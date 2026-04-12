@@ -856,11 +856,9 @@ $m_1(m_0) + m_2(m_0, m_0) = 0$, and for a single generator
 this reduces to $m_1(m_0) = 0$ plus higher-order terms that
 vanish by dimension). Hence $\rho(\cA)
 = \dim H^*(R_\cA, m_1^R) = 1$. The finite-dimensionality
-$\rho(\cA) \le \dim V_0 < \infty$ is Step~3 of
-Theorem~\ref{thm:platonic-completion}
-\textup{(}universal bound on positive-energy chiral
-algebras\textup{)}, and at Virasoro $\dim V_0 = 1$ saturates
-the bound.
+is Step~2 of Theorem~\ref{thm:platonic-completion} on the
+transferred model: $R_\cA = H_0$ is finite-dimensional, and
+for Virasoro one has $\dim H_0 \le \dim V_0 = 1$.
 
 \emph{Positive towers} ($\mathcal{W}_{1+\infty}$, $Y(\mathfrak{g})$):
 The tower structure provides a positive conformal-weight (resp.\
@@ -916,17 +914,17 @@ open are now resolved:
 \begin{enumerate}
 \item \emph{Finite-dimensionality of the resonance slice}:
  proved by Theorem~\ref{thm:platonic-completion}
- ($R_\cA \subseteq V_0$, $\dim V_0 < \infty$).
+ on the transferred model
+ \textup{(}$R_\cA = H_0$, $\dim H_0 \le \dim V_0 < \infty$\textup{)}.
  For Virasoro: $\dim V_0 = 1$ (just the vacuum), so
  $\dim R_{\mathrm{Vir}} \le 1$.
  Proposition~\ref{prop:resonance-ranks-standard} computes
  $\dim R_{\mathrm{Vir}} = 1$.
 \item \emph{Strict positive-weight growth of mixed
- operations}: the weight-compatible HTT (Step~2 of
- Theorem~\ref{thm:platonic-completion}) gives transferred
- operations that decompose by weight shift; the mixed
- components $\tilde{m}_k^{(\delta)}$ with $\delta > 0$
- strictly lower conformal weight.
+ operations}: Steps~1 and~3 of
+ Theorem~\ref{thm:platonic-completion} show that the
+ transferred operations respect reduced weight and that the
+ mixed differential strictly lowers positive conformal weight.
 \item \emph{Compatibility with $\mathcal{W}_N$
  approximants}: the DS-reduction functor preserves the
  positive-energy grading (the BRST differential commutes
@@ -951,7 +949,8 @@ $\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$.
 \index{platonic completion theorem|textbf}%
 \index{resonance rank!finiteness|textbf}%
 Every separated complete chiral $A_\infty$-algebra $\cA$
-arising from a positive-energy chiral algebra admits a canonical
+obtained by a weight-preserving homological transfer from a
+positive-energy chiral algebra admits a canonical
 decomposition
 \[
 \cA \cong R_\cA \;\widehat{\oplus}\; \cA^+_\cA
@@ -980,199 +979,187 @@ completed object.
 \end{theorem}
 
 \begin{proof}
-The proof has three steps: a weight-compatible SDR, transferred
-operations respecting weight, and the finiteness conclusion.
-
-\emph{Step~1: Weight-compatible strong deformation retract.}
-Let $\cA$ be a positive-energy chiral algebra. The conformal
-weight operator~$L_0$ acts semisimply on the state space with
-non-negative integer eigenvalues and finite-dimensional eigenspaces
-$V_h := \{v \in \cA : L_0 v = h \cdot v\}$, so that
-$\cA = \prod_{h \ge 0} V_h$ with $\dim V_h < \infty$ for
-all~$h$. The chiral differential $m_1$ (the BRST/bar differential
-at degree~$1$) acts on each weight space, giving a bounded-below
-chain complex of finite-dimensional vector spaces. The
-cohomology $H = H^*(\cA, m_1)$ inherits the weight grading:
-$H_h = H^*(V_h, m_1|_{V_h})$ for each~$h$.
-
-Since each $(V_h, m_1|_{V_h})$ is a finite-dimensional chain
-complex, we can choose a strong deformation retract
-$(V_h, H_h, p_h, \iota_h, h_h)$ for each weight~$h$
-individually (Hodge decomposition or explicit splitting).
-Assembling these: $p = \prod_h p_h$,
-$\iota = \prod_h \iota_h$,
-$h = \prod_h h_h$ gives a weight-preserving SDR
+Fix a positive-energy chiral algebra $\mathcal V$ whose
+weight-preserving transferred $A_\infty$-model is~$\cA$.
+Write
 \[
-(\cA, H, p, \iota, h)
-\qquad\text{with all maps preserving conformal weight.}
+\mathcal V = \prod_{h \ge 0} V_h,
+\qquad
+H_h := H^*(V_h, m_1|_{V_h}),
+\qquad
+H := \prod_{h \ge 0} H_h.
 \]
-The side conditions ($p\iota = \mathrm{id}$, $h\iota = 0$,
-$ph = 0$, $h^2 = 0$) hold weight by weight.
-
-\emph{Step~2: Transferred operations respect conformal weight.}
-The homotopy transfer theorem
-(Theorem~\ref{thm:htt}) produces $A_\infty$-operations
-$\tilde{m}_k = p \circ T_k \circ \iota^{\otimes k}$
-where $T_k$ is a sum over planar rooted trees whose internal
-edges carry the homotopy~$h$ and whose vertices carry the
-original operations~$m_k$.
-
-The chiral operations $m_k$ of a chiral algebra act via
-OPE residues on configuration spaces. For the binary
-operation $m_2$, the OPE
-$a(z)b(w) \sim \sum_{n \ge 0} c_n(w)/(z-w)^{n+1}$ has
-each $c_n$ of conformal weight $h(a) + h(b) - n - 1$.
-The chiral bar differential extracts the \emph{residue}
-at $z = w$: the coefficient of $(z-w)^{-1}$, giving
-$a_{(0)}b$ of weight $h(a) + h(b) - 1$. Hence
-$m_2$ \emph{lowers} total conformal weight by exactly~$1$.
-The propagator $d\log(z - w)$ has conformal weight~$0$,
-and configuration-space integrals over
-$\overline{C}_k(X)$ preserve weight (the logarithmic
-forms are weight-$0$ by construction).
-For the curvature~$m_0$ (the vacuum/central-charge
-component at genus $g \ge 1$): it has conformal weight~$0$
-(it is a scalar multiple of the period matrix).
-
-The binary chiral product $m_2$ therefore lowers total
-conformal weight by exactly~$1$ (from the zero-mode
-residue), while the curvature $m_0$ has weight shift~$0$.
-The \emph{raw bar differential} (which uses only $m_2$)
-lowers weight by~$1$ per application.
-
-The \emph{transferred higher operations} $\tilde{m}_k$
-(from the homotopy transfer theorem,
-Theorem~\ref{thm:htt}) are sums over planar rooted trees
-with $k$ leaves and $k - 1$ internal vertices. Each internal
-edge carries the homotopy~$h$ (weight-preserving by
-Step~1) and each internal vertex carries the binary product~$m_2$
-(lowering weight by~$1$). A tree with $k - 1$ internal
-vertices therefore has total weight shift $-(k-1)$.
-
-Since $p$, $\iota$, and $h$ preserve conformal weight
-(Step~1) and each tree in the HTT sum has total weight
-shift $-(k-1)$, the transferred operations $\tilde{m}_k$
-have a definite weight-shift bound:
-$\tilde{m}_k$ lowers total conformal weight by
-exactly $k - 1 \ge 1$ for $k \ge 2$. For the curvature
-$\tilde{m}_0$: weight shift~$0$ (it is the transferred
-image of the genus-$g$ vacuum term, which is a scalar of
-conformal weight~$0$). For $\tilde{m}_1$: weight
-shift~$0$ (it is the transferred differential, preserving
-weight by Step~1).
-
-\emph{Critical consequence for the resonance argument:}
-every $\tilde{m}_k$ with $k \ge 2$ strictly lowers
-conformal weight. The \emph{only} weight-preserving operations are
-$\tilde{m}_0$ (the curvature) and $\tilde{m}_1$ (the
-differential). Therefore the weight-$0$ sector is closed
-under $\tilde{m}_0$ and $\tilde{m}_1$ but receives no
-contributions from higher operations applied to
-weight-$0$ inputs (since $\tilde{m}_k$ for $k \ge 2$
-would lower weight below~$0$, which is impossible by
-positive energy).
-
-\emph{Step~3: Finite-dimensionality of $R_\cA$.}
-By Definition~\ref{def:resonance-rank}, the resonance piece
-$R_\cA$ is the maximal closed subspace of $\cA$ on which the
-$A_\infty$-operations preserve filtration degree~$0$
-(conformal weight~$0$). Since $\cA = R_\cA \;\widehat{\oplus}\;
-\cA^{>0}$ with $\cA^{>0}$ carrying strictly positive weight:
+Choose a strong deformation retract on each weight space and
+assemble them into a weight-preserving SDR
 \[
-R_\cA \;\subseteq\; V_0
-\;=\; \{v \in \cA : L_0 v = 0\}.
+(\mathcal V, H, p, \iota, h).
 \]
-By the positive-energy axiom, $\dim V_0 < \infty$. Therefore
-$\dim R_\cA \le \dim V_0 < \infty$.
+By the homotopy transfer theorem
+\textup{(}Theorem~\ref{thm:htt}\textup{)}, $H$ inherits
+transferred operations $\tilde m_k$, and by construction
+$\cA = (H, \{\tilde m_k\})$.
 
-The resonance rank $\rho(\cA) = \dim H^*(R_\cA, m_1^{R_\cA})
-\le \dim R_\cA < \infty$.
+\emph{Step~1: Reduced weight is preserved on the positive sector.}
+For $x \in H_h$ with $h > 0$, define the reduced weight
+\[
+\nu(x) := h - 1.
+\]
+The binary chiral product lowers conformal weight by exactly~$1$:
+if $a \in H_{h(a)}$ and $b \in H_{h(b)}$, then the residue
+product has weight $h(a) + h(b) - 1$. Each planar tree
+contributing to $\tilde m_k$ has $k-1$ internal vertices, so
+for homogeneous $x_i \in H_{h_i}$ one has
+\[
+h\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr)
+=
+\sum_{i=1}^k h_i - (k-1)
+\qquad (k \ge 2).
+\]
+Hence
+\[
+\nu\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr)
+=
+\sum_{i=1}^k \nu(x_i)
+\qquad (k \ge 2).
+\]
+Since $H$ is cohomology, the transferred differential vanishes:
+$\tilde m_1 = 0$. The transferred curvature $\tilde m_0$ has
+conformal weight~$0$.
 
-\emph{Step~4: Verification of the resonance-filtered hypotheses.}
-We verify the three hypotheses of
-Theorem~\ref{thm:resonance-filtered-bar-cobar} for the
-decomposition $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$
-with $R_\cA = V_0$ and $\cA^{>0} = \bigoplus_{h > 0} V_h$.
+Set
+\[
+R_\cA := H_0,
+\qquad
+\cA^+_\cA := \prod_{h > 0} H_h.
+\]
+Then $\cA = R_\cA \;\widehat{\oplus}\; \cA^+_\cA$. The formula
+above shows that $\cA^+_\cA$ is closed under all
+$\tilde m_k$ with $k \ge 1$, because if every input has
+conformal weight at least~$1$, then the output has conformal
+weight at least~$1$ as well. On $\cA^+_\cA$, the transferred
+curvature is zero, so the curvature clause in
+Theorem~\ref{thm:stabilized-completion-positive} is vacuous.
+Each reduced-weight truncation
+\[
+(\cA^+_\cA)_{\le N}^{\nu}
+:=
+\prod_{0 \le \nu \le N} (\cA^+_\cA)_\nu
+=
+\prod_{1 \le h \le N+1} H_h
+\]
+is finite-dimensional, hence lies in the finite-type bar-cobar
+regime. Therefore
+Theorem~\ref{thm:stabilized-completion-positive} applies to
+$\cA^+_\cA$ with respect to the reduced weight~$\nu$.
 
-\emph{Hypothesis~(1):} the positive-weight sector $\cA^{>0}$
-satisfies stabilized completion. By Step~2, the transferred
-operations on $\cA^{>0}$ decompose by weight shift. In the
-bar complex of $\cA^{>0}$, the differential either preserves
-or strictly decreases total conformal weight of bar words
-(each OPE residue decreases total weight by at least~$1$).
-Therefore the bar complex at total weight~$w$ sees only
-algebra elements of weight $\le w$; this is the stabilization
-property of
-Theorem~\ref{thm:stabilized-completion-positive} applied to
-the \emph{total conformal weight of bar words} (which is
-bounded and decreasing under the differential, ensuring
-weightwise finiteness).
+\emph{Step~2: The resonance piece is finite-dimensional and
+curved.}
+By positive energy, each $V_h$ is finite-dimensional. Therefore
+each $H_h$ is finite-dimensional, in particular
+$R_\cA = H_0$ is finite-dimensional. If all inputs lie in $H_0$
+and $k \ge 2$, then the conformal-weight formula from Step~1 gives
+\[
+h\bigl(\tilde m_k(x_1, \ldots, x_k)\bigr) = -(k-1) < 0,
+\]
+which is impossible in a positive-energy theory. Hence
+\[
+\tilde m_k|_{R_\cA^{\otimes k}} = 0
+\qquad (k \ge 2).
+\]
+Since $\tilde m_1 = 0$ and $\tilde m_0 \in R_\cA$, the resonance
+piece is a finite-dimensional curved $A_\infty$-subalgebra.
+Its resonance rank is therefore
+\[
+\rho(\cA)
+=
+\dim H^*(R_\cA, \tilde m_1)
+=
+\dim R_\cA
+<
+\infty.
+\]
 
-\emph{Hypothesis~(2):} $R_\cA = V_0$ is finite-dimensional
-by Step~3, and it is a curved $A_\infty$-subalgebra because:
-the curvature $m_0 \in V_0$ (it is the central-charge/vacuum
-term), the higher operations $m_k|_{V_0^{\otimes k}} = 0$ for
-$k \ge 2$ (since the OPE mode $v_{(n)}w$ for $v, w \in V_0$
-has output weight $-n-1 < 0$, which vanishes by positive
-energy), and $m_1|_{V_0} = 0$ (the transferred differential
-preserves weight by Step~1, and is zero on the weight-$0$
-cohomology).
+\emph{Step~3: The mixed differential is topologically nilpotent.}
+Consider the completed tensor product
+\[
+\widehat{\bar B}^{\mathrm{res}}(\cA)
+=
+\widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
+\;\widehat{\otimes}\;
+\bar B(R_\cA).
+\]
+For a bar word, define its \emph{positive conformal weight}
+$w_+$ to be the sum of the conformal weights of the
+$\cA^+_\cA$-entries. The differential splits as
+$D = D^+ + D_R + D_{\mathrm{mix}}$, where $D^+$ uses only
+operations on~$\cA^+_\cA$, $D_R$ uses only operations on
+$R_\cA$, and $D_{\mathrm{mix}}$ contains the remaining terms.
 
-\emph{Hypothesis~(3):} mixed operations with at least one
-$\cA^{>0}$-input strictly raise positive weight \emph{in the
-bar complex}. This requires a sign clarification. In the
-completed tensor product
-$\widehat{\bar B}^{\mathrm{res}}(\cA) =
-\widehat{\bar B}^{\mathrm{st}}(\cA^{>0}) \;\widehat{\otimes}\;
-\bar B(R_\cA)$,
-the ``positive weight'' of a tensor element
-$\alpha \otimes \beta$ is defined as the total conformal
-weight of $\alpha \in \bar B(\cA^{>0})$. The mixed
-differential $D_{\mathrm{mix}}$ has two components:
-(a)~interactions of $R_\cA$-elements with
-$\cA^{>0}$-elements, and
-(b)~$\cA^{>0}$-collisions whose outputs land in $R_\cA$.
-For~(a): by the vacuum property, $v_{(n)}a = 0$ and
-$a_{(n)}v = 0$ for all $v \in V_0$, $a \in \cA^{>0}$,
-$n \ge 0$ (the vacuum annihilates under singular OPE, and the
-only nonzero mode $a_{(-1)}|0\rangle = a$ is regular, hence
-invisible to the bar differential which extracts only singular
-residues). For~(b): an $\cA^{>0}$-collision
-$a_{(n)}b \in V_0$ requires $h(a) + h(b) - n - 1 = 0$,
-i.e., the collision absorbs all positive weight into
-$V_0$. In the bar complex, this means a bar word
-$[\cdots | a | b | \cdots]$ of positive weight~$w$ maps to a
-bar word with positive weight $w - h(a) - h(b)$ and one
-additional $R_\cA$-factor. Since the total conformal weight
-$w$ is finite and each such collapse strictly decreases
-positive weight, the mixed differential is topologically
-nilpotent: $D_{\mathrm{mix}}^n$ vanishes for $n$ exceeding
-$\lfloor w / h_{\min} \rfloor$ where
-$h_{\min} = \min\{h > 0 : V_h \ne 0\} \ge 1$.
+If a mixed operation involves $r \ge 1$ positive inputs of
+weights $h_1, \ldots, h_r$ and $s \ge 1$ resonance inputs, then
+\[
+h_{\mathrm{out}}
+=
+\sum_{i=1}^r h_i - (r+s-1)
+\le
+\sum_{i=1}^r h_i - 1.
+\]
+So any mixed operation with at least one resonance input lowers
+positive conformal weight by at least~$1$. If all inputs are
+positive, then $h_{\mathrm{out}} \ge 1$, so the output remains in
+$\cA^+_\cA$ and the term belongs to~$D^+$, not to
+$D_{\mathrm{mix}}$. Consequently
+$D_{\mathrm{mix}}$ lowers $w_+$ by at least~$1$ on every term to
+which it contributes.
 
-\emph{Remark on directionality.} The mixed differential
-here is \emph{weight-decreasing} (positive weight flows from
-$\cA^{>0}$ into $R_\cA$), not weight-increasing. The
-convergence argument is the same: topological nilpotence of
-$D_{\mathrm{mix}}$ in the completed topology, since each
-application decreases positive weight by a positive amount
-bounded below by~$h_{\min}$. The
-filtered homological perturbation lemma applies with the
-\emph{decreasing} positive-weight filtration
-$\mathcal{F}^p = \{\text{bar chains with positive weight}
-\le p\}$, which is preserved by~$D_{\mathrm{mix}}$.
+Therefore, for a bar chain of positive conformal weight~$w$,
+\[
+D_{\mathrm{mix}}^n = 0
+\qquad\text{for } n > w.
+\]
+This is the required topological nilpotence. The perturbation
+argument used in the proof of
+Theorem~\ref{thm:resonance-filtered-bar-cobar} depends only on
+that nilpotence, so it applies here with the decreasing
+filtration
+\[
+\mathcal F^p
+:=
+\{\text{bar chains of positive conformal weight } \le p\}.
+\]
+Combining this with Step~1 gives
+\[
+\widehat{\bar B}(\cA)
+\simeq
+\widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
+\;\widehat{\otimes}\;
+\bar B(R_\cA),
+\]
+and the completed cobar recovers~$\cA$.
 
-\emph{Completion.}
-With hypotheses~(1)--(3) verified (the third in the
-topologically nilpotent sense just established),
-Theorem~\ref{thm:resonance-filtered-bar-cobar} gives the
-completed bar coalgebra decomposition and the cobar recovery.
+\emph{Step~4: Comparison with the original positive-energy model.}
+The SDR maps extend to $A_\infty$-quasi-isomorphisms by
+Theorem~\ref{thm:htt}. By
+Proposition~\ref{prop:transfer-bar}, the induced maps on bar
+complexes are quasi-isomorphisms:
+\[
+\bar B(\mathcal V) \xrightarrow{\sim} \bar B(\cA),
+\qquad
+\bar B(\cA) \xrightarrow{\sim} \bar B(\mathcal V).
+\]
+Because the SDR data preserve conformal weight, these maps are
+weightwise quasi-isomorphisms. Passing to the completed products
+over weight pieces therefore preserves quasi-isomorphisms. Hence
+the resonance-filtered completed bar coalgebra constructed above
+computes the same completed bar-cobar type as the original
+positive-energy chiral algebra~$\mathcal V$.
 
 The specific resonance ranks for the standard families are
 computed in Proposition~\ref{prop:resonance-ranks-standard}:
 $\rho = 0$ for quadratic and positive-tower families, and
 $\rho = 1$ for Virasoro and $\mathcal{W}_N$
-(the single resonance direction being the curvature $m_0$).
+\textup{(}the single resonance direction being the
+curvature $m_0$\textup{)}.
 \end{proof}
 
 \begin{remark}[The mode algebra vs.\ state-space formulation]
@@ -1312,15 +1299,17 @@ extension of the proved core. What is currently in hand is:
  \textup{(}Theorem~\ref{thm:resonance-filtered-bar-cobar}\textup{)};
 \item the Resonance completion theorem
  \textup{(}Theorem~\ref{thm:platonic-completion}\textup{)},
- which proves that every positive-energy chiral algebra has
- finite resonance rank, identifying the irreducible core of MC4
- as a finite resonance problem.
+ which proves that every positive-energy chiral algebra is
+ represented, for completed bar-cobar purposes, by a
+ finite-resonance transferred model, identifying the
+ irreducible core of MC4 as a finite resonance problem.
 \end{enumerate}
 The Resonance completion theorem
 \textup{(}Theorem~\ref{thm:platonic-completion}\textup{)}
 is the sharp form of the MC4 content:
-every positive-energy chiral algebra has finite resonance rank,
-so ``MC4'' is a finite-dimensional problem sitting atop an
+every positive-energy chiral algebra has the same completed
+bar-cobar type as a finite-resonance transferred model, so
+``MC4'' is a finite-dimensional problem sitting atop an
 already-solved positive-weight stabilization machine.
 What remains at the frontier is the \emph{Virasoro resonance
 model}: the explicit computation of the resonance spectral

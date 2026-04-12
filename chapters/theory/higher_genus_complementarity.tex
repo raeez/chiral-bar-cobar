@@ -60,10 +60,13 @@ with distinct logical statuses.
  \;=\;
  Q_g(\cA) \;\oplus\; Q_g(\cA^!),
  \end{equation}
- where $Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
- $Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$ are the eigenspaces of
- the Verdier involution~$\sigma$, and $Q_g(\cA) \cong
- Q_g(\cA^!)^\vee$
+where $Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
+$Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$ are the eigenspaces of
+ the Verdier involution~$\sigma$. For $g \geq 1$, the Verdier pairing
+ identifies $Q_g(\cA) \cong Q_g(\cA^!)^\vee$; at $g=0$, the point
+ class is $\sigma$-fixed, so
+ $Q_0(\cA)=H^0(\overline{\mathcal{M}}_0,\mathcal{Z}(\cA))$ and
+ $Q_0(\cA^!)=0$
  \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}.
 
 \item \emph{Shifted-symplectic Lagrangian upgrade
@@ -472,20 +475,20 @@ Definition~\textup{\ref{def:complementarity-complexes}}.
 \textbf{H-level \textup{(}homotopy\textup{)}.}
 For each genus $g \geq 0$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Homotopy Lagrangian decomposition.}
- Verdier duality induces a cochain-level pairing
- $\langle -,- \rangle_{\mathbb{D}}$ on~$\mathbf{C}_g(\cA)$
- of cohomological degree $-(3g{-}3) = -\dim_{\mathbb C}\cM_g$,
- anti-symmetric under the Verdier involution~$\sigma$.
+\item \emph{Homotopy eigenspace decomposition.}
  By Lemma~\textup{\ref{lem:involution-splitting}(a,c)},
  \begin{equation}\label{eq:complementarity-decomp}
  \mathbf{C}_g(\cA) \;\simeq\;
  \mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!),
  \end{equation}
- with each summand Lagrangian for
- $\langle -,- \rangle_{\mathbb{D}}$.
+ functorially in~$(\cA,\cA^!)$.
 
-\item \emph{Perfect duality.}
+\item \emph{Perfect duality for $g \geq 1$.}
+ For $g \geq 1$, Verdier duality induces a cochain-level pairing
+ $\langle -,- \rangle_{\mathbb{D}}$ on~$\mathbf{C}_g(\cA)$
+ of cohomological degree $-(3g{-}3)$, anti-symmetric under the
+ Verdier involution~$\sigma$. Under this pairing, each summand in
+ \eqref{eq:complementarity-decomp} is Lagrangian, and
  $\langle -, - \rangle_{\mathbb{D}}$ restricts to a
  non-degenerate pairing
  $\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA^!) \to \mathbb{C}[-{(3g{-}3)}]$,
@@ -510,10 +513,18 @@ where the cohomological shadows
 $Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
 $Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$
 \textup{(}Definition~\textup{\ref{def:complementarity-complexes}}\textup{)}
-are Lagrangians for the induced pairing on~$\mathcal{H}_g$, and
+are the $\pm 1$ eigenspaces of~$\sigma$.
+For $g \geq 1$, they are Lagrangians for the induced pairing
+on~$\mathcal{H}_g$, and
 \begin{equation}\label{eq:quantum-duality}
 Q_g(\cA) \cong Q_g(\cA^!)^\vee.
 \end{equation}
+At genus $0$, the unique point class is $\sigma$-fixed, so
+\[
+Q_0(\cA)=H^0(\overline{\mathcal{M}}_0,\mathcal{Z}(\cA)),
+\qquad
+Q_0(\cA^!)=0.
+\]
 \end{theorem}
 
 \begin{remark}\label{rem:lagrangian-decomp}
@@ -1209,11 +1220,16 @@ But $E_\infty^{*,*,g} = \text{gr}^g H^*$ by definition, so:
 
 \begin{corollary}[Quantum corrections are dual; \ClaimStatusProvedHere]
 \label{cor:quantum-dual-complete}
-For Koszul dual chiral algebras $(\mathcal{A}, \mathcal{A}^!)$:
+For each genus $g \geq 1$ and every Koszul dual chiral pair
+$(\mathcal{A}, \mathcal{A}^!)$:
 \begin{equation}
 Q_g(\mathcal{A}) \cong Q_g(\mathcal{A}^!)^\vee
 \end{equation}
-with respect to the Verdier pairing.
+with respect to the Verdier pairing. At genus $0$, the
+cohomological-shadow eigenspaces are instead
+$Q_0(\mathcal{A}) = H^0(\overline{\mathcal{M}}_0, Z(\mathcal{A}))$
+and $Q_0(\mathcal{A}^!) = 0$
+\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main}}\textup{)}.
 \end{corollary}
 
 \begin{proof}[Proof of Corollary~\ref{cor:quantum-dual-complete}]
@@ -1227,7 +1243,9 @@ Q_g(\mathcal{A}) = \bigoplus_{p+q=n} (E_\infty^{p,q,g})_{\mathcal{A}} \cong
 
 This completes Step~II: Verdier duality on configuration spaces
 induces a duality of spectral sequences and a perfect pairing
-between $Q_g(\mathcal{A})$ and $Q_g(\mathcal{A}^!)$.
+between $Q_g(\mathcal{A})$ and $Q_g(\mathcal{A}^!)$ for $g \geq 1$;
+the genus-$0$ cohomological-shadow exception is recorded in
+Theorem~\ref{thm:quantum-complementarity-main}.
 \end{proof}
 
 \subsection{Step III: decomposition and complementarity}
@@ -1239,10 +1257,11 @@ between $Q_g(\mathcal{A})$ and $Q_g(\mathcal{A}^!)$.
 \begin{theorem}[Kodaira--Spencer map for chiral algebras; \ClaimStatusProvedHere]
 \label{thm:kodaira-spencer-chiral-complete}
 \index{Kodaira--Spencer map|textbf}
-\textup{[Regime: curved-central on the Koszul locus; all genera
+\textup{[Regime: curved-central on the Koszul locus; positive genus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair and let $\pi: \mathcal{C}_g
+Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair with
+$g \geq 1$, and let $\pi: \mathcal{C}_g
 \to \overline{\mathcal{M}}_g$ be the universal curve. There is a natural action:
 \begin{equation}
 \rho: Z(\mathcal{A}) \to \mathrm{End}\bigl(H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))\bigr)
@@ -1701,7 +1720,8 @@ and in particular $\dim V^+ + \dim V^- = \dim V$.
 \emph{Genus $0$}: $\overline{\mathcal{M}}_0 = \mathrm{pt}$, so
 $\dim H^* = 1$. The involution $\sigma$ acts as $+1$ on $H^0$ (identity class),
 giving $Q_0(\mathcal{A}) = \mathbb{C}$, $Q_0(\mathcal{A}^!) = 0$. Dimension check:
-$1 + 0 = 1$.
+$1 + 0 = 1$. This is the genus-$0$ exception to the duality clause in
+Theorem~\ref{thm:quantum-complementarity-main}.
 
 \emph{Genus $1$}: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$ ($H^0 \oplus H^2$).
 For the Heisenberg algebra: $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$
@@ -1898,12 +1918,18 @@ curve $X$.
  $\barB^{\mathrm{ch}}(\cA)$
  \textup{(}Theorem~\textup{\ref{thm:config-space-bv}}\textup{)}
  has degree~$+1$, hence defines a $(-1)$-shifted Poisson structure.
- Non-degeneracy is guaranteed by the Koszul duality pairing
- \textup{(}Corollary~\textup{\ref{cor:duality-bar-complexes-complete}}\textup{)}
- and the Verdier intertwining
- $\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \cong \barB(\cA^!)$
- \textup{(}Theorem~\textup{\ref{thm:verdier-bar-cobar}};
- Convention~\textup{\ref{conv:bar-coalgebra-identity}}\textup{)}.
+ Under the bracket-compatible Verdier comparison assumed in
+ Theorem~\textup{\ref{thm:bv-functor}}, the adjoint map
+ \[
+ x \longmapsto \{x,-\}_{\mathrm{BV}} \colon
+ \barB^{\mathrm{ch}}(\cA)
+ \longrightarrow
+ \mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))[1]
+ \simeq
+ \barB^{\mathrm{ch}}(\cA^!)[1]
+ \]
+ is a quasi-isomorphism, so this Poisson structure is
+ non-degenerate.
 
 \item \emph{Formal moduli is $(-1)$-shifted symplectic.}
  The dg Lie algebra $L_g := \barB^{(g)}(\cA)[1]$, with Lie bracket
@@ -1918,12 +1944,16 @@ curve $X$.
  Proposition~\ref{prop:modular-deformation-truncation}) of the
  modular $L_\infty$-deformation object $\Definfmod(\cA)$
  (Theorem~\ref{thm:modular-homotopy-convolution}).
-\item \emph{Bar-side eigenspaces are Lagrangian.}
- The Verdier involution induces an involution on~$L_g$, and the
+\item \emph{Bar-side eigenspaces lift the ambient Lagrangian polarization.}
+ For $g \geq 1$, assume in addition that there is a quasi-isomorphism
+ of paired complexes
+ \[
+ \chi_g \colon L_g \xrightarrow{\;\sim\;} \mathbf{C}_g(\cA)
+ \]
+ intertwining the Verdier involution and the pairings. Then the
  eigenspace decomposition $L_g = L_g^+ \oplus L_g^-$ provides
- complementary Lagrangian subspaces, with $L_g^+$ controlling
- deformations of~$\cA$ and $L_g^-$ controlling deformations
- of~$\cA^!$.
+ complementary Lagrangian subspaces, and
+ $H^*(L_g^+) = Q_g(\cA)$, $H^*(L_g^-) = Q_g(\cA^!)$.
 \end{enumerate}
 \end{theorem}
 
@@ -1933,33 +1963,32 @@ The BV bracket $\{-,-\}_{\mathrm{BV}}$ on $\barB^{\mathrm{ch}}(\cA)$
 has degree~$+1$ by Theorem~\ref{thm:config-space-bv}. A degree~$+1$
 Lie bracket is by definition a $(-1)$-shifted Poisson structure: the
 associated bivector field on the formal moduli problem has degree~$-1$.
-For non-degeneracy, the map
-$x \mapsto \{x, -\}_{\mathrm{BV}}$
-gives $\barB^{\mathrm{ch}}(\cA) \to
-\barB^{\mathrm{ch}}(\cA)^{\vee}[-1]$.
-The Verdier duality identification
-$\mathbb{D}(\barB(\cA)) \cong \Omega(\cA^!)$
-(Theorem~\ref{thm:bv-functor}) identifies
-$\barB^{\mathrm{ch}}(\cA)^{\vee}$ with $\Omega^{\mathrm{ch}}(\cA^!)$.
-On the Koszul locus, the bar-cobar adjunction
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}) ensures that this
-map induces a quasi-isomorphism on cohomology, verifying
-non-degeneracy.
+Theorem~\ref{thm:config-space-bv} identifies this bracket with the
+configuration-space residue pairing. Corollary~\ref{cor:duality-bar-complexes-complete}
+gives a perfect pairing
+$\barB^{\mathrm{ch}}(\cA)\otimes \barB^{\mathrm{ch}}(\cA^!)\to\mathbb{C}$,
+and Theorem~\ref{thm:bv-functor} supplies the bracket-compatible
+Verdier comparison
+$\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \simeq \barB(\cA^!)$.
+Therefore the adjoint of the BV bracket is identified with the
+Verdier duality map, hence is a quasi-isomorphism. This is precisely
+the required non-degeneracy.
 
 \emph{Part (ii).}
 Shifting $\barB^{(g)}(\cA)$ by $[1]$ converts the degree~$+1$ BV
 bracket to a degree~$0$ Lie bracket on $L_g$; the dg Lie algebra
 axioms are inherited from the BV algebra axioms. The BV pairing on
-$\barB^{(g)}(\cA)$ (degree~$+1$ from the antibracket; equivalently,
-the non-degenerate pairing from the Koszul--Verdier construction of
-Corollary~\ref{cor:duality-bar-complexes-complete}) shifts to a
-pairing on $L_g$ of degree $+1 - 2 = -1$
+$\barB^{(g)}(\cA)$ produced in Part~(i) restricts to a
+quasi-isomorphism
+$\beta_g\colon \barB^{(g)}(\cA)\xrightarrow{\sim}
+(\barB^{(g)}(\cA))^\vee[1]$.
+After shifting by~$[1]$, $\beta_g$ becomes a pairing on $L_g$ of
+degree $+1 - 2 = -1$
 (each of the two inputs shifts by~$[-1]$).
 Invariance of the pairing (the cyclic property
 $\langle [x,y], z \rangle = \langle x, [y,z] \rangle$)
-follows from the BV relation
-$\{a, bc\} = \{a,b\}c \pm b\{a,c\}$ (Leibniz rule) applied to
-the pairing. By the Kontsevich--Pridham correspondence (a
+is exactly the bracket-compatibility built into the conditional BV
+package of Theorem~\ref{thm:bv-functor}. By the Kontsevich--Pridham correspondence (a
 non-degenerate invariant pairing of degree~$n$ on a dg Lie algebra
 $L$ endows $\mathrm{MC}(L)$ with an $n$-shifted symplectic
 structure~\cite{Pridham17}), the formal moduli
@@ -1967,19 +1996,18 @@ $\mathrm{Def}_g(\cA) = \mathrm{MC}(L_g)$ is $(-1)$-shifted
 symplectic.
 
 \emph{Part (iii).}
-The Verdier involution~$\sigma$ induces an involution on~$L_g$ that
-anti-commutes with the Lie bracket:
-$\sigma[x,y] = -[\sigma x, \sigma y]$.
-(This follows from the sign reversal under Verdier duality: the
-antibracket involves the symplectic form on configuration space,
-and~$\mathbb{D}$ reverses the orientation of~$\overline{C}_n(X)$,
-hence reverses the sign of the symplectic form.)
-By the eigenspace argument of
-Proposition~\ref{prop:lagrangian-eigenspaces}(iii), the
-$\sigma$-eigenspaces $L_g^+$ and $L_g^-$ are isotropic for the
-$(-1)$-shifted symplectic form. They are maximal isotropic (hence
-Lagrangian) because $L_g = L_g^+ \oplus L_g^-$ over a field of
-characteristic $\neq 2$.
+Assume $g \geq 1$ and that the comparison map~$\chi_g$ from the
+statement exists. Because~$\chi_g$ intertwines the involutions and the
+pairings, it identifies the $\sigma$-eigenspaces $L_g^\pm$ with the
+ambient homotopy eigenspaces
+$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$. Theorem~\ref{thm:quantum-complementarity-main}
+then supplies a decomposition of~$\mathbf{C}_g(\cA)$ by complementary
+Lagrangians. Pulling that structure back along~$\chi_g$ shows that
+$L_g^+$ and~$L_g^-$ are isotropic. Since
+$L_g = L_g^+ \oplus L_g^-$ over a field of characteristic $\neq 2$,
+they are maximal isotropic, hence Lagrangian. Passing to cohomology
+gives $H^*(L_g^+) = Q_g(\cA)$ and
+$H^*(L_g^-) = Q_g(\cA^!)$.
 \end{proof}
 
 \begin{remark}[Genus-wise strictification]
@@ -2213,7 +2241,8 @@ Modular forms therefore appear in:
 
 \begin{corollary}[Uniqueness of quantum corrections; \ClaimStatusProvedHere]
 \label{cor:uniqueness-quantum}
-Given genus-$g$ corrections $Q_g(\mathcal{A})$ for a chiral algebra $\mathcal{A}$, the 
+Given genus-$g$ corrections with $g \geq 1$ for a chiral algebra
+$\mathcal{A}$, the
 Koszul dual corrections $Q_g(\mathcal{A}^!)$ are \emph{uniquely determined} by:
 \begin{equation}
 Q_g(\mathcal{A}^!) \cong \left(H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) / Q_g(
@@ -4100,8 +4129,7 @@ quasi-isomorphism.
 
 \begin{theorem}[Higher genus inversion; \ClaimStatusProvedHere]\label{thm:higher-genus-inversion}
 \index{bar-cobar inversion!higher genus}
-\textup{[}Regime: curved-central on the Koszul locus;
-filtered-complete off it
+\textup{[}Regime: curved-central on the Koszul locus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
 
 \smallskip\noindent
@@ -4119,21 +4147,6 @@ quasi-isomorphism:
 where $\cA_g$ denotes the genus-$g$ component.
 The spectral sequence $E_1^{p,q}(g) \Rightarrow
 H^{p+q}(\Omega_g \bar{B}_g(\cA))$ collapses at $E_2$.
-
-\item \emph{Off the Koszul locus.}
-If $\cA$ leaves the Koszul locus \textup{(}admissible affine levels,
-minimal-model central charges\textup{)}, the bar-cobar object
-$\Omega_X \bar{B}_X(\cA)$ persists but becomes curved: $d^2 \neq 0$
-on the underlying complex, and the failure of inversion is
-measured by the shadow obstruction tower $\Theta_{\cA}^{\leq r}$
-(Definition~\ref{def:shadow-postnikov-tower},
-equation~\eqref{eq:universal-MC}).
-In this regime, $\Omega_X \bar{B}_X(\cA)$ represents $\cA$
-faithfully in the provisional coderived category
-$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
-\textup{(}Definition~\textup{\ref{def:provisional-coderived},}
-Proposition~\textup{\ref{prop:coderived-adequacy}(a))},
-not in the ordinary derived category.
 \end{enumerate}
 \end{theorem}
 
@@ -4169,7 +4182,28 @@ $X=U_g\sqcup\partial X$ and $f=\psi_g$. Since $j^*f$ and $i^*f$ are
 quasi-isomorphisms by (1)--(2), $f$ is a quasi-isomorphism.
 \end{enumerate}
 Therefore $\psi_g$ is a quasi-isomorphism on $\overline{\mathcal{M}}_g$.
+The asserted $E_2$-collapse is proved separately in
+Lemma~\ref{lem:e2-collapse-higher-genus}.
 \end{proof}
+
+\begin{remark}[Off-locus coderived continuation kept separate]
+\index{bar-cobar inversion!off Koszul locus}
+Outside the Koszul locus \textup{(}admissible affine levels,
+minimal-model central charges\textup{)}, the filtered curved object
+$\Omega_X \bar{B}_X(\cA)$ still exists and its failure to invert in the
+ordinary derived category is measured by the shadow obstruction tower
+$\Theta_{\cA}^{\leq r}$
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower},}
+equation~\eqref{eq:universal-MC}\textup{)}. The present file does not
+prove that the counit becomes an equivalence in the provisional
+coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$; that off-locus upgrade is
+left to the separate coderived-model formalism
+\textup{(}Definition~\textup{\ref{def:provisional-coderived}}\textup{)}
+and is intentionally not folded into
+Theorem~\ref{thm:higher-genus-inversion}, so no circular dependence on
+Proposition~\ref{prop:coderived-adequacy}(a) remains.
+\end{remark}
 
 \begin{remark}[Geometric substrate (Volume~II)]
 \label{rem:theorem-b-lagrangian}

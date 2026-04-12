@@ -48,8 +48,8 @@ functorial pair that resolves all three obstructions. It is the
 unique adjunction that (a)~inverts on the Koszul locus, producing
 $\Omega_X(\barB_X(\cA)) \xrightarrow{\sim} \cA$
 (Theorem~\ref{thm:bar-cobar-inversion-qi}); (b)~intertwines
-Verdier duality on $\Ran(X)$, connecting $\barB_X(\cA)$ with
-$\barB_X(\cA^!)$; (c)~produces Lagrangian complementarity
+Verdier duality on $\Ran(X)$, connecting $\barB_X(\cA)$ with the
+homotopy dual factorization algebra~$\cA^!_\infty$; (c)~produces Lagrangian complementarity
 $Q_g(\cA) \oplus Q_g(\cA^!) \simeq
 H^*(\overline{\mathcal{M}}_g, Z(\cA))$
 (Theorem~\ref{thm:quantum-complementarity-main}).
@@ -59,15 +59,18 @@ achieves (b) but has no bar-cobar content; complementarity (c)
 requires both (a) and (b) as input.
 
 Theorem~\ref{thm:koszul-equivalences-meta} assembles twelve
-equivalent characterisations of chiral Koszulness. Ten are
-unconditional: $E_2$-collapse of the bar spectral sequence,
+tests and consequences around chiral Koszulness. Nine are
+unconditional equivalences: $E_2$-collapse of the bar spectral sequence,
 vanishing of transferred $A_\infty$ operations $m_k$ for
 $k \geq 3$, acyclicity of the twisted tensor product
 $K_\tau^L(\cA, \cC)$, truncation of the shadow tower
-$\Theta_\cA^{\leq r}$, and six others. One (the Lagrangian
+$\Theta_\cA^{\leq r}$, and five others. One (Hochschild
+duality and concentration in degrees $\{0,1,2\}$) is a proved
+consequence on the Koszul locus. One (the Lagrangian
 eigenspace decomposition) is conditional on perfectness of the
 bar-cobar normal complex. One (D-module purity) is a
-one-directional implication. The count is exact: $10 + 1 + 1$.
+one-directional implication. The count is exact:
+$9 + 1 + 1 + 1$.
 
 Two distinctions require emphasis. First, the four complexity
 classes G/L/C/M, with shadow depths
@@ -137,7 +140,8 @@ and formulates the PBW recognition criterion. The chiral Koszul
 pair (Definition~\ref{def:chiral-koszul-pair}) is then defined,
 and the full bar-cobar adjunction and inversion on the Koszul
 locus (Theorem~A) are proved. The Verdier intertwining that
-connects $\barB_X(\cA)$ with $\barB_X(\cA^!)$ completes the
+connects $\barB_X(\cA)$ with the homotopy dual factorization
+algebra~$\cA^!_\infty$ completes the
 genus-zero layer of the duality. The passage to higher genus
 (Chapter~\ref{chap:higher-genus}), where curvature enters and
 the fiberwise differential ceases to square to zero, builds on
@@ -353,6 +357,45 @@ then lifts this to acyclicity of $K_\tau^L$ and $K_\tau^R$
 themselves.
 \end{proof}
 
+\begin{lemma}[Filtered comparison for the unit; \ClaimStatusProvedHere]
+\label{lem:filtered-comparison-unit}
+\index{spectral sequence!filtered comparison for the unit}
+Let $(\cA, \cC, \tau, F_\bullet)$ be a chiral twisting datum
+whose filtration is exhaustive, complete, and bounded below.
+If $\eta_\tau\colon \cC \to \bar{B}_X(\cA)$ is a weak equivalence,
+then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the associated graded datum
+ $(\operatorname{gr} \cA, \operatorname{gr} \cC,
+ \operatorname{gr} \tau)$ is a classical Koszul datum;
+\item both twisted tensor products $K_\tau^L$ and $K_\tau^R$ are
+ acyclic.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Filter $\eta_\tau$ by bar degree. Since the filtration is bounded
+below and complete, the induced spectral sequence converges
+strongly, and the associated graded map
+\[
+\operatorname{gr}\eta_\tau \colon \operatorname{gr}\cC
+\longrightarrow \operatorname{gr}\barB_X(\cA)
+\cong \barB(\operatorname{gr}\cA)
+\]
+is a quasi-isomorphism of classical conilpotent coalgebras. By the
+classical fundamental theorem of twisting morphisms
+\cite[Theorem~2.3.1]{LV12}, the induced twisting morphism
+$\operatorname{gr}\tau$ is classically Koszul, proving~(a).
+
+For~(b), Lemma~\ref{lem:twisted-product-cone-unit} identifies
+$K_\tau^R$ with $\operatorname{Cone}(\eta_\tau)[-1]$, so the weak
+equivalence of $\eta_\tau$ makes $K_\tau^R$ acyclic. Filter
+$K_\tau^L$ by $F_\bullet$; its associated graded complex is the
+classical left twisted tensor product for $\operatorname{gr}\tau$,
+which is acyclic by~(a). Strong convergence then lifts this
+acyclicity to~$K_\tau^L$.
+\end{proof}
+
 \begin{theorem}[Fundamental theorem of chiral twisting morphisms; \ClaimStatusProvedHere]
 \label{thm:fundamental-twisting-morphisms}
 \index{twisting morphism!fundamental theorem|textbf}
@@ -414,16 +457,13 @@ hypothesis (Definition~\ref{def:chiral-koszul-morphism},
 condition~3) ensures the spectral sequence converges strongly.
 
 \emph{\ref{ftm:unit}$\Rightarrow$\ref{ftm:koszul}:}
-Filter $\bar{B}_X(\cA)$ by bar degree. The weak equivalence
-of $\eta_\tau$ implies, by the bar-degree analogue of
-Lemma~\ref{lem:filtered-comparison}, that the associated graded
-datum $(\operatorname{gr} \cA, \operatorname{gr} \cC,
-\operatorname{gr} \tau)$ is classically Koszul. Strong
-convergence of the bar-degree spectral sequence (ensured by the
-completeness and bounded-below hypotheses of the filtration
-$F_\bullet$) then lifts acyclicity of the associated graded
-twisted tensor products to acyclicity of $K_\tau^L$ and
-$K_\tau^R$.
+This is the unit-side filtered comparison of
+Lemma~\ref{lem:filtered-comparison-unit}: the weak equivalence of
+$\eta_\tau$ forces the associated graded datum
+$(\operatorname{gr} \cA, \operatorname{gr} \cC,
+\operatorname{gr} \tau)$ to be classically Koszul and lifts the
+acyclicity of the classical twisted tensor products to
+$K_\tau^L$ and $K_\tau^R$.
 
 \end{proof}
 
@@ -510,7 +550,8 @@ duality theorem:
  $H^0 \cong \cC$.
 \item \emph{$\mathrm{A}_2$}: geometric bar-cobar duality
  (Theorem~\ref{thm:bar-cobar-isomorphism-main}): for a chiral
- dual pair, Verdier duality intertwines bar complexes.
+ dual pair, Verdier duality sends the bar coalgebra of one side
+ to the dual factorization algebra of the other.
 \end{itemize}
 $\mathrm{A}_0$ is the Koszul recognition theorem;
 $\mathrm{A}_1$ extracts the dual coalgebra;
@@ -591,10 +632,12 @@ Definition~\textup{\ref{def:chiral-koszul-morphism})}
 (\cA_1, \cC_1, \tau_1, F_\bullet), \qquad
 (\cA_2, \cC_2, \tau_2, F_\bullet)
 \]
-equipped with Verdier-compatible identifications
+equipped with Verdier-compatible factorization-algebra
+identifications
 \[
-\mathbb{D}_{\operatorname{Ran}}(\cC_1) \simeq \cC_2, \qquad
-\mathbb{D}_{\operatorname{Ran}}(\cC_2) \simeq \cC_1,
+\mathbb{D}_{\operatorname{Ran}}(\cC_1) \simeq \Omega_X(\cC_2),
+\qquad
+\mathbb{D}_{\operatorname{Ran}}(\cC_2) \simeq \Omega_X(\cC_1),
 \]
 compatible with the twisting morphisms and filtrations.
 In this situation we write $\cA_2 \simeq \cA_1^!$ and
@@ -616,8 +659,16 @@ For the standard examples, the Koszul pair is constructed
 as follows: $\cC_i = \bar{B}_X(\cA_i)$ with the canonical
 twisting morphism, $F_\bullet$ is the PBW filtration
 (Theorem~\ref{thm:pbw-koszulness-criterion}), acyclicity
-follows from spectral sequence degeneration, and
-Verdier compatibility from Theorem~\ref{thm:verdier-bar-cobar}.
+follows from spectral sequence degeneration, and the
+algebra-level Verdier compatibility
+\[
+\mathbb{D}_{\operatorname{Ran}}(\cC_1)
+\simeq \Omega_X(\cC_2)
+\]
+is supplied by Theorem~\ref{thm:verdier-bar-cobar} together with
+the counit quasi-isomorphism
+$\Omega_X(\cC_2) \xrightarrow{\sim} \cA_2$ from
+Theorem~\ref{thm:fundamental-twisting-morphisms}.
 The Heisenberg pair
 $(\mathcal{H}_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ is the
 prototype (\S\ref{sec:frame-koszul-dual}).
@@ -1961,13 +2012,15 @@ reducedness and reduced Li--bar concentration hypotheses recorded in
 Corollary~\ref{cor:minimal-orbit-koszul}.
 \end{remark}
 
-\begin{theorem}[Equivalences of chiral Koszulness; \ClaimStatusProvedHere]
+\begin{theorem}[Equivalences and consequences of chiral Koszulness; \ClaimStatusProvedHere]
 \label{thm:koszul-equivalences-meta}
 \index{Koszul property!equivalences of characterizations|textbf}
 
 Let $\cA$ be a chiral algebra on a smooth projective curve~$X$
 with PBW filtration $F_\bullet$.
-Conditions \textup{(i)--(x)} below are equivalent.
+Conditions \textup{(i)--(vii)} and \textup{(ix)--(x)} below are
+equivalent. Condition~\textup{(viii)} is a proved consequence of
+them on the Koszul locus.
 Under the additional perfectness and non-degeneracy hypotheses on the
 ambient tangent complex, condition~\textup{(xi)} is also equivalent to
 them. Condition~\textup{(xii)} implies condition~\textup{(x)}
@@ -1996,22 +2049,26 @@ them. Condition~\textup{(xii)} implies condition~\textup{(x)}
  bar-cobar adjunction is an equivalence on the fiber over
  $\barBgeom(\cA)$.
 \item[\textup{(vii)}] Factorization homology
- $\int_{\Sigma_g} \cA$ is concentrated in degree~$0$
- for $g = 0$ ; for $g \geq 1$
- the analogous concentration holds on the uniform-weight lane
- but is conditional on cross-channel cancellation in the
- multi-weight case (see
- Remark~\ref{rem:fh-vii-uniform-weight-scope} below).
-\item[\textup{(viii)}] $\mathrm{ChirHoch}^*(\cA)$ is a polynomial algebra
- with generators concentrated in degrees $\{0, 1, 2\}$
- \textup{(}Theorem~H,
- Theorem~\textup{\ref{thm:main-koszul-hoch})}.
+ $\int_{\mathbb{P}^1} \cA$ is concentrated in degree~$0$.
 \item[\textup{(ix)}] The Kac--Shapovalov determinant
  $\det G_h \neq 0$ in the bar-relevant range
  \textup{(}Theorem~\textup{\ref{thm:kac-shapovalov-koszulness})}.
 \item[\textup{(x)}] The restriction
  $i_S^!\,\barB_n(\cA)$ to every FM boundary stratum~$S$ is
  acyclic outside degree~$0$.
+\end{enumerate}
+
+\smallskip
+\noindent\textbf{Unconditional consequence on the Koszul locus:}
+\begin{enumerate}
+\item[\textup{(viii)}] $\mathrm{ChirHoch}^*(\cA)$ is concentrated in
+ cohomological degrees $\{0,1,2\}$ and satisfies the duality
+ \[
+ \ChirHoch^n(\cA)
+ \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X
+ \]
+ \textup{(}Theorem~H,
+ Theorem~\textup{\ref{thm:main-koszul-hoch})}.
 \end{enumerate}
 
 \smallskip
@@ -2029,8 +2086,7 @@ them. Condition~\textup{(xii)} implies condition~\textup{(x)}
 \begin{proof}
 \textsc{The core circuit}
 \textup{(i)}$\Leftrightarrow$\textup{(ii)}$\Leftrightarrow$%
-\textup{(iii)}$\Leftrightarrow$%
-\textup{(v)}$\Leftrightarrow$\textup{(viii)}:
+\textup{(iii)}$\Leftrightarrow$\textup{(v)}:
 
 \smallskip\noindent
 \textup{(i)}$\Leftrightarrow$\textup{(ii)}:
@@ -2053,27 +2109,18 @@ twisted tensor product $K_\tau^L$ is acyclic
 condition~(1) of
 Definition~\ref{def:chiral-koszul-morphism}.
 
-\smallskip\noindent
+\medskip
+\textsc{Hochschild consequence}
 \textup{(v)}$\Rightarrow$\textup{(viii)}:
-The quasi-isomorphism
-$\Omega(\barBgeom(\cA)) \xrightarrow{\sim} \cA$ is a free
-resolution. The bigraded Hochschild complex inherits the bar-cobar
-filtration, forcing polynomial vanishing
-(Theorem~\ref{thm:main-koszul-hoch}).
 
 \smallskip\noindent
-\textup{(viii)}$\Rightarrow$\textup{(v)}:
-If $\ChirHoch^*(\cA)$ is a polynomial algebra with generators
-concentrated in degrees~$\{0, 1, 2\}$, then the bar resolution
-computes $\operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X)$ by the
-Beilinson--Drinfeld comparison, and the polynomial structure forces
-diagonal concentration: the generators in degree~$0$ contribute
-to~$\operatorname{Ext}^{0,0}$, those in degree~$1$
-to~$\operatorname{Ext}^{1,1}$, and those in degree~$2$
-to~$\operatorname{Ext}^{2,2}$; all products of these generators remain
-on the diagonal $p = q$. This is condition~(iv). By the already
-established (iv)$\Rightarrow$(i)$\Rightarrow$(v), the counit is a
-quasi-isomorphism.
+The quasi-isomorphism
+$\Omega(\barBgeom(\cA)) \xrightarrow{\sim} \cA$ identifies the
+bar-cobar resolution with the chiral Hochschild complex. On the
+Koszul locus, Theorem~H and
+Theorem~\ref{thm:main-koszul-hoch} then give the stated
+cohomological concentration and duality. No converse from
+\textup{(viii)} to the bar-cobar counit is proved here.
 
 \medskip
 \textsc{$A_\infty$ formality}
@@ -2106,7 +2153,7 @@ on~$\barBgeom(\cA)$ also collapses at~$E_2$.
 \medskip
 \textsc{Factorization homology concentration}
 \textup{(i)}$\Leftrightarrow$\textup{(vii)}
-\textup{(}, scoped at $g = 0$; cf.\
+\textup{(}the genus-$0$ specialization; cf.\
 Remark~\ref{rem:fh-vii-uniform-weight-scope}\textup{)}:
 
 \smallskip\noindent
@@ -2432,12 +2479,12 @@ are classified by shadow depth as follows.
 & $m_k^{\mathrm{SC}},\; k \geq 5$ \\
 \midrule
 $G$ \textup{(}$r_{\max}=2$\textup{)}
-& Heisenberg
+& Heisenberg, lattice VOA
 & $= 0$
 & $= 0$
 & $= 0$ \\
 $L$ \textup{(}$r_{\max}=3$\textup{)}
-& affine KM, lattice VOA
+& affine KM
 & $\neq 0$
 & $= 0$
 & $= 0$ \\
@@ -2457,10 +2504,13 @@ $M$ \textup{(}$r_{\max}=\infty$\textup{)}
 
 \medskip\noindent
 \emph{Mechanism.}
-For class~$G$\textup{:} the bracket $[a_m, a_n] = km\,\delta_{m+n,0}$
-is central, so nested brackets
-$[[a_m, a_n], a_p] = 0$ and all higher tree sums vanish.
-For class~$L$\textup{:} the OPE has at most a double pole; the
+For class~$G$\textup{:} Heisenberg is central, and lattice VOAs are
+Gaussian: the Heisenberg bracket
+$[a_m, a_n] = km\,\delta_{m+n,0}$ is central, while for lattice
+VOAs the shadow obstruction tower terminates at weight~$2$ by
+Corollary~\ref{cor:lattice-postnikov-termination}. In both cases
+all higher tree sums vanish.
+For class~$L$\textup{:} the affine KM OPE has at most a double pole; the
 three-channel tree sum over $\overline{\cM}_{0,4}$ is nonzero
 \textup{(}$S_3 = 2h^\vee/(k+h^\vee) \neq 0$\textup{)} but the
 tower terminates at depth~$3$ because $S_r = 0$ for $r \geq 4$.
@@ -2480,8 +2530,11 @@ nonzero.
 \end{proposition}
 
 \begin{proof}
-Class~$G$: centrality of the Heisenberg bracket kills all nested
-compositions; $m_k^{\mathrm{SC}} = 0$ for $k \geq 3$.
+Class~$G$: for Heisenberg, centrality of the bracket kills all nested
+compositions, so $m_k^{\mathrm{SC}} = 0$ for $k \geq 3$. For lattice
+VOAs, Corollary~\ref{cor:lattice-postnikov-termination} identifies
+the shadow obstruction tower with its weight-$2$ truncation, so the
+transferred Swiss-cheese operations vanish for every $k \geq 3$.
 Class~$L$: the cubic shadow
 $S_3 = 2h^\vee/(k + h^\vee)$ is computed from the OPE coefficient
 ratio (the structure constant divided by the level); the quartic
@@ -2509,14 +2562,12 @@ shadow $S_5 = -48/(c^2(5c+22))$, all four classes verified).
 
 The four classes exhaust the standard landscape, but the
 relationship between SC-formality and the classification is
-sharper than the table suggests. The forward direction is
-clear: class~$G$ algebras have a central bracket, so all
-higher SC-operations vanish. The question is whether any
-algebra outside class~$G$ can be SC-formal. The answer
-is no, and the proof is a three-line forced march: the
-nondegeneracy of the invariant form turns vanishing of the
-cubic shadow into vanishing of the bracket itself. Of the
-four classes, only Heisenberg survives.
+sharper than the table suggests. Proposition~\ref{prop:swiss-cheese-nonformality-by-class}
+already isolates the first nonzero Swiss-cheese operation in each
+non-Gaussian class: class~$L$ has $m_3^{\mathrm{SC}} \neq 0$,
+class~$C$ has $m_4^{\mathrm{SC}} \neq 0$, and class~$M$ has
+nonzero $m_k^{\mathrm{SC}}$ for all $k \geq 3$. This reduces the
+formality criterion to a classification check.
 
 \begin{proposition}[SC-formality characterises class~$G$; \ClaimStatusProvedHere]
 \label{prop:sc-formal-iff-class-g}
@@ -2532,44 +2583,18 @@ if and only if~$\cA$ belongs to class~$G$.
 The forward direction \textup{(}class~$G$ $\Longrightarrow$
 SC-formal\textup{)} is established in
 Proposition~\ref{prop:swiss-cheese-nonformality-by-class}:
-the Heisenberg bracket $[a_m, a_n] = km\,\delta_{m+n,0}$ is
-central, so all nested brackets vanish and
-$m_k^{\mathrm{SC}} = 0$ for $k \geq 3$.
+the class-$G$ row consists exactly of Heisenberg and lattice
+VOAs, and in both cases $m_k^{\mathrm{SC}} = 0$ for $k \geq 3$.
 
 For the converse, suppose~$\cA$ is SC-formal.
-The cubic shadow $S_3$ is the normalized projection of the
-trilinear form
-\[
- C(x,y,z) \;=\; \kappa\bigl(x, [y,z]\bigr),
-\]
-where $\kappa$ is the invariant bilinear form and $[-,-]$ the
-current algebra bracket. The chain of implications is:
-\[
- \text{SC-formal}
- \;\Longrightarrow\;
- m_3^{\mathrm{SC}} = 0
- \;\Longrightarrow\;
- S_3 = 0
- \;\Longrightarrow\;
- C = 0.
-\]
-The last step is the one that kills. Every chiral algebra in the
-standard landscape carries a nondegenerate invariant bilinear
-form~$\kappa$ (this is a consequence of the self-duality or
-Lagrangian complementarity of the landscape; see
-Theorem~\ref{thm:modular-characteristic}). Nondegeneracy means
-$\kappa$ is a perfect pairing: if $C(x,y,z) = \kappa(x,[y,z]) = 0$
-for all~$x$, then $[y,z] = 0$ for all $y,z$. The bracket is
-identically zero; the current algebra is abelian. An abelian
-current algebra at level~$k$ is Heisenberg, which is class~$G$.
-
-The converse direction is a unique-survivor argument. Four
-classes enter; one constraint eliminates three. The
-nondegeneracy of~$\kappa$ converts a vanishing condition on
-shadows ($S_3 = 0$) into a structural condition on the bracket
-($[-,-] = 0$). Classes~$L$, $C$, and~$M$ all have nonzero
-brackets; SC-formality is incompatible with each. The only
-algebra whose bracket is already zero is Heisenberg.
+Because the standard landscape is exhausted by the four classes
+$G$, $L$, $C$, $M$, it is enough to eliminate the three
+non-Gaussian cases. Proposition~\ref{prop:swiss-cheese-nonformality-by-class}
+does exactly this: class~$L$ has $m_3^{\mathrm{SC}} \neq 0$,
+class~$C$ has $m_4^{\mathrm{SC}} \neq 0$, and class~$M$ has
+nonzero higher operations in every arity $k \geq 3$. Each of
+these contradicts SC-formality. Hence an SC-formal algebra must
+belong to class~$G$.
 \end{proof}
 
 \begin{remark}[D-module purity: reduction to a single gap]
@@ -2820,7 +2845,8 @@ bridge is available only for Kac--Moody.
 \begin{remark}[Computational verification landscape]
 \label{rem:koszulness-computational-landscape}
 \index{Koszul property!computational verification}
-The ten unconditional equivalences have been verified
+The nine unconditional equivalences and the Hochschild
+consequence~\textup{(viii)} have been verified
 computationally for a landscape of 17 algebras
 (Table~\textup{\ref{tab:koszulness-landscape}}):
 13 proved Koszul via equivalences~\textup{(ii)} and~\textup{(ix)},
@@ -3114,7 +3140,8 @@ The $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ classification
 Koszulness: $E_2$-collapse of the bar spectral sequence
 (Theorem~\ref{thm:koszul-equivalences-meta}). Beyond this boundary
 lies class~$\mathbf{W}$ (wild), where $E_2$-collapse fails and the
-ten unconditional Koszul equivalences lose force simultaneously.
+nine unconditional Koszul equivalences lose force simultaneously,
+and the Hochschild consequence~\textup{(viii)} no longer follows.
 The mechanism is controlled by the Kronecker quiver $K_m$ (two
 vertices, $m$ parallel arrows) and its root multiplicities.
 
@@ -3139,16 +3166,17 @@ $\prod_{n \geq 1}(1 - t^n)^{m+2}$ acquires negative
 coefficients at weight~$2$, confirming the failure of bar
 concentration.
 
-\emph{Why the ten equivalences break.}
-Each of the ten unconditional equivalences~(i)--(x) in
+\emph{Why the nine equivalences break.}
+Each of the nine unconditional equivalences
+\textup{(i)--(vii), (ix), (x)} in
 Theorem~\ref{thm:koszul-equivalences-meta} requires, at its core,
 that bar cohomology $H^\bullet(\barB(\cA))$ be concentrated on the
 PBW diagonal. In the wild regime, the excess moduli inject
 off-diagonal classes into $H^2$ (and higher) that persist to
 $E_\infty$: condition~(ii) (PBW concentration) fails, and with
-it the equivalence chain. The 11th equivalence (Lagrangian,
-conditional on perfectness) and the 12th (D-module purity,
-one-directional) fail \emph{a fortiori}, since both rely on
+it the equivalence chain. The conditional Lagrangian criterion
+\textup{(xi)} and the one-directional $\mathcal{D}$-module purity
+statement \textup{(xii)} fail \emph{a fortiori}, since both rely on
 $E_2$-collapse as input.
 
 \emph{Concrete instances.}
@@ -3633,18 +3661,21 @@ Then:
 \qquad (i = 1, 2);
 \]
 
-\item the reduced bar functor is intertwined with Verdier duality:
+\item the homotopy Koszul dual factorization algebras are
+ identified with the opposite member of the pair:
 \[
 \mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
-\simeq \bar{B}_X(\cA_2), \qquad
+\simeq \Omega_X(\cC_2) \simeq \cA_2, \qquad
 \mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_2)
-\simeq \bar{B}_X(\cA_1);
+\simeq \Omega_X(\cC_1) \simeq \cA_1;
 \]
 
 \item if $\cA_2$ is denoted by $\cA_1^!$, then
 \[
-\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
-\simeq \bar{B}_X(\cA_1^!).
+(\cA_1)^!_\infty := \mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
+\simeq \cA_1^!, \qquad
+(\cA_2)^!_\infty := \mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_2)
+\simeq \cA_2^!.
 \]
 \end{enumerate}
 
@@ -3661,10 +3692,18 @@ conditions
 the unit and counit being quasi-isomorphisms.
 For part~(2), the Verdier compatibility in
 Definition~\ref{def:chiral-koszul-pair} identifies
-$\mathbb{D}_{\operatorname{Ran}}(\cC_1)$ with $\cC_2$.
-Composing with the unit equivalences $\cC_i \simeq \bar{B}_X(\cA_i)$
-yields $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1) \simeq
-(\cA_2)_\infty$ (factorization \emph{algebra}, not coalgebra).
+$\mathbb{D}_{\operatorname{Ran}}(\cC_1)$ with the factorization
+algebra $\Omega_X(\cC_2)$, and likewise with the indices reversed.
+Composing this with the unit equivalence
+$\cC_1 \xrightarrow{\sim} \bar{B}_X(\cA_1)$ and the counit
+equivalence $\Omega_X(\cC_2) \xrightarrow{\sim} \cA_2$ from
+part~(1) yields
+\[
+\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
+\simeq \Omega_X(\cC_2) \simeq \cA_2,
+\]
+and similarly for the other index. This is the Verdier
+identification at the factorization-algebra level.
 Part~(3) is the same statement after naming $\cA_2$ as the Koszul
 dual~$\cA_1^!$.
 The relative/family statement follows from proper base change
@@ -3697,8 +3736,8 @@ in part~(1) are induced by the Koszul morphism~$\tau_i$
 of the underlying twisting datum
 (Definition~\ref{def:chiral-twisting-datum}).
 Part~(1) says each~$\tau_i$ is acyclic;
-part~(2) says Verdier duality exchanges
-$(\cC_1, \tau_1)$ with $(\cC_2, \tau_2)$;
+part~(2) says Verdier duality sends the bar coalgebra of one side
+to the dual factorization algebra recovered from the other;
 and the family statement says these identifications are
 compatible with proper base change over
 $\overline{\mathcal{M}}_{g,n}$.
@@ -3721,9 +3760,11 @@ $\boldsymbol{\Omega}_X$ form an adjoint pair
 on the stable $\infty$-category of factorization (co)algebras on
 $\operatorname{Ran}(X)$. On the Koszul locus, the unit and counit
 are equivalences: $\boldsymbol{\Omega}_X \mathbf{B}_X(\cA)
-\simeq \cA$. Verdier duality intertwines bar constructions via
+\simeq \cA$. Verdier duality identifies the bar coalgebra with the
+homotopy dual factorization algebra via
 $\mathbb{D}_{\operatorname{Ran}} \mathbf{B}_X(\cA) \simeq
-\mathbf{B}_X(\cA^!)$. This is the theorem; what follows are
+(\cA)^!_\infty \simeq \cA^!$ on the Koszul locus. This is the
+theorem; what follows are
 presentations.
 
 \emph{Step~B} (M-level):

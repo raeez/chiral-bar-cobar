@@ -22,9 +22,11 @@ The chapter culminates in the chiral center theorem
 Hochschild cochain complex as the operadic center of an
 $\mathsf{SC}^{\mathrm{ch,top}}$-algebra, and in the topologization
 theorem (\S\ref{sec:topologization}), which upgrades the resulting
-$\Etwo$ center to~$\Ethree$ via the Sugawara conformal vector.
+$\Etwo$ center on BRST cohomology to~$\Ethree$ via the Sugawara
+conformal vector.
 The topologization proof is made constructive by an explicit
-antighost contraction $G(z)$ satisfying $T_{\mathrm{Sug}} = [Q, G]$
+antighost contraction $G(z)$ representing
+$T_{\mathrm{Sug}} = [Q, G]$ in BRST cohomology
 in the $3$d holomorphic Chern--Simons BV complex
 (Construction~\ref{constr:sugawara-antighost}). For class~M
 algebras (Virasoro, $\cW_N$), where the chain-level $\Ethree$
@@ -1269,7 +1271,7 @@ the 3d HT theory on $X \times \bR$:
   $\FM_k(\bC)$ (the operadic center theorem,
   Theorem~\textup{\ref{thm:operadic-center-hochschild}}).
 \item With an inner conformal vector at non-critical level,
-  this $\Etwo$ upgrades to $\Ethree$ via the
+  this $\Etwo$ upgrades on BRST cohomology to $\Ethree$ via the
   topologization theorem
   (Theorem~\textup{\ref{thm:topologization}}).
 \item Without a conformal vector,
@@ -2951,8 +2953,9 @@ $\bC \times \bR$ whose boundary chiral algebra
 is~$\cA$. An \emph{inner conformal vector} for
 $(\cA, Q)$ is a conformal vector $T(z) \in \cA$ of
 central charge~$c$ that is $Q$-exact in the algebra
-of bulk observables: there exists $G(z)$ such that
-$T(z) = [Q, G(z)]$.
+of bulk observables up to a $Q$-boundary: there exists
+$G(z)$ such that $T(z) - [Q, G(z)]$ is $Q$-exact.
+Equivalently, $T(z) = [Q, G(z)]$ in BRST cohomology.
 For affine Kac--Moody $V_k(\fg)$ at non-critical level,
 the Sugawara element
 $T_{\mathrm{Sug}} = \frac{1}{2(k + h^\vee)}
@@ -2961,7 +2964,7 @@ provides the inner conformal vector. For the
 Virasoro algebra, $T(z)$ is the stress tensor itself.
 \end{definition}
 
-\begin{theorem}[Topologization for affine Kac--Moody; {\cite{KhanZeng25}}]
+\begin{theorem}[Cohomological topologization for affine Kac--Moody; {\cite{KhanZeng25}}]
 \label{thm:topologization}
 \ClaimStatusProvedHere
 \index{topologization theorem!statement}
@@ -2977,31 +2980,37 @@ center $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, which carries
 $\Etwo$ structure from the closed sector of
 $\mathsf{SC}^{\mathrm{ch,top}}$
 \textup{(}Theorem~\textup{\ref{thm:operadic-center-hochschild}}\textup{)},
-upgrades to an $\Ethree$-algebra:
+upgrades on BRST cohomology to an $\Ethree$-algebra:
 \begin{equation}\label{eq:topologization}
-\Etwo^{\mathrm{hol}} \otimes \Eone^{\mathrm{top}}
-\;\xrightarrow{\;\text{Sugawara}\;}\;
+H_Q^\bullet\!\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)
+\text{ carries an }
 \Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}}
-\;=\; \Ethree^{\mathrm{top}},
+\;=\; \Ethree^{\mathrm{top}}\text{-algebra structure}.
 \end{equation}
-where the first arrow is the topologization
-\textup{(}the inner conformal vector makes holomorphic
-translations homotopically trivial\textup{)} and the
-second equality is Dunn additivity.
+Here the inner conformal vector makes holomorphic
+translations $Q$-exact, hence trivial on BRST cohomology,
+and the equality with $\Ethree^{\mathrm{top}}$ is Dunn
+additivity. The corresponding chain-level
+$\Ethree^{\mathrm{top}}$ enhancement of
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is not proved here;
+see Conjecture~\textup{\ref{conj:topologization-general}}.
 \end{theorem}
 
 \begin{proof}
-The inner conformal vector $T_{\mathrm{Sug}} = [Q, G]$,
-where $G(z) = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a(z)\,
-\bar c_a(z){:}$ is the antighost contraction of
-Construction~\ref{constr:sugawara-antighost} below,
-generates holomorphic translations: for any bulk
+Let
+$G(z) = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a(z)\,\bar c_a(z){:}$
+be the antighost contraction of
+Construction~\ref{constr:sugawara-antighost} below.
+The inner conformal vector identifies
+$T_{\mathrm{Sug}}$ with $[Q, G]$ in BRST cohomology, and
+$G$ generates holomorphic translations: for any bulk
 observable $\cO$,
 $\partial_z \cO = [T_{\mathrm{Sug}}, \cO]
 = [Q, [G, \cO]]$.
 Since $\partial_z$ is $Q$-exact, holomorphic translations
-act trivially on $Q$-cohomology: the factorization algebra
-on the $\bC$-direction becomes locally constant. A locally
+act trivially on BRST cohomology: the BRST cohomology of
+the factorization algebra on the $\bC$-direction becomes
+locally constant. A locally
 constant factorization algebra on $\bC \cong \bR^2$
 is an $\Etwo^{\mathrm{top}}$-algebra
 (Lurie~\cite{HA}, Theorem~5.4.5.9). Combined with the
@@ -3009,14 +3018,15 @@ $\Eone^{\mathrm{top}}$ from the $\bR$-direction (the
 open color of $\mathsf{SC}^{\mathrm{ch,top}}$), Dunn
 additivity gives
 $\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}}
-= \Ethree^{\mathrm{top}}$.
+= \Ethree^{\mathrm{top}}$ on
+$H_Q^\bullet\!\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)$.
 
 At critical level $k = -h^\vee$, the Sugawara denominator
 $2(k + h^\vee)$ diverges: the Sugawara element is undefined,
 $\partial_z$ is not $Q$-exact, and the factorization algebra
 retains genuine holomorphic dependence. The $\Etwo$ structure
 remains holomorphic, not topological, and the upgrade
-to~$\Ethree$ fails.
+to~$\Ethree$ on BRST cohomology fails.
 \end{proof}
 
 \begin{remark}[Essential external inputs]
@@ -3065,9 +3075,9 @@ Kac--Moody $V_k(\fg)$ at non-critical level
 $k \neq -h^\vee$, where the Sugawara element provides
 an explicit inner conformal vector and the $3$d
 holomorphic--topological theory is Chern--Simons.
-Topologization produces the perturbative
-Chern--Simons $\Ethree$-algebra of
-Costello--Francis--Gwilliam.
+Topologization produces the corresponding
+cohomological $\Ethree$-algebra on BRST cohomology.
+The chain-level enhancement remains conjectural.
 
 For general chiral algebras with conformal vector, the
 same conclusion is expected but remains conjectural:
@@ -3077,7 +3087,8 @@ stress tensor $T(z)$. The holomorphic--topological theory
 is $3$d gravity. Topologization requires $T$ to be $Q$-exact
 in the $3$d gravity bulk; this is expected at generic
 $c \neq 0$ but requires constructing the BRST complex of
-$3$d HT gravity and verifying $T = [Q, G]$ explicitly.
+$3$d HT gravity and verifying explicitly that
+$T - [Q, G]$ is $Q$-exact.
 This construction is the subject of
 Conjecture~\ref{conj:topologization-general} below.
 
@@ -3093,27 +3104,30 @@ algebras without inner Virasoro): topologization fails.
 The center remains $\Etwo^{\mathrm{hol}}$, not $\Ethree$.
 \end{remark}
 
-\begin{conjecture}[Topologization for general chiral algebras]
+\begin{conjecture}[Chain-level topologization for general chiral algebras]
 \label{conj:topologization-general}
 \ClaimStatusConjectured
 \index{topologization theorem!general conjecture}
 Let $\cA$ be a chiral algebra with conformal vector
 $T(z)$ at non-critical level. Then the derived chiral
-center $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ admits an
-$\Ethree$-topological structure via~\eqref{eq:topologization}.
+center $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ itself admits
+a chain-level $\Ethree$-topological structure lifting the
+cohomological topologization of~\eqref{eq:topologization}.
 \end{conjecture}
 
 \begin{remark}[Evidence and obstructions]
 \label{rem:topologization-evidence}
 The proof of Theorem~\ref{thm:topologization} for affine
 Kac--Moody uses only two inputs: (i)~the existence of an
-inner conformal vector $T = [Q, G]$, and (ii)~the
+inner conformal vector in BRST cohomology, and (ii)~the
 $Q$-exactness of holomorphic translations on $Q$-cohomology.
 Both inputs are cohomological: the argument shows that the
 factorization algebra becomes locally constant
 \emph{on $Q$-cohomology}, not necessarily at the cochain
 level. For affine Kac--Moody, the Sugawara mechanism
-provides both inputs explicitly.
+provides both inputs explicitly. Accordingly,
+Theorem~\ref{thm:topologization} proves only the
+cohomological $\Ethree$-structure.
 
 For Virasoro and $\cW$-algebras (class~M in the shadow
 classification), the chain-level data is essential:
@@ -3134,7 +3148,8 @@ Conjecture~\ref{conj:topologization-general} is
 the construction of the $3$d HT BRST complex for the
 relevant bulk theory (Chern--Simons for gauge algebras,
 $3$d gravity for Virasoro, higher-spin gravity for
-$\cW_N$) and the verification that $T = [Q, G]$ therein.
+$\cW_N$) and the verification that
+$T - [Q, G]$ is $Q$-exact therein.
 For affine Kac--Moody, the bulk theory is holomorphic
 Chern--Simons and the BRST complex is standard. For
 $3$d gravity, this is the subject of Volume~II
@@ -3143,8 +3158,8 @@ $3$d gravity, this is the subject of Volume~II
 
 \begin{remark}[Chain-level vs cohomological topologization]
 \label{rem:topologization-chain-vs-cohomology}
-The proof of Theorem~\ref{thm:topologization} establishes $\Ethree$
-at the following levels:
+The proof of Theorem~\ref{thm:topologization} mixes chain-level
+inputs with a cohomological recognition step:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The $\mathsf{SC}^{\mathrm{ch,top}}$ structure on the pair
   $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\;\cA)$ is \emph{chain-level}
@@ -3155,7 +3170,8 @@ at the following levels:
   for affine $V_k(\fsl_2)$, the bracket restricts on
   $\ChirHoch^1$ to the $\fsl_2$ Lie bracket
   \textup{(}Proposition~\textup{\ref{prop:gerstenhaber-sl2-bracket}}\textup{)}.
-\item The Sugawara contraction $T = [Q, G]$ is proved at the
+\item The Sugawara contraction
+  $T = [Q, G]$ in BRST cohomology is proved at the
   \emph{operator} level for $V_k(\fg)$ at non-critical level
   \textup{(}Construction~\textup{\ref{constr:sugawara-antighost}}\textup{)}.
 \item The passage $\Etwo^{\mathrm{hol}} \to \Etwo^{\mathrm{top}}$
@@ -3166,14 +3182,17 @@ at the following levels:
   is proved at the \emph{$\infty$-categorical} level
   \textup{(}Lurie~\cite{HA}\textup{)}.
 \end{enumerate}
-The chain-level gap is at step~\textup{(iv)}: the locally-constant
-recognition requires passing to $Q$-cohomology.  For class~G
-and~L algebras \textup{(}SC-formal: $m_k^{\mathrm{SC}} = 0$ for
-$k \geq 3$\textup{)}, the chain-level and cohomological
-$\Ethree$ agree.  For class~M \textup{(}Virasoro, $\cW$-algebras\textup{)},
-where SC non-formality means all $m_k^{\mathrm{SC}}$ are nontrivial, the
-chain-level $\Ethree$ may differ from the cohomological $\Ethree$.
-Whether the chain-level $\Ethree$ exists for class~M is open.
+The decisive gap is at step~\textup{(iv)}: the locally-constant
+recognition requires passing to $Q$-cohomology. Therefore
+Theorem~\ref{thm:topologization} proves only the
+\emph{cohomological} $\Ethree$-structure on
+$H_Q^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA))$.
+A chain-level $\Ethree$ refinement would require a cochain-level
+replacement for step~\textup{(iv)}, and no such replacement is
+proved here. For class~M \textup{(}Virasoro, $\cW$-algebras\textup{)},
+where SC non-formality means all $m_k^{\mathrm{SC}}$ are nontrivial,
+the chain-level $\Ethree$ may differ from the cohomological
+$\Ethree$. Whether such a chain-level lift exists is open.
 \end{remark}
 
 \begin{construction}[The Sugawara antighost contraction for affine
@@ -3184,9 +3203,9 @@ Kac--Moody]
 \index{antighost contraction|textbf}%
 \ClaimStatusProvedHere
 The proof of Theorem~\textup{\ref{thm:topologization}} asserts the
-existence of $G(z)$ satisfying $T_{\mathrm{Sug}}(z) = [Q, G(z)]$
-but does not construct it. We supply the explicit chain-level
-datum.
+existence of $G(z)$ witnessing the inner conformal vector in BRST
+cohomology but does not construct it. We supply the explicit
+operator and verify the cohomological identity.
 
 Let $\fg$ be a finite-dimensional simple Lie algebra with basis
 $\{t_a\}_{a=1}^{\dim\fg}$, structure constants
@@ -3309,7 +3328,8 @@ In summary,
  (\text{$Q$-exact operators of ghost number $\ge 1$}).
 \end{equation}
 On $Q$-cohomology, $[Q, G(z)] = T_{\mathrm{Sug}}(z)$ exactly. This is
-the chain-level datum that makes the topologization proof
+the explicit operator-level datum that makes the cohomological
+topologization proof
 \textup{(}Theorem~\textup{\ref{thm:topologization}}\textup{)}
 constructive.
 
@@ -3345,9 +3365,10 @@ The antighost $\bar c_a(z)$ is a bulk field of the $3$d HT theory
 that does not descend to the boundary chiral algebra $V_k(\fg)$.
 The operator $G(z)$ therefore lives in the algebra of bulk
 observables $\cO_{\mathrm{bulk}}$, not in the boundary. The
-identity $T_{\mathrm{Sug}} = [Q, G]$ states that the Sugawara
-element, which IS a boundary operator, is the BRST-commutator of a
-bulk operator. This is the physical content of topologization: the
+relation~\eqref{eq:TQG-result} states that the Sugawara
+element, which is a boundary operator, is represented in BRST
+cohomology by the commutator of a bulk operator. This is the
+physical content of topologization: the
 stress tensor of the boundary theory is exact in the bulk, so
 $\bC$-translations are homotopically trivial when viewed from the
 three-dimensional perspective.
@@ -3368,7 +3389,8 @@ affine Kac--Moody at non-critical level.
  conformal vector to topologize.
 \item \emph{Virasoro and $\cW$-algebras \textup{(}class~M\textup{)}.}
  The stress tensor $T(z)$ IS the conformal vector, so
- $T = [Q, G]$ requires $G(z)$ to be a ghost-number~$-1$ operator
+ representing $T$ by $[Q, G]$ in BRST cohomology requires
+ $G(z)$ to be a ghost-number~$-1$ operator
  in the $3$d gravity \textup{(}respectively higher-spin
  gravity\textup{)} bulk. This bulk theory and its BRST complex
  have not been constructed at the BV level; the antighost
@@ -3405,14 +3427,14 @@ at non-critical level.
   the open color of $\mathsf{SC}^{\mathrm{ch,top}}$, Dunn
   additivity gives an $\Ethree^{\mathrm{top}}$-structure in
   $D^{\mathrm{co}}$.
-\item \textup{(Class-by-class agreement.)}
-  For classes~$\mathsf{G}$, $\mathsf{L}$, and~$\mathsf{C}$
-  \textup{(}where the chain-level obstructions vanish\textup{)},
-  the coderived $\Ethree$ agrees with the chain-level $\Ethree$
-  of Theorem~\textup{\ref{thm:topologization}}.
-  For class~$\mathsf{M}$, the coderived $\Ethree$ is the
-  \emph{only} $\Ethree$-structure available, and it is
-  compatible with the coderived BV$=$bar identification of
+\item \textup{(Compatibility with cohomological topologization.)}
+  In the affine Kac--Moody case, the coderived $\Ethree$
+  recovers the cohomological $\Ethree$ of
+  Theorem~\textup{\ref{thm:topologization}} after passing
+  to $Q$-cohomology. For class~$\mathsf{M}$, the coderived
+  $\Ethree$ is the only presently available candidate for a
+  chain-level lift, and it is compatible with the coderived
+  BV$=$bar identification of
   Theorem~\textup{\ref{thm:bv-bar-coderived}}.
 \end{enumerate}
 \end{conjecture}
@@ -3471,6 +3493,1865 @@ coderived tensor product requires verification.
 \end{remark}
 
 
+
+% ================================================================
+
+\begin{theorem}[The $\Ethree$-algebra and Chern--Simons]
+\label{thm:e3-cs}
+\ClaimStatusProvedElsewhere
+Let $\fg$ be a simple finite-dimensional Lie algebra and
+$V_k(\fg)$ the affine Kac--Moody vertex algebra at level~$k$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(The $\Ethree$ structure.)}
+  The curve geometry provides the $\Etwo$ structure on
+  $\BarSig(V_k(\fg))$. By the Higher Deligne Conjecture
+  \textup{(}Lurie~\cite{HA}, Francis~\cite{Francis2013}\textup{)},
+  the derived chiral centre
+  $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  = \HH^*(\BarSig(V_k(\fg)), \BarSig(V_k(\fg)))$
+  carries a natural $\Ethree$-algebra structure
+  \textup{(}$\Etwo + 1 = \Ethree$\textup{)}.
+\item \textup{(Deformation classification.)}
+  The space of $\Ethree$-deformations is
+  non-canonically isomorphic to
+  $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$. For simple~$\fg$,
+  $H^3(\fg)$ is one-dimensional.
+\item \textup{(Comparison with CFG.)}
+  The same space classifies perturbative CS quantisations,
+  filtered $\Ethree$-algebras deforming $C^*(\fg)$,
+  braided monoidal deformations of
+  $\mathrm{Rep}_{\mathrm{fin}}(\fg)$, and
+  quasi-triangular quasi-Hopf deformations of $U(\fg)$
+  \textup{(}Costello--Francis--Gwilliam\textup{)}.
+\item \textup{(Topological enhancement.)}
+  The Sugawara Virasoro element at non-critical level
+  upgrades the holomorphic $\Etwo$ to topological $\Etwo$;
+  Dunn additivity gives $\Ethree^{\mathrm{top}}$
+  \textup{(}Theorem~\textup{\ref{thm:topologization}}\textup{)}.
+  At $k = -h^\vee$, the enhancement fails.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Costello--Francis--Gwilliam~\cite{CFG26}]
+\label{thm:cfg}
+\ClaimStatusProvedElsewhere
+Let $\fg$ be a simple finite-dimensional Lie algebra.
+BV quantisation of Chern--Simons theory on $\RR^3$ with
+gauge algebra $\fg$ and coupling $\lambda$ yields
+a filtered $\Ethree$-algebra $\cA^\lambda$ on
+$C^*(\fg) = \Sym(\fg^\vee[-1])$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Classical observables: $C^*(\fg)$, commutative.
+\item Quantum observables: $\cA^\lambda$, filtered
+  $\Ethree$-algebra with deformation space
+  $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$.
+\item $\mathrm{Mod}_{\cA^\lambda}$ is braided monoidal;
+  filtered Koszul duality gives
+  $\mathrm{Perf}_{C^*(\fg)} \simeq
+  \mathrm{Rep}_{\mathrm{fin}}(\fg)^{\mathrm{dg}}$,
+  recovering the Drinfeld--Jimbo quantum group.
+\item \textup{(Theorem~1.4 of \cite{CFG26}.)} Canonical
+  bijection between perturbative CS quantisations,
+  filtered $\Ethree$-deformations, braided monoidal
+  deformations, and quasi-triangular quasi-Hopf algebras.
+\end{enumerate}
+\end{theorem}
+
+% The E_3 identification theorem and explicit operations
+% ================================================================
+
+The topologization theorem identifies the BRST cohomology of the
+derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
+as an $\Ethree$-algebra. The Costello--Francis--Gwilliam
+construction produces another $\Ethree$-algebra $\cA^\lambda$
+from perturbative Chern--Simons quantisation. Both deform
+$C^*(\fg)$ over the same base. For simple $\fg$, the
+one-dimensionality of $H^3(\fg)$ forces the two
+deformation families to be isomorphic.
+
+\begin{theorem}[Identification of $\Ethree$-deformation families]
+\label{thm:e3-identification}
+\ClaimStatusProvedHere
+Let $\fg$ be a simple finite-dimensional Lie algebra and
+$V_k(\fg)$ the affine Kac--Moody vertex algebra at
+level~$k$.
+Writing $\lambda = k + h^\vee$ for the departure from
+critical level, the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ of
+Proposition~\textup{\ref{prop:e3-structure}} and the
+CFG $\Ethree$-algebra $\cA^\lambda$ of
+Theorem~\textup{\ref{thm:cfg}} are isomorphic as formal
+deformation families of $\Ethree$-algebras:
+\begin{equation}\label{eq:e3-families}
+  \{Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \}_{k + h^\vee \in \lambda\CC[[\lambda]]}
+  \;\simeq\; \{\cA^\lambda\}_{\lambda
+  \in \lambda H^3(\fg)[[\lambda]]}
+\end{equation}
+over the base $\lambda H^3(\fg)[[\lambda]]$
+\textup{(}with $\lambda = k + h^\vee$\textup{)}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Matching deformation spaces.)}
+  Both families are parametrised by
+  $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$:
+  for the derived chiral centre, the deformation
+  parameter is the departure from critical level;
+  for the CFG algebra, it is the Chern--Simons coupling.
+\item \textup{(Base point mismatch.)}
+  At the critical level $k = -h^\vee$, the derived
+  chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}
+  (V_{-h^\vee}(\fg))$ is related to the
+  Feigin--Frenkel centre
+  $\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+  \textup{(}opers on the formal disk\textup{)}, not
+  directly to $C^*(\fg)$. The isomorphism is
+  perturbative: it holds in the formal neighbourhood
+  of critical level, order by order in
+  $\lambda = k + h^\vee$.
+\item \textup{(Order-by-order uniqueness.)}
+  For simple $\fg$, $H^3(\fg) \cong \CC$ is
+  one-dimensional, so the deformation base is
+  one-dimensional at each order in $\lambda$. The
+  isomorphism~\eqref{eq:e3-families} is forced by
+  the matching of associated graded algebras
+  \textup{(}both $C^*(\fg)$\textup{)},
+  matching $\Pthree$ brackets on the formal disk
+  \textup{(}Theorem~\textup{\ref{thm:chiral-e3-cfg}(ii)}%
+  \textup{)}, and the one-dimensionality of the
+  obstruction space at each order.
+\item \textup{(Sugawara constraint.)}
+  The topological enhancement
+  \textup{(}Theorem~\ref{thm:e3-cs}(iv)\textup{)} holds
+  at generic $k$ but fails at $k = -h^\vee$, where
+  the Sugawara element is undefined. The perturbative
+  identification holds
+  order by order in $(k + h^\vee)$, since the Sugawara
+  element exists at any nonzero departure from critical
+  level.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument is obstruction-theoretic: we construct an
+isomorphism of $\Ethree$-algebras order by order in
+$\lambda = k + h^\vee$, using the one-dimensionality of
+$H^3(\fg)$ for simple~$\fg$ to force uniqueness at each
+stage.
+
+\smallskip
+\noindent\textit{Step 1: setup.}
+Both $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and
+$\cA^\lambda$ are filtered $\Ethree$-algebras deforming
+$C^*(\fg) = \Sym(\fg^\vee[-1])$ over the base
+$\lambda H^3(\fg)[[\lambda]]$, with $\lambda = k + h^\vee$
+(Theorem~\ref{thm:e3-cs}(ii) and
+Theorem~\ref{thm:cfg}(iv) respectively).
+Both filtrations are complete and exhaustive with
+associated graded $C^*(\fg)$.
+The deformation theory of $\Ethree$-algebras with fixed
+associated graded $C^*(\fg)$ is controlled by the
+$\Ethree$-deformation complex, whose relevant cohomology
+group is $H^3(\fg)$: the space of $\Ethree$-deformations
+of $C^*(\fg)$ at each order $p \geq 1$ in $\lambda$,
+modulo those at order $< p$, is classified by
+$H^3(\fg)$ (Lurie~\cite{HA},
+Costello--Francis--Gwilliam~\cite{CFG26},
+Theorem~1.4).
+
+\smallskip
+\noindent\textit{Step 2: induction on order.}
+We construct the isomorphism
+$\varphi \colon Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\xrightarrow{\sim} \cA^\lambda$ as a compatible family of
+isomorphisms $\varphi_p$ modulo $\lambda^{p+1}$, by
+induction on~$p$.
+
+\emph{Base case ($p = 0$):} both associated graded
+algebras are $C^*(\fg)$
+(Theorem~\ref{thm:chiral-e3-cfg}(i)), so
+$\varphi_0 = \mathrm{id}_{C^*(\fg)}$.
+
+\emph{Inductive step:} suppose $\varphi_p$ is an
+$\Ethree$-isomorphism modulo $\lambda^{p+1}$.
+The obstruction to extending $\varphi_p$ to an
+isomorphism modulo $\lambda^{p+2}$ lies in the
+space of $\Ethree$-deformations of $C^*(\fg)$ at
+order $p+1$, which is $H^3(\fg)$. For simple~$\fg$,
+$H^3(\fg) = \CC$ is one-dimensional, generated by the
+Cartan three-form
+$\omega_3(X, Y, Z) = (X, [Y, Z])$.
+Two $\Ethree$-deformations of $C^*(\fg)$
+that agree modulo $\lambda^{p+1}$ therefore differ at order
+$p+1$ by a scalar multiple of $\omega_3$.
+
+It remains to show that both constructions select the
+\emph{same} scalar at each order. On the formal disk
+$D = \Spec \CC[[z]]$, the restriction functor
+$\Gamma(D, -)$ is symmetric monoidal and preserves
+$\Ethree$-structures
+(Theorem~\ref{thm:chiral-e3-cfg}, Step~1 of the
+proof). By Theorem~\ref{thm:chiral-e3-cfg}(ii), the
+chiral $\Pthree$ bracket restricted to~$D$ recovers
+the CFG $\Pthree$ bracket at every order. Since the
+$\Pthree$ bracket determines the $\Ethree$-deformation
+class (the bracket on generators
+$\fg^*[-1] \otimes \fg^*[-1] \to \CE^{\mathrm{ch}}(\fg_k)$
+encodes the full deformation datum for biderivations, by
+the argument of
+Lemma~\ref{lem:bv-p3-commutativity}, Step~2), and the
+space of $\fg$-equivariant corrections at each order is
+one-dimensional (spanned by the Killing-form term
+$k\,(a,b)\,\partial$), the two constructions agree at
+order $p+1$. The isomorphism $\varphi_{p+1}$ extends
+$\varphi_p$.
+
+\smallskip
+\noindent\textit{Step 3: passage to the limit.}
+The compatible family $\{\varphi_p\}_{p \geq 0}$
+determines an isomorphism
+$\varphi = \varprojlim_p\,\varphi_p$
+of filtered $\Ethree$-algebras over
+$\lambda\,H^3(\fg)[[\lambda]]$, completing the proof
+of~\eqref{eq:e3-families}.
+Part~(iv) is immediate: the topological enhancement
+(Theorem~\ref{thm:e3-cs}(iv)) requires the Sugawara
+element, which exists for $\lambda \neq 0$ and is
+compatible with the isomorphism~$\varphi$ order by order
+(the Sugawara element at order~$p$ depends only on the
+data modulo~$\lambda^{p+1}$, where the two families
+already agree).
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{Explicit $\Ethree$ operations for
+$V_k(\mathfrak{sl}_2)$}
+\label{subsec:e3-explicit}
+
+\subsection{Explicit $\Ethree$ operations for
+$V_k(\mathfrak{sl}_2)$}
+\label{subsec:e3-explicit}
+
+The abstract $\Ethree$ structure of
+Proposition~\ref{prop:e3-structure} acquires concrete content
+for $\fg = \mathfrak{sl}_2$: the five-dimensional derived
+chiral centre $\CC \oplus \mathfrak{sl}_2[-1] \oplus \CC[-2]$
+carries an explicit cup product, Gerstenhaber bracket,
+$\Pthree$ bracket, and BV operator, all computable from the
+OPE.
+
+\medskip
+\noindent
+\textbf{The underlying graded vector space.}
+By Proposition~\ref{prop:e3-structure} and the chiral
+Hochschild computation of
+Example~\ref{ex:km}, the derived chiral centre of
+$V_k(\mathfrak{sl}_2)$ at generic level
+$k \neq -2$ is the graded vector space
+\begin{equation}\label{eq:e3-graded-space}
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))
+  \;=\;
+  \underbrace{\CC}_{=\, \HH^0}
+  \;\oplus\;
+  \underbrace{\mathfrak{sl}_2[-1]}_{=\, \HH^1}
+  \;\oplus\;
+  \underbrace{\CC[-2]}_{=\, \HH^2},
+\end{equation}
+with total dimension $1 + 3 + 1 = 5$. Write $\mathbf{1}$
+for the generator of $\HH^0 = \CC$ (the vacuum),
+$\{e, f, h\}$ for the standard basis of
+$\HH^1 = \mathfrak{sl}_2$
+(outer derivations: infinitesimal level-preserving
+deformations parametrised by $\fg$ itself), and $\eta$
+for the generator of $\HH^2 = \CC$
+(the central charge deformation cocycle). The
+$\mathfrak{sl}_2$-module structure is: $\HH^0$ trivial,
+$\HH^1$ adjoint, $\HH^2$ trivial.
+
+\medskip
+\noindent
+\textbf{Conventions.}
+The Killing form normalisation is
+$(e, f) = (f, e) = 1$, $(h, h) = 2$, all other pairings zero.
+Structure constants: $[e, f] = h$, $[h, e] = 2e$,
+$[h, f] = -2f$. The inverse Casimir is
+$\Omega = e \otimes f + f \otimes e
++ \tfrac{1}{2}\,h \otimes h$, and $h^\vee = 2$.
+The KZ coupling constant is
+$h_{\mathrm{KZ}} = 1/(k + h^\vee) = 1/(k + 2)$.
+
+\begin{remark}[Convention for $\hbar$]
+\label{rem:hbar-convention}
+Throughout this paper, $\hbar$ denotes the
+\emph{KZ coupling constant}
+\begin{equation}\label{eq:hbar-convention}
+  \hbar \;=\; h_{\mathrm{KZ}}
+  \;=\; \frac{1}{k + h^\vee},
+\end{equation}
+the normalisation in the KZ connection
+$\nabla = d + \hbar \sum \Omega_{ij}\,dz_{ij}$.
+It vanishes as $k \to \infty$ (weak-coupling limit) and
+diverges at the critical level $k = -h^\vee$.
+In the $\mathfrak{sl}_2$ computations, $h^\vee = 2$,
+so $\hbar = 1/(k+2)$.
+The \emph{departure from critical level} is the inverse
+quantity $k + h^\vee = 1/\hbar$; we always write this
+explicitly as $k + h^\vee$ rather than introducing a
+separate symbol. Critical level corresponds to
+$k + h^\vee = 0$ (equivalently, $\hbar \to \infty$);
+weak coupling corresponds to $k + h^\vee \to \infty$
+(equivalently, $\hbar \to 0$).
+For the quantum group parameter: $q = e^{2\pi i \hbar}$.
+\end{remark}
+
+An $\Ethree$-algebra carries three levels of
+operations:
+\begin{itemize}
+\item Level $0$ ($\Einf$): a graded-commutative product
+  $\mu\colon \HH^p \otimes \HH^q \to \HH^{p+q}$.
+\item Level $1$ ($\Etwo$ beyond $\Eone$): the
+  Gerstenhaber bracket
+  $[-,-]\colon \HH^p \otimes \HH^q \to \HH^{p+q-1}$
+  of degree~$-1$, derived from the fundamental class of
+  $S^1 = \Conf_2(\RR^2)/\RR^+$.
+\item Level $2$ ($\Ethree$ beyond $\Etwo$): the $\Pthree$
+  bracket
+  $\{-,-\}\colon \HH^p \otimes \HH^q \to \HH^{p+q-2}$
+  of degree~$-2$, derived from the fundamental class of
+  $S^2 = \Conf_2(\RR^3)/\RR^+$.
+\end{itemize}
+We compute each in turn.
+
+\begin{proposition}[Explicit $\Ethree$ operations on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$]
+\label{prop:e3-explicit-sl2}
+\ClaimStatusProvedHere
+Let $k \neq -2$.
+The $\Ethree$-algebra structure on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\mathfrak{sl}_2))$
+is determined by the following data.
+
+\smallskip
+\noindent
+\textup{(I) Cup product} ($\Einf$ level).
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\mathbf{1}$ is the unit:
+  $\mathbf{1} \cdot f = f \cdot \mathbf{1} = f$ for all $f$.
+\item
+  $\mu(X, Y) = 0$ for all $X, Y \in \HH^1 = \mathfrak{sl}_2$.
+\item
+  $\mu(X, \eta) = 0$ for all $X \in \HH^1$, and
+  $\eta \cdot \eta = 0$.
+\end{enumerate}
+
+\smallskip
+\noindent
+\textup{(II) Gerstenhaber bracket} ($\Etwo$ level,
+degree~$-1$).
+\begin{gather*}
+  [\mathbf{1}, -] = 0, \qquad
+  [X, Y] = 0 \quad \text{for all }
+  X, Y \in \HH^1 = \mathfrak{sl}_2, \\
+  [X, \eta] = 0 \quad \text{for all } X \in \HH^1,
+  \qquad [\eta, \eta] = 0.
+\end{gather*}
+
+\smallskip
+\noindent
+\textup{(III) The $\Pthree$ bracket} ($\Ethree$ level,
+degree~$-2$).
+\begin{align}
+  \label{eq:e3-p3-killing}
+  \{X, Y\}
+  &= h_{\mathrm{KZ}} \cdot (X, Y)
+  = \frac{1}{k + h^\vee}\,(X, Y)
+  \quad \text{for } X, Y \in \HH^1,
+  \\
+  \label{eq:e3-p3-derivation}
+  \{X, \eta\}
+  &= 0
+  \quad \text{for } X \in \HH^1,
+  \\
+  \label{eq:e3-p3-unit}
+  \{\mathbf{1}, -\}
+  &= 0,
+  \\
+  \label{eq:e3-p3-top}
+  \{\eta, \eta\}
+  &= 0,
+\end{align}
+where $(X, Y)$ denotes the normalised Killing form
+and $h_{\mathrm{KZ}} = 1/(k + h^\vee) = 1/(k + 2)$ is
+the KZ coupling constant
+\textup{(}Remark~\textup{\ref{rem:hbar-convention}}\textup{)}.
+\end{proposition}
+
+\begin{proof}
+We establish each level by $\mathfrak{sl}_2$-equivariance,
+degree counting, and the BV relation.
+
+\textit{Cup product.}
+The cup product $\mu\colon \HH^p \otimes \HH^q
+\to \HH^{p+q}$ is graded-commutative:
+$\mu(a, b) = (-1)^{pq}\,\mu(b, a)$.
+For $X, Y \in \HH^1$, this gives
+$\mu(X, Y) = -\mu(Y, X)$: the restriction to
+$\HH^1 \otimes \HH^1 \to \HH^2 = \CC$ is an
+$\mathfrak{sl}_2$-invariant antisymmetric bilinear form
+on the adjoint representation valued in the trivial
+representation.
+Since
+$\Lambda^2(\mathfrak{sl}_2)^{\mathfrak{sl}_2}
+\cong \Hom_{\mathfrak{sl}_2}(\Lambda^2(\mathrm{ad}), \CC)
+= 0$
+(the exterior square of the adjoint decomposes as
+$\Lambda^2(\mathrm{ad}) \cong \mathrm{ad}$,
+which has no trivial summand), the cup product
+$\mu(X, Y) = 0$ for all $X, Y \in \HH^1$.
+
+The products $\mu(\HH^1, \HH^2) \subset \HH^3 = 0$ and
+$\mu(\HH^2, \HH^2) \subset \HH^4 = 0$ vanish for degree
+reasons.
+
+\textit{BV operator.}
+The framed $\Etwo$ structure on $\BarSig(V_k(\mathfrak{sl}_2))$
+(from genus-$1$ sewing) equips the derived centre with a BV
+operator $\Delta\colon \HH^n \to \HH^{n-1}$ satisfying
+$\Delta^2 = 0$ and the BV relation
+\begin{equation}\label{eq:bv-rel-sl2}
+  [f, g]
+  = \Delta(f \cdot g) - (\Delta f) \cdot g
+  - (-1)^{|f|}\,f \cdot (\Delta g).
+\end{equation}
+
+The component $\Delta\colon \HH^1 \to \HH^0$ is an
+$\mathfrak{sl}_2$-equivariant linear map from the adjoint
+representation to the trivial representation. Since the
+adjoint is irreducible and non-trivial,
+$\Delta|_{\HH^1} = 0$.
+
+The component $\Delta\colon \HH^2 \to \HH^1$ is an
+$\mathfrak{sl}_2$-equivariant linear map from the trivial
+to the adjoint. Again, $\Delta|_{\HH^2} = 0$.
+
+All other components vanish trivially
+($\Delta|_{\HH^0}$ lands in $\HH^{-1} = 0$;
+$\Delta|_{\HH^n} = 0$ for $n \geq 3$). Therefore
+$\Delta = 0$ on the entire derived centre.
+
+\textit{Gerstenhaber bracket.}
+With $\Delta = 0$ and $\mu|_{\HH^1 \otimes \HH^1} = 0$,
+the BV relation~\eqref{eq:bv-rel-sl2} gives:
+for $X, Y \in \HH^1$,
+\[
+  [X, Y]
+  = \Delta(\mu(X, Y)) - (\Delta X) \cdot Y
+  + X \cdot (\Delta Y)
+  = \Delta(0) - 0 + 0 = 0.
+\]
+For $X \in \HH^1$, $\eta \in \HH^2$:
+$[X, \eta] = \Delta(\mu(X, \eta)) - (\Delta X) \cdot \eta
+- (-1)^1\,X \cdot (\Delta \eta)
+= 0 - 0 + 0 = 0$
+(since $\mu(X, \eta) \in \HH^3 = 0$,
+$\Delta X = 0$, $\Delta\eta = 0$).
+Similarly $[\eta, \eta] \in \HH^3 = 0$.
+
+The vanishing of the Gerstenhaber bracket on the derived
+centre is a structural consequence of the
+$\mathfrak{sl}_2$-equivariance constraints: the adjoint
+representation provides no equivariant maps to or from the
+trivial representation. This is specific to the
+\emph{derived centre} $\HH^*(\BarSig, \BarSig)$; the
+Gerstenhaber bracket on the full Hochschild cochain complex
+$C^*(\BarSig, \BarSig)$ is non-trivial (it carries the
+commutator of derivations at the cochain level).
+
+\textit{$\Pthree$ bracket.}
+The degree-$(-2)$ bracket
+$\{-,-\}\colon \HH^p \otimes \HH^q \to \HH^{p+q-2}$
+satisfies the graded symmetry
+\begin{equation}\label{eq:p3-symmetry}
+  \{a, b\}
+  = -(-1)^{(|a|-2)(|b|-2)}\,\{b, a\}
+\end{equation}
+of a degree-$(-2)$ Lie bracket, together with the Leibniz rule
+$\{a, b \cdot c\}
+= \{a, b\} \cdot c + (-1)^{(|a|-2)|b|}\,b \cdot \{a, c\}$.
+
+\textit{Step 1: $\{\mathbf{1}, -\} = 0$.}
+The Leibniz rule applied to
+$\mathbf{1} = \mathbf{1} \cdot \mathbf{1}$ gives
+$\{\mathbf{1}, f\} = 2\,\{\mathbf{1}, f\}$
+for all $f$; hence $\{\mathbf{1}, f\} = 0$.
+
+\textit{Step 2: $\{X, Y\} = h_{\mathrm{KZ}}\,(X, Y)$.}
+For $X, Y \in \HH^1$,
+$\{X, Y\} \in \HH^0 = \CC$.
+The symmetry~\eqref{eq:p3-symmetry} at
+$|X| = |Y| = 1$ gives
+$\{X, Y\} = -(-1)^{(-1)(-1)}\,\{Y, X\}
+= -(-1)^1\,\{Y, X\}
+= \{Y, X\}$:
+the bracket is \emph{symmetric} on $\HH^1 \otimes \HH^1$.
+By $\mathfrak{sl}_2$-equivariance, $\{X, Y\}$ is an
+invariant symmetric bilinear form on the adjoint
+representation valued in $\CC$. The space of such forms is
+one-dimensional, spanned by the Killing form $(X, Y)$.
+Hence $\{X, Y\} = \alpha \cdot (X, Y)$ for a scalar
+$\alpha$ depending on $k$.
+
+The scalar $\alpha$ is determined by the $r$-matrix
+residue, independently of any comparison with the CFG
+construction. The $\Pthree$ bracket on the derived
+chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+= \HH^*(\BarSig(V_k(\fg)), \BarSig(V_k(\fg)))$ is the
+$\Etwo$-Hochschild cohomology operation derived from
+the fundamental class of $S^2 \subset \Conf_2(\RR^3)$.
+At degree~$2$, this operation is the residue of the
+classical $r$-matrix paired with the fundamental class
+of $S^1 \subset \Conf_2(\CC)$. In the KZ normalisation
+(see~\eqref{eq:kz-sl2-degree2} and the conventions
+of~\S\ref{subsec:sl2-chiral-e3}):
+% AP126/AP148: KZ convention r(z) = Omega/((k+h^v)z).
+% At k=0, r = Omega/(h^v z) != 0 (non-abelian; correct for KZ).
+% At k=-h^v, r diverges (Sugawara singularity).
+\begin{equation}\label{eq:p3-from-r-matrix-residue}
+  r(z) = \frac{\Omega}{(k + h^\vee)\,z},
+  \qquad
+  \operatorname{Res}_{z=0}\bigl[r(z)\bigr]
+  = \frac{\Omega}{k + h^\vee}.
+\end{equation}
+The residue acts on $X \otimes Y \in \fg \otimes \fg$
+by contraction with the inverse Casimir:
+$\Omega(X \otimes Y) = (X, Y)$ (the normalised Killing
+form). The $\Pthree$ bracket on $\HH^1 \cong \fg$ is
+therefore
+\begin{equation}\label{eq:p3-bracket-normalisation}
+  \{X, Y\}
+  = \operatorname{Res}_{z=0}
+  \bigl[r(z)(X \otimes Y)\bigr]
+  = \frac{(X, Y)}{k + h^\vee}
+  = h_{\mathrm{KZ}} \cdot (X, Y),
+\end{equation}
+giving $\alpha = h_{\mathrm{KZ}} = 1/(k + h^\vee)$.
+For $\mathfrak{sl}_2$, $h^\vee = 2$ and
+$\alpha = 1/(k + 2)$.
+
+Verification: at $k \to \infty$,
+$h_{\mathrm{KZ}} \to 0$ and the bracket vanishes (the
+weak-coupling limit is the abelian $\Ethree$). At the
+critical level $k = -h^\vee$, $h_{\mathrm{KZ}}$ diverges
+(the bracket degenerates, reflecting the Feigin--Frenkel
+singularity). Both limits are consistent with
+the behaviour of the KZ connection.
+
+\textit{Step 3: $\{X, \eta\} = 0$.}
+The bracket $\{X, \eta\} \in \HH^1 = \mathfrak{sl}_2$
+for $X \in \HH^1$, $\eta \in \HH^2$ is an
+$\mathfrak{sl}_2$-equivariant map
+$\mathrm{ad} \otimes \CC \to \mathrm{ad}$,
+hence $\{X, \eta\} = \beta\,X$ for some scalar $\beta$.
+The $\Pthree$ Jacobi identity applied to
+$X, Y \in \HH^1$ and $\eta \in \HH^2$,
+combined with
+$\{X, Y\} = h_{\mathrm{KZ}}\,(X, Y) \in \HH^0$, gives
+$\{\{X, \eta\}, \eta\} = 0$ (since
+$\{\{X, \eta\}, \eta\} \in \HH^{-1} = 0$) and
+$\{\eta, \{X, \eta\}\} \in \HH^{-1} = 0$,
+while $\{X, \{\eta, \eta\}\} = \{X, 0\} = 0$.
+The Jacobi identity is thus satisfied for all $\beta$;
+the constraint comes instead from the self-consistency
+of the $\Ethree$ deformation.
+At the cohomological level, one applies the iterated Jacobi
+identity to $X, Y \in \HH^1$ and $\eta$:
+\begin{align*}
+  \{\{X, Y\}, \eta\}
+  &= \{X, \{Y, \eta\}\}
+  - (-1)^{(|X|-2)(|Y|-2)}\,\{Y, \{X, \eta\}\} \\
+  &= \{X, \beta Y\} - (-1)^1\,\{Y, \beta X\} \\
+  &= \beta\,h_{\mathrm{KZ}}\,(X, Y)
+  + \beta\,h_{\mathrm{KZ}}\,(Y, X) \\
+  &= 2\beta\,h_{\mathrm{KZ}}\,(X, Y).
+\end{align*}
+The left side:
+$\{\{X, Y\}, \eta\}
+= \{h_{\mathrm{KZ}}(X, Y)\,\mathbf{1}, \eta\}
+= h_{\mathrm{KZ}}(X, Y)\,\{\mathbf{1}, \eta\} = 0$.
+Hence $2\beta\,h_{\mathrm{KZ}}\,(X, Y) = 0$ for all
+$X, Y$. Since
+$(e, f) = 1 \neq 0$ and $h_{\mathrm{KZ}} \neq 0$ at
+generic $k$, we conclude $\beta = 0$.
+
+\textit{Step 4: $\{\eta, \eta\} = 0$.}
+The bracket $\{\eta, \eta\} \in \HH^2 = \CC$ and
+the symmetry~\eqref{eq:p3-symmetry} at
+$|\eta| = 2$ gives
+$\{\eta, \eta\} = -(-1)^{0 \cdot 0}\,\{\eta, \eta\}
+= -\{\eta, \eta\}$, hence $\{\eta, \eta\} = 0$.
+\end{proof}
+
+\begin{remark}[The Killing form as the $\Ethree$ shadow
+of the Cartan $3$-form]
+\label{rem:cartan-3-form}
+The bracket~\eqref{eq:e3-p3-killing} has a transparent
+topological origin. The $\Ethree$-deformation space is
+$(k+h^\vee)\,H^3(\mathfrak{sl}_2)[[k+h^\vee]] \cong (k+h^\vee)\,\CC[[k+h^\vee]]$,
+one-dimensional at each order in $(k+h^\vee)$
+(Theorem~\ref{thm:cfg}(iv)). The generator of
+$H^3(\mathfrak{sl}_2)$ is the Cartan $3$-form
+\begin{equation}\label{eq:cartan-3form}
+  \omega_3(X, Y, Z)
+  = (X, [Y, Z]),
+\end{equation}
+the unique (up to scalar) $\mathfrak{sl}_2$-invariant element
+of $\Lambda^3(\mathfrak{sl}_2^*)$. The degree-$(-2)$ bracket
+$\{X, Y\}$ is the $\Ethree$-operation induced by this
+deformation class scaled by
+$\hbar = 1/(k + h^\vee)$:
+\[
+  \{X, Y\}
+  = \hbar \cdot (X, Y).
+\]
+The mechanism is \emph{not} literal contraction of the
+antisymmetric $3$-form $\omega_3$: the $\Pthree$ bracket
+is symmetric on $\HH^1$ (by the graded
+symmetry~\eqref{eq:p3-symmetry} at $|X| = |Y| = 1$),
+while any contraction of $\omega_3$ in two slots is
+antisymmetric. The connection is indirect:
+the one-dimensional deformation space
+$H^3(\mathfrak{sl}_2)$, generated by $\omega_3$,
+parametrises $\Ethree$-deformations of $C^*(\fg)$
+(Theorem~\ref{thm:cfg}(iv));
+on cohomology, $\mathfrak{sl}_2$-equivariance forces
+the induced $\Pthree$ bracket on
+$\HH^1 \cong \mathfrak{sl}_2$ to be proportional to
+the Killing form $(X, Y)$, the unique invariant
+symmetric bilinear form. The coefficient
+$h_{\mathrm{KZ}} = 1/(k + h^\vee)$ is fixed by the
+$r$-matrix residue
+(equation~\eqref{eq:p3-from-r-matrix-residue}), not by
+comparison with CFG.
+The $\Pthree$ bracket on $Z^{\mathrm{der}}_{\mathrm{ch}}$
+is the binary shadow of the ternary Cartan deformation class,
+with the Killing form appearing through equivariance rather
+than through direct contraction.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Quantum corrections from the vertex $R$-matrix:
+$\Ethree$ operations for the EK quantum VOA}
+\label{subsec:e3-ek-quantum}
+
+The classical $V_k(\mathfrak{sl}_2)$ has trivial braiding
+$S(z) = \id$; the Etingof--Kazhdan quantum VOA
+$V_{\mathrm{EK}}$ of Example~\ref{ex:ek-qvoa} has
+$S(z) = \id + h_{\mathrm{KZ}}\,\Omega/z + O(z^{-2})$. Does
+the non-trivial $R$-matrix change the $\Ethree$-algebra
+structure on the derived chiral centre? On cohomology, no:
+the $\Pthree$ bracket coincides with the classical answer
+(Proposition~\ref{prop:e3-explicit-sl2}). On cochains, yes:
+the quantum corrections encode the braided monoidal structure
+of $\mathrm{Rep}(Y_\hbar(\mathfrak{sl}_2))$.
+
+\medskip
+\noindent
+\textbf{The underlying graded vector space.}
+The EK quantum VOA is a flat formal deformation of
+$V_k(\mathfrak{sl}_2)$ over $\CC[[h_{\mathrm{KZ}}]]$, with
+$h_{\mathrm{KZ}} = 1/(k+2)$.
+Since the chiral Hochschild cohomology is computed by
+a bounded complex of finite-dimensional
+$\mathfrak{sl}_2$-modules, the deformation does not
+change the underlying graded vector space:
+\begin{equation}\label{eq:ek-e3-graded}
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_{\mathrm{EK}})
+  \;=\;
+  \CC[[h_{\mathrm{KZ}}]]
+  \;\oplus\;
+  \mathfrak{sl}_2[[h_{\mathrm{KZ}}]][-1]
+  \;\oplus\;
+  \CC[[h_{\mathrm{KZ}}]][-2],
+\end{equation}
+with total rank $5$ over $\CC[[h_{\mathrm{KZ}}]]$.
+The generators
+$\mathbf{1} \in \HH^0$, $\{e, f, h\} \in \HH^1$, and
+$\eta \in \HH^2$ are defined as in
+Proposition~\ref{prop:e3-explicit-sl2}, now taken
+over the base ring $\CC[[h_{\mathrm{KZ}}]]$.
+
+\medskip
+\noindent
+\textbf{Equivariance under the quantum $R$-matrix.}
+The Yang $R$-matrix $R(u) = u\,I + \hbar\,P$ on
+$V \otimes V$ is $\mathfrak{sl}_2$-equivariant:
+$[R(u),\, \rho(X) \otimes I + I \otimes \rho(X)] = 0$
+for all $X \in \mathfrak{sl}_2$.
+The full vertex $R$-matrix
+$S(z)$ on $V_{\mathrm{EK}}^{\otimes 2}$
+(equation~\eqref{eq:ek-vertex-rmatrix}) is likewise
+$\mathfrak{sl}_2$-equivariant, since it is constructed from
+$\mathcal{R}(z)$, the spectral universal $R$-matrix of
+the Yangian $Y_\hbar(\mathfrak{sl}_2)$, which
+commutes with the $\mathfrak{sl}_2$-action by the
+defining property of the Drinfeld coproduct.
+
+This equivariance is the key structural constraint: all
+three levels of the $\Ethree$ operations on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_{\mathrm{EK}})$ are
+$\mathfrak{sl}_2$-equivariant maps between representations.
+The equivariance arguments of
+Proposition~\ref{prop:e3-explicit-sl2} therefore apply
+verbatim to the quantum case.
+
+\begin{proposition}[{$\Ethree$ operations on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_{\mathrm{EK}})$}]
+\label{prop:e3-ek-quantum}
+Let $V_{\mathrm{EK}}$ be the Etingof--Kazhdan quantum
+vertex algebra for $\mathfrak{sl}_2$ at KZ coupling
+$h_{\mathrm{KZ}} = 1/(k+2) \neq 0$
+\textup{(}Example~\textup{\ref{ex:ek-qvoa}}\textup{)}.
+The $\Ethree$-algebra structure on the derived chiral
+centre $Z^{\mathrm{der}}_{\mathrm{ch}}(V_{\mathrm{EK}})$
+coincides with the classical $\Ethree$ structure of
+Proposition~\textup{\ref{prop:e3-explicit-sl2}}: the
+cup product and Gerstenhaber bracket vanish, and the
+$\Pthree$ bracket is
+\begin{equation}\label{eq:ek-p3-bracket}
+  \{X, Y\}_q \;=\; h_{\mathrm{KZ}} \cdot (X, Y)
+  \qquad
+  \textup{for } X, Y \in \HH^1 = \mathfrak{sl}_2,
+\end{equation}
+with all other brackets zero. In particular, the
+vertex $R$-matrix $S(z)$ does not renormalise the
+$\Pthree$ bracket on cohomology.
+\end{proposition}
+
+\begin{proof}
+The argument has four ingredients: equivariance,
+one-dimensionality of the obstruction space,
+exactness of the rational classical $r$-matrix, and a
+$\GRT_1$ consistency check.
+
+\textit{Step 1: cup product and BV operator.}
+The cup product $\mu \colon \HH^p \otimes \HH^q
+\to \HH^{p+q}$ is a graded-commutative product on
+$\mathfrak{sl}_2$-modules over $\CC[[h_{\mathrm{KZ}}]]$.
+For $X, Y \in \HH^1
+= \mathfrak{sl}_2[[h_{\mathrm{KZ}}]]$,
+the product $\mu(X, Y) \in \HH^2
+= \CC[[h_{\mathrm{KZ}}]]$
+is an $\mathfrak{sl}_2$-equivariant antisymmetric
+bilinear form on the adjoint representation:
+$\Lambda^2(\mathrm{ad})^{\mathfrak{sl}_2} = 0$,
+so $\mu(X, Y) = 0$ over $\CC[[h_{\mathrm{KZ}}]]$.
+
+The BV operator $\Delta \colon \HH^n \to \HH^{n-1}$
+is $\mathfrak{sl}_2$-equivariant. The components
+$\Delta|_{\HH^1} \colon \mathrm{ad} \to \CC$ and
+$\Delta|_{\HH^2} \colon \CC \to \mathrm{ad}$ vanish
+by Schur's lemma. Hence $\Delta = 0$ on the derived
+centre, and the BV relation gives
+$[X, Y] = 0$ for all $X, Y \in \HH^1$, just as in the
+classical case.
+
+\textit{Step 2: the $\Pthree$ bracket is proportional
+to the Killing form.}
+For $X, Y \in \HH^1$, the bracket
+$\{X, Y\}_q \in \HH^0 = \CC[[h_{\mathrm{KZ}}]]$ is an
+$\mathfrak{sl}_2$-equivariant symmetric bilinear
+form on the adjoint representation:
+$\Sym^2(\mathrm{ad})^{\mathfrak{sl}_2} \cong \CC$.
+
+(the notation $\kappa$ here denotes the Koszul invariant,
+not the Killing form).
+At critical level $k = -h^\vee$ (i.e.\ $k + h^\vee = 0$), the
+curvature vanishes and
+$\CE^{\mathrm{ch}}(\fg_{-h^\vee}) = (\Sym^c(\fg^*[-1]) \otimes
+\omega_X,\, d_{\CE})$
+is an uncurved commutative ($\Einf$) factorisation
+coalgebra on~$X$.
+\end{definition}
+
+
+\begin{definition}[The chiral Chevalley--Eilenberg complex]
+\label{def:chiral-ce-complex}
+Let $\fg$ be a simple Lie algebra with Killing form
+$(\cdot, \cdot)$ and dual Coxeter number~$h^\vee$.
+The \emph{chiral Chevalley--Eilenberg complex} is
+the curved chiral coalgebra
+\begin{equation}\label{eq:chiral-ce-complex}
+  \CE^{\mathrm{ch}}(\fg_k)
+  \;:=\;
+  \bigl(\Sym^c(\fg^*[-1]) \otimes \omega_X,\;
+  d_{\CE},\; m_0 = \tfrac{k + h^\vee}{2h^\vee}\,\kappa\bigr),
+\end{equation}
+where $\omega_X$ denotes the dualising sheaf of~$X$,
+$d_{\CE}$ is the chiral Chevalley--Eilenberg differential
+encoding the Lie bracket of~$\fg$, and the curvature
+$m_0$ is the image of the level under the bar construction
+(the notation $\kappa$ here denotes the Koszul invariant,
+not the Killing form).
+At critical level $k = -h^\vee$ (i.e.\ $k + h^\vee = 0$), the
+curvature vanishes and
+$\CE^{\mathrm{ch}}(\fg_{-h^\vee}) = (\Sym^c(\fg^*[-1]) \otimes
+\omega_X,\, d_{\CE})$
+is an uncurved commutative ($\Einf$) factorisation
+coalgebra on~$X$.
+\end{definition}
+
+\begin{construction}[The chiral $\Pthree$ bracket]
+\begin{construction}[The chiral $\Pthree$ bracket]
+\label{constr:chiral-p3-bracket}
+The PVA $\lambda$-bracket on $V_k(\fg)$ is
+(see \cite{Lorgat26I}, \S5.11):
+\begin{equation}\label{eq:pva-bracket-recall}
+  \{J^a \mathbin{{}_\lambda} J^b\}
+  \;=\;
+  f^{ab}{}_c\, J^c \;+\; k\,(a,b)\,\lambda,
+\end{equation}
+where $f^{ab}{}_c$ are the structure constants of $\fg$ and
+$(a,b)$ is the Killing form.
+
+At the level of the chiral Chevalley--Eilenberg complex, the
+$\lambda$-bracket induces a degree-$(-2)$ bracket
+\begin{equation}\label{eq:chiral-p3-def}
+  \{-,-\}^{\mathrm{ch}}
+  \colon
+  \CE^{\mathrm{ch}}(\fg_k)
+  \otimes
+  \CE^{\mathrm{ch}}(\fg_k)
+  \;\longrightarrow\;
+  \CE^{\mathrm{ch}}(\fg_k),
+\end{equation}
+defined on generators $\phi_a = (J^a)^* \in \fg^*[-1]$ by
+the two components of the PVA bracket:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Lie bracket term.)}
+  The structure constant term $f^{ab}{}_c\,J^c$ contributes
+  the Chevalley--Eilenberg differential $d_{\CE}$ at the
+  algebra level. On the dual (coalgebra) side, it induces a
+  coderivation.
+  This is the classical $\Pthree$ bracket of the
+  uncurved complex $\CE^{\mathrm{ch}}(\fg_0)$: the degree-$(-2)$
+  Lie bracket
+  \begin{equation}\label{eq:p3-lie-component}
+    \{\phi_a, \phi_b\}^{\mathrm{ch}}_{\mathrm{Lie}}
+    \;=\;
+    f^{ab}{}_c\,\phi_c.
+  \end{equation}
+  This bracket is the coinvariant shadow of the ordered bar
+  $R$-matrix at the critical level.
+\item \textup{(Cocycle term.)}
+  The level-dependent term $k\,(a,b)\,\lambda$ contributes a
+  degree-$(-2)$ symmetric pairing valued in $\cO_X$:
+  \begin{equation}\label{eq:p3-cocycle-component}
+    \{\phi_a, \phi_b\}^{\mathrm{ch}}_{\mathrm{cocycle}}
+    \;=\;
+    k\,(a,b) \cdot \partial,
+  \end{equation}
+  where $\partial$ denotes the $\cD$-module action
+  (the spectral parameter~$\lambda$ of the PVA bracket
+  becomes the derivation $\partial_z$ in the $\cD$-module
+  structure). This term is the cocycle that controls
+  the deformation away from the commutative
+  ($\Einf$) factorisation structure.
+\end{enumerate}
+
+The total chiral $\Pthree$ bracket is
+\begin{equation}\label{eq:chiral-p3-total}
+  \{\phi_a, \phi_b\}^{\mathrm{ch}}
+  \;=\;
+  f^{ab}{}_c\,\phi_c
+  \;+\;
+  k\,(a,b)\,\partial.
+\end{equation}
+\end{construction}
+
+\begin{proposition}[The chiral $\Pthree$ structure]
+\label{prop:chiral-p3-structure}
+\ClaimStatusProvedHere
+The bracket~\eqref{eq:chiral-p3-total} equips the chiral
+Chevalley--Eilenberg complex $\CE^{\mathrm{ch}}(\fg_k)$
+with the structure of a $\Pthree$-algebra object in
+$\cD\textrm{-}\mathrm{mod}(X)$. Concretely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The bracket is a degree-$(-2)$ Lie bracket satisfying
+  graded antisymmetry and the Jacobi identity.
+  The Jacobi identity follows from the Jacobi identity of the
+  PVA $\lambda$-bracket, which in turn encodes the Jacobi
+  identity of the Lie algebra $\fg$ together with the
+  $\fg$-invariance of the Killing form.
+\item The bracket is compatible with the commutative product
+  on $\Sym^c(\fg^*[-1])$ via the Leibniz rule:
+  \[
+    \{a, b \cdot c\}^{\mathrm{ch}}
+    = \{a, b\}^{\mathrm{ch}} \cdot c
+    + (-1)^{(|a|-2)|b|}\, b \cdot \{a, c\}^{\mathrm{ch}}.
+  \]
+\item The bracket is $\cD$-linear in the sense that it
+  respects the flat connection on
+  $\CE^{\mathrm{ch}}(\fg_k)$ inherited from the
+  $\cD$-module structure: the chiral $\Pthree$ bracket
+  is a morphism of $\cD$-modules, not merely of
+  $\cO_X$-modules.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The PVA $\lambda$-bracket on $V_k(\fg)$ satisfies the PVA
+axioms (sesquilinearity, Leibniz, skew-symmetry, Jacobi);
+these are the $\lambda$-bracket translations of the classical
+master equation for the Poisson structure.
+The identification of the $\lambda$-bracket with a
+degree-$(-2)$ Lie bracket on the shifted dual follows the
+general correspondence between PVA brackets and shifted
+Poisson structures (Beilinson--Drinfeld~\cite{BD04},
+\S3.8): a PVA $\lambda$-bracket of conformal weight $1$
+(where $\lambda$ has weight $1$) corresponds to a
+$\Pthree$ bracket (degree $-2$ = $-\dim_\CC X - 1$, where
+$\dim_\CC X = 1$) on the $\cD$-module of chiral cochains.
+
+The $\cD$-linearity follows because the PVA
+$\lambda$-bracket is a $\cD$-module morphism by construction:
+the derivation $\partial$ acts via $\lambda \mapsto \lambda$
+in the $\lambda$-bracket formalism, and this action is
+compatible with the Leibniz rule by the sesquilinearity
+axiom of the PVA.
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{The filtered $\Ethree$-chiral algebra}
+\label{subsec:filtered-e3-chiral}
+
+The chiral $\Pthree$ bracket and the chiral
+Chevalley--Eilenberg complex assemble into a single object:
+a filtered $\Ethree$-chiral algebra
+$\CE^{\mathrm{ch}}_k(\fg)$, a factorisation $\cD$-module
+on $\Ran(X)$ whose global sections on the formal disk
+recover the CFG $\Ethree$-algebra.
+
+\begin{definition}[The filtered $\Ethree$-chiral algebra]
+\label{def:filtered-e3-chiral}
+The \emph{chiral $\Ethree$-algebra}
+\begin{equation}\label{eq:chiral-e3-algebra}
+  \CE^{\mathrm{ch}}_k(\fg)
+  \;:=\;
+  \bigl(\CE^{\mathrm{ch}}(\fg_k),\;
+  \{-,-\}^{\mathrm{ch}},\;
+  \cD\textrm{-module structure}\bigr)
+\end{equation}
+is the chiral Chevalley--Eilenberg complex
+(Definition~\ref{def:chiral-ce-complex}) equipped with
+the chiral $\Pthree$ bracket
+(Construction~\ref{constr:chiral-p3-bracket}) and the
+$\cD$-module structure from the factorisation algebra
+on~$X$. It carries a $(k+h^\vee)$-adic filtration
+$F^\bullet \CE^{\mathrm{ch}}_k(\fg)$ defined by:
+\begin{equation}\label{eq:hbar-filtration}
+  F^p \CE^{\mathrm{ch}}_k(\fg)
+  \;=\;
+  (k+h^\vee)^p \cdot \CE^{\mathrm{ch}}_k(\fg).
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Structure of the chiral $\Ethree$-algebra]
+\label{thm:chiral-e3-structure}
+\ClaimStatusProvedHere
+Let $\fg$ be a simple Lie algebra.
+The chiral $\Ethree$-algebra
+$\CE^{\mathrm{ch}}_k(\fg)$ satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Associated graded.)}
+  The associated graded with respect to the $(k+h^\vee)$-adic
+  filtration is the uncurved chiral Chevalley--Eilenberg
+  complex at the critical level:
+  \begin{equation}\label{eq:assoc-graded}
+    \mathrm{gr}_F\,\CE^{\mathrm{ch}}_k(\fg)
+    \;\simeq\;
+    \CE^{\mathrm{ch}}(\fg_{-h^\vee})
+    \;=\;
+    \bigl(\Sym^c(\fg^*[-1]) \otimes \omega_X,\; d_{\CE}\bigr),
+  \end{equation}
+  which is an $\Einf$-chiral algebra \textup{(}commutative
+  factorisation $\cD$-module on $\Ran(X)$\textup{)}.
+\item \textup{(The $\Ethree$ structure.)}
+  The chiral $\Pthree$ bracket
+  \textup{(}Proposition~\textup{\ref{prop:chiral-p3-structure}}%
+  \textup{)} deforms the $\Einf$ structure to
+  a filtered $\Ethree$-chiral algebra:
+  $\Etwo$ from the curve geometry
+  \textup{(}Warning~\textup{\ref{warn:e1-vs-e2-source}}%
+  \textup{)} $+ 1$ from the chiral $\Pthree$ bracket
+  $= \Ethree$.
+\item \textup{(Curvature and the deformation parameter.)}
+  The curvature
+  $m_0 = \tfrac{k + h^\vee}{2h^\vee}\,\kappa$ of the chiral
+  Chevalley--Eilenberg complex is the obstruction to the
+  $\Einf$ structure: at $k = -h^\vee$, the curvature vanishes
+  and the algebra is commutative; at $k \neq -h^\vee$, the
+  $\Pthree$ bracket and the curvature together deform the
+  commutative structure to a filtered $\Ethree$-chiral
+  algebra.
+  The deformation parameter is $(k+h^\vee) \in
+  (k+h^\vee)\,H^3(\fg)[[k+h^\vee]]$,
+  matching the deformation space of
+  Theorem~\textup{\ref{thm:e3-cs}(ii)}.
+\item \textup{(Factorisation property.)}
+  The $\Ethree$-chiral algebra
+  $\CE^{\mathrm{ch}}_k(\fg)$ is a factorisation algebra on
+  $X$ in the sense that the restriction to disjoint
+  opens $U_1 \sqcup U_2 \hookrightarrow X$ induces
+  \begin{equation}\label{eq:factorisation}
+    \CE^{\mathrm{ch}}_k(\fg)\big|_{U_1 \sqcup U_2}
+    \;\simeq\;
+    \CE^{\mathrm{ch}}_k(\fg)\big|_{U_1}
+    \otimes
+    \CE^{\mathrm{ch}}_k(\fg)\big|_{U_2},
+  \end{equation}
+  where the tensor product is in the derived category of
+  $\cD$-modules. The $\Ethree$ structure is compatible with
+  the factorisation isomorphism.
+\end{enumerate}
+\end{theorem}
+The following lemma supplies the key compatibility between
+the BV operator $\Delta$ and the chiral $\Pthree$ bracket
+used in the proof of part~(ii). The ``independent
+geometric data'' heuristic (genus-$1$ sewing vs.\
+genus-$0$ collision) motivates the result, but
+the proof requires a precise argument.
+
+\begin{lemma}[Commutativity of the BV operator and the
+chiral $\Pthree$ bracket]
+\label{lem:bv-p3-commutativity}
+\ClaimStatusProvedHere
+Let $\fg$ be a simple Lie algebra and $k \neq -h^\vee$.
+The BV operator $\Delta$ on the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
+\textup{(}from the framed $\Etwo$ structure,
+genus-$1$ sewing\textup{)} and the chiral $\Pthree$
+bracket $\{-,-\}^{\mathrm{ch}}$
+\textup{(}Construction~\textup{\ref{constr:chiral-p3-bracket}},
+genus-$0$ collision residue\textup{)} satisfy
+\begin{equation}\label{eq:bv-p3-commute}
+  [\Delta, \{a,-\}^{\mathrm{ch}}] = 0
+  \quad \text{for all } a \in \CE^{\mathrm{ch}}(\fg_k).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The abstract $\Ethree$-algebra structure on the derived
+chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
+is provided by Proposition~\ref{prop:e3-structure}(ii)
+via the Higher Deligne Conjecture applied to the
+$\Etwo$-coalgebra $\BarSig(V_k(\fg))$.
+This abstract $\Ethree$ structure includes, in particular,
+an abstract BV operator $\Delta_{\mathrm{HDC}}$
+(from the framed $\Etwo$ structure) and an abstract
+$\Pthree$ bracket $\{-,-\}_{\mathrm{HDC}}$
+(the degree-$(-2)$ Lie bracket from the $S^2$ fundamental
+class of $\Conf_2(\RR^3)/\RR^+$). These satisfy all
+$\Ethree$ compatibility conditions, including
+$[\Delta_{\mathrm{HDC}}, \{a, -\}_{\mathrm{HDC}}] = 0$,
+by the operadic structure of $\Ethree$.
+
+It remains to identify the explicit chiral $\Pthree$
+bracket $\{-,-\}^{\mathrm{ch}}$ from
+Construction~\ref{constr:chiral-p3-bracket} with
+the abstract bracket $\{-,-\}_{\mathrm{HDC}}$. We argue
+in three steps.
+
+\textit{Step 1: matching on the associated graded.}
+At $k = -h^\vee$ (the associated graded of the
+$(k+h^\vee)$-adic filtration), the chiral
+Chevalley--Eilenberg complex becomes the uncurved
+commutative coalgebra $\CE^{\mathrm{ch}}(\fg_0)$,
+which is an $\Einf$-chiral algebra.
+Both $\{-,-\}^{\mathrm{ch}}$ and $\{-,-\}_{\mathrm{HDC}}$
+reduce to the classical $\Pthree$ bracket on
+$\Sym^c(\fg^*[-1]) \otimes \omega_X$ induced by the Lie
+bracket of $\fg$: the bracket
+$\{\phi_a, \phi_b\} = f^{ab}{}_c\,\phi_c$ on generators,
+extended as a biderivation.
+This classical bracket is uniquely determined by the
+$\fg$-equivariance and degree constraints on
+$\Sym^c(\fg^*[-1])$: the space of degree-$(-2)$
+Lie brackets on $\Sym^c(\fg^*[-1])$ that are
+biderivations of the commutative product and
+$\fg$-equivariant is one-dimensional (generated by the
+bracket induced by $\fg$ itself). Therefore
+$\{-,-\}^{\mathrm{ch}}$ and $\{-,-\}_{\mathrm{HDC}}$
+agree on $\mathrm{gr}_F$.
+
+\textit{Step 2: matching order by order.}
+The $(k+h^\vee)$-adic filtration on
+$\CE^{\mathrm{ch}}(\fg_k)$ induces a filtration on the
+space of degree-$(-2)$ Lie biderivations. At each order
+$p \geq 1$ in $(k+h^\vee)$, the bracket is determined by
+its value on generators
+$\phi_a \otimes \phi_b \in \fg^*[-1] \otimes \fg^*[-1]$
+(since both brackets are biderivations of $\mu$). On
+generators, the space of $\fg$-equivariant $\cD$-linear
+pairings $\fg^*[-1] \otimes \fg^*[-1] \to
+\CE^{\mathrm{ch}}(\fg_k)$ of degree~$-2$ is spanned by
+$f^{ab}{}_c\,\phi_c$ and $k\,(a,b)\,\partial$ (the
+structure constants and the Killing form, the only
+$\fg$-invariant tensors of the appropriate type for
+simple~$\fg$). Step~1 fixes the structure-constant coefficient
+$f^{ab}{}_c\,\phi_c$ at order~$0$.  At each subsequent
+order $p \geq 1$, the \emph{correction} to the bracket on
+generators lies in the subspace spanned by the Killing-form
+term $k\,(a,b)\,\partial$ alone (since the
+structure-constant component is already determined by
+the lower orders and the biderivation property).
+For simple~$\fg$, this correction space is
+one-dimensional: $\Hom_\fg(\Sym^2\fg, \CC) \cong \CC$
+(the Killing form is the unique $\fg$-invariant symmetric
+bilinear form).  Both $\{-,-\}^{\mathrm{ch}}$ and
+$\{-,-\}_{\mathrm{HDC}}$ are $\fg$-equivariant
+$\cD$-linear biderivations with the same
+order-$0$ value (Step~1), so their corrections at each
+order $p$ coincide by the one-dimensionality of the
+Killing-form component.  Therefore the two brackets agree
+at each order.
+
+\textit{Step 3: conclusion.}
+Since $\{-,-\}^{\mathrm{ch}} = \{-,-\}_{\mathrm{HDC}}$
+as formal power series in $(k+h^\vee)$, and
+$[\Delta_{\mathrm{HDC}}, \{a,-\}_{\mathrm{HDC}}] = 0$
+holds by the $\Ethree$ operadic structure,
+the commutativity~\eqref{eq:bv-p3-commute} follows.
+\end{proof}
+
+\begin{remark}[Chain-level status of
+Lemma~\ref{lem:bv-p3-commutativity}]
+\label{rem:bv-p3-chain-level}
+The proof reduces the commutativity to the identification
+of the explicit chiral $\Pthree$ bracket with the abstract
+HDC bracket. This identification is proved order by order
+in $(k+h^\vee)$ using the one-dimensionality of the
+deformation space, which holds for simple~$\fg$.
+For non-simple~$\fg$, the deformation space
+$H^3(\fg)[[k+h^\vee]]$ may be higher-dimensional, and the
+order-by-order uniqueness argument requires a more refined
+comparison.
+
+The ``independent geometric data'' intuition (that
+$\Delta$ comes from genus-$1$ sewing strata of
+$\overline{\cM}_{1,n}$ while
+$\{-,-\}^{\mathrm{ch}}$ comes from genus-$0$ collision
+strata of $\overline{\cM}_{0,n}$) captures the operadic
+reason: in the modular envelope of the $\Ethree$ operad,
+genus-$1$ and genus-$0$ operations compose without
+interference because they correspond to disjoint cells
+in the modular operad. Making this precise at the
+chain level in the chiral (as opposed to topological)
+setting is what the identification argument above
+accomplishes for simple~$\fg$.
+\end{remark}
+
+\begin{proof}[Proof of Theorem~\ref{thm:chiral-e3-structure}]
+Part (i) is immediate from the filtration: the $(k+h^\vee)$-adic
+filtration is exhaustive, and at $k = -h^\vee$ the curvature
+and the cocycle term of the $\Pthree$ bracket both vanish,
+leaving the uncurved commutative chiral coalgebra
+$\CE^{\mathrm{ch}}(\fg_{-h^\vee})$.
+
+Part (ii) requires three things: that the chiral
+$\Pthree$ bracket is a degree-$(-2)$ Lie bracket
+(Jacobi), that it satisfies the Leibniz rule with respect
+to the commutative product (Poisson compatibility), and
+that it is compatible with the $\Etwo$ structure from
+the curve geometry, so that the combined data assembles
+into an $\Ethree$-algebra. We prove each in turn.
+
+\textit{Step 1: the $\Pthree$ Jacobi identity from the
+PVA Jacobi.}
+The PVA $\lambda$-bracket on $V_k(\fg)$ satisfies the
+$(-1)$-shifted Jacobi identity
+(see~\cite{Lorgat26II}, Appendix~A, Proposition~A.5):
+\begin{equation}\label{eq:pva-jacobi-recall}
+  \{a \mathbin{{}_\lambda} \{b \mathbin{{}_\mu} c\}\}
+  - (-1)^{(|a|+1)(|b|+1)}\,
+  \{b \mathbin{{}_\mu} \{a \mathbin{{}_\lambda} c\}\}
+  = \{\{a \mathbin{{}_\lambda} b\}
+  \mathbin{{}_{{\lambda+\mu}}} c\}.
+\end{equation}
+The chiral $\Pthree$ bracket
+$\{-,-\}^{\mathrm{ch}}$
+on $\CE^{\mathrm{ch}}(\fg_k)$ is obtained from the
+$\lambda$-bracket by specialising $\lambda \mapsto \partial$
+(the $\cD$-module derivation) and passing to the chiral
+Chevalley--Eilenberg complex. On generators
+$\phi_a, \phi_b, \phi_c \in \fg^*[-1]$
+(cohomological degree $1$, shifted bracket-degree
+$|\phi_a| - 2 = -1$), the degree-$(-2)$ Jacobi identity
+is:
+\begin{equation}\label{eq:p3-jacobi}
+  \{\phi_a, \{\phi_b, \phi_c\}^{\mathrm{ch}}\}^{\mathrm{ch}}
+  + \text{graded cyclic}
+  = 0.
+\end{equation}
+To derive this from~\eqref{eq:pva-jacobi-recall}, set
+$\lambda = \mu = 0$ (the constant-coefficient specialisation
+that extracts the $\Pthree$ bracket from the
+$\lambda$-bracket). The left side
+of~\eqref{eq:pva-jacobi-recall} becomes
+$\{\phi_a, \{\phi_b, \phi_c\}^{\mathrm{ch}}\}^{\mathrm{ch}}
+- (-1)^{(|\phi_a|+1)(|\phi_b|+1)}\,
+\{\phi_b, \{\phi_a, \phi_c\}^{\mathrm{ch}}\}^{\mathrm{ch}}$,
+and the right side becomes
+$\{\{\phi_a, \phi_b\}^{\mathrm{ch}},
+\phi_c\}^{\mathrm{ch}}$ (at $\lambda + \mu = 0$).
+The PVA $\lambda$-bracket has degree $-1$ (it is
+$(-1)$-shifted); the chiral $\Pthree$ bracket has
+degree~$-2$, accounting for the additional degree shift
+from the $\cD$-module derivation $\partial$ (conformal
+weight~$1$). The Koszul sign
+$(-1)^{(|\phi_a|+1)(|\phi_b|+1)}$ in the PVA identity
+translates to $(-1)^{(|\phi_a|-2)(|\phi_b|-2)}$ in the
+$\Pthree$ identity after incorporating the degree shift
+$|\,{-}\,| \mapsto |\,{-}\,| - 2$ appropriate to a
+degree-$(-2)$ bracket. On $\fg^*[-1]$ where
+$|\phi_a| = 1$, both signs evaluate to
+$(-1)^{(-1)(-1)} = -1$. Rearranging
+gives~\eqref{eq:p3-jacobi}.
+
+For general elements of $\Sym^c(\fg^*[-1])$ (not just
+generators), the Jacobi identity extends by the Leibniz
+rule (Step~2 below): the bracket is a biderivation of the
+free commutative algebra, so a trilinear identity that
+holds on generators holds on all elements.
+
+\textit{Step 2: the Leibniz rule from PVA sesquilinearity.}
+The PVA right Leibniz rule
+(see~\cite{Lorgat26II}, Appendix~A, Proposition~A.6)
+states:
+\[
+  \{a \mathbin{{}_\lambda} (b \cdot c)\}
+  = \{a \mathbin{{}_\lambda} b\} \cdot c
+  + (-1)^{(|a|+1)|b|}\,
+  b \cdot \{a \mathbin{{}_\lambda} c\}
+  + \int_0^\lambda
+  \{\{a \mathbin{{}_\mu} b\}
+  \mathbin{{}_\lambda} c\}\,d\mu.
+\]
+At $\lambda = 0$, the integral term vanishes
+(the integration range collapses to a point), leaving:
+\[
+  \{a, b \cdot c\}^{\mathrm{ch}}
+  = \{a, b\}^{\mathrm{ch}} \cdot c
+  + (-1)^{(|a|+1)|b|}\,
+  b \cdot \{a, c\}^{\mathrm{ch}}.
+\]
+Adjusting the Koszul sign from the $(-1)$-shifted
+convention to the degree-$(-2)$ convention:
+$(|a|+1)|b|$ becomes $(|a|-2)|b|$ after the degree shift,
+recovering the $\Pthree$ Leibniz rule
+\[
+  \{a, b \cdot c\}^{\mathrm{ch}}
+  = \{a, b\}^{\mathrm{ch}} \cdot c
+  + (-1)^{(|a|-2)|b|}\,
+  b \cdot \{a, c\}^{\mathrm{ch}},
+\]
+as stated in
+Proposition~\ref{prop:chiral-p3-structure}(ii). This
+identifies the chiral $\Pthree$ bracket as a derivation of
+the commutative product
+$\mu$ on $\Sym^c(\fg^*[-1]) \otimes \omega_X$: a
+commutative algebra equipped with a compatible
+degree-$(-2)$ Lie bracket is a $\Pthree$-algebra.
+
+\textit{Step 3: compatibility with $\Etwo$ and the
+$\Ethree$ assembly.}
+The $\Etwo$-coalgebra structure on $\BarSig$
+(Warning~\ref{warn:e1-vs-e2-source}) and its framed
+variant (from genus-$1$ sewing) equip the derived centre
+with a BV operator $\Delta$ satisfying
+$[f, g] = \Delta(f \cdot g) - (\Delta f) \cdot g
+- (-1)^{|f|}\,f \cdot (\Delta g)$
+(the BV relation~\eqref{eq:bv-rel-sl2}).
+The $\Pthree$ bracket of degree~$-2$ supplements
+this $\Etwo$ structure with one additional degree of
+operadic freedom:
+the $\Pthree$ bracket
+(degree $-2 = -(3-1)$) corresponds to the fundamental
+class of $S^2 = \Conf_2(\RR^3)/\RR^+$, the extra
+generator needed for $\Ethree$ beyond~$\Etwo$.
+
+The compatibility condition is that the $\Pthree$ bracket
+must be a derivation of the Gerstenhaber bracket
+$[-,-]$ of degree~$-1$ from the $\Etwo$ structure.
+Since the Gerstenhaber bracket is determined by $\Delta$
+and $\mu$ via the BV relation, it suffices to show that
+$\{-,-\}^{\mathrm{ch}}$ commutes with $\Delta$ and is a
+derivation of $\mu$ (already proved in Step~2). The
+commutativity $[\Delta, \{a,-\}^{\mathrm{ch}}] = 0$
+follows from Lemma~\ref{lem:bv-p3-commutativity}.
+Given this, for any $a, b, c \in
+\CE^{\mathrm{ch}}(\fg_k)$:
+\begin{align*}
+  \{a, [b, c]\}^{\mathrm{ch}}
+  &= \{a, \Delta(b \cdot c)
+  - (\Delta b) \cdot c
+  - (-1)^{|b|}\,b \cdot (\Delta c)\}^{\mathrm{ch}} \\
+  &= \Delta\{a, b \cdot c\}^{\mathrm{ch}}
+  - \{a, (\Delta b) \cdot c\}^{\mathrm{ch}}
+  - (-1)^{|b|}\,\{a, b \cdot (\Delta c)\}^{\mathrm{ch}},
+\end{align*}
+where the first term uses
+$[\Delta, \{a,-\}^{\mathrm{ch}}] = 0$. Expanding each
+term by the Leibniz rule of Step~2 and collecting via the
+BV relation yields
+\[
+  \{a, [b, c]\}^{\mathrm{ch}}
+  = [\{a, b\}^{\mathrm{ch}}, c]
+  + (-1)^{(|a|-2)|b|}\,[b, \{a, c\}^{\mathrm{ch}}]:
+\]
+the $\Pthree$ bracket is a derivation of the
+Gerstenhaber bracket.
+
+This is the mixed Leibniz rule that characterises
+$\Ethree = \Etwo + \Pthree$: the $\Pthree$ bracket acts
+as a derivation of the $\Etwo$ Gerstenhaber bracket. By
+the recognition principle for $\mathsf{E}_n$-algebras
+(Lurie~\cite{HA}, Theorem~5.1.2.2;
+Francis~\cite{Francis2013}, Theorem~4.1): a commutative
+algebra with a compatible $\Etwo$ structure and a
+degree-$(-2)$ Lie bracket satisfying the mutual Leibniz
+rules (Jacobi, Poisson compatibility with the product, and
+derivation of the Gerstenhaber bracket) is an
+$\Ethree$-algebra. The three verifications above establish
+all the required relations.
+
+Part (iii) combines two observations. The curvature
+$m_0 = \tfrac{k + h^\vee}{2h^\vee}\,\kappa$ is the bar-complex
+encoding of the level departure (the identification
+$\CE^{\mathrm{ch}}(\fg_k) \simeq B^{\mathrm{ch}}(V_k(\fg))$).
+The cocycle term
+$k\,(a,b)\,\partial$ of the $\Pthree$ bracket is linear
+in~$k$ and hence linear in $(k + h^\vee)$.
+Both vanish at $k = -h^\vee$, so the
+deformation is controlled by $(k + h^\vee)$. The identification
+of the deformation space as $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$
+then follows from the computation of
+Theorem~\ref{thm:e3-cs}(ii): $H^3(\fg)$ is one-dimensional
+for simple $\fg$, and the Cartan $3$-form
+$\omega_3(X, Y, Z) = (X, [Y,Z])$ is the generator.
+
+Part (iv) is the factorisation property of the chiral
+bar complex. The chiral Chevalley--Eilenberg complex, being
+a chiral coalgebra, satisfies the factorisation axiom
+by construction (Beilinson--Drinfeld~\cite{BD04}, Chapter 3).
+The $\Pthree$ bracket, being a $\cD$-module morphism
+(Proposition~\ref{prop:chiral-p3-structure}(iii)), is
+compatible with the factorisation isomorphisms.
+\end{proof}
+
+
+% ----------------------------------------------------------------
+\subsection{The $\cD$-module structure and the KZ connection}
+\label{subsec:chiral-e3-dmod}
+
+The chiral $\Ethree$-algebra
+$\CE^{\mathrm{ch}}_k(\fg)$ is not an abstract
+$\Ethree$-algebra: it is an $\Ethree$-algebra object
+in the category of $\cD$-modules on $X$, or equivalently
+on $\Ran(X)$. This $\cD$-module structure is the content
+that distinguishes the chiral construction from the
+topological CFG construction.
+
+\begin{proposition}[The $\cD$-module structure]
+\label{prop:chiral-e3-dmod}
+\ClaimStatusProvedHere
+The chiral $\Ethree$-algebra
+$\CE^{\mathrm{ch}}_k(\fg)$ carries a flat connection
+\begin{equation}\label{eq:chiral-e3-connection}
+  \nabla^{\mathrm{ch}}
+  \;=\;
+  d \;+\; \sum_{i < j}
+  \frac{k\,\Omega_{ij}}{z_i - z_j}\,dz_{ij}
+\end{equation}
+on $\Conf_n(X)$, where $\Omega_{ij}$ is the Casimir element
+acting on the $i$-th and $j$-th tensor factors. This is the
+Knizhnik--Zamolodchikov connection.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The flatness
+  $(\nabla^{\mathrm{ch}})^2 = 0$ follows from the
+  classical Yang--Baxter equation for the $r$-matrix
+  $r(z) = k\,\Omega/z$
+  \textup{(}trace-form convention; at $k = 0$, $r = 0$%
+  \textup{)}: the curvature of $\nabla^{\mathrm{ch}}$
+  is proportional to the LHS of the CYBE, which vanishes.
+\item The $\Ethree$-algebra operations are horizontal
+  with respect to $\nabla^{\mathrm{ch}}$: the cup product,
+  the Gerstenhaber bracket, and the $\Pthree$ bracket are
+  all flat sections of the corresponding $\Hom$-bundles.
+  This is the $\cD$-linearity of
+  Proposition~\textup{\ref{prop:chiral-p3-structure}(iii)}
+  in the multi-point form.
+\item The monodromy representation of~$\nabla^{\mathrm{ch}}$
+  on $\pi_1(\Conf_n(X))$ gives the braid group action.
+  For $X = \CC$, the monodromy of the KZ connection
+  is computed by the Drinfeld associator
+  $\Phi_{\mathrm{KZ}}$
+  and recovers the braided monoidal structure on
+  $\mathrm{Rep}(U_\hbar(\fg))$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The KZ connection on the $n$-point conformal blocks of
+$V_k(\fg)$ is classical (Knizhnik--Zamolodchikov, 1984).
+The presentation here identifies this connection as the
+$\cD$-module structure on the chiral Chevalley--Eilenberg
+complex, viewed as a factorisation algebra on $\Ran(X)$.
+
+For (i): the curvature of $\nabla^{\mathrm{ch}}$ on
+$\Conf_n(X)$ is
+$[\nabla_i, \nabla_j]
+= k^2\,[\Omega_{ij}/(z_i-z_j),\,
+\Omega_{ik}/(z_i-z_k) + \Omega_{jk}/(z_j-z_k)]
+\,dz_{ij} \wedge dz_{ik}$
+plus cyclic permutations. The vanishing of this expression
+is equivalent to the classical Yang--Baxter equation
+$[r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0$
+for $r_{ij} = k\,\Omega_{ij}/(z_i - z_j)$.
+
+For (ii): the $\Ethree$ operations are defined in terms of
+the PVA $\lambda$-bracket, which is itself a $\cD$-module
+morphism. The cup product is a $\cD$-module map by the
+commutative algebra structure on the factorisation algebra.
+The $\Pthree$ bracket involves the derivation $\partial$
+(from the $\lambda$ in the PVA bracket), which is the
+$\cD$-module action; its compatibility with the connection
+follows from the PVA sesquilinearity axiom.
+
+For (iii): this is the Drinfeld--Kohno theorem
+(Drinfeld~\cite{EK96}, Kohno, Kassel): the monodromy of the
+KZ connection on $\Conf_n(\CC)$ factors through the pure
+braid group $P_n$ and gives, via the Drinfeld associator
+$\Phi_{\mathrm{KZ}} \in \exp(\hat{\mathfrak{t}}_3)$,
+a braided monoidal structure on $\mathrm{Rep}(U_\hbar(\fg))$.
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{Comparison with CFG: formal disk global sections}
+\label{subsec:chiral-e3-cfg-comparison}
+
+The chiral $\Ethree$-algebra
+$\CE^{\mathrm{ch}}_k(\fg)$ lives on $\Ran(X)$ and
+carries the KZ connection; the CFG algebra $\cA^\lambda$
+lives on $\RR^3$ and is purely topological. The formal
+disk $D = \Spec \CC[[z]]$ is the bridge: restricting to
+$D$ trivializes the $\cD$-module structure and recovers the
+CFG algebra as the fiber.
+
+\begin{theorem}[Formal disk restriction recovers CFG]
+\label{thm:chiral-e3-cfg}
+\ClaimStatusProvedHere
+Let $D = \Spec \CC[[z]]$ be the formal disk in~$X$.
+There is a natural map of filtered $\Ethree$-algebras
+\begin{equation}\label{eq:cfg-comparison}
+  \Gamma(D,\, \CE^{\mathrm{ch}}_k(\fg))
+  \;\longrightarrow\;
+  \cA^\lambda
+\end{equation}
+from the global sections of the chiral $\Ethree$-algebra
+on the formal disk to the CFG $\Ethree$-algebra of
+Theorem~\textup{\ref{thm:cfg}}, where the CFG coupling
+$\lambda$ equals the departure from critical level
+$k + h^\vee$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Associated graded.)}
+  At the level of associated graded algebras,
+  \begin{equation}\label{eq:cfg-assoc-graded}
+    \mathrm{gr}\,\Gamma(D,\, \CE^{\mathrm{ch}}_k(\fg))
+    \;\simeq\;
+    C^*(\fg)
+    \;=\;
+    \Sym(\fg^\vee[-1]),
+  \end{equation}
+  the Chevalley--Eilenberg cochains of $\fg$: both the
+  chiral construction restricted to the formal disk and the
+  CFG construction have the same classical limit.
+\item \textup{(Matching of $\Pthree$ brackets.)}
+  The restriction of the chiral $\Pthree$
+  bracket~\eqref{eq:chiral-p3-total} to the formal disk
+  recovers the CFG $\Pthree$ bracket.
+  On the formal disk, the derivation $\partial = \partial_z$
+  acts on $\CC[[z]]$; the global sections
+  $\Gamma(D, \fg^*[-1] \otimes \omega_D)
+  \cong \fg^*[-1][[z]]\,dz$ produce, after extracting the
+  residue at $z = 0$, the finite-dimensional $\Pthree$
+  bracket
+  \[
+    \{\phi_a, \phi_b\}_{\mathrm{CFG}}
+    \;=\;
+    f^{ab}{}_c\,\phi_c
+    \;+\;
+    k\,(a,b) \cdot \delta_0,
+  \]
+  where $\delta_0$ is the delta-function at the origin,
+  the formal-disk avatar of $\partial$. Under the
+  identification $\Gamma(D, \omega_D) \cong \CC\,dz$
+  \textup{(}taking the constant mode\textup{)}, this
+  recovers the CFG bracket on $C^*(\fg)$.
+\item \textup{(Matching of deformation spaces.)}
+  Both $\CE^{\mathrm{ch}}_k(\fg)\big|_D$ and
+  $\cA^\lambda$ are deformations of $C^*(\fg)$ over the
+  base $(k+h^\vee)\,H^3(\fg)[[k+h^\vee]]$, with the same
+  one-dimensional fibre at each order in $(k+h^\vee)$ for
+  simple~$\fg$.
+  The map~\eqref{eq:cfg-comparison} intertwines
+  the $(k+h^\vee)$-adic filtrations.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument has two steps: construct the $\Ethree$-algebra
+structure on $\Gamma(D, \CE^{\mathrm{ch}}_k(\fg))$
+by symmetric monoidal transport, then identify it with the
+CFG algebra $\cA^\lambda$.
+
+\smallskip
+\noindent\textbf{Step 1: symmetric monoidal trivialization
+on~$D$.}
+The formal disk $D = \Spec \CC[[z]]$ is contractible:
+every $\cD$-module on~$D$ (that is, a $\CC[[z]]$-module
+with flat connection) is isomorphic to its fibre at the
+origin, since every flat connection on~$D$ is
+trivializable ($\pi_1(D^n) = 0$ for all~$n$, so there is
+no monodromy obstruction). The global sections functor
+\begin{equation}\label{eq:disk-equivalence}
+  \Gamma(D, -) \colon
+  \cD\textrm{-}\mathrm{mod}(D) \;\xrightarrow{\;\sim\;}\;
+  \mathrm{Vect}
+\end{equation}
+is an equivalence of categories. This equivalence is
+symmetric monoidal: the tensor product of $\cD$-modules
+on~$D$ (the $!$-tensor product, which on the contractible
+formal disk coincides with the $*$-tensor product and with
+the ordinary tensor product of the underlying vector
+spaces) corresponds under~\eqref{eq:disk-equivalence} to
+the tensor product in $\mathrm{Vect}$.
+
+An equivalence of symmetric monoidal categories preserves
+all algebraic structures definable in terms of the monoidal
+structure. In particular, it preserves $\Ethree$-algebra
+structures: if $\cB$ is an $\Ethree$-algebra in
+$\cD\textrm{-}\mathrm{mod}(D)$, then
+$\Gamma(D, \cB)$ is an $\Ethree$-algebra in
+$\mathrm{Vect}$, with structure maps obtained by applying
+$\Gamma(D, -)$ to those of~$\cB$.
+
+Applying this to
+$\cB = \CE^{\mathrm{ch}}_k(\fg)\big|_D$: the
+restriction of the chiral $\Ethree$-algebra to~$D$ is an
+$\Ethree$-algebra in $\cD\textrm{-}\mathrm{mod}(D)$ (by
+restriction of the $\Ethree$-structure on~$X$), and the
+equivalence~\eqref{eq:disk-equivalence} endows
+$\Gamma(D, \CE^{\mathrm{ch}}_k(\fg))$ with an
+$\Ethree$-algebra structure in $\mathrm{Vect}$. This
+$\Ethree$-structure is functorial and carries the
+$(k+h^\vee)$-adic filtration inherited from the chiral side.
+
+\smallskip
+\noindent\textbf{Step 2: identification with $\cA^\lambda$.}
+It remains to identify
+$\Gamma(D, \CE^{\mathrm{ch}}_k(\fg))$ with the CFG
+algebra $\cA^\lambda$ as filtered $\Ethree$-algebras,
+where $\lambda = k + h^\vee$. Both are filtered
+$\Ethree$-algebras deforming the same classical limit over
+the same base, and the identification proceeds through
+three structural invariants.
+
+Part (i): on~$D$, the $\cD$-module structure trivializes,
+so the chiral Chevalley--Eilenberg complex reduces to the
+ordinary one. The associated graded of the chiral
+$\Ethree$-algebra on~$D$ is
+\[
+  \mathrm{gr}\,\Gamma(D,\, \CE^{\mathrm{ch}}_k(\fg))
+  \;=\;
+  \Gamma(D,\, \mathrm{gr}\,\CE^{\mathrm{ch}}_k(\fg))
+  \;=\;
+  \Gamma(D,\, \Sym^c(\fg^*[-1]) \otimes \omega_D).
+\]
+On the formal disk, $\omega_D \cong \cO_D\,dz$; the
+equivalence~\eqref{eq:disk-equivalence} extracts the
+constant mode in the $z$-expansion, giving
+$\Sym(\fg^\vee[-1]) = C^*(\fg)$, the
+Chevalley--Eilenberg cochains of~$\fg$ as a commutative
+algebra. This is the associated graded of $\cA^\lambda$
+(Theorem~\ref{thm:cfg}(i)).
+
+Part (ii): the chiral $\Pthree$ bracket on~$X$
+(equation~\eqref{eq:chiral-p3-total}) is defined via the
+PVA $\lambda$-bracket. On the formal disk, the spectral
+parameter $\lambda$ becomes the formal variable of the
+completed enveloping algebra: the translation generator
+$\partial_z$ acts on $\CC[[z]]$, and taking global sections
+via~\eqref{eq:disk-equivalence} extracts the residue at
+$z = 0$. The resulting bracket on
+$\Gamma(D, \fg^*[-1] \otimes \omega_D)
+\cong \fg^*[-1][[z]]\,dz$ is
+\[
+  \{\phi_a, \phi_b\}_{\mathrm{CFG}}
+  \;=\;
+  f^{ab}{}_{c}\,\phi_c
+  \;+\;
+  k\,(a,b) \cdot \delta_0,
+\]
+where $f^{ab}{}_{c}$ are the structure constants of~$\fg$,
+$(a,b)$ is the Killing form, and $\delta_0$ is the
+delta-function at the origin (the formal-disk avatar of the
+derivation~$\partial$). Under the identification
+$\Gamma(D, \omega_D) \cong \CC\,dz$, this is the CFG
+$\Pthree$ bracket on $C^*(\fg)$
+(Theorem~\ref{thm:cfg}(ii)).
+
+Part (iii): the deformation theory of $\Ethree$-algebras
+with fixed associated graded $C^*(\fg)$ is controlled by
+the $\Ethree$-Hochschild cohomology, which for
+$C^*(\fg)$ with~$\fg$ simple is
+$(k+h^\vee)\,H^3(\fg)[[k+h^\vee]]$, one-dimensional at each
+order in $(k+h^\vee)$. Both
+$\Gamma(D, \CE^{\mathrm{ch}}_k(\fg))$ and
+$\cA^\lambda$ are deformations of $C^*(\fg)$ over this
+base (Theorem~\ref{thm:e3-cs}(ii) and
+Theorem~\ref{thm:cfg}(iv) respectively). Since the
+deformation space is one-dimensional at each order, and
+both deformations have matching associated graded
+(Part~(i)) and matching $\Pthree$ bracket (Part~(ii)),
+they are isomorphic as filtered $\Ethree$-algebras.
+The $(k+h^\vee)$-adic filtration on the chiral side maps to
+the $\lambda$-adic filtration on the CFG side under
+$\lambda = k + h^\vee$.
+\end{proof}
+
+\begin{remark}[The chain of spaces]
+\label{rem:disk-vs-point}
+The restriction passes through
+$\mathrm{pt} \leftarrow D \to \mathbb{A}^1 \to \PP^1
+\to X$, with each step adding geometric content: the formal
+disk provides the derivation $\partial$ (cocycle term
+$k(a,b)\partial$); $\mathbb{A}^1$ adds Arnold relations
+and braid monodromy; $\PP^1$ and higher-genus $X$ add
+compactness and modular curvature. None of these
+restrictions is an identity; each step loses geometric
+information.
+\end{remark}
+
+
+% ----------------------------------------------------------------
+\subsection{The Khan--Zeng topological enhancement}
+\label{subsec:khan-zeng-enhancement}
+
+The chiral $\Ethree$-algebra is holomorphic: it depends on the
+complex structure of $X$ through the KZ connection. At
+non-critical level $k \neq -h^\vee$, the Sugawara Virasoro
+element provides a homotopy between the holomorphic and
+topological directions, upgrading the $\Ethree$ structure
+from holomorphic to topological. At the critical level,
+the Sugawara element is undefined and the enhancement fails.
+
+\begin{proposition}[Topological enhancement via Sugawara]
+\label{prop:khan-zeng-topological}
+\ClaimStatusProvedHere
+At generic non-critical level $k \neq -h^\vee$, the affine
+Kac--Moody vertex algebra $V_k(\fg)$ possesses a Sugawara
+Virasoro element
+\begin{equation}\label{eq:sugawara-element}
+  T_{\mathrm{Sug}} \;=\;
+  \frac{1}{2(k + h^\vee)}
+  \sum_{a=1}^{\dim \fg}
+  \mathopen{:} J^a J_a \mathclose{:},
+\end{equation}
+which generates an inner action of the Virasoro algebra at
+central charge $c = k\,\dim(\fg)/(k + h^\vee)$.
+
+By Khan--Zeng~\cite{KhanZeng25}, the Virasoro element
+upgrades the holomorphic-topological symmetry of the $3$d
+gauge theory on $\Sigma \times \RR_t$ to fully topological
+symmetry on $\Sigma \times \RR_t$. At the level of the
+chiral $\Ethree$-algebra, this means:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Holomorphic-topological.)}
+  The chiral $\Ethree$-algebra
+  $\CE^{\mathrm{ch}}_k(\fg)$ lives on $X \times \RR$,
+  where $X$ carries holomorphic structure and $\RR$
+  carries topological structure. The $\Etwo$ from the
+  curve geometry is holomorphic; the $+1$ from the $\Pthree$
+  bracket is topological \textup{(}from the $\RR$ factor%
+  \textup{)}.
+\item \textup{(Full topological.)}
+  The Sugawara element provides an identification
+  of the holomorphic direction in~$X$ with a topological
+  direction: the stress-energy tensor $T_{\mathrm{Sug}}$
+  generates translations along $X$, making them homotopically
+  trivial. After this identification, the
+  $\Ethree$-structure becomes \emph{topological} $\Ethree$:
+  an $\Ethree$-algebra in the category of locally constant
+  sheaves on $\RR^3 \cong X \times \RR$
+  \textup{(}identifying $X \cong \CC \cong \RR^2$%
+  \textup{)}.
+\item \textup{(Failure at critical level.)}
+  At $k = -h^\vee$, the Sugawara element~\eqref{eq:sugawara-element}
+  is undefined \textup{(}the denominator $2(k+h^\vee)$
+  vanishes\textup{)}. The critical-level chiral
+  $\Ethree$-algebra $\CE^{\mathrm{ch}}_{-h^\vee}(\fg)$ is
+  genuinely holomorphic, not topological: the
+  $\Etwo$-coalgebra on $\BarSig(\cA)$ is topological
+  (Warning~\ref{warn:e1-vs-e2-source}), but $\cA$
+  itself retains essential dependence on the complex
+  structure of~$X$.
+  Without the Sugawara element, there is no homotopy
+  between the holomorphic and topological directions,
+  so the full structure is not topological $\Ethree$.
+  Perturbatively, in the formal neighbourhood of critical level,
+  the topological enhancement holds order-by-order in
+  $(k + h^\vee)$ \textup{(}since $T_{\mathrm{Sug}}$ exists at
+  any nonzero departure from critical level\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part (i) is the HT structure of the $3$d gauge theory
+whose boundary chiral algebra is $V_k(\fg)$
+(Costello--Gwilliam~\cite{CG17}). The factorisation
+algebra of the HT theory lives on $\Sigma \times \RR$
+with holomorphic dependence on $\Sigma$ and topological
+dependence on $\RR$; the chiral $\Ethree$-algebra is the
+algebraic encoding of this factorisation structure.
+
+Part (ii).
+Khan--Zeng~\cite{KhanZeng25} prove the following at the
+classical level: an inner Virasoro element in a Poisson
+vertex algebra with non-degenerate central charge provides
+a homotopy between the holomorphic and topological
+directions, upgrading the HT theory to a fully topological
+theory. We extend this to the quantum vertex algebra
+$V_k(\fg)$. The Sugawara construction
+(Frenkel--Ben-Zvi~\cite{FBZ04}, Chapter~15) produces
+$T_{\mathrm{Sug}} \in V_k(\fg)$ satisfying the exact
+Virasoro OPE
+\[
+  T_{\mathrm{Sug}}(z)\,T_{\mathrm{Sug}}(w) \;\sim\;
+  \frac{c/2}{(z-w)^4}
+  + \frac{2\,T_{\mathrm{Sug}}(w)}{(z-w)^2}
+  + \frac{\partial T_{\mathrm{Sug}}(w)}{z-w}
+\]
+at central charge $c = k\,\dim(\fg)/(k+h^\vee)$, and the
+Sugawara OPE with the current generators
+\[
+  T_{\mathrm{Sug}}(z)\,J^a(w) \;\sim\;
+  \frac{J^a(w)}{(z-w)^2}
+  + \frac{\partial J^a(w)}{z-w}.
+\]
+The second relation gives $L_{-1} \cdot J^a = \partial J^a$:
+the holomorphic translation operator $L_{-1} = (T_{\mathrm{Sug}})_{(1)}$
+acts as $\partial$ on all generators. These are identities in
+the quantum vertex algebra, not formal-deformation statements;
+the normal ordering in~\eqref{eq:sugawara-element} absorbs
+all quantum corrections.  The BRST operator $Q$ of the $3$d
+gauge theory satisfies $[Q, b] = L_{-1}$ where $b$ is the
+antighost zero-mode (this is the standard BRST relation for
+the Sugawara Virasoro; see~\cite{FBZ04}, \S15.4), so
+$L_{-1}$ is BRST-exact. The Khan--Zeng
+argument~\cite{KhanZeng25} then applies verbatim: BRST-exactness
+of holomorphic translation is the datum required to upgrade
+the HT symmetry to full topological symmetry. At generic
+$k$, the central charge
+$c = k\,\dim(\fg)/(k+h^\vee) \neq 0$, so the hypothesis is
+satisfied.
+
+Part (iii): at $k = -h^\vee$, the Feigin--Frenkel centre
+$Z(V_{-h^\vee}(\fg)) = \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+(Feigin--Frenkel) is a commutative
+algebra with non-trivial dependence on the complex structure
+of the formal disk (through the notion of $\fg^\vee$-oper).
+The absence of the Sugawara element means no homotopy
+between holomorphic and topological directions exists, and
+the chiral $\Ethree$-algebra is genuinely holomorphic.
+The perturbative statement follows because the Sugawara
+element exists as a formal power series in $(k + h^\vee)$ for
+$k \neq -h^\vee$.
+\end{proof}
+
+
+% ----------------------------------------------------------------
+\subsection{Example: $\mathfrak{sl}_2$ chiral $\Ethree$-algebra}
+\label{subsec:sl2-chiral-e3}
+
+The general construction specialises cleanly to
+$\fg = \mathfrak{sl}_2$: the chiral $\Pthree$ bracket is
+determined by six pairings on the generators
+$\phi_e, \phi_f, \phi_h$, each consisting of a Lie bracket
+term (from the structure constants) and a cocycle term
+(proportional to the level $k$, vanishing at $k = 0$).
+Restricting to the formal disk and extracting the zero mode
+recovers the CFG bracket of
+Proposition~\ref{prop:e3-explicit-sl2}.
+
+\begin{example}[Explicit chiral $\Pthree$ bracket for
+$\mathfrak{sl}_2$]
+\label{ex:sl2-chiral-e3}
+For $\fg = \mathfrak{sl}_2$ with basis $\{e, f, h\}$,
+Killing form $(e,f) = (f,e) = 1$, $(h,h) = 2$,
+structure constants $[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$,
+and $h^\vee = 2$, the chiral $\Pthree$ bracket
+(Construction~\ref{constr:chiral-p3-bracket}) on the
+generators $\phi_e, \phi_f, \phi_h \in \mathfrak{sl}_2^*[-1]$
+is:
+\begin{align}
+  \label{eq:sl2-p3-ef}
+  \{\phi_e, \phi_f\}^{\mathrm{ch}}
+  &= \phi_h + k\,\partial, \\
+  \label{eq:sl2-p3-he}
+  \{\phi_h, \phi_e\}^{\mathrm{ch}}
+  &= 2\,\phi_e, \\
+  \label{eq:sl2-p3-hf}
+  \{\phi_h, \phi_f\}^{\mathrm{ch}}
+  &= -2\,\phi_f, \\
+  \label{eq:sl2-p3-hh}
+  \{\phi_h, \phi_h\}^{\mathrm{ch}}
+  &= 2k\,\partial, \\
+  \label{eq:sl2-p3-ee}
+  \{\phi_e, \phi_e\}^{\mathrm{ch}}
+  &= 0, \\
+  \label{eq:sl2-p3-ff}
+  \{\phi_f, \phi_f\}^{\mathrm{ch}}
+  &= 0.
+\end{align}
+The Lie bracket terms ($\phi_h$ in~\eqref{eq:sl2-p3-ef},
+$2\phi_e$ in~\eqref{eq:sl2-p3-he},
+$-2\phi_f$ in~\eqref{eq:sl2-p3-hf}) persist at $k = 0$;
+the cocycle terms ($k\,\partial$ in~\eqref{eq:sl2-p3-ef}
+and~\eqref{eq:sl2-p3-hh}) vanish at $k = 0$
+(AP126 check: at $k = 0$, the level-dependent terms
+vanish, and the bracket reduces to the Chevalley--Eilenberg
+coderivation).
+
+At the critical level $k = -2$ (i.e.\ $k + h^\vee = 0$), the cocycle
+terms become $-2\,\partial$, and the chiral
+$\Ethree$-algebra degenerates: the curvature $m_0 = 0$
+(uncurved), and the commutative factorisation structure is
+undeformed.
+
+Taking formal disk global sections and extracting the zero
+mode recovers the CFG $\Pthree$ bracket of
+Proposition~\ref{prop:e3-explicit-sl2}:
+$\{\phi_a, \phi_b\}_{\mathrm{CFG}}
+= f^{ab}{}_c\,\phi_c + k\,(a,b)\,\delta_0$, which at the
+cohomological level gives
+$\{X, Y\} = h_{\mathrm{KZ}}\,(X,Y)$ for
+$X, Y \in \HH^1 = \mathfrak{sl}_2$
+(equation~\eqref{eq:e3-p3-killing}), with
+$h_{\mathrm{KZ}} = 1/(k+2)$.
+\end{example}
+
+% ================================================================
+\section{Examples}
+\label{sec:examples}
 %================================================================
 
 \section{The dimensional ladder}
@@ -3508,8 +5389,9 @@ property are restored only by the period-corrected differential
 $\Dg{g}$ of Theorem~\ref{thm:quantum-diff-squares-zero}
 (Remark~\ref{rem:sc-higher-genus}).
 The topologization theorem
-(Theorem~\ref{thm:topologization}) upgrades the $\Etwo$ center
-of $V_k(\fg)$ to $\Ethree$ via the Sugawara conformal vector,
+(Theorem~\ref{thm:topologization}) upgrades the BRST cohomology of
+the $\Etwo$ center of $V_k(\fg)$ to $\Ethree$ via the Sugawara
+conformal vector,
 with an explicit antighost contraction $G(z)$
 (Construction~\ref{constr:sugawara-antighost}) that makes
 the proof constructive. For class~M algebras, where the

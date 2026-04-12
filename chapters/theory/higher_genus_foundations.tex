@@ -625,13 +625,11 @@ holomorphic part
 $\partial_z\!\log E$ alone satisfies the exact Arnold
 relation, so $\Dg{g}$ built from the holomorphic propagator
 squares to zero (Theorem~\ref{thm:quantum-diff-squares-zero}).
-Part~(iv): the family
-$[\barB_g(\cA)]^{\mathrm{vir}} \in
-K^0(\overline{\mathcal{M}}_g)$ has Chern character computed
-by Grothendieck--Riemann--Roch on
-$\pi\colon \overline{\mathcal{C}}_g
-\to \overline{\mathcal{M}}_g$; the fiber contribution is
-$\kappa(\cA)$ and the Todd class gives the $\hat{A}$-series
+Part~(iv): the scalar factorization
+\eqref{eq:obstruction-hodge} is Theorem~\ref{thm:genus-universality},
+and the generating series
+\eqref{eq:family-index-package} is its
+Grothendieck--Riemann--Roch refinement
 (Theorem~\ref{thm:family-index}).
 \end{proof}
 
@@ -680,13 +678,9 @@ $\Sigma_g$ of genus~$g \geq 1$.
  \;\in\;
  H^{1,1}(\overline{\cM}_g).
  \end{equation}
- Second, the top Chern class $\lambda_g = c_g(\mathbb{E})$
- \textup{(LOCAL)}
- is recovered from the full curvature endomorphism by the
- Grothendieck--Riemann--Roch theorem on the universal curve
- $\pi\colon \overline{\cC}_g \to \overline{\cM}_g$,
- producing the family index formula
- \textup{(}Theorem~\textup{\ref{thm:family-index})}:
+ Second, the scalar projection of the genus-$g$ curvature is
+ identified on the proved uniform-weight scalar lane by
+ Theorem~\ref{thm:genus-universality}:
  \begin{equation}\label{eq:chern-weil-projection}
  \mathrm{obs}_g(\cA)
  \;=\;
@@ -747,18 +741,15 @@ vector space, and its action is scalar.)
 fiber integral $\pi_*[\omega_g^{\mathrm{Ar}}]$ computes the
 first Chern form $c_1(\mathbb{E}, h_{\mathrm{Ar}})$ of the
 Hodge bundle in the Arakelov metric~\cite{Ara74, Fal84}.
-The second step is the Grothendieck--Riemann--Roch theorem
-applied to $\pi\colon\overline{\cC}_g\to\overline{\cM}_g$:
-the fiber Chern character of the bar complex contributes
-$\kappa(\cA)$, and the Todd class of the relative tangent
-bundle produces the $\hat{A}$-series whose degree-$g$ term
-is $\lambda_g$ (Theorem~\ref{thm:family-index}).
-The chain-level operator $\dfib^{\,2}$ determines $\mathrm{obs}_g$
-by this two-step projection: trace the curvature endomorphism
+The second step is the projection from the fiberwise curvature to the
+scalar tautological class on the base. On the proved
+uniform-weight scalar lane, Theorem~\ref{thm:genus-universality}
+identifies that class as $\kappa(\cA)\cdot\lambda_g$.
+Equivalently: trace the curvature endomorphism
 (extracting~$\kappa(\cA)$), integrate the Arakelov form
-over the fiber (producing $c_1(\mathbb{E})$), and extract
+over the fiber (producing the Hodge Chern form), and recover
 the top Chern class $c_g(\mathbb{E}) = \lambda_g$
-\textup{(LOCAL)} via GRR.
+\textup{(LOCAL)} on the base.
 
 (iii)~Two chain representatives
 $\omega, \omega' \in [\omega_g^{\mathrm{Ar}}]$ with
@@ -4573,26 +4564,90 @@ This claim is used in this manuscript as an external theorem, proved in
 
 \begin{theorem}[Obstruction theory for quantum corrections; \ClaimStatusProvedHere]
 \label{thm:obstruction-quantum}
-For a chiral algebra $\mathcal{A}$ and deformation parameter $t$, the obstruction to extending from genus $g-1$ to genus $g$ lies in:
+Let $\mathcal{A}$ be a modular Koszul chiral algebra on the
+Koszul locus, and let
+\[
+\bar{B}^{(g)}_{\mathrm{flat}}(\mathcal{A})
+\;:=\;
+\bigl(\bar{B}^{(g)}(\mathcal{A}), \Dg{g}\bigr)
+\]
+be the strict genus-$g$ bar complex
+\textup{(}Convention~\textup{\ref{conv:higher-genus-differentials}}\textup{)}.
+Write
+\[
+\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A})
+\;:=\;
+\mathcal{E}nd\!\bigl(\bar{B}^{(g)}_{\mathrm{flat}}(\mathcal{A})\bigr),
+\qquad
+\mathcal{Z}(\mathcal{A})
+\;:=\;
+\mathcal{H}^0\!\bigl(\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A})\bigr).
+\]
+Then the obstruction to extending the genus-$(g{-}1)$ flat data to
+genus~$g$ is a transgression class
 \begin{equation}
-\text{Obs}^{(g)}(\mathcal{A}) \in H^2(\bar{B}_g(\mathcal{A}), \mathcal{Z}(\mathcal{A}))
+\operatorname{Obs}^{(g)}(\mathcal{A})
+\;\in\;
+H^2(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))
 \end{equation}
-where $\mathcal{Z}(\mathcal{A})$ is the center of $\mathcal{A}$ viewed as a sheaf on $\overline{\mathcal{M}}_g$.
-
-Explicitly, $\text{Obs}^{(1)}(\mathcal{A})$ captures central extensions and $\text{Obs}^{(g)}(\mathcal{A})$ for $g \geq 2$ captures higher genus anomalies.
+coming from the hypercohomology spectral sequence
+\begin{equation}
+E_2^{p,q}
+\;=\;
+H^p\!\bigl(\overline{\mathcal{M}}_g,
+\mathcal{H}^q(\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A}))\bigr)
+\Longrightarrow
+\mathbb{H}^{p+q}\!\bigl(\overline{\mathcal{M}}_g,
+\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A})\bigr).
+\end{equation}
+Under the uncurving comparison
+$\dfib \leadsto \Dg{g}$, the same global class is the
+Chern--Weil shadow of the fiberwise curvature
+$\dfib^{\,2} = \kappa(\mathcal{A}) \cdot \omega_g$.
+Explicitly, $\operatorname{Obs}^{(1)}(\mathcal{A})$ captures
+central extensions and $\operatorname{Obs}^{(g)}(\mathcal{A})$
+for $g \geq 2$ captures higher-genus anomalies.
 \end{theorem}
 
 \begin{proof}
-Consider the Leray spectral sequence for the bar complex sheaf on $\overline{\mathcal{M}}_g$:
-\begin{equation}
-E_2^{p,q} = H^p(\overline{\mathcal{M}}_g, \mathcal{H}^q(\bar{B}(\mathcal{A}))) \Rightarrow H^{p+q}(\bar{B}^{\text{global}}(\mathcal{A}))
-\end{equation}
-The obstruction to extending from genus $g-1$ to genus $g$ is the $d_2$ differential:
-\begin{equation}
-d_2: E_2^{0,1} \to E_2^{2,0}
-\end{equation}
-which measures the failure of local sections of the bar complex to extend globally over $\overline{\mathcal{M}}_g$.
-For central elements, $\mathcal{H}^0(\bar{B}(\mathcal{A})) = \mathcal{Z}(\mathcal{A})$ (the center acts trivially on the bar differential), so the obstruction lands in $E_2^{2,0} = H^2(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$. The two cases follow: at $g=1$, $H^2(\overline{\mathcal{M}}_{1,1}, \mathbb{C}) \cong \mathbb{C}$ captures the central extension; for $g \geq 3$, $H^2(\mathcal{M}_g) \cong \mathbb{Q}$ by Harer stability, while $H^2(\overline{\mathcal{M}}_g)$ has additional boundary classes (e.g., $\dim H^2(\overline{\mathcal{M}}_2) = 3$).
+By Proposition~\ref{prop:gauss-manin-uncurving-chain} and
+Convention~\ref{conv:higher-genus-differentials}, the corrected
+differential satisfies $\Dg{g}^{\,2} = 0$, so
+$\bar{B}^{(g)}_{\mathrm{flat}}(\mathcal{A})$ is an honest cochain
+complex of sheaves on $\overline{\mathcal{M}}_g$.
+Its endomorphism sheaf
+$\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A})$
+is therefore also a strict complex, and ordinary hypercohomology
+applies on the flat side.
+
+On the Koszul locus, Theorem~\ref{thm:cobar-resolution-scoped}
+identifies the strict bar complex as a bar resolution of
+$\mathcal{A}$. Hence
+$\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A})$
+computes the derived endomorphism complex of~$\mathcal{A}$, and
+its degree-$0$ cocycles are precisely the endomorphisms commuting
+with the chiral product. Their sheaf is the center local system
+$\mathcal{Z}(\mathcal{A})
+= \mathcal{H}^0(\mathcal{E}^{\bullet}_{g,\mathrm{flat}}(\mathcal{A}))$.
+
+The obstruction to lifting genus-$(g{-}1)$ data to genus~$g$ is the
+first transgression of a local degree-$1$ deformation class, so it
+is the image of
+\[
+d_2\colon E_2^{0,1} \longrightarrow E_2^{2,0}
+= H^2(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))
+\]
+in the hypercohomology spectral sequence above. This gives the
+stated obstruction class.
+
+Finally, Proposition~\ref{prop:gauss-manin-uncurving-chain}(ii)
+compares the strict flat complex with the curved fiberwise model.
+Under this comparison, the transgression class is represented on the
+curved side by the curvature operator
+$\dfib^{\,2} = \kappa(\mathcal{A}) \cdot \omega_g$; its
+Chern--Weil projection to the base is the same global obstruction
+class. At genus~$1$ the target is the usual central-extension
+class; for $g \geq 2$ it records the higher-genus anomaly.
 \end{proof}
 
 \subsection{Explicit computation for small genus}
@@ -4642,7 +4697,9 @@ For W-algebras, these involve \emph{screening charges} and \emph{higher central 
 \section{Obstruction classes: explicit computation for all examples}
 \label{sec:obstruction-explicit}
 
-The obstruction class $\text{obs}_k \in H^2(B_g, Z(\mathcal{A}))$ admits explicit formulas for all key examples.
+The global obstruction class
+$\mathrm{obs}_g \in H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$
+admits explicit formulas for all key examples.
 
 \subsection{Recollection: obstruction theory framework}
 \label{subsec:obstruction-framework-recall}
@@ -5011,9 +5068,9 @@ bar complex (Remark~\ref{rem:propagator-weight-universality}).
 \label{subsec:obstruction-squares-zero}
 
 \begin{theorem}[Nilpotence of obstruction (\texorpdfstring{$g \leq 2$}{g <= 2}); \ClaimStatusProvedHere]\label{thm:obstruction-nilpotent}
-For any augmented chiral algebra $\mathcal{A}$ and genus $g \leq 2$, the genus-$g$ obstruction satisfies \textup{(LOCAL)}:
+For any augmented chiral algebra $\mathcal{A}$ and genus $g \leq 2$, the genus-$g$ obstruction satisfies:
 \begin{equation}
-(\text{obs}_g)^2 = 0 \quad \text{in } H^4(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))
+(\text{obs}_g)^2 = 0 \quad \text{in } H^{4g}(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A})^{\otimes 2})
 \end{equation}
 
 This is a consistency condition ensuring the curved $A_\infty$ structure is well-defined.
@@ -5308,25 +5365,44 @@ $F_1 = \kappa/24$ \textup{(g=1 only; all-weight at g=1 is unconditional)}.
 \end{theorem}
 
 \begin{proof}
-The propagator $\eta_{ij}^{(g)} = \partial_{z_i}\log E(z_i,z_j)
-+ {}$\textup{(}Arakelov correction\textup{)}
-is a weight-$1$ form: a section of~$\omega_X$ in each variable,
-since the prime form $E(z,w) \in \Gamma(K^{-1/2}\boxtimes K^{-1/2})$
-(Definition~\ref{def:higher-genus-log-forms}).
-Its $B$-cycle quasi-periodicity produces the fiberwise Arakelov curvature
-$\omega_g$, whose pushforward gives $c_1(\mathbb{E})$ on moduli, and
-$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
-(Theorem~\ref{thm:quantum-arnold-relations}).
-The obstruction class $\mathrm{obs}_g(\cA)$ is computed
-by pushing forward the fiberwise curvature along the universal
-family $\pi\colon\overline{\cC}_g\to\overline{\cM}_g$.
-On the uniform-weight lane, every edge of the genus-$g$ graph sum
-uses the standard Hodge bundle $\mathbb{E}=R^0\pi_*\omega_\pi$
+The genus-$1$ class fixes the scalar coefficient. By definition of
+$\kappa(\cA)$ from the genus-$1$ curvature and because
+$H^2(\overline{\mathcal{M}}_{1,1}) \cong \mathbb{Q}\cdot\lambda_1$,
+one has
+\[
+\mathrm{obs}_1(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_1
+\qquad
+\textup{(g=1 only; all-weight at g=1 is unconditional)}.
+\]
+
+On the scalar lane, the shadow obstruction tower is one-dimensional:
+the scalar part of the Maurer--Cartan element has the form
+$\eta \otimes \Gamma_\cA$ for a genus series
+$\Gamma_\cA = \sum_{g \geq 1}\Gamma_{\cA,g}$.
+The obstruction recursion
+\textup{(}Construction~\textup{\ref{constr:obstruction-recursion}}\textup{)}
+is therefore a one-variable recursion.
+Every edge in every stable-graph contribution carries the standard
+weight-$1$ propagator $d\log E(z,w)$, hence the standard Hodge bundle
+$\mathbb{E}=R^0\pi_*\omega_\pi$
 (Remark~\ref{rem:propagator-weight-universality}).
-Grothendieck--Riemann--Roch applied to the $K$-theory class
-$\kappa(\cA)\cdot[\mathbb{E}]$ identifies
-$\mathrm{obs}_g = \kappa(\cA)\cdot c_g(\mathbb{E})
-= \kappa(\cA)\cdot\lambda_g$ (Theorem~\ref{thm:family-index}).
+Because all strong generators have the same conformal weight, no
+mixed-weight vertex channel is available: the scalar recursion
+propagates the genus-$1$ coefficient through the same Hodge line at
+every genus. The clutching maps for the Hodge bundle therefore force
+\[
+\Gamma_{\cA,g}
+\;=\;
+\kappa(\cA)\cdot c_g(\mathbb{E})
+\;=\;
+\kappa(\cA)\cdot\lambda_g
+\qquad (g \geq 1),
+\]
+which is exactly \eqref{eq:genus-universality}. This argument uses
+the genus-$1$ base case and the scalar shadow-tower recursion; it
+does not invoke Theorem~\ref{thm:family-index}.
 
 For multi-generator algebras: each channel contributes
 $\kappa_{h_i} \cdot \omega_g$ through the \emph{same}
@@ -6106,7 +6182,7 @@ at the full subcategory of algebras with $\kappa = 0$. Objects of $\mathrm{KCA}^
 
 \leavevmode\\
 The obstruction class
-$\text{obs}_g \in H^2(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))$
+$\text{obs}_g \in H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$
 pairs with the deformation space $Q_g(\mathcal{A}^!)$ via
 \begin{equation}
 \langle \text{obs}_g, \text{def}_g \rangle = \int_{\overline{\mathcal{M}}_g} 
@@ -6115,7 +6191,7 @@ pairs with the deformation space $Q_g(\mathcal{A}^!)$ via
 
 This pairing is perfect, giving:
 \[Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g, 
-Z(\mathcal{A}))\]
+ \mathcal{Z}(\mathcal{A}))\]
 as stated in Theorem~\ref{thm:deformation-obstruction}.
 \end{theorem}
 
@@ -6124,16 +6200,16 @@ as stated in Theorem~\ref{thm:deformation-obstruction}.
 \emph{Step 1: Serre duality on moduli space.}
 
 By Serre duality on $\overline{\mathcal{M}}_g$:
-\[H^i(\overline{\mathcal{M}}_g, Z(\mathcal{A}))^* \cong 
-H^{3g-3-i}(\overline{\mathcal{M}}_g, Z(\mathcal{A}^!) \otimes \omega_{\mathcal{M}_g})\]
+\[H^i(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))^* \cong 
+ H^{3g-3-i}(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}^!) \otimes \omega_{\mathcal{M}_g})\]
 
 \emph{Step 2: Obstructions vs deformations.}
 
 Obstructions and deformations live in complementary degrees determined
 by $\mathcal{A}$:
 \begin{align}
-\text{obs}_g &\in H^i(\overline{\mathcal{M}}_g, Z(\mathcal{A})) \\
-\text{def}_g &\in H^{3g-3-i}(\overline{\mathcal{M}}_g, Z(\mathcal{A}^!))
+\text{obs}_g &\in H^i(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A})) \\
+\text{def}_g &\in H^{3g-3-i}(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}^!))
 \end{align}
 where the degree $i$ depends on the chiral algebra $\mathcal{A}$
 (for the Heisenberg at level $\kappa$: $i = 2g$;

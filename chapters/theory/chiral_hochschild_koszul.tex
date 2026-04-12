@@ -605,57 +605,71 @@ The $\omega_X$ twist encodes the dualizing sheaf.
 \end{theorem}
 
 \begin{proof}
-Two proofs follow: the first via bar-cobar duality, the second via the Kodaira--Spencer map.
+Two proofs follow: the first via the bar coalgebra and Verdier duality, the second via the Kodaira--Spencer map.
 
-\medskip\noindent\emph{First proof: via bar-cobar duality.}
-The bar-cobar quasi-isomorphism (Theorem~\ref{thm:bar-cobar-isomorphism-main}),
-extended to all genera by Theorem~\ref{thm:higher-genus-inversion}, gives an
-equivalence of $\mathcal{D}$-module complexes on $\overline{C}_{n+2}(X)$:
-\[
-\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
-\xrightarrow{\;\sim\;} \mathcal{A}.
-\]
-Since $(\mathcal{A}, \mathcal{A}^!)$ is a Koszul pair, the bar coalgebra
-computes the Koszul dual coalgebra:
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})^{\vee} \simeq \mathcal{A}^!$
-(Theorem~\ref{thm:e1-chiral-koszul-duality}). Therefore:
-\begin{align}
-\ChirHoch^n(\mathcal{A})
-&= \mathrm{Ext}^n_{\mathrm{ChirAlg}}(\mathcal{A}, \mathcal{A}) \notag \\
-&\cong H^n\bigl(\mathrm{Hom}(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})), \mathcal{A})\bigr) \notag \\
-&\cong H^n\bigl(\mathrm{Hom}(\Omega^{\mathrm{ch}}(\mathcal{A}^!), \mathcal{A})\bigr). \label{eq:hh-via-hom}
-\end{align}
+\medskip\noindent\emph{First proof: via the bar coalgebra and Verdier duality.}
+Lemma~\ref{lem:chirhoch-descent} identifies the derived chiral
+Hochschild complex with the Verdier dual of the bar coalgebra:
+\begin{equation}
+\label{eq:hoch-descent-A}
+RHH_{\mathrm{ch}}(\cA)
+\;\simeq\;
+\bigl(\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA)\bigr)_{\Sigma},
+\qquad
+RHH_{\mathrm{ch}}(\cA^!)
+\;\simeq\;
+\bigl(\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA^!)\bigr)_{\Sigma}.
+\end{equation}
+For a chiral Koszul pair, Definition~\ref{def:chiral-koszul-pair}
+provides Verdier-compatible identifications of the two bar
+coalgebras:
+\begin{equation}
+\label{eq:bar-verdier-koszul-pair}
+\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA)
+\;\simeq\;
+\bar{B}^{\mathrm{ch}}(\cA^!),
+\qquad
+\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA^!)
+\;\simeq\;
+\bar{B}^{\mathrm{ch}}(\cA).
+\end{equation}
+This is the required identification chain: the bar coalgebra
+$\bar{B}^{\mathrm{ch}}(\cA)$ and the Koszul dual algebra $\cA^!$
+remain distinct objects, and the bridge between them is the
+Verdier-compatible bar-coalgebra identification~\eqref{eq:bar-verdier-koszul-pair},
+not a direct replacement of $\bar{B}^{\mathrm{ch}}(\cA)$ by~$\cA^!$.
 
-The chiral Hochschild complex in bar degree~$n$ lives on
-$\overline{C}_{n+2}(X)$, a smooth proper variety of complex dimension~$n+2$
-(since $\dim_{\mathbb{C}} X = 1$ and FM compactification preserves smoothness).
-Serre--Verdier duality for $\mathcal{D}$-modules on a smooth proper variety
-$Y$ of dimension~$d$ gives:
+Apply total Verdier duality to the second complex in~\eqref{eq:hoch-descent-A}.
+Since each bar summand is a perfect $\Sigma_n$-equivariant
+$\mathcal{D}$-module on the proper configuration space
+$\overline{C}_{n+2}(X)$, Verdier duality commutes with the
+finite $\Sigma_n$-coinvariants bar degree by bar degree. By
+Lemma~\ref{lem:hochschild-shift-computation}, the variable
+Verdier shift~$[n+2]$ on $\overline{C}_{n+2}(X)$ collapses
+after totalization to the uniform shift~$[2]$ with the
+base-curve twist~$\omega_X$. Therefore
 \[
-H^j(Y, \mathcal{M}) \cong H^{d-j}(Y, \mathbb{D}\mathcal{M})^{\vee}
+R\mathrm{Hom}\bigl(RHH_{\mathrm{ch}}(\cA^!),\, \omega_X[2]\bigr)
+\;\simeq\;
+\bigl(\mathbb{D}_{\Ran}^2\bar{B}^{\mathrm{ch}}(\cA^!)\bigr)_{\Sigma}
+\;\simeq\;
+\bigl(\bar{B}^{\mathrm{ch}}(\cA^!)\bigr)_{\Sigma}.
 \]
-where $\mathbb{D} = R\mathcal{H}\!\mathit{om}_{\mathcal{D}}({-}, \mathcal{D} \otimes \omega_Y^{-1})[\dim Y]$
-is the Verdier duality functor.
-
-Applying this on $\overline{C}_{n+2}(X)$ with
-$\mathcal{M} = \mathrm{Hom}(\mathcal{A}^!, \mathcal{A})$:
-the Koszul pairing identifies
+Using~\eqref{eq:bar-verdier-koszul-pair} and then
+Lemma~\ref{lem:chirhoch-descent} again gives
 \[
-\mathbb{D}(\mathrm{Hom}(\mathcal{A}^!, \mathcal{A}))
-\cong \mathrm{Hom}(\mathcal{A}, \mathcal{A}^!)
-\otimes \omega_{\overline{C}_{n+2}}.
+R\mathrm{Hom}\bigl(RHH_{\mathrm{ch}}(\cA^!),\, \omega_X[2]\bigr)
+\;\simeq\;
+\bigl(\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\cA)\bigr)_{\Sigma}
+\;\simeq\;
+RHH_{\mathrm{ch}}(\cA),
 \]
-By Lemma~\ref{lem:hochschild-shift-computation}, the variable
-Verdier shift~$[n+2]$ at bar degree~$n$ collapses to the uniform
-constant~$[2]$ after totalization and Koszul concentration: the
-totalization contributes $[-n]$, giving net shift $(n+2)-n = 2$
-independent of~$n$. The $\omega_X$ twist encodes
-$\mathcal{D}$-module duality on the base curve. Consequently,
+which is~\eqref{eq:hochschild-H-derived}. Taking cohomology yields
 \[
-\ChirHoch^n(\mathcal{A})
-\cong \ChirHoch^{2-n}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
+\ChirHoch^n(\cA)
+\;\cong\;
+\ChirHoch^{2-n}(\cA^!)^{\vee} \otimes \omega_X.
 \]
-The full details are given in the second proof below.
 
 \medskip\noindent\emph{Second proof: via Kodaira--Spencer map.}
 The Kodaira--Spencer map
@@ -734,45 +748,68 @@ and let $\cA^!$ denote its Koszul dual. Then:
 \end{enumerate}
 \end{theorem}
 
-The derived chiral Hochschild complex $\mathrm{RHH}_{\mathrm{ch}}(A)$ is computed by the algebraic cochain complex $C^*_{\mathrm{ch}}(A, A)$ of Definition~\ref{def:chiral-hochschild-cochain-brace} (\texttt{chiral\_center\_theorem.tex}), which in turn is identified with $\mathrm{RHom}_{\mathsf{ChirAlg}}(A, A)$ via the bar resolution (Proposition~\ref{prop:bar-resolution-chirhoch}).
-
 \begin{proof}
 Part~(a): by Theorem~\ref{thm:hochschild-bar-cobar},
-$\ChirHoch^n(\cA)
-= \mathrm{Ext}^n_{\mathrm{ChirAlg}(X)}(\cA, \cA)$.
-On the Koszul locus, bar concentration
-(Theorem~\ref{thm:bar-concentration}) gives a
-quasi-isomorphism $\barB^{\mathrm{ch}}(\cA) \simeq \cA^{!,\vee}$
-of graded chiral coalgebras. The bar-cobar resolution
-$\Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\cA))
-\xrightarrow{\sim} \cA$
-(Theorem~\ref{thm:bar-cobar-isomorphism-main})
-then provides a resolution of $\cA$ by free chiral algebras
-generated from the graded pieces of~$\cA^!$. The resulting
-Hom complex computing the Ext groups is a complex of
-$\mathcal{D}_X$-module morphisms on the curve~$X$. Since
-$\dim_{\mathbb{C}} X = 1$, the de~Rham functor on $X$ has
-cohomological amplitude~$[0, 2]$ (the de~Rham complex
-$\mathcal{O}_X \to \Omega^1_X$ has length~$2$, so
-$\mathrm{Ext}^n_{\mathcal{D}_X}(\cM, \cN) = 0$ for $n > 2$
-for holonomic $\mathcal{D}_X$-modules). The chiral algebra
-Ext inherits this bound: $\ChirHoch^n(\cA) = 0$ for
-$n \notin \{0, 1, 2\}$.\footnote{This is the chiral analogue
-of Brylinski's theorem: for $\mathcal{D}_X$ on a smooth
-variety of dimension~$d$,
-$\mathrm{HH}^n(\mathcal{D}_X)
-\cong H^{2d-n}_{\mathrm{dR}}(X)$,
-which vanishes for $n \notin \{0, \ldots, 2d\}$.}
+\[
+\ChirHoch^n(\cA)
+\;=\;
+\mathrm{Ext}^n_{\mathrm{ChirAlg}(X)}(\cA, \cA),
+\]
+so $\ChirHoch^n(\cA)=0$ for $n<0$. For $n>2$,
+Theorem~\ref{thm:main-koszul-hoch} gives
+\[
+\ChirHoch^n(\cA)
+\;\cong\;
+\ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X.
+\]
+Since $2-n<0$, the right-hand side vanishes. Hence
+$\ChirHoch^n(\cA)=0$ for $n>2$, and the only possible
+nonzero degrees are $0$, $1$, and~$2$.
 
-Part~(b): concentration in the range $\{0, 1, 2\}$ means
-$P_\cA(t)$ is a polynomial of degree at most~$2$.
-Identifying $\ChirHoch^0(\cA) = Z(\cA)$ (the center) and
-$\ChirHoch^2(\cA) \cong \ChirHoch^0(\cA^!)^\vee \otimes \omega_X$
-(by Theorem~\ref{thm:main-koszul-hoch} with $n = 2$) gives
-$\dim \ChirHoch^2(\cA) = \dim Z(\cA^!)$.
+Part~(b): part~(a) implies that $P_\cA(t)$ is a polynomial of
+degree at most~$2$. Its constant term is
+$\dim \ChirHoch^0(\cA)=\dim Z(\cA)$. For the quadratic term,
+set $n=2$ in Theorem~\ref{thm:main-koszul-hoch}:
+\[
+\ChirHoch^2(\cA)
+\;\cong\;
+\ChirHoch^0(\cA^!)^\vee \otimes \omega_X.
+\]
+Because $\omega_X$ is a line bundle on the fixed curve~$X$, it
+does not change the dimension. Therefore
+\[
+\dim \ChirHoch^2(\cA)
+\;=\;
+\dim \ChirHoch^0(\cA^!)
+\;=\;
+\dim Z(\cA^!),
+\]
+which is exactly~\eqref{eq:hoch-hilbert-polynomial}.
 
-Part~(c) follows from applying~(b) to both $\cA$ and $\cA^!$ and
-using the duality of Theorem~\ref{thm:main-koszul-hoch}.
+Part~(c): applying Theorem~\ref{thm:main-koszul-hoch} in degrees
+$n=0,1,2$ gives
+\[
+\dim \ChirHoch^0(\cA)=\dim \ChirHoch^2(\cA^!),
+\qquad
+\dim \ChirHoch^1(\cA)=\dim \ChirHoch^1(\cA^!),
+\qquad
+\dim \ChirHoch^2(\cA)=\dim \ChirHoch^0(\cA^!).
+\]
+If
+\[
+P_\cA(t)=a_0+a_1 t+a_2 t^2,
+\qquad
+P_{\cA^!}(t)=a_2+a_1 t+a_0 t^2,
+\]
+then
+\[
+t^2 P_{\cA^!}(t^{-1})
+= a_0 + a_1 t + a_2 t^2
+= P_\cA(t),
+\]
+which proves the palindromic identity. Adding the two degree-$2$
+polynomials termwise gives the displayed formula for
+$P_\cA(t)+P_{\cA^!}(t)$.
 \end{proof}
 
 \begin{remark}[Geometric substrate (Volume~II)]
@@ -4852,6 +4889,38 @@ it is computed by OPE residues on configuration spaces
 not by algebraic composition.
 \end{theorem}
 
+\begin{proof}
+By Remark~\ref{rem:comparison-geometric-hoch}, the geometric
+Hochschild complex of this chapter is identified with the algebraic
+cochain complex $C^\bullet_{\mathrm{ch}}(A,A)$ of
+Definition~\ref{def:chiral-hochschild-cochain-brace}. In that
+algebraic model, the Gerstenhaber bracket is defined by the
+antisymmetrization of the single-brace insertion
+\textup{(}Definition~\textup{\ref{def:gerstenhaber-bracket-chiral}}\textup{)}:
+\[
+[f,g]
+=
+f\{g\}
+-(-1)^{(|f|-1)(|g|-1)}g\{f\}.
+\]
+Construction~\ref{const:gerstenhaber-bracket} is the geometric
+realization of the same operation: inserting the configuration of
+$g$ into the $i$-th marked point of the configuration of $f$ gives
+the $i$-th brace term, and taking the residue along the collision
+divisor is the geometric form of the chiral operadic composition.
+Summing over all insertion points produces $f\{g\}$, while the
+second insertion sum produces $g\{f\}$; their antisymmetrization is
+exactly the residue bracket described below.
+
+Therefore the bracket defined by
+Construction~\ref{const:gerstenhaber-bracket} agrees with the
+algebraic Gerstenhaber bracket on cochains. Corollary~\ref{cor:gerstenhaber-cohomology}
+shows that this bracket descends to cohomology, has degree~$-1$,
+and satisfies the graded Jacobi identity. Hence
+$\ChirHoch^\bullet(\mathcal{A})$ is a graded Lie algebra with the
+stated bracket.
+\end{proof}
+
 \begin{construction}[Geometric realization of bracket]\label{const:gerstenhaber-bracket}
 The Gerstenhaber bracket has a natural geometric interpretation via configuration spaces.
 
@@ -4861,18 +4930,47 @@ f &\in \Gamma(\overline{C}_{p+2}(X), \ldots)\\
 g &\in \Gamma(\overline{C}_{q+2}(X), \ldots)
 \end{align*}
 
-The bracket $[f, g]$ is constructed by:
+For each insertion place $1 \leq i \leq p+1$, let
+$f \circ_i g$ be the residue obtained by colliding the
+output point of the $g$-configuration with the $i$-th marked
+point of the $f$-configuration. The total single-insertion
+operation is
+\[
+f \circ g
+\;:=\;
+\sum_{i=1}^{p+1} (-1)^{(q-1)(i-1)}\, f \circ_i g.
+\]
+The chiral Gerstenhaber bracket is then the
+antisymmetrization of the two single-insertion sums:
+\[
+[f,g]
+\;:=\;
+f \circ g
+\;-\;
+(-1)^{(p-1)(q-1)}\, g \circ f.
+\]
+
+Equivalently, the construction proceeds in three stages:
 \begin{enumerate}
-\item \emph{Diagonal insertion}: Insert configuration of $f$ ``inside'' configuration of $g$
+\item \emph{Diagonal insertion}: insert one configuration into a marked point of the other
 \item \emph{Summation}: Sum over all possible insertion points
 \item \emph{Residue}: Extract the coefficient of singular terms
 \end{enumerate}
 
-Explicitly:
-\[[f, g] = \sum_{i=1}^{q+1} (-1)^{\epsilon_i} \text{Res}_{z_0 \to z_i}\left[f(z_0, z_1, \ldots, z_p) 
-\cdot g(\ldots, z_i, \ldots)\right]\]
-
-where the residue extracts the collision behavior as one configuration approaches another.
+Explicitly, the first insertion sum has the form
+\[
+f \circ g
+=
+\sum_{i=1}^{p+1} (-1)^{\epsilon_i}
+\operatorname{Res}_{z_0 \to z_i}
+\left[
+f(\ldots, z_i, \ldots)\cdot
+g(z_0, \ldots, z_q)
+\right],
+\]
+and $g \circ f$ is defined by the same formula with $f$ and $g$
+interchanged. The residue extracts the collision behavior along the
+relevant boundary divisor in the Fulton--MacPherson compactification.
 \end{construction}
 
 \begin{example}[Gerstenhaber bracket for Heisenberg]\label{ex:gerstenhaber-heisenberg}

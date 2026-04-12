@@ -1088,14 +1088,11 @@ $F^{N+1}$ is the finite-stage unit, which is a quasi-isomorphism.
 Lemma~\ref{lem:complete-filtered-comparison} applies identically.
 \end{proof}
 
-\begin{proposition}[Strong filtration for the standard landscape;
+\begin{proposition}[Standard weight truncations and the induced bar filtration;
 \ClaimStatusProvedHere]
 \label{prop:standard-strong-filtration}
-\index{strong completion tower!standard families|textbf}
-The following chiral algebras are strong completion towers
-\textup{(}Definition~\textup{\ref{def:strong-completion-tower})}
-with respect to the conformal weight \textup{(}$L_0$-eigenvalue\textup{)}
-filtration $F^N\cA := \bigoplus_{h \geq N} \cA_h$:
+\index{bar complex!weight truncations for standard families|textbf}
+Let $\cA$ be one of the following chiral algebras:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item $V_k(\fg)$ for any simple~$\fg$ and $k \neq -h^\vee$;
 \item $\mathrm{Vir}_c$ for any~$c$;
@@ -1103,72 +1100,112 @@ filtration $F^N\cA := \bigoplus_{h \geq N} \cA_h$:
  principal nilpotent~$f$, and non-critical~$k$;
 \item $V_\Lambda$ for any positive-definite even lattice~$\Lambda$.
 \end{enumerate}
+Write
+\[
+\cA = \bigoplus_{h \geq 0} \cA_h,
+\qquad
+\cA_{\le N} := \bigoplus_{0 \le h \le N} \cA_h,
+\qquad
+\widehat{\cA}^{\mathrm{wt}} := \prod_{h \geq 0} \cA_h .
+\]
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the inverse limit of the finite weight truncations is the weight
+ completion,
+ \[
+ \varprojlim_N \cA_{\le N} \cong \widehat{\cA}^{\mathrm{wt}},
+ \]
+ and the direct sum~$\cA$ embeds into $\widehat{\cA}^{\mathrm{wt}}$ as
+ a dense subspace; in particular, the direct-sum algebra~$\cA$ is not
+ identified with this inverse limit unless it is already weight-complete;
+\item the finite truncations $\{\cA_{\le N}\}_{N \ge 0}$ form an inverse
+ system of finite-type curved chiral $\Ainf$-algebras;
+\item for the reduced bar complexes
+ \[
+ C_N := \bar B(\cA_{\le N}),
+ \]
+ the total conformal-weight filtration
+ \[
+ F_{\le w}C_N
+ := \operatorname{span}\left\{
+ s^{-1}a_1|\cdots|s^{-1}a_r \,\middle|\,
+ \sum_{j=1}^r \operatorname{wt}(a_j) \le w
+ \right\}
+ \]
+ is an exhaustive increasing filtration preserved by the bar
+ differential;
+\item for each weight bound~$w$ and each $N \ge w$, the transition map
+ $C_{N+1} \to C_N$ restricts to an isomorphism
+ \[
+ F_{\le w}C_{N+1} \xrightarrow{\sim} F_{\le w}C_N.
+ \]
+\end{enumerate}
+Consequently these standard families supply the bar-level hypotheses of
+Proposition~\ref{prop:mc4-weight-cutoff}. What they do not supply is the
+strong-filtration axiom~\eqref{eq:strong-filtration-condition} on
+$\cA$ itself for the descending conformal-weight filtration.
 \end{proposition}
 
 \begin{proof}
-We verify the four axioms of
-Definition~\ref{def:strong-completion-tower}.
+Each family carries the standard nonnegative conformal-weight
+decomposition
+\[
+\cA = \bigoplus_{h \ge 0} \cA_h
+\]
+with finite-dimensional weight spaces. For affine Kac--Moody,
+Virasoro, and principal~$\mathcal{W}$-algebras this is the usual
+$L_0$-grading by conformal weight; for a positive-definite even lattice
+vertex algebra, finite-dimensionality of each~$\cA_h$ follows because
+only finitely many lattice vectors have a given norm.
 
-\emph{Axioms \textup{(1)--(3)} \textup{(}common to all four
-families\textup{)}.}
-Each family admits a $\mathbb{Z}_{\geq 0}$-grading by $L_0$-eigenvalue
-with finite-dimensional graded pieces (this is the graded vertex
-algebra structure). The filtration is separated and complete:
-$\cA = \varprojlim \cA_{\leq N}$ since the grading is bounded below
-by $h = 0$ (vacuum). Each quotient $\cA/F^{N+1}\cA = \cA_{\leq N}$
-is finite-dimensional, hence of finite type. The augmentation ideal
-$\bar{\cA} = F^1\cA$ consists of all fields of positive conformal weight.
+The finite truncation $\cA_{\le N}$ is therefore finite-dimensional.
+The transition map $\cA_{\le N+1} \twoheadrightarrow \cA_{\le N}$ is
+the quotient by the weight-$(N+1)$ summand, so the inverse system
+$\{\cA_{\le N}\}_N$ is well defined. Its inverse limit is the product
+\[
+\varprojlim_N \cA_{\le N}
+\cong \prod_{h \ge 0} \cA_h
+= \widehat{\cA}^{\mathrm{wt}},
+\]
+whereas the original chiral algebra is the direct sum
+$\bigoplus_{h \ge 0} \cA_h$. This is the completion issue in the
+finding: bounded-below grading gives an inverse limit only after
+passing to the weight completion.
 
-\emph{Axiom \textup{(4)} \textup{(}weight additivity of
-$A_\infty$ operations\textup{)}.}
-The chiral $A_\infty$ operations $\mu_r$ in the bar complex arise
-from iterated OPE. For any two homogeneous fields $J^a$ and $J^b$
-of conformal weights $h_a$ and $h_b$, the $n$-th product
-$J^a_{(n)} J^b$ has conformal weight $h_a + h_b - n - 1$.
-The bar differential extracts only the singular terms
-$n \geq 0$, so the \emph{minimal} output weight of $\mu_2$ on
-$F^{i_1}\cA \otimes F^{i_2}\cA$ is $i_1 + i_2 - n_{\max} - 1$
-where $n_{\max}$ is the maximal pole order. In the bar complex,
-however, the inputs lie in $\bar{\cA} = F^1\cA$, and the cobar
-grading convention assigns each bar generator $s^{-1}a$ the weight
-$\operatorname{wt}(a)$. The bar
-differential~$d_{\mathrm{res}}$
-extracts the coefficient of $(z-w)^{-1}$ in the OPE after
-desuspension, which preserves the total weight. More precisely,
-at the level of the reduced bar complex $\barB(\cA)$ with the
-weight grading $\operatorname{wt}(s^{-1}a_1 | \cdots | s^{-1}a_r)
-= \sum_j \operatorname{wt}(a_j)$, the bar differential satisfies
+Now let $C_N = \bar B(\cA_{\le N})$. The weight decomposition on
+$\cA_{\le N}$ induces the total conformal weight on bar words by
+\[
+\operatorname{wt}(s^{-1}a_1|\cdots|s^{-1}a_r)
+:= \sum_{j=1}^r \operatorname{wt}(a_j).
+\]
+Desuspension changes cohomological degree, not conformal weight. A
+summand of the bar differential applies one of the chiral operations
+$\mu_r$ to a consecutive block of homogeneous inputs
+$a_1,\dots,a_r$ and extracts singular modes. For a single OPE step,
+\[
+\operatorname{wt}(a_{(n)}b)
+= \operatorname{wt}(a) + \operatorname{wt}(b) - n - 1
+\le \operatorname{wt}(a) + \operatorname{wt}(b)
+\qquad (n \ge 0),
+\]
+so residue extraction never increases conformal weight. Iterating this
+estimate through the $A_\infty$ terms shows that every summand of the
+bar differential weakly decreases total conformal weight. Equivalently,
 \begin{equation}\label{eq:bar-weight-preservation}
-d_{\mathrm{bar}}(F^{i_1}\barB \otimes \cdots \otimes F^{i_r}\barB)
-\;\subset\; F^{i_1 + \cdots + i_r}\barB
+d_{\mathrm{bar}}(F_{\le w}C_N) \subset F_{\le w}C_N .
 \end{equation}
-because $d_{\mathrm{bar}}$ is a sum of terms, each of which replaces
-two adjacent bar entries $a_j, a_{j+1}$ by a single entry
-$a_j \star a_{j+1}$ where $\star$ is the residue-extracted product,
-and $\operatorname{wt}(a_j \star a_{j+1}) \geq
-\operatorname{wt}(a_j) + \operatorname{wt}(a_{j+1})$ by the
-non-negativity of the pole order extracted.
-The $r$-ary operations $\mu_r$ are obtained by iterating $(r{-}1)$
-binary operations, so the weight bound propagates:
-$\mu_r(F^{i_1}, \ldots, F^{i_r}) \subset F^{i_1 + \cdots + i_r}$.
+This is the correct bar-level statement corresponding to the OPE weight
+formula. It does \emph{not} imply the strong-filtration axiom
+\eqref{eq:strong-filtration-condition} on~$\cA$ itself; for instance,
+for affine currents one has
+$\operatorname{wt}(J^a_{(0)}J^b)=1<2$.
 
-\emph{Family-specific verification.}
-\begin{enumerate}[label=(\alph*)]
-\item For $V_k(\fg)$: generators $J^a$ have $h = 1$; the OPE
- $J^a_{(n)} J^b$ has $h = 2 - n - 1 = 1 - n$, and only $n = 0,1$
- contribute (simple pole: structure constants; double pole: Killing
- form). Both preserve weight additivity.
-\item For $\mathrm{Vir}_c$: generator~$L$ has $h = 2$; the OPE
- $L_{(n)} L$ has $h = 4 - n - 1 = 3 - n$, and $n = 0,1,2,3$
- contribute. Each term satisfies weight additivity.
-\item For $\cW^k(\fg, f_{\mathrm{prin}})$: generators $W^{(s)}$ have
- $h = s$ for $s = 2, 3, \ldots, \operatorname{rank}(\fg) + 1$.
- By the same argument, each OPE preserves weight additivity.
-\item For $V_\Lambda$: generators $\alpha^i_{(-1)}\mathbf{1}$ have
- $h = 1$ and vertex operators $e^\alpha$ have
- $h = |\alpha|^2/2 \geq 1$. Weight additivity follows as in~(a).
- \qedhere
-\end{enumerate}
+Finally, if a homogeneous bar word has total conformal weight at most
+$w$, then each letter occurring in it has weight at most~$w$. Hence for
+$N \ge w$ every such word already lies in $\bar B(\cA_{\le N})$, and
+the transition map $C_{N+1} \to C_N$ is an isomorphism on
+$F_{\le w}$. This proves~\textup{(}iv\textup{)}, and the conclusion
+about Proposition~\ref{prop:mc4-weight-cutoff} is immediate.
 \end{proof}
 
 \begin{proposition}[Reduction of MC4 to finite-stage compatibility;
