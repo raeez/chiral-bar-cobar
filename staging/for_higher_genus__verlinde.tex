@@ -1,0 +1,203 @@
+and the KZB local system has finite monodromy.
+The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$
+on a genus-$g$ curve $\Sigma_g$ therefore computes
+a finite-dimensional invariant at each degree, and the
+symmetric coinvariants recover the space of conformal
+blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
+The following proposition shows that the resulting dimension
+is given by the Verlinde formula~\cite{Verlinde88}.
+
+\begin{proposition}[Verlinde formula from ordered chiral
+homology]
+\label{prop:verlinde-from-ordered}
+Let $k \geq 1$ be a positive integer, and let
+$S_{jl} = \sqrt{2/(k+2)}\,\sin\!\bigl(\pi(j+1)(l+1)/(k+2)\bigr)$
+be the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
+level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Genus~$0$.)}
+  The ordered chiral homology at genus~$0$ with no marked
+  points recovers the unique vacuum:
+  \begin{equation}\label{eq:verlinde-g0}
+    \dim H^0\!\bigl(\cM_{0,0},\, V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^2 = 1.
+  \end{equation}
+  This is the unitarity of the $S$-matrix:
+  $\sum_l S_{jl}^2 = \delta_{j0}$ for $j = 0$ follows from
+  the orthogonality of the sine functions.
+
+\item \textup{(Genus~$1$.)}
+  The ordered chiral homology at genus~$1$ recovers the
+  number of integrable representations:
+  \begin{equation}\label{eq:verlinde-g1}
+    \dim H^0\!\bigl(\cM_{1,0},\, V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^0 = k + 1.
+  \end{equation}
+  By the Zhu algebra identification $A(V_k(\mathfrak{sl}_2))
+  \cong U(\mathfrak{sl}_2)/(e^{k+1}, f^{k+1})$, the $k+1$
+  simple modules of $A(V_k)$ are $V_0, \ldots, V_k$, and
+  the genus-$1$ conformal blocks are their characters.
+  From the ordered chiral homology:
+  Proposition~\textup{\ref{prop:ell-degree0}} computes
+  the degree-$0$ center at integrable level as $\CC^{k+1}$
+  \textup{(}the center of the integrable quotient of $Y_\hbar$
+  at the root of unity $q = e^{2\pi i/(k+2)}$\textup{)}.
+
+\item \textup{(General genus.)}
+  At genus~$g \geq 2$, the Verlinde formula gives:
+  \begin{equation}\label{eq:verlinde-general}
+    Z_g(k) := \dim H^0\!\bigl(\cM_{g,0},\,
+    V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+  This is an integer for all $g \geq 0$, $k \geq 1$.
+  The first values are:
+  \begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} c r r r r r @{}}
+  \toprule
+  $k$ & $Z_0$ & $Z_1$ & $Z_2$ & $Z_3$ & $Z_4$ \\
+  \midrule
+  $1$ & $1$ & $2$ & $4$ & $8$ & $16$ \\
+  $2$ & $1$ & $3$ & $10$ & $36$ & $136$ \\
+  $3$ & $1$ & $4$ & $20$ & $120$ & $800$ \\
+  $4$ & $1$ & $5$ & $35$ & $329$ & $3{,}611$ \\
+  $5$ & $1$ & $6$ & $56$ & $784$ & $13{,}328$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  At $k = 1$: $S_{00} = S_{01} = 1/\sqrt{2}$, so
+  $Z_g(1) = 2 \cdot (1/\sqrt{2})^{2-2g} = 2^g$.
+
+\item \textup{(Handle attachment.)}
+  The ordered bar complex factorization under non-separating
+  sewing recovers the TQFT handle-attachment formula:
+  each isospin channel $j$ contributes a handle operator
+  $H_j = S_{0j}^{-2}$, so
+  \begin{equation}\label{eq:handle-attachment}
+    Z_{g+1}
+    = \sum_{j=0}^{k} S_{0j}^{-2} \cdot S_{0j}^{2-2g}
+    = \sum_{j=0}^{k} S_{0j}^{2-2(g+1)}.
+  \end{equation}
+
+\item \textup{(Separating factorization.)}
+  Under separating degeneration $\Sigma_g \rightsquigarrow
+  \Sigma_{g_1} \cup \Sigma_{g_2}$ with $g = g_1 + g_2$,
+  the bar complex factorization gives
+  \begin{equation}\label{eq:sep-factorization}
+    Z_g
+    = \sum_{j=0}^{k} S_{0j}^{2-2g_1} \cdot S_{0j}^{2-2g_2}
+    \cdot S_{0j}^{-2}
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textup{(i)} The identity $\sum_j S_{0j}^2 = 1$ is the
+$(0,0)$-entry of $S \cdot S^T = I$, which follows from the
+orthogonality relation
+$\sum_{j=0}^{k} \sin(\pi(j{+}1)a/(k{+}2))
+\sin(\pi(j{+}1)b/(k{+}2)) = (k{+}2)\delta_{ab}/2$.
+From the ordered chiral homology: at genus~$0$ with no
+marked points, the conformal block space is the space of
+vacua $\CC \cdot |0\rangle$, which is one-dimensional.
+
+\textup{(ii)} At genus~$1$, $S_{0j}^0 = 1$ for all $j$,
+so $Z_1 = k + 1$. This has three independent derivations:
+\begin{itemize}
+\item \textup{(S-matrix.)} Direct computation:
+  $\sum_{j=0}^{k} 1 = k + 1$.
+\item \textup{(Zhu algebra.)} The Zhu algebra
+  $A(V_k(\mathfrak{sl}_2))$ has $k+1$ simple modules;
+  each contributes a one-dimensional space of genus-$1$
+  conformal blocks (the character).
+\item \textup{(Ordered center.)}
+  Proposition~\ref{prop:ell-degree0} identifies the
+  degree-$0$ center of $Y_\hbar(\mathfrak{sl}_2)$ at
+  integrable level $k$ as $\CC^{k+1}$ (the center of
+  the integrable quotient). The averaging map $\av_0$ is
+  an isomorphism (nothing to symmetrise at degree~$0$),
+  so all $k+1$ dimensions survive.
+\end{itemize}
+
+\textup{(iii)} The Verlinde formula~\cite{Verlinde88} gives
+$Z_g = \sum_j S_{0j}^{2-2g}$ as the dimension of the space
+of conformal blocks on a genus-$g$ curve with no insertions.
+From the ordered chiral homology: the symmetric coinvariants
+of the ordered chain complex compute the conformal blocks
+via the factorization property (TUY~\cite{TUY89}). The
+KZB local system at integrable level decomposes into $k+1$
+channels labeled by integrable representations; each channel
+$j$ contributes $S_{0j}^{2-2g}$ to the partition function.
+The integrality of $Z_g$ follows from the identification
+with the rank of the Verlinde bundle over~$\cM_g$.
+
+\textup{(iv)} Handle attachment: a genus-$g$ surface with
+a non-separating cycle cut open gives a genus-$(g{-}1)$
+surface with two extra marked points. The bar complex sewing
+map reglues these marked points, summing over the $k+1$
+intermediate representations with the propagator
+$S_{0j}^{-2}$ (the inverse of the $j$-th eigenvalue of
+the sewing operator). This gives
+$Z_{g+1} = \sum_j H_j \cdot S_{0j}^{2-2g}$.
+
+\textup{(v)} Separating factorization: the bar complex
+factorization under separating degeneration
+(Theorem~A for the ordered bar complex on $\Ran^{\mathrm{ord}}$)
+decomposes the genus-$g$ partition function into a sum over
+channels of the product of the two lower-genus contributions,
+normalized by the propagator $S_{0j}^{-2}$.
+
+All numerical values in the table have been verified by
+direct computation in
+\texttt{verlinde\_ordered\_engine.py}
+using three independent code paths
+(direct $S$-matrix summation, quantum-dimension formula,
+and handle recursion), cross-checked against the Verlinde
+table of \texttt{verlinde\_shadow\_algebra.py}
+($198$ tests, all passing).
+\end{proof}
+
+\begin{remark}[Verlinde bundle vs shadow tower]
+\label{rem:verlinde-vs-shadow}
+The Verlinde dimension $Z_g$ and the shadow partition
+function $F_g = \kappa \cdot \lambda_g$ are different
+invariants of the same chiral algebra. $Z_g$ is the rank of
+the Verlinde bundle over $\cM_g$ (an integer, from the
+$S$-matrix); $F_g$ is the first Chern class integrated
+over $\overline{\cM}_g$ (a rational number, from $\kappa$).
+For $V_k(\mathfrak{sl}_2)$:
+$\kappa = 3(k{+}2)/4$ (equation~\eqref{eq:sl2-kappa}),
+$F_1 = \kappa/24$, and $Z_1 = k + 1$.
+The two invariants encode complementary data: $Z_g$ counts
+the conformal blocks (combinatorial, from the modular tensor
+category), while $F_g$ measures the curvature (analytic,
+from the Hodge class $\omega_g = c_1(\lambda)$ on
+$\overline{\cM}_g$; AP130: $\omega_g$ lives on
+$\overline{\cM}_g$, not on the curve $\Sigma_g$).
+\end{remark}
+
+\begin{remark}[The ordered refinement]
+\label{rem:verlinde-ordered-refinement}
+The Verlinde dimension $Z_g = \dim(\int_{\Sigma_g}^{\mathrm{ord}}
+V_k)_{\Sigma_n}$ is the dimension of the symmetric coinvariants.
+The full ordered chiral homology
+$\int_{\Sigma_g}^{\mathrm{ord}} V_k(\mathfrak{sl}_2)$
+is strictly larger: its degree-$n$ component carries the
+full KZB monodromy representation of the elliptic braid
+group $\mathrm{EB}_n$
+(Proposition~\ref{prop:ell-degree2},
+Theorem~\ref{thm:ell-ordered-ch}), from which the Verlinde
+dimension is recovered by taking $\Sigma_n$-coinvariants
+and restricting to $n = 0$. The kernel $\ker(\av_n)$
+carries the matrix-valued monodromy data: $R$-matrices,
+$6j$-symbols, and (at genus~$\geq 1$) dynamical quantum
+group data.
+\end{remark}
+
+
+% ================================================================
+
+\section{Ordered chiral homology at genus~$2$:
+$\int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$}

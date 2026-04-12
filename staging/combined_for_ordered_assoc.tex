@@ -1,0 +1,787 @@
+
+% ================================================================
+% NEW MATERIAL FROM STANDALONE (ordered chiral homology paper)
+% Inserted losslessly; macros to be adapted for memoir class
+% ================================================================
+
+
+\medskip
+\noindent
+\textbf{Triangle coherence.}
+The three functors satisfy
+$\gamma = \alpha^{-1} \circ \beta^{-1}$. Each functor
+is an equivalence with explicit inverse as constructed
+above, and the triangle~\eqref{eq:equiv-triangle}
+commutes: $\alpha \circ \gamma \circ \beta = \id$.
+\end{proof}
+
+\begin{remark}[Independent proof via the cohomological Hall algebra]
+\label{rem:independent-proof-coha}
+The equivalence $\textup{(I)} \leftrightarrow \textup{(II)}
+\leftrightarrow \textup{(III)}$ admits a second, independent
+proof for algebras arising as critical CoHAs of quivers with
+potential, using the framework of
+Kontsevich--Soibelman~\cite{KS11},
+Schiffmann--Vasserot~\cite{SV13},
+Yang--Zhao~\cite{YZ18a}, and
+Jindal--Kaubrys--Latyntsev~\cite{JKL26}. The logic is
+orthogonal to the bar-cobar adjunction above: rather than
+constructing the triangle abstractly from the ordered bar
+complex, one exhibits all three structures simultaneously on a
+single geometric object and verifies that they determine each
+other.
+
+\smallskip
+\noindent\textbf{Step~1: simultaneous existence of (I) and (III)
+on the CoHA.}
+Let $(Q,W)$ be a quiver with potential. The critical CoHA
+\[
+  \cH_{Q,W}
+  = \bigoplus_{d \in \ZZ_{\geq 0}^{Q_0}}
+  H^{G_d}_{\mathrm{BM},*}
+  (\cM_d^{\mathrm{nil}},\, \varphi_W)
+\]
+carries two structures of independent geometric origin:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Vertex coproduct} $\Delta_{\mathrm{CoHA}}$, from
+  restriction to Levi subalgebras
+  $G_{d_1} \times G_{d_2} \hookrightarrow G_d$; and
+\item \emph{$R$-matrix} $R(z)$, from the
+  Maulik--Okounkov stable envelope
+  construction~\cite{MO19} on the Nakajima variety
+  associated to~$Q$.
+\end{enumerate}
+Jindal--Kaubrys--Latyntsev~\cite{JKL26} prove that these two
+structures satisfy the vertex bialgebra axiom (their
+Theorems~A and~C):
+\begin{equation}\label{eq:jkl-vertex-bialgebra}
+  \Delta_{\mathrm{CoHA},z}(Y(a,w)\,b)
+  = Y^{(2)}(\Delta_{\mathrm{CoHA},z}(a),w)\,
+  \Delta_{\mathrm{CoHA},z}(b),
+\end{equation}
+which is the OPE compatibility
+axiom~\eqref{eq:ope-compat}. The $R$-matrix satisfies the
+QYBE and unitarity by the stable envelope formalism
+\cite{MO19}; the quasi-coassociativity of
+$\Delta_{\mathrm{CoHA}}$ follows from the
+associativity of the Hall product on the Drinfeld
+double~\cite{YZ18a}. This establishes the equivalence
+$\textup{(I)} \leftrightarrow \textup{(III)}$ by
+construction: the $R$-matrix and the coproduct coexist on
+$\cH_{Q,W}$ and satisfy the quasi-triangularity relation
+$R(z)\, \Delta^{\mathrm{ch}} = \Delta^{\mathrm{ch},\op}\,
+R(z)$.
+
+\smallskip
+\noindent\textbf{Step~2: extraction of (II) from the CoHA
+vertex bialgebra.}
+The CoHA $\cH_{Q,W}$, equipped with its $R$-matrix, is an
+$\Eone$-chiral algebra in the sense of
+Definition~\ref{def:e1-chiral-rmatrix}. The functor $\alpha$
+of the equivalence triangle~\eqref{eq:equiv-triangle}
+extracts the chiral $\Ainf$ operations
+$\{m_k^{\mathrm{ch}}\}$ by restricting the OPE to the
+associahedra
+$K_k \hookrightarrow
+\overline{\FM}_k^{\mathrm{ord}}(\CC)$ as
+in~\eqref{eq:mk-from-ope}. The Stasheff identities follow
+from Stokes' theorem on $K_{k+1}$ as before; the
+convergence of the integrals is guaranteed by
+$S$-locality of the $R$-matrix. This gives
+$\textup{(I)} \to \textup{(II)}$ on the CoHA.
+
+The reverse direction $\textup{(II)} \to \textup{(I)}$ is the
+degree-$2$ holonomy recovery of the $R$-matrix from
+$m_2^{\mathrm{ch}}$, which depends only on the formal
+structure of the Stasheff associahedra and not on the CoHA
+origin.
+
+\smallskip
+\noindent\textbf{Step~3: the triangle closes.}
+By the JKL vertex bialgebra theorem, the CoHA
+simultaneously carries (I), (II), and (III). To verify that
+these three structures \emph{determine} each other (not merely
+coexist), one checks the uniqueness directions. On the Koszul
+locus:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{(I) determines (III):} given an $R$-matrix
+  satisfying the QYBE and $S$-locality, the quasi-triangular
+  coproduct is unique up to gauge equivalence by the
+  Drinfeld reconstruction~\cite{Drinfeld90}
+  (spectral parameter version:
+  Etingof--Kazhdan~\cite{EK96}). The JKL coproduct on the
+  CoHA is the unique one compatible with the MO $R$-matrix.
+\item \emph{(III) determines (I):} the Drinfeld
+  formula~\eqref{eq:r-from-coprod-proof} recovers $S(z)$
+  from $\Delta^{\mathrm{ch}}$, independently of the CoHA
+  construction.
+\item \emph{(I) $\leftrightarrow$ (II):} the extraction of
+  $\Ainf$ operations from the $R$-matrix is the
+  Stasheff--FM construction (direction $\alpha$), whose
+  inverse recovers the $R$-matrix as holonomy (direction
+  $\alpha^{-1}$). Neither direction uses the CoHA.
+\end{enumerate}
+The triangle coherence
+$\alpha \circ \gamma \circ \beta = \id$ then follows from
+the uniqueness of each vertex.
+
+\smallskip
+\noindent\textbf{Independence from the bar-cobar proof.}
+The argument above differs from the proof of
+Theorem~\ref{thm:chiral-qg-equiv} in two respects.
+First, the equivalence $\textup{(I)} \leftrightarrow
+\textup{(III)}$ is established by the geometric CoHA
+construction (stable envelopes for the $R$-matrix,
+Levi restriction for the coproduct, JKL for the vertex
+bialgebra axiom), bypassing the ordered bar complex
+$\Barord(\cA) = T^c(s^{-1}\bar{\cA})$ and the
+cobar dualization~\eqref{eq:coprod-from-bar}. Second, the
+uniqueness of the coproduct given the $R$-matrix is
+deduced from the Drinfeld reconstruction theorem for
+quasi-triangular vertex bialgebras, rather than from the
+bar-cobar adjunction on the Koszul locus. The functor
+$\alpha$ (extraction of $\Ainf$ operations from the
+$R$-matrix via associahedron integrals) is shared between
+
+
+  inverting the Miura transform; the computation is
+  triangular and algorithmic at each spin.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Effective central charge and intertwining
+in the Miura basis]
+\label{rem:spin2-ceff-miura}
+The coproduct~\eqref{eq:coprod-T} in the
+$\cW_{1+\infty}$ field basis has cross-term coefficient
+$(\Psi - 1)/\Psi$ (not $1/\Psi$), as derived in step~4.
+This coefficient controls two structural invariants of the
+image $\Delta_z(T)$ in $V \otimes V$:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Effective central charge.}
+  The image $\Delta_z(T_n)$ generates a Virasoro
+  subalgebra in the tensor product mode algebra with
+  effective central charge
+  \begin{equation}\label{eq:c-eff-spin2}
+    c_{\mathrm{eff}}(\Psi) = 2 + 2(\Psi - 1)^2.
+  \end{equation}
+  At $\Psi = 1$ (free boson): $c_{\mathrm{eff}} = 2$
+  (two decoupled copies, the cross-term vanishes).
+  At $\Psi = 2$: $c_{\mathrm{eff}} = 4$.
+  The quadratic growth $c_{\mathrm{eff}} \sim 2\Psi^2$ at
+  large $\Psi$ reflects the quadratic Miura nonlinearity
+  $\psi_2 = T + J^2/(2\Psi)$.
+  The formula is independent of the spectral parameter~$z$
+  (the $z$-dependent terms in $\Delta_z(T)$ do not
+  contribute to the vacuum expectation value of the
+  commutator $[\Delta_z(T_2), \Delta_z(T_{-2})]$).
+\item \emph{Intertwining with $\Delta_z(J)$.}
+  The commutator
+  $[\Delta_z(T_n),\, \Delta_z(J_m)]
+  = -\Psi \cdot m \cdot \Delta_z(J_{n+m})$
+  has intertwining factor $\Psi$ (not~$1$).
+  The extra factor $\Psi - 1$ beyond the original algebra
+  relation $[T_n, J_m] = -m\,J_{n+m}$ arises from the
+  cross-term $(\Psi - 1)/\Psi \cdot (J \otimes J)_n$
+  commuting with $\Delta_z(J_m) = J_m^L + J_m^R$:
+  the left and right Heisenberg commutators each contribute
+  $-((\Psi-1)/\Psi) \cdot \Psi \cdot m = -(\Psi - 1)m$.
+  At $\Psi = 1$: factor~$1$ (algebra homomorphism).
+\end{enumerate}
+Both features are consequences of the Miura nonlinearity:
+the Drinfeld coproduct is an algebra homomorphism of the
+Yangian $Y(\widehat{\mathfrak{gl}}_1)$ (preserving the
+$\psi$-generator relations), but when expressed in the
+$\cW_{1+\infty}$ field basis via the nonlinear Miura
+inversion $T = \psi_2 - J^2/(2\Psi)$, the image acquires
+$\Psi$-dependent structural invariants that are absent in
+the $\psi$-basis.
+\end{remark}
+
+\begin{remark}[Descent to $\cW_N$]
+\label{rem:w-infty-descent}
+Drinfeld--Sokolov reduction gives
+$\pi_N \colon \cW_{1+\infty}[\Psi]
+\twoheadrightarrow \cW_N$
+for each $N \geq 2$. Since the spectral coproduct of
+Theorem~\ref{thm:w-infty-chiral-qg} is defined
+on the full $\cW_{1+\infty}$, it descends to $\cW_N$
+provided $\pi_N \otimes \pi_N$ intertwines $\Delta_z$ with
+a coproduct on $\cW_N$. For $\cW_{1+\infty}$ itself,
+OPE compatibility holds at all spins by the $GL_1$
+triviality argument (step~6 of the proof); for finite
+$N$, the intertwining $(\pi_N \otimes \pi_N) \circ
+\Delta_z = \Delta_z^{(N)} \circ \pi_N$ follows from the
+compatibility of the Miura transform with truncation
+(Remark~\ref{rem:w-infty-vertex-gap}).
+The tower
+$\cdots \twoheadrightarrow \cW_{N+1}
+\twoheadrightarrow \cW_N
+\twoheadrightarrow \cdots
+\twoheadrightarrow \cW_2 = \mathrm{Vir}_c$
+is a projective system of algebras with spectral
+coproducts.
+At $N = 2$: class $M$, $\kappa = c/2$, irregular KZ
+connection. At $N = 3$: $\kappa(\cW_3) = 5c/6$ (where
+$H_3 - 1 = 5/6$).
+The Gaiotto--Rap\v{c}\'ak $Y$-algebras
+$Y_{N_1,N_2,N_3}[\Psi]$~\cite{GR17} are truncations of
+$\cW_{1+\infty}$; the $S_3$-triality is a symmetry
+of the spectral coproduct, corresponding to three Hecke
+correspondences on spiked-instanton moduli
+(Rap\v{c}\'ak--Soibelman--Yang--Zhao~\cite{RSYZ20}).
+The $\cD$-module $\cF_n^{\mathrm{ord}}(\cW_{1+\infty})$
+has irregular singularities of unbounded Poincar\'e rank
+(spin-$s$ contributes pole order $2s - 1$ after $d$-log
+absorption), providing the boundary algebra of higher-spin
+holographic gravity.
+\end{remark}
+
+\begin{remark}[Proof structure and remaining questions]
+\label{rem:w-infty-vertex-gap}
+Three comments on the proof of
+Theorem~\textup{\ref{thm:w-infty-chiral-qg}}.
+
+\smallskip
+\noindent\emph{(1) Why RTT alone does not suffice.}
+The RTT relation~\eqref{eq:rtt-gl1} is a constraint on the
+\emph{associative algebra} structure (mode commutators).
+The vertex bialgebra axiom~\eqref{eq:ope-compat} is a
+constraint on the \emph{vertex algebra} structure (all
+$n$-products $a_{(n)}b$, including the regular products for
+$n < 0$). For $\mathfrak{gl}_1$ the RTT relation is
+trivially satisfied because the $R$-matrix is scalar; this
+confirms associative-algebra compatibility but does not, by
+itself, establish the full vertex-algebra compatibility.
+The two independent arguments of step~6 (the
+coderivation property on the Koszul-locus bar complex, and
+the JKL vertex bialgebra theorem on the CoHA) close this
+gap.
+
+\smallskip
+\noindent\emph{(2) Truncation to $\cW_N$.}
+Theorem~\ref{thm:glN-chiral-qg} resolves this question:
+for the truncations $\cW_N$ at finite $N \geq 2$, the
+$R$-matrix of $Y(\widehat{\mathfrak{gl}}_N)$ is Yang's
+rational $R$-matrix $R(u) = u\, I + \Psi\, P$ (no longer
+scalar), and the OPE compatibility at each truncation level
+is established by the same two arguments.
+The coderivation argument (argument~A) applies to
+$\cW_N$ at generic level by the same Koszul-locus reasoning.
+The JKL argument (argument~B) applies to
+$Y(\widehat{\mathfrak{gl}}_N)$ by their Theorem~C for
+general quivers.
+
+\smallskip
+\noindent\emph{(3) Antipode and Drinfeld double.}
+The Schiffmann--Mellit--Minets--Vasserot
+isomorphism~\cite{SMMV23} gives the positive half
+$\cH_{\mathrm{Jor}} \cong U(\cW_{1+\infty}[\Psi])^+$.
+The Drinfeld double
+$D(\cH_{\mathrm{Jor}}) \cong
+Y(\widehat{\mathfrak{gl}}_1)$ (Yang--Zhao~\cite{YZ18a})
+provides the full algebra with antipode
+$S(T(u)) = T(u)^{-1}$. Whether this lifts to a
+vertex-algebraic antipode on $\cW_{1+\infty}$, yielding a
+vertex Hopf algebra in the sense of Etingof--Kazhdan, is a
+natural question beyond the scope of the present theorem.
+\end{remark}
+
+\begin{lemma}[Miura inversion of the spectral coproduct at
+spin~$2$]
+\label{lem:coprod-T-miura}
+Let $\psi_1 = J$ and $\psi_2 = T + J^2/(2\Psi)$ be the
+Miura identification of
+Proch\'azka--Rap\v{c}\'ak~\textup{\cite{PR19}}.
+The spectral coproduct
+$\Delta_z(T)
+= \Delta_z(\psi_2) - (1/(2\Psi))\,\Delta_z(J)^2$
+equals
+\begin{equation}\label{eq:coprod-T-derived}
+  \Delta_z(T)
+  \;=\;
+  T \otimes 1
+  + 1 \otimes T
+  + \tfrac{\Psi - 1}{\Psi}\,
+  J \otimes J
+  + z\,(1 \otimes J).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The Drinfeld formula
+$\Delta_z(T(u)) = T(u) \otimes T(u-z)$
+gives, at the $u^{-2}$ coefficient,
+\[
+  \Delta_z(\psi_2)
+  \;=\;
+  \psi_2 \otimes 1
+  + 1 \otimes \psi_2
+  + \psi_1 \otimes \psi_1
+  + z\,(1 \otimes \psi_1).
+\]
+Since $\Delta_z$ is an algebra homomorphism and
+$J = \psi_1$ is primitive,
+\begin{align*}
+  \Delta_z(J)^2
+  &= (J \otimes 1 + 1 \otimes J)^2 \\
+  &= J^2 \otimes 1
+  + 2\,J \otimes J
+  + 1 \otimes J^2.
+\end{align*}
+Substituting $T = \psi_2 - J^2/(2\Psi)$:
+\begin{align*}
+  \Delta_z(T)
+  &= \Delta_z(\psi_2)
+  - \tfrac{1}{2\Psi}\,\Delta_z(J)^2 \\
+  &= \Bigl[
+    \bigl(T + \tfrac{J^2}{2\Psi}\bigr) \otimes 1
+    + 1 \otimes \bigl(T + \tfrac{J^2}{2\Psi}\bigr)
+    + J \otimes J
+    + z\,(1 \otimes J)
+  \Bigr] \\
+  &\qquad
+  - \tfrac{1}{2\Psi}\Bigl[
+    J^2 \otimes 1
+    + 2\,J \otimes J
+    + 1 \otimes J^2
+  \Bigr] \\
+  &= T \otimes 1
+  + 1 \otimes T
+  + \bigl(1 - \tfrac{1}{\Psi}\bigr)\,
+  J \otimes J
+  + z\,(1 \otimes J).
+\end{align*}
+Since $1 - 1/\Psi = (\Psi - 1)/\Psi$, this
+is~\eqref{eq:coprod-T-derived}. The
+$J^2/(2\Psi)$ terms cancel between the Miura
+substitution and the $\Delta_z(J)^2$ correction.
+At $\Psi = 1$ (free boson, $c = 1$) the
+$J \otimes J$ cross-term vanishes and
+$\Delta_z(T) = T \otimes 1 + 1 \otimes T
++ z\,(1 \otimes J)$;
+in the classical limit $\Psi \to \infty$ the
+coefficient tends to~$1$.
+\end{proof}
+
+
+% ----------------------------------------------------------------
+\subsection{The chiral quantum group structure on
+$\cW_N$ for $N \geq 2$}
+\label{subsec:glN-chiral-qg}
+
+Theorem~\ref{thm:w-infty-chiral-qg} established the chiral
+quantum group structure on $\cW_{1+\infty}[\Psi]$ via the
+scalar Maulik--Okounkov $R$-matrix. For the truncations
+$\cW_N = \cW_{1+\infty}/\cI_N$ (generators of spins
+$1, 2, \ldots, N$) the $R$-matrix is no longer scalar: it
+is Yang's rational $R$-matrix on $\CC^N \otimes \CC^N$,
+and the RTT relation is a non-trivial matrix identity.
+
+\begin{theorem}[$Y(\widehat{\mathfrak{gl}}_N)$ chiral
+quantum group for $N \geq 2$]
+\label{thm:glN-chiral-qg}
+For each $N \geq 2$ and generic $\Psi$, the truncation
+$\cW_N[\Psi]$ carries a chiral quantum group datum in
+the sense of
+Theorem~\textup{\ref{thm:chiral-qg-equiv}}: an $N \times N$
+matrix transfer matrix, Yang's rational $R$-matrix with
+level prefix~$\Psi$, and a chiral coproduct with all
+OPE compatibility verified.
+The precise content is as follows.
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \textup{($N \times N$ transfer matrix.)}
+  The affine Yangian $Y(\widehat{\mathfrak{gl}}_N)$ has
+  transfer matrix
+  \begin{equation}\label{eq:glN-transfer}
+    T(u)
+    = I_N + \sum_{r \geq 1} T^{(r)}\, u^{-r},
+    \qquad
+    (T^{(r)})_{ij} = t_{ij}^{(r)},
+    \quad 1 \leq i,j \leq N,
+  \end{equation}
+  an $N \times N$ matrix of formal power series in
+  $u^{-1}$. The Drinfeld--Sokolov reduction
+  $\pi_N \colon \cW_{1+\infty}[\Psi]
+  \twoheadrightarrow \cW_N$ sends the scalar transfer
+  matrix $T(u) = 1 + \sum \psi_n\, u^{-n}$ of
+  Theorem~\textup{\ref{thm:w-infty-chiral-qg}}
+  to the quantum Miura factorisation
+  \begin{equation}\label{eq:glN-miura}
+    T(u)
+    = (u + \Lambda_1^{(1)})
+    (u + \Lambda_2^{(1)})
+    \cdots
+    (u + \Lambda_N^{(1)}),
+  \end{equation}
+  where the $\Lambda_i^{(1)}$ are the Miura fields of
+  Proch\'azka--Rap\v{c}\'ak~\textup{\cite{PR19}}.
+\item \textup{(Yang's rational $R$-matrix.)}
+  The $R$-matrix for $Y(\widehat{\mathfrak{gl}}_N)$
+  in the fundamental representation is
+  \begin{equation}\label{eq:glN-yang-r}
+    % AP126: level prefix Psi mandatory; Psi=0 -> R = uI (trivial). Verified.
+    R(u)
+    = u\, I_{N^2} + \Psi\, P
+    \quad \in \End(\CC^N \otimes \CC^N),
+  \end{equation}
+  where $P(e_i \otimes e_j) = e_j \otimes e_i$ is the
+  permutation and $\Psi$ is the level.
+  The classical $r$-matrix
+  \textup{(}trace-form, level prefix
+  $\Psi$\textup{)} is
+  % AP126: Psi=0 -> r=0. Verified.
+  \begin{equation}\label{eq:glN-classical-r}
+    r(z) = \frac{\Psi\, P}{z},
+  \end{equation}
+  with $r|_{\Psi = 0} = 0$. The unitarity relation is
+  $R(u)\, R(-u) = (\Psi^2 - u^2)\, I$.
+  The Yang--Baxter equation
+  \begin{equation}\label{eq:glN-ybe}
+    R_{12}(u-v)\, R_{13}(u)\, R_{23}(v)
+    = R_{23}(v)\, R_{13}(u)\, R_{12}(u-v)
+  \end{equation}
+  holds for all $N$ and all $\Psi$
+  \textup{(}computed numerically at $N = 2, 3$ by
+  \texttt{glN\_affine\_yangian\_chiral\_qg\_engine.py};
+  proved algebraically in
+  Molev~\textup{\cite{Molev07}},
+  Chapter~$1$\textup{)}.
+  At $N = 1$: $P = 1$ and $R(u) = u + \Psi$ is scalar,
+  recovering the class-$G$ case of
+  Theorem~\textup{\ref{thm:w-infty-chiral-qg}}.
+\item \textup{(Drinfeld coproduct: matrix multiplication.)}
+  The Drinfeld coproduct on $T(u)$ is
+  \begin{equation}\label{eq:glN-drinfeld-coprod}
+    \Delta_z(T(u)) = T(u) \cdot T(u - z)
+    \qquad
+    \textup{(matrix multiplication in $\CC^N$)},
+  \end{equation}
+  that is, in components:
+  \begin{equation}\label{eq:glN-coprod-components}
+    \Delta_z(t_{ij}(u))
+    = \sum_{k=1}^{N}\,
+    t_{ik}(u) \otimes t_{kj}(u - z),
+  \end{equation}
+  where $t_{ij}(u) = \delta_{ij} + \sum_{r \geq 1}
+  t_{ij}^{(r)}\, u^{-r}$.
+  This is coassociative
+  up to the Drinfeld associator $\Phi$:
+  $(\Delta_{z_1} \otimes \id) \circ \Delta_{z_2}(T(u))
+  = T(u) \otimes T(u - z_2) \otimes T(u - z_1 - z_2)$
+  and
+  $(\id \otimes \Delta_{z_2}) \circ \Delta_{z_1}(T(u))
+  = T(u) \otimes T(u - z_1) \otimes T(u - z_1 - z_2)$,
+  strictly coassociative for $\mathfrak{gl}_N$
+  at generic $\Psi$.
+\item \textup{(RTT relation: non-trivial for $N \geq 2$.)}
+  The RTT relation
+  \begin{equation}\label{eq:glN-rtt}
+    R_{12}(u - v)\, T_1(u)\, T_2(v)
+    = T_2(v)\, T_1(u)\, R_{12}(u - v),
+  \end{equation}
+  where $T_1(u) = T(u) \otimes I_N$,
+  $T_2(v) = I_N \otimes T(v)$, is the defining relation of
+  $Y(\mathfrak{gl}_N)$.
+  For $N = 1$, this is trivially satisfied
+  \textup{(}scalar $R$\textup{)}. For $N \geq 2$ it is a
+  genuine quadratic constraint on the generators
+  $t_{ij}^{(r)}$: the commutator $[R_{12}, T_1 T_2]$
+  is generically nonzero
+  \textup{(}verified numerically at $N = 2, 3$\textup{)}.
+\item \textup{(Quantum determinant.)}
+  The quantum determinant
+  \begin{equation}\label{eq:glN-qdet}
+    \mathrm{qdet}\, T(u)
+    = \sum_{\sigma \in S_N}
+    \mathrm{sgn}(\sigma)\,
+    \prod_{i=1}^{N}
+    T_{i,\sigma(i)}\bigl(u - (i-1)\Psi\bigr)
+  \end{equation}
+  is \emph{central} in $Y(\mathfrak{gl}_N)$: it commutes
+  with all $t_{ij}(v)$. In the evaluation representation,
+  $\mathrm{qdet}\, T(u)$ is proportional to the identity
+  on~$\CC^N$ \textup{(}verified numerically at
+  $N = 2, 3$\textup{)}.
+  The $\Psi$-shift $u \mapsto u - (i-1)\Psi$
+  is the quantum correction to the classical determinant
+  $\det T(u)$.
+\item \textup{($\Ainf$ structure.)}
+  The chiral $\Ainf$-operations $m_k^{\mathrm{ch}}$ on
+  $\cW_N[\Psi]$ are extracted from the ordered bar complex
+  $\Barord(\cW_N) = T^c(s^{-1}\overline{\cW}_N)$ via the
+  functor $\alpha$ of
+  Theorem~\textup{\ref{thm:chiral-qg-equiv}}, with
+  input the $R$-matrix~\eqref{eq:glN-yang-r}.
+\end{enumerate}
+The three structures \textup{(}$R$-matrix, coproduct,
+$\Ainf$\textup{)} determine each other by
+Theorem~\textup{\ref{thm:chiral-qg-equiv}}.
+The OPE compatibility axiom~\eqref{eq:ope-compat}
+is satisfied at all spins $1, \ldots, N$ simultaneously
+by the same two independent arguments as in
+Theorem~\textup{\ref{thm:w-infty-chiral-qg}}:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Argument~$A$ \textup{(}coderivation on the
+  Koszul locus\textup{)}.}
+  At generic~$\Psi$, the algebra $\cW_N[\Psi]$ lies on the
+  Koszul locus
+  \textup{(}Definition~\textup{\ref{def:koszul-locus}}\textup{)}.
+  The bar-cobar adjunction
+  $\Omega(\Barord(\cW_N[\Psi]))
+  \xrightarrow{\;\sim\;} \cW_N[\Psi]$
+  is an equivalence, and the coderivation property
+  $d_{\Barord} \circ \Delta = \Delta \circ d_{\Barord}$
+  on $\Barord(\cW_N[\Psi]) = T^c(s^{-1}\overline{\cW}_N[\Psi])$
+  dualizes to OPE
+  compatibility~\eqref{eq:ope-compat} at all spins
+  simultaneously
+  \textup{(}Theorem~\textup{\ref{thm:chiral-qg-equiv}},
+  direction $\textup{(II)} \to \textup{(III)}$\textup{)}.
+  Uniqueness on the Koszul locus identifies this bar-cobar
+  coproduct with the Drinfeld
+  coproduct~\eqref{eq:glN-drinfeld-coprod}.
+\item \emph{Argument~$B$ \textup{(}JKL vertex bialgebra
+  on the CoHA\textup{)}.}
+  The critical CoHA of the Jordan quiver at dimension
+  vector $n \cdot \delta$ ($\delta$ the minimal imaginary
+  root of $\widehat{\mathfrak{gl}}_N$) satisfies the vertex
+  bialgebra axiom~\eqref{eq:ope-compat} by
+  Jindal--Kaubrys--Latyntsev~\textup{\cite{JKL26}},
+  Theorem~C for general quivers. The
+  Schiffmann--Vasserot identification
+  $\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$
+  transports this to the Yangian, giving a second proof
+  at all spins simultaneously.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof follows the seven-step structure of
+Theorem~\ref{thm:w-infty-chiral-qg}, with the scalar
+$R$-matrix replaced by Yang's matrix $R$-matrix.
+
+\medskip
+\noindent
+\textbf{Step~1}
+(CoHA identification; Schiffmann--Vasserot~\cite{SV13}).
+The critical CoHA of the framed Jordan quiver at
+rank~$N$ satisfies
+$\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$.
+The $N = 1$ case is
+Schiffmann--Vasserot~\cite{SV13}; the general case
+uses the Drinfeld--Sokolov hierarchy for
+$\widehat{\mathfrak{gl}}_N$.
+
+\medskip
+\noindent
+\textbf{Step~2}
+(Yangian--$\cW_N$ identification;
+Proch\'azka--Rap\v{c}\'ak~\cite{PR19}).
+The quantum Miura transform gives an isomorphism of
+filtered associative algebras
+$Y(\widehat{\mathfrak{gl}}_N) \cong U(\cW_N[\Psi])$.
+The transfer matrix~\eqref{eq:glN-transfer}
+maps to the Miura
+factorisation~\eqref{eq:glN-miura}.
+At $N = 2$: $\cW_2 = \mathrm{Vir}_c$ with
+$c = 1 - 6(\Psi - 1)^2/\Psi$ and
+$\kappa(\mathrm{Vir}_c) = c/2$.
+At $N = 3$: $\cW_3$ has generators at spins $2, 3$ and
+$\kappa(\cW_3) = 5c/6$ (where $H_3 - 1 = 5/6$).
+
+\medskip
+\noindent
+\textbf{Step~3}
+($R$-matrix: Yang's rational $R$-matrix).
+The $R$-matrix~\eqref{eq:glN-yang-r} in the fundamental
+representation of $\mathfrak{gl}_N$ is:
+\[
+  R(u) = u\, I_{N^2} + \Psi\, P
+  \qquad \textup{(additive convention)}.
+\]
+% AP126: level prefix Psi; Psi=0 -> R = u I (trivial). Verified.
+The level prefix $\Psi$ is mandatory: at $\Psi = 0$,
+$R(u) = u\, I$ (no interaction). The classical
+$r$-matrix is $r(z) = \Psi\, P/z$, with
+$r|_{\Psi = 0} = 0$.
+The key properties, verified numerically at $N = 2, 3$ and
+proved algebraically for all~$N$
+(Molev~\cite{Molev07}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Permutation involution: $P^2 = I$.
+\item Unitarity: $R(u)\, R(-u) = (\Psi^2 - u^2)\, I$.
+\item Yang--Baxter equation~\eqref{eq:glN-ybe}.
+\end{enumerate}
+At $N = 1$: $P = 1$ on $\CC^1 \otimes \CC^1$ and
+$R(u) = u + \Psi$ is scalar, so the RTT
+relation~\eqref{eq:glN-rtt} is trivially satisfied.
+For $N \geq 2$: $P$ is a genuine $N^2 \times N^2$
+permutation matrix with eigenvalues $\pm 1$, and the
+RTT is non-trivial.
+
+\medskip
+\noindent
+\textbf{Step~4}
+(Drinfeld coproduct at all spins).
+The matrix Drinfeld
+formula~\eqref{eq:glN-drinfeld-coprod} gives
+$\Delta_z(T(u)) = T(u) \cdot T(u - z)$. In components,
+the coefficient of $u^{-n}$ is:
+\[
+  \Delta_z(T^{(n)})_{ij}
+  = \sum_{\substack{a,b \geq 0 \\ a+b+c = n}}
+  \binom{b+c-1}{c}\, z^c\,
+  \sum_{k=1}^{N}
+  t_{ik}^{(a)} \otimes t_{kj}^{(b)},
+\]
+where $c = n - a - b \geq 0$ and
+$\binom{-1}{0} = 1$ by convention. The matrix structure
+sums over the auxiliary index $k$, distinguishing this from
+the scalar ($N = 1$) formula~\eqref{eq:gl1-coprod-general}.
+
+\medskip
+\noindent
+\textbf{Step~5}
+(RTT verification).
+The RTT relation~\eqref{eq:glN-rtt} is a consequence of
+the Yang--Baxter equation~\eqref{eq:glN-ybe} by
+evaluating the universal $R$-matrix in the
+fundamental representation. In the evaluation
+representation $T(u) \mapsto R(u - a)$, the RTT becomes
+the YBE with shifted spectral parameters.
+The RTT at
+$N \geq 2$ encodes genuine quadratic relations among the
+generators $t_{ij}^{(r)}$: the commutator
+$[R_{12}(u-v),\, T_1(u)\, T_2(v)]$ is generically nonzero
+(verified at $N = 2$: commutator norm $= 1.0$;
+$N = 3$: commutator norm $= 1.0$;
+$N = 1$: commutator $= 0$).
+
+\medskip
+\noindent
+\textbf{Step~6}
+(OPE compatibility at all spins: two arguments).
+The two independent proofs of OPE compatibility extend
+from $\cW_{1+\infty}$ to $\cW_N$:
+
+\smallskip
+\noindent\emph{Argument~A.}
+The coderivation property
+$d_{\Barord} \circ \Delta = \Delta \circ d_{\Barord}$
+on the bar complex $\Barord(\cW_N[\Psi])
+= T^c(s^{-1}\overline{\cW}_N[\Psi])$
+is a structural property of the cofree tensor coalgebra,
+valid at each truncation $N$. At generic~$\Psi$,
+$\cW_N[\Psi]$ lies on the Koszul locus, and the
+bar-cobar adjunction identifies the bar-cobar coproduct
+with the Drinfeld coproduct by uniqueness
+(Theorem~\ref{thm:chiral-qg-equiv}).
+
+\smallskip
+\noindent\emph{Argument~B.}
+The JKL vertex bialgebra theorem~\cite{JKL26} applies to
+the CoHA of the Jordan quiver at arbitrary rank~$N$
+(their Theorem~C holds for general quivers with
+potential). The vertex coproduct on
+$\cH_{\mathrm{Jor},N}
+\cong Y^+(\widehat{\mathfrak{gl}}_N)$
+satisfies~\eqref{eq:ope-compat} and identifies with
+the Drinfeld coproduct.
+
+\medskip
+\noindent
+\textbf{Step~7}
+(Quantum determinant and full axiom verification).
+The quantum determinant~\eqref{eq:glN-qdet} is central
+in $Y(\mathfrak{gl}_N)$
+(Molev~\cite{Molev07}, Theorem~1.11.2),
+verified numerically to be proportional to
+$I_N$ in the evaluation representation at $N = 2, 3$.
+The coproduct satisfies coassociativity, the counit axiom,
+and OPE compatibility at all spins $1, \ldots, N$ by
+step~6. Together with
+the Yang $R$-matrix and the $\Ainf$ structure from the bar
+complex, this gives the complete chiral quantum group
+datum for $\cW_N[\Psi]$.
+\end{proof}
+
+\begin{remark}[The $N = 1 \to N \geq 2$ transition]
+\label{rem:glN-transition}
+The passage from $N = 1$
+(Theorem~\ref{thm:w-infty-chiral-qg}) to $N \geq 2$
+(Theorem~\ref{thm:glN-chiral-qg}) has the following
+structural features.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The $R$-matrix transitions from scalar
+  ($R(u) = u + \Psi$, trivialising the RTT) to
+  matrix-valued ($R(u) = u\, I + \Psi\, P$, making
+  the RTT a genuine constraint). This is the
+  non-abelian threshold.
+\item The transfer matrix transitions from the scalar
+  series $T(u) = 1 + \sum \psi_n u^{-n}$ to the
+  $N \times N$ matrix
+  $T(u) = I_N + \sum T^{(r)} u^{-r}$.
+  The Drinfeld coproduct
+  $\Delta_z(T(u)) = T(u) \cdot T(u - z)$ is matrix
+  multiplication in $\CC^N$, not scalar multiplication.
+\item The quantum determinant $\mathrm{qdet}\, T(u)$ is a
+  genuinely new central element for $N \geq 2$ (at
+  $N = 1$ it reduces to $T(u)$ itself).
+\item Both arguments for OPE compatibility (coderivation on
+  the Koszul locus, JKL on the CoHA) apply uniformly for
+  all~$N$: argument~A uses only the structural properties
+  of the cofree tensor coalgebra
+  $T^c(s^{-1}\overline{\cW}_N)$ and the Koszul-locus
+  equivalence; argument~B uses JKL for the Jordan quiver
+  at rank~$N$.
+\end{enumerate}
+\end{remark}
+
+
+% ----------------------------------------------------------------
+\subsection{Structural consequences}
+\label{subsec:structural-consequences}
+
+\begin{corollary}[The ordered bar complex encodes all three
+structures]
+\label{cor:bar-encodes-all}
+The ordered bar complex $\Barord(\cA) = T^c(s^{-1}\bar{\cA})$,
+equipped with its bar differential $d_{\Barord}$ and
+deconcatenation coproduct $\Delta$, is the universal
+object from which all three structures in
+Theorem~\textup{\ref{thm:chiral-qg-equiv}} are recovered:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The bar differential $d_{\Barord}$ encodes the
+  $\Ainf$ structure maps $m_k^{\mathrm{ch}}$
+  \textup{(}by the standard bar-cobar correspondence:
+  coderivations of $T^c(s^{-1}\bar{\cA})$ biject with
+  elements of $\prod_k \End^{\mathrm{ch}}_\cA(k)$\textup{)}.
+\item The deconcatenation coproduct $\Delta$ induces,
+  via cobar dualization, the chiral coproduct
+  $\Delta^{\mathrm{ch}}$.
+\item The vertex $R$-matrix $S(z)$ is recovered as the
+  monodromy of the KZ connection, which is itself the
+  degree-$2$ projection of the Maurer--Cartan element
+  $\Theta_\cA$ in $\gEone$.
+\end{enumerate}
+This is the structural content of the $\Eone$ primacy
+principle: the ordered bar complex with deconcatenation
+is the primitive object; the $R$-matrix, the chiral
+coproduct, and the $\Ainf$ operations are projections of
+this single datum.
+\end{corollary}
+
+\begin{remark}[Relation to factorization quantum groups]
+\label{rem:factorization-qg}
+When the hexagon holds strictly, the chiral quantum group
+$(\cA, S(z), \Delta^{\mathrm{ch}})$ is a
+\emph{factorization quantum group}
+(Latyntsev~\cite{Latyntsev23}): its ordered bar complex
+defines a factorization coalgebra on the curve. When the
+hexagon holds only up to $\Phi$, one obtains a
+\emph{quasi-factorization quantum group} with regularized
+holonomy data $(R, \Phi)$.
+\end{remark}
+
+

@@ -1,0 +1,1053 @@
+
+% ================================================================
+% NEW MATERIAL FROM STANDALONE (ordered chiral homology paper)
+% Verlinde formula recovery, genus-2 ordered chiral homology
+% Inserted losslessly; macros to be adapted for memoir class
+% ================================================================
+
+and the KZB local system has finite monodromy.
+The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$
+on a genus-$g$ curve $\Sigma_g$ therefore computes
+a finite-dimensional invariant at each degree, and the
+symmetric coinvariants recover the space of conformal
+blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
+The following proposition shows that the resulting dimension
+is given by the Verlinde formula~\cite{Verlinde88}.
+
+\begin{proposition}[Verlinde formula from ordered chiral
+homology]
+\label{prop:verlinde-from-ordered}
+Let $k \geq 1$ be a positive integer, and let
+$S_{jl} = \sqrt{2/(k+2)}\,\sin\!\bigl(\pi(j+1)(l+1)/(k+2)\bigr)$
+be the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
+level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Genus~$0$.)}
+  The ordered chiral homology at genus~$0$ with no marked
+  points recovers the unique vacuum:
+  \begin{equation}\label{eq:verlinde-g0}
+    \dim H^0\!\bigl(\cM_{0,0},\, V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^2 = 1.
+  \end{equation}
+  This is the unitarity of the $S$-matrix:
+  $\sum_l S_{jl}^2 = \delta_{j0}$ for $j = 0$ follows from
+  the orthogonality of the sine functions.
+
+\item \textup{(Genus~$1$.)}
+  The ordered chiral homology at genus~$1$ recovers the
+  number of integrable representations:
+  \begin{equation}\label{eq:verlinde-g1}
+    \dim H^0\!\bigl(\cM_{1,0},\, V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^0 = k + 1.
+  \end{equation}
+  By the Zhu algebra identification $A(V_k(\mathfrak{sl}_2))
+  \cong U(\mathfrak{sl}_2)/(e^{k+1}, f^{k+1})$, the $k+1$
+  simple modules of $A(V_k)$ are $V_0, \ldots, V_k$, and
+  the genus-$1$ conformal blocks are their characters.
+  From the ordered chiral homology:
+  Proposition~\textup{\ref{prop:ell-degree0}} computes
+  the degree-$0$ center at integrable level as $\CC^{k+1}$
+  \textup{(}the center of the integrable quotient of $Y_\hbar$
+  at the root of unity $q = e^{2\pi i/(k+2)}$\textup{)}.
+
+\item \textup{(General genus.)}
+  At genus~$g \geq 2$, the Verlinde formula gives:
+  \begin{equation}\label{eq:verlinde-general}
+    Z_g(k) := \dim H^0\!\bigl(\cM_{g,0},\,
+    V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+  This is an integer for all $g \geq 0$, $k \geq 1$.
+  The first values are:
+  \begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} c r r r r r @{}}
+  \toprule
+  $k$ & $Z_0$ & $Z_1$ & $Z_2$ & $Z_3$ & $Z_4$ \\
+  \midrule
+  $1$ & $1$ & $2$ & $4$ & $8$ & $16$ \\
+  $2$ & $1$ & $3$ & $10$ & $36$ & $136$ \\
+  $3$ & $1$ & $4$ & $20$ & $120$ & $800$ \\
+  $4$ & $1$ & $5$ & $35$ & $329$ & $3{,}611$ \\
+  $5$ & $1$ & $6$ & $56$ & $784$ & $13{,}328$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  At $k = 1$: $S_{00} = S_{01} = 1/\sqrt{2}$, so
+  $Z_g(1) = 2 \cdot (1/\sqrt{2})^{2-2g} = 2^g$.
+
+\item \textup{(Handle attachment.)}
+  The ordered bar complex factorization under non-separating
+  sewing recovers the TQFT handle-attachment formula:
+  each isospin channel $j$ contributes a handle operator
+  $H_j = S_{0j}^{-2}$, so
+  \begin{equation}\label{eq:handle-attachment}
+    Z_{g+1}
+    = \sum_{j=0}^{k} S_{0j}^{-2} \cdot S_{0j}^{2-2g}
+    = \sum_{j=0}^{k} S_{0j}^{2-2(g+1)}.
+  \end{equation}
+
+\item \textup{(Separating factorization.)}
+  Under separating degeneration $\Sigma_g \rightsquigarrow
+  \Sigma_{g_1} \cup \Sigma_{g_2}$ with $g = g_1 + g_2$,
+  the bar complex factorization gives
+  \begin{equation}\label{eq:sep-factorization}
+    Z_g
+    = \sum_{j=0}^{k} S_{0j}^{2-2g_1} \cdot S_{0j}^{2-2g_2}
+    \cdot S_{0j}^{-2}
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textup{(i)} The identity $\sum_j S_{0j}^2 = 1$ is the
+$(0,0)$-entry of $S \cdot S^T = I$, which follows from the
+orthogonality relation
+$\sum_{j=0}^{k} \sin(\pi(j{+}1)a/(k{+}2))
+\sin(\pi(j{+}1)b/(k{+}2)) = (k{+}2)\delta_{ab}/2$.
+From the ordered chiral homology: at genus~$0$ with no
+marked points, the conformal block space is the space of
+vacua $\CC \cdot |0\rangle$, which is one-dimensional.
+
+\textup{(ii)} At genus~$1$, $S_{0j}^0 = 1$ for all $j$,
+so $Z_1 = k + 1$. This has three independent derivations:
+\begin{itemize}
+\item \textup{(S-matrix.)} Direct computation:
+  $\sum_{j=0}^{k} 1 = k + 1$.
+\item \textup{(Zhu algebra.)} The Zhu algebra
+  $A(V_k(\mathfrak{sl}_2))$ has $k+1$ simple modules;
+  each contributes a one-dimensional space of genus-$1$
+  conformal blocks (the character).
+\item \textup{(Ordered center.)}
+  Proposition~\ref{prop:ell-degree0} identifies the
+  degree-$0$ center of $Y_\hbar(\mathfrak{sl}_2)$ at
+  integrable level $k$ as $\CC^{k+1}$ (the center of
+  the integrable quotient). The averaging map $\av_0$ is
+  an isomorphism (nothing to symmetrise at degree~$0$),
+  so all $k+1$ dimensions survive.
+\end{itemize}
+
+\textup{(iii)} The Verlinde formula~\cite{Verlinde88} gives
+$Z_g = \sum_j S_{0j}^{2-2g}$ as the dimension of the space
+of conformal blocks on a genus-$g$ curve with no insertions.
+From the ordered chiral homology: the symmetric coinvariants
+of the ordered chain complex compute the conformal blocks
+via the factorization property (TUY~\cite{TUY89}). The
+KZB local system at integrable level decomposes into $k+1$
+channels labeled by integrable representations; each channel
+$j$ contributes $S_{0j}^{2-2g}$ to the partition function.
+The integrality of $Z_g$ follows from the identification
+with the rank of the Verlinde bundle over~$\cM_g$.
+
+\textup{(iv)} Handle attachment: a genus-$g$ surface with
+a non-separating cycle cut open gives a genus-$(g{-}1)$
+surface with two extra marked points. The bar complex sewing
+map reglues these marked points, summing over the $k+1$
+intermediate representations with the propagator
+$S_{0j}^{-2}$ (the inverse of the $j$-th eigenvalue of
+the sewing operator). This gives
+$Z_{g+1} = \sum_j H_j \cdot S_{0j}^{2-2g}$.
+
+\textup{(v)} Separating factorization: the bar complex
+factorization under separating degeneration
+(Theorem~A for the ordered bar complex on $\Ran^{\mathrm{ord}}$)
+decomposes the genus-$g$ partition function into a sum over
+channels of the product of the two lower-genus contributions,
+normalized by the propagator $S_{0j}^{-2}$.
+
+All numerical values in the table have been verified by
+direct computation in
+\texttt{verlinde\_ordered\_engine.py}
+using three independent code paths
+(direct $S$-matrix summation, quantum-dimension formula,
+and handle recursion), cross-checked against the Verlinde
+table of \texttt{verlinde\_shadow\_algebra.py}
+($198$ tests, all passing).
+\end{proof}
+
+\begin{remark}[Verlinde bundle vs shadow tower]
+\label{rem:verlinde-vs-shadow}
+The Verlinde dimension $Z_g$ and the shadow partition
+function $F_g = \kappa \cdot \lambda_g$ are different
+invariants of the same chiral algebra. $Z_g$ is the rank of
+the Verlinde bundle over $\cM_g$ (an integer, from the
+$S$-matrix); $F_g$ is the first Chern class integrated
+over $\overline{\cM}_g$ (a rational number, from $\kappa$).
+For $V_k(\mathfrak{sl}_2)$:
+$\kappa = 3(k{+}2)/4$ (equation~\eqref{eq:sl2-kappa}),
+$F_1 = \kappa/24$, and $Z_1 = k + 1$.
+The two invariants encode complementary data: $Z_g$ counts
+the conformal blocks (combinatorial, from the modular tensor
+category), while $F_g$ measures the curvature (analytic,
+from the Hodge class $\omega_g = c_1(\lambda)$ on
+$\overline{\cM}_g$; AP130: $\omega_g$ lives on
+$\overline{\cM}_g$, not on the curve $\Sigma_g$).
+\end{remark}
+
+\begin{remark}[The ordered refinement]
+\label{rem:verlinde-ordered-refinement}
+The Verlinde dimension $Z_g = \dim(\int_{\Sigma_g}^{\mathrm{ord}}
+V_k)_{\Sigma_n}$ is the dimension of the symmetric coinvariants.
+The full ordered chiral homology
+$\int_{\Sigma_g}^{\mathrm{ord}} V_k(\mathfrak{sl}_2)$
+is strictly larger: its degree-$n$ component carries the
+full KZB monodromy representation of the elliptic braid
+group $\mathrm{EB}_n$
+(Proposition~\ref{prop:ell-degree2},
+Theorem~\ref{thm:ell-ordered-ch}), from which the Verlinde
+dimension is recovered by taking $\Sigma_n$-coinvariants
+and restricting to $n = 0$. The kernel $\ker(\av_n)$
+carries the matrix-valued monodromy data: $R$-matrices,
+$6j$-symbols, and (at genus~$\geq 1$) dynamical quantum
+group data.
+\end{remark}
+
+
+% ================================================================
+
+\section{Ordered chiral homology at genus~$2$:
+$\int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$}
+
+% ================================================================
+
+\section{Ordered chiral homology at genus~$2$:
+$\int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$}
+\label{sec:genus2-ordered}
+
+The genus-$1$ construction of \S\ref{sec:elliptic-ordered}
+replaces the rational propagator $1/z$ by the elliptic
+function $\wp_1 = \theta_1'/\theta_1$ and the KZ connection
+by the KZB connection. At genus~$2$, three qualitatively
+new features enter: (i)~the prime form $E(z,w)$ on a
+genus-$2$ Riemann surface $\Sigma_2$ replaces the Jacobi
+theta function; (ii)~the period matrix
+$\Omega \in \HHH_2 = \{Z \in M_2(\CC) : Z = Z^t,\;
+\mathrm{Im}\,Z > 0\}$ is a $2 \times 2$ symmetric matrix,
+and the KZB connection coefficients involve the matrix
+$(\mathrm{Im}\,\Omega)^{-1}$ rather than the scalar
+$1/\mathrm{Im}(\tau)$; (iii)~the fundamental group
+$\pi_1(\Conf_n^{\mathrm{ord}}(\Sigma_2))$ is the genus-$2$
+surface braid group, an extension of the pure braid group
+by $\pi_1(\Sigma_2)^n \cong (\ZZ^4)^n$ with four generators
+per point (two $A$-cycles, two $B$-cycles).
+
+% ----------------------------------------------------------------
+\subsection{Setup: the genus-$2$ ordered chiral chain
+complex}
+\label{subsec:genus2-setup}
+
+Let $\Sigma_2$ be a smooth projective curve of genus~$2$
+with Siegel period matrix
+$\Omega = \bigl(\begin{smallmatrix}
+\Omega_{11} & \Omega_{12} \\
+\Omega_{12} & \Omega_{22}
+\end{smallmatrix}\bigr)
+\in \HHH_2$.
+Fix a symplectic basis
+$\{A_1, A_2, B_1, B_2\}$ of $H_1(\Sigma_2, \ZZ)$
+with intersection pairing
+$A_i \cdot B_j = \delta_{ij}$, and let
+$\omega_1, \omega_2 \in H^0(\Sigma_2, K_{\Sigma_2})$
+be the normalised holomorphic differentials satisfying
+$\oint_{A_i} \omega_j = \delta_{ij}$,
+$\oint_{B_i} \omega_j = \Omega_{ij}$.
+
+The bar propagator on $\Sigma_2$ is
+\begin{equation}\label{eq:bar-prop-g2}
+  \eta^{(2)}_{ij}
+  = d\log E(z_i, z_j),
+\end{equation}
+where $E(z,w)$ is the \emph{prime form} on $\Sigma_2$:
+a section of $K_{\Sigma_2}^{-1/2} \boxtimes
+K_{\Sigma_2}^{-1/2}$ with a simple zero along the
+diagonal $z = w$ and no other zeros or poles.
+This is weight~$1$ (the bar propagator is always weight~$1$).
+Explicitly, in terms of the Riemann theta function
+$\theta[\delta](z|\Omega)$ with odd characteristic
+$\delta$:
+\begin{equation}\label{eq:prime-form-g2}
+  E(z, w)
+  = \frac{\theta[\delta]\!\left(
+  \int_w^z \vec{\omega}\,\big|\,\Omega\right)}
+  {h_\delta(z)\,h_\delta(w)},
+\end{equation}
+where $\vec{\omega} = (\omega_1, \omega_2)^t$,
+$\int_w^z \vec{\omega} \in \CC^2$ is the Abel--Jacobi
+map, and $h_\delta$ is a half-differential depending on the
+odd spin structure $\delta$.
+In the genus-$1$ limit
+($\Omega_{12} \to 0$, $\Omega_{22} \to i\infty$), one
+component decouples and
+$E(z,w) \to \theta_1(z - w|\Omega_{11})/\theta_1'(0|\Omega_{11})$,
+recovering the elliptic prime form.
+
+\begin{remark}[The Szeg\H{o} kernel at genus~$2$]
+\label{rem:szego-g2}
+The logarithmic derivative of the prime form,
+\begin{equation}\label{eq:szego-g2}
+  S_2(z, w)
+  = d_z \log E(z, w)
+  = \partial_z \log \theta[\delta]\!\Bigl(
+  \int_w^z \vec{\omega}\,\Big|\,\Omega\Bigr)
+  \cdot \omega(z)
+  - d_z \log h_\delta(z),
+\end{equation}
+is the genus-$2$ Szeg\H{o} kernel. It has a simple pole
+at $z = w$ with residue~$1$ (matching $1/(z-w)$ locally)
+and is quasi-periodic under the $B$-cycles:
+\begin{equation}\label{eq:szego-quasiperiod}
+  S_2(z + B_\alpha, w)
+  = S_2(z, w)
+  - 2\pi i\,\omega_\alpha(z),
+  \qquad \alpha = 1, 2.
+\end{equation}
+The two-component quasi-periodicity
+increment $-2\pi i\,\omega_\alpha(z)$ replaces the scalar
+$-2\pi i\,dz$ of the genus-$1$ case; it is the source of
+the $2 \times 2$ matrix structure in the genus-$2$ KZB
+connection.
+\end{remark}
+
+The ordered chiral chain complex at degree~$n$ on
+$\Sigma_2$ is
+\begin{equation}\label{eq:g2-chiral-cx}
+  \cC_n^{\mathrm{ord}}(\Sigma_2, \cA)
+  = \Bigl(
+  \Omega^*_{\log}\bigl(
+  \overline{\FM}_n^{\mathrm{ord}}(\Sigma_2)\bigr)
+  \otimes (s^{-1}\bar{\cA})^{\otimes n},
+  \;\; d_{\mathrm{total}}
+  \Bigr)
+\end{equation}
+with
+\begin{equation}\label{eq:d-total-g2}
+  d_{\mathrm{total}}
+  = d_{\mathrm{dR}}
+  + d_{\mathrm{bar}}
+  + \nabla_{\mathrm{KZB}}^{(g=2)}.
+\end{equation}
+
+\begin{definition}[Ordered chiral homology on $\Sigma_2$]
+\label{def:ord-ch-g2}
+The \emph{ordered chiral homology of $\cA$ on $\Sigma_2$} is
+\begin{equation}\label{eq:ord-ch-g2}
+  \int_{\Sigma_2}^{\mathrm{ord}} \cA
+  \;:=\;
+  \bigoplus_{n \geq 0}
+  H^*\bigl(
+  \cC_n^{\mathrm{ord}}(\Sigma_2, \cA),\;
+  d_{\mathrm{total}}\bigr).
+\end{equation}
+\end{definition}
+
+\noindent
+\textbf{Curvature.}
+The fiberwise bar differential at genus~$2$ acquires
+curvature (UNIFORM-WEIGHT):
+\begin{equation}\label{eq:fib-curvature-g2}
+  d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_2,
+\end{equation}
+% AP1: kappa(V_k(sl_2)) = 3(k+2)/4 from landscape_census.tex;
+%   k=0 -> 3/2; k=-2 -> 0 (critical). VERIFIED.
+where $\omega_2 = c_1(\lambda) \in H^2(\overline{\cM}_2)$
+is the Hodge class on $\overline{\cM}_2$
+(a class on the \emph{moduli space}, not a form on the
+curve), and $\kappa(\cA) = 3(k+2)/4$ for
+$\cA = Y_\hbar(\mathfrak{sl}_2)$. The period-corrected
+differential
+$D^{(2)} = d_{\mathrm{total}} - \kappa(\cA) \cdot
+\omega_2 \cdot [\text{Hodge correction}]$ restores
+$(D^{(2)})^2 = 0$ at the total level.
+
+% ----------------------------------------------------------------
+\subsection{The genus-$2$ KZB connection}
+\label{subsec:g2-kzb}
+
+At degree~$n \geq 2$, the KZB connection on $\Sigma_2$
+is the genus-$2$ analogue of~\eqref{eq:kzb-ell}
+(Bernard~\cite{Bernard88},
+Calaque--Enriquez--Etingof~\cite{CEE09} for the
+universal formulation at arbitrary genus).
+The connection has two components: a spatial part on
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$ and a modular part
+along the Siegel upper half-space~$\HHH_2$.
+
+The spatial part at degree~$n$ is
+\begin{equation}\label{eq:kzb-g2-spatial}
+  \nabla^{(2)}_{\mathrm{spatial}}
+  = d
+  - \hbar \sum_{i < j}
+  \bigl(S_2(z_i, z_j)\bigr)\,\Omega_{ij},
+\end{equation}
+where $\hbar = 1/(k + h^\vee) = 1/(k+2)$ for
+$\mathfrak{sl}_2$, $S_2(z_i, z_j) = d_{z_i}\log E(z_i, z_j)$
+is the Szeg\H{o} kernel~\eqref{eq:szego-g2},
+and $\Omega_{ij}$ is the Casimir acting in positions
+$i, j$. This reduces to the genus-$1$ spatial connection
+$\hbar\,\Omega\,\wp_1(w, \tau)\,dw$ in the degeneration
+$\Sigma_2 \to E_\tau$ (one handle collapses).
+
+The modular part is a connection along the Siegel
+directions $\Omega_{\alpha\beta}$ ($\alpha, \beta = 1, 2$):
+\begin{equation}\label{eq:kzb-g2-modular}
+  \nabla^{(2)}_{\mathrm{modular}}
+  = \sum_{\alpha \leq \beta}
+  \Bigl(
+  \partial_{\Omega_{\alpha\beta}}
+  - \frac{1}{2\pi i}\,\hbar
+  \sum_{i < j}
+  \partial_{z_i}\partial_{z_j}
+  \log E(z_i, z_j) \cdot
+  \omega_\alpha(z_i)\,\omega_\beta(z_j)\,
+  \Omega_{ij}
+  \Bigr)
+  d\Omega_{\alpha\beta}.
+\end{equation}
+At genus~$1$, the Siegel matrix reduces to the scalar
+$\tau = \Omega_{11}$, $\omega_1(z) = dz$, and the modular
+part reduces to
+$\partial_\tau - \frac{\hbar}{2\pi i}\,
+\wp(w, \tau)\,\Omega\,d\tau$
+of equation~\eqref{eq:kzb-tau}. At genus~$2$, the modular
+part has \emph{three} independent components
+$d\Omega_{11}$, $d\Omega_{12}$, $d\Omega_{22}$ (the three
+directions in~$\HHH_2$). The flatness of the full KZB
+system follows from the genus-$2$ heat equation for the
+theta function:
+\begin{equation}\label{eq:heat-g2}
+  \frac{\partial}{\partial \Omega_{\alpha\beta}}
+  \theta[\delta](z|\Omega)
+  = \frac{1}{2\pi i}\,
+  \frac{\partial^2}{\partial z_\alpha\,\partial z_\beta}
+  \theta[\delta](z|\Omega).
+\end{equation}
+
+\begin{remark}[The $(2 \times 2)$-matrix structure]
+\label{rem:matrix-structure-g2}
+The genus-$2$ KZB system makes essential use of the
+matrix $(\mathrm{Im}\,\Omega)^{-1}$. In the de~Rham
+description, the harmonic projection requires the
+inner product on $H^1(\Sigma_2)$ given by the Hodge
+star, which on a genus-$2$ surface is encoded by the
+$2 \times 2$ positive-definite matrix
+$\mathrm{Im}\,\Omega$. Its inverse
+\begin{equation}\label{eq:im-omega-inv}
+  (\mathrm{Im}\,\Omega)^{-1}
+  = \frac{1}{\det(\mathrm{Im}\,\Omega)}
+  \begin{pmatrix}
+    \mathrm{Im}\,\Omega_{22} &
+    -\mathrm{Im}\,\Omega_{12} \\
+    -\mathrm{Im}\,\Omega_{12} &
+    \mathrm{Im}\,\Omega_{11}
+  \end{pmatrix}
+\end{equation}
+is a genuine $2 \times 2$ matrix (not a scalar as at
+genus~$1$ where $(\mathrm{Im}\,\Omega)^{-1} =
+1/\mathrm{Im}(\tau)$). The $B$-cycle monodromy at
+genus~$2$ involves the matrix exponential
+$\exp(-2\pi i\,\hbar\,\Omega_{ij})$ with the Casimir
+acting through a $2 \times 2$ block corresponding to
+the two $B$-cycles, producing a \emph{doubly-dynamical}
+parameter.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Degree $0$: the center}
+\label{subsec:g2-degree0}
+
+At degree~$0$, there are no marked points and no
+configuration space; the ordered chiral homology reduces
+to the chiral center of~$\cA$, independent of the base
+curve.
+
+\begin{proposition}[Degree-$0$ ordered chiral homology on
+$\Sigma_2$]
+\label{prop:g2-degree0}
+For $\cA = Y_\hbar(\mathfrak{sl}_2)$:
+\begin{equation}\label{eq:g2-degree0}
+  H^*\bigl(\cC_0^{\mathrm{ord}}(\Sigma_2,
+  Y_\hbar(\mathfrak{sl}_2))\bigr)
+  = Z(Y_\hbar(\mathfrak{sl}_2))
+  = \CC[\operatorname{qdet}\,T(u)].
+\end{equation}
+This is identical to degree~$0$ at genus~$0$
+and genus~$1$
+\textup{(}Proposition~\textup{\ref{prop:ell-degree0}}\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The degree-$0$ factorisation $\cD$-module is a skyscraper
+at the empty configuration. It depends only on the algebra
+$\cA$, not on the base curve.
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{Degree $1$: de~Rham cohomology of
+$\Sigma_2$ with Yangian coefficients}
+\label{subsec:g2-degree1}
+
+At degree~$1$,
+$\Conf_1^{\mathrm{ord}}(\Sigma_2) = \Sigma_2$ and the KZB
+connection has no pairwise terms ($i < j$ is empty), so the
+ordered chiral chain complex is
+\begin{equation}\label{eq:g2-degree1-cx}
+  \cC_1^{\mathrm{ord}}(\Sigma_2, Y_\hbar)
+  = \Bigl(\Omega^*(\Sigma_2) \otimes s^{-1}\bar{Y}_\hbar,
+  \;\; d_{\mathrm{dR}} + d_{\mathrm{bar}}\Bigr),
+\end{equation}
+where $\bar{Y}_\hbar = \ker(\varepsilon)$ is the
+augmentation ideal.
+The de~Rham complex of $\Sigma_2$ has cohomology
+\begin{equation}\label{eq:dr-sigma2}
+  H^0(\Sigma_2) = \CC, \qquad
+  H^1(\Sigma_2) = \CC^4, \qquad
+  H^2(\Sigma_2) = \CC,
+\end{equation}
+generated respectively by $1$; the four cycle forms
+$\omega_1, \omega_2$ ($A$-cycles) and
+$\bar{\omega}_1, \bar{\omega}_2$ ($B$-cycles, with
+normalisation involving
+$(\mathrm{Im}\,\Omega)^{-1}$); and the volume form.
+By the K\"unneth theorem, with bar cohomology
+$H^*(s^{-1}\bar{Y}_\hbar, d_{\mathrm{bar}}) =
+s^{-1}\mathfrak{sl}_2$ concentrated in degree~$1$
+(equation~\eqref{eq:bar-degree1-yangian}):
+
+\begin{proposition}[Degree-$1$ ordered chiral homology on
+$\Sigma_2$]
+\label{prop:g2-degree1}
+\begin{equation}\label{eq:g2-degree1-result}
+  H^*\bigl(\cC_1^{\mathrm{ord}}(\Sigma_2,
+  Y_\hbar(\mathfrak{sl}_2))\bigr)
+  \cong H^*(\Sigma_2) \otimes s^{-1}\mathfrak{sl}_2
+  \cong (s^{-1}\mathfrak{sl}_2)^{\oplus 6},
+\end{equation}
+with the six copies sitting in cohomological degrees
+$1, 2, 2, 2, 2, 3$ \textup{(}from the tensor product of
+$H^{0,1,1,1,1,2}(\Sigma_2)$ with the degree-$1$ bar
+cohomology $s^{-1}\mathfrak{sl}_2$\textup{)}.
+The total dimension is $6 \cdot 3 = 18$.
+\end{proposition}
+
+\begin{proof}
+Since the KZB connection is trivial at degree~$1$
+(no pairs $i < j$), the complex splits as a tensor
+product. The bar cohomology at degree~$1$ is
+$s^{-1}\mathfrak{sl}_2$ by
+Koszulness of $V_k(\mathfrak{sl}_2)$
+(equation~\eqref{eq:bar-degree1-yangian}). The de~Rham
+Betti numbers of $\Sigma_2$ are $(1, 4, 1)$, and
+the K\"unneth formula gives $6 = 1 + 4 + 1$ copies of
+$s^{-1}\mathfrak{sl}_2$.
+\end{proof}
+
+\begin{remark}[Comparison with genus~$0$ and genus~$1$]
+At genus~$0$, the degree-$1$ cohomology is
+$3$-dimensional ($1$ copy of $s^{-1}\mathfrak{sl}_2$
+from $H^0(D^\times)$, with additional degree-$1$
+contribution from the circle). At genus~$1$, the Betti
+numbers $(1,2,1)$ give $12 = 4 \cdot 3$. At genus~$2$,
+the Betti numbers $(1,4,1)$ give $18 = 6 \cdot 3$. The
+pattern at genus~$g$ is
+$\dim H^*(\cC_1^{\mathrm{ord}}) = 3(2g + 2)$ from
+$\dim H^*(\Sigma_g) = 2 + 2g$, reflecting the $2g$
+extra $1$-cycles on $\Sigma_g$.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Degree $2$: the genus-$2$ KZB local system}
+\label{subsec:g2-degree2}
+
+At degree~$2$, the configuration space
+$\Conf_2^{\mathrm{ord}}(\Sigma_2) = \Sigma_2^2 \setminus
+\Delta$ carries the KZB connection with non-trivial
+pairwise interaction. After separating the
+centre-of-mass coordinate (translation on $\Sigma_2$ via
+the Jacobian $\mathrm{Jac}(\Sigma_2) =
+\CC^2/(\ZZ^2 + \Omega\,\ZZ^2)$, which has dimension~$2$),
+the relative configuration is a punctured
+genus-$2$ surface:
+the KZB local system lives on $\Sigma_2 \setminus \{0\}$,
+a genus-$2$ surface with one puncture.
+
+The ordered chiral chain complex at degree~$2$ is
+\begin{equation}\label{eq:g2-degree2-cx}
+  \cC_2^{\mathrm{ord}}(\Sigma_2, Y_\hbar)
+  = \Bigl(
+  \Omega^*_{\log}\bigl(
+  \overline{\FM}_2^{\mathrm{ord}}(\Sigma_2)\bigr)
+  \otimes (s^{-1}\bar{Y}_\hbar)^{\otimes 2},
+  \;\;
+  d_{\mathrm{dR}} + d_{\mathrm{bar}}
+  + \nabla_{\mathrm{KZB}}^{(g=2)}
+  \Bigr).
+\end{equation}
+The collision residue is governed by the genus-$2$
+$r$-matrix
+% PE-1: r-matrix. Family: affine KM sl_2 on genus-2 curve.
+%   r(z,w) = hbar * S_2(z,w) * Omega (KZ convention).
+%   Level parameter: hbar = 1/(k+2).
+%   Convention: KZ normalization (consistent with genus-1 section).
+%   k=0 check: hbar = 1/2, r nonzero for non-abelian g (KZ: correct).
+%   k=-2 check: hbar diverges (critical level: correct).
+%   Source: CEE09, Bernard88.
+%   verdict: ACCEPT
+\begin{equation}\label{eq:r-g2}
+  r^{(g=2)}(z_i, z_j)
+  = \hbar\,S_2(z_i, z_j)\,\Omega
+  = \frac{1}{k + h^\vee}\,
+  d_{z_i}\!\log E(z_i, z_j)\,\Omega,
+\end{equation}
+where $\hbar = 1/(k + h^\vee) = 1/(k+2)$ and $\Omega$
+is the $\mathfrak{sl}_2$ Casimir (in the KZ normalisation
+consistent with equation~\eqref{eq:kzb-ell}).
+
+\smallskip
+\noindent
+\textbf{Decomposition by $\mathfrak{sl}_2$-isospin.}
+On $V \otimes V = \operatorname{Sym}^2 V \oplus
+\bigwedge\nolimits^2 V$ with $V = \CC^2$:
+\[
+  \Omega\big|_{\operatorname{Sym}^2} = +\tfrac{1}{2},
+  \qquad
+  \Omega\big|_{\bigwedge^2} = -\tfrac{3}{2},
+\]
+exactly as at genus~$0$ and genus~$1$. The KZB system
+decomposes into scalar equations on each isospin channel,
+now with genus-$2$ coefficients.
+
+\smallskip
+\noindent
+\textbf{Monodromy.}
+The fundamental group
+$\pi_1(\Sigma_2 \setminus \{0\})$ has presentation
+\begin{equation}\label{eq:fund-gp-g2}
+  \pi_1(\Sigma_2 \setminus \{0\})
+  = \bigl\langle
+  a_1, b_1, a_2, b_2, \gamma
+  \;\big|\;
+  [a_1, b_1]\,[a_2, b_2]\,\gamma = 1
+  \bigr\rangle
+\end{equation}
+with $a_\alpha, b_\alpha$ the $A$- and $B$-cycle
+generators ($\alpha = 1, 2$) and $\gamma$ the puncture
+loop. The KZB connection produces a monodromy
+representation
+\begin{equation}\label{eq:monodromy-rep-g2}
+  \rho^{(2)} \colon
+  \pi_1(\Sigma_2 \setminus \{0\})
+  \to \operatorname{GL}(V \otimes V)
+\end{equation}
+with monodromy matrices:
+\begin{itemize}
+\item Puncture loop:
+  $M_\gamma = \exp(2\pi i\,\hbar\,\Omega)$
+  (identical to genus~$0$ and genus~$1$, capturing
+  the local collision residue).
+\item $A$-cycles:
+  $M_{a_\alpha}$ ($\alpha = 1, 2$); the $A$-cycle
+  monodromy is trivial at leading order since
+  $S_2(z, w)$ is periodic under $A$-cycles:
+  $S_2(z + A_\alpha, w) = S_2(z, w)$.
+\item $B$-cycles:
+  $M_{b_\alpha}$ ($\alpha = 1, 2$); the
+  quasi-periodicity~\eqref{eq:szego-quasiperiod} gives
+  a shift by $-2\pi i\,\omega_\alpha$, producing
+  \begin{equation}\label{eq:b-monodromy-g2}
+    M_{b_\alpha}
+    = \exp\!\bigl(-2\pi i\,\hbar\,
+    \Omega \cdot \omega_\alpha\bigr),
+    \qquad \alpha = 1, 2.
+  \end{equation}
+  At genus~$1$, $\omega_1 = dz$ is a scalar and
+  $M_B = M_\gamma^{-1}$; at genus~$2$, the two $B$-cycle
+  monodromies $M_{b_1}, M_{b_2}$ are independent and
+  involve the two holomorphic differentials
+  $\omega_1, \omega_2$ separately.
+\end{itemize}
+The constraint from the fundamental group relation is
+\begin{equation}\label{eq:constraint-g2}
+  [M_{a_1}, M_{b_1}]\,
+  [M_{a_2}, M_{b_2}]\,
+  M_\gamma = I.
+\end{equation}
+
+\begin{remark}[Dynamical parameters at genus~$2$]
+\label{rem:dynamical-g2}
+The $B$-cycle monodromies at genus~$2$ depend on a
+\emph{two-component} dynamical parameter
+$\lambda = (\lambda_1, \lambda_2) \in \fh^* \oplus \fh^*$,
+replacing the single dynamical parameter $\lambda \in \fh^*$
+of the genus-$1$ theory
+(Remark~\textup{\ref{rem:dynamical-parameter}}).
+The dynamical Yang--Baxter equation is replaced by a
+system of two coupled equations, one for each $B$-cycle.
+This is the genus-$2$ instantiation of the Felder dynamical
+$R$-matrix theory~\cite{Felder94,FelderVarchenko96}.
+\end{remark}
+
+\begin{proposition}[Degree-$2$ ordered chiral homology on
+$\Sigma_2$]
+\label{prop:g2-degree2}
+The degree-$2$ ordered chiral homology
+$H^*(\cC_2^{\mathrm{ord}}(\Sigma_2, Y_\hbar))$ is the
+de~Rham cohomology of the KZB local system on
+$\Conf_2^{\mathrm{ord}}(\Sigma_2)$ with coefficients in
+$(s^{-1}\bar{Y}_\hbar)^{\otimes 2}$.
+On evaluation modules $V_a \otimes V_b$
+\textup{(}$V = \CC^2$, so the local system has
+rank~$d^2 = 4$\textup{)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The KZB local system on
+  $\Sigma_2 \setminus \{0\}$ \textup{(}a genus-$2$ surface
+  with one puncture\textup{)} has monodromy
+  representation~\eqref{eq:monodromy-rep-g2} with generators
+  $M_{a_1}, M_{b_1}, M_{a_2}, M_{b_2}, M_\gamma$.
+\item For generic $\hbar$, the monodromy has no invariant
+  vectors: $H^0_{\mathrm{dR}} = 0$.
+\item The Euler characteristic of a rank-$r$ local system on
+  a surface of genus~$g$ with $s$ punctures is
+  $\chi = r(2 - 2g - s)$. For $g = 2$, $s = 1$,
+  $r = d^2 = 4$:
+  \begin{equation}\label{eq:g2-degree2-euler}
+    \chi = 4 \cdot (2 - 4 - 1) = -12.
+  \end{equation}
+\item Since $H^0 = 0$ for generic $\hbar$ and
+  $H^2 = 0$ \textup{(}the puncture forces vanishing\textup{)},
+  we obtain:
+  \begin{equation}\label{eq:g2-degree2-h1}
+    \dim H^1_{\mathrm{dR}}(\Sigma_2 \setminus \{0\},\,
+    \nabla_{\mathrm{KZB}}) = 12.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The surface $\Sigma_2 \setminus \{0\}$ has genus~$g = 2$ and
+$s = 1$ punctures. The Euler characteristic of a local system
+of rank~$r$ is $\chi = r(2 - 2g - s)$:
+$\chi = 4(2 - 4 - 1) = 4 \cdot (-3) = -12$.
+For generic $\hbar$ (equivalently, generic level~$k$), the
+monodromy around the puncture is
+$M_\gamma = \exp(2\pi i\,\hbar\,\Omega)$ with eigenvalues
+$e^{\pi i/(k+2)}$ (on $\operatorname{Sym}^2 V$, dimension~$3$)
+and $e^{-3\pi i/(k+2)}$ (on $\bigwedge^2 V$, dimension~$1$);
+generically neither is~$1$, so
+$\ker(M_\gamma - I) = 0$ and $H^0 = 0$.
+The four $B$-cycle monodromies $M_{b_1}, M_{b_2}$ impose
+further non-trivial constraints, reinforcing $H^0 = 0$.
+Poincar\'e--Verdier duality on $\Sigma_2 \setminus \{0\}$
+(a non-compact surface) gives
+$H^2 = (H^0_c)^\vee = 0$ for generic
+monodromy; alternatively, the puncture forces $H^2 = 0$ by
+a residue argument.
+The alternating sum gives
+$0 - \dim H^1 + 0 = -12$, so $\dim H^1 = 12$.
+The $12$-dimensional space decomposes along the isospin
+channels:
+$\operatorname{Sym}^2 V$ (rank~$3$) contributes
+$3 \cdot 3 = 9$, and $\bigwedge^2 V$ (rank~$1$) contributes
+$1 \cdot 3 = 3$; total $9 + 3 = 12$.
+\end{proof}
+
+\begin{remark}[Comparison of $H^1$ dimensions]
+\label{rem:h1-comparison}
+The degree-$2$ $H^1$ dimension grows linearly with genus:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{} c c c c @{}}
+  \toprule
+  $g$ & $\chi({\Sigma_g \setminus \{0\}})$ &
+  $\chi = r \cdot (2 - 2g - 1)$ & $\dim H^1$ \\
+  \midrule
+  $0$ & $1$ & $4 \cdot 1 = 4$ & $4$ \\
+  $1$ & $-1$ & $4 \cdot (-1) = -4$ & $4$ \\
+  $2$ & $-3$ & $4 \cdot (-3) = -12$ & $12$ \\
+  $g$ & $1 - 2g$ & $4(1 - 2g)$ & $4(2g - 1)$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+The jump from $\dim H^1 = 4$ at $g = 1$ to $\dim H^1 = 12$
+at $g = 2$ reflects the richer monodromy: at genus~$1$, the
+monodromy group is generated by three elements
+$(M_\gamma, M_a, M_b)$ with one relation; at genus~$2$,
+by five elements $(M_\gamma, M_{a_1}, M_{b_1}, M_{a_2},
+M_{b_2})$ with one relation, allowing a $12$-dimensional
+space of flat sections with prescribed singular behaviour at
+the puncture. The genus-$0$ entry $\dim H^1 = 4$ uses
+$\chi(\PP^1 \setminus \{0, \infty\}) = 0$ for the
+once-punctured sphere (the relative coordinate lives on
+$\CC^\times$), so
+$\chi = 0$ and the $H^1$-dimension does not follow from
+$\chi$ alone; it is computed directly from KZ flat sections
+\textup{(}cf.\ \S\ref{subsec:ell-degree2}\textup{)}.
+\end{remark}
+
+\begin{remark}[The symmetric shadow at genus~$2$]
+\label{rem:g2-shadow}
+The averaging map $\av_2$ at degree~$2$ sends the
+$12$-dimensional ordered de~Rham cohomology to
+$\Sigma_2$-coinvariants. The scalar surviving $\av_2$ is
+$\kappa = 3(k+2)/4$
+(equation~\eqref{comp:sl2-kappa}), the same value as at
+genus~$0$ and genus~$1$: the averaging map is a local
+computation (residue extraction), independent of the global
+topology.
+The kernel $\ker(\av_2)$ at genus~$2$ is richer than at
+genus~$1$: the four $B$-cycle monodromies contribute
+independent antisymmetric classes that are invisible to the
+symmetric theory.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Degree $n$: genus-$2$ surface braid group
+monodromy}
+\label{subsec:g2-degree-n}
+
+At degree~$n$, the fundamental group of
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$ is the genus-$2$
+\emph{surface braid group} $\mathrm{SB}_n(\Sigma_2)$, which
+fits into the extension
+\begin{equation}\label{eq:surface-braid-g2}
+  1 \to PB_n \to \mathrm{SB}_n(\Sigma_2) \to
+  \pi_1(\Sigma_2)^n \to 1,
+\end{equation}
+generalising the elliptic braid group
+extension~\eqref{eq:ell-braid} (at genus~$1$,
+$\pi_1(E_\tau) \cong \ZZ^2$ contributes two generators
+per point; at genus~$2$,
+$\pi_1(\Sigma_2) \cong \langle a_1, b_1, a_2, b_2 \mid
+[a_1, b_1][a_2, b_2] = 1\rangle$ contributes four
+generators per point).
+
+The ordered chiral homology at degree~$n$ is
+\begin{equation}\label{eq:g2-degree-n}
+  \int_{\Sigma_2, n}^{\mathrm{ord}}
+  Y_\hbar(\mathfrak{sl}_2)
+  = H^*_{\mathrm{dR}}\bigl(
+  \overline{\FM}_n^{\mathrm{ord}}(\Sigma_2),\;
+  \nabla_{\mathrm{KZB}}^{(n)}\bigr)
+  \otimes (s^{-1}\bar{Y}_\hbar)^{\otimes n}.
+\end{equation}
+
+\begin{proposition}[Euler characteristic at low degrees,
+genus~$2$]
+\label{prop:g2-euler-n}
+The twisted Euler characteristics of the KZB local system on
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$, with fibre $V^{\otimes n}$
+\textup{(}$V = \CC^2$\textup{)} for generic $\hbar$, are:
+\begin{align}
+  n = 0&: \quad \chi = \infty
+  \;\;\text{\textup{(}$\CC[\operatorname{qdet}]$ is
+  infinite-dimensional\textup{)}},
+  \label{eq:g2-euler-n0} \\
+  n = 1&: \quad \chi = -4
+  \;\;\text{\textup{(}trivial local system of rank $2$
+  on $\Sigma_2$,
+  $\chi(\Sigma_2) = -2$\textup{)}},
+  \label{eq:g2-euler-n1} \\
+  n = 2&: \quad \chi = -12
+  \;\;\text{\textup{(}rank $4$ on $\Sigma_2 \setminus
+  \{0\}$\textup{)}}.
+  \label{eq:g2-euler-n2}
+\end{align}
+For $n \geq 3$, the Euler characteristic of
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$ with coefficients in a
+rank-$d^n$ local system is:
+\begin{equation}\label{eq:g2-euler-general}
+  \chi\bigl(\Conf_n^{\mathrm{ord}}(\Sigma_2),\,
+  \cL_{\mathrm{KZB}}\bigr)
+  = d^n \cdot \prod_{j=0}^{n-1}(\chi(\Sigma_2) - j)
+  = 2^n \cdot \prod_{j=0}^{n-1}(-2 - j).
+\end{equation}
+In particular: $n = 3$ gives
+$8 \cdot (-2)(-3)(-4) = -192$;
+$n = 4$ gives $16 \cdot (-2)(-3)(-4)(-5) = -1920$.
+\end{proposition}
+
+\begin{proof}
+At $n = 1$: $\Conf_1(\Sigma_2) = \Sigma_2$ and the KZB
+connection is trivial (no pairwise terms).
+The local system has rank~$d = 2$ and the Euler
+characteristic is
+$\chi = d \cdot \chi(\Sigma_2) = 2 \cdot (-2) = -4$.
+(In contrast to genus~$1$ where $\chi(E_\tau) = 0$
+gives $\chi = 0$, the negative Euler characteristic of
+$\Sigma_2$ makes the twisted Euler characteristic non-zero
+even at degree~$1$.)
+
+At $n = 2$: Proposition~\ref{prop:g2-degree2}.
+
+At $n \geq 3$: the product formula for the Euler
+characteristic of ordered configuration spaces gives
+$\chi(\Conf_n^{\mathrm{ord}}(\Sigma_2))
+= \prod_{j=0}^{n-1}(\chi(\Sigma_2) - j)
+= \prod_{j=0}^{n-1}(-2 - j)$, and
+the multiplicativity of the Euler characteristic with
+respect to local systems
+gives~\eqref{eq:g2-euler-general}.
+(Unlike genus~$1$, where $\chi(E_\tau) = 0$ kills the
+product at the first factor and gives
+$\chi(\Conf_n^{\mathrm{ord}}(E_\tau)) = 0$ for all
+$n \geq 1$, here $\chi(\Sigma_2) = -2 \neq 0$ and the
+product is non-vanishing for all~$n$.)
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{Summary: genus $0$ vs.\ genus $1$ vs.\
+genus $2$}
+\label{subsec:genus-comparison-table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{@{} l l l l @{}}
+\toprule
+& Genus $0$ ($\PP^1$ or $D^\times$)
+& Genus $1$ ($E_\tau$)
+& Genus $2$ ($\Sigma_2$)
+\\
+\midrule
+Base curve
+  & $\PP^1$
+  & $E_\tau = \CC/(\ZZ + \tau\ZZ)$
+  & $\Sigma_2$
+\\
+Period matrix
+  & ---
+  & $\tau \in \HHH$, scalar
+  & $\Omega \in \HHH_2$, $2 \times 2$
+\\
+Bar propagator
+  & $d\log(z_1 - z_2)$
+  & $d\log E(z,w) = \wp_1\,dz$
+  & $d\log E(z,w)$ (prime form)
+\\
+\quad weight
+  & $1$
+  & $1$
+  & $1$
+\\
+Connection
+  & KZ
+  & KZB
+  & KZB (genus $2$)
+\\
+$\pi_1$ per point
+  & $0$
+  & $\ZZ^2$ ($A, B$-cycle)
+  & $\ZZ^4$ ($A_1, B_1, A_2, B_2$)
+\\
+$B$-cycle monodromy
+  & ---
+  & $M_B = e^{-2\pi i\,\hbar\,\Omega}$
+  & $M_{b_\alpha} = e^{-2\pi i\,\hbar\,
+  \Omega \cdot \omega_\alpha}$
+\\
+Dynamical parameter
+  & ---
+  & $\lambda \in \fh^*$, one component
+  & $(\lambda_1, \lambda_2) \in (\fh^*)^2$
+\\
+\midrule
+Degree $0$
+  & $\CC[\operatorname{qdet}]$
+  & $\CC[\operatorname{qdet}]$
+  & $\CC[\operatorname{qdet}]$
+\\
+Degree $1$ dim
+  & $3$ (on $D^\times$)
+  & $12 = 4 \times 3$
+  & $18 = 6 \times 3$
+\\
+Degree $2$: $\dim H^1$
+  & $4$
+  & $4$
+  & $12$
+\\
+Degree $2$: $\chi$
+  & $4$ ($g=0,\,s=2$)
+  & $-4$
+  & $-12$
+\\
+$\chi(\Conf_n)$, $n \geq 1$
+  & varies
+  & $0$ (all $n \geq 1$)
+  & $\prod_{j=0}^{n-1}(-2-j) \neq 0$
+\\
+Curvature $d_{\mathrm{fib}}^2$
+  & $0$
+  & $\kappa(\cA) \cdot \omega_1$
+  & $\kappa(\cA) \cdot \omega_2$
+\\
+\quad lives on
+  & ---
+  & $\overline{\cM}_{1}$
+  & $\overline{\cM}_{2}$
+\\
+Degeneration
+  & ---
+  & $\tau \to i\infty$: $E_\tau \to \CC^\times$
+  & $\Omega_{12} \to 0$, $\Omega_{22} \to
+  i\infty$: $\Sigma_2 \to E_\tau$
+\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Non-vanishing Euler characteristics at
+genus~$2$]
+\label{rem:g2-nonvanishing-chi}
+The qualitative difference between genus~$1$ and genus~$2$
+at degree $n \geq 3$ is striking. At genus~$1$, the
+vanishing $\chi(E_\tau) = 0$ forces
+$\chi(\Conf_n^{\mathrm{ord}}(E_\tau)) = 0$ for all
+$n \geq 1$, so the Euler characteristic provides no
+information about the individual cohomology dimensions.
+At genus~$2$, $\chi(\Sigma_2) = -2 \neq 0$ and the product
+formula gives non-zero (and rapidly growing) Euler
+characteristics: $-4, -12, -192, -1920, \ldots$ at degrees
+$1, 2, 3, 4, \ldots$. These provide genuine lower bounds on
+the de~Rham cohomology dimensions of the KZB local system,
+making the genus-$2$ theory computationally richer: the
+alternating sum is a useful invariant at every degree.
+\end{remark}
+
+\begin{remark}[Degeneration $\Sigma_2 \to E_\tau$]
+\label{rem:g2-degeneration}
+In the separating degeneration
+$\Sigma_2 \to E_\tau \cup E_{\tau'}$ (a genus-$2$ curve
+pinches along a separating cycle to two elliptic curves
+joined at a node), the genus-$2$ KZB connection splits into
+two independent genus-$1$ KZB connections.
+The ordered chiral homology satisfies
+a factorisation constraint at this boundary stratum of
+$\overline{\cM}_2$:
+\[
+  \int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar
+  \;\xrightarrow{\;\mathrm{res}\;}\;
+  \int_{E_\tau}^{\mathrm{ord}} Y_\hbar
+  \;\otimes\;
+  \int_{E_{\tau'}}^{\mathrm{ord}} Y_\hbar.
+\]
+In the non-separating degeneration $\Sigma_2 \to E_\tau$
+(a single cycle pinches, reducing the genus by one),
+the period matrix
+$\Omega = \bigl(\begin{smallmatrix}
+\tau & \epsilon \\ \epsilon & i/\epsilon
+\end{smallmatrix}\bigr)$
+degenerates as $\epsilon \to 0$, and the genus-$2$ theory
+reduces to the genus-$1$ theory of
+\S\ref{sec:elliptic-ordered} with additional data from
+the pinched cycle.
+This non-separating degeneration carries genuinely
+genus-$2$ information (the off-diagonal entry
+$\Omega_{12}$); the separating degeneration does not.
+\end{remark}
+
+
+% ================================================================
+% MOVED FROM between ``Examples'' and ``Chiral quantum groups''; now after elliptic curves
+\section{Comparison with related work}
+\label{sec:comparison}
