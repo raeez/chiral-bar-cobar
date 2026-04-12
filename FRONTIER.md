@@ -57,7 +57,7 @@ The four-class partition G/L/C/M is structural, forced by the single-line dichot
 | Three bar complexes | Lie^c, Sym^c, T^c and their relationships (thm:three-bar-complexes) |
 | FCom = FAss at scalar level | E_n shadow independence (prop:en-shadow-independence) |
 | E1 modular D^2 = 0 | FAss-algebra structure on B^{E1-mod}(A) |
-| Five E1 shadow theorems | All genus at all arities on the E1 side |
+| Five E1 shadow theorems | All genus at all degrees on the E1 side |
 
 ### Vol II: Proved Algebraic Foundations
 
@@ -75,9 +75,9 @@ CY-to-chiral functor proved for d=2. d=3 conditional on chain-level S^3-framing.
 ### Shadow Obstruction Tower
 
 - Full Theta_A PROVED (thm:mc2-bar-intrinsic): Theta_A := D_A - d_0, MC because D_A^2 = 0
-- All-arity convergence Theta_A = varprojlim Theta_A^{<=r} PROVED (thm:recursive-existence)
+- All-degree convergence Theta_A = varprojlim Theta_A^{<=r} PROVED (thm:recursive-existence)
 - Algebraic-family rigidity PROVED (thm:algebraic-family-rigidity)
-- Shadow-formality = L-infinity formality identification PROVED at all arities (thm:shadow-formality-identification)
+- Shadow-formality = L-infinity formality identification PROVED at all degrees (thm:shadow-formality-identification)
 - conj:operadic-complexity PROVED: r_max = A-infinity depth = L-infinity formality level
 - Multi-weight genus expansion: F_g = kappa*lambda_g^FP + delta_F_g^cross (thm:multi-weight-genus-expansion)
 - delta_F_2(W_3) = (c+204)/(16c) > 0 for all c > 0 (PROVED, 5 independent agents agree)
@@ -301,11 +301,11 @@ Naive D_Ran(B^ord) doesn't exist. Correct analogue: opposite-duality. Full E1 Ve
 
 | # | Discovery | Compute evidence |
 |---|-----------|-----------------|
-| 9 | Virasoro bar denominator c^a*(5c+22)^b through arity 32 | Computed, should be remark in higher_genus_modular_koszul.tex |
+| 9 | Virasoro bar denominator c^a*(5c+22)^b through degree 32 | Computed, should be remark in higher_genus_modular_koszul.tex |
 | 10 | Rank-2 bar GF rationality + D-finiteness dichotomy | Partially inscribed via AP66 |
 | 11 | MC = conformal bootstrap (RRTV crossing symmetry) | 111 tests (COMP-25) |
 | 12 | Double resurgence: Gevrey-0 scalar + Gevrey-1 cross-channel | Universal instanton action inscribed; double structure not |
-| 14 | Inter-channel T-coupling at arity 6 for W_3 | 15 tests (interchannel_coupling.py) |
+| 14 | Inter-channel T-coupling at degree 6 for W_3 | 15 tests (interchannel_coupling.py) |
 | 15 | delta_F_2(W_4) irrational in c | Computed (COMP-W4) |
 | 17 | BTZ 5-loop black hole entropy | 109 tests (COMP-03) |
 | 18 | Soft graviton hierarchy from shadows | 116 tests (COMP-04) |

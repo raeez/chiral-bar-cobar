@@ -54,7 +54,7 @@ Six objects built from the bar complex B(A), connected by three functors:
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
 | Shadow census families | 25 (14 original + 11 added: BP_k, W_3, Ising, N=2 SCA, W(p), Y-algebras, symplectic boson/fermion, quantum lattice) |
 | Compute modules | 1,313 lib + 1,379 test |
-| Anti-patterns | AP1-AP165 + AAP1-18 + RS-1..20 |
+| Anti-patterns | AP1-AP175 + AAP1-18 + RS-1..20 + FM1-FM28 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
 | Standalone papers | 28 building PDFs |
