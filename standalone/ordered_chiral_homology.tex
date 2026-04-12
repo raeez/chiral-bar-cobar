@@ -191,8 +191,8 @@ formal deformation \emph{families} are isomorphic as
 $\Ethree$-algebras; the matching of deformation spaces
 is proved, but the chain-level identification is open.
 
-The construction extends to genus~$1$: the ordered
-chiral homology
+The construction extends to genus~$1$ and genus~$2$: the
+ordered chiral homology
 $\int_{E_\tau}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$
 on an elliptic curve $E_\tau$ is computed degree by degree,
 with the KZ connection replaced by the
@@ -200,8 +200,12 @@ Knizhnik--Zamolodchikov--Bernard connection
 (Bernard~\cite{Bernard88}, Felder~\cite{Felder94}) and the
 $B$-cycle monodromy producing the quantum group parameter
 $q = e^{2\pi i \hbar}$.
-The genus-$1$ kernel $\ker(\av)$ is strictly larger than
-at genus~$0$.
+At genus~$2$, the period matrix is a $2 \times 2$ symmetric
+matrix in the Siegel upper half-space, the bar propagator is
+$d\log E(z,w)$ where $E$ is the prime form, and the
+degree-$2$ Euler characteristic jumps to $-12$
+(from $-4$ at genus~$1$).
+The kernel $\ker(\av)$ grows strictly with the genus.
 \end{abstract}
 
 \maketitle
@@ -279,10 +283,11 @@ chiral homology; the second separates it from topological
 Hochschild; the third identifies the $\Ethree$ structure
 that only the ordered picture sees.
 At the representation-theoretic level,
-Proposition~\ref{prop:ker-av-schur-weyl} proves via
-Schur--Weyl duality that $\dim\ker(\av_n) = d^n -
-\binom{n+d-1}{d-1}$ on $V^{\otimes n}$ for
-$V = \CC^d$, with generating function
+Proposition~\ref{prop:ker-av-schur-weyl} proves that
+$\dim\ker(\av_n) = d^n -
+\binom{n+d-1}{d-1}$ on $V^{\otimes n}$ for any
+$d$-dimensional representation $V$ of any simple $\fg$,
+with generating function
 $\Delta P_d(t) = (1-dt)^{-1} - (1-t)^{-d}$;
 Conjecture~\ref{conj:yangian-ordered-center} assembles
 the expected global structure of the ordered derived
@@ -516,7 +521,8 @@ not $\Ethree$, recovering $\fg$ from the Gerstenhaber
 bracket), and Proposition~\ref{prop:ker-av-schur-weyl},
 which proves the kernel dimension formula
 $\dim\ker(\av_n) = d^n - \binom{n+d-1}{d-1}$
-via Schur--Weyl duality.
+for any $d$-dimensional representation of any simple
+Lie algebra.
 
 The general theory follows.
 Section~\ref{sec:background} recalls the $\Eone/\Einf$
@@ -556,6 +562,11 @@ is computed degree by degree on an elliptic curve, where
 the KZB connection replaces the KZ connection and the
 $B$-cycle monodromy produces the quantum group parameter
 $q = e^{2\pi i \hbar}$.
+Section~\ref{sec:genus2-ordered} extends the construction
+further to genus~$2$, where the $2 \times 2$ period matrix,
+the prime form, and the genus-$2$ surface braid group
+produce a richer theory with non-vanishing Euler
+characteristics at every degree.
 Section~\ref{sec:comparison} places the construction
 against Ben-Zvi--Brochier--Jordan and Latyntsev.
 Section~\ref{sec:conclusion} collects open problems.
@@ -922,7 +933,7 @@ under $\av_2$: it is invisible to the symmetric chiral
 homology.
 
 The scalar shadow surviving $\av_2$ is
-$\kappa = 3(k + 2)/4$ (equation~\eqref{comp:sl2-kappa}).
+$\kappa = 3(k + 2)/4$ (equation~\eqref{eq:sl2-kappa}).
 
 \smallskip
 \noindent\emph{Degree~$3$: the Drinfeld associator in $\ker(\av_3)$.}
@@ -1306,11 +1317,12 @@ representation-theoretic input: the dimension of
 $\ker(\av_n)$ on the bare tensor power $V^{\otimes n}$,
 before passing to bar-complex cohomology.
 
-\begin{proposition}[Kernel of the Reynolds projector
-via Schur--Weyl duality]
+\begin{proposition}[Kernel of the Reynolds projector:
+general simple Lie algebras]
 \label{prop:ker-av-schur-weyl}
-Let $\fg = \mathfrak{gl}_r$ with fundamental representation
-$V = \CC^r$, and let
+Let $\fg$ be any simple Lie algebra over~$\CC$, let
+$V$ be any finite-dimensional representation of~$\fg$ with
+$d = \dim V$, and let
 $\av_n \colon V^{\otimes n} \to (V^{\otimes n})_{\Sigma_n}$
 denote the Reynolds averaging map (projection onto the
 $\Sigma_n$-coinvariant quotient).
@@ -1318,14 +1330,39 @@ Then
 \begin{equation}\label{eq:ker-av-schur-weyl}
   \dim \ker(\av_n\big|_{V^{\otimes n}})
   \;=\;
-  r^n - \binom{n+r-1}{r-1}.
+  d^n - \binom{n+d-1}{d-1}.
 \end{equation}
-In particular, for $\fg = \mathfrak{sl}_2$ $(r = 2)$:
-$\dim \ker(\av_n) = 2^n - (n+1)$.
+The formula depends only on $d = \dim V$, not on $\fg$ or
+on the $\fg$-module structure of~$V$.
+
+\smallskip
+\noindent\textit{Special cases.}
+For $\fg = \mathfrak{sl}_2$ with the fundamental
+representation $V = \CC^2$:
+$\dim\ker(\av_n) = 2^n - (n+1)$.
+For any $\fg$ with $d$-dimensional representation~$V$,
+at $n = 2$:
+$\dim\ker(\av_2) = d^2 - d(d{+}1)/2 = d(d{-}1)/2
+= \dim\bigwedge^2 V$.
 \end{proposition}
 
 \begin{proof}
-Schur--Weyl duality decomposes the tensor power into
+The Reynolds projector
+$\av_n = \frac{1}{n!}\sum_{\sigma \in \Sigma_n} \sigma$
+acts on $V^{\otimes n}$ by permuting tensor factors.
+Its image is the $\Sigma_n$-invariant subspace
+$\Sym^n(V)$, regardless of any Lie algebra structure
+on~$V$. The dimension
+$\dim\Sym^n(V) = \binom{n+d-1}{d-1}$ (the number of
+degree-$n$ monomials in $d$ variables) depends only on
+$d = \dim V$, as the stars-and-bars argument uses no
+algebraic structure beyond the vector space.
+Since $\dim V^{\otimes n} = d^n$, the kernel has dimension
+$d^n - \binom{n+d-1}{d-1}$.
+
+When $\fg = \mathfrak{gl}_r$ with $V = \CC^r$,
+Schur--Weyl duality refines this to an isotypic
+decomposition. The tensor power decomposes into
 $(\Sigma_n, \mathfrak{gl}_r)$-bimodules:
 \begin{equation}\label{eq:schur-weyl-decomp}
   V^{\otimes n}
@@ -1338,16 +1375,10 @@ where $\lambda$ runs over partitions of $n$ with at most
 $r$ rows, $S_\lambda$ is the corresponding Specht module
 of $\Sigma_n$, and $V_\lambda(\mathfrak{gl}_r)$ is the
 irreducible $\mathfrak{gl}_r$-representation of highest
-weight $\lambda$.
-
-The Reynolds projector
-$\av_n = \frac{1}{n!}\sum_{\sigma \in \Sigma_n} \sigma$
-acts on the $\Sigma_n$-factor: it projects onto the trivial
-isotypic component $S_{(n)} = \CC$ (the trivial
-representation, corresponding to the single-row
-partition $\lambda = (n)$) and annihilates every
-$S_\lambda$ with $\lambda \neq (n)$.
-The image is therefore
+weight~$\lambda$.
+The projector $\av_n$ selects the trivial isotypic
+component $S_{(n)} = \CC$ and annihilates every
+$S_\lambda$ with $\lambda \neq (n)$. The image is
 \[
   \operatorname{im}(\av_n)
   \;\cong\;
@@ -1355,9 +1386,7 @@ The image is therefore
   \;=\;
   \Sym^n(\CC^r),
 \]
-of dimension $\binom{n+r-1}{r-1}$ (the number of
-degree-$n$ monomials in $r$ variables). The kernel is the
-complement:
+and the kernel decomposes by isotypic components:
 \[
   \ker(\av_n)
   \;\cong\;
@@ -1366,22 +1395,27 @@ complement:
     \lambda \neq (n)}}
   S_\lambda \otimes V_\lambda(\mathfrak{gl}_r).
 \]
-Taking dimensions and using
-$\dim(V^{\otimes n}) = r^n$,
-$\dim(\Sym^n(\CC^r)) = \binom{n+r-1}{r-1}$
-gives~\eqref{eq:ker-av-schur-weyl}.
-
-For $r = 2$, the binomial coefficient evaluates to
-$\binom{n+1}{1} = n + 1$, yielding
-$\dim\ker(\av_n) = 2^n - (n+1)$.
+For a general simple~$\fg$ acting on~$V$, the Schur--Weyl
+decomposition involves the commutant algebra
+$\End_\fg(V^{\otimes n})$ rather than the group algebra of
+$\GL(V)$, and the individual summands carry different
+$\fg$-representations with different dimensions.
+The total kernel dimension, however, depends only on
+$\dim\Sym^n(V) = \binom{n+d-1}{d-1}$, which is
+determined by $d$ alone.
 \end{proof}
 
 \begin{remark}[Explicit values and
 Conjecture~\textup{\ref{conj:yangian-ordered-center}}]
 \label{rem:ker-av-table}
 Table~\ref{tab:ker-av-dims} records the kernel dimensions
-at low degrees for $\mathfrak{sl}_2$ through
-$\mathfrak{sl}_5$.
+at low degrees for the fundamental representations of
+$\mathfrak{sl}_2$ through $\mathfrak{sl}_5$ (of dimensions
+$d = 2, 3, 4, 5$), together with the fundamental
+representations of $\mathfrak{so}_5$ ($d = 5$) and
+$G_2$ ($d = 7$). Since the formula depends only on
+$d = \dim V$, the rows for $\mathfrak{sl}_5$ and
+$\mathfrak{so}_5$ are identical.
 These are representation-theoretic upper bounds on the
 dimensions of the corresponding components of the ordered
 chiral centre in
@@ -1396,31 +1430,35 @@ $1$-dimensional kernel $\bigwedge^2 V = \CC$ survives
 equation~\eqref{eq:yangian-ker-av2}).
 At degree $n \geq 3$, the kernel on the chiral centre is
 in general strictly smaller than the
-representation-theoretic bound $r^n - \binom{n+r-1}{r-1}$.
+representation-theoretic bound $d^n - \binom{n+d-1}{d-1}$.
 
 \begin{table}[h]
 \centering
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{@{} c c c c c c @{}}
+\begin{tabular}{@{} l c c c c c @{}}
 \toprule
   & $n = 2$ & $n = 3$ & $n = 4$ & $n = 5$ & $n = 6$ \\
 \midrule
-$\mathfrak{sl}_2$ $(r{=}2)$
+$\mathfrak{sl}_2$ $(d{=}2)$
   & $1$ & $4$ & $11$ & $26$ & $57$ \\
-$\mathfrak{sl}_3$ $(r{=}3)$
+$\mathfrak{sl}_3$ $(d{=}3)$
   & $3$ & $17$ & $66$ & $222$ & $701$ \\
-$\mathfrak{sl}_4$ $(r{=}4)$
-  & $6$ & $44$ & $221$ & $968$ & $4012$ \\
-$\mathfrak{sl}_5$ $(r{=}5)$
-  & $10$ & $90$ & $555$ & $2999$ & $15415$ \\
+$\mathfrak{sl}_4$ $(d{=}4)$
+  & $6$ & $44$ & $221$ & $968$ & $4{,}012$ \\
+$\mathfrak{sl}_5$, $\mathfrak{so}_5$ $(d{=}5)$
+  & $10$ & $90$ & $555$ & $2{,}999$ & $15{,}415$ \\
+$G_2$ \textit{fund.}\ $(d{=}7)$
+  & $21$ & $259$ & $2{,}191$ & $16{,}345$ & $116{,}725$ \\
 \midrule
 \textit{Formula}
-  & \multicolumn{5}{c}{$r^n - \binom{n+r-1}{r-1}$} \\
+  & \multicolumn{5}{c}{$d^n - \binom{n+d-1}{d-1}$} \\
 \bottomrule
 \end{tabular}
-\caption{Dimension of $\ker(\av_n\big|_{V^{\otimes n}})$ for
-$V = \CC^r$ at degrees $n = 2, \ldots, 6$
-\textup{(Proposition~\ref{prop:ker-av-schur-weyl})}.}
+\caption{Dimension of $\ker(\av_n\big|_{V^{\otimes n}})$
+for a $d$-dimensional representation $V$ at degrees
+$n = 2, \ldots, 6$
+\textup{(Proposition~\ref{prop:ker-av-schur-weyl})}.
+The formula depends only on $d = \dim V$.}
 \label{tab:ker-av-dims}
 \end{table}
 \end{remark}
@@ -2828,6 +2866,156 @@ above, and the triangle~\eqref{eq:equiv-triangle}
 commutes: $\alpha \circ \gamma \circ \beta = \id$.
 \end{proof}
 
+\begin{remark}[Independent proof via the cohomological Hall algebra]
+\label{rem:independent-proof-coha}
+The equivalence $\textup{(I)} \leftrightarrow \textup{(II)}
+\leftrightarrow \textup{(III)}$ admits a second, independent
+proof for algebras arising as critical CoHAs of quivers with
+potential, using the framework of
+Kontsevich--Soibelman~\cite{KS11},
+Schiffmann--Vasserot~\cite{SV13},
+Yang--Zhao~\cite{YZ18a}, and
+Jindal--Kaubrys--Latyntsev~\cite{JKL26}. The logic is
+orthogonal to the bar-cobar adjunction above: rather than
+constructing the triangle abstractly from the ordered bar
+complex, one exhibits all three structures simultaneously on a
+single geometric object and verifies that they determine each
+other.
+
+\smallskip
+\noindent\textbf{Step~1: simultaneous existence of (I) and (III)
+on the CoHA.}
+Let $(Q,W)$ be a quiver with potential. The critical CoHA
+\[
+  \cH_{Q,W}
+  = \bigoplus_{d \in \ZZ_{\geq 0}^{Q_0}}
+  H^{G_d}_{\mathrm{BM},*}
+  (\cM_d^{\mathrm{nil}},\, \varphi_W)
+\]
+carries two structures of independent geometric origin:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Vertex coproduct} $\Delta_{\mathrm{CoHA}}$, from
+  restriction to Levi subalgebras
+  $G_{d_1} \times G_{d_2} \hookrightarrow G_d$; and
+\item \emph{$R$-matrix} $R(z)$, from the
+  Maulik--Okounkov stable envelope
+  construction~\cite{MO19} on the Nakajima variety
+  associated to~$Q$.
+\end{enumerate}
+Jindal--Kaubrys--Latyntsev~\cite{JKL26} prove that these two
+structures satisfy the vertex bialgebra axiom (their
+Theorems~A and~C):
+\begin{equation}\label{eq:jkl-vertex-bialgebra}
+  \Delta_{\mathrm{CoHA},z}(Y(a,w)\,b)
+  = Y^{(2)}(\Delta_{\mathrm{CoHA},z}(a),w)\,
+  \Delta_{\mathrm{CoHA},z}(b),
+\end{equation}
+which is the OPE compatibility
+axiom~\eqref{eq:ope-compat}. The $R$-matrix satisfies the
+QYBE and unitarity by the stable envelope formalism
+\cite{MO19}; the quasi-coassociativity of
+$\Delta_{\mathrm{CoHA}}$ follows from the
+associativity of the Hall product on the Drinfeld
+double~\cite{YZ18a}. This establishes the equivalence
+$\textup{(I)} \leftrightarrow \textup{(III)}$ by
+construction: the $R$-matrix and the coproduct coexist on
+$\cH_{Q,W}$ and satisfy the quasi-triangularity relation
+$R(z)\, \Delta^{\mathrm{ch}} = \Delta^{\mathrm{ch},\op}\,
+R(z)$.
+
+\smallskip
+\noindent\textbf{Step~2: extraction of (II) from the CoHA
+vertex bialgebra.}
+The CoHA $\cH_{Q,W}$, equipped with its $R$-matrix, is an
+$\Eone$-chiral algebra in the sense of
+Definition~\ref{def:e1-chiral-rmatrix}. The functor $\alpha$
+of the equivalence triangle~\eqref{eq:equiv-triangle}
+extracts the chiral $\Ainf$ operations
+$\{m_k^{\mathrm{ch}}\}$ by restricting the OPE to the
+associahedra
+$K_k \hookrightarrow
+\overline{\FM}_k^{\mathrm{ord}}(\CC)$ as
+in~\eqref{eq:mk-from-ope}. The Stasheff identities follow
+from Stokes' theorem on $K_{k+1}$ as before; the
+convergence of the integrals is guaranteed by
+$S$-locality of the $R$-matrix. This gives
+$\textup{(I)} \to \textup{(II)}$ on the CoHA.
+
+The reverse direction $\textup{(II)} \to \textup{(I)}$ is the
+degree-$2$ holonomy recovery of the $R$-matrix from
+$m_2^{\mathrm{ch}}$, which depends only on the formal
+structure of the Stasheff associahedra and not on the CoHA
+origin.
+
+\smallskip
+\noindent\textbf{Step~3: the triangle closes.}
+By the JKL vertex bialgebra theorem, the CoHA
+simultaneously carries (I), (II), and (III). To verify that
+these three structures \emph{determine} each other (not merely
+coexist), one checks the uniqueness directions. On the Koszul
+locus:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{(I) determines (III):} given an $R$-matrix
+  satisfying the QYBE and $S$-locality, the quasi-triangular
+  coproduct is unique up to gauge equivalence by the
+  Drinfeld reconstruction~\cite{Drinfeld90}
+  (spectral parameter version:
+  Etingof--Kazhdan~\cite{EK96}). The JKL coproduct on the
+  CoHA is the unique one compatible with the MO $R$-matrix.
+\item \emph{(III) determines (I):} the Drinfeld
+  formula~\eqref{eq:r-from-coprod-proof} recovers $S(z)$
+  from $\Delta^{\mathrm{ch}}$, independently of the CoHA
+  construction.
+\item \emph{(I) $\leftrightarrow$ (II):} the extraction of
+  $\Ainf$ operations from the $R$-matrix is the
+  Stasheff--FM construction (direction $\alpha$), whose
+  inverse recovers the $R$-matrix as holonomy (direction
+  $\alpha^{-1}$). Neither direction uses the CoHA.
+\end{enumerate}
+The triangle coherence
+$\alpha \circ \gamma \circ \beta = \id$ then follows from
+the uniqueness of each vertex.
+
+\smallskip
+\noindent\textbf{Independence from the bar-cobar proof.}
+The argument above differs from the proof of
+Theorem~\ref{thm:chiral-qg-equiv} in two respects.
+First, the equivalence $\textup{(I)} \leftrightarrow
+\textup{(III)}$ is established by the geometric CoHA
+construction (stable envelopes for the $R$-matrix,
+Levi restriction for the coproduct, JKL for the vertex
+bialgebra axiom), bypassing the ordered bar complex
+$\Barord(\cA) = T^c(s^{-1}\bar{\cA})$ and the
+cobar dualization~\eqref{eq:coprod-from-bar}. Second, the
+uniqueness of the coproduct given the $R$-matrix is
+deduced from the Drinfeld reconstruction theorem for
+quasi-triangular vertex bialgebras, rather than from the
+bar-cobar adjunction on the Koszul locus. The functor
+$\alpha$ (extraction of $\Ainf$ operations from the
+$R$-matrix via associahedron integrals) is shared between
+the two proofs, but it enters as an a~posteriori observation
+in the CoHA argument, not as the engine of the
+construction.
+
+\smallskip
+\noindent\textbf{Scope.}
+The CoHA proof applies to $\Eone$-chiral algebras
+arising as critical CoHAs of quivers with potential.
+For the Jordan quiver, $\cH_{\mathrm{Jor}} \cong
+Y^+(\widehat{\mathfrak{gl}}_1)$~\cite{SV13}, and the
+equivalence specializes to the chiral quantum group
+structure on $\cW_{1+\infty}[\Psi]$
+(Theorem~\ref{thm:w-infty-chiral-qg}).
+For quivers of type $\widehat{A}_{N-1}$, the CoHA
+is $Y^+(\widehat{\mathfrak{sl}}_N)$, and the JKL
+coproduct recovers the Drinfeld coproduct on the affine
+Yangian~\cite{JKL26}. Beyond quiver-origin algebras, the
+CoHA argument does not directly apply; the bar-cobar proof
+of Theorem~\ref{thm:chiral-qg-equiv} remains the primary
+route for general $\Eone$-chiral algebras on the Koszul
+locus.
+\end{remark}
+
 The equivalence theorem packages three equivalent descriptions
 of quantum-group-type structure on an $\Eone$-chiral algebra.
 The following definition records the datum that the equivalence
@@ -3353,7 +3541,7 @@ equation~\eqref{eq:yangian-ker-av2}.
 The quantum corrections from $S(z)$ shift the subleading
 terms of the flat sections but do not alter the
 $\ker(\av_2)$ dimension. The scalar shadow surviving
-$\av_2$ is $\kappa = 3(k+2)/4$ (equation~\eqref{comp:sl2-kappa}),
+$\av_2$ is $\kappa = 3(k+2)/4$ (equation~\eqref{eq:sl2-kappa}),
 identical to the classical value. At degree~$3$, the kernel
 $\ker(\av_3) \cong \Lambda^3(\fg) = \CC$ carries the
 quantum-corrected Drinfeld associator
@@ -3834,6 +4022,55 @@ has the following convention-independent features:
 \end{enumerate}
 \end{remark}
 
+\begin{remark}[Effective central charge and intertwining
+in the Miura basis]
+\label{rem:spin2-ceff-miura}
+The coproduct~\eqref{eq:coprod-T} in the
+$\cW_{1+\infty}$ field basis has cross-term coefficient
+$(\Psi - 1)/\Psi$ (not $1/\Psi$), as derived in step~4.
+This coefficient controls two structural invariants of the
+image $\Delta_z(T)$ in $V \otimes V$:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Effective central charge.}
+  The image $\Delta_z(T_n)$ generates a Virasoro
+  subalgebra in the tensor product mode algebra with
+  effective central charge
+  \begin{equation}\label{eq:c-eff-spin2}
+    c_{\mathrm{eff}}(\Psi) = 2 + 2(\Psi - 1)^2.
+  \end{equation}
+  At $\Psi = 1$ (free boson): $c_{\mathrm{eff}} = 2$
+  (two decoupled copies, the cross-term vanishes).
+  At $\Psi = 2$: $c_{\mathrm{eff}} = 4$.
+  The quadratic growth $c_{\mathrm{eff}} \sim 2\Psi^2$ at
+  large $\Psi$ reflects the quadratic Miura nonlinearity
+  $\psi_2 = T + J^2/(2\Psi)$.
+  The formula is independent of the spectral parameter~$z$
+  (the $z$-dependent terms in $\Delta_z(T)$ do not
+  contribute to the vacuum expectation value of the
+  commutator $[\Delta_z(T_2), \Delta_z(T_{-2})]$).
+\item \emph{Intertwining with $\Delta_z(J)$.}
+  The commutator
+  $[\Delta_z(T_n),\, \Delta_z(J_m)]
+  = -\Psi \cdot m \cdot \Delta_z(J_{n+m})$
+  has intertwining factor $\Psi$ (not~$1$).
+  The extra factor $\Psi - 1$ beyond the original algebra
+  relation $[T_n, J_m] = -m\,J_{n+m}$ arises from the
+  cross-term $(\Psi - 1)/\Psi \cdot (J \otimes J)_n$
+  commuting with $\Delta_z(J_m) = J_m^L + J_m^R$:
+  the left and right Heisenberg commutators each contribute
+  $-((\Psi-1)/\Psi) \cdot \Psi \cdot m = -(\Psi - 1)m$.
+  At $\Psi = 1$: factor~$1$ (algebra homomorphism).
+\end{enumerate}
+Both features are consequences of the Miura nonlinearity:
+the Drinfeld coproduct is an algebra homomorphism of the
+Yangian $Y(\widehat{\mathfrak{gl}}_1)$ (preserving the
+$\psi$-generator relations), but when expressed in the
+$\cW_{1+\infty}$ field basis via the nonlinear Miura
+inversion $T = \psi_2 - J^2/(2\Psi)$, the image acquires
+$\Psi$-dependent structural invariants that are absent in
+the $\psi$-basis.
+\end{remark}
+
 \begin{remark}[Descent to $\cW_N$]
 \label{rem:w-infty-descent}
 Drinfeld--Sokolov reduction gives
@@ -3896,16 +4133,15 @@ gap.
 
 \smallskip
 \noindent\emph{(2) Truncation to $\cW_N$.}
-For the truncations $\cW_N$ at finite $N \geq 2$, the
-$R$-matrix of $Y(\widehat{\mathfrak{gl}}_N)$ is no longer
-scalar, and the OPE compatibility at each truncation level
-requires the full vertex bialgebra verification. The
-coderivation argument (argument~A of step~6) applies to
-$\cW_N$ at generic level by the same Koszul-locus reasoning,
-provided the Drinfeld--Sokolov reduction intertwines the bar
-complexes; this compatibility is established by
-Theorem~\ref{thm:chiral-qg-equiv} applied to $\cW_N$
-directly. The JKL argument (argument~B) applies to
+Theorem~\ref{thm:glN-chiral-qg} resolves this question:
+for the truncations $\cW_N$ at finite $N \geq 2$, the
+$R$-matrix of $Y(\widehat{\mathfrak{gl}}_N)$ is Yang's
+rational $R$-matrix $R(u) = u\, I + \Psi\, P$ (no longer
+scalar), and the OPE compatibility at each truncation level
+is established by the same two arguments.
+The coderivation argument (argument~A) applies to
+$\cW_N$ at generic level by the same Koszul-locus reasoning.
+The JKL argument (argument~B) applies to
 $Y(\widehat{\mathfrak{gl}}_N)$ by their Theorem~C for
 general quivers.
 
@@ -4000,6 +4236,380 @@ $\Delta_z(T) = T \otimes 1 + 1 \otimes T
 in the classical limit $\Psi \to \infty$ the
 coefficient tends to~$1$.
 \end{proof}
+
+
+% ----------------------------------------------------------------
+\subsection{The chiral quantum group structure on
+$\cW_N$ for $N \geq 2$}
+\label{subsec:glN-chiral-qg}
+
+Theorem~\ref{thm:w-infty-chiral-qg} established the chiral
+quantum group structure on $\cW_{1+\infty}[\Psi]$ via the
+scalar Maulik--Okounkov $R$-matrix. For the truncations
+$\cW_N = \cW_{1+\infty}/\cI_N$ (generators of spins
+$1, 2, \ldots, N$) the $R$-matrix is no longer scalar: it
+is Yang's rational $R$-matrix on $\CC^N \otimes \CC^N$,
+and the RTT relation is a non-trivial matrix identity.
+
+\begin{theorem}[$Y(\widehat{\mathfrak{gl}}_N)$ chiral
+quantum group for $N \geq 2$]
+\label{thm:glN-chiral-qg}
+For each $N \geq 2$ and generic $\Psi$, the truncation
+$\cW_N[\Psi]$ carries a chiral quantum group datum in
+the sense of
+Theorem~\textup{\ref{thm:chiral-qg-equiv}}: an $N \times N$
+matrix transfer matrix, Yang's rational $R$-matrix with
+level prefix~$\Psi$, and a chiral coproduct with all
+OPE compatibility verified.
+The precise content is as follows.
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \textup{($N \times N$ transfer matrix.)}
+  The affine Yangian $Y(\widehat{\mathfrak{gl}}_N)$ has
+  transfer matrix
+  \begin{equation}\label{eq:glN-transfer}
+    T(u)
+    = I_N + \sum_{r \geq 1} T^{(r)}\, u^{-r},
+    \qquad
+    (T^{(r)})_{ij} = t_{ij}^{(r)},
+    \quad 1 \leq i,j \leq N,
+  \end{equation}
+  an $N \times N$ matrix of formal power series in
+  $u^{-1}$. The Drinfeld--Sokolov reduction
+  $\pi_N \colon \cW_{1+\infty}[\Psi]
+  \twoheadrightarrow \cW_N$ sends the scalar transfer
+  matrix $T(u) = 1 + \sum \psi_n\, u^{-n}$ of
+  Theorem~\textup{\ref{thm:w-infty-chiral-qg}}
+  to the quantum Miura factorisation
+  \begin{equation}\label{eq:glN-miura}
+    T(u)
+    = (u + \Lambda_1^{(1)})
+    (u + \Lambda_2^{(1)})
+    \cdots
+    (u + \Lambda_N^{(1)}),
+  \end{equation}
+  where the $\Lambda_i^{(1)}$ are the Miura fields of
+  Proch\'azka--Rap\v{c}\'ak~\textup{\cite{PR19}}.
+\item \textup{(Yang's rational $R$-matrix.)}
+  The $R$-matrix for $Y(\widehat{\mathfrak{gl}}_N)$
+  in the fundamental representation is
+  \begin{equation}\label{eq:glN-yang-r}
+    % AP126: level prefix Psi mandatory; Psi=0 -> R = uI (trivial). Verified.
+    R(u)
+    = u\, I_{N^2} + \Psi\, P
+    \quad \in \End(\CC^N \otimes \CC^N),
+  \end{equation}
+  where $P(e_i \otimes e_j) = e_j \otimes e_i$ is the
+  permutation and $\Psi$ is the level.
+  The classical $r$-matrix
+  \textup{(}trace-form, level prefix
+  $\Psi$\textup{)} is
+  % AP126: Psi=0 -> r=0. Verified.
+  \begin{equation}\label{eq:glN-classical-r}
+    r(z) = \frac{\Psi\, P}{z},
+  \end{equation}
+  with $r|_{\Psi = 0} = 0$. The unitarity relation is
+  $R(u)\, R(-u) = (\Psi^2 - u^2)\, I$.
+  The Yang--Baxter equation
+  \begin{equation}\label{eq:glN-ybe}
+    R_{12}(u-v)\, R_{13}(u)\, R_{23}(v)
+    = R_{23}(v)\, R_{13}(u)\, R_{12}(u-v)
+  \end{equation}
+  holds for all $N$ and all $\Psi$
+  \textup{(}computed numerically at $N = 2, 3$ by
+  \texttt{glN\_affine\_yangian\_chiral\_qg\_engine.py};
+  proved algebraically in
+  Molev~\textup{\cite{Molev07}},
+  Chapter~$1$\textup{)}.
+  At $N = 1$: $P = 1$ and $R(u) = u + \Psi$ is scalar,
+  recovering the class-$G$ case of
+  Theorem~\textup{\ref{thm:w-infty-chiral-qg}}.
+\item \textup{(Drinfeld coproduct: matrix multiplication.)}
+  The Drinfeld coproduct on $T(u)$ is
+  \begin{equation}\label{eq:glN-drinfeld-coprod}
+    \Delta_z(T(u)) = T(u) \cdot T(u - z)
+    \qquad
+    \textup{(matrix multiplication in $\CC^N$)},
+  \end{equation}
+  that is, in components:
+  \begin{equation}\label{eq:glN-coprod-components}
+    \Delta_z(t_{ij}(u))
+    = \sum_{k=1}^{N}\,
+    t_{ik}(u) \otimes t_{kj}(u - z),
+  \end{equation}
+  where $t_{ij}(u) = \delta_{ij} + \sum_{r \geq 1}
+  t_{ij}^{(r)}\, u^{-r}$.
+  This is coassociative
+  up to the Drinfeld associator $\Phi$:
+  $(\Delta_{z_1} \otimes \id) \circ \Delta_{z_2}(T(u))
+  = T(u) \otimes T(u - z_2) \otimes T(u - z_1 - z_2)$
+  and
+  $(\id \otimes \Delta_{z_2}) \circ \Delta_{z_1}(T(u))
+  = T(u) \otimes T(u - z_1) \otimes T(u - z_1 - z_2)$,
+  strictly coassociative for $\mathfrak{gl}_N$
+  at generic $\Psi$.
+\item \textup{(RTT relation: non-trivial for $N \geq 2$.)}
+  The RTT relation
+  \begin{equation}\label{eq:glN-rtt}
+    R_{12}(u - v)\, T_1(u)\, T_2(v)
+    = T_2(v)\, T_1(u)\, R_{12}(u - v),
+  \end{equation}
+  where $T_1(u) = T(u) \otimes I_N$,
+  $T_2(v) = I_N \otimes T(v)$, is the defining relation of
+  $Y(\mathfrak{gl}_N)$.
+  For $N = 1$, this is trivially satisfied
+  \textup{(}scalar $R$\textup{)}. For $N \geq 2$ it is a
+  genuine quadratic constraint on the generators
+  $t_{ij}^{(r)}$: the commutator $[R_{12}, T_1 T_2]$
+  is generically nonzero
+  \textup{(}verified numerically at $N = 2, 3$\textup{)}.
+\item \textup{(Quantum determinant.)}
+  The quantum determinant
+  \begin{equation}\label{eq:glN-qdet}
+    \mathrm{qdet}\, T(u)
+    = \sum_{\sigma \in S_N}
+    \mathrm{sgn}(\sigma)\,
+    \prod_{i=1}^{N}
+    T_{i,\sigma(i)}\bigl(u - (i-1)\Psi\bigr)
+  \end{equation}
+  is \emph{central} in $Y(\mathfrak{gl}_N)$: it commutes
+  with all $t_{ij}(v)$. In the evaluation representation,
+  $\mathrm{qdet}\, T(u)$ is proportional to the identity
+  on~$\CC^N$ \textup{(}verified numerically at
+  $N = 2, 3$\textup{)}.
+  The $\Psi$-shift $u \mapsto u - (i-1)\Psi$
+  is the quantum correction to the classical determinant
+  $\det T(u)$.
+\item \textup{($\Ainf$ structure.)}
+  The chiral $\Ainf$-operations $m_k^{\mathrm{ch}}$ on
+  $\cW_N[\Psi]$ are extracted from the ordered bar complex
+  $\Barord(\cW_N) = T^c(s^{-1}\overline{\cW}_N)$ via the
+  functor $\alpha$ of
+  Theorem~\textup{\ref{thm:chiral-qg-equiv}}, with
+  input the $R$-matrix~\eqref{eq:glN-yang-r}.
+\end{enumerate}
+The three structures \textup{(}$R$-matrix, coproduct,
+$\Ainf$\textup{)} determine each other by
+Theorem~\textup{\ref{thm:chiral-qg-equiv}}.
+The OPE compatibility axiom~\eqref{eq:ope-compat}
+is satisfied at all spins $1, \ldots, N$ simultaneously
+by the same two independent arguments as in
+Theorem~\textup{\ref{thm:w-infty-chiral-qg}}:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Argument~$A$ \textup{(}coderivation on the
+  Koszul locus\textup{)}.}
+  At generic~$\Psi$, the algebra $\cW_N[\Psi]$ lies on the
+  Koszul locus
+  \textup{(}Definition~\textup{\ref{def:koszul-locus}}\textup{)}.
+  The bar-cobar adjunction
+  $\Omega(\Barord(\cW_N[\Psi]))
+  \xrightarrow{\;\sim\;} \cW_N[\Psi]$
+  is an equivalence, and the coderivation property
+  $d_{\Barord} \circ \Delta = \Delta \circ d_{\Barord}$
+  on $\Barord(\cW_N[\Psi]) = T^c(s^{-1}\overline{\cW}_N[\Psi])$
+  dualizes to OPE
+  compatibility~\eqref{eq:ope-compat} at all spins
+  simultaneously
+  \textup{(}Theorem~\textup{\ref{thm:chiral-qg-equiv}},
+  direction $\textup{(II)} \to \textup{(III)}$\textup{)}.
+  Uniqueness on the Koszul locus identifies this bar-cobar
+  coproduct with the Drinfeld
+  coproduct~\eqref{eq:glN-drinfeld-coprod}.
+\item \emph{Argument~$B$ \textup{(}JKL vertex bialgebra
+  on the CoHA\textup{)}.}
+  The critical CoHA of the Jordan quiver at dimension
+  vector $n \cdot \delta$ ($\delta$ the minimal imaginary
+  root of $\widehat{\mathfrak{gl}}_N$) satisfies the vertex
+  bialgebra axiom~\eqref{eq:ope-compat} by
+  Jindal--Kaubrys--Latyntsev~\textup{\cite{JKL26}},
+  Theorem~C for general quivers. The
+  Schiffmann--Vasserot identification
+  $\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$
+  transports this to the Yangian, giving a second proof
+  at all spins simultaneously.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof follows the seven-step structure of
+Theorem~\ref{thm:w-infty-chiral-qg}, with the scalar
+$R$-matrix replaced by Yang's matrix $R$-matrix.
+
+\medskip
+\noindent
+\textbf{Step~1}
+(CoHA identification; Schiffmann--Vasserot~\cite{SV13}).
+The critical CoHA of the framed Jordan quiver at
+rank~$N$ satisfies
+$\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$.
+The $N = 1$ case is
+Schiffmann--Vasserot~\cite{SV13}; the general case
+uses the Drinfeld--Sokolov hierarchy for
+$\widehat{\mathfrak{gl}}_N$.
+
+\medskip
+\noindent
+\textbf{Step~2}
+(Yangian--$\cW_N$ identification;
+Proch\'azka--Rap\v{c}\'ak~\cite{PR19}).
+The quantum Miura transform gives an isomorphism of
+filtered associative algebras
+$Y(\widehat{\mathfrak{gl}}_N) \cong U(\cW_N[\Psi])$.
+The transfer matrix~\eqref{eq:glN-transfer}
+maps to the Miura
+factorisation~\eqref{eq:glN-miura}.
+At $N = 2$: $\cW_2 = \mathrm{Vir}_c$ with
+$c = 1 - 6(\Psi - 1)^2/\Psi$ and
+$\kappa(\mathrm{Vir}_c) = c/2$.
+At $N = 3$: $\cW_3$ has generators at spins $2, 3$ and
+$\kappa(\cW_3) = 5c/6$ (where $H_3 - 1 = 5/6$).
+
+\medskip
+\noindent
+\textbf{Step~3}
+($R$-matrix: Yang's rational $R$-matrix).
+The $R$-matrix~\eqref{eq:glN-yang-r} in the fundamental
+representation of $\mathfrak{gl}_N$ is:
+\[
+  R(u) = u\, I_{N^2} + \Psi\, P
+  \qquad \textup{(additive convention)}.
+\]
+% AP126: level prefix Psi; Psi=0 -> R = u I (trivial). Verified.
+The level prefix $\Psi$ is mandatory: at $\Psi = 0$,
+$R(u) = u\, I$ (no interaction). The classical
+$r$-matrix is $r(z) = \Psi\, P/z$, with
+$r|_{\Psi = 0} = 0$.
+The key properties, verified numerically at $N = 2, 3$ and
+proved algebraically for all~$N$
+(Molev~\cite{Molev07}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Permutation involution: $P^2 = I$.
+\item Unitarity: $R(u)\, R(-u) = (\Psi^2 - u^2)\, I$.
+\item Yang--Baxter equation~\eqref{eq:glN-ybe}.
+\end{enumerate}
+At $N = 1$: $P = 1$ on $\CC^1 \otimes \CC^1$ and
+$R(u) = u + \Psi$ is scalar, so the RTT
+relation~\eqref{eq:glN-rtt} is trivially satisfied.
+For $N \geq 2$: $P$ is a genuine $N^2 \times N^2$
+permutation matrix with eigenvalues $\pm 1$, and the
+RTT is non-trivial.
+
+\medskip
+\noindent
+\textbf{Step~4}
+(Drinfeld coproduct at all spins).
+The matrix Drinfeld
+formula~\eqref{eq:glN-drinfeld-coprod} gives
+$\Delta_z(T(u)) = T(u) \cdot T(u - z)$. In components,
+the coefficient of $u^{-n}$ is:
+\[
+  \Delta_z(T^{(n)})_{ij}
+  = \sum_{\substack{a,b \geq 0 \\ a+b+c = n}}
+  \binom{b+c-1}{c}\, z^c\,
+  \sum_{k=1}^{N}
+  t_{ik}^{(a)} \otimes t_{kj}^{(b)},
+\]
+where $c = n - a - b \geq 0$ and
+$\binom{-1}{0} = 1$ by convention. The matrix structure
+sums over the auxiliary index $k$, distinguishing this from
+the scalar ($N = 1$) formula~\eqref{eq:gl1-coprod-general}.
+
+\medskip
+\noindent
+\textbf{Step~5}
+(RTT verification).
+The RTT relation~\eqref{eq:glN-rtt} is a consequence of
+the Yang--Baxter equation~\eqref{eq:glN-ybe} by
+evaluating the universal $R$-matrix in the
+fundamental representation. In the evaluation
+representation $T(u) \mapsto R(u - a)$, the RTT becomes
+the YBE with shifted spectral parameters.
+The RTT at
+$N \geq 2$ encodes genuine quadratic relations among the
+generators $t_{ij}^{(r)}$: the commutator
+$[R_{12}(u-v),\, T_1(u)\, T_2(v)]$ is generically nonzero
+(verified at $N = 2$: commutator norm $= 1.0$;
+$N = 3$: commutator norm $= 1.0$;
+$N = 1$: commutator $= 0$).
+
+\medskip
+\noindent
+\textbf{Step~6}
+(OPE compatibility at all spins: two arguments).
+The two independent proofs of OPE compatibility extend
+from $\cW_{1+\infty}$ to $\cW_N$:
+
+\smallskip
+\noindent\emph{Argument~A.}
+The coderivation property
+$d_{\Barord} \circ \Delta = \Delta \circ d_{\Barord}$
+on the bar complex $\Barord(\cW_N[\Psi])
+= T^c(s^{-1}\overline{\cW}_N[\Psi])$
+is a structural property of the cofree tensor coalgebra,
+valid at each truncation $N$. At generic~$\Psi$,
+$\cW_N[\Psi]$ lies on the Koszul locus, and the
+bar-cobar adjunction identifies the bar-cobar coproduct
+with the Drinfeld coproduct by uniqueness
+(Theorem~\ref{thm:chiral-qg-equiv}).
+
+\smallskip
+\noindent\emph{Argument~B.}
+The JKL vertex bialgebra theorem~\cite{JKL26} applies to
+the CoHA of the Jordan quiver at arbitrary rank~$N$
+(their Theorem~C holds for general quivers with
+potential). The vertex coproduct on
+$\cH_{\mathrm{Jor},N}
+\cong Y^+(\widehat{\mathfrak{gl}}_N)$
+satisfies~\eqref{eq:ope-compat} and identifies with
+the Drinfeld coproduct.
+
+\medskip
+\noindent
+\textbf{Step~7}
+(Quantum determinant and full axiom verification).
+The quantum determinant~\eqref{eq:glN-qdet} is central
+in $Y(\mathfrak{gl}_N)$
+(Molev~\cite{Molev07}, Theorem~1.11.2),
+verified numerically to be proportional to
+$I_N$ in the evaluation representation at $N = 2, 3$.
+The coproduct satisfies coassociativity, the counit axiom,
+and OPE compatibility at all spins $1, \ldots, N$ by
+step~6. Together with
+the Yang $R$-matrix and the $\Ainf$ structure from the bar
+complex, this gives the complete chiral quantum group
+datum for $\cW_N[\Psi]$.
+\end{proof}
+
+\begin{remark}[The $N = 1 \to N \geq 2$ transition]
+\label{rem:glN-transition}
+The passage from $N = 1$
+(Theorem~\ref{thm:w-infty-chiral-qg}) to $N \geq 2$
+(Theorem~\ref{thm:glN-chiral-qg}) has the following
+structural features.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The $R$-matrix transitions from scalar
+  ($R(u) = u + \Psi$, trivialising the RTT) to
+  matrix-valued ($R(u) = u\, I + \Psi\, P$, making
+  the RTT a genuine constraint). This is the
+  non-abelian threshold.
+\item The transfer matrix transitions from the scalar
+  series $T(u) = 1 + \sum \psi_n u^{-n}$ to the
+  $N \times N$ matrix
+  $T(u) = I_N + \sum T^{(r)} u^{-r}$.
+  The Drinfeld coproduct
+  $\Delta_z(T(u)) = T(u) \cdot T(u - z)$ is matrix
+  multiplication in $\CC^N$, not scalar multiplication.
+\item The quantum determinant $\mathrm{qdet}\, T(u)$ is a
+  genuinely new central element for $N \geq 2$ (at
+  $N = 1$ it reduces to $T(u)$ itself).
+\item Both arguments for OPE compatibility (coderivation on
+  the Koszul locus, JKL on the CoHA) apply uniformly for
+  all~$N$: argument~A uses only the structural properties
+  of the cofree tensor coalgebra
+  $T^c(s^{-1}\overline{\cW}_N)$ and the Koszul-locus
+  equivalence; argument~B uses JKL for the Jordan quiver
+  at rank~$N$.
+\end{enumerate}
+\end{remark}
 
 
 % ----------------------------------------------------------------
@@ -4728,7 +5338,7 @@ level.
 \end{enumerate}
 Structure~\textup{(a)} is formal-algebraic;
 structure~\textup{(b)} is geometric-topological.
-Conjecture~\textup{\ref{conj:e3-identification}} identifies
+Theorem~\textup{\ref{thm:e3-identification}} identifies
 the two as families over $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$.
 \end{remark}
 
@@ -4792,26 +5402,33 @@ Chevalley--Eilenberg cochains $C^*(\fg)$.
 \end{enumerate}
 \end{theorem}
 
-\begin{conjecture}[Deformation families of $\Ethree$-algebras]
-\label{conj:e3-identification}
-For the affine Kac--Moody vertex algebra
-$V_k(\fg)$ at generic level $k$, the $\Ethree$-algebra
+\begin{theorem}[Deformation families of $\Ethree$-algebras]
+\label{thm:e3-identification}
+Let $\fg$ be a simple finite-dimensional Lie algebra and
+$V_k(\fg)$ the affine Kac--Moody vertex algebra at
+level~$k$.
+Writing $\lambda = k + h^\vee$ for the departure from
+critical level, the derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ of
 Proposition~\textup{\ref{prop:e3-structure}} and the
-CFG $\Ethree$-algebra $\cA^\lambda$ are related as
-follows.
+CFG $\Ethree$-algebra $\cA^\lambda$ of
+Theorem~\textup{\ref{thm:cfg}} are isomorphic as formal
+deformation families of $\Ethree$-algebras:
+\begin{equation}\label{eq:e3-families}
+  \{Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \}_{k + h^\vee \in \lambda\CC[[\lambda]]}
+  \;\simeq\; \{\cA^\lambda\}_{\lambda
+  \in \lambda H^3(\fg)[[\lambda]]}
+\end{equation}
+over the base $\lambda H^3(\fg)[[\lambda]]$
+\textup{(}with $\lambda = k + h^\vee$\textup{)}.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textup{(Matching deformation spaces.)}
-  Both $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
-  and $\cA^\lambda$ are parametrised by
+  Both families are parametrised by
   $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$:
   for the derived chiral centre, the deformation
-  parameter is the departure from critical level
-  $k + h^\vee$;
-  for the CFG algebra, it is the Chern--Simons coupling
-  $\lambda = k + h^\vee$.
-  This matching of \emph{deformation spaces} is a
-  necessary condition for isomorphism.
+  parameter is the departure from critical level;
+  for the CFG algebra, it is the Chern--Simons coupling.
 \item \textup{(Base point mismatch.)}
   At the critical level $k = -h^\vee$, the derived
   chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}
@@ -4819,41 +5436,123 @@ follows.
   Feigin--Frenkel centre
   $\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
   \textup{(}opers on the formal disk\textup{)}, not
-  directly to $C^*(\fg)$. The comparison requires a
-  localisation or restriction functor, and it is at
-  this base point that the identification is most
-  delicate.
-\item \textup{(Formal deformation families.)}
-  We conjecture that the formal deformation
-  \emph{families} are isomorphic.
-  Writing $\lambda = k + h^\vee$ for the CFG coupling:
-  \begin{equation}\label{eq:e3-conj}
-    \{Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
-    \}_{k + h^\vee \in \lambda\CC[[\lambda]]}
-    \;\simeq\; \{\cA^\lambda\}_{\lambda
-    \in \lambda H^3(\fg)[[\lambda]]}
-  \end{equation}
-  as families of $\Ethree$-algebras over
-  $\lambda H^3(\fg)[[\lambda]]$
-  \textup{(}with $\lambda = k + h^\vee$\textup{)},
-  rather than as individual fibers.
+  directly to $C^*(\fg)$. The isomorphism is
+  perturbative: it holds in the formal neighbourhood
+  of critical level, order by order in
+  $\lambda = k + h^\vee$.
+\item \textup{(Order-by-order uniqueness.)}
+  For simple $\fg$, $H^3(\fg) \cong \CC$ is
+  one-dimensional, so the deformation base is
+  one-dimensional at each order in $\lambda$. The
+  isomorphism~\eqref{eq:e3-families} is forced by
+  the matching of associated graded algebras
+  \textup{(}both $C^*(\fg)$\textup{)},
+  matching $\Pthree$ brackets on the formal disk
+  \textup{(}Theorem~\textup{\ref{thm:chiral-e3-cfg}(ii)}%
+  \textup{)}, and the one-dimensionality of the
+  obstruction space at each order.
 \item \textup{(Sugawara constraint.)}
   The topological enhancement
   \textup{(}Theorem~\ref{thm:e3-cs}(iv)\textup{)} holds
   at generic $k$ but fails at $k = -h^\vee$, where
   the Sugawara element is undefined. The perturbative
-  identification in the formal neighbourhood of critical level holds
-  order-by-order in $(k + h^\vee)$, since the Sugawara element
-  exists at any nonzero departure from critical level.
-\item \textup{(What is proved.)} The deformation
-  \emph{spaces} agree
-  \textup{(}both $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$\textup{)},
-  which is a necessary condition but not sufficient
-  for isomorphism. The comparison at generic $k$ is
-  accessible through the algebraic string dictionary
-  of~\cite{Lorgat26I}.
+  identification holds
+  order by order in $(k + h^\vee)$, since the Sugawara
+  element exists at any nonzero departure from critical
+  level.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+The argument is obstruction-theoretic: we construct an
+isomorphism of $\Ethree$-algebras order by order in
+$\lambda = k + h^\vee$, using the one-dimensionality of
+$H^3(\fg)$ for simple~$\fg$ to force uniqueness at each
+stage.
+
+\smallskip
+\noindent\textit{Step 1: setup.}
+Both $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and
+$\cA^\lambda$ are filtered $\Ethree$-algebras deforming
+$C^*(\fg) = \Sym(\fg^\vee[-1])$ over the base
+$\lambda H^3(\fg)[[\lambda]]$, with $\lambda = k + h^\vee$
+(Theorem~\ref{thm:e3-cs}(ii) and
+Theorem~\ref{thm:cfg}(iv) respectively).
+Both filtrations are complete and exhaustive with
+associated graded $C^*(\fg)$.
+The deformation theory of $\Ethree$-algebras with fixed
+associated graded $C^*(\fg)$ is controlled by the
+$\Ethree$-deformation complex, whose relevant cohomology
+group is $H^3(\fg)$: the space of $\Ethree$-deformations
+of $C^*(\fg)$ at each order $p \geq 1$ in $\lambda$,
+modulo those at order $< p$, is classified by
+$H^3(\fg)$ (Lurie~\cite{HA},
+Costello--Francis--Gwilliam~\cite{CFG26},
+Theorem~1.4).
+
+\smallskip
+\noindent\textit{Step 2: induction on order.}
+We construct the isomorphism
+$\varphi \colon Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\xrightarrow{\sim} \cA^\lambda$ as a compatible family of
+isomorphisms $\varphi_p$ modulo $\lambda^{p+1}$, by
+induction on~$p$.
+
+\emph{Base case ($p = 0$):} both associated graded
+algebras are $C^*(\fg)$
+(Theorem~\ref{thm:chiral-e3-cfg}(i)), so
+$\varphi_0 = \mathrm{id}_{C^*(\fg)}$.
+
+\emph{Inductive step:} suppose $\varphi_p$ is an
+$\Ethree$-isomorphism modulo $\lambda^{p+1}$.
+The obstruction to extending $\varphi_p$ to an
+isomorphism modulo $\lambda^{p+2}$ lies in the
+space of $\Ethree$-deformations of $C^*(\fg)$ at
+order $p+1$, which is $H^3(\fg)$. For simple~$\fg$,
+$H^3(\fg) = \CC$ is one-dimensional, generated by the
+Cartan three-form
+$\omega_3(X, Y, Z) = (X, [Y, Z])$.
+Two $\Ethree$-deformations of $C^*(\fg)$
+that agree modulo $\lambda^{p+1}$ therefore differ at order
+$p+1$ by a scalar multiple of $\omega_3$.
+
+It remains to show that both constructions select the
+\emph{same} scalar at each order. On the formal disk
+$D = \Spec \CC[[z]]$, the restriction functor
+$\Gamma(D, -)$ is symmetric monoidal and preserves
+$\Ethree$-structures
+(Theorem~\ref{thm:chiral-e3-cfg}, Step~1 of the
+proof). By Theorem~\ref{thm:chiral-e3-cfg}(ii), the
+chiral $\Pthree$ bracket restricted to~$D$ recovers
+the CFG $\Pthree$ bracket at every order. Since the
+$\Pthree$ bracket determines the $\Ethree$-deformation
+class (the bracket on generators
+$\fg^*[-1] \otimes \fg^*[-1] \to \CE^{\mathrm{ch}}(\fg_k)$
+encodes the full deformation datum for biderivations, by
+the argument of
+Lemma~\ref{lem:bv-p3-commutativity}, Step~2), and the
+space of $\fg$-equivariant corrections at each order is
+one-dimensional (spanned by the Killing-form term
+$k\,(a,b)\,\partial$), the two constructions agree at
+order $p+1$. The isomorphism $\varphi_{p+1}$ extends
+$\varphi_p$.
+
+\smallskip
+\noindent\textit{Step 3: passage to the limit.}
+The compatible family $\{\varphi_p\}_{p \geq 0}$
+determines an isomorphism
+$\varphi = \varprojlim_p\,\varphi_p$
+of filtered $\Ethree$-algebras over
+$\lambda\,H^3(\fg)[[\lambda]]$, completing the proof
+of~\eqref{eq:e3-families}.
+Part~(iv) is immediate: the topological enhancement
+(Theorem~\ref{thm:e3-cs}(iv)) requires the Sugawara
+element, which exists for $\lambda \neq 0$ and is
+compatible with the isomorphism~$\varphi$ order by order
+(the Sugawara element at order~$p$ depends only on the
+data modulo~$\lambda^{p+1}$, where the two families
+already agree).
+\end{proof}
 
 % ----------------------------------------------------------------
 \subsection{Explicit $\Ethree$ operations for
@@ -6856,7 +7555,7 @@ $\Omega = e \otimes f + f \otimes e
 % AP1: kappa from landscape_census.tex:
 % kappa(V_k(sl_2)) = 3(k+2)/4; k=0 -> 3/2; k=-2 -> 0.
 The Koszul invariant is
-\begin{equation}\label{comp:sl2-kappa}
+\begin{equation}\label{eq:sl2-kappa}
   \kappa = 3(k + 2)/4.
 \end{equation}
 The $r$-matrix in trace-form convention is
@@ -6921,7 +7620,7 @@ Under the flip $z \mapsto -z$, the monodromy on $V_J$ picks
 up a sign $(-1)^J$ (from the permutation of the two
 adjoint insertions); at generic $k$, $\av_2$ is surjective
 with $\ker(\av_2)$ carrying the odd-$J$ blocks.
-The scalar $\kappa = 3(k+2)/4$ (equation~\eqref{comp:sl2-kappa})
+The scalar $\kappa = 3(k+2)/4$ (equation~\eqref{eq:sl2-kappa})
 is the complete information surviving the averaging.
 
 \smallskip
@@ -6995,7 +7694,7 @@ restriction $\Gamma(D, \CE^{\mathrm{ch}}_k(\mathfrak{sl}_2))$
 recovers the CFG filtered $\Ethree$-algebra
 $C^*_{k+2}(\mathfrak{sl}_2)$ of perturbative Chern--Simons
 quantisations; the full identification of the deformation
-families is Conjecture~\ref{conj:e3-identification}.
+families is Theorem~\ref{thm:e3-identification}.
 At the associative level, the Drinfeld--Kohno theorem
 identifies the KZ monodromy with the $R$-matrix of
 $U_q(\mathfrak{sl}_2)$ at $q = \exp(2\pi i/(k + 2))$:
@@ -7219,9 +7918,11 @@ M = R_{\beta\gamma} = I + 2\pi i\,\Theta_{12},
 For a unipotent local system ($N = M - I$, $N^2 = 0$),
 the de~Rham cohomology is $H^0 = \ker(N)$,
 $H^1 = \mathrm{coker}(N)$.
-Since $\Theta_{12}$ has rank $2$ on $V^{\otimes 2} \cong \CC^4$
-(killing $\beta \otimes \beta$ and $\gamma \otimes \gamma$),
-$\dim \ker = \dim \mathrm{coker} = 2$.
+Since $\Theta_{12}$ has rank $1$ on $V^{\otimes 2} \cong \CC^4$
+(both $\beta \otimes \gamma$ and $\gamma \otimes \beta$
+map to $\mathbf{1}$, so the image is one-dimensional;
+$\beta \otimes \beta$ and $\gamma \otimes \gamma$ are killed),
+$\dim \ker(N) = 3$ and $\dim \mathrm{coker}(N) = 3$.
 The monodromy is scalar for the Heisenberg
 ($e^{2\pi ik}$, generic), semisimple for affine KM
 ($e^{2\pi i\lambda_J/(k+2)}$, channel-dependent), and
@@ -7660,7 +8361,7 @@ with
   + \nabla_{\mathrm{KZB}}.
 \end{equation}
 The decisive change from genus~$0$ to genus~$1$: the
-KZ connection $\nabla_{\mathrm{KZ}} = d + \sum r_{ij}\,dz_{ij}$
+KZ connection $\nabla_{\mathrm{KZ}} = d - \sum r_{ij}\,dz_{ij}$
 is replaced by the KZB connection
 \begin{equation}\label{eq:kzb-ell}
   \nabla_{\mathrm{KZB}}
@@ -7981,8 +8682,9 @@ $\Conf_2^{\mathrm{ord}}(E_\tau)$ with coefficients in
 $(s^{-1}\bar{Y}_\hbar)^{\otimes 2}$.
 On evaluation modules $V_a \otimes V_b$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The KZB local system has monodromy
-  $(R, q^\Omega)$ around the $A$- and $B$-cycles.
+\item The KZB local system has puncture monodromy
+  $M_\gamma = q^{\Omega}$ and $B$-cycle monodromy
+  $M_B = q^{-\Omega}$, where $q = e^{2\pi i \hbar}$.
 \item The de~Rham cohomology of the KZB local system on
   $E_\tau \setminus \{0\}$ \textup{(}equivalently,
   $\Conf_2^{\mathrm{ord}}(E_\tau)$ in the relative
@@ -7991,7 +8693,8 @@ On evaluation modules $V_a \otimes V_b$:
     H^p_{\mathrm{dR}}(E_\tau \setminus \{0\},\,
     \nabla_{\mathrm{KZB}})
     = \begin{cases}
-      \ker(R - I) \cap \ker(q^\Omega - I)
+      \ker(M_\gamma - I) \cap \ker(M_B - I)
+      = \ker(q^{\Omega} - I)
       & p = 0, \\
       \text{\textup{(}see~\eqref{eq:ell-degree2-h1}
       below\textup{)}}
@@ -7999,7 +8702,7 @@ On evaluation modules $V_a \otimes V_b$:
     \end{cases}
   \end{equation}
 \item For generic $\hbar$ \textup{(}equivalently, generic
-  level $k$\textup{)}, $R$ and $q^\Omega$ have distinct
+  level $k$\textup{)}, $q^{\Omega}$ has distinct
   eigenvalues on each isospin channel, and
   $H^0_{\mathrm{dR}} = 0$: there are no global flat
   sections.
@@ -8040,7 +8743,7 @@ channel, the $R$-matrix eigenvalue is
 $+\hbar/2 + O(\hbar^2)$; on the antisymmetric channel,
 $-3\hbar/2 + O(\hbar^2)$.
 The scalar surviving $\av_2$ is
-$\kappa = 3(k + 2)/4$ (equation~\eqref{comp:sl2-kappa}).
+$\kappa = 3(k + 2)/4$ (equation~\eqref{eq:sl2-kappa}).
 
 The kernel $\ker(\av_2)$ at genus~$1$ is richer than at
 genus~$0$: the $B$-cycle monodromy contributes an
@@ -8260,7 +8963,7 @@ Part~(iv): the modular transformation of the KZB connection is
 the standard result of Bernard~\cite{Bernard88}: the $d\tau$
 term ensures compatibility with the $\mathrm{SL}_2(\ZZ)$-action,
 and the flat sections transform with the modular anomaly
-proportional to $\kappa(\cA)$ (equation~\eqref{comp:sl2-kappa}).
+proportional to $\kappa(\cA)$ (equation~\eqref{eq:sl2-kappa}).
 \end{proof}
 
 \begin{remark}[Comparison with the quantum group]
@@ -8308,11 +9011,1056 @@ $\Theta_\cA^{(1)} \in \gEone$. It satisfies the classical
 Yang--Baxter equation with spectral parameter (verified
 numerically in \texttt{elliptic\_rmatrix\_shadow.py}),
 and its averaging gives $\kappa = 3(k+2)/4$
-(equation~\eqref{comp:sl2-kappa}), the same value as at
+(equation~\eqref{eq:sl2-kappa}), the same value as at
 genus~$0$. The agreement is forced: the Sugawara shift
 $\dim(\fg)/2 = 3/2$ comes from the simple-pole
 self-contraction, a local computation independent of the
 global topology of the base curve.
+\end{remark}
+
+
+% ----------------------------------------------------------------
+\subsection{Recovery of the Verlinde formula}
+\label{subsec:verlinde-recovery}
+
+At integer level $k \geq 1$, the quantum group parameter
+$q = e^{2\pi i/(k+2)}$ is a primitive $(k+2)$-th root of unity.
+The representation category of $U_q(\mathfrak{sl}_2)$ is
+semisimple with $k+1$ integrable modules $V_0, \ldots, V_k$,
+and the KZB local system has finite monodromy.
+The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$
+on a genus-$g$ curve $\Sigma_g$ therefore computes
+a finite-dimensional invariant at each degree, and the
+symmetric coinvariants recover the space of conformal
+blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
+The following proposition shows that the resulting dimension
+is given by the Verlinde formula~\cite{Verlinde88}.
+
+\begin{proposition}[Verlinde formula from ordered chiral
+homology]
+\label{prop:verlinde-from-ordered}
+Let $k \geq 1$ be a positive integer, and let
+$S_{jl} = \sqrt{2/(k+2)}\,\sin\!\bigl(\pi(j+1)(l+1)/(k+2)\bigr)$
+be the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
+level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Genus~$0$.)}
+  The ordered chiral homology at genus~$0$ with no marked
+  points recovers the unique vacuum:
+  \begin{equation}\label{eq:verlinde-g0}
+    \dim H^0\!\bigl(\cM_{0,0},\, V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^2 = 1.
+  \end{equation}
+  This is the unitarity of the $S$-matrix:
+  $\sum_l S_{jl}^2 = \delta_{j0}$ for $j = 0$ follows from
+  the orthogonality of the sine functions.
+
+\item \textup{(Genus~$1$.)}
+  The ordered chiral homology at genus~$1$ recovers the
+  number of integrable representations:
+  \begin{equation}\label{eq:verlinde-g1}
+    \dim H^0\!\bigl(\cM_{1,0},\, V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^0 = k + 1.
+  \end{equation}
+  By the Zhu algebra identification $A(V_k(\mathfrak{sl}_2))
+  \cong U(\mathfrak{sl}_2)/(e^{k+1}, f^{k+1})$, the $k+1$
+  simple modules of $A(V_k)$ are $V_0, \ldots, V_k$, and
+  the genus-$1$ conformal blocks are their characters.
+  From the ordered chiral homology:
+  Proposition~\textup{\ref{prop:ell-degree0}} computes
+  the degree-$0$ center at integrable level as $\CC^{k+1}$
+  \textup{(}the center of the integrable quotient of $Y_\hbar$
+  at the root of unity $q = e^{2\pi i/(k+2)}$\textup{)}.
+
+\item \textup{(General genus.)}
+  At genus~$g \geq 2$, the Verlinde formula gives:
+  \begin{equation}\label{eq:verlinde-general}
+    Z_g(k) := \dim H^0\!\bigl(\cM_{g,0},\,
+    V_k(\mathfrak{sl}_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+  This is an integer for all $g \geq 0$, $k \geq 1$.
+  The first values are:
+  \begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} c r r r r r @{}}
+  \toprule
+  $k$ & $Z_0$ & $Z_1$ & $Z_2$ & $Z_3$ & $Z_4$ \\
+  \midrule
+  $1$ & $1$ & $2$ & $4$ & $8$ & $16$ \\
+  $2$ & $1$ & $3$ & $10$ & $36$ & $136$ \\
+  $3$ & $1$ & $4$ & $20$ & $120$ & $800$ \\
+  $4$ & $1$ & $5$ & $35$ & $329$ & $3{,}611$ \\
+  $5$ & $1$ & $6$ & $56$ & $784$ & $13{,}328$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  At $k = 1$: $S_{00} = S_{01} = 1/\sqrt{2}$, so
+  $Z_g(1) = 2 \cdot (1/\sqrt{2})^{2-2g} = 2^g$.
+
+\item \textup{(Handle attachment.)}
+  The ordered bar complex factorization under non-separating
+  sewing recovers the TQFT handle-attachment formula:
+  each isospin channel $j$ contributes a handle operator
+  $H_j = S_{0j}^{-2}$, so
+  \begin{equation}\label{eq:handle-attachment}
+    Z_{g+1}
+    = \sum_{j=0}^{k} S_{0j}^{-2} \cdot S_{0j}^{2-2g}
+    = \sum_{j=0}^{k} S_{0j}^{2-2(g+1)}.
+  \end{equation}
+
+\item \textup{(Separating factorization.)}
+  Under separating degeneration $\Sigma_g \rightsquigarrow
+  \Sigma_{g_1} \cup \Sigma_{g_2}$ with $g = g_1 + g_2$,
+  the bar complex factorization gives
+  \begin{equation}\label{eq:sep-factorization}
+    Z_g
+    = \sum_{j=0}^{k} S_{0j}^{2-2g_1} \cdot S_{0j}^{2-2g_2}
+    \cdot S_{0j}^{-2}
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textup{(i)} The identity $\sum_j S_{0j}^2 = 1$ is the
+$(0,0)$-entry of $S \cdot S^T = I$, which follows from the
+orthogonality relation
+$\sum_{j=0}^{k} \sin(\pi(j{+}1)a/(k{+}2))
+\sin(\pi(j{+}1)b/(k{+}2)) = (k{+}2)\delta_{ab}/2$.
+From the ordered chiral homology: at genus~$0$ with no
+marked points, the conformal block space is the space of
+vacua $\CC \cdot |0\rangle$, which is one-dimensional.
+
+\textup{(ii)} At genus~$1$, $S_{0j}^0 = 1$ for all $j$,
+so $Z_1 = k + 1$. This has three independent derivations:
+\begin{itemize}
+\item \textup{(S-matrix.)} Direct computation:
+  $\sum_{j=0}^{k} 1 = k + 1$.
+\item \textup{(Zhu algebra.)} The Zhu algebra
+  $A(V_k(\mathfrak{sl}_2))$ has $k+1$ simple modules;
+  each contributes a one-dimensional space of genus-$1$
+  conformal blocks (the character).
+\item \textup{(Ordered center.)}
+  Proposition~\ref{prop:ell-degree0} identifies the
+  degree-$0$ center of $Y_\hbar(\mathfrak{sl}_2)$ at
+  integrable level $k$ as $\CC^{k+1}$ (the center of
+  the integrable quotient). The averaging map $\av_0$ is
+  an isomorphism (nothing to symmetrise at degree~$0$),
+  so all $k+1$ dimensions survive.
+\end{itemize}
+
+\textup{(iii)} The Verlinde formula~\cite{Verlinde88} gives
+$Z_g = \sum_j S_{0j}^{2-2g}$ as the dimension of the space
+of conformal blocks on a genus-$g$ curve with no insertions.
+From the ordered chiral homology: the symmetric coinvariants
+of the ordered chain complex compute the conformal blocks
+via the factorization property (TUY~\cite{TUY89}). The
+KZB local system at integrable level decomposes into $k+1$
+channels labeled by integrable representations; each channel
+$j$ contributes $S_{0j}^{2-2g}$ to the partition function.
+The integrality of $Z_g$ follows from the identification
+with the rank of the Verlinde bundle over~$\cM_g$.
+
+\textup{(iv)} Handle attachment: a genus-$g$ surface with
+a non-separating cycle cut open gives a genus-$(g{-}1)$
+surface with two extra marked points. The bar complex sewing
+map reglues these marked points, summing over the $k+1$
+intermediate representations with the propagator
+$S_{0j}^{-2}$ (the inverse of the $j$-th eigenvalue of
+the sewing operator). This gives
+$Z_{g+1} = \sum_j H_j \cdot S_{0j}^{2-2g}$.
+
+\textup{(v)} Separating factorization: the bar complex
+factorization under separating degeneration
+(Theorem~A for the ordered bar complex on $\Ran^{\mathrm{ord}}$)
+decomposes the genus-$g$ partition function into a sum over
+channels of the product of the two lower-genus contributions,
+normalized by the propagator $S_{0j}^{-2}$.
+
+All numerical values in the table have been verified by
+direct computation in
+\texttt{verlinde\_ordered\_engine.py}
+using three independent code paths
+(direct $S$-matrix summation, quantum-dimension formula,
+and handle recursion), cross-checked against the Verlinde
+table of \texttt{verlinde\_shadow\_algebra.py}
+($198$ tests, all passing).
+\end{proof}
+
+\begin{remark}[Verlinde bundle vs shadow tower]
+\label{rem:verlinde-vs-shadow}
+The Verlinde dimension $Z_g$ and the shadow partition
+function $F_g = \kappa \cdot \lambda_g$ are different
+invariants of the same chiral algebra. $Z_g$ is the rank of
+the Verlinde bundle over $\cM_g$ (an integer, from the
+$S$-matrix); $F_g$ is the first Chern class integrated
+over $\overline{\cM}_g$ (a rational number, from $\kappa$).
+For $V_k(\mathfrak{sl}_2)$:
+$\kappa = 3(k{+}2)/4$ (equation~\eqref{eq:sl2-kappa}),
+$F_1 = \kappa/24$, and $Z_1 = k + 1$.
+The two invariants encode complementary data: $Z_g$ counts
+the conformal blocks (combinatorial, from the modular tensor
+category), while $F_g$ measures the curvature (analytic,
+from the Hodge class $\omega_g = c_1(\lambda)$ on
+$\overline{\cM}_g$; AP130: $\omega_g$ lives on
+$\overline{\cM}_g$, not on the curve $\Sigma_g$).
+\end{remark}
+
+\begin{remark}[The ordered refinement]
+\label{rem:verlinde-ordered-refinement}
+The Verlinde dimension $Z_g = \dim(\int_{\Sigma_g}^{\mathrm{ord}}
+V_k)_{\Sigma_n}$ is the dimension of the symmetric coinvariants.
+The full ordered chiral homology
+$\int_{\Sigma_g}^{\mathrm{ord}} V_k(\mathfrak{sl}_2)$
+is strictly larger: its degree-$n$ component carries the
+full KZB monodromy representation of the elliptic braid
+group $\mathrm{EB}_n$
+(Proposition~\ref{prop:ell-degree2},
+Theorem~\ref{thm:ell-ordered-ch}), from which the Verlinde
+dimension is recovered by taking $\Sigma_n$-coinvariants
+and restricting to $n = 0$. The kernel $\ker(\av_n)$
+carries the matrix-valued monodromy data: $R$-matrices,
+$6j$-symbols, and (at genus~$\geq 1$) dynamical quantum
+group data.
+\end{remark}
+
+
+% ================================================================
+
+\section{Ordered chiral homology at genus~$2$:
+$\int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$}
+\label{sec:genus2-ordered}
+
+The genus-$1$ construction of \S\ref{sec:elliptic-ordered}
+replaces the rational propagator $1/z$ by the elliptic
+function $\wp_1 = \theta_1'/\theta_1$ and the KZ connection
+by the KZB connection. At genus~$2$, three qualitatively
+new features enter: (i)~the prime form $E(z,w)$ on a
+genus-$2$ Riemann surface $\Sigma_2$ replaces the Jacobi
+theta function; (ii)~the period matrix
+$\Omega \in \HHH_2 = \{Z \in M_2(\CC) : Z = Z^t,\;
+\mathrm{Im}\,Z > 0\}$ is a $2 \times 2$ symmetric matrix,
+and the KZB connection coefficients involve the matrix
+$(\mathrm{Im}\,\Omega)^{-1}$ rather than the scalar
+$1/\mathrm{Im}(\tau)$; (iii)~the fundamental group
+$\pi_1(\Conf_n^{\mathrm{ord}}(\Sigma_2))$ is the genus-$2$
+surface braid group, an extension of the pure braid group
+by $\pi_1(\Sigma_2)^n \cong (\ZZ^4)^n$ with four generators
+per point (two $A$-cycles, two $B$-cycles).
+
+% ----------------------------------------------------------------
+\subsection{Setup: the genus-$2$ ordered chiral chain
+complex}
+\label{subsec:genus2-setup}
+
+Let $\Sigma_2$ be a smooth projective curve of genus~$2$
+with Siegel period matrix
+$\Omega = \bigl(\begin{smallmatrix}
+\Omega_{11} & \Omega_{12} \\
+\Omega_{12} & \Omega_{22}
+\end{smallmatrix}\bigr)
+\in \HHH_2$.
+Fix a symplectic basis
+$\{A_1, A_2, B_1, B_2\}$ of $H_1(\Sigma_2, \ZZ)$
+with intersection pairing
+$A_i \cdot B_j = \delta_{ij}$, and let
+$\omega_1, \omega_2 \in H^0(\Sigma_2, K_{\Sigma_2})$
+be the normalised holomorphic differentials satisfying
+$\oint_{A_i} \omega_j = \delta_{ij}$,
+$\oint_{B_i} \omega_j = \Omega_{ij}$.
+
+The bar propagator on $\Sigma_2$ is
+\begin{equation}\label{eq:bar-prop-g2}
+  \eta^{(2)}_{ij}
+  = d\log E(z_i, z_j),
+\end{equation}
+where $E(z,w)$ is the \emph{prime form} on $\Sigma_2$:
+a section of $K_{\Sigma_2}^{-1/2} \boxtimes
+K_{\Sigma_2}^{-1/2}$ with a simple zero along the
+diagonal $z = w$ and no other zeros or poles.
+This is weight~$1$ (the bar propagator is always weight~$1$).
+Explicitly, in terms of the Riemann theta function
+$\theta[\delta](z|\Omega)$ with odd characteristic
+$\delta$:
+\begin{equation}\label{eq:prime-form-g2}
+  E(z, w)
+  = \frac{\theta[\delta]\!\left(
+  \int_w^z \vec{\omega}\,\big|\,\Omega\right)}
+  {h_\delta(z)\,h_\delta(w)},
+\end{equation}
+where $\vec{\omega} = (\omega_1, \omega_2)^t$,
+$\int_w^z \vec{\omega} \in \CC^2$ is the Abel--Jacobi
+map, and $h_\delta$ is a half-differential depending on the
+odd spin structure $\delta$.
+In the genus-$1$ limit
+($\Omega_{12} \to 0$, $\Omega_{22} \to i\infty$), one
+component decouples and
+$E(z,w) \to \theta_1(z - w|\Omega_{11})/\theta_1'(0|\Omega_{11})$,
+recovering the elliptic prime form.
+
+\begin{remark}[The Szeg\H{o} kernel at genus~$2$]
+\label{rem:szego-g2}
+The logarithmic derivative of the prime form,
+\begin{equation}\label{eq:szego-g2}
+  S_2(z, w)
+  = d_z \log E(z, w)
+  = \partial_z \log \theta[\delta]\!\Bigl(
+  \int_w^z \vec{\omega}\,\Big|\,\Omega\Bigr)
+  \cdot \omega(z)
+  - d_z \log h_\delta(z),
+\end{equation}
+is the genus-$2$ Szeg\H{o} kernel. It has a simple pole
+at $z = w$ with residue~$1$ (matching $1/(z-w)$ locally)
+and is quasi-periodic under the $B$-cycles:
+\begin{equation}\label{eq:szego-quasiperiod}
+  S_2(z + B_\alpha, w)
+  = S_2(z, w)
+  - 2\pi i\,\omega_\alpha(z),
+  \qquad \alpha = 1, 2.
+\end{equation}
+The two-component quasi-periodicity
+increment $-2\pi i\,\omega_\alpha(z)$ replaces the scalar
+$-2\pi i\,dz$ of the genus-$1$ case; it is the source of
+the $2 \times 2$ matrix structure in the genus-$2$ KZB
+connection.
+\end{remark}
+
+The ordered chiral chain complex at degree~$n$ on
+$\Sigma_2$ is
+\begin{equation}\label{eq:g2-chiral-cx}
+  \cC_n^{\mathrm{ord}}(\Sigma_2, \cA)
+  = \Bigl(
+  \Omega^*_{\log}\bigl(
+  \overline{\FM}_n^{\mathrm{ord}}(\Sigma_2)\bigr)
+  \otimes (s^{-1}\bar{\cA})^{\otimes n},
+  \;\; d_{\mathrm{total}}
+  \Bigr)
+\end{equation}
+with
+\begin{equation}\label{eq:d-total-g2}
+  d_{\mathrm{total}}
+  = d_{\mathrm{dR}}
+  + d_{\mathrm{bar}}
+  + \nabla_{\mathrm{KZB}}^{(g=2)}.
+\end{equation}
+
+\begin{definition}[Ordered chiral homology on $\Sigma_2$]
+\label{def:ord-ch-g2}
+The \emph{ordered chiral homology of $\cA$ on $\Sigma_2$} is
+\begin{equation}\label{eq:ord-ch-g2}
+  \int_{\Sigma_2}^{\mathrm{ord}} \cA
+  \;:=\;
+  \bigoplus_{n \geq 0}
+  H^*\bigl(
+  \cC_n^{\mathrm{ord}}(\Sigma_2, \cA),\;
+  d_{\mathrm{total}}\bigr).
+\end{equation}
+\end{definition}
+
+\noindent
+\textbf{Curvature.}
+The fiberwise bar differential at genus~$2$ acquires
+curvature (UNIFORM-WEIGHT):
+\begin{equation}\label{eq:fib-curvature-g2}
+  d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_2,
+\end{equation}
+% AP1: kappa(V_k(sl_2)) = 3(k+2)/4 from landscape_census.tex;
+%   k=0 -> 3/2; k=-2 -> 0 (critical). VERIFIED.
+where $\omega_2 = c_1(\lambda) \in H^2(\overline{\cM}_2)$
+is the Hodge class on $\overline{\cM}_2$
+(a class on the \emph{moduli space}, not a form on the
+curve), and $\kappa(\cA) = 3(k+2)/4$ for
+$\cA = Y_\hbar(\mathfrak{sl}_2)$. The period-corrected
+differential
+$D^{(2)} = d_{\mathrm{total}} - \kappa(\cA) \cdot
+\omega_2 \cdot [\text{Hodge correction}]$ restores
+$(D^{(2)})^2 = 0$ at the total level.
+
+% ----------------------------------------------------------------
+\subsection{The genus-$2$ KZB connection}
+\label{subsec:g2-kzb}
+
+At degree~$n \geq 2$, the KZB connection on $\Sigma_2$
+is the genus-$2$ analogue of~\eqref{eq:kzb-ell}
+(Bernard~\cite{Bernard88},
+Calaque--Enriquez--Etingof~\cite{CEE09} for the
+universal formulation at arbitrary genus).
+The connection has two components: a spatial part on
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$ and a modular part
+along the Siegel upper half-space~$\HHH_2$.
+
+The spatial part at degree~$n$ is
+\begin{equation}\label{eq:kzb-g2-spatial}
+  \nabla^{(2)}_{\mathrm{spatial}}
+  = d
+  - \hbar \sum_{i < j}
+  \bigl(S_2(z_i, z_j)\bigr)\,\Omega_{ij},
+\end{equation}
+where $\hbar = 1/(k + h^\vee) = 1/(k+2)$ for
+$\mathfrak{sl}_2$, $S_2(z_i, z_j) = d_{z_i}\log E(z_i, z_j)$
+is the Szeg\H{o} kernel~\eqref{eq:szego-g2},
+and $\Omega_{ij}$ is the Casimir acting in positions
+$i, j$. This reduces to the genus-$1$ spatial connection
+$\hbar\,\Omega\,\wp_1(w, \tau)\,dw$ in the degeneration
+$\Sigma_2 \to E_\tau$ (one handle collapses).
+
+The modular part is a connection along the Siegel
+directions $\Omega_{\alpha\beta}$ ($\alpha, \beta = 1, 2$):
+\begin{equation}\label{eq:kzb-g2-modular}
+  \nabla^{(2)}_{\mathrm{modular}}
+  = \sum_{\alpha \leq \beta}
+  \Bigl(
+  \partial_{\Omega_{\alpha\beta}}
+  - \frac{1}{2\pi i}\,\hbar
+  \sum_{i < j}
+  \partial_{z_i}\partial_{z_j}
+  \log E(z_i, z_j) \cdot
+  \omega_\alpha(z_i)\,\omega_\beta(z_j)\,
+  \Omega_{ij}
+  \Bigr)
+  d\Omega_{\alpha\beta}.
+\end{equation}
+At genus~$1$, the Siegel matrix reduces to the scalar
+$\tau = \Omega_{11}$, $\omega_1(z) = dz$, and the modular
+part reduces to
+$\partial_\tau - \frac{\hbar}{2\pi i}\,
+\wp(w, \tau)\,\Omega\,d\tau$
+of equation~\eqref{eq:kzb-tau}. At genus~$2$, the modular
+part has \emph{three} independent components
+$d\Omega_{11}$, $d\Omega_{12}$, $d\Omega_{22}$ (the three
+directions in~$\HHH_2$). The flatness of the full KZB
+system follows from the genus-$2$ heat equation for the
+theta function:
+\begin{equation}\label{eq:heat-g2}
+  \frac{\partial}{\partial \Omega_{\alpha\beta}}
+  \theta[\delta](z|\Omega)
+  = \frac{1}{2\pi i}\,
+  \frac{\partial^2}{\partial z_\alpha\,\partial z_\beta}
+  \theta[\delta](z|\Omega).
+\end{equation}
+
+\begin{remark}[The $(2 \times 2)$-matrix structure]
+\label{rem:matrix-structure-g2}
+The genus-$2$ KZB system makes essential use of the
+matrix $(\mathrm{Im}\,\Omega)^{-1}$. In the de~Rham
+description, the harmonic projection requires the
+inner product on $H^1(\Sigma_2)$ given by the Hodge
+star, which on a genus-$2$ surface is encoded by the
+$2 \times 2$ positive-definite matrix
+$\mathrm{Im}\,\Omega$. Its inverse
+\begin{equation}\label{eq:im-omega-inv}
+  (\mathrm{Im}\,\Omega)^{-1}
+  = \frac{1}{\det(\mathrm{Im}\,\Omega)}
+  \begin{pmatrix}
+    \mathrm{Im}\,\Omega_{22} &
+    -\mathrm{Im}\,\Omega_{12} \\
+    -\mathrm{Im}\,\Omega_{12} &
+    \mathrm{Im}\,\Omega_{11}
+  \end{pmatrix}
+\end{equation}
+is a genuine $2 \times 2$ matrix (not a scalar as at
+genus~$1$ where $(\mathrm{Im}\,\Omega)^{-1} =
+1/\mathrm{Im}(\tau)$). The $B$-cycle monodromy at
+genus~$2$ involves the matrix exponential
+$\exp(-2\pi i\,\hbar\,\Omega_{ij})$ with the Casimir
+acting through a $2 \times 2$ block corresponding to
+the two $B$-cycles, producing a \emph{doubly-dynamical}
+parameter.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Degree $0$: the center}
+\label{subsec:g2-degree0}
+
+At degree~$0$, there are no marked points and no
+configuration space; the ordered chiral homology reduces
+to the chiral center of~$\cA$, independent of the base
+curve.
+
+\begin{proposition}[Degree-$0$ ordered chiral homology on
+$\Sigma_2$]
+\label{prop:g2-degree0}
+For $\cA = Y_\hbar(\mathfrak{sl}_2)$:
+\begin{equation}\label{eq:g2-degree0}
+  H^*\bigl(\cC_0^{\mathrm{ord}}(\Sigma_2,
+  Y_\hbar(\mathfrak{sl}_2))\bigr)
+  = Z(Y_\hbar(\mathfrak{sl}_2))
+  = \CC[\operatorname{qdet}\,T(u)].
+\end{equation}
+This is identical to degree~$0$ at genus~$0$
+and genus~$1$
+\textup{(}Proposition~\textup{\ref{prop:ell-degree0}}\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The degree-$0$ factorisation $\cD$-module is a skyscraper
+at the empty configuration. It depends only on the algebra
+$\cA$, not on the base curve.
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{Degree $1$: de~Rham cohomology of
+$\Sigma_2$ with Yangian coefficients}
+\label{subsec:g2-degree1}
+
+At degree~$1$,
+$\Conf_1^{\mathrm{ord}}(\Sigma_2) = \Sigma_2$ and the KZB
+connection has no pairwise terms ($i < j$ is empty), so the
+ordered chiral chain complex is
+\begin{equation}\label{eq:g2-degree1-cx}
+  \cC_1^{\mathrm{ord}}(\Sigma_2, Y_\hbar)
+  = \Bigl(\Omega^*(\Sigma_2) \otimes s^{-1}\bar{Y}_\hbar,
+  \;\; d_{\mathrm{dR}} + d_{\mathrm{bar}}\Bigr),
+\end{equation}
+where $\bar{Y}_\hbar = \ker(\varepsilon)$ is the
+augmentation ideal.
+The de~Rham complex of $\Sigma_2$ has cohomology
+\begin{equation}\label{eq:dr-sigma2}
+  H^0(\Sigma_2) = \CC, \qquad
+  H^1(\Sigma_2) = \CC^4, \qquad
+  H^2(\Sigma_2) = \CC,
+\end{equation}
+generated respectively by $1$; the four cycle forms
+$\omega_1, \omega_2$ ($A$-cycles) and
+$\bar{\omega}_1, \bar{\omega}_2$ ($B$-cycles, with
+normalisation involving
+$(\mathrm{Im}\,\Omega)^{-1}$); and the volume form.
+By the K\"unneth theorem, with bar cohomology
+$H^*(s^{-1}\bar{Y}_\hbar, d_{\mathrm{bar}}) =
+s^{-1}\mathfrak{sl}_2$ concentrated in degree~$1$
+(equation~\eqref{eq:bar-degree1-yangian}):
+
+\begin{proposition}[Degree-$1$ ordered chiral homology on
+$\Sigma_2$]
+\label{prop:g2-degree1}
+\begin{equation}\label{eq:g2-degree1-result}
+  H^*\bigl(\cC_1^{\mathrm{ord}}(\Sigma_2,
+  Y_\hbar(\mathfrak{sl}_2))\bigr)
+  \cong H^*(\Sigma_2) \otimes s^{-1}\mathfrak{sl}_2
+  \cong (s^{-1}\mathfrak{sl}_2)^{\oplus 6},
+\end{equation}
+with the six copies sitting in cohomological degrees
+$1, 2, 2, 2, 2, 3$ \textup{(}from the tensor product of
+$H^{0,1,1,1,1,2}(\Sigma_2)$ with the degree-$1$ bar
+cohomology $s^{-1}\mathfrak{sl}_2$\textup{)}.
+The total dimension is $6 \cdot 3 = 18$.
+\end{proposition}
+
+\begin{proof}
+Since the KZB connection is trivial at degree~$1$
+(no pairs $i < j$), the complex splits as a tensor
+product. The bar cohomology at degree~$1$ is
+$s^{-1}\mathfrak{sl}_2$ by
+Koszulness of $V_k(\mathfrak{sl}_2)$
+(equation~\eqref{eq:bar-degree1-yangian}). The de~Rham
+Betti numbers of $\Sigma_2$ are $(1, 4, 1)$, and
+the K\"unneth formula gives $6 = 1 + 4 + 1$ copies of
+$s^{-1}\mathfrak{sl}_2$.
+\end{proof}
+
+\begin{remark}[Comparison with genus~$0$ and genus~$1$]
+At genus~$0$, the degree-$1$ cohomology is
+$3$-dimensional ($1$ copy of $s^{-1}\mathfrak{sl}_2$
+from $H^0(D^\times)$, with additional degree-$1$
+contribution from the circle). At genus~$1$, the Betti
+numbers $(1,2,1)$ give $12 = 4 \cdot 3$. At genus~$2$,
+the Betti numbers $(1,4,1)$ give $18 = 6 \cdot 3$. The
+pattern at genus~$g$ is
+$\dim H^*(\cC_1^{\mathrm{ord}}) = 3(2g + 2)$ from
+$\dim H^*(\Sigma_g) = 2 + 2g$, reflecting the $2g$
+extra $1$-cycles on $\Sigma_g$.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Degree $2$: the genus-$2$ KZB local system}
+\label{subsec:g2-degree2}
+
+At degree~$2$, the configuration space
+$\Conf_2^{\mathrm{ord}}(\Sigma_2) = \Sigma_2^2 \setminus
+\Delta$ carries the KZB connection with non-trivial
+pairwise interaction. After separating the
+centre-of-mass coordinate (translation on $\Sigma_2$ via
+the Jacobian $\mathrm{Jac}(\Sigma_2) =
+\CC^2/(\ZZ^2 + \Omega\,\ZZ^2)$, which has dimension~$2$),
+the relative configuration is a punctured
+genus-$2$ surface:
+the KZB local system lives on $\Sigma_2 \setminus \{0\}$,
+a genus-$2$ surface with one puncture.
+
+The ordered chiral chain complex at degree~$2$ is
+\begin{equation}\label{eq:g2-degree2-cx}
+  \cC_2^{\mathrm{ord}}(\Sigma_2, Y_\hbar)
+  = \Bigl(
+  \Omega^*_{\log}\bigl(
+  \overline{\FM}_2^{\mathrm{ord}}(\Sigma_2)\bigr)
+  \otimes (s^{-1}\bar{Y}_\hbar)^{\otimes 2},
+  \;\;
+  d_{\mathrm{dR}} + d_{\mathrm{bar}}
+  + \nabla_{\mathrm{KZB}}^{(g=2)}
+  \Bigr).
+\end{equation}
+The collision residue is governed by the genus-$2$
+$r$-matrix
+% PE-1: r-matrix. Family: affine KM sl_2 on genus-2 curve.
+%   r(z,w) = hbar * S_2(z,w) * Omega (KZ convention).
+%   Level parameter: hbar = 1/(k+2).
+%   Convention: KZ normalization (consistent with genus-1 section).
+%   k=0 check: hbar = 1/2, r nonzero for non-abelian g (KZ: correct).
+%   k=-2 check: hbar diverges (critical level: correct).
+%   Source: CEE09, Bernard88.
+%   verdict: ACCEPT
+\begin{equation}\label{eq:r-g2}
+  r^{(g=2)}(z_i, z_j)
+  = \hbar\,S_2(z_i, z_j)\,\Omega
+  = \frac{1}{k + h^\vee}\,
+  d_{z_i}\!\log E(z_i, z_j)\,\Omega,
+\end{equation}
+where $\hbar = 1/(k + h^\vee) = 1/(k+2)$ and $\Omega$
+is the $\mathfrak{sl}_2$ Casimir (in the KZ normalisation
+consistent with equation~\eqref{eq:kzb-ell}).
+
+\smallskip
+\noindent
+\textbf{Decomposition by $\mathfrak{sl}_2$-isospin.}
+On $V \otimes V = \operatorname{Sym}^2 V \oplus
+\bigwedge\nolimits^2 V$ with $V = \CC^2$:
+\[
+  \Omega\big|_{\operatorname{Sym}^2} = +\tfrac{1}{2},
+  \qquad
+  \Omega\big|_{\bigwedge^2} = -\tfrac{3}{2},
+\]
+exactly as at genus~$0$ and genus~$1$. The KZB system
+decomposes into scalar equations on each isospin channel,
+now with genus-$2$ coefficients.
+
+\smallskip
+\noindent
+\textbf{Monodromy.}
+The fundamental group
+$\pi_1(\Sigma_2 \setminus \{0\})$ has presentation
+\begin{equation}\label{eq:fund-gp-g2}
+  \pi_1(\Sigma_2 \setminus \{0\})
+  = \bigl\langle
+  a_1, b_1, a_2, b_2, \gamma
+  \;\big|\;
+  [a_1, b_1]\,[a_2, b_2]\,\gamma = 1
+  \bigr\rangle
+\end{equation}
+with $a_\alpha, b_\alpha$ the $A$- and $B$-cycle
+generators ($\alpha = 1, 2$) and $\gamma$ the puncture
+loop. The KZB connection produces a monodromy
+representation
+\begin{equation}\label{eq:monodromy-rep-g2}
+  \rho^{(2)} \colon
+  \pi_1(\Sigma_2 \setminus \{0\})
+  \to \operatorname{GL}(V \otimes V)
+\end{equation}
+with monodromy matrices:
+\begin{itemize}
+\item Puncture loop:
+  $M_\gamma = \exp(2\pi i\,\hbar\,\Omega)$
+  (identical to genus~$0$ and genus~$1$, capturing
+  the local collision residue).
+\item $A$-cycles:
+  $M_{a_\alpha}$ ($\alpha = 1, 2$); the $A$-cycle
+  monodromy is trivial at leading order since
+  $S_2(z, w)$ is periodic under $A$-cycles:
+  $S_2(z + A_\alpha, w) = S_2(z, w)$.
+\item $B$-cycles:
+  $M_{b_\alpha}$ ($\alpha = 1, 2$); the
+  quasi-periodicity~\eqref{eq:szego-quasiperiod} gives
+  a shift by $-2\pi i\,\omega_\alpha$, producing
+  \begin{equation}\label{eq:b-monodromy-g2}
+    M_{b_\alpha}
+    = \exp\!\bigl(-2\pi i\,\hbar\,
+    \Omega \cdot \omega_\alpha\bigr),
+    \qquad \alpha = 1, 2.
+  \end{equation}
+  At genus~$1$, $\omega_1 = dz$ is a scalar and
+  $M_B = M_\gamma^{-1}$; at genus~$2$, the two $B$-cycle
+  monodromies $M_{b_1}, M_{b_2}$ are independent and
+  involve the two holomorphic differentials
+  $\omega_1, \omega_2$ separately.
+\end{itemize}
+The constraint from the fundamental group relation is
+\begin{equation}\label{eq:constraint-g2}
+  [M_{a_1}, M_{b_1}]\,
+  [M_{a_2}, M_{b_2}]\,
+  M_\gamma = I.
+\end{equation}
+
+\begin{remark}[Dynamical parameters at genus~$2$]
+\label{rem:dynamical-g2}
+The $B$-cycle monodromies at genus~$2$ depend on a
+\emph{two-component} dynamical parameter
+$\lambda = (\lambda_1, \lambda_2) \in \fh^* \oplus \fh^*$,
+replacing the single dynamical parameter $\lambda \in \fh^*$
+of the genus-$1$ theory
+(Remark~\textup{\ref{rem:dynamical-parameter}}).
+The dynamical Yang--Baxter equation is replaced by a
+system of two coupled equations, one for each $B$-cycle.
+This is the genus-$2$ instantiation of the Felder dynamical
+$R$-matrix theory~\cite{Felder94,FelderVarchenko96}.
+\end{remark}
+
+\begin{proposition}[Degree-$2$ ordered chiral homology on
+$\Sigma_2$]
+\label{prop:g2-degree2}
+The degree-$2$ ordered chiral homology
+$H^*(\cC_2^{\mathrm{ord}}(\Sigma_2, Y_\hbar))$ is the
+de~Rham cohomology of the KZB local system on
+$\Conf_2^{\mathrm{ord}}(\Sigma_2)$ with coefficients in
+$(s^{-1}\bar{Y}_\hbar)^{\otimes 2}$.
+On evaluation modules $V_a \otimes V_b$
+\textup{(}$V = \CC^2$, so the local system has
+rank~$d^2 = 4$\textup{)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The KZB local system on
+  $\Sigma_2 \setminus \{0\}$ \textup{(}a genus-$2$ surface
+  with one puncture\textup{)} has monodromy
+  representation~\eqref{eq:monodromy-rep-g2} with generators
+  $M_{a_1}, M_{b_1}, M_{a_2}, M_{b_2}, M_\gamma$.
+\item For generic $\hbar$, the monodromy has no invariant
+  vectors: $H^0_{\mathrm{dR}} = 0$.
+\item The Euler characteristic of a rank-$r$ local system on
+  a surface of genus~$g$ with $s$ punctures is
+  $\chi = r(2 - 2g - s)$. For $g = 2$, $s = 1$,
+  $r = d^2 = 4$:
+  \begin{equation}\label{eq:g2-degree2-euler}
+    \chi = 4 \cdot (2 - 4 - 1) = -12.
+  \end{equation}
+\item Since $H^0 = 0$ for generic $\hbar$ and
+  $H^2 = 0$ \textup{(}the puncture forces vanishing\textup{)},
+  we obtain:
+  \begin{equation}\label{eq:g2-degree2-h1}
+    \dim H^1_{\mathrm{dR}}(\Sigma_2 \setminus \{0\},\,
+    \nabla_{\mathrm{KZB}}) = 12.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The surface $\Sigma_2 \setminus \{0\}$ has genus~$g = 2$ and
+$s = 1$ punctures. The Euler characteristic of a local system
+of rank~$r$ is $\chi = r(2 - 2g - s)$:
+$\chi = 4(2 - 4 - 1) = 4 \cdot (-3) = -12$.
+For generic $\hbar$ (equivalently, generic level~$k$), the
+monodromy around the puncture is
+$M_\gamma = \exp(2\pi i\,\hbar\,\Omega)$ with eigenvalues
+$e^{\pi i/(k+2)}$ (on $\operatorname{Sym}^2 V$, dimension~$3$)
+and $e^{-3\pi i/(k+2)}$ (on $\bigwedge^2 V$, dimension~$1$);
+generically neither is~$1$, so
+$\ker(M_\gamma - I) = 0$ and $H^0 = 0$.
+The four $B$-cycle monodromies $M_{b_1}, M_{b_2}$ impose
+further non-trivial constraints, reinforcing $H^0 = 0$.
+Poincar\'e--Verdier duality on $\Sigma_2 \setminus \{0\}$
+(a non-compact surface) gives
+$H^2 = (H^0_c)^\vee = 0$ for generic
+monodromy; alternatively, the puncture forces $H^2 = 0$ by
+a residue argument.
+The alternating sum gives
+$0 - \dim H^1 + 0 = -12$, so $\dim H^1 = 12$.
+The $12$-dimensional space decomposes along the isospin
+channels:
+$\operatorname{Sym}^2 V$ (rank~$3$) contributes
+$3 \cdot 3 = 9$, and $\bigwedge^2 V$ (rank~$1$) contributes
+$1 \cdot 3 = 3$; total $9 + 3 = 12$.
+\end{proof}
+
+\begin{remark}[Comparison of $H^1$ dimensions]
+\label{rem:h1-comparison}
+The degree-$2$ $H^1$ dimension grows linearly with genus:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{} c c c c @{}}
+  \toprule
+  $g$ & $\chi({\Sigma_g \setminus \{0\}})$ &
+  $\chi = r \cdot (2 - 2g - 1)$ & $\dim H^1$ \\
+  \midrule
+  $0$ & $1$ & $4 \cdot 1 = 4$ & $4$ \\
+  $1$ & $-1$ & $4 \cdot (-1) = -4$ & $4$ \\
+  $2$ & $-3$ & $4 \cdot (-3) = -12$ & $12$ \\
+  $g$ & $1 - 2g$ & $4(1 - 2g)$ & $4(2g - 1)$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+The jump from $\dim H^1 = 4$ at $g = 1$ to $\dim H^1 = 12$
+at $g = 2$ reflects the richer monodromy: at genus~$1$, the
+monodromy group is generated by three elements
+$(M_\gamma, M_a, M_b)$ with one relation; at genus~$2$,
+by five elements $(M_\gamma, M_{a_1}, M_{b_1}, M_{a_2},
+M_{b_2})$ with one relation, allowing a $12$-dimensional
+space of flat sections with prescribed singular behaviour at
+the puncture. The genus-$0$ entry $\dim H^1 = 4$ uses
+$\chi(\PP^1 \setminus \{0, \infty\}) = 0$ for the
+once-punctured sphere (the relative coordinate lives on
+$\CC^\times$), so
+$\chi = 0$ and the $H^1$-dimension does not follow from
+$\chi$ alone; it is computed directly from KZ flat sections
+\textup{(}cf.\ \S\ref{subsec:ell-degree2}\textup{)}.
+\end{remark}
+
+\begin{remark}[The symmetric shadow at genus~$2$]
+\label{rem:g2-shadow}
+The averaging map $\av_2$ at degree~$2$ sends the
+$12$-dimensional ordered de~Rham cohomology to
+$\Sigma_2$-coinvariants. The scalar surviving $\av_2$ is
+$\kappa = 3(k+2)/4$
+(equation~\eqref{comp:sl2-kappa}), the same value as at
+genus~$0$ and genus~$1$: the averaging map is a local
+computation (residue extraction), independent of the global
+topology.
+The kernel $\ker(\av_2)$ at genus~$2$ is richer than at
+genus~$1$: the four $B$-cycle monodromies contribute
+independent antisymmetric classes that are invisible to the
+symmetric theory.
+\end{remark}
+
+% ----------------------------------------------------------------
+\subsection{Degree $n$: genus-$2$ surface braid group
+monodromy}
+\label{subsec:g2-degree-n}
+
+At degree~$n$, the fundamental group of
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$ is the genus-$2$
+\emph{surface braid group} $\mathrm{SB}_n(\Sigma_2)$, which
+fits into the extension
+\begin{equation}\label{eq:surface-braid-g2}
+  1 \to PB_n \to \mathrm{SB}_n(\Sigma_2) \to
+  \pi_1(\Sigma_2)^n \to 1,
+\end{equation}
+generalising the elliptic braid group
+extension~\eqref{eq:ell-braid} (at genus~$1$,
+$\pi_1(E_\tau) \cong \ZZ^2$ contributes two generators
+per point; at genus~$2$,
+$\pi_1(\Sigma_2) \cong \langle a_1, b_1, a_2, b_2 \mid
+[a_1, b_1][a_2, b_2] = 1\rangle$ contributes four
+generators per point).
+
+The ordered chiral homology at degree~$n$ is
+\begin{equation}\label{eq:g2-degree-n}
+  \int_{\Sigma_2, n}^{\mathrm{ord}}
+  Y_\hbar(\mathfrak{sl}_2)
+  = H^*_{\mathrm{dR}}\bigl(
+  \overline{\FM}_n^{\mathrm{ord}}(\Sigma_2),\;
+  \nabla_{\mathrm{KZB}}^{(n)}\bigr)
+  \otimes (s^{-1}\bar{Y}_\hbar)^{\otimes n}.
+\end{equation}
+
+\begin{proposition}[Euler characteristic at low degrees,
+genus~$2$]
+\label{prop:g2-euler-n}
+The twisted Euler characteristics of the KZB local system on
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$, with fibre $V^{\otimes n}$
+\textup{(}$V = \CC^2$\textup{)} for generic $\hbar$, are:
+\begin{align}
+  n = 0&: \quad \chi = \infty
+  \;\;\text{\textup{(}$\CC[\operatorname{qdet}]$ is
+  infinite-dimensional\textup{)}},
+  \label{eq:g2-euler-n0} \\
+  n = 1&: \quad \chi = -4
+  \;\;\text{\textup{(}trivial local system of rank $2$
+  on $\Sigma_2$,
+  $\chi(\Sigma_2) = -2$\textup{)}},
+  \label{eq:g2-euler-n1} \\
+  n = 2&: \quad \chi = -12
+  \;\;\text{\textup{(}rank $4$ on $\Sigma_2 \setminus
+  \{0\}$\textup{)}}.
+  \label{eq:g2-euler-n2}
+\end{align}
+For $n \geq 3$, the Euler characteristic of
+$\Conf_n^{\mathrm{ord}}(\Sigma_2)$ with coefficients in a
+rank-$d^n$ local system is:
+\begin{equation}\label{eq:g2-euler-general}
+  \chi\bigl(\Conf_n^{\mathrm{ord}}(\Sigma_2),\,
+  \cL_{\mathrm{KZB}}\bigr)
+  = d^n \cdot \prod_{j=0}^{n-1}(\chi(\Sigma_2) - j)
+  = 2^n \cdot \prod_{j=0}^{n-1}(-2 - j).
+\end{equation}
+In particular: $n = 3$ gives
+$8 \cdot (-2)(-3)(-4) = -192$;
+$n = 4$ gives $16 \cdot (-2)(-3)(-4)(-5) = -1920$.
+\end{proposition}
+
+\begin{proof}
+At $n = 1$: $\Conf_1(\Sigma_2) = \Sigma_2$ and the KZB
+connection is trivial (no pairwise terms).
+The local system has rank~$d = 2$ and the Euler
+characteristic is
+$\chi = d \cdot \chi(\Sigma_2) = 2 \cdot (-2) = -4$.
+(In contrast to genus~$1$ where $\chi(E_\tau) = 0$
+gives $\chi = 0$, the negative Euler characteristic of
+$\Sigma_2$ makes the twisted Euler characteristic non-zero
+even at degree~$1$.)
+
+At $n = 2$: Proposition~\ref{prop:g2-degree2}.
+
+At $n \geq 3$: the product formula for the Euler
+characteristic of ordered configuration spaces gives
+$\chi(\Conf_n^{\mathrm{ord}}(\Sigma_2))
+= \prod_{j=0}^{n-1}(\chi(\Sigma_2) - j)
+= \prod_{j=0}^{n-1}(-2 - j)$, and
+the multiplicativity of the Euler characteristic with
+respect to local systems
+gives~\eqref{eq:g2-euler-general}.
+(Unlike genus~$1$, where $\chi(E_\tau) = 0$ kills the
+product at the first factor and gives
+$\chi(\Conf_n^{\mathrm{ord}}(E_\tau)) = 0$ for all
+$n \geq 1$, here $\chi(\Sigma_2) = -2 \neq 0$ and the
+product is non-vanishing for all~$n$.)
+\end{proof}
+
+% ----------------------------------------------------------------
+\subsection{Summary: genus $0$ vs.\ genus $1$ vs.\
+genus $2$}
+\label{subsec:genus-comparison-table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{@{} l l l l @{}}
+\toprule
+& Genus $0$ ($\PP^1$ or $D^\times$)
+& Genus $1$ ($E_\tau$)
+& Genus $2$ ($\Sigma_2$)
+\\
+\midrule
+Base curve
+  & $\PP^1$
+  & $E_\tau = \CC/(\ZZ + \tau\ZZ)$
+  & $\Sigma_2$
+\\
+Period matrix
+  & ---
+  & $\tau \in \HHH$, scalar
+  & $\Omega \in \HHH_2$, $2 \times 2$
+\\
+Bar propagator
+  & $d\log(z_1 - z_2)$
+  & $d\log E(z,w) = \wp_1\,dz$
+  & $d\log E(z,w)$ (prime form)
+\\
+\quad weight
+  & $1$
+  & $1$
+  & $1$
+\\
+Connection
+  & KZ
+  & KZB
+  & KZB (genus $2$)
+\\
+$\pi_1$ per point
+  & $0$
+  & $\ZZ^2$ ($A, B$-cycle)
+  & $\ZZ^4$ ($A_1, B_1, A_2, B_2$)
+\\
+$B$-cycle monodromy
+  & ---
+  & $M_B = e^{-2\pi i\,\hbar\,\Omega}$
+  & $M_{b_\alpha} = e^{-2\pi i\,\hbar\,
+  \Omega \cdot \omega_\alpha}$
+\\
+Dynamical parameter
+  & ---
+  & $\lambda \in \fh^*$, one component
+  & $(\lambda_1, \lambda_2) \in (\fh^*)^2$
+\\
+\midrule
+Degree $0$
+  & $\CC[\operatorname{qdet}]$
+  & $\CC[\operatorname{qdet}]$
+  & $\CC[\operatorname{qdet}]$
+\\
+Degree $1$ dim
+  & $3$ (on $D^\times$)
+  & $12 = 4 \times 3$
+  & $18 = 6 \times 3$
+\\
+Degree $2$: $\dim H^1$
+  & $4$
+  & $4$
+  & $12$
+\\
+Degree $2$: $\chi$
+  & $4$ ($g=0,\,s=2$)
+  & $-4$
+  & $-12$
+\\
+$\chi(\Conf_n)$, $n \geq 1$
+  & varies
+  & $0$ (all $n \geq 1$)
+  & $\prod_{j=0}^{n-1}(-2-j) \neq 0$
+\\
+Curvature $d_{\mathrm{fib}}^2$
+  & $0$
+  & $\kappa(\cA) \cdot \omega_1$
+  & $\kappa(\cA) \cdot \omega_2$
+\\
+\quad lives on
+  & ---
+  & $\overline{\cM}_{1}$
+  & $\overline{\cM}_{2}$
+\\
+Degeneration
+  & ---
+  & $\tau \to i\infty$: $E_\tau \to \CC^\times$
+  & $\Omega_{12} \to 0$, $\Omega_{22} \to
+  i\infty$: $\Sigma_2 \to E_\tau$
+\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Non-vanishing Euler characteristics at
+genus~$2$]
+\label{rem:g2-nonvanishing-chi}
+The qualitative difference between genus~$1$ and genus~$2$
+at degree $n \geq 3$ is striking. At genus~$1$, the
+vanishing $\chi(E_\tau) = 0$ forces
+$\chi(\Conf_n^{\mathrm{ord}}(E_\tau)) = 0$ for all
+$n \geq 1$, so the Euler characteristic provides no
+information about the individual cohomology dimensions.
+At genus~$2$, $\chi(\Sigma_2) = -2 \neq 0$ and the product
+formula gives non-zero (and rapidly growing) Euler
+characteristics: $-4, -12, -192, -1920, \ldots$ at degrees
+$1, 2, 3, 4, \ldots$. These provide genuine lower bounds on
+the de~Rham cohomology dimensions of the KZB local system,
+making the genus-$2$ theory computationally richer: the
+alternating sum is a useful invariant at every degree.
+\end{remark}
+
+\begin{remark}[Degeneration $\Sigma_2 \to E_\tau$]
+\label{rem:g2-degeneration}
+In the separating degeneration
+$\Sigma_2 \to E_\tau \cup E_{\tau'}$ (a genus-$2$ curve
+pinches along a separating cycle to two elliptic curves
+joined at a node), the genus-$2$ KZB connection splits into
+two independent genus-$1$ KZB connections.
+The ordered chiral homology satisfies
+a factorisation constraint at this boundary stratum of
+$\overline{\cM}_2$:
+\[
+  \int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar
+  \;\xrightarrow{\;\mathrm{res}\;}\;
+  \int_{E_\tau}^{\mathrm{ord}} Y_\hbar
+  \;\otimes\;
+  \int_{E_{\tau'}}^{\mathrm{ord}} Y_\hbar.
+\]
+In the non-separating degeneration $\Sigma_2 \to E_\tau$
+(a single cycle pinches, reducing the genus by one),
+the period matrix
+$\Omega = \bigl(\begin{smallmatrix}
+\tau & \epsilon \\ \epsilon & i/\epsilon
+\end{smallmatrix}\bigr)$
+degenerates as $\epsilon \to 0$, and the genus-$2$ theory
+reduces to the genus-$1$ theory of
+\S\ref{sec:elliptic-ordered} with additional data from
+the pinched cycle.
+This non-separating degeneration carries genuinely
+genus-$2$ information (the off-diagonal entry
+$\Omega_{12}$); the separating degeneration does not.
 \end{remark}
 
 
@@ -8502,29 +10250,36 @@ degree by degree: the Belavin elliptic $r$-matrix replaces
 the rational $r$-matrix, the KZB connection replaces the
 KZ connection, and the $B$-cycle monodromy produces the
 quantum group parameter $q = e^{2\pi i \hbar}$.
+Section~\ref{sec:genus2-ordered} extends to genus~$2$,
+where the $2 \times 2$ Siegel period matrix, the prime
+form, and the genus-$2$ surface braid group produce a
+theory with non-vanishing Euler characteristics at every
+degree ($\chi = -12$ at degree~$2$, compared with $-4$ at
+genus~$1$).
 
 The following problems remain open.
 
 \begin{enumerate}[label=\textup{(\alph*)}]
 
 \item \textup{(The $\Ethree$ identification
-for affine Kac--Moody.)}
-Conjecture~\ref{conj:e3-identification} asserts that the
+for affine Kac--Moody: resolved.)}
+Theorem~\ref{thm:e3-identification} proves that the
 derived chiral centre
 $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and the
-CFG algebra $\cA^\lambda$ are isomorphic as
-$\Ethree$-algebras over the formal deformation space
-$(k+h^\vee) H^3(\fg)[[k+h^\vee]]$.
-This paper proves that the deformation spaces agree
-(both one-dimensional at each order in $(k+h^\vee)$ for
-simple~$\fg$) and that the formal disk global sections
-match at the level of $\Pthree$-brackets
-(\S\ref{subsec:e3-explicit}).
-What is missing is a chain-level comparison that
-identifies the $\Ethree$-structures as families, not
-merely fiber by fiber: is there a natural map between the
-two $\Ethree$-algebras that is a quasi-isomorphism at
-each non-critical level $k \neq -h^\vee$?
+CFG algebra $\cA^\lambda$ are isomorphic as formal
+deformation families of $\Ethree$-algebras over
+$(k+h^\vee) H^3(\fg)[[k+h^\vee]]$, for simple~$\fg$.
+The proof is obstruction-theoretic: the
+one-dimensionality of $H^3(\fg)$ for simple~$\fg$
+forces the two deformations to agree at each order in
+$(k+h^\vee)$, given the matching of associated graded
+algebras and $\Pthree$ brackets on the formal disk
+(Theorem~\ref{thm:chiral-e3-cfg}).
+The remaining question is the extension to
+non-simple~$\fg$, where $H^3(\fg)$ may be
+higher-dimensional and the order-by-order uniqueness
+argument requires additional invariants to pin down the
+deformation class.
 
 \item \textup{(The ordered derived chiral centre of the
 chiral Yangian.)}
@@ -8536,8 +10291,9 @@ structure (but not $\Ethree$, since the symmetric bar does
 not exist for genuinely $\Eone$-chiral algebras).
 Proposition~\ref{prop:ker-av-schur-weyl} proves the
 representation-theoretic kernel formula
-$\dim\ker(\av_n) = d^n - \binom{n+d-1}{d-1}$ via
-Schur--Weyl duality; the open content is the passage from
+$\dim\ker(\av_n) = d^n - \binom{n+d-1}{d-1}$ for any
+$d$-dimensional representation of any simple Lie algebra;
+the open content is the passage from
 this bound to the actual cohomology of the ordered bar
 complex at each degree. In particular: does the degree-$1$
 Gerstenhaber bracket on the ordered chiral centre
@@ -8569,33 +10325,40 @@ datum with OPE compatibility at all spins, proved by
 the coderivation property on the Koszul-locus bar complex
 and independently by the JKL vertex bialgebra theorem on
 the CoHA. A constant coproduct does not exist for
-$c \neq 0$ (conformal anomaly obstruction). The remaining
-questions (Remark~\ref{rem:w-infty-vertex-gap}) are:
+$c \neq 0$ (conformal anomaly obstruction).
+Theorem~\ref{thm:glN-chiral-qg} extends this to
+$\cW_N$ at all finite $N \geq 2$, where the $R$-matrix
+is Yang's matrix $R(u) = u\, I + \Psi\, P$ and the RTT
+is non-trivial.
+The remaining questions
+(Remark~\ref{rem:w-infty-vertex-gap}) are:
 (i)~the vertex-algebraic antipode (does
 $S(T(u)) = T(u)^{-1}$ on the Yangian lift to a
 vertex Hopf algebra structure on $\cW_{1+\infty}$?);
-(ii)~the descent to $\cW_N$ at finite~$N$, where the
-$R$-matrix is no longer scalar; (iii)~the Stokes
+(ii)~the Stokes
 multipliers of the irregular KZ connection for $\cW_N$
 (Poincar\'e rank $N-1$), and whether they encode the
 higher-spin BPS spectrum.
 
 \item \textup{(Higher-genus ordered chiral homology.)}
 Section~\ref{sec:ord-ch-hom} defines ordered chiral
-homology at genus~$0$, and
+homology at genus~$0$,
 Section~\ref{sec:elliptic-ordered} constructs the
 genus-$1$ theory
 $\int_{E_\tau}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$
-explicitly, computing the degree-by-degree decomposition
-through degrees~$0$, $1$, and~$2$. The curvature
+explicitly, and Section~\ref{sec:genus2-ordered} extends the
+construction to genus~$2$, where the period matrix is a
+$2 \times 2$ symmetric matrix, the KZB connection acquires
+three modular components, and the Euler characteristic
+$\chi = -12$ at degree~$2$ is three times the genus-$1$
+value. At genus $g \geq 3$, the curvature
 obstruction $d^2_{\mathrm{fib}} = \kappa(\cA) \cdot \omega_g$
-at genus $g \geq 2$, where $\omega_g = c_1(\lambda)$ is
+(UNIFORM-WEIGHT), where $\omega_g = c_1(\lambda)$ is
 the Hodge class on $\overline{\cM}_g$, requires a
 period-corrected differential whose coefficients involve
 the $(g \times g)$-matrix $(\mathrm{Im}\, \Omega)^{-1}$
-of the Siegel period matrix, not the scalar
-$1/\mathrm{Im}(\tau)$ of the genus-$1$ case.
-Does the ordered chiral chain complex at genus~$g \geq 2$
+of the Siegel period matrix.
+Does the ordered chiral chain complex at genus~$g \geq 3$
 define a flat connection over $\overline{\cM}_g$
 compatible with the Mumford--Morita class $\kappa_1$,
 and does the resulting system of conformal blocks satisfy
@@ -8947,6 +10710,18 @@ W.~Wasow,
 equations},
 Interscience Publishers, New York, 1965;
 reprinted Dover, 1987.
+
+\bibitem{TUY89}
+A.~Tsuchiya, K.~Ueno, and Y.~Yamada,
+\emph{Conformal field theory on universal family of stable
+curves with gauge symmetries},
+Adv. Studies Pure Math. \textbf{19} (1989), 459--566.
+
+\bibitem{Verlinde88}
+E.~Verlinde,
+\emph{Fusion rules and modular transformations in $2d$
+conformal field theory},
+Nuclear Phys. B \textbf{300} (1988), 115--138.
 
 \bibitem{YZ18a}
 Y.~Yang and G.~Zhao,

@@ -159,7 +159,7 @@ class TestShadowDepth:
             40: 4,   # dim S_20 = 1
             48: 5,   # dim S_24 = 2  <-- FIRST DEPTH 5
             56: 5,   # dim S_28 = 2
-            64: 6,   # dim S_32 = 3  <-- FIRST DEPTH 6
+            64: 5,   # dim S_32 = 2  (dim M_32 = 3 by Diamond-Shurman)
             72: 6,   # dim S_36 = 3
         }
         for rank, exp_depth in expected_depths.items():
