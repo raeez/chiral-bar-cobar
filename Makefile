@@ -410,7 +410,15 @@ standalone:
 		w3_holographic_datum bp_self_duality three_parameter_hbar \
 		gaudin_from_collision genus1_seven_faces \
 		introduction_full_survey survey_modular_koszul_duality \
-		chiral_chern_weil; do \
+		survey_modular_koszul_duality_v2 \
+		survey_track_a_compressed survey_track_b_compressed \
+		chiral_chern_weil ordered_chiral_homology \
+		N1_koszul_meta N2_mc3_all_types N3_e1_primacy \
+		N4_mc4_completion N5_mc5_sewing N6_shadow_formality \
+		classification computations garland_lepowsky riccati \
+		programme_summary programme_summary_section1 \
+		programme_summary_sections2_4 programme_summary_sections5_8 \
+		programme_summary_sections9_14; do \
 		if [ -f standalone/$$paper.tex ]; then \
 			echo "    Building $$paper.tex ..."; \
 			cd standalone && for i in 1 2 3; do \
