@@ -273,12 +273,12 @@ class TestKoszulnessCritical:
         assert 'Sugawara' in result.k8_kac_shapovalov
 
     def test_koszulness_survival_count(self):
-        """3 hold, 4 fail, 3 modified, 2 inapplicable = 12 total."""
+        """3 hold, 5 fail, 2 modified, 2 inapplicable = 12 total."""
         g = lie_data("A", 1)
         counts = koszulness_survival_count(g)
         assert counts['total'] == 12
-        assert counts['holds'] == 3
-        assert counts['fails'] == 4
+        assert counts['holds'] == 3  # K4, K5, K6
+        assert counts['fails'] == 5  # K3, K7, K8, K9, K10
 
     def test_koszulness_all_types(self):
         """Koszulness analysis runs for all types without error."""
@@ -442,40 +442,72 @@ class TestOperSpace:
 # ============================================================
 
 
-class TestHochschildBoundedAmplitude:
-    """Chiral Hochschild cohomology at critical level (Theorem-H bounded).
+class TestHochschildCriticalLevel:
+    """Chiral Hochschild cohomology at critical level (BD comparison).
 
-    Per AP94/AP95: ChirHoch^*(V_crit) is concentrated in {0,1,2} with
-    finite total dimension (Theorem H).  The historical Gelfand-Fuchs polynomial model
-    (periodic for sl_2, polynomially growing for higher rank) is
-    REFUTED.
+    CORRECTED (2026-04-12): Theorem H does NOT apply at critical level
+    because chiral Koszulness fails.  The BD comparison theorem (BD04
+    Thm 4.5.2) identifies ChirHoch with continuous Lie cohomology:
+        ChirHoch^*(V_{-h^v}(g)) = Lambda(P_i) x C[Theta_i]
+    which is UNBOUNDED with polynomial growth O(n^{r-1}).
+
+    For sl_2 (rank 1): period 4.
+    For higher rank: polynomial growth, not periodic.
+
+    Source: thm:affine-periodicity-critical (koszul_pair_structure.tex).
     """
 
-    def test_sl2_bounded(self):
-        """sl_2: ChirHoch^*(V_crit) bounded by Theorem H amplitude [0,2]."""
+    def test_sl2_bd_comparison(self):
+        """sl_2: ChirHoch at critical level identified with Lie cohomology by BD.
+
+        FT-5 analysis: chiral Koszulness (diagonal Ext concentration) FAILS
+        at critical level.  PBW degeneration holds but E_2 page has
+        off-diagonal Fun(Op) contributions.  Theorem H does NOT apply.
+        BD comparison identifies ChirHoch = Lambda(P_1) x C[Theta_1],
+        which is unbounded (4-periodic for sl_2).
+        """
         g = lie_data("A", 1)
         result = hochschild_periodicity(g)
-        assert result['is_strictly_periodic'] is False
-        assert result['period'] is None
-        assert result['amplitude'] == (0, 2)
-        assert result['bounded_by_theorem_h'] is True
+        assert result['bounded_by_theorem_h'] is False
+        assert result['bd_comparison_applies'] is True
+        assert result['amplitude'] == 'unbounded'
+        assert result['chirhoch0_dim'] == 'infinite'  # FF center
+        assert result['chirhoch2_dim'] == 'infinite'  # self-dual
+        assert result['lie_cohomology_unbounded'] is True
+        assert result['is_strictly_periodic'] is True  # rank 1
+        assert result['period'] == 4
+        assert result['odd_generator_degrees'] == (3,)
+        assert result['even_generator_degrees'] == (4,)
+        assert result['sl2_period_4'] is True
 
-    def test_sl3_bounded(self):
-        """sl_3: ChirHoch^*(V_crit) bounded by Theorem H amplitude [0,2]."""
+    def test_sl3_bd_comparison(self):
+        """sl_3: ChirHoch at critical level unbounded O(n) by BD comparison.
+
+        # VERIFIED: [DC] thm:affine-periodicity-critical
+        # VERIFIED: [LT] BD04 Thm 4.5.2
+        """
         g = lie_data("A", 2)
         result = hochschild_periodicity(g)
-        assert result['amplitude'] == (0, 2)
-        assert result['bounded_by_theorem_h'] is True
-        assert result['total_dim_bound'] == 4
+        assert result['bounded_by_theorem_h'] is False
+        assert result['bd_comparison_applies'] is True
+        assert result['amplitude'] == 'unbounded'
+        assert result['total_dim_bound'] is None
+        assert result['chirhoch0_dim'] == 'infinite'
+        assert result['odd_generator_degrees'] == (3, 5)
+        assert result['even_generator_degrees'] == (4, 6)
+        assert result['lie_cohomology_unbounded'] is True
+        assert result['is_strictly_periodic'] is False
 
-    def test_higher_rank_bounded(self):
-        """Higher rank: ChirHoch bounded, NOT polynomial growth (AP94)."""
+    def test_higher_rank_bd_comparison(self):
+        """Higher rank: ChirHoch unbounded, polynomial growth O(n^{r-1})."""
         for (lt, rk) in [("A", 3), ("B", 2), ("D", 4)]:
             g = lie_data(lt, rk)
             result = hochschild_periodicity(g)
-            assert result['amplitude'] == (0, 2)
-            assert result['bounded_by_theorem_h'] is True
-            assert 'bounded' in result['growth_rate']
+            assert result['bounded_by_theorem_h'] is False
+            assert result['bd_comparison_applies'] is True
+            assert result['amplitude'] == 'unbounded'
+            assert result['chirhoch0_dim'] == 'infinite'
+            assert result['lie_cohomology_unbounded'] is True
             assert result['is_strictly_periodic'] is False
 
 

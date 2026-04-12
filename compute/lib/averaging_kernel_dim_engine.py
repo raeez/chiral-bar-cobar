@@ -260,6 +260,148 @@ def info_ratio_growth_table(
     return rows
 
 
+# -- Hecke algebra / Schur-Weyl decomposition for fundamental rep ------
+#
+# For V = C^d (fundamental representation of sl_d), the Schur-Weyl
+# decomposition of V^{tensor n} under S_n x GL_d is:
+#
+#   V^{tensor n} = bigoplus_{lambda |- n, l(lambda) <= d} S_lambda tensor V_lambda
+#
+# where S_lambda is the Specht module (S_n irrep of shape lambda) and
+# V_lambda is the GL_d irrep of highest weight lambda.
+#
+# At generic q (non-root of unity), the Hecke algebra H_n(q) is
+# semisimple and the R-twisted coinvariants are computed by:
+#   coinvariant = trivial S_n-isotypic component = single-row lambda = (n)
+#   coinvariant space = V_{(n)} = Sym^n(V), dim = binom(d+n-1, n)
+#   ker(av_n) = everything else = sum over non-trivial lambda
+#
+# For V = C^2 (fundamental of sl_2):
+#   Partitions with at most 2 parts: lambda = (n-j, j), j = 0, ..., floor(n/2)
+#   dim(V_{(n-j,j)}) = n - 2j + 1  (the spin-(n-2j)/2 irrep of SL_2)
+#   dim(S_{(n-j,j)}) = binom(n, j) - binom(n, j-1)  for j >= 1, and 1 for j=0
+#   coinvariant = lambda = (n, 0): dim(Sym^n(C^2)) = n + 1
+#   ker(av_n) = 2^n - (n + 1)
+
+
+def specht_dim_two_row(n: int, j: int) -> int:
+    """Dimension of the Specht module S_{(n-j, j)} for S_n.
+
+    For two-row partitions lambda = (n-j, j) with j >= 0:
+      j = 0: dim = 1 (trivial representation)
+      j >= 1: dim = binom(n, j) - binom(n, j-1) (ballot numbers)
+
+    VERIFIED: [DC] hook-length formula for two-row partitions;
+    [LT] Fulton-Harris Representation Theory, Ch. 4;
+    [CF] agrees with Catalan numbers at j = floor(n/2) when n = 2j.
+    """
+    if j < 0 or j > n // 2:
+        return 0
+    if j == 0:
+        return 1
+    return comb(n, j) - comb(n, j - 1)
+
+
+def gl2_irrep_dim(n: int, j: int) -> int:
+    """Dimension of the GL_2 irrep V_{(n-j, j)}.
+
+    For lambda = (n-j, j): this is the SL_2 irrep of spin (n-2j)/2,
+    dimension n - 2j + 1.
+
+    VERIFIED: [DC] Weyl dimension formula for GL_2;
+    [LC] j=0 gives n+1 = dim Sym^n(C^2).
+    """
+    if j < 0 or j > n // 2:
+        return 0
+    return n - 2 * j + 1
+
+
+def schur_weyl_decomposition_sl2(n: int) -> List[Dict]:
+    """Full Schur-Weyl decomposition of (C^2)^{tensor n} under S_n x GL_2.
+
+    Returns a list of dicts, one per partition lambda = (n-j, j):
+      j, partition, specht_dim, gl2_dim, product, is_trivial
+
+    VERIFIED: [DC] sum of products = 2^n (total dimension);
+    [SY] Schur-Weyl duality is exact at characteristic 0.
+    """
+    rows = []
+    total_check = 0
+    for j in range(n // 2 + 1):
+        sd = specht_dim_two_row(n, j)
+        gd = gl2_irrep_dim(n, j)
+        prod = sd * gd
+        total_check += prod
+        rows.append({
+            "j": j,
+            "partition": (n - j, j),
+            "specht_dim": sd,
+            "gl2_dim": gd,
+            "product": prod,
+            "is_trivial": (j == 0),
+        })
+    assert total_check == 2 ** n, (
+        f"Schur-Weyl total {total_check} != 2^{n} = {2**n}"
+    )
+    return rows
+
+
+def hecke_kernel_dim_sl2_fund(n: int) -> int:
+    """Dimension of ker(av_n) for V = C^2 (fundamental of sl_2)
+    under the Hecke algebra H_n(q) at generic q.
+
+    ker(av_n) = 2^n - dim(Sym^n(C^2)) = 2^n - (n + 1).
+
+    VERIFIED: [DC] Schur-Weyl decomposition, trivial isotypic = Sym^n;
+    [DC] explicit Reynolds operator computation at n = 1..6;
+    [LT] hook-length formula for dim(S_{(n,0)}) = 1 confirms only
+    one copy of the trivial representation.
+    """
+    return 2 ** n - (n + 1)
+
+
+def hecke_kernel_decomposition_sl2_fund(n: int) -> List[Dict]:
+    """Decomposition of ker(av_n) by S_n-isotypic component.
+
+    Returns a list of non-trivial contributions (j >= 1), each with:
+      j, partition, specht_dim, gl2_dim, contribution
+
+    The sum of contributions equals hecke_kernel_dim_sl2_fund(n).
+    """
+    parts = []
+    for j in range(1, n // 2 + 1):
+        sd = specht_dim_two_row(n, j)
+        gd = gl2_irrep_dim(n, j)
+        parts.append({
+            "j": j,
+            "partition": (n - j, j),
+            "specht_dim": sd,
+            "gl2_dim": gd,
+            "contribution": sd * gd,
+        })
+    return parts
+
+
+def hecke_kernel_table_sl2_fund(max_arity: int = 10) -> List[Dict]:
+    """Table of Hecke algebra kernel dimensions for V = C^2, arities 1..max_arity.
+
+    Each row has: n, total_dim, coinvariant_dim, kernel_dim, info_ratio.
+    """
+    rows = []
+    for n in range(1, max_arity + 1):
+        total = 2 ** n
+        coinv = n + 1
+        ker = total - coinv
+        rows.append({
+            "n": n,
+            "total_dim": total,
+            "coinvariant_dim": coinv,
+            "kernel_dim": ker,
+            "info_ratio": Fraction(ker, total),
+        })
+    return rows
+
+
 # -- Asymptotics -------------------------------------------------------
 
 def asymptotic_surviving_ratio(d: int, n: int) -> float:

@@ -492,24 +492,26 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
         "(no curvature contribution), not the Koszul case."
     )
 
-    # K7: ChirHoch bounded amplitude [0,2] per Theorem H (AP94, AP95).
-    # At critical level the bar complex is UNCURVED (kappa = 0), so the
-    # classical bar-cobar Koszulness machinery applies directly:
-    # ChirHoch^*(V_crit) is concentrated in degrees {0,1,2} (Theorem H).
-    # The historical claim that ChirHoch^* at critical level is a
-    # tensor product Lambda(P_1,...) x C[Theta_1,...] (Gelfand-Fuchs
-    # polynomial ring on oper generators) conflated chiral Hochschild
-    # with Chevalley-Eilenberg / continuous Lie cohomology, which is a
-    # DIFFERENT functor.  At critical level the ADDITIONAL structure
-    # (identification with Omega^*(Op)) pertains to the BAR complex,
-    # not to ChirHoch.
+    # K7: ChirHoch bounded amplitude [0,2] per Theorem H.
+    # FT-5 ANALYSIS: Theorem H does NOT apply at critical level.
+    # Chiral Koszulness (diagonal Ext concentration) FAILS: Ext^{p,q} != 0
+    # for p != q (Fun(Op) contributes at bar degree 0, all even weights).
+    # PBW degeneration holds but does NOT imply diagonal concentration
+    # when kappa = 0 (no curvature to force diagonality).
+    # The BD comparison identifies ChirHoch with continuous Lie cohomology,
+    # which is UNBOUNDED.
     result.k7_hochschild = (
-        "HOLDS: ChirHoch^*(V_crit) is concentrated in {0,1,2} with "
-        "concentrated in {0,1,2} per Theorem H (thm:hochschild-polynomial-growth). "
-        "At critical level kappa=0 so the bar complex is uncurved, "
-        "and Theorem H applies.  The oper-form identification "
-        "H^*(B(V_crit)) = Omega^*(Op) pertains to the BAR complex, "
-        "not to chiral Hochschild (AP94, AP95)."
+        "FAILS: Theorem H requires chiral Koszulness (diagonal Ext "
+        "concentration, chiral_koszul_pairs.tex:1286), which fails at "
+        "critical level. PBW degeneration holds (cor:universal-koszul) "
+        "but does NOT imply diagonal concentration when kappa = 0 "
+        "(curvature forces diagonality at generic level; at critical level "
+        "off-diagonal Ext survives). The BD comparison theorem (BD04 "
+        "Thm 4.5.2) identifies ChirHoch with continuous Lie cohomology: "
+        "Lambda(P_1,...,P_r) x C[Theta_1,...,Theta_r], which is UNBOUNDED "
+        f"with polynomial growth O(n^{{{g.rank-1}}}). "
+        "Each of ChirHoch^0 (FF center), ChirHoch^1 (z(g_hat) x g), "
+        "ChirHoch^2 (Z(V_crit) = FF center) is infinite-dimensional."
     )
 
     # K8: Kac-Shapovalov determinant
@@ -557,8 +559,8 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
 def koszulness_survival_count(g: SimpleLieData) -> Dict[str, int]:
     """Count how many K_i characterizations hold/fail/are modified at critical level."""
     holds = 3    # K4, K5, K6
-    fails = 4    # K3, K8, K9, K10
-    modified = 3  # K1, K7, K12
+    fails = 5    # K3, K7, K8, K9, K10
+    modified = 2  # K1, K12
     inapplicable = 2  # K2, K11
     return {
         'holds': holds,
@@ -760,47 +762,87 @@ def oper_space_analysis(g: SimpleLieData) -> Dict[str, Any]:
 # =========================================================================
 
 def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
-    """REFUTED: Gelfand-Fuchs polynomial model for critical-level ChirHoch.
+    """Critical-level ChirHoch: BD comparison identifies with Lie cohomology.
 
-    Per AP94/AP95 and Theorem H (thm:hochschild-polynomial-growth),
-    ChirHoch^*(V_{-h^v}(g)) is concentrated in {0, 1, 2} with total
-    dim <= 4.  At critical level the bar complex is UNCURVED
-    (kappa = 0) so Theorem H applies directly.
+    FT-5 ANALYSIS (2026-04-12):
 
-    The historical formula
-        ChirHoch^*(V_{-h^v}(g)) = Lambda(P_{2d_i-1}) x C[Theta_{2d_i}]
-    with unbounded polynomial growth O(n^{r-1}) is REFUTED: that
-    expression is the CONTINUOUS Lie cohomology of g (a
-    Gelfand-Fuchs / Chevalley-Eilenberg object), not chiral
-    Hochschild.  The oper-form identification
-    H^*(B(V_crit)) = Omega^*(Op) pertains to the BAR complex, not
-    to ChirHoch.
+    At critical level k = -h^v, chiral Koszulness FAILS in the precise
+    sense of the manuscript (chiral_koszul_pairs.tex:1286-1287): the
+    Ext algebra Ext^{p,q}(omega_X, omega_X) is NOT diagonally concentrated
+    (p != q contributions from Fun(Op) at weight q > 0, bar degree p = 0).
 
-    This function is retained (with its original name) for backward
-    import compatibility, but returns the Theorem-H bounded summary.
+    DETAIL: PBW degeneration (E_2-collapse) holds at all levels
+    (cor:universal-koszul), but at critical level the E_2 page is NOT
+    diagonally concentrated. PBW degeneration + diagonal E_2 = Koszulness.
+    PBW degeneration alone does NOT imply Koszulness when the E_2 page
+    has off-diagonal contributions.  At generic level, curvature forces
+    diagonal concentration. At critical level, kappa = 0, no curvature,
+    off-diagonal contributions survive.
+
+    CONSEQUENCE: Theorem H (thm:hochschild-polynomial-growth) does NOT
+    apply at critical level, because its hypothesis "chirally Koszul"
+    fails.  The Beilinson-Drinfeld comparison theorem (BD04, Thm 4.5.2)
+    identifies ChirHoch with continuous Lie algebra cohomology:
+
+        ChirHoch^*(V_{-h^v}(g)) = H^*_{Lie,cont}(g tensor tC[[t]]; C)
+                                 = Lambda(P_1,...,P_r) x C[Theta_1,...,Theta_r]
+
+    This is UNBOUNDED with polynomial growth O(n^{r-1}).
+
+    MANUSCRIPT REFERENCE: hochschild_cohomology.tex:158-191
+    (rem:critical-level-lie-vs-chirhoch): "At critical level, chiral
+    Koszulness fails ... Theorem H does not apply. Instead, the BD
+    comparison theorem identifies ChirHoch with continuous Lie algebra
+    cohomology."
+
+    KEY DISTINCTION (AP94/AP95):
+    - At GENERIC level: ChirHoch bounded in {0,1,2}, Lie cohomology
+      unbounded. They are DIFFERENT functors.
+    - At CRITICAL level: BD comparison IDENTIFIES them. ChirHoch IS
+      the Lie cohomology. Both unbounded.
+
+    NOTE ON cor:universal-koszul: This corollary says V_k(g) is
+    "chirally Koszul" at all k. This should be understood as "PBW
+    degenerate" (a necessary condition for Koszulness, not sufficient
+    at critical level). The corollary needs a clarifying remark that
+    PBW degeneration at critical level does not yield diagonal Ext
+    concentration. This is flagged as a manuscript tension (FT-5).
     """
     odd_generators = g.lie_cohomology_degrees
-    # Strong-generator weights for Fun(Op) (informational, for
-    # downstream consumers that reported the raw degree data).
-    even_generators_corrected = tuple(2 * (d + 1) for d in g.exponents)
+    even_generators = tuple(2 * (d + 1) for d in g.exponents)
+
+    r = g.rank
+    is_periodic = (r == 1)
+    period = 2 * (g.exponents[0] + 1) if is_periodic else None
 
     return {
         'lie_algebra': f"{g.type}_{g.rank}",
         'odd_generator_degrees': odd_generators,
-        'even_generator_degrees': even_generators_corrected,
-        'amplitude': (0, 2),
-        'total_dim_bound': 4,
-        'bounded_by_theorem_h': True,
-        'is_strictly_periodic': False,  # REFUTED: no GF periodicity in ChirHoch
-        'period': None,
-        'growth_rate': 'bounded (Theorem H amplitude [0,2])',
-        'poincare_series_type': 'bounded (finite support)',
-        'sl2_period_4': False,  # REFUTED per AP94
-        'refutation_note': (
-            'The old Lambda(P_*) x C[Theta_*] polynomial model is '
-            'Gelfand-Fuchs continuous Lie cohomology, not chiral '
-            'Hochschild (AP94, AP95).  Theorem H bounds ChirHoch '
-            'amplitude to [0,2] with total dim <= 4.'
+        'even_generator_degrees': even_generators,
+        'amplitude': 'unbounded',
+        'total_dim_bound': None,
+        'bounded_by_theorem_h': False,  # Theorem H does NOT apply
+        'koszulness_fails_at_critical': True,
+        'pbw_degeneration_holds': True,  # PBW E_2-collapse still holds
+        'diagonal_ext_fails': True,  # Ext^{p,q} != 0 for p != q
+        'bd_comparison_applies': True,
+        'chirhoch0_dim': 'infinite',  # FF center = Fun(Op)
+        'chirhoch1_dim': 'infinite',  # z(g_hat) tensor g
+        'chirhoch2_dim': 'infinite',  # Z(V_crit) = FF center (self-dual)
+        'is_strictly_periodic': is_periodic,
+        'period': period,
+        'growth_rate': f'polynomial O(n^{{{r-1}}})',
+        'poincare_series_type': (
+            f'prod_{{i=1}}^{{{r}}} (1 + t^{{2m_i+1}}) / (1 - t^{{2(m_i+1)}})'
+        ),
+        'sl2_period_4': is_periodic and period == 4,
+        'lie_cohomology_unbounded': True,
+        'correction_note': (
+            'Chiral Koszulness (diagonal Ext concentration) FAILS at '
+            'critical level even though PBW degeneration holds. The BD '
+            'comparison theorem identifies ChirHoch with continuous Lie '
+            'cohomology at critical level. Theorem H does not apply. '
+            'cor:universal-koszul needs a clarifying remark (FT-5 finding).'
         ),
     }
 

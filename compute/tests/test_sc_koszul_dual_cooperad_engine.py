@@ -64,6 +64,7 @@ from lib.sc_koszul_dual_cooperad_engine import (
     sc_dual_generating_function,
     # Convolution
     convolution_algebra_dimension,
+    bracket_vanishing_check,
     convolution_factorization_check,
     # Multi-path
     multipath_lie_dim_verification,
@@ -609,7 +610,112 @@ class TestFullSummary:
 
 
 # ===================================================================
-# 15. EDGE CASES AND ROBUSTNESS
+# 15. FT-2: BRACKET VANISHING [g^mod, g^R] = 0
+# ===================================================================
+
+class TestBracketVanishing:
+    """FT-2: Verify [g^mod, g^R] = 0 in the SC convolution algebra.
+
+    The bracket vanishes universally (for ALL chiral algebras) by the
+    colour constraint on SC^! cooperad cocomposition:
+
+    (A) COLOUR CONSTRAINT: The outer factor in any binary cocomposition
+        preserves the output colour of the source. g^mod has ch output;
+        g^R has top output. No single cocomposition term produces a
+        (ch-output) factor paired with a (pure-open top-output) factor.
+
+    (B) ARITY OBSTRUCTION: For a closed-edge split of (k, m; top),
+        the outer vertex has k - k1 + 1 >= 1 closed inputs. A pure-open
+        outer vertex (k_outer = 0) would require k1 = k + 1 > k, which
+        exceeds the available closed inputs. For an open-edge split,
+        both factors have top output, so f (needing ch output) cannot
+        match either factor.
+
+    (C) COMPUTATIONAL VERIFICATION: Exhaustive enumeration of all
+        cocompositions up to arity 6 finds zero matching terms.
+
+    References:
+        Vol II: prop:thqg-gSC-factorization
+        CLAUDE.md: HZ-9 (four-functor discipline)
+    """
+
+    def test_bracket_vanishes_arity_4(self):
+        """Bracket vanishes up to arity 4."""
+        result = bracket_vanishing_check(max_arity=4)
+        assert result['bracket_vanishes'] is True
+        assert result['num_violations'] == 0
+
+    def test_bracket_vanishes_arity_6(self):
+        """Bracket vanishes up to arity 6."""
+        result = bracket_vanishing_check(max_arity=6)
+        assert result['bracket_vanishes'] is True
+        assert result['num_violations'] == 0
+
+    def test_arity_obstruction_holds(self):
+        """The arity obstruction k1 = k+1 > k is impossible."""
+        result = bracket_vanishing_check(max_arity=6)
+        assert result['arity_obstruction_holds'] is True
+
+    def test_bracket_vanishing_in_factorization(self):
+        """The factorization check calls bracket_vanishing_check."""
+        result = convolution_factorization_check(4, 1)
+        assert result['bracket_vanishes'] is True
+        assert 'bracket_vanishing_detail' in result
+        detail = result['bracket_vanishing_detail']
+        assert detail['num_violations'] == 0
+        assert detail['proof_method'] == 'colour_constraint_plus_arity_obstruction'
+
+    def test_colour_constraint_at_arity_2_2(self):
+        """Explicit check: f at (2,0;ch) and g at (0,2;top) have no
+        matching cocomposition at any source arity up to 6.
+
+        # VERIFIED:
+        # [DC] Direct computation: exhaustive cocomposition enumeration
+        # [LT] Loday-Vallette 2012 Sec 13.3: SC^! colour preservation
+        """
+        for source_k in range(0, 7):
+            for source_m in range(0, 7):
+                if source_k + source_m < 3:
+                    continue
+                dim = sc_koszul_dual_dim_mixed(source_k, source_m)
+                if dim == 0:
+                    continue
+                result = sc_cooperad_cocomposition(source_k, source_m)
+                for decomp in result.get('decompositions', []):
+                    ik, im, io = decomp['inner']
+                    ok, om, oo = decomp['outer']
+                    # f at inner=(2,0;ch), g at outer=(0,2;top)
+                    assert not (io == 'ch' and ik == 2 and im == 0
+                                and oo == 'top' and ok == 0 and om == 2), \
+                        f"Colour violation at source ({source_k},{source_m})"
+                    # Reverse: g at inner=(0,2;top), f at outer=(2,0;ch)
+                    assert not (oo == 'ch' and ok == 2 and om == 0
+                                and io == 'top' and ik == 0 and im == 2), \
+                        f"Colour violation (rev) at source ({source_k},{source_m})"
+
+    def test_m1_zero_decomposition_now_present(self):
+        """Bug fix: SC^!(2,1;top) has an open-edge decomposition with
+        inner=(2,0;top) x outer=(0,2;top) (m1=0 on inner).
+
+        This decomposition was previously missing due to the m1 >= 1
+        constraint. The fix allows m1=0 when k1 >= 2.
+
+        Note: this decomposition has BOTH factors with top output,
+        so it does NOT contribute to the [g^mod, g^R] bracket
+        (which requires one ch-output factor).
+        """
+        result = sc_cooperad_cocomposition(2, 1)
+        has_20_02 = any(
+            d['inner'] == (2, 0, 'top') and d['outer'] == (0, 2, 'top')
+            for d in result.get('decompositions', [])
+        )
+        assert has_20_02, (
+            "Missing open-edge decomposition: inner=(2,0;top) x outer=(0,2;top)"
+        )
+
+
+# ===================================================================
+# 16. EDGE CASES AND ROBUSTNESS
 # ===================================================================
 
 class TestEdgeCases:

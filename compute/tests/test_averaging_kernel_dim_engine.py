@@ -481,3 +481,303 @@ class TestConsistencyWithExistingEngine:
     def test_sl3_arity2_matches(self):
         # Existing engine: surviving = 36, total = 64, ratio = 36/64 = 9/16
         assert surviving_ratio(8, 2) == Fraction(9, 16)
+
+
+# =====================================================================
+# Hecke algebra / Schur-Weyl decomposition for V = C^2 (fundamental)
+# =====================================================================
+#
+# This section computes ker(av_n) for the FUNDAMENTAL representation
+# V = C^2 of sl_2, using the Hecke algebra H_n(q) at generic q.
+#
+# The decomposition uses Schur-Weyl duality:
+#   V^{tensor n} = bigoplus_{j=0}^{floor(n/2)} S_{(n-j,j)} tensor V_{(n-j,j)}
+#
+# The trivial S_n-isotypic component is lambda = (n, 0):
+#   dim = 1 * (n+1) = n+1 = dim Sym^n(C^2).
+# ker(av_n) = 2^n - (n+1).
+#
+# This is DIFFERENT from the adjoint-representation computation in
+# TestSl2 above (d=3, coinvariant = binom(n+2, n)).
+# The fundamental computation is relevant to:
+#   - The KZ local system on Conf_n^ord(C) with V^{tensor n} coefficients
+#   - The standalone paper ordered_chiral_homology.tex
+#   - The Yangian Y(sl_2) R-matrix / Hecke algebra analysis
+#
+# Verification paths:
+#   [DC] direct binomial computation
+#   [DC2] explicit Reynolds operator on (C^2)^{tensor n} (path C above)
+#   [LT] Schur-Weyl duality / hook-length formula
+#   [CF] consistency with standalone paper ker(av_2) = 1, ker(av_3) = 1
+#        (the paper's ker(av_3) = Lambda^3(g) = C uses the ADJOINT g = C^3;
+#         on the fundamental V = C^2, ker(av_3) = 4 is the full non-trivial
+#         part, of which the associator occupies a 1-dim subspace)
+# =====================================================================
+
+from compute.lib.averaging_kernel_dim_engine import (
+    hecke_kernel_dim_sl2_fund,
+    hecke_kernel_decomposition_sl2_fund,
+    hecke_kernel_table_sl2_fund,
+    schur_weyl_decomposition_sl2,
+    specht_dim_two_row,
+    gl2_irrep_dim,
+)
+
+
+class TestHeckeKernelSl2Fund:
+    """ker(av_n) for V = C^2 (fundamental of sl_2) via Hecke algebra."""
+
+    def test_arity1_kernel_zero(self):
+        # n=1: 2^1 = 2, coinv = 2, ker = 0
+        # VERIFIED: [DC] 2 - 2 = 0; [SY] S_1 is trivial, no kernel
+        assert hecke_kernel_dim_sl2_fund(1) == 0
+
+    def test_arity2_kernel_1(self):
+        # n=2: 2^2 = 4, coinv = 3 (Sym^2(C^2)), ker = 1 (Lambda^2(C^2))
+        # VERIFIED: [DC] 4 - 3 = 1; [CF] standalone paper eq:yangian-ker-av2
+        # gives ker(av_2) = Lambda^2(V) = C, dim 1
+        assert hecke_kernel_dim_sl2_fund(2) == 1
+
+    def test_arity3_kernel_4(self):
+        # n=3: 2^3 = 8, coinv = 4 (Sym^3(C^2) = C^4), ker = 4
+        # VERIFIED: [DC] 8 - 4 = 4;
+        # [DC2] Reynolds operator rank computation gives rank 4;
+        # [LT] Schur-Weyl: S_{(2,1)} tensor V_{(2,1)} = 2 x 2 = 4
+        # NOTE: The standalone paper says ker(av_3) = Lambda^3(g) = C^1
+        # for g = sl_2 (adjoint, dim 3). This is the ADJOINT computation.
+        # On the fundamental V = C^2, ker(av_3) = 4, of which the
+        # Drinfeld associator occupies 1 dimension (the Lambda^3(g)
+        # subspace within the multiplicity space of the KZ system).
+        assert hecke_kernel_dim_sl2_fund(3) == 4
+
+    def test_arity4_kernel_11(self):
+        # n=4: 2^4 = 16, coinv = 5 (Sym^4(C^2)), ker = 11
+        # VERIFIED: [DC] 16 - 5 = 11;
+        # [DC2] explicit Reynolds operator on (C^2)^{tensor 4} gives rank 5;
+        # [LT] Schur-Weyl decomposition:
+        #   S_{(3,1)} tensor V_{(3,1)} = 3 x 3 = 9
+        #   S_{(2,2)} tensor V_{(2,2)} = 2 x 1 = 2
+        #   Total kernel = 9 + 2 = 11
+        assert hecke_kernel_dim_sl2_fund(4) == 11
+
+    def test_arity5_kernel_26(self):
+        # n=5: 2^5 = 32, coinv = 6 (Sym^5(C^2)), ker = 26
+        # VERIFIED: [DC] 32 - 6 = 26;
+        # [DC2] explicit Reynolds operator on (C^2)^{tensor 5} gives rank 6;
+        # [LT] Schur-Weyl decomposition:
+        #   S_{(4,1)} tensor V_{(4,1)} = 4 x 4 = 16
+        #   S_{(3,2)} tensor V_{(3,2)} = 5 x 2 = 10
+        #   Total kernel = 16 + 10 = 26
+        assert hecke_kernel_dim_sl2_fund(5) == 26
+
+    def test_arity6_kernel_57(self):
+        # n=6: 2^6 = 64, coinv = 7 (Sym^6(C^2)), ker = 57
+        # VERIFIED: [DC] 64 - 7 = 57;
+        # [DC2] explicit Reynolds operator on (C^2)^{tensor 6} gives rank 7;
+        # [LT] Schur-Weyl decomposition:
+        #   S_{(5,1)} tensor V_{(5,1)} = 5 x 5 = 25
+        #   S_{(4,2)} tensor V_{(4,2)} = 9 x 3 = 27
+        #   S_{(3,3)} tensor V_{(3,3)} = 5 x 1 = 5
+        #   Total kernel = 25 + 27 + 5 = 57
+        assert hecke_kernel_dim_sl2_fund(6) == 57
+
+    def test_general_formula(self):
+        """ker(av_n) = 2^n - (n + 1) for all n = 1..10."""
+        for n in range(1, 11):
+            expected = 2**n - (n + 1)
+            assert hecke_kernel_dim_sl2_fund(n) == expected
+
+
+class TestSchurWeylDecompositionSl2:
+    """Schur-Weyl decomposition of (C^2)^{tensor n}."""
+
+    def test_total_dimension(self):
+        """Sum of dim(S_lambda) * dim(V_lambda) = 2^n."""
+        for n in range(1, 11):
+            decomp = schur_weyl_decomposition_sl2(n)
+            total = sum(row["product"] for row in decomp)
+            assert total == 2**n
+
+    def test_trivial_isotypic(self):
+        """Trivial isotypic component has dim = n + 1 = dim Sym^n(C^2)."""
+        for n in range(1, 11):
+            decomp = schur_weyl_decomposition_sl2(n)
+            trivial = [r for r in decomp if r["is_trivial"]]
+            assert len(trivial) == 1
+            assert trivial[0]["product"] == n + 1
+            assert trivial[0]["specht_dim"] == 1
+            assert trivial[0]["gl2_dim"] == n + 1
+
+    def test_number_of_components(self):
+        """Number of Young diagrams = floor(n/2) + 1."""
+        for n in range(1, 11):
+            decomp = schur_weyl_decomposition_sl2(n)
+            assert len(decomp) == n // 2 + 1
+
+    def test_arity4_decomposition(self):
+        # VERIFIED: [DC] binom(4,1)-binom(4,0) = 3; dim V_{(3,1)} = 3
+        # [DC] binom(4,2)-binom(4,1) = 2; dim V_{(2,2)} = 1
+        decomp = schur_weyl_decomposition_sl2(4)
+        assert decomp[0]["partition"] == (4, 0)
+        assert decomp[0]["product"] == 5  # trivial: 1 * 5
+        assert decomp[1]["partition"] == (3, 1)
+        assert decomp[1]["specht_dim"] == 3
+        assert decomp[1]["gl2_dim"] == 3
+        assert decomp[1]["product"] == 9
+        assert decomp[2]["partition"] == (2, 2)
+        assert decomp[2]["specht_dim"] == 2
+        assert decomp[2]["gl2_dim"] == 1
+        assert decomp[2]["product"] == 2
+
+    def test_arity6_decomposition(self):
+        # VERIFIED: [DC] direct binomial computation for each component
+        decomp = schur_weyl_decomposition_sl2(6)
+        assert len(decomp) == 4  # j = 0, 1, 2, 3
+        # j=0: (6,0), trivial, 1 * 7 = 7
+        assert decomp[0]["product"] == 7
+        # j=1: (5,1), dim_S = binom(6,1) - binom(6,0) = 5, dim_V = 5, prod = 25
+        assert decomp[1]["specht_dim"] == 5
+        assert decomp[1]["gl2_dim"] == 5
+        assert decomp[1]["product"] == 25
+        # j=2: (4,2), dim_S = binom(6,2) - binom(6,1) = 15-6 = 9, dim_V = 3, prod = 27
+        assert decomp[2]["specht_dim"] == 9
+        assert decomp[2]["gl2_dim"] == 3
+        assert decomp[2]["product"] == 27
+        # j=3: (3,3), dim_S = binom(6,3) - binom(6,2) = 20-15 = 5, dim_V = 1, prod = 5
+        assert decomp[3]["specht_dim"] == 5
+        assert decomp[3]["gl2_dim"] == 1
+        assert decomp[3]["product"] == 5
+
+
+class TestHeckeKernelDecomposition:
+    """Decomposition of ker(av_n) by S_n-isotypic component."""
+
+    def test_arity4_parts(self):
+        parts = hecke_kernel_decomposition_sl2_fund(4)
+        assert len(parts) == 2
+        assert sum(p["contribution"] for p in parts) == 11
+
+    def test_arity5_parts(self):
+        parts = hecke_kernel_decomposition_sl2_fund(5)
+        assert len(parts) == 2
+        assert sum(p["contribution"] for p in parts) == 26
+
+    def test_arity6_parts(self):
+        parts = hecke_kernel_decomposition_sl2_fund(6)
+        assert len(parts) == 3
+        assert sum(p["contribution"] for p in parts) == 57
+
+    def test_parts_sum_to_kernel(self):
+        """Sum of non-trivial contributions = hecke_kernel_dim for all n."""
+        for n in range(1, 11):
+            parts = hecke_kernel_decomposition_sl2_fund(n)
+            total = sum(p["contribution"] for p in parts)
+            assert total == hecke_kernel_dim_sl2_fund(n)
+
+
+class TestSpechtDimTwoRow:
+    """Specht module dimensions for two-row partitions."""
+
+    def test_trivial_rep(self):
+        """S_{(n, 0)} is trivial: dim = 1."""
+        for n in range(1, 11):
+            assert specht_dim_two_row(n, 0) == 1
+
+    def test_sign_rep_at_n2(self):
+        """S_{(1,1)} is the sign representation of S_2: dim = 1."""
+        # VERIFIED: [DC] binom(2,1) - binom(2,0) = 2 - 1 = 1
+        assert specht_dim_two_row(2, 1) == 1
+
+    def test_standard_rep_at_n3(self):
+        """S_{(2,1)} is the standard rep of S_3: dim = 2."""
+        # VERIFIED: [DC] binom(3,1) - binom(3,0) = 3 - 1 = 2
+        assert specht_dim_two_row(3, 1) == 2
+
+    def test_known_values(self):
+        # VERIFIED: [DC] ballot numbers = binom(n,j) - binom(n,j-1)
+        assert specht_dim_two_row(4, 1) == 3   # binom(4,1) - binom(4,0) = 3
+        assert specht_dim_two_row(4, 2) == 2   # binom(4,2) - binom(4,1) = 2
+        assert specht_dim_two_row(5, 1) == 4   # binom(5,1) - binom(5,0) = 4
+        assert specht_dim_two_row(5, 2) == 5   # binom(5,2) - binom(5,1) = 5
+        assert specht_dim_two_row(6, 1) == 5   # binom(6,1) - binom(6,0) = 5
+        assert specht_dim_two_row(6, 2) == 9   # binom(6,2) - binom(6,1) = 9
+        assert specht_dim_two_row(6, 3) == 5   # binom(6,3) - binom(6,2) = 5
+
+    def test_out_of_range(self):
+        """specht_dim = 0 for j > floor(n/2) or j < 0."""
+        assert specht_dim_two_row(4, 3) == 0
+        assert specht_dim_two_row(5, 3) == 0
+        assert specht_dim_two_row(3, -1) == 0
+
+
+class TestGl2IrrepDim:
+    """GL_2 irrep dimensions."""
+
+    def test_symmetric_power(self):
+        """V_{(n, 0)} = Sym^n(C^2): dim = n + 1."""
+        for n in range(1, 11):
+            assert gl2_irrep_dim(n, 0) == n + 1
+
+    def test_determinant(self):
+        """V_{(1, 1)} = det: dim = 1."""
+        assert gl2_irrep_dim(2, 1) == 1
+
+    def test_known_values(self):
+        assert gl2_irrep_dim(4, 1) == 3  # spin 3/2, dim 3
+        assert gl2_irrep_dim(4, 2) == 1  # spin 0, dim 1
+        assert gl2_irrep_dim(6, 1) == 5  # spin 2, dim 5
+        assert gl2_irrep_dim(6, 2) == 3  # spin 1, dim 3
+        assert gl2_irrep_dim(6, 3) == 1  # spin 0, dim 1
+
+
+class TestHeckeKernelTable:
+    """Table of kernel dimensions for V = C^2."""
+
+    def test_table_length(self):
+        rows = hecke_kernel_table_sl2_fund(max_arity=8)
+        assert len(rows) == 8
+
+    def test_table_values(self):
+        rows = hecke_kernel_table_sl2_fund(max_arity=6)
+        expected_ker = [0, 1, 4, 11, 26, 57]
+        for row, ek in zip(rows, expected_ker):
+            assert row["kernel_dim"] == ek
+
+    def test_info_ratio_nondecreasing(self):
+        """Information ratio is nondecreasing for n >= 1."""
+        rows = hecke_kernel_table_sl2_fund(max_arity=10)
+        for i in range(1, len(rows)):
+            assert rows[i]["info_ratio"] >= rows[i - 1]["info_ratio"]
+
+    def test_info_ratio_approaches_1(self):
+        """For large n, almost all of V^{tensor n} lies in ker(av)."""
+        rows = hecke_kernel_table_sl2_fund(max_arity=20)
+        assert float(rows[-1]["info_ratio"]) > 0.99
+
+
+class TestHeckeVsAdjointComparison:
+    """Compare fundamental (V=C^2) vs adjoint (g=C^3) kernel dimensions.
+
+    These are DIFFERENT computations on DIFFERENT spaces.
+    The adjoint computes ker(av) on g^{tensor n} where g = sl_2 (dim 3).
+    The fundamental computes ker(av) on V^{tensor n} where V = C^2.
+    """
+
+    def test_adjoint_larger_at_arity2(self):
+        # Adjoint (d=3): ker = 3^2 - binom(4,2) = 9 - 6 = 3
+        # Fundamental (d=2): ker = 2^2 - 3 = 1
+        # VERIFIED: [DC] different spaces, adjoint strictly larger
+        assert kernel_dim(3, 2) == 3
+        assert hecke_kernel_dim_sl2_fund(2) == 1
+
+    def test_adjoint_larger_at_arity3(self):
+        # Adjoint: 27 - 10 = 17
+        # Fundamental: 8 - 4 = 4
+        assert kernel_dim(3, 3) == 17
+        assert hecke_kernel_dim_sl2_fund(3) == 4
+
+    def test_adjoint_larger_at_arity4(self):
+        # Adjoint: 81 - 15 = 66
+        # Fundamental: 16 - 5 = 11
+        assert kernel_dim(3, 4) == 66
+        assert hecke_kernel_dim_sl2_fund(4) == 11
