@@ -25,7 +25,7 @@ The Swiss-cheese operad SC^{ch,top} (Definition def:SC, en_koszul_duality.tex li
 | SC(ch^k, top^m; top) = FM_k(C) x E_1(m) | mixed-to-open | Bulk acting on boundary |
 | SC(..., top,...; ch) = empty | open-to-closed | FORBIDDEN (directionality) |
 
-The bar complex B^ord(A) is an SC^{ch,top}-coalgebra (thm:bar-swiss-cheese): the differential d_B is the closed color (FM_k(C) collision residues) and the deconcatenation coproduct Delta is the open color (E_1 interval splitting).
+The bar complex B^ord(A) is an E_1 chiral coassociative coalgebra over (ChirAss)^!: the differential d_B encodes holomorphic OPE residues (FM_k(C) collision residues) and the deconcatenation coproduct Delta encodes topological factorization (E_1 interval splitting). The SC^{ch,top} structure emerges on the derived center pair (C^bullet_ch(A,A), A), not on B(A) itself (AP165).
 
 ## Part 2: The Operadic Center and the Chiral Hochschild Complex
 

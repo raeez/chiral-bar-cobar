@@ -15,7 +15,9 @@ CONTEXT:
   Vol II of the monograph proves:
     - SC^{ch,top} is homotopy-Koszul (thm:homotopy-Koszul, via Kontsevich
       formality + transfer from classical SC Koszulity [Livernet, GK94])
-    - The bar complex B(A) is an SC^{ch,top}-coalgebra (thm:bar-swiss-cheese)
+    - The bar complex B(A) is an E_1 chiral coassociative coalgebra over
+      (ChirAss)^!; the SC^{ch,top} structure emerges on the derived center
+      pair (C^bullet_ch(A,A), A) (AP165)
     - PVA descent D2-D6 all proved (thm:cohomology-PVA-main)
 
 WHAT THIS ENGINE TESTS:

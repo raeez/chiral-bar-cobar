@@ -3,7 +3,7 @@
 **Volume I** of *Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves*
 by Raeez Lorgat.
 
-The bar complex of a chiral algebra is computed by integration over Fulton-MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus g >= 1 is controlled by a single scalar invariant kappa(A) that organizes the quantum corrections across all genera.
+The ordered bar complex B^{ord}(A) = T^c(s^{-1} A-bar) is an E_1 chiral coassociative coalgebra: the differential encodes the chiral product via collision residues on FM_n(C), the deconcatenation coproduct encodes the cofree tensor coalgebra structure. This is the primitive object of the programme. The symmetric bar B^Sigma is its Sigma_n-coinvariant shadow. Integration over Fulton-MacPherson compactifications computes the bar complex; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus g >= 1 is controlled by a single scalar invariant kappa(A) that organizes the quantum corrections across all genera. The geometry determines the operad, the operad determines the bar complex, the bar complex computes the factorisation (co)homology.
 
 ## The Three Volumes
 
@@ -47,16 +47,17 @@ Six objects built from the bar complex B(A), connected by three functors:
 | Metric | Value |
 |--------|------:|
 | Pages | ~2,672 |
-| Tagged claims | ~6,023 |
+| Tagged claims | ~6,101 |
+| Cross-volume labels | ~12,971 |
 | Compute tests | ~120,000+ |
-| Source files | 113 .tex chapters + 15 appendices + 35 standalones |
+| Source files | 113 .tex chapters + 15 appendices + 36 standalones |
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
 | Shadow census families | 25 (14 original + 11 added: BP_k, W_3, Ising, N=2 SCA, W(p), Y-algebras, symplectic boson/fermion, quantum lattice) |
-| Compute modules | 1,312 lib + 1,378 test |
-| Anti-patterns | AP1-AP149 (123 foundational + 26 deep empirical) + AAP1-18 + RS-1..20 |
+| Compute modules | 1,313 lib + 1,379 test |
+| Anti-patterns | AP1-AP165 + AAP1-18 + RS-1..20 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
-| Standalone papers | 13 (all building successfully) |
+| Standalone papers | 28 building PDFs |
 
 ## Build
 
@@ -93,7 +94,7 @@ chiral-bar-cobar/
     connections/            Parts IV-VI (~30 files)
   appendices/               signs, FM proofs, tables
   compute/
-    lib/                    1,312 verification engines
-    tests/                  1,378 test files (~120K tests)
-  standalone/               13 extracted standalone papers
+    lib/                    1,313 verification engines
+    tests/                  1,379 test files (~120K tests)
+  standalone/               28 extracted standalone papers
 ```

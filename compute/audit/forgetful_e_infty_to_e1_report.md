@@ -117,7 +117,7 @@ Omega : (conilpotent SC^{ch,top}-coalgebras) ⇄ (SC^{ch,top}-algebras) : B
 ```
 This is a Quillen equivalence when SC^{ch,top} is homotopy-Koszul (which is PROVED: Theorem thm:homotopy-Koszul via Kontsevich formality + transfer from classical Swiss-cheese Koszulity).
 
-The bar functor B is the RIGHT adjoint. Given an SC^{ch,top}-algebra A, B(A) is the universal conilpotent SC^{ch,top}-coalgebra coaugmented over A (via the twisting morphism). The Quillen equivalence means B and Omega are mutually inverse on the homotopy category.
+The bar functor B is the RIGHT adjoint. Given an SC^{ch,top}-algebra (A, M) (a two-coloured pair: closed A, open M), B(A,M) is the universal conilpotent SC^{ch,top}-coalgebra coaugmented over (A,M). For a single chiral algebra A, promotion A -> (A, A) is required (AP86). The bar complex B(A) of a single algebra is an E_1 chiral coassociative coalgebra over (ChirAss)^!; the SC structure lives on the derived center pair (C^bullet_ch(A,A), A) (AP165). The Quillen equivalence means B and Omega are mutually inverse on the homotopy category.
 
 At genus 0, this is an honest Quillen equivalence. At genus g >= 1, the bar complex is curved (d^2 = kappa * omega_g), and cobar reconstruction is replaced by the Feynman transform FT, with FT^2 ≃ id providing the involutivity.
 

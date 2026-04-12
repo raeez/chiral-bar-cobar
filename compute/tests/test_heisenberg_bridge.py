@@ -185,7 +185,7 @@ class TestVolI_ChainDimensions:
 # ============================================================
 
 class TestVolII_SwissCheese:
-    """The bar complex is an algebra over SC^{ch,top}."""
+    """B(A) is an E_1 chiral coassociative coalgebra; SC^{ch,top} on derived center pair."""
 
     def test_coproduct_is_deconcatenation(self):
         """Delta: T^c(V) → T^c(V) ⊗ T^c(V) is the cofree coproduct.
