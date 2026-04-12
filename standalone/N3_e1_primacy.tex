@@ -92,8 +92,11 @@ $\BarSig(\cA)$, which underlies the classical Francis--Gaitsgory
 factorization picture, is its $\Sigma_{n}$-coinvariant image under
 an averaging map $\av \colon \gEone \twoheadrightarrow \gmod$
 of dg Lie algebras. The scalar modular characteristic $\kappa(\cA)$
-is the degree-$2$ coinvariant of a meromorphic $r$-matrix $r(z)$ that
-lives natively on the ordered side. The Drinfeld associator is the
+is recovered at degree $2$ from a meromorphic $r$-matrix $r(z)$ that
+lives natively on the ordered side: for abelian families the average
+is $\kappa$, while for non-abelian affine Kac--Moody it is the
+double-pole term $\kappa_{\mathrm{dp}}$, and the full $\kappa$
+adds the Sugawara shift $\dim(\fg)/2$. The Drinfeld associator is the
 degree-$3$ coinvariant of the KZ connection. The five foundational
 theorems A--D and H of modular Koszul duality admit ordered
 counterparts whose $\Sigma_{n}$-shadows are exactly the
@@ -157,8 +160,12 @@ makes $E_{1}$ the lowest rung of a ladder whose every step is
 non-commutative. The second is representation-theoretic: the
 classical $r$-matrix of an affine Kac--Moody algebra at level $k$
 is the content of the degree-$2$ genus-$0$ Maurer--Cartan element
-on the ordered side, and the scalar curvature $\kappa$ is its
-$\Sigma_{2}$-average. The third is physical: the line-operator
+on the ordered side, and its $\Sigma_{2}$-average recovers the
+degree-$2$ scalar shadow: for Heisenberg this is $\kappa$, while
+for non-abelian affine Kac--Moody it is
+$\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^{\vee})$, with the full
+$\kappa$ obtained after adding the Sugawara shift $\dim(\fg)/2$.
+The third is physical: the line-operator
 sector of a chiral conformal theory is naturally open and
 ordered, while the closed (bulk) sector is symmetric; the
 averaging map is the operadic image of the open-to-closed
@@ -454,7 +461,7 @@ the Lie bracket follows because symmetrisation commutes with
 the convolution bracket on cooperadic Homs.
 \end{proof}
 
-\begin{theorem}[Degree-$2$ averaging: $\av(r(z)) = \kappa$]
+\begin{theorem}[Degree-$2$ averaging: Heisenberg exact, affine KM with Sugawara shift]
 \label{thm:av-degree-2}
 Let $r(z) \in \End(V \otimes V) \otimes \cO(*\Delta)$ be the
 genus-$0$ degree-$2$ $E_{1}$ shadow of $\cA$: the degree-$2$
@@ -468,15 +475,31 @@ Then
 \label{eq:av-degree-2}
 \av_{n=2}\bigl(r(z)\bigr)
 \;=\;
-\kappa(\cA),
+\begin{cases}
+\kappa(\cA), & \text{for abelian Heisenberg families},\\[4pt]
+\kappa_{\mathrm{dp}}(\widehat\fg_{k})
+:= \dfrac{k\,\dim(\fg)}{2h^{\vee}}, &
+\text{for non-abelian affine Kac--Moody in the trace-form convention.}
+\end{cases}
 \end{equation}
-the scalar modular characteristic of $\cA$. Concretely, for the
+In the affine Kac--Moody case the full modular characteristic is
+\[
+\kappa(\widehat\fg_{k})
+\;=\;
+\kappa_{\mathrm{dp}}(\widehat\fg_{k}) + \frac{\dim(\fg)}{2}
+\;=\;
+\frac{\dim(\fg)(k+h^{\vee})}{2h^{\vee}},
+\]
+so the extra $\dim(\fg)/2$ is the Sugawara simple-pole shift.
+Concretely, for the
 principal examples:
 \begin{itemize}
 \item Heisenberg $\cH_{k}$: $r(z) = k/z$, $\kappa(\cH_{k}) = k$.
 \item Affine Kac--Moody $\widehat\fg_{k}$: $r(z) = k\Omega_{\fg}/z$
  (the level $k$ survives; at $k=0$ the $r$-matrix vanishes
- identically), and
+ identically),
+ $\av(r(z)) = \kappa_{\mathrm{dp}}(\widehat\fg_k)
+ = k\dim(\fg)/(2h^{\vee})$, and
  $\kappa(\widehat\fg_{k}) = \dim(\fg)(k+h^{\vee})/(2h^{\vee})$.
 \item Virasoro $\Vir_{c}$: $r(z) = (c/2)/z^{3} + 2T/z$ (cubic
  plus simple pole, no quartic), and $\kappa(\Vir_{c}) = c/2$.
@@ -488,13 +511,20 @@ The degree-$2$ Maurer--Cartan component is, by definition, the
 degree-$2$ $E_{1}$ shadow
 $r(z) \in \End(V^{\otimes 2}) \otimes \cO(*\Delta)$
 in the pre-dualisation convention. Averaging over $\Sigma_{2}$
-projects onto the trivial isotypic component, which coincides
-with the scalar modular characteristic by the genus-$1$ curvature
-identification of Volume~I~Theorem~D. The example computations
-are recorded in \cite[Chapter~5]{Lorgat26I}; each formula is
-verified by the three independent paths of pole-order analysis,
-limiting case (at $k=0$, where $r$ vanishes), and
-cross-family consistency against the landscape census.
+projects onto the trivial isotypic component. For abelian
+Heisenberg families this scalar coincides with the full modular
+characteristic. For non-abelian affine Kac--Moody in the
+trace-form convention $r(z)=k\Omega_{\fg}/z$, the averaging sees
+only the double-pole channel and yields
+$\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^{\vee})$; the simple-pole
+self-contraction contributes the additional Sugawara term
+$\dim(\fg)/2$, so
+$\kappa = \kappa_{\mathrm{dp}} + \dim(\fg)/2$. The example
+computations are recorded in \cite[Chapter~5]{Lorgat26I}; each
+formula is verified by the three independent paths of pole-order
+analysis, the limiting case at $k=0$ for the trace-form
+$r$-matrix, and cross-family consistency against the landscape
+census.
 \end{proof}
 
 \begin{theorem}[Degree-$3$ averaging: associator to cubic shadow]
@@ -640,7 +670,10 @@ obtained from the genus-refined degree-$2$ projection of the
 $E_{1}$ Maurer--Cartan element is the $E_{1}$ degree-$2$
 characteristic package of $\cA$. It is universal, additive,
 antisymmetric under opposite-duality, and satisfies
-$\av(R^{E_{1},\mathrm{bin}}(z;\hbar)) = \kappa(\cA) + O(\hbar^{2})$.
+$\av(r_{0}(z)) = \kappa(\cA)$ on abelian families, while for
+non-abelian affine Kac--Moody one has
+$\av(r_{0}(z)) = \kappa_{\mathrm{dp}}(\cA)$ and
+$\kappa(\cA) = \kappa_{\mathrm{dp}}(\cA) + \dim(\fg)/2$.
 The coinvariant recovery of the scalar curvature from $r(z)$ is
 the content of Theorem~\ref{thm:av-degree-2}. A full higher-genus
 line-side modular $R$-matrix interpretation requires additional
@@ -667,11 +700,16 @@ complex of Theorem H.
 \label{rem:theorem-d-cleanest}
 Among the five, Theorem D makes the $E_{1}$ primacy thesis most
 concrete. The scalar modular characteristic $\kappa$ is a single
-number per family$ are distinct per family, never to be
-copied; the harmonic number is $H_{N} = \sum_{j=1}^{N} 1/j$). Its degree-$2$ lift is a meromorphic function of a single
+number per family, and the family formulas are distinct: for
+$W_{N}$ the harmonic number is $H_{N} = \sum_{j=1}^{N} 1/j$ and
+must not be copied from a different family. Its degree-$2$ lift is a meromorphic function of a single
 variable, the collision coordinate $z$. The statement
-$\av(r(z)) = \kappa$ says: the scalar is the $\Sigma_{2}$-average
-of a function. This is a strict projection; the full function
+$\av(r(z)) = \kappa$ says this exactly for Heisenberg, while for
+non-abelian affine Kac--Moody the same averaging recovers only
+$\kappa_{\mathrm{dp}}$ and the full $\kappa$ adds the Sugawara
+shift $\dim(\fg)/2$. The scalar shadow is still the
+$\Sigma_{2}$-average of a function. This is a strict projection;
+the full function
 $r(z)$ carries information about the braiding, the quantum group,
 and the line-operator algebra that no scalar invariant can see.
 The universality property of $\kappa$ in Volume I Theorem D
@@ -739,7 +777,10 @@ $bc$, $W$-algebras, Bershadsky--Polyakov. In each case $r(z)$ is
 fully determined by the underlying $E_{\infty}$ vertex algebra
 structure; the $E_{1}$ refinement adds no new data at degree $2$
 beyond what is already visible in the OPE. The averaging map on
-tier (b) satisfies $\av(r(z)) = \kappa(\cA)$, and the kernel is
+tier (b) recovers the scalar degree-$2$ shadow: for Heisenberg
+$\av(r(z)) = \kappa(\cA)$, while for non-abelian affine
+Kac--Moody $\av(r(z)) = \kappa_{\mathrm{dp}}(\cA)$ and the full
+$\kappa(\cA)$ adds the Sugawara shift $\dim(\fg)/2$; the kernel is
 nontrivial but reconstructible from $\cA$.
 
 \subsection*{Tier (c): genuinely $E_{1}$}
@@ -845,9 +886,12 @@ $\Sigma_{n}$-coinvariant shadow under an averaging map $\av$ of
 dg Lie algebras. The five foundational theorems A, B, C, D, H of
 modular Koszul duality admit ordered $E_{1}$ counterparts whose
 symmetric images are the classical theorems. Theorem D is the
-cleanest example: the scalar modular characteristic $\kappa$ is
-the degree-$2$ coinvariant of the spectral $r$-matrix $r(z)$, and
-the passage from $r(z)$ to $\kappa$ is a strict projection with
+cleanest example: the scalar degree-$2$ shadow is recovered from
+the spectral $r$-matrix $r(z)$ by averaging, giving $\kappa$
+for abelian families and $\kappa_{\mathrm{dp}}$ for non-abelian
+affine Kac--Moody before the Sugawara shift $\dim(\fg)/2$ is
+added; the passage from $r(z)$ to the scalar shadow is a strict
+projection with
 nontrivial kernel.
 
 Several problems remain open.
@@ -917,7 +961,10 @@ Koszul duality, the ordered bar complex $\Barord(\cA) =
 T^{c}(s^{-1}\bar\cA)$ is the primitive object and the symmetric
 bar is its $\Sigma_{n}$-coinvariant shadow; the five theorems
 A, B, C, D, H are the invariants that survive the averaging, and
-Theorem D displays this most visibly as $\av(r(z)) = \kappa(\cA)$.
+Theorem D displays this most visibly at degree $2$: for Heisenberg
+$\av(r(z)) = \kappa(\cA)$, while for non-abelian affine
+Kac--Moody $\av(r(z)) = \kappa_{\mathrm{dp}}(\cA)$ and the full
+$\kappa(\cA)$ adds the Sugawara shift $\dim(\fg)/2$.
 
 % ================================================================
 \begin{thebibliography}{99}

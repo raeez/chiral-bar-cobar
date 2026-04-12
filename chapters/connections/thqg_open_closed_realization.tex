@@ -168,8 +168,8 @@ $(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA), \delta)$
 with braces~\eqref{eq:thqg-brace} is a brace dg algebra.
 Equivalently:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $\delta^2 = 0$ (the $A_\infty$-chiral
- relations $[m, m] = 0$).
+\item $\delta^2 = 0$ (using the $A_\infty$-chiral
+ relation $m\{m\} = 0$).
 
 \item The \emph{higher pre-Lie identity}:
  for all $f, g_1, \ldots, g_r, h$,
@@ -199,20 +199,46 @@ Equivalently:
 \begin{proof}
 \emph{Step~1: $\delta^2 = 0$.}
 By direct computation, $\delta^2(f) = [m, [m, f]]$.
-Since $m$ has degree~$1$ in the endomorphism operad
-(odd degree), the graded Jacobi identity gives
-$2[m, [m, f]] = [[m, m], f]$, so
-$\delta^2(f) = \tfrac{1}{2}[[m, m], f]$. This vanishes because
-$[m, m] = 0$ is the $A_\infty$-chiral relation: expanding
-$[m, m] = \sum_{i+j=n+1} m_i \circ m_j$ with appropriate signs, this
-is exactly the system of $A_\infty$ identities. In the chiral
-setting, the operadic compositions $m_i \circ m_j$ carry
-block-substitution of spectral variables
-(Definition~\ref{def:thqg-chiral-endomorphism-operad}(b)), but
-the $A_\infty$ identity $[m, m] = 0$ holds identically in the
-operad $\mathcal{E}\!nd^{\mathrm{ch}}_A$ because associativity of
-block-substitution ensures the same cancellation pattern as in the
-classical case.
+In the shifted complex
+\eqref{eq:thqg-algebraic-hochschild}, each
+$m_n \in \mathcal{E}\!nd^{\mathrm{ch}}_A(n)$ has internal
+degree $2-n$, hence cochain degree~$1$ in
+$\mathcal{E}\!nd^{\mathrm{ch}}_A(n)[1-n]$. The suspended
+degree entering the Gerstenhaber sign is therefore
+$|m|-1 = 0$. Thus the graded-Jacobi shortcut
+$[m, [m, f]] = \tfrac{1}{2}[[m, m], f]$ is not available
+here: at even suspended degree the Jacobi identity only gives
+the tautology $[[m, m], f] = 0$.
+
+Instead one uses the brace form of the $A_\infty$ relations.
+Since $|m|-1 = 0$, the bracket is
+$[m, g] = m\{g\} - g\{m\}$, so
+\begin{align*}
+\delta^2(f)
+&= m\{m\{f\} - f\{m\}\} - (m\{f\} - f\{m\})\{m\} \\
+&= m\{m\{f\}\} - m\{f\{m\}\}
+   - m\{f\}\{m\} + f\{m\}\{m\}.
+\end{align*}
+Expanding these four terms by direct insertions, every summand is
+either a term containing $m\{m\}$ or a pair of nested/external
+insertions with opposite signs. The $A_\infty$-chiral relations
+are precisely
+\[
+(m\{m\})_n
+=
+\sum_{\substack{r+s+t=n \\ s \ge 1}}
+(-1)^{rs+t}\,
+m_{r+1+t}\bigl(
+\operatorname{id}^{\otimes r} \otimes m_s
+\otimes \operatorname{id}^{\otimes t}\bigr)
+= 0,
+\]
+so all contributions vanish. In the chiral setting, the
+operadic compositions still carry block-substitution of spectral
+variables
+(Definition~\ref{def:thqg-chiral-endomorphism-operad}(b)), and
+associativity of block-substitution gives the same cancellation
+pattern as in the classical brace algebra.
 
 \emph{Step~2: Pre-Lie identity.}
 The single-brace product $f \bullet g := f\{g\}$ satisfies the
@@ -241,10 +267,10 @@ Leibniz rule $\delta(f\{g_1, \ldots, g_r\})
 = (\delta f)\{g_1, \ldots, g_r\}
 + \sum_{s} \pm f\{g_1, \ldots, \delta g_s, \ldots, g_r\}
 + \text{boundary terms}$ follows because $\delta = [m, -]$
-and $m$ is a degree-$1$ element, so $[m, -]$ acts as a
+and $m$ has cochain degree~$1$, so $[m, -]$ acts as a
 graded derivation of the brace operations. The boundary terms
 are the braces involving $m$ insertions, which cancel pairwise
-by the $A_\infty$ identities $[m, m] = 0$.
+by the brace form $m\{m\} = 0$ of the $A_\infty$ identities.
 
 \emph{Step~4: Gerstenhaber on cohomology.}
 The cup product $f \smile g$ (concatenation composition) and the
