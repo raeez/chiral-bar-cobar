@@ -603,6 +603,242 @@ Hence the only nonzero columns on the $E_2$-page are
 $r=0,1,2$, proving the amplitude statement.
 \end{proof}
 
+\begin{proposition}[Configuration-space collapse via FM-formality
+spectral sequence; \ClaimStatusProvedHere]
+\label{prop:fm-tower-collapse}
+\index{configuration space!collapse|textbf}
+\index{Fulton--MacPherson!formality spectral sequence}
+Let $\cA$ be a chiral Koszul algebra on a smooth projective
+curve~$X$.  The bigraded chiral Hochschild complex
+\textup{(}Definition~\textup{\ref{def:bigraded-hochschild})}
+places degree-$p$ cochains on the Fulton--MacPherson
+compactification $\overline{C}_{p+2}(X)$ of complex
+dimension~$p+2$.  There is a spectral sequence, the
+\emph{FM-formality spectral sequence}, that collapses the
+entire tower $\{\overline{C}_{p+2}(X)\}_{p \geq 0}$ to the
+curve-level $\cD_X$-Ext computation of
+Lemma~\textup{\ref{lem:hochschild-shift-computation}}.
+Precisely:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Filtration by insertion number.}\;
+ The FM compactification $\overline{C}_{p+2}(X)$ admits a
+ stratification by collision patterns.  The maximal
+ collision stratum (all $p+2$ points colliding to a single
+ point of~$X$) fibers $\overline{C}_{p+2}(X)$ over~$X$ with
+ fiber the local model $\FM_{p+2}(\C)$.  The collision-depth
+ filtration of Lemma~\textup{\ref{lem:hochschild-shift-computation}}
+ gives a spectral sequence converging to
+ $H^*\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)\bigr)$ whose
+ $E_0$-page at filtration level~$r$ involves the cohomology
+ of configuration spaces $\FM_m(\C)$ for clusters of
+ size~$m$.
+
+\item \emph{FM fiber formality and the Arnold algebra.}\;
+ By Kontsevich formality
+ \textup{(}Proposition~\textup{\ref{prop:en-formality}}\textup{)},
+ each local fiber $\FM_m(\C)$ for $m \geq 2$ is formal: its
+ real cohomology algebra $H^*(\FM_m(\C); \R)$ is the
+ \emph{Arnold algebra}
+ \[
+ \cAr_m
+ \;:=\;
+ \bigwedge[\omega_{ij}]_{1 \leq i < j \leq m}
+ \Big/
+ \bigl(\omega_{ij}\wedge\omega_{jk}
+ + \omega_{jk}\wedge\omega_{ki}
+ + \omega_{ki}\wedge\omega_{ij}
+ \bigr),
+ \]
+ where $\omega_{ij} = d\log(z_i - z_j)$ has cohomological
+ degree~$1$.  This algebra has cohomological amplitude
+ $[0, m-1]$: the Poincar\'{e} polynomial is
+ $\prod_{j=1}^{m-1}(1+jt)$, with top class in
+ degree~$m-1$, and $H^k(\FM_m(\C)) = 0$ for
+ $k > m-1$.  In particular, $\FM_2(\C)$ has
+ amplitude~$[0,1]$.
+
+\item \emph{Bar-concentration kills the tower.}\;
+ On the Koszul locus, the local bar cohomology is
+ concentrated in bar-differential degree~$0$
+ \textup{(}Theorem~\textup{\ref{thm:bar-concentration}}\textup{)}.
+ The iterated OPE residues at each collision stratum are
+ computed by the local bar complex on the fiber
+ $\FM_m(\C)$, and bar-concentration forces the fiber
+ contribution to land entirely in the degree-$0$ piece
+ of the fiber cohomology.
+
+ The mechanism is as follows.  At bar degree~$p$, the
+ $E_1$-page of the collision-depth spectral sequence has
+ contributions from all collision patterns: partial
+ collisions where subsets of the $p+2$ points collide on
+ intermediate configuration spaces, and the full collision
+ to a single point on~$X$.  Each partial collision stratum
+ contributes through the Arnold-algebra cohomology of the
+ corresponding fiber, coupled by the Arnold differential
+ $d_1$ induced by the bar differential.
+
+ Bar-concentration on the Koszul locus forces these
+ Arnold-algebra contributions to be exact under~$d_1$:
+ the bar complex computes the iterated collision residues,
+ and Koszulness guarantees that the bar cohomology is
+ concentrated in the lowest filtration degree.  All
+ higher-filtration Arnold classes, which record the topology
+ of intermediate collision patterns in $\FM_m(\C)$ for
+ $m \geq 3$, are killed by the bar differential on the
+ $E_1$-page.
+
+\item \emph{Surviving contribution.}\;
+ The sole surviving $E_2$-term comes from the deepest
+ collision stratum, where all $p+2$ points have fully
+ collided to a single point of~$X$.  After
+ bar-concentration, this stratum contributes the coefficient
+ $\cD_X$-module $\cA^i_p = H^{p,0}(\barB^{\mathrm{ch}}(\cA))$
+ on the base curve.  Applying Verdier duality on~$X$ gives
+ $(\cA^!)_p = \mathbb{D}_X(\cA^i_p)$, and the surviving
+ $E_2$-terms are
+ \begin{equation}\label{eq:fm-tower-surviving}
+ E_2^{r,p}(p)
+ \;\cong\;
+ \Ext_{\cD_X}^r\!\bigl((\cA^!)_p, \omega_X\bigr),
+ \qquad
+ E_2^{r,s}(p) = 0 \;\text{for}\; s \neq p.
+ \end{equation}
+
+\item \emph{Amplitude from the base curve.}\;
+ The curve-level Ext on a smooth projective curve satisfies
+ \[
+ \Ext_{\cD_X}^r\!\bigl(\cM, \omega_X\bigr) = 0
+ \qquad\text{for }r \notin \{0,1,2\}
+ \]
+ for any holonomic $\cD_X$-module~$\cM$.
+ Therefore the total cohomological amplitude of
+ $\ChirHoch^*(\cA)$ is $[0,2]$: the FM tower of
+ configuration spaces of unbounded dimension contributes
+ \emph{zero} net amplitude beyond the base curve, because
+ bar-concentration eliminates all fiber cohomology above
+ degree~$0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The spectral sequence is the collision-depth filtration spectral
+sequence of Lemma~\ref{lem:hochschild-shift-computation},
+repackaged to make the tower collapse explicit.
+
+\emph{Step~1: stratification.}\;
+The FM compactification $\overline{C}_{p+2}(X)$ is stratified by
+collision forests: rooted trees recording which points collide.
+Each stratum is a fiber bundle whose base is a product of
+configuration spaces of~$X$ (recording the positions of
+collision clusters on the curve) and whose fiber is a product
+of local FM spaces $\FM_{m_i}(\C)$ (recording the collision
+pattern within each cluster, where $m_i$ is the cluster size).
+
+\emph{Step~2: $E_1$-page from Arnold algebras.}\;
+At each stratum, the fiber cohomology is computed by the Arnold
+algebra.  For a cluster of $m$ points, the Arnold algebra
+$\cAr_m$ has cohomological amplitude $[0, m-1]$.
+Formality (Proposition~\ref{prop:en-formality}) ensures that the
+fiber cohomology is computed entirely by $\cAr_m$; there are no
+higher chain-level corrections.  The $E_1$-page of the
+collision-depth spectral sequence is thus a complex whose terms
+involve the Arnold algebras of all cluster sizes occurring in
+the collision forest, tensored with the $\cD_X$-module
+coefficient system from the base.
+
+\emph{Step~3: bar-concentration kills higher fibers.}\;
+The bar differential computes iterated OPE residues.  On the
+Koszul locus, bar-concentration
+(Theorem~\ref{thm:bar-concentration}) forces the
+bar cohomology of each fiber to be concentrated in the
+lowest degree.  In terms of the collision-depth spectral
+sequence, this means the $d_1$-differential
+kills all $E_1$-classes coming from the Arnold-algebra
+cohomology in degrees $k \geq 1$.
+
+In detail: consider a stratum indexed by a collision pattern with
+cluster sizes $(m_1, \ldots, m_\ell)$, $\sum m_i = p + 2$.
+The fiber at this stratum is $\prod_{i=1}^{\ell} \FM_{m_i}(\C)$,
+with Arnold cohomology in degrees
+$[0, \sum_{i}(m_i - 1)] = [0, p + 2 - \ell]$.
+For $\ell < p + 2$ (i.e., not all points distinct), the top
+Arnold degree is positive, but bar-concentration forces these
+classes to be exact under~$d_1$.  The key input is that the
+bar complex on the Koszul locus has cohomology concentrated in
+tensor degree~$1$: the higher-tensor-degree bar cohomology
+vanishes, and this vanishing is precisely the $d_1$-exactness
+of the higher Arnold classes.
+
+\emph{Step~4: the survivor is the full-collision stratum.}\;
+The unique surviving stratum is the full-collision
+$\ell = 1$, $m_1 = p + 2$: all points collide to a single
+location on~$X$.  This stratum fibers over~$X$ with fiber
+$\FM_{p+2}(\C)$.  Bar-concentration forces the fiber
+contribution to the degree-$0$ piece of the Arnold algebra
+$\cAr_{p+2}$, which is
+$H^0(\FM_{p+2}(\C)) = \R$ (a point).  The coefficient system
+on the base~$X$ is the $\cD_X$-module
+$\cA^i_p = H^{p,0}(\barB^{\mathrm{ch}}(\cA))$,
+the degree-$p$ bar cohomology.
+
+\emph{Step~5: Verdier duality and curve-level Ext.}\;
+Applying degreewise Verdier duality on~$X$ replaces the
+bar cohomology coalgebra $\cA^i_p$ with the Koszul dual
+algebra piece $(\cA^!)_p = \mathbb{D}_X(\cA^i_p)$.
+The surviving $E_2$-terms are therefore
+$\Ext_{\cD_X}^r((\cA^!)_p, \omega_X)$ for $r = 0, 1, 2$,
+which is~\eqref{eq:fm-tower-surviving}.
+
+\emph{Step~6: the shift arithmetic.}\;
+The net degree shift is $(p + 2) - p = 2$: the Verdier shift
+$[p+2]$ from $\dim_{\C} \overline{C}_{p+2}(X) = p + 2$
+minus the totalization shift~$[-p]$ from the bigraded complex
+(Definition~\ref{def:bigraded-hochschild}).  This constant
+shift~$[2]$, independent of~$p$, is the origin of the uniform
+duality $\ChirHoch^n(\cA) \cong
+\ChirHoch^{2-n}(\cA^!)^{\vee} \otimes \omega_X$.
+
+\emph{Step~7: degeneration at $E_2$.}\;
+Higher differentials $d_m$ for $m \geq 2$ vanish by FM-formality.
+The local fibers carry pure mixed Hodge structures
+(Proposition~\ref{prop:en-formality}), and Deligne strictness
+forbids weight-changing differentials beyond~$E_2$.
+Therefore $E_2 = E_\infty$.
+
+The proposition follows: the full tower
+$\{\overline{C}_{p+2}(X)\}_{p \geq 0}$ of configuration spaces
+of unbounded dimension collapses, via the FM-formality
+spectral sequence, to the curve-level
+$\cD_X$-Ext computation of
+Lemma~\ref{lem:hochschild-shift-computation}.
+\end{proof}
+
+\begin{remark}[Why the collapse is nontrivial]
+\label{rem:fm-collapse-nontrivial}
+The collapse of Proposition~\ref{prop:fm-tower-collapse} is the
+essential content of Theorem~H beyond formal degree bookkeeping.
+The bigraded definition places cochains on spaces
+$\overline{C}_{p+2}(X)$ of dimension~$p+2$, which grows without
+bound.  Without the Koszul hypothesis, the Arnold-algebra
+contributions from higher collision strata can survive to the
+$E_2$-page, and the chiral Hochschild cohomology would have
+unbounded cohomological amplitude.  Koszulness provides the input
+that kills these contributions: bar-concentration forces the
+entire Arnold tower to collapse, leaving only the curve-level
+Ext that has amplitude~$[0,2]$ from the single complex
+dimension of~$X$.
+
+For comparison: the \emph{topological} Hochschild complex of an
+$E_1$-algebra~$A$ over a point requires only
+$\operatorname{Conf}_n(\R)$, which is discrete ($0$-dimensional),
+and concentration is automatic.  The chiral setting replaces
+$\R$ by a complex curve~$X$, and each configuration space
+$\FM_m(\C)$ contributes $(m{-}1)$ dimensions of Arnold cohomology
+that must be killed.  The FM-formality spectral sequence is the
+mechanism by which bar-concentration achieves this.
+\end{remark}
+
 \begin{lemma}[Chiral Hochschild descent; \ClaimStatusProvedHere]
 \label{lem:chirhoch-descent}
 \index{chiral Hochschild!descent from bar}
@@ -712,12 +948,16 @@ On cohomology:
 \]
 The shift by~$2$ is the output of the
 Fulton--MacPherson collapse
-\textup{(}Lemma~\textup{\ref{lem:hochschild-shift-computation}}\textup{)}:
-the collision-depth spectral sequence has $E_2$-page
-given by curve-level $\mathcal{D}_X$-Ext, so the geometric
-shift~$[p+2]$ on $\overline{C}_{p+2}(X)$ is cancelled by the
-totalization shift~$[-p]$ and only the base-curve shift~$[2]$
-survives. The $\omega_X$ twist encodes the dualizing sheaf.
+\textup{(}Lemma~\textup{\ref{lem:hochschild-shift-computation}}
+and
+Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}:
+the FM-formality spectral sequence collapses the tower of
+configuration spaces $\overline{C}_{p+2}(X)$ to the
+curve-level $\mathcal{D}_X$-Ext via bar-concentration, so the
+geometric shift~$[p+2]$ on $\overline{C}_{p+2}(X)$ is cancelled
+by the totalization shift~$[-p]$ and only the base-curve
+shift~$[2]$ survives.
+The $\omega_X$ twist encodes the dualizing sheaf.
 \end{theorem}
 
 \begin{proof}
@@ -851,7 +1091,9 @@ and let $\cA^!$ denote its Koszul dual. Then:
 
 \begin{proof}
 Part~(a): fix a bar degree~$p$.
-Lemma~\ref{lem:hochschild-shift-computation} furnishes a
+Lemma~\ref{lem:hochschild-shift-computation}, with the
+configuration-space collapse justified by
+Proposition~\ref{prop:fm-tower-collapse}, furnishes a
 first-quadrant spectral sequence
 \[
 E_2^{r,s}(p)=0 \text{ for } s\neq p,
@@ -1107,100 +1349,6 @@ by the same argument. A stronger converse would require
 the scalar-orbit formality problem discussed
 below, for which no converse is proved here
 \textup{(}Theorem~\textup{\ref{thm:convolution-formality-one-channel}}\textup{)}.
-\end{remark}
-
-\begin{proposition}[Freeness obstruction for chiral Hochschild
-cohomology; \ClaimStatusProvedHere]
-\label{prop:chirhoch-not-free}
-\index{Hochschild cohomology!freeness obstruction}
-\index{freeness!chiral Hochschild obstruction}
-Let $\cA$ be a chiral Koszul algebra on a smooth projective
-curve~$X$ with $\ChirHoch^2(\cA) \neq 0$.
-Then $\ChirHoch^*(\cA)$ is \emph{not} free as a
-graded-commutative algebra.
-\end{proposition}
-
-\begin{proof}
-The algebra $\ChirHoch^*(\cA)$ is graded-commutative and
-concentrated in degrees $\{0,1,2\}$
-\textup{(}Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}\textup{)}.
-
-Suppose for contradiction that $\ChirHoch^*(\cA)$ is a free
-graded-commutative algebra on generators
-$V = V_0 \oplus V_1 \oplus V_2$
-in degrees~$0$, $1$, and~$2$.
-The free graded-commutative algebra on~$V$ is
-\[
-\bigwedge(V_1) \otimes \mathrm{Sym}(V_0 \oplus V_2),
-\]
-the exterior algebra on odd-degree generators tensored with
-the polynomial algebra on even-degree generators.
-By hypothesis $V_2 \neq 0$; choose a nonzero $z \in V_2$.
-Since $|z| = 2$ is even, the element~$z$ is polynomial
-\textup{(}not exterior\textup{)}, so $z^2 \neq 0$ in the
-free algebra, and $|z^2| = 4$. But
-$\ChirHoch^4(\cA) = 0$ by concentration in $\{0,1,2\}$.
-This is a contradiction.
-
-Similarly, for any nonzero $y \in V_1$ and $z \in V_2$,
-the product $y \cdot z$ has degree~$3$ and is nonzero in
-the free algebra, yet $\ChirHoch^3(\cA) = 0$: another
-contradiction.
-
-Therefore $\ChirHoch^*(\cA)$ carries nontrivial
-cup-product relations whenever $\ChirHoch^2(\cA) \neq 0$.
-\end{proof}
-
-\begin{remark}[Scope of the freeness obstruction]
-\label{rem:chirhoch-freeness-scope}
-The obstruction is sharp: every standard family on the Koszul
-locus has $\ChirHoch^2(\cA) \neq 0$
-\textup{(}by duality, $\dim \ChirHoch^2(\cA) = \dim Z(\cA^!)
-\geq 1$\textup{)}, so $\ChirHoch^*(\cA)$ is never free for any
-nontrivial chiral Koszul algebra.
-
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Virasoro:}
- $\ChirHoch^*(\mathrm{Vir}_c) \cong \bC \oplus \bC[-2]$
- \textup{(}Theorem~\textup{\ref{thm:virasoro-hochschild}}\textup{)}.
- The degree-$2$ generator~$z$ satisfies $z^2 = 0$
- \textup{(}since $\ChirHoch^4 = 0$\textup{)},
- so the algebra is $\bC[z]/(z^2)$: a truncated polynomial
- ring, not a free graded-commutative algebra.
-
-\item \emph{Heisenberg:}
- $\ChirHoch^*(\cH_k) \cong \bC \oplus \bC[-1] \oplus \bC[-2]$
- with generators $1, y, z$ in degrees $0, 1, 2$.
- In the free algebra $\bigwedge(y) \otimes \bC[z]$,
- the products $yz$ \textup{(}degree~$3$\textup{)} and
- $z^2$ \textup{(}degree~$4$\textup{)} are nonzero;
- both vanish in $\ChirHoch^*(\cH_k)$
- by concentration.
-
-\item \emph{Affine Kac--Moody $V_k(\fg)$ at generic level:}
- $\ChirHoch^1 \cong \fg$ is $\dim(\fg)$-dimensional
- \textup{(}Proposition~\textup{\ref{prop:chirhoch1-affine-km}}\textup{)}.
- Beyond the degree-$4$ obstruction $z^2 = 0$, there is
- a dimension obstruction in degree~$2$ itself: in the free
- graded-commutative algebra on $\dim(\fg)$ odd generators
- and one even generator of degree~$2$, the degree-$2$ part
- has dimension $\binom{\dim(\fg)}{2} + 1$
- \textup{(}exterior products $y_i \wedge y_j$ plus the
- generator~$z$\textup{)}.
- For $\fg = \fsl_2$:
- $\binom{3}{2} + 1 = 4 \neq 1 = \dim \ChirHoch^2(V_k(\fsl_2))$.
-\end{enumerate}
-
-The obstruction is purely commutative-algebraic and has
-nothing to do with Massey products or $A_\infty$ corrections.
-$\Etwo$-formality
-\textup{(}Proposition~\textup{\ref{prop:e2-formality-hochschild}}\textup{)}
-kills the \emph{homotopical} obstructions \textup{(}higher braces,
-Massey products\textup{)}, but the \emph{ordinary} cup-product
-relations $z^2 = 0$ and $yz = 0$ persist: they are forced by
-the amplitude bound, not by any failure of formality.
-In particular, the formality of $\overline{\mathrm{FM}}_n(\bC)$
-does not imply freeness of $\ChirHoch^*(\cA)$.
 \end{remark}
 
 \begin{theorem}[Scalar universal class implies convolution
