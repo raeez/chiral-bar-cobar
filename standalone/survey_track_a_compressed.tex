@@ -1,6 +1,107 @@
+\documentclass[11pt]{report}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{evidence}[theorem]{Evidence}
+\newtheorem{computation}[theorem]{Computation}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cG}{\mathcal{G}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cY}{\mathcal{Y}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\FM}{\overline{C}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\gAmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\OPE}{\mathrm{OPE}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\En}{E_n}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\Convinf}{\mathrm{Conv}_\infty}
+\providecommand{\Convstr}{\mathrm{Conv}_{\mathrm{str}}}
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\Dg}{\mathrm{dg}}
+\providecommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch,top}}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\Bbbk}{\mathbb{k}}
+\providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Res}{\operatorname{Res}}
+
+\providecommand{\ClaimStatusProvedHere}{\textsuperscript{\textsc{[ph]}}}
+\providecommand{\ClaimStatusProvedElsewhere}{\textsuperscript{\textsc{[pe]}}}
+\providecommand{\ClaimStatusConjectured}{\textsuperscript{\textsc{[cj]}}}
+\providecommand{\ClaimStatusHeuristic}{\textsuperscript{\textsc{[he]}}}
+\providecommand{\ClaimStatusConditional}{\textsuperscript{\textsc{[cd]}}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Aut}{Aut}
+
+\numberwithin{equation}{section}
+
+\makeatletter
+\let\svy@oldref\ref
+\renewcommand{\ref}[1]{%
+ \@ifundefined{r@#1}{\textit{full monograph}}{\svy@oldref{#1}}%
+}
+\makeatother
+
+\begin{document}
+
 %% TRACK A COMPRESSED: sections 1-6 and 9 of the Witten two-track restructure. Merge pass pending.
 
-\providecommand{\cZ}{\mathcal{Z}}
+\chapter*{Track A: The Bar Construction and the Genus Tower}
+\addcontentsline{toc}{chapter}{Track A}
 
 % ====================================================================
 \section*{1.\quad The bar construction on algebraic curves}
@@ -503,7 +604,7 @@ with the general term
 $\kappa\cdot\tfrac{2^{2g-1}-1}{2^{2g-1}}\cdot\tfrac{|B_{2g}|}{(2g)!}$.
 Each of these is the scalar-lane projection; for multi-weight
 families at $g\ge 2$, add $\delta F_g^{\mathrm{cross}}$. Verify
-$F_1=\kappa/24$ as sanity check$, not $1/(2\pi)$).
+$F_1=\kappa/24$ as sanity check, not $1/(2\pi)$).
 
 The scalar $\kappa(\cA)$ is only the leading term. The bar complex
 carries higher-degree data: a universal Maurer--Cartan element
@@ -877,13 +978,13 @@ structure is needed for transfer, formality, and gauge equivalence.
 
 In log-FM coordinates,
 \[
-\mathrm B^{\log}_{\mathrm{mod}}(\cA)(g,n)=\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}\left(\bigotimes_{v\in V(\Gamma)}\bar B^{\mathrm{ch}}(A^{\mathrm{ch}}_\infty;\operatorname{In}(v))\otimes C_\bullet(\mathrm{FM}^{\log}_\Gamma)\otimes\orline{E_{\mathrm{int}}(\Gamma)}\right)_{\!\operatorname{Aut}(\Gamma)}.
+\mathrm B^{\log}_{\mathrm{mod}}(\cA)(g,n)=\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}\left(\bigotimes_{v\in V(\Gamma)}\bar B^{\mathrm{ch}}(A^{\mathrm{ch}}_\infty;\operatorname{In}(v))\otimes C_\bullet(\mathrm{FM}^{\log}_\Gamma)\otimes\overline{E_{\mathrm{int}}(\Gamma)}\right)_{\!\operatorname{Aut}(\Gamma)}.
 \]
 The ingredients: at each vertex the transferred
 $\mathrm{Ch}_\infty$-bar contribution on its incoming half-edges;
 at each internal edge the propagator $P_\cA=H_\cA^{-1}$; the geometric
 factor $C_\bullet(\mathrm{FM}^{\log}_\Gamma)$; the orientation line
-$\orline{E_{\mathrm{int}}(\Gamma)}=\det(\Bbbk E(\Gamma))\otimes\det(H_1(\Gamma;\Bbbk))^{-1}$;
+$\overline{E_{\mathrm{int}}(\Gamma)}=\det(\Bbbk E(\Gamma))\otimes\det(H_1(\Gamma;\Bbbk))^{-1}$;
 the automorphism quotient.
 
 \subsection*{3.9.\enspace The six-component differential}
@@ -2352,3 +2453,5 @@ affine algebras, for C by contact decoupling. For class M (Virasoro,
 $\mathcal W_N$) the identification holds on bar cohomology but fails
 at the chain level: the harmonic propagator produces a nonvanishing
 quartic obstruction, so a coderived reformulation is needed.
+
+\end{document}

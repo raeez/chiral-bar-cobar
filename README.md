@@ -57,8 +57,8 @@ Six objects built from the bar complex B(A), connected by three functors:
 | Anti-patterns | AP1-AP185 + AAP1-18 + RS-1..20 + FM1-FM34 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
-| Standalone papers | 6 (incl. chiral Yangians 115pp, chiral Chern-Weil 24pp) |
-| Standalone papers | 28 building PDFs |
+| Standalone papers | 8 publishable (incl. chiral Yangians 115pp, chiral Chern-Weil 24pp, survey tracks A/B) |
+| Standalone papers | 32 building PDFs (all pass; 0 failures) |
 
 ## Build
 
@@ -97,5 +97,5 @@ chiral-bar-cobar/
   compute/
     lib/                    1,313 verification engines
     tests/                  1,379 test files (~120K tests)
-  standalone/               28 extracted standalone papers
+  standalone/               36 standalone papers (32 in build target, all pass)
 ```
