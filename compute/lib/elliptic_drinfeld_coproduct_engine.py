@@ -747,55 +747,40 @@ def verify_trigonometric_limit(u: float, gamma: float,
     }
 
 
-def verify_rational_limit(u: float, gamma_values: list = None,
-                          m: float = 1e-8) -> Dict[str, Any]:
-    r"""Verify degeneration to the rational (XXX) R-matrix as gamma -> 0.
+def verify_rational_limit(u: float, gamma: float = 0.25,
+                          eps_values: list = None,
+                          m: float = 1e-14) -> Dict[str, Any]:
+    r"""Verify degeneration to the rational (XXX) Yang R-matrix.
 
-    At m ~ 0 (trigonometric regime), the R-matrix has:
-        a = sin(pi*(gamma+u)/2), b = sin(pi*u/2), c = sin(pi*gamma/2), d ~ 0.
+    The rational limit requires rescaling BOTH the spectral and crossing
+    parameters to zero simultaneously.  At m ~ 0 (six-vertex regime):
 
-    As gamma -> 0:
-        R(u) / c = R(u) / sin(pi*gamma/2) -> (pi*u/2)/(pi*gamma/2) * I + P
-                                             = (u/gamma) * I + P
+        R(eps*u, eps*gamma, m) / (pi*eps/2) -> u*I + gamma*P    as eps -> 0
 
-    after using sin(pi*(gamma+u)/2)/sin(pi*gamma/2) -> 1 + (u/gamma)*cos/sin...
-    More precisely, R(u)/c has the form:
-        a/c = sin(pi*(gamma+u)/2)/sin(pi*gamma/2) -> 1 + pi*u*cos(pi*gamma/2)/(2*sin(pi*gamma/2))
-        b/c = sin(pi*u/2)/sin(pi*gamma/2) -> (pi*u/2)/(pi*gamma/2) = u/gamma
-
-    So R(u)/c -> diag(1+u/gamma, u/gamma, u/gamma, 1+u/gamma) + off-diag c/c=1 terms.
-    This gives: (u/gamma)*I + P (the Yang R-matrix).
+    since sn(K*eps*v, m) ~ sin(pi*eps*v/2) ~ pi*eps*v/2 for small eps.
+    The convergence rate is O(eps^2).
     """
-    if gamma_values is None:
-        gamma_values = [0.5, 0.1, 0.01, 0.001, 0.0001]
+    if eps_values is None:
+        eps_values = [1.0, 0.5, 0.1, 0.01, 0.001]
 
     P = np.array([[1, 0, 0, 0], [0, 0, 1, 0],
                   [0, 1, 0, 0], [0, 0, 0, 1]], dtype=complex)
     I4 = np.eye(4, dtype=complex)
+    R_yang = u * I4 + gamma * P
 
     errors = []
-    for g in gamma_values:
-        R_g = baxter_belavin_R(u, g, m)
-        # c = sn(K*gamma, m) ~ sin(pi*gamma/2) for small m
-        K_val = ellipk(m)
-        sn_g, _, _, _ = ellipj(K_val * g, m)
-        c_val = complex(sn_g)
-        if abs(c_val) < 1e-15:
-            errors.append(float('inf'))
-            continue
-        # Normalize by c and compare to (u/gamma)*I + P
-        R_norm = R_g / c_val
-        R_yang = (u / g) * I4 + P
-        err = np.linalg.norm(R_norm - R_yang) / max(np.linalg.norm(R_yang), 1e-10)
+    for eps in eps_values:
+        R_eps = baxter_belavin_R(eps * u, eps * gamma, m)
+        R_rescaled = R_eps / (PI * eps / 2.0)
+        err = np.linalg.norm(R_rescaled - R_yang) / max(np.linalg.norm(R_yang), 1e-10)
         errors.append(float(err))
 
-    # The convergence rate is O(gamma^2) (next-order correction in the Taylor expansion).
     return {
-        'gamma_values': gamma_values,
+        'eps_values': eps_values,
         'relative_errors': errors,
         'monotone_decreasing': all(errors[i] >= errors[i + 1] - 1e-12
                                     for i in range(len(errors) - 1)),
-        'passed': errors[-1] < 1e-3 and all(
+        'passed': errors[-1] < 1e-4 and all(
             errors[i] >= errors[i + 1] - 1e-12
             for i in range(len(errors) - 1)),
     }
