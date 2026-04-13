@@ -5337,55 +5337,53 @@ here by OPE residues on configuration spaces.
 \end{theorem}
 
 \begin{proof}
-By Remark~\ref{rem:comparison-geometric-hoch}, the geometric
-chiral Hochschild complex of this chapter is identified with the algebraic
-cochain complex $C^\bullet_{\mathrm{ch}}(A,A)$ of
+Choose homogeneous cocycle representatives, still denoted
+$f,g,h$, in the geometric chiral Hochschild complex. By
+Remark~\ref{rem:comparison-geometric-hoch}, this geometric
+complex is identified with the algebraic cochain complex
+$C^\bullet_{\mathrm{ch}}(A,A)$ of
 Definition~\ref{def:chiral-hochschild-cochain-brace}. In that
-algebraic model, the single brace $f\{g\}$ is the pre-Lie
-insertion of Example~\ref{ex:single-brace-chiral}, and the
-Gerstenhaber bracket is its antisymmetrization
-\textup{(}Definition~\textup{\ref{def:gerstenhaber-bracket-chiral}}\textup{)}:
+model the single brace $f\{g\}$ is the one-fold insertion of
+Example~\ref{ex:single-brace-chiral}, and
+Definition~\ref{def:gerstenhaber-bracket-chiral} defines
 \[
 [f,g]_{\mathrm G}
 =
 f\{g\}
 -(-1)^{(|f|-1)(|g|-1)}g\{f\}.
 \]
-Construction~\ref{const:gerstenhaber-bracket} is the geometric
-realization of the same operation: each residue
-$f \circ_i g$ inserts the $g$-configuration into the $i$-th marked
-point of the $f$-configuration, so the sum over insertion places is
-the geometric avatar of the single brace $f\{g\}$. We therefore
-write
+Construction~\ref{const:gerstenhaber-bracket} gives the same
+operation geometrically:
 \[
-f \circ g = f\{g\}
+f \circ g
+\;:=\;
+\sum_{i=1}^{p+1} (-1)^{(q-1)(i-1)}\, f \circ_i g,
 \]
-under the comparison of Remark~\ref{rem:comparison-geometric-hoch},
-and the displayed formula above is exactly the bracket coming from
-Construction~\ref{const:gerstenhaber-bracket}.
+where $f \circ_i g$ is the residue along the boundary divisor where
+the output point of the $g$-configuration collides with the
+$i$-th marked point of the $f$-configuration. Under the
+comparison of Remark~\ref{rem:comparison-geometric-hoch}, each
+residue term $f \circ_i g$ is the $i$-th chiral insertion, so
+$f \circ g = f\{g\}$. Therefore the residue bracket of
+Construction~\ref{const:gerstenhaber-bracket} is exactly the
+antisymmetrization of the single brace.
 
-The graded Jacobi identity follows from the pre-Lie identity for
-the single insertion. Algebraically this is
-Proposition~\ref{prop:pre-lie-chiral}; geometrically it is the
-statement that the two ways of performing successive insertions are
-the two boundary decompositions of the same codimension-$1$ face in
-the Fulton--MacPherson space $\FM_3(\bC)$. Associativity of the
-chiral operadic composition on these boundary strata gives
+Proposition~\ref{prop:pre-lie-chiral} gives the pre-Lie identity
+for the single brace. Rewriting it in the residue notation yields
 \[
 (f \circ g)\circ h - f \circ (g \circ h)
 =
 (-1)^{(|g|-1)(|h|-1)}
-\bigl((f \circ h)\circ g - f \circ (h \circ g)\bigr),
+\bigl((f \circ h)\circ g - f \circ (h \circ g)\bigr).
 \]
-which is the Stasheff-type boundary relation for triple insertion.
 Antisymmetrizing a pre-Lie product gives a graded Lie bracket, so
-$[-,-]_{\mathrm G}$ satisfies graded skew-symmetry and Jacobi on
-cochains.
+$[-,-]_{\mathrm G}$ is graded skew-symmetric and satisfies the
+graded Jacobi identity on cochains.
 
-Next, the chiral Hochschild differential is $\delta=[m,-]$ on
-$C^\bullet_{\mathrm{ch}}(A,A)$.
-Theorem~\ref{thm:brace-dg-algebra} shows that $\delta$ is a
-derivation of the brace operations; hence
+The chiral Hochschild differential is $\delta=[m,-]$ on
+$C^\bullet_{\mathrm{ch}}(A,A)$. By
+Theorem~\ref{thm:brace-dg-algebra}, $\delta$ is a derivation of the
+brace operations. Since $f \circ g = f\{g\}$, one obtains
 \[
 \delta [f,g]_{\mathrm G}
 =
@@ -5393,29 +5391,58 @@ derivation of the brace operations; hence
 +
 (-1)^{|f|-1}[f,\delta g]_{\mathrm G}.
 \]
-Therefore the bracket descends to cohomology.
+Hence the bracket descends to cohomology.
 
-For compatibility with the cup product, use the universal local
-chiral Swiss-cheese pair of
-Theorem~\ref{thm:chiral-deligne-tamarkin}. In that operadic model,
-the cup product is the binary closed operation and the single brace
-is the boundary insertion operation obtained from the same
-$\mathsf{SC}^{\mathrm{ch,top}}$-structure. The mixed codimension-$1$
-boundary relation in the Swiss-cheese operad is exactly the
-brace-cup compatibility, so on cochains one has
+For the Leibniz rule, use the same brace dg algebra together with
+the cup product of Remark~\ref{rem:cup-product}. The proof of
+Corollary~\ref{cor:gerstenhaber-cohomology} shows that the brace
+identity~\textup{(}B1\textup{)} gives
 \[
 [f, g \smile h]_{\mathrm G}
 =
 [f,g]_{\mathrm G}\smile h
 +
-(-1)^{(|f|-1)|g|}\, g \smile [f,h]_{\mathrm G}.
+(-1)^{(|f|-1)|g|}\, g \smile [f,h]_{\mathrm G}
 \]
-Since both the bracket and the cup product descend through the
-differential, the same identity holds on cohomology. This is the
-Gerstenhaber compatibility recorded abstractly in
-Corollary~\ref{cor:gerstenhaber-cohomology}. Hence
-$\ChirHoch^\bullet(\mathcal{A})$ is a Gerstenhaber algebra with the
-stated residue bracket.
+on cochains, hence on cohomology. Equivalently,
+Theorem~\ref{thm:chiral-deligne-tamarkin} places the pair
+$(C^\bullet_{\mathrm{ch}}(A,A),A)$, whose cohomology is
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{A})$, in the local chiral
+Swiss-cheese operad, so the cup product and the single brace are
+the closed and mixed operations on the derived-center pair, not on
+the bar complex.
+
+For the Virasoro check, regard the stress tensor $T$ as the unary
+cochain given by insertion of the Virasoro field. Its OPE is
+\[
+T(z)T(w)
+\sim
+\frac{c/2}{(z-w)^4}
++
+\frac{2T(w)}{(z-w)^2}
++
+\frac{\partial T(w)}{z-w}.
+\]
+The residue defining the single insertion therefore extracts only
+the simple pole:
+\[
+T \circ T
+=
+\operatorname{Res}_{z \to w} T(z)T(w)
+=
+\partial T.
+\]
+The opposite insertion gives the same unary cochain, so
+$[T,T]_{\mathrm G} = 0$. Passing to cohomology, the degree-$2$
+Virasoro deformation class $\Theta$ of
+Proposition~\ref{prop:derived-center-explicit} also satisfies
+$[\Theta,\Theta]_{\mathrm G} = 0$ because it lands in
+$\ChirHoch^3(\mathrm{Vir}_c)=0$.
+
+Therefore the residue construction defines a degree-$(-1)$
+Gerstenhaber bracket on
+$\ChirHoch^\bullet(\mathcal{A}) = Z^{\mathrm{der}}_{\mathrm{ch}}
+(\mathcal{A})$.
 \end{proof}
 
 \begin{construction}[Geometric realization of bracket]\label{const:gerstenhaber-bracket}
@@ -5476,11 +5503,11 @@ Gerstenhaber bracket.
 \begin{example}[Gerstenhaber bracket for Heisenberg]\label{ex:gerstenhaber-heisenberg}
 For $\mathcal{B}$ (Heisenberg), $\ChirHoch^2 = \mathbb{C} \cdot [k]$ (level class).
 
-The bracket:
-\[[[k], [k]] = [k, k]\]
-
-must have degree $2 + 2 - 1 = 3$. But $\ChirHoch^3(\mathcal{B}) = 0$, so:
-\[[[k], [k]] = 0\]
+The bracket $[[k],[k]]_{\mathrm G}$ must have degree
+$2 + 2 - 1 = 3$. But $\ChirHoch^3(\mathcal{B}) = 0$, so:
+\[
+[[k],[k]]_{\mathrm G} = 0.
+\]
 
 This reflects that the level is a \emph{central element} in the Lie algebra structure
 (it commutes with everything).
