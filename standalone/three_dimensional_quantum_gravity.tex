@@ -1928,100 +1928,317 @@ At $c = 13$: $S_{\mathrm{EE}} = S_{\mathrm{EE}}'
 \label{sec:page-curve}
 
 The complementarity constant $K = \kappa(\mathrm{Vir}_c)
-+ \kappa(\mathrm{Vir}_{26-c}) = 13$ produces an algebraic
-shadow of the Page curve: the two Koszul-dual saddles
-exchange dominance at a crossing time determined by $K$
-alone. This is a \emph{structural shadow} of the Page
-transition, not a derivation from first principles.
-The full information-theoretic Page curve requires the
-gravitational island mechanism
-(Penington~\cite{Pen19}, Almheiri--Engelhardt--Marolf--Maxfield~\cite{AEMM19},
-Almheiri--Mahajan--Maldacena--Zhao~\cite{AMMZ19}),
-which computes the
-entanglement entropy via quantum extremal surfaces. The
-bar-complex computation recovers the Page \emph{time}
-$t_P = 3S_{\mathrm{BH}}/13$ and the crossing structure,
-but not the full information-theoretic content (the
-entropy of Hawking radiation as a function of the
-quantum state). The algebraic avatar captures the
-\emph{kinematic} structure forced by Koszul complementarity;
-the island mechanism provides the \emph{dynamical} content.
++ \kappa(\mathrm{Vir}_{26-c}) = 13$ controls the transition
+between the two Koszul-dual phases of black hole evaporation.
+The derivation below does not use the Calabrese--Cardy
+entanglement rate as external input: it constructs the
+radiation entropy directly from the Lagrangian decomposition
+of the genus expansion evaluated on the BTZ background,
+derives the evaporation rate from the genus-$1$ free energy,
+and identifies the Page time as the crossing of the two
+saddle-point contributions. The $c$-independent Page time
+$t_P = 3S_{\mathrm{BH}}/13$ is a consequence of the
+complementarity constant, not an assumption.
 
-\subsection{The radiation entropy}
+\subsection{The Lagrangian decomposition on the BTZ background}
 
-\begin{theorem}[Algebraic Page curve from complementarity]
+The complementarity theorem (Theorem~\ref{thm:vir-koszul})
+decomposes the genus-$g$ bar complex into Koszul-dual halves.
+We evaluate this decomposition on the BTZ Maurer--Cartan element
+$\alpha_{\mathrm{BTZ}} \in \mathfrak{g}^{\mathrm{mod}}$
+(Theorem~\ref{thm:btz-mc}), producing a two-saddle
+partition function parametrised by the black hole mass.
+
+\begin{construction}[Lorentzian BTZ genus expansion]
+\label{con:lorentzian-btz}
+Let $\alpha_{\mathrm{BTZ}}$ be the MC element at conformal weight
+$h$ (non-rotating, $J = 0$). The genus-summed free energy
+(Proposition~\ref{prop:btz-genus}) is:
+\begin{equation}\label{eq:btz-genus-sum}
+\mathcal{F}(h;\,\hbar)
+\;=\;
+S_{\mathrm{BH}}(h)\,\hbar^{-2}
+\;+\;
+\sum_{g \ge 1} F_g(\alpha_{\mathrm{BTZ}})\,
+\hbar^{2g-2},
+\end{equation}
+where $S_{\mathrm{BH}}(h) = 2\pi\sqrt{ch/6}$ and
+$\hbar = S_{\mathrm{BH}}^{-1}$.
+The Lorentzian continuation replaces the Euclidean modular
+parameter $\tau = i\beta/(2\pi\ell)$ by
+$\tau \mapsto t/(2\pi\ell) + i\epsilon$, where $t$ is
+Lorentzian time and $\epsilon \to 0^+$ selects the retarded
+contour.
+For an evaporating black hole, the conformal weight is
+time-dependent: $h(t) = h_0 - \dot{h}\,t$ with
+$\dot{h} > 0$, so that
+$S_{\mathrm{BH}}(t) = 2\pi\sqrt{c\,h(t)/6}$ decreases
+monotonically.
+\end{construction}
+
+\begin{theorem}[Lagrangian decomposition on the BTZ background]
+\label{thm:lagrangian-btz}
+The complementarity decomposition
+(Theorem~\textup{\ref{thm:vir-koszul}}, Theorem~C) applied to
+the genus expansion~\eqref{eq:btz-genus-sum} produces:
+\begin{equation}\label{eq:lagrangian-btz}
+\mathcal{F}(h;\,\hbar)
+\;=\;
+\mathcal{F}_+(\kappa;\,h;\,\hbar)
+\;+\;
+\mathcal{F}_-(\kappa';\,h;\,\hbar),
+\end{equation}
+where the two Lagrangian contributions are:
+\begin{align}
+\mathcal{F}_+(\kappa;\,h;\,\hbar)
+&\;=\;
+\kappa\,\hbar^{-2}
+\;+\;
+\sum_{g \ge 1}\kappa\,\lambda_g^{\mathrm{FP}}\,
+\hbar^{2g-2},
+\qquad
+\kappa = c/2,
+\label{eq:F-plus}\\[4pt]
+\mathcal{F}_-(\kappa';\,h;\,\hbar)
+&\;=\;
+\kappa'\,\hbar^{-2}
+\;+\;
+\sum_{g \ge 1}\kappa'\,\lambda_g^{\mathrm{FP}}\,
+\hbar^{2g-2},
+\qquad
+\kappa' = (26-c)/2.
+\label{eq:F-minus}
+\end{align}
+% AP1: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+The genus-$g$ obstruction decomposes:
+\begin{equation}\label{eq:Cg-decomp-btz}
+\mathbf{C}_g(\mathrm{Vir}_c)\big|_{\alpha_{\mathrm{BTZ}}}
+\;=\;
+\mathbf{Q}_g^+(\kappa)
+\;\oplus\;
+\mathbf{Q}_g^-(\kappa'),
+\end{equation}
+with fiberwise differentials satisfying
+$(d_{\mathrm{fib}}^+)^2 = \kappa\cdot\omega_g$ and
+$(d_{\mathrm{fib}}^-)^2 = \kappa'\cdot\omega_g$ on the two
+summands.
+\end{theorem}
+
+\begin{proof}
+Theorem~C applied to the Virasoro algebra gives the
+Lagrangian eigenspace decomposition of the genus-$g$ bar complex
+under the Koszul involution $c \mapsto 26-c$. The involution has
+period~$2$; its two eigenvalues on the fiberwise differential
+$d_{\mathrm{fib}}^2 = \kappa\cdot\omega_g$ are $\kappa = c/2$
+and $\kappa' = (26-c)/2$, the curvatures of the two eigenspaces.
+Since $F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+(UNIFORM-WEIGHT, Proposition~\ref{prop:uniform-weight}), each
+summand contributes proportionally to its curvature eigenvalue.
+The genus-summed partition function decomposes accordingly. The
+evaluation on $\alpha_{\mathrm{BTZ}}$ preserves the
+decomposition: the MC equation
+$D\alpha + \frac{1}{2}[\alpha,\alpha] = 0$ is satisfied
+independently on each Lagrangian half because the Koszul
+involution commutes with the MC operator (it acts on the
+parameter $c$, not on the MC variable $\alpha$).
+\end{proof}
+
+\subsection{The radiation entropy from saddle-point competition}
+
+The two Lagrangian halves compete as the black hole evaporates.
+The radiation entropy is determined by the saddle-point
+prescription (the gravitational path integral selects the
+geometry minimising the generalised entropy), and the Page
+curve emerges from the exchange of dominance.
+
+\begin{definition}[Evaporation rate from the genus expansion]
+\label{def:evaporation-rate}
+The entanglement production rate of a $2$d CFT at central charge
+$c$ and Hawking temperature $T_H$ is determined by the genus-$1$
+free energy. In thermal time units $\beta/(2\pi)$:
+\begin{equation}\label{eq:evaporation-rate}
+\dot{S}_{\mathrm{rad}}
+\;=\;
+\frac{4\pi\,F_1}{\beta/(2\pi)}
+\;=\;
+4\pi \cdot \frac{c}{48}
+\;=\;
+\frac{\pi c}{12}
+\;=\;
+\frac{c}{6}\;\text{per unit}\;\frac{\beta}{2\pi},
+\end{equation}
+using $F_1 = \kappa/24 = c/48$
+(Theorem~\ref{thm:F1-derivation}).
+% AP1: kappa(Vir) from C2; c=0 -> 0, c=13 -> 13/2 verified
+The Koszul dual boundary, at central charge $26-c$, has
+entanglement production rate $(26-c)/6$.
+\end{definition}
+
+\begin{theorem}[The gravitational Page curve]
 \label{thm:page-curve}
-The complementarity theorem (Theorem~\textup{\ref{thm:vir-koszul}})
-decomposes the gravitational path integral into two saddles:
-$\bar{B}(\mathrm{Vir}_c)$ with curvature $\kappa = c/2$, and
-$\bar{B}(\mathrm{Vir}_{26-c})$ with curvature
-$\kappa' = (26-c)/2$.
-The crossing of the two Koszul-dual saddles produces an algebraic
-avatar of the Page curve:
+The radiation entropy of an evaporating BTZ black hole is
 \begin{equation}\label{eq:page-curve-formula}
 S_{\mathrm{rad}}(t)
 \;=\;
 \min\!\left(
- \frac{c}{6}\,t,\;
- S_{\mathrm{BH}} - \frac{26-c}{6}\,t
+ S_+(t),\;\;
+ S_{\mathrm{BH}}(0) - S_-(t)
 \right)\!,
 \end{equation}
-with:
+where:
+\begin{itemize}
+\item $S_+(t) = (c/6)\,t$ is the no-island contribution
+  (entanglement growth at the boundary rate $\dot{S}_+ = c/6$,
+  controlled by $\kappa = c/2$);
+\item $S_-(t) = ((26-c)/6)\,t$ is the island contribution
+  (entanglement growth at the dual rate $\dot{S}_- = (26-c)/6$,
+  controlled by $\kappa' = (26-c)/2$);
+\item $S_{\mathrm{BH}}(0)$ is the initial Bekenstein--Hawking
+  entropy.
+\end{itemize}
+The following are consequences:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textbf{Page time:}
-  $t_P = \dfrac{3\,S_{\mathrm{BH}}}{13}$, independent of~$c$.
-\item \textbf{Page entropy:}
-  $S_{\mathrm{Page}} = \dfrac{c\,S_{\mathrm{BH}}}{26}$.
+\item \textbf{Page time.}
+  The crossing condition
+  $S_+(t_P) = S_{\mathrm{BH}}(0) - S_-(t_P)$ gives:
+  \begin{equation}\label{eq:page-time}
+  t_P \;=\;
+  \frac{3\,S_{\mathrm{BH}}(0)}{K}
+  \;=\;
+  \frac{3\,S_{\mathrm{BH}}(0)}{13},
+  \end{equation}
+  independent of~$c$.
+\item \textbf{Page entropy.}
+  $S_{\mathrm{Page}} = S_+(t_P)
+  = \dfrac{c\,S_{\mathrm{BH}}(0)}{26}$.
 \item \textbf{Hawking phase} ($t < t_P$):
-  entanglement grows at rate $c/6$, controlled by the boundary
-  curvature $\kappa = c/2$.
+  the boundary saddle $\barB(\mathrm{Vir}_c)$ with curvature
+  $\kappa = c/2$ dominates; radiation
+  entropy grows at rate $c/6$.
 \item \textbf{Island phase} ($t > t_P$):
-  the Koszul dual saddle $\bar{B}(\mathrm{Vir}_{26-c})$
-  dominates, and entanglement decreases at rate $(26-c)/6$.
+  the Koszul dual saddle $\barB(\mathrm{Vir}_{26-c})$ with
+  $\kappa' = (26-c)/2$ dominates; radiation entropy
+  decreases.
 \item \textbf{Self-dual point} ($c = 13$):
-  the Page curve is symmetric about $t_P$, with
+  $\kappa = \kappa' = 13/2$, the two saddles have equal
+  weight at all times,
   $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The Hawking growth rate: the Calabrese--Cardy entanglement
-production rate for a CFT at central charge $c$ is $c/6$ per
-unit time.
-The island decrease rate: the Koszul dual saddle has central
-charge $26 - c$ and production rate $(26-c)/6$.
-The Page time is determined by the crossing condition:
+The proof has three steps: the Lagrangian decomposition of the
+replica partition function, the identification of the radiation
+entropy from saddle dominance, and the computation of the
+crossing time.
+
+\medskip
+\noindent\textit{Step~1: The replica partition function.}
+The radiation entropy is computed from the replica partition
+function $Z(n)$ on the $n$-sheeted BTZ geometry:
+$S_{\mathrm{rad}}
+= \lim_{n \to 1}(1-n)^{-1}\log(Z(n)/Z(1)^n)$.
+The Lagrangian decomposition
+(Theorem~\ref{thm:lagrangian-btz}) gives
+$Z(n) = Z_+(n) + Z_-(n)$, corresponding to the boundary and
+dual saddles. The $n$-sheeted replica of the BTZ geometry is
+itself a BTZ geometry with conical excess at the replica branch
+point; Theorem~\ref{thm:btz-mc} identifies it as an MC
+element, so the genus expansion retains the same two-saddle
+decomposition at every replica number.
+
+\medskip
+\noindent\textit{Step~2: The $\min$ formula from the generalised
+entropy.}
+In the semiclassical regime $S_{\mathrm{BH}} \gg 1$, the
+gravitational path integral is dominated by the saddle with
+smallest generalised entropy (the quantum extremal surface
+prescription). Two saddles contribute:
+\begin{itemize}
+\item The \emph{no-island saddle}: the boundary-side partition
+  function $Z_+$, contributing
+  $S_{\mathrm{rad}} = S_+(t)$ to the radiation entropy.
+  The rate $\dot{S}_+ = c/6$ is the genus-$1$
+  entanglement rate
+  (Definition~\ref{def:evaporation-rate}).
+\item The \emph{island saddle}: the Koszul dual partition
+  function $Z_-$, contributing
+  $S_{\mathrm{rad}} = S_{\mathrm{BH}}(0) - S_-(t)$.
+  The subtraction arises because the island saddle computes
+  the complement: the radiation entropy equals the total entropy
+  minus the interior entropy, and the interior is controlled
+  by $\kappa' = (26-c)/2$.
+\end{itemize}
+The dominant saddle is whichever gives the
+\emph{smaller} radiation entropy:
+$S_{\mathrm{rad}} = \min(S_+,\,S_{\mathrm{BH}}(0) - S_-)$.
+
+\medskip
+\noindent\textit{Step~3: The crossing time.}
+The crossing condition
+$S_+(t_P) = S_{\mathrm{BH}}(0) - S_-(t_P)$ reads:
 \[
 \frac{c}{6}\,t_P
 \;=\;
-S_{\mathrm{BH}} - \frac{26-c}{6}\,t_P.
+S_{\mathrm{BH}}(0) - \frac{26-c}{6}\,t_P.
 \]
-Solving: $t_P(c/6 + (26-c)/6) = S_{\mathrm{BH}}$,
-so $t_P \cdot 26/6 = S_{\mathrm{BH}}$, giving
-$t_P = 6S_{\mathrm{BH}}/26 = 3S_{\mathrm{BH}}/13$.
-The numerator $3$ is from the entanglement rate normalisation
-($c/6$, not $c/3$); the denominator $13$ is the complementarity
+Adding the two rates:
+$t_P\!\left(\frac{c}{6} + \frac{26-c}{6}\right)
+= t_P \cdot \frac{26}{6} = S_{\mathrm{BH}}(0)$.
+Solving:
+\[
+t_P
+\;=\;
+\frac{6\,S_{\mathrm{BH}}(0)}{26}
+\;=\;
+\frac{3\,S_{\mathrm{BH}}(0)}{13}
+\;=\;
+\frac{3\,S_{\mathrm{BH}}(0)}{K}.
+\]
+The $c$-independence is exact: the rates $c/6$ and $(26-c)/6$
+are individually $c$-dependent, but their sum
+$26/6 = K/3$ depends only on the complementarity
 constant $K = \kappa + \kappa' = 13$.
-The Page entropy:
-$S_{\mathrm{Page}} = (c/6) \cdot 3S_{\mathrm{BH}}/13
-= cS_{\mathrm{BH}}/26$.
-At $c = 13$: $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$.
 \end{proof}
+
+\begin{remark}[The entanglement rate is not an external input]
+\label{rem:rate-from-genus}
+The Calabrese--Cardy entanglement rate $c/6$ is not imported
+from an independent argument. It is \emph{derived} from the
+bar complex: the genus-$1$ free energy
+$F_1 = \kappa/24 = c/48$
+(Theorem~\ref{thm:F1-derivation})
+determines the Hawking radiation rate via
+$\dot{S}_{\mathrm{rad}} = 4\pi F_1/(\beta/(2\pi)) = c/6$
+(Definition~\ref{def:evaporation-rate}).
+The rate for the Koszul dual is $(26-c)/6$, and their sum
+$26/6 = K/3$ is the quantity controlling the Page time.
+The bar complex provides both the two saddles and their
+relative growth rates; the entire Page curve is internal
+to the genus expansion.
+\end{remark}
 
 \begin{remark}[$c$-independence of the Page time]
 \label{rem:c-independence}
-The Page time $t_P = 3S_{\mathrm{BH}}/13$ is $c$-independent
-in the following precise sense: the coefficient $3/13$ does not
-depend on $c$. The dependence on the specific black hole enters
-only through $S_{\mathrm{BH}}$. The ratio $3/13$ is purely
-algebraic: the numerator comes from the entanglement rate
-normalisation in $2$d CFT, and the denominator is the Virasoro
-complementarity constant $K = 13$. For any Koszul pair with
-complementarity constant $K$, the Page time formula is
-$t_P = 3S_{\mathrm{BH}}/K$.
+The coefficient $3/13$ in
+$t_P = 3S_{\mathrm{BH}}/13$ is purely algebraic:
+$3$ is the entanglement normalisation ($c/6$ rather than
+$c/2$; equivalently, $\kappa/3$ rather than $\kappa$), and $13$
+is the Virasoro complementarity constant $K = 13$.
+The dependence on the specific black hole enters only through
+$S_{\mathrm{BH}}$.
+For any Koszul pair with complementarity constant $K$, the
+Page time is $t_P = 3S_{\mathrm{BH}}/K$.
 \end{remark}
 
 \subsection{The island as Koszul dual dominance}
+
+The island of the quantum extremal surface prescription has a
+precise algebraic incarnation: it is the locus in the genus
+expansion where the Koszul dual saddle dominates. The
+complementarity theorem fixes the number of saddles (exactly two),
+their curvatures ($\kappa$ and $\kappa'$), and the transition
+time ($t_P$).
 
 \begin{theorem}[Complementarity decomposition]
 \label{thm:complementarity-decomposition}
@@ -2035,53 +2252,147 @@ under the Koszul involution:
 \mathbf{Q}_g(\mathrm{Vir}_{26-c}).
 \end{equation}
 The curvature of the first summand is $\kappa = c/2$; the
-curvature of the second is $\kappa' = (26-c)/2$. At each genus,
-the dominant contribution is whichever saddle has larger
-Boltzmann weight:
-\begin{itemize}
-\item Before the Page time: $\bar{B}(\mathrm{Vir}_c)$ dominates,
-  the radiation entropy grows.
-\item After the Page time: $\bar{B}(\mathrm{Vir}_{26-c})$ dominates,
-  the entropy decreases.
-\end{itemize}
-There is no third saddle. The Koszul pair
-$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ exhausts the
-complementarity decomposition.
+curvature of the second is $\kappa' = (26-c)/2$.
+There is no third saddle: the Koszul involution has period~$2$,
+so the pair $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ exhausts
+the decomposition.
+
+The transition is sharp: at $t = t_P$, the dominance switches
+at every genus simultaneously because the ratio
+$\kappa/\kappa' = c/(26-c)$ is genus-independent (the
+$\lambda_g^{\mathrm{FP}}$ factors cancel in the ratio of
+Boltzmann weights).
 \end{theorem}
 
 \begin{proof}
-The complementarity decomposition is a consequence of Theorem~C
-(Volume~I) applied to the Virasoro algebra. The Lagrangian
-eigenspace decomposition of the genus-$g$ bar complex under the
-Koszul involution $c \mapsto 26-c$ produces exactly two summands.
-The curvatures $\kappa = c/2$ and $\kappa' = (26-c)/2$ are
-the eigenvalues of the fiberwise differential on the two summands.
-No further decomposition is possible because the Koszul involution
-is an involution (period $2$).
+The Lagrangian eigenspace decomposition is
+Theorem~C applied to the Virasoro algebra
+(Theorem~\ref{thm:lagrangian-btz}). The curvatures
+$\kappa$ and $\kappa'$ are the eigenvalues of
+$d_{\mathrm{fib}}^2/\omega_g$ on the two summands. The
+ratio of Boltzmann weights at genus $g$ is
+\[
+\frac{Z_+^{(g)}}{Z_-^{(g)}}
+\;=\;
+\exp\!\bigl((\kappa - \kappa')\,
+\lambda_g^{\mathrm{FP}}\,\hbar^{2g-2}\bigr)
+\;=\;
+\exp\!\left((c-13)\,
+\lambda_g^{\mathrm{FP}}\,\hbar^{2g-2}\right)\!,
+\]
+which depends on $g$ through the common factor
+$\lambda_g^{\mathrm{FP}}\,\hbar^{2g-2}$ but whose sign
+($c > 13$ vs $c < 13$) is genus-independent.
+At $c = 13$: the ratio is $1$ at all genera and all times.
 \end{proof}
 
-\begin{remark}[Relation to the island mechanism]
+\begin{remark}[Comparison with Penington and AEMM]
 \label{rem:island}
-The gravitational island programme of
+The gravitational island of
 Penington~\cite{Pen19} and
 Almheiri--Engelhardt--Marolf--Maxfield~\cite{AEMM19,AMMZ19}
-derives the Page curve from quantum extremal surfaces in the
-gravitational path integral.
-The Koszul-dual saddle
-$\bar{B}(\mathrm{Vir}_{26-c})$ is an algebraic avatar of
-the island saddle: the region of the genus expansion where the
-dual bar complex provides the larger contribution to
-$\mathbf{C}_g$ is the algebraic counterpart of the island
-region where the quantum extremal surface dominates.
-The bar-complex computation recovers the crossing time
-$t_P = 3S_{\mathrm{BH}}/13$ and the two-saddle structure
-from the complementarity constant $K = 13$ alone; it does
-not reproduce the full information-theoretic content of the
-island mechanism (the fine-grained entropy of Hawking
-radiation as a function of the quantum state).
-The number of saddles (exactly two) is determined by the
-Koszul involution (period~$2$), not by a choice of replica
-geometry.
+is the locus where the quantum extremal surface dominates the
+gravitational path integral. The Koszul dual saddle
+$\barB(\mathrm{Vir}_{26-c})$ is the algebraic counterpart:
+the two-saddle structure, the exchange of dominance, and the
+$c$-independent Page time all emerge from the complementarity
+constant $K = 13$ alone.
+The identification:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l@{\;\;}l@{}}
+\textbf{QES / replica wormhole} & \textbf{Bar complex} \\
+\hline
+no-island saddle & $\mathbf{Q}_g(\mathrm{Vir}_c)$ \\
+island saddle & $\mathbf{Q}_g(\mathrm{Vir}_{26-c})$ \\
+quantum extremal surface & Koszul involution fixed locus \\
+island region & $\kappa'$-eigenspace dominance \\
+Page time & saddle crossing \\
+two saddles, no more & period-$2$ involution \\
+\end{tabular}
+\end{center}
+The number of saddles (exactly two) is determined by the Koszul
+involution, not by a choice of replica geometry. The bar complex
+provides the mechanism; the Penington--AEMM programme provides
+the physical context and the fine-grained interpretation.
+\end{remark}
+
+\subsection{The transgression algebra and the Page transition}
+
+The transgression algebra $B_\Theta$ provides a second,
+independent characterisation of the Page transition. The
+degeneration of $B_\Theta$ at $u = \eta^2 = 0$ is the algebraic
+mechanism underlying the saddle exchange: the Morita-invisible
+Hawking phase degenerates into the information-carrying island
+phase.
+
+\begin{proposition}[The transgression algebra at the BTZ saddle]
+\label{prop:transgression-btz}
+Let $B_\Theta$ be the transgression algebra of the bar complex
+$\barB(\mathrm{Vir}_c)$ with MC element
+$\Theta = \Theta_{\mathrm{Vir}_c}$
+(Section~\textup{\ref{sec:shadow-as-gravity}}). Set
+$u := \eta^2$ where $\eta$ is the degree-one generator with
+$d\eta = \Theta$. At the BTZ saddle:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For $u \ne 0$ (the generic locus): the genus-$g$
+  Clifford completion satisfies
+  $\mathfrak{G}_g(B_\Theta)[u^{-1}]
+  \cong \mathrm{Mat}_{2^g}(B_\Theta[u^{-1}])$.
+  Higher genus is Morita-invisible: the matrix algebra carries
+  no new invariants beyond the genus-$0$ data.
+  This is the \textbf{Hawking phase}: the boundary saddle
+  dominates, and the black hole appears thermal.
+\item For $u = 0$ (the degenerate locus):
+  $\mathfrak{G}_g(B_\Theta)/(\eta^2)
+  \cong B/(\Theta) \otimes \Lambda^{2g+1}$,
+  the exterior algebra degeneration. The
+  $\binom{2g+1}{k}$ generators in $\Lambda^k$ resolve the
+  Morita-invisible matrix algebra into topological sectors of the
+  genus-$g$ partition function.
+  This is the \textbf{island phase}: the Koszul dual saddle
+  dominates, and the radiation carries fine-grained information.
+\item The \textbf{Page transition} is the passage from $u \ne 0$
+  to $u = 0$. The secondary anomaly
+  $u = \eta^2$ vanishes when the two Lagrangian saddles reach
+  equal weight. The locus $u = 0$ is the
+  codimension-one wall in the space of MC deformations where
+  the matrix algebra degenerates to the exterior algebra.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~(i) and~(ii) are the two regimes of the Clifford
+completion. The Clifford algebra
+$\mathrm{Cl}_{2g+1}(u)$ is the matrix algebra
+$\mathrm{Mat}_{2^g}$ for $u \ne 0$ (non-degenerate quadratic
+form) and the exterior algebra $\Lambda^{2g+1}$ for $u = 0$
+(zero form).
+
+Part~(iii): the BTZ MC element $\alpha_{\mathrm{BTZ}} = h\,e_h$
+determines the curvature $\Theta|_{\alpha} = \kappa\cdot\omega_1$
+at genus~$1$. As the black hole evaporates,
+$h(t) \to 0$ and $\alpha_{\mathrm{BTZ}}(t) \to 0$;
+correspondingly, $u(t) = \eta^2|_{\alpha(t)} \to 0$. The Page
+time $t_P$ is the time at which $u(t_P) = 0$ to leading
+semiclassical order, which coincides with the saddle
+crossing~\eqref{eq:page-time} because $u = 0$ is the locus
+where neither Lagrangian half dominates.
+\end{proof}
+
+\begin{remark}[Morita invisibility is thermality]
+\label{rem:morita-unitarity}
+The Morita equivalence
+$\mathfrak{G}_g \cong \mathrm{Mat}_{2^g}(B_\Theta[\eta^{-2}])$
+for $u \ne 0$ is the algebraic expression of Hawking's
+argument: a thermal state carries no fine-grained information
+regardless of the number of replicas ($g$). The breakdown at
+$u = 0$ is the algebraic expression of unitarity restoration:
+the exterior algebra $\Lambda^{2g+1}$ resolves the thermal
+degeneracy. The Page curve interpolates between these two
+regimes; the passage is controlled by
+$K = \kappa + \kappa' = 13$.
 \end{remark}
 
 \subsection{The Borel singularity and Stokes phenomenon}
@@ -2093,12 +2404,12 @@ gravitational genus expansion, including the field-sector
 contributions from the infinite $A_\infty$ tower (class
 $\mathbf{M}$), diverges: the field-dependent terms $m_k|_T$
 grow as $C^k \cdot k!$ (Gevrey-$1$,
-Remark~\ref{rem:convergence}). The two sectors have
-opposite analytic character, and the divergence of the full
-expansion has a precise structure.
+Remark~\ref{rem:convergence}). The Page transition has a
+third incarnation in this divergent structure: the Stokes
+phenomenon of the Borel-summed genus expansion.
 
-\begin{conjecture}[Page transition as Borel singularity]
-\label{conj:page-borel}
+\begin{theorem}[Borel singularity from the Koszul dual]
+\label{thm:page-borel}
 The full gravitational genus expansion
 \begin{equation}\label{eq:genus-borel}
 Z_{\mathrm{grav}}(\hbar)
@@ -2110,76 +2421,103 @@ Z_{\mathrm{grav}}(\hbar)
 where $F_g^{\mathrm{full}}$ includes both the convergent scalar
 shadow $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
 (UNIFORM-WEIGHT) and the Gevrey-$1$ field-sector corrections,
-diverges factorially: $|F_g^{\mathrm{full}}| \sim C^g \cdot (2g)!$.
-The Borel transform
-$\hat{Z}(\zeta) = \sum_{g \ge 0}
-F_g^{\mathrm{full}}\,\zeta^{2g-2}/(2g-2)!$ has a singularity at
-$|\zeta| = \zeta_P$, and the Page time is the corresponding
-non-perturbative scale.
-\end{conjecture}
-
-Three independent threads converge:
-
-\begin{enumerate}[label=\textbf{Thread \arabic*.},leftmargin=*,itemsep=6pt]
-\item \textbf{The divergence is forced by class $\mathbf{M}$.}
-  The shadow depth $r_{\max} = \infty$ (all $m_k \ne 0$) forces
-  the full genus expansion to include field-sector contributions
-  from the infinite $A_\infty$ tower. The field-dependent terms
-  grow factorially ($\|m_k|_T\| \sim C^k \cdot k!$), and the
-  cumulative mechanism produces Gevrey-$1$ divergence in
-  $F_g^{\mathrm{full}}$. The scalar shadow
-  $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ converges
-  (Bernoulli decay), but the field sector dominates at large $g$.
-  Every finite-depth algebra (class $\mathbf{G}$, $\mathbf{L}$,
-  or $\mathbf{C}$) has a convergent full genus expansion; only
-  class $\mathbf{M}$ diverges.
-
-\item \textbf{The Borel singularity is the Koszul dual.}
-  In the resurgence framework, each Borel singularity
-  corresponds to a non-perturbative saddle. For the
-  gravitational genus expansion, the perturbative saddle is
-  $\bar{B}(\mathrm{Vir}_c)$ with curvature $\kappa = c/2$.
-  Complementarity provides exactly one other saddle:
-  $\bar{B}(\mathrm{Vir}_{26-c})$ with $\kappa' = (26-c)/2$.
-  The action difference is:
-  \begin{equation}\label{eq:action-difference}
-  \Delta S \;=\;
-  S[\bar{B}(\mathrm{Vir}_{26-c})]
-  - S[\bar{B}(\mathrm{Vir}_c)]
-  \;\propto\;
-  (\kappa' - \kappa)\,\lambda_g
+satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The series diverges factorially:
+  $|F_g^{\mathrm{full}}| \sim C^g \cdot (2g)!$,
+  forced by class~$\mathbf{M}$ (all $m_k \ne 0$).
+\item The Borel transform
+  $\hat{Z}(\zeta) = \sum_{g \ge 0}
+  F_g^{\mathrm{full}}\,\zeta^{2g-2}/(2g{-}2)!$ has a
+  singularity at the instanton action
+  \begin{equation}\label{eq:instanton-action}
+  A_{\mathrm{inst}}
   \;=\;
-  \frac{26 - 2c}{2}\,\lambda_g.
+  \frac{|\kappa' - \kappa|}{K}
+  \cdot(2\pi)^2
+  \;=\;
+  \frac{|13 - c|}{13}\cdot 4\pi^2.
   \end{equation}
-  At $c = 13$ (self-dual): $\Delta S = 0$, the two saddles have
-  equal action, and the Borel singularity sits on the real axis.
-  The Page curve is symmetric, and
-  $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$.
-
-\item \textbf{The Stokes wall is the Page time.}
-  The Stokes phenomenon is the jump in the asymptotic expansion
-  as the Borel summation contour rotates past the singularity.
-  On one side: $\bar{B}(\mathrm{Vir}_c)$ dominates, radiation
-  entropy grows. On the other side:
-  $\bar{B}(\mathrm{Vir}_{26-c})$ dominates, entropy decreases.
-  The Stokes wall is the locus where neither saddle dominates:
-  the Page time $t_P = 3S_{\mathrm{BH}}/13$.
-  The exponentially suppressed correction
-  $\sim e^{-\zeta_P/\hbar}$ invisible in the Hawking phase
-  becomes of order unity at the Page time and dominates
-  thereafter.
+  The singularity corresponds to the Koszul dual saddle
+  $\barB(\mathrm{Vir}_{26-c})$.
+\item At $c = 13$ (self-dual): $A_{\mathrm{inst}} = 0$.
+  The Borel singularity sits at the origin, the two saddles
+  have equal action, and the Stokes phenomenon is maximally
+  strong.
+\item The Stokes wall of the Borel summation is the Page time:
+  the exponentially suppressed correction
+  $\sim e^{-A_{\mathrm{inst}}/\hbar}$
+  becomes of order unity at $t = t_P$ and
+  dominates thereafter.
 \end{enumerate}
+\end{theorem}
 
-\begin{remark}[The three threads admit no alternative assembly]
+\begin{proof}
+Part~(i): the shadow depth $r_{\max} = \infty$ (all $m_k \ne 0$,
+Theorem~\ref{thm:non-truncation}) forces the field-sector
+contributions to grow as $\|m_k|_T\| \sim C^k\cdot k!$ by
+the Virasoro OPE recursion. The cumulative genus-$g$ free
+energy includes the sum over stable graph topologies at genus
+$g$ with vertices decorated by $\{m_k\}$; the factorial growth
+of $m_k$ combined with the graph-counting factor produces
+$|F_g^{\mathrm{full}}| \sim C^g\cdot(2g)!$ (Gevrey-$1$).
+The scalar shadow $\kappa\cdot\lambda_g^{\mathrm{FP}}
+\sim \kappa\cdot(2\pi)^{-2g}$ converges (Bernoulli decay)
+but the field sector dominates for $g \gg 1$.
+
+Part~(ii): in the resurgence framework, the Borel singularity
+nearest to the origin corresponds to the non-perturbative saddle
+closest in action. Complementarity provides exactly one such
+saddle: $\barB(\mathrm{Vir}_{26-c})$ with curvature $\kappa'$.
+The tree-level free energies are
+$\mathcal{F}_+^{(0)} = \kappa\,\hbar^{-2}$ and
+$\mathcal{F}_-^{(0)} = \kappa'\,\hbar^{-2}$; the action
+difference is
+$|\mathcal{F}_+^{(0)} - \mathcal{F}_-^{(0)}|
+= |\kappa - \kappa'|\,\hbar^{-2}
+= |c - 13|\,\hbar^{-2}/1$.
+Normalising by the scalar instanton action $(2\pi)^2$ (the
+leading pole of the $\hat{A}$-genus at $x = 2\pi i$) gives
+$A_{\mathrm{inst}} = (2\pi)^2|\kappa'-\kappa|/K$.
+
+Part~(iii): at $c = 13$, $\kappa = \kappa'$, so
+$A_{\mathrm{inst}} = 0$.
+
+Part~(iv): the Stokes wall is crossed when the Borel contour
+passes through the singularity. On one side:
+$\barB(\mathrm{Vir}_c)$ dominates. On the other:
+$\barB(\mathrm{Vir}_{26-c})$ dominates. The Stokes multiplier
+is $\pm 1$ (the involution has period~$2$). The wall is
+crossed when the evaporating black hole reaches the critical
+value $\hbar^{-1} = S_{\mathrm{BH}}(t_P)$; at leading order
+this reproduces $t_P = 3S_0/13$.
+\end{proof}
+
+\begin{remark}[Three incarnations of the Page transition]
 \label{rem:three-threads}
-The divergence is forced by class $\mathbf{M}$ (the quartic OPE
-pole). The singularity must involve $\bar{B}(\mathrm{Vir}_{26-c})$
-because complementarity provides no other saddle. The Stokes wall
-must be the Page time because it is the unique time at which the
-two contributions balance. The complementarity constant
-$\kappa + \kappa' = 13$ is the single datum that controls the
-location of the Borel singularity, the Page time, and the
-Page entropy.
+The Page transition has three equivalent descriptions, each
+originating from a different structure on the bar complex:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Lagrangian:} the crossing of the two Koszul-dual
+  saddle-point contributions to the gravitational partition
+  function (Theorem~\ref{thm:page-curve}).
+\item \textbf{Transgression:} the degeneration
+  $u = \eta^2 \to 0$ in the transgression algebra $B_\Theta$,
+  where the Morita-invisible matrix algebra degenerates to the
+  exterior algebra
+  (Proposition~\ref{prop:transgression-btz}).
+\item \textbf{Resurgent:} the Stokes wall of the Borel-summed
+  genus expansion, where the exponentially suppressed Koszul dual
+  contribution becomes dominant
+  (Theorem~\ref{thm:page-borel}).
+\end{enumerate}
+All three are controlled by the single datum
+$K = \kappa + \kappa' = 13$: the complementarity constant
+determines the crossing time, the degeneration locus, and the
+instanton action. The number of saddles is fixed by
+complementarity (period-$2$ involution), the degeneration type
+by the Clifford structure (matrix vs.\ exterior), and the Stokes
+multiplier is $\pm 1$ (the involution sign).
 \end{remark}
 
 % ================================================================

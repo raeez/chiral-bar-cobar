@@ -78,6 +78,7 @@
 \providecommand{\Spec}{\mathrm{Spec}}
 \providecommand{\cF}{\mathcal{F}}
 \providecommand{\cR}{\mathcal{R}}
+\providecommand{\cN}{\mathcal{N}}
 
 \begin{document}
 
@@ -104,7 +105,9 @@ The Swiss-cheese operad $\SCchtop$ governs the pair
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$, not the bar complex
 itself. The topologisation theorem establishes
 $\SCchtop + \text{conformal vector} \simeq \Ethree^{\mathrm{top}}$ for
-affine Kac--Moody at non-critical level. The $\En$ operadic circle
+affine Kac--Moody at non-critical level (chain-level) and, via
+Drinfeld--Sokolov reduction, for Virasoro and all $\cW$-algebras
+(cohomological, with model-level $(\Ethree)_\infty$). The $\En$ operadic circle
 $\Ethree \to \Etwo \to \Eone \to \Etwo \to \Ethree$ is proved to close for
 simple $\fg$ via the $\Ethree$ identification theorem. Five notions of
 $\Eone$-chiral algebra are distinguished. The chiral quantum group
@@ -1535,27 +1538,37 @@ Kac--Moody $V_k(\fg)$ at non-critical level, where the Sugawara
 element provides an explicit inner conformal vector and the $3$d
 holomorphic--topological theory is Chern--Simons.
 
-For general chiral algebras with conformal vector (Virasoro,
-$\cW$-algebras), the same pattern is expected but remains
-conjectural:
+For Virasoro and $\cW$-algebras, the cohomological
+$\Ethree^{\mathrm{top}}$ is now proved via DS reduction
+(Theorem~\ref{thm:e-topologisation-DS}), and the
+model-level $(\Ethree)_\infty$ follows
+(Proposition~\ref{prop:e-chain-level-virasoro}).
+The original-complex chain-level lift remains open for
+class~$M$:
 \end{remark}
 
-\begin{conjecture}[General topologisation]
+\begin{conjecture}[Original-complex topologisation for class~$M$]
 \label{conj:e-topologisation-general}
-Let $\cA$ be a chiral algebra with conformal vector $T(z)$ of
-central charge $c$. If the associated holomorphic--topological
-theory on $\bC \times \bR$ has a BRST differential $Q$ such
-that $T = [Q, G]$ for some antighost contraction $G$, then
-$H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA))$
+Let $\cA$ be a chiral algebra with conformal vector $T(z)$ at
+non-critical level, and suppose the associated
+holomorphic--topological theory on $\bC \times \bR$ has a BRST
+differential $Q$ with $T = [Q, G]$ for some antighost
+contraction $G$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Cohomological.)} $H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA))$
 carries an $\Ethree^{\mathrm{top}}$-algebra structure.
-
-For Virasoro $\mathrm{Vir}_c$: the holomorphic--topological
-theory is $3$d gravity; the BRST complex requires constructing
-the gravitational path integral, which is a genuine difficulty.
-
-For $\cW_N$: the holomorphic--topological theory is $3$d
-higher-spin gravity; the BRST complex requires the full
-non-linear $\cW_N$ gauge theory.
+This is now a theorem for all $\cW$-algebras obtained by
+DS reduction \textup{(}Theorem~\ref{thm:e-topologisation-DS}\textup{)}
+and all conformal vertex algebras with freely generated PVA
+associated graded \textup{(}Khan--Zeng~\cite{KhanZeng25}\textup{)}.
+\item \textup{(Original-complex.)} The $\Ethree^{\mathrm{top}}$
+structure lifts from BRST cohomology to the original cochain
+complex $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+This remains open for class~$M$ \textup{(}Virasoro, $\cW_N$\textup{)}:
+the $\Ainf$-coherence tower is infinite and the gauge
+rectification does not terminate.
+The coderived category is expected to absorb the obstruction.
+\end{enumerate}
 \end{conjecture}
 
 \subsection{The Heisenberg: topologisation}
@@ -1585,6 +1598,313 @@ $\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_0)$ carries holomorphic
 $\Etwo$ but not $\Ethree^{\mathrm{top}}$.
 \end{example}
 
+\subsection{Topologisation via Drinfeld--Sokolov reduction}
+\label{subsec:topologisation-DS}
+
+The cohomological topologisation of
+Theorem~\ref{thm:e-topologisation} was stated for affine
+Kac--Moody. For Virasoro and $\cW$-algebras, the conjecture
+(Conjecture~\ref{conj:e-topologisation-general}) asked for the
+$3$d HT BRST complex. The Costello--Gaiotto
+theorem~\cite{CostelloGaiotto} provides exactly this: every
+$\cW$-algebra $\cW^k(\fg, f)$ arises as the boundary chiral
+algebra of holomorphic Chern--Simons with Drinfeld--Sokolov
+boundary conditions. The $3$d \emph{bulk} is the same
+holomorphic Chern--Simons for~$\fg$, independent of the
+nilpotent~$f$. The DS stress tensor decomposes as
+$T_{\mathrm{DS}} = T_{\mathrm{Sug}} + T_{\mathrm{imp}}$,
+where the improvement term involves only Cartan currents:
+$T_{\mathrm{imp}} = \sum_{i,j}(x_0)_i\,
+(\kappa^{-1})^{h_i h_j}\,\partial J_{h_j}$
+with $x_0 = \tfrac{1}{2}h_0 \in \fh$ the neutral element of the
+$\mathfrak{sl}_2$-triple $(e, h_0, f)$.
+Since each $J_a = [Q_{\mathrm{CS}}, \bar c_a]$ on
+$Q_{\mathrm{CS}}$-cohomology (by the BRST transformation of the
+antighost), both summands are $Q_{\mathrm{CS}}$-exact in the $3$d
+bulk.
+
+\begin{theorem}[Cohomological topologisation via DS reduction]
+\label{thm:e-topologisation-DS}
+Let $\fg$ be a finite-dimensional simple Lie algebra,
+$f \in \fg$ any nilpotent element, and $k \neq -h^\vee$.
+The $\cW$-algebra $\cW = \cW^k(\fg, f)$ obtained by
+Drinfeld--Sokolov reduction from $V_k(\fg)$ admits an
+$\Ethree^{\mathrm{top}}$-structure on the BRST cohomology of
+its derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW)$:
+\begin{equation}\label{eq:e-DS-topologisation}
+H_Q^\bullet\bigl(
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW)\bigr)
+\;\text{ is an }\;
+\Ethree^{\mathrm{top}}\text{-algebra.}
+\end{equation}
+In particular, this applies to: Virasoro
+$\mathrm{Vir}_c = \cW^k(\mathfrak{sl}_2, f_{\mathrm{prin}})$,
+principal $\cW_N = \cW^k(\mathfrak{sl}_N, f_{\mathrm{prin}})$
+for all $N$, and the Bershadsky--Polyakov algebra
+$\cW^k(\mathfrak{sl}_3, f_{\min})$.
+\end{theorem}
+
+\begin{proof}
+The Costello--Gaiotto theorem~\cite{CostelloGaiotto} provides the
+$3$d holomorphic--topological theory: holomorphic Chern--Simons
+for~$\fg$ at level~$k$, with DS boundary conditions determined
+by~$f$. The $3$d bulk is independent of~$f$.
+
+The DS-transported antighost is
+$G' = G_{\mathrm{Sug}} + G_{\mathrm{imp}}$, where
+$G_{\mathrm{Sug}} = (1/2(k+h^\vee))\sum_a {:}J^a\,\bar c_a{:}$
+and
+$G_{\mathrm{imp}} =
+-\sum_{i,j}\,(x_0)_i\,
+(\kappa^{-1})^{h_i h_j}\,\partial\bar c_{h_j}$.
+Both are well-defined bulk operators.
+
+\emph{The Sugawara term:}
+$[Q_{\mathrm{CS}}, G_{\mathrm{Sug}}] = T_{\mathrm{Sug}}$
+on $Q_{\mathrm{CS}}$-cohomology
+(the same identity as in
+Theorem~\ref{thm:e-topologisation}).
+
+\emph{The improvement term:}
+Since $x_0 = \tfrac{1}{2}h_0 \in \fh$
+(the Jacobson--Morozov theorem places $h_0$ in the Cartan
+subalgebra for any nilpotent), the improvement involves
+only Cartan currents.
+The identity $J_a = [Q_{\mathrm{CS}}, \bar c_a]$ on
+$Q_{\mathrm{CS}}$-cohomology implies
+$\partial J_{h_j} = [Q_{\mathrm{CS}}, \partial\bar c_{h_j}]$.
+Hence
+$T_{\mathrm{imp}} = [Q_{\mathrm{CS}}, G_{\mathrm{imp}}]$.
+
+\emph{BRST identity:}
+$[Q_{\mathrm{CS}}, G'] = T_{\mathrm{Sug}} + T_{\mathrm{imp}}
+= T_{\mathrm{DS}}$ on $Q_{\mathrm{CS}}$-cohomology.
+By the argument of Theorem~\ref{thm:e-topologisation}(i):
+holomorphic translations are $Q$-exact, the factorisation
+algebra on $\bC$ is locally constant on $Q$-cohomology, and
+Dunn additivity produces
+$\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}} =
+\Ethree^{\mathrm{top}}$.
+\end{proof}
+
+\begin{remark}[Specialisation to $\mathfrak{sl}_2$]
+\label{rem:e-DS-sl2}
+For $\fg = \mathfrak{sl}_2$ with $h^\vee = 2$,
+$\mathrm{rk} = 1$, $\rho^\vee = 1/2$, and $\kappa^{hh} = 1/2$,
+the DS-transported antighost reduces to
+\[
+G'(z)
+\;=\;
+\frac{1}{2(k+2)}\bigl({:}J^e\,\bar c_f{:}
++ {:}J^f\,\bar c_e{:}
++ \tfrac{1}{2}{:}J^h\,\bar c_h{:}\bigr)
++ \tfrac{1}{4}\,\partial\bar c_h(z),
+\]
+and the BRST identity reads
+$[Q_{\mathrm{CS}}, G'] = T_{\mathrm{DS}}
+= T_{\mathrm{Sug}} + \frac{1}{2}\partial J^h$
+on $Q_{\mathrm{CS}}$-cohomology.
+The improvement antighost $\frac{1}{4}\partial\bar c_h$ is the
+source of the $\frac{1}{2}\partial J^h$ term in the Miura
+transformation.
+\end{remark}
+
+\begin{remark}[The proof is cohomological]
+\label{rem:e-DS-cohomological}
+The BRST identity is proved on $Q_{\mathrm{CS}}$-cohomology:
+the ghost bilinear in $Q_{\mathrm{CS}} \cdot \bar c_a$ is
+$Q$-exact but not zero, so at the cochain level
+$[Q_{\mathrm{CS}}, G']$ differs from~$T_{\mathrm{DS}}$
+by $Q$-exact terms.
+For topologisation, the cohomological identity suffices.
+The chain-level question is addressed in
+Proposition~\ref{prop:e-chain-level-virasoro} below.
+\end{remark}
+
+\subsection{Chain-level $(\Ethree)_\infty$ for Virasoro
+and $\cW$-algebras}
+\label{subsec:chain-level-E3-virasoro}
+
+The cohomological topologisation of
+Theorem~\ref{thm:e-topologisation-DS} does not address
+whether the $\Ethree^{\mathrm{top}}$-structure lifts from
+BRST cohomology to the cochain complex itself.
+For affine Kac--Moody (class~$L$), such a lift is proved in
+Volume~I: the gauge rectification procedure terminates in
+finitely many steps because the shadow depth
+$r_{\max} = 3$ is finite.
+For Virasoro (class~$M$), the shadow depth is infinite,
+and the gauge rectification does \emph{not} terminate.
+The chain-level $\Ethree$ on the \emph{original} brace
+deformation complex of $\cZ^{\mathrm{der}}_{\mathrm{ch}}
+(\mathrm{Vir}_c)$ is a genuinely harder problem.
+
+There are, however, two unconditional chain-level results
+that can be extracted from the existing machinery.
+
+\begin{proposition}[Chain-level $(\Ethree)_\infty$
+for Virasoro and $\cW$-algebras]
+\label{prop:e-chain-level-virasoro}
+Let $\cW = \cW^k(\fg, f)$ be a $\cW$-algebra obtained
+by DS reduction from $V_k(\fg)$ at non-critical level
+$k \neq -h^\vee$, including $\mathrm{Vir}_c =
+\cW^k(\mathfrak{sl}_2, f_{\mathrm{prin}})$. The derived
+chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW)$ admits a
+chain-level $(\Ethree)_\infty^{\mathrm{top}}$-algebra
+structure on a quasi-isomorphic model, in two
+independent ways.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(From cohomological topologisation.)}
+  Theorem~\textup{\ref{thm:e-topologisation-DS}} produces
+  the cohomological $\Ethree^{\mathrm{top}}$ on
+  $M = H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW))$.
+  Over~$\bC$, choose a splitting of cycles and boundaries in
+  the cochain complex to obtain a strong deformation retract
+  from $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW)$ onto~$M$.
+  The homotopy transfer theorem for $\Ethree$-algebras
+  produces a transferred $(\Ethree)_\infty^{\mathrm{top}}$
+  structure on~$M$ \textup{(}zero differential\textup{)},
+  unique up to $\infty$-quasi-isomorphism.
+
+\item \textup{(From the $3$d bulk.)}
+  The $3$d holomorphic Chern--Simons bulk for~$\fg$
+  at level~$k$ has local observables that carry a
+  chain-level $\Ethree^{\mathrm{top}}$-structure, independent
+  of the boundary condition: for affine Kac--Moody boundary,
+  this is the content of the gauge rectification in Volume~I.
+  The DS boundary condition determines a
+  BRST-type differential $Q_{\mathrm{DS}}$ on the bulk
+  cochain complex~$C$ that is a derivation of the
+  $\Ethree^{\mathrm{top}}$ structure on~$C$,
+  because $Q_{\mathrm{DS}}$ is a component of the full
+  BV-BRST differential $Q_{\mathrm{CS}}$ and the
+  $\Ethree$ structure was constructed to be compatible
+  with $Q_{\mathrm{CS}}$.
+  The BRST cohomology $H^\bullet(C, Q_{\mathrm{DS}}) \cong
+  \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW)$
+  inherits $(\Ethree)_\infty^{\mathrm{top}}$ by homotopy
+  transfer through the strong deformation retract from
+  $(C, Q_{\mathrm{DS}})$ to its cohomology.
+
+  This second route is independent of the proof of
+  Theorem~\textup{\ref{thm:e-topologisation-DS}}: it
+  derives the $\Ethree$ structure on the $\cW$-algebra
+  derived centre from the \emph{already proved} chain-level
+  $\Ethree$ on the Kac--Moody-side bulk, without passing
+  through the DS-transported antighost.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) is a direct application of the homotopy transfer
+theorem for operadic algebras~\cite{LV12}: the
+$\Ethree^{\mathrm{top}}$ operations on the cohomology
+complex $M$ are strict, the strong deformation retract
+transfers them to $(\Ethree)_\infty^{\mathrm{top}}$ on the
+zero-differential model, and the transferred structure is
+unique up to $\infty$-quasi-isomorphism by the standard
+contractibility of the space of choices.
+
+Part~(ii) requires two inputs.
+
+\emph{Input~1: Chain-level $\Ethree$ on the bulk.}
+The gauge rectification for $V_k(\fg)$ at non-critical
+level produces a corrected antighost contraction
+$\widetilde{G}_1$ satisfying
+$[Q_{\mathrm{CS}}, \widetilde{G}_1] = T_{\mathrm{Sug}}$
+on the original BRST complex, and the brace defect
+$D^{(1)} = [m, \widetilde{G}_1] - \partial_z$ vanishes
+because the shadow depth $r_{\max} = 3$ is finite
+(class~$L$). This gives chain-level $\Ethree^{\mathrm{top}}$
+on the local bulk observables $C$ as a factorisation algebra
+on $\bC \times \bR$.
+
+\emph{Input~2: $Q_{\mathrm{DS}}$ is an $\Ethree$-derivation.}
+The DS boundary condition is implemented at the $3$d level
+by restricting to a sub-BV complex determined by the
+nilpotent~$f$. The differential $Q_{\mathrm{DS}}$ is a
+component of the full BV-BRST differential $Q_{\mathrm{CS}}$
+of the $3$d bulk. The chain-level $\Ethree$ structure on~$C$
+was constructed to be compatible with $Q_{\mathrm{CS}}$
+(the brace equation $[m, \widetilde{G}_1] = \partial_z$
+holds in the complex of $Q_{\mathrm{CS}}$-cochains).
+Since $Q_{\mathrm{DS}}$ is a summand of~$Q_{\mathrm{CS}}$,
+compatibility descends: $Q_{\mathrm{DS}}$ acts as an
+$\Ethree$-derivation on~$C$.
+
+With Inputs~1 and~2, the homotopy transfer theorem
+for operadic algebras produces a transferred
+$(\Ethree)_\infty^{\mathrm{top}}$-structure on the
+$Q_{\mathrm{DS}}$-cohomology
+$H^\bullet(C, Q_{\mathrm{DS}}) \cong
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cW)$.
+The transferred structure is unique up to
+$\infty$-quasi-isomorphism.
+\end{proof}
+
+\begin{remark}[Three layers of chain-level control]
+\label{rem:e-three-layers}
+Proposition~\ref{prop:e-chain-level-virasoro} gives
+chain-level $(\Ethree)_\infty$ on the zero-differential
+cohomology complex. This is the model-level statement:
+sufficient for applications that depend only on the
+$\infty$-quasi-isomorphism class (existence of an
+$\Ethree$ enhancement, factorisation homology up to
+equivalence, deformation functors).
+
+A stronger statement would be chain-level $\Ethree$ on the
+\emph{original} cochain complex
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$ itself.
+This requires an $\Ainf$-coherent null-homotopy of
+$\partial_z$ in the brace deformation complex, which for
+class~$M$ involves an infinite coherence tower (all
+$m_k^{\SCchtop}$ are nontrivial). The tower does not
+terminate, and the coderived category is the expected
+framework for absorbing it.
+
+The three layers are therefore:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Cohomological $\Ethree^{\mathrm{top}}$}:
+ proved unconditionally
+ \textup{(}Theorem~\ref{thm:e-topologisation-DS}\textup{)}.
+\item \emph{Model-level $(\Ethree)_\infty^{\mathrm{top}}$}:
+ proved unconditionally
+ \textup{(}Proposition~\ref{prop:e-chain-level-virasoro}\textup{)}.
+\item \emph{Original-complex $\Ethree^{\mathrm{top}}$}:
+ open, obstructed by the infinite class~$M$ coherence tower.
+ The coderived category is expected to absorb this obstruction.
+\end{enumerate}
+For affine Kac--Moody (class~$L$), all three layers are proved,
+because the coherence tower terminates at depth~$3$.
+\end{remark}
+
+\begin{remark}[The two obstructions to original-complex $\Ethree$
+for Virasoro]
+\label{rem:e-virasoro-two-obstructions}
+For $\mathrm{Vir}_c$ specifically, the obstruction to
+layer~(c) has two components:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{The infinite shadow tower.}
+ Virasoro is class~$M$: all $\Ainf$ operations $m_k$ for
+ $k \geq 2$ are nontrivial, producing an infinite coherence
+ tower in the brace deformation complex. The gauge
+ rectification procedure generates corrections at every
+ degree, none of which vanishes on the ordinary
+ cochain complex.
+\item \emph{The class~$M$ BV/bar discrepancy.}
+ The chain-level BV${}={}$bar comparison fails for class~$M$
+ on ordinary chain complexes (the quartic discrepancy
+ $\delta_4$ is not a coboundary). In the coderived category,
+ $\delta_4$ is absorbed.
+\end{enumerate}
+These are distinct obstructions: (i) is about the $\Ainf$
+coherence of the antighost homotopy, and (ii) is about the
+comparison between BV and bar constructions. Both point
+to the coderived category as the resolution.
+\end{remark}
+
 \subsection{Classification by topologisation status}
 
 \begin{proposition}[Topologisation status of standard families]
@@ -1598,18 +1918,38 @@ $\Etwo$ but not $\Ethree^{\mathrm{top}}$.
 $H_k$, $k \neq 0$ & $T = (1/2k)\,{:}JJ{:}$ &
  $\Ethree^{\mathrm{top}}$ & proved \\
 $V_k(\fg)$, $k \neq -h^\vee$ &
- $T_{\mathrm{Sug}}$ & $\Ethree^{\mathrm{top}}$ & proved \\
+ $T_{\mathrm{Sug}}$ & $\Ethree^{\mathrm{top}}$ &
+ proved (chain-level) \\
 $V_{-h^\vee}(\fg)$ (critical) & none &
  $\SCchtop$ & stuck \\
 $\mathrm{Vir}_c$ & $T(z)$ &
- $\Ethree^{\mathrm{top}}$ & conjectural \\
+ $\Ethree^{\mathrm{top}}$ &
+ proved (cohom.\ $+$ model) \\
 $\cW_N$ & $T(z)$ &
- $\Ethree^{\mathrm{top}}$ & conjectural \\
+ $\Ethree^{\mathrm{top}}$ &
+ proved (cohom.\ $+$ model) \\
+$\cW^k(\fg, f)$ (any $f$) & $T_{\mathrm{DS}}$ &
+ $\Ethree^{\mathrm{top}}$ &
+ proved (cohom.\ $+$ model) \\
 $H_0$ & none & $\SCchtop$ & stuck \\
 Lattice VA, $k \neq 0$ & $T = (1/2k)\,{:}JJ{:}$ &
  $\Ethree^{\mathrm{top}}$ & proved (abelian CS)
 \end{tabular}
 \end{center}
+The column ``Status'' records the strongest chain-level
+control:
+\emph{proved~\textup{(}chain-level\textup{)}} means the
+$\Ethree^{\mathrm{top}}$ structure lifts to the original
+BRST complex
+\textup{(}affine Kac--Moody, class~$L$\textup{)};
+\emph{proved~\textup{(}cohom.~$+$~model\textup{)}} means
+cohomological $\Ethree^{\mathrm{top}}$
+\textup{(}Theorem~\ref{thm:e-topologisation-DS}\textup{)}
+and $(\Ethree)_\infty^{\mathrm{top}}$ on a
+quasi-isomorphic model
+\textup{(}Proposition~\ref{prop:e-chain-level-virasoro}\textup{)},
+but the original-complex lift remains open
+\textup{(}class~$M$: infinite coherence tower\textup{)}.
 \end{proposition}
 
 % ================================================================
@@ -2722,8 +3062,9 @@ has the following $\En$ data:
  concentrated in $\{0,1,2\}$, polynomial &
  Theorem~\ref{thm:e-theorem-H} \\
 \textup{$\Ethree^{\mathrm{top}}$} &
- conjectural \textup{(}general topologisation\textup{)} &
- Conjecture~\ref{conj:e-topologisation-general} \\
+ proved \textup{(}cohom.\ $+$ model\textup{)} &
+ Theorem~\ref{thm:e-topologisation-DS},
+ Proposition~\ref{prop:e-chain-level-virasoro} \\
 \textup{SC-formality} & not SC-formal & class M \\
 \textup{Genus anomaly} &
  $\mathrm{obs}_g = (c/2) \cdot \lambda_g$
@@ -2754,11 +3095,19 @@ infinite. The generating depth is $d_{\mathrm{gen}} = 3$
 depth is $d_{\mathrm{alg}} = \infty$ (all $m_k$ are
 nonzero). The algebra is not SC-formal.
 
-The $\Ethree^{\mathrm{top}}$ structure for Virasoro is
-conjectural: the holomorphic--topological theory is $3$d
-gravity, and the BRST complex requires constructing the
-gravitational path integral. This is the content of
-Conjecture~\ref{conj:e-topologisation-general}.
+The cohomological $\Ethree^{\mathrm{top}}$ structure for
+Virasoro is proved by Theorem~\ref{thm:e-topologisation-DS}:
+the Costello--Gaiotto theorem provides $3$d holomorphic
+Chern--Simons with DS boundary conditions, and the
+DS-transported antighost $G'$ satisfies
+$T_{\mathrm{DS}} = [Q_{\mathrm{CS}}, G']$ on
+$Q_{\mathrm{CS}}$-cohomology.
+The chain-level $(\Ethree)_\infty$ on a quasi-isomorphic
+model follows from
+Proposition~\ref{prop:e-chain-level-virasoro}.
+The original-complex lift remains open (class~$M$:
+infinite coherence tower;
+Conjecture~\ref{conj:e-topologisation-general}(ii)).
 \end{proof}
 
 \begin{remark}[The $S_4$ invariant]
@@ -3308,13 +3657,18 @@ conjecture:
  Drinfeld centre for algebras with infinite shadow
  tower: a problem equivalent to the chain-level
  topologisation problem.
-\item For class~M, topologisation itself is
- conjectural
- (Conjecture~\ref{conj:e-topologisation-general}):
- the bulk $\Ethree^{\mathrm{top}}$-algebra for
- Virasoro requires constructing the $3$d gravity
- BRST complex. Without topologisation, the target
- of the closing equivalence is not defined.
+\item For class~M, cohomological topologisation is
+ now proved
+ (Theorem~\ref{thm:e-topologisation-DS}),
+ and the model-level $(\Ethree)_\infty$ follows
+ (Proposition~\ref{prop:e-chain-level-virasoro}).
+ The remaining gap is the original-complex
+ chain-level lift
+ (Conjecture~\ref{conj:e-topologisation-general}(ii)):
+ the infinite $\Ainf$-coherence tower does not
+ terminate, and applications requiring rigid
+ chain-level data on the specific BRST complex
+ remain conditional on the coderived resolution.
 \end{enumerate}
 The depth gap theorem ($d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$,
 gap at $3$) implies there is no intermediate class between
@@ -3450,6 +3804,10 @@ for all standard families.
 \bibitem{CFG25} K.~Costello, D.~Francis, and O.~Gwilliam,
  \emph{Perturbative quantization of Chern--Simons theory and the
  derived center}, in preparation, 2025.
+
+\bibitem{CostelloGaiotto} K.~Costello and D.~Gaiotto, \emph{Vertex
+ algebras and $3$d $\cN=4$ gauge theories}, J.\ High Energy Phys.\
+ \textbf{2019} (2019), 018.
 
 \bibitem{Coh76} F.~R.~Cohen, \emph{The homology of
  $C_{n+1}$-spaces, $n \ge 0$}, in: The Homology of Iterated Loop
