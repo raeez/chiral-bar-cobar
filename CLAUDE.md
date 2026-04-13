@@ -497,6 +497,13 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 | Depth gap | PROVED | d_alg in {0,1,2,inf}; gap at 3 (prop:depth-gap-trichotomy) |
 | ChirHoch^1 KM | PROVED | ChirHoch^1(V_k(g)) = g; total dim = dim(g)+2 (prop:chirhoch1-affine-km) |
 | Topologization | PROVED (affine KM); CONJECTURAL (general) | SC^{ch,top} + Sugawara = E_3 for V_k(g) at k != -h^v (thm:topologization). General chiral algebras with conformal vector: conj:topologization-general. Proof cohomological; class M chain-level open. |
+| E_3 identification | PROVED (simple g) | Z^der_ch(V_k(g)) ≅ A^lambda as E_3-families over lambda*H^3(g)[[lambda]] (thm:e3-identification). Proof: E_3 formality (Kontsevich) + 1-dim of H^3(g) forces order-by-order uniqueness. For non-simple g: open (H^3 may be higher-dimensional). |
+| Chiral QG equiv | PROVED | Three structures (R-matrix, A_inf, coproduct) determine each other on Koszul locus (thm:chiral-qg-equiv). Independent proof via CoHA (rem:independent-proof-coha). |
+| gl_N chiral QG | PROVED (all N >= 1) | W_N carries chiral quantum group datum with Yang R-matrix, Drinfeld coproduct, non-trivial RTT for N >= 2 (thm:glN-chiral-qg). N=1 = thm:w-infty-chiral-qg. OPE compatibility by coderivation + JKL. |
+| Verlinde recovery | PROVED | Verlinde Z_g = sum S_{0j}^{2-2g} recovered from ordered chiral homology at integer level (prop:verlinde-from-ordered). Handle attachment and separating factorization verified. |
+| ker(av) formula | PROVED (all simple g) | dim(ker(av_n)) = d^n - C(n+d-1,d-1) for d-dim rep of any simple g (prop:ker-av-schur-weyl). Type-independent: depends only on dim V. |
+| Genus-2 construction | CONSTRUCTED | Ordered chiral homology on Sigma_2: KZB with 2x2 Siegel period matrix, chi=-12 at degree 2, doubly-dynamical parameter (conj:g2-ddybe). |
+| Miura coefficient | CORRECTED | Delta_z(T) has (Psi-1)/Psi coefficient on J⊗J, NOT 1/Psi (lem:coprod-T-miura). Verified from first principles + 24 compute tests. |
 
 ## Anti-Patterns by Cognitive Trigger
 
