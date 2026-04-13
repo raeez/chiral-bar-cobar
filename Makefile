@@ -344,7 +344,7 @@ standalone:
 	@echo "  ── Building standalone papers ──"
 	@mkdir -p $(LOG_DIR) $(OUT_DIR)
 	@for paper in \
-		shadow_towers shadow_towers_v2 \
+		shadow_towers shadow_towers_v2 shadow_towers_v3 \
 		seven_faces classification_trichotomy virasoro_r_matrix \
 		w3_holographic_datum bp_self_duality three_parameter_hbar \
 		gaudin_from_collision genus1_seven_faces \
@@ -352,6 +352,13 @@ standalone:
 		survey_modular_koszul_duality_v2 \
 		survey_track_a_compressed survey_track_b_compressed \
 		chiral_chern_weil ordered_chiral_homology \
+		five_theorems_modular_koszul e1_primacy_ordered_bar \
+		en_chiral_operadic_circle koszulness_fourteen_characterizations \
+		drinfeld_kohno_bridge sc_chtop_pva_descent \
+		three_dimensional_quantum_gravity \
+		arithmetic_shadows multi_weight_cross_channel \
+		holographic_datum analytic_sewing \
+		cy_to_chiral_functor cy_quantum_groups_6d_hcs \
 		N1_koszul_meta N2_mc3_all_types N3_e1_primacy \
 		N4_mc4_completion N5_mc5_sewing N6_shadow_formality \
 		classification computations garland_lepowsky riccati \
