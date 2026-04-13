@@ -80,7 +80,7 @@ produces false statements.
  \[\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \;\simeq\;
  (\cA)^!_\infty\qquad
  \text{(gives the homotopy Koszul dual factorization algebra)}.\]
-\item \emph{Chiral derived centre / Hochschild cochains}
+\item \emph{Chiral derived centre / chiral Hochschild cochains}
  (Theorem~H):
  \[Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
  \;=\; C^\bullet_{\mathrm{ch}}(\cA, \cA)\qquad
@@ -1832,32 +1832,54 @@ The degree-$r$ component of the $\mathrm{FCom}$-algebra structure on $\Omega(\ba
 
 \subsection{Čech-Alexander complex realization}
 
-\begin{theorem}[Cobar as Čech complex; \ClaimStatusProvedHere]\label{thm:cobar-cech}
-The geometric cobar complex is quasi-isomorphic to a Čech-type complex:
-\[
-\Omega^{\text{ch}}(\mathcal{C}) \simeq \check{C}^{\bullet}(\mathfrak{U}, \mathcal{F}_{\mathcal{C}})
-\]
-where $\mathfrak{U} = \{U_{\sigma}\}$ is the open cover of $\overline{C}_n(X)$ by coordinate charts and $\mathcal{F}_{\mathcal{C}}$ is the factorization algebra associated to $\mathcal{C}$.
-\end{theorem}
+\begin{remark}[Lurie comparison]\label{rem:v1-lurie-comparison-bar-cobar}
+The comparison with Lurie's bar-cobar formalism has four layers.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item In Higher Algebra, the bar construction of an augmented algebra is the simplicial bar object, equivalently the \v{C}ech nerve of the augmentation
+\textup{(}Lurie~\cite[Example~5.2.2.3, Proposition~5.2.2.5]{HA}\textup{)}.
+Our reduced bar uses the same augmentation pattern, with
+$\bar{\cA} = \ker(\varepsilon)$ and the Fulton--MacPherson
+compactifications $\overline{C}_{n+1}(X)$ replacing the ordinary simplices.
 
-\begin{proof}
-The factorization algebra $\mathcal{F}_{\mathcal{C}}$ on $X$ is defined by the assignment $U \mapsto \mathcal{F}_{\mathcal{C}}(U) = \Omega(\mathcal{C}|_U)$, with factorization structure maps $\mathcal{F}_{\mathcal{C}}(U_1) \otimes \mathcal{F}_{\mathcal{C}}(U_2) \to \mathcal{F}_{\mathcal{C}}(U_1 \sqcup U_2)$ for disjoint opens, given by the cobar product. This is a cosheaf on the Ran space $\operatorname{Ran}(X)$, hence in particular a precosheaf on $X$.
+\item Lurie identifies the bar construction with the Koszul-dual
+coalgebra in a stable monoidal setting
+\textup{(}Lurie~\cite[Proposition~5.2.5.1]{HA}\textup{)}.
+This matches Theorem~A only after the distinction of
+Remark~\ref{rem:cobar-three-functors}: Verdier duality on
+$\operatorname{Ran}(X)$ produces the homotopy Koszul-dual
+factorization algebra, whereas the cobar functor produces the inverse
+$\Omega(\barB(\cA)) \simeq \cA$ on the Koszul locus.
 
-\emph{Step 1: Cover and nerve.}
-Choose a cover $\mathfrak{U} = \{U_\sigma\}_{\sigma \in S}$ of $X$ by coordinate discs. The configuration space $C_n(X)$ inherits an open cover $\mathfrak{U}^{(n)} = \{U_{\sigma_1} \times \cdots \times U_{\sigma_n} \cap C_n(X)\}$. The FM compactification $\overline{C}_n(X)$ is covered by the closures $\overline{U_{\sigma_1} \times \cdots \times U_{\sigma_n}}$ together with boundary coordinate charts at collision strata. The nerve of this cover computes the Čech complex $\check{C}^\bullet(\mathfrak{U}, \mathcal{F}_{\mathcal{C}})$.
+\item The Ran-space descent used here is the chiral analogue of
+Lurie's description of factorizable cosheaves on
+$\operatorname{Ran}(M)$
+\textup{(}Lurie~\cite[Theorems~5.5.4.10 and~5.5.4.14]{HA}\textup{)}.
+For algebraic curves with $\cD$-modules, the direct comparison is
+Francis--Gaitsgory's chiral Koszul duality on $\operatorname{Ran}(X)$
+\textup{(}\cite[Remark~2.5.7, Theorem~5.1.1]{FG12}\textup{)}.
+This is the piece of the Gaitsgory--Rozenblyum programme closest to
+the present chapter: the prestack and correspondence background is
+nearer to Volume~I than to Volume~II, while Volume~II enters later
+through formal geometry and derived $\cD$-modules.
 
-\emph{Step 2: Čech-de Rham comparison.}
-On each chart $U_\sigma$, the factorization algebra $\mathcal{F}_{\mathcal{C}}|_{U_\sigma}$ is computed by the cobar complex with local coordinates. The cobar differential $d_\Omega$ on $U_\sigma$ uses the coproduct $\bar{\Delta}$ of $\mathcal{C}$ together with the local propagator $\eta_{ij} = d\log(z_i - z_j)$. On overlaps $U_\sigma \cap U_\tau$, the transition data is encoded by the change-of-coordinate forms, which are $\bar{\partial}$-exact on the holomorphic curve $X$.
+\item The coderived continuation off the Koszul locus is not supplied
+by Higher Algebra alone. Lurie's stable $\infty$-categories provide
+the derived ambient category, but the curved and completed
+continuation used in
+Theorem~\ref{thm:higher-genus-inversion}\textup{(}b\textup{)}
+is Positselski's coderived enlargement
+\textup{(}\cite{Positselski11}\textup{)}.
+\end{enumerate}
 
-The cobar complex $\Omega^{\mathrm{ch}}(\mathcal{C})$ computes global sections of $\mathcal{F}_{\mathcal{C}}$ via integration of local cobar elements against logarithmic forms on $\overline{C}_n(X)$. This is the Čech-de Rham double complex: the Čech direction glues local cobar data across charts, while the de Rham direction is the cobar differential.
-
-\emph{Step 3: Quasi-isomorphism.}
-Since $X$ is a smooth algebraic curve, the FM compactification $\overline{C}_n(X)$ is a smooth variety with normal crossings boundary (Theorem~\ref{thm:normal-crossings}). The cover $\mathfrak{U}^{(n)}$ can be chosen to be a Leray cover: each finite intersection $U_{\sigma_1} \cap \cdots \cap U_{\sigma_k}$ is either empty or contractible (being an intersection of coordinate discs in $C_n(X)$). For a Leray cover of a smooth variety, the Čech-to-derived-functor spectral sequence degenerates at $E_1$, giving:
-\[
-\check{H}^p(\mathfrak{U}, \mathcal{F}_{\mathcal{C}}) \cong H^p(X^n, \mathcal{F}_{\mathcal{C}}).
-\]
-The right-hand side is the factorization homology $\int_X \mathcal{F}_{\mathcal{C}}$, which by the Costello--Gwilliam equivalence (cf.\ \cite{CG17}) agrees with the cobar cohomology $H^*(\Omega^{\mathrm{ch}}(\mathcal{C}))$.
-\end{proof}
+\noindent
+The truthful dictionary is therefore: Higher Algebra explains the
+augmentation nerve and the operadic bar-cobar package; Francis--Gaitsgory
+supplies the chiral Ran-space realization; Positselski controls the
+completed coderived continuation. We do not claim here a separate
+proved-here theorem identifying $\Omega^{\mathrm{ch}}(\cC)$ with a
+coordinate \v{C}ech complex; the rigorous comparison surface in this
+chapter is Verdier duality plus factorization descent.
+\end{remark}
 
 \subsection{Integration kernels and cobar operations}
 
@@ -2552,7 +2574,7 @@ The genus-1 contribution to $d_\Omega$ produces the central extension relation: 
 where $\mathbf{K}$ is the central element and $\kappa$ is the central charge. This is the relation defining the universal central extension $\widehat{\mathcal{A}}$.
 
 \emph{Step 4: Universality.}
-The resulting central extension is universal because any 2-cocycle $\omega: \mathcal{A} \otimes \mathcal{A} \to \mathbb{C}$ that defines a central extension of~$\mathcal{A}$ factors through the genus-1 trace pairing. Indeed, the Hochschild 2-cocycle condition requires $\omega$ to be $\mathcal{A}$-bilinear and invariant, which forces $\omega = c \cdot \mathrm{Tr}$ for some constant~$c$. The genus-1 construction produces exactly this with $c = \kappa$.
+The resulting central extension is universal because any 2-cocycle $\omega: \mathcal{A} \otimes \mathcal{A} \to \mathbb{C}$ that defines a central extension of~$\mathcal{A}$ factors through the genus-1 trace pairing. Indeed, the chiral Hochschild 2-cocycle condition requires $\omega$ to be $\mathcal{A}$-bilinear and invariant, which forces $\omega = c \cdot \mathrm{Tr}$ for some constant~$c$. The genus-1 construction produces exactly this with $c = \kappa$.
 \end{proof}
 
 \begin{remark}[Central extension as genus-\texorpdfstring{$1$}{1} component of \texorpdfstring{$\Theta$}{Theta}]

@@ -361,6 +361,48 @@ The identification follows from \cite{AF15} (for the factorization homology fram
 The key verification is that Weiss covers of $C_n(X)$ compute factorization homology (\cite{AF15}, Theorem~5.1), and the FM compactification provides a canonical system of Weiss covers whose \v{C}ech complex is precisely the bar complex (Definition~\ref{def:weiss-cover}).
 \end{proof}
 
+\begin{remark}[BD comparison]\label{rem:bd-comparison-bar}
+The comparison with Beilinson--Drinfeld is on the symmetric bar
+$\barB_X(\cA)$ on $\Ran(X)$, not on the ordered tensor coalgebra
+$B_X^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$. The ordered object is an
+$\Eone$ refinement that keeps the ordered collision data and the
+$R$-matrix; BD's Ran-space formalism is permutation-invariant from the
+start. Passing from $B_X^{\mathrm{ord}}(\cA)$ to $\barB_X(\cA)$ is the
+convention bridge from the ordered presentation used in this monograph
+to the symmetric factorization-coalgebra formalism of
+\cite[Theorem~3.4.9, §§3.4.11--3.4.12]{BD04}.
+
+At genus~$0$, the differential
+$d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{de\,Rham}}$
+is the Fulton--MacPherson/logarithmic-form model for the same Cousin
+differential that Beilinson--Drinfeld define abstractly on the Ran
+stratification. The codimension-two compatibility forcing $d^2 = 0$ is
+written here as the Arnold relation on logarithmic forms; in BD it is
+packaged in the compatibility of the Cousin differential with
+factorization. This identification is an inference from
+\cite[§§3.4.11--3.4.12]{BD04} together with
+Theorem~\ref{thm:bar-operadic-comparison}; BD do not isolate the Arnold
+relation under that name.
+
+Chapter~4 of \cite{BD04} uses ``commutative'' for commutative
+$\cD_X$-algebras, equivalently the pole-free subclass where the chiral
+product extends across the diagonal; see \cite[Theorem~4.6.1]{BD04}.
+This is strictly smaller than the $\Einf$-chiral lane used in this
+monograph. The Heisenberg, affine Kac--Moody, and Virasoro algebras are
+$\Einf$-chiral here because their OPEs are local and permutation
+compatible, but they are not BD-commutative because their OPEs still
+have poles. For the pole-free BD-commutative subclass, the symmetric bar
+is the whole story. For the with-poles $\Einf$ case, the
+ordered-to-unordered descent is $R$-twisted.
+
+This also matches the chiral-homology computations of
+\cite[Theorem~4.8.1]{BD04}: on the symmetric side, BD identify chiral
+homology of chiral envelopes with a Chevalley complex of derived global
+sections, while our Theorem~A/Theorem~B package uses the same symmetric
+input and then adds the ordered bar, the descent datum, and the
+bar-cobar inversion.
+\end{remark}
+
 \begin{remark}[The nilpotence-periodicity correspondence]
 \label{rem:nilpotence-periodicity}
 \index{nilpotence-periodicity correspondence|textbf}
@@ -1255,7 +1297,7 @@ By Arnol'd~\cite{Arnold69}, the 1-forms $\eta_{ij} = d\log(z_i - z_j)$ generate 
 In degree 0:
 \[\bar{B}^0(\mathcal{A}) = \Gamma\left(\overline{C}_1(\Sigma_g), \mathcal{A} \otimes \Omega^0(\log D)\right)\]
 
-But $\overline{C}_1(\Sigma_g) = \Sigma_g$ (single point, no collisions), and $\Omega^0(\log D) = \mathcal{O}_{\Sigma_g}$ (functions).
+But $\overline{C}_1(\Sigma_g) = \Sigma_g$ (one marked point, so no collision divisor), and $\Omega^0(\log D) = \mathcal{O}_{\Sigma_g}$ (functions).
 
 Therefore
 \[\bar{B}^0(\mathcal{A}) = \Gamma(\Sigma_g, \mathcal{A}) = H^0(\Sigma_g, \mathcal{A})\]
@@ -1266,6 +1308,17 @@ This is the space of global sections of the chiral algebra.
 
 \emph{Differential.} $d: \bar{B}^0 \to \bar{B}^{-1}$. But there is no $\bar{B}^{-1}$ (negative degree), so $d|_{\bar{B}^0} = 0$.
 \end{computation}
+
+\begin{proof}
+The definition of the reduced geometric bar complex at bar degree~$0$
+uses configurations of one marked point, so the configuration space is
+\(\overline{C}_1(\Sigma_g)=\Sigma_g\) and there is no boundary divisor.
+Hence the logarithmic form factor is \(\Omega^0(\log D)=\mathcal{O}_{\Sigma_g}\),
+which gives the displayed identification
+\(\bar B^0(\mathcal A)=\Gamma(\Sigma_g,\mathcal A)\).
+The bar differential lowers bar degree by one, so its restriction to
+\(\bar B^0\) is zero because \(\bar B^{-1}=0\).
+\end{proof}
 
 \subsubsection{Degree 1: two-point functions}
 
@@ -1280,11 +1333,12 @@ In degree 1:
 \emph{Logarithmic 1-forms.} $\Omega^1(\log D_{12})$ is 1-dimensional, spanned by:
 \[\eta_{12} = \frac{dz_1 - dz_2}{z_1 - z_2} = d\log(z_1 - z_2)\]
 
-\emph{Basis.} A basis for $\bar{B}^1(\mathcal{A})$ is:
-\[\{\phi_i(z_1) \otimes \phi_j(z_2) \otimes \eta_{12} : \phi_i, \phi_j \in \mathcal{A}\}\]
+\emph{Basis.} After choosing generators \(\{\phi_i\}\) for the algebra factor,
+the degree-$1$ term is spanned by:
+\[\{\phi_i(z_1) \otimes \phi_j(z_2) \otimes \eta_{12} : 1 \le i,j \le N\}\]
 
 If $\mathcal{A}$ has $N$ generators, then:
-\[\dim \bar{B}^1(\mathcal{A}) = N^2\]
+there are \(N^2\) basic tensors of this form.
 
 \emph{Differential.} $d: \bar{B}^1 \to \bar{B}^0$
 \[d(\phi_i \otimes \phi_j \otimes \eta_{12}) = \text{Res}_{D_{12}}[\mu(\phi_i, \phi_j) \otimes \eta_{12}]\]
@@ -1309,6 +1363,27 @@ The decomposition $\mu = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
 \end{itemize}
 \emph{Warning.} One must \emph{not} multiply the OPE pole by the propagator $\eta_{12} = d\epsilon/\epsilon$ and take the combined residue; the logarithmic form $\eta_{12}$ accounts for the \emph{degree} in the bar complex, not an additional pole.
 \end{computation}
+
+\begin{proof}
+By definition,
+\[
+\bar B^1(\mathcal A)
+=
+\Gamma\!\left(\overline C_2(\Sigma_g),
+j_*j^*(\mathcal A\boxtimes\mathcal A)\otimes\Omega^1(\log D_{12})\right).
+\]
+Choosing generators \(\{\phi_i\}\) for the algebra factor gives the
+displayed spanning tensors, and the logarithmic degree-$1$ factor is
+generated locally by the standard form
+\(\eta_{12}=d\log(z_1-z_2)\).
+The bar differential in degree~$1$ is the residue map along the collision
+divisor \(D_{12}\), so applying it to a generator tensor produces the
+chiral product \(\mu(\phi_i,\phi_j)\), which is exactly the displayed
+formula for \(d_{\mathrm{res}}\). The final warning is the usual
+separation between the OPE pole and the logarithmic propagator:
+\(\eta_{12}\) supplies the bar-degree form, while the residue acts on the
+singular part of \(\mu(\phi_i,\phi_j)\).
+\end{proof}
 
 \begin{remark}[Iterated residues as $A_\infty$ operations]
 \label{rem:iterated-residues-ainfty}
@@ -1885,7 +1960,7 @@ The two conventions agree up to an overall normalization constant, absorbed into
 The nine-term proof of $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) uses geometric signs throughout. Translating to operadic conventions via the dictionary above preserves $d^2 = 0$.
 \end{remark}
 
-\begin{theorem}[Three bar complexes and their inclusions; \ClaimStatusProvedHere]\label{thm:three-bar-complexes}
+\begin{theorem}[Three bar complexes and their inclusions]\label{thm:three-bar-complexes}
 \index{bar complex!three variants|textbf}
 \index{coshuffle coproduct|textbf}
 \index{deconcatenation coproduct|textbf}
@@ -1986,6 +2061,7 @@ The following structural results hold.
  \textup{(}$\kappa$ at\/ $r = 2$;
  the cubic shadow\/ $\mathfrak{C}$ at\/ $r = 3$\textup{)}.
 \end{enumerate}
+\ClaimStatusProvedHere{}
 \end{theorem}
 
 \begin{proof}
