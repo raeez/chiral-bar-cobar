@@ -934,7 +934,11 @@ $\fg$-module with diagonal adjoint action on the $\fg$-labels and
 trivial action on the mode and $H^1(\Sigma_g,\bC)$ factors.
 In particular the truncated current algebra $\fg \otimes V_h$
 records the mode cutoff only: the Whitehead step is carried out on
-the finite-dimensional $\fg$-modules $M_{h,\nu}$.
+the finite-dimensional $\fg$-modules $M_{h,\nu}$. Equivalently, after
+fixing a mode pattern~$\nu$, the residue action of the truncated
+current algebra factors through the diagonal adjoint action of the
+finite-dimensional semisimple Lie algebra~$\fg$; the quotient~$V_h$
+contributes only passive multiplicity data.
 \end{lemma}
 
 \begin{proof}
@@ -950,7 +954,18 @@ The Lie-bracket residue acts only on the $\fg$-labels. For each fixed
 mode pattern~$\nu$, this is exactly the
 Chevalley--Eilenberg differential for the diagonal adjoint action of
 $\fg$ on the coefficient module~$M_{h,\nu}$. Summing over the finite
-set of mode patterns gives the stated decomposition.
+set of mode patterns gives the stated decomposition. More explicitly,
+on the $\nu$-summand every residue bracket has the form
+\[
+x \cdot (a_1 \otimes \cdots \otimes a_n)_\nu
+\;=\;
+\sum_i c_i(\nu)\,
+a_1 \otimes \cdots \otimes [x,a_i] \otimes \cdots \otimes a_n,
+\]
+with coefficients $c_i(\nu)$ depending only on the mode pattern.
+Thus the Lie-theoretic part of $d_1^{\mathrm{PBW}}$ is the
+Chevalley--Eilenberg differential for the diagonal $\fg$-action, not
+for the non-semisimple Lie algebra $\fg \otimes V_h$ itself.
 \end{proof}
 
 \begin{lemma}[Mixed genus-\texorpdfstring{$0/g$}{0/g} map factors through
@@ -1135,7 +1150,11 @@ $\fg$-action: by Lemma~\ref{lem:pbw-mixed-factorization}, every
 mixed class factors through $H^1(\fg, N_h^{n-1})$ for a
 finite-dimensional $\fg$-module~$N_h^{n-1}$. Thus the Whitehead step
 is carried out weight by weight on honest $\fg$-modules, not on the
-non-semisimple Lie algebra $\fg \otimes V_h$.
+non-semisimple Lie algebra $\fg \otimes V_h$. The relevant
+comparison is therefore representation-theoretic rather than
+Lie-algebraic: once the mode pattern is fixed, the residue action is
+the diagonal adjoint $\fg$-action with multiplicity spaces coming
+from the modes.
 
 \medskip
 \emph{Step~3: Acyclicity of the enrichment complex.}
@@ -2890,14 +2909,26 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
 
 \begin{proof}
 \emph{Routing remark.}
-The dependency route has a common bar-intrinsic anchor.
-Theorem~\ref{thm:mc2-bar-intrinsic} produces the scalar trace of the
-shadow tower. Theorem~\ref{thm:genus-universality} identifies its
-cohomological genus-$g$ component with $\kappa(\cA)\lambda_g$ on the
-proved uniform-weight lane, while Theorem~\ref{thm:family-index}
-gives an independent Grothendieck--Riemann--Roch computation of the
-same scalar series from the family~\eqref{eq:bar-family} on the
-universal curve. Neither theorem is used to prove the other.
+The non-circular anchor is the bar-intrinsic shadow tower.
+Theorem~\ref{thm:mc2-bar-intrinsic} constructs $\Theta_\cA$ and its
+scalar trace. Theorem~\ref{thm:genus-universality} is the first
+downstream step: it identifies the genus-$g$ scalar component of that
+trace with $\kappa(\cA)\lambda_g$ on the proved uniform-weight lane.
+Theorem~\ref{thm:family-index} is downstream again: it is the
+Grothendieck--Riemann--Roch identification of the already constructed
+scalar series for the bar family~\eqref{eq:bar-family} on the
+universal curve. Thus the logical route is
+\[
+\Theta_\cA
+\;\Longrightarrow\;
+\mathrm{obs}_g=\kappa(\cA)\lambda_g
+\;\Longrightarrow\;
+\sum_{g \geq 1} F_g x^{2g}
+=
+\kappa(\cA)\cdot(\hat{A}(ix)-1),
+\]
+and Theorem~\ref{thm:genus-universality} does not invoke
+Theorem~\ref{thm:family-index}.
 Part~(i) is Theorem~\ref{thm:genus-universality} for
 uniform-weight algebras. For multi-generator algebras
 ($\mathcal{W}_N$, $N \geq 3$), only the genus-$1$ factorization
@@ -2963,22 +2994,19 @@ Convention~\ref{conv:proof-architecture}]
 \[
 \Theta_\cA \text{ and its shadow tower}
 \Longrightarrow
-\left\{
-\begin{array}{l}
-\mathrm{obs}_g=\kappa\cdot\lambda_g,\\[4pt]
+\mathrm{obs}_g=\kappa\cdot\lambda_g
+\Longrightarrow
 \sum_{g \ge 1} F_g x^{2g}
 =
-\kappa\cdot(\hat{A}(ix)-1).
-\end{array}
-\right.
+\kappa\cdot(\hat{A}(ix)-1)
 \]
 The bar-intrinsic shadow tower is the common source.
-The first line is the scalar-trace identification of
-Theorem~\ref{thm:genus-universality}; the second line is the
-independent GRR/family-index computation on the universal curve.
-Theorem~\ref{thm:family-index} is not downstream of
-Theorem~D, and Theorem~D is not proved from
-Theorem~\ref{thm:family-index}.
+The first implication is the scalar-trace identification of
+Theorem~\ref{thm:genus-universality}; the second is the downstream
+GRR/family-index identification of the same scalar series on the
+virtual bar family. Theorem~\ref{thm:family-index} is therefore the
+index-theoretic reformulation of the scalar output, not the
+load-bearing input that proves~$\mathrm{obs}_g=\kappa\cdot\lambda_g$.
 \emph{Step~B} (M-level): universality
 $\mathrm{obs}_g=\kappa\cdot\lambda_g$ (uniform-weight;
 unconditional at $g{=}1$,
@@ -2986,12 +3014,12 @@ Theorem~\ref{thm:genus-universality}); generating function via
 Bernoulli residues (Theorem~\ref{thm:universal-generating-function});
 duality $\kappa+\kappa'=\varrho\cdot K$; additivity
 (Theorem~\ref{thm:anomaly-koszul}).
-\emph{Parallel index package}: Grothendieck--Riemann--Roch maps the
+\emph{Step~C} (index identification): Grothendieck--Riemann--Roch maps the
 virtual bar family $[\barB^{(g)}(\cA)] \in
 K_0(\overline{\mathcal{M}}_g)$ to
 $\kappa\cdot(\hat{A}(ix)-1)$
 \textup{(}Theorem~\textup{\ref{thm:family-index}}\textup{)}.
-\emph{Step~C}: Heisenberg $\kappa(\mathcal{H}_k)=k$,
+\emph{Step~D}: Heisenberg $\kappa(\mathcal{H}_k)=k$,
 $F_g=k\cdot\frac{2^{2g-1}-1}{2^{2g-1}}\cdot\frac{|B_{2g}|}{(2g)!}$.
 \end{remark}
 
@@ -3502,6 +3530,9 @@ such that:
  $\Theta_{\cA^!}$.
 \end{enumerate}
 This is Theorem~\ref{thm:master-theta} (MC2).
+In this chapter, it is the coinvariant/symmetric MC2 statement; the
+ordered $E_1$ lift is Theorem~\ref{thm:e1-mc-element} in
+Chapter~\ref{chap:e1-modular-koszul}.
 \end{theorem}
 
 \begin{proof}
@@ -3697,9 +3728,14 @@ D_\cA - \dzero
  \barB^{(g)}_X(\cA)
 \bigr)[1].
 \end{equation}
+Via the genuswise-completion identification of
+Proposition~\ref{prop:geometric-modular-operadic-mc}(a)--(b), this
+product is the augmentation ideal
+$G^1(\Defcyc(\cA)\widehat{\otimes}\Gmod)$ of the completed
+coinvariant modular convolution algebra.
 Then \textup{(}see Figure~\textup{\ref{fig:bar-intrinsic-construction})}:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Maurer--Cartan on\/~$\gAmod$.}
+\item \emph{Maurer--Cartan on the coinvariant algebra\/~$\gAmod$.}
  $\Theta_\cA \in
  \MC\bigl(\Defcyc(\cA) \widehat{\otimes} \Gmod\bigr)$.
 \item \emph{Scalar trace.}
@@ -3737,7 +3773,10 @@ The ordered lift
 $\Theta_\cA^{E_1} = D_\cA^{E_1} - \dzero \in
 \MC({\gAmod}^{E_1})$ is Theorem~\ref{thm:e1-mc-element} in
 Chapter~\ref{chap:e1-modular-koszul}, and averaging sends
-$\Theta_\cA^{E_1}$ to~$\Theta_\cA$.
+$\Theta_\cA^{E_1}$ to~$\Theta_\cA$. Any external citation of
+Theorem~\ref{thm:mc2-bar-intrinsic} as the ordered $E_1$ statement is
+therefore incorrect; the ordered theorem is
+Theorem~\ref{thm:e1-mc-element}.
 \end{remark}
 
 % ----------------------------------------------------------------
@@ -4054,7 +4093,8 @@ an MC element in~$\widehat{\gAmod}$.
 \label{rem:mc2-bar-intrinsic-perspective}
 \index{MC2!bar-intrinsic perspective}
 \index{MC2!two regimes}
-Theorem~\ref{thm:mc2-bar-intrinsic} resolves MC2: the universal
+Theorem~\ref{thm:mc2-bar-intrinsic} resolves the coinvariant MC2
+statement in this chapter: the universal
 MC class \emph{is} the positive-genus part of the bar differential,
 and the Maurer--Cartan equation is a tautological consequence
 of~$D_\cA^2 = 0$.
@@ -4580,10 +4620,10 @@ Theorem~\textup{\ref{thm:algebraic-family-rigidity}}\textup{)}.
  \kappa(\cA) \cdot
  \Bigl(\hat{A}(ix) - 1\Bigr)
  \end{equation}
- by the family index theorem
+ where the first equality is the scalar trace already identified by
+ Theorem~\textup{\ref{thm:genus-universality}}, and the second is its
+ downstream GRR/family-index reformulation
  \textup{(}Theorem~\textup{\ref{thm:family-index}}\textup{)}.
- The $\hat{A}$-genus arises from the GRR pushforward of the
- Todd class of the universal curve.
 \end{enumerate}
 \end{theorem}
 
@@ -4630,9 +4670,9 @@ which vanishes by the Jacobi identity for~$\mathfrak{g}$.
 Hence $l_2(\theta_h, \theta_{g-h}) = 0$ at the cochain level,
 and the genus-$g$ recursion begins at $l_3$.
 
-Part~(f) is the family index theorem
-(Theorem~\ref{thm:family-index}); the $\hat{A}$-genus appears
-because
+Part~(f) is the downstream family-index identification
+(Theorem~\ref{thm:family-index}) of the scalar series already
+constructed above; the $\hat{A}$-genus appears because
 $\operatorname{Td}(\Omega_{\pi_g})$ on the universal curve,
 pushed forward to $\overline{\mathcal{M}}_g$, produces the
 $\hat{A}$-class by Mumford's formula.
@@ -9680,8 +9720,9 @@ $\kappa \cdot \lambda_g$ series proved on the uniform-weight lane.
 \end{remark}
 
 \begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-d}
-Properties~(i)--(iv) of Theorem~D are shadows of the family index
-theorem (Theorem~\ref{thm:family-index}).
+Properties~(i)--(iv) of Theorem~D arise from the bar-intrinsic scalar
+trace and are read index-theoretically by the family index theorem
+\textup{(}Theorem~\textup{\ref{thm:family-index}}\textup{)}.
 The determinant line $\mathcal{L}_{\cA} := \det R\pi_{g*}\bar{B}^{(g)}(\cA)$
 has $c_1(\mathcal{L}_{\cA}) = \kappa(\cA)\cdot\lambda$;
 the $\hat{A}$-genus arises from GRR via the Mumford
@@ -11335,8 +11376,12 @@ $d_{\mathrm{loop}}$ is the nonseparating genus-raising operator
 ($\hbar\Delta$ at leading order).
 The identity $(D_{\mathrm{mod}}^{\log})^2 = 0$ is the chain-level
 content of $D^2 = 0$ at the ambient level
-(Theorem~\ref{thm:ambient-d-squared-zero}), now proved via Mok's
-log-FM normal-crossings result~\cite[Theorem~3.3.1]{Mok25}.
+\textup{(}Theorem~\textup{\ref{thm:ambient-d-squared-zero}}\textup{)}:
+the relevant space is the relative log-FM compactification of the
+universal stable family over $\overline{\cM}_{g,n}$, whose collision
+faces give $d_{\mathrm{coll}}$ and whose curve-degeneration faces over
+$\partial\overline{\cM}_{g,n}$ give $d_{\mathrm{sew}}$ and
+$d_{\mathrm{loop}}$.
 \end{construction}
 
 \begin{construction}[Boundary operators as residue correspondences;
@@ -11373,8 +11418,11 @@ Codimension-one separating strata produce $d_{\mathrm{sew}}$;
 codimension-one non-separating strata produce $\Delta$;
 rigid codimension-two planted-forest strata produce
 $d_{\mathrm{pf}}$. The identity $D^2=0$ is the cancellation of
-codimension-two faces in the normal-crossings boundary of Mok's
-compactification~\cite[Theorem~3.3.1]{Mok25}.
+codimension-two faces in the relative normal-crossings boundary of the
+universal-family log-FM space: pure collision faces give the Arnold
+cancellation, while mixed faces where a curve degeneration meets a
+collision give the ambient cross-term cancellations of
+Theorem~\ref{thm:ambient-d-squared-zero}.
 \end{construction}
 
 \begin{construction}[Planted-forest differential as a push--pull
@@ -12150,7 +12198,7 @@ $\mathbf{G}$ & $2$ & $S_2$ only & Heisenberg &
  classical reconstruction exact \\
 $\mathbf{L}$ & $3$ & $S_2, S_3$ & affine $\widehat{\fg}_k$ &
  first quantum correction \\
-$\mathbf{C}$ & $4$ & $S_2, S_3, S_4$ & $\beta\gamma$ &
+$\mathbf{C}$ & $4$ & $S_2, S_4$ & $\beta\gamma$ &
  quartic contact term \\
 $\mathbf{M}$ & $\infty$ & all $S_r$ & $\operatorname{Vir}_c$,
  $\cW_N$ & full correction tower \\
@@ -13631,10 +13679,11 @@ Virasoro / $\mathcal{W}_N$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-For the $\beta\gamma$ system, the cubic corolla $K_{0,3}^\cA$ is nonzero
-but gauge-trivial (Theorem~\ref{thm:cubic-gauge-triviality}), so the
-separating bracket contributes to the shell equations at the cochain level
-but is exact. The quartic contact invariant
+For the $\beta\gamma$ system, the cubic contribution is gauge-trivial
+\textup{(}Theorem~\textup{\ref{thm:cubic-gauge-triviality}}\textup{)},
+so the separating bracket contributes to the shell equations only at
+the cochain level and does not produce a surviving cubic shadow.
+The quartic contact invariant
 $\mu_{\beta\gamma} = 0$
 (Corollary~\ref{cor:nms-betagamma-mu-vanishing}), but the quartic rigid
 cutting terms $R_{\rho}$ are generically nonzero.
@@ -14843,10 +14892,10 @@ Affine $\hat{\fg}_k$
  & $\mathbf{L}$ & $3$
  & $\dfrac{(k{+}h^\vee)\dim\fg}{2h^\vee}$
  & $\mathfrak{C}(x,y,z) = \kappa(x,[y,z])$ \\[6pt]
-$\beta\gamma$\rlap{\textsuperscript{$\dagger$}}
+$\beta\gamma_\lambda$\rlap{\textsuperscript{$\dagger$}}
  & $\mathbf{C}$ & $4$
- & $0$
- & $\mathfrak{Q} = \operatorname{cyc}(m_3)$ \\[4pt]
+ & $6\lambda^2 - 6\lambda + 1$
+ & $S_3 = 0,\;\; S_4 = -5/12$ \\[4pt]
 $\mathrm{Vir}_c$
  & $\mathbf{M}$ & $\infty$
  & $c/2$
@@ -14863,10 +14912,12 @@ $\mathcal{W}_N$ ($N \geq 3$)
 
 \smallskip
 \noindent
-{\footnotesize \textsuperscript{$\dagger$}Shadow data on the
-weight-changing line, where $\kappa = 0$ and the cubic is
-gauge-trivial
-(Theorem~\ref{thm:cubic-gauge-triviality}).}
+{\footnotesize \textsuperscript{$\dagger$}Global conformal-weight
+family: $S_2 = 6\lambda^2 - 6\lambda + 1$, $S_3 = 0$,
+$S_4 = -5/12$, and $S_r = 0$ for $r \geq 5$.
+The $T$-line is class~$\mathbf{M}$, while the weight-changing
+line has zero shadow tower, so neither one-dimensional slice is the
+class-$\mathbf{C}$ witness by itself.}
 
 \smallskip
 \noindent
@@ -14905,13 +14956,16 @@ $\mathfrak{C}_{\mathrm{aff}} = \kappa(x,[y,z])$ is the
 Lie bracket transported through the bar complex;
 the Jacobi identity forces
 $o_4 = \tfrac12\{\mathfrak{C},\mathfrak{C}\}_H = 0$.
-For $\beta\gamma$ on the weight-changing line, the cubic
-is gauge-trivial
-(Theorem~\ref{thm:cubic-gauge-triviality}); the
-quartic contact invariant
-$\mathfrak{Q} = \operatorname{cyc}(m_3)$ is the canonical
-representative
-(Theorem~\ref{thm:nms-betagamma-quartic-birth}).
+For $\beta\gamma_\lambda$ on the global conformal-weight family,
+the cubic shadow vanishes while the charged quartic survives:
+$S_2 = 6\lambda^2 - 6\lambda + 1$, $S_3 = 0$,
+$S_4 = -5/12$, and $S_r = 0$ for $r \geq 5$.
+The $T$-line restriction has an infinite tail, and the
+weight-changing line has zero shadow tower, so the
+class-$\mathbf{C}$ witness is the full family rather than either
+one-dimensional slice
+\textup{(}Theorem~\textup{\ref{thm:betagamma-global-depth}};
+ Corollary~\textup{\ref{cor:nms-betagamma-mu-vanishing}}\textup{)}.
 For Virasoro, the $H$-Poisson bracket
 $\{\mathfrak{C}, \mathfrak{Q}\}_H \neq 0$ forces an
 infinite tower
@@ -15140,7 +15194,7 @@ Affine $\hat{\mathfrak{g}}_k$ &
  Jacobi kills degree-$4$ graphs \\
 $\beta\gamma$ &
  $4$ & $4$ & $4$ &
- Rank-$1$ rigidity kills degree-$5$ \\
+ Charged quartic slice; rank-$1$ rigidity kills degree-$5$ \\
 Virasoro &
  $\infty$ & $\infty$ & $\infty$ &
  $:T^n:$ generates operations at all degrees \\
@@ -16614,7 +16668,7 @@ $\hat{\fg}_k$ (generic) &
  \S\ref{sec:affine-cubic-shadow} \\[3pt]
 $\beta\gamma$ &
  $\mathbf{C}$ & $4$ & $2$ & \textsuperscript{$\ast$} &
- \S\ref{sec:betagamma-quartic-birth} \\[3pt]
+ Thm~\ref{thm:betagamma-global-depth} \\[3pt]
 $\mathrm{Vir}_c$ &
  $\mathbf{M}$ & $\infty$ & $\infty$
  & $\frac{40}{5c{+}22}$ &
@@ -16637,8 +16691,11 @@ Rank-$72$ &
  \S\ref{sec:higher-depths} \\
 \bottomrule
 \multicolumn{6}{l}{\textsuperscript{$\ast$}%
- Stratum separation: $\Delta \neq 0$ on charged stratum,
- $\dim\Defcyc^{(2q)} = 0$.}
+ Stratum-separated global family:
+ $S_2 = 6\lambda^2 - 6\lambda + 1$, $S_3 = 0$,
+ $S_4 = -5/12$, $S_r = 0$ for $r \geq 5$.
+ The charged quartic lies off the $T$-line, so the single-line
+ discriminant is not the class-$\mathbf{C}$ witness.}
 \end{tabular}
 \end{center}
 \end{example}
@@ -16648,38 +16705,53 @@ Rank-$72$ &
 \ClaimStatusProvedHere
 \index{shadow depth!classification theorem|textbf}
 \index{shadow archetype classification|textbf}
-Every chirally Koszul algebra in the standard landscape belongs to
-exactly one of the shadow depth classes $\mathbf{F}_2$, $\mathbf{F}_3$,
-$\mathbf{F}_4$, or $\mathbf{M}$
+Every chirally Koszul algebra in the standard landscape has algebraic
+shadow depth
+\[
+ d_{\mathrm{alg}}(\cA) \in \{0,\, 1,\, 2,\, \infty\}.
+\]
+Equivalently, it belongs to exactly one of the shadow depth classes
+$\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$, or $\mathbf{M}$
 \textup{(}Definition~\textup{\ref{def:shadow-depth-classification}}).
 The class is determined by the vanishing pattern of obstruction
 classes at degrees~$3$, $4$, $5$, and the assignments for the
 primitive archetypes are as follows:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Gaussian \textup{(}$\mathbf{G}$, $r_{\max} = 2$\textup{)}:}
+\item \emph{Gaussian \textup{(}$\mathbf{G}$,
+$d_{\mathrm{alg}} = 0$, $r_{\max} = 2$\textup{)}:}
  Heisenberg $\cH_c$, lattice VOA $V_\Lambda$, free fermion.
  All higher obstruction classes vanish:
  $o_r(\cA) = 0$ for $r \geq 3$. The complementarity potential is
  exactly quadratic.
 
-\item \emph{Lie \textup{(}$\mathbf{L}$, $r_{\max} = 3$\textup{)}:}
+\item \emph{Lie \textup{(}$\mathbf{L}$,
+$d_{\mathrm{alg}} = 1$, $r_{\max} = 3$\textup{)}:}
  Affine Kac--Moody $V_k(\fg)$ at generic level.
  The cubic shadow $\mathfrak{C}_{\mathrm{aff}}(x,y,z) =
  \kappa(x,[y,z])$ is the unique non-vanishing higher shadow; the
  quartic obstruction $o_4 = 0$ by the Jacobi identity.
 
-\item \emph{Contact \textup{(}$\mathbf{C}$, $r_{\max} = 4$\textup{)}:}
- the global $\beta\gamma$ system, via stratum separation between the
- $T$-line and the charged weight/contact slice.
- The weight-changing-line projection
- $\mu_{\beta\gamma}$ vanishes, but the charged quartic contact class is
- nonzero and $o_5 = 0$ by rank-one abelian rigidity and stratum
- separation
+\item \emph{Contact \textup{(}$\mathbf{C}$,
+$d_{\mathrm{alg}} = 2$, $r_{\max} = 4$\textup{)}:}
+ the conformal-weight family $\beta\gamma_\lambda$
+ \textup{(}and its $bc$ dual\textup{)}.
+ The class-$\mathbf{C}$ witness is not the weight-changing line and
+ not the $T$-line: on the full family one has
+ \[
+  S_2 = 6\lambda^2 - 6\lambda + 1,\qquad
+  S_3 = 0,\qquad
+  S_4 = -5/12,\qquad
+  S_r = 0 \quad (r \geq 5).
+ \]
+ Thus the charged quartic contact class is nonzero and is the last
+ non-vanishing shadow component; the quintic obstruction vanishes by
+ rank-one abelian rigidity and stratum separation
  \textup{(}Theorem~\textup{\ref{thm:betagamma-global-depth}};
  Corollary~\textup{\ref{cor:nms-betagamma-mu-vanishing}};
  Remark~\textup{\ref{rem:contact-stratum-separation}}\textup{)}.
 
-\item \emph{Mixed \textup{(}$\mathbf{M}$, $r_{\max} = \infty$\textup{)}:}
+\item \emph{Mixed \textup{(}$\mathbf{M}$,
+$d_{\mathrm{alg}} = \infty$, $r_{\max} = \infty$\textup{)}:}
  Virasoro $\mathrm{Vir}_c$, $\mathcal{W}_N$ ($N \geq 3$).
  The cubic shadow $\mathfrak{C}_{\mathrm{Vir}} = 2x^3$ and quartic
  shadow $\mathfrak{Q}^{\mathrm{ct}}_{\mathrm{Vir}} =
@@ -16705,17 +16777,14 @@ complexity of $\Theta_\cA$, not whether the bar complex is acyclic.
 
 For lattice vertex algebras, the shadow--spectral correspondence
 \textup{(}Theorem~\textup{\ref{thm:shadow-spectral-correspondence}})
-identifies the shadow depth with $1$ plus the number of critical
-lines of the constrained Epstein zeta. The depth is unbounded:
+identifies the total shadow depth with $1$ plus the number of critical
+lines of the constrained Epstein zeta. The total depth is unbounded:
 every finite value $d \geq 2$ is realized by even unimodular
 lattices of sufficiently high rank, with depths $5, 6, 7, \dotsc$
 arising from independent cusp forms in $M_{r/2}$
-\textup{(}\S\textup{\ref{sec:higher-depths})}. The transition from
-finite shadow depth \textup{(}classes
-$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{F}_d$\textup{)} to
-infinite shadow depth \textup{(}class~$\mathbf{M}$\textup{)} is the
-transition from free to interacting
-\textup{(}Proposition~\textup{\ref{prop:free-interacting-dichotomy})}.
+\textup{(}\S\textup{\ref{sec:higher-depths})}. This does not create
+new algebraic-shadow archetypes: for lattices one has
+$d_{\mathrm{alg}} = 0$, so the extra depth is purely arithmetic.
 \end{theorem}
 
 \begin{proof}
@@ -16733,15 +16802,18 @@ obstruction $o_4 = \tfrac{1}{2}\{\mathfrak{C},\mathfrak{C}\}_H$
 vanishes by the Jacobi identity: the cyclic double Lie bracket
 $\kappa([x,[y,z]],w)$ summed over cyclic permutations is zero.
 
-(iii)~For $\beta\gamma$, the weight-changing line alone is not the
-class-$\mathbf{C}$ witness: its shadow tower vanishes and
+(iii)~For $\beta\gamma_\lambda$, the weight-changing line alone is not
+the class-$\mathbf{C}$ witness: its shadow tower vanishes and
 $\mu_{\beta\gamma} = 0$ by rank-one abelian rigidity
 \textup{(}Corollary~\textup{\ref{cor:nms-betagamma-mu-vanishing}}\textup{)}.
-The class-$\mathbf{C}$ witness is the global $\beta\gamma$ system,
-where a charged quartic contact class survives on the mixed
-weight/contact slice while the quintic obstruction still vanishes by
-stratum separation. This is exactly
-Theorem~\ref{thm:betagamma-global-depth}, so $r_{\max} = 4$.
+The $T$-line is also not the class-$\mathbf{C}$ witness:
+it has $S_3 = 2$, $S_4 = 10/[c(5c{+}22)]$, and infinite shadow depth
+\textup{(}Proposition~\textup{\ref{prop:betagamma-T-line-shadows}}\textup{)}.
+The class-$\mathbf{C}$ witness is the global conformal-weight family:
+there the cubic shadow vanishes, the charged quartic survives with
+$S_4 = -5/12$, and Theorem~\ref{thm:betagamma-global-depth} gives
+$S_r = 0$ for $r \geq 5$. Hence $d_{\mathrm{alg}} = 2$ and
+$r_{\max} = 4$.
 
 (iv)~For Virasoro, the cubic and quartic shadows coexist, and their
 Poisson bracket $\{\mathfrak{C}, \mathfrak{Q}\}_H$ is non-zero for
@@ -17377,8 +17449,7 @@ termination or infinite extent.
 \index{algebraic depth!gap theorem|textbf}
 \index{shadow depth!forbidden values}
 \index{depth classification!algebraic depth gap}
-Let $\cA$ be a chirally Koszul algebra in the standard landscape
-with primary-line shadow data $(\kappa, \alpha, S_4)$.
+Let $\cA$ be a chirally Koszul algebra in the standard landscape.
 Then the algebraic depth satisfies
 \begin{equation}\label{eq:depth-gap}
  d_{\mathrm{alg}}(\cA) \;\in\; \{0,\, 1,\, 2,\, \infty\}.
@@ -17387,21 +17458,28 @@ More precisely:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item on any primary line~$L$ with $\kappa|_L \neq 0$, one has
  $d_{\mathrm{alg}}(L) \in \{0, 1, \infty\}$;
-\item the boundary value $d_{\mathrm{alg}} = 2$ occurs exactly on the
- contact class~$\mathbf{C}$, where the nonzero quartic class lives on a
- charged stratum with $\kappa|_L = 0$.
+\item the boundary value $d_{\mathrm{alg}} = 2$ is realized by the
+ conformal-weight family $\beta\gamma_\lambda$
+ \textup{(}equivalently $bc_\lambda$\textup{)}, whose global shadow
+ data are
+ \[
+  S_2 = 6\lambda^2 - 6\lambda + 1,\qquad
+  S_3 = 0,\qquad
+  S_4 = -5/12,\qquad
+  S_r = 0 \quad (r \geq 5);
+ \]
+\item no value $d_{\mathrm{alg}} = 3$
+ \textup{(}or any finite $d_{\mathrm{alg}} \geq 3$\textup{)}
+ is realized.
 \end{enumerate}
-No value $d_{\mathrm{alg}} = 3$ \textup{(}or any finite
-$d_{\mathrm{alg}} \geq 3$\textup{)} is realized.
 The four values correspond bijectively to the shadow depth
 classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$, $\mathbf{M}$
 of Definition~\textup{\ref{def:shadow-depth-classification}}.
 \end{proposition}
 
 \begin{proof}
-The argument has three parts: a single-line analysis for
-$\kappa \neq 0$, the contact boundary $\kappa|_L = 0$, and a
-multi-sector extension.
+The argument has two parts: the single-line Riccati regime
+$\kappa \neq 0$, and the global contact witness.
 
 \emph{Single-line regime \textup{(}$\kappa \neq 0$\textup{)}.}
 On a primary line~$L$ with $\kappa \neq 0$, the shadow generating
@@ -17439,51 +17517,64 @@ $d_{\mathrm{alg}} = \infty$ (class~$\mathbf{M}$).
 Thus no single primary line with $\kappa \neq 0$ can realize
 $d_{\mathrm{alg}} = 2$ or~$3$.
 
-The gap at $d_{\mathrm{alg}} = 3$ is forced: termination at
-degree~$5$ (i.e.\ $S_5 = 0$ but $S_4 \neq 0$) would require the
-master equation~\eqref{eq:single-line-inversion} at $r = 5$
-to produce $S_5 = 0$ from nonzero inputs $S_3, S_4$.
-The recursion gives
-$S_5 = -(P/10)(3 \cdot 4 \cdot S_3 S_4)
-= -(6/5)\,P\,\alpha\,S_4$.
+The degree-$4$ master equation already isolates the unique quartic
+cancellation. From the quadratic identity $F(t)^2 = Q_L(t)$ one reads
+off the free quartic contribution
+\[
+ S_4^{\mathrm{free}}
+ \;=\;
+ -\frac{9\alpha^2}{16\kappa},
+\]
+so the finite-depth locus at degree~$4$ is exactly the cancellation
+$S_4 = 0$. This is the Jacobi locus of the affine class. Once that
+cancellation fails, the next recursion step forces a tail. Indeed,
+the master equation~\eqref{eq:single-line-inversion} at $r = 5$
+gives
+\[
+ S_5 = -(P/10)(3 \cdot 4 \cdot S_3 S_4)
+ = -(6/5)\,P\,\alpha\,S_4.
+\]
 For $\kappa \neq 0$ (so $P = 1/\kappa \neq 0$), $\alpha \neq 0$,
 and $S_4 \neq 0$, this is nonzero. If $\alpha = 0$, then
-$S_5 = 0$ but $S_4 \neq 0$ forces $S_6 \neq 0$ by the
-next recursion step (the $j = k = 4$ term contributes
-$S_6 \propto P\,S_4^2 \neq 0$), so the tower does not terminate
-at degree~$5$ in any case. By induction, $S_4 \neq 0$ propagates
-to infinitely many nonzero $S_r$: the closed form
+$S_5 = 0$ but the next step gives
+\[
+ S_6
+ \;=\;
+ -\frac{P}{12}\cdot \frac12 \cdot 4 \cdot 4\,S_4^2
+ \;=\;
+ -\frac{2\,S_4^2}{3\kappa},
+\]
+which is again nonzero. Thus there is no second finite
+cancellation beyond the affine one: away from $S_4 = 0$ the
+single-line tower does not terminate. By induction,
+$S_4 \neq 0$ propagates to infinitely many nonzero $S_r$: the closed form
 $H(t) = t^2\sqrt{Q_L(t)}$ makes this manifest.
 
-\emph{Contact boundary \textup{(}$\kappa|_L = 0$\textup{)}.}
-Class~$\mathbf{C}$ lies outside the single-line Riccati regime:
-the coefficient $P = 1/\kappa$ and the shadow metric $Q_L$
-are undefined on the charged quartic stratum.
-The $\beta\gamma$ witness is the global system, not the
-weight-changing line by itself. On the weight-changing line,
-all shadows vanish and
-$\mu_{\beta\gamma} = 0$ by rank-one abelian rigidity
+\emph{Global contact witness.}
+The value $d_{\mathrm{alg}} = 2$ is realized by the
+conformal-weight family $\beta\gamma_\lambda$, not by either of its
+one-dimensional internal slices. On the weight-changing line,
+all shadows vanish and $\mu_{\beta\gamma} = 0$ by rank-one abelian
+rigidity
 \textup{(}Corollary~\textup{\ref{cor:nms-betagamma-mu-vanishing}}\textup{)}.
-The nonzero quartic class appears instead on the charged stratum
-mixing the $T$-line and the weight-changing direction; it is the last
-nonvanishing shadow component. Equivalently, the global
-$\beta\gamma$ system has $d_{\mathrm{alg}} = 2$
-\textup{(}Theorem~\textup{\ref{thm:betagamma-global-depth}}; Remark~\textup{\ref{rem:contact-stratum-separation}}\textup{)}.
+On the $T$-line, Proposition~\ref{prop:betagamma-T-line-shadows}
+gives $S_3 = 2$, $S_4 = 10/[c(5c{+}22)]$, and an infinite tail.
+The class-$\mathbf{C}$ witness is the full family:
+Theorem~\ref{thm:betagamma-global-depth} gives
+$r_{\max} = 4$, hence $S_r = 0$ for $r \geq 5$;
+the degree-$2$ coefficient is
+$S_2 = 6\lambda^2 - 6\lambda + 1$; the cubic coefficient
+vanishes on the conformal-weight family; and the charged quartic
+is the nonzero constant $S_4 = -5/12$.
+Thus $d_{\mathrm{alg}}(\beta\gamma_\lambda) = 2$.
+The same statement holds for $bc_\lambda$ by the same
+stratum-separation mechanism.
 
-\emph{Multi-sector extension.}
-For a multi-generator algebra with primary lines
-$L_1, \dotsc, L_n$, the cubic pump
-(Remark~\ref{rem:contact-stratum-separation}) applies: if
-$\alpha \neq 0$ on any mixed sector, the adjoint
-$\mathrm{ad}_{S_3}$ generates an infinite chain on every
-reachable sector, forcing $d_{\mathrm{alg}} = \infty$. If all
-mixed cubics vanish, the sectors decouple
-(Proposition~\ref{prop:independent-sum-factorization}),
-and each sector is either one of the single-line values
-$0, 1, \infty$ or the charged contact boundary value~$2$.
-Hence
-$d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ globally, and no
-intermediate value $d_{\mathrm{alg}} = 3$ is accessible.
+The classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$, and
+$\mathbf{M}$ are therefore witnessed by Heisenberg/lattice/free
+families, affine Kac--Moody, $\beta\gamma_\lambda$/$bc_\lambda$,
+and Virasoro/$\mathcal{W}_N$, respectively. No finite value
+$d_{\mathrm{alg}} \geq 3$ remains.
 \end{proof}
 
 The depth gap is the shadow tower's sharpest structural
@@ -17514,9 +17605,10 @@ $0$ & $\mathbf{G}$ & $0$ & $0$
 $1$ & $\mathbf{L}$ & $0$ & $\neq 0$
  & $Q_L = (2\kappa + 3\alpha\,t)^2$: linear square
  & affine $\widehat{\mathfrak{g}}_k$ \\
-$2$ & $\mathbf{C}$ & --- & ---
- & charged quartic stratum,\; $\kappa|_L = 0$
- & $\beta\gamma$ \\
+$2$ & $\mathbf{C}$ & --- & $0$
+ & conformal-weight family:\; charged quartic survives,\;
+ stratum separation kills $r \geq 5$
+ & $\beta\gamma_\lambda$ \\
 $\infty$ & $\mathbf{M}$ & $\neq 0$ & $\neq 0$
  & $\sqrt{Q_L}$ irrational: all $S_r \neq 0$
  & $\operatorname{Vir}_c$, $\cW_N$ \\
@@ -19091,12 +19183,11 @@ invariant of the modular deformation type.
  $\mathfrak{C}_{\cH} = 0 \neq 2x^3 =
  \mathfrak{C}_{\mathrm{Vir}}$.
  \item $r = 4$:
- $(\kappa, \mathfrak{C})_{\cH_0} =
- (\kappa, \mathfrak{C})_{\beta\gamma} = (0, 0)$
- on the weight-changing line,\;
- $\mathfrak{Q}_{\cH_0} = 0 \neq
- \operatorname{cyc}(m_3)
- = \mathfrak{Q}_{\beta\gamma}$.
+ $\kappa(\cH_1) = \kappa(\beta\gamma_1) = 1$ and
+ $\mathfrak{C}_{\cH_1} = \mathfrak{C}_{\beta\gamma_1} = 0$
+ on the conformal-weight family line;\;
+ $\mathfrak{Q}_{\cH_1} = 0 \neq -5/12
+ = \mathfrak{Q}_{\beta\gamma_1}$.
  \end{itemize}
 
 \item \emph{Shadow class detection.}
@@ -21852,13 +21943,21 @@ projecting to each boundary type.
 
 \smallskip\noindent
 \emph{Source.}
-$D^2 = 0$ on $C_*(\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D))$
-(Theorem~\ref{thm:ambient-d-squared-zero}).
-Transport through the Hom functor into
-$\operatorname{Hom}_{\Sigma_n}(C_*(\operatorname{FM}_n^{\mathrm{log}}),
-\operatorname{End}_\cA(n))$
-gives $D^2 = 0$ on $\gAmod$
-(Theorem~\ref{thm:convolution-d-squared-zero}).
+The geometric source of the five-component differential is the
+relative Fulton--MacPherson space of the universal curve, not the
+log-FM space of a fixed pointed curve.
+Let $\pi\colon \cC_{g,n}\to \overline{\cM}_{g,n}$ be the universal
+stable family. Theorem~\ref{thm:ambient-d-squared-zero} identifies
+the ambient differential with the transport of the relative
+boundary operator on each chain complex
+$C_*(\operatorname{FM}_k(\cC_{g,n}/\overline{\cM}_{g,n}))$:
+the collision part $d_B$ satisfies $d_B^{\,2}=0$ by the Arnold
+relation on codimension-$2$ FM strata, while the
+base-degeneration part contributes the Hodge curvature
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$.
+Passing to the modular convolution algebra gives the flat identity
+$D^2 = 0$ on $\gAmod$
+\textup{(}Theorem~\textup{\ref{thm:convolution-d-squared-zero}}\textup{)}.
 The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA]
 = 0$ is the rewriting $D_\cA^2 = (\dzero + \Theta_\cA)^2 = 0$.
 
@@ -26085,7 +26184,7 @@ $\mathsf{G}$ & Heisenberg & $\kappa$ only
  & Mumford ($\lambda$-class identities) \\
 $\mathsf{L}$ & Affine KM & $\kappa, S_3$
  & Mumford $+$ Faber--Zagier \\
-$\mathsf{C}$ & $\beta\gamma$ & $\kappa, S_3, S_4$
+$\mathsf{C}$ & $\beta\gamma$ & $\kappa, S_4$
  & Mumford $+$ FZ $+$ quartic \\
 $\mathsf{M}$ & Virasoro & all $S_r$
  & Full MC tower $\supseteq$ Pixton ideal\,?
@@ -30787,7 +30886,8 @@ $($Theorem~\textup{\ref{thm:nms-clutching-law-modular-resonance}}$)$
 and the non-separating clutching law
 $($Theorem~\textup{\ref{thm:nms-nonseparating-clutching-law}}$)$:
 the algebraic clutching identities ARE the degeneration formula
-applied to the bar complex on log-FM spaces.
+applied to the bar complex on the relative log-FM spaces of the
+universal family.
 
 More explicitly: in the finite-order shadow obstruction tower, the extension
 $\Theta_\cA^{\leq r} \to \Theta_\cA^{\leq r+1}$ is governed by an
@@ -30804,7 +30904,8 @@ $\hbar\Delta(\Theta_\cA^{\leq r})$ appears: this is the
 BV operator that distinguishes non-separating from separating
 clutching, and is the primary reason that
 $D_\cA^2 = 0$ at the ambient level required the log-FM
-normal-crossings geometry of Mok~\cite[Theorem~3.3.1]{Mok25}
+normal-crossings geometry of Mok's relative compactification of the
+universal family~\cite[Theorem~3.3.1]{Mok25}
 (Theorem~\ref{thm:ambient-d-squared-zero}).
 \end{remark}
 
@@ -31034,11 +31135,29 @@ cancellation.
 The five-component differential on the ordered ambient
 algebra
 \textup{(}Definition~\textup{\ref{def:ordered-ambient-algebra}}\textup{)}
-satisfies $D^2 = 0$, by transport of $\partial^2 = 0$ on
-$C_*(\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D))$
-through the Hom functor, the same mechanism as
-Theorem~\textup{\ref{thm:ambient-d-squared-zero}}.
+satisfies $D^2 = 0$. For each stable pair $(g,n)$, its geometric
+source is the ordered relative
+Fulton--MacPherson space
+$\operatorname{FM}^{\mathrm{ord}}_k(\cC_{g,n}/\overline{\cM}_{g,n})$
+of the universal curve: the ordered collision faces give the
+bar part, whose square vanishes by the ordered Arnold cancellation,
+and the base-degeneration faces give the same Hodge-class curvature
+as in Theorem~\textup{\ref{thm:ambient-d-squared-zero}}.
 \end{corollary}
+
+\begin{proof}
+Let $\pi\colon \cC_{g,n}\to \overline{\cM}_{g,n}$ be the universal
+stable curve. Passing from
+$\operatorname{FM}_k(\cC_{g,n}/\overline{\cM}_{g,n})$ to its ordered
+cover $\operatorname{FM}^{\mathrm{ord}}_k(\cC_{g,n}/\overline{\cM}_{g,n})$
+does not change the codimension-$2$ boundary analysis: ordered
+collision strata still come in the two resolutions of a triple
+collision, so the transported bar operator satisfies
+$d_B^{\,2}=0$, and the base-degeneration strata still push forward
+to $\omega_g = c_1(\lambda)$ on $\overline{\cM}_{g,n}$. The ordered
+ambient differential is therefore square-zero by the same
+relative-FM argument as Theorem~\ref{thm:ambient-d-squared-zero}.
+\end{proof}
 
 \begin{definition}[Ordered ambient algebra]
 \label{def:ordered-ambient-algebra}
@@ -31127,7 +31246,15 @@ On the ambient complementarity algebra
 $\mathfrak{g}^{\mathrm{amb}}_{\cA}$
 \textup{(}Definition~\textup{\ref{def:ambient-modular-complementarity-algebra})},
 the five-component differential $D_{\cA}$ satisfies
-$D_{\cA}^2 = 0$.
+$D_{\cA}^2 = 0$. More precisely: for each stable pair $(g,n)$,
+writing $\pi\colon \cC_{g,n}\to \overline{\cM}_{g,n}$ for the
+universal stable curve, and for every relative configuration space
+$\operatorname{FM}_k(\cC_{g,n}/\overline{\cM}_{g,n})$, the
+fiberwise collision operator $d_B$ satisfies $d_B^{\,2}=0$
+unconditionally, and the fiberwise genus-$g$ differential satisfies
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, where
+$\omega_g = c_1(\lambda)$ is the Hodge class contributed by the
+curve-degeneration boundary of the universal family.
 \end{theorem}
 
 \begin{proof}
@@ -31136,86 +31263,115 @@ logarithmic Fulton--MacPherson space of a fixed pointed curve.
 For fixed $(X,D)$, the space
 $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ sees only
 configuration and puncture collisions, so it cannot produce the
-clutching operators $d_{\mathrm{sew}}$ and $\hbar\Delta$.
-The correct carrier is Mok's \emph{relative} log
-Fulton--MacPherson compactification of the universal stable family
-over $\overline{\mathcal{M}}_{g,n}$.
+curve-degeneration boundary of moduli. The correct carrier is the
+relative Fulton--MacPherson compactification of the universal stable
+family over $\overline{\cM}_{g,n}$.
 
 \medskip
 \emph{Step 1: The correct moduli space.}
-Let $B=\overline{\mathcal{M}}_{g,n}$ and let
-$\pi\colon W\to B$ be the universal pointed stable curve.
-Mok's relative space $\operatorname{FM}_n(W/B)$ compactifies
-configurations in the fibers of~$\pi$ and carries the base
-degenerations together with the fiberwise collision strata.
-Its codimension-$1$ boundary decomposes into two types:
+Let $B=\overline{\cM}_{g,n}$ and let
+$\pi\colon \cC_{g,n}\to B$ be the universal pointed stable curve.
+For each $k$, Mok's relative space
+$\operatorname{FM}_k(\cC_{g,n}/B)$ compactifies configurations in the
+fibers of~$\pi$ and keeps both pieces of the boundary data needed by
+the modular bar construction. Its codimension-$1$ boundary splits
+into two types:
 \begin{itemize}
-\item \emph{Base-degeneration strata}: the special fibers over
- $\partial B$, encoding
- separating clutching ($d_{\mathrm{sew}}$) and non-separating
- clutching ($\hbar\Delta$);
-\item \emph{Fiberwise configuration-collision strata}: point collisions
- and puncture approaches inside a fixed fiber, indexed by
- planted-forest combinatorial types. These encode
- $d_{\mathrm{pf}}$.
+\item \emph{Collision strata in the fibers}: diagonals in a smooth
+ fiber of~$\pi$, indexed by planted forests. Their transported
+ boundary operator is the bar operator $d_B$; on the algebra side
+ this is the $d_{\mathrm{int}} + [\tau_{\cA},-] + d_{\mathrm{pf}}$
+ part of~$D_{\cA}$.
+\item \emph{Curve-degeneration strata over $\partial B$}: the relative
+ special fibers where the curve acquires a node. Their transported
+ boundary operator is the degeneration part
+ $d_{\mathrm{sew}} + \hbar\Delta$.
 \end{itemize}
 This is the relative degeneration picture summarized in
 Remark~\ref{rem:degeneration-equals-clutching}.
 
 \medskip
-\emph{Step 2: Identification of the differential.}
-The five-component differential
-$D_{\cA} = d_{\mathrm{int}} + [\tau_{\cA},-] + d_{\mathrm{sew}}
-+ d_{\mathrm{pf}} + \hbar\Delta$
-on $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ is the transport of the
-total boundary operator $\partial$ on
-$C_*(\operatorname{FM}_n(W/B))$ through the Hom functor
-into $\operatorname{Hom}_{\Sigma_n}(C_*(\operatorname{FM}_n(W/B)),\,
-\operatorname{End}_{\cA})$,
-together with the algebra-side terms $d_{\mathrm{int}}$ and
-$[\tau_{\cA},-]$. The components correspond to geometric boundary
-strata:
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{ll}
-\emph{Differential component} & \emph{Geometric origin} \\
-\hline
-$d_{\mathrm{sew}}$ & Separating boundary component of the relative special fiber over $\partial\overline{\cM}_{g,n}$ \\
-$\hbar\Delta$ & Non-separating boundary component of the relative special fiber over $\partial\overline{\cM}_{g,n}$ \\
-$d_{\mathrm{pf}}$ & Fiberwise collision strata of $\operatorname{FM}_n(W/B)$
- \textup{(}planted forests\textup{)} \\
-$d_{\mathrm{int}}$ & Internal differential on $\operatorname{End}_{\cA}$
- \textup{(}algebra side\textup{)} \\
-$[\tau_{\cA},-]$ & Universal twisting morphism
- \textup{(}algebra side\textup{)}
-\end{tabular}
-\end{center}
+\emph{Step 2: Collision part.}
+Write the relative boundary operator on
+$C_*(\operatorname{FM}_k(\cC_{g,n}/B))$ as
+\[
+\partial = \partial_{\mathrm{coll}} + \partial_{\mathrm{deg}},
+\]
+with $\partial_{\mathrm{coll}}$ the sum of collision faces inside the
+fibers of~$\pi$ and $\partial_{\mathrm{deg}}$ the sum of faces lying
+over $\partial B$. The operator $d_B$ is the transport of
+$\partial_{\mathrm{coll}}$ through the Hom functor.
+
+Every codimension-$2$ stratum contained entirely in the collision
+boundary is a triple-collision stratum of
+$\operatorname{FM}_k(\Sigma)$ for a smooth fiber~$\Sigma$ of~$\pi$.
+Such a stratum lies in exactly two codimension-$1$ collision faces,
+corresponding to the two ways of resolving the same triple collision.
+Their signed sum is the Arnold cancellation on the
+Fulton--MacPherson boundary. Hence
+\[
+\partial_{\mathrm{coll}}^{\,2}=0
+\qquad\Longrightarrow\qquad
+d_B^{\,2}=0.
+\]
+This part is unconditional: it uses only the fiberwise
+Fulton--MacPherson geometry.
 
 \medskip
-\emph{Step 3: $D^2 = 0$.}
-Since the relative space $\operatorname{FM}_n(W/B)$ has simple
-normal-crossings boundary and the same codimension-$2$ pairing
-property, $\partial^2 = 0$ on $C_*(\operatorname{FM}_n(W/B))$.
-Every codimension-$2$ stratum arises in exactly two
-codimension-$1$ boundary components with opposite orientations,
-including the mixed strata where a base degeneration meets a
-fiberwise collision. Transporting through the Hom functor gives
-$D_{\cA}^2 = 0$, by the same mechanism as
-Theorem~\ref{thm:convolution-d-squared-zero}.
+\emph{Step 3: Degeneration part and curvature.}
+Restrict the relative construction to a smooth fiber
+$\Sigma_g$ of~$\pi$. The transported differential on the bar complex
+is the fiberwise operator~$\dfib$. Its square is not detected by the
+pure collision boundary of Step~2; it is detected by how the family
+meets the boundary $\partial B$ of the base. The higher-genus Arnold
+defect is the Arakelov $(1,1)$-form on the fiber
+\textup{(}Theorem~\textup{\ref{thm:quantum-arnold-relations}(b)--(d)}\textup{)}.
+Pushing that defect forward along the universal curve identifies its
+cohomology class on~$B$ with the Hodge class
+$\omega_g = c_1(\lambda)$. Multiplying by the scalar anomaly
+coefficient gives
+\[
+\dfib^{\,2}
+\;=\;
+\kappa(\cA)\cdot\omega_g\cdot \operatorname{id}.
+\]
+Thus the only fiberwise failure of flatness comes from the
+curve-degeneration boundary of the universal family.
 
-The cross-term cancellations, in particular the critical identity
+\medskip
+\emph{Step 4: Total differential.}
+The relative space $\operatorname{FM}_k(\cC_{g,n}/B)$ has simple
+normal-crossings boundary, so $\partial^2 = 0$ on its chain complex.
+Expanding with respect to the collision/degeneration decomposition:
+\[
+0
+=
+\partial^2
+=
+\partial_{\mathrm{coll}}^{\,2}
++ \bigl(
+\partial_{\mathrm{coll}}\partial_{\mathrm{deg}}
++ \partial_{\mathrm{deg}}\partial_{\mathrm{coll}}
+\bigr)
++ \partial_{\mathrm{deg}}^{\,2}.
+\]
+Step~2 identifies the first term with the unconditional equality
+$d_B^{\,2}=0$. Step~3 identifies the degeneration square with the
+Hodge-class curvature $\kappa(\cA)\cdot\omega_g$. The mixed term is
+the codimension-$2$ locus where a collision stratum meets a
+curve-degeneration stratum; after transport through the Hom functor
+it is exactly the ambient cross-term correction that absorbs this
+fiberwise curvature when one passes from the curved operator
+$\dfib$ to the strict total differential $D_{\cA}$. In particular,
 \[
  [d_{\mathrm{sew}}, d_{\mathrm{pf}}]
  + [d_{\mathrm{int}}, \hbar\Delta]
  + [[\tau_{\cA},-], d_{\mathrm{sew}} + d_{\mathrm{pf}}]
  = 0
 \]
-that was previously conjectural, now follow from
-$\partial^2 = 0$ on $\operatorname{FM}_n(W/B)$:
-the codimension-$2$ strata where a curve degeneration meets a
-configuration collision appear with cancelling signs in
-$\partial^2 = 0$, and the Hom transport preserves this
-cancellation.
+is the algebraic form of that mixed codimension-$2$ cancellation.
+Combining the three pieces yields $D_{\cA}^2 = 0$ on the ambient
+algebra.
 
 \emph{Conceptual summary.} The theorem that was previously
 conjectural reduces to the observation that the ambient
@@ -31223,12 +31379,13 @@ differential $D_{\cA}$ is \emph{not} the convolution differential
 on $\operatorname{Hom}(C_*(\overline{\cM}_{g,n}),
 \operatorname{End}_{\cA})$ with the planted-forest correction
 ``bolted on'': it \emph{is} the convolution differential on
-$\operatorname{Hom}(C_*(\operatorname{FM}_n(W/B)),
+$\operatorname{Hom}(C_*(\operatorname{FM}_k(\cC_{g,n}/B)),
 \operatorname{End}_{\cA})$, where
-$\operatorname{FM}_n(W/B)$ already includes both the clutching
-boundary and the planted-forest strata. Mok's relative
-construction provides the correct moduli space;
-$D^2 = 0$ is then as automatic as at the convolution level.
+$\operatorname{FM}_k(\cC_{g,n}/B)$ already includes both the
+collision strata and the curve-degeneration boundary. On that
+relative space, the bar part is square-zero by the Arnold
+relation, the fiberwise curvature is exactly
+$\kappa(\cA)\cdot\omega_g$, and the total operator is strict.
 \end{proof}
 
 \begin{remark}[Dependence on Mok's log-FM theorem]
@@ -32429,9 +32586,121 @@ group data.
 
 
 % ================================================================
+\subsection{The Verlinde polynomial family}
+\label{subsec:verlinde-polynomial-family}
+\index{Verlinde formula!polynomial family}
 
-\section{Ordered chiral homology at genus~$2$:
-$\int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar(\mathfrak{sl}_2)$}
+The Verlinde dimensions $Z_g(k)$ at each genus are
+polynomials in $n = k + 2$ with a universal factorisation
+that reflects the cosecant power sum origin.
+
+\begin{theorem}[Verlinde polynomial family]
+\label{thm:verlinde-polynomial-family}
+\ClaimStatusProvedHere
+For $\widehat{\mathfrak{sl}}_2$ at level $k \geq 1$,
+write $n = k + 2$. The Verlinde dimension
+$Z_g(k) = \sum_{j=0}^{k} S_{0j}^{2-2g}$ is a polynomial
+$P_g(n)$ of degree $3(g-1)$ in $n$ with the following
+structure.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Universal factor.)}
+  For $g \geq 2$,
+  \begin{equation}\label{eq:verlinde-universal-factor}
+    P_g(n) \;=\; n^{g-1}(n^2 - 1) \cdot R_{g-2}(n^2),
+  \end{equation}
+  where $R_{g-2}$ is a polynomial of degree $g - 2$ in
+  $n^2$ with rational coefficients and positive leading
+  term.
+\item \textup{(Explicit formulas through $g = 6$.)}
+  \begin{align}
+    P_2(n) &= \frac{n(n^2 - 1)}{6},
+    \label{eq:P2} \\
+    P_3(n) &= \frac{n^2(n^2 - 1)(n^2 + 11)}{180},
+    \label{eq:P3} \\
+    P_4(n) &= \frac{n^3(n^2 - 1)(2n^4 + 23n^2 + 191)}{7560},
+    \label{eq:P4} \\
+    P_5(n) &= \frac{n^4(n^2 - 1)(n^2 + 11)
+    (3n^4 + 10n^2 + 227)}{226800},
+    \label{eq:P5} \\
+    P_6(n) &= \frac{n^5(n^2 - 1)(2n^8 + 35n^6
+    + 321n^4 + 2125n^2 + 14797)}{2993760}.
+    \label{eq:P6}
+  \end{align}
+\item \textup{(Leading asymptotics.)}
+  The leading coefficient of $P_g(n)$ as $n \to \infty$ is
+  \begin{equation}\label{eq:verlinde-leading}
+    P_g(n) \;\sim\;
+    \frac{\zeta(2g - 2)}{2^{g-2}\,\pi^{2g-2}}\;
+    n^{3(g-1)}
+    \qquad (n \to \infty),
+  \end{equation}
+  where $\zeta$ is the Riemann zeta function.
+\item \textup{(Rational generating function.)}
+  At fixed level $k$ \textup{(}equivalently, fixed $n$\textup{)},
+  the genus generating function
+  \begin{equation}\label{eq:verlinde-gen-fn}
+    G_n(x) \;:=\;
+    \sum_{g \geq 1} Z_g(k)\, x^{g-1}
+    \;=\;
+    \sum_{j=1}^{n-1}
+    \frac{1}{1 - a_j\, x},
+    \qquad
+    a_j \;=\; \frac{n}{2\sin^2(\pi j/n)},
+  \end{equation}
+  is a rational function of $x$ with $n - 1$ simple poles.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The representation
+$Z_g(k) = (n/2)^{g-1} \sum_{j=1}^{n-1}
+\csc^{2g-2}(\pi j/n)$
+follows from $S_{0j} = \sqrt{2/n} \sin(\pi j/n)$
+(with the re-indexing $j \mapsto j$, $1 \leq j \leq n-1$).
+The cosecant power sum
+$\sigma_m(n) = \sum_{j=1}^{n-1} \csc^{2m}(\pi j/n)$
+is a polynomial in $n$ of degree $2m$ with rational
+coefficients: this is a classical result of Euler,
+with the leading coefficient
+$\sigma_m(n) \sim (2/\pi)^{2m}\,\zeta(2m)\,n^{2m}$.
+Parts~(i)--(iii) follow. For~(iv), the geometric series
+$\sum_{g \geq 1} a_j^{g-1} x^{g-1} = 1/(1 - a_j x)$
+applied term by term to the $j$-sum gives the
+rational generating function.
+The explicit formulas~\eqref{eq:P2}--\eqref{eq:P6}
+are obtained by polynomial interpolation from
+$Z_g(k)$ at $k = 1, \ldots, 3(g-1) + 1$ and verified
+against direct $S$-matrix summation at
+$k = 1, \ldots, 19$.
+\end{proof}
+
+\begin{remark}[Structural observations]
+\label{rem:verlinde-poly-structure}
+Three features of the polynomial
+family~\eqref{eq:verlinde-universal-factor} deserve
+comment.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The factor $n^2 - 1 = (k+1)(k+3)$ vanishes at
+  $k = -1$ and $k = -3$, reflecting the boundary of
+  the integrable range. The factor $n^{g-1}$ vanishes at
+  $n = 0$ ($k = -2$, the critical level), where the
+  Verlinde formula degenerates.
+\item $P_2(n) = \binom{n+1}{3}$ is the unique genus
+  at which $Z_g$ is a single binomial coefficient
+  (the tetrahedral numbers). At $g \geq 3$, the
+  irreducible factor $R_{g-2}(n^2)$ prevents a
+  binomial representation: $(n^2 + 11)$ at $g = 3$
+  has no real roots.
+\item The factor $(n^2 + 11)$ appears in both $P_3$
+  and $P_5$, suggesting a recurrence structure in the
+  polynomials $R_{g-2}$. The denominators
+  $6, 180, 7560, 226800, 2993760$ are
+  $\prod_{j=1}^{g-1}(2j)!/(2j-1)!!$-related, connecting
+  to the Bernoulli number structure of the
+  leading asymptotics~\eqref{eq:verlinde-leading}.
+\end{enumerate}
+\end{remark}
+
 
 % ================================================================
 

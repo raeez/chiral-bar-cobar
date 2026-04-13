@@ -1404,7 +1404,7 @@ and the kernel decomposes by isotypic components:
 For a general simple~$\fg$ acting on~$V$, the Schur--Weyl
 decomposition involves the commutant algebra
 $\End_\fg(V^{\otimes n})$ rather than the group algebra of
-$\GL(V)$, and the individual summands carry different
+$\mathrm{GL}(V)$, and the individual summands carry different
 $\fg$-representations with different dimensions.
 The total kernel dimension, however, depends only on
 $\dim\Sym^n(V) = \binom{n+d-1}{d-1}$, which is
@@ -3607,8 +3607,8 @@ cocommutative and strictly coassociative ($\Phi$ acts
 trivially). The ordered and symmetric data coincide.
 \end{example}
 
-\begin{theorem}[$\cW_{1+\infty}[\Psi]$ as a chiral quantum
-group]
+\begin{theorem}[{$\cW_{1+\infty}[\Psi]$ as a chiral quantum
+group}]
 \label{thm:w-infty-chiral-qg}
 The algebra $\cW_{1+\infty}[\Psi]$ carries a chiral quantum
 group datum in the sense of
@@ -4347,6 +4347,89 @@ leaving $-\alpha\Psi/z^2 + z\, J
 = -(\Psi - 1)/z^2 + z\, J$.
 \end{proof}
 
+\begin{remark}[The antipode as vertex algebra
+(anti-)homomorphism]
+\label{rem:antipode-ope-analysis}
+Proposition~\ref{prop:w-infty-antipode-obstruction}
+establishes that $S$ is not a vertex algebra endomorphism.
+The following OPE analysis sharpens the picture by isolating
+where the obstruction lives.
+
+\smallskip
+\noindent\emph{(1) The Heisenberg OPE is preserved.}
+Since $S(J) = -J$, the spin-$1$ self-OPE transforms as
+\[
+  S(J)(z)\, S(J)(w)
+  = (-J)(z)\,(-J)(w)
+  = J(z)\, J(w)
+  \sim \frac{\Psi}{(z-w)^2}.
+\]
+The sign cancellation is exact at all orders: $S$ acts on
+the Heisenberg subalgebra $\cH_\Psi \subset
+\cW_{1+\infty}[\Psi]$ as the map $J \mapsto -J$, which
+preserves the OPE $J_{(1)}J = \Psi$ and the regular products
+$J_{(n)}J = 0$ for $n \neq 1$.
+The Heisenberg subalgebra therefore admits $S$ as a
+vertex algebra automorphism (of order~$2$).
+
+\smallskip
+\noindent\emph{(2) The Virasoro OPE is not preserved.}
+Part~(ii) of the proposition shows that the quartic pole
+of $S(T)$ with itself differs from $c/2$:
+$S(T)_{(3)}\, S(T) = c/2 + 2(\Psi-1)(\Psi-2)$.
+Since the quartic pole is the leading singular term of the
+$T(z)\, T(w)$ OPE, this already proves $S$ is not a vertex
+algebra endomorphism.
+The quartic pole shift has a transparent origin:
+$S(T) = -T + \alpha\,{:}JJ{:}$ where $\alpha = (\Psi-1)/\Psi$,
+and the ${:}JJ{:}$ self-OPE contributes
+$\alpha^2 \cdot ({:}JJ{:})_{(3)}({:}JJ{:}) = 2\alpha^2 \Psi^2
+= 2(\Psi-1)^2$, which after combining with the cross-terms
+$-2\alpha\Psi$ produces the shift $2(\Psi-1)(\Psi-2)$.
+At $\Psi = 1$ (free boson) $\alpha = 0$ and $S(T) = -T$
+preserves the Virasoro OPE; at $\Psi = 2$ ($c = -2$,
+$bc$~ghosts) the shift likewise vanishes.
+
+\smallskip
+\noindent\emph{(3) The anti-homomorphism question.}
+A vertex algebra anti-homomorphism would satisfy
+$S(a_{(n)} b) = S(b)_{(n)} S(a)$ (up to signs in the
+super setting; both $J$ and $T$ are even, so no signs
+intervene).
+For the Heisenberg OPE:
+$S(J_{(1)} J) = S(\Psi) = \Psi$, and
+$S(J)_{(1)} S(J) = (-J)_{(1)}(-J) = J_{(1)} J = \Psi$.
+So $S$ is a Heisenberg anti-homomorphism (which coincides
+with the homomorphism property because $J_{(1)} J$ is
+scalar).
+For the Virasoro quartic pole:
+$S(T_{(3)} T) = S(c/2) = c/2$, but
+$S(T)_{(3)} S(T) = c/2 + 2(\Psi-1)(\Psi-2)$ by
+part~(ii).
+The anti-homomorphism property therefore fails on
+$T_{(3)}T$ at generic~$\Psi$, and $S$ is
+neither a vertex algebra homomorphism nor anti-homomorphism
+on $\cW_{1+\infty}[\Psi]$.
+
+\smallskip
+\noindent\emph{(4) Summary of obstructions.}
+The Yangian antipode $S(T(u)) = T(u)^{-1}$ is a
+well-defined involution $S \colon \cW_{1+\infty} \to
+\cW_{1+\infty}$ as a \emph{linear} map, and it restricts
+to a vertex algebra automorphism on the Heisenberg
+subalgebra. It fails to be a vertex algebra morphism (in
+either the homomorphism or anti-homomorphism sense) because
+the Miura nonlinearity $T = \psi_2 - J^2/(2\Psi)$
+introduces quartic normal-ordered terms into $S(T)$ that
+shift the central charge by $2(\Psi-1)(\Psi-2)$. The
+Hopf axiom fails independently because the spectral
+parameter $z$ in $\Delta_z$ is incompatible with a
+$z$-independent antipode.
+The two obstructions are independent: the OPE obstruction
+vanishes at $\Psi \in \{1,2\}$ while the Hopf obstruction
+(the $z \cdot J$ term) persists at all~$\Psi$.
+\end{remark}
+
 \begin{lemma}[Miura inversion of the spectral coproduct at
 spin~$2$]
 \label{lem:coprod-T-miura}
@@ -4433,7 +4516,7 @@ $\cW_N$ for $N \geq 2$}
 Theorem~\ref{thm:w-infty-chiral-qg} established the chiral
 quantum group structure on $\cW_{1+\infty}[\Psi]$ via the
 scalar Maulik--Okounkov $R$-matrix. For the truncations
-$\cW_N = \cW_{1+\infty}/\cI_N$ (generators of spins
+$\cW_N = \cW_{1+\infty}/\mathcal{I}_N$ (generators of spins
 $1, 2, \ldots, N$) the $R$-matrix is no longer scalar: it
 is Yang's rational $R$-matrix on $\CC^N \otimes \CC^N$,
 and the RTT relation is a non-trivial matrix identity.
@@ -8657,6 +8740,45 @@ $3$d theory & CS gauge theory
 \end{center}
 \end{example}
 
+\begin{remark}[Stokes ray count for $\cW_N$]
+\label{rem:stokes-count-wN}
+The Virasoro ($\cW_2$) KZ connection has Poincar\'e rank~$2$
+and $4$~Stokes rays. For $\cW_N$ with $N \geq 2$, the
+highest-spin generator $W_N$ has OPE pole order $2N$
+($W_N(z)\,W_N(w) \sim c_N/(z-w)^{2N} + \cdots$). After
+$d$-log absorption (AP19), the $r$-matrix pole is $2N - 1$
+and the Poincar\'e rank is $2N - 2$. The Stokes ray count is
+\begin{equation}\label{eq:stokes-wN}
+  \#\{\text{Stokes rays for } \cW_N\}
+  \;=\; 2(2N - 2) \;=\; 4N - 4.
+\end{equation}
+At $N = 2$: $4$ rays (Virasoro). At $N = 3$: $8$ rays.
+The $W_N\textrm{-}W_N$ channel dominates the irregular
+singularity structure; the $T\textrm{-}T$ and mixed channels
+are subleading. The linear growth in $N$ reflects the
+unbounded spin tower of higher-spin gravity.
+\end{remark}
+
+\begin{remark}[The conformal anomaly forces the spectral parameter]
+\label{rem:conformal-anomaly-forces-spectral}
+The quartic pole $T(z)\,T(w) \sim (c/2)/(z-w)^4 + \cdots$
+obstructs any $z$-independent coproduct $\Delta(T) = T \otimes 1
++ 1 \otimes T + X$ for $c \neq 0$: the primitive ansatz produces
+a quartic pole of $c/(z-w)^4$ on the tensor product (each copy
+contributes $c/2$), but the coproduct must reproduce the
+original coefficient $c/2$. The excess is exactly
+\begin{equation}\label{eq:conformal-anomaly-obstruction}
+  \text{obstruction} \;=\; \frac{c}{2}
+  \;=\; \kappa(\mathrm{Vir}_c).
+\end{equation}
+At $c = 0$: obstruction vanishes, constant coproduct exists
+(the Heisenberg at $\Psi = 1$). At $c \neq 0$: the spectral
+parameter in $\Delta_z(T(u)) = T(u) \otimes T(u - z)$ absorbs
+the mismatch through the shift $u \mapsto u - z$.
+The conformal anomaly is the \emph{quantitative reason} the
+chiral Yangian coproduct must be spectral.
+\end{remark}
+
 
 % ================================================================
 \section{Ordered chiral homology on elliptic curves:
@@ -10700,12 +10822,16 @@ Theorem~\ref{thm:glN-chiral-qg} extends this to
 $\cW_N$ at all finite $N \geq 2$, where the $R$-matrix
 is Yang's matrix $R(u) = u\, I + \Psi\, P$ and the RTT
 is non-trivial.
-The remaining questions
-(Remark~\ref{rem:w-infty-vertex-gap}) are:
-(i)~the vertex-algebraic antipode (does
-$S(T(u)) = T(u)^{-1}$ on the Yangian lift to a
-vertex Hopf algebra structure on $\cW_{1+\infty}$?);
-(ii)~the Stokes
+The vertex-algebraic antipode question
+(Remark~\ref{rem:w-infty-vertex-gap}) is resolved:
+Proposition~\ref{prop:w-infty-antipode-obstruction} and
+Remark~\ref{rem:antipode-ope-analysis} show that
+$S(T(u)) = T(u)^{-1}$ does \emph{not} lift to a vertex
+Hopf algebra structure; $S$ preserves the Heisenberg OPE
+but fails on the Virasoro OPE (quartic pole shift
+$2(\Psi-1)(\Psi-2)$), and the spectral Hopf axiom fails
+independently.
+The remaining open question is the Stokes
 multipliers of the irregular KZ connection for $\cW_N$
 (Poincar\'e rank $N-1$), and whether they encode the
 higher-spin BPS spectrum.
