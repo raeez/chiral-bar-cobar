@@ -56,7 +56,7 @@ OUT_DIR   := out
 OUT_PDF   := $(OUT_DIR)/modular_koszul_duality.pdf
 
 # Working notes
-WN_DIR    := archive/source_tex
+WN_DIR    := .
 WN_TEX    := $(WN_DIR)/working_notes.tex
 WN_PDF    := $(WN_DIR)/working_notes.pdf
 OUT_WN    := $(OUT_DIR)/working_notes.pdf
