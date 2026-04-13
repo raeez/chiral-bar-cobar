@@ -3407,7 +3407,13 @@ status sharpens as follows.
   $\infty$-quasi-isomorphism class of the bulk algebra: existence of
   an $\Ethree^{\mathrm{top}}$ enhancement, factorization homology up
   to equivalence, deformation functors of the bulk algebra, and
-  homotopy-invariant module-category constructions.
+  homotopy-invariant module-category constructions. On that lane,
+  parts~\textup{(i)} and~\textup{(ii)} already have a second proof
+  path: the bulk factorization argument of the preceding remark
+  bypasses the brace deformation complex and recovers the same
+  cohomological $\Ethree^{\mathrm{top}}$ and transferred-model output
+  from local constancy of the $3$d bulk observables together with the
+  bulk-boundary identification of the derived center.
 
 \item \emph{What still needs the original complex.}
   A transferred model does not by itself control statements written
@@ -3418,7 +3424,11 @@ status sharpens as follows.
   concrete brace and BV operators before passing to cohomology,
   locality and renormalization arguments on a fixed complex, and
   filtered perturbative constructions in which the chosen
-  representatives of $Q$, $T$, and the higher operations matter.
+  representatives of $Q$, $T$, the filtration, and the higher
+  operations matter. In short: if the application is invariant under
+  $\Ethree_\infty$ quasi-isomorphism, HTT is enough; if it is written
+  on a specific BRST/BV complex, the original complex remains the
+  correct target.
 
 \item \emph{Relation to class~M and MC5.}
   The class~M failure in MC5 does not literally equal the
@@ -3431,55 +3441,69 @@ status sharpens as follows.
   not vanish on the ordinary complex. Thus MC5 is not the same
   obstruction, but it is strong evidence that class~M should not
   admit a naive original-complex $\Ethree$ lift without extra
-  completion or coderived input.
+  completion or coderived input. The correct inference is therefore:
+  MC5 does not prove failure of chain-level topologization, but it
+  does detect the same kind of chain-level instability that makes a
+  direct lift implausible for Virasoro and $\cW$-algebras.
 
 \item \emph{Affine Kac--Moody: an explicit gauge-rectification
   programme.}
   For $V_k(\fg)$ at non-critical level
   $k \neq -h^\vee$, Construction~\ref{constr:sugawara-antighost}
   gives an explicit unary contraction $G_1$. Acting on observables,
-  the Sugawara field is the holomorphic-translation operator, so the
-  operator identity
-  $[Q,G_1] = T_{\mathrm{Sug}} + (\text{$Q$-exact})$
-  suggests at arity~$1$ a relation of the form
+  the Sugawara field is the holomorphic-translation operator. Choose
+  a primitive $\eta_1$ for the explicit $Q$-exact correction term in
+  the identity
   \[
-    [m_1, G_1]
-    \;=\;
-    \partial_z + [m_1,h_1]
+    [Q,G_1] - T_{\mathrm{Sug}} \;=\; [Q,\eta_1].
   \]
-  after choosing a degree-$(-1)$ primitive $h_1$ for the
-  $Q$-exact term. Replacing $G_1$ by
-  $G_1-h_1$ kills the unary defect. The remaining error then starts
-  in arity at least~$2$:
+  Replacing $G_1$ by
+  $\widetilde G_1 := G_1 - \eta_1$ gives
+  $[Q,\widetilde G_1] = T_{\mathrm{Sug}}$ on the original BRST
+  complex. Let
+  $m = (m_1,m_2,\ldots)$ be the cofibrant brace/$A_\infty$ model of
+  Remark~\ref{rem:topologization-chain-vs-cohomology}. The residual
+  defect is then
   \[
-    D^{(1)}
-    \;:=\;
-    [m, G_1-h_1] - \partial_z.
+    D^{(1)} \;:=\; [m,\widetilde G_1] - \partial_z.
   \]
-  A concrete route to
-  Theorem~\ref{thm:topologization}\textup{(iii)} is to solve
-  recursively for degree-$0$ gauge parameters
-  $u_2,u_3,\ldots$ and, in the arity-completed deformation Lie
-  algebra, try to gauge-conjugate schematically by
+  Because $\partial_z$ commutes with the holomorphic operadic
+  compositions, $D^{(1)}$ is $d_m := [m,-]$-closed, so the first
+  obstruction is a genuine deformation-cohomology class.
+
+  If the lowest-arity component of $D^{(r)}$ is $d_m$-exact, choose a
+  primitive $\eta_r$ for that component. After the standard
+  suspension that identifies the brace deformation complex with its
+  controlling dg Lie algebra, $\eta_r$ becomes a degree-$0$ gauge
+  parameter $h_r$, and the natural move is
   \[
-    m^{(r+1)} := \exp(\operatorname{ad}_{u_r})\,m^{(r)},
+    m^{(r+1)} \;:=\; \exp(\operatorname{ad}_{h_r})\,m^{(r)},
     \qquad
-    G^{(r+1)} := \exp(\operatorname{ad}_{u_r})\,G^{(r)},
+    G^{(r+1)} \;:=\; \exp(\operatorname{ad}_{h_r})\,G^{(r)}.
   \]
-  choosing $u_r$ so that the lowest-arity piece of
-  $D^{(r)} := [m^{(r)},G^{(r)}]-\partial_z$ becomes
-  $d_{m^{(r)}}$-exact and is removed at the next step. This is a
-  research programme, not a proof. Its appeal on the affine lane is
-  that every input is explicit: the Sugawara field is explicit,
-  affine Kac--Moody is class~L with shadow depth
-  $r_{\max}=3$ on the present surface, and the harmonic cubic
-  correction is killed by the Jacobi identity
+  Baker--Campbell--Hausdorff then gives
+  \[
+    D^{(r+1)}
+    \;:=\;
+    [m^{(r+1)},G^{(r+1)}]-\partial_z
+    \;=\;
+    \exp(\operatorname{ad}_{h_r})\,D^{(r)},
+  \]
+  so the corrected arity is removed and the defect is pushed to
+  higher arity. This is the precise sense in which one tries to kill
+  the $Q$-exact term by a gauge transformation.
+
+  The open affine problem is therefore not whether one can write down
+  $G_1$ or even the first correction, but whether this recursive
+  gauge procedure terminates. Affine Kac--Moody is the best testing
+  ground: the Sugawara field is explicit, class~L has finite shadow
+  depth, and the harmonic cubic obstruction already vanishes by
+  Jacobi
   \textup{(}Proposition~\textup{\ref{prop:chain-level-three-obstructions}}\textup{)}.
-  These facts suggest that only finitely many arities should need
-  correction in the affine case. The remaining gap is precise: one
-  must identify the higher-arity defect in the brace deformation
-  complex with the Jacobi-controlled harmonic terms strongly enough to
-  prove that the recursive gauge equations close.
+  These facts suggest that only finitely many arities need
+  correction in the affine case. What remains to prove is that the
+  higher defect classes in the affine brace deformation complex are
+  exhausted by this finite Jacobi-controlled list.
 \end{enumerate}
 \end{remark}
 
