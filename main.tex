@@ -587,6 +587,11 @@
 \providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
 \providecommand{\GL}{\mathrm{GL}}
 \providecommand{\Imag}{\operatorname{Im}}
+\ifdefined\mainpreambleonly
+% Allow standalone companions to reuse the manuscript preamble without
+% executing the monograph body.
+\expandafter\endinput
+\fi
 \begin{document}
 
 % Fallback macros for imported chapter fragments.
@@ -780,7 +785,7 @@ For $\mathsf{E}_\infty$-chiral~$\cA$, the symmetric bar
 carries an $\mathsf{E}_2$-coalgebra structure; by the
 Higher Deligne Conjecture, the derived chiral center
 $Z_{\mathrm{ch}}^{\mathrm{der}}(\cA)
-= \operatorname{HH}^*(B^\Sigma(\cA), B^\Sigma(\cA))$
+= \operatorname{HH}^*(\cA, \cA)$
 carries $\mathsf{E}_3$ structure.
 For $\mathsf{E}_1$-chiral~$\cA$, the derived center is
 $\mathsf{E}_2$.
@@ -879,7 +884,7 @@ Throughout this manuscript:
 %
 % ======================================================================
 
-% \input{platonic_introduction_volume_I} % archived; content absorbed into introduction.tex
+% omitted: platonic_introduction_volume_I.tex (archived; content absorbed into introduction.tex)
 
 % ======================================================================
 %
@@ -993,7 +998,12 @@ the constructive content is the finite-order engine.
 % Curved structures, I-adic completion, coalgebra homological algebra,
 % bar-cobar inversion (Theorem A), Ran-space perspective, categorical logarithm.
 % --------------------------------------------------
-\include{chapters/theory/bar_cobar_adjunction}
+% Stub dispatcher removed from live build; compile the substantive chapter files directly.
+% \include{chapters/theory/bar_cobar_adjunction}
+\clearpage
+\input{chapters/theory/bar_cobar_adjunction_curved}
+\input{chapters/theory/bar_cobar_adjunction_inversion}
+\clearpage
 
 % Homotopy Transfer Theorem: the mechanical heart of A∞ structure production.
 % Promoted from Appendix to Part I: this is foundational, not supplementary.
@@ -1003,7 +1013,7 @@ the constructive content is the finite-order engine.
 % construction, E_2 collapse, functoriality, derived equivalence.
 % Phase 0 canonicalization: merged into bar_cobar_construction; preserved at
 % archive/legacy/bar_cobar_quasi_isomorphism_legacy.tex.
-% \input{chapters/theory/bar_cobar_quasi_isomorphism}
+% omitted: chapters/theory/bar_cobar_quasi_isomorphism.tex
 
 % --------------------------------------------------
 % Chapter 6: Non-Abelian Poincare Duality and Koszul Dual Cooperads
@@ -1024,24 +1034,30 @@ the constructive content is the finite-order engine.
 % Chapter 8: Higher Genus Extension and Quantum Corrections
 % From genus 0 to all genera. Deformation-obstruction complementarity.
 % --------------------------------------------------
-\include{chapters/theory/higher_genus}
+% Stub dispatcher removed from live build; compile the substantive chapter files directly.
+% \include{chapters/theory/higher_genus}
+\clearpage
+\input{chapters/theory/higher_genus_foundations}
+\input{chapters/theory/higher_genus_complementarity}
+\input{chapters/theory/higher_genus_modular_koszul}
+\clearpage
 % Phase 0 canonicalization: overlap archived.
-% \include{chapters/theory/higher_genus_full}
+% omitted: chapters/theory/higher_genus_full.tex
 
 % Higher genus inversion theorem: induction on moduli space strata.
 % Phase 0 canonicalization: merged into higher_genus; preserved at
 % archive/legacy/higher_genus_quasi_isomorphism_legacy.tex.
-% \input{chapters/theory/higher_genus_quasi_isomorphism}
+% omitted: chapters/theory/higher_genus_quasi_isomorphism.tex
 
 % Koszul duality across genera: absorbed into higher_genus.tex §sec:koszul-across-genera.
 % Original standalone file preserved at chapters/theory/koszul_across_genera.tex.
-% \input{chapters/theory/koszul_across_genera}
+% omitted: chapters/theory/koszul_across_genera.tex
 
 \include{chapters/theory/chiral_hochschild_koszul}
 
 % Three-level hierarchy: compressed into introduction.tex rem:three-level-dictionary.
 % Original standalone file preserved at chapters/theory/classical_to_chiral.tex.
-% \input{chapters/theory/classical_to_chiral}
+% omitted: chapters/theory/classical_to_chiral.tex
 
 \include{chapters/theory/chiral_modules}
 \include{chapters/theory/poincare_duality_quantum}
@@ -1073,9 +1089,12 @@ the constructive content is the finite-order engine.
 \label{part:characteristic-datum}
 
 \noindent
-The modular characteristic~$\kappa(\cA) = \mathrm{av}(r(z))$ is the
-linear leading term of the categorical logarithm: even this degree-$2$
-scalar is extracted from the collision residue $r(z)$ by a
+The modular characteristic~$\kappa(\cA)$ is the
+linear leading term of the categorical logarithm: at degree~$2$,
+$\kappa(\cA)=\mathrm{av}(r(z))$ in the abelian and scalar families,
+while non-abelian affine Kac--Moody satisfies
+$\kappa(V_k(\fg))=\mathrm{av}(r(z))+\dim(\fg)/2$. Even this scalar is
+extracted from the collision residue $r(z)$ by a
 $\Sigma_2$-coinvariant integral on the Fulton--MacPherson
 compactification $\overline{C}_2(X)$, so the shadow tower is rooted
 in curve geometry from the start.
@@ -1218,14 +1237,14 @@ inversion, not type exchange.
 \include{chapters/examples/beta_gamma}
 % Phase 0 canonicalization: overlapping stream collapsed into
 % chapters/examples/heisenberg_eisenstein.tex.
-% \input{chapters/examples/heisenberg_higher_genus}
+% omitted: chapters/examples/heisenberg_higher_genus.tex
 
 % Obstruction class explicit computations: Heisenberg, Kac--Moody, W-algebras.
 % obs_g = kappa * lambda_g for Heisenberg; Sugawara shift for Kac--Moody.
 % Nilpotence proof, deformation-obstruction pairing via Serre duality.
 % Phase 0 canonicalization: overlapping stream consolidated in
 % chapters/theory/higher_genus.tex.
-% \input{chapters/examples/obstruction_classes}
+% omitted: chapters/examples/obstruction_classes.tex
 
 % Complete genus expansion of Heisenberg with Eisenstein series E_2, E_4, E_6,
 % Dedekind eta. Modular transformation laws. Agreement with DMVV.
@@ -1242,7 +1261,7 @@ inversion, not type exchange.
 % --------------------------------------------------
 \include{chapters/examples/kac_moody}
 % Phase 0 canonicalization: computational overlap archived.
-% \include{chapters/examples/kac_moody_computations}
+% omitted: chapters/examples/kac_moody_computations.tex
 
 % --------------------------------------------------
 % Chapter 11: W-Algebras
@@ -1253,7 +1272,7 @@ inversion, not type exchange.
 % --------------------------------------------------
 \include{chapters/examples/w_algebras}
 % Phase 0 canonicalization: computational overlap archived.
-% \include{chapters/examples/w_algebras_computations}
+% omitted: chapters/examples/w_algebras_computations.tex
 
 % Complete W_3 composite field Lambda derivation: alpha(c) = 16/(22+5c),
 % beta(c) = 3/10. Mode expansion, central charge analysis, literature match.
@@ -1313,7 +1332,7 @@ inversion, not type exchange.
 % --------------------------------------------------
 \include{chapters/examples/deformation_quantization}
 % Phase 0 canonicalization: complete overlap archived.
-% \include{chapters/examples/deformation_quantization_complete}
+% omitted: chapters/examples/deformation_quantization_complete.tex
 
 % Deformation quantization examples: coisson (PVA) to E-infinity chiral,
 % P-infinity chiral to E-1 chiral, formality, star product, Maurer--Cartan.
@@ -1325,7 +1344,11 @@ inversion, not type exchange.
 % Drinfeld presentation, E_1 classification, BFN construction, CoHA.
 % \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 % --------------------------------------------------
-\input{chapters/examples/yangians}
+% Stub dispatcher removed from live build; compile the substantive chapter files directly.
+% \input{chapters/examples/yangians}
+\input{chapters/examples/yangians_foundations}
+\input{chapters/examples/yangians_computations}
+\input{chapters/examples/yangians_drinfeld_kohno}
 
 % --------------------------------------------------
 % Chapter: Symmetric Orbifolds
@@ -1344,7 +1367,7 @@ inversion, not type exchange.
 
 \ifannalsedition\else
  % --- Archive-only: extended example families and census ---
- % \input{chapters/examples/toroidal_elliptic} % Moved to Vol III
+ % omitted: chapters/examples/toroidal_elliptic.tex (moved to Vol III)
  \input{chapters/examples/genus_expansions}
  \input{chapters/examples/bar_complex_tables}
  \input{chapters/examples/landscape_census}
@@ -1378,7 +1401,7 @@ Yang--Baxter equation at $u = 0$, and the BRST Ward identity for
 triple collisions. The categorical logarithm therefore has
 incarnations in every field that uses propagators on configuration
 spaces: its bar differential is the worldsheet BRST differential
-(Chapter~\ref{ch:bv-brst}); its genus tower is the string
+(Chapter~\ref{ch:v1-bv-brst}); its genus tower is the string
 perturbation series; its graph expansion produces Kontsevich weights
 and Vassiliev invariants; at critical level $k = -h^\vee$ it
 recovers the algebra of opers and enters the geometric Langlands
@@ -1389,9 +1412,42 @@ One kernel. One relation. Many incarnations.
 % Poincare/Feynman chapters: sequential \inputs to avoid .aux proliferation
 \input{chapters/connections/poincare_computations}
 \ifannalsedition
- % Physics chapters migrated to Vol II
- \phantomsection\label{ch:feynman}%
- \phantomsection\label{ch:bv-brst}%
+ % Physics chapters migrated to Vol II -- phantom stubs for cross-references
+ \phantomsection\label{ch:v1-feynman}%
+ \phantomsection\label{ch:v1-bv-brst}%
+ % Labels from feynman_diagrams.tex referenced by other chapters
+ \phantomsection\label{conj:v1-bar-worldline}%
+ \phantomsection\label{conj:v1-bphz-recursion}%
+ \phantomsection\label{conj:v1-disk-local-perturbative-fm}%
+ \phantomsection\label{cor:disk-local-ternary-on-brstbar-locus}%
+ \phantomsection\label{cor:genus0-named-coefficient-packet}%
+ \phantomsection\label{cor:genus0-standard-chart-two-residues}%
+ \phantomsection\label{cor:genus0-two-coefficient-packet}%
+ \phantomsection\label{prop:compactified-ternary-two-channel}%
+ \phantomsection\label{prop:disk-local-binary-ternary-reduction}%
+ \phantomsection\label{rem:feynman-bar-bridge}%
+ \phantomsection\label{rem:quantum-master-complete}%
+ \phantomsection\label{thm:mk-general-structure}%
+ % Labels from feynman_connection.tex referenced by other chapters
+ \phantomsection\label{comp:v1-virasoro-m4}%
+ \phantomsection\label{conj:v1-bar-cobar-path-integral}%
+ \phantomsection\label{conj:physical-pairing}%
+ \phantomsection\label{prop:chain-level-three-obstructions}%
+ \phantomsection\label{rem:bv-equals-bar-cobar}%
+ \phantomsection\label{sec:brst-bar-chain-map}%
+ \phantomsection\label{thm:brst-bar-genus0}%
+ % Labels from bv_brst.tex referenced by other chapters
+ \phantomsection\label{cor:anomaly-duality-km}%
+ \phantomsection\label{cor:anomaly-duality-w}%
+ \phantomsection\label{cor:anomaly-physical-genus0}%
+ \phantomsection\label{lem:brst-nilpotence}%
+ \phantomsection\label{rem:bv-bar-bridge}%
+ \phantomsection\label{thm:bar-semi-infinite-km}%
+ \phantomsection\label{thm:bar-semi-infinite-w}%
+ \phantomsection\label{thm:bv-bar-coderived}%
+ \phantomsection\label{thm:bv-functor}%
+ \phantomsection\label{thm:config-space-bv}%
+ \phantomsection\label{thm:heisenberg-bv-bar-all-genera}%
 \else
 \input{chapters/connections/feynman_diagrams}
 \input{chapters/connections/feynman_connection}
@@ -1400,22 +1456,22 @@ One kernel. One relation. Many incarnations.
 
 \ifannalsedition\else
  % --- Archive-only: physics-facing bridges and frontier connections ---
- % \input{chapters/connections/holomorphic_topological} % migrated to Vol II Part V
- % \input{chapters/connections/kontsevich_integral} % migrated to Vol II Part III
- % \input{chapters/connections/physical_origins} % 19-line stub; content absorbed into Vol II
+ % omitted: chapters/connections/holomorphic_topological.tex (migrated to Vol II Part V)
+ % omitted: chapters/connections/kontsevich_integral.tex (migrated to Vol II Part III)
+ % omitted: chapters/connections/physical_origins.tex (19-line stub; content absorbed into Vol II)
  \input{chapters/connections/genus_complete}
  % Yang--Mills boundary theory — migrated to Vol II Part V
- % \input{chapters/connections/ym_boundary_theory} % Migrated to Vol II
- % \input{chapters/connections/ym_higher_body_couplings} % Migrated to Vol II
- % \input{chapters/connections/ym_instanton_screening} % Migrated to Vol II
+ % omitted: chapters/connections/ym_boundary_theory.tex (migrated to Vol II)
+ % omitted: chapters/connections/ym_higher_body_couplings.tex (migrated to Vol II)
+ % omitted: chapters/connections/ym_instanton_screening.tex (migrated to Vol II)
  % Derived structures and geometric Langlands
  \input{chapters/theory/derived_langlands}
  % --- Promoted from appendices: substantial bridge chapters ---
  % spectral_sequences and existence_criteria moved to Appendices (EXEC-17)
- % \input{chapters/connections/casimir_divisor_core_transport} % migrated to Vol II Part II
- % \input{chapters/connections/typeA_baxter_rees_theta} % migrated to Vol II Part II
- % \input{chapters/connections/shifted_rtt_duality_orthogonal_coideals} % migrated to Vol II Part II
- % \input{chapters/connections/dg_shifted_factorization_bridge} % removed; content in Vol II Part II
+ % omitted: chapters/connections/casimir_divisor_core_transport.tex (migrated to Vol II Part II)
+ % omitted: chapters/connections/typeA_baxter_rees_theta.tex (migrated to Vol II Part II)
+ % omitted: chapters/connections/shifted_rtt_duality_orthogonal_coideals.tex (migrated to Vol II Part II)
+ % omitted: chapters/connections/dg_shifted_factorization_bridge.tex (removed; content in Vol II Part II)
 \fi
 
 % ======================================================================
@@ -1496,7 +1552,7 @@ higher-spin geometry, entanglement, and the open problems toward which
 the engine points.
 
 \input{chapters/connections/frontier_modular_holography_platonic}
-% \input{chapters/connections/twisted_holography_quantum_gravity}
+% omitted: chapters/connections/twisted_holography_quantum_gravity.tex
 % thqg_open_closed_realization promoted to Part II (The Characteristic Datum)
 \input{chapters/connections/entanglement_modular_koszul}
 \input{chapters/connections/thqg_entanglement_programme}
@@ -1790,7 +1846,6 @@ the engine points.
  \phantomsection\label{tab:master-invariants}%
  \phantomsection\label{tab:shadow-tower-census}%
  \phantomsection\label{eq:sl2-bar-matrix}%
- \phantomsection\label{eq:verlinde-general}%
  % --- landscape_census.tex labels ---
  \phantomsection\label{conj:sl3-bar-gf}%
  \phantomsection\label{conj:w3-bar-gf}%
