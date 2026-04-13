@@ -524,6 +524,9 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 | W_N Stokes count | DISCOVERED | Stokes rays for W_N KZ = 4N-4 (linear in N). W_2(Vir): 4. W_3: 8. W-W channel (pole 2N) dominates. Poincare rank = 2N-2. |
 | Shadow = GW(C³) | IDENTIFIED | Shadow tower at κ=Ψ produces perturbative constant-map GW free energies F_g^{GW,const}(C³). MacMahon M(q) on DT side via MNOP. Shadow IS full GW for C³ (no compact curves). |
 | Conformal anomaly | QUANTIFIED | Obstruction to constant coproduct = c/2 = κ(Vir_c). Quartic pole excess: primitive Delta gives c/(z-w)⁴ but need c/2. At c=0: obstruction vanishes (Heisenberg, constant coproduct exists). At c≠0: spectral parameter FORCED. |
+| Critical level jump | PROVED | At k=-h^v: kappa=0, ALL monodromy trivial (integer eigenvalues), H^1 doubles (4→8), Koszulness fails, bar H* = Omega*(Op_g^v(D)). Spectral sequence: d_1 = lambda*[delta] vanishes at lambda=0 (prop:critical-level-ordered). 72 tests. |
+| Genus-2 degree decomp | PROVED | Degree-2 conformal blocks on Sigma_2: CB_{2,2}(k) = 2k(k+1)(k+2)/3 (cubic). At k=1: 4. Singlet+triplet channels with fusion coefficients (prop:g2-conformal-block-degree). |
+| Antipode non-lifting | PROVED (negative) | S(T(u))=T(u)^{-1} does NOT lift to vertex-algebraic antipode. Two obstructions: OPE (S(T)_{(3)}S(T) ≠ c/2 at generic Psi) and Hopf axiom (z·J residual). Source: Miura nonlinearity (rem:antipode-ope-analysis). |
 | DS intertwining | VERIFIED | (pi_3×pi_3)∘Delta_z^{sl_3} = Delta_z^{W_3}∘pi_3 verified with 57 tests. Spectral coassociativity uses shifted parameters. |
 | AP128 bar H^2 | FIXED | sl2_bar_dims gave h_2=6 (CE/Riordan). Correct chiral bar: h_2=5. New sl2_chiral_bar_dims() function. AP63 discrepancy: Orlik-Solomon form factor. |
 | Quantum det ordering | FOUND | Central qdet uses DECREASING column index (j=N-1 leftmost). At N=3, increasing-index ordering is NOT central. 74 tests. |

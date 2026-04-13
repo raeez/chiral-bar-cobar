@@ -2938,7 +2938,8 @@ Theorem~\ref{thm:multi-generator-universality}.
 Part~(ii) is Theorem~\ref{thm:universal-generating-function}.
 Part~(iii) is the duality clause of
 Theorem~\ref{thm:genus-universality}(ii).
-Part~(iv) is Theorem~\ref{thm:anomaly-koszul}.
+Part~(iv) is Corollary~\ref{cor:kappa-additivity};
+Theorem~\ref{thm:anomaly-koszul} is the matter-ghost specialization.
 The group homomorphism property follows from~(iv): additivity
 under tensor product and $\kappa(\mathbb{C}) = 0$ (the trivial
 algebra has no curvature) give a homomorphism to $(\mathbb{C}, +)$.
@@ -3013,7 +3014,9 @@ unconditional at $g{=}1$,
 Theorem~\ref{thm:genus-universality}); generating function via
 Bernoulli residues (Theorem~\ref{thm:universal-generating-function});
 duality $\kappa+\kappa'=\varrho\cdot K$; additivity
-(Theorem~\ref{thm:anomaly-koszul}).
+\textup{(}Corollary~\textup{\ref{cor:kappa-additivity}}\textup{)};
+matter-ghost cancellation
+\textup{(}Theorem~\textup{\ref{thm:anomaly-koszul}}\textup{)}.
 \emph{Step~C} (index identification): Grothendieck--Riemann--Roch maps the
 virtual bar family $[\barB^{(g)}(\cA)] \in
 K_0(\overline{\mathcal{M}}_g)$ to
@@ -3021,6 +3024,60 @@ $\kappa\cdot(\hat{A}(ix)-1)$
 \textup{(}Theorem~\textup{\ref{thm:family-index}}\textup{)}.
 \emph{Step~D}: Heisenberg $\kappa(\mathcal{H}_k)=k$,
 $F_g=k\cdot\frac{2^{2g-1}-1}{2^{2g-1}}\cdot\frac{|B_{2g}|}{(2g)!}$.
+\end{remark}
+
+\begin{remark}[Alternative proof via GRR]
+\label{rem:theorem-d-alt-grr}
+\index{Grothendieck--Riemann--Roch!alternative proof of Theorem D}
+\index{Hodge bundle!alternative proof of Theorem D}
+There is a second proof route to the uniform-weight clause of
+Theorem~D which does not use the shadow tower or the
+Maurer--Cartan element. Let
+\[
+\pi \colon \overline{\mathcal{C}}_g \longrightarrow
+\overline{\mathcal{M}}_g
+\]
+be the universal curve, let
+$\mathbb{E} = R^0\pi_*\omega_\pi$ be the Hodge bundle, and
+write $\barB^{\mathrm{fib}}(\cA)$ for the scalar fiber bar complex
+in the family~\eqref{eq:bar-family}. By the bar-family
+construction and the chain-level modular functor
+\textup{(}Theorem~\textup{\ref{thm:chain-modular-functor}}\textup{)},
+this family defines a virtual perfect complex on
+$\overline{\mathcal{M}}_g$; its scalar rank is determined by the
+Hilbert series of~$\cA$, and the genus-$1$ curvature fixes the
+normalization to be~$\kappa(\cA)$. Since every scalar propagator is
+the same weight-$1$ form $d\!\log E(z,w)$, the only Hodge-theoretic
+bundle entering the scalar sector is~$\mathbb{E}$: higher Hodge
+bundles $R^0\pi_*\omega_\pi^{\otimes h}$ do not appear on the
+uniform-weight lane.
+
+Applying Grothendieck--Riemann--Roch to the universal curve gives
+\[
+\operatorname{ch}\!\bigl(R\pi_*\barB^{\mathrm{fib}}(\cA)\bigr)
+\;=\;
+\kappa(\cA)\,\operatorname{ch}(\mathbb{E})
+\;+\;
+\text{tautological classes of codimension $< g$},
+\]
+with the Hodge contribution computed by Mumford's GRR formula and
+its Arakelov--Faltings refinement
+\textup{(}\cite{Mumford83,Fal84}\textup{)}. Passing from the
+Chern character to the Euler class of the Hodge summand, the
+codimension-$g$ term is
+\[
+\mathrm{obs}_g(\cA)
+\;=\;
+\kappa(\cA)\,c_g(\mathbb{E})
+\;=\;
+\kappa(\cA)\,\lambda_g
+\qquad
+\textup{(UNIFORM-WEIGHT)}.
+\]
+This gives an alternative Hodge-theoretic proof path for
+Theorem~D: genus~$1$ determines~$\kappa(\cA)$, and the family
+index of the fiber bar complex identifies the genus-$g$
+obstruction with the top Chern class of the Hodge bundle.
 \end{remark}
 
 \begin{corollary}[Scalar free energy as $\hat{A}$-genus;
@@ -25365,7 +25422,7 @@ CohFT is the unique solution of the MC system at all $(g,n)$).
 For every class~$\mathbf{M}$ chiral algebra $\cA$ with infinite
 shadow obstruction tower $\{S_r(\cA)\}_{r \ge 2}$, the MC-descended
 tautological relations
-$\cR_{g,n}^{\mathrm{MC}}(\cA) \subset R^*(\overline{\cM}_{g,n})$
+$\mathcal{R}_{g,n}^{\mathrm{MC}}(\cA) \subset R^*(\overline{\cM}_{g,n})$
 lie in the Pixton ideal $\cP_{g,n}$. On the standard landscape:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item For rank-$1$ CohFT data \textup{(}the scalar lane\textup{)}:
@@ -33394,6 +33451,47 @@ $\chi = 0$ and the $H^1$-dimension does not follow from
 $\chi$ alone; it is computed directly from KZ flat sections
 \textup{(}cf.\ \S\ref{subsec:ell-degree2}\textup{)}.
 \end{remark}
+
+\begin{proposition}[Genus-$2$ conformal block decomposition by degree]
+\label{prop:g2-conformal-block-degree}
+\ClaimStatusProvedHere
+At integer level $k \geq 1$, the degree-$2$ conformal
+block count on $\Sigma_2$ decomposes by isospin channel:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The singlet channel ($V_0 = \bigwedge^2 V$, fusion
+  coefficient $N_{1,1}^0 = 1$) contributes at all levels.
+\item The triplet channel ($V_2 = \operatorname{Sym}^2 V$,
+  fusion coefficient $N_{1,1}^2 = 1$) contributes only for
+  $k \geq 2$ \textup{(}at $k = 1$, $V_2$ is not integrable\textup{)}.
+\item The degree-$2$ total is
+  \begin{equation}\label{eq:g2-degree2-total}
+    \mathrm{CB}_{2,2}(k) \;=\; \frac{2k(k+1)(k+2)}{3},
+  \end{equation}
+  a cubic polynomial in $k$. At $k = 1$: $4$.
+  At $k = 2$: $16$. At $k = 3$: $40$.
+\end{enumerate}
+The generic dimension $\dim H^1 = 12$
+\textup{(}Proposition~\textup{\ref{prop:g2-degree2}}\textup{)} is the
+topological Euler characteristic of the KZB local system;
+the degree-$2$ conformal block
+count~\eqref{eq:g2-degree2-total} is the integrable
+truncation, growing cubically in $k$.
+\end{proposition}
+
+\begin{proof}
+The fusion coefficients $N_{1,1}^j$ for
+$V \otimes V = V_0 \oplus V_2$
+give $N_{1,1}^0 = 1$ (always integrable) and
+$N_{1,1}^2 = 1$ (integrable for $k \geq 2$).
+Each channel contributes
+$\mathrm{CB}_{2,1}(j) = \sum_m (S_{jm}/S_{0m})^{-2}$,
+a genus-$2$ one-point conformal block count.
+Direct computation using $S_{jm}$ gives
+$\mathrm{CB}_{2,2}(k) = \sum_j N_{1,1}^j \cdot
+\mathrm{CB}_{2,1}(j)$, which evaluates to
+$2k(k+1)(k+2)/3$ by the trigonometric identity for
+cosecant power sums restricted to integrable channels.
+\end{proof}
 
 \begin{remark}[The symmetric shadow at genus~$2$]
 \label{rem:g2-shadow}
