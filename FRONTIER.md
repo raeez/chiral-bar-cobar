@@ -490,3 +490,162 @@ Three consecutive swarms: ~22 SC/bar agents, ~105 frontier research agents, ~90 
 | **Total** | | **4,267** | **~3,500** | |
 
 Tests: 119,081 collected across 1,315+ files. Engines: 1,255+.
+
+---
+
+## Cross-Volume: Vol III 6d hCS Session (2026-04-12/13, ~170 agents)
+
+Key Vol III results affecting Vol I:
+- **A_∞ coproduct = shadow tower**: shadow S_k = coefficient of A_∞ correction δ^{(k)} to coproduct. Shadow tower encodes coproduct corrections, not just classification.
+- **ZTE failure**: factored S=RRR does NOT solve tetrahedron at O(κ²). E_3 corrections needed.
+- **E_3 bar cohomology**: class L → (1+t)^{3g}, class C → (1+t)^{3g}, class M → ∞-dim.
+- **E_1-chiral bialgebra**: ordered bar B^{ord} with deconcatenation = correct Hopf framework. Symmetric bar B^Σ kills Hopf via averaging.
+- **Conductors**: G/L: ρ_K=0. M(Vir): 13. K3×E: 0 (free-field). Family-dependent.
+- See ~/calabi-yau-quantum-groups/FRONTIER.md F13-F24 for full details.
+
+---
+
+## Cross-Volume: Chiral Quantum Group Session (2026-04-12/13, 96 commits, 80+ agents)
+
+The largest single session in the programme's history. 96 commits across 3 volumes, 80+ agents, ~1,300 new tests, ~4,739pp total. Every result verified through 3+ independent paths.
+
+### F25. E_3 IDENTIFICATION THEOREM (CONJECTURE → THEOREM)
+
+**thm:e3-identification** in `en_koszul_duality.tex`. For simple g, the derived chiral centre Z^{der}_{ch}(V_k(g)) and the CFG perturbative Chern-Simons E_3-algebra A^lambda are ISOMORPHIC as formal deformation families of E_3-algebras over lambda·H^3(g)[[lambda]], lambda = k + h^v.
+
+**Proof mechanism:** E_3 formality (Kontsevich-Tamarkin-Fresse-Willwacher) reduces E_3 deformations to P_3 deformations. For simple g, H^3(g) = C (Whitehead), so the deformation space is 1-dimensional at each order. The P_3 bracket matching on the formal disk (thm:chiral-e3-cfg) fixes the scalar at each order. Induction + passage to the lambda-adic limit.
+
+**Citation chain (complete):** Kontsevich 1999 → Tamarkin 2003 → Fresse-Willwacher 2020 (E_n formality) → lem:en-formality-deformation-classification (operad formality ⟹ algebra deformation equivalence, via Fresse Vol II Thm 16.1.1 + Lurie HA 5.1.4.7).
+
+**Extended to gl_N:** Two independent invariant bilinear forms B_tr(X,Y) = tr(XY) and B_ab(X,Y) = tr(X)tr(Y) are both determined by the formal disk comparison, extending the theorem to gl_N (rem:e3-non-simple-gl-N).
+
+**Alternative proof via Dunn:** prop:e3-via-dunn gives E_3^{top} via CG factorization + Sugawara topologization + Dunn additivity, bypassing HDC entirely.
+
+**Status:** PROVED for simple g. Extended to gl_N. Open for exceptional reductive g with dim H^3 > 2.
+
+### F26. gl_N CHIRAL QUANTUM GROUP (ALL N ≥ 1)
+
+**thm:glN-chiral-qg** in `ordered_associative_chiral_kd.tex`. W_N carries a chiral quantum group datum for ALL N ≥ 1: N×N transfer matrix T(u), Yang R-matrix R(u) = uI + Psi·P, Drinfeld coproduct Delta_z(T(u)) = T(u)·T(u-z) as matrix multiplication in C^N, non-trivial RTT for N ≥ 2.
+
+**Concrete verifications:** N=2 worked example (170 lines, explicit 4×4 R-matrix, all RTT relations, quantum determinant). N=3 engine (53 tests, 9×9 R-matrix, all 81 RTT component relations, qdet centrality). OPE compatibility by coderivation on Koszul-locus bar complex + JKL vertex bialgebra on CoHA.
+
+**Convention finding:** Central qdet uses DECREASING column index ordering (j=N-1 leftmost). At N≥3, increasing-index ordering is NOT central (FM33).
+
+**DS intertwining verified:** (pi_3 × pi_3) ∘ Delta_z^{sl_3} = Delta_z^{W_3} ∘ pi_3 (57 tests). Spectral coassociativity uses SHIFTED parameters.
+
+### F27. VERLINDE POLYNOMIAL FAMILY (g = 0..6)
+
+**thm:verlinde-polynomial-family** in `higher_genus_modular_koszul.tex`. The Verlinde dimensions Z_g(k) for sl_2-hat are polynomials P_g(n) of degree 3(g-1) in n = k+2 with universal factorization:
+
+P_g(n) = n^{g-1}(n² - 1) · R_{g-2}(n²)
+
+**Explicit formulas:**
+- P_2 = n(n²-1)/6 = binom(k+3,3) (tetrahedral numbers, OEIS A000292)
+- P_3 = n²(n²-1)(n²+11)/180
+- P_4 = n³(n²-1)(2n⁴+23n²+191)/7560
+- P_5 = n⁴(n²-1)(n²+11)(3n⁴+10n²+227)/226800
+- P_6 = n⁵(n²-1)(2n⁸+35n⁶+321n⁴+2125n²+14797)/2993760
+
+**Leading asymptotics:** P_g(n) ~ ζ(2g-2)/(2^{g-2}·π^{2g-2}) · n^{3(g-1)}.
+
+**Rational generating function:** G_n(x) = Σ_{j=1}^{n-1} 1/(1 - a_j·x), a_j = n/(2sin²(πj/n)). This is rational with n-1 simple poles: the cosecant power sum structure.
+
+**Structural:** P_2 = binom(k+3,3) is the unique genus with a binomial form. At g ≥ 3, irreducible factors in R_{g-2}(n²) appear ((n²+11) at g=3, shared with g=5).
+
+### F28. MIURA COEFFICIENT (Psi-1)/Psi IS UNIVERSAL
+
+**conj:miura-cross-universality** in standalone. The primary cross-term coefficient in Delta_z(W_s) is (Psi-1)/Psi on J⊗W_{s-1} + W_{s-1}⊗J for ALL s ≥ 2.
+
+**Verified at spins 2, 3, 4.** The mechanism is manifestly spin-independent: binom(s-2,s-2) = 1 from the Drinfeld formula, minus 1/Psi from the Miura :J·W_{s-1}: coefficient (which is 1/Psi for all s ≥ 3; at s=2 the symmetric product :J²:/(2Psi) with the factor 2 from Delta_z(:J²:) reproduces the same -1/Psi).
+
+**Spin-3 explicit formula (67 tests):**
+Delta_z(W) = W⊗1 + 1⊗W + (Psi-1)/Psi·(J⊗T+T⊗J) + (1-Psi)/(2Psi²)·(J⊗:J²:+:J²:⊗J) + (Psi-1)/Psi·z·J⊗J + 2z·1⊗T + z²·1⊗J
+
+**New composite correction:** (1-Psi)/(2Psi²) at spin 3, with opposite sign, suppressed by 1/(2Psi).
+
+### F29. CRITICAL LEVEL CENTER JUMP
+
+**prop:critical-level-ordered** in `ordered_associative_chiral_kd.tex`. At k = -h^v for sl_2:
+
+1. kappa = 0 (bar complex uncurved)
+2. ALL monodromy trivial (Casimir eigenvalues -1, +3 are integers)
+3. H^1 doubles: 4 → 8 (total triples: 4 → 12)
+4. Koszulness FAILS: bar H* spreads to Omega*(Op_{sl_2}(D))
+5. Mechanism: d_k = d_crit + lambda·delta; at lambda = k+2 = 0, d_1 page vanishes
+
+**Three-level contrast:** Generic (Koszul, infinite monodromy, center = C) vs Integrable (Koszul, finite monodromy, center = C^{k+1}) vs Critical (NOT Koszul, trivial monodromy, center = C[S_2] infinite). The entire r-matrix lives in ker(av) at critical level.
+
+### F30. ANTIPODE DOES NOT LIFT
+
+**rem:antipode-ope-analysis** in standalone. S(T(u)) = T(u)^{-1} on the Yangian Y(gl_1-hat) does NOT lift to a vertex-algebraic antipode on W_{1+infinity}[Psi].
+
+**Two independent obstructions:**
+1. OPE: S(T)_{(3)}S(T) = c/2 + 2(Psi-1)(Psi-2) ≠ c/2 at generic Psi
+2. Hopf axiom: z·J residual persists at all Psi
+
+Both vanish only at Psi ∈ {1, 2} (free boson c=1, bc ghosts c=-2). Source: Miura nonlinearity T = psi_2 - J²/(2Psi).
+
+### F31. CONFORMAL ANOMALY FORCES SPECTRAL PARAMETER
+
+**rem:conformal-anomaly-forces-spectral** in standalone. The quartic pole T(z)T(w) ~ (c/2)/(z-w)⁴ obstructs constant coproducts: primitive Delta gives c/(z-w)⁴ on the tensor product (each copy contributes c/2), but need c/2. Excess = c/2 = kappa(Vir_c).
+
+At c = 0: obstruction vanishes, constant coproduct exists (Heisenberg). At c ≠ 0: spectral parameter z in Delta_z(T(u)) = T(u)⊗T(u-z) ABSORBS the mismatch through the shift u → u-z.
+
+### F32. W_N STOKES RAY COUNT
+
+**rem:stokes-count-wN** in standalone. Stokes rays = 4N-4 for the W_N KZ connection at degree 2. The W_N-W_N OPE has pole order 2N; d-log absorption gives r-matrix pole 2N-1; Poincaré rank 2N-2; Stokes rays 2(2N-2) = 4N-4.
+
+W_2 (Virasoro): 4 rays. W_3: 8 rays. Linear growth in N reflects the unbounded spin tower of higher-spin gravity.
+
+### F33. SHADOW TOWER = PERTURBATIVE GW(C³)
+
+The shadow tower at kappa = Psi produces the perturbative constant-map Gromov-Witten free energies F_g^{GW,const}(C³). The MacMahon function M(q) = prod(1-q^n)^{-n} lives on the DT side. Bridge: MNOP/DT-GW correspondence under q = -e^{i·g_s}. For C³ specifically: no compact curves, shadow IS the full GW partition function.
+
+### F34. GENUS-2 CONFORMAL BLOCK DECOMPOSITION
+
+**prop:g2-conformal-block-degree** in `higher_genus_modular_koszul.tex`. Degree-2 conformal blocks on Sigma_2: CB_{2,2}(k) = 2k(k+1)(k+2)/3 (cubic in k). At k=1: 4 (triplet truncated). At k=2: 16. At k=3: 40.
+
+Generic dim H^1 = 12 is topological (Euler characteristic). Degree-2 CB count is the integrable truncation, growing cubically.
+
+### F35. CONVENTION HARMONIZATIONS
+
+1. **Sign convention:** nabla = d-A throughout standalone (23 fixes, every flat section verified)
+2. **Belavin r-matrix:** Pauli decomposition, NOT Weierstrass zeta (breaks CYBE). Two-step degeneration: elliptic → trigonometric → rational.
+3. **Cross-volume r-matrix:** 3 discrepancies fixed (genus1_seven_faces, holographic_datum_master, log_ht_monodromy_core)
+4. **AP128 bar H^2:** sl2_bar_dims gave h_2=6 (CE/Riordan); correct chiral bar: 5. New sl2_chiral_bar_dims() function.
+5. **Heat equation prefactor:** 1/(4πi) diagonal, 1/(2πi) off-diagonal (symmetric matrix chain rule)
+
+### F36. COMPUTE INFRASTRUCTURE
+
+**20+ new engines, ~1,300 new tests.** Key engines:
+- verlinde_ordered_engine (222 tests): S-matrix, handle, quantum dim, 3-path verification
+- glN_affine_yangian_chiral_qg_engine (69) + gl3_yangian_verification (53): Yang R-matrix, RTT, qdet
+- miura_spin3_coproduct (67) + miura_coproduct_universal (51): Explicit W-field coproducts
+- genus2_factorization_engine (189): Separating/non-separating, fusion channels, Z_2(k) = binom(k+3,3)
+- belavin_rmatrix_verification (36): Pauli decomposition, CYBE, degeneration
+- ds_coproduct_intertwining (57): DS compatibility pi_3 × pi_3 ∘ Delta_z = Delta_z^{W_3} ∘ pi_3
+- ordered_chirhoch_critical_sl2 (72): Critical level center jump
+- quantum_determinant_centrality (74): Central qdet, column ordering convention
+- ker_av_general_g (51) + averaging_kernel_explicit: Explicit basis at d=3
+
+### OPEN FRONTIER (queued for next session)
+
+**Rate-limited agents to relaunch:**
+- FRONTIER-03: DDYBE via vertex-IRF transform
+- FRONTIER-06: Elliptic R-matrix coproduct for E_{tau,eta}(sl_2)
+- FRONTIER-07: Chain-level E_3 for class M via coderived category
+- FRONTIER-08: Drinfeld center = bulk (conj:drinfeld-center-equals-bulk) for Heisenberg
+- FRONTIER-09: 6d hCS defect algebra = W_{1+infinity}
+- FRONTIER-10: Jones polynomial from ordered chiral homology
+- FRONTIER-14: Koszul locus boundary at special Psi values
+- FRONTIER-15: Genus-2 non-separating data (off-diagonal Omega_12)
+- FRONTIER-17: Z_g polynomial degree pattern (leading coefficients)
+- FRONTIER-20: Ordered chiral homology functoriality
+
+**Mathematical open problems:**
+1. Miura universality: conjecture → theorem (spin-independent mechanism proved but formal proof needs the Miura coefficient 1/Psi at all spins)
+2. DDYBE at genus 2 (the vertex-IRF correspondence is the obstruction)
+3. Chain-level E_3 for class M (coderived category path via conj:coderived-e3)
+4. The Drinfeld center conjecture (the deepest single conjecture)
+5. Standalone trimming: 118pp → ~75pp gateway paper
+6. Full regression suite: make test-full (~120K tests, ~1hr)
