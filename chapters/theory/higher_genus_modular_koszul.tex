@@ -22641,13 +22641,15 @@ hypothesis from Theorem~D and C2]
 \label{rem:theorem-d-c2-multiweight-programme}
 \index{uniform-weight hypothesis!removal programme}
 \index{cross-channel correction!research programme}
-The present surface already splits into a proved numerical statement
-and an open class-level lift.
+The live surface now separates into three layers:
+a proved scalar theorem on the uniform-weight lane,
+a proved numerical all-weight correction package,
+and an unbuilt class-level lift.
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{What is known.}
  At the scalar free-energy level,
- Theorem~\ref{thm:multi-weight-genus-expansion}(ii) already gives the
- corrected all-weight formula
+ Theorem~\ref{thm:multi-weight-genus-expansion}(ii) already proves the
+ all-weight numerical formula
  \[
  F_g(\cA)
  \;=\;
@@ -22661,44 +22663,74 @@ and an open class-level lift.
  Proposition~\ref{prop:free-field-scalar-exact} shows that the
  vanishing also persists for the all-weight free-field exceptions,
  including~$\beta\gamma$.
- Thus the first genuine obstruction is not multi-weight by itself
- but interacting mixed-channel propagation, with~$\cW_3$ the first
- explicit witness.
- At the cohomological level, however,
- Theorem~\ref{thm:tautological-line-support} still proves
- $o_g = \kappa\lambda_g$ only on the one-channel
- uniform-weight lane.
+ Thus the first genuine obstruction is not multi-weight by itself but
+ interacting mixed-channel propagation, with~$\cW_3$ the first explicit
+ witness.
+
+ On the proved scalar lane, Theorem~D is already redundant:
+ Theorem~\ref{thm:genus-universality} gives the shadow-trace proof, and
+ Remark~\ref{rem:theorem-d-alt-grr} gives the independent GRR proof.
+ The remaining problem is extension beyond that lane.
+ On the C2 side, the bar-intrinsic Maurer--Cartan class is already
+ unconditional
+ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)},
+ and Theorem~\ref{thm:mc2-full-resolution} shows that off the scalar lane
+ the missing input is MC2-3, not MC2-1 or MC2-2.
+ What is proved today is therefore the numerical theorem for~$F_g$.
+ What is not yet proved is the class-valued replacement for
+ $\mathrm{obs}_g$.
 
 \item \emph{What is computable.}
  Construction~\ref{constr:cross-channel-graph-sum} makes
  $\delta F_g^{\mathrm{cross}}$ a mixed-channel stable-graph sum on
  $\overline{\cM}_{g,0}$.
- This is concrete at genus~$2$:
- Theorem~\ref{thm:multi-weight-genus-expansion}(vi) gives
- \[
- \delta F_2(\cW_3)
- \;=\;
- \frac{c + 204}{16c},
- \]
- and Proposition~\ref{prop:universal-gravitational-cross-channel}
- gives the universal gravitational formula for~$\cW_N$.
- The current compute layer already matches this division of labour:
- \texttt{curved\_sc\_higher\_genus\_engine.py} records the
- $\cW_3$ genus-$2$ decomposition,
+ The compute layer now covers four concrete regimes.
+ First,
+ \texttt{multi\_weight\_cross\_channel\_engine.py} gives a unified
+ genus-$2$/genus-$3$ mixed-channel engine for\/~$\cW_N$;
  \texttt{rectification\_delta\_f2\_verify\_engine.py} independently
- re-derives the genus-$2$~$\cW_N$ formula from the seven stable graphs,
- \texttt{theorem\_multi\_weight\_generating\_function\_engine.py}
- and the genus-$3$/$4$ tests track the higher-genus
- $\cW_3$ tower, and
- \texttt{betagamma\_genus2\_cross\_channel\_engine.py} verifies the
- free-field exact~$\beta\gamma$ exception.
- What is not yet available is a family-agnostic all-genera engine
- producing $\delta F_g^{\mathrm{cross}}$ from an arbitrary weight
- spectrum and OPE package.
+ re-derives the universal genus-$2$ gravitational formula from the
+ seven stable graphs; and
+ \texttt{theorem\_w4\_full\_ope\_delta\_f2\_engine.py} and
+ \texttt{theorem\_thm\_d\_multiweight\_frontier\_engine.py}
+ extend the genus-$2$ analysis beyond\/~$\cW_3$.
+ Second,
+ \texttt{multi\_weight\_genus\_tower.py},
+ \texttt{theorem\_genus3\_multiweight\_engine.py},
+ \texttt{theorem\_genus4\_multiweight\_engine.py},
+ \texttt{theorem\_multi\_weight\_generating\_function\_engine.py},
+ and \texttt{theorem\_multiweight\_structure\_engine.py}
+ track the\/~$\cW_3$ tower through genera~$2,3,4$ and record the
+ Betti-stratum and generating-function obstructions.
+ Third,
+ \texttt{betagamma\_genus2\_cross\_channel\_engine.py}
+ verifies the all-genera vanishing for the free-field
+ $\beta\gamma$ exception by the determinant/Mumford route.
+ Fourth,
+ \texttt{mg\_genus2\_clutching\_engine.py} tests the genus-$2$
+ clutching restrictions and shows that boundary data plus the trace
+ do not yet force a class identity.
+
+ What is \emph{not} currently computable in the repository is the
+ class-valued object
+ $\delta o_g^{\mathrm{cross}}$ itself:
+ there is no engine in \texttt{compute/lib} producing a mixed-channel
+ tautological support theorem, a family-agnostic all-genera class lift,
+ or a Verdier-compatible obstruction-class package.
 
 \item \emph{The precise obstruction.}
  The missing upgrade is not another scalar identity but a
  class-valued lift.
+ One can already state the numerical theorem
+ \[
+ F_g(\cA)
+ \;=\;
+ \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+ \;+\;
+ \delta F_g^{\mathrm{cross}}(\cA)
+ \]
+ and it is proved.
+ What is not yet available is the cohomological theorem.
  To remove the uniform-weight hypothesis from Theorem~D one needs
  classes
  \[
@@ -22723,9 +22755,19 @@ and an open class-level lift.
  Theorem~\ref{thm:mc2-full-resolution} uses
  Theorem~\ref{thm:tautological-line-support}, and that theorem
  presently isolates only the one-channel tautological line.
- The mixed-channel sector is visible numerically, but it has not
- yet been promoted to the obstruction-class package required by
- MC2-3.
+ The mixed-channel sector is visible numerically, but it has not yet
+ been promoted to the obstruction-class package required by MC2-3.
+
+ The genus-$2$ clutching computation makes the point sharper.
+ The separating boundary restriction is forced by genus-$1$
+ universality and therefore carries no new information, while the
+ joint trace-plus-boundary test still leaves a kernel on the relevant
+ tautological sector
+ \textup{(}\texttt{mg\_genus2\_clutching\_engine.py}\textup{)}.
+ The shifted-symplectic/K11 engines attack the ambient perfectness side
+ of C2, but they do not supply this missing mixed-channel support
+ theorem. On the current surface, the live obstruction to removing the
+ uniform-weight hypothesis from C2 is MC2-3.
 
 \item \emph{Can one absorb the correction into a modified
  \texorpdfstring{$\kappa$}{kappa}?}
@@ -22737,6 +22779,9 @@ and an open class-level lift.
  $(c,\hbar)$.
  A single number cannot absorb a genus tower with new asymptotics
  at each genus.
+ The notation \texttt{kappa\_eff} should not be used for this purpose:
+ throughout the compute layer it already denotes the matter-plus-ghost
+ effective curvature and is not an intrinsic invariant of~$\cA$.
  One may introduce the bookkeeping quantity
  \[
  \widetilde{\kappa}_g(\cA)
@@ -22747,6 +22792,8 @@ and an open class-level lift.
  \qquad (\lambda_g^{\mathrm{FP}} \neq 0),
  \]
  but this depends on~$g$ and is not an invariant of~$\cA$.
+ No duality, additivity, clutching, or Verdier law is presently proved
+ for\/~$\widetilde{\kappa}_g$.
  The natural replacement is the mixed-channel package
  $\{\kappa_i,\delta o_g^{\mathrm{cross}}\}_{i,g}$,
  or equivalently the full shadow obstruction tower, not a
@@ -22764,10 +22811,14 @@ and an open class-level lift.
  support theorem;
  fourth, feed this replacement into
  Theorem~\ref{thm:mc2-conditional-completion}.
- At that point Theorem~D would become an all-weight statement with
- explicit correction term, and C2 would cease to depend on the
- uniform-weight hypothesis wherever the mixed-channel support
- theorem is proved.
+ The genus-$2$ clutching engine gives a numerical model for the second
+ step, and the shifted-symplectic/K11 engines indicate that ambient
+ perfectness is not the bottleneck on the standard landscape.
+ The unresolved step is the class lift itself.
+ Once that lift is built, Theorem~D becomes an all-weight statement
+ with explicit correction term, and C2 ceases to depend on the
+ uniform-weight hypothesis wherever the mixed-channel support theorem
+ is proved.
 \end{enumerate}
 \end{remark}
 
