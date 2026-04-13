@@ -62,7 +62,7 @@ Axis 1: OPERADIC STRUCTURE
     Higher shadows S_r for r >= 3 DO depend on n through Arnold relations.
 
 Axis 2: BAR COMPLEX AND KOSZUL DUALITY
-    For E_1: bar complex B(A) = TsA with differential from OPE.
+    For E_1: bar complex B(A) = T^c(s^{-1}A-bar) with differential from OPE.
     For E_n: bar complex B_{E_n}(A) = tensor product with H*(Conf_k(R^n)).
     The bar complex EXISTS for all n, but:
     - At n=1: the bar differential encodes all OPE data (full chiral algebra)
@@ -1005,7 +1005,7 @@ def operadic_comparison_table() -> List[Dict[str, Any]]:
             'name': 'E_1 (chiral/associative)',
             'geometric_setting': 'curve X (complex dim 1)',
             'physical_theory': '2d CFT / chiral algebra on X',
-            'bar_complex': 'B(A) = TsA, differential from OPE',
+            'bar_complex': 'B(A) = T^c(s^{-1}A-bar), differential from OPE',
             'propagator_degree': 0,
             'koszul_shift': 1,
             'koszul_dual': 'E_1{-1} = Ass{-1}',
@@ -1020,7 +1020,7 @@ def operadic_comparison_table() -> List[Dict[str, Any]]:
             'name': 'E_2 (braided monoidal)',
             'geometric_setting': 'surface Sigma x curve C (4d CS)',
             'physical_theory': '4d CS (Costello 2013) / holomorphic-topological',
-            'bar_complex': 'B_{E_2}(A) = TsA tensor H*(Conf_k(R^2))',
+            'bar_complex': 'B_{E_2}(A) = T^c(s^{-1}A-bar) tensor H*(Conf_k(R^2))',
             'propagator_degree': 1,
             'koszul_shift': 2,
             'koszul_dual': 'E_2{-2} (self-dual up to shift)',
@@ -1035,7 +1035,7 @@ def operadic_comparison_table() -> List[Dict[str, Any]]:
             'name': 'E_3 (symmetric up to coherence)',
             'geometric_setting': 'CY3 x curve C (5d/6d HCS)',
             'physical_theory': '5d/6d HCS (Costello-Li 2016)',
-            'bar_complex': 'B_{E_3}(A) = TsA tensor H*(Conf_k(R^3))',
+            'bar_complex': 'B_{E_3}(A) = T^c(s^{-1}A-bar) tensor H*(Conf_k(R^3))',
             'propagator_degree': 2,
             'koszul_shift': 3,
             'koszul_dual': 'E_3{-3} (self-dual up to shift)',

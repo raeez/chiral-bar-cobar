@@ -80,11 +80,11 @@ class TestCoinvariantProjection:
 
 
 # ══════════════════════════════════════════════════════════════════════
-#  2. KAPPA RECOVERY: av(r(z)) = κ(A)
+#  2. DEGREE-2 SHADOW RECOVERY
 # ══════════════════════════════════════════════════════════════════════
 
 class TestKappaRecovery:
-    """At (g,n)=(0,2): the E₁ r-matrix av-projects to κ(A)."""
+    """At (g,n)=(0,2): the E₁ r-matrix av-projects to the scalar degree-2 shadow."""
 
     def test_heisenberg_kappa(self):
         assert coinvariant_kappa_check("heisenberg")
@@ -92,7 +92,7 @@ class TestKappaRecovery:
 
     def test_affine_sl2_kappa(self):
         assert coinvariant_kappa_check("affine_sl2")
-        assert AFFINE_SL2_E1.verify_coinvariant_at_02() == Fraction(9, 4)
+        assert AFFINE_SL2_E1.verify_coinvariant_at_02() == Fraction(3, 4)
 
     def test_betagamma_kappa_zero(self):
         """Beta-gamma: r(z) = 0, so av(r(z)) = 0 = κ(βγ)."""

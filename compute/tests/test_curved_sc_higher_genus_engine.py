@@ -1,7 +1,8 @@
-r"""Tests for the curved SC^{ch,top}-coalgebra structure at higher genus.
+r"""Tests for the curved ordered bar coalgebra at higher genus.
 
 FRONTIER QUESTION: At genus g >= 1, the bar complex is CURVED: d^2 = kappa * omega_g.
-What happens to the SC^{ch,top}-coalgebra structure?
+What happens to the ordered E_1 bar coalgebra, and where does the
+SC^{ch,top} datum live?
 
 SEVEN CLAIMS VERIFIED (3+ paths per claim, per CLAUDE.md multi-path mandate):
 
@@ -545,7 +546,7 @@ class TestMultiWeightCrossChannel:
 # ============================================================================
 
 class TestModularTower:
-    """Verify the genus tower of SC^{ch,top}-coalgebras."""
+    """Verify the genus tower of ordered bar coalgebras."""
 
     def test_tower_curvatures_grow(self):
         """Curvature decreases with genus (lambda_fp decreases)."""
@@ -642,7 +643,7 @@ class TestComprehensiveAnalysis:
     """Test the full analysis pipeline for standard families."""
 
     def test_heisenberg_genus_0(self):
-        """Heisenberg at genus 0: uncurved, classical dg SC coalgebra."""
+        """Heisenberg at genus 0: uncurved, classical dg ordered bar coalgebra."""
         result = analyze_curved_sc_structure("H_1", Fraction(1), 0)
         assert not result['is_curved']
         assert result['sc_type_fiberwise'] == 'dg'

@@ -5,6 +5,11 @@ Hamilton-Jacobi equation: 2E(U) + (1/2)||∇U||²_H = R,
 and that all residuals vanish at arities 5, 6, 7.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 from sympy import Rational, Symbol, simplify, expand, S
 

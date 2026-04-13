@@ -1,15 +1,21 @@
 \chapter{The geometric cobar complex}
 \label{chap:cobar-construction}
 
-The bar functor destroys the algebra: it encodes~$\cA$ as a
-factorization coalgebra $\barB(\cA)$ from which no multiplication
-is directly visible. The cobar complex $\Omega(\cC)$ is the
-reconstruction machine that recovers~$\cA$ from this coalgebraic
-residue, realizing the inversion
-$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ (Theorem~B) and
-proving that the MC element
+The bar functor destroys the multiplication: it encodes~$\cA$ as the
+symmetric factorization coalgebra $\barB(\cA)$, where the collision
+data survive but the product one must recover is no longer visible.
+The geometric cobar complex
+$\Omega^{\mathrm{ch}}(\cC)=\bigoplus_{n\geq 0}\Omega^{\mathrm{ch}}_n(\cC)$
+is the reconstruction machine for this loss on a conilpotent chiral
+coalgebra~$\cC$, meaning a factorization coalgebra whose iterated
+reduced coproduct vanishes on every local section. It realizes the
+inversion $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ (Theorem~B) and
+proves that the MC element
 $\Theta_\cA \in \MC(\gAmod)$ determines~$\cA$ up to
-quasi-isomorphism on the Koszul locus. Both functors are
+quasi-isomorphism on the Koszul locus. Definitions~\ref{def:factorization-coalgebra},
+\ref{def:conilpotent-cobar}, and
+\ref{def:geom-cobar-intrinsic} give the formal versions used below.
+Both functors are
 projections of a single universal twisting morphism
 $\tau \in \MC\bigl(\operatorname{Conv}(\cC, \cA)\bigr)$
 (Definition~\ref{def:twisting-morphism}): bar records collision
@@ -2221,7 +2227,7 @@ The critical level is the fixed point of the level-shifting involution $k \mapst
 \label{cor:level-shifting-part1}
 \index{Feigin--Frenkel duality}
 \index{level!shifted}
-% Resolved RECTIFICATION-FLAG (2026-04-07): This result uses Verdier
+% Verification note (2026-04-07): This result uses Verdier
 % duality D_Ran on the bar coalgebra (Theorem A intertwining), NOT bar-cobar
 % inversion (Theorem B). Bar-cobar inversion recovers the original algebra:
 % Omega(B(g_k)) ~ g_k. The level-shifted algebra arises from
@@ -3134,10 +3140,13 @@ introduced in Convention~\ref{conv:higher-genus-differentials}.
 The failure of the fiberwise bar differential to square to zero is measured by:
 \[\dfib^{\,2}: \bar{B}^n_g(\mathcal{A}) \to \bar{B}^{n+2}_g(\mathcal{A})\]
 
-\begin{lemma}[Obstruction cohomology class {\cite{Positselski11}}; \ClaimStatusProvedElsewhere]\label{lem:obstruction-class}
-The composition $\dfib^{\,2}$ defines a cohomology class:
-\[[\dfib^{\,2}] \in H^2(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))\]
-which vanishes if and only if the genus-$g$ bar construction is well-defined.
+\begin{lemma}[Obstruction operator {\cite{Positselski11}}; \ClaimStatusProvedElsewhere]\label{lem:obstruction-class}
+The composition $\dfib^{\,2}$ is the chain-level curvature operator
+\[
+\dfib^{\,2} = m_0^{(g)} \ast (-)
+\]
+with $m_0^{(g)} \in Z(\mathcal{A})$. It vanishes if and only if the
+genus-$g$ fiberwise bar differential is square-zero on the nose.
 \end{lemma}
 
 \begin{proof}
@@ -3164,16 +3173,15 @@ while nested collisions contribute only scalar multiples (OPE associativity).
 \emph{Cocycle condition.}
 The curved $A_\infty$ relation at $n=0$
 (Definition~\ref{def:curved-ainfty}) gives
-$\mu_1(m_0^{(g)}) = 0$, so $m_0^{(g)}$ is a $d$-cocycle. The map
-$\phi \mapsto m_0^{(g)} \ast \phi$ therefore defines a $2$-cocycle in
-the Hochschild complex $C^2(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))$,
-and the class $[\dfib^{\,2}] = [m_0^{(g)} \ast (-)]$ is the obstruction to
-lifting the genus-$0$ differential (where $m_0^{(0)} = 0$) to genus~$g$.
-It vanishes if and only if $m_0^{(g)} = d(\text{something})$, i.e., the
-curvature is exact, which is the CDG condition for the bar construction
-to be well-defined as a DG object rather than merely CDG.
-See the full spectral sequence analysis in the proof of
-Theorem~\ref{thm:quantum-complementarity-main}.
+$\mu_1(m_0^{(g)}) = 0$, so $m_0^{(g)}$ is closed. Hence
+$\dfib^{\,2} = m_0^{(g)} \ast (-)$ is the chain-level obstruction to
+lifting the genus-$0$ square-zero differential (where $m_0^{(0)} = 0$)
+to genus~$g$. It vanishes exactly when the fiberwise genus-$g$
+differential is already square-zero. Otherwise one must pass either to
+the strict flat comparison differential $\Dg{g}$ of
+Theorem~\ref{thm:quantum-diff-squares-zero} or to the coderived
+framework; ordinary cohomology of the curved fiber complex
+$(\bar{B}^{(g)}(\mathcal{A}), \dfib)$ is not the correct invariant.
 \end{proof}
 
 \emph{Step 2: Moduli space interpretation.}
@@ -3353,9 +3361,10 @@ H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))
 It remains to identify the two summands.
 
 \emph{The $+1$-eigenspace is $Q_g(\mathcal{A})$.}
-By Lemma~\ref{lem:obstruction-class}, the obstruction class
-$[\dfib^{\,2}] = [m_0^{(g)} \ast (-)]$ lies in the $\sigma$-invariant part
-of $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$, because
+By Lemma~\ref{lem:obstruction-class}, the chain-level obstruction is
+governed by the central coefficient $m_0^{(g)}$. Its flat-side
+comparison class lies in the $\sigma$-invariant part of
+$H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$, because
 $\sigma(m_0^{(g)}) = m_0^{(g)}$ (the curvature is Verdier-self-dual:
 it is constructed from the volume form $\omega_g$, which is a canonical
 section of $K_{\Sigma_g}$, and Verdier duality acts as the identity on
@@ -3414,14 +3423,15 @@ is the self-commutator of the simple root.
 
 \begin{corollary}[Curved differential formula; \ClaimStatusProvedHere]\label{cor:curved-differential}
 For a curved chiral algebra $\mathcal{A}$ with curvature $\mu_0$, the fiberwise genus-$g$ bar
-differential is:
-\[\dfib = \dzero + \mu_0 \otimes \left(\int_{\mathcal{M}_g} \omega_g\right)\]
+differential is schematically of the form
+\[\dfib = \dzero + \mu_0 \otimes \omega_g\]
 where $\omega_g \in H^*(\mathcal{M}_g, \mathcal{Z}(\mathcal{A}))$ is the quantum correction class (living in the cohomology of $\mathcal{M}_g$ with coefficients in the center $\mathcal{Z}(\mathcal{A})$).
 
-This satisfies:
-\[\dfib^{\,2} = [\mu_0, -] \otimes \left(\int_{\mathcal{M}_g} \omega_g^2\right)
-\in H^*(\mathcal{M}_g, Z(\mathcal{A}))\]
-which is the obstruction class.
+Its square is the chain-level obstruction operator
+\[\dfib^{\,2} = [\mu_0, -] \otimes \omega_g^2,\]
+whose cohomological shadow appears only after passage to the flat
+comparison differential $\Dg{g}$ or the corresponding Chern--Weil
+class.
 \end{corollary}
 \begin{proof}
 The genus-$g$ bar differential receives quantum corrections from the

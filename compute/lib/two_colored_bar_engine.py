@@ -31,22 +31,25 @@ ANSWER (worked out from first principles in this module):
      - Closed part: B_{Com}(C) -- the commutative bar
      - Open part: B_{Ass}(C) -- the associative bar of C
      - Mixed: the action of C on itself by multiplication
-   This is exactly what happens for chiral algebras: B^ch(A) is
-   ALREADY an SC-coalgebra because the bar differential (closed, from
-   FM_k(C)) and the deconcatenation coproduct (open, from Conf_k(R))
-   are independent structures on the SAME underlying tensor coalgebra.
+   For chiral algebras, the analogous construction requires care.
+   The promoted self-action pair (A, A) has a genuine two-coloured
+   operadic bar B_{SC}(A, A), but the ordered chiral bar
+   B^ch(A) = T^c(s^{-1}\bar A) records only the open tensor-coalgebra
+   sector. It is not itself the full SC-coalgebra.
 
 4. THE TYPE-CHECKING RESOLUTION:
-   A chiral algebra A is a Com^ch-algebra (one-coloured). To get
-   an SC^{ch,top}-coalgebra, we do NOT need a separate open input.
-   The bar construction B^ch(A) = T^c(s^{-1} A_bar) carries:
-     - d_C from FM_k(C): the closed structure
-     - Delta from Conf_k(R): the open structure (deconcatenation)
-   These COMMUTE (d_C is a coderivation of Delta) because
-   FM_k(C) x Conf_k(R) is a product.
+   A chiral algebra A is a Com^ch-algebra (one-coloured). Its ordered
+   bar B^ch(A) = T^c(s^{-1} A_bar) carries:
+     - d_C from FM_k(C): the holomorphic bar differential
+     - Delta from Conf_k(R): the E_1 deconcatenation coproduct
+   These COMMUTE (d_C is a coderivation of Delta) because the
+   holomorphic and topological directions are independent.
 
-   The open-colour data is PRODUCED by the bar construction, not
-   assumed as input. This is the content of thm:bar-swiss-cheese.
+   This does NOT by itself produce a two-coloured SC-coalgebra.
+   The genuine SC datum arises either from the promoted pair (A, A)
+   in the operadic bar B_{SC}(A, A), or, in the manuscript's actual
+   Vol I/II architecture, on the derived-center pair
+   (C^bullet_ch(A,A), A).
 
 MATHEMATICAL FRAMEWORK (Loday-Vallette, Chapter 13):
 
@@ -1079,31 +1082,27 @@ class SwissCheeseBarComplex:
 # =========================================================================
 
 def chiral_bar_sc_structure_summary() -> dict:
-    """Summarise how B^ch(A) is an SC^{ch,top}-coalgebra.
+    """Summarise the relation between B^ch(A) and the SC^{ch,top} bar story.
 
     This is a conceptual function documenting the type-checking
     resolution of the fundamental question.
 
-    For a chiral algebra A (= Com^ch-algebra), the bar construction
-    B^ch(A) = T^c(s^{-1} A_bar) is SIMULTANEOUSLY:
+    For a chiral algebra A (= Com^ch-algebra), the ordered bar
+    B^ch(A) = T^c(s^{-1} A_bar) carries:
 
-    1. A dg coalgebra via d_C (the bar differential from FM_k(C))
-       = CLOSED colour structure
-    2. A coassociative coalgebra via Delta (deconcatenation)
-       = OPEN colour structure
-    3. d_C is a coderivation of Delta
-       = the SC^{ch,top}-coalgebra compatibility
+    1. A holomorphic bar differential d_C from FM_k(C)
+    2. An E_1 coassociative coproduct Delta from deconcatenation
+    3. The coderivation compatibility d_C o Delta
+       = (d_C tensor id + id tensor d_C) o Delta
 
-    The key insight: the bar construction does NOT require a second
-    (open-colour) input. It PRODUCES the two-coloured structure from
-    a one-coloured input. The open-colour data (deconcatenation) is
-    a FORMAL CONSEQUENCE of the tensor coalgebra structure.
+    These structures make B^ch(A) a single-coloured E_1 bar coalgebra.
+    They do NOT make B^ch(A) the full two-coloured SC datum.
 
-    In the Loday-Vallette framework: this corresponds to the fact
-    that the forgetful functor from SC-coalgebras to Com-coalgebras
-    (forgetting the open sector) has a LEFT ADJOINT that freely
-    generates the open-colour structure. The bar construction
-    computes this left adjoint on the nose.
+    In the genuine two-coloured operadic bar story, one instead starts
+    from a promoted self-action pair (A, A) and forms B_{SC}(A, A).
+    The manuscript's actual SC^{ch,top} attribution is different again:
+    the SC datum lives on the derived-center pair
+    (C^bullet_ch(A,A), A), computed using the ordered bar as a resolution.
 
     Comparison with the classical case:
     - Classical SC (Voronov): (C, A) with C = Com-algebra, A = Ass-algebra
@@ -1112,19 +1111,18 @@ def chiral_bar_sc_structure_summary() -> dict:
         closed = B_{Com}(C) = coLie coalgebra
         open = B_{Ass}(C) = coAss coalgebra
         mixed = action-induced maps
-    - For chiral: A single chiral algebra gives rise to the self-action
-      SC-algebra (A, A) where A acts on itself, and B_{SC}(A, A)
-      decomposes exactly as described in thm:bar-swiss-cheese.
+    - For chiral: the promoted self-action pair (A, A) has a genuine
+      two-coloured operadic bar B_{SC}(A, A), while B^ch(A) itself is
+      only the ordered tensor-coalgebra sector.
     """
     return {
         "closed_sector": "B_{Com}(A) = coLie coalgebra from FM_k(C)",
         "open_sector": "B_{Ass}(A) = coAss coalgebra from Conf_k(R)",
         "compatibility": "d_C coderivation of Delta",
         "input": "Single Com-algebra A",
-        "output": "SC-coalgebra (B_{Com}(A), B_{Ass}(A), mixed)",
-        "key_fact": "Open sector is PRODUCED, not assumed",
-        "type_resolution": "Forgetful SC-coalg -> Com-coalg has left adjoint; "
-                           "bar computes this adjoint",
+        "output": "B^ch(A) is the ordered E_1 bar coalgebra; the full two-coloured object is B_{SC}(A,A), and the manuscript's SC datum is (C^bullet_ch(A,A), A)",
+        "key_fact": "The ordered bar supplies the open/bar sector, not the whole SC datum",
+        "type_resolution": "Promotion to (A, A) gives the genuine two-coloured operadic bar; the derived-center pair gives the manuscript's SC attribution",
         "manuscript_ref": "thm:bar-swiss-cheese (en_koszul_duality.tex)",
     }
 

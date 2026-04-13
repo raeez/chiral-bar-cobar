@@ -802,9 +802,15 @@ def ybe_coefficient_relations(lie_type: str, n: int,
             residuals[(a, b)] = 0.0  # Will be filled by numerical check
 
     # Numerical verification at many parameter points
-    test_params = [
+    candidate_params = [
         (3.7, 1.3), (5.2, 2.1), (7.1, 4.3), (2.8, 0.9),
         (10.0, 3.0), (4.5, 1.5), (6.3, 2.7),
+    ]
+    test_params = [
+        (u, v) for u, v in candidate_params
+        if not _full_rmatrix_hits_pole(lie_type, n, u)
+        and not _full_rmatrix_hits_pole(lie_type, n, v)
+        and not _full_rmatrix_hits_pole(lie_type, n, u - v)
     ]
 
     ybe_errors = []
@@ -843,12 +849,27 @@ def _ybe_numerical_error(lie_type: str, n: int, u: float, v: float) -> float:
     return float(np.max(np.abs(lhs - rhs)))
 
 
+def _full_rmatrix_hits_pole(lie_type: str, n: int, u: complex,
+                            tol: float = 1e-12) -> bool:
+    """Check whether the rational R-matrix is singular at the given spectral value."""
+    if abs(u) < tol:
+        return True
+
+    if lie_type == 'B':
+        return abs(u - (n - 0.5)) < tol
+    if lie_type == 'C':
+        return abs(u - (n + 1.0)) < tol
+    if lie_type == 'D':
+        return abs(u - (n - 1.0)) < tol
+    return False
+
+
 def _full_rmatrix(lie_type: str, n: int, u: complex) -> np.ndarray:
     """Full R-matrix R(u) for a given type, in the fundamental representation.
 
     Type A: R(u) = uI + P (additive Yang).
     Types B,D: R(u) = I - P/u + Q/(u - kappa_R).
-    Type C: R(u) = I - P/u - K/(u + kappa_R).
+    Type C: R(u) = I - P/u - K/(u - kappa_R).
     G_2: R(u) = I + Omega/u (leading order approximation).
     """
     data = lie_algebra_data(lie_type, n)

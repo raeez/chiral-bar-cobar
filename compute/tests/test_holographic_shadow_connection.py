@@ -52,7 +52,7 @@ from holographic_shadow_connection import (
 # ========================================================================
 
 class TestHeisenbergFlatness:
-    """nabla = d - kappa sum q_i q_j dlog(z_i - z_j) is flat."""
+    """nabla = d - kappa sum q_i q_j d(z_i - z_j)/(z_i - z_j) is flat."""
 
     def test_flatness_n3_unit_charges(self):
         """Flatness for n=3 with charges (1,1,1)."""

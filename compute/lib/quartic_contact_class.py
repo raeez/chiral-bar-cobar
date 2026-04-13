@@ -60,7 +60,7 @@ def kappa_virasoro(c):
 def kappa_wn(N, c):
     """κ(W_N at central charge c) = c·ρ(sl_N) where ρ = Σ_{j=2}^{N} 1/j.
 
-    The anomaly ratio ρ(sl_N) = H_N - 1 where H_N = 1 + 1/2 + ... + 1/(N-1),
+    The anomaly ratio ρ(sl_N) = H_N - 1 where H_N = 1 + 1/2 + ... + 1/N,
     equivalently ρ = 1/2 + 1/3 + ... + 1/N = Σ_{j=2}^{N} 1/j.
     For W_3: ρ = 1/2 + 1/3 = 5/6, so κ = 5c/6.
     """

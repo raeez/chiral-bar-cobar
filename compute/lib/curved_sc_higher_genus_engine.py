@@ -1,7 +1,8 @@
-r"""Curved Swiss-cheese coalgebra at higher genus: the modular SC^{ch,top} structure.
+r"""Curved ordered bar coalgebra at higher genus and the derived-center SC output.
 
 FRONTIER QUESTION: At genus g >= 1, the bar complex B^{(g)}(A) is curved:
-d^2 = kappa(A) * omega_g != 0. What happens to the SC^{ch,top}-coalgebra structure?
+d^2 = kappa(A) * omega_g != 0. What happens to the ordered E_1 bar coalgebra,
+and where does the SC^{ch,top} datum live?
 
 SEVEN VERIFIED CLAIMS (with cross-checks):
 
@@ -112,8 +113,10 @@ SEVEN VERIFIED CLAIMS (with cross-checks):
    - The structure is governed by the CURVED bar complex formalism
      (Positselski, "Two kinds of derived categories, Koszul duality, and
      comodule-contramodule correspondence").
-   The SC^{ch,top} structure persists in the CURVED sense: (B^{(g)}, d, Delta)
-   is a curved SC^{ch,top}-coalgebra.
+   The ordered bar structure persists in the CURVED sense:
+   (B^{(g)}, d, Delta) is a curved E_1 dg coalgebra. The actual
+   SC^{ch,top} datum remains the derived-center pair
+   (C^\bullet_{ch}(A,A), A).
 
 5. THE CORRECTED DIFFERENTIAL D^{(g)}: Built from the holomorphic propagator
    h_{ij} = partial_{z_i} log E(z_i, z_j) (prime form). Satisfies D^{(g)}^2 = 0
@@ -124,7 +127,7 @@ SEVEN VERIFIED CLAIMS (with cross-checks):
    built from A-cycle integrals. Each d_k is a coderivation of Delta (period
    integrals commute with interval splitting). Therefore D^{(g)} is a
    coderivation of Delta, and D^{(g)}^2 = 0, so (B^{(g)}, D^{(g)}, Delta) is
-   a genuine (non-curved) dg SC^{ch,top}-coalgebra.
+   a genuine (non-curved) dg E_1 bar coalgebra.
 
 6. MULTI-WEIGHT CORRECTION: delta_F_g^cross lives in the CLOSED sector of
    the SC cooperad. It arises from mixed-channel boundary graphs of M_{g,0}
@@ -136,14 +139,15 @@ SEVEN VERIFIED CLAIMS (with cross-checks):
 
 7. MODULAR EXTENSION: The genus tower {B^{(g,n)}(A)}_{2g-2+n>0} is an algebra
    over FCom (Feynman transform of commutative modular operad) by
-   thm:bar-modular-operad. The SC^{ch,top} structure at each genus is
+   thm:bar-modular-operad. The ordered bar structure at each genus is
    compatible with the modular operad composition maps because:
    (a) Edge contraction (modular composition) uses the propagator P_A,
-       which acts on FM_k(C) (closed color).
-   (b) Deconcatenation Delta acts on Conf_k(R) (open color).
+       which acts on FM_k(C).
+   (b) Deconcatenation Delta acts on Conf_k(R).
    (c) These are independent (product structure FM x Conf).
-   The genus tower of (corrected) SC^{ch,top}-coalgebras is controlled by
-   the modular characteristic kappa(A) (thm:modular-characteristic).
+   The genus tower of corrected ordered bar coalgebras is controlled by
+   the modular characteristic kappa(A) (thm:modular-characteristic),
+   and the SC^{ch,top} datum is recovered only on the derived-center pair.
 
 Conventions
 -----------
@@ -158,7 +162,7 @@ Conventions
 
 References
 ----------
-- thm:bar-swiss-cheese (en_koszul_duality.tex): SC coalgebra structure at genus 0
+- thm:bar-swiss-cheese (en_koszul_duality.tex): E_1 bar coalgebra structure at genus 0
 - rem:sc-higher-genus (en_koszul_duality.tex): Curved SC at higher genus
 - thm:quantum-diff-squares-zero (higher_genus_complementarity.tex): D^{(g)}^2 = 0
 - thm:bar-modular-operad (bar_cobar_adjunction_curved.tex): FCom-algebra structure
@@ -320,13 +324,15 @@ def verify_coassociativity(x: BarElement) -> bool:
 
 @dataclass
 class CurvedSCData:
-    """Data for a curved SC^{ch,top}-coalgebra at genus g.
+    """Legacy-named data for the curved ordered bar coalgebra at genus g.
 
     At genus g >= 1 with kappa != 0:
     - d is a coderivation of Delta (always, by tensor coalgebra universality).
     - d^2 = kappa * omega_g (curvature) as a fiberwise operator.
     - The corrected differential D^{(g)} satisfies D^{(g)}^2 = 0.
-    - (B^{(g)}, D^{(g)}, Delta) is a genuine dg SC^{ch,top}-coalgebra.
+    - (B^{(g)}, D^{(g)}, Delta) is a genuine dg E_1 bar coalgebra.
+    - The actual SC^{ch,top} datum is the derived-center pair
+      (C^bullet_{ch}(A,A), A).
 
     Attributes:
         kappa: modular characteristic kappa(A)
@@ -457,7 +463,7 @@ def verify_coderivation_of_d_squared(
 
 @dataclass
 class CorrectedSCCoalgebra:
-    """The corrected (flat) SC^{ch,top}-coalgebra at genus g.
+    """Legacy-named corrected (flat) ordered bar coalgebra at genus g.
 
     At genus g, the corrected differential D^{(g)} is built from the
     holomorphic propagator h_{ij} = partial_{z_i} log E(z_i, z_j)
@@ -466,7 +472,9 @@ class CorrectedSCCoalgebra:
     Properties:
     - D^{(g)}^2 = 0 (Fay trisecant identity = higher-genus Arnold relation).
     - D^{(g)} is a coderivation of Delta (period integrals commute with splitting).
-    - (B^{(g)}, D^{(g)}, Delta) is a genuine dg SC^{ch,top}-coalgebra.
+    - (B^{(g)}, D^{(g)}, Delta) is a genuine dg E_1 bar coalgebra.
+    - The SC^{ch,top} datum remains the derived-center pair
+      (C^bullet_{ch}(A,A), A).
 
     The corrected differential has the expansion:
         D^{(g)} = d_0 + sum_k t_k d_k
@@ -492,10 +500,10 @@ class CorrectedSCCoalgebra:
 
     @property
     def sc_structure_type(self) -> str:
-        """Classification of the SC structure.
+        """Classification of the corrected bar structure.
 
-        Genus 0: classical dg SC coalgebra (no corrections needed).
-        Genus >= 1: corrected dg SC coalgebra (period integral corrections).
+        Genus 0: classical dg ordered bar coalgebra (no corrections needed).
+        Genus >= 1: corrected dg ordered bar coalgebra (period integral corrections).
         """
         if self.genus == 0:
             return "classical_dg"
@@ -599,7 +607,7 @@ def heisenberg_genus1_computation(k: Fraction) -> Dict[str, Any]:
         'corrected_is_flat': True,  # D^{(1)}^2 = 0 always
         'note': ('The fiberwise d^2 is NOT a coderivation: factor-2 discrepancy '
                  'at the (1,1) splitting. The corrected D^{(1)} is flat and IS '
-                 'a coderivation, giving a genuine dg SC coalgebra.'),
+                 'a coderivation, giving a genuine dg E_1 bar coalgebra.'),
     }
 
 
@@ -695,18 +703,19 @@ def classify_cross_channel_sector(genus: int, num_marked: int) -> str:
 
 @dataclass
 class ModularSCTower:
-    """The genus tower of SC^{ch,top}-coalgebras.
+    """Legacy-named genus tower of ordered bar coalgebras.
 
     {B^{(g,n)}(A)}_{2g-2+n>0} is an algebra over FCom (thm:bar-modular-operad).
-    At each genus, the SC structure is:
-    - Fiberwise: curved dg SC coalgebra (d_fib^2 = kappa * omega_g).
-    - Corrected: genuine dg SC coalgebra (D^{(g)}^2 = 0).
+    At each genus, the bar structure is:
+    - Fiberwise: curved dg ordered bar coalgebra (d_fib^2 = kappa * omega_g).
+    - Corrected: genuine dg ordered bar coalgebra (D^{(g)}^2 = 0).
     - Modular: the genus-completed D_A = sum hbar^g d^{(g)} satisfies D_A^2 = 0.
 
-    The compatibility between FCom structure and SC structure arises because:
-    - FCom composition = edge contraction via propagator (CLOSED color, FM_k(C)).
-    - SC coproduct = deconcatenation (OPEN color, Conf_k(R)).
+    The compatibility between FCom structure and the ordered bar arises because:
+    - FCom composition = edge contraction via propagator on FM_k(C).
+    - The bar coproduct = deconcatenation on Conf_k(R).
     - These act on independent factors in FM_k(C) x Conf_k(R).
+    The genuine SC^{ch,top} datum is recovered only on the derived-center pair.
     """
     kappa: Fraction
     genus_max: int
@@ -824,13 +833,13 @@ def analyze_curved_sc_structure(
     num_generators: int = 1,
     weights: Optional[List[int]] = None,
 ) -> Dict[str, Any]:
-    """Complete analysis of the curved SC^{ch,top} structure for a given algebra.
+    """Complete analysis of the curved ordered bar structure for a given algebra.
 
     Returns a comprehensive dictionary with:
     - Curvature data
     - Coderivation verification
     - Corrected differential properties
-    - SC sector classification
+    - Legacy-named SC-sector bookkeeping for the derived-center output
     - Multi-weight correction status
     """
     if weights is None:

@@ -871,14 +871,14 @@ def kz_connection_data(N: int, k: Fraction, n_points: int = 2
     """KZ connection data for affine sl_N at level k.
 
     The KZ connection at genus 0 with n marked points is:
-        nabla_KZ = d - (1/kappa) * sum_{i<j} Omega_{ij} * d log(z_i - z_j)
+        nabla_KZ = d - (1/kappa) * sum_{i<j} (Omega_{ij}/(z_i - z_j)) * d(z_i - z_j)
 
     where:
         kappa_KZ = k + h^v  (the shifted level for KZ)
         Omega_{ij} = sum_a t^a_i t^a_j  (Casimir insertion at points i, j)
 
     For 2 points:
-        nabla_KZ = d - (1/(k+N)) * Omega_{12} * d log(z_1 - z_2)
+        nabla_KZ = d - (1/(k+N)) * (Omega_{12}/(z_1 - z_2)) * d(z_1 - z_2)
 
     The KZ connection arises as the linearization of the primitive MC element:
         K_A -> FT(K_A) = Theta_A -> linearize -> nabla^mod_A

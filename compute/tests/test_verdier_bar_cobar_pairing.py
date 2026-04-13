@@ -882,14 +882,15 @@ class TestBarCobarStructural:
         bar = bar_complex_finite(dga, 3)
         d = bar.differential(2)  # B^2 -> B^1, shape (3, 9)
 
-        # se_0 | se_2 (= se tensor sf) should map to sh = se_1
-        # [e, f] = h, so d(se|sf) = s[e,f] = sh with sign
+        # s^{-1}e_0 | s^{-1}e_2 (= s^{-1}e tensor s^{-1}f)
+        # should map to s^{-1}h = s^{-1}e_1
+        # [e, f] = h, so d(s^{-1}e|s^{-1}f) = s^{-1}[e,f] = s^{-1}h with sign
         # Basis of B^2 = {(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)}
         # (0,2) is index 2
         # Target basis B^1: {0, 1, 2}
-        # d(se|sf) should have nonzero component at h (index 1)
+        # d(s^{-1}e|s^{-1}f) should have nonzero component at h (index 1)
         col_idx = 2  # (0, 2) = se tensor sf
-        assert abs(d[1, col_idx]) > 0, "d(se|sf) should have h component"
+        assert abs(d[1, col_idx]) > 0, "d(s^{-1}e|s^{-1}f) should have h component"
 
     def test_cobar_differential_encodes_comultiplication(self):
         """The cobar differential at degree 1 encodes the coalgebra structure."""

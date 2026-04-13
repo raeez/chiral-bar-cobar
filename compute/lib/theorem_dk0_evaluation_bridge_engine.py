@@ -135,7 +135,7 @@ LIE_DATA = {
 class KZData:
     """Data for the KZ connection associated to V_k(g).
 
-    nabla_KZ = d - (1/(k+h^v)) * sum_{i<j} Omega_{ij} d log(z_i - z_j)
+    nabla_KZ = d - (1/(k+h^v)) * sum_{i<j} (Omega_{ij}/(z_i - z_j)) d(z_i - z_j)
 
     For two-point (z = z_1 - z_2):
         dPsi/dz = [Omega / ((k+h^v) * z)] * Psi

@@ -9,6 +9,11 @@ This catches inconsistencies between modules that are tested
 independently but never tested AGAINST each other.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 from fractions import Fraction
 from sympy import Rational, symbols

@@ -374,7 +374,7 @@ def curved_ainfty(V: List[str], degrees: List[int],
 
 @dataclass
 class BarComplex:
-    """Truncated bar complex B(A) = oplus_{n=0}^{max_tensor} sA^{otimes n}.
+    """Truncated reduced bar complex B(A) = oplus_{n=0}^{max_tensor} (s^{-1}A-bar)^{otimes n}.
 
     The bar differential d_B: B^n -> B^{n-1} oplus B^{n+1} oplus ...
     is decomposed by tensor degree:
@@ -390,7 +390,7 @@ class BarComplex:
         return self.ainfty.dim
 
     def bar_dim(self, n: int) -> int:
-        """Dimension of B^n = sA^{otimes n}."""
+        """Dimension of B^n = (s^{-1}A-bar)^{otimes n}."""
         if n < 0 or n > self.max_tensor:
             return 0
         if n == 0:
@@ -415,12 +415,14 @@ class BarComplex:
     def d_linear_matrix(self, n: int) -> Matrix:
         """d_linear: B^n -> B^n from m_1.
 
-        d_linear(sa_1|...|sa_n) = sum_i (-1)^{eps_i} (sa_1|...|m_1(sa_i)|...|sa_n)
+        d_linear(s^{-1}a_1|...|s^{-1}a_n)
+          = sum_i (-1)^{eps_i}
+            (s^{-1}a_1|...|s^{-1}m_1(a_i)|...|s^{-1}a_n)
 
-        Sign: eps_i = sum_{j<i} (|sa_j| + 1) = sum_{j<i} |a_j|
-        (desuspension shifts degree by -1, so |sa| = |a| - 1; the Koszul
-        sign for passing m_1 through previous suspended elements gives
-        (-1)^{sum of |sa_j| for j < i}).
+        Sign: eps_i = sum_{j<i} (|s^{-1}a_j| + 1) = sum_{j<i} |a_j|
+        (desuspension shifts degree by -1, so |s^{-1}a| = |a| - 1; the
+        Koszul sign for passing m_1 through previous desuspended elements gives
+        (-1)^{sum of |s^{-1}a_j| for j < i}).
 
         For degree-0 generators (all bosonic): all signs are +1.
         """
@@ -454,8 +456,8 @@ class BarComplex:
     def d_bracket_matrix(self, n: int) -> Matrix:
         """d_bracket: B^n -> B^{n-1} from m_2.
 
-        d_bracket(sa_1|...|sa_n) = sum_{i=1}^{n-1} (-1)^{eps_i}
-            (sa_1|...|m_2(sa_i, sa_{i+1})|...|sa_n)
+        d_bracket(s^{-1}a_1|...|s^{-1}a_n) = sum_{i=1}^{n-1} (-1)^{eps_i}
+            (s^{-1}a_1|...|m_2(s^{-1}a_i, s^{-1}a_{i+1})|...|s^{-1}a_n)
 
         This contracts adjacent pairs using m_2.
         For ALL-PAIRS (not just adjacent): use CE-type formula.
@@ -492,8 +494,8 @@ class BarComplex:
     def d_curvature_matrix(self, n: int) -> Matrix:
         """d_curv: B^n -> B^{n+1} from m_0.
 
-        d_curv(sa_1|...|sa_n) = sum_{i=0}^{n} (-1)^{eps_i}
-            (sa_1|...|sa_i | sm_0 | sa_{i+1}|...|sa_n)
+        d_curv(s^{-1}a_1|...|s^{-1}a_n) = sum_{i=0}^{n} (-1)^{eps_i}
+            (s^{-1}a_1|...|s^{-1}a_i | s^{-1}m_0 | s^{-1}a_{i+1}|...|s^{-1}a_n)
 
         Inserts the curvature element m_0 at each position.
         """
@@ -555,7 +557,7 @@ class BarComplex:
 
 
 def bar_complex_truncated(ainfty: CurvedAInfty, max_tensor: int = 4) -> BarComplex:
-    """Construct the truncated bar complex B(A) = oplus_{n=0}^{max_tensor} sA^{otimes n}."""
+    """Construct the truncated reduced bar complex B(A) = oplus_{n=0}^{max_tensor} (s^{-1}A-bar)^{otimes n}."""
     return BarComplex(ainfty=ainfty, max_tensor=max_tensor)
 
 

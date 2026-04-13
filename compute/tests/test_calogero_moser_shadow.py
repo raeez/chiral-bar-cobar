@@ -950,7 +950,7 @@ class TestConsistency:
         assert 'beta' in d['Koszul_duality'] or '1/beta' in d['Koszul_duality']
 
     def test_free_boson_pf_is_eta_inverse(self):
-        """The free boson PF at N=1 is 1/eta(q) = prod (1-q^n)^{-1}.
+        """The free boson PF at N=1 is q^{1/24}/eta(q) = prod (1-q^n)^{-1}.
 
         First few terms: 1 + q + 2q^2 + 3q^3 + 5q^4 + 7q^5 + 11q^6.
         """

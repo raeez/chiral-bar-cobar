@@ -199,21 +199,24 @@ coassociative coproduct compatible with the cogenerators.
 
 The central claim of Vol II (`foundations.tex` lines 1792-1797):
 
-> "The bar complex of Volume I, equipped with its coproduct, is a
-> coalgebra over SC^{ch,top}."
+> Superseded by AP165: the bar complex of Volume I, equipped with its
+> coproduct, is an ordered E_1 coalgebra. The genuine SC^{ch,top}
+> datum appears only on the derived-center pair
+> $(C^\bullet_{ch}(A,A), A)$.
 
 The two-coloured Swiss-cheese operad SC^{ch,top} has:
-- **Closed colour** from FM_k(C): the differential d_B (from OPE
+- **Holomorphic direction** from FM_k(C): the differential d_B (from OPE
   residues on holomorphic configuration spaces)
-- **Open colour** from E_1(m) = Conf_m^<(R): the coproduct Delta
+- **Topological/E_1 direction** from E_1(m) = Conf_m^<(R): the coproduct Delta
   (from ordered interval-cutting on the real line)
 
 A bar element of degree k is parametrised by FM_k(C) x Conf_k^<(R)
 (Vol II, `introduction.tex` lines 204-207).
 
-The differential is the E_infty/E_2 structure (symmetric,
-holomorphic).  The coproduct is the E_1 structure (ordered,
-topological).  Together they form an SC^{ch,top}-coalgebra.
+The differential is the holomorphic/E_2 input and the coproduct is
+the ordered E_1 input. Together they form the ordered bar coalgebra;
+the genuine SC^{ch,top} datum appears only on the derived-center pair
+$(C^\bullet_{ch}(A,A), A)$.
 
 ### Why the E_1 bar is preferred
 
@@ -328,10 +331,11 @@ coexist and carry complementary information:
 - The E_1 bar B^ord(A) = T^c(s^{-1} A-bar) with deconcatenation
   coproduct is the open-colour coalgebra
 
-Together they form an SC^{ch,top}-coalgebra.  The Swiss-cheese
-structure is not an ansatz but a theorem: given the holomorphic
-differential, the topological coproduct is forced by the universal
-property of the cofree coalgebra.
+Together they form the ordered E_1 bar coalgebra. The Swiss-cheese
+story is not an ansatz but a derived-center theorem: the holomorphic
+and topological bar data feed the bulk/boundary pair
+$(C^\bullet_{ch}(A,A), A)$ rather than making $B(A)$ itself
+two-coloured.
 
 ### Key compatibility statement:
 

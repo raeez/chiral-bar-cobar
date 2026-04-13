@@ -663,7 +663,7 @@ def drinfeld_associator_in_kernel(
     r"""Analyze the Drinfeld associator's position relative to ker(av).
 
     For sl_2 at level k, the KZ connection on Conf_3(C) is:
-        nabla_KZ = d - (1/(k+h^v)) (Omega_12 dlog(z12) + Omega_23 dlog(z23))
+        nabla_KZ = d - (1/(k+h^v)) ((Omega_12/z12) dz12 + (Omega_23/z23) dz23)
 
     The monodromy representation factors through the braid group B_3.
     The associator Phi_KZ is the regularized holonomy from 0 to 1
@@ -971,12 +971,13 @@ def sl2_obstruction_analysis(k: int = 1) -> Dict[str, object]:
       associators modulo the action of GRT_1.
 
     The h_dual for sl_2 is 2, dim(sl_2) = 3.
-    kappa(sl_2, k) = 3k / (2(k+2)).
+    In trace-form normalization, av(r(z)) = 3k/4 and
+    kappa(sl_2, k) = av(r(z)) + 3/2 = 3(k+2)/4.
     """
     dim = 2
     h_dual = 2
     dim_g = 3
-    kappa = Fraction(dim_g * k, 2 * (k + h_dual))
+    kappa = Fraction(dim_g * (k + h_dual), 2 * h_dual)
 
     results = {
         'algebra': 'sl_2',

@@ -635,9 +635,10 @@ complex
 satisfies
 $H^*(\bar{B}(\cA;\, \mathcal{M})) \cong \mathcal{M}^!$
 as a $\bar{B}(\cA)$-comodule.
-Just as $\bar{B}(\cA)$ \emph{is} the Koszul dual coalgebra
-of~$\cA$ (Convention~\ref{conv:bar-coalgebra-identity}),
-$\bar{B}(\cA;\, \mathcal{M})$ \emph{is} the Koszul dual
+Just as $H^*(\barB(\cA))$ is the dual coalgebra of~$\cA$ and
+$\barB(\cA)$ is the bar coalgebra computing it
+(Convention~\ref{conv:bar-coalgebra-identity}),
+$\bar{B}(\cA;\, \mathcal{M})$ computes the Koszul dual
 comodule of~$\mathcal{M}$.
 \end{definition}
 
@@ -1998,7 +1999,7 @@ $A(\mathrm{Vir}_c) \cong A(\mathrm{Vir}_{26-c})$ follows.
 \begin{remark}[H-level comparison conjecture]\label{rem:virasoro-mc4-scope}
 The Zhu-level identification $\mathrm{Vir}_{26-c}$ is the proved same-family shadow partner.
 The MC4 structural framework is proved (Theorem~\ref{thm:completed-bar-cobar-strong}); the H-level identification is the residual task
-(Conjecture~\ref{conj:v1-master-infinite-generator};
+(Conjecture~\ref{conj:master-infinite-generator};
 see \S\ref{sec:principal-contributions} for the current finite-detection status).
 \end{remark}
 
@@ -2440,11 +2441,18 @@ in regime~(i)):
 \end{enumerate}
 \end{remark}
 
-\section{Resolutions and character formulas}\label{sec:complete-calculations}
-
-For a bounded acyclic resolution $V^\bullet \to M$, the graded character satisfies $\operatorname{ch}(M) = \sum_{i \geq 0} (-1)^i \operatorname{ch}(V^i)$; when the resolution terms are free or induced modules, this alternating sum collapses to a closed form. In the chiral setting, vector spaces are replaced by $\mathcal{D}_X$-modules, tensor products respect locality (singularities only on diagonals), and configuration spaces provide the geometric arena.
-
 \section{Deriving the chiral module resolution}\label{sec:chiral-module-resolution}
+
+For a bounded acyclic resolution $V^\bullet \to M$, the graded
+character satisfies
+$\operatorname{ch}(M) = \sum_{i \geq 0} (-1)^i \operatorname{ch}(V^i)$;
+when the resolution terms are free or induced modules, this
+alternating sum collapses to a closed form. In the chiral setting,
+vector spaces are replaced by $\mathcal{D}_X$-modules, tensor
+products respect locality (singularities only on diagonals), and
+configuration spaces provide the geometric arena. This section builds
+the free and bar resolutions used in
+Section~\ref{sec:computing-characters}.
 
 \subsection{Free chiral modules}
 
@@ -3283,6 +3291,20 @@ the center cohomology $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
 rather than the module Ext groups.
 \end{proposition}
 
+\begin{proof}
+Proposition~\ref{prop:ext-sl2-level2} gives the level-$2$
+semisimplicity statement: the Kac--Kazhdan determinant has no
+bar-relevant zeros there, so the bar resolution detects no higher
+Ext-classes. Corollary~\ref{cor:singular-vector-symmetry} transports
+that determinant locus under the Feigin--Frenkel involution
+$k \mapsto -k-2h^\vee$, so the dual level $k'=-6$ lands on the
+singular-vector surface. Proposition~\ref{prop:ext-bar-resolution}
+identifies those singular vectors with nontrivial cohomology classes
+in the bar resolution, hence with nonzero $\mathrm{Ext}^1$. This is
+exactly the stated complementarity between the semisimple side and the
+extension-rich dual side.
+\end{proof}
+
 \begin{proposition}[Characters under level-shifting Koszul duality; \ClaimStatusProvedHere]
 \label{prop:character-koszul-duality}
 \index{character!under Koszul duality}
@@ -3975,7 +3997,7 @@ Resolution:
 
 Character of $\mathcal{B}^{\otimes n}$:
 \[
-\text{ch}(\mathcal{B}^{\otimes n}) = \prod_{i=1}^n \prod_{m > 0} (1 - q^m)^{-1} = \eta(q)^{-n}
+\text{ch}(\mathcal{B}^{\otimes n}) = \prod_{i=1}^n \prod_{m > 0} (1 - q^m)^{-1} = q^{n/24}\eta(q)^{-n}
 \]
 
 Configuration space contribution:

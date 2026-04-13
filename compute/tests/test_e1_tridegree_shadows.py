@@ -21,6 +21,7 @@ from compute.lib.e1_tridegree_shadows import (
     e1_genus1_r_matrix,
     e1_coinvariant_projection,
     e1_tridegree_table,
+    e1_degree2_shadow_from_r_matrix,
     e1_kappa_from_r_matrix,
     e1_shadow_depth,
     e1_depth_class,
@@ -184,7 +185,7 @@ class TestCYBE:
 # =========================================================================
 
 class TestKappaFromRMatrix:
-    """Verify kappa = av(r(z)) = Res_{z=0}[r(z)] for all families."""
+    """Verify full kappa, with affine KM using the Sugawara shift."""
 
     def test_heisenberg_kappa(self):
         """Heisenberg: kappa = k."""
@@ -241,20 +242,21 @@ class TestCoinvariantProjection:
     def test_coinvariant_arity2_equals_kappa_heisenberg(self):
         """av(r(z)) = kappa for Heisenberg."""
         proj = e1_coinvariant_projection('heisenberg', 2)
-        kappa = e1_kappa_from_r_matrix('heisenberg')
-        assert simplify(proj - kappa) == 0
+        shadow = e1_degree2_shadow_from_r_matrix('heisenberg')
+        assert simplify(proj - shadow) == 0
 
-    def test_coinvariant_arity2_equals_kappa_affine(self):
-        """av(r(z)) = kappa for affine sl_2."""
+    def test_coinvariant_arity2_equals_kappa_dp_affine(self):
+        """Affine sl_2: av(r(z)) = kappa_dp = 3k/4, not full kappa."""
         proj = e1_coinvariant_projection('affine_sl2', 2)
-        kappa = e1_kappa_from_r_matrix('affine_sl2')
-        assert simplify(proj - kappa) == 0
+        shadow = e1_degree2_shadow_from_r_matrix('affine_sl2')
+        assert simplify(proj - shadow) == 0
+        assert simplify(e1_kappa_from_r_matrix('affine_sl2') - (proj + Rational(3, 2))) == 0
 
     def test_coinvariant_arity2_equals_kappa_virasoro(self):
         """av(r(z)) = kappa for Virasoro."""
         proj = e1_coinvariant_projection('virasoro', 2)
-        kappa = e1_kappa_from_r_matrix('virasoro')
-        assert simplify(proj - kappa) == 0
+        shadow = e1_degree2_shadow_from_r_matrix('virasoro')
+        assert simplify(proj - shadow) == 0
 
     def test_coinvariant_arity2_equals_kappa_lattice_vz(self):
         """av(r(z)) = kappa for V_Z."""

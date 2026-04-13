@@ -336,9 +336,11 @@ def swiss_cheese_pair_dimensions(family: str,
       - boundary_dim[w]: number of states in A at weight w
         (counting derivatives of generators up to weight w)
 
-    The swiss-cheese identification says the bar complex differential
-    is the C-direction factorization and the coproduct is the
-    R-direction factorization.
+    The same two geometric directions feed the ordered bar complex:
+    the differential records the C-direction factorization and the
+    coproduct records the R-direction factorization. The genuine
+    Swiss-cheese datum is the pair (Z^der_ch(A), A), not the bar
+    complex by itself.
     """
     algebra = _get_algebra(family, **kwargs)
     weights = _generator_weights(family)

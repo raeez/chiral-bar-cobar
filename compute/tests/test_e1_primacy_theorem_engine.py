@@ -432,14 +432,14 @@ class TestInformationContent:
             assert verify_kappa_recovery_heisenberg(k)
 
     def test_28_kappa_recovery_sl2(self):
-        """Test 28: kappa(sl_2, k) = 3k/(2(k+2)) recovered from av(r(z)).
+        """Test 28: kappa(sl_2, k) = 3(k+2)/4 recovered from av(r(z)) + 3/2.
 
-        Path A (direct): from Casimir structure.
-        Path D (from CLAUDE.md): kappa = dim(g)*k/(2*(k+h^vee)).
+        Path A (direct): av(r(z)) = 3k/4 and the Sugawara shift is 3/2.
+        Path D (from CLAUDE.md): kappa = dim(g)(k+h^vee)/(2h^vee).
         """
         for k in [1, 2, 3, 5]:
             ok, val = verify_kappa_recovery_sl2(k)
-            assert ok, f"kappa(sl_2, {k}) = {val}, expected {Fraction(3*k, 2*(k+2))}"
+            assert ok, f"kappa(sl_2, {k}) = {val}, expected {Fraction(3 * (k + 2), 4)}"
 
     def test_29_information_loss_grows_with_dim(self):
         """Test 29: Information loss (ker/total) grows with dim.

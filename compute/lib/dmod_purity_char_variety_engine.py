@@ -668,7 +668,7 @@ def heisenberg_char_variety(n: int, k: int = 1,
 
       FH_n(H_k) = O_{Conf_n} (free D-module, rank 1)
 
-    with the connection d + k * sum_{i<j} d log(z_i - z_j).
+    with the connection d + k * sum_{i<j} d(z_i - z_j)/(z_i - z_j).
 
     This is a FLAT connection (curvature = 0 at genus 0).
     The characteristic variety of a flat connection on a vector
@@ -710,7 +710,7 @@ def heisenberg_char_variety(n: int, k: int = 1,
         "curvature_genus_g": f"kappa * omega_g = {kappa} * omega_g",
         "shadow_depth": 2,  # class G, terminates at arity 2
         "note": ("Free D-module: Ch = zero section. Maximally pure. "
-                 "The flat connection d + k * sum d log(z_i - z_j) "
+                 "The flat connection d + k * sum d(z_i - z_j)/(z_i - z_j) "
                  "has trivial characteristic variety."),
     }
 

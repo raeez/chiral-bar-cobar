@@ -266,8 +266,8 @@ def gap13_coderived_gives_poles():
     the Fredholm determinant, whose analytic continuation provides
     the pole structure of the intertwining operator.
 
-    For V_Z: det(1 - K_q) = product_{n>=1} (1 - q^n)^2 = eta(q)^2.
-    The poles of the Mellin transform of eta^2 are at zeta zeros.
+    For V_Z: det(1 - K_q) = product_{n>=1} (1 - q^n)^2 = q^{-1/12} * eta(q)^2.
+    The poles of the Mellin transform of q^{-1/12} * eta^2 are at zeta zeros.
     """
     if not HAS_MPMATH:
         return {'status': 'mpmath required', 'coupled': None}

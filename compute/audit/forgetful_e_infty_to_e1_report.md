@@ -40,7 +40,7 @@ Vol II is precise about the distinction. Construction constr:bar-fact-coalgebra 
 
 And then the key identification (line 955-958):
 
-> The bar differential encodes the holomorphic (closed) colour. The bar coproduct encodes the topological (open) colour. Together, B(F) is a factorization coalgebra with two colours, the factorization-level Swiss-cheese coalgebra.
+> Superseded by AP165: the bar differential comes from holomorphic collision data and the bar coproduct comes from the topological/E_1 direction. Together they make the ordered bar an E_1 coalgebra; the genuine Swiss-cheese datum is the derived-center pair $(C^\bullet_{ch}(A,A), A)$.
 
 #### 1c. Vol II CLAUDE.md (the authoritative conceptual statement)
 
@@ -77,7 +77,7 @@ The E_infty bar (in the sense of B^{Sigma}) exists and is the subject of Vol I. 
 - **Closed colour**: operations parametrized by FM_k(C) — these produce the differential d_B
 - **Open colour**: operations parametrized by Conf_k(R) — these produce the coproduct Delta
 
-The open colour IS E_1 by definition (locally constant factorization algebras on R are E_1-algebras, by Lurie HA Theorem 5.4.5.9). The bar complex presents the SC^{ch,top}-coalgebra, so it necessarily carries E_1 coalgebra structure on the open colour.
+The open colour IS E_1 by definition (locally constant factorization algebras on R are E_1-algebras, by Lurie HA Theorem 5.4.5.9). The ordered bar complex itself is therefore an E_1 coalgebra. It does \emph{not} present the full SC^{ch,top} datum; that two-colour structure appears only on the derived-center pair $(C^\bullet_{ch}(A,A), A)$.
 
 The manuscript's CG Koszul duality remark (rem:CG-koszul, factorization_swiss_cheese.tex line 1611) decomposes this precisely:
 - In the R-direction: E_1 Koszul duality (bar-cobar for associative algebras)
@@ -109,7 +109,7 @@ Dunn additivity says E_m ⊗ E_n ≃ E_{m+n}. The relevant statement for Swiss-c
 
 The directionality constraint (no open-to-closed operations) makes SC genuinely different from E_2 ⊗ E_1 or E_3. Dunn additivity applies to single-colour operads; SC is bicoloured with asymmetric mixed operations.
 
-#### Q6: Is the SC^{ch,top}-coalgebra structure on B^ch(A) the consequence of a UNIVERSAL PROPERTY?
+#### Q6: Is the two-coloured SC^{ch,top} operadic bar the consequence of a UNIVERSAL PROPERTY?
 
 **Yes.** The bar-cobar adjunction (Vol II, thm:bar-cobar-adjunction, cited throughout) gives:
 ```
@@ -165,18 +165,19 @@ This is the content of the Vol I chapter on E_1 modular Koszul duality (e1_modul
 
 The bar complex does not "forget" E_infty down to E_1. The correct statement is:
 
-**The bar construction REFINES E_infty to SC^{ch,top}.** It takes an E_infty-chiral algebra A (a factorizable D-module on Ran(X)) and produces an SC^{ch,top}-coalgebra B(A) (a factorization coalgebra on Ran(X) x Ran(R)). The SC^{ch,top} structure is RICHER than E_infty, not poorer:
+**The ordered bar construction adds an E_1 line-side direction to the E_\infty shadow.** It takes an E_infty-chiral algebra A and produces the ordered bar coalgebra $B^{\mathrm{ord}}(A)$, an E_1 coalgebra with holomorphic differential and deconcatenation coproduct. The genuine SC^{ch,top} structure is richer than either shadow alone and appears only on the derived-center pair $(C^\bullet_{ch}(A,A), A)$:
 
 ```
-E_infty-chiral-Alg ---bar---> SC^{ch,top}-coAlg ---forget open---> E_infty-chiral-coAlg
-                                                  ---forget closed--> E_1-coAlg
+E_infty-chiral-Alg ---bar---> E_1-bar-coAlg
+                                   |
+                                   +-- derived center --> SC^{ch,top}-datum on (C^bullet_ch(A,A), A)
 ```
 
-Forgetting the open colour recovers the chiral factorization coalgebra B^{Sigma}(A) of Vol I Theorem A. Forgetting the closed colour recovers the associative coalgebra (the Yangian side). Neither alone is the full bar complex. The SC^{ch,top}-coalgebra structure is the UNIVERSAL object from which both projections are shadows.
+Passing to Sigma_n-coinvariants recovers the chiral factorization coalgebra B^{Sigma}(A) of Vol I Theorem A. Retaining the ordering recovers the associative coalgebra/Yangian side. Neither alone is the full Swiss-cheese datum; that datum sits on the derived-center pair computed from the ordered bar.
 
 This is the content of the "Steinberg principle" (Vol II preface, line 72):
 
-> The bar complex presents the Swiss-cheese algebra, as the Steinberg variety presents the Hecke algebra. [...] three functors extract three objects: cobar Omega(B^ch(A)) ≃ A recovers the original algebra, Verdier duality D_Ran(B^ch(A)) ≃ B^ch(A!) produces the line-side Koszul dual, and chiral Hochschild cochains C^bullet_ch(A,A) compute the bulk observables.
+> Superseded by AP165: the bar complex is the ordered E_1 coalgebraic engine, not the Swiss-cheese algebra itself. The genuine SC datum is the derived-center pair $(C^\bullet_{ch}(A,A), A)$; three functors still extract the original algebra, the line-side Koszul dual, and the bulk observables.
 
 And the colour-projection theorem (thm:latyntsev-colour-projections, factorization_swiss_cheese.tex line 2278):
 - Closed-colour projection: quantum group (Latyntsev factorization quantum group)

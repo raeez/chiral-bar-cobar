@@ -569,7 +569,7 @@ def tree_amplitude_mzv(n: int, family: str = 'virasoro',
         # The bar amplitude with a single internal edge (channel s, t, or u)
         # weighted by the r-matrix gives:
         #   ell_T = kappa * zeta(2)  (for the s-channel tree)
-        # More precisely: the KZ regularized integral of d log(z)/(1-z) on [0,1]
+        # More precisely: the KZ regularized integral of dz/z - dz/(1-z) on [0,1]
         # gives -zeta(2).  The bar complex extracts this with the appropriate sign.
         z2 = mzv((2,))
         result['amplitude'] = kappa * z2
@@ -1351,7 +1351,7 @@ def period_matrix(n: int) -> Dict[str, Any]:
 
     if n == 4:
         # M_{0,4}: 1-dimensional, de Rham H^1 has dim 1 (after SL_2 reduction).
-        # Basis: omega = d log(z) - d log(1-z) (the KZ 1-form on the diagonal).
+        # Basis: omega = dz/z - dz/(1-z) (the KZ 1-form on the diagonal).
         # Period: int_0^1 omega regularized = zeta(2).
         # More precisely: the period of the d-log form on M_{0,4} is 2*pi*i
         # in H^1, but the MZV content comes from the real part.

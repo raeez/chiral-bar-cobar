@@ -922,7 +922,7 @@ def connes_absorption_spectrum(
     consists of the missing eigenvalues from the full line.
 
     The shadow analogue: the bar differential d_B acts on the bar complex
-    B(A) = direct_sum_{r>=2} (s^{-1} A)^{tensor r}. The graded pieces
+    B(A) = direct_sum_{r>=2} (s^{-1} A-bar)^{tensor r}, with A-bar = ker(epsilon). The graded pieces
     by arity r give a direct sum decomposition, and the restriction
     of d_B to arity r has eigenvalues determined by the OPE data.
 

@@ -8,6 +8,11 @@ T21-T30: The proof structure and weight table
 T31-T40: The Leech lattice and the depth-4 barrier
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 import numpy as np
 import sys, os

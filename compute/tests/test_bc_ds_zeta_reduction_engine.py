@@ -116,6 +116,8 @@ class TestCentralChargeFormulas:
 
     def test_c_ghost_values(self):
         """c_ghost(sl_N, k=0) = (N-1)[(N^2-1)(N-1)-1]."""
+        # VERIFIED: [DC] direct formula (N-1)[(N^2-1)(N-1)-1].
+        # [CF] matches ds_shadow_cascade_engine.c_ghost(N) at the k=0 intercept.
         assert eng.c_ghost(2) == Fraction(2)
         assert eng.c_ghost(3) == Fraction(30)
         assert eng.c_ghost(4) == Fraction(132)
@@ -825,10 +827,14 @@ class TestKnownValues:
 
     def test_ghost_c_sl2(self):
         """c_ghost(sl_2, k=0) = 2."""
+        # VERIFIED: [DC] (2-1)[(2^2-1)(2-1)-1] = 2.
+        # [CF] ds_shadow_cascade_engine.c_ghost(2) = 2.
         assert eng.c_ghost(2) == Fraction(2)
 
     def test_ghost_c_sl3(self):
         """c_ghost(sl_3, k=0) = 30."""
+        # VERIFIED: [DC] (3-1)[(3^2-1)(3-1)-1] = 30.
+        # [CF] ds_shadow_cascade_engine.c_ghost(3) = 30.
         assert eng.c_ghost(3) == Fraction(30)
 
     def test_ff_level_sl2_k1(self):

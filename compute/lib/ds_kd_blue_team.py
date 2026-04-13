@@ -402,7 +402,7 @@ def brst_bar_commutation_check(partition: Partition) -> BRSTBarCommutationResult
 
     # Q_DS and d_bar act on independent factors
     # Q_DS: acts on V_k(g) tensor ghost complex (BRST side)
-    # d_bar: acts on the bar coalgebra T^c(sV) (bar side)
+    # d_bar: acts on the bar coalgebra T^c(s^{-1}V) (bar side)
     # They commute because:
     # (1) DS is BRST cohomology H*(V tensor ghost, Q_DS)
     # (2) Bar is the simplicial/cobar resolution

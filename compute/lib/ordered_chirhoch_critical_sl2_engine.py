@@ -451,7 +451,7 @@ def averaging_analysis_critical(max_arity: int = 8) -> Dict[str, Any]:
         V^{tensor n} -> Sym^n(V), kernel dim = d^n - C(n+d-1,d-1).
         This is LEVEL-INDEPENDENT (depends only on dim V = 2).
 
-    (B) ALGEBRAIC-LEVEL av: the map av(r(z)) = kappa at degree 2.
+    (B) ALGEBRAIC-LEVEL av: the map av(r(z)) gives the degree-2 scalar shadow.
         For non-abelian KM (trace-form): av(r(z)) = k*dim(g)/(2*h^v).
         Full kappa = av(r) + dim(g)/2 (Sugawara shift, C13).
         At critical level k = -2:
@@ -478,7 +478,8 @@ def averaging_analysis_critical(max_arity: int = 8) -> Dict[str, Any]:
         algebraic sense: it now includes the entire ordered data, not just
         the antisymmetric part.
 
-        More precisely: at generic level, av(r(z)) = kappa != 0, so the
+        More precisely: at generic level, the full kappa = av(r(z)) + dim(g)/2
+        is nonzero, so the
         ordered datum r(z) projects to a nonzero scalar kappa.  The kernel
         of av at the algebraic level is the "shape" of r(z) modulo its
         scalar average.  At critical level, kappa = 0 and the entire
@@ -1300,7 +1301,7 @@ def summary_table() -> str:
     lines.append(f"    n=2: ker = 4 - 3 = 1 (antisymmetric)")
     lines.append(f"    n=3: ker = 8 - 4 = 4")
     lines.append(f"    n=4: ker = 16 - 5 = 11")
-    lines.append(f"  Algebraic-level: kappa = 0, so av(r(z)) contributes NOTHING")
+    lines.append(f"  Algebraic-level: av(r(z)) = -3/2 and the Sugawara shift is +3/2, so kappa = 0")
     lines.append(f"  The entire r-matrix datum r(z) = -2*Omega/z is in ker(av)")
     lines.append("")
 

@@ -42,7 +42,7 @@ QUANTITATIVE IMPLEMENTATION:
     that GKW's Feynman-diagrammatic formulas agree with our shadow projections.
 
     The key formula connecting GKW to shadows:
-        m_k^{tr}(sT, ..., sT) = S_k * e_{2k}   (on the primary line)
+        m_k^{tr}(s^{-1}T, ..., s^{-1}T) = S_k * e_{2k}   (on the primary line)
     where S_k is the k-th shadow coefficient and e_{2k} the weight-2k basis vector.
 
 LITERATURE:
@@ -372,7 +372,7 @@ def transferred_mk_primary_line(family: str, arity: int,
     """Compute transferred m_k on the primary line.
 
     By thm:shadow-formality-identification:
-        m_k^{tr}(sT, ..., sT) = S_k * e_{2k}
+        m_k^{tr}(s^{-1}T, ..., s^{-1}T) = S_k * e_{2k}
 
     where S_k is the shadow coefficient at arity k and e_{2k} is the
     weight-2k basis vector on the primary line.

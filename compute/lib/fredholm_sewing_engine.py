@@ -748,7 +748,7 @@ def partition_function_genus1(algebra_type: str, q_abs: float,
                                N: int = 50, params: Dict = None) -> Dict:
     """Genus-1 partition function Z_1 = 1/det(1 - K_q) (up to q^{-c/24}).
 
-    For Heisenberg: Z_1 = prod (1-q^n)^{-rank} = eta^{-2*rank} * q^{rank/12}
+    For Heisenberg: Z_1 = prod (1-q^n)^{-rank} = q^{rank/24} * eta^{-rank}
     For Virasoro:   Z_1 = prod_{n>=2} (1-q^n)^{-1} (vacuum character)
     For affine:     Z_1 = prod (1-q^n)^{-dim g}
     """

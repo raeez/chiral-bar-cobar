@@ -167,7 +167,7 @@ class TestEtaFunction:
         assert c[6] == 0
 
     def test_eta_squared(self):
-        """eta^2 = prod(1-q^n)^2 leading terms."""
+        """q^{-1/12} * eta^2 = prod(1-q^n)^2 leading terms."""
         c = eta_power_coeffs(20, 2)
         assert c[0] == 1
         assert c[1] == -2

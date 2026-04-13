@@ -46,10 +46,12 @@ Evidence:
       The averaging map av: g^{E_1} -> g^mod is the Sigma_n-coinvariant projection.
       This is exactly the passage T^c -> Sym^c.
 
-  (d) At arity 2: kappa = av(r(z)).  The r-matrix r(z) lives in the E_1
-      (ordered/T^c) convolution.  The scalar kappa is its Sigma_2-coinvariant
-      (symmetric/Sym^c component).  The Sigma_2-coinvariant of a bilinear
-      map is its SYMMETRIZATION, not its Harrison/antisymmetric part.
+  (d) At arity 2: the Sigma_2-coinvariant of r(z) gives the scalar
+      degree-2 shadow. In the scalar families this equals kappa; for
+      non-abelian affine KM it is kappa_dp and the full kappa adds
+      dim(g)/2. The r-matrix r(z) lives in the E_1 (ordered/T^c)
+      convolution. The Sigma_2-coinvariant of a bilinear map is its
+      SYMMETRIZATION, not its Harrison/antisymmetric part.
 
 RESOLVING THE CONTRADICTION (Agent 1 vs Agent 6):
 
@@ -107,7 +109,7 @@ SUMMARY TABLE:
   Theta_A    in g^mod          (symmetric MC, kappa, cubic shadow, ...)
   av(Theta^{E_1}) = Theta_A   (coinvariant projection)
 
-  kappa = av(r(z)) = Sigma_2-coinvariant of r(z)
+  the degree-2 scalar shadow = Sigma_2-coinvariant of r(z)
         = (1/2)(r(z) + r(-z))  ... NO.  kappa is the SCALAR part: the trace of
           the arity-2 component evaluated at the fundamental class of M_bar_{0,3}.
           More precisely: kappa = Theta_A(0,2) evaluated on the fundamental class
@@ -651,7 +653,9 @@ def averaging_map_at_arity_2(ordered_value: Fraction,
     structure of the ribbon modular operad.
 
     For the SCALAR projection (trace over generators), the result is:
-      kappa = av(r(z)) = Sigma_2-invariant scalar extracted from r(z).
+      the degree-2 scalar shadow is the Sigma_2-invariant scalar extracted
+      from r(z). In the non-abelian affine KM case this is kappa_dp, and
+      the full kappa adds dim(g)/2.
 
     The correct computation uses eq:e1-coinvariant-arity2 from the manuscript:
       av_{r=2}(r(z)) = kappa(A)
@@ -783,7 +787,7 @@ def definitive_answer() -> Dict[str, str]:
     2. Sigma_n-equivariant Hom = Hom from Sigma_n-coinvariants = Hom from Sym^c.
     3. The E_1 variant (def:e1-modular-convolution) uses Hom without Sigma_n.
     4. The averaging map av: g^{E_1} -> g^mod is the Sigma_n-coinvariant projection.
-    5. kappa = av(r(z)) lives in Sym^c (weight-2 Eulerian), not Lie^c (weight-1).
+    5. The degree-2 scalar shadow from av(r(z)) lives in Sym^c (weight-2 Eulerian), not Lie^c (weight-1).
     6. The bar complex is an FCom-algebra (thm:bar-modular-operad).
     7. FCom is the Feynman transform of the COMMUTATIVE modular operad.
 

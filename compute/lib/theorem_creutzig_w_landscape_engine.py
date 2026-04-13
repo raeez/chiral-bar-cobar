@@ -970,7 +970,7 @@ def creutzig_landscape_catalog(level=k_sym) -> List[CreutzigLandscapeEntry]:
 # ============================================================================
 
 def verify_type_a_kappa_consistency(N: int, level=k_sym) -> bool:
-    """Verify that kappa(W_N) matches the known formula kappa = c * H_{N-1}.
+    """Verify that kappa(W_N) matches the canonical formula c * (H_N - 1).
 
     For W_N = W^k(sl_N, f_prin), kappa = c * sum_{j=2}^{N} 1/j = c * (H_N - 1)
     where H_N = 1 + 1/2 + ... + 1/N is the harmonic number.

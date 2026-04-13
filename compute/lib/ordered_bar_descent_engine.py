@@ -26,7 +26,7 @@ Conf_n^{ord}(C). To descend to Conf_n(C), one needs a Sigma_n-
 equivariant structure: the R-MATRIX.
 
 The R-matrix R(z) is the monodromy of the Kohno connection:
-  nabla = d - sum_{i<j} r_{ij}(z_i - z_j) d log(z_i - z_j)
+  nabla = d - sum_{i<j} r_{ij}(z_i - z_j) d(z_i - z_j)
 where r(z) is the collision residue (pole orders ONE LESS than OPE, AP19).
 
 The R-twisted Sigma_n action on generators sigma_i is:
@@ -272,7 +272,7 @@ class AffineSl2RMatrix:
         # where P_{12} is the permutation operator... no.
 
         # Let me be precise.
-        # The Kohno connection is nabla = d - sum_{i<j} hbar * r_{ij} d log(z_{ij})
+        # The Kohno connection is nabla = d - sum_{i<j} hbar * r_{ij} * dz_{ij}/z_{ij}
         # where r_{ij} = Omega inserted in slots i,j.
         # The tensor Omega in g x g has components Omega_{ab}
         # and r_{12} acts on g^{x n} as Omega_{ab} in the (1,2) factor.
@@ -357,7 +357,7 @@ class AffineSl2RMatrix:
 
         # Hmm, but that's for modules. For the BAR COMPLEX:
         # The bar complex fibre at (z_1, z_2) is V x V = g x g.
-        # The flat connection is nabla = d - r_{12}(z) dlog(z_1 - z_2)
+        # The flat connection is nabla = d - r_{12}(z) d(z_1 - z_2)
         # where r_{12}(z) : V x V -> V x V.
         # The collision residue from J^a(z)J^b(w) ~ k g^{ab}/(z-w)^2 is:
         # r(z)_{ab,cd} acts on basis vectors e_c x e_d to give
@@ -807,7 +807,7 @@ class DescentVerificationEngine:
             'algebra': self.algebra_type,
             'level': str(self.level),
             'three_bar_complexes': {
-                'B_ord': 'Ordered bar, T^c(s^{-1}A), deconc coproduct (E_1 coalgebra)',
+                'B_ord': 'Ordered bar, T^c(s^{-1}A-bar), deconc coproduct (E_1 coalgebra)',
                 'B_Sigma': 'Symmetric bar, R-twisted Sigma_n descent, fact coproduct (E_infty coalgebra)',
                 'B_FG': 'Francis-Gaitsgory bar, only zeroth product, assoc graded of B_Sigma',
             },

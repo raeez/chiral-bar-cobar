@@ -21,7 +21,7 @@ These categories are already well-described in CLAUDE.md but the campaign found 
 | AP142 (local-global conflation) | 14 | AP20 found 9 CRITICAL instances |
 | AP165 (B(A) not SC-coalgebra) | 16 | AP19 found ongoing conflation language |
 | AP166 (SC not self-dual) | 6 | AP18 found residual claims |
-| AP168 (E_3-chiral ban) | 19 | AP17 found E_3-chiral instead of E_3-topological |
+| AP168 (E_3 topologization naming ban) | 19 | AP17 found the banned label instead of E_3-topological |
 | AP132 (augmentation ideal) | 12 | AP04 found T^c(s^{-1}A) without bar |
 | AP22 (desuspension direction) | 12 | AP05 found residual +1 instances |
 | AP117 (Arnold vs KZ) | 26 | F19 found d log used as connection form |

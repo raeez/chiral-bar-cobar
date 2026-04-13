@@ -1002,28 +1002,8 @@ def kappa_formula(family: str, **params) -> object:
       Heisenberg H_k:    kappa = k  (the level itself, NOT k/2)
       Virasoro Vir_c:    kappa = c/2
       sl_N at level k:   kappa = dim(g)*(k+h^v)/(2*h^v) = (N^2-1)*(k+N)/(2N)
-      W_N at c:          kappa = c * sigma(sl_N) = c * H_N  where H_N = sum 1/j
-                         Wait: kappa(W_N) = c * (H_N - 1) per CLAUDE.md correction.
-                         NO: CLAUDE.md says kappa(W_N) = c * H_N.
-                         But genus_expansion.py says kappa(W_3) = 5c/6.
-                         sigma(sl_3) = 1/2 + 1/3 = 5/6. So kappa = c * sigma.
-                         For sl_N: sigma = sum_{j=1}^{N-1} 1/(j+1)?
-                         No: sigma(sl_N) = sum_{j=1}^{N-1} 1/(j*(j+1)) * j = ...
-                         Actually: for W_3, sigma = 5/6 = 1/2 + 1/3.
-                         This is H_3 - 1 = (1 + 1/2 + 1/3) - 1 = 5/6.
-                         So kappa(W_N) = c * (H_N - 1) where H_N = harmonic.
-
-                         WAIT: Re-reading CLAUDE.md more carefully, the
-                         CORRECTED version says kappa(W_N) = c * H_N (not H_N-1).
-                         But for N=3: H_3 = 1 + 1/2 + 1/3 = 11/6.
-                         While we know kappa(W_3) = 5c/6 from genus_expansion.py.
-                         So 5/6 != 11/6. Therefore kappa(W_N) = c * (H_N - 1).
-                         CLAUDE.md line says "kappa(W_N) = c·H_N" but this
-                         contradicts the ground truth in genus_expansion.py.
-                         The ground truth (genus_expansion.py, Epistemic rank 1)
-                         wins over CLAUDE.md (rank 6).
-
-                         kappa(W_N) = c * (H_N - 1) where H_N = sum_{j=1}^N 1/j.
+      W_N at c:          kappa = c * (H_N - 1) = c * sum_{j=2}^{N} 1/j
+                         where H_N = sum_{j=1}^N 1/j, so N=2 gives kappa = c/2
 
       bc system:         kappa = c/2 = -(6*lambda^2 - 6*lambda + 1)
     """

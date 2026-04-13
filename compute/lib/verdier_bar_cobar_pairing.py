@@ -72,12 +72,12 @@ class DGA:
 class BarData:
     """Bar complex B(A) for a finite-dimensional dg algebra A.
 
-    B^n(A) = (sV)^{tensor n} with the bar differential.
-    The suspension s shifts degree by -1 (cohomological convention:
-    bar uses desuspension, so |se_i| = |e_i| - 1).
+    B^n(A) = (s^{-1}V)^{tensor n} with the bar differential.
+    The desuspension s^{-1} lowers degree by 1:
+    |s^{-1}e_i| = |e_i| - 1.
 
     Elements are multi-indices (i_1, ..., i_n) representing
-    se_{i_1} tensor ... tensor se_{i_n}.
+    s^{-1}e_{i_1} tensor ... tensor s^{-1}e_{i_n}.
 
     The bar differential has two components:
       d_1: internal differential (from d on A)
@@ -91,7 +91,7 @@ class BarData:
         self._diff_cache: Dict[int, np.ndarray] = {}
 
     def basis(self, n: int) -> List[Tuple[int, ...]]:
-        """Basis for B^n = (sV)^{tensor n}."""
+        """Basis for B^n = (s^{-1}V)^{tensor n}."""
         if n in self._basis_cache:
             return self._basis_cache[n]
         if n <= 0:
@@ -111,9 +111,11 @@ class BarData:
     def differential(self, n: int) -> np.ndarray:
         """Bar differential d_B: B^n -> B^{n-1}.
 
-        d_B(se_{i_1} | ... | se_{i_n})
-          = sum_{p=1}^{n} (-1)^{eps_p} se_{i_1} | ... | s d(e_{i_p}) | ... | se_{i_n}
-          + sum_{p=1}^{n-1} (-1)^{eps_p} se_{i_1} | ... | s m_2(e_{i_p}, e_{i_{p+1}}) | ... | se_{i_n}
+        d_B(s^{-1}e_{i_1} | ... | s^{-1}e_{i_n})
+          = sum_{p=1}^{n} (-1)^{eps_p}
+            s^{-1}e_{i_1} | ... | s^{-1} d(e_{i_p}) | ... | s^{-1}e_{i_n}
+          + sum_{p=1}^{n-1} (-1)^{eps_p}
+            s^{-1}e_{i_1} | ... | s^{-1} m_2(e_{i_p}, e_{i_{p+1}}) | ... | s^{-1}e_{i_n}
 
         The first sum preserves tensor degree (internal differential).
         The second sum reduces tensor degree by 1 (multiplication term).
@@ -200,8 +202,11 @@ class CobarData:
       d_2: from the comultiplication Delta on C (coAlexander-Whitney)
 
     For C = B(A), the comultiplication on B(A) is the deconcatenation:
-      Delta(se_{i_1} | ... | se_{i_n})
-        = sum_{p=1}^{n-1} (se_{i_1}|...|se_{i_p}) tensor (se_{i_{p+1}}|...|se_{i_n})
+      Delta(s^{-1}e_{i_1} | ... | s^{-1}e_{i_n})
+        = sum_{p=1}^{n-1}
+          (s^{-1}e_{i_1}|...|s^{-1}e_{i_p})
+          tensor
+          (s^{-1}e_{i_{p+1}}|...|s^{-1}e_{i_n})
     """
 
     def __init__(self, bar: BarData, max_tensor: int = 3):
@@ -325,7 +330,8 @@ def bar_cobar_finite(dga: DGA, max_tensor: int = 3) -> Tuple[BarData, CobarData]
 def verdier_pairing_matrix(bar: BarData, cobar: CobarData, degree: int) -> np.ndarray:
     """The Verdier pairing matrix at tensor degree n.
 
-    <se_{i_1} tensor ... tensor se_{i_n}, s^{-1}c_{j_1} tensor ... tensor s^{-1}c_{j_n}>
+    <s^{-1}e_{i_1} tensor ... tensor s^{-1}e_{i_n},
+     s^{-1}c_{j_1} tensor ... tensor s^{-1}c_{j_n}>
     = delta_{i_1,j_1} * ... * delta_{i_n,j_n}
 
     At the level of V^{tensor n} (after cancelling s and s^{-1}),
@@ -856,7 +862,7 @@ def koszul_dual_from_bar(dga: DGA, max_tensor: int = 3) -> Dict[str, object]:
     """Compute A^i = H*(B(A)) and A^! = (A^i)^v.
 
     For the bar complex of A:
-      B^n(A) = (sV)^{tensor n}, differential d_B.
+      B^n(A) = (s^{-1}V)^{tensor n}, differential d_B.
     Bar cohomology H^n(B(A)) = A^i_n (the Koszul dual coalgebra at degree n).
     The Koszul dual algebra is A^! = (A^i)^v (linear dual).
 

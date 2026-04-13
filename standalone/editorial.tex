@@ -1,0 +1,18 @@
+% Editorial companion: the archive-only concordance and constitution chapters.
+\def\archivebuild{1}
+\def\mainpreambleonly{1}
+\IfFileExists{main.tex}{\input{main.tex}}{\input{../main.tex}}
+
+\newcommand{\repoinput}[1]{%
+ \IfFileExists{#1.tex}{\input{#1}}{\input{../#1}}%
+}
+
+\begin{document}
+\frontmatter
+\tableofcontents
+\mainmatter
+\repoinput{chapters/connections/concordance}
+\repoinput{chapters/connections/editorial_constitution}
+\backmatter
+\repoinput{bibliography/references}
+\end{document}

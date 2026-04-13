@@ -1,9 +1,11 @@
-r"""Vol II Part I rectification engine: bar complex = Swiss-cheese algebra.
+r"""Vol II Part I rectification engine: ordered bar is the E_1
+coalgebraic engine; SC lives on the derived-center pair.
 
 CORE CLAIMS VERIFIED:
 1. Bar differential = C-direction (holomorphic) factorization
 2. Bar coproduct = R-direction (topological) factorization
-3. Together = Swiss-cheese algebra on FM_k(C) x Conf_k(R)
+3. Together = ordered E_1 coalgebra on FM_k(C) x Conf_k(R);
+   the SC datum appears on (C^bullet_ch(A,A), A)
 4. d_fib^2 = kappa * omega_g at genus g >= 1
 5. Arnold relation ensures d^2 = 0 at genus 0
 6. Arnold DEFECT at genus g produces curvature kappa * omega_g
@@ -570,7 +572,10 @@ def verify_cdg_compatibility():
         This IS the SC^{ch,top} structure.
 
     (c) CDG's setup: 3d N=2 gauge theories on C x R.
-        Our setup: SC^{ch,top} algebras on FM_k(C) x Conf_k(R).
+        Our setup: the SC^{ch,top} operation spaces are modeled on
+        FM_k(C) x Conf_k(R), while the ordered bar complex supplies
+        the E_1 coalgebraic engine and the SC datum lives on the
+        derived-center pair.
         The operation spaces match.
 
     Returns: dict with compatibility verification.
@@ -640,7 +645,7 @@ def verify_moriwaki_compatibility():
         },
         "swiss_cheese_action": {
             "Moriwaki": "SC operad acts on C_1-cofinite module categories",
-            "Vol_II": "SC^{ch,top} algebra structure on boundary algebra",
+            "Vol_II": "SC^{ch,top} structure on the derived-center pair (C^bullet_ch(A,A), A)",
             "compatible": True,
             "level_difference": "module categories vs algebras",
         },

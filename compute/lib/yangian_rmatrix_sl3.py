@@ -10,7 +10,8 @@ Mathematical structure
 ---------------------
 * OPE:  J^a(z) J^b(w) ~ k g^{ab}/(z-w)^2 + f^{abc} J^c(w)/(z-w)
 * r-matrix (collision residue of bar):
-      r(z) = \sum_a T^a \otimes T_a / z   in  sl_3 \otimes sl_3 \otimes C((z))
+      r(z) = k * \sum_a T^a \otimes T_a / z
+  in  sl_3 \otimes sl_3 \otimes C((z))
   This has a SINGLE pole at z=0 (AP19: bar absorbs one power).
 * R-matrix (perturbative in 1/\kappa):
       R(z) = 1 + r(z)/\kappa + O(1/\kappa^2)
@@ -330,16 +331,16 @@ def d_tensor_sl3() -> np.ndarray:
 # r-matrix from bar complex collision residue
 # ============================================================
 
-def r_matrix_abstract() -> Dict[str, object]:
-    r"""The r-matrix r(z) = k*Omega/z extracted from the bar collision residue.
+def r_matrix_abstract(k: complex = 1) -> Dict[str, object]:
+    r"""The affine collision residue r(z) = k*Omega/z in the fundamental.
 
     The bar construction for the affine KM algebra sl_3_k uses the
-    propagator d\log E(z,w).  The collision residue (AP19) extracts the
-    simple pole of the OPE: [a, b] (structure constants), NOT the
-    double pole k g^{ab} (curvature).
+    propagator d\log E(z,w).  By AP19 the double pole
+    k g^{ab}/(z-w)^2 contributes the simple collision pole, while the
+    bracket term f^{ab}{}_c J^c/(z-w) shifts to a regular term and drops.
 
     The r-matrix lives in sl_3 \otimes sl_3 \otimes C((z)):
-        r(z) = sum_a T^a \otimes T_a / z
+        r(z) = k * sum_a T^a \otimes T_a / z
 
     where the sum is over a dual-basis pair: (T^a, T_b) = delta^a_b.
 
@@ -356,21 +357,23 @@ def r_matrix_abstract() -> Dict[str, object]:
         "pole_location": 0,
         "representation": "fundamental (C^3)",
         "formula": "r(z) = k*Omega / z",
+        "level": k,
         "AP19_check": "OPE poles z^{-2}, z^{-1}; bar absorbs one; r-matrix has z^{-1} only",
     }
 
 
-def r_matrix_fund(z: complex) -> np.ndarray:
+def r_matrix_fund(z: complex, k: complex = 1) -> np.ndarray:
     """r-matrix in the fundamental representation: r(z) = k*Omega / z.
 
     Args:
         z: spectral parameter (nonzero).
+        k: affine level in the trace-form convention.
 
     Returns:
         9x9 complex matrix.
     """
     Omega = casimir_tensor_fund()
-    return Omega / z
+    return complex(k) * Omega / z
 
 
 # ============================================================
@@ -775,8 +778,8 @@ def R_at_infinity() -> np.ndarray:
 def R_residue_at_zero() -> np.ndarray:
     """Residue of R(z) = I + P/z at z = 0 is P (the permutation).
 
-    This is the collision residue of the bar construction: the
-    permutation operator P exchanges the two tensor factors.
+    This is the residue of the normalized Yang R-matrix, not the raw
+    affine collision residue k*Omega/z.
     """
     return permutation_matrix_3()
 

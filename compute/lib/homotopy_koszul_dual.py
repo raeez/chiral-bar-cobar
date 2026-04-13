@@ -6,7 +6,7 @@ formal (m_k = 0 for k >= 3). Off the Koszul locus, genuine higher
 operations m_3, m_4, ... appear.
 
 MAIN COMPUTATION: For A = k[x]/(x^n) (augmented by x -> 0):
-- B(A) = T^c(s * I) with I = (x, x^2, ..., x^{n-1}), the bar differential
+- B(A) = T^c(s^{-1} I) with I = (x, x^2, ..., x^{n-1}), the bar differential
 - H*(B(A)) = Tor^A(k, k), the bar cohomology as a coalgebra
 - The A-infinity structure on H*(B(A)) via homological perturbation lemma
 
@@ -21,7 +21,7 @@ For n = 3: A = k[x]/(x^3). This is NOT Koszul (not quadratic in the
 For n >= 3: increasingly complex A-infinity structure.
 
 GRADING: We use HOMOLOGICAL grading on B(A). The bar construction
-B(A) = bigoplus_{p >= 0} (s*I)^{otimes p} with |s*a| = |a| - 1.
+B(A) = bigoplus_{p >= 0} (s^{-1}I)^{otimes p} with |s^{-1}a| = |a| - 1.
 The bar differential d: B_p -> B_{p-1} has degree -1.
 """
 
@@ -83,7 +83,7 @@ class TruncatedPolynomialAlgebra:
 class BarComplex:
     """Bar complex B(A) for A = k[x]/(x^n).
 
-    B_p = (sI)^{otimes p} has basis indexed by tuples (a_1, ..., a_p)
+    B_p = (s^{-1}I)^{otimes p} has basis indexed by tuples (a_1, ..., a_p)
     where each a_i in {0, ..., n-2} (representing x^{a_i+1}).
 
     The bar differential d_1: B_p -> B_{p-1} is:
@@ -96,7 +96,7 @@ class BarComplex:
         self.d = algebra.aug_ideal_dim  # dimension of augmentation ideal
 
     def basis_size(self, p: int) -> int:
-        """Dimension of B_p = (sI)^{otimes p}."""
+        """Dimension of B_p = (s^{-1}I)^{otimes p}."""
         if p <= 0:
             return 1 if p == 0 else 0
         return self.d ** p
@@ -343,7 +343,7 @@ class AInfinityTransfer:
         if H_p == 0 or H_q == 0 or H_pq == 0:
             return np.zeros((H_pq, H_p * H_q))
 
-        # Concatenation: (sI)^p x (sI)^q -> (sI)^{p+q}
+        # Concatenation: (s^{-1}I)^p x (s^{-1}I)^q -> (s^{-1}I)^{p+q}
         # [a_1|...|a_p] * [b_1|...|b_q] = [a_1|...|a_p|b_1|...|b_q]
         iota_p = self.iota[p]  # B_p <- H_p
         iota_q = self.iota[q]  # B_q <- H_q

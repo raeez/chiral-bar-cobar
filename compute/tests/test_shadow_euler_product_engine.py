@@ -19,6 +19,11 @@ Verification paths:
   Path 4: Cross-family consistency (Rankin-Selberg, convolution)
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import sys
 sys.path.insert(0, 'compute')
 

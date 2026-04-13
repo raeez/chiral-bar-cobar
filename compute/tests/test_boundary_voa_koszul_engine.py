@@ -115,19 +115,39 @@ class TestCentralChargeFormulas:
 
     def test_c_betagamma_lambda_half(self):
         """Symplectic boson (lambda=1/2): c = -1 per pair."""
+        # VERIFIED: [LT] CLAUDE.md C6 gives c_bg(lambda)=2(6lambda^2-6lambda+1).
+        # [CF] C7 gives c_bg(1/2)+c_bc(1/2)=-1+1=0.
         assert c_betagamma_system(1, F(1, 2)) == F(-1)
 
     def test_c_betagamma_lambda_0(self):
         """Standard bg (lambda=0): c = 2 per pair."""
+        # VERIFIED: [LT] CLAUDE.md C6 and landscape_census.tex bc/bg rows.
+        # [SY] lambda -> 1-lambda symmetry gives c_bg(0)=c_bg(1)=2.
         assert c_betagamma_system(1, 0) == F(2)
 
     def test_c_betagamma_lambda_1(self):
         """Reversed bg (lambda=1): c = 2 per pair."""
+        # VERIFIED: [LT] CLAUDE.md C6 gives c_bg(1)=2.
+        # [SY] weight symmetry c_bg(lambda)=c_bg(1-lambda) matches lambda=0.
         assert c_betagamma_system(1, 1) == F(2)
+
+    def test_c_bc_lambda_2(self):
+        """Reparametrization ghosts (lambda=2): c = -26 per pair."""
+        # VERIFIED: [LT] CLAUDE.md C5 gives c_bc(lambda)=1-3(2lambda-1)^2.
+        # [CF] C7 gives c_bc(2)+c_bg(2)=-26+26=0.
+        assert c_bc_system(1, 2) == F(-26)
+
+    def test_c_betagamma_lambda_2(self):
+        """Bosonic partner at lambda=2: c = +26 per pair."""
+        # VERIFIED: [LT] CLAUDE.md C6 gives c_bg(2)=2(24-12+1)=26.
+        # [CF] C7 gives c_bg(2)+c_bc(2)=26+(-26)=0.
+        assert c_betagamma_system(1, 2) == F(26)
 
     def test_c_bc_complementarity(self):
         """c(bg, lambda) + c(bc, lambda) = 0 for all lambda."""
-        for lam in [0, F(1, 2), 1, F(1, 3), F(2, 3)]:
+        # VERIFIED: [LT] CLAUDE.md C5-C7 gives the canonical closed forms.
+        # [DC] expanding 2(6lambda^2-6lambda+1)+1-3(2lambda-1)^2 gives 0.
+        for lam in [0, F(1, 2), 1, F(2), F(1, 3), F(2, 3)]:
             assert c_betagamma_system(1, lam) + c_bc_system(1, lam) == 0
 
     def test_c_free_fermion(self):
@@ -658,6 +678,7 @@ class TestBLLPRR:
         assert d['central_charge'] == F(-26)
         assert d['kappa'] == F(-13)
         assert d['shadow_class'] == 'C'
+        assert "lambda=2" in d['name']
 
     def test_argyres_douglas_H0(self):
         d = bllprr_schur_voa('argyres_douglas_H0')

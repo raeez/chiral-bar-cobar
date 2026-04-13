@@ -55,7 +55,7 @@ EXPLICIT sl_2 VERIFICATION:
   This satisfies the quantum YBE:
     R_{12}(u) R_{13}(u+v) R_{23}(v) = R_{23}(v) R_{13}(u+v) R_{12}(u)
 
-  The monodromy of the KZ connection nabla_{0,n} = d - sum r^{ij} d log(z_ij)
+  The monodromy of the KZ connection nabla_{0,n} = d - sum r^{ij}(z_ij) dz_ij
   gives the quantum group R-matrix of U_q(sl_2) where q = exp(pi*i/(k+2)).
   This is the Drinfeld-Kohno theorem, which in our framework is the statement
   that the genus-0 shadow connection monodromy = R-matrix.
@@ -715,7 +715,7 @@ def quantum_r_matrix(A: ChiralAlgebraData) -> QuantumRMatrix:
       = (z - hbar*P) / z  (Yang R-matrix, exact to leading order)
 
     The Drinfeld-Kohno theorem: monodromy of the KZ connection
-      nabla_{0,n} = d - (1/(k+h^v)) sum_{i<j} Omega^{ij} d log(z_i - z_j)
+      nabla_{0,n} = d - (1/(k+h^v)) sum_{i<j} (Omega^{ij}/(z_i - z_j)) d(z_i - z_j)
     gives the quantum group R-matrix of U_q(g) where q = exp(pi*i/(k+h^v)).
     """
     r = extract_collision_residue(A)
@@ -784,10 +784,10 @@ def verify_qybe_yang_numerical(N: int, z_vals: Optional[List[complex]] = None,
 def shadow_connection_genus0(A: ChiralAlgebraData, n: int) -> Dict[str, Any]:
     """Shadow connection nabla^{hol}_{0,n} at genus 0.
 
-    nabla_{0,n} = d - sum_{i<j} r^{ij}(z_i - z_j) d log(z_i - z_j)
+    nabla_{0,n} = d - sum_{i<j} r^{ij}(z_i - z_j) d(z_i - z_j)
 
     For affine sl_N at level k, this is the KZ connection:
-      nabla_{KZ} = d - (1/(k+h^v)) sum_{i<j} Omega^{ij} d log(z_i - z_j)
+      nabla_{KZ} = d - (1/(k+h^v)) sum_{i<j} (Omega^{ij}/(z_i - z_j)) d(z_i - z_j)
 
     Flatness: (nabla_{0,n})^2 = 0
     This follows from the MC equation for Theta_A (thm:thqg-flatness).
@@ -816,8 +816,8 @@ def kz_connection_matches_shadow(A: ChiralAlgebraData) -> bool:
     """Verify the KZ connection matches the genus-0 shadow connection.
 
     For affine sl_N at level k:
-      nabla_{0,n}^{shadow} = d - sum_{i<j} r^{ij} d log(z_{ij})
-      nabla_{KZ} = d - (1/(k+N)) sum_{i<j} Omega^{ij} d log(z_{ij})
+      nabla_{0,n}^{shadow} = d - sum_{i<j} r^{ij}(z_{ij}) dz_{ij}
+      nabla_{KZ} = d - (1/(k+N)) sum_{i<j} (Omega^{ij}/z_{ij}) dz_{ij}
 
     These match because:
       r^{coll}(z) = Omega/z  and the normalization factor 1/(k+h^v)

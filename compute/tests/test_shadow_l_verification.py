@@ -9,6 +9,11 @@ T16-T25: Verification table and the correspondence formula
 T26-T35: βγ charge-0 spectrum computation
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 import numpy as np
 import sys, os

@@ -530,7 +530,7 @@ def scalar_curved_module(algebra: CurvedDGAlgebra,
 class CurvedBarConstruction:
     """Curved bar construction B(A) for a curved dg algebra.
 
-    B(A) = T^c(s * A_bar) = direct sum of (s * A_bar)^{otimes n}.
+    B(A) = T^c(s^{-1} A_bar) = direct sum of (s^{-1} A_bar)^{otimes n}.
 
     The bar differential d_B = d_linear + d_bracket + d_curv where:
       d_linear: B^n -> B^n      (from d_A applied to each tensor factor)
@@ -542,8 +542,8 @@ class CurvedBarConstruction:
 
     Convention: we work with the augmentation ideal A_bar = ker(augmentation).
     For our models, A_bar = span{e_1, ..., e_{dim-1}} (excluding the unit e_0).
-    Suspension shifts degree by +1 (cohomological convention, bar uses desuspension
-    per signs appendix, but for the bar COALGEBRA the total shift is +1 on generators).
+    Desuspension lowers degree by 1 in cohomological grading:
+    |s^{-1}a| = |a| - 1.
     """
     algebra: CurvedDGAlgebra
     max_tensor: int  # truncation level
@@ -558,7 +558,7 @@ class CurvedBarConstruction:
         return len(self.aug_indices)
 
     def bar_dim(self, n: int) -> int:
-        """Dimension of B^n = (s A_bar)^{otimes n}."""
+        """Dimension of B^n = (s^{-1} A_bar)^{otimes n}."""
         if n < 0 or n > self.max_tensor:
             return 0
         if n == 0:
@@ -590,14 +590,15 @@ class CurvedBarConstruction:
     def _koszul_sign(self, indices: Tuple[int, ...], pos: int) -> int:
         """Koszul sign for acting at position pos.
 
-        For elements in the bar complex (suspended), the sign is
-        (-1)^{sum_{j<pos} |s e_{i_j}|} = (-1)^{sum_{j<pos} (deg[i_j] + 1)}.
+        For elements in the bar complex (desuspended), the sign is
+        (-1)^{sum_{j<pos} |s^{-1} e_{i_j}|}
+        = (-1)^{sum_{j<pos} (deg[i_j] - 1)}.
 
-        For degree-0 generators: each |s e| = 1, so sign = (-1)^pos.
+        For degree-0 generators: each |s^{-1} e| = -1, so sign = (-1)^pos.
         """
         degrees = self.algebra.degrees
-        eps = sum(degrees[indices[j]] + 1 for j in range(pos))
-        return (-1) ** eps
+        eps = sum(degrees[indices[j]] - 1 for j in range(pos))
+        return -1 if eps % 2 else 1
 
     def d_linear_matrix(self, n: int) -> Matrix:
         """d_linear: B^n -> B^n from d_A.

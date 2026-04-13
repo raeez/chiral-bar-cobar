@@ -8,6 +8,11 @@ All formulas computed from first principles (AP1, AP3).
 Cross-family consistency verified (AP10).
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 from sympy import (
     I, Rational, Symbol, cancel, diff, exp, expand, factor, log,

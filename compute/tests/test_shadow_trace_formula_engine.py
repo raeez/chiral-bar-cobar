@@ -19,6 +19,11 @@ CAUTION (AP24): kappa + kappa' = 0 for KM/Heis; = 13 for Virasoro.
 CAUTION (AP48): kappa depends on the full algebra.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import math
 import cmath
 import pytest

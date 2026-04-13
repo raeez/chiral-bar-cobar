@@ -1,7 +1,8 @@
 r"""Tests for Vol II Part I rectification engine.
 
 50+ tests verifying the core claims of Vol II Part I:
-bar complex = Swiss-cheese algebra on FM_k(C) x Conf_k(R).
+ordered bar = E_1 coalgebra on FM_k(C) x Conf_k(R), with the
+Swiss-cheese datum on the derived-center pair.
 
 Test structure follows the multi-path verification mandate:
 every claim verified by at least 2 independent paths.

@@ -1,4 +1,4 @@
-r"""SC bar-cobar inversion engine: explicit Omega(B^ch(A)) for standard families.
+r"""Bar-cobar inversion engine with the derived-center/SC comparison.
 
 THEOREM B (thm:bar-cobar-inversion-qi): For a chirally Koszul algebra A,
 the counit epsilon: Omega^ch(B^ch(A)) -> A is a quasi-isomorphism.
@@ -13,7 +13,8 @@ sl_2 at level k, verifying:
   3. The counit epsilon: Omega(B^ch(A)) -> A is a quasi-isomorphism
      (chain map inducing iso on cohomology).
   4. The contracting homotopy h: A -> Omega(B^ch(A)) at arity 2.
-  5. The SC^{ch,top} version: does the SC cobar recover (A, A) or only A?
+  5. The SC^{ch,top} comparison: why bar-cobar inversion recovers only A,
+     while the genuine SC datum lives on (C^bullet_ch(A,A), A).
 
 MATHEMATICAL CONTENT:
 
@@ -42,12 +43,12 @@ MATHEMATICAL CONTENT:
     d = d_bracket + d_residue
     d^2 = 0 by Arnold + Jacobi + Killing symmetry
 
-  SC^{ch,top} version:
-    The bar complex carries BOTH differential (hol) and coproduct (top).
-    The SC cobar Omega_SC(B^ch(A)) recovers the CLOSED-colour algebra A,
-    not the full SC algebra (A, A). The open colour is the coproduct
-    direction, which is encoded in the coalgebra structure of B^ch(A),
-    not in the cobar of B^ch(A).
+  Derived-center/SC comparison:
+    The bar complex carries BOTH the holomorphic differential and the
+    E_1 deconcatenation coproduct. This does NOT make B^ch(A) the full
+    SC datum. Bar-cobar inversion still recovers only the original
+    algebra A. The genuine SC^{ch,top} structure sits on the derived-center
+    pair (C^bullet_ch(A,A), A), computed using B^ch(A) as a resolution.
 
 CRITICAL DISTINCTIONS (from CLAUDE.md):
   - Omega(B(A)) = A (bar-cobar INVERSION, recovers original) [AP25]
@@ -653,23 +654,23 @@ def compute_heisenberg_arity2_resolution(k=None) -> BarCobarResolution:
 
 
 # ============================================================================
-# V. Swiss-cheese version: SC cobar
+# V. Derived-center/SC comparison
 # ============================================================================
 
 
 @dataclass
 class SCBarCobarResult:
-    """Result of the SC^{ch,top} bar-cobar analysis.
+    """Result of the derived-center/SC comparison.
 
-    The bar complex B^ch(A) of an SC^{ch,top}-algebra carries:
+    The ordered bar complex B^ch(A) carries:
       - Differential d_B from OPE residues (holomorphic/C-direction)
       - Coproduct Delta from deconcatenation (topological/R-direction)
 
-    The SC cobar Omega_SC(B^ch(A)):
-      - Recovers the CLOSED-colour algebra A (the chiral algebra)
-      - Does NOT recover the full SC-algebra (A, A^!)
-      - The OPEN-colour structure is encoded in the coproduct of B,
-        which becomes the R-matrix/braiding of the cobar resolution.
+    Bar-cobar inversion Omega(B^ch(A)):
+      - Recovers the original chiral algebra A
+      - Does NOT by itself produce the genuine SC datum
+      - Leaves the actual SC^{ch,top} attribution on the derived-center pair
+        (C^bullet_ch(A,A), A)
 
     The key distinction (AP34, AP-OC):
       Omega(B(A)) = A (inversion, recovers original)
@@ -684,23 +685,15 @@ class SCBarCobarResult:
 
 
 def analyze_sc_bar_cobar(ope: OPEData) -> SCBarCobarResult:
-    """Analyze what the SC cobar recovers.
+    """Analyze what bar-cobar inversion does and does not recover.
 
-    For any SC^{ch,top}-algebra (A, A_boundary):
-      The SC bar B_SC(A) encodes both colours.
-      The SC cobar Omega_SC(B_SC(A)) recovers A (closed colour).
+    For the ordered bar B^ch(A) of a chiral algebra:
+      Omega(B^ch(A)) recovers A.
 
-    The open colour (boundary/A^!) is NOT recovered by the cobar.
+    The line-side dual A^! is NOT recovered by the cobar.
     It is obtained by Verdier duality: D_Ran(B(A)) = B(A!).
-    The FULL SC structure requires BOTH operations.
-
-    The SC^{ch,top} is homotopy-Koszul (thm:homotopy-Koszul in Vol II),
-    so the bar-cobar adjunction is a Quillen equivalence.
-    This means: Omega(B(A)) ~ A as SC^{ch,top}-algebras.
-    But this recovers the CLOSED-colour structure of A as an
-    SC^{ch,top}-algebra, which includes the A_inf operations m_k
-    from the homotopy transfer. It does NOT produce A^! as the
-    open sector.
+    The genuine SC^{ch,top} structure is different again:
+    it lives on the derived-center pair (C^*_ch(A,A), A).
 
     The open/closed architecture (AP34):
       Functor (1): Omega(B(A)) = A (reconstruction)
@@ -714,12 +707,14 @@ def analyze_sc_bar_cobar(ope: OPEData) -> SCBarCobarResult:
     result.closed_colour_algebra = ope.name
 
     result.explanation = (
-        f"The SC cobar Omega_SC(B^ch({ope.name})) recovers the CLOSED-colour "
-        f"algebra {ope.name} via the bar-cobar quasi-isomorphism (Theorem B). "
-        f"The OPEN colour (boundary conditions, A^!) is obtained by Verdier "
-        f"duality D_Ran(B(A)) = B(A!), a DIFFERENT functor. "
-        f"The BULK (universal bulk algebra) is Z^der_ch(A) = C^*_ch(A, A), "
-        f"yet another functor. Three functors, three outputs (AP25, AP34)."
+        f"Bar-cobar inversion Omega(B^ch({ope.name})) recovers the algebra "
+        f"{ope.name} via the bar-cobar quasi-isomorphism (Theorem B). "
+        f"The line-side dual A^! is obtained by Verdier duality "
+        f"D_Ran(B(A)) = B(A!), a DIFFERENT functor. "
+        f"The genuine SC bulk/boundary datum is "
+        f"(C^*_ch(A, A), {ope.name}), with bulk algebra "
+        f"Z^der_ch(A) = C^*_ch(A, A). Three functors, three outputs "
+        f"(AP25, AP34)."
     )
     return result
 

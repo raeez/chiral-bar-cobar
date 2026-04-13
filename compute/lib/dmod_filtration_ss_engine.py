@@ -436,7 +436,7 @@ def kz_connection_matrix(k: Rational, n: int,
                          reps: Optional[List[int]] = None) -> Dict[str, Any]:
     """KZ connection data for V_k(sl_2) on n points.
 
-    nabla_KZ = d - 1/(k+2) sum_{i<j} Omega_{ij} d log(z_i - z_j)
+    nabla_KZ = d - 1/(k+2) sum_{i<j} (Omega_{ij}/(z_i - z_j)) d(z_i - z_j)
 
     where Omega_{ij} is the Casimir acting on the i-th and j-th tensor
     factors of V_{lambda_1} tensor ... tensor V_{lambda_n}.

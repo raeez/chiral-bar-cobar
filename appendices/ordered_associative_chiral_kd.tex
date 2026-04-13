@@ -433,10 +433,10 @@ $\bar A^{\otimes n}$:
 d
 \;-\;
 \sum_{1\leq i<j\leq n}
-r_{ij}(z_i-z_j)\,d\log(z_i-z_j).
+r_{ij}(z_i-z_j)\,d(z_i-z_j).
 \end{equation}
 Here $r_{ij}$ acts in the $(i,j)$ tensor slots of~$\bar A^{\otimes n}$
-and $d\log(z_i-z_j)=dz_{ij}/(z_i-z_j)$ is the logarithmic form
+and $r_{ij}(z_{ij})\,dz_{ij}$ is the connection $1$-form
 on $\mathrm{Conf}_n^{\mathrm{ord}}(\mathbb{C})$.
 
 \emph{Flatness.}
@@ -479,7 +479,7 @@ R(z)
 \operatorname{Mon}_\gamma(\nabla)
 \;=\;
 \mathcal{P}\exp\!\Bigl(
-\oint_\gamma r(z)\,d\log z
+\oint_\gamma r(z)\,dz
 \Bigr)
 \;\in\;
 \operatorname{End}(\bar A\otimes\bar A)[\![z^{-1}]\!],
@@ -740,7 +740,7 @@ periods, and the resulting transcendental data is stratified by
 degree:
 \begin{itemize}
 \item At degree~$2$: the monodromy $R(z)$ of the flat connection
-$\nabla = d - r(z)\,d\log z$ involves $2\pi i$, a period of
+$\nabla = d - r(z)\,dz$ involves $2\pi i$, a period of
 the Lefschetz motive~$\mathbb{L}$ (weight~$1$).
 
 \item At degree~$3$: the Drinfeld associator
@@ -1068,8 +1068,8 @@ On the coalgebra side this becomes
 \end{proposition}
 
 \begin{proof}
-The Hochschild complex of the square-zero extension decomposes, modulo $\eps^2$, into the sector with
-no defect and the sector with exactly one defect; the second computes Hochschild homology with
+The chiral Hochschild complex of the square-zero extension decomposes, modulo $\eps^2$, into the sector with
+no defect and the sector with exactly one defect; the second computes chiral Hochschild homology with
 coefficients in $M$. The coalgebra statement follows from
 Corollary~\ref{cor:infdual} and the coHochschild identification proved later in
 Theorem~\ref{thm:HH-coHH-homology}.
@@ -1223,7 +1223,7 @@ The diagonal bicomodule $C_\Delta$ is therefore the universal boundary condition
 composition.
 \end{remark}
 
-\section{Hochschild--coHochschild duality}
+\section{chiral Hochschild--coHochschild duality}
 \label{sec:HH-coHH}
 
 Annular traces and centers on the algebra side are identified with coHochschild theories of the bar
@@ -1314,7 +1314,7 @@ There is a canonical action
 \[
 \coHoch^{\mathrm{ch}}_\bullet(C)\square_C^{\mathbf R} C_\Delta \longrightarrow C_\Delta
 \]
-obtained by transporting the Hochschild cap action
+obtained by transporting the chiral Hochschild cap action
 \[
 \HH^{\mathrm{ch}}_\bullet(A)\otimes A\longrightarrow A
 \]
@@ -1574,7 +1574,7 @@ The diagonal bicomodule is the unit for derived cotensor:
 C_\Delta\square_C^{\mathbf R} X\simeq X\simeq X\square_C^{\mathbf R}C_\Delta.
 \]
 
-\item \textbf{Hochschild/coHochschild homology.}
+\item \textbf{chiral Hochschild/coHochschild homology.}
 For every complete $A$-bimodule $M$,
 \[
 \HH^{\mathrm{ch}}_\bullet(A,M)
@@ -1582,7 +1582,7 @@ For every complete $A$-bimodule $M$,
 \coHoch^{\mathrm{ch}}_\bullet(C,\KK_A^{\mathrm{bi}}(M)).
 \]
 
-\item \textbf{Hochschild/coHochschild cohomology.}
+\item \textbf{chiral Hochschild/coHochschild cohomology.}
 For every complete $A$-bimodule $M$,
 \[
 \HH_{\mathrm{ch}}^\bullet(A,M)
@@ -1730,8 +1730,32 @@ is the geometric fingerprint of a 3d holomorphic-topological
 field theory on $\mathbb C_z\times\mathbb R_t$:
 observables factorise holomorphically in~$z$ and
 associatively in~$t$. The bar differential is the
-closed (holomorphic) colour. The bar coproduct is the
-open (topological) colour.
+chiral (holomorphic) component. The bar coproduct is the
+coassociative (topological) component.
+\end{remark}
+
+\begin{remark}[Codimension-one generators for
+\texorpdfstring{$\mathrm{SC}^{\mathrm{ch,top}}$}{SC}]
+The construction above gives the operation space, not yet a minimal
+generators-and-relations presentation, and by itself it does not
+equip the ordered bar complex with a full Swiss-cheese algebra
+structure. On compactified models the codimension-$1$ generator
+families are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item closed collision faces $\partial_S\FM_k(\mathbb C)$ with
+ $|S|\ge 2$;
+\item open interval-splitting faces in a Stasheff compactification
+ of $E_1(m)$, equivalently cuts of the ordered open inputs into
+ consecutive blocks;
+\item in the mixed space $\FM_k(\mathbb C)\times E_1(m)$, the
+ product faces $\partial_S\FM_k(\mathbb C)\times E_1(m)$ and
+ $\FM_k(\mathbb C)\times F$, with $F$ an interval-splitting face
+ as in \textup{(}ii\textup{)}.
+\end{enumerate}
+The codimension-$2$ relations are the intersections of these faces:
+Arnold--Orlik--Solomon in the closed factor, Stasheff associativity
+in the open factor, and mixed commuting squares comparing a closed
+collision with an open split.
 \end{remark}
 
 \subsection{The ordered FM compactification}
@@ -1902,8 +1926,8 @@ The bar differential~$d$ extracts residues in the holomorphic
 direction (collisions of points on~$\mathbb C$). The coproduct
 $\Delta$ cuts in the topological direction (splitting the
 ordered sequence on~$\mathbb R$). Together, the pair
-$(d,\Delta)$ encodes both colours of the Swiss-cheese
-algebra:
+$(d,\Delta)$ encodes both components of the $E_1$-chiral
+coalgebra:
 \begin{center}
 \begin{tabular}{lll}
 \textbf{Structure} & \textbf{Direction} &
@@ -2178,7 +2202,7 @@ one power: $\Res_{w=0}\frac{k}{w^2}\cdot w\,d\log w = k/z$\textup{)}.
 The flat connection on the trivial bundle over
 $\Conf_2^{<}(\bC)$ determined by the bar propagator is
 \begin{equation}\label{eq:heisenberg-connection}
-\nabla \;=\; d \;-\; k\cdot d\log(z),
+\nabla \;=\; d \;-\; (k/z)\,dz,
 \end{equation}
 and its monodromy around the origin is
 \begin{equation}\label{eq:heisenberg-monodromy}
@@ -2418,7 +2442,7 @@ inserts $a_{(0)}a' = \pm 1$, which the augmentation kills.
 Hence $d = 0$ in the reduced complex.
 
 \item \emph{R-matrix.} The connection
-$\nabla = d - \Theta\,d\log(z_1{-}z_2)$ on
+$\nabla = d - \Theta\,d(z_1{-}z_2)/(z_1{-}z_2)$ on
 $\operatorname{Conf}_2^{\mathrm{ord}}(\bC)$ has monodromy
 \begin{equation}\label{eq:bg-rmatrix}
 R \;=\; \exp(2\pi i\,\Theta) \;=\; \id + 2\pi i\,\Theta,
@@ -2623,7 +2647,7 @@ is always even for an even lattice. The non-diagonal residue at
 order~$1$ gives~\eqref{eq:lattice-symmetric-residue}.
 
 For the R-matrix: the connection is
-$\nabla = d - r(z)\,d\log(z_1 - z_2)$, and the monodromy around
+$\nabla = d - r(z_1-z_2)\,d(z_1 - z_2)$, and the monodromy around
 $z_1 = z_2$ is $\exp(2\pi i \cdot r)$. On the lattice sector
 $(e^\alpha, e^\beta)$, this is
 $(-1)^{\langle\alpha,\beta\rangle}\,
@@ -3294,6 +3318,7 @@ $c = 13$, so $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$.
 The genus tower is invariant under $c \mapsto 26 - c$
 \textup{(}gravitational S-duality\textup{)} with
 $F_g(\mathrm{Vir}_{13}) = \frac{13}{2}\lambda_g^{\mathrm{FP}}
+\textup{(}UNIFORM-WEIGHT\textup{)}
 \neq 0$.
 \end{enumerate}
 \end{proposition}
@@ -3793,7 +3818,7 @@ follow from the Chevalley basis.
 \label{rem:km-drinfeld-kohno}
 The Kohno connection~\eqref{eq:kohno-connection} for
 $\widehat{\mathfrak{g}}_k$ takes the form
-$\nabla = d - \hbar\sum_{i<j}\Omega_{ij}\,d\log(z_i-z_j)$,
+$\nabla = d - \hbar\sum_{i<j}\Omega_{ij}\,dz_{ij}/z_{ij}$,
 which is the Knizhnik--Zamolodchikov connection at level~$k$.
 Its monodromy representation $\pi_1(\mathrm{Conf}_n(\bC))
 \to\GL(\mathfrak{g}^{\otimes n})$ factors through the
@@ -4871,7 +4896,7 @@ d
 \;-\;
 \frac{\hbar}{2\pi i}
 \sum_{1 \leq i < j \leq n}
-\Omega_{ij}\,d\log(z_i - z_j),
+\Omega_{ij}\,d(z_i - z_j)/(z_i - z_j),
 \end{equation}
 where $\hbar = \pi i/(k + h^\vee)$ and $\Omega_{ij}$ denotes the
 Casimir acting in the $(i,j)$ tensor slots.
@@ -4882,7 +4907,8 @@ The connection~\eqref{eq:kz} is a special case of the Kohno
 connection~\eqref{eq:kohno-connection}: for the affine algebra
 $V^k(\mathfrak{g})$, the collision residue $r_{ij}(z)$ extracted by
 the $d\log$ kernel (cf.\: the kernel absorbs one pole) is
-$r_{ij} = (\hbar/2\pi i)\,\Omega_{ij}$, which is constant in~$z$.
+$r_{ij}(z) = (\hbar/2\pi i)\,\Omega_{ij}/z$, which has the expected
+simple pole.
 The one-loop collapse established in the Volume~II affine monodromy
 identification theorem
 ensures that the higher $A_\infty$ operations $m_k$ ($k \geq 3$) do not
@@ -4906,7 +4932,7 @@ R_{ij}
 \;=\;
 \mathcal{P}\exp\!\Bigl(
 \frac{\hbar}{2\pi i}
-\oint_{\gamma_{ij}} \Omega_{ij}\,d\log(z_i - z_j)
+\oint_{\gamma_{ij}} \Omega_{ij}\,d(z_i - z_j)/(z_i - z_j)
 \Bigr)
 \;=\;
 e^{\hbar\,\Omega_{ij}}.
@@ -7260,13 +7286,13 @@ C_\Delta\simeq
 \coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)$.
 \end{remark}
 
-\subsection{Annular Hochschild identification}
+\subsection{Annular chiral Hochschild identification}
 
 \begin{theorem}[Annular bar complex computes chiral Hochschild homology;
 \ClaimStatusProvedHere]%
 \label{thm:annular-HH}%
-\index{annular bar complex!Hochschild homology|textbf}%
-\index{Hochschild homology!via annular bar complex}%
+\index{annular bar complex!chiral Hochschild homology|textbf}%
+\index{chiral Hochschild homology!via annular bar complex}%
 Let $\cA$ be a strongly admissible $\Eone$-chiral
 algebra with ordered bar coalgebra $C=\Barchord(\cA)$
 and diagonal bicomodule $C_\Delta$.
@@ -7714,7 +7740,7 @@ at some specific algebra) remains open.
 \label{sec:explicit-r-matrices}
 
 The $R$-matrix is the monodromy of the Kohno connection
-$\nabla = d - \sum_{i<j} r_{ij}(z_{ij})\,d\log(z_{ij})$.
+$\nabla = d - \sum_{i<j} r_{ij}(z_{ij})\,dz_{ij}$.
 For the Yangian $Y(\mathfrak{g})$ of a simple Lie algebra,
 the rational $R$-matrix on $V = \mathbb{C}^N$ takes a closed form:
 the Yang $R$-matrix for type~$A$, and the
@@ -7850,7 +7876,7 @@ Lemma~\ref{lem:Kbi-dg}).
 \item Diagonal correspondence (Theorem~\ref{thm:diagonal}).
 \item Composition unit theorem (Corollary~\ref{cor:unit}).
 \item Tensor--cotensor gluing (Corollary~\ref{cor:tensor-cotensor}).
-\item Hochschild/coHochschild homology and cohomology equivalence
+\item chiral Hochschild/coHochschild homology and cohomology equivalence
 (Theorems~\ref{thm:HH-coHH-homology} and \ref{thm:HH-coHH-cohomology}).
 \item Infinitesimal annular variation (Proposition~\ref{prop:infann}).
 \item Ordered genus-zero open trace formalism (Theorem~\ref{thm:ordered-open}).
@@ -8179,7 +8205,7 @@ absorbed completely, producing no pole in the collision residue).
 
 \emph{$R$-matrices.}
 The $R$-matrix is the monodromy of the connection
-$\nabla = d - r^{\mathrm{coll}} \cdot d\log(z)$ on
+$\nabla = d - r^{\mathrm{coll}}(z)\,dz$ on
 $\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$.
 For abelian algebras ($\mathcal{H}_k$, $V_\Lambda$):
 the connection is scalar and

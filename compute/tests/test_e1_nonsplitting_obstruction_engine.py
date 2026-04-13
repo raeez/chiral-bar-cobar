@@ -480,14 +480,14 @@ class TestSl2Nontriviality:
         assert ker == 44
 
     def test_34_sl2_kappa_correct(self):
-        """Test 34: kappa(sl_2, k) = 3k/(2(k+2)).
+        """Test 34: kappa(sl_2, k) = 3(k+2)/4.
 
         Path D (consistency with CLAUDE.md).
         """
         data = sl2_obstruction_analysis(k=1)
-        assert abs(data['kappa'] - 3 / (2 * 3)) < 1e-10
+        assert abs(data['kappa'] - 9 / 4) < 1e-10
         data = sl2_obstruction_analysis(k=2)
-        assert abs(data['kappa'] - 6 / (2 * 4)) < 1e-10
+        assert abs(data['kappa'] - 3) < 1e-10
 
     def test_35_sl2_associator_in_kernel(self):
         """Test 35: The Drinfeld associator lies partially in ker(av).

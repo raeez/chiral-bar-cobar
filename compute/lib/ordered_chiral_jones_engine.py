@@ -22,7 +22,7 @@ THE CHAIN OF IDENTIFICATIONS (degree 3)
 2. KZ FLAT BUNDLE on Conf_3(C):
    The ordered configuration space Conf_3(C) carries the KZ flat bundle
    L_KZ with connection (for sl_2 at level k, kappa = k + h^v = k + 2):
-     nabla_KZ = d - (1/kappa) sum_{i<j} Omega_{ij} d log(z_i - z_j)
+     nabla_KZ = d - (1/kappa) sum_{i<j} (Omega_{ij}/(z_i - z_j)) d(z_i - z_j)
    where Omega_{ij} is the Casimir insertion on the (i,j) tensor factor.
    The flat sections are the KZ conformal blocks.
    AP117: connection form is Omega dz, NOT Omega d log z.
@@ -200,13 +200,13 @@ def kz_connection_matrix(n_points: int, k: int) -> List[np.ndarray]:
     r"""KZ connection matrices A_{ij} for sl_2 at level k on Conf_n(C).
 
     The KZ connection is:
-      nabla_KZ = d - sum_{i<j} A_{ij} d log(z_i - z_j)
+      nabla_KZ = d - sum_{i<j} (A_{ij}/(z_i - z_j)) d(z_i - z_j)
 
     where A_{ij} = Omega_{ij} / kappa, kappa = k + h^v = k + 2 for sl_2.
 
     AP148: KZ convention r(z) = Omega/((k+h^v)*z).
-    AP117: connection 1-form uses d log(z_i - z_j), which is the
-           Arnold form (bar-construction coefficient).
+    AP117: connection 1-form is (A_{ij}/(z_i - z_j)) d(z_i - z_j);
+           d log(z_i - z_j) is the Arnold bar coefficient.
 
     Returns list of (A_{ij}, (i,j)) pairs for all 0 <= i < j < n_points.
     The representation space is V^{tensor n_points} with V = C^2.

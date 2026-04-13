@@ -293,7 +293,7 @@ def count_internal_nodes(tree) -> int:
 def ainfty_depth_virasoro(c_val: Fraction, max_arity: int = 15) -> Optional[int]:
     r"""A-infinity depth of Virasoro from direct computation.
 
-    On the primary line, m_k^tr(sT,...,sT) = S_k * (basis vector).
+    On the primary line, m_k^tr(s^{-1}T,...,s^{-1}T) = S_k * (basis vector).
     The A-infinity depth is the largest k with S_k != 0.
 
     For Virasoro (class M): S_k != 0 for all k >= 2 (by Riccati
@@ -394,7 +394,7 @@ class AntisymmetrizationData:
         each individual tree contribution vanishes (since the tree
         contributions are evaluated on a single primary-line element
         and cyclically symmetrized).
-    (b) On the primary line (all inputs = sT), all tree contributions
+    (b) On the primary line (all inputs = s^{-1}T), all tree contributions
         are SCALAR MULTIPLES of the same output, so Alt reduces to
         a scalar map that is trivially injective when nonzero.
     """
@@ -413,17 +413,17 @@ def verify_antisymmetrization_injectivity(arity: int) -> AntisymmetrizationData:
     On the primary line, every tree gives a scalar.  The key fact:
 
     For cyclic cochains on a single primary-line generator (all inputs
-    are the same element sT), every tree T contributes a scalar
+    are the same element s^{-1}T), every tree T contributes a scalar
     w_T * (common basis vector).  The m_r coefficient is sum_T w_T,
     and the ell_r coefficient is the same sum with Koszul signs from
     the antisymmetrization.  But since all inputs are identical
-    (sT has odd bar degree 1), the Koszul sign for permuting inputs
+    (s^{-1}T has odd bar degree 1), the Koszul sign for permuting inputs
     is (-1)^{number of transpositions}, and the cyclic structure
     cancels the ambiguity.
 
     The result: on the primary line,
-        m_r^tr(sT,...,sT) = S_r * e_{2r}
-        ell_r^{(0),tr}(sT,...,sT) = S_r * e_{2r}   (same coefficient!)
+        m_r^tr(s^{-1}T,...,s^{-1}T) = S_r * e_{2r}
+        ell_r^{(0),tr}(s^{-1}T,...,s^{-1}T) = S_r * e_{2r}   (same coefficient!)
     so vanishing of one implies vanishing of the other.
 
     This is NOT a coincidence: it holds because on the one-dimensional

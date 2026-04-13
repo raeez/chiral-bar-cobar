@@ -121,11 +121,11 @@ for name, d in [("Heis", 1), ("sl2", 3), ("sl3", 8)]:
     prod_lr = multiply(chi, chi_neg)
 
     # Compute eta(2tau)^d / eta(tau)^{3d}
-    # eta(tau)^{3d} = prod(1-q^n)^{3d}
+    # q^{-d/8} * eta(tau)^{3d} = prod(1-q^n)^{3d}
     eta_3d = eta_power(3 * d, N)
     inv_eta_3d = invert(eta_3d)
 
-    # eta(2tau)^d = prod(1-q^{2n})^d
+    # q^{-d/12} * eta(2tau)^d = prod(1-q^{2n})^d
     eta_2tau = [0] * N; eta_2tau[0] = 1
     for n in range(1, N // 2 + 1):
         for _ in range(d):

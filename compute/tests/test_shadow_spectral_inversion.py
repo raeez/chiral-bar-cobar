@@ -12,6 +12,11 @@ T61-T65:  Spectral density and branch cuts
 T66-T70:  Affine sl_2 spectral data (class L, depth 3)
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import cmath
 import math
 import sys

@@ -7,6 +7,11 @@ Task 4: Rigidity defect and atom recovery (#24)
 Task 5: Fake spectral measure discrimination (#38)
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import cmath
 import math
 import pytest

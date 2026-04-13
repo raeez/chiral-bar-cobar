@@ -408,7 +408,7 @@ class TestFockSpace(unittest.TestCase):
     def test_fock_exceeds_virasoro(self):
         """Fock space >= Virasoro character (Fock has more modes).
 
-        The Fock space F_0 has character 1/eta(q) = prod_{n>=1} 1/(1-q^n),
+        The Fock space F_0 has character q^{1/24}/eta(q) = prod_{n>=1} 1/(1-q^n),
         while Virasoro has prod_{n>=2} 1/(1-q^n). The difference is
         the n=1 mode, so Fock >= Virasoro.
 

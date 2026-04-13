@@ -507,7 +507,7 @@ exec
    650	c*H_{N-1}                             # wrong W_N harmonic-number form
    651	T^c(s^{-1} A)                         # bar complex forgot augmentation ideal
    652	|s^{-1}v| = |v|+1                     # desuspension wrong direction
-   653	eta(tau) = prod(1-q^n)                # missing q^(1/24)
+   653	eta(tau) written as bare prod(1-q^n)  # missing q^(1/24); correct eta(tau)=q^(1/24)*prod_{n>=1}(1-q^n)
    654	K_BP = 2                              # wrong Bershadsky-Polyakov conductor
 exec
 /bin/zsh -lc "nl -ba chapters/connections/thqg_preface_supplement.tex | sed -n '1174,1182p'" in /Users/raeez/chiral-bar-cobarexec

@@ -2175,7 +2175,7 @@ objects of the bar-cobar localization) if and only if their bar
 coalgebras $\bar{B}^{\mathrm{ch}}(\cA)$ and
 $\bar{B}^{\mathrm{ch}}(\cB)$ are quasi-isomorphic as dg~coalgebras.
 The Koszul conductor $K(\cA) = \kappa(\cA) + \kappa(\cA^!)$
-(\S\ref{sec:complementarity}) controls the rigidity of this
+(\S\ref{sec:complementarity-theorem}) controls the rigidity of this
 identification.
 
 When $K = 0$ (affine Kac--Moody at non-critical level, Heisenberg,
@@ -2225,7 +2225,17 @@ The induced differential on $\text{Gr}^\bullet$ is the \emph{bar complex differe
 By definition of associated graded:
 \[\text{Gr}^p = F^p / F^{p+1} = \Omega^p(\bar{B}^p(\mathcal{A}))\]
 
-The full differential on $\Omega(\bar{B}(\mathcal{A}))$ decomposes as $d = d_{\bar{B}} + d_{\text{cobar}}$, where $d_{\bar{B}} = d_{\text{internal}} + d_{\text{bar}}$ is the lift of the bar complex differential to each cobar tensor factor (preserving cobar degree~$p$), and $d_{\text{cobar}}$ is the comultiplication-induced part (raising cobar degree by~$1$). On the associated graded $\text{Gr}^p = F^p/F^{p+1}$, only the \emph{filtration-preserving} component survives: $d_{\text{cobar}}$ maps $F^p$ into $F^{p+1}$ and so vanishes on $\text{Gr}^p$. Thus $d_{\text{gr}} = d_{\bar{B}}$, which is the $d_0$ differential of the spectral sequence (cf.\ Theorem~\ref{thm:bar-cobar-spectral-sequence}).
+The full differential on $\Omega(\bar{B}(\mathcal{A}))$ decomposes as
+$d = d_{\bar{B}} + d_{\text{cobar}}$, where
+$d_{\bar{B}} = d_{\text{internal}} + d_{\text{bar}}$ is the lift of
+the bar complex differential to each cobar tensor factor and preserves
+cobar degree~$p$.
+The comultiplication term $d_{\text{cobar}}$ raises cobar degree by~$1$,
+so it sends $F^p$ into $F^{p+1}$ and vanishes on
+$F^p/F^{p+1}=\text{Gr}^p$.
+Therefore the induced differential on the associated graded is exactly
+$d_{\bar{B}}$, which is the $d_0$ differential of the spectral
+sequence.
 \end{proof}
 
 \subsection{Spectral sequence construction}
@@ -2303,13 +2313,24 @@ Theorem~\ref{thm:bar-cobar-spectral-sequence} collapses at the $E_2$ page:
 \end{theorem}
 
 \begin{proof}
-The Koszul property of $\mathcal{A}$ means that the natural inclusion $\iota: \mathcal{A}^! \hookrightarrow \bar{B}(\mathcal{A})$ of the quadratic dual into the bar complex is a quasi-isomorphism (see \cite[Theorem~3.4.1]{LV12} for the classical case and Chapter~\ref{chap:koszul-pairs} for the chiral adaptation). Since $\mathcal{A}^!$ is generated in weight~1 with quadratic relations, its image under $\iota$ lies on the diagonal $p + q = \text{const}$ in the bigrading $(p,q)$ by bar degree and internal degree.
-
-At the $E_1$ page, we compute the cohomology of each column with respect to $d_0 = d_{\bar{B}}$, the full bar complex differential. Each column $E_0^{p,\bullet}$ with differential $d_0$ computes the bar cohomology $H^q(\bar{B}^p(\mathcal{A}), d_{\bar{B}})$ at fixed cobar degree~$p$. By the Koszul quasi-isomorphism, the bar cohomology is concentrated on the diagonal, giving $E_1^{p,q} = 0$ whenever $q \neq 0$ (after reindexing by the bar filtration degree).
-
-At the $E_2$ page, we take cohomology with respect to $d_1$ (induced by $d_{\text{cobar}}$, the comultiplication part). The $E_2$ groups inherit the diagonal concentration.
-
-For $r \geq 2$, the differential $d_r: E_r^{p,q} \to E_r^{p+r, q-r+1}$ shifts the bidegree by $(r, 1-r)$. Since $E_2^{p,q} = 0$ for $q \neq 0$, either the source or the target of $d_r$ vanishes for every $r \geq 2$. Therefore $d_r = 0$ for all $r \geq 2$, and the spectral sequence collapses at $E_2$.
+The Koszul property gives a quasi-isomorphism
+$\iota\colon \mathcal{A}^! \hookrightarrow \bar{B}(\mathcal{A})$ from
+the quadratic dual into the bar complex
+\cite[Theorem~3.4.1]{LV12}; Chapter~\ref{chap:koszul-pairs} gives the
+chiral version used here.
+Because $\mathcal{A}^!$ is generated in weight~$1$ with quadratic
+relations, the bar cohomology is concentrated on the diagonal in the
+bigrading by cobar degree and internal degree.
+Thus on the $E_1$ page, where the differential is
+$d_0=d_{\bar B}$, one has $E_1^{p,q}=0$ for $q\neq 0$.
+The $d_1$ differential comes from $d_{\text{cobar}}$, so the same
+diagonal concentration persists to $E_2$.
+For $r\ge 2$, the differential
+$d_r\colon E_r^{p,q}\to E_r^{p+r,q-r+1}$ changes the second grading,
+so with $E_2^{p,q}$ supported only at $q=0$, either its source or its
+target vanishes.
+Hence every $d_r$ for $r\ge 2$ is zero, and the spectral sequence
+collapses at $E_2$.
 \end{proof}
 
 \begin{remark}[Square-zero boundary of the spectral-sequence proof]
@@ -2458,7 +2479,16 @@ for a chiral coalgebra $\mathcal{C}$ is also a quasi-isomorphism (dual statement
 \end{proposition}
 
 \begin{proof}
-By Verdier duality (Theorem~\ref{thm:verdier-bar-cobar}), the counit $\epsilon_{\mathcal{C}} \colon \bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C})) \to \mathcal{C}$ is the Verdier dual of the unit $\eta_{\mathcal{A}^!}$, which is a quasi-isomorphism by Theorem~\ref{thm:geom-unit}. Since Verdier duality on the Fulton--MacPherson compactifications preserves quasi-isomorphisms (Theorem~\ref{thm:verdier-bar-cobar}), the result follows.
+Verdier duality identifies the counit
+$\epsilon_{\mathcal{C}}\colon
+\bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C}))\to\mathcal{C}$
+with the dual of the unit map on the dual algebra side
+(Theorem~\ref{thm:verdier-bar-cobar}).
+The unit is a quasi-isomorphism by Theorem~\ref{thm:geom-unit}.
+The same Verdier-duality theorem shows that duality on the relevant
+Fulton--MacPherson complexes preserves quasi-isomorphisms.
+Applying Verdier duality to the unit therefore yields that the counit
+is also a quasi-isomorphism.
 \end{proof}
 
 \subsection{Functoriality of the quasi-isomorphism}
@@ -4860,9 +4890,15 @@ $B_{\kappa,\cA}(u,v)$ is symmetric on~$\mathcal{P}_\cA$.
 \end{lemma}
 
 \begin{proof}
-After desuspension, degree-two classes become odd. The shifted graded
-antisymmetry of the transferred $L_\infty$-operations therefore becomes
-ordinary symmetry when restricted to two primitive degree-two inputs.
+After desuspension, degree-two classes become odd.
+The transferred bracket is graded antisymmetric in the shifted sense,
+so exchanging two odd inputs contributes the extra minus sign coming
+from their parity.
+That sign cancels the shifted antisymmetry sign, leaving ordinary
+symmetry on the primitive degree-two sector.
+The same argument applies to both
+$l_2^{\mathrm{tr}}(u,v)$ and the Hessian $H_{\eta,\cA}(u,v)$, so
+$B_{\kappa,\cA}(u,v)$ is symmetric as well.
 \end{proof}
 
 \begin{remark}[The frontier has moved]
@@ -5962,6 +5998,10 @@ Submodules of $k[t]/(p)$ correspond to ideals $(a)$ with
 $(p) \subseteq (a) \subseteq k[t]$. Since $k[t]$ is a PID,
 $a$~is a monic divisor of~$p$. Setting $g = p/a$ gives
 $\mathcal{C}_g(p)$.
+Uniqueness of $g$ is equivalent to uniqueness of the intermediate ideal
+$(a)$.
+The anti-isomorphism of lattices is immediate because larger divisors
+produce smaller quotient ideals.
 \end{proof}
 
 \begin{remark}[The first structural correction]
@@ -6166,6 +6206,9 @@ By Theorem~\ref{thm:divisor-core-calculus-inv}(i),
 $\mathcal{C}_s(p_\cA) \cong k[t]/(s)$; the determinant
 identity follows exactly as in
 Theorem~\ref{thm:minimal-intrinsic-realization-inv}.
+Namely, the endomorphism on the $S$-sector is multiplication by~$t$ on
+$k[t]/(s)$, whose characteristic polynomial is~$s$.
+Reversing the polynomial back to the $x$-variable gives $S(x)$.
 \end{proof}
 
 \begin{theorem}[Casimir moment reconstruction;
@@ -6254,6 +6297,21 @@ discriminant encode genuine extension classes in bar
 cohomology, not idempotently removable bookkeeping.
 \end{corollary}
 
+\begin{proof}
+Let $q$ be a common irreducible factor of $g$ and $p_\cA/g$.
+Then the $q$-primary piece of $\mathcal{C}_g(p_\cA)$ lies inside the
+Jordan filtration of Theorem~\ref{thm:primary-jordan-filtration-inv}
+with exponent at least~$2$.
+That theorem identifies the corresponding primary summand with
+$k[t]/(q^m)$ and, when $q=t-\lambda$ splits, exhibits a single Jordan
+block for $T_{p_\cA}-\lambda$.
+Such a primary block is canonical as a submodule, but it cannot split
+idempotently into semisimple eigenspaces because the nilpotent Jordan
+operator is nonzero.
+Hence repeated roots of the discriminant encode genuine extension data
+rather than removable bookkeeping.
+\end{proof}
+
 \subsection{Common-core transport between algebras}
 \label{subsec:common-core-transport}
 \index{common core!transport}
@@ -6302,6 +6360,10 @@ Apply Theorem~\ref{thm:divisor-core-calculus-inv}(ii) with
 $g = g_{\cA,\mathcal{B}}$ to each of the recurrence modules
 $\mathcal{R}_\cA \cong M(p_\cA)$ and
 $\mathcal{R}_\mathcal{B} \cong M(p_\mathcal{B})$.
+This identifies the common core with the divisor core cut out by
+$g_{\cA,\mathcal{B}}$ on both sides.
+The two quotient modules are therefore exactly the complementary
+defect factors recorded in the statement.
 \end{proof}
 
 \begin{proposition}[Transport factors through the common core;
@@ -6326,9 +6388,16 @@ on the maximal common core.
 \end{proposition}
 
 \begin{proof}
-Combine
-Theorem~\ref{thm:minimal-intrinsic-realization-inv} with
-Theorem~\ref{thm:factorization-through-common-core-inv}.
+Theorem~\ref{thm:minimal-intrinsic-realization-inv} identifies each
+recurrence module with its minimal polynomial model
+$M(p_\cA)$ or $M(p_\mathcal{B})$.
+Theorem~\ref{thm:factorization-through-common-core-inv} then says that
+every $k[t]$-linear map between these models factors uniquely through
+the common core $M(g_{\cA,\mathcal{B}})$ by multiplication by an
+element of that core.
+Transporting this factorization back through the intrinsic
+realizations gives exactly the stated factorization for
+$\mathcal{R}_\cA$ and $\mathcal{R}_\mathcal{B}$.
 \end{proof}
 
 \subsection{The \texorpdfstring{$\widehat{\mathfrak{sl}}_3$
@@ -6392,6 +6461,24 @@ $k[t]/(t-1)$ record the non-preserved dominant modes:
 eigenvalue~$8$ for
 $\widehat{\mathfrak{sl}}_3$ and eigenvalue~$1$ for~$W_3$.
 \end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:divisor-core-calculus-inv}(ii) gives the short exact
+sequences
+\[
+0\to M(g_{\cA,\mathcal{B}})\to M(p_\cA)\to
+M(p_\cA/g_{\cA,\mathcal{B}})\to 0
+\]
+and the analogous sequence for $M(p_\mathcal{B})$.
+Under the explicit polynomials in this example,
+$g_{\cA,\mathcal{B}}=t^2-3t-1$,
+$p_{\widehat{\mathfrak{sl}}_3}/g_{\cA,\mathcal{B}}=t-8$, and
+$p_{W_3}/g_{\cA,\mathcal{B}}=t-1$.
+Substituting these values into the general exact sequences gives the
+two displayed decompositions.
+The quotient factors are one-dimensional, so they record exactly the
+dominant modes that are not seen by the maximal common core.
+\end{proof}
 
 \begin{proposition}[Explicit coprime-locus projectors;
 \ClaimStatusProvedHere]

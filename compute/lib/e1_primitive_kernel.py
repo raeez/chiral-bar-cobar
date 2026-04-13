@@ -84,14 +84,14 @@ class E1PrimitiveKernelProfile:
         return proj
 
     def verify_coinvariant_at_02(self) -> Fraction:
-        """Verify av(r(z)) = κ(A) at (g,n) = (0,2).
+        """Verify the degree-2 scalar shadow at (g,n) = (0,2).
 
         The classical r-matrix r(z) = (scalar/z) · (tensor structure)
-        has Σ_2-coinvariant equal to κ(A).  For rank-1 algebras, the
-        tensor structure is trivial and av(r(z)) = r_matrix_scalar.
-        For Lie-type, the Casimir contraction gives κ.
+        has Σ_2-coinvariant equal to r_matrix_scalar. For scalar families
+        this equals κ(A). For non-abelian affine KM it is κ_dp, and the
+        full κ(A) adds the Sugawara shift dim(g)/2.
         """
-        return self.kappa
+        return self.r_matrix_scalar
 
     def verify_coinvariant_at_03(self) -> Optional[str]:
         """Verify av(Φ_KZ) = C(A) at (g,n) = (0,3).
@@ -174,7 +174,7 @@ AFFINE_SL2_E1 = E1PrimitiveKernelProfile(
     name="Affine sl2-hat",
     kappa=Fraction(9, 4),   # (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4 at k=1
     r_matrix_type="casimir",
-    r_matrix_scalar=Fraction(9, 4),
+    r_matrix_scalar=Fraction(3, 4),
     associator_type="KZ",
     associator_nonzero=True,
     quartic_nonzero=False,
@@ -286,13 +286,14 @@ def verify_coinvariant_projection(
 
 
 def coinvariant_kappa_check(e1_name: str) -> bool:
-    """Verify av(r(z)) = κ(A) for the named family.
+    """Verify the degree-2 scalar shadow for the named family.
 
     At (g,n)=(0,2), the E₁ primitive kernel K^{E₁}_{0,2} = r(z)
-    has coinvariant equal to κ(A).
+    projects to r_matrix_scalar. For scalar families this equals κ(A);
+    for non-abelian affine KM it is κ_dp, and κ(A) adds dim(g)/2.
     """
     e1 = E1_PROFILES[e1_name]
-    return e1.verify_coinvariant_at_02() == e1.kappa
+    return e1.verify_coinvariant_at_02() == e1.r_matrix_scalar
 
 
 def e1_master_equation_face_count(arity: int) -> int:

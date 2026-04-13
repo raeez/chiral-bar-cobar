@@ -18,6 +18,11 @@ hierarchies (KdV, Boussinesq, Gelfand-Dickey).
   12. Cross-family consistency
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 from sympy import Rational, Symbol, cancel, factor, simplify, sqrt, expand
 

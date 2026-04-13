@@ -116,7 +116,7 @@ The proof uses E_2 formality + the geometric = operadic bar identification (Theo
 
 **The SC^{ch,top} contribution.** The homotopy-Koszulity of SC^{ch,top} (proved in Vol II via Kontsevich formality + transfer from classical Swiss-cheese) gives a bar-cobar Quillen equivalence. This means:
 - The bar functor B: SC^{ch,top}-alg -> SC^{ch,top}-coalg and cobar functor Omega: SC^{ch,top}-coalg -> SC^{ch,top}-alg form an adjoint equivalence on the homotopy categories.
-- Every SC^{ch,top}-coalgebra (including bar complexes) can be recovered by the cobar functor up to quasi-isomorphism.
+- Every genuine SC^{ch,top}-coalgebra can be recovered by the cobar functor up to quasi-isomorphism; ordered bar complexes of single chiral algebras are not themselves SC coalgebras but E_1 coalgebras feeding the derived-center construction.
 
 **But this does not solve the DQ problem directly.** The DQ problem asks: given a PVA (which lives at the cohomological level, below the SC^{ch,top} world), construct an SC^{ch,top}-algebra. The bar-cobar equivalence operates at the chain level, not at the cohomological level. To go from PVA to SC^{ch,top}-algebra, one must first LIFT the PVA to a chain-level object (the resolved classical datum), and then apply the bar-cobar machinery.
 

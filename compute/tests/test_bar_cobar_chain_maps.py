@@ -224,7 +224,7 @@ class TestBarConstruction:
 
         Bar basis B^1 = {(1,), (2,)} = {x, x^2}.
         Bar basis B^2 = {(1,1), (1,2), (2,1), (2,2)}.
-        d_B^2(sx|sx) = s(x*x) = s(x^2), mapping (1,1) -> (2,).
+        d_B^2(s^{-1}x|s^{-1}x) = s^{-1}(x*x) = s^{-1}(x^2), mapping (1,1) -> (2,).
         d_B^2(others involving x^2) = 0 since x*x^2 = x^3 = 0.
         """
         dga = truncated_polynomial_dga(3)
@@ -396,12 +396,12 @@ class TestTwistingMorphism:
     """Tests for the universal twisting morphism tau: B(A) -> A."""
 
     def test_tau_degree_1(self):
-        """tau on B^1 = sA_bar is the inclusion: tau(sa) = a."""
+        """tau on B^1 = s^{-1}A_bar is the inclusion: tau(s^{-1}a) = a."""
         dga = truncated_polynomial_dga(3)
         tau = twisting_morphism_tau(dga)
         mat = tau[1]
         assert mat.shape == (3, 2)
-        # tau(s*x) = x (index 1), tau(s*x^2) = x^2 (index 2)
+        # tau(s^{-1}x) = x (index 1), tau(s^{-1}x^2) = x^2 (index 2)
         assert mat[1, 0] == Rational(1)
         assert mat[2, 1] == Rational(1)
         # Zero elsewhere
@@ -426,9 +426,9 @@ class TestTwistingMorphism:
     def test_mc_trunc_poly_3_fails_at_degree_2(self):
         """MC equation for k[x]/(x^3): fails at bar degree 2.
 
-        At B^2: tau(d_B(sx|sx)) + tau(sx)*tau(sx).
-        d_B(sx|sx) = s(x*x) = s(x^2) at position (2,) in B^1.
-        tau(s(x^2)) = x^2. tau(sx)*tau(sx) = x*x = x^2.
+        At B^2: tau(d_B(s^{-1}x|s^{-1}x)) + tau(s^{-1}x)*tau(s^{-1}x).
+        d_B(s^{-1}x|s^{-1}x) = s^{-1}(x*x) = s^{-1}(x^2) at position (2,) in B^1.
+        tau(s^{-1}(x^2)) = x^2. tau(s^{-1}x)*tau(s^{-1}x) = x*x = x^2.
         Total = x^2 + x^2 = 2*x^2 != 0.
 
         This is because the bar differential sign convention: d_B at p=0
@@ -739,12 +739,12 @@ class TestKoszulSigns:
         assert dga.koszul_sign(3, 3) == -1
 
     def test_bar_diff_sign_at_degree_2(self):
-        """Bar differential at degree 2: sign = (-1)^{|sa_1|} = (-1)^1 = -1.
+        """Bar differential at degree 2: sign = (-1)^{|s^{-1}a_1|} = (-1)^1 = -1.
 
         For k[x]/(x^3) with all generators in degree 0:
-        d_B(sx|sx) = (-1)^{|sx|} * s(x*x) = (-1)^1 * s(x^2) = -s(x^2).
-        But the code computes eps = sum of |sa_q| for q < p.
-        At p=0: eps = 0, sign = +1. So d_B(sx|sx) at p=0 is +s(x*x).
+        d_B(s^{-1}x|s^{-1}x) = (-1)^{|s^{-1}x|} * s^{-1}(x*x) = (-1)^1 * s^{-1}(x^2) = -s^{-1}(x^2).
+        But the code computes eps = sum of |s^{-1}a_q| for q < p.
+        At p=0: eps = 0, sign = +1. So d_B(s^{-1}x|s^{-1}x) at p=0 is +s^{-1}(x*x).
         This is the sign convention from the code: the first contraction
         (p=0) has sign +1, and the sign alternates from there.
         """
@@ -757,9 +757,9 @@ class TestKoszulSigns:
     def test_bar_diff_sign_alternation(self):
         """Bar differential of k[x]/(x^3) at degree 3: signs alternate.
 
-        d_B^3(sx|sx|sx):
-          p=0: (+1)*s(x*x)|sx = s(x^2)|sx -> (2,1) with +1
-          p=1: (-1)*sx|s(x*x) = sx|s(x^2) -> (1,2) with -1
+        d_B^3(s^{-1}x|s^{-1}x|s^{-1}x):
+          p=0: (+1)*s^{-1}(x*x)|s^{-1}x = s^{-1}(x^2)|s^{-1}x -> (2,1) with +1
+          p=1: (-1)*s^{-1}x|s^{-1}(x*x) = s^{-1}x|s^{-1}(x^2) -> (1,2) with -1
         """
         dga = truncated_polynomial_dga(3)
         bar = BarConstruction(dga, 4)
@@ -976,7 +976,7 @@ class TestFreeFermion:
         """Free fermion: psi*psi = 1, so unit contraction B^2 -> B^0 is [[1]].
 
         The product psi*psi = 1 (unit, index 0) means the bar differential
-        sends s*psi|s*psi -> 1 in B^0, captured by unit_contraction.
+        sends s^{-1}psi|s^{-1}psi -> 1 in B^0, captured by unit_contraction.
         """
         result = free_fermion_bar_cobar()
         uc = result["unit_contraction_B2"]
@@ -1159,8 +1159,8 @@ class TestPolynomialWithDiff:
         """Internal differential at bar degree 1 maps x -> x^2.
 
         Basis B^1 = {x, x^2}. The internal differential applies d_A to each factor.
-        d_1(sx) = s(d(x)) = s(x^2), so column 0 has entry 1 at row 1 (for x^2).
-        d_1(sx^2) = s(d(x^2)) = 0.
+        d_1(s^{-1}x) = s^{-1}(d(x)) = s^{-1}(x^2), so column 0 has entry 1 at row 1 (for x^2).
+        d_1(s^{-1}x^2) = s^{-1}(d(x^2)) = 0.
         """
         pwd = polynomial_with_diff()
         bar = BarConstruction(pwd, 3)

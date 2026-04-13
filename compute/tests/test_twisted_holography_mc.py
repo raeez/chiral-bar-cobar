@@ -278,7 +278,7 @@ class TestQuantumRMatrix:
 # =========================================================================
 
 class TestShadowConnection:
-    """Test nabla^{hol}_{0,n} = d - sum r^{ij} d log(z_{ij})."""
+    """Test nabla^{hol}_{0,n} = d - sum r^{ij}(z_{ij}) dz_{ij}."""
 
     def test_shadow_connection_flat(self):
         """Flatness from MC equation (thm:thqg-flatness)."""

@@ -398,7 +398,7 @@ class TestMultiPathVerification:
 
         This is exactly the passage T^c -> Sym^c (coinvariant projection).
         """
-        # Verify: av(r(z)) = kappa is the Sigma_2-coinvariant of the r-matrix.
+        # Verify: in scalar families, av(r(z)) = kappa is the Sigma_2-coinvariant of the r-matrix.
         kappa = averaging_map_at_arity_2(F(1), desuspended_degree=0)
         assert kappa == F(1)
 
@@ -435,7 +435,7 @@ class TestMultiPathVerification:
         kappa is the E_infty shadow = Sigma_2-coinvariant of r(z).
         This confirms g^mod uses the symmetric/commutative structure.
         """
-        # From the table: kappa = av(r(z))
+        # From the table: the degree-2 scalar shadow is extracted from av(r(z))
         # If g^mod used Lie^c, then kappa would be in the Harrison part.
         # But for Heisenberg, the Harrison part at arity 2 is 0.
         # So g^mod CANNOT use Lie^c (or kappa would be 0 for Heisenberg).
@@ -508,10 +508,11 @@ class TestMultiPathVerification:
         assert result_sum['total_kappa'] == result1['total_kappa'] + result2['total_kappa']
 
     def test_path_10_manuscript_formula_recovery(self):
-        """Path 10: The manuscript's formula av(r(z)) = kappa recovers the correct values.
+        """Path 10: The manuscript's degree-2 scalar-shadow formula recovers the correct scalar cases.
 
-        For all standard families, the averaging (Sigma_2-coinvariant) of the
-        E_1 r-matrix gives the correct scalar kappa. This is eq:e1-coinvariant-arity2.
+        For the scalar families, the averaging (Sigma_2-coinvariant) of the
+        E_1 r-matrix gives the correct scalar kappa. Non-abelian affine KM
+        requires the extra Sugawara shift dim(g)/2.
         """
         # Heisenberg at various levels
         for k in [1, 2, 5, -3]:

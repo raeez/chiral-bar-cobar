@@ -12,6 +12,11 @@ The Cauchy-Schwarz shadow inequality is a NEW invariant:
 measures "channel spread". ρ = 1 iff effectively one-channel.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 from __future__ import annotations
 
 import numpy as np

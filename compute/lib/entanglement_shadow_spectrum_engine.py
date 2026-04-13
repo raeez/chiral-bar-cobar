@@ -161,13 +161,12 @@ def betagamma_kappa(lam: Any) -> Fraction:
 
 
 def bershadsky_polyakov_central_charge(k: Any) -> Fraction:
-    """Return c_BP(k) = -3*(3k^2 + 14k + 23)/(k + 3)."""
+    """Return c_BP(k) = 2 - 24*(k + 1)^2/(k + 3)."""
     level = _as_fraction(k)
     denominator = level + 3
     if denominator == 0:
         raise ValueError("Bershadsky-Polyakov central charge has a pole at k = -3")
-    numerator = -3 * (3 * level**2 + 14 * level + 23)
-    return numerator / denominator
+    return Fraction(2) - 24 * (level + 1) ** 2 / denominator
 
 
 def bershadsky_polyakov_kappa(k: Any) -> Fraction:

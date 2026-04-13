@@ -4,18 +4,28 @@
 #
 #  Usage:
 #    make               Build everything: manuscript + working notes → out/
-#    make fast           Single-pass build for quick iteration
-#    make release        Full release: annals + archive + working notes + standalone → out/
-#    make standalone     Build standalone paper → out/shadow_towers.pdf
-#    make annals         Build annals edition (frontier quarantined)
-#    make archive        Build archive edition (full content visible)
-#    make working-notes  Build working notes only → out/
+#    make fast           Quick build for rapid iteration → out/main.pdf
+#    make release        Full release: manuscript + working notes + standalone → out/
+#    make standalone     Build standalone papers → out/
+#    make working-notes  Build working notes → out/working_notes.pdf
 #    make watch          Continuous rebuild on file changes (requires latexmk)
 #    make clean          Remove all LaTeX build artifacts
-#    make veryclean      Remove artifacts AND compiled PDFs
+#    make veryclean      Remove artifacts AND out/ (forces full rebuild)
+#    make clean-builds   Remove all /tmp/mkd-* isolated build directories
 #    make count          Line counts and page estimate
 #    make check          Dry-run compilation to check for errors
 #    make draft          Build with draft mode (faster, no images)
+#
+#  Build isolation (parallel agents):
+#    Each build runs in its own /tmp directory.  Set MKD_BUILD_NS to reuse
+#    the same directory across invocations (warm .aux files = faster builds):
+#
+#      export MKD_BUILD_NS="agent-$$"   # set once per agent session
+#      make fast                         # cold first time, warm thereafter
+#      # ... edit .tex ...
+#      make fast                         # warm — converges in fewer passes
+#
+#  All compiled output goes to out/.
 #
 # ============================================================================
 
@@ -50,19 +60,14 @@ SOURCES   := $(wildcard *.tex) \
              $(wildcard appendices/*.tex) \
              $(wildcard bibliography/*.tex)
 
-# Output
-PDF       := $(MAIN).pdf
+# Output — everything goes to out/
 OUT_DIR   := out
-OUT_PDF   := $(OUT_DIR)/modular_koszul_duality.pdf
+PDF       := $(OUT_DIR)/main.pdf
 
 # Working notes
-WN_DIR    := .
-WN_TEX    := $(WN_DIR)/working_notes.tex
-WN_PDF    := $(WN_DIR)/working_notes.pdf
-OUT_WN    := $(OUT_DIR)/working_notes.pdf
+WN_TEX    := working_notes.tex
 
-# Stamp file: tracks last successful build. Survives `make clean` so that
-# make can skip recompilation when no .tex files have changed.
+# Stamp file: tracks last successful build.
 STAMP     := .build_stamp
 
 # If PDF was externally deleted but stamp remains, force a rebuild.
@@ -78,71 +83,54 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial standalone annals archive dist release help working-notes publish icloud
+.PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud
 
 ## icloud: Copy latest PDFs to iCloud Drive
-icloud: main.pdf
+icloud: $(PDF)
 	@mkdir -p "$(ICLOUD_DIR)"
-	@cp -v main.pdf "$(ICLOUD_DIR)/vol1_modular_koszul_duality.pdf"
-	@for f in standalone/*.pdf; do [ -f "$$f" ] && cp -v "$$f" "$(ICLOUD_DIR)/$$(basename $$f)" || true; done
+	@cp -v $(PDF) "$(ICLOUD_DIR)/vol1_modular_koszul_duality.pdf"
+	@for f in $(OUT_DIR)/*.pdf; do [ -f "$$f" ] && cp -v "$$f" "$(ICLOUD_DIR)/$$(basename $$f)" || true; done
 	@echo "Vol I PDFs copied to iCloud."
 
 ## all: Full build — manuscript + working notes → out/
-##   Builds the main manuscript (stamp-based, idempotent), the working notes,
-##   and copies final PDFs to out/.
-all: $(STAMP) working-notes publish
+all: $(STAMP) working-notes
 
 $(STAMP): $(SOURCES) $(BUILD_SCRIPT)
 	@echo "══════════════════════════════════════════════════════════"
 	@echo "  Building: $(MAIN).tex  →  $(PDF)"
-	@echo "  Engine:   quiet $(TEX) wrapper (up to $(PASSES) passes)"
 	@echo "══════════════════════════════════════════════════════════"
-	@mkdir -p $(LOG_DIR)
 	@$(BUILD_SCRIPT) $(PASSES)
-	@if [ ! -f $(MAIN).pdf ]; then \
+	@if [ ! -f $(PDF) ]; then \
 		echo "  ✗  Build failed — no PDF produced."; exit 1; \
 	fi
 	@touch $(STAMP)
 	@echo ""
 	@echo "  ✓  $(PDF) built successfully."
-	@echo "     Logs: $(LOG_DIR)/tex-build.stdout.log and $(MAIN).log"
 	@echo ""
 
-## fast: Bounded quick build for rapid iteration.
-##   Runs enough passes to settle references in normal editing flows, while
-##   still capping the work below the full build target.
+## fast: Bounded quick build for rapid iteration → out/main.pdf
 fast:
 	@echo "  ── Fast build (up to $(FAST_PASSES) passes) ──"
-	@mkdir -p $(LOG_DIR)
 	@$(BUILD_SCRIPT) $(FAST_PASSES)
-	@echo "     Logs: $(LOG_DIR)/tex-build.stdout.log and $(MAIN).log"
 
-## working-notes: Build the working notes (standalone document).
-working-notes: $(OUT_WN)
-
-$(OUT_WN): $(WN_TEX)
+## working-notes: Build the working notes → out/working_notes.pdf
+working-notes:
 	@echo "  ── Building working notes ──"
 	@mkdir -p $(OUT_DIR) $(LOG_DIR)
-	@cd $(WN_DIR) && \
-		$(TEX) $(TEXFLAGS) working_notes.tex >/dev/null 2>&1 || true && \
-		$(TEX) $(TEXFLAGS) working_notes.tex >/dev/null 2>&1 || true
-	@if [ -f $(WN_PDF) ]; then \
-		cp $(WN_PDF) $(OUT_WN); \
-		echo "  ✓  $(OUT_WN)"; \
+	@$(TEX) $(TEXFLAGS) $(WN_TEX) >/dev/null 2>&1 || true
+	@$(TEX) $(TEXFLAGS) $(WN_TEX) >/dev/null 2>&1 || true
+	@if [ -f working_notes.pdf ]; then \
+		mv working_notes.pdf $(OUT_DIR)/working_notes.pdf; \
+		rm -f working_notes.aux working_notes.log working_notes.out working_notes.toc 2>/dev/null; \
+		echo "  ✓  $(OUT_DIR)/working_notes.pdf"; \
 	else \
 		echo "  ✗  Working notes build failed."; \
 		exit 1; \
 	fi
 
-## publish: Copy final PDFs to out/ (does not trigger a rebuild).
-publish:
-	@mkdir -p $(OUT_DIR)
-	@if [ -f $(PDF) ]; then cp $(PDF) $(OUT_PDF); echo "  ✓  $(OUT_PDF)"; \
-	else echo "  ⚠  $(PDF) not found — run 'make fast' first."; fi
-
-## release: Full rebuild of everything — annals + archive + working notes + standalone → out/ + root + iCloud
+## release: Full rebuild — manuscript + working notes + standalone → out/ + iCloud
 release:
-	@rm -f $(STAMP) $(PDF) $(WN_PDF)
+	@rm -f $(STAMP)
 	@rm -rf $(OUT_DIR)
 	@mkdir -p $(LOG_DIR) $(OUT_DIR)
 	@echo ""
@@ -150,70 +138,33 @@ release:
 	@echo "  ── RELEASE BUILD ──"
 	@echo "  ══════════════════════════════════════════"
 	@echo ""
-	@echo "  [1/4] Annals edition (frontier quarantined, claim-status tags suppressed)"
+	@echo "  [1/3] Manuscript"
 	@$(BUILD_SCRIPT) $(FAST_PASSES)
 	@if [ -f $(PDF) ]; then \
-		cp $(PDF) $(OUT_DIR)/modular_koszul_duality_annals.pdf; \
-		cp $(PDF) Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf; \
-		cp $(PDF) modular_koszul_duality_annals.pdf; \
-		echo "  ✓  out/modular_koszul_duality_annals.pdf"; \
+		echo "  ✓  $(PDF)"; \
 	else \
-		echo "  ✗  Annals build failed."; \
+		echo "  ✗  Build failed."; \
 	fi
 	@echo ""
-	@echo "  [2/4] Archive edition (full content, all frontiers visible)"
-	@for i in $$(seq 1 $(FAST_PASSES)); do \
-		$(TEX) $(TEXFLAGS) "\def\archivebuild{1}\input{$(MAIN)}" >$(LOG_DIR)/tex-build.stdout.log 2>&1 || true; \
-	done
-	@if [ -f $(PDF) ]; then \
-		cp $(PDF) $(OUT_DIR)/modular_koszul_duality_archive.pdf; \
-		cp $(PDF) modular_koszul_duality_archive.pdf; \
-		echo "  ✓  out/modular_koszul_duality_archive.pdf"; \
-	else \
-		echo "  ✗  Archive build failed."; \
-	fi
-	@echo ""
-	@echo "  [3/4] Working notes"
+	@echo "  [2/3] Working notes"
 	@$(MAKE) --no-print-directory working-notes
-	@if [ -f $(OUT_WN) ]; then cp $(OUT_WN) working_notes.pdf; echo "  ✓  working_notes.pdf (root)"; fi
 	@echo ""
-	@echo "  [4/4] Standalone papers"
+	@echo "  [3/3] Standalone papers"
 	@$(MAKE) --no-print-directory standalone
-	@for pdf in $(OUT_DIR)/*.pdf; do \
-		name=$$(basename "$$pdf"); \
-		case "$$name" in \
-			modular_koszul_duality_annals.pdf|modular_koszul_duality_archive.pdf|working_notes.pdf) ;; \
-			*) if [ -f "$$pdf" ]; then cp "$$pdf" "$$name"; echo "  ✓  $$name (root)"; fi ;; \
-		esac; \
-	done
 	@echo ""
 	@echo "  ── Copying to iCloud ──"
 	@mkdir -p "$(ICLOUD_DIR)"
 	@for pdf in $(OUT_DIR)/*.pdf; do \
 		name=$$(basename "$$pdf"); \
 		if [ -f "$$pdf" ]; then \
-			case "$$name" in \
-				working_notes.pdf) \
-					cp "$$pdf" "$(ICLOUD_DIR)/working_notes_vol1.pdf"; \
-					echo "    ✓  working_notes_vol1.pdf" ;; \
-				*) \
-					cp "$$pdf" "$(ICLOUD_DIR)/$$name"; \
-					echo "    ✓  $$name" ;; \
-			esac; \
+			cp "$$pdf" "$(ICLOUD_DIR)/$$name"; \
+			echo "    ✓  $$name"; \
 		fi; \
 	done
-	@if [ -f Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf ]; then \
-		cp Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf "$(ICLOUD_DIR)/"; \
-		echo "    ✓  Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf"; \
-	fi
 	@echo ""
 	@echo "  ══════════════════════════════════════════"
-	@echo "  Release complete. Output in out/:"
+	@echo "  Release complete. All output in out/:"
 	@ls -1 $(OUT_DIR)/*.pdf 2>/dev/null | sed 's/^/    /'
-	@echo "  Root copies:"
-	@ls -1 *.pdf 2>/dev/null | grep -v main.pdf | sed 's/^/    /'
-	@echo "  iCloud copies:"
-	@ls -1 "$(ICLOUD_DIR)"/*.pdf 2>/dev/null | sed 's/^/    /'
 	@echo "  ══════════════════════════════════════════"
 
 ## watch: Continuous rebuild on save (requires latexmk).
@@ -255,8 +206,6 @@ draft:
 	@echo "     Log: $(LOG_DIR)/draft.log"
 
 ## clean: Remove build debris (aux, log, etc.) but preserve the build stamp.
-##   Idempotent — safe to spam. After `make clean`, `make` is a no-op if
-##   no .tex files changed since the last successful build.
 clean:
 	@echo "  Cleaning build artifacts..."
 	@for ext in $(AUX_EXTS); do \
@@ -267,19 +216,25 @@ clean:
 	@rm -f texput.log
 	@echo "  ✓  Clean (stamp preserved — make will skip rebuild if sources unchanged)."
 
-## veryclean: Remove EVERYTHING including PDF, out/, and build stamp (forces full rebuild).
+## veryclean: Remove EVERYTHING including out/ and build stamp (forces full rebuild).
 veryclean: clean
-	@rm -f $(MAIN).pdf $(STAMP) $(WN_PDF)
+	@rm -f $(STAMP)
 	@rm -rf $(OUT_DIR)
-	@echo "  ✓  Stamp, PDFs, and out/ removed — next make will rebuild."
+	@echo "  ✓  Stamp and out/ removed — next make will rebuild."
+
+## clean-builds: Remove ALL /tmp/mkd-* isolated build directories (all volumes).
+clean-builds:
+	@echo "  Cleaning isolated build directories..."
+	@rm -rf /tmp/mkd-chiral-bar-cobar-* /tmp/mkd-chiral-bar-cobar-vol2-* /tmp/mkd-calabi-yau-quantum-groups-*
+	@echo "  ✓  All /tmp/mkd-* build directories removed."
 
 ## count: Manuscript statistics.
 count:
 	@echo ""
 	@echo "  ── Manuscript Statistics ──"
 	@echo ""
-	@printf "  Source files:   %s .tex files\n" "$$(find . -name '*.tex' -not -path './archive/*' | wc -l | tr -d ' ')"
-	@printf "  Total lines:   %s\n" "$$(find . -name '*.tex' -not -path './archive/*' -exec cat {} + | wc -l | tr -d ' ')"
+	@printf "  Source files:   %s .tex files\n" "$$(find . -name '*.tex' -not -path './archive/*' -not -path './out/*' | wc -l | tr -d ' ')"
+	@printf "  Total lines:   %s\n" "$$(find . -name '*.tex' -not -path './archive/*' -not -path './out/*' -exec cat {} + | wc -l | tr -d ' ')"
 	@if [ -f $(PDF) ]; then \
 		PAGES=$$(strings $(PDF) | grep -c '/Type /Page' 2>/dev/null || echo '?'); \
 		printf "  PDF pages:     %s\n" "$$PAGES"; \
@@ -369,31 +324,15 @@ test-full:
 		echo "  (no compute tests found — skipping)"; \
 	fi
 
-## annals: Build the Annals edition (frontier quarantined, claim-status tags suppressed).
-annals:
-	@echo "  ── Annals edition build ──"
-	@mkdir -p $(LOG_DIR)
-	@$(BUILD_SCRIPT) $(FAST_PASSES)
-	@echo "  ✓  Annals edition built (default: \\annalseditiontrue)."
-
-## archive: Build the full archive edition (everything visible).
-archive:
-	@echo "  ── Archive edition build (full content) ──"
-	@mkdir -p $(LOG_DIR)
-	@for i in $$(seq 1 $(FAST_PASSES)); do \
-		$(TEX) $(TEXFLAGS) "\def\archivebuild{1}\input{$(MAIN)}" >$(LOG_DIR)/tex-build.stdout.log 2>&1 || true; \
-	done
-	@echo "  ✓  Archive edition built (\\annalseditionfalse)."
-
 ## dist: Create Vol1Archive.zip for distribution.
-dist: working-notes publish
+dist: working-notes
 	@echo "  ── Creating Vol1Archive.zip ──"
 	@rm -f $(OUT_DIR)/Vol1Archive.zip
 	@mkdir -p $(OUT_DIR)
 	@zip -r $(OUT_DIR)/Vol1Archive.zip \
 		main.tex chapters/ appendices/ bibliography/ scripts/ compute/ \
 		Makefile README.md CLAUDE.md \
-		$(OUT_DIR)/modular_koszul_duality.pdf \
+		$(PDF) \
 		$(OUT_DIR)/working_notes.pdf \
 		-x '.*' -x '**/.*' -x '**/__pycache__/*' -x '**/*.pyc' \
 		-x 'compute/.venv/*' -x 'compute/state/*' \
@@ -425,7 +364,8 @@ standalone:
 				$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
 			done && cd ..; \
 			if [ -f standalone/$$paper.pdf ]; then \
-				cp standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
+				mv standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
+				rm -f standalone/$$paper.aux standalone/$$paper.log standalone/$$paper.out standalone/$$paper.toc 2>/dev/null; \
 				echo "    ✓  out/$$paper.pdf"; \
 			else \
 				echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
@@ -433,15 +373,17 @@ standalone:
 		fi; \
 	done
 
-## editorial: Build the editorial companion (concordance + editorial constitution).
+## editorial: Build the editorial companion → out/editorial.pdf
 editorial:
 	@echo "  ── Building editorial companion ──"
-	@mkdir -p $(LOG_DIR)
+	@mkdir -p $(LOG_DIR) $(OUT_DIR)
 	@for i in 1 2 3; do \
 		$(TEX) $(TEXFLAGS) -output-directory=standalone standalone/editorial.tex >$(LOG_DIR)/editorial.log 2>&1 || true; \
 	done
 	@if [ -f standalone/editorial.pdf ]; then \
-		echo "  ✓  standalone/editorial.pdf built."; \
+		mv standalone/editorial.pdf $(OUT_DIR)/editorial.pdf; \
+		rm -f standalone/editorial.aux standalone/editorial.log standalone/editorial.out 2>/dev/null; \
+		echo "  ✓  $(OUT_DIR)/editorial.pdf"; \
 	else \
 		echo "  ✗  Editorial build failed. See $(LOG_DIR)/editorial.log"; \
 		exit 1; \
@@ -452,26 +394,28 @@ help:
 	@echo ""
 	@echo "  Chiral Bar-Cobar Duality — Build System"
 	@echo "  ────────────────────────────────────────"
+	@echo "  All compiled output goes to out/"
 	@echo ""
 	@echo "  make               Full build: manuscript + working notes → out/"
-	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes)"
+	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes) → out/"
 	@echo "  make working-notes  Build working notes → out/working_notes.pdf"
-	@echo "  make release        Full release: annals + archive + working notes + standalone → out/"
-	@echo "  make standalone      Build standalone paper → out/shadow_towers.pdf"
+	@echo "  make release        Full release: manuscript + working notes + standalone → out/"
+	@echo "  make standalone     Build standalone papers → out/"
 	@echo "  make dist           Create Vol1Archive.zip in out/"
-	@echo "  make watch      Continuous rebuild on save (latexmk)"
-	@echo "  make check      Halt-on-error validation"
-	@echo "  make integrity  Strict CI-style integrity gate"
-	@echo "  make phase0-index  Regenerate theorem dependency index"
-	@echo "  make draft      Draft mode (faster, no images)"
-	@echo "  make clean      Remove build debris (idempotent, preserves stamp)"
-	@echo "  make veryclean  Remove everything including PDF (forces rebuild)"
-	@echo "  make count      Manuscript statistics"
-	@echo "  make metadata   Regenerate machine-readable metadata"
-	@echo "  make census     Print claim census"
-	@echo "  make editorial  Build editorial companion (concordance + constitution)"
-	@echo "  make verify     Run anti-pattern verification"
-	@echo "  make test       Fast tests (excludes slow — for rapid iteration)"
-	@echo "  make test-full  Full test suite (including slow — before commits)"
-	@echo "  make help       This message"
+	@echo "  make watch          Continuous rebuild on save (latexmk)"
+	@echo "  make check          Halt-on-error validation"
+	@echo "  make integrity      Strict CI-style integrity gate"
+	@echo "  make phase0-index   Regenerate theorem dependency index"
+	@echo "  make draft          Draft mode (faster, no images)"
+	@echo "  make clean          Remove build debris (preserves stamp)"
+	@echo "  make veryclean      Remove everything including out/ (forces rebuild)"
+	@echo "  make clean-builds   Remove /tmp/mkd-* isolated build directories"
+	@echo "  make count          Manuscript statistics"
+	@echo "  make metadata       Regenerate machine-readable metadata"
+	@echo "  make census         Print claim census"
+	@echo "  make editorial      Build editorial companion → out/"
+	@echo "  make verify         Run anti-pattern verification"
+	@echo "  make test           Fast tests (excludes slow — for rapid iteration)"
+	@echo "  make test-full      Full test suite (including slow — before commits)"
+	@echo "  make help           This message"
 	@echo ""

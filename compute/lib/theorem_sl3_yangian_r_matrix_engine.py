@@ -27,9 +27,10 @@ For A = sl_3-hat_k at level k:
   * The ordered bar cohomology algebra is A^!_{line} = Y_hbar(sl_3)
     at hbar = 1/(k+3).
 
-  * The collision residue (AP19): r(z) = Omega/z where Omega is the
-    quadratic Casimir tensor.  The d log propagator absorbs one pole
-    order from the OPE: z^{-2} -> z^{-1}.
+  * The raw affine collision residue (AP19) is r(z) = k*Omega/z where
+    Omega is the quadratic Casimir tensor.  The d log propagator absorbs
+    one pole order from the OPE: z^{-2} -> z^{-1}; the z^{-1} bracket
+    term becomes regular and drops.
 
   * Casimir identity on the fundamental V = C^3:
         Omega = P - (1/N) I,  N = 3
@@ -41,7 +42,7 @@ For A = sl_3-hat_k at level k:
     Omega eigenvalues: 2 (x27), 0 (x20), -3 (x16), -6 (x1).
 
   * KZ Hamiltonians for n points in representation V:
-        H_i = (1/kappa) sum_{j != i} Omega_{ij} / (z_i - z_j)
+        H_i = (1/(k+h^vee)) sum_{j != i} Omega_{ij} / (z_i - z_j)
     satisfy [H_i, H_j] = 0  (infinitesimal braid relations, IBR).
     This follows from the Casimir identity [Omega_{12}, Omega_{13}+Omega_{23}] = 0.
 
@@ -60,7 +61,8 @@ For A = sl_3-hat_k at level k:
     At level 3: 10 integrable reps, 3 x 3 = 6 + 3*.
 
   * DNP comparison: for pure gauge (sl_3, CS level k):
-        DNP r(z) = Omega/z = MK bar collision residue.
+        DNP r(z) = Omega/z in unit-level normalization.
+        The raw affine collision residue is k*Omega/z.
         DNP A_infty YBE reduces to CYBE (no higher operations for KM).
         DNP non-renormalization = MK E_2-collapse = Koszulness of sl_3-hat_k.
 
@@ -336,22 +338,23 @@ def adjoint_casimir_eigenvalues() -> Dict[str, object]:
 # R-matrix from bar collision residue
 # ============================================================
 
-def r_matrix_fund(z: complex) -> np.ndarray:
-    r"""r-matrix in the fundamental: r(z) = Omega^{fund}/z.
+def r_matrix_fund(z: complex, k: complex = 1) -> np.ndarray:
+    r"""Raw affine residue in the fundamental: r(z) = k*Omega^{fund}/z.
 
-    The bar collision residue Res^{coll}_{0,2}(Theta_A) = Omega/z.
+    The bar collision residue Res^{coll}_{0,2}(Theta_A) = k*Omega/z
+    in the trace-form convention.
     Single pole at z = 0 (AP19).
     """
-    return casimir_tensor_fund() / z
+    return complex(k) * casimir_tensor_fund() / z
 
 
-def r_matrix_adj(z: complex) -> np.ndarray:
-    r"""r-matrix in the adjoint: r(z) = Omega^{adj}/z.
+def r_matrix_adj(z: complex, k: complex = 1) -> np.ndarray:
+    r"""Raw affine residue in the adjoint: r(z) = k*Omega^{adj}/z.
 
     Same Casimir r-matrix formula but in the adjoint representation.
     Satisfies the CYBE in the adjoint.
     """
-    return casimir_tensor_adj() / z
+    return complex(k) * casimir_tensor_adj() / z
 
 
 def R_matrix_yang_fund(u: complex) -> np.ndarray:
@@ -500,10 +503,10 @@ def _omega_ij(n: int, i: int, j: int, Omega_2: np.ndarray, dim_rep: int) -> np.n
 
 def kz_hamiltonian(n: int, site: int, z_vals: List[complex],
                    Omega_2: np.ndarray, dim_rep: int,
-                   kappa_val: complex) -> np.ndarray:
+                   level_shift: complex) -> np.ndarray:
     r"""KZ Hamiltonian H_i for n points at positions z_1,...,z_n.
 
-    H_i = (1/kappa) sum_{j != i} Omega_{ij} / (z_i - z_j)
+    H_i = (1/(k+h^vee)) sum_{j != i} Omega_{ij} / (z_i - z_j)
 
     The KZ equation is d Phi / d z_i = H_i Phi.
     """
@@ -515,12 +518,12 @@ def kz_hamiltonian(n: int, site: int, z_vals: List[complex],
         ii, jj = min(site, j), max(site, j)
         Omega_ij = _omega_ij(n, ii, jj, Omega_2, dim_rep)
         H += Omega_ij / (z_vals[site] - z_vals[j])
-    return H / kappa_val
+    return H / level_shift
 
 
 def verify_kz_commutativity(n: int, z_vals: List[complex],
                             Omega_2: np.ndarray, dim_rep: int,
-                            kappa_val: complex) -> float:
+                            level_shift: complex) -> float:
     r"""Verify [H_i, H_j] = 0 for all pairs i != j (IBR).
 
     The infinitesimal braid relations state that the KZ
@@ -529,7 +532,7 @@ def verify_kz_commutativity(n: int, z_vals: List[complex],
 
     Returns: max Frobenius norm of [H_i, H_j] over all pairs.
     """
-    Hs = [kz_hamiltonian(n, i, z_vals, Omega_2, dim_rep, kappa_val)
+    Hs = [kz_hamiltonian(n, i, z_vals, Omega_2, dim_rep, level_shift)
           for i in range(n)]
     max_norm = 0.0
     for i in range(n):
@@ -695,27 +698,26 @@ def verlinde_fusion(k: int, lam: Tuple[int, int],
 # DNP comparison
 # ============================================================
 
-def dnp_r_matrix_genus0(z: complex) -> np.ndarray:
+def dnp_r_matrix_genus0(z: complex, k: complex = 1) -> np.ndarray:
     r"""DNP dg-shifted Yangian r-matrix at genus 0 for sl_3.
 
-    For pure gauge theory (sl_3 at level k), the DNP r-matrix is:
-        r^{DNP}(z) = Omega/z
-    This is EXACTLY the MK bar collision residue (prop:dg-shifted-comparison).
+    This comparison engine uses the same level normalization as
+    r_matrix_fund; the unit-level case is Omega/z.
     """
-    return r_matrix_fund(z)
+    return r_matrix_fund(z, k=k)
 
 
-def dnp_comparison_report(z: complex) -> Dict[str, object]:
+def dnp_comparison_report(z: complex, k: complex = 1) -> Dict[str, object]:
     r"""Compare MK bar extraction with DNP dg-shifted Yangian for sl_3.
 
     Checks:
-    1. r^{MK}(z) = r^{DNP}(z) = Omega/z  (genus-0 agreement)
+    1. r^{MK}(z) = r^{DNP}(z) = k*Omega/z  (genus-0 agreement)
     2. Both satisfy CYBE
     3. A_infty YBE reduces to CYBE (no higher operations for KM)
     4. Non-renormalization = E_2-collapse = Koszulness
     """
-    r_mk = r_matrix_fund(z)
-    r_dnp = dnp_r_matrix_genus0(z)
+    r_mk = r_matrix_fund(z, k=k)
+    r_dnp = dnp_r_matrix_genus0(z, k=k)
     agreement = bool(np.allclose(r_mk, r_dnp, atol=1e-14))
 
     w = z + 1.0
@@ -724,8 +726,8 @@ def dnp_comparison_report(z: complex) -> Dict[str, object]:
 
     return {
         "genus_0_agreement": agreement,
-        "r_MK": "Omega/z (bar collision residue)",
-        "r_DNP": "Omega/z (A_infty structure on A^!)",
+        "r_MK": "k*Omega/z (bar collision residue)",
+        "r_DNP": "k*Omega/z (matched normalization)",
         "identification": "prop:dg-shifted-comparison",
         "CYBE_norm": cybe_norm,
         "CYBE_satisfied": cybe_norm < 1e-10,
@@ -841,9 +843,9 @@ def full_report(k: int = 1) -> Dict[str, object]:
     cybe_adj = verify_cybe(Omega_a, ADJ_DIM, 1.5, 2.7)
 
     kz_norm_3 = verify_kz_commutativity(
-        3, [1.0, 2.5, 4.0], Omega_f, FUND_DIM, float(kappa))
+        3, [1.0, 2.5, 4.0], Omega_f, FUND_DIM, float(k + H_VEE))
 
-    dnp = dnp_comparison_report(1.5)
+    dnp = dnp_comparison_report(1.5, k=k)
     verl_k1 = verlinde_fusion(1, (1, 0), (1, 0))
 
     return {

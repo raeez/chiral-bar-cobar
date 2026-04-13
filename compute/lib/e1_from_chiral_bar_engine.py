@@ -1290,7 +1290,7 @@ def sl2_bar_differential_arity3() -> Dict[str, Any]:
       (sa)(sb) = (-1)^{|a|} s(ab)
 
     For degree-0 elements a, b (after desuspension): the Koszul sign is
-    (-1)^{|sa|} = (-1)^0 = 1 (since |sa| = |a| + 1 = 1 in the suspended convention).
+    (-1)^{|s^{-1}a|} = (-1)^{-1} = -1 (since |s^{-1}a| = |a| - 1 = -1).
 
     Wait, I am confusing myself. Let me use the notation from signs_and_shifts.tex.
 

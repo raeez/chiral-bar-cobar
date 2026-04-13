@@ -21,6 +21,11 @@ Manuscript references:
     def:shadow-growth-rate (higher_genus_modular_koszul.tex)
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import math
 import cmath
 import pytest

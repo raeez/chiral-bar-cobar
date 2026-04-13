@@ -292,7 +292,8 @@ def c_bc_system(n_pairs: int, weight: Num = Fraction(1, 2)) -> Fraction:
 
     Each pair: c = -2(6*lambda^2 - 6*lambda + 1).
     At lambda = 1/2: c = 1 per pair.
-    At lambda = 1 (standard bc ghosts, b weight 2, c weight -1): c = -26 per pair.
+    At lambda = 1: c = -2 per pair.
+    At lambda = 2 (reparametrization ghosts, b weight 2, c weight -1): c = -26 per pair.
     """
     lam = _to_frac(weight)
     c_one = -2 * (6 * lam**2 - 6 * lam + 1)
@@ -1432,7 +1433,7 @@ def bllprr_schur_voa(theory: str, **params) -> Dict[str, Any]:
 
     Known examples:
       - Free hypermultiplet: A(T) = symplectic boson pair (bg at lambda=1/2)
-      - Free vector multiplet: A(T) = bc ghost pair (at lambda=1)
+      - Free vector multiplet: A(T) = bc ghost pair at the conformal point lambda=2
       - SU(2) N_f=4: A(T) = affine so(8) at level -2
       - Argyres-Douglas H_0: A(T) = Virasoro at c = -22/5
       - Argyres-Douglas H_1: A(T) = Virasoro at c = -7 (= W_2 at k=1)
@@ -1453,12 +1454,12 @@ def bllprr_schur_voa(theory: str, **params) -> Dict[str, Any]:
         name = "Symplectic boson (free hyper)"
 
     elif theory == 'free_vector':
-        c = Fraction(-26)   # bc ghosts at lambda=1 (reparametrization ghosts)
+        c = Fraction(-26)   # bc ghosts at lambda=2 (reparametrization ghosts)
         kap = Fraction(-13)
         sc = 'C'
         dual_c = Fraction(26)
         dual_kap = Fraction(13)
-        name = "bc ghosts lambda=1 (free vector)"
+        name = "bc ghosts lambda=2 (free vector)"
 
     elif theory == 'argyres_douglas_H0':
         c = Fraction(-22, 5)

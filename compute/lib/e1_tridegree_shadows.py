@@ -24,7 +24,9 @@ KEY RESULTS:
   1. Genus-0 R-matrices for all 5 families (exact, sympy).
   2. CYBE verification: [r12, r13] + [r12, r23] + [r13, r23] = 0 (numerical).
   3. Genus-1 ordered shadows: elliptic R-matrices via Weierstrass p-function.
-  4. Coinvariant projection FAss -> FCom: av(r(z)) = kappa(A) at arity 2.
+  4. Coinvariant projection FAss -> FCom: at arity 2 this gives the
+     scalar degree-2 shadow. For non-abelian affine KM, av(r(z)) = kappa_dp
+     and the full kappa adds dim(g)/2.
   5. E1 tridegree tables: all nonzero (g, n, d) up to g <= 1, n <= 6.
 
 Shadow depth classification:
@@ -415,7 +417,9 @@ def e1_genus1_r_matrix(family: str, tau_val: Optional[complex] = None, **params)
 def e1_coinvariant_projection(family: str, arity: int, **params) -> Any:
     """Coinvariant projection: average over S_n sends E1 shadow to unordered shadow.
 
-    At arity 2: av(r(z)) = Res_{z=0}[r(z)] = kappa(A).
+    At arity 2: this gives the scalar degree-2 shadow. For scalar families
+    it equals kappa(A); for non-abelian affine KM it equals kappa_dp and the
+    full kappa adds dim(g)/2.
     At arity 3: av(r_3) = C(A) (cubic shadow).
     At arity >= 4: depends on the family.
 
@@ -433,8 +437,7 @@ def e1_coinvariant_projection(family: str, arity: int, **params) -> Any:
         raise ValueError("Arity must be >= 2")
 
     if arity == 2:
-        # av(r(z)) = kappa for all families
-        return e1_kappa_from_r_matrix(family, **params)
+        return e1_degree2_shadow_from_r_matrix(family, **params)
 
     if arity == 3:
         return _coinvariant_arity3(family, **params)
@@ -571,13 +574,50 @@ def e1_tridegree_table(family: str, max_g: int = 1, max_n: int = 6,
 # 6. Kappa from R-matrix
 # =========================================================================
 
+def e1_degree2_shadow_from_r_matrix(family: str, **params) -> Any:
+    """Extract the degree-2 scalar shadow av(r(z)) at arity 2.
+
+    For scalar R-matrices: av(r(z)) = coefficient of 1/z.
+    For non-abelian affine sl_2 in trace-form normalization:
+      av(r(z)) = k*dim(g)/(2*h^v) = 3k/4 = kappa_dp.
+
+    Args:
+        family: family name
+        **params: family-specific parameters
+
+    Returns:
+        sympy expression for the degree-2 scalar shadow.
+    """
+    family = family.lower()
+
+    if family == 'heisenberg':
+        lev = params.get('k', params.get('level', k))
+        return lev
+
+    elif family == 'affine_sl2':
+        lev = params.get('k', params.get('level', k))
+        return Rational(3) * lev / 4
+
+    elif family == 'virasoro':
+        cc = params.get('c', params.get('central_charge', c))
+        return cc / 2
+
+    elif family == 'lattice_vz':
+        return Rational(1)
+
+    elif family == 'lattice_va2':
+        return Rational(2)
+
+    else:
+        raise ValueError(f"Unknown family: {family}")
+
+
 def e1_kappa_from_r_matrix(family: str, **params) -> Any:
-    """Extract kappa from the R-matrix via coinvariant projection at arity 2.
+    """Extract the full kappa from the degree-2 shadow.
 
-    kappa(A) = av(r(z)) = (1/dim) * Tr(coefficient of 1/z in r(z))
-
-    For scalar R-matrices: kappa = coefficient of 1/z.
-    For matrix R-matrices (affine sl_N): kappa = (k+h^v)*dim(g)/(2*h^v).
+    For scalar families this equals av(r(z)).
+    For non-abelian affine sl_2 in trace-form normalization:
+      kappa = av(r(z)) + dim(g)/2 = 3k/4 + 3/2 = 3(k+2)/4.
 
     Args:
         family: family name
@@ -588,29 +628,11 @@ def e1_kappa_from_r_matrix(family: str, **params) -> Any:
     """
     family = family.lower()
 
-    if family == 'heisenberg':
+    if family == 'affine_sl2':
         lev = params.get('k', params.get('level', k))
-        return lev
+        return e1_degree2_shadow_from_r_matrix(family, **params) + Rational(3, 2)
 
-    elif family == 'affine_sl2':
-        lev = params.get('k', params.get('level', k))
-        # kappa = (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4 for sl_2
-        return Rational(3) * (lev + 2) / 4
-
-    elif family == 'virasoro':
-        cc = params.get('c', params.get('central_charge', c))
-        return cc / 2
-
-    elif family == 'lattice_vz':
-        # V_Z = Heisenberg at k = 1, rank 1
-        return Rational(1)
-
-    elif family == 'lattice_va2':
-        # V_{A2}: rank-2 Heisenberg at k = 1 per channel
-        return Rational(2)
-
-    else:
-        raise ValueError(f"Unknown family: {family}")
+    return e1_degree2_shadow_from_r_matrix(family, **params)
 
 
 # =========================================================================

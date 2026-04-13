@@ -10,11 +10,11 @@ The W_6 algebra = DS(sl_6, f_prin) has 5 strong generators:
 This is the MOST COMPLEX W-algebra shadow tower explicitly computed.
 
 CENTRAL CHARGE:
-    c(W_6, k) = 5(1 - 42/(k+6)) = 5(k+6-42)/(k+6) = 5(k-36)/(k+6)
+    c(W_6, k) = 5 - 210(k+5)^2/(k+6)
 
 FEIGIN-FRENKEL DUALITY:
     k' = -k - 12 (dual Coxeter number h^v = 6 for sl_6)
-    c(k) + c(k') = 2(N-1) = 10
+    c(k) + c(k') = 2(N-1) + 4N(N^2-1) = 850
 
 MODULAR CHARACTERISTIC:
     κ(W_6) = (H_6 - 1)·c where H_6 = 1 + 1/2 + 1/3 + 1/4 + 1/5 + 1/6 = 49/20
@@ -76,22 +76,21 @@ W6_RANK = 5  # Number of generators = N - 1 = 5
 # =============================================================================
 
 def w6_central_charge(level=None):
-    r"""Central charge c(W_6, k) = 5(1 - 42/(k+6)) = 5(k-36)/(k+6).
+    r"""Central charge c(W_6, k) = 5 - 210(k+5)^2/(k+6).
 
     From DS(sl_6) at level k:
-      c = (N-1)(1 - N(N+1)/(k+N)) with N=6
-        = 5(1 - 42/(k+6))
-        = 5(k-36)/(k+6)
+      c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=6
+        = 5 - 210(k+5)^2/(k+6)
 
     Special values:
-      k=1: c = 5·(-35)/7 = -25
-      k=6: c = 5·(-30)/12 = -25/2
-      k=36: c = 0
-      k→∞: c → 5
+      k=1: c = -1075
+      k=5: c = -20945/11
+      k=36: c = -8400
+      k→∞: c ~ -210k
     """
     if level is None:
         level = k
-    return Rational(5) * (level - 36) / (level + 6)
+    return Rational(5) - Rational(210) * (level + 5) ** 2 / (level + 6)
 
 
 def w6_central_charge_frac(k_val):

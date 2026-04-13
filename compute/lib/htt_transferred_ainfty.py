@@ -1068,11 +1068,13 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
     # d_bar on arity 2 -> arity 1:
     # d([x|x]) = +[x*x] = [x^2]   (sign: (-1)^0 = +1 for i=0... let me be careful)
     # Sign convention: for [a|b], d = [m(a,b)].
-    # With desuspension: d([sa|sb]) = +[s(m(a,b))] (the sign is +1 for the first
+    # With desuspension:
+    # d([s^{-1}a|s^{-1}b]) = +[s^{-1}(m(a,b))]
+    # (the sign is +1 for the first
     # and only product in arity 2).
     # Actually, the standard convention: d_bar([a_1|...|a_n]) = sum_{i=1}^{n-1}
-    #   (-1)^{|sa_1|+...+|sa_i|} [a_1|...|a_i*a_{i+1}|...|a_n]
-    # With |sa_j| = |a_j| - 1 = -1 (since all a_j have degree 0).
+    #   (-1)^{|s^{-1}a_1|+...+|s^{-1}a_i|} [a_1|...|a_i*a_{i+1}|...|a_n]
+    # With |s^{-1}a_j| = |a_j| - 1 = -1 (since all a_j have degree 0).
     # Sign for position i: (-1)^{i * (-1)} = (-1)^{-i} = (-1)^i.
     # For arity 2: only i=1, sign = (-1)^{1*(-1)} = (-1)^{-1} = -1.
     # Hmm, let me use the Loday-Vallette convention directly.
@@ -1123,7 +1125,7 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
 
     # Product on B(A): shuffle product (makes B(A) a dg Hopf algebra).
     # For the A-infinity transfer, we use the CONCATENATION product
-    # (tensor product structure on T^c(sA_+)), which is actually
+    # (tensor product structure on T^c(s^{-1}A_+)), which is actually
     # the deconcatenation coproduct of the bar coalgebra dualized.
     #
     # But for the Kadeishvili transfer on B(A) viewed as a dg algebra,
@@ -1133,10 +1135,13 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
     #
     # For our computation at low arity:
     # [x] * [x] = [x|x] + [x|x] = 2[x|x]?  No!
-    # [a] * [b] = [a|b] + (-1)^{|sa||sb|} [b|a] = [a|b] + (-1)^{(-1)(-1)} [b|a]
-    #           = [a|b] + (-1) [b|a]   (since |sa| = |sb| = -1)
-    # Wait: shuffle product sign is (-1)^{|sa||sb|} where s denotes desuspension.
-    # |sa| = |a| - 1 = -1 for all our elements.
+    # [a] * [b]
+    #   = [a|b] + (-1)^{|s^{-1}a||s^{-1}b|} [b|a]
+    #   = [a|b] + (-1)^{(-1)(-1)} [b|a]
+    #   = [a|b] + (-1) [b|a]
+    #   (since |s^{-1}a| = |s^{-1}b| = -1)
+    # Wait: shuffle product sign is (-1)^{|s^{-1}a||s^{-1}b|}.
+    # |s^{-1}a| = |a| - 1 = -1 for all our elements.
     # So [a]*[b] = [a|b] + (-1)^{(-1)(-1)}[b|a] = [a|b] + (-1)^1 [b|a] = [a|b] - [b|a].
 
     # This makes B(A) a GRADED COMMUTATIVE algebra (the shuffle algebra).
@@ -1152,10 +1157,13 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
     # arity 1 * arity 1 -> arity 2:
     # [x]*[x] = [x|x] - [x|x] = 0
     # Actually: [a]*[b] = [a|b] + sign * [b|a].
-    # For (a,b) = (x,x): [x]*[x] = [x|x] + (-1)^{|sx||sx|}[x|x] = [x|x] + (-1)^1 [x|x] = 0.
-    # (Graded symmetric: a*a = 0 for odd-degree elements; |sx|=-1 is odd.)
+    # For (a,b) = (x,x):
+    # [x]*[x] = [x|x] + (-1)^{|s^{-1}x||s^{-1}x|}[x|x] = [x|x] + (-1)^1 [x|x] = 0.
+    # (Graded symmetric: a*a = 0 for odd-degree elements; |s^{-1}x|=-1 is odd.)
 
-    # [x]*[x^2] = [x|x^2] + (-1)^{|sx||sx^2|}[x^2|x] = [x|x^2] - [x^2|x]
+    # [x]*[x^2]
+    #   = [x|x^2] + (-1)^{|s^{-1}x||s^{-1}x^2|}[x^2|x]
+    #   = [x|x^2] - [x^2|x]
     P[0, 1, 3] = FR(1)     # [x]*[x^2] has +[x|x^2]
     P[0, 1, 4] = FR(-1)    # [x]*[x^2] has -[x^2|x]
 
@@ -1168,15 +1176,16 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
     # arity 1 * arity 2 -> arity 3 (if in range):
     # [x]*[x|x] = sum over (1,2)-shuffles of [x,x,x]:
     #   shuffle (1,2,3): [x|x|x]
-    #   shuffle (2,1,3): (-1)^{|sx||sx|}[x|x|x] = -[x|x|x]
-    #   shuffle (2,3,1): (-1)^{|sx|(|sx|+|sx|)}[x|x|x] = (-1)^{(-1)(-2)}[x|x|x] = [x|x|x]
+    #   shuffle (2,1,3): (-1)^{|s^{-1}x||s^{-1}x|}[x|x|x] = -[x|x|x]
+    #   shuffle (2,3,1): (-1)^{|s^{-1}x|(|s^{-1}x|+|s^{-1}x|)}[x|x|x]
+    #                    = (-1)^{(-1)(-2)}[x|x|x] = [x|x|x]
     # Hmm, the (p,q)-shuffle formula for p=1, q=2:
     # sigma ranges over shuffles that keep the relative order of (a) and (b_1,b_2).
     # Shuffles of {1} and {2,3}: (1,2,3), (2,1,3), (2,3,1).
     # [x] * [x|x]:
     #   (1,2,3): [x|x|x], sign = 1
-    #   (2,1,3): [x|x|x], sign = (-1)^{|sx||sx|} = (-1)^1 = -1
-    #   (2,3,1): [x|x|x], sign = (-1)^{|sx|(|sx|+|sx|)} = (-1)^{(-1)(-2)} = (-1)^2 = 1
+    #   (2,1,3): [x|x|x], sign = (-1)^{|s^{-1}x||s^{-1}x|} = (-1)^1 = -1
+    #   (2,3,1): [x|x|x], sign = (-1)^{|s^{-1}x|(|s^{-1}x|+|s^{-1}x|)} = (-1)^{(-1)(-2)} = (-1)^2 = 1
     # Total: [x|x|x](1 - 1 + 1) = [x|x|x].
     #
     # Actually, all three shuffles give [x|x|x] since all factors are the same!
@@ -1186,10 +1195,10 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
     # For distinct a, b_1, b_2:
     # [a] * [b_1|b_2]:
     #   shuffle (a, b_1, b_2): [a|b_1|b_2], sign = 1
-    #   shuffle (b_1, a, b_2): [b_1|a|b_2], sign = (-1)^{|sb_1||sa|}
-    #   shuffle (b_1, b_2, a): [b_1|b_2|a], sign = (-1)^{(|sb_1|+|sb_2|)|sa|}
+    #   shuffle (b_1, a, b_2): [b_1|a|b_2], sign = (-1)^{|s^{-1}b_1||s^{-1}a|}
+    #   shuffle (b_1, b_2, a): [b_1|b_2|a], sign = (-1)^{(|s^{-1}b_1|+|s^{-1}b_2|)|s^{-1}a|}
 
-    # With all |s*| = -1:
+    # With all desuspended degrees equal to -1:
     #   sign for (b_1,a,b_2) = (-1)^{(-1)(-1)} = (-1)^1 = -1
     #   sign for (b_1,b_2,a) = (-1)^{(-2)(-1)} = (-1)^2 = 1
 
@@ -1265,8 +1274,8 @@ def koszul_resolution_k_over_poly3() -> DGAlgebra:
     # [x|x]*[x] = analysis similar to [x]*[x|x] with roles swapped
     # For [b_1|b_2]*[a]: shuffles of {b_1,b_2} and {a}:
     # (b_1,b_2,a): sign +1 -> [b_1|b_2|a]
-    # (b_1,a,b_2): sign (-1)^{|sa||sb_2|} = (-1)^{1} = -1 -> [b_1|a|b_2]
-    # (a,b_1,b_2): sign (-1)^{|sa|(|sb_1|+|sb_2|)} = (-1)^{2} = +1 -> [a|b_1|b_2]
+    # (b_1,a,b_2): sign (-1)^{|s^{-1}a||s^{-1}b_2|} = (-1)^{1} = -1 -> [b_1|a|b_2]
+    # (a,b_1,b_2): sign (-1)^{|s^{-1}a|(|s^{-1}b_1|+|s^{-1}b_2|)} = (-1)^{2} = +1 -> [a|b_1|b_2]
 
     # [x|x]*[x]: b_1=x, b_2=x, a=x
     # All shuffles give [x|x|x] (same sequence (0,0,0))

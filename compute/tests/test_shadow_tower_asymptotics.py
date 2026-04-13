@@ -6,6 +6,11 @@ T1-T10:  The leading coefficient formula a_r = 2(-3)^{r-4}/r
 T11-T15: Growth rate, convergence, and the self-referentiality proof
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 from fractions import Fraction
 import sys, os

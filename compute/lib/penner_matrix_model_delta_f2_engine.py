@@ -57,7 +57,8 @@ Path 5: Direct comparison with A_2(N) and B_2(N) formulas
 
 CONVENTIONS (AP1, AP22, AP27, AP39)
 ====================================
-- kappa(W_N) = c_N(N-1)/2 where c_N = N(N^2-1)/(N+k) at level k
+- kappa(W_N) = c_N * (H_N - 1) where c_N denotes the W_N central charge
+  and H_N = sum_{j=1}^{N} 1/j; at N=2 this gives c_N/2.
   For the UNIVERSAL W-algebra at large c: kappa ~ 5c/6 for N=3, etc.
 - S_k = sum_{j=2}^N j^k (power sums of CONFORMAL WEIGHTS, not levels)
 - Bar propagator weight = 1 (AP27)

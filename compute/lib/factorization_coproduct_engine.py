@@ -608,13 +608,16 @@ def operadic_bar_comparison(n: int) -> Dict[str, Any]:
     configurations).  Its bar complex uses P = Com in the chiral
     direction, giving the Lie cooperad and COCOMMUTATIVE coproduct.
 
-    The Swiss-cheese structure adds an ORDERED (E_1) direction along R.
-    The bar complex in the R-direction uses P = Ass, giving the
+    The Swiss-cheese comparison adds an ORDERED (E_1) direction along R.
+    The ordered bar complex uses P = Ass in that direction, giving the
     associative cooperad and DECONCATENATION coproduct.
 
-    The full Swiss-cheese bar complex uses BOTH simultaneously:
-      - Lie^c in the C-direction (bar differential, cocommutative)
-      - Ass^c in the R-direction (deconcatenation coproduct, non-cocommutative)
+    The same two geometric directions must be tracked simultaneously:
+      - Lie^c in the C-direction (bar differential provenance)
+      - Ass^c in the R-direction (deconcatenation provenance)
+    These do NOT make B(A) itself a two-coloured SC object; they are
+    the inputs for the ordered E_1 bar coalgebra, while the SC datum
+    appears on the derived-center pair (C^bullet_ch(A,A), A).
     """
     # Lie cooperad dimension: dim Lie^c(n) = (n-1)! for n >= 1
     lie_cooperad_dim = factorial(n - 1) if n >= 1 else 0
@@ -642,8 +645,9 @@ def operadic_bar_comparison(n: int) -> Dict[str, Any]:
             f"At arity {n}: Lie^c({n}) has dim {lie_cooperad_dim}, "
             f"Ass^c({n}) has dim {ass_cooperad_dim}. "
             f"The chiral bar complex uses Lie^c (cocommutative factorization "
-            f"coproduct). The Swiss-cheese bar complex adds Ass^c "
-            f"(non-cocommutative deconcatenation) in the R-direction."
+            f"coproduct). Tracking the Swiss-cheese comparison adds Ass^c "
+            f"(non-cocommutative deconcatenation) in the R-direction, "
+            f"while B(A) remains the ordered E_1 coalgebraic engine."
         ),
     }
 
@@ -1033,11 +1037,10 @@ def coproduct_resolution_summary() -> Dict[str, str]:
     FM_k(C) x Conf_k^<(R)
       |                  |
       v                  v
-    Bar differential   Deconcatenation
-    (closed color)     coproduct (open color)
-    Cocommutative      Non-cocommutative
-    Factorization      E_1 coalgebra
-    on Ran(X)          on ordered configs
+    Holomorphic        Deconcatenation
+    collision data     coproduct
+    for d_bar          for the ordered bar
+    on FM_k(C)         on ordered configs
 
     The unordered (factorization) coproduct on Ran(X) is the
     Sigma_k-symmetrization of the ordered (deconcatenation)
@@ -1046,8 +1049,11 @@ def coproduct_resolution_summary() -> Dict[str, str]:
 
     The factorization coproduct is the CHIRAL structure (Ran(X),
     Verdier duality, Theorem A).  The deconcatenation is the
-    TOPOLOGICAL structure (E_1 direction, interval splitting,
-    Swiss-cheese theorem).
+    TOPOLOGICAL/E_1 structure (interval splitting on the ordered bar).
+    These two directions later feed the Swiss-cheese picture, but
+    they do NOT by themselves make B(A) a two-coloured SC datum;
+    that attribution belongs to the derived-center pair
+    (C^bullet_ch(A,A), A).
 
     The coderived category and Verdier intertwining use the
     FACTORIZATION (cocommutative) coproduct.  The Swiss-cheese

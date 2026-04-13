@@ -50,11 +50,11 @@ E_1-E_1 operadic Koszul duality in the homotopical modular chiral realm on algeb
 
 **The primitive object** is B^ord(A) = T^c(s^{-1}A-bar): ordered bar, deconcatenation coproduct, R-matrix, Yangian. The symmetric bar B^Sigma is the Sigma_n-coinvariant shadow. Physics IS the homotopy type: A-infinity = scattering, SC^{ch,top} governs the (bulk, boundary) pair, modular L-infinity = genus tower. The five theorems A-D+H are the invariants that survive averaging.
 
-**Bar complex is E_1-coassociative; SC^{ch,top} emerges on the derived center (CRITICAL, corrected 2026-04-12).** The bar complex B^{ord}(A) = T^c(s^{-1}A-bar) is an E_1-chiral coassociative COALGEBRA (over ChirAss^!). It has a differential + deconcatenation coproduct. It does NOT carry SC^{ch,top} structure. The SC^{ch,top} structure (or E_3 with conformal vector) emerges on the DERIVED CENTER Z^{der}_{ch}(A) = ChirHoch*(A,A), computed USING the bar complex as a resolution. The bar complex is the E_1 engine; the derived center is the SC^{ch,top}/E_3 output. thm:bar-swiss-cheese (claiming B(A) is an SC-coalgebra) needs retraction or careful restatement — see FOUND-11.
+**Bar complex is E_1-coassociative; SC^{ch,top} emerges on the derived center (CRITICAL, corrected 2026-04-12).** The bar complex B^{ord}(A) = T^c(s^{-1}A-bar) is an E_1-chiral coassociative COALGEBRA (over ChirAss^!). It has a differential + deconcatenation coproduct. It does NOT carry SC^{ch,top} structure. The SC^{ch,top} structure (or E_3-TOPOLOGICAL with conformal vector) emerges on the DERIVED CENTER Z^{der}_{ch}(A) = ChirHoch*(A,A), computed USING the bar complex as a resolution. The bar complex is the E_1 engine; the derived center is the SC^{ch,top}/E_3-TOPOLOGICAL output. thm:bar-swiss-cheese (claiming B(A) is an SC-coalgebra) needs retraction or careful restatement — see FOUND-11.
 
-**The E_n operadic circle (2026-04-12):** E_3(bulk) → E_2(boundary chiral) → E_1(bar/QG) → E_2(Drinfeld center) → E_3(derived center). Each arrow: restriction to codim-2 defect, ordered bar complex, categorified averaging (Drinfeld center), higher Deligne (derived center). Closes for 3d HT with conformal vector; without conformal vector, stuck at SC^{ch,top}.
+**The E_n operadic circle (2026-04-12):** E_3-TOPOLOGICAL(bulk) → E_2(boundary chiral) → E_1(bar/QG) → E_2(Drinfeld center) → E_3-TOPOLOGICAL(derived center). Each arrow: restriction to codim-2 defect, ordered bar complex, categorified averaging (Drinfeld center), higher Deligne (derived center). Closes for 3d HT with conformal vector; without conformal vector, stuck at SC^{ch,top}.
 
-**SC^{ch,top} ≠ E_3 (2026-04-12).** The Swiss-cheese operad is two-coloured with directionality (no open-to-closed). Dunn additivity does NOT apply. E_3 requires topologization: SC^{ch,top} + inner conformal vector (Sugawara at non-critical level, making C-translations Q-exact) = E_3-TOPOLOGICAL (NOT E_3-chiral). Without conformal vector: stuck at SC^{ch,top}. thm:topologization PROVED for affine KM V_k(g) at non-critical level k != -h^v. General: CONJECTURAL (conj:topologization-general). Proof is cohomological; for class M, chain-level E_3 may fail.
+**SC^{ch,top} ≠ E_3 (2026-04-12).** The Swiss-cheese operad is two-coloured with directionality (no open-to-closed). Dunn additivity does NOT apply. E_3 requires topologization: SC^{ch,top} + inner conformal vector (Sugawara at non-critical level, making C-translations Q-exact) = E_3-TOPOLOGICAL. Without conformal vector: stuck at SC^{ch,top}. thm:topologization PROVED for affine KM V_k(g) at non-critical level k != -h^v. General: CONJECTURAL (conj:topologization-general). Proof is cohomological; for class M, chain-level E_3 may fail.
 
 **Five notions of E_1-chiral algebra (2026-04-12):** (A) strict ChirAss-algebra, (B) A_inf in End^{ch}_A, (C) EK quantum vertex algebra, (D) A_inf in E_1-chiral, (E) factorization on Ran^{ord}(X). Each has own derived center. (B)↔(C) via Drinfeld associator on Koszul locus. Warning installed at algebraic_foundations.tex warn:multiple-e1-chiral.
 
@@ -108,7 +108,7 @@ The ordered bar B^ord(A) is the primitive object. Every chapter, section, theore
 1. CONSTRUCT the E1 object (B^ord, r(z), Theta_A in g^{E1}, the matrix-valued curvature)
 2. EXHIBIT the E1 structure (deconcatenation coproduct, R-matrix, Yangian)
 3. APPLY the averaging map av: g^{E1} → g^mod (lossy Sigma_n-coinvariant projection)
-4. DERIVE the symmetric result (kappa = av(r(z)), obs_g = kappa*lambda_g, the shadow tower)
+4. DERIVE the symmetric result (kappa from av(r(z)); for non-abelian affine KM, av(r(z)) + dim(g)/2 = kappa; obs_g = kappa*lambda_g, the shadow tower)
 
 NEVER state a symmetric-bar result (kappa, obs_g, shadow tower) without first showing the E1 object it projects from. NEVER frame the five theorems as "concerning the symmetric bar" — they EXTRACT the Sigma_n-invariant content of the ordered bar. The symmetric bar is the shadow; the ordered bar generates.
 
@@ -233,7 +233,7 @@ B13. kappa_{global|BPS|eff|total|naive} # forbidden subscripts in Vol III
 B14. T^c(s^{-1} A)                     # missing augmentation: MUST be A-bar
 B15. T^c(s A)                          # wrong direction: MUST be s^{-1}
 B16. |s^{-1}v| = |v|+1                 # MUST be |v|-1
-B17. eta = prod(1-q^n)                 # missing q^{1/24}
+B17. eta written as bare prod(1-q^n)   # missing q^{1/24}; correct eta(tau)=q^{1/24}*prod_{n>=1}(1-q^n)
 
 # boundaries / combinatorics
 B18. W_N weights {2,...,N+1}           # MUST be {2,...,N} (N-1 generators)
@@ -287,7 +287,7 @@ B53. "over a point is over P^1"        # FALSE: retract is DATA; disk≠point; A
 B54. "B(A) is SC coalgebra"            # FALSE: E_1 coalgebra; SC in derived center pair
 B55-B56. bar diff/coprod = SC colors   # FALSE: single E_1 coalgebra
 B57. SC^{ch,top} is Koszul self-dual   # FALSE: SC^!=(Lie,Ass,shuffle)
-B58. "E_3-chiral" for topologized center # FALSE: E_3-TOPOLOGICAL
+B58. chiral label for topologized center # FALSE: E_3-TOPOLOGICAL
 B59. "Topologization proved for all"   # ONLY for affine KM at non-critical level
 B60. "A^! is an SC-algebra"            # FALSE: SC^!-algebra = (Lie,Ass)
 B61. "chiral QG for all four families" # ONLY sl_2 Yangian + affine KM verified concretely
@@ -662,7 +662,7 @@ All commits authored by Raeez Lorgat. NEVER credit an LLM. No co-authored-by, no
 
 **Shadow tower**: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic). kappa, C, Q are projections. All-degree convergence PROVED. G/L/C/M classification.
 **Convolution**: dg Lie Conv_str is strict model of L-inf Conv_inf. MC moduli coincide. Full L-inf needed for transfer/formality/gauge equivalence.
-**E_1 primacy**: B^ord primitive (Stasheff). av: g^{E1}→g^mod lossy Sigma_n-coinvariant projection. av(r(z))=kappa at degree 2. All standard chiral algebras E_inf (local); E_1=nonlocal (Yangian, EK quantum VA). NEVER "E_inf means no OPE poles."
+**E_1 primacy**: B^ord primitive (Stasheff). av: g^{E1}→g^mod lossy Sigma_n-coinvariant projection. At degree 2, av(r(z)) recovers kappa in the abelian and scalar families; for non-abelian affine KM, av(r(z)) = kappa_dp and the full kappa adds dim(g)/2. All standard chiral algebras E_inf (local); E_1=nonlocal (Yangian, EK quantum VA). NEVER "E_inf means no OPE poles."
 **Three pillars**: (1) Conv sL-inf hom_alpha(C,A) NOT strict Lie. (2) hom_alpha fails as bifunctor in both slots simultaneously (RNW19). MC3 one slot at a time. (3) Log FM != classical FM; requires snc pair (X,D).
 
 ## XXXI. Session 2026-04-12/13 Results (Load-Bearing)

@@ -236,13 +236,13 @@ class TestEtaCoeffs(unittest.TestCase):
         self.assertEqual(c[5], 1)
 
     def test_eta_cubed_leading(self):
-        """eta^3 = prod(1-q^n)^3 starts with 1, -3, 0, 5, ..."""
+        """q^{-1/8} * eta^3 = prod(1-q^n)^3 starts with 1, -3, 0, 5, ..."""
         c = eta_power_coeffs(10, 3)
         self.assertEqual(c[0], 1)
         self.assertEqual(c[1], -3)
 
     def test_partition_function(self):
-        """eta^{-1} = prod(1/(1-q^n)) = sum p(n) q^n."""
+        """q^{1/24} * eta^{-1} = prod(1/(1-q^n)) = sum p(n) q^n."""
         nmax = 20
         p_eng = _partition_coeffs(nmax)
         p_ind = _independent_partition(nmax)
@@ -601,7 +601,7 @@ class TestEtaPowerCoeffs(unittest.TestCase):
             self.assertEqual(c[i], 0)
 
     def test_eta_power_1(self):
-        """eta^1 = prod(1-q^n)."""
+        """q^{-1/24} * eta = prod(1-q^n)."""
         c1 = eta_power_coeffs(20, 1)
         c0 = eta_coeffs(20)
         for i in range(20):
@@ -685,4 +685,3 @@ class TestCharacterTableExtended(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

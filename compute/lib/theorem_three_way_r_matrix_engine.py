@@ -391,7 +391,7 @@ class RMatrixFromPVA:
         Actually, the r-matrix from the PVA is r^{cl}(z) = Omega * 1/z,
         where Omega = sum_a t^a tensor t^a is the Casimir tensor.
         The normalization 1/(k + h^v) comes from the KZ equation, which
-        is nabla = d - (1/(k+h^v)) sum_{j != i} Omega_{ij} d log(z_i - z_j).
+        is nabla = d - (1/(k+h^v)) sum_{j != i} (Omega_{ij}/(z_i - z_j)) d(z_i - z_j).
 
         The collision residue of Theta_A extracts the NORMALIZED r-matrix,
         which includes the 1/(k + h^v) factor from the bar normalization.

@@ -14,6 +14,11 @@ References:
   - CLAUDE.md C2 (kappa(Vir) = c/2), C24 (F_1 = kappa/24), B37 (F_2 = 7/5760)
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import math
 import pytest
 from fractions import Fraction

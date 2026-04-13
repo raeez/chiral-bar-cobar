@@ -512,7 +512,7 @@ class TestEtaProduct:
     """Tests for 1/eta(tau)^N coefficients."""
 
     def test_exponent_1(self):
-        """1/eta^1 = prod 1/(1-q^n) = partition function.
+        """q^{1/24}/eta = prod 1/(1-q^n) = partition function.
         p(0)=1, p(1)=1, p(2)=2, p(3)=3, p(4)=5, p(5)=7."""
         c = eta_product_coefficients(1, 10)
         expected = [1, 1, 2, 3, 5, 7, 11, 15, 22, 30]

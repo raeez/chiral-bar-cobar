@@ -13,7 +13,8 @@ the FULL inter-volume pipeline on the simplest atom:
 
   Vol II (Swiss-Cheese and 3D HT):
     6. Coproduct Delta from ordered deconcatenation (R-factorization)
-    7. (d, Delta) = Swiss-cheese algebra on FM(C) x Conf(R)
+    7. (d, Delta) = ordered E_1 coalgebra on FM(C) x Conf(R);
+       SC lives on the derived-center pair
     8. m_k = 0 for k >= 3 (formality: Heisenberg is E_infty)
     9. PVA descent: regular part of m_2 = commutative, singular = lambda-bracket
    10. Spectral R-matrix: trivial (E_infty => no braiding)
@@ -192,7 +193,7 @@ class TestVolII_SwissCheese:
 
         This is the R-factorization: TAUTOLOGICAL, not geometric.
         Every cofree coalgebra has a unique deconcatenation coproduct.
-        The R-direction of the Swiss-cheese algebra is the tensor ordering.
+        The R-direction behind the Swiss-cheese comparison is the tensor ordering.
 
         For Heisenberg: Delta(a⊗a⊗η) = (a⊗η) ⊗ (a) + (a) ⊗ (a⊗η)
         (modulo signs from the desuspension).

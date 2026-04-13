@@ -4,7 +4,7 @@ Makes Theorem B (bar-cobar inversion on the Koszul locus) COMPUTATIONAL
 by constructing the actual chain maps, not just proving their existence.
 
 The key objects:
-1. Bar construction B(A) = (T^c(sA_bar), d_B)
+1. Bar construction B(A) = (T^c(s^{-1}A_bar), d_B)
    - Free tensor coalgebra on suspension of augmentation ideal
    - d_B = d_1 (internal) + d_2 (from multiplication)
    - d_B^2 = 0 when m_2 is associative
@@ -24,7 +24,7 @@ The key objects:
    - Quasi-isomorphism on Koszul locus (Theorem B)
 
 5. Twisting morphism tau: B(A) -> A
-   - tau(sa) = a on bar degree 1, zero elsewhere
+   - tau(s^{-1}a) = a on bar degree 1, zero elsewhere
    - MC equation: d(tau) + tau*tau = 0
 
 CONVENTIONS (from CLAUDE.md):
@@ -250,7 +250,7 @@ def polynomial_with_diff() -> AugDGA:
 
 @dataclass
 class BarConstruction:
-    """The bar construction B(A) = (T^c(sA_bar), d_B).
+    """The bar construction B(A) = (T^c(s^{-1}A_bar), d_B).
 
     Computes the bar complex with exact rational arithmetic.
 
@@ -258,9 +258,9 @@ class BarConstruction:
     the non-unit generators. For our algebras, if basis element 0 is the unit,
     then A_bar = span{e_1, ..., e_{dim-1}}.
 
-    Bar degree n: B^n = (sA_bar)^{tensor n}.
+    Bar degree n: B^n = (s^{-1}A_bar)^{tensor n}.
     Basis: multi-indices (i_1, ..., i_n) with each i_j in {1, ..., dim-1}.
-    Degree of s*e_i = |e_i| + 1 (suspension shifts degree up by 1 in
+    Degree of s^{-1}e_i = |e_i| - 1 (desuspension lowers degree by 1 in
     cohomological convention).
 
     The bar differential d_B: B^n -> B^{n-1} has two parts:
@@ -286,7 +286,7 @@ class BarConstruction:
         return len(self._aug_ideal_indices)
 
     def basis(self, n: int) -> List[Tuple[int, ...]]:
-        """Basis for B^n = (sA_bar)^{tensor n}.
+        """Basis for B^n = (s^{-1}A_bar)^{tensor n}.
 
         Returns list of multi-indices from the augmentation ideal.
         """
@@ -309,11 +309,14 @@ class BarConstruction:
     def differential(self, n: int) -> Matrix:
         """Bar differential d_B: B^n -> B^{n-1}, the multiplication component.
 
-        d_B([sa_1|...|sa_n]) = sum_{p=1}^{n-1} (-1)^{eps_p} [sa_1|...|s(a_p*a_{p+1})|...|sa_n]
+        d_B([s^{-1}a_1|...|s^{-1}a_n])
+          = sum_{p=1}^{n-1} (-1)^{eps_p}
+            [s^{-1}a_1|...|s^{-1}(a_p*a_{p+1})|...|s^{-1}a_n]
 
-        where eps_p = sum_{q=1}^{p-1} (|sa_q|) = sum_{q=1}^{p-1} (|a_q| + 1).
+        where eps_p = sum_{q=1}^{p-1} |s^{-1}a_q|
+        = sum_{q=1}^{p-1} (|a_q| - 1).
 
-        For generators all in degree 0: eps_p = p-1, so sign = (-1)^{p-1} = (-1)^{p+1}.
+        For generators all in degree 0: eps_p = -(p-1), so sign = (-1)^{p-1}.
 
         Returns matrix (dim B^{n-1}) x (dim B^n).
 
@@ -340,10 +343,10 @@ class BarConstruction:
         for col_idx, multi in enumerate(source):
             for p in range(n - 1):
                 # Koszul sign for the bar differential
-                # eps = sum of |sa_q| for q < p (0-indexed)
-                # For degree-0 generators: |sa_q| = 1, so eps = p
-                eps = sum(self.dga.degrees[multi[q]] + 1 for q in range(p))
-                sign = (-1) ** eps
+                # eps = sum of |s^{-1}a_q| for q < p (0-indexed)
+                # For degree-0 generators: |s^{-1}a_q| = -1, so eps = -p.
+                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
+                sign = -1 if eps % 2 else 1
 
                 a_p = multi[p]
                 a_p1 = multi[p + 1]
@@ -381,8 +384,8 @@ class BarConstruction:
 
         for col_idx, multi in enumerate(source):
             for p in range(n - 1):
-                eps = sum(self.dga.degrees[multi[q]] + 1 for q in range(p))
-                sign = (-1) ** eps
+                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
+                sign = -1 if eps % 2 else 1
 
                 a_p = multi[p]
                 a_p1 = multi[p + 1]
@@ -402,7 +405,9 @@ class BarConstruction:
         """Internal differential d_1: B^n -> B^n.
 
         Applies the differential d of A to each tensor factor.
-        d_1([sa_1|...|sa_n]) = sum_p (-1)^{eps_p} [sa_1|...|s(d a_p)|...|sa_n]
+        d_1([s^{-1}a_1|...|s^{-1}a_n])
+          = sum_p (-1)^{eps_p}
+            [s^{-1}a_1|...|s^{-1}(d a_p)|...|s^{-1}a_n]
         """
         if n <= 0:
             return zeros(1, 1)
@@ -414,8 +419,8 @@ class BarConstruction:
 
         for col_idx, multi in enumerate(source):
             for p in range(n):
-                eps = sum(self.dga.degrees[multi[q]] + 1 for q in range(p))
-                sign = (-1) ** eps
+                eps = sum(self.dga.degrees[multi[q]] - 1 for q in range(p))
+                sign = -1 if eps % 2 else 1
                 a_p = multi[p]
                 for k in self._aug_ideal_indices:
                     coeff = self.dga.diff[k, a_p]
@@ -464,8 +469,9 @@ class CobarConstruction:
 
     For C = B(A), the cobar uses bar elements as "letters".
 
-    In the SIMPLEST formulation (cobar using only bar-degree-1 letters):
-      Omega^n = (s^{-1}(sA_bar))^{tensor n} = A_bar^{tensor n}
+    In this implementation we identify the cobar generators coming from
+    bar-degree-1 letters with the underlying augmentation ideal, so
+      Omega^n = A_bar^{tensor n}.
 
     The cobar differential d_Omega: Omega^n -> Omega^{n+1} comes from the
     coalgebra structure (comultiplication = deconcatenation on B(A)):
@@ -575,7 +581,7 @@ class CobarConstruction:
                     continue
                 # Sign from desuspended degrees
                 eps = sum(self.bar.dga.degrees[multi[q]] for q in range(p))
-                sign = (-1) ** eps
+                sign = -1 if eps % 2 else 1
 
                 for j, k, coeff in self._coproduct_cache[a_p]:
                     new_multi = multi[:p] + (j, k) + multi[p + 1:]
@@ -624,7 +630,7 @@ class BarCobarComposition:
     The bar differential on each letter acts internally.
 
     The FULL version uses bar letters of all degrees:
-    a letter in B^p(A) = (sA_bar)^{tensor p} is a bar element.
+    a letter in B^p(A) = (s^{-1}A_bar)^{tensor p} is a bar element.
     Omega(B(A)) at cobar degree q uses q such letters.
 
     We implement the full bigraded version for small total degree.
@@ -654,7 +660,7 @@ class BarCobarComposition:
         this is (A_bar)^{tensor q}.
 
         For bar_deg p > 1: each cobar letter is a bar element of degree p,
-        i.e., an element of (sA_bar)^{tensor p}. Then the cobar component
+        i.e., an element of (s^{-1}A_bar)^{tensor p}. Then the cobar component
         has q such letters, giving total dimension (aug_dim^p)^q.
 
         We simplify by using only bar-degree-1 letters (the standard
@@ -700,7 +706,8 @@ def counit_map(dga: AugDGA, max_degree: int = 4) -> Dict[int, Matrix]:
       psi_n: Omega^n -> A for n >= 2 (zero for the strict augmentation)
 
     The augmentation psi: T(s^{-1}B_bar(A)) -> A is defined by:
-      psi(s^{-1}(sa)) = a  on generators (cobar degree 1, bar degree 1)
+      psi sends the cobar generator corresponding to the bar letter
+      s^{-1}a to a on cobar degree 1 / bar degree 1
       psi = 0 on cobar degree >= 2
 
     This is NOT the full quasi-isomorphism map. The quasi-isomorphism
@@ -788,14 +795,20 @@ def twisting_morphism_tau(dga: AugDGA) -> Dict[int, Matrix]:
     """The universal twisting morphism tau: B(A) -> A.
 
     tau is defined by:
-      tau(sa) = a  on B^1 = sA_bar  (projection onto bar degree 1)
+      tau(s^{-1}a) = a  on B^1 = s^{-1}A_bar  (projection onto bar degree 1)
       tau = 0     on B^n for n >= 2
 
     The Maurer-Cartan equation for twisting morphisms:
       d(tau) + tau * tau = 0
     where:
-      d(tau)(sa_1|...|sa_n) = d_A(tau(sa_1|...|sa_n)) + (-1)^n tau(d_B(sa_1|...|sa_n))
-      (tau*tau)(sa_1|...|sa_n) = sum_{p+q=n} tau(sa_1|...|sa_p) tensor tau(sa_{p+1}|...|sa_n)
+      d(tau)(s^{-1}a_1|...|s^{-1}a_n)
+        = d_A(tau(s^{-1}a_1|...|s^{-1}a_n))
+          + (-1)^n tau(d_B(s^{-1}a_1|...|s^{-1}a_n))
+      (tau*tau)(s^{-1}a_1|...|s^{-1}a_n)
+        = sum_{p+q=n}
+          tau(s^{-1}a_1|...|s^{-1}a_p)
+          tensor
+          tau(s^{-1}a_{p+1}|...|s^{-1}a_n)
 
     Returns {bar_degree: matrix from B^n to A}.
     """
@@ -803,7 +816,7 @@ def twisting_morphism_tau(dga: AugDGA) -> Dict[int, Matrix]:
     aug_dim = len(aug_indices)
     result = {}
 
-    # Bar degree 1: tau(s*a_i) = a_i
+    # Bar degree 1: tau(s^{-1}a_i) = a_i
     mat1 = zeros(dga.dim, aug_dim)
     for j, idx in enumerate(aug_indices):
         mat1[idx, j] = Rational(1)
@@ -821,17 +834,20 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
 
     The MC equation: partial(tau) + tau star tau = 0.
 
-    At bar degree 1: partial(tau)(sa) = d_A(a) + tau(d_B(sa))
+    At bar degree 1: partial(tau)(s^{-1}a) = d_A(a) + tau(d_B(s^{-1}a))
                      tau star tau at B^1 = 0 (no splitting of a single element)
     So: d_A(a) = 0 for all a in A_bar (which holds when d_A = 0 on generators).
 
-    At bar degree 2: partial(tau)(sa_1|sa_2) = d_A(tau(sa_1|sa_2)) + tau(d_B(sa_1|sa_2))
-                     = 0 + tau(d_B(sa_1|sa_2))
-                     tau star tau at B^2 = tau(sa_1) * tau(sa_2) = a_1 * a_2
+    At bar degree 2:
+      partial(tau)(s^{-1}a_1|s^{-1}a_2)
+        = d_A(tau(s^{-1}a_1|s^{-1}a_2)) + tau(d_B(s^{-1}a_1|s^{-1}a_2))
+        = 0 + tau(d_B(s^{-1}a_1|s^{-1}a_2))
+      tau star tau at B^2 = tau(s^{-1}a_1) * tau(s^{-1}a_2) = a_1 * a_2
 
-    MC at B^2: tau(d_B(sa_1|sa_2)) + a_1 * a_2 = 0.
-    d_B(sa_1|sa_2) = s(a_1 * a_2) (the bar differential contracts adjacent pair).
-    tau(s(a_1 * a_2)) = a_1 * a_2.
+    MC at B^2: tau(d_B(s^{-1}a_1|s^{-1}a_2)) + a_1 * a_2 = 0.
+    d_B(s^{-1}a_1|s^{-1}a_2) = s^{-1}(a_1 * a_2)
+    (up to the bar sign convention on the first contraction).
+    tau(s^{-1}(a_1 * a_2)) = a_1 * a_2.
     So: a_1 * a_2 + a_1 * a_2 = 2 * a_1 * a_2 ??? That can't be right.
 
     CORRECTION: The MC equation is ∂τ + τ⋆τ = 0 with specific signs.
@@ -839,22 +855,33 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
     For τ of degree -1 (the twisting morphism has degree -1): (-1)^{|τ|} = -1.
     So ∂τ(c) = d_A(τ(c)) + τ(d_C(c)).
 
-    At B^2: ∂τ(sa_1|sa_2) = d_A(0) + τ(d_B(sa_1|sa_2)) = τ(s(a_1·a_2)) = a_1·a_2
-    (τ⋆τ)(sa_1|sa_2) = τ(sa_1)·τ(sa_2) = a_1·a_2
+    At B^2:
+      ∂τ(s^{-1}a_1|s^{-1}a_2)
+        = d_A(0) + τ(d_B(s^{-1}a_1|s^{-1}a_2))
+        = τ(s^{-1}(a_1·a_2))
+        = a_1·a_2
+      (τ⋆τ)(s^{-1}a_1|s^{-1}a_2) = τ(s^{-1}a_1)·τ(s^{-1}a_2) = a_1·a_2
 
     Wait, the convolution product uses the COPRODUCT on the coalgebra.
-    (τ⋆τ)(sa_1|sa_2) = m_A(τ⊗τ)(Δ(sa_1|sa_2))
-    Δ(sa_1|sa_2) = (sa_1)⊗(sa_2) (deconcatenation coproduct, only nondegenerate splitting).
-    So (τ⋆τ)(sa_1|sa_2) = τ(sa_1)·τ(sa_2) = a_1·a_2.
+    (τ⋆τ)(s^{-1}a_1|s^{-1}a_2) = m_A(τ⊗τ)(Δ(s^{-1}a_1|s^{-1}a_2))
+    Δ(s^{-1}a_1|s^{-1}a_2)
+      = (s^{-1}a_1)⊗(s^{-1}a_2)
+    (deconcatenation coproduct, only nondegenerate splitting).
+    So (τ⋆τ)(s^{-1}a_1|s^{-1}a_2) = τ(s^{-1}a_1)·τ(s^{-1}a_2) = a_1·a_2.
 
     MC: ∂τ + τ⋆τ = a_1·a_2 + a_1·a_2 = 2·a_1·a_2 ≠ 0???
 
     The sign convention: the bar differential at degree 2 is
-    d_B(sa_1|sa_2) = -s(a_1·a_2) (with the standard sign (-1)^{|sa_1|} = -1 for |a_1|=0).
-    So τ(d_B(sa_1|sa_2)) = -a_1·a_2.
+    d_B(s^{-1}a_1|s^{-1}a_2) = -s^{-1}(a_1·a_2)
+    (with the standard sign (-1)^{|s^{-1}a_1|} = -1 for |a_1|=0).
+    So τ(d_B(s^{-1}a_1|s^{-1}a_2)) = -a_1·a_2.
     Then ∂τ + τ⋆τ = -a_1·a_2 + a_1·a_2 = 0. CORRECT.
 
-    The sign in d_B: d_B(sa_1|sa_2) = (-1)^{|sa_1|} s(a_1·a_2) = (-1)^1 s(a_1·a_2) = -s(a_1·a_2).
+    The sign in d_B:
+      d_B(s^{-1}a_1|s^{-1}a_2)
+        = (-1)^{|s^{-1}a_1|} s^{-1}(a_1·a_2)
+        = (-1)^1 s^{-1}(a_1·a_2)
+        = -s^{-1}(a_1·a_2).
     """
     bar = BarConstruction(dga, max_bar_degree + 1)
     tau = twisting_morphism_tau(dga)
@@ -886,7 +913,8 @@ def verify_twisting_mc(dga: AugDGA, max_bar_degree: int = 3) -> Dict[str, object
                 term2 = zeros(dga.dim, 1)
 
             # Term 3: (tau star tau)(element)
-            # Uses deconcatenation coproduct: Delta(sa_1|...|sa_n) = sum_{p=1}^{n-1} left_p tensor right_p
+            # Uses deconcatenation coproduct:
+            # Delta(s^{-1}a_1|...|s^{-1}a_n) = sum_{p=1}^{n-1} left_p tensor right_p
             term3 = zeros(dga.dim, 1)
             if n >= 2:
                 for p in range(1, n):
@@ -1336,7 +1364,9 @@ def bar_cobar_functoriality(dga1: AugDGA, dga2: AugDGA,
 
     The bar functor is CONTRAVARIANT for coalgebras but the bar of an
     algebra map gives a coalgebra map B(f): B(A) -> B(A').
-    At bar degree n: B(f)(sa_1|...|sa_n) = sf(a_1)|...|sf(a_n).
+    At bar degree n:
+      B(f)(s^{-1}a_1|...|s^{-1}a_n)
+        = s^{-1}f(a_1)|...|s^{-1}f(a_n).
 
     The cobar functor then gives:
     Omega(B(f)): Omega(B(A)) -> Omega(B(A')) at each cobar degree.

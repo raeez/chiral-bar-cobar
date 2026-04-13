@@ -343,7 +343,7 @@ def heisenberg_genus2_fredholm_expansion(q1, q2, q3, order=10):
         The full Fredholm determinant inverse.
     """
     # Separating contribution: product of genus-1 determinants
-    # 1/eta(q) = prod_{n>=1} 1/(1-q^n)
+    # q^{1/24}/eta(q) = prod_{n>=1} 1/(1-q^n)
     def inv_eta(q, N):
         result = 1.0
         for n in range(1, N + 1):

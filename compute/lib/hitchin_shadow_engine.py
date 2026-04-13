@@ -774,7 +774,7 @@ def shadow_connection_is_kz_genus0(N: int, k_val=None) -> Dict[str, Any]:
     r"""Verify: shadow connection at genus 0, arity 2 = KZ connection.
 
     The shadow connection at genus 0, arity 2 is:
-        nabla^{sh}_{0,2} = d - kappa * (d log(z_i - z_j))
+        nabla^{sh}_{0,2} = d - (kappa/(z_i - z_j)) d(z_i - z_j)
 
     The KZ connection is:
         nabla_{KZ} = d - (1/(k+h^v)) * sum Omega_{ij} / (z_i - z_j) dz_j

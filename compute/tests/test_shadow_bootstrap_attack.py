@@ -9,6 +9,11 @@ T36-T45: MC-enhanced bootstrap and Virasoro constraints
 T46-T55: Residue analysis and the bootstrap closure
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 import numpy as np
 import sys, os

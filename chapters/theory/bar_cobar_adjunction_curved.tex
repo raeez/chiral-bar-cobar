@@ -134,8 +134,10 @@ three layers of structure:
  $r(z) \in \End(V^{\otimes 2}) \otimes \cO(*\Delta)$, a
  matrix-valued meromorphic function satisfying the classical
  Yang--Baxter equation. Its $\Sigma_2$-coinvariant is the scalar
- $\kappa(\cA) = \operatorname{av}(r(z))$
- \textup{(}equation~\eqref{eq:intro-kappa-from-r}\textup{)}: the
+ $\kappa(\cA) = \operatorname{av}(r(z))$ for abelian algebras
+ (for non-abelian Kac--Moody,
+ $\kappa = \operatorname{av}(r(z)) + \dim(\fg)/2$;
+ see equation~\eqref{eq:intro-kappa-from-r}): the
  full spectral data collapses to a single number.
 \item \emph{The braided monoidal category.} The deconcatenation
  coproduct on $\barB^{\mathrm{ord}}(\cA)$ controls the tensor
@@ -143,12 +145,16 @@ three layers of structure:
  $\Factord(\cA)$. The $R$-matrix provides the braiding.
  After coinvariants, only the symmetric monoidal shadow survives.
 \item \emph{The Swiss-cheese directionality.} The
- $\mathrm{SC}^{\mathrm{ch},\mathrm{top}}$~operad decomposes as
- $\Eone \times \Einf$ on $\R \times \C$: the bar differential is
- the closed/$\Einf$ colour on holomorphic configurations, and the
- deconcatenation coproduct is the open/$\Eone$ colour on the
- topological interval. The symmetric bar retains only the closed
- colour; the ordered bar retains both.
+ $\mathrm{SC}^{\mathrm{ch},\mathrm{top}}$~picture couples
+ holomorphic collision data on~$\FM_k(\C)$ with topological
+ interval splitting on~$\Conf_k(\R)$. On the ordered bar these
+ appear as the bar differential and the deconcatenation
+ coproduct, but they do \emph{not} make
+ $\barB^{\mathrm{ord}}(\cA)$ itself an
+ $\mathrm{SC}^{\mathrm{ch},\mathrm{top}}$ object: the ordered
+ bar remains a single-coloured $\Eone$-chiral coalgebra, and the
+ actual Swiss-cheese datum emerges only on the derived center
+ pair $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\,\cA)$.
 \end{enumerate}
 The five main theorems~A--H are invariants of the symmetric bar
 and therefore survive averaging. The Yangian $R$-matrix, the
@@ -431,10 +437,12 @@ This is the regime of Theorem~B (bar-cobar inversion on the Koszul locus).
 \smallskip\noindent
 \emph{Genus $g \geq 1$ with $\kappa(\cA) \neq 0$
 \textup{(}$h \neq 0$\textup{)}.}
-Ordinary bar-complex cohomology collapses on the higher-genus
-bar-object surface
+The square-zero total comparison differential
+$d_{\mathrm{total}} = \Dg{g}$ has trivial ordinary cohomology
 \textup{(}Proposition~\ref{prop:curved-bar-acyclicity}\textup{)},
-but the
+whereas the raw higher-genus fiber operator satisfies
+$\dfib^{\,2} = \mcurv{g} \cdot \mathrm{id}$ and therefore lives only on
+the coderived bar-object surface. The
 coderived--contraderived equivalence
 (Theorem~\ref{thm:positselski-chiral-proved}) is nontrivial.
 The Positselski equivalence
@@ -4415,6 +4423,15 @@ $\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)=0$ and
 $\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)=0$.
 \end{corollary}
 
+\begin{proof}
+The first vanishing is exactly
+Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}.
+The second vanishing is exactly
+Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing}.
+Together they show that the target-$5$ corridor contracts to the
+tail singleton and carries no surviving target-$5$ coefficient.
+\end{proof}
+
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor carries no new
 independent coefficient; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-target5-no-new-independent-data}
@@ -4430,6 +4447,20 @@ and~\ref{cor:winfty-stage5-tail-cross-target-reduction}:
 \]
 while the two target-$5$ transport coefficients vanish.
 \end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-stage5-target5-corridor-to-tail}
+supplies the vanishing of the two target-$5$ transport coefficients.
+Proposition~\ref{prop:winfty-stage5-tail-from-w4-pairing}
+expresses
+$\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)$ as
+$\frac{5}{3}\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)$, while
+Corollary~\ref{cor:winfty-stage5-tail-cross-target-reduction}
+rewrites the same coefficient as
+$-\frac{5}{4}\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)$.
+Hence every surviving corridor coefficient is determined by the tail
+singleton, so the corridor carries no new independent data.
+\end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$4$}{4} pole-\texorpdfstring{$5$}{5} transport singleton
 vanishes; \ClaimStatusProvedHere]
@@ -6272,12 +6303,12 @@ the bar-cobar adjunction
 \[
 B_\kappa\colon \mathrm{dg}\text{-}\mathrm{Ch\text{-}alg}
 \;\rightleftarrows\;
-\mathrm{conil}\text{-}\mathrm{dg}\text{-}\cC^{\textup{!`}}_{\mathrm{ch}}\text{-}\mathrm{coalg}
+\mathrm{conil}\text{-}\mathrm{dg}\text{-}\cC^{\textup{!\textasciigrave}}_{\mathrm{ch}}\text{-}\mathrm{coalg}
 \;:\!\Omega_\kappa
 \]
 is a Quillen equivalence in the Vallette model structure
 \textup{\cite[Theorem~2.1]{Val16}} on conilpotent
-dg~$\cC^{\textup{!`}}_{\mathrm{ch}}$-coalgebras, where:
+dg~$\cC^{\textup{!\textasciigrave}}_{\mathrm{ch}}$-coalgebras, where:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Weak equivalences are maps whose cobar construction is a
  quasi-isomorphism.
@@ -6292,7 +6323,7 @@ equivalent to the homotopy category of conilpotent chiral coalgebras:
 $\mathrm{Ho}(\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg})
 \simeq
 \mathrm{Ho}(\mathrm{conil}\text{-}\mathrm{dg}\text{-}
-\cC^{\textup{!`}}_{\mathrm{ch}}\text{-}\mathrm{coalg})$.
+\cC^{\textup{!\textasciigrave}}_{\mathrm{ch}}\text{-}\mathrm{coalg})$.
 \end{theorem}
 
 \begin{proof}[References]
@@ -6648,7 +6679,7 @@ complementarity theorem depends on keeping these two operations
 apart. The following definition and theorem make the separation
 precise.
 
-\begin{definition}[The two functors; \ClaimStatusProvedHere]
+\begin{definition}[The two functors]
 \label{def:reconstruction-vs-duality-functors}
 \index{reconstruction functor $R_X$}
 \index{Verdier--cobar duality functor $K_X$}
@@ -6709,8 +6740,8 @@ $\barBch(\cA)$ & coalgebra & coproduct from collision splitting \\
 $\mathbb{D}_{\Ran}\barBch(\cA)$ & algebra
  & multiplication = Verdier dual of coproduct \\
 $\barBch(\cA^!)$ & coalgebra & coproduct from $\cA^!$-collisions \\
-$\cA^{\scriptstyle \text{\normalfont !`}} = H^*(\barBch(\cA))$ & coalgebra & bar cohomology \\
-$\cA^! = (\cA^{\scriptstyle \text{\normalfont !`}})^\vee$ & algebra
+$\cA^{\scriptstyle \text{\normalfont !\textasciigrave}} = H^*(\barBch(\cA))$ & coalgebra & bar cohomology \\
+$\cA^! = (\cA^{\scriptstyle \text{\normalfont !\textasciigrave}})^\vee$ & algebra
  & Koszul dual algebra
 \end{tabular}
 \end{center}
@@ -6887,6 +6918,16 @@ the structure constants of~$\mathfrak{g}$ nor the value of~$k$,
 only on the existence condition $k \neq -h^\vee$.
 \end{corollary}
 
+\begin{proof}
+The preceding theorem identifies the mixed differential with the sum
+of the translation coderivation and the conformal-weight Euler
+operator. Its proof uses only the Virasoro primarity relations
+$L_{(0)}J^a=\partial J^a$ and $L_{(1)}J^a=J^a$, together with the
+fact that conformal weights add under normal ordering. No structure
+constants of~$\mathfrak{g}$ enter, and the level appears only through
+the existence of the Sugawara field, namely $k \neq -h^\vee$.
+\end{proof}
+
 \begin{proposition}[Contractibility on positive current weight;
 \ClaimStatusProvedHere]
 \label{prop:sugawara-contraction}
@@ -6938,8 +6979,7 @@ Its bar shadow is the Casimir class
 $\Omega_{\mathfrak{g},k}
 := [\nu_{\mathfrak{g},k}] \in C_\mathfrak{g}$.
 
-\begin{construction}[Minimal Casimir-transgression complex;
-\ClaimStatusProvedHere]
+\begin{construction}[Minimal Casimir-transgression complex]
 \label{cons:minimal-casimir-transgression}
 Define
 \[

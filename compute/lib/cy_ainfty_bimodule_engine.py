@@ -988,7 +988,7 @@ def bar_resolution_element(A: AInfAlgebra, n: int,
     """Compute a bar resolution element [a_1 | ... | a_n] in B(A).
 
     Returns sparse representation: {basis_index: coefficient}.
-    The bar complex B_n(A) = A otimes (sA)^{otimes n} otimes A has
+    The bar complex B_n(A) = A otimes (s^{-1}A)^{otimes n} otimes A has
     basis elements indexed by (left, a_1,...,a_n, right).
 
     Here we return just the middle part [a_1|...|a_n] for simplicity.

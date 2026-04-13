@@ -18,6 +18,11 @@ CAUTION (AP39): kappa != c/2 for non-Virasoro families.
 CAUTION (AP48): kappa depends on the full algebra, not just Virasoro subalgebra.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import math
 import pytest
 import sys

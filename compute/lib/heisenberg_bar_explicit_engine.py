@@ -615,8 +615,8 @@ def verify_coderivation_explicit(arity: int, level=None):
     deconcatenation coproduct in the curved case!
 
     The resolution: in a CURVED A-infinity algebra, the bar differential
-    INCLUDES the m_0 term (curvature insertion). The FULL bar differential
-    on T^c(s^{-1}A) inserts m_0 = k at any position:
+    INCLUDES the m_0 term (curvature insertion). The total coderivation
+    before reduction inserts m_0 = k at any position:
 
         D = d_collision + d_{m_0}
 
@@ -628,18 +628,16 @@ def verify_coderivation_explicit(arity: int, level=None):
 
     D_0 (from m_0): inserts the curvature m_0 at any position.
         D_0[a_1|...|a_n] = sum_{i=0}^{n} [a_1|...|a_i|m_0|a_{i+1}|...|a_n]
-    But m_0 = k is a SCALAR (the vacuum), and in the reduced bar complex
-    (modding out by the augmentation ideal), inserting the vacuum just
-    acts as a scalar. Actually, m_0 is an element of A (the algebra),
-    specifically m_0 in the center. For Heisenberg, m_0 = k * |0>.
+    But m_0 = k is a SCALAR (the vacuum), and the reduced bar complex
+    is built on the augmentation ideal A-bar = ker(epsilon). For
+    Heisenberg, m_0 = k * |0>.
 
-    For the FULL (unreduced) bar complex B(A) = T^c(s^{-1}A):
-        D_0 inserts s^{-1}(m_0) at any of n+1 positions.
+    For the REDUCED bar complex B(A) = T^c(s^{-1}A-bar):
+        D_0 is induced by inserting s^{-1}(m_0) before reduction.
         D_1 applies the internal differential (zero for Heisenberg).
         D_2 contracts adjacent pairs using the product.
 
-    For the REDUCED bar complex B-bar(A) = T^c(s^{-1}A-bar):
-        After modding out the vacuum, D_0 insertions give boundary terms.
+    After modding out the vacuum, the D_0 insertions give boundary terms.
 
     The key insight: the TOTAL differential D satisfies D^2 = 0 on the
     FULL bar complex. The collision-only differential satisfies

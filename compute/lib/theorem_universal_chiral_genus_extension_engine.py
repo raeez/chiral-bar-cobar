@@ -258,14 +258,9 @@ def w_algebra(N: int = 3, k: int = 1) -> ChiralAlgebraData:
     # This is getting complicated; use explicit formula per N.
     c = _w_algebra_central_charge(N, k)
 
-    # kappa for W-algebras: kappa = c * prod_{j=2}^{N} (2j-1)!! / ...
-    # Actually: kappa(W_N) = c * (H_N - 1) where H_N = sum 1/j
-    # NO -- that formula was corrected multiple times (AP1!).
-    # The correct formula from landscape_census:
-    # For W_N, kappa depends on N and k.
-    # At the scalar level: kappa = c/2 only for Virasoro (N=2).
-    # For N >= 3: kappa != c/2 in general.
-    # Use the genus-1 computation.
+    # AP136/C4: kappa(W_N) = c(W_N, k) * (H_N - 1), with H_N = sum_{j=1}^{N} 1/j.
+    # This depends on N and k through c(W_N, k); at N=2 it reduces to c/2.
+    # Use the canonical genus-1 computation below.
     kap = _w_algebra_kappa(N, k)
 
     gen_weights = tuple(range(2, N + 1))

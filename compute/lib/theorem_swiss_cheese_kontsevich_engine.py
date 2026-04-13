@@ -22,8 +22,9 @@ CONTEXT:
 
 WHAT THIS ENGINE TESTS:
   1. SC operad action on Heisenberg modules: closed-color chiral operations
-     and open-color E_1 structure on the bar complex, verifying that the
-     SC^{ch,top} coalgebra structure reproduces the brace dg algebra.
+     together with the ordered bar's E_1 line-side structure, verifying
+     that the genuine SC^{ch,top} datum on the derived-center pair
+     reproduces the brace dg algebra.
   2. Groupoid action on module categories: the fundamental groupoid of
      SC_2 = SC^{ch,top} acts on Heisenberg Fock modules via parallel
      transport of the KZ connection; different parenthesizations give
@@ -303,11 +304,10 @@ def heisenberg_sc_interchange(kappa: float, k: int, m: int) -> Dict[str, Any]:
     # Delta acts on Conf_m^<(R) chains. They commute because they
     # act on different factors.
 
-    # More precisely: the SC coalgebra structure on B(A) means
-    # (B(A), d_B, Delta) is simultaneously:
-    #   - a dg coalgebra over B(E_2) on the closed color
-    #   - a conilpotent coalgebra over B(E_1) on the open color
-    # and the two structures are compatible via the interchange law.
+    # More precisely: the holomorphic and topological directions are compatible,
+    # but on B(A) they still give only the ordered E_1 bar coalgebra.
+    # The genuine two-coloured SC datum is the derived-center pair
+    # (C^bullet_ch(A,A), A), where closed-to-open operations act.
 
     interchange_holds = True
 
@@ -465,7 +465,7 @@ def groupoid_parallel_transport(
         dz = z1 - z2
 
         # Monodromy phase from KZ connection
-        # The connection form is omega = kappa * d log(z_1 - z_2)
+        # The connection form is omega = (kappa/(z_1 - z_2)) d(z_1 - z_2)
         # Monodromy around a loop exchanging z_1, z_2 gives exp(pi*i*kappa)
         monodromy_phase = cmath.exp(1j * math.pi * kappa)
 
@@ -474,7 +474,7 @@ def groupoid_parallel_transport(
             'n_points': n,
             'monodromy_phase': monodromy_phase,
             'kappa': kappa,
-            'connection_form': f'kappa * d log(z1 - z2)',
+            'connection_form': f'kappa * d(z1 - z2)/(z1 - z2)',
             'r_matrix_consistent': True,
         }
 

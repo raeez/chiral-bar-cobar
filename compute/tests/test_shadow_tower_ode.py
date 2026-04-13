@@ -21,6 +21,11 @@ Theorem (Alternating Signs): For r >= 4, sgn(S_r(c)) = (-1)^r for
 c in the physical range c > 0, c != -22/5.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 from sympy import Rational, Symbol, cancel, factor, Poly, simplify, denom, numer
 

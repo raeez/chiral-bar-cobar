@@ -823,10 +823,12 @@ class CFGComparison:
         factorization homology on 3-manifolds.
 
     The precise bridge: CFG's E_3 acts on the boundary via the
-    Swiss-cheese algebra SC^{ch,top}.  Our bar complex extracts the
-    E_1-algebra data (the C-direction factorization) while the coproduct
-    extracts the E_1-coalgebra data (the R-direction factorization).
-    Together: Swiss-cheese on FM_k(C) x Conf_k(R).
+    Swiss-cheese operad SC^{ch,top}, realized on the derived-center pair
+    (Z^der_ch(A), A). Our ordered bar complex supplies the E_1
+    coalgebraic engine: its differential records the C-direction
+    factorization and its coproduct records the R-direction
+    factorization. These data feed the Swiss-cheese pair; they do not
+    make B(A) itself an SC algebra.
 
     This is NOT a new theorem -- it is a COMPARISON between two descriptions
     of the same physical data (3d CS TFT on R x C with boundary on C).

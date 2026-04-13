@@ -9,23 +9,25 @@ operations m_k on H*(B(Vir_c)).
 THE COMPUTATION:
 
 The Virasoro algebra has a single strong generator T of conformal
-weight 2.  The bar complex B(Vir_c) = T^c(sVir_c) is a dg coalgebra
+weight 2.  With V_+ = ker(epsilon) the augmentation ideal, the bar
+complex B(Vir_c) = T^c(s^{-1}V_+) is a dg coalgebra
 (equivalently, with the shuffle product, a dg algebra) with:
 
-  - Bar degree n part: B_n = (sV_+)^{\otimes n} \otimes \Omega^{n-1}(Conf_n)
+  - Bar degree n part: B_n = (s^{-1}V_+)^{\otimes n} \otimes \Omega^{n-1}(Conf_n)
   - Bar differential: d_bar encodes the OPE T_{(n)}T for n = 0,1,2,3
 
 For the transferred A-infinity, we work in the PRIMARY SECTOR:
-states spanned by sT (the desuspension of T, weight 2).  At bar
-degree n, the relevant basis element is [sT | sT | ... | sT] with
-n copies of sT and a top-degree configuration form.
+states spanned by s^{-1}T (the desuspension of T, weight 2).  At bar
+degree n, the relevant basis element is
+[s^{-1}T | s^{-1}T | ... | s^{-1}T] with
+n copies of s^{-1}T and a top-degree configuration form.
 
 The transferred operations m_k^{tr} on H*(B) are computed by the
 tree formula and satisfy the A-infinity relations.  For Virasoro:
 
-  m_2(sT, sT) encodes the binary product (kappa-related)
-  m_3(sT, sT, sT) encodes the cubic shadow S_3
-  m_4(sT, sT, sT, sT) encodes the quartic shadow S_4
+  m_2(s^{-1}T, s^{-1}T) encodes the binary product (kappa-related)
+  m_3(s^{-1}T, s^{-1}T, s^{-1}T) encodes the cubic shadow S_3
+  m_4(s^{-1}T, s^{-1}T, s^{-1}T, s^{-1}T) encodes the quartic shadow S_4
 
 CROSS-CHECK: the shadow-formality identification
 (prop:shadow-formality-low-arity) gives:
@@ -36,7 +38,7 @@ This module verifies this identification numerically and symbolically.
 
 CONVENTIONS:
 - Cohomological grading (|d| = +1)
-- Bar uses DESUSPENSION: |sT| = |T| - 1 = 2 - 1 = 1
+- Bar uses DESUSPENSION: |s^{-1}T| = |T| - 1 = 2 - 1 = 1
 - Bar differential has bidegree (-1 in bar degree, +1 in cohomological)
 - Exact rational arithmetic via fractions.Fraction
 - The bar complex of a CURVED A-infinity algebra has d^2 = m_0 (curvature).
@@ -49,12 +51,12 @@ We work in a truncated weight-graded bar complex.  At each total
 conformal weight w, the bar complex is FINITE-DIMENSIONAL, so we
 can compute exactly.  The key spaces:
 
-  Weight 2: B_1 = span{sT}  (1-dim, bar degree 1)
-  Weight 4: B_1 = span{sL_{-2}T}, B_2 = span{sT|sT}  (dimensions depend on descendants)
-  Weight 6: B_1 (descendants), B_2 (mixed), B_3 (sT|sT|sT)
+  Weight 2: B_1 = span{s^{-1}T}  (1-dim, bar degree 1)
+  Weight 4: B_1 = span{s^{-1}L_{-2}T}, B_2 = span{s^{-1}T|s^{-1}T}  (dimensions depend on descendants)
+  Weight 6: B_1 (descendants), B_2 (mixed), B_3 (s^{-1}T|s^{-1}T|s^{-1}T)
 
-For the PRIMARY-SECTOR computation (all inputs = sT), we only need:
-  - The image of the bar differential on [sT|...|sT] elements
+For the PRIMARY-SECTOR computation (all inputs = s^{-1}T), we only need:
+  - The image of the bar differential on [s^{-1}T|...|s^{-1}T] elements
   - How these images decompose in the bar complex
 
 We implement this through a direct matrix computation at each weight.
@@ -230,9 +232,9 @@ class VirasoroBarComplex:
     transferred m_k on H*(B) uses both.
 
     IMPORTANT: we work with the PRIMARY LINE only.  The primary state
-    sT spans a 1-dimensional subspace in bar degree 1 at weight 2.
-    The m_k(sT, ..., sT) computation only requires tracking how
-    products of sT elements map through the bar complex.
+    s^{-1}T spans a 1-dimensional subspace in bar degree 1 at weight 2.
+    The m_k(s^{-1}T, ..., s^{-1}T) computation only requires tracking how
+    products of s^{-1}T elements map through the bar complex.
 
     At each total weight w, the relevant bar complex piece is:
     - B_1 at weight w: descendants L_{-n_1}...L_{-n_k}|0> at weight w
@@ -419,7 +421,7 @@ class VirasoroBarComplex:
             # dT = L_{-3}|0>, so (L_{-3}|0>)_{(n)}(L_{-3}|0>)
             # From Virasoro commutation: [L_m, L_n] = (m-n)L_{m+n} + c/12 m(m^2-1) delta
             # This gets complicated.  For the primary-sector computation
-            # (all inputs = sT), we only need T-T products.
+            # (all inputs = s^{-1}T), we only need T-T products.
             result['d2T'] = FR(6)  # from conformal weight action
         else:
             pass  # Zero product for unhandled pairs
@@ -442,7 +444,7 @@ class VirasoroBarComplex:
 
         where eps_i = sum_{j=1}^i (|a_j| - 1) (Koszul sign from desuspension).
         For all a_j in degree 0 (conformal fields), |a_j| = 0 and
-        |s a_j| = |a_j| - 1 = -1, so eps_i = -i and sign = (-1)^{-i} = (-1)^i.
+        |s^{-1} a_j| = |a_j| - 1 = -1, so eps_i = -i and sign = (-1)^{-i} = (-1)^i.
 
         IMPORTANT: the Virasoro algebra has generators in conformal weight 2
         (not degree 0 in the cohomological sense).  The bar complex of a
@@ -469,8 +471,8 @@ class VirasoroBarComplex:
 
             if bar_deg == 1:
                 # d on bar degree 1 goes to bar degree 0.
-                # For the uncurved part: d(sT) = 0.
-                # For the curved part: d(sT) picks up the m_0 = c/2 term.
+                # For the uncurved part: d(s^{-1}T) = 0.
+                # For the curved part: d(s^{-1}T) picks up the m_0 = c/2 term.
                 # We do NOT include curvature in the differential for the
                 # Koszul dual computation.
                 continue
@@ -539,23 +541,23 @@ class PrimarySectorAInfinity:
     of weight 2, the primary-sector HTT reduces to explicit OPE manipulations.
 
     The bar complex at bar degree n on the primary line is 1-dimensional
-    (spanned by [sT|...|sT]) when we restrict to the primary sector.
-    The bar differential maps [sT]^n to [sT]^{n-1} via OPE extraction.
+    (spanned by [s^{-1}T|...|s^{-1}T]) when we restrict to the primary sector.
+    The bar differential maps [s^{-1}T]^n to [s^{-1}T]^{n-1} via OPE extraction.
 
-    The transferred m_k(sT, ..., sT) is a SCALAR times sT in H*(B),
+    The transferred m_k(s^{-1}T, ..., s^{-1}T) is a SCALAR times s^{-1}T in H*(B),
     and this scalar is (up to normalization) the shadow coefficient S_k.
 
     THE KEY FORMULA:
 
     The bar complex on the PRIMARY LINE is:
 
-        B_1 = k.sT     (weight 2, bar degree 1)
-        B_2 = k.[sT|sT] (weight 4, bar degree 2)
+        B_1 = k.s^{-1}T      (weight 2, bar degree 1)
+        B_2 = k.[s^{-1}T|s^{-1}T] (weight 4, bar degree 2)
         ...
-        B_n = k.[sT|...|sT] (weight 2n, bar degree n)
+        B_n = k.[s^{-1}T|...|s^{-1}T] (weight 2n, bar degree n)
 
-    The bar differential sends [sT^n] to a LINEAR COMBINATION in B_{n-1}
-    which includes [sT^{n-1}] plus descendants in B_{n-1} at higher weight.
+    The bar differential sends [s^{-1}T^n] to a LINEAR COMBINATION in B_{n-1}
+    which includes [s^{-1}T^{n-1}] plus descendants in B_{n-1} at higher weight.
 
     For the HTT, we need the SDR data on a larger complex that includes
     these descendants.  But on the primary line, the projection pi:B -> H*(B)
@@ -564,7 +566,7 @@ class PrimarySectorAInfinity:
 
     INSTEAD, we use the RECURSIVE SHADOW FORMULA directly:
 
-    The tree formula for m_k(sT, ..., sT) evaluates to:
+    The tree formula for m_k(s^{-1}T, ..., s^{-1}T) evaluates to:
 
         m_k = sum_{T in PBT(k)} pi . mu_T(iota, h, ...)
 
@@ -572,8 +574,8 @@ class PrimarySectorAInfinity:
     iota includes cohomology into chains, and pi projects back.
 
     For the primary sector, we can compute this recursively:
-    m_2(sT, sT) involves the OPE T_{(n)}T, projected to the primary line.
-    m_3(sT, sT, sT) involves h applied to m_2 output, then another m_2.
+    m_2(s^{-1}T, s^{-1}T) involves the OPE T_{(n)}T, projected to the primary line.
+    m_3(s^{-1}T, s^{-1}T, s^{-1}T) involves h applied to m_2 output, then another m_2.
 
     Parameters:
         c_val: Fraction value for central charge.
@@ -585,24 +587,24 @@ class PrimarySectorAInfinity:
         self.kappa = self.c / FR(2)
 
     def m2_primary(self) -> Fraction:
-        r"""m_2(sT, sT) projected to the sT direction in H*(B).
+        r"""m_2(s^{-1}T, s^{-1}T) projected to the s^{-1}T direction in H*(B).
 
-        The bar differential d([sT|sT]) extracts the OPE:
+        The bar differential d([s^{-1}T|s^{-1}T]) extracts the OPE:
           T_{(1)}T = 2T  (the double pole, weight-preserving)
           T_{(0)}T = dT  (translation, weight-increasing)
           T_{(3)}T = c/2 (curvature, to vacuum)
 
         For the UNCURVED projection (relevant for Koszul dual):
-        pi(d([sT|sT])) = pi(2.sT + s(dT) + (c/2).1)
+        pi(d([s^{-1}T|s^{-1}T])) = pi(2.s^{-1}T + s^{-1}(dT) + (c/2).1)
 
-        The cohomology projection pi kills s(dT) (a descendant, exact in
+        The cohomology projection pi kills s^{-1}(dT) (a descendant, exact in
         bar cohomology) and the vacuum part (bar degree 0).
 
-        So m_2(sT, sT) = pi(mu(iota(sT), iota(sT))) where mu is the
+        So m_2(s^{-1}T, s^{-1}T) = pi(mu(iota(s^{-1}T), iota(s^{-1}T))) where mu is the
         shuffle product on B.
 
         Wait: we need to be more careful about what mu is.  The shuffle
-        product on the bar complex B(A) = T^c(sA_+) is the shuffle of
+        product on the bar complex B(A) = T^c(s^{-1}A_+) is the shuffle of
         tensors.  m_2 on the bar COALGEBRA is the deconcatenation coproduct.
         For the A-infinity ALGEBRA structure on H*(B), we use the CONVOLUTION
         product (from the coalgebra coproduct and the algebra structure on k).
@@ -615,7 +617,7 @@ class PrimarySectorAInfinity:
 
         We work with B(A) as a dg algebra with the concatenation product
         (NOT the shuffle product).  The concatenation product on the tensor
-        coalgebra T^c(sA_+) is:
+        coalgebra T^c(s^{-1}A_+) is:
 
             [a_1|...|a_p] * [b_1|...|b_q] = [a_1|...|a_p|b_1|...|b_q]
 
@@ -627,13 +629,13 @@ class PrimarySectorAInfinity:
         The SDR data (pi, iota, h) for this dg algebra transfers the
         product * to an A-infinity product on H*(B(A)).
 
-        For the primary sector: iota(sT) = sT (the bar-degree-1 representative).
-        mu(iota(sT), iota(sT)) = [sT|sT] (concatenation).
-        pi([sT|sT]) is the H*(B)-component of [sT|sT].
+        For the primary sector: iota(s^{-1}T) = s^{-1}T (the bar-degree-1 representative).
+        mu(iota(s^{-1}T), iota(s^{-1}T)) = [s^{-1}T|s^{-1}T] (concatenation).
+        pi([s^{-1}T|s^{-1}T]) is the H*(B)-component of [s^{-1}T|s^{-1}T].
 
-        BUT [sT|sT] is in bar degree 2, and H*(B) is in bar degree 1
+        BUT [s^{-1}T|s^{-1}T] is in bar degree 2, and H*(B) is in bar degree 1
         (by Koszulness).  So the projection is to H^2(B) = 0, which gives
-        m_2(sT, sT) = 0?  That can't be right.
+        m_2(s^{-1}T, s^{-1}T) = 0?  That can't be right.
 
         THE RESOLUTION: The concatenation product on B(A) as a dg ALGEBRA
         is wrong for computing the Ext A-infinity structure.  The correct
@@ -647,7 +649,7 @@ class PrimarySectorAInfinity:
         product.
 
         For augmented algebras concentrated in degree 0, the bar complex
-        B(A) = (T^c(sA_+), d_bar) is a dg coalgebra, and its LINEAR DUAL
+        B(A) = (T^c(s^{-1}A_+), d_bar) is a dg coalgebra, and its LINEAR DUAL
         is the cobar construction Omega(A^i) which is a dg algebra.  The
         cohomology H*(Omega(A^i)) = Ext_A(k,k).
 
@@ -671,12 +673,12 @@ class PrimarySectorAInfinity:
         Returns:
             The m_2 coefficient on the primary line (= 2*kappa = c).
         """
-        # m_2(sT, sT) in the primary direction = OPE coefficient T_{(1)}T = 2
+        # m_2(s^{-1}T, s^{-1}T) in the primary direction = OPE coefficient T_{(1)}T = 2
         # This is the conformal weight of T acting on T.
         # In the A^! = Koszul dual algebra, m_2 is the linear dual of
         # the bar differential's degree-2 to degree-1 part.
-        # d([sT|sT]) has sT-component = 2 (from T_{(1)}T).
-        # So the Yoneda cup product on Ext: m_2(sT^*, sT^*) = 2 sT^*.
+        # d([s^{-1}T|s^{-1}T]) has s^{-1}T-component = 2 (from T_{(1)}T).
+        # So the Yoneda cup product on Ext: m_2((s^{-1}T)^*, (s^{-1}T)^*) = 2 (s^{-1}T)^*.
         return FR(2)
 
     def shadow_coefficients(self, max_arity: int = 10) -> Dict[int, Fraction]:
@@ -736,7 +738,7 @@ class PrimarySectorAInfinity:
         The shadow-formality identification (prop:shadow-formality-low-arity)
         gives:
 
-            m_k(sT, ..., sT) / m_2(sT, sT)^{k/2} = S_k / S_2
+            m_k(s^{-1}T, ..., s^{-1}T) / m_2(s^{-1}T, s^{-1}T)^{k/2} = S_k / S_2
 
         More precisely, the shadow coefficient S_r is the normalized
         r-ary operation.  The UNNORMALIZED transferred m_k on the
@@ -759,16 +761,16 @@ class PrimarySectorAInfinity:
 
             m_k^{Ext}(xi, ..., xi) = [coefficient of xi in d_bar(xi^k)]
 
-        where xi = sT^* is the dual of sT, and xi^k is the bar-k element.
+        where xi = (s^{-1}T)^* is the dual of s^{-1}T, and xi^k is the bar-k element.
 
-        For the bar differential on [sT|...|sT] (k copies), summing over
+        For the bar differential on [s^{-1}T|...|s^{-1}T] (k copies), summing over
         all adjacent-pair contractions with the OPE, the coefficient of
-        [sT|...|sT] (k-1 copies) is the relevant data.
+        [s^{-1}T|...|s^{-1}T] (k-1 copies) is the relevant data.
 
         The relationship between the bar differential coefficients and
         the shadow obstruction tower is:
 
-            d_bar([sT^n]) = sum_{i=1}^{n-1} c_i [sT^{n-1}]_i + descendants
+            d_bar([s^{-1}T^n]) = sum_{i=1}^{n-1} c_i [s^{-1}T^{n-1}]_i + descendants
 
         where c_i are the primary-projection coefficients.  By the Arnold
         relations and the all-T symmetry, the total primary-line coefficient is:
@@ -781,7 +783,7 @@ class PrimarySectorAInfinity:
 
         So the bar complex restricted to the primary line at bar degree n
         has:
-            d([sT^n]) = 2(n-1) [sT^{n-1}] + (descendant corrections)
+            d([s^{-1}T^n]) = 2(n-1) [s^{-1}T^{n-1}] + (descendant corrections)
 
         The descendant corrections feed back in via the homotopy h.
         These corrections are exactly what the shadow obstruction tower computes.
@@ -793,9 +795,9 @@ class PrimarySectorAInfinity:
         The transferred m_r on Ext is the Yoneda product/Massey product
         interpretation.  At the level of the primary line:
 
-            m_r^{tr}(sT, ..., sT) = S_r * (sT)  (in H^1(B))
+            m_r^{tr}(s^{-1}T, ..., s^{-1}T) = S_r * (s^{-1}T)  (in H^1(B))
 
-        where sT is the degree-1 cohomology generator of Ext.
+        where s^{-1}T is the degree-1 cohomology generator of Ext.
 
         Returns:
             S_k as a Fraction.
@@ -821,7 +823,7 @@ class PrimarySectorAInfinity:
         The nontrivial relation is at arity 4:
             sum of m_2(m_3(...), ...) + m_3(m_2(...), ..., ...) + m_4(...) terms.
 
-        For the primary line with a single generator, m_2(sT, sT) = 2*sT
+        For the primary line with a single generator, m_2(s^{-1}T, s^{-1}T) = 2*s^{-1}T
         (the Ext^1 product), and associativity of m_2 is trivially satisfied
         since everything lives on a 1-dimensional line.
 
@@ -829,8 +831,9 @@ class PrimarySectorAInfinity:
             The residual (should be 0 for a valid A-infinity structure).
         """
         # On the primary line, everything is 1-dimensional.
-        # m_2(sT, sT) = 2 sT, so m_2(m_2(sT,sT), sT) = m_2(2sT, sT) = 4sT
-        # m_2(sT, m_2(sT,sT)) = m_2(sT, 2sT) = 4sT
+        # m_2(s^{-1}T, s^{-1}T) = 2 s^{-1}T, so
+        # m_2(m_2(s^{-1}T,s^{-1}T), s^{-1}T) = m_2(2s^{-1}T, s^{-1}T) = 4s^{-1}T
+        # m_2(s^{-1}T, m_2(s^{-1}T,s^{-1}T)) = m_2(s^{-1}T, 2s^{-1}T) = 4s^{-1}T
         # Difference = 0.  Associativity satisfied.
         return FR(0)
 
@@ -862,15 +865,15 @@ class PrimarySectorAInfinity:
         m_3(m_2(a,b),c,d) - m_3(a,m_2(b,c),d) + m_3(a,b,m_2(c,d))
         + m_2(m_3(a,b,c),d) - m_2(a,m_3(b,c,d)) = 0
 
-        On the primary line with a = b = c = d = sT:
-        Let alpha = m_2(sT,sT) = 2 (coefficient in sT direction)
-        Let beta = m_3(sT,sT,sT) = S_3 (shadow cubic)
+        On the primary line with a = b = c = d = s^{-1}T:
+        Let alpha = m_2(s^{-1}T,s^{-1}T) = 2 (coefficient in the s^{-1}T direction)
+        Let beta = m_3(s^{-1}T,s^{-1}T,s^{-1}T) = S_3 (shadow cubic)
 
-        m_3(alpha*sT, sT, sT) = alpha * beta * sT  (linearity)
-        m_3(sT, alpha*sT, sT) = alpha * beta * sT
-        m_3(sT, sT, alpha*sT) = alpha * beta * sT
-        m_2(beta*sT, sT) = beta * alpha * sT
-        m_2(sT, beta*sT) = beta * alpha * sT
+        m_3(alpha*s^{-1}T, s^{-1}T, s^{-1}T) = alpha * beta * s^{-1}T  (linearity)
+        m_3(s^{-1}T, alpha*s^{-1}T, s^{-1}T) = alpha * beta * s^{-1}T
+        m_3(s^{-1}T, s^{-1}T, alpha*s^{-1}T) = alpha * beta * s^{-1}T
+        m_2(beta*s^{-1}T, s^{-1}T) = beta * alpha * s^{-1}T
+        m_2(s^{-1}T, beta*s^{-1}T) = beta * alpha * s^{-1}T
 
         Relation: alpha*beta - alpha*beta + alpha*beta + alpha*beta - alpha*beta
                 = alpha*beta ≠ 0 in general!
@@ -947,14 +950,15 @@ class PrimarySectorAInfinity:
         -m_2(a1, m_3(a2,a3,a4))
         = 0
 
-        On the primary line: let m2 = m_2(sT,sT) = alpha*sT, m3 = S_3*sT.
-        (All operations are on the 1-dimensional line, so m_k(...) = coeff * sT.)
+        On the primary line: let m2 = m_2(s^{-1}T,s^{-1}T) = alpha*s^{-1}T,
+        m3 = S_3*s^{-1}T.
+        (All operations are on the 1-dimensional line, so m_k(...) = coeff * s^{-1}T.)
 
-        Term 1: m_3(alpha*sT, sT, sT) = alpha*S_3 sT
-        Term 2: -m_3(sT, alpha*sT, sT) = -alpha*S_3 sT
-        Term 3: m_3(sT, sT, alpha*sT) = alpha*S_3 sT
-        Term 4: -m_2(S_3*sT, sT) = -S_3*alpha sT
-        Term 5: -m_2(sT, S_3*sT) = -S_3*alpha sT
+        Term 1: m_3(alpha*s^{-1}T, s^{-1}T, s^{-1}T) = alpha*S_3 s^{-1}T
+        Term 2: -m_3(s^{-1}T, alpha*s^{-1}T, s^{-1}T) = -alpha*S_3 s^{-1}T
+        Term 3: m_3(s^{-1}T, s^{-1}T, alpha*s^{-1}T) = alpha*S_3 s^{-1}T
+        Term 4: -m_2(S_3*s^{-1}T, s^{-1}T) = -S_3*alpha s^{-1}T
+        Term 5: -m_2(s^{-1}T, S_3*s^{-1}T) = -S_3*alpha s^{-1}T
 
         Sum = alpha*S_3 - alpha*S_3 + alpha*S_3 - alpha*S_3 - alpha*S_3
             = -alpha*S_3
@@ -972,7 +976,7 @@ class PrimarySectorAInfinity:
         The resolution is that the A-infinity relation at arity 4 DEFINES
         the constraint on m_4:
 
-        m_1(m_4) = alpha*S_3 sT   (nonzero residual = obstruction)
+        m_1(m_4) = alpha*S_3 s^{-1}T   (nonzero residual = obstruction)
 
         But m_1 = 0, so the residual is:
         0 = alpha*S_3 - alpha*S_3 + alpha*S_3 - alpha*S_3 - alpha*S_3 + m_4-contribution
@@ -998,13 +1002,13 @@ class PrimarySectorAInfinity:
         But this contradicts the existence of a valid A-infinity structure!
 
         The resolution: the m_k operations are STRICTLY graded (by bar degree /
-        weight), and on the primary line, m_3(sT, sT, sT) maps to a different
-        WEIGHT than sT.  Specifically:
+        weight), and on the primary line, m_3(s^{-1}T, s^{-1}T, s^{-1}T) maps to a different
+        WEIGHT than s^{-1}T.  Specifically:
 
-        sT has weight 2 and bar degree 1.
-        m_3(sT, sT, sT) has weight 6 and bar degree 1.
+        s^{-1}T has weight 2 and bar degree 1.
+        m_3(s^{-1}T, s^{-1}T, s^{-1}T) has weight 6 and bar degree 1.
 
-        So m_3(sT, sT, sT) is NOT a scalar multiple of sT -- it lives in
+        So m_3(s^{-1}T, s^{-1}T, s^{-1}T) is NOT a scalar multiple of s^{-1}T: it lives in
         Ext^1 at weight 6, which is a DIFFERENT vector space!
 
         This is the key point: the weight grading means the operations
@@ -1019,12 +1023,16 @@ class PrimarySectorAInfinity:
         of the arity-k operation in the weight-2k component of H^1(B).
 
         The A-infinity relation at arity 4 in weight 8 is:
-        m_3(m_2(sT,sT), sT, sT) - m_3(sT, m_2(sT,sT), sT) + m_3(sT, sT, m_2(sT,sT))
-        - m_2(m_3(sT,sT,sT), sT) - m_2(sT, m_3(sT,sT,sT)) = 0
+        m_3(m_2(s^{-1}T,s^{-1}T), s^{-1}T, s^{-1}T)
+        - m_3(s^{-1}T, m_2(s^{-1}T,s^{-1}T), s^{-1}T)
+        + m_3(s^{-1}T, s^{-1}T, m_2(s^{-1}T,s^{-1}T))
+        - m_2(m_3(s^{-1}T,s^{-1}T,s^{-1}T), s^{-1}T)
+        - m_2(s^{-1}T, m_3(s^{-1}T,s^{-1}T,s^{-1}T)) = 0
 
-        Now m_2(sT, sT) lives in weight 4 (Ext^1 at weight 4), and
-        m_3(weight-4, sT, sT) maps to weight 8.  Similarly m_3(sT,sT,sT)
-        lives in weight 6, and m_2(weight-6, sT) maps to weight 8.
+        Now m_2(s^{-1}T, s^{-1}T) lives in weight 4 (Ext^1 at weight 4), and
+        m_3(weight-4, s^{-1}T, s^{-1}T) maps to weight 8.  Similarly
+        m_3(s^{-1}T,s^{-1}T,s^{-1}T) lives in weight 6, and
+        m_2(weight-6, s^{-1}T) maps to weight 8.
 
         For the relation to hold, we need to know m_3 on mixed-weight inputs
         (one input at weight 4, two at weight 2), and m_2 on mixed-weight
@@ -1045,7 +1053,7 @@ class PrimarySectorAInfinity:
         # The A-infinity relation at weight 8 involves:
         # 1. m_3 on mixed-weight inputs (needs more HTT data)
         # 2. m_2 on mixed-weight inputs (needs more HTT data)
-        # 3. Possibly m_4(sT, sT, sT, sT)
+        # 3. Possibly m_4(s^{-1}T, s^{-1}T, s^{-1}T, s^{-1}T)
         #
         # On the primary line ALONE, the relation is not closed.
         # The shadow obstruction tower recursion encodes the CORRECT all-arity data
@@ -1243,7 +1251,7 @@ def verify_shadow_ainfty_crosscheck(c_val: Fraction,
     operations computed here.
 
     The identification (prop:shadow-formality-low-arity):
-        S_r(A) = m_r^{tr}(sT, ..., sT) / normalization
+        S_r(A) = m_r^{tr}(s^{-1}T, ..., s^{-1}T) / normalization
 
     At arities 2, 3, 4 this is PROVED.
 

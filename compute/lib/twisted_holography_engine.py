@@ -901,7 +901,7 @@ def holographic_shadow_connection(
 
     Singularity classification:
     - Heisenberg (depth 2): flat, no singularity.
-      nabla is just d - kappa * sum dlog(z_i - z_j).
+      nabla is just d - kappa * sum d(z_i - z_j)/(z_i - z_j).
     - Affine (depth 3): logarithmic singularities.
       nabla specializes to KZ connection at (0,2).
       Singularities at coinciding points z_i = z_j.

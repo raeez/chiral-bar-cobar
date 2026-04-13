@@ -17,6 +17,7 @@ Ground truth sources:
 """
 
 import math
+import warnings
 
 import numpy as np
 import pytest
@@ -951,6 +952,17 @@ class TestCrossConsistency:
                 assert ybe['passes'], (
                     f"CYBE passes but YBE fails for {lie_type}_{n}"
                 )
+
+    def test_ybe_parameter_sweep_avoids_rational_pole_warnings(self):
+        """The YBE sweep should skip exact poles instead of emitting runtime warnings."""
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always", RuntimeWarning)
+            result_b = ybe_coefficient_relations('B', 2, 4)
+            result_c = ybe_coefficient_relations('C', 2, 4)
+        assert result_b['passes']
+        assert result_c['passes']
+        runtime_warnings = [w for w in caught if issubclass(w.category, RuntimeWarning)]
+        assert runtime_warnings == []
 
     def test_C2_times_N_equals_dim_g(self):
         """C_2(fund) * dim(fund) = dim(g) for all types."""

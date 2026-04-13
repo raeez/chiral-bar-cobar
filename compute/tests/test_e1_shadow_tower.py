@@ -433,7 +433,7 @@ class TestShadowDepthTable:
 # =========================================================================
 
 class TestKappaAveraging:
-    """Verify av(r(z)) = κ for each family."""
+    """Verify degree-2 shadow data, with affine KM including the Sugawara shift."""
 
     def test_heisenberg_averaging(self):
         result = verify_kappa_averaging("Heisenberg", k=3.0)
@@ -443,6 +443,7 @@ class TestKappaAveraging:
     def test_affine_sl2_averaging(self):
         result = verify_kappa_averaging("Affine_sl2", k=4.0)
         assert result["match"]
+        assert result["av_r_value"] == pytest.approx(3.0)
         assert result["kappa_value"] == pytest.approx(4.5)  # 3*(4+2)/4 = 4.5
 
     def test_betagamma_averaging(self):

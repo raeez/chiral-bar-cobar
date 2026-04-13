@@ -69,22 +69,20 @@ For A = k[x]/(x^{d+1}) with generator x in degree 0:
 
 THE CHIRAL CASE:
 
-A chiral algebra A on C is E_infty-chiral.  The manuscript's bar complex
-B^ch(A) carries an E_1 (coassociative) coproduct from the R-direction,
-NOT an E_infty coproduct.  This is because:
+A chiral algebra A on C is E_infty-chiral.  The manuscript's ordered bar
+complex B^ch(A) = T^c(s^{-1}\bar A) carries an E_1 (coassociative)
+coproduct from the R-direction, NOT an E_infty coproduct.  Its
+bar differential still uses holomorphic collision data from FM_k(C).
+This mixed provenance explains the Swiss-cheese picture, but B^ch(A)
+is NOT itself the full two-coloured SC^{ch,top}-bar object.  The actual
+SC^{ch,top} datum in the manuscript lives on the derived-center pair
+(C^bullet_ch(A,A), A), computed using the ordered bar as a resolution.
 
-    The chiral bar complex = B_{SC^{ch,top}}(A)
-
-where SC^{ch,top} is the holomorphic-topological Swiss-cheese operad.
-The differential (C-direction) uses E_2/chiral structure.
-The coproduct (R-direction) uses E_1/associative structure.
-
-This is NOT the same as B_{E_2}(A) or B_{Com}(A).  It is a MIXED
-(two-colored) construction.  The Swiss-cheese bar complex is LARGER than
-B_{E_2}(A) because it retains the ordered tensor structure.  Concretely:
+This is NOT the same as B_{E_2}(A) or B_{Com}(A).  It is the ordered
+E_1 bar that preserves tensor ordering.  Concretely:
 
     B_{E_2}(A): elements are symmetric (up to homotopy) in the E_2 sense
-    B_{SC}(A):  elements are ORDERED (the R-direction ordering is physical)
+    B^ch(A):    elements are ORDERED (the R-direction ordering is physical)
 
 The manuscript uses the ordered (tensor coalgebra) structure because:
 1. The R-matrix R(z) lives in End(V tensor V), which requires ordering.
@@ -938,14 +936,16 @@ def heisenberg_bar_comparison(max_weight: int = 6) -> Dict[int, Dict[str, int]]:
 # ================================================================
 
 def swiss_cheese_analysis() -> Dict[str, object]:
-    r"""Analyze the Swiss-cheese structure of the chiral bar complex.
+    r"""Analyze how the chiral bar complex sits inside the Swiss-cheese picture.
 
-    The chiral bar complex B^ch(A) is a Swiss-cheese coalgebra:
-    - Differential d_B: from E_2 (holomorphic, Conf_k(C))
-    - Coproduct Delta: from E_1 (topological, Conf_k(R))
+    The ordered chiral bar complex B^ch(A) is an E_1 bar coalgebra:
+    - Differential d_B: from E_2/holomorphic collision data on Conf_k(C)
+    - Coproduct Delta: from E_1/topological ordering on Conf_k(R)
 
-    This means B^ch(A) is NOT B_{E_2}(A).  It is B_{SC}(A) where
-    SC is the Swiss-cheese operad.
+    This means B^ch(A) is NOT B_{E_2}(A).  It is the ordered E_1 bar
+    whose mixed holomorphic/topological provenance is later used to
+    compute the genuine SC^{ch,top} datum on the derived-center pair
+    (C^bullet_ch(A,A), A).
 
     The dimensional consequences:
     - B_{E_2}(A) would have dim involving Arnold algebra / S_n coinvariants
@@ -957,7 +957,7 @@ def swiss_cheese_analysis() -> Dict[str, object]:
     result = {
         'differential_source': 'E_2 (holomorphic, Conf_k(C))',
         'coproduct_source': 'E_1 (topological, Conf_k(R))',
-        'operad': 'SC^{ch,top} (Swiss-cheese)',
+        'operad': 'SC^{ch,top} appears on the derived-center pair, not on B^ch(A) itself',
         'coalgebra_type': 'coassociative (NOT cocommutative)',
         'explanation': (
             'A chiral algebra A on C is E_infty-chiral (commutative OPE), '
@@ -966,9 +966,10 @@ def swiss_cheese_analysis() -> Dict[str, object]:
             'the differential (collision residues on Conf_k(C)).  The coproduct '
             'is the deconcatenation Delta on the ordered tensor coalgebra, '
             'corresponding to cutting the R-line at a point.  '
-            'This is the Swiss-cheese operad SC^{ch,top}: differential from '
-            'the closed (holomorphic) color, coproduct from the open '
-            '(topological) color.'
+            'These two directions explain the Swiss-cheese geometry, but '
+            'B^ch(A) remains a single-coloured E_1 bar coalgebra; the '
+            'actual SC^{ch,top} datum is the derived-center pair '
+            '(C^bullet_ch(A,A), A).'
         ),
         'consequence_for_quantum_groups': (
             'The non-cocommutative E_1 coproduct is ESSENTIAL for the '
@@ -1132,8 +1133,8 @@ Question: A chiral algebra A is E_infty-chiral (commutative OPE).
 Why does B^ch(A) carry an E_1 (coassociative, non-cocommutative)
 coproduct rather than an E_infty (cocommutative) coproduct?
 
-Answer: The bar complex is NOT B_{E_infty}(A).  It is a SWISS-CHEESE
-construction B_{SC^{ch,top}}(A), where:
+Answer: The bar complex is NOT B_{E_infty}(A).  It is an ordered
+E_1 bar construction whose geometry later feeds the Swiss-cheese story:
 
   - The DIFFERENTIAL uses E_2 (holomorphic) data:
     collision residues on Conf_k(C).
@@ -1141,9 +1142,9 @@ construction B_{SC^{ch,top}}(A), where:
   - The COPRODUCT uses E_1 (topological) data:
     deconcatenation = interval-splitting on Conf_k(R).
 
-The Swiss-cheese operad SC^{ch,top} has two colors:
-  closed (holomorphic, contributing to the differential)
-  open (topological, contributing to the coproduct)
+These two directions do NOT make B^ch(A) the full Swiss-cheese datum.
+The actual SC^{ch,top} structure lives on the derived-center pair
+  (C^bullet_ch(A,A), A).
 
 Why E_1 and not E_2 for the coproduct?
 The coproduct comes from the R-direction in C x R.  Points on R
@@ -1167,7 +1168,8 @@ we would lose:
   1. The R-matrix (lives in ordered tensors)
   2. The quantum group (requires non-cocommutative coproduct)
   3. The Yang-Baxter equation (needs ordered triple tensor products)
-  4. The modular data at higher genus (Swiss-cheese is essential)
+  4. The ordered line-side data needed before passing to the
+     derived-center SC^{ch,top} pair
 
 The CLASSICAL r-matrix r(z) is the symmetrization of R(z):
 it lives in the E_infty quotient.  But the full quantum R-matrix,

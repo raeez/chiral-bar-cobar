@@ -1280,7 +1280,7 @@ def kz_connection_parameter(lie_type: str, rank: int,
     r"""KZ connection data for the defect system.
 
     The KZ connection on Conf_n(C) x V_1^{x n} is:
-      nabla_{KZ} = d - (1/(k + h^v)) sum_{i<j} Omega_{ij} d log(z_i - z_j)
+      nabla_{KZ} = d - (1/(k + h^v)) sum_{i<j} (Omega_{ij}/(z_i - z_j)) d(z_i - z_j)
 
     where Omega_{ij} = sum_a T_a^(i) T_a^(j) is the Casimir acting on
     the i-th and j-th tensor factors.

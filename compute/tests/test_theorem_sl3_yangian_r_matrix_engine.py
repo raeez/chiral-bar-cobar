@@ -274,13 +274,24 @@ class TestCasimirAdj:
 # ============================================================
 
 class TestRMatrixPoleStructure:
-    """The r-matrix r(z) = Omega/z has a single pole at z=0 (AP19)."""
+    """The affine residue r(z) = k*Omega/z has a single pole at z=0 (AP19)."""
 
     def test_single_pole_fund(self):
-        """r(z) = Omega/z has a single pole (AP19)."""
+        """At unit level, r(z) = Omega/z has a single pole (AP19)."""
         r = r_matrix_fund(1.0)
         Omega = casimir_tensor_fund()
         assert np.allclose(r, Omega, atol=1e-14)
+
+    def test_k0_vanishes(self):
+        """AP126/AP141: the raw affine residue vanishes at k=0."""
+        r = r_matrix_fund(1.0, k=0)
+        assert np.allclose(r, np.zeros((9, 9)), atol=1e-14)
+
+    def test_scales_linearly_with_level(self):
+        """Trace-form raw residue scales linearly in k."""
+        r1 = r_matrix_fund(1.0, k=1)
+        r3 = r_matrix_fund(1.0, k=3)
+        assert np.allclose(r3, 3.0 * r1, atol=1e-12)
 
     def test_r_matrix_at_large_z(self):
         """r(z) -> 0 as z -> infinity."""
@@ -294,7 +305,7 @@ class TestRMatrixPoleStructure:
         assert np.allclose(Omega, P - np.eye(9) / 3, atol=1e-10)
 
     def test_adj_r_matrix_structure(self):
-        """r^{adj}(z) = Omega^{adj}/z has single pole."""
+        """r^{adj}(z) = k*Omega^{adj}/z has single pole."""
         r1 = r_matrix_adj(1.0)
         r2 = r_matrix_adj(2.0)
         assert np.allclose(r1, 2.0 * r2, atol=1e-10)
@@ -377,14 +388,14 @@ class TestKZCommutativity:
     def test_kz_n3_fund(self):
         """KZ commutativity at 3 points, fundamental rep."""
         Omega = casimir_tensor_fund()
-        kv = float(kappa_sl3(1))
+        kv = float(1 + H_VEE)
         norm = verify_kz_commutativity(3, [1.0, 2.5, 4.0], Omega, FUND_DIM, kv)
         assert norm < 1e-10
 
     def test_kz_n3_fund_different_z(self):
         """KZ commutativity at 3 points with different spectral params."""
         Omega = casimir_tensor_fund()
-        kv = float(kappa_sl3(2))
+        kv = float(2 + H_VEE)
         norm = verify_kz_commutativity(3, [0.5, 1.7, 3.2], Omega, FUND_DIM, kv)
         assert norm < 1e-10
 
@@ -393,17 +404,25 @@ class TestKZCommutativity:
 
         This tests all 6 pairs of Hamiltonians H_1,...,H_4."""
         Omega = casimir_tensor_fund()
-        kv = float(kappa_sl3(1))
+        kv = float(1 + H_VEE)
         norm = verify_kz_commutativity(4, [1.0, 2.0, 3.5, 5.0], Omega, FUND_DIM, kv)
         assert norm < 1e-10
 
-    def test_kz_kappa_independence(self):
-        """IBR holds for any kappa (it's a property of Omega, not kappa)."""
+    def test_kz_level_shift_independence(self):
+        """IBR holds for any nonzero KZ level shift (it's a property of Omega)."""
         Omega = casimir_tensor_fund()
         for k in [1, 2, 5, 10]:
-            kv = float(kappa_sl3(k))
+            kv = float(k + H_VEE)
             norm = verify_kz_commutativity(3, [1.0, 2.5, 4.0], Omega, FUND_DIM, kv)
             assert norm < 1e-10, f"IBR fails at k={k}"
+
+    def test_kz_hamiltonian_prefactor_matches_k_plus_hvee(self):
+        """KZ uses 1/(k+h^vee), not 1/kappa."""
+        Omega = casimir_tensor_fund()
+        z_vals = [1.0, 3.0]
+        H = kz_hamiltonian(2, 0, z_vals, Omega, FUND_DIM, float(1 + H_VEE))
+        expected = Omega / ((z_vals[0] - z_vals[1]) * float(1 + H_VEE))
+        assert np.allclose(H, expected, atol=1e-12)
 
 
 # ============================================================

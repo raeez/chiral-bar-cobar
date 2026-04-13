@@ -444,12 +444,12 @@ class CVABarComplex:
     r"""Bar complex of a CVA in dimension n.
 
     For dim=1 (standard chiral bar complex):
-        B(A) = bigoplus_{r >= 1} (s^{-1} A)^{tensor r}
+        B(A) = bigoplus_{r >= 1} (s^{-1} A-bar)^{tensor r}, A-bar = ker(epsilon)
         d_bar extracts residue via d log(z_i - z_j) (AP19, AP27)
         Curvature: d_bar^2 = [m_0, -] where m_0 = kappa * omega
 
     For dim=n (CVA bar complex):
-        B^{CVA}(A) = bigoplus_{r >= 1} (s^{-1} A)^{tensor r}
+        B^{CVA}(A) = bigoplus_{r >= 1} (s^{-1} A-bar)^{tensor r}
         d_bar extracts Grothendieck residue via n-fold d log
         Curvature: d_bar^2 = [m_0, -] where m_0 involves H^{n-1} classes
 

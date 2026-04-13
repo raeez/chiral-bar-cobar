@@ -119,11 +119,13 @@ This is because the r-matrix is obtained by integrating the OPE against $d\log(z
 ### C13. Averaging map identity
 
 **Canonical form.** The coinvariant projection $\mathrm{av}: \fg^{E_1}\to \fg^{\mathrm{mod}}$ at arity 2 satisfies
-$$\mathrm{av}(r(z)) \;=\; \kappa(A)$$
-where $\kappa(A)$ is the family-specific kappa from C1-C4.
+$$\mathrm{av}(r(z)) \;=\; \kappa(A) \quad \text{for abelian and scalar families,}$$
+and for non-abelian affine Kac--Moody,
+$$\mathrm{av}(r(z)) + \frac{\dim(\fg)}{2} \;=\; \kappa(V_k(\fg)).$$
+Here $\kappa(A)$ is the family-specific kappa from C1-C4.
 **Sanity check 1 (Heisenberg).** $\mathrm{av}(k/z)=k=\kappa(\cH_k)$. Direct.
-**Sanity check 2 (affine KM).** $\mathrm{av}(k\Omega/z)=(k+h^\vee)\dim(\fg)/(2h^\vee)=\kappa(V_k(\fg))$. The Sugawara shift is ALREADY ENCODED in the averaging projection; no extra shift is required. At $k=-h^\vee$ both sides vanish.
-**Wrong variants.** (a) $\mathrm{av}(r(z))=\kappa(A)-\dim(\fg)/2$: subtracting a spurious constant; the shift is already inside $\kappa$. (b) $\mathrm{av}(r(z))=k$ for affine KM: this is the bare level, not $\kappa$; forgets the trace over $\Omega$.
+**Sanity check 2 (affine KM).** $\mathrm{av}(k\Omega/z)=k\dim(\fg)/(2h^\vee)$ is the double-pole contribution $\kappa_{\mathrm{dp}}(V_k(\fg))$, so $\mathrm{av}(k\Omega/z)+\dim(\fg)/2=\dim(\fg)(k+h^\vee)/(2h^\vee)=\kappa(V_k(\fg))$. At $k=0$, $\mathrm{av}(r(z))=0$ but $\kappa(V_0(\fg))=\dim(\fg)/2$, so the Sugawara shift is essential.
+**Wrong variants.** (a) $\mathrm{av}(r(z))=\kappa(V_k(\fg))$ for non-abelian affine KM: omits the Sugawara shift $\dim(\fg)/2$. (b) $\mathrm{av}(r(z))=k$ for affine KM: this is the bare level, not $\kappa$; forgets the trace over $\Omega$.
 **Diagnostic.** Writing the averaging identity while switching between Heisenberg and affine KM in the same passage; the reader mixes up the scalar identity with the matrix trace.
 
 ### C14. Bar complex uses augmentation ideal

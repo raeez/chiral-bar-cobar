@@ -11,10 +11,13 @@ EXTENDS genus2_ds_cross_engine.py and quintic_shadow_engine.py to provide:
    The ghost sector BRST coupling creates a nonzero quartic S_4 that cascades
    to all higher arities.  This is UNIVERSAL for all N >= 2.
 
-4. Ghost sector analysis: c_ghost(N) = N(N-1), kappa_ghost = c_ghost/2 = N(N-1)/2.
-   Individual bc pairs are class C (depth 4); at the scalar level the ghost sector
-   has depth 2.  The BRST coupling produces cross-terms that escape the
-   independent-sum factorization (prop:independent-sum-factorization).
+4. Ghost sector analysis: c_ghost(N, k) = c(sl_N, k) - c(W_N, k)
+   = (N-1)[(N^2-1)(N-1)-1] + N(N^2-1)k. The default call c_ghost(N)
+   returns the k=0 intercept, and kappa_ghost(N, k) = c_ghost(N, k)/2.
+   Individual bc pairs are class C (depth 4); at the scalar level the
+   ghost sector has depth 2. The BRST coupling produces cross-terms that
+   escape the independent-sum factorization
+   (prop:independent-sum-factorization).
 
 5. BRST quartic creation mechanism: the quartic contact invariant S_4(W_N) arises
    entirely from the BRST differential coupling matter to ghosts.  At N=2:
@@ -199,7 +202,8 @@ def verify_kappa_additivity(N: int, k_values: Optional[List[Fraction]] = None) -
 
     The kappa non-additivity is:
     kappa(sl_N) = (N^2-1)(k+N)/(2N)
-    kappa(W_N) + kappa_ghost = rho(N)*c(W_N) + N(N-1)/2
+    kappa(W_N) + kappa_ghost(.,0) = rho(N)*c(W_N) +
+      ((N-1)[(N^2-1)(N-1)-1])/2
 
     These are generally different because rho(N) != 1/2 for N >= 3,
     and kappa(sl_N) != c(sl_N)/2 for N >= 2.
@@ -522,8 +526,9 @@ def depth_increase_all_N(N_values: Optional[List[int]] = None,
 def brst_quartic_creation(N: int, k_val: Fraction) -> Dict:
     r"""Analyze the BRST quartic creation mechanism for sl_N -> W_N.
 
-    At the scalar level, the ghost sector has kappa_ghost = N(N-1)/2,
-    alpha_ghost = 0, S_4_ghost = 0.  The W_N sector has S_4 != 0.
+    At the scalar k=0 summary lane, the ghost sector uses
+    kappa_ghost = c_ghost(N,0)/2, alpha_ghost = 0, S_4_ghost = 0.
+    The W_N sector has S_4 != 0.
 
     If DS were an independent sum at the scalar level, we would have:
     S_4(W_N) = S_4(sl_N) + S_4(ghost) = 0 + 0 = 0.
@@ -733,7 +738,7 @@ def multi_N_summary(k_val: Fraction = Fraction(5), max_arity: int = 8) -> Dict:
 
     For each N, reports:
     - Central charges (sl_N, W_N, ghost)
-    - Ghost c = N(N-1) verified
+    - Ghost c = c_ghost(N,0) verified
     - Depth of sl_N (always L=3) and W_N (always M=inf)
     - S_4(W_N): the quartic seed created by BRST
     - S_5(W_N): first cascade coefficient
@@ -769,7 +774,7 @@ def multi_N_summary(k_val: Fraction = Fraction(5), max_arity: int = 8) -> Dict:
 def ghost_shadow_tower(N: int, max_arity: int = 8) -> Dict[int, Fraction]:
     r"""The ghost sector shadow obstruction tower at the scalar (kappa-only) level.
 
-    Ghost sector: c = N(N-1), kappa = N(N-1)/2, alpha = 0, S_4 = 0.
+    Ghost sector: c = c_ghost(N,0), kappa = c_ghost(N,0)/2, alpha = 0, S_4 = 0.
     Scalar-level depth 2: S_r = 0 for all r >= 3 in this approximation.
 
     NOTE: Individual bc pairs are class C (depth 4), not class G. This
@@ -972,7 +977,7 @@ if __name__ == '__main__':
 
     print("\n--- Ghost central charges ---")
     for N in [2, 3, 4, 5]:
-        print(f"  c_ghost(sl_{N}) = {c_ghost(N)} = {N}*{N-1}")
+        print(f"  c_ghost(sl_{N}, k=0) = {c_ghost(N)}")
 
     print("\n--- Depth increase verification ---")
     di = depth_increase_all_N()

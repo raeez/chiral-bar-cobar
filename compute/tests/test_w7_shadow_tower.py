@@ -103,24 +103,31 @@ class TestW7CentralCharge:
     """Central charge c(W_7, k) = 6 - 336(k+6)^2/(k+7) (Fateev-Lukyanov)."""
 
     def test_c_w7_k1(self):
-        """c(W_7, k=1) = 6*(-48)/8 = -36."""
+        """c(W_7, k=1) = 6 - 336*49/8 = -2052."""
         # VERIFIED: c_wn_fl(7,1)=-2052 [DC], complementarity c(1)+c(-15)=1356 [SY]
         assert w7_central_charge_frac(Fraction(1)) == Fraction(-2052)
 
     def test_c_w7_k7(self):
-        """c(W_7, k=7) = 6*(-42)/14 = -18."""
+        """c(W_7, k=7) = 6 - 336*169/14 = -4050."""
         assert w7_central_charge_frac(Fraction(7)) == Fraction(-4050)
 
     def test_c_w7_k5(self):
-        """c(W_7, k=5) = 6*(-44)/12 = -22."""
+        """c(W_7, k=5) = 6 - 336*121/12 = -3382."""
         assert w7_central_charge_frac(Fraction(5)) == Fraction(-3382)
 
     def test_c_w7_k49(self):
-        """c(W_7, k=49) = 0."""
+        """c(W_7, k=49) = 6 - 336*55^2/56 = -18144."""
         assert w7_central_charge_frac(Fraction(49)) == Fraction(-18144)
 
+    def test_legacy_api_matches_frac(self):
+        """Legacy symbolic/numeric API matches the Fraction implementation."""
+        # VERIFIED: [DC] w7_central_charge_frac is the exact FL formula.
+        # [CF] canonical c_wn_fl(7,k) agrees with the same values.
+        assert w7_central_charge(Fraction(1)) == Rational(-2052)
+        assert w7_central_charge(Fraction(5)) == Rational(-3382)
+
     def test_ff_sum(self):
-        """c(k) + c(k') = 12 for all k."""
+        """c(k) + c(k') = 1356 for all k."""
         # VERIFIED: 2(N-1)+4N(N^2-1) = 12+1344 = 1356 [DC]
         assert w7_ff_central_charge_sum() == Rational(1356)
         for kv in [Fraction(1), Fraction(5), Fraction(7), Fraction(10), Fraction(100)]:

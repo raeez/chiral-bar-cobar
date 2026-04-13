@@ -21,7 +21,7 @@ framework has a different home category, a different naming
 convention, and a different proof of consistency. This chapter
 proves that all seven incarnations agree, on the nose, as elements
 of the same convolution dg~Lie algebra. The seven-face master
-theorem is the centrepiece of Part~\ref{part:standard-landscape}: it asserts that the
+theorem is the main theorem of Part~\ref{part:standard-landscape}: it asserts that the
 collision residue is a basis-independent invariant of the chiral
 algebra, computable from any one of the seven frameworks and equal in
 all of them. When two faces disagree, both are wrong.
@@ -459,15 +459,16 @@ $\geq 2$ for Virasoro and $\Walg_N$ ($k_{\max} \geq 3$).
 The original spectral $r$-matrix is Drinfeld's~\cite{Drinfeld85},
 introduced in connection with the quantum Yang--Baxter equation and
 the Yangian deformation $Y_\hbar(\fg)$ of the universal enveloping
-algebra of a simple Lie algebra~$\fg$. The classical $r$-matrix
+algebra of a simple Lie algebra~$\fg$. In the trace-form
+normalization used in this volume, the classical $r$-matrix is
 \begin{equation}\label{eq:hdm-drinfeld-rmatrix}
 r^{\mathrm{Dr}}(z)
 \;=\;
-\frac{\Omega}{z}
+\frac{k\,\Omega_{\mathrm{tr}}}{z}
 \;\in\;
 \fg \otimes \fg [\![z^{-1}]\!],
 \qquad
-\Omega \;=\; \sum_a J^a \otimes J^a,
+\Omega_{\mathrm{tr}} \;=\; \sum_a J^a \otimes J^a,
 \end{equation}
 where $\{J^a\}$ is an orthonormal basis of $\fg$ with respect to the
 Killing form, satisfies the classical
@@ -478,30 +479,31 @@ $[r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{13}(z+w)]
 is the prototype of all spectral $r$-matrices and the historical
 origin of the Yangian as the quantization of the Lie bialgebra
 $(\fg[\![z^{-1}]\!], r^{\mathrm{Dr}})$.
-The Drinfeld $r$-matrix is level-independent: the
-level~$k$ of the affine algebra enters only through the dualization
-metric and the Sugawara shift, not through~$r^{\mathrm{Dr}}$ itself.
+The historical literature often absorbs the level into the chosen
+invariant form. In the trace-form normalization used in Volume~I we
+keep the level explicit as the prefactor~$k$, so
+$r^{\mathrm{Dr}}(z)|_{k=0} = 0$.
 
 \begin{theorem}[Face~5: Drinfeld $r$-matrix; \ClaimStatusProvedHere\ (identification with collision residue); \ClaimStatusProvedElsewhere\ (classical $r$-matrix theory: Drinfeld 1985)]
 \label{thm:hdm-face-5}
 For $\cA = \widehat{\fg}_k$ the affine Kac--Moody algebra at level
 $k \neq -h^\vee$, the collision residue equals the Drinfeld
-$r$-matrix rescaled by the Sugawara denominator:
+$r$-matrix in KZ normalization:
 \begin{equation}\label{eq:hdm-face-5}
 r_{\widehat{\fg}_k}(z)
-\;=\;
-\frac{1}{k + h^\vee}\, r^{\mathrm{Dr}}(z)
 \;=\;
 \frac{\Omega}{(k + h^\vee)\, z}
 \;\in\;
 \fg \otimes \fg [\![z^{-1}]\!].
 \end{equation}
+On the generic trace-form locus this is the same family as
+$r^{\mathrm{Dr}}(z) = k\,\Omega_{\mathrm{tr}}/z$.
 %: The collision residue lives on C_2(X), not over a point.
-% The factor 1/(k+h^v) is the Sugawara normalization from dualizing
+% The KZ-normalized form \Omega/((k+h^v)z) comes from dualizing
 % the zeroth product (Lie bracket) via the level-shifted Killing form.
-% At k=0 the collision residue is Omega/(h^v z) != 0 because the
-% Lie bracket of g persists; the abelian vanishing r=0 at k=0
-% applies to the Heisenberg r-matrix, not to non-abelian KM.
+% At k=0 the KZ-normalized collision residue stays nonzero because the
+% Lie bracket of g persists; the trace-form vanishing r=0 at k=0
+% applies to the Heisenberg-style level-prefixed kernel.
 The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
 follows from the infinitesimal braid relation
 $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
@@ -575,7 +577,10 @@ produces an actual Poisson bracket on a phase space.
 For $\cA = \widehat{\fg}_k$, the Sklyanin Poisson bracket on
 $\fg^*$ defined by~\eqref{eq:hdm-sklyanin-bracket} with
 level-$k$ Drinfeld rational $r$-matrix
-$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = k\Omega/z$ (vanishing at $k=0$) is the classical
+$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = k\Omega_{\mathrm{tr}}/z$
+\textup{(}vanishing at $k=0$ and related at generic $k$ to the
+KZ-normalized collision residue by
+$k\,\Omega_{\mathrm{tr}}/z = \Omega/((k+h^\vee)z)$\textup{)} is the classical
 limit of the collision residue $r_\cA(z)$ in the sense that the
 Lie--Poisson bracket on $\fg^* \cong \mathrm{Spec}\,\mathrm{gr}^{\mathrm{Li}}(\cA)$
 agrees with the leading-order term of $r_\cA(z)$ under the classical
@@ -589,8 +594,8 @@ Yangian coproduct of Drinfeld~\cite{Drinfeld85}.
 The Sklyanin bracket is constructed from a classical $r$-matrix
 $r^{\mathrm{cl}}\colon \fg \to \fg$ with antisymmetric part
 $\Omega^{\mathrm{cl}} \in \fg \wedge \fg$. For
-$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = k\Omega/z$ (level $k$, vanishing
-at $k=0$) the antisymmetric
+$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = k\Omega_{\mathrm{tr}}/z$
+\textup{(}level $k$, vanishing at $k=0$\textup{)} the antisymmetric
 part is the symmetric Casimir $\Omega = \sum_a J^a \otimes J^a$,
 which is the residue at $z = 0$ of $r^{\mathrm{Dr}}(z)$. The
 Sklyanin Poisson structure on $\fg^*$ is then the Lie--Poisson
@@ -600,7 +605,8 @@ Face~3, the chiral OPE pole structure of $\widehat{\fg}_k$ becomes
 the Lie--Poisson bracket on $\fg^*$, and the binary collision
 residue $r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$
 % AP148: KZ convention, consistent with eq:hdm-face-5; at k=0 gives Omega/(h^v z) != 0.
-becomes the
+is the same generic family as $k\Omega_{\mathrm{tr}}/z$ via
+$k\,\Omega_{\mathrm{tr}}/z = \Omega/((k+h^\vee)z)$, so it becomes the
 Lie--Poisson bracket twisted by $\Omega$. This is the Sklyanin
 bracket up to the level normalization. The $\hbar \to 0$ statement
 is Drinfeld's classical-limit theorem: the Yangian
@@ -716,7 +722,7 @@ the following diagram commutes:
 \{\cdot,\cdot\}_{\mathrm{STS}}\;\textrm{(STS83)}
  \ar@{<->}[r]^-{\textrm{(F6)}}
 & \{H_i^{\mathrm{Gaudin}}\}\;\textrm{(FFR94)}\\
-& \frac{\Omega}{z}\;\textrm{(Drinfeld85)}
+& k\,\Omega_{\mathrm{tr}}/z\;\textrm{(Drinfeld85)}
  \ar@{<->}[u]^{\textrm{(F5--F7)}}
 }
 \end{equation}
@@ -741,7 +747,7 @@ r^{\mathrm{DNP}}(z)
 \;=\;
 H_i^{\mathrm{GZ}}\bigr|_{j\textrm{-coeff}}
 \;=\;
-\frac{r^{\mathrm{Dr}}(z)}{k + h^\vee}
+\frac{\Omega}{(k+h^\vee)z}
 \;=\;
 \bigl\{\cdot,\cdot\bigr\}_{\mathrm{STS}}
 \;=\;
@@ -973,7 +979,8 @@ $Y_\hbar(\fg)$ admits the following three identifications:
  $k \to \infty$ limit is the classical limit and the
  $k \to -h^\vee$ limit is the critical-level Gaudin limit.
 \item \emph{Inverse spectral parameter:} $\hbar = 1/z$ in the formal
- expansion $r^{\mathrm{Dr}}(z) = k\Omega/z = k\Omega \cdot \hbar$
+ expansion $r^{\mathrm{Dr}}(z) = k\Omega_{\mathrm{tr}}/z
+ = k\Omega_{\mathrm{tr}} \cdot \hbar$
  (level-$k$ form, vanishing at $k=0$),
  with the $z \to \infty$ limit identifying classical with quantum
  at large separation.
@@ -997,7 +1004,8 @@ results of Drinfeld~\cite{Drinfeld85}: the Yangian
 $Y_\hbar(\fg) = \mathcal{U}(\fg[\![z^{-1}]\!]) \otimes \mathbb{C}[\![\hbar]\!]$
 with $\hbar = 1/(k+h^\vee)$ specializes to the universal enveloping
 algebra at $\hbar = 0$, and the $r$-matrix expands as
-$r^{\mathrm{Dr}}(z) = \hbar \Omega/z + \mathcal{O}(\hbar^2)$ in the
+$r^{\mathrm{Dr}}(z) = k\Omega_{\mathrm{tr}}/z
+= k\Omega_{\mathrm{tr}} \cdot \hbar$ in the
 spectral parameter. Identification $(\mathrm{iii})$ is the
 bar-complex translation: the iterated collision residue
 $\mathrm{Res}^{\mathrm{coll}}_{0,n}(\Theta_\cA)$ has bar degree
@@ -1174,7 +1182,7 @@ verifiable; the master theorem asserts that they all compute the
 same object.
 \end{remark}
 
-The seven-face programme is the centrepiece of Part~\ref{part:standard-landscape} precisely
+The seven-face programme is a core result of Part~\ref{part:standard-landscape}
 because it converts the abstract claim ``the bar-intrinsic MC
 element is universal'' into a concrete checklist: seven frameworks,
 seven independent computations, one mathematical object. When the

@@ -308,18 +308,23 @@ def genus1_eta_exponent(lam_val):
     For the free bg system at weight lam = 1 (c = 2):
     The single-particle partition function is sum_{n>=1} 2 q^n = 2q/(1-q).
     The multi-particle (bosonic Fock space) is:
-      Z_1 = q^{-c/24} prod_{n=1}^infty (1-q^n)^{-2} = eta(tau)^{-2}
+      Z_1 = q^{-c/24} prod_{n=1}^infty (1-q^n)^{-2}
+          = q^{-c/24 + 1/12} * eta(tau)^{-2}
+          = eta(tau)^{-2}  when lam = 1 and c = 2
 
     This is correct: each of beta (weight 1) and gamma (weight 0)
-    contributes one set of oscillators, giving two factors of 1/eta.
+    contributes one oscillator product factor, so
+      prod_{n>=1}(1-q^n)^{-2} = q^{1/12} * eta(tau)^{-2}.
 
     For general lam: the oscillator content changes but for chiral bg,
     the modes of beta of weight lam and gamma of weight 1-lam still
-    contribute prod (1-q^n)^{-1} each, giving Z_1 = eta(tau)^{-2}
-    INDEPENDENT of lam (the oscillator spectrum is always the same).
+    contribute prod (1-q^n)^{-1} each, giving
+      Z_1 = q^{-c(lam)/24 + 1/12} * eta(tau)^{-2}.
+    The oscillator product is lam-independent; the lam dependence sits in
+    the vacuum-energy q-shift.
 
     The central charge dependence enters through the q^{-c/24} factor:
-      Z_1 = q^{-c(lam)/24} / eta(tau)^2
+      Z_1 = q^{-c(lam)/24 + 1/12} * eta(tau)^{-2}
     But eta(tau) = q^{1/24} prod (1-q^n), so
       Z_1 = q^{-c/24} * q^{2/24} * prod (1-q^n)^{-2}
            = q^{(2-c)/24} * prod (1-q^n)^{-2}
@@ -328,7 +333,7 @@ def genus1_eta_exponent(lam_val):
            = q^{(-12 lam^2 + 12 lam)/24} * prod (1-q^n)^{-2}
            = q^{lam(1-lam)/2} * prod (1-q^n)^{-2}
 
-    At lam = 1: q^0 * prod (1-q^n)^{-2} = eta^{-2} * q^{2/24} ... hmm.
+    At lam = 1: q^0 * prod (1-q^n)^{-2} = q^{1/12} * eta^{-2}.
 
     Actually, let us be more careful. The standard result for a single
     bg pair is Z_1 = eta(tau)^{-2}, meaning:

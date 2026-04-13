@@ -409,7 +409,7 @@ class TestShadowTower:
             prev_kappa = shadow[N]['kappa']
 
     def test_kappa_diverges(self):
-        """kappa(W_N) ~ N*H_N grows without bound."""
+        """kappa(W_N, c=N-1) = (N-1)(H_N - 1) ~ N log N grows without bound."""
         shadow = w_infinity_shadow_tower_regulated(50)
         assert shadow[50]['kappa'] > 100, \
             f"kappa(W_50) = {shadow[50]['kappa']} not large enough"

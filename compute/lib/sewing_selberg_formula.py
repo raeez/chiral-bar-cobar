@@ -112,8 +112,8 @@ def ramanujan_tau(N: int) -> int:
 @lru_cache(maxsize=1)
 def _delta_coefficients(N_max: int) -> List[int]:
     """Compute tau(n) for n = 0, ..., N_max via product expansion."""
-    # eta(q)^24 = prod(1-q^n)^24
-    # Delta(q) = q * eta(q)^24, so tau(n) = coeff of q^n in q * prod(1-q^n)^24
+    # q^{-1} * eta(q)^24 = prod(1-q^n)^24
+    # Delta(q) = eta(q)^24 = q * prod(1-q^n)^24, so tau(n) = coeff of q^n in q * prod(1-q^n)^24
     # = coeff of q^{n-1} in prod(1-q^n)^24
     # We compute prod(1-q^n)^24 up to order N_max.
     # Use iterative multiplication.

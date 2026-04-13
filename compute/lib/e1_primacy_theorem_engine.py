@@ -444,7 +444,7 @@ def kappa_from_r_matrix_heisenberg(k: complex) -> complex:
 
 
 def kappa_from_r_matrix_sl2(k: complex, h_dual: int = 2) -> complex:
-    """Compute kappa = av(r(z)) for sl_2 at level k.
+    """Compute the full kappa for sl_2 at level k.
 
     r(z) = k * Omega / z. The S_2-coinvariant (trace over both
     tensor factors divided by dim) gives:
@@ -468,12 +468,15 @@ def kappa_from_r_matrix_sl2(k: complex, h_dual: int = 2) -> complex:
     (the modular characteristic) is then obtained by evaluating on
     the vacuum/identity state.
 
-    For affine KM: kappa(g_k) = k * dim(g) / (2 * (k + h_dual)).
-    For sl_2: dim(g) = 3, h_dual = 2.
-    kappa(sl_2, k) = 3k / (2(k+2)).
+    For affine KM in trace-form normalization:
+      av(r(z)) = k * dim(g) / (2 * h_dual)
+      kappa(g_k) = av(r(z)) + dim(g)/2.
+    For sl_2: dim(g) = 3, h_dual = 2, so
+      av(r(z)) = 3k/4
+      kappa(sl_2, k) = 3(k+2)/4.
     """
     dim_g = 3  # sl_2
-    return Fraction(dim_g * k, 2 * (k + h_dual))
+    return Fraction(dim_g * k, 2 * h_dual) + Fraction(dim_g, 2)
 
 
 def kappa_virasoro(c: complex) -> complex:
@@ -775,14 +778,14 @@ def r_matrix_minus_kappa_in_kernel(
     k: complex = 1, dim_g: int = 3, h_dual: int = 2,
     tol: float = 1e-8
 ) -> Tuple[bool, float]:
-    """Verify that r(z) - kappa * I lies in ker(av) at z=1.
+    """Verify that r(z) minus its scalar shadow lies in ker(av) at z=1.
 
-    For sl_2: r(z) = k * Omega / z, kappa = 3k/(2(k+2)).
+    For sl_2: r(z) = k * Omega / z and av(r(z)) = 3k/4.
     At a specific z: r(z) - kappa * (I/dim^2) should have
     av(r(z) - kappa * normalization) = 0.
 
     More precisely: the E_1 r-matrix r(z) maps under av to
-    av(r(z)) = kappa (the scalar). So:
+    its scalar degree-2 shadow. So:
       av(r(z) - av(r(z))) = av(r(z)) - av(av(r(z)))
                            = av(r(z)) - av(r(z)) = 0
     since av is a projection (av^2 = av).
@@ -1320,22 +1323,22 @@ def verify_kappa_recovery_heisenberg(k: int = 1) -> bool:
 
 
 def verify_kappa_recovery_sl2(k: int = 1) -> Tuple[bool, Fraction]:
-    """Verify av(r(z)) = kappa for sl_2.
+    """Verify the full kappa for sl_2 from av(r(z)) plus the Sugawara shift.
 
     sl_2 at level k:
     r(z) = k * Omega / z, dim(g) = 3, h^vee = 2.
-    kappa = 3k / (2(k+2)).
+    av(r(z)) = 3k/4 and kappa = 3(k+2)/4.
 
     The "averaging" at arity 2 sends the End(C^2 tensor C^2)-valued
     r-matrix to its scalar projection.
 
-    Path 1 (direct): kappa = 3k/(2(k+2))
+    Path 1 (direct): av(r(z)) = 3k/4 and kappa = av(r(z)) + 3/2
     Path 2 (Casimir trace): The S_2-coinvariant of Omega_{sl_2} is
       av(Omega) = Omega (since Casimir is S_2-symmetric).
       The SCALAR extraction from av(Omega) gives
       tr(Omega) / dim = (dim(g)/dim(V)^2) * (standard normalization).
-    Path 3 (from CLAUDE.md formula): kappa(g_k) = dim(g)*k/(2*(k+h^vee))
+    Path 3 (from CLAUDE.md formula): kappa(g_k) = dim(g)(k+h^vee)/(2h^vee)
     """
-    expected = Fraction(3 * k, 2 * (k + 2))
+    expected = Fraction(3 * (k + 2), 4)
     computed = kappa_from_r_matrix_sl2(k, h_dual=2)
     return computed == expected, computed

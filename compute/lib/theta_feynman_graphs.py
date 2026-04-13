@@ -17,7 +17,7 @@ OPE data of A via iterated collision residues.
 THE TREE AMPLITUDE:
 
 For a planted tree T with r leaves, the amplitude w_T is computed bottom-up:
-  - Each leaf carries the generator (e.g., sT for Virasoro)
+  - Each leaf carries the generator (e.g., s^{-1}T for Virasoro)
   - Each internal vertex performs a collision residue:
     the OPE of the two incoming states, extracting the simple-pole residue
   - The bar differential extracts Res_{z->w} of (OPE tensor) * d log(z-w)
@@ -49,7 +49,7 @@ CROSS-CHECK: Method C results must match:
 
 CONVENTIONS:
   - Cohomological grading (|d| = +1)
-  - Bar uses DESUSPENSION: |sT| = |T| - 1 = 2 - 1 = 1
+  - Bar uses DESUSPENSION: |s^{-1}T| = |T| - 1 = 2 - 1 = 1
   - The bar propagator d log E(z,w) has weight 1 (AP27)
   - All channels use E_1 at the edge level
   - Exact rational arithmetic via fractions.Fraction
@@ -403,7 +403,7 @@ class VirasoroOPE:
                                 = T_{(0)}T = dT  (for Virasoro inputs T, T)
 
     So the bar differential at degree 2 gives:
-      d[sT|sT] = sT_{(0)}(sT) = s(dT) * (sign from desuspension)
+      d[s^{-1}T|s^{-1}T] = s^{-1}(T_{(0)}T) = s^{-1}(dT) * (sign from desuspension)
 
     The HPL tree formula then builds the transferred operations m_k on
     H*(B) by composing:
@@ -912,7 +912,7 @@ class VirasoroHomotopy:
     the individual module level.  The relevant homotopy is on the bar
     complex B(A) = tensor coalgebra, with bar differential d_bar.
 
-    In the primary sector (all inputs = sT), the computation of m_k
+    In the primary sector (all inputs = s^{-1}T), the computation of m_k
     requires a homotopy that:
     1. Receives a state in V_+ at some weight
     2. Projects it to the T-component (weight 2)
@@ -1169,14 +1169,14 @@ class VirasoroHomotopy:
            The homotopy h maps weight-3 state to itself.
 
         Actually, the computation is:
-        Bottom vertex: m_2(sT, sT) in the bar complex
-        = bar differential applied to [sT | sT]
+        Bottom vertex: m_2(s^{-1}T, s^{-1}T) in the bar complex
+        = bar differential applied to [s^{-1}T | s^{-1}T]
         = T_{(0)} T = dT
 
         Then the homotopy h is applied to dT:
         h(dT) = some state in V_+
 
-        Then the top vertex combines h(dT) with sT:
+        Then the top vertex combines h(dT) with s^{-1}T:
         (h(dT))_{(0)} T  or  T_{(0)} h(dT)
 
         For the scalar projection (T-coefficient):
@@ -1196,8 +1196,9 @@ class VirasoroHomotopy:
         # So the second vertex computes T_{(0)}(dT) or dT_{(0)}T
 
         # In the HPL formula:
-        # m_3(sT, sT, sT) = P * m_2(H * m_2(I sT, I sT), I sT)
-        #                  + P * m_2(I sT, H * m_2(I sT, I sT))
+        # m_3(s^{-1}T, s^{-1}T, s^{-1}T)
+        #   = P * m_2(H * m_2(I s^{-1}T, I s^{-1}T), I s^{-1}T)
+        #   + P * m_2(I s^{-1}T, H * m_2(I s^{-1}T, I s^{-1}T))
         # where I = inclusion, P = projection, H = homotopy, m_2 = OPE
 
         # Tree 1: ((0,1), 2)
@@ -1220,22 +1221,22 @@ class VirasoroHomotopy:
 
         # The HPL is applied to the BAR COMPLEX, not the module directly.
         # The bar differential on B_2 sends:
-        #   d_bar[sT|sT] = s(T_{(0)} T) = s(dT)
+        #   d_bar[s^{-1}T|s^{-1}T] = s^{-1}(T_{(0)} T) = s^{-1}(dT)
 
         # This lives in B_1 at weight 3+2 = 5? No.
-        # The bar degrees: [sT|sT] is in B_2.
-        # sT has weight |T|-1 = 1 (desuspension).
-        # [sT|sT] has weight 1+1 = 2 in the desuspended sense.
+        # The bar degrees: [s^{-1}T|s^{-1}T] is in B_2.
+        # s^{-1}T has weight |T|-1 = 1 (desuspension).
+        # [s^{-1}T|s^{-1}T] has weight 1+1 = 2 in the desuspended sense.
 
         # Actually the weights in the bar complex track the ORIGINAL
-        # conformal weights:  [sT|sT] has conformal weight 2+2 = 4
+        # conformal weights:  [s^{-1}T|s^{-1}T] has conformal weight 2+2 = 4
         # (each T has weight 2, desuspension doesn't change conformal weight,
         #  only the homological degree).
 
-        # d_bar[sT|sT] is in B_1, and represents s(T_{(0)}T) = s(dT)
+        # d_bar[s^{-1}T|s^{-1}T] is in B_1, and represents s^{-1}(T_{(0)}T) = s^{-1}(dT)
         # which is at conformal weight 3 in B_1.
 
-        # The cohomology H*(B_1) at weight 2 is span{sT} (if T is
+        # The cohomology H*(B_1) at weight 2 is span{s^{-1}T} (if T is
         # the only state up to L_{-1}-equivalence at weight 2).
         # At weight 3: H*(B_1) = 0 (dT = L_{-1}T is exact).
 
@@ -1251,11 +1252,11 @@ class VirasoroHomotopy:
         # d(s(dT)) = 0 (d: B_1 -> B_0, and we're in the augmented complex)
 
         # So s(dT) = d(H(s(dT))).  This means H(s(dT)) is in B_2 at weight 3.
-        # But B_2 at weight 3 is empty (since each sT has weight >=2,
+        # But B_2 at weight 3 is empty (since each s^{-1}T has weight >=2,
         # and two copies give weight >= 4).
 
         # So the HPL formula gives H(s(dT)) = 0, which would make
-        # m_3(sT, sT, sT) = 0.  But S_3 = 2 != 0!
+        # m_3(s^{-1}T, s^{-1}T, s^{-1}T) = 0.  But S_3 = 2 != 0!
 
         # THE RESOLUTION: the bar complex is NOT just the tensor algebra
         # with the d_bar using only T_{(0)}.  The full bar differential
@@ -1269,7 +1270,7 @@ class VirasoroHomotopy:
 
         # The configuration space form of degree n on Conf_N involves
         # the n-th power of d log(z_i - z_{i+1}).  At bar degree 2:
-        #   d_bar[sT|sT] = sum_{n>=0} (T_{(n)}T) * omega_n
+        #   d_bar[s^{-1}T|s^{-1}T] = sum_{n>=0} (T_{(n)}T) * omega_n
 
         # where omega_n is the appropriate form on Conf_2.
 
@@ -1292,11 +1293,11 @@ class VirasoroHomotopy:
         # The bar differential extracts T_{(1)}T, not T_{(0)}T.
 
         # With this correction:
-        # d_bar[sT|sT] = 2 * sT  (bar degree 1, weight 2)
+        # d_bar[s^{-1}T|s^{-1}T] = 2 * s^{-1}T  (bar degree 1, weight 2)
         # This is an element of B_1 at weight 2, which IS the cohomology
-        # class [sT].  So d_bar[sT|sT] = 2 * [sT] in B_1.
+        # class [s^{-1}T].  So d_bar[s^{-1}T|s^{-1}T] = 2 * [s^{-1}T] in B_1.
 
-        # And the homotopy: H(2 sT) = 0 (sT is in cohomology, HI = 0).
+        # And the homotopy: H(2 s^{-1}T) = 0 (s^{-1}T is in cohomology, HI = 0).
 
         # So the contribution to m_3 from the OPE at this level is:
         # P(m_2(H(m_2(T,T)), T)) = P(m_2(H(2T), T)) = P(m_2(0, T)) = 0.
@@ -1306,7 +1307,7 @@ class VirasoroHomotopy:
         #   T_{(3)}T = (c/2)|0>  with omega_3
 
         # At bar degree 2, the full differential is:
-        #   d_bar[sT|sT] = sum over modes n that appear in the OPE,
+        #   d_bar[s^{-1}T|s^{-1}T] = sum over modes n that appear in the OPE,
         #                   weighted by the appropriate form
 
         # The mode n contributes with the form (z-w)^{-n-1} dz on the

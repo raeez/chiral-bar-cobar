@@ -920,7 +920,7 @@ def associator_shadow_dictionary(kappa_val: float, S3_val: float,
     # The associator involves 1/kappa_KZ as the coupling.
     # Shadow curvature kappa = S_2 determines the genus-0 binary amplitude:
     #   r(z) = kappa * Omega / z  (the r-matrix is kappa-proportional)
-    # The KZ equation: dPhi = (1/kappa) * sum Omega_{ij} d log(z_i - z_j) * Phi
+    # The KZ equation: dPhi = (1/kappa) * sum (Omega_{ij}/(z_i - z_j)) d(z_i - z_j) * Phi
     # So the associator expansion parameter is 1/kappa.
 
     shadow_mzv = {}

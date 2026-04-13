@@ -181,7 +181,7 @@ def eta_power_qexp(exponent, nmax):
         return coeffs
 
     if exponent > 0:
-        # eta^exponent = prod(1-q^k)^exponent, multiply exponent times
+        # q^{-exponent/24} * eta^exponent = prod(1-q^k)^exponent.
         coeffs = [0] * (nmax + 1)
         coeffs[0] = 1
         for k in range(1, nmax + 1):
@@ -190,7 +190,7 @@ def eta_power_qexp(exponent, nmax):
                     coeffs[m] -= coeffs[m - k]
         return coeffs
     else:
-        # eta^{-|exponent|} = 1/eta^|exp| = prod(1-q^k)^{-|exp|}
+        # q^{|exponent|/24} * eta^{-|exponent|} = prod(1-q^k)^{-|exp|}.
         # Use 1/(1-q^k) = sum q^{mk} and iterate
         neg_exp = -exponent
         coeffs = [0] * (nmax + 1)

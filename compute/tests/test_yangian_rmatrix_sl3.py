@@ -224,13 +224,12 @@ class TestRMatrixPoleStructure:
     """Verify the r-matrix has the correct pole structure (AP19)."""
 
     def test_single_pole(self):
-        """r(z) = Omega/z has a SINGLE pole at z = 0 (AP19)."""
+        """r(z) = k*Omega/z has a SINGLE pole at z = 0 (AP19)."""
         info = r_matrix_abstract()
         assert info["pole_order"] == 1
 
     def test_residue_is_omega(self):
-        """Residue of r(z) at z = 0 is Omega = P - I/3."""
-        # r(z) = Omega/z, so Res_{z=0} r(z) = Omega
+        """Residue of the unit-level r-matrix is Omega = P - I/3."""
         Omega = casimir_tensor_fund()
         P = permutation_matrix_3()
         I9 = np.eye(9)
@@ -246,6 +245,17 @@ class TestRMatrixPoleStructure:
         # So r-matrix has ONLY z^{-1} pole, as verified above.
         info = r_matrix_abstract()
         assert "z^{-1} only" in info["AP19_check"]
+
+    def test_k0_vanishes(self):
+        """AP126/AP141: at k=0 the affine collision residue vanishes."""
+        r = r_matrix_fund(1.0, k=0)
+        assert np.allclose(r, np.zeros((9, 9)), atol=1e-14)
+
+    def test_linear_in_level(self):
+        """Trace-form residue scales linearly with the level k."""
+        r1 = r_matrix_fund(2.0, k=1)
+        r3 = r_matrix_fund(2.0, k=3)
+        assert np.allclose(r3, 3.0 * r1, atol=1e-12)
 
     def test_r_matrix_at_large_z(self):
         """r(z) -> 0 as z -> infinity."""

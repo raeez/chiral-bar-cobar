@@ -100,6 +100,13 @@ class TestW6CentralCharge:
             c_gen = Fraction(5) - Fraction(210) * (kv + 5)**2 / (kv + 6)
             assert c_w6 == c_gen
 
+    def test_legacy_api_matches_frac(self):
+        """Legacy symbolic/numeric API matches the Fraction implementation."""
+        # VERIFIED: [DC] w6_central_charge_frac is the exact FL formula.
+        # [CF] canonical c_wn_fl(6,k) agrees with the same values.
+        assert w6_central_charge(Fraction(1)) == Rational(-1075)
+        assert w6_central_charge(Fraction(5)) == Rational(-20945, 11)
+
     def test_large_k_limit(self):
         """c ~ -210k for large k (Fateev-Lukyanov quadratic growth)."""
         c_1000 = w6_central_charge_frac(Fraction(1000))
@@ -376,8 +383,9 @@ class TestDSCascade:
     """Systematic comparison across the W_N cascade."""
 
     def test_ghost_c_sequence(self):
-        """c_ghost(N) from DS reduction (Fateev-Lukyanov)."""
-        # VERIFIED: c_ghost = c_KM - c_WN at k=1 for each N [DC]
+        """c_ghost(N, k=0) from DS reduction (Fateev-Lukyanov intercepts)."""
+        # VERIFIED: [DC] c_ghost(N,0) = (N-1)[(N^2-1)(N-1)-1].
+        # [CF] ds_shadow_cascade_engine.c_ghost(N) returns this k=0 intercept.
         from compute.lib.ds_shadow_cascade_engine import c_ghost
         assert c_ghost(2) == Fraction(2)
         assert c_ghost(3) == Fraction(30)

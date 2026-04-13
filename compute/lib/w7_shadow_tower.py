@@ -13,22 +13,20 @@ with 6 generators producing a 6-dimensional deformation space and
 (6 choose 2) = 15 binary channels.
 
 CENTRAL CHARGE:
-    c(W_7, k) = 6(1 - 56/(k+7)) = 6(k-49)/(k+7)
+    c(W_7, k) = 6 - 336(k+6)^2/(k+7)
 
-    Derivation: c = (N-1)(1 - N(N+1)/(k+N)) with N=7
-              = 6(1 - 56/(k+7))
-              = 6(k+7-56)/(k+7)
-              = 6(k-49)/(k+7)
+    Derivation: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=7
+              = 6 - 336(k+6)^2/(k+7)
 
     Special values:
-      k=1: c = 6*(-48)/8 = -36
-      k=7: c = 6*(-42)/14 = -18
-      k=49: c = 0
-      k->inf: c -> 6
+      k=1: c = -2052
+      k=5: c = -3382
+      k=7: c = -4050
+      k->inf: c ~ -336k
 
 FEIGIN-FRENKEL DUALITY:
     k' = -k - 2h^v = -k - 14 (dual Coxeter number h^v = 7 for sl_7)
-    c(k) + c(k') = 2(N-1) = 12
+    c(k) + c(k') = 2(N-1) + 4N(N^2-1) = 1356
 
 MODULAR CHARACTERISTIC:
     kappa(W_7) = (H_7 - 1)*c where H_7 = 1 + 1/2 + ... + 1/7 = 363/140
@@ -52,7 +50,7 @@ SHADOW DEPTH: Infinite (class M) on all non-Gaussian lines.
 DS REDUCTION:
     sl_7 (class L, depth 3) -> W_7 (class M, depth infinity).
     Ghost sector: c_ghost(k) = c(sl_7,k) - c(W_7,k) = 1722 + 336*k (linear in k).
-    kappa_ghost = 21.
+    At k=0: kappa_ghost = 1722/2 = 861.
 
 BINARY CHANNELS: (6 choose 2) = 15 pairs (from 6 generators)
     (T,W_3), (T,W_4), (T,W_5), (T,W_6), (T,W_7),
@@ -113,22 +111,22 @@ W7_BINARY_CHANNELS = [
 # =============================================================================
 
 def w7_central_charge(level=None):
-    r"""Central charge c(W_7, k) = 6(1 - 56/(k+7)) = 6(k-49)/(k+7).
+    r"""Central charge c(W_7, k) = 6 - 336(k+6)^2/(k+7).
 
     From DS(sl_7) at level k:
-      c = (N-1)(1 - N(N+1)/(k+N)) with N=7
-        = 6(1 - 56/(k+7))
-        = 6(k-49)/(k+7)
+      c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=7
+        = 6 - 336(k+6)^2/(k+7)
 
     Special values:
-      k=1: c = 6*(-48)/8 = -36
-      k=7: c = 6*(-42)/14 = -18
-      k=49: c = 0
-      k->inf: c -> 6
+      k=1: c = -2052
+      k=5: c = -3382
+      k=7: c = -4050
+      k=49: c = -18144
+      k->inf: c ~ -336k
     """
     if level is None:
         level = k
-    return Rational(6) * (level - 49) / (level + 7)
+    return Rational(6) - Rational(336) * (level + 6) ** 2 / (level + 7)
 
 
 def w7_central_charge_frac(k_val):

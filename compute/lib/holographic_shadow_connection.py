@@ -4,7 +4,7 @@ Verifies the geometric construction: the genus-0 shadow of the MC element
 Theta_A produces flat connections on conformal blocks.  For each standard
 family the shadow connection specialises to a classical object:
 
-  - Heisenberg:      nabla = d - kappa sum q_i q_j dlog(z_i - z_j)
+  - Heisenberg:      nabla = d - kappa sum q_i q_j d(z_i - z_j)/(z_i - z_j)
                      (cor:shadow-connection-heisenberg)
   - Affine g_k:      nabla = d - 1/(k+h^v) sum Omega_ij / (z_i - z_j) dz_i
                      = KZ connection (thm:shadow-connection-kz)
@@ -40,7 +40,7 @@ import sympy as sp
 class HeisenbergShadowConnection:
     """Shadow connection for rank-1 Heisenberg at level kappa.
 
-    nabla = d - kappa * sum_{i<j} q_i q_j dlog(z_i - z_j)
+    nabla = d - kappa * sum_{i<j} q_i q_j d(z_i - z_j)/(z_i - z_j)
 
     Flat sections: f = prod_{i<j} (z_i - z_j)^{kappa q_i q_j}
     multiplied by delta_{sum q_i, 0}.

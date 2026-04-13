@@ -1,8 +1,10 @@
 \section{The complementarity theorem}
 \label{sec:complementarity-theorem}
 
-Classical Koszul duality over a point is a discrete correspondence:
-$\cA$ and~$\cA^!$ are linked by $\Omega \circ B$ and nothing more.
+Classical Koszul duality over a point already distinguishes the bar
+coalgebra $B(\cA)$, the inversion $\Omega(B(\cA)) \simeq \cA$, the
+dual coalgebra $\cA^i = H^*(B(\cA))$, and the dual algebra
+$\cA^! = ((\cA^i)^\vee)$.
 Already at genus~$0$ on a curve, the Fulton--MacPherson
 compactifications $\overline{C}_n(X)$ and the Arnold forms
 $\eta_{ij} = d\log(z_i - z_j)$ supply configuration-space geometry
@@ -674,7 +676,7 @@ also a second route, conditional on the same perfectness and
 nondegeneracy package that later yields
 Theorem~\ref{thm:ambient-complementarity-fmp} and
 Proposition~\ref{prop:ptvv-lagrangian}. Start with the ordered bar
-resolution $B^{\ord}(\cA)$ together with its cyclic pairing. On the
+resolution $\barB^{\mathrm{ord}}(\cA)$ together with its cyclic pairing. On the
 perfect duality locus of chiral Koszul pairs, that pairing identifies
 the tangent complex of the ambient moduli problem
 $\mathcal{M}_{\mathrm{comp}}(\cA)$ with its shifted dual, hence gives a
@@ -815,9 +817,12 @@ mathematically precise.
 
 \begin{theorem}[Spectral sequence for quantum corrections; \ClaimStatusProvedHere]
 \label{thm:ss-quantum}
-The genus filtration on $\bar{B}(\mathcal{A})$ induces a spectral sequence:
+The genus filtration on the strict flat comparison family
+$\barB^{(g)}_{\mathrm{flat}}(\mathcal{A})
+= (\barB^{(g)}(\mathcal{A}), \Dg{g})$
+induces a spectral sequence:
 \begin{equation}
-E_1^{p,q,g} = H^q\left(\bar{B}^p_g(\mathcal{A}), d_{\text{fiber}}\right) 
+E_1^{p,q,g} = H^q\left(\barB^p_{g,\mathrm{flat}}(\mathcal{A})\right)
 \Longrightarrow H^{p+q}\left(\bar{B}(\mathcal{A}), d_{\text{total}}\right)
 \end{equation}
 where:
@@ -825,21 +830,28 @@ where:
 \item $p$ = configuration space degree (number of points)
 \item $q$ = form degree (dimension of logarithmic forms)
 \item $g$ = genus degree
-\item $d_{\text{fiber}}$ = differential along fibers (Arnold relations)
+\item $\barB^p_{g,\mathrm{flat}}(\mathcal{A})$ = the $p$-point piece of the
+ flat genus-$g$ bar complex with square-zero differential~$\Dg{g}$
 \item $d_{\text{total}}$ = full differential (including moduli variations)
 \end{itemize}
+The curved fiber operator~$\dfib$ remains only as a coderived
+comparison surface when $\kappa(\mathcal{A}) \neq 0$; ordinary
+cohomology is taken after passage to the flat representative.
 
 The $E_2$ page is:
 \begin{equation}
-E_2^{p,q,g} = H^p\left(\overline{\mathcal{M}}_g, \mathcal{H}^q_{\text{fiber}}(
+E_2^{p,q,g} = H^p\left(\overline{\mathcal{M}}_g, \mathcal{H}^q_{\mathrm{flat}}(
 \mathcal{A})\right)
 \end{equation}
-where $\mathcal{H}^q_{\text{fiber}}(\mathcal{A})$ is the sheaf of fiber cohomologies.
+where $\mathcal{H}^q_{\mathrm{flat}}(\mathcal{A})$ is the sheaf of
+flat fiber cohomologies.
 \end{theorem}
 
 \begin{proof}[Proof of Theorem~\ref{thm:ss-quantum}]
 For each genus~$g$, the Leray spectral sequence for the fibration
-below converges to $H^{p+q}(\bar{B}^{(g)}(\mathcal{A}))$;
+below is applied to the strict flat comparison family
+$\barB^{(g)}_{\mathrm{flat}}(\mathcal{A})$, hence converges to
+$H^{p+q}(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))$;
 the genus filtration on the total bar complex
 $\bar{B}(\mathcal{A}) = \bigoplus_g \bar{B}^{(g)}(\mathcal{A})$
 then assembles these into the stated spectral sequence
@@ -859,27 +871,22 @@ of the fiber complex.
 The fiber over
 $[(\Sigma_g;\allowbreak p_1, \ldots, p_n)]$ is:
 \begin{equation}
-\bar{B}^p_{\text{fiber}} = \Gamma(\overline{C}_p(\Sigma_g), \mathcal{A}^{\boxtimes p} 
+\barB^p_{g,\mathrm{flat}}(\mathcal{A})\big|_{[\Sigma_g]}
+= \Gamma(\overline{C}_p(\Sigma_g), \mathcal{A}^{\boxtimes p}
 \otimes \Omega^*_{\log})
 \end{equation}
-
-The differential
 \[
-d_{\mathrm{fiber}} = \!\!\!\!\sum_{D \,\subset\, \partial \overline{C}_p(\Sigma_g)}
-\!\!\!\!\operatorname{Res}_D
+\text{with differential } \Dg{g}^{(\Sigma_g)}.
 \]
-computes residues along boundary divisors. By Theorem~\ref{thm:arnold-three},
-this satisfies $d_{\text{fiber}}^2 = 0$, so we can compute cohomology.
-(The genus-$0$ Arnold relations apply here because the fiber
-differential is \emph{local}: each residue $\operatorname{Res}_{D_{ij}}$
-extracts the singular OPE data at a collision $z_i \to z_j$
-in a formal neighborhood of the diagonal, which is isomorphic to
-the corresponding neighborhood on any curve regardless of genus.
-The Arnold three-term relation involves only three points in a
-small disk and is therefore insensitive to the global topology
-of~$\Sigma_g$.)
+By Convention~\ref{conv:higher-genus-differentials},
+$\Dg{g}^{\,2} = 0$ on this flat comparison complex. The Arnold
+relations still govern the local collision term in the associated
+graded, but they do not imply $\dfib^{\,2} = 0$ when
+$\kappa(\mathcal{A}) \neq 0$; the curved fiber operator remains on the
+coderived side.
 \begin{equation}
-E_1^{p,q,g} = H^q(\bar{B}^p_{\text{fiber}}, d_{\text{fiber}})
+E_1^{p,q,g}
+= H^q\bigl(\barB^p_{g,\mathrm{flat}}(\mathcal{A})\big|_{[\Sigma_g]}\bigr)
 \end{equation}
 
 \emph{$d_1$ differential}: This is induced by the differential on $\overline{
@@ -887,10 +894,11 @@ E_1^{p,q,g} = H^q(\bar{B}^p_{\text{fiber}}, d_{\text{fiber}})
 
 \emph{$E_2$ page}: After taking cohomology with respect to $d_1$, we obtain:
 \begin{equation}
-E_2^{p,q,g} = H^p(\overline{\mathcal{M}}_g, \mathcal{H}^q_{\text{fiber}})
+E_2^{p,q,g} = H^p(\overline{\mathcal{M}}_g, \mathcal{H}^q_{\mathrm{flat}})
 \end{equation}
-where $\mathcal{H}^q_{\text{fiber}}$ is the sheaf on $\overline{\mathcal{M}}_g$ whose 
-stalk at $[(\Sigma_g; \vec{p})]$ is $H^q(\bar{B}^p_{\Sigma_g}(\mathcal{A}))$.
+where $\mathcal{H}^q_{\mathrm{flat}}$ is the sheaf on
+$\overline{\mathcal{M}}_g$ whose stalk at $[(\Sigma_g; \vec{p})]$ is
+$H^q\bigl(\barB^p_{g,\mathrm{flat}}(\mathcal{A})\big|_{[\Sigma_g]}\bigr)$.
 
 This sheaf is \emph{locally constant} away from boundary strata, by the local 
 triviality of the fibration. On boundary strata, it has monodromy captured by the 
@@ -923,7 +931,7 @@ $i > 2(3g-3) = 6g - 6$
 
 \emph{(2) Constructibility of the fiber sheaves.}
 The fiber cohomology sheaf
-$\mathcal{H}^q_{\mathrm{fiber}}(\cA)$ on
+$\mathcal{H}^q_{\mathrm{flat}}(\cA)$ on
 $\overline{\mathcal{M}}_g$ is constructible with respect to
 the stratification by topological type of stable curve.
 On the smooth locus $\mathcal{M}_g$, it is a local system
@@ -1000,7 +1008,11 @@ from $j_!$-extended bar cochains of~$\mathcal{A}^!$ (eigenvalue~$-1$),
 and the genus filtration separates precisely these two sources
 (Lemma~\ref{lem:eigenspace-decomposition-complete}).
 
-\emph{Explicit description.} An element of $Q_g(\mathcal{A})$ is represented by a closed form $\omega \in \bar{B}^{(g)}(\mathcal{A})$ (i.e., $d\omega = 0$) that is not exact modulo lower genus contributions.
+\emph{Explicit description.} An element of $Q_g(\mathcal{A})$ is represented by a
+$\Dg{g}$-closed class $\omega \in \barB^{(g)}_{\mathrm{flat}}(\mathcal{A})$
+that is not exact modulo lower genus contributions. On the curved
+fiber model one retains the corresponding coderived class whenever
+$\kappa(\mathcal{A}) \neq 0$.
 
 \emph{Example.} For the Heisenberg algebra at $g=1$:
 \begin{equation}
@@ -1013,14 +1025,14 @@ that does not appear at genus~$0$.
 
 \emph{Step 4: Identify fiber cohomology with center.}
 
-\begin{lemma}[Fiber cohomology and center; \ClaimStatusProvedHere]
+\begin{lemma}[Flat fiber cohomology and center; \ClaimStatusProvedHere]
 \label{lem:fiber-cohomology-center}
 For a Koszul chiral algebra~$\mathcal{A}$
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})},
-the fiber cohomology sheaf over the smooth
+the flat fiber cohomology sheaf over the smooth
 locus~$\overline{\mathcal{M}}_g^{\mathrm{sm}}$ satisfies:
 \begin{equation}
-\mathcal{H}^*_{\mathrm{fiber}}(\mathcal{A})
+\mathcal{H}^*_{\mathrm{flat}}(\mathcal{A})
 \big|_{\overline{\mathcal{M}}_g^{\mathrm{sm}}}
 \cong Z(\mathcal{A}) \otimes \underline{\mathbb{C}}
 \end{equation}
@@ -1028,126 +1040,24 @@ where $\underline{\mathbb{C}}$ is the constant sheaf.
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{lem:fiber-cohomology-center}]
-Fix a smooth curve $\Sigma_g$ of genus~$g$. The fiber of the bar
-complex at the moduli point $[\Sigma_g] \in \mathcal{M}_g$ is
-\begin{equation}\label{eq:fiber-bar-complex}
-\bar{B}^*_{\Sigma_g}(\mathcal{A})
-= \bigoplus_{n \geq 0}
- \Gamma\bigl(\overline{C}_n(\Sigma_g),\,
- \mathcal{A}^{\boxtimes n} \otimes \Omega^*_{\log}\bigr),
-\end{equation}
-with differential $d = d_{\mathrm{coll}} + d_{\mathrm{curv}}$
-(collision residues plus curvature corrections).
-
-The proof proceeds in four steps: identify degree-$0$ cocycles with
-the center (Steps~1--2), verify constancy over moduli (Step~3), then
-show vanishing of all higher fiber cohomology (Step~4).
-
-\emph{Step 1: Degree-$0$ identification.}
-The bar-degree-$0$ component is
-$\bar{B}^0_{\Sigma_g}(\mathcal{A}) = \mathcal{A}$
-(the algebra on $\Sigma_g$ with no configuration space insertions).
-The bar differential
-$d\colon \bar{B}^0 \to \bar{B}^1$ sends $a \in \mathcal{A}$ to
-the collection of its singular OPE residues along the boundary
-divisors of~$\overline{C}_2(\Sigma_g)$.
-
-\emph{Step 2: Kernel of $d$ at degree~$0$ equals the center.}
-An element $a \in \bar{B}^0 = \mathcal{A}$ satisfies $da = 0$ if
-and only if, for every $b \in \mathcal{A}$, the residue of the OPE
-along the collision divisor vanishes:
-\begin{equation}\label{eq:center-residue-condition}
-\operatorname{Res}_{z=w}\bigl[a(z)\,b(w)\,\omega\bigr] = 0
-\quad\text{for all }
-b \in \mathcal{A},\;
-\omega \in \Omega^1_{\log}\bigl(\overline{C}_2(\Sigma_g)\bigr).
-\end{equation}
-Since the bar differential extracts precisely the singular part of
-the OPE, condition~\eqref{eq:center-residue-condition} holds for
-all~$b$ if and only if $a(z)\,b(w)$ has no singular terms, that is,
-$[a,b]^{\mathrm{ch}} = 0$ for all~$b$. By definition this
-characterizes $a \in Z(\mathcal{A})$, the center.
-
-It remains to confirm that $H^0 = \ker d / \operatorname{im} d$
-equals $Z(\mathcal{A})$, not merely $\ker d$. But $\bar{B}^{-1} = 0$
-(the bar complex is concentrated in non-negative degrees), so
-$\operatorname{im}(d\colon \bar{B}^{-1} \to \bar{B}^0) = 0$ and
-$H^0 = \ker(d\colon \bar{B}^0 \to \bar{B}^1) = Z(\mathcal{A})$.
-
-\emph{Step 3: Constancy over moduli.}
-The center $Z(\mathcal{A})$ is an intrinsic subspace of~$\mathcal{A}$,
-cut out by the vanishing of all chiral brackets. The chiral bracket is
-a $\mathcal{D}_X$-module morphism determined by OPE data that are local
-on the curve and do not depend on the global complex structure
-of~$\Sigma_g$. Therefore $Z(\mathcal{A})$ is constant as
-$[\Sigma_g]$ varies over~$\mathcal{M}_g$, and the degree-$0$ fiber
-cohomology sheaf is
-$\mathcal{H}^0_{\mathrm{fiber}} \cong
- Z(\mathcal{A}) \otimes \underline{\mathbb{C}}$
-over~$\mathcal{M}_g^{\mathrm{smooth}}$.
-
-\emph{Verification for Heisenberg.}
-For $\mathcal{H}_\kappa$ the current $J(z)$ is not central
-($J(z)\,J(w) \sim \kappa/(z-w)^2$), while the vacuum~$\mathbf{1}$
-and the level parameter~$\kappa$ are central (regular OPE with all
-fields), so $H^0 = Z(\mathcal{H}_\kappa) =
-\mathbb{C}\cdot\mathbf{1} \oplus \mathbb{C}\cdot\kappa$.
-
-\emph{Step 4: Total fiber-cohomology concentration.}
-It remains to prove that $\mathcal{H}^q_{\mathrm{fiber}} = 0$ for
-$q \neq 0$, i.e., the result holds for the total fiber cohomology,
-not merely its degree-$0$ component.
-
-Filter the fiber bar complex~\eqref{eq:fiber-bar-complex} by bar
-degree:
+This is the ordinary-derived clause of
+Theorem~\ref{thm:fiber-center-identification} restricted to the smooth
+locus. On the strict flat comparison family
+$\barB^{(g)}_{\mathrm{flat}}(\mathcal{A})$, the differential
+$\Dg{g}$ squares to zero, the higher flat fiber cohomology vanishes,
+and the surviving degree-$0$ sheaf is the center local system.
+Hence
 \[
-F_p := \bigoplus_{j \leq p}
-\Gamma\bigl(\overline{C}_j(\Sigma_g),\,
-\mathcal{A}^{\boxtimes j} \otimes \Omega^*_{\log}\bigr).
-\]
-This is an exhaustive, bounded-below ($F_{-1}=0$) filtration, so the
-associated spectral sequence converges to
-$H^*(\bar{B}^*_{\Sigma_g}(\mathcal{A}))$.
-
-On the associated graded $\operatorname{gr}^p_F$, the curvature
-corrections~$d_{\mathrm{curv}}$ vanish because they raise bar degree
-(hence filtration level). The surviving differential~$d_0$ is the
-genus-$0$ collision differential alone. By
-Theorem~\ref{thm:geometric-equals-operadic-bar}, the complex
-$(\operatorname{gr}^p_F, d_0)$ is identified with the operadic bar
-complex of~$\operatorname{gr}\mathcal{A}$.
-
-Since $\mathcal{A}$ is Koszul
-(Definition~\ref{def:chiral-koszul-pair}), the bar concentration
-theorem (Theorem~\ref{thm:bar-concentration}) gives
-\[
-E_1^{p,q}
-= H^q\bigl(\operatorname{gr}^p_F
- \bar{B}^*_{\Sigma_g}(\mathcal{A}),\, d_0\bigr)
-= 0
-\qquad\text{for } q \neq 0.
-\]
-Because the $E_1$ page is concentrated on the line $q=0$, every
-differential
-$d_r\colon E_r^{p,q} \to E_r^{p+r,\,q-r+1}$
-with $r \geq 2$ has target in the row $q' = q - r + 1 \leq -1$,
-which is zero (bar degree is non-negative).
-The $d_1$ differential maps within the $q = 0$ row and need not
-vanish, but after passing to $E_2 = H(E_1, d_1)$ the page remains
-concentrated on $q = 0$. The spectral sequence therefore collapses
-at~$E_2$: $E_\infty = E_2$.
-
-Convergence of the spectral sequence now gives
-$H^q(\bar{B}^*_{\Sigma_g}(\mathcal{A})) = 0$ for $q \neq 0$.
-Combining with Steps~1--3:
-\begin{equation}\label{eq:fiber-cohomology-concentration}
-\mathcal{H}^q_{\mathrm{fiber}}(\mathcal{A})
-\big|_{\mathcal{M}_g^{\mathrm{smooth}}} = 0
+\mathcal{H}^q_{\mathrm{flat}}(\mathcal{A}) = 0
 \quad\text{for } q \neq 0,
 \qquad
-\mathcal{H}^0_{\mathrm{fiber}}
+\mathcal{H}^0_{\mathrm{flat}}(\mathcal{A})
 \cong Z(\mathcal{A}) \otimes \underline{\mathbb{C}}.
-\end{equation}
+\]
+When $\kappa(\mathcal{A}) \neq 0$, the curved fiber differential
+$\dfib$ is retained only in coderived form; if $\kappa(\mathcal{A})=0$,
+the curved and flat models coincide by
+Theorem~\ref{thm:fiber-center-identification}(iii).
 \end{proof}
 
 This completes Step~I: the genus filtration, the associated spectral
@@ -1287,14 +1197,14 @@ for all $r \geq 1$, where $d = \dim_{\mathbb{R}} \overline{C}_n(X) = 2n$.
 \begin{proof}[Proof of Lemma~\ref{lem:ss-duality-complete}]
 \emph{$E_1$ page}: By definition,
 \begin{align}
-(E_1^{p,q,g})_{\mathcal{A}} &= H^q(\bar{B}^p_g(\mathcal{A}), d_{\text{fiber}})\\
-(E_1^{p,d-q,g})_{\mathcal{A}^!} &= H^{d-q}(\bar{B}^p_g(\mathcal{A}^!), d_{\text{fiber}})
+(E_1^{p,q,g})_{\mathcal{A}} &= H^q(\barB^p_{g,\mathrm{flat}}(\mathcal{A}))\\
+(E_1^{p,d-q,g})_{\mathcal{A}^!} &= H^{d-q}(\barB^p_{g,\mathrm{flat}}(\mathcal{A}^!))
 \end{align}
 
 By Corollary~\ref{cor:duality-bar-complexes-complete}, the pairing:
 \begin{equation}
-\langle -, - \rangle: H^q(\bar{B}^p_g(\mathcal{A})) \otimes H^{d-q}(\bar{B}^p_g(
-\mathcal{A}^!)) \to \mathbb{C}
+\langle -, - \rangle: H^q(\barB^p_{g,\mathrm{flat}}(\mathcal{A})) \otimes
+H^{d-q}(\barB^p_{g,\mathrm{flat}}(\mathcal{A}^!)) \to \mathbb{C}
 \end{equation}
 is perfect. Thus $(E_1^{p,q,g})_{\mathcal{A}} \cong ((E_1^{p,d-q,g})_{\mathcal{A}^!})^\vee$.
 
@@ -1379,8 +1289,9 @@ $g \geq 1$, and let $\pi: \mathcal{C}_g
 constructed from the Gauss--Manin connection on the chiral homology sheaf.
 
 This action interacts with Verdier duality via anti-commutativity: let
-$\mathbb{D}: H^*(\bar{B}^{(g)}(\mathcal{A})) \xrightarrow{\sim} H^*(\bar{B}^{(g)}(
-\mathcal{A}^!))^\vee$ be the Verdier isomorphism of Corollary~\ref{cor:quantum-dual-complete}.
+$\mathbb{D}: H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A})) \xrightarrow{\sim}
+H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}^!))^\vee$ be the Verdier
+isomorphism of Corollary~\ref{cor:quantum-dual-complete}.
 Then for every $z \in Z(\mathcal{A})$ and $v \in T_{[\Sigma_g]}\overline{\mathcal{M}}_g$:
 \begin{equation}\label{eq:verdier-ks-anticommute}
 \mathbb{D} \circ \nabla_{\kappa(v)}^z = -\nabla_{\kappa(v)}^z \circ \mathbb{D}
@@ -1500,7 +1411,7 @@ $\langle \rho(z)\omega, \omega' \rangle_{\mathrm{Verdier}} = \langle \omega, \rh
 by the $Z(\mathcal{A})$-linearity of the Koszul pairing.
 
 \emph{Ingredient 3: The involution absorbs the transpose.}
-Let $\sigma = \mathbb{D} \circ ((\text{---})^!)^{-1}$ be the Verdier--Koszul involution
+Let $\sigma = \mathbb{D} \circ ((-)^!)^{-1}$ be the Verdier--Koszul involution
 (Lemma~\ref{lem:verdier-involution-moduli}). The Koszul identification
 $(\mathcal{A}^!)^! \simeq \mathcal{A}$ sends $\kappa_Z(z) \in Z(\mathcal{A}^!)$ back to
 $z \in Z(\mathcal{A})$ (since $\kappa_Z$ composed with $\kappa_Z'$ is the identity by
@@ -1567,20 +1478,20 @@ satisfying $\sigma^2 = \mathrm{id}$.
 
 \begin{proof}[Proof of Lemma~\ref{lem:verdier-involution-moduli}]
 \emph{Construction.}
-By Corollary~\ref{cor:duality-bar-complexes-complete}, the Verdier-Koszul pairing
-identifies:
+By Corollary~\ref{cor:duality-bar-complexes-complete}, the
+Verdier-Koszul pairing identifies:
 \begin{equation}
-\mathbb{D}: H^*(\bar{B}^{(g)}(\mathcal{A})) \xrightarrow{\sim}
-H^*(\bar{B}^{(g)}(\mathcal{A}^!))^\vee
+\mathbb{D}: H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A})) \xrightarrow{\sim}
+H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}^!))^\vee
 \end{equation}
 Since $(\mathcal{A}^!)^! \simeq \mathcal{A}$ (Koszul involutivity,
 Theorem~\ref{thm:chiral-koszul-duality}), we also have:
 \begin{equation}
-\mathbb{D}': H^*(\bar{B}^{(g)}(\mathcal{A}^!)) \xrightarrow{\sim}
-H^*(\bar{B}^{(g)}(\mathcal{A}))^\vee
+\mathbb{D}': H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}^!)) \xrightarrow{\sim}
+H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))^\vee
 \end{equation}
-The composition $(\mathbb{D}')^\vee \circ \mathbb{D}: H^*(\bar{B}^{(g)}(\mathcal{A}))
-\to H^*(\bar{B}^{(g)}(\mathcal{A}))$ is the identity (by involutivity of Verdier
+The composition $(\mathbb{D}')^\vee \circ \mathbb{D}: H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))
+\to H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))$ is the identity (by involutivity of Verdier
 duality on compact smooth varieties, see Theorem~\ref{thm:verdier-duality-config-complete}).
 
 Now, the $E_2$ page of the Leray spectral sequence
@@ -1602,8 +1513,9 @@ Since every $E_\infty$-chiral algebra is in particular an $E_1$-chiral algebra, 
 D^b(\mathrm{Mod}^{\Eone}_{\mathcal{A}^!})
 \end{equation}
 Under~$\Phi$, the unit module $\mathcal{A}$ (viewed as a module over itself)
-maps to $\bar{B}^{\mathrm{ch}}(\mathcal{A}) = \mathcal{A}^!$ (viewed as a
-module over~$\mathcal{A}^!$). Since equivalences of categories preserve
+maps to the canonical $\mathcal{A}^!$-module; the bar object
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the coalgebra-side resolution used to
+compute this image, not the image itself. Since equivalences of categories preserve
 endomorphism algebras:
 \begin{equation}
 Z(\mathcal{A}) = \mathrm{End}_{D(\mathrm{Mod}_{\mathcal{A}})}(\mathcal{A})
@@ -1768,7 +1680,7 @@ of $\mathcal{A}^!$ at genus $g$
 \begin{proof}[Proof of Lemma~\ref{lem:obs-def-split-complete}]
 The bar complex $\bar{B}^{(g)}(\mathcal{A})$ computes obstruction
 classes: a class
-$\alpha \in H^*(\bar{B}^{(g)}(\mathcal{A}))$
+$\alpha \in H^*(\barB^{(g)}_{\mathrm{flat}}(\mathcal{A}))$
 represents a cohomological obstruction to extending the
 genus-$(g{-}1)$ structure to genus~$g$. By
 Lemma~\ref{lem:quantum-from-ss}, these are precisely the
@@ -2003,7 +1915,7 @@ proved shifted-symplectic statement on the ambient complex~$C_g$. The
 direct bar-side realization of a $(-1)$-shifted symplectic chart on
 $L_g = \barB^{(g)}_{\mathrm{flat}}(\cA)[1]$ would require the
 additional BV package of
-Chapter~\ref{ch:bv-brst}. The following theorem records that bar-side
+Chapter~\ref{ch:v1-bv-brst}. The following theorem records that bar-side
 upgrade conditionally. The transport from the ambient complex to a
 bar chart factors through Theorem~\ref{thm:fiber-center-identification}.
 
@@ -2430,7 +2342,7 @@ anomalies in the physical theory, which is established at $g = 0$
 well-defined (Theorem~\ref{thm:inductive-genus-determination},
 Theorem~\ref{thm:general-hs-sewing}), but the
 identification with the BRST complex remains conjectural
-(Conjecture~\ref{conj:v1-master-bv-brst});
+(Conjecture~\ref{conj:master-bv-brst});
 (b)~the $\mathcal{N}=4$ example requires constructing the Kapustin--Witten twist
 as a chiral Koszul pair, which is beyond the scope of this monograph.
 The first two bullet points are proved for specific examples (Heisenberg at genus~1
@@ -2644,7 +2556,8 @@ Feigin--Frenkel center (Remark~\ref{rem:feigin-frenkel-center}; \cite{Feigin-Fre
 From Table~\ref{tab:obstruction-summary}, the genus-$g$ obstruction for
 $\widehat{\mathfrak{g}}_k$ is
 $\mathrm{obs}_g = \frac{(k+h^\vee)\dim(\mathfrak{g})}{2h^\vee}\,
-\lambda_g$ At $k = -h^\vee$, the coefficient $k + h^\vee$ vanishes. The
+\lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{)}.
+At $k = -h^\vee$, the coefficient $k + h^\vee$ vanishes. The
 complementarity formula
 (Theorem~\ref{thm:quantum-complementarity-main}) with
 $Z(\widehat{\mathfrak{g}}_{-h^\vee})
@@ -2878,8 +2791,8 @@ The $\beta\gamma$ system and free fermions form a Koszul dual pair:
 \begin{proof}
 Via bar construction and duality:
 \begin{enumerate}
-\item Bar complex: $\bar{B}(\mathcal{F}) = \Lambda^{*,c}(\psi^*, \partial\psi^*, \ldots)$ (exterior coalgebra, the Koszul dual coalgebra).
-\item Koszul dual algebra: $\mathcal{F}^! = \bar{B}(\mathcal{F})^\vee \cong \beta\gamma$ (linear dual of the bar coalgebra). Bar-cobar inversion gives $\Omega(\bar{B}(\mathcal{F})) \cong \mathcal{F}$ (recovers the fermion, not $\beta\gamma$).
+\item Bar complex: $\bar{B}(\mathcal{F}) = \Lambda^{*,c}(\psi^*, \partial\psi^*, \ldots)$ (the exterior bar coalgebra on the desuspended generators).
+\item Koszul dual algebra: $\mathcal{F}^! \cong \beta\gamma$ is obtained by dualizing the dual coalgebra computed from $\bar{B}(\mathcal{F})$; in this free case that amounts to the linear dual of the bar coalgebra. Bar-cobar inversion gives $\Omega(\bar{B}(\mathcal{F})) \cong \mathcal{F}$ (recovers the fermion, not $\beta\gamma$).
 \item Conversely: $\bar{B}(\beta\gamma)$ has nonzero cohomology classes $[\beta \otimes \beta], [\gamma \otimes \gamma] \in H^2(\bar{B}(\beta\gamma))$, which dualize to the fermionic relation $\psi^2 = 0$.
 \item Koszul dual: $(\beta\gamma)^! = \bar{B}(\beta\gamma)^\vee \cong \mathcal{F}$.
 \end{enumerate}
@@ -2993,8 +2906,10 @@ Given a chiral algebra $\mathcal{A}$ on a curve $X$ of genus $g$, the quantum co
 residues, the Gauss--Manin connection, and modular corrections.
 This differential satisfies $\Dg{g}^{\,2} = 0$ (Convention~\ref{conv:higher-genus-differentials}).
 \item Compute the fiberwise collision differential $\dfib$ and verify
-that $\dfib^{\,2} = \kappa \cdot \omega_g \in Z(\mathcal{A}) \otimes H^2(\overline{\mathcal{M}}_g)$;
-this curvature measures the obstruction coefficient $\kappa(\mathcal{A})$.
+at chain level that $\dfib^{\,2} = \kappa(\mathcal{A}) \cdot \omega_g$;
+this curvature measures the obstruction coefficient
+$\kappa(\mathcal{A})$ and is interpreted coderivedly before passing to
+the flat differential~$\Dg{g}$.
 \item Take cohomology of the total differential:
 $Q_g(\mathcal{A}) = H^*(\bar{B}^{(g)}(\mathcal{A}),\, \Dg{g})$.
 \item Verify complementarity: $\dim Q_g(\mathcal{A}) + \dim Q_g(\mathcal{A}^!) = \dim H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$.
@@ -3155,26 +3070,26 @@ Family $\cA$ & $\kappa(\cA)$ & $\kappa(\cA^!)$
 \multicolumn{6}{@{}l}{\textit{Free fields:
  $\kappa + \kappa^! = 0$}} \\[2pt]
 $\cH_k$
- & $k$ & $-k$ & $0$ & --- & $k = 0$ \\
+ & $k$ & $-k$ & $0$ & n/a & $k = 0$ \\
 Free fermion
- & $1/4$ & $-1/4$ & $0$ & --- & --- \\
+ & $1/4$ & $-1/4$ & $0$ & n/a & n/a \\
 $V_\Lambda$ (rank $r$)
- & $r$ & $-r$ & $0$ & $2r$ & --- \\
+ & $r$ & $-r$ & $0$ & $2r$ & n/a \\
 $\beta\gamma_\lambda$
  & $6\lambda^2{-}6\lambda{+}1$
  & $-(6\lambda^2{-}6\lambda{+}1)$
- & $0$ & --- & --- \\[4pt]
+ & $0$ & n/a & n/a \\[4pt]
 \midrule
 \multicolumn{6}{@{}l}{\textit{Affine Kac--Moody:
  $\kappa + \kappa^! = 0$, $K = 2\dim(\fg)$}} \\[2pt]
 $\widehat{\mathfrak{sl}}_2$
- & $3(k{+}2)/4$ & $-3(k{+}2)/4$ & $0$ & $6$ & --- \\
+ & $3(k{+}2)/4$ & $-3(k{+}2)/4$ & $0$ & $6$ & n/a \\
 $\widehat{\mathfrak{sl}}_3$
- & $4(k{+}3)/3$ & $-4(k{+}3)/3$ & $0$ & $16$ & --- \\
+ & $4(k{+}3)/3$ & $-4(k{+}3)/3$ & $0$ & $16$ & n/a \\
 $\widehat{G}_2$
- & $7(k{+}4)/4$ & $-7(k{+}4)/4$ & $0$ & $28$ & --- \\
+ & $7(k{+}4)/4$ & $-7(k{+}4)/4$ & $0$ & $28$ & n/a \\
 $\widehat{E}_8$
- & $62(k{+}30)/15$ & $-62(k{+}30)/15$ & $0$ & $496$ & --- \\[4pt]
+ & $62(k{+}30)/15$ & $-62(k{+}30)/15$ & $0$ & $496$ & n/a \\[4pt]
 \midrule
 \multicolumn{6}{@{}l}{\textit{$\cW_N$-algebras:
  $\kappa + \kappa^! = \varrho_N K_N \neq 0$
@@ -3822,7 +3737,8 @@ The three incarnations descend through the H/M/S hierarchy:
  encoding the Arakelov defect.
 \item \emph{S-level.} The scalar shadow is
  $\kappa(\cA) \cdot \lambda_g \in H^*(\overline{\mathcal{M}}_g)$
- (Theorem~\ref{thm:genus-universality}; ):
+ \textup{(}UNIFORM-WEIGHT\textup{)}
+ (Theorem~\ref{thm:genus-universality}):
  one number per genus,
  determined by the genus-$1$ curvature alone.
  For multi-weight algebras at $g \geq 2$, the scalar formula
@@ -4061,7 +3977,9 @@ The last step uses the pairing between logarithmic forms and compactly supported
 \begin{lemma}[AF duality for chiral algebras; \ClaimStatusProvedHere]\label{lem:AF-dual-chiral}
 The Ayala--Francis duality for a chiral algebra $\mathcal{A}$ is:
 \[\int_{\text{Conf}_n(X)} \mathcal{A} \simeq \mathbb{D}_{\text{top}}\left(\int_{-\text{Conf}_n(X)} \bar{B}(\mathcal{A})\right)\]
-where $\bar{B}(\mathcal{A})$ is the bar coalgebra (Koszul dual) and $\mathbb{D}_{\text{top}}$ is topological (linear) duality.
+where $\bar{B}(\mathcal{A})$ is the bar coalgebra computing the dual
+coalgebra $\mathcal{A}^i = H^*(\barB(\mathcal{A}))$, and
+$\mathbb{D}_{\text{top}}$ is topological (linear) duality.
 \end{lemma}
 
 \begin{proof}[Proof of Lemma]
@@ -6058,7 +5976,7 @@ sewing node. In particular, $\mathfrak{N}_g$ is a quartic
 invariant: it sits at the same degree as the quartic contact
 shadow $\mathfrak{Q}_{\cA}$ and, for uniform-weight algebras
 (or any multi-generator family at genus~$1$) where
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ is proved , is controlled by the same data.
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{)} is proved, is controlled by the same data.
 This is the mechanism by which the Gaussian sewing calculus
 recovers algebra-dependent modular information beyond $\kappa$.
 \end{remark}
@@ -6295,7 +6213,7 @@ $Q_g(\mathrm{Vir}_c) + Q_g(\mathrm{Vir}_{26-c})
 \end{proposition}
 
 \begin{proof}
-The curvature identity $d_{\barB}^2 = \kappa \cdot \omega_g$
+The fiberwise curvature identity $\dfib^{\,2} = \kappa \cdot \omega_g$
 applied to $\cA = \mathrm{Vir}_c$ gives
 $\kappa(\mathrm{Vir}_c) = c/2$. The Koszul dual satisfies
 $\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$

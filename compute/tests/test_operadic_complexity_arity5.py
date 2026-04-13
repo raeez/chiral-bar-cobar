@@ -10,7 +10,7 @@ THREE INDEPENDENT COMPUTATIONS of S_5(Vir_c):
     Sh_5 = -nabla_H^{-1}({Sh_3, Sh_4}_H)
     S_5 = -48 / [c^2 (5c + 22)]
 
-(2) A-INFINITY TREE FORMULA: m_5^{tr}(sT,...,sT) via the HPL transfer
+(2) A-INFINITY TREE FORMULA: m_5^{tr}(s^{-1}T,...,s^{-1}T) via the HPL transfer
     Sum over C_4 = 14 planar binary trees with 5 leaves.
     On the primary line, the tree sum reduces to the convolution
     recursion a_3 = -a_1*a_2/a_0, giving S_5 = a_3/5.
@@ -166,11 +166,11 @@ class TestShadowRecursionS5:
 # ============================================================================
 
 class TestAInfinityTreeS5:
-    """Compute m_5^{tr}(sT,...,sT) via the HPL tree formula and verify = S_5.
+    """Compute m_5^{tr}(s^{-1}T,...,s^{-1}T) via the HPL tree formula and verify = S_5.
 
     On the primary line, the tree formula reduces to the convolution recursion.
     This is because:
-    - All inputs have weight 2 (sT in bar degree 1)
+    - All inputs have weight 2 (s^{-1}T in bar degree 1)
     - m_2 on the primary line produces a single weight component
     - The homotopy h acts as the propagator P = 2/c
     - Projecting to cohomology extracts the scalar coefficient
@@ -180,7 +180,7 @@ class TestAInfinityTreeS5:
     """
 
     def test_primary_line_m5_equals_S5(self):
-        """m_5(sT,...,sT) = S_5 * e_{10} on the primary line."""
+        """m_5(s^{-1}T,...,s^{-1}T) = S_5 * e_{10} on the primary line."""
         for c_num in [1, 5, 13, 25]:
             vir = HigherVirasoroAInfinity(FR(c_num))
             m5_val = vir.m5_primary()
@@ -189,7 +189,7 @@ class TestAInfinityTreeS5:
     def test_tree_formula_scalar_reduction(self):
         """The 14-tree sum for m_5 reduces to the scalar convolution at a_3.
 
-        Each tree T with 5 leaves contributes pi o Phi_T(i(sT),...,i(sT)).
+        Each tree T with 5 leaves contributes pi o Phi_T(i(s^{-1}T),...,i(s^{-1}T)).
         On the primary line, Phi_T involves:
         - 4 applications of m_2 (one per internal node)
         - 3 applications of h (one per internal edge connecting parent to child)

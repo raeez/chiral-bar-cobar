@@ -1235,8 +1235,8 @@ def _numerical_kappa(family: str, **params) -> object:
         return Rational(dim) * (Rational(level) + h_dual) / (2 * h_dual)
 
     elif family_lower.startswith('w_') or family_lower.startswith('w3') or family_lower.startswith('wn'):
-        # W_N principal: kappa = c * sum_{i=1}^{N-1} 1/(i+1) = c * H_N
-        # where H_N = sum 1/(i+1) for i=1..N-1 = H_N - 1 (shifted harmonic)
+        # W_N principal: kappa = c * sum_{i=1}^{N-1} 1/(i+1) = c * (H_N - 1)
+        # where H_N = sum_{j=1}^{N} 1/j, so the shifted sum is H_N - 1.
         N = params.get('N', 3)
         cc = params.get('central_charge', None)
         if cc is not None:

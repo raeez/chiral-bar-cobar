@@ -1228,7 +1228,7 @@ def full_langlands_dictionary() -> Dict[str, Dict[str, str]]:
                 '(genus-0 binary shadow)'
             ),
             'geom_langlands': (
-                'KZ connection nabla = d - Omega/(k+h^v) dlog(z_i-z_j). '
+                'KZ connection nabla = d - (Omega/((k+h^v)(z_i-z_j))) d(z_i-z_j). '
                 'Monodromy = quantum group R-matrix (Kohno-Drinfeld).'
             ),
         },

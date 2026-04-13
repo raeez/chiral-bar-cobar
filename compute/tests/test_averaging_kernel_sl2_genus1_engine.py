@@ -98,7 +98,7 @@ class TestAveragingKernelSL2Genus1Engine:
 
         # VERIFIED [CF][LC]: kappa(V_k(g)) = dim(g)(k+h^vee)/(2h^vee) with dim(sl_2)=3 and h^vee=2.
         assert classical_average_from_symmetric_casimir(K) == SL2_CASIMIR_AVERAGE_WEIGHT * K == sp.Rational(3, 4) * K
-        # VERIFIED [CF][LC]: the affine shift contributes dim(sl_2)/2 = 3/2, so av(r) = 3(k+2)/4.
+        # VERIFIED [CF][LC]: av(r) = 3k/4 and the affine shift contributes dim(sl_2)/2 = 3/2, so kappa = 3(k+2)/4.
         assert affine_genus1_average(K) == SL2_CASIMIR_AVERAGE_WEIGHT * K + SL2_SUGAWARA_SHIFT
         assert averaging_map_of_elliptic_r_matrix(level=K, z=Z, antisymmetric_part=antisymmetric_part) == kappa_sl2(K)
         assert kappa_sl2(K) == sp.Rational(3) * (K + 2) / 4

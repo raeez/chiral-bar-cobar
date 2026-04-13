@@ -425,11 +425,10 @@ def w_algebra_family(N: int, c: Rational = Rational(2)) -> ChiralAlgebraFamily:
     Multi-weight for N >= 3.
     """
     gens = [(f"W_{j}", Rational(j)) for j in range(2, N + 1)]
-    # kappa for W_N: sum over generators c / (h_i * (2*h_i - 1))
-    # For the universal W_N at generic c, kappa = c * H_N
-    # where H_N = sum_{j=2}^{N} 1/(j*(2j-1))
-    H_N = sum(Rational(1, j * (2 * j - 1)) for j in range(2, N + 1))
-    kappa = c * H_N
+    # AP1/AP136: kappa(W_N) = c * (H_N - 1), H_N = sum_{j=1}^{N} 1/j.
+    # Boundary check: N=2 gives c/2, recovering Virasoro.
+    harmonic_shift = sum(Rational(1, j) for j in range(2, N + 1))
+    kappa = c * harmonic_shift
     return ChiralAlgebraFamily(
         name=f"W_{N}(c={c})",
         central_charge=c,

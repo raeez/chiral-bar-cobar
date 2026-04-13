@@ -22,6 +22,11 @@ CAUTION (AP38): Convention-check all hardcoded values.
 CAUTION (AP10): Cross-family consistency checks, not just hardcoded values.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 from __future__ import annotations
 
 import math

@@ -11,7 +11,7 @@ thm:e1-factorization-disjoint (foundations.tex) cites `prop:mc-homotopy-invarian
 - Stages 1 and 2 are the same observation (Morita theory). One definition suffices.
 - Stage 3 is a conjecture, not a theorem. Cannot be a "stage" of a proved architecture.
 - Stage 4 is already implicit in the definition of C (axiom (vi): clutching).
-- The MINIMAL decomposition has TWO stages: (1) define C with clutching, (2) observe bar is a coalgebra over SC.
+- The MINIMAL decomposition has TWO stages: (1) define C with clutching, (2) observe that the ordered bar is an E_1 coalgebra and that the genuine SC datum appears only on the derived-center pair.
 - The "corrected big picture" remark has 6 points but only 1 is independent. The rest are consequences.
 
 ### Dirac: The chapter is 25-30% scaffolding

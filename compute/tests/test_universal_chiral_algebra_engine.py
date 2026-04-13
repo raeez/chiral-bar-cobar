@@ -406,6 +406,21 @@ class TestKappaConsistency:
         family = critical_level_family("A", 1)
         assert family.kappa == Rational(0)
 
+    def test_w2_kappa_matches_virasoro_boundary(self):
+        """AP136/C04: W_2 gives kappa = c/2, matching Virasoro."""
+        family = w_algebra_family(2, Rational(26))
+        assert family.kappa == Rational(13)
+
+    def test_w3_kappa_matches_harmonic_formula(self):
+        """AP1/AP136: kappa(W_3) = c * (H_3 - 1) = 5c/6."""
+        family = w_algebra_family(3, Rational(6))
+        assert family.kappa == Rational(5)
+
+    def test_w5_kappa_matches_harmonic_formula(self):
+        """Higher-rank regression: kappa(W_5) = c * (H_5 - 1)."""
+        family = w_algebra_family(5, Rational(60))
+        assert family.kappa == Rational(77)
+
     def test_lattice_kappa_equals_rank(self):
         """kappa(V_Lambda) = rank(Lambda) (AP48, not c/2)."""
         family = lattice_voa_family(24, True)

@@ -4,6 +4,11 @@ Tests for shadow_level_arithmetic.py — per-channel and shadow-level arithmetic
 GRADING: Cohomological, |d| = +1.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 from __future__ import annotations
 
 import pytest

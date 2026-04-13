@@ -8,17 +8,17 @@ The Virasoro algebra Vir_c has a single strong generator T of conformal
 weight 2.  The transferred A-infinity operations m_k on H*(B(Vir_c)) are
 computed via the Kadeishvili-Merkulov tree formula (HPL transfer).
 
-On the PRIMARY LINE (all inputs = sT, the desuspension of T in bar
+On the PRIMARY LINE (all inputs = s^{-1}T, the desuspension of T in bar
 degree 1), the transferred operations satisfy:
 
-    m_k^{tr}(sT, ..., sT) = S_k * (basis vector at weight 2k in Ext^1)
+    m_k^{tr}(s^{-1}T, ..., s^{-1}T) = S_k * (basis vector at weight 2k in Ext^1)
 
 where S_k is the shadow obstruction tower coefficient at arity k.  This is the
 shadow-formality identification (prop:shadow-formality-low-arity),
 PROVED at arities 2, 3, 4 and extended here to arities 5, 6, 7.
 
-WEIGHT GRADING:  sT has weight 2 and bar degree 1.  The operation
-m_k(sT, ..., sT) has total weight 2k and bar degree 1.  Different
+WEIGHT GRADING:  s^{-1}T has weight 2 and bar degree 1.  The operation
+m_k(s^{-1}T, ..., s^{-1}T) has total weight 2k and bar degree 1.  Different
 arities live in DIFFERENT weight spaces of Ext^1.  The A-infinity
 relations involve compositions where intermediate results occupy
 specific weight components; they are verified within each weight
@@ -45,7 +45,7 @@ arity is the image of S_k under the shadow-formality identification.
 
 CONVENTIONS:
 - Cohomological grading (|d| = +1)
-- Bar uses DESUSPENSION: |sT| = |T| - 1 = 2 - 1 = 1
+- Bar uses DESUSPENSION: |s^{-1}T| = |T| - 1 = 2 - 1 = 1
 - Exact rational arithmetic via fractions.Fraction
 - Shadow coefficients: S_r = a_{r-2} / r where a_n are Taylor
   coefficients of sqrt(Q_L(t))
@@ -207,7 +207,7 @@ class HigherVirasoroAInfinity:
 
     On the primary line, the transferred A-infinity operations satisfy:
 
-        m_k(sT, ..., sT) = S_k * (weight-2k basis vector in Ext^1)
+        m_k(s^{-1}T, ..., s^{-1}T) = S_k * (weight-2k basis vector in Ext^1)
 
     The A-infinity relations are encoded by the MC equation:
 
@@ -234,13 +234,13 @@ class HigherVirasoroAInfinity:
         return self._tower_cache
 
     def mk_primary(self, k: int) -> Fraction:
-        r"""Transferred m_k on the primary line: m_k(sT, ..., sT).
+        r"""Transferred m_k on the primary line: m_k(s^{-1}T, ..., s^{-1}T).
 
         Returns the scalar coefficient S_k (the shadow obstruction tower coefficient
         at arity k), which is the normalized structure constant.
 
         The shadow-formality identification gives:
-            m_k^{tr}(sT, ..., sT) = S_k * e_{2k}
+            m_k^{tr}(s^{-1}T, ..., s^{-1}T) = S_k * e_{2k}
 
         where e_{2k} is the weight-2k basis vector in Ext^1.
 
@@ -254,7 +254,7 @@ class HigherVirasoroAInfinity:
         return tower.get(k, FR(0))
 
     def m5_primary(self) -> Fraction:
-        r"""m_5(sT, sT, sT, sT, sT) on the primary line.
+        r"""m_5(s^{-1}T, s^{-1}T, s^{-1}T, s^{-1}T, s^{-1}T) on the primary line.
 
         S_5 = -48 / [c^2 (5c + 22)]
 
@@ -267,7 +267,7 @@ class HigherVirasoroAInfinity:
         return self.mk_primary(5)
 
     def m6_primary(self) -> Fraction:
-        r"""m_6(sT, ..., sT) on the primary line.
+        r"""m_6(s^{-1}T, ..., s^{-1}T) on the primary line.
 
         S_6 = 80(45c + 193) / [3 c^3 (5c + 22)^2]
 
@@ -278,7 +278,7 @@ class HigherVirasoroAInfinity:
         return self.mk_primary(6)
 
     def m7_primary(self) -> Fraction:
-        r"""m_7(sT, ..., sT) on the primary line.
+        r"""m_7(s^{-1}T, ..., s^{-1}T) on the primary line.
 
         S_7 = -2880(15c + 61) / [7 c^4 (5c + 22)^2]
 
@@ -348,11 +348,11 @@ class HigherVirasoroAInfinity:
 
         ON THE PRIMARY LINE, this reduces to a scalar identity on the
         shadow coefficients.  The weight-graded structure means that
-        the composition m_j(...m_i(sT,...,sT)...,sT,...,sT) involves
+        the composition m_j(...m_i(s^{-1}T,...,s^{-1}T)...,s^{-1}T,...,s^{-1}T) involves
         m_i contributing weight 2i and m_j accepting one input of weight 2i
         plus (j-1) inputs of weight 2.
 
-        For the PRIMARY LINE with all inputs = sT (weight 2), the
+        For the PRIMARY LINE with all inputs = s^{-1}T (weight 2), the
         compositions involve MIXED-WEIGHT inputs.  The correct encoding
         of the A-infinity relation is the MC equation of the shadow obstruction tower:
 
@@ -724,7 +724,7 @@ def mk_coefficient_table(c_val: Fraction, max_arity: int = 7,
     r"""Tabulate nonzero structure constants m_k at weight up to max_weight.
 
     For a single generator T of weight 2:
-    - m_k(sT,...,sT) has output weight 2k
+    - m_k(s^{-1}T,...,s^{-1}T) has output weight 2k
     - We list all (k, 2k) with 2k <= max_weight
 
     Parameters:

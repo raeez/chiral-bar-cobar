@@ -1448,11 +1448,10 @@ def full_analysis_summary() -> Dict[str, any]:
             'not just the Harrison subcomplex.'
         ),
         'implications_for_sc_structure': (
-            'The SC^{ch,top}-coalgebra structure lives on Sym^c (the FULL geometric bar), '
-            'which carries cocommutative coassociative structure. This is compatible with '
-            'both the operadic bar for Com^{ch} (via primitive projection) and for Ass^{ch} '
-            '(via ordered embedding). The E_1 structure on B^{geom} IS the cocommutative '
-            'coalgebra structure, which is STRICTLY STRONGER than coLie (it is coLie + '
-            'cocommutative coassociative).'
+            'Sym^c is the FULL geometric factorization coalgebra of Vol I, not the '
+            'Swiss-cheese coalgebra. The actual SC^{ch,top} datum lives on the '
+            'derived-center pair (C^bullet_ch(A,A), A); Sym^c is its '
+            'Sigma_n-coinvariant closed shadow, while the ordered tensor bar '
+            'supplies the E_1 line-side shadow.'
         ),
     }

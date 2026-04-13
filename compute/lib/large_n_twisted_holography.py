@@ -163,7 +163,7 @@ class ShadowConnection:
     """nabla^hol_{g,n} = d - Sh_{g,n}(Theta_A).
 
     At genus 0, arity 2: specializes to KZ connection for affine algebras.
-    nabla = d - kappa sum_{i<j} dlog(z_i - z_j) for Heisenberg.
+    nabla = d - kappa sum_{i<j} d(z_i - z_j)/(z_i - z_j) for Heisenberg.
 
     Flatness: (nabla)^2 = 0 follows from MC equation D*Theta + (1/2)[Theta,Theta] = 0
     projected to genus 0, plus Arnold relation on C_bar_3(X).
@@ -676,7 +676,7 @@ def kappa_involution_check(N: int, k: Fraction) -> Dict[str, object]:
 def shadow_connection_genus0_arity2(A: ChiralAlgebraData) -> ShadowConnection:
     """The shadow connection at genus 0, arity 2.
 
-    nabla^hol_{0,2} = d - kappa * dlog(z_1 - z_2).
+    nabla^hol_{0,2} = d - (kappa/(z_1 - z_2)) d(z_1 - z_2).
     For affine algebras this is the KZ connection at the scalar level.
     Flatness is automatic (scalar on configuration space of 2 points).
     """
@@ -694,7 +694,7 @@ def shadow_connection_genus0_arity2(A: ChiralAlgebraData) -> ShadowConnection:
 def shadow_connection_genus0_arity3(A: ChiralAlgebraData) -> ShadowConnection:
     """The shadow connection at genus 0, arity 3.
 
-    nabla^hol_{0,3} = d - kappa * (dlog(z_12) + dlog(z_13) + dlog(z_23)).
+    nabla^hol_{0,3} = d - kappa * (dz_12/z_12 + dz_13/z_13 + dz_23/z_23).
     At the scalar level, flatness on C_3(X) uses the Arnold relation:
     dlog(z_12) ^ dlog(z_23) + dlog(z_12) ^ dlog(z_13) + dlog(z_13) ^ dlog(z_23) = 0.
 

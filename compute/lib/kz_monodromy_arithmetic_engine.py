@@ -975,7 +975,7 @@ def shadow_connection_kz_identification(k: int) -> Dict[str, Any]:
     """Verify the identification: KZ connection = shadow connection at genus 0.
 
     The genus-0 arity-2 shadow connection on Conf_n(C) is:
-      nabla^{sh}_{0,2} = d - (1/kappa_KZ) sum_{i<j} Omega_{ij} d log(z_i - z_j)
+      nabla^{sh}_{0,2} = d - (1/kappa_KZ) sum_{i<j} (Omega_{ij}/(z_i - z_j)) d(z_i - z_j)
 
     This is EXACTLY the KZ connection. The identification:
       r(z) = Res^{coll}_{0,2}(Theta_A) = Omega / z

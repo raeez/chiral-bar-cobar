@@ -79,23 +79,28 @@ Throughout this chapter: collision divisors are $D_{ij}$ with $i < j$ (indices i
 
 \begin{convention}[Bar coalgebra and Koszul dual algebra]
 \label{conv:bar-coalgebra-identity}
-\index{bar construction!as Koszul dual coalgebra|textbf}
+\index{bar construction!as bar coalgebra|textbf}
 \index{Koszul dual!coalgebra vs.\ algebra|textbf}
 The bar construction $\barB_X(\cA)$ of an augmented chiral
 algebra~$\cA$ is a dg factorization \emph{coalgebra} on
-$\operatorname{Ran}(X)$, the $\Sigma_n$-coinvariant quotient of the ordered bar $B^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$. Throughout this chapter, the unqualified notation $\barB_X(\cA)$ refers to this symmetric factorization bar on unordered $\operatorname{Ran}(X)$; the ordered tensor coalgebra is always written $B^{\mathrm{ord}}_X(\cA)$. It is the Koszul dual \emph{coalgebra}
-of~$\cA$: the bar complex is not a tool for computing the dual,
-it \emph{is} the dual.
+$\operatorname{Ran}(X)$, the $\Sigma_n$-coinvariant quotient of the ordered bar $B^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$. Throughout this chapter, the unqualified notation $\barB_X(\cA)$ refers to this symmetric factorization bar on unordered $\operatorname{Ran}(X)$; the ordered tensor coalgebra is always written $B^{\mathrm{ord}}_X(\cA)$. It is the bar coalgebra
+of~$\cA$: the bar complex computes the dual
+coalgebra
+\[
+\cA^i \;:=\; H^*(\barB_X(\cA)).
+\]
+Thus $\barB_X(\cA)$, $\cA^i$, and $\cA^!$ are distinct objects.
 
 When $\cA$ is Koszul, the bar coalgebra has cohomology concentrated
-in bar degree~$1$. The Koszul dual \emph{algebra}~$\cA^!$ is a
+in bar degree~$1$, so $\cA^i$ is concentrated there. The Koszul dual
+\emph{algebra}~$\cA^! = ((\cA^i)^\vee)$ is a
 separate object: it has generators $\mathcal{V}^\vee =
 \mathcal{H}om_{\mathcal{O}_X}(\mathcal{V}, \omega_X)$
 ($\mathcal{D}_X$-module dual of the generators of~$\cA$) and
 relations~$R^\perp$ (orthogonal complement under the residue
 pairing). In the classical setting (algebras on a point),
-$\cA^!$ is the graded linear dual of the concentrated bar
-coalgebra. In the chiral setting, $\cA^!$ is characterized by
+$\cA^!$ is the graded linear dual of the concentrated dual
+coalgebra~$\cA^i$. In the chiral setting, $\cA^!$ is characterized by
 Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main}):
 Verdier duality on $\operatorname{Ran}(X)$ sends the bar
 \emph{coalgebra} to the homotopy Koszul dual \emph{algebra},
@@ -174,9 +179,11 @@ leading coefficient~(D).
 \textbf{Object} & \textbf{Type} & \textbf{Relationship} \\
 \hline
 $\barB_X(\cA)$ & factorization coalgebra
- & the Koszul dual coalgebra \\[2pt]
+ & bar coalgebra \\[2pt]
+$\cA^i = H^*(\barB_X(\cA))$ & factorization coalgebra
+ & dual coalgebra \\[2pt]
 $\cA^!$ & chiral algebra
- & generators $= \mathcal{V}^\vee$,
+ & $= ((\cA^i)^\vee)$; generators $= \mathcal{V}^\vee$,
  relations $= R^\perp$ \\[2pt]
 $\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$
  & factorization \emph{algebra}
@@ -391,7 +398,8 @@ Lagrangians (the branch structure of the logarithm); and
 Theorem~D that the leading coefficient~$\kappa(\cA)$ of the
 logarithm determines the genus expansion
 $F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
-for uniform-weight algebras at all genera, while the
+\textup{(}UNIFORM-WEIGHT\textup{)}
+at all genera, while the
 multi-weight extension at genus~$g \geq 2$ receives a
 nonvanishing cross-channel correction
 (Theorem~\ref{thm:multi-weight-genus-expansion}).
@@ -422,7 +430,8 @@ The total bar complex is
 $\bar{B}(\mathcal{A}) = \bigoplus_{g \geq 0} \bar{B}^{(g)}(\mathcal{A})$.
 The complete definition, incorporating the bigrading by bar
 degree~$p$ and form degree~$q$ together with the genus-graded
-orientation bundle $\mathrm{or}_{p+1}^{(g)}$, is given in
+orientation bundle $\mathrm{or}_{p+1}^{(g)}$, the sign line that records
+orientations of the codimension-$p$ collision strata at genus~$g$, is given in
 Definition~\ref{def:geom-bar} below.
 \end{definition}
 
@@ -563,7 +572,9 @@ where:
 
 The explicit formula for the sign is:
 \[\sigma_{ij} = \left(\sum_{k=0}^{i-1} |\phi_k|\right) + \left(\sum_{k=i+1}^{j-1} |\phi_k|\right) + |\phi_i| + \epsilon_{\text{geom}}(D_{ij})\]
-where $\epsilon_{\text{geom}}(D_{ij}) = 0$ or $1$ depending on orientation convention (see Convention \ref{conv:orientations-enhanced}).
+where $\epsilon_{\text{geom}}(D_{ij}) \in \{0,1\}$ is the parity of the
+boundary orientation of the collision divisor~$D_{ij}$; the full sign
+package is fixed in Convention~\ref{conv:orientations-enhanced}.
 
 \emph{Component 3: Form differential $d_{\text{form}}$.}
 
@@ -1047,6 +1058,17 @@ is stated and proved in full generality in
 Theorem~\ref{thm:bar-functorial-complete}.
 \end{corollary}
 
+\begin{proof}
+The first sentence is the square-zero statement already proved for the
+total bar differential. If
+$f \colon \cA \to \cA'$ is a morphism of chiral algebras, applying~$f$
+to each algebra factor commutes with the internal differential, with
+the collision residues, and with the de~Rham differential, so
+$\bar B^{\mathrm{geom}}(f)$ is a chain map. Compatibility with the
+coproduct, identities, and composition is checked on the same tensor
+factors, yielding the stated functor.
+\end{proof}
+
 \subsection{Stokes' theorem on configuration spaces}
 
 \begin{theorem}[Stokes' theorem on configuration spaces; \ClaimStatusProvedHere]\label{thm:stokes-config}
@@ -1469,6 +1491,15 @@ identities and composition are immediate from the definition.
 A commutative diagram of chiral algebras induces a commutative diagram of bar complexes: if $k \circ f = g \circ h$ in $\mathsf{ChirAlg}_X$, then $\bar{B}(k) \circ \bar{B}(f) = \bar{B}(g) \circ \bar{B}(h)$ in $\mathsf{dgCoalg}_X$. This is immediate from functoriality.
 \end{corollary}
 
+\begin{proof}
+By Corollary~\ref{cor:bar-functorial}, the bar construction is a
+functor. Applying that functor to the equality
+$k \circ f = g \circ h$ gives
+$\bar{B}(k \circ f) = \bar{B}(g \circ h)$, and functoriality expands
+this as
+$\bar{B}(k)\circ\bar{B}(f) = \bar{B}(g)\circ\bar{B}(h)$.
+\end{proof}
+
 \begin{proposition}[Model independence; \ClaimStatusProvedHere]
 \label{prop:model-independence}
 \index{model independence}
@@ -1488,6 +1519,8 @@ functions.
 \begin{proof}
 Both presentations are cofibrant-fibrant objects in the model structure
 on conilpotent dg coalgebras over $\operatorname{Ran}(X)$
+(that is, dg coalgebras whose iterated reduced coproduct vanishes on
+every section; see Definition~\ref{def:conilpotent-chiral-coalgebra})
 (Positselski~\cite{Positselski11}, Theorem~8.1). Cofibrant-fibrant
 replacements in this model structure are unique up to a contractible
 space of weak equivalences: the mapping space
@@ -2051,9 +2084,13 @@ Costello--Gwilliam framework~\cite[\S5.4]{CG17}: the bar
 differential is holomorphic factorization on~$\FM_k(\bC)$
 (Remark~\ref{rem:costello-gwilliam-factorization}); the bar
 coproduct is topological factorization on~$\Conf_n^{<}(\bR)$.
-Together they constitute the Swiss-cheese algebra
-$\mathrm{SC}^{\mathrm{ch,top}}$ on
-$\FM_k(\bC) \times \Conf_n^{<}(\bR)$.
+Together they exhibit the two geometric directions that later
+feed the Swiss-cheese story. On the bar complex itself they still
+form only the single-coloured $\Eone$ dg coalgebra
+$T^c(s^{-1}\bar{\cA})$; the actual
+$\mathrm{SC}^{\mathrm{ch,top}}$ datum appears only on the
+derived-center pair
+$(C^\bullet_{\mathrm{ch}}(\cA,\cA),\,\cA)$.
 \end{remark}
 
 \begin{remark}[Conventions for this chapter]\label{rem:three-bar-conventions}

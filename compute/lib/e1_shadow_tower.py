@@ -35,7 +35,8 @@ KEY RESULTS (in the r^{sc} sense for scalar families):
 The E₁ shadow obstruction tower is the ORDERED version of the unordered shadow
 Postnikov tower Θ_A^{≤r}.  The binary R-matrix r(z) is precisely
 the collision residue Res^coll_{0,2}(Θ_A) of the universal MC element.
-Its averaged form av(r(z)) recovers the scalar curvature κ(A).
+Its averaged form gives the degree-2 scalar shadow. For non-abelian
+affine KM this is κ_dp, and the full κ(A) adds dim(g)/2.
 
 Shadow depth classification (from CLAUDE.md):
   G (Gaussian): r_max = 2 (Heisenberg)
@@ -537,13 +538,11 @@ def shadow_depth_table() -> Dict[str, Dict]:
 
 
 def verify_kappa_averaging(family: str, **kwargs) -> Dict:
-    """Verify that av(r(z)) = κ for a given family.
+    """Verify the degree-2 shadow and full kappa for a given family.
 
-    The averaged R-matrix recovers the scalar curvature:
-    κ(A) = Tr(r(z)) * z  (residue of trace).
-
-    For matrix-valued R-matrices (affine), this is the supertrace
-    over the Lie algebra.
+    For scalar families, av(r(z)) = κ(A).
+    For non-abelian affine sl_2, av(r(z)) = 3k/4 = κ_dp and
+    κ(A) = av(r(z)) + 3/2 = 3(k+2)/4.
 
     Returns verification data.
     """
@@ -565,12 +564,13 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
         # Trace of Casimir Ω in fundamental rep
         omega = shadow.casimir_tensor()
         tr_omega = np.trace(omega)
-        # The correct kappa for affine sl_2:
-        # κ = (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4
-        # NOT k*dim(g)/(k+h^v) which is the central charge c.
+        av_r_value = 3 * level_val / 4
+        # The correct full kappa for affine sl_2:
+        # κ = av(r) + dim(g)/2 = 3k/4 + 3/2 = 3(k+2)/4.
         kappa_formula = 3 * (level_val + 2) / 4
         return {
             "family": family,
+            "av_r_value": av_r_value,
             "kappa_formula": f"3*({level_val}+2)/4",
             "kappa_value": kappa_formula,
             "tr_omega": float(np.real(tr_omega)),

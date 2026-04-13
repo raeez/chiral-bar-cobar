@@ -219,13 +219,14 @@ def sc_m3_virasoro_primary(c: Fraction) -> Dict[str, Any]:
                        (with appropriate signs from the OS algebra)
 
     For the TRANSFERRED m_3 via HTT (Kadeishvili tree formula):
-      m_3(sT, sT, sT) = p . m_2(h . m_2(i.sT, i.sT), i.sT)
-                       + p . m_2(i.sT, h . m_2(i.sT, i.sT))
+      m_3(s^{-1}T, s^{-1}T, s^{-1}T)
+        = p . m_2(h . m_2(i.s^{-1}T, i.s^{-1}T), i.s^{-1}T)
+        + p . m_2(i.s^{-1}T, h . m_2(i.s^{-1}T, i.s^{-1}T))
 
     where (i, p, h) is the SDR from B(Vir) to H*(B(Vir)).
 
     For the PRIMARY SECTOR computation:
-    The key is that m_2(sT, sT) has a descendant component (dT term)
+    The key is that m_2(s^{-1}T, s^{-1}T) has a descendant component (dT term)
     that feeds into the next m_2, producing a nonzero m_3.
 
     The result:
@@ -273,7 +274,7 @@ def sc_m3_virasoro_primary(c: Fraction) -> Dict[str, Any]:
     # element in B_1 whose projection onto [T]-descendants gives S_3.
     #
     # For Virasoro with T_{(0)}T = dT:
-    # The inner m_2(sT, sT) = 2*sT + (dT correction)
+    # The inner m_2(s^{-1}T, s^{-1}T) = 2*s^{-1}T + (dT correction)
     # The dT correction feeds through h and then m_2 to give:
     #   m_3 coefficient = (coeff of dT in m_2) * (coeff of T in m_2(h(dT), T))
     #

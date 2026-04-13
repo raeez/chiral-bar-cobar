@@ -98,10 +98,10 @@ No mathematical findings. The shadow-Eisenstein identity is correctly scoped as 
 - Suggested fix: restore the fiber/Koszul-locus qualifier.
 
 ### Section 10: The open/closed world (Volume II)
-#### [CRITICAL] The bar complex is called an `\mathsf{SC}^{\mathrm{ch,top}}`-algebra when the proved local statement is a Swiss-cheese coalgebra (line 3424)
+#### [CRITICAL] The bar complex is called an `\mathsf{SC}^{\mathrm{ch,top}}`-algebra when the proved local statement is an ordered `E_1` coalgebra (line 3424)
 - Claim as written: “The bar complex with both structures is a `\SCchtop`-algebra.”
-- Why it's wrong/imprecise/overclaimed: this flips the operadic variance on the bar side. The bar construction carries differential plus deconcatenation coproduct and is formulated locally as a Swiss-cheese coalgebra, not as an algebra over the operad.
-- Independent verification: `chapters/theory/en_koszul_duality.tex:1222-1237` states “Bar complex as Swiss-cheese coalgebra” and identifies `\barB^{\mathrm{ord}}(\cA)` as a dg coalgebra with deconcatenation coproduct.
+- Why it's wrong/imprecise/overclaimed: this flips the operadic variance on the bar side. The bar construction carries differential plus deconcatenation coproduct and is formulated locally as a single-coloured ordered `E_1` coalgebra, not as an algebra over the operad.
+- Independent verification: `chapters/theory/en_koszul_duality.tex` now states “Bar complex as `E_1`-chiral coassociative coalgebra” and identifies `\barB^{\mathrm{ord}}(\cA)` as a dg coalgebra with deconcatenation coproduct, with `\mathsf{SC}^{\mathrm{ch,top}}` moved to the derived-center pair.
 - Suggested fix: replace “algebra” by “coalgebra” here and in the surrounding discussion.
 
 ### Section 11: Modular PVA quantization

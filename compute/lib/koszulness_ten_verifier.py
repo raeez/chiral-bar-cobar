@@ -339,7 +339,7 @@ def catalan(n: int) -> int:
 # ============================================================================
 
 def verify_pbw_degeneration(data: ChiralAlgebraData, max_weight: int = 6) -> Dict:
-    """Verify PBW degeneration: gr B(A) = Sym^ch(A[1]).
+    """Verify PBW degeneration: gr B(A) = Sym^ch(A-bar[1]).
 
     For a chiral algebra with d generators of weight h_i, the PBW-associated
     graded of the bar complex has dimension at each (bar_degree, weight)

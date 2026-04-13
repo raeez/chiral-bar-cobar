@@ -621,8 +621,8 @@ def ising_exact_coefficients(i, n_max):
                 new[k + n] += p_plus[k]
         p_plus = new
 
-    # P_- coefficients: prod (1 - q^n) = eta(q) / q^{-1/24} expansion
-    # 1/eta(q) = q^{-1/24} / prod(1-q^n) -> prod(1-q^n) = q^{1/24} * eta
+    # P_- coefficients: prod (1 - q^n) = q^{-1/24} * eta(q)
+    # 1/eta(q) = q^{-1/24} / prod(1-q^n) -> prod(1-q^n) = q^{1/24} / eta(q)^{-1}
     # But we need the inverse: 1/prod(1-q^n) = sum p(n) q^n (partition function)
     p_minus = [mpmath.mpf(0)] * (N + 1)
     p_minus[0] = mpmath.mpf(1)

@@ -196,7 +196,7 @@ def _partitions_at_most_k(n: int, k: int) -> int:
 def bar_arity_weight_dim(voa: VOAWeightData, arity: int, weight: int) -> int:
     """Dimension of the weight-w component of bar_n(A) (the reduced bar complex at arity n).
 
-    In the reduced bar complex, bar_n(A) = (sA+)^{otimes n}, where sA+ is the
+    In the reduced bar complex, bar_n(A) = (s^{-1}A_+)^{otimes n}, where s^{-1}A_+ is the
     desuspension of the augmentation ideal. Each factor contributes weight >= min_w
     (the minimum positive weight of the VOA).
 

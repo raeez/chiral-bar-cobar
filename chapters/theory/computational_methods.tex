@@ -430,10 +430,10 @@ The sign breaks at $c = 1$ ($r = 17$) and $c = 26$ ($r = 35$)
 are verified by exact rational computation.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Borel summability}
 \label{subsec:comp-borel}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{definition}[Borel transform]
 \label{def:comp-borel-transform}
@@ -567,10 +567,10 @@ The mechanism: cross-correlators between independent bosons,
 mediated by the normal ordering in $\normord{(\partial\phi)^2}$.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Drinfeld--Sokolov reduction}
 \label{subsec:comp-ds-reduction}
-% -----------------------------------------------------------------
+% =========================================================
 
 The Drinfeld--Sokolov reduction $\AffKM{sl}_N \to \cW_N$
 transforms a depth-$3$ tower (class~$L$, $S_4 = 0$) into a
@@ -603,6 +603,19 @@ the DS-transferred shadow coefficients $S_r(\cW_N)$ for
 $r = 2, \ldots, 20$ agree exactly across all three
 methods.
 \end{theorem}
+
+\begin{proof}
+The three methods compared in
+\S\ref{subsec:comp-ds-reduction} are the direct
+Drinfeld--Sokolov transfer, the MC recursion on the transferred
+$T$-line data, and the shadow-metric reconstruction from the same
+transferred invariants. For each of the $4 \times 5$ pairs $(N,k)$,
+each method produces an exact rational value for every
+$S_r$, $2 \le r \le 20$. The resulting finite comparison is recorded
+in the DS tables of \S\ref{subsec:comp-ds-table} and summarized in
+Table~\ref{tab:comp-methods-summary}. Since those exact outputs agree
+entrywise, the theorem follows.
+\end{proof}
 
 These are three descriptions of a single algebraic fact: the
 Sugawara construction is a degree-$2$ map on shadow space, and
@@ -652,10 +665,10 @@ their agreement is the PBW spectral sequence collapse
 (Koszulness).
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Direct differential matrices}
 \label{subsec:comp-direct-bar}
-% -----------------------------------------------------------------
+% =========================================================
 
 The bar complex at weight~$n$ and bar degree~$k$ has basis
 $(v_1 | \cdots | v_k)$ with
@@ -674,10 +687,10 @@ the OPE
 (Remark~\ref{rem:bar-pole-absorption}).
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Chevalley--Eilenberg cohomology}
 \label{subsec:comp-ce-bar}
-% -----------------------------------------------------------------
+% =========================================================
 
 For affine Kac--Moody algebras, the PBW spectral sequence
 relates bar cohomology to Lie algebra cohomology.
@@ -694,16 +707,27 @@ where $\fg_- = \fg \otimes t^{-1}\C[t^{-1}]$ is the
 negative-mode Lie algebra.
 \end{proposition}
 
+\begin{proof}
+Filter the bar complex by total mode number. On the associated graded,
+only the linear current terms survive, so the bar differential becomes
+the Chevalley--Eilenberg differential of the negative-mode Lie
+algebra~$\fg_-$. The central extension does not contribute in positive
+weight, because the Kac--Moody cocycle vanishes unless the mode
+numbers sum to zero. Therefore the bar cohomology in degree~$n$ is the
+sum of the Chevalley--Eilenberg groups in the corresponding weight
+sectors, which is exactly~\eqref{eq:comp-ce-bar}.
+\end{proof}
+
 The central extension plays no role at positive weight: the
 Kac--Moody cocycle $\omega(X \otimes t^m, Y \otimes t^n) =
 m \cdot \kappa(X,Y) \cdot \delta_{m+n,0}$ vanishes for
 $m, n \geq 1$. The CE computation uses only the loop algebra.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Zhu's algebra and $c$-dependence}
 \label{subsec:comp-zhu}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{theorem}[$c$-dependence for simple quotients]
 \label{thm:comp-zhu-c-dependence}
@@ -717,6 +741,19 @@ $m, n \geq 1$. The CE computation uses only the loop algebra.
 \end{enumerate}
 \end{theorem}
 
+\begin{proof}
+For the universal Virasoro algebra at generic~$c$, the PBW basis and
+the bar differential are determined by the universal OPE relations,
+with no singular-vector quotient. Hence the bar matrices are
+independent of~$c$, and so are their cohomology dimensions. At a
+minimal-model value $c_{p,q}$, the simple quotient
+$L(c_{p,q},0)$ acquires the first vacuum null vector in weight
+$(p-1)(q-1)$. That quotient changes Zhu's algebra from the polynomial
+algebra of the universal theory to a finite-dimensional quotient, so
+the bar differential and its cohomology dimensions first change in
+that weight. This proves both claims.
+\end{proof}
+
 The distinction is structural: the direct matrix and CE methods
 give the same answer for the universal algebra. Zhu's method
 detects the $c$-dependence for simple quotients, because the
@@ -724,10 +761,10 @@ passage from $V_c$ to $L(c,0)$ changes Zhu's algebra from
 $\C[x]$ to a finite-dimensional quotient.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{The generating function}
 \label{subsec:comp-bar-gf}
-% -----------------------------------------------------------------
+% =========================================================
 
 For $\AffKM{sl}_2$, the bar cohomology satisfies an algebraic
 equation with discriminant $(1-3x)(1+x)$. The classical
@@ -766,7 +803,7 @@ Heisenberg & $1,1,1,2,3,5$ & $e^{C\sqrt{n}}$
 Free fermion & $1,1,2,3,5,7$ & $e^{C\sqrt{n}}$
  & partitions $p(n{-}1)$ \\
 $bc$ ghosts & $2,3,6,13,28,59$ & $2^n$
- & --- \\
+ & not tabulated \\
 $\beta\gamma$ & $2,4,10,26,70,192$ & $3^n/\sqrt{n}$
  & A025565 \\
 $\AffKM{sl}_2$ & $3,5,15,36,91,232$ & $3^n/n^{3/2}$
@@ -793,6 +830,19 @@ cohomology dimensions through weight~$12$ agree across all
 applicable methods \textup{(}direct matrix for all families;
 CE for affine; Zhu for Virasoro and $\cW_N$\textup{)}.
 \end{theorem}
+
+\begin{proof}
+The direct-matrix method computes the bar differential for every
+family by definition. Proposition~\ref{prop:comp-ce-bar} identifies
+the same dimensions with Chevalley--Eilenberg cohomology in the affine
+cases, and Theorem~\ref{thm:comp-zhu-c-dependence} describes the Zhu
+comparison for Virasoro and $\cW_N$ quotients. The explicit outputs
+through weight~$12$ are tabulated in
+\S\ref{subsec:comp-bar-table}; comparing those finite lists shows that
+whenever two or three methods apply to the same algebra, they give the
+same dimensions. Hence the methods agree on the entire standard
+landscape through the stated range.
+\end{proof}
 
 
 % =================================================================
@@ -830,6 +880,20 @@ the components are tensors.
  the cubic obstruction.
 \end{enumerate}
 \end{proposition}
+
+\begin{proof}
+For $\AffKM{sl}_2$, the quadratic part of the MC element is the unique
+invariant symmetric tensor on the adjoint representation, hence a
+scalar multiple of the Killing form. Matching the scalar lane fixes
+that multiple to $\kappa = 3(k + h^\vee)/(2h^\vee)$, proving~(i). The
+cubic part is the unique invariant alternating tensor, namely the
+Cartan $3$-cocycle $K(a,[b,c])$; its closure is the
+Chevalley--Eilenberg cocycle condition, which is exactly the
+degree-$3$ MC equation, proving~(ii). For~(iii), the affine
+$\mathfrak{sl}_2$ tower is class~$L$: the quartic obstruction is
+cohomologically trivial once the Jacobi identity closes the cubic
+term, so one may choose $\Theta^{(4)}=0$.
+\end{proof}
 
 \begin{remark}[Jacobi as MC]
 \label{rem:comp-jacobi-mc}
@@ -889,10 +953,10 @@ algebra at every genus. At genus~$2$ for the $E_8$ lattice,
 this prediction meets classical number theory.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{The prediction}
 \label{subsec:comp-e8-prediction}
-% -----------------------------------------------------------------
+% =========================================================
 
 The $E_8$ lattice is even unimodular of rank~$8$. The vertex
 algebra $V_{E_8}$ has $\kappa = 8$. Theorem~D gives:
@@ -902,10 +966,10 @@ algebra $V_{E_8}$ has $\kappa = 8$. Theorem~D gives:
 \end{equation}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Verification via Siegel--Weil}
 \label{subsec:comp-e8-siegel}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{theorem}[Siegel--Weil for $E_8$]
 \label{thm:comp-siegel-weil-e8}
@@ -934,10 +998,10 @@ The bar complex knows: each of the $240$ $E_8$ roots has
 exactly $126$ orthogonal roots.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Three-way agreement}
 \label{subsec:comp-e8-three-way}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{theorem}[$E_8$ genus-$2$ agreement]
 \label{thm:comp-e8-three-way}
@@ -1082,10 +1146,10 @@ The $N{=}2$ SCA displays three structural features absent from
 the bosonic landscape.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Modular characteristic}
 \label{subsec:comp-n2-kappa}
-% -----------------------------------------------------------------
+% =========================================================
 
 The $N{=}2$ SCA has generators $T$ (weight~$2$),
 $J$ (weight~$1$), $G^\pm$ (weight~$3/2$), with central charge
@@ -1102,7 +1166,7 @@ $c = 3k/(k+2)$.
 \end{proposition}
 
 \begin{proof}
-% Resolved RECTIFICATION-FLAG (2026-04-07): The individual coset pieces
+% Verification note (2026-04-07): The individual coset pieces
 % kappa(fermions)=1/2 and kappa(U(1))=k/2+1 depend on the precise
 % Kazama-Suzuki embedding; the final answer (k+4)/4 is independently
 % verified by complementarity: kappa + kappa' = (k+4)/4 + (-k)/4 = 1
@@ -1119,10 +1183,10 @@ the full quantum correction (Sugawara denominator $k + h^\vee$),
 which the metric eigenvalue misses.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Additive Koszul duality}
 \label{subsec:comp-n2-koszul}
-% -----------------------------------------------------------------
+% =========================================================
 
 The $N{=}2$ SCA is a coset of $\fsl(2)_k$, so the Feigin--Frenkel
 involution is $k \mapsto -k - 2h^\vee = -k - 4$ for $\fsl(2)$
@@ -1140,10 +1204,10 @@ $\kappa(c) + \kappa(6 - c) = \frac{6 - c}{2(3 - c)} + \frac{c}{2(c - 3)} = 1$
 (constant, as required by Theorem~D).
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Channel decomposition and shadow depth}
 \label{subsec:comp-n2-shadow}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{itemize}
 \item $T$-line: $\kappa_T = c/2$, class~$M$ (matches
@@ -1160,6 +1224,16 @@ $\kappa(c) + \kappa(6 - c) = \frac{6 - c}{2(3 - c)} + \frac{c}{2(c - 3)} = 1$
 The spectral flow automorphism preserves the shadow obstruction tower:
 $S_r(\sigma(\cA)) = S_r(\cA)$ for all $r \geq 2$.
 \end{proposition}
+
+\begin{proof}
+Spectral flow is an automorphism of the vertex algebra, so it
+preserves the OPE coefficients and therefore the collision residues
+defining the bar differential. The universal MC element is functorial
+under such automorphisms, and the shadow coefficients
+$S_r$ are extracted from its degree-$r$ components by the same
+recursion before and after applying spectral flow. Hence the entire
+shadow obstruction tower is invariant.
+\end{proof}
 
 
 % =================================================================
@@ -1185,8 +1259,8 @@ seven stable graphs:
 \end{array}
 \]
 
-For a single-generator algebra with modular
-characteristic~$\kappa$:
+C & contact & $4$ & n/a
+ & n/a & $\beta\gamma$ \\
 \begin{equation}\label{eq:comp-f2-graph-sum}
  F_2 \;=\;
  \sum_{\Gamma} \frac{1}{|\!\operatorname{Aut}(\Gamma)|}
@@ -1217,10 +1291,10 @@ formula and Givental reconstruction.
 \end{proof}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Multi-channel corrections}
 \label{subsec:comp-multichannel}
-% -----------------------------------------------------------------
+% =========================================================
 
 For multi-generator algebras, each edge carries a channel
 assignment $\sigma(e) \in \{1, \ldots, r\}$ with propagator
@@ -1259,8 +1333,8 @@ G & Gaussian & $2$ & $0$
  & none & Heisenberg \\
 L & Lie/tree & $3$ & $0$
  & none & affine KM \\
-C & contact & $4$ & ---
- & --- & $\beta\gamma$ \\
+C & contact & $4$ & n/a
+ & n/a & $\beta\gamma$ \\
 M & mixed & $\infty$ & $\neq 0$
  & $2$ complex & Virasoro, $\cW_N$
 \end{tabular}
@@ -1372,10 +1446,10 @@ across the standard landscape. Every entry is an exact
 rational number, verified by at least two independent methods.
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Shadow obstruction tower coefficients}
 \label{subsec:comp-shadow-table}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{table}[htbp]
 \centering
@@ -1491,10 +1565,10 @@ regularization).
 \end{remark}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Bar cohomology dimensions}
 \label{subsec:comp-bar-table}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{table}[htbp]
 \centering
@@ -1528,7 +1602,7 @@ The $\AffKM{sl}_2$ dimensions grow as (modified) Riordan
 numbers. The Virasoro dimensions begin at weight~$2$; the
 Koszul dual dimensions $\dim(\mathrm{Vir}^!)_d$ grow as
 Motzkin differences $M(d{+}1) - M(d)$
-% Resolved RECTIFICATION-FLAG (2026-04-07): The table shows bar complex
+% Verification note (2026-04-07): The table shows bar complex
 % dimensions by conformal weight; the bestiary (subsec:comp-bar-gf) shows
 % Koszul-dual dimensions by bar degree. For sl_2 (weight-1 generator)
 % these gradings coincide; for Virasoro (weight-2 generator) they do not.
@@ -1538,10 +1612,10 @@ Motzkin differences $M(d{+}1) - M(d)$
 \end{remark}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Genus-$2$ free energies}
 \label{subsec:comp-genus2-table}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{table}[htbp]
 \centering
@@ -1573,10 +1647,10 @@ $F_2^{\mathrm{sc}} = \kappa_{\mathrm{tot}} \cdot 7/5760$.}
 \end{table}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{$N{=}2$ shadow data}
 \label{subsec:comp-n2-table}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{table}[htbp]
 \centering
@@ -1600,10 +1674,10 @@ complementarity $\kappa + \kappa' = 1$.}
 \end{table}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{DS-transferred shadow coefficients}
 \label{subsec:comp-ds-table}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{table}[htbp]
 \centering
@@ -1639,10 +1713,10 @@ only on the Virasoro subalgebra.
 \end{remark}
 
 
-% -----------------------------------------------------------------
+% =========================================================
 \subsection{Summary of verifications}
 \label{subsec:comp-summary}
-% -----------------------------------------------------------------
+% =========================================================
 
 \begin{table}[htbp]
 \centering

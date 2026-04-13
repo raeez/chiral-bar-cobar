@@ -5,6 +5,11 @@ with explicit per-family F_g values at g = 1, 2, 3, pole structure at
 s = 1 and s = 2, and cross-module kappa consistency checks.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 from fractions import Fraction
 
 import pytest

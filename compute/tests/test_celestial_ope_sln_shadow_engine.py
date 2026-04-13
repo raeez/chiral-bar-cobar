@@ -15,7 +15,7 @@ MULTI-PATH VERIFICATION:
 References:
   CLAUDE.md C3: kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v)
   CLAUDE.md C9: r^KM(z) = k*Omega/z
-  CLAUDE.md C13: av(r(z)) = kappa at arity 2
+  CLAUDE.md C13: for non-abelian KM, av(r(z)) = kappa_dp and full kappa adds dim(g)/2
   prop:arity-2-shadow-is-kappa (higher_genus_modular_koszul.tex)
 
 CAUTIONS:

@@ -21,6 +21,11 @@ MULTI-PATH VERIFICATION:
   Path 4: Local-global compatibility
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import pytest
 import math
 import cmath

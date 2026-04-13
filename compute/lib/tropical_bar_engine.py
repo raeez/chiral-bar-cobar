@@ -519,7 +519,8 @@ class NonKoszulTropicalComplex:
 
         for col, multi in enumerate(source):
             for p in range(n - 1):
-                # Sign: (-1)^p for degree-0 generators (|sx| = 1, eps = p)
+                # Sign: (-1)^p for degree-0 generators
+                # (|s^{-1}x| = -1, so eps = -p equiv p mod 2)
                 sign = (-1) ** p
                 a_p, a_p1 = multi[p], multi[p + 1]
 

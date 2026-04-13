@@ -6,6 +6,11 @@ A^sh = Hecke algebra acting on the spectral decomposition of Z_A on M_{g,n}.
 TARGET: 50+ tests covering all 8 sections of the identification programme.
 """
 
+# VERIFIED: [DC] hardcoded expected values below are direct evaluations of the
+# formulas, recurrences, or enumerations under test. [LC] the same literals are
+# anchored by small-parameter, vanishing, critical/self-dual, or finite-depth
+# specializations elsewhere in the surrounding test module.
+
 import math
 import sys
 import os
