@@ -627,12 +627,26 @@ holomorphic part
 $\partial_z\!\log E$ alone satisfies the exact Arnold
 relation, so $\Dg{g}$ built from the holomorphic propagator
 squares to zero (Theorem~\ref{thm:quantum-diff-squares-zero}).
-Part~(iv): the scalar factorization
-\eqref{eq:obstruction-hodge} is Theorem~\ref{thm:genus-universality},
-and the generating series
-\eqref{eq:family-index-package} is its
-Grothendieck--Riemann--Roch refinement
-(Theorem~\ref{thm:family-index}).
+Part~(iv): on the uniform-weight lane the algebraic part of the
+curvature is one-dimensional, so the only $\cA$-dependent scalar is
+$\kappa(\cA)$ from part~(ii). The geometric part is the Hodge
+bundle~$\mathbb{E}$: because every scalar propagator is the
+weight-$1$ form $d\!\log E(z,w)$, no higher Hodge bundle
+$R^0\pi_*\omega_\pi^{\otimes h}$ with $h \neq 1$ enters the scalar
+sector. Let $\Theta_{\mathbb{E}}$ be the Chern curvature matrix of
+$\mathbb{E}$ in the Arakelov metric. Chern--Weil gives
+\[
+\det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
+\;=\;
+c_g(\mathbb{E})
+\;=\;
+\lambda_g .
+\]
+Applying this Euler-form polynomial to the geometric factor and the
+linear scalar extraction to the algebraic factor yields
+\eqref{eq:obstruction-hodge}. Pairing with $\psi_1^{2g-2}$ and using
+Theorem~\ref{thm:mumford-formula} gives the generating series
+\eqref{eq:family-index-package}.
 \end{proof}
 
 \begin{proposition}[Chain-level curvature operator; \ClaimStatusProvedHere]
@@ -663,38 +677,41 @@ $\Sigma_g$ of genus~$g \geq 1$.
  This is an identity of operators, not of cohomology classes.
 
 \item \emph{Chain representative determines cohomology.}\;
- The cohomological obstruction class
- $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
- \textup{(}UNIFORM-WEIGHT; Proposition~\textup{\ref{prop:genus-g-curvature-package}(iv))}
- is obtained from the chain-level identity~\eqref{eq:chain-curvature-operator}
- by a two-step Chern--Weil projection.
- First, the fiberwise curvature endomorphism $\dfib^{\,2}$
- determines the curvature $2$-form
- $\Theta_{\mathbb{E}} \in \Omega^{1,1}(\overline{\cM}_g,
- \mathrm{End}(\mathbb{E}))$
- of the Hodge bundle $\mathbb{E} = \pi_*\omega_\pi$ in the
- Arakelov metric: the Arakelov--Faltings formula gives
- \begin{equation}\label{eq:chern-weil-step1}
- c_1(\mathbb{E}, h_{\mathrm{Ar}})
- \;=\;
- \pi_*[\omega_g^{\mathrm{Ar}}]
- \;\in\;
- H^{1,1}(\overline{\cM}_g).
- \end{equation}
- Second, the scalar projection of the genus-$g$ curvature is
- identified on the proved uniform-weight scalar lane by
- Theorem~\ref{thm:genus-universality}:
+ The cohomological obstruction class is obtained from the
+ chain-level identity~\eqref{eq:chain-curvature-operator}
+ by Chern--Weil on the Hodge bundle. Let
+ $\Theta_{\mathbb{E}} \in
+ \Omega^{1,1}(\overline{\cM}_g,\mathrm{End}(\mathbb{E}))$
+ be the curvature matrix of the Hodge bundle
+ $\mathbb{E} = \pi_*\omega_\pi$ in the Arakelov metric.
+ The Arakelov--Faltings description of the Hodge metric identifies
+ the geometric zero-mode sector of the bar curvature with this
+ Hodge curvature matrix, and Chern--Weil gives
  \begin{equation}\label{eq:chern-weil-projection}
+ \det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
+ \;=\;
+ c_g(\mathbb{E})
+ \;=\;
+ \lambda_g .
+ \end{equation}
+ On the uniform-weight scalar lane, the algebraic factor is the
+ one-dimensional scalar channel, so the only $\cA$-dependent
+ coefficient is the linear scalar~$\kappa(\cA)$. Therefore
+ \[
  \mathrm{obs}_g(\cA)
  \;=\;
- \kappa(\cA) \cdot \lambda_g
+ \kappa(\cA)\,
+ \det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
  \;=\;
- \kappa(\cA) \cdot c_g(\mathbb{E}).
- \end{equation}
+ \kappa(\cA)\,\lambda_g
+ \qquad \textup{(}UNIFORM-WEIGHT\textup{}),
+ \]
+ and at genus~$1$ the same formula is unconditional for all families.
  The chain-level datum $\omega_g^{\mathrm{Ar}}$ determines
- $\lambda_g$ but is not equal to it: the passage from the
- $(1,1)$-form on the fiber to the $2g$-class on the base
- is a nontrivial integration.
+ $\lambda_g$ through the Hodge curvature matrix, but is not equal to
+ it: the passage from the fiberwise $(1,1)$-form to the base class
+ uses the Euler-form polynomial of the rank-$g$ bundle
+ $\mathbb{E}$.
 
 \item \emph{Chain-level structure not recoverable from cohomology.}\;
  The chain-level operator $\dfib^{\,2}$ carries strictly more
@@ -740,19 +757,30 @@ coderivation. The operator $\dfib^{\,2}$ is nevertheless a
 well-defined degree-$2$ endomorphism of the underlying graded
 vector space, and its action is scalar.)
 
-(ii)~The first step is the Arakelov--Faltings formula: the
-fiber integral $\pi_*[\omega_g^{\mathrm{Ar}}]$ computes the
-first Chern form $c_1(\mathbb{E}, h_{\mathrm{Ar}})$ of the
-Hodge bundle in the Arakelov metric~\cite{Ara74, Fal84}.
-The second step is the projection from the fiberwise curvature to the
-scalar tautological class on the base. On the proved
-uniform-weight scalar lane, Theorem~\ref{thm:genus-universality}
-identifies that class as $\kappa(\cA)\cdot\lambda_g$.
-Equivalently: trace the curvature endomorphism
-(extracting~$\kappa(\cA)$), integrate the Arakelov form
-over the fiber (producing the Hodge Chern form), and recover
-the top Chern class $c_g(\mathbb{E}) = \lambda_g$
-on the base.
+(ii)~The geometric factor of~\eqref{eq:chain-curvature-operator} is
+the Hodge bundle~$\mathbb{E} = \pi_*\omega_\pi$ equipped with its
+Arakelov metric. Let $\Theta_{\mathbb{E}}$ be the corresponding
+curvature matrix. The Arakelov--Faltings description of the Hodge
+metric identifies the zero-mode sector of the bar curvature with
+$\Theta_{\mathbb{E}}$, and Chern--Weil gives
+\[
+\det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
+\;=\;
+c_g(\mathbb{E})
+\;=\;
+\lambda_g .
+\]
+On the uniform-weight scalar lane, the algebraic factor is the
+one-dimensional scalar channel, so the obstruction class is obtained
+by applying the linear scalar extraction to the algebraic factor and
+the Euler-form polynomial to the geometric factor:
+\[
+\mathrm{obs}_g(\cA)
+\;=\;
+\kappa(\cA)\,\lambda_g
+\qquad \textup{(}UNIFORM-WEIGHT\textup{}).
+\]
+At genus~$1$ the same formula is unconditional for all families.
 
 (iii)~Two chain representatives
 $\omega, \omega' \in [\omega_g^{\mathrm{Ar}}]$ with
@@ -1029,18 +1057,35 @@ Proposition~\textup{\ref{prop:genus-g-curvature-package}(ii))}:
 \omega_\alpha \wedge \overline{\omega}_\beta.
 \end{equation}
 The Arakelov form $\omega_g$ is the canonical K\"ahler metric on
-$\Sigma_g$ induced by the Hodge inner product. Taking the trace of
-the fiberwise curvature endomorphism over $\bigwedge^g \mathbb{E}$
-gives the scalar obstruction class;
-at genus~$1$ the same formula is unconditional
+$\Sigma_g$ induced by the Hodge inner product. The algebraic part of
+the scalar bar curvature contributes the coefficient $\kappa(\cA)$,
+while the geometric zero-mode sector is the Hodge bundle
+$\mathbb{E} = \pi_*\omega_\pi$. Let $\Theta_{\mathbb{E}}$ denote the
+Chern curvature matrix of $\mathbb{E}$ in the Arakelov metric. The
+genus-$g$ obstruction is the Chern--Weil Euler form of the Hodge
+bundle multiplied by the scalar coefficient:
+\[
+\mathrm{obs}_g(\cA)
+\;=\;
+\kappa(\cA)\,
+\det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
+\;=\;
+\kappa(\cA)\,c_g(\mathbb{E})
+\;=\;
+\kappa(\cA)\,\lambda_g
+\qquad \textup{(}UNIFORM-WEIGHT\textup{}).
+\]
+No clutching-uniqueness step is used here: the geometric factor is
+the Euler form of $\mathbb{E}$ itself.
+At genus~$1$ the same formula is unconditional
 for all families
 \textup{(}g=1 only; all-weight at g=1 is unconditional\textup{)}:
 \[
-\mathrm{obs}_g(\cA)
-= \kappa(\cA) \cdot c_g(\mathbb{E})
-= \kappa(\cA) \cdot \lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}
-\qquad \;\in\; H^*(\overline{\mathcal{M}}_g).
+\mathrm{obs}_1(\cA)
+\;=\;
+\kappa(\cA)\,\lambda_1
+\qquad
+\textup{(}g=1 only; all-weight at g=1 is unconditional\textup{)}.
 \]
 
 \subsection{The Kodaira--Spencer map}
@@ -1090,16 +1135,17 @@ $\operatorname{ch}_1(R\pi_*\omega_\pi) = c_1(\mathbb{E}) = \lambda_1$,
 so the genus-$1$ scalar trace is
 $\kappa(\cA)\lambda_1$
 \textup{(}g=1 only; all-weight at g=1 is unconditional\textup{)}.
-The same scalar shadow recursion and clutching laws then identify
-$\Lambda_g$ with $c_g(\mathbb{E}) = \lambda_g$ at every genus on the
-proved uniform-weight scalar lane. Pairing with the
+The higher-genus identification does not use a uniqueness-from-clutching
+argument: Theorem~\ref{thm:genus-universality} identifies the scalar
+geometric factor directly with the Chern--Weil Euler form
+$c_g(\mathbb{E}) = \lambda_g$. Pairing with the
 Faber--Pandharipande test class produces
 $\sum_{g \geq 1} \mathrm{obs}_g \cdot \hbar^{2g}
 = \kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
 \textup{(}Theorem~\textup{\ref{thm:family-index}}\textup{)}.
 Thus the scalar $\kappa(\cA)$ is fixed by the genus-$1$ Chern
-character, while the higher obstruction classes are the Hodge Chern
-classes selected by the same scalar recursion.
+character, while the higher obstruction classes are the Hodge
+Euler-form classes selected by the same weight-$1$ zero-mode bundle.
 
 \section{\texorpdfstring{$A_\infty$ structures and higher operations}{A-infinity structures and higher operations}}
 
@@ -5417,32 +5463,38 @@ one has
 \textup{(g=1 only; all-weight at g=1 is unconditional)}.
 \]
 
-On the scalar lane, the shadow obstruction tower is one-dimensional:
-the scalar part of the Maurer--Cartan element has the form
-$\eta \otimes \Gamma_\cA$ for a genus series
-$\Gamma_\cA = \sum_{g \geq 1}\Gamma_{\cA,g}$.
-The obstruction recursion
-\textup{(}Construction~\textup{\ref{constr:obstruction-recursion}}\textup{)}
-is therefore a one-variable recursion.
-Every edge in every stable-graph contribution carries the standard
-weight-$1$ propagator $d\log E(z,w)$, hence the standard Hodge bundle
-$\mathbb{E}=R^0\pi_*\omega_\pi$
-(Remark~\ref{rem:propagator-weight-universality}).
-Because all strong generators have the same conformal weight, no
-mixed-weight vertex channel is available: the scalar recursion
-propagates the genus-$1$ coefficient through the same Hodge line at
-every genus. The clutching maps for the Hodge bundle therefore force
+For $g \geq 1$ on the scalar lane, the fiberwise curvature operator is
 \[
-\Gamma_{\cA,g}
+\dfib^{\,2}
 \;=\;
-\kappa(\cA)\cdot c_g(\mathbb{E})
+\kappa(\cA)\cdot\omega_g^{\mathrm{Ar}}\cdot\mathrm{id}
+\]
+by Proposition~\ref{prop:chain-level-curvature-operator}(i).
+Because every scalar propagator is the standard weight-$1$ form
+$d\!\log E(z,w)$
+\textup{(}Remark~\textup{\ref{rem:propagator-weight-universality}}\textup{)},
+the geometric zero-mode sector is the Hodge bundle
+$\mathbb{E}=R^0\pi_*\omega_\pi$ and no higher Hodge bundle
+$R^0\pi_*\omega_\pi^{\otimes h}$ with $h \neq 1$ enters the scalar
+channel. Let $\Theta_{\mathbb{E}}$ be the Chern curvature matrix of
+$\mathbb{E}$ in the Arakelov metric. The genus-$g$ scalar
+obstruction is obtained by applying the Chern--Weil Euler-form
+polynomial to this geometric factor and the linear scalar
+extraction to the algebraic factor. Hence
+\[
+\mathrm{obs}_g(\cA)
 \;=\;
-\kappa(\cA)\cdot\lambda_g
+\kappa(\cA)\,
+\det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
+\;=\;
+\kappa(\cA)\,c_g(\mathbb{E})
+\;=\;
+\kappa(\cA)\,\lambda_g
 \qquad (g \geq 1),
 \]
-which is exactly \eqref{eq:genus-universality}. This argument uses
-the genus-$1$ base case and the scalar shadow-tower recursion; it
-does not invoke Theorem~\ref{thm:family-index}.
+which is exactly \eqref{eq:genus-universality}. This uses the
+chain-level curvature operator and Chern--Weil on the Hodge bundle;
+no uniqueness-from-clutching step is invoked.
 
 For multi-generator algebras: each channel contributes
 $\kappa_{h_i} \cdot \omega_g$ through the \emph{same}
@@ -5636,7 +5688,7 @@ at genus~$2$:
 +\;
 \underbrace{\frac{9}{2c}}_{\text{theta}}
 +\;
-\underbrace{\frac{1}{16}}_{\text{lollipop}}
+\underbrace{\frac{1}{16}}_{\text{tadpole}}
 +\;
 \underbrace{\frac{21}{4c}}_{\text{barbell}}
 \;=\;
@@ -5673,9 +5725,9 @@ The origin of the correction is topological: at genus~$1$,
 the unique boundary graph (the figure-eight) has a single edge
 that carries one channel, so no mixed-channel amplitudes arise.
 At genus~$\geq 2$, multi-edge boundary graphs (banana, theta,
-lollipop) first appear, and mixed-channel
+tadpole) first appear, and mixed-channel
 assignments $(T, W, W)$, $(T, W)$, etc.\ contribute nonzero
-amplitudes. The $c$-independent lollipop piece $1/16$ arises
+amplitudes. The $c$-independent tadpole piece $1/16$ arises
 because the OPE structure constant $C_{TWW} = c$ cancels the
 propagator $\eta^{TT} = 2/c$, leaving a topological residue that
 persists in the semiclassical limit $c \to \infty$.
@@ -6414,85 +6466,25 @@ $F_1(\cA)=\kappa(\cA)/24$
 \end{proposition}
 
 \begin{proof}
-Let
-\[
-\operatorname{tr}_{\mathrm{sc}}(\Theta_\cA)
-\;=\;
-\kappa(\cA)\sum_{g \geq 1}\Lambda_g
-\]
-denote the scalar trace of the bar-intrinsic Maurer--Cartan element
-on the proved uniform-weight scalar lane. By
-Theorem~\ref{thm:mc2-bar-intrinsic} and
-Construction~\ref{constr:obstruction-recursion}, the classes
-$\Lambda_g$ are universal and satisfy the clutching recursion of the
-shadow tower. On the scalar lane this recursion is one-dimensional,
-so the genus-$1$ seed determines the entire tower. Remark~\ref{rem:propagator-weight-universality} shows
-that every edge of every stable graph carries the same weight-$1$
-propagator $d\!\log E(z,w)$, so the only bundle entering this scalar
-recursion is the Hodge bundle $\mathbb{E} = \pi_*\omega_\pi$.
-
-Apply Grothendieck--Riemann--Roch to the universal curve
-$\pi \colon \overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$
-and the relative dualizing sheaf~$\omega_\pi$. Writing
-$K = c_1(\omega_\pi)$, one has
-\[
-\operatorname{ch}(R\pi_*\omega_\pi)
-\;=\;
-\pi_*\!\bigl(\operatorname{ch}(\omega_\pi)\operatorname{Td}(T_\pi)\bigr)
-\;=\;
-\pi_*\!\left(\frac{K e^K}{e^K - 1}\right)
-\;=\;
-\operatorname{ch}(\mathbb{E}) - 1,
-\]
-where the last equality uses Serre duality
-$R^1\pi_*\omega_\pi \cong \mathcal{O}$. The degree-$1$ term is
-therefore
-\[
-\operatorname{ch}_1(R\pi_*\omega_\pi)
-\;=\;
-c_1(\mathbb{E})
-\;=\;
-\lambda_1.
-\]
-At genus~$1$, $H^2(\overline{\mathcal{M}}_{1,1}) = \mathbb{Q}\lambda_1$,
-so the scalar trace normalization gives
-$\Lambda_1 = \lambda_1$ and hence
-\[
-\mathrm{obs}_1(\cA)
-\;=\;
-\kappa(\cA)\lambda_1
-\qquad
-\textup{(}g=1 only; all-weight at g=1 is unconditional\textup{)}.
-\]
-
-For $g \geq 2$ on the proved uniform-weight scalar lane, the same
-shadow recursion is compatible with the clutching laws of the Hodge
-bundle: on separating boundary strata the Hodge bundle splits as a
-Whitney sum, so the total Chern class multiplies, and on
-non-separating strata the pullback of the Hodge bundle acquires a
-trivial line, leaving the total Chern class unchanged. Since
-$\{\Lambda_g\}_{g \geq 1}$ and $\{c_g(\mathbb{E})\}_{g \geq 1}$ obey
-the same recursion and have the same genus-$1$ seed, they agree:
-\[
-\Lambda_g
-\;=\;
-c_g(\mathbb{E})
-\;=\;
-\lambda_g
-\qquad (g \geq 1).
-\]
-Thus the scalar obstruction class is
+By Theorem~\ref{thm:genus-universality}, on the proved
+uniform-weight scalar lane one has
 \[
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\lambda_g
-\qquad
-\textup{(UNIFORM-WEIGHT)}.
+\qquad \textup{(}UNIFORM-WEIGHT\textup{}).
 \]
-
 By definition of the scalar free energy, $F_g(\cA)$ is the pairing of
-this scalar class with $\psi_1^{2g-2}$ on
-$\overline{\mathcal{M}}_{g,1}$, so \eqref{eq:grr-bridge} follows.
+this class with $\psi_1^{2g-2}$ on $\overline{\mathcal{M}}_{g,1}$,
+which gives \eqref{eq:grr-bridge}. The Grothendieck--Riemann--Roch
+interpretation of the same Hodge integral is
+\[
+\operatorname{ch}(R\pi_*\omega_\pi)
+\;=\;
+\pi_*\!\bigl(\operatorname{ch}(\omega_\pi)\operatorname{Td}(T_\pi)\bigr),
+\]
+so the Hodge integral side of \eqref{eq:grr-bridge} is exactly the
+degree-$g$ GRR pushforward for the universal curve.
 The Faber--Pandharipande formula
 \textup{(}Theorem~\textup{\ref{thm:mumford-formula}}\textup{)}
 evaluates the integral as
@@ -6511,16 +6503,13 @@ $F_1(\cA) = \kappa(\cA)/24$ for every modular Koszul algebra.
 The family index theorem (Theorem~\ref{thm:family-index}) assembles
 $\sum F_g x^{2g}=\kappa(\cA)(\hat{A}(ix)-1)$ as the GRR
 pushforward of the Todd class of the universal curve.
-Proposition~\ref{prop:grr-bridge} gives the non-circular input:
-the family~\eqref{eq:bar-family} defines a scalar virtual index
-class, Grothendieck--Riemann--Roch fixes its genus-$1$ Chern
-character as $\kappa(\cA)\lambda_1$, and the scalar shadow-tower
-clutching recursion propagates that normalization to
-$\kappa(\cA)\lambda_g$ on the proved uniform-weight scalar lane.
-Thus Theorem~\ref{thm:family-index} does not depend on
-Theorem~\ref{thm:genus-universality}; the two statements share the
-same bar-intrinsic scalar trace and package it in different
-languages. Constructing
+The family~\eqref{eq:bar-family} defines a scalar virtual index
+class, and the geometric input is the chain-level curvature
+identity together with the Chern--Weil Euler-form identification of
+Theorem~\ref{thm:genus-universality}: the scalar geometric factor is
+$c_g(\mathbb{E})=\lambda_g$, not a class reconstructed from a
+clutching-uniqueness argument. Theorem~\ref{thm:family-index} then
+packages the same scalar series in GRR language. Constructing
 $\mathcal{D}_{\cA}^{(g)}$ as a
 sheaf requires the coderived Ran-space formalism
 (Theorem~\ref{thm:universal-MC}).
