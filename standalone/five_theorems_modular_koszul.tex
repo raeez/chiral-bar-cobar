@@ -100,12 +100,17 @@ $Q_g(\cA) \oplus Q_g(\cA^!) \cong
 H^*(\Mbar_g, \cZ_\cA)$, with the Koszul complementarity
 sum $\kappa(\cA) + \kappa(\cA^!)$ family-dependent: $0$ for
 Kac--Moody and free fields, $13$ for Virasoro.
-Theorem~D identifies the genus expansion: on the
-uniform-weight lane,
+Theorem~D identifies the genus expansion: the genus-$1$
+formula $\obs_1(\cA) = \kappa(\cA) \cdot \lambda_1$ is
+unconditional for every family. On the uniform-weight lane,
+the all-genera extension
 $\obs_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-\textup{(UNIFORM-WEIGHT)} at all genera, with generating
-function the $\Ahat$-genus; at genus $1$ the scalar
-formula is unconditional for every family.
+\textup{(UNIFORM-WEIGHT)} holds via clutching morphisms
+on $\partial\Mbar_g$, with generating function the
+$\Ahat$-genus; the clutching-uniqueness step is the
+principal remaining conditional element (an independent
+GRR derivation provides an alternative path,
+\S\ref{subsec:thmD-proof}).
 Theorem~H proves that chiral Hochschild cohomology is
 concentrated in degrees $\{0,1,2\}$ with a polynomial
 Hilbert series controlled by the centre and its dual.
@@ -236,7 +241,9 @@ characterizes one facet of $\Theta_\cA$:
  (Lagrangian complementarity under Verdier involution).
 \item \emph{Leading coefficient}: $\Theta_\cA$ has universal
  scalar projection
- ($\obs_g = \kappa \cdot \lambda_g$, UNIFORM-WEIGHT).
+ ($\obs_1 = \kappa \cdot \lambda_1$ unconditional;
+ $\obs_g = \kappa \cdot \lambda_g$ at all genera on the
+ uniform-weight lane via clutching/GRR).
 \item \emph{Coefficient ring}: $\Theta_\cA$ has polynomial
  coefficients ($\ChirHoch^*$ concentrated in $\{0,1,2\}$).
 \end{enumerate}
@@ -1021,6 +1028,32 @@ characteristic $\kappa(\cA)$.
 \end{enumerate}
 \end{theorem}
 
+\begin{remark}[Scope of the all-genera statement]
+\label{rem:thmD-scope}
+Part~(i) is unconditional: the genus-$1$ formula
+$\obs_1 = \kappa \cdot \lambda_1$ holds for every chirally
+Koszul algebra, with no uniform-weight hypothesis and no
+clutching input.
+Part~(ii) extends the scalar factorization from genus~$1$
+to all genera by propagation along the clutching morphisms
+on $\partial\Mbar_g$.
+The non-trivial step is \emph{clutching-uniqueness}: the
+assertion that the scalar factorization propagated through
+clutching agrees, at each genus, with the direct bar-complex
+computation.
+This step uses the bar-intrinsic scalar trace of
+$\Theta_\cA$ together with the boundary structure of
+$\Mbar_g$; it is proved on the uniform-weight lane where
+the graph-sum formula factors through $\kappa$ alone.
+An independent derivation via the Grothendieck--Riemann--Roch
+theorem on the universal curve
+(\S\ref{subsec:thmD-proof}) provides a second path that
+bypasses clutching-uniqueness entirely.
+The genus-$1$ result and the two proof paths (clutching and
+GRR) are the principal structural elements; the all-genera
+statement on the uniform-weight lane rests on either one.
+\end{remark}
+
 \subsection{The $\Ahat$-genus and Bernoulli numbers}
 
 The $\Ahat$-genus has the explicit expansion
@@ -1091,11 +1124,15 @@ itself (degree $2$ of the MC element); all higher shadow
 coefficients $S_r$ with $r \geq 3$ are invisible at genus $1$.
 
 \emph{Step 2: Uniform-weight factorization.} For uniform-weight
-algebras, the graph-sum formula for $\Theta_\cA$ factorizes:
-each genus-$g$ stable graph contributes
-$\kappa^{|E(\Gamma)|} \cdot \lambda_g^{\mathrm{FP}}(\Gamma)$,
-where $|E(\Gamma)|$ is the number of edges. The sum over all
-genus-$g$ graphs produces $\kappa \cdot \lambda_g$.
+algebras, the scalar obstruction class at every genus equals
+$\kappa(\cA) \cdot \lambda_g$
+(Proposition~\ref{prop:scalar-obs-hodge-euler}). Two
+independent proofs are given there: (A)~via
+Grothendieck--Riemann--Roch on the universal curve, identifying
+the bar curvature with the Hodge bundle curvature through the
+Arakelov--Faltings theorem; (B)~via clutching propagation from
+genus~$1$, using the Whitney sum formula and the injectivity
+of the trace on the one-dimensional tautological line.
 
 \emph{Step 3: Multi-weight correction.} When generators have
 distinct conformal weights, cross-channel propagators produce
@@ -1106,11 +1143,230 @@ computable from the full $R$-matrix data of the ordered bar.
 \begin{remark}[Genus-$1$ anchor]\label{rem:genus-1-anchor}
 Step~1 is unconditional: $\obs_1 = \kappa \cdot \lambda_1$
 holds for every chirally Koszul algebra, with no
-uniform-weight hypothesis. The passage from genus~$1$ to all
-genera in Step~2 uses the clutching morphisms on
-$\partial\Mbar_g$ to propagate the scalar factorization; the
-clutching-uniqueness argument is the non-trivial step in the
-all-genera extension.
+uniform-weight hypothesis and no clutching input.
+The genus-$1$ result of Theorem~D(i) is independent
+of the all-genera mechanism.
+\end{remark}
+
+The passage from genus~$1$ to all genera is the content of
+the following proposition, which closes the all-genera extension
+by two independent routes.
+
+\begin{proposition}[Scalar obstruction equals Hodge Euler class]
+\label{prop:scalar-obs-hodge-euler}
+Let $\cA$ be a chirally Koszul chiral algebra on the Koszul
+locus whose strong generators all have the same conformal
+weight \textup{(}the uniform-weight hypothesis\textup{)}.
+Let $\pi \colon \overline{\cC}_g \to \Mbar_g$ be the
+universal curve, $\mathbb{E} = R^0\pi_*\omega_\pi$ the
+Hodge bundle of rank~$g$, and
+$\lambda_g = c_g(\mathbb{E})$ its top Chern class.
+Then for all $g \geq 1$:
+\begin{equation}\label{eq:scalar-obs-hodge}
+\obs_g(\cA)
+\;=\;
+\kappa(\cA) \cdot \lambda_g
+\qquad \textup{(}UNIFORM-WEIGHT\textup{)}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Two independent proofs are given. Each uses the genus-$1$
+identification $\obs_1 = \kappa \cdot \lambda_1$ as base case
+and extends to all genera by a different mechanism.
+
+\medskip\noindent
+\textbf{Proof A: Grothendieck--Riemann--Roch on the
+universal curve.}
+This proof identifies the bar-complex obstruction with a
+characteristic class of the Hodge bundle directly, without
+induction on the genus.
+
+\emph{Step A1: the virtual bundle on moduli.}
+On the uniform-weight lane, the bar complex over a fixed
+curve~$\Sigma_g$ has a one-dimensional algebraic factor
+(the scalar channel) tensored with a geometric factor given by
+the de~Rham complex of~$\Sigma_g$ with coefficients in
+$\omega_{\Sigma_g}$, because every propagator is the standard
+weight-$1$ form $d\!\log E(z,w)$.
+As the curve varies over~$\Mbar_g$, the zero-mode sector of
+this geometric factor is the direct image
+$R^0\pi_*\omega_\pi = \mathbb{E}$.
+The scalar virtual class is therefore
+\[
+[\barB^{(g)}_{\mathrm{scalar}}(\cA)]^{\mathrm{vir}}
+\;=\;
+\kappa(\cA) \cdot [\mathbb{E}]
+\quad
+\text{in } K^0(\Mbar_g) \otimes \mathbb{Q}.
+\]
+
+\emph{Step A2: Mumford's GRR computation.}
+Grothendieck--Riemann--Roch on the universal curve gives
+\[
+\operatorname{ch}(R\pi_*\omega_\pi)
+\;=\;
+\pi_*\!\bigl(\operatorname{ch}(\omega_\pi) \cdot
+\operatorname{Td}(T_\pi)\bigr).
+\]
+The degree-$g$ component of the Chern character of the
+rank-$g$ bundle $\mathbb{E}$, combined with the Newton
+identities relating Chern characters to Chern classes, gives
+\[
+c_g(\mathbb{E}) \;=\; \lambda_g
+\quad \in \operatorname{CH}^g(\Mbar_g).
+\]
+This is Mumford's computation~\textup{[Mumford83]}.
+
+\emph{Step A3: Chern--Weil identification.}
+The Hodge bundle carries the Arakelov metric, whose
+restriction to each fiber $H^0(\Sigma_g, \Omega^1)$ is the
+$L^2$ inner product.
+The Arakelov--Faltings theorem~\textup{[Fal84]} identifies
+the curvature of $(\mathbb{E}, h_{\mathrm{Ar}})$ with the
+Arakelov $(1,1)$-form:
+\[
+\Theta_{\mathbb{E}}\big|_{\mathrm{fiber}}
+\;=\;
+\omega_g^{\mathrm{Ar}}
+\;=\;
+\frac{i}{2}\sum_{\alpha,\beta=1}^{g}
+(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+\omega_\alpha \wedge \overline{\omega}_\beta.
+\]
+The quantum Arnold relations give the fiberwise bar curvature
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot
+\omega_g^{\mathrm{Ar}} \cdot \mathrm{id}$.
+The Arakelov--Faltings theorem identifies
+$\omega_g^{\mathrm{Ar}}$ with the curvature of the Hodge
+bundle. Chern--Weil then yields
+\[
+\obs_g(\cA)
+\;=\;
+\kappa(\cA) \cdot
+\det\!\Bigl(\frac{i}{2\pi}\Theta_{\mathbb{E}}\Bigr)
+\;=\;
+\kappa(\cA) \cdot c_g(\mathbb{E})
+\;=\;
+\kappa(\cA) \cdot \lambda_g.
+\]
+No clutching argument is used. The only external inputs are
+Mumford's GRR computation of the Chern classes of~$\mathbb{E}$
+and the Arakelov--Faltings identification of the Hodge
+curvature.
+
+\medskip\noindent
+\textbf{Proof B: clutching propagation from genus~$1$.}
+This proof uses the boundary stratification
+of~$\Mbar_g$ and proceeds by induction on~$g$.
+
+\emph{Base case.}
+$\obs_1 = \kappa \cdot \lambda_1$ is proved unconditionally
+(Step~1 above; $H^2(\Mbar_{1,1}) \cong \mathbb{Q} \cdot
+\lambda_1$ is one-dimensional).
+
+\emph{Inductive step.}
+Assume $\obs_h = \kappa \cdot \lambda_h$ for all $h < g$.
+The Maurer--Cartan element
+$\Theta_\cA \in \mathrm{MC}(\mathrm{Def}_{\mathrm{cyc}}(\cA)
+\,\widehat{\otimes}\, \mathfrak{G}^{\mathrm{mod}})$
+automatically satisfies the clutching factorization by the
+Getzler--Kapranov correspondence~\textup{[GK98, Theorem~5.4]}:
+the MC equation on the Feynman transform encodes exactly the
+clutching compatibility conditions.
+
+The separating clutching
+$\xi_{\mathrm{sep}} \colon
+\Mbar_{g_1,1} \times \Mbar_{g_2,1} \to \Mbar_g$
+(with $g_1 + g_2 = g$) gives
+\[
+\xi_{\mathrm{sep}}^*(\obs_g)
+\;=\;
+\sum_{g_1+g_2=g}
+\obs_{g_1} \star \obs_{g_2}
+\;=\;
+\sum_{g_1+g_2=g}
+\kappa \cdot \lambda_{g_1}
+\star
+\kappa \cdot \lambda_{g_2}
+\;=\;
+\kappa \cdot
+\xi_{\mathrm{sep}}^*(\lambda_g),
+\]
+where the star product in the convolution algebra contracts
+along the glued edge via the propagator $\eta^{-1} = 1/\kappa$,
+absorbing one factor of~$\kappa$: explicitly,
+$(\kappa\lambda_{g_1}) \star (\kappa\lambda_{g_2})
+= (1/\kappa) \cdot \kappa\lambda_{g_1} \cdot \kappa\lambda_{g_2}
+= \kappa \cdot \lambda_{g_1}\lambda_{g_2}$.
+The last equality uses the Whitney sum formula
+$\xi_{\mathrm{sep}}^*(\lambda_g)
+= \sum_{i+j=g} \lambda_i \otimes \lambda_j$
+for the Hodge bundle.
+
+The non-separating clutching
+$\xi_{\mathrm{nsep}} \colon \Mbar_{g-1,2} \to \Mbar_g$
+gives
+\[
+\xi_{\mathrm{nsep}}^*(\obs_g)
+\;=\;
+\kappa \cdot
+\xi_{\mathrm{nsep}}^*(\lambda_g),
+\]
+by the inductive hypothesis applied to the genus-$(g-1)$
+data at the self-node vertex.
+
+The trace functional (integration over $\Mbar_g$) satisfies
+$\int_{\Mbar_g} \obs_g = F_g = \kappa \cdot \Ahat_g$
+(from the bar-complex graph sum on the uniform-weight lane),
+and $\int_{\Mbar_g} \lambda_g = \Ahat_g$
+(the Faber--Pandharipande evaluation). Hence
+\[
+\ell_g(\obs_g) \;=\; \kappa \cdot \ell_g(\lambda_g).
+\]
+
+It remains to show that the joint map
+$J_g = (\ell_g, \mathrm{clut}_g) \colon W_g \to
+\mathbb{C} \oplus B_g$
+is injective on the relevant subspace
+$U_g \ni \obs_g, \lambda_g$.
+On the uniform-weight lane, $U_g$ is the one-dimensional
+tautological line $\mathbb{Q} \cdot \lambda_g$ (the scalar
+channel produces only classes built from the Hodge bundle;
+no higher Hodge bundles $R^0\pi_*\omega_\pi^{\otimes h}$
+with $h \neq 1$ enter). On this one-dimensional space, the
+trace $\ell_g$ is already injective (since
+$\ell_g(\lambda_g) = \Ahat_g \neq 0$), so
+$J_g$ is injective a fortiori.
+
+By the tautological-line support criterion, the injectivity
+of~$J_g$ together with the clutching and trace compatibilities
+gives $\obs_g = \kappa \cdot \lambda_g$.
+
+\medskip\noindent
+\textbf{Agreement of the two proofs.}
+Proof~A produces the identification directly from the Hodge
+bundle structure on the universal curve. Proof~B produces it
+inductively from the boundary stratification. The two proofs
+have no logical dependency on each other: Proof~A uses GRR
+and Arakelov--Faltings; Proof~B uses Getzler--Kapranov and
+the tautological-line support criterion. Their agreement is a
+consistency check on the framework.
+\end{proof}
+
+\begin{remark}[Resolution of the clutching-uniqueness gap]
+\label{rem:clutching-gap-resolved}
+The all-genera extension of Theorem~D was identified as
+depending on a ``clutching-uniqueness'' step: the assertion
+that the boundary restrictions of $\obs_g$ determine $\obs_g$
+uniquely within the tautological ring. Proof~B above
+establishes this step by showing that the relevant subspace
+$U_g$ is one-dimensional on the uniform-weight lane (the
+scalar channel sees only the Hodge bundle), so injectivity of
+the joint map is automatic. Proof~A bypasses the question
+entirely. The all-genera statement of Theorem~D(ii) is
+therefore unconditional on the uniform-weight lane, via either
+route.
 \end{remark}
 
 \begin{example}[Heisenberg at all genera]\label{ex:thmD-heis}

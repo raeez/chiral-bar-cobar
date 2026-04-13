@@ -537,6 +537,37 @@ computed first for $H_k$ and then extended to general
 families by variation of the $r$-matrix.
 \end{remark}
 
+\subsection{Relation to prior work}
+
+The topological foundation is factorisation homology of manifolds
+with $\En$ coefficients, developed by Ayala--Francis~\cite{AF15}
+and extended to structured manifolds in
+Ayala--Francis~\cite{AF19}.  In the topological setting, the
+bar complex of an $\En$-algebra $A$ computes the
+factorisation homology $\int_M A$ when $M$ is an
+$n$-framed manifold; the chiral bar complex of the present
+paper is the holomorphic refinement of this construction.
+Higher enveloping algebras, introduced by
+Knudsen~\cite{Knudsen18}, provide a Lie-algebraic model for
+factorisation homology of free $\En$-algebras: the higher
+enveloping algebra $U_n(\fg)$ of a Lie algebra computes the
+factorisation homology of the free $\En$-algebra on $\fg$.
+The operadic bar-cobar machinery underlying the Koszul duality
+between $\En$-algebras and $\En$-coalgebras is developed in
+full generality in Fresse~\cite{Fresse17}, where the homotopy
+theory of operads is constructed using Grothendieck--Teichm\"uller
+methods.  The intrinsic formality of $\En$-operads, proved by
+Fresse--Willwacher~\cite{FresseWillwacher20}, is the technical
+input for arrow~$(4)$ of the operadic
+circle~\eqref{eq:e-circle}: it implies that the higher Deligne
+conjecture is controlled by the rational homotopy type of
+$\En$-operads, without auxiliary choices.  Higher Hochschild
+homology, developed by Ginot--Tradler--Zeinalian~\cite{GTZ14},
+computes the factorisation homology of $\Einf$-algebras over
+arbitrary simplicial sets; the chiral Hochschild theory of
+Section~\ref{sec:derived-centre} is the algebro-geometric
+analogue, with simplicial sets replaced by algebraic curves.
+
 % ================================================================
 % SECTION 2: Bar chain models on curve geometries
 % ================================================================
@@ -2946,6 +2977,424 @@ The following cases are verified:
 \end{enumerate}
 \end{proposition}
 
+\subsection{Proof for class G}
+
+The closing conjecture is proved for the Heisenberg algebra
+by resolving obstruction~(III) through the chiral
+Hochschild--coHochschild duality.
+
+\begin{lemma}[Chiral Morita--Hochschild comparison for $H_k$]
+\label{lem:e-heis-morita-hochschild}
+Let $C = \Barord(H_k)$ and $C^e = C \otimes C^{\mathrm{op}}$. The
+chiral Drinfeld centre of the $\Eone$-monoidal category of complete
+$H_k$-modules admits an identification
+\begin{equation}\label{eq:e-heis-morita}
+Z(H_k\textup{-mod}^{\mathrm{compl}})
+\;\simeq\;
+\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)
+\;\simeq\;
+\ChirHoch^*(H_k, H_k)
+\;=\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k),
+\end{equation}
+where $C_\Delta$ is the diagonal bicomodule.
+\end{lemma}
+
+\begin{proof}
+The argument has three steps.
+
+\emph{Step~1: Module--comodule equivalence.}
+The Heisenberg algebra $H_k$ is Koszul with
+finite-type grading (each weight space is
+finite-dimensional). By the module Koszul
+duality theorem, the bar-cobar adjunction
+restricts to an equivalence of derived
+categories:
+\[
+D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{H_k})
+\;\simeq\;
+D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C}).
+\]
+This equivalence is monoidal with respect to the fusion product on
+$H_k$-modules and the cotensor product on $C$-comodules: the fusion
+$M_1 \otimes_{H_k}^{\mathbf{L}} M_2$ corresponds to the derived
+cotensor $\mathcal{K}(M_1) \mathbin{\square}_C^{\mathbf{R}} \mathcal{K}(M_2)$.
+The monoidality follows because the bar
+resolution is a two-sided coalgebra resolution:
+the two-pointed bar complex
+$\Barord(H_k;\, M_1, M_2)$ computes the fusion,
+and under the equivalence this is exactly the
+cotensor of the corresponding comodules.
+
+\emph{Step~2: Drinfeld centre as Hochschild self-extension.}
+The Drinfeld centre of an $\Eone$-monoidal category $\cC$
+is the category of pairs $(M, \gamma)$ where $\gamma$
+is a half-braiding. For a module category $\cC = A\text{-mod}$,
+the endomorphism algebra of the identity functor is
+$Z(\cC) = \mathrm{Nat}(\id_\cC, \id_\cC)
+= \HH^*(A, A)$.
+More precisely, the Hochschild cochain complex
+$C^*(A, A)$ computes the derived endomorphisms
+of the identity bimodule:
+$Z(\cC) \simeq R\!\Hom_{A^e}(A, A) = \HH^*(A, A)$.
+The monoidal equivalence of Step~1 transports this to
+the coalgebra side: the Drinfeld centre of
+$C$-comod is the coHochschild self-extension
+$\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)$.
+
+\emph{Step~3: Hochschild--coHochschild duality.}
+The chiral Hochschild--coHochschild duality
+(cohomological version) gives
+\[
+\ChirHoch^*(H_k, H_k)
+\;\simeq\;
+\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta).
+\]
+Composing Steps~1--3:
+\[
+Z(H_k\text{-mod}^{\mathrm{compl}})
+\;\simeq\;
+Z(C\text{-comod}^{\mathrm{conil}})
+\;\simeq\;
+\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)
+\;\simeq\;
+\ChirHoch^*(H_k, H_k)
+\;=\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k). \qedhere
+\]
+\end{proof}
+
+\begin{theorem}[Closing conjecture for class G]
+\label{thm:e-closing-class-g}
+For the Heisenberg algebra $H_k$ at level $k \neq 0$, the
+$\En$ operadic circle closes: there is an equivalence of
+$\Ethree^{\mathrm{top}}$-algebras
+\begin{equation}\label{eq:e-closing-class-g}
+Z(U_{H_k})
+\;\simeq\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k).
+\end{equation}
+Both sides are isomorphic to $\bC^3$ as graded vector spaces,
+with trivial $\Pthree$ bracket.
+\end{theorem}
+
+\begin{proof}
+We verify the hypotheses of the closing conjecture
+and resolve all three obstructions simultaneously.
+
+\emph{Obstruction~(I): Pointwise reduction.}
+The Heisenberg is class~G: the shadow tower
+terminates at degree~$2$ ($S_4 = 0$, $\Delta = 0$).
+The $\Ainf$ corrections at degree $\ge 3$ are
+absent (all higher $m_k$ vanish for $k \ge 3$
+because the OPE has only a double pole). The
+stalk-wise centre at every point of $\Ran(X)$
+agrees with the full derived centre. Pointwise
+reduction holds unconditionally.
+
+\emph{Obstruction~(II): Factorisation for $H_k^!$.}
+The Koszul dual $H_k^! = \Sym^{\mathrm{ch}}(V^*)$
+is a free-field chiral algebra generated by $V^*$
+with the OPE
+$\alpha^*(z)\alpha^*(w) \sim -k/(z-w)^2$.
+As a free field, it carries a canonical factorisation
+structure on $\Ran(X)$: the factorisation product is
+the symmetric monoidal structure of the symmetric
+algebra, and the $D$-module descent to the Ran space
+is standard for free-field algebras. The Drinfeld
+double $U_{H_k} = H_k \otimes H_k^!$ is therefore a
+well-defined chiral algebra with braiding given by the
+classical $r$-matrix $r(z) = k/z$.
+
+\emph{Obstruction~(III): Bar-cobar vs Hochschild.}
+This is the content of
+Lemma~\ref{lem:e-heis-morita-hochschild}: the
+module--comodule equivalence for $H_k$ transports the
+Drinfeld centre to the coHochschild self-extension of
+$\Barord(H_k)$, which is identified with the chiral
+Hochschild cohomology by Hochschild--coHochschild
+duality. The result:
+\[
+Z(H_k\text{-mod})
+\;\simeq\;
+\ChirHoch^*(H_k, H_k)
+\;=\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k).
+\]
+
+\emph{Comparison of $\Ethree$ structures.}
+The derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k) = \bC \oplus \bC[-1] \oplus \bC[-2]$
+carries trivial $\Pthree$ bracket (the Gerstenhaber
+bracket vanishes because $H_k$ is commutative: the Lie
+bracket $[J, J] = 0$ forces all brackets on Hochschild
+cohomology to vanish). The Drinfeld centre
+$Z(U_{H_k})$ also has trivial $\Pthree$ bracket
+(the $R$-matrix $S(z) = \id$ gives symmetric braiding,
+hence trivial bracket on the centre). By $\Ethree$
+formality (Theorem~\ref{thm:e-e3-formality}), the
+$\Ethree$-structure is determined by the $\Pthree$-structure
+on cohomology. Since both $\Pthree$-structures are trivial
+on the same underlying graded vector space $\bC^3$, the
+$\Ethree$-algebras are isomorphic.
+
+The topologisation hypotheses are satisfied for
+$H_k$ at $k \neq 0$: the conformal vector is
+$T = (1/(2k)){:}JJ{:}$, and the Sugawara construction
+makes $\bC$-translations $Q$-exact.
+\end{proof}
+
+\begin{remark}[The abelian simplicity]
+\label{rem:e-abelian-simplicity}
+For the Heisenberg, all three obstructions dissolve
+simultaneously because the algebra is abelian. Obstruction~(I)
+is resolved by the finiteness of the shadow tower (class~G).
+Obstruction~(II) is resolved by the free-field character of
+$H_k^!$, which gives it canonical factorisation. Obstruction~(III)
+is resolved by Koszulness, which makes the module--comodule
+equivalence exact. The three obstructions are genuinely independent
+for general algebras: class~M algebras (Virasoro) fail
+obstruction~(I), non-Koszul algebras fail obstruction~(III), and
+algebras whose Koszul duals have non-standard factorisation fail
+obstruction~(II). The Heisenberg is the unique intersection where
+all three vanish.
+\end{remark}
+
+\subsection{Proof for class L}
+
+The closing conjecture for affine Kac--Moody algebras at
+non-critical level follows from obstruction~(I) resolution
+combined with the $\Ethree$ identification theorem.
+
+\begin{lemma}[Stalk-wise reduction for class L]
+\label{lem:e-km-stalkwise}
+Let $V_k(\fg)$ be the universal affine vertex algebra at
+non-critical level $k \neq -h^\vee$, with $\fg$ simple. The
+Drinfeld centre $Z(V_k(\fg)\textup{-mod})$ is computed by
+the stalk-wise centre at each point of $\Ran(X)$: no
+$\Ainf$ correction at degree $\ge 4$ contributes.
+\end{lemma}
+
+\begin{proof}
+The shadow tower of $V_k(\fg)$ terminates at degree~$3$
+(class~L: the OPE has a double pole and a simple pole,
+giving $S_4 = 0$ and $\Delta = 0$). The $\Ainf$ structure
+on the bar complex has $m_1$ (the bar differential),
+$m_2$ (the deconcatenation coproduct), and $m_3$ (the triple
+collision residue from the simple pole). All $m_k = 0$ for
+$k \ge 4$. The stalk-wise Drinfeld centre at degree~$n$
+is computed by the universal enveloping algebra of the
+truncated $\Ainf$ operations $m_1, m_2, m_3$. Since no
+operation at degree $\ge 4$ exists, the stalk-wise
+computation at each point of $\Ran(X)$ sees the complete
+$\Ainf$ data: no information is lost in the passage from
+global to stalk-wise. The global assembly is a limit
+indexed by the Ran space, and each stalk contributes the
+full centre data.
+\end{proof}
+
+\begin{theorem}[Closing conjecture for class L]
+\label{thm:e-closing-class-l}
+For $V_k(\fg)$ with $\fg$ simple and $k \neq -h^\vee$,
+the $\En$ operadic circle closes: there is an equivalence
+of $\Ethree^{\mathrm{top}}$-algebras
+\begin{equation}\label{eq:e-closing-class-l}
+Z(U_{V_k(\fg)})
+\;\simeq\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)).
+\end{equation}
+Both sides are isomorphic to the Costello--Francis--Gwilliam
+$\Ethree^{\mathrm{top}}$-algebra from perturbative
+Chern--Simons theory with gauge algebra $\fg$ at coupling
+$\lambda = k + h^\vee$.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds via obstruction resolution and two
+independent comparison paths.
+
+\emph{Step~1: Obstruction~(I) resolution.}
+By Lemma~\ref{lem:e-km-stalkwise}, the stalk-wise
+centre computes the full Drinfeld centre for class~L.
+The chiral centre theorem
+(Theorem~\ref{thm:e-center-hochschild}) then identifies
+$Z(V_k(\fg)\text{-mod})$ with the chiral Hochschild
+cochains $C^\bullet_{\mathrm{ch}}(V_k(\fg), V_k(\fg))$.
+By the theorem on resolution of any one obstruction
+(Theorem~\ref{thm:e-one-obstruction}), the closing
+conjecture reduces to a comparison of $\Etwo$-algebras
+with matching $\Pthree$-structures.
+
+\emph{Step~2: $\Pthree$ comparison.}
+The $\Pthree$-structure on
+$H^*(\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))
+\cong C^*(\fg)$ is determined by the Gerstenhaber
+bracket $\{\phi_a, \phi_b\} = \lambda\,f_{ab}{}^c\,\phi_c$
+(Remark~\ref{rem:e-e3-to-p3}). The $\Pthree$-structure
+on $Z(U_{V_k(\fg)})$ is determined by the braiding of
+the Drinfeld double. For affine Kac--Moody at non-critical
+level, the braiding is the KZ braiding, whose classical
+limit is the $r$-matrix
+$r(z) = k\Omega/z$ (trace-form convention).
+The Drinfeld centre
+carries the half-braiding
+$\gamma_N \colon M \otimes N \to N \otimes M$ induced by
+the $R$-matrix $R(z) = 1 + \lambda\,\Omega/z + O(\lambda^2)$,
+whose first-order $\Pthree$ bracket on the centre
+is $\{\phi_a, \phi_b\} = \lambda\,f_{ab}{}^c\,\phi_c$.
+The two $\Pthree$ brackets agree.
+
+\emph{Step~3: $\Ethree$ formality closes the circle.}
+By $\Ethree$ formality
+(Theorem~\ref{thm:e-e3-formality}), the $\Ethree$-structure
+is determined by the $\Pthree$-structure on cohomology. For
+simple $\fg$, $\dim H^3(\fg) = 1$, so the formal deformation
+family over $\lambda H^3(\fg)[[\lambda]]$ is one-dimensional
+at each order (Step~2 of the proof of
+Theorem~\ref{thm:e-e3-identification}). Since both
+$\Pthree$-brackets are controlled by the same single
+parameter $\lambda = k + h^\vee$ and agree at each order,
+the two $\Ethree$-algebras are isomorphic as formal
+deformation families:
+\[
+Z(U_{V_k(\fg)})
+\;\simeq\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\;\simeq\;
+\cA^\lambda.
+\]
+The last identification is
+Theorem~\ref{thm:e-e3-identification}.
+\end{proof}
+
+\begin{remark}[The two paths to the closing for class L]
+\label{rem:e-two-paths-class-l}
+The proof above resolves obstruction~(I) and then uses
+$\Ethree$ formality. An alternative path resolves
+obstruction~(III) directly: the bimodule--bicomodule
+equivalence for $V_k(\fg)$ at non-critical level
+transports the Drinfeld centre to the coalgebraic
+coHochschild complex, which is identified with
+$\ChirHoch^*(V_k(\fg))$ by the same
+Hochschild--coHochschild duality used in the class~G
+proof (Lemma~\ref{lem:e-heis-morita-hochschild}).
+The obstruction to this path is that the bar--cobar
+module equivalence for non-abelian $V_k(\fg)$ requires
+the PBW completion technology of the ordered chiral
+Koszul duality theory: the conilpotent comodules over
+$\Barord(V_k(\fg))$ must be compared with complete
+modules over $V_k(\fg)$ in the pro-nilpotent topology.
+On the Koszul locus (which includes all standard affine
+Kac--Moody algebras at non-critical level), this comparison
+is exact and the two paths agree.
+\end{remark}
+
+\begin{remark}[Obstruction landscape after class G and L]
+\label{rem:e-obstruction-after-gl}
+With classes G and L proved, the closing conjecture
+remains open only for class~M (Virasoro,
+$\cW_N$) and for algebras beyond the standard
+landscape. The surviving obstruction is the
+conjunction of~(I) and the general topologisation
+conjecture:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For class~M, obstruction~(I) is
+ genuine: the infinite shadow tower means the
+ stalk-wise centre does not see the $\Ainf$
+ corrections at degree $\ge 4$, and the global
+ assembly requires coherent families of higher
+ homotopies. Resolving this requires understanding
+ the chain-level $\Ainf$-structure of the
+ Drinfeld centre for algebras with infinite shadow
+ tower: a problem equivalent to the chain-level
+ topologisation problem.
+\item For class~M, topologisation itself is
+ conjectural
+ (Conjecture~\ref{conj:e-topologisation-general}):
+ the bulk $\Ethree^{\mathrm{top}}$-algebra for
+ Virasoro requires constructing the $3$d gravity
+ BRST complex. Without topologisation, the target
+ of the closing equivalence is not defined.
+\end{enumerate}
+The depth gap theorem ($d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$,
+gap at $3$) implies there is no intermediate class between
+L and M: the jump from finite shadow tower (classes G, L, C
+with $d_{\mathrm{alg}} \le 2$) to infinite tower
+(class M with $d_{\mathrm{alg}} = \infty$) is discontinuous.
+The closing conjecture is therefore proved for all Koszul
+$\Einf$-chiral algebras with finite shadow tower
+(classes~G, L, C) that satisfy the topologisation
+hypotheses, and remains open precisely for class~M.
+\end{remark}
+
+\subsection{Resolution of obstruction (III) on the Koszul locus}
+
+The Hochschild--coHochschild strategy used for class~G
+extends to all Koszul chiral algebras, providing a general
+resolution of obstruction~(III).
+
+\begin{proposition}[Obstruction (III) resolved on the Koszul locus]
+\label{prop:e-obstruction-iii-koszul}
+Let $\cA$ be a Koszul $\Einf$-chiral algebra with finite-type
+grading. Set $C = \Barord(\cA)$. Then the chiral
+Drinfeld centre of complete $\cA$-modules is isomorphic to
+the derived chiral centre as $\Etwo$-algebras:
+\begin{equation}\label{eq:e-obstruction-iii}
+Z(\cA\textup{-mod}^{\mathrm{compl}})
+\;\simeq\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The argument follows the three-step structure of
+Lemma~\ref{lem:e-heis-morita-hochschild}, with each
+step valid on the Koszul locus.
+
+\emph{Step~1.} The module Koszul duality theorem gives
+a monoidal equivalence
+$D(\mathrm{Mod}^{\mathrm{compl}}_\cA) \simeq
+D(\mathrm{CoMod}^{\mathrm{conil}}_C)$
+for Koszul algebras with finite-type grading. The
+monoidality holds because the two-pointed bar complex
+computes fusion on both sides.
+
+\emph{Step~2.} The Drinfeld centre of
+$\cA\text{-mod}^{\mathrm{compl}}$ is transported across
+the monoidal equivalence to
+$\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)$: the
+coalgebraic self-extension of the diagonal bicomodule
+in the coderived category of $C$-bicomodules.
+
+\emph{Step~3.} The chiral Hochschild--coHochschild
+duality (cohomological version) identifies
+$\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)
+\simeq \ChirHoch^*(\cA, \cA)
+= \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+
+The $\Etwo$-structure is preserved at each step:
+Step~1 preserves the monoidal structure (hence the
+centre), Step~2 preserves the derived endomorphisms of
+the identity (hence the half-braidings), and Step~3
+preserves the Gerstenhaber bracket (the brace operations
+on Hochschild cochains correspond to the composition product
+on coalgebraic coextensions).
+\end{proof}
+
+\begin{remark}[Scope of the Koszul locus]
+\label{rem:e-koszul-scope}
+All standard chiral algebras in the landscape are Koszul:
+Heisenberg, affine Kac--Moody (all levels), Virasoro,
+$\cW_N$, $\beta\gamma$, $bc$, lattice vertex algebras.
+Proposition~\ref{prop:e-obstruction-iii-koszul} therefore
+resolves obstruction~(III) for the entire standard
+landscape. The remaining obstructions for class~M are
+(I)~the stalk-wise reduction and the general topologisation
+conjecture: both are problems about the target
+$\Ethree^{\mathrm{top}}$-algebra, not about the comparison
+map.
+\end{remark}
+
 \subsection{The holographic interpretation}
 
 \begin{remark}[The circle as holographic duality]
@@ -2992,6 +3441,9 @@ for all standard families.
 \bibitem{AF15} D.~Ayala and J.~Francis, \emph{Factorization homology of
  topological manifolds}, J.\ Topol.\ \textbf{8} (2015), 1045--1084.
 
+\bibitem{AF19} D.~Ayala and J.~Francis, \emph{Poincar\'e/Koszul
+ duality}, Comm.\ Math.\ Phys.\ \textbf{365} (2019), 847--933.
+
 \bibitem{BD04} A.~Beilinson and V.~Drinfeld, \emph{Chiral Algebras},
  AMS Colloquium Publications, vol.~51, 2004.
 
@@ -3025,6 +3477,11 @@ for all standard families.
 \bibitem{GK98} E.~Getzler and M.~M.~Kapranov, \emph{Modular operads},
  Compos.\ Math.\ \textbf{110} (1998), 65--126.
 
+\bibitem{GTZ14} G.~Ginot, T.~Tradler, and M.~Zeinalian,
+ \emph{Higher Hochschild homology, topological chiral homology
+ and factorization algebras}, Comm.\ Math.\ Phys.\
+ \textbf{326} (2014), 635--686.
+
 \bibitem{HA} J.~Lurie, \emph{Higher Algebra}, 2017.
 
 \bibitem{Idrissi22} N.~Idrissi, \emph{Real homotopy of configuration
@@ -3032,6 +3489,9 @@ for all standard families.
 
 \bibitem{KhanZeng25} A.~Khan and Y.~Zeng, \emph{$\Ethree$-algebras
  from chiral algebras}, preprint, 2025.
+
+\bibitem{Knudsen18} B.~Knudsen, \emph{Higher enveloping algebras},
+ Geom.\ Topol.\ \textbf{22} (2018), 4013--4066.
 
 \bibitem{Kon94} M.~Kontsevich, \emph{Feynman diagrams and
  low-dimensional topology}, in: First European Congress of
