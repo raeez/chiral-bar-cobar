@@ -690,6 +690,7 @@ These results change what is TRUE in the manuscript. Every agent must know them.
 - Face model bypasses vertex-IRF: when vertex-model DYBE fails numerically, use IRF Boltzmann weights directly.
 - Miura proof: Prochazka-Rapcak factorization T(u)=prod(u+Lambda_i) → elementary symmetric expansion → 1/Psi coefficient.
 - Drinfeld center dim < derived center dim: Ext^1,2 invisible to commutant.
+- **FM35 (CONSTITUTIONAL): NEVER revert mathematical content to fix build errors.** Fix the LaTeX (add macros, close environments) while preserving every line of mathematics. Reverting content to make a build pass destroys agent work. The correct response to 100 undefined-macro errors is 100 \providecommand lines, NOT git checkout.
 
 **Final session state (2026-04-13, 130 commits):**
 - 2 conjectures → theorems (E_3 identification, Miura universality)
