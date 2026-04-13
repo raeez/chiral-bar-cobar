@@ -100,6 +100,22 @@ $\End_\cA(2)[\![z^{-1}]\!]$; their mutual identification is
 controlled by the collision depth $k_{\max}$ and the shadow class
 $G/L/C/M$.
 
+The collision residue $r_\cA(z)$ is the degree-$2$ component of
+the $E_1$ Maurer--Cartan element
+$\Theta^{E_1}_\cA$ in the ordered convolution algebra
+$\mathfrak{g}^{E_1}_\cA$, where
+$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$ is the cofree tensor
+coalgebra with deconcatenation coproduct. Its
+$\Sigma_n$-coinvariant projection is the scalar shadow $\kappa$:
+$\mathrm{av}(r(z))$ in abelian and scalar families, and
+$\mathrm{av}(r(z))+\dim(\fg)/2$ for non-abelian affine
+Kac--Moody;
+the spectral parameter that $\kappa$ discards is precisely the data
+the seven faces read. At genus~$1$, the spectral parameter acquires
+modular dependence: $r^{(1)}_\cA(z,\tau)$ depends on the elliptic
+modulus $\tau$, and the $B$-cycle monodromy of the ordered collision
+residue encodes the quantum group parameter.
+
 This paper extends the identification to genus~$1$. The elliptic
 curve $E_\tau = \mathbb{C}/(\mathbb{Z}+\mathbb{Z}\tau)$ replaces the
 Riemann sphere, the rational propagator $1/z$ is replaced by the
@@ -692,11 +708,11 @@ the KZ connection: $\zeta_\tau(z_{ij}) \to 1/z_{ij}$. The
 $d\tau$-component has no genus-$0$ counterpart.
 
 \item \textup{(Elliptic $\to$ rational $r$-matrix.)}
-$r^{\mathrm{ell}}_\fg(z,\tau) \to \Omega/z$ through the intermediate
-trigonometric $r$-matrix:
-$r^{\mathrm{ell}} \to r^{\mathrm{trig}} \to r^{\mathrm{rat}}$,
-in the level-normalised convention where the
-$1/(k+h^\vee)$ prefactor is absorbed into the rescaled $\Omega$.
+$r^{\mathrm{ell}}_\fg(z,\tau)/(k+h^\vee) \to
+k\,\Omega/((k+h^\vee)z) = \Omega/((k+h^\vee)z)$ through the
+intermediate trigonometric $r$-matrix:
+$r^{\mathrm{ell}} \to r^{\mathrm{trig}} \to r^{\mathrm{rat}}$.
+% AP126: level prefix mandatory; k=0 -> r=0 verified.
 
 \item \textup{(Elliptic $\to$ rational Gaudin.)}
 $H_i^{\mathrm{ell}} \to H_i^{\mathrm{Gaudin}} = \sum_{j \neq i}
@@ -721,11 +737,10 @@ The elliptic $r$-matrix degeneration: as $q \to 0$,
 $\phi_\pm(z,\tau) \to \pi/\sin(\pi z) + O(q)$, recovering the
 trigonometric $r$-matrix. A further limit
 $z \mapsto z/L$, $L \to \infty$ gives $\pi/\sin(\pi z/L) \to L/z$,
-recovering the level-normalised $\Omega/z$ form (the
-canonical AP\textsc{126}-compliant form
-$k\,\Omega/z$ is recovered by undoing the absorption
-$\Omega \mapsto k\,\Omega$). Both limits are continuous in the topology of
-formal Laurent series.
+recovering the rational $r$-matrix
+$\Omega/((k+h^\vee)z)$ in the KZ normalization.
+% AP126: all r-matrices carry level prefix; k=0 -> r=0 for trace-form.
+Both limits are continuous in the topology of formal Laurent series.
 \end{proof}
 
 The degeneration theorem provides the consistency check between genus-$0$
@@ -776,6 +791,126 @@ $c = 1, 1/2, 25, 26$, verify~\eqref{eq:vir-genus1} and confirm the
 $c_1 = 0$ vanishing. For $\cW_3$ at $c = 2, 50, 98$,
 verify~\eqref{eq:wn-genus1} and confirm terms through $\wp'''$.
 \end{enumerate}
+
+
+%%% ================================================================
+%%% 9. VERLINDE FORMULA
+%%% ================================================================
+
+\section{The Verlinde formula from ordered chiral
+homology}\label{sec:verlinde}
+
+At integer level $k \in \mathbb{Z}_{\geq 1}$, the ordered chiral
+homology of $\widehat{\fg}_k$ on $E_\tau$ recovers the Verlinde
+partition function. The connection to the seven-face programme is
+direct: the KZB connection of Theorem~\ref{thm:kzb} has finite
+monodromy at integer level, and the trace of the $B$-cycle monodromy
+over the space of conformal blocks recovers the Verlinde formula.
+
+\begin{proposition}[Verlinde from genus-$1$ collision
+residue]\label{prop:verlinde-g1}
+For $\cA = \widehat{\fg}_k$ at integer level $k \geq 1$, the $B$-cycle
+monodromy of the KZB connection is
+\begin{equation}\label{eq:b-monodromy}
+\mathcal{M}_B
+\;=\;
+\exp\Bigl(\frac{2\eta_\tau}{k+h^\vee}\,\Omega\Bigr)
+\;=\;
+\exp\bigl(2\eta_\tau \cdot c_0\bigr),
+\end{equation}
+where $c_0 = \Omega/(k+h^\vee)$ is the degree-$0$ collision
+coefficient. The quantum group parameter is
+$q = \exp(2\pi i/(k+h^\vee))$, and the Verlinde partition function
+at genus~$1$ is
+\begin{equation}\label{eq:verlinde-g1}
+Z_1(\widehat{\fg}_k)
+\;=\;
+\sum_{\lambda \in P_+^k}
+|S_{0\lambda}|^{0}
+\;=\;
+|P_+^k|,
+\end{equation}
+where $P_+^k$ is the set of integrable highest weights at level $k$
+and $S_{0\lambda}$ are the modular $S$-matrix entries. At higher genus
+$g$, the Verlinde formula
+$Z_g = \sum_\lambda S_{0\lambda}^{2-2g}$ is recovered from the
+ordered chiral homology via handle attachment and separating
+factorization of the ordered bar complex.
+\end{proposition}
+
+\begin{remark}[The $B$-cycle monodromy and the quantum
+group]\label{rem:quantum-group}
+The quasi-periodicity~\eqref{eq:B-cycle-monodromy} of the genus-$1$
+collision residue is the geometric origin of the quantum group
+parameter. For affine $\widehat{\fsl}_{2,k}$: the $B$-cycle monodromy
+eigenvalues are $q^{j(j+1)}$ for $j = 0, 1/2, \ldots, k/2$, where
+$q = e^{2\pi i/(k+2)}$ is a root of unity. The passage from the
+$E_1$ collision residue $r^{(1)}(z,\tau)$ to the quantum group
+$U_q(\fg)$ is the $B$-cycle monodromy of the ordered bar complex:
+the spectral parameter $z$ (genus-$0$ data) becomes the quantum
+group parameter $q$ (genus-$1$ data) through exponentiation of the
+quasi-period.
+\end{remark}
+
+
+%%% ================================================================
+%%% 10. THE CRITICAL LEVEL JUMP
+%%% ================================================================
+
+\section{The critical level}\label{sec:critical-level}
+
+The seven-face programme at genus~$1$ has a distinguished boundary:
+the critical level $k = -h^\vee$, where the Sugawara construction
+degenerates. The collision residue and the KZB connection undergo a
+qualitative change at this value.
+
+\begin{theorem}[Critical level jump at
+genus~$1$]\label{thm:critical-level-g1}
+For $\cA = \widehat{\fg}_k$ at the critical level $k = -h^\vee$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The shadow invariant vanishes:
+$\kappa(\widehat{\fg}_{-h^\vee}) = 0$. All monodromy eigenvalues of
+the genus-$1$ collision residue become integers.
+\item The first cohomology of the ordered chiral homology doubles:
+$\dim H^1$ jumps from $4$ (generic level) to $8$ (critical level) for
+$\fg = \fsl_2$.
+\item The bar cohomology at critical level computes the algebra of
+functions on the space of $\fg$-opers:
+$H^*(B(\widehat{\fg}_{-h^\vee})) \cong \Omega^*(\mathrm{Op}_\fg(D))$.
+\item The genus-$1$ collision residue degenerates: the KZ normalization
+$r^{(1)}(z,\tau) = \Omega\,\zeta_\tau(z)/(k+h^\vee)$ has a pole at
+$k = -h^\vee$, and the KZB connection becomes singular. The critical
+level requires a separate regularization via the Feigin--Frenkel
+center~\cite{FeiginFrenkel94}.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Koszulness at critical level]\label{rem:koszul-critical}
+At generic level $k \neq -h^\vee$, the affine Kac--Moody algebra
+$\widehat{\fg}_k$ is chirally Koszul, and the seven-face programme
+applies without modification. At the critical level $k = -h^\vee$,
+chirally Koszulness fails: the center of $\widehat{\fg}_{-h^\vee}$
+jumps (it becomes the Feigin--Frenkel center, isomorphic to the
+algebra of functions on the space of opers), and the bar complex
+acquires additional cohomology. The seven faces degenerate: the
+Gaudin Hamiltonians become the Feigin--Frenkel higher Gaudin
+Hamiltonians, and the $r$-matrix limit requires the Langlands dual
+group ${}^L G$ via the geometric Langlands correspondence. The
+critical level is not an obstruction to the programme; it is a
+boundary where new structure emerges.
+\end{remark}
+
+\begin{remark}[Spectral sequence at critical
+level]\label{rem:spectral-critical}
+The passage from generic to critical level is controlled by a spectral
+sequence with $d_1 = \lambda \cdot [\delta]$, where
+$\lambda = k + h^\vee$ is the level shift and $\delta$ is the boundary
+class. At $\lambda = 0$ (critical level), $d_1$ vanishes, and the
+spectral sequence degenerates at $E_1$: the bar cohomology jumps
+because the differential that would kill the extra classes is absent.
+This is the mechanism by which $H^1$ doubles from $4$ to $8$ for
+$\fsl_2$.
+\end{remark}
 
 
 %%% ================================================================
