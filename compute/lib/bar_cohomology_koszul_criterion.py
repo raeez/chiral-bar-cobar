@@ -119,7 +119,13 @@ def virasoro_bar_dims(N: int) -> List[int]:
 
 
 def sl2_bar_dims(N: int) -> List[int]:
-    """Bar cohomology dimensions for sl2-hat: h_n = R(n+3).
+    """Chevalley-Eilenberg cohomology dimensions for sl2-hat: h_n = R(n+3).
+
+    WARNING (AP63/B22): These are CE dimensions, NOT chiral bar dimensions.
+    At degree 2: CE gives R(5) = 6, but chiral bar gives 5.
+    The discrepancy arises because the chiral bar complex uses OPE residues
+    (Orlik-Solomon form factor), not the CE differential.
+    For the CHIRAL bar dimensions, use sl2_chiral_bar_dims() below.
 
     OEIS A005043 (Riordan numbers, shifted by 3).
     GF: P(x) = (1 + x - sqrt(1 - 2x - 3x^2))/(2x(1+x)), algebraic degree 2.
@@ -131,6 +137,29 @@ def sl2_bar_dims(N: int) -> List[int]:
     """
     R = riordan_numbers(N + 4)
     return [R[n + 3] for n in range(1, N + 1)]
+
+
+def sl2_chiral_bar_dims(N: int) -> List[int]:
+    """CHIRAL bar cohomology dimensions for sl2-hat.
+
+    These differ from the CE/Riordan values at degree >= 2 due to the
+    Orlik-Solomon form factor (AP63). The chiral bar complex uses OPE
+    collision residues, not the CE differential.
+
+    Known values (PROVED, WAVE2-36 verified by 3 independent paths):
+      h_1 = 3  (= CE, coincides)
+      h_2 = 5  (CE gives 6; the difference is the Killing form coboundary)
+      h_3 = 15 (= CE, coincides; the AP63 correction vanishes at this degree)
+
+    For n >= 4: CONJECTURAL that chiral = CE (the Orlik-Solomon correction
+    appears to vanish at degrees >= 3 for sl_2, but this is not proved).
+    """
+    # Start with CE/Riordan values
+    ce_dims = sl2_bar_dims(N)
+    # Apply the known correction at degree 2
+    if N >= 2:
+        ce_dims[1] = 5  # CE gives 6, chiral bar gives 5
+    return ce_dims
 
 
 def betagamma_bar_dims(N: int) -> List[int]:
