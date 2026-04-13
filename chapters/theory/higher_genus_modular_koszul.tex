@@ -1020,7 +1020,9 @@ Write
 $V_h := t^{-1}\bC[t^{-1}] / t^{-h-1}\bC[t^{-1}]$.
 The truncated current algebra $\fg \otimes V_h$
 records which modes can occur at weight~$h$; Whitehead is
-not applied to this non-semisimple Lie algebra.
+not applied to this non-semisimple Lie algebra. Its role is
+only to enumerate the finitely many mode patterns~$\nu$
+that occur in weight~$h$.
 After separating the mode data from the $\fg$-labels,
 the weight-$h$ enrichment block is a finite direct sum of
 Chevalley--Eilenberg complexes
@@ -1037,7 +1039,10 @@ C^*(\fg, M_h),
 M_h := \bigoplus_\nu M_{h,\nu},
 \]
 and $d_1^{\mathrm{PBW}}$ is the corresponding
-Chevalley--Eilenberg differential. The map to the concentrated
+Chevalley--Eilenberg differential for the finite-dimensional
+semisimple Lie algebra~$\fg$. Thus the Whitehead step is carried
+out weight by weight on the $\fg$-modules~$M_{h,\nu}$, not on
+$\fg \otimes V_h$. The map to the concentrated
 genus-$0$ sector is one of the $\fg$-equivariant components of this
 same differential.
 
@@ -1200,6 +1205,17 @@ decomposition under~$\fg$ and the Whitehead vanishing
 are weight-independent), completing the proof.
 \end{proof}
 
+\begin{remark}[Whitehead reduction in the PBW proof]
+For fixed conformal weight~$h$, the truncated current algebra
+$\fg \otimes V_h$ only records which modes can occur. The actual
+Whitehead input appears after rewriting the weight-$h$ enrichment
+block as a finite direct sum of complexes $C^*(\fg, M_{h,\nu})$,
+with~$\fg$ acting diagonally on the $\fg$-labels and the mode and
+$H^1$ factors treated as passive coefficients. No vanishing statement
+is invoked for the non-semisimple Lie algebra $\fg \otimes V_h$
+itself.
+\end{remark}
+
 \begin{corollary}[Unconditional modular Koszulity at genus~\texorpdfstring{$1$}{1}; \ClaimStatusProvedHere]
 \label{cor:unconditional-genus1-km}
 \index{modular Koszul chiral algebra!unconditional genus-1}
@@ -1307,7 +1323,10 @@ are codimension-$1$ loci in $\overline{C}_n(\Sigma_g)$,
 and the regular forms from $H^{1,0}(\Sigma_g)$ are
 smooth across these divisors. The module~$M_h$ is
 determined solely by the OPE structure of~$\widehat{\fg}_k$
-truncated at weight~$h$, which is genus-independent.
+truncated at weight~$h$, which is genus-independent. Equivalently,
+the weight-$h$ enrichment block is the same finite direct sum of
+Chevalley--Eilenberg complexes $C^*(\fg, M_{h,\nu})$ as in
+genus~$1$, indexed by the finitely many mode patterns.
 
 \medskip
 \emph{Step~2: Whitehead acyclicity of the enrichment.}
@@ -1328,7 +1347,10 @@ Thus the enrichment complex at weight~$h$ is
 H^{1,0}(\Sigma_g)
 \]
 where $C^*(\fg, M_h)$ is the Chevalley--Eilenberg
-complex of~$\fg$ with coefficients in~$M_h$.
+complex of~$\fg$ with coefficients in~$M_h$. Thus the Whitehead
+argument is again applied to the finite-dimensional semisimple
+Lie algebra~$\fg$ on each weight-graded piece, not to the
+truncated current algebra that records the mode cutoff.
 
 Since $\fg$ is semisimple, the
 Whitehead--Chevalley--Eilenberg theorem gives
@@ -1809,6 +1831,9 @@ at weight~$h$ restricted to the non-trivial summand is
 \;\otimes_{\bC}\;
 H^{1,0}(\Sigma_g).
 \]
+Here the mode truncation has already been absorbed into the
+finite-dimensional coefficient module~$M_h^{\mathrm{non\text{-}triv}}$,
+so Whitehead is applied only to the semisimple Lie algebra~$\fg$.
 By the Whitehead--Chevalley--Eilenberg vanishing theorem,
 $H^q(\fg,\, N) = 0$ for all $q \geq 0$ and any
 finite-dimensional $\fg$-module~$N$ with no trivial summand,
@@ -2724,11 +2749,15 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
 \end{theorem}
 
 \begin{proof}
-The dependency route is one-way: the bar-intrinsic shadow tower of
+\emph{Routing remark.}
+The dependency route is one-way and has an independent anchor:
+the bar-intrinsic shadow tower of
 Theorem~\ref{thm:mc2-bar-intrinsic} produces the scalar trace,
 Theorem~\ref{thm:genus-universality} identifies that trace with
 $\kappa(\cA)\lambda_g$, and Theorem~\ref{thm:family-index} is only the
-subsequent GRR repackaging of the resulting genus series.
+subsequent GRR repackaging of the resulting genus series. There is no
+reverse dependence from Theorem~\ref{thm:family-index} back to
+Theorem~\ref{thm:genus-universality}.
 Part~(i) is Theorem~\ref{thm:genus-universality} for
 uniform-weight algebras. For multi-generator algebras
 ($\mathcal{W}_N$, $N \geq 3$), only the genus-$1$ factorization
