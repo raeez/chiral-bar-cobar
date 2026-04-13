@@ -510,6 +510,22 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 
 **FM34. Heat equation prefactor diagonal vs off-diagonal.** The genus-g heat equation d/dOmega_{ab} Theta = coefficient * d^2/(dz_a dz_b) Theta has prefactor 1/(4πi) for a=b (diagonal) and 1/(2πi) for a≠b (off-diagonal). The factor of 2 comes from the symmetric matrix chain rule: d/dOmega_{aa} = (1/2) d/d(Omega_{aa} as independent variable). Writing 1/(2πi) uniformly is a notational convention that absorbs the factor into the matrix derivative, but produces wrong numerical results when Omega_{aa} is treated as an independent variable in computations.
 
+**FM36. Macro portability on cross-volume insertion.** When agent content is inserted from one .tex file into another, macros may be undefined. After EVERY cross-file insertion, grep for undefined control sequences and add \providecommand. Related to V2-AP39.
+
+**FM37. Double superscript from macro with built-in superscript.** Macros like \SCchtop = \mathsf{SC}^{ch,top} cannot take additional superscripts. Use explicit \mathsf{SC}^{ch,top,an} instead.
+
+**FM38. Vertex-IRF is not automatic.** When vertex-model DYBE verification fails, attack from the IRF/face-model side directly. The genus-2 DDYBE breakthrough came from bypassing vertex-IRF entirely (29 tests).
+
+**FM39. Spectral coassociativity uses SHIFTED parameters.** (Delta_{z1} tensor id) compose Delta_{z1+z2} = (id tensor Delta_{z2}) compose Delta_{z1}. NOT Delta_z composed with itself.
+
+**FM40. Naive center != derived center.** Z(Drin(H_k)) dim 1 vs Z^{der}_{ch}(H_k) dim 3. Ext^1,2 invisible to commutant. Specify which center: commutant, Hochschild, or categorical.
+
+**FM41. Jones polynomial requires Markov trace.** Raw KZ trace != Jones polynomial. Needs writhe normalization + quantum dimension factor.
+
+**AP186. Coincidental agreement masks bugs.** (Psi-1)/Psi = 1/Psi at Psi=2; comb(d+2,2) = comb(d+2,3) at d=3. Verify at 3+ parameter values.
+
+**AP187. Miura coefficients from elementary symmetric expansion.** T(u) = prod(u+Lambda_i) gives psi_s = e_s(Lambda_i). Coefficient of :J*W_{s-1}: is 1/Psi at all s >= 2 (structural, thm:miura-cross-universality).
+
 **FM28. Topologization scope conflation.** Opus marked thm:topologization as ClaimStatusProvedHere without scope, when the proof is verified only for affine KM at non-critical level (where Sugawara is explicit). For Virasoro and W-algebras, the proof depends on constructing the 3d HT BRST complex, which the manuscript itself acknowledges as conditional. Furthermore, the proof is COHOMOLOGICAL (works on Q-cohomology, not cochains). For class M, where chain-level data is essential, the E_3 may exist only on cohomology. Counter: every topologization claim must carry "(proved for affine KM at non-critical level; conjectural in general; cohomological, not chain-level)."
 
 ## Theorem Status
