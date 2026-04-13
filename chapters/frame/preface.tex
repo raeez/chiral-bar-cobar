@@ -13,6 +13,7 @@
 \providecommand{\orline}[1]{\mathrm{or}(#1)}
 \providecommand{\fg}{\mathfrak{g}}
 \providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\Rep}{\mathrm{Rep}}
 
 \chapter*{Preface}
 \addcontentsline{toc}{chapter}{Preface}
@@ -33,70 +34,12 @@ Swiss-cheese operad $\mathrm{SC}^{\mathrm{ch,top}}$. Each operad
 determines a bar complex; the bar complex computes the
 factorisation (co)homology. The five theorems of this volume
 are structural properties of the result at each level.
-
-\medskip
-
-\noindent
 The computational engine is the ordered bar complex
-$\barB^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$
-of a chiral algebra~$\cA$ on an algebraic curve~$X$: a cofree
-$E_1$-coalgebra with deconcatenation coproduct, whose differential
-extracts OPE data through the logarithmic kernel
-$\eta = d\log(z_1 - z_2)$ on Fulton--MacPherson configuration spaces.
-Its binary collision residue is the classical $r$-matrix
-$r_\cA(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$;
-its $\Sigma_n$-coinvariant quotient
-$\barB^\Sigma_X(\cA)$ retains only the scalar
-$\kappa(\cA) = \mathrm{av}(r_\cA(z))$, the modular characteristic.
-The operator product expansion is local data: it governs the
-singularity of $a(z)\,b(w)$ as $z\to w$ on one fibre at a time.
-The moduli space $\overline{\mathscr{M}}_g$ is global: it parametrises
-all curves of genus~$g$ simultaneously. The ordered bar complex
-provides the map from one to the other. At genus one,
-$\mathrm{obs}_1(\cA) = \kappa(\cA)\cdot\lambda_1$ unconditionally;
-for uniform-weight algebras the identity
-$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-\textup{(UNIFORM-WEIGHT)} persists at all genera; at $g \ge 2$
-outside the scalar lane the free energy is
-\textup{(ALL-WEIGHT $+\delta F_g^{\mathrm{cross}}$)}.
-
-\medskip
-
-\noindent\textbf{The ordered bar complex.}\enspace
-Given a chiral algebra~$\cA$ on a smooth curve~$X$, the ordered bar
-complex
-\[
-\barB^{\mathrm{ord}}_X(\cA)
-\;=\;
-T^c\bigl(s^{-1}\bar\cA\bigr),
-\qquad
-\Delta[a_1|\cdots|a_n]
-= \sum_{i=0}^{n}[a_1|\cdots|a_i]\otimes[a_{i+1}|\cdots|a_n],
-\]
-is a cofree $E_1$-coalgebra with deconcatenation coproduct. Its
-binary collision residue is the classical $r$-matrix
-\[
-r_\cA(z) \;=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
-\;\in\; \operatorname{End}_\cA(2)[\![z^{-1}]\!],
-\]
-where $\Theta_\cA := D_\cA - d_0$ is the universal Maurer--Cartan
-element of the bar differential.
-At each degree $r\ge 2$, $\Theta_\cA$ projects to a shadow
-invariant~$S_r(\cA)$; the tower $\{S_r(\cA)\}_{r\ge 2}$ is the
-correction hierarchy. The $\Sigma_n$-coinvariant quotient
-$\barB^\Sigma_X(\cA)$ erases $r_\cA(z)$ and retains only the scalar
-\[
-\kappa(\cA) \;=\; \mathrm{av}\bigl(r_\cA(z)\bigr),
-\]
-the modular characteristic: the single number that survives averaging.
-At genus~$1$ one has
-$\mathrm{obs}_1(\cA) = \kappa(\cA)\cdot\lambda_1$ for every family.
-On the proved uniform-weight lane,
-$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$
-\textup{(UNIFORM-WEIGHT)} at all genera; for multi-weight algebras
-with $g \ge 2$ the scalar formula acquires the cross-channel
-correction $\delta F_g^{\mathrm{cross}}$
-\textup{(ALL-WEIGHT $+\delta F_g^{\mathrm{cross}}$)}.
+$\barB^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$:
+a cofree $E_1$-coalgebra with deconcatenation coproduct, whose
+differential encodes the complete OPE data of~$\cA$ through the
+logarithmic kernel $\eta = d\log(z_1 - z_2)$ on
+Fulton--MacPherson configuration spaces.
 
 \medskip
 
@@ -537,14 +480,16 @@ extending the inversion one step further. The tower
 $\{S_r\}_{r\ge 2}$ terminates when the obstruction
 hierarchy collapses to finitely many terms.
 
-The conjectural extension (Volume~II) identifies
-$\barB^{\mathrm{ord}}(\cA)$ as the boundary-to-bulk map: the
+The conjectural extension (Volume~II) uses
+$\barB^{\mathrm{ord}}(\cA)$ as the boundary-side coalgebraic
+resolution feeding the boundary-to-bulk story: the
 derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
 R\!\operatorname{Hom}_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$
-reassembles the bulk from the coalgebraic shadow. Volume~I
-proves bar-cobar inversion; Volume~II would upgrade it to bulk
-reconstruction.
+is computed from Hochschild cochains using that resolution.
+Volume~I proves bar-cobar inversion and the bar-side input;
+Volume~II would add the separate bulk reconstruction through the
+derived centre.
 
 When~$\cA$ is chirally Koszul, $H^*(B(\cA))$ concentrates in bar
 degree~$1$, the bar-to-cobar spectral sequence collapses at~$E_2$,
@@ -682,15 +627,15 @@ Compute the derived centre:
 \;\simeq\;
 \begin{cases}
 \mathbf{C}\cdot\mathbf{1} & \text{degree } 0,\\
-0 & \text{degree } 1,\\
+\mathbf{C}\cdot J & \text{degree } 1,\\
 \mathbf{C}\cdot\partial_k & \text{degree } 2,
 \end{cases}
 \qquad
-\dim = 2 \quad (k\ne 0).
+\dim = 3 \quad (k\ne 0).
 \]
 This is the algebra of observables of abelian Chern--Simons theory at
-level~$k$: the unit and the infinitesimal level deformation.
-The derived centre recovers the bulk.
+level~$k$: the unit, the current, and the infinitesimal level
+deformation. The derived centre recovers the bulk.
 
 The modular characteristic $\kappa(\mathcal H_k) = k$ is the
 holographic central charge. At genus~$1$,
@@ -931,8 +876,8 @@ $B^{\mathrm{ann}}(\cA)$ carries a bimodule structure: one $E_1$
 factor per boundary circle. Factorisation homology over the
 annulus gives
 $\int_{S^1 \times [0,1]} \cA \simeq \mathrm{HH}_\bullet(\cA)$,
-the Hochschild bimodule. The annulus is the geometric home of
-the Hochschild complex: the two boundary circles are input and
+the topological Hochschild bimodule. The annulus is the geometric home of
+the topological Hochschild complex: the two boundary circles are input and
 output; the annulus is the cobordism between them.
 
 Degeneration: pinch the annulus waist and the bar complex
@@ -1033,7 +978,7 @@ Yang--Baxter equation from Stokes on $\FM_3(\C)$. $E_2$ structure
 lives on the derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, on the module category
 $\cA\text{-}\mathsf{mod}$, and on the representation category
-$\Rep(U_\hbar(\fg))$ --- never on the boundary algebra $\cA$
+$\mathrm{Rep}(U_\hbar(\fg))$: never on the boundary algebra $\cA$
 itself when $\cA$ is $E_1$.
 
 \emph{$E_3$} requires topologisation: the algebraic-geometric
@@ -1056,7 +1001,7 @@ $B^{\mathrm{ord}}(\cA)$ determine each other
 chiral $\Ainf$ structure, and the chiral coproduct. For affine
 Kac--Moody: the Yang $R$-matrix $R(u) = u\,I + \Psi\,P$, the
 Drinfeld coproduct $\Delta_z(T(u)) = T(u) \cdot T(u{-}z)$, and
-the RTT relations. Concrete verifications through $\fg = \fgl_N$
+the RTT relations. Concrete verifications through $\fg = \mathfrak{gl}_N$
 for all $N \ge 1$
 (Theorem~\ref{thm:glN-chiral-qg}).
 
@@ -1083,9 +1028,9 @@ The $\SCchtop$ structure lives on the \emph{pair}
 $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$: the derived
 centre acts on the boundary algebra via brace operations from
 $\End^{\mathrm{ch}}_\cA$. The bar complex $B(\cA)$ is an $E_1$
-chiral coassociative coalgebra---a single-coloured object, not an
+chiral coassociative coalgebra: a single-coloured object, not an
 $\SCchtop$-coalgebra. The $\SCchtop$ structure emerges in the
-Hochschild construction, not in the bar complex.
+chiral Hochschild construction, not in the bar complex.
 
 Three Hochschild theories coexist:
 (i)~chiral Hochschild (OPE composition on $\Ran(\C)$, producing
@@ -1225,14 +1170,16 @@ collapsed by averaging to the single scalar $c/2$.
 Applying the $\Sigma_2$-coinvariant projection
 $\mathrm{av}\colon\operatorname{End}_\cA(2)\to\Bbbk$:
 \begin{equation}\label{eq:pref-curvature}
-d_{\mathrm{fib}}^{\,2}\;=\;\kappa(\cA)\cdot\omega_g,
-\qquad
-\kappa(\cA) := \mathrm{av}\bigl(r_\cA(z)\bigr).
+d_{\mathrm{fib}}^{\,2}\;=\;\kappa(\cA)\cdot\omega_g.
 \end{equation}
 This is the equation on the symmetric bar $\barB^\Sigma(\cA)$:
-the scalar shadow of the $E_1$ curvature. The modular
-characteristic $\kappa(\cA)$ is the single number that survives
-averaging:
+the scalar shadow of the $E_1$ curvature. The \emph{modular
+characteristic}~$\kappa(\cA)$ is the scalar curvature of
+the symmetric bar at genus~$g \ge 1$. For abelian algebras
+$\kappa = \mathrm{av}(r_\cA(z))$; for non-abelian
+Kac--Moody the Sugawara normal-ordering shift contributes
+an additive $\dim(\fg)/2$
+(equation~\eqref{eq:pf1-km-kappa}):
 $\kappa(\mathcal H_k) = k$;\;
 $\kappa(\widehat{\fg}_k) = (k{+}h^\vee)\dim\fg/(2h^\vee)$,
 vanishing at the critical level $k = -h^\vee$;\;
@@ -1301,7 +1248,9 @@ the scalar
 \kappa(\cA)\cdot\lambda_g
 \;\in\;
 H^*(\overline{\cM}_g)
-\qquad \qquad
+\qquad
+\textup{(UNIFORM-WEIGHT)},
+\qquad
 \lambda_g\;=\;c_g(\mathbb E),
 \]
 where $\mathbb E = \pi_*\omega_\pi$ is the \emph{Hodge bundle}
@@ -1683,7 +1632,7 @@ E_1\text{-modular} &
  & \text{coinvariant genus towers ($\kappa$)}
 \end{array}
 \end{equation}
-The first line is the Hochschild cochain complex; the
+The first line is the chiral Hochschild cochain complex; the
 second is the deformation complex of Ginzburg--Kapranov;
 the third, acting on the ordered bar with no $\Sigma_n$-quotient,
 is the $E_1$-modular convolution algebra
@@ -2161,8 +2110,7 @@ ordered MC element $\Theta^{E_1}_\cA \in
 \operatorname{MC}(\mathfrak{g}^{\mathrm{mod},E_1}_\cA)$. The
 coinvariant projection sends $\Theta^{E_1}_\cA \mapsto \Theta_\cA$:
 the modular MC element is the $\Sigma_n$-averaged shadow of the
-ordered one. At degree~$2$, this recovers
-$\mathrm{av}(r(z)) = \kappa(\cA)$.
+ordered one. At degree~$2$, the projection recovers~$\kappa(\cA)$.
 
 \subsection*{4.3.\enspace Universal modular twisting morphism}
 
@@ -2394,7 +2342,7 @@ splits the genus tower into Lagrangian summands. The leading
 coefficient of~$\Theta_\cA$ is the modular characteristic: Theorem~D
 extracts the scalar $\kappa(\cA)$ with $\hat A$-genus generating
 function. The coefficient ring of~$\Theta_\cA$ is the chiral
-Hochschild complex: Theorem~H identifies the deformation ring.
+chiral Hochschild complex: Theorem~H identifies the deformation ring.
 
 The finite-order projections form an obstruction tower
 $\Theta_\cA^{\leq 2} \to
@@ -2455,9 +2403,7 @@ The degree-two, genus-zero trace:
 \kappa(\cA)
 \;=\;
 \operatorname{tr}(\Theta_\cA)_{2,0}
-\;=\;
-\mathrm{av}\bigl(r(z)\bigr)
-\;\in\;\Bbbk.
+\;\in\;\Bbbk
 \]
 This is the first Chern class of the modular bar bundle:
 $\operatorname{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$ for
@@ -2579,7 +2525,7 @@ Curvature $\Omega=d\omega+\frac{1}{2}[\omega,\omega]$
 Flatness $\Omega=0$
  & Automatic (bar-intrinsic)\\[2pt]
 First Chern class $c_1$
- & Scalar curvature $\kappa(\cA)=\mathrm{av}(r(z))$\\[2pt]
+ & Scalar curvature $\kappa(\cA)$ (abelian: $\mathrm{av}(r(z))$)\\[2pt]
 Chern character
  & Spectral discriminant
  $\Delta_\cA(t)=\operatorname{sdet}(1-tT_{\mathrm{br}})$\\[2pt]
@@ -2922,11 +2868,11 @@ The family-by-family activation:
 & \textbf{Class}\\
 \hline
 \textbf{Heisenberg} $\cH_k$
- & $\checkmark$ & --- & --- & G\\
+ & $\checkmark$ & none & none & G\\
 \textbf{Affine} $\widehat{\fg}_k$
- & $\checkmark$ & $\checkmark$ & --- & L\\
+ & $\checkmark$ & $\checkmark$ & none & L\\
 \textbf{$\beta\gamma$ system}
- & $\checkmark$ & --- & --- & C\\
+ & $\checkmark$ & none & none & C\\
 \textbf{Virasoro} $\mathrm{Vir}_c$
  & $\checkmark$ & $\checkmark$ & $\checkmark$ & M
 \end{tabular}
@@ -3381,7 +3327,7 @@ $Y(\fg)$
  & $k\,\Omega/z$
  & $3$
  & L
- & ---
+ & n/a
  & YBE $=$ degree-$3$ MC
 \end{tabular}
 \end{center}
@@ -3666,7 +3612,7 @@ $\textup{(i)} \Leftrightarrow \textup{(ii)}
 \Leftrightarrow \textup{(v)}
 \Leftrightarrow \textup{(viii)}$,
 proved by PBW concentration $\to$ bar-cobar inversion $\to$
-Hochschild polynomial growth $\to$ Koszul-complex acyclicity,
+chiral Hochschild polynomial growth $\to$ Koszul-complex acyclicity,
 with the $A_\infty$-formality branch via HPL transfer and Keller
 classicality. From this core: (iv) by Ext spectral sequence,
 (vi) by conservativity + log-FM totalization,
@@ -3751,7 +3697,7 @@ identification acquires curvature: $d^2_{\mathrm{fib}}
 genus~$g\ge 2$, the chain-level identification is resolved for
 classes G, L, and C; for class~M (Virasoro, $\cW_N$), a
 coderived reformulation is needed
-(Conjecture~\ref{conj:v1-master-bv-brst}).
+(Conjecture~\ref{conj:master-bv-brst}).
 
 The BV/BRST identification connects the bar complex to physics;
 the shadow algebra connects it to geometry. The shadows
@@ -3830,8 +3776,8 @@ open/closed and local chiral interfaces. The annulus is the trace
 geometry of Hochschild and center constructions. The genus tower
 packages the global modular corrections. The last two steps are
 operadic: the derived center is $E_2$, and only topologization raises
-it to $E_3^{\mathrm{top}}$. The target is not an
-$E_3$-chiral algebra.
+it to $E_3^{\mathrm{top}}$. The target is an
+$E_3^{\mathrm{top}}$ algebra.
 
 \subsection*{10.1.\enspace Five arrows}
 
@@ -3919,7 +3865,7 @@ conformal vector ceases to exist, and the $\SCchtop$-algebra
 does not topologise. The critical level is therefore the
 precise obstruction to closing the $E_n$ circle at the
 $\SCchtop$ stage. The endpoint is
-$E_3^{\mathrm{top}}$, not $E_3$-chiral.
+$E_3^{\mathrm{top}}$.
 
 \subsection*{10.3.\enspace Five notions of $E_1$-chiral algebra}
 
@@ -4052,7 +3998,7 @@ multiplication, and nontrivial RTT relations for $N\ge 2$
 (Theorem~\ref{thm:glN-chiral-qg}). Concrete verifications run through
 $N=3$; the universal Miura coefficient $(\Psi{-}1)/\Psi$ on all
 cross-terms $J\otimes W_{s-1}$ persists at every spin $s\ge 2$
-(Theorem~\ref{thm:miura-cross-universality}).
+(Theorem~\ref{thm:miura-cross-universality-monograph}).
 
 At integer level, the ordered chiral homology recovers the Verlinde
 formula: $Z_g = \sum_j S_{0j}^{2-2g}$ arises as the dimension of ordered
@@ -4211,7 +4157,7 @@ Koszul inversion (Theorem~B) reconstructs the Lagrangian from its clean
 self-intersection; complementarity (Theorem~C) is two Lagrangians whose
 intersection carries a $(-1)$-shifted symplectic structure; the modular
 characteristic (Theorem~D) is the Kodaira--Spencer class of the
-Lagrangian family over the Hodge bundle; and the Hochschild polynomial
+Lagrangian family over the Hodge bundle; and the chiral Hochschild polynomial
 growth (Theorem~H) is the HKR theorem for the Lagrangian embedding.
 
 At genus $g\ge 1$ the bar complex acquires curvature:
@@ -4491,9 +4437,9 @@ stabilisation) and MC4${}^0$ (resonant towers: Virasoro, non-quadratic
 $\mathcal W_N$; reduced to finite resonance by the resonance-filtered
 bar-cobar theorem). The completed bar complex decomposes into finite
 $q$-windows $K_q(\cA)$: for Virasoro at $q=2$, the window
-$K_2(\mathrm{Vir})=\operatorname{span}\{sT,\;sT|sT\}$ yields
-$d(sT|sT)|_{K_2}=(c/2)\cdot s\mathbf{1}=\kappa(\mathrm{Vir}_c)
-\cdot s\mathbf{1}$: the curvature emerging from a
+$K_2(\mathrm{Vir})=\operatorname{span}\{s^{-1}T,\;s^{-1}T|s^{-1}T\}$ yields
+$d(s^{-1}T|s^{-1}T)|_{K_2}=(c/2)\cdot s^{-1}\mathbf{1}=\kappa(\mathrm{Vir}_c)
+\cdot s^{-1}\mathbf{1}$: the curvature emerging from a
 $2\times 1$ matrix computation.
 
 \noindent\emph{MC5} (genus expansion).
@@ -4514,7 +4460,7 @@ Corollary~\ref{cor:string-amplitude-genus0}.
 BV=bar in the coderived category is proved for all four shadow classes
 including class~M (Theorem~\ref{thm:bv-bar-coderived}).
 The genuswise chain-level BV/BRST/bar identification remains conjectural
-(Conjecture~\ref{conj:v1-master-bv-brst}; class~M chain-level false).
+(Conjecture~\ref{conj:master-bv-brst}; class~M chain-level false).
 
 \medskip
 

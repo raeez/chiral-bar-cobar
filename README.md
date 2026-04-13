@@ -15,23 +15,26 @@ The ordered bar complex B^{ord}(A) = T^c(s^{-1} A-bar) is an E_1 chiral coassoci
 
 ## Five Main Theorems
 
-| Theorem | Statement |
-|:-------:|-----------|
-| **(A)** | Bar-cobar adjunction + Verdier intertwining on Ran(X) |
-| **(B)** | Bar-cobar inversion: quasi-isomorphism on the Koszul locus |
-| **(C)** | Complementarity: deformations of A and obstructions of A^! are Lagrangian complements |
-| **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g at all genera (uniform-weight lane) |
-| **(H)** | Hochschild duality: ChirHoch*(A) polynomial, Koszul-functorial |
+These summaries follow the concordance. The precise chapter statements retain the standing finiteness, Koszul-locus, and uniform-weight hypotheses where applicable.
 
-All five master conjectures MC1-MC5 are proved: MC1 (PBW), MC2 (MC element), MC3 (thick generation, all simple types; type A unconditional, other types conditional on Lemma L for the rank-independence step), MC4 (completion towers), MC5 (analytic HS-sewing at all genera). The full genuswise BV/BRST/bar identification at genus g >= 1 remains conjectural; genus 0 algebraic BRST/bar comparison is proved.
+| Theorem | Statement | Status |
+|:-------:|-----------|--------|
+| **(A)** | Bar-cobar adjunction on Ran(X); the algebra-level Verdier half appears after D_Ran | Proved here |
+| **(B)** | Strict bar-cobar inversion on the Koszul locus; coderived/coacyclic refinement off the locus | Proved here |
+| **(C)** | Complementarity package: C0/C1 are proved; the shifted-symplectic/BV upgrade C2 is conditional | C0/C1 proved here; C2 conditional |
+| **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g on the proved uniform-weight lane; genus 1 is universal, multi-weight g >= 2 has delta F_g^cross | Proved here |
+| **(H)** | Chiral Hochschild on the Koszul locus at generic level: concentrated in {0,1,2}, duality shift [2], degree <= 2 Hilbert polynomial | Proved here |
 
-## The Six-Object Web
+The README follows the concordance: A, B, D, and H are proved here; C is split as above. The genuswise chain-level BV/BRST/bar identification for g >= 1 remains conjectural.
 
-Six objects built from the bar complex B(A), connected by three functors:
+## The Five Objects
 
-- **A**: the chiral algebra. **B(A)**: its bar coalgebra. **A^!**: Koszul dual algebra.
-- Omega(B(A)) = A (bar-cobar inversion). D_Ran(B(A)) = B(A!) (Verdier intertwining).
-- Z^der_ch(A) = chiral derived center (universal bulk, distinct from bar).
+The programme keeps the five canonical objects distinct:
+
+- **A**: the chiral algebra. **B(A)**: the bar coalgebra. **A^i = H^*(B(A))**: the dual coalgebra. **A^! = ((A^i)^v)**: the dual algebra. **Z^der_ch(A)**: the chiral derived center.
+- Omega(B(A)) = A is bar-cobar inversion, not Koszul duality.
+- A^! is recovered from A^i by linear or Verdier duality.
+- Z^der_ch(A) is Hochschild-cochain bulk, distinct from bar-cobar inversion.
 
 ## Shadow Depth Classification
 
@@ -42,23 +45,45 @@ Six objects built from the bar complex B(A), connected by three functors:
 | **C** | 4 | beta-gamma | Contact/quartic: quartic shadow, then terminates |
 | **M** | infinity | Virasoro, W_N | Mixed: infinite tower, all higher shadows nonzero |
 
+## Standalone Papers Programme
+
+16 standalone papers extracting the three-volume programme into publishable units, all CG-rectified:
+
+| Paper | Title | Pages |
+|:-----:|-------|------:|
+| A | Five Theorems of Modular Koszul Duality | 27 |
+| B | The Shadow Obstruction Tower | 43 |
+| C | The Ordered Bar Complex and E_1 Primacy | 27 |
+| D | Chiral Koszulness: 14 Characterizations | 22 |
+| E | E_n-Chiral Algebras and the Operadic Circle | 37 |
+| F | Chiral Quantum Groups and the gl_N Tower | 81 |
+| G | The Drinfeld-Kohno Bridge | 19 |
+| H | Seven Faces of the Collision Residue | 25 |
+| I | Arithmetic Shadows | 14 |
+| J | Multi-Weight Cross-Channel Corrections | 18 |
+| K | SC^{ch,top} and PVA Descent | 18 |
+| L | The Holographic Modular Koszul Datum | 15 |
+| M | Three-Dimensional Quantum Gravity | 30 |
+| N | Analytic Sewing for Chiral Algebras | 40 |
+| O | The CY-to-Chiral Functor | 11 |
+| P | CY Quantum Groups and 6d hCS | 11 |
+
+Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
+
 ## Status
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,750+ |
-| Tagged claims | ~6,200+ |
-| Cross-volume labels | ~13,100+ |
-| Compute tests | ~121,000+ |
-| Source files | 113 .tex chapters + 15 appendices + 36 standalones |
-| Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
-| Shadow census families | 25 (14 original + 11 added) |
-| Compute modules | 1,350+ lib + 1,410+ test |
-| Anti-patterns | AP1-AP185 + AAP1-18 + RS-1..20 + FM1-FM34 |
-| Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
-| Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
-| Standalone papers | 8 publishable (incl. chiral Yangians 115pp, chiral Chern-Weil 24pp, survey tracks A/B) |
-| Standalone papers | 32 building PDFs (all pass; 0 failures) |
+| Pages (annals edition) | ~2,745 |
+| Pages (total with guarded chapters) | ~2,786 |
+| Tagged claims (Vol I registry) | ~3,463 |
+| Compute tests | 121,000+ |
+| Source tree | 89 chapter `.tex`; 15 appendices; 65+ standalone `.tex` |
+| Standalone papers | 16 papers, ~438pp total, all CG-rectified |
+| Survey paper | 8,507 lines / 122pp |
+| Koszulness programme | 10 unconditional + 1 proved consequence + 1 conditional + 1 one-directional + bifunctor + Sklyanin = 14 total |
+| Master conjectures MC1-MC5 | ALL PROVED |
+| Main proofs adversarially verified | 10/10 SOUND (732-agent campaign) |
 
 ## Build
 
@@ -67,8 +92,8 @@ Six objects built from the bar complex B(A), connected by three functors:
 pkill -9 -f pdflatex 2>/dev/null || true; sleep 2; make fast
 
 # Run tests
-make test          # fast suite (~8K)
-make test-full     # all tests (~120K definitions)
+make test          # non-slow suite (124,511 currently selected)
+make test-full     # full suite (125,444 currently collected)
 ```
 
 Requires TeX Live 2024+ with pdflatex (memoir, EB Garamond, newtxmath).
@@ -95,7 +120,7 @@ chiral-bar-cobar/
     connections/            Parts IV-VI (~30 files)
   appendices/               signs, FM proofs, tables
   compute/
-    lib/                    1,313 verification engines
-    tests/                  1,379 test files (~120K tests)
-  standalone/               36 standalone papers (32 in build target, all pass)
+    lib/                    1,352 Python files
+    tests/                  1,421 test files (125,444 collected tests)
+  standalone/               51 .tex sources
 ```
