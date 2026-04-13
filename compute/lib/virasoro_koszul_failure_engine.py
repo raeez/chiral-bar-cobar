@@ -604,42 +604,58 @@ class VirasoroKoszulAnalysis:
 # ============================================================================
 
 def koszul_diagonal_check(ce_table: Dict[Tuple[int, int], int]) -> dict:
-    """Check whether CE cohomology lies on the Koszul diagonal.
+    """Check whether CE cohomology satisfies Koszul concentration.
 
-    For a quadratic algebra with generator at weight 2, the Koszul
-    diagonal at bar degree k has weight w = k + 1 (in the classical sense).
-    For the Virasoro with generators at multiple weights (2, 3, 4 from H^1),
-    the diagonal condition is that H^k_w = 0 unless w lies in the expected
-    range for k-fold products of the generators.
+    The Koszul condition for Virasoro is that the PBW spectral sequence
+    collapses at E_2, giving H^k(B(Vir)) = H^k(CE(Vir_-)).  This is a
+    statement about the spectral sequence, NOT a naive weight bound.
 
-    The Koszul bigrading constraint for an algebra with generators at
-    weights {d_1, ..., d_r}: H^k_w != 0 only if w = d_{i_1} + ... + d_{i_k}
-    for some choice of generators.
+    The CE complex Lambda^k(Vir_-^*) at weight w uses k-element subsets
+    of the generators {L_{-2}, L_{-3}, L_{-4}, ...} with DISTINCT elements
+    (exterior algebra) and weights summing to w.  The minimum weight at
+    degree k is 2 + 3 + ... + (k+1) = k(k+3)/2.
 
-    For Virasoro: generators at weights 2, 3, 4 (from H^1).
-    H^2 at weight w: must be sum of two generators, so w in {4, 5, 6, 7, 8}.
-    H^3: w in {6, ..., 12}.  Etc.
+    Koszul concentration means: H^k = 0 for k >= 3 at all computed weights
+    (this is the content of the Koszul property for Virasoro).
+
+    For a quadratic algebra with generators in a SINGLE degree, Koszul
+    means H^k concentrated in weight k*d.  For Virasoro with generators
+    at multiple weights (2, 3, 4 from H^1), H^2 can appear at any weight
+    achievable as a sum of 2 distinct generators from {L_{-2}, L_{-3}, ...},
+    i.e. w >= 5 with w = a + b, a < b, a >= 2.  This is the correct
+    Koszul diagonal for the multi-weight generator case.
+
+    The diagnostic checks:
+    (1) H^1 is nonzero only at weights 2, 3, 4 (the generators)
+    (2) H^2 is nonzero only at weights achievable as sums of 2 distinct
+        generator-weights from {2, 3, 4, ...}
+    (3) H^k = 0 for k >= 3 at all computed weights
     """
-    on_diag = {}
-    off_diag = {}
-    gen_weights = [2, 3, 4]
+    h1_entries = {w: d for (k, w), d in ce_table.items() if k == 1 and d > 0}
+    h2_entries = {w: d for (k, w), d in ce_table.items() if k == 2 and d > 0}
+    h3_plus = {(k, w): d for (k, w), d in ce_table.items()
+               if k >= 3 and d > 0}
 
-    for (k, w), dim in ce_table.items():
-        if dim == 0:
-            continue
-        # Check if w is achievable as sum of k generator weights
-        # Each generator weight in {2, 3, 4}
-        min_w = 2 * k
-        max_w = 4 * k
-        if min_w <= w <= max_w:
-            on_diag[(k, w)] = dim
-        else:
-            off_diag[(k, w)] = dim
+    # Check (1): H^1 only at weights 2, 3, 4
+    h1_correct = set(h1_entries.keys()) <= {2, 3, 4}
+
+    # Check (2): H^2 at valid weights (sums of 2 distinct gens >= 2)
+    # Minimum: 2+3=5.  All w >= 5 with w = a + b, 2 <= a < b are valid.
+    h2_valid = all(w >= 5 for w in h2_entries.keys())
+
+    # Check (3): no H^k for k >= 3
+    h3_vanishes = len(h3_plus) == 0
+
+    is_concentrated = h1_correct and h2_valid and h3_vanishes
 
     return {
-        'on_diagonal': on_diag,
-        'off_diagonal': off_diag,
-        'is_concentrated': len(off_diag) == 0,
+        'h1_weights': sorted(h1_entries.keys()),
+        'h2_weights': sorted(h2_entries.keys()),
+        'h3_plus_entries': h3_plus,
+        'h1_correct': h1_correct,
+        'h2_valid': h2_valid,
+        'h3_vanishes': h3_vanishes,
+        'is_concentrated': is_concentrated,
     }
 
 
