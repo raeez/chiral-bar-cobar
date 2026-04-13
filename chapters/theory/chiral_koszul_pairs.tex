@@ -2435,44 +2435,68 @@ intersection) is Koszulness
 
 \begin{remark}[Proof web redundancy]
 \label{rem:koszul-proof-web-redundancy}
-The proof above need not be read as a line.
-Several arrows close independently of the PBW-to-shadow route.
-
-The shortest loop is
+The proof of Theorem~\ref{thm:koszul-equivalences-meta} is not a
+single chain.
+Its unconditional core already has several proof lanes that do not
+route through the same intermediate condition:
 \[
-\textup{(v)} \Longleftrightarrow \textup{(i)}.
+\textup{(i)} \Longleftrightarrow \textup{(v)}
+\quad\text{(universal twisting morphism and bar filtration),}\qquad
+\textup{(i)} \Longleftrightarrow \textup{(iii)}
+\quad\text{($A_\infty$ transfer and Keller classicality),}
 \]
-The backward implication is the repaired step in the proof:
-for the universal twisting morphism
+\[
+\textup{(i)} \Longleftrightarrow \textup{(iv)}
+\quad\text{(Ext diagonal vanishing),}\qquad
+\textup{(i)} \Longleftrightarrow \textup{(vii)}
+\quad\text{(factorization homology at genus~$0$),}
+\]
+\[
+\textup{(i)} \Longleftrightarrow \textup{(ix)}
+\quad\text{(Kac--Shapovalov non-degeneracy),}\qquad
+\textup{(i)} \Longleftrightarrow \textup{(x)}
+\quad\text{(FM boundary acyclicity),}
+\]
+and on the monadic side
+\[
+\textup{(i)} \Longleftrightarrow \textup{(vi)}
+\quad\text{(Barr--Beck--Lurie monadicity).}
+\]
+
+Three direct cross-links are the load-bearing redundancy.
+
+\smallskip\noindent
+\textup{(v)}$\Rightarrow$\textup{(i)} is the shortest loop.
+For the universal twisting morphism
 $\tau_{\mathrm{univ}}\colon \barB_X(\cA)\to \cA$,
 condition~\textup{(v)} is the quasi-isomorphism of the counit
 $\varepsilon_{\tau_{\mathrm{univ}}}$, and
 Theorem~\ref{thm:fundamental-twisting-morphisms}
 identifies that directly with
 $\tau_{\mathrm{univ}}$ being a chiral Koszul morphism.
-This route uses the universal bar twisting datum and the bar
-filtration, not the chain through \textup{(ii)} or \textup{(iii)}.
+This uses the universal bar twisting datum and the bar filtration,
+not the route through \textup{(ii)} or \textup{(iii)}.
 
-Condition~\textup{(i)} also implies condition~\textup{(viii)}
-directly.
+\smallskip\noindent
+\textup{(i)}$\Rightarrow$\textup{(viii)} is also direct.
 Theorem~\ref{thm:main-koszul-hoch},
 Theorem~\ref{thm:hochschild-polynomial-growth}, and
 Proposition~\ref{prop:e2-formality-hochschild}
-start from a Koszul datum and compute
+start from a chiral Koszul datum and compute
 $\ChirHoch^*(\cA)$ by the bar-cobar Hochschild resolution.
-This gives duality, polynomial growth, and $\Etwo$-formality
-without routing through conditions~\textup{(ii)}--\textup{(vii)}
-inside the meta-theorem.
+This yields duality, polynomial Hilbert growth, and
+$\Etwo$-formality without routing through
+\textup{(ii)}--\textup{(vii)} inside the meta-theorem.
 
-Condition~\textup{(iii)} implies condition~\textup{(x)}
-directly on FM strata.
+\smallskip\noindent
+\textup{(iii)}$\Rightarrow$\textup{(x)} is fiberwise and geometric.
 For a boundary stratum $S_T$, the restriction
 $i_{S_T}^!\,\barB_n(\cA)$ decomposes as the tensor product of the
 vertexwise collision complexes, and
 Remark~\ref{rem:iterated-residues-ainfty}
 identifies those iterated residues with the transferred
 $A_\infty$ operations.
-If $m_k=0$ for $k \geq 3$, only the strict binary residue survives
+If $m_k = 0$ for $k \geq 3$, only the strict binary residue survives
 at each vertex.
 Fiberwise Keller classicality, exactly as in
 Theorem~\ref{thm:ainfty-koszul-characterization},
@@ -2484,16 +2508,17 @@ H^k\bigl(i_{S_T}^!\,\barB_n(\cA)\bigr)=0
 \]
 This reaches \textup{(x)} without passing through the shadow tower.
 
-The same bookkeeping exposes further direct links already implicit
-in the proof:
+\smallskip\noindent
+The same bookkeeping gives further direct arrows already implicit in
+the proof:
 \[
+\textup{(ii)} \Rightarrow \textup{(vii)},\qquad
+\textup{(vii)} \Rightarrow \textup{(ii)},\qquad
 \textup{(iv)} \Rightarrow \textup{(ii)},\qquad
-\textup{(vii)} \Longleftrightarrow \textup{(ii)},\qquad
 \textup{(ix)} \Rightarrow \textup{(ii)},\qquad
-\textup{(x)} \Rightarrow \textup{(ii)},\qquad
 \textup{(v)} \Longleftrightarrow \textup{(vi)}.
 \]
-Accordingly the unconditional core
+Hence the unconditional core
 \[
 \{\textup{(i)},\textup{(ii)},\textup{(iii)},\textup{(iv)},
 \textup{(v)},\textup{(vi)},\textup{(vii)},\textup{(ix)},
@@ -2520,12 +2545,24 @@ forms a web rather than a chain.
 
 Here \textup{(viii)} is a satellite consequence, not part of the
 equivalence core.
-In the undirected graph underlying the displayed core subweb on
-\textup{(i)--(vii)}, \textup{(ix)}, \textup{(x)},
-deleting any one displayed implication still leaves the core
-connected:
-there is no single proved arrow whose removal disconnects the
-equivalence package.
+Let $G_{\mathrm{core}}$ be the undirected graph obtained from the
+displayed core subweb by forgetting arrow directions and deleting the
+satellite node~\textup{(viii)}.
+Every displayed core edge lies on one of the cycles
+\[
+(\textup{(i)},\textup{(ii)},\textup{(v)}),\qquad
+(\textup{(i)},\textup{(ii)},\textup{(iv)}),\qquad
+(\textup{(i)},\textup{(ii)},\textup{(vii)}),
+\]
+\[
+(\textup{(i)},\textup{(iii)},\textup{(x)}),\qquad
+(\textup{(i)},\textup{(v)},\textup{(vi)}),\qquad
+(\textup{(i)},\textup{(ii)},\textup{(ix)},\textup{(x)}).
+\]
+Therefore $G_{\mathrm{core}}$ has no bridges.
+Equivalently, deleting any one displayed implication still leaves the
+unconditional core connected: the proof web has no single point of
+failure.
 \end{remark}
 
 \begin{remark}[Status of the Lagrangian and purity refinements]
