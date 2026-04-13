@@ -285,3 +285,51 @@ Evidence: D01 found 9C circular chains that T-series agents flagged individually
 | **Total new declarations** | **48** | **~1,430 findings catalogued** |
 
 Remaining ~88 findings are covered by existing APs without need for specialization.
+
+## VII. Additional Anti-Patterns from Mega Rescue + Healing (2026-04-13)
+
+### AP225: Genus-universality gap — the all-genera scalar factorization is NOT proved.
+The proof of thm:genus-universality jumps from "one-variable recursion, same propagator, same Hodge bundle" to obs_g = kappa*lambda_g for ALL g, but no cited result proves those hypotheses UNIQUELY FORCE the lambda_g class. The same file (higher_genus_foundations.tex:5730-5776) later states that scalar saturation does NOT determine which genus-g class appears. This means Theorem D parts (i)(a) and (ii) are overstated on the all-genera lane. The genus-1 statement obs_1 = kappa*lambda_1 IS proved. The passage to all genera requires a separate CLUTCHING-UNIQUENESS proposition.
+**Rule**: Split all-genera scalar claims into: (a) genus-1 (unconditional), (b) all-genera (conditional on clutching-uniqueness or independent GRR derivation). Never claim all-genera from genus-1 + "same recursion."
+**Impact**: Theorem D status, thm:universal-generating-function, concordance, all surfaces advertising "obs_g=kappa*lambda_g for all g."
+Evidence: mega_rescue H04, healing H04 (GRR alternative).
+
+### AP226: K_0-class vs scalar confusion.
+thm:family-index defines D_A^(g) := kappa(A)*E as a K_0-class, calling it "kappa copies of the Hodge bundle." But kappa is a COMPLEX SCALAR (not an integer), and K_0 requires integer multiplicities. A complex scalar cannot be a bundle multiplicity. The top Chern class does not uniquely determine a K-theory class either.
+**Rule**: When defining K_0-classes, the multiplicity must be an integer. If kappa is not an integer, the K_0 interpretation must be replaced by a Chern character / cohomological statement. Delete "K_0-class" language and use the scalar GRR/Faber-Pandharipande identity directly.
+Evidence: mega_rescue concordance agent, lines concordance.tex:5939-5947.
+
+### AP227: ProvedHere forwarding — "proof" is just "By Theorem X."
+Propositions/corollaries tagged ClaimStatusProvedHere whose proof block consists entirely of "By Theorem X" or "Follows from Theorem X" are NOT ProvedHere — they are ProvedElsewhere (in Theorem X). This creates false coverage: the proof surface appears complete but the actual work is in the forwarded theorem. Found in: prop:genus-g-curvature-package part (iv), cor:kappa-additivity, thm:universal-generating-function.
+**Rule**: If the entire proof body is a single citation, use ClaimStatusProvedElsewhere. If the proof combines multiple results, ProvedHere is appropriate. A proof that says "By Theorem X and Lemma Y, the result follows by Z" is ProvedHere. A proof that says only "By Theorem X" is ProvedElsewhere.
+Evidence: mega_rescue, higher_genus_foundations.tex:514-633, :5893.
+
+### AP228: Anomaly-Koszul dependency inversion.
+Theorem D cites thm:anomaly-koszul for general kappa additivity, but thm:anomaly-koszul is about the matter-ghost system and itself imports additivity from cor:kappa-additivity. The dependency is backwards.
+**Rule**: Check dependency direction before citing. If Theorem X cites Corollary Y, do not cite Theorem X to prove Corollary Y. The correct direction: cor:kappa-additivity proves additivity; thm:anomaly-koszul specializes to matter-ghost.
+Evidence: mega_rescue, higher_genus_modular_koszul.tex:2741-2744.
+
+### AP229: SC-formality propagation debt across compute libraries.
+Vol III compute libraries (swiss_cheese_cy3_e1.py:62-74) still carry the older "class G/L SC-formal" claim, which conflicts with the updated proof surface (class G ONLY). Any update to the SC-formality proof must be mirrored in: concordance, metadata, standalone summaries, Vol II prefaces/bridges, Vol III compute libraries.
+**Rule**: After updating any classification result (G/L/C/M membership, SC-formality, depth), grep ALL compute libraries across all three volumes for hardcoded copies of that classification. Update them in the same session.
+Evidence: mega_rescue healing, Vol III swiss_cheese_cy3_e1.py.
+
+### AP230: Genus-1 sufficient but claimed all-genera.
+Multiple theorems are stated "for all g" but their proofs only use genus-1 data. The passage from genus-1 to all genera is the universality gap (AP225). Affected: Theorem D, thm:universal-generating-function, cor:kappa-additivity (which only needs genus-1 curvature but cites all-genera universality).
+**Rule**: When a proof only needs genus-1, cite the genus-1 result. Do not route through thm:genus-universality if only obs_1=kappa*lambda_1 is needed. This eliminates unnecessary dependence on the universality gap.
+Evidence: mega_rescue, higher_genus_foundations.tex:5893-5894.
+
+### AP231: Draft artifacts in theorem statements.
+Raw markers like \textup{(LOCAL)} remain inside theorem/proposition statements. These are drafting artifacts, not mathematical scope qualifiers.
+**Rule**: Grep for \textup{(LOCAL)}, \textup{(DRAFT)}, \textup{(TODO)}, and similar markers in theorem/proposition environments. Remove or replace with proper scope language.
+Evidence: mega_rescue, higher_genus_foundations.tex:5312,594,4541,4545.
+
+### AP232: Duality clause overclaiming family scope.
+The duality clause of Theorem D says "affine KM and free-field algebras" but the proof only covers affine KM + principal W_N. The general W(g,f) statement is only the principal embedding, not general f. "kappa=0 iff critical level" is unscoped and wrong for W-algebras (where kappa=0 iff c=0).
+**Rule**: Narrow duality clauses to the families ACTUALLY proved. Specify: "For affine KM, kappa=0 iff k=-h^v. For principal W^k(g,f_prin) at generic level, kappa=0 iff c=0." Do not merge these into a single unscoped statement.
+Evidence: mega_rescue, higher_genus_modular_koszul.tex:2703-2716.
+
+### AP233: Compact/completed comparison gap in MC3.
+The shifted prefundamental generation (MC3) proves thick generation on finite-dimensional strata, then claims it extends to compact objects of the completed category. The extension to the completed/coderived MC3 domain is explicitly marked as conjectural in the same file. The gap is: the lift-and-lower (Lemma L) filtration needed to upgrade the ℓ-weight multiplicity-free decomposition to the derived shifted category.
+**Rule**: When claiming generation in a COMPLETED category from generation in a BOUNDED subcategory, cite the specific compact-generation theorem that lifts the result. If no such theorem exists, mark the extension as conditional.
+Evidence: mega_rescue, yangians_computations.tex:3068-3335, conj:rank-independence-step2.

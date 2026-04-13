@@ -549,7 +549,7 @@ Every main theorem now has 2+ independent proof paths. See CLAUDE.md for full de
 | A | PROVED | Verdier at algebra post-D_Ran; lem:filtered-comparison-unit written. ALT: Lurie nerve-realization |
 | B | PROVED | On-locus qi + off-locus coderived (non-circular). ALT: Keller+Kontsevich formality |
 | C | PROVED | C0 D^co unconditional; C1 g>=1 perfectness; C2 uniform-weight. ALT: PTVV shifted symplectic |
-| D | PROVED | Circularity BROKEN (routing remark). ALT: GRR on universal curve |
+| D | **GENUS-1 PROVED; ALL-GENERA CONDITIONAL (AP225)** | Circularity broken. BUT: all-genera universality gap (clutching-uniqueness NOT proved). Genus-1 obs_1=kappa*lambda_1 unconditional. All-genera conditional on clutching-uniqueness or independent GRR. ALT: GRR sketch (H04). |
 | H | PROVED | Verdier chain fixed; FM-formality collapse. ALT: deformation-theoretic dimension |
 | MC1-4 | PROVED | PBW Whitehead explicit; MC2 g^mod; MC3 Baxter b=a-1/2; MC4 pole-order filtration |
 | MC5 | CODERIVED PROVED | Coacyclic clean; harmonic derived. Chain M: conjectural. ALT: operadic Koszul |
@@ -561,7 +561,9 @@ Every main theorem now has 2+ independent proof paths. See CLAUDE.md for full de
 | ChirHoch^1 KM | PROVED | = g; total dim = dim(g)+2 |
 | Topologization | COHOM PROVED (KM); qi-model chain (KM); CONJECTURAL general | ALT: CFG factorization |
 
-48 new anti-patterns catalogued: AP186-AP224, B74-B78, FM35-FM38. Full catalogue: `compute/audit/new_antipatterns_wave12_campaign.md`.
+57 new anti-patterns catalogued: AP186-AP233, B74-B78, FM35-FM38. Full catalogue: `compute/audit/new_antipatterns_wave12_campaign.md`.
+
+**AP225 WARNING (CRITICAL):** Theorem D all-genera universality gap. The passage from genus-1 obs_1=kappa*lambda_1 to all-genera obs_g=kappa*lambda_g relies on thm:genus-universality whose proof is incomplete (scalar saturation does not uniquely force lambda_g). Genus-1 is unconditional. All-genera requires clutching-uniqueness or independent GRR. See AP225-AP233 for the full set of deep structural findings from the mega rescue campaign.
 
 Recovery infrastructure: `scripts/resume_failed.py` (idempotent), `scripts/campaign_dashboard.py` (status).
 
