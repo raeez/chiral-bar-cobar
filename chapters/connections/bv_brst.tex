@@ -1116,7 +1116,6 @@ Theorem~\ref{thm:quantum-complementarity-main}.
 \end{proof}
 
 \begin{remark}[The Master Table, revisited]
-\textup{(}LOCAL: scope fixed in this environment\textup{})
 \label{rem:master-table-brst}
 \index{master table of invariants!BRST interpretation}
 Via Corollary~\ref{cor:anomaly-duality-km}, every entry in the Master Table (Table~\ref{tab:master-invariants}) is a semi-infinite anomaly coefficient: $\kappa$ is the semi-infinite anomaly, $c + c' = 2\dim\fg$ the total Feigin--Frenkel anomaly, and $F_g$ the genus-$g$ WZW free energy.
@@ -2097,6 +2096,191 @@ terminate \textup{(}Corollary~\ref{cor:virasoro-postnikov-nontermination}\textup
 so $c_r(\cA)$ is generically nonzero for $r \geq 4$.
 The factorization through $m_0^{\lfloor r/2 \rfloor - 1}$
 is therefore sharp: the coefficients do not vanish, but
+
+% ---- Harmonic factorization (AP203 resolution) ----
+\begin{proposition}[Harmonic factorization of higher bar differentials;
+\ClaimStatusProvedHere]%
+\label{prop:harmonic-factorization}%
+\index{harmonic factorization|textbf}%
+\index{bar complex!harmonic projection}%
+\index{curvature!harmonic factorization through}%
+Let~$\cA$ be a chirally Koszul algebra with curvature
+$m_0 = \kappa(\cA)\cdot\omega_g$ at genus $g \geq 1$
+\textup{(}cohomological degree~$+2$, central\textup{)}.
+Let $d_{\mathrm{fib}}$ denote the fiber bar differential,
+$H_g \subset \ker(d_{\mathrm{fib}})$ the harmonic subspace
+of the Hodge decomposition, and
+$P_{\mathrm{harm}} \colon V_g \twoheadrightarrow H_g$
+the harmonic projector. For each $r \geq 2$, let
+$\delta_r$ denote the degree-$r$ component of the discrepancy
+between the BV differential and the bar differential, arising
+from insertion of the harmonic propagator at
+$r$-valent interaction vertices. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The harmonic projection
+$\delta_r^{\mathrm{harm}}
+:= P_{\mathrm{harm}} \circ \delta_r \big|_{H_g}$
+factors through powers of the curvature:
+\[
+\delta_r^{\mathrm{harm}}
+\;=\;
+c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}
+\qquad\text{for every } r \geq 2,
+\]
+where $c_r(\cA)$ is a scalar depending only on the shadow
+invariants of~$\cA$.
+\item At low degrees:
+$c_2(\cA) = 0$ \textup{(}the binary discrepancy is absorbed
+by the Hodge homotopy\textup{)};
+$c_3(\cA) = 0$ for classes~$\mathsf{G}$ and~$\mathsf{L}$
+\textup{(}vanishes by the Jacobi identity for affine
+Kac--Moody; absent for Heisenberg\textup{)};
+$c_4(\cA) = S_4(\cA)$, the quartic shadow invariant.
+\item For class~$\mathsf{G}$, $c_r(\cA) = 0$ for all $r$.
+For class~$\mathsf{L}$, $c_r(\cA) = 0$ for all $r$
+\textup{(}shadow depth $r_{\max} = 3$, so $c_r = 0$ for $r \geq 4$;
+and $c_3 = 0$ by Jacobi\textup{)}.
+For class~$\mathsf{M}$ \textup{(}Virasoro, $\cW_N$\textup{)},
+the coefficients $c_r(\cA)$ are generically nonzero for
+$r \geq 4$, and the factorization through $m_0$ is sharp.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The proof proceeds through Hodge decomposition, degree
+counting on the harmonic subspace, and centrality of the
+curvature.
+
+\emph{Step~1: Hodge decomposition isolates the harmonic
+discrepancy.}
+At genus $g \geq 1$, the Hodge decomposition of the BV
+propagator is
+\[
+P_{\mathrm{BV}}
+\;=\;
+d\log E + [d_{\mathrm{fib}}, h] + P_{\mathrm{harm}},
+\]
+where $d\log E$ is the bar propagator \textup{(}the prime
+form\textup{)}, $h$ is the Hodge homotopy, and
+$P_{\mathrm{harm}}$ projects onto the harmonic
+subspace~$H_g$. The commutator $[d_{\mathrm{fib}}, h]$
+is $d_{\mathrm{fib}}$-exact and therefore contributes
+only a chain homotopy: replacing $P_{\mathrm{BV}}$ by
+$d\log E + P_{\mathrm{harm}}$ changes the BV differential
+by a chain-homotopic deformation. The discrepancy between
+the BV differential and the bar differential is therefore
+concentrated in the harmonic part $P_{\mathrm{harm}}$.
+
+\emph{Step~2: Centrality of $m_0$ on $H_g$.}
+The curvature $m_0 = \kappa(\cA) \cdot \omega_g$
+is central: it commutes with all operations in the fiber
+model. In particular, $m_0$ commutes with the harmonic
+projector $P_{\mathrm{harm}}$ and preserves the
+decomposition
+$V_g = \operatorname{im}(d_{\mathrm{fib}})
+\oplus H_g \oplus \operatorname{im}(d_{\mathrm{fib}}^*)$.
+The restriction of any power $m_0^k$ to~$H_g$ is again
+central and has cohomological degree~$2k$.
+
+\emph{Step~3: Degree counting.}
+The degree-$r$ harmonic discrepancy
+$\delta_r^{\mathrm{harm}}
+= P_{\mathrm{harm}} \circ \delta_r |_{H_g}$
+is a map from harmonics to harmonics. The $r$-valent
+interaction vertex involves $r$ external legs from the fiber.
+Insertion of the harmonic propagator contracts these legs
+pairwise: each contraction through $P_{\mathrm{harm}}$
+pairs two fiber directions and contributes cohomological
+degree~$+2$. With $r$ legs, at most
+$\lfloor r/2 \rfloor$ pairwise contractions are possible.
+One contraction is already accounted for by the propagator
+insertion that creates the discrepancy~$\delta_r$ itself.
+The remaining $\lfloor r/2 \rfloor - 1$ contractions
+contribute total cohomological degree
+$2(\lfloor r/2 \rfloor - 1)$ to the harmonic-to-harmonic
+map.
+
+On~$H_g$, the curvature $m_0$ is the unique
+\textup{(}up to scalar\textup{)} central endomorphism of
+cohomological degree~$+2$: it is the restriction
+of $d_{\mathrm{fib}}^2$ to $H_g$, and no other central
+operator of that degree exists because the fiber model is
+generated by $d_{\mathrm{fib}}$ and the chiral product,
+whose only degree-$2$ central combination is~$m_0$.
+Therefore, a central endomorphism of~$H_g$ of cohomological
+degree $2(\lfloor r/2 \rfloor - 1)$ must be a scalar
+multiple of $m_0^{\lfloor r/2 \rfloor - 1}$.
+
+Since $\delta_r^{\mathrm{harm}}$ is central
+\textup{(}the harmonic propagator is constructed from the
+Hodge star, which commutes with the algebra operations
+restricted to harmonics\textup{)} and has cohomological
+degree $2(\lfloor r/2 \rfloor - 1)$ by the leg-pairing
+argument, the factorization
+\[
+\delta_r^{\mathrm{harm}}
+\;=\;
+c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}
+\]
+follows, with $c_r(\cA)$ determined by evaluating
+$\delta_r^{\mathrm{harm}}$ on any nonzero harmonic
+element and dividing by the corresponding power of~$m_0$.
+
+\emph{Step~4: Low-degree evaluations.}
+At $r = 2$: $\lfloor 2/2 \rfloor - 1 = 0$, so
+$\delta_2^{\mathrm{harm}} = c_2(\cA) \cdot \mathrm{id}$.
+The binary discrepancy arises from replacing one bar
+propagator by $P_{\mathrm{harm}}$. But the Hodge homotopy
+$[d_{\mathrm{fib}}, h]$ already absorbs this replacement
+at the binary level: the chain-homotopy equivalence between
+$P_{\mathrm{BV}}$ and $d\log E$ at a single vertex
+is the content of Step~1 applied at degree~$2$. Therefore
+$c_2(\cA) = 0$.
+
+At $r = 3$: $\lfloor 3/2 \rfloor - 1 = 0$, so
+$\delta_3^{\mathrm{harm}} = c_3(\cA) \cdot \mathrm{id}$.
+For class~$\mathsf{G}$ \textup{(}Heisenberg\textup{)},
+no cubic vertex exists, so $c_3 = 0$.
+For class~$\mathsf{L}$ \textup{(}affine Kac--Moody at
+$k \neq -h^\vee$\textup{)}, the cubic harmonic correction
+takes the form
+$\sum_c f^{abc} \cdot I_{\mathrm{harm}} \cdot f^{cde}$,
+where $f^{abc}$ are the structure constants. By
+antisymmetry of $f^{abc}$ and the Jacobi identity
+$f^{ab[c}f^{d]be} = 0$, this coefficient vanishes:
+$c_3(\cA) = 0$.
+
+At $r = 4$: $\lfloor 4/2 \rfloor - 1 = 1$, so
+$\delta_4^{\mathrm{harm}} = c_4(\cA) \cdot m_0$.
+The quartic harmonic correction is the first term
+involving a nontrivial curvature power. The coefficient
+$c_4(\cA)$ is determined by the quartic shadow
+invariant: $c_4(\cA) = S_4(\cA)$, the degree-$4$
+projection of the Maurer--Cartan class
+$\Theta_\cA$ in the convolution algebra.
+For class~$\mathsf{G}$ and class~$\mathsf{L}$
+\textup{(}shadow depth $r_{\max} \leq 3$\textup{)},
+$S_4(\cA) = 0$ and thus $c_4(\cA) = 0$.
+For class~$\mathsf{M}$ \textup{(}Virasoro\textup{)},
+$S_4(\mathrm{Vir}_c) = 10/[c(5c+22)] \neq 0$
+at generic~$c$, confirming that the quartic harmonic
+discrepancy is nontrivial.
+
+\emph{Step~5: Class-by-class vanishing.}
+For class~$\mathsf{G}$: no interaction vertices at
+any degree, so $c_r(\cA) = 0$ for all $r \geq 2$.
+For class~$\mathsf{L}$: shadow depth $r_{\max} = 3$
+implies $c_r(\cA) = 0$ for $r \geq 4$
+\textup{(}no interaction vertex exists at degree
+$\geq 4$\textup{)}, and Jacobi kills $c_3$.
+For class~$\mathsf{M}$: the shadow tower does not
+terminate \textup{(}Corollary~\ref{cor:virasoro-postnikov-nontermination}\textup{)},
+so $c_r(\cA)$ is generically nonzero for $r \geq 4$.
+The factorization through $m_0^{\lfloor r/2 \rfloor - 1}$
+is therefore sharp: the coefficients do not vanish, but
+every harmonic discrepancy is curvature-divisible.
+\end{proof}
+
 every harmonic discrepancy is curvature-divisible.
 \end{proof}
 
@@ -2156,11 +2340,17 @@ The commutator term contributes only a chain homotopy, so the
 failure of~$f_g$ to intertwine the two curved differentials is the
 harmonic discrepancy
 $\delta^{\mathrm{harm}} = \sum_{r \geq 4}\delta_r^{\mathrm{harm}}$.
+Proposition~\ref{prop:harmonic-factorization} gives the
+factorization
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot
+m_0^{\lfloor r/2 \rfloor - 1}$, and
 Proposition~\ref{prop:chain-level-three-obstructions} gives the
-class-by-class description of this discrepancy.
+class-by-class description of these coefficients.
 
 If $\cA$ lies in class~$\mathsf{G}$ or~$\mathsf{L}$, all harmonic
-discrepancies vanish. Hence $f_g$ intertwines the curved
+discrepancies vanish by
+Proposition~\ref{prop:harmonic-factorization}(iii).
+Hence $f_g$ intertwines the curved
 differentials on the nose. On the PBW-associated graded, the map is
 the genus-$0$ comparison on each weight piece, hence a
 quasi-isomorphism. By Definition~\ref{def:curved-weak-equiv}, $f_g$
@@ -2196,6 +2386,7 @@ for the argument.
 \index{coderived category!higher-genus validity}%
 The factored form
 $\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+\textup{(}Proposition~\ref{prop:harmonic-factorization}\textup{)}
 is the genus-independent mechanism behind
 Theorem~\ref{thm:bv-bar-coderived}. The proof has two inputs:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
@@ -2480,7 +2671,6 @@ associated test file
 \end{computation}
 
 \begin{remark}[Burns shadow class, global vs.\ $T$-line]
-\textup{(}LOCAL: scope fixed in this environment\textup{})
 \label{rem:burns-shadow-class}
 On the generic locus of the Burns parameter space, the only
 propagating OPE channel is the $\beta\gamma$ binary OPE with a
