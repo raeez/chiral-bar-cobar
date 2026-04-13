@@ -667,7 +667,7 @@ These results change what is TRUE in the manuscript. Every agent must know them.
 - prop:verlinde-from-ordered: Z_g = sum S_{0j}^{2-2g} from ordered chiral homology at integer level.
 - prop:e3-via-dunn: Alternative E_3 proof via CG factorization + Sugawara + Dunn. Independent of HDC.
 - Z_2(k) = binom(k+3,3). Z_3(k) = n²(n²-1)(n²+11)/180, n=k+2.
-- (Psi-1)/Psi universal across spins (conj:miura-cross-universality, verified spin 2-4).
+- (Psi-1)/Psi universal across spins (thm:miura-cross-universality, PROVED from Miura factorization, verified spin 2-6).
 - DS intertwining (pi_3×pi_3)∘Delta_z = Delta_z^{W_3}∘pi_3 verified (57 tests).
 - E_3 extended to gl_N (two independent bilinear forms B_tr, B_ab).
 

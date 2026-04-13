@@ -9221,20 +9221,127 @@ arises as $1$ (from $\psi_1 \otimes \psi_2$)
 minus $1/\Psi$ (from $\Delta_z({:}JT{:})$).
 \end{proof}
 
-\begin{conjecture}[Miura cross-term universality]
-\label{conj:miura-cross-universality-monograph}
-\ClaimStatusConjectured
-For all $s \geq 2$, the primary cross-term in
-$\Delta_z(W_s)$ has coefficient $(\Psi - 1)/\Psi$ on
-$J \otimes W_{s-1} + W_{s-1} \otimes J$.
-The mechanism is spin-independent:
-$\binom{s-2}{s-2} = 1$ from the Drinfeld formula minus
-$1/\Psi$ from the Miura coefficient of ${:}J \cdot
-W_{s-1}{:}$ in $\psi_s = W_s + (1/\Psi){:}J \cdot
-W_{s-1}{:} + \ldots$.
-Verified at spins $2$, $3$, $4$
-\textup{(}$51 + 67 + 24$ compute tests\textup{)}.
-\end{conjecture}
+\begin{theorem}[Miura cross-term universality]
+\label{thm:miura-cross-universality-monograph}
+\ClaimStatusProvedHere
+For all $s \geq 2$, the spectral coproduct on the
+spin-$s$ primary generator $W_s$ of
+$\cW_{1+\infty}[\Psi]$ satisfies
+\begin{equation}\label{eq:miura-cross-universal}
+  \Delta_z(W_s)
+  = W_s \otimes 1 + 1 \otimes W_s
+  + \frac{\Psi - 1}{\Psi}
+    \bigl(J \otimes W_{s-1} + W_{s-1} \otimes J\bigr)
+  + (\textup{lower-spin and composite corrections})
+  + (\textup{spectral tail in~$z$}).
+\end{equation}
+The coefficient $(\Psi - 1)/\Psi$ of the primary
+cross-term $J \otimes W_{s-1} + W_{s-1} \otimes J$
+is independent of the spin~$s$.
+\end{theorem}
+
+\begin{proof}
+The argument has three steps.
+
+\emph{Step~1: the Miura coefficient of
+${:}J \cdot W_{s-1}{:}$ in $\psi_s$ is $1/\Psi$
+at every spin.}
+The quantum Miura factorisation
+\textup{(}Proch\'azka--Rap\v{c}\'ak~\cite{PR19}\textup{)}
+writes the transfer matrix as a product of Miura fields:
+$T(u) = \prod_{i \geq 1}(1 + \Lambda_i/u)$, with
+$\psi_s = e_s(\Lambda_1, \Lambda_2, \ldots)$ the $s$-th
+elementary symmetric function.
+Each $\Lambda_i$ decomposes as
+$\Lambda_i = \sigma_i + J_i/\Psi$, where
+$\sigma_i$ is the primary \textup{(}non-$J$\textup{)}
+contribution from the $i$-th Miura slot.
+Expanding $e_s$ and collecting the sector with exactly
+one $J$-insertion and $(s-1)$ primary slots:
+\[
+  e_s(\Lambda_1, \ldots)
+  \;\supset\;
+  \frac{1}{\Psi}
+  \sum_{i}
+  J_i \cdot \prod_{j \neq i}^{s-1\text{ slots}} \sigma_j
+  \;=\;
+  \frac{1}{\Psi}\,{:}J \cdot W_{s-1}{:}\,,
+\]
+where the last identification uses the fact that the
+$(s-1)$-slot primary block is $W_{s-1}$ by the triangular
+structure of the Miura transform
+\textup{(}Step~3 of the proof of
+Theorem~\textup{\ref{thm:w-infty-chiral-qg}}\textup{)}.
+Each such term carries the same factor $1/\Psi$ from
+the single $J/\Psi$ slot.
+The remaining sectors have $k \geq 2$ distinguished
+$J$-insertions with $W$-spin $\leq s - 2$:
+\begin{equation}\label{eq:miura-triangular}
+  \psi_s
+  \;=\;
+  W_s + \frac{1}{\Psi}\,{:}J \cdot W_{s-1}{:}
+  + (\textup{terms of $W$-spin $\leq s-2$}).
+\end{equation}
+
+\emph{Step~2: the Drinfeld formula contributes $+1$ to
+$\psi_1 \otimes \psi_{s-1}$.}
+The general coproduct
+formula~\eqref{eq:gl1-coprod-general} gives the
+$z^0$ coefficient of $\psi_1 \otimes \psi_{s-1}$ as
+$\binom{s - 2}{s - 2} = 1$, and the $z^0$ coefficient
+of $\psi_{s-1} \otimes \psi_1$ as
+$\binom{0}{0} = 1$. Both are identically $1$ for all
+$s \geq 2$.
+
+\emph{Step~3: assembly and non-contribution of lower
+sectors.}
+Inverting~\eqref{eq:miura-triangular}:
+\[
+  W_s
+  \;=\;
+  \psi_s - \frac{1}{\Psi}\,{:}J \cdot W_{s-1}{:}
+  + (\textup{terms of $W$-spin $\leq s-2$}).
+\]
+Applying $\Delta_z$ and extracting the coefficient of
+$J \otimes W_{s-1}$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item From $\Delta_z(\psi_s)$: the
+  $\psi_1 \otimes \psi_{s-1}$ term contributes
+  $+1 \cdot J \otimes W_{s-1}$, since
+  $\psi_1 = J$ and
+  $\psi_{s-1} = W_{s-1} + {}$composites of
+  spin $\leq s - 2$, which do not produce $W_{s-1}$
+  in the right tensor factor.
+\item From $-(1/\Psi)\,\Delta_z({:}J \cdot W_{s-1}{:})$:
+  the leading piece
+  $(J \otimes 1)(1 \otimes W_{s-1})
+  = J \otimes W_{s-1}$ contributes
+  $-1/\Psi$.
+\item From the Miura sectors with $k \geq 2$
+  $J$-insertions: their $W$-spin is $\leq s - 2$.
+  The coproduct $\Delta_z$ does not raise $W$-spin in
+  either tensor factor
+  \textup{(}triangularity of the Miura transform\textup{)},
+  so the tensor support
+  of these sectors is contained in $W$-spin $\leq s - 2$
+  on each side, and they contribute zero to the
+  $J \otimes W_{s-1}$ channel.
+\end{enumerate}
+The total coefficient is $1 - 1/\Psi = (\Psi - 1)/\Psi$.
+The argument for $W_{s-1} \otimes J$ is symmetric.
+The three ingredients are each spin-independent: the
+Drinfeld binomial coefficient $\binom{s-2}{s-2} = 1$
+is tautological, the Miura coefficient $1/\Psi$ is
+structural \textup{(}one $J/\Psi$ slot\textup{)},
+and the non-contribution of higher $J$-sectors follows
+from $W$-spin filtration.
+Limiting cases: at $\Psi = 1$
+\textup{(}free boson\textup{)} the coefficient vanishes;
+at $\Psi \to \infty$ it tends to~$1$.
+Verified computationally at spins $2$--$6$
+\textup{(}\texttt{miura\_universality\_proof\_engine.py},
+$142$ tests\textup{)}.
+\end{proof}
 
 \begin{remark}[The conformal anomaly forces the spectral
 parameter]

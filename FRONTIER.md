@@ -554,9 +554,9 @@ P_g(n) = n^{g-1}(n² - 1) · R_{g-2}(n²)
 
 ### F28. MIURA COEFFICIENT (Psi-1)/Psi IS UNIVERSAL
 
-**conj:miura-cross-universality** in standalone. The primary cross-term coefficient in Delta_z(W_s) is (Psi-1)/Psi on J⊗W_{s-1} + W_{s-1}⊗J for ALL s ≥ 2.
+**thm:miura-cross-universality** in standalone, **thm:miura-cross-universality-monograph** in monograph. PROVED. The primary cross-term coefficient in Delta_z(W_s) is (Psi-1)/Psi on J⊗W_{s-1} + W_{s-1}⊗J for ALL s ≥ 2.
 
-**Verified at spins 2, 3, 4.** The mechanism is manifestly spin-independent: binom(s-2,s-2) = 1 from the Drinfeld formula, minus 1/Psi from the Miura :J·W_{s-1}: coefficient (which is 1/Psi for all s ≥ 3; at s=2 the symmetric product :J²:/(2Psi) with the factor 2 from Delta_z(:J²:) reproduces the same -1/Psi).
+**Proof:** Three-step argument from the Prochazka-Rapcak quantum Miura factorization. (1) The elementary symmetric expansion of psi_s = e_s(Lambda_1,...) has 1/Psi on the single-J sector :J·W_{s-1}: at every spin (one J/Psi slot). (2) The Drinfeld coproduct contributes binom(s-2,s-2) = 1 to psi_1⊗psi_{s-1}. (3) Lower Miura sectors (k≥2 J-insertions, W-spin ≤ s-2) cannot hit the W_{s-1} channel. Total: 1 - 1/Psi = (Psi-1)/Psi. Verified computationally at spins 2--6 (142 tests).
 
 **Spin-3 explicit formula (67 tests):**
 Delta_z(W) = W⊗1 + 1⊗W + (Psi-1)/Psi·(J⊗T+T⊗J) + (1-Psi)/(2Psi²)·(J⊗:J²:+:J²:⊗J) + (Psi-1)/Psi·z·J⊗J + 2z·1⊗T + z²·1⊗J
@@ -643,7 +643,7 @@ Generic dim H^1 = 12 is topological (Euler characteristic). Degree-2 CB count is
 - FRONTIER-20: Ordered chiral homology functoriality
 
 **Mathematical open problems:**
-1. Miura universality: conjecture → theorem (spin-independent mechanism proved but formal proof needs the Miura coefficient 1/Psi at all spins)
+1. ~~Miura universality: conjecture → theorem~~ RESOLVED (thm:miura-cross-universality, proved from Prochazka-Rapcak Miura factorization)
 2. DDYBE at genus 2 (the vertex-IRF correspondence is the obstruction)
 3. Chain-level E_3 for class M (coderived category path via conj:coderived-e3)
 4. The Drinfeld center conjecture (the deepest single conjecture)

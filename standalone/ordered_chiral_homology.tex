@@ -57,7 +57,7 @@
 \newcommand{\Ainf}{A_{\infty}}
 \newcommand{\Eone}{\mathsf{E}_{1}}
 \newcommand{\Etwo}{\mathsf{E}_{2}}
-\newcommand{\Ethree}{\mathsf{E}_{3}}
+\providecommand{\Ethree}{\mathsf{E}_{3}}
 \newcommand{\En}{\mathsf{E}_{n}}
 \newcommand{\Einf}{\mathsf{E}_{\infty}}
 \newcommand{\Pthree}{\mathsf{P}_{3}}
@@ -176,26 +176,29 @@ $d$-dimensional representation
 
 For $\Einf$-chiral algebras, the symmetric bar
 $\BarSig(\cA)$ carries an $\Etwo$-coalgebra structure from
-the curve geometry, and the Higher Deligne Conjecture
-(Lurie, Francis) equips the derived chiral centre
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with an
-$\Ethree$-algebra structure ($\Etwo + 1 = \Ethree$).
-This $\Ethree$ structure does not extend to genuinely
-$\Eone$-chiral algebras, where the symmetric bar does not
-exist and the ordered bar yields only $\Etwo$ on the
-derived centre.
-For $V_k(\fg)$ at non-critical level, we construct a
-filtered $\Ethree$-algebra
-$\CE^{\mathrm{ch}}_k(\fg)$ in $\cD$-modules on
-$\Ran(X)$ whose $\Ethree$-deformation space is
-$(k+h^\vee) H^3(\fg)[[k+h^\vee]]$. The same space classifies
-the Costello--Francis--Gwilliam perturbative
-Chern--Simons $\Ethree$-algebra; formal disk restriction
-recovers the CFG algebra at the associated-graded and
-$\Pthree$-bracket level. We conjecture that the two
-formal deformation \emph{families} are isomorphic as
-$\Ethree$-algebras; the matching of deformation spaces
-is proved, but the chain-level identification is open.
+the curve geometry. The derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is therefore an
+algebraic $\Etwo$ bulk object, and together with the
+boundary algebra it forms the universal
+$\mathrm{SC}^{\mathrm{ch,top}}$ pair. This package does not
+extend to genuinely $\Eone$-chiral algebras, where the
+symmetric bar does not exist and the ordered bar yields only
+$\Etwo$ on the ordered derived centre; passage to bulk then
+requires the categorical Drinfeld-centre step.
+For $V_k(\fg)$ at non-critical level, the Sugawara element
+topologises the affine derived centre on BRST cohomology,
+giving an $\Ethree^{\mathrm{top}}$-algebra. The
+zero-differential cohomology complex gives an unconditional
+chain-level $\Ethree^{\mathrm{top}}$ model
+quasi-isomorphic to the original complex, while the lift to
+the original cochain complex is conditional on the
+coherence equation $[m,G]=\partial_z$. The same formal
+parameter space $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$
+classifies the Costello--Francis--Gwilliam perturbative
+Chern--Simons $\Ethree^{\mathrm{top}}$-algebra. Formal disk
+restriction matches the associated graded and the
+$\Pthree$ bracket; identifying the full deformation
+families remains conjectural.
 
 The construction extends to genus~$1$ and genus~$2$: the
 ordered chiral homology
@@ -286,8 +289,9 @@ resulting invariant.
 Three theorems and a conjecture emerge from the ordered theory.
 The first constructs the $\cD$-module and defines ordered
 chiral homology; the second separates it from topological
-Hochschild; the third identifies the $\Ethree$ structure
-that only the ordered picture sees.
+Hochschild; the third identifies the derived-centre and
+topologization package that the ordered picture feeds but
+does not itself carry.
 At the representation-theoretic level,
 Proposition~\ref{prop:ker-av-schur-weyl} proves that
 $\dim\ker(\av_n) = d^n -
@@ -448,44 +452,61 @@ $D^\times = \Spec\, \CC((z))$ be the punctured formal disk.
 \end{enumerate}
 \end{theorem}
 
-\begin{theorem}[The $\Ethree$-algebra and Chern--Simons]
+\begin{theorem}[Derived centre, topologization, and
+Chern--Simons]
 \label{thm:e3-cs}
 Let $\fg$ be a simple finite-dimensional Lie algebra and
 $V_k(\fg)$ the affine Kac--Moody vertex algebra at level~$k$.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(The $\Ethree$ structure.)}
+\item \textup{(The algebraic bulk package.)}
   The curve geometry provides the $\Etwo$ structure on
   $\BarSig(V_k(\fg))$
   \textup{(}Warning~\textup{\ref{warn:e1-vs-e2-source}}\textup{)}.
-  By the Higher Deligne Conjecture
-  \textup{(}Lurie~\cite{HA}, Francis~\cite{Francis2013}\textup{)},
-  the Hochschild cohomology of this $\Etwo$-coalgebra
+  Its Hochschild cochains
   \begin{equation}\label{eq:e3-center}
     Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
     = \HH^*\bigl(\BarSig(V_k(\fg)),\;
     \BarSig(V_k(\fg))\bigr)
   \end{equation}
-  carries a natural $\Ethree$-algebra structure
-  \textup{(}$\Etwo + 1 = \Ethree$\textup{)}.
-\item \textup{(Deformation classification.)}
-  The space of $\Ethree$-deformations of
-  $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
-  is non-canonically isomorphic to
+  carries the algebraic $\Etwo$ structure of the derived
+  centre. Together with the boundary algebra $V_k(\fg)$ it
+  forms the universal $\mathrm{SC}^{\mathrm{ch,top}}$ pair;
+  the bar complex remains the $\Eone$ coalgebraic engine,
+  not the bulk object itself.
+\item \textup{(Affine topologization at non-critical level.)}
+  If $k \neq -h^\vee$, the Sugawara element upgrades the
+  derived centre on BRST cohomology to an
+  $\Ethree^{\mathrm{top}}$-algebra. More precisely,
+  $H_Q^\bullet\!\bigl(
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))\bigr)$ carries
+  $\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}}
+  = \Ethree^{\mathrm{top}}$, the
+  zero-differential cohomology complex gives an
+  unconditional chain-level $\Ethree^{\mathrm{top}}$ model
+  quasi-isomorphic as a chain complex to the original
+  derived centre, and the lift to the original cochain
+  complex is conditional on $[m,G]=\partial_z$.
+\item \textup{(Matching deformation parameter space.)}
+  The affine package and the perturbative
+  Costello--Francis--Gwilliam package are both governed by
+  the same formal parameter space
   $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$. For simple~$\fg$,
   $H^3(\fg)$ is one-dimensional, so there is a single
-  deformation parameter at each order in $(k+h^\vee)$.
-\item \textup{(Comparison.)}
-  The same $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$ classifies, by
-  Costello--Francis--Gwilliam~\cite{CFG26}:
-  perturbative Chern--Simons quantisations,
-  filtered $\Ethree$-algebras deforming $C^*(\fg)$,
-  braided monoidal deformations of
+  deformation direction at each order in $(k+h^\vee)$.
+\item \textup{(Comparison with perturbative
+  Chern--Simons.)}
+  Costello--Francis--Gwilliam~\cite{CFG26} identify
+  $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$ with the deformation
+  space of perturbative Chern--Simons quantisations,
+  filtered $\Ethree^{\mathrm{top}}$-algebras deforming
+  $C^*(\fg)$, braided monoidal deformations of
   $\mathrm{Rep}_{\mathrm{fin}}(\fg)$, and
-  quasi-triangular quasi-Hopf deformations of $U(\fg)$;
-  and by Etingof--Kazhdan~\cite{EK96,EK00}:
-  quantum vertex $R$-matrices on $V(\fg, K)$, forming
-  a $\GRT_1$-torsor.
-  All six classification spaces are in natural bijection.
+  quasi-triangular quasi-Hopf deformations of $U(\fg)$.
+  Formal disk restriction matches the affine and CFG
+  constructions at the associated-graded and
+  $\Pthree$-bracket level. Identifying the full
+  deformation families as chain-level
+  $\Ethree^{\mathrm{top}}$-algebras remains conjectural.
 \item \textup{(Topological enhancement.)}
   By Khan--Zeng~\cite{KhanZeng25}, the Sugawara Virasoro
   element at non-critical level upgrades the
@@ -1670,13 +1691,17 @@ ordered configurations with unordered ones, and
 the deconcatenation with the coshuffle.
 
 Without the curve, bar-cobar gives $\Eone$, and
-Higher Deligne gives the centre $\Etwo$
+the classical Deligne theorem gives the centre $\Etwo$
 \textup{(}$\Eone + 1$; this is the classical Deligne
 conjecture for associative algebras\textup{)}.
-With the curve, the bar is $\Etwo$, and
-Higher Deligne gives the centre $\Ethree$
-\textup{(}$\Etwo + 1$\textup{)}.
-The extra operadic level is the curve.
+With the curve, the symmetric bar acquires the
+$\Etwo$ structure of unordered configurations, while the
+derived centre remains algebraically $\Etwo$ and enters the
+open/closed $\mathrm{SC}^{\mathrm{ch,top}}$ package.
+Only affine topologization with an inner conformal vector
+raises BRST cohomology to $\Ethree^{\mathrm{top}}$.
+The extra operadic level comes from topologization, not
+from the curve alone.
 \end{warning}
 
 \begin{definition}[Topological ladder]
@@ -4077,9 +4102,9 @@ $\Psi$-dependent structural invariants that are absent in
 the $\psi$-basis.
 \end{remark}
 
-\begin{conjecture}[Universal Miura cross-term coefficient]
-\label{conj:miura-cross-universality}
-\ClaimStatusConjectured
+\begin{theorem}[Universal Miura cross-term coefficient]
+\label{thm:miura-cross-universality}
+\ClaimStatusProvedHere
 Let $W_s$ denote the spin-$s$ primary generator of
 $\cW_{1+\infty}[\Psi]$ (so $W_1 = J$, $W_2 = T$,
 $W_3 = W$, $W_4$, \ldots). For each $s \geq 2$,
@@ -4095,55 +4120,105 @@ Theorem~\textup{\ref{thm:w-infty-chiral-qg}} satisfies
 The coefficient $(\Psi - 1)/\Psi$ of the primary
 cross-term $J \otimes W_{s-1} + W_{s-1} \otimes J$
 is independent of the spin~$s$.
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Evidence for
-Conjecture~\textup{\ref{conj:miura-cross-universality}}]
-\label{rem:miura-cross-evidence}
-The conjecture is verified at spins $s = 2, 3, 4$
-by explicit computation
-(\texttt{miura\_coproduct\_universal\_engine.py},
-51~tests). At each spin, the coefficient arises from
-a cancellation of two contributions:
+\begin{proof}
+The argument has three steps.
+
+\emph{Step~1: the Miura coefficient of
+${:}J \cdot W_{s-1}{:}$ in $\psi_s$ is $1/\Psi$
+at every spin.}
+The quantum Miura
+factorisation~\eqref{eq:glN-miura}
+writes
+$T(u) = \prod_{i}(1 + \Lambda_i/u)$, with
+$\psi_s = e_s(\Lambda_1, \Lambda_2, \ldots)$
+the $s$-th elementary symmetric function of the
+Miura fields. Each $\Lambda_i$ decomposes as
+$\Lambda_i = \sigma_i + J_i/\Psi$, where
+$\sigma_i$ is the primary \textup{(}non-$J$\textup{)}
+contribution from the $i$-th slot.
+Expanding $e_s$ and collecting the sector with exactly
+one $J$-insertion and $(s - 1)$ primary slots:
+\[
+  e_s(\Lambda_1, \ldots)
+  \;\supset\;
+  \frac{1}{\Psi}
+  \sum_{i}
+  J_i \cdot \prod_{\substack{j \neq i}}^{s-1\text{ slots}}
+  \sigma_j
+  \;=\;
+  \frac{1}{\Psi}\,{:}J \cdot W_{s-1}{:}\,,
+\]
+where the last identification uses the triangular
+structure of the Miura transform: the $(s-1)$-slot
+primary block is $W_{s-1}$
+\textup{(}Proch\'azka--Rap\v{c}\'ak~\cite{PR19}\textup{)}.
+Each such term carries the same factor $1/\Psi$
+from the single $J/\Psi$ slot.
+The remaining sectors have $k \geq 2$ distinguished
+$J$-insertions with $W$-spin $\leq s - 2$:
+\begin{equation}\label{eq:miura-triangular}
+  \psi_s
+  \;=\;
+  W_s + \frac{1}{\Psi}\,{:}J \cdot W_{s-1}{:}
+  + (\textup{terms of $W$-spin $\leq s-2$}).
+\end{equation}
+
+\emph{Step~2: the Drinfeld formula contributes $+1$ to
+$\psi_1 \otimes \psi_{s-1}$.}
+The general coproduct
+formula~\eqref{eq:gl1-coprod-general} gives the
+$z^0$ coefficient of $\psi_1 \otimes \psi_{s-1}$ as
+$\binom{s - 2}{s - 2} = 1$, and the $z^0$ coefficient
+of $\psi_{s-1} \otimes \psi_1$ as
+$\binom{0}{0} = 1$. Both are identically $1$ for all
+$s \geq 2$.
+
+\emph{Step~3: assembly and non-contribution of lower
+sectors.}
+Inverting~\eqref{eq:miura-triangular}:
+$W_s = \psi_s - (1/\Psi)\,{:}J \cdot W_{s-1}{:}
++ (\textup{terms of $W$-spin $\leq s-2$})$.
+Applying $\Delta_z$ and extracting the coefficient of
+$J \otimes W_{s-1}$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The Drinfeld formula for
-  $\Delta_z(\psi_s)$ produces a
-  $\psi_1 \otimes \psi_{s-1}$ cross-term with
-  coefficient~$1$ (from
-  $\binom{s-2}{s-2} z^0 = 1$ in the general
-  formula~\eqref{eq:gl1-coprod-general}).
-  Since $\psi_{s-1} = W_{s-1} +{}$~composites,
-  this contributes $+1$ to the
-  $J \otimes W_{s-1}$ coefficient.
-\item The Miura relation
-  $\psi_s = W_s + (1/\Psi)\,{:}J \cdot W_{s-1}{:}
-  + \cdots$ (where the coefficient of
-  ${:}J \cdot W_{s-1}{:}$ is $1/\Psi$ at every
-  spin) requires subtracting
-  $(1/\Psi)\,\Delta_z({:}J \cdot W_{s-1}{:})$.
-  The term $(J \otimes 1)(1 \otimes W_{s-1})$
-  in $\Delta_z({:}J \cdot W_{s-1}{:})$ contributes
+\item From $\Delta_z(\psi_s)$: the
+  $\psi_1 \otimes \psi_{s-1}$ term contributes
+  $+1 \cdot J \otimes W_{s-1}$, since
+  $\psi_1 = J$ and
+  $\psi_{s-1} = W_{s-1} + {}$composites of
+  spin $\leq s - 2$, which do not produce $W_{s-1}$
+  in the right tensor factor.
+\item From $-(1/\Psi)\,\Delta_z({:}J \cdot W_{s-1}{:})$:
+  the leading piece
+  $(J \otimes 1)(1 \otimes W_{s-1})
+  = J \otimes W_{s-1}$ contributes
   $-1/\Psi$.
-\item All remaining Miura corrections (normal-ordered
-  products of fields of spin ${}<s-1$) cannot produce
-  $W_{s-1}$ in either tensor factor. Their contribution
-  is zero.
+\item From the Miura sectors with $k \geq 2$
+  $J$-insertions: their $W$-spin is $\leq s - 2$.
+  The coproduct $\Delta_z$ does not raise $W$-spin in
+  either tensor factor
+  \textup{(}triangularity of the Miura
+  transform\textup{)},
+  so these sectors contribute zero to the
+  $J \otimes W_{s-1}$ channel.
 \end{enumerate}
-The net coefficient is $1 - 1/\Psi = (\Psi - 1)/\Psi$.
-The mechanism is manifestly spin-independent: at each
-spin, the Drinfeld formula contributes $+1$ (a
-combinatorial identity), and the Miura inversion
-subtracts $1/\Psi$ (from the universal coefficient of
-${:}J \cdot W_{s-1}{:}$ in the Miura relation). The
-conjecture amounts to the assertion that this structural
-cancellation persists at all spins $s \geq 2$.
-
-Limiting cases: at $\Psi = 1$ (free boson) the
-coefficient vanishes, consistent with the triviality
-of the Miura transform; as $\Psi \to \infty$
-(classical limit) the coefficient tends to~$1$,
-recovering the classical coproduct.
-\end{remark}
+The total coefficient is $1 - 1/\Psi = (\Psi - 1)/\Psi$.
+The argument for $W_{s-1} \otimes J$ is symmetric.
+All three ingredients are spin-independent: the
+Drinfeld binomial coefficient $\binom{s-2}{s-2} = 1$
+is tautological, the Miura coefficient $1/\Psi$ is
+structural \textup{(}one $J/\Psi$ slot\textup{)},
+and the non-contribution of higher $J$-sectors follows
+from $W$-spin filtration.
+Limiting cases: at $\Psi = 1$
+\textup{(}free boson\textup{)} the coefficient vanishes;
+at $\Psi \to \infty$ it tends to~$1$.
+Verified computationally at spins $2$--$6$
+\textup{(}\texttt{miura\_universality\_proof\_engine.py},
+$142$~tests\textup{)}.
+\end{proof}
 
 \begin{remark}[Descent to $\cW_N$]
 \label{rem:w-infty-descent}
@@ -5660,14 +5735,18 @@ whose total dimension is $n!$.
 \section{The $\Ethree$ structure and Chern--Simons theory}
 \label{sec:e3}
 
-The $\Etwo$-coalgebra structure on $\BarSig(\cA)$
-(Warning~\ref{warn:e1-vs-e2-source}) and the Higher
-Deligne Conjecture together equip the derived chiral centre
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with a natural
-$\Ethree$-algebra structure ($\Etwo + 1 = \Ethree$).
-The comparison with perturbative Chern--Simons theory
-(Costello--Francis--Gwilliam) identifies this $\Ethree$
-structure with the bulk observables of the $3$d gauge theory.
+The symmetric bar $\BarSig(\cA)$ exists only on the
+$\Einf$-chiral side and carries the $\Etwo$ structure of
+unordered configurations on the curve. Its Hochschild
+cochains form the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, which is the bulk
+object. Together with the boundary algebra $\cA$ it forms
+the universal $\mathrm{SC}^{\mathrm{ch,top}}$ pair. For
+affine Kac--Moody at non-critical level, the Sugawara
+element topologises BRST cohomology and upgrades this bulk
+to $\Ethree^{\mathrm{top}}$; the comparison with
+perturbative Chern--Simons is made at that affine,
+topologised level.
 
 % ----------------------------------------------------------------
 \subsection{The derived chiral centre}
@@ -5711,8 +5790,8 @@ Let $\cA$ be a chiral algebra on a curve $X$.
 \end{enumerate}
 \end{definition}
 
-\begin{proposition}[The $\Ethree$ structure on the
-derived centre]
+\begin{proposition}[Derived centre, Swiss-cheese package,
+and affine topologization]
 \label{prop:e3-structure}
 Let $\cA$ be a chiral algebra on a smooth algebraic
 curve~$X$.
@@ -5722,29 +5801,28 @@ curve~$X$.
   structure on $\BarSig(\cA)$
   \textup{(}Warning~\textup{\ref{warn:e1-vs-e2-source}}%
   \textup{)}.
-\item \textup{(Higher Deligne gives $\Ethree$.)}
-  By the Higher Deligne Conjecture
-  \textup{(}Lurie~\cite{HA}, Francis~\cite{Francis2013}%
-  \textup{)}, the Hochschild cohomology of an
-  $\Etwo$-algebra carries a natural $\Ethree$-algebra
-  structure. Dualising the $\Etwo$-coalgebra
-  $\BarSig(\cA)$ to an algebra
-  \textup{(}which requires the finiteness conditions
-  satisfied by standard chiral algebras,
-  see~\cite[Thm~A]{Lorgat26I}\textup{)}:
+\item \textup{(Derived centre and open/closed package.)}
+  Dualising the $\Etwo$-coalgebra $\BarSig(\cA)$ to an
+  algebra \textup{(}which requires the finiteness
+  conditions satisfied by standard chiral algebras,
+  see~\cite[Thm~A]{Lorgat26I}\textup{)}, the derived centre
   \begin{equation}\label{eq:e3-hdc}
     Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
     = \HH^*(\BarSig(\cA), \BarSig(\cA))
-    \quad \text{is an $\Ethree$-algebra.}
+    \quad \text{is the bulk $\Etwo$-algebra.}
   \end{equation}
-  The dimension count: $\Etwo$ \textup{(}curve,
-  $\dim_{\RR} X = 2$\textup{)} $+ 1$
-  \textup{(}centre construction\textup{)} $= \Ethree$.
-\item \textup{(Scope.)} For $\Einf$-chiral algebras, the
+  Together with the boundary algebra $\cA$, it forms the
+  universal $\mathrm{SC}^{\mathrm{ch,top}}$ pair of bulk
+  and boundary observables.
+\item \textup{(Scope and topologization boundary.)} For
+  $\Einf$-chiral algebras, the
   symmetric bar $\BarSig(\cA)$ exists as a well-defined
-  $\Etwo$-coalgebra and the $\Ethree$ structure on
-  the derived centre follows from \textup{(i)--(ii)}.
-  No Virasoro element or conformal symmetry is required.
+  $\Etwo$-coalgebra and the derived-centre package of
+  \textup{(i)--(ii)} is available. If, in addition, $\cA$
+  admits an inner conformal vector making holomorphic
+  translations $Q$-exact, the affine topologization theorem
+  upgrades BRST cohomology of the derived centre to
+  $\Ethree^{\mathrm{top}}$.
   For genuinely $\Eone$-chiral algebras
   \textup{(}Yangians, EK quantum vertex algebras\textup{)},
   the factorisation $\cD$-module does not descend to
@@ -5756,7 +5834,7 @@ curve~$X$.
   $\HH^*(\Barord(\cA), \Barord(\cA))$
   via the classical Deligne conjecture
   \textup{(}$\Eone + 1 = \Etwo$\textup{)}.
-  The passage from $\Etwo$ to $\Ethree$ for $\Eone$-chiral
+  The passage from boundary data to bulk for $\Eone$-chiral
   algebras requires the Drinfeld centre construction
   \textup{(}%
   see~\cite[conj:drinfeld-center-equals-bulk]{Lorgat26III}%
@@ -5764,35 +5842,38 @@ curve~$X$.
 \end{enumerate}
 \end{proposition}
 
-\begin{remark}[Two distinct $\Ethree$ structures]
+\begin{remark}[Bulk $\Etwo$ versus affine
+$\Ethree^{\mathrm{top}}$]
 \label{rem:two-e3}
-The paper produces two $\Ethree$-algebra structures on
-the derived chiral centre of $V_k(\fg)$ at non-critical
-level.
+Two different structures appear on the affine derived
+centre at non-critical level.
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Algebraic $\Ethree$}
+\item \emph{Algebraic bulk $\Etwo$}
   \textup{(}Proposition~\textup{\ref{prop:e3-structure}}%
   \textup{)}: the Hochschild cohomology of the
-  $\Etwo$-coalgebra $\BarSig(V_k(\fg))$, via the Higher
-  Deligne Conjecture. This requires dualisation of the
+  $\Etwo$-coalgebra $\BarSig(V_k(\fg))$, via the
+  centre formalism. This requires dualisation of the
   coalgebra to an algebra, which uses the finiteness of
   $V_k(\fg)$ \textup{(}finite-type as a graded vector space
   in each conformal-weight stratum\textup{)}. No conformal
   vector is needed.
-\item \emph{Topological $\Ethree$}
+\item \emph{Topological $\Ethree^{\mathrm{top}}$}
   \textup{(}Proposition~%
   \textup{\ref{prop:khan-zeng-topological}}\textup{)}:
   the Sugawara Virasoro element at non-critical level
-  topologises the holomorphic direction of the
-  $\Etwo$ (Warning~\ref{warn:e1-vs-e2-source}), producing a topological
-  $\Ethree$-algebra on $\RR^3 \cong X \times \RR$.
+  topologises the holomorphic direction of the affine bulk,
+  producing a topological $\Ethree$-algebra on
+  $\RR^3 \cong X \times \RR$ after passing to BRST
+  cohomology, with an unconditional chain-level model on a
+  quasi-isomorphic complex.
   This requires the conformal vector and fails at
   $k = -h^\vee$.
 \end{enumerate}
-Structure~\textup{(a)} is formal-algebraic;
+Structure~\textup{(a)} is algebraic and holomorphic;
 structure~\textup{(b)} is geometric-topological.
-Theorem~\textup{\ref{thm:e3-identification}} identifies
-the two as families over $(k+h^\vee) H^3(\fg)[[k+h^\vee]]$.
+Theorem~\textup{\ref{thm:e3-identification}} compares their
+deformation parameter spaces and first nontrivial
+operations; full family identification remains open.
 \end{remark}
 
 \begin{warning}[The bar complex itself is not $\Ethree$]

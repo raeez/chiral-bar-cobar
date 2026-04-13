@@ -1,4 +1,4 @@
-r"""Computational verification engine for conj:miura-cross-universality.
+r"""Computational verification engine for thm:miura-cross-universality.
 
 Target
 ======
