@@ -1,0 +1,173 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+\usepackage[all]{xy}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{principle}[theorem]{Principle}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+% Macros (providecommand: safe against collision with any input)
+% ================================================================
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cG}{\mathcal{G}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cI}{\mathcal{I}}
+\providecommand{\cJ}{\mathcal{J}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\cR}{\mathcal{R}}
+\providecommand{\cS}{\mathcal{S}}
+\providecommand{\cT}{\mathcal{T}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cX}{\mathcal{X}}
+\providecommand{\cY}{\mathcal{Y}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\barC}{\overline{C}}
+\providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\Ext}{\mathrm{Ext}}
+\providecommand{\Res}{\mathrm{Res}}
+\providecommand{\Aut}{\mathrm{Aut}}
+\providecommand{\FM}{\overline{C}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\gAmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\OPE}{\mathrm{OPE}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Ahat}{\widehat{A}}
+\providecommand{\hol}{\mathrm{hol}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bP}{\mathbb{P}}
+\providecommand{\bA}{\mathbb{A}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\Bbbk}{\mathbb{k}}
+\providecommand{\coll}{\mathrm{coll}}
+\providecommand{\FP}{\mathrm{FP}}
+\providecommand{\cross}{\mathrm{cross}}
+% Operad/algebra macros
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch,top}}}
+\providecommand{\Convinf}{\mathrm{Conv}_\infty}
+\providecommand{\Convstr}{\mathrm{Conv}_{\mathrm{str}}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\orline}[1]{\mathfrak{o}_{#1}}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\HH}{\mathrm{HH}}
+\providecommand{\Fun}{\mathrm{Fun}}
+\providecommand{\Op}{\mathrm{Op}}
+\providecommand{\Rep}{\mathrm{Rep}}
+\providecommand{\End}{\mathrm{End}}
+\providecommand{\Conf}{\mathrm{Conf}}
+% Subscript/superscript decorators
+\providecommand{\coll}{\mathrm{coll}}
+\providecommand{\dg}{\mathrm{dg}}
+\providecommand{\FP}{\mathrm{FP}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\conn}{\mathrm{conn}}
+\providecommand{\bF}{\mathbb{F}}
+\providecommand{\der}{\mathrm{der}}
+\providecommand{\ch}{\mathrm{ch}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\oc}{\mathrm{oc}}
+\providecommand{\SC}{\mathrm{SC}}
+\providecommand{\Id}{\mathrm{Id}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\Reg}{\mathrm{Reg}}
+\providecommand{\GM}{\mathrm{GM}}
+\providecommand{\co}{\mathrm{co}}
+\providecommand{\contact}{\mathrm{contact}}
+\providecommand{\cross}{\mathrm{cross}}
+\providecommand{\grav}{\mathrm{grav}}
+\providecommand{\sep}{\mathrm{sep}}
+\providecommand{\nsep}{\mathrm{nsep}}
+\providecommand{\DS}{\mathrm{DS}}
+\providecommand{\BV}{\mathrm{BV}}
+\providecommand{\cyc}{\mathrm{cyc}}
+\providecommand{\mod}{\mathrm{mod}}
+\providecommand{\fib}{\mathrm{fib}}
+\providecommand{\Fl}{\mathrm{Fl}}
+\providecommand{\sgn}{\mathrm{sgn}}
+\providecommand{\Coder}{\mathrm{Coder}}
+\providecommand{\Ob}{\mathrm{Ob}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\clutch}{\mathrm{clutch}}
+\providecommand{\Ch}{\mathrm{Ch}}
+\providecommand{\red}{\mathrm{red}}
+\providecommand{\gh}{\mathrm{gh}}
+\providecommand{\fo}{\mathfrak{o}}
+\providecommand{\CompCl}{\mathrm{CompCl}}
+\providecommand{\Tr}{\mathrm{Tr}}
+\providecommand{\Conv}{\mathrm{Conv}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\Spec}{Spec}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+% Graceful fallback for cross-references to theorems/propositions
+% that live in the full monograph but are cited in this standalone
+% survey. Undefined labels resolve to "full monograph" rather than
+% the default LaTeX "??" placeholder.
+% ================================================================
+\makeatletter
+\let\svy@oldref\ref
+\renewcommand{\ref}[1]{%
+ \@ifundefined{r@#1}{\textit{full monograph}}{\svy@oldref{#1}}%
+}
+\makeatother
+
+% ================================================================
+\begin{document}
+\input{../standalone/survey_track_b_compressed.tex}
+\end{document}
