@@ -567,13 +567,14 @@ class TestP3Bracket:
         assert result["requires_chain_correction"] > 0, (
             "Expected some Leibniz failures on cohomology"
         )
-        # Verify the defect is always in HH^1 (the obstruction space)
+        # The defect degree is forced by {-,-}: degree -2 and mu: degree 0.
         for trip in result["failing_triples"]:
             a, b, c, defect = trip
+            expected_degree = DEGREE[a] + DEGREE[b] + DEGREE[c] - 2
             for gen in defect:
-                assert DEGREE[gen] == 1, (
+                assert DEGREE[gen] == expected_degree, (
                     f"Leibniz defect for ({a},{b},{c}) has component "
-                    f"in HH^{DEGREE[gen]}, expected HH^1"
+                    f"in HH^{DEGREE[gen]}, expected HH^{expected_degree}"
                 )
 
 

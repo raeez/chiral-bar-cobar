@@ -79,14 +79,30 @@ class TestThetaFunctions:
 
     def test_theta1_prime_triple_product(self):
         """theta_1'(0) = pi * theta_2(0) * theta_3(0) * theta_4(0)."""
-        from compute.lib.elliptic_rmatrix_shadow import (
-            jacobi_theta2 as th2,
-            jacobi_theta3 as th3_ext,
-            jacobi_theta4 as th4,
-        )
+        def th2(z, tau, n_terms=80):
+            q = np.exp(1j * PI * tau)
+            result = 0.0 + 0.0j
+            for n in range(n_terms):
+                result += q ** ((n + 0.5) ** 2) * np.cos((2 * n + 1) * PI * z)
+            return 2.0 * result
+
+        def th3(z, tau, n_terms=80):
+            q = np.exp(1j * PI * tau)
+            result = 1.0 + 0.0j
+            for n in range(1, n_terms + 1):
+                result += 2.0 * q ** (n ** 2) * np.cos(2 * n * PI * z)
+            return result
+
+        def th4(z, tau, n_terms=80):
+            q = np.exp(1j * PI * tau)
+            result = 1.0 + 0.0j
+            for n in range(1, n_terms + 1):
+                result += 2.0 * ((-1) ** n) * q ** (n ** 2) * np.cos(2 * n * PI * z)
+            return result
+
         tau = 1.5j
         tp0 = jacobi_theta1_prime0(tau)
-        rhs = PI * th2(0, tau) * th3_ext(0, tau) * th4(0, tau)
+        rhs = PI * th2(0, tau) * th3(0, tau) * th4(0, tau)
         # VERIFIED: [DC] numerical; [LT] Jacobi triple product (Mumford)
         assert abs(tp0 - rhs) < 1e-8 * max(abs(tp0), 1.0)
 

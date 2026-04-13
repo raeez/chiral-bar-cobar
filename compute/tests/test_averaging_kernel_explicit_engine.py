@@ -260,7 +260,10 @@ class TestSchurWeylN3:
     @pytest.mark.parametrize("d", [2, 3, 4, 5])
     def test_decomposition_sums(self, d):
         sw = verify_schur_weyl_n3(d)
+        expected_kernel_dim = d ** 3 - comb(d + 2, 3)
         assert sw['total_match'], f"d={d}: Schur-Weyl sum mismatch"
+        assert sw['ker(av_3)'] == expected_kernel_dim
+        assert sw['ker_formula'] == expected_kernel_dim
         assert sw['ker_match'], f"d={d}: kernel dim mismatch"
 
     def test_d3_values(self):

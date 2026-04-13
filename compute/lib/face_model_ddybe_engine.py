@@ -390,31 +390,42 @@ def verify_face_dybe_g1(z: complex, w: complex, lam: complex,
 def verify_unitarity_relation(z: complex, lam: complex, eta: complex,
                                tau: complex,
                                n_terms: int = 60) -> Dict[str, Any]:
-    r"""Verify the unitarity relation: alpha*beta + gamma*delta = 1.
+    r"""Verify the Fay trisecant identity for face model Boltzmann weights:
 
-    This is the star-triangle / partition function identity for the
-    face model weights.  It follows from the Riemann identity for
-    theta functions:
+        alpha * beta - gamma * delta = theta_1(z - eta) / theta_1(z + eta).
 
-        theta_1(a)*theta_1(b)*theta_1(c)*theta_1(d)
-        = theta_1(a')*theta_1(b')*theta_1(c')*theta_1(d')
-        - theta_1(a'')*theta_1(b'')*theta_1(c'')*theta_1(d'')
+    This is derived from the Riemann addition theorem for theta_1
+    (Fay trisecant identity):
 
-    specialized to the face-model parametrization.
+        theta_1(lam)^2 * theta_1(z+eta) * theta_1(z-eta)
+        = theta_1(lam+eta)*theta_1(lam-eta)*theta_1(z)^2
+          - theta_1(lam+z)*theta_1(lam-z)*theta_1(eta)^2
+
+    Dividing by theta_1(lam)^2 * theta_1(z+eta)^2 gives:
+
+        theta_1(z-eta)/theta_1(z+eta) = alpha*beta - gamma*delta.
+
+    Note: this is NOT alpha*beta + gamma*delta = 1 (which is the
+    vertex model unitarity). The face model identity has a minus sign
+    and a nontrivial RHS from the Fay identity.
     """
     w = face_boltzmann_weights_g1(z, lam, eta, tau, n_terms)
     if w.get('degenerate', False):
         return {'passed': False, 'degenerate': True}
 
-    val = w['alpha'] * w['beta'] + w['gamma'] * w['delta']
-    residual = abs(val - 1.0)
+    computed = w['alpha'] * w['beta'] - w['gamma'] * w['delta']
+    expected = theta1(z - eta, tau, n_terms) / theta1(z + eta, tau, n_terms)
+    residual = abs(computed - expected)
+    scale = max(abs(expected), 1e-15)
 
     return {
         'alpha_beta': complex(w['alpha'] * w['beta']),
         'gamma_delta': complex(w['gamma'] * w['delta']),
-        'sum': complex(val),
+        'computed': complex(computed),
+        'expected': complex(expected),
         'residual': float(residual),
-        'passed': residual < 1e-8,
+        'relative': float(residual / scale),
+        'passed': residual / scale < 1e-8,
     }
 
 
@@ -826,18 +837,34 @@ def verify_g2_to_g1_degeneration(z: complex, lam_scalar: complex,
 
 def verify_unitarity_g2(z: complex, lam: np.ndarray, eta: complex,
                          Omega: np.ndarray, N: int = 10) -> Dict[str, Any]:
-    r"""Verify alpha*beta + gamma*delta = 1 at genus 2."""
+    r"""Verify the Fay trisecant identity at genus 2:
+
+        alpha * beta - gamma * delta = Theta_odd((z-eta)*e_1) / Theta_odd((z+eta)*e_1).
+
+    This is the genus-2 extension of the genus-1 Fay identity, with
+    theta_1 replaced by the genus-2 odd theta function.
+    """
     w = face_boltzmann_weights_g2(z, lam, eta, Omega, N)
     if w.get('degenerate', False):
         return {'passed': False, 'degenerate': True}
 
-    val = w['alpha'] * w['beta'] + w['gamma'] * w['delta']
-    residual = abs(val - 1.0)
+    computed = w['alpha'] * w['beta'] - w['gamma'] * w['delta']
+
+    e1 = np.array([1.0, 0.0], dtype=complex)
+    z_scalar = z if isinstance(z, (int, float, complex)) else z[0]
+    th_zmeta = theta_g2_odd((z_scalar - eta) * e1, Omega, N)
+    th_zpeta = theta_g2_odd((z_scalar + eta) * e1, Omega, N)
+    expected = th_zmeta / th_zpeta
+
+    residual = abs(computed - expected)
+    scale = max(abs(expected), 1e-15)
 
     return {
-        'sum': complex(val),
+        'computed': complex(computed),
+        'expected': complex(expected),
         'residual': float(residual),
-        'passed': residual < 1e-6,
+        'relative': float(residual / scale),
+        'passed': residual / scale < 1e-6,
     }
 
 

@@ -29,11 +29,11 @@ At n=2: ker(av_2) = Alt^2(V) = span{ e_i tensor e_j - e_j tensor e_i : i < j }.
 For sl_2 (d=3), the basis {e,h,f} gives ker(av_2) the 3 antisymmetric tensors:
     e tensor f - f tensor e,  e tensor h - h tensor e,  f tensor h - h tensor f.
 
-At n=3: ker(av_3) has dimension d^3 - C(d+2,2).  For d=3: 27 - 10 = 17.
+At n=3: ker(av_3) has dimension d^3 - C(d+2,3).  For d=3: 27 - 10 = 17.
 These decompose under Sigma_3 into:
   - The alternating part Alt^3(V): dim = C(d,3).  For d=3: 1 element.
   - The "standard representation" part (two copies of the standard rep):
-    dim = d^3 - C(d+2,2) - C(d,3).  For d=3: 17 - 1 = 16 elements.
+    dim = d^3 - C(d+2,3) - C(d,3).  For d=3: 17 - 1 = 16 elements.
 
 References:
   - Vol I, averaging_kernel_engine.py (dimension verification)
@@ -437,8 +437,8 @@ def verify_schur_weyl_n3(d: int) -> Dict:
         'sum': total_check,
         'total_match': total_check == d ** 3,
         'ker(av_3)': kernel_check,
-        'ker_formula': d ** 3 - comb(d + 2, 2),
-        'ker_match': kernel_check == d ** 3 - comb(d + 2, 2),
+        'ker_formula': d ** 3 - comb(d + 2, 3),
+        'ker_match': kernel_check == d ** 3 - comb(d + 2, 3),
     }
 
 
@@ -475,8 +475,8 @@ def sl2_ker_av3_decomposition() -> Dict:
     total_ker = 2 * hook_dim + alt_dim  # 17
 
     # Verify
-    assert total_ker == d**3 - comb(d + 2, 2), (
-        f"Schur-Weyl mismatch: {total_ker} != {d**3 - comb(d+2,2)}"
+    assert total_ker == d**3 - comb(d + 2, 3), (
+        f"Schur-Weyl mismatch: {total_ker} != {d**3 - comb(d+2,3)}"
     )
 
     return {
