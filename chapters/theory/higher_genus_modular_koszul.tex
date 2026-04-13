@@ -17781,10 +17781,12 @@ this is the unique quartic cancellation:
 $o_4 = \tfrac12\{\mathfrak{C},\mathfrak{C}\}_H$ vanishes by the
 Jacobi identity for the affine bracket, so the raising operator
 $D_{\mathfrak{Q}}$ never appears. The remaining finite value
-$d_{\mathrm{alg}} = 2$ is the global contact boundary
-$\kappa = 0$, realized by the full $\beta\gamma_\lambda$ family;
-the primary-line Hamiltonian model above does not apply there
-because $P = \kappa^{-1}$ is undefined.
+$d_{\mathrm{alg}} = 2$ is not a single-line phenomenon: it is the
+global contact class realized by the full $\beta\gamma_\lambda$
+family, where stratum separation kills $r \geq 5$ only after the
+different primary directions are assembled. The one-variable
+primary-line Hamiltonian model above does not see that global
+mechanism.
 
 This is consistent with the primary proof. The proof of
 Proposition~\ref{prop:depth-gap-trichotomy} detects the same
@@ -22632,6 +22634,141 @@ $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
 replaces the conjectured scalar formula:
 the diagonal part is universal, the cross-channel part is the
 new invariant.
+\end{remark}
+
+\begin{remark}[Research programme: removing the uniform-weight
+hypothesis from Theorem~D and C2]
+\label{rem:theorem-d-c2-multiweight-programme}
+\index{uniform-weight hypothesis!removal programme}
+\index{cross-channel correction!research programme}
+The present surface already splits into a proved numerical statement
+and an open class-level lift.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{What is known.}
+ At the scalar free-energy level,
+ Theorem~\ref{thm:multi-weight-genus-expansion}(ii) already gives the
+ corrected all-weight formula
+ \[
+ F_g(\cA)
+ \;=\;
+ \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+ \;+\;
+ \delta F_g^{\mathrm{cross}}(\cA)
+ \qquad (g \geq 1).
+ \]
+ Here $\delta F_1^{\mathrm{cross}} = 0$ universally, and
+ $\delta F_g^{\mathrm{cross}} = 0$ on the uniform-weight lane.
+ Proposition~\ref{prop:free-field-scalar-exact} shows that the
+ vanishing also persists for the all-weight free-field exceptions,
+ including~$\beta\gamma$.
+ Thus the first genuine obstruction is not multi-weight by itself
+ but interacting mixed-channel propagation, with~$\cW_3$ the first
+ explicit witness.
+ At the cohomological level, however,
+ Theorem~\ref{thm:tautological-line-support} still proves
+ $o_g = \kappa\lambda_g$ only on the one-channel
+ uniform-weight lane.
+
+\item \emph{What is computable.}
+ Construction~\ref{constr:cross-channel-graph-sum} makes
+ $\delta F_g^{\mathrm{cross}}$ a mixed-channel stable-graph sum on
+ $\overline{\cM}_{g,0}$.
+ This is concrete at genus~$2$:
+ Theorem~\ref{thm:multi-weight-genus-expansion}(vi) gives
+ \[
+ \delta F_2(\cW_3)
+ \;=\;
+ \frac{c + 204}{16c},
+ \]
+ and Proposition~\ref{prop:universal-gravitational-cross-channel}
+ gives the universal gravitational formula for~$\cW_N$.
+ The current compute layer already matches this division of labour:
+ \texttt{curved\_sc\_higher\_genus\_engine.py} records the
+ $\cW_3$ genus-$2$ decomposition,
+ \texttt{rectification\_delta\_f2\_verify\_engine.py} independently
+ re-derives the genus-$2$~$\cW_N$ formula from the seven stable graphs,
+ \texttt{theorem\_multi\_weight\_generating\_function\_engine.py}
+ and the genus-$3$/$4$ tests track the higher-genus
+ $\cW_3$ tower, and
+ \texttt{betagamma\_genus2\_cross\_channel\_engine.py} verifies the
+ free-field exact~$\beta\gamma$ exception.
+ What is not yet available is a family-agnostic all-genera engine
+ producing $\delta F_g^{\mathrm{cross}}$ from an arbitrary weight
+ spectrum and OPE package.
+
+\item \emph{The precise obstruction.}
+ The missing upgrade is not another scalar identity but a
+ class-valued lift.
+ To remove the uniform-weight hypothesis from Theorem~D one needs
+ classes
+ \[
+ \delta o_g^{\mathrm{cross}}(\cA)
+ \;\in\;
+ W_g \subset R^*(\overline{\cM}_g)
+ \]
+ whose scalar evaluation is
+ $\delta F_g^{\mathrm{cross}}(\cA)$ and which are compatible with
+ clutching, Verdier/Koszul duality, and the cyclic
+ $L_\infty$ obstruction calculus.
+ Only after such a lift exists can one state
+ \[
+ o_g(\cA)
+ \;=\;
+ \kappa(\cA)\cdot\lambda_g
+ \;+\;
+ \delta o_g^{\mathrm{cross}}(\cA)
+ \]
+ as the cohomological replacement for the scalar theorem.
+ This is exactly the point where C2 remains blocked:
+ Theorem~\ref{thm:mc2-full-resolution} uses
+ Theorem~\ref{thm:tautological-line-support}, and that theorem
+ presently isolates only the one-channel tautological line.
+ The mixed-channel sector is visible numerically, but it has not
+ yet been promoted to the obstruction-class package required by
+ MC2-3.
+
+\item \emph{Can one absorb the correction into a modified
+ \texorpdfstring{$\kappa$}{kappa}?}
+ Not by a genus-independent scalar.
+ Proposition~\ref{prop:cross-channel-growth} and
+ Proposition~\ref{prop:cross-channel-no-closed-form} show that,
+ already for~$\cW_3$, the correction changes its $c$-power window
+ with~$g$ and yields an irreducibly bivariate series in
+ $(c,\hbar)$.
+ A single number cannot absorb a genus tower with new asymptotics
+ at each genus.
+ One may introduce the bookkeeping quantity
+ \[
+ \widetilde{\kappa}_g(\cA)
+ \;:=\;
+ \kappa(\cA)
+ \;+\;
+ \frac{\delta F_g^{\mathrm{cross}}(\cA)}{\lambda_g^{\mathrm{FP}}}
+ \qquad (\lambda_g^{\mathrm{FP}} \neq 0),
+ \]
+ but this depends on~$g$ and is not an invariant of~$\cA$.
+ The natural replacement is the mixed-channel package
+ $\{\kappa_i,\delta o_g^{\mathrm{cross}}\}_{i,g}$,
+ or equivalently the full shadow obstruction tower, not a
+ renormalized scalar.
+
+\item \emph{Research programme.}
+ A plausible route to weaken the hypothesis is:
+ first, lift Construction~\ref{constr:cross-channel-graph-sum}
+ from numbers to class-valued CohFT amplitudes on
+ $\overline{\cM}_{g,n}$;
+ second, prove clutching and $R$-matrix independence for the lifted
+ mixed-channel classes;
+ third, identify the smallest tautological sector containing them
+ and replace the one-channel line-support theorem by a mixed-channel
+ support theorem;
+ fourth, feed this replacement into
+ Theorem~\ref{thm:mc2-conditional-completion}.
+ At that point Theorem~D would become an all-weight statement with
+ explicit correction term, and C2 would cease to depend on the
+ uniform-weight hypothesis wherever the mixed-channel support
+ theorem is proved.
+\end{enumerate}
 \end{remark}
 
 % ================================================================
@@ -31963,10 +32100,16 @@ $\beta\gamma_{\lambda=1}$ & $1$ & $\tfrac{7}{5760}$
 \end{table}
 
 \noindent
-The $F_g$ values are on the scalar lane ($F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$);
-for multi-weight families ($\mathcal{W}_3$, $\beta\gamma$ at $\lambda \neq 1/2$),
-these are conditional at $g \geq 2$
-(Remark~\ref{rem:propagator-weight-universality}).
+The displayed $F_g$ values record the scalar term
+$\kappa \cdot \lambda_g^{\mathrm{FP}}$.
+For scalar-lane families and the free-field exact exceptions,
+including~$\beta\gamma$, this equals the true genus-$g$
+free energy by Proposition~\ref{prop:free-field-scalar-exact}.
+For interacting multi-weight families such as~$\mathcal{W}_3$,
+the actual genus-$g$ free energy at $g \geq 2$ is this scalar term
+plus the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$
+\textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)}.
 The planted-forest correction
 $\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$
 vanishes for class~G (where $S_3 = 0$) and
@@ -31979,7 +32122,9 @@ For $\mathcal{W}_3$: $\delta_{\mathrm{pf}} = (40{-}c)/48$
 nothing at genus~$2$).
 The universal ratios $F_2/F_1 = 7/240$ and
 $F_3/F_1 = 31/40320 = 31/8!$ are independent of~$\cA$.
-${}^{\ddagger}$Multi-weight: $F_g$ conditional at $g \geq 2$.
+${}^{\ddagger}$Interacting multi-weight row: the displayed $F_g$
+is the scalar part $\kappa \cdot \lambda_g^{\mathrm{FP}}$;
+add $\delta F_g^{\mathrm{cross}}$ to recover the total free energy.
 \end{remark}
 
 \begin{computation}[Genus-$3$ stable graph census; \ClaimStatusProvedHere]
@@ -33513,6 +33658,31 @@ system~\eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}.
 The new content at genus~$2$ is the \emph{coupling}
 between the two dynamical variables through
 $\Omega_{12}$: this coupling has no genus-$1$ analogue.
+\end{remark}
+
+\begin{remark}[Face-model numerical verification]
+\label{rem:ddybe-face-model}
+The vertex-model formulation of
+Conjecture~\textup{\ref{conj:g2-ddybe}} involves the
+vertex-IRF correspondence, which introduces subtle
+shift-convention ambiguities. The \emph{face model}
+(IRF) formulation bypasses this: the Baxter--Felder
+Boltzmann weights $(\alpha, \beta, \gamma, \delta)$ are
+built from $\theta_1$ directly, satisfying the Fay
+trisecant identity
+$\alpha\beta - \gamma\delta =
+\theta_1(z - \eta)/\theta_1(z + \eta)$.
+At genus~$2$, $\theta_1$ is replaced by the genus-$2$
+odd theta function $\Theta[{{}^{1/2,0}_{1/2,0}}]$, and
+the doubly-dynamical YBE is verified numerically at
+generic off-diagonal period matrix $\Omega$ to relative
+error $< 10^{-12}$
+\textup{(}$29$ compute tests in
+\texttt{face\_model\_ddybe\_engine.py}\textup{)}.
+The genus-$2$ odd theta factorises at diagonal $\Omega$
+as $-\theta_1(x|\tau_1) \cdot \theta_3(0|\tau_2)$; the
+sign cancels in all Boltzmann-weight ratios, giving exact
+degeneration to two copies of the genus-$1$ DYBE.
 \end{remark}
 
 \begin{proposition}[Degree-$2$ ordered chiral homology on
