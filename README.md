@@ -46,17 +46,18 @@ Six objects built from the bar complex B(A), connected by three functors:
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,672 |
-| Tagged claims | ~6,101 |
-| Cross-volume labels | ~12,971 |
-| Compute tests | ~120,000+ |
+| Pages | ~2,719 |
+| Tagged claims | ~6,200+ |
+| Cross-volume labels | ~13,100+ |
+| Compute tests | ~121,000+ |
 | Source files | 113 .tex chapters + 15 appendices + 36 standalones |
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
-| Shadow census families | 25 (14 original + 11 added: BP_k, W_3, Ising, N=2 SCA, W(p), Y-algebras, symplectic boson/fermion, quantum lattice) |
-| Compute modules | 1,313 lib + 1,379 test |
-| Anti-patterns | AP1-AP175 + AAP1-18 + RS-1..20 + FM1-FM28 |
+| Shadow census families | 25 (14 original + 11 added) |
+| Compute modules | 1,332 lib + 1,391 test |
+| Anti-patterns | AP1-AP185 + AAP1-18 + RS-1..20 + FM1-FM34 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
+| Standalone papers | 6 (incl. chiral Yangians 115pp, chiral Chern-Weil 24pp) |
 | Standalone papers | 28 building PDFs |
 
 ## Build
