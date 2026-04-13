@@ -46,14 +46,14 @@ Six objects built from the bar complex B(A), connected by three functors:
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,719 |
+| Pages | ~2,750+ |
 | Tagged claims | ~6,200+ |
 | Cross-volume labels | ~13,100+ |
 | Compute tests | ~121,000+ |
 | Source files | 113 .tex chapters + 15 appendices + 36 standalones |
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
 | Shadow census families | 25 (14 original + 11 added) |
-| Compute modules | 1,332 lib + 1,391 test |
+| Compute modules | 1,350+ lib + 1,410+ test |
 | Anti-patterns | AP1-AP185 + AAP1-18 + RS-1..20 + FM1-FM34 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
