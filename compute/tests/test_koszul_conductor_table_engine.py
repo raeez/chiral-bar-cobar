@@ -7,8 +7,8 @@ value has a VERIFIED comment citing 2+ independent sources (AP10/HZ-6).
 Ground truth references:
   C1-C7:   central charges and kappa per family
   C18:     K(A) = kappa+kappa': 0 (KM/Heis/lattice/free), 13 (Vir),
-           250/3 (W_3), 196 (BP)
-  C20:     K_BP = 196, self-dual at k=-3
+           250/3 (W_3), 98/3 (BP scalar lane)
+  C20:     K_BP = 196, self-dual at k=-3 on the central-charge lane
   AP136:   H_N = sum_{j=1}^N 1/j, NOT H_{N-1}
   B7:      WRONG: kappa(W_N) = c*H_{N-1}
   B9:      WRONG: kappa+kappa' = 0 universally
@@ -306,12 +306,17 @@ class TestWN:
 # ===========================================================================
 
 class TestBershadskyPolyakov:
-    """BP: K_kk = 196, self-dual at k=-3."""
+    """BP: K_kk = 98/3, K_cc = 196, self-dual at k=-3."""
 
-    def test_K_kk_196(self):
-        """K_kk(BP) = 196.  (C18, C20)"""
-        # VERIFIED: [LT] C18 K_kk=196, [LT] C20 K_BP=196
-        assert bp_K_kk() == Fraction(196)
+    def test_K_kk_98_over_3(self):
+        """K_kk(BP) = 98/3 on the scalar lane.  (C18, C20)"""
+        # VERIFIED: [DC] (1/6)*196=98/3, [LT] BP complementarity proposition
+        assert bp_K_kk() == Fraction(98, 3)
+
+    def test_K_cc_196(self):
+        """K_cc(BP) = 196 on the central-charge lane.  (C20)"""
+        # VERIFIED: [DC] c(0)+c(-6)=-6+202=196, [LT] BP self-duality proposition
+        assert bp_K_cc(Fraction(0)) == Fraction(196)
 
     def test_self_dual_level(self):
         """Self-dual at k=-3: k'=-(-3)-6=-3."""
@@ -436,8 +441,9 @@ class TestFullTable:
         # W_3: 250/3 (C18)
         assert table["W_3"]["K_kk"] == Fraction(250, 3)
 
-        # BP: 196 (C18, C20)
-        assert table["BP"]["K_kk"] == Fraction(196)
+        # BP scalar lane: 98/3, central-charge lane: 196
+        assert table["BP"]["K_kk"] == Fraction(98, 3)
+        assert table["BP"]["K_cc"] == Fraction(196)
 
         # bc/bg: 0 (free)
         assert table["bc"]["K_kk"] == Fraction(0)
@@ -479,10 +485,10 @@ class TestCrossFamilyConsistency:
         assert virasoro_K_kk(Fraction(1)) != Fraction(0)
         # W_3 K_kk=250/3 != 0.
         assert WN_CONDUCTORS[3] != Fraction(0)
-        # BP K_kk=196 != 0.
+        # BP K_kk=98/3 != 0.
         assert bp_K_kk() != Fraction(0)
 
     def test_kk_values_distinct(self):
         """The four known K_kk values are all distinct."""
-        vals = {Fraction(0), Fraction(13), Fraction(250, 3), Fraction(196)}
+        vals = {Fraction(0), Fraction(13), Fraction(250, 3), Fraction(98, 3)}
         assert len(vals) == 4

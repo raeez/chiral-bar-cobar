@@ -463,28 +463,12 @@ def classify_betagamma(weight):
     Classification requires stratum separation (rem:contact-stratum-separation).
 
     For lambda = 0 or 1 (standard): kappa = 1, class C, r_max = 4.
-    For lambda = 1/2 (symplectic): kappa = -1/2, degenerate considerations.
-    For lambda = 0: weight-0 generator, violates positive grading (AP18).
+    For lambda = 1/2 (symplectic): kappa = -1/2, still class C.
+    For lambda = 0: the weight-0 generator triggers the AP18 warning,
+    but the global quartic/contact witness still gives class C.
     """
     w = Rational(weight)
     kap = kappa_betagamma(weight)
-    degen = (kap == 0)
-
-    if w == 0:
-        return DepthClassification(
-            name='betagamma (lambda=0)',
-            kappa=kap,
-            alpha=Rational(0),
-            S4=Rational(0),
-            delta=Rational(0),
-            depth_class='G',
-            r_max=2,
-            d_alg=0,
-            d_arith=0,
-            d_total=1,
-            degenerate=True,
-            notes='Weight-0 generator violates positive grading (AP18). kappa=1 but degenerate.',
-        )
 
     # For the contact classification, we use the fact that the quartic
     # contact invariant lives on a charged stratum with alpha = 0 but S_4 != 0.
@@ -501,7 +485,13 @@ def classify_betagamma(weight):
         d_alg=2,
         d_arith=1,
         d_total=4,
-        notes=f'Stratum separation: alpha=0 on weight-changing line, quartic on charged stratum.',
+        degenerate=(w == 0),
+        notes=(
+            'Stratum separation: alpha=0 on the weight-changing line, '
+            'quartic on the charged stratum. '
+            'At lambda=0 the weight-0 generator triggers AP18, but the '
+            'global depth remains class C.'
+        ),
     )
 
 

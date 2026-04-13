@@ -595,10 +595,6 @@ Q_0(\cA^!)=0.
 \]
 \end{theorem}
 
-\begin{remark}\label{rem:lagrangian-decomp}
-What one algebra sees as deformation, its dual sees as obstruction.
-\end{remark}
-
 \begin{proof}
 The proof occupies the remainder of this chapter,
 organized as three steps:
@@ -610,6 +606,10 @@ Step~III (from Theorem~\ref{thm:kodaira-spencer-chiral-complete})
 constructs the Kodaira--Spencer map and identifies the eigenspaces
 as Lagrangian complements.
 \end{proof}
+
+\begin{remark}\label{rem:lagrangian-decomp}
+What one algebra sees as deformation, its dual sees as obstruction.
+\end{remark}
 
 \begin{remark}[External dependency status]
 \label{rem:theorem-c-mok-independence}
@@ -3125,18 +3125,23 @@ $\cW_7$
 \end{tabular}
 \end{table}
 
-\begin{remark}[Alternative derivation via index theory]
+\begin{remark}[Independent derivation via Euler characteristic and index theory]
 \label{rem:complementarity-index-theory}
 \index{complementarity!index-theoretic derivation}
 \index{index theory!complementarity}
-There is a second derivation of the complementarity sum that does not
-add the two explicit $\kappa$-formulas term by term. The bar-cobar
-package
+There is a second derivation of the scalar complementarity constant
+that does not add the explicit $\kappa$-formulas term by term.
+Write
+\[
+K_\kappa(\cA)
+\;:=\;
+\kappa(\cA) + \kappa(\cA^!).
+\]
+The bar-cobar package
 \textup{(}Theorem~\textup{\ref{thm:chiral-koszul-duality}},
 Theorem~\textup{\ref{thm:verdier-bar-cobar}}\textup{)}
-does not treat $\cA$ and $\cA^!$ as isolated objects. It places the
-Koszul pair inside the single ambient complementarity complex
-$\mathbf{C}_g(\cA)$ of
+places the Koszul pair inside the single ambient complementarity
+complex $\mathbf{C}_g(\cA)$ of
 Theorem~\textup{\ref{thm:quantum-complementarity-main}}, with Verdier
 eigenspace splitting
 \[
@@ -3161,7 +3166,8 @@ coefficient:
 \[
 \chi_g^{\mathrm{sh}}(\cA) \;=\; \kappa(\cA).
 \]
-Thus $\kappa(\cA)$ is the index-theoretic shadow of the genus tower.
+Thus $\kappa(\cA)$ is the Euler characteristic of the shadow tower
+after dividing by the universal Hodge factor.
 
 Passing to the total Verdier-self-dual bar package gives
 \[
@@ -3171,24 +3177,29 @@ Passing to the total Verdier-self-dual bar package gives
 \;=\;
 \frac{F_g(\cA) + F_g(\cA^!)}{\lambda_g^{\mathrm{FP}}}
 \;=\;
-\kappa(\cA) + \kappa(\cA^!).
+\kappa(\cA) + \kappa(\cA^!)
+\;=\;
+K_\kappa(\cA).
 \]
-This is the normalized index of the total bar package. Replacing
-$\cA$ by $\cA^!$ only exchanges the two Verdier eigensummands, so the
-total index depends on the underlying $\chirAss$ duality orbit, not on
-the chosen representative. Over a point the Hodge contribution is
-absent, and one recovers the classical commutative Koszul constant
-$K = 0$. On a curve the same index acquires the universal Hodge term,
-so in the chiral associative setting the conductor can be nonzero; in
-the Virasoro family this is the central-charge conductor.
+This is the Euler-characteristic route to complementarity:
+$K_\kappa(\cA)$ is the normalized Euler characteristic of the total
+bar package. It is also the cohomological index of the total
+bar-cobar differential on the Koszul pair, because the index of a
+differential is by definition the Euler characteristic of its
+cohomology. Replacing $\cA$ by $\cA^!$ only exchanges the two Verdier
+eigensummands, so the total index depends only on the underlying
+$\chirAss$ duality orbit. Over a point the Hodge factor is absent and
+the classical commutative Koszul pair has index~$0$; on a curve the
+same construction acquires the universal Hodge term and can produce a
+nonzero scalar constant.
 
-For the Virasoro family the involution is $c \mapsto 26-c$, whose
-fixed point is $c = 13$
+The three standard checks are immediate. For the Virasoro family the
+involution is $c \mapsto 26-c$, whose fixed point is $c = 13$
 \textup{(}Remark~\textup{\ref{rem:self-dual-complementarity}}\textup{)}.
 Since $\chi_g^{\mathrm{tot}}$ is constant along the duality orbit, it
 may be evaluated at the fixed point:
 \[
-K_{\mathrm{Vir}}
+K_\kappa(\mathrm{Vir})
 \;=\;
 \chi_g^{\mathrm{tot}}(\mathrm{Vir}_{13})
 \;=\;
@@ -3200,9 +3211,37 @@ K_{\mathrm{Vir}}
 \;=\;
 13.
 \]
-This recovers the Virasoro complementarity constant from the
+This recovers the Virasoro scalar complementarity constant from the
 self-dual fixed point plus index theory, independently of the direct
 identity $c/2 + (26-c)/2 = 13$.
+
+For affine Kac--Moody, the Feigin--Frenkel involution
+$k' = -k - 2h^\vee$ gives
+\[
+\kappa(V_k(\fg)) + \kappa(V_{k'}(\fg)) \;=\; 0,
+\]
+so the total bar-cobar index vanishes on the scalar lane:
+$K_\kappa(\widehat{\fg}) = 0$.
+
+For Bershadsky--Polyakov, Proposition~\ref{prop:bp-kappa} gives
+$\kappa(\mathcal{B}^k) = c(k)/6$, while
+Proposition~\ref{prop:bp-self-duality} gives
+$c(k) + c(-k-6) = 196$. Therefore
+\[
+K_\kappa(\mathcal{B})
+\;=\;
+\kappa(\mathcal{B}^k) + \kappa(\mathcal{B}^{-k-6})
+\;=\;
+\frac{c(k) + c(-k-6)}{6}
+\;=\;
+\frac{196}{6}
+\;=\;
+\frac{98}{3}.
+\]
+Thus the same bar-cobar package carries two related invariants: the
+unnormalized central-charge conductor $c + c'$ and the scalar
+complementarity constant $K_\kappa = \kappa + \kappa'$. For
+Bershadsky--Polyakov the former is $196$ and the latter is $98/3$.
 \end{remark}
 
 \begin{remark}[The Koszul conductor polynomial]
@@ -4961,6 +5000,34 @@ By the PTVV Lagrangian correspondence, isotropic sub-dg-Lie
 algebras whose tangent complexes are Lagrangian
 integrate to Lagrangian maps of formal moduli problems.
 \end{proof}
+
+\begin{remark}[PTVV scope]
+The comparison with \cite{PTVV13} has two distinct layers.
+At the ambient level,
+Theorem~\ref{thm:ambient-complementarity-fmp}
+uses the degree-$(-1)$ cyclic pairing on
+$T_{\mathrm{comp}}(\cA)$ to produce a
+$(-1)$-shifted symplectic formal moduli problem.
+At fixed genus,
+Proposition~\ref{prop:ptvv-lagrangian}
+uses the linear derived stack attached to
+$C_g = R\Gamma(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))$:
+the Verdier pairing gives the constant
+$(-(3g{-}3))$-shifted symplectic form of
+\cite[Example~1.4]{PTVV13}, and the perfect subcomplexes whose
+cohomology groups are denoted
+$Q_g(\cA)$ and $Q_g(\cA^!)$
+satisfy the Lagrangian conditions of
+\cite[Definition~2.8, Theorem~2.9]{PTVV13}.
+
+This matches the PTVV framework, but it does not identify
+complementarity with a derived-intersection computation, and it does
+not derive the scalar conductor identity
+$\kappa(\cA)+\kappa(\cA^!)=K$ from shifted symplectic geometry alone.
+The conductor formula still enters only after the Verdier
+eigenspace decomposition is projected to the scalar lane and the
+family-specific computations of Theorem~D are used.
+\end{remark}
 
 \subsection{The complementarity potential: direct definition}
 \label{subsec:cotangent-normal-form}

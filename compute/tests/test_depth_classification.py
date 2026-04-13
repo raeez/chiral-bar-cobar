@@ -159,9 +159,11 @@ class TestGLCMClassification:
         assert a.depth_class == 'C'
         assert a.r_max == 4
 
-    def test_betagamma_lam0_degenerate(self):
+    def test_betagamma_lam0_is_class_C_but_flagged(self):
         a = classify_betagamma(0)
-        assert a.depth_class == 'G'
+        assert a.depth_class == 'C'
+        assert a.r_max == 4
+        assert a.d_alg == 2
         assert a.degenerate
 
     def test_virasoro_is_M(self):
@@ -612,6 +614,8 @@ class TestDegenerateCases:
         a = classify_betagamma(0)
         assert a.degenerate
         assert a.kappa == 1  # formula gives kappa=1 even for lambda=0
+        assert a.depth_class == 'C'
+        assert a.d_alg == 2
 
     def test_ap31_kappa_zero_not_theta_zero(self):
         """AP31: kappa = 0 does NOT imply Theta_A = 0.
@@ -704,13 +708,13 @@ class TestConsistency:
         counts = {'G': 0, 'L': 0, 'C': 0, 'M': 0}
         for a in algebras:
             counts[a.depth_class] += 1
-        # Expected: G=7 (Heis, Heis_0, fermion, D4, E8, Leech, bg_lam0)
+        # Expected: G=6 (Heis, Heis_0, fermion, D4, E8, Leech)
         #           L=4 (sl2, sl3, G2, E8 affine)
-        #           C=2 (bg_lam1, bg_lam_half)
+        #           C=3 (bg_lam0, bg_lam1, bg_lam_half)
         #           M=7 (Vir_1, Vir_0, Vir_26, W3_50, W4_50, W3_2, W_inf)
-        assert counts['G'] == 7
+        assert counts['G'] == 6
         assert counts['L'] == 4
-        assert counts['C'] == 2
+        assert counts['C'] == 3
         assert counts['M'] == 7
 
     def test_no_class_G_has_infinite_depth(self, algebras):
