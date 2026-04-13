@@ -59,14 +59,21 @@ The four-class partition G/L/C/M is structural, forced by the single-line dichot
 | E1 modular D^2 = 0 | FAss-algebra structure on B^{E1-mod}(A) |
 | Five E1 shadow theorems | All genus at all degrees on the E1 side |
 
-### Vol II: Proved Algebraic Foundations
+### Vol II: Proved Algebraic Foundations (updated 2026-04-12/13)
 
 - SC^{ch,top} homotopy-Koszulity (via Kontsevich formality + transfer)
+- SC^{ch,top} pentagon: ALL 10/10 edges PROVED (direct Koszul duality + alt proof via cofibrant resolutions)
 - PVA descent D2-D6 ALL PROVED (exchange cylinder + three-face Stokes)
 - Recognition theorem PROVED (Weiss cosheaf descent)
 - Operad implies axioms (F4), axioms imply operad (F5, rectification) PROVED
 - Stokes implies A-infinity (FM1) PROVED
 - BV = bar in coderived category D^co for ALL classes (thm:bv-bar-coderived)
+- E_3-topological: PROVED for KM (Costello-Li), ALL W-algebras via DS (any nilpotent), ALL free PVAs (Khan-Zeng). Conjectural only for non-free (Monster VOA).
+- Modular operad: composition PROVED (KZ pentagon + KL regularity, genus 0 all levels + all genera integrable); equivariance PROVED (quasi-triangularity + YBE); unitality PROVED (all genera all classes). Heisenberg full axioms all genera PROVED. Sole gap: Stokes regularity at generic non-integral level, genus >= 1.
+- Global triangle: PROVED for classes G/L/C (boundary-linear). OPEN for class M (chain-level A_inf obstruction).
+- R=PT: Eberhardt Route D (shift-equation uniqueness) reduces to meromorphicity. Level-by-level rationality PROVED.
+- Bar chain models: D* (punctured disk), nodal curves, pair-of-pants — all with dedicated constructions.
+- 25 arXiv papers (2024-2026) engaged. ~1,704pp.
 
 ### Vol III: CY-A at d=2 PROVED
 
