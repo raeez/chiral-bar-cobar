@@ -1109,6 +1109,100 @@ below, for which no converse is proved here
 \textup{(}Theorem~\textup{\ref{thm:convolution-formality-one-channel}}\textup{)}.
 \end{remark}
 
+\begin{proposition}[Freeness obstruction for chiral Hochschild
+cohomology; \ClaimStatusProvedHere]
+\label{prop:chirhoch-not-free}
+\index{Hochschild cohomology!freeness obstruction}
+\index{freeness!chiral Hochschild obstruction}
+Let $\cA$ be a chiral Koszul algebra on a smooth projective
+curve~$X$ with $\ChirHoch^2(\cA) \neq 0$.
+Then $\ChirHoch^*(\cA)$ is \emph{not} free as a
+graded-commutative algebra.
+\end{proposition}
+
+\begin{proof}
+The algebra $\ChirHoch^*(\cA)$ is graded-commutative and
+concentrated in degrees $\{0,1,2\}$
+\textup{(}Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}\textup{)}.
+
+Suppose for contradiction that $\ChirHoch^*(\cA)$ is a free
+graded-commutative algebra on generators
+$V = V_0 \oplus V_1 \oplus V_2$
+in degrees~$0$, $1$, and~$2$.
+The free graded-commutative algebra on~$V$ is
+\[
+\bigwedge(V_1) \otimes \mathrm{Sym}(V_0 \oplus V_2),
+\]
+the exterior algebra on odd-degree generators tensored with
+the polynomial algebra on even-degree generators.
+By hypothesis $V_2 \neq 0$; choose a nonzero $z \in V_2$.
+Since $|z| = 2$ is even, the element~$z$ is polynomial
+\textup{(}not exterior\textup{)}, so $z^2 \neq 0$ in the
+free algebra, and $|z^2| = 4$. But
+$\ChirHoch^4(\cA) = 0$ by concentration in $\{0,1,2\}$.
+This is a contradiction.
+
+Similarly, for any nonzero $y \in V_1$ and $z \in V_2$,
+the product $y \cdot z$ has degree~$3$ and is nonzero in
+the free algebra, yet $\ChirHoch^3(\cA) = 0$: another
+contradiction.
+
+Therefore $\ChirHoch^*(\cA)$ carries nontrivial
+cup-product relations whenever $\ChirHoch^2(\cA) \neq 0$.
+\end{proof}
+
+\begin{remark}[Scope of the freeness obstruction]
+\label{rem:chirhoch-freeness-scope}
+The obstruction is sharp: every standard family on the Koszul
+locus has $\ChirHoch^2(\cA) \neq 0$
+\textup{(}by duality, $\dim \ChirHoch^2(\cA) = \dim Z(\cA^!)
+\geq 1$\textup{)}, so $\ChirHoch^*(\cA)$ is never free for any
+nontrivial chiral Koszul algebra.
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Virasoro:}
+ $\ChirHoch^*(\mathrm{Vir}_c) \cong \bC \oplus \bC[-2]$
+ \textup{(}Theorem~\textup{\ref{thm:virasoro-hochschild}}\textup{)}.
+ The degree-$2$ generator~$z$ satisfies $z^2 = 0$
+ \textup{(}since $\ChirHoch^4 = 0$\textup{)},
+ so the algebra is $\bC[z]/(z^2)$: a truncated polynomial
+ ring, not a free graded-commutative algebra.
+
+\item \emph{Heisenberg:}
+ $\ChirHoch^*(\cH_k) \cong \bC \oplus \bC[-1] \oplus \bC[-2]$
+ with generators $1, y, z$ in degrees $0, 1, 2$.
+ In the free algebra $\bigwedge(y) \otimes \bC[z]$,
+ the products $yz$ \textup{(}degree~$3$\textup{)} and
+ $z^2$ \textup{(}degree~$4$\textup{)} are nonzero;
+ both vanish in $\ChirHoch^*(\cH_k)$
+ by concentration.
+
+\item \emph{Affine Kac--Moody $V_k(\fg)$ at generic level:}
+ $\ChirHoch^1 \cong \fg$ is $\dim(\fg)$-dimensional
+ \textup{(}Proposition~\textup{\ref{prop:chirhoch1-affine-km}}\textup{)}.
+ Beyond the degree-$4$ obstruction $z^2 = 0$, there is
+ a dimension obstruction in degree~$2$ itself: in the free
+ graded-commutative algebra on $\dim(\fg)$ odd generators
+ and one even generator of degree~$2$, the degree-$2$ part
+ has dimension $\binom{\dim(\fg)}{2} + 1$
+ \textup{(}exterior products $y_i \wedge y_j$ plus the
+ generator~$z$\textup{)}.
+ For $\fg = \fsl_2$:
+ $\binom{3}{2} + 1 = 4 \neq 1 = \dim \ChirHoch^2(V_k(\fsl_2))$.
+\end{enumerate}
+
+The obstruction is purely commutative-algebraic and has
+nothing to do with Massey products or $A_\infty$ corrections.
+$\Etwo$-formality
+\textup{(}Proposition~\textup{\ref{prop:e2-formality-hochschild}}\textup{)}
+kills the \emph{homotopical} obstructions \textup{(}higher braces,
+Massey products\textup{)}, but the \emph{ordinary} cup-product
+relations $z^2 = 0$ and $yz = 0$ persist: they are forced by
+the amplitude bound, not by any failure of formality.
+In particular, the formality of $\overline{\mathrm{FM}}_n(\bC)$
+does not imply freeness of $\ChirHoch^*(\cA)$.
+\end{remark}
+
 \begin{theorem}[Scalar universal class implies convolution
 formality along its distinguished orbit;
 \ClaimStatusProvedHere]
