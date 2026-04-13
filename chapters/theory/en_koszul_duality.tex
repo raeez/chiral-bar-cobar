@@ -3492,7 +3492,174 @@ stable $\infty$-categories; its compatibility with the
 coderived tensor product requires verification.
 \end{remark}
 
+% ================================================================
+% Alternative E_3 via Dunn additivity (bypasses HDC)
+% ================================================================
 
+\begin{proposition}[$\Ethree^{\mathrm{top}}$ via Dunn additivity, bypassing the
+Higher Deligne Conjecture]
+\label{prop:e3-via-dunn}%
+\index{E3 algebra@$\Ethree$ algebra!via Dunn additivity|textbf}%
+\index{Dunn additivity!alternative $\Ethree$ construction|textbf}%
+\index{topologization theorem!Dunn route to $\Ethree$}%
+\ClaimStatusProvedHere
+Let $\fg$ be a finite-dimensional simple Lie algebra and
+$\cA = V_k(\fg)$ the universal affine vertex algebra at
+non-critical level $k \neq -h^\vee$.  The BRST cohomology of
+the derived chiral centre
+$H_Q^\bullet\!\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)$
+carries an $\Ethree^{\mathrm{top}}$-algebra structure by a route
+that does not invoke the Higher Deligne Conjecture.
+
+The three inputs are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Costello--Gwilliam factorisation algebra.)}
+  The $3$d holomorphic--topological Chern--Simons theory on
+  $\bR_t \times \bC_z$ produces a factorisation algebra
+  $\cF^{\mathrm{CS}}_k$ on $\bR \times \bC$ whose
+  algebraic structure decomposes as
+  $\Eone^{\mathrm{top}}$ along the $\bR$-direction and
+  $\Etwo^{\mathrm{hol}}$ along the $\bC$-direction
+  \textup{(}Costello--Gwilliam~\cite{CG17}\textup{)}.
+  On the chiral centre, the $\Etwo^{\mathrm{hol}}$ factor
+  encodes the chiral Gerstenhaber bracket from the
+  $\mathsf{SC}^{\mathrm{ch,top}}$ structure
+  \textup{(}Theorem~\textup{\ref{thm:operadic-center-hochschild}}\textup{)}.
+
+\item \textup{(Topologisation of the holomorphic factor.)}
+  By Theorem~\textup{\ref{thm:topologization}}, the Sugawara element
+  $T_{\mathrm{Sug}} = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a J_a{:}$
+  makes holomorphic translations $Q$-exact. On BRST cohomology the
+  factorisation algebra on $\bC$ becomes locally constant, so the
+  $\Etwo^{\mathrm{hol}}$ upgrades to $\Etwo^{\mathrm{top}}$ by
+  Lurie's locally-constant recognition
+  \textup{(}\cite{HA}, Theorem~5.4.5.9\textup{)}.
+
+\item \textup{(Transverse $\Eone^{\mathrm{top}}$.)}
+  The $\Eone^{\mathrm{top}}$ from the $\bR$-direction is
+  topological from the outset: no conformal vector is needed for
+  this factor, since $\bR$ carries no complex structure. The
+  topologisation of the $\bC$-direction does not disturb this
+  transverse structure.
+\end{enumerate}
+Dunn additivity \textup{(}Lurie~\cite{HA},
+Theorem~5.1.2.2\textup{)} gives an equivalence
+$\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}} \simeq
+\Ethree^{\mathrm{top}}$.
+Combining the three inputs:
+\begin{equation}\label{eq:e3-via-dunn}
+H_Q^\bullet\!\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))\bigr)
+\;\text{ carries }\;
+\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}}
+\;=\; \Ethree^{\mathrm{top}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The factorisation algebra $\cF^{\mathrm{CS}}_k$ of holomorphic
+Chern--Simons theory on $\bR_t \times \bC_z$ at level~$k$ is
+constructed in~\cite{CG17} and~\cite{CG-vol2}. The product
+decomposition $\bR \times \bC$ equips $\cF^{\mathrm{CS}}_k$ with
+the structure of a factorisation algebra on $\bR$ valued in
+factorisation algebras on~$\bC$: the $\bR$-direction
+carries $\Eone^{\mathrm{top}}$ (a topological factorisation algebra
+on a $1$-manifold) and the $\bC$-direction carries
+$\Etwo^{\mathrm{hol}}$ (a holomorphic factorisation algebra on a
+$2$-manifold). The bulk observables of the $3$d theory on the
+$\bC$-slice reproduce the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ by the
+holomorphic descent identification of~\cite{CG-vol2},
+Chapter~5.
+
+The Sugawara element $T_{\mathrm{Sug}}$ at non-critical level
+provides the inner conformal vector
+(Definition~\ref{def:inner-conformal-vector}), which is
+$Q$-exact in the bulk: $T_{\mathrm{Sug}} = [Q, G]$ in BRST
+cohomology, where
+$G = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a\,\bar c_a{:}$ is the
+antighost contraction of
+Construction~\ref{constr:sugawara-antighost}. Since
+$\partial_z \cO = [T_{\mathrm{Sug}}, \cO] = [Q, [G, \cO]]$
+for any bulk observable $\cO$, holomorphic translations act
+trivially on $H_Q^\bullet$. The factorisation algebra on $\bC$
+therefore becomes locally constant on BRST cohomology.
+By Lurie's recognition theorem
+(\cite{HA}, Theorem~5.4.5.9), a locally constant factorisation
+algebra on $\bC \cong \bR^2$ is an $\Etwo^{\mathrm{top}}$-algebra.
+
+The $\Eone^{\mathrm{top}}$ from the $\bR$-direction was
+topological throughout: the $\bR$-direction is the topological
+direction of the HT theory, and no step in the topologisation
+of the $\bC$-direction alters the $\bR$-factor.
+
+Dunn additivity (\cite{HA}, Theorem~5.1.2.2) now applies.
+The two structures act on the same object
+$H_Q^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA))$
+and come from orthogonal geometric directions
+($\bR$ and $\bC \cong \bR^2$), so the hypotheses of the
+Dunn equivalence are satisfied. The result is an
+$\Ethree^{\mathrm{top}}$-algebra structure on
+$H_Q^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))$
+as claimed.
+\end{proof}
+
+\begin{remark}[Comparison of the two $\Ethree$ constructions]
+\label{rem:e3-two-routes}%
+\index{E3 algebra@$\Ethree$ algebra!two constructions compared}%
+Two independent routes produce $\Ethree$-structures on the derived
+chiral centre of $V_k(\fg)$ at non-critical level:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(HDC route, Theorem~\textup{\ref{thm:e3-cs}(i)}.)}
+  The curve geometry provides an $\Etwo$ structure on the bar
+  coalgebra $\BarSig(V_k(\fg))$. The Higher Deligne Conjecture
+  (Lurie~\cite{HA}, Francis~\cite{Francis2013}) promotes
+  Hochschild cochains of an $\Etwo$-algebra to an
+  $\Ethree$-algebra: $\Etwo + 1 = \Ethree$. This route is
+  purely algebraic; it does not reference the $3$d bulk theory
+  and works for any $\Einf$-chiral algebra whose symmetric bar
+  coalgebra carries an $\Etwo$ structure. The resulting
+  $\Ethree$ is algebraic and need not be topological without
+  additional data.
+
+\item \textup{(Dunn route, Proposition~\textup{\ref{prop:e3-via-dunn}}.)}
+  The Costello--Gwilliam factorisation algebra on $\bR \times \bC$
+  provides $\Eone^{\mathrm{top}} \times \Etwo^{\mathrm{hol}}$;
+  topologisation converts the $\Etwo^{\mathrm{hol}}$ to
+  $\Etwo^{\mathrm{top}}$; Dunn additivity gives
+  $\Ethree^{\mathrm{top}}$. This route uses the $3$d
+  bulk theory and Sugawara explicitly. The output is topological
+  by construction.
+\end{enumerate}
+For affine Kac--Moody at non-critical level, both routes apply.
+The HDC route gives an algebraic $\Ethree$ that the Sugawara
+element can subsequently topologize
+(Theorem~\ref{thm:e3-cs}(iv)); the Dunn route produces
+$\Ethree^{\mathrm{top}}$ directly without the intermediate
+algebraic $\Ethree$ or the Hochschild cochain machinery. The
+two $\Ethree^{\mathrm{top}}$-structures on
+$H_Q^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))$ agree:
+both are determined by the unique
+$\Ethree^{\mathrm{top}}$-deformation of $C^*(\fg)$
+classified by $(k + h^\vee)\,H^3(\fg)[[k+h^\vee]]$
+(Theorem~\ref{thm:cfg}).
+
+The Dunn route has two advantages: it avoids the Higher Deligne
+Conjecture (a deep result in higher algebra whose chain-level
+content is controlled by formality), and it makes the physical
+origin of $\Ethree$ manifest as Dunn additivity for the product
+$\bR \times \bC \cong \bR^3$. The HDC route has the advantage
+of working for any $\Einf$-chiral algebra (no $3$d bulk theory
+required), and it gives $\Ethree$ without the Sugawara hypothesis.
+
+Both routes are cohomological: the Dunn route requires local
+constancy on BRST cohomology
+(Theorem~\ref{thm:topologization}, step~(iv)), and the HDC
+route requires formality of $\Etwo$ to control higher operations.
+Neither produces a chain-level $\Ethree$ for class~M algebras;
+this remains open
+(Conjecture~\ref{conj:topologization-general},
+Conjecture~\ref{conj:coderived-e3}).
+\end{remark}
 
 % ================================================================
 
@@ -3865,22 +4032,170 @@ For simple~$\fg$, the identification theorem exploits
 $\dim H^3(\fg) = 1$ to force uniqueness at each order.
 For reductive $\fg$ with simple summands
 $\fg = \fg_1 \oplus \cdots \oplus \fg_r \oplus \mathfrak{z}$
-(where $\mathfrak{z}$ is the centre), the situation is more
-delicate: $H^3(\fg) \cong
-H^3(\fg_1) \oplus \cdots \oplus H^3(\fg_r) \oplus
-\Lambda^3 \mathfrak{z}^*$ has dimension $r + \binom{\dim \mathfrak{z}}{3}$.
-At each order in $\lambda$, the obstruction space is
-$r$-dimensional for semisimple~$\fg$ and larger
+(where $\mathfrak{z}$ is the centre), the $\Ethree$
+deformation theory is controlled by the space of
+$\fg$-invariant symmetric bilinear forms
+$\Sym^2(\fg^*)^\fg$, which classifies $\Pthree$
+biderivations on $C^*(\fg) = \Sym(\fg^\vee[-1])$ via
+the formality reduction
+(Lemma~\ref{lem:en-formality-deformation-classification}).
+For semisimple~$\fg$, the Cartan map
+$B \mapsto \omega_B(X,Y,Z) = B(X,[Y,Z])$ gives an
+isomorphism
+$\Sym^2(\fg^*)^\fg \xrightarrow{\sim} H^3(\fg)$,
+so $\dim \Sym^2(\fg^*)^\fg = r$ (one Killing form
+per simple summand). When $\mathfrak{z} \neq 0$,
+the Cartan map has a kernel: any bilinear form
+pairing central elements with central elements maps
+to zero under $B \mapsto B(-,[-,-])$, since
+$[\mathfrak{z},\mathfrak{z}] = 0$. The dimension of the
+deformation space is therefore
+$\dim \Sym^2(\fg^*)^\fg
+= r + \binom{\dim \mathfrak{z} + 1}{2}$,
+which exceeds $\dim H^3(\fg)
+= r + \binom{\dim\mathfrak{z}}{3}$
 when $\mathfrak{z} \neq 0$.
-The uniqueness argument requires matching
-$r + \binom{\dim \mathfrak{z}}{3}$ independent scalars, which demands
-a more refined comparison: for $\fg = \mathfrak{gl}_N$
-($r = 1$, $\dim \mathfrak{z} = 1$, so $\dim H^3 = 2$), one must
-separately match the $\mathfrak{sl}_N$ and abelian
-deformation parameters. This is expected to hold by
-compatibility with the direct-sum decomposition of
-Chern--Simons theory, but has not been verified at
-chain level.
+The uniqueness argument requires matching all
+$\dim \Sym^2(\fg^*)^\fg$ independent scalars at each
+order in $\lambda$, not merely
+$\dim H^3(\fg)$ of them.
+\end{remark}
+
+\begin{remark}[Obstruction analysis for $\mathfrak{gl}_N$]
+\label{rem:e3-non-simple-gl-N}
+We carry out the uniqueness argument of
+Theorem~\ref{thm:e3-identification} for
+$\fg = \mathfrak{gl}_N = \mathfrak{sl}_N \oplus
+\mathfrak{gl}_1$, where the deformation space is
+two-dimensional at each order.
+
+\smallskip
+\noindent\textit{Step 1: invariant bilinear forms.}
+The space of $\mathfrak{gl}_N$-invariant symmetric
+bilinear forms has basis
+\[
+  B_{\mathrm{tr}}(X,Y) = \tr(XY),
+  \qquad
+  B_{\mathrm{ab}}(X,Y) = \tr(X)\,\tr(Y).
+\]
+Both are $\mathfrak{gl}_N$-invariant (conjugation-invariant).
+Under the Cartan map
+$B \mapsto \omega_B(X,Y,Z) = B(X,[Y,Z])$:
+the form $B_{\mathrm{tr}}$ maps to the Cartan three-form
+$\omega_3(X,Y,Z) = \tr(X[Y,Z])$, which generates
+$H^3(\mathfrak{sl}_N) \cong \CC$; the form
+$B_{\mathrm{ab}}$ maps to
+$\tr(X)\,\tr([Y,Z]) = 0$, since the trace vanishes on
+commutators. Hence $\dim H^3(\mathfrak{gl}_N) = 1$
+while $\dim \Sym^2(\mathfrak{gl}_N^*)^{\mathfrak{gl}_N} = 2$.
+The abelian form $B_{\mathrm{ab}}$ is invisible to $H^3$
+but visible to the $\Pthree$ deformation theory.
+
+\smallskip
+\noindent\textit{Step 2: two-parameter $\Pthree$ bracket.}
+The vertex algebra
+$V_{k_1, k_2}(\mathfrak{gl}_N)$ carries two independent
+levels: $k_1$ for the $\mathfrak{sl}_N$ summand and
+$k_2$ for $\mathfrak{gl}_1$. The PVA
+$\lambda$-bracket on generators $J^a$ of
+$\mathfrak{gl}_N$ is
+\[
+  \{J^a {}_\lambda J^b\}
+  \;=\;
+  f^{ab}{}_c\, J^c
+  \;+\;
+  \bigl(k_1\, B_{\mathrm{tr}}(a,b)
+  \;+\;
+  k_2\, B_{\mathrm{ab}}(a,b)\bigr)\,\lambda,
+\]
+where $f^{ab}{}_c$ are the $\mathfrak{gl}_N$ structure
+constants. On the chiral Chevalley--Eilenberg complex, the
+induced $\Pthree$ bracket
+(Construction~\ref{constr:chiral-p3-bracket}) is
+\begin{equation}\label{eq:p3-glN}
+  \{\phi_a, \phi_b\}^{\mathrm{ch}}
+  \;=\;
+  f^{ab}{}_c\,\phi_c
+  \;+\;
+  \bigl(k_1\, B_{\mathrm{tr}}(a,b)
+  + k_2\, B_{\mathrm{ab}}(a,b)\bigr)\,\partial.
+\end{equation}
+At each order in the two-parameter deformation
+$(\lambda_1, \lambda_2) =
+(k_1 + N,\; k_2)$
+(the departure from critical level for $\mathfrak{sl}_N$
+is $k_1 + h^\vee = k_1 + N$; the Heisenberg factor has
+$h^\vee = 0$), the correction space is
+$\Sym^2(\mathfrak{gl}_N^*)^{\mathfrak{gl}_N}
+\cong \CC^2$, spanned by $B_{\mathrm{tr}}$ and
+$B_{\mathrm{ab}}$.
+
+\smallskip
+\noindent\textit{Step 3: formal disk determination of both
+parameters.}
+Theorem~\ref{thm:chiral-e3-cfg}(ii) matches the chiral
+$\Pthree$ bracket restricted to the formal disk with the
+CFG $\Pthree$ bracket. On the formal disk, the
+bracket~\eqref{eq:p3-glN} yields
+\[
+  \{\phi_a, \phi_b\}_{\mathrm{CFG}}
+  \;=\;
+  f^{ab}{}_c\,\phi_c
+  \;+\;
+  \bigl(k_1\, B_{\mathrm{tr}}(a,b)
+  + k_2\, B_{\mathrm{ab}}(a,b)\bigr) \cdot \delta_0.
+\]
+The two bilinear forms $B_{\mathrm{tr}}$ and
+$B_{\mathrm{ab}}$ are \emph{linearly independent} as
+elements of $\Sym^2(\mathfrak{gl}_N^*)$: choosing
+$a,b \in \mathfrak{sl}_N$ with $\tr(a) = \tr(b) = 0$ and
+$\tr(ab) \neq 0$ extracts $k_1$; choosing
+$a = b = I_N/N$ (a scalar matrix) extracts $k_2$.
+The formal disk comparison therefore determines
+both $k_1$ and $k_2$ independently.
+
+\smallskip
+\noindent\textit{Step 4: the identification extends.}
+The inductive argument of
+Theorem~\ref{thm:e3-identification}, Steps~1--3,
+goes through for $\mathfrak{gl}_N$: at each order
+in $(\lambda_1, \lambda_2)$, the two-dimensional
+correction space $\CC \cdot B_{\mathrm{tr}} \oplus
+\CC \cdot B_{\mathrm{ab}}$ is fully determined by the
+$\Pthree$ bracket on the formal disk
+(Step~3 above). Both the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}
+(V_{k_1,k_2}(\mathfrak{gl}_N))$ and the CFG algebra
+$\cA^{\lambda_1, \lambda_2}$ (perturbative Chern--Simons
+with gauge algebra $\mathfrak{gl}_N$ and two coupling
+constants) have matching associated graded
+$C^*(\mathfrak{gl}_N) =
+\Sym(\mathfrak{gl}_N^\vee[-1])$ and matching
+$\Pthree$ brackets on the formal disk.
+Since the correction at each order is a
+\emph{linear} function of the invariant bilinear form,
+and the formal disk data determines both components,
+the isomorphism
+\[
+  \{Z^{\mathrm{der}}_{\mathrm{ch}}
+  (V_{k_1,k_2}(\mathfrak{gl}_N))\}
+  \;\simeq\;
+  \{\cA^{\lambda_1, \lambda_2}\}
+\]
+of filtered $\Ethree$-algebras holds over the
+two-dimensional base
+$(\lambda_1, \lambda_2) \in \CC^2$, order by order in
+the joint $(\lambda_1, \lambda_2)$-adic filtration.
+
+The Sugawara constraint
+(Theorem~\ref{thm:e3-identification}(iv)) requires
+separate analysis: the Sugawara element for
+$\mathfrak{gl}_N$ at levels $(k_1, k_2)$ involves only
+the $\mathfrak{sl}_N$ factor at non-critical level
+$k_1 \neq -N$; the $\mathfrak{gl}_1$ factor contributes
+independently to the stress tensor. The topological
+enhancement holds at generic $(k_1, k_2)$ with
+$k_1 \neq -N$.
 \end{remark}
 
 % ----------------------------------------------------------------
