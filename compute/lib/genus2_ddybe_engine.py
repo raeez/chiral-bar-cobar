@@ -125,8 +125,15 @@ def riemann_theta_g2_gradient(z: np.ndarray, Omega: np.ndarray,
 # ============================================================
 
 def genus2_odd_characteristic() -> Tuple[np.ndarray, np.ndarray]:
-    """Standard odd theta characteristic at genus 2."""
-    return np.array([0.5, 0.5]), np.array([0.5, 0.5])
+    """An odd theta characteristic at genus 2.
+
+    At genus 2 there are 6 odd characteristics (where Theta[a;b](0|Omega) = 0).
+    We use delta = [1/2, 0; 1/2, 0], which has parity
+    4*(1/2*1/2 + 0*0) = 1 (odd), and whose gradient at z=0 has a dominant
+    first component, making it suitable for the Szego kernel S(z,0)
+    where z is a coordinate along the first direction.
+    """
+    return np.array([0.5, 0.0]), np.array([0.5, 0.0])
 
 
 def genus2_szego_kernel(z: complex, Omega: np.ndarray, N: int = 10) -> complex:
