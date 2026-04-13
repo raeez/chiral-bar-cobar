@@ -657,7 +657,37 @@ All commits authored by Raeez Lorgat. NEVER credit an LLM. No co-authored-by, no
 **E_1 primacy**: B^ord primitive (Stasheff). av: g^{E1}→g^mod lossy Sigma_n-coinvariant projection. av(r(z))=kappa at degree 2. All standard chiral algebras E_inf (local); E_1=nonlocal (Yangian, EK quantum VA). NEVER "E_inf means no OPE poles."
 **Three pillars**: (1) Conv sL-inf hom_alpha(C,A) NOT strict Lie. (2) hom_alpha fails as bifunctor in both slots simultaneously (RNW19). MC3 one slot at a time. (3) Log FM != classical FM; requires snc pair (X,D).
 
-## XXXI. End-of-Task Output Contract
+## XXXI. Session 2026-04-12/13 Results (Load-Bearing)
+
+These results change what is TRUE in the manuscript. Every agent must know them.
+
+**Proved this session:**
+- thm:e3-identification: Z^der_ch(V_k(g)) ≅ CFG A^lambda for simple g. Route: E_3 formality + H^3(g)=C + P_3 matching.
+- thm:glN-chiral-qg: W_N chiral QG for ALL N≥1. Yang R(u)=uI+Psi*P. OPE compat by coderivation+JKL.
+- prop:verlinde-from-ordered: Z_g = sum S_{0j}^{2-2g} from ordered chiral homology at integer level.
+- prop:e3-via-dunn: Alternative E_3 proof via CG factorization + Sugawara + Dunn. Independent of HDC.
+- Z_2(k) = binom(k+3,3). Z_3(k) = n²(n²-1)(n²+11)/180, n=k+2.
+- (Psi-1)/Psi universal across spins (conj:miura-cross-universality, verified spin 2-4).
+- DS intertwining (pi_3×pi_3)∘Delta_z = Delta_z^{W_3}∘pi_3 verified (57 tests).
+- E_3 extended to gl_N (two independent bilinear forms B_tr, B_ab).
+
+**Corrected this session:**
+- (Psi-1)/Psi NOT 1/Psi on J⊗J in Delta_z(T). AP128.
+- nabla = d-A NOT d+A (23 sign fixes). FM29.
+- Belavin r-matrix: Pauli decomposition NOT Weierstrass zeta. FM30.
+- Theta rank = 1 NOT 2 (betagamma). 
+- sl2_bar_dims h_2=6 is CE; chiral bar h_2=5. AP63/AP128/B22.
+- qdet column ordering: DECREASING index (j=N-1 leftmost). FM33.
+- Heat equation prefactor: 1/(4πi) diagonal, 1/(2πi) off-diagonal. FM34.
+- 3 cross-volume r-matrix convention discrepancies fixed.
+
+**Codex/GPT-5.4 specific failure patterns (from 60-agent campaign):**
+- Engine-test synchronization to wrong value (AP128): the engine and its test can share the same wrong mental model. ALWAYS derive expected values from an INDEPENDENT source.
+- Fixture infrastructure: pytest fixtures must be defined in the test file or conftest. Missing fixtures cause silent errors that look like test failures.
+- Column determinant ordering: textbook conventions vary. Always verify centrality numerically at N≥3 before trusting a formula.
+- Spectral coassociativity uses SHIFTED parameters, not the same z: (Delta_{z1}⊗id)∘Delta_{z1+z2} = (id⊗Delta_{z2})∘Delta_{z1}.
+
+## XXXII. End-of-Task Output Contract
 
 For every substantial mathematical task, end with:
 

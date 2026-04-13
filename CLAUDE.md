@@ -489,6 +489,10 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 
 **FM32. RTT sign convention dependence.** The level-1 RTT commutation relation sign depends on the R-matrix convention: additive R(u) = uI + Psi*P gives [t_{ij}, t_{kl}] = Psi(delta_{il} t_{kj} - delta_{kj} t_{il}); Molev's 1-P/u convention gives the opposite sign. Counter: always state which R-matrix convention before writing RTT relations.
 
+**FM33. Quantum determinant column ordering.** The central quantum determinant qdet T(u) for Y(gl_N) uses DECREASING column index ordering in the column determinant (j=N-1 leftmost, j=0 rightmost). The "left-to-right in j" ordering (j=0 leftmost) is NOT central at N >= 3 (coincidentally agrees at N=2). Counter: always specify column ordering when writing qdet formulas. Cite Molev Theorem 1.6.4 for the correct convention.
+
+**FM34. Heat equation prefactor diagonal vs off-diagonal.** The genus-g heat equation d/dOmega_{ab} Theta = coefficient * d^2/(dz_a dz_b) Theta has prefactor 1/(4πi) for a=b (diagonal) and 1/(2πi) for a≠b (off-diagonal). The factor of 2 comes from the symmetric matrix chain rule: d/dOmega_{aa} = (1/2) d/d(Omega_{aa} as independent variable). Writing 1/(2πi) uniformly is a notational convention that absorbs the factor into the matrix derivative, but produces wrong numerical results when Omega_{aa} is treated as an independent variable in computations.
+
 **FM28. Topologization scope conflation.** Opus marked thm:topologization as ClaimStatusProvedHere without scope, when the proof is verified only for affine KM at non-critical level (where Sugawara is explicit). For Virasoro and W-algebras, the proof depends on constructing the 3d HT BRST complex, which the manuscript itself acknowledges as conditional. Furthermore, the proof is COHOMOLOGICAL (works on Q-cohomology, not cochains). For class M, where chain-level data is essential, the E_3 may exist only on cohomology. Counter: every topologization claim must carry "(proved for affine KM at non-critical level; conjectural in general; cohomological, not chain-level)."
 
 ## Theorem Status
@@ -515,7 +519,14 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 | Verlinde recovery | PROVED | Verlinde Z_g = sum S_{0j}^{2-2g} recovered from ordered chiral homology at integer level (prop:verlinde-from-ordered). Handle attachment and separating factorization verified. |
 | ker(av) formula | PROVED (all simple g) | dim(ker(av_n)) = d^n - C(n+d-1,d-1) for d-dim rep of any simple g (prop:ker-av-schur-weyl). Type-independent: depends only on dim V. |
 | Genus-2 construction | CONSTRUCTED | Ordered chiral homology on Sigma_2: KZB with 2x2 Siegel period matrix, chi=-12 at degree 2, doubly-dynamical parameter (conj:g2-ddybe). |
-| Miura coefficient | CORRECTED | Delta_z(T) has (Psi-1)/Psi coefficient on J⊗J, NOT 1/Psi (lem:coprod-T-miura). Verified from first principles + 24 compute tests. |
+| Miura coefficient | CORRECTED + UNIVERSAL | (Psi-1)/Psi on J⊗J (spin 2), J⊗T+T⊗J (spin 3), J⊗W_{s-1}+W_{s-1}⊗J (spin 4). Mechanism spin-independent: binom(s-2,s-2)=1 from Drinfeld minus 1/Psi from Miura :J·W_{s-1}: coefficient. conj:miura-cross-universality installed. 51+67+24 tests. |
+| Z_g closed forms | DISCOVERED | Z_2(k) = binom(k+3,3) (tetrahedral). Z_3(k) = n²(n²-1)(n²+11)/180, n=k+2. General: Z_g polynomial of degree 3(g-1) in n with factor n^{g-1}(n²-1). Verified k=0..19. |
+| DS intertwining | VERIFIED | (pi_3×pi_3)∘Delta_z^{sl_3} = Delta_z^{W_3}∘pi_3 verified with 57 tests. Spectral coassociativity uses shifted parameters. |
+| AP128 bar H^2 | FIXED | sl2_bar_dims gave h_2=6 (CE/Riordan). Correct chiral bar: h_2=5. New sl2_chiral_bar_dims() function. AP63 discrepancy: Orlik-Solomon form factor. |
+| Quantum det ordering | FOUND | Central qdet uses DECREASING column index (j=N-1 leftmost). At N=3, increasing-index ordering is NOT central. 74 tests. |
+| E_3 via Dunn | PROVED (alternative) | prop:e3-via-dunn: CG factorization E_1^top×E_2^hol + Sugawara topologization + Dunn = E_3^top. Independent of HDC. |
+| E_3 for gl_N | EXTENDED | E_3 identification extends to gl_N via two independent invariant bilinear forms B_tr, B_ab. Both determined by formal disk comparison. |
+| KZB flatness | VERIFIED | Heat equation d_tau(wp_1) = (1/(4πi))d_w(wp+wp²) at machine precision. Prefactor 1/(4πi) diagonal vs 1/(2πi) off-diagonal (symmetric matrix chain rule). |
 
 ## Anti-Patterns by Cognitive Trigger
 
