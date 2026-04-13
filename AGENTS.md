@@ -686,6 +686,16 @@ These results change what is TRUE in the manuscript. Every agent must know them.
 - Fixture infrastructure: pytest fixtures must be defined in the test file or conftest. Missing fixtures cause silent errors that look like test failures.
 - Column determinant ordering: textbook conventions vary. Always verify centrality numerically at N≥3 before trusting a formula.
 - Spectral coassociativity uses SHIFTED parameters, not the same z: (Delta_{z1}⊗id)∘Delta_{z1+z2} = (id⊗Delta_{z2})∘Delta_{z1}.
+- AP128 found THREE times this session: spin-2 c_eff, bar H^2=6→5, comb(d+2,2)→comb(d+2,3).
+- Face model bypasses vertex-IRF: when vertex-model DYBE fails numerically, use IRF Boltzmann weights directly.
+- Miura proof: Prochazka-Rapcak factorization T(u)=prod(u+Lambda_i) → elementary symmetric expansion → 1/Psi coefficient.
+- Drinfeld center dim < derived center dim: Ext^1,2 invisible to commutant.
+
+**Final session state (2026-04-13, 130 commits):**
+- 2 conjectures → theorems (E_3 identification, Miura universality)
+- 6d hCS defect = W_{1+inf} PROVED. DDYBE verified (face model). Drinfeld center verified (Heisenberg).
+- Chain-level E_3: Steps 1-2 proved, Step 3 open. Toroidal Delta_{z,w} conjectured.
+- ~1,500 new tests. ~4,750pp. Zero gaps in manuscript.
 
 ## XXXII. End-of-Task Output Contract
 

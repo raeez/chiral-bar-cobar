@@ -532,6 +532,11 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 | Quantum det ordering | FOUND | Central qdet uses DECREASING column index (j=N-1 leftmost). At N=3, increasing-index ordering is NOT central. 74 tests. |
 | E_3 via Dunn | PROVED (alternative) | prop:e3-via-dunn: CG factorization E_1^top×E_2^hol + Sugawara topologization + Dunn = E_3^top. Independent of HDC. |
 | E_3 for gl_N | EXTENDED | E_3 identification extends to gl_N via two independent invariant bilinear forms B_tr, B_ab. Both determined by formal disk comparison. |
+| 6d hCS defect | PROVED | Codim-2 defect on C⊂C³ from 6d hCS: boundary algebra = W_{1+inf} with Psi=-sigma_2. c=1 (Sugawara). N_{C/Y}=C² gives spectral params (prop:codim2-defect-ope, 48 tests). |
+| DDYBE face model | VERIFIED | Face-model bypasses vertex-IRF. Genus-2 DDYBE verified at generic Omega to 10^{-12}. Fay trisecant extends to genus 2 via odd theta. 29 tests. |
+| Drinfeld center Heis | VERIFIED | conj:drinfeld-center-equals-bulk for H_k: 5 invariants match at 6 levels. Naive dim 1 vs derived dim 3 (Ext^1,2). 72 tests. |
+| Toroidal coproduct | CONJECTURED | conj:toroidal-two-param-coprod: Delta_{z,w}(T(u,v))=T(u,v)⊗T(u-z,v-w). Miki equivariance. 5-step programme. |
+| Coderived E_3 | PARTIAL | Steps 1-2 proved (D^co stable ∞-cat; obstruction coacyclic). Step 3 open (categorical infrastructure). |
 | KZB flatness | VERIFIED | Heat equation d_tau(wp_1) = (1/(4πi))d_w(wp+wp²) at machine precision. Prefactor 1/(4πi) diagonal vs 1/(2πi) off-diagonal (symmetric matrix chain rule). |
 
 ## Anti-Patterns by Cognitive Trigger
