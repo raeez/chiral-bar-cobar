@@ -20,7 +20,7 @@ Three volumes by Raeez Lorgat. Vol I *Modular Koszul Duality* (this repo, ~2,650
 
 **Architecture (2026-04-12):** E_n chiral algebra theory stays in Vol I (pure algebra/operads). ALL physics moves to Vol II. Vol III provides the geometric source (CY categories → chiral algebras via the E_n circle).
 
-**North star:** platonic_ideal_reconstituted_2026_04_12.md is THE SINGLE REFERENCE for all structural questions.
+**North star:** platonic_ideal_reconstituted_2026_04_13.md is THE SINGLE REFERENCE for all structural questions. (Supersedes the 2026-04-12 version.)
 
 ## HOT ZONE -- Top 10 Repeat Offenders
 
