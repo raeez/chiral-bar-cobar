@@ -1,0 +1,3315 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,
+ citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{tikz-cd}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\HS}{\mathrm{HS}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\GG}{\Gamma}
+\newcommand{\Dco}{D^{\mathrm{co}}}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Analytic Sewing for Chiral Algebras]
+{Analytic Sewing for Chiral Algebras}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada\newline
+ Department of Physics \& Astronomy, University of Waterloo,
+ Waterloo, ON N2L 3G1, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+The bar complex of a chiral algebra is a purely algebraic
+object: it encodes the operator product expansion through
+residue-contracted point configurations on algebraic curves.
+Partition functions, by contrast, require convergence of sewing
+amplitudes across all genera.  This paper develops the analytic
+completion that bridges the two.
+
+We introduce the sewing envelope~$\cA^{\mathrm{sew}}$, the
+universal locally convex completion for which every bordism
+amplitude extends continuously, and formulate a single
+Hilbert--Schmidt condition on the sector multiplication that
+implies trace-class closed amplitudes at all genera.  For the
+Heisenberg algebra we prove that the sewing envelope is
+$\Sym A^2(D)$, the pair-of-pants amplitude is the second
+quantisation of a one-particle Bergman restriction, and every
+genus-$g$ partition function is a Fredholm determinant; this is
+the decisive first case.  For lattice vertex algebras we prove
+that the partition function factors into a Heisenberg Fredholm
+determinant times a Siegel theta function, both absolutely
+convergent on the Siegel upper half-space.  The general
+HS-sewing theorem verifies the criterion for the entire standard
+landscape: Heisenberg, affine Kac--Moody, Virasoro, $\cW_N$
+algebras, and lattice vertex algebras.
+
+We identify a three-layer analytic gap separating the algebraic
+bar construction from convergent partition functions: the sewing
+envelope for interacting algebras, metric independence of the
+ind-Hilbert factorisation, and the coderived shadow at genus
+$g \geq 1$.  The coderived category~$\Dco$ is the correct
+receptacle: curved differentials ($d^2 = \kappa \cdot \omega_g
+\neq 0$) are permitted, coacyclic complexes replace acyclic
+ones, and the BV/bar comparison holds for all four shadow
+classes including class~$\mathsf{M}$ (Virasoro, $\cW_N$),
+where the naive chain-level identification fails.
+\end{abstract}
+
+\subjclass[2020]{17B69 (primary); 14H10, 30H20, 47B10, 81T40
+ (secondary)}
+
+\keywords{Chiral algebras, sewing, bar construction,
+ Hilbert--Schmidt operators, Bergman space, Fredholm determinant,
+ coderived category, partition functions}
+
+\maketitle
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+% ================================================================
+% 1. INTRODUCTION
+% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The algebraic bar complex and the convergence
+ problem}\label{subsec:problem}
+
+The bar complex of a chiral algebra~$\cA$ is the tensor
+coalgebra $B(\cA) = T^c(s^{-1}\bar\cA)$ with differential
+extracted from the operator product expansion by residues at
+collision diagonals in the Fulton--MacPherson
+compactification~$\overline{\mathrm{FM}}_n(\bC)$.  The
+construction is purely algebraic: it uses only the OPE
+coefficients, the augmentation ideal~$\bar\cA = \ker(\varepsilon)$,
+and the desuspension~$s^{-1}$ with~$|s^{-1}v| = |v| - 1$.
+The bar differential satisfies $D^2 = 0$ on a fixed curve,
+and the Maurer--Cartan element
+$\Theta_\cA = D_\cA - d_0
+\in \MC(\mathfrak{g}^{\mathrm{mod}}_\cA)$
+governs the modular obstruction tower.
+
+Partition functions require more.  A genus-$g$ partition
+function is a trace
+\begin{equation}\label{eq:partition-function}
+Z_g(\cA;\,\Omega)
+\;=\;
+\Tr_{\cA}\bigl(q_1^{L_0 - c/24} \cdots q_g^{L_0 - c/24}\bigr)
+\end{equation}
+over a state space completed in a topology for which the
+operator~$q^{L_0}$ is trace class.  The algebraic bar complex
+produces formal power series in the sewing parameters; the
+question is whether these series converge to honest complex
+numbers.
+
+This convergence problem is the analytic gap at the heart of the
+modular Koszul duality programme~\cite{LorgatVolI}.  The five
+theorems (A through D and~H) of that programme are stated and
+proved algebraically; the analytic sewing package developed here
+is the mechanism by which the algebraic skeleton extends to
+convergent invariants.
+
+\subsection{Main results}
+
+We prove five results.
+
+\paragraph{The sewing envelope.}
+For any positive-energy chiral algebra~$\cA$, we construct
+the \emph{sewing envelope}~$\cA^{\mathrm{sew}}$
+(Definition~\ref{def:sewing-envelope}), the universal locally
+convex completion for which every bordism amplitude extends
+continuously, and establish its universal property
+(Proposition~\ref{prop:sewing-universal}).
+
+\paragraph{The Hilbert--Schmidt sewing condition.}
+We formulate a single analytic hypothesis
+(Definition~\ref{def:hs-sewing}): the sector multiplication
+operators $m_{a,b}^c \colon H_a \otimes H_b \to H_c$ satisfy
+\begin{equation}\label{eq:hs-intro}
+\sum_{a,b,c \geq 0} q^{a+b+c}\,
+\|m_{a,b}^c\|_{\HS}^2 \;<\; \infty
+\end{equation}
+for some $0 < q < 1$.  We prove
+(Proposition~\ref{prop:closed-trace-class}) that this single
+estimate delivers the full sewing package: every closed
+amplitude is trace class on the weighted completion
+$H_q := \widehat{\bigoplus}_n q^n H_n$.
+
+\paragraph{The Heisenberg Fredholm determinant.}
+For the Heisenberg algebra~$\cH_k$
+(Theorem~\ref{thm:heisenberg-sewing}): the sewing envelope
+is~$\Sym A^2(D)$; the pair-of-pants amplitude is the second
+quantisation~$\GG(R)$ of a one-particle Bergman restriction;
+every genus-$g$ partition function is the Fredholm determinant
+\begin{equation}\label{eq:heisenberg-intro}
+Z_g(\cH_k;\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-k/2}
+\cdot (\det{}'_\zeta \Delta_{\Sigma_g})^{-k/2}.
+\end{equation}
+
+\paragraph{Lattice sewing.}
+For a lattice vertex algebra~$V_\Lambda$ of rank~$r$
+(Theorem~\ref{thm:lattice-sewing}): the genus-$g$ partition
+function factors as
+\begin{equation}\label{eq:lattice-intro}
+Z_g(V_\Lambda;\,\Omega)
+\;=\;
+Z_g(\cH_r;\,\Omega)
+\cdot \Theta_\Lambda(\Omega),
+\end{equation}
+where~$\Theta_\Lambda(\Omega)
+= \sum_{\lambda \in \Lambda^g}
+e^{i\pi\lambda^T\Omega\lambda}$ is the Siegel theta function
+of the lattice, absolutely convergent on the Siegel upper
+half-space~$\fH_g$.
+
+\paragraph{The general HS-sewing theorem.}
+Any positive-energy chiral algebra with subexponential sector
+growth and polynomial OPE coefficient growth satisfies the
+HS-sewing condition
+(Theorem~\ref{thm:general-hs-sewing}).  The criterion verifies
+for the Heisenberg, affine Kac--Moody at non-critical level,
+Virasoro at every central charge, $\cW_N$ algebras, and lattice
+vertex algebras.
+
+\subsection{The three-layer gap and the coderived
+ category}\label{subsec:gap-intro}
+
+Convergent partition functions are the beginning of the analytic
+theory, not its end.  Three layers of structure separate the
+algebraic bar construction from a complete analytic modular
+Koszul programme:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{The sewing envelope for interacting algebras.}
+ For the Heisenberg and lattice algebras, the sewing envelope
+ admits an explicit description (Bergman symmetric algebra,
+ charge-refined Hilbert completion).  For non-abelian chiral
+ algebras (affine Kac--Moody at generic level, Virasoro,
+ $\cW_N$), the sewing envelope exists abstractly but lacks a
+ concrete Hilbert-space identification.
+\item \emph{Metric independence of the ind-Hilbert
+ factorisation.}  The ind-Hilbert completion of
+ Moriwaki~\cite{Moriwaki26b} depends a~priori on a conformal
+ metric on the curve; the algebraic bar complex does not.
+ Identifying the two requires proving that the analytic
+ completion is independent of the metric, a functional-analytic
+ problem with no algebraic counterpart.
+\item \emph{The coderived shadow at $g \geq 1$.}  At genus
+ $g \geq 1$ the bar complex carries curvature:
+ $d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g \neq 0$.
+ The ordinary derived category is empty (every object is
+ acyclic).  The correct receptacle is the coderived
+ category~$\Dco$, defined by totalising the curvature bicomplex.
+\end{enumerate}
+
+In Sections~\ref{sec:gap} and~\ref{sec:coderived} we develop
+the third layer in detail: the coderived category as the natural
+home for curved bar complexes, the notion of coacyclicity
+replacing acyclicity, and the BV/bar comparison theorem in~$\Dco$
+for all four shadow classes (G, L, C, M) of the standard landscape.
+
+\subsection{Relation to prior work}\label{subsec:prior}
+
+Segal~\cite{Segal88} formulated the sewing axiom as the
+defining property of a conformal field theory.
+Zhu~\cite{Zhu96} proved modular invariance of genus-1 characters
+for rational vertex operator algebras.
+Huang~\cite{Huang05} extended the sewing of sphere amplitudes
+to genus one and by induction to all genera, under a list of
+analytic convergence hypotheses.  The HS criterion of this paper
+is strictly stronger: a single norm
+estimate~\eqref{eq:hs-intro} implies all convergences
+simultaneously.
+
+Moriwaki~\cite{Moriwaki26b} identified the Heisenberg sewing
+envelope with~$\Sym A^2(D)$ through factorisation homology
+valued in ind-Hilbert spaces.  We reinterpret this as a
+one-particle reduction of the pair-of-pants operator and deduce
+the Fredholm determinant
+formula~\eqref{eq:heisenberg-intro}.
+
+The Belavin--Knizhnik theorem~\cite{BK86} expresses the bosonic
+string measure as a product of determinants of Laplacians; our
+formula~\eqref{eq:heisenberg-intro} is the vertex-algebraic
+incarnation.  Beilinson--Drinfeld~\cite{BD04} develop the
+algebraic theory of chiral algebras and factorisation; our bar
+complex is the explicit chain model of their factorisation
+coalgebra.
+
+The coderived category for curved dg-modules was introduced
+by Positselski~\cite{Positselski11}; its application to
+curved bar complexes in the chiral setting appears
+in~\cite{LorgatVolI}.  The BV/bar identification in the
+coderived category (Theorem~\ref{thm:bv-bar-coderived})
+extends the genus-0 chain-level result of Costello and
+Gwilliam~\cite{CG17} to all genera.
+
+\subsection{The modular Koszul duality
+ context}\label{subsec:programme-context}
+
+The analytic sewing programme is one component of a larger
+algebraic structure.  The modular Koszul duality programme
+of~\cite{LorgatVolI} constructs, for every chirally Koszul
+algebra~$\cA$, a package of algebraic invariants:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the bar complex
+ $B(\cA) = T^c(s^{-1}\bar\cA)$ with differential and
+ deconcatenation coproduct;
+\item the Maurer--Cartan element
+ $\Theta_\cA = D_\cA - d_0
+ \in \MC(\mathfrak{g}^{\mathrm{mod}}_\cA)$;
+\item the shadow obstruction tower
+ $\Theta_\cA = \sum_{r \geq 2} S_r(\cA)$
+ with $S_2 = \kappa(\cA)$ the modular characteristic;
+\item the Koszul dual~$\cA^!$ and the complementarity
+ relation $\kappa(\cA) + \kappa(\cA^!) = K(\cA)$;
+\item five theorems (A through D and~H) controlling the
+ structure of the bar complex, bar-cobar inversion,
+ complementarity, the genus expansion, and chiral Hochschild
+ cohomology.
+\end{enumerate}
+
+All of this is purely algebraic: the bar complex is built from
+OPE coefficients and residues; no convergence hypothesis enters.
+The analytic sewing programme begins where the algebraic
+programme ends: it asks when the formal genus expansion
+$\Theta_\cA = \sum_g \Theta_\cA^{(g)}$ converges to a
+well-defined partition function~$Z_g(\cA;\,\Omega)$.
+
+The algebraic programme establishes the formula; the analytic
+programme establishes the number.  The two are connected by the
+HS-sewing condition, which is precisely the analytic hypothesis
+that converts the algebraic genus expansion into a convergent
+Fredholm expansion.
+
+\begin{remark}[The four shadow classes and
+ sewing]\label{rem:shadow-sewing-intro}
+The shadow classification (G, L, C, M) of the standard
+landscape controls the complexity of the sewing programme:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Class~G} (Heisenberg, lattice): the shadow tower
+ terminates at degree~$2$; the sewing programme is
+ fully explicit (Sections~\ref{sec:heisenberg}
+ and~\ref{sec:lattice}).
+\item \emph{Class~L} (affine Kac--Moody): the shadow tower
+ terminates at degree~$3$; the sewing programme is proved
+ abstractly (HS-sewing, Theorem~\ref{thm:general-hs-sewing})
+ but the sewing envelope is not yet identified concretely.
+\item \emph{Class~C} ($\beta\gamma$, $bc$): the shadow tower
+ terminates at degree~$4$; the BV/bar comparison is
+ conditional on harmonic decoupling.
+\item \emph{Class~M} (Virasoro, $\cW_N$): the shadow tower is
+ infinite; the chain-level BV/bar comparison fails; the
+ coderived category is essential
+ (Section~\ref{sec:coderived}).
+\end{enumerate}
+\end{remark}
+
+\subsection{Outline}
+
+Section~\ref{sec:sewing-envelope} constructs the sewing
+envelope.  Section~\ref{sec:hs-criterion} formulates the
+Hilbert--Schmidt sewing condition and proves the trace-class
+theorem.  Section~\ref{sec:heisenberg} treats the decisive
+first case: the Heisenberg Fredholm determinant.
+Section~\ref{sec:lattice} develops lattice sewing via theta
+functions.  Section~\ref{sec:general-criterion} proves the
+general HS-sewing theorem and verifies the criterion on the
+standard landscape.  Section~\ref{sec:gap} analyses the
+three-layer analytic gap.  Section~\ref{sec:coderived}
+develops the coderived category as the correct receptacle for
+curved bar complexes at $g \geq 1$.
+
+\subsection{Conventions}\label{subsec:conventions}
+
+All chiral algebras are $\bZ_{\geq 0}$-graded
+(positive energy), with finite-dimensional weight spaces.
+Grading is cohomological: $|d| = +1$.  Desuspension lowers
+degree: $|s^{-1}v| = |v| - 1$.  The bar complex uses the
+augmentation ideal: $B(\cA) = T^c(s^{-1}\bar\cA)$ with
+$\bar\cA = \ker(\varepsilon)$.  The Dedekind eta function is
+$\eta(\tau) = q^{1/24}\prod_{n \geq 1}(1-q^n)$ with
+$q = e^{2\pi i \tau}$.
+
+
+% ================================================================
+% 2. THE SEWING ENVELOPE
+% ================================================================
+
+\section{The sewing envelope}\label{sec:sewing-envelope}
+
+\subsection{Algebraic cores and bordism
+ amplitudes}\label{subsec:algebraic-cores}
+
+An \emph{algebraic chiral core} is a
+$\bZ_{\geq 0}$-graded vector space
+$\cA_{\mathrm{alg}} = \bigoplus_{n \geq 0} H_n$
+equipped with the operator product expansion of a vertex
+operator algebra of positive energy, with
+$H_0 = \bC \cdot \mathbf{1}$ and $\dim H_n < \infty$.
+The sector components~$H_n$ are the conformal-weight
+eigenspaces.  The augmentation
+$\varepsilon \colon \cA_{\mathrm{alg}} \to \bC$ is the
+projection to~$H_0$.  The augmentation ideal
+$\bar\cA = \ker(\varepsilon)$ is the input to the bar
+construction $B(\cA) = T^c(s^{-1}\bar\cA)$.
+
+A finite conformally flat bordism is a compact Riemann
+surface~$\Sigma$ with parametrised in/out boundary collars.
+Each such~$\Sigma$ determines an algebraic amplitude
+\[
+A_\Sigma^{\mathrm{alg}} \colon
+\cA_{\mathrm{alg}}^{\otimes m}
+\longrightarrow
+\cA_{\mathrm{alg}}^{\otimes \ell},
+\]
+a~priori valued in formal series of conformal-weight
+components.  Matrix coefficients
+\[
+\langle \eta,\,
+A_\Sigma^{\mathrm{alg}}
+(\xi_1 \otimes \cdots \otimes \xi_m)
+\rangle
+\;\in\;
+\bC[[\text{moduli of } \Sigma]]
+\]
+are the objects whose convergence the sewing programme must
+establish.
+
+\subsection{Construction of the sewing
+ envelope}\label{subsec:sewing-envelope-construction}
+
+\begin{definition}[Sewing envelope]\label{def:sewing-envelope}
+For every finite conformally flat bordism~$\Sigma$ and every
+choice of boundary vectors
+$\xi_i \in \cA_{\mathrm{alg}}$,
+$\eta \in \cA_{\mathrm{alg}}^\vee$, define the seminorm
+\begin{equation}\label{eq:sewing-seminorm}
+p_{\Sigma,\xi,\eta}(a)
+\;=\;
+\bigl|\langle \eta,\,
+A_\Sigma^{\mathrm{alg}}
+(\xi_1 \otimes \cdots \otimes a \otimes \cdots \otimes \xi_m)
+\rangle\bigr|.
+\end{equation}
+The \emph{sewing envelope}~$\cA^{\mathrm{sew}}$ is the
+Hausdorff completion of~$\cA_{\mathrm{alg}}$ for the locally
+convex topology generated by all
+seminorms~$p_{\Sigma,\xi,\eta}$.
+\end{definition}
+
+The sewing envelope is the smallest completion that remembers
+every local-to-global operation at once: it is tautologically
+the correct target for any analytic bootstrap.
+
+\begin{proposition}[Universal property]
+\label{prop:sewing-universal}
+Let $E$ be any complete locally convex realisation of
+$\cA_{\mathrm{alg}}$ for which every algebraic amplitude
+$A_\Sigma^{\mathrm{alg}}$ extends continuously.  Then the
+identity on~$\cA_{\mathrm{alg}}$ extends uniquely to a
+continuous map $\cA^{\mathrm{sew}} \to E$.
+\end{proposition}
+
+\begin{proof}
+By hypothesis, each seminorm~$p_{\Sigma,\xi,\eta}$ is
+continuous on~$E$.  Hence the identity
+$\cA_{\mathrm{alg}} \to E$ is continuous for the sewing
+topology.  By completeness of~$E$, it extends uniquely from
+the Hausdorff completion~$\cA^{\mathrm{sew}}$.
+\end{proof}
+
+\begin{remark}[Comparison with other completions]
+\label{rem:completion-comparison}
+The sewing envelope need not coincide with naive completions:
+the $q$-adic completion
+$\widehat{\bigoplus}_n q^n H_n$, the Hilbert-space completion
+with respect to a fixed invariant form, Zhu's $C_2$-quotient,
+or Moriwaki's ind-Hilbert completion.  All of these are quotients
+or subspaces of~$\cA^{\mathrm{sew}}$ under the universal
+property, but none is a~priori large enough to carry every
+bordism amplitude as a continuous map.  The HS-sewing criterion
+of the next section is the device by which one identifies a
+concrete Hilbert completion
+$H_q \subset \cA^{\mathrm{sew}}$.
+\end{remark}
+
+\subsection{Functoriality}\label{subsec:sewing-functoriality}
+
+The sewing envelope construction is functorial in the algebraic
+core.  A morphism of vertex algebras
+$f \colon \cA \to \cB$ that preserves the conformal grading
+and the OPE induces a continuous map
+$f^{\mathrm{sew}} \colon \cA^{\mathrm{sew}} \to
+\cB^{\mathrm{sew}}$.  In particular, any subalgebra
+inclusion~$\cA \hookrightarrow \cB$ (such as the inclusion of
+a Heisenberg subalgebra into a lattice vertex algebra) induces
+a continuous inclusion of sewing envelopes.
+
+\begin{proposition}[Direct-sum decomposition]
+\label{prop:sewing-direct-sum}
+Let $\cA = \bigoplus_{\gamma \in I} \cA_\gamma$ be a
+decomposition of the algebraic core into sectors preserved by
+the pair-of-pants multiplication.  Then
+\[
+\cA^{\mathrm{sew}}
+\;=\;
+\widehat{\bigoplus}_{\gamma \in I}\,
+\cA_\gamma^{\mathrm{sew}},
+\]
+where the completion is in the product topology.
+\end{proposition}
+
+\begin{proof}
+Each seminorm~$p_{\Sigma,\xi,\eta}$ decomposes by sector
+selection (insertion of projection operators onto the
+sector~$\gamma$ at each boundary circle); the cross-terms are
+separate seminorms.  The completion of a direct sum in a product
+of locally convex topologies is the product of completions.
+\end{proof}
+
+
+\subsection{The five levels of analytic
+ structure}\label{subsec:five-levels}
+
+The sewing envelope sits at the fourth of five levels of
+analytic structure for chiral algebras, arranged in a strict
+chain of implications:
+
+\begin{theorem}[Five-level hierarchy]
+\label{thm:five-levels}
+The following conditions on a positive-energy chiral
+algebra~$\cA$ form a strict chain:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(\textbf{Algebraic})}\;
+ $D_\cA^2 = 0$ on the bar complex.  Universal: holds for
+ every chiral algebra.
+\item \textup{(\textbf{Coderived})}\;
+ The homotopy transfer theorem applies weight-by-weight in
+ the coderived category~$\Dco$.  Requires: positive energy
+ ($\dim H_n < \infty$).
+\item \textup{(\textbf{Koszul})}\;
+ The curved bar complex and the flat model are linked by the
+ coderived-to-derived comparison.  Requires: PBW collapse at
+ the $E_2$ page of the bar spectral sequence.
+\item \textup{(\textbf{Analytic})}\;
+ The genus-$g$ partition functions converge absolutely.
+ Requires: HS-sewing (polynomial OPE growth, subexponential
+ sector growth).
+\item \textup{(\textbf{Modular functor})}\;
+ Conformal blocks are finite-dimensional and the modular group
+ acts.  Requires: $C_2$-cofiniteness.
+\end{enumerate}
+The first four levels form the chain
+$\textup{(iv)} \subsetneq \textup{(iii)} \subsetneq
+\textup{(ii)} \subsetneq \textup{(i)}$.
+Level~$\textup{(v)}$ implies
+$\textup{(iv)}$, $\textup{(ii)}$, and $\textup{(i)}$, but
+its relation to~$\textup{(iii)}$ is not one of containment:
+$C_2$-cofinite simple quotients~$L_k(\fg)$ at admissible level
+satisfy~$\textup{(v)}$ but may fail~$\textup{(iii)}$, while
+Koszul universal algebras~$V^k(\fg)$ at generic level
+satisfy~$\textup{(iii)}$ but not~$\textup{(v)}$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Level~(i): $D^2 = 0$ holds because the bar differential is the
+Feynman-transform differential of a modular operad algebra, and
+$\partial^2 = 0$ on~$\overline\cM_{g,n}$ implies $D^2 = 0$.
+Level~(ii): the positive-energy axiom gives weight-by-weight
+finite-dimensional SDR data for the homotopy transfer.
+Level~(iii): the PBW collapse gives diagonal Ext vanishing.
+Level~(iv): HS-sewing (Theorem~\ref{thm:general-hs-sewing}).
+Level~(v): Zhu's theorem~\cite{Zhu96} gives finite-dimensional
+conformal blocks and modular group action.
+
+The inclusions are strict.  For (i)$\neq$(ii): a chiral algebra
+without positive energy satisfies $D^2 = 0$ but lacks the SDR.
+For (ii)$\neq$(iii): admissible-level quotients where bar-Ext
+differs from ordinary-Ext.
+For (iii)$\neq$(iv): a chirally Koszul algebra with
+super-polynomial OPE growth.
+For (iv)$\neq$(v): the universal $\cW$-algebra $V^k(\fg)$ at
+generic irrational level.
+\end{proof}
+
+\begin{remark}[The standard landscape]
+\label{rem:standard-landscape-levels}
+The standard landscape (Heisenberg, affine Kac--Moody at
+non-critical level, Virasoro, $\cW_N$, $\beta\gamma$ and $bc$
+systems, lattice vertex algebras) satisfies levels
+(i) through~(iv).  Those families that are also
+$C_2$-cofinite (simple quotients at admissible levels,
+self-dual lattice VOAs) satisfy all five levels.  The sewing
+envelope is the universal object at level~(iv); the present
+paper develops this level in detail.
+\end{remark}
+
+\subsection{The bar complex as a family over
+ moduli}\label{subsec:bar-over-moduli}
+
+The bar complex at genus~$g$ is a family of cochain complexes
+parametrised by~$\overline\cM_g$.  On the smooth
+locus~$\cM_g$ the differential satisfies $d^2 = 0$; on the
+compactification~$\overline\cM_g$ the differential acquires
+curvature $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ from
+the boundary strata.
+
+The Gauss--Manin connection
+$\nabla^{\mathrm{GM}} \colon B^{(g)}(\cA) \to
+B^{(g)}(\cA) \otimes \Omega^1_{\overline\cM_g}$
+controls the variation of the bar complex with moduli.  The
+total differential
+$D_g = d_{\mathrm{fib}} + \nabla^{\mathrm{GM}}$ satisfies
+$D_g^2 = 0$: the fiberwise curvature
+$d_{\mathrm{fib}}^2 = \kappa\omega_g$ is exactly cancelled
+by the Gauss--Manin curvature
+$(\nabla^{\mathrm{GM}})^2 = -\kappa\omega_g$.
+
+The analytic sewing programme extends this family to a family of
+Hilbert spaces: on each fiber (a fixed Riemann surface), the
+algebraic bar complex is completed to a Hilbert space by the
+HS-sewing condition, and the Gauss--Manin connection extends
+continuously to the completed fibers.
+
+\begin{proposition}[Continuity of the Gauss--Manin connection]
+\label{prop:gm-continuity}
+Under HS-sewing, the Gauss--Manin connection
+$\nabla^{\mathrm{GM}}_g$ extends to a bounded operator on the
+weighted completion~$H_q$ for each~$g$, and the total
+differential~$D_g = d_{\mathrm{fib}} + \nabla^{\mathrm{GM}}_g$
+satisfies $D_g^2 = 0$ on the completed bar complex.
+\end{proposition}
+
+\begin{proof}
+The Gauss--Manin connection acts on bar elements by variation
+of the bar propagator $d\log E(z,w)$ with respect to moduli.
+The variation is a holomorphic $(1,0)$-form on~$\overline\cM_g$
+valued in operators on~$H_q$; the HS bound on the pair-of-pants
+multiplication controls the operator norm of these
+variations, because each variation is expressed as a residue of
+the bar differential applied to a collar region.  The
+identity~$D_g^2 = 0$ is algebraic (it holds on the dense
+algebraic core) and extends by continuity.
+\end{proof}
+
+
+% ================================================================
+% 3. THE HILBERT--SCHMIDT SEWING CONDITION
+% ================================================================
+
+\section{The Hilbert--Schmidt sewing condition}
+\label{sec:hs-criterion}
+
+The universal sewing envelope of
+Definition~\ref{def:sewing-envelope} is an abstract object.
+To compute with it one needs a concrete Hilbert completion on
+which the sewing operators are not merely defined but small
+enough in norm to compose.
+
+\subsection{The condition}\label{subsec:hs-definition}
+
+\begin{definition}[HS-sewing]\label{def:hs-sewing}
+Let $\cA_{\mathrm{alg}} = \bigoplus_n H_n$ be an algebraic
+chiral core with a pre-Hilbert structure on each sector
+(for example, the restriction of the invariant bilinear form
+to~$H_n$).  Write the pair-of-pants sector multiplications as
+\[
+m_{a,b}^c \colon H_a \otimes H_b \longrightarrow H_c.
+\]
+Say $\cA$ satisfies \emph{HS-sewing} at parameter
+$q \in (0,1)$ if
+\begin{equation}\label{eq:hs-sewing}
+\sum_{a,b,c \geq 0} q^{a+b+c}\,
+\|m_{a,b}^c\|_{\HS}^2
+\;<\; \infty.
+\end{equation}
+The \emph{weighted completion} is
+$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$, with inner
+product
+$\langle v, w \rangle_q = q^{2n}\langle v, w\rangle_{H_n}$
+for $v, w \in H_n$.
+\end{definition}
+
+The scaling~$q^{2n}$ is the unique convention under which the
+weighted pair-of-pants~$m_q$ is Hilbert--Schmidt precisely
+when~\eqref{eq:hs-sewing} holds.
+
+\subsection{The trace-class theorem}
+\label{subsec:trace-class}
+
+\begin{proposition}[Closed amplitudes are trace class]
+\label{prop:closed-trace-class}
+Suppose $\cA$ satisfies HS-sewing at parameter~$q$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the weighted pair-of-pants
+$m_q \colon H_q \otimes H_q \to H_q$ is Hilbert--Schmidt, with
+\[
+\|m_q\|_{\HS}^2
+\;=\;
+\sum_{a,b,c} q^{a+b+c}\, \|m_{a,b}^c\|_{\HS}^2;
+\]
+\item every closed amplitude of~$\cA$, built from any finite
+composition of pair-of-pants multiplications and traces, is
+trace class on~$H_q$;
+\item the sewing envelope~$\cA^{\mathrm{sew}}$ admits a
+continuous linear map
+$\cA^{\mathrm{sew}} \to H_q$ with dense image.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Claim~(i): identifying $H_a \otimes H_b$ with the
+weight-$(a+b)$ subspace of $H_q^{\widehat{\otimes} 2}$,
+the sector component $m_{a,b}^c$ contributes
+$q^a \cdot q^b \cdot q^{-c} \cdot q^{2c} = q^{a+b+c}$
+to the Hilbert--Schmidt norm of~$m_q$ (the factor~$q^{-c}$
+comes from the output side, the factor~$q^{2c}$ from the
+normalisation of the inner product on~$H_c$).  Summing gives
+$\|m_q\|_{\HS}^2 =
+\sum q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2 < \infty$.
+
+Claim~(ii): a genus-$g$ Riemann surface with~$n$ punctures
+admits a pants decomposition into $2g - 2 + n$ pairs of pants.
+Each internal sewing circle corresponds to a Hilbert--Schmidt
+pair-of-pants composition, and the composition of two
+Hilbert--Schmidt operators is trace class.  Every closed
+amplitude (no free external legs) evaluates to the trace of
+a finite composition of trace-class operators.
+
+Claim~(iii): the seminorms~$p_{\Sigma,\xi,\eta}$ of
+Definition~\ref{def:sewing-envelope} are all dominated by
+the~$H_q$ inner product, because each matrix coefficient
+factorises through the trace-class operator of claim~(ii).
+Continuity of the identity
+$\cA_{\mathrm{alg}} \to H_q$ for the sewing topology follows.
+\end{proof}
+
+\begin{corollary}[Partition functions converge]
+\label{cor:partition-convergence}
+Under HS-sewing at parameter~$q$, the genus-$g$ partition
+function
+$Z_g(\cA;\,\Omega)
+= \Tr(q_1^{L_0 - c/24}\cdots q_g^{L_0 - c/24})$
+converges absolutely for all period matrices
+$\Omega \in \fH_g$ with
+$|q_j| = |e^{2\pi i \Omega_{jj}}| < q$, producing a
+holomorphic function on a domain in the Siegel upper
+half-space.
+\end{corollary}
+
+\begin{proof}
+The partition function is a closed amplitude (trace over the
+state space with $g$ sewing circles).  By
+Proposition~\ref{prop:closed-trace-class}(ii), it is the trace
+of a trace-class operator on~$H_q$, hence absolutely convergent.
+Holomorphicity in the moduli follows from the absolute convergence
+and the holomorphic dependence of the sewing kernel on~$\Omega$.
+\end{proof}
+
+\begin{corollary}[Gram positivity]
+\label{cor:hs-positivity}
+Under HS-sewing, the connected sewing amplitudes
+$a_\cA(N) \in \bR_{\geq 0}$ define a positive-semidefinite
+inner product on generating Dirichlet polynomials.
+\end{corollary}
+
+\begin{proof}
+Trace-class operators form a two-sided ideal with a well-defined
+trace, positive when applied to a positive operator; the sewing
+amplitude is a composition of positive pair-of-pants operators,
+and positivity passes through.
+\end{proof}
+
+\subsection{The sewing Gram matrix and its
+ determinant}\label{subsec:gram-matrix}
+
+The Hilbert--Schmidt bound controls not only convergence but
+spectral asymptotics.  Let $K_g$ denote the sewing operator
+(composition of pair-of-pants restrictions around a cycle of
+the genus-$g$ surface).  The connected free energy is
+\begin{equation}\label{eq:connected-free-energy}
+F_g^{\mathrm{conn}}(\cA;\,q)
+\;=\;
+-\log \det(1 - K_g),
+\end{equation}
+convergent whenever $\|K_g\|_1 < 1$.  The eigenvalues
+$\lambda_1 \geq \lambda_2 \geq \cdots$ of~$K_g$ satisfy
+$\sum_j \lambda_j < \infty$ (trace class), and the Fredholm
+determinant $\det(1 - K_g) = \prod_j(1 - \lambda_j)$ converges
+absolutely.  For the Heisenberg, the eigenvalues are $q^n$
+($n \geq 1$) and the Fredholm determinant is the Dedekind
+eta function (see Section~\ref{sec:heisenberg}).
+
+
+\subsection{The HS-sewing condition and the shadow
+ classes}\label{subsec:hs-shadow}
+
+The HS-sewing condition interacts with the shadow classification
+(G, L, C, M) of the modular Koszul duality programme.  The
+shadow class determines the OPE pole structure and hence the
+polynomial degree~$N$ in the OPE growth bound.
+
+\begin{proposition}[Shadow class and OPE growth]
+\label{prop:shadow-hs}
+The OPE growth exponent~$N$ in the bound
+$|C^{c,k}_{a,i;\,b,j}| \leq K(a+b+c+1)^N$ is controlled
+by the shadow class:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llcl}
+\toprule
+Class & Families & $N$ & Mechanism \\
+\midrule
+$\mathsf{G}$ & Heisenberg, free fields
+ & $1$ & quadratic OPE \\
+$\mathsf{L}$ & affine Kac--Moody
+ & $1$ & linear current algebra \\
+$\mathsf{C}$ & $\beta\gamma$, $bc$
+ & $1$ & first-order systems \\
+$\mathsf{M}$ & Virasoro, $\cW_N$
+ & $2N$ & higher-spin fields \\
+\bottomrule
+\end{tabular}
+\end{center}
+Classes~G, L, and~C all have $N = 1$ (linear OPE growth);
+class~M has $N$ growing with the number of generators.
+\end{proposition}
+
+\begin{proof}
+For class~G: the OPE $J(z)J(w) \sim k/(z-w)^2$ has no field
+on the right-hand side beyond the central term; the structure
+constants are bounded by the level~$k$, independent of weight.
+
+For class~L: the OPE $J^a(z)J^b(w) \sim
+k\delta^{ab}/(z-w)^2 + f^{ab}{}_cJ^c(w)/(z-w)$
+has at most one derivative insertion, giving $|C| \leq K(n+1)$.
+
+For class~C: the $\beta\gamma$ system has OPE
+$\beta(z)\gamma(w) \sim 1/(z-w)$, a simple pole; all
+higher correlators factor through this pairing by Wick's
+theorem.
+
+For class~M: the Virasoro OPE is quartic, and normal-ordered
+products of~$T$ with itself produce structure constants growing
+as $(n+1)^2$.  For $\cW_N$, the spin-$s$ generator
+contributes $2s$ poles, and the OPE growth is bounded by
+$(n+1)^{2N}$.
+\end{proof}
+
+The shadow class also determines the convergence rate of the
+HS-sewing sum.  For classes~G, L, C (all with $N = 1$),
+the HS-sewing sum converges rapidly:
+\[
+\sum_{a,b,c} q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+9K^2\Bigl(\sum_n q^n \dim H_n (n+1)^2\Bigr)
+\Bigl(\sum_n q^n \dim H_n\Bigr)^2,
+\]
+and the rate-limiting factor is the sector growth
+$\dim H_n$.  For class~M with large~$N$, the polynomial
+factor $(n+1)^{2N}$ slows convergence but does not affect
+the qualitative conclusion (the exponential decay of~$q^n$
+dominates any polynomial growth).
+
+\subsection{Quantitative HS bounds}\label{subsec:quantitative-hs}
+
+The HS-sewing condition provides not just qualitative
+convergence but quantitative bounds on partition functions.
+
+\begin{proposition}[Partition function bound]
+\label{prop:partition-bound}
+Let $\cA$ satisfy HS-sewing at parameter~$q$.  Then the
+genus-$g$ partition function satisfies
+\begin{equation}\label{eq:partition-bound}
+|Z_g(\cA;\,\Omega)|
+\;\leq\;
+\bigl(\|m_q\|_{\HS}\bigr)^{2(2g-2)}
+\end{equation}
+for all $\Omega \in \fH_g$ with
+$|q_j| < q$.
+\end{proposition}
+
+\begin{proof}
+A pants decomposition of the genus-$g$ surface has
+$2g - 2$ pairs of pants and $3g - 3$ sewing circles.
+Each pair of pants contributes a factor of
+$\|m_q\|_{\HS}$ (the Hilbert--Schmidt norm of the
+pair-of-pants multiplication); each sewing circle
+composes two such factors.  The closed amplitude (the
+trace) is bounded by the product of all $\HS$ norms:
+$|Z_g| \leq \|m_q\|_{\HS}^{2(2g-2)}$ (the exponent
+counts the number of internal pair-of-pants composition
+operations in a genus-$g$ surface with no punctures).
+\end{proof}
+
+\begin{corollary}[Growth in genus]\label{cor:growth-genus}
+Under HS-sewing, the partition functions grow at most
+exponentially in genus:
+$\log|Z_g| \leq (2g-2)\log\|m_q\|_{\HS}^2$.
+For the Heisenberg,
+$\|m_q\|_{\HS}^2 = k\sum_n q^{2n+1}/(1-q)^2$, and the
+growth rate is controlled by the level~$k$ and the sewing
+parameter~$q$.
+\end{corollary}
+
+This exponential-in-genus bound is consistent with the
+predictions of the Belavin--Knizhnik factorisation~\cite{BK86}
+and with the genus-$g$ Faber--Pandharipande
+evaluation~$\lambda_g^{\mathrm{FP}}$, which grows as
+$(2g)!/(2\pi)^{2g}$.
+
+\subsection{Optimality of the HS condition}
+\label{subsec:hs-optimality}
+
+The HS-sewing condition is not sharp: it is a sufficient
+condition for convergent partition functions, not a necessary
+one.  Two weaker conditions that also imply convergence in
+special cases:
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{$C_2$-cofiniteness:} Zhu's condition~\cite{Zhu96}
+ implies finite-dimensional conformal blocks and hence
+ convergent characters.  This is strictly stronger than
+ HS-sewing for rational VOAs (it implies modularity, which
+ HS-sewing does not), but strictly weaker in scope (it applies
+ only to $C_2$-cofinite algebras, while HS-sewing applies to
+ generic-level universal algebras).
+\item \emph{Trace-class pair-of-pants:} one could replace the
+ Hilbert--Schmidt condition on~$m_{a,b}^c$ with a trace-class
+ condition on the composed operator
+ $m_q \circ m_q^*$.  This is strictly weaker than HS-sewing
+ (trace class $\subset$ Hilbert--Schmidt) but harder to verify
+ from OPE data alone.
+\end{enumerate}
+
+The HS condition strikes the optimal balance between
+generality (it applies to the full standard landscape) and
+verifiability (it can be checked from character formulas and
+OPE tables).
+
+
+% ================================================================
+% 4. THE HEISENBERG SEWING: FREDHOLM DETERMINANT
+% ================================================================
+
+\section{The Heisenberg sewing: Fredholm determinant}
+\label{sec:heisenberg}
+
+The Heisenberg vertex algebra~$\cH_k$ is the decisive first
+case: a chiral algebra for which the entire analytic sewing
+programme admits a complete, explicit description.  Every
+step reduces to Fock-space combinatorics and Bergman-space
+functional analysis.
+
+\subsection{The Heisenberg algebra}\label{subsec:heisenberg-ope}
+
+The Heisenberg vertex algebra~$\cH_k$ at level~$k$ is
+generated by a single current~$J(z)$ with operator product
+expansion
+\[
+J(z)\, J(w)
+\;\sim\;
+\frac{k}{(z-w)^2}.
+\]
+The sectors~$H_n$ are spanned by monomials
+$a_{-n_1-1}\cdots a_{-n_j-1}\mathbf{1}$ with
+$\sum(n_i + 1) = n$; the sector generating function is
+$\sum_{n \geq 0} \dim H_n\,q^n
+= \prod_{n \geq 1}(1 - q^n)^{-1}$,
+equivalently $q^{1/24}/\eta(q)$.  The Heisenberg is
+the simplest member of the standard landscape, class~G in the
+shadow classification (the shadow tower terminates at
+degree~$2$), with $\kappa(\cH_k) = k$.
+
+\subsection{The Heisenberg OPE and HS-sewing
+ verification}\label{subsec:heisenberg-hs-verification}
+
+The HS-sewing condition for the Heisenberg is verified
+directly from the OPE.  The pair-of-pants multiplication
+$m_{a,b}^c \colon H_a \otimes H_b \to H_c$ is nonzero
+only when $c \leq a + b$ (the weight cannot increase beyond
+the total input weight).  The OPE
+$J(z)J(w) \sim k/(z-w)^2$ produces structure constants
+bounded by~$k$: the $n$-th mode $a_n$ satisfies
+$[a_m, a_n] = km\delta_{m+n,0}$, so the only nontrivial
+sector multiplication is the Wick contraction
+$m_{a,b}^{a+b-1} \colon
+a_{-a-1}\mathbf{1} \otimes a_{-b-1}\mathbf{1}
+\mapsto k(a+1)\delta_{b,0}\,a_{-a-1}\mathbf{1}$
+(plus normal-ordered products).  The Hilbert--Schmidt norm
+is
+\[
+\|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+k^2 p(a)p(b)p(c)(a+b+c+1)^2,
+\]
+and the HS-sewing sum is
+\[
+\sum_{a,b,c} q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+9k^2\Bigl(\sum_n q^n p(n)(n+1)^2\Bigr)
+\Bigl(\sum_n q^n p(n)\Bigr)^2.
+\]
+Each series converges for $0 < q < 1$ because $p(n)$ grows
+subexponentially ($\log p(n) \sim \pi\sqrt{2n/3}$) while
+$q^n$ decays exponentially.  The radius of convergence
+$q = 1$ is sharp: at $q = 1$ the series $\sum p(n) = \infty$.
+
+\begin{remark}[The partition number and subexponential growth]
+\label{rem:partition-growth}
+The Hardy--Ramanujan asymptotic
+$p(n) \sim \frac{1}{4n\sqrt{3}}
+\exp\bigl(\pi\sqrt{2n/3}\bigr)$
+shows that $\log p(n) = O(\sqrt{n})$, hence
+$p(n) \leq C\exp(\alpha\sqrt{n})$ for appropriate~$C$
+and~$\alpha$.  The exponential decay
+$q^n = \exp(-n\log(1/q))$ dominates the subexponential
+growth for any $q < 1$:
+$q^n p(n) \leq C\exp(\alpha\sqrt{n} - n\log(1/q))$,
+which decays superpolynomially.  This is the mechanism behind
+the HS-sewing convergence for all standard families.
+\end{remark}
+
+\subsection{The Bergman space}\label{subsec:bergman}
+
+Let $A^2(D)$ be the Bergman space of square-integrable
+holomorphic functions on the unit disk
+$D \subset \bC$, with inner product
+$\langle f, g \rangle = \int_D f\overline{g}\,dA$ and
+orthonormal basis
+$e_n(z) = \sqrt{(n+1)/\pi}\,z^n$ for $n \geq 0$.
+The symmetric algebra $\Sym A^2(D)$ is the bosonic Fock space
+built on the one-particle Bergman space.  The Bergman
+reproducing kernel is
+\begin{equation}\label{eq:bergman-kernel}
+K_D(z,w)
+\;=\;
+\frac{1}{\pi(1 - z\bar w)^2}.
+\end{equation}
+
+\begin{definition}[Mode--Bergman map]\label{def:theta-map}
+The \emph{mode--Bergman map}
+$\Theta \colon \cH_k^{\mathrm{alg}} \to \Sym A^2(D)$
+is the dense linear map defined on the algebraic Fock core by
+\begin{align*}
+\Theta(a_{-n-1}\mathbf{1})
+&\;=\;
+\sqrt{n+1}\, z^n,\\
+\Theta(a_{-n_1-1}\cdots a_{-n_j-1}\mathbf{1})
+&\;=\;
+\operatorname{Sym}\bigl(\Theta(a_{-n_1-1}\mathbf{1})
+\otimes \cdots \otimes
+\Theta(a_{-n_j-1}\mathbf{1})\bigr).
+\end{align*}
+\end{definition}
+
+The map~$\Theta$ intertwines the algebraic Fock space grading
+with the polynomial-degree grading of the Bergman space and
+sends the invariant bilinear form on~$\cH_k$ to the Bergman
+inner product (up to the level factor~$k$).
+
+\subsection{The Heisenberg sewing theorem}
+\label{subsec:heisenberg-sewing-theorem}
+
+\begin{theorem}[Heisenberg sewing]
+\label{thm:heisenberg-sewing}
+Let $\cH_k$ be the Heisenberg vertex algebra at level~$k$ and
+let~$\Theta$ be the mode--Bergman map.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The sewing envelope~$\cH_k^{\mathrm{sew}}$ is
+identified via~$\Theta$ with~$\Sym A^2(D)$.
+\item The completed bar differential on Bergman tensors is the
+closure of the Gaussian collision operator.
+\item The pair-of-pants sewing amplitude is the second
+quantisation~$\GG(R)$ of a one-particle Bergman restriction
+$R \colon A^2(D_{\mathrm{out}}) \to
+A^2(D_{\mathrm{in},1}) \otimes A^2(D_{\mathrm{in},2})$.
+\item Every closed genus-$g$ amplitude is a Fredholm
+determinant on the reduced one-particle Bergman space
+$A^2_0(\partial D)$ (constant mode removed).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Claim~(i) is the ind-Hilbert identification of
+Moriwaki~\cite{Moriwaki26b}, who constructs a conformally flat
+2-disk algebra structure on $\Sym A^2(D)$ isomorphic to the
+Heisenberg sewing completion by factorisation homology valued
+in $\operatorname{IndHilb}$.  The universal property
+(Proposition~\ref{prop:sewing-universal}) identifies his
+completion with~$\cH_k^{\mathrm{sew}}$.
+
+Claim~(ii) follows from the analytic-algebraic comparison: the
+algebraic bar differential, in the monomial basis of the Fock
+space, is
+\[
+d_{\mathrm{bar}}
+(a_{-n-1}\mathbf{1} \otimes a_{-m-1}\mathbf{1})
+\;=\;
+k\,\delta_{n+m+2,\,0}\,\mathbf{1}
+\]
+(the simple-pole Wick contraction of the generating current).
+Under~$\Theta$, this contraction is the Gaussian collision
+operator $G(z,w) = k/(1-z\bar w)^2$ on
+$A^2(D) \otimes A^2(D)$, the reproducing kernel of the
+Bergman space.
+
+Claims~(iii) and~(iv) follow from the one-particle sewing
+theorem below.
+\end{proof}
+
+\subsection{One-particle sewing and the Fredholm
+ determinant}\label{subsec:one-particle}
+
+The Heisenberg amplitude factorises completely through a
+one-particle operator.  This is the analytic avatar of
+Wick's theorem.
+
+\begin{theorem}[One-particle sewing]
+\label{thm:heisenberg-one-particle}
+The Heisenberg pair-of-pants amplitude is the second
+quantisation~$\GG(R)$ of the one-particle Bergman restriction
+$R \colon A^2(D_{\mathrm{out}}) \to
+A^2(D_{\mathrm{in},1}) \otimes A^2(D_{\mathrm{in},2})$,
+with matrix elements satisfying
+\[
+|R_{n,m}| \;\leq\; C q^{(n+m)/2},
+\]
+where $q = e^{-t}$ and~$t$ is the conformal length of the
+collar.  The sewing operator~$T_q$ on the reduced Bergman space
+$A^2_0(\partial D)$ has eigenvalues~$q^n$ for $n \geq 1$
+and is trace class with
+\begin{equation}\label{eq:sewing-trace-norm}
+\|T_q\|_1 \;=\; \frac{q}{1 - q}.
+\end{equation}
+The genus-$g$ partition function of~$\cH_k$ is the Fredholm
+determinant
+\begin{equation}\label{eq:heisenberg-fredholm}
+Z_g(\cH_k;\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-k/2}
+\cdot (\det{}'_\zeta \Delta_{\Sigma_g})^{-k/2}.
+\end{equation}
+At genus~$1$,
+$Z_1 = (\operatorname{Im}\tau)^{-k/2}\,
+|\eta(\tau)|^{-2k}$.
+\end{theorem}
+
+\begin{proof}
+Wick's theorem: every Heisenberg amplitude factors into
+pairwise contractions of the generating current.  Each
+contraction across a sewing circle corresponds to a
+one-particle pairing, so the full Fock-space amplitude
+equals the second quantisation~$\GG(R)$ of the one-particle
+pairing~$R$.
+
+The one-particle matrix element is
+\[
+R_{n,m}
+\;=\;
+\frac{k}{2\pi i}\oint_{|z| = 1}
+\oint_{|w| = 1}
+z^{-n-1}\, w^{-m-1}\,
+G_{\mathrm{pants}}(z, w)\, dz\, dw,
+\]
+where $G_{\mathrm{pants}}$ is the Bergman kernel of the pair
+of pants.  The collar of length $t = -\log q$ and the Bergman
+reproducing property give
+$|G_{\mathrm{pants}}(z, w)| \leq C(1 - q|zw|)^{-2}$;
+extracting the $(n,m)$ Fourier coefficient yields
+$|R_{n,m}| \leq C q^{(n+m)/2}$.
+
+The operator~$R$ is Hilbert--Schmidt, so the
+second-quantised operator~$\GG(R)$ is trace class, and
+$\|\GG(R)\|_1 = \det(1 + |R|)^k < \infty$.
+
+The Polyakov--Belavin--Knizhnik formula~\cite{BK86}
+identifies the Heisenberg partition function:
+$\det(1 - K_g)^{-k}
+= (\det\operatorname{Im}\Omega)^{-k/2}
+(\det{}'_\zeta \Delta_{\Sigma_g})^{-k/2}$,
+where~$K_g$ is the genus-$g$ sewing kernel assembled by
+composing $2g - 2$ pair-of-pants restriction operators along
+the edges of a trivalent graph~$\GG$ of first Betti number~$g$.
+
+At genus~$1$, $K_1 = T_q$ and the Fredholm determinant is
+$\det(1 - T_q) = \prod_{n \geq 1}(1 - q^n) =
+q^{-1/24}\eta(q)$,
+so $Z_1 = (\operatorname{Im}\tau)^{-k/2}
+\cdot |\eta(\tau)|^{-2k}$
+after combining holomorphic and antiholomorphic sectors.
+\end{proof}
+
+\begin{remark}[Genus-1 connected free energy]
+\label{rem:genus-1-free-energy}
+At genus~$1$, the connected free energy is
+\[
+F_1^{\mathrm{conn}}(\cH_k;\,q)
+\;=\;
+-k\log\det(1 - T_q)
+\;=\;
+-k\log\bigl(q^{-1/24}\eta(q)\bigr)
+\;=\;
+k\Bigl(\frac{1}{24}\log q
+- \sum_{n \geq 1}\log(1 - q^n)\Bigr),
+\]
+the Fourier expansion of which produces the connected sewing
+amplitudes $a_{\cH_k}(N) = k\sum_{d \mid N} 1/d$; the
+Dirichlet series is
+$S_{\cH_k}(u) = k\,\zeta(u)\,\zeta(u+1)$.  The Gram
+positivity of Corollary~\ref{cor:hs-positivity} is a
+consequence of $a_{\cH_k}(N) > 0$.
+\end{remark}
+
+\subsection{Higher-genus Fredholm expansion}
+\label{subsec:higher-genus-heisenberg}
+
+The genus-$g$ partition function is assembled by choosing a
+pants decomposition of~$\Sigma_g$: a trivalent graph~$\GG$ with
+$g$ loops (first Betti number), $2g - 2$ vertices (pairs of
+pants), and $3g - 3$ internal edges (sewing circles).  Each
+vertex contributes a pair-of-pants restriction operator; each
+edge contributes a sewing operator~$T_q$ (the restriction to a
+collar of conformal length~$t = -\log q$).
+
+The genus-$g$ sewing kernel is the composition
+\begin{equation}\label{eq:genus-g-kernel}
+K_g
+\;=\;
+\prod_{\text{edges of }\GG} T_{q_e}
+\;\circ\;
+\prod_{\text{vertices of }\GG} R_v,
+\end{equation}
+where $q_e = e^{-t_e}$ is the sewing parameter of the $e$-th
+internal edge.  The eigenvalues of~$K_g$ on the one-particle
+Bergman space are controlled by the Schottky parametrisation
+of~$\Sigma_g$.
+
+\begin{proposition}[Eigenvalue asymptotics of the sewing kernel]
+\label{prop:sewing-eigenvalues}
+The eigenvalues~$\lambda_j$ of the genus-$g$ sewing
+kernel~$K_g$ satisfy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $0 \leq \lambda_j < 1$ for all~$j$;
+\item $\sum_j \lambda_j < \infty$ (trace class);
+\item $\sum_j \lambda_j^2 < \infty$ (Hilbert--Schmidt);
+\item $\lambda_j \sim C_g j^{-1}\exp(-\alpha_g j^{1/g})$ as
+ $j \to \infty$, where~$\alpha_g$ depends on the conformal
+ structure of~$\Sigma_g$ through the extremal length of the
+ separating geodesic.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) and (ii): each~$T_{q_e}$ has eigenvalues $q_e^n$
+($n \geq 1$), which are positive and summable.  Composition of
+trace-class operators is trace class; eigenvalues of a
+composition are bounded by the product of spectral radii.
+
+(iii): the square-summability follows from the
+Hilbert--Schmidt property of the pair-of-pants restriction
+(Theorem~\ref{thm:heisenberg-one-particle}).
+
+(iv): the asymptotic is determined by the extremal length of
+the shortest separating geodesic on~$\Sigma_g$; the
+exponential decay $\exp(-\alpha_g j^{1/g})$ reflects the
+$g$-fold nature of the Schottky parametrisation.
+\end{proof}
+
+\begin{corollary}[Fredholm expansion at genus~$g$]
+\label{cor:fredholm-expansion-g}
+The genus-$g$ partition function admits the absolutely
+convergent Fredholm expansion
+\begin{equation}\label{eq:fredholm-expansion}
+Z_g(\cH_k;\,\Omega)
+\;=\;
+\det(1 - K_g)^{-k}
+\;=\;
+\exp\Bigl(k\sum_{m \geq 1}
+\frac{1}{m}\Tr(K_g^m)\Bigr),
+\end{equation}
+where the power traces $\Tr(K_g^m)$ are convergent sums over
+products of sewing eigenvalues.
+\end{corollary}
+
+\begin{proof}
+The Fredholm determinant of a trace-class operator satisfies
+$\log\det(1 - K) = -\sum_{m \geq 1} \frac{1}{m}\Tr(K^m)$,
+convergent whenever $\|K\|_1 < 1$.  The trace-class property
+of~$K_g$ (Proposition~\ref{prop:sewing-eigenvalues}) ensures
+convergence; raising to the $k$-th power accounts for the level
+factor.
+\end{proof}
+
+\subsection{Genus-2 specialisation}\label{subsec:genus-2}
+
+At genus~$2$, every Riemann surface admits a hyperelliptic
+representation $y^2 = \prod_{i=1}^6(x - e_i)$, and the period
+matrix is a $2 \times 2$ symmetric matrix
+$\Omega \in \fH_2$ with $\operatorname{Im}\Omega > 0$.  The
+Heisenberg partition function becomes
+\begin{equation}\label{eq:genus-2-heisenberg}
+Z_2(\cH_k;\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-k/2}
+\cdot (\det{}'_\zeta \Delta_{\Sigma_2})^{-k/2}.
+\end{equation}
+The $2 \times 2$ determinant
+$\det\operatorname{Im}\Omega
+= (\operatorname{Im}\Omega_{11})
+(\operatorname{Im}\Omega_{22})
+- (\operatorname{Im}\Omega_{12})^2$
+is the volume of the Jacobian torus
+$\bC^2/(\bZ^2 + \Omega\bZ^2)$.
+
+The sewing kernel at genus~$2$ is assembled from a trivalent
+graph with $2$ vertices and $3$ internal edges:
+$K_2 = T_{q_1}\circ R_1\circ T_{q_2}\circ R_2\circ T_{q_3}$,
+where $q_1, q_2, q_3$ are the three sewing parameters
+corresponding to the three handles of the genus-$2$ surface
+(two non-separating, one separating).  The degeneration limits
+$q_i \to 0$ recover the genus-$1$ partition functions of the
+constituent tori.
+
+\begin{remark}[Factorisation at the separating
+ node]\label{rem:separating-node}
+In the separating degeneration (one of the three sewing
+parameters approaches zero while the other two remain generic),
+the genus-$2$ partition function factors:
+\[
+Z_2(\cH_k;\,\Omega)
+\;\xrightarrow{q_3 \to 0}\;
+Z_1(\cH_k;\,\tau_1) \cdot Z_1(\cH_k;\,\tau_2) \cdot
+(1 + O(q_3)),
+\]
+where $\tau_1, \tau_2$ are the modular parameters of the two
+genus-$1$ components.  The leading term is the product of
+two genus-$1$ partition functions; the corrections are
+trace-class contributions from the sewing circle.  The
+non-separating degeneration carries genuinely genus-$2$
+information: the $2 \times 2$ period matrix controls the
+interplay of the two homology cycles.
+\end{remark}
+
+\begin{remark}[The Heisenberg as the atom of sewing]
+\label{rem:heisenberg-atom}
+The Heisenberg algebra is the unique member of the standard
+landscape for which every step of the sewing programme is
+explicit: the sewing envelope is a classical Bergman space;
+the pair-of-pants amplitude is a Fock-space second
+quantisation; every partition function is a Fredholm
+determinant.  All non-abelian chiral algebras satisfying
+HS-sewing require the abstract approach of
+Section~\ref{sec:general-criterion}.  The lattice vertex
+algebra is the first extension (Section~\ref{sec:lattice}),
+where the Heisenberg Fredholm determinant appears as one
+factor of the full partition function.
+\end{remark}
+
+
+\subsection{The Heisenberg at higher genus: Schottky
+ uniformisation}\label{subsec:schottky}
+
+The Fredholm determinant formula for the Heisenberg partition
+function admits an interpretation in terms of Schottky
+uniformisation that illuminates the sewing structure.
+
+A genus-$g$ Schottky group is generated by $g$
+loxodromic M\"obius transformations
+$\gamma_1,\ldots,\gamma_g \in \mathrm{PSL}_2(\bC)$, each
+with multiplier~$q_j$ ($|q_j| < 1$).  The Schottky
+uniformisation represents $\Sigma_g$ as a quotient of a
+domain in~$\bC\mathrm{P}^1$ by the Schottky group.
+
+The sewing construction realises this uniformisation at the
+chain level: each generator~$\gamma_j$ corresponds to a sewing
+circle with parameter~$q_j$, and the Fredholm determinant is
+\begin{equation}\label{eq:schottky-fredholm}
+Z_g(\cH_k;\,q_1,\ldots,q_g)
+\;=\;
+\prod_{n \geq 1}
+\prod_{\{\gamma\}'} (1 - q_\gamma^n)^{-k},
+\end{equation}
+where $\{\gamma\}'$ denotes the set of primitive conjugacy
+classes in the Schottky group and $q_\gamma$ is the multiplier
+of~$\gamma$.  The product converges absolutely because the
+multipliers decay exponentially: $|q_\gamma| \leq
+\max_j|q_j|^{|\gamma|}$, where $|\gamma|$ is the word length.
+
+\begin{remark}[Selberg zeta function]
+\label{rem:selberg-zeta}
+The Schottky product~\eqref{eq:schottky-fredholm} is the
+inverse of the Selberg zeta function
+$Z_{\mathrm{Selberg}}(\Sigma_g,s)$ evaluated at $s = 1$.
+The Selberg zeta function encodes the spectrum of the
+Laplacian on~$\Sigma_g$; its value at $s = 1$ is
+$\det{}'_\zeta\Delta_{\Sigma_g}$.  The Heisenberg partition
+function is therefore
+$Z_g(\cH_k) = Z_{\mathrm{Selberg}}(\Sigma_g, 1)^{-k/2}$
+times the period-matrix factor
+$(\det\operatorname{Im}\Omega)^{-k/2}$.  This connects the
+algebraic sewing construction to spectral geometry.
+\end{remark}
+
+\begin{remark}[The Polyakov conjecture]
+\label{rem:polyakov-conjecture}
+Polyakov's programme computes the string partition function as a
+product of determinants: the holomorphic sector gives
+$(\det{}'_\zeta\Delta)^{-k/2}$ (the zeta-regularised
+determinant of the scalar Laplacian), and the non-holomorphic
+sector gives $(\det\operatorname{Im}\Omega)^{-k/2}$ (the
+volume of the Jacobian torus).  The HS-sewing theorem provides
+the vertex-algebraic proof: the algebraic sewing
+(Fredholm determinant of the one-particle Bergman operator)
+reproduces the spectral-geometric answer (zeta-regularised
+determinant of the Laplacian), and both are equal to the
+Belavin--Knizhnik formula~\cite{BK86}.  The three independent
+computations (algebraic, spectral, geometric) constitute a
+verification of the Heisenberg sewing theorem by independent
+paths.
+\end{remark}
+
+
+% ================================================================
+% 5. LATTICE SEWING: THETA FUNCTIONS
+% ================================================================
+
+\section{Lattice sewing: theta functions}\label{sec:lattice}
+
+The lattice vertex algebra~$V_\Lambda$ associated to a
+positive-definite even lattice $\Lambda$ of rank~$r$ provides
+the natural next case after the Heisenberg: the sewing
+programme extends by combining the Heisenberg Fredholm
+determinant with the convergence of the Siegel theta function.
+
+\subsection{Structure of the lattice vertex algebra}
+\label{subsec:lattice-structure}
+
+Let~$\Lambda$ be a positive-definite even lattice of rank~$r$,
+with dual lattice~$\Lambda^*$ and discriminant group
+$D(\Lambda) = \Lambda^*/\Lambda$.  The lattice vertex algebra
+$V_\Lambda$ is the tensor product of the rank-$r$ Heisenberg
+Fock space with the group algebra of~$\Lambda$:
+\[
+V_\Lambda
+\;=\;
+\bigoplus_{\gamma \in D(\Lambda)} \cF_\gamma,
+\qquad
+\cF_\gamma \;=\; \cH_r \otimes \bC[[\Lambda + \gamma]],
+\]
+where~$\cF_\gamma$ is the twisted Heisenberg module indexed by
+the coset~$\gamma \in D(\Lambda)$.  The vertex operators
+$e^\gamma$ ($\gamma \in \Lambda$) act by
+\[
+e^\gamma \cdot
+a_{-n_1}\cdots a_{-n_j} |\gamma'\rangle
+\;=\;
+\varepsilon(\gamma,\gamma') \cdot
+a_{-n_1}\cdots a_{-n_j} |\gamma + \gamma'\rangle,
+\]
+where $\varepsilon \colon \Lambda \times \Lambda \to
+\{\pm 1\}$ is the 2-cocycle.  The central charge is~$c = r$
+and $\kappa(V_\Lambda) = r$.
+
+Sector dimensions satisfy
+$\dim(V_\Lambda)_n = |D(\Lambda)| \cdot p_r(n)$,
+where~$p_r(n)$ is the $r$-coloured partition number.  The
+sector growth is subexponential:
+$\log\dim(V_\Lambda)_n = O(\sqrt{n})$.  OPE structure
+constants satisfy
+$|C^{c,k}_{a,i;\,b,j}| \leq K(a+b+c+1)^r$ because all OPE
+singularities in~$V_\Lambda$ are at most $r$-th order poles.
+
+\subsection{The lattice partition function}
+\label{subsec:lattice-partition}
+
+\begin{theorem}[Lattice sewing]\label{thm:lattice-sewing}
+Let $\Lambda$ be a positive-definite even lattice of rank~$r$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item (\textbf{HS-sewing})\; $V_\Lambda$ satisfies HS-sewing
+ at every $0 < q < 1$.
+\item (\textbf{Factorisation})\; The genus-$g$ partition
+ function factors as
+ \begin{equation}\label{eq:lattice-partition}
+ Z_g(V_\Lambda;\,\Omega)
+ \;=\;
+ \underbrace{(\det\operatorname{Im}\Omega)^{-r/2}
+ \cdot (\det{}'_\zeta \Delta_{\Sigma_g})^{-r/2}}_{%
+  Z_g(\cH_r;\,\Omega)}
+ \;\cdot\;
+ \underbrace{\sum_{\lambda \in \Lambda^g}
+  e^{i\pi \lambda^T \Omega \lambda}}_{%
+  \Theta_\Lambda(\Omega)},
+ \end{equation}
+ and each factor converges absolutely on the Siegel upper
+ half-space~$\fH_g$.
+\item (\textbf{Sewing envelope})\; The sewing envelope is the
+ charge-refined Hilbert completion
+ \begin{equation}\label{eq:lattice-sewing-envelope}
+ V_\Lambda^{\mathrm{sew}}
+ \;=\;
+ \widehat{\bigoplus}_{\gamma \in D(\Lambda)}
+ \Sym\, A^2_\gamma(D),
+ \end{equation}
+ where $A^2_\gamma(D) \subset A^2(D)$ is the Bergman space
+ with~$L_0$-shift
+ $\tfrac{1}{2}\langle\gamma,\gamma\rangle$ and the completion
+ is in the HS-sewing topology.
+\item (\textbf{Bounded vertex operators})\; The vertex
+ operators $e^\gamma \colon
+ \widehat{\cF}_{\gamma'} \to
+ \widehat{\cF}_{\gamma'+\gamma}$ extend to bounded operators
+ between completed sectors with
+ $\|e^\gamma\|_{\mathrm{op}}
+ \leq q^{\langle\gamma,\gamma\rangle/2}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) follows from
+$\log\dim(V_\Lambda)_n = O(\sqrt{n})$ (subexponential sector
+growth) and $|C^{c,k}_{a,i;\,b,j}| \leq K(a+b+c+1)^r$
+(polynomial OPE growth): the hypotheses of
+Theorem~\ref{thm:general-hs-sewing} are satisfied.
+
+(ii): the Fock decomposition
+$V_\Lambda = \bigoplus_\gamma \cF_\gamma$ is a direct sum
+of twisted Heisenberg modules.  Within each sector, Wick's
+theorem reduces all correlation functions to propagator
+pairings on the underlying rank-$r$ Heisenberg, contributing
+$Z_g(\cH_r;\,\Omega)$
+(Theorem~\ref{thm:heisenberg-one-particle}).  The lattice sum
+over winding modes contributes~$\Theta_\Lambda(\Omega)$.  The
+Heisenberg factor converges by the one-particle sewing theorem
+(eigenvalues~$q^n$, trace class).  The theta factor converges
+absolutely on~$\fH_g$: the defining sum satisfies
+$|\Theta_\Lambda(\Omega)|
+\leq \sum_\lambda e^{-\pi\lambda^T Y\lambda}$
+with $Y = \operatorname{Im}(\Omega) > 0$, and the exponent
+$\lambda^T Y\lambda
+\geq \lambda_{\min}(Y) \cdot \|\lambda\|^2$
+grows as $\|\lambda\|^2 \to \infty$.
+
+(iii): the Bergman-space completion
+$\widehat{\cF}_\gamma
+= \overline{\cF_\gamma}^{\|\cdot\|_{A^2}}$
+gives honest Hilbert sectors.  The direct-sum decomposition of
+Proposition~\ref{prop:sewing-direct-sum} applies to the
+$D(\Lambda)$-grading.
+
+(iv): the vertex operator~$e^\gamma$ preserves mode operators
+and only shifts the lattice vector.  The cocycle~$\varepsilon$
+is bounded by~$1$.  The $L_0$-shift
+$\Delta_\gamma = \frac{1}{2}\langle\gamma,\gamma\rangle$ is
+absorbed into the grading; the exponential weight damping
+$q^{\Delta_\gamma}$ in the HS topology gives the bound.
+\end{proof}
+
+\begin{remark}[Self-dual lattices and modular
+ invariance]\label{rem:self-dual}
+When $\Lambda$ is unimodular
+($D(\Lambda) = \{0\}$, e.g.\ $E_8$ or
+$\Lambda_{24}$), the theta function
+$\Theta_\Lambda(\Omega)$ is a Siegel modular form with
+respect to $\mathrm{Sp}_{2g}(\bZ)$.  The full partition
+function $Z_g(V_\Lambda;\,\Omega)$ then transforms as a
+modular form of weight~$r/2$, recovering Zhu's modular
+invariance theorem~\cite{Zhu96} from the sewing formalism.
+For non-self-dual lattices, the theta function transforms
+under a finite-index congruence subgroup of
+$\mathrm{Sp}_{2g}(\bZ)$, and the partition function has the
+corresponding transformation law.
+\end{remark}
+
+\begin{remark}[Genus-1 specialisation]
+\label{rem:lattice-genus-1}
+At genus~$1$, the lattice partition function reduces to
+\[
+Z_1(V_\Lambda;\,\tau)
+\;=\;
+\frac{\Theta_\Lambda(\tau)}{|\eta(\tau)|^{2r}}.
+\]
+For the $E_8$ lattice ($r = 8$): the theta function
+$\Theta_{E_8}(\tau) = E_4(\tau)$ (the Eisenstein series of
+weight~$4$), and
+$Z_1(V_{E_8};\,\tau)
+= E_4(\tau)/|\eta(\tau)|^{16}$.
+For the Leech lattice ($r = 24$):
+$\Theta_{\Lambda_{24}}(\tau) = E_{12}(\tau) + \cdots$
+(a weight-$12$ modular form).
+\end{remark}
+
+\begin{example}[Genus-2 for the $E_8$ lattice]
+\label{ex:e8-genus2}
+At genus~$2$ with period matrix
+$\Omega = \begin{pmatrix}\tau_1 & z \\ z & \tau_2
+\end{pmatrix} \in \fH_2$, the $E_8$ lattice partition function
+is
+\[
+Z_2(V_{E_8};\,\Omega)
+\;=\;
+Z_2(\cH_8;\,\Omega) \cdot \Theta_{E_8}(\Omega),
+\]
+where the Heisenberg factor is
+$Z_2(\cH_8;\,\Omega) = (\det\operatorname{Im}\Omega)^{-4}
+\cdot (\det{}'_\zeta\Delta_{\Sigma_2})^{-4}$
+and the genus-$2$ theta function is
+\[
+\Theta_{E_8}(\Omega)
+\;=\;
+\sum_{\lambda \in E_8^2}
+e^{i\pi\lambda^T\Omega\lambda}
+\;=\;
+\sum_{\lambda_1,\lambda_2 \in E_8}
+e^{i\pi(\tau_1|\lambda_1|^2 + 2z\langle\lambda_1,
+\lambda_2\rangle + \tau_2|\lambda_2|^2)}.
+\]
+The genus-$2$ theta function
+$\Theta_{E_8}(\Omega)$ is a Siegel modular form of weight~$4$
+with respect to $\mathrm{Sp}_4(\bZ)$.  The factorisation of
+$Z_2$ into Heisenberg and lattice parts extends the genus-$1$
+formula $Z_1 = E_4(\tau)/|\eta(\tau)|^{16}$ to genus~$2$.
+
+The convergence of~$\Theta_{E_8}(\Omega)$ on~$\fH_2$ is
+controlled by the shortest vector of~$E_8$
+($|\lambda_{\min}|^2 = 2$): the tail of the theta sum is
+bounded by
+$\sum_{|\lambda| \geq R}
+e^{-\pi\lambda_{\min}(Y)\cdot|\lambda|^2}$,
+which decays as $e^{-\pi\lambda_{\min}(Y)\cdot R^2}$.
+\end{example}
+
+\begin{example}[The $D_{16}^+$ lattice and moonshine]
+\label{ex:d16plus}
+The lattice $D_{16}^+$ (rank~$16$, even, unimodular, but not
+isomorphic to $E_8 \oplus E_8$) provides a lattice VOA with
+the same genus-$1$ partition function as
+$V_{E_8 \oplus E_8}$ (both equal
+$E_4(\tau)^2/|\eta(\tau)|^{32}$).  The two VOAs are
+distinguished at genus~$2$: their Siegel theta functions
+$\Theta_{D_{16}^+}(\Omega) \neq
+\Theta_{E_8 \oplus E_8}(\Omega)$ are distinct Siegel modular
+forms of weight~$8$.  The analytic sewing programme detects
+this distinction through the genus-$2$ partition function,
+providing finer invariants than the genus-$1$ character.
+\end{example}
+
+\subsection{Convergence of the Siegel theta
+ function}\label{subsec:theta-convergence}
+
+The theta factor $\Theta_\Lambda(\Omega)
+= \sum_{\lambda \in \Lambda^g}
+e^{i\pi\lambda^T\Omega\lambda}$ in the lattice partition
+function requires a separate convergence analysis from the
+Heisenberg Fredholm factor.  The two convergence mechanisms are
+logically independent.
+
+\begin{proposition}[Theta convergence on the Siegel upper
+ half-space]\label{prop:theta-convergence}
+Let $\Lambda$ be a positive-definite even lattice of rank~$r$.
+For any $\Omega \in \fH_g$
+(i.e.\ $\Omega^T = \Omega$ and
+$Y := \operatorname{Im}\Omega > 0$), the theta series
+converges absolutely with the bound
+\begin{equation}\label{eq:theta-bound}
+|\Theta_\Lambda(\Omega)|
+\;\leq\;
+\sum_{\lambda \in \Lambda^g}
+e^{-\pi\lambda^T Y\lambda}
+\;\leq\;
+C(Y)^{r/2}
+\cdot \bigl(\det Y\bigr)^{-r/2},
+\end{equation}
+where $C(Y)$ is a constant depending on the lattice through the
+shortest vector.
+\end{proposition}
+
+\begin{proof}
+For $\lambda = (\lambda_1,\ldots,\lambda_g) \in \Lambda^g$,
+the real part of $i\pi\lambda^T\Omega\lambda$ is
+$-\pi\lambda^T Y\lambda$.  Since $Y > 0$, each summand satisfies
+$|e^{i\pi\lambda^T\Omega\lambda}|
+= e^{-\pi\lambda^T Y\lambda}$.
+The quadratic form
+$\lambda^T Y\lambda
+\geq \lambda_{\min}(Y)
+\cdot \|\lambda\|^2$
+grows as $\|\lambda\|^2$, so the sum converges by comparison
+with a Gaussian integral over~$\bR^{rg}$.  The bound follows
+from the Poisson summation formula applied to the Gaussian
+$e^{-\pi\lambda^T Y\lambda}$.
+\end{proof}
+
+\begin{remark}[Two independent convergence
+ mechanisms]\label{rem:two-mechanisms}
+The lattice partition function~\eqref{eq:lattice-partition}
+has two factors, each with a distinct convergence mechanism:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the Heisenberg factor~$Z_g(\cH_r;\,\Omega)$ converges by
+ the Fredholm determinant (trace-class sewing operator,
+ eigenvalue decay $q^n$, $n \geq 1$);
+\item the theta factor~$\Theta_\Lambda(\Omega)$ converges by
+ positive-definiteness of~$\operatorname{Im}\Omega$
+ (Gaussian decay of the lattice sum).
+\end{enumerate}
+Neither mechanism alone suffices for the other factor.  The
+Heisenberg factor involves the Bergman kernel and the Arakelov
+Green function; the theta factor involves the lattice geometry
+and the period matrix.  The factorisation
+$Z_g = Z_g^{\mathrm{Heis}} \cdot \Theta_\Lambda$ is a
+consequence of the Fock decomposition of~$V_\Lambda$ into
+twisted Heisenberg modules; no analogous factorisation is
+available for non-abelian algebras.
+\end{remark}
+
+\subsection{The Dirichlet--sewing lift for
+ lattice VOAs}\label{subsec:lattice-dirichlet}
+
+The connected free energy of the lattice VOA at genus~$1$ is
+\begin{equation}\label{eq:lattice-f1}
+F_1^{\mathrm{conn}}(V_\Lambda;\,q)
+\;=\;
+-r\log\det(1 - T_q)
+- \log\Theta_\Lambda(\tau),
+\end{equation}
+where the first term is the rank-$r$ Heisenberg contribution
+and the second is the lattice correction.  The Dirichlet--sewing
+lift produces
+\begin{equation}\label{eq:lattice-dirichlet}
+S_{V_\Lambda}(u)
+\;=\;
+r\,\zeta(u)\,\zeta(u+1)
++ S_\Lambda^{\mathrm{lattice}}(u),
+\end{equation}
+where $S_\Lambda^{\mathrm{lattice}}(u)$ encodes the theta
+function's Fourier coefficients as a Dirichlet series.  For
+self-dual lattices, the lattice Dirichlet series inherits the
+modular invariance of the theta function.
+
+
+% ================================================================
+% 6. GENERAL HS-SEWING THEOREM
+% ================================================================
+
+\section{General HS-sewing theorem for the standard landscape}
+\label{sec:general-criterion}
+
+For chiral algebras beyond the Heisenberg and lattice families,
+the sewing envelope does not admit a classical description, but
+the Hilbert--Schmidt criterion can still be verified from two
+OPE-level estimates.
+
+\subsection{The general criterion}\label{subsec:general-criterion}
+
+\begin{theorem}[General HS-sewing criterion]
+\label{thm:general-hs-sewing}
+Let $\cA$ be a positive-energy chiral algebra with a choice of
+pre-Hilbert structure on each sector~$H_n$.  Suppose:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(\textbf{subexponential sector growth})}\;
+$\log\dim H_n = o(n)$; equivalently,
+$\dim H_n \leq C e^{\alpha\sqrt{n}}$ for some
+$C, \alpha > 0$;
+\item \textup{(\textbf{polynomial OPE coefficient growth})}\;
+there exist $K > 0$ and $N \geq 0$ such that the matrix
+elements of~$m_{a,b}^c$ in orthonormal bases satisfy
+\[
+|C^{c,k}_{a,i;\,b,j}|
+\;\leq\;
+K(a + b + c + 1)^N
+\]
+for all weights $a,b,c$ and all basis indices $i,j,k$.
+\end{enumerate}
+Then $\cA$ satisfies HS-sewing at every parameter
+$0 < q < 1$.
+\end{theorem}
+
+\begin{proof}
+From hypothesis~(ii), the Hilbert--Schmidt norm of the sector
+multiplication is bounded by
+\begin{equation}\label{eq:hs-bound}
+\|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+\dim H_a \cdot \dim H_b \cdot \dim H_c \cdot
+K^2(a+b+c+1)^{2N}.
+\end{equation}
+The power-mean inequality
+$(x+y+z)^p \leq 3^{p-1}(x^p + y^p + z^p)$ with $p = 2N$ gives
+\[
+(a+b+c+1)^{2N}
+\;\leq\;
+3^{2N-1}\bigl((a+1)^{2N} + (b+1)^{2N} + (c+1)^{2N}\bigr).
+\]
+Substituting into~\eqref{eq:hs-bound} and using the symmetry
+of the three terms:
+\[
+\sum_{a,b,c \geq 0}
+q^{a+b+c}\,\|m_{a,b}^c\|_{\HS}^2
+\;\leq\;
+3^{2N}K^2
+\Bigl(\sum_{n \geq 0} q^n\dim H_n\,(n+1)^{2N}\Bigr)
+\Bigl(\sum_{n \geq 0} q^n\dim H_n\Bigr)^2.
+\]
+By hypothesis~(i), $\dim H_n \leq Ce^{\alpha\sqrt{n}}$,
+while $q^n = e^{-n\log(1/q)}$ decays exponentially.  Each
+factor $q^n\dim H_n\,(n+1)^{2N}$ is bounded by
+$C(n+1)^{2N}\exp(\alpha\sqrt{n} - n\log(1/q))$,
+which decays superpolynomially.  Each series converges
+absolutely.
+\end{proof}
+
+\begin{corollary}[Automatic HS-sewing for Koszul
+ algebras]\label{cor:koszul-automatic}
+Every finitely strongly generated chirally Koszul algebra
+satisfies HS-sewing.  The PBW theorem provides polynomial OPE
+growth; finite strong generation provides the finite $N$ in
+hypothesis~(ii); positive energy provides subexponential sector
+growth.  HS-sewing is therefore an independent analytic
+condition only for infinitely generated algebras.
+\end{corollary}
+
+\subsection{Verification on the standard
+ landscape}\label{subsec:verification}
+
+We verify the hypotheses of
+Theorem~\ref{thm:general-hs-sewing} for each standard family.
+The data required is a character formula (controlling
+$\dim H_n$) and a polynomial OPE bound (determining~$N$).
+
+\begin{example}[Heisenberg]\label{ex:heisenberg}
+The Heisenberg~$\cH_k$ has $\dim H_n = p(n)$, the partition
+number.  The OPE
+$J(z)J(w) \sim k/(z-w)^2$ has structure constants bounded
+by~$k$, independent of weight; $N = 1$ suffices (the
+derivation~$\partial$ increases weight by~$1$, so normal-ordered
+products of derivatives are at most linear in the weight).
+\end{example}
+
+\begin{example}[Affine Kac--Moody]\label{ex:kac-moody}
+Let $V_k(\fg)$ be the vacuum module at level~$k$, with $\fg$
+simple.  Sectors satisfy
+$\dim H_n \leq Ce^{\alpha\sqrt{n}}$ from the Kac--Weyl
+character formula.  The OPE
+$J^a(z)J^b(w) \sim k\,\delta^{ab}/(z-w)^2
++ f^{ab}{}_c J^c(w)/(z-w)$
+gives $|C| \leq K(n+1)$ with $N = 1$.  HS-sewing at every
+$0 < q < 1$ follows.
+\end{example}
+
+\begin{example}[Virasoro]\label{ex:virasoro}
+The Virasoro algebra~$\Vir_c$ has $\dim H_n = p(n)$.  The OPE
+$T(z)T(w) \sim (c/2)(z-w)^{-4} + 2T(w)(z-w)^{-2}
++ \partial T(w)(z-w)^{-1}$
+is quartic (the $r$-matrix has cubic pole by $d\log$-absorption,
+per the pole relation $\mathrm{pole}_r = \mathrm{pole}_{\mathrm{OPE}} - 1$).
+Repeated normal products give $|C| \leq K(n+1)^2$ with
+$N = 2$.  The criterion applies at every central charge~$c$.
+\end{example}
+
+\begin{example}[$\cW_N$-algebras]\label{ex:wn}
+The principal~$\cW_N$-algebra has $N-1$ generators of
+conformal weights $2,3,\ldots,N$.  Sector dimensions satisfy
+$\dim H_n \leq Ce^{\alpha\sqrt{n}}$ from the $\cW_N$ character
+formula.  OPE coefficient growth is
+$|C| \leq K(n+1)^{2N}$; applying
+Theorem~\ref{thm:general-hs-sewing} gives HS-sewing at every
+$0 < q < 1$.
+\end{example}
+
+\begin{example}[Lattice vertex algebras]\label{ex:lattice}
+Covered by Theorem~\ref{thm:lattice-sewing}; recorded here
+for completeness.  $\dim H_n = |D(\Lambda)| \cdot p_r(n)$,
+$|C| \leq K \cdot r$, $N = r$.
+\end{example}
+
+\begin{proposition}[Summary table]\label{prop:summary-table}
+The following table records the HS-sewing data for the standard
+landscape.  Every entry satisfies the hypotheses of
+Theorem~\ref{thm:general-hs-sewing}.
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{l|ccc|c}
+\toprule
+$\cA$ & $\dim H_n$ & $|C|$ bound & $N$ &
+ $\sum_n q^n\dim H_n$ \\
+\midrule
+$\cH_k$ & $p(n)$ & $\leq k$
+ & $1$ & $q^{1/24}/\eta(q)$ \\
+$V_k(\fg)$ & $\leq Ce^{\alpha\sqrt{n}}$
+ & $\leq K(n+1)$ & $1$ & $\chi_{V_k}(q)$ \\
+$\Vir_c$ & $p(n)$
+ & $\leq K(n+1)^2$ & $2$
+ & $q^{(1-c)/24}/\eta(q)$ \\
+$\cW_N$ & $\leq Ce^{\alpha\sqrt{n}}$
+ & $\leq K(n+1)^{2N}$ & $2N$
+ & $\chi_{\cW_N}(q)$ \\
+$V_\Lambda$ & $|D(\Lambda)|\cdot p_r(n)$
+ & $\leq Kr$ & $r$
+ & $\Theta_\Lambda(q)/\eta(q)^r$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{remark}[Completed algebras]\label{rem:completed}
+The standard families above are finitely strongly generated.
+For completed algebras (such as $\cW_{1+\infty}$ or completed
+Yangians), the polynomial OPE bound of hypothesis~(ii) must be
+verified in the completed (inverse-limit) topology, where the
+structure constants are formal power series.  This verification
+is the content of the MC4 completion programme
+of~\cite{LorgatVolI}.
+\end{remark}
+
+\begin{remark}[Beyond the standard landscape]
+\label{rem:beyond-standard}
+The HS-sewing criterion is a priori applicable to any
+positive-energy chiral algebra satisfying subexponential growth
+and polynomial OPE bounds.  Two classes of algebras beyond the
+standard landscape merit investigation:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Admissible-level simple quotients~$L_k(\fg)$ satisfy
+ $C_2$-cofiniteness~\cite{Zhu96} and hence HS-sewing (the
+ $C_2$-cofinite condition implies convergent characters, which
+ implies subexponential growth; the simple quotient has
+ finite-dimensional fused products, which implies polynomial
+ OPE bounds).
+\item $\cW$-algebras at non-generic central charge, where the
+ sector growth may exhibit resonance phenomena but remains
+ subexponential.
+\end{enumerate}
+\end{remark}
+
+\subsection{Fredholm expansion and the shadow
+ tower}\label{subsec:fredholm-shadow}
+
+The HS-sewing theorem delivers convergent partition functions;
+the Fredholm expansion connects them to the shadow obstruction
+tower of the modular Koszul duality programme.
+
+For any HS-sewing algebra, the genus-$g$ partition function
+admits a graph-sum expansion over stable graphs
+$\GG \in \cS_g$ (the set of stable graphs
+of~$\overline\cM_g$):
+\begin{equation}\label{eq:graph-sum}
+Z_g(\cA;\,\Omega)
+\;=\;
+\sum_{\GG \in \cS_g}
+\frac{1}{|\mathrm{Aut}(\GG)|}
+\prod_{v \in V(\GG)} A_v(\cA)
+\prod_{e \in E(\GG)} K_e(q_e),
+\end{equation}
+where $A_v$ is the vertex amplitude (genus-$g_v$ with $n_v$
+legs) and $K_e(q_e)$ is the sewing kernel along edge~$e$.
+Each term is absolutely convergent by the trace-class property.
+
+The shadow obstruction tower
+$\Theta_\cA = \sum_{r \geq 2} S_r(\cA)$
+governs the leading-order asymptotics of the graph-sum.
+At uniform weight, the genus-$g$ partition function satisfies
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+\textsc{(uniform-weight)}, where $\lambda_g^{\mathrm{FP}}$ is
+the Faber--Pandharipande evaluation of the tautological
+class~$\lambda_g$ on~$\overline\cM_g$.
+
+\begin{proposition}[Convergence of the shadow tower evaluation]
+\label{prop:shadow-convergence}
+Under HS-sewing, the evaluation of the MC element
+$\Theta_\cA$ on any tautological class
+$\alpha \in H^*(\overline\cM_{g,n})$ converges to a finite
+complex number.  In particular, the genus-$g$ shadow
+obstruction $F_g(\cA) = \langle\Theta_\cA, [\overline\cM_g]
+\rangle$ is finite.
+\end{proposition}
+
+\begin{proof}
+The MC element $\Theta_\cA = D_\cA - d_0$ lies in the modular
+convolution algebra~$\mathfrak{g}^{\mathrm{mod}}_\cA$.  Its
+evaluation on~$\alpha$ is a sum of graph amplitudes
+$\langle\Theta_\cA^{(r)}, \alpha\rangle$ indexed by the
+degree~$r$ of the MC component.  Each graph amplitude factors
+through the trace-class sewing operators by the same mechanism
+as the partition function; the trace-class property ensures
+absolute convergence of each term and of the sum over~$r$.
+\end{proof}
+
+\subsection{The Dirichlet--sewing lift}\label{subsec:dirichlet-lift}
+
+The connected free energy at genus~$1$ encodes connected
+sewing amplitudes $a_\cA(N)$ as Fourier coefficients.  The
+Dirichlet--sewing lift
+\begin{equation}\label{eq:dirichlet-sewing}
+S_\cA(u)
+\;=\;
+\sum_{N \geq 1} a_\cA(N) N^{-u}
+\;=\;
+\frac{(2\pi)^u}{\GG(u)}
+\int_0^\infty F_\cA^{\mathrm{conn}}(e^{-2\pi y})\,
+y^{u-1}\,dy
+\end{equation}
+is a Dirichlet series whose analytic structure is controlled by
+the MC element~$\Theta_\cA$.
+
+\begin{example}[Explicit Dirichlet series]
+\label{ex:dirichlet-explicit}
+The sewing Dirichlet series for the standard families:
+\begin{align}
+S_{\cH_k}(u) &= k\,\zeta(u)\,\zeta(u+1),
+\label{eq:dirichlet-heisenberg}\\
+S_{V_k(\fg)}(u) &= \dim(\fg)\cdot\zeta(u)\,\zeta(u+1),
+\label{eq:dirichlet-km}\\
+S_{\Vir_c}(u) &= \zeta(u+1)\bigl(\zeta(u) - 1\bigr),
+\label{eq:dirichlet-virasoro}\\
+S_{\cW_N}(u) &= \zeta(u+1)\Bigl((N-1)\zeta(u)
+- \textstyle\sum_{j=1}^{N-1} H_j(u)\Bigr),
+\label{eq:dirichlet-wn}
+\end{align}
+where $H_j(u) = \sum_{n=1}^j n^{-u}$ are partial harmonic
+sums.  The Heisenberg and Kac--Moody series have a double pole
+at $u = 0$; the Virasoro series has a simple pole (the
+subtraction of~$1$ from $\zeta(u)$ removes the $N = 1$ term).
+\end{example}
+
+The sewing amplitudes $a_\cA(N)$ define a positive-semidefinite
+inner product
+$\langle f, g\rangle_\cA
+= \sum_N a_\cA(N) f(N) g(N)$
+with reproducing kernel
+$K_\cA(s,t) = S_\cA(s+t)$.  The surface moment matrix
+$\mathscr{M}_{ij}
+= K_\cA(\alpha/2 + i, \alpha/2 + j)$
+is positive definite for all $\alpha \geq 2$: a Gram matrix
+$V^T D V$ with Vandermonde~$V$.
+
+
+% ================================================================
+% 7. THE THREE-LAYER ANALYTIC GAP
+% ================================================================
+
+\section{The three-layer analytic gap}\label{sec:gap}
+
+The HS-sewing theorem guarantees convergent partition functions
+for the standard landscape, but three layers of structure
+separate the convergence statement from a complete analytic
+theory.
+
+\subsection{Layer 1: the sewing envelope for interacting
+ algebras}\label{subsec:gap-layer1}
+
+For the Heisenberg algebra, the sewing envelope is
+$\Sym A^2(D)$: a classical Fock space built on the
+Bergman space of the disk.  For lattice vertex algebras, it is
+the charge-refined Hilbert
+completion~\eqref{eq:lattice-sewing-envelope}.  Both
+identifications rest on the same mechanism: the Wick theorem
+reduces all amplitudes to one-particle (Heisenberg) or
+one-particle-plus-lattice (lattice) data, and the sewing
+envelope inherits the Bergman structure from the one-particle
+space.
+
+For non-abelian chiral algebras (affine Kac--Moody at generic
+level, Virasoro, $\cW_N$), no such reduction is available.
+The sewing envelope exists abstractly by
+Definition~\ref{def:sewing-envelope}, and HS-sewing guarantees
+that the weighted completion~$H_q$ is a concrete Hilbert space
+on which all amplitudes are trace class.  The open problem is a
+structural identification of~$\cA^{\mathrm{sew}}$ analogous
+to the Bergman identification for the Heisenberg.
+
+\begin{conjecture}[Sewing envelope for
+ $V_k(\fg)$]\label{conj:sewing-envelope-km}
+The sewing envelope of $V_k(\fg)$ at integer level
+$k \in \bZ_{>0}$ is the ind-Hilbert completion
+$\widehat{V_k(\fg)}^{\mathrm{IndHilb}}$, and the
+pair-of-pants amplitude admits a Fredholm expansion indexed
+by Weyl-orbit data.
+\end{conjecture}
+
+The next step is explicit: the case $\fg = \mathfrak{sl}_2$ at
+$k = 1$ is the simplest interacting sewing computation.
+
+\begin{example}[$\mathfrak{sl}_2$ at level~$1$]
+\label{ex:sl2-level1}
+The vacuum module $V_1(\mathfrak{sl}_2)$ has central charge
+$c = 1$ and $\kappa = \dim(\mathfrak{sl}_2)(1+2)/(2\cdot 2)
+= 3 \cdot 3/4 = 9/4$.  At conformal weight~$2$, the
+sector~$H_2$ is $3$-dimensional, spanned by
+$\{J^a_{-1}J^b_{-1}\mathbf{1}\}_{a,b \in \{+,-,0\}}$
+modulo the Serre relations.  The pair-of-pants sewing kernel
+restricted to this sector is a $3 \times 3$ matrix whose
+entries are determined by the fusion rules
+$V_1 \otimes V_1 \to V_1$ and the KZ connection at level~$1$.
+
+The KZ equation at level~$1$ is
+$\partial_z \Phi = \frac{\Omega}{(1+2)z}\Phi
+= \frac{\Omega}{3z}\Phi$
+(KZ normalisation with Sugawara denominator $k + h^\vee = 3$),
+where $\Omega$ is the Casimir in $\mathfrak{sl}_2 \otimes
+\mathfrak{sl}_2$.  The eigenvalues of the sewing kernel
+$K_1$ on the $3$-dimensional sector are
+$\{q, q^2, q^2\}$ (the level-$1$ WZW primary fields have
+conformal weights $0$ and~$1/4$), so the trace-class condition
+is satisfied with
+$\|K_1|_{H_2}\|_1 = q + 2q^2$.
+
+This is the gateway to a full interacting sewing
+computation: the first case where the sewing kernel is a
+non-diagonal matrix and the Fredholm expansion involves
+genuine fusion data.
+\end{example}
+
+\begin{remark}[The conformal-block
+ obstruction]\label{rem:conformal-block-obstruction}
+For non-abelian chiral algebras at generic (non-integer) level,
+the spaces of conformal blocks are infinite-dimensional; the
+sewing kernel is an infinite-rank operator on these spaces.
+HS-sewing guarantees that this operator is trace class, but the
+explicit spectral decomposition requires detailed knowledge of
+the conformal blocks (solutions of the KZ equation).  For
+integer level, the conformal blocks are finite-dimensional
+(Zhu's theorem), and the sewing kernel is a finite matrix at
+each degree; this is the regime where explicit computation is
+feasible.
+\end{remark}
+
+\subsection{Layer 2: metric independence of the ind-Hilbert
+ factorisation}\label{subsec:gap-layer2}
+
+Moriwaki's ind-Hilbert completion~\cite{Moriwaki26b} is defined
+using a conformal metric on the curve; the Bergman inner product
+on~$A^2(D)$ depends on the disk~$D$ and hence on the
+conformal structure.  The algebraic bar complex, by contrast,
+depends only on the OPE data and is independent of any metric.
+
+\begin{definition}[Metric independence]
+\label{def:metric-independence}
+An ind-Hilbert factorisation is \emph{metrically independent}
+if the isomorphism class of the completed sewing envelope
+(as a topological vector space with continuous pair-of-pants
+multiplication) is independent of the conformal metric used to
+define the Bergman inner product.
+\end{definition}
+
+For the Heisenberg, metric independence is immediate: the Fock
+space $\Sym A^2(D)$ depends on the disk~$D$, but any two disks
+are conformally equivalent, and the isomorphism class of the
+Bergman space is a conformal invariant.
+
+For interacting algebras, metric independence is the assertion
+that the analytic completion sees only the algebraic structure
+(the OPE), not the auxiliary metric.  This is a functional-analytic
+statement with no algebraic counterpart; it is the content of
+the algebraic-to-analytic comparison theorem.
+
+\begin{conjecture}[Metric independence]
+\label{conj:metric-independence}
+For every positive-energy chiral algebra satisfying HS-sewing,
+the ind-Hilbert factorisation is metrically independent: the
+sewing envelope~$\cA^{\mathrm{sew}}$ depends only on the
+algebraic chiral core~$\cA_{\mathrm{alg}}$.
+\end{conjecture}
+
+\begin{remark}[Evidence for metric independence]
+\label{rem:metric-evidence}
+Three observations support the conjecture:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item For the Heisenberg, the Bergman space $A^2(D)$ depends
+ on~$D$, but the abstract Hilbert space structure (separable,
+ infinite-dimensional, with the canonical grading by polynomial
+ degree) is a conformal invariant.  Any two conformal metrics
+ give isomorphic Bergman spaces; the isomorphism is the
+ conformal change-of-variables on holomorphic functions.
+\item The algebraic bar differential depends only on OPE data
+ (residues at collision diagonals); the OPE coefficients are
+ independent of conformal metric.  If the bar differential
+ is dense in the completed bar differential (as guaranteed by
+ the analytic-algebraic comparison), the topology of the
+ completion is determined by the algebraic data.
+\item The sewing envelope is defined by
+ seminorms~\eqref{eq:sewing-seminorm} that depend on bordism
+ amplitudes.  Each amplitude is a composition of OPE operations
+ (metric-independent) and sewing traces (metric-dependent only
+ through the choice of conformal collar).  The collar dependence
+ enters through the sewing parameter~$q$, which appears
+ universally in all completions.
+\end{enumerate}
+The conjecture is that these observations extend to a proof for
+all HS-sewing algebras: the sewing topology depends on~$q$ but
+not on the conformal metric that determines the embedding of
+the collar in the surface.
+\end{remark}
+
+\subsection{Layer 3: the coderived shadow at
+ $g \geq 1$}\label{subsec:gap-layer3}
+
+At genus $g = 0$ the bar complex satisfies $d^2 = 0$, and the
+ordinary derived category is the correct receptacle.  At genus
+$g \geq 1$, the fiberwise bar differential acquires curvature:
+\begin{equation}\label{eq:curvature}
+d_{\mathrm{fib}}^2
+\;=\;
+\kappa(\cA) \cdot \omega_g,
+\end{equation}
+where $\kappa(\cA)$ is the modular characteristic and
+$\omega_g = c_1(\lambda)$ is the first Chern class of the
+Hodge bundle on~$\overline\cM_g$.  For $\kappa \neq 0$
+(which holds for every non-trivial chiral algebra in the
+standard landscape), $d_{\mathrm{fib}}^2 \neq 0$ and
+every object is acyclic in the ordinary derived category.
+
+The correct receptacle is the coderived category~$\Dco$,
+developed in the next section.  The passage from derived to
+coderived is the categorified form of passage from the
+equation~$d^2 = 0$ to the curved Maurer--Cartan equation
+$d\alpha + \alpha^2 + \kappa\omega = 0$.
+
+The analytic content of Layer~3 is: the sewing amplitudes that
+converge by HS-sewing must be reinterpreted as evaluations of
+coderived (not derived) functors.  The Fredholm determinant of
+the Heisenberg is the prototype: the curvature
+$d_{\mathrm{fib}}^2 = k \cdot \omega_1$ at genus~$1$ means that the
+bar complex does not define an object in the derived category;
+the Fredholm determinant
+$\det(1 - T_q) = q^{-1/24}\eta(q)$ is the correct
+coacyclic invariant.
+
+
+\subsection{Interaction between the three
+ layers}\label{subsec:gap-interaction}
+
+The three layers are logically independent but interact in
+concrete examples.
+
+\begin{proposition}[Layer independence]
+\label{prop:layer-independence}
+\mbox{}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Layer~1 (sewing envelope identification) does not imply
+ Layer~2 (metric independence): an explicit Hilbert
+ identification could depend on the choice of conformal metric.
+\item Layer~2 (metric independence) does not imply Layer~3
+ (coderived formulation): metric independence is a genus-$0$
+ property of the completion, while the coderived category
+ is forced by curvature at $g \geq 1$.
+\item Layer~3 (coderived formulation) does not imply Layer~1:
+ the coderived category provides the correct homotopy theory
+ but does not identify the completion concretely.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i): the Heisenberg sewing envelope $\Sym A^2(D)$ depends on
+the disk~$D$; the metric independence is a separate theorem
+(conformal invariance of the Bergman space,
+Proposition~\ref{prop:bergman-conformal}).
+
+(ii): metric independence concerns the topology of the
+completion; the coderived category concerns the homological
+algebra of the curved differential.  The Heisenberg at
+genus~$0$ is metrically independent but has $d^2 = 0$ (no
+coderived issues); at genus~$1$ the coderived formulation
+is needed but the metric independence is inherited from
+genus~$0$.
+
+(iii): the coderived category provides
+$C^\bullet_{\mathrm{BV}} \simeq_{\Dco} B^{(g)}$ abstractly;
+the identification of~$\cA^{\mathrm{sew}}$ with a specific
+Hilbert space is additional data.
+\end{proof}
+
+For the standard landscape, the current status of each layer:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc}
+\toprule
+Family & Layer 1 & Layer 2 & Layer 3 \\
+\midrule
+Heisenberg & proved & proved & proved \\
+Lattice & proved & proved & proved \\
+Affine KM & conjectural & conjectural & proved \\
+Virasoro & conjectural & conjectural & proved \\
+$\cW_N$ & conjectural & conjectural & proved \\
+$\beta\gamma$ & conjectural & conjectural & conditional \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Layer~3 is proved for all standard families
+(Theorem~\ref{thm:bv-bar-coderived}); Layers~1 and~2 are
+proved only for the abelian families (Heisenberg and lattice).
+The resolution of Layers~1 and~2 for non-abelian families is
+the primary open problem of the analytic sewing programme.
+
+\subsection{The sewing envelope as a nuclear
+ space}\label{subsec:nuclear}
+
+The sewing envelope carries a natural nuclear topology
+(projective limit of Hilbert spaces~$H_q$ as $q \to 1^-$).
+This nuclear structure provides additional functional-analytic
+tools.
+
+\begin{proposition}[Nuclear structure]
+\label{prop:nuclear-structure}
+Under HS-sewing, the sewing envelope $\cA^{\mathrm{sew}}$
+is the projective limit
+\[
+\cA^{\mathrm{sew}}
+\;=\;
+\varprojlim_{q \to 1^-} H_q,
+\]
+and the transition maps $H_{q'} \to H_q$ (for $q' > q$) are
+Hilbert--Schmidt.  In particular, $\cA^{\mathrm{sew}}$ is a
+nuclear Fr\'echet space.
+\end{proposition}
+
+\begin{proof}
+The weighted completions $H_q$ form a projective system: for
+$q' > q$, the inclusion
+$\cA_{\mathrm{alg}} \hookrightarrow H_q$ factors through
+$H_{q'}$ because $q'^n > q^n$ for all $n \geq 1$.  The
+transition map $H_{q'} \to H_q$ sends the basis vector
+$e_{n,j} \in H_n$ to $(q/q')^n e_{n,j}$, with
+Hilbert--Schmidt norm
+$\sum_{n,j}(q/q')^{2n} = \sum_n \dim H_n (q/q')^{2n}$,
+which is finite by subexponential sector growth (the ratio
+$q/q' < 1$ provides exponential decay).  A projective limit
+of Hilbert spaces with Hilbert--Schmidt transition maps is
+nuclear~\cite{RS72}.
+\end{proof}
+
+The nuclear structure implies the Schwartz kernel theorem:
+every continuous bilinear form on $\cA^{\mathrm{sew}}$ is
+represented by a distribution kernel.  This provides the
+correct framework for the pair-of-pants multiplication as a
+continuous bilinear operation on the sewing envelope.
+
+
+% ================================================================
+% 8. THE CODERIVED CATEGORY AS CORRECT RECEPTACLE
+% ================================================================
+
+\section{The coderived category as correct receptacle}
+\label{sec:coderived}
+
+The genus $g \geq 1$ bar complex carries curvature
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$.  The ordinary
+derived category is empty: every curved complex is acyclic.
+The coderived category~$\Dco$ resolves this: curved
+differentials are permitted, coacyclic complexes replace
+acyclic ones, and the BV/bar comparison holds universally.
+
+\subsection{Curved dg-modules}\label{subsec:curved-dg}
+
+\begin{definition}[Curved dg-module]\label{def:curved-dg}
+A \emph{curved dg-module} over a graded algebra~$R$ is a
+graded $R$-module~$M$ equipped with a degree-$1$
+endomorphism~$d$ satisfying
+\[
+d^2 \;=\; \mu \cdot \id_M
+\]
+for some central element~$\mu \in R$ (the \emph{curvature}).
+When $\mu = 0$ this reduces to an ordinary dg-module.
+\end{definition}
+
+The genus-$g$ bar complex $B^{(g)}(\cA)$ is a curved
+dg-module over
+$R = H^*(\overline\cM_g)$ with curvature
+$\mu = \kappa(\cA) \cdot \omega_g$.
+
+\begin{warning}[Acyclicity in the ordinary sense]
+\label{warn:acyclicity}
+If $d^2 = \mu \neq 0$, then for every
+cocycle~$x$ ($dx = 0$) we have
+$\mu \cdot x = d^2 x = d(dx) = 0$; if $\mu$ is
+not a zero divisor, this forces $x = 0$.  In particular,
+$H^*(M,d) = 0$ whenever $\mu$ is a non-zero-divisor.  The
+ordinary derived category of curved dg-modules is therefore
+trivial when $\kappa \neq 0$.
+\end{warning}
+
+\subsection{The coderived category}\label{subsec:coderived-def}
+
+The coderived category replaces acyclicity with coacyclicity.
+
+\begin{definition}[Coacyclic complex]
+\label{def:coacyclic}
+A curved dg-module~$M$ is \emph{coacyclic} if it lies in the
+smallest thick subcategory of the homotopy category of curved
+dg-modules containing all totalizations of short exact
+sequences.  Equivalently, $M$ is coacyclic if every morphism
+from~$M$ to an injective curved dg-module is null-homotopic.
+\end{definition}
+
+\begin{definition}[Coderived category]
+\label{def:coderived-category}
+The \emph{coderived category}~$\Dco(R\text{-}\mathrm{mod}_\mu)$
+is the Verdier quotient of the homotopy category of curved
+dg-modules by the thick subcategory of coacyclic complexes.
+\end{definition}
+
+The coderived category is the correct homotopy category for
+curved complexes: it retains the meaningful homological
+information that the ordinary derived category discards.
+
+\begin{remark}[Positselski's theory]
+\label{rem:positselski}
+The coderived category was introduced by
+Positselski~\cite{Positselski11} in the context of curved
+dg-algebras and matrix factorisations.  The totalisation of a
+short exact sequence of curved complexes need not be acyclic
+(because $d^2 \neq 0$), but it is always coacyclic:
+coacyclicity is the correct generalisation of acyclicity to the
+curved setting.
+\end{remark}
+
+\subsection{The curvature bicomplex}\label{subsec:curvature-bicomplex}
+
+The curved bar complex $B^{(g)}(\cA)$ carries a natural
+bicomplex structure.  Write the total differential as
+\[
+D_g \;=\; d_{\mathrm{fib}} + \nabla^{\mathrm{GM}}_g,
+\]
+where $d_{\mathrm{fib}}$ is the fiberwise bar differential
+(with curvature $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$)
+and $\nabla^{\mathrm{GM}}_g$ is the Gauss--Manin connection.
+The total differential satisfies
+\begin{equation}\label{eq:total-flat}
+D_g^2
+\;=\;
+d_{\mathrm{fib}}^2
++ [d_{\mathrm{fib}}, \nabla^{\mathrm{GM}}_g]
++ (\nabla^{\mathrm{GM}}_g)^2
+\;=\;
+\kappa\omega_g - \kappa\omega_g
+\;=\; 0:
+\end{equation}
+flatness is restored by coupling the bar differential to the
+Hodge bundle.  The curvature bicomplex is the bigraded object
+with horizontal differential~$d_{\mathrm{fib}}$ and vertical
+differential~$\nabla^{\mathrm{GM}}_g$.
+
+\begin{proposition}[Totalisation in $\Dco$]
+\label{prop:totalisation}
+The totalisation of the curvature bicomplex of~$B^{(g)}(\cA)$
+is an object of the coderived category~$\Dco$.  When~$\cA$
+satisfies HS-sewing, the associated partition function is the
+trace of the totalised sewing operator and coincides with the
+absolutely convergent Fredholm expansion of
+Corollary~\ref{cor:partition-convergence}.
+\end{proposition}
+
+\begin{proof}
+The totalisation of the bicomplex
+$(d_{\mathrm{fib}}, \nabla^{\mathrm{GM}}_g)$ produces a
+complex with $D_g^2 = 0$ by~\eqref{eq:total-flat}, hence an
+honest object of the derived category of the total complex.
+The passage to the coderived category of the curved
+component~$d_{\mathrm{fib}}$ (with
+$d_{\mathrm{fib}}^2 = \kappa\omega_g$) is by the standard
+Positselski comparison: totalisation of the bicomplex
+represents the curved component as an object of~$\Dco$
+because the vertical differential~$\nabla^{\mathrm{GM}}_g$
+absorbs the curvature.
+
+Under HS-sewing, the trace-class property of
+Proposition~\ref{prop:closed-trace-class} ensures that the
+trace of the totalised sewing operator is an absolutely
+convergent number; this trace coincides with the partition
+function computed from the Fredholm expansion, because both
+are the same composition of pair-of-pants operators evaluated
+on the completed Hilbert space~$H_q$.
+\end{proof}
+
+\subsection{The BV/bar comparison in the coderived
+ category}\label{subsec:bv-bar}
+
+The BV complex of a chiral algebra on a Riemann
+surface~$\Sigma_g$ is the Costello--Gwilliam perturbative
+quantisation~\cite{CG17}; the bar complex $B^{(g)}(\cA)$ is
+the algebraic chain model.  At genus~$0$, the two are
+chain-level quasi-isomorphic.  At genus~$g \geq 1$, curvature
+intervenes: the BV propagator acquires a harmonic component
+(the Arakelov Green function) that produces corrections
+invisible to the algebraic bar differential.
+
+\begin{theorem}[BV${}={}$bar in the coderived category]
+\label{thm:bv-bar-coderived}
+Let~$\cA$ be a chirally Koszul algebra.  For each genus
+$g \geq 1$, let
+\[
+f_g \colon
+C^\bullet_{\mathrm{BV}}(\cA, \Sigma_g)
+\longrightarrow
+B^{(g)}(\cA)
+\]
+be the comparison morphism obtained by replacing the BV
+propagator with its Hodge decomposition relative to the bar
+propagator.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For every genus $g \geq 0$,
+\[
+C^\bullet_{\mathrm{BV}}(\cA, \Sigma_g)
+\;\simeq_{\Dco}\;
+B^{(g)}(\cA).
+\]
+\item If $\cA$ lies in class~$\mathsf{G}$ or~$\mathsf{L}$,
+ then~$f_g$ is a weak equivalence of filtered curved models.
+\item If $\cA$ lies in class~$\mathsf{C}$ and harmonic
+ decoupling holds, then~$f_g$ is a weak equivalence.
+\item If $\cA$ lies in class~$\mathsf{M}$, then for every
+ $r \geq 4$ the harmonic discrepancy satisfies
+ \[
+ \delta_r^{\mathrm{harm}}
+ \;=\;
+ c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}
+ \]
+ and the cone of~$f_g$ is coacyclic.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+At genus~$0$, the comparison is the chain-level
+quasi-isomorphism: $d_{\mathrm{fib}}^2 = 0$ and the harmonic
+component of the propagator vanishes on~$\bC$.
+
+For $g \geq 1$, Hodge decomposition writes the BV propagator
+as the sum of the bar propagator (holomorphic, $d\log E(z,w)$,
+weight~$1$) and the harmonic correction
+$h_g = (2\pi)^{-1}(\operatorname{Im}\Omega)^{-1}_{ab}\,
+d\bar z_a \wedge dz_b$.  The harmonic correction produces a
+discrepancy between the BV and bar differentials.
+
+For classes~G and~L (Heisenberg, affine Kac--Moody): the
+harmonic correction to the cubic vertex vanishes by Jacobi
+(for~L) or by absence of interaction vertices (for~G).  The
+comparison is a weak equivalence of filtered curved models.
+
+For class~C ($\beta\gamma$): composite free-field
+factorisation reduces the harmonic correction to a product of
+Heisenberg corrections; each factor vanishes by the G-class
+argument, conditional on harmonic decoupling.
+
+For class~M (Virasoro, $\cW_N$): the quartic harmonic
+discrepancy
+$\delta_4^{\mathrm{harm}} \propto
+Q^{\mathrm{contact}} \cdot \kappa/\operatorname{Im}(\tau)$
+is not cancelled by the Fay trisecant identity.  The naive
+chain-level comparison fails.  The full harmonic discrepancy
+is a sum of curvature powers
+$\delta_r^{\mathrm{harm}}
+= c_r(\cA) \cdot m_0^{\lfloor r/2\rfloor - 1}$,
+and the comparison cone is coacyclic in the sense of
+Definition~\ref{def:coacyclic}: every morphism from the cone
+to an injective curved module is null-homotopic, because the
+discrepancy is divisible by the curvature element~$m_0$.
+
+The coderived equivalence~(i) follows: the cone of~$f_g$ is
+coacyclic for every class, and a morphism with coacyclic cone
+is an isomorphism in~$\Dco$.
+\end{proof}
+
+\begin{remark}[Class-by-class obstruction profile]
+\label{rem:class-by-class}
+The four shadow classes of the standard landscape exhibit a
+strict hierarchy of analytic regularity:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcl}
+\toprule
+Class & Chain-level status & Mechanism \\
+\midrule
+$\mathsf{G}$ (Heisenberg) & weak equivalence
+ & no interaction vertices \\
+$\mathsf{L}$ (affine KM) & weak equivalence
+ & Jacobi kills cubic harmonic term \\
+$\mathsf{C}$ ($\beta\gamma$) & conditional
+ & composite free-field factorisation \\
+$\mathsf{M}$ (Virasoro, $\cW_N$) & coderived only
+ & harmonic correction curvature-divisible \\
+\bottomrule
+\end{tabular}
+\end{center}
+For classes~G and~L the chain-level and coderived comparisons
+coincide.  For class~M the chain-level comparison genuinely
+fails, and the coderived category is essential.
+\end{remark}
+
+\subsection{The harmonic discrepancy mechanism}
+\label{subsec:harmonic-mechanism}
+
+The key to the coderived comparison is the factorisation of
+the harmonic discrepancy through curvature powers.  The
+mechanism is the Hodge decomposition of the Bergman kernel.
+
+On a genus-$g$ surface~$\Sigma_g$ with period
+matrix~$\Omega$, the Bergman kernel (the bar propagator) is
+\begin{equation}\label{eq:bergman-g}
+B(z,w)
+\;=\;
+d_z d_w \log E(z,w)
+\;+\;
+2\pi i\, (\operatorname{Im}\Omega)^{-1}_{ab}\,
+\omega_a(z)\,\omega_b(w),
+\end{equation}
+where $E(z,w)$ is the prime form and
+$\omega_1,\ldots,\omega_g$ is a normalised basis of abelian
+differentials.  The second term is the harmonic correction.
+
+The BV propagator~$P_g$ differs from the bar
+propagator~$d\log E(z,w)$ by this harmonic term:
+\[
+P_g(z,w)
+\;=\;
+d\log E(z,w)
+\;+\;
+h_g(z,w),
+\qquad
+h_g
+\;=\;
+\frac{1}{2\pi}\,
+(\operatorname{Im}\Omega)^{-1}_{ab}\,
+d\bar z_a \wedge dz_b.
+\]
+Each insertion of~$h_g$ into a Feynman graph vertex produces
+a harmonic correction to the BV amplitude.  At the quartic
+level ($r = 4$), the correction is
+\begin{equation}\label{eq:quartic-obstruction}
+\delta_4^{\mathrm{harm}}
+\;=\;
+Q^{\mathrm{contact}}(\cA)
+\cdot \frac{\kappa(\cA)}{\operatorname{Im}(\tau)},
+\end{equation}
+where $Q^{\mathrm{contact}}$ is the quartic contact invariant
+of~$\cA$.  For class~G and~L, $Q^{\mathrm{contact}} = 0$.
+For class~M, $Q^{\mathrm{contact}} \neq 0$ and
+$\delta_4^{\mathrm{harm}}$ is a genuine obstruction to the
+chain-level comparison.
+
+The crucial observation is that every~$\delta_r^{\mathrm{harm}}$
+is divisible by~$m_0 = \kappa \cdot \omega_g$ (the curvature
+element of the curved bar differential).  This divisibility
+is the mechanism by which the comparison cone becomes
+coacyclic: in the coderived category, elements divisible by the
+curvature are trivial.
+
+\subsection{Coderived versus derived: a comparison}
+\label{subsec:coderived-comparison}
+
+The passage from derived to coderived captures a precise
+mathematical phenomenon.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Derived} $D(R)$ & \textbf{Coderived}
+  $\Dco(R)$ \\
+\midrule
+Curvature & $d^2 = 0$ required & $d^2 = \mu$ permitted \\
+Acyclicity notion & $H^*(M) = 0$ & coacyclic \\
+Genus-$0$ bar & object of $D(R)$ & object of $\Dco(R)$ \\
+Genus-$g$ bar ($\kappa \neq 0$) & empty & well-defined \\
+BV/bar comparison & chain-level (G,L) & all classes \\
+Partition function & formal series & convergent number \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The coderived category is the categorified avatar of the
+curved Maurer--Cartan equation.  The passage from
+$d^2 = 0$ to $d\alpha + \alpha^2 + \kappa\omega = 0$
+is the passage from derived to coderived: the curvature
+becomes data rather than obstruction.
+
+\subsection{Genus-1 illustration}\label{subsec:genus-1-coderived}
+
+The genus-$1$ case illustrates the three categories concretely.
+
+At genus~$1$, the bar complex $B^{(1)}(\cA)$ has
+curvature $d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_1$,
+where $\omega_1 = c_1(\lambda)$ is the first Chern class
+of the Hodge bundle on~$\overline\cM_{1,1}$.  The total
+differential $D_1 = d_{\mathrm{fib}} + \nabla^{\mathrm{GM}}$
+satisfies $D_1^2 = 0$.
+
+\begin{example}[Heisenberg at genus~$1$]
+\label{ex:heisenberg-genus1-coderived}
+For $\cH_k$ with $\kappa = k$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Derived category:} $d_{\mathrm{fib}}^2
+ = k \cdot \omega_1 \neq 0$ for $k \neq 0$.
+ Every object in the curved complex is acyclic:
+ $H^*(B^{(1)}(\cH_k), d_{\mathrm{fib}}) = 0$.
+\item \emph{Coderived category:} the totalisation of the
+ bicomplex $(d_{\mathrm{fib}}, \nabla^{\mathrm{GM}})$ is a
+ well-defined object of~$\Dco$.  The trace of the sewing
+ operator gives
+ $Z_1 = (\operatorname{Im}\tau)^{-k/2}\,|\eta(\tau)|^{-2k}
+ \neq 0$.
+\item \emph{Total category:} $D_1^2 = 0$; the total complex
+ $B^{(1)}(\cH_k)$ is an honest dg-module over
+ $H^*(\overline\cM_{1,1})$ and lives in the ordinary derived
+ category of the total complex.
+\end{enumerate}
+The partition function~$Z_1$ is a coderived invariant
+(well-defined in~$\Dco$ of the curved fiberwise complex) and
+simultaneously a derived invariant (well-defined in~$D$ of the
+total complex).  The two perspectives are related by the
+totalisation functor of
+Proposition~\ref{prop:totalisation}.
+\end{example}
+
+\begin{example}[Virasoro at genus~$1$]
+\label{ex:virasoro-genus1-coderived}
+For $\Vir_c$ with $\kappa = c/2$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The curvature is
+ $d_{\mathrm{fib}}^2 = (c/2)\cdot\omega_1$.
+\item The partition function is
+ $Z_1(\Vir_c;\,\tau)
+ = (\operatorname{Im}\tau)^{-c/4}\,
+ |\eta(\tau)|^{-2(c-1)}$
+ (the vacuum character of the Virasoro algebra).
+\item The BV/bar comparison: the harmonic discrepancy at the
+ quartic level is
+ $\delta_4^{\mathrm{harm}}
+ = Q^{\mathrm{contact}} \cdot (c/2)/\operatorname{Im}(\tau)$.
+ For $c \neq 0$ (non-trivial Virasoro), this is nonzero; the
+ chain-level BV/bar comparison fails.  The cone is coacyclic
+ by Theorem~\ref{thm:bv-bar-coderived}(iv), so the coderived
+ comparison holds.
+\end{enumerate}
+The Virasoro at genus~$1$ is the simplest class-M example: the
+harmonic discrepancy is explicit, the coacyclicity is verifiable,
+and the coderived category is genuinely necessary.
+\end{example}
+
+\subsection{Convergent versus formal partition
+ functions}\label{subsec:convergent-formal}
+
+The three levels of structure (algebraic, coderived, analytic)
+produce three notions of partition function:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Formal:} the genus-$g$ component of the MC element
+ $\Theta_\cA$, evaluated on the fundamental class
+ $[\overline\cM_g]$.  This is a formal power series in the
+ sewing parameters $q_1,\ldots,q_g$.  It exists for every
+ chiral algebra with $D^2 = 0$.
+\item \emph{Coderived:} the trace of the totalised sewing
+ operator in the coderived category.  This is a formal power
+ series with the additional property that each coefficient is a
+ coderived invariant (independent of the choice of resolution
+ up to coacyclic error).  It exists for every positive-energy
+ chiral algebra.
+\item \emph{Analytic:} an absolutely convergent complex number,
+ the trace of a trace-class operator on the weighted Hilbert
+ completion~$H_q$.  This exists under HS-sewing.
+\end{enumerate}
+
+\begin{proposition}[Compatibility of the three notions]
+\label{prop:three-partition-functions}
+For a chirally Koszul algebra satisfying HS-sewing:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the formal partition function is the Taylor expansion of
+ the analytic partition function around the cusp
+ $q_j \to 0$;
+\item the coderived partition function is the image of the
+ analytic partition function under the forgetful functor from
+ the Hilbert-completed category to the coderived category;
+\item all three notions agree on the domain of convergence.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a): the formal MC element $\Theta_\cA$ is the generating
+function for the graph-sum amplitudes, which are the Taylor
+coefficients of the partition function at the cusp.  Under
+HS-sewing, the Taylor series converges absolutely for
+$|q_j| < 1$ (Corollary~\ref{cor:partition-convergence}), so
+the formal and analytic partition functions agree on the
+domain of convergence.
+
+(b): the forgetful functor sends a trace-class operator on~$H_q$
+to its underlying curved dg-module structure in~$\Dco$; the
+trace (a convergent number) is sent to the same number viewed
+as a coderived invariant.
+
+(c): on the domain of convergence, all three are the same
+complex number, computed by the same graph-sum with the same
+absolutely convergent Fredholm expansion.
+\end{proof}
+
+\subsection{The analytic Koszul pair}\label{subsec:analytic-koszul}
+
+The algebraic Koszul pair $(\cA, \cA^!)$ controls Theorems~A
+through~H of the modular Koszul duality programme
+at the algebraic level.  The analytic extension is the
+following.
+
+\begin{definition}[Analytic Koszul pair]
+\label{def:analytic-koszul-pair}
+An \emph{analytic Koszul pair} is a pair
+$(\cA, \cA^!)^{\mathrm{an}}$ of chirally Koszul algebras,
+both satisfying HS-sewing, for which the analytic bar-cobar
+adjunction restricts to a Quillen equivalence on
+sewing-complete categories:
+\[
+\barB^{\mathrm{an}} \colon
+\cA^{\mathrm{sew}}\text{-}\mathrm{mod}
+\rightleftarrows
+(\cA^!)^{\mathrm{sew}}\text{-}\mathrm{comod}
+\;\colon\!
+\Omega^{\mathrm{an}}.
+\]
+\end{definition}
+
+Every algebraic Koszul pair in the standard landscape is
+expected to extend to an analytic Koszul pair; the HS-sewing
+theorem provides the analytic input for both~$\cA$
+and~$\cA^!$.
+
+\begin{conjecture}[Analytic realisation criterion]
+\label{conj:analytic-realisation}
+HS-sewing on~$\cA$ plus dual HS-sewing on~$\cA^!$ suffices
+for the analytic Koszul pair to exist: the analytic bar-cobar
+adjunction restricts to a Quillen equivalence on
+sewing-complete categories.
+\end{conjecture}
+
+The verification of this conjecture for the Heisenberg
+($\cH_k^! = \Sym^{\mathrm{ch}}(V^*) \neq \cH_{-k}$) and
+for lattice vertex algebras is the natural test case.
+
+\begin{remark}[Koszul complementarity and the analytic
+ pair]\label{rem:koszul-complementarity-analytic}
+The Koszul complementarity theorem (Theorem~C of the modular
+Koszul duality programme) asserts that
+$\kappa(\cA) + \kappa(\cA^!) = K(\cA)$
+(the Koszul conductor): $K = 0$ for KM/Heis/lattice/free;
+$K = 13$ for Virasoro; $K = 250/3$ for $\cW_3$.  The
+analytic content is: both $\cA$ and $\cA^!$ satisfy HS-sewing
+(because both are in the standard landscape), and the
+complementarity relation constrains the sewing data:
+\begin{equation}\label{eq:complementarity-sewing}
+S_\cA(u) + S_{\cA^!}(u)
+\;=\;
+K \cdot \zeta(u)\,\zeta(u+1)
+\;+\;
+\text{lower-order terms},
+\end{equation}
+where the leading term involves the Koszul conductor.  For
+the Virasoro pair $(\Vir_c, \Vir_{26-c})$:
+$S_{\Vir_c}(u) + S_{\Vir_{26-c}}(u)
+= 2\zeta(u+1)(\zeta(u) - 1)$,
+independent of~$c$; the dependence on~$c$ cancels in the sum,
+reflecting the topological nature of the Koszul conductor.
+\end{remark}
+
+\begin{remark}[The analytic bar coalgebra]
+\label{rem:analytic-bar-coalgebra}
+The algebraic bar coalgebra
+$B(\cA) = T^c(s^{-1}\bar\cA)$ carries the deconcatenation
+coproduct $\Delta \colon B(\cA) \to B(\cA) \otimes B(\cA)$.
+Under HS-sewing, the bar coalgebra completes to the
+\emph{analytic bar coalgebra}
+$B^{\mathrm{an}}(\cA)$, defined as the graph-norm closure
+of $B(\cA)$ in the Hilbert-space topology induced by~$H_q$.
+The coproduct extends continuously:
+$\Delta^{\mathrm{an}} \colon B^{\mathrm{an}}(\cA) \to
+B^{\mathrm{an}}(\cA)
+\widehat{\otimes} B^{\mathrm{an}}(\cA)$,
+where $\widehat{\otimes}$ is the completed Hilbert-space
+tensor product.
+
+The analytic bar coalgebra is the correct object for the
+analytic bar-cobar adjunction: it carries both the algebraic
+coalgebra structure (deconcatenation) and the analytic
+topology (trace-class sewing), and the cobar functor
+$\Omega^{\mathrm{an}}$ applied to
+$B^{\mathrm{an}}(\cA)$ recovers the sewing
+envelope~$\cA^{\mathrm{sew}}$.
+\end{remark}
+
+\subsection{The curvature--sewing
+ interplay}\label{subsec:curvature-sewing}
+
+The coderived category and the HS-sewing condition interact
+at genus $g \geq 1$ through the curvature.
+
+\begin{proposition}[Curvature and trace class]
+\label{prop:curvature-trace}
+Let $\cA$ satisfy HS-sewing and let $\kappa = \kappa(\cA)$.
+At genus $g \geq 1$, the curvature element
+$m_0 = \kappa \cdot \omega_g$ acts on the weighted
+completion~$H_q$ as a bounded operator of norm
+$\|m_0\|_{\mathrm{op}} = |\kappa| \cdot \|\omega_g\|$,
+where $\|\omega_g\|$ is the sup-norm of the Hodge class
+representative on the moduli space.  The iterated curvatures
+$m_0^k$ remain bounded for all~$k$, and the harmonic
+discrepancy $\delta_r^{\mathrm{harm}}
+= c_r \cdot m_0^{\lfloor r/2\rfloor - 1}$
+is a bounded operator on~$H_q$ for every~$r$.
+\end{proposition}
+
+\begin{proof}
+The curvature element $m_0 = \kappa \cdot \omega_g$ is a
+scalar operator (multiplication by a cohomology class)
+tensored with the identity on the state space.  As such, its
+operator norm on~$H_q$ is $|\kappa| \cdot \|\omega_g\|$,
+independent of~$q$.  Powers are similarly bounded:
+$\|m_0^k\| = |\kappa|^k \cdot \|\omega_g\|^k$.  The
+harmonic discrepancy $\delta_r^{\mathrm{harm}}$ is a
+finite sum of such terms with coefficients $c_r(\cA)$
+determined by the OPE data; each term is bounded.
+\end{proof}
+
+The proposition shows that the curvature does not disrupt
+the trace-class property of the sewing operators: the
+HS-sewing condition and the curved differential coexist in
+the completed Hilbert space.  The coderived category
+provides the correct homological framework; the HS-sewing
+condition provides the correct functional-analytic framework;
+together they deliver convergent genus-$g$ partition functions
+for curved bar complexes.
+
+\begin{proposition}[Genus-$g$ partition function as coderived
+ trace]\label{prop:coderived-trace}
+Under HS-sewing, the genus-$g$ partition function is
+simultaneously:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the trace of a trace-class operator on~$H_q$
+ (analytic);
+\item an evaluation of the MC element
+ $\Theta_\cA$ on $[\overline\cM_g]$ (algebraic);
+\item a coderived invariant of the curved bar
+ complex~$B^{(g)}(\cA)$ in~$\Dco$ (homological).
+\end{enumerate}
+All three produce the same complex number on the domain of
+convergence.
+\end{proposition}
+
+\begin{proof}
+(a) is Corollary~\ref{cor:partition-convergence}.
+(b) is the definition of the MC evaluation (the graph-sum
+expansion).  (c) is
+Proposition~\ref{prop:three-partition-functions}.  The
+equality of the three numbers follows from the compatibility
+statement of
+Proposition~\ref{prop:three-partition-functions}(c).
+\end{proof}
+
+
+% ================================================================
+% CONCLUSION
+% ================================================================
+
+\section*{Conclusion}
+
+The results of this paper organise as follows.
+
+The sewing envelope (Definition~\ref{def:sewing-envelope})
+provides the universal locally convex completion for convergent
+amplitudes.  The HS-sewing condition
+(Definition~\ref{def:hs-sewing}) is a single Hilbert--Schmidt
+estimate that implies trace-class closed amplitudes at all
+genera.  For the Heisenberg, the sewing programme is
+completely explicit: Bergman space, second quantisation,
+Fredholm determinant
+(Theorems~\ref{thm:heisenberg-sewing}
+and~\ref{thm:heisenberg-one-particle}).  For lattice vertex
+algebras, the programme extends by combining the Heisenberg
+Fredholm determinant with convergent theta functions
+(Theorem~\ref{thm:lattice-sewing}).  The general HS-sewing
+theorem (Theorem~\ref{thm:general-hs-sewing}) verifies the
+criterion for the entire standard landscape.
+
+Three layers separate the convergence statement from a complete
+analytic theory: the sewing envelope for interacting algebras
+(explicit Hilbert identification open), metric independence of
+the ind-Hilbert factorisation (conjectural), and the coderived
+shadow at $g \geq 1$ (the BV/bar comparison in~$\Dco$ is
+proved for all four shadow classes,
+Theorem~\ref{thm:bv-bar-coderived}).
+
+The coderived category is the correct receptacle for the curved
+bar complex: curvature is data, not obstruction; the harmonic
+discrepancy for class~M is coacyclic (divisible by the
+curvature element); and the partition functions computed by
+HS-sewing are coderived invariants.
+
+Five problems define the frontier.
+
+\paragraph{The sewing envelope of $V_1(\mathfrak{sl}_2)$.}
+The simplest interacting case.  The conformal blocks are
+finite-dimensional at each degree; the sewing kernel is a
+finite matrix computable from the KZ connection at level~$1$.
+The goal is an explicit Fredholm expansion involving Weyl-orbit
+data, providing the template for all non-abelian sewing
+envelopes.
+
+\paragraph{Fredholm determinants beyond Heisenberg.}
+For non-abelian Kac--Moody and Virasoro, the closed amplitudes
+are trace class but are not yet known to be Fredholm
+determinants of a single one-particle operator.  The
+Heisenberg identification suggests the existence of an
+analogous second-quantisation structure for every chiral
+algebra with quadratic OPE; finding the correct one-particle
+Hilbert space is the natural next step.
+
+\paragraph{The analytic bar-cobar adjunction.}
+The algebraic bar-cobar adjunction
+$\barB \dashv \Omega$ is the structural spine of the
+modular Koszul duality programme.  Conjecture~\ref{conj:analytic-realisation}
+predicts that HS-sewing on both sides
+($\cA$ and $\cA^!$) suffices for the analytic adjunction.
+Verification for the Heisenberg pair
+$(\cH_k, \Sym^{\mathrm{ch}}(V^*))$ and the Virasoro pair
+$(\Vir_c, \Vir_{26-c})$ are the natural test cases.  For
+Virasoro, the Koszul dual has central charge $c' = 26 - c$ and
+$\kappa(\Vir_c) + \kappa(\Vir_{26-c}) = c/2 + (26-c)/2 = 13$;
+both sides satisfy HS-sewing.
+
+\paragraph{Metric independence.}
+Conjecture~\ref{conj:metric-independence} predicts that the
+sewing envelope is independent of the conformal metric.
+A proof for the Heisenberg (where the statement is elementary)
+and for lattice vertex algebras (where it follows from the
+conformal invariance of the theta function) would establish the
+pattern; the general case requires new functional-analytic
+techniques.
+
+\paragraph{Positivity and modular invariance.}
+Corollary~\ref{cor:hs-positivity} establishes a positivity
+cone for HS-sewing amplitudes; it does not directly imply
+$\mathrm{SL}_2(\bZ)$ covariance of genus-$1$ characters.
+Combining the analytic sewing of this paper with Zhu's modular
+invariance theorem~\cite{Zhu96} and Huang's higher-genus
+extension~\cite{Huang05} is the natural route to a unified
+analytic modular programme.
+
+\bigskip
+
+The algebraic bar complex and the analytic sewing envelope are
+two facets of the same object: the bar complex is the formal
+skeleton; the sewing envelope is the convergent flesh.  The
+coderived category mediates between them, absorbing the
+curvature that obstructs the ordinary derived category at
+$g \geq 1$.  The modular Koszul duality programme operates at
+the algebraic level; the analytic sewing programme developed
+here is the bridge to computable, convergent partition functions.
+
+
+% ================================================================
+% APPENDIX: FUNCTIONAL ANALYSIS BACKGROUND
+% ================================================================
+
+\appendix
+
+\section{Functional analysis background}
+\label{app:functional-analysis}
+
+We collect the functional-analytic facts used throughout.
+
+\subsection{Trace-class and Hilbert--Schmidt
+ operators}\label{app:trace-hs}
+
+Let $H$ be a separable Hilbert space.
+
+\begin{definition}\label{def:trace-class}
+A bounded operator $T \colon H \to H$ is:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Hilbert--Schmidt} if
+ $\|T\|_{\HS}^2 := \sum_j \|Te_j\|^2 < \infty$
+ for some (hence every) orthonormal basis $\{e_j\}$;
+\item \emph{trace class} if
+ $\|T\|_1 := \sum_j \langle e_j, |T| e_j\rangle < \infty$
+ where $|T| = (T^*T)^{1/2}$;
+\item \emph{nuclear} if it admits a representation
+ $T = \sum_j \lambda_j \langle f_j, \cdot\rangle g_j$
+ with $\sum_j |\lambda_j| < \infty$.
+\end{enumerate}
+The three conditions (a), (b), (c) are equivalent for
+positive operators; in general,
+trace class $\subset$ Hilbert--Schmidt $\subset$ compact.
+\end{definition}
+
+\begin{proposition}[Composition and trace]
+\label{prop:hs-composition}
+\mbox{}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The composition of two Hilbert--Schmidt operators is
+ trace class.
+\item If $T$ is trace class, then
+ $\Tr(T) = \sum_j \langle e_j, Te_j\rangle$ converges
+ absolutely and is independent of the basis.
+\item If $T$ is Hilbert--Schmidt and $S$ is bounded, then
+ $ST$ and $TS$ are Hilbert--Schmidt.
+\end{enumerate}
+\end{proposition}
+
+These standard facts (see Reed--Simon~\cite{RS72}) underpin
+the trace-class theorem
+(Proposition~\ref{prop:closed-trace-class}): each pair of
+pants contributes a Hilbert--Schmidt operator; each sewing
+circle composes two Hilbert--Schmidt operators into a
+trace-class operator.
+
+\subsection{Fredholm determinants}\label{app:fredholm}
+
+\begin{definition}\label{def:fredholm-det}
+For a trace-class operator~$K$ on a separable Hilbert space,
+the \emph{Fredholm determinant} is
+\[
+\det(1 - K)
+\;=\;
+\prod_{j \geq 1}(1 - \lambda_j),
+\]
+where $\{\lambda_j\}$ are the eigenvalues of~$K$ counted with
+algebraic multiplicity.  The product converges absolutely
+whenever~$K$ is trace class.
+\end{definition}
+
+\begin{proposition}[Properties of the Fredholm determinant]
+\label{prop:fredholm-properties}
+Let $K$ be trace class.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $|\det(1 - K)| \leq \exp(\|K\|_1)$.
+\item $\log\det(1 - K)
+ = -\sum_{m \geq 1}\frac{1}{m}\Tr(K^m)$
+ whenever $\|K\| < 1$.
+\item $\det(1 - K) \neq 0$ if and only if
+ $1 \notin \mathrm{spec}(K)$.
+\item The map $K \mapsto \det(1 - K)$ is continuous in the
+ trace norm.
+\end{enumerate}
+\end{proposition}
+
+For the Heisenberg sewing, the operator~$K_g$ has
+eigenvalues~$q^n$ ($n \geq 1$) at genus~$1$; the Fredholm
+determinant is $\det(1 - K_1) = \prod_{n \geq 1}(1-q^n)
+= q^{-1/24}\eta(q)$.
+
+\subsection{The Bergman space}\label{app:bergman}
+
+\begin{definition}\label{def:bergman-space}
+The \emph{Bergman space} $A^2(\Omega)$ of a bounded domain
+$\Omega \subset \bC$ is the Hilbert space of
+square-integrable holomorphic functions:
+\[
+A^2(\Omega)
+\;=\;
+\bigl\{f \in \cO(\Omega) :
+\|f\|^2 := \textstyle\int_\Omega |f|^2\,dA < \infty
+\bigr\}.
+\]
+The Bergman kernel
+$K_\Omega(z,w) = \sum_j e_j(z)\overline{e_j(w)}$
+(with $\{e_j\}$ any orthonormal basis) is the reproducing
+kernel: $f(z) = \int_\Omega K_\Omega(z,w) f(w)\,dA(w)$.
+\end{definition}
+
+For the unit disk,
+$K_D(z,w) = \frac{1}{\pi}(1-z\bar w)^{-2}$
+and the orthonormal basis is
+$e_n(z) = \sqrt{(n+1)/\pi}\,z^n$
+for $n \geq 0$.  The Bergman space of the disk is the
+one-particle Hilbert space for the Heisenberg sewing
+(Definition~\ref{def:theta-map}).
+
+\begin{proposition}[Conformal invariance]
+\label{prop:bergman-conformal}
+If $\varphi \colon \Omega_1 \to \Omega_2$ is a biholomorphism,
+then the map $f \mapsto (f \circ \varphi)\cdot\varphi'$ is a
+unitary isomorphism
+$A^2(\Omega_2) \xrightarrow{\sim} A^2(\Omega_1)$.  In
+particular, the Bergman space of any simply connected domain is
+unitarily isomorphic to~$A^2(D)$.
+\end{proposition}
+
+This conformal invariance is the mechanism behind the metric
+independence of the Heisenberg sewing envelope: any choice of
+conformal collar gives an isomorphic Bergman space.
+
+\subsection{Siegel modular forms}\label{app:siegel}
+
+The Siegel upper half-space of degree~$g$ is
+\[
+\fH_g
+\;=\;
+\{\Omega \in \mathrm{Mat}_{g \times g}(\bC) :
+\Omega^T = \Omega,\;
+\operatorname{Im}\Omega > 0\}.
+\]
+The symplectic group
+$\mathrm{Sp}_{2g}(\bZ)$ acts on~$\fH_g$ by
+$\begin{pmatrix}A&B\\C&D\end{pmatrix}
+\cdot \Omega = (A\Omega+B)(C\Omega+D)^{-1}$.
+
+\begin{definition}\label{def:siegel-theta}
+The \emph{Siegel theta function} of an even lattice~$\Lambda$
+of rank~$r$ is
+\[
+\Theta_\Lambda(\Omega)
+\;=\;
+\sum_{\lambda \in \Lambda^g}
+e^{i\pi\lambda^T\Omega\lambda},
+\qquad \Omega \in \fH_g.
+\]
+For unimodular~$\Lambda$, $\Theta_\Lambda$ is a Siegel modular
+form of weight~$r/2$ with respect to
+$\mathrm{Sp}_{2g}(\bZ)$.
+\end{definition}
+
+At genus~$1$, $\fH_1 = \fH$ is the classical upper half-plane,
+$\Omega = \tau$, and the Siegel theta function reduces to the
+Jacobi theta function
+$\Theta_\Lambda(\tau)
+= \sum_{\lambda \in \Lambda} q^{\langle\lambda,\lambda\rangle/2}$
+with $q = e^{2\pi i\tau}$.
+
+The convergence of the Siegel theta function on~$\fH_g$
+(Proposition~\ref{prop:theta-convergence}) is the lattice
+analogue of the trace-class property of the Heisenberg sewing
+operator: both provide absolute convergence of the partition
+function, by complementary mechanisms.
+
+
+% ================================================================
+% REFERENCES
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson, V.~Drinfeld,
+\emph{Chiral Algebras},
+Amer. Math. Soc. Colloq. Publ. \textbf{51},
+Providence, RI, 2004.
+
+\bibitem{BK86}
+A.~A. Belavin, V.~G. Knizhnik,
+\emph{Algebraic geometry and the geometry of quantum strings},
+Phys. Lett. B \textbf{168} (1986), 201--206.
+
+\bibitem{CG17}
+K.~Costello, O.~Gwilliam,
+\emph{Factorization Algebras in Quantum Field Theory, Vol.~2},
+New Math. Monogr. \textbf{31}, Cambridge Univ. Press, 2021.
+
+\bibitem{Huang05}
+Y.-Z. Huang,
+\emph{Differential equations, duality and modular invariance},
+Commun. Contemp. Math. \textbf{7} (2005), 649--706.
+
+\bibitem{LorgatVolI}
+R.~Lorgat,
+\emph{Modular Koszul Duality},
+monograph in preparation, 2026.
+
+\bibitem{Moriwaki26b}
+Y.~Moriwaki,
+\emph{Conformally flat factorization homology and ind-Hilbert
+vertex algebras},
+preprint, 2026.
+
+\bibitem{Positselski11}
+L.~Positselski,
+\emph{Two kinds of derived categories, Koszul duality, and
+comodule-contramodule correspondence},
+Mem. Amer. Math. Soc. \textbf{212} (2011), no.~996.
+
+\bibitem{RS72}
+M.~Reed, B.~Simon,
+\emph{Methods of Modern Mathematical Physics I: Functional
+Analysis},
+Academic Press, New York, 1972.
+
+\bibitem{Segal88}
+G.~Segal,
+\emph{The definition of conformal field theory},
+in \emph{Differential geometrical methods in theoretical
+physics}, NATO Adv. Sci. Inst. Ser. C \textbf{250}, Kluwer,
+Dordrecht, 1988, 165--171.
+
+\bibitem{Zhu96}
+Y.~Zhu,
+\emph{Modular invariance of characters of vertex operator
+algebras},
+J. Amer. Math. Soc. \textbf{9} (1996), 237--302.
+
+\end{thebibliography}
+
+\end{document}

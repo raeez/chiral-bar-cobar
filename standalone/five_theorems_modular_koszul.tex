@@ -1,0 +1,2426 @@
+\documentclass[11pt]{article}
+
+%%% Packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+
+%%% Page geometry
+\usepackage[margin=1.15in]{geometry}
+
+%%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+%%% Macros
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\Abar}{\bar{\cA}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\disc}{\operatorname{disc}}
+\newcommand{\ChirHoch}{\mathrm{ChirHoch}}
+\newcommand{\Eone}{E_1}
+\newcommand{\Einf}{E_\infty}
+\newcommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}}
+\newcommand{\Ahat}{\hat{A}}
+\newcommand{\Confinf}{\mathrm{Conv}_\infty}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\av}{av}
+\DeclareMathOperator{\Conf}{Conf}
+\DeclareMathOperator{\obs}{obs}
+
+%%% Title
+\title{The five theorems of modular Koszul duality}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+
+%%% ================================================================
+%%% ABSTRACT
+%%% ================================================================
+
+\begin{abstract}
+Koszul duality over a point terminates: a quadratic algebra
+determines a dual coalgebra, the bar construction mediates
+between them, and no further structure appears. Over an
+algebraic curve, the theory does not terminate. The bar
+differential acquires curvature from the Hodge bundle on
+moduli space; its failure to square to zero is controlled
+by a single scalar $\kappa(\cA)$, the modular
+characteristic, extracted from the collision residue of the
+universal Maurer--Cartan element.
+
+We prove five structural theorems for the bar complex of
+a chirally Koszul chiral algebra $\cA$ on a smooth
+algebraic curve $X$.
+Theorem~A constructs the bar-cobar adjunction and its
+Verdier intertwining, producing from the bar coalgebra
+$\barB_X(\cA) = T^c(s^{-1}\Abar)$ the homotopy Koszul
+dual $\cA^!_\infty$.
+Theorem~B proves bar-cobar inversion
+$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ on the
+Koszul locus: unconditionally at genus $0$ and on the
+standard landscape at all genera.
+Theorem~C decomposes the genus-$g$ ambient complex into
+Verdier-Lagrangian complements
+$Q_g(\cA) \oplus Q_g(\cA^!) \cong
+H^*(\Mbar_g, \cZ_\cA)$, with the Koszul complementarity
+sum $\kappa(\cA) + \kappa(\cA^!)$ family-dependent: $0$ for
+Kac--Moody and free fields, $13$ for Virasoro.
+Theorem~D identifies the genus expansion: on the
+uniform-weight lane,
+$\obs_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+\textup{(UNIFORM-WEIGHT)} at all genera, with generating
+function the $\Ahat$-genus; at genus $1$ the scalar
+formula is unconditional for every family.
+Theorem~H proves that chiral Hochschild cohomology is
+concentrated in degrees $\{0,1,2\}$ with a polynomial
+Hilbert series controlled by the centre and its dual.
+
+All five theorems are $\Sigma_n$-coinvariant projections
+of a single $\Eone$ object: the ordered bar complex
+$\barB^{\mathrm{ord}}_X(\cA)$ with its deconcatenation
+coproduct and classical $R$-matrix
+$r_\cA(z)$, for which
+$\av(r_\cA(z)) = \kappa(\cA)$ for abelian
+algebras; for non-abelian Kac--Moody,
+$\kappa = \av(r(z)) + \dim(\fg)/2$ after the Sugawara
+shift.
+The Heisenberg algebra provides the complete base
+computation; every other family is a variation with
+increasingly complex collision residues.
+\end{abstract}
+
+\tableofcontents
+
+%%% ================================================================
+%%% SECTION 1: INTRODUCTION
+%%% ================================================================
+
+\section{Introduction: from a point to a curve}
+\label{sec:introduction}
+
+\subsection{The problem}
+
+Koszul duality over a point terminates. A quadratic algebra
+$A = T(V)/(R)$ determines a dual coalgebra
+$A^{!} = (H^*(B(A)))^\vee$, the bar construction
+$B(A) = (T^c(s^{-1}\bar{A}), d_B)$ mediates between them, and the
+cobar functor inverts:
+$\Omega(B(A)) \xrightarrow{\sim} A$ when $A$ is Koszul
+\cite{Priddy70, BGS96, LV12}. The bar cohomology concentrates in
+degree $1$, the derived categories of $A$-modules and
+$A^!$-modules are equivalent, and no further structure appears.
+
+Over an algebraic curve, three obstructions prevent this from
+working. The generators of a chiral algebra are sections of a
+$\cD_X$-module, not elements of a vector space. The relations are
+operator product expansions with poles of arbitrary order, not
+quadratic expressions. The topology of higher-genus curves forces
+the fiberwise bar differential to satisfy
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$ rather than
+$d^2 = 0$, where $\omega_g = c_1(\mathbb{E})$ is the Hodge class
+on $\Mbar_g$.
+
+The question is: what structure replaces the terminating classical
+theory?
+
+\subsection{The answer}
+
+The ordered bar complex
+\begin{equation}\label{eq:bar-complex-def}
+\barB^{\mathrm{ord}}_X(\cA)
+\;=\;
+T^c(s^{-1}\Abar),
+\qquad
+|s^{-1}v| = |v| - 1,
+\end{equation}
+with deconcatenation coproduct
+\begin{equation}\label{eq:deconcatenation}
+\Delta[s^{-1}a_1 | \cdots | s^{-1}a_n]
+\;=\;
+\sum_{i=0}^{n}
+[s^{-1}a_1 | \cdots | s^{-1}a_i]
+\otimes
+[s^{-1}a_{i+1} | \cdots | s^{-1}a_n],
+\end{equation}
+is a cofree $\Eone$-coalgebra. Here
+$\Abar = \ker(\varepsilon \colon \cA \to \omega_X)$ is the
+augmentation ideal and $s^{-1}$ is the desuspension, lowering
+degree by $1$. The integral kernel is the logarithmic $1$-form
+\begin{equation}\label{eq:eta}
+\eta_{12} \;=\; d\log(z_1 - z_2)
+\;=\; \frac{dz_1 - dz_2}{z_1 - z_2}\,,
+\end{equation}
+with conformally invariant residue $1$: no coordinate, no metric,
+no level. At three points, the Arnold relation
+\begin{equation}\label{eq:arnold}
+\eta_{12} \wedge \eta_{23}
++ \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12}
+\;=\; 0
+\end{equation}
+generates all relations in
+$H^*(\Conf_n(\mathbf{C}), \mathbf{C})$. The bar
+differential squares to zero if and only if the $n$-th products
+satisfy the Borcherds identity; the Arnold relation kills the
+differential form, the Borcherds identity kills the algebra, and
+both are consumed simultaneously. This is the \emph{selection
+principle}: configuration space geometry determines the algebraic
+axioms; the bar construction accepts exactly chiral algebras.
+
+The binary collision residue of the bar differential is the
+classical $R$-matrix
+\[
+r_\cA(z) \;=\;
+\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;\in\; \operatorname{End}_\cA(2)[\![z^{-1}]\!],
+\]
+where $\Theta_\cA := D_\cA - d_0$ is the Maurer--Cartan element
+of the bar differential, satisfying
+$d\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
+automatically because $(D_\cA)^2 = 0$. The
+$\Sigma_n$-coinvariant quotient erases the matrix structure and
+retains only the scalar
+\begin{equation}\label{eq:kappa-def}
+\kappa(\cA) \;=\; \av(r_\cA(z))
+\quad \text{for abelian and scalar families,}
+\end{equation}
+while for non-abelian affine Kac--Moody
+\[
+\kappa(V_k(\fg)) \;=\; \av(r_\cA(z)) + \dim(\fg)/2.
+\]
+the modular characteristic: the single number that survives
+averaging. Five structural theorems extract the
+$\Sigma_n$-invariant content of the ordered bar. Each theorem
+characterizes one facet of $\Theta_\cA$:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Arena}: $\Theta_\cA$ exists (bar-cobar adjunction
+ and Verdier intertwining).
+\item \emph{Faithfulness}: $\Theta_\cA$ determines $\cA$
+ (bar-cobar inversion on the Koszul locus).
+\item \emph{Decomposition}: $\Theta_\cA$ splits
+ (Lagrangian complementarity under Verdier involution).
+\item \emph{Leading coefficient}: $\Theta_\cA$ has universal
+ scalar projection
+ ($\obs_g = \kappa \cdot \lambda_g$, UNIFORM-WEIGHT).
+\item \emph{Coefficient ring}: $\Theta_\cA$ has polynomial
+ coefficients ($\ChirHoch^*$ concentrated in $\{0,1,2\}$).
+\end{enumerate}
+
+The chain is forced: without~A, there is no arena for the dual;
+without~B, the bar transform can lose the boundary algebra;
+without~C, higher-genus deformation theory has no canonical
+polarization; without~D, the genus tower has no distinguished
+scalar shadow; without~H, the coefficient ring is uncontrolled.
+
+\subsection{Prior work}
+
+Five existing programmes address aspects of the problem.
+Beilinson--Drinfeld \cite{BD04} construct factorization algebras on
+$\Ran(X)$ and prove chiral homology is well-defined, but do not
+treat bar-cobar inversion, complementarity, or the genus tower.
+Francis--Gaitsgory \cite{FG12} establish chiral Koszul duality at
+genus $0$ for Lie-type bar complexes; their framework does not
+reach higher genera or the full tensor bar.
+Costello--Gwilliam \cite{CG17} develop factorization algebras for
+perturbative QFT; they do not treat Koszul duality or the modular
+characteristic.
+Gui--Li--Zeng \cite{GLZ22} prove a quadratic duality at the
+cochain level, a genus-$0$ degree-$2$ result.
+Malikov--Schechtman \cite{MS24} construct homotopy chiral algebras
+as the correct input, but do not prove the five structural
+theorems.
+
+\begin{center}
+\small
+\begin{tabular}{l@{\quad}c@{\quad}c@{\quad}c@{\quad}c@{\quad}c}
+\toprule
+& \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{H} \\
+\textbf{Programme}
+& \footnotesize adjunction
+& \footnotesize inversion
+& \footnotesize compl.
+& \footnotesize genus
+& \footnotesize Hochschild \\
+\midrule
+BD \cite{BD04}
+ & $\checkmark$ & & & & \\
+FG \cite{FG12}
+ & $\checkmark$ & $\checkmark^*$ & & & \\
+CG \cite{CG17}
+ & & & & & \\
+GLZ \cite{GLZ22}
+ & $\checkmark^*$ & & & & \\
+MS \cite{MS24}
+ & & & & & \\
+\textbf{This work}
+ & $\checkmark$ & $\checkmark$ & $\checkmark$
+ & $\checkmark$ & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+{\footnotesize ${}^*$FG: genus $0$, Lie-type. GLZ: genus $0$,
+degree $2$.}
+
+\subsection{The Heisenberg computation}
+
+The Heisenberg chiral algebra $\cH_k$ is generated by a single
+current $J$ of conformal weight $1$ with OPE
+$J(z)\,J(w) \sim k/(z-w)^2$. One generator, one double pole, no
+simple pole. The binary residue of the bar differential is the
+complete computation:
+\[
+d_{\barB}[s^{-1}J \,|\, s^{-1}J]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+ \frac{k}{(z_1 - z_2)^2} \cdot d\log(z_1 - z_2)
+\right]
+\;=\; k.
+\]
+% AP1: kappa(H_k) = k from landscape_census.tex; k=0 -> 0 verified
+The modular characteristic is
+$\kappa(\cH_k) = k$, the collision residue
+$r(z) = k/z$ (scalar, not matrix), bar-cobar inversion gives
+$\Omega(\barB(\cH_k)) \simeq \cH_k$, complementarity yields
+$\kappa(\cH_k) + \kappa(\cH_k^!) = k + (-k) = 0$, genus
+universality produces $F_1 = k/24$ and the $\Ahat$-series at all
+genera (UNIFORM-WEIGHT), and chiral Hochschild gives
+$P(t) = 1 + t + t^2$. Every clause of every theorem is verified
+in a single example. Every other family is a variation on this
+computation, with increasingly complex collision residues.
+
+
+\subsection{Conventions}
+
+Throughout, $X$ denotes a smooth projective curve over
+$\mathbf{C}$, $\cA$ a chiral algebra on $X$ in the sense of
+Beilinson--Drinfeld \cite{BD04}, and $\Mbar_g = \Mbar_{g,0}$ the
+Deligne--Mumford moduli space of stable curves of genus $g$.
+Grading is cohomological: $|d| = +1$. Desuspension lowers degree:
+$|s^{-1}v| = |v| - 1$. The bar complex uses the augmentation ideal:
+$\barB(\cA) = T^c(s^{-1}\Abar)$ with $\Abar = \ker(\varepsilon)$.
+The Fulton--MacPherson compactification $\overline{\FM}_n(X)$ is the
+real oriented blowup of $X^n$ along all diagonal strata; it is a
+manifold with corners whose codimension-one faces $D_S$ are
+indexed by subsets $S \subseteq \{1, \ldots, n\}$ with $|S| \geq 2$.
+
+
+%%% ================================================================
+%%% SECTION 2: THE BAR COMPLEX
+%%% ================================================================
+
+\section{The bar complex on algebraic curves}
+\label{sec:bar-complex}
+
+\subsection{Chiral algebras}
+
+A \emph{chiral algebra} $\cA$ on a smooth curve $X$
+\cite{BD04} is a $\cD_X$-module equipped with a chiral bracket
+\begin{equation}\label{eq:chiral-bracket}
+\mu^{\mathrm{ch}} \colon
+j_* j^*(\cA \boxtimes \cA)
+\longrightarrow
+\Delta_!(\cA),
+\end{equation}
+where $j \colon X^2 \setminus \Delta \hookrightarrow X^2$ is the
+complement of the diagonal and $\Delta_!$ is the $!$-pushforward
+along the diagonal embedding. In local coordinates, the chiral
+bracket encodes the operator product expansion:
+\[
+a(z)\,b(w) \;\sim\;
+\sum_{n \geq 0} \frac{a_{(n)}b(w)}{(z-w)^{n+1}}.
+\]
+The zeroth product $a_{(0)}b$ is the Lie bracket (first-order
+pole); the first product $a_{(1)}b$ carries the symmetric inner
+product (second-order pole). The Borcherds identity
+\begin{equation}\label{eq:borcherds}
+\sum_{j \geq 0} \binom{m}{j}
+(a_{(n+j)}b)_{(m+k-j)}c
+\;=\;
+\sum_{j \geq 0} (-1)^j \binom{n}{j}
+\left(
+a_{(m+n-j)}(b_{(k+j)}c)
+- (-1)^n\, b_{(n+k-j)}(a_{(m+j)}c)
+\right)
+\end{equation}
+is the defining axiom: it couples all pole orders in a single
+constraint.
+
+\subsection{The propagator and the Arnold relation}
+
+The bar differential extracts OPE data from collisions
+on $C_2(X) = X \times X \setminus \Delta$. A regular form has
+residue zero and extracts nothing. A double pole transforms under
+coordinate change and has no coordinate-invariant residue. A
+simple pole is forced; among $1$-forms with a first-order pole
+along $\Delta$, only the logarithmic derivative has conformally
+invariant residue:
+\[
+\eta_{12} = d\log(z_1 - z_2)
+= \frac{dz_1 - dz_2}{z_1 - z_2}\,,
+\qquad \Res_\Delta\, \eta_{12} = 1.
+\]
+This is the \emph{propagator}: weight $1$, no dependence on level,
+metric, or conformal structure.
+
+Under $z \mapsto w(z)$, the propagator transforms as
+$\eta_{12} \mapsto \eta_{12}
++ d\log\frac{w(z_1) - w(z_2)}{z_1 - z_2}$; near the diagonal
+the correction reduces to $d\log w'(z_i)$, the standard cocycle
+for $\mathrm{Diff}(X)$. This failure of invariance is not a
+defect; it is the datum that the Virasoro algebra measures.
+
+At three points, the Arnold relation
+\[
+\eta_{12} \wedge \eta_{23}
++ \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12}
+= 0
+\]
+restates the partial-fractions identity
+\[
+\frac{1}{(z_1 - z_2)(z_2 - z_3)}
++ \frac{1}{(z_2 - z_3)(z_3 - z_1)}
++ \frac{1}{(z_3 - z_1)(z_1 - z_2)}
+= 0.
+\]
+Arnold proved that, replicated across all triples
+$\{i,j,k\} \subset \{1, \ldots, n\}$, this generates the
+complete ideal of relations in
+$H^*(\Conf_n(\mathbf{C}), \mathbf{C})$.
+
+\subsection{The ordered bar complex}
+
+\begin{definition}[Ordered bar complex]\label{def:ordered-bar}
+Let $\cA$ be a chiral algebra on a smooth curve $X$,
+$\Abar = \ker(\varepsilon)$ the augmentation ideal.
+The \emph{ordered bar complex} is
+\begin{equation}\label{eq:bar-full}
+\barB^{\mathrm{ord}}_X(\cA)
+\;=\;
+\bigoplus_{n \geq 1}
+(s^{-1}\Abar)^{\otimes n}
+\otimes
+\Gamma\bigl(\overline{\FM}_n(X),\,
+\Omega^{n-1}_{\log}\bigr),
+\end{equation}
+with no $\Sigma_n$-quotient. Here $s^{-1}$ denotes
+desuspension ($|s^{-1}a| = |a| - 1$), and the cohomological
+convention $|d| = +1$ is used throughout.
+\end{definition}
+
+The bar differential decomposes into three pieces:
+\begin{equation}\label{eq:bar-diff}
+d_{\barB} = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}.
+\end{equation}
+The internal differential $d_{\mathrm{int}}$ acts on each tensor
+factor of $\cA$. The de Rham differential $d_{\mathrm{dR}}$ acts
+on logarithmic forms on $\overline{\FM}_n(X)$. The residue
+differential $d_{\mathrm{res}}$ extracts OPE data at collision
+divisors: for a codimension-one face $D_{\{i,j\}}$ corresponding to
+the collision $z_i \to z_j$,
+\begin{equation}\label{eq:res-diff}
+d_{\mathrm{res}}^{(ij)}
+\bigl(
+a_1 \otimes \cdots \otimes a_n \otimes \eta_{ij} \wedge \omega'
+\bigr)
+\;=\;
+\pm\,
+a_1 \otimes \cdots \otimes
+\widehat{a_i} \otimes \cdots \otimes
+\widehat{a_j} \otimes \cdots \otimes
+a_{i(p)}a_j
+\otimes \omega',
+\end{equation}
+where $p$ is the pole order, hats denote omission, and
+$a_{(p)}b$ is the $p$-th Fourier mode of the OPE.
+
+\subsection{Why $d^2 = 0$: the Borcherds selection principle}
+
+\begin{theorem}[Bar nilpotence]\label{thm:bar-nilpotence}
+The bar differential satisfies $d_{\barB}^2 = 0$ if and only if
+the $n$-th products of $\cA$ satisfy the Borcherds
+identity~\eqref{eq:borcherds}.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Expand $(d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}})^2$
+into nine terms. Three vanish individually:
+$d_{\mathrm{int}}^2 = 0$ (cochain complex),
+$d_{\mathrm{dR}}^2 = 0$ (de Rham), and
+$\{d_{\mathrm{int}}, d_{\mathrm{dR}}\} = 0$ (Leibniz). The
+remaining terms are controlled by index overlap in the residue
+operator:
+
+\emph{Disjoint indices}
+($\{i,j\} \cap \{k,\ell\} = \emptyset$): residue operators
+commute; cancellation is by the Koszul sign rule. No condition on
+the OPE.
+
+\emph{One shared index} (say $j = k$): three boundary strata meet
+at the codimension-$2$ locus $D_{ij\ell}$ of triple collision.
+The cyclic sum of iterated residues vanishes if and only if the
+Borcherds identity holds. The Arnold relation kills the
+differential form; the Borcherds identity kills the algebra.
+Both are consumed.
+
+\emph{Same pair} ($\{i,j\} = \{k,\ell\}$):
+$(\Res_{D_{ij}})^2 = 0$ by degree.
+\end{proof}
+
+\begin{remark}[Selection table]\label{rem:selection-table}
+The bar construction asks the same question at every level
+of geometry:
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Base} & \textbf{Condition for $d^2 = 0$}
+ & \textbf{Selected objects} \\
+\hline
+Point & Jacobi identity & Lie algebras \\
+Curve $X$ & Borcherds identity & Chiral algebras \\
+$X$ over $\Mbar_g$ & $+$ period corrections
+ & Modular Koszul algebras
+\end{tabular}
+\end{center}
+Each row is forced by the geometry of the next.
+\end{remark}
+
+\subsection{Two coproducts}
+
+The ordered bar carries the \emph{deconcatenation
+coproduct}~\eqref{eq:deconcatenation}: $n+1$ terms, coassociative
+but not cocommutative, an $\Eone$-coalgebra reflecting the
+linear ordering. The $\Sigma_n$-coinvariant quotient
+\[
+\barB^\Sigma_X(\cA)
+\;=\;
+\bigoplus_{n \geq 1}
+(s^{-1}\Abar)^{\otimes n}_{\Sigma_n}
+\otimes
+\Gamma\bigl(\overline{\FM}_n(X),\,
+\Omega^{n-1}_{\log}\bigr)
+\]
+carries the \emph{coshuffle coproduct}: $2^n$ terms,
+coassociative and cocommutative, an $\Einf$-coalgebra. The
+ordered bar is the primitive object; the symmetric bar is the lossy
+projection that discards the $R$-matrix.
+
+\subsection{From genus $0$ to all genera}
+
+At genus $g \geq 1$, the function $z_1 - z_2$ has no global
+meaning; the propagator must be replaced by
+$d\log E(z_1, z_2)$, where $E(z,w)$ is the prime form on a
+Riemann surface of genus $g$ (a section of
+$K^{-1/2} \boxtimes K^{-1/2}$, weight $1$). The bar differential
+acquires curvature:
+\begin{equation}\label{eq:curvature}
+(d_{\mathrm{fib}}^{\mathrm{ord}})^2
+\;=\; r_\cA(z) \cdot \omega_g,
+\end{equation}
+matrix-valued in
+$\operatorname{End}_\cA(2) \otimes H^{1,1}(\cC_g)$, where
+$\omega_g = c_1(\mathbb{E})$ is the Hodge class on $\Mbar_g$.
+Averaging over $\Sigma_2$ collapses this to the scalar equation
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$.
+
+The \emph{total} bar differential
+$D_\cA = \sum_{g \geq 0} \hbar^g\, d_\cA^{(g)}$ absorbs the
+curvature into the genus expansion: $D_\cA^2 = 0$
+unconditionally.
+
+\begin{definition}[Modular characteristic]\label{def:kappa}
+The \emph{modular characteristic} of a chiral algebra $\cA$ is
+\[
+\kappa(\cA) := \av(r_\cA(z)),
+\]
+the $\Sigma_2$-coinvariant of the collision residue $r$-matrix.
+\end{definition}
+
+\begin{definition}[Maurer--Cartan element]\label{def:mc}
+The \emph{Maurer--Cartan element} is
+$\Theta_\cA := D_\cA - d_0 \in \gAmod$, the positive-genus
+part of the bar differential. Since $D_\cA^2 = 0$, it satisfies
+\begin{equation}\label{eq:mc}
+d_0\, \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0
+\end{equation}
+unconditionally. Existence of the MC element is a tautology
+of the bar construction; the five theorems characterize its
+structure.
+\end{definition}
+
+
+%%% ================================================================
+%%% SECTION 3: THEOREM A
+%%% ================================================================
+
+\section{Theorem A: bar-cobar adjunction and Verdier intertwining}
+\label{sec:theorem-A}
+
+\subsection{Statement}
+
+The bar complex produces a coalgebra; the question is what
+algebra it encodes.  Three functors act on the bar complex
+and produce three distinct outputs:
+\begin{equation}\label{eq:three-functors}
+\begin{array}{lcll}
+\Omega(\barB(\cA)) &\simeq& \cA
+ & \text{(inversion: recovers the original),}\\[3pt]
+\mathbb{D}_{\Ran}(\barB(\cA)) &\simeq& \cA^!_\infty
+ & \text{(Verdier: the homotopy dual),}\\[3pt]
+(H^*(\barB(\cA)))^\vee &=& \cA^!
+ & \text{(linear duality: the strict dual).}
+\end{array}
+\end{equation}
+Confusing any two is a category error: cobar inverts, Verdier
+dualizes at chain level, and linear duality produces the strict
+dual.
+
+\begin{theorem}[Theorem A: bar-cobar adjunction]
+\label{thm:bar-cobar-adjunction}
+Let $(\cA, \cC)$ be a chiral Koszul pair on a smooth
+curve $X$: that is, $\cA$ is an augmented chiral algebra,
+$\cC$ is a conilpotent chiral coalgebra, and the twisting
+morphism $\tau \colon \cC \to \cA$ makes the twisted tensor
+product $K_\tau^L(\cA, \cC)$ acyclic.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Adjunction.} The bar and cobar functors form an
+ adjoint pair
+ \[
+ \barB_X \colon
+ \mathrm{Alg}_{\mathrm{aug}}(\mathrm{Fact}(X))
+ \rightleftarrows
+ \mathrm{CoAlg}_{\mathrm{conil}}(\mathrm{Fact}(X))
+ \,:\! \Omega_X
+ \]
+ with unit $\eta \colon \mathrm{id} \to \Omega_X \circ \barB_X$
+ and counit
+ $\varepsilon \colon \barB_X \circ \Omega_X \to \mathrm{id}$.
+ On the Koszul locus, both are quasi-isomorphisms:
+ \[
+ \cC \xrightarrow{\;\sim\;} \barB_X(\cA),
+ \qquad
+ \Omega_X(\cC) \xrightarrow{\;\sim\;} \cA.
+ \]
+
+\item \emph{Verdier intertwining.}
+ Verdier duality on $\Ran(X)$ intertwines the bar construction
+ of $\cA$ with the bar construction of $\cA^!$:
+ \[
+ \mathbb{D}_{\Ran}\, \barB_X(\cA)
+ \;\simeq\;
+ \cA^!_\infty,
+ \]
+ where $\cA^!_\infty$ is the homotopy Koszul dual factorization
+ algebra. On cohomology this recovers the strict Koszul dual:
+ $H^*(\cA^!_\infty) \cong \cA^!$ on the Koszul locus.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Proof sketch}
+
+\emph{Step 1: The twisting morphism.} A chiral twisting morphism
+$\tau \colon \cC \to \cA$ is a degree-$+1$ element in the chiral
+convolution algebra satisfying the Maurer--Cartan equation
+$d\tau + \tau \star \tau = 0$, where the star product is mediated
+by the integration kernel $\eta_{12}$ on
+$X^2 \setminus \Delta$. The acyclicity of the twisted tensor
+product $K_\tau^L(\cA, \cC)$ is the defining property of a
+chiral Koszul pair.
+
+\emph{Step 2: The PBW recognition criterion.} The PBW filtration
+on $\cA$ by bar-length makes the associated graded
+quadratic-Koszul in the classical sense. The chiral algebra need
+not be quadratic (the Virasoro OPE has a quartic pole, $\cW$-algebras
+have poles of arbitrary order); what matters is that the
+leading-order structure under the PBW filtration is. The $E_2$
+page of the bar spectral sequence identifies with the classical
+bar complex of the associated graded, and the collapse at
+$E_2$ is the chiral Koszul condition.
+
+\emph{Step 3: Verdier intertwining.} Verdier duality
+$\mathbb{D}_{\Ran}$ on $\Ran(X)$ converts coalgebras to algebras.
+Applied to $\barB_X(\cA)$, it produces a factorization algebra
+$\cA^!_\infty$ on $\Ran(X)$. The key identity is
+\[
+\mathbb{D}_{\Ran}(T^c(s^{-1}\Abar))
+\;\simeq\;
+T(s\, (H^*(\barB(\cA)))^\vee),
+\]
+where the left side is the Verdier dual of the cofree coalgebra
+and the right side is the free algebra on the linear dual of
+bar cohomology. On the Koszul locus, bar cohomology
+concentrates in degree $1$, and the right side reduces to the
+strict Koszul dual algebra $\cA^!$.
+
+\emph{Step 4: Filtered comparison.} The filtered comparison
+lemma establishes that the PBW spectral sequence is compatible
+with the Verdier functor: the filtration on $\barB_X(\cA)$
+induced by bar degree is taken by $\mathbb{D}_{\Ran}$ to the
+dual filtration on $\cA^!_\infty$. This is the non-formal content
+of the theorem; the compatibility is not automatic and requires
+the Fulton--MacPherson boundary structure.
+
+\begin{example}[Heisenberg]\label{ex:thmA-heis}
+For $\cA = \cH_k$: the bar complex
+$\barB(\cH_k) = T^c(s^{-1}\mathbf{C} \cdot J)$ has bar
+cohomology concentrated in degree $1$
+($H^{-1}(\barB(\cH_k)) = \mathbf{C} \cdot s^{-1}J$).
+The Koszul dual coalgebra is
+$\cH_k^{\mathrm{i}} = \mathbf{C} \cdot s^{-1}J$; the strict
+Koszul dual is the curved symmetric chiral algebra
+$\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ with curvature
+$m_0 = -k\omega$. The Verdier dual recovers
+$\cH_k^!$ at the level of cohomology. The complementarity sum:
+$\kappa(\cH_k) + \kappa(\cH_k^!) = k + (-k) = 0$.
+\end{example}
+
+
+%%% ================================================================
+%%% SECTION 4: THEOREM B
+%%% ================================================================
+
+\section{Theorem B: bar-cobar inversion on the Koszul locus}
+\label{sec:theorem-B}
+
+\subsection{Statement}
+
+Theorem~A constructs the dual algebra $\cA^!_\infty$, but does
+not prove that the bar transform is faithful: the coalgebra
+$\barB(\cA)$ could in principle fail to reconstruct~$\cA$.
+
+\begin{theorem}[Theorem B: bar-cobar inversion]
+\label{thm:bar-cobar-inversion}
+Let $\cA$ be a chirally Koszul chiral algebra on a smooth
+curve $X$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus $0$ (unconditional).}
+ The cobar-bar counit is a quasi-isomorphism:
+ \[
+ \varepsilon \colon
+ \Omega_X(\barB_X(\cA))
+ \xrightarrow{\;\sim\;}
+ \cA.
+ \]
+ The bar spectral sequence collapses at $E_2$, and bar
+ cohomology concentrates in bar degree $1$:
+ $H^*(B(\cA)) \cong (s\, \cA^{\mathrm{i}})$, identifying
+ the Koszul dual coalgebra.
+
+\item \emph{Genus $g \geq 1$ (on the modular Koszul lane).}
+ At each genus $g$, if $\cA$ satisfies the diagonal Ext
+ vanishing condition on the fibers of the universal curve
+ over $\Mbar_{g,n}$, then the genus-$g$ cobar-bar counit
+ is a quasi-isomorphism:
+ $\Omega^{(g)}(\barB^{(g)}(\cA)) \xrightarrow{\sim}
+ \cA^{(g)}$.
+ For the standard landscape (Heisenberg, affine Kac--Moody
+ at generic level, Virasoro at generic central charge,
+ principal $\cW$-algebras, lattice vertex algebras), the
+ Ext vanishing holds unconditionally, and bar-cobar
+ inversion is unconditional at all genera.
+\end{enumerate}
+\end{theorem}
+
+\subsection{The genus-$0$ argument}
+
+The genus-$0$ proof proceeds by spectral sequence. The PBW
+filtration on $\cA$ by conformal weight induces a decreasing
+filtration $F^p$ on $\barB_X(\cA)$ by bar degree: elements of
+$F^p$ have at least $p$ tensor factors. The associated spectral
+sequence has $E_1$ page equal to the classical bar complex
+$B(\mathrm{gr}\, \cA)$ of the associated graded, and
+converges to $H^*(\barB_X(\cA))$.
+
+The Koszul condition is that $\mathrm{gr}\, \cA$ is quadratic
+Koszul in the classical sense (Priddy \cite{Priddy70}). Then the
+$E_1$ differential has cohomology concentrated on the diagonal:
+$E_2^{p,q} = 0$ for $p \neq q$. The spectral sequence
+collapses at $E_2$, and bar cohomology concentrates in bar
+degree $1$. The counit map
+$\varepsilon \colon \Omega_X(\barB_X(\cA)) \to \cA$ is then a
+quasi-isomorphism by the comparison theorem for filtered
+complexes.
+
+\subsection{The higher-genus extension}
+
+At genus $g \geq 1$, the fiberwise bar differential satisfies
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g \neq 0$:
+the bar complex is curved, and the cobar functor cannot be
+applied in the classical sense. The resolution uses the total
+bar differential $D_\cA$ with $D_\cA^2 = 0$: the curvature is
+absorbed into the genus expansion.
+
+The genus-$g$ inversion requires two conditions:
+\begin{enumerate}
+\item \emph{Central curvature}: the curvature
+ $d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$ is a
+ scalar multiple of the Hodge class, not an arbitrary
+ endomorphism-valued class.
+\item \emph{Diagonal Ext vanishing}: the twisted tensor product
+ $K_\tau^L(\cA^{(g)}, \cC^{(g)})$ is acyclic at genus $g$.
+\end{enumerate}
+
+For the standard landscape, central curvature is automatic (the
+Virasoro-type curvature is generated by the stress tensor) and
+diagonal Ext vanishing follows from the PBW argument adapted to
+the genus-$g$ bar complex. The exception is the $\beta\gamma$
+system at integer spin, where the Ext group has an anomalous
+contribution from the fermionic parity.
+
+\begin{example}[Heisenberg]\label{ex:thmB-heis}
+$\barB(\cH_k)$ has bar cohomology concentrated in bar degree $1$:
+$H^{-1}(\barB(\cH_k)) = \mathbf{C} \cdot s^{-1}J$. The cobar
+recovers $\cH_k$ as a graded algebra. Bar-cobar inversion is
+unconditional at all genera: the curvature
+$d_{\mathrm{fib}}^2 = k \cdot \omega_g$ is scalar, and the Ext
+vanishing is automatic because the only OPE pole is of order $2$
+(no Lie bracket, no higher obstructions).
+\end{example}
+
+\begin{remark}[Off the Koszul locus]\label{rem:off-koszul}
+Off the Koszul locus, bar-cobar inversion fails: the spectral
+sequence does not collapse at $E_2$, bar cohomology is not
+concentrated in degree $1$, and the counit is not a
+quasi-isomorphism. The failure is measured by the shadow
+obstruction tower $\{S_r(\cA)\}_{r \geq 2}$: the degree-$r$
+shadow class $S_r \in H^*(\Mbar_{0,r})$ is the obstruction
+to extending the inversion from bar degree $r-1$ to bar degree
+$r$. All standard chiral algebras in the landscape are chirally
+Koszul; the shadow tower measures the \emph{complexity} of
+their higher-genus behaviour, not the failure of duality itself.
+\end{remark}
+
+
+%%% ================================================================
+%%% SECTION 5: THEOREM C
+%%% ================================================================
+
+\section{Theorem C: complementarity}
+\label{sec:theorem-C}
+
+\subsection{The problem}
+
+At genus $g \geq 1$, the bar complex of $\cA$ and the bar
+complex of its Koszul dual $\cA^!$ coexist on the same moduli
+space $\Mbar_g$. The curvatures are related:
+$d_{\mathrm{fib}}^2(\cA) = \kappa(\cA) \cdot \omega_g$ and
+$d_{\mathrm{fib}}^2(\cA^!) = \kappa(\cA^!) \cdot \omega_g$.
+The Verdier involution exchanges the two bar complexes. The
+question is whether this exchange induces a canonical
+decomposition of the ambient cohomology.
+
+\subsection{Statement}
+
+\begin{theorem}[Theorem C: Lagrangian complementarity]
+\label{thm:complementarity}
+Let $(\cA, \cA^!)$ be a chirally Koszul pair.
+\begin{enumerate}[label=\textup{(C\arabic*)}]
+\item \emph{Fiber-center decomposition (unconditional in the
+ coderived category).}
+ For every $g \geq 0$, the genus-$g$ ambient complex
+ $\mathbf{C}_g(\cA)
+ := R\Gamma(\Mbar_g, \cZ_\cA)$
+ admits a homotopy decomposition
+ \begin{equation}\label{eq:lagrangian}
+ \mathbf{C}_g(\cA)
+ \;\simeq\;
+ \mathbf{Q}_g(\cA)
+ \;\oplus\;
+ \mathbf{Q}_g(\cA^!),
+ \end{equation}
+ where $\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ are
+ Lagrangian summands with respect to the Verdier pairing.
+
+\item \emph{Lagrangian eigenspace decomposition
+ (proved for $g \geq 1$).}
+ At the cohomological level,
+ \begin{equation}\label{eq:complementarity-cohom}
+ Q_g(\cA) \oplus Q_g(\cA^!)
+ \;\cong\;
+ H^*(\Mbar_g, \cZ_\cA).
+ \end{equation}
+ The two summands are eigenspaces of the Verdier involution,
+ and the decomposition is canonical.
+
+\item \emph{Shifted-symplectic upgrade (conditional).}
+ If the bar-cobar normal complex is perfect and nondegenerate,
+ the ambient complex carries a $(2-d)$-shifted symplectic
+ structure, and each Lagrangian summand carries a shifted
+ Lagrangian structure. This upgrade is conditional on
+ perfectness and nondegeneracy.
+\end{enumerate}
+\end{theorem}
+
+\subsection{The Koszul complementarity sum}
+
+The Lagrangian decomposition constrains the modular
+characteristics of $\cA$ and $\cA^!$:
+\[
+\kappa(\cA) + \kappa(\cA^!) \;=\; K(\cA),
+\]
+where $K(\cA)$ is the \emph{Koszul complementarity conductor},
+a family-dependent constant. This is not a universal zero.
+
+\begin{proposition}[Complementarity sums]
+\label{prop:complementarity-sums}
+% AP1: all kappa from landscape_census.tex; AP24: K family-dependent
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Heisenberg:}
+ $\kappa(\cH_k) = k$,\;
+ $\kappa(\cH_k^!) = -k$,\;
+ $K = 0$.
+
+\item \emph{Affine Kac--Moody:}
+ % AP1: kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v); k=0 -> dim(g)/2; k=-h^v -> 0
+ $\kappa(V_k(\fg)) = \frac{\dim(\fg)(k + h^\vee)}{2h^\vee}$,\;
+ $\kappa(V_k(\fg)^!) = -\frac{\dim(\fg)(k + h^\vee)}{2h^\vee}$,\;
+ $K = 0$.
+
+\item \emph{Virasoro:}
+ % AP1: kappa(Vir_c) = c/2; c=13 -> 13/2 self-dual
+ $\kappa(\mathrm{Vir}_c) = c/2$,\;
+ $\kappa(\mathrm{Vir}_{26-c}) = (26-c)/2$,\;
+ $K = 13$.\; Self-dual at $c = 13$.
+
+\item \emph{Principal $\cW_N$:}
+ % AP1: kappa(W_N) = c*(H_N - 1), H_N = sum 1/j; N=2: c/2 = Vir
+ $\kappa(\cW_N) = c \cdot (H_N - 1)$
+ where $H_N = \sum_{j=1}^{N} 1/j$.\;
+ $K$ is nonzero and $N$-dependent.
+
+\item \emph{Free fields} (lattice, $\beta\gamma$, $bc$):
+ $K = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The Lagrangian decomposition of Theorem~C forces
+$\kappa + \kappa' = K$ at the level of the scalar shadow.
+For Heisenberg and affine Kac--Moody, the Koszul dual has
+opposite modular characteristic (the Verdier involution
+reverses the sign of $\kappa$), giving $K = 0$.
+For the Virasoro algebra, $c \mapsto 26 - c$ under Koszul
+duality (the ghost central charge), and
+$K = c/2 + (26-c)/2 = 13$, constant. The self-dual point
+$c = 13$ is the unique value where
+$\kappa = \kappa' = 13/2$: the Lagrangian decomposition
+is symmetric.
+\end{proof}
+
+\begin{remark}[Five objects]\label{rem:five-objects}
+% FOUR OBJECTS:
+% 1. B(A) = bar coalgebra = T^c(s^{-1} A-bar) with deconcatenation
+% 2. A^i = H^*(B(A)) = dual coalgebra (bar cohomology)
+% 3. A^! = ((A^i)^v) = dual ALGEBRA (linear dual)
+% 4. Z^der_ch(A) = derived chiral center = Hochschild cochains
+The five objects appearing in the complementarity theorem:
+$\cA$ (the algebra), $\barB(\cA)$ (the bar coalgebra),
+$\cA^{\mathrm{i}} = H^*(\barB(\cA))$ (the dual coalgebra),
+$\cA^! = (\cA^{\mathrm{i}})^\vee$ (the dual algebra), and
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+= R\Hom_{\cA \otimes \cA^{\mathrm{op}}}(\cA, \cA)$
+(the derived chiral center). These are distinct objects produced by
+distinct functors; conflation of any two is a category error.
+\end{remark}
+
+
+%%% ================================================================
+%%% SECTION 6: THEOREM D (SCAFFOLD)
+%%% ================================================================
+
+\section{Theorem D: the genus expansion}
+\label{sec:theorem-D}
+
+\subsection{Statement}
+
+The Lagrangian decomposition of Theorem~C separates $\cA$ from
+$\cA^!$ on moduli space, but does not identify what the scalar
+projection $\kappa$ governs at each genus.
+
+\begin{theorem}[Theorem D: genus universality]
+\label{thm:genus-universality}
+Let $\cA$ be a chirally Koszul chiral algebra with modular
+characteristic $\kappa(\cA)$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus $1$ (unconditional).}
+ The genus-$1$ obstruction class is
+ \[
+ \obs_1(\cA) = \kappa(\cA) \cdot \lambda_1
+ \in H^*(\Mbar_{1,1}),
+ \]
+ and the genus-$1$ free energy is
+ $F_1(\cA) = \kappa(\cA)/24$.
+ This holds for every family.
+
+\item \emph{All genera, uniform weight}
+ \textup{(UNIFORM-WEIGHT)}.
+ For chiral algebras whose strong generators have a single
+ conformal weight, the obstruction class at every genus is
+ \[
+ \obs_g(\cA) = \kappa(\cA) \cdot \lambda_g
+ \quad (g \geq 1),
+ \]
+ and the free energies are
+ $F_g(\cA) = \kappa(\cA) \cdot \Ahat_g$,
+ where $\Ahat_g$ is the $g$-th coefficient of the
+ $\Ahat$-genus:
+ \begin{equation}\label{eq:ahat-generating}
+ \sum_{g \geq 1} F_g(\cA) \cdot \hbar^{2g}
+ \;=\;
+ \kappa(\cA) \cdot
+ \bigl(\Ahat(i\hbar) - 1\bigr).
+ \end{equation}
+
+\item \emph{Multi-weight correction}
+ \textup{(ALL-WEIGHT $+ \delta F_g^{\mathrm{cross}}$)}.
+ For multi-weight algebras at genus $g \geq 2$, the
+ diagonal term remains universal but the full free energy is
+ \[
+ F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
+ + \delta F_g^{\mathrm{cross}}(\cA),
+ \]
+ with $\delta F_g^{\mathrm{cross}}$ the cross-channel
+ correction from mixed conformal-weight interactions.
+\end{enumerate}
+\end{theorem}
+
+\subsection{The $\Ahat$-genus and Bernoulli numbers}
+
+The $\Ahat$-genus has the explicit expansion
+\[
+\Ahat(x) - 1
+\;=\;
+\frac{x/2}{\sin(x/2)} - 1
+\;=\;
+\frac{1}{24}\,x^2
++ \frac{7}{5760}\,x^4
++ \frac{31}{967680}\,x^6
++ \cdots
+\]
+The coefficients are
+$\Ahat_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}$,
+where $B_{2g}$ is the $2g$-th Bernoulli number.
+The leading term $\Ahat_1 = 1/24$ is universal: for every family,
+$F_1 = \kappa/24$.
+
+\subsection{The shadow obstruction tower}
+
+The Maurer--Cartan element $\Theta_\cA$ projects at each degree
+$r \geq 2$ to a shadow invariant $S_r(\cA)$; the tower
+$\{S_r\}_{r \geq 2}$ classifies chiral algebras into four
+complexity classes:
+
+\begin{center}
+\small
+\begin{tabular}{lcccl}
+\toprule
+\textbf{Class} & \textbf{Depth} & $\Delta$
+ & \textbf{Example} & \textbf{Behaviour} \\
+\midrule
+$\mathsf{G}$ (Gaussian) & $2$ & $0$ ($S_4 = 0$)
+ & Heisenberg & Formal, free \\
+$\mathsf{L}$ (Lie) & $3$ & $0$ ($\kappa = 0$)
+ & Aff.\ KM (crit.) & Single Massey \\
+$\mathsf{C}$ (Contact) & $4$ & special
+ & $\beta\gamma$ & Contact then rigid \\
+$\mathsf{M}$ (Mixed) & $\infty$ & $\neq 0$
+ & Virasoro, $\cW_N$ & Non-formal \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The critical discriminant $\Delta = 8\kappa S_4$ governs a
+dichotomy: $\Delta = 0$ terminates the tower, $\Delta \neq 0$
+makes it infinite. The \emph{shadow depth} $r_{\max}$
+(the highest degree at which $S_r \neq 0$) takes values
+$\{2, 3, 4, \infty\}$; the \emph{algebraic depth}
+$d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ measures the
+internal complexity of the MC equation and admits no value $3$
+or any finite value $\geq 3$: there is a gap.
+
+\subsection{Proof architecture}
+\label{subsec:thmD-proof}
+
+The proof of genus universality proceeds in three steps.
+
+\emph{Step 1: Genus $1$ (unconditional).} On $\Mbar_{1,1}$,
+the self-loop graph $\Gamma_{\mathrm{irr}}$ contributes
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_1$, and
+integration over $\Mbar_{1,1}$ gives $F_1 = \kappa/24$.
+The only invariant that contributes at genus $1$ is $\kappa$
+itself (degree $2$ of the MC element); all higher shadow
+coefficients $S_r$ with $r \geq 3$ are invisible at genus $1$.
+
+\emph{Step 2: Uniform-weight factorization.} For uniform-weight
+algebras, the graph-sum formula for $\Theta_\cA$ factorizes:
+each genus-$g$ stable graph contributes
+$\kappa^{|E(\Gamma)|} \cdot \lambda_g^{\mathrm{FP}}(\Gamma)$,
+where $|E(\Gamma)|$ is the number of edges. The sum over all
+genus-$g$ graphs produces $\kappa \cdot \lambda_g$.
+
+\emph{Step 3: Multi-weight correction.} When generators have
+distinct conformal weights, cross-channel propagators produce
+mixed terms that do not factor through $\kappa$ alone. The
+correction $\delta F_g^{\mathrm{cross}}$ is explicit and
+computable from the full $R$-matrix data of the ordered bar.
+
+\begin{remark}[Genus-$1$ anchor]\label{rem:genus-1-anchor}
+Step~1 is unconditional: $\obs_1 = \kappa \cdot \lambda_1$
+holds for every chirally Koszul algebra, with no
+uniform-weight hypothesis. The passage from genus~$1$ to all
+genera in Step~2 uses the clutching morphisms on
+$\partial\Mbar_g$ to propagate the scalar factorization; the
+clutching-uniqueness argument is the non-trivial step in the
+all-genera extension.
+\end{remark}
+
+\begin{example}[Heisenberg at all genera]\label{ex:thmD-heis}
+$\kappa(\cH_k) = k$ (UNIFORM-WEIGHT, single generator of
+conformal weight $1$). The generating function:
+\[
+\sum_{g \geq 1} F_g(\cH_k) \cdot \hbar^{2g}
+\;=\;
+k \cdot \left(\frac{\hbar/2}{\sin(\hbar/2)} - 1\right)
+\;=\;
+\frac{k}{24}\,\hbar^2
++ \frac{7k}{5760}\,\hbar^4
++ \frac{31k}{967680}\,\hbar^6
++ \cdots
+\]
+% C24 check: F_1 = k/24, consistent with kappa/24
+The chiral partition function
+$Z_{\mathrm{ch}}(\cH_k) = 1/\eta(\tau)$
+(where $\eta(\tau) = q^{1/24}\prod_{n \geq 1}(1 - q^n)$)
+gives $F_1 = k/24$, consistent with the universal formula.
+\end{example}
+
+
+%%% ================================================================
+%%% SECTION 7: THEOREM H (SCAFFOLD)
+%%% ================================================================
+
+\section{Theorem H: chiral Hochschild cohomology}
+\label{sec:theorem-H}
+
+\subsection{Statement}
+
+Theorem~D identifies a universal genus expansion governed by
+$\kappa$; the question is what constrains the coefficient ring
+in which $\kappa$ lives.
+
+\begin{theorem}[Theorem H: polynomial Hilbert series]
+\label{thm:hochschild}
+Let $\cA$ be a chirally Koszul chiral algebra on a smooth
+curve $X$. The chiral Hochschild cohomology is concentrated
+in degrees $\{0, 1, 2\}$:
+\[
+\ChirHoch^n(\cA) = 0
+\quad \text{for } n \notin \{0, 1, 2\},
+\]
+and the Hilbert polynomial is
+\begin{equation}\label{eq:hilbert-poly}
+P_\cA(t)
+\;=\;
+\dim Z(\cA)
++ \dim \ChirHoch^1(\cA) \cdot t
++ \dim Z(\cA^!) \cdot t^2.
+\end{equation}
+\end{theorem}
+
+\begin{warning}[Three Hochschild theories]
+\label{warn:three-hochschild}
+Three inequivalent notions of Hochschild cohomology coexist.
+\emph{Chiral Hochschild}
+$\ChirHoch^*(\cA) = H^*(\mathrm{CoDer}(\barB(\cA)))$ is the
+cohomology of coderivations of the bar coalgebra; it lives on
+the curve $X$ and has amplitude $[0,2]$ on the Koszul locus
+(Theorem~H). \emph{Topological Hochschild}
+$\mathrm{HH}^*_{\mathrm{top}}$ is factorization homology on
+$S^1$; it lives in one dimension higher. \emph{Categorical
+Hochschild} $\mathrm{HH}^*(\mathrm{Rep}(\cA))$ governs the
+Drinfeld center and the $E_2$ structure. Conflating any two
+produces errors.
+\end{warning}
+
+\subsection{Family-specific specializations}
+
+\begin{proposition}[Hilbert series for standard families]
+\label{prop:hilbert-families}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Heisenberg $\cH_k$:}\;
+ $P(t) = 1 + t + t^2$.\;
+ Centre = $\mathbf{C}$, outer derivation $D(J) = \mathbf{1}$,
+ level deformation in degree $2$.
+
+\item \emph{Affine Kac--Moody $V_k(\fg)$ (generic level):}\;
+ $\ChirHoch^1(V_k(\fg)) \cong \fg$, giving total
+ dimension $\dim(\fg) + 2$.\;
+ $P(t) = 1 + \dim(\fg) \cdot t + t^2$.
+
+\item \emph{Virasoro $\mathrm{Vir}_c$ (generic):}\;
+ $P(t) = 1 + t^2$.\; $\ChirHoch^1 = 0$ (no outer
+ chiral derivations).
+
+\item \emph{Principal $\cW_N$ (generic):}\;
+ $P(t) = 1 + t^2$.
+
+\item \emph{Critical level $k = -h^\vee$:}\; Outside the
+ regime of Theorem~H. The Feigin--Frenkel center makes the
+ cohomology unbounded.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Proof architecture}
+
+The descent lemma reduces Theorem~H to the Verdier
+intertwining of Theorem~A: the concentration of
+$\ChirHoch^*(\cA)$ in degrees $\{0,1,2\}$ follows from the
+Koszul resolution having length $2$ (the bar coalgebra has
+generators in a single bar degree on the Koszul locus), and
+the identification of the Hilbert polynomial with the dimensions
+of the center and its dual follows from the Verdier
+intertwining pairing degree-$0$ with degree-$2$.
+
+The configuration-space collapse uses Fulton--MacPherson
+formality: the spectral sequence from the FM filtration on the
+coderivation complex collapses, and the $E_2$ page identifies
+with the cohomology of the classical coderivation complex of
+the associated graded.
+
+
+%%% ================================================================
+%%% SECTION 8: THE FORCED CHAIN
+%%% ================================================================
+
+\section{The forced chain $\mathrm{A} \Rightarrow \mathrm{B}
+ \Rightarrow \mathrm{C} \Rightarrow \mathrm{D}
+ \Rightarrow \mathrm{H}$}
+\label{sec:forced-chain}
+
+The five theorems are not five unrelated assertions about the bar
+complex. They form a chain: each theorem solves a problem created
+by its predecessor, and each requires exactly one new geometric
+input beyond what the previous theorem provides.
+
+\subsection{The dependency DAG}
+
+The logical dependencies are strictly linear:
+\[
+\fbox{A}
+\xrightarrow{\;\text{dual object}\;}
+\fbox{B}
+\xrightarrow{\;\text{coexistence}\;}
+\fbox{C}
+\xrightarrow{\;\text{polarization}\;}
+\fbox{D}
+\xrightarrow{\;\text{coefficient ring}\;}
+\fbox{H}
+\]
+No arrow can be reversed. Each node depends on all preceding
+nodes. The chain is \emph{forced}: removing any one theorem
+leaves the subsequent ones either undefined or vacuous.
+
+\subsection{A creates the arena}
+
+\begin{proposition}[A is necessary for B--H]
+\label{prop:A-necessary}
+Without Theorem~A, the objects of Theorems~B--H do not exist.
+\end{proposition}
+
+\begin{proof}
+Theorem~B asserts that the bar-cobar counit
+$\varepsilon \colon \Omega(\barB(\cA)) \to \cA$ is a
+quasi-isomorphism. The cobar functor $\Omega$ is defined on
+conilpotent coalgebras in the factorization category
+$\mathrm{Fact}(X)$; its existence and the adjunction with
+$\barB$ are the content of Theorem~A(i). Without the
+adjunction, the counit $\varepsilon$ is undefined.
+
+Theorem~C decomposes
+$H^*(\Mbar_g, \cZ_\cA) \cong Q_g(\cA) \oplus Q_g(\cA^!)$.
+The summand $Q_g(\cA^!)$ involves the Koszul dual
+$\cA^!_\infty$, whose existence is Theorem~A(ii): the
+Verdier intertwining
+$\mathbb{D}_{\Ran}\, \barB(\cA) \simeq \cA^!_\infty$.
+Without this intertwining, the dual object is unavailable.
+
+Theorems~D and~H depend on~C and~B respectively; their
+dependence on~A is inherited.
+\end{proof}
+
+The geometric input that Theorem~A requires, beyond the bar
+complex itself, is the Fulton--MacPherson compactification
+$\overline{\FM}_n(X)$ and its boundary divisor structure: the
+twisting morphism $\tau$ is mediated by integration kernels
+on $\overline{\FM}_n(X)$, and the Verdier intertwining uses
+the Poincar\'{e}--Verdier duality on $\Ran(X)$.
+
+\subsection{B establishes faithfulness}
+
+\begin{proposition}[B is necessary for C--H]
+\label{prop:B-necessary}
+Without Theorem~B, the Lagrangian decomposition of Theorem~C
+is vacuous and the genus expansion of Theorem~D is
+ungrounded.
+\end{proposition}
+
+\begin{proof}
+Theorem~A constructs the homotopy Koszul dual
+$\cA^!_\infty$, but the construction produces a
+factorization algebra that a priori differs from $\cA^!$.
+Theorem~B proves that bar-cobar inversion is faithful:
+$\barB$ is injective on quasi-isomorphism classes. This
+identifies $\cA$ and $\cA^!$ as the two canonical algebras
+recoverable from the bar coalgebra, and establishes that
+Verdier duality on $\barB(\cA)$ produces the \emph{correct}
+dual.
+
+Without this identification, the decomposition
+$Q_g(\cA) \oplus Q_g(\cA^!)$ in Theorem~C involves an
+object $\cA^!_\infty$ whose relation to the strict dual
+$\cA^!$ is uncontrolled: the summands may not be
+complementary. The genus expansion of Theorem~D uses the
+Lagrangian decomposition to force the scalar factorization
+$\obs_g = \kappa \cdot \lambda_g$; without the correct
+identification of $\cA^!$, the constraint
+$\kappa + \kappa' = K$ that anchors the genus tower is
+meaningless.
+\end{proof}
+
+The geometric input is the \emph{PBW filtration}: the
+spectral sequence from conformal-weight filtration collapses
+at $E_2$, reducing the problem to classical Koszul duality
+of the associated graded. This is the only step that
+involves the conformal weight grading; Theorem~A uses only
+the chiral bracket and $\cD_X$-module structure.
+
+\subsection{C provides the polarization}
+
+\begin{proposition}[C is necessary for D--H]
+\label{prop:C-necessary}
+Without Theorem~C, the genus tower has no canonical
+factorization into $\cA$ and $\cA^!$ contributions, and
+Theorem~D cannot distinguish the universal scalar
+$\kappa$ from family-dependent corrections.
+\end{proposition}
+
+\begin{proof}
+At genus $g \geq 1$, the bar differential satisfies
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$, and the
+Maurer--Cartan element $\Theta_\cA$ encodes all genus
+corrections. But the ambient complex
+$\mathbf{C}_g(\cA) = R\Gamma(\Mbar_g, \cZ_\cA)$ receives
+contributions from both $\cA$ and its dual. Without the
+Lagrangian decomposition, these contributions are entangled:
+one cannot extract the universal part $\kappa \cdot \lambda_g$
+because the cohomology of $\Mbar_g$ carries mixed classes
+from both sides.
+
+Theorem~C provides the polarization: the Verdier involution
+decomposes $\mathbf{C}_g$ into eigenspaces, and the scalar
+projection of this decomposition yields the complementarity
+constraint $\kappa + \kappa' = K$. This constraint is the
+input to the genus universality argument: the fact that the
+scalar shadow factors through $\kappa$ alone, at every genus,
+is a consequence of the polarization being Lagrangian (each
+summand carries half the information).
+\end{proof}
+
+The geometric input is the \emph{Verdier involution}: the
+existence of a functorial duality on sheaves on $\Mbar_g$
+that exchanges the bar complex of $\cA$ with that of $\cA^!$.
+This requires the moduli space $\Mbar_g$ as a smooth
+Deligne--Mumford stack with Poincar\'{e} duality.
+
+\subsection{D identifies the scalar shadow}
+
+\begin{proposition}[D is necessary for H]
+\label{prop:D-necessary}
+Without Theorem~D, the coefficient ring of the genus tower
+is unidentified, and Theorem~H cannot distinguish
+polynomial behaviour from more complex coefficient growth.
+\end{proposition}
+
+\begin{proof}
+The genus expansion
+$\sum_g F_g(\cA) \cdot \hbar^{2g} = \kappa \cdot (\Ahat(i\hbar) - 1)$
+shows that all genus invariants are determined by a single
+number $\kappa$. The Maurer--Cartan element $\Theta_\cA$
+lives in the convolution algebra $\gAmod$, whose
+coefficient ring is the chiral Hochschild cohomology
+$\ChirHoch^*(\cA)$. Theorem~D demonstrates that the
+genus tower is not an independent sequence of invariants
+but a single series governed by $\kappa$; this forces the
+question: what constrains $\kappa$ itself?
+
+The answer is Theorem~H. The modular characteristic $\kappa$
+lives in degree~$2$ of $\ChirHoch^*(\cA)$. The deformations
+of $\kappa$ are parametrized by $\ChirHoch^2(\cA)$; the
+obstructions are in $\ChirHoch^3(\cA)$. Theorem~H proves
+$\ChirHoch^3 = 0$: the deformation theory is unobstructed,
+and the coefficient ring is polynomial. Without Theorem~D's
+identification of $\kappa$ as the universal scalar, one
+would not know that the coefficient ring has a single
+generator in degree~$2$; one would only know that genus
+invariants exist.
+\end{proof}
+
+The geometric input is \emph{Faber--Pandharipande
+integration}: the evaluation of $\lambda_g$ on $\Mbar_g$
+produces the numerical coefficients $\Ahat_g$, and the
+factorization through stable graphs uses the clutching
+morphisms on the boundary of $\Mbar_g$.
+
+\subsection{The non-circular routing}
+
+The chain A $\Rightarrow$ B $\Rightarrow$ C $\Rightarrow$ D
+$\Rightarrow$ H might appear circular: Theorem~A uses the
+bar complex, whose higher-genus structure involves
+$\kappa$ (which is computed in Theorem~D). The resolution is
+that the chain has a non-circular anchor.
+
+\begin{remark}[Primitive non-circular anchor]
+\label{rem:non-circular}
+The bar complex $\barB(\cA) = T^c(s^{-1}\Abar)$ and the
+Maurer--Cartan element $\Theta_\cA = D_\cA - d_0$ are
+defined intrinsically, without reference to any theorem.
+The MC equation $d_0\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+is a tautology of the bar differential $D_\cA^2 = 0$.
+
+Theorem~A uses only genus-$0$ data: the twisting morphism
+and the Verdier functor on $\Ran(X)$. Theorem~B uses the
+PBW filtration at genus~$0$. Theorem~C uses the Verdier
+involution on $\Mbar_g$ applied to the objects constructed
+in~A and identified in~B. Theorem~D uses the Lagrangian
+decomposition from~C to extract the scalar shadow $\kappa$,
+which was already present in the definition of $\Theta_\cA$
+but not yet identified as universal. Theorem~H uses the
+concentration result from Koszul duality (Theorem~B) to
+bound the coderivation complex.
+
+The routing is: bar-intrinsic MC element (definition)
+$\to$ adjunction/intertwining (A) $\to$ inversion (B)
+$\to$ polarization (C) $\to$ scalar extraction (D)
+$\to$ coefficient ring (H). Each step uses results from
+the previous step and new geometric input; no step
+requires a result proved later.
+\end{remark}
+
+\subsection{Independence of converses}
+
+The converses of the five implications fail. This is not
+a deficiency; it reflects the fact that each theorem addresses
+a strictly different aspect of the bar complex.
+
+\begin{enumerate}
+\item \emph{H does not imply D.} A polynomial Hilbert series
+ $P(t) = 1 + t^2$ (Virasoro) does not determine
+ $\kappa = c/2$; it constrains $\dim \ChirHoch^2 = 1$
+ (the space where $\kappa$ lives has dimension~$1$) but
+ not the value.
+
+\item \emph{D does not imply C.} The formula
+ $\obs_g = \kappa \cdot \lambda_g$ could hold
+ without a Lagrangian decomposition: one could imagine
+ a non-decomposable ambient complex whose scalar
+ projection still factors through $\kappa$. Theorem~C
+ is stronger; it provides the \emph{reason} for the
+ factorization.
+
+\item \emph{C does not imply B.} The Lagrangian
+ decomposition $Q_g(\cA) \oplus Q_g(\cA^!)$ is
+ meaningful even if bar-cobar inversion fails; one
+ could have a Lagrangian complement indexed by a
+ coalgebra that does not reconstruct~$\cA$. Inversion
+ is a separate condition.
+
+\item \emph{B does not imply A.} One could define bar-cobar
+ inversion without the adjunction formalism: the
+ counit $\varepsilon$ could be a quasi-isomorphism
+ without being part of an adjoint pair. The adjunction
+ gives functoriality; inversion alone does not.
+\end{enumerate}
+
+\subsection{Summary: one new input per step}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+\toprule
+\textbf{Theorem} & \textbf{Output} & \textbf{New input}
+ & \textbf{Problem solved} \\
+\midrule
+A & dual object $\cA^!_\infty$
+ & FM boundary
+ & no dual without adjunction \\
+B & inversion $\Omega(\barB(\cA)) \simeq \cA$
+ & PBW filtration
+ & bar could lose boundary algebra \\
+C & $Q_g(\cA) \oplus Q_g(\cA^!)$
+ & Verdier involution on $\Mbar_g$
+ & no canonical polarization \\
+D & $\obs_g = \kappa \cdot \lambda_g$
+ & Faber--Pandharipande
+ & no distinguished scalar shadow \\
+H & $P(t) = 1 + \dim(\fg) \cdot t + t^2$
+ & coderivation complex
+ & coefficient ring uncontrolled \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Each row adds exactly one geometric tool to the preceding
+rows. The five-step chain is the minimum path from the bare
+bar complex to the complete structural description of the
+modular Koszul dual.
+
+
+%%% ================================================================
+%%% SECTION 9: THE HEISENBERG
+%%% ================================================================
+
+\section{The Heisenberg: complete computation}
+\label{sec:heisenberg}
+
+The Heisenberg algebra $\cH_k$ is the simplest chiral algebra
+that is not a Lie algebra. It has one generator, one double pole,
+and no simple pole. Every clause of every theorem is computable
+in closed form. This section carries out the computation: the five
+theorems verified in a single place, with no step deferred.
+
+\subsection{The algebra}
+
+The Heisenberg chiral algebra $\cH_k$ at level $k \in \mathbf{C}$
+is generated by a single current $J$ of conformal weight $1$, with
+the operator product expansion
+\begin{equation}\label{eq:heis-ope}
+J(z)\, J(w) \;\sim\; \frac{k}{(z-w)^2}\,.
+\end{equation}
+One generator, one OPE pole of order $2$, no simple pole. The
+zeroth product $J_{(0)}J = 0$ (no Lie bracket: the algebra is
+abelian). The first product $J_{(1)}J = k$ (the level is the
+inner product). The augmentation ideal is
+$\overline{\cH}_k = \mathbf{C} \cdot J$, one-dimensional.
+
+The classical $R$-matrix is scalar:
+\begin{equation}\label{eq:heis-rmatrix}
+% AP126: r(z) = k/z; k=0 -> r=0 verified
+r^{\cH}(z) \;=\; \frac{k}{z}\,,
+\end{equation}
+obtained from the OPE double pole by $d\log$ absorption:
+$\mathrm{pole}_r = \mathrm{pole}_{\mathrm{OPE}} - 1 = 2 - 1 = 1$.
+% AP1: kappa(H_k) = k from landscape_census.tex; k=0 -> 0 verified
+The modular characteristic is $\kappa(\cH_k) = \av(r^{\cH}(z)) = k$.
+Since $r(z)$ is already scalar, the averaging map is the identity:
+no matrix structure to erase, no Casimir tensor to contract. The
+Heisenberg is the unique family where the ordered and symmetric
+bars carry exactly the same information.
+
+\subsection{Theorem A for $\cH_k$: bar-cobar adjunction}
+
+The bar complex is the cofree coalgebra on the desuspended
+augmentation ideal:
+\begin{equation}\label{eq:heis-bar}
+\barB(\cH_k) \;=\; T^c(s^{-1}\mathbf{C}\cdot J)
+\;=\;
+\bigoplus_{n \geq 1} (s^{-1}J)^{\otimes n},
+\qquad
+|s^{-1}J| = 1 - 1 = 0.
+\end{equation}
+The bar differential at degree $2$ is the complete computation:
+\begin{equation}\label{eq:heis-bar-diff}
+d_{\barB}[s^{-1}J \,|\, s^{-1}J]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+ \frac{k}{(z_1 - z_2)^2} \cdot d\log(z_1 - z_2)
+\right]
+\;=\; k.
+\end{equation}
+At degree $n \geq 3$, the bar differential involves iterated
+residues that reduce to degree $n-1$ by the Arnold relation. The
+bar cohomology concentrates in bar degree $1$:
+\[
+H^*(\barB(\cH_k))
+\;=\;
+\mathbf{C} \cdot s^{-1}J
+\qquad (\text{degree } -1).
+\]
+The Koszul dual coalgebra is
+$\cH_k^{\mathrm{i}} = \mathbf{C} \cdot s^{-1}J$
+(one-dimensional, in degree $-1$). The strict Koszul dual is the
+curved symmetric chiral algebra
+\begin{equation}\label{eq:heis-dual}
+\cH_k^!
+\;=\;
+\mathrm{Sym}^{\mathrm{ch}}(V^*),
+\qquad
+m_0 = -k\omega,
+\end{equation}
+with curvature $m_0 = -k\omega$ encoding the dual level. The
+Verdier intertwining of Theorem~A(ii) recovers $\cH_k^!$ at the
+cohomological level:
+$\mathbb{D}_{\Ran}\, \barB(\cH_k) \simeq (\cH_k^!)_\infty$.
+
+\subsection{Theorem B for $\cH_k$: bar-cobar inversion}
+
+The cobar of the bar recovers the original algebra:
+\begin{equation}\label{eq:heis-cobar}
+\Omega(\barB(\cH_k))
+\;\xrightarrow{\;\sim\;}\;
+\cH_k.
+\end{equation}
+The PBW spectral sequence collapses at $E_2$ because the bar
+cohomology is already concentrated in degree~$1$: the associated
+graded is quadratic Koszul in the classical sense (the relation
+space is one-dimensional, generated by $J \otimes J - k$).
+
+Bar-cobar inversion for $\cH_k$ is \emph{unconditional at all
+genera}. At genus $g \geq 1$, the fiberwise bar differential
+satisfies
+$d_{\mathrm{fib}}^2 = k \cdot \omega_g$
+with scalar curvature. The Ext vanishing condition of
+Theorem~\ref{thm:bar-cobar-inversion}(ii) is automatic: the
+OPE has a single double pole and no simple pole, so there are
+no Lie brackets to obstruct and no higher-order collisions to
+produce non-trivial Ext groups. The absence of a simple pole
+($J_{(0)}J = 0$) is the algebraic reason that $\cH_k$ is the
+simplest non-trivial test case for every theorem in the
+programme.
+
+\subsection{Theorem C for $\cH_k$: complementarity}
+
+The Koszul dual has modular characteristic
+$\kappa(\cH_k^!) = -k$: the curvature $m_0 = -k\omega$ encodes
+the opposite level. The complementarity sum is
+\begin{equation}\label{eq:heis-complementarity}
+% AP24: K=0 for Heisenberg (family-specific, not universal)
+\kappa(\cH_k) + \kappa(\cH_k^!) \;=\; k + (-k) \;=\; 0
+\;=\; K(\cH_k).
+\end{equation}
+The Koszul complementarity conductor $K = 0$: the Heisenberg
+is in the class of algebras where duality reverses the sign of
+$\kappa$.
+
+The Lagrangian decomposition of Theorem~\ref{thm:complementarity}
+is visible by inspection. The center local system
+$\cZ_{\cH_k}$ on $\Mbar_g$ is the constant sheaf (the center of
+$\cH_k$ is $\mathbf{C}$, with no monodromy). The ambient
+complex
+$\mathbf{C}_g(\cH_k) = R\Gamma(\Mbar_g, \cZ_{\cH_k})
+= H^*(\Mbar_g, \mathbf{C})$
+decomposes into the Hodge eigenspaces of the Verdier involution,
+and the two Lagrangian summands $Q_g(\cH_k)$ and $Q_g(\cH_k^!)$
+are exchanged by $\kappa \mapsto -\kappa$.
+
+\subsection{Theorem D for $\cH_k$: the genus expansion}
+
+The Heisenberg is a uniform-weight algebra (single generator of
+conformal weight $1$), so the genus expansion takes the
+unconditional form
+\begin{equation}\label{eq:heis-obs}
+% AP32: (UNIFORM-WEIGHT) tag
+\obs_g(\cH_k) \;=\; k \cdot \lambda_g
+\qquad (g \geq 1)
+\quad\text{(UNIFORM-WEIGHT)}.
+\end{equation}
+No cross-channel correction: $\delta F_g^{\mathrm{cross}} = 0$
+because there is only one conformal weight.
+
+The genus-$1$ free energy:
+\begin{equation}\label{eq:heis-F1}
+F_1(\cH_k) \;=\; \frac{k}{24}\,.
+\end{equation}
+% C24 check: F_1 = kappa/24 = k/24
+
+The full generating function is
+\begin{equation}\label{eq:heis-generating}
+\sum_{g \geq 1} F_g(\cH_k) \cdot \hbar^{2g}
+\;=\;
+k \cdot \left(\frac{\hbar/2}{\sin(\hbar/2)} - 1\right)
+\;=\;
+\frac{k}{24}\,\hbar^2
++ \frac{7k}{5760}\,\hbar^4
++ \frac{31k}{967680}\,\hbar^6
++ \cdots
+\end{equation}
+with coefficients
+$F_g(\cH_k) = k \cdot \frac{2^{2g-1} - 1}{2^{2g-1}}
+\cdot \frac{|B_{2g}|}{(2g)!}$,
+where $B_{2g}$ is the $2g$-th Bernoulli number.
+
+\begin{remark}[The chiral partition function]
+\label{rem:heis-partition}
+The genus-$1$ chiral partition function of $\cH_k$ is
+\[
+Z_{\mathrm{ch}}(\cH_k)
+\;=\;
+\frac{1}{\eta(\tau)}\,,
+\qquad
+\eta(\tau) = q^{1/24}\prod_{n \geq 1}(1 - q^n),
+\]
+where $q = e^{2\pi i\tau}$. The leading exponent $q^{-1/24}$
+encodes $F_1 = k/24$ (at $k = 1$). The product form is the
+Euler function; its reciprocal counts states at each energy
+level.
+\end{remark}
+
+\begin{remark}[$R$-matrix and averaging]\label{rem:heis-averaging}
+The $R$-matrix $r^{\cH}(z) = k/z$ is already scalar, so
+$\av(r^{\cH}(z)) = k = \kappa(\cH_k)$ with no information
+lost. For every other family, the averaging map $\av$ compresses
+a matrix-valued function of $z$ into a single number. The
+Heisenberg is the unique base case where the compression is
+lossless. For non-abelian affine Kac--Moody, the averaging
+discards the Casimir tensor $\Omega$ and the $z$-dependence; for
+the Virasoro algebra, it discards the stress tensor $T$ and the
+cubic pole structure. The ordered bar sees the full $R$-matrix;
+the symmetric bar sees only $\kappa$.
+\end{remark}
+
+\subsection{Theorem H for $\cH_k$: chiral Hochschild cohomology}
+
+The chiral Hochschild cohomology of $\cH_k$ is three-dimensional:
+\begin{equation}\label{eq:heis-chirhoch}
+\ChirHoch^n(\cH_k)
+\;=\;
+\begin{cases}
+\mathbf{C} & n = 0, \\
+\mathbf{C} & n = 1, \\
+\mathbf{C} & n = 2, \\
+0 & n \geq 3.
+\end{cases}
+\end{equation}
+The Hilbert polynomial is $P_{\cH_k}(t) = 1 + t + t^2$.
+
+The three generators have transparent algebraic meaning:
+
+\begin{enumerate}
+\item \emph{Degree $0$: the center.} $\ChirHoch^0(\cH_k)
+ = Z(\cH_k) = \mathbf{C}$. The center consists of scalars;
+ $J$ has no zeroth product ($J_{(0)} = 0$), so $J$ itself
+ is central, but $J$ is not a scalar; the degree-$0$
+ Hochschild class is the identity.
+
+\item \emph{Degree $1$: the outer derivation.}
+ $\ChirHoch^1(\cH_k) = \mathbf{C}$, generated by the
+ derivation $D \colon J \mapsto \mathbf{1}$ that maps the
+ current to the vacuum. This derivation is outer: it is not
+ of the form $a \mapsto a_{(0)}b$ for any $b \in \cH_k$,
+ because $J_{(0)} = 0$ (no simple pole in the OPE). The
+ existence of an outer derivation is the Heisenberg's
+ distinguishing feature relative to the Virasoro algebra,
+ where $\ChirHoch^1 = 0$.
+
+\item \emph{Degree $2$: the level deformation.}
+ $\ChirHoch^2(\cH_k) = \mathbf{C}$, generated by the
+ infinitesimal deformation of the OPE coefficient
+ $k \mapsto k + \epsilon$. This is the dual of the center:
+ the Verdier pairing identifies
+ $\ChirHoch^2(\cH_k) \cong Z(\cH_k^!)^\vee = \mathbf{C}$,
+ consistent with the general formula~\eqref{eq:hilbert-poly}.
+\end{enumerate}
+
+\subsection{The shadow tower and the derived center}
+
+The shadow tower $\{S_r(\cH_k)\}_{r \geq 2}$ terminates at
+$r = 2$:
+\[
+S_2 = \kappa = k, \qquad
+S_r = 0 \;\text{ for all } r \geq 3.
+\]
+The critical discriminant $\Delta = 8\kappa S_4 = 0$: the
+Heisenberg is class~G (Gaussian), the simplest archetype. The
+shadow tower carries no information beyond $\kappa$ itself.
+
+The derived chiral center is
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cH_k)
+= \ChirHoch^*(\cH_k) = \mathbf{C} \oplus \mathbf{C}[1]
+\oplus \mathbf{C}[2]$,
+three-dimensional ($k \neq 0$). This is strictly larger than
+the naive center $Z(\cH_k) = \mathbf{C}$: the Ext$^1$ and
+Ext$^2$ contributions are invisible to the commutant.
+
+\begin{remark}[Abelian Chern--Simons]
+\label{rem:abelian-cs}
+The Heisenberg algebra $\cH_k$ is the boundary algebra of abelian
+Chern--Simons theory at level $k$: the $3$-dimensional bulk is
+$U(1)_k$ Chern--Simons on a $3$-manifold $M^3$ with
+$\partial M^3 = \Sigma$. The modular characteristic
+$\kappa = k$ is the Chern--Simons level; the genus expansion
+$F_g = k \cdot \Ahat_g$ is the perturbative expansion of the
+Chern--Simons partition function. The complementarity sum
+$K = 0$ reflects the topological nature of the theory: bulk and
+boundary carry opposite orientations.
+\end{remark}
+
+\subsection{Summary: the Heisenberg as base computation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $\cH_k$}
+ & \textbf{Key simplification} \\
+\midrule
+A & $\barB(\cH_k) = T^c(s^{-1}\mathbf{C} \cdot J)$,\;
+   $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+ & one generator, degree-$1$ concentration \\
+B & $\Omega(\barB(\cH_k)) \simeq \cH_k$, all genera
+ & no Lie bracket, Ext automatic \\
+C & $\kappa + \kappa' = 0$
+ & Verdier reverses sign \\
+D & $F_g = k \cdot \Ahat_g$ (UNIFORM-WEIGHT)
+ & single weight, no cross-channel \\
+H & $P(t) = 1 + t + t^2$
+ & outer derivation from abelian OPE \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Every other family is a deformation of this computation. Affine
+Kac--Moody adds a simple pole (Lie bracket); the Virasoro algebra
+adds a quartic pole (stress tensor) and the cubic $R$-matrix
+structure; the $\cW$-algebras add higher-spin generators and
+multi-channel interactions. The five theorems persist, but their
+proofs become harder: bar cohomology is still concentrated in
+degree~$1$ (Koszul), but the spectral sequence argument requires
+PBW-type tools; the complementarity sum is no longer zero; the
+genus expansion acquires cross-channel corrections for multi-weight
+algebras; the chiral Hochschild loses its degree-$1$ component.
+The Heisenberg computation is the base case that makes the pattern
+visible.
+
+
+%%% ================================================================
+%%% SECTION 10: THE STANDARD LANDSCAPE
+%%% ================================================================
+
+\section{The standard landscape}
+\label{sec:landscape}
+
+The five theorems hold for every chirally Koszul chiral algebra.
+The \emph{standard landscape} is the collection of families for
+which every invariant has been computed: the modular characteristic
+$\kappa$, the Koszul complementarity conductor $K$, the critical
+discriminant $\Delta$, the complexity class, the shadow depth
+$r_{\max}$, and the classical $R$-matrix. This section records
+the census.
+
+\subsection{The census table}
+
+% AP1: all kappa from landscape_census.tex, cross-checked against compute/
+% AP126: all r-matrix entries carry level prefix; k=0 -> r=0 verified for KM
+% AP136: W_N uses c*(H_N - 1), NOT c*H_{N-1}; N=2 check: c/2 = kappa(Vir)
+
+\begin{table}[ht]
+\centering
+\caption{Invariants of the standard landscape.
+All $R$-matrices in the trace-form convention;
+$\Omega$ is the inverse Killing form Casimir;
+$d = \dim\fg$, $t = k + h^\vee$.}
+\label{tab:census}
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+\textbf{Family}
+ & $c$
+ & $\kappa$
+ & $K$
+ & $\Delta$
+ & \textbf{Class}
+ & $r_{\max}$
+ & $R$\textbf{-matrix} \\
+\midrule
+\multicolumn{8}{@{}l}{\textit{Abelian (class G, Gaussian)}} \\[2pt]
+$\cH_k$ (Heisenberg)
+ & $1$
+ & $k$
+ & $0$
+ & $0$
+ & G & $2$
+ & $k/z$ \\
+Free fermion $\psi$
+ & $1/2$
+ & $1/4$
+ & $0$
+ & $0$
+ & G & $2$
+ & $\tfrac{1}{2z}$ \\
+Lattice $V_\Lambda$
+ & $\mathrm{rank}(\Lambda)$
+ & $\mathrm{rank}(\Lambda)$
+ & $0$
+ & $0$
+ & G & $2$
+ & Heisenberg \\[4pt]
+\midrule
+\multicolumn{8}{@{}l}{\textit{Affine Kac--Moody (class L, Lie)}} \\[2pt]
+$\widehat{\fsl}_2$ at level $k$
+ & $\dfrac{3k}{k+2}$
+ & $\dfrac{3(k+2)}{4}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{\fsl}_3$ at level $k$
+ & $\dfrac{8k}{k+3}$
+ & $\dfrac{4(k+3)}{3}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{\mathfrak{so}}_8$ ($D_4$)
+ & $\dfrac{28k}{k+6}$
+ & $\dfrac{7(k+6)}{3}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{G}_2$
+ & $\dfrac{14k}{k+4}$
+ & $\dfrac{7(k+4)}{4}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{F}_4$
+ & $\dfrac{52k}{k+9}$
+ & $\dfrac{26(k+9)}{9}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{E}_6$
+ & $\dfrac{78k}{k+12}$
+ & $\dfrac{13(k+12)}{4}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{E}_7$
+ & $\dfrac{133k}{k+18}$
+ & $\dfrac{133(k+18)}{36}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+$\widehat{E}_8$
+ & $\dfrac{248k}{k+30}$
+ & $\dfrac{62(k+30)}{15}$
+ & $0$
+ & $0$
+ & L & $3$
+ & $k\,\Omega/z$ \\[6pt]
+\midrule
+\multicolumn{8}{@{}l}{\textit{Free fields (class C/G)}} \\[2pt]
+$\beta\gamma$ (weight $\lambda$)
+ & $2(6\lambda^2 - 6\lambda + 1)$
+ & $1$
+ & $0$
+ & special
+ & C & $4$
+ & constant \\[2pt]
+$bc$ ghosts (weight $\lambda$)
+ & $1 - 3(2\lambda-1)^2$
+ & $c_{bc}/2$
+ & $0$
+ & $0$
+ & G & $2$
+ & Clifford \\[4pt]
+\midrule
+\multicolumn{8}{@{}l}{\textit{$\cW$-algebras and Virasoro (class M, Mixed)}} \\[2pt]
+$\mathrm{Vir}_c$
+ & $c$
+ & $c/2$
+ & $13$
+ & $\neq 0$
+ & M & $\infty$
+ & $\dfrac{c/2}{z^3} + \dfrac{2T}{z}$ \\[6pt]
+$\cW_3$ ($\fsl_3$ DS)
+ & $c$
+ & $5c/6$
+ & $250/3$
+ & $\neq 0$
+ & M & $\infty$
+ & matrix-valued \\[2pt]
+$\cW_N$ ($\fsl_N$ DS)
+ & $c$
+ & $c(H_N - 1)$
+ & $N$-dep.
+ & $\neq 0$
+ & M & $\infty$
+ & matrix-valued \\[4pt]
+\midrule
+\multicolumn{8}{@{}l}{\textit{Non-principal $\cW$-algebras}} \\[2pt]
+$\mathrm{BP}_k$ (Bersh.--Pol.)
+ & $2 - \dfrac{24(k+1)^2}{k+3}$
+ & $c/6$
+ & $98/3$
+ & $\neq 0$
+ & M & $\infty$
+ & multi-channel \\[4pt]
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+In the table:
+$H_N = \sum_{j=1}^{N} 1/j$ is the $N$-th harmonic number;
+$K = \kappa(\cA) + \kappa(\cA^!)$ is the Koszul complementarity
+conductor; $\Delta = 8\kappa S_4$ is the critical discriminant;
+$r_{\max}$ is the shadow depth (the highest degree at which $S_r
+\neq 0$, or $\infty$ if the tower does not terminate).
+
+\subsection{The general affine Kac--Moody formula}
+
+For a simple Lie algebra $\fg$ of dimension $d = \dim\fg$ and
+dual Coxeter number $h^\vee$, the affine Kac--Moody vertex
+algebra $V_k(\fg)$ at level $k$ has
+\begin{equation}\label{eq:km-kappa}
+% AP1: kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v); k=0 -> dim(g)/2; k=-h^v -> 0
+\kappa(V_k(\fg))
+\;=\;
+\frac{d \cdot (k + h^\vee)}{2h^\vee}\,.
+\end{equation}
+The formula is derived from the trace-form classical
+$R$-matrix $r(z) = k\,\Omega/z$:
+\[
+% AP126: k=0 -> r=0 verified; k=-h^v -> critical level
+\av(r(z)) \;=\; \frac{k \cdot d}{2h^\vee}
+\;=\; \kappa - \frac{d}{2}\,,
+\]
+where the shift $d/2$ is the Sugawara contribution from the
+simple-pole self-contraction through the adjoint Casimir eigenvalue
+$2h^\vee$. The full modular characteristic is
+$\kappa = \av(r(z)) + d/2 = d(k + h^\vee)/(2h^\vee)$.
+
+Two boundary checks:
+\begin{enumerate}
+\item At $k = 0$ (abelian limit):
+ $\kappa(V_0(\fg)) = d/2 \neq 0$. The $R$-matrix
+ $r(z) = 0$ vanishes, but the Sugawara shift persists.
+\item At $k = -h^\vee$ (critical level):
+ $\kappa(V_{-h^\vee}(\fg)) = 0$. All monodromy becomes
+ trivial; the Feigin--Frenkel center appears; Koszulness
+ fails.
+\end{enumerate}
+
+The Koszul duality acts by $k \mapsto -k - 2h^\vee$ (the
+Feigin--Frenkel involution), giving
+$\kappa(V_k(\fg)^!) = -d(k + h^\vee)/(2h^\vee) = -\kappa$,
+so $K = 0$ for all affine Kac--Moody algebras. The
+complementarity sum $c + c'$ is $2d$, independent of $k$.
+
+\begin{example}[Specific Lie algebras]\label{ex:km-specific}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccccc}
+\toprule
+$\fg$ & $d$ & $h^\vee$ & $\kappa$ & $c + c'$ & $\kappa|_{k=0}$ \\
+\midrule
+$\fsl_2$ & $3$ & $2$ & $3(k+2)/4$ & $6$ & $3/2$ \\
+$\fsl_3$ & $8$ & $3$ & $4(k+3)/3$ & $16$ & $4$ \\
+$\mathfrak{so}_8$ & $28$ & $6$ & $7(k+6)/3$ & $56$ & $14$ \\
+$G_2$ & $14$ & $4$ & $7(k+4)/4$ & $28$ & $7$ \\
+$F_4$ & $52$ & $9$ & $26(k+9)/9$ & $104$ & $26$ \\
+$E_6$ & $78$ & $12$ & $13(k+12)/4$ & $156$ & $39$ \\
+$E_7$ & $133$ & $18$ & $133(k+18)/36$ & $266$ & $133/2$ \\
+$E_8$ & $248$ & $30$ & $62(k+30)/15$ & $496$ & $124$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{example}
+
+\subsection{The $R$-matrix census}
+
+The classical $R$-matrix $r_\cA(z) =
+\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ is the binary collision
+residue. Its pole structure is determined by the OPE pole order
+via $d\log$ absorption:
+\begin{equation}\label{eq:pole-absorption}
+\mathrm{pole}_r \;=\; \mathrm{pole}_{\mathrm{OPE}} - 1.
+\end{equation}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccl}
+\toprule
+\textbf{Family} & \textbf{OPE pole}
+ & $r$\textbf{-matrix pole} & $r(z)$ \\
+\midrule
+$\cH_k$ & $2$ & $1$ & $k/z$ (scalar) \\
+$V_k(\fg)$ & $2$ & $1$
+ & $k\,\Omega/z$ (matrix, trace-form) \\
+$\mathrm{Vir}_c$ & $4$ & $3$
+ & $(c/2)/z^3 + 2T/z$ (cubic $+$ simple) \\
+$\cW_N$ & $2N$ & $2N-1$
+ & matrix-valued, $N{-}1$ channels \\
+$\beta\gamma$ & $1$ & $0$
+ & constant \\
+$bc$ & $1$ & $0$
+ & Clifford-valued \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The Virasoro $R$-matrix has a cubic pole and a simple pole. The
+cubic pole encodes the central charge; the simple pole encodes
+the stress tensor. It is \emph{not} quartic: the quartic pole of
+the $T(z)\,T(w)$ OPE is absorbed by $d\log$.
+
+\subsection{The four complexity classes}
+
+The shadow obstruction tower $\{S_r\}_{r \geq 2}$ partitions the
+landscape into four classes. The partition is determined by two
+invariants: $S_4$ (the quartic shadow coefficient) and $\kappa$.
+
+\begin{definition}[Complexity class]\label{def:complexity-class}
+Let $\Delta = 8\kappa S_4$ be the critical discriminant. The
+four classes are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textbf{Class G} (Gaussian): $S_r = 0$ for all
+ $r \geq 3$. Shadow depth $r_{\max} = 2$. The shadow
+ tower carries only $\kappa$; no nonlinear corrections.
+ $\Delta = 0$ because $S_4 = 0$.
+
+\item \textbf{Class L} (Lie): $S_3 \neq 0$, $S_4 = 0$.
+ Shadow depth $r_{\max} = 3$. A single Massey product
+ appears at degree $3$ (the Lie bracket), then the tower
+ terminates. $\Delta = 0$ because $S_4 = 0$.
+
+\item \textbf{Class C} (Contact): $S_3 = 0$, $S_4 \neq 0$,
+ but $\kappa = 0$ or special cancellation gives
+ $\Delta = 0$. Shadow depth $r_{\max} = 4$. The
+ $\beta\gamma$ system is the witness: $r_{\max} = 4$ but
+ $S_r = 0$ for $r \geq 5$.
+
+\item \textbf{Class M} (Mixed): $\Delta \neq 0$. Shadow
+ depth $r_{\max} = \infty$. The tower does not
+ terminate; every $S_r$ is nonzero. The Virasoro
+ algebra and all principal $\cW_N$-algebras are class~M.
+\end{enumerate}
+\end{definition}
+
+The partition is \emph{forced}: the critical discriminant
+$\Delta$ governs a dichotomy. If $\Delta = 0$ (i.e.\
+$\kappa = 0$ or $S_4 = 0$), the MC equation at degree $4$
+is automatically satisfied, and the tower can terminate. If
+$\Delta \neq 0$, the degree-$4$ MC equation produces a
+non-trivial $S_5$, which feeds degree $5$ to produce $S_6$,
+and so on: the tower is infinite. There is no class with
+shadow depth $3$ or any finite value $\geq 3$ other than $4$:
+the algebraic depth $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$
+has a gap.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccl}
+\toprule
+\textbf{Class} & $S_3$ & $S_4$ & $\Delta$
+ & \textbf{Families} \\
+\midrule
+G & $0$ & $0$ & $0$
+ & Heisenberg, lattice, free fermion, $bc$ \\
+L & $\neq 0$ & $0$ & $0$
+ & Affine Kac--Moody (all $\fg$, generic $k$) \\
+C & $0$ & $\neq 0$ & $0$
+ & $\beta\gamma$ \\
+M & $\neq 0$ & $\neq 0$ & $\neq 0$
+ & Virasoro, $\cW_N$, Bershadsky--Polyakov \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Free-field central charges}
+
+The free-field families provide essential boundary data.
+
+\emph{Fermionic $bc$ ghosts} (conformal weights $\lambda$
+and $1 - \lambda$):
+\begin{equation}\label{eq:cbc}
+% C5: c_bc(lambda) = 1 - 3(2*lambda-1)^2; lambda=1/2 -> 1; lambda=2 -> -26
+c_{bc}(\lambda) \;=\; 1 - 3(2\lambda - 1)^2.
+\end{equation}
+At $\lambda = 1/2$: $c_{bc} = 1$ (a single Dirac fermion).
+At $\lambda = 2$: $c_{bc} = -26$ (the reparametrization ghosts
+of the bosonic string).
+
+\emph{Bosonic $\beta\gamma$ system} (conformal weights
+$\lambda$ and $1 - \lambda$):
+\begin{equation}\label{eq:cbg}
+% C6: c_betagamma(lambda) = 2(6*lambda^2 - 6*lambda + 1); lambda=1/2 -> -1; lambda=2 -> 26
+c_{\beta\gamma}(\lambda) \;=\; 2(6\lambda^2 - 6\lambda + 1).
+\end{equation}
+At $\lambda = 1/2$: $c_{\beta\gamma} = -1$ (the symplectic boson).
+At $\lambda = 2$: $c_{\beta\gamma} = 26$.
+
+The complementarity relation
+\begin{equation}\label{eq:bc-bg-complementarity}
+% C7: c_betagamma + c_bc = 0 for all lambda
+c_{\beta\gamma}(\lambda) + c_{bc}(\lambda) \;=\; 0
+\qquad \text{for all } \lambda
+\end{equation}
+is the ghost cancellation: bosonic and fermionic partners
+contribute opposite central charges. At $\lambda = 2$,
+this is the string-theoretic statement $26 + (-26) = 0$.
+
+\subsection{The Virasoro self-dual point}
+
+Under Koszul duality, the Virasoro algebra satisfies
+$c \mapsto 26 - c$. The modular characteristic:
+\begin{equation}\label{eq:vir-kappa-dual}
+% AP1: kappa(Vir_c) = c/2; c=13 -> 13/2 self-dual
+\kappa(\mathrm{Vir}_c) = c/2,
+\qquad
+\kappa(\mathrm{Vir}_{26-c}) = (26-c)/2.
+\end{equation}
+The complementarity sum is $K = c/2 + (26-c)/2 = 13$, constant
+and independent of $c$. The self-dual point is
+\begin{equation}\label{eq:vir-self-dual}
+c = 13\colon \quad \kappa = \kappa' = 13/2.
+\end{equation}
+This is the unique point where the Lagrangian decomposition of
+Theorem~\ref{thm:complementarity} is symmetric: the two summands
+$Q_g(\mathrm{Vir}_{13})$ and $Q_g(\mathrm{Vir}_{13}^!)$ are
+isomorphic.
+
+\begin{warning}[The self-dual point is $c = 13$, not $c = 26$]
+\label{warn:self-dual}
+The complementarity sum $c + c' = 26$ involves both central
+charges; the self-dual \emph{point} is $c = c' = 13$, the
+fixed point of $c \mapsto 26 - c$. Confusing the sum with the
+fixed point is a persistent error.
+\end{warning}
+
+\subsection{The $\cW_N$ family}
+
+The principal $\cW$-algebra $\cW_N$ is the Drinfeld--Sokolov
+reduction of $\widehat{\fsl}_N$. It has $N - 1$ strong generators
+of conformal weights $2, 3, \ldots, N$. The modular characteristic:
+\begin{equation}\label{eq:wn-kappa}
+% AP1: kappa(W_N) = c*(H_N - 1), H_N = sum_{j=1}^N 1/j
+% AP136: N=2 check: H_2 - 1 = 1/2, kappa(W_2) = c/2 = kappa(Vir) (consistent)
+\kappa(\cW_N) \;=\; c \cdot (H_N - 1),
+\qquad
+H_N = \sum_{j=1}^{N} \frac{1}{j}\,.
+\end{equation}
+At $N = 2$: $H_2 - 1 = 3/2 - 1 = 1/2$, so
+$\kappa(\cW_2) = c/2 = \kappa(\mathrm{Vir}_c)$, consistent
+with $\cW_2 = \mathrm{Vir}$.
+At $N = 3$: $H_3 - 1 = 1 + 1/2 + 1/3 - 1 = 5/6$, so
+$\kappa(\cW_3) = 5c/6$.
+
+All $\cW_N$-algebras with $N \geq 2$ are class~M: the shadow
+tower is infinite and the critical discriminant $\Delta \neq 0$.
+As multi-weight algebras (generators at weights $2, \ldots, N$),
+at genus $g \geq 2$ the full free energy acquires a
+cross-channel correction $\delta F_g^{\mathrm{cross}}$
+from mixed conformal-weight interactions. The scalar formula
+$\obs_g = \kappa \cdot \lambda_g$ is unconditional at
+genus~$1$; at higher genera the diagonal term persists but
+$\delta F_g^{\mathrm{cross}} \neq 0$ (ALL-WEIGHT).
+
+\subsection{The Bershadsky--Polyakov algebra}
+
+The Bershadsky--Polyakov algebra $\mathrm{BP}_k =
+\cW_3^{(2)}(k)$ is the subregular DS reduction of
+$\widehat{\fsl}_3$. It has four generators:
+$J$ (weight $1$), $G^\pm$ (weight $3/2$), and $T$ (weight $2$).
+The central charge:
+\[
+c(\mathrm{BP}_k) = 2 - \frac{24(k+1)^2}{k+3}\,.
+\]
+The modular characteristic $\kappa(\mathrm{BP}_k) = c/6$, and
+the Koszul complementarity conductor:
+\begin{equation}\label{eq:bp-conductor}
+% C20/C31: K_BP = 196; self-dual k = -3; kappa(BP) + kappa(BP^!) = 98/3
+K(\mathrm{BP})
+\;=\;
+\kappa(\mathrm{BP}_k) + \kappa(\mathrm{BP}_{-k-6})
+\;=\; \frac{98}{3}\,.
+\end{equation}
+The self-dual level is $k = -3$, at which
+$\kappa(\mathrm{BP}_{-3}) = 49/3$. The full Koszul conductor
+(summing central charges) is $K_{\mathrm{BP}} = c(k) + c(-k-6)
+= 196$.
+
+\subsection{The Hilbert polynomial census}
+
+\begin{proposition}[Hilbert polynomials across the landscape]
+\label{prop:hilbert-census}
+The chiral Hochschild Hilbert polynomial for the standard
+families:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Family} & $P(t)$
+ & $\dim \ChirHoch^1$ \\
+\midrule
+$\cH_k$ (Heisenberg)
+ & $1 + t + t^2$ & $1$ \\
+Lattice $V_\Lambda$ ($\mathrm{rank} = r$)
+ & $1 + r\,t + t^2$ & $r$ \\
+$V_k(\fg)$ (affine Kac--Moody)
+ & $1 + \dim(\fg) \cdot t + t^2$ & $\dim(\fg)$ \\
+$\mathrm{Vir}_c$ (generic)
+ & $1 + t^2$ & $0$ \\
+$\cW_N$ (generic)
+ & $1 + t^2$ & $0$ \\
+$\mathrm{BP}_k$ (generic)
+ & $1 + t + t^2$ & $1$ \\
+$\beta\gamma$
+ & $1 + t + t^2$ & $1$ \\
+$bc$
+ & $1 + t^2$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+The degree-$1$ component $\ChirHoch^1(\cA)$ is the space of
+outer chiral derivations. Its dimension distinguishes families:
+affine Kac--Moody has $\dim(\fg)$ outer derivations (one per
+generator), reflecting the Lie algebra of infinitesimal
+automorphisms; the Virasoro algebra has none (no non-trivial
+chiral derivations at generic $c$). The degree-$0$ and degree-$2$
+terms are always present (center and dual center); the
+degree-$1$ term is the variable.
+
+\subsection{Three features of the census}
+
+Three structural features of the census table
+(Table~\ref{tab:census}) are visible only across the full
+landscape.
+
+\emph{Shadow depth is not monotone in OPE pole order.}
+The $\beta\gamma$ system has OPE pole order $p_{\max} = 1$
+(a single simple pole) yet shadow depth $r_{\max} = 4$, while
+affine Kac--Moody has $p_{\max} = 2$ yet $r_{\max} = 3$.
+Shadow depth is an invariant of the obstruction tower, not of the
+OPE; the $\beta\gamma$ system separates the two invariants.
+
+\emph{The complementarity conductor $K$ is family-specific, not
+universal.} It is $0$ for Kac--Moody and free fields, $13$ for
+Virasoro, $250/3$ for $\cW_3$, $98/3$ for Bershadsky--Polyakov.
+There is no universal relation between $\kappa$ and $\kappa'$;
+the relation $\kappa + \kappa' = K$ is a theorem about each
+family separately.
+
+\emph{The $R$-matrix column compresses to the $\kappa$ column
+under averaging.} Every entry demonstrates the same phenomenon:
+$\av(r_\cA(z)) = \kappa(\cA)$ (for abelian algebras, directly;
+for non-abelian Kac--Moody, after accounting for the Sugawara
+shift). The matrix-valued, $z$-dependent classical $R$-matrix of
+the ordered bar collapses to a single scalar under the
+$\Sigma_2$-coinvariant projection. Every family with
+$r_{\max} \geq 3$ has an ordered bar that carries strictly more
+information than the symmetric bar; the five theorems extract
+the $\Sigma_n$-invariant content of this richer structure.
+
+
+%%% ================================================================
+%%% BIBLIOGRAPHY (SCAFFOLD)
+%%% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral Algebras},
+AMS Colloquium Publications, vol.~51, 2004.
+
+\bibitem{BGS96}
+A.~Beilinson, V.~Ginzburg, and W.~Soergel,
+Koszul duality patterns in representation theory,
+\emph{J.\ Amer.\ Math.\ Soc.}\ \textbf{9} (1996), no.~2, 473--527.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\emph{Factorization Algebras in Quantum Field Theory}, vols.~1--2,
+Cambridge University Press, 2017--2021.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+Chiral Koszul duality,
+\emph{Selecta Math.\ (N.S.)}\ \textbf{18} (2012), no.~1, 27--87.
+
+\bibitem{GLZ22}
+J.~Gui, H.~Li, and J.~Zeng,
+Quadratic duality for chiral algebras,
+\emph{Adv.\ Math.}\ \textbf{408} (2022), Paper no.~108566.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic Operads},
+Grundlehren der mathematischen Wissenschaften, vol.~346,
+Springer, 2012.
+
+\bibitem{Mok25}
+S.~Mokhov,
+Logarithmic Fulton--MacPherson compactifications and modular bar
+complexes,
+preprint, 2025.
+
+\bibitem{MS24}
+F.~Malikov and V.~Schechtman,
+Homotopy chiral algebras,
+preprint, 2024.
+
+\bibitem{Priddy70}
+S.~Priddy,
+Koszul resolutions,
+\emph{Trans.\ Amer.\ Math.\ Soc.}\ \textbf{152} (1970), 39--60.
+
+\end{thebibliography}
+
+\end{document}

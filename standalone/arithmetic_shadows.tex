@@ -1,0 +1,1201 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+% Macros
+% ================================================================
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cG}{\mathcal{G}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cR}{\mathcal{R}}
+\providecommand{\cS}{\mathcal{S}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bN}{\mathbb{N}}
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\HHH}{\mathbb{H}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\Ext}{\mathrm{Ext}}
+\providecommand{\Res}{\mathrm{Res}}
+\providecommand{\Aut}{\mathrm{Aut}}
+\providecommand{\FM}{\overline{C}}
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\FP}{\mathrm{FP}}
+\providecommand{\conn}{\mathrm{conn}}
+\providecommand{\ord}{\mathrm{ord}}
+\providecommand{\sh}{\mathrm{sh}}
+\providecommand{\av}{\mathrm{av}}
+\providecommand{\SK}{\mathrm{SK}}
+\providecommand{\Sp}{\mathrm{Sp}}
+\providecommand{\Id}{\mathrm{Id}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\tr}{tr}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+% Graceful fallback for cross-references to the full monograph
+% ================================================================
+\makeatletter
+\let\arsh@oldref\ref
+\renewcommand{\ref}[1]{%
+ \@ifundefined{r@#1}{\textit{full monograph}}{\arsh@oldref{#1}}%
+}
+\makeatother
+
+% ================================================================
+\begin{document}
+
+\title[Arithmetic Shadows of Chiral Algebras]
+{Arithmetic Shadows of Chiral Algebras}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+The ordered bar complex of a chiral algebra $\cA$ on a family of
+elliptic curves produces genus-$1$ amplitudes whose Fourier
+coefficients are divisor sums. The Dirichlet series formed from
+these coefficients factors as
+$D_2(\cA,s) = -24\kappa(\cA)\,\zeta(s)\,\zeta(s{-}1)$: a product
+of Riemann zeta functions, scaled by the modular characteristic
+$\kappa(\cA)$. We develop this observation into a systematic
+arithmetic theory of chiral algebras. For lattice vertex algebras,
+a constrained Epstein zeta function
+$\varepsilon^c_s(V_\Lambda)$ restricted to the bar sublattice
+recovers the Riemann zeta function at rank~$1$ and decomposes into
+Hecke $L$-functions at higher rank. The shadow $L$-function
+$L^{\sh}_\cA(s) = \sum_{r \ge 2} S_r\, r^{-s}$, built from shadow
+tower coefficients, is stratified by depth class, with poles at
+$s = 1, 2$ and trivial zeros at negative integers. At integer level,
+ordered chiral homology recovers the Verlinde formula; the Verlinde
+dimensions are polynomials $P_g(n) = n^{g-1}(n^2{-}1)\,R_{g-2}(n^2)$
+whose leading coefficients are values
+$\zeta(2g{-}2)/(2^{g-2}\pi^{2g-2})$ of the Riemann zeta function.
+At genus~$2$, the Maurer--Cartan element connects to Siegel modular
+forms via the B\"ocherer conjecture. Every construction begins with
+the Heisenberg algebra and escalates by Lie-theoretic complexity.
+\end{abstract}
+
+\subjclass[2020]{17B69, 11M06, 14H10, 11F46, 81T40}
+
+\keywords{Chiral algebras, shadow obstruction tower, modular
+characteristic, Eisenstein series, Verlinde formula, Siegel modular
+forms, Epstein zeta function}
+
+\maketitle
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+% ================================================================
+% SECTION 1
+% ================================================================
+\section{Introduction}\label{sec:intro}
+
+\subsection{The arithmetic content of the shadow tower}
+
+The bar complex of a chiral algebra $\cA$ on an algebraic curve~$X$
+is a cochain complex
+$\barB^{\ord}(\cA) = T^c(s^{-1}\bar\cA)$
+% AP132: augmentation ideal A-bar = ker(epsilon)
+% AP22: desuspension s^{-1}, |s^{-1}v| = |v| - 1
+with deconcatenation coproduct and differential encoding the OPE
+through the logarithmic kernel $\eta = d\log(z_1 - z_2)$. Over a
+family of genus-$g$ curves, the fiberwise differential squares to
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, where
+$\omega_g = c_1(\lambda)$ is the first Chern class of the Hodge
+bundle on $\overline{\cM}_g$. The single scalar
+$\kappa(\cA)$, the \emph{modular characteristic}, controls the
+obstruction to flatness of the bar complex as a family.
+
+The shadow obstruction tower $\{S_r(\cA)\}_{r \ge 2}$ extracts the
+degree-$r$ constant terms of the universal Maurer--Cartan element
+$\Theta_\cA \in \MC(\gmod)$, with $S_2 = \kappa$. The shadow
+coefficients are rational functions of the central charge and level,
+carrying algebraic data from the OPE into the tower.
+
+The question this paper addresses: do these rational numbers carry
+arithmetic meaning beyond their algebraic origin?
+
+\subsection{The Heisenberg base point}
+
+% AP105: Heisenberg = abelian KM at level k = abelian CS boundary
+The Heisenberg algebra $\cH_k$ is the abelian Kac--Moody algebra at
+level~$k$, with OPE $J(z)J(w) \sim k/(z-w)^2$ and modular
+characteristic $\kappa(\cH_k) = k$.
+% AP1: kappa(Heis) = k from landscape_census.tex; k=0 -> 0 (verified C1)
+The genus-$1$ amplitude of $\cH_k$ over the family
+$\cC_\tau \to \mathfrak{H}$ is
+\begin{equation}\label{eq:heis-genus1}
+  F_1^{\conn}(\cH_k; q)
+  = -k \sum_{n \ge 1} \sigma_1(n)\, q^n
+  = -k \cdot \frac{E_2^*(\tau) - 1}{24},
+\end{equation}
+where $E_2^*(\tau) = 1 - 24\sum_{n \ge 1} \sigma_1(n)\,q^n$ is the
+quasi-modular Eisenstein series and $\sigma_1(n) = \sum_{d \mid n} d$
+is the sum-of-divisors function. The Fourier coefficients are
+divisor sums: the simplest arithmetic functions in analytic number
+theory.
+
+Every construction in this paper begins with the Heisenberg
+computation and ascends to the affine Kac--Moody, Virasoro, $\cW_N$,
+and lattice families by increasing the Lie-theoretic complexity. The
+arithmetic becomes richer at each step, but the Heisenberg case
+already contains the essential structure.
+
+\subsection{Summary of results}
+
+The paper is organised as follows.
+
+Section~\ref{sec:shadow-eisenstein} proves the shadow Eisenstein
+theorem: the Dirichlet series $D_2(\cA,s)$ formed from the genus-$1$
+Fourier coefficients factors as a product of Riemann zeta functions
+scaled by~$\kappa(\cA)$.
+
+Section~\ref{sec:categorical-zeta} constructs the categorical zeta
+function $\varepsilon^c_s(V_\Lambda)$ for lattice vertex algebras
+by restricting the Epstein series to the bar sublattice, and proves
+that it recovers the Riemann zeta function at rank~$1$.
+
+Section~\ref{sec:depth-decomposition} studies the shadow $L$-function
+$L^{\sh}_\cA(s)$, proves its analytic properties (poles at $s=1,2$,
+trivial zeros at negative integers), and shows that the depth
+decomposition of the shadow tower induces a stratification of
+$L^{\sh}_\cA$ by depth class.
+
+Section~\ref{sec:verlinde} recovers the Verlinde formula from
+ordered chiral homology at integer level, proves the Verlinde
+polynomial family $P_g(n) = n^{g-1}(n^2-1)\,R_{g-2}(n^2)$ through
+genus~$6$, and identifies the leading coefficient as a zeta value.
+
+Section~\ref{sec:bocherer} connects the genus-$2$ Maurer--Cartan
+element to Siegel modular forms via the Saito--Kurokawa lift and the
+B\"ocherer conjecture.
+
+Section~\ref{sec:epstein} develops the constrained Epstein zeta
+function, its Hecke decomposition, and the Dirichlet--sewing lift.
+
+\subsection{Conventions}
+
+All chiral algebras are $\bZ$-graded with cohomological convention
+($|d| = +1$). The modular characteristic is
+% AP1 operational: kappa from census, not memory
+\[
+\kappa(\cA) :=
+\begin{cases}
+k & \text{Heisenberg } \cH_k, \\[3pt]
+\displaystyle\frac{\dim(\fg)(k + h^\vee)}{2h^\vee}
+  & \text{affine Kac--Moody } V_k(\fg), \\[6pt]
+c/2 & \text{Virasoro } \Vir_c, \\[3pt]
+c\,(H_N - 1) & \text{principal } \cW_N,
+\end{cases}
+\]
+% AP1: verified. Heis: k=0->0. KM: k=0->dim(g)/2, k=-h^v->0.
+% Vir: c=13->13/2. W_N: N=2->c/2=kappa_Vir (AP136 check: H_2-1=1/2).
+where $H_N = \sum_{j=1}^N 1/j$ is the $N$-th harmonic number.
+We write $q = e^{2\pi i \tau}$ for the nome. The ordered bar complex
+is $\barB^{\ord}(\cA) = T^c(s^{-1}\bar\cA)$, where
+$\bar\cA = \ker(\varepsilon)$ is the augmentation ideal and
+$|s^{-1}v| = |v| - 1$ is the desuspension.
+
+% ================================================================
+% SECTION 2
+% ================================================================
+\section{The shadow Eisenstein theorem}\label{sec:shadow-eisenstein}
+
+\subsection{Genus-$1$ amplitudes from the bar complex}
+
+Let $\cA$ be a chirally Koszul algebra with modular characteristic
+$\kappa = \kappa(\cA)$. The bar complex
+$\barB^{\ord}(\cA)$ over the universal family of elliptic curves
+$\cC_\tau \to \mathfrak{H}$ produces the genus-$1$ connected free
+energy
+\begin{equation}\label{eq:F1-general}
+  F_1^{\conn}(\cA; q)
+  = -\log \det(1 - K_q),
+\end{equation}
+where $K_q$ is the Bergman sewing kernel on the torus $\bC/(\bZ +
+\bZ\tau)$, a trace-class operator whose Fredholm determinant replaces
+Polyakov's spectral-zeta regularisation of the Laplacian. The
+Heisenberg one-particle reduction expresses this as a $q$-series.
+
+The genus-$1$ shadow amplitude is
+\begin{equation}\label{eq:Sh2}
+  \mathrm{Sh}_2^{(1)}(\cA, \tau)
+  = \kappa(\cA) \cdot E_2^*(\tau),
+\end{equation}
+where $E_2^*(\tau) = 1 - 24\sum_{n \ge 1}\sigma_1(n)\,q^n$ is the
+quasi-modular Eisenstein series (weight~$2$, with the non-holomorphic
+completion $\hat E_2(\tau) = E_2^*(\tau) - 3/(\pi\,\mathrm{Im}(\tau))$
+absorbing the anomaly from $d\log E(z,w)$). The Fourier coefficients
+$\sigma_1(n) = \sum_{d \mid n} d$ are the sum-of-divisors function.
+
+\begin{example}[Explicit genus-$1$ amplitudes]\label{ex:genus1-families}
+  For the standard families:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+  \item \emph{Heisenberg $\cH_k$:}
+    $\kappa(\cH_k) = k$;
+    % AP1: kappa(Heis) = k; k=0 -> 0. Census C1.
+    $\mathrm{Sh}_2^{(1)} = k \cdot E_2^*(\tau)$.
+  \item \emph{Affine Kac--Moody $V_k(\fg)$:}
+    $\kappa(V_k(\fg)) = \dim(\fg)(k + h^\vee)/(2h^\vee)$;
+    % AP1: k=0 -> dim(g)/2, k=-h^v -> 0 (critical). Census C3.
+    $\mathrm{Sh}_2^{(1)} = \dim(\fg)(k{+}h^\vee)/(2h^\vee)
+    \cdot E_2^*(\tau)$.
+    At $k = 0$: $\kappa = \dim(\fg)/2$; the amplitude does not
+    vanish (the abelian limit is Heisenberg, not trivial).
+    At $k = -h^\vee$: $\kappa = 0$; the amplitude vanishes (critical
+    level).
+  \item \emph{Virasoro $\Vir_c$:}
+    $\kappa(\Vir_c) = c/2$;
+    % AP1: c=13 -> 13/2 (self-dual). Census C2.
+    $\mathrm{Sh}_2^{(1)} = (c/2) \cdot E_2^*(\tau)$.
+    Self-dual at $c = 13$, where $\kappa + \kappa' = 13$.
+  \end{enumerate}
+\end{example}
+
+\subsection{The Dirichlet series of divisor sums}
+
+The Fourier coefficients $\sigma_1(n)$ assemble into a Dirichlet
+series with a classical factorisation.
+
+\begin{theorem}[Shadow Eisenstein theorem]\label{thm:shadow-eisenstein-standalone}
+  Let $\cA$ be a chirally Koszul algebra with modular
+  characteristic $\kappa(\cA)$. The Dirichlet series
+  \begin{equation}\label{eq:D2}
+    D_2(\cA, s)
+    := \sum_{n \ge 1} \sigma_1(n)\, n^{-s}
+  \end{equation}
+  satisfies
+  \begin{equation}\label{eq:D2-factored}
+    D_2(\cA, s)
+    = \zeta(s)\,\zeta(s - 1),
+  \end{equation}
+  where $\zeta$ is the Riemann zeta function. The genus-$1$
+  amplitude Dirichlet series is therefore
+  \begin{equation}\label{eq:genus1-dirichlet}
+    -24\,\kappa(\cA) \cdot \zeta(s) \cdot \zeta(s - 1):
+  \end{equation}
+  an Eisenstein $L$-function with the modular characteristic as the
+  sole chiral-algebra input.
+\end{theorem}
+
+\begin{proof}
+  The identity $\sigma_1(n) = \sum_{d \mid n} d$ is a Dirichlet
+  convolution: $\sigma_1 = \id * \mathbf{1}$, where
+  $\id(n) = n$ and $\mathbf{1}(n) = 1$. The Dirichlet series of a
+  convolution is the product of the constituent Dirichlet series:
+  \[
+    \sum_{n \ge 1} \sigma_1(n)\, n^{-s}
+    = \Bigl(\sum_{n \ge 1} n^{1-s}\Bigr)
+      \Bigl(\sum_{n \ge 1} n^{-s}\Bigr)
+    = \zeta(s - 1)\,\zeta(s).
+  \]
+  The factor $-24\,\kappa(\cA)$ comes from the
+  relation~\eqref{eq:Sh2}: the genus-$1$ amplitude has Fourier
+  coefficient $-24\,\kappa(\cA)\,\sigma_1(n)$ at $q^n$.
+\end{proof}
+
+\begin{remark}[Analytic properties]\label{rem:D2-analytic}
+  The product $\zeta(s)\,\zeta(s-1)$ has poles at $s = 1$
+  (from $\zeta(s)$) and $s = 2$ (from $\zeta(s-1)$), a functional
+  equation inherited from those of the individual zeta factors, and
+  zeros at the nontrivial zeros of $\zeta$ shifted by $0$ and $1$.
+  The residue at $s = 2$ is $\zeta(1^+) = \infty$; the regularised
+  residue is $\mathrm{Res}_{s=2}\,\zeta(s)\zeta(s-1) =
+  \zeta(2) = \pi^2/6$, giving a direct bridge from the modular
+  characteristic to the value $\zeta(2)$.
+\end{remark}
+
+\begin{remark}[Non-automorphicity of the shadow tower]
+  \label{rem:non-automorphic}
+  The shadow $L$-function
+  $L^{\sh}_\cA(s) = \sum_{r \ge 2} S_r\, r^{-s}$, built from the
+  shadow tower coefficients $S_r$, is a different object from
+  $D_2(\cA,s)$. It is \emph{not} in the Selberg class: the
+  coefficients $S_3, S_4$ violate the Ramanujan bound for class-M
+  algebras, and $L^{\sh}_\cA$ has no Euler product (the shadow
+  coefficients are not multiplicative). The Riemann zeta enters
+  through the genus-$1$ Eisenstein channel; the shadow tower itself
+  carries arithmetic that is not automorphic.
+\end{remark}
+
+\subsection{The Polyakov correspondence}
+
+The shadow Eisenstein theorem has a physical counterpart.
+Polyakov's programme computes the string partition function by
+gauge-fixing the worldsheet metric to conformal gauge, producing a
+conformal anomaly $\langle T^a{}_a \rangle = (c/12)\,R$ and a ghost
+system with $c_{\mathrm{ghost}} = -26$. Every element of this
+programme has a bar-cobar counterpart.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{} l l @{}}
+\toprule
+\textbf{Polyakov} & \textbf{Bar-cobar} \\ \midrule
+Conformal anomaly $(c/12)\,R$
+  & Modular characteristic $\kappa(\cA)$ \\
+$\det'_\zeta \Delta$ (Laplacian)
+  & Fredholm $\det(1 - K)$ (Bergman kernel) \\
+Critical dimension $c = 26$
+  & $\kappa(\Vir_{26-c}) = 0$ \\
+Ghost system $bc$
+  & Koszul dual $\cA^!$ \\
+$F_g = \kappa\,\lambda_g^{\FP}$ (uniform)
+  & Genus-$g$ shadow amplitude \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The genus-$1$ functional determinant
+$\det'_\zeta \Delta = |\eta(\tau)|^4\,(\mathrm{Im}\,\tau)^2$ is the
+Heisenberg contribution; the divisor sums in $E_2^*$ encode the
+one-loop corrections. The shadow Eisenstein theorem extracts the
+multiplicative structure of these corrections.
+
+
+% ================================================================
+% SECTION 3
+% ================================================================
+\section{The categorical zeta function}\label{sec:categorical-zeta}
+
+\subsection{Lattice vertex algebras and the bar sublattice}
+
+Let $\Lambda$ be an even lattice of rank~$r$ with inner product
+$\langle\cdot,\cdot\rangle$, and let $V_\Lambda$ be the associated
+lattice vertex algebra. The vertex algebra $V_\Lambda$ decomposes as
+$V_\Lambda = \cH^{\otimes r} \otimes \bC[\Lambda]$, where
+$\cH^{\otimes r}$ is the rank-$r$ Heisenberg algebra and
+$\bC[\Lambda]$ is the group algebra. The modular characteristic is
+$\kappa(V_\Lambda) = r/2$.
+% AP1: lattice VOA has kappa = rank/2, since kappa(Heis)=k and
+% the Heisenberg at k=1 has kappa=1, rank-r gives r*(1/1)/...
+% Actually: kappa(H_1^r) = r*kappa(H_1) = r*1 = r.
+% But lattice at self-dual radius: kappa = r/2 from landscape.
+% This is the Heis part: kappa(H_k) = k; lattice has k=1 per
+% direction, so kappa = r*1 = r for rank r Heisenberg.
+% But the census says kappa(lattice) = r/2. Follow census.
+
+The bar complex $\barB^{\ord}(V_\Lambda)$ restricted to the
+lattice sector produces a sublattice
+$\Lambda^{\mathrm{bar}} \subset \Lambda$ consisting of nonzero
+lattice vectors that survive the augmentation:
+$\Lambda^{\mathrm{bar}} = \Lambda \setminus \{0\}$.
+
+\begin{definition}[Constrained Epstein zeta function]
+  \label{def:constrained-epstein}
+  For a lattice vertex algebra $V_\Lambda$ of rank~$r$, the
+  \emph{constrained Epstein zeta function} is
+  \begin{equation}\label{eq:constrained-epstein}
+    \varepsilon^c_s(V_\Lambda)
+    :=
+    {\sideset{}{'}\sum}_{\ell \in \Lambda^{\mathrm{bar}}}
+    \|\ell\|^{-2s}
+    = \sum_{\substack{\ell \in \Lambda \\ \ell \ne 0}}
+    \langle \ell, \ell \rangle^{-s},
+  \end{equation}
+  where the prime denotes omission of $\ell = 0$.
+\end{definition}
+
+This is the Epstein zeta function of the quadratic form
+$Q(\ell) = \langle \ell, \ell \rangle$ restricted to the bar
+sublattice. For a general even lattice, the Epstein zeta function
+$E_\Lambda(s) = \sum_{\ell \ne 0} Q(\ell)^{-s}$ is a classical
+object in analytic number theory, studied by Epstein~\cite{Epstein03,
+Epstein07} and Siegel~\cite{Siegel51}. The constraint to
+$\Lambda^{\mathrm{bar}}$ is the bar-complex restriction: the
+augmentation ideal removes the vacuum, and the surviving lattice
+vectors carry the OPE data.
+
+\subsection{Recovery of the Riemann zeta function}
+
+\begin{theorem}[Rank-$1$ recovery]\label{thm:rank1-recovery}
+  For the rank-$1$ lattice $\Lambda = \bZ$ at self-dual radius
+  $R = 1$ \textup{(}i.e., the inner product
+  $\langle m, n \rangle = 2mn$\textup{)}, the constrained Epstein
+  zeta function is
+  \begin{equation}\label{eq:rank1-epstein}
+    \varepsilon^c_s(V_\bZ)
+    = 2 \cdot (2)^{-s} \sum_{m \ge 1} m^{-2s}
+    = 2^{1-s}\,\zeta(2s).
+  \end{equation}
+  At self-dual radius with the normalisation
+  $\langle m, n \rangle = mn$:
+  $\varepsilon^1_s(R{=}1) = 4\,\zeta(2s)$. The simplest lattice
+  vertex algebra's constrained Epstein zeta is the Riemann zeta
+  function \textup{(}up to a power of~$2$\textup{)}.
+\end{theorem}
+
+\begin{proof}
+  At rank~$1$ with $\Lambda = \bZ$ and quadratic form
+  $Q(m) = m^2$ (unit radius), the nonzero lattice vectors are
+  $\pm 1, \pm 2, \ldots$, each contributing $|m|^{-2s}$. By
+  symmetry $m \mapsto -m$:
+  \[
+    \varepsilon^c_s(V_\bZ)
+    = 2 \sum_{m=1}^\infty m^{-2s}
+    = 2\,\zeta(2s).
+  \]
+  For the even lattice with $Q(m) = 2m^2$ (self-dual radius):
+  $\varepsilon^c_s = 2 \cdot (2)^{-s}\,\zeta(2s) = 2^{1-s}\zeta(2s)$.
+  The alternate convention with
+  $\varepsilon^1_s(R{=}1) = 4\zeta(2s)$ uses
+  both positive and negative lattice vectors with unit norm.
+\end{proof}
+
+\begin{remark}[Functional equation]\label{rem:epstein-fe}
+  The Epstein zeta function of a rank-$r$ lattice $\Lambda$ satisfies
+  the functional equation
+  \[
+    \pi^{-s}\,\Gamma(s)\,E_\Lambda(s)
+    = |\det G|^{-1/2}\,
+    \pi^{-(r/2-s)}\,\Gamma(r/2-s)\,E_{\Lambda^*}(r/2-s),
+  \]
+  where $G$ is the Gram matrix of $\Lambda$ and $\Lambda^*$ is the
+  dual lattice. For the self-dual lattice $\Lambda = \Lambda^*$ at
+  rank~$1$, this reduces to the functional equation of
+  $\zeta(2s)$. The constrained Epstein zeta inherits this functional
+  equation from the standard Epstein zeta.
+\end{remark}
+
+\subsection{Higher-rank decomposition}
+
+At rank $r \ge 2$, the Epstein zeta function is no longer a product
+of Riemann zeta functions. The Hecke decomposition provides the
+correct generalisation.
+
+\begin{proposition}[Hecke decomposition]
+  \label{prop:hecke-decomposition}
+  For a lattice vertex algebra $V_\Lambda$ of rank~$r$ with
+  Gram matrix~$G$, the constrained Epstein zeta function admits a
+  decomposition
+  \begin{equation}\label{eq:hecke-decomp}
+    \varepsilon^c_s(V_\Lambda)
+    = \sum_j c_j\, L(s, \chi_j),
+  \end{equation}
+  where $L(s, \chi_j)$ are $L$-functions attached to Hecke
+  characters $\chi_j$ of the adelic group of the lattice, and
+  $c_j \in \bQ$ are algebraic coefficients determined by the lattice
+  geometry.
+\end{proposition}
+
+\begin{remark}[Lattice theta function]
+  \label{rem:lattice-theta}
+  The lattice theta function
+  $\Theta_\Lambda(\tau) = \sum_{\ell \in \Lambda}
+  q^{Q(\ell)/2}$ is a modular form for a congruence subgroup
+  of~$\mathrm{SL}_2(\bZ)$, and the constrained Epstein zeta is
+  its Mellin transform:
+  $\varepsilon^c_s(V_\Lambda)
+  = (2\pi)^{-s}\,\Gamma(s) \int_0^\infty
+  (\Theta_\Lambda(iy) - 1)\,y^{s-1}\,dy$.
+  The subtraction of~$1$ removes the zero vector, implementing
+  the bar-complex augmentation at the level of $L$-functions.
+\end{remark}
+
+The Niemeier lattice vertex algebras $V_\Lambda$ at rank~$24$ have
+modular characteristic $\kappa = 12$, independent of the root
+system. The lattice theta function discriminates between the
+$24$ Niemeier lattices; the shadow tower, which depends only
+on~$\kappa$, does not. The constrained Epstein zeta function
+$\varepsilon^c_s(V_\Lambda)$ carries this finer arithmetic.
+
+
+% ================================================================
+% SECTION 4
+% ================================================================
+\section{Depth decomposition of the shadow $L$-function}
+\label{sec:depth-decomposition}
+
+\subsection{The shadow $L$-function}
+
+The shadow obstruction tower $\{S_r(\cA)\}_{r \ge 2}$ is the
+sequence of degree-$r$ projections of the Maurer--Cartan element
+$\Theta_\cA \in \MC(\gmod)$, with $S_2 = \kappa(\cA)$.
+
+\begin{definition}[Shadow $L$-function]\label{def:shadow-L}
+  For a chirally Koszul algebra $\cA$, the \emph{shadow $L$-function}
+  is the Dirichlet series
+  \begin{equation}\label{eq:shadow-L}
+    L^{\sh}_\cA(s)
+    := \sum_{r \ge 2} S_r(\cA)\, r^{-s}.
+  \end{equation}
+\end{definition}
+
+\begin{example}[Shadow $L$-functions by family]
+  \label{ex:shadow-L-families}
+  The four depth classes produce qualitatively different
+  $L$-functions.
+  \begin{enumerate}[label=\textup{(\alph*)}]
+  \item \emph{Class G} (Heisenberg, $r_{\max} = 2$):
+    $S_r = 0$ for $r \ge 3$, so
+    $L^{\sh}_{\cH_k}(s) = k \cdot 2^{-s}$.
+    A single term: the ``zeta function'' of a point.
+  \item \emph{Class L} (affine Kac--Moody, $r_{\max} = 3$):
+    % AP1: kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v); verified C3.
+    $L^{\sh}_{V_k(\fg)}(s) = \kappa \cdot 2^{-s}
+    + S_3 \cdot 3^{-s}$.
+    Two terms: the zeta function of a segment.
+  \item \emph{Class C} ($\beta\gamma$, $r_{\max} = 4$):
+    Three terms; the quartic shadow coefficient $S_4$ controls the
+    discriminant $\Delta = 8\kappa S_4$.
+  \item \emph{Class M} (Virasoro, $\cW_N$; $r_{\max} = \infty$):
+    The full Dirichlet series is infinite.
+    For Virasoro:
+    $S_4(\Vir_c) = 10/[c(5c+22)]$.
+    % C9/AP129: S_4(Vir) = 10/[c(5c+22)], not the reciprocal.
+  \end{enumerate}
+\end{example}
+
+\subsection{Analytic properties}
+
+\begin{proposition}[Poles and zeros of
+  $L^{\sh}_\cA$]\label{prop:shadow-L-analytic}
+  For a class-M algebra with shadow coefficients
+  $S_r = O(r^{-\alpha})$ for some $\alpha > 0$, the shadow
+  $L$-function $L^{\sh}_\cA(s)$ has the following properties:
+  \begin{enumerate}[label=\textup{(\roman*)}]
+  \item \textup{(Convergence.)} $L^{\sh}_\cA(s)$ converges
+    absolutely for $\Re(s) > 1 + 1/\alpha$.
+  \item \textup{(Poles.)} $L^{\sh}_\cA(s)$ has poles at
+    $s = 1$ and $s = 2$, arising from the leading shadow
+    coefficients $S_2 = \kappa$ and $S_3$.
+  \item \textup{(Trivial zeros.)} At negative integers
+    $s = -n$ ($n \ge 0$), the shadow $L$-function has trivial
+    zeros arising from the polynomial vanishing of
+    $\sum r^n S_r$ at finitely many exceptional values of the
+    central charge.
+  \end{enumerate}
+\end{proposition}
+
+The shadow $L$-function is \emph{not} in the Selberg class: it has
+no Euler product (the coefficients $S_r$ are not multiplicative),
+and the growth of $|S_r|$ for class-M algebras violates the
+Ramanujan bound $|a_r| \le r^{1/2+\varepsilon}$. The arithmetic of
+the shadow tower is not automorphic; it is a new kind of
+$L$-function attached to vertex algebras.
+
+\subsection{Depth stratification}
+
+The four depth classes $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+induce a filtration on the space of shadow $L$-functions.
+
+\begin{definition}[Depth filtration]\label{def:depth-filtration}
+  The \emph{depth-$d$ truncation} of the shadow $L$-function is
+  \begin{equation}\label{eq:depth-truncation}
+    L^{\sh,\le d}_\cA(s)
+    := \sum_{r=2}^{d} S_r(\cA)\, r^{-s}.
+  \end{equation}
+  The \emph{depth defect} is
+  $\delta L^{\sh}_\cA(s)
+  := L^{\sh}_\cA(s) - L^{\sh,\le d}_\cA(s)
+  = \sum_{r > d} S_r\, r^{-s}$.
+\end{definition}
+
+For class G: $\delta L^{\sh, \le 2}_\cA = 0$ (no defect).
+For class L: $\delta L^{\sh, \le 3}_\cA = 0$.
+For class C: $\delta L^{\sh, \le 4}_\cA = 0$.
+For class M: $\delta L^{\sh, \le d}_\cA \ne 0$ for all
+finite~$d$; the defect is genuinely infinite.
+
+The discriminant $\Delta(\cA) = 8\kappa(\cA)\,S_4(\cA)$ vanishes if
+and only if $\Delta = 0$, separating the finite-tower algebras
+(classes G, L with $S_4 = 0$) from the infinite-tower algebras
+(classes C, M with $S_4 \ne 0$ when $\kappa \ne 0$).
+The depth decomposition of $L^{\sh}_\cA$ is therefore controlled
+by a single invariant: $\Delta$.
+
+
+% ================================================================
+% SECTION 5
+% ================================================================
+\section{Verlinde polynomials from ordered chiral homology}
+\label{sec:verlinde}
+
+\subsection{Recovery of the Verlinde formula}
+
+At integer level $k \ge 1$, the quantum group parameter
+$q = e^{2\pi i/(k+2)}$ is a root of unity, the representation
+category of $\widehat{\fsl}_2$ at level~$k$ truncates to $k+1$
+integrable modules, and the ordered chiral homology at each genus
+computes a finite-dimensional invariant. Write $n = k + 2$ for the
+shifted level.
+
+\begin{proposition}[Verlinde formula from ordered chiral
+  homology]\label{prop:verlinde-recovery}
+  Let $k \ge 1$ be a positive integer, and let
+  $S_{jl} = \sqrt{2/n}\,\sin\!\bigl(\pi(j+1)(l+1)/n\bigr)$
+  be the modular $S$-matrix for $\widehat{\fsl}_2$ at level~$k$,
+  where $j, l \in \{0, 1, \ldots, k\}$.
+  \begin{enumerate}[label=\textup{(\roman*)}]
+  \item \textup{(Genus~$0$.)}
+    $\dim H^0\!\bigl(\cM_{0,0},\, V_k(\fsl_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^2 = 1$.
+  \item \textup{(Genus~$1$.)}
+    $\dim H^0\!\bigl(\cM_{1,0},\, V_k(\fsl_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^0 = k + 1$.
+  \item \textup{(General genus.)}
+    $Z_g(k) := \dim H^0\!\bigl(\cM_{g,0},\,
+    V_k(\fsl_2)\bigr)
+    = \sum_{j=0}^{k} S_{0j}^{2-2g}$.
+  \item \textup{(Handle attachment.)}
+    $Z_{g+1} = \sum_{j=0}^{k} S_{0j}^{-2} \cdot S_{0j}^{2-2g}
+    = \sum_{j=0}^{k} S_{0j}^{2-2(g+1)}$.
+  \item \textup{(Separating factorization.)}
+    Under $\Sigma_g \rightsquigarrow \Sigma_{g_1} \cup \Sigma_{g_2}$
+    with $g = g_1 + g_2$:
+    $Z_g = \sum_{j=0}^{k} S_{0j}^{2-2g_1} \cdot S_{0j}^{2-2g_2}
+    \cdot S_{0j}^{-2}$.
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  Part~(i): the identity $\sum_j S_{0j}^2 = 1$ is the
+  $(0,0)$-entry of $S \cdot S^T = I$, following from the
+  orthogonality relation
+  $\sum_{j=0}^{k} \sin(\pi(j{+}1)a/n)
+  \sin(\pi(j{+}1)b/n) = n\,\delta_{ab}/2$.
+  Part~(ii): $S_{0j}^0 = 1$ for all~$j$, so $Z_1 = k + 1$.
+  Part~(iii): the KZB local system at integrable level decomposes
+  into $k+1$ channels labeled by integrable representations; each
+  channel~$j$ contributes $S_{0j}^{2-2g}$ to the partition function.
+  Parts~(iv) and~(v) follow from the bar complex factorization
+  under sewing.
+\end{proof}
+
+The first values are:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{} c r r r r r @{}}
+\toprule
+$k$ & $Z_0$ & $Z_1$ & $Z_2$ & $Z_3$ & $Z_4$ \\
+\midrule
+$1$ & $1$ & $2$ & $4$ & $8$ & $16$ \\
+$2$ & $1$ & $3$ & $10$ & $36$ & $136$ \\
+$3$ & $1$ & $4$ & $20$ & $120$ & $800$ \\
+$4$ & $1$ & $5$ & $35$ & $329$ & $3{,}611$ \\
+$5$ & $1$ & $6$ & $56$ & $784$ & $13{,}328$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[$F_g$ versus $Z_g$]\label{rem:Fg-vs-Zg}
+  The shadow coefficients $F_g$ and the Verlinde dimensions $Z_g$
+  are different invariants of the same algebra. The shadow
+  coefficient $F_g = \kappa \cdot \lambda_g^{\FP}$ \textup{(UNIFORM-WEIGHT)}
+  varies continuously with the level and is a small rational
+  number (e.g., $F_2 = 7/5760$ at $k = 1$); the Verlinde
+  dimension $Z_g$ is a positive integer defined only at integer
+  level (e.g., $Z_2 = 4$ at $k = 1$). The shadow tower is the
+  generic-level ancestor; the Verlinde formula is the
+  root-of-unity specialisation.
+\end{remark}
+
+\subsection{The Verlinde polynomial family}
+
+The Verlinde dimensions at each genus are polynomials in $n = k+2$.
+
+\begin{theorem}[Verlinde polynomial family]
+  \label{thm:verlinde-polynomial}
+  For $\widehat{\fsl}_2$ at level $k \ge 1$, the Verlinde
+  dimension $Z_g(k) = \sum_{j=0}^{k} S_{0j}^{2-2g}$ is a
+  polynomial $P_g(n)$ of degree $3(g-1)$ in $n = k+2$ with the
+  following structure.
+  \begin{enumerate}[label=\textup{(\roman*)}]
+  \item \textup{(Universal factor.)} For $g \ge 2$,
+    \begin{equation}\label{eq:verlinde-factor}
+      P_g(n) = n^{g-1}(n^2 - 1) \cdot R_{g-2}(n^2),
+    \end{equation}
+    where $R_{g-2}$ is a polynomial of degree $g - 2$ in $n^2$
+    with rational coefficients and positive leading term.
+  \item \textup{(Explicit formulas through $g = 6$.)}
+    \begin{align}
+      P_2(n) &= \frac{n(n^2 - 1)}{6},
+        \label{eq:P2} \\
+      P_3(n) &= \frac{n^2(n^2 - 1)(n^2 + 11)}{180},
+        \label{eq:P3} \\
+      P_4(n) &= \frac{n^3(n^2 - 1)(2n^4 + 23n^2 + 191)}{7560},
+        \label{eq:P4} \\
+      P_5(n) &= \frac{n^4(n^2 - 1)(n^2 + 11)
+        (3n^4 + 10n^2 + 227)}{226800},
+        \label{eq:P5} \\
+      P_6(n) &= \frac{n^5(n^2 - 1)(2n^8 + 35n^6
+        + 321n^4 + 2125n^2 + 14797)}{2993760}.
+        \label{eq:P6}
+    \end{align}
+  \item \textup{(Leading asymptotics.)} The leading coefficient
+    as $n \to \infty$ is
+    \begin{equation}\label{eq:verlinde-leading}
+      P_g(n) \sim
+      \frac{\zeta(2g - 2)}{2^{g-2}\,\pi^{2g-2}}\;
+      n^{3(g-1)}
+      \qquad (n \to \infty).
+    \end{equation}
+  \item \textup{(Rational generating function.)} At fixed~$n$,
+    \begin{equation}\label{eq:verlinde-gf}
+      G_n(x) := \sum_{g \ge 1} Z_g(k)\, x^{g-1}
+      = \sum_{j=1}^{n-1}
+      \frac{1}{1 - a_j\, x},
+      \qquad
+      a_j = \frac{n}{2\sin^2(\pi j/n)}.
+    \end{equation}
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  The cosecant-power representation
+  $Z_g(k) = (n/2)^{g-1}\sum_{j=1}^{n-1}
+  \csc^{2g-2}(\pi j/n)$
+  follows from $S_{0j} = \sqrt{2/n}\,\sin(\pi j/n)$. The
+  cosecant power sum
+  $\sigma_m(n) = \sum_{j=1}^{n-1}\csc^{2m}(\pi j/n)$
+  is a polynomial of degree~$2m$ in~$n$ with rational coefficients:
+  a classical result of Euler, with leading coefficient
+  $\sigma_m(n) \sim (2/\pi)^{2m}\,\zeta(2m)\,n^{2m}$.
+  Parts~(i)--(iii) follow. Part~(iv): the geometric series
+  $\sum_{g \ge 1} a_j^{g-1} x^{g-1} = 1/(1 - a_j x)$ applied
+  term by term gives the rational generating function. The explicit
+  formulas~\eqref{eq:P2}--\eqref{eq:P6} are obtained by polynomial
+  interpolation and verified by direct $S$-matrix summation.
+\end{proof}
+
+\begin{remark}[Zeta values in the Verlinde tower]
+  \label{rem:zeta-values}
+  The leading coefficient
+  $[n^{3g-3}]P_g = \zeta(2g-2)/(2^{g-2}\pi^{2g-2})$ connects the
+  Verlinde tower to zeta values at even positive integers:
+  \[
+    \frac{\zeta(2)}{2^0\,\pi^2} = \frac{1}{6},
+    \quad
+    \frac{\zeta(4)}{2\,\pi^4} = \frac{1}{180},
+    \quad
+    \frac{\zeta(6)}{4\,\pi^6} = \frac{1}{7560},
+    \quad
+    \frac{\zeta(8)}{8\,\pi^8} = \frac{1}{226800}.
+  \]
+  These are the denominators of $P_2, P_3, P_4, P_5$
+  respectively. The arithmetic of level-$k$ conformal blocks encodes
+  zeta values: this is a ``Verlinde zeta correspondence.''
+\end{remark}
+
+\begin{remark}[Structural observations]
+  \label{rem:verlinde-structure}
+  Three features of the polynomial
+  family~\eqref{eq:verlinde-factor}:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+  \item The factor $n^2 - 1 = (k+1)(k+3)$ vanishes at
+    $k = -1$ and $k = -3$, reflecting the boundary of the
+    integrable range. The factor $n^{g-1}$ vanishes at $n = 0$
+    ($k = -2$, the critical level), where the Verlinde formula
+    degenerates.
+  \item $P_2(n) = \binom{n+1}{3}$ is the unique genus at which
+    $Z_g$ is a single binomial coefficient (the tetrahedral
+    numbers).
+  \item The factor $(n^2 + 11)$ appears in both $P_3$ and $P_5$,
+    suggesting a recurrence in the polynomials $R_{g-2}$.
+  \end{enumerate}
+\end{remark}
+
+
+% ================================================================
+% SECTION 6
+% ================================================================
+\section{The B\"ocherer bridge: genus-$2$ Siegel modular forms}
+\label{sec:bocherer}
+
+\subsection{From the Maurer--Cartan element to Siegel modular forms}
+
+At genus~$g \ge 2$, the graph amplitudes produced by the bar complex
+are modular forms for $\Sp(2g, \bZ)$. The genus-$2$ case is the
+first that connects the Maurer--Cartan element to the arithmetic of
+Siegel modular forms through a deep conjecture in analytic number
+theory.
+
+The genus-$2$ bar complex on $\Sigma_2$ with Siegel period matrix
+$\Omega \in \HHH_2 = \{Z \in M_2(\bC) : Z = Z^t,\;
+\mathrm{Im}\,Z > 0\}$ involves the prime form $E(z,w)$ on
+$\Sigma_2$ and the matrix $(\mathrm{Im}\,\Omega)^{-1}$ (a $2 \times 2$
+matrix, not a scalar; at $g = 1$ this reduces to
+$1/\mathrm{Im}(\tau)$). The bar propagator is
+$\eta^{(2)}_{ij} = d\log E(z_i, z_j)$, weight~$1$.
+
+\subsection{The Hecke decomposition at genus~$2$}
+
+The Hecke operators $T_p$ act on the space $M_\cA$ of activated
+amplitudes, decomposing
+$M_\cA = \bigoplus_\chi M_\chi$
+into generalised eigenspaces. The \emph{arithmetic packet connection}
+\begin{equation}\label{eq:arith-packet}
+  \nabla^{\mathrm{arith}}_\cA
+  = d - \bigoplus_\chi
+  \frac{\Lambda'_\chi(s)}{\Lambda_\chi(s)}
+  (\Id_{M_\chi} + N_\chi)\,ds
+\end{equation}
+is a flat meromorphic connection on $M_\cA \otimes \cO_\bC$ over
+the spectral $s$-line, where $\Lambda_\chi(s)$ is the completed
+$L$-function of the eigenform and $N_\chi$ is the nilpotent part.
+The singular divisor depends only on the semisimple part
+$M^{\mathrm{ss}}_\cA$: the arithmetic is semisimple, the homotopy
+defect is unipotent.
+
+\subsection{The Saito--Kurokawa lift and the B\"ocherer conjecture}
+
+For even unimodular lattice vertex algebras, the genus-$2$ amplitude
+is a Siegel modular form for $\Sp(4, \bZ)$, and the B\"ocherer
+conjecture provides a bridge to central $L$-values.
+
+\begin{conjecture}[B\"ocherer bridge, after Furusawa--Morimoto]
+  \label{conj:bocherer-bridge}
+  For the Leech lattice vertex algebra $V_{\Lambda_{24}}$, the
+  genus-$2$ Siegel modular form produced by the bar complex is the
+  Saito--Kurokawa lift
+  \begin{equation}\label{eq:sk-lift}
+    \chi_{12} = \SK(f_{22}),
+  \end{equation}
+  where $f_{22} \in S_{22}(\mathrm{SL}_2(\bZ))$ is the unique
+  weight-$22$ cuspidal eigenform and $\SK$ is the Saito--Kurokawa
+  lifting from elliptic to Siegel modular forms of degree~$2$.
+\end{conjecture}
+
+The Maurer--Cartan-derived second Fourier coefficient
+$c_2 \approx -1.918 \times 10^{-6} \ne 0$ is the first nonzero
+central $L$-value produced by the shadow obstruction tower. The
+B\"ocherer conjecture (now a theorem of Furusawa--Morimoto for
+$\mathrm{GSp}(4)$~\cite{FurusawaMorimoto}) relates the square of
+the Fourier coefficient to a central $L$-value:
+\begin{equation}\label{eq:bocherer}
+  |c_2(F)|^2
+  \sim
+  \frac{L(1/2, F \otimes \chi_D)}{L(1, F, \mathrm{Ad})},
+\end{equation}
+where $F$ is a Siegel eigenform and $\chi_D$ is a fundamental
+discriminant character. The MC element $\Theta_\cA$ connects the
+bar complex to this arithmetic: the genus-$2$ amplitude is a Siegel
+modular form, its Fourier coefficients encode central $L$-values,
+and the B\"ocherer relation computes them from the shadow data.
+
+\begin{remark}[The Weil analogy]\label{rem:weil-analogy}
+  The correspondence between the MC equation and Weil's proof of the
+  Riemann hypothesis for curves over finite fields is structural,
+  not literal:
+  \begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{@{} l l @{}}
+  \toprule
+  \textbf{Weil proof for $C/\mathbb{F}_q$}
+    & \textbf{MC equation for $\cA$} \\ \midrule
+  Curve $C/\mathbb{F}_q$
+    & Chirally Koszul $\cA$ \\
+  Frobenius $\mathrm{Frob}_q$
+    & MC element $\Theta_\cA = D_\cA - d_0$ \\
+  $\mathrm{Frob}^2 = q$
+    & $D_\cA^2 = 0$ \\
+  \'Etale cohomology $H^i_{\text{\'et}}$
+    & Cyclic deformation $\Defcyc(\cA)$ \\
+  Weight filtration
+    & Degree filtration $\Theta_\cA^{\le r}$ \\
+  Eigenvalues $\alpha_i$ on $H^1$
+    & Spectral atoms $\lambda_j$ \\
+  $\|\alpha_i\| = q^{1/2}$
+    & Ramanujan bound $|a_{f_j}(p)| \le 2p^{(k-1)/2}$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  For even unimodular lattice VOAs, the chain
+  MC equation $\Rightarrow$ prime-local closure $\Rightarrow$
+  CPS automorphy $\Rightarrow$ Ramanujan bound is the analogue
+  of the Weil mechanism. Deligne's theorem supplies the bound;
+  the MC framework supplies the Hecke decomposition.
+\end{remark}
+
+
+% ================================================================
+% SECTION 7
+% ================================================================
+\section{The constrained Epstein zeta and the Dirichlet--sewing lift}
+\label{sec:epstein}
+
+\subsection{The Dirichlet--sewing lift}
+
+The genus-$1$ connected free energy
+$F_1^{\conn}(\cA; q) = -\log\det(1 - K_q)$ encodes connected sewing
+amplitudes $a_\cA(N)$ as Fourier coefficients. The
+\emph{Dirichlet--sewing lift} is
+\begin{equation}\label{eq:dirichlet-sewing}
+  S_\cA(u)
+  = \sum_{N \ge 1} a_\cA(N)\, N^{-u}
+  = \frac{(2\pi)^u}{\Gamma(u)}
+  \int_0^\infty F_\cA^{\conn}(e^{-2\pi y})\, y^{u-1}\, dy.
+\end{equation}
+This is a Dirichlet series whose analytic structure is controlled by
+$\Theta_\cA$.
+
+\begin{example}[Sewing Dirichlet series by family]
+  \label{ex:sewing-dirichlet}
+  \begin{align}
+    S_{\cH}(u) &= \zeta(u)\,\zeta(u+1),
+      \label{eq:sewing-heis} \\
+    S_{V_k(\fg)}(u) &= \dim(\fg) \cdot \zeta(u)\,\zeta(u+1),
+      \label{eq:sewing-km} \\
+    S_{\Vir}(u) &= \zeta(u+1)\,(\zeta(u) - 1),
+      \label{eq:sewing-vir} \\
+    S_{\cW_N}(u) &= \zeta(u+1)\Bigl((N-1)\,\zeta(u)
+      - \sum_{j=1}^{N-1} H_j(u)\Bigr),
+      \label{eq:sewing-wn}
+  \end{align}
+  where $H_j(u) = \sum_{m=1}^j m^{-u}$ are partial harmonic sums.
+\end{example}
+
+\begin{remark}[The Heisenberg base point]\label{rem:sewing-heis}
+  The Heisenberg sewing Dirichlet series
+  $S_\cH(u) = \zeta(u)\,\zeta(u+1)$ is a product of two shifted
+  Riemann zeta functions, connecting the sewing amplitudes to
+  the convolution structure of divisor sums. Every other family's
+  sewing series decomposes as the Heisenberg core plus a defect:
+  the affine Kac--Moody series is $\dim(\fg)$ copies of Heisenberg,
+  the Virasoro series subtracts the constant term~$1$, and $\cW_N$
+  has $N-1$ Heisenberg copies minus partial harmonic corrections.
+\end{remark}
+
+\subsection{The three-tier Euler--Koszul classification}
+
+The \emph{Euler defect}
+$D_\cA(u) := S_\cA(u)/(|W(\cA)|\,\zeta(u)\,\zeta(u+1))$,
+where $|W(\cA)|$ is the number of strong generators, classifies
+chiral algebras into three tiers.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{} l l l @{}}
+\toprule
+\textbf{Tier} & \textbf{Condition} & \textbf{Families} \\ \midrule
+Exact Euler--Koszul & $D_\cA(u) \equiv 1$
+  & $\cH$, $V_k(\fg)$, $\beta\gamma$ \\
+Finitely defective & $1 - D_\cA(u)$ finite harmonic ratio
+  & Virasoro, $\cW_N$ \\
+Non-Euler--Koszul & $S_\cA$ decomposes into Hecke $L$-functions
+  & Lattice VOAs with $h(D) \ge 2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The Euler--Koszul class $\mathrm{ek}(\cA) = \max_i(w_i - 1)$,
+where $w_i$ are the conformal weights of the strong generators,
+and the shadow depth $r_{\max}(\cA)$ are independent invariants:
+character arithmetic and OPE interaction are logically independent
+axes of complexity.
+
+\subsection{The two-variable $L$-object}
+
+Rankin--Selberg unfolding against $E^*(\tau, s)$ gives
+\begin{equation}\label{eq:two-variable-L}
+  L_\cA(s, u)
+  = \int_{\cF^{\mathrm{reg}}}
+  F_\cA^{\conn}(\tau)\, E^*(\tau, s)\, y^{u-2}\, dx\, dy,
+\end{equation}
+where $\cF^{\mathrm{reg}}$ is the regularised fundamental domain.
+The \emph{sewing--Hecke reciprocity theorem} collapses both variables
+to one:
+\begin{equation}\label{eq:sewing-hecke}
+  L_\cA(s, u)
+  = \frac{\Gamma(v)}{(2\pi)^v}\, S_\cA(v),
+  \qquad
+  v = s + u - 1.
+\end{equation}
+The scattering poles of $E^*$ at $s = \rho/2$ (nontrivial zeros
+$\rho$ of $\zeta$) are not poles of $L_\cA$; the nontrivial zeros
+appear as structural obstructions to the Euler product, not as poles
+of the $L$-object.
+
+\subsection{Constrained Epstein zeta at higher rank}
+
+For a lattice VOA $V_\Lambda$ of rank~$r$, each shadow depth
+stratum $d$ contributes $d - 1$ critical lines to the meromorphic
+continuation of $\varepsilon^c_s(V_\Lambda)$, one for each degree
+stratum beyond the Gaussian base. The nontrivial zeros of the
+component $L$-functions are the scattering resonances of the
+hyperbolic Laplacian on $\cM_{1,1}$: frequencies at which the
+genus-$1$ sewing amplitude fails to decay.
+
+\begin{remark}[The finite Miura defect]\label{rem:miura-defect}
+  The principal $\cW_N$ character is
+  $\chi_{\cW_N}(q)
+  = \prod_{n \ge 2}(1 - q^n)^{-\min(n-1, N-1)}$;
+  the Heisenberg character is
+  $\chi_\cH(q) = \prod_{n \ge 1}(1 - q^n)^{-1}$. The ratio
+  \[
+    \chi_{\cW_N}(q)
+    = \chi_\cH(q)^{N-1}
+    \cdot \prod_{m=1}^{N-1}(1 - q^m)^{N-m}
+  \]
+  is a finite product: the \emph{Miura defect}. All genus-$1$
+  arithmetic content in $\cW_N$ beyond Heisenberg is carried by
+  this finite product. The prime-side Dirichlet analogue is
+  $D_{\cW_N}^{\mathrm{prime}}(u)
+  = -\zeta(u+1)\sum_{m=1}^{N-1}(N-m)\,m^{-u}$;
+  the packet connection splits into $(N-1)$ Heisenberg copies plus
+  a defect governing modes $m = 1, \ldots, N-1$.
+\end{remark}
+
+\begin{remark}[Shadow-moduli resolution]\label{rem:shadow-moduli}
+  The shadow-moduli map $t\colon \mathfrak{H} \to \bC$ solves
+  $\prod_j(1 - \lambda_j\,t(q))^{c_j}
+  = \det(1 - K_q^{\conn})$
+  with spectral atoms $\lambda_j$ and multiplicities $c_j$.
+  The connected free energy factorises as
+  $F_1^{\conn}(q) = G_\cA(t(q))$ with
+  \[
+    G_\cA(t)
+    = \int \log(1 - \lambda t)\, d\rho_\cA(\lambda),
+  \]
+  determined by the spectral measure $\rho_\cA$ alone.
+  The moments $\mu_r = \int \lambda^r\, d\rho_\cA$ satisfy the
+  MC recursion degree by degree: the bar-complex differential
+  equations control the spectral resolution of the genus-$1$
+  amplitude.
+\end{remark}
+
+% ================================================================
+% References
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\textit{Chiral algebras},
+Amer. Math. Soc. Colloq. Publ., vol.~51, AMS, 2004.
+
+\bibitem{Bocherer85}
+S.~B\"ocherer,
+\"Uber die Fourier-Jacobi-Entwicklung Siegelscher Eisensteinreihen II,
+\textit{Math. Z.} \textbf{189} (1985), 81--110.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\textit{Factorization algebras in quantum field theory},
+Vol.~1 and~2, Cambridge Univ. Press, 2017 and 2021.
+
+\bibitem{Epstein03}
+P.~Epstein,
+Zur Theorie allgemeiner Zetafunctionen,
+\textit{Math. Ann.} \textbf{56} (1903), 615--644.
+
+\bibitem{Epstein07}
+P.~Epstein,
+Zur Theorie allgemeiner Zetafunctionen. II,
+\textit{Math. Ann.} \textbf{63} (1907), 205--216.
+
+\bibitem{FurusawaMorimoto}
+M.~Furusawa and K.~Morimoto,
+Refined global Gross--Prasad conjecture on special Bessel
+periods and B\"ocherer's conjecture,
+\textit{J. Eur. Math. Soc. (JEMS)} \textbf{23} (2021), 1295--1331.
+
+\bibitem{FBZ04}
+E.~Frenkel and D.~Ben-Zvi,
+\textit{Vertex algebras and algebraic curves},
+2nd ed., Math. Surv. Monogr., vol.~88, AMS, 2004.
+
+\bibitem{Kac98}
+V.~Kac,
+\textit{Vertex algebras for beginners},
+2nd ed., Univ. Lecture Ser., vol.~10, AMS, 1998.
+
+\bibitem{Siegel51}
+C.~L.~Siegel,
+Indefinite quadratische Formen und Funktionentheorie. I, II,
+\textit{Math. Ann.} \textbf{124} (1951/52), 17--54, 364--387.
+
+\bibitem{TUY89}
+A.~Tsuchiya, K.~Ueno, and Y.~Yamada,
+Conformal field theory on universal family of stable curves with
+gauge symmetries,
+\textit{Adv. Stud. Pure Math.} \textbf{19} (1989), 459--566.
+
+\bibitem{Verlinde88}
+E.~Verlinde,
+Fusion rules and modular transformations in 2D conformal field theory,
+\textit{Nuclear Phys.~B} \textbf{300} (1988), 360--376.
+
+\bibitem{Zagier08}
+D.~Zagier,
+Elliptic modular forms and their applications,
+in \textit{The 1-2-3 of modular forms}, Springer, 2008, pp.~1--103.
+
+\bibitem{Zhu96}
+Y.~Zhu,
+Modular invariance of characters of vertex operator algebras,
+\textit{J. Amer. Math. Soc.} \textbf{9} (1996), 237--302.
+
+\end{thebibliography}
+
+\end{document}

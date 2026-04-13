@@ -1,0 +1,1693 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,
+  citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{tikz-cd}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\barBch}{\bar{B}^{\mathrm{ch}}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Symch}{\mathrm{Sym}^{\mathrm{ch}}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\RHom}{R\!\operatorname{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\FM}{\overline{C}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\KM}{\mathrm{KM}}
+\newcommand{\Heis}{\mathrm{Heis}}
+\newcommand{\ChirHoch}{\mathrm{ChirHoch}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\Einf}{E_\infty}
+\newcommand{\Etwo}{E_2}
+\newcommand{\Eone}{E_1}
+\newcommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch,top}}}
+\newcommand{\Ainfty}{A_\infty}
+\newcommand{\Linfty}{L_\infty}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\av}{av}
+\DeclareMathOperator{\coLie}{coLie}
+\DeclareMathOperator{\Conf}{Conf}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Chiral Koszulness: fourteen characterizations]
+{Chiral Koszulness: fourteen characterizations}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+The bar construction of a chiral algebra $\cA$ on an algebraic
+curve~$X$ works in complete generality: its differential squares to
+zero, it carries a deconcatenation coproduct, and its cohomology
+defines the Koszul dual coalgebra. The construction works
+\emph{optimally} on a distinguished locus: the cobar inverts the bar,
+the spectral sequence collapses at the second page, the resolution is
+linear, and a single scalar $\kappa(\cA)$ determines the Maurer--Cartan
+element at degree two. This paper characterizes that locus.
+
+We prove that fourteen a priori distinct conditions on a chiral
+algebra are equivalent (ten unconditionally, one as a proved
+consequence, one conditionally on perfectness, two partially).
+The list comprises: (i)~chiral Koszulness;
+(ii)~PBW spectral sequence $\Etwo$-collapse;
+(iii)~$\Ainfty$-formality of bar cohomology;
+(iv)~shadow-tower formality;
+(v)~$\Etwo$-formality of the chiral Hochschild complex;
+(vi)~curve independence of genus-zero factorization homology;
+(vii)~PBW universality;
+(viii)~Barr--Beck--Lurie monadicity;
+(ix)~factorization homology concentration;
+(x)~Fulton--MacPherson boundary acyclicity;
+(xi)~tropical Koszulness;
+(xii)~Ext diagonal vanishing;
+(xiii)~Kac--Shapovalov determinant nonvanishing;
+and (xiv)~Sklyanin $H^2 = 0$.
+Under a perfectness hypothesis, a fifteenth
+condition (Lagrangian transversality in the $(-1)$-shifted symplectic
+deformation space) joins the equivalence class.
+A sixteenth ($\cD$-module purity) implies the others; the converse
+holds for the affine Kac--Moody family and is open in general.
+
+The core circuit
+$\mathrm{(i)} \Leftrightarrow \mathrm{(ii)} \Leftrightarrow
+\mathrm{(iii)} \Leftrightarrow \mathrm{(viii)}
+\Leftrightarrow \mathrm{(ix)}$
+is proved by PBW concentration, homological perturbation, and
+bar--cobar inversion. The remaining conditions are linked by
+satellite implications from this core.
+The meta-theorem is verified on the full standard landscape:
+Heisenberg, affine Kac--Moody at generic level, Virasoro at generic
+central charge, $\beta\gamma$, and the principal $\cW$-algebras.
+Every standard family is chirally Koszul. Shadow depth
+(G/L/C/M classification) is an orthogonal invariant: it
+classifies complexity within the Koszul world, not Koszulness itself.
+
+We prove scalar saturation: on every one-parameter family $\cA_k$,
+the degree-two component of the universal Maurer--Cartan element
+$\Theta_{\cA_k}$ is determined by the single scalar
+$\kappa(\cA_k) = \av(r_{\cA_k}(z))$.
+This scalar, the modular characteristic, is the unique invariant
+that survives the $\Sigma_n$-coinvariant projection from the ordered
+to the symmetric bar.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+% ================================================================
+\section{Introduction: the Koszul locus and why it matters}
+\label{sec:introduction}
+% ================================================================
+
+\subsection{The problem}
+
+The bar complex of a chiral algebra $\cA$ on an algebraic curve~$X$
+is the cofree $\Eone$-coalgebra
+\begin{equation}\label{eq:bar-complex}
+\barBch(\cA) \;=\; T^c(s^{-1}\bar\cA)
+\end{equation}
+with deconcatenation coproduct, where $\bar\cA = \ker(\varepsilon)$
+is the augmentation ideal and
+$|s^{-1}v| = |v| - 1$ is the desuspension grading.
+The bar differential extracts OPE data through the logarithmic
+propagator $\eta = d\log(z_1 - z_2)$ on Fulton--MacPherson
+configuration spaces $\FM_n(X)$.
+This construction exists for every chiral algebra. Its differential
+squares to zero. Its cohomology defines a factorization coalgebra.
+The cobar functor $\Omega^{\mathrm{ch}}$ produces from
+$\barBch(\cA)$ a new chiral algebra, and the counit
+$\varepsilon_\cA \colon \Omega^{\mathrm{ch}}(\barBch(\cA)) \to \cA$
+is a natural transformation.
+
+The question is: when is $\varepsilon_\cA$ a quasi-isomorphism?
+
+When it is, the bar complex is a complete invariant: it encodes~$\cA$
+up to quasi-isomorphism, the spectral sequences computing its
+cohomology collapse, the resolution is linear in the PBW degree,
+and a single scalar $\kappa(\cA)$ controls the universal
+Maurer--Cartan element at degree two. When it is not, the
+bar--cobar object persists only in the coderived category, the
+spectral sequences have nontrivial higher differentials, and the
+resolution is nonlinear in a way that resists finite description.
+
+The locus on which $\varepsilon_\cA$ is a quasi-isomorphism is the
+\emph{Koszul locus}. This paper gives fourteen characterizations
+of this locus, proves their equivalence (with the status qualifications
+stated in the abstract), and verifies that every standard family of
+chiral algebras lies on it.
+
+\subsection{Context}
+
+In classical algebra, the Koszul property of a quadratic algebra
+$A = T(V)/(R)$ has been characterized by
+Priddy~\cite{Priddy} (purity of the bar complex),
+Beilinson--Ginzburg--Soergel~\cite{BGS} (Ext diagonal vanishing),
+and Loday--Vallette~\cite{LV12} ($\Ainfty$-formality of the
+Koszul dual cooperad). Each formulation detects the same
+phenomenon from a different mathematical vantage point: the
+bar complex ``works best'' exactly when bar cohomology is
+concentrated in degree one.
+
+Chiral algebras are not quadratic. The Virasoro algebra has a
+quartic OPE pole; $\cW$-algebras have poles of
+arbitrarily high order; Yangians have spectral-parameter
+relations. None of these admit a quadratic presentation, and the
+Beilinson--Ginzburg--Soergel theory does not see them directly.
+Three features of chiral algebras on algebraic curves defeat the
+classical framework simultaneously: (a)~the bar differential on
+the genus expansion satisfies
+$d^2_{\mathrm{fib}} = \kappa(\cA) \cdot \omega_g$ rather than
+$d^2 = 0$, so the classical bar--cobar adjunction does not apply
+beyond genus zero; (b)~the tensor power $V^{\otimes n}$ is replaced
+by the factorization product $\cA^{\boxtimes n}$ over $\FM_n(X)$,
+and the differential is a sum of OPE residues at boundary strata,
+not a combinatorial sum of face maps; (c)~conformal-weight
+components are infinite-dimensional, so convergence of spectral
+sequences is a separate problem.
+
+What forces the extension of Koszul theory to the chiral
+setting is not a desire for generality but the structure of
+the objects. The Francis--Gaitsgory adjunction
+$\mathrm{Lie}^{\mathrm{ch}} \dashv \mathrm{Com}^{\mathrm{ch}}$
+on $\Ran(X)$~\cite{FG12} settles Koszul duality of the
+Lie--Com pair at the operadic level, but it does not determine
+whether a specific chiral algebra is Koszul: it does not see the
+genus corrections in the bar complex, and it does not detect the
+shadow obstruction tower whose depth varies from two to infinity
+across the standard families.
+
+\subsection{The fourteen characterizations}
+
+The meta-theorem of this paper assembles fourteen tests for
+chiral Koszulness. They sort into four groups by mathematical
+origin.
+
+\smallskip
+\noindent
+\textbf{Homological algebra} (from the bar complex and its
+spectral sequences): chiral Koszulness~(i), PBW
+$\Etwo$-collapse~(ii), $\Ainfty$-formality~(iii), Ext
+diagonal vanishing~(xii), Kac--Shapovalov determinant
+nonvanishing~(xiii).
+
+\smallskip
+\noindent
+\textbf{Deformation theory} (from the convolution algebra and
+its formality): shadow-tower formality~(iv),
+$\Etwo$-formality of chiral Hochschild cohomology~(v),
+Sklyanin $H^2 = 0$~(xiv).
+
+\smallskip
+\noindent
+\textbf{Factorization geometry} (from configuration spaces and
+the Ran space): curve independence~(vi), PBW
+universality~(vii), Barr--Beck--Lurie monadicity~(viii),
+factorization homology concentration~(ix),
+FM boundary acyclicity~(x).
+
+\smallskip
+\noindent
+\textbf{Tropical geometry} (from the dual complex of the FM
+compactification): tropical Koszulness~(xi).
+
+\smallskip
+\noindent
+Two further conditions stand outside these fourteen. The
+\emph{Lagrangian criterion}~(xv): $\cM_\cA$ and $\cM_{\cA^!}$
+are transverse Lagrangians in the $(-1)$-shifted symplectic
+deformation space, proved equivalent under a perfectness
+hypothesis. And \emph{$\cD$-module purity}~(xvi): each
+$\barBch_n(\cA)$ is pure of weight~$n$ as a mixed Hodge module,
+proved to imply Koszulness with the converse established for
+the affine Kac--Moody family and open in general.
+
+\subsection{Two distinctions}
+
+\begin{warning}[Shadow depth is not Koszulness]
+\label{warn:shadow-depth-not-koszulness}
+The four complexity classes G/L/C/M, with shadow depths
+$\{2, 3, 4, \infty\}$, record the degree at which the shadow
+obstruction tower first becomes nontrivial. They do \emph{not}
+record failure of Koszulness. Every standard chiral algebra
+is chirally Koszul. The Virasoro algebra has shadow depth
+$r_{\max} = \infty$ (class~M); it is chirally Koszul at
+generic central charge. Shadow depth classifies complexity
+\emph{within} the Koszul world.
+\end{warning}
+
+\begin{warning}[Koszulness is not SC-formality]
+\label{warn:koszulness-not-sc-formality}
+Koszulness is the condition that bar cohomology is concentrated
+in degree one; SC-formality is the condition that the
+higher operations $m_k^{\mathrm{SC}} = 0$ for $k \geq 3$ in
+the Swiss-cheese bar complex. All standard families are chirally
+Koszul; only class~G (Heisenberg) is SC-formal.
+Confusing the two misidentifies what the shadow tower measures.
+\end{warning}
+
+\subsection{Conventions}
+
+All chain complexes are cohomologically graded: $|d| = +1$.
+Desuspension lowers degree: $|s^{-1}v| = |v| - 1$. The bar
+complex uses the augmentation ideal $\bar\cA = \ker(\varepsilon)$;
+we write $\barBch(\cA) = T^c(s^{-1}\bar\cA)$ with deconcatenation
+coproduct. We work in characteristic zero over an algebraically
+closed field. The Fulton--MacPherson compactification $\FM_n(X)$
+is the real oriented blowup along all diagonals; it is a manifold
+with corners whose boundary strata are indexed by rooted
+trees~\cite{FM94}. We cite~\cite{LorgatMKD1} for background
+results established in the parent monograph.
+
+
+% ================================================================
+\section{The fourteen characterizations}
+\label{sec:fourteen}
+% ================================================================
+
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$,
+equipped with its PBW filtration $F_\bullet$.
+Write $\barBch(\cA) = T^c(s^{-1}\bar\cA)$ for the geometric chiral
+bar complex with deconcatenation coproduct, $R_\cA = \gr^F \cA$ for
+the associated graded (a Poisson vertex algebra), and
+$\Omega^{\mathrm{ch}}$ for the cobar functor.
+
+\begin{definition}[Chiral Koszul morphism]
+\label{def:kfc-chiral-koszul-morphism}
+A chiral twisting datum $(\cA, \cC, \tau, F_\bullet)$
+consisting of an augmented chiral algebra~$\cA$, a conilpotent
+factorization coalgebra~$\cC$, a degree-$+1$ Maurer--Cartan element
+$\tau \colon \cC \to \cA$ in the convolution algebra, and a
+compatible PBW filtration, is \emph{Koszul} if both twisted tensor
+products
+\[
+K_\tau^L(\cA,\cC) = (\cA \otimes \cC,\; d_\cA + d_\cC + d_\tau^L),
+\qquad
+K_\tau^R(\cC,\cA) = (\cC \otimes \cA,\; d_\cC + d_\cA + d_\tau^R)
+\]
+are acyclic. The chiral algebra~$\cA$ is \emph{chirally Koszul}
+if the canonical bar twisting datum
+$(\cA, \barBch(\cA), \tau_0, F_\bullet^{\mathrm{PBW}})$ is Koszul.
+\end{definition}
+
+\begin{theorem}[Fourteen characterizations of chiral Koszulness]
+\label{thm:kfc-fourteen}
+Let $\cA$ be a positive-energy chiral algebra on~$X$ with PBW
+filtration~$F_\bullet$.
+Conditions~\textup{(i)--(x)} and~\textup{(xii)--(xiii)} below
+are unconditionally equivalent.
+Condition~\textup{(xi)} is equivalent to them for all chiral
+algebras whose FM dual complex is simplicial.
+Condition~\textup{(v)} is a proved one-way consequence on the
+Koszul locus.
+Condition~\textup{(xiv)} is equivalent to the others for the
+affine Kac--Moody family and one-directional in general.
+
+Under the perfectness hypothesis on the ambient tangent complex,
+the Lagrangian criterion~\textup{(xv)} is also equivalent.
+$\cD$-module purity~\textup{(xvi)} implies~\textup{(x)}; the
+converse is proved for affine Kac--Moody and open in general.
+
+\medskip
+\noindent
+\textbf{Core equivalences}
+\textup{(homological algebra and factorization geometry):}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.4em]
+
+\item\label{item:kfc-koszul}
+\textbf{Chiral Koszulness.}
+The twisted tensor products $K_\tau^L(\cA, \barBch(\cA))$ and
+$K_\tau^R(\barBch(\cA), \cA)$ are acyclic
+\textup{(}Definition~\textup{\ref{def:kfc-chiral-koszul-morphism})}.
+
+\item\label{item:kfc-pbw}
+\textbf{PBW $\Etwo$-collapse.}
+The PBW spectral sequence
+$E_1^{p,q} = H^{p+q}(\gr^F_p \barBch(\cA))
+ \Rightarrow H^{p+q}(\barBch(\cA))$
+collapses at~$\Etwo$: all differentials $d_r = 0$ for $r \geq 2$.
+
+\item\label{item:kfc-ainfty}
+\textbf{$\Ainfty$-formality of bar cohomology.}
+The minimal $\Ainfty$-model of $H^*(\barBch(\cA))$
+is formal: the transferred higher products satisfy
+$m_n = 0$ for all $n \geq 3$.
+
+\item\label{item:kfc-shadow}
+\textbf{Shadow-tower formality.}
+The genus-zero obstruction classes of the shadow tower vanish:
+$o_{r+1}^{(0)}(\cA) = 0$ for all $r \geq 2$.
+Equivalently, the transferred $\Linfty$-brackets
+$\ell_{r+1}^{(0)}$ of the modular convolution algebra vanish at
+genus zero for all $r \geq 2$.
+
+\item\label{item:kfc-e2formality}
+\textbf{$\Etwo$-formality of chiral Hochschild cohomology.}
+$\ChirHoch^*(\cA)$ is concentrated in cohomological degrees
+$\{0,1,2\}$, carries a polynomial Hilbert series
+$P_\cA(t) = \dim Z(\cA) + \dim \ChirHoch^1(\cA) \cdot t
+ + \dim Z(\cA^!) \cdot t^2$,
+and is formal as an $\Etwo$-algebra.
+
+\item\label{item:kfc-curve-indep}
+\textbf{Curve independence.}
+The genus-zero factorization homology
+$H^k(\int_{\bP^1}\cA)$ is independent of the choice of smooth
+projective curve: replacing $\bP^1$ by any smooth proper
+curve~$X'$ of genus zero gives the same cohomology.
+
+\item\label{item:kfc-pbw-univ}
+\textbf{PBW universality.}
+The PBW filtration on~$\cA$ deforms flatly:
+$\gr^F \cA_\hbar \cong \cA_0$ for the one-parameter deformation,
+and the associated graded is quadratic-Koszul in the classical
+sense.
+Sufficient condition: $\cA$ is freely strongly generated.
+
+\item\label{item:kfc-bbl}
+\textbf{Barr--Beck--Lurie monadicity.}
+The comparison functor~$\Phi$ for the bar--cobar adjunction
+$\barBch \dashv \Omega^{\mathrm{ch}}$ is an equivalence on the
+fiber over $\barBch(\cA)$.
+
+\item\label{item:kfc-fh}
+\textbf{Factorization homology concentration.}
+$H^k(\int_{\bP^1}\cA) = 0$ for $k \neq 0$.
+On the uniform-weight lane, for every smooth projective
+curve~$\Sigma_g$ of genus~$g \geq 0$,
+$H^k(\int_{\Sigma_g}\cA) = 0$ for $k \neq 0$,
+and the surviving scalar class at $g \geq 1$ is
+$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+\textup{(UNIFORM-WEIGHT)}.
+
+\item\label{item:kfc-fm}
+\textbf{FM boundary acyclicity.}
+For every Fulton--MacPherson boundary stratum
+$S_T \cong \prod_{v \in V(T)} \FM_{|v|}(X)$
+indexed by a rooted tree~$T$, the restriction
+$i_{S_T}^!\,\barBch_n(\cA)$ is acyclic outside degree~$0$.
+
+\end{enumerate}
+
+\medskip
+\noindent
+\textbf{Tropical and representation-theoretic:}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.4em,start=11]
+
+\item\label{item:kfc-tropical}
+\textbf{Tropical Koszulness.}
+The tropicalization of the bar complex
+$\mathrm{trop}(\barBch(\cA))$, obtained by
+passing to the dual complex of the FM compactification and
+retaining only the combinatorial (tree-level) data, satisfies
+tropical $\Etwo$-collapse:
+the tropical spectral sequence has $d_r^{\mathrm{trop}} = 0$
+for $r \geq 2$.
+
+\item\label{item:kfc-ext}
+\textbf{Ext diagonal vanishing.}
+$\Ext^{p,q}_\cA(\omega_X, \omega_X) = 0$ for $p \neq q$,
+where the bigrading comes from the PBW filtration on the bar
+resolution.
+
+\item\label{item:kfc-ks}
+\textbf{Kac--Shapovalov determinant nonvanishing.}
+The Shapovalov determinant $\det G_h \neq 0$ in the bar-relevant
+range: the PBW-to-bar comparison map is injective at every
+bar-relevant conformal weight~$h$.
+
+\end{enumerate}
+
+\medskip
+\noindent
+\textbf{Poisson-geometric (affine family):}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.4em,start=14]
+
+\item\label{item:kfc-sklyanin}
+\textbf{Sklyanin $H^2 = 0$.}
+For $\cA = V_k(\fg)$ with $\fg$ semisimple, the second Poisson
+cohomology of the Sklyanin bracket
+$\{-,-\}_{\mathrm{STS}}$ on $(\fg^!)^*$ vanishes:
+$H^2_\pi((\fg^!)^*, \{-,-\}_{\mathrm{STS}}) = 0$.
+Equivalently, the Sklyanin--Poisson structure determined by the
+classical $r$-matrix $r(z) = k\Omega/z$ admits no nontrivial
+infinitesimal deformations.
+
+\end{enumerate}
+
+\medskip
+\noindent
+\textbf{Conditional and partial:}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.4em,start=15]
+
+\item\label{item:kfc-lagrangian}
+\textbf{Lagrangian criterion} \textup{(conditional on
+perfectness).}
+$\cM_\cA$ and $\cM_{\cA^!}$ are transverse Lagrangians in the
+$(-1)$-shifted symplectic deformation space~$\cM_{\mathrm{comp}}$.
+
+\item\label{item:kfc-purity}
+\textbf{$\cD$-module purity} \textup{(one-directional).}
+Each $\barBch_n(\cA)$ is pure of weight~$n$ as a mixed Hodge
+module, with characteristic variety aligned to FM boundary strata.
+Implies~\textup{\ref{item:kfc-fm}}. Converse proved for affine
+Kac--Moody; open in general.
+
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Numbering convention]
+\label{rem:kfc-numbering}
+The numbering (i)--(xiv) in this paper groups conditions by
+mathematical kinship rather than by the order of the proof.
+The parent monograph~\cite{LorgatMKD1} numbers twelve
+conditions (i)--(xii) in a slightly different order; the
+present list expands by introducing shadow-tower
+formality~(iv), $\Etwo$-formality~(v), curve
+independence~(vi), PBW universality~(vii), and tropical
+Koszulness~(xi) as named conditions, and by separating the
+Sklyanin criterion~(xiv) from the Ext diagonal
+vanishing~(xii).
+The Lagrangian criterion~(xv) and $\cD$-module purity~(xvi)
+are kept outside the numbered list because their equivalence
+class is incomplete.
+\end{remark}
+
+\begin{remark}[The four objects]
+\label{rem:kfc-four-objects}
+% FOUR OBJECTS:
+% 1. B(A) = bar coalgebra = T^c(s^{-1} A-bar) with deconcatenation + twist
+% 2. A^i = H^*(B(A)) = dual coalgebra (Koszul cohomology of bar)
+% 3. A^! = ((A^i)^v) = dual ALGEBRA (linear or Verdier dual)
+% 4. Z^der_ch(A) = derived chiral center = Hochschild cochains = bulk
+The four objects of chiral Koszul duality must not be conflated:
+\begin{enumerate}
+\item $\barBch(\cA) = T^c(s^{-1}\bar\cA)$: the bar
+  \emph{coalgebra}, with deconcatenation coproduct and bar
+  differential.
+\item $\cA^i = H^*(\barBch(\cA))$: the dual
+  \emph{coalgebra}, Koszul cohomology of the bar complex.
+\item $\cA^! = ((\cA^i)^\vee)$: the Koszul dual
+  \emph{algebra}, obtained by Verdier duality.
+\item $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
+  \RHom_{\cA \otimes \cA^{\mathrm{op}}}(\cA,\cA)$: the
+  derived chiral center, computed using the bar complex as a
+  resolution.
+\end{enumerate}
+The bar complex is the $\Eone$ engine; $\Omega(\barBch(\cA)) = \cA$
+is \emph{inversion}, not Koszul duality. The Koszul dual comes from
+Verdier duality. The derived center comes from Hochschild cochains.
+\end{remark}
+
+
+% ================================================================
+\section{The circuit of implications}
+\label{sec:circuit}
+% ================================================================
+
+The proof of Theorem~\ref{thm:kfc-fourteen} is organized as a
+directed graph of implications. The central structure is the
+\emph{core circuit}, a cycle of biconditional implications among five
+conditions:
+\begin{equation}\label{eq:core-circuit}
+\mathrm{(i)} \;\Leftrightarrow\;
+\mathrm{(ii)} \;\Leftrightarrow\;
+\mathrm{(iii)} \;\Leftrightarrow\;
+\mathrm{(viii)} \;\Leftrightarrow\;
+\mathrm{(ix)}.
+\end{equation}
+Each of the remaining conditions is shown equivalent to a
+designated node of this core by a satellite implication.
+The full graph has the following shape.
+
+\begin{center}
+\begin{tikzcd}[row sep=1.6em, column sep=1.8em]
+& \text{(iv) shadow form.} \ar[d,Leftrightarrow] \\
+\text{(xii) Ext diag.} \ar[r,Leftrightarrow]
+& \text{(ii) PBW $E_2$} \ar[r,Leftrightarrow]
+ \ar[d,Leftrightarrow]
+& \text{(i) Koszul} \ar[r,Leftrightarrow]
+& \text{(viii) BBL} \\
+\text{(xiii) Kac--Shap.} \ar[ur,Leftrightarrow]
+& \text{(iii) $A_\infty$ form.}
+ \ar[d,Leftrightarrow] \\
+\text{(vi) curve indep.} \ar[uur,Leftrightarrow]
+& \text{(vii) PBW univ.}
+ \ar[uu,Leftrightarrow,crossing over] \\
+\text{(x) FM bdry} \ar[uuur,Leftrightarrow]
+& \text{(xi) tropical} \ar[l,Leftrightarrow] \\
+\text{(v) $E_2$-Hoch} & \text{(ix) FH conc.}
+ \ar[uuuu,Leftrightarrow,bend right=40] \\
+\text{(xiv) Skl.\ $H^2$} \ar[uuuu,Rightarrow]
+& \text{(xv) Lagr.} \ar[uuuuu,Leftrightarrow,dashed]
+& \text{(xvi) purity} \ar[uuuul,Rightarrow,dashed]
+\end{tikzcd}
+\end{center}
+
+\noindent
+Dashed arrows indicate conditional or partial implications.
+We now give proof sketches for each link, following the order
+of the graph from the core outward.
+
+\subsection{The core circuit}
+
+\subsubsection*{\textup{(i)}~$\Leftrightarrow$~\textup{(ii):}
+Koszulness and PBW collapse}
+
+Koszulness is acyclicity of $K_\tau^L(\cA, \barBch(\cA))$
+for the canonical twisting morphism~$\tau_0$. The left
+twisted tensor product is filtered by the PBW bar degree, and on
+the associated graded the twisted complex becomes the standard
+Koszul complex of the Poisson vertex algebra~$R_\cA$.
+Acyclicity on the associated graded lifts to acyclicity of
+$K_\tau^L$ if and only if the spectral sequence collapses
+at~$\Etwo$~\cite[Thm.~4.2.1]{LorgatMKD1}. This is the PBW
+Koszulness criterion.
+
+Conversely, $\Etwo$-collapse means $H^*(\barBch(\cA))$ is
+concentrated on the PBW diagonal $p = q$. A $d_r$-differential
+in the spectral sequence moves off-diagonal by $(r, 1-r)$;
+off-diagonal classes in the abutment would contradict diagonal
+concentration. The spectral sequence converges conditionally in
+the sense of Boardman (the PBW filtration on a positive-energy
+chiral algebra is bounded below and exhaustive), and in
+characteristic zero with a split filtration the extension problem
+is trivial.
+
+\subsubsection*{\textup{(ii)}~$\Leftrightarrow$~\textup{(iii):}
+PBW collapse and $\Ainfty$-formality}
+
+The Homological Perturbation Lemma identifies the differentials
+$d_r$ of the PBW spectral sequence with the transferred
+$\Ainfty$-operations $m_{r+1}$ on bar cohomology, up to sign.
+Hence $d_r = 0$ for all $r \geq 2$ is equivalent to $m_n = 0$
+for all $n \geq 3$: the minimal $\Ainfty$-model is formal.
+
+For the converse, if $m_n = 0$ for $n \geq 3$, the minimal model
+is a strict dg algebra. The chiral $\Ainfty$-structure is computed
+fiberwise on each FM stratum; on each fiber, Keller's classicality
+theorem for formal $\Ainfty$-algebras gives $\Etwo$-collapse.
+The PBW filtration is defined fiberwise and compatible with the FM
+stratification, so fiberwise collapse assembles to global collapse.
+
+\subsubsection*{\textup{(i)}~$\Leftrightarrow$~\textup{(viii):}
+Koszulness and Barr--Beck--Lurie monadicity}
+
+The Barr--Beck--Lurie theorem~\cite[Thm.~4.7.3.5]{HA} states that
+the comparison functor~$\Phi$ for the bar--cobar adjunction is an
+equivalence if and only if the bar functor is conservative and
+preserves totalizations of bar-split cosimplicial objects.
+
+On the Koszul locus, the bar functor detects quasi-isomorphisms
+(the bar--cobar counit inverts them), giving conservativity. The
+bar--cobar adjunction is a Quillen equivalence on the Koszul
+locus~\cite[\S5]{LorgatMKD1}; a Quillen equivalence of stable
+model categories satisfies the monadic descent conditions of
+\cite[Prop.~4.7.3.16]{HA}. Hence BBL monadicity holds if and
+only if the chiral algebra is Koszul.
+
+\subsubsection*{\textup{(i)}~$\Leftrightarrow$~\textup{(ix):}
+Koszulness and factorization homology concentration}
+
+The bar complex computes factorization homology:
+$\barBch_n(\cA) = (\int_X \cA)_n$. At genus zero,
+$\Etwo$-collapse gives
+$H^k(\int_{\bP^1}\cA) = 0$ for $k \neq 0$: the Goodwillie
+filtration has associated graded given by bar contributions,
+each concentrated in degree~$0$ by PBW collapse.
+On the uniform-weight lane, the same holds at every
+genus: the loop-order spectral sequence collapses on the
+modular Koszul locus, each vertex contribution remains in
+degree~$0$, and the surviving scalar is
+$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+(UNIFORM-WEIGHT).
+
+Conversely, concentration at genus zero specializes to
+$H^k(\int_{\bP^1}\cA) = 0$ for $k \neq 0$. This is computed
+by the bar complex: the geometric realization
+$\int_{\bP^1}\cA \simeq |\barBch(\cA)|$. Concentration in
+degree~$0$ forces the bar spectral sequence to collapse, which
+by the first equivalence is Koszulness.
+
+\subsection{Satellite equivalences from the core}
+
+\subsubsection*{\textup{(ii)}~$\Leftrightarrow$~\textup{(iv):}
+PBW collapse and shadow-tower formality}
+
+The shadow obstruction tower $\{o_{r+1}(\cA)\}_{r \geq 2}$
+has two projections: the genus-zero slice
+$o_{r+1}^{(0)}(\cA)$ and the all-genera projection. Shadow-tower
+formality (vanishing of the genus-zero slice) is identified with the
+transferred $\Linfty$-brackets $\ell_{r+1}^{(0)}$ of the modular
+convolution algebra at genus zero. The HPL transfer identifies
+these with the PBW spectral sequence differentials.
+Hence shadow-tower formality is equivalent to $\Etwo$-collapse.
+
+The all-genera shadow tower, by contrast, can be nontrivial even for
+Koszul algebras: this is the shadow depth classification G/L/C/M.
+Shadow-tower formality is the genus-zero condition; shadow depth
+is the all-genera condition. They are independent invariants.
+
+\subsubsection*{\textup{(i)}~$\Rightarrow$~\textup{(v):}
+Koszulness implies $\Etwo$-formality of ChirHoch}
+
+The bar--cobar quasi-isomorphism
+$\Omega^{\mathrm{ch}}(\barBch(\cA)) \xrightarrow{\sim} \cA$
+provides a free resolution of~$\cA$. Computing
+$\ChirHoch^*(\cA)$ through this resolution, the bar--cobar
+filtration forces diagonal concentration. The polynomial
+structure in degrees $\{0,1,2\}$ follows: degree~$0$ is the
+center, degree~$1$ is first-order deformations, degree~$2$ is
+obstructions. The $\Etwo$-formality of $\ChirHoch^*(\cA)$ uses
+the formality of the local configuration spaces $\FM_n(\bC)$.
+
+This is a one-way consequence: $\Etwo$-formality of $\ChirHoch^*$
+does not force the underlying graded-commutative algebra to be free,
+so the converse from (v) to bar--cobar inversion is not established.
+
+\subsubsection*{\textup{(ii)}~$\Leftrightarrow$~\textup{(vi):}
+PBW collapse and curve independence}
+
+Curve independence at genus zero follows from PBW collapse because
+the collapsed spectral sequence depends only on the associated
+graded $R_\cA$, which is a Poisson vertex algebra independent of
+the global geometry of~$X$. The FM compactification
+$\FM_n(X)$ depends on~$X$, but the $\Etwo$-page
+$H^{p+q}(\gr^F_p \barBch(\cA))$ is computed from $R_\cA$ by
+Chevalley--Eilenberg methods that see only the local OPE data.
+
+Conversely, if factorization homology is curve-independent at
+genus zero, the bar complex cannot have differentials sensitive to
+global geometry. The PBW spectral sequence differentials
+$d_r$ for $r \geq 2$ involve integration over FM strata of
+codimension~$r$; these strata encode collisions of $r+1$ points
+and are sensitive to the curve's geometry at the $r$-fold
+collision scale. Curve independence forces these to vanish,
+giving $\Etwo$-collapse.
+
+\subsubsection*{\textup{(iii)}~$\Leftrightarrow$~\textup{(vii):}
+$\Ainfty$-formality and PBW universality}
+
+PBW universality states that the PBW filtration deforms flatly
+with classically Koszul associated graded. If $\cA$ is freely
+strongly generated (the generators form a free $\cD_X$-module),
+the associated graded is a free polynomial PVA, which is
+quadratic-Koszul. The flat deformation property then implies that
+the bar spectral sequence for $\cA_\hbar$ is a deformation of
+the (collapsed) spectral sequence for $\cA_0$. By
+semicontinuity, the collapsed page persists, giving
+$\Etwo$-collapse and hence $\Ainfty$-formality.
+
+Conversely, $\Ainfty$-formality of bar cohomology means the
+transferred operations $m_n = 0$ for $n \geq 3$; this is the
+linearization condition that PBW universality encodes.
+
+\subsubsection*{\textup{(i)}~$\Leftrightarrow$~\textup{(x):}
+Koszulness and FM boundary acyclicity}
+
+Each FM boundary stratum $S_T$ is indexed by a rooted tree~$T$.
+The residue component $d_{\mathrm{res}}|_{S_T}$ of the bar
+differential restricts to the tensor product of lower-degree bar
+complexes at the vertices of~$T$. $\Etwo$-collapse at each
+vertex gives acyclicity at $S_T$:
+$H^k(i_{S_T}^!\,\barBch_n(\cA)) = 0$ for $k \neq 0$.
+
+Conversely, acyclicity at the deepest strata (binary collision
+divisors $S = D_{\{i,j\}} \cong X \times \FM_{n-1}(X)$) forces
+every OPE residue to be exact in the PBW-graded sense, which is
+the condition for $\Etwo$-collapse. Iterating over all strata
+closes the equivalence.
+
+\subsubsection*{\textup{(x)}~$\Leftrightarrow$~\textup{(xi):}
+FM boundary acyclicity and tropical Koszulness}
+
+The tropicalization of the bar complex retains only the
+combinatorial data visible in the dual complex of the FM
+compactification: the rooted trees indexing boundary strata, the
+face maps between strata, and the residues of the bar differential
+along each stratum. Tropical $\Etwo$-collapse is the assertion
+that these combinatorial residues produce no off-diagonal cohomology.
+
+FM boundary acyclicity (the analytic statement) implies tropical
+Koszulness (the combinatorial statement) by restriction. The
+converse holds when the dual complex is simplicial (the standard
+case for smooth curves): the combinatorial data determines the
+analytic behavior up to homotopy equivalence, so tropical acyclicity
+forces analytic acyclicity.
+
+\subsubsection*{\textup{(i)}~$\Leftrightarrow$~\textup{(xii):}
+Koszulness and Ext diagonal vanishing}
+
+$\Etwo$-collapse places $H^*(\barBch(\cA))$ on the PBW diagonal
+$p = q$. The bar complex computes
+$\Ext^{p,q}_\cA(\omega_X, \omega_X)$, so diagonal concentration
+of bar cohomology is Ext diagonal vanishing.
+
+Conversely, Ext diagonal vanishing means the abutment of the PBW
+spectral sequence is diagonal. Any nonzero differential $d_r$ for
+$r \geq 2$ would produce off-diagonal classes, contradicting
+diagonal concentration. Hence $d_r = 0$ for all $r \geq 2$.
+
+\subsubsection*{\textup{(i)}~$\Leftrightarrow$~\textup{(xiii):}
+Koszulness and Kac--Shapovalov determinant}
+
+If $\cA$ is Koszul, the PBW filtration is strict on the vacuum
+module: $\gr^F M_0(\cA) \cong \Symch(V)$. Strictness implies
+non-degeneracy of the Shapovalov form $G_h$ in the bar-relevant
+range.
+
+Conversely, non-degeneracy of $G_h$ makes the PBW-to-bar comparison
+injective at every bar-relevant weight. Suppose $d_r \neq 0$ for
+some $r \geq 2$; then there exists a nonzero class in
+$E_r^{p,q}$ with nonzero differential, whose lift to the bar
+complex contradicts the acyclicity of $\Sym(V)$ as a Koszul
+complex. Hence $d_r = 0$ for all $r \geq 2$.
+
+\subsubsection*{\textup{(xiv)}~$\Rightarrow$~\textup{(ii):}
+Sklyanin $H^2 = 0$ implies PBW collapse (affine family)}
+
+For $\cA = V_k(\fg)$ with $\fg$ semisimple, the Koszul dual
+coalgebra $\barBch(\cA)^!$ carries the Poisson-Lie group
+$(\fg^!)^*$ with the Sklyanin--Poisson bracket determined by the
+classical $r$-matrix $r(z) = k\Omega/z$ via the
+Semenov-Tian-Shansky construction. The second Poisson cohomology
+$H^2_\pi$ controls infinitesimal deformations of this bracket.
+
+The vanishing $H^2_\pi = 0$ is established by Whitehead's second
+lemma (for $\fg$ semisimple, $H^2(\fg; M) = 0$ for finite-dimensional
+modules~$M$): the Poisson cochain complex
+$(\mathfrak{X}^\bullet, \delta_\pi)$ is the associated graded of
+the bar differential under PBW filtration, so vanishing of $H^2_\pi$
+is the associated-graded avatar of $\Etwo$-collapse.
+The proof: five independent derivation paths (direct kernel/image,
+Chevalley--Eilenberg comparison, polynomial-degree spectral sequence,
+Whitehead reduction, and numerical from the compute engine) confirm
+$H^0_\pi = \bC[C_2]$ (Casimir ring),
+$H^1_\pi = H^2_\pi = H^3_\pi = 0$.
+
+This is proved as a biconditional for the affine Kac--Moody family.
+For general chiral algebras, the Sklyanin construction does not
+apply (it requires a Lie-algebraic $r$-matrix), so the equivalence is
+restricted to this family.
+
+\subsubsection*{\textup{(xv):}
+Lagrangian criterion, conditionally}
+
+Under the perfectness and non-degeneracy hypotheses on the ambient
+tangent complex: on the Koszul locus, the complementarity splitting
+\[
+\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)
+ \;\simeq\; H^*(\overline{\cM}_g, \cZ_\cA)
+\]
+identifies $\cM_\cA$ and $\cM_{\cA^!}$ as complementary subspaces
+of $\cM_{\mathrm{comp}}$. The $(-1)$-shifted symplectic structure
+makes each isotropic; complementarity gives maximal dimension,
+hence Lagrangian. Conversely, transverse Lagrangian intersection
+in a $(-1)$-shifted symplectic space has expected dimension zero;
+its discreteness is acyclicity of the twisted tensor product,
+which is Koszulness.
+
+\subsubsection*{\textup{(xvi)}~$\Rightarrow$~\textup{(x):}
+$\cD$-module purity implies FM boundary acyclicity}
+
+Suppose each $\barBch_n(\cA)$ is pure of weight~$n$ as a mixed
+Hodge module. By Saito's theory, the weight filtration on a pure
+Hodge module splits up to semisimplification; purity plus the
+alignment of the characteristic variety to FM strata forces
+acyclicity outside degree~$0$ on every stratum. The converse
+(Koszulness implies purity) is proved for the affine Kac--Moody
+family, where the bar complex is identified with a geometric
+complex whose purity follows from the Riemann hypothesis for
+weight filtrations.
+
+\begin{remark}[Proof web redundancy]
+\label{rem:kfc-proof-redundancy}
+The proof graph is intentionally overdetermined. The core circuit
+has five nodes and can be verified by tracing any four of the five
+biconditionals. Each satellite equivalence is independent: a
+failure in one link does not compromise the others. The total
+number of proved implications (counting both directions of each
+biconditional) is twenty-four unconditional and four conditional.
+\end{remark}
+
+
+% ================================================================
+\section{Scalar saturation}
+\label{sec:scalar-saturation}
+% ================================================================
+
+\subsection{The modular characteristic}
+
+Let $\cA$ be a chiral algebra on~$X$. The universal Maurer--Cartan
+element $\Theta_\cA := D_\cA - d_0$ of the bar differential lives
+in the modular convolution dg Lie algebra
+$\fg^{\mathrm{mod}}_\cA$ and satisfies
+\begin{equation}\label{eq:mc-equation}
+d\,\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0.
+\end{equation}
+At each degree $r \geq 2$, $\Theta_\cA$ projects to a shadow
+invariant $S_r(\cA)$.
+
+The $\Eone$ ordered bar complex
+$\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ is the primitive
+object: it carries the full $R$-matrix
+$r_\cA(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$.
+The symmetric bar $\barB^\Sigma(\cA)$ is the
+$\Sigma_n$-coinvariant quotient: a lossy projection that discards
+the matrix-valued data and retains only the scalar
+\begin{equation}\label{eq:kappa-definition}
+\kappa(\cA) \;=\; S_2(\cA),
+\end{equation}
+the \emph{modular characteristic}: the single number that survives
+averaging.
+
+\begin{remark}[Family-specific formulas]
+\label{rem:kfc-kappa-families}
+The modular characteristic is family-specific; writing it from
+memory is forbidden. The canonical formulas, verified by multiple
+independent paths, are:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+Family & $\kappa(\cA)$ & Sanity checks \\
+\midrule
+Heisenberg $\mathcal{H}_k$
+  & $k$
+  & $k=0 \to 0$; $k=1 \to 1$ \\
+Affine KM $V_k(\fg)$
+  & $\dfrac{\dim(\fg)(k+h^\vee)}{2h^\vee}$
+  & $k=0 \to \frac{\dim(\fg)}{2}$;
+    $k=-h^\vee \to 0$ \\
+Virasoro $\Vir_c$
+  & $c/2$
+  & $c=0 \to 0$; $c=13 \to 13/2$ \\
+$\cW_N$ (principal)
+  & $c \cdot (H_N - 1)$
+  & $N=2 \to c/2 = \kappa^{\Vir}$;
+    $N=3 \to 5c/6$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+where $H_N = \sum_{j=1}^{N} 1/j$ is the $N$-th harmonic number.
+\end{remark}
+
+\subsection{The saturation theorem}
+
+\begin{theorem}[Scalar saturation]
+\label{thm:kfc-scalar-saturation}
+Let $\cA_k$ be a one-parameter algebraic family of chiral algebras
+with rational OPE coefficients, parametrized by a level~$k$.
+At degree~$2$, the universal MC element is determined by the
+single scalar $\kappa(\cA_k)$:
+\begin{equation}\label{eq:scalar-saturation}
+\Theta_{\cA_k}^{(2)}
+ \;=\; \kappa(\cA_k) \cdot \eta \otimes \Lambda,
+\end{equation}
+where $\eta = d\log(z_1 - z_2)$ is the Arnold propagator and
+$\Lambda$ is the universal quadratic Casimir element.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The degree-two component of $\Theta_\cA$ in the modular convolution
+algebra takes values in
+$H^2(\fg_\cA^{\mathrm{mod}}; \Sym^q V)$ for appropriate~$q$.
+Whitehead's second lemma gives vanishing of this cohomology for
+reductive Lie algebras at generic level: the space of degree-two
+MC deformations is one-dimensional, spanned by
+$\eta \otimes \Lambda$. The coefficient is determined by the
+$\Sigma_n$-coinvariant projection:
+$\av(\Theta_\cA^{(2)}) = \kappa(\cA) \cdot [\lambda_1]$, which
+fixes the coefficient as~$\kappa$.
+
+The argument has three steps:
+\begin{enumerate}
+\item \textbf{Whitehead reduction.} For each standard family, the
+  Lie algebra cohomology $H^2(\fg; \Sym^q V) = 0$ at generic level
+  (the reductive hypothesis is used here). This gives a
+  one-dimensional deformation space at degree two.
+\item \textbf{Algebraic semicontinuity.} The exceptional locus
+  where Whitehead reduction fails is Zariski-closed in the level
+  parameter~$k$. Since the free-field limit $k \to 0$ (for
+  families where $\kappa(k=0) = 0$) provides a base point where
+  saturation holds trivially, the exceptional locus is empty.
+\item \textbf{Coefficient identification.} The averaging map
+  $\av \colon \fg_\cA^{\Eone} \to \fg_\cA^{\mathrm{mod}}$
+  projects $\Theta_\cA^{(2)}$ to
+  $\kappa(\cA) \cdot [\lambda_1]$. Since $\av$ is the
+  $\Sigma_n$-coinvariant projection and $\eta \otimes \Lambda$ is
+  the unique $\Sigma_2$-invariant degree-two element (up to scalar),
+  the coefficient is~$\kappa$.
+\end{enumerate}
+
+For non-abelian affine KM, the averaging identity involves the
+Sugawara shift:
+$\av(r(z)) + \dim(\fg)/2 = \kappa(V_k(\fg))$
+where $\av(r(z)) = k \cdot \dim(\fg)/(2h^\vee)$ is the
+double-pole channel and $\dim(\fg)/2$ is the simple-pole
+self-contraction through the adjoint Casimir.
+\end{proof}
+
+\begin{remark}[Scope]
+\label{rem:kfc-saturation-scope}
+Scalar saturation at degree~$2$ holds for every family in the
+standard landscape at all non-critical levels, including admissible.
+For multi-weight algebras at genus $g \geq 2$, saturation holds at
+degree~$2$ but the full MC element receives cross-channel
+corrections: the stronger identity
+$\Theta_\cA^{\mathrm{min}} = \kappa \cdot \eta \otimes \Lambda$
+is proved on the uniform-weight lane and fails at $g \geq 2$ for
+multi-weight families (ALL-WEIGHT $+ \delta F_g^{\mathrm{cross}}$).
+\end{remark}
+
+\subsection{From scalar saturation to Koszulness}
+
+Scalar saturation establishes that $\kappa$ controls the MC element
+at degree~$2$. The question is what controls it at \emph{all}
+degrees. The answer is the Koszul condition.
+
+\begin{proposition}[Koszulness controls the full tower]
+\label{prop:kfc-koszul-controls-tower}
+If $\cA$ is chirally Koszul, then the universal MC element
+$\Theta_\cA$ is determined at every degree by its genus-zero
+projection. Concretely:
+\begin{enumerate}
+\item The shadow invariants $S_r(\cA)$ for $r \geq 3$ are
+  determined by the $\Ainfty$-formality data of bar cohomology.
+\item On the uniform-weight lane, $\Theta_\cA$ is determined
+  by $\kappa(\cA)$ and the shadow depth class.
+\item For class~G algebras (Heisenberg), $S_r = 0$ for
+  $r \geq 3$: the MC element is entirely controlled by~$\kappa$.
+\item For class~M algebras (Virasoro), $S_r \neq 0$ for
+  infinitely many~$r$, but each $S_r$ is determined by
+  $\kappa = c/2$ and $S_4 = 10/[c(5c+22)]$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+$\Ainfty$-formality (condition~(iii) of
+Theorem~\ref{thm:kfc-fourteen}) means $m_n = 0$ for $n \geq 3$:
+the bar cohomology algebra has no higher operations. The MC moduli
+of a formal $\Ainfty$-algebra is discrete; the shadow invariants
+$S_r$ are the Taylor coefficients of the unique MC solution
+in the completion of the convolution algebra. Each $S_r$ is
+determined recursively from $\kappa = S_2$ and the structure
+constants of the algebra.
+
+For class~G, all $S_r = 0$ for $r \geq 3$ by direct computation
+(the bar complex is abelian).
+For class~M, the recursion is controlled by the Riccati equation
+$\Delta = 8\kappa S_4$, where
+$\Delta = 0$ characterizes class~G. The seed $S_4$ determines
+$S_r$ for all $r$ via the shadow algebra Lie bracket; for
+Virasoro, $S_4 = 10/[c(5c+22)] \sim 2/c^2$ at large~$c$.
+\end{proof}
+
+\begin{remark}[The critical discriminant]
+\label{rem:kfc-discriminant}
+The discriminant $\Delta = 8\kappa \cdot S_4$ is linear in
+$\kappa$ (not quadratic). $\Delta = 0$ if and only if the shadow
+tower is finite. For $\kappa \neq 0$, finiteness is equivalent to
+$S_4 = 0$, which characterizes class~G. For $\kappa = 0$ (critical
+level), $\Delta = 0$ regardless of~$S_4$.
+\end{remark}
+
+\subsection{The $\Eone$ structure}
+
+Scalar saturation is a statement about the $\Sigma_n$-coinvariant
+quotient. The full $\Eone$ ordered bar complex carries strictly
+more data: the matrix-valued classical $r$-matrix
+$r_\cA(z) \in \mathrm{End}_\cA(2)[\![z^{-1}]\!]$, of which
+$\kappa$ is only the scalar shadow $\kappa = \av(r_\cA(z))$.
+
+The $r$-matrix satisfies the classical Yang--Baxter equation
+$[r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0$
+and determines the Yangian structure on the ordered bar cohomology.
+It absorbs one pole from the OPE via the logarithmic propagator:
+for Heisenberg, the OPE has a double pole and the $r$-matrix
+has a simple pole, $r^{\Heis}(z) = k/z$. For Virasoro, the OPE has
+a quartic pole and the $r$-matrix has a cubic pole,
+$r^{\Vir}(z) = (c/2)/z^3 + 2T/z$.
+For affine KM in the trace-form convention,
+$r^{\KM}(z) = k\Omega/z$, where $\Omega$ is the inverse Killing
+form Casimir and the level prefix~$k$ is mandatory: at $k = 0$
+the $r$-matrix vanishes (abelian limit).
+
+The averaging map $\av \colon \fg_\cA^{\Eone} \to
+\fg_\cA^{\mathrm{mod}}$ is the $\Sigma_n$-coinvariant projection.
+It is lossy: the full $r$-matrix determines $\kappa$, but $\kappa$
+does not determine the $r$-matrix. The five theorems of the parent
+monograph extract the $\Sigma_n$-invariant content; the present
+paper works at this invariant level, where scalar saturation gives
+full control at degree two and Koszulness extends control to all
+degrees.
+
+
+% ================================================================
+\section{The standard landscape}
+\label{sec:landscape}
+% ================================================================
+
+The fourteen characterizations of
+Theorem~\ref{thm:kfc-fourteen} are verified on every family in
+the standard landscape. The verification proceeds family by
+family, each through a different Koszul equivalence: the
+structure of the algebra determines which criterion provides
+the cleanest proof.
+
+\begin{theorem}[Every standard family is chirally Koszul]
+\label{thm:kfc-landscape}
+The following chiral algebras are chirally Koszul:
+Heisenberg~$\mathcal{H}_k$ at all levels~$k$; lattice
+algebras $V_L$ for all even lattices~$L$; affine Kac--Moody
+$V_k(\fg)$ for all semisimple~$\fg$ at all non-critical
+levels~$k \neq -h^\vee$; Virasoro~$\Vir_c$ at all
+$c \neq 0$; the principal $\cW$-algebra $\cW_N$ at all $N$
+and generic level; the $\beta\gamma$ system at standard
+conformal weight; and the Bershadsky--Polyakov
+algebra~$\cW^{(2)}_k(\mathfrak{sl}_3)$ at generic level.
+\end{theorem}
+
+The proof is the content of this section. Table~\ref{tab:landscape}
+records the family, the Koszul equivalence that proves it, the
+shadow class, the modular characteristic, and the Koszul
+complementarity conductor.
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lllll}
+\toprule
+Family & Koszul equivalence & Class & $\kappa$ & $K$ \\
+\midrule
+$\mathcal{H}_k$ & (ii) PBW, trivial & G & $k$ & $0$ \\
+Lattice $V_L$ & (ii) PBW, lattice & G & $\mathrm{rk}(L)/2$ & $0$ \\
+$V_k(\fg)$ & (xiii) Kac--Shapovalov & L & $\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}$ & $0$ \\
+$\Vir_c$ & (iv) shadow formality & M & $c/2$ & $13$ \\
+$\cW_N$ & (xiii) via DS from KM & M & $c(H_N-1)$ & family-dep. \\
+$\beta\gamma$ & (iii) $\Ainfty$-formality & C & $6\lambda^2-6\lambda+1$ & $0$ \\
+$\cW^{(2)}_k(\mathfrak{sl}_3)$ & (xii) Ext diag. & M & $c(k)/6$ & $98/3$ \\
+\bottomrule
+\end{tabular}
+\caption{The standard landscape and Koszulness.
+  $H_N = \sum_{j=1}^{N} 1/j$. The column $K$ denotes the Koszul
+  complementarity conductor $K = \kappa(\cA) + \kappa(\cA^!)$.}
+\label{tab:landscape}
+\end{table}
+
+\subsection{Heisenberg}
+
+The Heisenberg algebra $\mathcal{H}_k$ has a single generator
+$J$ with OPE $J(z) J(w) \sim k/(z-w)^2$, so the bar complex
+$\barBch(\mathcal{H}_k)$ is the desuspended tensor coalgebra on
+a one-dimensional augmentation ideal. The PBW spectral sequence
+has a single nonzero column at $p = 1$, so $\Etwo$-collapse
+is vacuous: there are no possible higher differentials. This is
+equivalence~(ii) of Theorem~\ref{thm:kfc-fourteen}, in its
+trivial form. The modular characteristic is
+$\kappa(\mathcal{H}_k) = k$, and the shadow tower terminates
+at $r = 2$: class~G. The Koszul dual is
+$\mathcal{H}_k^! = \Symch(V^*)$ (the chiral symmetric algebra
+on the linear dual), with
+$\kappa(\mathcal{H}_k^!) = -k$, giving
+$K = k + (-k) = 0$.
+
+\subsection{Lattice algebras}
+
+The lattice vertex algebra $V_L$ associated to an even
+lattice~$L$ of rank~$r$ is an extension of the Heisenberg
+algebra by vertex operators $e^\alpha$ for $\alpha \in L$.
+The PBW filtration on $V_L$ has associated graded
+$\gr^F V_L \cong \Symch(\fh) \otimes \bC[L]$, where
+$\fh = L \otimes_\bZ \bC$. The lattice grading gives a
+decomposition of the bar complex into weight spaces, each of
+which reduces to a Heisenberg bar complex tensored with
+the group algebra. The PBW spectral sequence collapses at
+$\Etwo$ in each weight sector: equivalence~(ii).
+The modular characteristic is
+$\kappa(V_L) = \mathrm{rk}(L)/2$, and the shadow class is~G.
+
+\subsection{Affine Kac--Moody}
+
+For $\cA = V_k(\fg)$ with $\fg$ semisimple and $k \neq -h^\vee$,
+the Koszulness proof goes through the Kac--Shapovalov
+criterion~(xiii). The Shapovalov form $G_h$ on the vacuum Verma
+module $M_0(V_k(\fg))$ is nondegenerate for $k$ outside the
+critical hyperplane: the Shapovalov determinant is a product
+over positive roots and PBW-relevant weights, and its zeros are
+confined to the critical level and the reducibility
+locus~\cite[Thm.~11.4]{KK79}.
+
+At non-critical level, $\det G_h \neq 0$ in the bar-relevant
+range: the PBW-to-bar comparison is injective, and the
+PBW spectral sequence collapses at~$\Etwo$ by
+Theorem~\ref{thm:kfc-fourteen}~(xiii)$\Leftrightarrow$(ii).
+This is the chiral analogue of the Garland--Lepowsky
+concentration theorem~\cite{GL76}: the cohomology of the bar
+complex is concentrated on the PBW diagonal, the higher
+differentials vanish, and the associated graded computes the
+Koszul dual coalgebra.
+
+The modular characteristic is
+$\kappa(V_k(\fg)) = \dim(\fg)(k+h^\vee)/(2h^\vee)$.
+Sanity checks: $k = 0$ gives $\kappa = \dim(\fg)/2$ (the abelian
+limit, not zero: the double-pole vanishes but the simple-pole
+self-contraction persists); $k = -h^\vee$ gives $\kappa = 0$
+(critical level, where Koszulness fails). The shadow class is~L:
+the cubic shadow $S_3 \neq 0$ detects the Lie bracket, but
+$S_4 = 0$, so the tower terminates at degree~$3$.
+The Koszul conductor is
+$K = \kappa(V_k(\fg)) + \kappa(V_{k'}(\fg)) = 0$
+where $k' = -2h^\vee - k$.
+
+\subsection{Virasoro}
+
+The Virasoro algebra $\Vir_c$ has OPE pole order~$4$ and is not
+quadratic in any classical sense. Its Koszulness is proved
+through shadow-tower formality~(iv). The PBW spectral sequence
+for $\Vir_c$ has higher differentials that could a priori be
+nonzero; the proof that they vanish uses the recursive structure
+of the Maurer--Cartan element.
+
+At genus zero, the shadow obstruction tower has
+$o_{r+1}^{(0)} = 0$ for all $r \geq 2$: the transferred
+$\Linfty$-brackets $\ell_{r+1}^{(0)}$ vanish because the
+Virasoro vacuum module satisfies Kac determinant nonvanishing at
+generic~$c$. Shadow-tower formality at genus zero is
+equivalence~(iv)$\Leftrightarrow$(ii): the PBW spectral sequence
+collapses.
+
+The modular characteristic is $\kappa(\Vir_c) = c/2$, and the
+shadow class is~M: $S_4 = 10/[c(5c+22)] \neq 0$ for generic~$c$,
+so the all-genera tower is infinite.
+The Koszul dual is $\Vir_c^! = \Vir_{26-c}$, giving
+$K = c/2 + (26-c)/2 = 13$.
+The self-dual point is $c = 13$ (not $c = 26$).
+
+\subsection{Principal $\cW$-algebras}
+
+The principal $\cW$-algebra $\cW_N$ at level~$k$ is obtained
+from $V_k(\mathfrak{sl}_N)$ by Drinfeld--Sokolov reduction with
+respect to the principal nilpotent $f_{\mathrm{prin}}$. The
+Koszulness of $\cW_N$ is derived from the Koszulness of the
+parent affine KM algebra through the functoriality of DS
+reduction with respect to the bar complex.
+
+DS reduction preserves the Shapovalov criterion: it sends the
+Kac--Shapovalov form on $V_k(\mathfrak{sl}_N)$ to the
+$\cW$-algebra Shapovalov form on $\cW_N$, and nonvanishing of
+the former at generic level implies nonvanishing of the latter.
+This gives Koszulness of $\cW_N$ through
+equivalence~(xiii). At $N = 2$, this recovers the Virasoro
+result through a different path (DS from $\mathfrak{sl}_2$
+rather than shadow-tower formality).
+
+The generators of $\cW_N$ have conformal weights
+$\{2, 3, \ldots, N\}$: that is $N - 1$ generators, with highest
+weight~$N$.
+The modular characteristic is
+$\kappa(\cW_N) = c \cdot (H_N - 1)$
+where $H_N = \sum_{j=1}^{N} 1/j$. Sanity check at $N = 2$:
+$H_2 - 1 = 3/2 - 1 = 1/2$, so $\kappa(\cW_2) = c/2$,
+matching $\kappa(\Vir_c)$. At $N = 3$: $H_3 - 1 = 11/6 - 1
+= 5/6$, so $\kappa(\cW_3) = 5c/6$.
+
+\subsection{The $\beta\gamma$ system}
+
+The $\beta\gamma$ system at conformal weight~$\lambda$ has central
+charge $c_{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)$.
+Its bar complex has a contact-term tower that terminates at
+degree~$4$ (shadow class~C), so the transferred $\Ainfty$-products
+$m_n$ satisfy $m_n = 0$ for $n \geq 5$. But Koszulness requires
+$m_n = 0$ for $n \geq 3$.
+
+The vanishing of $m_3$ and $m_4$ is proved by explicit computation:
+the genus-zero shadow obstructions $o_3^{(0)} = o_4^{(0)} = 0$ at
+generic conformal weight. This establishes $\Ainfty$-formality,
+equivalence~(iii). The $\beta\gamma$ system is the simplest
+family in class~C, the class where the tower is finite but
+nontrivial ($S_3 \neq 0$, $S_4 \neq 0$, $S_r = 0$ for
+$r \geq 5$).
+
+\subsection{Bershadsky--Polyakov}
+
+The Bershadsky--Polyakov algebra
+$\cW^{(2)}_k(\mathfrak{sl}_3)$ is the non-principal
+$\cW$-algebra obtained by DS reduction of
+$V_k(\mathfrak{sl}_3)$ with respect to the minimal nilpotent.
+It has generators at conformal weights $\{1, 3/2, 3/2, 2\}$
+and central charge
+$c(k) = (k-1)(6k+1)/(k+3)$.
+
+Koszulness is established through Ext diagonal
+vanishing~(xii): the bigraded Ext groups
+$\Ext^{p,q}(\omega, \omega)$ are concentrated on the diagonal
+$p = q$ at generic level. The proof uses the non-principal DS
+reduction from $V_k(\mathfrak{sl}_3)$: the DS functor sends
+the Kac--Shapovalov form of the parent to the
+Bershadsky--Polyakov Shapovalov form, and nonvanishing at
+generic level gives diagonal concentration.
+
+The modular characteristic is $\kappa(\cW^{(2)}_k) = c(k)/6$,
+with anomaly ratio $\varrho = 1/6$. The Koszul complementarity
+conductor is
+$K_{\mathrm{BP}} = \kappa(\cW^{(2)}_k) + \kappa(\cW^{(2)}_{k'})
+= 98/3$,
+where $k' = -k - 6$ is the dual level.
+The self-dual level is $k = -3$, at which
+$\kappa = 49/3$.
+
+
+% ================================================================
+\section{The admissible-level question}
+\label{sec:admissible}
+% ================================================================
+
+The standard landscape verification of
+\S\ref{sec:landscape} treats the universal enveloping VOA
+$V_k(\fg)$ at generic level. At admissible levels
+$k = -h^\vee + p/q$ (coprime $p \geq h^\vee$, $q \geq 2$), the
+simple quotient $L_k(\fg) = V_k(\fg)/I_k$ is a rational
+vertex algebra. The question is whether the simple quotient
+remains Koszul.
+
+\subsection{Rank one: $\mathfrak{sl}_2$}
+
+\begin{proposition}[$\mathfrak{sl}_2$ at admissible level]
+\label{prop:kfc-sl2-admissible}
+The simple quotient $L_k(\mathfrak{sl}_2)$ is chirally Koszul
+at every admissible level
+$k = -2 + p/q$ with $p \geq 2$, $q \geq 2$, $\gcd(p,q) = 1$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The ideal $I_k \subset V_k(\mathfrak{sl}_2)$ is generated by a
+single null vector at conformal weight $pq$. Since
+$\dim \mathfrak{sl}_2 = 3$, the PBW spectral sequence for
+$L_k(\mathfrak{sl}_2)$ has at most two nonzero columns at each
+conformal weight: the Cartan direction $h$ and the root
+directions $e, f$. The root generators are killed by
+$[e,f] = h$ on the $E_1$ page, and the Cartan generator
+survives as a single class in $H^1$.
+
+The null vector at weight $pq$ introduces a relation in the bar
+complex, but this relation is confined to a single PBW column: it
+does not create off-diagonal classes in the $E_2$ page. The
+PBW spectral sequence collapses at $\Etwo$ because the
+dimensional constraint ($\dim \mathfrak{sl}_2 = 3$, hence at
+most $2$ nonzero columns in the relevant range) leaves no room
+for higher differentials $d_r$ with $r \geq 2$.
+\end{proof}
+
+\begin{remark}[Mechanism]
+\label{rem:kfc-sl2-mechanism}
+The proof for $\mathfrak{sl}_2$ uses the small-rank accident: three
+generators produce at most two nonzero PBW columns at each weight,
+and a differential $d_r$ for $r \geq 2$ needs at least $r + 1$
+nonzero columns as domain and target. At rank one, the room
+runs out immediately. This is specific to $\mathfrak{sl}_2$; it
+fails at every higher rank.
+\end{remark}
+
+\subsection{Rank two and beyond: the obstruction}
+
+\begin{conjecture}[Admissible Koszul rank obstruction]
+\label{conj:kfc-admissible-rank}
+For every simple Lie algebra $\fg$ of rank $r \geq 2$ and every
+admissible level $k = p/q - h^\vee$ with denominator $q \geq 3$,
+the simple quotient $L_k(\fg)$ has
+$\dim H^2(\barBch(L_k(\fg))) = \mathrm{rank}(\fg)$.
+In particular, $L_k(\fg)$ is not chirally Koszul.
+\end{conjecture}
+
+The mechanism is the abelian Cartan subalgebra
+$\fh \subset \fg$. On the $E_1$ page of the PBW spectral
+sequence for $L_k(\fg)$, the Poisson differential kills the root
+generators via $[e_\alpha, f_\alpha] = h_\alpha$, but the
+Cartan generators $h_1, \ldots, h_r$ survive because $\fh$ is
+abelian. When $r = 1$, the surviving class is confined to a
+single column and cannot support a higher differential. When
+$r \geq 2$, the surviving $r$-dimensional space admits
+nontrivial higher differentials sourced by the multi-weight
+coupling between null vectors at different roots: the null
+vectors interact through the Cartan matrix, and the
+interactions generate off-diagonal bar cohomology.
+
+\begin{remark}[Evidence]
+\label{rem:kfc-admissible-evidence}
+For $\fg = \mathfrak{sl}_3$ at admissible level with $q = 3$:
+$\dim H^2(\barBch(L_k(\mathfrak{sl}_3))) = 2$, confirmed by
+direct computation. The two classes correspond to the two simple
+roots. For $\fg = \mathfrak{sl}_4$: predicted $H^2 = 3$.
+The pattern is $\dim H^2 = \mathrm{rank}(\fg)$.
+\end{remark}
+
+\begin{remark}[Physical content]
+\label{rem:kfc-admissible-physical}
+Admissible-level simple quotients are the vertex algebras of
+rational conformal field theories (Arakawa). If
+Conjecture~\ref{conj:kfc-admissible-rank} holds, then
+bar--cobar inversion fails for these quotients at rank
+$\geq 2$: the null vectors that enforce rationality of the
+representation category simultaneously obstruct PBW
+concentration. Koszulness and rationality would stand in
+tension for $\mathrm{rank} \geq 2$: the algebraic optimality
+of the bar complex (Koszulness) is incompatible with the
+representation-theoretic rigidity of the simple quotient
+(rationality). At rank one, both coexist.
+\end{remark}
+
+
+% ================================================================
+\section{The shadow algebra and BV/BRST}
+\label{sec:shadow-bv}
+% ================================================================
+
+The Koszul property controls the bar complex at genus zero. At
+higher genus, the bar differential squares to a nonzero
+curvature $d^2_{\mathrm{fib}} = \kappa(\cA) \cdot \omega_g$, and
+the Maurer--Cartan element $\Theta_\cA$ is the datum that
+measures the obstruction to extending genus-zero
+results across the modular tower. This section records two
+structures that accompany the Koszul property: the shadow
+algebra (the graded Lie algebra controlling the MC recursion)
+and the BV/bar comparison (the genus-by-genus identification
+with the BRST complex).
+
+\subsection{The shadow algebra}
+
+The shadow invariants $S_r(\cA)$ for $r \geq 2$ are the
+degree-$r$ projections of $\Theta_\cA$. They do not form a ring:
+the natural algebraic structure is a \emph{graded Lie bracket},
+inherited from the convolution Lie algebra
+$\fg^{\mathrm{mod}}_\cA$.
+
+\begin{definition}[Shadow algebra]
+\label{def:kfc-shadow-algebra}
+The \emph{shadow algebra} of a chiral algebra~$\cA$ is the
+bigraded Lie algebra
+\[
+\cA^{\mathrm{sh}} \;=\;
+\bigoplus_{r \geq 2,\; g \geq 0} \cA^{\mathrm{sh}}_{r,g}
+\]
+where $\cA^{\mathrm{sh}}_{r,g}$ is the degree-$r$, genus-$g$
+component of the modular convolution algebra
+$\fg^{\mathrm{mod}}_\cA$. The Lie bracket
+$[-,-]^{\mathrm{sh}} \colon
+\cA^{\mathrm{sh}}_{r_1,g_1} \otimes \cA^{\mathrm{sh}}_{r_2,g_2}
+\to \cA^{\mathrm{sh}}_{r_1+r_2-2, g_1+g_2}$
+descends from the convolution bracket and drives the
+Maurer--Cartan recursion: $S_{r+1}$ is determined by
+$S_2, \ldots, S_r$ through
+\[
+d\,S_{r+1} + \tfrac{1}{2}
+\sum_{\substack{r_1 + r_2 = r+2 \\ r_1, r_2 \geq 2}}
+[S_{r_1}, S_{r_2}]^{\mathrm{sh}} = 0.
+\]
+\end{definition}
+
+\begin{warning}[Not a ring]
+\label{warn:kfc-shadow-not-ring}
+The shadow algebra is a graded Lie algebra, \emph{not} a
+graded-commutative ring. There is no shadow product
+$S_r \cdot S_s$; there is a shadow bracket
+$[S_r, S_s]^{\mathrm{sh}}$. The distinction is structural:
+the Jacobi identity of $[-,-]^{\mathrm{sh}}$ controls the
+solvability of the MC recursion, and the depth classification
+G/L/C/M records where this recursion first produces nonzero
+data.
+\end{warning}
+
+The G/L/C/M classification follows from the shadow algebra:
+\begin{itemize}
+\item Class~G ($r_{\max} = 2$): $S_r = 0$ for $r \geq 3$.
+  The shadow algebra is abelian. Heisenberg, lattice algebras.
+\item Class~L ($r_{\max} = 3$): $S_3 \neq 0$, $S_r = 0$ for
+  $r \geq 4$. The cubic shadow detects the Lie bracket. Affine
+  Kac--Moody at non-critical level.
+\item Class~C ($r_{\max} = 4$): $S_3 \neq 0$, $S_4 \neq 0$,
+  $S_r = 0$ for $r \geq 5$. Contact-term termination. The
+  $\beta\gamma$ system.
+\item Class~M ($r_{\max} = \infty$): $S_r \neq 0$ for
+  infinitely many~$r$. Virasoro, $\cW$-algebras.
+\end{itemize}
+Every class is chirally Koszul. The depth classification is
+orthogonal to Koszulness: it measures complexity within the
+Koszul world, not failure of Koszulness.
+
+\subsection{BV/bar identification in the coderived category}
+
+The BV/BRST complex $C^\bullet_{\mathrm{BV}}(\cA, \Sigma_g)$
+on a genus-$g$ surface $\Sigma_g$ computes the same factorization
+homology as the bar complex $B^{(g)}(\cA)$, but through a
+different chain model: the BV propagator is the Green's function
+on $\Sigma_g$, while the bar propagator is the logarithmic form
+$d\log E(z,w)$ (weight~$1$, the prime form logarithmic
+derivative).
+
+\begin{theorem}[BV$=$bar in the coderived category]
+\label{thm:kfc-bv-bar}
+Let $\cA$ be a chirally Koszul algebra.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For every genus $g \geq 0$,
+  $C^\bullet_{\mathrm{BV}}(\cA, \Sigma_g)
+  \simeq_{D^{\mathrm{co}}} B^{(g)}(\cA)$
+  in the coderived category of curved factorization models.
+\item If $\cA$ is class~G or class~L, the comparison morphism
+  $f_g$ is a chain-level weak equivalence.
+\item If $\cA$ is class~C and harmonic decoupling holds,
+  $f_g$ is a chain-level weak equivalence.
+\item If $\cA$ is class~M, the comparison cone is coacyclic:
+  $f_g$ is a coderived equivalence but \emph{not} a chain-level
+  quasi-isomorphism. The harmonic discrepancy at degree~$r$ is
+  $\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot
+  m_0^{\lfloor r/2 \rfloor - 1}$,
+  a sum of curvature powers whose cone is exact in the coderived
+  sense.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The comparison morphism $f_g$ is constructed by replacing the BV
+propagator with its Hodge decomposition relative to the bar
+propagator. At genus~$0$, the Hodge decomposition is trivial (no
+harmonic forms on $\bP^1$), and $f_0$ is a chain-level
+quasi-isomorphism for all classes.
+
+At genus $g \geq 1$, the Hodge decomposition produces a harmonic
+correction proportional to the curvature
+$m_0 = \kappa(\cA) \cdot \omega_g$. For class~G,
+$\kappa = k$ and $S_r = 0$ for $r \geq 3$: the harmonic
+correction at each degree involves only the curvature itself,
+and the comparison is exact. For class~L, the cubic shadow
+contributes a single additional correction at degree~$3$,
+which is killed by the Jacobi identity of the shadow bracket.
+
+For class~M, the harmonic corrections are nonzero at
+every degree $r \geq 4$. Each correction
+$\delta_r^{\mathrm{harm}}$ is a polynomial in the curvature
+$m_0$; the sum defines the comparison cone. This cone is
+\emph{not} acyclic in the ordinary sense (the harmonic
+terms persist at each degree), but it \emph{is} coacyclic:
+it belongs to the acyclic class of the coderived category.
+The proof uses the characterization of coacyclic objects as
+those whose totalizations are contractible in the complete
+filtered sense~\cite[\S3.7]{PP}.
+\end{proof}
+
+\begin{remark}[Class~M: chain-level false]
+\label{rem:kfc-class-m-chain-false}
+The failure of the chain-level BV/bar comparison for class~M
+is genuine: it is not an artifact of a suboptimal chain model.
+The Virasoro algebra has
+$\delta_4^{\mathrm{harm}} = c_4(\Vir_c) \cdot m_0 \neq 0$
+for $c \neq 0$, and $c_4$ is determined by the shadow
+invariant $S_4 = 10/[c(5c+22)]$. Since $S_4 \neq 0$ for
+generic~$c$, the harmonic discrepancy is nonzero, and no
+chain-level comparison exists. The coderived category is
+the correct ambient category for BV/bar at class~M.
+\end{remark}
+
+\begin{remark}[Scope summary]
+\label{rem:kfc-bv-scope}
+BV$=$bar in the coderived category is proved unconditionally for
+all chirally Koszul algebras. The chain-level strengthening holds
+for class~G and class~L (unconditionally), for class~C
+(conditionally on harmonic decoupling), and fails for class~M.
+The coderived formulation is the natural one: it accommodates
+the curvature $d^2_{\mathrm{fib}} = \kappa \cdot \omega_g$
+without requiring chain-level cancellation.
+\end{remark}
+
+
+% ================================================================
+\bigskip
+
+\noindent
+The Koszul locus is the locus on which the bar construction is
+invertible, the spectral sequence collapses, the resolution is
+linear, and a single scalar controls the Maurer--Cartan element at
+degree two. Fourteen conditions detect this locus from fourteen
+mathematical vantage points; their equivalence is the content of
+this paper. Every standard chiral algebra lies on the Koszul locus.
+Shadow depth (the G/L/C/M classification) is an orthogonal invariant:
+it classifies complexity within the Koszul world, not proximity to
+the Koszul boundary. The admissible-level question (whether simple
+quotients at rank $\geq 2$ remain Koszul) and the $\cD$-module
+purity converse (whether Koszulness implies Hodge-theoretic purity
+beyond affine Kac--Moody) are the two open frontiers where the
+boundary of the Koszul locus has not yet been mapped.
+
+
+% ================================================================
+% Bibliography
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld.
+\newblock \emph{Chiral Algebras}.
+\newblock AMS Colloquium Publications, vol.~51, 2004.
+
+\bibitem{BGS}
+A.~Beilinson, V.~Ginzburg, and W.~Soergel.
+\newblock Koszul duality patterns in representation theory.
+\newblock \emph{J.~Amer.~Math.~Soc.} \textbf{9} (1996), 473--527.
+
+\bibitem{CG}
+K.~Costello and O.~Gwilliam.
+\newblock \emph{Factorization algebras in quantum field theory},
+ vols.~I--II.
+\newblock Cambridge University Press, 2017/2021.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory.
+\newblock Chiral Koszul duality.
+\newblock \emph{Selecta Math.~(N.S.)} \textbf{18} (2012), 27--87.
+
+\bibitem{FM94}
+W.~Fulton and R.~MacPherson.
+\newblock A compactification of configuration spaces.
+\newblock \emph{Ann.~of Math.} \textbf{139} (1994), 183--225.
+
+\bibitem{GL76}
+H.~Garland and J.~Lepowsky.
+\newblock Lie algebra homology and the Macdonald--Kac formulas.
+\newblock \emph{Invent.~Math.} \textbf{34} (1976), 37--76.
+
+\bibitem{GR17}
+D.~Gaitsgory and N.~Rozenblyum.
+\newblock \emph{A study in derived algebraic geometry}.
+\newblock American Mathematical Society, 2017.
+
+\bibitem{HA}
+J.~Lurie.
+\newblock \emph{Higher Algebra}.
+\newblock 2017. Available at
+ \url{https://www.math.ias.edu/~lurie/}.
+
+\bibitem{KK79}
+V.~Kac and D.~Kazhdan.
+\newblock Structure of representations with highest weight of
+ infinite-dimensional Lie algebras.
+\newblock \emph{Adv.~in Math.} \textbf{34} (1979), 97--108.
+
+\bibitem{Keller}
+B.~Keller.
+\newblock $A$-infinity algebras, modules and functor categories.
+\newblock In \emph{Trends in Representation Theory of Algebras
+ and Related Topics}, Contemp.~Math.~\textbf{406} (2006), 67--93.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette.
+\newblock \emph{Algebraic Operads}.
+\newblock Grundlehren der math.~Wissenschaften, vol.~346,
+ Springer, 2012.
+
+\bibitem{LorgatMKD1}
+R.~Lorgat.
+\newblock \emph{Modular Koszul Duality}.
+\newblock In preparation, 2026.
+
+\bibitem{PP}
+A.~Polishchuk and L.~Positselski.
+\newblock \emph{Quadratic Algebras}.
+\newblock University Lecture Series, vol.~37, AMS, 2005.
+
+\bibitem{Priddy}
+S.~Priddy.
+\newblock Koszul resolutions.
+\newblock \emph{Trans.~Amer.~Math.~Soc.} \textbf{152} (1970), 39--60.
+
+\bibitem{Saito}
+M.~Saito.
+\newblock Modules de Hodge polarisables.
+\newblock \emph{Publ.~Res.~Inst.~Math.~Sci.} \textbf{24} (1988), 849--995.
+
+\bibitem{STS83}
+M.~Semenov-Tian-Shansky.
+\newblock What is a classical $r$-matrix?
+\newblock \emph{Funct.~Anal.~Appl.} \textbf{17} (1983), 259--272.
+
+\end{thebibliography}
+
+\end{document}

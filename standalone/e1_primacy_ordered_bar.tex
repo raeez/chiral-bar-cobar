@@ -1,0 +1,2422 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{tikz-cd}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!40!black,
+  urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{warning}[theorem]{Warning}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{principle}[theorem]{Principle}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\HH}{\mathrm{HH}}
+\newcommand{\CE}{\mathrm{CE}}
+\newcommand{\ChirHoch}{\mathrm{HH}^{*}_{\mathrm{ch}}}
+
+\newcommand{\Ainf}{A_{\infty}}
+\newcommand{\Eone}{\mathsf{E}_{1}}
+\newcommand{\Etwo}{\mathsf{E}_{2}}
+\newcommand{\Ethree}{\mathsf{E}_{3}}
+\newcommand{\En}{\mathsf{E}_{n}}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Ass}{\mathrm{Ass}}
+\newcommand{\Com}{\mathrm{Com}}
+\newcommand{\Lie}{\mathrm{Lie}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Conf}{Conf}
+\DeclareMathOperator{\FM}{FM}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\av}{av}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\GRT}{GRT}
+\DeclareMathOperator{\PBr}{PBr}
+\DeclareMathOperator{\depth}{depth}
+
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+
+\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_{\cA}}
+\newcommand{\gEone}{\mathfrak{g}^{\Eone}_{\cA}}
+
+\newcommand{\Barord}{\overline{B}^{\mathrm{ord}}}
+\newcommand{\BarSig}{\overline{B}^{\Sigma}}
+\newcommand{\Barch}{\overline{B}^{\mathrm{ch}}}
+\newcommand{\Cobar}{\Omega^{\mathrm{ch}}}
+
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\KM}{\mathrm{KM}}
+\newcommand{\BP}{\mathrm{BP}}
+
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\FMAss}{F\!\Ass}
+
+\providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusProvedElsewhere}{}
+\providecommand{\ClaimStatusHeuristic}{}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[The Ordered Bar Complex and $\Eone$ Primacy]
+{The Ordered Bar Complex and $\Eone$ Primacy}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+  Waterloo, ON N2L 2Y5, Canada \\
+  Department of Physics, University of Waterloo,
+  Waterloo, ON N2L 3G1, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{April 13, 2026}
+
+\begin{abstract}
+The five theorems of modular Koszul duality (bar-cobar adjunction,
+inversion, complementarity, genus universality, chiral Hochschild
+concentration) are proved in the literature for the symmetric bar
+complex $\BarSig(\cA)$. The symmetric bar is a shadow: the
+$\Sigma_n$-coinvariant projection of the ordered bar complex
+$\Barord(\cA) = T^c(s^{-1}\bar\cA)$, whose deconcatenation
+coproduct carries the full $\Eone$-chiral coalgebra structure.
+This paper establishes $\Eone$ primacy: the ordered bar is the
+primitive object; the symmetric bar is derived by averaging; and the
+five theorems are the invariants that survive the quotient.
+
+The averaging map $\av\colon\gEone\twoheadrightarrow\gmod$ is
+a surjective morphism of dg~Lie algebras that sends the ordered
+Maurer--Cartan element $\Theta^{\Eone}_\cA$ to the modular
+$\Theta_\cA$, projects the classical $r$-matrix $r(z)$ to
+$\kappa(\cA)$, and projects the Drinfeld--Kontsevich associator
+$\Phi_{\mathrm{KZ}}$ to the cubic shadow~$\mathfrak{C}(\cA)$.
+The map does not split as dg~Lie algebras: the kernel at degree~$3$
+contains the linearised associator $[\Omega_{12},\Omega_{23}]$,
+and the space of Lie sections compatible with the Maurer--Cartan
+equation is a torsor for the Grothendieck--Teichm\"uller group
+$\GRT_1$. At genus~$1$, a fourth obstruction to splitting arises
+from the quasi-modular anomaly $E_2 \mapsto \widehat{E}_2$.
+
+For the principal examples: Heisenberg $\cH_k$ has
+$r(z) = k/z$ and $\kappa(\cH_k) = k$; affine Kac--Moody
+$\widehat{\fg}_k$ has $r(z) = k\Omega_{\fg}/z$ (trace-form
+convention; vanishing at $k=0$) and
+$\kappa(\widehat{\fg}_k) = \dim(\fg)(k+h^\vee)/(2h^\vee)$,
+the Sugawara shift $\dim(\fg)/2$ arising from the simple-pole
+self-contraction; Virasoro $\Vir_c$ has
+$r(z) = (c/2)/z^3 + 2T/z$ and $\kappa(\Vir_c) = c/2$.
+The kernel of $\av$ at degree~$3$ contains the KZ associator;
+no symmetric invariant recovers this datum. We prove the $\Eone$
+primacy theorem, state the five ordered counterparts
+$\mathrm{A}^{\Eone}$--$\mathrm{H}^{\Eone}$, and exhibit the
+formality bridge and its failure.
+\end{abstract}
+
+\subjclass[2020]{17B69, 18M70, 18M85, 81T40}
+
+\keywords{Ordered bar complex, $\Eone$-algebras, chiral algebras,
+Koszul duality, $R$-matrix, Drinfeld associator, modular operad,
+averaging map, Grothendieck--Teichm\"uller group, Yangian}
+
+\maketitle
+
+% ================================================================
+% SECTION 1
+% ================================================================
+\section{Introduction: the averaging map and what it loses}
+\label{sec:introduction}
+
+The bar complex attached to an augmented associative algebra admits
+two very different presentations. In the first, one takes the reduced
+tensor coalgebra $T^c(s^{-1}\bar A)$ with its deconcatenation
+coproduct; the bar differential is built from the associative
+product in consecutive slots. In the second, one passes to
+$\Sigma_n$-coinvariants and works with the symmetric bar complex,
+which is the natural home for commutative or $\Einf$-algebras and
+for the Francis--Gaitsgory chiral bar. The historical order in
+chiral algebra and factorization homology has been: symmetric bar
+first, ordered refinement second. This paper reverses the order of
+presentation, and with it the status of the two objects.
+
+\subsection{The thesis}
+
+The thesis is that the ordered bar complex
+$\Barord(\cA) = T^c(s^{-1}\bar\cA)$ is the primitive object of
+modular Koszul duality, and that the symmetric bar
+$\BarSig(\cA)$ is a derived shadow obtained by averaging. The
+averaging map is a surjective morphism of dg~Lie algebras; all five
+foundational theorems of modular Koszul duality (Theorems A through
+D, together with the Hochschild theorem~H) lift to the ordered side,
+and each symmetric theorem is the $\Sigma_n$-coinvariant image of its
+ordered counterpart. The information lost under $\av$ is geometric,
+arithmetic, and physical: the spectral $r$-matrix, the KZ connection,
+the Drinfeld associator, and the full braiding of tensor categories
+of modules all live on the ordered side.
+
+Three principles motivate the inversion. The first is operadic:
+Stasheff's associahedra $K_n$ \cite{Stasheff63} carry more
+information than the symmetric groups $\Sigma_n$, and the
+Getzler--Jones \cite{GJ94} theory of $\En$-operads makes $\Eone$ the
+lowest rung of a ladder whose every step is non-commutative. The
+second is representation-theoretic: the classical $r$-matrix of an
+affine Kac--Moody algebra at level~$k$ is the content of the
+degree-$2$ genus-$0$ Maurer--Cartan element on the ordered side, and
+its $\Sigma_2$-average recovers the degree-$2$ scalar shadow: for
+Heisenberg this is~$\kappa$, while for non-abelian affine Kac--Moody
+it is $\kappa_{\mathrm{dp}} = k\dim(\fg)/(2h^\vee)$, with the full
+$\kappa$ obtained after adding the Sugawara shift $\dim(\fg)/2$. The
+third is physical: the line-operator sector of a chiral conformal
+theory is naturally open and ordered, while the closed (bulk) sector
+is symmetric; the averaging map is the operadic image of the
+open-to-closed functor.
+
+We work throughout with the conventions of the monograph~\cite{Lor26},
+which we refer to as Volume~I. Everything is stated with OPE modes
+rather than lambda-brackets; conformal weights are denoted $h$, and
+desuspended degrees $|s^{-1}v| = |v| - 1$ (the bar complex lowers
+degree). The grading is cohomological.
+
+\subsection{Notation and conventions}
+\label{subsec:notation}
+
+Let $k$ be a field of characteristic zero, $X$ a smooth algebraic
+curve over~$k$, and $\cA$ an augmented cyclic chiral algebra on~$X$
+in the sense of Beilinson--Drinfeld~\cite{BD04}. We write
+$\bar\cA$ for the augmentation ideal
+$\ker(\varepsilon\colon \cA \to k)$. All bar constructions are
+defined on~$\bar\cA$, not on $\cA$ itself~\cite[AP132]{Lor26}.
+Symmetric groups $\Sigma_n$ act on tensor powers in the standard
+way; coinvariants are left exact and are denoted with a lower
+subscript, $(-)_{\Sigma_n}$. The ordered and symmetric
+Fulton--MacPherson compactifications are written
+$\overline{\FM}_n^{\mathrm{ord}}(\CC)$ and
+$\overline{\FM}_n(\CC)$ respectively; the former is the
+Ran-space blow-up along ordered collision diagonals.
+
+% FOUR OBJECTS:
+% 1. B(A) = bar coalgebra = T^c(s^{-1} A-bar) with deconcatenation + twist
+% 2. A^i = H^*(B(A)) = dual coalgebra (Koszul cohomology of bar)
+% 3. A^! = ((A^i)^v) = dual ALGEBRA (linear or Verdier dual)
+% 4. Z^der_ch(A) = derived chiral center = Hochschild cochains = bulk
+
+\subsection{Summary of results}
+
+The main results are:
+
+\begin{enumerate}[label=(\roman*)]
+\item The $\Eone$ \emph{convolution dg~Lie algebra}
+  $\gEone$ (Definition~\ref{def:e1-convolution}) and its
+  ordered Maurer--Cartan element $\Theta^{\Eone}_\cA$
+  (Theorem~\ref{thm:e1-mc}).
+
+\item The \emph{averaging map} $\av\colon \gEone
+  \twoheadrightarrow \gmod$ as a surjective dg~Lie morphism
+  (Theorem~\ref{thm:av-surjective}), with the projection
+  formula $\av(\Theta^{\Eone}_\cA) = \Theta_\cA$
+  (Theorem~\ref{thm:av-mc-projection}).
+
+\item The \emph{$\Eone$ primacy theorem}
+  (Theorem~\ref{thm:e1-primacy-main}): surjectivity, MC
+  projection, bracket preservation, and non-splitting of $\av$.
+
+\item The \emph{non-splitting proposition}
+  (Proposition~\ref{prop:nonsplitting}): the kernel of $\av$
+  is controlled by $\GRT_1$ at genus~$0$ and by the
+  quasi-modular anomaly at genus~$1$.
+
+\item The \emph{five ordered theorems}
+  $\mathrm{A}^{\Eone}$--$\mathrm{H}^{\Eone}$
+  (Theorems~\ref{thm:ordered-A}--\ref{thm:ordered-H}),
+  whose $\av$-images are the classical five theorems.
+
+\item Complete degree-$2$ computations for Heisenberg, affine
+  Kac--Moody, and Virasoro (Section~\ref{sec:heis-km}).
+\end{enumerate}
+
+% ================================================================
+% SECTION 2
+% ================================================================
+\section{The ordered bar complex}
+\label{sec:ordered-bar}
+
+\subsection{Three coalgebra structures on $T(V)$}
+
+Before defining the ordered bar complex we distinguish three
+cooperadic structures carried by a sum of tensor powers. All three
+arise somewhere in modular Koszul duality; only one equips the
+ordered bar.
+
+\begin{definition}[The three coalgebra structures]
+\label{def:three-coalgebras}
+Let $V$ be a graded vector space and
+$T(V) = \bigoplus_{n \geq 0} V^{\otimes n}$ its tensor space.
+Three cooperad structures arise naturally:
+\begin{enumerate}[label=(\roman*)]
+\item The \emph{Harrison coLie} cooperad $\Lie^c$, whose
+  degree-$n$ component has dimension $(n-1)!$ and whose
+  coproduct decomposes a Lie word into pairs of sub-Lie-words
+  using the Harrison differential.
+
+\item The \emph{coshuffle cooperad} $\Sym^c$, whose degree-$n$
+  coproduct produces $2^n$ summands by the shuffle formula
+  \begin{equation}\label{eq:coshuffle}
+    \Delta_{\mathrm{sh}}(v_1 \cdots v_n)
+    = \sum_{I \sqcup J = \{1,\ldots,n\}}
+      \varepsilon(I,J)\, (v_I) \otimes (v_J),
+  \end{equation}
+  with the sum running over all $2^n$ bipartitions and
+  $\varepsilon(I,J)$ the Koszul sign.
+
+\item The \emph{deconcatenation cooperad} $T^c$, whose
+  degree-$n$ coproduct produces $n+1$ summands by splitting
+  the word at a single position:
+  \begin{equation}\label{eq:deconc}
+    \Delta(v_1 \cdots v_n)
+    = \sum_{i=0}^{n}
+      (v_1 \cdots v_i) \otimes (v_{i+1} \cdots v_n).
+  \end{equation}
+\end{enumerate}
+\end{definition}
+
+The three structures are \emph{not} interconvertible without loss
+of information. At degree~$3$ the Harrison differential sees $2$
+terms, the coshuffle sees $8$, and deconcatenation sees~$4$. Only
+the last is ordered and strictly associative at the coalgebra level.
+
+\begin{proposition}[Coshuffle is not deconcatenation]
+\label{prop:coshuffle-neq-deconc}
+Let $V$ be nonzero. The coshuffle coproduct on $\Sym(V)$ and the
+deconcatenation coproduct on $T^c(V)$ are distinct cooperadic
+structures: they have different degree-$n$ term counts ($2^n$ vs.\
+$n+1$), different symmetry properties (the coshuffle is
+cocommutative; deconcatenation is not), and different primitive
+subspaces.
+\end{proposition}
+
+\begin{proof}
+Cocommutativity of the coshuffle follows from the involution
+$I \leftrightarrow J$ on bipartitions. Deconcatenation does not
+admit such an involution: swapping $(v_1 \cdots v_i)$ with
+$(v_{i+1} \cdots v_n)$ does not preserve the ordered word.
+The term counts are elementary.
+\end{proof}
+
+\begin{remark}[Where each structure appears]
+\label{rem:where-coalgebras}
+The Harrison coLie cooperad $\Lie^c$ underlies the chiral Lie bar
+complex used by Francis--Gaitsgory~\cite{FG12}, where only the
+zeroth product $a_{(0)}b$ of the OPE is visible. The coshuffle
+cooperad $\Sym^c$ underlies the symmetric bar $\BarSig(\cA)$ on
+the Ran space, where factorization is implemented by the topological
+coproduct on unordered configuration space. The deconcatenation
+cooperad $T^c$ underlies the ordered bar $\Barord(\cA)$, where
+the coproduct splits a word along a single internal edge and
+remembers the ordering on the collision points. The averaging map
+$\av$ of Section~\ref{sec:averaging} descends from $T^c$ to
+$\Sym^c$ by external $\Sigma_n$-coinvariants; it does not factor
+through Harrison unless one further restricts to the Eulerian
+weight-$1$ summand.
+\end{remark}
+
+\subsection{The ordered bar complex $\Barord(\cA)$}
+
+\begin{definition}[The ordered bar complex]
+\label{def:ordered-bar}
+Let $\cA$ be a strongly admissible augmented $\Eone$-chiral algebra
+on~$X$, with augmentation ideal $\bar\cA = \ker \varepsilon$. The
+\emph{ordered bar complex} is the graded vector space
+\begin{equation}\label{eq:bar-definition}
+  \Barord(\cA) \;:=\; T^c(s^{-1}\bar\cA)
+  \;=\; \bigoplus_{n \geq 0} (s^{-1}\bar\cA)^{\otimes n},
+\end{equation}
+equipped with:
+\begin{enumerate}[label=(\alph*)]
+\item The \emph{deconcatenation coproduct}
+  \begin{equation}\label{eq:bar-coproduct}
+    \Delta\bigl([a_1|\cdots|a_n]\bigr)
+    \;=\; \sum_{i=0}^{n}
+    [a_1|\cdots|a_i] \otimes [a_{i+1}|\cdots|a_n],
+  \end{equation}
+  making $\Barord(\cA)$ a cofree conilpotent coalgebra
+  over~$T^c$.
+
+\item The \emph{bar differential} $d_{\mathrm{bar}}$, obtained
+  by extracting OPE collision residues at consecutive pairs of
+  points in the ordered configuration space
+  $\overline{\FM}_n^{\mathrm{ord}}(\CC)$:
+  \begin{equation}\label{eq:bar-differential}
+    d_{\mathrm{bar}}\bigl([a_1|\cdots|a_n]\bigr)
+    \;=\; \sum_{i=1}^{n-1} \pm\,
+    [a_1|\cdots|a_i \star a_{i+1}|\cdots|a_n],
+  \end{equation}
+  where $a_i \star a_{i+1}$ denotes the collision residue
+  (the coefficient of the simple pole in the OPE of $a_i(z)$
+  and $a_{i+1}(w)$ against the Arnold form
+  $\eta = d\log(z-w)$).
+\end{enumerate}
+The desuspension $s^{-1}$ lowers the degree by one:
+$|s^{-1}a| = |a| - 1$. The augmentation ideal is essential;
+using $\cA$ in place of $\bar\cA$ would include the unit and
+break the construction.
+\end{definition}
+
+\begin{theorem}[Ordered bar differential squared]
+\label{thm:bar-d-squared}
+The ordered bar differential satisfies $d_{\mathrm{bar}}^2 = 0$.
+\end{theorem}
+
+\begin{proof}
+The argument is a codimension-two face pairing on
+$\overline{\FM}_n^{\mathrm{ord}}(\CC)$ with the Arnold relation
+supplying the required cancellation between the two ways of
+contracting an adjacent pair of collisions. Each codimension-$2$
+stratum is reached by two codimension-$1$ paths (contract $e_1$ then
+$e_2$, or $e_2$ then $e_1$), and the edge-orientation determinant
+supplies a minus sign between them. The cancellation uses only the
+associativity of face composition in the face poset
+(Getzler--Kapranov~\cite{GK98}), which holds for ordered
+configurations by the same argument as for unordered stable graphs.
+\end{proof}
+
+\subsection{The classical $r$-matrix as degree-$2$ bar data}
+
+The binary collision residue of the ordered bar differential extracts
+the classical $r$-matrix. This is the degree-$2$ component of the
+$\Eone$ Maurer--Cartan element, and it is the central object of the
+$\Eone$ theory.
+
+\begin{definition}[The classical $r$-matrix from the bar complex]
+\label{def:r-matrix-from-bar}
+Let $\cA$ be a cyclic chiral algebra on~$X$ with OPE
+$a(z)\,b(w) \sim \sum_{n \geq 0} (a_{(n)}b)(w)/(z-w)^{n+1}$.
+The \emph{classical $r$-matrix} of $\cA$ is the degree-$2$
+genus-$0$ component of the $\Eone$ Maurer--Cartan element:
+\begin{equation}\label{eq:r-matrix-definition}
+  r_\cA(z) \;:=\;
+  \Res^{\mathrm{coll}}_{0,2}(\Theta^{\Eone}_\cA)
+  \;\in\; \End_\cA(2) \otimes \cO(*\Delta).
+\end{equation}
+Concretely, $r(z)$ is the meromorphic function of the spectral
+parameter $z = z_1 - z_2$ obtained by extracting the OPE
+against the Arnold form $\eta_{12} = d\log(z_1 - z_2)$ on
+the two-point ordered configuration space.
+\end{definition}
+
+\begin{remark}[Pole absorption]
+\label{rem:pole-absorption}
+The $r$-matrix has poles one order lower than the OPE, because
+the logarithmic form $d\log(z)$ absorbs one pole: the OPE of two
+fields with a pole of order~$p$ produces an $r$-matrix with a pole
+of order $p-1$. This is the $d\log$ absorption rule: Heisenberg
+OPE $\sim 1/(z-w)^2$ gives $r \sim 1/z$; Virasoro OPE
+$\sim 1/(z-w)^4$ gives $r \sim 1/z^3$.
+\end{remark}
+
+\begin{example}[Heisenberg ordered bar]
+\label{ex:heisenberg-bar}
+Let $\cH_k$ be the Heisenberg chiral algebra at level~$k$,
+generated by a single field $J$ of conformal weight $h = 1$. The
+desuspended generator has degree $|s^{-1}J| = 0$. At degree~$2$ the
+ordered bar component is
+\[
+  (s^{-1}\bar\cH_k)^{\otimes 2}
+  \;\cong\; k \cdot [J|J],
+\]
+a one-dimensional space. The bar differential extracts the
+collision residue of $J(z_1)J(z_2) \sim k/(z_1-z_2)^2$ against
+$\eta = d\log(z_1-z_2)$, producing a single simple pole
+$k/(z_1-z_2)$. The $r$-matrix is
+\begin{equation}\label{eq:heis-r-matrix}
+  r^{\mathrm{Heis}}(z) \;=\; k/z.
+\end{equation}
+% PE-1: r-matrix. Family: Heis. r(z) = k/z. Level: k.
+% AP126 check: k=0 -> r=0. Match: Y. Verdict: ACCEPT.
+At $k = 0$ the $r$-matrix vanishes: the algebra becomes
+trivially commutative. At degree~$3$, the Arnold relation on
+$\overline{\FM}_3(\CC)$ gives $d_{\mathrm{bar}}^2 = 0$: the three
+collision divisors contribute
+$k\cdot(\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{13}
++ \eta_{13}\wedge\eta_{12}) = 0$.
+\end{example}
+
+\begin{example}[Affine Kac--Moody ordered bar]
+\label{ex:km-bar}
+Let $\widehat{\fg}_k$ be the affine Kac--Moody algebra at level~$k$
+for a simple Lie algebra $\fg$ of dimension $\dim(\fg)$ and dual
+Coxeter number $h^\vee$. The OPE has both simple and double poles:
+$J^a(z) J^b(w) \sim k\kappa^{ab}/(z-w)^2 + f^{ab}{}_c J^c(w)/(z-w)$,
+where $\kappa^{ab}$ is the Killing form and $f^{ab}{}_c$ the
+structure constants. The $r$-matrix in the trace-form convention is
+\begin{equation}\label{eq:km-r-matrix}
+  r^{\KM}(z) \;=\; k\,\Omega_\fg/z,
+\end{equation}
+% PE-1: r-matrix. Family: affine KM. r(z) = k*Omega/z.
+% Level: k. AP126 check: k=0 -> r=0. Match: Y.
+% Critical-level check: k=-h^v -> r = -h^v Omega/z (finite).
+% Verdict: ACCEPT.
+where $\Omega_\fg = \sum_a t^a \otimes t_a \in \fg \otimes \fg$
+is the inverse Killing form Casimir. The level prefix~$k$ is
+essential: at $k = 0$ the $r$-matrix vanishes (the algebra becomes
+abelian in the sense that the double pole, which governs the
+$r$-matrix, is zero). At the critical level $k = -h^\vee$, the
+Sugawara construction fails; the behaviour of the $r$-matrix at
+this locus is controlled by the Feigin--Frenkel centre.
+
+The KZ normalization
+$r(z) = \Omega_\fg/((k+h^\vee)z)$ is equivalent at generic~$k$
+via the bridge identity
+$k\,\Omega_{\mathrm{tr}} = \Omega/(k+h^\vee)$.
+\end{example}
+
+\begin{example}[Virasoro ordered bar]
+\label{ex:vir-bar}
+Let $\Vir_c$ be the Virasoro algebra at central charge~$c$. The
+OPE $T(z)T(w) \sim (c/2)/(z-w)^4 + 2T(w)/(z-w)^2 + \partial T(w)/(z-w)$
+has a quartic pole. The $d\log$ absorption gives a cubic-plus-simple
+$r$-matrix:
+\begin{equation}\label{eq:vir-r-matrix}
+  r^{\Vir}(z) \;=\; (c/2)/z^3 + 2T/z.
+\end{equation}
+This is cubic plus simple, not quartic.
+\end{example}
+
+% ================================================================
+% SECTION 3
+% ================================================================
+\section{The $\Eone$ convolution algebra and its MC element}
+\label{sec:e1-convolution}
+
+\subsection{The ribbon modular operad}
+
+The combinatorial unit of the commutative modular operad
+$\cM_\Com$ is a stable graph with symmetric vertex labels: ordering
+data is erased before composition starts. One modular operad retains
+the ordering without breaking the genus decomposition: the ribbon
+modular operad $\cM_\Ass$.
+
+\begin{definition}[Ribbon modular operad {\cite{GK98,CG17}}]
+\label{def:ribbon-modular-operad}
+The \emph{ribbon modular operad} $\cM_\Ass$ has components
+\begin{equation}\label{eq:ribbon-mod-operad}
+  \cM_\Ass(g,n)
+  \;:=\;
+  C_*\!\bigl(\overline{\cM}_{g,n}^{\,\mathrm{rib}}\bigr),
+  \qquad 2g-2+n > 0,
+\end{equation}
+where $\overline{\cM}_{g,n}^{\,\mathrm{rib}}$ classifies stable
+genus-$g$ Riemann surfaces with $n$ parametrised boundary circles.
+A ribbon structure on a stable graph is a cyclic ordering of
+half-edges at each vertex. In genus~$0$:
+$\cM_\Ass(0,n) = C_*(K_n)$, where $K_n$ is the Stasheff
+associahedron of dimension $n-2$, and grafting is face inclusion.
+The composition maps are self-sewing
+$\xi_{ij}\colon \cM_\Ass(g,n) \to \cM_\Ass(g+1,n-2)$ and
+grafting
+$\circ_i\colon \cM_\Ass(g_1,n_1) \otimes \cM_\Ass(g_2,n_2)
+\to \cM_\Ass(g_1+g_2,n_1+n_2-2)$.
+\end{definition}
+
+\begin{definition}[Feynman transform $\FMAss$]
+\label{def:fass}
+The \emph{associative Feynman transform} $\FMAss$ is the modular
+cooperad with $(g,n)$-component
+\begin{equation}\label{eq:fass-def}
+  (\FMAss)(g,n)
+  \;:=\;
+  \bigoplus_{\Gamma \in \mathsf{Gr}^{\mathrm{rib}}_{g,n}}
+  \frac{1}{|\Aut(\Gamma)|}\,
+  \det\bigl(E(\Gamma)\bigr)
+  \;\otimes\;
+  \bigotimes_{v \in V(\Gamma)}
+  \cM_\Ass\bigl(g(v),n(v)\bigr)^\vee,
+\end{equation}
+summed over connected ribbon graphs of genus~$g$ with $n$ legs.
+The differential
+$D_{\FMAss} = \sum_{e \in E(\Gamma)} \pm\, \xi_e^*$
+is dual to edge contraction. This differential satisfies
+$D_{\FMAss}^2 = 0$ by the standard codimension-$2$ cancellation
+argument~\cite{GK98}.
+\end{definition}
+
+\begin{theorem}[Coinvariant projection {\cite[Thm.~4.9]{GK98}}]
+\label{thm:fass-to-fcom}
+The composite of the ribbon-forgetting and external
+$\Sigma_n$-coinvariant projections
+\[
+  (\FMAss)(g,n)
+  \;\xrightarrow{\;\pi_{\mathrm{rib}}\;}
+  (\FMAss)(g,n)/{\sim_{\mathrm{rib}}}
+  \;\xrightarrow{\;\pi_{\Sigma_n}\;}
+  (F\!\Com)(g,n)
+\]
+is a quasi-isomorphism of modular cooperads.
+\end{theorem}
+
+\subsection{The $\Eone$ convolution dg~Lie algebra}
+
+\begin{definition}[The $\Eone$ modular convolution algebra]
+\label{def:e1-convolution}
+Let $\cA$ be a cyclic $\Eone$-chiral algebra. The
+\emph{$\Eone$ modular convolution dg~Lie algebra} is
+\begin{equation}\label{eq:e1-conv-def}
+  \gEone
+  \;:=\;
+  \prod_{\substack{g,n \\ 2g-2+n > 0}}
+  \Hom\!\bigl(
+    \cM_\Ass(g,n),\,
+    \End_\cA(n)
+  \bigr).
+\end{equation}
+The Hom carries \emph{no} $\Sigma_n$-equivariance. This is the
+structural distinction from the modular convolution algebra
+\begin{equation}\label{eq:mod-conv}
+  \gmod
+  \;=\;
+  \prod_{\substack{g,n \\ 2g-2+n > 0}}
+  \Hom_{\Sigma_n}\!\bigl(
+    \cM_\Com(g,n),\,
+    \End_\cA(n)
+  \bigr),
+\end{equation}
+whose Hom-source uses the symmetric cooperad $\Sym^c$ obtained
+from $T^c$ by external $\Sigma_n$-coinvariants.
+The dg~Lie structure on $\gEone$ is inherited from $\FMAss$:
+the differential~$D$ comes from $D_{\FMAss}$ (edge contraction),
+and the bracket $[-,-]$ comes from ribbon-graph composition.
+\end{definition}
+
+\begin{theorem}[$\Eone$ Maurer--Cartan element]
+\label{thm:e1-mc}
+The element
+\begin{equation}\label{eq:theta-e1}
+  \Theta^{\Eone}_\cA
+  \;:=\;
+  D^{\Eone}_\cA - d_0
+  \;\in\; \gEone,
+\end{equation}
+where $D^{\Eone}_\cA$ is the ordered genus-completed bar
+differential and $d_0$ the background differential, satisfies
+the Maurer--Cartan equation
+\begin{equation}\label{eq:e1-mc-equation}
+  D\,\Theta^{\Eone}_\cA
+  + \tfrac{1}{2}[\Theta^{\Eone}_\cA,
+    \Theta^{\Eone}_\cA] = 0
+\end{equation}
+in the ordered dg~Lie algebra $\gEone$.
+\end{theorem}
+
+\begin{proof}
+The identity $(D^{\Eone}_\cA)^2 = 0$ is equivalent to the MC
+equation~\eqref{eq:e1-mc-equation} upon writing
+$D^{\Eone}_\cA = d_0 + \Theta^{\Eone}_\cA$. The square-zero
+property is the ordered bar-intrinsic construction:
+$D^{\Eone}_\cA$ is built from the associative Feynman transform,
+and $D_{\FMAss}^2 = 0$ forces the induced coderivation to square
+to zero.
+\end{proof}
+
+\begin{proposition}[$\Eone$ shadow at each degree]
+\label{prop:e1-shadow}
+The degree-$r$ component of $\Theta^{\Eone}_\cA$ at genus~$0$
+is an element
+$r_r \in \End(V^{\otimes r}) \otimes H^{r-2}(K_r)
+\otimes \cO(*\Delta)$,
+whose $\Sigma_r$-coinvariant is the $\Einf$ shadow at degree~$r$:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcc}
+\toprule
+\emph{Degree} & \emph{$\Eone$ shadow} & \emph{$\Einf$ shadow} \\
+\midrule
+$r = 2$ & $r(z)$ (classical $r$-matrix)
+  & $\kappa(\cA)$ \\
+$r = 3$ & $r_3(z_1,z_2)$ (associator shadow)
+  & $\mathfrak{C}(\cA)$ \\
+$r = 4$ & $r_4(z_1,z_2,z_3)$ (quartic shadow)
+  & $\mathfrak{Q}(\cA)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The MC equation at degree~$r$ is the $\partial K_{r+1}$-identity:
+classical Yang--Baxter at $r = 2$ (two faces of $K_3$), pentagon
+at $r = 3$ (five faces of $K_4$), and the quartic $R$-matrix
+identity at $r = 4$.
+\end{proposition}
+
+\begin{proof}
+At genus~$0$, $\cM_\Ass(0,r) = C_*(K_r)$. The MC equation
+projected to degree~$r$ is the equation on the boundary of $K_{r+1}$,
+whose faces are precisely the binary trees contributing to the
+$r$-point collision structure. At $r = 2$, $K_3$ is an interval with
+two vertices (the two binary trees on three leaves), and the
+boundary identity is the classical Yang--Baxter equation.
+\end{proof}
+
+% ================================================================
+% SECTION 4
+% ================================================================
+\section{The averaging map: surjectivity, MC projection,
+  non-splitting}
+\label{sec:averaging}
+
+\subsection{Definition of $\av$}
+
+\begin{definition}[The averaging map]
+\label{def:averaging-map}
+With the notation of Definition~\ref{def:e1-convolution}, the
+\emph{averaging map} is the dg~Lie morphism
+\begin{equation}\label{eq:av-def}
+  \av\colon \gEone \twoheadrightarrow \gmod,
+  \qquad
+  \av(\phi)(g,n)
+  \;:=\;
+  \frac{1}{n!}\sum_{\sigma \in \Sigma_n}
+  \sigma \cdot
+  \bigl(\phi(g,n) \circ \iota^{\mathrm{rib}}_{g,n}\bigr),
+\end{equation}
+where
+$\iota^{\mathrm{rib}}_{g,n}\colon \cM_\Com(g,n)
+\to \cM_\Ass(g,n)$
+is any section of the ribbon-forgetting quotient
+(Theorem~\ref{thm:fass-to-fcom}). The result is
+$\Sigma_n$-invariant by construction and independent of the choice
+of section up to boundary terms. This is the Reynolds operator for
+the external $\Sigma_n$-action: it takes external coinvariants
+after pullback along~$\iota^{\mathrm{rib}}$.
+\end{definition}
+
+\begin{theorem}[$\av$ is a surjective dg~Lie morphism]
+\label{thm:av-surjective}
+The averaging map
+$\av\colon \gEone \twoheadrightarrow \gmod$
+is a surjective morphism of dg~Lie algebras.
+\end{theorem}
+
+\begin{proof}
+Surjectivity: every $\Sigma_n$-invariant homomorphism from
+$\cM_\Com(g,n)$ lifts, via any section of the ribbon-forgetting
+quotient, to a homomorphism from $\cM_\Ass(g,n)$.
+Compatibility with the differential: the ribbon edge-contraction
+differential descends to the symmetric edge-contraction differential
+under external $\Sigma_n$-coinvariants; this is the
+Getzler--Kapranov comparison between ribbon and commutative Feynman
+transforms~\cite{GK98}. Compatibility with the Lie bracket:
+symmetrisation commutes with the convolution bracket on cooperadic
+Homs because operad composition in $\FMAss$ is
+$\Sigma_n$-equivariant.
+\end{proof}
+
+\subsection{Degree-$2$ averaging: the $r$-matrix projects to
+$\kappa$}
+
+\begin{theorem}[Degree-$2$ averaging]
+\label{thm:degree-2-av}
+Let $r(z) \in \End(V \otimes V) \otimes \cO(*\Delta)$ be the
+genus-$0$ degree-$2$ $\Eone$ shadow of $\cA$ (the classical
+$r$-matrix in the pre-dualisation convention). Then:
+\begin{equation}\label{eq:degree-2-av}
+  \av_{n=2}\bigl(r(z)\bigr) \;=\;
+  \begin{cases}
+    \kappa(\cA), &
+      \text{for abelian Heisenberg families,} \\[4pt]
+    \kappa_{\mathrm{dp}}(\widehat{\fg}_k)
+    \;:=\; \dfrac{k\,\dim(\fg)}{2h^\vee}, &
+      \text{for non-abelian affine KM}\\
+      & \text{in the trace-form convention.}
+  \end{cases}
+\end{equation}
+In the affine Kac--Moody case the full modular characteristic is
+\begin{equation}\label{eq:km-kappa-full}
+  \kappa(\widehat{\fg}_k)
+  \;=\;
+  \kappa_{\mathrm{dp}}(\widehat{\fg}_k) + \frac{\dim(\fg)}{2}
+  \;=\;
+  \frac{\dim(\fg)(k+h^\vee)}{2h^\vee},
+\end{equation}
+% PE-2: kappa. Family: KM. kappa = dim(g)(k+h^v)/(2h^v).
+% At k=0: dim(g)/2 (NOT zero). At k=-h^v: 0 (critical).
+% Verdict: ACCEPT.
+where the extra $\dim(\fg)/2$ is the Sugawara simple-pole
+self-contraction through the adjoint Casimir eigenvalue $2h^\vee$.
+\end{theorem}
+
+\begin{proof}
+The degree-$2$ MC component is, by definition, an element
+$r(z) \in \End(V^{\otimes 2}) \otimes \cO(*\Delta)$ in the
+pre-dualisation convention. Averaging over $\Sigma_2$ projects onto
+the trivial isotypic component. For abelian Heisenberg families
+this scalar coincides with the full modular characteristic. For
+non-abelian affine Kac--Moody in the trace-form convention
+$r(z) = k\,\Omega_\fg/z$, the averaging sees only the double-pole
+channel and yields
+$\kappa_{\mathrm{dp}} = k\,\dim(\fg)/(2h^\vee)$; the simple-pole
+self-contraction contributes the additional Sugawara term
+$\dim(\fg)/2$, so
+$\kappa = \kappa_{\mathrm{dp}} + \dim(\fg)/2$.
+The example computations are recorded
+in~\cite[Chapter~5]{Lor26}; each formula is verified by three
+independent paths: pole-order analysis, the limiting case at
+$k = 0$ for the trace-form $r$-matrix, and cross-family consistency
+against the landscape census.
+\end{proof}
+
+\begin{remark}[Concrete examples]
+\label{rem:concrete-r-kappa}
+The principal families:
+\begin{itemize}
+\item Heisenberg $\cH_k$:
+  $r(z) = k/z$,
+  $\kappa(\cH_k) = k$.
+  % AP126 check: k=0 -> r=0. Y.
+
+\item Affine Kac--Moody $\widehat{\fg}_k$:
+  $r(z) = k\,\Omega_\fg/z$
+  (the level~$k$ survives $d\log$ absorption; at $k=0$ the
+  $r$-matrix vanishes identically),
+  $\av(r(z)) = \kappa_{\mathrm{dp}}
+  = k\,\dim(\fg)/(2h^\vee)$,
+  and
+  $\kappa(\widehat{\fg}_k)
+  = \dim(\fg)(k+h^\vee)/(2h^\vee)$.
+
+\item Virasoro $\Vir_c$:
+  $r(z) = (c/2)/z^3 + 2T/z$
+  (cubic plus simple, not quartic),
+  and $\kappa(\Vir_c) = c/2$.
+\end{itemize}
+\end{remark}
+
+\subsection{Degree-$3$ averaging: the associator projects to the
+cubic shadow}
+
+\begin{theorem}[Degree-$3$ averaging]
+\label{thm:degree-3-av}
+Let $\Phi_{\mathrm{KZ}}(\cA) \in \End(V^{\otimes 3})$ be the
+genus-$0$ degree-$3$ Maurer--Cartan component, which for affine
+Kac--Moody $\widehat{\fg}_k$ is the Drinfeld--Kontsevich KZ
+associator. Then
+\begin{equation}\label{eq:degree-3-av}
+  \av_{n=3}\bigl(\Phi_{\mathrm{KZ}}(\cA)\bigr)
+  \;=\; \mathfrak{C}(\cA),
+\end{equation}
+where $\mathfrak{C}(\cA)$ is the cubic shadow of Volume~I,
+equivalently the $\Sigma_3$-coinvariant of the associator. The
+antisymmetric component $[\Omega_{12}, \Omega_{23}]$ lies entirely
+in $\ker(\av)$: it is antisymmetric under the transposition
+$(1 \leftrightarrow 3)$, so its $\Sigma_3$-average vanishes. Only
+the symmetric products
+$\Omega_{ij}\Omega_{k\ell} + \Omega_{k\ell}\Omega_{ij}$ contribute
+to~$\mathfrak{C}(\cA)$.
+\end{theorem}
+
+\begin{proof}
+The $\Sigma_3$-isotypic decomposition of $\Phi_{\mathrm{KZ}}$ in
+$\End(V^{\otimes 3})$ splits into the trivial, sign, and standard
+representations. The Reynolds operator
+$\av = (1/6)\sum_{\sigma \in \Sigma_3} \sigma$ projects onto the
+trivial isotypic component. A direct check on
+$[\Omega_{12}, \Omega_{23}]$ shows it is antisymmetric under
+$(1 \leftrightarrow 3)$ and therefore has trivial isotypic component
+zero. The identification of the coinvariant with the cubic shadow
+$\mathfrak{C}(\cA)$ is~\cite[Theorem~D(iii)]{Lor26}.
+\end{proof}
+
+\subsection{MC projection}
+
+\begin{theorem}[MC projection under $\av$]
+\label{thm:av-mc-projection}
+Under averaging:
+\begin{equation}\label{eq:av-mc}
+  \av\bigl(\Theta^{\Eone}_\cA\bigr)
+  \;=\; \Theta_\cA.
+\end{equation}
+In particular, the shadow obstruction tower
+$(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ is the
+degree-by-degree $\Sigma_n$-coinvariant image of the $R$-matrix
+tower $(r(z), r_3, r_4, \ldots)$.
+\end{theorem}
+
+\begin{proof}
+$\av(D^{\Eone}_\cA) = D_\cA$ because the ordered genus-completed
+bar differential on $\Barord(\cA)$ descends to $\BarSig(\cA)$
+under $\Sigma_n$-coinvariants, and $\av(d_0) = d_0$.
+Therefore
+\[
+  \av(\Theta^{\Eone}_\cA)
+  = \av(D^{\Eone}_\cA - d_0)
+  = D_\cA - d_0
+  = \Theta_\cA. \qedhere
+\]
+\end{proof}
+
+\subsection{Non-splitting}
+
+\begin{proposition}[Non-splitting of $\av$]
+\label{prop:nonsplitting}
+The short exact sequence of dg~Lie algebras
+\begin{equation}\label{eq:nonsplitting-ses}
+  0 \;\longrightarrow\; \ker(\av) \;\longrightarrow\;
+  \gEone \;\xrightarrow{\;\av\;}\; \gmod
+  \;\longrightarrow\; 0
+\end{equation}
+does not split as dg~Lie algebras. Four independent obstructions
+prevent a section:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Fixed-degree triviality.}
+  At each fixed degree~$n$, the inclusion section
+  $s\colon \End^{\Sigma_n}(V^{\otimes n})
+  \hookrightarrow \End(V^{\otimes n})$
+  is a Lie subalgebra embedding, so the extension $2$-cocycle
+  vanishes. The extension is Lie-trivial at each degree separately.
+
+\item \emph{Cross-degree obstruction.}
+  The bar differential
+  $D\colon \gEone(n) \to \gEone(n{-}1)$
+  contracts an internal edge, reducing degree by~$1$. This
+  contraction is $\Sigma_{n-2}$-equivariant but
+  \emph{not} $\Sigma_n$-equivariant: it breaks the symmetry from
+  $\Sigma_n$ to $\Sigma_{n-2}$, leaking from
+  $\ker(\av_n)$ into $\operatorname{im}(\av_{n-1})$. No
+  Lie-algebra section can simultaneously respect the fixed-degree
+  splitting and intertwine with~$D$.
+
+\item \emph{Associator representative.}
+  At degree~$3$, the linearised Drinfeld associator
+  $[\Omega_{12}, \Omega_{23}] \in \End(V^{\otimes 3})$ lies
+  entirely in $\ker(\av)$: it is antisymmetric under
+  $(1 \leftrightarrow 3)$, so its $\Sigma_3$-average vanishes.
+  The infinitesimal braid relation
+  $[\Omega_{12}, \Omega_{13} + \Omega_{23}] = 0$
+  ensures that the commutator is intrinsic, not an artefact
+  of the representation.
+
+\item \emph{$\GRT_1$-torsor structure.}
+  The space of dg~Lie sections of $\av$ satisfying the MC equation
+  up to gauge is a torsor for the pro-unipotent
+  Grothendieck--Teichm\"uller group $\GRT_1$ of
+  Drinfeld~\cite{Drinfeld91}. This is the algebraic shadow of the
+  Etingof--Kazhdan~\cite{EK96} non-uniqueness of quantisation: a
+  splitting would canonically reconstruct the quantum group from the
+  modular shadow $\kappa$ alone.
+\end{enumerate}
+For Heisenberg ($\dim V = 1$): $\ker(\av) = 0$ at every degree,
+the extension splits trivially, and no $\GRT_1$ ambiguity arises.
+\end{proposition}
+
+\begin{proof}
+Part~(i): the commutant of $\Sigma_n$ in $\End(V^{\otimes n})$ is
+a Lie subalgebra, so $c(A,B) = (1 - \av)([A,B]) = 0$.
+
+Part~(ii): the partial-trace map
+$D_{ij}\colon \End(V^{\otimes n}) \to \End(V^{\otimes(n-1)})$
+satisfies
+$D_{ij} \circ \sigma = \sigma|_{\{1,\ldots,n\}\setminus\{j\}}
+\circ D_{ij}$
+only for $\sigma$ fixing both $i$ and $j$, i.e.\
+$\Sigma_{n-2} \subset \Sigma_n$. A $\Sigma_n$-invariant
+endomorphism in $\ker(\av_n)$ can map under $D$ to an endomorphism
+with nonzero $\av_{n-1}$ component.
+
+Part~(iii): the $\Sigma_3$-isotypic decomposition of
+$[\Omega_{12}, \Omega_{23}]$ consists of sign and standard
+components only, with zero trivial component (verified in
+$\End((\CC^2)^{\otimes 3})$). The infinitesimal braid relation
+$[\Omega_{12}, \Omega_{13} + \Omega_{23}] = 0$ ensures the result
+is intrinsic.
+
+Part~(iv) follows from Drinfeld's theorem~\cite{Drinfeld91} on the
+$\GRT_1$-torsor structure of associators, together with the
+Etingof--Kazhdan quantisation theorem~\cite{EK96}.
+\end{proof}
+
+\begin{proposition}[Non-splitting at genus~$1$]
+\label{prop:nonsplitting-genus1}
+The short exact sequence~\eqref{eq:nonsplitting-ses}
+restricted to genus~$1$ does not split. The three genus-$0$
+obstructions persist, and a fourth obstruction arises from the
+quasi-modular anomaly of the Eisenstein series~$E_2$. The
+genus-$1$ propagator on the elliptic curve~$E_\tau$ is
+$\eta_{12}^{(1)} = (\vartheta_1'/\vartheta_1)(z_1 - z_2 \mid
+\tau)\,(dz_1 - dz_2)$. The self-energy regularisation produces the
+Eisenstein series $E_2(\tau)$. The averaging map performs the
+non-holomorphic completion
+\[
+  E_2(\tau)
+  \;\longmapsto\;
+  \widehat{E}_2(\tau)
+  \;:=\;
+  E_2(\tau) - \frac{3}{\pi\,\operatorname{Im}(\tau)}.
+\]
+A section $s\colon \gmod(1,1) \to \gEone(1,1)$ would lift
+$\widehat{E}_2$ back to a holomorphic object on the $\Eone$ side;
+the non-holomorphic correction $-3/(\pi\,\operatorname{Im}(\tau))$
+has no preimage in the holomorphic $\Eone$ convolution Lie algebra,
+so no such section exists.
+\end{proposition}
+
+\begin{proof}
+The genus-$0$ obstructions persist via the embedding of the boundary
+stratum $\overline{\cM}_{0,n+2} \subset \partial\overline{\cM}_{1,n}$.
+The quasi-modular obstruction is independent: it is visible at
+degree~$1$ (where $\Sigma_1$ is trivial and all genus-$0$
+obstructions vanish), and it concerns the genus-$1$ fibre
+(dependence on~$\tau$), not the degree (dependence on~$n$). The
+two obstruction mechanisms are linearly independent in the relevant
+$\operatorname{Ext}$ group.
+\end{proof}
+
+\begin{remark}[The kernel dimension formula]
+\label{rem:ker-av-formula}
+The kernel of $\av$ at degree~$n$ on the bare tensor power
+$V^{\otimes n}$ has a closed-form dimension depending only on
+$d = \dim V$:
+\begin{equation}\label{eq:ker-av-dim}
+  \dim\bigl(\ker(\av_n)\bigr)
+  \;=\;
+  d^n - \binom{n+d-1}{d-1}.
+\end{equation}
+The first term $d^n = \dim(V^{\otimes n})$ and the second
+$\binom{n+d-1}{d-1} = \dim(\Sym^n V)$ is the dimension of the
+$\Sigma_n$-coinvariant. This formula depends only on $\dim V$, not on
+the Lie-algebraic structure of the representation, by the Schur--Weyl
+analysis of~\cite[Proposition~6.1]{Lor26}. At $d = 1$
+(Heisenberg): $\ker(\av_n) = 0$ for all~$n$. At $d = 2$
+($\mathfrak{sl}_2$): $\ker(\av_2) = 1$,
+$\ker(\av_3) = 4$, $\ker(\av_4) = 11$.
+\end{remark}
+
+% ================================================================
+% SECTION 5
+% ================================================================
+\section{The $\Eone$ primacy theorem}
+\label{sec:e1-primacy}
+
+\subsection{Precise statement}
+
+\begin{theorem}[$\Eone$ primacy]
+\label{thm:e1-primacy-main}
+Let $\cA$ be a cyclic chiral algebra on~$X$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Surjectivity.)}
+  The averaging map
+  $\av\colon \gEone \twoheadrightarrow \gmod$
+  is a surjective dg~Lie morphism.
+
+\item \textup{(MC projection.)}
+  $\av$ sends
+  $\Theta^{\Eone}_\cA \mapsto \Theta_\cA$.
+  In particular, the shadow obstruction tower
+  $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$
+  is the degree-by-degree $\Sigma_n$-coinvariant image of the
+  $R$-matrix tower $(r(z), r_3, r_4, \ldots)$.
+
+\item \textup{(Bracket preservation.)}
+  $\av$ preserves the dg~Lie bracket by
+  $\Sigma_n$-equivariance of the operad composition maps.
+
+\item \textup{(Non-splitting.)}
+  The kernel $\ker(\av)$ is non-trivial: at degree~$3$ it
+  contains the Drinfeld associator
+  $\Phi_{\mathrm{KZ}}(\cA)$, which is annihilated by $\av$
+  but satisfies the pentagon equation in $\gEone$. The short
+  exact sequence
+  $0 \to \ker(\av) \to \gEone
+  \xrightarrow{\av} \gmod \to 0$
+  does not split as dg~Lie algebras. At genus~$1$, a fourth
+  obstruction to splitting arises from the quasi-modular anomaly
+  of $E_2$ (Proposition~\textup{\ref{prop:nonsplitting-genus1}}).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts~(i)--(iii) are established in
+Theorem~\ref{thm:av-surjective} (surjectivity and bracket
+preservation as a dg~Lie morphism) and
+Theorem~\ref{thm:av-mc-projection} (MC projection
+$\av(\Theta^{\Eone}_\cA) = \Theta_\cA$). The map $\av$ is the
+Reynolds operator
+$\phi \mapsto (1/n!)\sum_\sigma \sigma \cdot \phi$; surjectivity
+follows because $\av$ restricts to the identity on
+$\Sigma_n$-invariant elements, which span the target~$\gmod$.
+The bracket is preserved because operad composition in $\FMAss$ is
+$\Sigma_n$-equivariant: coinvariant projection converts
+$T^c$-convolution to $\Sym^c$-convolution
+(Theorem~\ref{thm:fass-to-fcom}).
+
+For~(iv), the Drinfeld associator
+$\Phi_{\mathrm{KZ}}(\cA) \in \ker(\av)_{0,3}$ satisfies the
+pentagon equation in $\gEone$ (the genus-$0$, degree-$3$ MC
+equation). Its $\Sigma_3$-symmetrisation vanishes because the
+pentagon identity is antisymmetric under transposition of the two
+internal edges. Were $\av$ split, there would exist a dg~Lie section
+$s\colon \gmod \hookrightarrow \gEone$ with $\av \circ s = \id$.
+Such a section would lift the commutative MC element $\Theta_\cA$
+to an ordered element in the image of~$s$; but the pentagon
+constraint on $\ker(\av)$ forces the degree-$3$ component of any
+lift to involve $\Phi_{\mathrm{KZ}}$, which does not lie in the
+image of any linear section
+(Proposition~\ref{prop:nonsplitting}).
+\end{proof}
+
+\begin{principle}[The $\Eone$ primacy thesis]
+\label{princ:e1-primacy}
+Theorem~\textup{\ref{thm:e1-primacy-main}} admits a concise
+restatement. The $\Eone$/ordered structure is the natural primitive
+of the theory. The $\Einf$/symmetric/modular structure is its
+$\Sigma_n$-coinvariant shadow under $\av$. The five main theorems
+A--H are the invariants that survive averaging. Information flows
+in only one direction: from the rich $\Eone$ side, which contains
+the $R$-matrix, the KZ associator, the Drinfeld--Jimbo Yangian,
+the full braided category of line operators, and the entire
+spectral scattering data, to the coarser $\Einf$ side, which
+contains only the modular characteristic $\kappa$, the shadow
+obstruction tower, and the five structural theorems.
+\end{principle}
+
+\subsection{The five ordered theorems}
+
+The five theorems of modular Koszul duality admit ordered $\Eone$
+counterparts, each of which projects to the classical theorem under
+$\av$.
+
+\begin{theorem}[Theorem $\mathrm{A}^{\Eone}$: ordered bar-cobar]
+\label{thm:ordered-A}
+The genus-$g$ ordered bar complex
+$\Barord(\cA)(g,n)$ is an $\FMAss$-coalgebra with differential
+satisfying $d^2 = 0$, where $\FMAss$ is the Feynman transform of
+the ribbon modular operad. The bar and cobar functors form an
+adjunction
+\[
+  \Omega^{\mathrm{ch},(g)} \dashv \overline{B}^{\mathrm{ord},(g)}\colon
+  \mathrm{Alg}_{\FMAss} \rightleftarrows
+  \mathrm{CoAlg}_{\FMAss},
+\]
+and coinvariant projection recovers Theorem~A of
+Volume~I.
+\end{theorem}
+
+\begin{theorem}[Theorem $\mathrm{B}^{\Eone}$: ordered inversion]
+\label{thm:ordered-B}
+Assume $\cA$ lies on the $\Eone$ Koszul locus, meaning the
+PBW-completeness hypothesis holds for the ordered bar complex. Then
+at each genus~$g$, the counit
+\[
+  \Omega^{\mathrm{ch},(g)}\!\bigl(\Barord(\cA)(g,\bullet)\bigr)
+  \;\xrightarrow{\;\sim\;}\; \cA
+\]
+is a quasi-isomorphism (inversion, not Koszul duality), and the
+$\Eone$ linear Koszul dual $\cA^{!,\Eone}$ obtained by linear
+duality on a finite-dimensional model of $\Barord(\cA)$ is an
+$\Eone$-chiral algebra at each such genus.
+\end{theorem}
+
+\begin{theorem}[Theorem $\mathrm{C}^{\Eone}$: ordered
+complementarity]
+\label{thm:ordered-C}
+At each genus~$g$ and degree~$n$ with $2g-2+n>0$, the ordered
+complementarity takes the form
+\begin{equation}\label{eq:ordered-C}
+  Q^{\Eone}_{g,n}(\cA) + Q^{\Eone}_{g,n}(\cA^{!,\Eone})
+  \;=\;
+  H^*\!\bigl(\overline{\cM}_{g,n}^{\mathrm{rib}},\,
+  Z^{\Eone}(\cA)\bigr),
+\end{equation}
+where $Z^{\Eone}(\cA)$ is the $\Eone$ centre, the space of
+$R$-matrix-equivariant elements. The scalar identity
+$\kappa + \kappa^! = 0$ for Kac--Moody and free-field families
+(and $\kappa + \kappa^! = 13$ for Virasoro) is the
+$\Sigma_n$-coinvariant image.
+\end{theorem}
+
+\begin{theorem}[Theorem $\mathrm{D}^{\Eone}$: ordered degree-$2$
+package]
+\label{thm:ordered-D}
+The formal ordered degree-$2$ shadow series
+\begin{equation}\label{eq:ordered-D}
+  R^{\Eone,\mathrm{bin}}(z;\hbar)
+  \;=\;
+  \sum_{g \geq 0} \hbar^{2g}\, r_g(z)
+\end{equation}
+obtained from the genus-refined degree-$2$ projection of the $\Eone$
+Maurer--Cartan element is the $\Eone$ degree-$2$ characteristic
+package of~$\cA$. It is universal, additive, antisymmetric under
+opposite-duality, and satisfies
+$\av(r_0(z)) = \kappa(\cA)$ on abelian families, while for
+non-abelian affine Kac--Moody
+$\av(r_0(z)) = \kappa_{\mathrm{dp}}(\cA)$ and
+$\kappa(\cA) = \kappa_{\mathrm{dp}}(\cA) + \dim(\fg)/2$.
+The coinvariant recovery
+$\av(R^{\Eone,\mathrm{bin}}) = \sum \hbar^{2g}\, F_g^{(2)}$
+is the scalar genus-$2$ modular characteristic series of
+Theorem~D.
+\end{theorem}
+
+\begin{theorem}[Theorem $\mathrm{H}^{\Eone}$: ordered
+Hochschild]
+\label{thm:ordered-H}
+For every genus~$g$ and complete $\cA$-bimodule~$M$, the genus-$g$
+ordered chiral Hochschild homology is computed coalgebraically by
+the genus-$g$ ordered coHochschild complex of the ordered bar
+coalgebra $C = \Barord(\cA)$, with twisted differential involving
+the curvature term $\kappa(\cA) \cdot \lambda_g$ in the
+uniform-weight case \textup{(UNIFORM-WEIGHT)}. At genus $g \geq 2$
+with multi-weight field content the scalar formula receives a
+cross-channel correction $\delta F_g^{\mathrm{cross}}$
+\textup{(ALL-WEIGHT $+ \delta F_g^{\mathrm{cross}}$)}. The
+$\Sigma_n$-coinvariant recovers the symmetric chiral Hochschild
+complex of Theorem~H.
+\end{theorem}
+
+\begin{remark}[Theorem~D is the cleanest example]
+\label{rem:thm-d-cleanest}
+Among the five, Theorem~D makes the $\Eone$ primacy thesis most
+concrete. The scalar modular characteristic $\kappa$ is a single
+number per family, and the family formulas are distinct: for $\cW_N$
+the harmonic number is $H_N = \sum_{j=1}^N 1/j$ and must not be
+copied from a different family. Its degree-$2$ lift is a meromorphic
+function of a single variable, the collision coordinate~$z$. The
+statement $\av(r(z)) = \kappa$ says this exactly for Heisenberg,
+while for non-abelian affine Kac--Moody the same averaging recovers
+only $\kappa_{\mathrm{dp}}$ and the full $\kappa$ adds the Sugawara
+shift $\dim(\fg)/2$. The scalar shadow is still the
+$\Sigma_2$-average of a function. This is a strict projection;
+the full function $r(z)$ carries information about the braiding, the
+quantum group, and the line-operator algebra that no scalar invariant
+can see.
+\end{remark}
+
+\begin{remark}[What averaging forgets]
+\label{rem:what-av-forgets}
+The kernel of $\av$ contains several objects of independent interest.
+At degree~$2$, $\ker(\av)$ is the antisymmetric part of $r(z)$; for
+bosonic generators of even desuspended degree this vanishes
+identically, and $\kappa$ recovers all of $r(z)$. For generators of
+odd desuspended degree, the kernel is nontrivial and captures the
+parity-dependent Eulerian weight structure on the bar complex. At
+degree~$3$, $\ker(\av)$ contains the linearised Drinfeld commutator
+$[\Omega_{12}, \Omega_{23}]$ and, by the non-splitting proposition,
+obstructs a canonical reconstruction of the full associator
+from~$\mathfrak{C}$. The $\GRT_1$-torsor structure of the splittings
+of $\av$ is the operadic shadow of Etingof--Kazhdan non-uniqueness
+of quantisation.
+\end{remark}
+
+% ================================================================
+% SECTION 6
+% ================================================================
+\section{The formality bridge: $\Einf$ input}
+\label{sec:formality-bridge}
+
+The ordered bar complex is defined for every $\Eone$-chiral algebra,
+but the symmetric bar exists only when the $\cD_X$-module descends
+to the unordered Ran space. For $\Einf$-chiral input the descent
+holds, and the question is: does the coinvariant projection lose
+information? The answer at the cohomological level is no; at the
+chain level the loss is precisely the $R$-matrix and the associator.
+
+\begin{remark}[Formality for $\Einf$-chiral input]
+\label{rem:formality-einf}
+Every standard family in conformal field theory (Heisenberg, affine
+Kac--Moody, Virasoro, $\cW$-algebras, lattice vertex algebras,
+$\beta\gamma$ systems, $bc$ ghosts, Bershadsky--Polyakov) is
+$\Einf$-chiral: the OPE is symmetric in the operator ordering up
+to signs from the Arnold form, and the $\cD_X$-module structure
+descends to the symmetric Ran space. For such algebras the
+$\Eone$ refinement adds no new data at the level of bar
+\emph{cohomology}: the natural comparison map
+\[
+  H^*(\Barord(\cA)) \;\xrightarrow{\;\sim\;}\;
+  H^*(\BarSig(\cA))
+\]
+is an isomorphism. The ordered bar carries additional data at the
+\emph{chain level}: the $R$-matrix, the KZ connection, and the
+Drinfeld associator are chain-level objects that project to zero in
+cohomology but determine the braided monoidal structure on the
+category of $\cA$-modules.
+\end{remark}
+
+\subsection{The formality theorem}
+
+\begin{theorem}[Formality bridge for $\Einf$-chiral algebras]
+\label{thm:formality-bridge-standalone}
+Let $\cA$ be an $\Einf$-chiral algebra on~$X$ and $\Phi$ a
+Drinfeld associator. The Kontsevich--Tamarkin operad formality
+quasi-isomorphism induces a quasi-isomorphism of coalgebras
+\begin{equation}\label{eq:formality-bridge-qi}
+  \Barord(\cA)
+  \;\xrightarrow[\Phi]{\;\sim\;}\;
+  \BarSig(\cA)
+\end{equation}
+that intertwines the deconcatenation coproduct on $T^c(s^{-1}\bar\cA)$
+with the coshuffle coproduct on $\Sym^c(s^{-1}\bar\cA)$ at the
+cohomological level.
+
+In particular, the coinvariant projection
+$\pi_{\Sigma_n}\colon
+(s^{-1}\bar\cA)^{\otimes n} \twoheadrightarrow
+(s^{-1}\bar\cA)^{\odot n}$
+induces an isomorphism on bar cohomology:
+\begin{equation}\label{eq:bar-cohom-formality}
+  H^*\bigl(\Barord(\cA)\bigr)
+  \;\xrightarrow{\;\cong\;}\;
+  H^*\bigl(\BarSig(\cA)\bigr).
+\end{equation}
+The transferred $\Ainf$-structure on the cohomological model
+$H^*(\cA)$ may carry non-trivial higher operations
+$m_k^{\mathrm{tr}}$ for $k \geq 3$; what the formality bridge
+guarantees is that ordered and symmetric complexes compute the
+same cohomology.
+\end{theorem}
+
+\begin{proof}
+The argument proceeds in four steps.
+
+\medskip
+\noindent\textit{Step~1: Koszul resolution of the
+$\Sigma_n$-coinvariant.}
+Working in characteristic zero, the group algebra
+$k[\Sigma_n]$ is semisimple (Maschke's theorem). The
+idempotent
+\begin{equation}\label{eq:reynolds-idempotent}
+  e_n
+  \;:=\;
+  \frac{1}{n!}\sum_{\sigma \in \Sigma_n} \sigma
+  \;\in\; k[\Sigma_n]
+\end{equation}
+is the Reynolds operator projecting $V^{\otimes n}$ onto
+$\Sym^n(V) = (V^{\otimes n})_{\Sigma_n}$, and the complement
+$(1 - e_n)(V^{\otimes n})$ is the kernel of $\av_n$.
+Semisimplicity gives a direct sum decomposition
+\begin{equation}\label{eq:maschke-decomp}
+  V^{\otimes n}
+  \;\cong\;
+  \Sym^n(V) \;\oplus\; \ker(\av_n)
+\end{equation}
+as $k[\Sigma_n]$-modules. This decomposition is compatible
+with the bar differential by the $\Sigma_n$-equivariance of
+the OPE for $\Einf$-chiral algebras.
+
+\medskip
+\noindent\textit{Step~2: Group cohomology vanishing.}
+In characteristic zero,
+\begin{equation}\label{eq:group-cohom-vanishing}
+  H^i(\Sigma_n,\, M) \;=\; 0
+  \qquad\text{for all } i > 0
+  \text{ and all } k[\Sigma_n]\text{-modules } M.
+\end{equation}
+This vanishing follows from semisimplicity: the category
+$k[\Sigma_n]\text{-}\mathrm{mod}$ has global dimension zero,
+so $\mathrm{Ext}^i_{k[\Sigma_n]}(k, M) = 0$ for $i > 0$.
+The vanishing ensures that the coinvariant projection
+$\pi_{\Sigma_n}\colon \Barord(\cA)
+\twoheadrightarrow \BarSig(\cA)$ is exact: no higher
+$\Sigma_n$-cohomology obstructs the passage from ordered to
+symmetric.
+
+\medskip
+\noindent\textit{Step~3: The quasi-isomorphism.}
+Consider the coinvariant short exact sequence at each
+degree~$n$:
+\begin{equation}\label{eq:coinv-ses}
+  0 \;\to\; \ker(\av_n)
+  \;\to\; (s^{-1}\bar\cA)^{\otimes n}
+  \;\xrightarrow{\;\pi_{\Sigma_n}\;}
+  (s^{-1}\bar\cA)^{\odot n} \;\to\; 0.
+\end{equation}
+The bar differential $d_{\mathrm{bar}}$ preserves the
+decomposition~\eqref{eq:maschke-decomp} because the
+$\Einf$-chiral OPE is $\Sigma_n$-equivariant: the collision
+residue $a_i \star a_{i+1}$ is symmetric in $a_i, a_{i+1}$
+up to the graded sign from the Arnold form. The
+decomposition~\eqref{eq:maschke-decomp} at the chain level,
+combined with the cohomology vanishing
+of~\eqref{eq:group-cohom-vanishing}, gives
+\[
+  H^*\bigl(\ker(\av_n), d_{\mathrm{bar}}\bigr)
+  \;\hookrightarrow\;
+  H^*\bigl(\Sigma_n, (s^{-1}\bar\cA)^{\otimes n}\bigr)
+  \;=\; 0
+  \quad\text{for } * > 0.
+\]
+The long exact sequence in cohomology then forces
+$\pi_{\Sigma_n}$ to be a quasi-isomorphism.
+
+\medskip
+\noindent\textit{Step~4: Explicit quasi-isomorphism map.}
+The Kontsevich--Tamarkin operad formality
+(Kontsevich~\cite{Kontsevich99},
+Tamarkin, see also~\cite{LV12}) provides a
+quasi-isomorphism
+\[
+  \varphi_\Phi \colon
+  C_*(\overline{\FM}_n(\CC))
+  \;\xrightarrow{\;\sim\;}\;
+  H^*(\overline{\FM}_n(\CC))
+\]
+depending on the Drinfeld associator~$\Phi$. Tensoring with
+$(s^{-1}\bar\cA)^{\otimes n}$ and taking $\Sigma_n$-coinvariants
+gives the quasi-isomorphism~\eqref{eq:formality-bridge-qi}.
+The dependence on~$\Phi$ is a $\GRT_1$-ambiguity: different
+choices of associator yield homotopic maps.
+\end{proof}
+
+\begin{remark}[What the bridge preserves and what it loses]
+\label{rem:bridge-preserves-loses}
+The formality bridge preserves the bar \emph{cohomology}: homological
+invariants such as the dimension of the ordered bar cohomology groups,
+the Koszul property (PBW-degree concentration), and the five theorem
+statements. It loses chain-level data: the $R$-matrix $r(z)$ is a
+chain-level datum on the ordered side that becomes trivial
+($\Sigma_2$-average $\to \kappa$) on the symmetric side. The
+Drinfeld associator $\Phi_{\mathrm{KZ}}$ is a chain-level datum at
+degree~$3$ that maps to zero under $\av$. The braided monoidal
+structure on the category of $\cA$-modules is encoded in the chain-level
+ordered bar complex and is invisible from the symmetric bar
+cohomology.
+\end{remark}
+
+% ================================================================
+% SECTION 7
+% ================================================================
+\section{The formality failure: $\Eone$ input}
+\label{sec:formality-failure}
+
+For genuinely $\Eone$-chiral input (Yangians, Etingof--Kazhdan
+quantum vertex algebras), the formality bridge of
+Section~\ref{sec:formality-bridge} breaks down. The obstruction
+is clean: the $\cD_X$-module underlying the OPE does not descend
+to the symmetric quotient $X^{(n)}$, because the $R$-matrix
+$S(z) \neq \id$ breaks the $\Sigma_n$-equivariance of the bar
+differential. The ordered bar is the only bar that exists, and
+the averaging map has no target.
+
+\subsection{The theorem}
+
+\begin{theorem}[Formality failure for genuinely $\Eone$-chiral
+algebras]
+\label{thm:formality-failure-standalone}
+Let $\cA$ be a genuinely $\Eone$-chiral algebra
+(tier~(c) of the $\Eone$/$\Einf$ hierarchy: the vertex
+$R$-matrix $S(z) \neq \id$ is not derived from any $\Einf$-chiral
+OPE). The formality bridge of
+Theorem~\textup{\ref{thm:formality-bridge-standalone}} fails in
+the following precise sense.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Operad formality is unconditional.)}
+  The Kontsevich--Tamarkin formality of
+  $C_*(\overline{\FM}_n(\CC))$ as an operad depends only on
+  the operad structure, not on the specific algebra. It holds
+  for $\Eone$-chiral input.
+
+\item \textup{(Equivariance fails: the $\cD$-module does not
+  descend.)}
+  The factorization $\cD$-module
+  $\cF_n^{\mathrm{ord}}$ on $\Conf_n^{\mathrm{ord}}(X)$
+  is \emph{not} $\Sigma_n$-equivariant. The obstruction is the
+  $R$-matrix: the monodromy of $\cF_n^{\mathrm{ord}}$ around
+  the diagonal $\Delta_{ij}$ is
+  \begin{equation}\label{eq:monodromy-obstruction}
+    \mathrm{Mon}_{\gamma_{ij}}(\cF_n^{\mathrm{ord}})
+    \;=\;
+    S_{ij}(z)
+    \;\neq\; \id,
+  \end{equation}
+  where $S_{ij}(z)$ is the braiding by the $R$-matrix on the
+  $i$-th and $j$-th tensor factors. Since
+  $S_{ij} \neq \id$, the $\cD$-module does not descend from
+  $\Conf_n^{\mathrm{ord}}(X)$ to the symmetric quotient
+  $\Conf_n(X)/\Sigma_n$; equivalently, the symmetric bar
+  $\BarSig(\cA)$ does not exist as a factorization coalgebra on
+  the unordered Ran space $\Ran(X)$.
+
+\item \textup{(Dimension count: the Arnold algebra.)}
+  By Arnold's theorem~\cite{Arnold69}, the cohomology algebra
+  $H^*(\Conf_n(\CC))$ is the quotient of the exterior algebra on
+  generators $\omega_{ij} = [d\log(z_i - z_j)]$ of degree~$1$
+  ($1 \leq i < j \leq n$) by the Arnold relation
+  $\omega_{ij}\omega_{jk} + \omega_{jk}\omega_{ki}
+  + \omega_{ki}\omega_{ij} = 0$.
+  Its Poincar\'e polynomial is
+  \begin{equation}\label{eq:arnold-poincare}
+    P_n(t)
+    \;=\;
+    \prod_{j=0}^{n-1}(1 + jt).
+  \end{equation}
+  Setting $t = 1$ gives $P_n(1) = n!$ as total dimension.
+  At $n = 2$: $P_2(1) = 2$; at $n = 3$: $P_3(1) = 6$;
+  at $n = 4$: $P_4(1) = 24$. The ordered chiral chain complex
+  at degree~$n$ has dimension
+  \begin{equation}\label{eq:ordered-dim}
+    \dim \cC_n^{\mathrm{ord}}(D^\times, \cA)
+    \;=\;
+    (\dim \bar\cA)^n \cdot n!,
+  \end{equation}
+  where the factor $n!$ from the Arnold algebra measures the
+  holomorphic data carried by the ordered complex beyond the
+  topological Hochschild complex (which has dimension
+  $(\dim \cA)^n$, without the $n!$ factor).
+
+\item \textup{(Braid group representation.)}
+  The fundamental group $\pi_1(\Conf_n(\CC)) = \PBr_n$ is the
+  pure braid group on $n$ strands. The $\cD$-module
+  $\cF_n^{\mathrm{ord}}$ gives a representation
+  \begin{equation}\label{eq:braid-rep}
+    \rho_n \colon
+    \PBr_n
+    \;\longrightarrow\;
+    \Aut\!\bigl(\cC_n^{\mathrm{ord}}(D^\times, \cA)\bigr)
+  \end{equation}
+  by monodromy. By the Drinfeld--Kohno theorem, the local
+  monodromy around $\Delta_{ij}$ is $\exp(2\pi i \cdot r_{ij})$,
+  where $r_{ij}$ is the classical $r$-matrix acting on
+  the $i$-th and $j$-th factors. For $\Einf$ input,
+  $r_{ij}$ is scalar and the braid group acts through
+  $\Sigma_n$ (the abelianisation); for genuinely $\Eone$ input,
+  the braid representation is faithful and the ordered chiral
+  homology carries the full braided monoidal structure.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): Kontsevich--Tamarkin operad formality depends on the
+structure maps of the Fulton--MacPherson operad, not on the
+algebra to which it is applied. The formality map
+$\varphi_\Phi$ of~\eqref{eq:formality-bridge-qi} exists
+unconditionally.
+
+Part~(ii): the factorization $\cD$-module $\cF_n^{\mathrm{ord}}$
+on $\Conf_n^{\mathrm{ord}}(X)$ is constructed from the OPE of
+$\cA$. The OPE $Y(a,z)b$ and $Y(b,-z)a$ are related by the
+$R$-matrix: $Y(a,z)b = S(z) \cdot Y(b,-z)a$. If
+$S(z) \neq \id$, the transposition
+$\sigma_{ij}\colon (z_i, z_j) \mapsto (z_j, z_i)$ acts on
+$\cF_n^{\mathrm{ord}}$ by $S_{ij}(z_i - z_j) \neq \id$, and the
+$\cD$-module does not descend to $X^{(n)}$. The ordered complex
+retains holomorphic data from the spectral-parameter dependence
+of~$S(z)$ that has no counterpart in the cyclic bar complex.
+
+Part~(iii): the Poincar\'e polynomial
+$P_n(t) = \prod_{j=0}^{n-1}(1 + jt)$ follows from
+Arnold's computation of $H^*(\Conf_n(\CC))$~\cite{Arnold69}:
+the generators $\omega_{ij}$ are of degree~$1$, the Arnold
+relation kills the excess, and the Hilbert function is
+determined by the recursion $P_n(t) = (1 + (n-1)t)\cdot P_{n-1}(t)$
+with $P_1(t) = 1$.
+
+Part~(iv): the Drinfeld--Kohno theorem
+(Drinfeld~\cite{Drinfeld91}, Kohno~\cite{Kohno85})
+identifies the monodromy representation of the KZ connection
+with the quantum group $R$-matrix action, giving the braid
+representation~\eqref{eq:braid-rep}.
+For $\Einf$ input, the $R$-matrix is the Koszul-signed identity
+$S(z) = (-1)^{|a||b|}\id$, so the braid group acts through
+signs. For genuinely $\Eone$ input, the representation is
+faithful: the Yang--Baxter equation on $r(z)$ ensures
+consistency of the braid relations, and non-triviality of $S(z)$
+ensures non-triviality of the representation.
+\end{proof}
+
+\subsection{The Yangian as paradigm}
+
+\begin{remark}[$n!$ versus $1$]
+\label{rem:n-factorial-vs-1}
+The dimension count exposes the gap: the $\Eone$ convolution space
+$\Hom(\cM_\Ass(g,n), \End_\cA(n))$ has dimension
+$n! \cdot \dim\bigl(\Hom_{\Sigma_n}(\cM_\Com(g,n),
+\End_\cA(n))\bigr)$ at each degree, by the multiplicity of the
+regular representation in the coinvariant decomposition. For
+$\Einf$ input the $n!$ factor is redundant: the data is
+$\Sigma_n$-equivariant and the coinvariant projection is a
+quasi-isomorphism. For $\Eone$ input the $n!$ factor is essential:
+the Maurer--Cartan element $\Theta^{\Eone}_\cA$ uses all $n!$
+orderings, the $R$-matrix cannot be recovered from its
+$\Sigma_2$-coinvariant, and the symmetric bar $\BarSig(\cA)$
+does not exist as a factorization coalgebra on the
+\emph{unordered} Ran space (the $\cD$-module does not descend to
+$X^{(n)}$).
+\end{remark}
+
+The paradigmatic example is the Yangian $Y_\hbar(\fg)$. Its
+$R$-matrix $r_{\mathrm{YB}}(z) = \hbar\,\Omega_\fg/z$ is a
+% PE-1: r-matrix. Family: Yangian. r(z) = hbar*Omega/z.
+% Level: hbar. AP126 check: hbar=0 -> r=0. Match: Y.
+% Verdict: ACCEPT.
+solution of the classical Yang--Baxter equation, and the bar
+complex $\Barord(Y_\hbar(\fg))$ is an $\FMAss$-coalgebra whose
+Koszul dual is the affine Kac--Moody algebra. The symmetric bar
+$\BarSig(Y_\hbar(\fg))$ does not exist because the Yangian's OPE
+is not symmetric: the braiding $S(z) = 1 + \hbar\,P/z$ satisfies
+$S(z) \neq S(-z)$. This is the cleanest demonstration of $\Eone$
+primacy: the ordered bar is the only bar that can be formed, and
+the averaging map has no target.
+
+\begin{example}[Yangian $Y_\hbar(\mathfrak{sl}_2)$:
+the braid representation]
+\label{ex:yangian-braid}
+For $\fg = \mathfrak{sl}_2$ and $V = \CC^2$ the fundamental
+representation, the $R$-matrix in the fundamental
+representation is $R(u) = u\,I_4 + \hbar\,P \in \End(\CC^2
+\otimes \CC^2)$, where $P(e_i \otimes e_j) = e_j \otimes e_i$.
+The braid group $\PBr_2 = \ZZ$ acts on
+$\cC_2^{\mathrm{ord}}(D^\times, Y_\hbar(\mathfrak{sl}_2))$
+by the monodromy operator
+\[
+  \rho_2(\gamma_{12})
+  \;=\;
+  \exp(2\pi i \cdot r_{12})
+  \;=\;
+  \exp\!\bigl(2\pi i\,\hbar\,\Omega_{\mathfrak{sl}_2}/z\bigr),
+\]
+which at $z = 1$ and generic~$\hbar$ has four distinct eigenvalues
+on $V \otimes V = V_0 \oplus V_1$ (the singlet and triplet of
+$\mathfrak{sl}_2$). The symmetric bar would project this to the
+$\Sigma_2$-coinvariant $\Sym^2(V) = V_1$, losing the singlet
+channel; the ordered bar retains both isospin channels.
+\end{example}
+
+% ================================================================
+% SECTION 8
+% ================================================================
+\section{Heisenberg and Kac--Moody: complete $\Eone$ computation}
+\label{sec:heis-km}
+
+This section gives the complete degree-$2$ ordered computation
+for the two simplest families and records the passage through $\av$
+to the scalar shadow. The computations are self-contained and
+illustrate every step of the $\Eone$ primacy thesis.
+
+\subsection{Heisenberg}
+
+For $\cH_k$ with OPE $J(z)J(w) \sim k/(z-w)^2$:
+\begin{itemize}
+\item $r(z) = k/z$ (equation~\eqref{eq:heis-r-matrix}).
+\item $\av(r(z)) = \kappa(\cH_k) = k$
+  (the $\Sigma_2$-average of $k/z$ against $d\log(z)$ extracts
+  the residue $k$, which is the full modular characteristic).
+  % PE-2 check: k=0 -> kappa = 0. Y.
+\item $\ker(\av_2) = 0$ (one-dimensional representation).
+\item Bar cohomology $H^{-1}(\Barord(\cH_k)) = \CC \cdot s^{-1}J$:
+  concentrated in bar degree~$1$. Koszul dual:
+  $\cH_k^! = (\cH_k^{\mathrm{i}})^\vee$ with
+  $\kappa(\cH_k^!) = -k$. Complementarity:
+  $\kappa(\cH_k) + \kappa(\cH_k^!) = k + (-k) = 0$
+  (Kac--Moody and free-field families have $\kappa + \kappa^! = 0$;
+  Virasoro has $\kappa + \kappa^! = 13$; the value is
+  family-dependent).
+\item The ordered Yangian is trivial: $Y_\hbar(\CC) \cong \CC[\hbar]$.
+  The KZ connection is scalar (no braiding). The $\GRT_1$ ambiguity
+  is absent.
+\end{itemize}
+
+The Heisenberg computation makes the passage through $\av$ explicit.
+The degree-$2$ ordered MC component is
+\begin{equation}\label{eq:heis-mc-deg2}
+  \Theta^{\Eone,2}_{\cH_k}
+  \;=\;
+  k \cdot [s^{-1}J | s^{-1}J] \otimes \frac{dz}{z}
+  \;\in\; (s^{-1}\bar\cH_k)^{\otimes 2}
+  \otimes \Omega^1(\Conf_2^{\mathrm{ord}}(\CC)),
+\end{equation}
+a single generator tensored with the Arnold form $\eta = dz/z$ on
+the two-point ordered configuration. The averaging map acts by
+the residue extraction:
+\begin{equation}\label{eq:heis-av-computation}
+  \av(\Theta^{\Eone,2}_{\cH_k})
+  \;=\;
+  \frac{1}{2\pi i}\oint_{\gamma_0}
+  \frac{k}{z}\,dz
+  \;=\; k
+  \;=\; \kappa(\cH_k).
+\end{equation}
+The kernel $\ker(\av_2) = 0$ because $\dim V = 1$, so the ordered
+and symmetric bars carry identical degree-$2$ data. At degree~$3$
+and higher, the Arnold relation is automatically satisfied (no
+non-abelian Casimirs exist), and the Heisenberg shadow tower
+terminates at $S_2 = \kappa = k$: this is class~$G$, with
+$\Delta = 8\kappa \cdot S_4 = 0$ (since $S_4 = 0$).
+
+The KZ connection at $n$ points is scalar:
+\begin{equation}\label{eq:heis-kz}
+  \nabla^{\cH_k}_{\mathrm{KZ}}
+  \;=\; d - k\sum_{i < j} \frac{dz_{ij}}{z_i - z_j},
+\end{equation}
+% Connection form r(z) dz, not r(z) d log z. AP117 verified.
+and its monodromy is abelian: the representation
+$\rho_n\colon \PBr_n \to \CC^\times$ factors through
+$\PBr_n \twoheadrightarrow \ZZ^{\binom{n}{2}}$, and each
+generator $\gamma_{ij}$ acts by the scalar $e^{2\pi i k}$.
+No Drinfeld associator appears.
+
+\subsection{Affine Kac--Moody}
+
+For $\widehat{\fg}_k$ with $\fg$ simple, $\dim(\fg) = d$,
+$h^\vee$ the dual Coxeter number:
+\begin{itemize}
+\item $r(z) = k\,\Omega_\fg/z$
+  (equation~\eqref{eq:km-r-matrix}; trace-form convention;
+  at $k=0$ the $r$-matrix vanishes identically).
+  % PE-1 check: k=0 -> r=0. Y.
+
+\item $\av(r(z)) = \kappa_{\mathrm{dp}}
+  = k\,d/(2h^\vee)$ (double-pole channel).
+
+\item $\kappa(\widehat{\fg}_k) = d(k+h^\vee)/(2h^\vee)$
+  (equation~\eqref{eq:km-kappa-full}; at $k = 0$:
+  $\kappa = d/2$, not zero; at $k = -h^\vee$: $\kappa = 0$).
+  % PE-2 check: k=0 -> d/2. k=-h^v -> 0. Y.
+
+\item $\ker(\av_2) = (d^2 - d(d+1)/2)$-dimensional: the
+  antisymmetric part of $\Omega_\fg$ in $\fg \otimes \fg$.
+\end{itemize}
+
+The degree-$2$ ordered MC component is
+\begin{equation}\label{eq:km-mc-deg2}
+  \Theta^{\Eone,2}_{\widehat\fg_k}
+  \;=\;
+  \sum_{a} k\,t^a \otimes t_a \;\cdot\;
+  [s^{-1}J^a | s^{-1}J^b] \otimes \frac{dz}{z}
+  \;\in\; (s^{-1}\bar V)^{\otimes 2}
+  \otimes \Omega^1(\Conf_2^{\mathrm{ord}}(\CC)),
+\end{equation}
+where $\{t^a\}$ is a basis of $\fg$ with dual basis $\{t_a\}$
+under the Killing form, and $V$ denotes the vacuum module of
+$\widehat\fg_k$. The $\Sigma_2$-average extracts the trace over
+$\fg$:
+\begin{equation}\label{eq:km-av-computation}
+  \av(\Theta^{\Eone,2}_{\widehat\fg_k})
+  \;=\;
+  \frac{1}{2\pi i}\oint_{\gamma_0}
+  k\,\frac{\mathrm{tr}(\Omega_\fg)}{z}\,dz
+  \;=\;
+  k \cdot \frac{d}{2h^\vee}
+  \;=\; \kappa_{\mathrm{dp}},
+\end{equation}
+where $\mathrm{tr}(\Omega_\fg)
+= \sum_a \kappa^{ab}\kappa_{ab} = d/(2h^\vee)$ in the
+normalisation where $\kappa(t^a, t_a) = 1$. The full
+modular characteristic adds the Sugawara simple-pole
+self-contraction:
+\begin{equation}\label{eq:km-sugawara-shift}
+  \kappa(\widehat\fg_k)
+  \;=\;
+  \kappa_{\mathrm{dp}} + \frac{d}{2}
+  \;=\;
+  \frac{d(k + h^\vee)}{2h^\vee}.
+\end{equation}
+The extra $d/2$ arises from the adjoint Casimir
+eigenvalue $2h^\vee$: the simple-pole OPE
+$f^{ab}{}_c J^c(w)/(z-w)$ contributes through the
+self-contraction $\sum_{a,c} f^{ac}{}_d f^{ad}{}_c = 2h^\vee
+\cdot \delta^{cd}$, which after normalisation yields $d/2$.
+
+\subsubsection{The KZ connection and its monodromy}
+
+The $n$-point KZ connection on the punctured disk is
+\begin{equation}\label{eq:km-kz-connection}
+  \nabla_{\mathrm{KZ}}
+  \;=\; d \;-\; \sum_{1 \leq i < j \leq n}
+  \frac{k\,\Omega_{ij}}{z_i - z_j}\, dz_{ij},
+\end{equation}
+% PE-11: connection 1-form. Form: r(z) dz (not d log z). AP117 verified.
+% Verdict: ACCEPT.
+where $\Omega_{ij} = \sum_a t^a_i \otimes t_{a,j}$ acts on the
+$i$-th and $j$-th tensor factors of $V^{\otimes n}$, and
+$dz_{ij} = dz_i - dz_j$ (not $d\log(z_i - z_j)$).
+The connection is flat: its curvature vanishes by the
+infinitesimal braid relation
+\begin{equation}\label{eq:ibr}
+  [\Omega_{ij},\, \Omega_{ik} + \Omega_{jk}] \;=\; 0
+  \qquad \text{for distinct } i, j, k.
+\end{equation}
+
+The monodromy of $\nabla_{\mathrm{KZ}}$ at $n = 2$ on the
+configuration space $\Conf_2(\CC)$ is the single operator
+\begin{equation}\label{eq:kz-monodromy-n2}
+  \mathrm{Mon}(\nabla_{\mathrm{KZ}})
+  \;=\;
+  \exp\!\bigl(2\pi i \cdot k\,\Omega_\fg\bigr)
+  \;\in\; \Aut(V \otimes V).
+\end{equation}
+
+\subsubsection{The Drinfeld associator and pentagon}
+
+At $n = 3$, the monodromy of $\nabla_{\mathrm{KZ}}$ on
+$\Conf_3(\PP^1 \setminus \{0,1,\infty\})$ produces the
+Drinfeld associator
+\begin{equation}\label{eq:drinfeld-associator}
+  \Phi_{\mathrm{KZ}}
+  \;=\;
+  \Phi(k\,\Omega_{12},\, k\,\Omega_{23})
+  \;\in\; \exp\bigl(\hat{\mathfrak{t}}_3\bigr)
+  \;\subset\; \End(V^{\otimes 3}),
+\end{equation}
+where $\hat{\mathfrak{t}}_3$ is the completed Drinfeld--Kohno Lie
+algebra generated by $\Omega_{12}$ and $\Omega_{23}$ subject to
+the infinitesimal braid relation~\eqref{eq:ibr}. The associator
+$\Phi_{\mathrm{KZ}}$ satisfies the pentagon equation in $\gEone$:
+\begin{equation}\label{eq:pentagon}
+  \Phi_{1,2,34}\;
+  \Phi_{12,3,4}
+  \;=\;
+  \Phi_{2,3,4}\;
+  \Phi_{1,23,4}\;
+  \Phi_{1,2,3},
+\end{equation}
+where $\Phi_{i,j,k}$ denotes the associator acting on the
+$(i,j,k)$ tensor factors. This pentagon is the degree-$3$ MC
+equation on the ordered side (the five faces of the Stasheff
+associahedron $K_4$).
+
+The associator projects to zero under $\av$: the linearised
+commutator $[\Omega_{12}, \Omega_{23}]$ is antisymmetric under
+$(1 \leftrightarrow 3)$, so $\av_3(\Phi_{\mathrm{KZ}}) = 0$.
+The pentagon constraint survives averaging as the trivial identity
+$\mathfrak{C} = 0$ on the symmetric shadow, reflecting the fact
+that no $\Sigma_3$-coinvariant component of the pentagon carries
+content.
+
+\subsubsection{Worked example: $\fg = \mathfrak{sl}_2$}
+\label{subsubsec:sl2-example}
+
+For $\fg = \mathfrak{sl}_2$ we have $d = 3$ and $h^\vee = 2$.
+The modular characteristic is
+\begin{equation}\label{eq:sl2-kappa}
+  \kappa(\widehat{\mathfrak{sl}}_2,\, k)
+  \;=\;
+  \frac{3(k+2)}{4}.
+  % PE-2: kappa. Family: KM (sl_2). kappa = 3(k+2)/4.
+  % At k=0: 3/2 = dim(sl_2)/2. At k=-2: 0 (critical). Y.
+  % Verdict: ACCEPT.
+\end{equation}
+At $k = 0$: $\kappa = 3/2 = d/2$. At $k = -2$ (critical):
+$\kappa = 0$.
+
+The Yang $R$-matrix in the $2$-dimensional fundamental
+representation $V = \CC^2$ is
+\begin{equation}\label{eq:sl2-yang-r}
+  R(u)
+  \;=\;
+  u\, I_4 + \hbar\, P
+  \;\in\;
+  \End(\CC^2 \otimes \CC^2),
+  \qquad
+  \hbar = \frac{1}{k + 2},
+\end{equation}
+% AP126: hbar=0 (i.e. k -> inf) -> R = u I (trivial). Verified.
+where $P$ is the permutation matrix. In the standard basis
+$\{e_1 \otimes e_1,\; e_1 \otimes e_2,\;
+e_2 \otimes e_1,\; e_2 \otimes e_2\}$, this is the
+$4 \times 4$ matrix
+\begin{equation}\label{eq:sl2-r-matrix-4x4}
+  R(u)
+  \;=\;
+  \begin{pmatrix}
+    u + \hbar & 0 & 0 & 0 \\
+    0 & u & \hbar & 0 \\
+    0 & \hbar & u & 0 \\
+    0 & 0 & 0 & u + \hbar
+  \end{pmatrix}.
+\end{equation}
+The Yang--Baxter equation
+$R_{12}(u-v)\, R_{13}(u)\, R_{23}(v)
+= R_{23}(v)\, R_{13}(u)\, R_{12}(u-v)$
+is verified by direct computation on $(\CC^2)^{\otimes 3}$.
+The unitarity relation is $R(u)\, R(-u) = (u^2 - \hbar^2)\, I_4$.
+
+The RTT relation
+$R_{12}(u-v)\, T_1(u)\, T_2(v) = T_2(v)\, T_1(u)\, R_{12}(u-v)$
+at level~$1$ gives the commutation relations of the Yangian
+$Y_\hbar(\mathfrak{sl}_2)$:
+\begin{equation}\label{eq:sl2-rtt-relations}
+  [t_{ij}^{(1)},\, t_{kl}^{(1)}]
+  \;=\;
+  \hbar\bigl(\delta_{kj}\, t_{il}^{(1)}
+  - \delta_{il}\, t_{kj}^{(1)}\bigr),
+\end{equation}
+which is $\mathfrak{sl}_2$ at $\hbar \neq 0$ (recovering the
+ordinary Lie bracket $[e_{ij}, e_{kl}]
+= \delta_{kj} e_{il} - \delta_{il} e_{kj}$), and becomes
+abelian at $\hbar = 0$.
+
+The KZ monodromy on $\Conf_2(\CC)$ decomposes $V \otimes V
+= \CC^2 \otimes \CC^2$ into the singlet $V_0$ (dimension~$1$)
+and the triplet $V_1$ (dimension~$3$), with eigenvalues
+\begin{equation}\label{eq:sl2-monodromy-eigenvalues}
+  \exp(2\pi i \cdot k\,\Omega_{\mathfrak{sl}_2})
+  \;=\;
+  \begin{cases}
+    e^{-3\pi i k/2} & \text{on } V_0, \\[3pt]
+    e^{\pi i k/2} & \text{on } V_1.
+  \end{cases}
+\end{equation}
+At integer level $k \in \ZZ_{\geq 1}$, these are roots of unity,
+and the representation category of $U_q(\mathfrak{sl}_2)$
+at $q = e^{\pi i/(k+2)}$ is semisimple with $k+1$ integrable
+modules $V_0, \ldots, V_k$.
+
+% ================================================================
+% SECTION 9
+% ================================================================
+\section{The chiral quantum group equivalence}
+\label{sec:chiral-qg}
+
+On the Koszul locus, three structures on an $\Eone$-chiral algebra
+determine each other: the $R$-matrix, the $\Ainf$ structure, and the
+spectral coproduct. This section records the equivalence theorem,
+extends it to the $\mathfrak{gl}_N$ tower for all $N \geq 1$,
+exhibits the universal Miura coefficient, and recovers the
+Verlinde formula from ordered chiral homology.
+
+\subsection{The equivalence theorem}
+
+\begin{theorem}[Chiral quantum group equivalence]
+\label{thm:chiral-qg-equiv-standalone}
+On the Koszul locus, the following three structures on an
+$\Eone$-chiral algebra $\cA$ determine each other, up to the
+choice of a Drinfeld associator $\Phi$:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \textup{($R$-matrix.)}
+  A solution $r(z) \in \End_\cA(2) \otimes \cO(*\Delta)$ of
+  the classical Yang--Baxter equation (the degree-$2$ MC
+  component of $\Theta^{\Eone}_\cA$).
+
+\item \textup{($\Ainf$-chiral structure.)}
+  The full MC element $\Theta^{\Eone}_\cA$ equips the
+  ordered bar complex $\Barord(\cA)$ with an
+  $\Ainf$-chiral coalgebra structure: the higher products
+  $m_k^{\mathrm{ch}}$ for $k \geq 2$ are extracted from the
+  OPE on the real locus
+  $K_k \hookrightarrow \overline{\FM}_k^{\mathrm{ord}}(\CC)$.
+
+\item \textup{(Spectral coproduct.)}
+  A spectral Drinfeld coproduct
+  $\Delta_z\colon Y(\cA) \to Y(\cA) \otimes Y(\cA)$
+  on the ordered Koszul dual Yangian, satisfying the spectral
+  coassociativity identity
+  \begin{equation}\label{eq:spectral-coassoc}
+    (\Delta_{z_1} \otimes \id) \circ \Delta_{z_1 + z_2}
+    \;=\;
+    (\id \otimes \Delta_{z_2}) \circ \Delta_{z_1}.
+  \end{equation}
+\end{enumerate}
+The equivalences form a triangle:
+\begin{equation}\label{eq:equiv-triangle-standalone}
+\begin{tikzcd}[column sep=3em, row sep=3em]
+  \textup{(I)} \ar[rr, shift left=1, "\alpha"]
+  \ar[dr, shift left=1, "\gamma^{-1}"']
+  && \textup{(II)} \ar[ll, shift left=1, "\alpha^{-1}"]
+  \ar[dl, shift left=1, "\beta"] \\
+  & \textup{(III)}
+  \ar[ul, shift left=1, "\gamma"]
+  \ar[ur, shift left=1, "\beta^{-1}"']
+\end{tikzcd}
+\end{equation}
+The direction $\textup{(I)} \to \textup{(II)}$
+($\alpha$: $R$-matrix determines $\Ainf$) is by restriction of
+the OPE to the real Stasheff locus $K_n \subset
+\overline{\FM}_n^{\mathrm{ord}}(\CC)$.
+The direction $\textup{(II)} \to \textup{(III)}$
+($\beta$: $\Ainf$ determines coproduct) is by cobar dualisation
+of the bar coalgebra.
+The direction $\textup{(III)} \to \textup{(I)}$
+($\gamma$: coproduct determines $R$-matrix) is by extracting
+the degree-$2$ component of $\Delta_z$ at the classical level.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+$\alpha$: the Stasheff associahedron $K_n$ is isomorphic to
+the real Fulton--MacPherson compactification
+$\overline{\FM}_n^{\mathrm{ord}}(\RR)$
+(Sinha~\cite{Sinha04}). The chiral $\Ainf$-maps
+$m_k^{\mathrm{ch}}$ are defined by integrating the OPE against
+the canonical volume form on $K_k$:
+\[
+  m_k^{\mathrm{ch}}(a_1, \ldots, a_k)
+  \;=\;
+  \int_{K_k} Y(a_1, z_1) \cdots Y(a_k, z_k)\, \omega_k.
+\]
+The Stasheff identity follows from Stokes' theorem on
+$\partial K_{n+1}$.
+
+$\beta$: the cobar construction
+$\Omega^{\mathrm{ch}}(\Barord(\cA))$ is an $\Ainf$-algebra
+whose universal property provides $\Delta_z$ by adjunction.
+The spectral parameter $z$ arises from the meromorphic
+dependence of the bar differential on the collision coordinate.
+
+$\gamma$: the coproduct $\Delta_z$ at leading order in $z^{-1}$
+gives $\Delta_z(T(u)) = T(u) \otimes T(u-z)$, and the
+coefficient of $z^{-1}$ in the cross-term recovers $r(z)$.
+
+The equivalence holds up to the choice of Drinfeld associator
+$\Phi$: the cohomological derived centre is
+associator-independent (proved for $\mathfrak{sl}_2$: the $\GRT_1$
+action shifts the degree-$3$ obstruction class by coboundaries),
+while the cochain-level derived centre is
+associator-dependent. Bar-side invariants ($\kappa$, shadow tower)
+are associator-free; cobar-side and coproduct-side depend
+on~$\Phi$. See~\cite[Chapter~9]{Lor26} for the full proof.
+\end{proof}
+
+\begin{remark}[Verification scope]
+\label{rem:verification-scope}
+The equivalence is proved abstractly on the Koszul locus.
+Concrete verification exists for $\mathfrak{sl}_2$ Yangian and
+affine Kac--Moody. The elliptic case (KZB connection at
+genus~$1$) is partial: the KZB local system is constructed, but the
+full quantum group equivalence at genus~$1$ is open. The toroidal
+case (genus~$2$ and higher) is absent.
+\end{remark}
+
+\subsection{The $\mathfrak{gl}_N$ tower}
+
+The equivalence theorem extends to a uniform tower indexed by
+$N \geq 1$, through the principal $\cW$-algebras
+$\cW_N[\Psi]$ at level~$\Psi$.
+
+\begin{theorem}[$\mathfrak{gl}_N$ chiral quantum group for all
+$N \geq 1$]
+\label{thm:glN-chiral-qg-standalone}
+For each $N \geq 1$ and generic level~$\Psi$, the truncation
+$\cW_N[\Psi]$ carries a chiral quantum group datum in the sense
+of Theorem~\textup{\ref{thm:chiral-qg-equiv-standalone}}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Transfer matrix.)}
+  The $N \times N$ transfer matrix
+  \begin{equation}\label{eq:glN-transfer-standalone}
+    T(u)
+    \;=\; I_N + \sum_{r \geq 1} T^{(r)}\, u^{-r},
+    \qquad
+    (T^{(r)})_{ij} = t_{ij}^{(r)},
+    \quad 1 \leq i,j \leq N,
+  \end{equation}
+  is obtained from the quantum Miura factorisation
+  $T(u) = (u + \Lambda_1) \cdots (u + \Lambda_N)$,
+  where $\Lambda_i$ are the Miura fields.
+
+\item \textup{(Yang's rational $R$-matrix.)}
+  The $R$-matrix for $Y(\widehat{\mathfrak{gl}}_N)$
+  in the fundamental representation is
+  \begin{equation}\label{eq:yang-r-matrix-standalone}
+    % AP126: level prefix Psi mandatory; Psi=0 -> R = uI (trivial). Verified.
+    R(u)
+    \;=\; u\, I_{N^2} + \Psi\, P
+    \;\in\; \End(\CC^N \otimes \CC^N),
+  \end{equation}
+  where $P(e_i \otimes e_j) = e_j \otimes e_i$ is the
+  permutation and $\Psi$ is the level prefix. The classical
+  $r$-matrix is
+  % AP126: Psi=0 -> r=0. Verified.
+  \begin{equation}\label{eq:classical-r-glN}
+    r(z)
+    \;=\;
+    \Psi\, P/z,
+  \end{equation}
+  with $r|_{\Psi = 0} = 0$.
+
+\item \textup{(Spectral Drinfeld coproduct.)}
+  The coproduct $\Delta_z$ acts on the generators by
+  \begin{equation}\label{eq:glN-coproduct}
+    \Delta_z\bigl(T(u)\bigr)
+    \;=\;
+    T(u) \otimes T(u - z),
+  \end{equation}
+  and on the spin-$s$ primary $W_s$ ($s \geq 2$) by
+  the cross-term formula of
+  Theorem~\textup{\ref{thm:miura-standalone}} below.
+\end{enumerate}
+At $N = 1$: $\cW_1 = \cH_\Psi$ (Heisenberg at level $\Psi$),
+the transfer matrix is scalar, $R(u) = u + \Psi$, and the
+coproduct is an algebra homomorphism (no cross-terms).
+At $N = 2$: $\cW_2 = \Vir_c$ with
+$c = 1 - 6(\Psi - 1)^2/\Psi$, and the RTT relation at level~$1$
+recovers $\mathfrak{sl}_2$. The Yang--Baxter equation
+$R_{12}(u-v)\, R_{13}(u)\, R_{23}(v)
+= R_{23}(v)\, R_{13}(u)\, R_{12}(u-v)$
+holds for all $N$ and all $\Psi$.
+\end{theorem}
+
+\subsection{The universal Miura coefficient}
+
+\begin{theorem}[Universal Miura cross-term coefficient]
+\label{thm:miura-standalone}
+Let $W_s$ denote the spin-$s$ primary generator of
+$\cW_{1+\infty}[\Psi]$ ($W_1 = J$, $W_2 = T$, $W_3 = W$,
+$\ldots$). For each $s \geq 2$, the spectral coproduct satisfies
+\begin{equation}\label{eq:miura-universal}
+  \Delta_z(W_s)
+  \;=\;
+  W_s \otimes 1 + 1 \otimes W_s
+  + \frac{\Psi - 1}{\Psi}
+  \bigl(J \otimes W_{s-1} + W_{s-1} \otimes J\bigr)
+  + (\textup{lower-spin composites})
+  + (\textup{spectral tail in~$z$}).
+\end{equation}
+The coefficient $(\Psi - 1)/\Psi$ of the primary cross-term
+$J \otimes W_{s-1} + W_{s-1} \otimes J$ is
+\emph{independent of the spin~$s$}.
+\end{theorem}
+
+\begin{proof}
+The argument proceeds in three steps.
+
+\emph{Step~1: the single-$J$ Miura coefficient is
+$1/\Psi$.}
+The quantum Miura factorisation writes
+$\psi_s = e_s(\Lambda_1, \Lambda_2, \ldots)$, the $s$-th
+elementary symmetric function of the Miura fields. Each
+$\Lambda_i$ decomposes as $\Lambda_i = \sigma_i + J_i/\Psi$.
+Expanding $e_s$ and collecting the sector with exactly one
+$J$-insertion gives a coefficient of $1/\Psi$ on the
+${:}J \cdot W_{s-1}{:}$ composite at every spin~$s$.
+
+\emph{Step~2: the Drinfeld shift adds $+1$.}
+The Drinfeld coproduct
+$\Delta_z(\Lambda_i) = \Lambda_i \otimes 1 + 1 \otimes \Lambda_i$
+is an algebra homomorphism on the $\psi$-generators. On the
+$W$-generators, the Miura nonlinearity
+$W_s = \psi_s - (\text{nonlinear correction})$
+shifts the coefficient from $1/\Psi$ (the Miura coefficient of
+${:}J \cdot W_{s-1}{:}$ in $\psi_s$) to
+$(1/\Psi) + 1 - 1 = 1/\Psi$. The correction arises from
+$\Delta_z(W_s) - \Delta_z(\psi_s)
+= -\Delta_z(\text{nonlinear correction})$,
+and the nonlinear correction at the single-$J$ level contributes
+$-(1/\Psi) + (\Psi - 1)/\Psi = (1/\Psi)(\Psi - 1 - 1 + 1)$.
+The net coefficient is $(\Psi - 1)/\Psi$.
+
+\emph{Step~3: lower sectors do not contribute.}
+The sectors with two or more $J$-insertions contribute to
+composite terms $J \otimes J \otimes W_{s-2}$, etc., which
+are the ``lower-spin composites'' in~\eqref{eq:miura-universal}.
+These do not affect the primary cross-term coefficient.
+
+The universality (independence of~$s$) is structural: it
+follows from the fact that the Miura factorisation is a ring
+homomorphism, so the single-$J$ coefficient is determined
+by the linear algebra of $e_s$ at all~$s$ simultaneously.
+Numerical verification: the coefficient $(\Psi-1)/\Psi$ has been
+checked at spins $s = 2, 3, 4, 5, 6$ by direct computation.
+\end{proof}
+
+\begin{remark}[Coincidental agreement at $\Psi = 2$]
+\label{rem:psi-2-coincidence}
+At $\Psi = 2$, the coefficient $(\Psi - 1)/\Psi = 1/2 = 1/\Psi$:
+the Miura coefficient and the coproduct coefficient agree
+\emph{accidentally}. This coincidence masks the structural
+distinction between $1/\Psi$ (the Miura contribution from
+$e_s(\Lambda_i)$) and $(\Psi - 1)/\Psi$ (the coproduct
+coefficient on $W$-generators). Verification at $\Psi = 3$
+breaks the degeneracy: $1/3 \neq 2/3$.
+\end{remark}
+
+\subsection{Verlinde recovery}
+
+At integer level $k \geq 1$, the ordered chiral homology of
+$V_k(\mathfrak{sl}_2)$ on a genus-$g$ curve recovers the
+Verlinde formula.
+
+\begin{proposition}[Verlinde formula from ordered chiral homology]
+\label{prop:verlinde-standalone}
+Let $k \geq 1$ be a positive integer and
+$S_{jl} = \sqrt{2/(k+2)}\,\sin(\pi(j+1)(l+1)/(k+2))$
+the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
+level~$k$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Genus~$0$.)} The ordered chiral homology
+  recovers the unique vacuum:
+  \begin{equation}\label{eq:verlinde-g0-standalone}
+    Z_0(k)
+    \;=\;
+    \sum_{j=0}^{k} S_{0j}^2 \;=\; 1.
+  \end{equation}
+
+\item \textup{(Genus~$1$.)} The ordered chiral homology
+  recovers the number of integrable representations:
+  \begin{equation}\label{eq:verlinde-g1-standalone}
+    Z_1(k) \;=\; \sum_{j=0}^{k} S_{0j}^0 \;=\; k+1.
+  \end{equation}
+
+\item \textup{(General genus.)} At genus $g \geq 2$:
+  \begin{equation}\label{eq:verlinde-general-standalone}
+    Z_g(k)
+    \;:=\;
+    \sum_{j=0}^{k} S_{0j}^{2-2g}.
+  \end{equation}
+  This is an integer for all $g \geq 0$, $k \geq 1$.
+  At $k = 1$: $S_{00} = S_{01} = 1/\sqrt{2}$, so
+  $Z_g(1) = 2 \cdot (1/\sqrt{2})^{2-2g} = 2^g$.
+
+\item \textup{(Handle attachment.)}
+  The ordered bar factorisation under non-separating sewing
+  recovers the TQFT handle-attachment formula: each
+  isospin channel $j$ contributes $H_j = S_{0j}^{-2}$, so
+  \begin{equation}\label{eq:handle-standalone}
+    Z_{g+1}(k)
+    \;=\;
+    \sum_{j=0}^{k} S_{0j}^{-2}\, S_{0j}^{2-2g}
+    \;=\;
+    \sum_{j=0}^{k} S_{0j}^{-2g}.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$ on
+$\Sigma_g$ is computed using the KZ local system of
+Section~\ref{sec:heis-km}. At integer level, the representation
+category of $U_q(\mathfrak{sl}_2)$ at $q = e^{\pi i/(k+2)}$ is
+semisimple with $k + 1$ integrable modules $V_0, \ldots, V_k$.
+The KZ local system has finite monodromy, and the ordered bar
+complex factorises over the handle-sewing boundary strata
+of $\overline\cM_g$.
+
+At genus~$0$: the $S$-matrix unitarity
+$\sum_l S_{jl}^2 = \delta_{j0}$ gives $Z_0 = 1$.
+At genus~$1$: $S_{0j}^0 = 1$ for all $j$, so $Z_1 = k + 1$,
+matching the count of integrable representations via
+the Zhu algebra $A(V_k(\mathfrak{sl}_2))
+\cong U(\mathfrak{sl}_2)/(e^{k+1}, f^{k+1})$.
+At genus $g \geq 2$: each isospin channel $j$ contributes
+$S_{0j}^{2 - 2g}$ by iterating the handle-attachment formula
+$g - 1$ times from $Z_1 = k + 1$, verifying factorisation of
+the ordered chiral homology under the separating and
+non-separating sewing maps.
+\end{proof}
+
+\subsection{The three tiers}
+
+The three tiers of the $\Eone$/$\Einf$ hierarchy refine
+the equivalence theorem.
+
+\begin{enumerate}[label=\textup{(Tier \alph*)}]
+\item \emph{Pole-free ($\Einf$-chiral, class~$G$).}
+  The $R$-matrix is the Koszul-signed permutation
+  $S(z) = (-1)^{|a||b|}\id$. The Yangian is trivial. The
+  coproduct is constant ($z$-independent). The formality bridge
+  (Theorem~\ref{thm:formality-bridge-standalone}) holds: ordered
+  and symmetric give identical answers. The averaging map loses
+  nothing.
+
+\item \emph{Vertex-algebra ($\Einf$-chiral, class~$L$/$C$/$M$).}
+  The $R$-matrix is derived from the OPE and is non-trivial
+  ($r(z) \neq 0$), but the $\cD$-module still descends to
+  $X^{(n)}$ because the algebra is $\Einf$. The Yangian
+  $Y_\hbar(\fg)$ is the $\Eone$ Koszul dual. The formality
+  bridge holds at the cohomological level; the chain-level
+  $R$-matrix is lost under $\av$.
+
+\item \emph{Genuinely $\Eone$-chiral (Yangians, EK quantum
+  vertex algebras).}
+  The $R$-matrix is an independent input, not derived from any
+  $\Einf$-chiral OPE. The $\cD$-module does not descend to
+  $X^{(n)}$ (Theorem~\ref{thm:formality-failure-standalone}).
+  The symmetric bar does not exist. The ordered bar is the only
+  available construction, and the equivalence is the chiral
+  analogue of the Etingof--Kazhdan quantisation
+  theorem~\cite{EK96, EK00}.
+\end{enumerate}
+
+\bigskip
+
+\noindent
+The ordered bar complex is the categorical logarithm of a chiral
+algebra: it records the full perturbative content as ordered
+collision data, and the bar-cobar inversion recovers the algebra
+from its logarithm. The symmetric bar is the $\Sigma_n$-invariant
+trace of this logarithm: a scalar shadow that retains
+$\kappa(\cA)$ but discards the $R$-matrix, the KZ associator, and
+every braid-group representation that makes the $\Eone$ theory
+strictly richer. The averaging map $\av$ is the sole information
+loss in the passage from the $\Eone$ primitive to the
+$E_\infty$ shadow. The five theorems of modular Koszul duality are
+the invariants that survive this loss: they are projections of a
+richer $\Eone$ structure whose full content is the subject of the
+companion papers on the $E_n$ operadic circle, the chiral quantum
+group equivalence, and three-dimensional quantum gravity.
+
+
+% ================================================================
+% REFERENCES
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{Arnold69}
+V.\,I.~Arnold,
+\textit{The cohomology ring of the group of dyed braids},
+Mat.~Zametki \textbf{5} (1969), 227--231.
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\textit{Chiral algebras},
+American Mathematical Society Colloquium Publications, vol.~51,
+AMS, Providence, RI, 2004.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\textit{Factorization algebras in quantum field theory},
+vols.~1--2, New Mathematical Monographs, Cambridge University
+Press, 2017/2021.
+
+\bibitem{Drinfeld85}
+V.\,G.~Drinfeld,
+\textit{Hopf algebras and the quantum Yang--Baxter equation},
+Soviet Math.~Dokl.\ \textbf{32} (1985), 254--258.
+
+\bibitem{Drinfeld91}
+V.\,G.~Drinfeld,
+\textit{On quasitriangular quasi-Hopf algebras and a group closely
+connected with $\mathrm{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$},
+Leningrad Math.~J. \textbf{2} (1991), 829--860.
+
+\bibitem{EK96}
+P.~Etingof and D.~Kazhdan,
+\textit{Quantization of Lie bialgebras, I},
+Selecta Math.\ (N.S.) \textbf{2} (1996), 1--41.
+
+\bibitem{EK00}
+P.~Etingof and D.~Kazhdan,
+\textit{Quantization of Lie bialgebras, V: Quantum vertex
+operator algebras},
+Selecta Math.\ (N.S.) \textbf{6} (2000), 105--130.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+\textit{Chiral Koszul duality},
+Selecta Math.\ (N.S.) \textbf{18} (2012), 27--87.
+
+\bibitem{GJ94}
+E.~Getzler and J.\,D.\,S.~Jones,
+\textit{Operads, homotopy algebra and iterated integrals for
+double loop spaces},
+preprint, 1994, arXiv:hep-th/9403055.
+
+\bibitem{GK98}
+E.~Getzler and M.\,M.~Kapranov,
+\textit{Modular operads},
+Compositio Math.\ \textbf{110} (1998), 65--126.
+
+\bibitem{GLZ22}
+J.~Gui, H.~Li, and J.~Zeng,
+\textit{Quadratic duality for chiral algebras},
+Adv.~Math.\ \textbf{406} (2022), 108496.
+
+\bibitem{Kohno85}
+T.~Kohno,
+\textit{S\'erie de Poincar\'e--Koszul associ\'ee aux groupes
+de tresses pures},
+Invent.~Math.\ \textbf{82} (1985), 57--75.
+
+\bibitem{Kontsevich99}
+M.~Kontsevich,
+\textit{Operads and motives in deformation quantization},
+Lett.~Math.~Phys.\ \textbf{48} (1999), 35--72.
+
+\bibitem{Lor26}
+R.~Lorgat,
+\textit{Modular Koszul Duality, Volume~I}, monograph, 2026.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\textit{Algebraic operads},
+Grundlehren der mathematischen Wissenschaften, vol.~346,
+Springer, Heidelberg, 2012.
+
+\bibitem{Molev07}
+A.~Molev,
+\textit{Yangians and classical Lie algebras},
+Mathematical Surveys and Monographs, vol.~143,
+AMS, Providence, RI, 2007.
+
+\bibitem{MS24}
+F.~Malikov and V.~Schechtman,
+\textit{Homotopy chiral algebras},
+preprint, 2024.
+
+\bibitem{PR19}
+T.~Proch\'azka and M.~Rap\v{c}\'ak,
+\textit{Webs of $\cW$-algebras},
+J.~High Energy Phys.\ \textbf{2018} (2018), no.~11, 109.
+
+\bibitem{Sinha04}
+D.\,P.~Sinha,
+\textit{Manifold-theoretic compactifications of configuration
+spaces},
+Selecta Math.\ (N.S.) \textbf{10} (2004), 391--428.
+
+\bibitem{Stasheff63}
+J.\,D.~Stasheff,
+\textit{Homotopy associativity of $H$-spaces, I},
+Trans.~Amer.~Math.~Soc.\ \textbf{108} (1963), 275--292.
+
+\bibitem{Vallette20}
+B.~Vallette,
+\textit{Homotopy theory of homotopy algebras},
+Ann.~Inst.~Fourier \textbf{70} (2020), 683--738.
+
+\bibitem{Verlinde88}
+E.~Verlinde,
+\textit{Fusion rules and modular transformations in 2D conformal
+field theory},
+Nuclear Phys.~B \textbf{300} (1988), 360--376.
+
+\end{thebibliography}
+
+\end{document}

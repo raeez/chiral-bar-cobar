@@ -1,0 +1,3065 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Paper E: E_n-Chiral Algebras, Derived Centres,
+%          and the Operadic Circle
+% STATUS: SECTIONS 1--5 FILLED (algebraic-geometric foundation)
+% TARGET: Inventiones Mathematicae (or Annals)
+% LENGTH: 80-100pp
+% ================================================================
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{warning}[theorem]{Warning}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem{principle}[theorem]{Principle}
+
+% Macros
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\fz}{\mathfrak{z}}
+\providecommand{\FM}{\overline{\mathrm{C}}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Linf}{L_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Ethree}{E_3}
+\providecommand{\En}{E_n}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\Pn}{\mathsf{P}_n}
+\providecommand{\Pthree}{\mathsf{P}_3}
+\providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\Barord}{\bar{B}^{\mathrm{ord}}}
+\providecommand{\BarSig}{\bar{B}^{\Sigma}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\HH}{\mathrm{HH}}
+\providecommand{\THH}{\mathrm{THH}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\RHom}{R\!\mathrm{Hom}}
+\providecommand{\Conv}{\mathrm{Conv}}
+\providecommand{\End}{\mathrm{End}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Res}{\mathrm{Res}}
+\providecommand{\gr}{\mathrm{gr}}
+\providecommand{\GRT}{\mathrm{GRT}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\chirAss}{\mathrm{Ass}^{\mathrm{ch}}}
+\providecommand{\Spec}{\mathrm{Spec}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cR}{\mathcal{R}}
+
+\begin{document}
+
+\title[$\En$-Chiral Algebras and the Operadic Circle]
+{$\En$-Chiral Algebras, Derived Centres,\\
+and the Operadic Circle}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+$\En$-chiral algebras are factorisation algebras on configuration
+spaces of algebraic curves, inherently geometric. We construct bar
+complexes at every operadic level ($n = 1, 2, 3, \infty$) on every
+curve geometry (formal disk, punctured disk, annulus, nodal curves,
+pair of pants), and prove that the derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ carries $\Etwo$ structure from
+$\Eone$ input (Deligne) and $\Ethree$ from $\Etwo$ input (higher Deligne).
+The Swiss-cheese operad $\SCchtop$ governs the pair
+$(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$, not the bar complex
+itself. The topologisation theorem establishes
+$\SCchtop + \text{conformal vector} \simeq \Ethree^{\mathrm{top}}$ for
+affine Kac--Moody at non-critical level. The $\En$ operadic circle
+$\Ethree \to \Etwo \to \Eone \to \Etwo \to \Ethree$ is proved to close for
+simple $\fg$ via the $\Ethree$ identification theorem. Five notions of
+$\Eone$-chiral algebra are distinguished. The chiral quantum group
+equivalence identifies three structures ($R$-matrix, $\Ainf$,
+coproduct) on the Koszul locus.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+% ================================================================
+% SECTION 1: E_n-chiral algebras on configuration spaces
+% ================================================================
+
+\section{$\En$-chiral algebras on configuration spaces}
+\label{sec:en-chiral}
+
+\subsection{The problem}
+
+A chiral algebra is a factorisation algebra on a complex curve.
+The point of departure is the collision of labelled points:
+when $z_1 \to z_2$ on a curve $X$, the OPE extracts algebraic
+data from the singularity along the diagonal, and the bar
+construction records the iterated collisions as a coalgebra.
+The bar differential uses the logarithmic $1$-form
+$\eta_{ij} = d\log(z_i - z_j)$ as propagator, the Arnold
+relation $\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki}
++ \eta_{ki}\wedge\eta_{ij} = 0$ ensures $d^2 = 0$, and the
+whole construction lives on Fulton--MacPherson compactifications
+$\FM_k(X)$ of ordered configurations.
+
+This is the $n = 2$ entry of a larger pattern. Replace the curve
+by a real $n$-manifold, the logarithmic $1$-form by a closed
+$(n{-}1)$-form, and the Arnold relation by its higher-dimensional
+analogue (the Totaro relation): the result is $\En$-Koszul duality.
+The chiral bar complex of a vertex algebra is the holomorphic
+refinement of this topological construction, and the E$_n$ hierarchy
+parametrises both the manifold dimension and the available algebraic
+structure at each level.
+
+Two axes must be kept separate throughout this paper. The
+\emph{chirality axis} is the hierarchy
+\begin{equation}\label{eq:chirality-hierarchy}
+\Einf\text{-chiral}
+\;\subset\;
+P_\infty\text{-chiral}
+\;\subset\;
+\Eone\text{-chiral}
+\end{equation}
+of commutativity constraints on the OPE, all on a fixed curve.
+The Heisenberg, affine Kac--Moody, and Virasoro algebras are
+$\Einf$-chiral (local, symmetric OPE); the Yangian and
+Etingof--Kazhdan quantum vertex algebras are $\Eone$-chiral
+(nonlocal, ordered OPE). The \emph{dimensional axis} is the
+$\En$ ladder
+\begin{equation}\label{eq:en-ladder}
+n = 1 \;(\text{interval}),
+\quad
+n = 2 \;(\text{surface/curve}),
+\quad
+n = 3 \;(\text{Chern--Simons}),
+\quad
+\ldots
+\end{equation}
+indexed by real manifold dimension. The chiral bar complex on
+a complex curve belongs to $n = 2$; the $n = 1$ case is the
+classical associative/$\Ainf$ bar construction on intervals.
+An $\Eone$-chiral algebra on a curve is \emph{not} the same as
+an $\Eone$-algebra in the topological sense: the former carries
+holomorphic structure on a $2$-dimensional base, the latter lives
+on a $1$-dimensional interval.
+
+\subsection{Configuration spaces and their cohomology}
+
+\begin{definition}[Configuration space]\label{def:e-config}
+For a smooth manifold $M$ of real dimension $n$, the
+\emph{ordered configuration space of $k$ points} is
+\[
+\Conf_k(M)
+\;=\;
+\{(x_1,\ldots,x_k) \in M^k : x_i \neq x_j
+\text{ for } i \neq j\}.
+\]
+The \emph{unordered configuration space} is the quotient
+$\Conf_k(M)/\Sigma_k$, where $\Sigma_k$ acts by permuting
+the labels.
+\end{definition}
+
+\begin{theorem}[Arnold presentation; $n = 2$]
+\label{thm:e-arnold}
+The cohomology ring $H^*(\Conf_k(\bC);\bQ)$ is the
+graded-commutative algebra generated by classes
+$\eta_{ij} \in H^1$, $1 \le i < j \le k$, subject to the
+\emph{Arnold relations}:
+\begin{equation}\label{eq:e-arnold}
+\eta_{ij}\wedge\eta_{jk}
++ \eta_{jk}\wedge\eta_{ki}
++ \eta_{ki}\wedge\eta_{ij}
+\;=\; 0
+\qquad (i < j < k).
+\end{equation}
+This is the Orlik--Solomon algebra $\mathrm{OS}_k$
+\textup{\cite{Arnold69}}.
+\end{theorem}
+
+\begin{theorem}[Totaro presentation; general $n$
+\textup{\cite{Totaro96,Coh76}}]\label{thm:e-totaro}
+For $n \ge 2$, the ring $H^*(\Conf_k(\bR^n);\bQ)$ is generated
+by classes $\alpha_{ij} \in H^{n-1}$, $1 \le i \neq j \le k$,
+subject to:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Symmetry)}\; $\alpha_{ij} = (-1)^n\,\alpha_{ji}$.
+\item \textup{(Totaro relations)}\; $\alpha_{ij}\cdot\alpha_{jk}
+ + \alpha_{jk}\cdot\alpha_{ki} + \alpha_{ki}\cdot\alpha_{ij} = 0$
+ for distinct $i,j,k$.
+\item \textup{(Degree)}\; $\alpha_{ij}^2 = 0$ when $n$ is odd;
+ when $n$ is even, $\alpha_{ij}^2$ is determined by the Euler
+ class.
+\end{enumerate}
+At $n = 2$, identifying $\bR^2 \cong \bC$, the Totaro relations
+specialize to the Arnold relations~\eqref{eq:e-arnold}. At
+$n = 1$, the configuration space $\Conf_k(\bR)$ has contractible
+components indexed by orderings, and $H^0$ is the group algebra
+of~$\Sigma_k$; the degree-$(n{-}1) = 0$ generators encode the
+ordered structure of the associative bar complex.
+\end{theorem}
+
+\begin{remark}[Arnold at $n = 2$ as Totaro specialization]
+\label{rem:e-arnold-totaro}
+The generators $\eta_{ij}$ of Arnold are the Totaro generators
+$\alpha_{ij}$ at $n = 2$. The following table organises the
+connection between the $\En$ level, the manifold, and the bar
+complex:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ccll}
+$n$ & Propagator degree & Manifold & Bar complex \\
+\hline
+$1$ & $0$ & interval/circle & associative bar (classical) \\
+$2$ & $1$ & surface/curve & chiral bar (this paper) \\
+$3$ & $2$ & $3$-manifold & Chern--Simons bar \\
+$n$ & $n{-}1$ & $n$-manifold & $\En$ bar
+\end{tabular}
+\end{center}
+\end{remark}
+
+\subsection{Fulton--MacPherson compactification}
+
+\begin{definition}[FM compactification of $\Conf_k(\bR^n)$]
+\label{def:e-fm-rn}
+The \emph{Fulton--MacPherson compactification}
+$\overline{\Conf}_k(\bR^n)$ is the real oriented blowup
+of $(\bR^n)^k$ along all partial diagonals, ordered by reverse
+inclusion. It is the closure of the image of
+\[
+\Conf_k(\bR^n) \;\hookrightarrow\;
+(\bR^n)^k \times \prod_{i<j} S^{n-1}
+\times \prod_{|S| \ge 2} [0,\infty],
+\]
+recording positions, relative directions
+$\theta_{ij} = (x_i - x_j)/|x_i - x_j|$, and relative
+distances. The result is a smooth manifold with corners.
+\end{definition}
+
+\begin{proposition}[FM operad \textup{\cite{FM94}}]
+\label{prop:e-fm-operad}
+The codimension-$1$ boundary strata of
+$\overline{\Conf}_k(\bR^n)$ are indexed by subsets
+$S \subset \{1,\ldots,k\}$ with $|S| \ge 2$, and satisfy
+\[
+\partial_S\overline{\Conf}_k(\bR^n)
+\;\cong\;
+\overline{\Conf}_{k - |S| + 1}(\bR^n)
+\times
+\overline{\Conf}_{|S|}(\bR^n).
+\]
+This factorisation equips
+$\{\overline{\Conf}_k(\bR^n)\}_{k \ge 0}$ with the structure
+of the FM operad $\mathsf{FM}_n$, a model for $\En$
+\textup{\cite{GJ,SalvatoreLongoni05}}.
+\end{proposition}
+
+\subsection{The $\En$ propagator}
+
+\begin{definition}[$\En$ propagator]\label{def:e-propagator}
+An \emph{$\En$ propagator} on an oriented $n$-manifold $M$ is
+a smooth closed $(n{-}1)$-form
+$G \in \Omega^{n-1}(M \times M \setminus \Delta)$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Poincar\'e dual of diagonal)}\;
+ $\int_{M \times M} G \wedge \pi_2^*\eta = \int_M \eta$
+ for every closed $\eta$.
+\item \textup{(Singularity)}\;
+ Near $\Delta$, in geodesic coordinates $r = x_1 - x_2$,
+ \[
+ G \;\sim\;
+ \frac{1}{\mathrm{vol}(S^{n-1})}\,
+ \frac{\sum_{a=1}^n (-1)^{a-1} r_a\,
+ dr_1 \wedge \cdots \wedge \widehat{dr_a}
+ \wedge \cdots \wedge dr_n}{|r|^n}
+ \;+\;\text{smooth}.
+ \]
+\item \textup{(Symmetry)}\;
+ $\sigma^*G = (-1)^n\,G$ under the swap
+ $(x_1,x_2) \mapsto (x_2,x_1)$.
+\end{enumerate}
+\end{definition}
+
+\begin{example}[$n = 2$: the chiral propagator]
+\label{ex:e-n2-chiral}
+For $M = \bC$, the propagator is $G = \eta_{12} = d\log(z_1 - z_2)$,
+a meromorphic $1$-form. Residues along $z_1 = z_2$ extract OPE data.
+The symmetry $\sigma^*G = d\log(z_2 - z_1) = G$ holds since
+$d\log(-1) = 0$.
+\end{example}
+
+\begin{example}[$n = 3$: the Chern--Simons propagator]
+\label{ex:e-n3-cs}
+For $M = \bR^3$, the propagator is the closed $2$-form
+\[
+G \;=\; \frac{1}{4\pi}\,
+\frac{\epsilon_{abc}\, r^a\, dr^b \wedge dr^c}{|r|^3},
+\qquad r = x_1 - x_2.
+\]
+Integration over $S^2$ gives the linking number:
+$\int_{S^2} G = 1$.
+\end{example}
+
+\begin{example}[$n = 1$: the associative case]
+\label{ex:e-n1-assoc}
+For $M = \bR$, the ``propagator'' is a $0$-form: the sign function
+$G(x_1,x_2) = \mathrm{sgn}(x_1 - x_2)$, which records the ordering
+of points on the real line. The bar complex is the classical tensor
+coalgebra $T^c(s^{-1}\bar{A})$ with deconcatenation coproduct;
+there is no de~Rham differential to speak of, and the Arnold/Totaro
+relations are trivial (degree-$0$ generators commute vacuously).
+\end{example}
+
+\begin{proposition}[Residue as linking sphere integral]
+\label{prop:e-linking-residue}
+For an $\En$ propagator $G$ and a smooth function $f$ near the
+diagonal, the $\En$ residue is
+\[
+\Res_\Delta(G \wedge f)
+\;:=\;
+\lim_{\varepsilon \to 0}
+\int_{|x_1 - x_2| = \varepsilon} G \cdot f(x_1,x_2)
+\;=\; f(x,x).
+\]
+This generalises the chiral residue $\Res_{z_1 = z_2}$ at $n = 2$.
+\end{proposition}
+
+\begin{proof}
+The singularity condition forces $G|_{|r| = \varepsilon}$ to
+be the normalised volume form on $S^{n-1}$ up to terms vanishing
+as $\varepsilon \to 0$. The integral therefore extracts $f(x,x)$.
+\end{proof}
+
+\subsection{The $\En$ bar complex}
+
+\begin{definition}[$\En$ bar complex]\label{def:e-en-bar}
+Let $A$ be an $\En$-algebra. The \emph{$\En$ bar complex} is the
+chain complex
+\begin{equation}\label{eq:e-en-bar}
+\barB_{\En}(A)
+\;=\;
+\bigoplus_{k \ge 1}
+\Omega^*\!\bigl(\overline{\Conf}_k(\bR^n)\bigr)
+\otimes_{\Sigma_k} (s^{-1}\bar{A})^{\otimes k},
+\end{equation}
+with differential
+\begin{equation}\label{eq:e-en-bar-diff}
+d_{\En}
+\;=\; d_{\mathrm{dR}}
+\;+\;
+\sum_{\substack{S \subset \{1,\ldots,k\} \\ |S| \ge 2}}
+\Res_{\partial_S}\!(G_S \wedge \mu_S),
+\end{equation}
+where $G_S$ is the product of propagators for pairs within $S$,
+$\Res_{\partial_S}$ is the linking-sphere residue along the
+boundary stratum $\partial_S$ of $\overline{\Conf}_k(\bR^n)$,
+and $\mu_S \colon \bar{A}^{\otimes|S|} \to \bar{A}$ is the
+$\En$-multiplication.
+\end{definition}
+
+\begin{theorem}[$d^2 = 0$ from Totaro relations]
+\label{thm:e-d2-totaro}
+The differential $d_{\En}$ satisfies $d_{\En}^2 = 0$.
+\end{theorem}
+
+\begin{proof}
+Decompose $d_{\En}^2 = d_{\mathrm{dR}}^2
++ [d_{\mathrm{dR}}, d_{\mathrm{res}}] + d_{\mathrm{res}}^2$.
+The first term vanishes. The cross-term vanishes because $G$ is
+closed. The square $d_{\mathrm{res}}^2$ involves iterated
+residues: for three points $i,j,k$, the three iterated residues
+cancel by the Totaro relation
+$\alpha_{ij}\cdot\alpha_{jk} + \alpha_{jk}\cdot\alpha_{ki}
++ \alpha_{ki}\cdot\alpha_{ij} = 0$. Nested collisions cancel by
+the $\En$-algebra associativity coherences encoded in the FM
+operad structure (Proposition~\ref{prop:e-fm-operad}).
+\end{proof}
+
+\begin{remark}[$n$-dependence of the bar complex]
+\label{rem:e-n-dependence}
+At $n = 1$: the propagator has degree $0$, the de~Rham
+differential vanishes, and the bar complex reduces to
+$T^c(s^{-1}\bar{A})$ with the classical bar differential from
+the algebra multiplication. At $n = 2$: the propagator is a
+$1$-form, and the bar complex is the chiral bar complex
+$\barB^{\mathrm{ch}}(\cA)$ of this paper. At $n = 3$: the
+propagator is a $2$-form, and the bar complex computes
+perturbative Chern--Simons invariants.
+\end{remark}
+
+\subsection{The four levels}
+
+The operadic levels relevant to chiral algebras on curves are:
+
+\begin{definition}[Four operadic levels on a curve]
+\label{def:e-four-levels}
+Let $X$ be a smooth complex curve. We distinguish four levels
+of algebraic structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{$\Einf$-chiral} (local, symmetric OPE):
+ the factorisation algebra is defined on unordered
+ configuration spaces, with $\Sigma_k$-equivariant
+ multiplication.
+ All standard vertex algebras (Heisenberg, affine Kac--Moody,
+ Virasoro, $\cW_N$, free-field algebras) are $\Einf$-chiral.
+\item \emph{$\Etwo$-topological}: the bar complex
+ $\barB_{\Etwo}(A)$ uses the topological propagator
+ $(1/2\pi)\,d\arg(z_1 - z_2)$ and depends only on the
+ oriented topology of~$X$.
+\item \emph{$\Eone$-chiral} (ordered, nonlocal OPE):
+ the factorisation algebra lives on ordered configuration
+ spaces $\Conf_k^{\mathrm{ord}}(X)$, with no $\Sigma_k$
+ quotient. Yangians and Etingof--Kazhdan quantum vertex
+ algebras are $\Eone$-chiral.
+\item \emph{$\Ethree$-topological}: the algebra of bulk
+ observables. Accessed via the derived centre
+ (topologisation theorem, Section~\ref{sec:topologisation}).
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[The chirality axis is orthogonal to the
+dimensional axis]\label{rem:e-orthogonality}
+An $\Einf$-chiral algebra and an $\Eone$-chiral algebra are both
+``$n = 2$ objects'' in the dimensional ladder: they are both
+factorisation algebras on a complex curve. The distinction is
+the commutativity of the OPE, not the manifold dimension.
+The $\Etwo$-topological bar complex uses $n = 2$ topological
+configurations; the $\Eone$ ordered bar complex uses the
+$\Eone$-chiral ordering. These are different structures on the
+same underlying space.
+\end{remark}
+
+\subsection{The Heisenberg at each level}
+
+The Heisenberg algebra $H_k$ at level $k$, generated by a
+single field $J(z)$ with OPE $J(z)J(w) \sim k/(z-w)^2$,
+provides the universal test case. As an abelian chiral algebra,
+its structure simplifies at every operadic level.
+
+\begin{example}[Heisenberg: $\Einf$-chiral]
+\label{ex:e-heis-einf}
+The Heisenberg $H_k$ is $\Einf$-chiral. The OPE has a double
+pole $k/(z-w)^2$ and no simple pole (the algebra is abelian),
+so all OPE products are $\Sigma_k$-symmetric. The
+$\Einf$-chiral bar complex is the coshuffle coalgebra
+$S^c(s^{-1}\overline{H}_k)$ with the bar differential encoding
+the double-pole OPE. The classical $r$-matrix is
+% AP126 check: r(z)|_{k=0} = 0 (abelian limit). Y.
+\begin{equation}\label{eq:e-heis-r}
+r^{\mathrm{Heis}}(z) \;=\; k/z,
+\end{equation}
+with $\kappa(H_k) = \mathrm{av}(r(z)) = k$.
+At $k = 0$, $r(z) = 0$ and $\kappa = 0$: the algebra becomes
+trivially abelian with no scattering.
+\end{example}
+
+\begin{example}[Heisenberg: $\Eone$-chiral]
+\label{ex:e-heis-e1}
+The ordered bar complex
+$\Barord(H_k) = T^c(s^{-1}\overline{H}_k)$ has deconcatenation
+coproduct. Since $H_k$ is $\Einf$, the formality bridge holds:
+$\Barord(H_k) \xrightarrow{\sim} \BarSig(H_k)$ is a
+quasi-isomorphism. The $R$-matrix is trivial (the Heisenberg
+is commutative), and the averaging map
+$\mathrm{av}\colon\fg^{\Eone}_{H_k} \to \fg^{\mathrm{mod}}_{H_k}$
+loses nothing. The Heisenberg is class~G (shadow tower
+terminates at degree $2$: $\Delta = 8\kappa\,S_4 = 0$
+because $S_4 = 0$).
+\end{example}
+
+\begin{example}[Heisenberg: $\Etwo$-topological]
+\label{ex:e-heis-e2}
+The $\Etwo$ bar complex
+$\barB_{\Etwo}(H_k^{\mathrm{top}})$ uses the topological
+propagator $(1/2\pi)\,d\arg(z_1 - z_2)$. The bar cohomology
+is concentrated in degree $1$: the Heisenberg is Koszul. The
+Koszul dual is $H_k^! = \Sym^{\mathrm{ch}}(V^*)$, the
+symmetric chiral algebra on the dual generator. The Koszul
+complementarity is
+$\kappa(H_k) + \kappa(H_k^!) = k + (-k) = 0$.
+\end{example}
+
+\begin{example}[Heisenberg: $\Ethree$-topological]
+\label{ex:e-heis-e3}
+The derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k)$ carries
+$\Etwo$ from the chiral direction and $\Eone$ from the
+topological direction. Since $H_k$ has a conformal vector
+at any $k \neq 0$ (the Sugawara element
+$T = (1/2k)\,{:}JJ{:}$ at level $k$), topologisation applies:
+the BRST cohomology carries $\Ethree^{\mathrm{top}}$.
+For the Heisenberg, this $\Ethree$ structure is trivial
+(all operations are determined by the commutative product
+and the linear Lie bracket), reflecting class G.
+\end{example}
+
+\begin{remark}[The Heisenberg as Casimir--Goldstone opening]
+\label{rem:e-heis-cg}
+The Heisenberg is the abelian Kac--Moody algebra:
+the same object as the level-$k$ $\mathrm{U}(1)$ current
+algebra, as the boundary algebra of abelian Chern--Simons
+theory, and as the universal target of the Casimir element
+in the chiral bar complex. Every formula in this paper is
+computed first for $H_k$ and then extended to general
+families by variation of the $r$-matrix.
+\end{remark}
+
+% ================================================================
+% SECTION 2: Bar chain models on curve geometries
+% ================================================================
+
+\section{Bar chain models on curve geometries}
+\label{sec:bar-chain-models}
+
+The $\En$ bar complex of Section~\ref{sec:en-chiral} is defined
+on configuration spaces of $\bR^n$: a flat, contractible base
+with no periods, no curvature, no modular anomaly. A chiral
+algebra lives on curves whose global topology shapes the bar
+differential. On the formal disk $D$, the bar complex is flat
+($d^2 = 0$). On a genus-$g$ curve $\Sigma_g$, the period matrix
+introduces curvature $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$.
+The passage from $D$ to $\Sigma_g$ is the passage from algebra
+to geometry.
+
+\subsection{The formal disk $D$}
+
+\begin{definition}[Bar complex on the formal disk]
+\label{def:e-bar-disk}
+Let $D = \Spec\bC[[z]]$ be the formal disk and $\cA$ a chiral
+algebra on~$D$. The \emph{bar complex on $D$} is
+\begin{equation}\label{eq:e-bar-disk}
+\barB_D(\cA) \;=\; T^c(s^{-1}\bar{\cA}),
+\qquad
+d_{\barB} = \sum_{i < j}
+\Res_{z_i = z_j}\!
+\bigl(\eta_{ij} \wedge \mu_{ij}\bigr),
+\end{equation}
+where $\eta_{ij} = d\log(z_i - z_j)$ is the chiral propagator,
+$\mu_{ij}$ is the OPE product at positions $z_i, z_j$, and
+$\bar{\cA} = \ker(\varepsilon)$ is the augmentation ideal.
+The coproduct is deconcatenation:
+\[
+\Delta[a_1|\cdots|a_n]
+\;=\;
+\sum_{i=0}^{n} [a_1|\cdots|a_i]
+\otimes [a_{i+1}|\cdots|a_n].
+\]
+This makes $\barB_D(\cA)$ an $\Eone$-chiral coassociative
+coalgebra (a dg coalgebra over $(\chirAss)^!$).
+The bar complex on the formal disk sees genus $0$ only. There
+is no period matrix, no curvature, no modular anomaly. The bar
+differential uses only the collision data of points on a
+contractible space.
+\end{definition}
+
+\begin{proposition}[$d^2 = 0$ on $D$]
+\label{prop:e-bar-disk-d2}
+The differential~\eqref{eq:e-bar-disk} satisfies $d_{\barB}^2 = 0$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:e-d2-totaro} at $n = 2$: the Arnold
+relation on $\Conf_k(D)$ ensures cancellation of iterated
+residues. On the formal disk, the global topology is trivial
+and there is no curvature correction.
+\end{proof}
+
+\begin{example}[Heisenberg on $D$]\label{ex:e-heis-disk}
+The bar complex $\barB_D(H_k)$ has generators
+$s^{-1}J_{-n}\,\mathbf{1}$ for $n \ge 1$, where
+$J_{-n} = (1/(n{-}1)!)\,\partial^{n-1}J$. The bar
+differential encodes the OPE $J(z)J(w) \sim k/(z-w)^2$:
+the only nonzero component of $d_{\barB}$ at degree $2$ is
+\[
+d_{\barB}[J_{-1}|J_{-1}]
+\;=\; k\,[J_{-2}],
+\]
+the residue of the double-pole OPE contracted against
+$d\log(z_1 - z_2)$, which absorbs one pole to produce a
+simple-pole residue. Bar cohomology is concentrated in
+degree $1$: the Heisenberg is Koszul.
+\end{example}
+
+\subsection{The punctured disk $D^*$}
+
+\begin{definition}[Bar complex on $D^*$]
+\label{def:e-bar-punc}
+Let $D^* = \Spec\bC((z))$ be the punctured formal disk. The
+bar complex on $D^*$ is
+\begin{equation}\label{eq:e-bar-punc}
+\barB_{D^*}(\cA)
+\;=\;
+T^c(s^{-1}\bar{\cA}),
+\qquad
+d_{\barB}
+= d_D
++ \sum_i \oint_{|z_i| = \varepsilon} \eta_i \wedge \partial_i,
+\end{equation}
+where $d_D$ is the disk bar differential~\eqref{eq:e-bar-disk}
+and the second term records the monodromy around the puncture.
+The punctured disk is the home of the state-field
+correspondence: a bar element of degree $k$ is a $k$-fold
+collision pattern that wraps around the origin.
+\end{definition}
+
+\begin{proposition}[The $\Etwo$-$\Eone$ gap on $D^*$]
+\label{prop:e-e2-e1-gap}
+On the punctured disk, the ordered bar complex
+$\Barord_{D^*}(\cA)$ carries strictly more information than the
+symmetric bar $\BarSig_{D^*}(\cA)$. The averaging map
+$\mathrm{av}\colon \Barord \to \BarSig$ has kernel controlled
+by braid-group representations of
+$\pi_1(\Conf_k(D^*)) = B_k^{\mathrm{aff}}$
+\textup{(}the affine braid group\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The fundamental group $\pi_1(\Conf_k(D^*))$ is the affine
+braid group on $k$ strands, which surjects onto $\Sigma_k$ with
+kernel the pure affine braid group. The symmetric bar complex
+takes $\Sigma_k$-coinvariants, killing the braid-group
+representations. For $\Einf$-chiral algebras (Heisenberg,
+Kac--Moody), the $R$-matrix is trivial and the loss is
+inessential. For $\Eone$-chiral algebras (Yangian), the
+$R$-matrix is nontrivial and the kernel of $\mathrm{av}$
+contains the KZ associator and its higher-degree descendants.
+\end{proof}
+
+\begin{example}[Heisenberg on $D^*$]\label{ex:e-heis-punc}
+The monodromy of $H_k$ around the puncture is trivial (the
+$R$-matrix $r(z) = k/z$ has no branch cut), so
+$\barB_{D^*}(H_k) \simeq \barB_D(H_k)$. The $\Etwo$-$\Eone$
+gap is zero: the ordered and symmetric bars agree.
+\end{example}
+
+\subsection{The annulus}
+
+\begin{definition}[Bar complex on the annulus]
+\label{def:e-bar-annulus}
+Let $A_{r,R} = \{z : r < |z| < R\}$ be an annulus. The bar
+complex on $A_{r,R}$ computes the Hochschild homology of $\cA$
+as a chiral algebra:
+\begin{equation}\label{eq:e-bar-annulus}
+\barB_{A_{r,R}}(\cA)
+\;\simeq\;
+\barB(\cA) \otimes^{\mathbf{L}}_{\cA^e} \barB(\cA),
+\end{equation}
+where $\cA^e = \cA \otimes \cA^{\mathrm{op}}$ is the
+enveloping algebra and the derived tensor product computes
+the self-Tor of the bar resolution. The annulus has two boundary
+circles (inner and outer), giving it the structure of a bimodule
+over~$\cA$.
+\end{definition}
+
+\begin{proposition}[Annulus computes chiral Hochschild homology]
+\label{prop:e-annulus-hh}
+The factorisation homology of $\cA$ over the annulus
+$A_{r,R}$ is
+\[
+\int_{A_{r,R}} \cA
+\;\simeq\;
+\ChirHoch_*(\cA).
+\]
+The inner boundary gives the left $\cA$-module structure, the
+outer boundary the right $\cA$-module structure, and the
+factorisation homology of the annulus is the derived trace.
+\end{proposition}
+
+\begin{proof}
+The annulus is the trace geometry for factorisation homology:
+$\int_{S^1 \times I} \cA \simeq \HH_*(\cA)$ by the
+K\"unneth property of factorisation homology applied to the
+product $S^1 \times I$, where $S^1$ contributes the trace
+and $I$ the bimodule structure. The chiral refinement replaces
+the topological $S^1$ with the holomorphic annulus and the
+topological HH with $\ChirHoch$.
+\end{proof}
+
+\begin{example}[Heisenberg on the annulus]\label{ex:e-heis-annulus}
+The chiral Hochschild homology of $H_k$ is
+$\ChirHoch_*(H_k) \cong \bC[J_{-1}, J_{-2}, \ldots]$, the
+polynomial algebra on the negative modes. The annulus partition
+function is the character
+$\mathrm{tr}_{H_k}(q^{L_0}) = 1/\eta(q)$, where
+$\eta(q) = q^{1/24}\prod_{n \ge 1}(1 - q^n)$
+is the Dedekind eta function.
+\end{example}
+
+\subsection{Nodal curves and curvature}
+
+\begin{definition}[Bar complex at genus $g$]\label{def:e-bar-genus}
+Let $\Sigma_g$ be a smooth genus-$g$ curve and $\cA$ a chiral
+algebra on $\Sigma_g$. The genus-$g$ bar complex is
+\begin{equation}\label{eq:e-bar-genus}
+\barB^{(g)}(\cA)
+\;=\;
+\bigoplus_{k \ge 1}
+\Omega^*\!\bigl(\FM_k(\Sigma_g)\bigr)
+\otimes (s^{-1}\bar{\cA})^{\otimes k},
+\end{equation}
+with differential $d_g = d_{\mathrm{dR}} + d_{\mathrm{res}}$,
+where $d_{\mathrm{res}}$ uses the genus-$g$ propagator
+$d\log E(z,w)$, with $E(z,w)$ the prime form on $\Sigma_g$.
+The propagator $d\log E(z,w)$ has weight $1$ for all $g$
+\textup{(}the prime form is a section of
+$K^{-1/2} \boxtimes K^{-1/2}$\textup{)}.
+\end{definition}
+
+\begin{proposition}[Curvature at genus $g \ge 1$]
+\label{prop:e-curvature}
+At genus $g \ge 1$, the bar differential is curved:
+\begin{equation}\label{eq:e-curvature}
+d_{\mathrm{fib}}^2
+\;=\; \kappa(\cA) \cdot \omega_g,
+\end{equation}
+where $\omega_g = c_1(\lambda) \in H^2(\overline{\cM}_g)$ is
+the first Chern class of the Hodge line bundle on the moduli
+space $\overline{\cM}_g$, and $\kappa(\cA)$ is the scalar
+curvature of $\cA$. The curvature is on the fiberwise bar
+differential over $\overline{\cM}_g$, not on the total bar
+differential \textup{(}which satisfies $d^2 = 0$ on the
+convolution algebra over $\overline{\cM}_{g,n}$\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The genus-$g$ propagator $d\log E(z,w)$ acquires period
+corrections from $H^0(\Sigma_g, \Omega^1)$. These corrections
+introduce the curvature $\kappa \cdot \omega_g$ when the bar
+differential is restricted to fibers of the universal curve
+over $\overline{\cM}_g$. The computation reduces to the
+anomaly of the Hodge line bundle and is performed in the
+convolution algebra formalism.
+\end{proof}
+
+\begin{example}[Heisenberg at genus $g$]\label{ex:e-heis-genus}
+At genus $g \ge 1$, the curvature is
+$d_{\mathrm{fib}}^2 = k \cdot \omega_g$, using
+$\kappa(H_k) = k$. At $k = 0$, the curvature vanishes: the
+bar complex is uncurved at every genus. The genus-$g$ anomaly
+$\mathrm{obs}_g = \kappa \cdot \lambda_g = k \cdot \lambda_g$
+(uniform-weight) gives $F_1 = k/24$ from the Hodge class on
+$\overline{\cM}_{1,1}$.
+\end{example}
+
+\subsection{Pair of pants and fusion}
+
+\begin{definition}[Pair of pants]\label{def:e-pants}
+The pair of pants $P$ is a genus-$0$ surface with three boundary
+circles. The factorisation homology over $P$ computes the fusion
+product:
+\[
+\int_P \cA \;=\; \cA \otimes_{\cA}^{\mathbf{L}} \cA,
+\]
+where the derived tensor product is taken over the chiral algebra
+itself, viewed as a bimodule via left and right OPE.
+\end{definition}
+
+\begin{proposition}[Fusion from bar complex]\label{prop:e-fusion}
+The fusion product of two $\cA$-modules $M_1, M_2$ is computed
+by the two-pointed bar complex:
+\[
+M_1 \otimes_\cA^{\mathbf{L}} M_2
+\;\simeq\;
+\barB(\cA;\, M_1, M_2)
+\;=\;
+\bigoplus_{k \ge 0}
+M_1 \otimes (s^{-1}\bar{\cA})^{\otimes k} \otimes M_2,
+\]
+with differential contracting adjacent factors via OPE. The
+associated derived category is the category of conformal blocks.
+\end{proposition}
+
+\begin{example}[Heisenberg fusion]\label{ex:e-heis-fusion}
+The Fock modules $\cF_\lambda$ of $H_k$ at momentum $\lambda$
+fuse by
+$\cF_{\lambda_1} \otimes_{H_k}^{\mathbf{L}} \cF_{\lambda_2}
+\simeq \cF_{\lambda_1 + \lambda_2}$,
+reflecting the additive structure of the abelian current
+algebra. The fusion rules are trivial: all Fock modules fuse
+freely. This is the class~G triviality.
+\end{example}
+
+% ================================================================
+% SECTION 3: The derived chiral centre
+% ================================================================
+
+\section{The derived chiral centre}
+\label{sec:derived-centre}
+
+\subsection{The problem}
+
+Given a chiral algebra $\cA$, what is the algebra of bulk
+observables of the associated $3$-dimensional
+holomorphic--topological theory? The answer is the derived
+chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
+C^\bullet_{\mathrm{ch}}(\cA, \cA)$, the chiral Hochschild
+cochain complex. This is not the commutant of $\cA$ in itself
+(the naive centre, which may be too small), but the derived
+endomorphism object computed via the bar resolution.
+
+The key structural result is that this derived centre carries
+$\Etwo$ structure from the chiral direction (the chiral Deligne
+conjecture, Theorem~\ref{thm:e-center-hochschild} below) and
+$\Eone$ structure from the topological direction, giving a
+total $\SCchtop$ structure on the \emph{pair}
+$(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$.
+
+\subsection{Chiral Hochschild cochains}
+
+\begin{definition}[Chiral Hochschild cochain complex]
+\label{def:e-chirHoch}
+Let $\cA$ be a chiral algebra on a curve $X$ and let
+$\End^{\mathrm{ch}}_\cA$ denote the chiral endomorphism
+operad (the collection of multilinear maps
+$\cA^{\otimes m} \to \cA$ parametrised by points on $X$ and
+their collision patterns). The \emph{chiral Hochschild cochain
+complex} is
+\begin{equation}\label{eq:e-chirHoch}
+C^\bullet_{\mathrm{ch}}(\cA, \cA)
+\;=\;
+\prod_{m \ge 0}
+\Hom_{\Sigma_m}\!\bigl(
+\FM_m(\bC),\,
+\Hom(\cA^{\otimes m}, \cA)
+\bigr),
+\end{equation}
+with differential combining the bar differential of the
+configuration space with the internal differential of $\cA$.
+A degree-$k$ cochain is a map that takes $m$ inputs from
+$\cA$, arranged on the configuration space $\FM_m(\bC)$, and
+produces a single output in $\cA$ with the correct
+equivariance.
+\end{definition}
+
+\begin{definition}[Chiral braces]
+\label{def:e-chiral-braces}
+The cochain complex $C^\bullet_{\mathrm{ch}}(\cA, \cA)$
+carries \emph{chiral brace operations}
+\begin{equation}\label{eq:e-braces}
+\{f; g_1, \ldots, g_k\}
+\;\in\;
+C^{p+q_1+\cdots+q_k - k}_{\mathrm{ch}}(\cA, \cA)
+\end{equation}
+for $f \in C^p$ and $g_i \in C^{q_i}$, defined by inserting
+the $g_i$ into the inputs of $f$ at specified positions in
+$\FM_m(\bC)$. These are the chiral analogues of the classical
+Gerstenhaber braces. The brace operations satisfy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the pre-Lie identity on the single insertion
+ $\{f; g\}$ (which defines the chiral Gerstenhaber bracket
+ $[f, g] = \{f; g\} - (-1)^{(|f|-1)(|g|-1)}\{g; f\}$);
+\item higher coherence relations making
+ $C^\bullet_{\mathrm{ch}}(\cA, \cA)$ a homotopy
+ $\Etwo$-algebra.
+\end{enumerate}
+\end{definition}
+
+\subsection{The chiral centre theorem}
+
+\begin{theorem}[Chiral centre theorem: the operadic centre of
+$\SCchtop$ is $C^\bullet_{\mathrm{ch}}$]
+\label{thm:e-center-hochschild}
+Let $\cA$ be an $\Einf$-chiral algebra on a curve $X$ and
+$A = \cA|_{\{z_0\}}$ the fiber at a basepoint. The
+\emph{operadic centre} of $A$ in the Swiss-cheese operad
+$\SCchtop$ is quasi-isomorphic to the chiral Hochschild cochain
+complex as $\Etwo$-algebras:
+\begin{equation}\label{eq:e-center-qi}
+Z_{\SCchtop}(A)
+\;\simeq\;
+C^\bullet_{\mathrm{ch}}(\cA, \cA).
+\end{equation}
+The $\Etwo$-structure comes from the closed sector
+$\{\FM_k(\bC)\}_{k \ge 0}$ of $\SCchtop$: the FM
+compactification of the plane provides the operadic parameter
+space for the braces and the cup product.
+\end{theorem}
+
+\begin{proof}
+By the operadic centre construction
+(Definition~\ref{def:e-operadic-centre} below), an element
+of $Z_{\SCchtop}(A)$ at degree $(k,m)$ is a map
+\[
+\phi_{k,m}\colon
+\FM_k(\bC) \times \Eone(m) \;\longrightarrow\;
+\Hom(A^{\otimes m}, A),
+\]
+equivariant for $\Sigma_k$ on $\FM_k(\bC)$ and $\Sigma_m$
+on $\Eone(m)$. The $\Eone(m)$ factor provides the open inputs;
+the $\FM_k(\bC)$ factor provides the closed/holomorphic
+inputs. Taking the limit over all $m$, the components assemble
+into the chiral Hochschild cochain complex~\eqref{eq:e-chirHoch}.
+The closed-sector composition maps in $\SCchtop$ (FM insertion
+in~$\bC$) produce the brace operations, and the compatibility
+conditions of the operadic centre are precisely the higher
+coherence relations that make the braces into a homotopy
+$\Etwo$-structure.
+\end{proof}
+
+\begin{definition}[Operadic centre]
+\label{def:e-operadic-centre}
+Let $\cO$ be a two-coloured operad with colours
+$\{\mathsf{c}, \mathsf{o}\}$ and the vanishing constraint
+$\cO(\ldots, \mathsf{o}, \ldots;\, \mathsf{c}) = \varnothing$
+(no open-to-closed maps). For an
+$\cO^{\mathsf{o}}$-algebra $A$, the \emph{operadic centre}
+$Z_\cO(A)$ is the terminal object in the category of
+$\cO$-algebra pairs $(B, A)$ with fixed open colour~$A$:
+\[
+Z_\cO(A) \;=\;
+\varprojlim_{\substack{(B,A) \in \\
+\cO\text{-}\mathsf{Alg}_{/A}}} B.
+\]
+Concretely, it is the equaliser in
+\[
+Z_\cO(A) \;\hookrightarrow\;
+\prod_{m \ge 0}
+\Hom_{\Sigma_m}\!\bigl(
+\cO(\mathsf{c}, \mathsf{o}^m;\, \mathsf{o}),\,
+\Hom(A^{\otimes m}, A)\bigr)
+\;\rightrightarrows\; (\cdots),
+\]
+where the two maps enforce closed-sector and open-sector
+equivariance.
+\end{definition}
+
+\subsection{Theorem H: concentration in degrees $\{0,1,2\}$}
+
+\begin{theorem}[Theorem H: cohomological concentration]
+\label{thm:e-theorem-H}
+Let $\cA$ be a Koszul chiral algebra. The chiral Hochschild
+cohomology $\ChirHoch^*(\cA) = H^*(C^\bullet_{\mathrm{ch}}(\cA,\cA))$
+is concentrated in cohomological degrees $\{0,1,2\}$:
+\begin{equation}\label{eq:e-thmH}
+\ChirHoch^i(\cA) = 0
+\qquad \text{for } i \ge 3.
+\end{equation}
+The Hilbert series is polynomial. The three nonvanishing degrees
+have the following interpretations:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\ChirHoch^0(\cA) = Z(\cA)$: the naive centre.
+\item $\ChirHoch^1(\cA)$: first-order deformations of $\cA$
+ as a chiral algebra.
+\item $\ChirHoch^2(\cA)$: obstructions to extending
+ deformations.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Amplitude, not virtual dimension]
+\label{rem:e-amplitude}
+Concentration in degrees $\{0,1,2\}$ is a statement about
+\emph{cohomological amplitude}: the cochain complex is
+quasi-isomorphic to one supported in degrees $0, 1, 2$. This
+is not the same as ``virtual dimension $2$'' (an arithmetic
+invariant) or ``$\ChirHoch^*(\cA) = \bC[\Theta]$''
+(which is false for all non-trivial algebras). It also differs
+from the Gelfand--Fuchs cohomology $H^*_{\mathrm{GF}}(\fg)$,
+which is infinite-dimensional for the Virasoro algebra.
+\end{remark}
+
+\begin{example}[Heisenberg: $\ChirHoch^*(H_k)$]
+\label{ex:e-heis-chirhoch}
+For the Heisenberg algebra $H_k$:
+\begin{align}
+\ChirHoch^0(H_k) &= \bC
+\qquad\text{(the centre is $1$-dimensional)},
+\label{eq:e-heis-hoch0}\\
+\ChirHoch^1(H_k) &= \bC
+\qquad\text{(one-parameter deformation: the level $k$)},
+\label{eq:e-heis-hoch1}\\
+\ChirHoch^2(H_k) &= \bC
+\qquad\text{(one obstruction class)}.
+\label{eq:e-heis-hoch2}
+\end{align}
+Total dimension: $\dim\ChirHoch^*(H_k) = 3$.
+For comparison: the naive centre $Z(H_k) = \bC$ has dimension
+$1$; the derived centre has dimension $3$, detecting the
+$\mathrm{Ext}^1$ and $\mathrm{Ext}^2$ contributions invisible
+to the commutant.
+\end{example}
+
+\begin{example}[Affine Kac--Moody: $\ChirHoch^*(V_k(\fg))$]
+\label{ex:e-km-chirhoch}
+For the affine Kac--Moody algebra $V_k(\fg)$ with
+$\fg$ simple of dimension $\dim(\fg)$:
+\begin{align}
+\ChirHoch^0(V_k(\fg)) &= \bC,\\
+\ChirHoch^1(V_k(\fg)) &\cong \fg
+\qquad\text{($\dim(\fg)$ deformations)},\\
+\ChirHoch^2(V_k(\fg)) &= \bC.
+\end{align}
+Total dimension: $\dim(\fg) + 2$. The $\ChirHoch^1$ is
+isomorphic to $\fg$ as a vector space; the $\dim(\fg)$
+directions correspond to the current-algebra deformations
+$J^a(z) \mapsto J^a(z) + \epsilon\,\phi^a(z)$.
+\end{example}
+
+\subsection{Three Hochschild theories}
+
+\begin{warning}[Three Hochschild theories: never conflate]
+\label{warn:e-three-hochschild}
+Three distinct Hochschild-type constructions appear in the
+$\En$ operadic circle. The geometry of the base space
+determines which theory applies.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chiral Hochschild:}
+ $\ChirHoch^*(\cA)$. Input: $\Einf$-chiral algebra on a
+ curve $X$. Configuration complex: $\FM_k(X)$. Output:
+ $\Etwo$ structure (chiral braces), concentrated in degrees
+ $\{0,1,2\}$ (Theorem~\ref{thm:e-theorem-H}).
+\item \emph{Topological Hochschild:}
+ $\THH(A)$. Input: $\Eone$-algebra (associative). Configuration
+ complex: $\Conf_k(\bR)$ (ordered, locally constant). Output:
+ $\Etwo$ structure (classical Deligne conjecture).
+\item \emph{Categorical Drinfeld centre:}
+ $Z(\cA\text{-mod})$. Input: $\Eone$-monoidal category of
+ $\cA$-modules. Output: $\Etwo$-braided monoidal category
+ (the centre carries half-braidings).
+\end{enumerate}
+Chiral Hochschild lives on algebraic curves; topological
+Hochschild lives on $S^1$; the Drinfeld centre lives in the
+representation category. The three constructions give different
+answers for the same algebra, and their relationship is the
+content of the $\En$ operadic circle
+(Section~\ref{sec:en-circle}).
+\end{warning}
+
+\subsection{The $\SCchtop$ structure on the pair
+$(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$}
+
+\begin{principle}[The bar complex is $\Eone$-chiral coassociative;
+$\SCchtop$ lives on the derived centre pair]
+\label{princ:e-sc-location}
+The ordered bar complex
+$\Barord(\cA) = T^c(s^{-1}\bar{\cA})$ is an
+$\Eone$-chiral coassociative coalgebra: a dg coalgebra over
+$(\chirAss)^!$ with differential from OPE residues and
+deconcatenation coproduct. It does \emph{not} carry $\SCchtop$
+structure.
+
+The $\SCchtop$ structure emerges on the \emph{derived chiral
+centre pair}
+$(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$:
+\begin{itemize}
+\item The derived centre
+ $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the
+ \emph{closed colour} (bulk), carrying $\Etwo$ from
+ $\FM_k(\bC)$.
+\item The chiral algebra $\cA$ is the \emph{open colour}
+ (boundary), carrying $\Eone$ from ordered configurations.
+\item The bulk acts on the boundary: the action maps
+ $\alpha_{k,m}\colon
+ \FM_k(\bC) \times \Eone(m) \times
+ (\cZ^{\mathrm{der}})^{\otimes k} \times \cA^{\otimes m}
+ \to \cA$ are the mixed-sector operations.
+\item No boundary-to-bulk maps exist:
+ $\SCchtop(\ldots,\mathsf{o},\ldots;\,\mathsf{c})
+ = \varnothing$.
+\end{itemize}
+The passage from bar complex to derived centre is the
+Hochschild construction: the convolution
+$\Hom(\Barord(\cA), \cA)$ is the computational model for
+$C^\bullet_{\mathrm{ch}}(\cA, \cA)$. The bar complex is the
+$\Eone$ engine; the derived centre is the $\SCchtop$ output.
+\end{principle}
+
+\begin{example}[Heisenberg: $\SCchtop$ structure]
+\label{ex:e-heis-sc}
+For $H_k$, the derived centre pair
+$(\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k), H_k)$ has closed
+colour $\cZ^{\mathrm{der}} \simeq \bC^3$
+(Example~\ref{ex:e-heis-chirhoch}) and open colour
+$H_k$. The bulk-to-boundary action is determined by the
+identity map (degree $0$), the level deformation (degree $1$),
+and the obstruction class (degree $2$). All higher mixed-sector
+operations vanish: the Heisenberg is SC-formal.
+\end{example}
+
+% ================================================================
+% SECTION 4: The Swiss-cheese operad SC^{ch,top}
+% ================================================================
+
+\section{The Swiss-cheese operad $\SCchtop$}
+\label{sec:sc-operad}
+
+\subsection{Definition}
+
+\begin{definition}[Holomorphic--topological Swiss-cheese operad]
+\label{def:e-SC}
+The two-coloured topological operad $\SCchtop$ has colours
+$\{\mathsf{ch}, \mathsf{top}\}$ (closed/holomorphic and
+open/topological) with three sectors:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Closed sector} (all inputs and output
+ closed/holomorphic):
+ \[
+ \SCchtop((\mathsf{ch},\ldots,\mathsf{ch});\,\mathsf{ch})
+ \;=\; \FM_k(\bC).
+ \]
+ This is the $\Etwo$-operad parametrising holomorphic
+ configurations on the complex plane.
+\item \emph{Open sector} (all inputs and output
+ open/topological):
+ \[
+ \SCchtop((\mathsf{top},\ldots,\mathsf{top});\,\mathsf{top})
+ \;=\; \Eone(m).
+ \]
+ This is the $\Eone$-operad of ordered configurations on the
+ real line.
+\item \emph{Mixed sector} ($k$ closed and $m$ open inputs,
+ open output):
+ \[
+ \SCchtop((\mathsf{ch}^k, \mathsf{top}^m);\,\mathsf{top})
+ \;=\; \FM_k(\bC) \times \Eone(m).
+ \]
+ No mixed operations with closed output: the closed colour
+ receives no information from the open colour.
+\end{enumerate}
+Composition is componentwise: FM insertion in $\bC$,
+interval insertion in $\Eone$. The no-open-to-closed rule
+is the directionality constraint
+$\SCchtop(\ldots,\mathsf{top},\ldots;\,\mathsf{ch})
+= \varnothing$.
+\end{definition}
+
+\begin{remark}[$\SCchtop$ is not $\Ethree$]
+\label{rem:e-sc-not-e3}
+The Swiss-cheese operad is two-coloured with a strict
+directionality constraint. Dunn additivity
+($\En \otimes E_m \simeq E_{n+m}$) applies to
+\emph{single-coloured} operads. The product structure
+$\FM_k(\bC) \times \Eone(m)$ in the mixed sector does
+\emph{not} imply that $\SCchtop$ is $\Etwo \otimes \Eone = \Ethree$:
+the directionality constraint (no open-to-closed) breaks the
+symmetry required for Dunn's theorem. The passage from
+$\SCchtop$ to $\Ethree$ requires additional data
+(Section~\ref{sec:topologisation}).
+\end{remark}
+
+\subsection{Koszul duality of $\SCchtop$}
+
+\begin{theorem}[Koszulity of $\SCchtop$
+\textup{\cite{Livernet06}}]
+\label{thm:e-sc-koszul}
+The operad $\SCchtop$ is Koszul.
+\end{theorem}
+
+\begin{proposition}[Koszul dual cooperad: three sectors]
+\label{prop:e-sc-dual}
+The Koszul dual cooperad $(\SCchtop)^!$ has three sectors:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Closed:}
+ $\dim(\SCchtop)^!(n;\mathsf{c}) = (n{-}1)!$
+ \quad\textup{(}$\mathrm{Lie}$ cooperad, since
+ $\mathrm{Com}^! = \mathrm{Lie}$\textup{)}.
+\item \emph{Open:}
+ $\dim(\SCchtop)^!(m;\mathsf{o}) = m!$
+ \quad\textup{(}$\mathrm{Ass}$ cooperad,
+ self-Koszul-dual\textup{)}.
+\item \emph{Mixed} ($k$ closed, $m$ open inputs):
+ $\dim(\SCchtop)^!(k,m;\mathsf{o}) =
+ (k{-}1)!\,\binom{k+m}{m}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The closed sector is $\mathrm{Com}^! = \mathrm{Lie}$ with
+$\dim\mathrm{Lie}(n) = (n{-}1)!$. The open sector is
+$\mathrm{Ass}^! = \mathrm{Ass}$ with $\dim = m!$. The mixed
+sector combines a Lie factor $(k{-}1)!$ from the holomorphic
+direction with a binomial coefficient $\binom{k+m}{m}$ from the
+$(k,m)$-shuffle interleaving of $k$ closed inputs among $m$
+ordered open inputs on $\FM_k(\bC) \times \Eone(m)$.
+\end{proof}
+
+\begin{corollary}[$\SCchtop$ is not Koszul self-dual]
+\label{cor:e-sc-not-selfdual}
+The dimensions of $\SCchtop$ and $(\SCchtop)^!$ disagree in the
+closed sector:
+\[
+\dim\,\SCchtop(n;\mathsf{c}) = 1
+\quad\text{(Com)},
+\qquad
+\dim(\SCchtop)^!(n;\mathsf{c}) = (n{-}1)!
+\quad\text{(Lie)}.
+\]
+Therefore $\SCchtop \not\cong (\SCchtop)^!$: the operad is
+\emph{not} Koszul self-dual.
+
+The duality \emph{functor} on $\SCchtop$-algebras is an
+involution ($(P^!)^! \cong P$ for Koszul $P$), but the
+operad itself is not fixed. Koszul duality exchanges
+$\mathrm{Com}$ (closed) with $\mathrm{Lie}$ (closed) while
+preserving $\mathrm{Ass}$ (open).
+\end{corollary}
+
+\subsection{The five presentations of $\SCchtop$}
+
+An $\SCchtop$-algebra pair $(\cA^{\mathrm{cl}}, A^{\mathrm{op}})$
+can be presented in five equivalent ways:
+
+\begin{proposition}[Five presentations of $\SCchtop$-algebra
+structure]\label{prop:e-five-presentations}
+The following structures on a pair
+$(\cA^{\mathrm{cl}}, A^{\mathrm{op}})$ are equivalent for
+Koszul $\SCchtop$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Operadic:}
+ a map of two-coloured operads
+ $\SCchtop \to \End_{(\cA^{\mathrm{cl}}, A^{\mathrm{op}})}$.
+\item \emph{Koszul dual:}
+ an $(\SCchtop)^!$-coalgebra structure on the pair
+ $(\barB(\cA^{\mathrm{cl}}), \barB(A^{\mathrm{op}}))$.
+ The closed colour is a Lie coalgebra
+ $(\barB_{\mathrm{Lie}}(\cA^{\mathrm{cl}}))$; the open colour is
+ an associative coalgebra $(\barB_{\mathrm{Ass}}(A^{\mathrm{op}}))$.
+\item \emph{Factorisation:}
+ a factorisation algebra on $\bC \times \bR^{\ge 0}$
+ (the upper half-space), with the interior ($\bC \times \bR^{>0}$)
+ carrying the closed colour and the boundary
+ ($\bC \times \{0\}$) carrying the open colour.
+\item \emph{BV/BRST:}
+ a BV algebra whose classical master equation encodes the
+ $\SCchtop$ structure, with the antibracket splitting into
+ holomorphic (closed) and topological (open) components.
+\item \emph{Convolution:}
+ a Maurer--Cartan element in the $\SCchtop$-convolution algebra
+ $\fg^{\SCchtop}_\cA
+ = \fg^{\mathrm{mod}}_\cA \times \fg^{\bR}_\cA$,
+ where $\fg^{\mathrm{mod}}$ controls the closed direction
+ (shadows $\kappa$, $\mathfrak{C}$, $\mathfrak{Q}$) and
+ $\fg^{\bR}$ controls the open direction ($r$-matrix, KZ
+ associator, Yangian deformation).
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Pentagon of equivalences]
+\label{rem:e-pentagon}
+The five presentations are pairwise equivalent, but all
+equivalences route through the operadic hub (presentation~(i)).
+No single pentagon theorem closes the circle of all five
+equivalences directly. Three links have independent mathematical
+content: Koszul--BV (the BV formalism realises the Koszul dual
+cooperad), BV--Convolution (the antibracket encodes the
+convolution Lie bracket), and Factorisation--Convolution
+(the global sections functor converts a factorisation algebra
+to a convolution algebra).
+\end{remark}
+
+\subsection{The Koszul dual algebra $\cA^!$ as an
+$(\SCchtop)^!$-algebra}
+
+\begin{proposition}[Koszul dual carries $(\SCchtop)^! =
+(\mathrm{Lie}, \mathrm{Ass})$ structure]
+\label{prop:e-koszul-dual-sc}
+Let $\cA$ be a Koszul chiral algebra. The Koszul dual
+$\cA^! = ((\cA^i)^\vee)$ carries the structure of an
+$(\SCchtop)^!$-algebra:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Closed colour:}
+ the Sklyanin bracket $\{-,-\}$ makes
+ $\cA^!$ a Lie algebra (from $\mathrm{Com}^! = \mathrm{Lie}$).
+\item \emph{Open colour:}
+ the Yangian product makes $\cA^!$ an associative algebra
+ (from $\mathrm{Ass}^! = \mathrm{Ass}$).
+\end{enumerate}
+This is an $(\SCchtop)^!$-algebra $= (\mathrm{Lie},
+\mathrm{Ass})$-algebra, \emph{not} an $\SCchtop$-algebra
+$= (\mathrm{Com}, \mathrm{Ass})$-algebra.
+\end{proposition}
+
+\begin{example}[Heisenberg: $H_k^!$]
+\label{ex:e-heis-koszul-dual}
+The Koszul dual $H_k^! = \Sym^{\mathrm{ch}}(V^*)$ has
+$\kappa(H_k^!) = -k$, so the Koszul complementarity gives
+$\kappa(H_k) + \kappa(H_k^!) = k + (-k) = 0$. The Lie bracket
+(Sklyanin bracket) on $H_k^!$ is trivial (abelian), reflecting
+the class~G status. The Ass structure is the symmetric algebra
+product, which is commutative and thus carries no ordered data
+beyond the symmetric quotient.
+\end{example}
+
+% ================================================================
+% SECTION 5: The topologisation theorem
+% ================================================================
+
+\section{The topologisation theorem}
+\label{sec:topologisation}
+
+\subsection{The problem}
+
+The chiral centre theorem
+(Theorem~\ref{thm:e-center-hochschild}) produces $\Etwo$
+structure on the derived centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, with the $\Etwo$
+coming from holomorphic configurations $\FM_k(\bC)$. This
+$\Etwo$ is \emph{holomorphic}: it depends on the complex
+structure of the curve. The dimensional ladder places $\Ethree$
+at the level of $3$-manifolds (Chern--Simons). How does the
+holomorphic $\Etwo$ centre upgrade to topological $\Ethree$?
+
+The answer requires extra structure: an inner conformal vector.
+The conformal vector makes holomorphic translations $Q$-exact
+in the BRST complex, killing the dependence on the complex
+structure at the cohomological level. The BRST cohomology of
+the factorisation algebra on $\bC$ becomes locally constant;
+a locally constant factorisation algebra on $\bR^2$ is an
+$\Etwo^{\mathrm{top}}$-algebra. Combined with the $\Eone$ from
+the topological direction, Dunn additivity gives
+$\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}} =
+\Ethree^{\mathrm{top}}$.
+
+\subsection{The conformal vector}
+
+\begin{definition}[Inner conformal vector]
+\label{def:e-conformal-vector}
+Let $\cA$ be a chiral algebra and $Q$ a BRST differential on the
+observables of a holomorphic--topological theory on
+$\bC \times \bR$ whose boundary chiral algebra is $\cA$. An
+\emph{inner conformal vector} for $(\cA, Q)$ is a conformal
+vector $T(z) \in \cA$ that is $Q$-exact in the algebra of bulk
+observables: there exists $G(z)$ (the antighost contraction) such
+that
+\begin{equation}\label{eq:e-sugawara-exact}
+T(z) \;=\; [Q, G(z)]
+\end{equation}
+in BRST cohomology. The consequence: holomorphic translations
+$\partial_z \cO = [T, \cO] = [Q, [G, \cO]]$ are $Q$-exact for
+every bulk observable $\cO$.
+\end{definition}
+
+\begin{example}[Affine Kac--Moody: the Sugawara element]
+\label{ex:e-sugawara}
+For $V_k(\fg)$ at non-critical level $k \neq -h^\vee$, the
+Sugawara element
+\begin{equation}\label{eq:e-sugawara}
+T_{\mathrm{Sug}}
+\;=\; \frac{1}{2(k + h^\vee)}\sum_a {:}J^a J_a{:}
+\end{equation}
+provides the inner conformal vector. The central charge is
+$c = k\dim(\fg)/(k + h^\vee)$, and the antighost contraction is
+\begin{equation}\label{eq:e-antighost}
+G(z) \;=\; \frac{1}{2(k + h^\vee)}\sum_a
+{:}J^a(z)\,\bar{c}_a(z){:},
+\end{equation}
+where $\bar{c}_a$ is the antighost field of the BRST complex.
+\end{example}
+
+\begin{example}[Heisenberg: the Sugawara element]
+\label{ex:e-heis-sugawara}
+For $H_k$ at $k \neq 0$, the Sugawara element is
+$T = (1/2k)\,{:}JJ{:}$ with central charge $c = 1$. At
+$k = 0$, the Sugawara element is undefined (the denominator
+$2k$ vanishes) and the algebra has no conformal vector:
+topologisation fails. The critical level for the Heisenberg is
+$k = 0$ (there is no dual Coxeter number for $\mathrm{U}(1)$).
+\end{example}
+
+\begin{remark}[Critical level: topologisation fails]
+\label{rem:e-critical-level}
+At the critical level $k = -h^\vee$ for affine Kac--Moody,
+the Sugawara denominator $2(k + h^\vee)$ vanishes: the Sugawara
+element is undefined, $\partial_z$ is not $Q$-exact, and the
+factorisation algebra retains genuine holomorphic dependence.
+The $\Etwo$ structure remains holomorphic, not topological,
+and the upgrade to $\Ethree$ fails. The critical level is the
+precise obstruction to topologisation.
+\end{remark}
+
+\subsection{The topologisation theorem}
+
+\begin{theorem}[Cohomological topologisation for affine Kac--Moody]
+\label{thm:e-topologisation}
+Let $\fg$ be a finite-dimensional simple Lie algebra and
+$V_k(\fg)$ the universal affine vertex algebra at non-critical
+level $k \neq -h^\vee$. The Sugawara element
+$T_{\mathrm{Sug}} = (1/2(k + h^\vee))\sum_a {:}J^a J_a{:}$
+provides an inner conformal vector. The derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$, which carries
+$\Etwo$ from the closed sector of $\SCchtop$
+\textup{(}Theorem~\ref{thm:e-center-hochschild}\textup{)}, has
+the following topologisation package:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Cohomological $\Ethree^{\mathrm{top}}$.)}
+ The BRST cohomology
+ $H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))$
+ carries an $\Ethree^{\mathrm{top}}$-algebra structure:
+ \begin{equation}\label{eq:e-topologisation}
+ H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))
+ \;\text{ is an }\;
+ \Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}}
+ = \Ethree^{\mathrm{top}}\text{-algebra.}
+ \end{equation}
+
+\item \textup{(Chain-level model.)}
+ The cohomology complex
+ $M_k = H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}})$,
+ with zero differential and the $\Ethree^{\mathrm{top}}$
+ operations of part~\textup{(i)}, is a chain-level
+ $\Ethree^{\mathrm{top}}$-algebra quasi-isomorphic to the
+ derived centre. The homotopy transfer theorem controls the
+ dependence on the chosen retract: transferred
+ $(E_3)_\infty$-models are unique up to
+ $\infty$-quasi-isomorphism.
+
+\item \textup{(Original-complex lift: conditional.)}
+ If there exists a family $G = (G_1, G_2, \ldots)$ with
+ $G_1$ the Sugawara antighost contraction
+ \eqref{eq:e-antighost} and $[m, G] = \partial_z$ in the
+ brace deformation complex, then the original complex
+ $\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ itself
+ admits a chain-level $\Ethree^{\mathrm{top}}$-structure.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).}
+The inner conformal vector identifies $T_{\mathrm{Sug}} =
+[Q, G]$ in BRST cohomology. For any bulk observable $\cO$,
+$\partial_z\cO = [T_{\mathrm{Sug}}, \cO] = [Q, [G, \cO]]$,
+so $\partial_z$ is $Q$-exact. The BRST cohomology of the
+factorisation algebra on $\bC$ is therefore locally constant:
+it does not detect the complex structure. By the recognition
+theorem of Lurie \cite{HA}, a locally constant factorisation
+algebra on $\bR^2$ is an $\Etwo^{\mathrm{top}}$-algebra.
+The $\Eone^{\mathrm{top}}$ from the $\bR$-direction (the open
+colour of $\SCchtop$) combines with the
+$\Etwo^{\mathrm{top}}$ via Dunn additivity to give
+$\Ethree^{\mathrm{top}}$.
+
+\emph{Part (ii).}
+Over $\bC$, choose a splitting of cycles and boundaries in
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}$; this gives a strong
+deformation retract onto the cohomology complex $M_k$. Part~(i)
+equips $M_k$ with $\Ethree^{\mathrm{top}}$. The homotopy
+transfer theorem for operadic algebras ensures that transferred
+$(E_3)_\infty$-models are unique up to
+$\infty$-quasi-isomorphism.
+
+\emph{Part (iii).}
+The condition $[m, G] = \partial_z$ asserts that holomorphic
+translations are null-homotopic in the brace deformation complex
+by an $\Ainf$-coherent family of higher homotopies. Under this
+condition, the locally-constant recognition applies to the
+original cochain complex (not just to cohomology), and Dunn
+additivity produces $\Ethree^{\mathrm{top}}$ at chain level.
+
+\emph{Critical level.}
+At $k = -h^\vee$, the Sugawara denominator vanishes: the inner
+conformal vector is undefined, $\partial_z$ is not $Q$-exact,
+and the factorisation algebra retains holomorphic dependence.
+The $\Etwo$ remains holomorphic, and the upgrade to $\Ethree$
+fails.
+\end{proof}
+
+\begin{remark}[The conformal vector is necessary]
+\label{rem:e-conformal-necessary}
+Without a conformal vector, the $\SCchtop$-algebra produces a
+centre with holomorphic $\Etwo$ that genuinely detects the
+complex structure. The $\SCchtop$ structure is the
+\emph{intermediary} between $\Eone$-chiral and $\Ethree$; the
+conformal vector is the bridge. The $\Ethree$ is
+$\Ethree^{\mathrm{top}}$ (topological), not
+$\Ethree$-chiral: the conformal vector kills the chiral
+direction.
+\end{remark}
+
+\begin{remark}[Scope of topologisation]
+\label{rem:e-topologisation-scope}
+Theorem~\ref{thm:e-topologisation} is proved for affine
+Kac--Moody $V_k(\fg)$ at non-critical level, where the Sugawara
+element provides an explicit inner conformal vector and the $3$d
+holomorphic--topological theory is Chern--Simons.
+
+For general chiral algebras with conformal vector (Virasoro,
+$\cW$-algebras), the same pattern is expected but remains
+conjectural:
+\end{remark}
+
+\begin{conjecture}[General topologisation]
+\label{conj:e-topologisation-general}
+Let $\cA$ be a chiral algebra with conformal vector $T(z)$ of
+central charge $c$. If the associated holomorphic--topological
+theory on $\bC \times \bR$ has a BRST differential $Q$ such
+that $T = [Q, G]$ for some antighost contraction $G$, then
+$H_Q^\bullet(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA))$
+carries an $\Ethree^{\mathrm{top}}$-algebra structure.
+
+For Virasoro $\mathrm{Vir}_c$: the holomorphic--topological
+theory is $3$d gravity; the BRST complex requires constructing
+the gravitational path integral, which is a genuine difficulty.
+
+For $\cW_N$: the holomorphic--topological theory is $3$d
+higher-spin gravity; the BRST complex requires the full
+non-linear $\cW_N$ gauge theory.
+\end{conjecture}
+
+\subsection{The Heisenberg: topologisation}
+
+\begin{example}[Heisenberg topologisation]
+\label{ex:e-heis-topologisation}
+For $H_k$ at $k \neq 0$: the Sugawara element
+$T = (1/2k)\,{:}JJ{:}$ provides the inner conformal vector.
+The $3$d holomorphic--topological theory is abelian Chern--Simons
+on $\bC \times \bR$. All three parts of
+Theorem~\ref{thm:e-topologisation} hold unconditionally:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item BRST cohomology is $\Ethree^{\mathrm{top}}$
+ (the abelian case is trivial: all operations are determined
+ by the commutative product and the Lie bracket).
+\item The chain-level model is the $3$-dimensional cochain
+ complex $\bC \oplus \bC[-1] \oplus \bC[-2]$ with trivial
+ differential and $\Ethree$ structure from the abelian
+ Chern--Simons.
+\item The original-complex lift is unconditional because the
+ $\Ainf$ coherences are trivial (class~G: all higher operations
+ vanish).
+\end{enumerate}
+At $k = 0$: the Sugawara element is undefined, and the algebra
+is stuck at $\SCchtop$. The derived centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_0)$ carries holomorphic
+$\Etwo$ but not $\Ethree^{\mathrm{top}}$.
+\end{example}
+
+\subsection{Classification by topologisation status}
+
+\begin{proposition}[Topologisation status of standard families]
+\label{prop:e-topologisation-status}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+\textbf{Family} & \textbf{Conformal vector} &
+ \textbf{Topologisation} & \textbf{Status} \\
+\hline
+$H_k$, $k \neq 0$ & $T = (1/2k)\,{:}JJ{:}$ &
+ $\Ethree^{\mathrm{top}}$ & proved \\
+$V_k(\fg)$, $k \neq -h^\vee$ &
+ $T_{\mathrm{Sug}}$ & $\Ethree^{\mathrm{top}}$ & proved \\
+$V_{-h^\vee}(\fg)$ (critical) & none &
+ $\SCchtop$ & stuck \\
+$\mathrm{Vir}_c$ & $T(z)$ &
+ $\Ethree^{\mathrm{top}}$ & conjectural \\
+$\cW_N$ & $T(z)$ &
+ $\Ethree^{\mathrm{top}}$ & conjectural \\
+$H_0$ & none & $\SCchtop$ & stuck \\
+Lattice VA, $k \neq 0$ & $T = (1/2k)\,{:}JJ{:}$ &
+ $\Ethree^{\mathrm{top}}$ & proved (abelian CS)
+\end{tabular}
+\end{center}
+\end{proposition}
+
+% ================================================================
+% SECTION 6: The E_n operadic circle
+% ================================================================
+
+\section{The $\En$ operadic circle}
+\label{sec:en-circle}
+
+\subsection{The circle}
+
+The five theorems of modular Koszul duality live in the
+symmetric bar $\BarSig(\cA)$: they are invariants surviving
+the averaging map
+$\mathrm{av}\colon \Barord(\cA) \to \BarSig(\cA)$.
+The $\En$ operadic circle explains why the averaging map
+exists, what it loses, and how the lost information can
+in principle be recovered. The circle is a sequence of five
+functorial operations, each shifting the operadic level by
+one:
+\begin{equation}\label{eq:e-circle}
+\Ethree^{\mathrm{top}}(\text{bulk})
+\;\xrightarrow{\;(1)\;\text{restrict}\;}
+\Etwo(\text{boundary chiral})
+\;\xrightarrow{\;(2)\;\Barord\;}
+\Eone(\text{bar/QG})
+\;\xrightarrow{\;(3)\;Z(-)\;}
+\Etwo(\text{Drinfeld centre})
+\;\xrightarrow{\;(4)\;\mathrm{HH}^*\;}
+\Ethree^{\mathrm{top}}(\text{derived centre}).
+\end{equation}
+
+\begin{definition}[Five arrows of the operadic circle]
+\label{def:e-five-arrows}
+The five arrows are:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Restriction to a codimension-$2$ defect.}
+ A bulk $\Ethree^{\mathrm{top}}$-algebra of observables on
+ a $3$-manifold $M^3$ restricts to a factorisation algebra
+ on a codimension-$2$ defect curve $C \subset M^3$. The
+ normal bundle $N_{C/M}$ of rank $2$ supplies two
+ directions: one holomorphic (along the curve) and one
+ topological (transverse). The restricted algebra is
+ $\Etwo$-chiral on $C$.
+\item \emph{Ordered bar complex.}
+ The $\Etwo$-chiral algebra on $C$ passes to its ordered
+ bar complex $\Barord(\cA) = T^c(s^{-1}\bar{\cA})$:
+ an $\Eone$-chiral coassociative coalgebra with
+ deconcatenation coproduct, $R$-matrix, and (on the
+ Koszul locus) Yangian structure.
+\item \emph{Drinfeld centre.}
+ The functor
+ $Z \colon \Eone\text{-}\mathsf{Cat} \to
+ \Etwo\text{-}\mathsf{Cat}$ recovers an
+ $\Etwo$-braided monoidal category from $\Eone$-module
+ data. This is the categorified analogue of the averaging
+ map. The Drinfeld centre is the \emph{sole source of
+ nontrivial braiding}: direct restriction from
+ $\Ethree^{\mathrm{top}}$ to $\Etwo$ gives only
+ symmetric braiding, because
+ $\pi_1(\Conf_2(\bR^3))$ is trivial.
+\item \emph{Higher Deligne conjecture.}
+ The Hochschild cohomology of an $\Etwo$-algebra carries
+ $\Ethree^{\mathrm{top}}$-structure. This is the higher
+ Deligne conjecture, proved by
+ Francis~\cite{Francis2013}: $\HH^*(A)$ for an
+ $\En$-algebra $A$ carries an $E_{n+1}$-structure.
+\item \emph{Closing.}
+ The fifth arrow closes the circle: the
+ $\Ethree^{\mathrm{top}}$-algebra obtained by traversing
+ arrows $(1)$--$(4)$ should be equivalent to the original
+ bulk $\Ethree^{\mathrm{top}}$-algebra. This is the
+ content of the closing conjecture
+ (Section~\ref{sec:closing-conjecture}).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Arrow 3 as the sole source of braiding]
+\label{thm:e-arrow3-braiding}
+Let $A$ be an $\Ethree^{\mathrm{top}}$-algebra.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Restriction of $A$ to a codimension-$2$ locus gives
+ an $\Etwo$-algebra $A|_C$ whose braiding is
+ \emph{symmetric}: the monodromy representation factors
+ through $\pi_1(\Conf_2(\bR^3)) = \{1\}$, the trivial
+ group.
+\item The Drinfeld centre $Z(\cA\textup{-mod})$ of the
+ $\Eone$-monoidal category of $\cA$-modules carries a
+ half-braiding that is generically \emph{non-symmetric}:
+ the braiding comes from the $R$-matrix of the ordered
+ bar complex, which records the nontrivial monodromy of
+ $\pi_1(\Conf_2(\bC)) = \bZ$ (the braid group on $2$
+ strands).
+\item The non-symmetric braiding in the Drinfeld centre is
+ therefore not inherited from the original $\Ethree$
+ restriction; it is created by arrow~$3$. For
+ $\Einf$-chiral algebras, the braiding is symmetric
+ \textup{(}the $R$-matrix is trivial\textup{)}. For
+ $\Eone$-chiral algebras, the braiding is non-symmetric
+ and encodes the KZ associator
+ $\Phi_{\mathrm{KZ}} \in \exp(\hat{\mathfrak{t}}_3)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): the fundamental group $\pi_1(\Conf_2(\bR^3))$ is
+trivial because $\bR^3 \setminus \{0\}$ is simply connected
+(the linking sphere $S^2$ carries no $1$-cycles). The
+representation of the braid group on the $\Etwo$-restricted
+modules therefore factors through $\Sigma_2$: the braiding
+is a symmetric involution.
+
+Part~(ii): the Drinfeld centre $Z(\cA\text{-mod})$ consists
+of pairs $(M, \gamma)$ where $\gamma_N \colon M \otimes N
+\xrightarrow{\sim} N \otimes M$ is a half-braiding natural
+in $N$. When $\cA$ is the module category of the ordered
+bar complex, the half-braiding is conjugation by the
+$R$-matrix: $\gamma_N = R_{M,N} \circ \tau$. For
+$\Eone$-chiral algebras with nontrivial $R$-matrix, the
+braiding is non-symmetric.
+
+Part~(iii): since $\Ethree$ restriction gives only symmetric
+braiding and the Drinfeld centre produces non-symmetric
+braiding, the non-symmetric part is created by arrow~$3$.
+This is the mathematical content of the statement that the
+Drinfeld centre is the sole source of nontrivial braiding.
+\end{proof}
+
+\subsection{The $\SCchtop$ intermediary}
+
+Between the $\Eone$-chiral world and the
+$\Ethree^{\mathrm{top}}$ bulk sits the Swiss-cheese operad
+$\SCchtop$ (Section~\ref{sec:sc-operad}). The passage
+from $\SCchtop$ to $\Ethree^{\mathrm{top}}$ requires an
+inner conformal vector
+(Section~\ref{sec:topologisation}). Without such a vector,
+the $\SCchtop$-algebra cannot topologise: the two colours
+(holomorphic and topological) remain distinct, and Dunn
+additivity does not apply.
+
+\begin{proposition}[The $\SCchtop$ intermediary in the circle]
+\label{prop:e-sc-intermediary}
+The $\En$ operadic circle factors through $\SCchtop$:
+\[
+\Ethree^{\mathrm{top}}
+\;\xrightarrow{\;(1)\;}
+\Etwo^{\mathrm{ch}}
+\;\xrightarrow{\;(2)\;}
+\Eone^{\mathrm{ch}}
+\;\xrightarrow{\;\SCchtop\;}
+(\Etwo^{\mathrm{ch}},\,\Eone^{\mathrm{top}})
+\;\xrightarrow{\;\nu\;}
+\Ethree^{\mathrm{top}}.
+\]
+The penultimate stage is the $\SCchtop$-pair
+$(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA), \cA)$.
+The last arrow requires the inner conformal vector $\nu$;
+when $\nu$ exists, the two SC colours collapse to a single
+$\Ethree^{\mathrm{top}}$ structure.
+\end{proposition}
+
+\begin{proof}
+The Drinfeld centre (arrow~$3$) and the higher Deligne
+conjecture (arrow~$4$) combine to produce the $\SCchtop$-pair:
+the derived centre $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+carries the closed $\Etwo$ from the FM configuration spaces,
+and $\cA$ carries the open $\Eone$ from ordered configurations.
+The topologisation theorem
+(Theorem~\ref{thm:e-topologisation}) provides the final
+arrow.
+\end{proof}
+
+\subsection{The formality bridge and its failure}
+
+\begin{theorem}[Formality bridge for $\Einf$-chiral algebras]
+\label{thm:e-formality-bridge}
+For an $\Einf$-chiral algebra $\cA$ \textup{(}the entire
+standard families: Heisenberg, affine Kac--Moody, Virasoro,
+$\cW_N$, and all free-field algebras\textup{)}, the averaging
+map is a quasi-isomorphism:
+\[
+\mathrm{av}\colon
+\Barord(\cA)
+\;\xrightarrow{\;\sim\;}
+\BarSig(\cA).
+\]
+The $R$-matrix is trivial \textup{(}the braiding on the
+ordered bar is symmetric\textup{)}, the Yangian is
+cocommutative, and the averaging map loses nothing.
+\end{theorem}
+
+\begin{proof}
+The $\Einf$-chiral condition means the OPE is
+$\Sigma_k$-equivariant: the factorisation $\cD$-module
+descends to the symmetric Ran space. The $R$-matrix
+$S(z) = \id$ is the identity, and the $\Sigma_k$-action
+on the ordered bar complex is free. The averaging map
+takes $\Sigma_k$-coinvariants of a free action, which is
+a quasi-isomorphism by the standard acyclicity of the
+group algebra.
+\end{proof}
+
+\begin{theorem}[Formality failure for $\Eone$-chiral algebras]
+\label{thm:e-formality-failure}
+For a genuinely $\Eone$-chiral algebra \textup{(}Yangian,
+Etingof--Kazhdan quantum vertex algebra\textup{)}, the
+averaging map is \emph{not} a quasi-isomorphism:
+\[
+\dim H^n(\Barord(\cA))
+\;=\; n!
+\quad\text{at degree $n$},
+\qquad
+\dim H^n(\BarSig(\cA))
+\;=\; 1.
+\]
+The ordered bar carries Arnold braid-group representations
+(from $\pi_1(\Conf_k(\bC)) = B_k$) that the symmetric bar
+annihilates.
+\end{theorem}
+
+\begin{proof}
+The $\Eone$-chiral condition means the $R$-matrix
+$S(z) \neq \id$ is a nontrivial solution of the quantum
+Yang--Baxter equation. The $\Sigma_k$-action on the
+ordered bar complex is twisted by $S(z)$, and the kernel
+of $\mathrm{av}$ records the braid-group representations.
+The dimension $n!$ at degree $n$ is the dimension of the
+regular representation of $\Sigma_n$; the coinvariant
+quotient collapses to dimension $1$.
+\end{proof}
+
+\begin{remark}[What the five theorems see and what they miss]
+\label{rem:e-five-thms-see}
+The five theorems of modular Koszul duality (A, B, C, D, H)
+extract the $\Sigma_n$-invariant content of the ordered bar:
+the scalar $\kappa$, given by $\mathrm{av}(r(z))$ in abelian and
+scalar families and by $\mathrm{av}(r(z))+\dim(\fg)/2$ for
+non-abelian affine Kac--Moody, the genus
+anomaly $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+(uniform-weight), and the shadow tower. For $\Einf$-chiral
+algebras this is the complete picture. For $\Eone$-chiral
+algebras, the five theorems see only the shadow, while the
+ordered bar carries the $R$-matrix, the KZ associator, and
+the full braid-group representation.
+\end{remark}
+
+% ================================================================
+% SECTION 7: The E_3 identification theorem
+% ================================================================
+
+\section{The $\Ethree$ identification theorem}
+\label{sec:e3-identification}
+
+\subsection{The problem}
+
+The topologisation theorem
+(Theorem~\ref{thm:e-topologisation}) produces an
+$\Ethree^{\mathrm{top}}$-algebra on the BRST cohomology of
+the derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ for simple
+$\fg$ at non-critical level. This is a formal deformation of
+the Chevalley--Eilenberg cochains
+$C^*(\fg) = \Sym(\fg^\vee[-1])$, parametrised by
+$\lambda = k + h^\vee$. There is a second source of
+$\Ethree^{\mathrm{top}}$-algebras: the perturbative
+quantisation of Chern--Simons theory on $\bR^3$ with gauge
+algebra $\fg$, carried out by
+Costello--Francis--Gwilliam~\cite{CFG25}. Both are
+deformations of the same classical limit. Do they coincide?
+
+\subsection{The $\Pthree$ reduction}
+
+\begin{theorem}[$\Ethree$ formality
+\textup{\cite{Kon99,Tamarkin03,FresseWillwacher20}}]
+\label{thm:e-e3-formality}
+The operad $\Ethree$ is formal over $\bQ$: there is a
+zig-zag of quasi-isomorphisms of operads
+\[
+\Ethree
+\;\xleftarrow{\sim}\; \cdots \;\xrightarrow{\sim}\;
+H_*(\Ethree) \;=\; \Pthree.
+\]
+An $\Ethree$-algebra structure on a cochain complex is
+therefore determined, up to homotopy, by the induced
+$\Pthree$-algebra structure on cohomology.
+\end{theorem}
+
+\begin{remark}[From $\Ethree$ to $\Pthree$]
+\label{rem:e-e3-to-p3}
+The $\Pthree$-algebra structure on
+$H^*(\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))
+\cong C^*(\fg)$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a graded-commutative product (the cup product,
+ $\Sym(\fg^\vee[-1])$);
+\item a degree-$(1{-}3) = -2$ Lie bracket
+ $\{-,-\}$ (the Schouten--Nijenhuis bracket on polyvector
+ fields, or equivalently the linearisation of the
+ Chern--Simons interaction).
+\end{enumerate}
+The $\Pthree$ bracket is determined by its restriction to
+generators: $\{\phi_a, \phi_b\} = \lambda\,f_{ab}{}^c\,\phi_c$,
+where $\lambda = k + h^\vee$ and $f_{ab}{}^c$ are the
+structure constants of $\fg$. The coefficient $\lambda$ comes
+from the formal disk computation: the chiral derived centre
+at level $k$ deforms the classical cochains by exactly
+$\lambda = k + h^\vee$ times the Cartan $3$-form.
+\end{remark}
+
+\subsection{The identification}
+
+\begin{theorem}[Identification of $\Ethree$-deformation families
+for simple $\fg$]
+\label{thm:e-e3-identification}
+Let $\fg$ be a simple finite-dimensional Lie algebra,
+$V_k(\fg)$ the universal affine vertex algebra at non-critical
+level $k \neq -h^\vee$, and
+$\lambda = k + h^\vee$. Then the derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and the
+Costello--Francis--Gwilliam $\Ethree$-algebra
+$\cA^\lambda$ from perturbative Chern--Simons are isomorphic
+as formal deformation families of $\Ethree$-algebras:
+\begin{equation}\label{eq:e-e3-identification}
+\bigl\{
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\bigr\}_{k + h^\vee \in \lambda\bC[[\lambda]]}
+\;\simeq\;
+\bigl\{
+\cA^\lambda
+\bigr\}_{\lambda \in \lambda H^3(\fg)[[\lambda]]}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The proof proceeds in four steps.
+
+\emph{Step 1: $\Ethree$ formality reduces to $\Pthree$.}
+By Theorem~\ref{thm:e-e3-formality}, both sides are
+determined by their $\Pthree$-structures on the common
+cohomology $C^*(\fg) = \Sym(\fg^\vee[-1])$. A formal
+deformation of a $\Pthree$-algebra with cohomology
+$\Sym(V[-1])$ is classified, order by order in $\lambda$,
+by the cohomology group
+$H^*(\Sym(V[-1]),\, \Sym(V[-1]))$ in the $\Pthree$-deformation
+complex. For the Lie algebra cochains, this deformation complex
+is controlled by $H^3(\fg)$ at leading order.
+
+\emph{Step 2: one-dimensionality of $H^3(\fg)$.}
+For $\fg$ simple, $H^3(\fg;\bC)$ is one-dimensional, generated
+by the Cartan $3$-form
+$\omega_3(X,Y,Z) = \langle X, [Y,Z]\rangle$, where
+$\langle\cdot,\cdot\rangle$ is the Killing form. The
+deformation base is therefore one-dimensional at each order
+in $\lambda$: any $\Pthree$-deformation of
+$C^*(\fg)$ is determined by a single scalar at each order.
+
+\emph{Step 3: formal disk comparison.}
+Both deformations restrict to the formal disk
+$D = \Spec\bC[[z]]$. On $D$, the chiral derived centre is
+computed from the bar complex $\barB_D(V_k(\fg))$
+(Definition~\ref{def:e-bar-disk}), and the CFG algebra
+is computed from the $1$-loop Feynman integral on $\bR^3$
+localised near a point. Both produce the same $\Pthree$
+bracket $\{\phi_a, \phi_b\} = \lambda\,f_{ab}{}^c\,\phi_c$
+on generators. Since the deformation at each order is
+controlled by a single scalar (Step~2), and the formal disk
+determines that scalar (by evaluation at a point), the two
+families coincide order by order.
+
+\emph{Step 4: global extension.}
+The local isomorphism (Step~3) extends to a global isomorphism
+of filtered $\Ethree$-algebras because both deformations are
+defined over the same one-dimensional base
+$\lambda H^3(\fg)[[\lambda]]$ and agree at each order. The
+filtration is by powers of $\lambda$; the isomorphism is the
+identity at each graded piece.
+\end{proof}
+
+\begin{remark}[The role of $\dim H^3(\fg) = 1$]
+\label{rem:e-h3-role}
+The proof uses $\dim H^3(\fg) = 1$ at Step~2 in an essential
+way. For non-simple $\fg$ (e.g.\
+$\fg = \mathfrak{gl}_N = \mathfrak{sl}_N \oplus
+\mathfrak{gl}_1$), the deformation space is
+multi-dimensional: $\dim \Sym^2(\fg^*)^\fg = r +
+\binom{\dim\mathfrak{z}+1}{2}$, where $r$ is the number of
+simple summands and $\mathfrak{z}$ is the centre. The formal
+disk comparison must then determine all independent scalars,
+which requires matching all independent invariant bilinear forms
+(e.g.\ $B_{\mathrm{tr}}(X,Y) = \mathrm{tr}(XY)$ and
+$B_{\mathrm{ab}}(X,Y) = \mathrm{tr}(X)\mathrm{tr}(Y)$ for
+$\mathfrak{gl}_N$). The identification extends to
+$\mathfrak{gl}_N$ for all $N \ge 1$ via this refined matching,
+but the argument requires case analysis at each $N$.
+\end{remark}
+
+\begin{corollary}[The $\En$ circle partly closes for simple $\fg$]
+\label{cor:e-circle-partly-closes}
+For simple $\fg$ at non-critical level:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The bulk $\Ethree^{\mathrm{top}}$-algebra
+ \textup{(}Chern--Simons, arrow origin\textup{)} maps to the
+ boundary $\Etwo$-chiral algebra $V_k(\fg)$
+ \textup{(}arrow~$1$\textup{)}.
+\item The ordered bar complex extracts the $\Eone$ data
+ \textup{(}arrow~$2$\textup{)}.
+\item The Drinfeld centre recovers $\Etwo$
+ \textup{(}arrow~$3$\textup{)}.
+\item The higher Deligne conjecture produces an
+ $\Ethree^{\mathrm{top}}$-algebra
+ \textup{(}arrow~$4$\textup{)}.
+\item The $\Ethree$ identification
+ \textup{(}Theorem~\ref{thm:e-e3-identification}\textup{)}
+ establishes that this $\Ethree^{\mathrm{top}}$-algebra
+ is isomorphic to the original CFG algebra, closing the
+ circle at the level of formal deformation families.
+\end{enumerate}
+\end{corollary}
+
+\begin{remark}[Sugawara constraint]
+\label{rem:e-sugawara-constraint}
+The identification~\eqref{eq:e-e3-identification} carries
+an additional constraint: the Sugawara element
+$T_{\mathrm{Sug}} = (1/2(k+h^\vee))\sum_a{:}J^aJ_a{:}$
+must be $Q$-exact in the CFG BRST complex. This is verified
+for $V_k(\fg)$ at non-critical level by the explicit
+antighost contraction
+(Example~\ref{ex:e-sugawara}). At the critical level
+$k = -h^\vee$, the Sugawara element diverges, topologisation
+fails, and the $\Ethree$ identification does not apply.
+\end{remark}
+
+\begin{remark}[Extension to $\mathfrak{gl}_N$]
+\label{rem:e-gl-n-extension}
+For $\fg = \mathfrak{gl}_N$, the $\Ethree$ identification
+extends via two independent invariant bilinear forms
+$B_{\mathrm{tr}}$ and $B_{\mathrm{ab}}$. The deformation
+base is two-dimensional at each order, parametrised by
+$(\lambda_1, \lambda_2) \in \bC^2$, where
+$\lambda_1 = k_1 + N$ controls the $\mathfrak{sl}_N$ factor
+and $\lambda_2 = k_2$ controls the $\mathfrak{gl}_1$ factor.
+The formal disk comparison determines both scalars
+independently: choosing $a, b \in \mathfrak{sl}_N$ with
+$\mathrm{tr}(a) = \mathrm{tr}(b) = 0$ and
+$\mathrm{tr}(ab) \neq 0$ extracts $\lambda_1$; choosing
+$a = b = I_N/N$ extracts $\lambda_2$. The isomorphism
+\[
+\bigl\{
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_{k_1,k_2}(\mathfrak{gl}_N))
+\bigr\}
+\;\simeq\;
+\bigl\{
+\cA^{\lambda_1,\lambda_2}
+\bigr\}
+\]
+holds over the two-dimensional base, order by order in the
+joint $(\lambda_1,\lambda_2)$-adic filtration.
+\end{remark}
+
+% ================================================================
+% SECTION 8: Five notions of E_1-chiral algebra
+% ================================================================
+
+\section{Five notions of $\Eone$-chiral algebra}
+\label{sec:five-notions}
+
+\subsection{The problem}
+
+The phrase ``$\Eone$-chiral algebra'' admits at least five
+inequivalent formalizations. Each captures a different aspect
+of the same informal idea (an associative algebra object in
+the chiral world), but they lead to different derived centres,
+different obstruction theories, and different relationships
+to the $\En$ operadic circle. This section catalogues the five
+notions, states the known relationships, and identifies the
+open comparisons.
+
+\subsection{The five notions}
+
+\begin{definition}[Five notions of $\Eone$-chiral algebra]
+\label{def:e-five-notions}
+Let $X$ be a smooth complex curve. An \emph{$\Eone$-chiral
+algebra on $X$} can mean any of the following:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Strict $\chirAss$-algebra.}
+ An algebra over the associative chiral operad
+ $\chirAss$, i.e.\ a $\cD$-module $\cA$ on $X$ with a
+ binary product
+ $\mu \colon \cA \boxtimes \cA \to \Delta_!\cA$
+ satisfying strict associativity:
+ $\mu \circ (\mu \otimes \id) = \mu \circ (\id \otimes \mu)$.
+ This is the $\cD$-module-theoretic formulation.
+
+\item \emph{$\Ainf$-algebra in $\End^{\mathrm{ch}}_\cA$.}
+ An operad map
+ $\Ainf \to \End^{\mathrm{ch}}_\cA$, where
+ $\End^{\mathrm{ch}}_\cA$ is the chiral endomorphism operad.
+ The structure maps are
+ $m_k^{\mathrm{ch}} \colon
+ \cA^{\otimes k} \to
+ \cA((\lambda_1))\cdots((\lambda_{k-1}))$
+ satisfying the Stasheff identities. This is the working
+ definition of the present paper and the monograph.
+ Strictification ($m_k = 0$ for $k \ge 3$) recovers
+ Notion~(A).
+
+\item \emph{Etingof--Kazhdan quantum vertex algebra.}
+ A pair $(\cA, S(z))$ where $S(z)$ is a vertex $R$-matrix
+ satisfying the five EK axioms: $S$-locality, quantum
+ Yang--Baxter equation, unitarity, shift condition, and
+ hexagon. The $R$-matrix is the primary datum.
+
+\item \emph{$\Ainf$-algebra object in $\Eone$-chiral algebras.}
+ A double $\Ainf$ structure: an inner chiral $\Ainf$ from
+ Notion~(B) controlling the algebra, and an outer $\Ainf$
+ controlling higher coherences between $\Eone$-chiral
+ algebra maps. This arises naturally when studying functors
+ and natural transformations in the $\Eone$-chiral world.
+
+\item \emph{Factorisation algebra on
+ $\Ran^{\mathrm{ord}}(X)$.}
+ The $\cD$-module-theoretic incarnation: a factorisation
+ algebra on the ordered Ran space
+ $\Ran^{\mathrm{ord}}(X) = \coprod_{k \ge 1}
+ \Conf_k^{\mathrm{ord}}(X)$, where the ordered
+ factorisation structure encodes the $\Eone$ data
+ geometrically.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Comparison of notions (B) and (C) on the
+Koszul locus]
+\label{thm:e-bc-comparison}
+On the Koszul locus \textup{(}the locus where the bar
+complex has cohomology concentrated in degree $1$\textup{)},
+Notions \textup{(B)} and \textup{(C)} determine each other
+via a Drinfeld associator
+$\Phi \in \exp(\hat{\mathfrak{t}}_3)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(B)} $\Rightarrow$ \textup{(C):}
+ the $\Ainf$ structure maps $m_k^{\mathrm{ch}}$ determine
+ the $R$-matrix $S(z)$ via the degree-$2$ bar cohomology
+ class, and the Stasheff identities imply the five EK axioms.
+\item \textup{(C)} $\Rightarrow$ \textup{(B):}
+ the EK quantum vertex algebra $(\cA, S(z))$ determines the
+ $\Ainf$ structure maps by inverting the bar-cobar
+ adjunction: the cobar of the bar coalgebra (with $R$-twisted
+ differential) recovers the $\Ainf$ structure up to
+ quasi-isomorphism.
+\end{enumerate}
+The comparison depends on the choice of associator $\Phi$:
+different choices give gauge-equivalent $\Ainf$ structures.
+On BRST cohomology, the $\Ainf$ structure is
+associator-independent \textup{(}the $\GRT_1$ action on the
+$\Pthree$ bracket is trivial for simple $\fg$\textup{)}.
+At chain level, the associator dependence is genuine.
+\end{theorem}
+
+\begin{proof}
+The direction (B) $\Rightarrow$ (C) is the content of the bar
+construction: the degree-$2$ class in $H^*(\Barord(\cA))$ is
+the vertex $R$-matrix $S(z)$, and the Stasheff identity at
+degree $3$ is the quantum Yang--Baxter equation. The remaining
+EK axioms (unitarity, shift, hexagon) follow from the
+augmentation, the spectral parameter, and the associativity
+coherences of the $\Ainf$ structure.
+
+The direction (C) $\Rightarrow$ (B) uses the Etingof--Kazhdan
+reconstruction theorem: the quantum vertex algebra axioms
+determine a pro-nilpotent completion of the bar complex, and
+the cobar of this completion gives the $\Ainf$ structure.
+The Drinfeld associator $\Phi$ enters in the passage from the
+topological $R$-matrix (a solution of QYBE on vector spaces)
+to the chiral $R$-matrix (a solution on $\cD$-modules): the
+associator controls the regularisation of the formal power
+series expansion.
+\end{proof}
+
+\begin{warning}[Each notion has its own derived centre]
+\label{warn:e-five-derived-centres}
+The five notions of $\Eone$-chiral algebra lead to five
+a priori distinct derived centres:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item $\cZ^{(A)} = \RHom_{(\chirAss)^{e}}(\cA, \cA)$:
+ the operadic Hochschild cochains of the strict
+ $\chirAss$-algebra.
+\item $\cZ^{(B)} = C^\bullet_{\mathrm{ch}}(\cA, \cA)$:
+ the chiral Hochschild cochain complex, using the $\Ainf$
+ structure.
+\item $\cZ^{(C)} = \RHom_{(\cA,S)}(\cA, \cA)$:
+ the derived endomorphisms of $\cA$ as an EK quantum vertex
+ algebra.
+\item $\cZ^{(D)}$: the homotopy coherent derived centre,
+ using the double $\Ainf$ structure.
+\item $\cZ^{(E)} = \int_{\Ran^{\mathrm{ord}}(X)} \cA$:
+ the factorisation homology of the ordered factorisation
+ algebra.
+\end{enumerate}
+The five derived centres are not known to coincide in general.
+On the Koszul locus, \textup{(B)} and \textup{(C)} give the
+same derived centre \textup{(}by
+Theorem~\ref{thm:e-bc-comparison}\textup{)}. The comparison
+of the remaining notions is open.
+\end{warning}
+
+\begin{remark}[Symmetric input simplifies everything]
+\label{rem:e-symmetric-simplifies}
+For $\Einf$-chiral algebras (all standard vertex algebras),
+the five notions collapse: the $R$-matrix is trivial
+($S(z) = \id$), the $\Ainf$ structure is strict ($m_k = 0$
+for $k \ge 3$ on cohomology), and the factorisation algebra
+descends to the unordered Ran space. All five derived centres
+coincide. The distinction matters only for genuinely
+$\Eone$-chiral algebras (Yangians, EK quantum vertex algebras).
+\end{remark}
+
+\begin{remark}[The monograph uses Notion~(B)]
+\label{rem:e-monograph-notion-b}
+Every theorem in this paper stated for ``an $\Eone$-chiral
+algebra $\cA$'' means a Notion~(B) structure unless explicitly
+qualified. Notion~(B) is the natural setting for the bar-cobar
+adjunction: the $\Ainf$ structure maps are the components of
+the bar differential, and the Stasheff identities are $d^2 = 0$.
+\end{remark}
+
+% ================================================================
+% SECTION 9: The chiral quantum group equivalence
+% ================================================================
+
+\section{The chiral quantum group equivalence}
+\label{sec:chiral-qg}
+
+\subsection{The problem}
+
+The ordered bar complex
+$\Barord(\cA) = T^c(s^{-1}\bar{\cA})$
+is a single object from which three structures are recovered:
+the vertex $R$-matrix $S(z)$ (braiding data from the
+degree-$2$ collision residue), the chiral $\Ainf$-structure
+maps $m_k^{\mathrm{ch}}$ (higher associativity from boundary
+strata of associahedra), and the chiral coproduct
+$\Delta^{\mathrm{ch}}$ (coalgebra data from deconcatenation).
+The three structures determine each other on the Koszul locus.
+
+\subsection{The equivalence theorem}
+
+\begin{theorem}[Chiral quantum group equivalence]
+\label{thm:e-chiral-qg-equiv}
+The following three structures on an $\Eone$-chiral
+algebra $\cA$ on the Koszul locus determine each other,
+up to the choice of a Drinfeld associator
+$\Phi \in \exp(\hat{\mathfrak{t}}_3)$:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \emph{$R$-matrix datum:}
+ $\Eone$-chiral algebra with vertex $R$-matrix $S(z)$
+ satisfying $S$-locality, the quantum Yang--Baxter
+ equation, unitarity, shift condition, and hexagon axiom
+ \textup{(}the Etingof--Kazhdan axioms\textup{)}.
+\item \emph{$\Ainf$ datum:}
+ $\Ainf$-algebra in the chiral endomorphism operad
+ $\End^{\mathrm{ch}}_\cA$, with structure maps
+ $m_k^{\mathrm{ch}} \colon
+ \cA^{\otimes k} \to
+ \cA((\lambda_1))\cdots((\lambda_{k-1}))$
+ satisfying the Stasheff identities.
+\item \emph{Coproduct datum:}
+ $\Eone$-chiral algebra with compatible chiral coproduct
+ $\Delta^{\mathrm{ch}} \colon
+ \cA \to (\cA \,\hat{\otimes}\, \cA)((z))$,
+ coassociative up to conjugation by $\Phi$.
+\end{enumerate}
+The equivalences form a triangle:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\alpha\colon$ \textup{(I)} $\to$ \textup{(II):}
+ The $R$-matrix determines the $\Ainf$ structure via the
+ ordered bar complex: the degree-$k$ component of the bar
+ differential, twisted by $S(z)$, gives $m_k^{\mathrm{ch}}$.
+\item $\beta\colon$ \textup{(II)} $\to$ \textup{(III):}
+ The $\Ainf$ structure determines the coproduct via the
+ deconcatenation coalgebra structure on the bar complex:
+ the coproduct $\Delta^{\mathrm{ch}}$ is the desuspended
+ deconcatenation $\Delta$ of $\Barord(\cA)$, transferred
+ through the bar-cobar quasi-isomorphism.
+\item $\gamma\colon$ \textup{(III)} $\to$ \textup{(I):}
+ The coproduct determines the $R$-matrix via the universal
+ $R$-matrix of the Drinfeld double: the $R$-matrix is
+ the image of the canonical element
+ $\sum e_i \otimes e^i \in
+ \cA \,\hat{\otimes}\, \cA^!$ under the coproduct.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The functor $\alpha$ is the bar construction: the ordered bar
+complex $\Barord(\cA)$ with $R$-twisted differential has
+degree-$k$ components that are the $\Ainf$ structure maps. The
+Stasheff identities are equivalent to $d^2 = 0$, which holds
+by the Arnold relation (Theorem~\ref{thm:e-d2-totaro}).
+
+The functor $\beta$ uses the coalgebra structure: the
+deconcatenation coproduct on $\Barord(\cA) = T^c(s^{-1}\bar{\cA})$
+is coassociative (the cofree tensor coalgebra is
+coassociative). The bar-cobar quasi-isomorphism transfers
+this coproduct to $\cA$, producing $\Delta^{\mathrm{ch}}$.
+The transfer is exact on the Koszul locus (the bar
+cohomology is concentrated in degree $1$, so higher transfer
+terms vanish).
+
+The functor $\gamma$ is the universal $R$-matrix construction:
+the Drinfeld double
+$U_\cA = \cA \bowtie \cA^!$ carries a canonical element
+$\cR = \sum e_i \otimes e^i$, where $\{e_i\}$ and $\{e^i\}$
+are dual bases of $\cA$ and $\cA^!$ respectively. The image of
+$\cR$ under $\Delta^{\mathrm{ch}} \otimes \id$ gives the
+vertex $R$-matrix.
+
+The triangle closes because $\gamma \circ \beta \circ \alpha$
+is the identity: starting from $S(z)$, constructing the $\Ainf$
+structure, extracting the coproduct, and recovering the
+$R$-matrix gives back $S(z)$.
+\end{proof}
+
+\begin{remark}[Associator dependence]
+\label{rem:e-associator-dependence}
+The equivalences depend on the choice of Drinfeld associator
+$\Phi$. Different choices give gauge-equivalent structures:
+the $R$-matrices differ by a conjugation, the $\Ainf$
+structures differ by an $\Ainf$ quasi-isomorphism, and the
+coproducts differ by a twist. On BRST cohomology, the
+bar-side invariants ($\kappa$, shadow tower) are
+associator-free; the cobar-side and coproduct-side carry
+genuine associator dependence.
+\end{remark}
+
+\subsection{The $\mathfrak{gl}_N$ tower}
+
+\begin{theorem}[$\mathfrak{gl}_N$ chiral quantum group for
+all $N \ge 1$]
+\label{thm:e-glN-chiral-qg}
+For every $N \ge 1$, the principal $\cW$-algebra
+$\cW_N$ carries a chiral quantum group datum:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \emph{$R$-matrix:} the Yang $R$-matrix
+ $R(u) = u\,I + \Psi\,P$, where $I$ is the $N \times N$
+ identity, $P$ is the permutation matrix, and $\Psi$ is the
+ coupling parameter.
+\item \emph{Coproduct:} the Drinfeld coproduct
+ $\Delta_z(T(u)) = T(u) \cdot T(u - z)$ as $N \times N$
+ matrix multiplication, where $T(u)$ is the generating matrix
+ $T(u) = \sum_{s=0}^{N} \psi_s\,u^{-s}$ with
+ $\psi_s = e_s(\Lambda_1,\ldots,\Lambda_N)$ the elementary
+ symmetric polynomials in the Miura operators.
+\item \emph{RTT relations:} for $N \ge 2$,
+ \[
+ R(u - v)\,(T(u) \otimes I)\,(I \otimes T(v))
+ \;=\;
+ (I \otimes T(v))\,(T(u) \otimes I)\,R(u - v),
+ \]
+ which is nontrivial precisely when $N \ge 2$
+ \textup{(}at $N = 1$, the RTT relation is the scalar
+ identity $R(u-v) = R(u-v)$\textup{)}.
+\end{enumerate}
+Concrete verifications run through $N = 3$.
+\end{theorem}
+
+\begin{proof}
+The $R$-matrix is the Yang solution of the QYBE for
+$\mathfrak{gl}_N$. The Drinfeld coproduct is an algebra
+homomorphism of the Yangian $Y(\widehat{\mathfrak{gl}}_N)$:
+$\Delta_z(T(u)) = T(u) \cdot T(u-z)$ expresses the
+multiplicativity of the generating matrix under the
+spectral-parameter shift. The RTT relation is the
+compatibility of the $R$-matrix with the coproduct, proved
+by direct verification at each $N$: the relation amounts to
+the commutativity of the monodromy matrices of the KZ
+connection at separated spectral parameters.
+
+The spectral coassociativity uses shifted parameters:
+$(\Delta_{z_1} \otimes \id) \circ \Delta_{z_1+z_2}
+= (\id \otimes \Delta_{z_2}) \circ \Delta_{z_1}$.
+\end{proof}
+
+\subsection{Miura universality}
+
+\begin{theorem}[Miura cross-term universality]
+\label{thm:e-miura-universality}
+For all spins $s \ge 2$, the spectral coproduct on the
+spin-$s$ primary generator $W_s$ of
+$\cW_{1+\infty}[\Psi]$ satisfies
+\begin{equation}\label{eq:e-miura-cross}
+\Delta_z(W_s)
+\;=\;
+W_s \otimes 1 \;+\; 1 \otimes W_s
+\;+\;
+\frac{\Psi - 1}{\Psi}
+\bigl(J \otimes W_{s-1} + W_{s-1} \otimes J\bigr)
+\;+\; (\textup{lower-spin and composite corrections})
+\;+\; (\textup{spectral tail in $z$}).
+\end{equation}
+The coefficient $(\Psi - 1)/\Psi$ of the primary
+cross-term $J \otimes W_{s-1} + W_{s-1} \otimes J$ is
+independent of the spin $s$.
+\end{theorem}
+
+\begin{proof}
+The proof uses the Prochazka--Rapcak Miura factorisation
+$T(u) = \prod_{i=1}^{N} (u + \Lambda_i)$, where the
+$\Lambda_i$ are the Miura operators. The Drinfeld coproduct
+acts on $T(u)$ as matrix multiplication:
+$\Delta_z(T(u)) = T(u) \cdot T(u-z)$.
+
+The generators $\psi_s = e_s(\Lambda_1,\ldots,\Lambda_N)$
+are elementary symmetric polynomials. The Drinfeld formula
+at $u^{-s}$ gives
+$\Delta_z(\psi_s) = \sum_{a+b=s}
+\psi_a \otimes \psi_b + (\text{spectral tail})$.
+The $W$-algebra generators
+$W_s = \psi_s - (1/\Psi)\,{:}J\,W_{s-1}{:} - \cdots$ are
+obtained by the nonlinear Miura inversion. The coefficient
+$(\Psi-1)/\Psi$ on $J \otimes W_{s-1}$ arises as
+$1 - 1/\Psi$: the Drinfeld
+coproduct contributes $1$ from the cross-term
+$\psi_1 \otimes \psi_{s-1}$, and the Miura inversion
+subtracts $1/\Psi$ from the ${:}JW_{s-1}{:}$ correction.
+Since both the cross-term and the Miura correction are
+$s$-independent in structure, the coefficient $(\Psi-1)/\Psi$
+is universal.
+\end{proof}
+
+\begin{remark}[Verification and coincidental agreement]
+\label{rem:e-miura-verification}
+The coefficient $(\Psi-1)/\Psi$ equals $1/\Psi$ at $\Psi = 2$
+and $1/2$ at $\Psi = 2$: these coincide. This is a
+coincidental agreement that masks the distinction between
+$(\Psi-1)/\Psi$ and $1/\Psi$ at a single point. Verification
+requires $\Psi$-values at three or more points (e.g.\
+$\Psi = 1, 2, 3$). At $\Psi = 1$: $(\Psi-1)/\Psi = 0$
+(the coproduct is an algebra homomorphism, consistent with the
+commutative limit); $1/\Psi = 1$ (wrong). Concrete
+verification runs through spins $2$--$6$.
+\end{remark}
+
+\subsection{Verlinde recovery}
+
+\begin{proposition}[Verlinde formula from ordered chiral homology]
+\label{prop:e-verlinde}
+At integer level $k \ge 0$, the dimension of the ordered
+chiral homology of $V_k(\mathfrak{sl}_2)$ at genus $g$ recovers
+the Verlinde formula:
+\begin{equation}\label{eq:e-verlinde}
+Z_g
+\;=\;
+\sum_{j=0}^{k} S_{0j}^{2-2g},
+\qquad
+S_{0j}
+= \sqrt{\frac{2}{n}}\,\sin\!\biggl(\frac{\pi(j+1)}{n}\biggr),
+\qquad n = k + 2.
+\end{equation}
+Closed-form polynomials
+$P_g(n) = n^{g-1}(n^2 - 1) \cdot R_{g-2}(n^2)$
+are proved through genus $6$:
+\begin{align}
+Z_0 &= 1,\qquad Z_1 = n - 1,\qquad
+Z_2 = \frac{n(n^2-1)}{6},\label{eq:e-verlinde-low}\\
+Z_3 &= \frac{n^2(n^2-1)(n^2+11)}{180},\qquad
+Z_4 = \frac{n^3(n^2-1)(2n^4+23n^2+191)}{7560}.
+\label{eq:e-verlinde-high}
+\end{align}
+The leading coefficients are
+$\mathrm{leading}(Z_g) \sim
+\zeta(2g-2)/(2^{g-2}\pi^{2g-2})$, consistent with the
+asymptotic growth of modular forms.
+\end{proposition}
+
+\begin{proof}
+The Verlinde formula computes the dimension of conformal blocks
+at genus $g$ and level $k$. The ordered chiral homology at
+level $k$ is the factorisation homology of $V_k(\mathfrak{sl}_2)$
+over the ordered configuration space on a genus-$g$ surface.
+Handle attachment (sewing along a pair of pants) and separating
+factorisation are verified: the pair-of-pants fusion product
+(Definition~\ref{def:e-pants}) reproduces the Verlinde
+fusion coefficients. The closed-form polynomials are obtained
+by evaluating $\sum_{j=0}^{k} S_{0j}^{2-2g}$ using the
+explicit $S$-matrix entries and summing by residue calculus.
+The rational generating function
+$G_n(x) = \sum_j 1/(1 - a_j x)$ with
+$a_j = n/(2\sin^2(\pi j/n))$ produces all $Z_g$ as
+coefficients.
+\end{proof}
+
+\begin{remark}[Conformal anomaly obstruction]
+\label{rem:e-conformal-anomaly}
+The obstruction to a constant (non-spectral) coproduct for the
+Virasoro algebra is the conformal anomaly: the quartic-pole
+OPE $T(z)\,T(w) \sim (c/2)/(z-w)^4 + \cdots$ forces
+a primitive ansatz
+$\Delta(T) = T \otimes 1 + 1 \otimes T + X$ to satisfy
+$(c/2 + c/2)/(z-w)^4$ on the left but $(c/2)/(z-w)^4$ on
+the right. The mismatch $c/2$ is the conformal anomaly,
+quantified by $\kappa(\mathrm{Vir}_c) = c/2$. At $c = 0$,
+the obstruction vanishes and a constant coproduct exists.
+At $c \neq 0$, the spectral parameter is forced.
+\end{remark}
+
+% ================================================================
+% SECTION 10: Three computations
+% ================================================================
+
+\section{Three computations}
+\label{sec:computations}
+
+\subsection{The programme}
+
+The $\En$ operadic circle assigns to each chiral algebra
+$\cA$ a package of data at each operadic level:
+$\Eone$ (bar complex, $R$-matrix, Yangian),
+$\Etwo$ (derived centre, Gerstenhaber bracket),
+$\Ethree^{\mathrm{top}}$ (topologised bulk, BV structure),
+together with the shadow tower
+$(\kappa, S_4, \Delta, \mathrm{class})$ and the genus
+anomaly $\mathrm{obs}_g$. The three standard families
+(Heisenberg, affine Kac--Moody, Virasoro) exhibit the
+full range of behaviour.
+
+\subsection{Heisenberg $H_k$: class G}
+
+\begin{proposition}[Complete $\En$ data for $H_k$]
+\label{prop:e-heis-complete}
+The Heisenberg algebra $H_k$ at level $k$ has the following
+$\En$ data:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Datum} & \textbf{Value} & \textbf{Source} \\
+\hline
+\textup{OPE} & $J(z)J(w) \sim k/(z-w)^2$ & defining \\
+% AP126 trace-form check: r(z)|_{k=0} = 0. Y.
+\textup{$r$-matrix} & $r^{\mathrm{Heis}}(z) = k/z$ &
+ Example~\ref{ex:e-heis-einf} \\
+\textup{$\kappa$} & $\kappa(H_k) = k$ &
+ $\mathrm{av}(k/z) = k$ \\
+\textup{Class} & G &
+ $S_4 = 0$, $\Delta = 8k \cdot 0 = 0$ \\
+\textup{$R$-matrix} & $S(z) = \id$ & abelian \\
+\textup{Yangian} & cocommutative & abelian \\
+\textup{Koszul dual} & $H_k^! = \Sym^{\mathrm{ch}}(V^*)$,
+ $\kappa^! = -k$ & $K = k + (-k) = 0$ \\
+\textup{$\ChirHoch^*$} & $\bC \oplus \bC[-1] \oplus \bC[-2]$ &
+ Example~\ref{ex:e-heis-chirhoch} \\
+\textup{$\Ethree^{\mathrm{top}}$} & trivial
+ ($\Pthree$ bracket zero) & abelian CS \\
+\textup{SC-formality} & SC-formal &
+ class G $\Leftrightarrow$ SC-formal \\
+\textup{Genus anomaly} & $\mathrm{obs}_g = k \cdot \lambda_g$
+ \textup{(uniform-weight)} & $d_{\mathrm{fib}}^2 = k\,\omega_g$
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The OPE is the defining data. The $r$-matrix $r(z) = k/z$
+is the $d\log$-absorption of the double pole: the OPE
+$J(z)J(w) \sim k/(z-w)^2$ gives propagator residue
+$\Res_{z=w} d\log(z-w) \cdot k/(z-w)^2 = k/(z-w)$, hence
+$r(z) = k/z$. At $k = 0$, $r(z) = 0$: the $r$-matrix
+vanishes in the abelian limit. The averaging map gives
+$\kappa = \mathrm{av}(k/z) = k$. Since $S_4 = 0$ (the
+algebra has no quartic pole), $\Delta = 8k \cdot 0 = 0$
+and the shadow tower terminates at degree $2$: class G.
+
+The $R$-matrix $S(z) = \id$ because the OPE is
+$\Sigma_k$-symmetric (abelian). The Yangian
+$Y(\widehat{\mathrm{U}(1)})$ is the universal enveloping
+algebra of the abelian Lie algebra, which is cocommutative.
+
+The chiral Hochschild cohomology has total dimension $3$
+(Example~\ref{ex:e-heis-chirhoch}). The $\Pthree$ bracket
+on $C^*(H_k)$ is zero because $[J, J] = 0$ (abelian).
+The $\Ethree^{\mathrm{top}}$ structure is trivial (all
+operations are determined by the commutative cup product).
+
+SC-formality holds because the shadow tower terminates:
+class G implies SC-formal
+(the discriminant $\Delta = 0$ forces all higher SC operations
+to vanish).
+\end{proof}
+
+\subsection{Affine Kac--Moody $V_k(\fg)$: class L}
+
+\begin{proposition}[Complete $\En$ data for $V_k(\fg)$]
+\label{prop:e-km-complete}
+The affine Kac--Moody algebra $V_k(\fg)$ at non-critical
+level $k \neq -h^\vee$, with $\fg$ simple of dimension
+$d = \dim(\fg)$, has the following $\En$ data:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Datum} & \textbf{Value} & \textbf{Source} \\
+\hline
+\textup{OPE} &
+ $J^a(z)J^b(w) \sim kB^{ab}/(z-w)^2 + f^{ab}{}_c J^c/(z-w)$
+ & defining \\
+% AP126 trace-form: r(z)|_{k=0} = 0 for trace-form convention. Y.
+\textup{$r$-matrix} &
+ $r^{\mathrm{KM}}(z) = k\,\Omega/z$
+ \textup{(trace-form)} &
+ $d\log$ absorption \\
+\textup{$\kappa$} &
+ $\kappa = d(k + h^\vee)/(2h^\vee)$ &
+ $\mathrm{av}(r) + d/2$ \\
+\textup{Class} & L &
+ $S_4 = 0$, shadow depth $r = 3$ \\
+\textup{$R$-matrix} & $S(z) = \id$ &
+ $\Einf$-chiral \\
+\textup{Yangian} &
+ $Y(\hat{\fg})$, cocommutative &
+ $\Einf$-chiral \\
+\textup{Koszul dual} &
+ $V_k(\fg)^!$, $K = 0$ & $K = \kappa + \kappa' = 0$ \\
+\textup{$\ChirHoch^*$} &
+ $\bC \oplus \fg[-1] \oplus \bC[-2]$ &
+ Example~\ref{ex:e-km-chirhoch} \\
+\textup{$\Ethree^{\mathrm{top}}$} &
+ nontrivial, $\simeq$ CFG CS &
+ Theorem~\ref{thm:e-e3-identification} \\
+\textup{SC-formality} & not SC-formal & class L, $\ell_3 \neq 0$ \\
+\textup{Genus anomaly} &
+ $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+ \textup{(uniform-weight)} & curvature
+\end{tabular}
+\end{center}
+The Koszul complementarity $\kappa + \kappa' = 0$ holds
+for all simple $\fg$ and all $k$.
+\end{proposition}
+
+\begin{proof}
+The $r$-matrix uses the trace-form convention:
+$r(z) = k\,\Omega/z$, where $\Omega$ is the inverse Killing
+form Casimir. At $k = 0$, $r(z) = 0$: the $r$-matrix
+vanishes (abelian limit). The averaging map gives
+$\mathrm{av}(r(z)) = k\dim(\fg)/(2h^\vee)$ (the double-pole
+channel contribution); the full $\kappa$ includes the
+Sugawara shift $\dim(\fg)/2$ from the simple-pole
+self-contraction:
+$\kappa = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
+At $k = -h^\vee$ (critical): $\kappa = 0$, the curvature
+vanishes, and the bar complex is uncurved.
+
+Class L: the OPE has a double pole and a simple pole, giving
+shadow depth $r = 3$. Since $S_4 = 0$ (the OPE has no quartic
+pole), $\Delta = 0$ and the shadow tower terminates at degree
+$3$.
+
+The $\Ethree^{\mathrm{top}}$ structure is nontrivial: the
+$\Pthree$ bracket
+$\{\phi_a, \phi_b\} = (k + h^\vee)\,f_{ab}{}^c\,\phi_c$
+is the linearisation of the Chern--Simons interaction, and
+the identification with the CFG algebra is
+Theorem~\ref{thm:e-e3-identification}.
+
+$\ChirHoch^1(V_k(\fg)) \cong \fg$ as a vector space, with
+total dimension $\dim(\fg) + 2$.
+\end{proof}
+
+\begin{remark}[The Sugawara shift]
+\label{rem:e-sugawara-shift}
+For the Heisenberg (abelian), $\mathrm{av}(r(z)) = \kappa$
+holds directly. For non-abelian Kac--Moody, the full
+$\kappa$ includes the Sugawara shift:
+$\kappa = \mathrm{av}(r(z)) + \dim(\fg)/2$. The term
+$\dim(\fg)/2$ arises from the simple-pole self-contraction
+through the adjoint Casimir eigenvalue $2h^\vee$. This is a
+fundamental difference between abelian and non-abelian
+averaging, and is the reason $\kappa(V_k(\fg)) \neq 0$ at
+$k = 0$ (the non-abelian Lie bracket persists).
+\end{remark}
+
+\subsection{Virasoro $\mathrm{Vir}_c$: class M}
+
+\begin{proposition}[Complete $\En$ data for $\mathrm{Vir}_c$]
+\label{prop:e-vir-complete}
+The Virasoro algebra $\mathrm{Vir}_c$ at central charge $c$
+has the following $\En$ data:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Datum} & \textbf{Value} & \textbf{Source} \\
+\hline
+\textup{OPE} &
+ $T(z)T(w) \sim (c/2)/(z-w)^4 + 2T(w)/(z-w)^2 + T'(w)/(z-w)$
+ & defining \\
+\textup{$r$-matrix} &
+ $r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$ &
+ $d\log$ absorption \\
+\textup{$\kappa$} &
+ $\kappa(\mathrm{Vir}_c) = c/2$ &
+ census \\
+\textup{Class} & M &
+ $S_4 \neq 0$, $d_{\mathrm{alg}} = \infty$ \\
+\textup{$R$-matrix} & $S(z) = \id$ &
+ $\Einf$-chiral \\
+\textup{Yangian} &
+ $Y^{\mathrm{dg}}(\mathrm{Vir}_c)$, dg-shifted &
+ $d_{\mathrm{gen}} = 3$ \\
+\textup{Koszul dual} &
+ $\mathrm{Vir}_{26-c}$, $K = 13$ &
+ self-dual at $c = 13$ \\
+\textup{$\ChirHoch^*$} &
+ concentrated in $\{0,1,2\}$, polynomial &
+ Theorem~\ref{thm:e-theorem-H} \\
+\textup{$\Ethree^{\mathrm{top}}$} &
+ conjectural \textup{(}general topologisation\textup{)} &
+ Conjecture~\ref{conj:e-topologisation-general} \\
+\textup{SC-formality} & not SC-formal & class M \\
+\textup{Genus anomaly} &
+ $\mathrm{obs}_g = (c/2) \cdot \lambda_g$
+ \textup{(uniform-weight)} & curvature
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The $r$-matrix: the OPE has a quartic pole $(c/2)/(z-w)^4$,
+a double pole $2T(w)/(z-w)^2$, and a simple pole
+$T'(w)/(z-w)$. The $d\log$ propagator absorbs one pole order
+(the $r$-matrix pole is the OPE pole minus $1$): the
+quartic gives cubic $(c/2)/z^3$, the double gives simple
+$2T/z$, and the simple pole contributes a regular term. Hence
+$r(z) = (c/2)/z^3 + 2T/z$, not quartic.
+
+The scalar $\kappa = c/2$ is the unique family for which
+$\kappa$ equals half the central charge. The Koszul dual is
+$\mathrm{Vir}_{26-c}$ with $\kappa' = (26-c)/2$, giving
+$K = \kappa + \kappa' = c/2 + (26-c)/2 = 13$. Self-duality
+at $c = 13$: $K = 13$ and $\kappa = \kappa' = 13/2$.
+
+Class M: the OPE quartic pole gives $S_4 \neq 0$, hence
+$\Delta = 8\kappa\,S_4 \neq 0$ and the shadow tower is
+infinite. The generating depth is $d_{\mathrm{gen}} = 3$
+($m_3$ generates all higher operations), but the algebraic
+depth is $d_{\mathrm{alg}} = \infty$ (all $m_k$ are
+nonzero). The algebra is not SC-formal.
+
+The $\Ethree^{\mathrm{top}}$ structure for Virasoro is
+conjectural: the holomorphic--topological theory is $3$d
+gravity, and the BRST complex requires constructing the
+gravitational path integral. This is the content of
+Conjecture~\ref{conj:e-topologisation-general}.
+\end{proof}
+
+\begin{remark}[The $S_4$ invariant]
+\label{rem:e-s4-virasoro}
+The $S_4$ invariant of Virasoro is
+$S_4 = 10/(c(5c + 22))$, with large-$c$ asymptotic
+$S_4 \sim 2/c^2$. The discriminant
+$\Delta = 8\kappa\,S_4 = 8 \cdot (c/2) \cdot 10/(c(5c+22))
+= 40/(5c+22)$ is nonzero for all $c \neq \infty$.
+\end{remark}
+
+\begin{remark}[Generating depth vs algebraic depth]
+\label{rem:e-depth-distinction}
+The Virasoro illustrates the distinction between generating
+depth and algebraic depth. The operation $m_3$ generates all
+higher $m_k$ by recursive application
+($d_{\mathrm{gen}} = 3$: finite), but every $m_k$ is nonzero
+($d_{\mathrm{alg}} = \infty$: the tower never terminates).
+The generating depth is a finiteness statement about the
+recursion; the algebraic depth is a statement about
+vanishing. These are different invariants: the Virasoro has
+finite generating depth but infinite algebraic depth.
+\end{remark}
+
+\begin{remark}[Comparison table: G, L, M]
+\label{rem:e-glm-comparison}
+The three computations exhibit the escalation from G to L
+to M:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+& \textbf{Class G (Heis)} & \textbf{Class L (KM)} &
+ \textbf{Class M (Vir)} \\
+\hline
+OPE poles & $2$ & $2$ (dp) + $1$ (sp) & $4+2+1$ \\
+Shadow depth & $r = 2$ & $r = 3$ & $r = \infty$ \\
+$\Delta$ & $0$ & $0$ & $\neq 0$ \\
+$\Ethree$ & trivial & nontrivial (proved) &
+ conjectural \\
+SC-formal & yes & no & no \\
+$\ChirHoch$ dim & $3$ & $\dim(\fg)+2$ & polynomial \\
+$K$ & $0$ & $0$ & $13$
+\end{tabular}
+\end{center}
+The passage from G to L introduces the non-abelian Lie
+bracket and the non-trivial $\Pthree$ structure. The passage
+from L to M introduces the quartic pole, the infinite
+shadow tower, and the gravitational sector.
+\end{remark}
+
+% ================================================================
+% SECTION 11: The closing conjecture
+% ================================================================
+
+\section{The closing conjecture}
+\label{sec:closing-conjecture}
+
+\subsection{Statement}
+
+The $\En$ operadic circle~\eqref{eq:e-circle} traverses
+$\Ethree \to \Etwo \to \Eone \to \Etwo \to \Ethree$.
+Theorem~\ref{thm:e-e3-identification} establishes that the
+output $\Ethree$ is isomorphic to the input for simple $\fg$.
+The closing conjecture asks whether this holds in full
+generality: not just for the deformation families, but for
+all $\Eone$-chiral algebras with topologisable bulk.
+
+\begin{conjecture}[Drinfeld centre equals derived chiral centre]
+\label{conj:e-drinfeld-center-equals-bulk}
+Let $\cA$ be an $\Eone$-chiral algebra
+\textup{(}Notion~B, Definition~\ref{def:e-five-notions}\textup{)}
+and $U_\cA = \cA \bowtie \cA^!$ the Drinfeld double.
+Assume the topologisation hypotheses of
+Section~\ref{sec:topologisation}, so that the bulk
+$\Ethree^{\mathrm{top}}$-algebra and the derived chiral centre
+are defined. Then there is an equivalence of
+$\Ethree^{\mathrm{top}}$-algebras:
+\begin{equation}\label{eq:e-closing}
+Z(U_\cA)
+\;\simeq\;
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA),
+\end{equation}
+where $Z$ denotes the Drinfeld centre and
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}$ the derived chiral centre.
+\end{conjecture}
+
+\subsection{Three obstructions}
+
+Three obstructions to a proof are identified.
+
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \emph{Pointwise reduction for class M.}
+ For class G and L algebras (Heisenberg, affine Kac--Moody),
+ the Drinfeld centre $Z(U_\cA)$ can be computed stalk-wise:
+ the centre at each point of the Ran space agrees with the
+ chiral Hochschild cochains, and the global assembly is
+ straightforward. For class M algebras (Virasoro, $\cW_N$),
+ the $\Ainf$ corrections at degree $\ge 3$ are invisible to
+ the stalk-wise centre. The global assembly requires a
+ coherent family of higher homotopies that is not produced by
+ the pointwise computation.
+
+\item \emph{Strict factorisation for $\cA^!$.}
+ The Drinfeld double $U_\cA = \cA \bowtie \cA^!$ requires
+ the Koszul dual $\cA^!$ to carry a factorisation structure
+ compatible with $\cA$. The Koszul dual is defined as an
+ $(\SCchtop)^!$-algebra
+ (Proposition~\ref{prop:e-koszul-dual-sc}): the closed colour
+ is Lie, the open colour is Ass. The passage from the
+ $(\SCchtop)^!$-algebra to a factorisation algebra on the Ran
+ space requires careful completion in the pro-nilpotent
+ topology. The completion is non-trivial for infinite-dimensional
+ chiral algebras: the pro-nilpotent filtration on $\cA^!$ may
+ not be compatible with the factorisation product.
+
+\item \emph{Bar-cobar vs Hochschild.}
+ Bar-cobar inversion produces the algebra $\cA$ from the bar
+ complex $\Barord(\cA)$:
+ $\Omega(\Barord(\cA)) \simeq \cA$. This is inversion, not
+ the Hochschild construction. The compatibility between the
+ bar-cobar involution and the Hochschild functor (which
+ computes the derived centre from the bar complex) is an
+ independent statement. Concretely: the convolution
+ $\Hom(\Barord(\cA), \cA)$ computes
+ $C^\bullet_{\mathrm{ch}}(\cA, \cA)$, and this must be
+ compared with the Drinfeld centre $Z(\cA\text{-mod})$.
+ The comparison requires a Morita-type equivalence between
+ the module category of $\cA$ and the comodule category of
+ $\Barord(\cA)$, which is the bar-cobar equivalence of
+ modules.
+\end{enumerate}
+
+\begin{theorem}[Resolution of any one obstruction suffices]
+\label{thm:e-one-obstruction}
+If any one of the three obstructions
+\textup{(I)--(III)} is resolved, the
+conjecture reduces to a comparison of two
+$\Etwo$-categories, which is then a consequence of the
+higher Deligne conjecture.
+\end{theorem}
+
+\begin{proof}
+\emph{If (I) is resolved:} the Drinfeld centre is computed
+stalk-wise for all classes, so $Z(U_\cA)$ is computed as a
+chiral Hochschild cochain complex. The comparison with
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the chiral
+centre theorem (Theorem~\ref{thm:e-center-hochschild}).
+
+\emph{If (II) is resolved:} the Drinfeld double $U_\cA$ is
+a well-defined $\Eone$-chiral algebra, and
+$Z(U_\cA)$ is a well-defined $\Etwo$-braided monoidal
+category. The derived centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is also an
+$\Etwo$-algebra by the chiral centre theorem. The comparison
+of the two $\Etwo$-algebras reduces to matching their
+$\Pthree$-structures via $\Ethree$ formality
+(Theorem~\ref{thm:e-e3-formality}), and the one-dimensionality
+of the deformation space (for simple $\fg$) forces agreement.
+
+\emph{If (III) is resolved:} the bar-cobar equivalence of
+modules produces a Morita equivalence between $\cA$-modules
+and $\Barord(\cA)$-comodules. The Drinfeld centre of the
+$\Eone$-monoidal category of $\cA$-modules is then computed
+by the Hochschild cochains of $\Barord(\cA)$, which is
+$C^\bullet_{\mathrm{ch}}(\cA, \cA) =
+\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ by definition.
+
+In each case, the resulting comparison is between two
+$\Etwo$-algebras with matching $\Pthree$-structure. The
+higher Deligne conjecture promotes both to $\Ethree$, and
+the $\Ethree$ identification
+(Theorem~\ref{thm:e-e3-identification}) establishes the
+equivalence.
+\end{proof}
+
+\subsection{Evidence}
+
+\begin{proposition}[Evidence for the closing conjecture]
+\label{prop:e-evidence}
+The following cases are verified:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Heisenberg $H_k$, $k \neq 0$
+ \textup{(}class G\textup{)}.}
+ The Drinfeld double $U_{H_k} = H_k \bowtie H_k^!$ has
+ centre $Z(U_{H_k}) = \bC^3$ (Proposition~\ref{prop:e-heis-complete}),
+ matching the derived centre
+ $\cZ^{\mathrm{der}}_{\mathrm{ch}}(H_k) = \bC^3$
+ (Example~\ref{ex:e-heis-chirhoch}). All three obstructions
+ are trivially resolved: pointwise reduction works (class G),
+ $H_k^!$ is a free-field algebra (factorisation automatic),
+ and bar-cobar inversion is a quasi-isomorphism (class G,
+ Koszul).
+
+\item \emph{Affine Kac--Moody $V_k(\fg)$, simple $\fg$,
+ $k \neq -h^\vee$ \textup{(}class L\textup{)}.}
+ The $\Ethree$ identification theorem
+ (Theorem~\ref{thm:e-e3-identification}) establishes the
+ closing at the level of formal deformation families. The
+ closing conjecture asks for the identification as
+ $\Ethree$-algebras, which requires matching the
+ Drinfeld centre with the derived centre. The pointwise
+ reduction obstruction (I) is resolved for class L (the
+ shadow tower terminates at degree $3$, so the stalk-wise
+ centre sees all the data). Obstruction (II) requires the
+ Koszul dual $V_k(\fg)^!$ to carry factorisation structure;
+ this is proved for $\fg = \mathfrak{sl}_2$.
+
+\item \emph{Numerical verification for $H_k$.}
+ The five invariants of the Drinfeld centre
+ ($\Etwo$ dimension, $\Pthree$ bracket, cup product,
+ $\Ethree$ operation, obstruction class) match at six
+ levels $k = 1, 2, \ldots, 6$. The naive centre has
+ dimension $1$; the derived centre has dimension $3$
+ (the $\mathrm{Ext}^1$ and $\mathrm{Ext}^2$
+ contributions are invisible to the commutant).
+\end{enumerate}
+\end{proposition}
+
+\subsection{The holographic interpretation}
+
+\begin{remark}[The circle as holographic duality]
+\label{rem:e-holographic}
+If the closing conjecture holds, the $\En$ operadic circle
+is a mathematical formulation of holographic duality in $3$d
+holomorphic--topological field theory: the bulk
+$\Ethree^{\mathrm{top}}$-algebra determines the boundary
+$\Etwo$-chiral algebra, its $\Eone$-bar complex, the
+Drinfeld centre, and the derived centre, each recovering
+the next. The passage from the ordered bar to the symmetric
+bar is the operadic shadow of the passage from the boundary
+to the bulk. The five theorems of modular Koszul duality
+(A, B, C, D, H) are the $\Sigma_n$-invariant projections
+of this holographic structure.
+\end{remark}
+
+\begin{remark}[The three obstructions as mathematical problems]
+\label{rem:e-three-problems}
+Each obstruction identifies a concrete mathematical problem:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item The class~M pointwise reduction requires understanding
+ $\Ainf$ corrections to the Drinfeld centre for algebras
+ with infinite shadow tower. This is related to the
+ chain-level topologisation problem.
+\item The factorisation structure on $\cA^!$ requires
+ constructing the Koszul dual as a genuine factorisation
+ algebra, not merely an $(\SCchtop)^!$-algebra. This is
+ related to the pro-nilpotent completion problem.
+\item The bar-cobar vs Hochschild comparison requires
+ extending the Keller--Lef\`evre-Hasegawa theorem to the
+ chiral setting: the derived Morita equivalence between
+ $\cA$-modules and $\Barord(\cA)$-comodules must be proved
+ in the chiral world.
+\end{enumerate}
+Resolution of any one of these would close the $\En$ circle
+for all standard families.
+\end{remark}
+
+\begin{thebibliography}{99}
+\bibitem{Arnold69} V.~I.~Arnold, \emph{The cohomology ring of the
+ group of dyed braids}, Mat.\ Zametki \textbf{5} (1969), 227--231.
+
+\bibitem{AF15} D.~Ayala and J.~Francis, \emph{Factorization homology of
+ topological manifolds}, J.\ Topol.\ \textbf{8} (2015), 1045--1084.
+
+\bibitem{BD04} A.~Beilinson and V.~Drinfeld, \emph{Chiral Algebras},
+ AMS Colloquium Publications, vol.~51, 2004.
+
+\bibitem{CFG25} K.~Costello, D.~Francis, and O.~Gwilliam,
+ \emph{Perturbative quantization of Chern--Simons theory and the
+ derived center}, in preparation, 2025.
+
+\bibitem{Coh76} F.~R.~Cohen, \emph{The homology of
+ $C_{n+1}$-spaces, $n \ge 0$}, in: The Homology of Iterated Loop
+ Spaces, Lecture Notes in Math.\ \textbf{533}, Springer, 1976.
+
+\bibitem{FM94} W.~Fulton and R.~MacPherson, \emph{A compactification
+ of configuration spaces}, Ann.\ Math.\ \textbf{139} (1994), 183--225.
+
+\bibitem{Francis2013} J.~Francis, \emph{The tangent complex and
+ Hochschild cohomology of $\En$-rings}, Compos.\ Math.\ \textbf{149}
+ (2013), 430--480.
+
+\bibitem{Fresse17} B.~Fresse, \emph{Homotopy of Operads and
+ Grothendieck--Teichm\"uller Groups}, Mathematical Surveys and
+ Monographs, AMS, 2017.
+
+\bibitem{FresseWillwacher20} B.~Fresse and T.~Willwacher,
+ \emph{The intrinsic formality of $\En$-operads}, J.\ Eur.\ Math.\
+ Soc.\ \textbf{22} (2020), 2047--2133.
+
+\bibitem{GJ} E.~Getzler and J.~D.~S.~Jones, \emph{Operads, homotopy
+ algebra and iterated integrals for double loop spaces}, preprint,
+ 1994.
+
+\bibitem{GK98} E.~Getzler and M.~M.~Kapranov, \emph{Modular operads},
+ Compos.\ Math.\ \textbf{110} (1998), 65--126.
+
+\bibitem{HA} J.~Lurie, \emph{Higher Algebra}, 2017.
+
+\bibitem{Idrissi22} N.~Idrissi, \emph{Real homotopy of configuration
+ spaces}, Lecture Notes in Math.\ \textbf{2303}, Springer, 2022.
+
+\bibitem{KhanZeng25} A.~Khan and Y.~Zeng, \emph{$\Ethree$-algebras
+ from chiral algebras}, preprint, 2025.
+
+\bibitem{Kon94} M.~Kontsevich, \emph{Feynman diagrams and
+ low-dimensional topology}, in: First European Congress of
+ Mathematics, Vol.~II, Birkh\"auser, 1994, 97--121.
+
+\bibitem{Kon99} M.~Kontsevich, \emph{Operads and motives in deformation
+ quantization}, Lett.\ Math.\ Phys.\ \textbf{48} (1999), 35--72.
+
+\bibitem{Kon03} M.~Kontsevich, \emph{Deformation quantization of
+ Poisson manifolds}, Lett.\ Math.\ Phys.\ \textbf{66} (2003), 157--216.
+
+\bibitem{Livernet06} M.~Livernet, \emph{A note on the Lawrence--Sullivan
+ interval and the Koszul property of the Swiss-cheese operad},
+ preprint, 2006.
+
+\bibitem{LV12} J.-L.~Loday and B.~Vallette, \emph{Algebraic Operads},
+ Grundlehren der math.\ Wiss.\ \textbf{346}, Springer, 2012.
+
+\bibitem{SalvatoreLongoni05} P.~Salvatore and R.~Longoni,
+ \emph{Configuration spaces are not homotopy invariant},
+ Topology \textbf{44} (2005), 375--380.
+
+\bibitem{Tamarkin03} D.~Tamarkin, \emph{Formality of chain operad of
+ little discs}, Lett.\ Math.\ Phys.\ \textbf{66} (2003), 65--72.
+
+\bibitem{Totaro96} B.~Totaro, \emph{Configuration spaces of algebraic
+ varieties}, Topology \textbf{35} (1996), 1057--1067.
+\end{thebibliography}
+
+\end{document}

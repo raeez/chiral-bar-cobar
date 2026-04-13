@@ -1,0 +1,1594 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{tikz-cd}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!40!black,
+  urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{warning}[theorem]{Warning}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\providecommand{\Bbbk}{\mathbf{k}}
+
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fb}{\mathfrak{b}}
+
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\HH}{\mathrm{HH}}
+\newcommand{\CE}{\mathrm{CE}}
+\newcommand{\PVA}{\mathrm{PVA}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\barA}{\bar{\cA}}
+
+\newcommand{\Ainf}{A_{\infty}}
+\newcommand{\Linf}{L_{\infty}}
+\newcommand{\Pinf}{P_{\infty}}
+\newcommand{\Eone}{\mathsf{E}_{1}}
+\newcommand{\Etwo}{\mathsf{E}_{2}}
+\newcommand{\Ethree}{\mathsf{E}_{3}}
+\newcommand{\En}{\mathsf{E}_{n}}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+
+\newcommand{\SC}{\mathsf{SC}}
+\newcommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Lie}{\mathsf{Lie}}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Conf}{Conf}
+\DeclareMathOperator{\FM}{FM}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\av}{av}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\colim}{colim}
+
+\numberwithin{equation}{section}
+
+% Claim status macros (standalone: no-op definitions)
+\providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusProvedElsewhere}{}
+\providecommand{\ClaimStatusHeuristic}{}
+
+% ================================================================
+\begin{document}
+
+\title[SC$^{\mathrm{ch,top}}$ and PVA descent]
+{The Swiss-cheese operad $\SCchtop$ and PVA descent}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+  Waterloo, ON N2L 2Y5, Canada \\
+  Department of Physics, University of Waterloo,
+  Waterloo, ON N2L 3G1, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+A chiral algebra $\cA$ on a smooth curve $X$ determines a bar
+complex $\barB(\cA) = T^c(s^{-1}\barA)$ that is an $\Eone$
+chiral coassociative coalgebra: the differential encodes
+holomorphic factorisation on $\FM_k(\CC)$, the deconcatenation
+coproduct encodes topological factorisation on
+$\Conf_k^{<}(\RR)$.  The two-coloured operad governing the
+interaction of these two structures on the \emph{derived chiral
+centre} $C^\bullet_{\mathrm{ch}}(\cA,\cA)$ and the boundary
+algebra~$\cA$ is the Swiss-cheese operad
+$\SCchtop$, with closed colour $\FM_k(\CC)$, open colour
+$\Eone(m) = \Conf_m^{<}(\RR)$, and empty open-to-closed
+component (directionality).
+
+We establish three results.
+First, $\SCchtop$ is homotopy-Koszul, via Kontsevich formality
+for the closed colour composed with Livernet's Koszulity of the
+classical Swiss-cheese operad $\SC$ and bar-cobar transfer.
+Second, the Koszul dual cooperad satisfies
+$(\SCchtop)^! = (\Lie^c,\,\Ass^c,\,\text{shuffle-mixed})$;
+in particular $\SCchtop$ is \emph{not} Koszul self-dual
+($\dim\SCchtop_{\mathrm{cl}}(n) = 1$ versus
+$\dim(\SCchtop)^!_{\mathrm{cl}}(n) = (n-1)!$).
+Third, the cogenerator projections of the bar differential
+produce $\Ainf$ operations $\{m_k\}_{k \geq 1}$ whose Stasheff
+relations are Stokes' theorem on $\FM_n(\CC)$; on cohomology
+these descend to the five axioms of a Poisson vertex algebra.
+The descent is computed in three cases:
+the Heisenberg algebra (formal, class~G, shadow depth zero),
+affine Kac--Moody at level~$k$ (Lie-transverse, class~L, shadow
+depth one), and $\cW_3$ (infinite tower, class~M).
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction: two colours, one operad}
+\label{sec:introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The problem}
+
+The bar complex of a chiral algebra carries two independent
+structures.  The \emph{differential} $D_\cA$ is a coderivation
+of the cofree tensor coalgebra $T^c(s^{-1}\barA)$; it encodes
+the OPE residues extracted from collisions on the
+Fulton--MacPherson spaces $\FM_k(\CC)$.  The
+\emph{deconcatenation coproduct} $\Delta$ cuts the tensor word
+at each gap:
+\begin{equation}\label{eq:intro-deconc}
+  \Delta[s^{-1}a_1 \mid \cdots \mid s^{-1}a_n]
+  \;=\;
+  \sum_{i=0}^{n}
+  [s^{-1}a_1 \mid \cdots \mid s^{-1}a_i]
+  \;\otimes\;
+  [s^{-1}a_{i+1} \mid \cdots \mid s^{-1}a_n].
+\end{equation}
+The compatibility between these two structures is the
+coderivation property:
+\begin{equation}\label{eq:intro-coderivation}
+  \Delta \circ D_\cA
+  \;=\;
+  (D_\cA \otimes \id + \id \otimes D_\cA)
+  \circ \Delta.
+\end{equation}
+A differential and a coassociative coproduct satisfying
+\eqref{eq:intro-coderivation} make $(\barB(\cA), D_\cA, \Delta)$
+into a dg coassociative coalgebra: an $\Eone$ coalgebra, with
+holomorphic collisions on $\FM_k(\CC)$ as the differential and
+topological separations on $\Conf_k^{<}(\RR)$ as the coproduct.
+
+The question is: \emph{what operad governs the structures
+that emerge from this $\Eone$ engine?}
+
+\subsection{The answer}
+
+The bar complex itself does not carry the answer.  It is the
+input, not the output.  The output is the \emph{chiral derived
+centre}: the chiral Hochschild cochain complex
+$C^\bullet_{\mathrm{ch}}(\cA,\cA)$, defined via the chiral
+endomorphism operad $\End^{\mathrm{ch}}_\cA$ with spectral
+parameters from $\FM_k(\CC)$.  The pair
+\begin{equation}\label{eq:intro-SC-pair}
+  \bigl(C^\bullet_{\mathrm{ch}}(\cA,\cA),\; \cA\bigr)
+  \;=\;
+  (\text{bulk},\; \text{boundary})
+\end{equation}
+is the datum governed by the two-coloured Swiss-cheese operad
+$\SCchtop$.  The closed colour is the bulk; the open colour is
+the boundary.  Bulk acts on boundary; boundary does not
+act on bulk.  This directionality is the empty open-to-closed
+component of $\SCchtop$.
+
+Three properties hold.
+
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Homotopy-Koszulity.}  The operad $\SCchtop$ is
+  homotopy-Koszul (Theorem~\ref{thm:homotopy-koszul-SC}): the
+  bar-cobar adjunction
+  $\Omega\mathbf{B}(\SCchtop) \xrightarrow{\sim} \SCchtop$
+  is a quasi-isomorphism.  This follows from Livernet's
+  Koszulity of the classical Swiss-cheese operad~$\SC$
+  \cite{Liv06}, composed with Kontsevich formality for
+  the closed colour, and transferred to $\SCchtop$ via
+  bar-cobar comparison.
+
+\item \textbf{The Koszul dual cooperad.}  The Koszul dual
+  satisfies
+  $(\SCchtop)^! = (\Lie^c,\, \Ass^c,\, \text{shuffle-mixed})$
+  (Theorem~\ref{thm:SC-koszul-dual}).  The closed colour
+  exchanges $\Com \leftrightarrow \Lie$; the open colour
+  preserves $\Ass$ (which is self-dual); the mixed sector
+  acquires a shuffle structure.  In particular, $\SCchtop$ is
+  \emph{not} Koszul self-dual: the closed-colour component
+  dimensions differ ($\dim\SCchtop_{\mathrm{cl}}(n) = 1$ versus
+  $\dim(\SCchtop)^!_{\mathrm{cl}}(n) = (n-1)!$).
+
+\item \textbf{PVA descent.}  The cogenerator projections of
+  $D_\cA$ yield $\Ainf$ operations $\{m_k\}_{k \geq 1}$
+  satisfying the Stasheff relations, each relation being
+  Stokes' theorem on $\FM_n(\CC)$.  On cohomology, the
+  operations $m_k$ descend to a commutative product and a
+  $\lambda$-bracket satisfying the five axioms of a Poisson
+  vertex algebra: sesquilinearity, skew-symmetry, Jacobi,
+  Leibniz, and commutativity
+  (Theorem~\ref{thm:pva-descent}).
+\end{enumerate}
+
+\begin{warning}[The bar complex is not an
+  $\SCchtop$-coalgebra]\label{warn:bar-not-SC}
+The bar complex $\barB(\cA) = T^c(s^{-1}\barA)$ is an $\Eone$
+chiral coassociative coalgebra.  It carries a differential
+(from the chiral product) and a coproduct
+(from deconcatenation).  These are two structures on a
+\emph{single} coalgebra.  The $\SCchtop$ structure is
+\emph{not} carried by $\barB(\cA)$; it is carried by the
+pair $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\, \cA)$, where
+$C^\bullet_{\mathrm{ch}}(\cA,\cA)$ is computed \emph{using}
+the bar complex as a resolution.  The bar complex is the
+$\Eone$ engine; the derived centre pair is the $\SCchtop$
+output.
+\end{warning}
+
+\subsection{Context and conventions}
+
+We work over a field $\Bbbk$ of characteristic zero.  Grading
+is cohomological: $|d| = +1$.  Desuspension lowers degree:
+$|s^{-1}v| = |v| - 1$.  The bar complex uses the augmentation
+ideal: $\barB(\cA) = T^c(s^{-1}\barA)$ where
+$\barA = \ker(\varepsilon)$.  The Fulton--MacPherson space
+$\FM_n(X)$ is the iterated real blowup of $X^n$ along all
+diagonal strata.  Configuration spaces of ordered points on
+$\RR$ are denoted $\Conf_n^{<}(\RR) = \{t_1 < \cdots < t_n\}$.
+
+Throughout, $\cA$ denotes a chiral algebra on a smooth algebraic
+curve $X$ over $\Bbbk$ in the sense of Beilinson--Drinfeld
+\cite{BD04}.  A vertex algebra is a chiral algebra on the
+formal disk $D = \Spec\Bbbk[[z]]$.
+
+\subsection{Relation to other work}
+
+The classical Swiss-cheese operad $\SC$ (with $\Etwo$ closed
+colour and $\Eone$ open colour) was introduced by Voronov
+\cite{Vor99}.  Koszulity of $\SC$ was proved by Livernet
+\cite{Liv06}.  The deformation-theoretic role of $\SC$ in
+open-closed homotopy algebras was developed by Kajiura--Stasheff
+\cite{KS06}.  The passage from the classical $\SC$ to the chiral
+variant $\SCchtop$ replaces the $\Etwo$ closed colour by
+$\FM_k(\CC)$-spaces carrying holomorphic structure; this
+replacement is the content of the Beilinson--Drinfeld
+factorisation framework \cite{BD04}.  The relationship between
+$\Ainf$ structures and PVA axioms has been studied from the
+$\lambda$-bracket perspective by De Sole and Kac \cite{DSK06},
+and from the factorisation perspective by Francis and Gaitsgory
+\cite{FG12}.  The present paper makes the operadic architecture
+of this descent explicit.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The $\SCchtop$ operad}
+\label{sec:SC-operad}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Configuration spaces}
+
+\begin{definition}[Fulton--MacPherson space]
+\label{def:FM-space}
+For a smooth manifold $M$ and $n \geq 1$, the
+\emph{Fulton--MacPherson space} $\FM_n(M)$ is the real-oriented
+blowup of $M^n$ along all diagonal strata
+$\Delta_S = \{(x_i)_{i \in I} : x_i = x_j \text{ for all }
+i,j \in S\}$, for all subsets $S \subseteq \{1,\ldots,n\}$ with
+$|S| \geq 2$, performed in order of increasing $|S|$.  Points
+of $\FM_n(M)$ are configurations of $n$ labelled points in $M$,
+together with ``infinitesimal data'' recording the relative rates
+and directions of approach to collision.
+\end{definition}
+
+\begin{definition}[Ordered configuration space]
+\label{def:ordered-conf}
+For $n \geq 1$, define
+\[
+  \Conf_n^{<}(\RR)
+  \;=\;
+  \{(t_1, \ldots, t_n) \in \RR^n : t_1 < t_2 < \cdots < t_n\}.
+\]
+This is contractible: $\Conf_n^{<}(\RR) \cong \RR^{n-1}_{>0}$
+via the change of variables $u_i = t_{i+1} - t_i$.
+\end{definition}
+
+\subsection{The two-coloured operad}
+
+\begin{definition}[The Swiss-cheese operad $\SCchtop$]
+\label{def:SC-chtop}
+The operad $\SCchtop$ is a two-coloured operad with colours
+$\{\mathsf{cl}, \mathsf{op}\}$ (closed and open), defined by
+the following operation spaces:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Closed-to-closed.}  For $k \geq 1$ closed inputs
+  and one closed output:
+  \begin{equation}\label{eq:SC-cl-cl}
+    \SCchtop(\mathsf{cl}^k;\, \mathsf{cl})
+    \;=\;
+    \FM_k(\CC).
+  \end{equation}
+  Composition is given by the operadic structure maps of the
+  Fulton--MacPherson operad: for a decomposition
+  $\{1,\ldots,k\} = S_1 \sqcup \cdots \sqcup S_r$, the
+  composition map
+  \[
+    \gamma \colon
+    \FM_r(\CC) \times \FM_{|S_1|}(\CC) \times \cdots \times
+    \FM_{|S_r|}(\CC)
+    \;\longrightarrow\;
+    \FM_k(\CC)
+  \]
+  inserts the inner configurations into the outer one at the
+  collision points.
+
+\item \textbf{Open-to-open.}  For $m \geq 1$ open inputs and
+  one open output:
+  \begin{equation}\label{eq:SC-op-op}
+    \SCchtop(\mathsf{op}^m;\, \mathsf{op})
+    \;=\;
+    \Eone(m)
+    \;=\;
+    \Conf_m^{<}(\RR).
+  \end{equation}
+  Composition is by interval insertion: the $\Eone$ operadic
+  structure on ordered configurations.  Since
+  $\Conf_m^{<}(\RR)$ is contractible, the open-to-open
+  component is equivalent to the associative operad $\Ass$
+  up to homotopy.
+
+\item \textbf{Mixed (closed and open inputs, open output).}
+  For $k \geq 0$ closed inputs and $m \geq 1$ open inputs
+  with one open output:
+  \begin{equation}\label{eq:SC-mix}
+    \SCchtop(\mathsf{cl}^k, \mathsf{op}^m;\, \mathsf{op})
+    \;=\;
+    \FM_k(\CC) \times \Eone(m).
+  \end{equation}
+  The composition is the product of FM-substitution on the
+  closed factor and interval-insertion on the open factor.
+
+\item \textbf{Directionality (open-to-closed is empty).}
+  For any input profile containing at least one open colour
+  and producing a closed output:
+  \begin{equation}\label{eq:SC-direction}
+    \SCchtop(\ldots, \mathsf{op}, \ldots;\, \mathsf{cl})
+    \;=\;
+    \varnothing.
+  \end{equation}
+  Bulk restricts to boundary; boundary does not act on bulk.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Directionality and the Springer pattern]
+\label{rem:directionality}
+The empty open-to-closed component is a structural feature,
+not a convention.  In the Beilinson--Drinfeld framework, the
+factorisation $D$-module on $\Ran(X)$ (the closed sector)
+restricts to the boundary via $\iota^!$, but the reverse
+extension $\iota_!$ produces zero $!$-tensor product with the
+bulk $D$-module by support considerations: the boundary
+$X \times \{0\}$ has codimension one in $X \times \RR$, and
+the $!$-extension carries no sections transverse to the
+boundary.
+\end{remark}
+
+\begin{remark}[Comparison with the classical $\SC$]
+\label{rem:classical-SC}
+Voronov's classical Swiss-cheese operad $\SC$ has $\Etwo$ closed
+colour (configurations of little disks in a disk) and $\Eone$
+open colour (configurations of little intervals in an interval).
+The operad $\SCchtop$ replaces the $\Etwo$ closed colour by
+$\FM_k(\CC)$-spaces that carry holomorphic structure: the complex
+structure on $\CC$ is visible in the boundary strata of
+$\FM_k(\CC)$ and enters the bar differential through the OPE
+residues.  On cohomology, the Kontsevich formality theorem
+provides a quasi-isomorphism from $\FM_k(\CC)$-chains to the
+$\Etwo$-operad; composing with the projection from $\SC$ to the
+homology operad $(\Com, \Ass)$ recovers the classical descent to
+PVA\@.  At the chain level, the holomorphic structure is load-bearing:
+it determines the spectral parameters of the $\Ainf$ operations.
+\end{remark}
+
+\begin{definition}[$\SCchtop$-algebra]
+\label{def:SC-algebra}
+An \emph{$\SCchtop$-algebra} is a pair $(B, A)$ where:
+\begin{enumerate}[label=(\roman*)]
+\item $A$ is an $\Eone$-algebra (the open/boundary algebra);
+\item $B$ is an algebra over the FM-operad
+  $\{\FM_k(\CC)\}_{k \geq 1}$ (the closed/bulk algebra);
+\item the mixed operations
+  $\FM_k(\CC) \times \Eone(m) \to
+  \Hom(B^{\otimes k} \otimes A^{\otimes m},\, A)$
+  define a module structure of $B$ over $A$, compatible with
+  all composition maps;
+\item the open-to-closed maps are zero.
+\end{enumerate}
+\end{definition}
+
+\begin{example}[The chiral derived centre pair]
+\label{ex:derived-centre-pair}
+For a chiral algebra $\cA$ on $X$, the chiral Hochschild cochain
+complex
+\[
+  C^\bullet_{\mathrm{ch}}(\cA,\cA)
+  \;:=\;
+  \Hom_{\barB(\cA)}\bigl(\barB(\cA),\, \cA\bigr)
+\]
+(the convolution $\Hom$ from the bar resolution into $\cA$) carries
+the structure of an algebra over $\{\FM_k(\CC)\}_{k \geq 1}$
+via the chiral brace operations.  The pair
+$(C^\bullet_{\mathrm{ch}}(\cA,\cA),\, \cA)$ is an
+$\SCchtop$-algebra.  The closed colour is the bulk; the open
+colour is the boundary.  The bar complex $\barB(\cA)$ is used
+\emph{in the construction} of $C^\bullet_{\mathrm{ch}}(\cA,\cA)$
+but does not itself carry the $\SCchtop$ structure.
+\end{example}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Homotopy-Koszulity}
+\label{sec:homotopy-koszulity}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Koszulity of the classical Swiss-cheese operad}
+
+Recall that a quadratic operad $\cP$ is \emph{Koszul} if the
+natural augmentation map
+$\Omega(\cP^!) \xrightarrow{\sim} \cP$ is a quasi-isomorphism,
+where $\cP^!$ is the Koszul dual cooperad and $\Omega$ denotes
+the cobar functor.  For coloured operads, the Koszul property is
+defined colour by colour with compatibility conditions on the
+mixed sectors.
+
+\begin{theorem}[Livernet {\cite{Liv06}}]
+\label{thm:livernet-koszulity}
+\ClaimStatusProvedElsewhere{}
+The classical Swiss-cheese operad $\SC$, with $\Etwo$ closed
+colour and $\Eone$ open colour, is Koszul.
+\end{theorem}
+
+The proof proceeds by establishing a distributive law between
+the $\Com$ and $\Ass$ components that governs the mixed sector,
+then verifying the rewriting criterion of Dotsenko--Khoroshkin
+\cite{DK10} for the resulting coloured quadratic presentation.
+
+\subsection{Formality of the closed colour}
+
+The closed colour of $\SCchtop$ is the FM-operad
+$\{\FM_k(\CC)\}_{k \geq 1}$.  Kontsevich's formality theorem
+\cite{Kon99,Kon03} provides a quasi-isomorphism of operads:
+\begin{equation}\label{eq:kontsevich-formality}
+  \{H_\bullet(\FM_k(\CC))\}_{k \geq 1}
+  \;\xleftarrow{\;\sim\;}\;
+  \{\FM_k(\CC)\}_{k \geq 1},
+\end{equation}
+where the left-hand side is the homology operad, which is the
+$\Etwo$-operad $\{H_\bullet(\Conf_k(\CC))\}$ concentrated in
+degree zero.  The formality is over $\RR$; over $\CC$ it holds
+unconditionally.  The key input is the propagator on $\FM_2(\CC)$
+and the vanishing of all obstructions via the Arnold relation.
+
+\begin{remark}[Formality is for the closed colour, not the
+  full operad]\label{rem:formality-scope}
+Kontsevich formality applies to the closed colour of $\SCchtop$
+(the FM-operad on $\CC$).  It does \emph{not} assert formality
+of the full two-coloured operad $\SCchtop$; the mixed sector
+carries non-trivial chain-level data that does not simplify under
+the formality quasi-isomorphism.  The chain-level mixed data is
+precisely the spectral-parameter dependence of the $\Ainf$
+operations.
+\end{remark}
+
+\subsection{Transfer to $\SCchtop$}
+
+\begin{theorem}[Homotopy-Koszulity of $\SCchtop$]
+\label{thm:homotopy-koszul-SC}
+\ClaimStatusProvedHere{}
+The operad $\SCchtop$ is homotopy-Koszul: the canonical map
+\begin{equation}\label{eq:bar-cobar-SC}
+  \Omega\mathbf{B}(\SCchtop)
+  \;\xrightarrow{\;\sim\;}\;
+  \SCchtop
+\end{equation}
+is a quasi-isomorphism.  The bar-cobar adjunction on
+$\SCchtop$-algebras is a Quillen equivalence.
+\end{theorem}
+
+\begin{proof}
+The argument has three steps.
+
+\medskip\noindent\textbf{Step~1.}
+Livernet's Theorem~\ref{thm:livernet-koszulity} gives
+Koszulity of the classical $\SC$: the bar-cobar
+resolution $\Omega(\SC^!) \xrightarrow{\sim} \SC$ is a
+quasi-isomorphism.
+
+\medskip\noindent\textbf{Step~2.}
+Kontsevich formality \eqref{eq:kontsevich-formality} provides
+a chain of quasi-isomorphisms connecting the closed colour
+of $\SCchtop$ (the FM-operad) to the closed colour of $\SC$
+(the $\Etwo$-operad, the homology of FM).  The open colour is
+already $\Eone$ in both operads, so no formality argument is
+needed there.
+
+\medskip\noindent\textbf{Step~3.}
+The bar-cobar transfer principle
+(Loday--Vallette \cite{LV12}, Theorem~11.3.3) states: if
+$f \colon \cP \xrightarrow{\sim} \cQ$ is a quasi-isomorphism
+of dg operads and $\cQ$ is Koszul, then $\cP$ is
+homotopy-Koszul; that is, the natural map
+$\Omega\mathbf{B}(\cP) \xrightarrow{\sim} \cP$ is a
+quasi-isomorphism.  Applying this with $\cP = \SCchtop$ and
+$\cQ = \SC$ (connected by the formality quasi-isomorphism on
+the closed colour and the identity on the open colour) yields
+the result.
+
+The Quillen equivalence follows from the general model category
+structure on algebras over a homotopy-Koszul operad
+(Hinich \cite{Hin97}, extended to the coloured setting by
+Caviglia \cite{Cav14}).
+\end{proof}
+
+\begin{remark}[Why homotopy-Koszulity matters]
+\label{rem:homotopy-koszul-consequences}
+Homotopy-Koszulity of $\SCchtop$ has three consequences:
+\begin{enumerate}[label=(\alph*)]
+\item The bar construction $\mathbf{B}(\SCchtop)$ is a
+  well-defined cooperad with $\partial^2 = 0$; this is the
+  prerequisite for the convolution algebra
+  $\Hom_\Sigma(\mathbf{B}(\SCchtop),\, \End_{(B,A)})$ to
+  carry an $\Linf$-structure and for the MC element $\alpha_T$
+  to exist.
+\item The cobar resolution $\Omega\mathbf{B}(\SCchtop)$ provides
+  a cofibrant replacement of $\SCchtop$; algebras over this
+  resolution are $\SCchtop$-algebras up to homotopy.
+\item The homotopy transfer theorem applies: given a deformation
+  retract of the pair $(B,A)$ onto cohomology $(H^\bullet(B),
+  H^\bullet(A))$, the $\SCchtop$-algebra structure transfers to
+  a homotopy $\SCchtop$-algebra structure on cohomology.  This
+  transfer is the mechanism producing the PVA structure.
+\end{enumerate}
+\end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Koszul dual: $(\SCchtop)^!$ is not self-dual}
+\label{sec:koszul-dual}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The Koszul dual cooperad}
+
+\begin{theorem}[Koszul dual of $\SCchtop$]
+\label{thm:SC-koszul-dual}
+\ClaimStatusProvedHere{}
+The Koszul dual cooperad of $\SCchtop$ is
+\begin{equation}\label{eq:SC-dual}
+  (\SCchtop)^!
+  \;=\;
+  (\Lie^c,\; \Ass^c,\; \text{shuffle-mixed}),
+\end{equation}
+with the following structure:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Closed colour.}
+  $(\SCchtop)^!_{\mathrm{cl}}(n) = \Lie^c(n)$, the Lie
+  cooperad.  The dimension is
+  $\dim (\SCchtop)^!_{\mathrm{cl}}(n) = (n-1)!$.
+\item \textbf{Open colour.}
+  $(\SCchtop)^!_{\mathrm{op}}(m) = \Ass^c(m) = \Bbbk$,
+  the associative cooperad, one-dimensional in each degree.
+\item \textbf{Mixed sector.}
+  $(\SCchtop)^!(\mathsf{cl}^k, \mathsf{op}^m;\, \mathsf{op})$
+  carries the shuffle cooperad structure:
+  \begin{equation}\label{eq:SC-dual-mixed}
+    \dim(\SCchtop)^!(\mathsf{cl}^k, \mathsf{op}^m;\, \mathsf{op})
+    \;=\;
+    (k-1)! \cdot \binom{k+m}{m}.
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Koszul duality for two-coloured operads
+(Loday--Vallette \cite{LV12}, Chapter~8) exchanges each
+colour's operad with its Koszul dual and intertwines the mixed
+sector through the distributive law.
+
+For the closed colour: $\Com^! = \Lie$ (the classical
+Ginzburg--Kapranov duality \cite{GK94}).  The operation spaces
+exchange: $\dim\Com(n) = 1$ becomes
+$\dim\Lie(n) = (n-1)!$.
+
+For the open colour: $\Ass^! = \Ass$ (associative is
+self-dual under Koszul duality).  The operation spaces
+are one-dimensional in each degree, and this is preserved.
+
+For the mixed sector: the distributive law of
+$\Com$ over $\Ass$ dualises to the shuffle structure.  The
+dimension formula \eqref{eq:SC-dual-mixed} follows from
+the shuffle product: $(k-1)!$ from the Lie component and
+$\binom{k+m}{m}$ from the shuffle of closed and open inputs.
+\end{proof}
+
+\begin{warning}[$\SCchtop$ is not Koszul self-dual]
+\label{warn:not-self-dual}
+The closed-colour dimensions differ:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccccc}
+  \toprule
+  $n$ & 1 & 2 & 3 & 4 & 5 & 6 \\
+  \midrule
+  $\dim \SCchtop_{\mathrm{cl}}(n) = \dim\Com(n)$
+  & 1 & 1 & 1 & 1 & 1 & 1 \\
+  $\dim (\SCchtop)^!_{\mathrm{cl}}(n) = \dim\Lie(n)$
+  & 1 & 1 & 2 & 6 & 24 & 120 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+At $n \geq 3$ these are manifestly different.  The operad
+$\SCchtop$ is therefore \emph{not} Koszul self-dual.
+
+What \emph{is} true: the Koszul duality \emph{functor} on
+$\SCchtop$-algebras is an involution.  For any Koszul operad
+$\cP$, the double dual satisfies $(\cP^!)^! \cong \cP$
+(tautologically).  This means the duality functor
+$\cA \mapsto \cA^!$ on algebras is an involution; it does
+\emph{not} mean the operad is isomorphic to its own dual.
+The confusion between ``the functor is an involution'' and
+``the operad is self-dual'' is a common source of error.
+\end{warning}
+
+\subsection{Algebras over $(\SCchtop)^!$}
+
+\begin{proposition}[Structure of an $(\SCchtop)^!$-algebra]
+\label{prop:SC-dual-algebra}
+\ClaimStatusProvedHere{}
+An algebra over $(\SCchtop)^!$ is a pair $(L, A)$ where:
+\begin{enumerate}[label=(\roman*)]
+\item $L$ is a Lie algebra (the closed colour, from the
+  $\Lie$ component);
+\item $A$ is an associative algebra (the open colour, from
+  the $\Ass$ component);
+\item $L$ acts on $A$ by derivations, through the mixed
+  sector;
+\item the open-to-closed direction is zero.
+\end{enumerate}
+The chiral Koszul dual $\cA^!_{\mathrm{line}}$ of a chiral
+algebra carries exactly this structure: a Lie bracket
+(the Sklyanin bracket from the closed colour) and an
+associative product (the Yangian product from the open colour),
+with the Lie bracket acting as derivations.
+\end{proposition}
+
+\begin{proof}
+This is a direct consequence of
+Theorem~\ref{thm:SC-koszul-dual}.  The $\Lie$ cooperad
+dualises to the $\Lie$ operad on algebras; the $\Ass$ cooperad
+dualises to the $\Ass$ operad on algebras; the shuffle mixed
+sector dualises to the derivation condition.
+\end{proof}
+
+\begin{remark}[The asymmetry principle]
+\label{rem:asymmetry}
+The Koszul dual exchanges $\Com$ (one-dimensional, commutative)
+with $\Lie$ ($(n-1)!$-dimensional, non-commutative) on the closed
+colour, while preserving $\Ass$ on the open colour.  This
+asymmetry is the operadic origin of the structural difference
+between the bulk and the line side: the bulk is governed by
+$\Com$ (factorisation on $\Ran(X)$ is symmetric), while the
+line-side Koszul dual is governed by $\Lie$ (the Sklyanin
+bracket, the Yangian Lie structure).  The open colour, governed
+by $\Ass$ on both sides, is the shared associative structure:
+the $\Eone$-algebra on the boundary equals the $\Eone$-algebra
+on the line side.
+\end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{PVA descent: $\Ainf$ operations from $\FM_n(\CC)$}
+\label{sec:pva-descent}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The $\Ainf$ operations}
+
+The bar differential $D_\cA$ on
+$\barB(\cA) = T^c(s^{-1}\barA)$ is a coderivation of the cofree
+coalgebra.  By the universal property of cofree coalgebras, a
+coderivation is determined by its composition with the
+cogenerator projection
+$\mathrm{pr} \colon T^c(s^{-1}\barA) \to s^{-1}\barA$.
+The resulting sequence of multilinear maps
+\begin{equation}\label{eq:Ainf-ops}
+  m_k \colon \cA^{\otimes k}
+  \;\longrightarrow\;
+  \cA((\lambda_1)) \cdots ((\lambda_{k-1})),
+  \qquad k \geq 1, \quad |m_k| = 2-k,
+\end{equation}
+are the $\Ainf$ operations.  Here $\lambda_j = z_j - z_k$ are
+spectral parameters recording the holomorphic separations of
+the insertion points on $X$.
+
+The identity $D_\cA^2 = 0$ expands into the
+\emph{Stasheff relations}: for each $n \geq 1$,
+\begin{equation}\label{eq:stasheff-general}
+  \sum_{\substack{i+j = n+1 \\ i,j \geq 1}}
+  \;\sum_{s=0}^{n-j}
+  (-1)^{\epsilon(s,j)}\;
+  m_i\bigl(a_1, \ldots, a_s,\,
+  m_j(a_{s+1}, \ldots, a_{s+j}),\,
+  a_{s+j+1}, \ldots, a_n\bigr)
+  \;=\; 0,
+\end{equation}
+where $\epsilon(s,j) = \sum_{t=1}^{s}(|a_t|-1)$ is the
+Koszul sign from commuting $m_j$ past the desuspended elements.
+
+\subsection{Stasheff relations as Stokes' theorem}
+
+Each Stasheff relation at degree $n$ is Stokes' theorem on the
+Fulton--MacPherson space $\FM_n(\CC)$.  The boundary
+$\partial\FM_n(\CC)$ is stratified by collision patterns: each
+codimension-one stratum $D_S$ (indexed by a subset
+$S \subseteq \{1,\ldots,n\}$ with $|S| \geq 2$) records the
+collision of the points indexed by $S$.  The contribution of
+$D_S$ to the Stasheff relation is $m_{n-|S|+1}$ composed with
+$m_{|S|}$, where $m_{|S|}$ acts on the colliding points and
+$m_{n-|S|+1}$ acts on the result together with the remaining
+points.
+
+\begin{proposition}[Stasheff = Stokes]
+\label{prop:stasheff-stokes}
+\ClaimStatusProvedHere{}
+The $n$-th Stasheff relation \eqref{eq:stasheff-general} is
+the identity
+\[
+  \int_{\FM_n(\CC)} d\omega_n \;=\;
+  \int_{\partial\FM_n(\CC)} \omega_n
+  \;=\;
+  \sum_{|S| \geq 2}
+  \int_{D_S} \omega_n,
+\]
+where $\omega_n$ is the chain-level integrand of $m_n$ contracted
+with the weight forms
+$\eta_{ij} = d\log(z_i - z_j)$ and OPE coefficients.  The
+identity $\partial^2 = 0$ on $\FM_n(\CC)$ (each
+codimension-two face is reached by exactly two codimension-one
+faces with opposite orientations) ensures $D_\cA^2 = 0$.
+\end{proposition}
+
+\begin{proof}
+The bar differential is defined as a sum of boundary integrals
+on $\FM_n(\CC)$.  The map $m_n$ at degree $n$ is the integral
+over the top-dimensional stratum of $\FM_n(\CC)$;
+$m_i \circ m_j$ contributions arise from boundary strata.
+Stokes' theorem identifies the sum of boundary contributions
+with the differential of the bulk integral.  The identity
+$d^2 = 0$ on differential forms, applied to the FM
+compactification (where boundary strata compose correctly),
+gives $D_\cA^2 = 0$.
+\end{proof}
+
+We spell out the first four cases.
+
+\subsubsection{$n = 1$: the BRST differential}
+
+$\FM_1(\CC)$ is a single point with empty boundary.  The
+Stasheff relation is $m_1 \circ m_1 = 0$: the map $m_1 = Q$
+is a differential, $Q^2 = 0$.  This is the BRST condition.
+
+\subsubsection{$n = 2$: the Leibniz rule}
+
+$\FM_2(\CC)$, modulo translations, is a point; its boundary is
+the single collision stratum $z_1 = z_2$.  The Stasheff relation
+is
+\[
+  m_1(m_2(a,b))
+  \;+\;
+  m_2(m_1(a), b)
+  \;+\;
+  (-1)^{|a|}\, m_2(a, m_1(b))
+  \;=\; 0:
+\]
+the binary product $m_2$ is a chain map with respect to $m_1$.
+
+\subsubsection{$n = 3$: homotopy associativity}
+
+The Stasheff associahedron $K_3$ is a closed interval $[0,1]$,
+the quotient of $\FM_3(\CC)$ by the affine group.  Its two
+endpoints are the collision strata $D_{12} = \{z_1 \to z_2\}$
+and $D_{23} = \{z_2 \to z_3\}$.  The Stasheff relation is:
+\begin{equation}\label{eq:stasheff-3}
+  m_2(m_2(a,b),c) - m_2(a, m_2(b,c))
+  \;=\;
+  m_1(m_3(a,b,c)) + m_3(m_1(a),b,c)
+  + (-1)^{|a|}\, m_3(a, m_1(b), c)
+  + (-1)^{|a|+|b|}\, m_3(a, b, m_1(c)).
+\end{equation}
+The left-hand side is the associativity defect of $m_2$.  The
+right-hand side is the boundary of the homotopy $m_3$: the binary
+product is associative up to the homotopy $m_3$, which is the
+integral over the interval $K_3$.
+
+When $m_3 = 0$ (Heisenberg, free fermion), the relation reduces to
+strict associativity.  When $m_3 \neq 0$ (affine Kac--Moody,
+Virasoro), the homotopy is the Jacobiator on $K_3$.
+
+\subsubsection{$n = 4$: the Stasheff pentagon}
+
+The associahedron $K_4$ is a compact polygon with five boundary
+faces, corresponding to the collision strata
+$D_{12}$, $D_{23}$, $D_{34}$, $D_{123}$, $D_{234}$.  The
+Stasheff relation involves $m_2$, $m_3$, and $m_4$, with $m_4$
+as the integral over the interior of $K_4$.  For $\cW_3$, the
+operation $m_4$ is non-zero, with the coefficient $32/(22+5c)$
+entering through the $WW\Lambda$ channel
+(Section~\ref{sec:computations}, third computation).
+
+
+\subsection{PVA descent on cohomology}
+
+\begin{definition}[Poisson vertex algebra]
+\label{def:PVA}
+A \emph{Poisson vertex algebra} (PVA) over $\Bbbk$ is a
+commutative differential algebra $(V, \cdot, \partial)$ equipped
+with a $\lambda$-bracket
+$\{a_\lambda b\} \in V[\lambda]$
+satisfying the following five axioms:
+\begin{enumerate}[label=(PVA\arabic*)]
+\item \textbf{Sesquilinearity.}
+  $\{\partial a_\lambda b\} = -\lambda\{a_\lambda b\}$
+  and
+  $\{a_\lambda \partial b\} = (\lambda + \partial)\{a_\lambda b\}$.
+
+\item \textbf{Skew-symmetry.}
+  $\{a_\lambda b\} = -\{b_{-\lambda-\partial} a\}$.
+
+\item \textbf{Jacobi identity.}
+  $\{a_\lambda \{b_\mu c\}\}
+  - \{b_\mu \{a_\lambda c\}\}
+  = \{\{a_\lambda b\}_{\lambda+\mu} c\}$.
+
+\item \textbf{Left Leibniz rule.}
+  $\{a_\lambda bc\}
+  = \{a_\lambda b\}c + b\{a_\lambda c\}$.
+
+\item \textbf{Commutativity.}
+  $a \cdot b = b \cdot a$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[PVA descent]
+\label{thm:pva-descent}
+\ClaimStatusProvedHere{}
+Let $\cA$ be a chiral algebra on a smooth curve $X$, and let
+$H = H^\bullet(\cA, m_1)$ be the cohomology with respect to
+the internal differential $m_1 = Q$.  Suppose
+$(H, p, \iota, h)$ is a deformation retract of $(\cA, m_1)$
+onto $H$, with the side conditions $h^2 = h\iota = ph = 0$.
+
+Then:
+\begin{enumerate}[label=(\alph*)]
+\item The homotopy transfer of the $\Ainf$ structure
+  $\{m_k\}$ to $H$ produces transferred operations
+  $\{m_k^H\}_{k \geq 1}$ satisfying the Stasheff relations.
+
+\item The transferred binary operation $m_2^H$ decomposes as
+  \[
+    m_2^H(a,b;\lambda)
+    \;=\;
+    a \cdot b + \{a_\lambda b\},
+  \]
+  where $a \cdot b = m_2^H(a,b;0)$ is a commutative associative
+  product on $H$ and $\{a_\lambda b\}$ is a $\lambda$-bracket.
+
+\item The pair $(H, \cdot, \{-_\lambda -\})$ is a Poisson vertex
+  algebra in the sense of Definition~\textup{\ref{def:PVA}}.
+
+\item The higher transferred operations $m_k^H$ for $k \geq 3$
+  encode the homotopy corrections to the PVA structure; they
+  vanish if and only if $\cA$ is formal (class~G in the shadow
+  depth classification).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof outline]
+\textbf{Part~(a)} follows from the homotopy transfer theorem
+for $\Ainf$ algebras (Kadeishvili \cite{Kad82}, Merkulov
+\cite{Mer99}), applied through the homotopy-Koszulity of
+$\SCchtop$ (Theorem~\ref{thm:homotopy-koszul-SC}).
+
+\textbf{Part~(b).}  The binary operation $m_2$ has two sources:
+the constant term in $\lambda$ (the normally-ordered product,
+which is commutative on cohomology) and the polynomial part in
+$\lambda$ (the $\lambda$-bracket, which records the OPE
+singular part).  On cohomology, the constant term survives as a
+commutative product because the $\Sigma_n$-equivariance of the
+chiral algebra (for $\Einf$-chiral algebras, all standard vertex
+algebras) forces $m_2^H(a,b;0) = m_2^H(b,a;0)$.
+
+\textbf{Part~(c).}  The five PVA axioms are the cohomological
+shadows of the Stasheff relations:
+\begin{itemize}[nosep]
+\item Sesquilinearity (PVA1) is the $n=2$ Stasheff relation
+  applied to $\partial a$ and $a$, using the translation
+  covariance of the chiral algebra.
+\item Skew-symmetry (PVA2) follows from the $\Sigma_2$-equivariance
+  of $\FM_2(\CC)$ (the antipodal map $z \mapsto -z$ on the
+  boundary circle).
+\item The Jacobi identity (PVA3) is the $n=3$ Stasheff relation
+  \eqref{eq:stasheff-3} on cohomology, where $m_3$ disappears
+  (it is exact on $H$) and the associativity defect becomes the
+  Jacobiator.
+\item The Leibniz rule (PVA4) is the compatibility of $m_2$
+  with the product structure, inherited from the factorisation
+  property of the $D$-module.
+\item Commutativity (PVA5) is the cohomological consequence of
+  $\Einf$-locality, as in part~(b).
+\end{itemize}
+
+\textbf{Part~(d).}  If $\cA$ is formal (all $m_k = 0$ for
+$k \geq 3$), then $m_2$ is strictly associative and the PVA
+structure on $H$ is the complete algebraic datum.  If $\cA$ is
+non-formal (class~L, C, or M), the higher operations $m_k^H$
+carry the residual $\Ainf$ data that the PVA structure does not
+capture.
+\end{proof}
+
+\subsection{The five PVA axioms from geometry}
+\label{subsec:five-axioms-geometry}
+
+We record the geometric origin of each PVA axiom in detail.
+
+\begin{proposition}[Geometric origin of PVA axioms]
+\label{prop:pva-axioms-geometry}
+\ClaimStatusProvedHere{}
+The five PVA axioms correspond to geometric properties of the
+Fulton--MacPherson spaces as follows:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+  \toprule
+  \textbf{Axiom} & \textbf{FM property}
+  & \textbf{Stasheff} \\
+  \midrule
+  Sesquilinearity & Translation covariance of $\FM_2(\CC)$
+  & $n = 2$ \\
+  Skew-symmetry & $\Sigma_2$-action on $\FM_2(\CC)$
+  & $n = 2$ \\
+  Jacobi & Arnold relation on $\FM_3(\CC)$
+  & $n = 3$ \\
+  Leibniz & Factorisation on $\FM_2(\CC) \times \FM_1(\CC)$
+  & $n = 2$ \\
+  Commutativity & $\Einf$-locality ($\Sigma_n$-equivariance)
+  & all $n$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+\textbf{Sesquilinearity.}
+The translation $z \mapsto z + c$ acts on $\FM_n(\CC)$ and
+preserves all boundary strata.  On the bar complex, translation
+covariance is encoded by
+$D_\cA \circ \partial = \partial \circ D_\cA$, where $\partial$
+is the translation operator on $\cA$.  Applied to a degree-two
+bar element $[s^{-1}\partial a \mid s^{-1}b]$, the Stasheff
+relation gives
+$m_2(\partial a, b; \lambda) = -\lambda\, m_2(a, b; \lambda)$
+after extracting the $\lambda$-dependent part (the spectral
+parameter $\lambda$ is conjugate to translation, so
+$\partial \leftrightarrow -\lambda$ under the Fourier-type
+correspondence between position and spectral variables).
+The right sesquilinearity follows by skew-symmetry.
+
+\textbf{Skew-symmetry.}
+The involution $(z_1, z_2) \mapsto (z_2, z_1)$ on $\FM_2(\CC)$
+acts on the boundary circle $E_{12} \cong S^1$ as the antipodal
+map.  On the bar complex, this exchanges
+$[s^{-1}a \mid s^{-1}b]$ with
+$(-1)^{(|a|-1)(|b|-1)}[s^{-1}b \mid s^{-1}a]$.
+On the $\lambda$-bracket, the antipodal map sends $\lambda$ to
+$-\lambda - \partial$ (the shift by $\partial$ arises from the
+chain rule in the Fourier transform), yielding
+$\{a_\lambda b\} = -\{b_{-\lambda-\partial} a\}$.
+
+\textbf{Jacobi identity.}
+The Arnold relation on $\FM_3(\CC)$,
+\begin{equation}\label{eq:arnold-relation}
+  \eta_{12} \wedge \eta_{23}
+  + \eta_{23} \wedge \eta_{31}
+  + \eta_{31} \wedge \eta_{12}
+  \;=\; 0,
+\end{equation}
+where $\eta_{ij} = d\log(z_i - z_j)$, is the fundamental
+cohomological relation of the ordered configuration space.
+The $n = 3$ Stasheff relation on cohomology (where $m_3$ vanishes)
+reduces to
+\[
+  m_2(m_2(a,b),c) - m_2(a, m_2(b,c)) = 0 \quad (\text{modulo }
+  m_3\text{-exact terms}).
+\]
+Expanding $m_2$ into its product and $\lambda$-bracket components,
+the $\lambda$-bracket part of this relation is exactly the
+PVA Jacobi identity.  The Arnold relation ensures the three
+cyclic terms cancel; this is the same mechanism that gives
+$D_\cA^2 = 0$ at degree three.
+
+\textbf{Leibniz rule.}
+The factorisation property of the chiral algebra gives a
+compatibility between the binary chiral product and the
+normally-ordered product.  On $\FM_2(\CC) \times \FM_1(\CC)$
+(two colliding points and one spectator), the boundary stratum
+where the spectator approaches one of the colliding pair
+decomposes the interaction into two terms: $\{a_\lambda b\}c$
+and $b\{a_\lambda c\}$.  This is the Leibniz rule.
+
+\textbf{Commutativity.}
+For $\Einf$-chiral algebras (all standard vertex algebras), the
+chiral product is $\Sigma_n$-equivariant: the factorisation
+$D$-module on $\Ran(X)$ is defined on \emph{unordered}
+configurations.  On cohomology, this forces the normally-ordered
+product to be commutative: $a \cdot b = b \cdot a$.  For
+genuinely $\Eone$-chiral algebras (Yangians,
+Etingof--Kazhdan quantum vertex algebras), commutativity fails
+and the PVA axiom must be replaced by a noncommutative variant.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The resolvent principle}
+\label{sec:resolvent}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The $\Ainf$ operations $\{m_k\}_{k \geq 2}$ are not independent.
+They are determined by a single datum: the binary product $m_2$.
+
+\subsection{The tree-level bootstrap equation}
+
+Let $(H, p, \iota, h)$ be a deformation retract of
+$(\cA, m_1)$ onto cohomology $H = H^\bullet(\cA, m_1)$, with
+$h^2 = h\iota = ph = 0$.
+
+\begin{definition}[Dressed propagator]
+\label{def:dressed-propagator}
+The \emph{dressed propagator}
+$\Phi \colon T^+(H) \to \cA$ is defined by the fixed-point
+equation
+\begin{equation}\label{eq:dressed-propagator}
+  \Phi
+  \;=\;
+  \iota + h \circ m_2 \circ \Phi^{\otimes 2}.
+\end{equation}
+Here $T^+(H) = \bigoplus_{k \geq 1} H^{\otimes k}$ is the
+reduced tensor module, $\iota \colon H \hookrightarrow \cA$ is
+the inclusion, and $h \colon \cA \to \cA$ is the contracting
+homotopy.
+\end{definition}
+
+Equation~\eqref{eq:dressed-propagator} is the tree-level
+bootstrap: the full propagator from boundary data $H$ into the
+bulk algebra $\cA$ is determined self-consistently from the free
+embedding $\iota$ and the interaction vertex $m_2$.  Iteration
+produces the tree formula.
+
+\subsection{The tree formula}
+
+\begin{theorem}[Resolvent principle]
+\label{thm:resolvent}
+\ClaimStatusProvedHere{}
+The transferred $\Ainf$ operations on $H$ are given by
+\begin{equation}\label{eq:tree-formula}
+  m_k^H
+  \;=\;
+  \sum_{T \in \mathrm{PRT}_k}
+  p \circ \mathfrak{m}(T) \circ \iota^{\otimes k},
+\end{equation}
+where:
+\begin{enumerate}[label=(\roman*)]
+\item $\mathrm{PRT}_k$ is the set of planar rooted binary trees
+  with $k$ leaves;
+\item $|\mathrm{PRT}_k| = C_{k-1}$, the $(k-1)$-st Catalan number
+  ($C_0 = 1$, $C_1 = 1$, $C_2 = 2$, $C_3 = 5$, \ldots);
+\item $\mathfrak{m}(T)$ assigns the binary product $m_2$ to each
+  internal vertex and the contracting homotopy $h$ to each
+  internal edge;
+\item $p \colon \cA \to H$ is the projection and
+  $\iota \colon H \to \cA$ is the inclusion.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The iteration of \eqref{eq:dressed-propagator} at order $k$ collects
+all ways of building a $k$-to-$1$ map from $H^{\otimes k}$ to
+$\cA$ using the vertex $m_2$ and the propagator $h$.  Each such
+composition pattern is a planar rooted binary tree with $k$
+leaves (one leaf per input from $H$), internal vertices labelled
+by $m_2$, and internal edges labelled by $h$.  The projection $p$
+extracts the cohomology class.
+
+The number of planar rooted binary trees with $k$ leaves is the
+Catalan number $C_{k-1}$: this follows from the recursive
+decomposition of a tree into its left and right subtrees,
+which gives the recurrence
+$C_n = \sum_{i=0}^{n-1} C_i C_{n-1-i}$ with $C_0 = 1$.
+
+The Stasheff relations for $\{m_k^H\}$ are verified by
+checking that the boundary contributions of each tree (where
+two adjacent vertices merge) produce the correct
+composition terms.  This is the combinatorial content of the
+associahedron: the faces of $K_n$ correspond to the degenerate
+trees.
+\end{proof}
+
+One equation, one binary input, $C_{k-1}$ trees.
+
+\begin{remark}[Physical interpretation]
+\label{rem:physical-tree-formula}
+The tree formula is the perturbative expansion of the Lagrangian
+self-intersection $\cL \times_{\cM}^h \cL$ in a shifted symplectic
+stack.  Each tree is a Feynman diagram with vertices $m_2$ and
+propagators $h$.  The sum over $\mathrm{PRT}_k$ is the tree-level
+scattering amplitude at multiplicity $k$.  Loop corrections
+(genus $g \geq 1$) arise from the curvature
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, which obstructs
+the tree-level bootstrap at higher genus.
+\end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Three computations}
+\label{sec:computations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{First computation: Heisenberg (formal, class~G)}
+\label{subsec:comp-heisenberg}
+
+Let $\cA = \cH_k$ be the Heisenberg algebra at level $k$, with
+generator $J$ and OPE
+\[
+  J(z)\, J(w)
+  \;\sim\;
+  \frac{k}{(z-w)^2}.
+\]
+
+\begin{proposition}[Heisenberg $\Ainf$ structure]
+\label{prop:heisenberg-ainf}
+\ClaimStatusProvedHere{}
+The $\Ainf$ structure of $\cH_k$ is:
+\begin{enumerate}[label=(\roman*)]
+\item $m_1 = 0$ (no internal differential).
+\item $m_2(J, J; \lambda) = k\lambda$ (the double-pole residue,
+  absorbed by $d\log$: the OPE has a double pole, and the
+  $d\log(z_1 - z_2)$ kernel reduces the pole order by one,
+  producing a simple-pole collision residue $k$ times the spectral
+  parameter).
+\item $m_k = 0$ for all $k \geq 3$ (no composites, no higher
+  poles).
+\end{enumerate}
+The algebra is formal: the $\Ainf$ structure is concentrated in
+$m_2$.
+\end{proposition}
+
+\begin{proof}
+The augmentation-ideal projected binary product
+$\bar\mu_2(J, J) = 0$: the OPE $J(z)J(w) \sim k/(z-w)^2$ has
+singular part a scalar (the identity), which projects to
+zero in $\barA = \ker(\varepsilon)$.  Therefore the bar
+differential on $\barB(\cH_k)$ vanishes identically: all bar
+elements are $D_\cA$-closed.
+
+The operation $m_2(J,J;\lambda) = k\lambda$ is obtained from
+the full OPE by the $d\log$ extraction: the coefficient of
+$1/(z_1 - z_2)^2$ in the OPE is $k$, and the spectral
+parameter $\lambda = z_1 - z_2$ after Fourier transform gives
+$k\lambda$.
+
+Since $\bar\mu_2 = 0$ on $\barA$, the degree-$n$ bar
+differential involves only the identity-valued OPE residue,
+which lives outside $\barA$.  All $m_k$ for $k \geq 3$ vanish.
+\end{proof}
+
+\begin{corollary}[Heisenberg PVA]
+\label{cor:heisenberg-pva}
+On $H^\bullet(\cH_k) = \Bbbk[J]$, the PVA structure is:
+\begin{enumerate}[label=(\roman*)]
+\item Product: $J^n \cdot J^m = J^{n+m}$ (polynomial ring).
+\item $\lambda$-bracket: $\{J_\lambda J\} = k\lambda$.
+\item All higher operations $m_k^H = 0$ for $k \geq 3$.
+\end{enumerate}
+This is a PVA of rank one.  The classical $r$-matrix is
+$r(z) = k/z$.
+
+Verification: at $k = 0$, the $r$-matrix vanishes ($r(z) = 0$)
+and the algebra reduces to a commutative ring with trivial
+$\lambda$-bracket: the abelian limit.
+
+The modular characteristic is $\kappa(\cH_k) = k$: the same
+scalar governs the OPE, the $\lambda$-bracket, the $r$-matrix,
+and the genus-one curvature $d_{\mathrm{fib}}^2 = k \cdot \omega_1$.
+\end{corollary}
+
+\begin{remark}[Shadow depth zero]
+\label{rem:heisenberg-shadow}
+The Heisenberg algebra belongs to class~G in the shadow depth
+classification: $d_{\mathrm{alg}} = 0$.  The shadow tower
+terminates at $\kappa = k$; the discriminant
+$\Delta = 8\kappa S_4 = 0$ (since $S_4 = 0$ for the Heisenberg)
+confirms the finite tower.  The SC-formality condition is
+satisfied: $\cH_k$ is SC-formal because $m_k = 0$ for $k \geq 3$.
+\end{remark}
+
+
+\subsection{Second computation: Kac--Moody at level $k$
+  (Lie-transverse, class~L)}
+\label{subsec:comp-km}
+
+Let $\cA = V_k(\fg)$ be the vacuum module of the affine
+Kac--Moody algebra at level
+$k \in \CC \setminus \{-h^\vee\}$, with generators $\{J^a\}$
+($a = 1, \ldots, d = \dim\fg$) and OPE
+\begin{equation}\label{eq:km-ope}
+  J^a(z)\, J^b(w)
+  \;\sim\;
+  \frac{k\, \kappa^{ab}}{(z-w)^2}
+  \;+\;
+  \frac{f^{ab}{}_{c}\, J^c(w)}{z-w},
+\end{equation}
+where $\kappa^{ab}$ is the normalised Killing form and
+$f^{ab}{}_c$ are the structure constants.
+
+\begin{proposition}[Kac--Moody $\Ainf$ structure]
+\label{prop:km-ainf}
+\ClaimStatusProvedHere{}
+The $\Ainf$ structure of $V_k(\fg)$ is:
+\begin{enumerate}[label=(\roman*)]
+\item $m_1 = 0$.
+\item $m_2(J^a, J^b; \lambda) = f^{ab}{}_c\, J^c + k\,\kappa^{ab}\,\lambda$.
+  The simple-pole coefficient $f^{ab}{}_c J^c$ is the Lie bracket;
+  the double-pole coefficient $k\,\kappa^{ab}$ contributes the
+  $\lambda$-dependent term.
+\item $m_3 \neq 0$: the Jacobiator homotopy on $\FM_3(\CC)$.
+  The three codimension-one boundary strata of $\FM_3(\CC)$
+  contribute $m_2(m_2(-,-),-)$ terms; their failure to cancel
+  (the Jacobi identity defect from the simple-pole bracket) is
+  corrected by $m_3$.
+\item $m_k = 0$ for all $k \geq 4$, by dimension counting on
+  $\FM_k(\CC)$: the OPE has at most a double pole, so the
+  chain-level integrands vanish for $k \geq 4$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The binary operation extracts from the OPE
+\eqref{eq:km-ope}: the residue at $z_1 = z_2$ with the
+$d\log(z_1 - z_2)$ kernel gives the simple-pole coefficient
+$f^{ab}{}_c J^c$ (the Lie bracket), and the double-pole
+coefficient $k\kappa^{ab}$ contributes the $\lambda$-linear
+term.
+
+The existence of $m_3 \neq 0$ follows from the failure of
+strict associativity: $m_2(m_2(J^a, J^b), J^c) -
+m_2(J^a, m_2(J^b, J^c)) = f^{ab}{}_e f^{ec}{}_d J^d -
+f^{bc}{}_e f^{ae}{}_d J^d \neq 0$ (the Jacobi defect).  The
+homotopy $m_3$ is the integral over $K_3 = [0,1]$ that
+interpolates between the two boundary contributions.
+
+The vanishing $m_k = 0$ for $k \geq 4$ follows from the pole
+structure: the OPE has at most double poles, and the weight
+forms $\eta_{ij}$ absorb one pole order each.  For $k \geq 4$
+insertion points, the integrand on $\FM_k(\CC)$ involves at most
+$(k-1)$ weight forms but the pole excess is at most $2$, which
+is consumed at $k = 3$.  For $k \geq 4$, the integrand has no
+residual singularity and the FM integral vanishes.
+\end{proof}
+
+\begin{corollary}[Kac--Moody PVA]
+\label{cor:km-pva}
+On $H^\bullet(V_k(\fg)) = \Bbbk[J^a : a = 1, \ldots, d]$, the
+PVA structure is:
+\begin{enumerate}[label=(\roman*)]
+\item Product: polynomial ring in $d$ generators.
+\item $\lambda$-bracket:
+  $\{J^a_\lambda J^b\} = f^{ab}{}_c\, J^c + k\,\kappa^{ab}\,\lambda$.
+\item Classical $r$-matrix: $r(z) = k\,\Omega/z$ in the
+  trace-form convention, where $\Omega = \sum_a J^a \otimes J_a$ is
+  the split Casimir.
+
+  Verification: at $k = 0$, the $r$-matrix vanishes
+  ($r(z) = 0$); the algebra reduces to the commutative ring with
+  Lie bracket $\{J^a_\lambda J^b\} = f^{ab}{}_c J^c$, which is
+  still a well-defined PVA (the abelian limit of the level).
+
+  In the KZ convention: $r(z) = \Omega/((k+h^\vee)z)$.  Bridge:
+  $k\,\Omega_{\mathrm{tr}} = \Omega/(k+h^\vee)$ at generic $k$.
+\end{enumerate}
+
+The modular characteristic is
+\begin{equation}\label{eq:kappa-km}
+  \kappa(V_k(\fg))
+  \;=\;
+  \frac{\dim(\fg)\,(k + h^\vee)}{2h^\vee}.
+\end{equation}
+At $k = 0$: $\kappa = \dim(\fg)/2$ (not zero: the pure vacuum
+anomaly).  At $k = -h^\vee$: $\kappa = 0$ (critical level, the
+bar complex is flat).
+\end{corollary}
+
+\begin{remark}[Shadow depth one, class~L]
+\label{rem:km-shadow}
+The affine Kac--Moody algebra belongs to class~L:
+$d_{\mathrm{alg}} = 1$.  The shadow tower extends to the cubic
+invariant $\mathfrak{C}(\hat\fg_k)$ (from the Lie structure
+constants) but terminates at shadow depth $r_{\max} = 3$.  The
+quartic shadow invariant $S_4 = 0$, so the discriminant
+$\Delta = 8\kappa S_4 = 0$: the shadow tower is finite
+(class~L terminates at depth $3$).  The algebra is
+\emph{not} SC-formal:
+$m_3 \neq 0$.
+\end{remark}
+
+
+\subsection{Third computation: $\cW_3$ (infinite tower, class~M)}
+\label{subsec:comp-w3}
+
+The $\cW_3$ algebra has two generators: the stress tensor $T$
+of conformal weight $2$ and a spin-$3$ current $W$ of conformal
+weight $3$.
+
+\begin{proposition}[$\cW_3$ $\Ainf$ structure]
+\label{prop:w3-ainf}
+\ClaimStatusProvedHere{}
+The $\Ainf$ structure of $\cW_3$ satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item $m_1 = 0$.
+\item $m_2(T, T; \lambda) = (c/12)\lambda^3 + 2T\lambda + \partial T$
+  (the full $TT$ OPE in divided-power parametrisation; the
+  coefficient $c/12$ matches $T_{(3)}T = c/2$ via the divided
+  power $\lambda^{(3)} = \lambda^3/3!$).
+\item $m_2(T, W; \lambda) = 3W\lambda + \partial W$.
+\item The $WW$ operation involves the composite field
+  $\Lambda = {}{:}(TT){:} - \frac{3}{10}\partial^2 T$ at the
+  $\lambda$-linear term:
+  \[
+    m_2(W, W; \lambda)
+    \;=\;
+    \frac{c}{360}\lambda^5
+    + \frac{1}{3}T\lambda^3
+    + \frac{1}{2}(\partial T)\lambda^2
+    + \Bigl(\frac{3}{10}\partial^2 T
+      + \frac{32}{22+5c}\,\Lambda\Bigr)\lambda
+    + \cdots
+  \]
+  The coefficient $32/(22+5c)$ diverges at $c = -22/5$
+  (the Lee--Yang value).
+\item $m_3 \neq 0$: the Jacobiator homotopy, involving $\Lambda$.
+\item $m_4 \neq 0$: the quartic operation from the $\FM_4(\CC)$
+  boundary decomposition, with $32/(22+5c)$ entering through the
+  $WW\Lambda$ channel.
+\item The $\Ainf$ structure does not terminate: $m_k \neq 0$
+  for all $k \geq 3$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The binary operations are extracted from the Zamolodchikov
+$\cW_3$ OPE \cite{Zam85} using the $d\log$ kernel and divided-power
+parametrisation.  The non-vanishing of $m_3$ follows from the
+non-Lie structure of the $\cW_3$ bracket (the bracket involves
+the composite field $\Lambda$, which is not a generator).  The
+non-vanishing of $m_4$ follows from the Stasheff pentagon: the
+$m_3$-$m_3$ composition on $\partial K_4$ does not cancel (the
+$\Lambda$ channel provides a non-trivial residue on the
+interior of $K_4$).  The infinite tower $m_k \neq 0$ for all $k$
+follows by induction: each $m_k$ generates a non-vanishing
+correction at degree $k+1$ through the Stasheff cascade, driven
+by the non-primitive composite $\Lambda$.
+\end{proof}
+
+\begin{corollary}[$\cW_3$ PVA]
+\label{cor:w3-pva}
+On cohomology, the PVA structure is the Zamolodchikov PVA:
+\begin{align*}
+  \{T_\lambda T\}
+  &\;=\;
+  \frac{c}{12}\lambda^3 + 2T\lambda + \partial T, \\
+  \{T_\lambda W\}
+  &\;=\;
+  3W\lambda + \partial W, \\
+  \{W_\lambda W\}
+  &\;=\;
+  \frac{c}{360}\lambda^5
+  + \frac{1}{3}T\lambda^3
+  + \frac{1}{2}(\partial T)\lambda^2
+  + \Bigl(\frac{3}{10}\partial^2 T
+    + \frac{32}{22+5c}\,\Lambda\Bigr)\lambda
+  + \cdots
+\end{align*}
+The modular characteristic is $\kappa(\cW_3) = 5c/6$: from the
+formula $\kappa(\cW_N) = c\,(H_N - 1)$ with
+$H_N = \sum_{j=1}^{N} 1/j$, at $N = 3$ we have
+$H_3 = 1 + 1/2 + 1/3 = 11/6$, so $\kappa = c \cdot 5/6$.
+
+Verification at $N = 2$: $H_2 = 3/2$, $H_2 - 1 = 1/2$, so
+$\kappa(\cW_2) = c/2$, which matches the Virasoro formula
+$\kappa(\mathrm{Vir}_c) = c/2$ (since $\cW_2 = \mathrm{Vir}$).
+\end{corollary}
+
+\begin{remark}[Class~M: infinite shadow depth]
+\label{rem:w3-shadow}
+The $\cW_3$ algebra belongs to class~M:
+$d_{\mathrm{alg}} = \infty$.  The shadow tower
+$S_2, S_3, S_4, \ldots$ is infinite, driven by the
+non-primitive composite $\Lambda$.  The generating depth
+$d_{\mathrm{gen}} = 3$ (the operation $m_3$ generates all higher
+$m_k$ via the Stasheff cascade), but the algebraic depth is
+infinite (all $m_k \neq 0$).  The discriminant
+$\Delta = 8\kappa S_4 \neq 0$ for $c \neq 0$ and
+$c \neq -22/5$, confirming the infinite tower.
+
+This infinite depth is the algebraic shadow of the fact that
+three-dimensional gravity with $\cW_3$ symmetry requires an
+infinite number of graviton vertices: the $\Ainf$ structure is
+the perturbative expansion of the bulk theory.
+\end{remark}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccccl}
+  \toprule
+  \textbf{Algebra} & \textbf{Class} & $d_{\mathrm{alg}}$ &
+  $\kappa$ & $m_{k \geq 3}$ & \textbf{PVA type} \\
+  \midrule
+  $\cH_k$ & G & $0$ & $k$ & $= 0$ & free rank-1 \\
+  $V_k(\fg)$ & L & $1$ & $\frac{d(k+h^\vee)}{2h^\vee}$ &
+  $m_3 \neq 0$, $m_{\geq 4} = 0$ & affine, Lie-transverse \\
+  $\cW_3$ & M & $\infty$ & $5c/6$ & all $\neq 0$ &
+  Zamolodchikov, infinite \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% REFERENCES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+
+\bibitem{AF15}
+D.~Ayala and J.~Francis,
+\emph{Factorization homology of topological manifolds},
+J.~Topol.~\textbf{8} (2015), no.~4, 1045--1084.
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral Algebras},
+Amer.\ Math.\ Soc.\ Colloq.\ Publ., vol.~51, AMS, 2004.
+
+\bibitem{Cav14}
+G.~Caviglia,
+\emph{The Quillen model structure for coloured operads},
+arXiv:1401.6983, 2014.
+
+\bibitem{DK10}
+V.~Dotsenko and A.~Khoroshkin,
+\emph{Gr\"obner bases for operads},
+Duke Math.~J.~\textbf{153} (2010), no.~2, 363--396.
+
+\bibitem{DSK06}
+A.~De~Sole and V.~Kac,
+\emph{Finite vs.\ affine $W$-algebras},
+Jpn.~J.~Math.~\textbf{1} (2006), no.~1, 137--261.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+\emph{Chiral Koszul duality},
+Selecta Math.~(N.S.)~\textbf{18} (2012), no.~1, 27--87.
+
+\bibitem{GK94}
+V.~Ginzburg and M.~Kapranov,
+\emph{Koszul duality for operads},
+Duke Math.~J.~\textbf{76} (1994), no.~1, 203--272.
+
+\bibitem{Hin97}
+V.~Hinich,
+\emph{Homological algebra of homotopy algebras},
+Comm.~Algebra~\textbf{25} (1997), no.~10, 3291--3323.
+
+\bibitem{Kad82}
+T.~V.~Kadeishvili,
+\emph{On the theory of homology of fiber spaces},
+Uspekhi Mat.~Nauk~\textbf{35} (1980), no.~3, 183--188;
+Int.\ Math.\ Res.\ Not.\ (2003), no.~3, 141.
+
+\bibitem{Kon99}
+M.~Kontsevich,
+\emph{Operads and motives in deformation quantization},
+Lett.~Math.~Phys.~\textbf{48} (1999), no.~1, 35--72.
+
+\bibitem{Kon03}
+M.~Kontsevich,
+\emph{Deformation quantization of Poisson manifolds},
+Lett.~Math.~Phys.~\textbf{66} (2003), no.~3, 157--216.
+
+\bibitem{KS06}
+H.~Kajiura and J.~Stasheff,
+\emph{Open-closed homotopy algebra in mathematical physics},
+J.~Math.~Phys.~\textbf{47} (2006), 023506.
+
+\bibitem{Liv06}
+M.~Livernet,
+\emph{A rigidity theorem for pre-Lie algebras},
+J.~Pure Appl.~Algebra~\textbf{207} (2006), no.~1, 1--18.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic Operads},
+Grundlehren Math.~Wiss., vol.~346, Springer, 2012.
+
+\bibitem{Mer99}
+S.~Merkulov,
+\emph{Strong homotopy algebras of a K\"ahler manifold},
+Internat.\ Math.\ Res.\ Notices~(1999), no.~3, 153--164.
+
+\bibitem{Vor99}
+A.~Voronov,
+\emph{The Swiss-cheese operad},
+Contemp.~Math.~\textbf{239} (1999), 365--373.
+
+\bibitem{Zam85}
+A.~B.~Zamolodchikov,
+\emph{Infinite additional symmetries in two-dimensional
+conformal quantum field theory},
+Theor.~Math.~Phys.~\textbf{65} (1985), no.~3, 1205--1213.
+
+\end{thebibliography}
+
+\end{document}

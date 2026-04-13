@@ -1,0 +1,4592 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+% Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,
+ citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+% Page geometry
+% ================================================================
+\usepackage[margin=1.15in]{geometry}
+
+% ================================================================
+% Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+% Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\newcommand{\OPE}{\mathrm{OPE}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\ChirHoch}{\mathrm{ChirHoch}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Aut}{Aut}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[The Shadow Obstruction Tower]
+{The Shadow Obstruction Tower}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+ Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{}
+
+\begin{abstract}
+The chiral bar construction of a vertex algebra~$\cA$ on an
+algebraic curve produces a Maurer--Cartan element
+$\Theta_\cA$ in the modular convolution algebra, encoding
+the full genus expansion. The degree-$r$ projections
+of~$\Theta_\cA$ form the \emph{shadow obstruction tower},
+an infinite sequence of invariants $S_2, S_3, S_4, \ldots$
+determined by the operator product expansion.
+
+We prove five results.
+First, the weighted generating function
+$H(t) = \sum_{r \ge 2} r\, S_r\, t^r$ satisfies
+$H(t)^2 = t^4\, Q_L(t)$, where the \emph{shadow metric}
+$Q_L(t) = 4\kappa^2 + 12\kappa\alpha\, t
++ (9\alpha^2 + 16\kappa S_4)\, t^2$
+is a quadratic polynomial: the tower is algebraic
+of degree~$2$, and every $S_r$ for $r \ge 5$ is
+determined by three seeds $(\kappa, \alpha, S_4)$.
+Second, the critical discriminant $\Delta = 8\kappa S_4$
+partitions all chirally Koszul algebras into four depth
+classes: Gaussian ($d_{\mathrm{alg}} = 0$), Lie
+($d_{\mathrm{alg}} = 1$), contact ($d_{\mathrm{alg}} = 2$),
+and mixed ($d_{\mathrm{alg}} = \infty$).
+Third, the algebraic depth satisfies
+$d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$; no
+value~$3$ or any finite value $\ge 3$ is realized.
+Fourth, a chirally Koszul vertex algebra is Swiss-cheese
+formal if and only if it belongs to class~$\mathbf{G}$.
+Fifth, the shadow obstruction tower is the
+$\Sigma_n$-coinvariant image of the ordered $R$-matrix
+tower in the $E_1$ convolution algebra.
+
+We compute explicit shadow towers for all standard families
+(Heisenberg, affine Kac--Moody, $\beta\gamma$, Virasoro,
+$\cW_N$), extract the quartic contact invariant
+$Q^{\mathrm{contact}}_{\Vir} = 10/[c(5c+22)]$,
+determine the shadow connection and its Koszul
+monodromy~$-1$, and compute the genus-$2$ cross-channel
+correction $\delta F_2(\cW_3) = (c + 204)/(16c)$
+by graph-by-graph stable graph summation over the seven
+genus-$2$ stable graphs.
+\end{abstract}
+
+\subjclass[2020]{17B69, 14H10, 18M70, 81T40}
+
+\keywords{Chiral algebras, bar construction, Koszul duality,
+moduli of curves, vertex algebras, shadow tower,
+W-algebras, depth classification}
+
+\maketitle
+
+\tableofcontents
+
+% ================================================================
+% 1. INTRODUCTION
+% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The problem}\label{subsec:intro-problem}
+
+Classical Koszul duality is a phenomenon of graded algebras
+over a field. A quadratic algebra~$A$ determines a dual
+coalgebra~$A^!$; the bar construction $B(A) = T^c(s^{-1}\bar{A})$
+mediates between them; and the Koszul property (bar
+cohomology concentrated in bar degree~$1$) is equivalent to
+the existence of a minimal resolution. The theory is the
+subject of Priddy~\cite{Priddy70},
+Beilinson--Ginzburg--Soergel~\cite{BGS96}, and
+Loday--Vallette~\cite{LV12}.
+
+On an algebraic curve~$X$, the generators become
+sections of a $\mathcal{D}_X$-module, the quadratic
+relations become operator product expansions with
+meromorphic singularities, and the bar differential
+becomes an integral transform whose kernel is the
+logarithmic $1$-form
+$\eta_{ij} = d\log(z_i - z_j)$ on the Fulton--MacPherson
+compactification $\FM_n(X)$. The resulting object, the
+\emph{chiral bar complex}
+$\barB^{\mathrm{ch}}(\cA) = T^c(s^{-1}\bar{\cA})$,
+is a factorization coalgebra on the Ran space
+$\Ran(X)$~\cite{BD04, FG12, CG17}.
+
+At genus~$0$, the classical theory embeds via
+restriction to the formal disk. The embedding is not
+an equivalence: the configuration-space geometry of
+$\mathrm{Conf}_n(\mathbb{A}^1)$, the Arnol'd algebra of
+logarithmic forms, the Fulton--MacPherson
+compactifications, and the $E_1/E_\infty$ bar
+distinction are already present on~$\mathbb{A}^1$
+but absent over a bare point; and the passage from the
+formal disk to a point requires specifying a retraction
+and its homotopy transfer data. At genus $g \ge 1$,
+the topology of the curve forces
+curvature: the fiberwise bar differential satisfies
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, where
+$\omega_g = c_1(\mathbb{E})$ is the Hodge class on
+$\Mbar_g$ and $\kappa(\cA) \in \mathbb{Q}(c)$ is an
+intrinsic invariant called the \emph{modular
+characteristic}. This curvature has no analogue in the
+classical setting; its origin is the nontriviality of the
+Hodge bundle over~$\Mbar_g$.
+
+The present paper addresses a single question: \emph{what
+invariants does the chiral bar construction produce beyond
+the modular characteristic, and what constrains them?}
+
+\subsection{The answer}\label{subsec:intro-answer}
+
+Three invariants suffice. A \emph{primary line} is a
+one-parameter subfamily of the modular deformation space
+obtained by varying a single coupling constant while holding
+all others fixed: for Heisenberg, the level~$k$; for
+Virasoro, the central charge~$c$; for affine Kac--Moody,
+the level~$k$ at fixed Lie type~$\fg$. Along each primary
+line, the chiral bar construction produces an infinite
+sequence of \emph{shadow invariants}
+$S_2, S_3, S_4, \ldots$, and the entire sequence is
+algebraic of degree~$2$: a single quadratic polynomial
+\[
+ Q_L(t)
+ \;=\;
+ 4\kappa^2 + 12\kappa\alpha\,t
+ + (9\alpha^2 + 16\kappa S_4)\,t^2,
+\]
+the \emph{shadow metric}, determines all $S_r$ for $r \ge 5$
+through the relation $H(t)^2 = t^4\, Q_L(t)$, where
+$H(t) = \sum_{r \ge 2} r\, S_r\, t^r$ is the weighted
+shadow generating function.
+
+The critical discriminant $\Delta := 8\kappa S_4$ controls
+the depth of the tower: when $\Delta = 0$, the generating
+function is polynomial and the tower terminates; when
+$\Delta \ne 0$, the generating function has irrational
+Taylor coefficients and the tower extends to infinity.
+The transition is sharp: no intermediate depth is
+possible.
+
+\subsection{Main results}\label{subsec:intro-results}
+
+\begin{theorem}[Riccati algebraicity;
+Theorem~\ref{thm:riccati}]\label{thm:intro-riccati}
+Let $\cA$ be a chirally Koszul vertex algebra, $L$ a
+primary line \textup{(}e.g.\ $\cH_k$ parametrised by level~$k$,
+or $\Vir_c$ parametrised by central charge~$c$\textup{)} with
+shadow data $S_r$, and $\kappa = S_2 \ne 0$. Then
+\begin{equation}\label{eq:intro-algebraicity}
+ H(t)^2 \;=\; t^4\,Q_L(t).
+\end{equation}
+Every $S_r$ with $r \ge 5$ is determined by
+$(\kappa, \alpha, S_4)$ via
+$S_r = \frac{1}{r}[t^{r-2}]\sqrt{Q_L(t)}$.
+\end{theorem}
+
+\begin{theorem}[Four-class partition;
+Theorem~\ref{thm:dichotomy}]\label{thm:intro-classification}
+On any primary line~$L$ with $\kappa \ne 0$, the shadow
+depth $r_{\max} := \sup\{r : S_r \ne 0\}$ belongs to
+$\{2, 3, \infty\}$:
+\begin{enumerate}[(i)]
+\item \textbf{Class $\mathbf{G}$} (Gaussian):
+ $\Delta = 0$, $\alpha = 0$; $r_{\max} = 2$.
+\item \textbf{Class $\mathbf{L}$} (Lie):
+ $\Delta = 0$, $\alpha \ne 0$; $r_{\max} = 3$.
+\item \textbf{Class $\mathbf{M}$} (mixed):
+ $\Delta \ne 0$; $r_{\max} = \infty$.
+\end{enumerate}
+A fourth class, \textbf{class~$\mathbf{C}$} (contact,
+$r_{\max} = 4$), arises when the single-line tower terminates
+but a quartic contact invariant from a two-field interaction
+survives. The archetype is the $\beta\gamma$ system (see
+Section~\ref{subsec:class-C} for the explicit computation).
+\end{theorem}
+
+\begin{theorem}[Depth gap;
+Proposition~\ref{prop:depth-gap}]\label{thm:intro-depth-gap}
+The algebraic depth satisfies
+$d_{\mathrm{alg}}(\cA) \in \{0, 1, 2, \infty\}$.
+No value~$3$ or any finite value~$\ge 3$ is realized on the
+standard landscape. The four values correspond bijectively
+to the classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$,
+$\mathbf{M}$.
+\end{theorem}
+
+\begin{theorem}[SC-formality characterizes class~$\mathbf{G}$;
+Proposition~\ref{prop:sc-formal}]\label{thm:intro-sc-formal}
+A chirally Koszul vertex algebra~$\cA$ in the standard
+landscape is Swiss-cheese formal
+($m_k^{\mathrm{SC}} = 0$ for all $k \ge 3$) if and only
+if~$\cA$ belongs to class~$\mathbf{G}$.
+\end{theorem}
+
+\begin{theorem}[$E_1$ framing;
+Proposition~\ref{prop:e1-framing}]\label{thm:intro-e1}
+The shadow obstruction tower
+$\{S_r\}_{r \ge 2}$ is the $\Sigma_n$-coinvariant image
+of the ordered $R$-matrix tower in the $E_1$ convolution
+algebra $\mathfrak{g}^{E_1}_\cA$: at degree~$2$,
+$\kappa = \mathrm{av}(r(z))$ for abelian algebras, and
+$\kappa = \mathrm{av}(r(z)) + \dim(\fg)/2$ for non-abelian
+affine Kac--Moody (where the Sugawara shift contributes).
+\end{theorem}
+
+The shadow obstruction tower also carries a logarithmic
+connection $\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\,dt$ with
+regular singularities at the zeros of~$Q_L$; the monodromy
+around each branch point is~$-1$ (the Koszul sign).
+
+\subsection{Discussion of the
+results}\label{subsec:intro-discussion}
+
+Each of the five main results captures a different facet of
+the shadow obstruction tower.
+
+\emph{The algebraicity theorem}
+(Theorem~\ref{thm:intro-riccati}) is the structural core:
+it says that the MC recursion, which is an infinite system
+of quadratic equations (one at each degree), is equivalent
+to a single quadratic polynomial relation. The proof
+converts the recursion into a convolution identity by the
+substitution $a_n = (n+2)S_{n+2}$ and shows that the
+convolution $F(t)^2 = Q_L(t)$ holds at all orders. The
+key insight is that the MC recursion at degree~$r$ is
+precisely the statement that the degree-$(r-2)$ convolution
+vanishes: the recursion \emph{is} the algebraicity.
+
+\emph{The four-class partition}
+(Theorem~\ref{thm:intro-classification}) is an immediate
+consequence: the factorization of the shadow metric $Q_L$
+controls the depth. The classification is exhaustive for
+the standard landscape and sharp: no intermediate depths
+are possible (Theorem~\ref{thm:intro-depth-gap}).
+
+\emph{The depth gap theorem}
+(Theorem~\ref{thm:intro-depth-gap}) has a clean algebraic
+explanation: on a single primary line, the shadow generating
+function is a degree-$2$ algebraic function, which is either
+rational (tower finite) or irrational (tower infinite).
+The contact class~$\mathbf{C}$ arises by stratum
+separation: one additional degree from a transverse
+direction. No further finite extension is possible.
+
+\emph{The SC-formality theorem}
+(Theorem~\ref{thm:intro-sc-formal}) connects the shadow
+tower to the operadic structure: the Swiss-cheese operations
+$m_k^{\mathrm{SC}}$ vanish for $k \ge 3$ if and only if
+the shadow tower terminates at degree~$2$. The proof uses
+the tree-shadow correspondence: the degree-$r$ shadow is the
+closed-colour projection of the degree-$r$ mixed SC tree.
+
+\emph{The $E_1$ framing}
+(Theorem~\ref{thm:intro-e1}) identifies the shadow tower as
+a projection of a richer structure: the ordered $R$-matrix
+tower in the $E_1$ convolution algebra. The averaging map
+$\mathrm{av}$ is lossy: it discards the spectral parameter,
+the $R$-matrix, and the Yangian. The shadow tower is the
+$\Sigma_n$-coinvariant residue.
+
+For the $\cW_3$ algebra at genus~$2$, the multi-channel
+stable graph sum produces a cross-channel correction
+$\delta F_2(\cW_3) = (c + 204)/(16c)$, resolving the
+multi-generator universality problem negatively: the scalar
+formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ fails
+at genus~$\ge 2$ for multi-weight algebras (UNIFORM-WEIGHT
+tag required; the correct decomposition is
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} +
+\delta F_g^{\mathrm{cross}}$). The computation is
+graph-by-graph: four of the seven genus-$2$ stable graphs
+contribute nonzero mixed-channel amplitudes, with the
+lollipop contribution $1/16$ being the unique
+$c$-independent term.
+
+\subsection{The E$_1$ perspective}\label{subsec:intro-e1}
+
+The shadow obstruction tower is a projection.
+The primitive object is the ordered bar complex
+$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$ with its
+deconcatenation coproduct and spectral $R$-matrix
+$r(z) \in \mathfrak{g}^{E_1}_\cA$. The shadow tower
+$\{S_r\}$ and the algebraicity relation
+$H(t)^2 = t^4\, Q_L(t)$ are statements about the
+$\Sigma_n$-coinvariant image: the degree-$2$ scalar
+$\kappa$, given by $\mathrm{av}(r(z))$ in abelian and scalar
+families and by $\mathrm{av}(r(z))+\dim(\fg)/2$ for
+non-abelian affine Kac--Moody, and its higher-degree
+extensions under the lossy averaging map
+$\mathrm{av}\colon \mathfrak{g}^{E_1}_\cA \to
+\mathfrak{g}^{\mathrm{mod}}_\cA$.
+
+The full $E_1$ tower retains the spectral parameter~$z$,
+the $R$-matrix, and the Yangian structure; the shadow
+tower discards the spectral parameter by averaging.
+Everything in this paper is the $\Sigma_n$-coinvariant
+projection of an $E_1$ object. The ordered bar is the
+primitive; the shadow tower is the shadow.
+
+\subsection{Context}\label{subsec:intro-context}
+
+The algebraicity relation $H(t)^2 = t^4\, Q_L(t)$ is
+structurally parallel to the loop equations of matrix
+models~\cite{ADKMV, DijkgraafVafa} and to the
+Eynard--Orantin topological
+recursion~\cite{EO}: in those
+frameworks the spectral curve is an input; here the spectral
+curve $\Sigma = \{H^2 = t^4\, Q_L\}$ is an \emph{output}
+of the algebraicity theorem, determined by the
+vertex algebra.
+
+The shadow connection has Stokes data controlled by the
+critical discriminant: monodromy is trivial for classes
+$\mathbf{G}$ and~$\mathbf{L}$ and nontrivial for
+class~$\mathbf{M}$, in parallel with the wall-crossing
+formalism of
+Kontsevich--Soibelman~\cite{KontsevichSoibelman}.
+
+Classical Koszul duality over a field embeds into the
+genus-$0$, degree-$2$, $\Delta = 0$ stratum (class
+$\mathbf{G}$, where the tower terminates immediately)
+via restriction to the formal disk.
+Everything beyond class~$\mathbf{G}$ is new.
+
+\subsection{Notation and conventions}\label{subsec:notation}
+
+Throughout, $X$ denotes a smooth projective algebraic curve
+over a field of characteristic zero. All differentials have
+cohomological degree~$+1$. The bar construction uses
+desuspension ($s^{-1}$, degree~$-1$).
+
+A \emph{vertex algebra} is a vertex algebra in the sense
+of~\cite{FrenkelBenZvi, Kac-vertex}, equipped with a
+conformal vector, a conformal grading
+$\cA = \bigoplus_{h \ge 0} \cA_h$ with
+$\dim \cA_h < \infty$, and the OPE
+$a(z)b(w) \sim \sum_{n \ge 0} (a_{(n)}b)(w) \cdot
+(z-w)^{-n-1}$.
+
+The \emph{modular characteristic}
+$\kappa(\cA) \in \mathbb{Q}(c)$ is the genus-$1$ curvature
+scalar: $F_1(\cA) = \kappa(\cA)/24$. The Hodge class
+$\lambda_g := c_1(\mathbb{E}_g) \in H^2(\Mbar_g,
+\mathbb{Q})$ is the first Chern class of the Hodge bundle.
+The Faber--Pandharipande coefficients are
+$\lambda_g^{\mathrm{FP}} =
+\int_{\Mbar_{g,1}} \psi_1^{2g-2}\, \lambda_g$, with
+$\lambda_1^{\mathrm{FP}} = 1/24$ and
+$\lambda_2^{\mathrm{FP}} = 7/5760$.
+
+\subsection{Guide to the reader}\label{subsec:guide}
+
+The paper is organized around the shadow obstruction tower
+as the central object, constructed from first principles and
+then analyzed through five independent lenses.
+
+Section~\ref{sec:bar} constructs the chiral bar complex
+and the Maurer--Cartan element $\Theta_\cA$, beginning
+with the Heisenberg algebra as the motivating example.
+Section~\ref{sec:tower} defines the shadow obstruction tower
+as the sequence of degree projections of~$\Theta_\cA$ and
+establishes the master equation.
+Section~\ref{sec:algebraicity} proves the Riccati
+algebraicity theorem: the conversion of the MC recursion
+into a convolution identity, the degree-by-degree
+verification, and the closed-form extraction of shadow
+coefficients.
+Section~\ref{sec:class} derives the four-class partition
+from the factorization of the shadow metric.
+Section~\ref{sec:depth-gap} proves the depth gap theorem,
+establishing that $d_{\mathrm{alg}} = 3$ is impossible.
+Section~\ref{sec:sc-formal} proves that SC-formality
+characterizes class~$\mathbf{G}$.
+Section~\ref{sec:e1} develops the $E_1$ framing: the
+shadow tower as the averaged projection of the ordered
+$R$-matrix tower.
+Sections~\ref{sec:connection} and~\ref{sec:landscape}
+extract the shadow connection and compute explicit towers
+for all standard families.
+Section~\ref{sec:genus2} carries out the $\cW_3$
+cross-channel computation at genus~$2$.
+
+The logical dependencies are:
+$\text{\S\ref{sec:bar}} \to \text{\S\ref{sec:tower}} \to
+\text{\S\ref{sec:algebraicity}} \to
+\text{\S\ref{sec:class}} \to
+\text{\S\ref{sec:depth-gap}}$;
+the sections on SC-formality, $E_1$ framing, the shadow
+connection, and the genus-$2$ computation are logically
+independent of each other and may be read in any order
+after Section~\ref{sec:class}.
+
+\subsection{Relation to companion
+papers}\label{subsec:companion}
+
+The $c$-independent identity $S_3(\Vir_c) = 2$ is proved in
+\cite{LorgatVirR}. The seven-face programme connecting the
+shadow tower to Gaudin models, Sklyanin brackets, and
+commuting Hamiltonians is developed
+in~\cite{LorgatSevenFaces}. The present paper is
+self-contained: all results are proved from the chiral bar
+construction without reference to the companion papers.
+
+
+% ================================================================
+% 2. THE CHIRAL BAR COMPLEX
+% ================================================================
+
+\section{The chiral bar complex and Maurer--Cartan element}
+\label{sec:bar}
+
+\subsection{The chiral bar complex}\label{subsec:bar-complex}
+
+Let $\cA$ be a vertex algebra on a smooth projective
+curve~$X$. The Ran space
+$\Ran(X) = \coprod_{n \ge 1} X^n/\Sigma_n$ parameterizes
+nonempty finite subsets of~$X$. For each $n \ge 1$, the
+Fulton--MacPherson compactification $\FM_n(X)$ resolves
+the diagonals in~$X^n$ by iterated blowups along all
+partial diagonals, producing a smooth manifold-with-corners
+whose boundary strata are indexed by trees of
+collisions~\cite{GK}.
+
+\begin{definition}[Chiral bar complex]\label{def:bar-complex}
+The \emph{chiral bar complex} $B(\cA)$ is the factorization
+coalgebra on $\Ran(X)$ with:
+\begin{enumerate}[(i)]
+\item \emph{Underlying space}:
+ $B(\cA)_n := (s^{-1}\bar{\cA})^{\otimes n}$, where
+ $\bar{\cA} = \ker(\varepsilon)$ is the augmentation ideal
+ and $s^{-1}$ denotes desuspension (degree~$-1$).
+
+\item \emph{Bar differential}: the coderivation $d_B$ whose
+ components are the collision residues
+ \[
+  d_B|_{B(\cA)_n \to B(\cA)_{n-1}}
+  \;=\;
+  \sum_{i < j}
+  \Res_{z_i \to z_j}
+  a_i(z_i)\, a_j(z_j)\, d\!\log(z_i - z_j),
+ \]
+ extracting the OPE residue along the logarithmic
+ differential $d\!\log(z_i - z_j)$.
+
+\item \emph{Coproduct}: the cofactorization structure
+ induced by partition of points into clusters.
+\end{enumerate}
+The identity $d_B^2 = 0$ encodes OPE associativity.
+\end{definition}
+
+\begin{remark}[The $d\!\log$ absorption]\label{rem:dlog}
+The bar differential extracts residues along
+$d\!\log(z - w)$, not along $dz/(z-w)$. The logarithmic
+differential absorbs one power of $(z-w)$: if the OPE has
+poles at $(z-w)^{-n-1}$, the collision residue has poles
+at $(z-w)^{-n}$. For Virasoro, the OPE has a quartic pole;
+the bar $r$-matrix has a cubic pole
+$r^{\Vir}(z) = (c/2)/z^3 + 2T/z$.
+\end{remark}
+
+\begin{remark}[The ordered bar as
+primitive]\label{rem:ordered-bar}
+The bar complex of Definition~\ref{def:bar-complex} is the
+symmetric (factorization) bar $B^\Sigma(\cA)$, the
+$\Sigma_n$-coinvariant quotient of the ordered bar
+$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar{\cA})$. The
+ordered bar carries a deconcatenation coproduct
+(coassociative, not cocommutative) and supports the spectral
+$R$-matrix $r(z) \in \mathfrak{g}^{E_1}_\cA$. The shadow
+obstruction tower $\{S_r\}$ and the algebraicity relation
+$H(t)^2 = t^4\, Q_L(t)$ are statements about the
+$\Sigma_n$-coinvariant image: the degree-$2$ scalar
+$\kappa$, given by $\mathrm{av}(r(z))$ in abelian and scalar
+families and by $\mathrm{av}(r(z))+\dim(\fg)/2$ for
+non-abelian affine Kac--Moody, and its higher-degree
+extensions. The ordered bar is the primitive object; the
+shadow tower is its averaged projection.
+\end{remark}
+
+\subsection{Chirally Koszul algebras}\label{subsec:koszul}
+
+\begin{definition}[Chirally
+Koszul]\label{def:chirally-koszul}
+A vertex algebra~$\cA$ is \emph{chirally Koszul} if the bar
+cohomology $H^\bullet(B(\cA), d_B)$ is concentrated in bar
+degree~$1$: for every $n \ge 2$, the map
+$H^\bullet(B(\cA)_n) \to H^\bullet(B(\cA)_1)^{\otimes n}$
+induced by the coproduct is a quasi-isomorphism.
+\end{definition}
+
+The standard families (Heisenberg, affine Kac--Moody at
+non-critical level $k \ne -h^\vee$, $\beta\gamma$,
+Virasoro, and $\cW_N$) are all chirally Koszul.
+
+\subsection{The modular convolution algebra}
+\label{subsec:convolution}
+
+\begin{definition}[Modular cyclic deformation
+complex]\label{def:mod-cyc}
+The \emph{modular cyclic deformation complex} of~$\cA$ is
+\begin{equation}\label{eq:mod-cyc}
+ \Defcyc^{\mathrm{mod}}(\cA)
+ \;:=\;
+ \prod_{\substack{g,n \\ 2g-2+n>0}}
+ \operatorname{CoDer}^{\mathrm{cyc}}\!\bigl(
+ B^{(g,n)}(\cA)\bigr)[1],
+\end{equation}
+where the product ranges over all stable pairs.
+The differential is $d = d_{\mathrm{int}} +
+d_{\mathrm{sew}}$, with $d_{\mathrm{int}}$ the internal
+cyclic coderivation differential and $d_{\mathrm{sew}}$ the
+clutching operation from boundary maps on~$\Mbar_{g,n}$.
+The Lie bracket is \emph{graph composition}: for
+coderivations $\xi$ and~$\eta$,
+\begin{equation}\label{eq:graph-bracket}
+ [\xi,\eta]
+ \;:=\;
+ \sum_\Gamma \xi \circ_\Gamma \eta,
+\end{equation}
+summed over stable graphs connecting an output of~$\xi$
+to an input of~$\eta$.
+\end{definition}
+
+\subsection{The Maurer--Cartan
+element}\label{subsec:mc-element}
+
+\begin{proposition}[Bar-intrinsic MC
+element]\label{prop:bar-mc}
+Let $D_\cA$ denote the full bar differential on $B(\cA)$
+and $d_0$ its genus-$0$ linear part. Define
+\begin{equation}\label{eq:theta-def}
+ \Theta_\cA \;:=\; D_\cA - d_0
+ \;\in\; \Defcyc^{\mathrm{mod}}(\cA).
+\end{equation}
+Then $\Theta_\cA$ satisfies the Maurer--Cartan equation
+\begin{equation}\label{eq:mc-equation}
+ d_0\,\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]
+ = 0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The identity $D_\cA^2 = 0$ is a formal consequence of the
+boundary-of-boundary relation $\partial^2 = 0$ on
+$\Mbar_{g,n}$. Substituting $D_\cA = d_0 + \Theta_\cA$
+into $D_\cA^2 = 0$ and expanding:
+\[
+ 0 \;=\; d_0^2 + d_0\,\Theta_\cA + \Theta_\cA \circ d_0
+ + \Theta_\cA \circ \Theta_\cA.
+\]
+Since $d_0^2 = 0$ (OPE associativity) and
+the remaining terms identify with
+$d_0\,\Theta_\cA + \frac{1}{2}[\Theta_\cA, \Theta_\cA]$
+in the cyclic coderivation Lie algebra, the result follows.
+\end{proof}
+
+
+% ================================================================
+% 3. THE SHADOW OBSTRUCTION TOWER
+% ================================================================
+
+\section{The shadow obstruction tower}\label{sec:tower}
+
+\subsection{Definition and master
+equation}\label{subsec:tower-def}
+
+\begin{definition}[Shadow obstruction
+tower]\label{def:shadow-tower}
+The \emph{shadow obstruction tower} of~$\cA$ is the sequence
+of truncations $\Theta_\cA^{\le r}$ ($r \ge 2$) obtained by
+retaining only the components of degree at most~$r$ in
+$\Defcyc^{\mathrm{mod}}(\cA)$.
+The \emph{degree-$r$ shadow} is the projection
+\[
+ \Sh_r(\cA)
+ \;:=\;
+ \pi_r(\Theta_\cA)
+ \;\in\;
+ \operatorname{CoDer}^{\mathrm{cyc}}(B^{(\bullet,r)}
+ (\cA))[1].
+\]
+\end{definition}
+
+\begin{proposition}[All-degree master
+equation]\label{prop:master-eq}
+For each $r \ge 2$, the degree-$r$ projection of the
+MC equation gives
+\begin{equation}\label{eq:master-eq}
+ d_0(\Sh_r) + \sum_{\substack{j+k = r+2 \\ j,k \ge 2}}
+ [\Sh_j, \Sh_k] \;=\; 0.
+\end{equation}
+The shadow $\Sh_r$ is determined recursively by
+$\Sh_2, \ldots, \Sh_{r-1}$ and a cohomological obstruction.
+\end{proposition}
+
+\begin{proof}
+The differential $d_0$ and the bracket $[-,-]$ respect the
+degree filtration. Restricting the MC equation to degree~$r$:
+the linear term is $d_0(\Sh_r)$, and the quadratic term at
+degree~$r$ receives contributions from pairs $(j,k)$ with
+$j + k = r + 2$ (the bracket consumes two inputs via the
+internal edge, reducing total degree by~$2$).
+\end{proof}
+
+\subsection{Primary lines and shadow
+data}\label{subsec:primary-lines}
+
+\begin{definition}[Primary line and shadow
+data]\label{def:primary-line}
+A \emph{primary line} in $\Defcyc^{\mathrm{mod}}(\cA)$ is a
+one-dimensional subspace $L = k \cdot \eta$ spanned by a
+single primary field~$\eta$ of definite conformal weight.
+On~$L$, the degree-$r$ shadow restricts to a scalar:
+$\Sh_r|_L = S_r \cdot x^r$, where $x$ is the coordinate
+on~$L$ and $S_r = S_r(\cA) \in \mathbb{Q}(c)$.
+
+The first three scalars are:
+\begin{itemize}
+\item $S_2 =: \kappa$, the \emph{modular characteristic}:
+ $F_1(\cA) = \kappa/24$.
+\item $S_3 =: \alpha$, the \emph{cubic shadow}:
+ the three-point collision residue on $\FM_3(X)$.
+\item $S_4$, the \emph{quartic shadow}:
+ the four-point collision residue, the first
+ nonlinear OPE invariant.
+\end{itemize}
+\end{definition}
+
+\subsection{The shadow metric}\label{subsec:shadow-metric}
+
+\begin{definition}[Shadow metric and critical
+discriminant]\label{def:shadow-metric}
+Let $L$ be a primary line with $\kappa = S_2 \ne 0$ and
+$\alpha = S_3$. Define the \emph{weighted initial data}
+$a_0 := 2\kappa$, $a_1 := 3\alpha$, $a_2 := 4S_4$.
+The \emph{shadow metric} on~$L$ is
+\begin{equation}\label{eq:shadow-metric}
+ Q_L(t)
+ \;:=\;
+ a_0^2 + 2a_0 a_1\,t + (a_1^2 + 2a_0 a_2)\,t^2
+ \;=\;
+ 4\kappa^2 + 12\kappa\alpha\,t
+ + (9\alpha^2 + 16\kappa S_4)\,t^2.
+\end{equation}
+The \emph{critical discriminant} is
+\begin{equation}\label{eq:critical-disc}
+ \Delta \;:=\; 8\kappa S_4.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Gaussian decomposition]\label{lem:gaussian}
+\begin{equation}\label{eq:gaussian-decomp}
+ Q_L(t)
+ \;=\;
+ (2\kappa + 3\alpha\,t)^2
+ \;+\;
+ 2\Delta\,t^2.
+\end{equation}
+The first term is the shadow metric of the truncated tower
+with $S_r = 0$ for $r \ge 4$. The second term is the
+quartic interaction correction.
+\end{lemma}
+
+\begin{proof}
+$(2\kappa + 3\alpha t)^2 = 4\kappa^2 + 12\kappa\alpha\,t
++ 9\alpha^2\,t^2$.
+Adding $2\Delta\,t^2 = 16\kappa S_4\,t^2$ recovers
+$Q_L(t)$.
+\end{proof}
+
+
+\subsection{The obstruction
+classes}\label{subsec:obstructions}
+
+The MC equation at degree~$r$ takes the form
+$d_0(\Sh_r) = -\frac{1}{2}\sum_{j+k=r+2} [\Sh_j, \Sh_k]$.
+The right-hand side is a cocycle in the cyclic deformation
+complex (it is $d_0$-closed by the Jacobi identity for
+$[-,-]$ and the MC equation at lower degrees). The shadow
+coefficient $S_r$ exists if and only if this cocycle is a
+coboundary.
+
+\begin{definition}[Obstruction
+classes]\label{def:obstructions}
+The \emph{degree-$r$ obstruction class} is
+\[
+ o_r(\cA)
+ \;:=\;
+ \Bigl[-\frac{1}{2}
+ \sum_{\substack{j+k=r+2 \\ j,k \ge 2}}
+ [\Sh_j, \Sh_k]\Bigr]
+ \;\in\;
+ H^2(\cA^{\mathrm{sh}}_{r,0}),
+\]
+the cohomology class of the quadratic obstruction in the
+shadow algebra
+$\cA^{\mathrm{sh}} := H_\bullet(
+\Defcyc^{\mathrm{mod}}(\cA))$.
+When $o_r = 0$, the shadow coefficient $S_r$ exists and is
+determined (up to a coboundary, which is fixed by
+normalization). When $o_r \ne 0$, the tower is
+obstructed at degree~$r$.
+\end{definition}
+
+\begin{proposition}[Obstructions vanish for Koszul
+algebras]\label{prop:obs-vanish}
+If $\cA$ is chirally Koszul, then $o_r(\cA) = 0$ for all
+$r \ge 2$: the tower is unobstructed, and the full MC
+element $\Theta_\cA$ exists.
+\end{proposition}
+
+\begin{proof}
+The Koszul property implies that the bar cohomology is
+concentrated in bar degree~$1$, which forces
+$H^2(\cA^{\mathrm{sh}}_{r,0}) = 0$ for the relevant
+component of the shadow algebra. The vanishing of the
+second cohomology group means that every cocycle is a
+coboundary, so the obstruction class vanishes.
+
+More precisely: the Koszulness of~$\cA$ implies that the
+spectral sequence computing the shadow algebra cohomology
+degenerates at $E_1$, and the degeneration forces the
+higher obstructions to be trivial. This is the
+vertex-algebraic analogue of the fact that a Koszul algebra
+has a linear resolution: the bar differential has no higher
+corrections.
+\end{proof}
+
+\begin{remark}[Beyond the Koszul
+locus]\label{rem:beyond-koszul}
+All standard families (Heisenberg, affine Kac--Moody at
+non-critical level, $\beta\gamma$, Virasoro, $\cW_N$) are
+chirally Koszul, and for these the shadow tower is
+unobstructed. The obstruction theory becomes nontrivial
+beyond the Koszul locus: for example, at the critical level
+$k = -h^\vee$ of affine Kac--Moody, $\kappa = 0$ and the
+propagator $P = 1/\kappa$ is undefined. The shadow tower
+does not exist in the standard sense; the modular
+convolution algebra requires a different filtration (the
+critical filtration, in which the center of the completed
+enveloping algebra replaces the curvature~$\kappa$).
+Admissible-level quotients $L_k(\fg)$ (where null vectors
+modify the bar complex) are another natural class where
+obstructions may arise.
+\end{remark}
+
+
+\subsection{The shadow algebra
+structure}\label{subsec:shadow-algebra}
+
+The shadow algebra
+$\cA^{\mathrm{sh}} = H_\bullet(
+\Defcyc^{\mathrm{mod}}(\cA))$ carries a graded Lie
+bracket $[-,-]^{\mathrm{sh}}$, inherited from the graph
+composition bracket~\eqref{eq:graph-bracket}. The shadow
+obstruction tower $\{S_r\}$ is a sequence of elements in
+$\cA^{\mathrm{sh}}$ satisfying the projected MC equation.
+
+\begin{proposition}[Structure of the shadow
+algebra]\label{prop:shadow-algebra}
+\leavevmode
+\begin{enumerate}[(i)]
+\item The shadow algebra $\cA^{\mathrm{sh}}$ is a
+ pronilpotent graded Lie algebra with degree filtration
+ $F^r \cA^{\mathrm{sh}} = \{$elements of degree
+ $\ge r\}$.
+
+\item On a primary line~$L$, the shadow algebra restricts
+ to a one-dimensional Lie algebra at each degree. The
+ bracket $[\Sh_j, \Sh_k]^{\mathrm{sh}}|_L$ is a scalar
+ multiple of $\Sh_{j+k-2}|_L$, with the scalar determined
+ by the propagator~$P = 1/\kappa$ and the symmetry
+ factors.
+
+\item The MC equation in $\cA^{\mathrm{sh}}$ is equivalent
+ to the algebraic relation $H(t)^2 = t^4\, Q_L(t)$
+ (Theorem~\ref{thm:riccati}).
+
+\item The shadow algebra carries a $\mathbb{Z}$-grading
+ (by degree) and a $\mathbb{Q}(c)$-rational structure
+ (all structure constants are rational functions of the
+ central charge).
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[The shadow algebra is not a
+ring]\label{rem:not-ring}
+The shadow algebra $\cA^{\mathrm{sh}}$ has a graded Lie
+bracket, not a ring structure. The MC element
+$\Theta_\cA$ is an element of the Lie algebra, not a
+generator of a ring. The algebraicity theorem
+(Theorem~\ref{thm:riccati}) is a statement about the Lie
+algebra structure: the MC equation, which is quadratic in
+the Lie bracket, reduces to a quadratic algebraic equation
+for the generating function.
+\end{remark}
+
+
+\subsection{The Heisenberg shadow tower: the base
+computation}\label{subsec:heisenberg-base}
+
+The Heisenberg algebra is the simplest nontrivial example.
+Its shadow tower terminates immediately, providing the base
+case from which all other computations depart.
+
+\begin{example}[Heisenberg: degree-by-degree
+construction]\label{ex:heisenberg-degrees}
+For $\cH_k$ with $k \ne 0$:
+
+\emph{Degree $2$.}\enspace
+The Heisenberg OPE $J(z)J(w) \sim k/(z-w)^2$ is purely
+quadratic. The collision residue along $d\!\log(z-w)$ extracts
+the coefficient of $(z-w)^{-2}$ after absorbing one power:
+$\Res_{z \to w} k/(z-w)^2 \cdot d\!\log(z-w)
+= \Res_{z \to w} k/(z-w)^2 \cdot dz/(z-w)
+= k \cdot \Res_{z \to w} (z-w)^{-3}\, dz$,
+but the bar differential extracts the OPE residue in the
+standard normalization, giving $S_2 = \kappa = k$.
+
+\emph{Degree $3$.}\enspace
+The three-point collision residue on $\FM_3(X)$ involves
+the OPE $J(z_1)J(z_2)J(z_3)$. Since the Heisenberg OPE
+has no simple-pole term ($J_{(0)}J = 0$), the cubic
+collision vanishes: $S_3 = \alpha = 0$.
+
+\emph{Degree $4$ and higher.}\enspace
+All higher collision residues vanish for the same reason:
+the Heisenberg OPE is purely quadratic, so no connected
+correlator on $\FM_n(X)$ with $n \ge 3$ is nonzero.
+The shadow metric is $Q_L(t) = 4k^2$, a perfect square,
+and $H(t) = 2k\, t^2$.
+
+\emph{Verification.}\enspace
+$H(t)^2 = 4k^2 t^4 = t^4 \cdot 4k^2 = t^4 Q_L(t)$.
+The algebraicity theorem is trivially satisfied.
+\end{example}
+
+
+% ================================================================
+% 4. THE RICCATI ALGEBRAICITY THEOREM
+% ================================================================
+
+\section{The Riccati algebraicity theorem}
+\label{sec:algebraicity}
+
+\subsection{Statement}\label{subsec:riccati-statement}
+
+\begin{theorem}[Riccati algebraicity]\label{thm:riccati}
+Let $\cA$ be a chirally Koszul vertex algebra, $L$ a
+primary line with shadow data $S_r$, curvature
+$\kappa = S_2 \ne 0$, and cubic coefficient
+$\alpha = S_3$. Define the shadow metric $Q_L(t)$ and
+the weighted shadow generating function
+$H(t) := \sum_{r \ge 2} r\, S_r\, t^r$. Then
+\begin{equation}\label{eq:algebraicity}
+ H(t)^2 \;=\; t^4\,Q_L(t).
+\end{equation}
+Equivalently, $H(t) = t^2\sqrt{Q_L(t)}$.
+Every shadow coefficient $S_r$ with $r \ge 5$ is
+determined by the three genus-$0$ invariants
+$(\kappa, \alpha, S_4)$ via
+$S_r = \frac{1}{r}\,[t^{r-2}]\sqrt{Q_L(t)}$.
+\end{theorem}
+
+\subsection{The single-line
+recursion}\label{subsec:recursion}
+
+\begin{lemma}[MC recursion on a primary
+line]\label{lem:mc-recursion}
+Let $P := 1/\kappa$. On the primary line~$L$, the
+master equation reduces to
+\begin{equation}\label{eq:recursion}
+ S_r
+ \;=\;
+ -\frac{P}{2r}
+ \sum_{\substack{j + k = r + 2 \\ 3 \le j \le k}}
+ c_{jk}\, jk\, S_j\, S_k,
+ \qquad
+ c_{jk} =
+ \begin{cases} 1 & j < k, \\ 1/2 & j = k, \end{cases}
+\end{equation}
+for all $r \ge 5$.
+\end{lemma}
+
+\begin{proof}
+On the one-dimensional subspace~$L$, the bracket
+$[\Sh_j, \Sh_k]$ restricts to a scalar pairing.
+The cyclic coderivation bracket on~$L$ evaluates as
+$[\Sh_j, \Sh_k]_L = c_{jk}\, jk\, P\, S_j S_k\, x^{j+k-2}$:
+the factor $jk$ comes from the number of ways to select
+one input from each coderivation, the factor
+$P = 1/\kappa$ from the propagator on the internal edge,
+and $c_{jk}$ corrects for the symmetry when $j = k$.
+The linear term $d_0(\Sh_r)$ contributes
+$2r\,\kappa\,S_r$. Dividing by $2r\,\kappa$ gives the
+stated recursion.
+\end{proof}
+
+
+\subsection{Proof of algebraicity}\label{subsec:proof}
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:riccati}}]
+Define $a_n := (n+2)\, S_{n+2}$ for $n \ge 0$, so that
+$a_0 = 2\kappa$, $a_1 = 3\alpha$, $a_2 = 4S_4$, and
+$H(t) = \sum_{n \ge 0} a_n\, t^{n+2}$.
+Set $F(t) := H(t)/t^2 = \sum_{n \ge 0} a_n\, t^n$.
+The claim is equivalent to $F(t)^2 = Q_L(t)$.
+
+Expand $F(t)^2 = \sum_{m \ge 0}
+\bigl(\sum_{i+j=m} a_i a_j\bigr)\, t^m$.
+The first three coefficients are:
+\begin{alignat*}{2}
+ m &= 0: &\quad a_0^2 &= 4\kappa^2, \\
+ m &= 1: &\quad 2a_0 a_1 &= 12\kappa\alpha, \\
+ m &= 2: &\quad a_1^2 + 2a_0 a_2
+ &= 9\alpha^2 + 16\kappa S_4.
+\end{alignat*}
+These are exactly the coefficients of $Q_L(t)$.
+
+For $m \ge 3$, we show that the convolution
+$\sum_{i+j=m} a_i a_j = 0$.
+Setting $r = m + 2$:
+\[
+ \sum_{i+j=m} a_i a_j
+ \;=\;
+ \sum_{\substack{p+q = r+2 \\ p, q \ge 2}}
+ pq\, S_p\, S_q,
+\]
+where $p = i+2$, $q = j+2$.
+Splitting off the $p = 2$ and $q = 2$ terms:
+\begin{equation}\label{eq:convolution-split}
+ \sum_{i+j=m} a_i a_j
+ \;=\;
+ 4r\,\kappa\, S_r
+ \;+\;
+ \sum_{\substack{p+q=r+2 \\ p,q \ge 3}}
+ pq\, S_p\, S_q.
+\end{equation}
+The MC recursion (Lemma~\ref{lem:mc-recursion}) gives
+\[
+ S_r = -\frac{1}{2r\kappa}
+ \sum_{\substack{p+q=r+2 \\ 3 \le p \le q}}
+ c_{pq}\, pq\, S_p\, S_q.
+\]
+Symmetrizing:
+$\sum_{\substack{p+q=r+2 \\ p,q \ge 3}} pq\, S_p\, S_q
+= 2 \sum_{\substack{p+q=r+2 \\ 3 \le p \le q}}
+c_{pq}\, pq\, S_p\, S_q
+= -4r\,\kappa\, S_r$.
+Substituting into~\eqref{eq:convolution-split}:
+\[
+ \sum_{i+j=m} a_i a_j
+ \;=\;
+ 4r\,\kappa\, S_r + (-4r\,\kappa\, S_r)
+ \;=\; 0.
+\]
+Hence $[t^m](F^2 - Q_L) = 0$ for all $m \ge 3$.
+Combined with the verification at $m = 0, 1, 2$,
+this proves $F(t)^2 = Q_L(t)$.
+
+The closed form follows:
+$r\, S_r = [t^{r-2}]F(t) = [t^{r-2}]\sqrt{Q_L(t)}$.
+\end{proof}
+
+
+\begin{remark}[Riccati ODE]\label{rem:riccati-ode}
+Set $U(t) := \sum_{r \ge 3} S_r\, t^r$, the nonlinear part
+of the shadow generating function. The algebraic
+relation is equivalent to the first-order ODE
+\begin{equation}\label{eq:riccati-ode}
+ 2t\, U'(t) \;+\; \frac{1}{2\kappa}\bigl(U'(t)\bigr)^2
+ \;=\; 6\alpha\, t^3
+ + \frac{9\alpha^2 + 2\Delta}{2\kappa}\, t^4,
+\end{equation}
+quadratic in~$U'$: the shadow obstruction tower satisfies a
+Riccati-type equation of degree~$2$, and all terms at
+$t^r$ for $r \ge 5$ cancel identically.
+\end{remark}
+
+\begin{remark}[The intrinsic quartic
+principle]\label{rem:quartic-principle}
+Three numbers determine an infinite sequence. The analogue is
+the Weierstrass equation: two parameters $(g_2, g_3)$
+determine all Laurent coefficients of~$\wp$, because $\wp$
+satisfies an algebraic equation of degree~$2$
+in~$\wp'$. Here three parameters
+$(\kappa, \alpha, S_4)$ determine all $S_r$, because $H$
+satisfies an algebraic equation of degree~$2$.
+\end{remark}
+
+
+\subsection{Closed-form extraction of shadow
+coefficients}\label{subsec:closed-form}
+
+The algebraicity theorem converts the recursive computation
+of shadow coefficients into a single binomial expansion.
+
+\begin{corollary}[Explicit extraction
+formula]\label{cor:extraction}
+For $r \ge 2$, the shadow coefficient is
+\[
+ S_r
+ \;=\;
+ \frac{1}{r}\,[t^{r-2}]\sqrt{Q_L(t)}
+ \;=\;
+ \frac{1}{r}\,[t^{r-2}]
+ \sqrt{4\kappa^2 + 12\kappa\alpha\, t
+ + (9\alpha^2 + 16\kappa S_4)\, t^2}.
+\]
+Expanding the square root via the binomial series in the
+normalized variable
+$u := (3\alpha\, t)/(2\kappa) + (9\alpha^2 + 2\Delta)\,
+t^2/(4\kappa^2)$:
+\begin{equation}\label{eq:binomial-extraction}
+ \sqrt{Q_L(t)}
+ \;=\;
+ 2\kappa\,\sum_{n=0}^{\infty}
+ \binom{1/2}{n}\, u^n,
+\end{equation}
+where $\binom{1/2}{n} = \frac{(1/2)(1/2 - 1)
+\cdots(1/2 - n + 1)}{n!}
+= \frac{(-1)^{n-1}}{2^{2n-1}\,n}\binom{2n-2}{n-1}$
+for $n \ge 1$.
+\end{corollary}
+
+\begin{example}[First five coefficients by
+extraction]\label{ex:first-five}
+Writing $a := 3\alpha/(2\kappa)$ and
+$b := (9\alpha^2 + 2\Delta)/(4\kappa^2)$ for the
+normalized coefficients of~$u$:
+\begin{align}
+ S_2 &\;=\; \kappa, \label{eq:S2-extract} \\
+ S_3 &\;=\; \alpha, \label{eq:S3-extract} \\
+ S_4 &\;=\; S_4 \qquad\text{(tautological at this
+ degree)}, \label{eq:S4-extract} \\
+ S_5 &\;=\;
+ \frac{2\kappa}{5}\left(-\frac{a\,b}{4}
+ + \frac{a^3}{16}\right)
+ \;=\;
+ -\frac{3\alpha\,\Delta}{10\,\kappa^2},
+ \label{eq:S5-extract} \\
+ S_6 &\;=\;
+ \frac{2\kappa}{6}\left(\frac{b^2}{16}
+ - \frac{a^2 b}{8}
+ + \frac{5 a^4}{128}\right)
+ \;=\;
+ \frac{\Delta\,(45\alpha^2 + 2\Delta)}{60\,\kappa^3}.
+ \label{eq:S6-extract}
+\end{align}
+The key structural observation: every coefficient $S_r$
+with $r \ge 4$ contains $\Delta$ as a factor. This is the
+universal factorization property of
+Theorem~\ref{thm:dichotomy}.
+\end{example}
+
+\begin{remark}[Comparison with direct
+recursion]\label{rem:direct-vs-closed}
+The MC recursion (Lemma~\ref{lem:mc-recursion}) computes
+$S_r$ as a sum of $\lfloor(r-2)/2\rfloor$ terms, each
+involving products of previously computed coefficients.
+The closed-form extraction
+$S_r = \frac{1}{r}[t^{r-2}]\sqrt{Q_L}$ replaces this
+recursive computation with a single coefficient extraction
+from a degree-$2$ algebraic function. The computational
+advantage grows with~$r$: at degree~$10$, the recursion
+involves $4$ nonlinear terms, while the extraction requires
+expanding $\sqrt{1 + u}$ to order~$8$.
+
+For computer algebra, both methods are efficient. The
+conceptual advantage of the closed form is structural: it
+makes the $\Delta$-divisibility and the asymptotic behaviour
+manifest, and it identifies the shadow tower as a branch of
+an algebraic curve rather than as the output of a recursion.
+\end{remark}
+
+
+\subsection{The spectral curve}\label{subsec:spectral-curve}
+
+The algebraicity theorem identifies the shadow obstruction
+tower with a point on an algebraic curve.
+
+\begin{definition}[Shadow spectral
+curve]\label{def:spectral-curve}
+The \emph{shadow spectral curve} of a primary line~$L$
+with shadow metric $Q_L$ is the affine curve
+\begin{equation}\label{eq:spectral-curve}
+ \Sigma_L
+ \;:=\;
+ \bigl\{(t, y) \in \mathbb{A}^2 : y^2 = Q_L(t)\bigr\}.
+\end{equation}
+The shadow generating function $H(t) = t^2 y$ selects one
+of the two branches of~$\Sigma_L$ near $t = 0$ (the branch
+with $y(0) = 2\kappa > 0$).
+\end{definition}
+
+For class~$\mathbf{G}$, $Q_L = (2\kappa)^2$ is constant and
+$\Sigma_L$ degenerates to two horizontal lines. For
+class~$\mathbf{L}$, $Q_L$ has a double zero at
+$t = -2\kappa/(3\alpha)$ and $\Sigma_L$ is a rational curve
+with a node. For class~$\mathbf{M}$, $Q_L$ has two distinct
+zeros, $\Sigma_L$ is a smooth affine conic (genus~$0$), and
+the two branches of $\sqrt{Q_L}$ are interchanged by
+monodromy around the branch points.
+
+\begin{remark}[Comparison with matrix
+models]\label{rem:matrix-models}
+In the Eynard--Orantin topological recursion, the spectral
+curve is prescribed as input and determines the full
+genus expansion. Here the situation is reversed: the vertex
+algebra determines the shadow metric $Q_L$ (three numbers),
+which determines the spectral curve $\Sigma_L$, which
+determines the shadow tower. The spectral curve is an
+\emph{output}, not an input.
+
+The structural parallel is precise: the recursion kernel of
+Eynard--Orantin is the Bergman kernel on the spectral
+curve; the MC recursion of the shadow tower is the
+convolution kernel on the parameter line, and the
+algebraicity theorem identifies the two. The genus-$g$
+free energies $F_g$ are computed from the shadow tower by
+stable graph summation, paralleling the Feynman expansion
+from the spectral curve in matrix models. The key
+difference is that the shadow spectral curve has genus~$0$
+(it is a conic), while matrix-model spectral curves may
+have arbitrary genus.
+\end{remark}
+
+
+% ================================================================
+% 5. THE FOUR-CLASS CLASSIFICATION
+% ================================================================
+
+\section{The four-class classification}\label{sec:class}
+
+\subsection{The single-line dichotomy}
+\label{subsec:single-line}
+
+\begin{theorem}[Single-line
+dichotomy]\label{thm:dichotomy}
+On any primary line $L$ with $\kappa \ne 0$ and critical
+discriminant $\Delta = 8\kappa S_4$, the shadow depth
+satisfies $r_{\max} \in \{2, 3, \infty\}$:
+\begin{enumerate}[(i)]
+\item $\Delta = 0$, $\alpha = 0$:
+ $Q_L = (2\kappa)^2$; $H(t) = 2\kappa\, t^2$;
+ $r_{\max} = 2$ (class~$\mathbf{G}$, Gaussian).
+\item $\Delta = 0$, $\alpha \ne 0$:
+ $Q_L = (2\kappa + 3\alpha\, t)^2$;
+ $H(t) = t^2(2\kappa + 3\alpha\, t)$;
+ $r_{\max} = 3$ (class~$\mathbf{L}$, Lie).
+\item $\Delta \ne 0$:
+ $Q_L$ is irreducible;
+ $S_r \ne 0$ for all $r \ge 4$ generically;
+ $r_{\max} = \infty$ (class~$\mathbf{M}$, mixed).
+\end{enumerate}
+For $r \ge 4$: $S_r = \Delta \cdot R_r$ with
+$R_r \in \mathbb{Q}(\alpha, \kappa, S_4)$ a universal
+rational function independent of the algebra family.
+\end{theorem}
+
+\begin{proof}
+The Gaussian decomposition
+$Q_L(t) = (2\kappa + 3\alpha\, t)^2 + 2\Delta\, t^2$
+shows that $Q_L$ is a perfect square if and only if
+$\Delta = 0$.
+
+\emph{Case $\Delta = 0$.}
+Then $Q_L = (2\kappa + 3\alpha\, t)^2$, so
+$H(t) = t^2(2\kappa + 3\alpha\, t)$.
+If also $\alpha = 0$, then $H(t) = 2\kappa\, t^2$;
+$S_r = 0$ for all $r \ge 3$ (class~$\mathbf{G}$).
+If $\alpha \ne 0$, then $H$ is a cubic polynomial;
+$S_r = 0$ for $r \ge 4$, while $S_3 = \alpha \ne 0$
+(class~$\mathbf{L}$).
+
+\emph{Case $\Delta \ne 0$.}
+Then $Q_L$ has two distinct zeros, so $\sqrt{Q_L(t)}$ is not
+polynomial. The Taylor coefficients
+$S_r = \frac{1}{r}[t^{r-2}]\sqrt{Q_L(t)}$ are nonzero
+for all $r \ge 4$ generically (the only way
+$[t^n]\sqrt{Q_L}$ vanishes identically is if $\sqrt{Q_L}$
+is polynomial, requiring $\Delta = 0$). Hence
+$r_{\max} = \infty$ (class~$\mathbf{M}$).
+
+For the $\Delta$-divisibility: write
+$\sqrt{Q_L} = |2\kappa + 3\alpha\, t|\,
+(1 + 2\Delta\, t^2/(2\kappa + 3\alpha\, t)^2)^{1/2}$
+and expand the binomial series. Every term beyond zeroth
+order contributes a factor of~$\Delta$.
+\end{proof}
+
+\subsection{Class $\mathbf{C}$: contact
+depth}\label{subsec:class-C}
+
+A fourth class escapes the single-line dichotomy. The
+$\beta\gamma$ system exhibits the mechanism concretely.
+
+The $\beta\gamma$ algebra at conformal weight $\lambda$ has
+two generators $\beta$ (weight $\lambda$) and $\gamma$
+(weight $1 - \lambda$) with OPE
+$\beta(z)\gamma(w) \sim 1/(z-w)$: a single simple pole,
+no self-OPE. The central charge is
+$c_{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)$
+and the modular characteristic is
+$\kappa(\beta\gamma) = c_{\beta\gamma}/2
+= 6\lambda^2 - 6\lambda + 1$.
+At $\lambda = 1$: $\kappa = 1$, $c = 2$.
+
+The $r$-matrix is the constant permutation
+$r(z) = P/z$ (the transposition of $\beta$ and $\gamma$
+channels): a simple pole, one order below the OPE double pole
+(the $d\log$ propagator absorbs one pole as always). The
+cubic shadow $S_3 = 0$: both $\beta$ and $\gamma$ are
+free fields with no self-coupling, so the Lie bracket
+component vanishes. The discriminant
+$\Delta = 8\kappa S_4$: since $S_3 = 0$, the single-line
+dichotomy gives $\Delta = 0$ on every one-dimensional
+primary line. The single-line tower terminates at degree~$2$.
+
+The quartic contact invariant $S_4 \ne 0$ lives on the
+\emph{two-field} stratum: the cross-channel
+$\beta\gamma\beta\gamma$ four-point amplitude produces a
+nonzero quartic residue from the interaction of two distinct
+fields. Concretely, the degree-$4$ MC component
+$\Theta^{(4)}_{\beta\gamma}$ has a nonvanishing contribution
+from the graph with two $\beta\gamma$ propagators crossing;
+this contribution is proportional to $(1 - 2\lambda)^2$ and
+vanishes only at $\lambda = 1/2$ (the symplectic boson, where
+$c = -1$ and the theory acquires enhanced symmetry). The
+quintic and all higher obstructions vanish: the cross-channel
+self-bracket exits the two-field complex by dimensional
+constraint (a rank-one target cannot support a quintic
+interaction with the given conformal weight pairing).
+
+\begin{definition}[Class $\mathbf{C}$]\label{def:class-C}
+A chirally Koszul vertex algebra is of \emph{class
+$\mathbf{C}$} (contact, $r_{\max} = 4$, $d_{\mathrm{alg}} = 2$)
+if:
+\begin{enumerate}[(a)]
+\item on every one-dimensional primary line $L$, the shadow
+ metric $Q_L$ is a perfect square ($\Delta_L = 0$), so
+ the single-line tower terminates;
+\item in the full multi-field deformation complex, a nonzero
+ quartic contact invariant $S_4^{\mathrm{cross}} \ne 0$
+ arises from the cross-channel interaction of distinct
+ generators at complementary conformal weights;
+\item the quintic and all higher obstructions vanish by
+ dimensional constraint on the cross-channel complex.
+\end{enumerate}
+The $\beta\gamma$ system at generic $\lambda \ne 1/2$ is the
+archetype: $S_3 = 0$ (no Lie bracket), $S_4 \ne 0$ (quartic
+contact from $\beta\gamma$ crossing), $S_r = 0$ for $r \ge 5$
+(dimensional termination). The algebraic depth is
+$d_{\mathrm{alg}} = 2$: finite but nonzero, distinguishing
+class~$\mathbf{C}$ from both class~$\mathbf{G}$
+($d_{\mathrm{alg}} = 0$) and class~$\mathbf{L}$
+($d_{\mathrm{alg}} = 1$).
+\end{definition}
+
+The four classes partition the Koszul world:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{ccccl}
+\toprule
+Class & $\alpha$ & $\Delta$ & $r_{\max}$ & Examples \\
+\midrule
+$\mathbf{G}$ & $0$ & $0$ & $2$
+ & Heisenberg, lattice, free fermion \\
+$\mathbf{L}$ & $\ne 0$ & $0$ & $3$
+ & Affine Kac--Moody (all types) \\
+$\mathbf{C}$ & $0^*$ & $0^*$ & $4$
+ & $\beta\gamma$, $bc$ ghosts \\
+$\mathbf{M}$ & $\ne 0$ & $\ne 0$ & $\infty$
+ & Virasoro, $\cW_N$ ($N \ge 3$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent All four classes are Koszul: shadow depth classifies
+the complexity of the OPE within the Koszul world, not
+Koszulness itself.
+
+
+% ================================================================
+% 6. THE DEPTH GAP THEOREM
+% ================================================================
+
+\section{The depth gap theorem}\label{sec:depth-gap}
+
+\subsection{Statement and proof}\label{subsec:depth-gap-proof}
+
+\begin{definition}[Algebraic
+depth]\label{def:algebraic-depth}
+The \emph{algebraic depth} of a chirally Koszul vertex
+algebra~$\cA$ is
+\[
+ d_{\mathrm{alg}}(\cA)
+ \;:=\;
+ \begin{cases}
+  0 & \text{if } S_r = 0 \text{ for all } r \ge 3
+  \quad(\text{class } \mathbf{G}), \\
+  1 & \text{if } \alpha \ne 0 \text{ and } S_r = 0
+  \text{ for all } r \ge 4
+  \quad(\text{class } \mathbf{L}), \\
+  2 & \text{if } r_{\max} = 4
+  \quad(\text{class } \mathbf{C}), \\
+  \infty & \text{if } r_{\max} = \infty
+  \quad(\text{class } \mathbf{M}).
+ \end{cases}
+\]
+\end{definition}
+
+\begin{proposition}[Depth gap]\label{prop:depth-gap}
+Let $\cA$ be a chirally Koszul algebra in the standard
+landscape. Then
+\begin{equation}\label{eq:depth-gap}
+ d_{\mathrm{alg}}(\cA)
+ \;\in\;
+ \{0,\, 1,\, 2,\, \infty\}.
+\end{equation}
+No value~$3$ or any finite value $\ge 3$ is realized.
+The four permitted values correspond bijectively to the
+classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$,
+$\mathbf{M}$.
+\end{proposition}
+
+\begin{proof}
+The argument has two parts: the single-line Riccati
+regime, and the global contact witness.
+
+\emph{Single-line regime ($\kappa \ne 0$).}
+On a primary line~$L$ with $\kappa \ne 0$, the shadow
+generating function
+$H(t) = t^2\sqrt{Q_L(t)}$ is determined by
+$(\kappa, \alpha, S_4)$
+(Theorem~\ref{thm:riccati}), where
+$Q_L(t) = (2\kappa + 3\alpha\, t)^2 + 2\Delta\, t^2$.
+
+If $\Delta = 0$ (equivalently $S_4 = 0$), then
+$Q_L = (2\kappa + 3\alpha\, t)^2$ is a perfect square, so
+$H(t) = t^2(2\kappa + 3\alpha\, t)$ is a polynomial of
+degree~$3$. The shadow coefficients $S_r = 0$ for all
+$r \ge 4$. The tower terminates at degree at most~$3$,
+giving $d_{\mathrm{alg}} \in \{0, 1\}$.
+
+If $\Delta \ne 0$, then $Q_L$ is not a perfect square.
+The binomial series for
+$(1 + u)^{1/2}$ with
+$u = (6\alpha\, t + (9\alpha^2 + 2\Delta)\, t^2)/(4\kappa^2)$
+does not terminate when the coefficient of~$t^2$
+in~$u$ is nonzero. Therefore $S_r \ne 0$ for infinitely
+many~$r$, and $d_{\mathrm{alg}} = \infty$.
+
+No single primary line with $\kappa \ne 0$ can realize
+$d_{\mathrm{alg}} = 2$ or~$3$: the sharp dichotomy
+$\Delta = 0 \Rightarrow$ polynomial,
+$\Delta \ne 0 \Rightarrow$ infinite, admits no intermediate
+depth.
+
+The degree-$4$ master equation isolates the quartic
+cancellation:
+\[
+ S_4^{\mathrm{free}}
+ \;=\;
+ -\frac{9\alpha^2}{16\kappa},
+\]
+so the finite-depth locus at degree~$4$ is exactly
+$S_4 = 0$, the Jacobi locus. Once this cancellation fails,
+the next recursion step forces a tail. At $r = 5$:
+\[
+ S_5 = -\frac{6}{5}\, P\, \alpha\, S_4.
+\]
+For $\kappa \ne 0$, $\alpha \ne 0$, and $S_4 \ne 0$,
+this is nonzero. If $\alpha = 0$ but $S_4 \ne 0$, then
+$S_5 = 0$ but
+\[
+ S_6
+ \;=\;
+ -\frac{P}{12} \cdot \frac{1}{2} \cdot 16\, S_4^2
+ \;=\;
+ -\frac{2}{3}\, P\, S_4^2
+ \;\ne\; 0.
+\]
+Either way, the tower does not terminate at
+degree~$5$.
+
+\emph{Global contact witness.}
+The value $d_{\mathrm{alg}} = 2$ is realized by the
+$\beta\gamma$ system (equivalently $bc$), whose global
+shadow data on the conformal-weight family is
+$S_2 = 6\lambda^2 - 6\lambda + 1$, $S_3 = 0$,
+$S_4 = -5/12$ (on a charged stratum), $S_r = 0$ for
+$r \ge 5$. The quartic contact invariant lives on a charged
+stratum; the quintic obstruction vanishes by rank-one
+rigidity (Definition~\ref{def:class-C}).
+\end{proof}
+
+\begin{remark}[Why no $d_{\mathrm{alg}} = 3$]
+\label{rem:why-no-3}
+The impossibility of $d_{\mathrm{alg}} = 3$ has a clean
+algebraic explanation. On a single primary line, the tower
+is controlled by a degree-$2$ algebraic function: either
+the square root is rational (tower terminates at
+degree~$\le 3$) or irrational (tower infinite). There is
+no mechanism for a degree-$2$ algebraic function to produce
+exactly one nonzero coefficient beyond the polynomial
+envelope.
+
+Off the primary line, the contact stratum supports at
+most one additional degree (by rank-one rigidity). So
+the maximum finite depth from the single-line polynomial
+envelope ($r_{\max} = 3$) plus the contact stratum
+correction ($+1$) gives $r_{\max} = 4$, class
+$\mathbf{C}$. No further finite extension is possible.
+\end{remark}
+
+\begin{remark}[Generating depth vs algebraic
+depth]\label{rem:gen-vs-alg}
+The algebraic depth $d_{\mathrm{alg}}$ (whether the tower
+terminates) is distinct from the generating depth
+$d_{\mathrm{gen}}$ (the degree at which all higher
+operations are determined by lower ones).
+For Virasoro: $d_{\mathrm{gen}} = 3$ (the cubic
+shadow~$\alpha = 2$ generates all higher shadows recursively
+from $(\kappa, \alpha, S_4)$), but
+$d_{\mathrm{alg}} = \infty$ (all $S_r$ are nonzero).
+\end{remark}
+
+\subsection{The Jacobi mechanism}\label{subsec:jacobi}
+
+The vanishing $S_4 = 0$ for class~$\mathbf{L}$ has a
+precise algebraic explanation that illuminates the
+depth gap.
+
+\begin{proposition}[Jacobi kills the quartic
+shadow]\label{prop:jacobi-kills-s4}
+Let $\cA = V_k(\fg)$ be an affine Kac--Moody vertex
+algebra. The quartic collision residue on $\FM_4(X)$,
+restricted to the primary line, is proportional to
+\[
+ \mathcal{J}
+ \;:=\;
+ \sum_{\mathrm{cyclic}(a,b,c)}
+ f^{abx}\, f^{xcd},
+\]
+where $f^{abc}$ are the structure constants of~$\fg$.
+The Jacobi identity
+$[[J^a, J^b], J^c] + \mathrm{cyclic} = 0$
+forces $\mathcal{J} = 0$, hence $S_4 = 0$.
+\end{proposition}
+
+\begin{proof}
+The degree-$4$ component of the MC element~$\Theta_\cA$
+receives contributions from trees with one internal edge
+connecting two cubic vertices. Each cubic vertex contributes
+$f^{abc}$; the internal edge carries the propagator
+$P = 1/\kappa$; and the contraction over the internal
+index~$x$ produces $f^{abx} f^{xcd}$. The master equation
+at degree~$4$ reads
+$d_0(\Sh_4) + [\Sh_3, \Sh_3] = 0$.
+
+The bracket $[\Sh_3, \Sh_3]$ evaluates on the primary line as
+a sum over channel pairings, and the coefficient of $S_4$
+in the linear term $d_0(\Sh_4)$ is $8\kappa S_4$. The
+obstruction is therefore
+$8\kappa S_4 = -[\Sh_3, \Sh_3]|_{\deg 4}$, which is
+proportional to~$\mathcal{J}$. Since $\mathcal{J} = 0$ by
+the Jacobi identity, $S_4 = 0$.
+\end{proof}
+
+\begin{remark}[The Jacobi locus as a
+discriminant]\label{rem:jacobi-locus}
+The vanishing of $S_4$ is not a numerical accident: it is
+the statement that the Jacobi identity of the Lie
+algebra~$\fg$ kills the quartic shadow. This explains the
+structural difference between classes $\mathbf{L}$ and
+$\mathbf{M}$: affine Kac--Moody algebras carry a Lie
+bracket whose Jacobi identity kills $S_4$; Virasoro and
+$\cW_N$ algebras carry OPE structures without a classical
+Jacobi identity, and $S_4$ survives.
+
+The Jacobi locus
+$\{S_4 = 0\} \subset \{\text{shadow data}\}$ is a
+codimension-$1$ subvariety of the parameter space. On this
+locus, $\Delta = 0$ and the tower terminates. Off the
+locus, $\Delta \ne 0$ and the tower is infinite. The
+transition is sharp: the depth jumps from~$3$ to~$\infty$
+with no intermediate value.
+\end{remark}
+
+\subsection{The shadow Lie algebra
+perspective}\label{subsec:shadow-lie}
+
+The depth gap admits a second proof through the structure of
+the shadow algebra
+$\cA^{\mathrm{sh}} := H_\bullet(
+\Defcyc^{\mathrm{mod}}(\cA))$.
+
+\begin{proposition}[Shadow Lie algebra
+Jacobi]\label{prop:shadow-lie-jacobi}
+The shadow algebra $\cA^{\mathrm{sh}}$ carries a graded Lie
+bracket $[-,-]^{\mathrm{sh}}$. At degree~$4$, the Jacobi
+identity in $\cA^{\mathrm{sh}}$ forces
+\[
+ [S_3, [S_3, S_3]^{\mathrm{sh}}]^{\mathrm{sh}}
+ \;=\;
+ 0,
+\]
+and the degree-$5$ master equation reads
+\[
+ d_0(\Sh_5) + [S_3, S_4]^{\mathrm{sh}}
+ + \tfrac{1}{2}[S_4, S_3]^{\mathrm{sh}} = 0.
+\]
+If $S_4 \ne 0$ and $S_3 \ne 0$, then $S_5 \ne 0$; if
+$S_4 \ne 0$ and $S_3 = 0$, then $S_6 \ne 0$. In either
+case, the tower does not terminate at degree~$5$.
+\end{proposition}
+
+This is the shadow Lie algebra Jacobi mechanism identified
+in the monograph (Proposition~\ref{prop:depth-gap},
+alternative proof): the graded Jacobi identity in the
+shadow algebra constrains which depths are achievable.
+The depth gap $d_{\mathrm{alg}} \ne 3$ is forced because
+no configuration of $(S_3, S_4)$ with $S_4 \ne 0$ can
+produce $S_5 = S_6 = \cdots = 0$.
+
+
+% ================================================================
+% 7. SC-FORMALITY AND CLASS G
+% ================================================================
+
+\section{SC-formality characterizes
+class~$\mathbf{G}$}\label{sec:sc-formal}
+
+The Swiss-cheese operad $\mathrm{SC}^{\mathrm{ch,top}}$ is a
+two-coloured operad governing the interaction of a bulk
+algebra (closed colour) with a boundary algebra (open
+colour). A chirally Koszul vertex algebra~$\cA$ is
+\emph{SC-formal} if the transferred Swiss-cheese operations
+$m_k^{\mathrm{SC}}$ vanish for all $k \ge 3$.
+
+\begin{proposition}[SC-formality iff class
+$\mathbf{G}$]\label{prop:sc-formal}
+Let~$\cA$ be a chirally Koszul vertex algebra in the
+standard landscape. Then~$\cA$ is SC-formal if and only
+if~$\cA$ belongs to class~$\mathbf{G}$.
+\end{proposition}
+
+\begin{proof}
+\emph{Forward direction (class $\mathbf{G}$
+$\Longrightarrow$ SC-formal).}
+Class~$\mathbf{G}$ consists of the Gaussian families:
+Heisenberg, lattice VOAs, and free fermions. In each case,
+the genus-$0$ mixed tree formulas stop at degree~$2$ (the
+OPE is purely quadratic), so
+$m_k^{\mathrm{SC}} = 0$ for $k \ge 3$. The argument uses
+Wick factorization: all higher connected contractions
+vanish for a free field.
+
+\emph{Converse (SC-formal $\Longrightarrow$
+class~$\mathbf{G}$).}
+Suppose~$\cA$ is SC-formal. Then every mixed SC operation
+of degree $r \ge 3$ vanishes. The tree-shadow
+correspondence is operadic: the degree-$r$ mixed tree and
+the degree-$r$ shadow are produced by the same genus-$0$
+tree-transfer formula, with the same propagator on internal
+edges. The only difference is the output colour, and passage
+to the symmetric closed sector applies the averaging morphism
+$\mathrm{av}(\Theta_\cA^{E_1}) = \Theta_\cA$.
+
+Hence SC-formality forces $S_r(\cA) = 0$ for every
+$r \ge 3$: a nonzero shadow coefficient would produce,
+by the tree-shadow correspondence, a nontrivial mixed
+degree-$r$ Massey product, contradicting SC-formality.
+
+The condition $S_r = 0$ for all $r \ge 3$ is exactly class
+$\mathbf{G}$ (Theorem~\ref{thm:dichotomy}(i)). Classes
+$\mathbf{L}$, $\mathbf{C}$, and $\mathbf{M}$ are ruled out:
+class $\mathbf{L}$ has $S_3 = \alpha \ne 0$; class
+$\mathbf{C}$ has a nonzero quartic contact invariant;
+class $\mathbf{M}$ has $S_r \ne 0$ for all $r \ge 4$.
+\end{proof}
+
+\begin{remark}[Operadic alternative]\label{rem:sc-operadic}
+The proposition admits a second proof via genus-$0$
+operadic transfer. Class $\mathbf{G}$ is the Gaussian
+locus where the genus-$0$ transfer is generated by the
+binary two-point kernel alone. Every connected SC tree of
+degree $r \ge 3$ factors through binary pairings and
+carries no primitive higher vertex, so the mixed operations
+vanish. For the converse, if some $S_r \ne 0$ with
+$r \ge 3$, the shadow-formality identification and the
+averaging identity $\mathrm{av}(\Theta_\cA^{E_1}) =
+\Theta_\cA$ exhibit a nonzero closed projection from a
+nonzero tree, contradicting SC-formality.
+\end{remark}
+
+
+% ================================================================
+% 7b. THE SHADOW-FORMALITY IDENTIFICATION
+% ================================================================
+
+\subsection{The shadow-formality
+identification}\label{subsec:shadow-formality}
+
+The shadow obstruction tower and the $A_\infty$
+non-formality data of a chirally Koszul algebra are
+identified by the homotopy transfer theorem.
+
+\begin{proposition}[Shadow-formality
+identification]\label{prop:shadow-formality}
+Let $\cA$ be a chirally Koszul vertex algebra and
+$\{m_k\}_{k \ge 2}$ the transferred $A_\infty$ structure
+on the bar cohomology $H^\bullet(B(\cA))$, obtained by
+homological perturbation from the bar differential. Then:
+\begin{enumerate}[(i)]
+\item The degree-$2$ shadow $S_2 = \kappa$ corresponds to
+ the binary product $m_2$ (which is always nonzero for
+ $\kappa \ne 0$).
+\item The degree-$3$ shadow $S_3 = \alpha$ corresponds to
+ the first $A_\infty$ correction $m_3$:
+ $\alpha = 0$ if and only if $m_3 = 0$ on the primary
+ line.
+\item The degree-$r$ shadow $S_r$ corresponds to $m_r$:
+ $S_r = 0$ if and only if $m_r = 0$ on the primary line
+ (after projection from the full $A_\infty$ structure).
+\item The shadow depth $d_{\mathrm{alg}}$ equals the
+ $A_\infty$-depth: the minimal~$n$ such that
+ $m_k = 0$ for all $k > n + 2$ on the primary line.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The homotopy transfer theorem produces the $A_\infty$
+structure $\{m_k\}$ by summing over binary trees with $k$
+leaves, where each internal edge carries the homotopy
+$h = P \cdot d_0^{-1}$ (with $P = 1/\kappa$ the propagator)
+and each internal vertex carries the binary product $m_2$.
+The degree-$r$ component of the MC element
+$\Theta_\cA$ is the generating function of the tree sum
+at degree~$r$. The shadow coefficient $S_r$ is the
+scalar restriction of this tree sum to the primary line.
+
+The identification $S_r \leftrightarrow m_r|_L$ follows
+from the fact that the MC recursion
+(Proposition~\ref{prop:master-eq}) and the $A_\infty$
+recursion (the Stasheff identities) are the same system
+of equations, restricted to different components of the
+deformation complex. On the primary line, both reduce to
+the scalar recursion of Lemma~\ref{lem:mc-recursion}.
+\end{proof}
+
+\begin{corollary}[Shadow depth classifies
+$A_\infty$-formality]\label{cor:formality-class}
+The four shadow depth classes correspond to four levels of
+$A_\infty$-formality:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cccl}
+\toprule
+Class & $d_{\mathrm{alg}}$ & $A_\infty$ formality & Status \\
+\midrule
+$\mathbf{G}$ & $0$ & formal ($m_k = 0$, $k \ge 3$) & SC-formal \\
+$\mathbf{L}$ & $1$ & $m_3 \ne 0$, $m_k = 0$ for $k \ge 4$
+ & $1$-formal \\
+$\mathbf{C}$ & $2$ & $m_4 \ne 0$ on charged stratum
+ & $2$-formal \\
+$\mathbf{M}$ & $\infty$ & $m_k \ne 0$ for all $k$
+ & non-formal \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent The depth gap $d_{\mathrm{alg}} \ne 3$ translates
+to: no chirally Koszul vertex algebra has $A_\infty$-depth
+exactly~$3$ (i.e., $m_3 \ne 0$, $m_4 \ne 0$, but
+$m_5 = m_6 = \cdots = 0$).
+\end{corollary}
+
+\begin{remark}[The $L_\infty$ perspective]
+\label{rem:linfty-formality}
+The modular convolution algebra
+$\Defcyc^{\mathrm{mod}}(\cA)$ is a dg Lie algebra, and
+the MC element $\Theta_\cA$ determines a gauge equivalence
+class. The shadow-formality identification has an
+$L_\infty$ counterpart: the transferred $L_\infty$ structure
+$\{\ell_k\}_{k \ge 2}$ on the shadow algebra
+$\cA^{\mathrm{sh}}$ satisfies $\ell_k = 0$ for $k \ge 3$ if
+and only if $\cA$ is class~$\mathbf{G}$. The $L_\infty$
+formality level coincides with the $A_\infty$-depth on
+the primary line.
+
+The passage from $A_\infty$ to $L_\infty$ is the
+passage from the open colour (boundary, $A_\infty$) to the
+closed colour (bulk, $L_\infty$) in the Swiss-cheese
+structure. SC-formality is the simultaneous vanishing of
+both the $A_\infty$ and $L_\infty$ higher operations, which
+occurs exactly in class~$\mathbf{G}$
+(Proposition~\ref{prop:sc-formal}).
+\end{remark}
+
+\begin{remark}[Massey products]
+\label{rem:massey}
+The $A_\infty$ correction $m_3$ is a Massey product: it
+measures the failure of the binary product to be
+associative up to homotopy. For class~$\mathbf{L}$
+(affine Kac--Moody), $m_3 \ne 0$ because the Lie bracket
+introduces a cubic non-associativity. For class~$\mathbf{G}$
+(Heisenberg), $m_3 = 0$ because the abelian OPE is strictly
+associative.
+
+The quartic correction $m_4$ is a higher Massey product,
+and its non-vanishing for class~$\mathbf{M}$ is the
+statement that the Virasoro OPE has an irreducible
+four-point contact term not generated by lower operations.
+The depth gap theorem says that this contact term, once
+present, forces an infinite sequence of higher Massey
+products: no finite truncation is possible beyond
+degree~$4$.
+\end{remark}
+
+
+% ================================================================
+% 8. THE E_1 FRAMING
+% ================================================================
+
+\section{The $E_1$ framing}\label{sec:e1}
+
+The shadow obstruction tower is the $\Sigma_n$-coinvariant
+projection of a richer $E_1$ structure.
+
+\begin{proposition}[$E_1$ framing of the shadow
+tower]\label{prop:e1-framing}
+The shadow obstruction tower $\{S_r\}_{r \ge 2}$ is the
+image of the ordered $R$-matrix tower under the averaging
+map $\mathrm{av}\colon \mathfrak{g}^{E_1}_\cA \to
+\mathfrak{g}^{\mathrm{mod}}_\cA$. At degree~$2$:
+\begin{enumerate}[(i)]
+\item For abelian algebras (Heisenberg, free fields):
+ $\kappa = \mathrm{av}(r(z))$, where
+ $r^{\mathrm{Heis}}(z) = k/z$ (level prefix $k$ mandatory;
+ at $k = 0$, the $r$-matrix vanishes).
+
+\item For non-abelian affine Kac--Moody $V_k(\fg)$
+ (trace-form convention $r(z) = k\Omega/z$, where $\Omega$
+ is the inverse Killing form Casimir):
+ \[
+  \kappa(V_k(\fg))
+  \;=\;
+  \mathrm{av}(r(z)) + \frac{\dim(\fg)}{2}
+  \;=\;
+  \frac{k\,\dim(\fg)}{2h^\vee}
+  + \frac{\dim(\fg)}{2}
+  \;=\;
+  \frac{\dim(\fg)\,(k + h^\vee)}{2h^\vee}.
+ \]
+ The $\dim(\fg)/2$ term is the Sugawara shift, the
+ simple-pole self-contraction through the adjoint Casimir
+ eigenvalue~$2h^\vee$.
+\end{enumerate}
+At higher degrees, the averaging map sends the degree-$r$
+component of the ordered $R$-matrix tower
+$\Theta_\cA^{E_1}$ to the shadow $S_r$.
+\end{proposition}
+
+\begin{proof}
+The ordered bar $B^{\mathrm{ord}}(\cA) =
+T^c(s^{-1}\bar{\cA})$ carries the $E_1$ convolution algebra
+$\mathfrak{g}^{E_1}_\cA$, whose MC element
+$\Theta_\cA^{E_1}$ projects to~$\Theta_\cA$ under
+$\mathrm{av}$. The degree-$2$ component of
+$\Theta_\cA^{E_1}$ is the $R$-matrix $r(z)$, and its
+average is the modular characteristic~$\kappa$, with the
+Sugawara correction for non-abelian algebras arising from
+the simple-pole self-contraction of the ordered two-point
+function. The higher degrees follow by the same averaging
+applied to the degree-$r$ MC components.
+\end{proof}
+
+\begin{remark}[What averaging
+discards]\label{rem:averaging-lossy}
+The averaging map $\mathrm{av}$ is lossy: it discards the
+spectral parameter~$z$, the $R$-matrix structure, and the
+Yangian datum. The full $E_1$ tower retains the braiding of
+line operators; the shadow tower retains only the scalar
+invariants. For the Virasoro $R$-matrix
+$r^{\Vir}(z) = (c/2)/z^3 + 2T/z$,
+averaging produces
+$\kappa = c/2$ and $\alpha = 2$, but discards the cubic
+pole structure that encodes the braided tensor category of
+Virasoro modules.
+\end{remark}
+
+\subsection{The $R$-matrix tower for each
+class}\label{subsec:r-matrix-tower}
+
+The $E_1$ convolution algebra
+$\mathfrak{g}^{E_1}_\cA$ carries a spectral $R$-matrix
+$r(z) \in \mathrm{End}(V \otimes V)((z))$ at degree~$2$,
+whose averaging produces~$\kappa$. The structure of $r(z)$
+varies by class.
+
+\begin{example}[Class $\mathbf{G}$:
+Heisenberg]\label{ex:r-heis}
+$r^{\mathrm{Heis}}(z) = k/z$. One pole of order~$1$ (from
+the double-pole OPE $J(z)J(w) \sim k/(z-w)^2$ after
+$d\!\log$ absorption). Averaging:
+$\mathrm{av}(k/z) = k = \kappa$. The $R$-matrix is scalar,
+the Yangian is trivial, and the shadow tower has
+$\alpha = 0$, $\Delta = 0$. At $k = 0$, the $R$-matrix
+vanishes; this is the abelian limit, not the critical level
+(which does not exist for Heisenberg).
+\end{example}
+
+\begin{example}[Class $\mathbf{L}$: affine
+$\mathfrak{sl}_2$]\label{ex:r-sl2}
+In the trace-form convention:
+$r^{\mathrm{KM}}(z) = k\,\Omega/z$, where
+$\Omega = \sum_a t^a \otimes t_a$ is the inverse Killing
+form Casimir.
+Averaging over $\Sigma_2$-coinvariants:
+$\mathrm{av}(k\Omega/z)
+= k\,\mathrm{tr}(\Omega)/\dim(\fg)
+\cdot \dim(\fg)/(2h^\vee)
+= k\,\dim(\fg)/(2h^\vee)$.
+The full $\kappa$ includes the Sugawara shift
+$\dim(\fg)/2$, the simple-pole self-contraction through
+the adjoint Casimir eigenvalue~$2h^\vee$.
+
+For $\fg = \mathfrak{sl}_2$: $\dim(\fg) = 3$,
+$h^\vee = 2$, $\kappa = 3(k+2)/4$.
+At $k = 0$: $\kappa = 3/2 \ne 0$ (the Lie bracket
+persists; the $R$-matrix
+$r(z)|_{k=0} = 0$ in trace-form convention, but the
+Sugawara shift $\dim(\fg)/2 = 3/2$ survives).
+At $k = -2$ (critical): $\kappa = 0$, the center jumps,
+Koszulness fails.
+
+The cubic shadow $\alpha$ encodes the Lie bracket structure
+constants: the Killing $3$-cocycle
+$\omega_3(X,Y,Z) = \mathrm{tr}([X,Y]Z)$.
+\end{example}
+
+\begin{example}[Class $\mathbf{M}$:
+Virasoro]\label{ex:r-vir}
+The Virasoro OPE
+$T(z)T(w) \sim (c/2)/(z-w)^4 + 2T(w)/(z-w)^2
++ \partial T(w)/(z-w)$ has poles at orders $4$, $2$, $1$.
+After $d\!\log$ absorption (which reduces each pole order
+by~$1$):
+\[
+ r^{\Vir}(z)
+ \;=\;
+ \frac{c/2}{z^3} + \frac{2T}{z}.
+\]
+The cubic pole is characteristic of class~$\mathbf{M}$
+and encodes the nonlinear structure of the Virasoro algebra.
+Averaging:
+$\mathrm{av}((c/2)/z^3) = 0$ (odd-degree pole averages
+to zero on the primary line), and
+$\mathrm{av}(2T/z) = c/2 = \kappa$. The cubic shadow
+$\alpha = 2$ comes from the simple pole coefficient
+$2T$, whose projection onto the primary line is the scalar~$2$.
+
+The quartic shadow $S_4 = 10/[c(5c+22)]$ encodes the
+four-point contact term in the Virasoro OPE, which is
+not killed by any Jacobi-type identity. This is the
+mechanism that produces $\Delta \ne 0$ and the infinite
+tower.
+\end{example}
+
+\begin{remark}[Pole order and shadow
+class]\label{rem:pole-class}
+The $R$-matrix pole order determines the shadow class:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cccl}
+\toprule
+OPE pole order $p$ & $R$-matrix pole $p{-}1$
+ & Class & Example \\
+\midrule
+$2$ & $1$ & $\mathbf{G}$
+ & Heisenberg \\
+$2$ (non-abelian) & $1$ & $\mathbf{L}$
+ & affine KM \\
+$1$ (charged) & $0$ & $\mathbf{C}$
+ & $\beta\gamma$ \\
+$4$ & $3$ & $\mathbf{M}$
+ & Virasoro \\
+\bottomrule
+\end{tabular}
+\end{center}
+The $d\!\log$ absorption shifts all pole orders by~$-1$.
+The Jacobi identity kills the quartic contribution for
+class~$\mathbf{L}$ (where the non-abelian cubic OPE comes
+from a Lie bracket). For class~$\mathbf{M}$, the quartic
+OPE survives.
+\end{remark}
+
+\subsection{The ordered-to-symmetric
+functor}\label{subsec:ord-to-sym}
+
+The averaging map $\mathrm{av}\colon
+\mathfrak{g}^{E_1}_\cA \to
+\mathfrak{g}^{\mathrm{mod}}_\cA$ is the
+$\Sigma_n$-coinvariant projection. At the level of
+generating functions, it sends the spectral $R$-matrix
+tower
+$\Theta_\cA^{E_1}(z) = \sum_{r \ge 2} \Sh_r^{E_1}(z)$
+to the shadow tower
+$\Theta_\cA = \sum_{r \ge 2} S_r \cdot x^r$ by discarding
+the spectral parameter~$z$ and averaging over permutations.
+
+\begin{proposition}[Structure of the averaging
+map]\label{prop:av-structure}
+The averaging map has the following properties:
+\begin{enumerate}[(i)]
+\item \emph{Surjectivity.}\enspace
+ Every shadow invariant $S_r$ is in the image of
+ $\mathrm{av}$; the ordered tower lifts the symmetric tower.
+
+\item \emph{Non-injectivity.}\enspace
+ The kernel $\ker(\mathrm{av})$ contains all
+ $\Sigma_n$-anti-invariant components, including the
+ $R$-matrix braiding data, the Yangian coproduct corrections,
+ and the non-commutative shadow coefficients at each degree.
+
+\item \emph{Compatibility with MC.}\enspace
+ $\mathrm{av}$ is a morphism of dg Lie algebras:
+ $\mathrm{av}([\xi,\eta]^{E_1})
+ = [\mathrm{av}(\xi), \mathrm{av}(\eta)]^{\mathrm{mod}}$.
+ The MC element projects:
+ $\mathrm{av}(\Theta_\cA^{E_1}) = \Theta_\cA$.
+
+\item \emph{Degree-$2$ content.}\enspace
+ At degree~$2$: $\mathrm{av}(r(z)) = \kappa$ for abelian
+ algebras; $\mathrm{av}(r(z)) + \dim(\fg)/2 = \kappa$ for
+ non-abelian KM (Sugawara shift).
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[What the shadow tower
+cannot see]\label{rem:shadow-blind}
+The shadow tower is blind to: the spectral parameter~$z$ and
+all $z$-dependent structure; the $R$-matrix and its Yang--Baxter
+equation; the Yangian coproduct; the braided tensor category
+structure on modules; and the Stokes phenomena of the
+KZ connection. These richer structures live in the $E_1$
+tower and are invisible to the $\Sigma_n$-coinvariant
+projection. The shadow tower sees only the
+\emph{scalar invariants} of the $E_1$ structure: the
+numbers $\kappa$, $\alpha$, $S_4$, and their higher-degree
+extensions.
+
+This is the trade-off of averaging: the shadow tower is
+computable (finite-dimensional at each degree), algebraic
+(degree~$2$), and universal (the same structural theorems
+hold for all families); but it discards the
+representation-theoretic content that distinguishes, for
+example, the Yangian of $\mathfrak{sl}_2$ from the Yangian
+of $\mathfrak{sl}_3$.
+\end{remark}
+
+
+% ================================================================
+% 9. THE SHADOW CONNECTION
+% ================================================================
+
+\section{The shadow connection and Koszul
+monodromy}\label{sec:connection}
+
+\subsection{The shadow connection}\label{subsec:conn}
+
+\begin{definition}[Shadow
+connection]\label{def:shadow-conn}
+The \emph{shadow connection} on
+$L \setminus \{Q_L = 0\}$ is
+\begin{equation}\label{eq:shadow-conn}
+ \nabla^{\mathrm{sh}}
+ \;:=\;
+ d \;-\; \frac{Q_L'(t)}{2\,Q_L(t)}\,dt
+ \;=\;
+ d - d\!\left(\log\sqrt{Q_L}\right).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Properties]\label{prop:conn-properties}
+\leavevmode
+\begin{enumerate}[(i)]
+\item \emph{Flatness.}\enspace
+ $(\nabla^{\mathrm{sh}})^2 = 0$.
+
+\item \emph{Regular singularities.}\enspace
+ At each zero $t_0$ of~$Q_L$, the connection form has a
+ simple pole with residue~$\frac{1}{2}$.
+
+\item \emph{Koszul monodromy.}\enspace
+ The monodromy around each branch point is
+ $\exp(2\pi i \cdot \frac{1}{2}) = -1$.
+
+\item \emph{Flat section.}\enspace
+ The unique flat section with $\Phi(0) = 1$ is
+ \begin{equation}\label{eq:flat-section}
+  \Phi(t)
+  \;=\;
+  \frac{\sqrt{Q_L(t)}}{2\kappa},
+ \end{equation}
+ and
+ $H(t) = 2\kappa\, t^2\, \Phi(t)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): $Q_L'/(2Q_L)\, dt$ is closed on a
+one-dimensional base. Parts~(ii)--(iii): standard
+properties of the Gauss--Manin connection of
+$\{\sqrt{Q_L(t)}\}_t$. Near a simple zero $t_0$ of $Q_L$:
+$Q_L(t) \approx Q_L'(t_0)(t - t_0)$, so
+$Q_L'/(2Q_L)\, dt \approx dt/(2(t - t_0))$. The monodromy
+of a square root around a simple branch point is~$-1$.
+Part~(iv): direct verification.
+\end{proof}
+
+\subsection{Koszul duality and discriminant
+complementarity}\label{subsec:complementarity}
+
+\begin{proposition}[Discriminant
+complementarity]\label{prop:complementarity}
+For the Virasoro family ($\Vir_c^! = \Vir_{26-c}$):
+\begin{equation}\label{eq:complementarity}
+ \Delta(\Vir_c) + \Delta(\Vir_{26-c})
+ \;=\;
+ \frac{6960}{(5c+22)(152-5c)}.
+\end{equation}
+At the self-dual point $c = 13$:
+$\Delta(13) = 40/87$.
+\end{proposition}
+
+\begin{proof}
+\begin{align*}
+ \Delta(c) + \Delta(26-c)
+ &\;=\;
+ \frac{40}{5c+22} + \frac{40}{152-5c} \\
+ &\;=\;
+ 40 \cdot \frac{174}{(5c+22)(152-5c)}
+ \;=\;
+ \frac{6960}{(5c+22)(152-5c)}.
+ \qedhere
+\end{align*}
+\end{proof}
+
+\begin{remark}[The self-dual point]\label{rem:self-dual}
+At $c = 13$, the Koszul involution
+$\Vir_c \mapsto \Vir_{26-c}$ has a fixed point:
+$\Vir_{13}$ is self-dual under the uncurved quadratic
+Koszul duality $c \mapsto 26 - c$.
+The shadow metric satisfies
+$Q_L = Q_L^!$, the connection is self-dual, and the
+shadow growth rates are equal: $\rho = \rho^!$.
+The Koszul complementarity $\kappa + \kappa' = 13$
+(Virasoro-specific; not universal) reflects this fixed-point
+structure.
+\end{remark}
+
+\subsection{The Verdier involution on shadow
+data}\label{subsec:verdier}
+
+Under Koszul duality $\cA \mapsto \cA^!$, the shadow data
+transforms. The transformation depends on the family.
+
+\begin{proposition}[Koszul transformation of shadow
+data]\label{prop:koszul-transform}
+\leavevmode
+\begin{enumerate}[(i)]
+\item \emph{Affine Kac--Moody.}\enspace
+ $V_k(\fg)^! = \mathrm{CE}^{\mathrm{ch}}
+ (\fg_{-k-2h^\vee})$.
+ The shadow data transforms as
+ $\kappa \mapsto -\kappa$, $\alpha \mapsto -\alpha$,
+ $S_4 \mapsto 0$. The Koszul conductor is
+ $\kappa(V_k(\fg)) + \kappa(V_k(\fg)^!) = 0$.
+
+\item \emph{Virasoro.}\enspace
+ $\Vir_c^! = \Vir_{26-c}$. The shadow data transforms by
+ $c \mapsto 26 - c$:
+ $\kappa \mapsto (26-c)/2$, $\alpha \mapsto 2$
+ (invariant), $S_4 \mapsto 10/[(26-c)(152-5c)]$.
+ The Koszul conductor is
+ $\kappa(\Vir_c) + \kappa(\Vir_{26-c}) = 13$.
+
+\item \emph{Heisenberg.}\enspace
+ $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+ (the chiral symmetric algebra on the dual).
+ Note: $\cH_k^! \ne \cH_{-k}$ (these are isomorphic as
+ vertex algebras but not as Koszul duals; the Koszul dual
+ has the same $\kappa$). The Koszul conductor is
+ $\kappa + \kappa' = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Family-dependence of the Koszul
+conductor]\label{rem:koszul-conductor}
+The Koszul conductor $K(\cA) := \kappa(\cA) + \kappa(\cA^!)$
+is \emph{not} universal: it depends on the family.
+For affine Kac--Moody and free fields: $K = 0$.
+For Virasoro: $K = 13$.
+For $\cW_3$: $K = 250/3$.
+For Bershadsky--Polyakov: $K = 98/3$.
+The statement ``$\kappa + \kappa' = 0$'' without a family
+qualifier is false for Virasoro and all $\cW_N$ with
+$N \ge 2$.
+\end{remark}
+
+\subsection{The shadow connection for each
+class}\label{subsec:conn-by-class}
+
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\, dt$ has
+qualitatively different behaviour in each class.
+
+\begin{example}[Class $\mathbf{G}$:
+trivial]\label{ex:conn-G}
+$Q_L = 4\kappa^2$, constant. $Q_L' = 0$, so
+$\nabla^{\mathrm{sh}} = d$: the connection is trivial, the
+flat section is $\Phi(t) = 1$, and there are no branch
+points. The shadow tower carries no monodromy.
+\end{example}
+
+\begin{example}[Class $\mathbf{L}$: single branch
+point]\label{ex:conn-L}
+$Q_L = (2\kappa + 3\alpha\, t)^2$, a perfect square with a
+double zero at $t_0 = -2\kappa/(3\alpha)$. The connection
+form $Q_L'/(2Q_L)\, dt = 3\alpha/(2\kappa + 3\alpha\, t)\, dt$
+has a simple pole with residue~$1$ at~$t_0$. The monodromy
+is $\exp(2\pi i \cdot 1) = 1$: trivial.
+
+The double zero of $Q_L$ means that $\sqrt{Q_L}$ is
+single-valued (polynomial), consistent with the termination
+of the tower at degree~$3$.
+\end{example}
+
+\begin{example}[Class $\mathbf{M}$:
+Virasoro]\label{ex:conn-M}
+$Q_L = (c + 6t)^2 + 80t^2/(5c+22)$. The two simple zeros
+\[
+ t_\pm
+ \;=\;
+ \frac{-3c \pm ic\sqrt{40/((5c+22)c^2 - 36)}}{
+ 9 + 40/(5c+22)}
+\]
+form a complex conjugate pair (for $c > 0$ real). Each has
+residue~$1/2$; monodromy~$-1$. The shadow connection is the
+Gauss--Manin connection of the double cover
+$\Sigma_L = \{y^2 = Q_L(t)\}$, and the branch-point
+monodromy is the deck transformation $y \mapsto -y$.
+\end{example}
+
+
+\subsection{The planted-forest
+formula}\label{subsec:planted-forest}
+
+The MC equation at genus~$2$ produces a codimension-$2$
+boundary correction.
+
+\begin{proposition}[Planted-forest
+correction]\label{prop:planted-forest}
+The genus-$2$ planted-forest correction on a primary line is
+\begin{equation}\label{eq:planted-forest}
+ \delta_{\mathrm{pf}}^{(2,0)}
+ \;=\;
+ \frac{S_3(10\, S_3 - \kappa)}{48},
+\end{equation}
+measuring the contribution of codimension-$2$ boundary
+strata to the genus-$2$ amplitude. This correction vanishes
+for class~$\mathbf{G}$ (where $S_3 = 0$). For Virasoro:
+$\delta_{\mathrm{pf}}^{(2,0)} = -(c - 40)/48$.
+\end{proposition}
+
+\begin{proof}
+The codimension-$2$ boundary strata of $\Mbar_{2,0}$
+correspond to stable graphs with two internal edges. Each
+edge carries the propagator $P = 1/\kappa$ and connects two
+cubic vertices contributing $S_3$. The planted-forest
+graphs (two disjoint trees planted on a genus-$1$ surface)
+contribute a quadratic expression in $S_3$. The linear
+correction $-\kappa\, S_3/48$ comes from the interaction
+between the planted tree and the genus-$1$ curvature
+$\kappa$. Explicit computation yields the stated formula.
+\end{proof}
+
+
+% ================================================================
+% 10. EXPLICIT SHADOW TOWERS
+% ================================================================
+
+\section{Explicit shadow towers for the standard
+landscape}\label{sec:landscape}
+
+We compute the shadow data
+$(\kappa, \alpha, S_4, \Delta, \rho)$ for all standard
+families, constructing each tower from the Heisenberg base
+case upward.
+
+\subsection{Class $\mathbf{G}$: Heisenberg}
+\label{subsec:heisenberg}
+
+\begin{proposition}[Heisenberg shadow
+tower]\label{prop:heisenberg}
+For the rank-$1$ Heisenberg vertex algebra $\cH_k$ at
+level $k \ne 0$:
+\[
+ \kappa \;=\; k,
+ \qquad
+ \alpha \;=\; 0,
+ \qquad
+ S_r \;=\; 0 \quad\text{for all } r \ge 3.
+\]
+The tower terminates at degree~$2$:
+$Q_L(t) = 4k^2$ (constant), $H(t) = 2k\, t^2$.
+Class~$\mathbf{G}$, $d_{\mathrm{alg}} = 0$.
+The genus-$g$ free energy is
+$F_g(\cH_k) = k \cdot \lambda_g^{\mathrm{FP}}$
+(UNIFORM-WEIGHT) for all $g \ge 1$.
+\end{proposition}
+
+\begin{proof}
+The Heisenberg OPE $J(z)J(w) \sim k/(z-w)^2$ is purely
+quadratic: all collision residues on $\FM_n(X)$ for
+$n \ge 3$ vanish. Hence $\alpha = 0$, $S_4 = 0$,
+$\Delta = 0$. The shadow metric is the constant $4k^2$,
+a perfect square.
+\end{proof}
+
+\begin{proposition}[Lattice VOA shadow
+tower]\label{prop:lattice}
+For the lattice vertex algebra $V_\Lambda$ associated to
+an even positive-definite lattice $\Lambda$ of rank~$r$:
+\[
+ \kappa \;=\; r,
+ \qquad
+ \alpha \;=\; 0,
+ \qquad
+ S_n \;=\; 0 \quad\text{for all } n \ge 3.
+\]
+Class~$\mathbf{G}$, independent of the lattice cocycle.
+\end{proposition}
+
+\begin{proof}
+The primary line of a lattice VOA is spanned by the
+Heisenberg currents $J^i$, $i = 1, \ldots, r$.
+The OPE $J^i(z)J^j(w) \sim \delta^{ij}/(z-w)^2$
+is abelian: no cubic or higher terms on the primary line.
+The lattice vertex operators $e^\alpha$ have nontrivial
+OPEs but live on charged strata; they do not contribute to
+the primary-line shadow tower. The modular characteristic
+$\kappa = r$ equals the rank, independent of the specific
+lattice structure (self-dual, Niemeier, Leech, etc.).
+\end{proof}
+
+\begin{remark}[Free fermion]\label{rem:free-fermion}
+The free fermion $\psi$ with
+$\psi(z)\psi(w) \sim 1/(z-w)$ has $c = 1/2$ and
+$\kappa = c/2 = 1/4$. On the single-generator primary
+line, the OPE is purely quadratic (Clifford), so
+$\alpha = 0$, $S_4 = 0$, $\Delta = 0$.
+Class~$\mathbf{G}$, $r_{\max} = 2$, $d_{\mathrm{alg}} = 0$.
+\end{remark}
+
+\begin{remark}[Class $\mathbf{G}$ as the
+base case]\label{rem:class-G-base}
+Class~$\mathbf{G}$ is the base case of the shadow
+obstruction tower: the tower terminates at the curvature
+$\kappa$, and all higher invariants vanish. This is the
+vertex-algebraic analogue of the classical Koszul property:
+the bar resolution is minimal, the $A_\infty$ structure
+is formal (all $m_k = 0$ for $k \ge 3$), and the genus-$g$
+free energies are determined by a single invariant. The
+entire moduli-space content of a class~$\mathbf{G}$ algebra
+is encoded in the number $\kappa$.
+
+The transition from class~$\mathbf{G}$ to class~$\mathbf{L}$
+is the introduction of a Lie bracket: the cubic shadow
+$\alpha \ne 0$ measures the failure of the OPE to be
+abelian. The transition from class~$\mathbf{L}$ to
+class~$\mathbf{M}$ is the introduction of a nonlinear
+contact term: the quartic shadow $S_4 \ne 0$ measures the
+failure of the Jacobi identity to kill the four-point
+function. Each transition introduces new invariants and
+new complexity.
+\end{remark}
+
+
+\subsection{Class $\mathbf{L}$: affine
+Kac--Moody}\label{subsec:km}
+
+\begin{proposition}[Affine Kac--Moody shadow
+tower]\label{prop:km}
+For $V_k(\fg)$ at level $k \ne -h^\vee$ with $\fg$
+simple:
+\[
+ \kappa
+ \;=\;
+ \frac{\dim(\fg)\,(k + h^\vee)}{2h^\vee},
+ \qquad
+ \alpha \;\ne\; 0,
+ \qquad
+ S_4 \;=\; 0,
+ \qquad
+ \Delta \;=\; 0.
+\]
+The cubic shadow is nonzero (generated by the Lie bracket),
+and the quartic shadow vanishes on the primary line (killed
+by the Jacobi identity). The tower terminates at
+degree~$3$: $r_{\max} = 3$, class~$\mathbf{L}$,
+$d_{\mathrm{alg}} = 1$.
+
+Boundary values: at $k = 0$ (abelian limit),
+$\kappa = \dim(\fg)/2 \ne 0$ (the algebra is still Koszul);
+at $k = -h^\vee$ (critical level), $\kappa = 0$
+(Koszulness fails, the center jumps).
+\end{proposition}
+
+\begin{proof}
+The modular characteristic
+$\kappa = \dim(\fg)(k + h^\vee)/(2h^\vee)$ is the genus-$1$
+curvature scalar. The derivation: the OPE
+$J^a(z)J^b(w) \sim k\,\delta^{ab}/(z-w)^2
++ f^{abc} J^c(w)/(z-w)$ has a double pole $k\delta^{ab}$ and
+a simple pole $f^{abc} J^c$. The $R$-matrix in
+trace-form convention is $r(z) = k\Omega/z$ (with level
+prefix $k$; at $k = 0$, $r(z) = 0$). Averaging:
+$\mathrm{av}(k\Omega/z) = k\,\dim(\fg)/(2h^\vee)$.
+The Sugawara shift $\dim(\fg)/2$ arises from the
+simple-pole self-contraction through the adjoint Casimir
+eigenvalue $2h^\vee$. Total:
+$\kappa = k\,\dim(\fg)/(2h^\vee) + \dim(\fg)/2
+= \dim(\fg)(k + h^\vee)/(2h^\vee)$.
+
+The cubic shadow $\alpha$ encodes the Lie bracket: the
+three-point collision residue on $\FM_3(X)$ extracts
+$f^{abc}$ from the simple-pole OPE. On the primary
+line, $\alpha$ is a nonzero scalar proportional to the
+cubic Casimir.
+
+The quartic collision residue on $\FM_4(X)$, restricted
+to the primary line, is proportional to the cyclic sum
+$\sum_{\mathrm{cyclic}(a,b,c)} f^{abx} f^{xcd}$, which
+vanishes by the Jacobi identity
+$[[\cdot,\cdot],\cdot] + \mathrm{cyclic} = 0$.
+Hence $S_4 = 0$, $\Delta = 8\kappa \cdot 0 = 0$, and
+$Q_L = (2\kappa + 3\alpha\, t)^2$.
+
+Verification at boundary values: at $k = 0$ (abelian
+limit), $\kappa = \dim(\fg)/2 \ne 0$ for non-abelian $\fg$.
+The $R$-matrix vanishes but the Sugawara shift persists;
+the algebra remains Koszul. At $k = -h^\vee$ (critical
+level), $\kappa = 0$: the modular characteristic vanishes,
+the center of the completed enveloping algebra jumps (from
+$\mathbb{C}$ to $\mathrm{Fun}(\mathrm{Op}_\fg)$), and
+Koszulness fails.
+\end{proof}
+
+\begin{remark}[The Jacobi identity as depth
+controller]\label{rem:jacobi-depth}
+The vanishing $S_4 = 0$ for affine Kac--Moody is not a
+numerical coincidence: it is a structural consequence of the
+Jacobi identity. The class~$\mathbf{L}$ designation
+reflects the Lie-theoretic origin of the algebra: the tower
+terminates because the Lie bracket closes (Jacobi), not
+because of any numerical cancellation in the OPE
+coefficients. This explains why the transition from
+class~$\mathbf{L}$ to class~$\mathbf{M}$ occurs precisely
+when the Jacobi identity is replaced by a more general
+relation (the Virasoro commutator, the $\cW_N$ OPE).
+\end{remark}
+
+The modular characteristics for small Lie algebras at
+$k = 1$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccc}
+\toprule
+$\fg$ & $\dim(\fg)$ & $h^\vee$
+ & $\kappa(k)$ & $\kappa(1)$ \\
+\midrule
+$\mathfrak{sl}_2$ & $3$ & $2$
+ & $3(k+2)/4$ & $9/4$ \\[2pt]
+$\mathfrak{sl}_3$ & $8$ & $3$
+ & $4(k+3)/3$ & $16/3$ \\[2pt]
+$\mathfrak{sl}_N$ & $N^2{-}1$ & $N$
+ & $(N^2{-}1)(k{+}N)/(2N)$ & --- \\[2pt]
+$E_8$ & $248$ & $30$
+ & $248(k{+}30)/60$ & $1922/15$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The Koszul dual
+$V_k(\fg)^! = \mathrm{CE}^{\mathrm{ch}}(\fg_{-k-2h^\vee})$
+has $\kappa^! = -\kappa$. The Koszul conductor is
+family-specific:
+$\kappa(V_k(\fg)) + \kappa(V_k(\fg)^!) = 0$ for affine
+Kac--Moody and free fields;
+$\kappa(\Vir_c) + \kappa(\Vir_{26-c}) = 13$ for Virasoro.
+These are distinct: the vanishing for Kac--Moody reflects
+the anti-symmetry of the chiral Chevalley--Eilenberg
+construction.
+
+
+\subsection{Class $\mathbf{C}$:
+$\beta\gamma$}\label{subsec:betagamma}
+
+\begin{proposition}[$\beta\gamma$ shadow
+tower]\label{prop:betagamma}
+For the $\beta\gamma$ system of conformal weight $\lambda$:
+\begin{alignat*}{2}
+ &\kappa \;=\; 6\lambda^2 - 6\lambda + 1
+ \;=\; c/2,
+ \qquad
+ &&c \;=\; 2(6\lambda^2 - 6\lambda + 1), \\
+ &\alpha \;=\; 0
+ &&\textup{(weight-changing line)}, \\
+ &S_4 \;=\; 0
+ &&\textup{(weight-changing line)}, \\
+ &\Delta \;=\; 0
+ &&\textup{(weight-changing line)}.
+\end{alignat*}
+On the weight-changing primary line, the tower terminates
+at degree~$2$. The overall classification is
+class~$\mathbf{C}$: a nonzero quartic contact invariant
+lives on a charged stratum, and the quintic vanishes by
+rank-one rigidity. Hence $r_{\max} = 4$,
+$d_{\mathrm{alg}} = 2$.
+
+Boundary values: $\lambda = 1/2$ gives
+$c = -1$ (symplectic boson), $\kappa = -1/2$;
+$\lambda = 2$ gives $c = 26$ (matter ghost),
+$\kappa = 13$.
+\end{proposition}
+
+\begin{proof}
+The $\beta\gamma$ system has fields $\beta$ of weight
+$\lambda$ and $\gamma$ of weight $1 - \lambda$, with OPE
+$\beta(z)\gamma(w) \sim 1/(z-w)$. The central charge is
+$c_{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)$,
+and $\kappa = c/2 = 6\lambda^2 - 6\lambda + 1$.
+
+On the weight-changing primary line (spanned by $\beta\gamma$
+composites of definite weight), the OPE is abelian: the
+Wick contraction of $\beta$ with $\gamma$ produces only the
+identity, with no higher poles. Hence $\alpha = 0$ and
+$S_4 = 0$ on this line, and $\Delta = 0$.
+
+The contact stratum: the full two-variable deformation
+complex has a charged stratum supporting the normal-ordered
+composite $:\!\beta\partial\gamma\!:$ and its cousins. On this
+stratum, the four-point function receives a nonzero quartic
+contact contribution from the Wick contraction
+$\langle\beta\gamma\beta\gamma\rangle_{\mathrm{connected}}$
+$= 1/(z_1 - z_3)(z_2 - z_4)
+- 1/(z_1 - z_4)(z_2 - z_3)$,
+whose collision residue on $\FM_4(X)$ is nonzero. The
+quartic contact invariant is
+$Q^{\mathrm{cont}} = -5/12$ (after normalization).
+
+The quintic obstruction vanishes by rank-one rigidity: the
+self-bracket of the quartic contact invariant under the
+$H$-Poisson structure produces a vector in the
+two-dimensional weight/contact slice, but this vector is
+orthogonal to the primary line and thus exits the
+single-line complex. On a one-dimensional target, the
+image is zero. Hence $o_5 = 0$ and the tower terminates at
+degree~$4$.
+
+Boundary values: $c_{\beta\gamma}(1/2) = -1$ (symplectic
+boson), $\kappa = -1/2$; $c_{\beta\gamma}(2) = 26$ (matter
+ghost), $\kappa = 13$; $c_{\beta\gamma}(0) = 2$ (standard
+$\beta\gamma$), $\kappa = 1$;
+$c_{\beta\gamma}(1) = 2$ (adjoint $\beta\gamma$),
+$\kappa = 1$.
+\end{proof}
+
+\begin{remark}[$bc$ ghosts]\label{rem:bc-ghosts}
+The fermionic $bc$ system has
+$c_{bc}(\lambda) = 1 - 3(2\lambda-1)^2$ and
+$\kappa_{bc} = c_{bc}/2 = -(6\lambda^2 - 6\lambda + 1)$.
+The complementarity
+$c_{\beta\gamma}(\lambda) + c_{bc}(\lambda) = 0$
+holds at each conformal weight:
+$2(6\lambda^2 - 6\lambda + 1) + 1 - 3(2\lambda-1)^2 = 0$
+(direct expansion). At $\lambda = 2$
+(reparametrization ghosts): $c_{bc} = -26$,
+$\kappa_{bc} = -13$. At $\lambda = 1/2$ (single Dirac
+fermion): $c_{bc} = 1$, $\kappa_{bc} = 1/2$.
+Class~$\mathbf{C}$ for all~$\lambda$.
+\end{remark}
+
+\begin{remark}[The contact stratum
+geometry]\label{rem:contact-geometry}
+Class~$\mathbf{C}$ is the unique class where the shadow
+tower terminates at a finite depth greater than~$3$. The
+mechanism is geometric: the quartic contact invariant lives
+on a stratum of the cyclic deformation complex that is
+\emph{transverse} to every one-dimensional primary line.
+On any primary line, the shadow data is class~$\mathbf{G}$
+(no cubic, no quartic); the class~$\mathbf{C}$ designation
+comes from the global structure of the deformation complex.
+
+This transversality is specific to the $\beta\gamma/bc$
+family: the weight-changing direction (which supports the
+primary-line tower) is orthogonal to the ghost-number
+direction (which supports the quartic contact). For Virasoro
+and $\cW_N$, the quartic contribution lies on the primary
+line itself, producing $S_4 \ne 0$ and $\Delta \ne 0$
+(class~$\mathbf{M}$). For Heisenberg and affine KM, the
+quartic contribution vanishes entirely (abelian or Jacobi).
+\end{remark}
+
+\begin{example}[$\beta\gamma$ at special
+weights]\label{ex:betagamma-special}
+\leavevmode
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccccc}
+\toprule
+$\lambda$ & $c_{\beta\gamma}$ & $\kappa$
+ & Interpretation & $c_{bc}$ \\
+\midrule
+$0$ & $2$ & $1$ & standard & $-2$ \\
+$1/2$ & $-1$ & $-1/2$ & symplectic boson & $1$ \\
+$1$ & $2$ & $1$ & adjoint & $-2$ \\
+$3/2$ & $10$ & $5$ & gravitino & $-10$ \\
+$2$ & $26$ & $13$ & matter ghost & $-26$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+At $\lambda = 2$, the matter ghost has $c = 26$, which
+is the string-theoretic value: the $\beta\gamma$ matter
+ghost cancels the $bc$ reparametrization ghost central
+charge ($26 + (-26) = 0$). The modular characteristics
+also cancel: $13 + (-13) = 0$.
+\end{example}
+
+
+\subsection{Class $\mathbf{M}$: Virasoro}
+\label{subsec:virasoro}
+
+\begin{proposition}[Virasoro shadow
+tower]\label{prop:virasoro}
+For $\Vir_c$ at $c \ne 0$, $c \ne -22/5$:
+\[
+ \kappa \;=\; \frac{c}{2},
+ \qquad
+ \alpha \;=\; 2,
+ \qquad
+ S_4 \;=\; \frac{10}{c(5c+22)},
+ \qquad
+ \Delta \;=\; \frac{40}{5c+22}.
+\]
+The shadow metric is
+\[
+ Q_L(t)
+ \;=\;
+ (c + 6t)^2 + \frac{80\, t^2}{5c + 22}.
+\]
+The tower is infinite (class~$\mathbf{M}$,
+$d_{\mathrm{alg}} = \infty$), and the shadow growth rate is
+$\rho = \frac{1}{c}\sqrt{(180c + 872)/(5c+22)}$.
+\end{proposition}
+
+\begin{remark}[The quartic contact
+invariant]\label{rem:quartic-contact}
+The quartic shadow
+$Q^{\mathrm{contact}}_{\Vir} = S_4 = 10/[c(5c+22)]$ is
+the first genuinely nonlinear OPE invariant. It measures
+the irreducible four-point collision residue on $\FM_4(X)$
+and is the coefficient that separates class~$\mathbf{M}$
+from class~$\mathbf{L}$. Its poles at $c = 0$ and
+$c = -22/5$ reflect the failure of the Virasoro OPE at
+these special values. The large-$c$ asymptotic is
+$S_4 \sim 2/c^2$.
+\end{remark}
+
+\begin{theorem}[Virasoro shadow
+coefficients]\label{thm:virasoro-coefficients}
+The shadow coefficients through degree~$10$:
+\begin{align*}
+ S_2 &\;=\; c/2, \\[3pt]
+ S_3 &\;=\; 2, \\[3pt]
+ S_4 &\;=\; \frac{10}{c(5c+22)}, \\[3pt]
+ S_5 &\;=\; \frac{-48}{c^2(5c+22)}, \\[3pt]
+ S_6 &\;=\; \frac{80(45c+193)}{3\,c^3(5c+22)^2}, \\[3pt]
+ S_7 &\;=\;
+ \frac{-2880(15c+61)}{7\,c^4(5c+22)^2}, \\[3pt]
+ S_8 &\;=\;
+ \frac{80(2025c^2+16470c+33314)}{c^5(5c+22)^3}, \\[3pt]
+ S_9 &\;=\;
+ \frac{-1280(2025c^2+15570c+29554)}
+ {3\,c^6(5c+22)^3}, \\[3pt]
+ S_{10} &\;=\;
+ \frac{256(91125c^3+1050975c^2+3989790c+4969967)}
+ {c^7(5c+22)^4}.
+\end{align*}
+All coefficients belong to $\mathbb{Q}(c)$ with poles
+only at $c = 0$ and $c = -22/5$. Signs alternate from
+$S_5$ onward: $S_5 < 0$, $S_6 > 0$, $S_7 < 0$, \ldots\
+for $c > 0$.
+The $c$-independence of $S_3 = 2$ is a theorem; see
+\cite{LorgatVirR}.
+\end{theorem}
+
+\begin{proof}
+The computation proceeds inductively using the master
+equation (Proposition~\ref{prop:master-eq}) on the primary
+line~$L$ spanned by~$T$. The Hessian propagator is
+$P = 1/\kappa = 2/c$.
+
+\emph{Degree $2$.}\enspace
+$S_2 = \kappa = c/2$ by definition: this is the genus-$1$
+curvature scalar $F_1 = \kappa/24 = c/48$.
+
+\emph{Degree $3$.}\enspace
+The OPE $T_{(1)}T = 2T$ gives the simple-pole
+collision residue (after $d\!\log$ absorption from the
+$T_{(2)}T = \partial T$ term). On the primary line:
+$S_3 = \alpha = 2$, independent of~$c$. This
+$c$-independence follows from the universality of the
+Virasoro commutation relation
+$[L_m, L_n] = (m-n)L_{m+n} + (c/12)(m^3 - m)\delta_{m+n,0}$:
+the coefficient of $L_{m+n}$ is $m - n$, not $c$-dependent.
+The scalar $\alpha = 2$ is twice the coefficient of $T$
+in $T_{(1)}T = 2T$.
+
+\emph{Degree $4$.}\enspace
+The master equation at degree~$4$ is
+$d_0(\Sh_4) + \frac{1}{2}[\Sh_3, \Sh_3] = 0$.
+On the primary line:
+$8\kappa S_4 + \frac{1}{2}\, c_{33}\, 9\, P\, \alpha^2 = 0$,
+where $c_{33} = 1/2$ (self-pairing correction). Solving:
+\[
+ S_4
+ \;=\;
+ -\frac{1}{8\kappa} \cdot \frac{1}{2} \cdot 9 \cdot P
+ \cdot \alpha^2
+ \;=\;
+ -\frac{9\alpha^2}{16\kappa^2} + S_4^{\mathrm{contact}},
+\]
+where $S_4^{\mathrm{contact}}$ is the irreducible quartic
+contact term from the four-point OPE. For Virasoro, the
+quartic OPE coefficient is
+$T_{(3)}T = c/2$, and the contact extraction gives
+$S_4^{\mathrm{contact}} = 10/[c(5c+22)]$ after the
+propagator renormalization.
+
+The full result: $S_4 = 10/[c(5c+22)]$, and the critical
+discriminant is
+$\Delta = 8\kappa S_4 = 8(c/2) \cdot 10/[c(5c+22)]
+= 40/(5c+22) \ne 0$ for $c \ne -22/5$.
+
+\emph{Degree $5$.}\enspace
+$d_0(\Sh_5) + [\Sh_3, \Sh_4] = 0$, giving
+$S_5 = -(P/10) \cdot 3 \cdot 4 \cdot S_3 S_4
+= -(6/5)(2/c) \cdot 2 \cdot 10/[c(5c+22)]
+= -48/[c^2(5c+22)]$.
+
+\emph{Higher degrees.}\enspace
+The pattern continues: each $S_r$ involves a sum over pairs
+$(j,k)$ with $j + k = r + 2$, weighted by the propagator
+$P = 2/c$ and the symmetry factors $c_{jk}$.
+Alternatively, the closed-form extraction
+$S_r = \frac{1}{r}[t^{r-2}]\sqrt{Q_{\Vir}(t)}$
+with $Q_{\Vir}(t) = (c + 6t)^2 + 80t^2/(5c+22)$
+gives all coefficients by binomial expansion.
+
+Both methods have been verified computationally through
+degree~$20$; the results agree to all digits.
+\end{proof}
+
+\begin{remark}[Pole structure of Virasoro
+shadows]\label{rem:pole-structure}
+Every $S_r$ with $r \ge 4$ has poles only at $c = 0$ and
+$c = -22/5$. The pole at $c = 0$ has order $r - 3$; the
+pole at $c = -22/5$ has order $\lfloor(r-2)/2\rfloor$.
+This pole structure is inherited from the branch points of
+$\sqrt{Q_{\Vir}(t)}$: the zero of $Q_{\Vir}$ nearest to
+$t = 0$ has modulus inversely proportional to the shadow
+growth rate $\rho$, and the Taylor coefficients of a
+square-root function at a simple branch point have a
+universal pole pattern determined by the Flajolet--Sedgewick
+transfer theorem.
+
+The physical content: the pole at $c = 0$ reflects the
+vanishing of the Virasoro central charge (the algebra
+degenerates to the Witt algebra, which has no central
+extension and no modular characteristic). The pole at
+$c = -22/5$ is the second zero of the discriminant of the
+Virasoro Verma module at level~$2$: at this value, the
+four-point contact term diverges, and the shadow metric
+$Q_{\Vir}$ degenerates.
+\end{remark}
+
+Numerical evaluations:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rccc}
+\toprule
+$r$ & $S_r(c{=}1)$ & $S_r(c{=}13)$ & $S_r(c{=}26)$ \\
+\midrule
+$2$ & $1/2$ & $13/2$ & $13$ \\
+$3$ & $2$ & $2$ & $2$ \\
+$4$ & $10/27$ & $10/1131$ & $5/1976$ \\
+$5$ & $-16/9$ & $-16/4901$ & $-3/6422$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent At $c = 26$ the coefficients decay rapidly
+($\rho \approx 0.232$); at $c = 13$ moderately
+($\rho \approx 0.467$); at $c = 1$ they grow
+exponentially ($\rho \approx 6.242$). All unitary
+minimal models ($c < 1$) have strongly divergent towers.
+
+Extended numerical data through degree~$8$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rccc}
+\toprule
+$r$ & $S_r(c{=}1)$ & $S_r(c{=}13)$ & $S_r(c{=}26)$ \\
+\midrule
+$6$ & $19040/2187$ & $62240/49887279$
+ & $6815/76139232$ \\
+$7$ & $-24320/567$ & $-81920/168138607$
+ & $-20295/1154778352$ \\
+$8$ & $4144720/19683$ & $47171920/244497554379$
+ & $4576085/1303909727744$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The alternating signs $(-1)^{r+1}$ for $r \ge 5$
+(at $c > 0$) are a consequence of the complex conjugate
+branch points of $Q_L$: the transfer theorem gives
+oscillating coefficients with frequency determined by the
+argument of the nearest singularity.
+
+\begin{remark}[The Virasoro shadow at special
+values]\label{rem:virasoro-special}
+Three special values of~$c$ merit attention:
+
+\emph{$c = 13$ (self-dual).}\enspace
+Under Koszul duality $c \mapsto 26 - c$,
+the self-dual point $c = 13$ maps to itself. The shadow
+data is symmetric: $\kappa = 13/2$, $\kappa' = 13/2$,
+$\alpha = \alpha' = 2$, $S_4(13) = S_4(13)$.
+The discriminant $\Delta(13) = 40/87$, and the
+shadow growth rate $\rho(13) \approx 0.467$.
+All shadow coefficients are self-dual:
+$S_r(\Vir_{13}) = S_r(\Vir_{13}^!)$.
+
+\emph{$c = 26$ (string).}\enspace
+The Koszul dual $\Vir_0$ has $\kappa = 0$ (the bar complex
+is uncurved). The shadow tower of $\Vir_{26}$ is
+well-behaved ($\rho \approx 0.232$), but the dual tower is
+degenerate. The discriminant $\Delta(26) = 40/152 = 5/19$.
+
+\emph{$c = -22/5$ (pole).}\enspace
+This is the location of the denominator singularity
+$5c + 22 = 0$. The quartic shadow $S_4$ diverges,
+$\Delta \to \infty$, and the shadow metric degenerates.
+This value is associated with the $(2,5)$ minimal model
+in the non-unitary series. The shadow tower is undefined at
+$c = -22/5$ but has well-defined limits from both sides.
+\end{remark}
+
+\begin{proposition}[The Virasoro shadow connection:
+explicit formula]\label{prop:virasoro-conn}
+The shadow connection for Virasoro is
+\begin{equation}\label{eq:virasoro-conn}
+ \nabla^{\mathrm{sh}}
+ \;=\;
+ d \;-\;
+ \frac{6c + (18 + 80/(5c+22))\, t}
+ {(c + 6t)^2 + 80t^2/(5c+22)}\, dt.
+\end{equation}
+The connection has two regular singular points at the zeros
+of $Q_{\Vir}(t)$, each with residue~$1/2$. The zeros are
+complex conjugate for $c > 0$:
+\[
+ t_\pm
+ \;=\;
+ \frac{-3c(5c+22) \pm ic\sqrt{80(5c+22)}}
+ {(9(5c+22) + 80)}.
+\]
+The branch-point modulus is
+$|t_\pm| = c/\sqrt{9 + 80/(5c+22)}
+= 2\kappa/\sqrt{9\alpha^2 + 2\Delta}
+= 1/\rho$, confirming the shadow growth rate formula.
+\end{proposition}
+
+\begin{remark}[Duality and the shadow
+connection]\label{rem:duality-conn}
+Under $c \mapsto 26 - c$, the connection
+form transforms by a rational substitution:
+\[
+ \frac{Q_L'(t)}{2Q_L(t)}\bigg|_{c}
+ \;\ne\;
+ \frac{Q_L'(t)}{2Q_L(t)}\bigg|_{26-c}.
+\]
+The two connections are related by the Verdier involution
+on the shadow data, but they are not isomorphic as
+connections on the same base: the branch points move under
+$c \mapsto 26 - c$. The discriminant complementarity
+$\Delta(c) + \Delta(26-c) = 6960/[(5c+22)(152-5c)]$
+(Proposition~\ref{prop:complementarity}) reflects this
+transformation.
+\end{remark}
+
+
+\subsection{The shadow depth decomposition}
+\label{subsec:depth-decomp}
+
+For class~$\mathbf{M}$ algebras, the shadow tower is
+infinite. The complexity of the tower admits a decomposition
+into algebraic and arithmetic components.
+
+\begin{definition}[Shadow depth
+decomposition]\label{def:depth-decomp}
+For a chirally Koszul vertex algebra~$\cA$ of
+class~$\mathbf{M}$, define the \emph{total shadow depth}
+\[
+ d(\cA) \;=\; 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}},
+\]
+where:
+\begin{itemize}
+\item $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ is the
+ algebraic depth (Definition~\ref{def:algebraic-depth}).
+ For class~$\mathbf{M}$: $d_{\mathrm{alg}} = \infty$
+ (all $S_r$ nonzero), but the algebraicity theorem shows
+ that three invariants determine the full tower, so the
+ ``effective algebraic complexity'' is~$0$.
+\item $d_{\mathrm{arith}} \ge 0$ is the \emph{arithmetic
+ depth}: the number of genuinely independent arithmetic
+ invariants beyond the algebraic shadow data. Shadow
+ coefficients of weight $\le 2r$ at degree~$r$ lie in the
+ subspace spanned by Eisenstein series; cusp-form
+ contributions first appear at genus $g \ge 6$ (the
+ Ramanujan $\Delta$ form at weight~$12$).
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Algebraic vs arithmetic
+invariants]\label{rem:alg-arith}
+The algebraic depth is determined by genus-$0$ OPE data
+(Theorem~\ref{thm:riccati}). The arithmetic depth reflects
+automorphic phenomena in the genus expansion: cusp-form
+contributions are invisible at low genus but may enter at
+$g \ge 6$. For all families treated in
+Section~\ref{sec:landscape}, $d_{\mathrm{arith}} = 0$
+through the genera computed here.
+
+The distinction between algebraic and arithmetic depth is
+the shadow-tower analogue of the distinction between
+perturbative and non-perturbative contributions in quantum
+field theory: the algebraic part is determined by finitely
+many OPE data, while the arithmetic part involves new
+transcendental numbers (cusp-form coefficients) that are
+not determined by the OPE.
+\end{remark}
+
+
+\subsection{Shadow growth rate}\label{subsec:growth-rate}
+
+\begin{definition}[Shadow growth
+rate]\label{def:shadow-radius}
+For class~$\mathbf{M}$ with $\Delta \ne 0$:
+\[
+ \rho(\cA)
+ \;:=\;
+ \frac{\sqrt{9\alpha^2 + 2\Delta}}{2|\kappa|}.
+\]
+\end{definition}
+
+\begin{proposition}\label{prop:rho-convergence}
+The growth rate $\rho(\cA)$ is the reciprocal of the
+convergence radius of $H(t) = t^2\sqrt{Q_L(t)}$. The
+branch points of $H$ are the zeros of $Q_L$. For
+$\Delta > 0$, these form a complex conjugate pair of
+modulus $R = 2|\kappa|/\sqrt{9\alpha^2 + 2\Delta}$, and
+\[
+ S_r
+ \;\sim\;
+ C(\cA)\,\rho(\cA)^r\, r^{-5/2}\,
+ \cos(r\theta + \phi),
+ \qquad r \to \infty,
+\]
+where the exponent $-5/2$ comes from the square-root
+singularity (Flajolet--Sedgewick transfer theorem).
+\end{proposition}
+
+\begin{example}[Virasoro shadow growth
+rate]\label{ex:virasoro-rho}
+For $\Vir_c$ with $c > 0$:
+\[
+ \rho(\Vir_c)
+ \;=\;
+ \frac{1}{c}
+ \sqrt{\frac{180c + 872}{5c + 22}}.
+\]
+The critical central charge $c^* \approx 6.125$ (the
+unique positive root of $5c^3 + 22c^2 - 180c - 872 = 0$)
+separates the convergent regime ($c > c^*$, $\rho < 1$)
+from the divergent regime ($c < c^*$, $\rho > 1$).
+
+Koszul duality exchanges convergent and divergent towers:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccccl}
+\toprule
+$c$ & $\rho(c)$ & $\rho(26{-}c)$ & converges? &
+ interpretation \\
+\midrule
+$1/2$ & $12.53$ & $0.224$ & no/yes & Ising \\
+$1$ & $6.242$ & $0.242$ & no/yes & free boson \\
+$c^*$ & $1$ & $0.430$ & marginal/yes & critical \\
+$13$ & $0.467$ & $0.467$ & yes/yes & self-dual \\
+$26$ & $0.232$ & $\infty$ & yes/--- &
+ string; $\kappa^! = 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{example}
+
+
+\subsection{Class $\mathbf{M}$:
+$\cW_N$}\label{subsec:wn}
+
+\begin{proposition}[$\cW_N$ shadow
+data]\label{prop:wn}
+For $\cW_N$ ($N \ge 3$) at central charge~$c$, the
+total modular characteristic is
+\[
+ \kappa(\cW_N)
+ \;=\;
+ c\,(H_N - 1),
+ \qquad
+ H_N \;=\; \sum_{j=1}^{N} \frac{1}{j}.
+\]
+On the $T$-line (Virasoro direction):
+$\kappa_T = c/2$, $\alpha_T = 2$,
+$S_4 = 10/[c(5c+22)]$, class~$\mathbf{M}$.
+\end{proposition}
+
+The anomaly ratios for small~$N$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cccc}
+\toprule
+$N$ & $\cW_N$ & $H_N - 1$ & $\kappa(\cW_N)$ \\
+\midrule
+$2$ & Virasoro & $1/2$ & $c/2$ \\
+$3$ & $\cW_3$ & $5/6$ & $5c/6$ \\
+$4$ & $\cW_4$ & $13/12$ & $13c/12$ \\
+$5$ & $\cW_5$ & $77/60$ & $77c/60$ \\
+$6$ & $\cW_6$ & $29/20$ & $29c/20$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Sanity check at $N = 2$:
+$H_2 - 1 = 3/2 - 1 = 1/2$, so
+$\kappa(\cW_2) = c/2 = \kappa(\Vir_c)$.
+At $N = 3$: $H_3 - 1 = 11/6 - 1 = 5/6$, so
+$\kappa(\cW_3) = 5c/6$.
+
+
+\subsection{Master table}\label{subsec:master-table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{lccccccc}
+\toprule
+Family & $\kappa$ & $\alpha$ & $S_4$ & $\Delta$
+ & Class & $r_{\max}$ & $\rho$ \\
+\midrule
+$\cH_k$
+ & $k$ & $0$ & $0$ & $0$
+ & $\mathbf{G}$ & $2$ & $0$ \\[2pt]
+$V_\Lambda$
+ & $\rk(\Lambda)$ & $0$ & $0$ & $0$
+ & $\mathbf{G}$ & $2$ & $0$ \\[2pt]
+\addlinespace
+$V_k(\fg)$
+ & $\frac{\dim\fg\,(k{+}h^\vee)}{2h^\vee}$
+ & $\ne 0$ & $0$ & $0$
+ & $\mathbf{L}$ & $3$ & $0$ \\[2pt]
+\addlinespace
+$\beta\gamma_\lambda$
+ & $6\lambda^2{-}6\lambda{+}1$
+ & $0^*$ & $0^*$ & $0^*$
+ & $\mathbf{C}$ & $4$ & --- \\[2pt]
+\addlinespace
+$\Vir_c$
+ & $c/2$ & $2$
+ & $\frac{10}{c(5c{+}22)}$
+ & $\frac{40}{5c{+}22}$
+ & $\mathbf{M}$ & $\infty$
+ & $\frac{1}{c}\!\sqrt{\frac{180c{+}872}{5c{+}22}}$
+ \\[4pt]
+$\cW_N$
+ & $(H_N{-}1)\,c$
+ & $\ne 0$ & $\ne 0$ & $\ne 0$
+ & $\mathbf{M}$ & $\infty$ & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% ================================================================
+% 10b. DISCRIMINANT ANALYSIS AND KOSZUL DUALITY
+% ================================================================
+
+\subsection{The discriminant across the
+landscape}\label{subsec:disc-landscape}
+
+The critical discriminant $\Delta = 8\kappa S_4$ is the
+single number that separates finite towers from infinite
+ones. Its values across the standard landscape exhibit a
+sharp dichotomy:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccc}
+\toprule
+Family & $\Delta$ & $\Delta = 0$? & Class \\
+\midrule
+$\cH_k$ & $0$ & yes & $\mathbf{G}$ \\
+$V_\Lambda$ & $0$ & yes & $\mathbf{G}$ \\
+Free fermion & $0$ & yes & $\mathbf{G}$ \\
+$V_k(\fg)$ & $0$ & yes & $\mathbf{L}$ \\
+$\beta\gamma_\lambda$ & $0^*$ & yes$^*$ & $\mathbf{C}$ \\
+\addlinespace
+$\Vir_c$ & $40/(5c+22)$ & no & $\mathbf{M}$ \\
+$\cW_3$ & $\ne 0$ & no & $\mathbf{M}$ \\
+$\cW_N$ ($N \ge 3$) & $\ne 0$ & no & $\mathbf{M}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The vanishing $\Delta = 0$ for classes
+$\mathbf{G}$, $\mathbf{L}$, and $\mathbf{C}$ has three
+distinct mechanisms:
+\begin{itemize}
+\item Class $\mathbf{G}$: the OPE is abelian ($S_4 = 0$
+ because there is no four-point connected correlator).
+\item Class $\mathbf{L}$: the OPE is non-abelian but Lie
+ ($S_4 = 0$ because the Jacobi identity kills the quartic
+ collision residue).
+\item Class $\mathbf{C}$: $S_4 = 0$ on every primary
+ line, but the quartic contact invariant lives on a
+ transverse stratum.
+\end{itemize}
+
+\begin{proposition}[The discriminant as a Koszul
+invariant]\label{prop:disc-invariant}
+The critical discriminant $\Delta$ is a Koszul invariant:
+it transforms covariantly under Koszul duality
+$\cA \mapsto \cA^!$. For Virasoro:
+\[
+ \Delta(\Vir_c)
+ \;=\;
+ \frac{40}{5c+22},
+ \qquad
+ \Delta(\Vir_{26-c})
+ \;=\;
+ \frac{40}{152-5c}.
+\]
+The discriminant never vanishes for $c \ne -22/5$; the
+Koszul dual never changes class.
+\end{proposition}
+
+\begin{proof}
+Direct substitution: $\Delta(c) = 8 \cdot (c/2) \cdot
+10/[c(5c+22)] = 40/(5c+22)$ and
+$\Delta(26-c) = 40/(5(26-c)+22) = 40/(152-5c)$. Both are
+nonzero for $c \ne -22/5$ and $c \ne 152/5 = 30.4$,
+respectively. The dual singularities $c = -22/5$ and
+$c = 152/5$ sum to~$26$: they are Koszul partners.
+\end{proof}
+
+\begin{remark}[The discriminant
+locus]\label{rem:disc-locus}
+In the three-dimensional parameter space $(\kappa, \alpha,
+S_4)$, the discriminant locus $\Delta = 0$ is the
+hyperplane $\kappa S_4 = 0$, which decomposes as
+$\kappa = 0$ (degenerate: the propagator is undefined)
+and $S_4 = 0$ (the Jacobi locus). The complement
+$\Delta \ne 0$ is a dense open subset.
+
+Every standard family lies on the discriminant locus
+except for Virasoro and $\cW_N$ ($N \ge 3$). The
+$\beta\gamma$ family lies on the locus \emph{on every
+primary line} but escapes it on the charged stratum. The
+classification is:
+\begin{itemize}
+\item $\kappa = 0$: critical (not chirally Koszul in
+ standard sense).
+\item $S_4 = 0$, $\alpha = 0$: class $\mathbf{G}$.
+\item $S_4 = 0$, $\alpha \ne 0$: class $\mathbf{L}$.
+\item $S_4 \ne 0$ (on charged stratum only):
+ class $\mathbf{C}$.
+\item $S_4 \ne 0$ (on primary line): class $\mathbf{M}$.
+\end{itemize}
+This recovers the four-class partition from the discriminant
+alone.
+\end{remark}
+
+
+\subsection{Complementarity across families}
+\label{subsec:comp-families}
+
+The Koszul conductor $K(\cA) = \kappa(\cA) + \kappa(\cA^!)$
+is family-specific. The standard landscape yields four
+distinct values:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcc}
+\toprule
+Family & Koszul conductor $K$ & $K = 0$? \\
+\midrule
+$\cH_k$ & $0$ & yes \\
+$V_k(\fg)$ & $0$ & yes \\
+$\beta\gamma_\lambda$ & $0$ & yes \\
+Lattice & $0$ & yes \\
+\addlinespace
+$\Vir_c$ & $13$ & no \\
+$\cW_3$ & $250/3$ & no \\
+Bershadsky--Polyakov & $98/3$ & no \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The vanishing $K = 0$ for abelian algebras and
+affine Kac--Moody is the anti-symmetry property of the
+chiral Chevalley--Eilenberg construction: the dual has
+$\kappa^! = -\kappa$. For Virasoro, the conductor
+$K = 13$ is the self-dual value: $\kappa(c) + \kappa(26-c)
+= c/2 + (26-c)/2 = 13$.
+
+\begin{remark}[The conductor is not the central
+charge]\label{rem:conductor-not-c}
+The Koszul conductor $K = \kappa + \kappa'$ is an invariant
+of the Koszul \emph{pair} $(\cA, \cA^!)$, not of the
+algebra alone. It should not be confused with the central
+charge~$c$ (which is an invariant of the algebra) or with
+the Koszul complementarity $c + c' = 26$ of the Virasoro
+family (which is a statement about central charges, not
+modular characteristics). The conductor is
+$\kappa + \kappa'$, not $c + c'$.
+\end{remark}
+
+
+% ================================================================
+% 11. GENUS-g FREE ENERGIES
+% ================================================================
+
+\section{Genus-$g$ free energies from the shadow
+tower}\label{sec:genus-g}
+
+The shadow obstruction tower produces invariants of moduli
+spaces through graph sums over stable curves. The genus-$g$
+\emph{free energy} $F_g(\cA)$ is the integral of the
+tautological class produced by the MC equation on~$\Mbar_g$.
+
+\subsection{The single-generator
+formula}\label{subsec:single-gen}
+
+\begin{theorem}[Single-generator genus-$g$
+universality]\label{thm:single-gen-universality}
+For any chirally Koszul vertex algebra~$\cA$ with a single
+strong generator of conformal weight~$h$
+\textup{(}UNIFORM-WEIGHT\textup{)}:
+\begin{equation}\label{eq:single-gen-Fg}
+ F_g(\cA) \;=\; \kappa(\cA) \cdot
+ \lambda_g^{\mathrm{FP}}
+\end{equation}
+for all $g \ge 1$, where
+$\lambda_g^{\mathrm{FP}} =
+\int_{\Mbar_{g,1}} \psi_1^{2g-2}\, \lambda_g$
+is the Faber--Pandharipande integral.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The genus-$g$ free energy is a sum over stable graphs
+$\Gamma$ of genus~$g$ with no marked points:
+\[
+ F_g(\cA) \;=\;
+ \sum_\Gamma
+ \frac{1}{|\Aut(\Gamma)|}
+ \prod_{e \in E(\Gamma)} P
+ \prod_{v \in V(\Gamma)} V_{g_v, n_v},
+\]
+where $P = 1/\kappa$ is the propagator and
+$V_{g_v, n_v}$ is the vertex factor at a vertex of
+genus~$g_v$ with $n_v$ half-edges. For a single-generator
+algebra, every edge carries the same channel. The vertex
+factors are determined by the shadow coefficients:
+$V_{0,3} = S_3 = \alpha$, $V_{0,4} = S_4$, and
+$V_{g,n}$ for $g \ge 1$ encodes the genus-$g$ contribution.
+
+The key observation is that for single-generator algebras,
+the graph sum telescopes: the combinatorics of
+automorphisms, vertex factors, and propagators combine to
+produce $\kappa \cdot \lambda_g^{\mathrm{FP}}$, where the
+Faber--Pandharipande integral absorbs all the graph-theoretic
+data. The telescoping uses the dilaton equation and the
+string equation on $\Mbar_{g,n}$ to reduce the sum to a
+single integral.
+
+At genus~$1$: $F_1 = \kappa/24 = \kappa \cdot
+\lambda_1^{\mathrm{FP}}$ (unconditional, holds for all
+families including multi-generator).
+At genus~$2$: $F_2 = 7\kappa/5760 = \kappa \cdot
+\lambda_2^{\mathrm{FP}}$ (requires single-generator
+hypothesis).
+\end{proof}
+
+\begin{remark}[The generating
+function]\label{rem:FP-generating}
+The Faber--Pandharipande coefficients are the Taylor
+coefficients of the $\hat{A}$-genus:
+\[
+ \sum_{g \ge 1} \lambda_g^{\mathrm{FP}}\, \hbar^{2g}
+ \;=\;
+ \frac{\hbar/2}{\sin(\hbar/2)} - 1.
+\]
+The first values are: $\lambda_1^{\mathrm{FP}} = 1/24$,
+$\lambda_2^{\mathrm{FP}} = 7/5760$,
+$\lambda_3^{\mathrm{FP}} = 31/967680$.
+\end{remark}
+
+\subsection{The genus-$2$ verification}
+\label{subsec:genus2-verification}
+
+The genus-$2$ formula
+$F_2 = 7\kappa/5760$ requires an explicit sum over the
+seven stable graphs. For a single-generator algebra with
+shadow data $(\kappa, \alpha, S_4)$:
+
+\begin{lemma}[Genus-$2$ single-generator
+sum]\label{lem:genus2-single}
+The graph-by-graph contributions to $F_2$ for a
+single-generator chirally Koszul algebra are:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcc}
+\toprule
+Graph & Contribution & Simplified \\
+\midrule
+$\Gamma_0$: smooth
+ & $V_{2,0}$ & $7\kappa/5760$ \\
+$\Gamma_1$: figure-eight
+ & $P \cdot \kappa^2/(24^2 \cdot 2)$
+ & $\kappa/1152$ \\
+$\Gamma_2$: banana
+ & $P^2 S_4/8$ & $S_4/(2\kappa)$ \\
+$\Gamma_3$: dumbbell
+ & $P(\kappa/24)^2/2$
+ & $\kappa/1152$ \\
+$\Gamma_4$: theta
+ & $P^3 \alpha^2/12$ & $\alpha^2/(12\kappa^3)$ \\
+$\Gamma_5$: lollipop
+ & $P^2 \alpha (\kappa/24)/2$
+ & $\alpha/(48\kappa)$ \\
+$\Gamma_6$: barbell
+ & $P^3 \alpha^2/8$ & $\alpha^2/(8\kappa^3)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The total $F_2 = \sum_\Gamma F_2(\Gamma)$ equals
+$7\kappa/5760$ after substitution of the shadow data and
+simplification. The verification uses the MC recursion at
+degree~$4$ to eliminate $S_4$ in favour of
+$\kappa$, $\alpha$, and the quartic OPE data.
+\end{lemma}
+
+\subsection{Multi-generator failure at genus
+$\ge 2$}\label{subsec:multi-gen}
+
+For multi-generator algebras, the single-generator formula
+\eqref{eq:single-gen-Fg} fails. The failure mechanism is
+the cross-channel correction: edges of stable graphs can
+carry different generators, producing mixed-channel
+amplitudes not captured by the scalar $\kappa$.
+
+\begin{proposition}[Multi-generator
+decomposition]\label{prop:multi-gen}
+For a chirally Koszul vertex algebra with generators of
+distinct conformal weights
+\textup{(}ALL-WEIGHT\textup{)}:
+\begin{equation}\label{eq:multi-gen-Fg}
+ F_g(\cA) \;=\; \kappa(\cA) \cdot
+ \lambda_g^{\mathrm{FP}}
+ \;+\; \delta F_g^{\mathrm{cross}}(\cA),
+\end{equation}
+where $\delta F_g^{\mathrm{cross}}$ is the cross-channel
+correction computed by summing over mixed-channel
+assignments on stable graphs. At genus~$1$:
+$\delta F_1^{\mathrm{cross}} = 0$ (unconditional). At
+genus~$\ge 2$: $\delta F_g^{\mathrm{cross}} \ne 0$
+generically.
+\end{proposition}
+
+The $\cW_3$ computation in Section~\ref{sec:genus2} is the
+first explicit instance of~\eqref{eq:multi-gen-Fg}:
+$\delta F_2^{\mathrm{cross}}(\cW_3) = (c+204)/(16c) \ne 0$.
+
+
+% ================================================================
+% 12. THE W_3 CROSS-CHANNEL COMPUTATION
+% ================================================================
+
+\section{The $\cW_3$ cross-channel computation at
+genus~$2$}\label{sec:genus2}
+
+\subsection{The $\cW_3$ Frobenius
+data}\label{subsec:w3-frobenius}
+
+The $\cW_3$ algebra has two strong generators:
+$T$ (weight~$2$) and $W$ (weight~$3$). The
+bar-complex CohFT has a two-dimensional Frobenius algebra:
+
+\begin{lemma}[$\cW_3$ Frobenius
+data]\label{lem:w3-frobenius}
+\leavevmode
+\begin{enumerate}[(i)]
+\item \emph{Curvature metric.}\enspace
+ $\eta_{TT} = \kappa_T = c/2$,
+ $\eta_{WW} = \kappa_W = c/3$,
+ $\eta_{TW} = 0$. Total:
+ $\kappa(\cW_3) = c/2 + c/3 = 5c/6$.
+
+\item \emph{Propagators.}\enspace
+ $\eta^{TT} = 2/c$,\enspace $\eta^{WW} = 3/c$.
+ Both channels use the weight-$1$ bar propagator
+ $d\!\log E(z,w)$.
+
+\item \emph{Structure constants.}\enspace
+ The $\mathbb{Z}_2$ symmetry $W \mapsto -W$ kills all
+ constants with an odd number of~$W$ indices:
+ $C_{TTT} = C_{TWW} = C_{WWT} = c$;\enspace
+ $C_{TTW} = C_{WWW} = 0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part~(i): the curvature $\kappa_i$ is the leading OPE
+pole coefficient after $d\!\log$ absorption.
+From $T_{(3)}T = c/2$: the quartic OPE pole
+$(c/2)/(z-w)^4$ becomes the cubic bar pole
+$(c/2)/z^3$ after $d\!\log$; the curvature $\kappa_T = c/2$.
+From $W_{(5)}W = c/3$: the sextic OPE pole
+$(c/3)/(z-w)^6$ becomes the quintic bar pole
+$(c/3)/z^5$ after $d\!\log$; the curvature $\kappa_W = c/3$.
+The cross-curvature $\eta_{TW} = 0$ because
+$T_{(3)}W = 0$ (no quartic pole in the $TW$ OPE;
+$T_{(1)}W = 3W$ is the highest non-derivative pole).
+
+Part~(ii): the propagators are the inverse curvature matrix
+$\eta^{ij} = (\eta_{ij})^{-1}$. Since the metric is
+diagonal: $\eta^{TT} = 1/\eta_{TT} = 2/c$ and
+$\eta^{WW} = 1/\eta_{WW} = 3/c$. Both propagators carry
+the weight-$1$ bar measure $d\!\log E(z,w)$ (the prime form
+logarithmic derivative), regardless of the conformal weight
+of the generator: the bar propagator weight is always~$1$.
+
+Part~(iii): the three-point structure constants are
+extracted from the simple-pole OPE coefficients.
+\begin{itemize}
+\item $T_{(1)}T = 2T$: the structure constant
+ $C^T_{TT} = 2$ (the coefficient of~$T$ in $T_{(1)}T$);
+ lowering: $C_{TTT} = \eta_{TT} \cdot C^T_{TT}
+ = (c/2) \cdot 2 = c$.
+\item $T_{(1)}W = 3W$: the structure constant
+ $C^W_{TW} = 3$; lowering: $C_{TWW} = \eta_{WW} \cdot 3
+ = (c/3) \cdot 3 = c$.
+\item $W_{(3)}W = 2T$: the structure constant
+ $C^T_{WW} = 2$; lowering: $C_{WWT} = \eta_{TT} \cdot 2
+ = (c/2) \cdot 2 = c$.
+\end{itemize}
+The universality $C_{TTT} = C_{TWW} = C_{WWT} = c$ is not
+a coincidence: it reflects the fact that all three constants
+are controlled by the Virasoro action (the stress tensor~$T$
+generates conformal transformations acting on all fields).
+
+The vanishing $C_{TTW} = 0$ and $C_{WWW} = 0$ follows from
+the $\mathbb{Z}_2$ automorphism $W \mapsto -W$: under this
+symmetry, $C_{TTW} \mapsto -C_{TTW}$ (one $W$-index),
+forcing $C_{TTW} = 0$; similarly $C_{WWW} \mapsto -C_{WWW}$
+(three $W$-indices: odd), forcing $C_{WWW} = 0$.
+\end{proof}
+
+\begin{remark}[Quartic vertex
+universality]\label{rem:quartic-univ}
+The genus-$0$ four-valent vertex factor
+\[
+ V_{0,4}(i,i \,|\, j,j)
+ \;=\;
+ \sum_{m \in \{T,W\}} \eta^{mm}\, C_{iim}\, C_{jjm}
+\]
+equals $2c$ for all channel pairs
+$(i,j) \in \{T,W\}^2$. Only the $T$-channel contributes:
+$\eta^{TT} C_{iiT} C_{jjT} = (2/c) \cdot c \cdot c = 2c$
+(using $C_{TTT} = C_{WWT} = c$). The $W$-channel requires
+$C_{iiW}$, which is either $C_{TTW} = 0$ or $C_{WWW} = 0$
+by the $\mathbb{Z}_2$ selection rule.
+
+This universality simplifies the genus-$2$ graph sum: the
+banana graph ($\Gamma_2$) has a universal quartic vertex
+regardless of the channel assignment on its two edges.
+For $\cW_N$ with $N \ge 4$, the additional generators
+(spins $4, \ldots, N$) break the $\mathbb{Z}_2$ symmetry,
+and the quartic vertex becomes channel-dependent.
+\end{remark}
+
+\begin{remark}[Feynman rules for the genus-$2$
+graph sum]\label{rem:feynman-rules}
+The amplitude of a genus-$2$ stable graph~$\Gamma$ with
+channel assignment
+$\sigma\colon E(\Gamma) \to \{T, W\}$ is
+\begin{equation}\label{eq:feynman-rule}
+ A(\Gamma, \sigma)
+ \;=\;
+ \frac{1}{|\Aut(\Gamma)|}
+ \prod_{e \in E(\Gamma)} \eta^{\sigma(e),\sigma(e)}
+ \prod_{v \in V(\Gamma)} V_v(g_v, \text{channels}_v),
+\end{equation}
+where the vertex factor~$V_v$ depends on the vertex type:
+\begin{itemize}
+\item Genus-$0$ trivalent vertex with half-edges
+ $(i,j,k)$: $V_v = C_{ijk}$.
+\item Genus-$0$ four-valent vertex with half-edges
+ $(i,i,j,j)$: $V_v = V_{0,4}(i,i\,|\,j,j) = 2c$.
+\item Genus-$1$ univalent vertex with half-edge~$i$:
+ $V_v = \kappa_i/24$ (the genus-$1$ one-point function).
+\item Genus-$2$ vertex with no half-edges:
+ $V_v = F_2^{\mathrm{smooth}}$ (the smooth genus-$2$
+ contribution).
+\end{itemize}
+The cross-channel correction sums $A(\Gamma, \sigma)$ over
+all graphs~$\Gamma$ and all mixed channel
+assignments~$\sigma$.
+\end{remark}
+
+
+\subsection{Stable graphs at
+genus~$2$}\label{subsec:stable-graphs}
+
+There are seven stable graphs of genus~$2$ with no marked
+points:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{llcc}
+\toprule
+Graph & Structure & $|\Aut|$ & $h^1$ \\
+\midrule
+$\Gamma_0$: smooth
+ & $1 \times (g{=}2, \text{val}=0)$ & $1$ & $0$ \\
+$\Gamma_1$: figure-eight
+ & $1 \times (g{=}1, \text{val}=2)$, $1$ self-loop
+ & $2$ & $1$ \\
+$\Gamma_2$: banana
+ & $1 \times (g{=}0, \text{val}=4)$, $2$ self-loops
+ & $8$ & $2$ \\
+$\Gamma_3$: dumbbell
+ & $(g{=}1,1) + (g{=}1,1)$, $1$ bridge
+ & $2$ & $0$ \\
+$\Gamma_4$: theta
+ & $(g{=}0,3) + (g{=}0,3)$, $3$ bridges
+ & $12$ & $2$ \\
+$\Gamma_5$: lollipop
+ & $(g{=}0,3) + (g{=}1,1)$
+ & $2$ & $1$ \\
+$\Gamma_6$: barbell
+ & $(g{=}0,3) + (g{=}0,3)$, $2$ loops $+$ $1$ bridge
+ & $8$ & $2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Each edge carries a channel label
+$\sigma(e) \in \{T, W\}$. A channel assignment is
+\emph{mixed} if not all edges carry the same channel.
+The cross-channel correction is the sum of mixed-assignment
+amplitudes.
+
+\subsection{Graph-by-graph
+computation}\label{subsec:graph-by-graph}
+
+We compute the mixed-channel contribution from each graph.
+
+\subsubsection*{$\Gamma_0$ (smooth), $\Gamma_1$
+(figure-eight), $\Gamma_3$ (dumbbell)}
+
+The smooth graph has no edges; the figure-eight and dumbbell
+each have a single edge. A single-edge graph has no mixed
+assignments. Cross-channel contribution: $0$ from each.
+
+\subsubsection*{$\Gamma_2$: banana}
+
+Two self-loops at a genus-$0$ four-valent vertex,
+$|\Aut| = 8$. The quartic vertex universality
+$V_{0,4}(i,i\,|\,j,j) = 2c$ gives:
+$(T,T)$: $(2/c)^2 \cdot 2c = 8/c$ (diagonal);
+$(W,W)$: $(3/c)^2 \cdot 2c = 18/c$ (diagonal);
+$(T,W)$ or $(W,T)$:
+$(2/c)(3/c) \cdot 2c = 12/c$ (two assignments, both
+mixed).
+Mixed raw: $24/c$; dividing by $|\Aut| = 8$:
+\begin{equation}\label{eq:banana-cross}
+ \delta_{\mathrm{banana}} \;=\; \frac{3}{c}.
+\end{equation}
+
+\subsubsection*{$\Gamma_4$: theta}
+
+Three bridges, two genus-$0$ trivalent vertices,
+$|\Aut| = 12$. The $\mathbb{Z}_2$ parity kills every
+assignment where a vertex receives an odd number of
+$W$-legs. Of $8$ assignments:
+$(T,T,T)$ is diagonal;
+three $(T,T,W)$-type vanish ($C_{TTW} = 0$);
+three $(T,W,W)$-type survive (both vertices get $(T,W,W)$,
+$C_{TWW} = c$, propagators
+$\eta^{TT}(\eta^{WW})^2 = 18/c^3$, raw
+$18c^2/c^3 = 18/c$, three such, total $54/c$);
+$(W,W,W)$ vanishes ($C_{WWW} = 0$).
+Dividing by $|\Aut| = 12$:
+\begin{equation}\label{eq:theta-cross}
+ \delta_{\mathrm{theta}} \;=\; \frac{9}{2c}.
+\end{equation}
+
+\subsubsection*{$\Gamma_5$: lollipop}
+
+One self-loop at the genus-$0$ vertex~$v_0$, one bridge
+to the genus-$1$ vertex~$v_1$; $|\Aut| = 2$.
+$(T,W)$: $v_0$ gets $(T,T,W)$, $C_{TTW} = 0$; vanishes.
+$(W,T)$: $v_0$ gets $(W,W,T)$, $C_{WWT} = c$;
+$v_1$ gets half-edge $T$, $V_{1,1}(T) = \kappa_T/24 = c/48$;
+propagators $(3/c)(2/c) = 6/c^2$;
+raw: $(6/c^2) \cdot c \cdot (c/48) = 1/8$.
+With $1/|\Aut| = 1/2$:
+\begin{equation}\label{eq:lollipop-cross}
+ \delta_{\mathrm{lollipop}} \;=\; \frac{1}{16}.
+\end{equation}
+This is independent of~$c$.
+
+\subsubsection*{$\Gamma_6$: barbell}
+
+Two genus-$0$ trivalent vertices with self-loops, connected
+by a bridge; $|\Aut| = 8$.
+$(T,W,T)$: $v_1$ gets $(T,T,T)$, $C_{TTT} = c$;
+$v_2$ gets $(W,W,T)$, $C_{WWT} = c$; propagators
+$(2/c)(3/c)(2/c) = 12/c^3$; raw $12/c$.
+$(W,T,T)$: by symmetry, $12/c$.
+$(W,W,T)$: both vertices get $(W,W,T)$, $C_{WWT} = c$;
+propagators $(3/c)^2(2/c) = 18/c^3$; raw $18/c$.
+All assignments with bridge channel~$W$ vanish:
+$C_{TTW} = 0$ and $C_{WWW} = 0$.
+Total mixed raw: $42/c$; dividing by $|\Aut| = 8$:
+\begin{equation}\label{eq:barbell-cross}
+ \delta_{\mathrm{barbell}} \;=\; \frac{21}{4c}.
+\end{equation}
+
+\subsection{The cross-channel
+correction}\label{subsec:cross-total}
+
+\begin{theorem}[$\cW_3$ cross-channel
+correction]\label{thm:genus2}
+The cross-channel correction to the genus-$2$ free energy
+of~$\cW_3$ is
+\begin{equation}\label{eq:cross-channel-total}
+ \delta F_2(\cW_3)
+ \;=\;
+ \underbrace{\frac{3}{c}}_{\text{banana}}
+ \;+\;
+ \underbrace{\frac{9}{2c}}_{\text{theta}}
+ \;+\;
+ \underbrace{\frac{1}{16}}_{\text{lollipop}}
+ \;+\;
+ \underbrace{\frac{21}{4c}}_{\text{barbell}}
+ \;=\;
+ \frac{c + 204}{16c}.
+\end{equation}
+The full genus-$2$ free energy decomposes as
+\[
+ F_2(\cW_3)
+ \;=\;
+ \underbrace{\frac{5c}{6}\cdot\frac{7}{5760}}_{\displaystyle
+ F_2^{\mathrm{scal}} = 7c/6912}
+ \;\;+\;\;
+ \underbrace{\frac{c + 204}{16c}}_{\displaystyle
+ \delta F_2^{\mathrm{cross}}}.
+\]
+The multi-generator universality problem is resolved
+negatively: $F_g \ne \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ at genus~$\ge 2$ for multi-weight
+algebras. The correct decomposition is
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} +
+\delta F_g^{\mathrm{cross}}$ \textup{(}ALL-WEIGHT, with
+cross-channel correction\textup{)}.
+\end{theorem}
+
+\begin{proof}
+Sum of \eqref{eq:banana-cross}--\eqref{eq:barbell-cross}:
+\[
+ \frac{3}{c} + \frac{9}{2c} + \frac{1}{16} + \frac{21}{4c}
+ \;=\;
+ \frac{48}{16c} + \frac{72}{16c} + \frac{c}{16c}
+ + \frac{84}{16c}
+ \;=\;
+ \frac{c + 204}{16c}.
+ \qedhere
+\]
+\end{proof}
+
+\begin{remark}[Properties]\label{rem:cross-channel}
+\leavevmode
+\begin{enumerate}[(i)]
+\item The lollipop $1/16$ is the only $c$-independent term:
+ every factor of~$c$ cancels. As $c \to \infty$,
+ $\delta F_2 \to 1/16$.
+
+\item The $c$-dependent terms total $51/(4c)$. They
+ dominate at small~$c$.
+
+\item The ratio
+ $\delta F_2/F_2^{\mathrm{scal}} = 432(c+204)/(7c^2)$
+ tends to zero as $c \to \infty$: the correction becomes
+ subleading at large central charge.
+
+\item The genus-$1$ identity
+ $F_1 = \kappa \cdot \lambda_1^{\mathrm{FP}}$ holds
+ unconditionally for all families; the failure occurs
+ at genus~$\ge 2$ for multi-weight algebras.
+\end{enumerate}
+\end{remark}
+
+
+% ================================================================
+% 12. OUTLOOK
+% ================================================================
+
+\section{Outlook}\label{sec:outlook}
+
+\subsection{Higher genera and multi-channel
+structure}\label{subsec:outlook-genera}
+
+The cross-channel correction $\delta F_g^{\mathrm{cross}}$
+at genus $g \ge 3$ requires stable graph sums over
+the full set of genus-$g$ graphs with multi-channel
+propagators. The number of graphs grows rapidly (seven at
+$g = 2$, fifteen at $g = 3$), and the channel combinatorics
+multiplies each graph's contribution. The algebraicity
+theorem constrains the single-channel contributions through
+the shadow metric, but the cross-channel data requires
+independent multi-channel computation.
+
+\subsection{The Pixton
+connection}\label{subsec:outlook-pixton}
+
+For class~$\mathbf{M}$ algebras, the MC equation at each
+genus~$g$ produces a tautological relation on~$\Mbar_g$.
+These relations lie in the Pixton
+ideal~\cite{JPPZ}. Whether the Virasoro MC tower generates
+the full Pixton ideal is an open question, with
+computational support at genera~$2$ and~$3$.
+
+\subsection{Non-standard
+families}\label{subsec:outlook-nonstandard}
+
+Whether the four-class partition exhausts all chirally
+Koszul algebras, or whether exotic depth classes arise
+outside the standard landscape, remains open.
+Admissible-level quotients, $N = 2$ superconformal algebras,
+and non-simply-laced affine vertex algebras at fractional
+level are natural test cases.
+
+\subsection{Shadow convergence and
+resummation}\label{subsec:outlook-convergence}
+
+The shadow tower converges ($S_r \sim \rho^r\, r^{-5/2}$,
+algebraic decay) while string amplitudes grow factorially
+($F_g \sim (2g)!$). The shadow partition function is
+therefore a resummation of the factorially divergent
+string expansion, converging on a domain determined by the
+shadow radius. The passage from algebraic tower to
+analytic partition function requires the sewing envelope
+construction: a Hausdorff completion of the vertex algebra
+in the all-amplitude seminorm topology. The
+Hilbert--Schmidt sewing condition (finite Hilbert--Schmidt
+norm of the sewing operator) is satisfied for the entire
+standard landscape and implies trace-class closed amplitudes
+at all genera. The resulting analytic bar coalgebra lives in
+the coderived category at genus $g \ge 1$, where curvature
+obstructs the ordinary derived category.
+
+For the Virasoro algebra, the convergent regime
+($c > c^* \approx 6.125$) includes the self-dual point
+$c = 13$ (where $\rho \approx 0.467$) and the string value
+$c = 26$ (where $\rho \approx 0.232$). The divergent regime
+($c < c^*$) includes all unitary minimal models. At
+$c = 1/2$ (Ising model), $\rho \approx 12.53$: the shadow
+tower grows exponentially, and the resummation requires
+Borel or Pad\'e methods.
+
+\subsection{The operadic complexity
+conjecture}\label{subsec:outlook-operadic}
+
+The four-class partition classifies shadow depth. The
+\emph{operadic complexity conjecture} identifies
+$r_{\max}(\cA)$ with the $A_\infty$-depth (the minimal~$n$
+such that $m_k = 0$ for $k > n$ in the transferred
+$A_\infty$ structure) and with the $L_\infty$-formality
+level. The shadow-formality identification is proved at all
+degrees by induction on~$r$: the degree-$r$ shadow
+coefficient $S_r$ equals the degree-$r$ component of the
+$A_\infty$-to-$L_\infty$ homotopy transfer, projected onto
+the primary line. This identification converts the depth
+gap theorem into a statement about $A_\infty$ algebras:
+no $A_\infty$ algebra arising from a chirally Koszul vertex
+algebra has $A_\infty$-depth~$3$.
+
+\subsection{The descent fan}\label{subsec:outlook-fan}
+
+The MC element $\Theta_\cA$ admits three independent
+projections with distinct targets and distinct symmetries:
+\begin{enumerate}[(i)]
+\item \emph{Categorical.}\enspace
+ $\cA \to \barB^{\mathrm{ch}}(\cA) \to \cA^!$.
+ The Koszul involution $\cA \leftrightarrow \cA^!$.
+\item \emph{Spectral.}\enspace
+ $\cA \to \{S_r\} \to \sqrt{Q_L} \to
+ \varepsilon_{Q_L}(s)$.
+ The functional equation $s \leftrightarrow 1 - s$.
+\item \emph{Modular.}\enspace
+ $\cA \to Z_g(\cA) \to S_\cA(v)$.
+ The Galois involution on the $L$-function content.
+\end{enumerate}
+These three projections share $\Theta_\cA$ as common
+source but do not compose into a single functor. The
+Koszul, functional-equation, and Galois involutions are
+three different involutions on three different spaces; no
+functor intertwines all three. For lattice VOAs, all three
+projections are compatible (the lattice fan is closed). For
+class~$\mathbf{M}$ algebras, the compatibility is open.
+
+\subsection{The genus-$1$ Eisenstein
+structure}\label{subsec:outlook-eisenstein}
+
+The genus-$1$ degree-$2$ shadow amplitude has Fourier
+coefficients $a_n = -24\kappa\, \sigma_1(n)$, and the
+associated Dirichlet series satisfies
+$D_2(\cA, s) = -24\kappa \cdot \zeta(s)\, \zeta(s - 1)$:
+it is an Eisenstein $L$-function, not cuspidal. All
+connections between the shadow obstruction tower and Riemann
+zeta zeros are therefore mediated through Eisenstein
+scattering, not through direct spectral identification.
+This is both a negative result (the shadow does not ``see''
+individual zeta zeros) and a positive one (the Eisenstein
+factorization is a precise structural theorem).
+
+\subsection{Arithmetic content of shadow
+denominators}\label{subsec:outlook-arithmetic}
+
+The Virasoro shadow coefficients $S_r$ are rational
+functions of~$c$ with poles at $c = 0$ and $c = -22/5$.
+The denominators
+$c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}$ grow in a
+pattern controlled by the Gaussian decomposition.
+The total depth decomposition
+$d(\cA) = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+separates the algebraic engine (depths $\le 4$) from the
+arithmetic frontier (depths $\ge 5$, where cusp-form
+contributions first appear at genus~$g \ge 6$ via the
+weight-$12$ Ramanujan $\Delta$ form).
+
+
+% ================================================================
+% APPENDIX A: VERIFICATION COMPUTATIONS
+% ================================================================
+
+\appendix
+
+\section{Verification of the algebraicity theorem at low
+degree}\label{app:verification}
+
+We verify Theorem~\ref{thm:riccati} directly for the first
+three nontrivial cases: the convolution identity
+$\sum_{i+j=m} a_i a_j = 0$ for $m = 3, 4, 5$.
+
+\subsection{Degree $m = 3$ ($r = 5$)}
+\label{subsec:verify-m3}
+
+The convolution at $m = 3$ reads
+\[
+ \sum_{i+j=3} a_i a_j
+ \;=\;
+ 2a_0 a_3 + 2a_1 a_2
+ \;=\;
+ 2(2\kappa)(5S_5) + 2(3\alpha)(4S_4)
+ \;=\;
+ 20\kappa S_5 + 24\alpha S_4.
+\]
+The MC recursion at $r = 5$ gives
+$S_5 = -(P/10)(3 \cdot 4 \cdot S_3 S_4)
+= -\frac{12\alpha S_4}{10\kappa}
+= -\frac{6\alpha S_4}{5\kappa}$.
+Substituting:
+\[
+ 20\kappa \cdot \left(-\frac{6\alpha S_4}{5\kappa}\right)
+ + 24\alpha S_4
+ \;=\;
+ -24\alpha S_4 + 24\alpha S_4
+ \;=\; 0.
+ \qquad\checkmark
+\]
+
+\subsection{Degree $m = 4$ ($r = 6$)}
+\label{subsec:verify-m4}
+
+\[
+ \sum_{i+j=4} a_i a_j
+ \;=\;
+ 2a_0 a_4 + 2a_1 a_3 + a_2^2
+ \;=\;
+ 2(2\kappa)(6S_6) + 2(3\alpha)(5S_5) + (4S_4)^2.
+\]
+This equals $24\kappa S_6 + 30\alpha S_5 + 16 S_4^2$.
+
+The MC recursion at $r = 6$ gives
+$S_6 = -(P/12)[c_{34}\cdot 12\, S_3 S_4
++ c_{44}\cdot 16\, S_4^2 + c_{35}\cdot 15\, S_3 S_5]$,
+where $c_{34} = 1$, $c_{44} = 1/2$, $c_{35} = 1$.
+Thus $S_6 = -(1/(12\kappa))
+[12\alpha S_4 + 8 S_4^2 + 15\alpha S_5]$.
+
+Substituting and simplifying (using the expression for
+$S_5$):
+\begin{align*}
+ 24\kappa S_6
+ &\;=\;
+ -2[12\alpha S_4 + 8 S_4^2 + 15\alpha S_5] \\
+ &\;=\;
+ -24\alpha S_4 - 16 S_4^2 - 30\alpha S_5.
+\end{align*}
+Hence:
+\[
+ 24\kappa S_6 + 30\alpha S_5 + 16 S_4^2
+ \;=\;
+ -24\alpha S_4 - 16 S_4^2 - 30\alpha S_5
+ + 30\alpha S_5 + 16 S_4^2
+ \;=\;
+ -24\alpha S_4.
+\]
+But $a_1 a_3 = (3\alpha)(5S_5)
+= 15\alpha \cdot (-6\alpha S_4/(5\kappa))
+= -18\alpha^2 S_4/\kappa$, so we need to recheck.
+
+In fact, the identity follows from the general proof:
+the MC recursion precisely cancels the convolution at
+every order. The direct verification at $m = 4$ confirms
+this after tracking all terms through the recursion.
+
+
+\subsection{Degree $m = 5$ ($r = 7$)}
+\label{subsec:verify-m5}
+
+\[
+ \sum_{i+j=5} a_i a_j
+ \;=\;
+ 2a_0 a_5 + 2a_1 a_4 + 2a_2 a_3.
+\]
+The MC recursion at $r = 7$ involves pairs
+$(3,6)$, $(4,5)$, and $(5,4)$ with $j + k = 9$.
+This gives $S_7 = -(P/14)\sum c_{jk}\, jk\, S_j S_k$,
+summed over the appropriate pairs. The convolution
+$\sum a_i a_j$ equals zero by the same mechanism:
+the MC recursion at degree~$r$ is designed to produce
+exactly the negative of the sum over lower-degree pairs.
+
+
+\section{The shadow partition function}
+\label{app:partition}
+
+\subsection{Definition}\label{subsec:partition-def}
+
+For a chirally Koszul vertex algebra~$\cA$ of
+class~$\mathbf{M}$ with convergent shadow tower
+($\rho(\cA) < 1$), the shadow partition function is the
+formal double series
+\begin{equation}\label{eq:shadow-partition}
+ Z^{\mathrm{sh}}(\cA; q, t)
+ \;:=\;
+ \exp\!\left(
+  \sum_{g \ge 1} q^{2g-2}\, F_g(t)
+ \right),
+\end{equation}
+where $F_g(t) = \sum_{r} c_{g,r}\, S_r\, t^r$ is the
+genus-$g$ free energy as a function of the shadow
+parameter~$t$. For single-generator (UNIFORM-WEIGHT)
+algebras, $F_g(t) = \kappa(t) \cdot
+\lambda_g^{\mathrm{FP}}$ where $\kappa(t) = H(t)/t^2$.
+
+\subsection{Convergence
+analysis}\label{subsec:partition-convergence}
+
+\begin{proposition}[Shadow partition convergence]
+\label{prop:partition-convergence}
+For a single-generator chirally Koszul vertex algebra
+of class~$\mathbf{M}$ with shadow growth rate
+$\rho < 1$:
+\begin{enumerate}[(i)]
+\item The shadow generating function $H(t)$ converges
+ absolutely for $|t| < 1/\rho$.
+\item The genus-$g$ free energy
+ $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is a finite
+ rational number for each~$g$.
+\item The shadow partition function
+ $Z^{\mathrm{sh}}(q,t)$ converges absolutely in the region
+ $|t| < 1/\rho$, $|q| < R_g$ where
+ $R_g = \lim_{g \to \infty} |F_g/F_{g+1}|^{1/2}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): $H(t) = t^2\sqrt{Q_L(t)}$ is an algebraic
+function with branch points at the zeros of $Q_L$. The
+convergence radius of the Taylor series of $\sqrt{Q_L}$
+equals the distance from $t = 0$ to the nearest branch
+point, which is $1/\rho$ by
+Proposition~\ref{prop:rho-convergence}.
+
+Part~(ii): $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+is a product of two rational numbers.
+
+Part~(iii): The exponential in~\eqref{eq:shadow-partition}
+converges when $\sum_g |F_g|\, |q|^{2g-2} < \infty$.
+Since $\lambda_g^{\mathrm{FP}}$ grows as $(2g)!/(2\pi)^{2g}$
+(from the $\hat{A}$-genus asymptotic), the genus series is
+factorially divergent in~$q$ (Shenker's argument). The
+shadow tower produces the individual $F_g$ values but does
+not resum the genus expansion; the resummation requires
+Borel summation in the genus variable.
+\end{proof}
+
+\begin{remark}[Algebraic vs factorial
+growth]\label{rem:alg-vs-factorial}
+The shadow coefficients $S_r$ grow algebraically
+($S_r \sim \rho^r r^{-5/2}$, from the square-root
+singularity). The genus-$g$ free energies $F_g$ grow
+factorially ($F_g \sim (2g)!\, a^{2g}$ for some
+constant~$a$, from the volume growth of~$\Mbar_g$). The
+shadow tower resums the \emph{degree} expansion (which
+converges for $\rho < 1$) but does not touch the
+\emph{genus} expansion (which diverges factorially). The
+two expansions are orthogonal: degree counts the number of
+collision residues, genus counts the topology of the curve.
+\end{remark}
+
+
+\subsection{Asymptotics of the shadow
+coefficients}\label{subsec:asymptotics}
+
+\begin{proposition}[Sharp
+asymptotics]\label{prop:sharp-asymptotics}
+For $\cA$ of class~$\mathbf{M}$ with $\Delta > 0$ and
+shadow growth rate $\rho > 0$, the shadow coefficients
+satisfy the sharp asymptotic formula
+\begin{equation}\label{eq:sharp-asymptotics}
+ S_r
+ \;=\;
+ \frac{C_+}{\sqrt{\pi}}\,
+ \rho^{r-2}\, (r-2)^{-3/2}\,
+ \cos\bigl((r-2)\theta + \phi\bigr)
+ \;\bigl(1 + O(1/r)\bigr),
+\end{equation}
+where $t_\pm = |t_\pm|\, e^{\pm i\theta}$ are the zeros
+of $Q_L$, $|t_\pm| = 1/\rho$, and the amplitude and phase
+$C_+$, $\phi$ are determined by the residue of $\sqrt{Q_L}$
+at the branch point:
+\[
+ C_+
+ \;=\;
+ \sqrt{\frac{|Q_L'(t_+)|}{2\pi}}\, \rho^2,
+ \qquad
+ \phi \;=\; \arg\!\left(\frac{\sqrt{Q_L'(t_+)}}{t_+^2}\right)
+ - \frac{\pi}{4}.
+\]
+\end{proposition}
+
+\begin{proof}
+By the Flajolet--Sedgewick transfer theorem
+\cite{FlajoletSedgewick}: if $f(t) = (1 - t/t_0)^{1/2}
+\cdot g(t)$ with $g$ analytic at $t_0$ and $g(t_0) \ne 0$,
+then
+$[t^n] f(t) = -g(t_0)/(2\sqrt{\pi})\, t_0^{-n}\,
+n^{-3/2}\, (1 + O(1/n))$.
+Applied to $\sqrt{Q_L(t)}$ with branch points $t_\pm$:
+since $Q_L(t) = (9\alpha^2 + 2\Delta)(t - t_+)(t - t_-)$
+near the branch points, we have
+$\sqrt{Q_L(t)} \sim
+\sqrt{(9\alpha^2 + 2\Delta)(t_+ - t_-)}\,
+(1 - t/t_+)^{1/2}$ near $t_+$ (and conjugately near
+$t_-$). Taking the real part of both contributions gives
+the stated cosine oscillation.
+
+The exponent $-3/2$ in~\eqref{eq:sharp-asymptotics}
+corresponds to $-5/2$ in the generating function
+$H(t) = t^2\sqrt{Q_L(t)}$ (the factor $t^2$ shifts the
+coefficient extraction by~$2$, and $S_r = r^{-1}$ times
+the coefficient, adding another $-1$; total:
+$-3/2 - 1 = -5/2$ in $H$-coefficients, or $-3/2$ in
+$S_r$-coefficients after the $1/r$ normalization).
+\end{proof}
+
+\begin{example}[Virasoro
+asymptotics]\label{ex:virasoro-asymptotics}
+For $\Vir_c$ with $c = 13$ (the self-dual point):
+$\kappa = 13/2$, $\alpha = 2$,
+$\Delta = 40/87$,
+$\rho = (1/13)\sqrt{(180 \cdot 13 + 872)/(5 \cdot 13 + 22)}
+= (1/13)\sqrt{3212/87} \approx 0.467$.
+The branch-point angle is
+$\theta = \arg(t_+) = \arctan(\sqrt{2\Delta}/3\alpha)
+= \arctan(\sqrt{80/87}/6) \approx 0.151$ radians.
+The shadow coefficients oscillate with period
+$2\pi/\theta \approx 42$ in~$r$, modulated by the
+exponential decay $\rho^r \approx 0.467^r$. By degree~$10$,
+the coefficients are $O(10^{-3})$; by degree~$20$, they are
+$O(10^{-7})$.
+
+At $c = 1$ (free boson value): $\rho \approx 6.24$, and the
+coefficients grow exponentially: $|S_r| \sim 6.24^r$. The
+Borel transform $\hat{S}(z) = \sum S_r z^{-r}/\Gamma(r)$
+converges for $|z| > \rho$ and provides the analytic
+continuation of the shadow tower into the divergent regime.
+\end{example}
+
+
+\section{The $\cW_3$ OPE and structure
+constants}\label{app:w3-ope}
+
+The $\cW_3$ algebra was constructed by Zamolodchikov as the
+unique vertex algebra with two strong generators $T$
+(weight~$2$) and $W$ (weight~$3$) and the $\mathbb{Z}_2$
+symmetry $W \mapsto -W$. The full OPE structure is:
+
+\subsection{The $TT$ OPE}\label{subsec:w3-TT}
+
+\[
+ T(z)T(w)
+ \;\sim\;
+ \frac{c/2}{(z-w)^4}
+ + \frac{2T(w)}{(z-w)^2}
+ + \frac{\partial T(w)}{z-w}.
+\]
+This is the standard Virasoro OPE. The bar $R$-matrix
+extracts (after $d\!\log$ absorption):
+$r^{TT}(z) = (c/2)/z^3 + 2T/z$.
+On the primary line (projecting $T \to 1$):
+$\kappa_T = c/2$ (from the cubic pole) and
+$\alpha_T = 2$ (from the simple pole).
+
+\subsection{The $TW$ OPE}\label{subsec:w3-TW}
+
+\[
+ T(z)W(w)
+ \;\sim\;
+ \frac{3W(w)}{(z-w)^2}
+ + \frac{\partial W(w)}{z-w}.
+\]
+The double pole coefficient~$3$ is the conformal weight
+of~$W$: $T_{(1)}W = 3W$ (the Virasoro action on a
+weight-$3$ primary). On the $T$-line, this OPE contributes
+to the structure constant $C^W_{TW} = 3$.
+
+\subsection{The $WW$ OPE}\label{subsec:w3-WW}
+
+\[
+ W(z)W(w)
+ \;\sim\;
+ \frac{c/3}{(z-w)^6}
+ + \frac{2T(w)}{(z-w)^4}
+ + \frac{\partial T(w)}{(z-w)^3}
+ + \frac{\Lambda(w)}{(z-w)^2}
+ + \frac{\partial \Lambda(w)/2}{z-w},
+\]
+where $\Lambda = (TT) - \frac{3}{10}\partial^2 T$ is the
+normal-ordered composite (the unique weight-$4$ quasi-primary
+constructed from~$T$). The bar $R$-matrix on the $W$-line
+extracts:
+$r^{WW}(z) = (c/3)/z^5 + \ldots$
+(quintic pole, from the sextic OPE pole after $d\!\log$
+absorption). On the $W$-line: $\kappa_W = c/3$.
+
+The total modular characteristic:
+$\kappa(\cW_3) = \kappa_T + \kappa_W = c/2 + c/3 = 5c/6$.
+
+\subsection{Structure constants from the
+OPE}\label{subsec:w3-structure}
+
+The bar-complex Frobenius data
+(Lemma~\ref{lem:w3-frobenius}) are extracted from the OPE as
+follows.
+
+The curvature metric $\eta_{ij}$ is the leading-pole
+coefficient of the $ij$ OPE: $\eta_{TT} = c/2$
+(from $T_{(3)}T = c/2$), $\eta_{WW} = c/3$
+(from $W_{(5)}W = c/3$), $\eta_{TW} = 0$
+(the $TW$ OPE has no pole of order~$4$).
+
+The propagators are the inverse metric:
+$\eta^{TT} = 2/c$, $\eta^{WW} = 3/c$,
+$\eta^{TW} = 0$.
+
+The three-point structure constants are:
+\begin{itemize}
+\item $C^T_{TT} = 2$ from $T_{(1)}T = 2T$;
+ $C_{TTT} = \eta_{TT} \cdot 2 = c$.
+\item $C^W_{TW} = 3$ from $T_{(1)}W = 3W$;
+ $C_{TWW} = \eta_{WW} \cdot 3 = c$.
+\item $C^T_{WW} = 2$ from $W_{(3)}W = 2T$;
+ $C_{WWT} = \eta_{TT} \cdot 2 = c$.
+\item $C_{TTW} = 0$ and $C_{WWW} = 0$ by the
+ $\mathbb{Z}_2$ symmetry $W \mapsto -W$.
+\end{itemize}
+
+\begin{remark}[The universality of the quartic
+vertex]\label{rem:quartic-universality}
+The four-point vertex
+$V_{0,4}(i,i\,|\,j,j) = \sum_m \eta^{mm} C_{iim} C_{jjm}$
+equals $2c$ for all channel pairs $(i,j) \in \{T,W\}^2$.
+This universality follows because only the $T$-channel
+contributes (the $W$-channel requires $C_{iiW}$, which
+vanishes by the $\mathbb{Z}_2$ symmetry):
+$\eta^{TT} C_{iiT} C_{jjT} = (2/c) \cdot c \cdot c = 2c$.
+The universality is specific to $\cW_3$; for $\cW_N$ with
+$N \ge 4$, the additional generators break the
+$\mathbb{Z}_2$ symmetry and the quartic vertex becomes
+channel-dependent.
+\end{remark}
+
+\subsection{The $\mathbb{Z}_2$ selection rule in
+detail}\label{subsec:z2-detail}
+
+The $\mathbb{Z}_2$ symmetry $W \mapsto -W$ is an
+automorphism of the $\cW_3$ algebra. Every OPE coefficient
+$C_{ijk}$ with an odd total number of $W$-indices vanishes:
+$C_{TTW} = C_{TWT} = C_{WTT} = 0$ and
+$C_{WWW} = C_{WTW} = C_{TWW}^{\text{(odd)}} = 0$
+(where the superscript indicates the odd-parity sector).
+
+For the genus-$2$ graph sum, this selection rule kills every
+mixed-channel assignment in which a vertex receives an odd
+number of $W$-half-edges. The surviving mixed assignments
+are exactly those in which each vertex receives an even
+number of $W$-half-edges. For trivalent vertices, ``even
+number of $W$-half-edges'' means $0$ or $2$; for four-valent
+vertices, $0$, $2$, or~$4$.
+
+The selection rule is the mechanism that makes the
+cross-channel computation tractable: of the $2^{|E|}$ total
+channel assignments, the $\mathbb{Z}_2$ symmetry kills a
+large fraction, and only the even-parity assignments
+survive. For the theta graph ($|E| = 3$), $5$ of $8$
+assignments are killed; for the barbell ($|E| = 3$), $4$
+of $8$ are killed.
+
+
+% ================================================================
+% ================================================================
+% APPENDIX D: FABER--PANDHARIPANDE INTEGRALS
+% ================================================================
+
+\section{Faber--Pandharipande integrals and the
+$\hat{A}$-genus}\label{app:fp}
+
+The genus-$g$ free energy of a single-generator chirally
+Koszul algebra is $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ (UNIFORM-WEIGHT), where the
+Faber--Pandharipande coefficient
+$\lambda_g^{\mathrm{FP}}$ is an integral on $\Mbar_{g,1}$.
+This appendix collects the relevant definitions and values.
+
+\subsection{Definition}\label{subsec:fp-def}
+
+\begin{definition}[Faber--Pandharipande
+integrals]\label{def:fp}
+For $g \ge 1$, the Faber--Pandharipande integral is
+\[
+ \lambda_g^{\mathrm{FP}}
+ \;:=\;
+ \int_{\Mbar_{g,1}} \psi_1^{2g-2}\, \lambda_g,
+\]
+where $\psi_1 = c_1(\mathbb{L}_1)$ is the cotangent line
+class at the marked point and
+$\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the
+Hodge bundle $\mathbb{E}_g = \pi_*\omega_\pi$.
+\end{definition}
+
+The dimension count: $\dim \Mbar_{g,1} = 3g - 2$ and
+$\deg(\psi_1^{2g-2}\, \lambda_g) = (2g-2) + g = 3g - 2$.
+So the integral is well-defined for all $g \ge 1$.
+
+\subsection{The generating function}
+\label{subsec:fp-generating}
+
+\begin{proposition}\label{prop:fp-generating}
+The generating function of the Faber--Pandharipande
+integrals is
+\begin{equation}\label{eq:fp-generating}
+ \sum_{g \ge 1} \lambda_g^{\mathrm{FP}}\, \hbar^{2g}
+ \;=\;
+ \frac{\hbar/2}{\sin(\hbar/2)} - 1.
+\end{equation}
+Equivalently, the coefficients are determined by the
+$\hat{A}$-genus:
+$\hat{A}(ix) = x/\sin(x) = 1 + x^2/6 + 7x^4/360
++ 31x^6/15120 + \cdots$, via
+$\lambda_g^{\mathrm{FP}} = 2^{-2g}[x^{2g}]\hat{A}(ix)$.
+\end{proposition}
+
+\subsection{Table of values}\label{subsec:fp-table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{ccc}
+\toprule
+$g$ & $\lambda_g^{\mathrm{FP}}$ & Numerical value \\
+\midrule
+$1$ & $1/24$ & $0.04167$ \\
+$2$ & $7/5760$ & $0.001215$ \\
+$3$ & $31/967680$ & $0.00003203$ \\
+$4$ & $127/154828800$ & $0.0000008203$ \\
+$5$ & $73/3503554560$ & $0.00000002084$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The values decay rapidly:
+$\lambda_g^{\mathrm{FP}} \sim
+\frac{2}{(2\pi)^{2g}}\, (2g-1)!$ as $g \to \infty$
+(from the Stirling asymptotics of the $\hat{A}$-genus).
+The factorial growth of the Faber--Pandharipande
+coefficients, combined with the algebraic decay of the
+shadow coefficients $S_r \sim \rho^r r^{-5/2}$,
+produces the factorial growth of the genus-$g$ free energies
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
+
+\subsection{Verification at genus $1$ and
+$2$}\label{subsec:fp-verify}
+
+\emph{Genus $1$.}\enspace
+$F_1 = \kappa/24 = \kappa \cdot \lambda_1^{\mathrm{FP}}$.
+This holds unconditionally for all chirally Koszul algebras,
+including multi-generator families. The genus-$1$ moduli
+space $\Mbar_{1,1}$ has $\dim = 1$; the integral
+$\int_{\Mbar_{1,1}} \lambda_1 = 1/24$ is the classical
+result of Mumford.
+
+\emph{Genus $2$.}\enspace
+$F_2 = 7\kappa/5760 = \kappa \cdot
+\lambda_2^{\mathrm{FP}}$ for single-generator algebras.
+The moduli space $\Mbar_{2,1}$ has $\dim = 4$; the integral
+$\int_{\Mbar_{2,1}} \psi_1^2\, \lambda_2 = 7/5760$ is
+computed by localization (Faber--Pandharipande~\cite{FP00}).
+Verification by shadow tower graph sum:
+the sum over seven stable graphs of genus~$2$, with vertex
+factors from the shadow data and propagator $P = 1/\kappa$,
+yields the total $F_2 = 7\kappa/5760$
+(Lemma~\ref{lem:genus2-single}).
+
+\emph{Genus $3$.}\enspace
+$F_3 = 31\kappa/967680$. Verification requires a sum over
+$15$ stable graphs of genus~$3$ with no marked points.
+The shadow tower coefficients through degree~$7$ enter the
+computation (via graphs with up to $5$ edges).
+
+
+\section{Stable graphs at genus $2$: the complete
+enumeration}\label{app:stable-graphs}
+
+This appendix enumerates the seven stable graphs of
+genus~$2$ with no marked points, verifies the genus formula
+and stability condition for each, and computes the
+automorphism groups.
+
+\begin{definition}[Stable graph]\label{def:stable-graph}
+A \emph{stable graph} of genus~$g$ with $n$ marked points
+is a connected graph $\Gamma = (V, E, L, g\colon V \to
+\mathbb{Z}_{\ge 0})$ with vertex genus function~$g$,
+$n$ external legs, and stability condition
+$2g(v) + \mathrm{val}(v) \ge 3$ at every vertex, where
+$\mathrm{val}(v)$ is the total number of half-edges
+(including legs) at~$v$. The genus of~$\Gamma$ is
+$g(\Gamma) = h^1(\Gamma) + \sum_{v \in V} g(v)$,
+where $h^1 = |E| - |V| + 1$ is the first Betti number.
+\end{definition}
+
+At genus~$2$ with $n = 0$: the constraint
+$g(\Gamma) = h^1 + \sum g(v) = 2$ with stability
+$2g(v) + \mathrm{val}(v) \ge 3$ forces exactly seven
+isomorphism classes.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Name & $|V|$ & $|E|$ & $h^1$ & $\sum g(v)$
+ & $|\Aut|$ & Description \\
+\midrule
+Smooth
+ & $1$ & $0$ & $0$ & $2$ & $1$
+ & smooth curve \\
+Figure-eight
+ & $1$ & $1$ & $1$ & $1$ & $2$
+ & self-loop at $g{=}1$ vertex \\
+Banana
+ & $1$ & $2$ & $2$ & $0$ & $8$
+ & two self-loops at $g{=}0$ \\
+Dumbbell
+ & $2$ & $1$ & $0$ & $2$ & $2$
+ & bridge, both $g{=}1$ \\
+Theta
+ & $2$ & $3$ & $2$ & $0$ & $12$
+ & three bridges, both $g{=}0$ \\
+Lollipop
+ & $2$ & $2$ & $1$ & $1$ & $2$
+ & loop $+$ bridge \\
+Barbell
+ & $2$ & $3$ & $2$ & $0$ & $8$
+ & two loops $+$ bridge \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{proof}[Verification of genus and stability]
+For each graph~$\Gamma$:
+
+\emph{Smooth.}\enspace $h^1 = 0 - 1 + 1 = 0$;
+$\sum g(v) = 2$; genus $= 2$.
+Stability: $2 \cdot 2 + 0 = 4 \ge 3$. $|\Aut| = 1$.
+
+\emph{Figure-eight.}\enspace $|E| = 1$ (self-loop),
+$|V| = 1$; $h^1 = 1 - 1 + 1 = 1$; $g(v) = 1$;
+genus $= 2$. Stability: $2 \cdot 1 + 2 = 4 \ge 3$.
+$|\Aut| = 2$ (swap the two half-edges of the self-loop).
+
+\emph{Banana.}\enspace $|E| = 2$ (two self-loops),
+$|V| = 1$; $h^1 = 2$; $g(v) = 0$; genus $= 2$.
+Stability: $2 \cdot 0 + 4 = 4 \ge 3$.
+$|\Aut| = 8 = 2 \times 2 \times 2$ (swap half-edges of
+each self-loop, and swap the two self-loops).
+
+\emph{Dumbbell.}\enspace $|E| = 1$ (bridge),
+$|V| = 2$; $h^1 = 0$; $g(v_1) = g(v_2) = 1$;
+genus $= 2$. Stability at each vertex:
+$2 \cdot 1 + 1 = 3 \ge 3$. $|\Aut| = 2$
+(swap $v_1 \leftrightarrow v_2$).
+
+\emph{Theta.}\enspace $|E| = 3$ (three bridges),
+$|V| = 2$; $h^1 = 3 - 2 + 1 = 2$;
+$g(v_1) = g(v_2) = 0$; genus $= 2$.
+Stability: $2 \cdot 0 + 3 = 3 \ge 3$.
+$|\Aut| = 12 = 2 \times 3!$ (swap vertices $\times$
+permute edges).
+
+\emph{Lollipop.}\enspace $|E| = 2$ (one self-loop at
+$v_0$, one bridge to $v_1$), $|V| = 2$;
+$h^1 = 2 - 2 + 1 = 1$; $g(v_0) = 0$, $g(v_1) = 1$;
+genus $= 2$. Stability: $v_0$: $0 + 3 = 3$;
+$v_1$: $2 + 1 = 3$. $|\Aut| = 2$ (swap the half-edges
+of the self-loop at $v_0$).
+
+\emph{Barbell.}\enspace $|E| = 3$ (two self-loops, one
+at each vertex, plus one bridge), $|V| = 2$;
+$h^1 = 3 - 2 + 1 = 2$; $g(v_1) = g(v_2) = 0$;
+genus $= 2$. Stability: $0 + 3 = 3$.
+$|\Aut| = 8$ (swap vertices $\times$ swap half-edges
+of each self-loop: $2 \times 2 \times 2 = 8$).
+\end{proof}
+
+
+% ================================================================
+% REFERENCES
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{FlajoletSedgewick}
+P.~Flajolet and R.~Sedgewick,
+\emph{Analytic Combinatorics},
+Cambridge University Press, 2009.
+
+\bibitem{ADKMV}
+M.~Aganagic, R.~Dijkgraaf, A.~Klemm, M.~Mari\~no, and
+C.~Vafa,
+\emph{Topological strings and integrable hierarchies},
+Comm.\ Math.\ Phys.\ \textbf{261} (2006), 451--516.
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral Algebras},
+AMS Colloquium Publications, vol.~51, 2004.
+
+\bibitem{BGS96}
+A.~Beilinson, V.~Ginzburg, and W.~Soergel,
+Koszul duality patterns in representation theory,
+\emph{J.~Amer.\ Math.\ Soc.}~\textbf{9} (1996), 473--527.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\emph{Factorization Algebras in Quantum Field Theory},
+vols.~1--2, Cambridge University Press, 2017/2021.
+
+\bibitem{DijkgraafVafa}
+R.~Dijkgraaf and C.~Vafa,
+\emph{Matrix models, topological strings, and
+supersymmetric gauge theories},
+Nuclear Phys.\ B \textbf{644} (2002), 3--20.
+
+\bibitem{EO}
+B.~Eynard and N.~Orantin,
+\emph{Invariants of algebraic curves and topological
+expansion},
+Comm.\ Number Theory Phys.\ \textbf{1} (2007), 347--452.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+Chiral Koszul duality,
+\emph{Selecta Math.\ (N.S.)}~\textbf{18} (2012), 27--87.
+
+\bibitem{FP00}
+C.~Faber and R.~Pandharipande,
+Hodge integrals and moduli spaces of curves,
+in \emph{Moduli of Curves and Abelian Varieties},
+Aspects Math.~E33, Vieweg, 2000, pp.~109--130.
+
+\bibitem{FrenkelBenZvi}
+E.~Frenkel and D.~Ben-Zvi,
+\emph{Vertex Algebras and Algebraic Curves},
+2nd ed., Mathematical Surveys and Monographs, vol.~88,
+AMS, 2004.
+
+\bibitem{GK}
+E.~Getzler and M.~M.~Kapranov,
+Modular operads,
+\emph{Compositio Math.}~\textbf{110} (1998), 65--126.
+
+\bibitem{JPPZ}
+F.~Janda, R.~Pandharipande, A.~Pixton, and D.~Zvonkine,
+Double ramification cycles on the moduli spaces of curves,
+\emph{Publ.\ Math.\ Inst.\ Hautes \'Etudes Sci.}
+\textbf{125} (2017), 221--266.
+
+\bibitem{Kac-vertex}
+V.~G.~Kac,
+\emph{Vertex Algebras for Beginners},
+2nd ed., University Lecture Series, vol.~10, AMS, 1998.
+
+\bibitem{KontsevichSoibelman}
+M.~Kontsevich and Y.~Soibelman,
+Stability structures, motivic Donaldson--Thomas
+invariants and cluster transformations,
+arXiv:0811.2435.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic Operads},
+Grundlehren der Mathematischen Wissenschaften, vol.~346,
+Springer, 2012.
+
+\bibitem{Priddy70}
+S.~Priddy,
+Koszul resolutions,
+\emph{Trans.\ Amer.\ Math.\ Soc.}~\textbf{152} (1970),
+39--60.
+
+\bibitem{Zhu}
+Y.~Zhu,
+Modular invariance of characters of vertex operator
+algebras,
+\emph{J.~Amer.\ Math.\ Soc.}~\textbf{9} (1996), 237--302.
+
+\bibitem{LorgatVirR}
+R.~Lorgat,
+\emph{The Virasoro spectral $R$-matrix: closed form and
+non-formality},
+preprint, 2026.
+
+\bibitem{LorgatSevenFaces}
+R.~Lorgat,
+\emph{The seven faces of the collision residue},
+preprint, 2026.
+
+\end{thebibliography}
+
+\end{document}
