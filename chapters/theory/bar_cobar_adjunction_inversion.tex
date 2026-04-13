@@ -19,25 +19,20 @@ geometry of the Fulton--MacPherson compactification and the
 Koszulness of the underlying chiral operad.
 
 Theorem~B (Theorem~\ref{thm:bar-cobar-inversion-qi}) gives the
-answer: on the Koszul locus
+answer in two layers: on the Koszul locus
 (Definition~\ref{def:koszul-locus}), the counit~$\psi$ is a
 quasi-isomorphism of chiral algebras, genus by genus and in
 the $\hbar$-adic completion
-(Theorem~\ref{thm:genus-graded-convergence}). The proof uses
-a strict bar-cobar spectral sequence whose $E_2$~collapse, forced by the Koszul
-property (Theorem~\ref{thm:spectral-sequence-collapse}),
-reduces the quasi-isomorphism to a finite verification at each
-bar degree. Off the Koszul locus this strict argument stops.
-What survives on the proved surface is the intrinsic
-completed/coderived comparison: curved-central algebras via
-$I$-adic completion, filtered-complete algebras via the
-coderived/contraderived bar-coalgebra comparison of
-Theorem~\ref{thm:positselski-chiral-proved}
-\textup{(}cf.\ Gui--Li--Zeng~\cite{GLZ22}\textup{)}, and programmatic
-algebras ($\mathcal{W}_\infty$, $\mathcal{W}_{1+\infty}$) via
-the strong completion-tower theorem
-(Theorem~\ref{thm:completed-bar-cobar-strong}). The regime
-hierarchy (Convention~\ref{conv:regime-tags}) organizes these
+(Theorem~\ref{thm:genus-graded-convergence}); off the Koszul locus,
+the same counit remains invertible in the coderived
+bar-coalgebra category, and promotion back to ordinary chain
+cohomology requires an extra collapse input. The strict proof uses
+the square-zero bar-cobar spectral sequence only on the Koszul lane.
+The curved proof uses the coderived bar-degree filtration: the
+curvature term lies in positive filtration, so the
+associated-graded $E_1$ page is strict, while coacyclicity of the
+cone records the actual inversion statement. The regime hierarchy
+(Convention~\ref{conv:regime-tags}) organizes these
 four cases.
 
 \section{Non-quadratic chiral algebras}
@@ -1604,67 +1599,96 @@ ordinary derived category, and the inversion theorem is a
 quasi-isomorphism in the classical sense; at genus~$g \geq 1$
 the curvature forces passage to the coderived setting, and the
 inversion theorem becomes a statement about coderived equivalences.
-We now prove the central result of this chapter.
+The central result of this chapter is the following.
 
 \subsection{Statement of the main result}
 
-\begin{theorem}[Bar-cobar inversion is quasi-isomorphism; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-qi}
-\textup{[Regime: quadratic at genus~$0$; curved-central at genus~$g \geq 1$
-on the Koszul locus
+\begin{theorem}[Bar-cobar inversion: strict on the Koszul locus, coderived off it; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-qi}
+\textup{[Regime: quadratic on the strict lane; curved-central and
+filtered-complete on the coderived lane
 \textup{(}cf.\ Convention~\textup{\ref{conv:regime-tags})}.]}
 
 The Heisenberg inversion $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}) generalizes to all Koszul chiral algebras.
 
-Let $\mathcal{A}$ be a \emph{Koszul} chiral algebra on a Riemann surface $X$
-(Definition~\ref{def:koszul-chiral-algebra};
-equivalently, $\cA \in \operatorname{Kosz}(X)$;
-this excludes simple admissible-level quotients and minimal-model
-central charges; see Scope below), with
-$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ conilpotent or $\mathcal{A}$ complete
-with respect to its augmentation ideal
-\textup{(}\S\ref{sec:i-adic-completion}\textup{)}. Then the genus-$0$
-counit
+Let $\mathcal{A}$ be a complete augmented chiral algebra on a
+Riemann surface~$X$, with
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ conilpotent or $\mathcal{A}$
+complete with respect to its augmentation ideal
+\textup{(}\S\ref{sec:i-adic-completion}\textup{)}, and with
+finite-dimensional graded bar pieces whenever the coderived clause
+below is invoked. The bar-cobar counit
 \[
-\psi_0: \Omega_0(\bar{B}_0(\mathcal{A})) \longrightarrow \mathcal{A}
+\psi \colon \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}
 \]
-is a quasi-isomorphism of chiral algebras.
-
-If, in addition, $\mathcal{A}$ satisfies axiom~\ref{MK:modular}
-\textup{(}Definition~\ref{def:modular-koszul-chiral}\textup{)}, or lies in the
-standard landscape covered by
-Theorems~\ref{thm:pbw-allgenera-km}--\ref{thm:pbw-allgenera-principal-w},
-then the natural genus-graded map
-\[\psi: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
-induced by the bar-cobar adjunction is a quasi-isomorphism of
-\emph{chiral algebras}: a morphism whose linear component induces an
-isomorphism on cohomology and whose higher components intertwine all
-$A_\infty$ operations up to coherent homotopy
-\textup{(}Remark~\textup{\ref{rem:qi-vs-homology-iso})}.
-
-More precisely:
+is the adjunction counit and hence a canonical morphism of chiral
+algebras. Its strongest proved form is:
 \begin{enumerate}
-\item The map $\psi$ is a morphism of chiral algebras (respects all structure)
+\item \emph{Strict Koszul lane.}
+ If $\mathcal{A}$ is Koszul
+ \textup{(}Definition~\ref{def:koszul-chiral-algebra}; equivalently,
+ $\cA \in \operatorname{Kosz}(X)$\textup{)}, then the genus-$0$
+ counit
+ \[
+ \psi_0 \colon \Omega_0(\bar{B}_0(\mathcal{A})) \longrightarrow \mathcal{A}
+ \]
+ is a quasi-isomorphism of chiral algebras.
+ If, in addition, $\mathcal{A}$ lies on the higher-genus Koszul locus
+ of Theorem~\ref{thm:higher-genus-inversion}
+ \textup{(}for the standard landscape, by
+ Theorems~\ref{thm:pbw-allgenera-km}--\ref{thm:pbw-allgenera-principal-w}\textup{)},
+ then each genus component
+ \[
+ \psi_g \colon \Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow \mathcal{A}_g
+ \]
+ and the completed series
+ \[
+ \psi = \sum_{g=0}^\infty \hbar^{2g-2}\psi_g
+ \]
+ are quasi-isomorphisms.
 
-\item For each genus $g \geq 1$, the genus-$g$ component:
- \[\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow \mathcal{A}_g\]
- is a quasi-isomorphism
+\item \emph{Coderived off-Koszul lane.}
+ For arbitrary complete augmented $\mathcal{A}$ with
+ finite-dimensional graded bar pieces, the factorization counit
+ \[
+ \psi_X \colon \Omega_X \barB_X(\mathcal{A}) \longrightarrow \mathcal{A}
+ \]
+ is a coacyclic-equivalence: its cone
+ \[
+ K_\psi :=
+ \operatorname{cone}\!\bigl(\Omega_X \barB_X(\mathcal{A}) \to \mathcal{A}\bigr)
+ \]
+ is coacyclic. Equivalently, $\psi_X$ is an isomorphism in
+ $D^{\mathrm{co}}(\barB\text{-}\mathrm{CoFact})$, without any
+ Koszulness hypothesis.
 
-\item The full genus-graded map:
- \[\psi = \sum_{g=0}^\infty \hbar^{2g-2}\psi_g: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
- converges and is a quasi-isomorphism in the $\hbar$-adic completion
+\item \emph{Coderived bar-degree filtration.}
+ On the curved cone $K_\psi$, the bar-degree filtration yields the
+ coderived spectral sequence of
+ Proposition~\ref{prop:coderived-bar-degree-spectral-sequence}. Its
+ $E_1$ page is computed from the strict associated-graded differential
+ $\operatorname{gr}^0 d$; the curvature relation
+ $\dfib^{\,2} = \kappa(\mathcal{A}) \cdot \omega_g$ is absorbed into
+ positive filtration and does not obstruct the $E_1$ page.
+ On the square-zero Koszul lane this reduces to
+ Theorems~\ref{thm:bar-cobar-spectral-sequence}
+ and~\ref{thm:spectral-sequence-collapse}.
 
-\item There exists a spectral sequence converging to
- $H^\bullet(\Omega(\bar{B}(\mathcal{A})))$
- with $E_1$-page given by the bar-cobar complex; it collapses at $E_2$
- by the Koszul property (Theorem~\ref{thm:spectral-sequence-collapse})
+\item \emph{Promotion back to ordinary quasi-isomorphism.}
+ If $\kappa(\mathcal{A}) = 0$, or more generally if the coderived
+ bar-degree spectral sequence degenerates to ordinary cohomology on
+ the relevant off-Koszul locus
+ \textup{(}the class~$G/L$ collapse input\textup{)}, then the
+ coderived equivalence of~(2) upgrades to a chain-level
+ quasi-isomorphism. Outside those collapse loci this theorem does not
+ assert an ordinary quasi-isomorphism.
 \end{enumerate}
 
 \smallskip\noindent\emph{Scope.}
 The Koszul hypothesis is essential: for simple admissible affine
 quotients and minimal-model Virasoro/W-algebras the PBW/Shapovalov
-argument is unavailable, the bar spectral sequence can carry extra
-higher-differential data, and this chapter does \emph{not} claim that
-the counit $\psi$ is a quasi-isomorphism there
+argument is unavailable, the square-zero bar spectral sequence can
+carry extra higher-differential data, and this chapter does
+\emph{not} claim that the counit $\psi$ is a quasi-isomorphism there
 \textup{(}see Remark~\ref{rem:sl2-admissible}
 and~\ref{rem:virasoro-module-koszul-minimal}\textup{)}. In those regimes one must work
 with the completed correspondence of
@@ -1672,8 +1696,8 @@ Corollary~\ref{cor:bar-cobar-inverse} and the intrinsic
 coderived/contraderived bar-coalgebra comparison of
 Theorems~\ref{thm:positselski-chiral-proved}
 and~\ref{thm:full-derived-module-equiv-proved}; this theorem
-does not assert that the ordinary counit $\psi$ is a
-quasi-isomorphism there.
+asserts the coderived statement of~(2), and isolates in~(4) the extra
+input needed to recover an ordinary quasi-isomorphism there.
 \end{theorem}
 
 
@@ -1686,8 +1710,8 @@ at the admissible level $k = -1/2$ for $\widehat{\mathfrak{sl}}_2$
 (here $h^\vee = 2$, so $k + h^\vee = 3/2$; the admissible
 parametrization is $k = -h^\vee + p/q$ with $p = 3$, $q = 2$).
 This algebra is excluded from the Koszul locus of
-Theorem~\ref{thm:bar-cobar-inversion-qi}, and we now explain the
-concrete mechanism by which bar-cobar inversion fails.
+Theorem~\ref{thm:bar-cobar-inversion-qi}; the concrete mechanism by
+which bar-cobar inversion fails is the following.
 
 \emph{Singular vector in the bar-relevant range.}
 The vacuum Verma module $M(k\Lambda_0)$ at $k = -1/2$ has a
@@ -1715,9 +1739,9 @@ null vector at weight~$4$ generates an off-diagonal class that
 persists in $H^\bullet(\bar{B}^{\mathrm{ch}})$.
 
 \emph{Spectral sequence non-collapse.}
-The bar-cobar spectral sequence of
-Theorem~\ref{thm:bar-cobar-inversion-qi}(4)
-(Theorem~\ref{thm:spectral-sequence-collapse}) relies on
+The square-zero bar-cobar spectral sequence of
+Theorems~\ref{thm:bar-cobar-spectral-sequence}
+and~\ref{thm:spectral-sequence-collapse} relies on
 Koszul-diagonal concentration for its $E_2$ collapse. The
 off-diagonal class at weight~$4$ supports a non-trivial higher
 differential, so the spectral sequence does not collapse at $E_2$.
@@ -1761,9 +1785,10 @@ A stronger expectation is that the bar cohomology is concentrated in
 degrees $\{1, 2\}$, making $L_{-1/2}(\mathfrak{sl}_2)$ a
 \emph{$2$-Koszul} (or \emph{$N$-Koszul} with $N = 2$) chiral algebra
 in the sense of Berger~\cite{Berger01}:
-the bar-cobar spectral sequence
-(Theorem~\ref{thm:bar-cobar-inversion-qi}(4)) collapses at a finite
-page~$E_N$ rather than at~$E_2$.
+the square-zero bar-cobar spectral sequence
+\textup{(}Theorems~\ref{thm:bar-cobar-spectral-sequence}
+and~\ref{thm:spectral-sequence-collapse}\textup{)} collapses at a
+finite page~$E_N$ rather than at~$E_2$.
 
 This is consistent with the representation-theoretic structure.
 The category $\mathrm{KL}_{-1/2}(\mathfrak{sl}_2)$ has exactly two
@@ -1780,40 +1805,54 @@ non-Koszul (critical level, no finite collapse).
 \end{remark}
 
 \begin{proof}[Dependency-closed proof]
-We verify each numbered clause by previously established results in this chapter.
+We verify each numbered clause by previously established results in
+this chapter and in the coderived appendix.
 \begin{enumerate}[label=(D\arabic*)]
-\item \emph{Morphism of chiral algebras.}
-The map $\psi$ is the counit of the bar-cobar adjunction
-(the right adjoint of the unit map of Theorem~\ref{thm:bar-cobar-adjunction}); therefore it is canonical and respects
-the algebraic structure by functoriality of bar and cobar
-(Theorem~\ref{thm:bar-functorial}; functoriality of cobar is the formal dual).
-
-\item \emph{Genuswise quasi-isomorphism.}
-The genus-$0$ base case is proved independently by
+\item \emph{Strict Koszul lane.}
+The genus-$0$ quasi-isomorphism is proved independently by
 Theorem~\ref{thm:bar-nilpotency-complete} and
 Theorem~\ref{thm:chiral-koszul-duality};
 equivalently, it is the implication
 \ref{ftm:koszul}$\Rightarrow$\ref{ftm:counit} of
 the fundamental theorem of chiral twisting morphisms
 (Theorem~\ref{thm:fundamental-twisting-morphisms}).
-Under axiom~\ref{MK:modular}, the genus-$g$ components $\psi_g$ for
-$g \geq 1$ are quasi-isomorphisms by induction on genus via
-Theorem~\ref{thm:genus-graded-convergence}, item~(2), together with the
-higher-genus inversion package (Theorem~\ref{thm:higher-genus-inversion}).
+Under the higher-genus hypotheses of
+Theorem~\ref{thm:higher-genus-inversion}, the genus-$g$ components
+$\psi_g$ for $g \geq 1$ are quasi-isomorphisms by induction on genus,
+and Theorem~\ref{thm:genus-graded-convergence} supplies the completed
+series statement.
 
-\item \emph{Full genus-graded convergence and quasi-isomorphism.}
-Under the same higher-genus hypothesis, this is
-Theorem~\ref{thm:genus-graded-convergence}, item~(3), which identifies
-the completed genus series $\psi=\sum_{g\ge 0}\hbar^{2g-2}\psi_g$ and
-proves convergence.
+\item \emph{Coderived off-Koszul lane.}
+Theorem~\ref{thm:off-koszul-ran-inversion} proves that the
+factorization counit $\psi_X$ is an isomorphism in the coderived
+category for every complete augmented input with finite-dimensional
+graded bar pieces. Its proof is independent of
+Theorem~\ref{thm:higher-genus-inversion}: it identifies the cone of
+$\psi_X$ as coacyclic by stratified Positselski inversion and the
+Verdier-quotient criterion for
+$D^{\mathrm{co}}(\barB\text{-}\mathrm{CoFact})$.
 
-\item \emph{Spectral sequence statement.}
-Existence and explicit page description are exactly
-Theorem~\ref{thm:bar-cobar-spectral-sequence}; collapse for Koszul input is
-Theorem~\ref{thm:spectral-sequence-collapse}.
+\item \emph{Coderived bar-degree filtration.}
+On the strict square-zero surface, existence and collapse are exactly
+Theorems~\ref{thm:bar-cobar-spectral-sequence}
+and~\ref{thm:spectral-sequence-collapse}. On the curved surface,
+Proposition~\ref{prop:coderived-bar-degree-spectral-sequence}
+replaces ordinary abutment by coacyclicity of the cone: the
+associated-graded $E_1$ page is strict because the curvature term lies
+in positive filtration.
+
+\item \emph{Promotion lane.}
+If $\kappa(\mathcal{A}) = 0$, then the curved differential becomes
+square-zero, so Theorem~\ref{thm:conilpotent-reduction} identifies the
+coderived and ordinary derived categories and the coderived
+equivalence of~(D2) is an ordinary quasi-isomorphism. More generally,
+any class~$G/L$ collapse input for the coderived bar-degree spectral
+sequence turns coacyclicity of the cone into acyclicity, hence into an
+ordinary quasi-isomorphism. This is the exact extra hypothesis isolated
+in clause~(4).
 \end{enumerate}
-Combining (D1)--(D4) gives the genus-$0$ clause unconditionally and the
-higher-genus clauses under axiom~\ref{MK:modular}.
+Combining (D1)--(D4) gives the strongest proved package stated in the
+theorem.
 \end{proof}
 
 \begin{conjecture}[Derived Koszul wall; \ClaimStatusConjectured]
@@ -2124,11 +2163,13 @@ completed/corrected model whose total differential squares to zero.
 They do \emph{not} apply to the curved fiberwise higher-genus
 differential $\dfib$ with
 $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$. Off the Koszul locus, the
-proved replacement in this file is the intrinsic
-coderived/contraderived bar-coalgebra comparison of
-Theorem~\ref{thm:positselski-chiral-proved}, with ordinary derived
-reduction only on the flat finite-type completed-dual loci of
-Theorem~\ref{thm:full-derived-module-equiv-proved}.
+proved replacement is the coderived bar-degree filtration of
+Proposition~\ref{prop:coderived-bar-degree-spectral-sequence},
+together with the intrinsic coderived/contraderived bar-coalgebra
+comparison of Theorem~\ref{thm:positselski-chiral-proved}. Ordinary
+derived reduction remains available only on the flat finite-type
+completed-dual loci of Theorem~\ref{thm:full-derived-module-equiv-proved}
+or when the curvature collapses.
 \end{remark}
 
 \subsection{Convergence at all genera}
@@ -2137,7 +2178,8 @@ Theorem~\ref{thm:full-derived-module-equiv-proved}.
 \textup{[Regime: curved-central on the Koszul locus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Let $\mathcal{A}$ be a Koszul chiral algebra satisfying the hypotheses of
+Let $\mathcal{A}$ be a Koszul chiral algebra satisfying the strict
+Koszul-lane hypotheses of
 Theorem~\ref{thm:bar-cobar-inversion-qi}. The bar-cobar inversion
 $\psi: \Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$
 converges at each genus $g$, and the full genus-graded sum converges in the

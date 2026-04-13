@@ -72,8 +72,8 @@ produces false statements.
 \item \emph{Verdier duality on $\operatorname{Ran}(X)$}
  (Theorem~A, Convention~\ref{conv:bar-coalgebra-identity}):
  \[\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \;\simeq\;
- \barB(\cA^!)\qquad
- \text{(gives the Koszul dual's bar coalgebra)}.\]
+ (\cA)^!_\infty\qquad
+ \text{(gives the homotopy Koszul dual factorization algebra)}.\]
 \item \emph{Chiral derived centre / Hochschild cochains}
  (Theorem~H):
  \[Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
@@ -83,13 +83,14 @@ produces false statements.
 \emph{Cobar is the inverse, not the dual.} Throughout this
 chapter $\Omegach$ denotes the bar-cobar inverse functor of
 (i); it recovers the algebra from its bar coalgebra. The
-Koszul dual $\cA^!$ is obtained by Verdier duality on
-$\operatorname{Ran}(X)$, which is a \emph{different} operation on
-$\barB(\cA)$. A statement such as
+homotopy Koszul dual factorization algebra $\cA^!_\infty$ is obtained by
+Verdier duality on $\operatorname{Ran}(X)$, and on the Koszul locus
+Theorem~A identifies $\cA^!_\infty \simeq \cA^!$. This is a
+\emph{different} operation on $\barB(\cA)$. A statement such as
 ``the cobar of the bar gives the Koszul dual''
 is false; the correct statement is
 ``the cobar of the bar gives $\cA$, and Verdier duality of the bar
-gives the bar of the Koszul dual.''
+gives the homotopy Koszul dual factorization algebra.''
 \end{remark}
 
 \begin{remark}[Which bar complex does the cobar invert?]
@@ -1344,8 +1345,12 @@ open configuration space
 = -\langle \omega, d_{\text{cobar}}K \rangle$ (graded Leibniz rule)
 \item \emph{Residue-distribution duality:} $\langle \text{Res}_{D}[\omega], 
 \delta_D \rangle = 1$ for any divisor $D$
-\item \emph{Verdier duality:} The perfect pairing realizes $\Omega^{\text{ch}}(\mathcal{A}^!)
- \simeq \mathbb{D}(\bar{B}^{\text{ch}}(\mathcal{A}))$ as factorization algebras
+\item \emph{Verdier duality:} The perfect pairing realizes
+\[
+\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\text{ch}}(\mathcal{A}))
+\;\simeq\; (\mathcal{A})^!_\infty
+\]
+as factorization algebras on $\operatorname{Ran}(X)$
 \end{enumerate}
 \end{theorem}
 
@@ -1415,10 +1420,15 @@ The pairing between residues and delta functions is therefore exact.
 
 \emph{Step 4: Verdier duality realization}
 
-The pairing establishes an isomorphism:
-\[\Omega^{\text{ch}}(\mathcal{A}^!) \xrightarrow{\sim} \mathbb{D}(\bar{B}^{\text{ch}}(\mathcal{A}))\]
+The pairing establishes an isomorphism of factorization algebras on
+$\operatorname{Ran}(X)$:
+\[
+\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\text{ch}}(\mathcal{A}))
+\xrightarrow{\sim} (\mathcal{A})^!_\infty
+\]
 
-where $\mathbb{D}$ is the Verdier dualizing functor.
+where $(\mathcal{A})^!_\infty$ denotes the homotopy Koszul dual factorization
+algebra of Theorem~A.
 
 \emph{Non-degeneracy.}
 At bar degree~$n = 1$, Step~3 establishes the fundamental pairing
@@ -2029,10 +2039,13 @@ The bar and cobar constructions are related by the Verdier
 intertwining of Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}:
 \[
 \mathbb{D}_{\operatorname{Ran}}\bigl(\bar{B}^{\mathrm{ch}}(\cA)\bigr)
-\;\simeq\; \bar{B}^{\mathrm{ch}}(\cA^!),
+\;\simeq\; (\cA)^!_\infty,
 \]
 where $\mathbb{D}_{\operatorname{Ran}}$ denotes Verdier duality on
-$\operatorname{Ran}(X)$ and $\cA^!$ is the Koszul dual algebra.
+$\operatorname{Ran}(X)$ and $(\cA)^!_\infty$ is the homotopy Koszul
+dual factorization algebra. On the Koszul locus,
+Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}} identifies
+$(\cA)^!_\infty \simeq \cA^!$.
 The cobar construction $\Omega^{\mathrm{ch}}$ is the \emph{inverse},
 not the dual: $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
 \simeq \cA$ on the Koszul locus
@@ -2202,7 +2215,8 @@ The critical level is the fixed point of the level-shifting involution $k \mapst
 % duality D_Ran on the bar coalgebra (Theorem A intertwining), NOT bar-cobar
 % inversion (Theorem B). Bar-cobar inversion recovers the original algebra:
 % Omega(B(g_k)) ~ g_k. The level-shifted algebra arises from
-% D_Ran(B(g_k)) ~ B(g_{k'}) with k' = -k-2h^v. The proof below correctly
+% D_Ran(B(g_k)) ~ (g_k)^!_infty ~ g_{k'} as factorization algebras, with
+% k' = -k-2h^v. The proof below correctly
 % invokes Theorem A and Convention conv:bar-coalgebra-identity. Verified.
 For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$,
 the Verdier intertwining
@@ -2214,7 +2228,9 @@ Proposition~\ref{prop:km-bar-curvature} gives
 \mathbb{D}_{\operatorname{Ran}}\bigl(
  \bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr)
 \;\simeq\;
-\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{k'}),
+\bigl(\widehat{\mathfrak{g}}_k\bigr)^!_\infty
+\;\simeq\;
+\widehat{\mathfrak{g}}_{k'},
 \qquad k' = -k - 2h^\vee.
 \end{equation}
 Bar-cobar \emph{inversion} recovers the original algebra:
@@ -2238,8 +2254,9 @@ The Verdier intertwining
 (Theorem~\ref{thm:bar-cobar-isomorphism-main},
 Convention~\ref{conv:bar-coalgebra-identity}) identifies
 $\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\mathrm{ch}}(\cA))
-\simeq \bar{B}^{\mathrm{ch}}(\cA^!)$ for any chiral algebra
-$\cA$. For $\cA = \widehat{\mathfrak{g}}_k$, the Koszul dual
+\simeq (\cA)^!_\infty$ for any chiral algebra $\cA$, and on the
+Koszul locus $(\cA)^!_\infty \simeq \cA^!$. For
+$\cA = \widehat{\mathfrak{g}}_k$, the Koszul dual
 is $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with
 $k' = -k - 2h^\vee$: Verdier duality on Ran negates the
 curvature element, sending

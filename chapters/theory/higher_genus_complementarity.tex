@@ -41,11 +41,19 @@ Theorem~C decomposes into three layers
 with distinct logical statuses.
 \begin{enumerate}[label=\textup{(C\arabic*)},start=0]
 \item \emph{Fiber--center identification
- \textup{(}unconditional on the Koszul locus\textup{)}.}\;
- For every chiral algebra~$\cA$ carrying a modular pre-Koszul datum
- with finite-dimensional fiber cohomology, the relative bar family
- satisfies $R^q\pi_{g*}\bar{B}^{(g)}(\cA) = 0$ for $q \neq 0$,
- with $R^0\pi_{g*}\bar{B}^{(g)}(\cA) \cong \mathcal{Z}_{\cA}$
+ \textup{(}unconditional in coderived form on the Koszul locus\textup{)}.}\;
+ For every chiral algebra~$\cA$ carrying a modular pre-Koszul datum,
+ the curved fiber bar family
+ $(\barB^{(g)}(\cA),\dfib)$ determines a well-defined coderived
+ object and is read through its strict flat comparison model
+ $(\barB^{(g)}(\cA),\Dg{g})$
+ \textup{(}Proposition~\textup{\ref{prop:gauss-manin-uncurving-chain}}\textup{)}.
+ On the flat perfect locus, and in particular when
+ $\kappa(\cA)=0$, the ordinary derived pushforward satisfies
+ $\mathcal{H}^q(R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)) = 0$
+ for $q \neq 0$, with
+ $\mathcal{H}^0(R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA))
+ \cong \mathcal{Z}_{\cA}$
  \textup{(}Theorem~\textup{\ref{thm:fiber-center-identification})}.
  This produces the ambient complex on which~\textup{(C1)}
  and~\textup{(C2)} operate.
@@ -71,8 +79,8 @@ $Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$ are the eigenspaces of
 
 \item \emph{Shifted-symplectic Lagrangian upgrade
  \textup{(}conditional on perfectness and nondegeneracy\textup{)}.}\;
- When the relative bar family
- $R\pi_{g*}\barB^{(g)}(\cA)$ is perfect
+ When the strict flat relative bar family
+ $R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA)$ is perfect
  \textup{(}Lemma~\textup{\ref{lem:perfectness-criterion})} and the
  Verdier pairing $\langle -,- \rangle_{\mathbb{D}}$ on the ambient
  complex $\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,
@@ -89,13 +97,15 @@ $Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$ are the eigenspaces of
 \end{enumerate}
 The conditionality in~(C2) is substantive:
 perfectness requires PBW filterability and finite-dimensional
-fiber cohomology (Lemma~\ref{lem:perfectness-criterion}), and
+flat fiber cohomology (Lemma~\ref{lem:perfectness-criterion}), and
 nondegeneracy of the Verdier pairing is a hypothesis verified
 family by family
 (Proposition~\ref{prop:standard-examples-modular-koszul}).
-The fiber--center identification~(C0) and the
-S-level decomposition~(C1) hold unconditionally on the
-Koszul locus; the H-level Lagrangian upgrade~(C2) is the
+The fiber--center identification~(C0) holds unconditionally in
+coderived form on the Koszul locus, and its ordinary-derived
+realization holds on the flat perfect locus; the
+S-level decomposition~(C1) is read on that strict flat
+representative; the H-level Lagrangian upgrade~(C2) is the
 geometric content of the nonlinear theory.
 
 \begin{remark}[Calabi--Yau exchange and the perfectness hypothesis]
@@ -275,7 +285,7 @@ differential~$\dfib$
 \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})}.
 \end{definition}
 
-\begin{lemma}[Perfectness criterion for the relative bar family;
+\begin{lemma}[Perfectness criterion for the strict flat relative bar family;
 \ClaimStatusProvedHere]
 \label{lem:perfectness-criterion}
 \index{perfectness criterion|textbf}
@@ -283,6 +293,14 @@ differential~$\dfib$
 Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth projective
 curve~$X$, carrying a modular pre-Koszul datum
 \textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
+Write
+\[
+\barB^{(g)}_{\mathrm{flat}}(\cA)
+\;:=\;
+\bigl(\barB^{(g)}(\cA), \Dg{g}\bigr)
+\]
+for the strict flat comparison family of
+Convention~\textup{\ref{conv:higher-genus-differentials}}.
 Suppose the following two conditions hold:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{PBW filterability.}
@@ -294,15 +312,15 @@ Suppose the following two conditions hold:
  \textup{MK3} of
  Definition~\textup{\ref{def:modular-koszul-chiral})}.
 
-\item \emph{Finite-dimensional fiber cohomology.}
+\item \emph{Finite-dimensional flat fiber cohomology.}
  For each closed point
  $[\Sigma] \in \overline{\mathcal{M}}_g$,
  $\dim_\mathbb{C} H^n\bigl(
- \bar{B}^{(g)}(\cA)\big|_\Sigma\bigr)
+ \bar{B}^{(g)}_{\mathrm{flat}}(\cA)\big|_\Sigma\bigr)
  < \infty$ for all~$n$.
 \end{enumerate}
 Then the derived pushforward
-$R\pi_{g*}\bar{B}^{(g)}(\cA)$ is a perfect complex on
+$R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is a perfect complex on
 $\overline{\mathcal{M}}_g$.
 \end{lemma}
 
@@ -313,25 +331,24 @@ The argument has three steps.
 The PBW filtration~$F_\bullet$ is flat over the base
 $\overline{\mathcal{M}}_g$ (it is a bar-degree filtration,
 hence defined fiber-by-fiber by the combinatorial bar grading).
-At the associated graded level the fiberwise
-curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ vanishes
-(it sits in positive filtration degree), so
+At the associated graded level the quantum correction terms in
+$\Dg{g}$ sit in positive filtration degree, so
 $\operatorname{gr}_F$ carries only the genus-$0$
 differential~$\dzero$. By Koszul acyclicity~(i), the
 cohomology of $\operatorname{gr}_F$ is concentrated in total
 degree~$0$, giving a uniform vanishing range
-$H^q(\operatorname{gr}_F\bar{B}^{(g)}(\cA)\big|_\Sigma) = 0$
+$H^q(\operatorname{gr}_F\bar{B}^{(g)}_{\mathrm{flat}}(\cA)\big|_\Sigma) = 0$
 for $q \neq 0$ at every point of the base.
 
 \emph{Step~2: Transfer to the filtered complex.}
 The bar-degree filtration spectral sequence
 $E_1^{p,q} =
-H^q(\operatorname{gr}_p\bar{B}^{(g)}(\cA)\big|_\Sigma)$
+H^q(\operatorname{gr}_p\bar{B}^{(g)}_{\mathrm{flat}}(\cA)\big|_\Sigma)$
 has $E_1^{p,q} = 0$ for $q \neq 0$ by Step~1. All higher
 differentials $d_r$ ($r \geq 2$) therefore vanish (they map into
 or out of the zero row), and the spectral sequence collapses at
 $E_2$ with $E_\infty^{p,0} = E_2^{p,0}$. In particular, the
-full fiber complex $\bar{B}^{(g)}(\cA)\big|_\Sigma$ has
+full flat fiber complex $\bar{B}^{(g)}_{\mathrm{flat}}(\cA)\big|_\Sigma$ has
 cohomology concentrated in degree~$0$ for every~$\Sigma$.
 The uniform vanishing range $q \neq 0$ is independent
 of~$[\Sigma]$.
@@ -340,12 +357,14 @@ of~$[\Sigma]$.
 The family
 $\pi_g\colon \mathcal{C}_g(\cA) \to \overline{\mathcal{M}}_g$
 is a proper morphism of finite type. By Steps~1--2, the fiber
-cohomology sheaves $R^q\pi_{g*}\bar{B}^{(g)}(\cA)$ vanish for
-$q \neq 0$ uniformly over the base, and the surviving $R^0$ has
+cohomology sheaves
+$\mathcal{H}^q(R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA))$ vanish for
+$q \neq 0$ uniformly over the base, and the surviving
+degree-$0$ cohomology sheaf has
 finite-dimensional fibers by hypothesis~(ii). The standard
 cohomology and base change theorem
 (EGA~III, Th\'eor\`eme~7.7.5)
-then gives that $R\pi_{g*}\bar{B}^{(g)}(\cA)$ is a perfect
+then gives that $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is a perfect
 complex (bounded, with coherent cohomology sheaves) on
 $\overline{\mathcal{M}}_g$.
 \end{proof}
@@ -358,48 +377,92 @@ $\overline{\mathcal{M}}_g$.
 
 \smallskip\noindent
 Assume $\cA$ carries a modular pre-Koszul datum
-\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
-with finite-dimensional fiber cohomology, so that the relative bar
-family $R\pi_{g*}\bar{B}^{(g)}(\cA)$ is perfect over
-$\overline{\mathcal{M}}_g$
-\textup{(}Lemma~\textup{\ref{lem:perfectness-criterion})}.
-Then:
-\begin{equation}\label{eq:fiber-center}
-R^q\pi_{g*}\bar{B}^{(g)}(\cA) = 0
-\quad\text{for } q \neq 0,
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
+Write
+\[
+\barB^{(g)}_{\mathrm{curv}}(\cA)
+\;:=\;
+\bigl(\barB^{(g)}(\cA), \dfib\bigr),
 \qquad
-R^0\pi_{g*}\bar{B}^{(g)}(\cA)
-\;\cong\; \mathcal{Z}_{\cA}
-\end{equation}
-as local systems/sheaves on $\overline{\mathcal{M}}_g$,
-where $\mathcal{Z}_{\cA}$ is the center local system.
+\barB^{(g)}_{\mathrm{flat}}(\cA)
+\;:=\;
+\bigl(\barB^{(g)}(\cA), \Dg{g}\bigr)
+\]
+for the curved fiberwise and strict flat genus-$g$ bar models.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Coderived form.}\;
+ The curved fiber model
+ $\barB^{(g)}_{\mathrm{curv}}(\cA)$ determines a well-defined
+ coderived object. Proposition~\textup{\ref{prop:gauss-manin-uncurving-chain}}
+ supplies its strict flat comparison representative
+ $\barB^{(g)}_{\mathrm{flat}}(\cA)$.
+
+\item \emph{Ordinary-derived realization on the flat perfect locus.}\;
+ If $R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA)$ is perfect over
+ $\overline{\mathcal{M}}_g$
+ \textup{(}Lemma~\textup{\ref{lem:perfectness-criterion})},
+ then
+ \begin{equation}\label{eq:fiber-center}
+ \mathcal{H}^q\!\bigl(
+ R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)\bigr) = 0
+ \quad\text{for } q \neq 0,
+ \qquad
+ \mathcal{H}^0\!\bigl(
+ R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)\bigr)
+ \;\cong\; \mathcal{Z}_{\cA}
+ \end{equation}
+ as sheaves on $\overline{\mathcal{M}}_g$, where
+ $\mathcal{Z}_{\cA}$ is the center local system.
+
+\item \emph{Zero-curvature recovery.}\;
+ If $\kappa(\cA)=0$, then $\dfib^{\,2}=0$, so the curved fiber model
+ is itself an ordinary complex. In that case the conclusion of
+ \textup{(ii)} may be read directly on
+ $\barB^{(g)}_{\mathrm{curv}}(\cA)$.
+\end{enumerate}
+In particular, $\mathrm{C}_0$ holds unconditionally in coderived
+form, and its ordinary-cohomology manifestation holds on the flat
+perfect locus, with the original fiberwise reading recovered when
+$\kappa(\cA)=0$.
 \end{theorem}
 
 \begin{proof}
 The proof proceeds in four steps.
 
-\emph{Step~1: Filter.}
-Filter the full fiber bar complex
-$C^{(g)}_X(\cA)\!\mid_\Sigma$ by bar degree, writing
+\emph{Step~1: Separate the curved and strict models.}
+By Convention~\ref{conv:higher-genus-differentials}, the fiberwise
+differential satisfies
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, so
+$\barB^{(g)}_{\mathrm{curv}}(\cA)$ is a curved object and ordinary
+cohomology is not the invariant when $\kappa(\cA)\neq 0$.
+Proposition~\ref{prop:gauss-manin-uncurving-chain} supplies the strict
+comparison model
+$\barB^{(g)}_{\mathrm{flat}}(\cA)$ with $\Dg{g}^{\,2}=0$.
+This proves \textup{(i)} and shows that the ordinary-derived
+calculation must be performed on the flat representative.
+
+\emph{Step~2: Filter the strict flat representative.}
+Filter the flat fiber bar complex
+$C^{(g)}_{X,\mathrm{flat}}(\cA)\!\mid_\Sigma$ by bar degree, writing
 \[
 F_p := \bigoplus_{n \leq p} \bar{B}^{(g),n}(\cA).
 \]
 
-\emph{Step~2: Identify the associated graded.}
-At the associated graded level, the fiberwise curvature
-$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ vanishes (it lies
-in positive filtration degree), so $\operatorname{gr}_F$ sees
-only the genus-$0$ collision differential~$\dzero$.
+\emph{Step~3: Identify the associated graded and collapse.}
+At the associated graded level, the quantum corrections in
+$\Dg{g}$ lie in positive filtration degree, so
+$\operatorname{gr}_F$ sees only the genus-$0$
+collision differential~$\dzero$.
 By genus-$0$ Koszulity (axiom~MK1), the associated graded is
 the classical Koszul/Ext complex of
 $\operatorname{gr}_F \cA$, which has cohomology concentrated
 in total degree~$0$.
 
-\emph{Step~3: Total fiber concentration.}\quad
 The bar-degree filtration spectral sequence
 \[
 E_1^{p,q} = H^q\bigl(\operatorname{gr}_p
-C^{(g)}_X(\cA)\big|_\Sigma\bigr)
+C^{(g)}_{X,\mathrm{flat}}(\cA)\big|_\Sigma\bigr)
 \]
 has $E_1^{p,q} = 0$ for $q \neq 0$ by Step~2
 (the associated graded sees only the
@@ -408,27 +471,30 @@ Therefore all differentials $d_r$ with $r \geq 2$ vanish
 (their target lies in a row $q' \leq -1$, which is zero),
 and $d_1$ acts within the $q = 0$ row, so
 $E_\infty^{p,q} = E_2^{p,q}$. In particular,
-$H^q(C^{(g)}_X(\cA)\!\mid_\Sigma) = 0$ for $q \neq 0$:
-the full fiber complex (including the curvature terms) has
-cohomology concentrated in bar-differential degree~$0$.
-The surviving $H^0$ is the graded coalgebra
-$\bigoplus_p E_\infty^{p,0} \cong \bigoplus_p (\cA^!)_p$,
-which is identified with the Koszul dual coalgebra and
-hence with the center $\mathcal{Z}_{\cA}\!\mid_\Sigma$
-by the genus-$0$ center-bar identification
-(Corollary~\ref{cor:bar-cohomology-koszul-dual}).
+$H^q(C^{(g)}_{X,\mathrm{flat}}(\cA)\!\mid_\Sigma) = 0$
+for $q \neq 0$: the strict flat fiber complex has cohomology
+concentrated in bar-differential degree~$0$.
+On the Koszul locus, Theorem~\ref{thm:cobar-resolution-scoped}
+identifies the strict flat bar family as a bar resolution of~$\cA$,
+and the flat-side center computation of
+Theorem~\ref{thm:obstruction-quantum} identifies the surviving
+degree-$0$ sheaf with the center local system~$\mathcal{Z}_{\cA}$.
 
-\emph{Step~4: Base change.}
+\emph{Step~4: Base change and the $\kappa=0$ recovery.}
 Apply cohomology and base change to the family
 $\pi_g\colon \mathcal{C}_g(\cA) \to \overline{\mathcal{M}}_g$.
 The fiber-level concentration from Step~3 gives
-$R^q\pi_{g*}\bar{B}^{(g)}(\cA) = 0$ for $q \neq 0$.
-Perfectness of $R\pi_{g*}\bar{B}^{(g)}(\cA)$
+$\mathcal{H}^q(R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)) = 0$
+for $q \neq 0$.
+Perfectness of $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$
 (Lemma~\ref{lem:perfectness-criterion}) ensures base change applies
 uniformly over $\overline{\mathcal{M}}_g$.
-The surviving $R^0\pi_{g*}$ is identified with
+The surviving $\mathcal{H}^0$ is identified with
 $\mathcal{Z}_{\cA}$ by the fiber-level identification
 from Step~3, which holds uniformly over the base.
+If $\kappa(\cA)=0$, then $\dfib^{\,2}=0$ and the curved model is
+already an ordinary complex; the same conclusion can therefore be
+read directly on $\barB^{(g)}_{\mathrm{curv}}(\cA)$.
 \end{proof}
 
 \begin{remark}[Theorem~C decomposition]\label{rem:theorem-C-decomposition}
@@ -1891,9 +1957,83 @@ Lagrangian polarization at the level of cohomology, and
 Proposition~\ref{prop:ptvv-lagrangian} upgrades the Verdier side to a
 proved shifted-symplectic statement on the ambient complex~$C_g$. The
 direct bar-side realization of a $(-1)$-shifted symplectic chart on
-$L_g = \barB^{(g)}(\cA)[1]$ would require the additional BV package of
+$L_g = \barB^{(g)}_{\mathrm{flat}}(\cA)[1]$ would require the
+additional BV package of
 Chapter~\ref{ch:bv-brst}. The following theorem records that bar-side
-upgrade conditionally.
+upgrade conditionally. The transport from the ambient complex to a
+bar chart factors through Theorem~\ref{thm:fiber-center-identification}.
+
+\begin{lemma}[Bar chart transport of the ambient Lagrangian polarization;
+\ClaimStatusProvedHere]
+\label{lem:bar-chart-lagrangian-lift}
+\index{Lagrangian!bar-chart transport}
+\index{fiber--center identification!transport to bar chart}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair, let $g \geq 1$, and assume
+the hypotheses of Theorem~\ref{thm:fiber-center-identification}.
+Write
+\[
+\mathbf{C}_g(\cA) := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA)).
+\]
+Then Theorem~\ref{thm:fiber-center-identification} induces a canonical
+quasi-isomorphism
+\[
+\gamma_g \colon
+R\Gamma(\overline{\mathcal{M}}_g, R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA))
+\xrightarrow{\;\sim\;}
+\mathbf{C}_g(\cA)
+\]
+intertwining the Verdier involution and the Verdier pairing. If
+\[
+\iota_g \colon L_g := \barB^{(g)}_{\mathrm{flat}}(\cA)[1]
+\xrightarrow{\;\sim\;}
+R\Gamma(\overline{\mathcal{M}}_g, R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA))
+\]
+is a quasi-isomorphism of paired complexes, set
+$\chi_g := \gamma_g \circ \iota_g$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\chi_g \colon L_g \xrightarrow{\sim} \mathbf{C}_g(\cA)$ is a
+ quasi-isomorphism intertwining the involutions and the pairings.
+\item If $\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ are
+ complementary Lagrangians in $\mathbf{C}_g(\cA)$, then the
+ homotopy eigenspaces
+ \[
+ L_g^+ := \operatorname{fib}(\sigma_{L_g} - \mathrm{id}),
+ \qquad
+ L_g^- := \operatorname{fib}(\sigma_{L_g} + \mathrm{id})
+ \]
+ are complementary Lagrangians in $L_g$.
+\item On cohomology,
+ $H^*(L_g^+) = Q_g(\cA)$ and
+ $H^*(L_g^-) = Q_g(\cA^!)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Theorem~\ref{thm:fiber-center-identification} gives
+the concentration
+$\mathcal{H}^q(R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA))=0$
+for $q \neq 0$ and the identification
+$\mathcal{H}^0(R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA))
+\cong \mathcal{Z}_{\cA}$. Applying
+derived global sections to the perfect flat representative yields the
+quasi-isomorphism~$\gamma_g$. The
+Verdier involution and pairing are functorial under exact functors, so
+$\gamma_g$ intertwines both structures.
+
+If $\iota_g$ is a quasi-isomorphism of paired complexes, then so is
+$\chi_g=\gamma_g\circ\iota_g$, proving~(i). For~(ii), transport the
+projectors
+$p^\pm=\tfrac{1}{2}(\mathrm{id}\pm\sigma)$ from
+$\mathbf{C}_g(\cA)$ to $L_g$ along~$\chi_g$. Because~$\chi_g$
+intertwines pairings, isotropy of
+$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ pulls back to isotropy of
+$L_g^+$ and $L_g^-$. Since $\chi_g$ is a quasi-isomorphism and
+$\mathbf{C}_g(\cA)=\mathbf{Q}_g(\cA)\oplus \mathbf{Q}_g(\cA^!)$ is a
+Lagrangian polarization, Lemma~\ref{lem:involution-splitting}(c)
+implies that $L_g^+$ and $L_g^-$ are complementary Lagrangians. Part
+(\textup{iii}) is Lemma~\ref{lem:involution-splitting}(b) applied to
+$L_g$ and then identified through~$\chi_g$.
+\end{proof}
 
 \begin{theorem}[Conditional bar-side BV upgrade of complementarity; \ClaimStatusConditional]
 \label{thm:shifted-symplectic-complementarity}
@@ -1918,18 +2058,22 @@ curve $X$.
  $\barB^{\mathrm{ch}}(\cA)$
  \textup{(}Theorem~\textup{\ref{thm:config-space-bv}}\textup{)}
  has degree~$+1$, hence defines a $(-1)$-shifted Poisson structure.
- Under the bracket-compatible Verdier comparison assumed in
- Theorem~\textup{\ref{thm:bv-functor}}, the adjoint map
+ Under the bracket-compatible Verdier comparison of
+ Theorem~\textup{\ref{thm:bv-functor}}, refined on the Koszul locus by
+ Theorem~\textup{\ref{thm:verdier-bar-cobar}} to
+ $\mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))
+ \simeq \cA^!_\infty$, the adjoint map
  \[
  x \longmapsto \{x,-\}_{\mathrm{BV}} \colon
  \barB^{\mathrm{ch}}(\cA)
  \longrightarrow
  \mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))[1]
  \simeq
- \barB^{\mathrm{ch}}(\cA^!)[1]
+ \cA^!_\infty[1]
  \]
- is a quasi-isomorphism, so this Poisson structure is
- non-degenerate.
+ is a quasi-isomorphism. On the Koszul locus, the underlying complex
+ of $\cA^!_\infty$ is equivalent to $\barB^{\mathrm{ch}}(\cA^!)$.
+ Therefore this Poisson structure is non-degenerate.
 
 \item \emph{Formal moduli is $(-1)$-shifted symplectic.}
  The dg Lie algebra $L_g := \barB^{(g)}(\cA)[1]$, with Lie bracket
@@ -1945,14 +2089,12 @@ curve $X$.
  modular $L_\infty$-deformation object $\Definfmod(\cA)$
  (Theorem~\ref{thm:modular-homotopy-convolution}).
 \item \emph{Bar-side eigenspaces lift the ambient Lagrangian polarization.}
- For $g \geq 1$, assume in addition that there is a quasi-isomorphism
- of paired complexes
- \[
- \chi_g \colon L_g \xrightarrow{\;\sim\;} \mathbf{C}_g(\cA)
- \]
- intertwining the Verdier involution and the pairings. Then the
+ For $g \geq 1$, assume in addition that the bar chart $L_g$ fits into
+ the transport square of
+ Lemma~\textup{\ref{lem:bar-chart-lagrangian-lift}}. Then the
  eigenspace decomposition $L_g = L_g^+ \oplus L_g^-$ provides
- complementary Lagrangian subspaces, and
+ complementary Lagrangian subspaces lifting the ambient Verdier
+ polarization, and
  $H^*(L_g^+) = Q_g(\cA)$, $H^*(L_g^-) = Q_g(\cA^!)$.
 \end{enumerate}
 \end{theorem}
@@ -1964,51 +2106,95 @@ has degree~$+1$ by Theorem~\ref{thm:config-space-bv}. A degree~$+1$
 Lie bracket is by definition a $(-1)$-shifted Poisson structure: the
 associated bivector field on the formal moduli problem has degree~$-1$.
 Theorem~\ref{thm:config-space-bv} identifies this bracket with the
-configuration-space residue pairing. Corollary~\ref{cor:duality-bar-complexes-complete}
-gives a perfect pairing
-$\barB^{\mathrm{ch}}(\cA)\otimes \barB^{\mathrm{ch}}(\cA^!)\to\mathbb{C}$,
-and Theorem~\ref{thm:bv-functor} supplies the bracket-compatible
-Verdier comparison
-$\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \simeq \barB(\cA^!)$.
-Therefore the adjoint of the BV bracket is identified with the
-Verdier duality map, hence is a quasi-isomorphism. This is precisely
-the required non-degeneracy.
+configuration-space residue pairing. Theorem~\ref{thm:bv-functor}
+supplies a bracket-compatible Verdier comparison, and
+Theorem~\ref{thm:verdier-bar-cobar} identifies that comparison with
+\[
+\mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))
+\xrightarrow{\;\sim\;}
+\cA^!_\infty
+\]
+on the Koszul locus. By the compatibility clause in
+Theorem~\ref{thm:bv-functor}, the adjoint map
+$x \mapsto \{x,-\}_{\mathrm{BV}}$ is exactly this Verdier comparison,
+shifted by~$[1]$. Since the comparison is a quasi-isomorphism, the
+BV Poisson structure is non-degenerate. When one passes to the
+underlying complex of~$\cA^!_\infty$, this recovers the equivalent
+description in terms of $\barB^{\mathrm{ch}}(\cA^!)$.
 
 \emph{Part (ii).}
 Shifting $\barB^{(g)}(\cA)$ by $[1]$ converts the degree~$+1$ BV
 bracket to a degree~$0$ Lie bracket on $L_g$; the dg Lie algebra
 axioms are inherited from the BV algebra axioms. The BV pairing on
-$\barB^{(g)}(\cA)$ produced in Part~(i) restricts to a
-quasi-isomorphism
-$\beta_g\colon \barB^{(g)}(\cA)\xrightarrow{\sim}
-(\barB^{(g)}(\cA))^\vee[1]$.
-After shifting by~$[1]$, $\beta_g$ becomes a pairing on $L_g$ of
-degree $+1 - 2 = -1$
-(each of the two inputs shifts by~$[-1]$).
+$\barB^{(g)}(\cA)$ produced in Part~(i) restricts to a degree-$+1$
+Verdier pairing. Evaluating against the canonical Verdier pairing on
+the dual object and then shifting by~$[1]$ on both inputs produces a
+bilinear form
+\[
+\omega_g \colon L_g \otimes L_g \longrightarrow \mathbb{C}[-1].
+\]
+Its non-degeneracy is equivalent to the quasi-isomorphism of the
+adjoint map from Part~(i).
 Invariance of the pairing (the cyclic property
 $\langle [x,y], z \rangle = \langle x, [y,z] \rangle$)
 is exactly the bracket-compatibility built into the conditional BV
-package of Theorem~\ref{thm:bv-functor}. By the Kontsevich--Pridham correspondence (a
-non-degenerate invariant pairing of degree~$n$ on a dg Lie algebra
-$L$ endows $\mathrm{MC}(L)$ with an $n$-shifted symplectic
-structure~\cite{Pridham17}), the formal moduli
-$\mathrm{Def}_g(\cA) = \mathrm{MC}(L_g)$ is $(-1)$-shifted
-symplectic.
+package of Theorem~\ref{thm:bv-functor}. By the
+Kontsevich--Pridham correspondence, a non-degenerate invariant pairing
+of degree~$n$ on a dg Lie algebra yields an $n$-shifted symplectic
+structure on its Maurer--Cartan formal moduli problem~\cite{Pridham17}.
+Therefore $\mathrm{Def}_g(\cA) = \mathrm{MC}(L_g)$ is
+$(-1)$-shifted symplectic.
 
 \emph{Part (iii).}
-Assume $g \geq 1$ and that the comparison map~$\chi_g$ from the
-statement exists. Because~$\chi_g$ intertwines the involutions and the
-pairings, it identifies the $\sigma$-eigenspaces $L_g^\pm$ with the
-ambient homotopy eigenspaces
-$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$. Theorem~\ref{thm:quantum-complementarity-main}
-then supplies a decomposition of~$\mathbf{C}_g(\cA)$ by complementary
-Lagrangians. Pulling that structure back along~$\chi_g$ shows that
-$L_g^+$ and~$L_g^-$ are isotropic. Since
-$L_g = L_g^+ \oplus L_g^-$ over a field of characteristic $\neq 2$,
-they are maximal isotropic, hence Lagrangian. Passing to cohomology
-gives $H^*(L_g^+) = Q_g(\cA)$ and
-$H^*(L_g^-) = Q_g(\cA^!)$.
+Assume $g \geq 1$ and the transport square of
+Lemma~\ref{lem:bar-chart-lagrangian-lift}. Proposition~\ref{prop:lagrangian-eigenspaces}
+provides the ambient Verdier Lagrangian polarization of
+$\mathbf{C}_g(\cA)$, and
+Lemma~\ref{lem:bar-chart-lagrangian-lift} pulls that polarization back
+to the $\sigma$-eigenspaces of~$L_g$. Thus
+$L_g^+$ and~$L_g^-$ are complementary Lagrangians, and their
+cohomology groups are $Q_g(\cA)$ and $Q_g(\cA^!)$.
 \end{proof}
+
+\begin{remark}[Uniform-weight is sufficient, not necessary]
+\index{uniform-weight!minimal scalar condition}
+\index{cross-channel correction!modified pairing problem}
+The scalar lane of the BV package does not stop at the
+uniform-weight hypothesis. Theorem~\ref{thm:multi-weight-genus-expansion}
+shows that for every modular Koszul algebra
+\[
+F_g(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+\;+\;
+\delta F_g^{\mathrm{cross}}(\cA),
+\]
+with $\delta F_1^{\mathrm{cross}}(\cA)=0$ for all~$\cA$ and
+$\delta F_g^{\mathrm{cross}}(\cA)=0$ for all~$g$ on the
+uniform-weight lane. Therefore the exact scalar condition for the
+genus-$g$ BV pairing to reduce to the diagonal
+$\kappa(\cA)\lambda_g^{\mathrm{FP}}$ term is not uniform-weight by
+itself, but the weaker requirement
+$\delta F_g^{\mathrm{cross}}(\cA)=0$ in the genus under study.
+
+A multi-weight upgrade of Theorem~\ref{thm:shifted-symplectic-complementarity}
+would require a corrected bar-side pairing
+\[
+\omega_g^{\mathrm{corr}}
+\;=\;
+\omega_g^{\mathrm{diag}} + \omega_g^{\mathrm{cross}}
+\]
+whose mixed piece is indexed by the same mixed-channel boundary graphs
+that define $\delta F_g^{\mathrm{cross}}(\cA)$. The research programme
+is: construct $\omega_g^{\mathrm{cross}}$ from the graph sum of
+Theorem~\ref{thm:multi-weight-genus-expansion}; prove that it is
+closed and anti-invariant under the Verdier involution; then test
+non-degeneracy on the first explicit case $\cW_3$ at genus~$2$, where
+$\delta F_2^{\mathrm{cross}} \neq 0$. The manuscript does not yet
+construct this corrected pairing, so the proved scalar form of~(C2)
+extends exactly to the locus where the cross-channel correction
+vanishes.
+\end{remark}
 
 \begin{remark}[Genus-wise strictification]
 \label{rem:genuswise-strictification}
@@ -2200,7 +2386,7 @@ anomalies in the physical theory, which is established at $g = 0$
 well-defined (Theorem~\ref{thm:inductive-genus-determination},
 Theorem~\ref{thm:general-hs-sewing}), but the
 identification with the BRST complex remains conjectural
-(Conjecture~\ref{conj:master-bv-brst});
+(Conjecture~\ref{conj:v1-master-bv-brst});
 (b)~the $\mathcal{N}=4$ example requires constructing the Kapustin--Witten twist
 as a chiral Koszul pair, which is beyond the scope of this monograph.
 The first two bullet points are proved for specific examples (Heisenberg at genus~1

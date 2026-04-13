@@ -107,7 +107,7 @@ identification
 \mathbf{C}_g(\cA)
 \simeq
 \RGamma(\overline{\mathcal{M}}_g,
-R^0\pi_{g*}\barB^{(g)}(\cA)).
+\mathcal{H}^0(R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA))).
 \end{equation}
 \end{definition}
 
@@ -162,7 +162,7 @@ $2 \dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 2(3g - 3) = 6g - 6$
 by Artin vanishing for proper DM stacks
 \cite[\S4.1]{Olsson16}. The stalks of
 $\mathcal{Z}(\cA)$ are finite-dimensional by hypothesis
-(finite-dimensional fiber cohomology,
+(finite-dimensional flat fiber cohomology,
 Lemma~\ref{lem:perfectness-criterion}(ii)).
 By constructibility of $\mathcal{Z}(\cA)$
 (Lemma~\ref{lem:quantum-ss-convergence}, condition (2)),
@@ -201,9 +201,8 @@ The Verdier self-duality of
 Proposition~\ref{prop:thqg-III-ambient-properties}(ii) and
 the Koszul involutivity
 $(\cA^!)^! \simeq \cA$
-(Theorem~\ref{thm:chiral-koszul-duality}), under the
-finite-dimensional fiber-cohomology hypothesis of
-Lemma~\ref{lem:perfectness-criterion}(ii), combine to produce
+(Theorem~\ref{thm:chiral-koszul-duality}), together with the
+canonical biduality of the perfect ambient complex, combine to produce
 a cochain-level endomorphism
 \begin{equation}\label{eq:thqg-III-sigma-def}
 \sigma
@@ -220,7 +219,7 @@ constructed as the composition:
 \arrow[r, "\mathrm{KS}^{\vee}"]
 &
 \mathbf{C}_g(\cA)^{\vee\vee}[{-(3g{-}3)}][{3g{-}3}]
-\arrow[r, "\mathrm{ev}"]
+\arrow[r, "\mathrm{can}_{\mathbf{C}_g}^{-1}"]
 &
 \mathbf{C}_g(\cA)
 \end{tikzcd}
@@ -229,13 +228,20 @@ Here $\mathbb{D}$ is the Verdier duality map from
 Corollary~\ref{cor:duality-bar-complexes-complete},
 $\mathrm{KS}$ is the Koszul identification
 $\mathbf{C}_g(\cA) \xrightarrow{\sim} \mathbf{C}_g(\cA^!)$
-via Lemma~\ref{lem:center-isomorphism}, and $\mathrm{ev}$
-is the evaluation map. Under the same finite-dimensional
-fiber-cohomology hypothesis,
-Proposition~\ref{prop:thqg-III-ambient-properties}(i) gives
-finite-dimensional cohomology for $\mathbf{C}_g(\cA)$, so we may
-choose a bounded finite-dimensional model and hence identify
-$\mathbf{C}_g(\cA)^{\vee\vee} \cong \mathbf{C}_g(\cA)$.
+via Lemma~\ref{lem:center-isomorphism}, and
+$\mathrm{can}_{\mathbf{C}_g}$ denotes the canonical biduality
+quasi-isomorphism
+$\mathbf{C}_g(\cA) \xrightarrow{\sim} \mathbf{C}_g(\cA)^{\vee\vee}$.
+One way to see this canonically is to combine
+Lemma~\ref{lem:perfectness-criterion} with
+Theorem~\ref{thm:fiber-center-identification}: on the modular
+Koszul locus, $\mathbf{C}_g(\cA)$ is the derived global sections of
+a perfect complex on $\overline{\mathcal{M}}_g$, hence is itself a
+perfect complex over~$\mathbb{C}$. Equivalently,
+Proposition~\ref{prop:thqg-III-ambient-properties}(i) shows that
+$\mathbf{C}_g(\cA)$ has finite-dimensional total cohomology, which
+is the same perfection statement over a field. Thus no choice of a
+bounded finite-dimensional model is needed.
 The shifts cancel, and the composition
 is well-defined as a cochain map of degree zero.
 \end{construction}
@@ -264,20 +270,29 @@ satisfies:
 
 \begin{proof}
 \emph{Part (a).}
+Write
+$\mathrm{can}_{\mathbf{C}_g}\colon
+\mathbf{C}_g(\cA) \xrightarrow{\sim}
+\mathbf{C}_g(\cA)^{\vee\vee}$
+for the canonical biduality map of
+Construction~\ref{constr:thqg-III-verdier-involution}.
 Koszul involutivity
-$(\cA^!)^! \simeq \cA$ gives $\mathrm{KS}^{-1} = \mathrm{KS}'$
-(the transpose identification). Verdier duality satisfies
+$(\cA^!)^! \simeq \cA$ gives an inverse identification
+$\mathrm{KS}'\colon \mathbf{C}_g(\cA^!) \xrightarrow{\sim}
+\mathbf{C}_g(\cA)$.
+Verdier duality satisfies
 $\mathbb{D}^2 = \id$ on constructible sheaves over
-smooth proper DM stacks (Poincar\'{e} duality is involutive).
-The composition $\sigma$ is therefore the identity composed
-twice, once from each factor:
-\[
-\sigma^2
-= (\mathrm{ev} \circ \mathrm{KS}'^{\vee} \circ \mathbb{D})
- \circ
- (\mathrm{ev} \circ \mathrm{KS}^{\vee} \circ \mathbb{D})
-= \id.
-\]
+smooth proper DM stacks, and biduality is natural for perfect
+complexes. Applying Verdier--Koszul duality twice therefore
+returns the canonical biduality morphism
+$\mathrm{can}_{\mathbf{C}_g}$: the Verdier part squares to the
+identity, the Koszul part uses
+$(\cA^!)^! \simeq \cA$, and naturality identifies the resulting
+double-dual comparison with $\mathrm{can}_{\mathbf{C}_g}$.
+Since $\sigma$ is defined by composing this once-iterated
+Verdier--Koszul map with
+$\mathrm{can}_{\mathbf{C}_g}^{-1}$, the second iteration cancels
+the first and $\sigma^2 = \id$.
 
 \emph{Part (b).}
 Let $v, w \in \mathbf{C}_g(\cA)$. By definition of the
@@ -395,14 +410,14 @@ of $\overline{\mathcal{M}}_g$.
 \ClaimStatusProvedHere]
 \label{lem:thqg-III-nondegeneracy}
 \index{Verdier pairing!nondegeneracy}
-When the relative bar family is perfect
+When the strict flat relative bar family is perfect
 \textup{(}Lemma~\textup{\ref{lem:perfectness-criterion})},
 the holographic Verdier pairing
 \eqref{eq:thqg-III-holographic-pairing-def} is nondegenerate.
 \end{lemma}
 
 \begin{proof}
-Perfectness of $R\pi_{g*}\barB^{(g)}(\cA)$ ensures that
+Perfectness of $R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA)$ ensures that
 the Verdier duality map
 $\mathcal{Z}(\cA) \xrightarrow{\sim}
 \mathbb{D}\,\mathcal{Z}(\cA)[3g - 3]$
@@ -432,7 +447,8 @@ $-(3g - 3)$. In particular:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item At genus $0$: degree $+3$, pairing
  $H^0 \otimes H^0 \to \mathbb{C}[3]$
- \textup{(}trivially degenerate on one-dimensional $H^0$;
+ \textup{(}trivially degenerate because
+ $\mathbf{C}_0(\cA)$ is concentrated in degree~$0$;
  the complementarity is purely at the S-level\textup{)}.
 \item At genus $1$: degree $0$, pairing
  $H^0 \otimes H^0 \to \mathbb{C}$
@@ -488,7 +504,8 @@ curve $X$ over $\mathbb{C}$, and let $g \ge 0$.
 Assume the finite-dimensional fiber-cohomology hypothesis of
 Lemma~\ref{lem:perfectness-criterion}(ii), so that
 Construction~\ref{constr:thqg-III-verdier-involution} is defined
-on a reflexive model of $\mathbf{C}_g(\cA)$.
+using the canonical biduality quasi-isomorphism of
+$\mathbf{C}_g(\cA)$.
 
 \smallskip\noindent
 \textbf{H-level.}\;
@@ -523,6 +540,15 @@ The Verdier pairing restricts to a perfect duality
 \begin{equation}\label{eq:thqg-III-C1-duality}
 Q_g(\cA) \;\cong\; Q_g(\cA^!)^{\vee}.
 \end{equation}
+
+\smallskip\noindent
+\textbf{Sharp genus-$0$ boundary.}\;
+At $g = 0$ one has
+\[
+Q_0(\cA) = Z(\cA), \qquad Q_0(\cA^!) = 0.
+\]
+Hence the duality statement above cannot extend to genus~$0$
+unless $Z(\cA)=0$.
 
 \smallskip\noindent
 \textbf{Functoriality.}\;
@@ -633,27 +659,26 @@ H^*(\mathbf{C}_g(\cA))
 = Q_g(\cA) \oplus Q_g(\cA^!).
 \]
 For $g \ge 1$, the duality
-$Q_g(\cA) \cong Q_g(\cA^!)^{\vee}$ follows from the Verdier
-pairing. For $v \in Q_g(\cA)$ and
-$w \in Q_g(\cA^!)$, the pairing $\langle v, w \rangle_g$
-is nondegenerate: if $\langle v, w \rangle_g = 0$ for all
-$w \in Q_g(\cA^!)$, then $v$ lies in the radical of the
-restricted pairing. Since
-$\langle Q_g(\cA), Q_g(\cA) \rangle_g = 0$
-(isotropy from anti-symmetry of $\sigma$),
-$v$ lies in the radical of the full pairing on
-$\mathcal{H}_g(\cA)$, which is zero by nondegeneracy
-(Lemma~\ref{lem:thqg-III-nondegeneracy}).
+$Q_g(\cA) \cong Q_g(\cA^!)^{\vee}$ is exactly the
+unconditional spectral-sequence duality of
+Corollary~\ref{cor:quantum-dual-complete}.
+At genus~$0$, Proposition~\ref{prop:thqg-III-genus-0} gives
+$\mathcal{H}_0(\cA) = Z(\cA)$ with $\sigma = +\id$ on this space,
+so
+$Q_0(\cA) = Z(\cA)$ and $Q_0(\cA^!) = 0$.
+This is the sharp boundary of the duality statement: if
+$Z(\cA) \neq 0$, then a putative identification
+$Q_0(\cA) \cong Q_0(\cA^!)^{\vee}$ would force
+$\dim Z(\cA) = 0$, a contradiction.
 
 \emph{Note on hypotheses.}
 Stages 1--3 use only $\sigma^2 = \id$ and the
 identification of $\sigma$-eigenspaces with $j_*/j_!$
-extensions once $\sigma$ is defined on a reflexive model.
-No additional nondegeneracy hypothesis is needed. The duality
-statement in Stage~4 for $g \ge 1$ uses
-nondegeneracy but can also be obtained unconditionally from
-spectral sequence duality
-(Corollary~\ref{cor:quantum-dual-complete}).
+extensions once $\sigma$ is defined using the canonical
+biduality of the perfect ambient complex.
+No additional nondegeneracy hypothesis is needed: the duality
+statement in Stage~4 for $g \ge 1$ is taken directly from
+Corollary~\ref{cor:quantum-dual-complete}.
 
 \emph{Functoriality.}
 A morphism $f \colon (\cA, \cA^!) \to (\cB, \cB^!)$
@@ -716,18 +741,30 @@ giving:
 \[
 Q_0(\cA) = Z(\cA), \qquad Q_0(\cA^!) = 0.
 \]
+If $Z(\cA)\neq 0$, no duality
+$Q_0(\cA) \cong Q_0(\cA^!)^{\vee}$ can hold.
 \end{proposition}
 
 \begin{proof}
 Since $\overline{\mathcal{M}}_0$ is a point, the center
-local system has a single stalk $Z(\cA)$. The bar complex
-at genus~$0$ is uncurved (the curvature
-$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ vanishes
-because $\omega_0 = 0$), so the Verdier involution acts on
-the genus-$0$ center by the identity: bar cochains with
-$j_*$-extension are all of $Z(\cA)$, and there are no
-$j_!$-extended cochains (the configuration space has no
-boundary at genus~$0$).
+local system has a single stalk, so
+\[
+\mathbf{C}_0(\cA)
+= \RGamma(\overline{\mathcal{M}}_0,\mathcal{Z}(\cA))
+\simeq Z(\cA)
+\]
+is concentrated in degree~$0$.
+Corollary~\ref{cor:quantum-dual-complete} identifies the
+genus-$0$ cohomological-shadow eigenspaces as
+$Q_0(\cA)=H^0(\overline{\mathcal{M}}_0,\mathcal{Z}(\cA))$
+and $Q_0(\cA^!)=0$.
+Equivalently, the unique point class on the base is
+$\sigma$-fixed, so the entire degree-$0$ ambient space is the
+$+1$ eigenspace and the $-1$ eigenspace vanishes.
+If $Z(\cA)\neq 0$, then $Q_0(\cA)$ is nonzero while
+$Q_0(\cA^!)=0$, so any putative duality
+$Q_0(\cA) \cong Q_0(\cA^!)^{\vee}$ would force
+$\dim Z(\cA)=0$, a contradiction.
 \end{proof}
 
 \begin{proposition}[Genus-$1$ complementarity;
@@ -775,8 +812,8 @@ instance of the exchange principle:
 \begin{tabular}{l@{\quad}c@{\quad}c}
 & $\mathcal{H}_\kappa$ & $\mathcal{H}_\kappa^!$ \\
 \midrule
-Obstruction & $\kappa$ & --- \\
-Deformation & --- & $\lambda_1$ \\
+Obstruction & $\kappa$ & $\varnothing$ \\
+Deformation & $\varnothing$ & $\lambda_1$ \\
 \end{tabular}
 \end{center}
 What $\mathcal{H}_\kappa$ sees as the obstruction to
@@ -950,7 +987,7 @@ in the holographic notation of this chapter.
 Let $(\cA, \cA^!)$ be a chiral Koszul pair on $X$.
 Assume:
 \begin{enumerate}[label=\textup{(H\arabic*)}]
-\item \emph{Perfectness:} $R\pi_{g*}\barB^{(g)}(\cA)$ is
+\item \emph{Perfectness:} $R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA)$ is
  perfect on $\overline{\mathcal{M}}_g$
  \textup{(}Lemma~\textup{\ref{lem:perfectness-criterion})}.
 \item \emph{Nondegeneracy:} the holographic Verdier pairing
@@ -1137,8 +1174,10 @@ The BV pairing on $L_g = \barB^{(g)}(\cA)[1]$ descends to
 a pairing on the $E_\infty$ page of the bar-degree spectral
 sequence. By the fiber--center identification
 (Theorem~\ref{thm:fiber-center-identification}), the
-$E_\infty$ page is concentrated in degree~$0$ and coincides
-with $R^0\pi_{g*}\barB^{(g)}(\cA) \cong \mathcal{Z}(\cA)$.
+$E_\infty$ page of the strict flat representative is
+concentrated in degree~$0$ and coincides with
+$\mathcal{H}^0(R\pi_{g*}\barB^{(g)}_{\mathrm{flat}}(\cA))
+\cong \mathcal{Z}(\cA)$.
 The induced pairing on $\RGamma(\overline{\mathcal{M}}_g,
 \mathcal{Z}(\cA))$ is exactly the holographic Verdier pairing.
 The degree shift from $-1$ to $-(3g-3)$ arises because the
@@ -1784,7 +1823,7 @@ verified computationally.
 PBW filterability holds by the PBW theorem for vertex algebras
 at non-critical level $k \ne -h^{\vee}$
 (Proposition~\ref{prop:pbw-universality}).
-The bar complex has finite-dimensional fiber cohomology
+The strict flat bar complex has finite-dimensional fiber cohomology
 because $\widehat{\mathfrak{g}}_k$ is Koszul
 (Corollary~\ref{cor:universal-koszul}).
 Both (H1) and (H2) hold.

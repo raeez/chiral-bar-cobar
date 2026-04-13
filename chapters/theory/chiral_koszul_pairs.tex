@@ -209,7 +209,7 @@ $(\cA, \cC, \tau, F_\bullet)$ consisting of:
 \item a degree $+1$ morphism
  $\tau\colon \cC \to \cA$ satisfying the Maurer--Cartan equation
  $d\tau + \tau \star \tau = 0$ in the convolution dg~Lie algebra;
-\item an exhaustive bounded-below filtration $F_\bullet$ on $\cA$,
+\item an exhaustive, complete, bounded-below filtration $F_\bullet$ on $\cA$,
  $\cC$, $\bar{B}_X(\cA)$, and $\Omega_X(\cC)$, compatible with
  all structure maps.
 \end{enumerate}
@@ -357,9 +357,9 @@ then lifts this to acyclicity of $K_\tau^L$ and $K_\tau^R$
 themselves.
 \end{proof}
 
-\begin{lemma}[Filtered comparison for the unit; \ClaimStatusProvedHere]
+\begin{lemma}[Bar-side filtered comparison; \ClaimStatusProvedHere]
 \label{lem:filtered-comparison-unit}
-\index{spectral sequence!filtered comparison for the unit}
+\index{spectral sequence!bar-side filtered comparison}
 Let $(\cA, \cC, \tau, F_\bullet)$ be a chiral twisting datum
 whose filtration is exhaustive, complete, and bounded below.
 If $\eta_\tau\colon \cC \to \bar{B}_X(\cA)$ is a weak equivalence,
@@ -374,24 +374,36 @@ then:
 \end{lemma}
 
 \begin{proof}
-Filter $\eta_\tau$ by bar degree. Since the filtration is bounded
+This is the unit-side analogue of
+Lemma~\ref{lem:filtered-comparison}: one replaces the cobar-side
+filtration on $\Omega_X(\cC)$ by the induced filtration on the bar
+coalgebra $\barB_X(\cA)$. Because $\barB_X(\cA)$ is the cofree tensor
+coalgebra on $s^{-1}\bar\cA$ and $F_\bullet$ is compatible with the
+bar structure, the associated graded bar coalgebra is canonically
+the classical reduced bar construction:
+\[
+\operatorname{gr}_F \barB_X(\cA)
+\;\cong\;
+\barB(\operatorname{gr}_F \cA).
+\]
+Filter $\eta_\tau$ by $F_\bullet$. Since the filtration is bounded
 below and complete, the induced spectral sequence converges
 strongly, and the associated graded map
 \[
-\operatorname{gr}\eta_\tau \colon \operatorname{gr}\cC
-\longrightarrow \operatorname{gr}\barB_X(\cA)
-\cong \barB(\operatorname{gr}\cA)
+\operatorname{gr}_F\eta_\tau \colon \operatorname{gr}_F\cC
+\longrightarrow \operatorname{gr}_F\barB_X(\cA)
+\cong \barB(\operatorname{gr}_F\cA)
 \]
 is a quasi-isomorphism of classical conilpotent coalgebras. By the
 classical fundamental theorem of twisting morphisms
 \cite[Theorem~2.3.1]{LV12}, the induced twisting morphism
-$\operatorname{gr}\tau$ is classically Koszul, proving~(a).
+$\operatorname{gr}_F\tau$ is classically Koszul, proving~(a).
 
 For~(b), Lemma~\ref{lem:twisted-product-cone-unit} identifies
 $K_\tau^R$ with $\operatorname{Cone}(\eta_\tau)[-1]$, so the weak
 equivalence of $\eta_\tau$ makes $K_\tau^R$ acyclic. Filter
 $K_\tau^L$ by $F_\bullet$; its associated graded complex is the
-classical left twisted tensor product for $\operatorname{gr}\tau$,
+classical left twisted tensor product for $\operatorname{gr}_F\tau$,
 which is acyclic by~(a). Strong convergence then lifts this
 acyclicity to~$K_\tau^L$.
 \end{proof}
@@ -449,21 +461,25 @@ Acyclicity of $K_\tau^R$ is therefore equivalent to
 $\eta_\tau$ being a weak equivalence.
 
 \emph{\ref{ftm:counit}$\Rightarrow$\ref{ftm:koszul}:}
-By Lemma~\ref{lem:filtered-comparison}: filter $\Omega_X(\cC)$
-by cobar degree; the quasi-isomorphism of $\varepsilon_\tau$
-implies classical Koszulity of the associated graded datum and
-acyclicity of the twisted tensor products. The convergence
-hypothesis (Definition~\ref{def:chiral-koszul-morphism},
-condition~3) ensures the spectral sequence converges strongly.
+Because the filtration in the twisting datum is exhaustive,
+complete, and bounded below on both $\Omega_X(\cC)$ and
+$\barB_X(\cA)$, the comparison spectral sequences converge
+strongly. Lemma~\ref{lem:filtered-comparison} then gives classical
+Koszulity of the associated graded datum and acyclicity of the
+twisted tensor products. These are conditions~\textup{(1)} and
+\textup{(2)} of Definition~\ref{def:chiral-koszul-morphism}; the
+strong convergence just noted is condition~\textup{(3)}.
 
 \emph{\ref{ftm:unit}$\Rightarrow$\ref{ftm:koszul}:}
-This is the unit-side filtered comparison of
-Lemma~\ref{lem:filtered-comparison-unit}: the weak equivalence of
-$\eta_\tau$ forces the associated graded datum
+The same completeness and bounded-below hypotheses give strong
+convergence on the bar-side filtration. Lemma~\ref{lem:filtered-comparison-unit}
+shows that the weak equivalence of $\eta_\tau$ forces the
+associated graded datum
 $(\operatorname{gr} \cA, \operatorname{gr} \cC,
 \operatorname{gr} \tau)$ to be classically Koszul and lifts the
 acyclicity of the classical twisted tensor products to
-$K_\tau^L$ and $K_\tau^R$.
+$K_\tau^L$ and $K_\tau^R$. Together with strong convergence, this
+is exactly Definition~\ref{def:chiral-koszul-morphism}.
 
 \end{proof}
 
@@ -3683,10 +3699,6 @@ Then:
 \simeq \cA_2^!.
 \]
 \end{enumerate}
-
-These equivalences are functorial in families over the modular
-configuration spaces $\overline{\mathcal{M}}_{g,n}$ whenever
-the bar construction is formed relatively.
 \end{theorem}
 
 \begin{proof}
@@ -3696,29 +3708,125 @@ conditions
 (Definition~\ref{def:chiral-koszul-morphism}) are equivalent to
 the unit and counit being quasi-isomorphisms.
 For part~(2), the Verdier compatibility in
-Definition~\ref{def:chiral-koszul-pair} identifies
-$\mathbb{D}_{\operatorname{Ran}}(\cC_1)$ with the factorization
-algebra $\Omega_X(\cC_2)$, and likewise with the indices reversed.
-Composing this with the unit equivalence
-$\cC_1 \xrightarrow{\sim} \bar{B}_X(\cA_1)$ and the counit
-equivalence $\Omega_X(\cC_2) \xrightarrow{\sim} \cA_2$ from
-part~(1) yields
+Definition~\ref{def:chiral-koszul-pair} identifies the algebra-level
+Verdier dual $\mathbb{D}_{\operatorname{Ran}}(\cC_1)$ with the
+factorization algebra $\Omega_X(\cC_2)$, and likewise with the
+indices reversed. Let
+\[
+\eta_i \colon \cC_i \xrightarrow{\sim} \barB_X(\cA_i),
+\qquad
+\varepsilon_i \colon \Omega_X(\cC_i) \xrightarrow{\sim} \cA_i
+\]
+be the unit and counit equivalences from part~(1). Applying
+$\mathbb{D}_{\operatorname{Ran}}$ to $\eta_1$ gives an
+equivalence of factorization algebras
+\[
+\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA_1)
+\xrightarrow{\sim}
+\mathbb{D}_{\operatorname{Ran}}(\cC_1).
+\]
+Composing this with the Verdier-compatibility identification
+$\mathbb{D}_{\operatorname{Ran}}(\cC_1)\simeq \Omega_X(\cC_2)$ and
+then with $\varepsilon_2$ yields
 \[
 \mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
 \simeq \Omega_X(\cC_2) \simeq \cA_2,
 \]
-and similarly for the other index. This is the Verdier
-identification at the factorization-algebra level.
+and similarly for the other index. Every object after
+$\mathbb{D}_{\operatorname{Ran}}$ is therefore a factorization
+algebra, not a coalgebra.
 Part~(3) is the same statement after naming $\cA_2$ as the Koszul
 dual~$\cA_1^!$.
-The relative/family statement follows from proper base change
-(Lemma~\ref{lem:pushforward-preserves-qi}): the FM compactification
-$\overline{C}_n(X)$ is proper over $\overline{\mathcal{M}}_{g,n}$,
-so the fiberwise quasi-isomorphisms lift to the family by
-Theorem~\ref{thm:bar-cobar-inversion-functorial}, and Verdier
-duality commutes with proper base change by
-Theorem~\ref{thm:verdier-bar-cobar}.
 \end{proof}
+
+\begin{proposition}[Relative extension from relative Verdier base change;
+\ClaimStatusProvedHere]
+\label{prop:bar-cobar-relative-extension}
+\index{bar-cobar duality!relative extension}
+Let $\pi \colon \mathcal{X} \to S$ be a family of smooth projective
+curves. Suppose given relative factorization data
+\[
+(\cA_{1,S}, \cC_{1,S}, \tau_{1,S}, F_\bullet),
+\qquad
+(\cA_{2,S}, \cC_{2,S}, \tau_{2,S}, F_\bullet)
+\]
+together with relative algebra-level Verdier identifications,
+where $\Omega^{\mathrm{rel}}$ denotes the cobar functor formed over
+the family $\pi$:
+\[
+\mathbb{D}_{\operatorname{Ran}(\mathcal{X}/S)}(\cC_{1,S})
+\simeq \Omega^{\mathrm{rel}}(\cC_{2,S}),
+\qquad
+\mathbb{D}_{\operatorname{Ran}(\mathcal{X}/S)}(\cC_{2,S})
+\simeq \Omega^{\mathrm{rel}}(\cC_{1,S}),
+\]
+whose geometric fibers are chiral Koszul pairs in the sense of
+Definition~\textup{\ref{def:chiral-koszul-pair}}. Assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item each relative bar component is represented on the relative
+ Fulton--MacPherson spaces by a bounded complex of relative
+ holonomic $\cD$-modules;
+\item for every geometric point $s \to S$, the canonical base-change
+ morphism
+ \[
+ s^* \mathbb{D}_{\operatorname{Ran}(\mathcal{X}/S)}
+ \barB_{\mathcal{X}/S}(\cA_{i,S})
+ \longrightarrow
+ \mathbb{D}_{\operatorname{Ran}(X_s)}
+ \barB_{X_s}(\cA_{i,s})
+ \]
+ is an isomorphism;
+\item the unit and counit quasi-isomorphisms of
+ Theorem~\ref{thm:bar-cobar-isomorphism-main}\textup{(1)} commute
+ with pullback to geometric fibers.
+\end{enumerate}
+Then the equivalences of
+Theorem~\ref{thm:bar-cobar-isomorphism-main} assemble into
+equivalences of relative factorization algebras over~$S$, functorial
+under base change in~$S$.
+
+For the universal curve over $\overline{\mathcal{M}}_{g,n}$, the only
+additional input beyond Theorem~\ref{thm:bar-cobar-isomorphism-main}
+is the lift of the displayed relative Verdier identifications and the
+verification of \textup{(a)} and \textup{(b)} on the relative Ran
+space.
+\end{proposition}
+
+\begin{proof}
+Hypothesis~\textup{(c)} promotes part~\textup{(1)} of
+Theorem~\ref{thm:bar-cobar-isomorphism-main} from a fiberwise
+statement to a compatible relative unit/counit package. Applying
+$\mathbb{D}_{\operatorname{Ran}(\mathcal{X}/S)}$ to the relative unit
+map and then pulling back to a geometric fiber $X_s$ gives, by
+hypothesis~\textup{(b)}, the algebra-level Verdier equivalence of
+Theorem~\ref{thm:bar-cobar-isomorphism-main}\textup{(2)} on that
+fiber. The displayed relative Verdier identifications provide the
+algebra target on the total space, and hypothesis~\textup{(a)} is the
+exact condition needed to take Verdier duals degreewise in the
+relative holonomic category. These ingredients glue the fiberwise
+identifications over~$S$. The specialization
+$S=\overline{\mathcal{M}}_{g,n}$ is obtained by applying the same
+argument to the universal curve.
+\end{proof}
+
+\begin{remark}[Programme for the modular-family extension]
+\label{rem:bar-cobar-relative-programme}
+\index{bar-cobar duality!modular-family programme}
+To prove the full modular-family statement over
+$\overline{\mathcal{M}}_{g,n}$, one must establish the two relative
+inputs isolated in
+Proposition~\ref{prop:bar-cobar-relative-extension}:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item construct the relative bar components as bounded holonomic
+ $\cD$-complexes on the relative Fulton--MacPherson spaces;
+\item prove the relative Verdier/base-change isomorphism on the
+ relative Ran space, lift the algebra-level Verdier-compatible pair
+ identifications, and check compatibility with the factorization
+ gluing maps.
+\end{enumerate}
+The fixed-curve theorem above is the strongest unconditional result
+proved in this chapter.
+\end{remark}
 
 \begin{remark}[Geometric substrate (Volume~II)]
 \label{rem:theorem-a-lagrangian}
@@ -3743,9 +3851,9 @@ of the underlying twisting datum
 Part~(1) says each~$\tau_i$ is acyclic;
 part~(2) says Verdier duality sends the bar coalgebra of one side
 to the dual factorization algebra recovered from the other;
-and the family statement says these identifications are
-compatible with proper base change over
-$\overline{\mathcal{M}}_{g,n}$.
+and Proposition~\ref{prop:bar-cobar-relative-extension} isolates
+the extra relative Verdier/base-change input needed to transport
+these identifications over a base.
 \end{remark}
 
 \begin{remark}[Elementary model presentation;
@@ -5729,7 +5837,7 @@ d_{\mathrm{BRST}})$ forming a derived Koszul pair. The M-level model
 is the derived bar-cobar adjunction for DG chiral algebras. The shadow
 is the decomposition of the BRST complex into Koszul dual sectors.
 (Contributing to the derived/super extension flank adjoining
-Conjecture~\ref{conj:master-infinite-generator}, not to the standard
+Conjecture~\ref{conj:v1-master-infinite-generator}, not to the standard
 $W_\infty$/Yangian packet.)
 \end{remark}
 

@@ -1181,7 +1181,7 @@ showing the Axelrod--Singer compactification models the
 $\mathsf{E}_3$ bar complex (the $n = 2$ analogue is our
 Prism Principle, Theorem~\ref{thm:prism-higher-genus}).
 The $n = 3$ case requires modular $\mathsf{E}_3$-operads, not yet
-developed. (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
+developed. (Contributing to Conjecture~\ref{conj:v1-master-bv-brst}.)
 \end{remark}
 
 
@@ -3532,7 +3532,7 @@ $V_k(\fg)$ the affine Kac--Moody vertex algebra at level~$k$.
 \end{enumerate}
 \end{theorem}
 
-\begin{theorem}[Costello--Francis--Gwilliam~\cite{CFG26}]
+\begin{theorem}[Costello--Francis--Gwilliam~\cite{CFG25}]
 \label{thm:cfg}
 \ClaimStatusProvedElsewhere
 Let $\fg$ be a simple finite-dimensional Lie algebra.
@@ -3550,12 +3550,96 @@ $C^*(\fg) = \Sym(\fg^\vee[-1])$.
   $\mathrm{Perf}_{C^*(\fg)} \simeq
   \mathrm{Rep}_{\mathrm{fin}}(\fg)^{\mathrm{dg}}$,
   recovering the Drinfeld--Jimbo quantum group.
-\item \textup{(Theorem~1.4 of \cite{CFG26}.)} Canonical
+\item \textup{(Theorem~1.4 of \cite{CFG25}.)} Canonical
   bijection between perturbative CS quantisations,
   filtered $\Ethree$-deformations, braided monoidal
   deformations, and quasi-triangular quasi-Hopf algebras.
 \end{enumerate}
 \end{theorem}
+
+\begin{lemma}[Formality reduction for $\En$-deformations
+of commutative algebras]
+\label{lem:en-formality-deformation-classification}
+\ClaimStatusProvedHere
+Let $n \geq 2$ and let $V$ be a commutative algebra in
+chain complexes \textup{(}equivalently an
+$\Einf$-algebra\textup{)}. Write
+$\mathsf{P}_n = H_*(\En)$ for the $n$-Poisson operad
+\textup{(}commutative product $+$ degree-$(1{-}n)$ Lie
+bracket satisfying Leibniz\textup{)}.
+Suppose $\En$ is formal over~$\bR$, i.e.,
+there exists a quasi-isomorphism of operads
+$\En \xrightarrow{\sim} \mathsf{P}_n$ in chain complexes.
+Then the space of $\En$-algebra structures on $V$ deforming
+the given commutative structure, modulo
+$\En$-quasi-isomorphisms, is equivalent to the space of
+$\mathsf{P}_n$-algebra structures on $H^*(V)$ deforming the
+commutative structure:
+\[
+  \pi_0\bigl(\En\text{-}\mathrm{Alg}^{\mathrm{def}}(V)\bigr)
+  \;\simeq\;
+  \pi_0\bigl(\mathsf{P}_n\text{-}\mathrm{Alg}^{\mathrm{def}}
+  (H^*(V))\bigr).
+\]
+In particular, for $V = \Sym(W)$ free commutative, the
+$\mathsf{P}_n$ deformations are classified by
+degree-$(1{-}n)$ Lie brackets on $W$ satisfying the Leibniz
+rule with respect to the symmetric product
+\textup{(}$\mathsf{P}_n$ biderivations\textup{)}.
+\end{lemma}
+
+\begin{proof}
+The argument proceeds in three steps.
+
+\emph{Step 1: operadic transfer.}
+A quasi-isomorphism of dg operads
+$\phi\colon \cP \xrightarrow{\sim} \cQ$ induces a Quillen
+equivalence of model categories
+$\phi_!\colon \cP\text{-}\mathrm{Alg}
+\rightleftarrows \cQ\text{-}\mathrm{Alg} :\! \phi^*$
+(Fresse~\cite{Fresse17}, Vol.~II, Theorem~16.1.1;
+Loday--Vallette~\cite{LV12}, Theorem~11.4.7 for the Koszul
+case).
+At the $\infty$-categorical level, the induced functor on
+$\infty$-categories of algebras is an equivalence
+(Lurie~\cite{HA}, Theorem~5.1.4.7, applied to the symmetric
+monoidal $\infty$-category of chain complexes).
+
+Applying this to the formality quasi-isomorphism
+$\phi\colon \En \xrightarrow{\sim} \mathsf{P}_n$ (which
+exists for $n \geq 2$ by
+Fresse--Willwacher~\cite{FresseWillwacher20}),
+we obtain an equivalence between the $\infty$-categories
+of $\En$-algebras and $\mathsf{P}_n$-algebras in chain
+complexes.
+
+\emph{Step 2: deformation equivalence.}
+Fix a commutative algebra $V$, viewed as a
+$\mathsf{P}_n$-algebra with zero Lie bracket.  Under the
+equivalence of Step~1, $V$ qua $\mathsf{P}_n$-algebra
+corresponds to $\phi^*(V)$ qua $\En$-algebra, which is $V$
+with its commutative (hence $\En$) structure.
+The equivalence restricts to the formal neighbourhoods of
+these base points: filtered deformations of $V$ as an
+$\En$-algebra correspond bijectively to filtered
+deformations of $V$ as a $\mathsf{P}_n$-algebra (on the
+level of equivalence classes).
+
+\emph{Step 3: biderivation reduction.}
+For $V = \Sym(W)$ free commutative, a
+$\mathsf{P}_n$-algebra structure consists of the commutative
+product (which is fixed) and a degree-$(1{-}n)$ Lie bracket
+$\{-,-\}\colon V \otimes V \to V$ satisfying the Leibniz
+rule: $\{a, bc\} = \{a,b\}\,c + (-1)^{|a||b|}\,b\,\{a,c\}$.
+Such a bracket is a biderivation, uniquely determined by
+its restriction to generators $W \otimes W \to V$.
+By the universal property of $\Sym(W)$, the Jacobi identity
+on $\Sym(W)$ is equivalent to the Jacobi identity on
+generators (extend by Leibniz), so
+$\mathsf{P}_n$-deformations are classified by
+degree-$(1{-}n)$ Lie brackets on $W$ extended as
+biderivations.
+\end{proof}
 
 % The E_3 identification theorem and explicit operations
 % ================================================================
@@ -3655,24 +3739,43 @@ By $\En$ formality for $n = 3$
 (Proposition~\ref{prop:en-formality};
 Fresse--Willwacher~\cite{FresseWillwacher20}),
 $\Ethree$-deformations of the commutative algebra
-$C^*(\fg)$ are classified by $\Pthree$-deformations: the
-formality quasi-isomorphism
+$C^*(\fg)$ are classified by $\Pthree$-deformations.
+The precise citation chain is:
+Kontsevich~\cite{Kon99} first observed
+that operadic formality implies deformation classification
+at $n = 2$;
+Tamarkin~\cite{Tamarkin03} gave the first complete proof
+of $\Etwo$ formality;
+Fresse--Willwacher~\cite{FresseWillwacher20} proved
+intrinsic formality of $\En$ for all $n \geq 2$ over~$\bR$;
+Lemma~\ref{lem:en-formality-deformation-classification}
+(via Fresse~\cite{Fresse17}, Vol.~II, Theorem~16.1.1 and
+Lurie~\cite{HA}, Theorem~5.1.4.7)
+deduces that the operad-level formality
+quasi-isomorphism $\En \xrightarrow{\sim} \mathsf{P}_n$ induces an
+equivalence of deformation theories for algebras.
+Applying Lemma~\ref{lem:en-formality-deformation-classification}
+at $n = 3$ with $V = C^*(\fg) = \Sym(\fg^\vee[-1])$:
+the formality quasi-isomorphism
 $C_*(\Ethree;\, \bR) \xrightarrow{\sim}
 H_*(\Ethree;\, \bR)$
 identifies chain-level $\Ethree$ structures on $C^*(\fg)$,
 up to quasi-isomorphism, with $\Pthree$-algebra structures
 on $H^*(C^*(\fg)) = C^*(\fg)$.
-The $\Pthree$ bracket on generators
-$\fg^*[-1] \subset C^*(\fg)$ therefore determines the
-full $\Ethree$ structure, since a $\Pthree$ bracket
-on the free commutative algebra $\Sym(\fg^\vee[-1])$ is
-equivalent to a degree~$-2$ Lie bracket on $\fg^*[-1]$
-(the biderivation property).
+Since $C^*(\fg) = \Sym(\fg^\vee[-1])$ is free commutative,
+the biderivation reduction
+(Lemma~\ref{lem:en-formality-deformation-classification},
+Step~3) shows that a $\Pthree$ bracket is determined by a
+degree~$-2$ Lie bracket on generators
+$\fg^*[-1] \subset C^*(\fg)$.
 The space of $\fg$-equivariant such brackets is
 $\Hom_\fg(\Lambda^2\fg^*, \CC)[-2] \cong H^3(\fg)[-2]$,
 one-dimensional for simple~$\fg$
-(Lurie~\cite{HA},
-Costello--Francis--Gwilliam~\cite{CFG26}, Theorem~1.4).
+(Costello--Francis--Gwilliam~\cite{CFG25}, Theorem~1.4
+establish the matching of deformation spaces; the
+one-dimensionality itself is Whitehead's lemma:
+$H^3(\fg) = H^3_{\mathrm{CE}}(\fg; \CC) \cong \CC$
+for simple~$\fg$).
 
 \smallskip
 \noindent\textit{Step 2: induction on order.}
@@ -4353,7 +4456,6 @@ is an uncurved commutative ($\Einf$) factorisation
 coalgebra on~$X$.
 \end{definition}
 
-\begin{construction}[The chiral $\Pthree$ bracket]
 \begin{construction}[The chiral $\Pthree$ bracket]
 \label{constr:chiral-p3-bracket}
 The PVA $\lambda$-bracket on $V_k(\fg)$ is
