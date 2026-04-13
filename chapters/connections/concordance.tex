@@ -21,7 +21,8 @@ approximates the concordance.
 \bigskip
 
 \noindent\textbf{The five main theorems.}\quad
-The algebraic engine rests on five theorems, all proved.
+The algebraic engine rests on five theorem packages.
+Their proved core and conditional refinements are recorded explicitly below.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -30,44 +31,51 @@ The algebraic engine rests on five theorems, all proved.
 \hline
 \textbf{A} & Bar-cobar adjunction
  & $\barBch \dashv \Omegach$ on $\Ran(X)$,
- with Verdier intertwining
+ with the algebra-level Verdier half only after
+ $\mathbb{D}_{\Ran}$:
+ $\mathbb{D}_{\Ran}\barB_X(\cA_i)\simeq \Omega_X(\cC_j)\simeq \cA_j$,
  \textup{(}Thm~\ref{thm:bar-cobar-isomorphism-main}\textup{)}
  & \ClaimStatusProvedHere \\
 \textbf{B} & Bar-cobar inversion
- & $\Omegach(\barBch(\cA)) \xrightarrow{\sim} \cA$
- on the Koszul locus
- \textup{(}Thm~\ref{thm:higher-genus-inversion}\textup{)};
- genus~$0$ unconditional; for arbitrary~$\cA$,
- $g \geq 1$ is conditional on
- axiom~\ref{MK:modular}; unconditional on the
- CFT-type standard landscape except integer-spin
- $\beta\gamma$ by Theorem~\ref{thm:pbw-propagation}
- and Remark~\ref{rem:pbw-propagation-scope}
+ & Strict quasi-isomorphism on the Koszul locus
+ $\Omegach(\barBch(\cA)) \xrightarrow{\sim} \cA$
+ \textup{(}Thms~\ref{thm:higher-genus-inversion},
+ \ref{thm:bar-cobar-inversion-qi}\textup{)}; off the locus,
+ the counit is an unconditional coderived coacyclic-equivalence,
+ promoted back to an ordinary quasi-isomorphism on collapse loci
  & \ClaimStatusProvedHere \\
 \textbf{C} & Complementarity
- & $Q_g(\cA) + Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, Z(\cA))$
- \textup{(}Thm~\ref{thm:quantum-complementarity-main}\textup{)};
- Verdier-side Lagrangian splitting unconditional;
- ambient shifted-symplectic upgrade conditional on
- perfectness/nondegeneracy
- & \ClaimStatusProvedHere \\
+ & C0: coderived fiber-center identification unconditional,
+ ordinary-derived only on the flat perfect locus
+ \textup{(}Thm~\ref{thm:fiber-center-identification}\textup{)}.
+ C1: homotopy eigenspace decomposition for all~$g$, with
+ duality/Lagrangian only for $g \geq 1$ and genus~$0$
+ treated separately
+ \textup{(}Thm~\ref{thm:quantum-complementarity-main}\textup{)}.
+ C2: shifted-symplectic/BV upgrade conditional on the
+ uniform-weight perfectness package
+ \textup{(}Thm~\ref{thm:shifted-symplectic-complementarity}\textup{)}
+ & C0/C1: \ClaimStatusProvedHere; C2: \ClaimStatusConditional \\
 \textbf{D} & Modular characteristic
  & $\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$
- for uniform-weight modular Koszul algebras
- \textup{(}Definition~\ref{def:scalar-lane}\textup{)}
- at all genera;
- genus~$1$ universal for all families;
- additivity and duality constraints;
- Faber--Pandharipande free-energy formula
- \textup{(}Thm~\ref{thm:genus-universality}\textup{)}
+ on the proved uniform-weight lane at all genera
+ \textup{(}Definition~\ref{def:scalar-lane},
+ Thm~\ref{thm:modular-characteristic}\textup{)};
+ genus~$1$ is universal for all families;
+ multi-weight $g \geq 2$ acquires the cross-channel term
+ $\delta F_g^{\mathrm{cross}}$; the routing
+ $\Theta_\cA \to \mathrm{obs}_g \to$ family index is non-circular
  & \ClaimStatusProvedHere \\
 \textbf{H} & Chiral Hochschild
- & $\ChirHoch^*(\cA)$ polynomial with Hilbert polynomial
- $P(t)=1+t^2$, Koszul-functorial;
- $\ChirHoch^1(V_k(\fg))\cong\fg$ at generic level
- \textup{(}Thms~\ref{thm:w-algebra-hochschild},
- \ref{thm:virasoro-hochschild},
- \ref{thm:critical-level-cohomology};
+ & On the Koszul locus at generic level:
+ $\ChirHoch^*(\cA)$ is concentrated in $\{0,1,2\}$,
+ satisfies the duality shift~$[2]$, has degree-$\leq 2$
+ Hilbert polynomial, and obeys
+ $\ChirHoch^1(V_k(\fg))\cong\fg$ for affine KM;
+ the collision-depth spectral sequence collapses by local
+ Fulton--MacPherson formality
+ \textup{(}Thms~\ref{thm:main-koszul-hoch},
+ \ref{thm:hochschild-polynomial-growth};
  Prop.~\ref{prop:chirhoch1-affine-km}\textup{)}
  & \ClaimStatusProvedHere
 \end{tabular}
@@ -89,6 +97,13 @@ is $\Definfmod(\cA)$
 MC element $\Theta_\cA \in \MC(\gAmod)$ exists by the bar-intrinsic
 construction (Theorem~\ref{thm:mc2-bar-intrinsic}:
 $\Theta_\cA := D_\cA - d_0$ is MC because $D_\cA^2 = 0$).
+This is the coinvariant carrier for the main theorem.
+The ordered lift
+$\Theta_\cA^{E_1} \in \MC((\gAmod)^{E_1})$
+is constructed separately in the $\Eone$-modular chapter
+\textup{(}Theorem~\ref{thm:e1-mc-element}\textup{)},
+and averaging recovers the concordance-level class
+$\Theta_\cA$.
 The shadow obstruction tower
 $\Theta_\cA^{\le 2} \to \Theta_\cA^{\le 3} \to \Theta_\cA^{\le 4}
 \to \cdots$ consists of its finite-order projections.
@@ -320,11 +335,20 @@ class~M (intrinsically non-formal, $r_{\max} = \infty$).
 
 \item \emph{Deformation-obstruction complementarity
  (Theorem~\ref{thm:quantum-complementarity-main}).}
- For a Koszul pair $(\cA, \cA^!)$, the genus-$g$ obstructions
- satisfy $\mathrm{obs}_g(\cA) + \mathrm{obs}_g(\cA^!) =
- [\text{characteristic class of } Z(\cA)]$ in $H^*(\overline{\mathcal{M}}_g)$.
+ The package splits into three layers. C0 identifies the fiber object
+ with the derived center in the coderived category unconditionally,
+ and in the ordinary derived category on the flat perfect locus
+ \textup{(}Theorem~\ref{thm:fiber-center-identification}\textup{)}.
+ C1 gives the homotopy eigenspace decomposition for all genera, with
+ duality and the Lagrangian package for $g \geq 1$, while genus~$0$
+ is treated separately
+ \textup{(}Theorem~\ref{thm:quantum-complementarity-main}\textup{)}.
+ C2 is the shifted-symplectic/BV upgrade, conditional on the
+ uniform-weight perfectness package
+ \textup{(}Theorem~\ref{thm:shifted-symplectic-complementarity}\textup{)}.
  The Kodaira--Spencer map is constructed for all Koszul pairs
- and all genera (Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
+ and all genera
+ \textup{(}Theorem~\ref{thm:kodaira-spencer-chiral-complete}\textup{)}.
 
 \item \emph{$\Eone$-chiral Koszul duality
  (Theorem~\ref{thm:e1-chiral-koszul-duality}).}
@@ -371,28 +395,28 @@ class~M (intrinsically non-formal, $r_{\max} = \infty$).
  oper side of the geometric Langlands programme.
 
 \item \emph{Chiral Hochschild cohomology
- (Theorems~\ref{thm:w-algebra-hochschild},
- \ref{thm:virasoro-hochschild},
- \ref{thm:critical-level-cohomology};
+ (Theorems~\ref{thm:main-koszul-hoch},
+ \ref{thm:hochschild-polynomial-growth};
  Proposition~\ref{prop:chirhoch1-affine-km}).}
- For the principal $\Walg$-algebra $\Walg^k(\fg)$ at generic level:
- $\ChirHoch^n(\Walg^k(\fg)) = 0$ for $n > 2$, with Hilbert polynomial
- $P(t) = 1 + t^2$ (concentration in degrees $\{0,1,2\}$;
- the continuous Lie algebra cohomology
- $H^*_{\mathrm{cont}} = \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
- is a different, unbounded invariant).
- Rank~$1$ (Virasoro): $P(t) = 1 + t^2$.
- Rank $r \geq 2$: $P(t) = 1 + t^2$ at generic level.
+ On the Koszul locus at generic level, the collision-depth spectral
+ sequence for the Fulton--MacPherson stratification collapses at
+ $E_2=E_\infty$ because each local
+ $\FM_m(\mathbb{C})$ is formal. Hence $\ChirHoch^*(\cA)$ is
+ concentrated in cohomological degrees $\{0,1,2\}$, carries the
+ derived duality shift~$[2]$, and has Hilbert polynomial of degree at
+ most~$2$.
+ For the principal $\Walg$ and Virasoro lanes this polynomial is
+ $1+t^2$ at generic level.
  For affine Kac--Moody at generic level:
  $\ChirHoch^1(V_k(\fg)) \cong \fg$
- (Proposition~\ref{prop:chirhoch1-affine-km}).
- At critical level $k = \critLevel$:
- exterior$\otimes$polynomial structure
- $\Lambda^*(P_1, \ldots, P_r) \otimes \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
- (Fuks--Feigin--Tsygan).
- Functorial under Koszul duality via the Connes
- operator~$S$ (Theorem~\ref{thm:main-koszul-hoch},
- Corollary~\ref{cor:hochschild-cup-exchange}).
+ \textup{(}Proposition~\ref{prop:chirhoch1-affine-km}\textup{)}.
+ Critical level is separate:
+ Theorem~H does not apply there, and the oper/Feigin--Frenkel package
+ is recorded instead by Theorem~\ref{thm:critical-level-cohomology}.
+ Functoriality under Koszul duality passes through the Connes
+ operator~$S$
+ \textup{(}Theorem~\ref{thm:main-koszul-hoch},
+ Corollary~\ref{cor:hochschild-cup-exchange}\textup{)}.
 
 \item \emph{Chain-level modular functor
  (Theorem~\ref{thm:chain-modular-functor}).}
@@ -1854,10 +1878,17 @@ multiplicity-free $\ell$-weights
 the DK comparison on the
 evaluation-generated core is proved
 \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}. Type~$A$
-further proves shifted-prefundamental generation and pro-Weyl
-recovery \textup{(}Theorems~\ref{thm:shifted-prefundamental-generation},
-\ref{thm:pro-weyl-recovery}\textup{)}. The residual problem is DK-4/5:
-extension and completion beyond evaluation modules
+further reduces the old four-packet post-core problem to the single
+compact-completion packet
+\textup{(}Theorem~\ref{thm:mc3-type-a-resolution}\textup{)}:
+shifted-prefundamental generation and pro-Weyl recovery are proved on
+the Baxter-locus seed
+$\{V_{\omega_i}(a)\}\cup\{L^-_{i,a-\frac{1}{2}}\}$, with the spectral
+constraint supplied by
+Proposition~\ref{prop:baxter-yangian-equivariance}. The residual
+problem is DK-4/5:
+extension and completion beyond the evaluation core and its compact
+shifted-prefundamental enhancement
 \textup{(}Conjecture~\ref{conj:dk-compacts-completion}\textup{)},
 which is downstream of MC3. The
 one-slot obstruction (Remark~\ref{rem:no-bifunctor}) forces a
@@ -1919,19 +1950,19 @@ type (Proposition~\ref{conj:mc3-automatic-generalization}).
  (Theorem~\ref{thm:coefficient-stability-criterion}) reduces
  completion to finite truncations. MC4$^0$ concerns algebras with
  finite resonance rank (Virasoro, non-quadratic
- $\mathcal{W}_N$) and is reduced to a finite-dimensional problem
- by Theorem~\ref{thm:resonance-filtered-bar-cobar}. The uniform
+ $\mathcal{W}_N$) and is proved on the transferred split surface of
+ Theorems~\ref{thm:resonance-filtered-bar-cobar}
+ and~\ref{thm:platonic-completion}. The uniform
  PBW bridge (Theorem~\ref{thm:uniform-pbw-bridge}) connects MC1
  to MC4: uniform PBW degeneration plus quotient stabilization
  implies completed bar-cobar duality.
  The \emph{general theorem} (strong completion-tower
  theorem) is proved unconditionally. What remains is
- \emph{example-specific verification}: for each new
+ \emph{transfer verification}: for each new
  algebra family beyond the standard landscape, one must
- verify that its coefficient sequences stabilize on finite
- windows and identify the H-level target. This is a
- finite computation for each family, not a theoretical
- gap.
+ verify the split transfer package that places the family on
+ the MC4$^0$ resonance surface or the MC4$^+$ stabilization
+ surface, and then identify the H-level target.
  \emph{Arithmetic connection}: the spectral curve of the shadow
  Higgs field
  (Theorem~\ref{thm:shadow-higgs-field}) has convergence
@@ -1982,10 +2013,10 @@ Theorems~A/B/C/D/H, MC1/MC2/MC4, the proved lanes of MC5
 \textup{(}analytic HS-sewing at all genera, genus-$0$ algebraic
 BRST/bar, $D^{\mathrm{co}}$-level BV=bar for all shadow classes;
 chain-level BV/BRST/bar conjectural\textup{)},
-MC3 \textup{(}three-layer split: MC3a evaluation core all types unconditional,
-MC3b categorical thick generation all types unconditional,
-MC3c full Cat~O type~A unconditional / other types conditional on
-Conjecture~\ref{conj:rank-independence-step2}; residual DK-4/5 downstream\textup{)},
+MC3 \textup{(}evaluation core all types unconditional; categorical
+CG all types unconditional; type-$A$ post-core reduction proved on the
+Baxter-locus seed, with residual compact-completion DK-4/5 downstream
+of the Baxter constraint and Conjecture~\ref{conj:dk-compacts-completion}\textup{)},
 DK-0/1 (proved), DK-2/3 (evaluation-generated core proved),
 and the Koszulness characterization programme
 (9 unconditional equivalences, with \textup{(}vii\textup{)} the genus-$0$
@@ -4362,18 +4393,23 @@ degree beyond which all operations vanish. Virasoro:
 $d_{\mathrm{gen}} = 3$ (finite), $d_{\mathrm{alg}} = \infty$
 (class~M). Bare $d(\cA)$ without subscript is forbidden.
 
-\paragraph{MC3 three-layer split and Lemma~L.}
-Corollary~\ref{cor:mc3-all-types} is rewritten as an
-explicit three-layer decomposition: MC3a (evaluation-generated
-core, all simple types, unconditional), MC3b (categorical
-thick generation, all types, unconditional), MC3c (full
-category~$\cO$, type~A unconditional, other types conditional
-on Conjecture~\ref{conj:rank-independence-step2}).
-The new Conjecture~\ref{conj:rank-independence-step2}
-(Lemma~L, the lift-and-lower hypothesis) is the sole
-remaining input for MC3 beyond type~A: shifted prefundamental
-representations in non-type-A types should satisfy
-lift-and-lower from a maximal-rank type-$A$ Levi subalgebra.
+\paragraph{MC3 after the type-$A$ reduction.}
+Corollary~\ref{cor:mc3-all-types} still records the two unconditional
+all-types layers: categorical prefundamental Clebsch--Gordan and the
+DK-2/3 comparison on the evaluation-generated core.
+The new load-bearing theorem is
+Theorem~\ref{thm:mc3-type-a-resolution}: in type~$A$ the old
+four-packet post-core problem is reduced to the single compact-
+completion packet
+Conjecture~\ref{conj:dk-compacts-completion}. The proved post-core
+surface is the Baxter-locus seed
+$\{V_{\omega_i}(a)\}\cup\{L^-_{i,a-\frac{1}{2}}\}$, with the spectral
+constraint supplied by
+Proposition~\ref{prop:baxter-yangian-equivariance}; shifted-
+prefundamental generation and pro-Weyl recovery are proved on that
+surface. The remaining completion step is therefore a Baxter-
+constrained compact-completion problem, not an independent
+rank-induction packet.
 
 
 \paragraph{Holographic central charge identification (conjectural).}
@@ -4572,7 +4608,8 @@ Z_{\mathrm{der}}(B_\partial) \simeq
 \operatorname{HH}^*_{\mathrm{ch}}(\cA^!)$,
 where $B_\partial := \cA^!$ is the boundary algebra.
 This recovers Theorem~H
-(Theorem~\ref{thm:w-algebra-hochschild}) via dimensional
+(Theorems~\ref{thm:main-koszul-hoch},
+\ref{thm:hochschild-polynomial-growth}) via dimensional
 descent.
 \end{conjecture}
 
