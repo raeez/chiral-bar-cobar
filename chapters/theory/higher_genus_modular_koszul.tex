@@ -4156,76 +4156,83 @@ an MC element in~$\widehat{\gAmod}$.
 \label{rem:mc2-scattering-diagram}
 \index{Maurer--Cartan element!scattering-diagram construction}
 \index{Kontsevich--Soibelman!alternative construction of MC2}
-This is a proof sketch for a second construction of the element of
+This is a proof sketch for a second, conceptually independent
+construction of the element of
 Theorem~\ref{thm:mc2-bar-intrinsic}.
-Work in the shadow algebra of
-Definition~\ref{def:shadow-algebra} and choose a central-charge map
+Work in the completed shadow algebra
+$\widehat{\gAmod}$ of
+Definition~\ref{def:shadow-algebra}, graded by shadow degree, and
+choose a central-charge map
 \[
-Z \colon \bigoplus_{r \geq 2} \mathbb{Z} e_r \longrightarrow \mathbb{C}
+Z \colon \bigoplus_{r \geq 2} \mathbb{Z} e_r \longrightarrow \mathbb{C}.
 \]
-on the shadow grading. Order the rays by increasing
-$\arg Z(e_r)$ \textup{(}the BPS phase ordering\textup{)}.
-On an autonomous primary line~$L$, the primitive degree-$r$ shadow
-invariant $S_r(L)$ determines a wall
-$\ell_r := \mathbb{R}_{>0} Z(e_r)$ and a wall-crossing automorphism
+For each primitive degree-$r$ shadow class
+$\sigma_r \in \cA^{\mathrm{sh}}_{r,\bullet}$, attach the ray
 \[
-\Phi_{\ell_r}
+\ell_{\sigma_r} := \mathbb{R}_{>0} Z(\sigma_r)
+\]
+and the wall-crossing automorphism
+\[
+\Phi_{\ell_{\sigma_r}}
 \;:=\;
-\exp\!\bigl(\operatorname{ad}_{H_r}\bigr),
-\qquad
-H_r := S_r(L)\,e_r .
+\exp\!\bigl(\operatorname{ad}_{\sigma_r}\bigr)
+\;\in\;
+\exp(F^1\widehat{\gAmod}).
 \]
-For the full multi-channel theory one replaces the scalar Hamiltonian
-$H_r$ by the primitive degree-$r$ shadow class in
-$\cA^{\mathrm{sh}}_{r,\bullet}$.
+On an autonomous primary line~$L$, this reduces to the scalar wall data
+$\sigma_r = S_r(L)e_r$, so
+$\Phi_{\ell_r} = \exp(\operatorname{ad}_{S_r(L)e_r})$.
+The rays are ordered by increasing
+$\arg Z(\sigma_r)$, i.e.\ by BPS phase.
 
 Theorem~\ref{thm:stable-graph-pronilpotent-completion} and the weight
-filtration used in Theorem~\ref{thm:recursive-existence} place all
-these automorphisms in the pronilpotent group
-$\exp(F^1\widehat{\gAmod})$.
-The ordered product
+filtration used in Theorem~\ref{thm:recursive-existence} imply that, in
+each quotient $\gAmod/F^{N+1}\gAmod$, only finitely many walls of
+weight at most~$N$ contribute.
+Hence the phase-ordered product
 \[
 \Phi_{\mathfrak{D}}
 \;:=\;
 \prod_{\ell\ \textup{in BPS phase order}} \Phi_\ell
 \]
-therefore converges in every quotient
-$\gAmod/F^{N+1}\gAmod$ and hence in
+stabilizes degree by degree and defines an element of
 $\exp(F^1\widehat{\gAmod})$.
-On an autonomous primary line, the shadow-growth estimate
+On an autonomous primary line the quantitative shadow-growth estimate
 \[
 |S_r(L)| \sim A(L)\,\rho_L^{\,r}\,r^{-5/2}
 \qquad (r \to \infty)
 \]
-of Theorem~\ref{thm:shadow-radius}\textup{(}ii\textup{)} implies that
-modulo $F^{N+1}$ only finitely many rays of weight $\leq N$ contribute,
-so the phase-ordered product stabilizes degree by degree.
+of Theorem~\ref{thm:shadow-radius}\textup{(}ii\textup{)} supplies the
+explicit growth bound for the wall data, so the same degreewise
+stabilization is visible directly on the coefficients.
 
-If the scattering diagram is consistent in the sense of
-Kontsevich--Soibelman~\cite{KS00}, the product around any loop is the
-identity. The Kontsevich--Soibelman lemma then identifies the logarithm
-of the ordered product with a Maurer--Cartan element:
+Assume now that the scattering diagram is consistent in the sense of
+Kontsevich--Soibelman~\cite{KS00}: the ordered product around every loop
+is the identity. This means that the phase-ordered transport is flat.
+Writing
 \[
-\Theta_\cA^{\mathrm{scat}}
-\;:=\;
-\log(\Phi_{\mathfrak{D}})
-\;\in\;
-\widehat{\gAmod},
+\Phi_{\mathfrak{D}} = \exp(\Theta_\cA^{\mathrm{scat}}),
 \qquad
+\Theta_\cA^{\mathrm{scat}} \in \widehat{\gAmod},
+\]
+its infinitesimal flatness equation in the completed dg~Lie algebra is
+\[
 [\dzero,\Theta_\cA^{\mathrm{scat}}]
 + \tfrac12[\Theta_\cA^{\mathrm{scat}},\Theta_\cA^{\mathrm{scat}}]
 = 0.
 \]
-Its degree-$r$ truncation is built from the same primitive shadow data
-as the obstruction tower, now assembled by Baker--Campbell--Hausdorff
-rather than by the recursive inverse-limit construction.
-This gives a second conceptual origin for~$\Theta_\cA$:
-the primitive shadows are the wall data, the BPS phase ordering is the
-assembly rule, and the Maurer--Cartan equation is the infinitesimal
-form of scattering-diagram consistency.
-The missing manuscript-level input is the full setup of this
-scattering-diagram formalism on $\widehat{\gAmod}$; once that package is
-installed, it furnishes an alternative proof path to MC2.
+Thus $\Theta_\cA^{\mathrm{scat}}$ is a Maurer--Cartan element. Its
+degree-$r$ truncation is assembled from the same primitive shadows as
+the bar-intrinsic tower, but now by phase-ordered wall crossing and the
+Baker--Campbell--Hausdorff product instead of the recursive inverse
+limit. In this picture the primitive shadows are the wall data, the BPS
+phase ordering is the assembly rule, and the Maurer--Cartan equation is
+the infinitesimal form of scattering-diagram consistency; compare
+Remark~\ref{rem:bps-wall-crossing-bar}. The missing manuscript-level
+input is the full construction of the scattering diagram attached
+to~$\cA$ together with the comparison between its wall data and the
+primitive shadows extracted from~$D_\cA$. Once that package is
+installed, it gives a redundant proof path to MC2.
 \end{remark}
 
 \begin{remark}[The bar-intrinsic perspective and the two regimes]
