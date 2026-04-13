@@ -87,13 +87,28 @@ Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
 
 ## Build
 
-```bash
-# Kill any competing pdflatex, then build
-pkill -9 -f pdflatex 2>/dev/null || true; sleep 2; make fast
+All compiled output goes to `out/`.
 
-# Run tests
-make test          # non-slow suite (124,511 currently selected)
-make test-full     # full suite (125,444 currently collected)
+```bash
+make fast                    # quick converging build → out/main.pdf
+make                         # full build: manuscript + working notes → out/
+make release                 # manuscript + working notes + standalone → out/ + iCloud
+make standalone              # standalone papers → out/
+make test                    # non-slow test suite (124,511 currently selected)
+make test-full               # full suite (125,444 currently collected)
+make clean-builds            # remove /tmp/mkd-* isolated build directories
+```
+
+Each build runs in its own `/tmp/mkd-chiral-bar-cobar-<NS>/` directory,
+so parallel agents never clobber each other's `.aux` files. Set
+`MKD_BUILD_NS` to reuse a build directory across invocations (warm
+`.aux` files converge in fewer passes):
+
+```bash
+export MKD_BUILD_NS="agent-$$"   # stable for the agent's session
+make fast                         # cold first time
+# ... edit ...
+make fast                         # warm — reuses .aux, converges faster
 ```
 
 Requires TeX Live 2024+ with pdflatex (memoir, EB Garamond, newtxmath).
