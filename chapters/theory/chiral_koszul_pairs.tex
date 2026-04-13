@@ -2147,11 +2147,21 @@ bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi}).
 
 \smallskip\noindent
 \textup{(v)}$\Rightarrow$\textup{(i)}:
-The bar-cobar counit being a quasi-isomorphism means the
-twisted tensor product $K_\tau^L$ is acyclic
-(Lemma~\ref{lem:twisted-product-cone-counit}), which is
-condition~(1) of
-Definition~\ref{def:chiral-koszul-morphism}.
+Condition~\textup{(v)} is the statement that the canonical counit
+\[
+\varepsilon_{\tau_{\mathrm{univ}}}\colon
+\Omega_X(\barB_X(\cA)) \longrightarrow \cA
+\]
+of the universal twisting morphism
+$\tau_{\mathrm{univ}}\colon \barB_X(\cA)\to \cA$
+\textup{(}Corollary~\ref{cor:three-bijections}\textup{)}
+is a quasi-isomorphism.
+The fundamental theorem of chiral twisting morphisms
+\textup{(}Theorem~\ref{thm:fundamental-twisting-morphisms}\textup{)}
+identifies this directly with
+$\tau_{\mathrm{univ}}$ being a chiral Koszul morphism.
+With the PBW filtration fixed in the statement of the theorem,
+that is exactly condition~\textup{(i)}.
 
 \medskip
 \textsc{Hochschild consequence}
@@ -2422,6 +2432,101 @@ $K_\tau(\cA, \cA^!)$; its acyclicity (i.e., discreteness of the
 intersection) is Koszulness
 (Definition~\ref{def:chiral-koszul-morphism}).
 \end{proof}
+
+\begin{remark}[Proof web redundancy]
+\label{rem:koszul-proof-web-redundancy}
+The proof above need not be read as a line.
+Several arrows close independently of the PBW-to-shadow route.
+
+The shortest loop is
+\[
+\textup{(v)} \Longleftrightarrow \textup{(i)}.
+\]
+The backward implication is the repaired step in the proof:
+for the universal twisting morphism
+$\tau_{\mathrm{univ}}\colon \barB_X(\cA)\to \cA$,
+condition~\textup{(v)} is the quasi-isomorphism of the counit
+$\varepsilon_{\tau_{\mathrm{univ}}}$, and
+Theorem~\ref{thm:fundamental-twisting-morphisms}
+identifies that directly with
+$\tau_{\mathrm{univ}}$ being a chiral Koszul morphism.
+This route uses the universal bar twisting datum and the bar
+filtration, not the chain through \textup{(ii)} or \textup{(iii)}.
+
+Condition~\textup{(i)} also implies condition~\textup{(viii)}
+directly.
+Theorem~\ref{thm:main-koszul-hoch},
+Theorem~\ref{thm:hochschild-polynomial-growth}, and
+Proposition~\ref{prop:e2-formality-hochschild}
+start from a Koszul datum and compute
+$\ChirHoch^*(\cA)$ by the bar-cobar Hochschild resolution.
+This gives duality, polynomial growth, and $\Etwo$-formality
+without routing through conditions~\textup{(ii)}--\textup{(vii)}
+inside the meta-theorem.
+
+Condition~\textup{(iii)} implies condition~\textup{(x)}
+directly on FM strata.
+For a boundary stratum $S_T$, the restriction
+$i_{S_T}^!\,\barB_n(\cA)$ decomposes as the tensor product of the
+vertexwise collision complexes, and
+Remark~\ref{rem:iterated-residues-ainfty}
+identifies those iterated residues with the transferred
+$A_\infty$ operations.
+If $m_k=0$ for $k \geq 3$, only the strict binary residue survives
+at each vertex.
+Fiberwise Keller classicality, exactly as in
+Theorem~\ref{thm:ainfty-koszul-characterization},
+then gives degree-zero concentration for every vertex factor, so
+the K\"unneth spectral sequence yields
+\[
+H^k\bigl(i_{S_T}^!\,\barB_n(\cA)\bigr)=0
+\qquad (k \neq 0).
+\]
+This reaches \textup{(x)} without passing through the shadow tower.
+
+The same bookkeeping exposes further direct links already implicit
+in the proof:
+\[
+\textup{(iv)} \Rightarrow \textup{(ii)},\qquad
+\textup{(vii)} \Longleftrightarrow \textup{(ii)},\qquad
+\textup{(ix)} \Rightarrow \textup{(ii)},\qquad
+\textup{(x)} \Rightarrow \textup{(ii)},\qquad
+\textup{(v)} \Longleftrightarrow \textup{(vi)}.
+\]
+Accordingly the unconditional core
+\[
+\{\textup{(i)},\textup{(ii)},\textup{(iii)},\textup{(iv)},
+\textup{(v)},\textup{(vi)},\textup{(vii)},\textup{(ix)},
+\textup{(x)}\}
+\]
+forms a web rather than a chain.
+
+\begin{center}
+\begin{tikzcd}[column sep=3em,row sep=2.8em]
+\textup{(iv)} \arrow[r] \arrow[dr] &
+\textup{(ii)} \arrow[d, shift left=.5ex] \arrow[r, shift left=.5ex] &
+\textup{(v)} \arrow[l, shift left=.5ex] \arrow[dl] \arrow[dr] &
+\\
+\textup{(vii)} \arrow[r, shift left=.5ex] \arrow[ur] &
+\textup{(i)} \arrow[l, shift left=.5ex] \arrow[r, shift left=.5ex] \arrow[d, shift left=.5ex] \arrow[dr] \arrow[rr, bend left=12] &
+\textup{(iii)} \arrow[l, shift left=.5ex] \arrow[dl] &
+\textup{(vi)} \arrow[ll, bend left=12]
+\\
+\textup{(ix)} \arrow[uur, bend left=16] \arrow[r] &
+\textup{(x)} \arrow[u, shift left=.5ex] \arrow[ur] &
+\textup{(viii)} &
+\end{tikzcd}
+\end{center}
+
+Here \textup{(viii)} is a satellite consequence, not part of the
+equivalence core.
+In the undirected graph underlying the displayed core subweb on
+\textup{(i)--(vii)}, \textup{(ix)}, \textup{(x)},
+deleting any one displayed implication still leaves the core
+connected:
+there is no single proved arrow whose removal disconnects the
+equivalence package.
+\end{remark}
 
 \begin{remark}[Status of the Lagrangian and purity refinements]
 Condition~\textup{(xi)} remains conditional on perfectness and
@@ -3135,8 +3240,10 @@ convolution algebra $\gAmod$ satisfies:
 \item The genus-$0$ convolution algebra
  $\mathfrak{g}^{(0)}_\cA$ is formal as a dg Lie algebra.
 \end{enumerate}
-These three conditions are equivalent to each other and to the ten
-unconditional equivalences~\textup{(i)--(x)} in
+These three conditions are equivalent to each other and to the
+unconditional core consisting of
+\textup{(i)--(vi)}, the genus-$0$ clause of
+\textup{(vii)}, and \textup{(ix)--(x)} in
 Theorem~\textup{\ref{thm:koszul-equivalences-meta}}.
 \end{proposition}
 
@@ -3848,7 +3955,7 @@ Remark~\ref{rem:theorem-a-model}. In the stable presentable
 $\infty$-category of augmented factorization algebras on
 $\Ran(X)$, the role of the terminal algebra~$k$ is played by the unit
 object~$\omega_X$. For an augmentation
-\varepsilon\colon\cA\to\omega_X$, the associated simplicial bar object
+$\varepsilon\colon\cA\to\omega_X$, the associated simplicial bar object
 $\operatorname{Bar}_\bullet(\omega_X,\cA,\omega_X)$ is the
 \v{C}ech nerve of~$\varepsilon$, and its geometric realization is the
 bar coalgebra~$\barB_X(\cA)$~\cite[Chapter~5, especially
