@@ -30,6 +30,28 @@ AGENTS = []
 PREAMBLE = """\
 <task>
 You are a HEALING and FORTIFICATION agent for a research mathematics manuscript.
+
+CRITICAL SESSION CONTEXT (factor this in):
+This session deployed 537+ Codex agents across 7 campaigns. The following has ALREADY been done:
+- Theorems A-D, H: proof architecture rectified. Verdier convention fixed (Thm A), off-locus
+  coderived proven independently (Thm B), curved C0 in D^co unconditional (Thm C0), genus-0
+  separated + reflexivity from perfectness (Thm C1), center-to-bar lift proved (Thm C2),
+  circularity broken with routing remark (Thm D).
+- MC1-5: filtration inequality corrected (MC4), Baxter constraint honest (MC3), coderived
+  argument clean (MC5), g^{mod}/g^{E1} clarified (MC2).
+- Topologization: split into cohomological (proved KM) + chain-level (conjectural).
+- Koszul equivs (vii)/(viii): scope narrowed to match proofs.
+- SC-formality, depth gap, D^2=0, Gerstenhaber: platonic agents running (P11-P20).
+- 48 new anti-patterns catalogued (AP186-AP224).
+- Wave A: broken refs, hardcoded Parts, duplicate labels, status mismatches, proof-after-conj
+  all fixed across Vol I and Vol II.
+- New compute engines: critical level (72 tests), Verlinde polynomial (g=0..6),
+  genus-2 decomposition, chiral bialgebra, tetrahedron, and 20+ more.
+- Vol I ~2,719pp (29 commits this session), Vol II ~1,681pp (15 commits), Vol III ~319pp (19 commits).
+
+READ the current state of files on disk — they reflect ALL the above work.
+Your job: HEAL remaining wounds, provide ALTERNATIVE proofs, UPGRADE strength.
+
 Your mission is threefold:
 
 1. HEAL: find remaining wounds (gaps, weaknesses, fragilities) and repair them

@@ -918,6 +918,68 @@ polynomials termwise gives the displayed formula for
 $P_\cA(t)+P_{\cA^!}(t)$.
 \end{proof}
 
+\begin{remark}[Alternative proof via deformation theory]
+There is a second route to
+Theorem~\ref{thm:hochschild-polynomial-growth}\textup{(a)}
+and to the polynomiality statement in
+\textup{(b)} that does not use the bar-collision spectral sequence.
+It is the chiral analogue of Gerstenhaber's deformation-theoretic
+argument.
+
+By Definition~\ref{def:cyclic-deformation-elementary}, the formal
+deformation problem of~$\cA$ is governed by the cyclic deformation
+complex. In the Gerstenhaber grading used throughout this manuscript,
+\[
+\ChirHoch^0(\cA)=Z(\cA),\qquad
+\ChirHoch^1(\cA)=\operatorname{Der}(\cA)/\operatorname{Inn}(\cA),
+\]
+\[
+\ChirHoch^2(\cA)\ \text{classifies first-order deformations},\qquad
+\ChirHoch^3(\cA)\ \text{is the primary obstruction space}.
+\]
+Equivalently, after the standard shift by~$[1]$, the same complex is
+the tangent complex of the formal moduli problem of chiral
+deformations.
+
+For a chiral algebra on a smooth projective curve, the governing
+complex is built from holonomic $\cD_X$-modules on a one-dimensional
+base. The curve contributes one cohomological direction, and the
+chiral deformation direction contributes one more; equivalently, the
+relevant derived Hom in $\cD_X$-modules has global amplitude at
+most~$2$. Hence
+\[
+\ChirHoch^n(\cA)=0\qquad\text{for }n>2,
+\]
+while negative degrees are absent by construction. This recovers the
+concentration in degrees $\{0,1,2\}$ independently of
+Lemma~\ref{lem:hochschild-shift-computation}.
+
+Once one knows that the deformation problem is finite-dimensional on
+the Koszul locus, only the three groups
+$\ChirHoch^0(\cA)$, $\ChirHoch^1(\cA)$, and $\ChirHoch^2(\cA)$ can
+contribute. Therefore
+\[
+P_\cA(t)=\sum_{n\ge 0}\dim \ChirHoch^n(\cA)\,t^n
+\]
+is automatically a polynomial of degree at most~$2$:
+\[
+P_\cA(t)
+=
+\dim Z(\cA)
++\dim \ChirHoch^1(\cA)\,t
++\dim \ChirHoch^2(\cA)\,t^2.
+\]
+Theorem~\ref{thm:main-koszul-hoch} then identifies the quadratic
+coefficient with $\dim Z(\cA^!)$, recovering
+\eqref{eq:hoch-hilbert-polynomial}. In this language,
+Theorem~H says that the chiral deformation problem on a curve is a
+three-term formal moduli problem; on the Koszul locus the primary
+obstruction group $\ChirHoch^3(\cA)$ vanishes. This does not remove
+the Koszul-locus hypothesis: outside that locus one still needs an
+independent finite-type or perfectness statement for the deformation
+complex before the same polynomiality conclusion can be justified.
+\end{remark}
+
 \begin{remark}[Geometric substrate (Volume~II)]
 \label{rem:theorem-h-lagrangian}
 \index{Lagrangian self-intersection!Theorem H}
@@ -4984,15 +5046,44 @@ HH^n_{\text{classical}}(H^0(\mathcal{A}))$.
 \begin{theorem}[Chiral Gerstenhaber structure on $\ChirHoch^*$;
 \ClaimStatusProvedHere]\label{thm:gerstenhaber-structure}
 \index{Gerstenhaber bracket!chiral|textbf}
-The chiral Hochschild cohomology carries a degree $-1$
-bracket (the \emph{chiral Gerstenhaber bracket}):
-\[[\cdot, \cdot]: \ChirHoch^p(\mathcal{A}) \otimes \ChirHoch^q(\mathcal{A}) \to \ChirHoch^{p+q-1}(\mathcal{A}),\]
-making $\ChirHoch^*(\mathcal{A})$ into a graded Lie algebra.
+The single-insertion residue sum of
+Construction~\textup{\ref{const:gerstenhaber-bracket}}
+induces a degree-$(-1)$ pre-Lie product
+\[
+\circ \colon
+\ChirHoch^p(\mathcal{A}) \otimes \ChirHoch^q(\mathcal{A})
+\longrightarrow
+\ChirHoch^{p+q-1}(\mathcal{A}),
+\]
+and its antisymmetrization
+\[
+[f,g]_{\mathrm G}
+\;:=\;
+f \circ g
+\;-\;
+(-1)^{(|f|-1)(|g|-1)}\, g \circ f
+\]
+defines a degree-$(-1)$ bracket
+\[
+[-,-]_{\mathrm G} \colon
+\ChirHoch^p(\mathcal{A}) \otimes \ChirHoch^q(\mathcal{A})
+\longrightarrow
+\ChirHoch^{p+q-1}(\mathcal{A}).
+\]
+For homogeneous classes $f,g,h$, this bracket is graded
+skew-symmetric, satisfies the graded Jacobi identity, and is a
+derivation of the cup product:
+\[
+[f, g \smile h]_{\mathrm G}
+=
+[f,g]_{\mathrm G}\smile h
++
+(-1)^{(|f|-1)|g|}\, g \smile [f,h]_{\mathrm G}.
+\]
+Hence $\ChirHoch^*(\mathcal{A})$ is a Gerstenhaber algebra.
 This is the chiral analogue of Gerstenhaber's classical
-bracket~\cite{Ger63} on associative Hochschild cochains;
-it is computed by OPE residues on configuration spaces
-\textup{(}Construction~\textup{\ref{const:gerstenhaber-bracket}}\textup{)},
-not by algebraic composition.
+bracket~\cite{Ger63} on associative Hochschild cochains, realized
+here by OPE residues on configuration spaces.
 \end{theorem}
 
 \begin{proof}
@@ -5000,31 +5091,81 @@ By Remark~\ref{rem:comparison-geometric-hoch}, the geometric
 Hochschild complex of this chapter is identified with the algebraic
 cochain complex $C^\bullet_{\mathrm{ch}}(A,A)$ of
 Definition~\ref{def:chiral-hochschild-cochain-brace}. In that
-algebraic model, the Gerstenhaber bracket is defined by the
-antisymmetrization of the single-brace insertion
+algebraic model, the single brace $f\{g\}$ is the pre-Lie
+insertion of Example~\ref{ex:single-brace-chiral}, and the
+Gerstenhaber bracket is its antisymmetrization
 \textup{(}Definition~\textup{\ref{def:gerstenhaber-bracket-chiral}}\textup{)}:
 \[
-[f,g]
+[f,g]_{\mathrm G}
 =
 f\{g\}
 -(-1)^{(|f|-1)(|g|-1)}g\{f\}.
 \]
 Construction~\ref{const:gerstenhaber-bracket} is the geometric
-realization of the same operation: inserting the configuration of
-$g$ into the $i$-th marked point of the configuration of $f$ gives
-the $i$-th brace term, and taking the residue along the collision
-divisor is the geometric form of the chiral operadic composition.
-Summing over all insertion points produces $f\{g\}$, while the
-second insertion sum produces $g\{f\}$; their antisymmetrization is
-exactly the residue bracket described below.
+realization of the same operation: each residue
+$f \circ_i g$ inserts the $g$-configuration into the $i$-th marked
+point of the $f$-configuration, so the sum over insertion places is
+the geometric avatar of the single brace $f\{g\}$. We therefore
+write
+\[
+f \circ g = f\{g\}
+\]
+under the comparison of Remark~\ref{rem:comparison-geometric-hoch},
+and the displayed formula above is exactly the bracket coming from
+Construction~\ref{const:gerstenhaber-bracket}.
 
-Therefore the bracket defined by
-Construction~\ref{const:gerstenhaber-bracket} agrees with the
-algebraic Gerstenhaber bracket on cochains. Corollary~\ref{cor:gerstenhaber-cohomology}
-shows that this bracket descends to cohomology, has degree~$-1$,
-and satisfies the graded Jacobi identity. Hence
-$\ChirHoch^\bullet(\mathcal{A})$ is a graded Lie algebra with the
-stated bracket.
+The graded Jacobi identity follows from the pre-Lie identity for
+the single insertion. Algebraically this is
+Proposition~\ref{prop:pre-lie-chiral}; geometrically it is the
+statement that the two ways of performing successive insertions are
+the two boundary decompositions of the same codimension-$1$ face in
+the Fulton--MacPherson space $\FM_3(\bC)$. Associativity of the
+chiral operadic composition on these boundary strata gives
+\[
+(f \circ g)\circ h - f \circ (g \circ h)
+=
+(-1)^{(|g|-1)(|h|-1)}
+\bigl((f \circ h)\circ g - f \circ (h \circ g)\bigr),
+\]
+which is the Stasheff-type boundary relation for triple insertion.
+Antisymmetrizing a pre-Lie product gives a graded Lie bracket, so
+$[-,-]_{\mathrm G}$ satisfies graded skew-symmetry and Jacobi on
+cochains.
+
+Next, the Hochschild differential is $\delta=[m,-]$ on
+$C^\bullet_{\mathrm{ch}}(A,A)$.
+Theorem~\ref{thm:brace-dg-algebra} shows that $\delta$ is a
+derivation of the brace operations; hence
+\[
+\delta [f,g]_{\mathrm G}
+=
+[\delta f,g]_{\mathrm G}
++
+(-1)^{|f|-1}[f,\delta g]_{\mathrm G}.
+\]
+Therefore the bracket descends to cohomology.
+
+For compatibility with the cup product, use the universal local
+chiral Swiss-cheese pair of
+Theorem~\ref{thm:chiral-deligne-tamarkin}. In that operadic model,
+the cup product is the binary closed operation and the single brace
+is the boundary insertion operation obtained from the same
+$\mathsf{SC}^{\mathrm{ch,top}}$-structure. The mixed codimension-$1$
+boundary relation in the Swiss-cheese operad is exactly the
+brace-cup compatibility, so on cochains one has
+\[
+[f, g \smile h]_{\mathrm G}
+=
+[f,g]_{\mathrm G}\smile h
++
+(-1)^{(|f|-1)|g|}\, g \smile [f,h]_{\mathrm G}.
+\]
+Since both the bracket and the cup product descend through the
+differential, the same identity holds on cohomology. This is the
+Gerstenhaber compatibility recorded abstractly in
+Corollary~\ref{cor:gerstenhaber-cohomology}. Hence
+$\ChirHoch^\bullet(\mathcal{A})$ is a Gerstenhaber algebra with the
+stated residue bracket.
 \end{proof}
 
 \begin{construction}[Geometric realization of bracket]\label{const:gerstenhaber-bracket}
@@ -5040,16 +5181,16 @@ For each insertion place $1 \leq i \leq p+1$, let
 $f \circ_i g$ be the residue obtained by colliding the
 output point of the $g$-configuration with the $i$-th marked
 point of the $f$-configuration. The total single-insertion
-operation is
+sum
 \[
 f \circ g
 \;:=\;
 \sum_{i=1}^{p+1} (-1)^{(q-1)(i-1)}\, f \circ_i g.
 \]
-The chiral Gerstenhaber bracket is then the
-antisymmetrization of the two single-insertion sums:
+is the geometric pre-Lie product on chiral Hochschild cochains.
+The chiral Gerstenhaber bracket is its antisymmetrization:
 \[
-[f,g]
+[f,g]_{\mathrm G}
 \;:=\;
 f \circ g
 \;-\;
@@ -5076,7 +5217,10 @@ g(z_0, \ldots, z_q)
 \]
 and $g \circ f$ is defined by the same formula with $f$ and $g$
 interchanged. The residue extracts the collision behavior along the
-relevant boundary divisor in the Fulton--MacPherson compactification.
+relevant boundary divisor in the Fulton--MacPherson compactification,
+so $f \circ g$ is the geometric realization of the single brace
+operation and $[f,g]_{\mathrm G}$ is the corresponding
+Gerstenhaber bracket.
 \end{construction}
 
 \begin{example}[Gerstenhaber bracket for Heisenberg]\label{ex:gerstenhaber-heisenberg}

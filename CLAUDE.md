@@ -1008,6 +1008,25 @@ Details: FRONTIER.md (research programme status), MEMORY.md (session history), c
 
 All macros in main.tex preamble. NEVER \newcommand in chapters (use \providecommand). Memoir class, EB Garamond (newtxmath + ebgaramond). Tags: \ClaimStatusProvedHere, \ClaimStatusProvedElsewhere, \ClaimStatusConjectured, \ClaimStatusHeuristic. Label everything with \label{def:}, \label{thm:}. Cross-reference with \ref. Do not add packages without checking compatibility. Do not create new .tex files when content belongs in existing chapters.
 
+## Vol III 6d hCS Session Cross-Awareness (2026-04-12/13)
+
+The Vol III session (~170 agents) produced results that feed back into Vol I:
+
+**New anti-patterns applicable to Vol I:**
+- AP-CY23: E_1-chiral bialgebra is the correct Hopf home. The ORDERED bar B^{ord} (Vol I) preserves R-matrix; the SYMMETRIC bar B^Σ (Vol I Theorem A) kills Hopf via averaging av(r(z))=κ_ch.
+- AP-CY24: Docstring confabulation — agents produce correct code but fabricate ground-truth values in docstrings for n≥4. Verify EVERY docstring value against function output.
+- AP-CY25: R-matrix formula R=(id⊗S)∘Δ(1) is WRONG. Use half-braiding construction.
+- AP-CY26: σ_2 is EVEN under h_i→-h_i. Level inversion k^!=-k from Shapovalov transposition, NOT σ_2 negation.
+
+**Key results affecting Vol I infrastructure:**
+- Shadow tower S_k = A_∞ coproduct correction coefficient δ^{(k)}. The shadow invariants encode coproduct corrections.
+- ZTE fails for Yang R-matrix at O(κ²). E_3 is genuinely nontrivial beyond E_2.
+- E_3 bar cohomology: class L → (1+t)^{3g}, class C → (1+t)^{3g}, class M → ∞-dim.
+- Universal coproduct: Δ_z(e_s) = Σ C(N_R-b,k) z^k e_a^L·e_b^R. All spins, closed form.
+- Conductors: G/L: ρ_K=0. M(Vir): 13. K3×E: 0. Family-dependent.
+
+See ~/calabi-yau-quantum-groups/FRONTIER.md F13-F24 and CLAUDE.md for full details.
+
 ## Git
 
 All commits authored by Raeez Lorgat. NEVER credit an LLM. No co-authored-by, no generated-by, no AI attribution anywhere. Constitution: concordance.tex. git stash FORBIDDEN (AAP16).

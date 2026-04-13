@@ -131,8 +131,7 @@ $\mathbf{C}_g(\cA)$ satisfies:
 \item \emph{Finite-dimensionality.}
  For each $n \in \mathbb{Z}$,
  $H^n(\mathbf{C}_g(\cA))$ is finite-dimensional over
- $\mathbb{C}$, and is nonzero only for
- $0 \le n \le 6g - 6$.
+ $\mathbb{C}$, and only finitely many cohomological degrees occur.
 
 \item \emph{Verdier self-duality.}
  The Koszul pairing
@@ -157,10 +156,9 @@ $\mathbf{C}_g(\cA)$ satisfies:
 
 \begin{proof}
 \emph{Part (i).}
-The cohomological dimension of $\overline{\mathcal{M}}_g$ is
-$2 \dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 2(3g - 3) = 6g - 6$
-by Artin vanishing for proper DM stacks
-\cite[\S4.1]{Olsson16}. The stalks of
+$\mathbf{C}_g(\cA)$ is the derived global sections of a
+constructible complex on the proper Noetherian DM stack
+$\overline{\mathcal{M}}_g$. The stalks of
 $\mathcal{Z}(\cA)$ are finite-dimensional by hypothesis
 (finite-dimensional flat fiber cohomology,
 Lemma~\ref{lem:perfectness-criterion}(ii)).
@@ -170,7 +168,10 @@ each cohomology sheaf $R^q\pi_{g*}\barB^{(g)}(\cA)$
 is a constructible sheaf on the Noetherian stack
 $\overline{\mathcal{M}}_g$. Cohomology of a constructible
 sheaf on a Noetherian DM stack is finite-dimensional
-\cite[Theorem~18.1.1]{SAG}.
+\cite[Theorem~18.1.1]{SAG}, and proper DM stacks have finite
+cohomological dimension \cite[\S4.1]{Olsson16}. Hence
+$H^*(\mathbf{C}_g(\cA))$ is finite-dimensional in each degree and
+vanishes outside a finite range.
 
 \emph{Part (ii).}
 The Koszul pairing restricts to a perfect pairing on centers
@@ -194,6 +195,32 @@ Applying $\RGamma(\overline{\mathcal{M}}_g, -)$ preserves
 functoriality.
 \end{proof}
 
+\begin{lemma}[Canonical biduality for the ambient complex;
+\ClaimStatusProvedHere]
+\label{lem:thqg-III-ambient-biduality}
+\index{ambient complex!canonical biduality}
+Under the finite-dimensionality statement of
+Proposition~\ref{prop:thqg-III-ambient-properties}(i), the canonical
+evaluation morphism
+\[
+\mathrm{can}_{\mathbf{C}_g}\colon
+\mathbf{C}_g(\cA) \longrightarrow \mathbf{C}_g(\cA)^{\vee\vee}
+\]
+is a quasi-isomorphism.
+\end{lemma}
+
+\begin{proof}
+Over the field~$\mathbb{C}$, a complex is perfect if and only if it
+is quasi-isomorphic to a bounded complex of finite-dimensional vector
+spaces. Proposition~\ref{prop:thqg-III-ambient-properties}(i) gives
+finite-dimensional total cohomology for $\mathbf{C}_g(\cA)$, so
+$\mathbf{C}_g(\cA)$ is perfect in $D(\mathbb{C})$. For a bounded
+finite-dimensional complex, evaluation into the double dual is an
+isomorphism termwise, hence a quasi-isomorphism. Transporting this
+along any perfect representative gives the canonical biduality
+quasi-isomorphism above.
+\end{proof}
+
 \begin{construction}[Verdier involution on the ambient complex]
 \label{constr:thqg-III-verdier-involution}
 \index{Verdier involution!construction|textbf}
@@ -202,7 +229,8 @@ Proposition~\ref{prop:thqg-III-ambient-properties}(ii) and
 the Koszul involutivity
 $(\cA^!)^! \simeq \cA$
 (Theorem~\ref{thm:chiral-koszul-duality}), together with the
-canonical biduality of the perfect ambient complex, combine to produce
+canonical biduality quasi-isomorphism of
+Lemma~\ref{lem:thqg-III-ambient-biduality}, combine to produce
 a cochain-level endomorphism
 \begin{equation}\label{eq:thqg-III-sigma-def}
 \sigma
@@ -224,24 +252,26 @@ constructed as the composition:
 \mathbf{C}_g(\cA)
 \end{tikzcd}
 \end{equation}
-Here $\mathbb{D}$ is the Verdier duality map from
-Corollary~\ref{cor:duality-bar-complexes-complete},
+Here $\mathbb{D}$ is the map on derived global sections induced by the
+Verdier self-duality
+\eqref{eq:thqg-III-verdier-self-duality} of
+Proposition~\ref{prop:thqg-III-ambient-properties}(ii),
 $\mathrm{KS}$ is the Koszul identification
 $\mathbf{C}_g(\cA) \xrightarrow{\sim} \mathbf{C}_g(\cA^!)$
 via Lemma~\ref{lem:center-isomorphism}, and
 $\mathrm{can}_{\mathbf{C}_g}$ denotes the canonical biduality
 quasi-isomorphism
 $\mathbf{C}_g(\cA) \xrightarrow{\sim} \mathbf{C}_g(\cA)^{\vee\vee}$.
-One way to see this canonically is to combine
+One route to Lemma~\ref{lem:thqg-III-ambient-biduality} is to combine
 Lemma~\ref{lem:perfectness-criterion} with
 Theorem~\ref{thm:fiber-center-identification}: on the modular
 Koszul locus, $\mathbf{C}_g(\cA)$ is the derived global sections of
 a perfect complex on $\overline{\mathcal{M}}_g$, hence is itself a
 perfect complex over~$\mathbb{C}$. Equivalently,
-Proposition~\ref{prop:thqg-III-ambient-properties}(i) shows that
-$\mathbf{C}_g(\cA)$ has finite-dimensional total cohomology, which
-is the same perfection statement over a field. Thus no choice of a
-bounded finite-dimensional model is needed.
+Proposition~\ref{prop:thqg-III-ambient-properties}(i) gives
+finite-dimensional total cohomology, which over a field is the same
+perfection statement. Thus no separate reflexivity hypothesis and no
+choice of a bounded finite-dimensional model are needed.
 The shifts cancel, and the composition
 is well-defined as a cochain map of degree zero.
 \end{construction}
@@ -492,7 +522,9 @@ $Q_1(\cA) \oplus Q_1(\cA^!) \cong H^*(\overline{\mathcal{M}}_{1,1},
 Under the finite-dimensional fiber-cohomology hypothesis needed
 for Construction~\ref{constr:thqg-III-verdier-involution}, the
 eigenspace decomposition~(C1) holds on the Koszul locus without
-any additional nondegeneracy hypothesis.
+any additional nondegeneracy hypothesis. The splitting is valid for
+all $g \ge 0$, but the perfect duality between the two summands starts
+only at genus~$1$; genus~$0$ is the sharp center-valued boundary case.
 We give a self-contained proof in the holographic setting.
 
 \begin{theorem}[Holographic eigenspace decomposition (C1);
@@ -502,10 +534,12 @@ We give a self-contained proof in the holographic setting.
 Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth projective
 curve $X$ over $\mathbb{C}$, and let $g \ge 0$.
 Assume the finite-dimensional fiber-cohomology hypothesis of
-Lemma~\ref{lem:perfectness-criterion}(ii), so that
+Lemma~\ref{lem:perfectness-criterion}(ii). Then
+Proposition~\ref{prop:thqg-III-ambient-properties}(i) and
+Lemma~\ref{lem:thqg-III-ambient-biduality} supply the canonical
+biduality quasi-isomorphism of $\mathbf{C}_g(\cA)$, so
 Construction~\ref{constr:thqg-III-verdier-involution} is defined
-using the canonical biduality quasi-isomorphism of
-$\mathbf{C}_g(\cA)$.
+for every such genus.
 
 \smallskip\noindent
 \textbf{H-level.}\;
@@ -535,7 +569,7 @@ where $Q_g(\cA) = \ker(\sigma - \id)$ and
 $Q_g(\cA^!) = \ker(\sigma + \id)$.
 
 \smallskip\noindent
-\textbf{Duality for $g \ge 1$.}\;
+\textbf{Duality only for $g \ge 1$.}\;
 The Verdier pairing restricts to a perfect duality
 \begin{equation}\label{eq:thqg-III-C1-duality}
 Q_g(\cA) \;\cong\; Q_g(\cA^!)^{\vee}.

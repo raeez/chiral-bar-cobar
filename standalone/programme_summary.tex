@@ -552,11 +552,20 @@ data. The averaging map collapses $k\,\Omega$ to a scalar:
 \begin{equation}\label{eq:km-kappa}
 \mathrm{av}(k\,\Omega/z)
 \;=\;
-\frac{\dim(\fg) \cdot (k + h^\vee)}{2h^\vee}
+\frac{k\,\dim(\fg)}{2h^\vee}
 \;=\;
-\kappa(\widehat{\fg}_k)\,,
+\kappa_{\mathrm{dp}}(\widehat{\fg}_k)\,,
 \end{equation}
-where $h^\vee$ is the dual Coxeter number. The matrix
+where $h^\vee$ is the dual Coxeter number. The full modular
+characteristic adds the Sugawara shift:
+\[
+\kappa(\widehat{\fg}_k)
+\;=\;
+\kappa_{\mathrm{dp}}(\widehat{\fg}_k) + \frac{\dim(\fg)}{2}
+\;=\;
+\frac{\dim(\fg)\,(k+h^\vee)}{2h^\vee}.
+\]
+The matrix
 structure of~$\Omega$, erased by $\Sigma_2$-coinvariance,
 encodes the representation theory of~$\fg$: it is the datum
 that builds the Yangian~$Y(\fg)$.
@@ -712,8 +721,12 @@ and $\kappa(\cA) \in \Bbbk$ is the \emph{modular
 characteristic}. The modular characteristic is intrinsic to
 the chiral algebra; it is determined by the leading OPE
 singularity and is visible already at genus~$0$ as the
-$\Sigma_2$-coinvariant of the collision residue:
-$\kappa(\cA) = \mathrm{av}(r(z))$.
+$\Sigma_2$-coinvariant scalar shadow of the collision residue:
+for abelian and Virasoro-type families
+$\kappa(\cA) = \mathrm{av}(r(z))$, while for non-abelian
+affine Kac--Moody in the trace-form convention
+$\mathrm{av}(r(z)) = \kappa_{\mathrm{dp}}(\cA)$ and
+$\kappa(\cA) = \kappa_{\mathrm{dp}}(\cA) + \dim(\fg)/2$.
 
 The failure of $d^2 = 0$ at genus~$g \ge 1$ is not a defect
 of the construction; it is the construction detecting global
@@ -932,6 +945,10 @@ original algebra:
 \end{equation}
 The counit of the bar-cobar adjunction is a
 quasi-isomorphism of augmented factorization algebras.
+At genus~$0$ this is unconditional. For arbitrary
+modular pre-Koszul inputs at $g \ge 1$, the extension uses
+the modular axiom; on the standard CFT-type landscape it is
+unconditional except for integer-spin $\beta\gamma$.
 \end{theorem}
 
 Bar-cobar inversion is a round-trip, not a duality.
@@ -955,7 +972,7 @@ inversion requires completion.
 % ====================================================================
 
 \begin{theorem}[C]\label{thm:C}
-For a Koszul pair $(\cA, \cA^!)$ on~$X$ and $g \ge 2$, the
+For a Koszul pair $(\cA, \cA^!)$ on~$X$ and each $g \ge 0$, the
 complementarity complex
 \[
 \mathbf{C}_g(\cA)
@@ -969,7 +986,7 @@ involution~$\sigma$:
 \;\simeq\;
 \mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!)\,.
 \end{equation}
-The summands $\mathbf{Q}_g(\cA) =
+For $g \ge 1$, the summands $\mathbf{Q}_g(\cA) =
 \operatorname{fib}(\sigma - \mathrm{id})$
 and\/ $\mathbf{Q}_g(\cA^!) =
 \operatorname{fib}(\sigma + \mathrm{id})$ are
@@ -995,6 +1012,7 @@ perfectness and nondegeneracy of the cyclic pairing.
 For a uniform-weight modular Koszul chiral algebra\/~$\cA$,
 the genus-$g$ obstruction class satisfies
 $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+\textup{(UNIFORM-WEIGHT)}
 for all\/ $g \ge 1$, where $\kappa(\cA)$ is a universal,
 additive, duality-constrained scalar determined by the
 genus-$0$ data of\/~$\cA$. The generating function is
@@ -1017,16 +1035,16 @@ uniform-weight lane; at genus~$1$ it is unconditional
 % ====================================================================
 
 \begin{theorem}[H]\label{thm:H}
-For a chirally Koszul algebra~$\cA$, the chiral Hochschild
-cohomology
-$\mathrm{ChirHoch}^*(\cA)
-= H^*(C^{\bullet}_{\mathrm{ch}}(\cA, \cA), \delta)$
-is polynomial with generators concentrated in degrees
-$\{0, 1, 2\}$:
+For the generic Virasoro and principal $\cW$-algebra
+families, the chiral Hochschild cohomology is concentrated
+in degrees $\{0,1,2\}$ with Hilbert polynomial
+$P(t)=1+t^2$. For affine Kac--Moody at generic level,
 \[
-\dim_\Bbbk \mathrm{ChirHoch}^*(\cA)
-\;\le\; 4\,.
+\ChirHoch^1(V_k(\fg)) \cong \fg.
 \]
+At critical level, the cohomology is identified with the
+continuous Lie algebra cohomology by the
+Beilinson--Drinfeld comparison theorem.
 \end{theorem}
 
 The chiral derived centre
@@ -1483,11 +1501,22 @@ The relationship to the modular characteristic is immediate:
 \begin{equation}\label{eq:kappa-from-r}
 \kappa(\cA)
 \;=\;
-\mathrm{av}\bigl(r(z)\bigr)\,.
+\mathrm{av}\bigl(r(z)\bigr)
+\quad\text{for abelian and Virasoro-type families,}
 \end{equation}
-The averaging map $\mathrm{av}$ is the
-$\Sigma_2$-coinvariant projection. For Kac--Moody,
-$\mathrm{av}(k\,\Omega/z) = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
+while for non-abelian affine Kac--Moody in the trace-form
+convention
+\[
+\mathrm{av}(k\,\Omega/z)
+\;=\;
+\frac{k\,\dim(\fg)}{2h^\vee}
+\;=\;
+\kappa_{\mathrm{dp}}(\widehat\fg_k),
+\qquad
+\kappa(\widehat\fg_k)
+\;=\;
+\kappa_{\mathrm{dp}}(\widehat\fg_k)+\frac{\dim(\fg)}{2}.
+\]
 For Virasoro, $\mathrm{av}((c/2)/z^3 + 2T/z) = c/2$.
 
 % ====================================================================

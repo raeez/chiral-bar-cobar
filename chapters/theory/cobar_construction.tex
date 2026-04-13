@@ -1319,20 +1319,27 @@ of the OPE algebra in CFT.
 Let $\mathcal{A}$ be on the Koszul locus and write $\mathcal{A}^!$ for its
 Koszul dual.
 
-There is a perfect pairing:
+Write
+\[
+(\mathcal{A})^!_\infty
+:=
+\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\text{ch}}(\mathcal{A}))
+\]
+for the homotopy Koszul dual factorization algebra. There is a perfect pairing:
 \[\langle \cdot, \cdot \rangle: \bar{B}^{\text{ch}}_n(\mathcal{A}) \otimes 
-\Omega^{\text{ch}}_n(\mathcal{A}^!) \to \mathbb{C}\]
+(\mathcal{A})^!_{\infty,n} \to \mathbb{C}\]
 
 given by:
-\[\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle = \int_{\overline{C}_n(X)} 
-\omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}\]
+\[\langle \omega_{\text{bar}}, K_{\text{Verdier}} \rangle = \int_{\overline{C}_n(X)} 
+\omega_{\text{bar}} \wedge \iota^* K_{\text{Verdier}}\]
 
 where:
 \begin{itemize}
 \item $\omega_{\text{bar}} \in \Gamma(\overline{C}_n(X), \mathcal{A}^{\boxtimes n} 
 \otimes \Omega^*_{\log})$ is a bar element (logarithmic form on compactified space)
-\item $K_{\text{cobar}} \in \mathcal{D}'(C_n(X), (\mathcal{A}^!)^{\boxtimes n})$ is 
-	a cobar element (distribution on open space)
+\item $K_{\text{Verdier}} \in (\mathcal{A})^!_{\infty,n}$ is represented on $C_n(X)$ by 
+	distributional sections with values in $(\mathcal{A}^!)^{\boxtimes n}$; this is the
+	post-Verdier factorization-algebra side of Theorem~A, not a pre-Verdier coalgebra
 \item $\iota: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the inclusion of the 
 open configuration space
 \item The integration is well-defined because logarithmic forms pair with distributions
@@ -1350,7 +1357,8 @@ open configuration space
 \mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\text{ch}}(\mathcal{A}))
 \;\simeq\; (\mathcal{A})^!_\infty
 \]
-as factorization algebras on $\operatorname{Ran}(X)$
+as factorization algebras on $\operatorname{Ran}(X)$; on the Koszul locus,
+Theorem~A identifies $(\mathcal{A})^!_\infty \simeq \mathcal{A}^!$
 \end{enumerate}
 \end{theorem}
 
@@ -1366,7 +1374,8 @@ Logarithmic form: $\omega = \frac{d\epsilon}{\epsilon} \wedge (\text{smooth form
 Restriction to $C_n(X)$: $\iota^*\omega$ has a pole at $\epsilon = 0$, hence is 
 a distribution on $C_n(X) = \overline{C}_n(X) \setminus D$.
 
-The pairing integrates this distribution against the cobar distribution:
+The pairing integrates this distribution against the corresponding
+distributional representative on the Verdier-dual side:
 \[\langle \omega, K \rangle = \int_{\overline{C}_n(X)} \omega \wedge K\]
 
 This is well-defined by the theory of currents (de Rham's theorem on distributions).
@@ -1376,13 +1385,13 @@ This is well-defined by the theory of currents (de Rham's theorem on distributio
 We verify:
 \[\langle d_{\text{bar}}\omega, K \rangle = -\langle \omega, d_{\text{cobar}}K \rangle\]
 
-At the level of $\mathcal{D}$-modules on $\overline{C}_n(X)$, the bar and cobar differentials are flat connections (the bar complex is a complex of holonomic $\mathcal{D}$-modules by Lemma~\ref{lem:bar-holonomicity}). Verdier duality is an exact contravariant involution on $D^b_{\mathrm{hol}}(\mathcal{D}_{\overline{C}_n(X)})$ that sends a flat connection $\nabla$ to the adjoint connection $\nabla^\dagger$ (see~\cite{KS90}, Chapter~4).
+At the level of $\mathcal{D}$-modules on $\overline{C}_n(X)$, the bar differential and its Verdier-transported differential on the post-Verdier factorization-algebra side are flat connections (the bar complex is a complex of holonomic $\mathcal{D}$-modules by Lemma~\ref{lem:bar-holonomicity}). Verdier duality is an exact contravariant involution on $D^b_{\mathrm{hol}}(\mathcal{D}_{\overline{C}_n(X)})$ that sends a flat connection $\nabla$ to the adjoint connection $\nabla^\dagger$ (see~\cite{KS90}, Chapter~4).
 
 We make the adjoint identity explicit. For a holonomic $\mathcal{D}$-module $\mathcal{M}$ on a smooth variety $Y$ of dimension~$d$, the Verdier dual is $\mathbb{D}\mathcal{M} = R\mathcal{H}\!\mathit{om}_{\mathcal{D}_Y}(\mathcal{M}, \mathcal{D}_Y \otimes \Omega_Y^{-1})[d]$. When $\mathcal{M}$ carries a flat connection $\nabla \colon \mathcal{M} \to \mathcal{M} \otimes \Omega^1_Y$, sections $m^* \in \mathbb{D}\mathcal{M}$ inherit the adjoint connection $\nabla^\dagger$ defined by
 \[\langle \nabla^\dagger m^*,\, m \rangle \;=\; -\,\langle m^*,\, \nabla m \rangle\]
 for all local sections $m \in \mathcal{M}$, where $\langle -,- \rangle$ is the canonical pairing $\mathbb{D}\mathcal{M} \otimes \mathcal{M} \to \omega_Y$. This is the unique connection on $\mathbb{D}\mathcal{M}$ making the pairing flat, i.e., satisfying $d\langle m^*, m\rangle = \langle \nabla^\dagger m^*, m\rangle + \langle m^*, \nabla m\rangle = 0$.
 
-Applying this to $Y = \overline{C}_n(X)$, $\mathcal{M} = \bar{B}^{\mathrm{ch}}_n(\mathcal{A})$ with $\nabla = d_{\mathrm{bar}}$, and the cobar side identified with $\mathbb{D}\mathcal{M}$ by the pairing constructed in Steps~3--4, one obtains $d_{\mathrm{cobar}} = d_{\mathrm{bar}}^\dagger$ as the Verdier-adjoint connection. The differential compatibility
+Applying this to $Y = \overline{C}_n(X)$, $\mathcal{M} = \bar{B}^{\mathrm{ch}}_n(\mathcal{A})$ with $\nabla = d_{\mathrm{bar}}$, and the post-Verdier factorization-algebra side identified with $\mathbb{D}\mathcal{M}$ by the pairing constructed in Steps~3--4, one obtains $d_{\mathrm{cobar}} = d_{\mathrm{bar}}^\dagger$ as the Verdier-adjoint connection. The differential compatibility
 \[\langle d_{\text{bar}}\omega, K \rangle = -\langle \omega, d_{\text{cobar}}K \rangle\]
 therefore holds by the flatness of the canonical pairing on holonomic $\mathcal{D}$-modules, without requiring a component-by-component Stokes argument.
 
@@ -1428,7 +1437,8 @@ $\operatorname{Ran}(X)$:
 \]
 
 where $(\mathcal{A})^!_\infty$ denotes the homotopy Koszul dual factorization
-algebra of Theorem~A.
+algebra of Theorem~A; on the Koszul locus this is the same post-Verdier
+factorization algebra that Theorem~A identifies with $\mathcal{A}^!$.
 
 \emph{Non-degeneracy.}
 At bar degree~$n = 1$, Step~3 establishes the fundamental pairing
@@ -1445,9 +1455,9 @@ at each bar degree.
 
 \emph{Geometric meaning.}
 \begin{itemize}
-\item Bar = cohomology with compact support (logarithmic forms on $\overline{C}_n$)
-\item Cobar = homology (distributional cycles on $C_n$)
-\item Pairing = Poincar\'e duality between cohomology and homology
+\item Bar = logarithmic-form realization of the pre-Verdier bar coalgebra
+\item Verdier-dual side = distributional realization of the post-Verdier factorization algebra
+\item Pairing = Poincar\'e--Verdier duality between these two realizations
 \end{itemize}
 
 This completes the proof.
@@ -2219,7 +2229,7 @@ The critical level is the fixed point of the level-shifting involution $k \mapst
 % k' = -k-2h^v. The proof below correctly
 % invokes Theorem A and Convention conv:bar-coalgebra-identity. Verified.
 For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$,
-the Verdier intertwining
+the post-Verdier factorization-algebra identification
 (Theorem~\ref{thm:bar-cobar-isomorphism-main},
 Convention~\ref{conv:bar-coalgebra-identity}) applied to the
 curved bar coalgebra of
@@ -2250,7 +2260,7 @@ The dual level $k' = -k - 2h^\vee$ satisfies:
 \end{corollary}
 
 \begin{proof}
-The Verdier intertwining
+The Verdier intertwining on the factorization-algebra side
 (Theorem~\ref{thm:bar-cobar-isomorphism-main},
 Convention~\ref{conv:bar-coalgebra-identity}) identifies
 $\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\mathrm{ch}}(\cA))
