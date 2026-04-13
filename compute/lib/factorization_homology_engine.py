@@ -49,6 +49,7 @@ from .genus_partition_closure import (
     F_g_scalar,
     _compute_kappa,
 )
+from .sl3_verlinde_engine import sl3_verlinde_dimension
 
 
 # ---------------------------------------------------------------------------
@@ -679,7 +680,7 @@ def verlinde_formula(lie_type: str, level: int,
     Known values:
       sl_2, k=1, g=0: 1
       sl_2, k=1, g=1: 2
-      sl_2, k=1, g=2: 3
+      sl_2, k=1, g=2: 4
       sl_2, k=2, g=0: 1
       sl_2, k=2, g=1: 3
       sl_2, k=2, g=2: 10
@@ -693,12 +694,7 @@ def verlinde_formula(lie_type: str, level: int,
     if lie_type.lower() in ("sl2", "sl_2", "a1"):
         return _verlinde_sl2_integer(level, genus)
     elif lie_type.lower() in ("sl3", "sl_3", "a2"):
-        if genus == 0:
-            return 1
-        elif genus == 1:
-            return (level + 1) * (level + 2) // 2
-        else:
-            return _verlinde_slN_integer(3, level, genus)
+        return sl3_verlinde_dimension(genus, level)
     elif lie_type.lower() in ("sln", "sl_n"):
         return None
     else:
@@ -750,38 +746,7 @@ def _verlinde_slN_integer(N: int, k: int, g: int) -> Optional[int]:
         return _verlinde_sl2_integer(k, g)
 
     if N == 3:
-        # SU(3) at level k: the S-matrix entries are
-        #   S_{0, (a,b)} = C * sin(pi*a'/(k+3)) * sin(pi*b'/(k+3))
-        #                    * sin(pi*(a'+b')/(k+3))
-        # where a' = a+1, b' = b+1, and the sum is over integrable weights
-        # (a,b) with a+b <= k, a,b >= 0.
-        #
-        # The Verlinde partition function is sum |S_{0,lambda} / S_{0,0}|^{2-2g}.
-        total = 0.0
-        s000_sq = 0.0
-        # S_{0,0} corresponds to (a,b) = (0,0), i.e. (a',b') = (1,1)
-        K = k + N  # = k + 3
-        s00 = (math.sin(math.pi / K) *
-               math.sin(math.pi / K) *
-               math.sin(math.pi * 2 / K))
-        s00_abs = abs(s00)
-
-        for a in range(k + 1):
-            for b in range(k + 1 - a):
-                ap = a + 1
-                bp = b + 1
-                s_val = (math.sin(math.pi * ap / K) *
-                         math.sin(math.pi * bp / K) *
-                         math.sin(math.pi * (ap + bp) / K))
-                ratio = abs(s_val / s00)
-                total += ratio ** (2 - 2 * g)
-
-        # The dimension includes a normalization by |S_{0,0}|^{2-2g}
-        # Beauville normalization: dim = total (already normalized)
-        # Actually for SU(N), the correct Beauville formula is more involved.
-        # We use: dim = sum_{lambda} (d_lambda)^{2-2g}
-        # where d_lambda = S_{0,lambda}/S_{0,0} are quantum dimensions.
-        return round(total)
+        return sl3_verlinde_dimension(g, k)
 
     return None
 

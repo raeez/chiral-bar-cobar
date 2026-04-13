@@ -88,6 +88,8 @@ import math
 from fractions import Fraction
 from typing import Dict, List, Optional, Tuple
 
+from .sl3_verlinde_engine import sl3_verlinde_dimension
+
 
 # ---------------------------------------------------------------------------
 # 0. Lie data and central charges (kept local for self-containment)
@@ -550,28 +552,15 @@ def fh_higher_genus_verlinde(N: int, k: int, g: int) -> Dict[str, object]:
         }
 
     if N == 3:
-        # sl_3 at level k, genus g:
-        # dim = sum_lambda (S_{0,lambda}/S_{0,0})^{2-2g} where lambda runs
-        # over integrable level-k weights of sl_3.
-        K = k + 3  # k + h^v for sl_3
-        s00 = (math.sin(math.pi / K) *
-               math.sin(math.pi / K) *
-               math.sin(math.pi * 2 / K))
-        total = 0.0
-        for a in range(k + 1):
-            for b in range(k + 1 - a):
-                ap, bp = a + 1, b + 1
-                s_val = (math.sin(math.pi * ap / K) *
-                         math.sin(math.pi * bp / K) *
-                         math.sin(math.pi * (ap + bp) / K))
-                ratio = s_val / s00
-                total += ratio ** (2 - 2 * g)
-        dim = round(total)
+        dim = sl3_verlinde_dimension(g, k)
         return {
             "N": 3, "k": k, "g": g,
             "dim": dim,
-            "method": "sl_3 Verlinde S-matrix sum (Weyl-Kac normalization).",
-            "verified_paths": ["S_matrix"],
+            "method": (
+                "sl_3 Verlinde dimension via quantum dimensions plus "
+                "the S_{0,0}^{2-2g} prefactor from unitarity."
+            ),
+            "verified_paths": ["qdim", "unitarity"],
         }
 
     # General N: only return for small data via brute force
