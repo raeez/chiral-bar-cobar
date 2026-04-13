@@ -24,11 +24,19 @@ VERIFIED by four independent paths:
 """
 from itertools import permutations
 import numpy as np
+import pytest
 
 np.random.seed(42)
 TOL = 1e-10
 PASS_COUNT = 0
 FAIL_COUNT = 0
+
+# Fixture for Psi values used across multiple tests
+PSI_VALUES = [0.5, 1.0, 2.0]
+
+@pytest.fixture
+def Psi_values():
+    return PSI_VALUES
 
 
 def report(name, ok):
@@ -141,6 +149,7 @@ def compute_qdet(T, N, Psi, u):
 # ---------------------------------------------------------------------------
 # Test 1: Centrality [qdet T(u), t_{ij}(v)] = 0
 # ---------------------------------------------------------------------------
+@pytest.mark.parametrize("N,M", [(2, 2), (3, 2)])
 def test_centrality(N, M, Psi_values):
     """Test [qdet T(u), t_{ij}(v)] = 0 for given N, M, multiple Psi values."""
     print(f"\n=== Centrality: N={N}, M={M} (qdim={N**M}) ===")
