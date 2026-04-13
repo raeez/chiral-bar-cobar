@@ -898,10 +898,109 @@ Theorem~\ref{thm:pbw-allgenera-km}), Virasoro ($L_0$ diagonal,
 Theorem~\ref{thm:pbw-allgenera-virasoro}), and principal
 $\mathcal{W}$ (block upper triangular,
 Theorem~\ref{thm:pbw-allgenera-principal-w}).
+For semisimple weightwise symmetry, the genus enrichment splits into
+non-trivial isotypic pieces killed by Whitehead on the $d_1$ page and
+invariant pieces killed by the family-specific $d_2$ transgression.
+The affine KM Killing class shows that this is an $E_3$ statement, not
+an $E_1$ statement. For non-semisimple symmetry, the obstruction is the
+radical cohomology of the weightwise Lie action.
 Open: non-principal families; the $\mathcal{W}_\infty$
 inverse-limit package
 (Conjecture~\ref{conj:v1-master-infinite-generator}; MC4 structural framework proved, Theorem~\ref{thm:completed-bar-cobar-strong}; H-level identification remaining).
 \end{remark}
+
+\begin{lemma}[Weightwise reduction of the genus enrichment to
+ \texorpdfstring{$\fg$}{g}-modules; \ClaimStatusProvedHere]
+\label{lem:pbw-weightwise-g-module}
+\index{PBW spectral sequence!weightwise \texorpdfstring{$\fg$}{g}-module reduction|textbf}
+\index{truncated current algebra!mode bookkeeping only}
+Fix a genus $g \geq 1$ and a conformal weight $h \geq 1$. Write
+\[
+V_h := t^{-1}\bC[t^{-1}] / t^{-h-1}\bC[t^{-1}].
+\]
+Then the weight-$h$ genus-enrichment block of
+$\bar{B}^{(g)}(\widehat{\fg}_k)$ admits a finite decomposition
+\[
+\mathcal{E}_g^{*,h}
+\;\cong\;
+\bigoplus_\nu
+C^*_{\mathrm{CE}}(\fg, M_{h,\nu})
+\otimes_{\bC}
+H^1(\Sigma_g,\bC),
+\]
+where $\nu$ runs over the finitely many mode patterns of total
+weight~$h$, and each $M_{h,\nu}$ is a finite-dimensional
+$\fg$-module with diagonal adjoint action on the $\fg$-labels and
+trivial action on the mode and $H^1(\Sigma_g,\bC)$ factors.
+In particular the truncated current algebra $\fg \otimes V_h$
+records the mode cutoff only: the Whitehead step is carried out on
+the finite-dimensional $\fg$-modules $M_{h,\nu}$.
+\end{lemma}
+
+\begin{proof}
+At fixed weight~$h$, only modes $J^a_{-m}$ with $1 \leq m \leq h$
+can occur, so $V_h$ records all possible mode labels. Because the
+total weight is fixed, only finitely many mode patterns~$\nu$ occur.
+Fixing~$\nu$ separates the mode data from the $\fg$-labels in a bar
+word. The regular genus form contributes a passive factor from
+$H^1(\Sigma_g,\bC)$ because it is smooth across every collision
+divisor.
+
+The Lie-bracket residue acts only on the $\fg$-labels. For each fixed
+mode pattern~$\nu$, this is exactly the
+Chevalley--Eilenberg differential for the diagonal adjoint action of
+$\fg$ on the coefficient module~$M_{h,\nu}$. Summing over the finite
+set of mode patterns gives the stated decomposition.
+\end{proof}
+
+\begin{lemma}[Mixed genus-\texorpdfstring{$0/g$}{0/g} map factors through
+ \texorpdfstring{$H^1(\fg,-)$}{H1(g,-)}; \ClaimStatusProvedHere]
+\label{lem:pbw-mixed-factorization}
+\index{PBW spectral sequence!mixed map factorization|textbf}
+\index{Whitehead lemma!mixed genus-0/genus-g factorization}
+Fix $g \geq 1$, conformal weight~$h$, and bar degree~$n$.
+After choosing a basis of $H^1(\Sigma_g,\bC)$ and using
+Lemma~\ref{lem:pbw-weightwise-g-module}, there is a
+finite-dimensional $\fg$-module $N_h^{n-1}$ and
+$\fg$-equivariant maps
+\[
+\mathcal{E}_g^{n,h}
+\xrightarrow{\ \iota_{g,h,n}\ }
+C^1(\fg, N_h^{n-1})
+\xrightarrow{\ q\ }
+H^1(\fg, N_h^{n-1})
+\xrightarrow{\ \beta_{g,h,n}\ }
+E_2^{n-1,h}(g{=}0)
+\]
+with the following property: if
+$\xi \in \mathcal{E}_g^{n,h}$ is $d_{1,\mathrm{enr}}$-closed, then
+$\iota_{g,h,n}(\xi)$ is a Chevalley--Eilenberg $1$-cocycle and the
+mixed genus-$0$/genus-$g$ contribution of $[\xi]$ on the $E_2$ page
+equals $\beta_{g,h,n}\bigl(q(\iota_{g,h,n}(\xi))\bigr)$.
+Hence the mixed genus-$0$/genus-$g$ interaction is controlled by
+$H^1(\fg, N_h^{n-1})$ and does not require any cohomology theory for
+the non-semisimple truncated current algebra $\fg \otimes V_h$.
+\end{lemma}
+
+\begin{proof}
+Choose a basis $\{\alpha_r\}$ of $H^1(\Sigma_g,\bC)$ and write every
+enrichment class as a sum of tensors
+$(a_1 \otimes \cdots \otimes a_n) \otimes \alpha_r$ with fixed mode
+pattern. For each such tensor, isolate the $\fg$-label attached to the
+slot carrying the regular form and collect the remaining bar data into
+the coefficient module~$N_h^{n-1}$. This gives the map
+$\iota_{g,h,n}$ to degree-one Chevalley--Eilenberg cochains.
+
+The mixed residue brackets the distinguished $\fg$-label with one of
+the remaining labels and then forgets the regular genus form. The
+Jacobi identity for the residue bracket is exactly the cocycle
+condition on $\iota_{g,h,n}(\xi)$ when
+$d_{1,\mathrm{enr}}(\xi) = 0$. Changing $\xi$ by a
+$d_{1,\mathrm{enr}}$-boundary changes $\iota_{g,h,n}(\xi)$ by a
+Chevalley--Eilenberg coboundary. Therefore the mixed $E_2$ class
+depends only on the image of $\iota_{g,h,n}(\xi)$ in
+$H^1(\fg, N_h^{n-1})$.
+\end{proof}
 
 \begin{theorem}[PBW degeneration at genus~\texorpdfstring{$1$}{1} for Kac--Moody; \ClaimStatusProvedHere]
 \label{thm:pbw-genus1-km}
@@ -1018,33 +1117,25 @@ $\mathcal{E}_1^{*,h}$ is a finite-dimensional complex
 with only finitely many mode labels.
 Write
 $V_h := t^{-1}\bC[t^{-1}] / t^{-h-1}\bC[t^{-1}]$.
-The truncated current algebra $\fg \otimes V_h$
-records which modes can occur at weight~$h$; Whitehead is
-not applied to this non-semisimple Lie algebra. Its role is
-only to enumerate the finitely many mode patterns~$\nu$
-that occur in weight~$h$.
-After separating the mode data from the $\fg$-labels,
-the weight-$h$ enrichment block is a finite direct sum of
-Chevalley--Eilenberg complexes
-$C^*(\fg, M_{h,\nu})$, indexed by the finitely many
-mode patterns~$\nu$ of total weight~$h$. Each
-$M_{h,\nu}$ is a finite-dimensional $\fg$-module with
-diagonal adjoint action on the $\fg$-labels and trivial
-action on the mode and $H^1(E_\tau)$ factors. Equivalently,
+By Lemma~\ref{lem:pbw-weightwise-g-module}, the truncated
+current algebra $\fg \otimes V_h$ records only the finitely many
+mode patterns~$\nu$ of total weight~$h$. After separating mode data
+from $\fg$-labels, the weight-$h$ enrichment block is a finite
+direct sum of Chevalley--Eilenberg complexes
+$C^*(\fg, M_{h,\nu})$, or equivalently
 \[
 \mathcal{E}_1^{*,h}
 \;\cong\;
 C^*(\fg, M_h),
 \qquad
-M_h := \bigoplus_\nu M_{h,\nu},
+M_h := \bigoplus_\nu M_{h,\nu}.
 \]
-and $d_1^{\mathrm{PBW}}$ is the corresponding
-Chevalley--Eilenberg differential for the finite-dimensional
-semisimple Lie algebra~$\fg$. Thus the Whitehead step is carried
-out weight by weight on the $\fg$-modules~$M_{h,\nu}$, not on
-$\fg \otimes V_h$. The map to the concentrated
-genus-$0$ sector is one of the $\fg$-equivariant components of this
-same differential.
+The mixed component is the degree-one part of the same diagonal
+$\fg$-action: by Lemma~\ref{lem:pbw-mixed-factorization}, every
+mixed class factors through $H^1(\fg, N_h^{n-1})$ for a
+finite-dimensional $\fg$-module~$N_h^{n-1}$. Thus the Whitehead step
+is carried out weight by weight on honest $\fg$-modules, not on the
+non-semisimple Lie algebra $\fg \otimes V_h$.
 
 \medskip
 \emph{Step~3: Acyclicity of the enrichment complex.}
@@ -1054,23 +1145,28 @@ in each conformal weight~$h$, by a representation-theoretic
 argument for~$\fg$ semisimple.
 
 The enrichment module~$M_h$ at weight~$h$ decomposes
-under~$\fg$ into irreducible summands. Since $\fg$ is
-semisimple, the Whitehead--Chevalley--Eilenberg theorem
-gives:
+under~$\fg$ into irreducible summands. Write
+$M_h = M_h^{\fg} \oplus M_h^{\mathrm{non\text{-}triv}}$.
+By Lemma~\ref{lem:pbw-mixed-factorization}, the mixed
+genus-$0$/genus-$1$ component on the non-trivial summands factors
+through
+$H^1(\fg, N_h^{n-1}) = 0$
+for finite-dimensional $\fg$-modules~$N_h^{n-1}$, by
+Whitehead's first lemma for semisimple~$\fg$
+\cite{Weibel94}. Hence no non-trivial isotypic summand survives to
+the $E_2$ page through the mixed map.
+
+For the internal enrichment differential, the same weightwise
+decomposition identifies the non-trivial summands with a finite
+direct sum of Chevalley--Eilenberg complexes. The standard
+semisimple extension of Whitehead then gives:
 \[
 H^q(\fg,\, M_h^{\mathrm{non\text{-}triv}}) = 0
 \quad \text{for all } q \geq 0,
 \]
-where $M_h^{\mathrm{non\text{-}triv}}$ is the sum of
-non-trivial irreducible summands. Thus only the
-$\fg$-invariant part $M_h^{\fg}$ can contribute
-to cohomology.
-Because the mixed component
-$d_{1,\mathrm{mix}}\colon \mathcal{E}_1^{*,h} \to E_1^{*,h}(g{=}0)$
-is also $\fg$-equivariant, the same conclusion applies to the
-genus-$0$ target: no non-trivial $\fg$-isotypic summand survives the
-$E_2$-page through the mixed map. Any possible survivor must lie on the
-$\fg$-invariant line.
+so only the $\fg$-invariant part $M_h^{\fg}$ can contribute to
+cohomology. Any possible survivor must lie on the $\fg$-invariant
+line.
 
 For the $\fg$-invariant part: the invariants in the
 enrichment arise from the Killing form
@@ -1209,11 +1305,15 @@ are weight-independent), completing the proof.
 For fixed conformal weight~$h$, the truncated current algebra
 $\fg \otimes V_h$ only records which modes can occur. The actual
 Whitehead input appears after rewriting the weight-$h$ enrichment
-block as a finite direct sum of complexes $C^*(\fg, M_{h,\nu})$,
-with~$\fg$ acting diagonally on the $\fg$-labels and the mode and
-$H^1$ factors treated as passive coefficients. No vanishing statement
-is invoked for the non-semisimple Lie algebra $\fg \otimes V_h$
-itself.
+block as a finite direct sum of complexes $C^*(\fg, M_{h,\nu})$
+\textup{(}Lemma~\textup{\ref{lem:pbw-weightwise-g-module}}\textup{)},
+and the mixed genus-$0$/genus-$1$ map factors through
+$H^1(\fg, N_h^{n-1})$
+\textup{(}Lemma~\textup{\ref{lem:pbw-mixed-factorization}}\textup{)}.
+The Lie algebra~$\fg$ acts diagonally on the $\fg$-labels; the
+mode and $H^1$ factors are passive coefficients. No vanishing
+statement is invoked for the non-semisimple Lie algebra
+$\fg \otimes V_h$ itself.
 \end{remark}
 
 \begin{corollary}[Unconditional modular Koszulity at genus~\texorpdfstring{$1$}{1}; \ClaimStatusProvedHere]
@@ -1326,7 +1426,8 @@ determined solely by the OPE structure of~$\widehat{\fg}_k$
 truncated at weight~$h$, which is genus-independent. Equivalently,
 the weight-$h$ enrichment block is the same finite direct sum of
 Chevalley--Eilenberg complexes $C^*(\fg, M_{h,\nu})$ as in
-genus~$1$, indexed by the finitely many mode patterns.
+genus~$1$, indexed by the finitely many mode patterns
+\textup{(}Lemma~\textup{\ref{lem:pbw-weightwise-g-module}}\textup{)}.
 
 \medskip
 \emph{Step~2: Whitehead acyclicity of the enrichment.}
@@ -1347,7 +1448,11 @@ Thus the enrichment complex at weight~$h$ is
 H^{1,0}(\Sigma_g)
 \]
 where $C^*(\fg, M_h)$ is the Chevalley--Eilenberg
-complex of~$\fg$ with coefficients in~$M_h$. Thus the Whitehead
+complex of~$\fg$ with coefficients in~$M_h$. By
+Lemma~\ref{lem:pbw-mixed-factorization}, each basis vector of
+$H^{1,0}(\Sigma_g)$ produces the same mixed genus-$0$/genus-$g$
+factorization through
+$H^1(\fg, N_h^{n-1})$ as in genus~$1$. Thus the Whitehead
 argument is again applied to the finite-dimensional semisimple
 Lie algebra~$\fg$ on each weight-graded piece, not to the
 truncated current algebra that records the mode cutoff.
@@ -1924,6 +2029,41 @@ The structural input is the enrichment factorization
 $M_h \otimes H^{1,0}(\Sigma_g)$
 (\ref{eq:enrichment-factorization}), which separates local OPE
 data from global curve topology.
+\end{remark}
+
+\begin{remark}[Optimal semisimple page bound and the non-semisimple
+ obstruction]
+\index{PBW spectral sequence!optimal semisimple page bound|textbf}
+\index{PBW spectral sequence!non-semisimple obstruction|textbf}
+The semisimple PBW conclusion is an $E_3$ statement, not an
+$E_1$ statement. The affine KM proof gives the boundary example:
+at weight~$2$ the Killing-form class is $d_1$-closed and nonzero on
+$E_2$, and only the family-specific $d_2$ contraction kills it.
+Hence one cannot strengthen the semisimple theorem to an
+$E_1$-collapse claim without adding a false statement.
+
+For a general weightwise Lie symmetry algebra
+$\mathfrak{l}_h = \mathfrak{s}_h \ltimes \mathfrak{r}_h$
+\textup{(}Levi decomposition\textup{)}, the enrichment is governed by
+the Hochschild--Serre spectral sequence
+\[
+E_2^{p,q}(h)
+\;=\;
+H^p\!\bigl(\mathfrak{s}_h,\,
+H^q(\mathfrak{r}_h, M_h)\bigr)
+\;\Longrightarrow\;
+H^{p+q}(\mathfrak{l}_h, M_h).
+\]
+When $\mathfrak{r}_h = 0$, Whitehead kills the non-trivial
+$\mathfrak{s}_h$-isotypic summands and the only possible survivors are
+the invariant classes handled by the family-specific $d_2$
+transgression. When $\mathfrak{r}_h \neq 0$, the obstruction is the
+$\mathfrak{s}_h$-invariant radical cohomology. In particular
+\[
+H^1(\mathfrak{r}_h, M_h)^{\mathfrak{s}_h}
+\]
+is the first mixed genus-$1$ obstruction. Jordan blocks and
+nilpotent radicals are concrete sources of this term.
 \end{remark}
 
 \begin{theorem}[PBW propagation: MK1 implies MK3;
@@ -2750,14 +2890,14 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
 
 \begin{proof}
 \emph{Routing remark.}
-The dependency route is one-way and has an independent anchor:
-the bar-intrinsic shadow tower of
-Theorem~\ref{thm:mc2-bar-intrinsic} produces the scalar trace,
-Theorem~\ref{thm:genus-universality} identifies that trace with
-$\kappa(\cA)\lambda_g$, and Theorem~\ref{thm:family-index} is only the
-subsequent GRR repackaging of the resulting genus series. There is no
-reverse dependence from Theorem~\ref{thm:family-index} back to
-Theorem~\ref{thm:genus-universality}.
+The dependency route has a common bar-intrinsic anchor.
+Theorem~\ref{thm:mc2-bar-intrinsic} produces the scalar trace of the
+shadow tower. Theorem~\ref{thm:genus-universality} identifies its
+cohomological genus-$g$ component with $\kappa(\cA)\lambda_g$ on the
+proved uniform-weight lane, while Theorem~\ref{thm:family-index}
+gives an independent Grothendieck--Riemann--Roch computation of the
+same scalar series from the family~\eqref{eq:bar-family} on the
+universal curve. Neither theorem is used to prove the other.
 Part~(i) is Theorem~\ref{thm:genus-universality} for
 uniform-weight algebras. For multi-generator algebras
 ($\mathcal{W}_N$, $N \geq 3$), only the genus-$1$ factorization
@@ -2823,17 +2963,22 @@ Convention~\ref{conv:proof-architecture}]
 \[
 \Theta_\cA \text{ and its shadow tower}
 \Longrightarrow
-\mathrm{obs}_g=\kappa\cdot\lambda_g
-\Longrightarrow
+\left\{
+\begin{array}{l}
+\mathrm{obs}_g=\kappa\cdot\lambda_g,\\[4pt]
 \sum_{g \ge 1} F_g x^{2g}
 =
 \kappa\cdot(\hat{A}(ix)-1).
+\end{array}
+\right.
 \]
-The first arrow is the scalar-trace extraction of
-Theorem~\ref{thm:genus-universality}; the second arrow is the
-GRR/family-index reinterpretation of the already identified scalar
-series. In particular, Theorem~\ref{thm:family-index} is downstream of
-Theorem~D and is not an input to its proof.
+The bar-intrinsic shadow tower is the common source.
+The first line is the scalar-trace identification of
+Theorem~\ref{thm:genus-universality}; the second line is the
+independent GRR/family-index computation on the universal curve.
+Theorem~\ref{thm:family-index} is not downstream of
+Theorem~D, and Theorem~D is not proved from
+Theorem~\ref{thm:family-index}.
 \emph{Step~B} (M-level): universality
 $\mathrm{obs}_g=\kappa\cdot\lambda_g$ (uniform-weight;
 unconditional at $g{=}1$,
@@ -2841,8 +2986,11 @@ Theorem~\ref{thm:genus-universality}); generating function via
 Bernoulli residues (Theorem~\ref{thm:universal-generating-function});
 duality $\kappa+\kappa'=\varrho\cdot K$; additivity
 (Theorem~\ref{thm:anomaly-koszul}).
-\emph{B$\to$A}: GRR maps $[\barB^{(g)}(\cA)]\in K_0(\overline{\mathcal{M}}_g)$
-to $\kappa\cdot(\hat{A}(ix)-1)$ (Theorem~\ref{thm:family-index}).
+\emph{Parallel index package}: Grothendieck--Riemann--Roch maps the
+virtual bar family $[\barB^{(g)}(\cA)] \in
+K_0(\overline{\mathcal{M}}_g)$ to
+$\kappa\cdot(\hat{A}(ix)-1)$
+\textup{(}Theorem~\textup{\ref{thm:family-index}}\textup{)}.
 \emph{Step~C}: Heisenberg $\kappa(\mathcal{H}_k)=k$,
 $F_g=k\cdot\frac{2^{2g-1}-1}{2^{2g-1}}\cdot\frac{|B_{2g}|}{(2g)!}$.
 \end{remark}

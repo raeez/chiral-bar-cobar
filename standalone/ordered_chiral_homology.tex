@@ -108,6 +108,12 @@
 
 \numberwithin{equation}{section}
 
+% Claim status macros (standalone: no-op definitions)
+\providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusProvedElsewhere}{}
+\providecommand{\ClaimStatusHeuristic}{}
+
 % ================================================================
 \begin{document}
 
@@ -4069,6 +4075,74 @@ $\cW_{1+\infty}$ field basis via the nonlinear Miura
 inversion $T = \psi_2 - J^2/(2\Psi)$, the image acquires
 $\Psi$-dependent structural invariants that are absent in
 the $\psi$-basis.
+\end{remark}
+
+\begin{conjecture}[Universal Miura cross-term coefficient]
+\label{conj:miura-cross-universality}
+\ClaimStatusConjectured
+Let $W_s$ denote the spin-$s$ primary generator of
+$\cW_{1+\infty}[\Psi]$ (so $W_1 = J$, $W_2 = T$,
+$W_3 = W$, $W_4$, \ldots). For each $s \geq 2$,
+the spectral coproduct of
+Theorem~\textup{\ref{thm:w-infty-chiral-qg}} satisfies
+\begin{equation}\label{eq:miura-cross-universal}
+  \Delta_z(W_s) = W_s \otimes 1 + 1 \otimes W_s
+  + \frac{\Psi - 1}{\Psi}
+    \bigl(J \otimes W_{s-1} + W_{s-1} \otimes J\bigr)
+  + (\textup{lower-spin and composite corrections})
+  + (\textup{spectral tail in~$z$}).
+\end{equation}
+The coefficient $(\Psi - 1)/\Psi$ of the primary
+cross-term $J \otimes W_{s-1} + W_{s-1} \otimes J$
+is independent of the spin~$s$.
+\end{conjecture}
+
+\begin{remark}[Evidence for
+Conjecture~\textup{\ref{conj:miura-cross-universality}}]
+\label{rem:miura-cross-evidence}
+The conjecture is verified at spins $s = 2, 3, 4$
+by explicit computation
+(\texttt{miura\_coproduct\_universal\_engine.py},
+51~tests). At each spin, the coefficient arises from
+a cancellation of two contributions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Drinfeld formula for
+  $\Delta_z(\psi_s)$ produces a
+  $\psi_1 \otimes \psi_{s-1}$ cross-term with
+  coefficient~$1$ (from
+  $\binom{s-2}{s-2} z^0 = 1$ in the general
+  formula~\eqref{eq:gl1-coprod-general}).
+  Since $\psi_{s-1} = W_{s-1} +{}$~composites,
+  this contributes $+1$ to the
+  $J \otimes W_{s-1}$ coefficient.
+\item The Miura relation
+  $\psi_s = W_s + (1/\Psi)\,{:}J \cdot W_{s-1}{:}
+  + \cdots$ (where the coefficient of
+  ${:}J \cdot W_{s-1}{:}$ is $1/\Psi$ at every
+  spin) requires subtracting
+  $(1/\Psi)\,\Delta_z({:}J \cdot W_{s-1}{:})$.
+  The term $(J \otimes 1)(1 \otimes W_{s-1})$
+  in $\Delta_z({:}J \cdot W_{s-1}{:})$ contributes
+  $-1/\Psi$.
+\item All remaining Miura corrections (normal-ordered
+  products of fields of spin ${}<s-1$) cannot produce
+  $W_{s-1}$ in either tensor factor. Their contribution
+  is zero.
+\end{enumerate}
+The net coefficient is $1 - 1/\Psi = (\Psi - 1)/\Psi$.
+The mechanism is manifestly spin-independent: at each
+spin, the Drinfeld formula contributes $+1$ (a
+combinatorial identity), and the Miura inversion
+subtracts $1/\Psi$ (from the universal coefficient of
+${:}J \cdot W_{s-1}{:}$ in the Miura relation). The
+conjecture amounts to the assertion that this structural
+cancellation persists at all spins $s \geq 2$.
+
+Limiting cases: at $\Psi = 1$ (free boson) the
+coefficient vanishes, consistent with the triviality
+of the Miura transform; as $\Psi \to \infty$
+(classical limit) the coefficient tends to~$1$,
+recovering the classical coproduct.
 \end{remark}
 
 \begin{remark}[Descent to $\cW_N$]

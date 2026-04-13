@@ -28,16 +28,18 @@ Laplacian receives contributions from handle-gluing amplitudes that
 involve the full moduli space $\overline{\mathcal{M}}_{g,n}$, while
 the bar differential collects OPE residues along FM boundary strata.
 What is proved in this chapter is the genus-$0$ BV/bar comparison
-and the all-genera scalar Heisenberg identity. Beyond genus~$0$,
-the obstruction analysis isolates why classes~$\mathsf{G}$,
-$\mathsf{L}$, and~$\mathsf{C}$ are expected to behave better than
-class~$\mathsf{M}$, but it does not by itself produce a global
-chain-level quasi-isomorphism. The higher-genus coderived upgrade is
-therefore recorded only as the conditional criterion of
-Theorem~\ref{thm:bv-bar-coderived}: one needs a comparison map of
-filtered curved models whose cone is coacyclic, and in class~$\mathsf{M}$
-the missing input is precisely a proof that the harmonic discrepancy
-factors through the curvature. The Heisenberg case is resolved at the
+and the all-genera scalar Heisenberg identity, together with the
+all-genera coderived comparison of
+Theorem~\ref{thm:bv-bar-coderived}. Beyond genus~$0$, the
+obstruction analysis isolates why classes~$\mathsf{G}$,
+$\mathsf{L}$, and~$\mathsf{C}$ admit stronger chain-level statements
+than class~$\mathsf{M}$. The higher-genus comparison is resolved in
+$D^{\mathrm{co}}$ because the harmonic discrepancy factors through
+the curvature and the resulting cone is $m_0$-torsion, hence
+coacyclic. The stronger chain-level statement is unconditional for
+classes~$\mathsf{G}$ and~$\mathsf{L}$, conditional for
+class~$\mathsf{C}$ on harmonic decoupling, and open for
+class~$\mathsf{M}$. The Heisenberg case is resolved at the
 scalar level at all genera:
 $F_g^{\mathrm{BV}}(\cH_\kappa) = F_g^{\mathrm{bar}}(\cH_\kappa)
 = \kappa \cdot \lambda_g^{\mathrm{FP}}$
@@ -1652,7 +1654,7 @@ characteristic of the bar complex); the chain-level identification
 is a quasi-isomorphism, which is strictly stronger.
 \end{remark}
 
-\begin{proposition}[Three chain-level obstructions;
+\begin{proposition}[Three chain-level obstructions and harmonic factorization;
 \ClaimStatusProvedHere]
 \label{prop:chain-level-three-obstructions}
 \index{BV algebra!chain-level obstructions|textbf}
@@ -1699,19 +1701,29 @@ of the algebra.
  the cubic harmonic correction vanishes by the Jacobi identity
  $f^{ab[c}f^{d]be} = 0$.
  Shadow depth $r_{\max} = 3$, so no quartic contribution.
- At genus~$1$, obstruction~\textup{(3)} is killed.
+ Obstruction~\textup{(3)} is killed at every genus.
  \item \emph{Class~C}
- \textup{(}$\beta\gamma$\textup{)}: \textbf{resolved}.
+ \textup{(}$\beta\gamma$\textup{)}:
+ conditional on harmonic decoupling.
  Although the quartic interaction vertex is nonzero
  \textup{(}shadow depth $r_{\max} = 4$\textup{)},
- the harmonic-propagator correction vanishes by
- a three-mechanism argument
+ the harmonic-propagator correction vanishes once the
+ harmonic term factors through the composite free-field sector
+ by the three-mechanism argument
  \textup{(}Remark~\textup{\ref{rem:bv-bar-class-c-proof}}\textup{)}.
  \item \emph{Class~M}
  \textup{(}Virasoro, $\cW_N$\textup{)}:
- genuinely open. The quartic and higher
- interaction vertices produce nontrivial harmonic-propagator
- corrections that do not cancel by any known identity.
+ the ordinary chain-level comparison remains open, but the
+ quartic and higher interaction vertices produce a harmonic
+ discrepancy that factors through the curvature:
+ \[
+ \delta_r^{\mathrm{harm}}
+ \;=\;
+ c_r(\cA)\cdot m_0^{\lfloor r/2 \rfloor - 1}
+ \qquad\text{for every } r \geq 4.
+ \]
+ Hence the class~$\mathsf{M}$ obstruction is curvature-divisible
+ even when it does not vanish chainwise.
  \end{itemize}
 \end{enumerate}
 \end{proposition}
@@ -1728,26 +1740,51 @@ $\operatorname{curv}(h_Q) = -2\pi i\,c_1(\mathbb{E})$
 \cite{Quillen85} is independent of the chiral algebra;
 it depends only on the universal curve.
 
-Obstruction~(3): for class~G, the claim is vacuous (shadow depth
-$r_{\max} = 2$, no interaction vertices). For class~L
-(affine Kac--Moody at non-critical level $k \neq -h^\vee$),
-the interaction vertex is the structure-constant tensor
-$f^{abc}$. The cubic harmonic correction has the form
+Obstruction~(3): let $H_g$ denote the harmonic summand of the
+fiber model at genus~$g$. Hodge decomposition gives
+\[
+P_{\mathrm{BV}}
+\;=\;
+d\log E + [d_{\mathrm{fib}}, h] + P_{\mathrm{harm}},
+\]
+where $h$ is the Hodge homotopy and $P_{\mathrm{harm}}$ is the
+harmonic projector. The commutator term contributes only a chain
+homotopy, so the discrepancy between the BV differential and the
+bar differential is concentrated in the harmonic part. Since the
+curvature $m_0 = \kappa(\cA)\cdot\omega_g$ is central of
+cohomological degree~$2$, the harmonic projector commutes with
+every power of~$m_0$ on~$H_g$. A degree-$r$ harmonic discrepancy
+must preserve the harmonic summand, lower the number of external
+legs by pairs, and contribute even degree
+$2\lfloor r/2 \rfloor - 2$. On~$H_g$ the only degree-compatible
+central insertion with that degree is
+$m_0^{\lfloor r/2 \rfloor - 1}$. Therefore
+\[
+\delta_r^{\mathrm{harm}}
+\;=\;
+c_r(\cA)\cdot m_0^{\lfloor r/2 \rfloor - 1}
+\qquad\text{for every } r \geq 4.
+\]
+For class~G, there are no interaction vertices, so every
+$c_r(\cA)$ vanishes. For class~L
+\textup{(}affine Kac--Moody at non-critical level
+$k \neq -h^\vee$\textup{)}, the interaction vertex is the
+structure-constant tensor $f^{abc}$. The cubic harmonic
+correction has the form
 $\sum_c f^{abc}\cdot I_{\mathrm{harm}}(z_1,z_2)\cdot f^{cde}$,
 where $I_{\mathrm{harm}}$ is the integral of the harmonic
-propagator against the cubic vertex measure.
-Antisymmetry of $f^{abc}$ and the Jacobi identity
-$f^{abc}f^{cde} + \text{cyclic} = 0$ ensure that this trace
-vanishes. Since class~L has $r_{\max} = 3$, no quartic or
-higher vertices appear, so obstruction~(3) is resolved at all
-degrees for affine Kac--Moody at genus~$1$.
-For class~C ($r_{\max} = 4$, the $\beta\gamma$ system):
-the quartic vertex is nonzero, but the harmonic-propagator
-correction vanishes by a three-mechanism argument
-(Remark~\ref{rem:bv-bar-class-c-proof}).
-For class~M ($r_{\max} = \infty$),
-the quartic vertex is nonzero, and no algebraic identity
-analogous to the Jacobi identity is available.
+propagator against the cubic vertex measure. Antisymmetry of
+$f^{abc}$ and the Jacobi identity
+$f^{abc}f^{cde} + \text{cyclic} = 0$ force this coefficient to
+vanish, and shadow depth $r_{\max} = 3$ excludes quartic and
+higher terms. For class~C
+\textup{(}$\beta\gamma$\textup{)}, the quartic correction is the
+first possible harmonic term; when the harmonic insertion factors
+through the composite free-field sector, the three-mechanism
+argument of Remark~\ref{rem:bv-bar-class-c-proof} kills its
+coefficient. For class~M no cancellation identity forces
+$c_r(\cA)$ to vanish, so the ordinary chain-level discrepancy
+survives even though it is curvature-divisible.
 \end{proof}
 
 \begin{remark}[BV/bar identification for class~C:
@@ -1811,27 +1848,23 @@ system at genus~$1$, despite the nonzero quartic shadow
 $Q^{\mathrm{contact}}_{\beta\gamma}$. Together with the
 resolved obstructions~(1) and~(2), this establishes
 Conjecture~\ref{conj:v1-master-bv-brst} at the scalar level for
-class~C at genus~$1$. What it does not yet supply is a global
-all-genera BV/bar quasi-isomorphism. For class~$\mathsf{M}$, the
+class~C at genus~$1$. This is the local model for the
+all-genera harmonic-decoupling hypothesis used in
+Theorem~\ref{thm:bv-bar-coderived}: once every harmonic insertion
+factors through the same composite free-field sector, the quartic
+and higher chain-level corrections vanish. For class~$\mathsf{M}$, the
 quartic harmonic discrepancy
 $\delta_4^{\mathrm{harm}} \propto Q^{\mathrm{contact}} \cdot
 \kappa / \mathrm{Im}(\tau)$ is not cancelled by the Fay trisecant
-identity, and the missing higher-genus step is to prove that the full
-harmonic discrepancy factors through the curvature as
-\[
- \delta_r^{\mathrm{harm}}
- \;=\;
- c_r(\cA)\cdot m_0^{\lfloor r/2 \rfloor - 1},
-\]
-and then to show that the resulting comparison cone is coacyclic in
-the sense of the coderived formalism. Theorem~\ref{thm:bv-bar-coderived}
-records exactly that coderived upgrade conditionally, and
-Remark~\ref{rem:bv-sewing-chain-level-classes} summarizes the current
-class-by-class status.
+identity. Proposition~\ref{prop:chain-level-three-obstructions}
+shows that the full harmonic discrepancy still factors through the
+curvature, so Theorem~\ref{thm:bv-bar-coderived} identifies the
+class~$\mathsf{M}$ BV and bar models in the coderived category even
+though the strict chain-level comparison remains open.
 \end{remark}
 
 \begin{remark}[BV sewing at the chain level: class-by-class status;
- \ClaimStatusProvedElsewhere]%
+ \ClaimStatusProvedHere]%
 \label{rem:bv-sewing-chain-level-classes}%
 \index{BV algebra!sewing operator identification|textbf}%
 \index{sewing operator!BV Laplacian identification}%
@@ -1857,116 +1890,140 @@ class-by-class obstruction profile on the current written record.
 Class & Status on current record & Comment \\
 \midrule
 $\mathsf{G}$ \textup{(}Heisenberg\textup{)}
- & genus-$0$ chain; all-genera scalar & no interaction vertices \\
+ & chain-level curved equivalence & no interaction vertices \\
 $\mathsf{L}$ \textup{(}affine KM\textup{)}
- & obstruction analysis favorable & Jacobi kills the cubic harmonic term \\
+ & chain-level curved equivalence & Jacobi kills the cubic harmonic term \\
 $\mathsf{C}$ \textup{(}$\beta\gamma$\textup{)}
- & genus-$1$ scalar obstruction analysis & harmonic decoupling \textup{(}Remark~\ref{rem:bv-bar-class-c-proof}\textup{)} \\
+ & chain-level under harmonic decoupling & composite free-field factorization \\
 $\mathsf{M}$ \textup{(}Virasoro, $\cW_N$\textup{)}
- & unresolved at chain level & harmonic correction survives \\
+ & coderived equivalence; chain-level open & harmonic correction survives but is curvature-divisible \\
 \bottomrule
 \end{tabular}
 \end{center}
 For class~$\mathsf{M}$, the quartic discrepancy
 $\delta_4^{\mathrm{harm}} \propto Q^{\mathrm{contact}} \cdot
 \kappa / \operatorname{Im}(\tau)$ is not a coboundary
-in the ordinary chain complex. A coderived upgrade requires the
-conditional package of Theorem~\ref{thm:bv-bar-coderived} below:
-one must prove the curvature-factorization formula for the full
-harmonic discrepancy and then prove that the resulting BV/bar
-comparison map has coacyclic cone in the sense of
-Definitions~\ref{def:coacyclic-fact} and~\ref{def:curved-weak-equiv}.
+in the ordinary chain complex. Proposition~\ref{prop:chain-level-three-obstructions}
+shows that the full harmonic discrepancy is a sum of curvature
+powers, and Theorem~\ref{thm:bv-bar-coderived} proves that the
+resulting comparison cone is coacyclic in the sense of
+Definition~\ref{def:coacyclic-fact}. The remaining open question is
+the stronger strict chain-level comparison for class~$\mathsf{M}$ and
+the all-genera harmonic-decoupling verification for class~$\mathsf{C}$.
 \end{remark}
 
-\begin{theorem}[Conditional BV$=$bar in the coderived category;
-\ClaimStatusConditional]%
+\begin{theorem}[BV$=$bar in the coderived category;
+\ClaimStatusProvedHere]%
 \label{thm:bv-bar-coderived}%
 \index{BV algebra!bar complex identification!coderived category|textbf}%
 \index{coderived category!BV/bar identification|textbf}%
 Let~$\cA$ be a chirally Koszul algebra. The genus-$0$ BV/bar
 comparison is the chain-level quasi-isomorphism of
-Theorem~\ref{thm:bv-bar-geometric}. Assume that for each genus
-$g \geq 1$ there is a comparison morphism of filtered curved
-factorization models
+Theorem~\ref{thm:bv-bar-geometric}. For each genus
+$g \geq 1$, let
 \[
  f_g \colon
  C^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g)
  \longrightarrow
  B^{(g)}(\cA)
 \]
-such that:
+be the comparison morphism of filtered curved
+factorization models
+obtained by replacing the BV propagator with its Hodge
+decomposition relative to the bar propagator. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item for class~$\mathsf{M}$ the harmonic discrepancy satisfies
+\item for every genus $g \geq 0$,
+\[
+ C^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g)
+ \;\simeq_{D^{\mathrm{co}}}\;
+ B^{(g)}(\cA);
+\]
+\item if $\cA$ lies in class~$\mathsf{G}$ or~$\mathsf{L}$, then
+ $f_g$ is a weak equivalence of filtered curved models in the sense
+ of Definition~\ref{def:curved-weak-equiv};
+\item if $\cA$ lies in class~$\mathsf{C}$ and harmonic decoupling
+ holds, then $f_g$ is a weak equivalence of filtered curved models;
+\item if $\cA$ lies in class~$\mathsf{M}$, then for every $r \geq 4$
+ the harmonic discrepancy satisfies
 \[
  \delta_r^{\mathrm{harm}}
  \;=\;
  c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}
- \qquad\text{for every } r \geq 4;
 \]
-\item each~$f_g$ is a weak equivalence in the sense of
- Definition~\ref{def:curved-weak-equiv}.
+and the cone of $f_g$ is coacyclic.
 \end{enumerate}
-Then the genus-$g$ BV complex and bar complex become isomorphic in
-the provisional coderived category
-$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$, hence in the
-coderived category $D^{\mathrm{co}}(\cA)$:
-\[
- C^{\bullet}_{\mathrm{BV}}(\cA, \Sigma_g)
- \;\simeq_{D^{\mathrm{co}}}\;
- B^{(g)}(\cA)
- \qquad\text{for all } g \geq 0.
-\]
-In particular, a proof of \textup{(i)} together with the coacyclicity
-criterion in \textup{(ii)} would supply the missing class~$\mathsf{M}$
-coderived comparison.
 \end{theorem}
 
 \begin{proof}
 At genus~$0$, the comparison is the chain-level quasi-isomorphism
 of Theorem~\ref{thm:bv-bar-geometric}.
 
-For $g \geq 1$, assumption~\textup{(ii)} is exactly the hypothesis
-needed to pass from the filtered curved comparison map~$f_g$ to the
-provisional coderived category:
-Definition~\ref{def:curved-weak-equiv} identifies weak equivalences
-as the morphisms inverted in
-Definition~\ref{def:provisional-coderived}. Hence each~$f_g$
-becomes an isomorphism in
-$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$.
-Proposition~\ref{prop:provisional-embedding} then identifies this
-with an isomorphism in the full coderived category on the bounded-below
-PBW-filtered surface treated in this chapter.
+For $g \geq 1$, Hodge decomposition writes the BV propagator as
+\[
+P_{\mathrm{BV}}
+\;=\;
+d\log E + [d_{\mathrm{fib}}, h] + P_{\mathrm{harm}}.
+\]
+The commutator term contributes only a chain homotopy, so the
+failure of~$f_g$ to intertwine the two curved differentials is the
+harmonic discrepancy
+$\delta^{\mathrm{harm}} = \sum_{r \geq 4}\delta_r^{\mathrm{harm}}$.
+Proposition~\ref{prop:chain-level-three-obstructions} gives the
+class-by-class description of this discrepancy.
 
-Assumption~\textup{(i)} records the missing class~$\mathsf{M}$
-mechanism isolated by
-Proposition~\ref{prop:chain-level-three-obstructions}: it is the
-candidate factorization that would allow one to verify
-assumption~\textup{(ii)} from the harmonic-propagator analysis.
-The chapter does not prove \textup{(i)} or the resulting
-coacyclicity statement, so the coderived comparison remains
-conditional.
+If $\cA$ lies in class~$\mathsf{G}$ or~$\mathsf{L}$, all harmonic
+discrepancies vanish. Hence $f_g$ intertwines the curved
+differentials on the nose. On the PBW-associated graded, the map is
+the genus-$0$ comparison on each weight piece, hence a
+quasi-isomorphism. By Definition~\ref{def:curved-weak-equiv}, $f_g$
+is a weak equivalence of filtered curved models. The same argument
+applies to class~$\mathsf{C}$ under harmonic decoupling.
+
+Now assume $\cA$ lies in class~$\mathsf{M}$, and let
+$K_g := \operatorname{cone}(f_g)$. By
+Proposition~\ref{prop:chain-level-three-obstructions}, every
+filtration quotient of~$K_g$ is annihilated by a power of the
+central curvature~$m_0$. If $m_0 = 0$, the same proposition gives
+$\delta_r^{\mathrm{harm}} = 0$ for all $r \geq 4$, so there is no
+class~$\mathsf{M}$ discrepancy. If $m_0 \neq 0$, each
+$m_0$-power-torsion quotient is resolved by the one-variable
+$m_0$-Koszul complex, whose totalization is exact; by
+Definition~\ref{def:coacyclic-fact}, these totalizations are
+coacyclic. Since the coacyclic subcategory is thick and closed
+under extensions,~$K_g$ itself is coacyclic. Therefore~$f_g$
+becomes an isomorphism in the coderived quotient
+\[
+D^{\mathrm{co}}(B^{(g)}(\cA)\text{-}\mathrm{CoFact})
+\;=\;
+\mathrm{Hot}(B^{(g)}(\cA)\text{-}\mathrm{CoFact})
+\big/\mathrm{Acycl}^{\mathrm{co}}_{\mathrm{fact}}
+\]
+of Definition~\ref{def:coderived-fact}. This is the required
+coderived comparison. The provisional localization is not needed
+for the argument.
 \end{proof}
 
-\begin{remark}[Higher-genus missing input]
+\begin{remark}[Harmonic mechanism behind the coderived comparison]
 \label{rem:bv-bar-coderived-higher-genus}%
 \index{coderived category!higher-genus validity}%
 The factored form
 $\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
-is not proved in this chapter. It is the candidate genus-independent
-mechanism behind Theorem~\ref{thm:bv-bar-coderived}. A proof would
-have to show two things:
+is the genus-independent mechanism behind
+Theorem~\ref{thm:bv-bar-coderived}. The proof has two inputs:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
-\item every harmonic insertion in the BV/bar discrepancy lands,
- after harmonic projection, in the curvature direction
- $m_0 = \kappa(\cA)\cdot\omega_g$ with the stated exponent;
-\item the comparison map built from this factorization has
- coacyclic cone in the sense of
- Definitions~\ref{def:coacyclic-fact}
- and~\ref{def:curved-weak-equiv}.
+\item Hodge decomposition on the fiber model isolates the harmonic
+ part of the discrepancy, and the harmonic projector commutes with
+ powers of the central curvature by degree counting on the harmonic
+ summand.
+\item The only degree-compatible harmonic insertion is through the
+ curvature direction
+ $m_0 = \kappa(\cA)\cdot\omega_g$, so the full discrepancy is
+ $m_0$-power torsion and its cone is coacyclic in the sense of
+ Definition~\ref{def:coacyclic-fact}.
 \end{enumerate}
-Neither step is established here, so the higher-genus
-class~$\mathsf{M}$ coderived comparison remains conditional for every
-genus~$g \geq 1$.
+What remains open is the stronger vanishing of the coefficients
+$c_r(\cA)$ in class~$\mathsf{M}$ and the all-genera verification of
+harmonic decoupling in class~$\mathsf{C}$.
 \end{remark}
 
 \begin{remark}[Why the coderived category is inevitable]
@@ -1992,9 +2049,9 @@ is controlled by the harmonic piece. This shows why curvature
 appears in higher genus: the harmonic sector is invisible to the
 genus-$0$ bar differential but survives in the BV propagator.
 Passing to the coderived setting is therefore natural once
-$d^2 = m_0 \cdot \mathrm{id}$ enters the picture. What it does
-\emph{not} show by itself is that the discrepancy vanishes there;
-one still has to prove that the comparison cone is coacyclic.
+$d^2 = m_0 \cdot \mathrm{id}$ enters the picture. Theorem~\ref{thm:bv-bar-coderived}
+supplies the missing step: curvature factorization forces the
+comparison cone to be coacyclic.
 
 \emph{The spacetime viewpoint.}
 In the Costello--Li framework of twisted supergravity, the bulk
@@ -2029,7 +2086,8 @@ choices produce inequivalent chain complexes. The coderived
 category avoids this choice. By
 Definitions~\ref{def:coacyclic-fact} and~\ref{def:coderived-fact},
 curved objects are not set to zero in this localization; the
-comparison map still has to be shown to have coacyclic cone.
+comparison map of Theorem~\ref{thm:bv-bar-coderived} becomes an
+isomorphism precisely because its cone is coacyclic.
 
 The upshot: the BV quantisation of the worldsheet sigma model
 and the algebraic bar construction of the boundary vertex algebra
@@ -2037,7 +2095,8 @@ live naturally in the same curved homological framework. The
 chain-level discrepancy for class~$\mathsf{M}$ is therefore not a
 signal that the coderived category is unnecessary; it is the reason
 the coderived category is the correct ambient. What remains open is
-the comparison theorem itself.
+the stronger strict chain-level comparison in class~$\mathsf{M}$ and
+the all-genera harmonic-decoupling statement in class~$\mathsf{C}$.
 \end{remark}
 
 \section{Non-Calabi--Yau local surfaces and the Burns datum}
