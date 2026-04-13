@@ -1024,6 +1024,13 @@ The Vol III session (~170 agents) produced results that feed back into Vol I:
 - AP-CY24: Docstring confabulation — agents produce correct code but fabricate ground-truth values in docstrings for n≥4. Verify EVERY docstring value against function output.
 - AP-CY25: R-matrix formula R=(id⊗S)∘Δ(1) is WRONG. Use half-braiding construction.
 - AP-CY26: σ_2 is EVEN under h_i→-h_i. Level inversion k^!=-k from Shapovalov transposition, NOT σ_2 negation.
+- AP-CY27: Agent sandbox non-persistence. Background agents' file writes don't persist. Verify with ls.
+- AP-CY28: Pole-unsafe test points for rational structure functions. Avoid z=±h_i.
+- AP-CY29: Wrong-repo file writes. Verify full path includes correct volume.
+- AP-CY30: Factored ≠ solved. S=RRR satisfying YBE does NOT imply ZTE. Kapranov-Voevodsky needs E_∞.
+- AP-CY31: Spectral z ≠ worldsheet z. Drinfeld coproduct vs OPE insertion. Never conflate.
+- AP-CY32: Reorganisation ≠ bypass. Alternative routes may reorganise CY-A₃, not resolve it.
+- AP-CY33: Chain-level ≠ rational. E₃ genuine at chain level, collapses under formality.
 
 **Key results affecting Vol I infrastructure:**
 - Shadow tower S_k = A_∞ coproduct correction coefficient δ^{(k)}. The shadow invariants encode coproduct corrections.
