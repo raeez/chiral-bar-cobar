@@ -540,24 +540,30 @@ Model-specific failures from ~100 agent invocations on this manuscript.
 
 Full catalog FM1-FM34 with counters: see CLAUDE.md §Opus 4.6 Quirks and Failure Modes.
 
-## XXIII. Theorem Status Table
+## XXIII. Theorem Status Table (Rectified 2026-04-13, 732-agent assault survived)
 
-| Thm | Status | Key result |
-|-----|--------|------------|
-| A | PROVED | Bar-cobar adjunction + Verdier intertwining on Ran(X) |
-| B | PROVED | Bar-cobar inversion: Omega(B(A)) → A qi on Koszul locus |
-| C | PROVED | C0 (fiber-center) unconditional, C1 (Lagrangian) unconditional, C2 (BV) conditional |
-| D | PROVED | obs_g=kappa*lambda_g uniform-weight; multi-weight: +delta_F_g^cross |
-| H | PROVED | ChirHoch* polynomial Hilbert series, concentrated {0,1,2} |
-| MC1-4 | PROVED | PBW, MC element, thick gen, completion tower |
-| MC5 | ANALYTIC+CODERIVED PROVED, CHAIN CONJECTURAL | |
-| Koszul | 10+1+1 | 10 unconditional + Lagrangian (conditional) + D-mod purity (one-dir) |
-| D^2=0 | PROVED | Convolution (M-bar_{g,n}) + ambient (Mok25 log FM) |
-| Theta_A | PROVED | Bar-intrinsic; all-degree inverse limit |
-| SC-formal | PROVED | iff class G |
-| Depth gap | PROVED | d_alg in {0,1,2,inf}; gap at 3 |
+Every main theorem now has 2+ independent proof paths. See CLAUDE.md for full details.
+
+| Thm | Status | Rectification + Alt Proof |
+|-----|--------|--------------------------|
+| A | PROVED | Verdier at algebra post-D_Ran; lem:filtered-comparison-unit written. ALT: Lurie nerve-realization |
+| B | PROVED | On-locus qi + off-locus coderived (non-circular). ALT: Keller+Kontsevich formality |
+| C | PROVED | C0 D^co unconditional; C1 g>=1 perfectness; C2 uniform-weight. ALT: PTVV shifted symplectic |
+| D | PROVED | Circularity BROKEN (routing remark). ALT: GRR on universal curve |
+| H | PROVED | Verdier chain fixed; FM-formality collapse. ALT: deformation-theoretic dimension |
+| MC1-4 | PROVED | PBW Whitehead explicit; MC2 g^mod; MC3 Baxter b=a-1/2; MC4 pole-order filtration |
+| MC5 | CODERIVED PROVED | Coacyclic clean; harmonic derived. Chain M: conjectural. ALT: operadic Koszul |
+| Koszul | 10+1+1 | (vii) uniform-wt all-genera; (viii) Massey conditional. ALT: proof web +3 cross-links |
+| D^2=0 | PROVED | Universal family (space corrected). Arnold relation on FM |
+| Theta_A | PROVED | Bar-intrinsic. ALT: KS scattering diagram |
+| SC-formal | PROVED | Operadic both directions. ALT: tower truncation |
+| Depth gap | PROVED | Witness corrected; 3 impossible via MC+Jacobi. ALT: shadow Lie |
 | ChirHoch^1 KM | PROVED | = g; total dim = dim(g)+2 |
-| Topologization | PROVED (affine KM); CONJECTURAL (general) | SC+Sugawara=E_3 |
+| Topologization | COHOM PROVED (KM); qi-model chain (KM); CONJECTURAL general | ALT: CFG factorization |
+
+48 new anti-patterns catalogued: AP186-AP224, B74-B78, FM35-FM38. Full catalogue: `compute/audit/new_antipatterns_wave12_campaign.md`.
+
+Recovery infrastructure: `scripts/resume_failed.py` (idempotent), `scripts/campaign_dashboard.py` (status).
 
 ## XXIV. Skill Routing (Claude ↔ Codex)
 
