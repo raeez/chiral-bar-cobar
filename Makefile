@@ -85,12 +85,51 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 
 .PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud
 
-## icloud: Copy latest PDFs to iCloud Drive
+## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(PDF)
-	@mkdir -p "$(ICLOUD_DIR)"
-	@cp -v $(PDF) "$(ICLOUD_DIR)/vol1_modular_koszul_duality.pdf"
-	@for f in $(OUT_DIR)/*.pdf; do [ -f "$$f" ] && cp -v "$$f" "$(ICLOUD_DIR)/$$(basename $$f)" || true; done
-	@echo "Vol I PDFs copied to iCloud."
+	@echo "  ── Copying to iCloud (subject-organised) ──"
+	@# --- Volumes ---
+	@mkdir -p "$(ICLOUD_DIR)/volumes"
+	@[ -f $(PDF) ] && cp $(PDF) "$(ICLOUD_DIR)/volumes/vol1_modular_koszul_duality.pdf" && echo "    ✓ volumes/vol1" || true
+	@# --- Vol I: Foundational algebraic-geometric theory ---
+	@mkdir -p "$(ICLOUD_DIR)/vol1_foundations"
+	@for p in five_theorems_modular_koszul shadow_towers_v3 e1_primacy_ordered_bar \
+		koszulness_fourteen_characterizations en_chiral_operadic_circle \
+		sc_chtop_pva_descent drinfeld_kohno_bridge seven_faces genus1_seven_faces \
+		arithmetic_shadows multi_weight_cross_channel analytic_sewing \
+		ordered_chiral_homology survey_modular_koszul_duality_v2; do \
+		[ -f $(OUT_DIR)/$$p.pdf ] && cp $(OUT_DIR)/$$p.pdf "$(ICLOUD_DIR)/vol1_foundations/$$p.pdf" \
+			&& echo "    ✓ vol1_foundations/$$p" || true; \
+	done
+	@# --- Vol II: 3d HT gauge theories (generalising real 3d Chern-Simons) ---
+	@mkdir -p "$(ICLOUD_DIR)/vol2_3d_ht_physics"
+	@for p in three_dimensional_quantum_gravity holographic_datum; do \
+		[ -f $(OUT_DIR)/$$p.pdf ] && cp $(OUT_DIR)/$$p.pdf "$(ICLOUD_DIR)/vol2_3d_ht_physics/$$p.pdf" \
+			&& echo "    ✓ vol2_3d_ht_physics/$$p" || true; \
+	done
+	@# --- Vol III: 6d hCS and higher-dimensional sources ---
+	@mkdir -p "$(ICLOUD_DIR)/vol3_6d_hcs_cy"
+	@for p in cy_to_chiral_functor cy_quantum_groups_6d_hcs; do \
+		[ -f $(OUT_DIR)/$$p.pdf ] && cp $(OUT_DIR)/$$p.pdf "$(ICLOUD_DIR)/vol3_6d_hcs_cy/$$p.pdf" \
+			&& echo "    ✓ vol3_6d_hcs_cy/$$p" || true; \
+	done
+	@# --- Programme overview ---
+	@mkdir -p "$(ICLOUD_DIR)/programme"
+	@for p in programme_summary introduction_full_survey; do \
+		[ -f $(OUT_DIR)/$$p.pdf ] && cp $(OUT_DIR)/$$p.pdf "$(ICLOUD_DIR)/programme/$$p.pdf" \
+			&& echo "    ✓ programme/$$p" || true; \
+	done
+	@# --- Legacy / notes ---
+	@mkdir -p "$(ICLOUD_DIR)/notes"
+	@for p in shadow_towers shadow_towers_v2 classification classification_trichotomy \
+		computations riccati w3_holographic_datum bp_self_duality three_parameter_hbar \
+		virasoro_r_matrix gaudin_from_collision chiral_chern_weil garland_lepowsky \
+		N1_koszul_meta N2_mc3_all_types N3_e1_primacy N4_mc4_completion \
+		N5_mc5_sewing N6_shadow_formality; do \
+		[ -f $(OUT_DIR)/$$p.pdf ] && cp $(OUT_DIR)/$$p.pdf "$(ICLOUD_DIR)/notes/$$p.pdf" \
+			&& echo "    ✓ notes/$$p" || true; \
+	done
+	@echo "  Vol I PDFs copied to iCloud (5 folders)."
 
 ## all: Full build — manuscript + working notes → out/
 all: $(STAMP) working-notes
@@ -152,15 +191,8 @@ release:
 	@echo "  [3/3] Standalone papers"
 	@$(MAKE) --no-print-directory standalone
 	@echo ""
-	@echo "  ── Copying to iCloud ──"
-	@mkdir -p "$(ICLOUD_DIR)"
-	@for pdf in $(OUT_DIR)/*.pdf; do \
-		name=$$(basename "$$pdf"); \
-		if [ -f "$$pdf" ]; then \
-			cp "$$pdf" "$(ICLOUD_DIR)/$$name"; \
-			echo "    ✓  $$name"; \
-		fi; \
-	done
+	@echo "  ── Copying to iCloud (subject-organised) ──"
+	@$(MAKE) --no-print-directory icloud
 	@echo ""
 	@echo "  ══════════════════════════════════════════"
 	@echo "  Release complete. All output in out/:"
