@@ -489,6 +489,8 @@ Counter: NEVER write B(A) and SC^{ch,top} in the same sentence attributing SC to
 
 **FM32. RTT sign convention dependence.** The level-1 RTT commutation relation sign depends on the R-matrix convention: additive R(u) = uI + Psi*P gives [t_{ij}, t_{kl}] = Psi(delta_{il} t_{kj} - delta_{kj} t_{il}); Molev's 1-P/u convention gives the opposite sign. Counter: always state which R-matrix convention before writing RTT relations.
 
+**FM35. NEVER REVERT MATHEMATICAL CONTENT TO FIX BUILD ERRORS (CONSTITUTIONAL).** When a .tex file fails to compile, the error is ALWAYS in the LaTeX (missing macros, unbalanced environments, convention clashes), NEVER in the mathematics. The correct response is to FIX THE BUILD (add \providecommand, close environments, resolve macro conflicts) while PRESERVING EVERY LINE OF MATHEMATICAL CONTENT. Reverting mathematical content to make a build pass is the WORST possible action: it destroys work that may have taken hours of agent computation to produce. The 2026-04-13 factorization_swiss_cheese.tex incident: agent content was reverted because of missing \SC/\ch/\CC/\RR macros; the fix was simply adding 8 \providecommand lines to main.tex. Counter: BEFORE reverting ANY .tex content, (a) identify the SPECIFIC LaTeX error (undefined macro, unbalanced env, etc.), (b) fix the LaTeX error, (c) rebuild. If the content causes 100 errors, add 100 macro definitions. NEVER DROP MATHEMATICS.
+
 **FM33. Quantum determinant column ordering.** The central quantum determinant qdet T(u) for Y(gl_N) uses DECREASING column index ordering in the column determinant (j=N-1 leftmost, j=0 rightmost). The "left-to-right in j" ordering (j=0 leftmost) is NOT central at N >= 3 (coincidentally agrees at N=2). Counter: always specify column ordering when writing qdet formulas. Cite Molev Theorem 1.6.4 for the correct convention.
 
 **FM34. Heat equation prefactor diagonal vs off-diagonal.** The genus-g heat equation d/dOmega_{ab} Theta = coefficient * d^2/(dz_a dz_b) Theta has prefactor 1/(4πi) for a=b (diagonal) and 1/(2πi) for a≠b (off-diagonal). The factor of 2 comes from the symmetric matrix chain rule: d/dOmega_{aa} = (1/2) d/d(Omega_{aa} as independent variable). Writing 1/(2πi) uniformly is a notational convention that absorbs the factor into the matrix derivative, but produces wrong numerical results when Omega_{aa} is treated as an independent variable in computations.
@@ -1031,6 +1033,52 @@ The Vol III session (~170 agents) produced results that feed back into Vol I:
 - Conductors: G/L: ρ_K=0. M(Vir): 13. K3×E: 0. Family-dependent.
 
 See ~/calabi-yau-quantum-groups/FRONTIER.md F13-F24 and CLAUDE.md for full details.
+
+## New Anti-Patterns from 732-Agent Adversarial Campaign (2026-04-13)
+
+Full catalogue: `compute/audit/new_antipatterns_wave12_campaign.md`. Summary of 48 new declarations:
+
+**Specialized from existing (AP186-AP210):** AP186 (ProvedHere without proof block, 99C), AP187 (orphaned chapters), AP188 (empty sections), AP189 (dead labels), AP190 (hidden imports — cited result doesn't prove what's claimed, 119 findings), AP191 (circular proof chains, systematic detection), AP192 (scope inflation in statement vs proof), AP193 (biconditional stated, only forward proved), AP194 (curved complex treated with flat tools, 45 findings), AP195 (five-object conflation in prose, 47 findings), AP196 (SC misattribution in non-formula contexts), AP197 (bare Hochschild without qualifier, 89 findings), AP198 (Whitehead lemma scope — semisimple g only), AP199 (strong filtration inequality direction), AP200 (transfer theorem gap — H*(A) results applied to A), AP201 (Baxter constraint not vacuous at lambda=0), AP202 (coderived category element-wise argument invalid), AP203 (class-M harmonic mechanism unproved), AP204 (genus-0 boundary case contradiction), AP205 (reflexivity hidden in duality), AP206 (object switch mid-proof: Verdier ≠ cobar), AP207 (center-side vs bar-side lift missing), AP208 (Theorem A Verdier algebra/coalgebra flip), AP209 (missing lemma cited but never proved), AP210 (topologization chain-level vs cohomological conflation).
+
+**Genuinely new (AP211-AP224):** AP211 (test file absent for compute engine, 219 findings), AP212 (TODO/FIXME unresolved), AP213 (stub chapter false coverage), AP214 (cross-volume bridge outdated after rectification), AP215 (preface/introduction advertising stronger than proved), AP216 (Koszul (vii) genus-0 scope), AP217 (Koszul (viii) ChirHoch freeness overclaim), AP218 (SC-formality proof restricted to families with metric), AP219 (depth-gap d_alg=2 witness on wrong line), AP220 (D^2=0 proof uses wrong geometric space), AP221 (Gerstenhaber bracket single insertion only), AP222 (Theorem H configuration-space collapse unjustified), AP223 (Theorem H bar-coalgebra/Koszul-dual conflation), AP224 (README scope inflation).
+
+**New wrong formulas (B74-B78):** B74 (Thm A Verdier at coalgebra level), B75 (av(r)=kappa without Sugawara for non-abelian KM), B76 (ChirHoch free polynomial overclaim), B77 (Q_g duality for all g>=0 when Q_0(A^!)=0), B78 (ProvedHere without proof block).
+
+**New failure modes (FM35-FM38):** FM35 (rate-limit cascade in parallel agent campaigns: batch<=5), FM36 (agent timeout on >15K line files: scope to line ranges), FM37 (agent confabulation of "vacuous constraint": always substitute and verify), FM38 (agent fails to detect circular proof chains: need dedicated DAG tracing).
+
+## Alternative Proofs Secured (2026-04-13 Healing Campaign)
+
+Every main theorem now has at least TWO independent proof paths:
+
+| Theorem | Primary Proof | Alternative Proof |
+|---------|--------------|-------------------|
+| A | Twisting morphisms + filtered comparison | Lurie infinity-categorical nerve-realization (H01) |
+| B | Bar filtration spectral sequence | Keller deformation + Kontsevich formality (H02) |
+| C | Fiber bar complex + eigenspace decomp | PTVV shifted symplectic geometry (H03) |
+| D | Shadow tower + genus universality | GRR on universal curve (H04) |
+| H | Bar-Hochschild comparison | Deformation-theoretic dimensional analysis (H05) |
+| MC2 | Recursive inverse limit | KS scattering diagram (H06) |
+| MC5 | Harmonic mechanism + coacyclic | Operadic Koszul duality (automatic from SC, H07) |
+| Topol | Sugawara [Q,G]=T | CFG factorization homology (E_3 from 3d, H08) |
+| SC-formal | Shadow tower truncation | Operadic tower truncation (both directions, H11) |
+| Depth gap | MC relation at degree 4 | Shadow Lie algebra Jacobi (H10) |
+| Compl K | Fiber-center + Theorem D | Index theory / Euler characteristic (H12) |
+
+Condition removal research: uniform-weight (delta_F_g^cross characterised, H13), Koszul locus (all standard VAs Koszul, H14), chain-level topol (gauge transformation approach for KM, H15), perfectness C1 (Serre duality avoids double-dual, H17).
+
+## Platonic Ideal Roadmap (Reconstituted 2026-04-13)
+
+The programme has been attacked by 732 adversarial agents and survived. The surviving core:
+
+**Unconditional (high confidence):** Theorems A (fixed-curve), B (on-locus), C0 (D^co), C1 (g>=1), D (non-circular), H, MC1, MC2, MC4, SC-formality, depth gap, D^2=0, Theta_A existence, ChirHoch^1, 10 Koszul equivs, Verlinde recovery, ker(av), Miura coefficient, critical level jump, E_3 identification (simple g), chiral QG equiv, gl_N chiral QG.
+
+**Conditional (genuine mathematical restrictions):** C2 (uniform-weight), MC3 type-A (Baxter b=a-1/2), MC4 resonance (transfer comparison), MC5 chain-level (class M false), Koszul (vii) multi-weight (genus-0 only), Koszul (viii) freeness (Massey vanishing).
+
+**Conjectural (research programmes identified):** Topologization chain-level on original complex (A-inf coherence), topologization general (non-KM), Theorem A modular-family (relative Ran base-change), off-locus chain qi (beyond class G/L).
+
+**Open frontier:** The five deepest open problems are: (1) chain-level E_3 on the original complex (not qi model); (2) MC5 chain-level for class M; (3) the modular-family Theorem A over M-bar_{g,n}; (4) topologization for general chiral algebras with conformal vector; (5) the chiral coproduct for non-gauge-theoretic families. Each has a precise research programme identified by the healing agents.
+
+**Recovery infrastructure:** `scripts/resume_failed.py` (idempotent universal resume), `scripts/campaign_dashboard.py` (status dashboard), 9 campaign scripts (adversarial, rectification, wave2, fix, healing, platonic, elite, mega, relaunch).
 
 ## Git
 
