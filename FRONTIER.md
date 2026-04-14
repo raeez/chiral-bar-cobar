@@ -2,7 +2,7 @@
 
 ## Status as of 2026-04-13 (final comprehensive update)
 
-Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), updated with results from Vol III ~170-agent final session + FINAL documentation wave (2026-04-13). Vol I: 124,636 tests. Programme total: ~4,950pp, ~159K tests, ~1,838 engines. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
+Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), updated through Vol III ~230-agent comprehensive wave (2026-04-14). Vol I: 139,568 tests, 3,726 engines. Programme total: ~5,142pp, ~177K tests, ~4,186 engines. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
 
 ---
 
@@ -75,20 +75,31 @@ The four-class partition G/L/C/M is structural, forced by the single-line dichot
 - Bar chain models: D* (punctured disk), nodal curves, pair-of-pants — all with dedicated constructions.
 - 25 arXiv papers (2024-2026) engaged. ~1,704pp.
 
-### Vol III: CY-A PROVED at d=2 and d=3; FINAL wave completed
+### Vol III: CY-A PROVED at d=2 and d=3; ~230-agent comprehensive wave completed
 
-CY-to-chiral functor proved for d=2 (unconditional) and d=3 (inf-categorical, thm:derived-framing-obstruction). The chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction: HH^{-2}_{E_1}=0 by unit-connectedness, all Goodwillie layers vanish. K3 abelian Yangian PROVED (thm:k3-abelian-yangian-presentation). ZTE correction EXISTS (prop:zte-deformation-cohomology). kappa_BKM = c_N(0)/2 universal. Class M E_3 bar = 6^g. Shadow tower = A_inf coproduct corrections. ~550pp, ~31,000 tests, ~420 engines.
+CY-to-chiral functor proved for d=2 (unconditional) and d=3 (inf-categorical, thm:derived-framing-obstruction). The chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction: HH^{-2}_{E_1}=0 by unit-connectedness, all Goodwillie layers vanish. K3 abelian Yangian PROVED (thm:k3-abelian-yangian-presentation). ZTE correction T COMPUTED (exact rational, 35 tests). kappa_BKM = c_N(0)/2 universal. Class M E_3 bar = 6^g. Shadow tower = A_inf coproduct corrections, computed through m_8 (160 tests, S_8=4144720/19683). ~693pp, ~34,000 tests, ~460 engines. 10 proofs at publication standard. Clean build: 0 undef refs, 0 undef cites.
 
-**Final wave new results (April 2026):**
-- P_2(D) = 0: BKM Serre EXACT (Nekrasov + Lie algebra twist, 70 tests)
+**~230-agent comprehensive wave results (April 2026):**
+- ZTE T matrix COMPUTED (exact rational, 35 tests). Previously constructive; now explicit.
+- Shadow tower through m_8 (160 tests, S_8=4144720/19683)
+- m_5 independently verified from 5-point Wick contraction (G_5^{conn}=775/5184)
+- Chiral volume conjecture FORMULATED (Abel-Jacobi period)
+- Mock modular K3: THEOREM at d=2 (4-step proof)
+- CY-D: kappa_ch != chi(O_X) at odd d (dimension-stratified formula)
+- CY-C: C(g,q) = D(Y^+(g_{K3})) at abelian level
+- BKM Serre P_2 = 0 EXACT (Nekrasov + Lie algebra twist)
+- E_8 x E_8: structure function (24,24), c = 8+8+8 = 24
+- Root-of-unity N=2: 324 modules, abelian S-matrix degenerate
+- Mathieu: frame shape = twined bar Euler for all 25 M_24 classes
+- Incompatibility theorem strengthened: mu_3!=0 implies mu_2=0 on aug (all non-formal)
+- P_2(D) = 0: BKM Serre EXACT (70 tests)
 - Borcherds spectral flow h=1 EXACT (not approximate)
 - CY-B push at d=3 (131 tests, conditional on chain-level CY-A_3)
 - Chiral Satake for C^3 PROVED (99 tests, Phi(C^3) = W_{1+inf} -> Rep(Y(gl_1^)))
-- Chain-level incompatibility theorem: mu_3 != 0 forces mu_2 = 0 on augmentation
 - kappa_ch deep mechanism: Hodge-filtered supertrace str_{F^0}(q^{L_0})
 - CY-D deep issue: chi(O_{K3xE}) = 0 != 3 = kappa_ch (target-space != worldsheet anomaly)
 - Notation appendix (541 lines), AP catalogue (668 lines), 10 proofs publication-upgraded
-- Part openers + 3 reading paths (algebraist, physicist, number theorist)
+- 7-part structure with Part openers + 3 reading paths (algebraist, physicist, number theorist)
 
 ### Shadow Obstruction Tower
 
@@ -704,9 +715,9 @@ G/L: rho_K=0. M(Vir): 13. K3xE: 0 (free-field/KM branch). Consistent with Vol I 
 
 ---
 
-## Cross-Volume: Vol III Final ~170-Agent Session Impact (2026-04-13)
+## Cross-Volume: Vol III ~230-Agent Comprehensive Wave Impact (2026-04-14)
 
-Vol III final session + FINAL documentation wave brought totals to ~550pp, ~31,000 tests, ~420 engines. Key results impacting Vol I:
+Vol III ~230-agent comprehensive wave brought totals to ~693pp, ~34,000 tests, ~460 engines. 10 proofs at publication standard, clean build. Key results impacting Vol I:
 
 - **CY-A_3 RESOLVED (inf-cat)**: thm:derived-framing-obstruction. Chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction. HH^{-2}_{E_1}=0, Goodwillie vanishing, E_3-liftings contractible. Vol I cross-ref in rem:shadow-ainfty-coproduct-vol3 (higher_genus_complementarity.tex) is now grounded.
 - **K3 abelian Yangian PROVED**: RTT presentation of Y(g_{K3}). Degree-(24,24) structure function. Quantum determinant central. Serre from BKM imaginary roots at D=3.
@@ -721,4 +732,4 @@ Vol III final session + FINAL documentation wave brought totals to ~550pp, ~31,0
 - **3 wrong proofs caught**: Bidegree decomposition, Tsygan formality, kappa_BKM naive decomposition.
 - **AP-CY35-40 added**: Superalgebra rank inflation, RTT-OPE incompleteness, CFG25 lift rate, inf-cat vs chain-level, Borel vs convergent, routes vs redundancy.
 
-Programme totals after all sessions (FINAL): ~4,950pp, ~159K tests, ~1,838 engines across 3 volumes.
+Programme totals after all sessions (DEFINITIVE): ~5,142pp, ~177K tests, ~4,186 engines across 3 volumes.

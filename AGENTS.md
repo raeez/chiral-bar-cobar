@@ -2,7 +2,7 @@
 
 This file is the always-on operating constitution for Codex/GPT-5.4 in `~/chiral-bar-cobar` (Vol I). It is optimized for mathematical correction at `xhigh` reasoning effort. `CLAUDE.md` is the encyclopedic atlas; `AGENTS.md` is the load-bearing operational layer that steers correct behavior after compaction, context loss, model drift, or long multi-tool sessions. Every line changes behavior or it gets cut.
 
-**Three volumes by Raeez Lorgat.** Vol I *Modular Koszul Duality* (this repo, ~2,700pp, 124,636 tests). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (`~/chiral-bar-cobar-vol2`, ~1,700pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (`~/calabi-yau-quantum-groups`, ~550pp, ~31,000 tests, ~420 engines). Total ~4,950pp, ~159K tests, ~1,838 engines, 3,500+ tagged claims.
+**Three volumes by Raeez Lorgat.** Vol I *Modular Koszul Duality* (this repo, ~2,700pp, 139,568 tests, 3,726 engines). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (`~/chiral-bar-cobar-vol2`, ~1,749pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (`~/calabi-yau-quantum-groups`, ~693pp, ~34,000 tests, ~460 engines). Total ~5,142pp, ~177K tests, ~4,186 engines, 3,500+ tagged claims.
 
 Use this file for: durable repo-wide invariants; task routing and mode selection; truth hierarchy and claim-state discipline; session entry and verification loops; cross-volume propagation rules; empirical failure maps from recent commit archaeology; current dirty-surface awareness when it changes behavior.
 
