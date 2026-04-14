@@ -2,7 +2,7 @@
 
 ## Status as of 2026-04-13 (final comprehensive update)
 
-Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), updated with results from Vol III ~170-agent final session (2026-04-13). Vol I: 124,636 tests. Programme total: ~4,933pp, ~158K tests, ~1,828 engines. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
+Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), updated with results from Vol III ~170-agent final session + FINAL documentation wave (2026-04-13). Vol I: 124,636 tests. Programme total: ~4,950pp, ~159K tests, ~1,838 engines. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
 
 ---
 
@@ -75,9 +75,20 @@ The four-class partition G/L/C/M is structural, forced by the single-line dichot
 - Bar chain models: D* (punctured disk), nodal curves, pair-of-pants — all with dedicated constructions.
 - 25 arXiv papers (2024-2026) engaged. ~1,704pp.
 
-### Vol III: CY-A PROVED at d=2 and d=3
+### Vol III: CY-A PROVED at d=2 and d=3; FINAL wave completed
 
-CY-to-chiral functor proved for d=2 (unconditional) and d=3 (inf-categorical, thm:derived-framing-obstruction). The chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction: HH^{-2}_{E_1}=0 by unit-connectedness, all Goodwillie layers vanish. K3 abelian Yangian PROVED (thm:k3-abelian-yangian-presentation). ZTE correction EXISTS (prop:zte-deformation-cohomology). kappa_BKM = c_N(0)/2 universal. Class M E_3 bar = 6^g. Shadow tower = A_inf coproduct corrections. ~533pp, 30,613 tests, ~410 engines.
+CY-to-chiral functor proved for d=2 (unconditional) and d=3 (inf-categorical, thm:derived-framing-obstruction). The chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction: HH^{-2}_{E_1}=0 by unit-connectedness, all Goodwillie layers vanish. K3 abelian Yangian PROVED (thm:k3-abelian-yangian-presentation). ZTE correction EXISTS (prop:zte-deformation-cohomology). kappa_BKM = c_N(0)/2 universal. Class M E_3 bar = 6^g. Shadow tower = A_inf coproduct corrections. ~550pp, ~31,000 tests, ~420 engines.
+
+**Final wave new results (April 2026):**
+- P_2(D) = 0: BKM Serre EXACT (Nekrasov + Lie algebra twist, 70 tests)
+- Borcherds spectral flow h=1 EXACT (not approximate)
+- CY-B push at d=3 (131 tests, conditional on chain-level CY-A_3)
+- Chiral Satake for C^3 PROVED (99 tests, Phi(C^3) = W_{1+inf} -> Rep(Y(gl_1^)))
+- Chain-level incompatibility theorem: mu_3 != 0 forces mu_2 = 0 on augmentation
+- kappa_ch deep mechanism: Hodge-filtered supertrace str_{F^0}(q^{L_0})
+- CY-D deep issue: chi(O_{K3xE}) = 0 != 3 = kappa_ch (target-space != worldsheet anomaly)
+- Notation appendix (541 lines), AP catalogue (668 lines), 10 proofs publication-upgraded
+- Part openers + 3 reading paths (algebraist, physicist, number theorist)
 
 ### Shadow Obstruction Tower
 
@@ -695,7 +706,7 @@ G/L: rho_K=0. M(Vir): 13. K3xE: 0 (free-field/KM branch). Consistent with Vol I 
 
 ## Cross-Volume: Vol III Final ~170-Agent Session Impact (2026-04-13)
 
-Vol III final session brought totals to ~533pp, 30,613 tests, ~410 engines. Key results impacting Vol I:
+Vol III final session + FINAL documentation wave brought totals to ~550pp, ~31,000 tests, ~420 engines. Key results impacting Vol I:
 
 - **CY-A_3 RESOLVED (inf-cat)**: thm:derived-framing-obstruction. Chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction. HH^{-2}_{E_1}=0, Goodwillie vanishing, E_3-liftings contractible. Vol I cross-ref in rem:shadow-ainfty-coproduct-vol3 (higher_genus_complementarity.tex) is now grounded.
 - **K3 abelian Yangian PROVED**: RTT presentation of Y(g_{K3}). Degree-(24,24) structure function. Quantum determinant central. Serre from BKM imaginary roots at D=3.
@@ -710,4 +721,4 @@ Vol III final session brought totals to ~533pp, 30,613 tests, ~410 engines. Key 
 - **3 wrong proofs caught**: Bidegree decomposition, Tsygan formality, kappa_BKM naive decomposition.
 - **AP-CY35-40 added**: Superalgebra rank inflation, RTT-OPE incompleteness, CFG25 lift rate, inf-cat vs chain-level, Borel vs convergent, routes vs redundancy.
 
-Programme totals after all sessions: ~4,933pp, ~158K tests, ~1,828 engines across 3 volumes.
+Programme totals after all sessions (FINAL): ~4,950pp, ~159K tests, ~1,838 engines across 3 volumes.
