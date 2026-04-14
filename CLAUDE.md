@@ -6,7 +6,7 @@ E_1-E_1 operadic Koszul duality in the homotopical modular chiral realm on algeb
 
 **Bar complex is E_1-coassociative; SC^{ch,top} emerges on the derived center (CRITICAL, corrected 2026-04-12):** The bar complex B^{ord}(A) = T^c(s^{-1}A-bar) is an E_1-chiral coassociative COALGEBRA (over ChirAss^!). It has a differential + deconcatenation coproduct. It does NOT carry SC^{ch,top} structure. The SC^{ch,top} structure (or E_3-TOPOLOGICAL with conformal vector) emerges on the DERIVED CENTER Z^{der}_{ch}(A) = ChirHoch*(A,A), computed USING the bar complex as a resolution. The bar complex is the E_1 engine; the derived center is the SC^{ch,top}/E_3-TOPOLOGICAL output. thm:bar-swiss-cheese (claiming B(A) is an SC-coalgebra) needs retraction or careful restatement — see FOUND-11. princ:sc-two-incarnations in en_koszul_duality.tex states this correctly.
 
-Three volumes by Raeez Lorgat. Vol I *Modular Koszul Duality* (this repo, ~2,650pp). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (~/chiral-bar-cobar-vol2, ~1,704pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (~/calabi-yau-quantum-groups, ~259pp). Total ~4,613pp, 120K+ tests, 3,463 tagged claims. This file is the canonical reference; Vols II/III inherit shared content and add volume-specific material.
+Three volumes by Raeez Lorgat. Vol I *Modular Koszul Duality* (this repo, ~2,700pp, 124,636 tests). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (~/chiral-bar-cobar-vol2, ~1,700pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (~/calabi-yau-quantum-groups, ~533pp, 30,613 tests, ~410 engines). Total ~4,933pp, ~158K tests, ~1,828 engines, 3,463+ tagged claims. This file is the canonical reference; Vols II/III inherit shared content and add volume-specific material.
 
 **Crystallized programme identity (2026-04-12):** We are studying **holomorphic chiral (factorisation) (co)homology** via **bar and cobar chain constructions** at **various different geometric locations**, hence the **different (modular) operads** at play. The geometry determines the operad, the operad determines the bar complex, the bar complex computes the factorisation (co)homology. The five theorems are structural properties. The shadow tower is the characteristic class data. The E_n circle is the holographic structure.
 
@@ -1000,7 +1000,7 @@ AAP18: Confabulating operadic theory -> compute or cite (Loday-Vallette, Vallett
 
 **Vol II** (~1,500pp, ~/chiral-bar-cobar-vol2): SC^{ch,top} bar differential = holomorphic factorization on C, coproduct = topological factorization on R. Seven parts: I(Open Primitive) II(E_1 Core) III(Seven Faces) IV(Char Datum) V(HT Landscape) VI(3D Quantum Gravity = CLIMAX) VII(Frontier). See Vol II CLAUDE.md for V2-AP1-24 (E_1/E_inf hierarchy).
 
-**Vol III** (~206pp, ~/calabi-yau-quantum-groups): CY -> chiral functor Phi. Five parts: I(CY Engine) II(CY Char Datum) III(CY Landscape) IV(Seven Faces r_CY) V(CY Frontier). 12 stub chapters. kappa subscripts MANDATORY. See Vol III CLAUDE.md for AP-CY1-8 (kappa-spectrum).
+**Vol III** (~533pp, ~/calabi-yau-quantum-groups): CY -> chiral functor Phi. 30,613 tests, ~410 engines. Five parts: I(CY Engine) II(CY Char Datum) III(CY Landscape) IV(Seven Faces r_CY) V(CY Frontier). 4 stub chapters. kappa subscripts MANDATORY. CY-A_3 PROVED (inf-cat, thm:derived-framing-obstruction). K3 abelian Yangian PROVED (thm:k3-abelian-yangian-presentation). ZTE correction EXISTS. kappa_BKM = c_N(0)/2 universal. Class M E_3 bar dim = 6^g. Shadow tower = A_inf coproduct corrections. See Vol III CLAUDE.md for AP-CY1-8 (kappa-spectrum), AP-CY21-40.
 
 ## Writing Standard
 
@@ -1064,13 +1064,17 @@ The Vol III session (~170 agents) produced results that feed back into Vol I:
 - AP-CY31: Spectral z ≠ worldsheet z. Drinfeld coproduct vs OPE insertion. Never conflate.
 - AP-CY32: Reorganisation ≠ bypass. Alternative routes may reorganise CY-A₃, not resolve it.
 - AP-CY33: Chain-level ≠ rational. E₃ genuine at chain level, collapses under formality.
+- AP-CY34: Cyclic invariance ≠ bar-level compatibility. Individual {b_k, B^{(2)}} != 0 for non-formal algebras (obs_ainf_local_p2.py confirms). ONLY the TOTAL {b, B^{(2)}} = 0 via Costello TCFT operadic argument. Cross-arity Stasheff cancellation: {b_3, B^{(2)}} cancelled by {b_2, B^{(2)}}. Previous proofs (bidegree decomposition, Tsygan formality) RETRACTED. The chain-level failure is NOT an obstruction in the inf-categorical framework.
 
 **Key results affecting Vol I infrastructure:**
-- Shadow tower S_k = A_∞ coproduct correction coefficient δ^{(k)}. The shadow invariants encode coproduct corrections.
-- ZTE fails for Yang R-matrix at O(κ²). E_3 is genuinely nontrivial beyond E_2.
-- E_3 bar cohomology: class L → (1+t)^{3g}, class C → (1+t)^{3g}, class M → ∞-dim.
+- Shadow tower S_k = A_∞ coproduct correction coefficient δ^{(k)}. PROVED with explicit computation (129-agent session). The shadow invariants encode coproduct corrections. Shadow-Feynman dictionary: L-loop = S_{L+1}.
+- ZTE fails for Yang R-matrix at O(κ²). E_3 is genuinely nontrivial beyond E_2. ZTE deformation cohomology: correction S^{corr} EXISTS (prop:zte-deformation-cohomology).
+- E_3 bar cohomology: class L → (1+t)^{3g} (dim 2^{3g}), class C → (1+t)^{3g} (dim 2^{3g}), class M → 6^g (closed form via Kunneth, NOT infinite-dim at cohomology level; infinite at chain level P(q)^{6g}).
 - Universal coproduct: Δ_z(e_s) = Σ C(N_R-b,k) z^k e_a^L·e_b^R. All spins, closed form.
 - Conductors: G/L: ρ_K=0. M(Vir): 13. K3×E: 0. Family-dependent.
+- Chiral CE complex: B(U^ch(L)) = CE_*(L) PROVED. Connects Vol I bar complex to classical Lie algebra homology.
+- kappa_BKM = c_N(0)/2 is the ONLY correct universal formula (Borcherds weight theorem). Naive kappa_BKM = kappa_ch + chi(O_fiber) is numerical coincidence for K3 x E.
+- CY-A_3 PROVED in infinity-categorical framework. Chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction (HH^{-2}_{E_1}=0). Obs_Ainf=0 UNIVERSALLY via Costello TCFT operadic argument. AP-CY34: individual {b_k,B^{(2)}}!=0 but total {b,B^{(2)}}=0 via cross-arity Stasheff cancellation.
 
 See ~/calabi-yau-quantum-groups/FRONTIER.md F13-F24 and CLAUDE.md for full details.
 

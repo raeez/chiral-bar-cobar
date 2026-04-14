@@ -1,8 +1,8 @@
 # FRONTIER — The Complete Research Programme
 
-## Status as of 2026-04-08 (final)
+## Status as of 2026-04-13 (final comprehensive update)
 
-Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), 119,081 tests, Beilinson re-audits converged through Tier 4. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
+Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), updated with results from Vol III ~170-agent final session (2026-04-13). Vol I: 124,636 tests. Programme total: ~4,933pp, ~158K tests, ~1,828 engines. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
 
 ---
 
@@ -75,9 +75,9 @@ The four-class partition G/L/C/M is structural, forced by the single-line dichot
 - Bar chain models: D* (punctured disk), nodal curves, pair-of-pants — all with dedicated constructions.
 - 25 arXiv papers (2024-2026) engaged. ~1,704pp.
 
-### Vol III: CY-A at d=2 PROVED
+### Vol III: CY-A PROVED at d=2 and d=3
 
-CY-to-chiral functor proved for d=2. d=3 conditional on chain-level S^3-framing.
+CY-to-chiral functor proved for d=2 (unconditional) and d=3 (inf-categorical, thm:derived-framing-obstruction). The chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction: HH^{-2}_{E_1}=0 by unit-connectedness, all Goodwillie layers vanish. K3 abelian Yangian PROVED (thm:k3-abelian-yangian-presentation). ZTE correction EXISTS (prop:zte-deformation-cohomology). kappa_BKM = c_N(0)/2 universal. Class M E_3 bar = 6^g. Shadow tower = A_inf coproduct corrections. ~533pp, 30,613 tests, ~410 engines.
 
 ### Shadow Obstruction Tower
 
@@ -656,3 +656,58 @@ Generic dim H^1 = 12 is topological (Euler characteristic). Degree-2 CB count is
 4. The Drinfeld center conjecture (the deepest single conjecture)
 5. Standalone trimming: 118pp → ~75pp gateway paper
 6. Full regression suite: make test-full (~120K tests, ~1hr)
+
+---
+
+## Cross-Volume: Vol III 129-Agent Session (2026-04-13)
+
+Vol III deployed 129 agents producing 485pp (+114), ~29,500 tests, ~360 engines. Frontier items affected:
+
+### F1 update: BV=bar in coderived confirmed by TCFT proof
+
+The chiral CE = bar complex identification (PROVED in Vol III) provides an independent proof route for F1. The TCFT structure on the CY bar complex gives a geometric incarnation of the BV=bar identification in D^co, confirming the coderived resolution from the CY side.
+
+### Shadow tower connected to Feynman diagrams
+
+The A_inf coproduct = shadow tower theorem (PROVED in Vol III) provides a new dictionary:
+- Shadow S_k = coefficient of coproduct correction delta^{(k)}.
+- L-loop Feynman diagrams correspond to S_{L+1} (shadow-Feynman dictionary).
+- This gives the shadow tower a PERTURBATIVE INTERPRETATION: each shadow invariant counts contributions from a specific loop order in the chiral quantum group coproduct expansion.
+- For class G: all loops vanish above tree level. For class M: all loop orders contribute.
+
+### F10 update: Class M Borel summability PROVED
+
+The Vol III 129-agent session PROVED Borel summability for class M shadow towers. The Stokes automorphism is controlled by BKM imaginary root multiplicities. This resolves the resurgence question and determines the non-perturbative completion: the imaginary root Serre relations g_{i0}*g_{i1}=1 are the non-perturbative completion conditions.
+
+### Pixton-CY bar connection
+
+The Pixton ideal generators (thm:pixton-from-mc-semisimple) connect to CY bar complexes via the CY-to-chiral functor Phi. This provides geometric realizations of the Pixton relations through the CY landscape.
+
+### Class M E_3 bar = 6^g (PROVED)
+
+E_3 bar cohomology depends on shadow class: L,C give (1+t)^{3g} = dim 2^{3g}. **Class M: dim = 6^g** (PROVED, closed form via Kunneth; d_4 survives giving 6=2*3 per handle). Chain level: P(q)^{6g}. This extends the F1 class M chain-level failure to the E_3 setting.
+
+### Conductors
+
+G/L: rho_K=0. M(Vir): 13. K3xE: 0 (free-field/KM branch). Consistent with Vol I complementarity data K(Vir)=13, K(KM)=0.
+
+---
+
+## Cross-Volume: Vol III Final ~170-Agent Session Impact (2026-04-13)
+
+Vol III final session brought totals to ~533pp, 30,613 tests, ~410 engines. Key results impacting Vol I:
+
+- **CY-A_3 RESOLVED (inf-cat)**: thm:derived-framing-obstruction. Chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction. HH^{-2}_{E_1}=0, Goodwillie vanishing, E_3-liftings contractible. Vol I cross-ref in rem:shadow-ainfty-coproduct-vol3 (higher_genus_complementarity.tex) is now grounded.
+- **K3 abelian Yangian PROVED**: RTT presentation of Y(g_{K3}). Degree-(24,24) structure function. Quantum determinant central. Serre from BKM imaginary roots at D=3.
+- **ZTE correction EXISTS**: Extended deformation complex rank 35/36. The correction T is constructible from 1-dim kernel.
+- **kappa_BKM = c_N(0)/2 universal**: The ONLY correct formula for all K3-fibered CY3. Naive decomposition kappa_BKM = kappa_ch + chi(O_fiber) is numerical coincidence for N=1.
+- **Shadow-Feynman dictionary extended**: L-loop = S_{L+1} at all loop orders. Class G = tree exact. Class M = all-loop.
+- **E_3 bar = 6^g for class M**: Closed form via Kunneth.
+- **CFG25 comparison**: 24% lift rate at perturbative genus-0.
+- **Super-Yangian Y(gl(4|20))**: Conjectural BKM-to-Yangian lift from Mukai signature (4,20).
+- **6 routes to G(K3xE)**: Kummer, Borcherds, MO, McKay, FH, Costello.
+- **Borcherds spectral flow**: Automorphisms of Y(g_{K3}) from vertex operators.
+- **3 wrong proofs caught**: Bidegree decomposition, Tsygan formality, kappa_BKM naive decomposition.
+- **AP-CY35-40 added**: Superalgebra rank inflation, RTT-OPE incompleteness, CFG25 lift rate, inf-cat vs chain-level, Borel vs convergent, routes vs redundancy.
+
+Programme totals after all sessions: ~4,933pp, ~158K tests, ~1,828 engines across 3 volumes.

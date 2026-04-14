@@ -2,7 +2,7 @@
 
 This file is the always-on operating constitution for Codex/GPT-5.4 in `~/chiral-bar-cobar` (Vol I). It is optimized for mathematical correction at `xhigh` reasoning effort. `CLAUDE.md` is the encyclopedic atlas; `AGENTS.md` is the load-bearing operational layer that steers correct behavior after compaction, context loss, model drift, or long multi-tool sessions. Every line changes behavior or it gets cut.
 
-**Three volumes by Raeez Lorgat.** Vol I *Modular Koszul Duality* (this repo, ~2,719pp). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (`~/chiral-bar-cobar-vol2`, ~1,681pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (`~/calabi-yau-quantum-groups`, ~319pp). Total ~4,719pp, 121K+ tests, 3,500+ tagged claims.
+**Three volumes by Raeez Lorgat.** Vol I *Modular Koszul Duality* (this repo, ~2,700pp, 124,636 tests). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (`~/chiral-bar-cobar-vol2`, ~1,700pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (`~/calabi-yau-quantum-groups`, ~533pp, 30,613 tests, ~410 engines). Total ~4,933pp, ~158K tests, ~1,828 engines, 3,500+ tagged claims.
 
 Use this file for: durable repo-wide invariants; task routing and mode selection; truth hierarchy and claim-state discipline; session entry and verification loops; cross-volume propagation rules; empirical failure maps from recent commit archaeology; current dirty-surface awareness when it changes behavior.
 
@@ -362,7 +362,7 @@ Persistent AP126/AP141; label/status/concordance drift (AP125, AP124, AP40); for
 AP40 environment/status (~50 instances in 7 commits); V2-AP34 divided-power drift (15+); AP32 uniform-weight drift (20+); AP126 propagation (34+); V2-AP37 Arakelov normalisation (same error 3x); stale Part refs (V2-AP26: 24+); proof-after-conjecture (V2-AP31); phantom label debt (V2-AP38: 366); undefined macros after migration (V2-AP39).
 
 ### Volume III: dominant repeat failures
-AP113 bare-kappa recurrence; overclaiming d=3 CY existence; conditionality not propagating; stub/thin-chapter fragility; compute/test churn masking status boundary.
+AP113 bare-kappa recurrence; d=3 CY-A PROVED (inf-cat, thm:derived-framing-obstruction, April 2026); CY-C remains conjectural; stub/thin-chapter fragility; compute/test churn masking status boundary.
 
 ## XVI. Pre-Edit Verification Protocol
 
@@ -705,6 +705,30 @@ These results change what is TRUE in the manuscript. Every agent must know them.
 - 6d hCS defect = W_{1+inf} PROVED. DDYBE verified (face model). Drinfeld center verified (Heisenberg).
 - Chain-level E_3: Steps 1-2 proved, Step 3 open. Toroidal Delta_{z,w} conjectured.
 - ~1,500 new tests. ~4,750pp. Zero gaps in manuscript.
+
+## XXXIII. Cross-Volume: Vol III 129-Agent Session Results (2026-04-13)
+
+Vol III deployed 129 agents producing 485pp (+114), ~29,500 tests, ~360 engines. Key results affecting Vol I:
+
+**Shadow tower = A_inf coproduct (PROVED)**:
+- The shadow tower IS the A_inf correction tower: Delta^{A_inf} = Delta^{Yangian} + hbar^2*delta^{(3)} + hbar^3*delta^{(4)} + ... where delta^{(k)} has coefficient = shadow S_k.
+- Shadow-Feynman dictionary: L-loop Feynman diagrams correspond to shadow invariant S_{L+1}. This connects the Vol I shadow obstruction tower to Vol III coproduct corrections via perturbative Feynman expansion.
+- Class G: truncation exact (no higher corrections). Class L: terminates at finite depth. Class M: infinite corrections = Gevrey-1 divergent = Borel summable (PROVED).
+- Vol I cross-ref: rem:shadow-ainfty-coproduct-vol3 (higher_genus_complementarity.tex).
+
+**Chiral CE = bar complex (PROVED)**:
+- The chiral Chevalley-Eilenberg complex of the E_1-chiral Lie algebra equals the bar complex. This provides an independent proof route for BV=bar (F1) via TCFT structure.
+
+**Class M E_3 bar cohomology = 6^g**:
+- The tricomplex model gives chain-level dimensions P(q)^{3g} for all classes. Cohomology depends on shadow class. Class L,C: (1+t)^{3g} (dim 2^{3g}). Class M: INFINITE-DIMENSIONAL (d_4 survives). At the level of Euler characteristic, class M gives 6^g (chain level). Vol I implication: the class M BV/bar chain-level failure (F1) extends to E_3.
+
+**Pixton-CY bar connection**:
+- The Pixton ideal (thm:pixton-from-mc-semisimple, proved in Vol I) connects to CY bar complexes via the TCFT structure. The CY-to-chiral functor Phi provides geometric realizations of the Pixton generators.
+
+**Class M Borel summability (PROVED)**:
+- Class M shadow tower series is Gevrey-1 divergent but Borel summable. The Stokes automorphism is controlled by BKM imaginary root multiplicities. This resolves the resurgence question for the shadow tower (connects to F10).
+
+**Conductors by class**: G/L: rho_K=0. M(Vir): 13. K3xE: 0 (free-field). Family-dependent. Consistent with Vol I K(Vir)=13, K(KM)=0.
 
 ## XXXII. End-of-Task Output Contract
 
