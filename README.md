@@ -74,8 +74,8 @@ Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
 
 | Metric | Value |
 |--------|------:|
-| Pages (annals edition) | ~2,745 |
-| Pages (total with guarded chapters) | ~2,786 |
+| Pages (annals edition) | ~2,636 |
+| Pages (total with guarded chapters) | ~2,745 |
 | Tagged claims (Vol I registry) | ~3,463 |
 | Compute tests | 121,000+ |
 | Source tree | 89 chapter `.tex`; 15 appendices; 65+ standalone `.tex` |
@@ -84,6 +84,7 @@ Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
 | Koszulness programme | 10 unconditional + 1 proved consequence + 1 conditional + 1 one-directional + bifunctor + Sklyanin = 14 total |
 | Master conjectures MC1-MC5 | ALL PROVED |
 | Main proofs adversarially verified | 10/10 SOUND (732-agent campaign) |
+| First-principles cache | 714 lines, cross-programme enforcement verified clean |
 
 ## Build
 
