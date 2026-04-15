@@ -712,3 +712,14 @@ Note: For non-abelian KM, kappa = av(r) + dim(g)/2 (Sugawara shift, preface L724
 - **All 14 entries clean in the Vol I front matter**. The canonical volume is in excellent shape.
 
 **Total new violations found across all files audited in this sweep: 0.** The Vol I remaining files (working_notes.tex + 5 major theory chapters) are clean against all 12 critical confusion entries.
+
+## XXVIII. Vol I Preface Deep Line-by-Line Pass (2026-04-15)
+
+| # | Wrong Claim | Ghost Theorem | Precise Error | Correct Relationship | Type | Location |
+|---|-------------|---------------|---------------|---------------------|------|----------|
+| 153 | "Arrow 3 is the Drinfeld center, the categorified analogue of the averaging map" | Z and av ARE related via factorization | Z categorifies the algebraic CENTER z(A), not the averaging map. av categorifies to Sym (symmetrization) | Z = right adjoint to forgetful E_2→E_1 (constructs braiding). av = further step Sym: E_2→E_∞ (destroys braiding). Factorization: E_1→^Z E_2→^{Sym} E_∞. Center constructs; averaging destroys. | construction/narration (AP-CY54) | preface.tex L3813 |
+
+115 claims checked, 2 violations found and fixed. The Vol I preface is the canonical reference — 113 clean claims out of 115.
+
+| 154 | "conditional on chain-level S³-framing for d=3" | CY-A_3 WAS conditional | CY-A_3 is NOW PROVED (inf-cat, HH^{-2}_{E_1}=0). Chain-level explicit A_X for non-formal remains open | Update: "proved at d=3 via inf-cat resolution" | temporal | preface.tex L4681 |
+| 155 | Σ F_g x^{2g} = k(x/2/sinh(x/2) - 1) | Â-genus DOES use sinh | sinh gives alternating signs; FP intersection numbers λ_g are POSITIVE | Correct: sin (all positive coefficients). Â-genus (sinh) alternates; FP series (sin) doesn't. |B_{2g}|/(2g)! is the absolute value. | convention/sign | heisenberg_frame.tex L48 |
