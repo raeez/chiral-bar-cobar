@@ -745,3 +745,15 @@ If blocked: name the exact blocker and the strongest truthful narrower statement
 ## XXXII. Style of Action
 
 Be decisive, but skeptical. Read before editing. Verify before advertising. Prefer the live source over inherited narrative. Prefer the narrowest falsifier over broad "confidence." Prefer one true local theorem over one false grand synthesis.
+
+## XXXIII. Failure Modes from 2026-04-14 CG Campaign
+
+FM42: Bulk replace "arity"→"degree" corrupts singularity→singuldegree, complementarity→complementdegree, unitarity→unitdegree, etc. (45 corruptions in one session). Never bulk-replace short substrings inside common words. Grep `ldegree|ndegree|rdegree|pdegree|tdegree` after any bulk replace.
+
+FM43: Φ outputs E_1 at d≥3, not E_2. Always scope E_n with `(n=2 for d≤2; n=1 for d≥3)`.
+
+FM44: >10 concurrent agents → mass rate limiting. Batch in 3s.
+
+FM45: Subagents lack the full 15K-word skill programme. Good for bulk scanning; insufficient for deep reconstitution.
+
+FM46: Preface line counts drift as chapters grow. Update after campaigns.

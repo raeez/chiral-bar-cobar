@@ -208,6 +208,24 @@ if [[ "$FILE_PATH" == *.tex ]]; then
       ;;
   esac
 
+  # --- AP186/AP-CY61: Shallow correction detection ---
+  OLD_STR=$(echo "$INPUT" | jq -r '.tool_input.old_string // empty' 2>/dev/null)
+  NEW_STR=$(echo "$INPUT" | jq -r '.tool_input.new_string // empty' 2>/dev/null)
+  if [ -n "$OLD_STR" ] && [ -n "$NEW_STR" ]; then
+    OLD_LEN=${#OLD_STR}
+    NEW_LEN=${#NEW_STR}
+    if [ $OLD_LEN -gt 40 ] && [ $NEW_LEN -gt 0 ]; then
+      RATIO=$((NEW_LEN * 100 / OLD_LEN))
+      if [ $RATIO -ge 70 ] && [ $RATIO -le 150 ]; then
+        HAS_MATH_CLAIM=$(echo "$NEW_STR" | grep -ci 'is the\|equals\|gives\|produces\|categorif\|corresponds to\|is equivalent' 2>/dev/null)
+        HAS_SUBSTANCE=$(echo "$NEW_STR" | grep -ci 'begin{remark}\|begin{proof}\|factori[sz]\|adjoint\|adjunction\|construct\|\\xrightarrow\|\\simeq\|\\cong' 2>/dev/null)
+        if [ "$HAS_MATH_CLAIM" -gt 0 ] && [ "$HAS_SUBSTANCE" -lt 1 ]; then
+          WARNINGS="${WARNINGS}AP186: Possible shallow correction (term swap without mathematical content). Investigate from first principles before replacing a claim. Invoke /investigate if unsure.\n"
+        fi
+      fi
+    fi
+  fi
+
 fi
 
 # ---------------------------------------------------------------------------
