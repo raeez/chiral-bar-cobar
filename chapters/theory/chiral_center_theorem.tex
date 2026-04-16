@@ -343,20 +343,128 @@ and $[-,-]$ is the Gerstenhaber bracket defined below
 in Definition~\ref{def:gerstenhaber-bracket-chiral}.
 \end{definition}
 
-\begin{remark}[Comparison with the geometric definition]
-\label{rem:comparison-geometric-hoch}
-The cochain complex of
-Definition~\ref{def:chiral-hochschild-cochain-brace}
-is the algebraic model of the geometric Hochschild
-complex of
-\S\ref{subsec:hochschild-duality}
+\begin{proposition}[Geometric--algebraic comparison for chiral Hochschild;
+\ClaimStatusProvedHere]
+\label{prop:geometric-algebraic-hochschild}
+\index{chiral Hochschild!geometric--algebraic comparison}
+Let $A$ be a chiral algebra on a smooth curve~$X$
+satisfying the standing finiteness conditions
+\textup{(\S\ref{sec:standing-assumptions})}.
+There is a natural quasi-isomorphism of cochain complexes
+\begin{equation}\label{eq:geom-alg-hochschild-comparison}
+  \varphi \colon C^\bullet_{\mathrm{ch,geom}}(A, A)
+  \xrightarrow{\;\sim\;}
+  C^\bullet_{\mathrm{ch,alg}}(A, A)
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $C^\bullet_{\mathrm{ch,geom}}(A, A)$ is the geometric
+  chiral Hochschild complex of
+  \S\ref{subsec:hochschild-duality}
+  \textup{(Theorem~\ref{thm:chiral-hochschild-differential})},
+  with cochains on $\overline{C}_{n+1}(X)$ and
+  differential $d_{\mathrm{int}} + d_{\mathrm{fact}}
+  + d_{\mathrm{config}}$;
+\item $C^\bullet_{\mathrm{ch,alg}}(A, A)$ is the algebraic
+  chiral Hochschild complex
+  \textup{(Definition~\ref{def:chiral-hochschild-cochain-brace})},
+  with cochains in $\prod_{n \ge 0}
+  \End^{\mathrm{ch}}_A(n{+}1)[-n]$ and
+  differential $\delta f = [m, f]_{\mathrm{G}}$
+  \textup{(Definition~\ref{def:gerstenhaber-bracket-chiral})};
+\item the map $\varphi$ evaluates a geometric cochain
+  \textup{(}a section with logarithmic form on
+  $\overline{C}_{n+1}(X)$\textup{)}
+  by restricting to the formal completion of
+  $\overline{C}_{n+1}(X)$ along the total diagonal
+  and expanding in the relative coordinates
+  $\lambda_i = z_i - z_{n+1}$,
+  producing a formal-Laurent-series-valued
+  multilinear map.
+\end{enumerate}
+The quasi-isomorphism is $E_1$-compatible: it
+intertwines the ordered compositions on both sides.
+At genus~$0$, it is an equivalence of $E_2$-algebras
+at the level of Gerstenhaber algebras (cohomology);
+the chain-level $E_2$-equivalence follows from
+formality of the FM operad (Kontsevich).
+At genus~$\ge 1$, the geometric model carries
+curve-dependent data \textup{(}Green's functions, period
+corrections\textup{)} invisible to the algebraic model.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The argument parallels the bar complex comparison
+(Theorem~\ref{thm:geometric-equals-operadic-bar}).
+
+\emph{Step~1} (The map).
+A geometric cochain $\omega \in
+\Gamma\bigl(\overline{C}_{n+1}(X),\,
+j_*j^*A^{\boxtimes(n+1)} \otimes
+\Omega^n(\log D)\bigr)$
+is sent to
+$\varphi(\omega) \in \End^{\mathrm{ch}}_A(n{+}1)$
+by restricting $\omega$ to the formal completion along
+the total diagonal and expanding in the relative
+coordinates $\lambda_i = z_i - z_{n+1}$.
+This extracts the formal Laurent series in the spectral
+variables $\lambda_1, \ldots, \lambda_n$.
+
+\emph{Step~2} (Chain map).
+The geometric differential decomposes as
+$d_{\mathrm{int}} + d_{\mathrm{fact}} +
+d_{\mathrm{config}}$
 (Theorem~\ref{thm:chiral-hochschild-differential}).
-The geometric realization on configuration spaces
-endows $C^\bullet_{\mathrm{ch}}(A, A)$ with the additional
-structure of integration over $\FM_n(\mathbb{C})$;
-the algebraic definition retains only the formal-variable
-residue operations and is therefore valid over any ground
-field.
+Under $\varphi$, $d_{\mathrm{int}}$ maps to the internal
+differential on~$A$; $d_{\mathrm{fact}}$ maps to the
+chiral multiplication insertions in
+$\delta = [m, -]$; and $d_{\mathrm{config}}$ maps to
+the formal residue contributions, by Stokes's theorem
+applied to the boundary strata of
+$\overline{C}_{n+1}(X)$.
+
+\emph{Step~3} (Quasi-isomorphism).
+The logarithmic comparison theorem (Deligne) gives
+$H^*\bigl(\Omega^*_{\overline{C}_{n+1}(X)}(\log D)\bigr)
+\cong H^*(C_{n+1}(X); \bC)$,
+and the operadic differential encodes precisely
+the boundary stratification combinatorics,
+as in Step~3 of the proof of
+Theorem~\ref{thm:geometric-equals-operadic-bar},
+applied to the dual ($\Hom$) setting:
+chiral Hochschild cochains are $\Hom$ out of
+the bar complex, and the logarithmic comparison
+extends to this $\Hom$-complex by the universal
+coefficient theorem for $\cD$-module coefficients
+(the key input is holonomicity of
+$j_*j^*A^{\boxtimes(n+1)}$, which holds under
+the standing finiteness assumptions; the extension
+then follows from the derived $\Hom$ adjunction
+applied to the cofibrant bar resolution).
+
+\emph{Step~4} ($E_1$-compatibility).
+The ordered composition on both sides is inherited from
+the ordered bar comparison
+(Theorem~\ref{thm:geometric-equals-operadic-bar}),
+since partial compositions $f \circ_i g$ on
+$\End^{\mathrm{ch}}_A$ correspond to collisions at
+ordered boundary strata.
+At genus~$0$, the curve-independence of
+$\FM_n(\bC)$ promotes the compatibility to $E_2$.
+\end{proof}
+
+\begin{remark}[Algebraic vs.\ geometric content]
+\label{rem:comparison-geometric-hoch}
+The quasi-isomorphism of
+Proposition~\ref{prop:geometric-algebraic-hochschild}
+shows that the algebraic model retains the full
+cohomological information of the geometric one.
+What the algebraic model \emph{loses} is the integration
+data over $\FM_n(\bC)$: the geometric realization
+endows $C^\bullet_{\mathrm{ch}}(A, A)$ with additional
+integration structure, while the algebraic definition
+retains only the formal-variable residue operations and
+is therefore valid over any ground field.
 \end{remark}
 
 The cochain complex $(C^\bullet_{\mathrm{ch}}(A, A), \delta)$

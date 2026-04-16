@@ -107,6 +107,91 @@ iterated OPE with the spectral variables tracking the collision
 parameters.
 \end{remark}
 
+\begin{proposition}[Bridge: BD chiral operad $\leftrightarrow$ algebraic $\mathcal{E}\!\mathit{nd}^{\mathrm{ch}}$]
+\label{prop:bd-algebraic-bridge}
+\ClaimStatusProvedHere
+Let $\cA$ be a chiral algebra on a smooth curve~$X$, and let
+$p \in X$ with local coordinate $z \colon \widehat{D}_p
+\xrightarrow{\sim} \operatorname{Spec} \mathbb{C}[[z]]$.  The following four-step
+chain produces a canonical isomorphism of non-$\Sigma$ operads:
+\begin{equation}\label{eq:bd-algebraic-bridge}
+  \operatorname{End}^{\mathrm{ch}}_{\cA, \mathrm{BD}}(n)\big|_{\widehat{D}_p^n}
+  \;\xrightarrow[\;\cong\;]{\;\Phi_z\;}
+  \mathcal{E}\!\mathit{nd}^{\mathrm{ch}}_{A_p}(n)
+\end{equation}
+where the left side is the Beilinson--Drinfeld chiral
+endomorphism operad
+\textup{(Definition~\textup{\ref{def:chiral-endo}})} restricted
+to the formal polydisk, and the right side is the algebraic
+chiral endomorphism operad
+\textup{(Definition~\textup{\ref{def:thqg-chiral-endomorphism-operad}})}.
+
+The isomorphism $\Phi_z$ is constructed in four steps:
+\begin{enumerate}[label=\textup{Step~\arabic*.},leftmargin=*]
+\item \textbf{Formal-disk restriction.}
+  Restrict the BD operad from $X^n$ to the formal
+  polydisk $\widehat{D}_p^n = \operatorname{Spec} \mathbb{C}[[z_1, \ldots, z_n]]$.
+\item \textbf{D-module trivialisation.}
+  On the formal disk $\widehat{D}_p$, every coherent D-module
+  trivialises: the global-sections functor
+  $\Gamma(\widehat{D}_p, -) \colon D\text{-}\mathrm{mod}(\widehat{D}_p)
+  \to \mathrm{Vect}$ is an equivalence of symmetric monoidal
+  categories.  The chiral algebra $\cA|_{\widehat{D}_p}$ becomes a
+  graded vector space $V = A_p$ equipped with a translation
+  operator $\partial = \nabla_{d/dz}$.
+\item \textbf{Spectral-variable identification.}
+  Under trivialisation, the maximal meromorphic extension
+  $j_* j^*(\cA^{\boxtimes n})|_{\widehat{D}_p^n}$ becomes
+  $V^{\otimes n} \otimes
+  \mathbb{C}((\lambda_1))\cdots((\lambda_{n-1}))$
+  where $\lambda_i = z_i - z_n$ are the relative positions.
+  The BD chiral product $\mu^{\mathrm{ch}}$ restricts to the
+  $\lambda$-bracket: $\mu(a, b; \lambda) = a_{(\lambda)} b$.
+\item \textbf{Operadic composition.}
+  The operadic composition on the BD side (via boundary strata
+  of the FM compactification $\overline{C}_n(\widehat{D}_p)$) maps
+  to block-substitution on the algebraic side: nested collision
+  of $m$ points near the $i$-th point of an $n$-point
+  configuration corresponds to the spectral substitution rule
+  $\lambda_i \mapsto \Lambda_i = \lambda_i + \cdots +
+  \lambda_{i+m-2}$.
+\end{enumerate}
+The isomorphism $\Phi_z$ depends on the choice of local
+coordinate~$z$.  The group $\operatorname{Aut}(\mathcal{O})$ of formal coordinate
+changes acts on $\mathcal{E}\!\mathit{nd}^{\mathrm{ch}}_{A_p}(n)$ and
+provides descent data: the BD operad is the
+$\operatorname{Aut}(\mathcal{O})$-equivariant global object from which the algebraic
+operad is obtained by choosing a trivialisation.
+\end{proposition}
+
+\begin{proof}
+Step~2 follows from the contractibility of the formal disk:
+$\pi_1(\widehat{D}_p) = 0$, so every regular flat connection on
+$\widehat{D}_p$ trivialises (regularity is inherited from the
+standing conventions of
+\S\ref{sec:standing-assumptions}), and $\Gamma(\widehat{D}_p, -)$ is
+an exact tensor equivalence.  Step~3 is the definition of the
+$j_* j^*$-functor applied to the trivialised sheaf: sections
+with poles along the diagonal $z_i = z_j$ become formal Laurent
+series in the difference variables $\lambda_i = z_i - z_n$.
+Poles along non-last diagonals $z_i = z_j$ ($i, j < n$) are
+captured by the element $(\lambda_i - \lambda_j)^{-1}$ in the
+iterated Laurent field; the ordering of the iterated completion
+(expand in $\lambda_{n-1}$ first, then $\lambda_{n-2}$, etc.)
+encodes the collision ordering, and this is the source of the
+non-$\Sigma$ (ordered) operadic structure.
+Step~4 follows from the operadic structure of the
+Fulton--MacPherson compactification
+(cf.\ Fulton--MacPherson~\cite{FM94}; the formal-disk
+restriction identifies codimension-one boundary strata with
+consecutive-block collisions), matching the algebraic operadic
+composition in equation~\eqref{eq:thqg-block-composition}.  The
+$\operatorname{Aut}(\mathcal{O})$-equivariance is immediate from the
+coordinate naturality of each step: a formal coordinate change
+$z \mapsto \tilde{z}(z)$ transforms $\partial$, the spectral
+variables, and the block-substitution rule compatibly.
+\end{proof}
+
 \begin{definition}[Chiral Hochschild cochain complex, algebraic model]
 \label{def:thqg-algebraic-hochschild}
 \index{chiral Hochschild cochains!algebraic model|textbf}
