@@ -9804,4 +9804,101 @@ $s \ge 4$). The Universal Holography classification
 upgrades from a single exponential-stratum invariant ($C = 6$)
 to a spin-stratified lattice $\{6, 12, 20, 30, \ldots\}$.
 
+\subsection{Iterations 59--63: rectification to the exact
+generating function and the linear-vs-quadratic dichotomy}
+\label{subsec:loop-iter-59-63-gf-dichotomy}
+
+\textbf{Iter 59 (Beilinson correction).} The iter 58 conjecture
+$C^{(s)} = s(s+1)$ rests on only two data points, fitting
+multiple functional forms. Three candidate parabolas all match
+at $s = 2, 3$ but differ at $s = 4$: $s(s+1) = 20$,
+$6(s-1) = 18$, $2s^2 - 4s + 6 = 22$. Conjecture downgraded to
+ClaimStatusConjectured with explicit two-point ambiguity.
+
+\textbf{Iter 60 (exact generating function).} The $W_3$ $W$-line
+sequence $a_n$ admits an ALGEBRAIC closed form for its
+generating function:
+\[
+  F(z) \;=\; \frac{z}{3} + \frac{(1 - 12 z)^{3/2} - 1}{54},
+  \quad
+  F'(z) \;=\; \frac{1 - \sqrt{1 - 12 z}}{3}.
+\]
+$F'$ solves the quadratic $\tfrac{3}{2} F'^2 - F' + 2 z = 0$;
+the branch $F'(0) = 0$ is the correct one; radius of convergence
+$= 1/12$ exactly. Self-consistency evaluation at the radius
+$F'(1/12) = 1/3$ gives the sharp identity
+$\sum_{n \ge 2} n \, a_n \, 12^{1-n} = 1/3$, verified numerically
+through $N = 300$ (residual matches Stirling tail
+$1/(3\sqrt{\pi N})$ to four significant figures).
+Via the Catalan identity $(1 - \sqrt{1-4u})/2 = \sum C_m u^{m+1}$,
+the sequence identifies as $a_n = 2 C_{n-2} 3^{n-2} / n$ where
+$C_m$ is the $m$-th Catalan. Structural prediction (under the
+``Riccati template'' with seed $a_2 = 1$, Hessian $s/c$, and
+$j, k \ge 2$ summation): $C_s = 4 s$. Matches $W_3$ $W$-line
+($s = 3$, $C = 12$) but not Virasoro $T$-line
+($s = 2$, $C = 6 \ne 8$).
+
+\textbf{Iter 61 (template hypotheses).} Four hypotheses
+$(H1)$--$(H4)$ isolate when $C = 4s$ applies:
+$(H1)$ $Z_2$ parity of the generator, $(H2)$ Hessian $s/c$,
+$(H3)$ seed $a_2 = 1$, $(H4)$ weight-$4$ OPE producing $a_3$
+from $a_2^2$. $W_3$ $W$-line satisfies all four; Virasoro
+$T$-line fails $(H1)$; higher-spin $W^{(s)}$ for $s \ge 4$
+open pending Fateev--Lukyanov verification.
+
+\textbf{Iter 62 (linear-vs-quadratic dichotomy).} Deeper
+structural mechanism: how leading-$c$ projection interacts
+with the quadratic shadow recurrence.
+\begin{itemize}
+  \item Virasoro $T$-line: $S_3 \sim c^0$, $S_r \sim
+        c^{-(r-2)}$ for $r \ge 4$ creates a \emph{cascade of
+        $c$-orders}. Under $A_r := c^{r-2} S_r$ scaling, only
+        the pair $(3, r-1)$ contributes at leading $c$; other
+        pairs are sub-leading. Quadratic shadow recurrence
+        collapses to LINEAR: $A_r = -6(r-1)/r \cdot A_{r-1}$,
+        $r \ge 5$. Seeds $A_3 = A_4 = 2$ determine the whole
+        tower $A_r = 8(-6)^{r-4}/r$. GF is TRANSCENDENTAL
+        (polynomial plus $\log(1 + 6z)$), subexponential
+        $\sim r^{-1}$.
+  \item $W_3$ $W$-line: integer sequence $a_m$ normalises out
+        all $c$-dependence; no cascade, all pairs contribute
+        at the same order. Shadow recurrence remains QUADRATIC
+        on $(a_m)$. GF is ALGEBRAIC (polynomial plus
+        $(1 - 12 z)^{3/2}$), subexponential $\sim m^{-5/2}$.
+\end{itemize}
+Both end at finite exponential base but the subexponential
+power differs by two orders.
+
+\textbf{Iter 63 (HZ-IV test suite).} New test file
+\texttt{compute/tests/test\_virasoro\_linear\_recurrence.py}
+independently verifies the linear recurrence claim against the
+closed form, across $r = 4, \ldots, 19$. Four tests pass.
+Twenty-two tests total across $W_3$ $W$-line and Virasoro
+T-line infrastructure (iter 58: 11; iter 60: 5; iter 63: 4;
++ 2 higher-spin conjecture tests).
+
+\textbf{Cumulative structural picture (iters 57--63).}
+\begin{itemize}
+  \item \emph{$W_3$ $W$-line}: exact algebraic GF, Catalan
+        reduction, $C = 12 = 4 \cdot 3$, Koszul-dual invariant.
+        Proved rigorously.
+  \item \emph{Riccati template} $C = 4 s$ under $(H1)$--$(H4)$:
+        structural formula, not just curve-fit. Gives
+        unambiguous higher-spin prediction: $W^{(4)}$-line in
+        $W_4$ should have $C = 16$ (if all four hypotheses
+        hold).
+  \item \emph{Linear-vs-quadratic asymptotic recurrence}: the
+        key structural mechanism distinguishing lanes. Virasoro
+        $T$-line (no parity, c-cascade) has linear recurrence
+        and log GF; $W_3$ $W$-line (parity, integer
+        normalisation) has quadratic recurrence and algebraic
+        GF.
+  \item \emph{Template fails} at Virasoro $T$-line because
+        $S_2 = \kappa$ is not $x$-dependent on the $T$-line
+        (it acts via $\nabla_H$ rather than as a shadow
+        coefficient), whereas on the $W_3$ $W$-line,
+        $Sh_2 = (c/3) x_W^2$ IS $x_W$-dependent and enters
+        the recursion as a seed at weight $4 = 2 + 2$.
+\end{itemize}
+
 \end{document}
