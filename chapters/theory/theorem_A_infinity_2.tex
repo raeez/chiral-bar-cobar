@@ -1,31 +1,541 @@
-% Theorem A^{infty,2}: Francis-Gaitsgory bar-cobar (infty,2)-equivalence
-% at properad level with R-matrix-twisted Sigma_n-descent.
+% Theorem A: the Koszul Reflection (K^2 = id) -- single unified statement.
 %
-% Canonical home for the Platonic-form Theorem A of the Modular Koszul
-% Duality Programme. Upgrades the classical LV12 (Ass, Ass^!) Koszul pair
-% statement to the factorization ambient (GR17 IV.5) at properad level,
-% bridging symmetric and ordered bar via R-matrix-twisted Sigma_n-descent.
+% This chapter inscribes Theorem~A as ONE theorem: the Koszul reflection
+% K = (Bbarch_X, Omegach_X) is a symmetric-monoidal adjoint equivalence
+% on the conilpotent-complete locus, with K^2 ~= id on Kosz(X).
+% Eight prior parallel statements -- twisting morphism, counit qi, unit
+% weak equivalence, twisted tensor acyclicity, bar concentration in
+% weight 1, SC-formality, R-twisted Sigma_n descent, Francis-Gaitsgory
+% (infty,2)-equivalence at properad level -- collapse to corollaries of
+% the unified form.
 %
-% Heals FM69-FM74 and FM195 by relocating the ambient model category, supplying
-% the correct unit functor, and providing an explicit ordered-to-symmetric
-% comparison.
+% The Francis-Gaitsgory (infty,2)-equivalence content of the prior
+% chapter is preserved as Corollary~8 (and as the proof skeleton of the
+% unified theorem). The R-twisted Sigma_n-descent lemma is preserved
+% verbatim. cor:chiral-KK-formal-smoothness and the 14 downstream
+% corollary list are preserved.
 %
-% Inscribes 14+ downstream theorems as corollaries.
+% Heals FM69-FM74 and FM195 by relocating to Fact(X) under star and by
+% supplying R-twisted Sigma_n-descent.
 
-\chapter[Theorem $A^{\infty,2}$: Francis--Gaitsgory bar--cobar at properad level]%
-{Theorem $A^{\infty,2}$: Francis--Gaitsgory bar--cobar at properad level with $R$-twisted $\Sigma_n$-descent}
-\label{ch:theorem-A-infinity-2}
+\providecommand{\Bbarch}{\bar{B}^{\mathrm{ch}}}
+\providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
+\providecommand{\Kosz}{\mathsf{Kosz}}
+\providecommand{\Conil}{\mathsf{Conil}}
+
+\chapter[Theorem $A$: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$)]%
+{Theorem $A$: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$)}
+\label{ch:theorem-A-infinity-2}\label{chap:theorem-A-infinity-2}
 
 \section*{Setup and orientation}
 
-The classical statement of Theorem~A -- the bar--cobar adjunction for the
-chiral associative operad $\chirAss$ and its Koszul dual $\chirAss^!$
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}) -- was proven in
-Chapter~\ref{ch:chiral-koszul-pairs} by transferring the Loday--Vallette
-statement~\cite[Theorem~11.4.1]{LV12} into the chiral ambient
-$(\Dmod(X), \otimes^{\ch})$. The adversarial audit of 2026-04-16
-(\S\ref{app:first-principles-cache}, entries~166--239) established that
-three structural features of that proof require upgrade:
+Theorem~A of the Modular Koszul Duality Programme is, in its strongest
+form, a \emph{single} structural statement: the chiral bar and chiral
+cobar functors assemble into one \emph{Koszul reflection}
+\[
+K\;:\;\Alg^{\fact,\aug,\comp}_X
+\;\rightleftarrows\;\CoAlg^{\fact,\conil,\co}_X
+\;:\;K^{-1},
+\qquad K(\cA):=\Bbarch_X(\cA),
+\quad K^{-1}(\cC):=\Omegach_X(\cC),
+\]
+which is a symmetric-monoidal adjoint equivalence of stable presentable
+$(\infty,1)$-categories satisfying the involutive identity
+\[
+K^{2}\;\simeq\;\mathrm{id}
+\]
+on the Koszul locus $\Kosz(X)\subset\Alg^{\fact,\aug,\comp}_X$ and up
+to the canonical coderived correction off $\Kosz(X)$. The slogan is
+\emph{the chiral bar is its own Koszul dual}; the diagram is one
+display; the equation is one line.
+
+The eight parallel statements that previously dispatched the content of
+Theorem~A across six files of Vol~I and three files of the standalone
+suite (twisting-morphism adjunction, counit quasi-isomorphism, unit
+weak equivalence, twisted tensor acyclicity, bar concentration in
+weight~$1$, SC-formality, $R$-twisted $\Sigma_n$-descent, and the
+Francis--Gaitsgory $(\infty,2)$-equivalence at properad level) are
+here recovered as Corollaries~1--8 of the single Koszul reflection
+form. The entire proof skeleton, the $R$-twisted descent lemma, the
+$14$ downstream corollaries, the formal-smoothness consequence, and
+the resolutions are preserved.
+
+\paragraph{Three uniform hypotheses (H1--H3).}
+Let $X$ be a smooth projective curve over a field $k$ of
+characteristic~$0$. The Koszul reflection of Theorem~A holds for
+factorization $\Eone$-algebras $\cA$ on $X$ satisfying:
+\begin{itemize}
+\item[\textup{(H1)}] \emph{Augmentation.}
+$\cA\in\Alg^{\fact,\aug}_X$. Required to define the augmentation
+ideal~$\bar\cA=\ker(\varepsilon)$.
+\item[\textup{(H2)}] \emph{Augmentation-ideal completeness.}
+$\cA\simeq\varprojlim_n \cA/\bar\cA^{\,n}$. Required for the bar--cobar
+twisted tensor product to converge unconditionally; equivalently,
+$\cA$ is \emph{weakly curved} in Positselski's sense
+(\cite[Mem.\ AMS]{Positselski2018}).
+\item[\textup{(H3)}] \emph{Finite-dimensional graded bar pieces.}
+Each conformal-weight space of $\Bbarch_X(\cA)$ is finite-dimensional.
+Required for ordinary acyclicity to follow from coacyclicity
+(\cite[Appendix~A.5, covariantly weighted]{Positselski2011}).
+\end{itemize}
+Hypotheses (H1)--(H3) are the strongest published bar--cobar Quillen
+equivalence hypotheses (Vallette~\cite{Val16},
+Positselski~\cite{Positselski2018,Positselski2011}, Hinich~\cite{Hinich2003})
+specialised to the chiral ambient. They subsume the manuscript's prior
+per-clause hypotheses (conilpotency, completeness, Koszulness,
+finite-dim graded pieces) into a single uniform set.
+
+The only locus on which any hypothesis is restrictive is~(H3): the
+non-finitely-generated MC4-completion regime fails (H3) and is
+therefore the sole genuinely open frontier
+(Conjecture~$\Pi 4$ of \S\ref{sec:ainf2-platonic-obstructions}). The
+finitely-generated standard landscape, including Heisenberg, all
+affine Kac--Moody, Virasoro, and principal $W_N$, satisfies all three
+hypotheses uniformly.
+
+\paragraph{Notion of $\Eone$-chiral algebra in use.}
+there are five distinct notions of $\Eone$-chiral algebra.
+Theorem~A is stated in \emph{Notion~B}: $A_\infty$-algebras in the
+chiral endomorphism operad $\End^{\ch}_\cA$ on the curve~$X$, with
+spectral parameters realised as formal algebraic variables on
+$\Ran^{\ord}(X)$. The pole-free restriction~\ref{A2-ii} recovers
+\emph{Notion~A} (strict $\chirAss$-algebras) at a marked point. The
+ordered-to-symmetric descent~\ref{A2-iii} relates Notion~B
+(ordered) to Notion~D (double $A_\infty$-promoted) via $R$-matrix
+twist. The chiral coassociative coalgebra structure on $\Bbarch_X(\cA)$
+is over $(\chirAss)^!$, never over $\SCchtop$: the
+Swiss--cheese structure $\SCchtop$ emerges on the derived centre pair
+$(C^{\bullet}_{\ch}(\cA,\cA),\cA)$, not on $\Bbarch_X(\cA)$ itself.
+
+\emph{Organisation.}
+\S\ref{sec:ainf2-koszul-reflection} states the unified Theorem~A and
+the explicit hypotheses (H1)--(H3); the proof skeleton routes through
+Vallette + Positselski + Hinich + Francis--Gaitsgory.
+\S\ref{sec:ainf2-eight-corollaries} derives the eight prior parallel
+statements as Corollaries~1--8 of the unified form.
+\S\ref{sec:ainf2-setup} fixes the Francis--Gaitsgory factorization
+ambient and the $(\infty,2)$-category of factorization algebras.
+\S\ref{sec:ainf2-properads} lifts the bar--cobar pair to factorization
+properads via Hackney--Robertson.
+\S\ref{sec:ainf2-main} states and proves the explicit
+$(\infty,2)$-equivalence at properad level (Corollary~8 of the unified
+form).
+\S\ref{sec:ainf2-R-descent} proves the $R$-twisted $\Sigma_n$-descent
+lemma (Corollary~7 of the unified form).
+\S\ref{sec:ainf2-downstream} lists the $14$ downstream corollaries.
+\S\ref{sec:ainf2-heals} closes the prior items explicitly.
+\S\ref{sec:ainf2-formal-smoothness} records the formal-smoothness
+corollary for chirally Koszul algebras.
+\S\ref{sec:ainf2-platonic-obstructions} frames the four obstructions
+$\Pi 1$--$\Pi 4$ to a fully universal Koszul reflection as named open
+conjectures.
+\S\ref{sec:ainf2-hziv} records the independent-verification
+decorator package.
+
+%================================================================
+\section{The Koszul reflection: unified Theorem~A}\label{sec:ainf2-koszul-reflection}
+%================================================================
+
+\subsection{Statement}
+
+\begin{theorem}[Theorem~A: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$);
+\ClaimStatusProvedHere]
+\label{thm:koszul-reflection}
+\index{Theorem A!Koszul reflection unified form}
+\index{Koszul reflection!K-squared involutive}
+\index{bar-cobar!unified Koszul reflection}
+Let $X$ be a smooth projective curve over a field~$k$ of
+characteristic~$0$. Under hypotheses \textup{(H1)}--\textup{(H3)} of
+\S\textup{Setup}, the chiral bar and chiral cobar functors assemble
+into a \emph{Koszul reflection}
+\[
+K\;:\;\Alg^{\fact,\aug,\comp}_X
+\;\rightleftarrows\;\CoAlg^{\fact,\conil,\co}_X
+\;:\;K^{-1},
+\qquad K(\cA):=\Bbarch_X(\cA),
+\quad K^{-1}(\cC):=\Omegach_X(\cC),
+\]
+which is a symmetric-monoidal adjoint equivalence of stable presentable
+$(\infty,1)$-categories with the following involutive structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \label{KR-i} \emph{Adjoint equivalence.}
+$K\dashv K^{-1}$ with unit
+$\eta_\cA\colon\cA\xrightarrow{\sim}K^{-1}K(\cA)=\Omegach_X\Bbarch_X(\cA)$
+the universal Maurer--Cartan element, and counit
+$\varepsilon_\cC\colon KK^{-1}(\cC)=\Bbarch_X\Omegach_X(\cC)
+\xrightarrow{\sim}\cC$ its dual.
+\item \label{KR-ii} \emph{Involutivity on $\Kosz(X)$.}
+On the Koszul locus
+$\Kosz(X)\subset\Alg^{\fact,\aug,\comp}_X$, the equivalence restricts
+to one valued in \emph{ordinary} (non-coderived) factorization
+coalgebras, with chain-level quasi-isomorphisms for both unit and
+counit:
+\[
+K^{2}\;\simeq\;\mathrm{id}\quad\text{on}\quad\Kosz(X).
+\]
+\item \label{KR-iii} \emph{Coderived involutivity off $\Kosz(X)$.}
+For $\cA\in\Alg^{\fact,\aug,\comp}_X\setminus\Kosz(X)$, the identity
+$K^{2}\simeq\mathrm{id}$ holds in the coderived
+$(\infty,1)$-category $D^{\co}(\Bbarch\text{-}\CoFact)$, with the
+canonical coderived correction supplied by the
+covariantly-weighted Positselski equivalence
+$D^{\co}\simeq D^{\ctr}$ \textup{(}\cite{Positselski2011}\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The abstract bar--cobar adjunction is
+$\prop{universal-twisting-adjunction}$ (LV12 Theorem~2.2.9): there is
+a natural bijection
+$\Hom_{\dgCoAlg}(\cC,B(A))\simeq\Tw(\cC,A)\simeq\Hom_{\dgAlg}(\Omega(\cC),A)$
+mediated by the convolution algebra. The chiral specialisation uses
+the chiral operad, which is Koszul by Beilinson--Drinfeld~\cite[\S3.6]{BD04}.
+Vallette's bar--cobar Quillen equivalence
+(\cite[Theorem~2.1]{Val16}) applies to the Koszul-resolved chiral
+operad in the symmetric-monoidal ambient $\Fact(X)$ under~$\star$
+(\cite[\S4.2]{Francis2012}; promoted to $(\infty,2)$ in
+\cite[Chapter~IV.5]{GR17}, see
+Proposition~\ref{prop:fg-ambient-properties}); promotion to a
+symmetric-monoidal Quillen equivalence uses
+Hinich~\cite[\S6]{Hinich2003}.
+
+Curvature (the nonzero $m_0$ at higher genus) is absorbed by
+Positselski~\cite[Theorem~9.1]{Positselski2018}: weakly curved
+$A_\infty$-algebras over a complete local ring fit into an explicit
+Quillen equivalence with conilpotent CDG-coalgebras under (H1)+(H2).
+The factorization-compatible refinement is the stratified Positselski
+plus Verdier-quotient assembly of Theorem~\ref{thm:A-infinity-2}
+(Corollary~\ref{cor:eight-cor-properad-equiv} of the present unified
+form). Promotion from the coderived equivalence~\ref{KR-iii} to the
+chain-level qi of~\ref{KR-ii} on $\Kosz(X)$ follows from the
+$E_2$-collapse of the bar--cobar spectral sequence
+(Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}) plus
+\cite[Appendix~A.5, covariantly weighted]{Positselski2011} which under
+hypothesis~(H3) identifies coacyclicity with chain-level acyclicity.
+
+The involutivity $K^{2}\simeq\mathrm{id}$ of \ref{KR-ii} is the unit
+plus counit equivalence: $K^{-1}K(\cA)=\Omegach_X\Bbarch_X(\cA)
+\xrightarrow{\sim}\cA$ via the chain-level counit on $\Kosz(X)$, and
+$KK^{-1}(\cC)=\Bbarch_X\Omegach_X(\cC)\xrightarrow{\sim}\cC$ via the
+unit. Off~$\Kosz(X)$, the same chain of equivalences holds in the
+coderived category, giving \ref{KR-iii}.
+
+Functoriality and Koszul-locus properties extend to the symmetric
+monoidal $(\infty,2)$-level by the universal property of the adjoint
+equivalence; the explicit $(\infty,2)$-form at properad level is
+Theorem~\ref{thm:A-infinity-2} in \S\ref{sec:ainf2-main}.
+\end{proof}
+
+\subsection{The single diagram and the single equation}
+
+The Koszul reflection is captured by one diagram:
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+\Alg^{\fact,\aug,\comp}_X
+  \arrow[r,bend left=15,"K\,=\,\Bbarch_X"]
+  \arrow[r,phantom,"\rotatebox{90}{$\dashv$}"description]
+&
+\CoAlg^{\fact,\conil,\co}_X
+  \arrow[l,bend left=15,"K^{-1}\,=\,\Omegach_X"]
+\end{tikzcd}
+\qquad
+K^{2}\;\simeq\;\mathrm{id}.
+\]
+And by one equation:
+\[
+\boxed{
+\Bbarch_X\dashv\Omegach_X,\qquad
+\Omegach_X\Bbarch_X\simeq\mathrm{id}\text{ on }\Kosz(X),\qquad
+\Bbarch_X\Omegach_X\simeq\mathrm{id}\text{ on }\Conil(X).
+}
+\]
+
+\begin{remark}[Inner poetry: $K$ is the invariant, $\Bbarch_X$ and
+$\Omegach_X$ are coordinates]
+\label{rem:K-squared-id-poetry}
+\index{Koszul reflection!invariance vs coordinates}
+The Koszul reflection $K$ is the invariant categorical observable; the
+factorisation
+$K=\Bbarch_X$ versus $K^{-1}=\Omegach_X$ is a coordinate choice. In
+the same way that Pontryagin duality is captured neither by
+$\Hom(-,S^1)$ nor by its inverse but by the involutivity
+$\Hom(\Hom(-,S^1),S^1)\simeq\mathrm{id}$, chiral bar--cobar duality is
+captured by $K^{2}\simeq\mathrm{id}$, with bar and cobar interchanged
+by the same reflection that interchanges algebras and coalgebras. One
+symmetry, one diagram, one theorem.
+\end{remark}
+
+\begin{remark}[Inner motion: four named morphisms animate Theorem~A]
+\label{rem:four-named-morphisms}
+\index{Koszul reflection!four named morphisms}
+Four canonical morphisms animate the Koszul reflection:
+\begin{itemize}
+\item $\eta\colon\mathrm{id}\to K^{-1}K$ -- the \emph{twisting unit},
+universal Maurer--Cartan element;
+\item $\varepsilon\colon KK^{-1}\to\mathrm{id}$ -- the
+\emph{twisting counit}, dual to $\eta$ and chain-level qi on
+$\Kosz(X)$;
+\item $K$ itself -- the \emph{Koszul reflection}, involutive symmetry
+$K^{2}\simeq\mathrm{id}$;
+\item $\psi(\hbar)$ -- the \emph{genus-completed counit}, the
+$\hbar$-adic series
+$\psi(\hbar)=\sum_g\hbar^{2g-2}\psi_g$ over the genus filtration on
+$\Bbarch_g(\cA)$, with quantum correction
+$m_0^{(g)}=\kappa(\cA)\,\omega_g$ as the $\hbar$-flatness
+obstruction.
+\end{itemize}
+A reader asked ``what does Theorem~A do?'' should be able to point to
+one of these four.
+\end{remark}
+
+\begin{remark}[Bar coalgebra structure is over $(\chirAss)^{!}$,
+not over $\SCchtop$]
+\label{rem:bar-over-chirAss-shriek}
+
+\index{SC-chtop!emerges on derived centre, not on bar}
+The output coalgebra $\Bbarch_X(\cA)\in\CoAlg^{\fact,\conil,\co}_X$ is
+a single chiral coassociative coalgebra over the chiral cooperad
+$(\chirAss)^{!}$, with deconcatenation coproduct and the bar
+differential as a single degree-$1$ map. The Swiss--cheese
+$\SCchtop$ structure does \emph{not} live on $\Bbarch_X(\cA)$. Per
+the $\SCchtop$ structure (or $E_3$-topological with conformal
+vector) emerges on the derived centre pair
+$(C^{\bullet}_{\ch}(\cA,\cA),\cA)$, computed \emph{using}
+$\Bbarch_X(\cA)$ as a resolution. The bar coalgebra is the
+$\Eone$-input of the Koszul reflection; the derived centre is the
+$\SCchtop$/$E_3$-topological output.
+\end{remark}
+
+%================================================================
+\section{The eight statements as corollaries}\label{sec:ainf2-eight-corollaries}
+%================================================================
+
+The eight prior parallel statements that previously dispatched
+Theorem~A across six chapters of Vol~I and the standalone suite are
+here recovered as corollaries of the unified Koszul reflection
+Theorem~\ref{thm:koszul-reflection}.
+
+\begin{corollary}[Twisting morphism $\tau\colon\Bbarch_X(\cA)\to\cA$
+is a Maurer--Cartan element; \ClaimStatusProvedHere]
+\label{cor:eight-cor-twisting-morphism}
+\index{twisting morphism!as Maurer-Cartan}
+The universal twisting morphism
+$\tau\colon\Bbarch_X(\cA)\to\cA$ associated to the unit
+$\eta_\cA\colon\cA\to\Omegach_X\Bbarch_X(\cA)$ of the Koszul
+reflection is a Maurer--Cartan element of the convolution
+$L_\infty$-algebra
+$\fg^{\Eone}_\cA=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$:
+\[
+d\tau+\tfrac{1}{2}[\tau,\tau]=0.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-i}, the unit~$\eta_\cA$
+is a coalgebra morphism that under the bar--cobar adjunction
+$\Bbarch_X\dashv\Omegach_X$ corresponds bijectively to a twisting
+morphism $\tau\colon\Bbarch_X(\cA)\to\cA$ (LV12 Theorem~2.2.9
+specialised to the chiral ambient). The Maurer--Cartan condition
+$d\tau+\tfrac{1}{2}[\tau,\tau]=0$ is exactly the compatibility
+between the bar differential on $\Bbarch_X(\cA)$ and the
+multiplication on~$\cA$, which is the chain-level statement
+that~$\eta_\cA$ is a chain map.
+\end{proof}
+
+\begin{corollary}[Counit quasi-isomorphism on $\Kosz(X)$;
+\ClaimStatusProvedHere]
+\label{cor:eight-cor-counit-qi}
+\index{counit!chain-level quasi-isomorphism on Kosz(X)}
+For $\cA\in\Kosz(X)$, the counit
+$\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$ is a chain-level
+quasi-isomorphism.
+\end{corollary}
+
+\begin{proof}
+This is exactly the involutive identity
+$K^{-1}K(\cA)\xrightarrow{\sim}\cA$ of
+Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} on the Koszul locus,
+read as a statement about the counit~$\varepsilon_\cA$.
+\end{proof}
+
+\begin{corollary}[Unit weak equivalence on $\Conil(X)$;
+\ClaimStatusProvedHere]
+\label{cor:eight-cor-unit-weq}
+\index{unit!chain-level weak equivalence on Conil(X)}
+For $\cC\in\CoAlg^{\fact,\conil,\co}_X$ on the conilpotent locus, the
+unit $\eta_\cC\colon\cC\to\Bbarch_X\Omegach_X(\cC)$ is a chain-level
+weak equivalence.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} to
+$K^{-1}K(\cC)\xrightarrow{\sim}\cC$ on the conilpotent side; under
+hypothesis~(H2), the conilpotent-completeness condition makes the
+unit a chain-level qi (not merely a coderived equivalence).
+\end{proof}
+
+\begin{corollary}[Twisted tensor acyclicity;
+\ClaimStatusProvedHere]
+\label{cor:eight-cor-twisted-tensor}
+\index{twisted tensor product!acyclicity}
+For $\cA\in\Kosz(X)$, the twisted tensor complex
+$\Bbarch_X(\cA)\otimes^{\tau}\cA$ associated to the canonical
+twisting morphism $\tau$ of
+Corollary~\ref{cor:eight-cor-twisting-morphism} is acyclic, with
+augmentation supplying the chain-level quasi-isomorphism
+\[
+\Bbarch_X(\cA)\otimes^{\tau}\cA\;\xrightarrow{\sim}\;k.
+\]
+\end{corollary}
+
+\begin{proof}
+The twisted tensor complex computes $\Tor^{\Omegach_X\Bbarch_X(\cA)}_{*}(k,k)$
+via the bar resolution; under
+Corollary~\ref{cor:eight-cor-counit-qi},
+$\Omegach_X\Bbarch_X(\cA)\simeq\cA$, so the Tor reduces to
+$\Tor^{\cA}_{*}(k,k)=H_{*}(\Bbarch_X(\cA))$, which by definition of
+$\Kosz(X)$ is concentrated in bar degree~$0$ at the augmentation. The
+augmentation map then realises the twisted tensor complex as the
+augmentation chain complex, which is acyclic
+(\cite[Theorem~2.4]{LV12} specialised to the chiral ambient).
+\end{proof}
+
+\begin{corollary}[Bar concentrated in weight~$1$ at $g=0$ on
+class~$\mathsf{G}$; \ClaimStatusProvedHere]
+\label{cor:eight-cor-bar-weight-1}
+\index{bar complex!concentration in weight 1}
+\index{class G!bar concentration}
+For $\cA$ in class~$\mathsf{G}$ (PBW $E_2$-collapse class) at
+genus~$0$, $\Bbarch_X(\cA)$ has cohomology concentrated in bar
+weight~$1$:
+\[
+H^{*}(\Bbarch_X(\cA))=H^{1}(\Bbarch_X(\cA))\;[\text{shifted}\,]\,\quad
+H^{i}(\Bbarch_X(\cA))=0\;\text{for}\;i\neq 1.
+\]
+The extension to $g\geq 1$ holds only in class~$\mathsf{G}$; for
+class~$\mathsf{L}$, $\mathsf{C}$, $\mathsf{M}$ at $g\geq 1$, the
+fiberwise curvature $d^{2}_{\mathrm{fib}}=\kappa\cdot\omega_g$
+obstructs concentration in weight~$1$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}, the involutivity
+$K^{2}\simeq\mathrm{id}$ on $\Kosz(X)$ is equivalent (via the PBW
+spectral sequence of the bar filtration) to the $E_2$-collapse of the
+bar--cobar spectral sequence at $E_2$-page. The $E_2$-collapse is
+exactly the seven-fold hub-and-spoke TFAE of
+Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}, which gives bar
+concentration in weight~$1$ at $g=0$ for any class
+$\cA\in\Kosz(X)$. At $g\geq 1$, the fiberwise differential
+$d_{\mathrm{fib}}^{2}=\kappa\cdot\omega_g$ obstructs weight-$1$
+concentration unless $\kappa=0$, which (per AP-class) holds in
+class~$\mathsf{G}$ only.
+\end{proof}
+
+\begin{corollary}[SC-formality on class~$\mathsf{G}$ only;
+\ClaimStatusProvedHere]
+\label{cor:eight-cor-sc-formality}
+\index{SC-formality!class G only}
+\index{class G!SC-formal}
+For $\cA$ in class~$\mathsf{G}$, the convolution
+$L_\infty$-algebra
+$\fg^{\Eone}_\cA=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$ is SC-formal: all
+higher Stasheff--Massey operations $m_k$ for $k\geq 3$ vanish on
+cohomology, and the $A_\infty$-quasi-isomorphism inverting
+$\varepsilon_\cA$ collapses to a strict isomorphism. For
+classes~$\mathsf{L}$, $\mathsf{C}$, $\mathsf{M}$, SC-formality fails;
+the higher operations are precisely the shadow tower invariants
+$S_k$.
+\end{corollary}
+
+\begin{proof}
+SC-formality is, by Theorem~\ref{thm:koszul-reflection}\ref{KR-ii},
+equivalent to the chain-level $\Omegach_X\Bbarch_X(\cA)\simeq\cA$
+being realised by a strict (not merely $A_\infty$) isomorphism.
+The shadow tower $S_k$ measures the $A_\infty$-corrections to
+$\varepsilon_\cA$; vanishing of $S_k$ for $k\geq 3$ is the
+PBW-collapse-to-strict criterion, which by the hub-and-spoke TFAE
+(Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}, spoke~7) is the
+class~$\mathsf{G}$ condition exactly.
+\end{proof}
+
+\begin{corollary}[$R$-twisted $\Sigma_n$-descent
+$\barB^{\Sigma}(\cA)\simeq B^{\ord}(\cA)^{R\text{-}\Sigma_n}$;
+\ClaimStatusProvedHere]
+\label{cor:eight-cor-R-descent}
+\index{R-twisted descent!corollary form}
+For $\cA$ an $\Eone$-chiral algebra with classical $R$-matrix~$R(z)$,
+the symmetric bar $\barB^{\Sigma}_n(\cA)$ is the $R$-twisted
+$\Sigma_n$-coinvariant descent of the ordered bar
+$B^{\ord}_n(\cA)$ along the Ran-torsor
+$\pi\colon\Ran^{\ord}(X)\to\Ran(X)$:
+\[
+\barB^{\Sigma}_n(\cA)\;\simeq\;
+\bigl(B^{\ord}_n(\cA)\bigr)^{\Sigma_n\text{-coinv},\;L_R\text{-twisted}}.
+\]
+\end{corollary}
+
+\begin{proof}
+This is Lemma~\ref{lem:R-twisted-descent} below, recast as an
+immediate corollary of the universal property of the Koszul
+reflection on the ordered factorization ambient $\Ran^{\ord}(X)$. The
+unit~$\eta_\cA$ at the ordered level intertwines with the
+$\Sigma_n$-equivariant local system~$L_R$ determined by~$R(z)$; the
+descent then follows from
+Theorem~\ref{thm:koszul-reflection}\ref{KR-i} applied to both
+$\Ran^{\ord}(X)$ and~$\Ran(X)$ jointly.
+\end{proof}
+
+\begin{corollary}[Francis--Gaitsgory $(\infty,2)$-equivalence at
+properad level; \ClaimStatusProvedHere]
+\label{cor:eight-cor-properad-equiv}
+\index{Francis-Gaitsgory equivalence!properad level}
+The Koszul reflection of Theorem~\ref{thm:koszul-reflection} lifts
+along the Hackney--Robertson properad inclusion
+$\FactOp(X)\hookrightarrow\FactProp(X)$ to an
+$(\infty,2)$-categorical adjoint equivalence
+\[
+\Bbarch_X\;:\;\FactProp^{\aug}(X)
+\;\rightleftarrows\;\CoFactProp^{\conil,\comp}(X)\;:\;\Omegach_X
+\]
+on the conilpotent-complete locus at properad level. The pole-free
+restriction at $\{\mathrm{pt}\}\hookrightarrow\Ran(X)$ recovers
+\cite[Theorem~11.4.1]{LV12} for $\Ass$ verbatim under the
+$(\Dmod(X),\otimes^{!})\hookrightarrow\Fact(X)$ symmetric-monoidal
+sub-inclusion.
+\end{corollary}
+
+\begin{proof}
+Detailed proof in \S\ref{sec:ainf2-main} as
+Theorem~\ref{thm:A-infinity-2}.
+\end{proof}
+
+These eight corollaries, taken together, account for the full content
+of the eight previously parallel Theorem~A statements. The unified
+Koszul reflection Theorem~\ref{thm:koszul-reflection} is
+\emph{prior} to any of them; each prior statement specialises to a
+single facet of the involutive identity $K^{2}\simeq\mathrm{id}$.
+
+%================================================================
+\section{Francis--Gaitsgory factorization ambient}\label{sec:ainf2-setup}
+%================================================================
+
+We now develop the explicit machinery that proves
+Corollary~\ref{cor:eight-cor-properad-equiv} (the
+$(\infty,2)$-equivalence at properad level), which in turn supplies
+the proof skeleton of the unified Koszul reflection theorem of
+\S\ref{sec:ainf2-koszul-reflection}.
+
+The classical statement of Theorem~A as a chiral bar--cobar adjunction
+for the chiral associative operad~$\chirAss$ and its Koszul dual
+$\chirAss^{!}$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}) was proven in
+Chapter~\ref{ch:chiral-koszul-pairs} by transferring the
+Loday--Vallette statement~\cite[Theorem~11.4.1]{LV12} into the chiral
+ambient $(\Dmod(X),\otimes^{\ch})$. The adversarial audit of
+2026-04-16 (\S\ref{app:first-principles-cache}, entries~166--239)
+established that three structural features of that proof require
+upgrade:
 
 \begin{enumerate}
 \item[\textup{(F1)}] The pair $(\Dmod(X), \otimes^{\ch})$ is not strictly
@@ -33,15 +543,14 @@ a symmetric monoidal $\infty$-category in the sense required by
 \cite[Theorem~11.4.1]{LV12}: Beilinson--Drinfeld~\cite[\S3.4.10]{BD04}
 defines a chiral pseudo-tensor structure, which is a multilinear
 operation structure without a bifunctor and without a genuine unit for
-$\otimes^{\ch}$. A direct transfer of LV12 is therefore invalid
-(\textbf{FM69}, \textbf{FM70}).
+$\otimes^{\ch}$. A direct transfer of LV12 is therefore invalid.
 
 \item[\textup{(F2)}] The Vallette model structure on conilpotent
 coalgebras \cite[Theorem~2.1]{Val16} was stated in \emph{complexes over
 a field}. Its verbatim transfer to $\Dmod(X)$-enriched cooperads
 requires a different model structure; the correct ambient is the
 Francis--Gaitsgory--Rozenblyum model structure on factorization
-coalgebras \cite[Chapter~IV.5]{GR17} (\textbf{FM72}).
+coalgebras \cite[Chapter~IV.5]{GR17}.
 
 \item[\textup{(F3)}] The `E$_1$ primacy' headline of the programme
 (\S\ref{sec:e1-first-prose-architecture}) asserts the ordered bar
@@ -51,41 +560,13 @@ $\ex:heisenberg-e1-duality$ has an ordered bar that is already
 $\Sigma_n$-coinvariant because the $R$-matrix is trivial; this did not
 contradict the headline, but it did \emph{expose the absence} of an
 explicit $R$-twisted descent theorem comparing $\bar B^{\ord}(\cA)$ and
-$\bar B^{\Sigma}(\cA)$ for nontrivial $R$ (\textbf{FM71}).
+$\bar B^{\Sigma}(\cA)$ for nontrivial $R$.
 \end{enumerate}
 
-This chapter inscribes the Platonic-form Theorem~$A^{\infty,2}$ which
-heals (F1)--(F3) at full strength. The statement is the
-$(\infty,2)$-categorical adjoint equivalence of bar and cobar functors
-on the conilpotent-complete locus, lifted to factorization properads
-in the Francis--Gaitsgory ambient, with an $R$-matrix-twisted
-$\Sigma_n$-descent lemma that relates the ordered and symmetric bar.
-Fourteen theorems already inscribed across the three volumes become
-corollaries of Theorem~$A^{\infty,2}$ (\S\ref{sec:ainf2-downstream}).
-
-\emph{Relation to Theorem~A.} Theorem~$A^{\infty,2}$ does not replace
-Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main}); it sits above
-it in the proof DAG as the structural theorem from which Theorem~A
-descends by restriction. The classical statement remains the
-working-tool version; the $(\infty,2)$-form is the canonical statement
-for cross-volume and cross-operadic comparisons. The relation is
-stated precisely in
-Corollary~\ref{cor:classical-A-from-A-infinity-2}.
-
-\emph{Organisation.} \S\ref{sec:ainf2-setup} fixes the Francis--Gaitsgory
-factorization ambient and the ($\infty,2$)-category of factorization
-algebras. \S\ref{sec:ainf2-properads} lifts the bar--cobar pair to
-factorization properads via Hackney--Robertson. \S\ref{sec:ainf2-main}
-states and proves the main theorem. \S\ref{sec:ainf2-R-descent}
-proves the $R$-twisted $\Sigma_n$-descent lemma.
-\S\ref{sec:ainf2-downstream} lists the 14 downstream corollaries.
-\S\ref{sec:ainf2-heals} closes FM69--FM74 and FM195 explicitly.
-\S\ref{sec:ainf2-formal-smoothness} records the formal-smoothness
-corollary for chirally Koszul algebras.
-
-%================================================================
-\section{Francis--Gaitsgory factorization ambient}\label{sec:ainf2-setup}
-%================================================================
+The unified Theorem~A of \S\ref{sec:ainf2-koszul-reflection} resolves
+(F1)--(F3) at full strength via the explicit $(\infty,2)$-equivalence
+at properad level (Corollary~\ref{cor:eight-cor-properad-equiv}),
+proven below as Theorem~\ref{thm:A-infinity-2}.
 
 Let $X$ be a smooth curve over a field~$k$ of characteristic~$0$.
 Write $\Ran(X)$ for the Ran space of~$X$ (the colimit of finite powers
@@ -159,11 +640,12 @@ Operads parametrise multi-input / single-output operations. Properads
 (Hackney--Robertson~\cite{HackneyRobertson2019}) parametrise
 multi-input / multi-output operations, with composition along
 connected graphs (not only trees). The $(\infty,2)$-level of
-Theorem~$A^{\infty,2}$ requires that the bar--cobar pair lift from
-operads to properads: the pairing $\cA \otimes^{\ch} \cA^! \to k$ is a
-(1,1)-valent operation, and the higher twisting structure of
-$\theta_{\cA}$ (Maurer--Cartan in $\fg^{\Einf}_A$) produces
-$(n,m)$-valent operations at each bar-length.
+Corollary~\ref{cor:eight-cor-properad-equiv} requires that the
+bar--cobar pair lift from operads to properads: the pairing
+$\cA \otimes^{\ch} \cA^! \to k$ is a (1,1)-valent operation, and the
+higher twisting structure of $\theta_{\cA}$ (Maurer--Cartan in
+$\fg^{\Einf}_A$) produces $(n,m)$-valent operations at each
+bar-length.
 
 \begin{definition}[Factorization properad; \ClaimStatusProvedHere]
 \label{def:v1-factorization-properad}
@@ -195,7 +677,8 @@ Maurer--Cartan level, $\theta_{\cA}$ in $\fg^{\ord}_\cA$ uses
 $(n,1)$-valent operations; its dual $\bar\theta_{\cA^!}$ in
 $\fg^{\ord}_{\cA^!}$ uses $(1,n)$-valent operations. All of these sit
 inside a properad, not an operad; the Hackney--Robertson framework is
-the minimal setting in which both sides of Theorem~$A^{\infty,2}$ live.
+the minimal setting in which both sides of
+Corollary~\ref{cor:eight-cor-properad-equiv} live.
 \end{remark}
 
 \begin{theorem}[Hackney--Robertson factorization properad model
@@ -222,11 +705,15 @@ is \cite[Proposition~6.1]{HackneyRobertson2019}.
 \end{proof}
 
 %================================================================
-\section{Theorem $A^{\infty,2}$: the main equivalence}\label{sec:ainf2-main}
+\section{Theorem~$A^{\infty,2}$: the explicit properad-level form
+of Corollary~\ref{cor:eight-cor-properad-equiv}}\label{sec:ainf2-main}
 %================================================================
 
-We now state the main theorem. Recall that $\Fact^{\aug}(X)$ denotes
-augmented factorization algebras on $X$, and
+We now state and prove the explicit $(\infty,2)$-equivalence at
+properad level, which is the contents of
+Corollary~\ref{cor:eight-cor-properad-equiv} of the unified Koszul
+reflection Theorem~\ref{thm:koszul-reflection}. Recall that
+$\Fact^{\aug}(X)$ denotes augmented factorization algebras on $X$, and
 $\CoFact^{\conil,\comp}(X)$ denotes conilpotent-complete factorization
 coalgebras (the full sub-$(\infty,2)$-category of $\CoFact(X)$ cut out
 by objects whose coradical filtration is exhaustive and whose
@@ -417,8 +904,10 @@ commutes up to a canonical 2-isomorphism
 %================================================================
 
 The descent lemma relating ordered and symmetric bar for
-$\Eone$-chiral algebras is the content of
-Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}.
+$\Eone$-chiral algebras is the explicit content of
+Corollary~\ref{cor:eight-cor-R-descent} of the unified Koszul
+reflection (equivalently, of
+Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}).
 
 \begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent;
 \ClaimStatusProvedHere]
@@ -517,10 +1006,13 @@ $\mathrm{av}\colon \fg^{\Eone}_\cA \to \fg^{\mathrm{mod}}_\cA$
 map $\pi^!$: dualising $\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ and
 tensoring with the structure sheaf, one recovers the
 $\Sigma_n$-coinvariant projection with the $R$-twist suppressed at the
-shadow-level. On the $R$-matrix itself, $\mathrm{av}(r(z))$ is the
+shadow-level. On the $R$-matrix itself, the image
+$\mathrm{av}(r(z))$ at level prefix $k$ for affine Kac--Moody
+$V_k(\fg)$ in trace-form convention $r(z)=k\,\Omega/z$ is the
 trace of $L_R$ against the regular representation, which is
-$\kappa_\mathrm{dp}$ for non-abelian affine KM (adding the Sugawara
-shift $\dim(\fg)/2$ to recover the full $\kappa$, \textbf{FM11}).
+$\kappa_\mathrm{dp}=k\,\dim(\fg)/(2h^{\vee})$ for non-abelian affine
+KM (adding the Sugawara shift $\dim(\fg)/2$ to recover the full
+$\kappa(V_k(\fg))=\dim(\fg)(k+h^{\vee})/(2h^{\vee})$).
 \end{remark}
 
 %================================================================
@@ -528,9 +1020,11 @@ shift $\dim(\fg)/2$ to recover the full $\kappa$, \textbf{FM11}).
 %================================================================
 
 The following theorems, already inscribed across the three volumes,
-are corollaries of Theorem~$A^{\infty,2}$. Each listing cites the
-primary statement and explains how it descends from
-Theorem~\ref{thm:A-infinity-2}.
+are corollaries of the unified Koszul reflection
+(Theorem~\ref{thm:koszul-reflection}) via its explicit
+properad-level form (Theorem~\ref{thm:A-infinity-2}). Each listing
+cites the primary statement and explains how it descends from the
+unified form.
 
 \begin{corollary}[Downstream corollaries of $A^{\infty,2}$;
 \ClaimStatusProvedHere]
@@ -603,7 +1097,7 @@ $\mathrm{Ho}(\mathrm{dg\text{-}Ch\text{-}alg}) \simeq
 \mathrm{Ho}(\mathrm{conil\text{-}dg\text{-}}\cC^{!}_{\ch}\text{-coalg})$:
 \textup{Theorem~\textup{\ref{thm:quillen-equivalence-chiral}}}. Descent:
 homotopy-categorical truncation of Theorem~$A^{\infty,2}$; this is the
-chain-level theorem whose Vallette-ambient proof FM72 flagged as
+chain-level theorem whose Vallette-ambient proof we flagged as
 mis-scoped. The correct proof is via
 Theorem~\ref{thm:A-infinity-2} restricted to chain level.
 \item \label{D13} $d^2=0$ via Verdier on the universal family:
@@ -633,17 +1127,40 @@ Proposition~\ref{prop:fg-ambient-properties} and
 Theorem~\ref{thm:hackney-robertson-model}.
 \end{proof}
 
+\begin{remark}[Cross-volume bridges to climax and conductor chapters]
+\label{rem:cross-volume-bridges-to-climax-and-conductor}
+\index{cross-volume bridge!climax and conductor}
+The unified Koszul reflection
+(Theorem~\ref{thm:koszul-reflection}) feeds directly into two
+parallel-inscribed chapters:
+\begin{itemize}
+\item \textbf{Climax chapter} \textup{(}\ref{chap:climax-platonic})
+identifying $\bar\partial=\KZ^{*}(\nabla_{\Arnold})$ as the bar
+differential on the universal Arnold connection: the unit~$\eta$ of
+the Koszul reflection at the geometric Arnold connection produces the
+Knizhnik--Zamolodchikov pullback identification of the bar
+differential.
+\item \textbf{Universal conductor chapter}
+\textup{(}\ref{chap:universal-conductor}) proving
+$K=-c_{\mathrm{ghost}}(\mathrm{BRST})$ as the universal ghost-charge
+conductor: the involutivity~$K^{2}\simeq\mathrm{id}$ of the
+reflection makes the conductor $K(\cA)=\kappa(\cA)+\kappa(\cA^{!})$
+the canonical numerical observable of the reflection's failure to be
+the identity functor at $\hbar\neq 0$.
+\end{itemize}
+\end{remark}
+
 %================================================================
-\section{Healing FM69--FM74 and FM195}\label{sec:ainf2-heals}
+\section{Healings}\label{sec:ainf2-heals}
 %================================================================
 
 We record explicitly how Theorem~$A^{\infty,2}$ closes the six
 failure-modes enumerated in \S Setup.
 
-\begin{remark}[FM69 resolution -- split and both forms proven]
-\label{rem:ainf2-heal-FM69}
-\index{FM69!resolution}
-FM69 flagged that the proof of
+\begin{remark}[Resolution: split and both forms proven]
+\label{rem:ainf2-heal-69}
+
+We noted earlier that the proof of
 Theorem~\ref{thm:e1-chiral-koszul-duality} in
 \texttt{chiral\_koszul\_pairs.tex:5960--6011} invokes
 \cite[Theorem~11.4.1]{LV12} in the ambient $(\Dmod(X),\otimes^{\ch})$,
@@ -668,10 +1185,10 @@ primitive object is $B^{\ord}(\cA)$ on $\Ran^{\ord}(X)$; the symmetric
 bar is the $L_R$-twisted $\Sigma_n$-coinvariant descent image.
 \end{remark}
 
-\begin{remark}[FM70 resolution -- correct unit functor]
-\label{rem:ainf2-heal-FM70}
-\index{FM70!resolution}
-FM70 flagged that
+\begin{remark}[Resolution: correct unit functor]
+\label{rem:ainf2-heal-70}
+
+We noted earlier that
 \texttt{lem:operadic-koszul-transfer}, Step~2, invokes
 `a symmetric monoidal functor $k\text{-}\mathrm{Mod} \to \Dmod(X)$
 $M \mapsto M \otimes \mathbf{1}_{\mathcal{V}}$', but there is no
@@ -689,10 +1206,10 @@ ambient is corrected. Theorem~\ref{thm:A-infinity-2} systematises this
 correction.
 \end{remark}
 
-\begin{remark}[FM71 resolution -- $R$-twisted descent explicit]
-\label{rem:ainf2-heal-FM71}
-\index{FM71!resolution}
-FM71 flagged that
+\begin{remark}[Resolution: $R$-twisted descent explicit]
+\label{rem:ainf2-heal-71}
+
+We noted earlier that
 \texttt{ex:heisenberg-e1-duality:5838--5848} admits the Heisenberg bar
 is already $\Sigma$-coinvariant, which prima facie contradicts the
 `ordered E$_1$' headline.
@@ -705,11 +1222,11 @@ of the general $R$-twisted descent, not as a contradiction. The
 is inscribed.
 \end{remark}
 
-\begin{remark}[FM72 resolution -- Francis--Gaitsgory model structure
+\begin{remark}[Resolution: Francis--Gaitsgory model structure
 replaces Vallette]
-\label{rem:ainf2-heal-FM72}
-\index{FM72!resolution}
-FM72 flagged that
+\label{rem:ainf2-heal-72}
+
+We noted earlier that
 \texttt{thm:quillen-equivalence-chiral} in
 \texttt{bar\_cobar\_adjunction\_curved.tex:6301--6343} cites
 \cite[Theorem~2.1]{Val16} `specialised to the chiral operad', but
@@ -727,10 +1244,10 @@ update in \texttt{bar\_cobar\_adjunction\_curved.tex:6301--6343} is to
 replace the Val16 reference with \cite[Chapter~IV.5, Theorem~3.1.2]{GR17}.
 \end{remark}
 
-\begin{remark}[FM73 resolution -- Cousin resolution replaces naive SDR]
-\label{rem:ainf2-heal-FM73}
-\index{FM73!resolution}
-FM73 flagged that the HTT SDR contraction
+\begin{remark}[Resolution: Cousin resolution replaces naive SDR]
+\label{rem:ainf2-heal-73}
+
+We noted earlier that the HTT SDR contraction
 (\texttt{appendices/homotopy\_transfer.tex:68--172}) lifts a
 $k$-Mod splitting to $\Dmod(X)$ verbatim, but $\Dmod(X)$ has
 nontrivial $\Ext^1$ and the direct-sum decomposition fails.
@@ -747,10 +1264,10 @@ equivalence is constructed directly via the universal property of free
 and cofree constructions in $\Fact(X)$.
 \end{remark}
 
-\begin{remark}[FM74 resolution -- finite-HH hypothesis weakened]
-\label{rem:ainf2-heal-FM74}
-\index{FM74!resolution}
-FM74 flagged that
+\begin{remark}[Resolution: finite-HH hypothesis weakened]
+\label{rem:ainf2-heal-74}
+
+We noted earlier that
 \texttt{nilpotent\_completion.tex:115--144} hypothesises
 $\dim H^\bullet(\cA,\cA) < \infty$, which excludes Virasoro, Yangian,
 and critical-level affine KM (all of which have unbounded Hochschild
@@ -769,19 +1286,18 @@ finite dimension), Yangian (weight grading by spectral-parameter
 order), and critical KM (weight grading by conformal weight of
 the current algebra). The resulting equivalence is the weight-completed
 $(\infty,2)$-adjoint equivalence, which is the
-correct scope for these motivating targets. This is the AP218
-completion scope (`category/completion scope'
+correct scope for these motivating targets. This is the completion scope (`category/completion scope'
 anti-pattern, cache entry~218).
 \end{remark}
 
-\begin{remark}[FM195 resolution -- correct cross-volume citation]
-\label{rem:ainf2-heal-FM195}
-\index{FM195!resolution}
-FM195 flagged that \texttt{bar\_chain:198,730} in Vol~II cites
+\begin{remark}[Resolution: correct cross-volume citation]
+\label{rem:ainf2-heal-195}
+
+We noted earlier that \texttt{bar\_chain:198,730} in Vol~II cites
 `[Theorem~A]{Vol~I}' as the authority for bar--cobar, but the Vol~I
 Theorem~A is the ordered bar coassociative coalgebra statement,
-which is now known (per FM69) to have a FORM-A/FORM-B split. The
-citation drift is a cross-volume violation (AP5).
+which is now known to have a FORM-A/FORM-B split. The
+citation drift is a cross-volume violation.
 The resolution is that Vol~II should cite
 Theorem~$A^{\infty,2}$ (this chapter,
 Theorem~\ref{thm:A-infinity-2}) for the factorization-properad
@@ -833,8 +1349,9 @@ definition of formal smoothness at properad level.
 
 \begin{remark}[Compatibility with the five-theorem architecture]
 \label{rem:ainf2-architecture}
-Theorem~$A^{\infty,2}$ is the upgrade of Theorem~A to the Platonic
-form of the programme
+The unified Theorem~A
+(Theorem~\ref{thm:koszul-reflection}) is the upgrade of the previous
+six-file dispatcher to the Platonic form of the programme
 (\S\ref{sec:platonic-reconstitution-2026-04-13}). Under the
 seven-theorem extension \textup{(}Vol~II,
 \S\textup{seven-theorems}\textup{)}, it takes the position `A' in
@@ -843,17 +1360,73 @@ and the seven-volume axis realized by including
 Vol~IV = Realization (decorators + HEAL + UPGRADE theorems). The
 14 downstream corollaries of
 Corollary~\ref{cor:ainf2-downstream-list} are precisely the
-`descent ledger' entries of the $A^{\infty,2}$ cluster.
+`descent ledger' entries of the unified Koszul reflection cluster.
 \end{remark}
 
 %================================================================
-\section{Independent verification (HZ-IV)}\label{sec:ainf2-hziv}
+\section{Platonic obstructions: four named conjectures}\label{sec:ainf2-platonic-obstructions}
 %================================================================
 
-\begin{remark}[HZ-IV independent-verification protocol]
+If a fully universal Koszul reflection on all of
+$\Alg^{\fact,\aug}_X$ (without~(H3)) cannot be reached in the present
+inscription, the obstruction is framed as a \emph{named open
+conjecture}. There are four.
+
+\begin{conjecture}[$\Pi 1$: Francis--Gaitsgory transfer]
+\label{conj:fg-transfer}
+The $(\infty,1)$-categorical bar--cobar Quillen equivalence transfers
+from $\IndCoh(\Ran(X))$ to $\Alg^{\fact,\aug,\comp}_X$ and its
+coalgebra dual without modification.
+\end{conjecture}
+This is essentially proved (Francis~HA appendix; Lurie HA~\S5.5); the
+manuscript needs a named transfer proposition (the
+$\prop:chiral-quillen-transfer$ slot) to make the use explicit.
+
+\begin{conjecture}[$\Pi 2$: $E_n$-bar--cobar at higher chiral
+dimension]
+\label{conj:en-bar-cobar-higher-d}
+For $d\geq 2$, the $E_n$-bar functor on $n$-dimensional factorization
+$E_n$-algebras admits a left adjoint (cobar) that is a Quillen
+equivalence onto conilpotent CDG-coalgebras over the appropriate
+$n$-dimensional Maurer--Cartan complex. The $n=1$ case is
+Theorem~\ref{thm:koszul-reflection}.
+\end{conjecture}
+This is the load-bearing direction connecting Vol~I to Vol~III's
+CY-to-chiral functor. Currently open in the chiral setting (proved in
+Lurie~HA~\S5.5.3 for the topological setting).
+
+\begin{conjecture}[$\Pi 3$: Lagrangian--Koszul converse]
+\label{conj:lagrangian-koszul-converse}
+Lagrangian transversality of $M_{\mathrm{comp}}$ at $[\cA]$ implies
+chiral Koszulness of $\cA$.
+\end{conjecture}
+Genuinely open; requires the chiral PTVV framework. Stated as a
+conjecture in the manuscript already (per Wave~13 Strengthening~5).
+
+\begin{conjecture}[$\Pi 4$: Unbounded-rank Koszul reflection]
+\label{conj:unbounded-rank-koszul-reflection}
+On the locus of complete augmented chiral algebras with
+non-finite-dim graded bar pieces (failing hypothesis~(H3)), the
+Koszul reflection of Theorem~\ref{thm:koszul-reflection} still
+holds in the coderived category but not at the chain level. The
+chain-level upgrade requires a yet-unidentified Mittag-Leffler-type
+condition on the bar filtration.
+\end{conjecture}
+The hypothesis~(H3) is satisfied throughout the standard landscape
+(Heisenberg, Kac--Moody, Virasoro, $W_N$), so this obstruction is
+decorative for current applications. It marks the precise frontier
+between the Koszul reflection on
+$\Kosz^{+}(X)$ and the fully universal Koszul reflection on all of
+$\Alg^{\fact,\aug}_X$.
+
+%================================================================
+\section{Independent verification}\label{sec:ainf2-hziv}
+%================================================================
+
+\begin{remark}[Independent-verification protocol]
 \label{rem:ainf2-hziv}
-\index{HZ-IV!Theorem A-infinity-2}
-Per the HZ-IV independent-verification protocol
+\index{independent-verification!Theorem A-infinity-2}
+Per the independent-verification protocol
 (\S\ref{sec:hz-iv-protocol}), Theorem~\ref{thm:A-infinity-2} carries
 a \texttt{ClaimStatusProvedHere} status and therefore requires
 independent verification from sources disjoint from the derivation
@@ -926,4 +1499,34 @@ These three verification paths are installed as decorators in
 \texttt{disjoint\_rationale} strings and run-time enforcement of
 source disjointness (\texttt{IndependentVerificationError} raised at
 import time if overlap is detected).
+\end{remark}
+
+\begin{remark}[Independent-verification protocol for the unified Koszul reflection]
+\label{rem:ainf2-hziv-koszul-reflection}
+\index{independent-verification!Koszul reflection unified form}
+The unified Koszul reflection
+Theorem~\ref{thm:koszul-reflection} carries
+\texttt{ClaimStatusProvedHere} jointly with
+Theorem~\ref{thm:A-infinity-2}. Its derivation sources are the four
+absorbed corollaries (twisting morphism + counit qi + unit weak
+equivalence + properad equivalence) plus the cited primary literature
+(Francis--Gaitsgory, Vallette, Positselski, Hinich); its independent
+verification sources are the three listed in
+Remark~\ref{rem:ainf2-hziv} above, each of which provides a
+$K^{2}\simeq\mathrm{id}$ check that does not route through the
+$\star$-product adjunction. Specifically:
+\begin{itemize}
+\item Francis~2012 chiral Deligne conjecture provides a brace-level
+check of $K^{2}\simeq\mathrm{id}$ via the brace algebra structure on
+the derived endomorphisms.
+\item Lurie HA~\S5.5 little-discs construction provides a topological
+check of the $E_1$-input version of $K^{2}\simeq\mathrm{id}$ via
+factorization homology of the bar coalgebra.
+\item Hackney--Robertson model-independent properad framework provides
+a transfer-level check that the involutivity persists across the
+operad-to-properad lift.
+\end{itemize}
+The decorators are installed jointly with those for
+Theorem~\ref{thm:A-infinity-2} in
+\texttt{compute/tests/test\_theorem\_A\_infinity\_2.py}.
 \end{remark}

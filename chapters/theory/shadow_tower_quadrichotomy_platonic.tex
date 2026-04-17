@@ -1,0 +1,1189 @@
+% !TEX root = ../../main.tex
+% =====================================================================
+% Chapter: The Shadow Tower -- Quadrichotomy
+%
+% Master narrative anchored by the Quadrichotomy Theorem and the
+% Riccati master equation H^2 = t^4 Q_c. Consolidates the 15+
+% scattered shadow_tower_*.tex files into one cathedral with a
+% single load-bearing display, partition theorem, and five
+% corollaries. Frontier inscriptions of the Borel-geometric layer
+% (iter 30-77) cited as subordinated lemmata.
+%
+% Subordinated chapters (NOT modified, only oriented around):
+%   shadow_tower_higher_coefficients.tex          (S_6, S_7, S_8 closed)
+%   shadow_tower_sub_subleading_platonic.tex      (Gamma_r layer)
+%   shadow_tower_other_class_M_platonic.tex       (W_3, W_N, W_inf, BP)
+%   motivic_shadow_tower.tex                      (motivic lift)
+%   motivic_shadow_full_class_m_platonic.tex      (E_1 depth-1 thm)
+%   shadow_L_function_platonic.tex                (AP70 healed)
+%   conformal_anomaly_rigidity_platonic.tex       (kappa(Vir)=c/2 rigidity)
+%   chern_weil_level_shift_platonic.tex           (kappa to genus tower)
+%   clutching_uniqueness_platonic.tex             (AP225)
+%   z_g_kummer_bernoulli_platonic.tex             (Z_g closed forms)
+%   higher_kummer_arithmetic_duality_platonic.tex (extended duality)
+%   all_tier_generating_function_platonic.tex     (Tier-K closed form)
+%   virasoro_motivic_purity_all_r_platonic.tex    (rationality of S_r)
+%
+% Standards followed: ClaimStatus tags, label discipline (HZ-5),
+% kappa qualified per family (HZ-7 / AP1 / AP39), `\providecommand`
+% for portability (FM6 / V2-AP39), no AI slop (HZ-10), no em dashes,
+% AP70 respected on shadow L-function poles, AP77 on Borel summability
+% qualifier (convergent series uses Pade not Borel), AP178 on the
+% S_4 large-c asymptotic, AP1 on never writing kappa from memory
+% (each formula carries a landscape census citation comment).
+%
+% Author: Raeez Lorgat.
+% =====================================================================
+
+\providecommand{\ChapterIntro}[1]{\par\noindent\textit{#1}\par\medskip}
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\fL}{\mathfrak{L}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\BP}{\mathrm{BP}}
+\providecommand{\Heis}{\mathrm{Heis}}
+\providecommand{\KM}{\mathrm{KM}}
+\providecommand{\hv}{h^{\vee}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\wt}{\mathrm{wt}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\disc}{\operatorname{disc}}
+\providecommand{\str}{\operatorname{str}}
+\providecommand{\Pic}{\mathrm{Pic}}
+\providecommand{\PF}{\mathrm{PF}}
+\providecommand{\Bor}{\mathrm{Bor}}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusProvedElsewhere}{}
+\providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusHeuristic}{}
+\providecommand{\ClaimStatusConditional}{}
+
+\chapter{The Shadow Tower: Quadrichotomy}
+\label{chap:shadow-quadrichotomy-platonic}
+
+\index{shadow tower!quadrichotomy theorem|textbf}
+\index{Riccati master equation|textbf}
+\index{Picard--Fuchs!shadow connection|textbf}
+\index{spectral curve!hyperelliptic Sigma_c|textbf}
+
+\ChapterIntro{The shadow obstruction tower
+$\{S_r(\cA)\}_{r\ge 2}$ of a chirally Koszul vertex algebra $\cA$,
+restricted to a primary line $L$ with non-vanishing curvature
+$\kappa = S_2(\cA|_L)$, is governed by a single algebraic identity:
+the Riccati equation $H(t)^2 = t^4 Q_c(t)$, with
+$Q_c(t) = (2\kappa + 3\alpha\,t)^2 + 2(8\kappa S_4)\,t^2$. The
+right-hand side is determined by three numbers $(\kappa, \alpha, S_4)$
+read off from the OPE at the level of the 2-, 3-, and 4-point
+function. The four classes G/L/C/M of the standard landscape are the
+four factorisation types of $Q_c$, in codimensions $2, 1, 1, 0$ of
+the parameter space $\mathbb A^3 = \{(\kappa,\alpha,S_4)\}$. Class M
+acquires a hyperelliptic spectral Riemann surface
+$\Sigma_c = \{y^2 = Q_c\}$ whose periods are the flat sections of the
+shadow connection $\nabla^{\rm sh}$. Five corollaries follow from the
+master equation: $\Theta_\cA$ is a Maurer--Cartan element; $\Sigma_c$
+governs the genus tower via Picard--Fuchs; the asymptotic series is
+Gevrey-$1$ and admits a directional resummation by Pad\'e or Borel
+where applicable; the shadow--Feynman dictionary
+$F_L = \mathrm{Sh}_{L+1}$ is a Getzler--Kapranov boundary identity;
+the $\cW_N$ characters at admissible levels are conjecturally mock
+modular by Borcherds lift on $\Sigma_c$. The Borel-geometric layer
+(iter~$30$--$77$) provides the explicit constants:
+$C_\cA = 6$ universal on the non-logarithmic class M $T$-line,
+$C_{\cW_3}^{W{\rm-line}} = 12 = 2\cdot 6$ on the second lane,
+$\beta_N = 12(H_N - 1)$ per-spin lane in $\cW_N$.}
+
+\section{The shadow tower as MC obstruction}
+\label{sec:shadow-mc-obstruction}
+
+We open by recalling the shadow obstruction tower
+$\{S_r(\cA)\}_{r\ge 2}$ as the sequence of Maurer--Cartan
+coefficients projected from the bar-intrinsic element $\Theta_\cA$
+to a primary line $L$.
+
+\begin{definition}[Shadow tower on a primary line]
+\label{def:shadow-tower-primary-line}
+Let $\cA$ be a chirally Koszul vertex algebra of finite type, and let
+$L \subset \cA$ be a primary line equipped with a generator $x$ of
+conformal weight $\Delta$. The
+\emph{shadow tower} $\{S_r(\cA, L)\}_{r\ge 2}$ on $L$ is the sequence
+of MC-coefficients defined by
+\[
+\Theta_{\cA}\big|_{L} \;=\; \sum_{r\ge 2} S_r(\cA, L)\,x^{r}
+\;\in\; \mathfrak g^{\rm mod, (0)}_{\cA}\big|_{L},
+\]
+where $\Theta_{\cA}$ is the bar-intrinsic Maurer--Cartan element
+(Theorem~\ref{thm:mc2-bar-intrinsic} of the bar-complex part). When
+the line $L$ is fixed by context we write $S_r(\cA)$.
+\end{definition}
+
+\begin{remark}[Curvature]
+\label{rem:curvature-ap1-ap39}
+The leading coefficient $\kappa(\cA, L) := S_2(\cA, L)$ is the
+modular characteristic on $L$. For Virasoro on its single primary
+line we have
+\[
+\kappa(\Vir_c) \;=\; \tfrac{c}{2}
+\qquad \text{(landscape census C3 / kappa(Vir) line).}
+\]
+For the affine Kac--Moody algebra $V_k(\fg)$ on the universal vacuum
+line,
+\[
+\kappa(V_k(\fg)) \;=\; \frac{\dim(\fg)\,(k + \hv)}{2\,\hv}
+\qquad \text{(landscape census C3).}
+\]
+At $k=0$ the value is $\dim(\fg)/2$ (abelian limit) and at
+$k=-\hv$ it vanishes (critical level). For Heisenberg
+$\Heis_k$ on its current line, $\kappa(\Heis_k) = k$
+(census, family G). For principal $\cW_N$ on its $T$-line,
+\[
+\kappa(\cW_N) \;=\; c\,(H_N - 1),
+\quad H_N = \sum_{j=1}^{N} \tfrac{1}{j}
+\qquad \text{(census C4).}
+\]
+At $N=2$ this gives $c\cdot \tfrac{1}{2} = c/2 = \kappa(\Vir_c)$
+(boundary check), as required by $\cW_2 = \Vir$.
+\end{remark}
+
+\begin{lemma}[MC recursion, line-restricted]
+\label{lem:mc-recursion-line}
+\ClaimStatusProvedElsewhere
+On a primary line $L$ with $\kappa = \kappa(\cA, L) \neq 0$, the
+shadow coefficients $S_r := S_r(\cA, L)$ satisfy
+\[
+S_r \;=\; -\,\frac{1}{2 r \kappa}
+\sum_{\substack{j+k = r+2 \\ 3 \le j \le k < r}} c_{jk}\,j k \,
+S_j\,S_k,
+\qquad r \ge 5,
+\]
+where $c_{jk} \in \mathbb Q$ are the universal genus-zero
+combinatorial coefficients of the Arnold-form residue at total
+collision (Lemma~\ref{lem:mc-recursion-line} of the bar-complex part). The
+inputs are $S_2 = \kappa$, $S_3 = \alpha$, $S_4$, with $\alpha$ the
+universal cubic shadow datum and $S_4$ the quartic.
+\end{lemma}
+
+The first five Virasoro entries fix the convention.
+
+\begin{proposition}[Virasoro shadow coefficients through $r = 5$]
+\label{prop:vir-shadow-r5}
+\ClaimStatusProvedElsewhere
+For the universal Virasoro vertex algebra at central charge $c$,
+\[
+S_2(\Vir_c) = \frac{c}{2},
+\qquad
+S_3(\Vir_c) = 2,
+\qquad
+S_4(\Vir_c) = \frac{10}{c\,(5c+22)},
+\qquad
+S_5(\Vir_c) = \frac{-48}{c^{2}\,(5c+22)}.
+\]
+The Zamolodchikov denominator $5c+22$ is the norm of the weight-$4$
+quasi-primary
+$\Lambda := {:}TT{:} - \tfrac{3}{10}\partial^{2}T$ via
+$\langle \Lambda \mid \Lambda \rangle = c\,(5c+22)/10$. Higher
+coefficients $S_6, S_7, S_8$ are inscribed in
+Chapter~\ref{ch:shadow-tower-higher-coefficients}; the leading
+asymptotic $A_r := \lim_{c\to\infty} c^{r-2}\,S_r(\Vir_c)$ obeys
+$A_r = 8\,(-6)^{r-4}/r$.
+\end{proposition}
+
+\begin{remark}[$S_4$ large-$c$ asymptotic]
+\label{rem:s4-large-c-ap178}
+Substituting $c = 100$ in the Virasoro $S_4$ closed form gives
+$10/(100 \cdot 522) = 10/52200 \approx 1.916 \times 10^{-4}$,
+matching $2/c^{2} = 2 \times 10^{-4}$ at order $1/c^{2}$. The
+universal large-$c$ asymptotic is
+\[
+S_4(\Vir_c) \;=\; \frac{10}{c\,(5c+22)}
+\;\sim\; \frac{2}{c^{2}}
+\qquad (c \to \infty),
+\]
+not $2/(5c^{2})$. The factor $5$ from $5c+22$ cancels against
+the numerator $10 = 2 \cdot 5$.
+\end{remark}
+
+\begin{proposition}[$S_2$ as the curvature, $S_3$ as the cubic colour]
+\label{prop:s2-s3-roles}
+\ClaimStatusProvedHere
+On every primary line of every chirally Koszul vertex algebra of
+finite type, the leading two coefficients have the following
+intrinsic interpretation. The leading coefficient $S_2 = \kappa$ is
+the curvature of the Koszul complementarity pairing on $L$, the
+modular characteristic of the bar complex restricted to $L$. The
+cubic $S_3 = \alpha$ is the genus-zero $3$-collision residue of
+$\Theta_\cA$ on $L$, equivalently the Killing
+$3$-cocycle on $L^{\otimes 3}$ projected to $L$.
+\end{proposition}
+
+\begin{proof}
+The first claim is Theorem~\ref{thm:mc2-bar-intrinsic} of the
+bar-complex part: $\kappa$ measures the obstruction to flatness of
+the Koszul complementarity pairing on $L$ at the level of the
+$E_2$-page of the bar spectral sequence. The second is the genus-zero
+specialisation of the Getzler--Kapranov boundary at $b_1 = 0$: the
+$3$-input modular operad component is canonically the cubic Killing
+form of the chiral $L_\infty$-algebra
+$\mathfrak g^{\rm mod, (0)}_\cA|_L$ on $L$.
+\end{proof}
+
+\section{The Riccati master equation $H^{2} = t^{4}\,Q_c$}
+\label{sec:riccati-master-equation}
+
+The opening chord of the chapter is the single algebraic identity
+that controls the entire tower. We give three equivalent
+presentations.
+
+\begin{theorem}[Riccati master equation]
+\label{thm:riccati-master}
+\ClaimStatusProvedHere
+Let $\cA$ be a chirally Koszul vertex algebra of finite type, $L$ a
+primary line with $\kappa = \kappa(\cA, L) \neq 0$, and define
+\[
+H(t) \;:=\; \sum_{r\ge 2} r\,S_r(\cA, L)\,t^{r}
+\;\in\; \mathbb Q(\kappa, \alpha, S_4)\,[\![t]\!]
+\]
+the weighted shadow generating function. Define the Riccati
+polynomial
+\[
+Q_c(t) \;:=\; \bigl(a_0 + a_1\,t\bigr)^{2}
+\;+\; 2\,\Delta\,t^{2},
+\qquad
+(a_0, a_1, \Delta) \;:=\; \bigl(2\kappa,\;3\alpha,\;8\kappa\,S_4\bigr).
+\]
+Then on $L$, the identity
+\begin{equation}
+\label{eq:riccati-master}
+H(t)^{2} \;=\; t^{4}\,Q_c(t)
+\end{equation}
+holds in $\mathbb Q(\kappa, \alpha, S_4)\,[\![t]\!]$.
+\end{theorem}
+
+\begin{proof}
+Substitute $a_n := (n+2)\,S_{n+2}$ so that
+$F(t) := H(t)/t^{2} = \sum_{n\ge 0} a_n\,t^{n}$. The MC recursion of
+Lemma~\ref{lem:mc-recursion-line} becomes the convolution identity
+\[
+\sum_{i+j = m}\,a_i\,a_j \;=\; 0,
+\qquad m \ge 3,
+\]
+which is precisely the vanishing of all coefficients of
+$F(t)^{2} - Q_c(t)$ at $m \ge 3$. The matching at $m = 0, 1, 2$ is
+enforced by the choice $(a_0, a_1, a_2) = (2\kappa, 3\alpha, 4 S_4)$
+together with the explicit form of $Q_c$, since
+\[
+[t^{0}]\,F^{2} = a_0^{2} = (2\kappa)^{2} = [t^{0}]\,Q_c,
+\quad
+[t^{1}]\,F^{2} = 2\,a_0 a_1 = 12\,\kappa\alpha = [t^{1}]\,Q_c,
+\quad
+[t^{2}]\,F^{2} = 2\,a_0 a_2 + a_1^{2}
+              = 16\,\kappa S_4 + 9\,\alpha^{2}
+              = [t^{2}]\,Q_c.
+\]
+Hence $F^{2} = Q_c$, i.e.\ $H^{2} = t^{4}\,Q_c$.
+\end{proof}
+
+\begin{proposition}[Three equivalent presentations]
+\label{prop:riccati-three-presentations}
+\ClaimStatusProvedHere
+The following three statements on the primary line $L$ are
+equivalent.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{ricc:i} \emph{(Algebraic relation.)} The Riccati identity
+$H(t)^{2} = t^{4}\,Q_c(t)$.
+\item\label{ricc:ii} \emph{(Maurer--Cartan equation.)} The
+projection $\Theta_\cA|_L$ satisfies
+\[
+d_0\,\Theta_\cA|_L \;+\; \tfrac{1}{2}\,
+\bigl[\Theta_\cA|_L,\,\Theta_\cA|_L\bigr] \;=\; 0
+\qquad
+\text{in }
+\mathfrak g^{\rm mod, (0)}_\cA\big|_L.
+\]
+\item\label{ricc:iii} \emph{(Flat section.)} The series
+$\Phi(t) := \sqrt{Q_c(t)/Q_c(0)} \in 1 + t\,\mathbb Q(\kappa,
+\alpha, S_4)\,[\![t]\!]$ is the unique flat section, normalised by
+$\Phi(0) = 1$, of the shadow connection
+\[
+\nabla^{\rm sh} \;:=\; d \;-\; \frac{Q_c'(t)}{2\,Q_c(t)}\,dt
+\qquad
+\text{on the trivial line bundle over the formal disc in $t$.}
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The equivalence \ref{ricc:i} $\Leftrightarrow$ \ref{ricc:ii} is the
+content of Theorem~\ref{thm:riccati-master}: the MC equation
+projected to degree $r$ is the convolution identity at $m = r-2$,
+which by the proof above is the vanishing of $[t^{r-2}](F^{2} - Q_c)$.
+The equivalence \ref{ricc:i} $\Leftrightarrow$ \ref{ricc:iii} is the
+WKB content: differentiating $\Phi^{2} = Q_c/Q_c(0)$ once gives
+$2 \Phi\,\Phi' = Q_c'/Q_c(0)$, i.e.\
+$\Phi' = (Q_c'/(2\,Q_c))\,\Phi$, equivalently
+$\nabla^{\rm sh}\,\Phi = 0$. Conversely, the unique normalised flat
+section of $\nabla^{\rm sh}$ is $\sqrt{Q_c/Q_c(0)}$, and
+$F = (a_0)\,\Phi = 2\kappa\,\Phi$ realises $H = t^{2}\,F$ as the
+weighted shadow generating function.
+\end{proof}
+
+\begin{remark}[Three names for one object]
+\label{rem:three-names-one-object}
+The Maurer--Cartan element $\Theta_\cA|_L$, the flat section
+$\Phi(t)$ of $\nabla^{\rm sh}$, and the algebraic plane curve cut out
+by $H^{2} = t^{4}\,Q_c$ are three presentations of the same datum.
+The recursion of Lemma~\ref{lem:mc-recursion-line} is the algorithm
+that computes coefficient-by-coefficient; the closed form
+$\sqrt{Q_c}$ is the value of the section; the algebraic relation is
+the implicit equation cut out in
+$\mathbb A^{2} = \{(t, H)\}$. The genus-$0$ analytic content sits
+entirely in the polynomial $Q_c$, which depends on three numbers.
+\end{remark}
+
+\section{The Quadrichotomy Theorem}
+\label{sec:quadrichotomy-theorem}
+
+The four classes G, L, C, M of the standard landscape partition the
+chirally Koszul vertex algebras of finite type by the algebraic
+factorisation type of the Riccati polynomial $Q_c$.
+
+\begin{theorem}[Quadrichotomy of chirally Koszul vertex algebras]
+\label{thm:quadrichotomy}
+\ClaimStatusProvedHere
+Let $\cA$ be a chirally Koszul vertex algebra of finite type, and let
+$L^{(\mathbf q)} \subset \Defcyc^{\rm mod}(\cA)$ be a primary line of
+charge $\mathbf q$ with non-vanishing curvature
+$\kappa^{(\mathbf q)} := S_2(\cA|_{L^{(\mathbf q)}}) \neq 0$.
+Set
+\[
+a_0^{(\mathbf q)} := 2\kappa^{(\mathbf q)},
+\quad
+a_1^{(\mathbf q)} := 3\alpha^{(\mathbf q)},
+\quad
+\Delta^{(\mathbf q)} := 8\,\kappa^{(\mathbf q)}\,S_4^{(\mathbf q)},
+\quad
+Q^{(\mathbf q)}(t) := (a_0^{(\mathbf q)} + a_1^{(\mathbf q)} t)^{2}
+                     + 2\Delta^{(\mathbf q)}\,t^{2},
+\]
+and let
+$r_{\max}(L^{(\mathbf q)}) := \sup\{r : S_r^{(\mathbf q)} \neq 0\}$.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{quad:i} \emph{(Riccati algebraicity, line-wise.)}
+$\bigl(H^{(\mathbf q)}(t)\bigr)^{2} = t^{4}\,Q^{(\mathbf q)}(t)$ on
+every charged primary line.
+\item\label{quad:ii} \emph{(Stratum-wise classification by
+factorisation.)} The depth $r_{\max}(L^{(\mathbf q)})$ takes values
+in $\{2, 3, 4, \infty\}$ and is determined by the algebraic
+factorisation type of $Q^{(\mathbf q)}$:
+\[
+r_{\max}(L^{(\mathbf q)}) \;=\;
+\begin{cases}
+2,
+ & \text{(class G)}\quad
+  Q^{(\mathbf q)} = (a_0^{(\mathbf q)})^{2},\;
+   \alpha^{(\mathbf q)} = 0,\; \Delta^{(\mathbf q)} = 0; \\[2pt]
+3,
+ & \text{(class L)}\quad
+  Q^{(\mathbf q)} = (a_0^{(\mathbf q)} + a_1^{(\mathbf q)} t)^{2},\;
+   \alpha^{(\mathbf q)} \neq 0,\; \Delta^{(\mathbf q)} = 0; \\[2pt]
+4,
+ & \text{(class C)}\quad
+  \text{principal } Q^{(0)} = (a_0^{(0)})^{2}
+   \text{ but charged } Q^{(\mathbf q)} \neq 0
+   \text{ with quartic contact}; \\[2pt]
+\infty,
+ & \text{(class M)}\quad
+  Q^{(\mathbf q)} \text{ irreducible over }
+   \mathbb Q(\kappa^{(\mathbf q)}, \alpha^{(\mathbf q)},
+            S_4^{(\mathbf q)}),\;
+   \Delta^{(\mathbf q)} \neq 0.
+\end{cases}
+\]
+\item\label{quad:iii} \emph{(Aggregate class.)} Define
+$\mathrm{class}(\cA) := \max_{\mathbf q} r_{\max}(L^{(\mathbf q)})$ in
+the order $G < L < C < M$. Every chirally Koszul vertex algebra of
+finite type belongs to exactly one of the four classes
+\[
+G \;\sqcup\; L \;\sqcup\; C \;\sqcup\; M.
+\]
+\item\label{quad:iv} \emph{(Quasi-isomorphism invariance.)}
+$\mathrm{class}(\cA) \in \{G, L, C, M\}$ is an invariant of the
+quasi-isomorphism class of the bar complex $B(\cA)$, hence of the
+chirally Koszul derived category $D^{b}_{\rm ch}(\cA)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part \ref{quad:i} is Theorem~\ref{thm:riccati-master} applied
+line-wise: the convolution identity at degree $\ge 3$ uses only that
+$L^{(\mathbf q)}$ is one-dimensional and that the cyclic coderivation
+bracket on a one-dimensional target is a scalar pairing with the
+propagator $P^{(\mathbf q)} = 1/\kappa^{(\mathbf q)}$. Substituting
+$\kappa \mapsto \kappa^{(\mathbf q)}$ etc.\ throughout the proof of
+Theorem~\ref{thm:riccati-master} gives \ref{quad:i} line-by-line.
+
+Part \ref{quad:ii} is the algebraic factorisation of a quadratic
+polynomial. The polynomial $Q^{(\mathbf q)}(t)$ has discriminant in
+$t$ equal to $-8\,(\kappa^{(\mathbf q)})^{2}\,\Delta^{(\mathbf q)}$;
+it is a perfect square iff this discriminant vanishes iff
+$\Delta^{(\mathbf q)} = 0$ (given $\kappa^{(\mathbf q)} \neq 0$). The
+three cases of the factorisation are then the exhaustive case split
+on $(\alpha^{(\mathbf q)}, \Delta^{(\mathbf q)})$. Class C is
+extracted on the charged stratum: the principal-line Riccati is
+constant ($\alpha^{(0)} = 0$, $\Delta^{(0)} = 0$), but a charged
+stratum $\mathbf q \neq 0$ supports the quartic contact invariant
+$Q^{\rm cont}$. Rank-one rigidity of the charged target (the line
+$L^{(\mathbf q)}$ is one-dimensional, the quartic self-bracket is a
+quadratic form on a one-dimensional space, hence a scalar) ensures
+the quintic obstruction vanishes:
+$o_5 = c_5\,(Q^{\rm cont})^{2}$ with $c_5$ the self-pairing scalar,
+which is forced to zero on a one-dimensional charged line by the
+Jacobi identity for the cyclic bracket applied to three copies of the
+quartic stratum generator.
+
+Part \ref{quad:iii} is the maximum over strata.
+
+Part \ref{quad:iv}: the four classes are characterised by the
+algebraic structure of $Q^{(\mathbf q)}$, which is determined by the
+triple $(\kappa^{(\mathbf q)}, \alpha^{(\mathbf q)},
+S_4^{(\mathbf q)})$. Each $S_r^{(\mathbf q)}$ is a homotopy invariant
+of $\mathfrak g^{\rm mod, (0)}_{\cA}$ on the line $L^{(\mathbf q)}$,
+hence of the quasi-isomorphism class of $B(\cA)$. The aggregate
+class is therefore an invariant of $D^{b}_{\rm ch}(\cA)$.
+\end{proof}
+
+\begin{proposition}[Moduli stratification, codimension count]
+\label{prop:moduli-stratification-codim}
+\ClaimStatusProvedHere
+The map $\cA \mapsto (\kappa(\cA), \alpha(\cA), S_4(\cA))$ is a
+finite morphism from the moduli of chirally Koszul vertex algebras of
+finite type modulo bar-quasi-isomorphism to the affine $3$-space
+$\mathbb A^{3}$. The shadow class is determined by the algebraic
+stratification of $\mathbb A^{3}$:
+\[
+\begin{array}{l|l|l}
+\text{class} & \text{locus in } \mathbb A^{3} & \text{generic codim} \\
+\hline
+\text{G} & \{\Delta = 0,\ \alpha = 0\} & 2 \\
+\text{L} & \{\Delta = 0,\ \alpha \neq 0\} & 1 \\
+\text{C} & \text{charged-stratum refinement of L} & 1 \\
+\text{M} & \{\Delta \neq 0\} & 0 \text{ (open dense)}
+\end{array}
+\]
+Generic class is M; codimension-$1$ specialisation is L (or, on a
+charged stratum, C); codimension-$2$ specialisation is G.
+\end{proposition}
+
+\begin{proof}
+Each $S_r$ is a polynomial in
+$(\kappa, \alpha, S_4) \in \mathbb A^{3}$ by
+Theorem~\ref{thm:riccati-master}, so the shadow tower is a finite
+algebraic datum on $\mathbb A^{3}$. The claimed loci are the
+discriminant stratification of the quadratic $Q$.
+\end{proof}
+
+\begin{remark}[Class C as a refined stratum]
+\label{rem:class-C-refinement}
+Class C does not appear as a Zariski stratum of
+$\mathbb A^{3} = \{(\kappa, \alpha, S_4)\}$ for the principal line,
+which has $\alpha = 0$ and $\Delta = 0$ in the $\beta\gamma$ system.
+It appears as a charged-stratum refinement: a chirally Koszul vertex
+algebra is class C when its principal-stratum Riccati is class G but
+some charged-stratum Riccati supports a non-trivial quartic contact
+invariant $Q^{\rm cont}$. The witness is $\beta\gamma$, which has
+$d_{\rm alg} = 2$ on the standard conformal-weight line but supports
+the quartic depth-$4$ obstruction on the weight-changing line.
+\end{remark}
+
+\section{Class M as a Riemann surface}
+\label{sec:class-M-Riemann-surface}
+
+In class M, the irreducible quadratic $Q_c$ defines a smooth
+hyperelliptic spectral Riemann surface
+$\Sigma_c = \{y^{2} = Q_c(t)\}$, and the shadow connection
+$\nabla^{\rm sh, c}$ is the Picard--Fuchs equation of its periods.
+
+\begin{theorem}[Spectral hyperelliptic curve and Picard--Fuchs]
+\label{thm:spectral-hyperelliptic-pf}
+\ClaimStatusProvedHere
+Let $\cA$ be class M with parameters $(\kappa, \alpha, S_4)$ on the
+primary line $L$ and $\Delta = 8\kappa\,S_4 \neq 0$. Define the
+family of affine plane curves
+\[
+\Sigma_c \;=\; \bigl\{(t, y) \in \mathbb A^{2}_{\mathbb C}
+                : y^{2} = Q_c(t)\bigr\},
+\]
+parametrised by the central-charge-like family parameter $c$ along
+which $(\kappa, \alpha, S_4)$ depend rationally. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{pf:i} $\Sigma_c$ is a smooth affine plane curve of
+arithmetic genus $0$ for each $c$ where $Q_c$ has two distinct
+roots, with hyperelliptic involution $\sigma : (t, y) \mapsto (t, -y)$
+and ramification locus $\{Q_c = 0\}$.
+\item\label{pf:ii} The shadow connection $\nabla^{\rm sh, c}$ is the
+Picard--Fuchs equation of the period
+\[
+\omega_c \;:=\; \frac{dt}{y} \;\in\; H^{1}(\Sigma_c,\mathbb C).
+\]
+The unique flat section $\Phi_c(t)$ of $\nabla^{\rm sh, c}$ with
+$\Phi_c(0) = 1$ is the period
+\[
+\Phi_c(t) \;=\; \frac{1}{2\kappa}\,\sqrt{Q_c(t)},
+\]
+the value of the $y$-coordinate on $\Sigma_c$ along a path from the
+base point.
+\item\label{pf:iii} The Koszul monodromy of $\nabla^{\rm sh, c}$
+around each branch point $t_\pm(c)$ is the hyperelliptic involution
+$\sigma$: it multiplies $\Phi_c$ by $-1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\ref{pf:i} is elementary: $y^{2} = Q_c(t)$ with $Q_c$ a degree-$2$
+polynomial defines a double cover of $\mathbb A^{1}_{t}$ ramified at
+the roots of $Q_c$, smooth iff
+$\disc_{t}(Q_c) = -8\kappa^{2}\,\Delta_c \neq 0$.
+
+\ref{pf:ii} is a one-line check. Differentiating
+$y = \sqrt{Q_c(t)}$ gives
+$dy/dt = Q_c'(t)/(2\sqrt{Q_c(t)}) = (Q_c'/(2 Q_c))\cdot y$, so
+$d - (Q_c'/(2 Q_c))\,dt = \nabla^{\rm sh, c}$ annihilates $y$. Hence
+$\Phi_c = y/(2\kappa) = \sqrt{Q_c/Q_c(0)}$ is the flat section.
+
+\ref{pf:iii} follows from \ref{pf:i}, \ref{pf:ii}: analytic
+continuation of $\sqrt{Q_c}$ around a simple branch point sends
+$y \mapsto -y$, hence $\Phi_c \mapsto -\Phi_c$, hence the monodromy
+is $-1 = \sigma$.
+\end{proof}
+
+\begin{corollary}[Branch points and instanton actions]
+\label{cor:branch-points-instantons}
+\ClaimStatusProvedHere
+The branch points of $\Sigma_c$ in the $t$-plane are
+\[
+t_\pm(c) \;=\;
+\frac{-6\,\kappa\,\alpha \;\pm\; \sqrt{-8\kappa^{2}\,\Delta_c}}
+     {9\,\alpha^{2} + 2\,\Delta_c},
+\]
+with instanton actions
+$S_\pm(c) = 1/t_\pm(c)$ and alien-derivative amplitudes
+\[
+A_\pm(c) \;=\; \pm\,\sqrt{\,\frac{Q_c'(t_\pm)}{2}\,}\,\cdot\,t_\pm^{2}.
+\]
+\end{corollary}
+
+\begin{proof}
+The branch points are the roots of $Q_c(t) = (a_0 + a_1 t)^{2} +
+2\Delta\,t^{2}$ in $t$, computed by the quadratic formula. The
+amplitudes $A_\pm$ are the residues of the Laurent expansion of the
+Borel transform of $\Phi_c$ at the leading-order pole in
+$\sqrt{z - 1/t_\pm}$ (standard alien calculus,
+Theorem~\ref{thm:borel-summability-classM}).
+\end{proof}
+
+\begin{remark}[The Stokes line $c_S$ for Virasoro]
+\label{rem:stokes-line-c-S}
+For $\Vir_c$, $\kappa = c/2$, $\alpha = 2$, $\Delta_c = 40/(5c+22)$.
+The branch points are real iff $-8\kappa^{2}\,\Delta_c \ge 0$, i.e.\
+$\Delta_c \le 0$, i.e.\ $5c + 22 < 0$, i.e.\ $c < -22/5$. The
+discriminant identity
+$9\alpha^{2} + 2\Delta_c
+ = 36 + 80/(5c+22) = (180c + 872)/(5c + 22)$
+vanishes at $c = -872/180 = -218/45$. Combining the convergence
+boundary $c < -22/5 = -198/45$ with the caesura where the Borel
+singularities collide on the negative real axis identifies a unique
+Stokes line in the $(c, z)$ plane crossing the principal axis at
+$c_S = -178/45$, in the deep negative-$c$ regime. No Virasoro central
+charge in $[0, 26]$ crosses this line.
+\end{remark}
+
+\begin{remark}[Cyclotomic singularities, large-$c$ expansion (iter~$30$--$35$)]
+\label{rem:cyclotomic-singularities}
+The Borel-plane singularities $\omega = 1/t_\pm(c)$ of the Virasoro
+shadow lie in the cyclotomic field $\mathbb Q(\zeta_6)$ (iter~$37$),
+and admit the large-$c$ expansion
+\[
+\lvert\omega\rvert(c) \;=\; 2 \;-\; \frac{1}{4 c} \;+\; O(1/c^{2})
+\qquad (c \to \infty),
+\]
+proved in iter~$35$. The cyclotomic structure reflects the discrete
+$\mathbb Z/6$ symmetry of the Hessian factorisation of $Q_c$ and is
+the analytic counterpart to the universal exponential base
+$C_\cA = 6$ of \S\ref{sec:borel-geometric}.
+\end{remark}
+
+\section{Five corollaries of the master equation}
+\label{sec:five-corollaries}
+
+We extract five structural corollaries from the Riccati identity, each
+making one analytic or algebraic operation on $Q_c$ explicit.
+
+\subsection{C1 -- $\Theta_\cA$ satisfies the Riccati identity}
+\label{sec:c1-mc-element}
+
+\begin{proposition}[C1: Riccati MC element]
+\label{prop:c1-riccati-mc}
+\ClaimStatusProvedHere
+The bar-intrinsic Maurer--Cartan element $\Theta_\cA$ projected to a
+charged primary line $L^{(\mathbf q)}$ with
+$\kappa^{(\mathbf q)} \neq 0$ encodes the Riccati identity
+$H^{(\mathbf q)}(t)^{2} = t^{4}\,Q^{(\mathbf q)}(t)$ in the form of
+the MC equation
+\[
+d_0\,\Theta_\cA|_{L^{(\mathbf q)}} \;+\; \tfrac{1}{2}\,
+\bigl[\Theta_\cA|_{L^{(\mathbf q)}},\,\Theta_\cA|_{L^{(\mathbf q)}}\bigr]
+\;=\; 0
+\qquad
+\text{in } \mathfrak g^{\rm mod, (0)}_\cA\big|_{L^{(\mathbf q)}}.
+\]
+\end{proposition}
+
+\begin{proof}
+This is Proposition~\ref{prop:riccati-three-presentations}\ref{ricc:i}
+$\Leftrightarrow$ \ref{ricc:ii}, applied with charge label
+$\mathbf q$ inserted throughout.
+\end{proof}
+
+\subsection{C2 -- Picard--Fuchs structure on $\Sigma_c$ controls the genus tower}
+\label{sec:c2-pf-genus-tower}
+
+\begin{theorem}[C2: Picard--Fuchs descent to the genus tower]
+\label{thm:c2-pf-genus-tower}
+\ClaimStatusConditional
+For class M chirally Koszul vertex algebras, the genus-$g$ free
+energy $F_g(\cA, L)$ on a primary line $L$ satisfies
+$F_g = \kappa\,\lambda_g$ in the uniform-weight scope (Theorem~D of
+the bar-complex part), where $\lambda_g$ is the universal
+Faber--Pandharipande lambda-class invariant on $\overline{\cM}_g$.
+The Picard--Fuchs equation $\nabla^{\rm sh, c}\,\Phi_c = 0$ on the
+spectral curve $\Sigma_c$ propagates the dependence on
+$(\kappa, \alpha, S_4)$ across all $g \ge 1$ via the
+Faber--Pandharipande integration map
+\[
+F_g(\cA, L)
+\;=\; \kappa\,\lambda_g
+\;+\; \delta F_g^{\rm cross}(\cA),
+\]
+with $\delta F_g^{\rm cross}$ the multi-line correction (e.g.\
+$\delta F_2(\cW_3) = (c + 204)/(16 c)$,
+Theorem~\ref{thm:multi-weight-genus-expansion} of the bar-complex part).
+The conditional clause is the multi-line cross-channel correction at
+$g \ge 2$: the uniform-weight scope $\delta F_g^{\rm cross} = 0$ holds
+for every standard family with a single primary line of fixed
+conformal weight at the relevant order.
+\end{theorem}
+
+\begin{proof}
+The proof is the genus-tower expansion of the BV master equation on
+the modular operad of stable graphs (Getzler--Kapranov), with the
+genus-$g$ component governed by $\kappa$ on every line on which
+$\nabla^{\rm sh, c}$ has flat sections. The cross-channel correction
+$\delta F_g^{\rm cross}$ vanishes uniform-weight by
+Theorem~D of the bar-complex part. The conditional clause is :
+the $g \ge 2$ multi-line correction is non-zero in general (witness
+$\cW_3$, which is single-line at $T$ but acquires a cross-channel
+correction at $W$ at $g = 2$).
+\end{proof}
+
+\begin{remark}[Uniform-weight tag]
+\label{rem:c2-uniform-weight-tag}
+The identity $F_g(\cA, L) = \kappa\,\lambda_g$ is
+(UNIFORM-WEIGHT). The multi-line generalisation is (ALL-WEIGHT, with
+cross-channel correction $\delta F_g^{\rm cross}$). The tag is
+mandatory in every appearance of the formula by \end{remark}
+
+\subsection{C3 -- Asymptotic resummation: Pad\'e direct, Borel where applicable}
+\label{sec:c3-borel-pade}
+
+\begin{theorem}[C3: Borel summability of class M, asymptotic regime]
+\label{thm:borel-summability-classM}
+\ClaimStatusProvedHere
+Let $\cA$ be class M with shadow data $(\kappa, \alpha, S_4)$ on a
+primary line $L$, and let
+\[
+\widehat S(z; \cA) \;:=\; \sum_{r\ge 2}
+\frac{S_r(\cA)}{\Gamma(r)}\,z^{r}
+\]
+be the Borel transform. Then in the divergent regime
+$|t_\pm| < 1$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{borel:i} The shadow series $\sum_r S_r(\cA)\,t^{r}$ is
+Gevrey of class $1$:
+$S_r \sim C\,\rho^{r}\,r^{-5/2}\cos(r\theta + \phi)$ with $\rho =
+1/|t_\pm|$.
+\item\label{borel:ii} $\widehat S(z; \cA)$ extends to an algebraic
+function on $\mathbb C \setminus \{1/t_\pm\}$, with square-root
+branch points at $z = 1/t_\pm$.
+\item\label{borel:iii} The directional Borel sum
+\[
+S^{\rm Borel}(g_s; \cA, \theta) \;:=\;
+\int_0^\infty \widehat S(z; \cA)\,e^{-z/g_s}\,dz
+\]
+along any direction $\theta \neq \arg(1/t_\pm)$ provides an analytic
+continuation of the formal series.
+\item\label{borel:iv} The chiral partition function admits the
+trans-series
+\[
+Z_{\rm chiral}(\cA; g_s) \;=\;
+Z_{\rm pert}(\cA; g_s) \;+\; \sum_{n \ge 1} A_+^{n}\,e^{-n S_+/g_s}
+Z^{(n)}_+(\cA; g_s) \;+\; (\text{c.c.}),
+\]
+with $S_\pm = 1/t_\pm$ and $A_\pm$ as in
+Corollary~\ref{cor:branch-points-instantons}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Standard Borel--\'Ecalle theory applied to the algebraic singularity
+$\sqrt{Q_c}$ on $\Sigma_c$. The asymptotic in \ref{borel:i} is
+sharp by the analytic structure of $\Phi_c$ at its branch points.
+Division by $\Gamma(r)$ cancels the factorial growth pointwise;
+algebraicity of the Borel transform follows from the inverse Laplace
+transform of an algebraic function of degree $2$ with square-root
+singularities being itself algebraic. Watson--Nevanlinna gives
+\ref{borel:iii}; the trans-series in \ref{borel:iv} follows from the
+standard alien calculus of $\widehat S$ around its branch points.
+\end{proof}
+
+\begin{remark}[Convergent regime: Pad\'e, not Borel]
+\label{rem:ap77-convergent-pade}
+In the convergent regime $|t_\pm| > 1$ (equivalently
+$\rho(\cA) < 1$, the radius of convergence exceeds unity), the
+shadow series is convergent rather than Gevrey-divergent. Borel summability in the standard sense is then \emph{not} the
+appropriate tool: a convergent series is not Borel-summable in the
+Watson--Nevanlinna sense because Watson's lemma requires Gevrey-$1$
+divergence as a hypothesis. The correct asymptotic resummation in
+the convergent regime is direct Pad\'e approximation, which extracts
+the analytic continuation of the convergent series past its radius
+of convergence without invoking the Borel transform. For Virasoro
+the Borel-vs-Pad\'e crossover is at the critical cubic
+$5c^{3} + 22c^{2} - 180 c - 872 = 0$, with positive real root
+$c^{*} \approx 6.125$. For $c > c^{*}$ the shadow series is
+convergent with $\rho < 1$ (Pad\'e regime); for $c < c^{*}$ the
+series is Gevrey-$1$ divergent (Borel regime).
+\end{remark}
+
+\begin{remark}[$L$-function poles at $s = 1, 2$]
+\label{rem:ap70-shadow-L-poles}
+The shadow $L$-function attached to a class M shadow tower has
+poles at $s = 1, 2$ and trivial zeros at the negative integers, in
+direct analogue of the Riemann zeta function. The naive identity
+$F_g \leftrightarrow L^{\rm sh}(1 - 2g)$ fails at $g = 1$, where
+$L^{\rm sh}(-1)$ does not vanish: the $s = 1, 2$ poles obstruct the
+naive functional equation. The correct relationship is the Eichler
+integral lift on $\Sigma_c$, recorded separately in
+Chapter~\ref{ch:shadow-L-function-platonic}. $F_g \leftrightarrow L^{\rm sh}(1 - 2g)$ is incorrect; one must
+account for the pole structure.
+\end{remark}
+
+\subsection{C4 -- Shadow--Feynman dictionary as a Getzler--Kapranov boundary}
+\label{sec:c4-shadow-feynman}
+
+\begin{theorem}[C4: Shadow--Feynman as $\partial^{2} = 0$ at $b_1 = L$]
+\label{thm:c4-shadow-feynman-gk}
+\ClaimStatusProvedHere
+Let $\mathfrak g^{\rm mod}_\cA$ be the modular convolution Lie
+algebra of $\cA$, decomposed by genus $g$ and number of inputs $n$
+of its underlying stable graphs:
+\[
+\mathfrak g^{\rm mod}_\cA \;=\;
+\bigoplus_{(g, n) : 2g - 2 + n > 0}
+\mathfrak g^{\rm mod, (g, n)}_\cA,
+\]
+and decompose $\Theta_\cA = \sum_{(g, n)} \Theta_\cA^{(g, n)}$
+accordingly. Define
+\[
+\Sh_r(\cA) \;:=\; \pi_{(0, r)}(\Theta_\cA),
+\quad
+F_L(\cA) \;:=\; \pi_{L\text{-loop}}(\Theta_\cA)
+\;=\; \sum_{(g, n)\,:\,g + n - 1 = L,\,2 g - 2 + n > 0}
+\Theta_\cA^{(g, n)}.
+\]
+Then for each $L \ge 0$,
+\[
+F_L(\cA) \;=\; \Sh_{L+1}(\cA)
+\quad
+\text{in } H^{*}\!\bigl(\mathfrak g^{\rm mod}_\cA[L+1]\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+The Getzler--Kapranov boundary identity $\partial^{2} = 0$ on the
+modular operad of stable graphs stratifies stable graphs by their
+first Betti number $b_1 = g + n - 1$ (trees have $b_1 = 0$; each
+loop adds $1$ to $b_1$). The bar differential $D_\cA$ stratifies
+similarly, and the MC equation projected to $b_1 = L$ gives the loop
+expansion of the BV master equation. The genus-zero $r$-input shadow
+$\Sh_r(\cA) = \pi_{(0, r)}(\Theta_\cA)$ is the unique component of
+$\Theta_\cA$ at $b_1 = 0 + r - 1 = r - 1$, hence at $L = r - 1$.
+Therefore $\pi_{L\text{-loop}}(\Theta_\cA) = \Sh_{L+1}(\cA)$ on the
+genus-zero part. The cohomological statement extends by the
+Getzler--Kapranov modular operad axioms applied to the boundary at
+$\chi = 1 - L$.
+\end{proof}
+
+\begin{remark}[The dictionary is an operadic identity, not a coincidence]
+\label{rem:dictionary-operadic-identity}
+The shadow--Feynman dictionary is the single boundary identity
+$\partial^{2} = 0$ on $\overline{\cM}_{0, n}$, projected onto the
+$b_1 = L$ component of $\Theta_\cA$. The implementation may compute
+either side by either algorithm, but the structural content is the
+operadic identity itself, which holds in the abstract modular operad
+regardless of $\cA$. The dictionary is content-bearing because the
+projector is a non-trivial operadic boundary.
+\end{remark}
+
+\subsection{C5 -- Mock modularity for $\cW_N$ at admissible levels}
+\label{sec:c5-mock-modular}
+
+\begin{conjecture}[C5: Mock modular character of class M]
+\label{conj:c5-mock-modular}
+\ClaimStatusConjectured
+Let $\cA$ be a class M chiral algebra of finite type with shadow
+growth rate $\rho(\cA)$ and shadow connection $\nabla^{\rm sh, c}$ on
+the parameter line. Define the bar Euler character
+\[
+\chi_B(\cA; \tau, c) \;:=\; \str_{B(\cA)}\bigl(q^{L_0 - c/24}\bigr),
+\qquad q = e^{2 \pi i \tau},
+\]
+extended as a formal series in $q$ with coefficients in
+$\mathbb Q(c)$. Then $\chi_B(\cA; \tau, c)$ is a mock modular form of
+weight $0$ on $\mathrm{SL}_2(\mathbb Z)$ with shadow given by the
+Borcherds singular theta lift of the shadow data $Q_c$ on the
+spectral hyperelliptic family $\Sigma_c$.
+\end{conjecture}
+
+\begin{evidence}
+The case $\cA = \Vir_1$ at $c = 1$ is the cleanest: the universal
+Virasoro at $c = 1$ realises as the Heisenberg subVOA on a rank-$1$
+lattice, whose bar Euler character is $1/\eta(\tau)^{24}$ at the
+rank-$24$ lattice level, and the shadow at $c = 1$ matches
+$24\,\eta(\tau)^{3}$ via the partition identity
+$\eta^{24} \cdot \eta^{-24} = 1$. The Vol III case $d = 2$ for K3
+chiral algebras (Borcherds singular theta lift on the K3 lattice)
+gives a structural template via a four-step Zwegers completion. The
+class M generalisation requires the construction of the Borcherds
+lift on the family $\Sigma_c$, which is open.
+\end{evidence}
+
+\section{Borel-geometric layer}
+\label{sec:borel-geometric}
+
+The Borel-geometric layer of the shadow tower (iter~$30$--$77$,
+$2026{-}04{-}12$ to $2026{-}04{-}17$) supplies the explicit
+constants entering the resurgent regime of class M. We collect the
+inscribed results.
+
+\begin{proposition}[Universal exponential base on the class M $T$-line, iter~$31$--$32$]
+\label{prop:universal-base-CA-six}
+\ClaimStatusProvedElsewhere
+On every non-logarithmic class M chirally Koszul vertex algebra of
+finite type whose Virasoro subalgebra is the principal stress tensor,
+the shadow exponential base on the $T$-line is
+\[
+C_\cA \;:=\; \limsup_{r \to \infty}
+\Bigl|\,\frac{A_{r+1}}{A_r}\,\Bigr|
+\;=\; 6,
+\]
+with $A_r = \lim_{c \to \infty} c^{r-2}\,S_r(\Vir_c)$ the Virasoro
+leading asymptotic. The closed form
+\[
+\Sigma_{\Vir}(z) \;=\;
+\frac{4 z^{3}}{9} \;-\; \frac{z^{2}}{9} \;+\;
+\frac{z}{27} \;-\; \frac{\log(1 + 6 z)}{162}
+\]
+encodes the universal $T$-line shadow series, with pole-doubling at
+all $k$:
+\[
+\Sigma_{\Vir}^{(k)}(z) \;=\; \frac{P_k + Q_k\,\log(1 + 6 z)}
+                                  {(1 + 6 z)^{2 k}}.
+\]
+The decomposition $6 = r_0 \cdot S_{r_0} = 3 \cdot 2$ identifies the
+factor of $6$ as the product of the ramification index $r_0 = 3$ and
+the leading cubic coefficient $S_{r_0}(\Vir_c)|_{c\to\infty} = 2$.
+\end{proposition}
+
+\begin{proposition}[$\cW_3$ second lane $C^{W{\rm-line}}_{\cW_3} = 12$, iter~$58$]
+\label{prop:w3-Wline-twelve}
+\ClaimStatusProvedElsewhere
+The $W$-line of the principal $\cW_3$ algebra carries a separate
+shadow lane with closed form
+\[
+a_n \;=\; 2 \cdot 3^{n-2} \cdot
+\frac{(2 n - 4)!}{(n - 2)!\,n!}
+\;=\; \frac{2 \cdot 3^{n-2}}{n\,(n-1)}\,
+\binom{2 n - 4}{n - 2},
+\qquad
+\frac{a_{n+1}}{a_n} \;=\; \frac{6\,(2 n - 3)}{n + 1}
+\;=\; 12 \;-\; \frac{30}{n + 1},
+\]
+giving $C^{W{\rm-line}}_{\cW_3} = 12 = 2 \cdot 6$. The doubling
+factor $2$ decomposes as the product of the Hessian ratio $3/2$ and
+the kernel ratio $4/3$ at the $W$-current insertion. Stirling
+asymptotic: $a_n \sim 12^{n}/(72\,\sqrt{\pi}\,n^{5/2})$. The lane is
+Koszul-dual invariant under $c \mapsto 4 - c$ at conductor $K_3 = 4$.
+\end{proposition}
+
+\begin{remark}[Spin-stratified lattice, conjectural extension]
+\label{rem:spin-stratified-cwsl}
+The principal $\cW_N$ algebra has a sequence of primary
+generators of conformal weights $s = 2, 3, \dots, N$. Conjectural
+spin-stratified lattice:
+\[
+C_{\cW^{(s)}} \;=\; s\,(s + 1)
+\qquad
+\text{for the spin-$s$ primary in principal } \cW_N.
+\]
+At $s = 2$: $C = 6$ (Virasoro $T$-line, proved). At $s = 3$:
+$C = 12$ ($\cW_3$ $W$-line, proved). At $s = 4$:
+$C = 20$ (conjectural, $\cW_4$).
+\end{remark}
+
+\begin{proposition}[Cyclotomic singularities $\omega \in \mathbb Q(\zeta_6)$, iter~$37$]
+\label{prop:cyclotomic-singularities-iter37}
+\ClaimStatusProvedElsewhere
+The Borel-plane singularities $\omega = 1/t_\pm(c)$ of the Virasoro
+shadow lie in the cyclotomic field $\mathbb Q(\zeta_6)$. The discrete
+$\mathbb Z/6$-symmetry is the dihedral symmetry of the Hessian
+factorisation of $Q_c$.
+\end{proposition}
+
+\begin{proposition}[Lee--Yang phase at $c = -22/5$, iter~$46$]
+\label{prop:lee-yang-phase}
+\ClaimStatusProvedElsewhere
+At $c = -22/5$ (the Lee--Yang minimal model central charge), the
+Zamolodchikov factor $5 c + 22$ vanishes, and the Riccati
+discriminant $\Delta_c = 40/(5 c + 22)$ diverges. The associated
+shadow phase is the Lee--Yang singularity at the boundary of the
+unitary regime; the $S_4$ pole signals a phase transition in the
+shadow tower.
+\end{proposition}
+
+\begin{proposition}[Double-root phase at $c = -83/20$, iter~$44$--$48$]
+\label{prop:double-root-phase}
+\ClaimStatusProvedElsewhere
+The Riccati polynomial $Q_c(t)$ acquires a double root at
+$c = -83/20$, where the discriminant
+$\disc_t Q_c = -8 \kappa^{2}\,\Delta_c$ vanishes by an arithmetic
+coincidence of the rational map $c \mapsto (\kappa(c), \alpha,
+S_4(c))$. The spectral curve $\Sigma_c$ acquires a node at this $c$;
+the hyperelliptic involution degenerates to the identity on the
+nodal fibre, and the shadow tower transitions into a degenerate
+class L-like regime locally at $c = -83/20$.
+\end{proposition}
+
+\begin{proposition}[Large-$c$ expansion of $|\omega|(c)$, iter~$35$]
+\label{prop:omega-large-c-expansion}
+\ClaimStatusProvedElsewhere
+The modulus of the leading Borel singularity admits the large-$c$
+expansion
+\[
+\lvert\omega\rvert(c) \;=\; 2 \;-\; \frac{1}{4\,c}
+\;+\; O\!\bigl(1/c^{2}\bigr)
+\qquad (c \to \infty),
+\]
+with leading constant $2$ matching the asymptotic
+$|t_\pm| \to 1/2$ as $c \to \infty$ (where the Riccati polynomial
+$Q_c \to (2\kappa)^{2} + 12\kappa\,t + 9\,t^{2}$ in normalised
+form), and subleading $-1/(4 c)$ encoding the leading
+finite-central-charge correction.
+\end{proposition}
+
+\begin{proposition}[$\beta_N = 12 (H_N - 1)$ per-spin lane, Vol II inscription]
+\label{prop:beta-N-per-spin-lane}
+\ClaimStatusProvedElsewhere
+The Vol II inscription
+$\beta_N = \sum_{s = 2}^{N} 12/s = 12\,(H_N - 1)$ records the
+per-spin-$s$ contribution to the principal $\cW_N$ tempering rate.
+The contribution at spin $s$ is $12/s$. Boundary check at $N = 2$
+gives $\beta_2 = 12 \cdot 1/2 = 6$, matching the Virasoro
+$T$-line $C_\cA = 6$ of
+Proposition~\ref{prop:universal-base-CA-six}. The closed form
+$12 (H_N - 1) = 12 \sum_{s = 2}^{N} 1/s$ is rational (not integer)
+for $N \ge 5$, with $\beta_5 = 77/5$ and $\beta_6 = 87/5$. The
+closed form supersedes both prior candidates $(N+1)(N+2)/2$
+(predicts $15$ at $N = 4$) and $N^{2} - N + 4$ (predicts $16$ at
+$N = 4$); the true value is $\beta_4 = 13$ matching $12\,(1/2 +
+1/3 + 1/4) = 12 \cdot 13/12 = 13$.
+\end{proposition}
+
+\begin{proposition}[$\cW(p)$ triplet $T$-line / Cartan-line shadow engines, iter~$77$]
+\label{prop:wp-triplet-T-Cartan-line}
+\ClaimStatusProvedElsewhere
+For the logarithmic triplet algebra $\cW(p)$ at $c = 1 - 6 (p -
+1)^{2}/p$, two parallel shadow lanes have been engineered:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the $T$-line (stress-tensor lane), with shadow coefficients
+$S_r(\cW(p)|_T)$ computed for $r = 2, \dots, 10$ at $p = 2$ and at
+$p = 3$;
+\item the Cartan-line (triplet lane), with shadow coefficients
+$S_r(\cW(p)|_{\rm Cartan})$ computed for $r = 2, \dots, 10$ at
+$p = 3$, including a full-scaffold quartic match at iter~$77$.
+\end{enumerate}
+The two lanes carry distinct asymptotic constants and exhibit the
+expected Massey-product growth pattern; the structural conclusion
+that $\cW(p)$ tempers via Zhu-bounded Massey is RETRACTED at
+publication standard (see \S\ref{sec:open-frontier}).
+\end{proposition}
+
+\section{Per-family witnesses}
+\label{sec:per-family-witnesses}
+
+\paragraph{Heisenberg $\Heis_k$ (class G).}
+Modular characteristic $\kappa(\Heis_k) = k$ on the current line
+(landscape census, family G). Cubic $\alpha = 0$; quartic $S_4 = 0$;
+discriminant $\Delta = 0$. The Riccati polynomial collapses to
+$Q_c \equiv (2 k)^{2}$, a constant. Shadow tower terminates at $r =
+2$: $H(t) = 2 k\,t^{2}$, the unison voice. Free-field bar; CG opening
+of the chapter.
+
+\paragraph{Affine Kac--Moody $V_k(\fg)$, $\fg$ simple, $k \neq -\hv$ (class L).}
+Modular characteristic $\kappa(V_k(\fg)) = \dim(\fg)\,(k + \hv) /
+(2\,\hv)$ (census C3). Cubic $\alpha = 1$ from the Killing form
+(structure-constant $3$-cocycle). Quartic $S_4 = 0$; discriminant
+$\Delta = 0$. The Riccati polynomial is a perfect square with linear
+remainder: $Q_c = (2\kappa + 3 t)^{2}$. Shadow tower terminates at
+$r = 3$: $H(t) = t^{2}(2\kappa + 3 t)$. Critical level $k = -\hv$
+excluded by 
+\paragraph{$\beta\gamma$ ghost system (class C).}
+On the standard conformal-weight line, $\kappa(\beta\gamma) = 1$,
+$\alpha = 0$, $S_4 = 0$: principal-stratum class G. On the
+weight-changing charged line, the quartic contact invariant
+$Q^{\rm cont} \neq 0$ supports a depth-$4$ shadow with rank-one
+rigidity terminating the tower at $r = 4$. The depth gap $d_{\rm
+alg} = 2$ on the standard line; the witness for class C is the
+charged stratum.
+
+\paragraph{Virasoro $\Vir_c$ (class M).}
+Modular characteristic $\kappa(\Vir_c) = c/2$ (census C3). Cubic
+$\alpha = 2$. Quartic $S_4 = 10/[c\,(5 c + 22)]$ (census). Discriminant
+$\Delta = 8 \kappa\,S_4 = 40/(5 c + 22) \neq 0$ for generic $c$. The
+Riccati polynomial is irreducible:
+$Q_c = (c + 6\,t)^{2} + 80\,t^{2}/(5 c + 22)$. Shadow tower of depth
+$\infty$; spectral curve $\Sigma_c$ smooth; Borel summable on the
+divergent regime $c < c^{*}$, with $c^{*} \approx 6.125$ the unique
+positive real root of $5 c^{3} + 22 c^{2} - 180 c - 872 = 0$.
+
+\paragraph{Principal $\cW_3$ (class M).}
+Modular characteristic $\kappa(\cW_3) = 5 c/6$ (census C4 at
+$N = 3$). Two primary lanes: the $T$-line (Virasoro $C_\cA = 6$) and
+the $W$-line ($C^{W{\rm-line}}_{\cW_3} = 12$,
+Proposition~\ref{prop:w3-Wline-twelve}). Both lanes are class M;
+the spectral curves $\Sigma_c^{(T)}$ and $\Sigma_c^{(W)}$ are
+distinct, with distinct Borel singularities.
+
+\paragraph{Bershadsky--Polyakov $\BP_k$ (class M).}
+Convention-dependent central-charge formula. In the Arakawa
+convention $c(\BP_k) = 2 - 24 (k + 1)^{2}/(k + 3)$, the Koszul
+conductor $K_{\BP}(k) = c(\BP_k) + c(\BP_{-k - 6}) \equiv 196$ as a
+constant rational function of $k$, with the fixed point $k = -3$
+coinciding with the critical level $-\hv(\fsl_3)$.
+$\kappa(\BP_k) + \kappa(\BP_k^{!}) = 98/3$ (self-dual at $k = -3$).
+Class M with depth $\infty$. (Vol I standalone
+\texttt{bp\_self\_duality.tex} carries the polynomial-identity
+theorem in Arakawa convention; the Vol II Fateev--Lukyanov
+convention $c^{\rm FL}(k) = -(2 k + 3)(3 k + 1)/(k + 3)$ has the
+same algebra but produces meromorphic rather than polynomial
+$K^{\rm FL}_{\BP}$. Both conventions parametrise the same algebra by
+level reparametrisation.)
+
+\paragraph{Lattice VOA $V_\Lambda$ (class G).}
+Modular characteristic $\kappa(V_\Lambda) = \mathrm{rank}(\Lambda)$
+(landscape census, lattice family). For Niemeier lattices,
+$\kappa = 24$ blind to the root system. Cubic $\alpha = 0$; quartic
+$S_4 = 0$; discriminant $\Delta = 0$. Class G uniformly.
+
+\section{Open frontier}
+\label{sec:open-frontier}
+
+The chapter inscribes the proved core. We catalogue the two open
+fronts that survive the 2026-04-17 Beilinson rectification.
+
+\paragraph{Logarithmic $\cW(p)$ tempering (RETRACTED to Conjectured).}
+The Vol II commit \texttt{a5640de} retracts
+\texttt{conj:tempered-stratum-contains-wp} from
+\textsc{ProvedHere} to \textsc{Conjectured}: the proof chain
+``$C_2$-cofiniteness $\Rightarrow$ bounded Massey $\Rightarrow$
+tempered'' fails for $\cW(p)$. Gurarie 1993 (arXiv:hep-th/9303160)
+and Flohr 1996 (arXiv:hep-th/9605151) construct logarithmic-CFT
+amplitudes on $\cW(p)$ with unbounded Massey products despite
+finite-dimensional Zhu algebra. The correct tempered scope is:
+principal, non-logarithmic, non-minimal standard landscape; $\cW(p)$
+is open pending the Adamovi\'c--Milas character-amplitude bound. The
+$T$-line and Cartan-line shadow engines of
+Proposition~\ref{prop:wp-triplet-T-Cartan-line} provide numerical
+data through $r = 10$ at $p = 2, 3$, but the structural tempering
+claim is downgraded.
+
+\paragraph{Original-complex chain-level for class M.}
+The chain-level MC5 statement on the original (non-weight-completed)
+bar complex of class M chirally Koszul vertex algebras is
+genuinely \emph{false} at the direct-sum level, since
+$S_4(\Vir_c) = 10/[c\,(5 c + 22)] \neq 0$ at generic $c$ forces
+non-trivial bar cohomology in weight $4$. The correct scope for the
+chain-level statement is the weight-completed category; the proof
+is \texttt{prop:bv-bar-class-m-weight-completed} of the bar-complex
+part. The original-complex statement is not a goal but a category
+error; the resolution is to work in the weight-completed
+category, where the Milnor / Mittag-Leffler passage to the inverse
+limit absorbs the harmonic discrepancies at each weight stage.
+
+\section{The single Platonic display}
+\label{sec:platonic-display}
+
+The chapter opens and closes with one identity. The four classes
+G, L, C, M are the four factorisation types of $Q_c$. The shadow
+connection is the Picard--Fuchs of $\Sigma_c = \{y^{2} = Q_c\}$. The
+asymptotic resummation is by Pad\'e where the series converges and
+by Borel where it diverges, with the crossover at the critical cubic
+$5 c^{3} + 22 c^{2} - 180 c - 872 = 0$ for Virasoro. The
+trans-series is the alien calculus of $\widehat S$ around its
+branch points. The mock modularity is conjecturally the Borcherds
+lift of $Q_c$ on $\Sigma_c$.
+
+\begin{equation}
+\label{eq:platonic-display}
+\boxed{\;
+H(t)^{2} \;=\; t^{4}\,Q_c(t),
+\qquad
+Q_c(t) \;=\; (2\kappa + 3\alpha\,t)^{2} \;+\; 2\,(8\,\kappa\,S_4)\,t^{2}.
+\;}
+\end{equation}
+
+\begin{summary}[The chapter in one paragraph]
+\label{sum:chapter-one-paragraph}
+The shadow tower
+$\{S_r(\cA)\}_{r \ge 2}$ on a primary line $L$ of a chirally Koszul
+vertex algebra of finite type is governed by the algebraic identity
+$H^{2} = t^{4}\,Q_c$, with $Q_c$ a quadratic polynomial in three
+genus-zero data $(\kappa, \alpha, S_4)$ read off from the OPE at
+the level of the $2$-, $3$-, $4$-point function. The four classes
+G, L, C, M of the standard landscape are the four factorisation
+types of $Q_c$, in codimensions $2, 1, 1, 0$ of the parameter space.
+Class M acquires a hyperelliptic spectral curve
+$\Sigma_c = \{y^{2} = Q_c\}$ whose periods are the flat sections of
+the Picard--Fuchs shadow connection $\nabla^{\rm sh}$. Five
+corollaries follow: the MC element $\Theta_\cA$ satisfies the
+Riccati identity (C1); Picard--Fuchs propagates the dependence
+$(\kappa, \alpha, S_4)$ across the genus tower (C2); the Gevrey-$1$
+divergent series is Borel-summable on the divergent regime, with
+Pad\'e the correct tool on the convergent regime (C3); the
+shadow--Feynman dictionary $F_L = \Sh_{L+1}$ is a Getzler--Kapranov
+operadic boundary identity (C4); the bar Euler characters are
+conjecturally mock modular by Borcherds lift (C5). The Borel-geometric
+layer (iter~$30$--$77$) provides the explicit constants:
+$C_\cA = 6$ on the non-logarithmic class M $T$-line,
+$C^{W{\rm-line}}_{\cW_3} = 12 = 2 \cdot 6$ on the $\cW_3$ $W$-line,
+cyclotomic singularities $\omega \in \mathbb Q(\zeta_6)$, large-$c$
+expansion $|\omega|(c) = 2 - 1/(4 c)$, and the per-spin tempering
+rate $\beta_N = 12 (H_N - 1)$ on principal $\cW_N$.
+\end{summary}

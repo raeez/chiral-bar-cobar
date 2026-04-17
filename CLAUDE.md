@@ -225,6 +225,52 @@ Three separate cleanup commits in Vol II prove aspirational instructions insuffi
 
 **Epistemic hierarchy** (higher wins): (1) Direct computation > (2) .tex source +/-100 lines > (3) Build system > (4) Published literature > (5) concordance.tex > (6) This file > (7) Memory. Before every assertion: "How do I know this? Read the source, computed it, or assumed it?" If assumed, stop and verify.
 
+## Manuscript Metadata Hygiene (CONSTITUTIONAL, ZERO TOLERANCE)
+
+**The anti-pattern catalogue, the confusion-pattern cache, and all metacognitive accounting stay out of the manuscript and out of the standalone papers.** They live only in `CLAUDE.md`, `appendices/first_principles_cache.md`, `MEMORY.md`, `notes/`, and the `memory/` directory. The manuscript and standalones are the mathematics; the metacognitive architecture is scaffolding that the reader must never see.
+
+**FORBIDDEN tokens in any typeset line** of `chapters/**/*.tex`, `standalone/**/*.tex`, `main.tex` (outside `%` comments), or any `.tex` file that compiles into the monograph or a standalone paper:
+
+- `AP\d+` (e.g. `AP1`, `AP113`, `AP234`), including in prose, remark/theorem titles, and section headers.
+- `V\d-AP\d+` (e.g. `V2-AP39`), `AP-CY\d+`, `FM\d+`, `B\d+` when used as blacklist identifiers.
+- `HZ-\d+`, `HZ-[IVX]+` (e.g. `HZ-4`, `HZ-IV`): CLAUDE.md HOT ZONE labels.
+- `Pattern \d+`, `Cache #\d+`: first-principles-cache entry identifiers.
+- `first_principles_cache` or `first principles cache` referenced by name in typeset prose.
+- "cache entry", "anti-pattern catalogue", "catalogue of anti-patterns", "the AP catalogue", or any variant, in typeset prose.
+- Titles of the form `\section{Universal APxxx healing}`, `\begin{remark}[..., AP\d+]`, `\label{...-ap\d+}`.
+- Commit-message style metadata in the manuscript: `RECTIFICATION-FLAG`, "(per AP...)", "(per cache...)".
+
+**ALLOWED:**
+
+- LaTeX comments starting with `%` (invisible in the PDF). `% AP126 check: k=0 gives r=0.` is fine as scaffolding.
+- References in `CLAUDE.md`, `MEMORY.md`, `appendices/first_principles_cache.md`, `notes/`, `memory/`, `adversarial_swarm_*/`, `compute/` Python files, test files.
+- Referring to a mathematical pattern by its mathematical content (e.g. "level-prefix convention", "trace-form r-matrix at k=0", "family-dependent anomaly ratio"). Rename and describe in substance, not by catalogue index.
+
+**Healing protocol** when an AP reference is found in typeset prose:
+
+1. If it is a parenthetical tag (`, AP1 / AP39` in a remark title; `(AP77)` in prose): remove the tag entirely; the mathematical substance of the surrounding paragraph already conveys the point.
+2. If it is a section header (`\section{Universal AP126 healing}`): rename to describe the mathematics (`\section{Universal level-prefix healing}` or similar). Update `\ref{sec:...}` targets if the label also carries the AP index.
+3. If it is a load-bearing prose sentence (`By AP77, the series is Pade-summable`): rephrase to state the mathematical content (`The series is convergent and therefore Pade-summable rather than Borel-summable`).
+4. If it is a label (`\label{rem:foo-ap42}`): rename to `\label{rem:foo}` and grep the whole Vol for `\ref{rem:foo-ap42}` to update. Labels stay unique (AP124/125 discipline).
+
+**Enforcement.** Before every commit whose diff touches `.tex` files under `chapters/`, `standalone/`, or the abstract of `main.tex`:
+
+```bash
+# Vol I:
+grep -rn '\bAP[0-9]\+\b\|\bHZ-[0-9IVX]\+\b\|V[0-9]-AP[0-9]\+\|AP-CY[0-9]\+\|\bPattern [0-9]\+\b\|Cache #[0-9]\+\|first_principles_cache' \
+  /Users/raeez/chiral-bar-cobar/chapters/ \
+  /Users/raeez/chiral-bar-cobar/standalone/ \
+  2>/dev/null | grep -v ':[0-9]*:\s*%'
+# Vol II: same under /Users/raeez/chiral-bar-cobar-vol2/
+# Vol III: same under /Users/raeez/calabi-yau-quantum-groups/
+```
+
+Zero hits is the commit-gate. If any hit appears: stop, heal via the protocol above, re-grep until zero.
+
+**Cross-volume.** The rule applies identically to all four volumes. The two anti-patterns catalogued in this session (AP234: K-notation collision; AP235: quaternitomy/quadrichotomy drift) and the two cache entries (Pattern 218, Pattern 219) are registered in `CLAUDE.md` and `appendices/first_principles_cache.md` only; the Vol~I preface, introduction, and main-abstract edits that resolved them contain the mathematical substance of the healing without any catalogue label.
+
+**Why.** The manuscript is the object of study for the reader; the catalogue is the author's working notebook. A reader who opens the PDF and encounters `(AP225)` in a theorem statement sees scaffolding, not mathematics. Catalogue indices also rot: they renumber, reorganise, and get retired; prose coupled to them breaks. Every AP-labelled sentence must be rewritten to stand on its mathematical content alone.
+
 ## E1-First Prose Architecture (MANDATORY)
 
 The ordered bar B^ord(A) is the primitive object of this programme. Every chapter, every section, every theorem presentation MUST construct the E1 ordered story first, then derive the symmetric story by averaging. The pattern:
@@ -379,6 +425,8 @@ Session 2026-04-17 corrections (B86-B92, Beilinson-rectified):
 - B90. "CY-C pentagon κ_ch stratification {3,12,24}" → CATEGORY ERROR. κ_ch = 0 route-independent (Hodge supertrace). The stratification is GENERATOR RANK ρ^{R_i}, orthogonal to κ_ch.
 - B91. "C_2-cofiniteness ⟹ bounded Massey ⟹ tempered" (W(p)) → FAILS. Gurarie 1993 + Flohr 1996 logarithmic CFT amplitudes exhibit unbounded Massey despite finite-dim Zhu. W(p) tempering OPEN.
 - B92. Primes 1423, 3067, 23, 43, 419 labelled Kummer-irregular → VERIFIED REGULAR at primary source. They still appear in S_r numerators as RICCATI-ARITHMETIC characteristic primes, NOT Kummer-arithmetic.
+- B93. `κ(A)+κ(A^!)=K(A)` (bare) → `κ(A)+κ(A^!)=ϱ_A·K(A)`. Two K's with same letter: Trinity K=c+c^!=-c_ghost(BRST) gives {-k, 2dim(g), 26, 100, 196}; scalar complementarity κ+κ^! gives {0, 13, 250/3, 98/3}. Relation: κ+κ^!=ϱ_A·K with ϱ_N=H_N-1 (principal W_N), ϱ_KM=ϱ_free=0, ϱ_BP=1/6. Canonical values: universal_conductor_K_platonic.tex:795-821. AP234. Cache #218.
+- B94. "quaternitomy" → "quadrichotomy". Canonical: thm:quadrichotomy in shadow_tower_quadrichotomy_platonic.tex. AP235. Cache #219.
 
 ## Cross-Volume Anti-Patterns
 Before cross-volume edits, Read `notes/cross_volume_aps.md` (Vol II V2-AP* and Vol III AP-CY1..AP-CY61 catalogs). The Geometric/Algebraic Model Conflations (AP-CY62..AP-CY67) are kept inline below under "Geometric vs Algebraic Models."
@@ -665,6 +713,8 @@ AP186-210 (specialized): AP186 ProvedHere-no-proof-block; AP187 orphaned chapter
 AP211-224 (new): AP211 test file absent (219); AP212 TODO/FIXME unresolved; AP213 stub chapter false coverage; AP214 cross-volume bridge outdated; AP215 preface advertising stronger than proved; AP216 Koszul (vii) genus-0 scope; AP217 Koszul (viii) ChirHoch freeness overclaim; AP218 SC-formality restricted to metric families; AP219 depth-gap d_alg=2 wrong line; AP220 D^2=0 wrong geometric space; AP221 Gerstenhaber single insertion; AP222 Theorem H config-space collapse unjustified; AP223 Theorem H bar-coalgebra/Koszul-dual conflation; AP224 README scope inflation.
 
 AP225-233 (deep structural): AP225 (CRITICAL) genus-universality gap — all-genera scalar factorization NOT proved; genus-1 unconditional; clutching-uniqueness needed; affects Theorem D; AP226 K_0-class vs scalar (use Chern character); AP227 ProvedHere forwarding ("By Theorem X" is ProvedElsewhere); AP228 anomaly-Koszul dependency inversion; AP229 SC-formality propagation debt (Vol III stale); AP230 genus-1 sufficient claimed all-genera; AP231 draft artifacts in theorem statements; AP232 duality clause overclaiming family scope; AP233 compact/completed comparison gap MC3.
+
+AP234-235 (preface rectification 2026-04-17): AP234 two-Koszul-conductors-same-letter — κ(A)+κ(A^!) (scalar complementarity, family-dependent: 0/13/250/3/98/3) distinct from Trinity K(A)=c+c^!=-c_ghost(BRST) (-k/2dim(g)/26/100/196); related by κ+κ^!=ϱ_A·K with ϱ_N=H_N-1 for principal W_N, ϱ_A=0 for KM/free, ϱ_BP=1/6. The equation κ+κ^!=K (bare, no ϱ) is FALSE for every standard family. Canonical K-values in universal_conductor_K_platonic.tex:795-821 and higher_genus_complementarity.tex:3015-3120. Grep trigger: any `K(Vir)=13` or `K=250/3 for W_3`. Counter: cross-check K at self-dual c=13 — correct is K=26, not 13. Confusion pattern #218 (cache). AP235 quaternitomy/quadrichotomy drift — "quadrichotomy" is canonical (matches thm:quadrichotomy, chap:shadow-quadrichotomy-platonic); "quaternitomy" is invented hybrid, drifts across preface, working_notes, part-introductions. Grep `quaternitomy` after any write naming the G/L/C/M partition. Confusion pattern #219 (cache).
 
 **WARNING (AP225):** Theorem D all-genera may rest on unproved universality step. Genus-1 obs_1=κ*λ_1 unconditional. All-genera requires (a) clutching-uniqueness (not yet proved), or (b) GRR (H04 sketched not inscribed). Until resolved: state genus-1 unconditional, all-genera conditional.
 

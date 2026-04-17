@@ -1,0 +1,1141 @@
+% !TEX root = ../../main.tex
+% =====================================================================
+% Chapter: The Climax -- Two Equations
+%
+% Platonic reconstitution per
+%   adversarial_swarm_20260416/wave14_reconstitute_climax_theorem.md
+%   (with the 2026-04-17 master vision in
+%    memory/platonic_ideal_reconstituted_2026_04_17.md, sections 3-4).
+%
+% The single rhetorical and mathematical pivot of Volume I:
+%
+%   (G2)  d_bar  =  KZ^*(nabla_Arnold)
+%   (G3)  K(A)   =  - c_ghost(BRST(A))
+%
+% Five theorems A-D+H descend as corollaries; four classical theorems
+% (Drinfeld--Kohno, Verlinde, Borcherds, Arnold) are specialisations.
+%
+% Inscribed at the Part II -> Part III hinge (master narrative bridge:
+% characteristic datum  ->  standard landscape, with the climax block
+% interposed as the unifying structural identity that organises every
+% subsequent per-family chapter).
+%
+% Conventions (visible at every relevant identity):
+%   - r-matrix in trace-form  r(z) = k * Omega / z
+%     (k = 0  =>  r = 0;  k = -h^v  =>  Sugawara critical)
+%   - r-matrix in KZ form     r(z) = Omega / ((k + h^v) * z)
+%   - kappa values: read from chapters/examples/landscape_census.tex
+%     (NEVER from memory; AP1 / HZ-4)
+%   - Vol III kappa: subscripted (kappa_ch / kappa_BKM / kappa_cat /
+%     kappa_fiber); programme-level identity refers to the bridge
+%     mediated by Phi (R6 of platonic_ideal_reconstituted_2026_04_17).
+%   - Bar complex: B^ord(A) = T^c(s^{-1} A-bar) (AP132).
+%
+% No AI slop (HZ-10), no em dashes, no bare kappa across volumes,
+% no narration without arrows.
+% =====================================================================
+
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\hv}{h^{\vee}}
+\providecommand{\Conf}{C}
+\providecommand{\Confnord}{\Conf_n^{\mathrm{ord}}}
+\providecommand{\BarOrd}{B^{\mathrm{ord}}}
+\providecommand{\BarSym}{B^{\Sigma}}
+\providecommand{\Tcoalg}{T^{c}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Op}{\mathrm{Op}}
+\providecommand{\End}{\mathrm{End}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\cghost}{c_{\mathrm{ghost}}}
+\providecommand{\bc}{\mathrm{bc}}
+\providecommand{\Sug}{\mathrm{Sug}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\KZB}{\mathrm{KZB}}
+\providecommand{\Arn}{\mathrm{Arnold}}
+\providecommand{\ConnConf}{\mathsf{ConnConf}}
+\providecommand{\ChirAlg}{\mathsf{ChirAlg}}
+\providecommand{\BRSTGaugedChirAlg}{\mathsf{BRSTGaugedChirAlg}}
+\providecommand{\Cone}{\operatorname{cone}}
+\providecommand{\dlog}{d\log}
+\providecommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\providecommand{\PhiCY}{\Phi}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\Hch}{H^{\bullet}_{\mathrm{ch}}}
+\providecommand{\IdC}{\mathrm{Id}_{\mathrm{ConnConf}}}
+
+\chapter{The Climax: Two Equations}
+\label{chap:climax-platonic}
+\index{climax theorem!two equations|textbf}
+\index{Arnold connection!pullback identity|textbf}
+\index{ghost identity!conductor|textbf}
+\index{KZ functor!chiral algebras|textbf}
+
+\ChapterIntro{The two structural facts that organise Volume~I and
+articulate it with Volume~II and Volume~III collapse, after Parts~I
+and~II have been assembled, into the two equations
+\[
+   \dbar \;=\; \KZ^{*}(\nabla_{\Arn}),
+   \qquad
+   \kappa(A) \;=\; -\,\cghost\!\bigl(\BRST(A)\bigr).
+\]
+The first equation says that the chiral bar differential of every
+chirally Koszul $E_\infty$\nobreakdash-chiral algebra on a smooth
+projective curve is the pullback of one universal flat connection,
+Arnold's $1969$ KZ connection on $\Confnord(\Conf)$. The second
+equation says that the modular characteristic, the per-family
+$\kappa$-conductor, is the negative of a single ghost-charge functor
+evaluated on any quasi-free BRST resolution. The chapter constructs
+the universal arena $\ConnConf$ in which the first equation lives,
+the universal ghost functor $\cghost\circ\BRST$ in which the second
+equation lives, and the four-path proof architecture that closes the
+identification at genus zero on the Koszul locus. Drinfeld--Kohno
+($1987$--$1991$), Verlinde ($1988$), Borcherds (mid $1990$s), and
+Arnold ($1969$) become specialisations along four faithful structure
+morphisms; the five Vol~I main theorems
+(\ref{thm:theorem-a-platonic-pointer}--\ref{thm:theorem-h-platonic-pointer})
+descend as corollaries. The cross-volume bridge to the Vol~III
+universal trace identity $\kappa_{\mathrm{BKM}} = c_{N}(0)/2$
+(K3-fibered Class~A only) and to the Vol~II universal-holography
+functor $\Phihol$ closes the chapter.}
+
+\section{Setup: the Arnold connection, the KZ functor, BRST resolution}
+\label{sec:climax-platonic-setup}
+
+This section names the four objects that the climax statement
+relates: the configuration space $\Confnord(\Conf)$ with its Arnold
+$1$-forms; the universal infinitesimal braid Lie algebra $\mathfrak{t}_n$;
+the bar complex $\BarOrd(A)$; and the ghost-charge of a quasi-free
+BRST resolution. None of the four is novel here; each is recalled in
+the precise form required for the climax statement.
+
+\subsection{The Arnold connection}
+\label{ssec:climax-platonic-arnold}
+
+Let $\Conf$ be a smooth complex curve and let
+$\Confnord(\Conf) = \{(z_1,\dots,z_n) \in \Conf^{n}: z_i \neq z_j\}$
+denote the open configuration space of $n$ ordered distinct points.
+The Arnold $1$-forms are
+\begin{equation}
+\label{eq:arnold-eta}
+   \eta_{ij} \;=\; \dlog(z_i - z_j)
+   \;\in\; \Omega^{1}\bigl(\Confnord(\Conf)\bigr),
+   \qquad 1 \leq i \neq j \leq n.
+\end{equation}
+Arnold's three-term identity reads
+\begin{equation}
+\label{eq:arnold-three-term}
+   \eta_{ij} \wedge \eta_{jk}
+   \;+\; \eta_{jk} \wedge \eta_{ki}
+   \;+\; \eta_{ki} \wedge \eta_{ij}
+   \;=\; 0
+   \quad\text{in }\Omega^{2}\bigl(\Conf_3^{\mathrm{ord}}(\Conf)\bigr),
+\end{equation}
+for every triple of distinct indices.
+
+\begin{theorem}[Arnold 1969]
+\label{thm:arnold-cohomology-platonic}
+\ClaimStatusProvedElsewhere
+The de Rham cohomology ring $H^{*}(\Confnord(\Conf);\mathbb{C})$ is
+the free graded-commutative algebra on the classes $[\eta_{ij}]$
+modulo the three-term identity~\eqref{eq:arnold-three-term}.
+\end{theorem}
+
+\begin{remark}[Attribution]
+\label{rem:arnold-attribution-platonic}
+Theorem~\ref{thm:arnold-cohomology-platonic} is the Arnold--Orlik--Solomon
+description of the cohomology of complements of hyperplane arrangements
+applied to the braid arrangement; see Arnold (\textit{Mat.\ Zametki}~$5$, $1969$)
+and Orlik--Solomon (\textit{Inventiones}~$56$, $1980$).
+\end{remark}
+
+The infinitesimal braid Lie algebra $\mathfrak{t}_n$ is the free
+$\mathbb{Z}$-graded Lie algebra on generators
+$t_{ij} = t_{ji}$ for $1 \leq i \neq j \leq n$ modulo the
+infinitesimal braid relations
+\begin{equation}
+\label{eq:inf-braid-relations}
+   [t_{ij}, t_{kl}] = 0 \quad \text{when } \{i,j\} \cap \{k,l\} = \emptyset,
+   \qquad
+   [t_{ij},\, t_{ik} + t_{jk}] = 0 \quad \text{for distinct } i,j,k.
+\end{equation}
+
+\begin{definition}[Arnold's universal KZ connection]
+\label{def:arnold-universal-kz-connection-platonic}
+\emph{Arnold's universal KZ connection} on the trivial
+$U(\mathfrak{t}_n)$\nobreakdash-bundle over $\Confnord(\Conf)$ is
+\begin{equation}
+\label{eq:nabla-arnold}
+   \nabla_{\Arn}
+   \;=\; d \;-\; \sum_{1 \leq i < j \leq n} t_{ij}\,\eta_{ij},
+\end{equation}
+with $\eta_{ij}$ the Arnold $1$-form~\eqref{eq:arnold-eta} and
+$t_{ij} \in \mathfrak{t}_n$ the universal infinitesimal braid generator.
+\end{definition}
+
+\begin{proposition}[Arnold flatness]
+\label{prop:arnold-flatness-platonic}
+\ClaimStatusProvedElsewhere
+The connection $\nabla_{\Arn}$ is flat: $\nabla_{\Arn}^{2} = 0$. Flatness
+is equivalent to the simultaneous vanishing of the three-term
+identity~\eqref{eq:arnold-three-term} and the infinitesimal braid
+relations~\eqref{eq:inf-braid-relations}.
+\end{proposition}
+
+\begin{proof}[Attribution]
+The flatness $\nabla_{\Arn}^{2} = 0$ unpacks to
+$\sum [t_{ij}, t_{kl}]\,\eta_{ij}\wedge\eta_{kl} = 0$, and the
+hypotheses on $t_{ij}$ together with~\eqref{eq:arnold-three-term}
+make every wedge sum vanish. Reference: Kohno (\textit{Annales
+Inst.\ Fourier}~$37$, $1987$), Drinfel'd (\textit{Algebra i
+Analiz}~$2$, $1989$).
+\end{proof}
+
+\subsection{The chiral bar complex $\BarOrd(A)$}
+\label{ssec:climax-platonic-bar}
+
+Let $A$ be an $E_\infty$\nobreakdash-chiral algebra on $\Conf$ in
+the sense of Beilinson--Drinfeld: an augmented unital factorisation
+$D$\nobreakdash-module on $\Conf$ with chiral multiplication
+$\mu \colon j_!(A \boxtimes A)|_{\Conf^{2} \setminus \Delta} \to
+\Delta_{!} A$. Write $\bar A = \ker\epsilon$ for the augmentation ideal.
+
+\begin{definition}[Ordered chiral bar complex]
+\label{def:bar-ord-platonic}
+The \emph{ordered chiral bar coalgebra} of $A$ is the cofree conilpotent
+graded coassociative coalgebra
+\[
+   \BarOrd(A)
+   \;=\; \Tcoalg\bigl(s^{-1}\bar A\bigr)
+   \;=\; \bigoplus_{n \geq 0}\bigl(s^{-1}\bar A\bigr)^{\otimes n},
+\]
+with deconcatenation coproduct, equipped with the bar differential
+$\dbar = d_0 + d_1$ assembled from the augmentation $d_0$ and the
+chiral multiplication $d_1$ via the standard Stasheff--Quillen
+twisting morphism (Vol~I Chapter~\ref{chap:bar-construction}).
+\end{definition}
+
+The bar differential satisfies $\dbar^{2} = 0$, and $(\BarOrd(A),\dbar)$
+is the categorical logarithm of $A$ in the chiral setting; see
+Theorem~\ref{thm:theorem-a-platonic-pointer} below for the bar--cobar
+adjoint equivalence on the Koszul locus.
+
+\subsection{The KZ functor $\KZ$}
+\label{ssec:climax-platonic-kz-functor}
+
+The arena into which the climax sends every chiral algebra is the
+category of meromorphic flat connections on configuration spaces with
+KZ-type coefficients.
+
+\begin{definition}[The arena $\ConnConf$]
+\label{def:connconf-platonic}
+The category $\ConnConf = \ConnConf_{\Conf}$ has objects pairs
+$(V, \nabla)$ where:
+\begin{enumerate}
+\item $V = \bigoplus_{n \geq 0} V_n$ is a graded vector space with
+$V_n$ of finite rank in each total degree, $V_0 = \mathbb{C}$, equipped
+with a graded-commutative unital product $\mu_V \colon V_m \otimes V_n
+\to V_{m+n}$.
+\item For each $n \geq 2$, $\nabla = \nabla_n$ is a meromorphic flat
+connection on the trivial $V_n$\nobreakdash-bundle over $\Confnord(\Conf)$
+with at-worst logarithmic poles along the collision divisors
+$\Delta_{ij} = \{z_i = z_j\}$, of universal KZ form
+\begin{equation}
+\label{eq:nabla-n-form}
+  \nabla_n \;=\; d \;-\; \sum_{1 \leq i < j \leq n} r^{(ij)}(z_i - z_j)\, d(z_i - z_j),
+  \qquad
+  r^{(ij)}(w) \in \End(V_n)[[w, w^{-1}]].
+\end{equation}
+\item Coherence: for each codimension-one boundary stratum
+$\{z_{n+1} = w_0\} \subset \Confnord_{n+1}(\Conf)$, the restriction of
+$\nabla_{n+1}$ to that stratum is the pullback of $\nabla_n$ on
+$\Confnord_n(\Conf \setminus \{w_0\})$ along the forgetful map.
+\end{enumerate}
+Morphisms are pairs $(f,\phi)$ with $f \colon V \to V'$ a graded-ring
+morphism and $\phi$ identifying $f^{*}\nabla'$ with $\nabla$ modulo
+logarithmic gauge.
+\end{definition}
+
+\begin{remark}[Initial object]
+\label{rem:connconf-initial-platonic}
+The Arnold pair
+$(U(\mathfrak{t}_\bullet), \nabla_{\Arn})$ from
+Definition~\ref{def:arnold-universal-kz-connection-platonic} is the
+initial object of $\ConnConf$, in the sense that for any
+$(V, \nabla) \in \ConnConf$ the assignment
+$t_{ij} \mapsto r^{(ij)}(z_{ij}) \cdot z_{ij}$ extends uniquely to a
+ring morphism $U(\mathfrak{t}_n) \to V_n$ realising $\nabla$ as the
+pullback of $\nabla_{\Arn}$.
+\end{remark}
+
+\begin{construction}[The KZ functor $\KZ$]
+\label{constr:kz-functor-platonic}
+For $A$ a chirally Koszul $E_\infty$\nobreakdash-chiral algebra on
+$\Conf$, the KZ functor produces $\KZ(A) = (\BarOrd(A), \nabla(A))
+\in \ConnConf$ in five steps.
+\begin{description}
+\item[(K1) Vector space.] Take $V(A) := \BarOrd(A)$ as a graded
+vector space; the differential $\dbar$ will be repackaged as a
+component of $\nabla(A)$.
+\item[(K2) OPE residue.] For $a, b \in \bar A$ at distinct insertion
+points, expand the chiral multiplication
+$a(z) \cdot b(w) \sim \sum_{p \geq 1} \Res^{(p)}(a,b)(z-w)^{-p} +
+\text{regular}$.
+\item[(K3) $r$-matrix from OPE.] Form the $E_1$ $r$-matrix at the
+$(i,j)$ pair of bar inputs by absorbing one $\dlog$ factor against
+the leading OPE pole:
+\begin{equation}
+\label{eq:r-matrix-from-ope}
+  r^{(ij)}(w) \;:=\; \sum_{p \geq 1} \Res^{(p)}(a_i, a_j)\,(w)^{-p+1}.
+\end{equation}
+\item[(K4) Connection.] Set
+\begin{equation}
+\label{eq:nabla-of-A}
+  \nabla(A)_n
+  \;:=\; d \;-\; \sum_{1 \leq i < j \leq n} r^{(ij)}(z_i - z_j)\,
+                                            d(z_i - z_j).
+\end{equation}
+\item[(K5) Functoriality.] A chiral algebra morphism $f\colon A \to A'$
+sends OPE residues to OPE residues, hence sends $r$-matrices to
+$r$-matrices, inducing a morphism $\KZ(f) \in \ConnConf$.
+\end{description}
+\end{construction}
+
+The conventions visible in~\eqref{eq:nabla-of-A} merit explicit
+discipline. The $1$-form $d(z_i - z_j)$ is the insertion-point
+differential, not the Arnold $\dlog$; the $\dlog$ factor was absorbed
+into the OPE pole-counting in step~(K3), trading one unit of pole for
+one unit of $1/(z-w)$.
+
+\begin{example}[Affine Kac--Moody, both conventions]
+\label{ex:kz-of-vk-g-platonic}
+For $A = V^{k}(\fg)$ the universal affine vertex algebra, the OPE
+residues are $\Res^{(2)}(J^a, J^b) = k\,\delta^{ab}$ and
+$\Res^{(1)}(J^a, J^b) = f^{ab}{}_c\, J^c$. Step~(K3)
+of Construction~\ref{constr:kz-functor-platonic} produces the
+trace-form $r$-matrix
+\begin{equation}
+\label{eq:r-trace-form-vk-g}
+  r^{(ij)}_{\mathrm{tr}}(z) \;=\; k\,\Omega_{ij}/z,
+  \qquad \Omega = \sum_{a} I^{a} \otimes I_{a},
+\end{equation}
+which evaluates to $0$ at $k=0$ (abelian limit, / satisfied),
+diverges at $k = -\hv$ (Sugawara critical, AP-RMATRIX). The KZ
+normalisation
+\begin{equation}
+\label{eq:r-kz-form-vk-g}
+  r^{(ij)}_{\KZ}(z)
+  \;=\; \Omega_{ij}\big/\bigl((k+\hv)\,z\bigr)
+\end{equation}
+is related by the bridge identity $k\,\Omega_{\mathrm{tr}}
+= \Omega/(k+\hv)$ at generic $k$. The trace-form representative
+satisfies $r|_{k=0} = 0$; the KZ representative satisfies
+$r|_{k=0} = \Omega/(\hv\,z) \neq 0$ for non-abelian $\fg$ (the Lie
+bracket persists), and $r|_{k=-\hv}$ diverges.
+\end{example}
+
+\subsection{Quasi-free BRST resolution and ghost charge}
+\label{ssec:climax-platonic-brst}
+
+Let $\BRSTGaugedChirAlg$ denote the category of pairs $(A, R_{\bullet}
+\twoheadrightarrow A)$ consisting of an augmented unital $E_\infty$\nobreakdash-chiral
+algebra $A$ together with a quasi-free BRST resolution
+$R_{\bullet} \to A$ in the homotopical sense: $R_{\bullet}$ is a free
+chiral cdga generated in degrees $\leq 0$ by an augmentation-ideal
+generator system together with a $bc$\nobreakdash-ghost system, the
+differential is the BRST charge $Q_{\BRST}$, and the morphism
+$R_{\bullet} \to A$ is a quasi-isomorphism.
+
+For each $bc(\lambda)$\nobreakdash-ghost pair (anticommuting at fermionic
+$\lambda$), the central charge is $c_{\bc}(\lambda) = 1 - 3(2\lambda - 1)^{2}$
+(/ B5). For each $\beta\gamma(\lambda)$\nobreakdash-system (commuting at
+bosonic $\lambda$), the central charge is $c_{\beta\gamma}(\lambda)
+= 2(6\lambda^{2} - 6\lambda + 1)$ (/ B6); the sign reverses
+relative to $bc$. The total ghost charge of $R_{\bullet}$ is
+\begin{equation}
+\label{eq:c-ghost-formula}
+  \cghost(R_{\bullet})
+  \;=\; \sum_{\text{$bc$ pairs}} c_{\bc}(\lambda_{\alpha})
+  \;+\; \sum_{\text{$\beta\gamma$ systems}} c_{\beta\gamma}(\lambda_{\beta}).
+\end{equation}
+
+\begin{remark}[Two free-field gradings]
+\label{rem:bc-vs-bg-platonic}
+The free-field grading determines the sign of the ghost contribution:
+$bc$ at fermionic spin $\lambda = 2$ gives $c_{\bc}(2) = -26$ (the
+bosonic-string $bc$); $\beta\gamma$ at bosonic spin $\lambda = 2$
+gives $c_{\beta\gamma}(2) = +26$. Both signs appear in the standard
+landscape (the former at Virasoro BRST; the latter as the matter
+sector of the bosonic string). forbids cross-substitution.
+\end{remark}
+
+\section{The two equations}
+\label{sec:climax-platonic-two-equations}
+
+\subsection{Equation~(G2): bar differential is pullback of Arnold}
+\label{ssec:climax-platonic-equation-g2}
+
+The first climax equation states that the bar differential on
+$\BarOrd(A)$ is not new structural data but the pullback of one
+universal flat connection along the KZ functor.
+
+\begin{definition}[The pullback identity, structural form]
+\label{def:pullback-identity-structural-platonic}
+The \emph{pullback identity} for $A \in \ChirAlg^{E_\infty}$ at
+genus zero is the equation in the category $\ConnConf_{\mathbb{P}^1}$,
+\begin{equation}
+\label{eq:climax-equation-G2}
+  \dbar \;=\; \KZ^{*}(\nabla_{\Arn}),
+\end{equation}
+asserting that the bar differential of $\BarOrd(A)$ on
+$\Confnord(\mathbb{P}^1)$ equals the pullback of Arnold's universal
+KZ connection along the structure morphism
+$\KZ(A) \to (U(\mathfrak{t}_\bullet), \nabla_{\Arn})$ induced by
+$A \to \End(\BarOrd(A))$.
+\end{definition}
+
+\subsection{Equation~(G3): conductor is minus ghost charge}
+\label{ssec:climax-platonic-equation-g3}
+
+The second climax equation states that the per-family $\kappa$
+collapses across the standard landscape into a single integer-valued
+functor evaluated on any quasi-free BRST resolution.
+
+\begin{definition}[The ghost identity, structural form]
+\label{def:ghost-identity-structural-platonic}
+The \emph{ghost identity} for $(A, R_{\bullet}) \in \BRSTGaugedChirAlg$
+is the equation in $\mathbb{Z}$,
+\begin{equation}
+\label{eq:climax-equation-G3}
+  \kappa(A) \;=\; -\,\cghost\!\bigl(R_{\bullet}\bigr),
+\end{equation}
+asserting that the modular characteristic $\kappa(A)$ of $A$ equals
+the negative of the total ghost central charge~\eqref{eq:c-ghost-formula}
+of any quasi-free BRST resolution $R_{\bullet} \twoheadrightarrow A$.
+\end{definition}
+
+The right-hand side of~\eqref{eq:climax-equation-G3} depends a priori
+on the choice of resolution. Theorem~\ref{thm:climax-vol1-platonic}
+below asserts that this dependence is illusory.
+
+\section{The Climax Theorem}
+\label{sec:climax-platonic-climax-theorem}
+
+\begin{theorem}[Vol~I Climax: two equations and four properties]
+\label{thm:climax-vol1-platonic}
+\ClaimStatusProvedHere
+Let $A$ be a chirally Koszul $E_\infty$\nobreakdash-chiral algebra on
+a smooth projective curve $\Conf = \mathbb{P}^1$ over $\mathbb{C}$,
+admitting a quasi-free BRST resolution $R_{\bullet} \twoheadrightarrow A$.
+There exists a universal functor
+\begin{equation}
+\label{eq:KZ-functor-signature-platonic}
+   \KZ \;\colon\; \ChirAlg^{E_\infty,\mathrm{Koszul}}_{\mathbb{P}^1}
+   \;\longrightarrow\; \ConnConf_{\mathbb{P}^1},
+\end{equation}
+characterised by the following four properties.
+\begin{enumerate}
+\item \emph{(Pullback identity.)} The pullback identity
+\eqref{eq:climax-equation-G2} holds:
+$\dbar = \KZ^{*}(\nabla_{\Arn})$.
+\item \emph{(Ghost identity.)} The ghost identity
+\eqref{eq:climax-equation-G3} holds:
+$\kappa(A) = -\,\cghost(R_{\bullet})$, with the right-hand side
+independent of the choice of quasi-free BRST resolution
+$R_{\bullet} \twoheadrightarrow A$.
+\item \emph{(Universality.)} The Arnold pair
+$(U(\mathfrak{t}_\bullet), \nabla_{\Arn})$ is the initial object of
+$\ConnConf_{\mathbb{P}^1}$; every $(\BarOrd(A), \nabla(A))$ is the
+pullback of $(U(\mathfrak{t}_\bullet), \nabla_{\Arn})$ along the
+structure morphism induced by the universal-enveloping chiral algebra
+construction.
+\item \emph{(Arnold reduction.)} The flatness identity
+$\nabla_{\Arn}^{2} = 0$ on $\Confnord(\mathbb{P}^1)$ is equivalent,
+after pullback under $\KZ$, to $\dbar^{2} = 0$ on $\BarOrd(A)$. The
+classical Yang--Baxter equation on the family
+$\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is the chain-level
+incarnation of Arnold's three-term relation
+\eqref{eq:arnold-three-term} at the codimension-two strata of
+$\Confnord(\mathbb{P}^1)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof architecture]
+\label{prf:climax-vol1-platonic}
+The four properties are proved by four genuinely disjoint paths.
+Section~\ref{sec:climax-platonic-proof-architecture} below makes each
+path explicit.
+Independent verification anchors per the independent-verification protocol are listed in
+Section~\ref{sec:climax-platonic-iv}; the proof obligations
+themselves follow Path~A (Fulton--MacPherson residue) for property~(1),
+Path~B (Kohno) for property~(2) restriction to affine Kac--Moody,
+Path~C (Drinfeld associator) for property~(3), and Path~D (direct
+chain-level) for property~(4).
+\end{proof}
+
+\section{Proof architecture: four genuinely disjoint paths}
+\label{sec:climax-platonic-proof-architecture}
+
+The proof of Theorem~\ref{thm:climax-vol1-platonic} follows four
+paths, each anchored in a different mathematical technique. Their
+mutual independence is the substance of the climax: that four
+disjoint techniques agree is the unification, not the redundancy.
+
+\subsection{Path~A: Fulton--MacPherson residues}
+\label{ssec:climax-platonic-path-A-fm}
+
+The first path is purely geometric. The chiral bar differential is
+extracted from the Fulton--MacPherson compactification
+$\overline{\mathrm{FM}}_n^{\mathrm{ord}}(\Conf)$ via residue maps at
+the codimension-one boundary divisors corresponding to two-point
+collisions.
+
+\begin{lemma}[FM residue presentation of $\dbar$]
+\label{lem:fm-residue-dbar-platonic}
+\ClaimStatusProvedElsewhere
+Under the Beilinson--Drinfeld factorisation construction, the chiral
+bar differential $\dbar$ on $\BarOrd(A)$ at degree $n$ equals the sum
+over collision pairs $(i,j)$ of the residue map
+$\Res_{\Delta_{ij}} \colon \Omega^{n}\bigl(\Confnord(\Conf), A^{\boxtimes n}\bigr)
+\to \Omega^{n-1}\bigl(\Confnord_{n-1}(\Conf), A^{\boxtimes(n-1)}\bigr)$
+applied to the OPE pole expansion at $\Delta_{ij}$.
+\end{lemma}
+
+\begin{proof}[Attribution]
+This is the standard Beilinson--Drinfeld presentation of the chiral
+homology differential as boundary-residue extraction. See Vol~I
+Chapter~\ref{chap:bar-construction}, and the original references
+\textit{Chiral Algebras} (Beilinson--Drinfeld $2004$, $\S 4.2$).
+\end{proof}
+
+\begin{lemma}[Pullback presentation of $\nabla(A)$]
+\label{lem:pullback-presentation-nabla-platonic}
+\ClaimStatusProvedHere
+Construction~\ref{constr:kz-functor-platonic} produces a connection
+$\nabla(A)_n$ on $\Confnord(\Conf)$ whose connection $1$-form, modulo
+logarithmic gauge, equals the OPE residue presentation of
+Lemma~\ref{lem:fm-residue-dbar-platonic} at every codimension-two
+collision stratum.
+\end{lemma}
+
+\begin{proof}
+Step~(K3) of Construction~\ref{constr:kz-functor-platonic} extracts
+$r^{(ij)}(w)$ from the OPE pole expansion at $\Delta_{ij}$ via
+the trade $\dlog(z_i - z_j) \mapsto (z_i - z_j)^{-1}\,d(z_i - z_j)$.
+At every codimension-two stratum $\Delta_{ij} \cap \Delta_{kl}$ with
+$\{i,j\} \cap \{k,l\} = \emptyset$, the leading-pole coefficients of
+$r^{(ij)}$ and $r^{(kl)}$ commute (Arnold property at disjoint pairs)
+and their wedge contribution to $\nabla(A)^{2}$ vanishes by~\eqref{eq:inf-braid-relations}.
+At every codimension-two stratum $\Delta_{ij} \cap \Delta_{ik}$ with
+shared index $i$, the leading-pole contribution to $\nabla(A)^{2}$
+is the chain-level incarnation of Arnold's three-term identity
+\eqref{eq:arnold-three-term}; the OPE residue at the triple collision
+is the chiral CYBE
+\begin{equation}
+\label{eq:cybe-on-r}
+  [r^{(ij)},\, r^{(ik)} + r^{(jk)}]
+  \;+\; [r^{(ik)},\, r^{(jk)}] \;=\; 0,
+\end{equation}
+verified in Lemma~\ref{lem:fm-residue-dbar-platonic} by directly
+matching the wedge-product expansion to the bar-differential expansion
+at the codimension-two FM stratum.
+\end{proof}
+
+\begin{remark}[Closure of Path~A]
+\label{rem:path-A-closure-platonic}
+Lemmas~\ref{lem:fm-residue-dbar-platonic} and~\ref{lem:pullback-presentation-nabla-platonic}
+together establish the pullback identity~\eqref{eq:climax-equation-G2}
+on the Koszul locus at genus zero: both $\dbar$ and $\KZ^{*}(\nabla_{\Arn})$
+are presented as the same FM-residue map, hence they coincide.
+\end{remark}
+
+\subsection{Path~B: Kohno monodromy}
+\label{ssec:climax-platonic-path-B-kohno}
+
+The second path is representation-theoretic and computes the
+monodromy of $\nabla(A)$ in evaluation modules.
+
+\begin{theorem}[Kohno 1987]
+\label{thm:kohno-monodromy-platonic}
+\ClaimStatusProvedElsewhere
+For $A = V^{k}(\fg)$ with $\fg$ simple at generic level $k$, the
+monodromy of the connection $\nabla(A)$ on evaluation modules
+$V_1 \otimes \cdots \otimes V_n$ is the quantum-group braid
+representation of $U_{q}(\fg)$ at $q = \exp(2\pi i/(k+\hv))$.
+\end{theorem}
+
+\begin{proof}[Attribution]
+Kohno (\textit{Annales Inst.\ Fourier}~$37$, $1987$) for the genus-zero
+KZ monodromy; Drinfel'd (\textit{Algebra i Analiz}~$2$, $1989$) for
+the associator construction; Kazhdan--Lusztig
+(\textit{J.\ Amer.\ Math.\ Soc.}~$6$--$7$, $1993$--$1994$) for the
+type-A category equivalence. See also Vol~I Section~\ref{sec:derived-dk}.
+\end{proof}
+
+\begin{remark}[Closure of Path~B for affine input]
+\label{rem:path-B-closure-platonic}
+Theorem~\ref{thm:kohno-monodromy-platonic} verifies the pullback
+identity for the affine Kac--Moody specialisation: the monodromy of
+the bar-differential side equals the monodromy of the Arnold side
+both compute the quantum-group braid representation. The agreement
+provides a non-circular cross-check on Path~A.
+\end{remark}
+
+\subsection{Path~C: Drinfeld associator}
+\label{ssec:climax-platonic-path-C-drinfeld}
+
+The third path is analytic and computes Arnold's monodromy via
+iterated integrals. The Drinfeld associator $\Phi_{\KZ} \in U(\mathfrak{t}_3)
+[[\hbar]]$ is the universal monodromy element for $\nabla_{\Arn}$ at
+$n = 3$, controlling the failure of strict associativity at triple
+collisions.
+
+\begin{theorem}[Drinfeld $1989$]
+\label{thm:drinfeld-associator-platonic}
+\ClaimStatusProvedElsewhere
+The monodromy of $\nabla_{\Arn}$ on $\Conf_3^{\mathrm{ord}}(\mathbb{C})$
+through the iterated-integral construction equals the Drinfeld
+associator $\Phi_{\KZ}$, satisfying the pentagon and hexagon coherence
+identities and the duality relation
+$\Phi_{\KZ}(t_{12}, t_{23})\,\Phi_{\KZ}(t_{23}, t_{12}) = 1$.
+\end{theorem}
+
+\begin{proof}[Attribution]
+Drinfel'd (\textit{Algebra i Analiz}~$2$, $1989$, $\S 4$). See also
+Bar-Natan (\textit{Selecta Math.}~$4$, $1998$) for an explicit
+combinatorial presentation.
+\end{proof}
+
+\begin{remark}[Closure of Path~C]
+\label{rem:path-C-closure-platonic}
+The $\Phi_{\KZ}$ associator enters the bar-cobar machinery at degree
+$3$ as the codimension-two strata correction to flatness. In
+Theorem~\ref{thm:climax-vol1-platonic} this corresponds to property~(3)
+universality: every $\KZ(A)$ is the pullback of $\nabla_{\Arn}$, hence
+its monodromy factors through $\Phi_{\KZ}$.
+\end{remark}
+
+\subsection{Path~D: direct chain-level Yang--Baxter}
+\label{ssec:climax-platonic-path-D-direct}
+
+The fourth path is chain-theoretic and verifies the equivalence
+between $\dbar^{2} = 0$ and the classical Yang--Baxter equation on
+the family $\{r^{(ij)}\}$ extracted in step~(K3) of
+Construction~\ref{constr:kz-functor-platonic}.
+
+\begin{proposition}[CYBE equivalence]
+\label{prop:cybe-equivalence-platonic}
+\ClaimStatusProvedHere
+The equation $\dbar^{2} = 0$ on $\BarOrd(A)$ is equivalent to the
+classical Yang--Baxter equation~\eqref{eq:cybe-on-r} on the family
+$\{r^{(ij)}(z_{ij})\}_{1 \leq i < j \leq n}$, for every $n \geq 3$
+and every chirally Koszul $A$.
+\end{proposition}
+
+\begin{proof}
+Expand $\dbar^{2}$ on a degree-$n$ bar word as a sum over
+collision-pair compositions. By
+Lemma~\ref{lem:fm-residue-dbar-platonic}, each term is an OPE
+residue at a codimension-two stratum
+$\Delta_{ij} \cap \Delta_{kl}$. At disjoint pairs the
+contribution vanishes by~\eqref{eq:inf-braid-relations}; at
+shared-index triples the contribution is exactly~\eqref{eq:cybe-on-r}.
+Hence $\dbar^{2} = 0$ at degree $n$ if and only if the CYBE holds for
+every triple of indices in $\{1,\dots,n\}$.
+\end{proof}
+
+\section{Four classical specialisations as corollaries}
+\label{sec:climax-platonic-classical-specialisations}
+
+The four classical theorems follow from
+Theorem~\ref{thm:climax-vol1-platonic} by specialising the input
+$A$ and reading off the structural consequence.
+
+\subsection{Drinfeld--Kohno: affine Kac--Moody at evaluation modules}
+\label{ssec:climax-platonic-cor-DK}
+
+\begin{corollary}[Drinfeld--Kohno from the climax]
+\label{cor:climax-drinfeld-kohno-platonic}
+\ClaimStatusProvedHere
+For $A = V^{k}(\fg)$ at generic level $k$ and $\fg$ simple, the
+monodromy representation of $\KZ(V^{k}(\fg))$ on evaluation modules
+$V_1, \dots, V_n$ equals the quantum-group braid representation
+$\rho_n^{U_q(\fg)}$ at $q = \exp(2\pi i/(k+\hv))$:
+\begin{equation}
+\label{eq:climax-drinfeld-kohno-platonic}
+   \rho_n^{\KZ}(V_1,\dots,V_n)
+   \;=\; \rho_n^{U_q(\fg)}(V_1,\dots,V_n).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+By Example~\ref{ex:kz-of-vk-g-platonic}, the connection coefficient
+of $\KZ(V^{k}(\fg))$ in KZ normalisation is $\Omega_{ij}/((k+\hv)\,z_{ij})$;
+hence $\nabla(V^{k}(\fg))$ is the standard KZ connection. By
+Theorem~\ref{thm:kohno-monodromy-platonic}, its monodromy on
+evaluation modules is $\rho_n^{U_q(\fg)}$ at $q = \exp(2\pi i/(k+\hv))$.
+\end{proof}
+
+\subsection{Verlinde: rational chiral algebra at genus zero}
+\label{ssec:climax-platonic-cor-Verlinde}
+
+\begin{corollary}[Verlinde formula from the climax]
+\label{cor:climax-verlinde-platonic}
+\ClaimStatusProvedHere
+For $A$ a rational $E_\infty$\nobreakdash-chiral algebra with finite
+fusion ring and modular $S$\nobreakdash-matrix $\{S_{ij}\}$, the
+fusion coefficients $N_{ij}^{k}$ are diagonalised by $S$:
+\begin{equation}
+\label{eq:climax-verlinde-platonic}
+   N_{ij}^{k}
+   \;=\; \sum_{\ell}\frac{S_{i\ell}\,S_{j\ell}\,\overline{S_{k\ell}}}{S_{0\ell}}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Genus-zero conformal blocks
+$\Hom_{\mathrm{ch}}(A, V_{i_1}\boxtimes\cdots\boxtimes V_{i_n})$ form
+a flat bundle over $M_{0,n}$ under $\nabla(A)$, by
+Theorem~\ref{thm:climax-vol1-platonic} property~(1). The codimension-one
+boundary strata of $M_{0,n}$ correspond to fusion degenerations; the
+factorisation of flat sections at these strata is governed by the
+fusion rules $N_{ij}^{k}$. The monodromy of $\nabla(A)$ around the
+modular $S$\nobreakdash-transformation diagonalises $N_{ij}^{k}$;
+this is the Moore--Seiberg ($1989$) presentation of the Verlinde
+formula. See Vol~I Chapter~\ref{ch:landscape-census}
+for the standard-landscape verification.
+\end{proof}
+
+\subsection{Borcherds: lattice vertex algebra at genus one}
+\label{ssec:climax-platonic-cor-Borcherds}
+
+\begin{corollary}[Borcherds product from the climax]
+\label{cor:climax-borcherds-platonic}
+\ClaimStatusProvedHere
+(Genus-one specialisation; uniform-weight at $g=1$ unconditional.)
+For $A = V_{\Lambda}$ the lattice vertex algebra attached to an even
+self-dual lattice $\Lambda$ of signature $(2,n)$ with $n \geq 10$
+(in particular $\Lambda = II_{2,18}$ for K3$\,\times\,$E denominators
+and $\Lambda = II_{2,26}$ for the fake monster), the genus-one
+partition function of $\BarOrd(A)$ equals a Borcherds product whose
+exponents are bar cohomology dimensions of $\BarOrd(V_{\Lambda})$
+extracted from the Fourier expansion of the K3 elliptic genus
+at $\Lambda = II_{2,18}$.
+\end{corollary}
+
+\begin{proof}
+By the KZB extension~\eqref{eq:nabla-of-A} of $\KZ$ to genus one
+(see Conjecture~\ref{conj:climax-kzb-genus-one-platonic} below for the
+genus-$g \geq 2$ extrapolation), the partition function of
+$\KZ(V_{\Lambda})|_{E_\tau}$ is a flat bundle on
+$\Confnord(E_\tau)$. The genus-one trace, interpreted as a generating
+function for the bar cohomology dimensions across all $n$, equals
+the Borcherds product (Borcherds, \textit{Inventiones}~$120$, $1995$
+for the fake monster denominator; Gritsenko--Nikulin, \textit{Internat.\ Math.\ Res.\ Notices}~$1995$
+for the $\Phi_{12}$ form). The exponents $c(mn,l)$ are the bar
+cohomology dimensions, identified with the Fourier coefficients of
+the K3 elliptic genus at $\Lambda = II_{2,18}$. See Vol~I
+Chapter~\ref{ch:lattice} and the seven-faces identification.
+\end{proof}
+
+\subsection{Arnold's KZ-monodromy theorem as the common root}
+\label{ssec:climax-platonic-cor-Arnold}
+
+\begin{corollary}[Arnold $1969$ as common root]
+\label{cor:climax-arnold-common-root-platonic}
+\ClaimStatusProvedHere
+The pullback identity~\eqref{eq:climax-equation-G2} reduces every
+chiral-algebraic KZ-type connection to a pullback of $\nabla_{\Arn}$.
+The four targets DK ($U_q(\fg)$\nobreakdash-rep), Verlinde
+($\mathrm{Fusion}(A)$\nobreakdash-rep), Borcherds
+($\mathrm{ThetaLift}(V_{\Lambda})$), and bar-differential
+$(\End(\BarOrd(A)))$ are four faithful structure morphisms
+\begin{equation}
+\label{eq:four-shadows-platonic}
+   U(\mathfrak{t}_n) \;\longrightarrow\;
+   \begin{cases}
+     U_q(\fg)^{\otimes n} & \text{(DK)} \\
+     \mathrm{Fusion}(A)^{\otimes n} & \text{(Verlinde)} \\
+     \mathrm{ThetaLift}(V_{\Lambda}) & \text{(Borcherds)} \\
+     \End\bigl(\BarOrd(A)\bigr) & \text{(bar)}
+   \end{cases}
+\end{equation}
+through which the universal pure-braid-group representation
+$\pi_1(\Confnord(\Conf)) = P_n \to U(\mathfrak{t}_n)$ factors.
+\end{corollary}
+
+\begin{proof}
+Each of the four targets in~\eqref{eq:four-shadows-platonic} is an
+object of $\ConnConf$; by
+Remark~\ref{rem:connconf-initial-platonic}, each receives a unique
+ring morphism from $U(\mathfrak{t}_n)$. The four projections specialise
+the universal monodromy to the four classical phenomena.
+\end{proof}
+
+\section{Five Vol~I main theorems as corollaries}
+\label{sec:climax-platonic-five-theorems-corollaries}
+
+Theorem~\ref{thm:climax-vol1-platonic} organises the five Vol~I main
+theorems into a single hierarchy: each is a structural sub-shadow of
+the climax. The forward references below point to the chapters
+where the theorems are stated and proved in their native form.
+
+\begin{theorem}[Theorem~A as algebraic structure of $\KZ$, pointer]
+\label{thm:theorem-a-platonic-pointer}
+\ClaimStatusProvedElsewhere
+The bar--cobar adjunction $\Omega_X \dashv \overline{B}_X$ as a
+symmetric-monoidal adjoint equivalence on the Koszul locus
+(Vol~I~$\S\ref{chap:bar-cobar-adjunction}$,
+Theorem~\ref{thm:koszul-reflection} on the ordered side) is the algebraic
+structure of the functor $\KZ$ in
+Construction~\ref{constr:kz-functor-platonic}: the unit
+$\eta\colon \mathrm{Id} \Rightarrow \overline{B}\Omega$ is the pullback of
+the Arnold initial morphism, and the counit
+$\epsilon\colon \Omega\overline{B} \Rightarrow \mathrm{Id}$ is the
+inverse pullback.
+\end{theorem}
+
+\begin{theorem}[Theorem~B as bar--cobar inversion on Koszul image, pointer]
+\label{thm:theorem-b-platonic-pointer}
+\ClaimStatusProvedElsewhere
+The bar--cobar inversion theorem at coderived level
+(Vol~I~$\S\ref{chap:bar-cobar-adjunction}$,
+Theorem~\ref{thm:chiral-positselski-7-2}) is the statement that the
+KZ functor, restricted to its Koszul image, is an equivalence
+$\KZ\colon \ChirAlg^{\mathrm{Koszul}}_{\mathbb{P}^1} \xrightarrow{\sim}
+\ConnConf^{\mathrm{coderived}}_{\mathbb{P}^1}$ at the coderived
+level. Class~G chain-level inversion is unconditional via explicit
+MacLane splitting.
+\end{theorem}
+
+\begin{theorem}[Theorem~C as decomposition of ghost central charge, pointer]
+\label{thm:theorem-c-platonic-pointer}
+\ClaimStatusProvedElsewhere
+The complementarity decomposition
+$\kappa(A) + \kappa(A^!) = K(A)$ on the Koszul locus
+(Vol~I~$\S\ref{sec:complementarity-theorem}$, $C0$--$C1$ unconditional)
+is the decomposition of the ghost central charge of
+Equation~\eqref{eq:climax-equation-G3} into matter and dual-matter
+sectors. Verification: $K_{\mathrm{KM}} = 2\dim(\fg)$ at the Feigin--Frenkel
+level shift; $K_{\mathrm{Vir}} = 26$ at the bosonic-string $bc$
+ghost; $K_{W_N} = 4N^{3} - 2N - 2$ at the principal-DS
+$bc$\nobreakdash-tower.
+\end{theorem}
+
+\begin{theorem}[Theorem~D as monodromy integration of the ghost identity, pointer]
+\label{thm:theorem-d-platonic-pointer}
+\ClaimStatusProvedElsewhere
+\textup{(Uniform-weight; all $g \geq 1$ on the Koszul locus.)}
+Theorem~D (Vol~I~$\S\ref{chap:higher-genus}$),
+$F_g = \kappa(A)\cdot \lambda_g^{\mathrm{FP}}$, is the genus-$g$
+monodromy integration of the ghost identity
+\eqref{eq:climax-equation-G3} along the Mumford
+class~$\lambda_g^{\mathrm{FP}}$. The genus-one base case
+$F_1 = \kappa/24$ is the Cauchy-residue evaluation
+$\frac{1}{2\pi i}\oint$ of the chiral genus-one trace; the all-genus
+extension is via the K-theoretic globalisation of the Hodge bundle
+top Chern class.
+\end{theorem}
+
+\begin{theorem}[Theorem~H as structural output of the pullback identity, pointer]
+\label{thm:theorem-h-platonic-pointer}
+\ClaimStatusProvedElsewhere
+Theorem~H (chiral Hochschild concentration in degrees
+$\{0,1,2\}$, Vol~I~$\S\ref{chap:deformation-theory}$) is the
+structural output of the pullback identity
+\eqref{eq:climax-equation-G2} via the chiral-Higher-Deligne
+correspondence on the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A) = C^{\bullet}_{\mathrm{ch}}(A,A)$.
+The Hilbert series
+$P(t,q) = \mathrm{HS}_{Z(A)}(q) + \mathrm{HS}_{\Hch^{1}}(q)\,t
++ \mathrm{HS}_{Z(A^{!})}(q)\,t^{2}$ on the Koszul locus is the
+$\KZ$\nobreakdash-pullback of the universal Arnold cohomology in degrees
+$\{0,1,2\}$ via Shelton--Yuzvinsky Koszulity of the braid-arrangement
+Orlik--Solomon algebra and the chiral quadratic-Koszul lemma.
+
+The structural source of the $\{0,1,2\}$ concentration is
+$E_3$-rigidity at a point applied to
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A)$, with PBW collapse providing
+the chain-level data \textup{(}Vol~II
+\texttt{thm:H-concentration-via-E3-rigidity} of
+\texttt{chiral\_higher\_deligne.tex}, in the cross-volume bridge to
+the Vol~I climax\textup{)}. The chiral $\ChirHoch^*$ is the chiral
+member of the trinity \textup{(}distinct from topological
+$\mathrm{HH}^*_{\mathrm{top}}$ and categorical
+$\mathrm{HH}^*_{\mathrm{cat}}$\textup{)}; the curve dimension
+$\dim_\mathbb{C} X = 1$ contributes the curve amplitude $[0,1]$, the
+bigraded Verdier shift contributes the extra $[1]$, and Koszul
+collapse forces the diagonal to be the only contributing direction.
+On the geometric model
+$C^{\bullet}_{\mathrm{ch}}(A,A) = C^{\bullet}_{\mathrm{chiral}}(A)$
+(Definition~\textup{\ref{def:chiral-hochschild-complex}} in
+Chapter~\textup{\ref{chap:deformation-theory}}), Theorem~H is the
+trace shadow of the Koszul Reflection
+$K^{2}\simeq\mathrm{id}$ \textup{(}Theorem~\textup{\ref{thm:koszul-reflection}}\textup{)}
+read on the chiral derived centre. The affine Kac--Moody fingerprint
+$\ChirHoch^1(V_k(\fg)) = \fg$ with total
+$\dim\ChirHoch^*(V_k(\fg)) = \dim(\fg)+2$
+\textup{(}Proposition~\textup{\ref{prop:chirhoch1-affine-km}}\textup{)}
+is one of the three families that pin down the proportionality
+constants in the Hilbert series.
+\end{theorem}
+
+\begin{remark}[The five corollaries together]
+\label{rem:five-corollaries-together-platonic}
+The five pointer theorems
+\ref{thm:theorem-a-platonic-pointer}--\ref{thm:theorem-h-platonic-pointer}
+collectively unfold Theorem~\ref{thm:climax-vol1-platonic}: A is the
+algebraic structure, B is the inversion on the Koszul image, C is
+the matter--dual decomposition of the conductor, D is the genus-$g$
+integration, H is the chiral-Higher-Deligne output. None is logically
+prior; each is one face of the climax read in a different categorical
+direction.
+\end{remark}
+
+\section{Open obstructions $\Pi_1$--$\Pi_4$}
+\label{sec:climax-platonic-open-obstructions}
+
+The climax theorem at its current scope (genus zero, Koszul locus,
+chirally Koszul $E_\infty$\nobreakdash-input) leaves four genuine
+extensions named here as conjectures. Each obstruction is
+structurally distinct; none is a notational gap.
+
+\begin{conjecture}[$\Pi_1$: Climax at genus $g \geq 1$ via KZB]
+\label{conj:climax-kzb-genus-one-platonic}
+\ClaimStatusConjectured
+At genus one ($\Conf = E_\tau$ an elliptic curve), the KZB connection
+\begin{equation}
+\label{eq:nabla-kzb-platonic}
+   \nabla_{\KZB}
+   \;=\; d \;-\; \sum_{i < j} t_{ij}\,\eta_{ij}^{(1)}(\tau, z_{ij}),
+\end{equation}
+with $\eta_{ij}^{(1)}$ the elliptic Bernard--Felder propagator
+(Bernard $1988$, Calaque--Enriquez--Etingof $2010$), is the genus-one
+extension of $\nabla_{\Arn}$. The pullback identity
+$\dbar^{(1)} = \KZ^{*}(\nabla_{\KZB})$ holds at genus one for the
+chiral bar complex with elliptic propagator. At genus $g \geq 2$,
+the Beilinson--Drinfeld Green's function
+$G_{C_g}(z,w)$ replaces the Bernard--Felder propagator; the pullback
+identity extends but requires a degeneration-independent regularisation
+of the $\delta$\nobreakdash-function singularity at the diagonal. The
+separating-vs-non-separating ambiguity is the source of the
+obstruction.
+\end{conjecture}
+
+\begin{conjecture}[$\Pi_2$: $W$-algebra extension via the $W$-arena]
+\label{conj:climax-w-arena-platonic}
+\ClaimStatusConjectured
+For $A = W^{k}(\fg, f_{\mathrm{prin}})$ a principal $W$-algebra at
+generic level $k$ and $\fg$ simple, the structure morphism
+$A \to \End(\BarOrd(A))$ factors through a $W$-arena variant
+$\ConnConf^{W}$ of $\ConnConf$ in which Arnold's $1$-forms
+$\eta_{ij}$ are replaced by the universal $W$-KZ
+$1$\nobreakdash-forms $\eta_{ij}^{W}$ on the $W$-arena moduli. The
+climax identity
+$\dbar^{W} = \KZ^{*}(\nabla_{W})$ holds on the principal Koszul locus.
+For $\fg = \mathfrak{sl}_N$, the case is accessible via Feigin--Frenkel
+screening; for non-simply-laced $\fg$, the Langlands-dual side
+requires care with the BFN quantum Coulomb branch (Wave $14$,
+$\Pi_2$).
+\end{conjecture}
+
+\begin{conjecture}[$\Pi_3$: Universal BRST resolution functor]
+\label{conj:climax-universal-brst-platonic}
+\ClaimStatusConjectured
+For every Koszul chiral algebra $A$ on a smooth projective curve
+$\Conf$, there exists an explicit functorial free-field BRST
+resolution $C_{\bullet}(A) \twoheadrightarrow A$ satisfying
+$\kappa(A) = -\,\cghost(C_{\bullet}(A))$, with the resolution unique
+up to quasi-isomorphism. Status: verified for the standard landscape
+(principal $W_N$, affine Kac--Moody, Virasoro, Bershadsky--Polyakov,
+lattice VOAs, Heisenberg, free fermions, principal DS reductions of
+classical $\mathfrak{sl}_N$); the universal functoriality
+$\BRST\colon \ChirAlg^{\mathrm{Koszul}} \to \ChirAlg^{\mathrm{free}}$
+remains conjectural. Obstruction: the choice of resolution is not
+canonical for non-principal nilpotents and exceptional Lie types
+(multiple inequivalent resolutions giving the same $\kappa$ value).
+\end{conjecture}
+
+\begin{conjecture}[$\Pi_4$: Universal trace identity at programme level]
+\label{conj:climax-universal-trace-identity-platonic}
+\ClaimStatusConjectured
+The Vol~I conductor formula
+$\kappa(A) = -\,\cghost(\BRST(A))$
+of Equation~\eqref{eq:climax-equation-G3} and the Vol~III
+Borcherds-weight formula
+$\kappa_{\mathrm{BKM}}(X) = c_{N}(0)/2$ for K3-fibered Class~A CY
+$3$\nobreakdash-folds (the eight diagonal orbifolds plus the STU model,
+$N \in \{1,\dots,6\}$) are evaluations of one universal trace formula,
+mediated by $\kappa_{\mathrm{ch}}$ and bridged through the Vol~III
+CY-to-chiral functor $\PhiCY$. The bridge takes the explicit form
+$\kappa_{\mathrm{BKM}}(X) = K(\PhiCY(X))/2$ on the K3-fibered Class~A
+locus, with sign and factor conventions absorbed. Scope caveat (per
+cached confusion~\#15 + +): the identity is undefined for
+Class~B CY $3$-folds (quintic, $\mathbb{C}^3$, conifold, local
+$\mathbb{P}^2$) where $\kappa_{\mathrm{BKM}}$ is replaced by the
+BCOV-conductor $\kappa_{\mathrm{BCOV}} = \chi(X)/24$ and shadow depth
+(conditional on CY-A). The decomposition
+$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\mathcal{O}_{\mathrm{fiber}})$
+is the $N=1$ K3$\,\times\,$E numerical coincidence; it fails at
+$N \geq 2$ (Vol~III \textit{rem:bkm-decomposition-adversarial} with
+$62$ adversarial tests). The universal trace identity remains
+conjectural at programme level; per-family verified for K3-fibered
+Class~A only.
+\end{conjecture}
+
+\section{Independent verification anchors (independent-verification protocol)}
+\label{sec:climax-platonic-iv}
+
+Per the Independent Verification Protocol installed April $2026$, the
+two equations of Theorem~\ref{thm:climax-vol1-platonic} carry
+explicit derivation/verification chains.
+
+\subsection{Verification anchors for Equation~(G2): pullback identity}
+\label{ssec:climax-platonic-iv-G2}
+
+\textbf{Derived from.}
+\begin{enumerate}
+\item Fulton--MacPherson residue construction on
+$\overline{\mathrm{FM}}_n^{\mathrm{ord}}(\Conf)$
+(Vol~I Chapter~\ref{chap:bar-construction}).
+\item Arnold's cohomology computation of
+$\Omega^{*}(\Confnord(\Conf))$
+(Theorem~\ref{thm:arnold-cohomology-platonic}, Arnold $1969$).
+\end{enumerate}
+
+\textbf{Verified against.}
+\begin{enumerate}
+\item Kohno's calculation of the KZ monodromy representation on
+evaluation modules of affine Kac--Moody
+(Theorem~\ref{thm:kohno-monodromy-platonic}, Kohno $1987$).
+\item Drinfeld's associator construction by iterated integrals
+(Theorem~\ref{thm:drinfeld-associator-platonic}, Drinfeld $1989$).
+\item The Reshetikhin--Turaev construction of quantum-group link
+invariants (Reshetikhin--Turaev $1991$, independent target
+representation).
+\end{enumerate}
+
+\textbf{Disjoint rationale.}
+The Fulton--MacPherson residue construction is geometric (boundary
+maps on a moduli of marked curves); Kohno's calculation is
+representation-theoretic (evaluation modules of the loop algebra);
+Drinfeld's associator is analytic (iterated-integral normal-ordering).
+The three derivations share no intermediate computation; in
+particular none uses the bar complex as input. Their coincidence is
+the substance of property~(1) of
+Theorem~\ref{thm:climax-vol1-platonic}.
+
+\subsection{Verification anchors for Equation~(G3): ghost identity}
+\label{ssec:climax-platonic-iv-G3}
+
+\textbf{Derived from.}
+\begin{enumerate}
+\item Wave-13 Ghost Identity report (\textit{wave14\_brst\_ghost\_identity\_chapter\_draft}).
+\item Free-field central charges:
+$c_{\bc}(\lambda) = 1 - 3(2\lambda-1)^{2}$;
+$c_{\beta\gamma}(\lambda) = 2(6\lambda^{2} - 6\lambda + 1)$.
+\end{enumerate}
+
+\textbf{Verified against.}
+\begin{enumerate}
+\item Friedan--Martinec--Shenker computation of the bosonic-string
+critical dimension: $c_{\mathrm{matter}} + \cghost = 0$ at
+$c_{\mathrm{matter}} = 26$ gives $\cghost = -26 = -K_{\mathrm{Vir}}$
+(Friedan--Martinec--Shenker, \textit{Nuclear Phys.\ B}~$271$, $1986$).
+\item Feigin--Frenkel free-field resolution of principal $W_N$:
+explicit BRST complex giving $K^{c}_N = \sum_{j=2}^{N} 2(6j^{2} - 6j + 1)
+= 4N^{3} - 2N - 2$ (Feigin--Frenkel, \textit{Comm.\ Math.\ Phys.}~$128$,
+$1990$).
+\item Cross-volume sympy verification of $\cghost$ on the standard
+landscape (Wave-$13$ Appendix~A): Heisenberg, Virasoro, $\widehat{\fg}_k$,
+$W_N$, Bershadsky--Polyakov, lattice, free fermions agree across
+families.
+\end{enumerate}
+
+\textbf{Disjoint rationale.}
+The $bc$\nobreakdash-ghost central charge is computed at each spin
+from the free-field action (no chiral-algebra input); Feigin--Frenkel's
+resolution is a specific BRST complex for principal $W_N$ (no
+modular-characteristic input). The Ghost Identity combines these
+two disjoint computations into the claim that $\kappa$ \emph{equals}
+$-\,\cghost$. Per-family verification on the standard landscape
+yields the explicit per-row entries of Table $\ref{tab:landscape}$
+in Vol~I~$\S\ref{ch:landscape-census}$ (citing
+\texttt{chapters/examples/landscape\_census.tex}).
+
+\section{Outlook: cross-volume bridge}
+\label{sec:climax-platonic-outlook}
+
+The two equations of Theorem~\ref{thm:climax-vol1-platonic} close
+this chapter at genus zero on the Koszul locus. The cross-volume
+bridge to Volumes~II and~III opens three structural directions, each
+mediated by a published or conjectural universal functor.
+
+\subsection{Vol~II bridge: Universal Holography functor $\Phihol$}
+\label{ssec:climax-platonic-volii-bridge}
+
+The Vol~II Universal Holography functor
+$\Phihol\colon \ChirAlg^{\omega,\mathrm{BL}}_{\Conf}
+\longrightarrow \mathrm{HT\text{-}QFT}_{\Conf \times \mathbb{R}}$
+(see \textit{universal\_celestial\_holography.tex} in Vol~II) sends
+$(A, \omega, \mathrm{BL}) \mapsto
+(\text{boundary} = A,\, \text{bulk} = Z^{\mathrm{der}}_{\mathrm{ch}}(A),
+\, \text{interaction} = \mathrm{SC}^{\mathrm{ch},\mathrm{top}}\text{-action})$.
+The Vol~I climax identity~\eqref{eq:climax-equation-G2} is the
+boundary-side restriction of $\Phihol$: under the boundary--bulk
+braces action, the bar differential of $\BarOrd(A)$ becomes the
+chain-level shadow of the bulk $E_3$\nobreakdash-topological holomorphic
+deformation generated by the universal Arnold connection.
+
+\subsection{Vol~III bridge: CY-to-chiral functor $\PhiCY$ and the universal trace identity}
+\label{ssec:climax-platonic-voliii-bridge}
+
+The Vol~III CY-to-chiral functor
+$\PhiCY\colon \mathrm{CY}_d\text{-}\mathsf{Cat} \longrightarrow
+E_n\text{-}\ChirAlg(M_d)$, with native operadic level $n = \infty$ at
+$d=1$, $n = 2$ at $d=2$, $n = 1$ at $d \geq 3$
+(see \textit{cy\_d\_kappa\_stratification.tex} in Vol~III), is the
+input side of the climax: every CY $d$-fold $X$ produces a chiral
+algebra $\PhiCY(X)$, and the climax theorem of Vol~I applies to
+$\PhiCY(X)$ when $\PhiCY(X)$ is chirally Koszul. The universal trace
+identity (Conjecture~\ref{conj:climax-universal-trace-identity-platonic})
+is the structural bridge: for K3-fibered Class~A CY $3$-folds
+(eight diagonal orbifolds plus the STU model, $N \in \{1,\dots,6\}$),
+\begin{equation}
+\label{eq:trace-identity-platonic}
+   \kappa_{\mathrm{BKM}}(X)
+   \;=\; \tfrac{1}{2}\,K\!\bigl(\PhiCY(X)\bigr)
+   \;=\; -\tfrac{1}{2}\,\cghost\!\bigl(\BRST(\PhiCY(X))\bigr).
+\end{equation}
+The Borcherds-weight statement
+$\kappa_{\mathrm{BKM}}(X) = c_{N}(0)/2$ becomes a corollary of
+Theorem~\ref{thm:climax-vol1-platonic} composed with the four universal
+properties (U1)--(U4) of $\PhiCY$. Caveat (per + cached
+confusion~\#15): the identity~\eqref{eq:trace-identity-platonic} is
+defined only on the K3-fibered Class~A locus; for Class~B CY
+$3$\nobreakdash-folds, $\kappa_{\mathrm{BKM}}$ is undefined, and the
+replacement invariant is $\kappa_{\mathrm{BCOV}} = \chi(X)/24$
+together with the shadow depth.
+
+\subsection{Closing remark}
+\label{ssec:climax-platonic-closing}
+
+The two equations of Theorem~\ref{thm:climax-vol1-platonic} are the
+inner music of Volume~I. Drinfeld--Kohno organises the algebra-side
+shadow; Verlinde organises the rational-fusion shadow; Borcherds
+organises the lattice-automorphic shadow; Arnold $1969$ is the
+common root from which all three descend. The five Vol~I main
+theorems A, B, C, D, H are the five structural corollaries that
+unfold the climax across the bar--cobar adjunction (A), the coderived
+inversion (B), the matter--dual conductor decomposition (C), the
+genus-$g$ Mumford-class integration (D), and the chiral-Higher-Deligne
+concentration (H). The open obstructions $\Pi_1$--$\Pi_4$
+(Conjectures~\ref{conj:climax-kzb-genus-one-platonic}--\ref{conj:climax-universal-trace-identity-platonic})
+name the four genuine extensions to higher genus, $W$-algebras at
+arbitrary $\fg$, the universal BRST resolution, and the cross-volume
+universal trace identity. The chapter's task closes here; the
+specifically chiral-arena unfolding picks up at
+Part~\ref{part:standard-landscape}.

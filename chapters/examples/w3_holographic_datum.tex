@@ -6,6 +6,13 @@
 % Multi-path verification: 5+ independent paths per numerical claim.
 % =====================================================================
 
+% Macro safety net for cross-volume universal-conductor references
+% (FM6 / V2-AP39): provided locally so the chapter remains portable
+% under standalone extraction. Definitions match
+% chapters/theory/universal_conductor_K_platonic.tex.
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\BRSTGauged}{\mathrm{BRSTGaugedChirAlg}}
+
 \chapter{The first rank-2 holographic datum: \texorpdfstring{$H(\Walg_3)$}{H(W3)}}
 \label{ch:w3-holographic-datum}
 
@@ -24,6 +31,32 @@ three independent paths, and every numerical invariant cross-checked
 against the engine
 \texttt{compute/lib/theorem\_w3\_holographic\_datum\_engine.py}
 (83 passing tests).
+
+\medskip
+\noindent\emph{Wave-14 cross-volume anchors.}
+The numerical invariants $\kappa^{W_3}(\Walg_3) = 5c/6$ and
+$K_3 = c + c' = 100$ established below are evaluations of two
+universal Vol~I objects:
+the universal conductor functor
+$K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$
+yields $\kappa^{W_3}(\Walg_3) = c\,(H_3 - 1) = 5c/6$ via the
+principal-DS BRST resolution, with $H_3 = 1 + 1/2 + 1/3 = 11/6$
+(Corollary~\ref{cor:uc-K-WN} at $N = 3$,
+Chapter~\ref{chap:universal-conductor}); the quadrichotomy classification
+places $\Walg_3$ in class~M with shadow depth
+$r_{\max}^{W_3} = \infty$, on the second lane (the $W$-line) of
+which the closed-form coefficient sequence
+$a_n = 2 \cdot 3^{n-2}\,(2n-4)!/[(n-2)!\,n!]$ produces the
+doubled exponential growth rate
+$C_{\Walg_3}^{W\text{-line}} = 12 = 2 \cdot 6$
+(Theorem~\ref{thm:w3-wline-closed-form},
+Theorem~\ref{thm:w3-wline-exponential-base},
+Chapter~\ref{chap:shadow-quadrichotomy-platonic}); these two
+universal results, plus the universal-class-M $T$-line value
+$C_{\mathcal{A}} = 6$
+(Theorem~\ref{thm:universal-class-M-C-is-6}), pin every numerical
+content of the $H(\Walg_3)$ datum.
+\medskip
 
 \medskip\noindent\textbf{Why this chapter exists.}
 Four structural features make $\Walg_3$ the natural rank-2 base case:
@@ -51,17 +84,16 @@ Throughout this chapter, $c$ denotes the central charge of $\Walg_3$
 at generic level $k \neq -3$. We use OPE-mode notation $a_{(n)}b$
 for singular products, the $\lambda$-bracket conversion
 $\{a_\lambda b\} = \sum_n \lambda^{(n)} a_{(n)} b$ with divided
-powers $\lambda^{(n)} = \lambda^n/n!$
-(), and the cohomological grading
+powers $\lambda^{(n)} = \lambda^n/n!$,
+and the cohomological grading
 convention $|d| = +1$. The bar propagator is the weight-1 form
 $d\log E(z,w)$ in \emph{both} variables, regardless of the conformal
 weights of the fields it sews
-(Remark~\ref{rem:propagator-weight-universality},
-). The modular characteristic $\kappa$ is
+(Remark~\ref{rem:propagator-weight-universality}).
+The modular characteristic $\kappa$ is
 the genus-1 obstruction coefficient $\mathrm{obs}_1 = \kappa
 \cdot \lambda_1$, distinct from both the central charge $c$
-(, ) and from $\kappa_{\mathrm{eff}}$
-().
+and from $\kappa_{\mathrm{eff}}$.
 
 \section{The six components of \texorpdfstring{$H(\Walg_3)$}{H(W3)}}
 \label{sec:w3hol-six-components}
@@ -750,8 +782,8 @@ implements every formula above with exact rational arithmetic
 (\texttt{Fraction}) and is verified by 83 passing tests in
 \texttt{compute/tests/test\_theorem\_w3\_holographic\_datum\_engine.py}.
 The tests cover Bernoulli numbers, harmonic sums, the
-channel decomposition, the $r$-matrix pole-shift rule
-(), the Faber--Pandharipande genus-1 and genus-2
+channel decomposition, the $r$-matrix pole-shift rule,
+the Faber--Pandharipande genus-1 and genus-2
 formulas, the cross-channel decomposition into four graph types,
 the propagator variance Cauchy--Schwarz inequality, the shadow
 metric formulas on the $T$- and $W$-lines, the discriminant

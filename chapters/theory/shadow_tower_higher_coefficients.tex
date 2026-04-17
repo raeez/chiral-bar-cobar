@@ -84,6 +84,29 @@ expansion), and each ProvedHere theorem is decorated with a
 \texttt{@independent\_verification} slot at
 \texttt{compute/tests/test\_shadow\_tower\_higher.py}.
 
+\begin{remark}[Independent BPZ--Wick verification of $S_5$]
+\label{rem:s5-bpz-wick-verification}
+The closed form $S_5(\Vir_c) = -48 / (c^2 (5c + 22))$ admits a third
+genuinely independent verification via direct Belavin--Polyakov--Zamolodchikov
+$5$-point Wick contraction. The Wick chain extracts $\langle \Lambda
+\mid \Lambda \rangle = c (5c + 22)/10$ from the Schur complement of the
+Virasoro level-$4$ Gram matrix (Kac--Feigin--Fuchs determinant
+$\det G_4 = c^2 (5c + 22)/2$), reads off $S_3 = 2$ from the universal
+BPZ $3$-point Ward identity, counts $\Lambda$-mediated chord-diagram
+topologies on $K_5$ via inclusion--exclusion cumulant inversion (signed
+weight $-48/10$), and assembles the Arnold $d{\log}$ residue at
+simultaneous collision on $\mathrm{Conf}_5(\mathbb{P}^1)$. This chain
+shares no intermediate symbol with the Riccati MC recursion: the latter
+takes $(\kappa, S_3, S_4)$ as inputs, while the Wick chain derives the
+$\Lambda$-norm and $S_3$ from the Virasoro algebra and OPE. The
+implementation is at \texttt{compute/lib/s5\_virasoro\_wick.py} with the
+independent-verification decorator at
+\texttt{compute/tests/test\_s5\_virasoro\_wick.py::TestWickIndependentVerification}
+covering all six finite calibration points
+$c \in \{\tfrac12, \tfrac{7}{10}, \tfrac{4}{5}, 1, 2, 24\}$. (At
+$c = -22/5$ both routes exhibit the same Lee--Yang pole at $5c+22=0$.)
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Setup}
 \label{sec:sth-setup}
@@ -472,8 +495,8 @@ through re-contraction of the $\Lambda$ quasi-primary. Explicitly
   r = 7{:} \; (5c+22)^{2}, \quad
   r = 8{:} \; (5c+22)^{3}.
 \]
-This refines the $S_4 \sim 10/(c(5c+22))$ observation of FM178
-(Vol I Blacklist B68, AP177/AP178): the Zamolodchikov factor is
+This refines the $S_4 \sim 10/(c(5c+22))$ observation of 
+(Vol I Blacklist B68): the Zamolodchikov factor is
 structural, not an artefact of the weight-$4$ specialisation.
 \end{remark}
 
@@ -598,10 +621,10 @@ Virasoro leading-$c$ behaviour of $S_{2g-2}$. The two statements
 measure different arithmetic invariants and are not in conflict.
 \end{remark}
 
-\begin{remark}[\label{rem:sth-alpha-asymptotic}Relation to AP178
+\begin{remark}[\label{rem:sth-alpha-asymptotic}Relation to 
 large-$c$ asymptotic]
-The AP178 large-$c$ result $S_4(\Vir_c) \sim 2/c^{2}$ is the $A_4 =
-2$ entry of Proposition~\ref{prop:sth-leading-asymp}. AP178 records
+The large-$c$ result $S_4(\Vir_c) \sim 2/c^{2}$ is the $A_4 =
+2$ entry of Proposition~\ref{prop:sth-leading-asymp}. records
 the \emph{wrong} asymptotic $2/(5 c^{2})$ as a common failure
 mode (factor-of-$5$ cancellation from $10/(c (5c+22))$): the
 correct $A_4 = 2$ is confirmed by the present framework.

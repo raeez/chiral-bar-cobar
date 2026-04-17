@@ -18,6 +18,29 @@ combinatorial decorations: they are the degree-two scattering
 kernel of the algebra, and the whole factorization structure on
 $\operatorname{Ran}(X)$ is built out of them.\label{rem:algebraic-foundations-hms}
 
+This chapter installs the algebraic apparatus (bar coalgebra,
+cobar, twisting morphisms, convolution $L_\infty$-algebra, GLZ
+quadratic data) in the form extracted by the wave-14 reconstitution
+(Chapter~\ref{chap:climax-platonic}: the bar differential is the
+KZ pullback $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
+of the universal Arnold connection;
+Chapter~\ref{chap:universal-conductor}: the per-family $\kappa$
+is the value of one universal conductor functor
+$K(\cA) = -c_{\mathrm{ghost}}(\mathrm{BRST}(\cA))$). The
+twisting-morphism formalism developed below is the algebraic
+spine on which Theorem~A
+(\textup{the Koszul reflection}
+$K^2 \simeq \mathrm{id}$ on $\mathrm{Kosz}(X)$,
+Theorem~\ref{thm:koszul-reflection}) is built; the configuration
+geometry is added in Chapter~\ref{chap:config-spaces} so that
+$\nabla_{\mathrm{Arnold}}$ becomes available; the shadow
+quadrichotomy
+(Chapter~\ref{chap:shadow-quadrichotomy-platonic}) reads off the
+Riccati-stratified obstruction tower. The classical story is the
+genus-zero, degree-two projection of this larger object; its
+genus tower and modular extensions are the content of the later
+chapters.
+
 A chiral upgrade of Koszul duality therefore has to add three
 ingredients that the classical theory cannot supply on its own.
 First, the tensor product $V^{\otimes n}$ is replaced by the
@@ -665,6 +688,37 @@ $\cA^!$ all descend from a single organizing datum.
 \begin{proof}[References]
 \cite[Theorem~4.6]{RNW19} and \cite[Theorem~6.5.7]{LV12}.
 \end{proof}
+
+\begin{remark}[Wave-14 reading: $\Theta_\cA$ as KZ pullback of
+the Arnold connection]
+\label{rem:theta-as-kz-pullback}
+Under the wave-14 reconstitution
+(Chapter~\ref{chap:climax-platonic}), the universal MC element
+$\Theta_\cA$ is read as the chiral instantiation of one
+identity:
+\[
+d_{\mathrm{bar}} \;=\; \mathrm{KZ}^*\!\bigl(\nabla_{\mathrm{Arnold}}\bigr).
+\]
+The universal Arnold connection $\nabla_{\mathrm{Arnold}}$ on
+$\operatorname{Conf}_n(\mathbb{C})$ has one-form
+$\eta = d\log(z_i - z_j)$ and is flat by the Arnold relation
+(Theorem~\ref{thm:arnold-relations}); pulling back along the
+KZ functor produces the bar differential of any
+$\Einf$-chiral input. The MC equation
+$\partial(\tau) + \tau \star \tau = 0$
+(Definition~\ref{def:twisting-morphism}) is the algebraic shadow
+of this geometric fact; the convolution algebra above is the
+host on which the equality $\Theta_\cA = \mathrm{KZ}^*\nabla$
+becomes a Maurer--Cartan condition.
+
+The same convolution algebra also hosts the universal conductor
+$K(\cA) = c(\cA) + c(\cA^!)$ of
+Chapter~\ref{chap:universal-conductor}: the wave-14 trinity
+identity reads $K = -c_{\mathrm{ghost}}(\mathrm{BRST}(\cA))$, a
+single functor whose per-family values yield the $\kappa$-table
+recorded later in this chapter
+(Definitions~\ref{def:anomaly-ratio}--\ref{def:koszul-spectrum}).
+\end{remark}
 
 \begin{definition}[Twisting morphism]
 \label{def:twisting-morphism}
@@ -2313,18 +2367,70 @@ At least five notions coexist; they are related but
   ordered factorization structure encodes the $\Eone$ data
   geometrically.
 \end{enumerate}
-\textup{(B)} and~\textup{(C)} determine each other on the
-Koszul locus via a Drinfeld associator $\Phi$
-\textup{(}Theorem~\textup{\ref{thm:chiral-qg-equiv}}\textup{)}.
-\textup{(A)} is a special case of~\textup{(B)}.
-\textup{(E)} is the $\cD$-module realization of~\textup{(B)}.
-The relationship of~\textup{(D)} to the others is an open
-problem connected to the higher-categorical structure of the
+Operational separation: the five notions are distinct as
+diagram inputs even when their derived centres coincide on the
+Koszul locus. \textup{(A)} is the strict input on which the
+fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}) operates
+verbatim; \textup{(B)} is the homotopy-input through which
+quasi-isomorphism invariance is enacted (the strict model
+suffices for MC computations by
+Remark~\ref{rem:conv-strict-vs-homotopy}); \textup{(C)} carries
+the $R$-matrix as primary datum and is the source of the chiral
+quantum-group equivalence; \textup{(D)} is the higher-coherence
+double-$A_\infty$ structure controlling the
+$(\infty,2)$-categorical world of $\Eone$-chiral algebras;
+\textup{(E)} is the $\cD$-module
+incarnation that the configuration-space machinery of
+Chapter~\ref{chap:config-spaces} consumes directly. \textup{(B)}
+and \textup{(C)} determine each other on the Koszul locus via a
+Drinfeld associator $\Phi$
+(Theorem~\ref{thm:chiral-qg-equiv}); \textup{(A)} is the
+$m_k = 0$ ($k \geq 3$) specialisation of \textup{(B)};
+\textup{(E)} is \textup{(B)} read $\cD$-module-theoretically.
+The relation of \textup{(D)} to the others is an open problem
+connected to the higher-categorical structure of the
 $\Eone$-chiral world.
 
-Each notion admits its own derived center construction, and the
-output operad depends on which construction is used
-(Remark~\ref{rem:ordered-ch-hom-bar}).
+Each notion admits its own derived-centre construction, and the
+output operad depends on which input is supplied: the bar
+coalgebra $\barB(A)$ is in every case an $\Eone$ coassociative
+coalgebra over $\mathrm{ChirAss}^!$ (cf.\
+Warning~\ref{warn:bar-not-sc-coalgebra}), but the derived
+centre $\mathrm{Z}^{\mathrm{der}}_{\mathrm{ch}}(A)$ extracted
+through $\barB(A)$ depends on which of \textup{(A)--(E)}
+furnishes the input
+(Remark~\ref{rem:ordered-ch-hom-bar}). \emph{Conflating
+inputs is a type error}: a result proved for \textup{(A)} does
+not transfer to \textup{(D)} without an explicit comparison.
+\end{warning}
+
+\begin{warning}[\texorpdfstring{$\barB(A)$ is an $\Eone$
+coassociative coalgebra, not an $\mathrm{SC}^{\mathrm{ch,top}}$
+coalgebra}{B(A) is an E1 coassociative coalgebra, not an
+SC-ch-top coalgebra}]
+\label{warn:bar-not-sc-coalgebra}
+\index{bar coalgebra!single E1 coassociative structure|textbf}
+\index{Swiss-cheese operad!derived center is the carrier|textbf}
+The bar coalgebra
+$\barB(A) = T^c(s^{-1}\bar{A})$ carries one differential and
+one coassociative deconcatenation coproduct, both compatible
+with $\mathrm{ChirAss}^!$. It is a \emph{single} $\Eone$
+coassociative coalgebra over $\mathrm{ChirAss}^!$. It is
+\emph{not} a two-coloured $\mathrm{SC}^{\mathrm{ch,top}}$ object. The
+$\mathrm{SC}^{\mathrm{ch,top}}$ structure (Volume~II) lives on
+the chiral derived-centre pair
+$(\mathrm{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA), \cA)$, computed
+\emph{using} $\barB(\cA)$ as a resolution. The bar complex is
+the $\Eone$ engine; the derived centre is the
+$\mathrm{SC}^{\mathrm{ch,top}}$ output. Confusing the two is the
+pattern guarded by AP\,165 and the deepest cached confusion of
+the programme: ``bar differential is closed colour'' and
+``deconcatenation is open colour'' are both wrong; both are
+single, single-coloured operations of one $\Eone$
+coalgebra. The chain of errors leading to the
+two-coloured misreading is documented in the consolidated
+anti-pattern AP-SC-BAR.
 \end{warning}
 
 \begin{principle}[Geometric origin of Hochschild variants]
@@ -2369,17 +2475,36 @@ Five cases exhaust the standard constructions:
 \item \emph{Representation category.}
   Input: monoidal (or braided monoidal) category~$\cC$.
   No configuration space; the construction is purely categorical.
-  Output: Drinfeld center~$\cZ(\cC)$
-  (half-braiding data, categorical Hochschild cohomology).
+  Output: Drinfeld centre~$\cZ(\cC)$, the \emph{right
+  adjoint} to the forgetful functor
+  $\mathrm{Cat}^{\mathrm{br}} \to \mathrm{Cat}$ (categorical
+  Hochschild cohomology, half-braiding data). The Drinfeld
+  centre is right-adjoint, not a categorical averaging map; the
+  averaging-map intuition fits the lossy
+  $\Sigma_n$-coinvariant projection
+  $\mathrm{av}\colon \mathfrak{g}^{\Eone}_A \to
+  \mathfrak{g}^{\mathrm{mod}}_A$ on the $\Eone$ side, not the
+  centre on the categorical side.
 \end{enumerate}
-The distinction is constitutional: different base geometries
-produce genuinely different operadic structures, not merely
-different models of a single theory.
-Cases~\textup{(i)--(iii)} are related by forgetting or imposing
-ordering; case~\textup{(iv)} combines cases~\textup{(i)}
-and~\textup{(ii)} via the Swiss-cheese mechanism;
-case~\textup{(v)} is the decategorification shadow in which
-configuration-space geometry is replaced by categorical coherence.
+The distinction is constitutional, not nominal: the three
+Hochschild theories
+(chiral, topological, categorical) consume genuinely different
+inputs, run on different operadic geometries, and produce
+genuinely different outputs. The shared name ``Hochschild'' is
+the source of repeated confusion (anti-pattern AP\,160). \emph{A
+result proved for one Hochschild theory does not transfer to
+another without an explicit comparison theorem}; the comparison
+itself is non-trivial and family-dependent. Cases~\textup{(i)
+--(iii)} are related by forgetting or imposing ordering;
+case~\textup{(iv)} combines cases~\textup{(i)} and~\textup{(ii)}
+via the Swiss-cheese mechanism; case~\textup{(v)} is the
+decategorified shadow in which configuration-space geometry is
+replaced by categorical coherence.
+
+Bare ``Hochschild'' without qualifier is forbidden in the
+manuscript: every reference must specify which of \textup{(i)},
+\textup{(ii)}, \textup{(iii)}, or \textup{(v)} is meant, with
+the geometric input named.
 \end{principle}
 
 Deformation quantization passes from $\Pinf$ to $\Eone$.

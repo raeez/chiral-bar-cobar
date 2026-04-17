@@ -3,6 +3,28 @@
 
 \index{deformation theory!chiral|textbf}
 \index{Hochschild cohomology!chiral|textbf}
+\index{three Hochschild theories!discipline}
+
+\begin{remark}[Three Hochschild theories: discipline]
+\label{rem:three-hochschild-discipline}
+
+The symbol \emph{Hochschild} carries three meanings in the
+programme; the present chapter is concerned with exactly one. The
+chiral Hochschild complex $\ChirHoch^*(\cA)$ defined here is the
+tangent complex of the chiral MC moduli on a curve, an
+$E_\infty$-chiral input producing an output concentrated in
+degrees~$\{0,1,2\}$ (Theorem~H below). It is distinct from
+\textup{(a)} the topological Hochschild $\mathrm{HH}^*_{\mathrm{top}}$
+of an $E_1$-algebra in spectra, whose output is the $E_2$-Gerstenhaber
+algebra of Deligne; and from \textup{(b)} the categorical Hochschild
+$\mathrm{HH}^*_{\mathrm{cat}}$ of a dg category, whose output is an
+$E_2$-algebra carrying CY shifted Poisson structure. The geometry
+determines which Hochschild: a curve $X$ produces ChirHoch, a
+formal disk over a point produces HH$_{\mathrm{top}}$, a CY dg
+category produces HH$_{\mathrm{cat}}$. Throughout this chapter
+``Hochschild'' means $\ChirHoch^*$; the other two are signposted
+explicitly when invoked.
+\end{remark}
 
 The MC element $\Theta_\cA \in \MC(\gAmod)$ controls all of chiral
 Koszul duality, but how rigid is the moduli it lives in? Without
@@ -14,7 +36,18 @@ Theorem~H proves it is concentrated in degrees $\{0,1,2\}$ on the
 Koszul locus, so the MC moduli has cohomological
 amplitude~$[0,2]$, and the Koszul duality
 $\ChirHoch^n(\cA) \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X$
-is Verdier duality on this tangent space.
+is Verdier duality on this tangent space. The amplitude is the
+output of the Koszul Reflection
+$K^{2}\simeq\mathrm{id}$
+(Theorem~\ref{thm:koszul-reflection}) read on the chiral derived
+centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) = \ChirHoch^*(\cA,\cA)$:
+the curve dimension $\dim_\mathbb{C} X = 1$ contributes the curve
+amplitude $[0,1]$, the bigraded Verdier shift contributes the extra
+$[1]$, and Koszul collapse forces the diagonal to be the only
+contributing direction. The structural source of the
+$\{0,1,2\}$ concentration is therefore $E_3$-rigidity at a point
+applied to $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, with PBW collapse
+underwriting the chain-level statement.
 
 The cyclic deformation complex $\Defcyc(\cA)$
 (Definition~\ref{def:cyclic-deformation-elementary}) is the cyclic
@@ -143,6 +176,8 @@ $\ChirHoch^n(\cA)\cong \ChirHoch^{2-n}(\cA^!)^\vee\otimes\omega_X$
 A degree-$n$ cochain involves $(n+2)$ marked points on~$X$: one output, $n$ inputs, and one evaluation point.
 
 \begin{definition}[Chiral Hochschild complex, geometric realization]
+\label{def:chiral-hochschild-complex}
+\index{Hochschild complex!chiral!geometric realization|textbf}
 For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, define the degree $n$ cochains as
 \[
 C^n_{\text{chiral}}(\mathcal{A}) = \Gamma\left(\overline{C}_{n+2}(X), j_*j^*\mathcal{A}^{\boxtimes (n+2)} \otimes \Omega^n_{\overline{C}_{n+2}(X)}(\log D)\right)
@@ -154,6 +189,21 @@ where:
 \item $\mathcal{A}^{\boxtimes (n+2)}$ denotes the external tensor product on $X^{n+2}$
 \item $\Omega^n_{\overline{C}_{n+2}(X)}(\log D)$ are $n$-forms with logarithmic poles along the boundary divisor $D$
 \end{itemize}
+This is the \emph{geometric Fulton--MacPherson model} of the chiral
+Hochschild complex; the algebraic Ext model
+$\Ext^*_{\cA^e}(\cA,\cA)$
+\textup{(}Definition~\textup{\ref{def:chirHoch-Ext}} in
+Chapter~\textup{\ref{chap:koszul-pair-structure}}\textup{)} computes
+the same chiral derived endomorphism centre under
+Theorem~\textup{\ref{thm:geometric-chiral-hochschild}}; the bigraded
+Verdier model is recorded in
+Definition~\textup{\ref{def:bigraded-hochschild}} of
+Chapter~\textup{\ref{chap:higher-genus}}. All three
+models compute $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and have
+universal cohomological amplitude~$[0,2]$ on $\Kosz(X)$
+(Theorem~H, Theorem~\textup{\ref{thm:main-koszul-hoch}}); the
+amplitude is the trace shadow of $K^{2}\simeq\mathrm{id}$
+(Theorem~\textup{\ref{thm:koszul-reflection}}).
 \end{definition}
 
 Explicitly, a degree $n$ cochain is a sum of expressions
@@ -1198,8 +1248,19 @@ This gives~\eqref{eq:chirhoch-descent}.
 \textup{(}Theorem~H\textup{)}; \ClaimStatusProvedHere]
 \label{thm:main-koszul-hoch}
 \index{Hochschild cohomology!Koszul duality|textbf}
+\index{Theorem H!structural form via Koszul Reflection}
+
 \textup{[Regime: quadratic on the Koszul locus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+\textit{The Hochschild theory used here is the chiral
+$\ChirHoch^*$, distinct from topological $\mathrm{HH}^*_{\mathrm{top}}$
+and categorical $\mathrm{HH}^*_{\mathrm{cat}}$
+(Remark~\textup{\ref{rem:three-hochschild-discipline}}).}
+The statement is the trace shadow of the Koszul Reflection
+$K^{2}\simeq\mathrm{id}$ of
+Theorem~\textup{\ref{thm:koszul-reflection}} read on the chiral
+derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
 
 For every chiral Koszul datum~$\cA$
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})} with
@@ -3118,7 +3179,7 @@ graph~$\Gamma$ with $k$~internal vertices. Then:
 \emph{(a) Logarithmic regularity.}
 The FM compactification $\ConfigSpace{k}$ is a smooth algebraic
 variety with simple normal crossing boundary
-divisor~\cite{FM94}. The graph amplitude form $\omega_\Gamma$ is a
+divisor~\cite{}. The graph amplitude form $\omega_\Gamma$ is a
 product of Szeg\H{o} propagators $S(z_a, z_b)$, one per internal
 edge, contracted with $A_\infty$ operations and the invariant form
 of~$\cA$. Each factor $S(z_a, z_b)$ is a section of
@@ -3128,7 +3189,7 @@ with a simple pole along the diagonal $\Delta_{ab}$.
 In the FM compactification, the diagonal $\Delta_{ab}$ is replaced
 by the exceptional divisor $D_{\{a,b\}}$. In the local coordinates
 $(r_S, \theta_S)$ of the FM blowup at $D_S$
-\cite[§2]{FM94}, the propagator has the expansion
+\cite[§2]{}, the propagator has the expansion
 $S(z_a, z_b) = r_S^{-1} \cdot \phi_S + O(1)$ where $\phi_S$ is a
 smooth section on $D_S$. This is a log pole:
 $S(z_a,z_b) \, dz_a$ contributes $dr_S/r_S$ (a log
@@ -3156,7 +3217,7 @@ vertex positions collide, the FM blowup produces the exceptional
 divisor $D_S \cong \ConfigSpace{|S|} \times \ConfigSpace{k-|S|+1}$,
 where the first factor parametrizes the relative positions of the
 colliding points and the second parametrizes the remaining
-configuration with $S$ collapsed to a single point~\cite[§3]{FM94}.
+configuration with $S$ collapsed to a single point~\cite[§3]{}.
 The residue of $\omega_\Gamma$ along $D_S$ localizes the
 propagators within $S$: the edges internal to $S$ contribute the
 graph amplitude of the subgraph $\Gamma|_S$, while the edges

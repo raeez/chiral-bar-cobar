@@ -2,6 +2,14 @@
 \label{chap:bar-cobar}
 \label{chap:bar-construction}
 
+% Local macros (provide-command idempotent; defined for cross-chapter
+% references to chap:climax-platonic and Theorem~A in
+% theorem_A_infinity_2.tex, both of which use these macros internally).
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Arn}{\mathrm{Arnold}}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\ConnConf}{\mathsf{ConnConf}}
 
 \index{bar construction!as integral transform|textbf}
 \index{non-abelian Fourier transform|textbf}
@@ -66,6 +74,34 @@ components into the full genus-$0$ differential $\dzero$
 and proves $\dzero^2 = 0$; the key input is the Arnold relation
 (Theorem~\ref{thm:arnold-three},
 Remark~\ref{rem:costello-gwilliam-factorization}).
+
+The three-component decomposition is not the structural endpoint.
+The full bar differential is the pullback of one universal flat
+connection along the KZ functor: at the climax of Volume~I one shows
+\[
+   \dbar \;=\; \KZ^{*}(\nabla_{\Arn})
+\]
+in the category $\ConnConf_{\mathbb{P}^1}$ of meromorphic flat
+connections on configuration spaces with KZ-type coefficients
+\textup{(}Theorem~\ref{thm:climax-vol1-platonic} of
+Chapter~\ref{chap:climax-platonic}, equation~\eqref{eq:climax-equation-G2}\textup{)}.
+Arnold's universal flat connection
+$\nabla_{\Arn} = d - \sum_{i<j} t_{ij}\eta_{ij}$ on the trivial
+$U(\mathfrak{t}_n)$-bundle over $\Conf_n^{\mathrm{ord}}(X)$ is the
+initial object of $\ConnConf_{\mathbb{P}^1}$
+\textup{(}Definition~\ref{def:connconf-platonic}\textup{)};
+every chiral algebra $\cA$ supplies the structure morphism
+$\KZ(\cA)$ that pulls $\nabla_{\Arn}$ back to $\dbar$ on
+$B^{\mathrm{ord}}(\cA)$. The Arnold three-term identity
+\eqref{eq:arnold-three-term} is the codimension-two compatibility that
+forces $\dbar^2 = 0$ \textup{(}Case~(ii) of
+Theorem~\ref{thm:bar-nilpotency-complete}\textup{)}; the classical
+Yang--Baxter equation on the family
+$\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is its $r$-matrix-valued
+incarnation. The chapter develops the bar differential in its
+three-component form because the form is computationally explicit;
+the climax statement records that the form is forced by a single
+universal pullback.
 
 \smallskip
 \noindent\textit{Notation.}
@@ -683,7 +719,7 @@ $\Omega^{q+1}_Y(\log D)$. This applies with
 $Y = \overline{C}_{p+1}(\Sigma_g)$ and
 $D = \partial\overline{C}_{p+1}(\Sigma_g)$, which is
 normal-crossings by the Fulton--MacPherson construction
-(\cite[Theorem~2]{FM94}).
+(\cite[Theorem~2]{}).
 \end{proof}
 
 \begin{remark}[Three components]\label{rem:three-components}
@@ -704,6 +740,99 @@ identity, not merely Jacobi
 cross-terms vanish by Stokes
 ($\{d_{\text{form}}, d_{\text{residue}}\} = 0$) and the
 derivation property.
+\end{remark}
+
+\begin{remark}[Bar differential as pullback of the Arnold connection]
+\label{rem:dbar-as-kz-pullback}
+\index{bar differential!as KZ pullback@as $\KZ^*(\nabla_{\mathrm{Arnold}})$}%
+\index{climax theorem!bar differential identification}%
+The three-component differential
+$d = d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{form}}$ of
+Definition~\ref{def:bar-differential-complete} is not assembled by hand:
+it is the pullback of one universal flat connection on the open
+configuration space $\Conf_n^{\mathrm{ord}}(X)$ along a faithful
+structure morphism induced by $\cA$. This is the structural identity
+\textup{(}G2\textup{)} of Chapter~\ref{chap:climax-platonic}:
+\[
+   d_{\mathrm{bar}} \;=\; \KZ^{*}(\nabla_{\mathrm{Arnold}}),
+\]
+where $\nabla_{\mathrm{Arnold}} = d - \sum_{i<j} t_{ij}\,\eta_{ij}$ is
+Arnold's universal flat connection on the trivial
+$U(\mathfrak{t}_n)$-bundle over $\Conf_n^{\mathrm{ord}}(X)$
+\textup{(}Definition in
+\S\ref{ssec:climax-platonic-arnold} of the climax chapter\textup{)}, and
+the KZ functor of
+Construction~\ref{constr:kz-functor-platonic} sends the universal
+infinitesimal braid generator $t_{ij}$ to the OPE-derived
+$r$-matrix $r^{(ij)}(z_{ij})\cdot z_{ij}$ on
+$\End\bigl(B^{\mathrm{ord}}(\cA)\bigr)$. The three components of $d$
+then collapse:
+\begin{itemize}
+\item the residue component
+$d_{\mathrm{residue}} = \sum_{i<j} \mathrm{Res}_{D_{ij}}\,\mu(\phi_i,\phi_j)$
+is the chain-level expression of $\KZ^{*}(t_{ij}\eta_{ij})$ at the
+collision divisor (\S\ref{ssec:climax-platonic-path-A-fm}, Path~A);
+\item the de~Rham component $d_{\mathrm{form}}$ is $\KZ^{*}$ of
+$d$ in $\nabla_{\mathrm{Arnold}}$;
+\item the internal component $d_{\mathrm{internal}}$ is the lift of
+$d$ on the coefficient bundle to the family parameter and contributes
+no new term beyond the $\cA$-internal differential.
+\end{itemize}
+The Arnold three-term relation~\eqref{eq:arnold-three-term} of
+Theorem~\ref{thm:arnold-cohomology-platonic} is precisely
+the codimension-two compatibility that forces $d^2 = 0$
+\textup{(}Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}\textup{)};
+the classical Yang--Baxter equation on the family
+$\{r^{(ij)}(z_{ij}) = \KZ^{*}(\eta_{ij})\}$ is its $r$-matrix-valued
+incarnation. Thus the per-family bar differentials are not independent
+data: every bar differential in this monograph is the pullback of one
+universal flat connection along the unique structure morphism induced
+by $\cA \to \End(B^{\mathrm{ord}}(\cA))$. The unification is
+Theorem~\ref{thm:climax-vol1-platonic}.
+\end{remark}
+
+\begin{remark}[The bar coalgebra over $(\chirAss)^!$, not over
+$\mathrm{SC}^{\mathrm{ch,top}}$]
+\label{rem:bar-not-sc-coalgebra}
+%
+\index{Swiss-cheese!emerges on derived centre, not on bar}%
+The bar coalgebra $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ is a
+single coassociative coalgebra over the chiral cooperad $(\chirAss)^!$
+with a single degree-$+1$ differential $d_{\mathrm{bar}}$ and the
+deconcatenation coproduct. It is \emph{not} a Swiss-cheese coalgebra:
+the $\mathrm{SC}^{\mathrm{ch,top}}$ structure of the programme emerges on
+the derived-centre pair
+$(C^\bullet_{\mathrm{ch}}(\cA,\cA),\,\cA)$ via the chiral Hochschild
+cochain complex (Theorem~H), not on $B^{\mathrm{ord}}(\cA)$ itself.
+A statement such as ``the bar complex is an
+$\mathrm{SC}^{\mathrm{ch,top}}$-coalgebra'' or ``the bar differential is
+the closed-color piece of the Swiss-cheese structure'' is false; the
+bar holds the $E_1$ data, the derived centre holds the
+$\mathrm{SC}^{\mathrm{ch,top}}$ data
+(\S\ref{ssec:climax-platonic-equation-g2} of
+Chapter~\ref{chap:climax-platonic} for the $E_1$ pullback identity;
+the universal Swiss-cheese assembly is treated in Vol~II).
+\end{remark}
+
+\begin{remark}[Curved $A_\infty$ and the genus-$g$ fiberwise curvature]
+\label{rem:curved-fiberwise-not-bar-d-squared}
+\index{curved A-infinity!fiberwise curvature versus bar differential}%
+The bar differential satisfies $d_{\mathrm{bar}}^2 = 0$ unconditionally
+in this chapter (Theorem~\ref{thm:bar-nilpotency-complete}). At higher
+genus a separate fiberwise differential $d_{\mathrm{fib}}$ on the
+Hodge-bundle direction acquires curvature
+$d_{\mathrm{fib}}^{\,2} = \kappa(\cA) \cdot \omega_g$
+\textup{(}/B49; treated in
+Chapter~\ref{chap:higher-genus}\textup{)}, and at the curved $A_\infty$
+level the relation $\mu_1^2(a) = [\mu_0, a]$ supersedes the strict
+$\mu_1^2 = 0$ \textup{(}\textup{)}. The two nilpotence statements
+do not conflict: the genus-$0$ bar differential and the curved
+$A_\infty$ differential live on different sides of the bar
+construction. The genus-$g$ fiberwise curvature reads off the
+$\kappa$-conductor of $\cA$, which by the climax identity~(G3)
+$\kappa(\cA) = -\,c_{\mathrm{ghost}}(\BRST(\cA))$ of
+Chapter~\ref{chap:universal-conductor} is independent of the choice of
+quasi-free BRST resolution.
 \end{remark}
 
 \begin{example}[Heisenberg degree-\texorpdfstring{$1$}{1} bar differential]\label{ex:heisenberg-d-deg1}
@@ -1911,7 +2040,7 @@ the cohomological degree.
  \end{lemma}
  
  \begin{proof}
- The FM compactification $\overline{C}_{n+1}(X)$ is constructed by iterated real blow-up along diagonals (\cite{FM94}, \S2). After blow-up, each codimension-1 boundary stratum $D_S$ (indexed by subsets $S \subset [n+1]$ with $|S| \geq 2$) is a smooth divisor, and distinct divisors $D_S, D_T$ meet transversally when $S \subset T$ or $T \subset S$ (nested), and are disjoint otherwise. A codimension-2 stratum therefore arises as $D_S \cap D_T$ where $S \subsetneq T$ (a two-step degeneration), and the two orderings of the iterated boundary (first collapse $S$, then collapse $T/S$, versus directly collapsing $T$ and then refining to $S$) yield opposite orientations by the antisymmetry of the normal bundle orientations (Corollary~\ref{cor:residues-anticommute}).
+ The FM compactification $\overline{C}_{n+1}(X)$ is constructed by iterated real blow-up along diagonals (\cite{}, \S2). After blow-up, each codimension-1 boundary stratum $D_S$ (indexed by subsets $S \subset [n+1]$ with $|S| \geq 2$) is a smooth divisor, and distinct divisors $D_S, D_T$ meet transversally when $S \subset T$ or $T \subset S$ (nested), and are disjoint otherwise. A codimension-2 stratum therefore arises as $D_S \cap D_T$ where $S \subsetneq T$ (a two-step degeneration), and the two orderings of the iterated boundary (first collapse $S$, then collapse $T/S$, versus directly collapsing $T$ and then refining to $S$) yield opposite orientations by the antisymmetry of the normal bundle orientations (Corollary~\ref{cor:residues-anticommute}).
  \end{proof}
  
  \begin{remark}[Significance of signs]

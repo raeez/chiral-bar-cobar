@@ -1,5 +1,10 @@
 \section{Koszul duality across genera}\label{sec:koszul-across-genera}\label{app:koszul_higher_genus}
 
+% Macro safety net for cross-chapter wave-14 anchors (BRST functor of
+% chap:universal-conductor). Defended by \providecommand for
+% standalone-extraction portability (AP-FM6/AP-FM36).
+\providecommand{\BRST}{\mathrm{BRST}}
+
 %% DEFICIENCY OPENING: the genus-0 machine breaks at g >= 1.
 
 Bar-cobar inversion (Theorem~B) proves that
@@ -199,6 +204,53 @@ For standard examples at generic parameters, the PBW argument of
 Proposition~\ref{prop:standard-examples-modular-koszul} suffices.
 At special parameters (e.g.\ admissible levels), the question
 remains open.
+
+\begin{remark}[Wave-14 anchors: universal conductor and Koszul reflection]
+\label{rem:wave14-anchors-modular-koszul}
+\index{wave-14 anchors!modular Koszul tower}
+The shadow tower~$\Theta_\cA^{\leq r}$ assembles into the
+universal conductor $K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$ of
+Chapter~\ref{chap:universal-conductor}. Three identifications are
+load-bearing for the present chapter.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Scalar prefactor.}\;
+On the uniform-weight scalar lane, the genus-$g$
+obstruction class factors as
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g = K(\cA)\cdot\lambda_g$:
+the modular characteristic $\kappa(\cA)$ is the wave-14 universal
+conductor evaluated on the algebra, equivalent on the
+Koszul-self-dual locus to the negative ghost central charge of
+any quasi-free BRST resolution (Trinity Theorem of
+Chapter~\ref{chap:universal-conductor}).
+\item \emph{Verdier symmetry.}\;
+Complementarity $\kappa(\cA) + \kappa(\cA^!) = K$
+(Theorem~\ref{thm:complementarity-root-datum}) is the
+$K(\cA) = K(\cA^!)$ statement of the universal conductor functor
+on the bar/cobar pair, and is the conductor-side incarnation of
+the Koszul reflection
+Theorem~\ref{thm:koszul-reflection}.
+\item \emph{Climax pairing.}\;
+The Vol~I climax (Chapter~\ref{chap:climax-platonic}) couples the
+identification $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
+on the differential side with the identification
+$\kappa = -c_{\mathrm{ghost}}(\BRST)$ on the conductor side; the
+present chapter records the genus-$g$ projection
+$\mathrm{obs}_g = K\cdot\lambda_g$ of that pairing on
+$\overline{\mathcal{M}}_g$.
+\end{enumerate}
+Multi-weight algebras at $g\geq 2$ acquire the cross-channel
+correction $\delta F_g^{\mathrm{cross}}$
+(Theorem~\ref{thm:multi-weight-genus-expansion}); the
+$W_3$ instance is explicit at $\delta F_2^{\mathrm{cross}}(W_3) = (c+204)/(16c)$
+(\textit{cf.}~the Vol~I CLAUDE.md proposition
+\texttt{prop:delta-f-cross-w3-g2}). (genus universality
+beyond $g=1$) is healed by the clutching-uniqueness statement of
+Chapter~\ref{chap:clutching-uniqueness-socle} together with
+Chern--Weil scalar-channel linearity
+(Proposition~\ref{prop:chain-level-curvature-operator}); the
+explicit Faltings/Bismut--Gillet--Soul\'e bridge is recorded at
+Chapter~\ref{chap:chern-weil-level-shift-platonic}.
+\end{remark}
 
 \subsection{The genus tower}
 
@@ -2848,6 +2900,16 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
  $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
  \textup{(}UNIFORM-WEIGHT\textup{}) in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$
  \textup{(}UNIFORM-WEIGHT; unconditional at $g = 1$\textup{)}.
+ The scalar prefactor admits the wave-14 universal-conductor reading
+ $\kappa(\cA) = K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$
+ (Chapter~\ref{chap:universal-conductor}, Trinity Theorem;
+ Chapter~\ref{chap:climax-platonic}, climax pairing), so the
+ universality identity rewrites as
+ $\mathrm{obs}_g(\cA) = K(\cA)\cdot\lambda_g$
+ (UNIFORM-WEIGHT). The all-genera extension uses
+ clutching uniqueness (Chapter~\ref{chap:clutching-uniqueness-socle},
+ healing) plus Chern--Weil scalar-channel linearity
+ (Proposition~\ref{prop:chain-level-curvature-operator}).
  \end{enumerate}
  For multi-generator algebras \textup{(}$\mathcal{W}_N$ with
  $N \geq 3$\textup{)}, the genus-$1$ factorization is unconditional,
@@ -10266,8 +10328,8 @@ $\iota_\ell^{*}\kappa_{\mathrm{univ}}
 =\kappa(\cA_\ell)\cdot\pi_*c_1(\omega)^{\otimes 2}
 =\kappa(\cA_\ell)\cdot\lambda$, matching each entry of
 \eqref{eq:kappa-pullback-table} by the established per-family formulas
-(Virasoro: AP39; Heisenberg: AP105; affine KM: AP126/AP141;
-$\mathcal{W}_N$: AP136).
+(Virasoro:; Heisenberg:; affine KM: /;
+$\mathcal{W}_N$:).
 \end{proof}
 
 \begin{remark}[Protocol for universal-$\kappa$ invocations]
@@ -10285,7 +10347,7 @@ Theorem~\textup{\ref{thm:kappa-universal-class}} and specify the
 stratum $\ell$ when specialization is used.
 This resolves the prior narration-only status of ``universal $\kappa$''
 at Sections~\textup{\ref{sec:theorem-d}}
-and the AP113 $\kappa$-without-subscript ban in Volume~III's
+and the $\kappa$-without-subscript ban in Volume~III's
 conventions.
 \end{remark}
 
@@ -33404,7 +33466,7 @@ At \emph{generic} level, the ordered bar complex
 $B^{\mathrm{ord}}(V_k(\mathfrak{sl}_2))$ on $\Sigma_g$
 has fiberwise curvature
 $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$
-(Theorem~\ref{thm:genus-universality}; AP130:
+(Theorem~\ref{thm:genus-universality}; :
 $\omega_g = c_1(\lambda)$ lives on $\overline{\mathcal{M}}_g$,
 not on the curve),
 % AP1: kappa(V_k(sl_2)) = 3(k+2)/4; k=0 -> 3/2;
@@ -33492,7 +33554,7 @@ The two invariants encode complementary data: $Z_g$ counts
 the conformal blocks (combinatorial, from the modular tensor
 category), while $F_g$ measures the curvature (analytic,
 from the Hodge class $\omega_g = c_1(\lambda)$ on
-$\overline{\cM}_g$; AP130: $\omega_g$ lives on
+$\overline{\cM}_g$; : $\omega_g$ lives on
 $\overline{\cM}_g$, not on the curve $\Sigma_g$).
 The Verlinde formula is \emph{not} a shadow invariant; it
 is recovered from the ordered chiral homology at roots of

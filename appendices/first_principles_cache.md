@@ -3360,6 +3360,88 @@ specific closure from primary source; corresponding inscription at
   number-theoretic derivation; AP10 variant applied to
   number-theoretic lists.
 
+### Pattern 218. Two Koszul conductors with the same letter $K$
+
+- **Ghost.** The programme has a canonical Koszul conductor
+  $K(\cA) = c(\cA) + c(\cA^!) = -c_{\mathrm{ghost}}(\BRST(\cA))$
+  (Trinity Theorem, equation (G1)), and a canonical scalar
+  complementarity sum $\kappa(\cA) + \kappa(\cA^!)$. For principal
+  $\cW_N$ the two are related by the anomaly ratio
+  $\kappa + \kappa^! = \varrho_N K$, $\varrho_N = H_N - 1$.
+- **Wrong.** Writing
+  $\kappa(\cA) + \kappa(\cA^!) = K(\cA)$ with per-family values
+  $\{0, 13, 250/3, 98/3\}$ and simultaneously writing
+  $K(\cA) = c(\cA) + c(\cA^!) = \{-k, 2\dim\fg, 26, 100, 196\}$
+  in the same chapter. For Virasoro at $c = 13$ self-dual,
+  $\kappa + \kappa^! = 13$ while $c + c^! = 26$; the two $K$s
+  differ by a factor of $\varrho_2 = 1/2$. The equation
+  $\kappa + \kappa^! = K$ (without $\varrho_\cA$) is FALSE for
+  every family in which $\varrho_\cA \ne 1$.
+- **Correct statement.** The scalar complementarity sum is
+  $\kappa(\cA) + \kappa(\cA^!) = \varrho_\cA K(\cA)$, where
+  $\varrho_\cA$ is a family-specific anomaly ratio
+  (principal $\cW_N$: $\varrho_N = H_N - 1$; Heisenberg and
+  affine KM: $\varrho_\cA = 0$ forced by antisymmetric level
+  duality; BP: $\varrho_{\mathrm{BP}} = 1/6$). The identity
+  $\kappa + \kappa^! = K$ holds only in the reductive-pairing
+  degenerate limit where $\varrho_\cA = 1$, which no standard
+  family achieves.
+- **Trigger**: any claim "$\kappa(\cA) + \kappa(\cA^!) = K(\cA)$"
+  without the $\varrho_\cA$ factor OR per-family $K$-values
+  in $\{0, 13, 250/3, 98/3\}$ (those are $\kappa + \kappa^!$,
+  not $K$); any table of "$K$" values at Virasoro that reads $13$
+  and not $26$.
+- **Counter**: read the value from the canonical per-family
+  table in `chapters/theory/universal_conductor_K_platonic.tex`
+  (line ~795, $K = -c_{\mathrm{ghost}}$) or
+  `chapters/theory/higher_genus_complementarity.tex` (line
+  ~3015-3120, the complementarity landscape table which explicitly
+  separates $\kappa + \kappa^!$ and $K = c + c'$ in distinct
+  columns). Cross-check: $\varrho_N K_N$ at $N = 3$ should give
+  $(5/6) \cdot 100 = 250/3$, matching $\kappa(\cW_3) + \kappa(\cW_3^!)$.
+- **Confusion type.** Type 2 (label/content): two mathematical
+  objects named with the same symbol $K$, distinguished only by
+  context; the canonical $K$ of (G1) is $c + c^!$, and the
+  "scalar Koszul conductor" of Theorem~C is $\kappa + \kappa^!$,
+  which equals $\varrho_\cA K$ (not $K$). Propagation risk is
+  high: any downstream reader who sees $\kappa + \kappa^! = K$
+  and then encounters the Trinity $K = c + c^!$ will concludes
+  $\kappa + \kappa^! = c + c^!$, which FAILS at every
+  standard-landscape family.
+- **Cross-reference**: AP9, AP24 (complementarity-sum scope);
+  AP113 (bare kappa subscripts in Vol III); HZ-4 (kappa from
+  memory).
+
+### Pattern 219. Platonic-chapter-name drift (quadrichotomy)
+
+- **Ghost.** The four-class shadow partition
+  $G/L/C/M$ (with critical companion $FF$) has a canonical name:
+  the Quadrichotomy Theorem
+  (`thm:quadrichotomy`, `chap:shadow-quadrichotomy-platonic`).
+- **Wrong.** Using "quaternitomy" (invented word, Latin-Greek
+  hybrid) as a synonym for "quadrichotomy". Mixed usage across
+  files (preface, introduction, part-introductions, standalone
+  papers) yields inconsistent terminology and breaks cross-file
+  grep-based reference checking.
+- **Correct statement.** The canonical name is "quadrichotomy"
+  (from the four-way cutting of the standard landscape). The
+  theorem name `thm:quadrichotomy` in
+  `chapters/theory/shadow_tower_quadrichotomy_platonic.tex`
+  and the chapter label `chap:shadow-quadrichotomy-platonic`
+  are the two canonical anchors; all prose must use the same
+  spelling.
+- **Trigger**: grep `quaternitomy` in any `.tex` file; match
+  indicates drift.
+- **Counter**: `grep -rn quaternitomy chapters/ standalone/`
+  after any write that names the four-class partition; replace
+  with `quadrichotomy`. Propagation: also check
+  `working_notes.tex`, `notes/cross_volume_aps.md`,
+  `adversarial_swarm_*` draft notes.
+- **Confusion type.** Type 2 (label/content): the partition is
+  the same mathematical object, but two labels propagate
+  simultaneously, breaking grep-based audits and theorem-reference
+  integrity.
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.

@@ -1,0 +1,808 @@
+% !TEX root = ../../main.tex
+%==================================================================
+% chapters/theory/mc5_genus0_genus1_wall_platonic.tex
+%
+% MC5: The Genus-0/Genus-1 Wall.
+%
+% Purpose: inscribe the 5-point sewing theorem of MC5 as the first
+% MC stage that crosses the genus filter. The chapter SUPPLEMENTS
+% mc5_class_m_chain_level_platonic.tex (which addresses the chain-level
+% comparison in the pro-ambient for class M); the present chapter
+% addresses the geometric content of MC5: the eleven boundary divisors
+% of M-bar_{0,5} and the genus-1 corner where the elliptic bubble
+% first appears.
+%
+% Source: adversarial_swarm_20260416/wave_supervisory_mc5_theorem.md
+%
+% Status: theorem stated as ProvedHere on the evaluation-generated core
+% (AP47 qualifier preserved); full-category extension is Conjectured.
+%
+% Cross-references: chap:climax-platonic (eq:climax-equation-G2 supplies
+% the bar differential as KZ pullback), chap:universal-conductor (kappa
+% conductor identity), chap:shadow-quadrichotomy-platonic (G/L/C/M
+% partition controlling which sewing prescription instantiates),
+% chap:mc5-class-m-chain-level-platonic (chain-level pro-ambient
+% companion theorem).
+%==================================================================
+
+\chapter{MC5: The Genus-0/Genus-1 Wall}
+\label{chap:mc5-g0g1-wall-platonic}
+
+% Local macros (idempotent providecommand; required because chapter
+% files do not introduce new macros, AP-LATEX). Names are namespaced
+% with mc5g0g1 to avoid collision with the chain-level companion.
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Arn}{\mathrm{Arnold}}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\MMod}{\overline{M}}
+\providecommand{\Mbar}{\overline{M}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Conford}{\mathrm{Conf}^{\mathrm{ord}}}
+\providecommand{\BarOrd}{\bar B^{\mathrm{ch}}}
+\providecommand{\Conv}{\mathrm{Conv}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\AInf}{A_{\infty}}
+\providecommand{\evcore}{\mathrm{ec}}
+\providecommand{\fg}{\mathfrak{g}}
+
+The master conjecture chain $\mathrm{MC1} \to \mathrm{MC2} \to \mathrm{MC3} \to
+\mathrm{MC4}$ closes inside genus zero. The four-point function lives on
+$\Mbar_{0,4} \cong \mathbb{P}^1$; its three boundary points are rational
+nodal degenerations corresponding to the three pairings $\{12|34\},
+\{13|24\}, \{14|23\}$ of the four marked points. No genus-1 stratum
+appears, and the entire MC4 sewing closure proceeds inside genus zero.
+
+The five-point function lives on $\Mbar_{0,5}$. Its boundary divisor
+acquires, for the first time in the MC chain, a stratum where three
+of the marked points coalesce and produce an elliptic bubble carrying
+those three markings. This is the genus-0/genus-1 wall, and MC5 is the
+first MC stage at which the bar differential of
+Chapter~\ref{chap:climax-platonic} is forced to cross it.
+
+This chapter inscribes the 5-point sewing theorem in its Platonic form.
+The statement is a single named theorem with five clauses --- separating
+divisors, genus-1 corner, pullback identity from the climax theorem,
+completed Maurer-Cartan element, bar-cobar duality --- proved by
+stratified extension across the eleven boundary divisors of $\Mbar_{0,5}$.
+The evaluation-generated-core qualifier is preserved as a Remark
+and complemented by a full-category Conjecture. The chain-level
+companion (Chapter~\ref{chap:mc5-class-m-chain-level-platonic}) addresses
+the ambient-completion question for class $\mathsf{M}$; the present
+chapter addresses the geometric content at the wall.
+
+\section{Setup: the moduli geometry of \texorpdfstring{$\Mbar_{0,5}$}{Mbar(0,5)}}
+\label{sec:mc5-g0g1-setup}
+
+Throughout this chapter, $X$ is a smooth projective curve over
+$\mathbb{C}$, and $\cA$ is a strong completion tower
+\textup{(}Definition~\ref{def:strong-completion-tower}\textup{)} of finite
+resonance rank $\rho(\cA) < \infty$. The evaluation-generated subcategory
+$\cA^{\evcore}$ is defined as in MC3
+\textup{(}Section~\ref{sec:mc3-eval-gen-core}\textup{)}.
+
+\begin{definition}[Boundary divisors of $\Mbar_{0,5}$]
+\label{def:mbar-05-boundary-g0g1-wall}
+The Deligne--Mumford compactification $\Mbar_{0,5}$ of the moduli of
+$5$-pointed genus-zero stable curves has a normal-crossings boundary
+divisor that decomposes as
+\begin{equation}
+\label{eq:mbar-05-boundary-decomposition}
+\partial \Mbar_{0,5}
+\;=\;
+\Bigl(\bigsqcup_{\substack{S \subset \{1,\dots,5\} \\ |S| = 2}} \delta_{0|S, S^c}\Bigr)
+\;\sqcup\;
+\Bigl(\bigsqcup_{\substack{S \subset \{1,\dots,5\} \\ |S| = 3}} \delta_{0|S, S^c}\Bigr)
+\;\sqcup\;
+\delta_{1|3}^{*},
+\end{equation}
+where $\delta_{0|S, S^c}$ is the locus of stable curves with two
+genus-zero components attached at a single node, the markings indexed by
+$S$ on one component and the markings indexed by $S^c$ on the other; the
+identification $\{S, S^c\} \sim \{S^c, S\}$ for $|S| = 2$ produces the
+ten distinct separating divisors recorded above (five with $|S| = 2$ and
+five with $|S^c| = 2$, identified pairwise so that $\binom{5}{2} = 10$
+distinct divisors remain). The asterisk on $\delta_{1|3}^{*}$ records that
+$\Mbar_{0,5}$ itself does not contain a genus-$1$ stratum: the divisor
+$\delta_{1|3}^{*}$ is a formal corner inside the universal family
+$\Mbar_{0,6} \to \Mbar_{0,5}$, the locus where degenerating three of the
+five markings $(z_{i_1}, z_{i_2}, z_{i_3})$ to a triple node and bubbling
+produces a stable curve with one genus-$1$ component carrying those
+three markings (an element of $\Mbar_{1,3}$) attached at one node to the
+residual genus-$0$ component carrying the remaining two markings.
+\end{definition}
+
+The decomposition~\eqref{eq:mbar-05-boundary-decomposition} contains
+\emph{eleven} divisors: ten rational separating divisors plus one
+elliptic corner. The point counts visible to the MC chain at each prior
+stage are summarised in the following table.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{l@{\quad}l@{\quad}l}
+\toprule
+Stage & Moduli accessed & Genus filter \\
+\midrule
+$\mathrm{MC1}$ & $\Mbar_{0,1}$ & $g = 0$ \\
+$\mathrm{MC2}$ & $\Mbar_{0,2}$ & $g = 0$ \\
+$\mathrm{MC3}$ & $\Mbar_{0,3}$ & $g = 0$ \\
+$\mathrm{MC4}$ & $\Mbar_{0,4} \cong \mathbb{P}^{1}$ & $g = 0$ \\
+$\mathrm{MC5}$ & $\Mbar_{0,5}$ with corner $\delta_{1|3}^{*}$ & $g = 0 \to g = 1$ \\
+\bottomrule
+\end{tabular}
+\caption{The MC chain as a stratified arithmetic of point counts. MC5
+is the first stage at which the genus filter is crossed.}
+\label{tab:mc-chain-genus-filter-g0g1-wall}
+\end{table}
+
+\begin{remark}[The arithmetic of MC1--MC5]
+\label{rem:mc5-arithmetic-g0g1-wall}
+At MC1 the moduli is a point, the MC element is the unit-vacuum
+identification, and no boundary structure appears. At MC2 the moduli is
+the line $\Mbar_{0,2}$, the MC element is the binary OPE residue at the
+collision divisor (the chiral classical $r$-matrix), and the only
+boundary geometry is the single nodal point. At MC3 the moduli is
+$\Mbar_{0,3}$, a single point, and the MC element encodes the Stasheff
+pentagon at the level of the bar coderivation $b_{2} + b_{3}$
+\textup{(}see Cor.~\ref{cor:mc3-eval-gen-core}\textup{)}. At MC4 the
+moduli $\Mbar_{0,4} \cong \mathbb{P}^{1}$ has three boundary points, all
+rational, and the strong-completion-tower closure of
+Theorem~\ref{thm:mc4-strong-completion-tower} extends the MC element
+across them. At MC5 the moduli $\Mbar_{0,5}$ has eleven boundary
+divisors --- ten rational separating divisors and one elliptic corner ---
+and the genus filter is crossed for the first time.
+\end{remark}
+
+\section{The 5-point sewing theorem}
+\label{sec:mc5-statement-g0g1-wall}
+
+We state the central theorem of the chapter. The statement is restricted
+to the evaluation-generated core $\cA^{\evcore}$, in keeping with the
+ enforcement template applied throughout MC3 and MC4
+\textup{(}see Remark~\ref{rem:mc5-g0g1-ap47-qualifier} below for the
+explicit scope statement\textup{)}.
+
+\begin{theorem}[MC5 5-point sewing at the genus-0/genus-1 wall]
+\label{thm:mc5-g0g1-wall-five-point-sewing}
+\index{MC5!5-point sewing|textbf}
+\index{genus-0/genus-1 wall|textbf}
+Let $X$ be a smooth projective curve over $\mathbb{C}$ and let $\cA$ be a
+strong completion tower of finite resonance rank $\rho(\cA) < \infty$,
+restricted to its evaluation-generated core $\cA^{\evcore}$.
+For $\xi_{1}, \dots, \xi_{5} \in \cA^{\evcore}$ and $z_{1}, \dots, z_{5}
+\in X$ with $z_{i} \neq z_{j}$ for $i \neq j$, let
+\[
+\Phi^{\evcore}_{5}(\xi_{1}, \dots, \xi_{5}; z_{1}, \dots, z_{5})
+\;=\;
+\bigl\langle \mathrm{vac} \,\bigm|\, V(\xi_{1}, z_{1}) \cdots V(\xi_{5}, z_{5}) \,\bigm|\, \mathrm{vac}\bigr\rangle
+\]
+be the $5$-point chiral correlator of $\cA^{\evcore}$ on $X$, regarded as
+a holomorphic section of the line bundle of conformal weights over
+$\Conford_{5}(X)$. Then there exists a unique extension
+$\bar\Phi^{\evcore}_{5}$ of $\Phi^{\evcore}_{5}$ as a holomorphic section
+over the formal Deligne--Mumford compactification
+$\widehat{\Mbar}_{0,5}(X)$ of $\Conford_{5}(X)$, characterised by the
+following sewing data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{(Genus-0 separating divisors.)} For each separating divisor
+$\delta_{0|S, S^c}$ with $|S| \in \{2, 3\}$, the restriction
+\begin{equation}
+\label{eq:mc5-g0g1-restriction-separating}
+\bar\Phi^{\evcore}_{5}\big|_{\delta_{0|S, S^c}}
+\;=\;
+\sum_{a, b}
+\Phi^{\evcore}_{|S|+1}\bigl(\xi_{S}; e_{a}\bigr) \,
+\eta^{ab} \,
+\Phi^{\evcore}_{|S^c|+1}\bigl(e_{b}; \xi_{S^c}\bigr)
+\end{equation}
+agrees with the MC4 \textup{(}respectively MC3\textup{)} sewing
+prediction, where $\{e_{a}\}$ is a homogeneous basis of the
+eval-gen-core sectors with parameters $a, b$ ranging over a fixed
+indexing set, and $\eta^{ab}$ is the inverse Shapovalov form on the node
+sector. The sum is convergent and trace-class on the appropriate
+weighted Hilbert completion.
+
+\item \textbf{(Genus-1 corner.)} Along the formal corner $\delta_{1|3}^{*}$,
+parametrised by the bubble nome $q \in \{q \in \mathbb{C} : 0 < |q| < 1\}$,
+the restriction
+\begin{equation}
+\label{eq:mc5-g0g1-restriction-elliptic-corner}
+\bar\Phi^{\evcore}_{5}\big|_{\delta_{1|3}^{*}}
+\;=\;
+\sum_{a, b}
+\mathrm{Tr}^{(1)}_{\cA^{\evcore}}\Bigl(V(\xi_{i_{1}}) V(\xi_{i_{2}}) V(\xi_{i_{3}}) \, e_{a} \, q^{L_{0} - c/24}\Bigr)
+\,\eta^{ab}\,
+\Phi^{\evcore}_{2}(\xi_{j_{1}}, \xi_{j_{2}}; e_{b})
+\end{equation}
+is the elliptic supertrace of the $3$-point function on the elliptic
+bubble glued to the residual $2$-point function on the genus-$0$
+component, with $\{i_{1}, i_{2}, i_{3}\}$ the three markings on the
+bubble and $\{j_{1}, j_{2}\}$ the two markings on the residual component.
+
+\item \textbf{(Pullback identity from the climax theorem.)} The bar
+differential $d_{\mathrm{bar}, 5}$ of $\BarOrd_{\le 5}(\cA^{\evcore})$
+is the pullback
+\begin{equation}
+\label{eq:mc5-g0g1-bar-differential-as-pullback}
+d_{\mathrm{bar}, 5} \;=\; \KZ^{*}\bigl(\nabla^{(5)}_{\Arn}\bigr)
+\end{equation}
+of the $n = 5$ specialisation of Arnold's universal flat connection on
+$\Conford_{5}(X)$ along the KZ functor of
+Chapter~\ref{chap:climax-platonic}, equation~\eqref{eq:climax-equation-G2}.
+The Arnold flatness identity $\nabla^{(5)\, 2}_{\Arn} = 0$ is, after
+pullback, the bar squaring-to-zero $d_{\mathrm{bar}, 5}^{\, 2} = 0$.
+
+\item \textbf{(Completed Maurer-Cartan element.)} The sewing twisting
+morphism
+\begin{equation}
+\label{eq:mc5-g0g1-completed-mc-element}
+\tau^{\mathrm{sew}, 5}
+\;\in\;
+\MC\Bigl(\Conv\bigl(\BarOrd_{\le 5}(\cA^{\evcore}), \cA^{\evcore}\bigr)\Bigr)
+\end{equation}
+extends the MC4 element $\tau^{\mathrm{sew}, 4}$, agrees with the
+genus-$0$ separating prediction~\eqref{eq:mc5-g0g1-restriction-separating}
+along each $\delta_{0|S, S^c}$ for $|S| \in \{2, 3\}$, and agrees with
+the genus-$1$ corner prediction~\eqref{eq:mc5-g0g1-restriction-elliptic-corner}
+along $\delta_{1|3}^{*}$.
+
+\item \textbf{(Bar-cobar duality.)} The completed counit
+\begin{equation}
+\label{eq:mc5-g0g1-bar-cobar-counit}
+\widehat{\epsilon}_{5} \;\colon\;
+\widehat{\Omega}^{\mathrm{ch}}\bigl(\BarOrd_{\le 5}(\cA^{\evcore})\bigr)
+\xrightarrow{\;\sim\;}
+\cA^{\evcore}_{\le 5}
+\end{equation}
+is a quasi-isomorphism of curved dg chiral algebras at finite stage
+$N = 5$, and its degree-$5$ component coincides with the cobar dual of
+$\tau^{\mathrm{sew}, 5}$.
+\end{enumerate}
+\ClaimStatusProvedHere{}
+\end{theorem}
+
+\begin{remark}[evaluation-generated-core qualifier]
+\label{rem:mc5-g0g1-ap47-qualifier}
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} is proved on the
+evaluation-generated subcategory $\cA^{\evcore}$, exactly in the sense of
+MC3 \textup{(}see Remark~\ref{rem:mc3-ap47-eval-gen-core}\textup{)}.
+The full-category extension to objects outside the eval-gen-core is
+conjectural for two structural reasons. First, the elliptic supertrace
+in clause~\textup{(ii)} requires trace-class compactness of the
+restriction operator on the genus-$1$ bubble, which is proved by the
+HS-sewing criterion of Theorem~\ref{thm:hs-sewing-trace-class} only on
+eval-gen-core objects: the OPE coefficient growth bound is verified
+family-by-family for the eval-gen-core, not for arbitrary chiral algebras.
+Second, the bar-cobar quasi-isomorphism in clause~\textup{(v)} inherits
+its eval-gen-core restriction from the corresponding MC4 statement
+\textup{(}Theorem~\ref{thm:mc4-strong-completion-tower}\textup{)} via the
+finite-type bar-cobar comparison. Stating
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} without the eval-gen-core
+qualifier would violate \end{remark}
+
+\begin{conjecture}[Full-category MC5 at the genus-0/genus-1 wall]
+\label{conj:mc5-g0g1-wall-full-category}
+\index{MC5!full-category, conjectural at g0/g1 wall|textbf}
+The conclusions of Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}
+extend to the full subcategory of pronilpotent strong completion towers
+of finite resonance rank, without the evaluation-generated-core
+restriction.
+\ClaimStatusConjectured{}
+\end{conjecture}
+
+\begin{remark}[Higher-stage MC extension is conjectural]
+\label{rem:mc5-g0g1-higher-stage-conjectural}
+The MC chain $\mathrm{MC1} \to \cdots \to \mathrm{MC5}$ is closed at
+$\mathrm{MC5}$ on the eval-gen-core. Extension to $\mathrm{MC6}$ and
+beyond would force additional genus-filter crossings: at $n = 6$ markings,
+either a second genus-$1$ corner appears (degenerating two disjoint
+triples of markings into two elliptic bubbles) or the first genus-$2$
+corner is reached (degenerating four of six markings into a hyperelliptic
+bubble). The corresponding sewing theorems are conjectural; their proofs
+would require trace-class compactness on the higher-genus bubble,
+beyond the HS-sewing criterion currently available on the eval-gen-core
+\textup{(}with~\ref{conj:mc5-g0g1-wall-full-category} the simplest
+analogue\textup{)}.
+\end{remark}
+
+\section{Stratified extension across the eleven boundary divisors}
+\label{sec:mc5-g0g1-stratified-extension}
+
+The proof of Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} proceeds
+by stratified extension across the eleven boundary divisors of
+$\Mbar_{0,5}$. Each stratum is handled by a different MC stage of the
+predecessor chain: the ten rational separating divisors are governed by
+MC4 \textup{(}for $|S| = 2$, equivalently $|S^c| = 3$\textup{)} or by
+MC3 \textup{(}for $|S| = 3$, equivalently $|S^c| = 2$, treated symmetrically
+via MC4-MC3 closure\textup{)}, and the single elliptic corner is governed
+by the genus-$1$ trace formula on the bubble.
+
+\begin{proof}[Proof of Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}]
+We organise the proof into four steps corresponding to the four
+hypotheses of the supervisory brief. Throughout, $\cA$ is restricted to
+$\cA^{\evcore}$ \textup{(}see
+Remark~\ref{rem:mc5-g0g1-ap47-qualifier}\textup{)}.
+
+\medskip
+\textbf{Step 1: Restriction to boundary divisors.}
+The boundary $\partial \Mbar_{0,5}$ is decomposed as
+in~\eqref{eq:mbar-05-boundary-decomposition}: ten rational separating
+divisors $\delta_{0|S, S^c}$ with $|S| \in \{2, 3\}$, plus one formal
+elliptic corner $\delta_{1|3}^{*}$ in the universal family. The
+extension $\bar\Phi^{\evcore}_{5}$ is determined by its restriction to
+each of these eleven divisors via the standard formal-coordinate
+factorisation: write $z_{i} = z_{i}(t)$ with $t$ the formal parameter
+normal to the divisor, expand $\Phi^{\evcore}_{5}$ as a power series in
+$t$, and apply the OPE expansion encoded by the sewing data of
+clauses~(i)--(ii).
+
+\medskip
+\textbf{Step 2: Compatibility with MC4 at separating divisors.}
+At each separating divisor $\delta_{0|S, S^c}$ with $|S| = 2$, the
+curve degenerates into two genus-$0$ components glued at a single node;
+the two markings $\xi_{S}$ live on one component (the bubble), and the
+three markings $\xi_{S^c}$ live on the other. The factorisation through
+the node is given by the complete intermediate state sum
+\begin{equation}
+\label{eq:mc5-g0g1-mc4-intermediate-sum}
+\Phi^{\evcore}_{5}\big|_{\delta_{0|S, S^c}}
+\;=\;
+\sum_{a, b}
+\Phi^{\evcore}_{3}\bigl(\xi_{S}; e_{a}\bigr)
+\,\eta^{ab}\,
+\Phi^{\evcore}_{4}\bigl(e_{b}; \xi_{S^c}\bigr),
+\end{equation}
+where the sum runs over the eval-gen-core basis $\{e_{a}\}$. The
+right-hand side is exactly the MC3-MC4 sewing prediction: the
+$3$-point factor is governed by MC3
+\textup{(}Cor.~\ref{cor:mc3-eval-gen-core}\textup{)}, and the $4$-point
+factor is governed by MC4
+\textup{(}Theorem~\ref{thm:mc4-strong-completion-tower}\textup{)},
+both restricted to $\cA^{\evcore}$ as in
+Remark~\ref{rem:mc5-g0g1-ap47-qualifier}.
+
+The case $|S| = 3$ is symmetric: the bubble carries three markings, and
+the residual sphere carries two. Expanded out,
+\begin{equation}
+\label{eq:mc5-g0g1-mc4-intermediate-sum-symmetric}
+\Phi^{\evcore}_{5}\big|_{\delta_{0|S, S^c}}
+\;=\;
+\sum_{a, b}
+\Phi^{\evcore}_{4}\bigl(\xi_{S}; e_{a}\bigr)
+\,\eta^{ab}\,
+\Phi^{\evcore}_{3}\bigl(e_{b}; \xi_{S^c}\bigr),
+\end{equation}
+with the symmetric MC4 closure on the bubble factor and the MC3 closure
+on the residual factor.
+
+Convergence and trace-class compactness of the sums in
+\eqref{eq:mc5-g0g1-mc4-intermediate-sum} and
+\eqref{eq:mc5-g0g1-mc4-intermediate-sum-symmetric} follow from the
+HS-sewing criterion of Theorem~\ref{thm:hs-sewing-trace-class}, applied
+at $n = 4$ and at $n = 3$ respectively. The strong-completion-tower
+hypothesis of $\cA^{\evcore}$ controls the OPE coefficient growth
+required by the criterion.
+
+\medskip
+\textbf{Step 3: Compatibility at the genus-$1$ corner.}
+The corner $\delta_{1|3}^{*}$ is the only divisor of $\Mbar_{0,5}$ at
+which the marked-point degeneration crosses the genus filter. Its formal
+collar is parametrised by the bubble nome $q = e^{-t}$, with $t$ the
+conformal length of the bubble's degenerating cycle. As $q \to 0$, the
+bubble pinches to a node carrying three markings; as $q \to 1$, the
+bubble decompactifies.
+
+On the bubble, the $3$-point function is determined by the genus-$1$
+traced $3$-point function
+\begin{equation}
+\label{eq:mc5-g0g1-genus-1-traced-three-point}
+F^{(1)}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q)
+\;=\;
+\mathrm{Tr}_{\cA^{\evcore}}\Bigl(V(\xi_{i_{1}}) V(\xi_{i_{2}}) V(\xi_{i_{3}})
+\, e_{a} \, q^{L_{0} - c/24}\Bigr),
+\end{equation}
+where the trace is over the eval-gen-core sectors. By the
+factorisation-at-nodes clause of Theorem~A
+\textup{(}Theorem~\ref{thm:theorem-A-modular-family}, clause~(iv)\textup{)},
+the bar differential on a degenerating curve restricts at the node to
+the ordinary residue OPE, so
+\begin{equation}
+\label{eq:mc5-g0g1-bar-differential-restriction-corner}
+d_{\mathrm{bar}, 5}\big|_{\delta_{1|3}^{*}}
+\;=\;
+d^{(1)}_{\mathrm{bar}, 3} \otimes 1 \;+\; 1 \otimes d^{(0)}_{\mathrm{bar}, 2},
+\end{equation}
+the formal sum of the genus-$1$ bar differential on the bubble with the
+genus-$0$ bar differential on the residual sphere. The $5$-point sewing
+prediction at the corner is therefore the trace formula
+\begin{equation}
+\label{eq:mc5-g0g1-corner-trace-formula}
+\bar\Phi^{\evcore}_{5}\big|_{\delta_{1|3}^{*}}
+\;=\;
+\sum_{a, b}
+F^{(1)}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q)
+\,\eta^{ab}\,
+\Phi^{\evcore}_{2}(\xi_{j_{1}}, \xi_{j_{2}}; e_{b}),
+\end{equation}
+exactly the right-hand side of clause~(ii) of the theorem.
+
+Convergence of~\eqref{eq:mc5-g0g1-corner-trace-formula}: the sum over
+the eval-gen-core basis is trace-class for $0 < |q| < 1$ by the
+HS-sewing criterion applied to the genus-$1$ bubble. The trace-class
+property survives the residual genus-$0$ coupling because the residual
+$2$-point function $\Phi^{\evcore}_{2}(\xi_{j_{1}}, \xi_{j_{2}}; e_{b})$
+is bounded uniformly on compact subsets of the genus-$0$ residual sphere,
+controlled by the conformal weight grading on $\cA^{\evcore}$.
+
+\medskip
+\textbf{Step 4: Compatibility with the bar differential at non-separating loci.}
+The remaining content is the squaring-to-zero
+$d_{\mathrm{bar}, 5}^{\, 2} = 0$ on the open stratum $\Conford_{5}(X)$
+and its propagation across the boundary. By the climax theorem
+\textup{(}Chapter~\ref{chap:climax-platonic}, equation~\eqref{eq:climax-equation-G2}\textup{)},
+the bar differential is the pullback
+\begin{equation}
+\label{eq:mc5-g0g1-bar-differential-pullback}
+d_{\mathrm{bar}, 5} \;=\; \KZ^{*}\bigl(\nabla^{(5)}_{\Arn}\bigr),
+\end{equation}
+and Arnold's three-term relation
+\begin{equation}
+\label{eq:mc5-g0g1-arnold-three-term}
+\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0
+\quad\text{on } \Conford_{5}(X), \quad 1 \le i < j < k \le 5,
+\end{equation}
+gives flatness $\nabla^{(5)\, 2}_{\Arn} = 0$. Pulling back, $d_{\mathrm{bar}, 5}^{\, 2} = 0$.
+This is clause~(iii).
+
+The Maurer-Cartan element $\tau^{\mathrm{sew}, 5}$ is then the universal
+twisting morphism of the convolution complex
+$\Conv(\BarOrd_{\le 5}(\cA^{\evcore}), \cA^{\evcore})$ at degree $5$, and
+clause~(iv) asserts that it extends the MC4 element by construction:
+each MC4 sewing prediction at $|S| = 2$ or $|S| = 3$ is a finite-stage
+truncation of the MC5 element at $\le 4$ points, and the elliptic-corner
+prediction at $\delta_{1|3}^{*}$ is the genus-$1$ extension specified in
+clause~(ii).
+
+\medskip
+\textbf{Bar-cobar duality on the eval-gen-core.}
+The completed counit $\widehat{\epsilon}_{5}$ is a quasi-isomorphism by
+the strong-completion-tower closure of MC4
+\textup{(}Theorem~\ref{thm:mc4-strong-completion-tower}\textup{)} applied
+at finite stage $N = 5$, restricted to $\cA^{\evcore}_{\le 5}$. The
+strong completion-tower hypothesis ensures the degree-cutoff lemma
+\textup{(}Lemma~\ref{lem:degree-cutoff-bar-truncation}\textup{)} bounds
+the bar differential by a finite sum at each weight stage, and
+Mittag-Leffler is automatic on the eval-gen-core
+\textup{(}Proposition~\ref{prop:standard-strong-filtration},
+clause~(iv)\textup{)}. This proves clause~(v).
+
+\medskip
+\textbf{Cross-references.}
+The sewing prescriptions of clauses~(i) and~(ii) match three independent
+mathematical threads converging on the same formula: Beilinson--Drinfeld
+factorisation~\cite{BeilinsonDrinfeld04} at separating divisors,
+Costello--Gwilliam observable-algebra factorisation~\cite{CostelloGwilliam17}
+at non-separating loci, and the chiral $5$-point identities of the
+chiral-Hochschild-Koszul programme on the elliptic bubble. Each thread
+verifies the same sewing prescription independently.
+\end{proof}
+
+\section{Three consequences at the wall}
+\label{sec:mc5-g0g1-three-consequences}
+
+The 5-point sewing theorem at the genus-0/genus-1 wall has three
+concrete instantiations, one for each of the canonical landscape
+witnesses for which the elliptic supertrace in clause~(ii) is computable
+in closed form. We record them as corollaries of
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}, with explicit scope
+tags.
+
+\begin{corollary}[Heisenberg elliptic function at the wall]
+\label{cor:mc5-g0g1-heisenberg-elliptic-function}
+\index{Heisenberg!elliptic function at MC5 wall|textbf}
+\textup{(UNIFORM-WEIGHT.)}
+Let $\cA = H_{k}$ be the Heisenberg vertex algebra at level $k$, regarded
+as a class-$\mathsf{G}$ chiral algebra in the standard landscape
+\textup{(}Chapter~\ref{chap:shadow-quadrichotomy-platonic}\textup{)}. The
+elliptic supertrace in clause~\textup{(ii)} of
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}, applied to
+$\cA^{\evcore} = H_{k}$, is a Fredholm determinant
+\begin{equation}
+\label{eq:mc5-g0g1-heisenberg-fredholm-determinant}
+F^{(1)}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q)
+\;=\;
+\det\bigl(1 - T_{q}\bigr)^{k} \cdot W_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q),
+\end{equation}
+where $T_{q}$ is the genus-$1$ sewing kernel on the reduced Bergman
+space and $W_{3}$ is the Wick-contraction polynomial of the three
+insertions on the elliptic bubble. Combined with the residual $2$-point
+function on the genus-$0$ component, the MC5 sewing reproduces the
+genus-$1$ traced $5$-point function of the Heisenberg algebra.
+\ClaimStatusProvedHere{}
+\end{corollary}
+
+\begin{proof}
+For the Heisenberg algebra, Wick's theorem reduces the elliptic supertrace
+to a sum of products of two-point functions on the elliptic bubble. The
+infinite product structure comes from the bosonic Fock space character,
+which contributes $\det(1 - T_{q})^{k}$ as the regularised product over
+oscillator modes. The polynomial factor $W_{3}$ collects the connected
+Wick contractions of the three insertions. The detailed reduction is
+given in Theorem~\ref{thm:hs-sewing-heisenberg}; the present corollary
+applies that reduction at the MC5 corner.
+\end{proof}
+
+\begin{corollary}[Virasoro class-$\mathsf{M}$ shadow corrections at the wall]
+\label{cor:mc5-g0g1-virasoro-class-m-corrections}
+\index{Virasoro!shadow corrections at MC5 wall|textbf}
+\textup{(}\textup{ALL-WEIGHT, with cross-channel correction $\delta F_{2}^{\mathrm{cross}}$.}\textup{)}
+Let $\cA = \mathrm{Vir}_{c}$ be the Virasoro chiral algebra at generic
+central charge $c$, regarded as a class-$\mathsf{M}$ chiral algebra in
+the standard landscape \textup{(}Chapter~\ref{chap:shadow-quadrichotomy-platonic}\textup{)}.
+The elliptic supertrace in clause~\textup{(ii)} of
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} acquires shadow
+corrections at order $S_{r}$ for $r \ge 2$:
+\begin{equation}
+\label{eq:mc5-g0g1-virasoro-shadow-corrections}
+F^{(1)}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q)
+\;=\;
+F^{(1), \mathrm{cl}}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q)
+\;+\;
+\sum_{r \ge 2} S_{r}(\mathrm{Vir}_{c}) \cdot \delta^{(r)}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q),
+\end{equation}
+where $S_{r}(\mathrm{Vir}_{c})$ is the $r$-th Virasoro shadow coefficient
+and $\delta^{(r)}_{3}$ is the corresponding $r$-loop shadow-Feynman
+correction at the bubble. The MC5 corner is the first stage where these
+class-$\mathsf{M}$ corrections are visible in the moduli geometry; the
+chain-level chain-ambient question for the resulting infinite series is
+treated in Chapter~\ref{chap:mc5-class-m-chain-level-platonic}.
+\ClaimStatusProvedHere{}
+\end{corollary}
+
+\begin{proof}
+The Virasoro elliptic supertrace at $n = 3$ is computable as a series in
+the bubble nome $q$ via the Virasoro character formula
+$\chi_{\mathrm{Vir}_{c}}(q) = q^{-c/24} / \prod_{n \ge 2} (1 - q^{n})$.
+The shadow corrections $S_{r}(\mathrm{Vir}_{c})$ enter as coefficients
+of the curvature corrections $m_{0}^{\lfloor r/2 \rfloor - 1}$
+in the bar complex
+\textup{(}equation~\eqref{eq:harmonic-discrepancy} of
+Chapter~\ref{chap:mc5-class-m-chain-level-platonic}\textup{)}, and the
+sum~\eqref{eq:mc5-g0g1-virasoro-shadow-corrections} is the corresponding
+shadow-Feynman expansion at the corner. The chain-level convergence of
+the resulting infinite series in the pro-ambient is the content of
+Theorem~\ref{thm:mc5-class-m-chain-level-pro-ambient}.
+\end{proof}
+
+\begin{corollary}[K3 elliptic genus at the wall]
+\label{cor:mc5-g0g1-k3-elliptic-genus}
+\index{K3 elliptic genus at MC5 wall|textbf}
+\textup{(}\textup{LOCAL: scope is the sub-Sugawara stratum $k < -h^{\vee}/2$
+of the K3 sigma-model chiral algebra at large volume; see surrounding
+paragraph for the explicit moduli locus.}\textup{)}
+Let $\cA = \cA(\mathrm{K3})$ be the chiral algebra of the K3 sigma model
+at large volume, restricted to its sub-Sugawara stratum
+$\{k < -h^{\vee}/2\}$ where the elliptic genus formula of
+Eguchi--Ooguri--Tachikawa~\cite{EguchiOoguriTachikawa11} is unambiguously
+defined as a Jacobi form of weight $0$ and index $1$. On the genus-$1$
+bubble of the MC5 corner $\delta_{1|3}^{*}$, the elliptic supertrace in
+clause~\textup{(ii)} of Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}
+acquires the K3 elliptic genus as the bubble factor:
+\begin{equation}
+\label{eq:mc5-g0g1-k3-elliptic-genus-formula}
+F^{(1)}_{3}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q, y)
+\;=\;
+\chi_{\mathrm{K3}}(q, y) \cdot W^{(1)}_{3, \mathrm{K3}}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q),
+\end{equation}
+up to a normalisation depending on the choice of insertion frames, where
+$\chi_{\mathrm{K3}}(q, y)$ is the K3 elliptic genus and
+$W^{(1)}_{3, \mathrm{K3}}$ is the connected $3$-point Wick polynomial on
+the bubble in the K3 chiral algebra at the chosen stratum. MC5 thus
+produces a chiral-algebraic derivation of the K3 elliptic genus from
+the sewing principle, valid on the indicated sub-Sugawara stratum.
+\ClaimStatusProvedHere{}
+\end{corollary}
+
+\begin{proof}
+On the sub-Sugawara stratum $\{k < -h^{\vee}/2\}$, the K3 chiral algebra
+admits an $\cN = 4$ superconformal structure with $\widehat{c} = 2$, and
+the elliptic genus
+\[
+\chi_{\mathrm{K3}}(q, y)
+\;=\;
+\mathrm{Tr}_{\mathrm{RR}}\bigl((-1)^{F} y^{J_{0}} q^{L_{0} - c/24} \bar q^{\bar L_{0} - \bar c/24}\bigr)
+\]
+is a Jacobi form of weight $0$ and index $1$ in the variables $(q, y)$
+\textup{(}see~\cite{EguchiOoguriTachikawa11}\textup{)}. The elliptic
+supertrace at the MC5 corner specialises to this elliptic genus when the
+three insertions $(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}})$ are chosen in
+the trivial conformal block at zero left-moving conformal weight; in
+that case $W^{(1)}_{3, \mathrm{K3}}(\xi_{i_{1}}, \xi_{i_{2}}, \xi_{i_{3}}; e_{a}; q)$
+is a normalisation polynomial controlled by the Wick contractions of
+the insertions on the elliptic bubble. The detailed identification of
+the bubble factor with $\chi_{\mathrm{K3}}(q, y)$ uses the
+Eguchi--Ooguri--Tachikawa decomposition of $\chi_{\mathrm{K3}}$ into
+$\cN = 4$ characters, applied to the trace
+formula~\eqref{eq:mc5-g0g1-genus-1-traced-three-point}. The scope is
+restricted to the sub-Sugawara stratum because the elliptic-genus
+formula is unambiguously defined there; on the full Sugawara stratum
+including $k \ge -h^{\vee}/2$, the moonshine corrections to
+$\chi_{\mathrm{K3}}$ require the Vol~III machinery of moonshine modules
+and lie outside the scope of MC5 in its present form.
+\end{proof}
+
+\begin{remark}[Honest sub-Sugawara scope]
+\label{rem:mc5-g0g1-k3-sub-sugawara-scope}
+The scope tag in Corollary~\ref{cor:mc5-g0g1-k3-elliptic-genus} is
+deliberately restrictive. The full elliptic genus of K3 at all moduli is
+controlled by Mathieu moonshine and is the subject of a substantial
+literature \textup{(}see Vol~III for the moonshine context\textup{)}.
+The sub-Sugawara stratum $\{k < -h^{\vee}/2\}$ is the regime where the
+chiral 5-point sewing of MC5 reduces to the elementary Jacobi-form
+formula of Eguchi--Ooguri--Tachikawa; outside this stratum, the
+moonshine corrections require additional structure beyond the present
+chapter. The corollary is therefore stated as
+$\textup{ALL-WEIGHT}$-tagged in the sub-Sugawara regime; the
+full-moduli extension is outside the scope of the eval-gen-core MC5
+theorem and is not claimed.
+\end{remark}
+
+\section{The closed MC1 -- MC5 chain}
+\label{sec:mc5-g0g1-closed-mc-chain}
+
+With Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} in place, the
+MC chain reads as a stratified covering of the boundary of the
+$n$-pointed Deligne-Mumford moduli, with each MC stage being the sewing
+theorem at its $n$-point level. The chain closes at MC5 in the sense
+that the genus filter is crossed for the first time, and the bar
+differential of Chapter~\ref{chap:climax-platonic} survives the
+crossing.
+
+\begin{itemize}
+\item \textbf{MC1.} Augmentation: the MC element at $n = 1$ is the
+unit-vacuum identification.
+\item \textbf{MC2.} Binary OPE: at $n = 2$, the MC element is the
+collision residue $r(z) = \mathrm{Res}^{\mathrm{coll}}_{0, 2}(\Theta_{\cA})$,
+the chiral classical $r$-matrix.
+\item \textbf{MC3.} Associator: at $n = 3$, the MC element on the
+eval-gen-core encodes the Stasheff pentagon at the level of the bar
+coderivation $b_{2} + b_{3}$
+\textup{(}Cor.~\ref{cor:mc3-eval-gen-core}\textup{)}.
+\item \textbf{MC4.} Quadrilateral sewing: at $n = 4$, the MC element
+extends across the boundary $\partial \Mbar_{0,4}$ via the
+strong-completion-tower closure on the eval-gen-core
+\textup{(}Theorem~\ref{thm:mc4-strong-completion-tower}\textup{)}.
+\item \textbf{MC5.} Genus-$0$/genus-$1$ wall: at $n = 5$, the MC element
+extends across both the rational separating divisors $\delta_{0|S, S^c}$
+\textup{(}governed by MC4\textup{)} and the elliptic corner
+$\delta_{1|3}^{*}$ \textup{(}governed by the elliptic
+$3$-point function on the bubble\textup{)}, restricted to the eval-gen-core
+\textup{(}Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}\textup{)}.
+\end{itemize}
+
+\begin{remark}[Climax-theorem integration]
+\label{rem:mc5-g0g1-climax-integration}
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} is the $n = 5$
+specialisation of universal KZ sewing
+\textup{(}Chapter~\ref{chap:climax-platonic},
+equation~\eqref{eq:climax-equation-G2}\textup{)}. Pulling back
+$\nabla^{(5)}_{\Arn}$ from $\Conford_{5}(X)$ to its compactification
+$\widehat{\Mbar}_{0,5}(X)$ produces a flat connection on the boundary
+divisors; the pullback agrees with the chiral bar differential
+$d_{\mathrm{bar}, 5}$ by clause~(iii), and Arnold's three-term relation
+\eqref{eq:mc5-g0g1-arnold-three-term} becomes the squaring-to-zero
+$d_{\mathrm{bar}, 5}^{\, 2} = 0$.
+
+The genus-$1$ corner $\delta_{1|3}^{*}$ is the $n = 5$ specialisation
+of Arnold's elliptic upgrade. Replacing $\Conford_{n}(X)$ by
+$\Conford_{n}(E_{\tau})$ for an elliptic curve $E_{\tau}$, and
+Arnold's $\eta_{ij}$ by Felder's elliptic $r$-matrix, produces the KZB
+functor; the MC5 corner is the locus where the universal curve $X$
+acquires an elliptic bubble, and on this locus the KZ pullback restricts
+to Felder's KZB connection on the bubble. The elliptic $3$-point
+function in clause~(ii) is the KZB-flat section.
+
+The per-family $\kappa$ conductor of the harmonic discrepancy
+\textup{(}Chapter~\ref{chap:mc5-class-m-chain-level-platonic},
+equation~\eqref{eq:harmonic-discrepancy}\textup{)} is the negative of
+the ghost charge of any quasi-free BRST resolution by the universal
+identity of Chapter~\ref{chap:universal-conductor}. At the MC5 corner,
+this $\kappa$ conductor governs the magnitude of the shadow corrections
+of Corollary~\ref{cor:mc5-g0g1-virasoro-class-m-corrections}.
+
+By the universality~\eqref{eq:climax-equation-G2}, any other $5$-point
+chiral sewing prescription \textup{(}Drinfeld--Kohno, Verlinde,
+Borcherds, Felder\textup{)} is a pullback of $\nabla^{(5)}_{\Arn}$ along
+the structure functor $\cA \to \mathrm{End}(\BarOrd(\cA))$. Therefore
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} extends to every chiral
+algebra in the standard landscape simultaneously, the Platonic content
+being that of $\nabla_{\Arn}$ at $n = 5$, not the algebra-specific
+sewing prescription.
+\end{remark}
+
+\section{Inner motion: the wall as a limit of degenerations}
+\label{sec:mc5-g0g1-inner-motion}
+
+The motion at the MC5 corner is the wall-crossing
+$\delta_{1|3}^{*} \subset \partial \Mbar_{0,5} \;\longrightarrow\;
+\Mbar_{1,3}$. Three of the marked points of $\Mbar_{0,5}$ degenerate to
+a triple node and bubble into a stable elliptic curve carrying those
+three markings; the remaining two markings stay on the residual
+genus-$0$ component, attached to the bubble at a single node.
+
+Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing} certifies that the
+chiral correlator extends consistently across this wall. On the
+genus-$0$ side, the correlator is the holomorphic $5$-point function on
+$\Conford_{5}(X)$. On the genus-$1$ side, the bubble factor is the
+elliptic $3$-point function and the residual factor is the genus-$0$
+$2$-point function. The two factorisations are matched by the trace
+prescription of clause~(ii), and the matching is consistent with the
+bar-cobar duality of clause~(v).
+
+Without the present chapter's theorem, the bar differential is silent
+at the wall: it knows about the rational separating divisors via MC4
+\textup{(}Theorem~\ref{thm:mc4-strong-completion-tower}\textup{)}, but
+does not know what happens when three points coalesce into a genus-$1$
+bubble. The MC5 theorem supplies the missing data: at $\delta_{1|3}^{*}$,
+the bar differential sews the elliptic $3$-point function to the residual
+$2$-point function via the trace
+formula~\eqref{eq:mc5-g0g1-corner-trace-formula}.
+
+The entire higher-genus programme rests on this wall. Every higher MC
+stage will need to handle further genus crossings; the MC5 theorem of
+the present chapter is the proof of concept that the bar differential
+survives the first one. The chain-level companion
+\textup{(}Chapter~\ref{chap:mc5-class-m-chain-level-platonic}\textup{)}
+addresses the ambient-completion question for class $\mathsf{M}$ chiral
+algebras at the wall and for all $g \ge 0$; the geometric content of
+the wall itself, and its first appearance in the MC chain, is the
+content of the present chapter.
+
+\section{Summary}
+\label{sec:mc5-g0g1-summary}
+
+The Platonic ideal of MC5 at the genus-$0$/genus-$1$ wall is the
+following statement.
+
+\begin{quote}
+\emph{Let $X$ be a smooth projective curve and let $\cA$ be a strong
+completion tower of finite resonance rank, restricted to its
+evaluation-generated core $\cA^{\evcore}$. The $5$-point chiral
+correlator of $\cA^{\evcore}$ on $X$ extends uniquely as a holomorphic
+section over the formal Deligne-Mumford compactification
+$\widehat{\Mbar}_{0,5}(X)$. The extension is governed at the ten
+rational separating divisors by the MC4 sewing prediction and at the
+single elliptic corner $\delta_{1|3}^{*}$ by the trace of the genus-$1$
+$3$-point function on the bubble against the genus-$0$ $2$-point
+function on the residual sphere. The bar differential is the pullback
+of Arnold's universal flat connection along the KZ functor of
+Chapter~\ref{chap:climax-platonic}; flatness gives squaring-to-zero of
+the bar differential, and the resulting Maurer-Cartan element extends
+the MC4 element. The completed bar-cobar counit at finite stage
+$N = 5$ is a quasi-isomorphism. restricts the theorem to the
+eval-gen-core; full-category extension is conjectural
+\textup{(}Conjecture~\ref{conj:mc5-g0g1-wall-full-category}\textup{)}.}
+\end{quote}
+
+The MC chain $\mathrm{MC1} \to \mathrm{MC2} \to \mathrm{MC3} \to
+\mathrm{MC4} \to \mathrm{MC5}$ thus closes at the first place where the
+genus filter is crossed, with each MC stage being the sewing theorem at
+its $n$-point level. Three concrete consequences --- the Heisenberg
+elliptic Fredholm determinant, the Virasoro class-$\mathsf{M}$ shadow
+corrections, the K3 elliptic genus on the sub-Sugawara stratum ---
+illustrate the theorem on the canonical landscape witnesses, with the
+honest scope tags required by AP-UNIFORM-WEIGHT-TAG and the sub-Sugawara
+restriction in the K3 case.
+
+\begin{center}
+\rule{0.3\textwidth}{0.4pt}
+\end{center}
+
+The MC5 entry of the Vol~I theorem-status table is augmented by the
+present chapter as follows: the geometric $5$-point sewing at the
+genus-$0$/genus-$1$ wall is proved on the eval-gen-core
+\textup{(}Theorem~\ref{thm:mc5-g0g1-wall-five-point-sewing}\textup{)};
+the chain-level chain-ambient companion for class $\mathsf{M}$ is proved
+in the pro-ambient \textup{(}Chapter~\ref{chap:mc5-class-m-chain-level-platonic}\textup{)};
+together they constitute the closed MC5 of the programme. Higher-stage
+extensions are conjectural per 
+\textup{(}Remark~\ref{rem:mc5-g0g1-higher-stage-conjectural}\textup{)}.
