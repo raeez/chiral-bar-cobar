@@ -1,0 +1,143 @@
+diff --git a/standalone/cy_quantum_groups_6d_hcs.tex b/standalone/cy_quantum_groups_6d_hcs.tex
+index f561bf10..191148ef 100644
+--- a/standalone/cy_quantum_groups_6d_hcs.tex
++++ b/standalone/cy_quantum_groups_6d_hcs.tex
+@@ -543,15 +543,19 @@ affine super Yangian attached to the toric quiver.  For $\bC^3$
+ $\CoHA(\bC^3) \simeq Y^+(\widehat{\fgl}_1) \simeq \cW_{1+\infty}$.
+ \end{theorem}
+ 
+-\subsection{The CoHA carries $\Eone$-chiral Hopf data}
++\subsection{The CoHA carries $\Eone$-chiral bialgebra data}
+ 
+ The CoHA is the natural $\Eone$-primitive of the CY quantum group.
+-Its algebraic structure matches the five Hopf axioms of Volume~I.
++Its algebraic structure matches the $\Eone$-chiral bialgebra axiom
++system of Volume~I; the chiral antipode does not lift
++(Remark~\ref{rem:v3-qg-antipode}), so the object is a chiral bialgebra
++in the sense of that volume, not a chiral Hopf algebra.
+ 
+-\begin{proposition}[CoHA Hopf data]
++\begin{proposition}[CoHA $\Eone$-chiral bialgebra data]
+ \label{prop:v3-qg-coha-hopf}
+ The critical CoHA $\CoHA(Q, W)$ of a toric CY$_3$ carries the data
+-of an $\Eone$-chiral Hopf algebra:
++of an $\Eone$-chiral bialgebra, with a classical Yangian antipode
++that does not lift to a vertex-algebraic antipode:
+ \begin{enumerate}[label=\textup{(H\arabic*)}]
+  \item \emph{$\Eone$-chiral algebra.}  The Hall multiplication
+  (extension of short exact sequences $0 \to V' \to V \to V'' \to 0$
+@@ -571,13 +575,20 @@ of an $\Eone$-chiral Hopf algebra:
+  $(\Delta_w \otimes \mathrm{id}) \circ \Delta_{z+w}
+  = (\mathrm{id} \otimes \Delta_z) \circ \Delta_w$
+  with shifted parameters (not $\Delta_z$ composed with itself).
+- \item \emph{Hopf axiom.}  The antipode
++ \item \emph{Classical antipode, non-lifting at the chiral level.}
++ On the classical Yangian fibre, the antipode
+  $S \colon \CoHA(Q, W) \to \CoHA(Q, W)^{\mathrm{op}}$
+  satisfies the standard Hopf identity at $z = 0$.  For
+  $\cW_{1+\infty}$: $S(T(u)) = T(u)^{-1}$ in the transfer-matrix
+- formalism; this does not lift to a vertex-algebraic antipode
+- (the OPE obstruction $S(T)_{(3)}S(T) \neq c/2$ at generic
+- $\Psi$).
++ formalism.  This classical antipode does not lift to a
++ vertex-algebraic antipode on $\CoHA(Q, W)$ (OPE obstruction
++ $S(T)_{(3)}S(T) \neq c/2$ at generic $\Psi$, and the universal
++ Hopf-axiom residual; see
++ Remark~\ref{rem:v3-qg-antipode} for the precise obstruction
++ and Vol~I
++ Proposition~\ref{prop:w-infty-antipode-obstruction}
++ for the proved negative).  The CoHA is therefore a chiral
++ bialgebra, not a chiral Hopf algebra.
+ \end{enumerate}
+ \end{proposition}
+ 
+@@ -1001,13 +1012,13 @@ $c \circ (\Delta \otimes \id)$ on the universal element.
+ 
+ \subsection{Seven-dimensional holomorphic Chern--Simons}
+ 
+-\begin{proposition}[7d hCS boundary algebra]
+-\label{prop:7d-hcs-boundary-algebra}
++\begin{conjecture}[7d hCS boundary algebra]
++\label{conj:7d-hcs-boundary-algebra}
+ \ClaimStatusConjectured
+ The boundary algebra of seven-dimensional holomorphic Chern--Simons
+ theory on $X \times \bR$, with $X$ a CY$_4$, is the $p_1$-twisted
+ double current algebra $Y_{p_1}(X)$.
+-\end{proposition}
++\end{conjecture}
+ 
+ \begin{remark}[Evidence]
+ The statement extends Costello--Witten--Yamazaki (4d hCS on
+diff --git a/chapters/theory/e1_chiral_algebras.tex b/chapters/theory/e1_chiral_algebras.tex
+index d448cba..deeb213 100644
+--- a/chapters/theory/e1_chiral_algebras.tex
++++ b/chapters/theory/e1_chiral_algebras.tex
+@@ -1179,6 +1179,37 @@ associator $\Phi$). The $E_1$-chiral setting eliminates the
+ associator: axiom~\textbf{(H4)} holds on the nose because
+ the $E_1$-monoidal category is strictly associative
+ (the associahedron is contractible for linear orders).
++
++\smallskip
++\noindent\emph{Scope of (H5): class~$\mathbf{G}$ versus
++non-class-$\mathbf{G}$ landscape.}
++Axiom~\textbf{(H5)} is realised on the nose by class~$\mathbf{G}$
++primitive-coproduct algebras (Heisenberg, lattice at integer level,
++$\beta\gamma$ before Sugawara substitute); for these the
++involutive sign map $S(J) = -J$ is a chain-level antipode and
++Heisenberg (Example~\ref{ex:heisenberg-bialgebra}) is the prototype.
++For non-class-$\mathbf{G}$ families with Miura-type nonlinearities,
++a chain-level antipode does \emph{not} exist: the classical Yangian
++antipode $S(T(u)) = T(u)^{-1}$ does not lift to a vertex-algebraic
++antipode on $\cW_{1+\infty}[\Psi]$ by two independent obstructions
++(OPE quartic pole $S(T)_{(3)}S(T) = c/2 + 2(\Psi{-}1)(\Psi{-}2)$ at
++generic~$\Psi$, and a universal Hopf-axiom residual
++$-\frac{\Psi-1}{z^2} + z\,J$ in the convolution
++$m_z \circ (S \otimes \mathrm{id}) \circ \Delta_z$).  This is the
++proved negative of Vol~I, Proposition
++\textup{\texttt{prop:w-infty-antipode-obstruction}}
++(\texttt{chapters/theory/ordered\_associative\_chiral\_kd.tex}).
++Consequently, the object that concrete CY quantum groups
++(toroidal, Yangian, affine BPS) inhabit is an
++$E_1$-chiral bialgebra (axioms \textbf{(H1)--(H4)}), not an
++$E_1$-chiral Hopf algebra.  The present chapter retains the
++Hopf-axiom definition for the class~$\mathbf{G}$ prototype and for
++naming the obstruction target; the rest of the volume consistently
++treats the chiral object as a bialgebra and invokes the antipode
++only on the classical point-value fibre via the Drinfeld double
++programme (Vol~II, Conjecture
++\textup{\texttt{conj:drinfeld-double-e1-construction}}
++in \texttt{chapters/connections/ordered\_associative\_chiral\_kd\_frontier.tex}).
+ \end{remark}
+ 
+ \subsection{Why $E_1$ and not $E_\infty$}
+@@ -1419,7 +1450,7 @@ involution, and the Hopf structure is the simplest possible.
+ \ClaimStatusConjectured
+ The $W_{1+\infty}$ algebra at $c = 1$ (equivalently, the affine
+ Yangian $Y(\widehat{\fgl}_1)$ via Proch\'azka--Rap\v{c}\'ak) carries an
+-$E_1$-chiral Hopf algebra structure with:
++$E_1$-chiral bialgebra structure (axioms~\textbf{(H1)--(H4)}) with:
+ \begin{enumerate}[label=(\roman*)]
+  \item \emph{Coproduct}: for the generating field $T(u)$ (the Yangian
+  transfer matrix), $\Delta_z(T(u)) = T(u) \otimes T(u)$
+@@ -1428,9 +1459,18 @@ $E_1$-chiral Hopf algebra structure with:
+  (Remark~\ref{rem:dimofte-k-matrix-cy}):
+  $\Delta_z(W_n) = W_n \otimes 1 + K_{\mathcal{A}}(z) \otimes W_n + \ldots$
+  for the higher spin fields $W_n$.
+- \item \emph{Antipode}: $S(T(u)) = T(u)^{-1}$ (formal inverse of the
+- transfer matrix). On modes: $S(W_2) = -W_2$, $S(W_3) = -W_3 + W_2^2$
+- (the Hopf antipode recursion).
++ \item \emph{Classical antipode, non-lifting at the chiral level}:
++ $S(T(u)) = T(u)^{-1}$ (formal inverse of the
++ transfer matrix) on the point-value Yangian fibre.  On modes:
++ $S(W_2) = -W_2$, $S(W_3) = -W_3 + W_2^2$
++ (the classical antipode recursion).  This antipode does not lift to a
++ vertex-algebraic antipode on $\cW_{1+\infty}[\Psi]$: two independent
++ obstructions (OPE quartic pole and universal Hopf-axiom residual)
++ block the lift at generic~$\Psi$.  This is the proved negative of
++ Vol~I Proposition~\textup{V1-\ref{prop:w-infty-antipode-obstruction}};
++ consequently the chiral object is a bialgebra (axioms
++ \textbf{(H1)--(H4)}), not a chiral Hopf algebra, and the antipode is
++ retained only on the classical fibre.
+  \item \emph{$R$-matrix}: via the Drinfeld center,
+  the universal $R$-matrix is the Yangian $R$-matrix
+  of Theorem~\ref{thm:yang-r-matrix-ybe} with structure function $g(u)$.

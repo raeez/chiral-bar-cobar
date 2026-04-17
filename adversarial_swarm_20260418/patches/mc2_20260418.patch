@@ -1,0 +1,158 @@
+# MC2 + H06 scope-qualification patch (2026-04-18)
+# Author: Raeez Lorgat.
+#
+# NOTE: this is a planning patch, not committed. Apply via `git apply` or
+# paste manually. No AI attribution anywhere.
+#
+# Scope: three CLAUDE.md edits + one manuscript scope remark.
+#
+# The patch does NOT downgrade MC2. `thm:mc2-bar-intrinsic` is structurally
+# sound. The heal is a scope qualification of the "all-degree convergence"
+# status banner, a rename of the H06 alt-proof row from "conditional" to
+# "sketched", two new anti-patterns (AP741, AP742), and one scope remark in
+# the manuscript making the pro-object-limit semantics explicit (which is
+# already honest in prose at rem:mc2-bar-intrinsic-perspective but does not
+# name the ambient category).
+#
+# ============================================================
+# EDIT 1: CLAUDE.md Structural Facts section
+# ============================================================
+# Before (Structural Facts / Shadow tower paragraph, first sentence):
+#
+#   **Shadow tower**: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic).
+#   kappa, C, Q are projections. All-degree convergence PROVED.
+#
+# After:
+#
+#   **Shadow tower**: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic).
+#   kappa, C, Q are projections. All-degree convergence PROVED as
+#   pro-object limit in pro-Ch(Vect): Theta_A lives in the completed
+#   weight-filtered dg-Lie algebra $\widehat{\gAmod} = \varprojlim_N
+#   \gAmod / F^{N+1}$ (surjective-transitions Mittag-Leffler). Class-G/L/C
+#   support in $\gAmod$ truncates at finite degree (Heisenberg 2, affine
+#   KM 3, betagamma 4); class M has genuine transfinite support — the MC
+#   element is chain-level in pro-Ch(Vect), NOT in Ch(Vect) on the nose.
+#   AP296 cross-check: the MC2 weight filtration $w(g,r,d) = 2g-2+r+d$
+#   is OPERADIC (stability exponent of stable graphs); distinct from the
+#   OPE conformal weight whose simple-pole summands violate weight
+#   preservation. No AP296 propagation.
+#
+# ============================================================
+# EDIT 2: CLAUDE.md Alternative Proofs Secured table (H06 row)
+# ============================================================
+# Before:
+#
+#   | MC2 | Recursive inverse limit | KS scattering diagram (H06) |
+#
+# With status line currently reading "MC2 ALT H06 (KS scattering)
+# conditional on support-property comparison (open)".
+#
+# After:
+#
+#   | MC2 | Recursive inverse limit | KS scattering diagram (H06) |
+#
+# With status line replaced by:
+#   "MC2 alt H06 (KS scattering): SKETCHED at rem:mc2-scattering-diagram
+#    (higher_genus_modular_koszul.tex:4421); two uninscribed packages
+#    block promotion to an inscribed alternative theorem:
+#    (1) construction of the central-charge map Z: bigoplus_r Z e_r -> C
+#    for an arbitrary modular Koszul chiral algebra A (currently a free
+#    variable, no canonicalisation);
+#    (2) comparison between the primitive shadows {sigma_r} extracted
+#    from D_A and the Kontsevich-Soibelman support property
+#    (KS08 Def. 1 + Remark 1 — discrete active charges with polynomial
+#    density in the central-charge plane).
+#    The shadow-radius bound |S_r(L)| ~ A(L) rho_L^r r^{-5/2}
+#    (thm:shadow-radius(ii)) is stronger than KS polynomial density on
+#    autonomous primary lines but insufficient without a T-line
+#    restriction. Until (1) + (2) are installed, H06 is a REDUNDANT
+#    PROOF SKETCH, not an inscribed alternative."
+#
+# ============================================================
+# EDIT 3: CLAUDE.md AP catalogue (append after AP316)
+# ============================================================
+#
+# ### Wave MC2-swarm (2026-04-18 MC2 + H06 attack-and-heal, AP741-AP742)
+#
+# Two scope-discipline anti-patterns surfaced in the 2026-04-18
+# MC2 + H06 audit. Companion to the Wave-14 MC5 ambient-discipline
+# patterns (AP296, AP261).
+#
+# **AP741 (Pro-object-limit-vs-chain-level ambient drift in MC
+# status-table).** Status-table row reads "all-degree convergence
+# PROVED" without naming the ambient category. For a class-M chiral
+# algebra, $\Theta_\cA$ exists in $\pro\text{-}Ch(\Vect)$ (pro-object
+# over the weight filtration), NOT in $Ch(\Vect)$ on the nose; the MC
+# equation holds in the completed dg-Lie algebra $\widehat{\gAmod}$,
+# not in $\gAmod$. Bare "all-degree convergence" invites confusion with
+# chain-level existence of the positive-genus MC element as a genuine
+# chain complex, which is FALSE for class M (infinite support, no
+# termination) and only TRUE for class G/L/C. Counter: every convergence
+# status claim must name the ambient category and the limit mechanism
+# (inverse limit, filtered colimit, bar-length completion).
+# Distinct from AP296 (weight-preservation fallacy on bar differentials
+# where OPE simple-pole summands strictly drop weight): AP296 catches
+# a specific bigrading error; AP741 catches the broader practice of
+# stating chain-level results without ambient-category qualification.
+# Related: AP261 (single-index ML vs bigraded ML — correct arity of
+# grading), AP258 (cohomological-vs-chain status drift — correct level
+# of resolution). AP741 is the ambient-category sibling.
+#
+# **AP742 (Alt-proof SKETCHED mislabelled as "conditional").** The
+# "Alternative Proofs Secured" block lists H06 (KS scattering) as
+# "conditional on support-property comparison (open)". "Conditional"
+# invites treating H06 as a proof waiting on a single missing input.
+# Source reality is a REMARK with a PROOF SKETCH and TWO uninscribed
+# packages: (a) central-charge map construction (free variable, no
+# canonicalisation); (b) KS support-property comparison (Kontsevich-
+# Soibelman 2008, Def. 1 + Remark 1). Counter: for every "Alternative
+# Proofs Secured" entry, distinguish INSCRIBED / SKETCHED / CONJECTURAL
+# / PROPOSED; audit all eleven H-rows. Distinct from AP280 (three-step
+# epistemic inflation remark → standalone → headline): AP742 is
+# inflation-within-status-table from "sketch in a remark" to
+# "conditional alt-proof" in a single banner. Related: AP255
+# (phantom-file), AP305 (pessimistic drift — AP742 is the
+# optimistic-drift sibling at the alt-proof layer).
+#
+# ============================================================
+# EDIT 4: manuscript scope remark at
+#          chapters/theory/higher_genus_modular_koszul.tex,
+#          after rem:mc2-bar-intrinsic-perspective (line ~4615)
+# ============================================================
+#
+# Insert a new remark AFTER the existing rem:mc2-bar-intrinsic-perspective
+# and BEFORE the corollary cor:shadow-extraction:
+#
+# \begin{remark}[Ambient category of $\Theta_\cA$]
+# \label{rem:mc2-ambient-category}
+# \index{Maurer--Cartan element!ambient category}
+# For the reader tracking the ambient-category semantics of the
+# all-degree MC element: $\Theta_\cA \in \MC(\widehat{\gAmod})$, where
+# $\widehat{\gAmod} = \varprojlim_N \gAmod / F^{N+1}$ is the
+# weight-filtration completion
+# \textup{(}Definition~\textup{\ref{def:weight-filtration-tower}}\textup{)}.
+# As a pro-object in $\pro\text{-}Ch(\Vect)$ this limit is well-defined
+# and complete Hausdorff
+# \textup{(}Theorem~\textup{\ref{thm:recursive-existence}}(iv)\textup{)}.
+# As a chain complex in $Ch(\Vect)$ on the nose, $\Theta_\cA$ has finite
+# chain-level presentation only for classes $\mathbf{G}$, $\mathbf{L}$,
+# $\mathbf{C}$ \textup{(}depth $d_{\mathrm{alg}} \in \{0,1,2\}$;
+# termination at degrees $2$, $3$, $4$ respectively\textup{)}; for class
+# $\mathbf{M}$ the support is unbounded and $\Theta_\cA$ is genuinely a
+# pro-object. This distinction is the ambient-category analogue of the
+# one-channel vs multi-channel distinction in
+# Remark~\ref{rem:mc2-bar-intrinsic-perspective}: scalar saturation
+# controls PARAMETRIZATION by $\kappa$; ambient-category semantics
+# controls EXISTENCE in $Ch$ vs $\pro\text{-}Ch$. The weight filtration
+# indexed by $w(g,r,d) = 2g - 2 + r + d$ is OPERADIC (stability exponent
+# of stable graphs), distinct from the conformal weight grading on bar
+# words where the bar differential's simple-pole summands strictly drop
+# weight; Mittag-Leffler on the operadic filtration is unconditional and
+# lives in its strongest form (surjective transitions), while
+# Mittag-Leffler on the conformal-weight grading of bar words would fail
+# (and correctly is not invoked at any step of the proof).
+# \end{remark}
+#
+# ============================================================
+# End of patch.
+# ============================================================

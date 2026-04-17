@@ -290,6 +290,10 @@ def chirhoch_affine_km(lie_algebra: str) -> ChirHochData:
         dim1=dim_g,  # VERIFIED: HH^1 = g, [DC] Koszul resolution, [LT] outer derivations
         # VERIFIED: [SY] dim ChirHoch^2 = dim Z(A^!) = 1 by Koszul duality at generic dual level;
         # [LT] the cited affine calculations use scalar dual center.
+        # VERIFIED: prop:chirhoch2-affine-km-general (chiral_center_theorem.tex:2223) inscribes
+        #           dim ChirHoch^2(V_k(g)) = 1 for ALL simple g at generic non-critical k,
+        #           via chiral Feigin-Frenkel self-duality V_k(g)^! = V_{-k-2h^v}(g) + scalar
+        #           dual center at non-critical dual level.
         dim2=1,  # VERIFIED: [SY] dim ChirHoch^2 = dim Z(A^!) = 1; [LT] cited affine calculation uses scalar dual center.
         # VERIFIED: [DC] total = 1 + dim(g) + 1 = dim(g) + 2;
         # [CF] sl_2 -> 5 and sl_3 -> 10 are the first checked cases.

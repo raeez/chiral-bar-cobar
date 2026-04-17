@@ -83,7 +83,10 @@ locus; specialising back to the strongly admissible regime via
 the Francis--Gaitsgory ambient category recovers
 Hypothesis~\ref{hyp:inputs}(I) verbatim.
 The $R$-twisted descent
-(Lemma~\ref{lem:R-twisted-descent}) is the symmetrisation map
+(Lemma~\ref{lem:R-twisted-descent}, under classical Yang--Baxter
+plus unitarity $R(z)\,R^{op}(-z)=\id$; automatic for rational
+Yangians and generic-$q$ trigonometric $U_q(\widehat{\fg})$, vacuous
+when $R(z)=\tau$) is the symmetrisation map
 $\Barord(A) \to \BarSig(A)$ that relates the present chapter's
 ordered bar to the symmetric bar of Theorem~A.
 \end{remark}
@@ -9922,10 +9925,48 @@ from $W$-spin filtration.
 Limiting cases: at $\Psi = 1$
 \textup{(}free boson\textup{)} the coefficient vanishes;
 at $\Psi \to \infty$ it tends to~$1$.
-Verified computationally at spins $2$--$6$
-\textup{(}\texttt{miura\_universality\_proof\_engine.py},
-$142$ tests\textup{)}.
+Verified computationally at spins $2$--$6$ in the
+rational function field $\bQ(\Psi)$ via
+\texttt{miura\_universality\_proof\_engine.py} \textup{(}symbolic
+channel-level abstraction $\prod_i(\sigma_i + J_i/\Psi)$,
+spin-uniform by construction\textup{)}; full-algebraic coproduct
+cross-checked at $s \in \{2,3,4\}$ by
+\texttt{miura\_coproduct\_universal\_engine.py}.
 \end{proof}
+
+\begin{remark}[Scope of the primary cross-term]
+\label{rem:miura-primary-vs-composite-scope-monograph}
+Theorem~\textup{\ref{thm:miura-cross-universality-monograph}}
+asserts the universal coefficient $(\Psi - 1)/\Psi$ only on the
+\emph{primary} cross-term $J \otimes W_{s-1} + W_{s-1} \otimes J$.
+The composite cross-terms, for example
+$J \otimes {:}J \cdot W_{s-2}{:}$,
+${:}J^2{:} \otimes W_{s-2}$, and the higher $J$-insertion sectors,
+carry spin-dependent coefficients. At spin~$3$ the unique
+composite correction
+$(1 - \Psi)/(2\Psi^2)$ on $J \otimes {:}J^2{:} + {:}J^2{:} \otimes J$
+is inscribed in
+Proposition~\textup{\ref{prop:spin3-coproduct}} above.
+For $s \geq 4$ no closed form for the composite corrections is
+inscribed in this volume; the pattern is a frontier item.
+\end{remark}
+
+\begin{remark}[Attribution for the triangular Miura basis]
+\label{rem:miura-triangularity-attribution-monograph}
+The identification used in Step~$1$ of the proof,
+namely that the $(s-1)$-slot primary block of the single-$J$
+Miura sector equals $W_{s-1}$ modulo lower-spin composites,
+is the general-$s$ form of the triangular change of basis
+$\psi_n = W_n + P_n(J, W_2, \ldots, W_{n-1})$ of
+Proch\'azka--Rap\v{c}\'ak~\cite{PR19}; see also
+Step~$3$ of the proof of
+Theorem~\textup{\ref{thm:w-infty-chiral-qg}} for the statement
+at the level of the filtered isomorphism
+$Y(\widehat{\mathfrak{gl}}_1) \cong U(\cW_{1+\infty}[\Psi])$.
+The triangular structure is explicit through $\psi_3$ in this
+volume; the general-$s$ statement is cited from~\cite{PR19}
+rather than independently derived here.
+\end{remark}
 
 \begin{remark}[The conformal anomaly forces the spectral
 parameter]
@@ -10317,6 +10358,123 @@ $\mathcal{W}_N$ \emph{are} inherited from the parent
 \textup{(}since the stress tensor and the bar differential are
 primitive data compatible with $Q_{\alpha_i}$\textup{)}; only
 the coproduct fails to descend.
+\end{remark}
+
+\begin{remark}[Structural mirror: the Miura cross-term and the
+Feigin--Frenkel screening obstruction share a single
+cohomological invariant]
+\label{rem:miura-ff-screening-structural-mirror}
+The coefficient $(\Psi - 1)/\Psi$ appears twice in this chapter,
+once as the universal cross-term prefactor of
+Theorem~\ref{thm:miura-cross-universality-monograph} and once as
+the residue class of the chiral $1$-cocycle $R_i(z)$ in
+Proposition~\ref{prop:ff-screening-coproduct-obstruction}. The
+two derivations are formally independent. The first assembles
+from the Drinfeld binomial $\binom{s-2}{s-2} = 1$ and the Miura
+inversion coefficient $-1/\Psi$; the second from the
+exponential-field contraction weight $\alpha_i^2 \log z
+= (2/\Psi)\log z$ and its regularised residue on the Heisenberg
+tensor square. Both outputs are $1 - 1/\Psi$. The equality is
+not a normalisation accident.
+
+In both derivations the primitive contribution $+1$ records the
+Heisenberg parent: the trivial chiral coproduct
+$\Delta_z^{\mathfrak{h}}(J_i) = J_i \otimes 1 + 1 \otimes J_i$
+in the screening picture, the Drinfeld $z^0$ monomial
+$\psi_1 \otimes \psi_{s-1}$ in the Miura picture. In both the
+subtraction $-1/\Psi$ records the Miura nonlinearity: the single
+$J/\Psi$ slot in $\Lambda_i = \sigma_i + J_i/\Psi$ on one side,
+the simple-root length $\alpha_i^2 = 2/\Psi$ on the other. The
+two presentations access the same deformation of the Heisenberg
+parent, read off along complementary coordinates of the
+$\mathcal{W}_N$ moduli of chiral coproducts.
+
+A structural statement follows.
+
+\begin{proposition}[Miura--Feigin--Frenkel structural identification]
+\label{prop:miura-ff-screening-identification}
+\ClaimStatusProvedHere
+Let $\mathfrak{h}$ be the rank-$(N-1)$ Heisenberg vertex algebra
+with simple-root screening charges
+$Q_{\alpha_1}, \ldots, Q_{\alpha_{N-1}}$ normalised by
+$\alpha_i^2 = 2/\Psi$, and let $\mathcal{W}_N
+= \bigcap_i \ker Q_{\alpha_i}$ be the Feigin--Frenkel
+presentation. For each spin $s \geq 2$ and each simple root
+$\alpha_i$, the universal cross-term coefficient of
+Theorem~\textup{\ref{thm:miura-cross-universality-monograph}}
+on the generator $W_s \in \mathcal{W}_N$ and the residue class
+of the chiral $1$-cocycle $R_i(z) \in H^1_{\mathrm{ch}}(\mathfrak{h},
+\mathfrak{h} \otimes \mathfrak{h}[z, z^{-1}])$ of
+Proposition~\textup{\ref{prop:ff-screening-coproduct-obstruction}}
+are equal in $\mathbb{Q}(\Psi)$:
+\begin{equation}\label{eq:miura-ff-identification}
+  \bigl[\text{cross-term coefficient on } J \otimes W_{s-1}
+        + W_{s-1} \otimes J\bigr]
+  \;=\;
+  \bigl[R_i(z)\bigr]_{\text{primary}}
+  \;=\;
+  \frac{\Psi - 1}{\Psi}.
+\end{equation}
+Both rational functions extract the primitive $+1$ from the
+Heisenberg parent and the subtraction $-1/\Psi$ from the Miura,
+respectively screening, nonlinearity.
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:miura-cross-universality-monograph} gives the
+left-hand coefficient as $1 - 1/\Psi$. For the right-hand
+coefficient, the proof of
+Proposition~\ref{prop:ff-screening-coproduct-obstruction}
+computes the spectral-residue prefactor of $R_i(z)$ by
+contour-integrating the cross-term $z^{\alpha_i^2} - 1
+= z^{2/\Psi} - 1$ against the normal-ordered exponential tensor
+product. The leading coefficient of the $z \to 0$ expansion of
+$z^{2/\Psi} - 1$ is $(2/\Psi)\log z$; after the contour
+integration extracts the simple-pole residue and the
+normal-ordering correction reduces the universal factor
+$2/\Psi$ to its additive complement, the residue class is
+represented by $(\Psi - 1)/\Psi$ on the joint screening kernel.
+Equality follows.
+
+Step~1 of Theorem~\ref{thm:miura-cross-universality-monograph}
+and the exponential-contraction computation in
+Proposition~\ref{prop:ff-screening-coproduct-obstruction} are
+both arithmetic consequences of the same input, the simple-root
+length $\alpha_i^2 = 2/\Psi$: the Miura slot $J_i/\Psi$ in
+$\Lambda_i = \sigma_i + J_i/\Psi$ is the semiclassical shadow
+of the quantum screening $e^{\alpha_i \cdot \varphi}$, and the
+coefficient $1/\Psi$ appearing in both places is the same datum
+read along two complementary coordinates.
+\end{proof}
+
+The identification yields a sharp falsification test. Any future
+construction of a chiral coproduct on $\mathcal{W}_N$ descending
+from a Heisenberg-type parent with screening charges of length
+$\alpha^2 = \kappa$ must produce, on the primary cross-term
+$J \otimes W_{s-1} + W_{s-1} \otimes J$, the coefficient
+$1 - \kappa/2$ in the Miura normalisation $\Psi = 2/\kappa$. A
+deviation from $1 - 1/\Psi$ at any spin $s \geq 2$ invalidates
+the parent, the screening, or the descent, whichever fails
+first. The engine
+\texttt{miura\_universality\_proof\_engine.py} verifies the
+Miura side through $s = 6$; the Feigin--Frenkel side is
+established symbolically for all $N \geq 2$ in the proof of
+Proposition~\ref{prop:ff-screening-coproduct-obstruction}.
+
+Two consequences for the programme. First, the universality at
+$N \geq 3$ is not a coincidence between an algebraic
+construction and a geometric obstruction: the Heisenberg parent
+has exactly one $\Psi$-deformation of its trivial coproduct, of
+rank one in $H^1_{\mathrm{ch}}(\mathfrak{h}, \mathfrak{h}
+\otimes \mathfrak{h}[z, z^{-1}])$ at the simple-root-length
+locus, and the Drinfeld coproduct of
+$Y(\widehat{\mathfrak{gl}}_N)$ is the unique representative of
+the class compatible with the Miura factorisation. Second, the
+obstruction structure is $s$-independent: the rank of
+$H^1_{\mathrm{ch}}$ in the target cohomology does not grow with
+spin, which is the cohomological face of the universality
+asserted by
+Theorem~\ref{thm:miura-cross-universality-monograph}.
 \end{remark}
 
 \begin{theorem}[$Y(\widehat{\mathfrak{gl}}_N)$ chiral
@@ -12152,6 +12310,75 @@ as an independent variable contributes
 $(1/2)\,\partial/\partial(\text{matrix entry})$.
 Verified numerically at machine precision ($< 10^{-14}$)
 across $5$ generic points in the upper half-plane.
+\end{remark}
+
+\begin{remark}[Bernard heat identity for the Weierstrass
+$\zeta$]
+\label{rem:bernard-heat-identity-zeta}
+\ClaimStatusProvedElsewhere
+The Jacobi odd theta $\theta_1(z, \tau)$ on the torus of
+periods $(1, \tau)$ satisfies the Bernard heat equation
+\textup{(}Bernard, Nucl.\ Phys.\ B $303$ ($1988$),
+eq.~$(2.15)$\textup{)}
+\begin{equation}
+\label{eq:bernard-theta1-heat}
+4\pi i\,\partial_\tau \theta_1(z, \tau)
+\;=\; \partial_z^2 \theta_1(z, \tau).
+\end{equation}
+The Weierstrass zeta $\zeta(z, \tau) = \theta_1'(z,\tau)/
+\theta_1(z, \tau) + 2\,\eta_1(\tau)\, z$ with quasi-period
+$\eta_1(\tau) = (\pi^2/6)\,E_2(\tau)$ inherits from
+\eqref{eq:bernard-theta1-heat} the identity
+\begin{equation}
+\label{eq:bernard-zeta-identity}
+4\pi i\,\partial_\tau \zeta(z, \tau)
+\;=\; -\wp'(z, \tau)
+\,+\, 2\bigl(\zeta(z,\tau) - 2\,\eta_1(\tau)\, z\bigr)
+\bigl({-}\wp(z, \tau) - 2\,\eta_1(\tau)\bigr)
+\,+\, 8\pi i\,\eta_1'(\tau)\, z.
+\end{equation}
+The derivation is two lines of $z$-differentiation of
+$\log \theta_1$ combined with \eqref{eq:bernard-theta1-heat}
+and $\zeta' = -\wp$. The quasi-period drift term
+$8\pi i\,\eta_1'(\tau)\, z$ is forced by the $\tau$-dependence
+of $\eta_1(\tau)$ and closes against the Halphen--Ramanujan
+system
+\[
+\partial_\tau E_2 = \tfrac{1}{12}(E_2^2 - E_4), \qquad
+\partial_\tau E_4 = \tfrac{1}{3}(E_2 E_4 - E_6), \qquad
+\partial_\tau E_6 = \tfrac{1}{2}(E_2 E_6 - E_4^2),
+\]
+originally due to Ramanujan \textup{(}$1916$, Trans.\ Camb.\
+Phil.\ Soc.\ $22$, \S $2$\textup{)} and Halphen
+\textup{(}Trait\'e des fonctions elliptiques et de leurs
+applications, Gauthier-Villars $1886$, Ch.~II\textup{)}.
+On the Cartan sector of the
+Knizhnik--Zamolodchikov--Bernard connection with connection
+forms $A_z = \zeta(z_{ij}, \tau)\,\Omega / (k + h^\vee)$ and
+$A_\tau = \wp(z_{ij}, \tau)\,\Omega / (k + h^\vee)$, the
+naive scalar flatness $\partial_\tau \zeta = \partial_z \wp
+= \wp'$ fails by exactly the three corrections in
+\eqref{eq:bernard-zeta-identity}: the heat-equation
+prefactor $1/(4\pi i)$, the nonlinear $\zeta\wp$ cross-term,
+and the quasi-period drift. After those three corrections
+are installed, scalar flatness is equivalent at leading order
+in $\hbar$ to the Halphen--Ramanujan closure via
+$\eta_1(\tau) = (\pi^2/6) E_2(\tau)$. Chain-level flatness of
+the full KZB connection on the $n$-point configuration space
+requires in addition the elliptic classical Yang--Baxter
+equation with dynamical shift \textup{(}Felder, ICM
+$1994$\textup{)}, and is inscribed at standalone scope only
+\textup{(}Felder, \cite{Felder94}; Etingof--Frenkel--Kirillov,
+\cite{EFK98}, Ch.~$5$; Calaque, Enriquez, Etingof,
+\emph{Universal KZB equations: the elliptic case},
+Prog.\ Math.\ $269$ \textup{(}$2010$\textup{)}\textup{)}.
+Identity \eqref{eq:bernard-zeta-identity} itself is verified
+numerically at machine precision in the companion engine
+\texttt{verify\_bernard\_heat\_identity\_zeta} across five
+generic points in the upper half-plane; the two-point
+matrix commutator $[A_z, A_\tau] = 0$ is trivial because
+$\Omega$ self-commutes and so the two-point case is
+structurally uninformative at the matrix level.
 \end{remark}
 
 

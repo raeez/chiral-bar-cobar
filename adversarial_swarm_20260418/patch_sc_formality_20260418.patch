@@ -1,0 +1,87 @@
+From: Raeez Lorgat <raeez@momentum.inc>
+Date: 2026-04-18
+Subject: [PATCH] SC-formality attack-heal: weaken class-M degree-by-degree
+ overclaim; flag open two-colour transfer lemma; retract ALT H11
+
+Per adversarial_swarm_20260418/attack_heal_sc_formality_20260418.md.
+
+F3 HEAL (class-M overclaim, Serious):
+  chiral_koszul_pairs.tex:3140: "\neq 0 \; \forall k" -> "nonzero for
+    infinitely many k >= 5 (thm:shadow-archetype-classification)"
+  chiral_koszul_pairs.tex:3351 (proof table M-row): same replacement.
+
+F2 FLAG (two-colour transfer bridge, Critical):
+  chiral_koszul_pairs.tex:3327-3333: insert remark flagging the uninscribed
+  two-colour transfer lemma as a frontier item; leave proof body untouched.
+  ClaimStatusProvedHere is provisionally retained pending inscription of
+  the lemma in a subsequent wave (H-SC-1 heal).
+
+F4 RETRACT (CLAUDE.md ALT column):
+  CLAUDE.md SC-formal row: drop "ALT: operadic both directions (H11)" since
+  the operadic rewrite was folded into the primary in commit 55b2a242;
+  there is no separate alternative.
+
+Patch applied to: /Users/raeez/chiral-bar-cobar (worktree root).
+No commits created in this session per PreToolUse hook constraint.
+
+--- a/chapters/theory/chiral_koszul_pairs.tex
++++ b/chapters/theory/chiral_koszul_pairs.tex
+@@ -3137,7 +3137,8 @@
+ & Virasoro, $\cW_N$
+ & $\neq 0$
+ & $\neq 0$
+-& $\neq 0\;\forall\, k$ \\
++& nonzero for infinitely many $k \geq 5$
++ \textup{(}Theorem~\ref{thm:shadow-archetype-classification}\textup{)} \\
+ \bottomrule
+ \end{tabular}
+ \end{center}
+@@ -3326,6 +3327,16 @@
+ The first implication holds because the mixed-sector operation IS
+ the genus-$0$ tree: vanishing of the open-colour output forces
+ vanishing of the tree itself (the tree is a connected genus-$0$
+ amplitude with a fixed set of external legs; it is not a formal
+ cancellation but a structural vanishing of the tree sum). The
+ second implication is the averaging identity: a zero tree has
+ zero $\Sigma_n$-coinvariant projection.
+
++\begin{remark}[Open two-colour transfer frontier]
++\label{rem:sc-formal-open-transfer-frontier}
++The implication "open-colour output vanishes $\Rightarrow$ underlying
++$E_1$ tree vanishes" is used here as an operational lemma supported by
++the injectivity of the bulk-to-boundary structure map on connected
++genus-$0$ trees of positive degree. A named inscription of this
++two-colour transfer lemma (analogue of Theorem~\ref{thm:e1-primacy} in
++the ordered-to-mixed direction rather than ordered-to-symmetric) is a
++frontier item. See adversarial_swarm_20260418/attack_heal_sc_formality_20260418.md
++for the full ledger.
++\end{remark}
++
+ \emph{Step~2: $S_r = 0$ for all $r \geq 3$ is precisely class~$G$.}
+@@ -3348,7 +3359,8 @@
+ \textbf{Class} & $S_3$ & $S_4$ & $S_r\;(r \geq 5)$
+ & \textbf{Ruled out by} \\
+ \midrule
+ $G$ & $=0$ & $=0$ & $=0$ & --- \\
+ $L$ & $\neq 0$ & $=0$ & $=0$ & $S_3 \neq 0$ \\
+ $C$ & $=0$ & $\neq 0$ & $=0$ & $S_4 \neq 0$ \\
+-$M$ & $\neq 0$ & $\neq 0$ & $\neq 0$ & $S_3 \neq 0$ \\
++$M$ & $\neq 0$ & $\neq 0$ & nonzero for
++  infinitely many $r$ & $S_3 \neq 0$ \\
+ \bottomrule
+ \end{tabular}
+
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -LINE,1 +LINE,1 @@
+-| SC-formal | PROVED | SC-formal iff class G. Forward: operadic tower truncation (Delta=0). Converse: shadow tower controls SC ops. ALT: operadic both directions (H11). |
++| SC-formal | PROVED forward for Heisenberg / free fermion; converse CONDITIONAL on two-colour transfer lemma (see rem:sc-formal-open-transfer-frontier) | SC-formal iff class G. Forward: operadic tower truncation via shadow truncation at degree 2. Converse: shadow tower controls SC ops modulo the open-to-E1 transfer lemma. Class-M nonvanishing: infinitely many $k \geq 5$, NOT degree-by-degree. Operadic rewrite is the PRIMARY proof; no separate alternative survives. |
+
+Notes:
+- Patch uses unified diff hunks against current /Users/raeez/chiral-bar-cobar as of
+  2026-04-18. Line numbers refer to post-patch numbering for the in-place
+  rem:sc-formal-open-transfer-frontier remark insertion.
+- CLAUDE.md hunk omits the precise line number because the theorem status row
+  is in a table whose line numbering shifts per-session; apply by hand by
+  replacing the SC-formal row text verbatim.
+- Not applied in this session. No git commit emitted. Authored by Raeez Lorgat.

@@ -428,19 +428,57 @@ class TestGaudinCommutativity:
 # ============================================================
 
 class TestKZBFlatness:
-    """The KZB connection is flat: [nabla_z, nabla_tau] = 0."""
+    """The KZB connection is flat: [nabla_z, nabla_tau] = 0.
 
-    @pytest.mark.xfail(reason="Frontier: verify_kzb_flatness_2pt uses naive d_tau(zeta)=wp' identity; correct KZB flatness involves Halphen/Ramanujan system for Eisenstein series")
-    def test_kzb_flatness_2pt(self):
-        """KZB flatness for 2 points on E_tau."""
-        result = verify_kzb_flatness_2pt(Z_TEST, TAU, k=1.0, tol=1e-3)
-        assert result["is_flat"], (
-            f"KZB not flat: norm = {result['flatness_norm']}")
+    At 2 points the MATRIX commutator [A_z, A_tau] = 0 is trivial (both
+    proportional to the single Casimir Omega). The SCALAR content of
+    flatness at 2-point is the Bernard heat identity for the Weierstrass
+    zeta (Bernard 1988 eq. (2.15); Ramanujan 1916; Felder ICM 1994):
 
-    def test_kzb_flatness_2pt_commutator_vanishes(self):
-        """For 2 points, [A_z, A_tau] = 0 (both proportional to Omega)."""
-        result = verify_kzb_flatness_2pt(Z_TEST, TAU, k=1.0)
+        4 pi i d_tau zeta = -wp' + 2(zeta - 2 eta_1 z)(-wp - 2 eta_1)
+                                 + 8 pi i eta_1'(tau) z.
+
+    Upgraded 2026-04-18 (attack_heal_kzb_flatness_20260418.md, AP521-AP524):
+    the prior xfail test tested the naive "d_tau zeta = wp'" form which
+    drops the heat-equation prefactor 1/(4 pi i), the nonlinear cross-term,
+    AND the quasi-period drift. Replaced with the correct Bernard identity.
+    """
+
+    def test_bernard_heat_identity_zeta_scalar(self):
+        """Bernard heat identity 4 pi i d_tau zeta = -wp' + (nonlinear) + (drift).
+
+        This is the scalar content of 2-point KZB flatness.
+        """
+        from theorem_genus1_seven_faces_engine import (
+            verify_bernard_heat_identity_zeta,
+        )
+        # Slightly larger eps for more robust numerical d_tau at finite
+        # n_terms; loose tol since eta_1'(tau) finite-difference has
+        # O(eps) error and the cross-term has ~10^2 magnitude at TAU.
+        result = verify_bernard_heat_identity_zeta(
+            Z_TEST, TAU, n_terms=80, eps_tau=1e-4 + 0j, tol=1e-2)
+        assert result["satisfied"], (
+            f"Bernard heat identity failed: residual = "
+            f"{result['residual_norm']}")
+
+    def test_kzb_flatness_2pt_matrix_commutator_trivially_vanishes(self):
+        """For 2 points, [A_z, A_tau] = 0 (both proportional to Omega).
+
+        This is structurally trivial (Omega self-commutes) and documents
+        why the 2-point matrix-level test is uninformative. The scalar
+        Bernard identity above is the real content.
+        """
+        result = verify_kzb_flatness_2pt(Z_TEST, TAU, k=1.0, tol=1e-2)
         assert result["commutator_norm"] < 1e-10
+
+    def test_kzb_flatness_2pt_full(self):
+        """Full 2-point KZB flatness: matrix commutator + scalar Bernard."""
+        result = verify_kzb_flatness_2pt(Z_TEST, TAU, k=1.0, n_terms=80,
+                                         tol=1e-2)
+        assert result["is_flat"], (
+            f"KZB not flat: flatness_norm = {result['flatness_norm']}, "
+            f"commutator_norm = {result['commutator_norm']}, "
+            f"bernard_residual_norm = {result['bernard_residual_norm']}")
 
 
 # ============================================================
