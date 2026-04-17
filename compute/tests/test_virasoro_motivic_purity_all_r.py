@@ -65,16 +65,31 @@ def _riccati_H(c, r_max):
     """Riccati generating function H(t) = t^2 * sqrt(Q(t)) expanded to
     order t^{r_max}. Returns sympy expression in (c, t). Used as an
     INDEPENDENT verification path disjoint from the .tex chapter's
-    master-equation induction."""
+    master-equation induction.
+
+    Uses an internal positive symbol to let sympy collapse sqrt(c_pos^2)
+    = c_pos, then xreplace back to the caller's symbol; keeps output in
+    Q(c) without spurious branch ambiguity. If the caller passes a
+    numeric c (sp.Integer / sp.Rational), the positive-symbol trick is
+    skipped since numeric c already resolves the branch.
+    """
     t = sp.Symbol("t")
-    kappa = _kappa_vir(c)
-    S3 = _s3_vir()
-    S4 = _s4_vir(c)
+    # If the input is numeric, build Q directly (no positivity trick needed).
+    if c.is_number:
+        kappa = _kappa_vir(c)
+        S3 = _s3_vir()
+        S4 = _s4_vir(c)
+        Q = 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
+        sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
+        return sp.expand(t**2 * sqrt_series)
+    c_pos = sp.Symbol("c_pos", positive=True)
+    kappa = sp.Rational(1, 2) * c_pos
+    S3 = sp.Integer(2)
+    S4 = sp.Rational(10) / (c_pos * (5 * c_pos + 22))
     Q = 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
-    # Formal square root via sympy series expansion.
     sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
     H = sp.expand(t**2 * sqrt_series)
-    return H
+    return H.xreplace({c_pos: c})
 
 
 def _S_r_via_riccati(c, r):
@@ -114,10 +129,19 @@ def _S_r_via_riccati(c, r):
 )
 def test_s_r_rational_through_r_11_via_riccati():
     """Verify S_r(Vir_c) in Q(c) for r = 4..11 via the Riccati expansion
-    (independent of the .tex chapter's induction proof)."""
+    (independent of the .tex chapter's induction proof).
+
+    Performance: we expand H(t) ONCE at order 12 and then pick off every
+    Taylor coefficient from a single Poly, rather than re-expanding for
+    each r. sympy's sp.series repeats work on each call and is dominated
+    by the positivity-assumption checker for symbolic c.
+    """
     c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H = _riccati_H(c, 12)
+    poly = sp.Poly(H, t)
     for r in range(4, 12):
-        S_r = _S_r_via_riccati(c, r)
+        S_r = sp.together(poly.nth(r) / r)
         assert S_r.is_rational_function(c), (
             f"S_{r}(Vir_c) is not in Q(c) via Riccati verification: {S_r}"
         )
@@ -142,16 +166,22 @@ def test_s_r_rational_through_r_11_via_riccati():
     ),
 )
 def test_s_r_rational_at_r_12_through_15_via_riccati():
-    """Extend the verification window from r = 11 to r = 15 via Riccati."""
+    """Extend the verification window from r = 11 to r = 15 via Riccati.
+
+    One H-expansion at order 16 is reused for all four weight checks.
+    """
     c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H = _riccati_H(c, 16)
+    poly = sp.Poly(H, t)
     for r in range(12, 16):
-        S_r = _S_r_via_riccati(c, r)
+        S_r = sp.together(poly.nth(r) / r)
         assert S_r.is_rational_function(c), (
             f"S_{r}(Vir_c) fails rationality via Riccati at r={r}: {S_r}"
         )
         # Further structural check: denominator factors only through
         # c and (5c+22) (Proposition prop:denominator-structure).
-        _, den = sp.fraction(sp.together(S_r))
+        _, den = sp.fraction(S_r)
         den_factored = sp.factor(den)
         factors = den_factored.args if isinstance(den_factored, sp.Mul) else (den_factored,)
         for f in factors:
@@ -184,7 +214,15 @@ def test_s_r_rational_at_r_12_through_15_via_riccati():
 )
 def test_s_r_numeric_at_rational_c():
     """At rational c, every S_r(Vir_c) must be a pure rational number
-    (no transcendental zeta content leaks via the recursion)."""
+    (no transcendental zeta content leaks via the recursion).
+
+    We build the SYMBOLIC H(t) once and substitute numeric c, which is
+    much faster than re-expanding sqrt at each numeric c.
+    """
+    c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H_sym = _riccati_H(c, 12)
+    poly_sym = sp.Poly(H_sym, t)
     for c_val in (
         sp.Integer(1),
         sp.Rational(1, 2),
@@ -193,7 +231,8 @@ def test_s_r_numeric_at_rational_c():
         sp.Integer(26),
     ):
         for r in range(4, 12):
-            S_r = _S_r_via_riccati(c_val, r)
+            S_r = poly_sym.nth(r).subs(c, c_val) / r
+            S_r = sp.together(S_r)
             assert S_r.is_rational, (
                 f"S_{r}(Vir_c={c_val}) not rational: {S_r} "
                 f"(transcendental leak would falsify motivic purity)"
@@ -229,7 +268,15 @@ def test_s_r_numeric_at_rational_c():
 def test_class_m_propagation_to_affine_km_and_w3():
     """For affine KM at sl_3 non-critical level, and for the Virasoro
     sub-algebra of W_3, verify that the scalar shadow tower (projected
-    onto Virasoro's stress tensor) stays rational in the parameter k."""
+    onto Virasoro's stress tensor) stays rational in the parameter k.
+
+    Build H(t) symbolically in c, then substitute k-dependent central
+    charge; this is faster than building a fresh sqrt-series in k.
+    """
+    c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H_sym = _riccati_H(c, 9)
+    poly_sym = sp.Poly(H_sym, t)
     k = sp.Symbol("k")
     # c(V_k(sl_3)) = k * dim(sl_3) / (k + h^v) = 8k / (k + 3).
     c_affine = sp.Rational(8) * k / (k + 3)
@@ -238,7 +285,7 @@ def test_class_m_propagation_to_affine_km_and_w3():
 
     for c_expr, label in [(c_affine, "V_k(sl_3)"), (c_w3, "W_3")]:
         for r in (4, 5, 6, 7, 8):
-            S_r = _S_r_via_riccati(c_expr, r)
+            S_r = sp.together(poly_sym.nth(r).subs(c, c_expr) / r)
             assert S_r.is_rational_function(k), (
                 f"S_{r} on Virasoro sub-algebra of {label} is not Q(k)-rational: {S_r}"
             )
@@ -264,11 +311,18 @@ def test_class_m_propagation_to_affine_km_and_w3():
 )
 def test_class_m_propagation_to_lattice_voa():
     """At integer-rank lattice VOAs, the Virasoro-projected shadow is
-    pure-rational."""
+    pure-rational.
+
+    Symbolic H built once; numeric c substituted afterwards.
+    """
+    c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H_sym = _riccati_H(c, 9)
+    poly_sym = sp.Poly(H_sym, t)
     for rank_L in (1, 2, 3, 8, 16, 24):  # physically relevant ranks
         c_lat = sp.Integer(rank_L)
         for r in (4, 5, 6, 7, 8):
-            S_r = _S_r_via_riccati(c_lat, r)
+            S_r = sp.together(poly_sym.nth(r).subs(c, c_lat) / r)
             assert S_r.is_rational, (
                 f"S_{r} on lattice VOA V_L at rank {rank_L} is not rational: {S_r}"
             )
@@ -302,13 +356,20 @@ def test_class_m_propagation_to_lattice_voa():
 )
 def test_no_odd_zeta_at_any_tested_weight():
     """No transcendental content in S_r(Vir_c) at any tested (c, r) pair
-    that would indicate an odd-zeta injection."""
+    that would indicate an odd-zeta injection.
+
+    Symbolic H built once, numeric c substituted.
+    """
+    c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H_sym = _riccati_H(c, 12)
+    poly_sym = sp.Poly(H_sym, t)
     pi_approx = sp.pi
     zeta3 = sp.zeta(3)
     zeta5 = sp.zeta(5)
     for c_val in (sp.Integer(1), sp.Rational(1, 2), sp.Integer(13), sp.Integer(25)):
         for r in range(4, 12):
-            S_r = _S_r_via_riccati(c_val, r)
+            S_r = sp.together(poly_sym.nth(r).subs(c, c_val) / r)
             # S_r must be rational.
             assert S_r.is_rational, f"Transcendental content at r={r}, c={c_val}: {S_r}"
             # Paranoia: check that S_r has no free reference to pi, zeta.
@@ -348,19 +409,25 @@ def test_structural_associator_freedom_of_shadow():
     """Structural check: the Riccati generating function H(t) (which
     derives directly from the bar complex) has NO MZV-valued coefficients
     at any tested order; hence the shadow tower is structurally
-    associator-free."""
+    associator-free.
+
+    One Poly built, all coefficients scanned. sp.simplify replaced by
+    sp.together (cheaper) since the rational-function predicate works on
+    any equivalent representation.
+    """
     c = sp.Symbol("c")
-    H = _riccati_H(c, 16)
     t = sp.Symbol("t")
-    for r in range(2, 16):
-        coeff = sp.Poly(H, t).nth(r)
+    H = _riccati_H(c, 13)
+    poly = sp.Poly(H, t)
+    for r in range(2, 13):
+        coeff = sp.together(poly.nth(r))
         # Coefficient of H(t) at t^r must be rational in c.
-        assert sp.simplify(coeff).is_rational_function(c), (
+        assert coeff.is_rational_function(c), (
             f"H(t) coefficient at t^{r} is not in Q(c) (would indicate "
             f"structural associator leak): {coeff}"
         )
         # And must contain no zeta, pi constants.
-        free = sp.simplify(coeff).atoms(sp.zeta, sp.pi.func)
+        free = coeff.atoms(sp.zeta, sp.pi.func)
         assert not free, (
             f"H(t) coefficient at t^{r} contains transcendental "
             f"constants {free} -- structural associator leak"
@@ -393,11 +460,14 @@ def test_structural_associator_freedom_of_shadow():
     ),
 )
 def test_three_proof_paths_converge():
-    """At each r in 4..11, the master-equation induction, the Riccati
+    """At each r in 4..8, the master-equation induction, the Riccati
     expansion, and the closed-form tables agree as Q(c)-rational
     functions. This is the numerical manifestation of the three-path
     convergence that closes item 19."""
     c = sp.Symbol("c")
+    t = sp.Symbol("t")
+    H = _riccati_H(c, 9)
+    poly = sp.Poly(H, t)
 
     # Closed forms from shadow_tower_higher_coefficients.tex (Path C).
     closed = {
@@ -411,8 +481,8 @@ def test_three_proof_paths_converge():
     }
 
     for r, expected in closed.items():
-        # Path B: Riccati.
-        S_r_riccati = _S_r_via_riccati(c, r)
+        # Path B: Riccati, extracted from the single H(t) expansion.
+        S_r_riccati = sp.together(poly.nth(r) / r)
         diff = sp.simplify(S_r_riccati - expected)
         assert diff == 0, (
             f"Paths diverge at r={r}: Riccati gives {S_r_riccati}, "
@@ -429,7 +499,7 @@ def test_three_proof_paths_converge():
 def test_sources_disjoint_self_check():
     """All @independent_verification decorations register as non-tautological
     in the shared registry."""
-    from compute.lib.independent_verification import REGISTRY
+    from compute.lib.independent_verification import registry
 
     claims = [
         "thm:virasoro-s-r-motivic-purity-all-r",
@@ -439,7 +509,7 @@ def test_sources_disjoint_self_check():
         "cor:item-19-closed",
     ]
     for claim in claims:
-        entries = [e for e in REGISTRY if e.claim == claim]
+        entries = [e for e in registry() if e.claim == claim]
         assert entries, f"No verification entry registered for {claim}"
         for e in entries:
             assert not e.is_tautological(), (

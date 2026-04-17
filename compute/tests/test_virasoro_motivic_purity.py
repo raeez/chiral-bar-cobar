@@ -97,14 +97,27 @@ def _riccati_Q(c):
 def _riccati_H_expansion(c, r_max):
     """Expand H(t) = t^2 sqrt(Q(t)) to order t^{r_max} in Q(c)[[t]].
     Verification path: binomial series, independent of master-equation
-    recursion."""
+    recursion.
+
+    Uses an internal positive symbol c_pos to let sympy collapse
+    sqrt(c_pos^2) = c_pos; the output is then relabelled back to the
+    caller's symbol c by xreplace. This keeps the output in Q(c) without
+    spurious sqrt(c^2) branch ambiguity.
+    """
     t = sp.Symbol("t")
-    Q = _riccati_Q(c)
+    c_pos = sp.Symbol("c_pos", positive=True)
+    kappa = sp.Rational(1, 2) * c_pos
+    S3 = sp.Integer(2)
+    S4 = sp.Rational(10) / (c_pos * (5 * c_pos + 22))
+    Q = 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
     # sympy series of sqrt(Q) around t=0 to order r_max - 1
     # (so that t^2 * series reaches order r_max).
     sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
     H = sp.expand(t**2 * sqrt_series)
-    return H
+    # Relabel c_pos -> c (caller's symbol) preserving all structural
+    # rationality; sqrt(c_pos^2) has already collapsed to c_pos, so no
+    # sqrt residue remains.
+    return H.xreplace({c_pos: c})
 
 
 def _extract_S_r_from_riccati(c, r):
@@ -478,7 +491,7 @@ def test_virasoro_purity_under_central_charge_shift_W3():
 def test_sources_disjoint_self_check():
     """The @independent_verification decorator already asserts disjointness
     at import time; this test documents the invariant for future auditors."""
-    from compute.lib.independent_verification import REGISTRY
+    from compute.lib.independent_verification import registry
 
     claims = [
         "thm:virasoro-motivic-purity",
@@ -488,7 +501,7 @@ def test_sources_disjoint_self_check():
         "cor:vir-purity-propagates-to-dress-reduced",
     ]
     for claim in claims:
-        entries = [e for e in REGISTRY if e.claim == claim]
+        entries = [e for e in registry() if e.claim == claim]
         assert entries, f"No verification entry registered for {claim}"
         for e in entries:
             assert not e.is_tautological(), (

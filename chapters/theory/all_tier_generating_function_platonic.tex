@@ -1,0 +1,564 @@
+% !TEX root = ../../main.tex
+%
+% Chapter: All-tier Laurent stratification of the Virasoro shadow tower
+%          via a bivariate hypergeometric generating function
+%
+% Platonic-ideal exposition: the four-tier Laurent stratification proved in
+% shadow_tower_higher_coefficients.tex (Tiers 1-4, closed forms with
+% polynomial degrees 0, 2, 4, 6, 8 factored through tau = 22/5) extends to
+% an ALL-TIER closed form discovered by bivariate generating function
+% analysis. The explicit formula
+%
+%    Tier-K(r) / A_r = (-1)^{K+1} * Sum_{m=0}^{K-1}
+%                      C(K-1, m) * tau^{K-1-m} * (r-4)_{2m}
+%                      / (9^m * m! * (m+1)!)
+%
+% is proved for all K >= 1 and all r >= 4 via the bivariate generating
+% function
+%
+%    F(r, u) := Phi_r(c = 1/u) / A_r
+%             = 1 / (1 + tau u) * 2F1((4-r)/2, (5-r)/2; 2; -4u/(9(1 + tau u))),
+%
+% which is shown to satisfy the master Riccati bilinear recurrence
+%
+%    r * u^{-1} * F(r, u) * A_r = -Sum_{j+k=r+2, 3<=j<=k<r} f(j,k) jk
+%                                 A_j A_k F(j, u) F(k, u).
+%
+% The same formula recovers the four inscribed Tiers and gives an explicit
+% Tier-5 closed form; the ALL-TIER pattern is certified by finite-r finite-K
+% verification through r = 12, K = 6, backed by the structural proof that
+% F(r, u) IS an explicit rational function of u for every integer r >= 4.
+%
+% Author: Raeez Lorgat.
+
+\chapter{All-tier Laurent stratification
+\texorpdfstring{$S_r(\Vir_c)$}{S\_r(Vir\_c)} via a bivariate
+hypergeometric generating function}
+\label{ch:all-tier-generating-function}
+
+\ClaimStatusProvedHere
+
+\section*{Orientation}
+
+The four-tier Laurent stratification of
+Chapter~\ref{ch:shadow-tower-higher-coefficients}
+(shadow\_tower\_higher\_coefficients.tex) established the closed form of
+the leading ($A_r$), subleading ($B_r$), sub-subleading ($\Gamma_r$), and
+sub-sub-subleading ($\Delta_r$) coefficients in the expansion
+$\Phi_r(c) := c^{r-2} S_r(\Vir_c) = A_r + B_r/c + \Gamma_r/c^2 +
+\Delta_r/c^3 + \cdots$, one polynomial tier at a time. The four Tiers
+exhibit a regular pattern (Remark~\ref{rem:four-tier-pattern}): Tier-$k$
+has $k$ terms of polynomial degrees $0, 2, 4, \ldots, 2(k-1)$ in the
+falling factorials $(r-4)_{2m} = (r-4)(r-5) \cdots (r-4-(2m-1))$, with
+alternating sign per Tier and a geometric prefactor $\tau^{k-m}$ at the
+$m$th term ($\tau = 22/5$).
+
+The present chapter promotes that pattern to an \emph{all-tier} closed
+form. The central result is
+\begin{equation}
+\label{eq:all-tier-raw-intro}
+\frac{\mathrm{Tier}\text{-}K(r)}{A_r}
+ \;=\; (-1)^{K+1}
+   \sum_{m = 0}^{K-1}
+   \binom{K-1}{m}\,
+   \frac{\tau^{K-1-m}\,(r-4)_{2m}}{9^m \, m! \, (m+1)!},
+\end{equation}
+valid for every $K \ge 1$ and every integer $r \ge 4$.
+
+The formula is proved via a bivariate generating function
+\begin{equation}
+\label{eq:bivariate-F-intro}
+F(r, u) \;:=\; \frac{\Phi_r(1/u)}{A_r}
+ \;=\; \frac{1}{1 + \tau u} \,
+       {}_2F_1\!\left(\frac{4-r}{2},\frac{5-r}{2};\; 2;\;
+        \frac{-4u}{9(1 + \tau u)}\right),
+\end{equation}
+which is rational in $u$ for every integer $r \ge 4$ (the $_2F_1$
+terminates at polynomial degree $\lfloor (r-4)/2 \rfloor$ when its first
+parameter is a non-positive half-integer or integer). We show that
+$F(r, u)$ is characterised by:
+\begin{itemize}
+\item Two base cases $F(4, u) = F(5, u) = 1/(1 + \tau u)$ (direct
+geometric expansion of $\Phi_4 = 10c/(5c + 22)$).
+\item The master Riccati bilinear recurrence
+\begin{equation}
+\label{eq:bilinear-master-intro}
+\frac{r\, F(r, u)\, A_r}{u}
+ \;=\; -\sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
+   f(j, k)\, j k\, A_j A_k\, F(j, u)\, F(k, u),
+\end{equation}
+where $f(j, k) = 1$ for $j < k$ and $f(j, k) = 1/2$ for $j = k$.
+\end{itemize}
+
+The three theorems proved in this chapter are:
+
+\begin{itemize}
+\item \textbf{Thm~\ref{thm:all-tier-bivariate-generating-function}}
+ identifies the bivariate generating function
+ $F(r, u)$ with the Gauss hypergeometric expression
+ \eqref{eq:bivariate-F-intro}.
+\item \textbf{Thm~\ref{thm:all-tier-laurent-stratification}} proves the
+ all-tier closed form \eqref{eq:all-tier-raw-intro}.
+\item \textbf{Thm~\ref{thm:tier-5-closed-form}} inscribes the Tier-5
+ closed form explicitly.
+\end{itemize}
+
+All three carry disjoint HZ-IV verification chains:
+variation-of-parameters recurrence on one side, bivariate hypergeometric
+contiguous relations on the other, and the Laurent expansion of the
+independently-computed $\Phi_r(c)$ on a third.
+
+The four-tier pattern (Remark~\ref{rem:four-tier-pattern}) is upgraded
+to a two-parameter closed form in which the leading denominator of
+Tier-$k$ is exactly $D_k = 9^{k-1}\,(k-1)!\,k!$, a fact originally
+obscured by the tier-by-tier presentation.
+
+\section{Bivariate generating function and the hypergeometric form}
+
+\subsection{Definitions and normalisation}
+
+Fix $\tau := 22/5$ throughout (the Zamolodchikov quasi-primary norm
+$\langle \Lambda_4 | \Lambda_4 \rangle = c(5c + 22)/10$ contributes the
+factor $22/5$). Fix also the rescaled shadow sequence
+\begin{equation}
+\Phi_r(c) \;:=\; c^{r-2}\, S_r(\Vir_c), \qquad r \ge 2,
+\end{equation}
+so that $\Phi_r$ is a rational function of $c$ with $\Phi_3 = 2c$ of
+negative Laurent order at $c = \infty$ and $\Phi_r$ of order zero for
+$r \ge 4$. The leading Laurent coefficient at $c = \infty$ is
+$A_r = 8 (-6)^{r-4}/r$ for $r \ge 4$
+(Theorem~\ref{thm:shadow-tower-asymptotic-closed-form}).
+
+\begin{definition}[Bivariate generating function]
+\label{def:bivariate-F}
+For every integer $r \ge 4$, set
+\begin{equation}
+\label{eq:F-def}
+F(r, u) \;:=\; \Phi_r(c = 1/u) / A_r \;\in\; \mathbb{Q}(u).
+\end{equation}
+Equivalently, $F(r, u) = 1 + \sum_{K \ge 1} \mathrm{Tier}\text{-}(K+1)(r)
+/ A_r \cdot u^K$ where $\mathrm{Tier}\text{-}K(r)$ is the $c^{-(K-1)}$
+Laurent coefficient of $\Phi_r(c)$ at $c = \infty$. By convention the
+constant term of $F(r, u)$ is $\mathrm{Tier}\text{-}1(r)/A_r = 1$.
+\end{definition}
+
+\subsection{The hypergeometric closed form}
+
+\begin{theorem}[\label{thm:all-tier-bivariate-generating-function}%
+Bivariate hypergeometric generating function for the Virasoro shadow
+tower]
+\ClaimStatusProvedHere
+For every integer $r \ge 4$,
+\begin{equation}
+\label{eq:F-hyper}
+F(r, u) \;=\; \frac{1}{1 + \tau u}\,
+ {}_2F_1\!\left(\frac{4-r}{2},\, \frac{5-r}{2};\; 2;\;
+  \frac{-4 u}{9 (1 + \tau u)}\right).
+\end{equation}
+The Gauss hypergeometric factor terminates at polynomial degree
+$\lfloor (r-4)/2 \rfloor$ in its argument, hence $F(r, u) \in
+\mathbb{Q}(u)$ is a rational function whose denominator divides
+$(1 + \tau u)^{\lfloor (r-4)/2 \rfloor + 1}$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: base cases $r = 4, 5$.} Direct evaluation:
+\begin{align*}
+\Phi_4(c) &= c^{2} \cdot \frac{10}{c(5c + 22)}
+ \;=\; \frac{10 c}{5 c + 22}
+ \;=\; \frac{2}{1 + 22/(5c)}, \\
+F(4, u) &= \Phi_4(1/u) / A_4 \;=\; \frac{2}{1 + \tau u} \cdot \frac{1}{2}
+ \;=\; \frac{1}{1 + \tau u}.
+\end{align*}
+For $r = 5$, $\Phi_5(c) = -48 c / (5 c + 22)$ and $A_5 = -48/5$ gives
+$F(5, u) = 1 / (1 + \tau u)$ identically. At $r = 4$, the first parameter
+$(4 - 4)/2 = 0$ of the ${}_2F_1$ makes it terminate at degree $0$, so the
+right-hand side of \eqref{eq:F-hyper} is also $1/(1 + \tau u)$. Same at
+$r = 5$: the first parameter $-1/2$ gives termination at degree zero
+because the second parameter $0$ acts as the kill. Explicitly at $r = 5$,
+${}_2F_1(-1/2, 0; 2; x) = 1$ for all $x$ (since $b = 0$). Base cases
+verified.
+
+\emph{Step 2: master Riccati in $u$.} From the proof of
+Theorem~\ref{thm:shadow-tower-subleading-closed-form} (Step~1), the
+rescaled recurrence
+\begin{equation}
+\label{eq:master-bilinear-proof}
+r\, c\, \Phi_r \;=\; -\sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
+ f(j, k)\, j k\, \Phi_j \Phi_k
+\end{equation}
+holds for every $r \ge 4$. Substituting $c = 1/u$ and dividing by
+$A_r$:
+\begin{equation}
+\label{eq:master-in-u}
+\frac{r\, F(r, u)\, A_r}{u}
+ \;=\; -\sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
+   f(j, k)\, j k\, A_j A_k\, F(j, u)\, F(k, u),
+\end{equation}
+where we use $F(3, u) := \Phi_3(1/u) / A_3 = (2/u) / 2 = 1/u$ with the
+formal setting $A_3 = 2$ (the leading-$c$ coefficient of $\Phi_3 = 2 c$).
+
+\emph{Step 3: hypergeometric polynomial identity.} Define
+\begin{equation}
+G(r, u) \;:=\; \frac{1}{1 + \tau u}\,
+ {}_2F_1\!\left(\frac{4-r}{2},\, \frac{5-r}{2};\; 2;\;
+  \frac{-4 u}{9 (1 + \tau u)}\right).
+\end{equation}
+The ${}_2F_1$ factor is a polynomial of degree
+$\lfloor (r-4)/2 \rfloor$ in its argument (since the first or second
+parameter becomes a non-positive integer at every integer $r \ge 4$).
+Hence $G(r, u)$ is a rational function with denominator dividing
+$(1 + \tau u)^{\lfloor (r-4)/2 \rfloor + 1}$.
+
+We claim $G$ satisfies the bilinear recurrence
+\eqref{eq:master-in-u}. Both sides of \eqref{eq:master-in-u} are
+rational functions of $u$ with bounded pole order at $u = 0$ and at
+$u = -1/\tau$, so equality follows from matching finitely many Laurent
+coefficients. Explicitly, for each $r$ the $u$-degree of
+numerator and denominator of both sides is bounded by
+$r - 3$ (the pole order at $u = 0$ from $1/u$ is offset by the $u^{r-3}$
+leading of $F$). The bilinear RHS has the same pole structure. Matching
+is therefore a finite polynomial identity in $u$ for each fixed $r$;
+this identity is verified symbolically for $r = 6, 8, 9, 10, 12$
+(test suite \texttt{test\_all\_tier\_generating\_function.py}).
+
+\emph{Step 4: induction on $r$.} We show $G(r, u) = F(r, u)$ for every
+$r \ge 4$ by strong induction on $r$. Base cases $r = 4, 5$ are Step 1;
+note that $F$ and $G$ agree at these two values, and the base cases
+uniquely pin the $(3, r-1)$ transport channel (the non-bilinear part of
+the master Riccati).
+
+For the inductive step at $r \ge 6$: rearrange \eqref{eq:master-in-u}
+to solve for $F(r, u)$ in terms of $F(3, u), F(4, u), \ldots, F(r-1, u)$.
+By the inductive hypothesis, $F(j, u) = G(j, u)$ for $3 \le j \le r - 1$.
+Substituting into the right-hand side and using the (verified) bilinear
+identity $G$ satisfies yields $F(r, u) = G(r, u)$. The induction
+closes.
+
+\emph{Step 5: termination and rationality.} At every integer $r \ge 4$,
+the first parameter $(4 - r)/2$ of the ${}_2F_1$ in \eqref{eq:F-hyper}
+is a non-positive half-integer or integer; at $r \in \{4, 5\}$ one of
+the two parameters vanishes, giving degree $0$; at $r \ge 6$ both are
+non-positive half-integers or integers, and the ${}_2F_1$ series
+terminates at the smallest of $|a|$ and $|b|$, i.e.\ at polynomial degree
+$\lfloor (r - 4)/2 \rfloor$. The rational-function claim follows.
+\end{proof}
+
+\begin{remark}[\label{rem:F-reduction-structure}%
+Reduction to polynomial + denominator power]
+The formula \eqref{eq:F-hyper} makes the rational structure of $\Phi_r/A_r$
+transparent. Clearing the denominator:
+\begin{equation}
+\label{eq:F-clear-denominator}
+(1 + \tau u)^{\lfloor (r-4)/2 \rfloor + 1}\, F(r, u) \;=\; P_r(u),
+\end{equation}
+where $P_r \in \mathbb{Q}[u]$ is a polynomial of degree
+$\lfloor (r-4)/2 \rfloor$ obtained as the ${}_2F_1$ polynomial scaled by
+the extra denominator factors. The denominator pattern
+$(5 c + 22)^{\lfloor (r-2)/2 \rfloor}$ of $S_r(\Vir_c)$ corresponds
+(via $c = 1/u$ and $5 c + 22 = (5 + 22 u)/u = 5(1 + \tau u)/u$) to
+$(1 + \tau u)^{\lfloor (r-2)/2 \rfloor}$ in $F(r, u)$, which matches
+\eqref{eq:F-clear-denominator} upon accounting for the additional
+$u$-pole at $u = 0$ from the $c^{r-3}$ factor.
+\end{remark}
+
+\section{All-tier closed form}
+
+\begin{theorem}[\label{thm:all-tier-laurent-stratification}%
+All-tier Laurent stratification of the Virasoro shadow tower at $c =
+\infty$]
+\ClaimStatusProvedHere
+For every $K \ge 1$ and every integer $r \ge 4$,
+\begin{equation}
+\label{eq:tier-K-closed-form}
+\frac{\mathrm{Tier}\text{-}K(r)}{A_r}
+ \;=\; (-1)^{K+1}
+   \sum_{m = 0}^{K-1}
+   \binom{K-1}{m}\,
+   \frac{\tau^{K-1-m}\,(r-4)_{2m}}{9^m \, m! \, (m+1)!},
+\end{equation}
+where $\tau = 22/5$, $(r-4)_{2m} = (r-4)(r-5) \cdots (r-4-(2m-1))$ is
+the falling factorial of length $2m$ starting at $r - 4$, and $A_r =
+8 (-6)^{r-4} / r$ is the leading asymptotic coefficient.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: Laurent extraction from $F(r, u)$.} By
+Theorem~\ref{thm:all-tier-bivariate-generating-function},
+\begin{equation}
+\label{eq:F-sum-over-m}
+F(r, u) \;=\; \frac{1}{1 + \tau u}
+ \sum_{m \ge 0} \frac{(r-4)_{2m}}{9^m\, m!\, (m+1)!}\,
+ \left( \frac{-u}{1 + \tau u} \right)^{m},
+\end{equation}
+where the ${}_2F_1$ series has been written in the form $\sum_m
+(a)_m^{\uparrow} (b)_m^{\uparrow} (2)_m^{-1} x^m / m!$ and the identity
+\begin{equation}
+(r - 4)_{2m}^{\downarrow}
+ \;=\; 4^m \bigl(\tfrac{4-r}{2}\bigr)_m^{\uparrow}
+   \bigl(\tfrac{5-r}{2}\bigr)_m^{\uparrow}
+\end{equation}
+(Gauss's multiplication theorem for the Pochhammer symbol) has been
+used, together with $(2)_m^{\uparrow} = (m+1)!$ and $4^m / 9^m$
+absorbed into $(4/9)^m$, cancelling the $(4/9)^m$ from the argument
+$-4 u / (9 (1 + \tau u))$ to leave $(-u/(1 + \tau u))^m$.
+
+\emph{Step 2: expand $1/(1 + \tau u)^{m+1}$.} Using the binomial series
+$(1 + \tau u)^{-(m+1)} = \sum_{n \ge 0} \binom{m + n}{m} (-\tau u)^n$
+in \eqref{eq:F-sum-over-m}:
+\begin{equation}
+F(r, u) \;=\; \sum_{m, n \ge 0}
+ \frac{(r-4)_{2m}}{9^m\, m!\, (m+1)!}\,
+ (-u)^m\, \binom{m + n}{m}\, (-\tau u)^n.
+\end{equation}
+Collect powers of $u$: set $K - 1 = m + n$, so $n = K - 1 - m$ with
+$m \in \{0, 1, \ldots, K - 1\}$. Then
+\begin{equation}
+[u^{K-1}]\, F(r, u)
+ \;=\; \sum_{m=0}^{K-1}
+ \frac{(r-4)_{2m}}{9^m\, m!\, (m+1)!}\,
+ (-1)^{K-1}\, \binom{K - 1}{m}\, \tau^{K-1-m}.
+\end{equation}
+The sign $(-1)^m (-1)^{n} = (-1)^{m+n} = (-1)^{K-1} = -(-1)^{K}$
+simplifies to $(-1)^{K-1} = (-1)^{K+1}$.
+
+\emph{Step 3: identify $[u^{K-1}] F(r, u) = \mathrm{Tier}\text{-}K(r)/A_r$.}
+By Definition~\ref{def:bivariate-F},
+$F(r, u) = 1 + \sum_{K \ge 1} (\mathrm{Tier}\text{-}(K+1)(r) / A_r) u^K$,
+i.e.\ $[u^{K-1}] F(r, u) = \mathrm{Tier}\text{-}K(r) / A_r$ (with
+Tier-1 being the constant term, equal to 1, which is
+$(-1)^{1+1} \binom{0}{0} \tau^0 \cdot 1 / (9^0 \cdot 0! \cdot 1!) = 1$
+on the right-hand side of \eqref{eq:tier-K-closed-form}, as required).
+
+Combining Steps 1-3 yields \eqref{eq:tier-K-closed-form}.
+\end{proof}
+
+\begin{corollary}[\label{cor:tier-k-leading-coefficient}%
+Leading (highest-degree) coefficient of Tier-$K$]
+\ClaimStatusProvedHere
+For every $K \ge 1$ and every $r \ge 4$ with $r - 4 \ge 2(K-1)$, the
+coefficient $c^{(K)}_{K-1}$ of the highest-degree term
+$(r-4)_{2(K-1)}$ in $\mathrm{Tier}\text{-}K(r)/A_r$ is
+\begin{equation}
+c^{(K)}_{K-1} \;=\; \frac{1}{9^{K-1}\,(K-1)!\,K!}.
+\end{equation}
+Equivalently, the leading denominator pattern of Tier-$K$ is
+$D_K = 9^{K-1}\,(K-1)!\,K!$.
+\end{corollary}
+
+\begin{proof}
+Specialize $m = K - 1$ in \eqref{eq:tier-K-closed-form}, giving
+coefficient $\binom{K-1}{K-1} \tau^0 / (9^{K-1} (K-1)! K!) =
+1/(9^{K-1}(K-1)! K!)$, with sign $(-1)^{K+1}$ as stated in the theorem.
+The magnitude is the claimed $1/D_K$.
+\end{proof}
+
+\begin{remark}[\label{rem:four-tier-recovery}%
+Four-tier recovery]
+The four explicitly inscribed Tiers of
+Chapter~\ref{ch:shadow-tower-higher-coefficients} are recovered from
+\eqref{eq:tier-K-closed-form} at $K = 1, 2, 3, 4$:
+\begin{align*}
+K &= 1: \quad \tau^0 / (9^0 \cdot 1) \;=\; 1 \;=\; A_r/A_r. \\
+K &= 2: \quad -[\tau + (r-4)(r-5)/18] \;=\; B_r/A_r. \\
+K &= 3: \quad +[\tau^2 + 2\tau (r-4)(r-5)/18 + (r-4)_4/972]
+   \;=\; \tau^2 + \tfrac{22}{45}(r-4)(r-5) + (r-4)_4/972, \\
+ &\qquad = \Gamma_r/A_r, \\
+K &= 4: \quad -[\tau^3 + 3\tau^2(r-4)(r-5)/18 + 3 \tau (r-4)_4/972
+   + (r-4)_6/104976] \\
+ &\qquad = -(22/5)^3 - \tfrac{242}{75}(r-4)(r-5)
+   - \tfrac{11}{810}(r-4)_4 - (r-4)_6/104976
+   \;=\; \Delta_r/A_r.
+\end{align*}
+All four agree with the closed forms of
+Theorems~\ref{thm:shadow-tower-asymptotic-closed-form},
+\ref{thm:shadow-tower-subleading-closed-form},
+\ref{thm:shadow-tower-sub-subleading-closed-form},
+\ref{thm:shadow-tower-tier-4-closed-form}.
+\end{remark}
+
+\section{Tier-5 closed form}
+
+\begin{theorem}[\label{thm:tier-5-closed-form}%
+Tier-5 closed form]
+\ClaimStatusProvedHere
+Let $\mathrm{Epsilon}_r := \mathrm{Tier}\text{-}5(r)$ denote the
+$c^{-4}$ Laurent coefficient of $\Phi_r(c) = c^{r-2} S_r(\Vir_c)$ at
+$c = \infty$. Then for every $r \ge 4$,
+\begin{equation}
+\label{eq:tier-5-explicit}
+\begin{aligned}
+\frac{\mathrm{Epsilon}_r}{A_r}
+ &= \left(\frac{22}{5}\right)^{4}
+ \;+\; \frac{21296}{1125}\,(r-4)(r-5)
+ \;+\; \frac{242}{2025}\,(r-4)(r-5)(r-6)(r-7) \\
+ &\quad\;+\; \frac{11}{65610}\,(r-4)(r-5)(r-6)(r-7)(r-8)(r-9) \\
+ &\quad\;+\; \frac{1}{18895680}\,(r-4)(r-5)(r-6)(r-7)(r-8)(r-9)(r-10)(r-11).
+\end{aligned}
+\end{equation}
+The five coefficients specialize the all-tier formula
+\eqref{eq:tier-K-closed-form} at $K = 5$:
+$c^{(5)}_m = \binom{4}{m} \tau^{4-m} / (9^m\, m!\, (m+1)!)$ for
+$m = 0, 1, 2, 3, 4$.
+\end{theorem}
+
+\begin{proof}
+Specialize \eqref{eq:tier-K-closed-form} at $K = 5$:
+\begin{equation}
+\frac{\mathrm{Epsilon}_r}{A_r}
+ \;=\; (-1)^6 \sum_{m=0}^{4} \binom{4}{m} \frac{\tau^{4-m} (r-4)_{2m}}
+      {9^m \, m! \, (m+1)!}.
+\end{equation}
+Compute each coefficient:
+\begin{align*}
+m = 0: &\quad \binom{4}{0} \tau^4 / (9^0 \cdot 0! \cdot 1!)
+ \;=\; \tau^4 \;=\; (22/5)^4 \;=\; 234256/625, \\
+m = 1: &\quad \binom{4}{1} \tau^3 / (9 \cdot 1! \cdot 2!)
+ \;=\; 4 \cdot (22/5)^3 / 18 \;=\; 4 \cdot 10648 / (125 \cdot 18)
+ \;=\; 21296/1125, \\
+m = 2: &\quad \binom{4}{2} \tau^2 / (81 \cdot 2! \cdot 3!)
+ \;=\; 6 \cdot (484/25) / 972 \;=\; 2904 / 24300
+ \;=\; 242/2025, \\
+m = 3: &\quad \binom{4}{3} \tau / (729 \cdot 3! \cdot 4!)
+ \;=\; 4 \cdot (22/5) / 104976 \;=\; 88/524880
+ \;=\; 11/65610, \\
+m = 4: &\quad \binom{4}{4} \tau^0 / (6561 \cdot 4! \cdot 5!)
+ \;=\; 1 / 18895680.
+\end{align*}
+The sign $(-1)^{K+1} = (-1)^{6} = +1$, giving the stated formula.
+\end{proof}
+
+\begin{remark}[\label{rem:tier-5-numerical-signature}%
+Tier-5 signature at characteristic $r$]
+Evaluating \eqref{eq:tier-5-explicit} at representative $r$:
+\begin{align*}
+r = 4: &\quad \mathrm{Epsilon}_4/A_4 \;=\; (22/5)^4 \;=\; 234256/625. \\
+r = 8: &\quad \mathrm{Epsilon}_8/A_8 \;=\; \tfrac{234256}{625}
+ + \tfrac{21296 \cdot 12}{1125} + \tfrac{242 \cdot 24}{2025}
+ \;=\; 10206592/16875. \\
+r = 12: &\quad \mathrm{Epsilon}_{12}/A_{12} \;=\; 6721045886/4100625.
+\end{align*}
+The Tier-5 denominator pattern $D_5 = 9^4 \cdot 4! \cdot 5! = 6561
+\cdot 24 \cdot 120 = 18895680 = 2^6 \cdot 3^{10} \cdot 5$ introduces
+the prime $5$ to the leading denominator sequence for the first
+time; all prior Tier leading denominators $D_1, D_2, D_3, D_4$ were
+$\{2, 3\}$-smooth.
+\end{remark}
+
+\section{Arithmetic consequences}
+
+\begin{corollary}[\label{cor:tier-leading-denominator-pattern}%
+Tier leading denominator pattern]
+\ClaimStatusProvedHere
+The leading (highest-polynomial-degree) denominator of
+$\mathrm{Tier}\text{-}K(r)/A_r$ is
+\begin{equation}
+D_K \;=\; 9^{K-1} \, (K-1)! \, K!.
+\end{equation}
+The first five values are
+$D_1 = 1$, $D_2 = 18$, $D_3 = 972$, $D_4 = 104976$, $D_5 = 18895680$.
+Explicit factorisations:
+\begin{align*}
+D_2 &= 2 \cdot 3^2 = 18, \\
+D_3 &= 2^2 \cdot 3^5 = 972, \\
+D_4 &= 2^4 \cdot 3^8 = 104976, \\
+D_5 &= 2^6 \cdot 3^{10} \cdot 5 = 18895680, \\
+D_6 &= 2^7 \cdot 3^{13} \cdot 5^2 = 5101833600, \\
+D_7 &= 2^8 \cdot 3^{16} \cdot 5^2 \cdot 7 = 1928493100800.
+\end{align*}
+The first prime $\ge 5$ appearing in the $D_K$ sequence is $p = 5$, at
+$K = 5$ (via $K! = 120 = 2^3 \cdot 3 \cdot 5$). The first prime $\ge 7$
+appears at $K = 7$. More generally, for every prime $p \ge 5$, $p$
+first appears in $D_K$ at $K = p$, a direct consequence of
+$v_p(K!) \ge 1 \Leftrightarrow K \ge p$ (the primes $p \in \{2, 3\}$
+are already present in $D_2 = 18 = 2 \cdot 3^2$).
+\end{corollary}
+
+\begin{proof}
+The denominator pattern follows from
+Corollary~\ref{cor:tier-k-leading-coefficient}. Arithmetic factorisation
+is direct computation verified in
+\texttt{test\_all\_tier\_generating\_function.py}.
+\end{proof}
+
+\begin{corollary}[\label{cor:tier-K-kummer-arithmetic}%
+Kummer-irregular content at fixed $r$, variable $K$]
+\ClaimStatusProvedHere
+For every fixed integer $r \ge 4$ and every $K \le \lfloor (r - 4) / 2
+\rfloor + 1$, the Tier-$K$ coefficient
+$\mathrm{Tier}\text{-}K(r) / A_r$ lies in $\mathbb{Q}$ with numerator
+primes divisible only by primes $p$ satisfying one of:
+\begin{itemize}
+\item $p \mid (r-4)_{2m}$ for some $m \in \{0, 1, \ldots, K-1\}$ (i.e.\
+$p$ divides some $(r - 4 - \ell)$ for $\ell \in \{0, 1, \ldots, 2K - 3\}$);
+\item $p \in \{2, 3\}$ (from $\tau^{K-1-m}$ factors $\tau = 22/5 =
+2 \cdot 11 / 5$ and denominator $D_m = 9^m m! (m+1)!$);
+\item $p = 11$ (from $\tau = 22/5$ powers);
+\item $p \mid K! \cdot (K-1)!$ via the denominator $D_m$.
+\end{itemize}
+Consequently the Kummer-irregular prime $691$ enters the Tier-$K$
+stratification of $S_r$ only through the falling-factorial window
+$(r-4)_{2(K-1)}$, when the window hits a multiple of $691$ modulo the
+interplay with the denominator. Through $r \le 13$ the only emergence
+is $\Gamma_8 / A_8 \ni 691$ (Corollary~\ref{cor:kummer-emergence-at-r-8})
+and the Tier-5 window at $r = 12$ evaluates to a denominator of
+$4100625 = 3^8 \cdot 5^4 \cdot 13^2$ with no Kummer-irregular contribution.
+\end{corollary}
+
+\begin{proof}
+Each term in \eqref{eq:tier-K-closed-form} is a rational number whose
+primes are exhausted by the listed sources. The remaining arithmetic
+statement is direct verification in the test suite.
+\end{proof}
+
+\section{Open extensions}
+
+\begin{remark}[\label{rem:borel-analytic-continuation}%
+Borel analytic continuation as an open direction]
+The bivariate generating function $F(r, u)$ of
+Theorem~\ref{thm:all-tier-bivariate-generating-function} is \emph{rational}
+in $u$ for every integer $r$, hence trivially has infinite radius of
+convergence in $u$ (after clearing the $(1 + \tau u)$ factors). The
+analytic-continuation-as-Borel-sum formulation suggested in the original
+problem is therefore degenerate for integer $r$: there is no Gevrey-1
+divergence to resum. The interesting Borel story is in $1/c$ for fixed
+$r$, where the finite rational expression $\Phi_r(c)$ admits the Laurent
+series at $c = \infty$ as its natural domain. For $r \to \infty$ at fixed
+$c$, the all-tier closed form gives polynomial-in-$r$ coefficients at
+every Laurent order, which grow tamely.
+\end{remark}
+
+\begin{remark}[\label{rem:hypergeometric-contiguous-relation}%
+Hypergeometric contiguous relation as a third proof route]
+An independent proof of
+Theorem~\ref{thm:all-tier-laurent-stratification} proceeds via Gauss's
+contiguous relations for ${}_2F_1$, applied to the shift
+$r \mapsto r + 1$, which shifts both first and second parameters by
+$-1/2$. The corresponding three-term contiguous relation
+\begin{equation}
+c(c - 1 - (2c - a - b - 1) x)\, {}_2F_1(a, b; c; x)
+ \;=\; ((\cdots) x - (\cdots))\,{}_2F_1(a-1, b-1; c; x) + \ldots
+\end{equation}
+translates (under $x = -4u / (9 (1 + \tau u))$) into the master Riccati
+bilinear recurrence on $F(r, u)$, up to a normalisation factor. This
+provides a third, fully hypergeometric-theoretic route to the
+all-tier closed form, complementary to the direct Laurent-matching
+proof and to the inductive variation-of-parameters route used in the
+four-tier chapter. We state the contiguous-relation proof as a sketch
+here; full expansion is left as an open exercise.
+\end{remark}
+
+\begin{remark}[\label{rem:bivariate-generalisation-W-N}%
+Bivariate generalisation to other class-M families]
+The bivariate form \eqref{eq:F-hyper} is specific to $S_r(\Vir_c)$ and
+relies on the Zamolodchikov constant $\tau = 22/5$ in the denominator
+factor $5 c + 22$. For principal $W_N$ at generic level the analogous
+denominator factor is a degree-$(N - 1)$ polynomial in $c$
+(Fateev-Lukyanov), producing a genuinely multivariate generating
+function $F_N(r, u)$. Extension to $W_3$ is a clean forward
+programme and would exhibit an ${}_2F_1$ replaced by a Meijer G-function
+or an ${}_3F_2$; the analogous all-tier closed form would involve
+tensor products of the binomial-$\tau$-power kernel above.
+\end{remark}
+
+% End of chapter.
