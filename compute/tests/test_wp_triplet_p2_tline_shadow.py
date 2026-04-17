@@ -88,6 +88,57 @@ class TestWpTripletP2TlineShadow(unittest.TestCase):
         self.assertEqual(closed_form, self.EXPECTED_S_R_AT_MINUS_2[4])
 
 
+class TestWpTripletP3TlineShadow(unittest.TestCase):
+    """Virasoro T-line shadow at c = -7 for W(3) triplet (c_{3,1} = -7).
+
+    Complementary to W(2) at c = -2: provides a second data point in
+    the W(p) family, enabling arithmetic structural observations across p.
+    """
+
+    EXPECTED_S_R_AT_MINUS_7 = {
+        2: Fraction(-7, 2),
+        3: Fraction(2),
+        4: Fraction(10, 91),
+        5: Fraction(48, 637),
+        6: Fraction(9760, 173901),
+        7: Fraction(126720, 2840383),
+        8: Fraction(1379920, 36924979),
+        9: Fraction(3618560, 110774937),
+        10: Fraction(695465728, 23521211623),
+    }
+
+    def test_s_r_at_c_minus_7_through_r10(self):
+        """Virasoro T-line shadow S_r at c = -7 for r = 2, ..., 10."""
+        c_sym = Symbol('c')
+        x_sym = Symbol('x')
+        shadows = compute_shadow_tower(max_arity=10)
+
+        for r, expected in self.EXPECTED_S_R_AT_MINUS_7.items():
+            sym_expr = shadows[r]
+            S_r_coeff = sympify(sym_expr).coeff(x_sym, r)
+            val = simplify(S_r_coeff.subs(c_sym, Rational(-7)))
+            actual = Fraction(int(val.p), int(val.q))
+            self.assertEqual(
+                actual, expected,
+                f"At r={r}: expected {expected}, got {actual}"
+            )
+
+    def test_s_3_universal_across_p(self):
+        """S_3 = 2 at any c; same at c=-2 and c=-7."""
+        self.assertEqual(
+            self.EXPECTED_S_R_AT_MINUS_7[3],
+            TestWpTripletP2TlineShadow.EXPECTED_S_R_AT_MINUS_2[3]
+        )
+
+    def test_s_r_smaller_at_c_minus_7(self):
+        """|S_r| is much smaller at c=-7 than c=-2 for r>=4.
+        This reflects c=-7 being farther from the c_{2,5} = -22/5 pole."""
+        for r in range(4, 11):
+            s_minus2 = TestWpTripletP2TlineShadow.EXPECTED_S_R_AT_MINUS_2[r]
+            s_minus7 = self.EXPECTED_S_R_AT_MINUS_7[r]
+            self.assertLess(abs(float(s_minus7)), abs(float(s_minus2)))
+
+
 class TestWpTripletP2ShadowAsymptotic(unittest.TestCase):
     """Observations on c=-2 shadow asymptotic behaviour.
 
