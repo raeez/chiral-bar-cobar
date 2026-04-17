@@ -94,30 +94,44 @@ def _riccati_Q(c):
     return 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
 
 
+def _truncate_poly_in_t(expr, t, deg_max):
+    """Drop every t^k with k > deg_max. Keeps rational-function c
+    coefficients intact."""
+    p = sp.Poly(expr, t)
+    return sum(p.nth(k) * t**k for k in range(0, deg_max + 1))
+
+
 def _riccati_H_expansion(c, r_max):
     """Expand H(t) = t^2 sqrt(Q(t)) to order t^{r_max} in Q(c)[[t]].
     Verification path: binomial series, independent of master-equation
     recursion.
 
-    Uses an internal positive symbol c_pos to let sympy collapse
-    sqrt(c_pos^2) = c_pos; the output is then relabelled back to the
-    caller's symbol c by xreplace. This keeps the output in Q(c) without
-    spurious sqrt(c^2) branch ambiguity.
+    Implementation: sp.series(sp.sqrt(.)) with rational-function c
+    coefficients is pathologically slow at order >= 9, so we factor
+    sqrt(Q) = (2 kappa) sqrt(1 + u), u = P(t)/(2 kappa)^2 = P(t)/c^2,
+    and apply the binomial expansion sqrt(1 + u) = sum_n binom(1/2, n)
+    u^n. Since u has t-valuation 1, only n <= r_max - 2 contributes.
     """
     t = sp.Symbol("t")
-    c_pos = sp.Symbol("c_pos", positive=True)
-    kappa = sp.Rational(1, 2) * c_pos
+    kappa = sp.Rational(1, 2) * c  # 2*kappa = c
     S3 = sp.Integer(2)
-    S4 = sp.Rational(10) / (c_pos * (5 * c_pos + 22))
-    Q = 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
-    # sympy series of sqrt(Q) around t=0 to order r_max - 1
-    # (so that t^2 * series reaches order r_max).
-    sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
-    H = sp.expand(t**2 * sqrt_series)
-    # Relabel c_pos -> c (caller's symbol) preserving all structural
-    # rationality; sqrt(c_pos^2) has already collapsed to c_pos, so no
-    # sqrt residue remains.
-    return H.xreplace({c_pos: c})
+    S4 = _s4_vir_shapovalov(c)
+    two_kappa_sq = (2 * kappa) ** 2  # = c^2
+    u = sp.together(
+        (12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2) / two_kappa_sq
+    )
+    n_max = r_max - 2
+    one_half = sp.Rational(1, 2)
+    binomial_series = sp.Integer(0)
+    u_power = sp.Integer(1)
+    for n in range(0, n_max + 1):
+        coeff = sp.binomial(one_half, n)
+        binomial_series += coeff * u_power
+        if n < n_max:
+            u_power = _truncate_poly_in_t(sp.expand(u_power * u), t, n_max)
+    sqrt_Q = (2 * kappa) * binomial_series
+    H = sp.expand(t**2 * sqrt_Q)
+    return _truncate_poly_in_t(H, t, r_max)
 
 
 def _extract_S_r_from_riccati(c, r):
@@ -125,7 +139,7 @@ def _extract_S_r_from_riccati(c, r):
     t = sp.Symbol("t")
     H = _riccati_H_expansion(c, r + 1)
     coeff = sp.Poly(H, t).nth(r)
-    return sp.simplify(coeff / r)
+    return sp.together(coeff / r)
 
 
 # ---------------------------------------------------------------------------

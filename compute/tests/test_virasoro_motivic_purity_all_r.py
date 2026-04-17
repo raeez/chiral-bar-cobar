@@ -61,35 +61,57 @@ def _s4_vir(c):
     return sp.Rational(10) / (c * (5 * c + 22))
 
 
+def _truncate_poly_in_t(expr, t, deg_max):
+    """Drop every t^k with k > deg_max. Keeps rational-function
+    coefficients in c intact. Returns a polynomial in t with Q(c)
+    coefficients."""
+    p = sp.Poly(expr, t)
+    return sum(p.nth(k) * t**k for k in range(0, deg_max + 1))
+
+
 def _riccati_H(c, r_max):
     """Riccati generating function H(t) = t^2 * sqrt(Q(t)) expanded to
-    order t^{r_max}. Returns sympy expression in (c, t). Used as an
-    INDEPENDENT verification path disjoint from the .tex chapter's
-    master-equation induction.
+    order t^{r_max}. Returns sympy expression in (c, t).
 
-    Uses an internal positive symbol to let sympy collapse sqrt(c_pos^2)
-    = c_pos, then xreplace back to the caller's symbol; keeps output in
-    Q(c) without spurious branch ambiguity. If the caller passes a
-    numeric c (sp.Integer / sp.Rational), the positive-symbol trick is
-    skipped since numeric c already resolves the branch.
+    Implementation: avoid sp.series(sp.sqrt(.)) (pathologically slow on
+    rational-function coefficients) and use the binomial expansion
+
+      sqrt(Q) = (2 kappa) * sqrt(1 + u),
+      sqrt(1 + u) = sum_{n >= 0} binom(1/2, n) u^n,
+
+    with u = P(t) / (2 kappa)^2 where P(t) = 12 kappa S_3 t + (9 S_3^2
+    + 16 kappa S_4) t^2. Since 2 kappa = c, the prefactor (2 kappa) is
+    rational in c with no sqrt branch. u has t-valuation 1, so only
+    n <= r_max - 2 contributes to H(t) at order t^{r_max}. Truncate
+    at t^{r_max - 2} after each multiplication to keep the expressions
+    small.
+
+    Path disjointness: this is the ALGEBRAIC-generating-function route
+    (binomial expansion of a formal square root), distinct from the
+    master-equation recursion in the .tex proof. The two paths share
+    only the three base values (kappa, S_3, S_4), which are
+    pre-programme OPE residue data.
     """
     t = sp.Symbol("t")
-    # If the input is numeric, build Q directly (no positivity trick needed).
-    if c.is_number:
-        kappa = _kappa_vir(c)
-        S3 = _s3_vir()
-        S4 = _s4_vir(c)
-        Q = 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
-        sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
-        return sp.expand(t**2 * sqrt_series)
-    c_pos = sp.Symbol("c_pos", positive=True)
-    kappa = sp.Rational(1, 2) * c_pos
+    kappa = sp.Rational(1, 2) * c  # 2*kappa = c
     S3 = sp.Integer(2)
-    S4 = sp.Rational(10) / (c_pos * (5 * c_pos + 22))
-    Q = 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
-    sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
-    H = sp.expand(t**2 * sqrt_series)
-    return H.xreplace({c_pos: c})
+    S4 = sp.Rational(10) / (c * (5 * c + 22))
+    two_kappa_sq = (2 * kappa) ** 2  # = c^2
+    u = sp.together(
+        (12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2) / two_kappa_sq
+    )
+    n_max = r_max - 2  # terms beyond n = n_max contribute t^{> r_max}
+    one_half = sp.Rational(1, 2)
+    binomial_series = sp.Integer(0)
+    u_power = sp.Integer(1)  # u^0
+    for n in range(0, n_max + 1):
+        coeff = sp.binomial(one_half, n)
+        binomial_series += coeff * u_power
+        if n < n_max:
+            u_power = _truncate_poly_in_t(sp.expand(u_power * u), t, n_max)
+    sqrt_Q = (2 * kappa) * binomial_series
+    H = sp.expand(t**2 * sqrt_Q)
+    return _truncate_poly_in_t(H, t, r_max)
 
 
 def _S_r_via_riccati(c, r):
