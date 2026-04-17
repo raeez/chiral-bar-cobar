@@ -48,7 +48,7 @@ KUMMER_IRREGULAR = frozenset({
     2273, 2293, 2309, 2357, 2371, 2377, 2381, 2383, 2389, 2411, 2423,
     2441, 2503, 2543, 2557, 2579, 2591, 2621, 2633, 2647, 2657, 2663,
     2671, 2689, 2753, 2767, 2777, 2789, 2791, 2833, 2857, 2861, 2879,
-    2903, 2957, 2999, 3023, 3067, 3079, 3089, 3109, 3167, 3181, 3203,
+    2903, 2957, 2999, 3023, 3079, 3089, 3109, 3167, 3181, 3203,
     3221, 3229, 3257, 3299, 3301, 3319, 3343, 3347, 3359, 3373, 3391,
     3407, 3413, 3449, 3461, 3463, 3469, 3499, 3517, 3529, 3533, 3539,
     3557, 3571, 3581, 3583, 3593, 3607, 3617, 3637,
@@ -153,12 +153,18 @@ def test_kummer_tier_3_emergences():
         for p in kummer_hits:
             if p not in emergences:
                 emergences[p] = r
-    # Corrected emergences after full enumeration:
-    #   37 at r=8 (inside 51134 = 2 * 37 * 691)
-    #   691 at r=8 (inside 51134 = 2 * 37 * 691) - Bernoulli-leading
-    #   3067 at r=12 (in numerator 2 * 3067) - Kummer-irregular, 3067 | B_2m
-    #   811 at r=13 (in numerator 2 * 811) - Kummer-irregular
-    expected = {37: 8, 691: 8, 3067: 12, 811: 13}
+    # Corrected emergences after primary-source Kummer verification:
+    #   37 at r=8 (inside 51134 = 2 * 37 * 691): Kummer-irregular via B_32.
+    #   691 at r=8 (inside 51134 = 2 * 37 * 691): Bernoulli-leading via B_12.
+    #   811 at r=13 (in numerator 2 * 811): Kummer-irregular via B_544.
+    # Retracted from earlier inscription:
+    #   3067 at r=12: primary-source verification through B_2000 shows no
+    #     witness; 3067 is KUMMER-REGULAR, NOT irregular as originally
+    #     claimed. See rem:kummer-witness-verification-20260417 in
+    #     shadow_tower_higher_coefficients.tex. The prime 3067 still
+    #     appears in Γ_12 numerator but is Riccati-arithmetic, not
+    #     Kummer-arithmetic.
+    expected = {37: 8, 691: 8, 811: 13}
     assert emergences == expected, (
         f"Expected Tier 3 Kummer {expected}, got {emergences}"
     )

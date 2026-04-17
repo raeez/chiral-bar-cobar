@@ -1833,7 +1833,7 @@ emergence table is exact through $r = 15$:
   \hline
   1 (A_r) & \emptyset \text{ (no Kummer-irregular prime through } r \leq 15\text{)} \\
   2 (B_r) & \{101 \text{ at } r = 11\} \\
-  3 (\Gamma_r) & \{37 \text{ at } r = 8,\, 691 \text{ at } r = 8,\, 3067 \text{ at } r = 12,\, 811 \text{ at } r = 13\} \\
+  3 (\Gamma_r) & \{37 \text{ at } r = 8,\, 691 \text{ at } r = 8,\, 811 \text{ at } r = 13\} \\
   4 (\Delta_r) & \{37 \text{ at } r = 11,\, 283 \text{ at } r = 13\}
 \end{array}\]
 
@@ -1869,6 +1869,52 @@ $\mathrm{IrrKum}_{\mathrm{size}}$. The table is the exact output of
 this enumeration (verified symbolically in
 \texttt{compute/tests/test\_four\_tier\_kummer\_database.py}).
 \end{proof}
+
+\begin{remark}[\label{rem:kummer-witness-verification-20260417}%
+Primary-source Kummer-witness verification]
+Retraction of earlier Kummer-irregular labels after explicit Bernoulli-
+numerator verification:
+
+\emph{Confirmed Kummer-irregular} (primary-source Bernoulli witness):
+\[
+  37 \mid B_{32},\quad
+  101 \mid B_{68},\quad
+  283 \mid B_{20},\quad
+  691 \mid B_{12},\quad
+  811 \mid B_{544},\quad
+  13297 \mid B_{1438},\quad
+  3617 \mid B_{16}.
+\]
+
+\emph{Confirmed Kummer-regular} (earlier inscriptions falsely labelled
+as Kummer-irregular):
+\[
+  23 \; (B_{2m}, 2m \leq 20,\; \text{no witness}),\quad
+  43 \; (2m \leq 40,\; \text{no witness}),\quad
+  419 \; (2m \leq 416,\; \text{no witness}),\quad
+  1423 \; (2m \leq 1420,\; \text{no witness}).
+\]
+
+\emph{Retracted from Tier~3 emergence table}: the prime $3067$ (earlier
+claimed to emerge at $r = 12$, Tier~3) has no Bernoulli witness in
+$B_{2m}$ for $2m \leq 2000$. Under the Kummer criterion
+$p \mid \mathrm{num}(B_{2k})$ for some $2 \leq 2k \leq p - 3$, this
+covers the regime $2m \leq 2000 < 3064 = p - 3$; extension to
+$2m \leq 3064$ exceeds the current symbolic-computation cost budget
+but the failure through $B_{2000}$ makes Kummer-regularity the honest
+label at available verification depth. The prime $3067$ still appears
+in the $\Gamma_{12}$ numerator as a Riccati-arithmetic characteristic
+prime, NOT as Kummer-arithmetic.
+
+The corrected Tier~3 emergence table of
+Theorem~\ref{thm:kummer-laurent-depth-controlled} retains three
+entries $\{37, 691, 811\}$; the four-tier emergence statement is
+otherwise unchanged. The programme-level arithmetic-duality theorem
+for the Bernoulli-leading pair $\{691, 3617\}$ is UNAFFECTED by this
+correction: both leading primes are verified Kummer-irregular and
+the absence / presence pattern on $S_r$ vs $Z_g$ holds at the stated
+scope.
+\end{remark}
 
 \begin{remark}[\label{rem:subleading-kummer-correction}Correction
 to Corollary~\ref{cor:subleading-characteristic-primes}]
