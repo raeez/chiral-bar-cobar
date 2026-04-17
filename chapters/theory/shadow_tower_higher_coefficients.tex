@@ -2066,6 +2066,63 @@ $j + k = r + 2$) producing $C_\Vir^T = 6$, not
 $C = 4 \cdot 2 = 8$.
 \end{remark}
 
+\begin{remark}[\label{rem:linear-vs-quadratic-asymptotic-recurrence}
+Linear vs quadratic asymptotic recurrence: the deeper
+structural dichotomy]
+The true structural difference between Virasoro $T$-line and
+$W_3$ $W$-line asymptotics lies not just in the $Z_2$ parity, but
+in how the \emph{leading-$c$} projection interacts with the
+quadratic shadow recurrence.
+
+Both families satisfy a quadratic shadow recursion on the
+full rational coefficients $S_r(c)$:
+\[
+  r \, c \, S_r \;=\; -\sum_{\substack{j+k = r+2 \\ j \le k}}
+    w(j, k) \, j \, k \, S_j(c) \, S_k(c).
+\]
+The recursion is quadratic in $S$, with a $1/c$ prefactor from
+the propagator $P = 2/c$ (on $T$-line) or $P = 3/c$ (on $W$-line).
+
+\emph{Virasoro $T$-line}: the different $S_j(c)$ have different
+$c$-scalings: $S_3 = 2 \sim c^0$, $S_r \sim c^{-(r-2)}$ for
+$r \ge 4$. Under the scaling $A_r := \lim_{c \to \infty}
+c^{r-2} S_r$ (for $r \ge 4$), only the pair $(j, k) = (3, r-1)$
+contributes at leading $c$ (other pairs are higher-order in
+$1/c$). This \emph{cascade of $c$-orders collapses the quadratic
+recursion to a LINEAR recurrence}
+\[
+  A_r \;=\; -\frac{6 (r-1)}{r} A_{r-1},
+  \qquad r \ge 5,
+\]
+with two seeds $A_3 = A_4 = 2$. Linear recurrence yields pure
+geometric growth $A_r = 8 (-6)^{r-4}/r$, and the GF involves
+the TRANSCENDENTAL closed form (polynomial plus $\log(1+6 z)$).
+
+\emph{$W_3$ $W$-line}: the integer sequence $a_m := |N_{2m}| /
+2560^{m-1}$ is defined \emph{after} factoring out all
+$c$-dependence. No cascade of $c$-orders: all pairs contribute at
+the same order. The quadratic shadow recursion preserves its
+quadratic character on $(a_m)$,
+\[
+  m a_m \;=\; \tfrac{3}{2} \sum_{\substack{j + k = m+1 \\ j, k \ge 2}}
+    w(j, k) \, j \, k \, a_j \, a_k,
+\]
+giving Catalan-type growth
+$a_m \sim 12^m / (72 \sqrt{\pi} \cdot m^{5/2})$
+and an ALGEBRAIC closed form (polynomial plus $(1-12 z)^{3/2}$).
+
+\emph{Distilled distinction}: the $Z_2$ parity (Remark~(H1)) allows
+the \emph{integer} sequence to be defined (by halving the arity
+and normalising $c$-powers); the resulting recurrence remains
+\emph{quadratic}, giving algebraic GF and Catalan-type
+$m^{-5/2}$ prefactor. Absence of parity forces leading-$c$
+extraction to route through a \emph{linear} recurrence on
+$A_r$ (leading scaling index), giving transcendental GF and
+$r^{-1}$ prefactor. Both end at finite exponential base ($6$
+or $12$), but the sub-exponential power-law differs by two orders
+of magnitude ($r^{-1}$ vs $m^{-5/2}$).
+\end{remark}
+
 \begin{remark}[\label{rem:riccati-template-hypotheses}
 Hypotheses for the $C = 4s$ Riccati template]
 The $C_s = 4 s$ structural formula from
