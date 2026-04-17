@@ -3615,6 +3615,75 @@ Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_
 - Cross-volume references preserved.
 - No mathematical content removed.
 
+### Pattern 221. Blacklist-slug leakage into typeset parenthetical (2026-04-17, bar_construction.tex)
+
+**Type**: 18 (hardcoded/symbolic) + CONSTITUTIONAL metadata hygiene.
+
+**Trigger**: `/B\d+` slug carried from a Wrong-Formulas Blacklist entry into a `\textup{(}...\textup{)}` parenthetical annotation in the manuscript. Regex:
+`\\textup\{\(\}\s*\/B\d+|\(\s*\/B\d+;`
+
+**What goes RIGHT**: the adjacent mathematics — the author correctly flagged a formula against a known blacklist entry (B49: fiberwise curvature $d_{\mathrm{fib}}^2 = \kappa(\cA)\cdot\omega_g$ and its distinction from the strict bar differential).
+
+**What goes WRONG**: the blacklist slug `/B49` is an editor-side registry index, not a mathematical reference. A reader of the PDF sees `(/B49; treated in Chapter X)` and reads it as a citation to some nonexistent document. The slug rots as the blacklist is renumbered.
+
+**Healing**: remove the slug; keep only the cross-reference to the target chapter. The surrounding prose already describes the mathematical content (fiberwise curvature; class-M curved-$A_\infty$).
+
+**Related APs**: AP234 (two Koszul conductors with same letter), AP235 (quadrichotomy drift) — all three are constitutional metadata-hygiene violations registered 2026-04-17.
+
+**Empty-parenthetical companion**: the same editorial pass left a stranded `\textup{(}\textup{)}` adjacent to the slug (the second paren held a macro reference that was deleted without removing its delimiters). Grep `\\textup\{\(\}\\textup\{\)\}` catches the symptom.
+
+### Pattern 222. $\overline{\mathcal{M}}_{0,n}$ off-by-one in degree-to-points conversion (2026-04-17, bar_construction.tex:602)
+
+**Type**: 8 (off-by-one) + 9 (conflation).
+
+**Trigger**: bar-degree-$n$ uses $(n+1)$ insertions and hence lives over $\overline{C}_{n+1}(X)$; the corresponding genus-$0$ moduli is $\overline{\mathcal{M}}_{0,n+1}$ with $\dim = (n+1) - 3 = n-2$. At $n=2$: $3$ points, $\overline{\mathcal{M}}_{0,3}$, a point (0-dim). Author wrote $\overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$ (the $n=3$ case) and added "one free cross-ratio parameter." Gauge-fixing `z_3 = 0, z_2 = 1, z_1 = \infty` uses up all 3 complex parameters of $\text{PSL}_2(\mathbb{C})$; 0 residual freedom.
+
+**What goes RIGHT**: the Arnold-form count (3 generators of $\eta_{ij}$, 1 Arnold relation, hence $\dim \Omega^2(\log D) = 2$) is correct and genuinely computes the right dimension of 2-forms; this count is INDEPENDENT of the moduli-space miscalibration.
+
+**What goes WRONG**: the canonical cross-ratio story belongs to $4$ points $\mod \text{PSL}_2$, not to $3$ points.
+
+**Healing**: `\overline{C}_{n+1}(\mathbb{P}^1)/\text{PSL}_2 \cong \overline{\mathcal{M}}_{0,n+1}$, dimension $n-2$'. At $n=2$: a point. At $n=3$: $\mathbb{P}^1$.
+
+**Regex trigger**: `\\overline\{C\}_(\d+)\([^)]*\)/\\text\{PSL\}_2\s*\\cong\s*\\overline\{\\mathcal\{M\}\}_\{0,(\d+)\}` — check that the two numbers match.
+
+**Related**: AP126 (level prefix off-by-one) and AP136 (harmonic-number off-by-one) — all three are "substitute smallest case" violations healed by evaluating at $n=0$ or $n=1$.
+
+### Pattern 223. Iterated-residue operator-order inconsistency with prose (2026-04-17, bar_construction.tex:1080-1084)
+
+**Type**: 10 (convention clash) — right-to-left vs left-to-right operator composition.
+
+**Trigger**: an enumeration of iterated residues at a codimension-$2$ collision stratum, where each item's prose describes "First $D_\alpha$, then $D_\beta$" but the displayed operator `\text{Res}_{D_\alpha} \circ \text{Res}_{D_\beta}` reads under standard right-to-left convention as "first $D_\beta$ (inner), then $D_\alpha$ (outer)." A single item out of three has operator order swapped relative to the prose.
+
+**What goes RIGHT**: the $\mu$-association in the bracket $[\mu(\mu(\phi_i,\phi_\ell),\phi_j)\otimes\omega]$ faithfully records the stage order of collisions; the underlying geometry (three codim-$2$ faces through $D_{ij\ell}$ summing to zero via Borcherds) is correct.
+
+**What goes WRONG**: operator composition in item (3) is `\text{Res}_{D_{i\ell}} \circ \text{Res}_{D_{ij}}` — standard right-to-left reads "$D_{ij}$ first, $D_{i\ell}$ second," the opposite of the stated prose "First $D_{i\ell}$, then $D_{ij}$." Items (1) and (2) are consistent; (3) is swapped.
+
+**Healing**: the operator should read `\text{Res}_{D_{ij}} \circ \text{Res}_{D_{i\ell}}` so that the inner-first convention matches "First $D_{i\ell}$." Alternative convention (left-to-right) applied uniformly would also fix, but only if the entire proof adopts it — and (1), (2) use right-to-left so changing the global convention is more invasive.
+
+**Regex trigger**: after any enumeration with prose "First $D_\alpha$, then $D_\beta$" and displayed `\text{Res}_{D_\gamma} \circ \text{Res}_{D_\delta}`, verify $\delta = \alpha$ (right-to-left convention) across all items of the enumeration.
+
+**Related**: AP48 (operator-order convention clash).
+
+### Pattern 224. Sym(r-matrix) = κ via trace-Res, normalization-dependent (2026-04-17, bar_construction.tex:2297)
+
+**Type**: 2 (scope error) + 10 (convention clash).
+
+**Trigger**: preview-level shorthand formula `sym(r(z)) = (1/2) tr[Res_{z=0} r(z)] = κ(A)` or similar compact identification of the R-matrix-to-κ passage.
+
+**What goes RIGHT**: κ(A) IS recoverable from the degree-2 R-matrix component via sym (Σ_n-coinvariant projection) — this is the substance of the coinvariant shadow theorem.
+
+**What goes WRONG**: the specific normalization `(1/2) tr[Res]` is convention-dependent. Substitutions:
+- **Heisenberg** (trace-form, r(z) = k/z, h^v = 0, 1-dim rep): Res r = k, tr = k, (1/2) tr Res = k/2 — but κ(Heis) = k from census (C3). Off by factor 2.
+- **Non-abelian affine KM** (trace-form, r(z) = k Ω/z): Res r = k Ω, tr[k Ω|_ad] = k · dim(g) (or similar), (1/2) tr Res ~ k dim(g)/2. But κ(V_k(g)) = dim(g)(k+h^v)/(2h^v) includes Sugawara shift +dim(g)/2. Missing Sugawara shift (FM11).
+
+**Healing**: qualify the formula or reroute through the actual theorem statement:
+- `sym(r_2) = S_2` (shadow at degree 2, matching coinvariant shadow theorem)
+- `κ = av(r) + Sugawara shift` with shift = dim(g)/2 for non-abelian affine KM (AP-RMATRIX/C9/FM11).
+
+**Regex trigger**: `\\operatorname\{sym\}\(r\([^)]*\)\)\s*=.*\\kappa|\(1/2\)\s*\\operatorname\{tr\}\[.*Res.*\]\s*=\s*\\kappa`.
+
+**Related**: AP-RMATRIX (level prefix + Sugawara shift), FM11 (sym(r) = κ_dp for KM, full κ requires +dim(g)/2), AP97 (av:g^{E_1} → g^mod lossy).
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.

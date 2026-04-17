@@ -1,8 +1,165 @@
-# FRONTIER — The Complete Research Programme
+# FRONTIER — The Complete Research Programme (Vol I)
 
-## Status as of 2026-04-13 (final comprehensive update)
+## DEFINITIVE STATUS AS OF 2026-04-17 (Beilinson-rectified)
 
-Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-04-08), updated through Vol III ~230-agent comprehensive wave (2026-04-14). Vol I: 139,568 tests, 3,726 engines. Programme total: ~5,142pp, ~177K tests, ~4,186 engines. This document is the authoritative record of what is PROVED, what is DESIGNED, what is OPEN, and what is COMPUTED but not yet proved.
+This supersedes every prior status line in this document. Sections marked "Prior status" and "F1-F36" below are HISTORICAL RECORD of the 2026-04-07 through 2026-04-14 session state; every closure and qualifier in this top section takes precedence. The authoritative audit that forced these updates is `notes/rectification_map_beilinson_audit.md` (926 lines, inscribed 2026-04-17).
+
+### 1. Closures since 2026-04-14 — 2026-04-16 Programme-Wide Wave
+
+The 2026-04-16 wave closed every surviving open frontier from the 2026-04-13 "Platonic Ideal Roadmap" list except one, and reduced the load-bearing conditional envelope from ~20 items to ~4.
+
+**CL1 (F1 / MC5 class M chain-level). CLOSED weight-completed; direct-sum genuinely FALSE.** `thm:completed-bar-cobar-strong` + `prop:standard-strong-filtration` + `prop:bv-bar-class-m-weight-completed`. Harmonic discrepancy at each weight stage N is absorbed by explicit h·m_0^{j-1} chain homotopy; Milnor/Mittag-Leffler passage to the inverse limit. Direct-sum chain-level class M is genuinely false: S_4(Vir_c) = 10/[c(5c+22)] nonzero at generic c forces bar cohomology in weight 4. This is the CORRECT SCOPE, not a gap. AP203 healed via uniqueness of central degree-2 m_0 (Hodge + vacuum-proportionality, H^{2,0}(curve) = 0 kills competing bar-length-2 insertions).
+
+**CL2 (Modular-family Theorem A over M̄_{g,n}). CLOSED unconditional.** Three-part proof: (a) hypothesis (c) base change via BD holonomic + GR17 Vol II six-functor formalism on relative Ran prestack; (b) nodal sewing theorem via Mok25 log FM + Francis-Gaitsgory factorization-gluing + HS-sewing convergence (chain-level at nodes); (c) full M̄_{g,n} assembly via K-theoretic filtration globalization (Thm D template: filter by collision depth, assoc-graded = Arnold OS, λ_{-1}(bundle) Euler char). PTVV/factorization-homology alternative H01 upgraded from sketch to proposition — GENUINELY INDEPENDENT (Costello-Gwilliam factorization homology + PTVV 1-shifted symplectic Lagrangian correspondence; no Verdier-pair hypothesis).
+
+**CL3 (E_1-ordered Theorem A). CLOSED.** `thm:theorem-A-E1` PROVED via pure braid Orlik-Solomon Koszulity (Shelton-Yuzvinsky). Yangian instance concrete (Cherednik monodromy + EK flatness). Residual: only the non-finitely-generated MC4-completion regime; finitely generated standard landscape is unconditional.
+
+**CL4 (FTM seven-fold TFAE, Theorem A genus-0). INSCRIBED.** `thm:ftm-seven-fold-tfae-via-hub-spoke` (700 lines, 8 HZ-IV decorators): six spokes — Koszul morphism, counit qi, unit weak equivalence, twisted tensor acyclic, bar concentrated in weight 1, SC-formality — each bidirected to the PBW E_2-collapse HUB (6 bidirections via transitivity, not 21 arrows). Spoke 4 (twisted tensor ⇔ PBW) is the load-bearing non-tautology witnessed by V_k(sl_2) at generic k. Spoke 7 (SC-formality) is class-G scoped. Spoke 5 extends to g ≥ 1 only for class G. Retargets the prior ghost label `thm:FTM-seven-fold` at `theorem_A_infinity_2.tex:570`.
+
+**CL5 (Theorem A^{∞,2}, properad (∞,2)-equivalence). PROVED.** `thm:A-infinity-2` in `chapters/theory/theorem_A_infinity_2.tex`: Francis-Gaitsgory bar-cobar (∞,2)-equivalence at properad level. Three clauses: (i) properad lift via Hackney-Robertson in FG ambient; (ii) pole-free restriction recovers LV12 (Ass, Ass^!) via (D_X-mod, ⊗^!) ↪ Fact(X); (iii) R-twisted Σ_n-descent (`lem:R-twisted-descent`) relates B^{ord}(A) to B^Σ(A). 14+ downstream corollaries enumerated. `cor:chiral-KK-formal-smoothness` formally smooth at properad level.
+
+**CL6 (Theorem B chiral Positselski 7-2). INSCRIBED unconditional at coderived level.** `thm:chiral-positselski-7-2`: for conilpotent chiral CDG-coalgebra C on X with finite-dim graded pieces, counit Ω_X(B_X(C)) → C iso in D^{co}_chi(X). 6-step proof: chiral Φ/Ψ adjoints + bicomplex totalization + conilpotent contracting homotopy + coacyclic cone. `thm:chiral-positselski-5-3` inscribed: co-contra correspondence D^co ≃ D^ctr. Class G (Heisenberg) chain-level inverse σ_Heis via MacLane splitting on Sym(V_{[1]}) — chain-level qi unconditional. Class L (affine KM non-critical) σ_KM via PBW filtration + E_2-collapse lifting. Ordered E_1-variant proved for Yangian (EK quantization acyclicity = FM^ord Koszulness). Class M chain-level genuinely false at direct sum; weight-completed proved.
+
+**CL7 (Theorem C, 9 strengthening inscriptions).** (T1) `lem:derived-center-koszul-equivalence`: brace dg algebra level Z^{der}_ch(A) ≅ Z^{der}_ch(A^!) (E_2 after Deligne-Tamarkin), H^0 recovers naive-centre iso with Koszul pairing. (T2) `prop:perfectness-standard-landscape` UNCONDITIONAL: Heisenberg finite at each weight; affine KM non-critical via Kac-Kazhdan; Virasoro generic c; W_N Fateev-Lukyanov; lattice via theta/eta; βγ via character. (T3) C1 reflexivity unconditional on Koszul locus. (T4) `thm:theorem-C-g0`: M̄_{0,3} = point, σ acts trivially, Q_0(A^!) = 0, Verdier pairing degree 0 (not -3). (T5) C2 hypotheses pinned: BV + Verdier + bar-chart lift ONLY. (T6) C0 unconditional with identifications. (T7) class-M C2(iii) closed weight-completed. (T8) δF_2^cross(W_3) = (c+204)/(16c) explicit. (T9) `thm:C-PTVV-alternative` via mapping-stack RMap(M̄_g, BG_A) + PTVV + Verdier anti-symplectic involution — GENUINELY INDEPENDENT.
+
+**CL8 (Theorem D, 3 prior gaps CLOSED).** (i) Step 1 virtual-class globalization via K-theory filtration + λ_{-1}(E) + top-degree Chern character identity `ch_g(λ_{-1}(E)) = c_g(E)` (splitting principle). (ii) Faltings citation retargeted to Arakelov 1974 + Faltings 1984 §2 + Soulé 1992 Ch.III (fiberwise Chern-curvature formula for Hodge bundle in Arakelov metric). (iii) BGS `c_1(det E) → c_g(E)` bridge via splitting principle + scalar-channel linearity. AP225 resolved via clutching-uniqueness proposition (genus-1 base + separating clutching additivity + nonseparating clutching trivialization + tautological-ring purity → obs_g/κ = λ_g uniquely, Graber-Vakil socle).
+
+**CL9 (Theorem H step-3 circularity). RESOLVED.** Rerouted through `thm:pbw-koszulness-criterion` directly via Shelton-Yuzvinsky Koszulity of braid-arrangement Orlik-Solomon algebras + chiral quadratic-Koszul lemma. Bar-concentration and fm-tower-collapse now parallel consequences of PBW, not sequential. Three disjoint HZ-IV decorators: Heisenberg via Feigin-Frenkel CE, Virasoro via Wang BRST/Feigin-Fuks, affine sl_2 via Whitehead + Künneth. E_1-variant `thm:hochschild-concentration-E1` for Yangian input via FM^ord + pure braid Orlik-Solomon + ordered Koszul dual.
+
+**CL10 (MC3 via five-family mechanism). PROVED; Baxter constraint RETRACTED.** `mc3_five_family_platonic.tex` (676 lines, 8 HZ-IV decorators): asymptotic prefundamentals (type A); reflection-equation Shapovalov (B/C/D); Chari-Moura multiplicity-free ℓ-weights (uniform); theta-divisor complement (elliptic); parity-balance (super-Yangian). Baxter constraint retracted as type-A rational artifact. Extension to full DK_g unconditional in type A modulo `conj:dk-compacts-completion`; conjectural elsewhere. Silent non-coverage: logarithmic W, N=2 SCA, cosets, non-rational lattice, roots of unity.
+
+**CL11 (MC4^0). UNCONDITIONAL at generic parameters for class M principal.** Explicit SDR via Wakimoto one-step (Virasoro) / Feigin-Frenkel screening (W_N). Homotopy h_htpy = (1 − ιp)/(L_0 − h − N + 1) invertible generically. Non-principal hook-type (r ≤ N-3) via parabolic screenings (KRW03, Arakawa07). Subregular/minimal W reduce to class-C SDR (βγ) — genuine remaining math.
+
+**CL12 (E_3 identification, 9 strengthenings).** (1) `prop:e3-gl-N` 2-param (B_tr, B_ab). (2) `thm:e3-identification-semisimple` r-param via Cartan-Whitehead + Künneth. (3) `thm:e3-identification-reductive` N = r + C(d+1,2) params with abelian center via Sym^2(z^*) invisible to H^3. (4) `prop:e3-heisenberg` 4-dim Sym^2(h^*)^h (not 1-dim H^3(h)) — Whitehead failure explicit. (5) `thm:e3-identification-solvable` UNCONDITIONAL. (6) Sugawara unconditional. (7) Explicit E_3-algebraic vs E_3-topological comparison diagram. (8) Chain-level on qi-model via Fresse Vol II Thm 16.2.1. (9) CY_4 p_1-twisted double current algebra — π_4(BU) = Z is obstruction group, not structure.
+
+**CL13 (Topologization tower, chain-level on original complex for G/L/C/critical).** (1) Class G (Heisenberg) E_3^top immediate via Dunn on commutative F^{H_k}. (2) Class L (V_k(g), k≠-h^v) E_3^top on ORIGINAL complex via Dunn rerouted through CG factorization algebra F^{CS}_k on R×C (single-coloured, not SC^{ch,top}) + explicit η_1^{(i)} = (1/(2(k+h^v))) Σ f^a_{bc} :bar c_b c^c bar c_a: making [Q, tilde G_1] = T_Sug STRICT chain-level (not up to Q-exact). (3) Class C (βγ, bc) E_3^top via FMS bosonization reducing to Heisenberg. (4) Class M (Vir, W_N) weight-completed E_3^top via half-BRST + MC5 pattern. (5) Critical level k=-h^v: E_2^top (dimension drop, not failure).
+
+**CL14 (E_∞-Topologization ladder, Vol II). PROVED.** `thm:iterated-sugawara-construction`: higher-spin Casimir tower {T^{(n)}}_{2 ≤ n ≤ N+1} each inner, admitting BRST primitive G^{(n)} with T^{(n)} = [Q_tot, G^{(n)}] on cohomology. `thm:e-infinity-topologization-ladder`: k inner stress tensors ⟹ E_{k+2}^top via Dunn. Virasoro (N=2) → E_3^top; W_N → E_{N+1}^top; W_∞ → E_∞^top (Platonic endpoint). `thm:operadic-spiral`: infinite bidirectional spiral with bar B descending, centre Z ascending, meeting at E_∞.
+
+**CL15 (Chiral Higher Deligne, Vol II). PROVED.** `thm:chiral-higher-deligne`: Z^{der}_ch(A) is the universal E_3-chiral algebra acted on by SC^{ch,top} via heptagon edges (3)↔(4)↔(5). `thm:H-concentration-via-E3-rigidity`: Theorem H concentration is a CONSEQUENCE of E_3-rigidity-at-a-point plus PBW collapse. `thm:chd-ds-hochschild`: ChirHoch^•(W_k(g)) ≃ H^•_DS(ChirHoch^•(V_k(g))) chain-level E_2-chiral Gerstenhaber.
+
+**CL16 (SC^{ch,top} heptagon 7 edges, Vol II). PROVED.** Five classical faces + face (6) Drinfeld-centre `Z(Rep_fact(A)) ≃ Rep_fact(Z^{der}_ch(A))^{E_2}` via categorified bar-cobar with half-braiding + face (7) derived-AG via PTVV on Map(X×R_≥0, B SC-Alg). SC^{ch,top} is the GENERIC case; topologization to E_3^top at affine KM non-critical is proved on the original complex.
+
+**CL17 (Universal Celestial Holography, Vol II). PROVED chain-level.** `thm:uch-main`: SC^{ch,top}-structure on (A^cel, Z^{der}_ch(A^cel)) + celestial OPE = chiral factorization homology on P^1_cel + shadow-tower coefficients = soft-factor hierarchy. Coverage: self-dual gauge (KM), gauge+matter (DS), gravity (Virasoro + w_{1+∞}), YM (Beem-Rastelli χ-functor). Chain-level class M at g ≥ 1 retained as `conj:uch-gravity-chain-level`.
+
+**CL18 (Curved-Dunn H²=0 at g ≥ 2, Vol II). PROVED.** `prop:modular-bootstrap-to-curved-dunn-bridge`: chain map Φ on H². `prop:genus1-twisted-tensor-product`: explicit Gauss-Manin uncurving + Arakelov pairing (phantom FM87 resolved). `thm:curved-dunn-H2-vanishing-all-genera`. `thm:irregular-singular-kzb-regularity`: Jimbo-Miwa replaces KZ Stokes.
+
+**CL19 (Periodic CDG admissible KL). PROVED.** `thm:periodic-cdg-is-koszul-compatible`: periodic-CDG filtration F^n = ker(Q^n_{adm}) on KL_k^{adm} at k+h^v = p/q compatible with chiral Koszul duality. `thm:admissible-kl-bar-cobar-adjunction`: Ω^ch ⊣ B^ch descends unconditionally on admissible category. `thm:adams-analog-construction`: chiral Steenrod algebra A^{ch}_k + chiral Adams functor (closes FM256). `cor:class-M-admissible-minimal-model`: KL^{adm}_{Vir}(c_{p,q}) has (p-1)(q-1)/2 simples, all finite-length (closes FM76 scope hole). **This was the SOLE remaining frontier from the 2026-04-16 target list to close; closing it completes the 2026-04-16 wave.**
+
+**CL20 (Unified Q_g^{k,f,μ} chiral quantum group, Vol II). PROVED.** Nine specialization fibres of `unified_chiral_quantum_group.tex` cover the non-gauge-theoretic landscape; closes the "chiral coproduct for non-gauge-theoretic families" frontier.
+
+**CL21 (gl_N chiral QG, all N ≥ 2). UNCONDITIONAL via Feigin-Frenkel replacement.** JKL26 phantom eliminated. W_N = ∩ ker(Q_{α_i}) inside rank-(N-1) Heisenberg (class G with explicit chiral QG datum). Drinfeld coproduct descends; RTT inherited from abelian parent. qdet-central-all-N lemma inscribed internally via Molev antisymmetriser. Ψ=0 free-abelian degenerate case and Ψ=1 free-boson point inscribed. Non-principal W hook-type (r ≤ N-3) via parabolic screenings. DS intertwining HZ-IV via independent sl_3 RTT (no longer tautological).
+
+**CL22 (Chiral QG equivalence on ORDERED Koszul locus). PROVED; elliptic and toroidal formal-disk PROVED.** `def:ordered-koszul-chiral-algebra` explicit. `prop:yangian-ordered-koszul`: Y_ℏ(g)^ch via Drinfeld second presentation + EK flatness. `thm:chiral-qg-equiv-ordered` covers E_1-chiral input (Yangian). `thm:glN-drinfeld-double-internal` bypasses JKL26 via Miura + cross-arity Stasheff + U(ĝl_1) screenings. `thm:w-infty-chiral-qg-completed` resolves class-M contradiction weight-completed. `thm:grt1-rigidity` makes associator-dependence explicit: trivial on H^0, homotopic on cochains. Elliptic via Felder dynamical R(z,τ) + Fay trisecant. Toroidal formal-disk via SV CoHA + Miki DIM.
+
+**CL23 (CY-D dimension stratification, Vol III). PROVED.** `thm:kappa-hodge-supertrace-identification`: κ_ch(A_X) = Σ_q (-1)^q h^{0,q}(X) unconditionally for compact CY_d via HKR + Mukai pairing + HC^-_d trace. `thm:kappa-stratification-by-d`: explicit across d ∈ {1,2,3,4,5}. `cor:conifold-non-local-surface`: conifold is NOT local surface at d=3; κ_ch=1 via direct McKay. `thm:borcherds-weight-kappa-BKM-universal`: κ_BKM(Φ_N) = c_N(0)/2 universal across N ∈ {1,2,3,4,6}. Naive decomposition κ_BKM = κ_ch + χ(O_fiber) is numerical coincidence at N=1.
+
+**CL24 (BP Koszul conductor polynomial identity, Arakawa convention).** `thm:bp-koszul-conductor-polynomial` (standalone/bp_self_duality.tex:253-297): c(BP_k) = 2 − 24(k+1)²/(k+3); K_BP(k) := c(BP_k) + c(BP_{-k-6}) ≡ 196 as constant rational function; c(BP_k) − 98 is odd in (k+3). Fixed point k=-3 coincides with critical level −h^v(sl_3); κ(BP_{-3}) = 49/3 principal-value symmetric limit. **Convention caveat**: Fateev-Lukyanov screening gives c^{FL}(k) = −(2k+3)(3k+1)/(k+3), K^{FL}_BP(k) = −12(k+3) − 48/(k+3) meromorphic with pole at k=-3. Both parametrize the same algebra via level reparametrization; the polynomial identity is Arakawa-convention specific. Vol II `bp_chain_level_strict_platonic.tex` uses FL convention.
+
+**Also closed: Φ functor Vol III universal trace identity** unifying Vol I K = −c_ghost with Vol III κ_BKM = c_N(0)/2 (`adversarial_swarm_20260416/wave14_reconstitute_phi_functor_volIII.md`).
+
+After CL1–CL24 + 2026-04-16 wave closures on the Vol II/III side (inherited cross-volume), the only item retained from the prior "Platonic Ideal Roadmap (2026-04-13) open frontier" list is **chain-level class M on the ORIGINAL complex** (topologization direct-sum form). Everything else is either proved on the original complex, proved weight-completed, or has a scope-qualifier stating so.
+
+### 2. Newly-Open Frontiers from the 2026-04-17 Beilinson Audit
+
+The 2026-04-16 closure wave forced a re-audit, which surfaced scope-qualifiers and outright retractions that prior FRONTIER.md text did not carry. These ARE the new frontier as of today.
+
+**NF1. W(p) triplet tempering — RETRACTED to Conjectured.** Vol II commit `a5640de` inscription `thm:tempered-stratum-contains-wp` is downgraded. The Zhu-bounded-Massey proof chain fails: Gurarie 1993 (arXiv:hep-th/9303160) and Flohr 1996 (arXiv:hep-th/9605151) construct logarithmic-CFT amplitudes with UNBOUNDED Massey products despite finite-dim Zhu. The correct tempered scope is principal + non-logarithmic + non-minimal standard landscape. W(p) tempering is OPEN pending an Adamović-Milas character-amplitude bound. `thm:tempered-stratum-contains-virasoro` retains unconditional heal. (B91.)
+
+**NF2. Non-tempered stratum emptiness — SCOPE-QUALIFIED.** "Non-tempered stratum is EMPTY on the C_2-cofinite standard landscape" is scope-qualified to the NON-LOGARITHMIC subset (Virasoro, W_N, all Schellekens, Monster, irrational cosets). Logarithmic W(p) remains open. The programme-climax statement must carry this scope tag; every standalone paper citing the climax must be re-audited.
+
+**NF3. CY-C pentagon invariant — CATEGORY ERROR CORRECTED.** Vol III commit `cade61c` healed the pentagon stratification {3, 12, 24} from `κ_ch^{R_i}` to `ρ^{R_i}` (generator-lattice rank). κ_ch is route-independent = 0 for K3×E by Hodge supertrace; the stratification is an ALGEBRAIC invariant (generator rank) ORTHOGONAL to κ_ch. (B89-B90.) The prior claim "six routes to G(K3×E) converge isomorphically" is FALSIFIED: the actual structure is a pentagon of five intertwiners with R_2 source branch, generator-rank stratified.
+
+**NF4. Kummer-irregular prime labels RETRACTED.** Vol I commit `9668336` retracted primes {1423, 3067, 23, 43, 419} from the Kummer-irregular label (primary-source Bernoulli witness search found no witness). They still appear in S_r numerators as RICCATI-ARITHMETIC characteristic primes, NOT Kummer-arithmetic. Corrected Tier-3 emergence: {37, 691, 811}; 3067 dropped. (B92.) Always qualify "first Kummer-irregular": Bernoulli-leading is 691 (B_12); size-leading is 37 (B_32). (B88.) Primes 1423, 3067, 23, 43, 419 VERIFIED REGULAR at primary source.
+
+**NF5. Super-Yangian complementarity identity — CORRECTED.** The Virasoro-analogy identity κ(Y(sl(m|n))) + κ(Y(sl(n|m))^!) = 0 is FALSE. The correct identity at Sugawara-shifted dual level is κ(Y(sl(m|n))) + κ(Y(sl(n|m))^!) = max(m, n), verified symbolically at small rank. (B86.) Canonical pairing scopes to the sub-Sugawara line; two pairings (super-trace vs Berezinian) coexist without programme-level canonicalization. Verdier pairing inscription pending.
+
+**NF6. Tempered stratum obstruction κ^{(∞)}_{orig} = 1/e — RETRACTED.** Stirling factor was dropped; correct limsup = 0 universally at generic c. (B87.) The tempered-stratum original-complex chapter carries an explicit RETRACTION NOTICE; the 1/e is a Stirling cancellation error. Unconditional heal lands at `thm:tempered-stratum-contains-virasoro`.
+
+**NF7. β_N exact closed form — RESOLVED (no longer frontier).** Vol II `chapters/theory/beta_N_closed_form_all_platonic.tex`, `thm:beta-N-closed-form-proved-all-N`: β_N = 12(H_N − 1) = Σ_{s=2}^{N} 12/s (per-spin-s lane contribution). Both prior candidates RULED OUT at N=4: (N+1)(N+2)/2 predicts 15; N²−N+4 predicts 16; proved value is 13. Closed form is RATIONAL (not integer) for N ≥ 5; β_5 = 77/5, β_6 = 87/5.
+
+**NF8. Two-K's distinction (working principle, not a frontier).** κ(A)+κ(A^!) scalar complementarity (family-dependent: 0 for KM/free, 13 for Vir, 250/3 for W_3, 98/3 for BP) is DISTINCT from the Trinity K(A) := c + c^! = −c_ghost(BRST) (−k for KM, 2 dim(g) for free, 26 for Vir, 100 for W_3, 196 for BP). Related by κ+κ^! = ϱ_A·K with ϱ_N = H_N − 1 (principal W_N), ϱ_KM = ϱ_free = 0, ϱ_BP = 1/6. The bare equation κ + κ^! = K is FALSE for every standard family. Canonical K-values in `universal_conductor_K_platonic.tex:795-821` and `higher_genus_complementarity.tex:3015-3120`. Grep trigger: any `K(Vir) = 13` or `K = 250/3 for W_3`. Counter: at self-dual c=13, K = 26 (not 13). (B93.)
+
+**NF9. Quadrichotomy/quaternitomy — terminological.** "Quadrichotomy" is canonical (matches `thm:quadrichotomy`, `chap:shadow-quadrichotomy-platonic`). "Quaternitomy" is an invented hybrid that drifts across preface, working_notes, part-introductions. Grep `quaternitomy` after any write naming the G/L/C/M partition. (B94.)
+
+### 3. Genuine Open Frontiers (after 2026-04-17), ranked
+
+**OF1. Chain-level class M on the ORIGINAL complex (direct-sum form).** Topologization on original complex CLOSED for G/L/C/critical. Class M (Vir, W_N) E_3^top proved WEIGHT-COMPLETED only; direct-sum / original-complex chain-level is the sole surviving topologization direction. Depth: technical — weight-completed suffices for every stated theorem, but resolving the direct-sum form would strengthen foundational clarity.
+
+**OF2. W(p) triplet tempering (logarithmic CFT branch).** Requires Adamović-Milas character-amplitude bound or a new tempering mechanism for logarithmic CFT. Zhu-bounded-Massey route refuted by Gurarie/Flohr. Depth: frontier.
+
+**OF3. Koszulness (viii) ChirHoch freeness beyond concentration.** Concentration proved (Theorem H). Freeness conditional on Massey vanishing. Logarithmic W(p): explicit Massey ⟨Ω,Ω,Ω⟩ obstruction.
+
+**OF4. Multi-weight (Koszul (vii)) genus ≥ 1.** All-genera uniform-weight proved unconditional. Multi-weight W_3 genus-0 proved. Genus ≥ 1 requires cross-channel δF_g^cross control. Genus-4 δF_4(W_3) computed; genus-5 would fix Gevrey shift b (OF5).
+
+**OF5. Genus-5 δF_5(W_3) cross-channel.** Three data points (g=2,3,4) give A_cross/A_scalar ∈ [1.7, 3.1]. Fourth data point at g=5 (≈4000-5000 stable graphs) determines Gevrey shift b, fixes A_cross uniquely, first test of CohFT-weighted topological recursion on the A_2 Frobenius manifold.
+
+**OF6. Super-complementarity canonical pairing.** Two pairings (super-trace vs Berezinian) coexist without programme-level canonicalization. Verdier pairing inscription pending. Scope: sub-Sugawara line only. Connected to NF5.
+
+**OF7. Admissible-level Koszulness at rank ≥ 3.** L_k(sl_2) Koszul at all admissible levels PROVED. sl_3 sharp transition at q=2 PROVED. Rank ≥ 3 wide open. Gateway: Li-bar E_2 page at k = −3/2.
+
+**OF8. Non-principal W-duality beyond hook-type.** Hook-type (r ≤ N−3) PROVED via parabolic screenings (KRW03, Arakawa07). Subregular/minimal W reduce to class-C SDR (βγ) — genuine remaining math. Gateway: (3,2) nilpotent of sl_5 (dim n_+ = 8, 2-step nilpotent, 4 nonzero commutators; BRST complex ≤ 3000×3000 sparse).
+
+**OF9. D-module purity converse.** Forward ((x) ⟹ (xii)) PROVED. Converse reduced to a single gap: PBW filtration = Saito weight filtration from mixed Hodge modules on FM_n(X). Proved for affine KM via chiral localisation + Hitchin connection. Open for Virasoro and W-algebras.
+
+**OF10. DK-4/5 beyond evaluation-generated core.** MC3 proved on eval core via five-family mechanism (CL10). DK-4 (formal moduli) and DK-5 (full triple bridge) downstream. For sl_2, DK-5 essentially closed by FRT. For sl_3 and higher: full O-Koszulness beyond eval core, tower completion algebraic identification, spectral quantum group comparison with Latyntsev all open.
+
+**OF11. Full chiral QG beyond formal disk (elliptic global, toroidal global).** Elliptic chiral QG PROVED leading-order ℏ for sl_2 (Felder R + KZB + Fay trisecant). Toroidal PROVED formal-disk via SV CoHA + Miki DIM. GLOBAL P^1×P^1 conditional on class-M chain-level. Genus-2 DDYBE numerical evidence only (tolerance ladder T1–T4 spanning 10^{-12} to 10^{-4}); face-model strategy bypasses vertex-IRF.
+
+**OF12. Drinfeld-centre conjecture (conj:drinfeld-center-equals-bulk).** Naive centre Z(A) vs derived centre Z^{der}_ch(A) differ for interacting chiral algebras. Heisenberg verified (5 invariants × 6 levels, 72 tests). General case open — the deepest single conjecture after the Grand Completion.
+
+**OF13. The Grand Completion (conj:grand-completion).** Cumulant recognition + jet principle for the completed pronilpotent modular cumulant coalgebra. Hardest structural problem. No session work has advanced it.
+
+**OF14. Analytic realization beyond free fields.** HS-sewing proved entire standard landscape; Heisenberg Fredholm determinant proved. Three-layer gap: (1) sewing envelope for interacting algebras (functional analysis beyond Heisenberg/lattice); (2) conformally flat 2-disk algebra (metric independence at chain level; anomaly cancellation); (3) higher-genus coderived shadow (downstream of 1+2).
+
+**OF15. Scalar saturation Layer 1 beyond algebraic families.** dim H^2_cyc = 1 PROVED for algebraic families with rational OPE. Residual for non-algebraic modular Koszul algebras. Candidates: non-GKO cosets, 4D N=2 quiver VOAs, admissible-level simple quotients rank ≥ 2. No counterexample known.
+
+**OF16. Shadow class moduli variation and conifold transition.** Vol III `shadow_class_moduli_variation` engine (88 tests) shows class G (large volume) → class M (conifold) transition is NON-PERTURBATIVE over CY moduli. Structural theorem pending.
+
+**OF17. Ordered-bar E_1 Verdier duality.** D_{Conf^<} doesn't exist naively; ribbon Ran space required. Opposite-duality B^ord(A^op) = B^ord(A)^{cop} is the correct E_1 analogue (proved in thm:two-color-master). Full intertwiner genuine open direction in higher algebra.
+
+**OF18. Drinfeld double at the E_1-chiral level.** Assembling A ⋈ A^! from ordered-bar ingredients. Would reduce holographic modular Koszul datum H(T) from 6-tuple to (U, Θ_A).
+
+**OF19. Non-abelian K3 Yangian and Y(gl(4|20)).** Abelian K3 Yangian Y(g_{K3}) PROVED (thm:k3-abelian-yangian-presentation, 47 tests). Non-abelian requires BKM real root generators. Super-Yangian Y(gl(4|20)) conjectural — grading compatibility verified, Lie bracket (supercommutator vs commutator) missing.
+
+**OF20. CY-A_3 chain-level explicit for non-formal CY_3.** Inf-cat resolved (thm:derived-framing-obstruction). Coefficient convergence proved (prop:cech-htt-coefficient-convergence, radius ≥ 1/(4‖s·δ‖)). S³ framing non-decomposable (prop:hopf-fibration-decomposition). Chain-level A_∞-compatible S³-framing on HC^-_3(C) for non-formal CY_3 remains open.
+
+**OF21. Jones polynomial from ordered chiral homology.** KZ trace ≠ Jones directly; Markov trace + writhe normalization + quantum dimension needed. Framework exists; identification conditional on normalization lemma.
+
+**OF22. ZTE explicit correction T_{ijk}.** Extended deformation complex rank 35/36; 1-dim kernel parametrizes solutions (prop:zte-deformation-cohomology). Vol III claim "T matrix COMPUTED (35 tests)" inscribed; propagation to Vol I chain-level remains to be verified.
+
+**OF23. Modular-cumulant coalgebra axiom completeness (MC4 coefficient stabilization).** MC4 PROVED (strong completion tower). Remaining: coefficient stabilisation on finite windows + H-level target identification.
+
+**OF24. Sewing envelope for interacting algebras (analytic).** Heisenberg HS-sewing closed-form. Next: sl_2 at k=1 WZW. Functional analysis beyond free-field Fredholm determinant.
+
+**OF25. Stokes regularity at generic non-integral level, genus ≥ 1.** Modular operad composition PROVED genus 0 all levels + all genera integrable. Stokes regularity at generic non-integral level g ≥ 1 is the sole Vol II gap now inherited via cross-volume dependency on Vol I KZB.
+
+### 4. Programme totals as of 2026-04-17
+
+| Volume | Pages | Tests | Engines |
+|--------|-------|-------|---------|
+| Vol I  | ~2,700 | 139,568 | 3,726 |
+| Vol II | ~1,749 | — | — |
+| Vol III | ~693 | ~34,000 | ~460 |
+| Total  | ~5,142 | ~177K | ~4,186 |
+
+Cross-volume: ~3,500+ tagged claims; HZ-IV independent-verification coverage: Vol I 0/2275 baseline (working queue seeded as adversarial audits identify candidates), Vol II 0/1134, Vol III 2/283 (seed in `notes/tautology_registry.md`).
+
+Anti-pattern catalogue (working notebook, not in manuscript):
+- AP1–AP235 (+ AP236 blacklist-slug leakage, 2026-04-17 bar_construction rectification).
+- V2-AP1–AP39 (Vol II).
+- AP-CY1–AP-CY67 (Vol III).
+- B1–B94 wrong-formulas blacklist.
+- FM1–FM46 Opus-specific failure modes.
+- HZ-1 through HZ-10 + HZ-IV hot-zone templates.
+
+### 5. Reading guide
+
+Top of document (§1–§4) is the definitive state. Sections below — "Part I-VII", "F1-F36", "Session Memorials", "Cross-Volume" — are HISTORICAL RECORD preserved for provenance. Every claim in those sections should be read with the §1–§3 closures / qualifiers applied; where they conflict, §1–§3 wins.
+
+---
+
+## Prior Status as of 2026-04-13 (HISTORICAL; superseded by §1–§4 above)
 
 ---
 

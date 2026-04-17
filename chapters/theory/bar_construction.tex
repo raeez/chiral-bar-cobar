@@ -17,7 +17,8 @@
 An augmented algebra has exactly one piece of canonical structure beyond
 its multiplication: the augmentation ideal $\bar\cA = \ker(\varepsilon)$,
 the part that the counit forgets.
-Desuspend it to shift the grading, then form the cofree
+Desuspend it (the shift $s^{-1}$ with $|s^{-1}v| = |v|-1$, lowering
+cohomological degree by one), then form the cofree
 conilpotent coalgebra $T^c(s^{-1}\bar\cA)$ with deconcatenation coproduct.
 This object is not a choice; it is the \emph{universal} recipient
 of coderivations built from the algebra structure maps, and the
@@ -39,9 +40,10 @@ $B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$: the cofree
 tensor coalgebra with deconcatenation coproduct, carrying the
 $R$-matrix, the KZ associator, and the full Yangian deformation.
 The factorization coalgebra $\barB(\cA) = \mathrm{Sym}^c(s^{-1}\bar\cA)$
-on $\Ran(X)$ is its $\Sigma_n$-coinvariant quotient, the
-input to the universal MC element
-$\Theta_\cA \in \MC(\gAmod)$ governing the genus expansion,
+on the Ran space $\Ran(X)$ (the ind-scheme of nonempty finite subsets of~$X$)
+is its $\Sigma_n$-coinvariant quotient, the
+input to the universal Maurer--Cartan element
+$\Theta_\cA \in \MC(\gAmod)$ of the modular convolution algebra, governing the genus expansion,
 the adjunction (Theorem~A), and the shadow obstruction
 tower $\Theta_\cA^{\leq r}$.
 At genus~$g \geq 1$ the fiberwise differential acquires curvature
@@ -70,7 +72,8 @@ $d_{\mathrm{de\,Rham}}$ & de~Rham differential on $\overline{C}_n(X)$ & Configur
 
 \noindent
 Theorem~\ref{thm:bar-nilpotency-complete} assembles these three
-components into the full genus-$0$ differential $\dzero$
+components into the full genus-$0$ collision differential
+$\dzero = d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{de\,Rham}}$
 and proves $\dzero^2 = 0$; the key input is the Arnold relation
 (Theorem~\ref{thm:arnold-three},
 Remark~\ref{rem:costello-gwilliam-factorization}).
@@ -342,7 +345,9 @@ is the form-level expression of $d^2 = 0$ on configuration spaces; it holds for 
 Conformal invariance, canonical residues, and differential nilpotence together force the logarithmic form uniquely.
 \end{remark}
 
-\subsection{Non-abelian Poincaré perspective on bar construction}
+\subsection{Non-abelian Poincar\'e perspective on bar construction}
+
+Factorization homology integrates a chiral algebra~$\cA$ over a space of configurations rather than over the space itself: each marked point contributes an insertion of~$\cA$, and the compactification~$\overline{C}_n(X)$ encodes how those insertions collide. Non-abelian Poincar\'e duality (NAP) identifies this integral with the bar complex.
 
 \begin{definition}[Bar as factorization homology]\label{def:bar-fh}
 The geometric bar construction is factorization homology of the
@@ -417,7 +422,7 @@ written here as the Arnold relation on logarithmic forms; in BD it is
 packaged in the compatibility of the Cousin differential with
 factorization. This identification is an inference from
 \cite[§§3.4.11--3.4.12]{BD04} together with
-Theorem~\ref{thm:bar-operadic-comparison}; BD do not isolate the Arnold
+Theorem~\ref{thm:geometric-equals-operadic-bar}; BD do not isolate the Arnold
 relation under that name.
 
 Chapter~4 of \cite{BD04} uses ``commutative'' for commutative
@@ -594,7 +599,7 @@ Hence $\dim \bar{B}^{(0),1}(\mathcal{A}) = N^2$.
 At genus 0, degree 2:
 \[\bar{B}^{(0),2}(\mathcal{A}) = \Gamma\left(\overline{C}_3(\mathbb{P}^1), j_*j^*(\mathcal{A}^{\boxtimes 3}) \otimes \Omega^2(\log D)\right)\]
 
-\emph{Configuration space.} $\overline{C}_3(\mathbb{P}^1)$ has $\dim_\mathbb{C} = 3$. Fixing the $\text{PSL}_2$ gauge (e.g., $z_3 = 0, z_2 = 1, z_1 = \infty$ for the normalization), the quotient $\overline{C}_3(\mathbb{P}^1)/\text{PSL}_2 \cong \overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$ has $\dim_\mathbb{C} = 1$. The $\text{PSL}_2$-reduced configuration has one free cross-ratio parameter.
+\emph{Configuration space.} $\overline{C}_3(\mathbb{P}^1)$ has $\dim_\mathbb{C} = 3$. $\text{PSL}_2(\mathbb{C})$ acts transitively on ordered triples of distinct points, so the quotient $\overline{C}_3(\mathbb{P}^1)/\text{PSL}_2 \cong \overline{\mathcal{M}}_{0,3}$ is a single point: the standard gauge $z_3 = 0,\ z_2 = 1,\ z_1 = \infty$ exhausts all three complex parameters of $\text{PSL}_2$. (Cross-ratios appear first at $4$ points: $\overline{C}_4(\mathbb{P}^1)/\text{PSL}_2 \cong \overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$.)
 
 \emph{Boundary divisor.} $D = D_{12} \cup D_{23} \cup D_{13}$ (three divisors, one for each pair of points colliding).
 
@@ -822,10 +827,9 @@ in this chapter (Theorem~\ref{thm:bar-nilpotency-complete}). At higher
 genus a separate fiberwise differential $d_{\mathrm{fib}}$ on the
 Hodge-bundle direction acquires curvature
 $d_{\mathrm{fib}}^{\,2} = \kappa(\cA) \cdot \omega_g$
-\textup{(}/B49; treated in
-Chapter~\ref{chap:higher-genus}\textup{)}, and at the curved $A_\infty$
+(Chapter~\ref{chap:higher-genus}), and at the curved $A_\infty$
 level the relation $\mu_1^2(a) = [\mu_0, a]$ supersedes the strict
-$\mu_1^2 = 0$ \textup{(}\textup{)}. The two nilpotence statements
+$\mu_1^2 = 0$. The two nilpotence statements
 do not conflict: the genus-$0$ bar differential and the curved
 $A_\infty$ differential live on different sides of the bar
 construction. The genus-$g$ fiberwise curvature reads off the
@@ -1078,7 +1082,7 @@ $\mu$ determines the algebra element produced at each stage:
  $\mu(\phi_i,\phi_\ell)$; collapsing the result with $z_j$
  applies $\mu(-,\phi_j)$. This gives:
  \[
- \text{Res}_{D_{i\ell}}\circ\text{Res}_{D_{ij}}
+ \text{Res}_{D_{ij}}\circ\text{Res}_{D_{i\ell}}
  \bigl[\mu\bigl(\mu(\phi_i,\phi_\ell),\,\phi_j\bigr)
  \otimes\omega\bigr].
  \]
@@ -2289,10 +2293,12 @@ $r_r$ is the degree-$r$ shadow $S_r$ on the
 symmetric bar $\mathrm{Sym}^c$: this is the content
 of the coinvariant shadow theorem
 (Theorem~\ref{thm:e1-coinvariant-shadow}).
-At $r = 2$:
-$\operatorname{sym}(r(z)) = \frac{1}{2}
-\operatorname{tr}[\operatorname{Res}_{z=0} r(z)]
-= \kappa(\cA)$.
+At $r = 2$ the shadow $S_2$ equals $\kappa(\cA)$ for
+abelian and scalar families, and $\kappa(\cA) -
+\dim(\mathfrak{g})/2$ for non-abelian affine
+Kac--Moody (the Sugawara shift;
+Theorem~\ref{thm:e1-coinvariant-shadow} for the
+precise identification in each family).
 The Harrison subcomplex $\mathrm{Lie}^c$ detects
 the primitives of $\mathrm{Sym}^c$ under the
 coshuffle coproduct; these are the weight-$1$
@@ -2663,3 +2669,6 @@ where the union is over ordered partitions with $0 \in I$. Explicitly:
 This follows from the compatibility of residues with the stratification of configuration spaces
 (the residue of $d\omega$ along a boundary stratum equals the residue of $\omega$ on the induced stratum, by the compatibility of the Leray residue with the boundary map in the long exact sequence of the pair).
 \end{proof}
+
+\medskip\noindent
+Three inputs have now produced one output. The augmentation ideal of an augmented chiral algebra, the Fulton--MacPherson compactification of its configuration spaces, and the logarithmic kernel $\eta_{ij} = d\log(z_i - z_j)$ assemble into the dg factorization coalgebra $\barB_X(\cA)$, with the Arnold relation enforcing $\dzero^2 = 0$ at genus~$0$. The symmetric bar is the $\Sigma_n$-coinvariant projection of the primitive ordered bar $B^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$; the coinvariant loses the $R$-matrix's non-symmetric Fourier modes but preserves cohomology. The cobar--bar adjunction (Chapter~\ref{chap:cobar-construction}) inverts this construction on the Koszul locus; the fiberwise curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ (Chapter~\ref{chap:higher-genus}) records its failure at higher genus. The characteristic datum $\kappa(\cA)$ is the residue of that failure at the branch point.
