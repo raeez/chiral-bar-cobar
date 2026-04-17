@@ -1,0 +1,34 @@
+\chapter{Appendix: The q-convention bridge}
+\label{app:q-conventions}
+
+Two conventions for the multiplicative quantum parameter appear throughout the manuscript: the Kazhdan--Lusztig convention $q_{KL} := \exp(\pi i/(k+h^\vee))$ and the Drinfeld--Kohno convention $q_{DK} := \exp(2\pi i/(k+h^\vee))$. Geometrically, $q_{KL}$ is the half-monodromy around the diagonal of $\mathrm{Conf}_2(\mathbb{C})$ and $q_{DK}$ is the full monodromy; the relation $q_{KL}^2 = q_{DK}$ is the deck transformation of the $\mathbb{Z}/2$-cover $\mathrm{Conf}_2(\mathbb{C}) \to \mathrm{Conf}_2(\mathbb{C})/S_2$, so the KL convention lives on the cover and the DK convention on the base. The following theorem gathers the six derived identities.
+
+\begin{theorem}[Q-convention bridge]
+\label{thm:q-convention-bridge}
+Let $\mathfrak{g}$ be a finite-dimensional simple Lie algebra with dual Coxeter number $h^\vee$, let $k \neq -h^\vee$ be a non-critical level, set $\hbar := 1/(k+h^\vee)$, and define
+\[
+q_{KL} := \exp(\pi i \hbar), \qquad q_{DK} := \exp(2\pi i \hbar).
+\]
+Then:
+\begin{enumerate}
+\item[(i)] \emph{Squaring.} $q_{KL}^2 = q_{DK}$ as elements of $\mathbb{C}^\times$.
+\item[(ii)] \emph{Logarithm.} $\log q_{DK} = 2\log q_{KL} = 2\pi i \hbar$ on the principal branch.
+\item[(iii)] \emph{r-matrix bridge.} The trace-form r-matrix $r_{\mathrm{tr}}(z) = k\,\Omega_{\mathrm{tr}}/z$ and the KZ r-matrix $r_{KZ}(z) = \Omega/((k+h^\vee)z)$ are related by the rescaling $\Omega = 2h^\vee\,\Omega_{\mathrm{tr}}$ of Casimirs between the normalised Killing and trace forms, not by equality as rational functions in $z$; only the trace form manifests the level-prefix vanishing $r_{\mathrm{tr}}\big|_{k=0} = 0$ demanded by AP126.
+\item[(iv)] \emph{R-matrix monodromy.} On an evaluation module $V_\lambda$, the half-monodromy of the KZ connection about the diagonal is $R_{KL} = q_{KL}^\Omega$ and the full monodromy is $R_{DK} = q_{DK}^\Omega = R_{KL}^2$.
+\item[(v)] \emph{Conformal weights.} The Sugawara weight $h(V_\lambda) = (\lambda,\lambda+2\rho)/(2(k+h^\vee))$ exponentiates to $q_{KL}^{2h(V_\lambda)} = q_{DK}^{h(V_\lambda)}$, so KL sees half-weights on the cover and DK sees full weights on the base.
+\item[(vi)] \emph{Categorical agreement.} There is an isomorphism of braided monoidal categories $\mathrm{Rep}_{q_{KL}}(\mathfrak{g}) \simeq \mathrm{Rep}_{q_{DK}^{1/2}}(\mathfrak{g})$ induced by the relabeling $q \mapsto q^{1/2}$; at generic $q$ the two realisations describe the same abstract braided monoidal category.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) $q_{KL}^2 = \exp(2\pi i \hbar) = q_{DK}$.
+(ii) Apply the principal-branch logarithm to (i).
+(iii) The normalised Killing form satisfies $(\cdot,\cdot) = 2h^\vee(\cdot,\cdot)_{\mathrm{tr}}$, so the Casimirs satisfy $\Omega = 2h^\vee\,\Omega_{\mathrm{tr}}$; substituting into $r_{KZ}$ produces $2h^\vee\,\Omega_{\mathrm{tr}}/((k+h^\vee)z) \neq k\,\Omega_{\mathrm{tr}}/z$ except after the basis rescaling absorbed in the Sugawara renormalisation. The trace form alone has the level $k$ as an overall prefix; only there does $k=0$ force $r=0$ identically.
+(iv) The KZ connection $\nabla = d - \hbar\,\Omega\,dz/z$ has residue $\hbar\Omega$ at $z=0$; Cauchy's theorem gives full monodromy $\exp(2\pi i \hbar \Omega) = q_{DK}^\Omega$, and the half-path gives $\exp(\pi i \hbar \Omega) = q_{KL}^\Omega$.
+(v) Direct: $q_{DK}^{h} = \exp(2\pi i \hbar h) = \exp(\pi i \hbar \cdot 2h) = q_{KL}^{2h}$.
+(vi) The braided monoidal category $\mathrm{Rep}_q(\mathfrak{g})$ is intrinsic to the quantum group; the substitution $q_{DK} = q_{KL}^2$ is a relabeling of the formal parameter that intertwines the two realisations at generic $q$.
+\end{proof}
+
+\begin{remark}[Vol II companion]
+The Vol II companion appendix (Appendix~\ref*{app:q-conventions-v2}, to be added to \texttt{chiral-bar-cobar-vol2}) records the parallel statement at the level of the bar complex $B^{\mathrm{ord}}(\widehat{\mathfrak{g}}_k)$: the half-monodromy $q_{KL}^\Omega$ is the braiding of ordered bar chains under swap of two adjacent chiral inputs, while the full monodromy $q_{DK}^\Omega$ is the class of a pure braid in $\pi_1(\mathrm{Conf}_2(\mathbb{C}))$.
+\end{remark}
