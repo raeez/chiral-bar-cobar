@@ -1229,10 +1229,11 @@ holds through $r = 11$.
 \end{proof}
 
 \begin{corollary}[\label{cor:virasoro-motivic-purity-r-leq-11}Motivic
-purity through weight 11]
+purity through weight 11 --- SPECIAL CASE of
+Theorem~\ref{thm:virasoro-motivic-rationality-all-r}]
 \ClaimStatusProvedHere
-For $r \in \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11\}$ the motivic lift of
-the Virasoro shadow coefficient is purely rational in $c$:
+For $r \in \{2, 3, \ldots, 11\}$ the motivic lift of the Virasoro
+shadow coefficient is purely rational in $c$:
 \[
   S_r^{\mathrm{mot}}(\Vir_c) \;=\; S_r(\Vir_c) \;\in\; \mathbb{Q}(c)
    \;\subset\; \MZV^{\mathrm{mot}}_{r} \otimes \mathbb{Q}(c),
@@ -1242,21 +1243,44 @@ weight in the range.
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:sth-virasoro-rational-through-8} establishes
-the claim for $r \leq 8$. For $r = 9, 10, 11$, the closed forms of
+Immediate specialisation of
+Theorem~\ref{thm:virasoro-motivic-rationality-all-r}
+(\texttt{motivic\_shadow\_tower.tex}, session~2026-04-17
+inscription): $S_r(\Vir_c) \in \mathbb{Q}(c)$ for every $r \ge 2$
+unconditionally, by the master-equation recurrence preserving
+$\mathbb{Q}(c)$-rationality at each step. The range
+$r \le 11$ is the finite subset with explicit closed-form
+verification via
 Theorems~\ref{thm:s9-virasoro-closed-form},
 \ref{thm:s10-virasoro-closed-form},
-\ref{thm:s11-virasoro-closed-form} are explicit rational functions
-of $c$; the motivic-lift functor of
-Theorem~\ref{thm:shadow-tower-motivic-lift}
-(\texttt{motivic\_shadow\_tower.tex}) sends
-$\mathbb{Q}(c)$-valued inputs to tautological $\mathbb{Q}(c)$
-images in $\MZV^{\mathrm{mot}}_{r} \otimes \mathbb{Q}(c)$. No
-$\zeta^{\mathrm{mot}}(n)$-content enters because the
-master-equation recurrence is $\mathbb{Q}(c)$-rational at every
-step (rational inputs times rational prefactors sum to rational
-outputs).
+\ref{thm:s11-virasoro-closed-form}.
 \end{proof}
+
+\begin{remark}[\label{rem:motivic-purity-all-r-supersession}%
+All-$r$ supersession of the motivic purity corollary]
+The all-$r$ Virasoro motivic rationality inscribed at
+Theorem~\ref{thm:virasoro-motivic-rationality-all-r}
+(session~2026-04-17) supersedes the $r \le 11$ scope of
+Corollary~\ref{cor:virasoro-motivic-purity-r-leq-11}: the
+$\mathbb{Q}(c)$-rationality of $S_r(\Vir_c)$ holds for every $r \ge 2$
+without the finite-range restriction. The corollary is retained as
+a finite-range numerical-verification handle and as a
+cross-reference site from the arithmetic-duality inscriptions
+(\texttt{z\_g\_kummer\_bernoulli\_platonic.tex},
+\texttt{higher\_kummer\_arithmetic\_duality\_platonic.tex}); its
+proof now routes through the all-$r$ theorem rather than the
+earlier weight-by-weight argument.
+
+The same supersession applies to the class-M extension: for every
+family in the standard landscape (Virasoro, $W_N$ for any $N$, BP,
+$W_\infty$, irrational coset), the shadow tower is
+$\mathbb{Q}(c)$-rational at every $r \ge 2$
+(Theorem~\ref{thm:motivic-shadow-full-class-m}, session 2026-04-17).
+The $E_1$-chiral residue structure of the recurrence forces
+$\mathbb{Q}(c)$-rationality at every step; depth-2 MZV would
+require $E_2$-associator structure absent from the shadow tower
+(Theorem~\ref{thm:shadow-tower-depth-1-rationality}).
+\end{remark}
 
 \subsection{Subleading asymptotic and characteristic-prime layer}
 \label{subsec:subleading-asymptotic}
@@ -1454,9 +1478,18 @@ The discriminant computation is elementary. For the prime
 factorizations, substitute $r = 4, 5, \ldots, 11$ into $q(r)$ and
 factor (confirmed symbolically in
 \texttt{compute/tests/test\_subleading\_asymptotic.py}). The primes
-$\{7, 11, 13, 19, 29, 31, 71, 101\}$ that appear are all strictly
-below the first Kummer-irregular prime $691$, so none lies in
-$\mathrm{IrrKum}$.
+$\{7, 11, 13, 19, 29, 31, 71, 101\}$ that appear: with the
+exception of $101$ (which is Kummer-irregular via $101 \mid
+\mathrm{num}(B_{68})$, verified at session 2026-04-17 primary-source
+check), all lie below the smallest-by-size Kummer-irregular prime
+$37$; hence $\{7, 11, 13, 19, 29, 31, 71\} \cap
+\mathrm{IrrKum} = \varnothing$, and only the single Kummer
+emergence $101$ at $r = 11$ sits inside $\mathrm{IrrKum}$. The two
+\emph{Bernoulli-leading} Kummer-irregular primes $\{691, 3617\}$
+(smallest by Bernoulli index, $691 \mid B_{12}$ and $3617 \mid
+B_{16}$) are absent from $q(r)$ for every $r \le 11$. See
+Remark~\ref{rem:subleading-kummer-correction} for the
+Bernoulli-leading vs size-leading distinction.
 \end{proof}
 
 \subsection{Sub-subleading asymptotic: the Tier-3 closed form and the
