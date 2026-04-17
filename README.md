@@ -143,3 +143,39 @@ chiral-bar-cobar/
     tests/                  1,421 test files (125,444 collected tests)
   standalone/               51 .tex sources
 ```
+
+## Independent Verification Protocol
+
+Every `\ClaimStatusProvedHere` theorem should be paired with a test module
+decorated with `@independent_verification(claim, derived_from, verified_against, disjoint_rationale)`.
+The decorator enforces token-level disjointness between the programme-internal
+derivation and the external-source verification; tautological decoration fails
+at import, not silently.
+
+**Audit state (2026-04-17, post-rewrite-loop):** Vol I audit is **PASSing**
+with zero tautological decorations and zero orphan entries. Coverage snapshot:
+166/2718 ProvedHere labels with installed IV (6.1%). 490 ProvedElsewhere +
+348 Conjectured/Conditional + 3237 remark/definition/construction labels all
+recognised as valid decoration targets by the upgraded audit. The audit
+infrastructure was extended to accept the four semantic categories
+(theorems, conjectures, constructions, ProvedElsewhere citations) uniformly
+across the three volumes.
+
+**Recent IV installations.**
+- `thm:platonic-conductor`: via BRST quantisation + Friedan-Martinec-Shenker
+  (FMS) tabulated ghost central charges. (b, c) at λ=2 gives c_ghost = -26
+  (string theory critical dim); (β, γ) at λ=3/2 gives c_ghost = +11; (b, c)
+  at λ=1 gives c_ghost = -2.
+- `thm:climax-genus-zero`: via KZ functor + Arnold connection initiality vs
+  explicit κ = -c_ghost identity at Heisenberg (κ=1) and Virasoro (κ=26 at
+  FMS critical c=26), cross-validated with the platonic-conductor IV.
+
+Make targets:
+```
+make verify-independence           # summary audit (no tautology / no orphan gate)
+make verify-independence-verbose   # full list of uncovered claims
+```
+
+See `notes/INDEPENDENT_VERIFICATION.md` for the three-healing rubric
+(find disjoint source / restrict scope / downgrade status) and
+`compute/lib/independent_verification.py` for the decorator implementation.
