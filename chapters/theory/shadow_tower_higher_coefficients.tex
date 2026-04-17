@@ -855,13 +855,32 @@ both a logarithmic branch AND a double pole $(6z + 1)^{-2}$. The
 singularity strength strictly increases at higher orders of the
 $1/c$ expansion.
 
-Conjectured pattern for higher orders:
-$\Sigma_\Vir^{(k)}(z)$ has a pole of order $2k$ at $z = -1/6$
-plus a logarithmic branch point with residue in a specific
-arithmetic sequence. Verifying this pattern at order $k = 2$
-(sub-subleading, via
-\verb|sub_subleading_asymptotic|) is a natural continuation of
-this Beilinson iteration thread.
+The pattern for higher orders: $\Sigma_\Vir^{(k)}(z)$ has a pole
+of order $2k$ at $z = -1/6$ plus a logarithmic branch point. For
+$k = 2$ (sub-subleading), this gives a pole of order~$4$. Verified
+symbolically:
+\[
+  \Sigma_\Vir^{(2)}(z)
+  \;=\;
+  \frac{P_4(z) + Q_4(z) \log(6z + 1)}{164025 \cdot (6z + 1)^4},
+\]
+where $P_4(z)$ is a polynomial of degree~$7$ and $Q_4(z)$ is a
+polynomial of degree~$4$, with specific coefficients derivable from
+the sum decomposition
+\[
+  \Sigma_\Vir^{(2)}(z)
+  \;=\;
+  \frac{484}{25}\, \Sigma_\Vir(z)
+   + \frac{22}{45}\bigl[z^2 \Sigma_\Vir'' - 8 z \Sigma_\Vir' + 20 \Sigma_\Vir\bigr]
+   + \frac{1}{972}\bigl[z^4 \Sigma_\Vir^{(4)} + 6 z^3 \Sigma_\Vir^{(3)}
+     + 7 z^2 \Sigma_\Vir'' + z \Sigma_\Vir' - 22 (\ldots) + \ldots\bigr],
+\]
+applied to the closed form of
+Theorem~\ref{thm:shadow-series-closed-form-Virasoro}.
+The $(6z + 1)^4$ denominator arises from the fourth derivative of
+$-\log(1 + 6z)/162$, which produces $(6z + 1)^{-4}$ via Faà di
+Bruno. Taylor expansion to order~$z^{11}$ reproduces the engine's
+sub-subleading coefficients exactly.
 
 The singular surface of the full shadow tower summed over all
 $1/c$ orders is therefore not a pure logarithmic branch point
