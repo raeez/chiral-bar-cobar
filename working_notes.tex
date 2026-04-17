@@ -9310,10 +9310,76 @@ Iteration~2: caught conflation of $h$-index with $r$-index; refined
 to sub-exponential via Hardy--Ramanujan on $\eta^{-1}$.
 Iteration~3: numerical fit gave slope $3.2054$, not $2.5651$; refined
 to ``effective-$c$ correction or finite-$h$''.
-Iteration~4 (this entry): pure partition function also pre-asymptotic
+Iteration~4: pure partition function also pre-asymptotic
 at $n=100$; hypothesis (N2) wins; W(p) sub-exponential stratum has
 universal leading slope $\pi\sqrt{2/3}$.
+Iteration~5 (this entry): re-examined r-index growth using existing
+Virasoro engine; the ``polynomial stratum'' label was wrong at r-index.
 Each iteration takes the previous inscription as input and refines it
 via first-principles numerical check plus Beilinson audit.
+
+\subsection{$r$-index growth correction: the standard landscape is
+exponential, not polynomial}
+\label{subsec:r-index-correction-2026-04-17}
+
+The Virasoro shadow leading asymptotic (from
+\verb|compute/lib/shadow_tower_higher_vir.py|
+\verb|leading_asymptotic(r)|) is
+\[
+  A_r^{\mathrm{Vir}} \;=\; \frac{8 \cdot (-6)^{r-4}}{r},
+\]
+i.e.\ $|A_r| \sim 6^r/r$: linear exponential in~$r$. The
+${h}$-index sub-exponential growth of the character $c_h$ does
+not transfer to the $r$-index shadow coefficient by a simple
+substitution; the bar-complex combinatorics introduce an explicit
+$6^r$ factor reflecting the $6$-fold multiplicity of
+$\mathrm{FM}_r$ boundary strata contributing to the Virasoro
+shadow at each depth.
+
+Corrected four-layer stratification at the $r$-index:
+\begin{itemize}
+  \item \emph{Finite (terminating).} Classes G/L/C with
+        $d_{\mathrm{alg}} \le 2$ (Heisenberg, affine KM non-critical,
+        $\beta\gamma$): $S_r = 0$ for $r > r_0$. Terminating tower.
+  \item \emph{Exponential.} Class M with $d_{\mathrm{alg}} = \infty$
+        (Virasoro, $\cW_N$ at generic $c$): $|S_r| \sim C^r/r$,
+        $C = 6$ for Virasoro. Linear exponential; this is the
+        ``standard tempered'' class.
+  \item \emph{Gevrey-$\alpha$ with $\alpha > 0$.} Class M with
+        non-semisimple Zhu, logarithmic $\cW(p)$: bound
+        $|S_r| \le C \cdot r!^\alpha \cdot e^{c\sqrt r}$, factorial
+        factor from configuration-space integration combined with
+        Massey-transport indecomposability.
+  \item \emph{Non-Borel-summable.} Pathological; outside tempered;
+        C$_2$-cofiniteness rules this out by Zhu finiteness.
+\end{itemize}
+
+Consequences requiring propagation:
+\begin{itemize}
+  \item \textbf{Theorem F scope.} $(\infty, 2)$-adjoint equivalence
+        holds on the \emph{exponential} stratum (standard landscape);
+        $(\infty, 1)$-adjoint morphism only on the
+        \emph{Gevrey-$\alpha$} stratum ($\cW(p)$) with
+        Gurarie--Flohr Massey class as obstruction to $(\infty, 2)$.
+  \item \textbf{Theorem H scope.} $\{0, 1, 2\}$ concentration holds
+        on the Koszul locus, which is a subset of the exponential
+        stratum. On the Gevrey stratum, concentration may fail;
+        ChirHoch support spreads in proportion to the Massey-class
+        obstruction.
+  \item \textbf{Scalar complementarity $K_\cA = \kappa + \kappa^!$.}
+        For finite-shadow algebras, $K_\cA$ reads off as polynomial.
+        For exponential-stratum algebras (Vir, $\cW_N$), $K_\cA$
+        is the residue-of-leading-asymptotic
+        (for Vir: $K = c + c' = 13$, from the $A_r^{\mathrm{Vir}}$
+        structure). For Gevrey-stratum algebras, $K_\cA$ is defined
+        by Borel resummation.
+\end{itemize}
+
+This correction is the fifth Beilinson-iteration refinement on
+the W(p) temperedness thread. Key conceptual move: distinguish
+\emph{$h$-index} growth (character dimension) from \emph{$r$-index}
+growth (shadow coefficient); bar-complex combinatorics introduce
+a multiplicative constant-to-$r$-th-power factor that shifts
+sub-exponential-$h$ to exponential-$r$ for non-terminating class M.
 
 \end{document}
