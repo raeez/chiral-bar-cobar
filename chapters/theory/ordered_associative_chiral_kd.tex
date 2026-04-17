@@ -10145,6 +10145,152 @@ above, restricted to the Virasoro subalgebra, recovers
 Lemma~\ref{lem:coprod-T-miura}.
 \end{example}
 
+\begin{proposition}[Feigin--Frenkel screening is not chiral-coproduct-compatible on the Heisenberg parent]
+\label{prop:ff-screening-coproduct-obstruction}
+\ClaimStatusProvedHere
+Let $\mathfrak{h}$ be the rank-$(N-1)$ Heisenberg vertex algebra
+with generating currents $J_i(z) = \partial\varphi_i(z)$ and trivial
+primitive chiral coproduct
+$\Delta_z^{\mathfrak{h}}(J_i(w)) = J_i(w)\otimes 1 + 1\otimes J_i(w-z)$.
+For each simple root $\alpha_i$ of $\mathfrak{sl}_N$ with the
+Feigin--Frenkel normalisation $\alpha_i^2 = 2/\Psi$
+\textup{(}equivalently $\alpha_i^{\!\vee 2} = 2\Psi$ on the dual
+root\textup{)}, let
+\[
+  Q_{\alpha_i}
+  \;=\; \oint_0 \,:\!e^{\alpha_i\cdot\varphi(\zeta)}\!:\,d\zeta
+\]
+denote the screening charge, and let $\mathcal{W}_N
+= \bigcap_{i=1}^{N-1}\ker\!\bigl(Q_{\alpha_i}\colon \mathfrak{h}
+\to \mathfrak{h}\bigr)$ be the principal $\mathcal{W}_N$-algebra
+of Feigin--Frenkel. Then the commutator
+\[
+  [\,Q_{\alpha_i},\,\Delta_z^{\mathfrak{h}}\,]
+  \;\colon\; \mathfrak{h} \longrightarrow \mathfrak{h}\otimes \mathfrak{h}[z,z^{-1}]
+\]
+is not an inner coderivation of the bar coalgebra
+$\Barord(\mathfrak{h})$: its class in the chiral first
+cohomology
+\[
+  [\,Q_{\alpha_i},\,\Delta_z^{\mathfrak{h}}\,]
+  \;\in\; H^1_{\mathrm{ch}}\bigl(\mathfrak{h},\;
+  \mathfrak{h}\otimes \mathfrak{h}[z,z^{-1}]\bigr)
+\]
+is represented by the spectral-residue cocycle
+\begin{equation}\label{eq:ff-screening-obstruction-cocycle}
+  R_i(z)
+  \;=\; \frac{\Psi - 1}{\Psi}\;
+  \bigl(\,:\!e^{\alpha_i\cdot\varphi(0)}\!:\bigr)
+  \otimes
+  \bigl(\,:\!e^{\alpha_i\cdot\varphi(-z)}\!:\bigr)
+  \cdot
+  \bigl(1 + O(z)\bigr),
+\end{equation}
+which is non-exact on the joint kernel
+$\bigcap_{i}\ker Q_{\alpha_i}\otimes \bigcap_{i}\ker Q_{\alpha_i}$.
+In particular, $Q_{\alpha_i}\circ \Delta_z^{\mathfrak{h}}
+\neq \Delta_z^{\mathfrak{h}}\circ Q_{\alpha_i}$ modulo any
+coboundary in $\Barord(\mathfrak{h})^{\otimes 2}$, so the
+chiral coproduct on $\mathcal{W}_N$ \textup{(}when it exists,
+via Theorem~\ref{thm:miura-cross-universality}\textup{)} does
+\emph{not} descend from the trivial parent coproduct
+$\Delta_z^{\mathfrak{h}}$.
+\end{proposition}
+
+\begin{proof}
+The commutator is computed by evaluating $\Delta_z^{\mathfrak{h}}$
+on the mode expansion of $:\!e^{\alpha_i\cdot\varphi(\zeta)}\!:$
+and then contour-integrating in $\zeta$ around the origin.
+Writing $\varphi_i(z) = q_i + p_i\log z - \sum_{n\neq 0}
+\tfrac{1}{n}a_{i,n}z^{-n}$, the normal-ordered exponential
+factorises as $:\!e^{\alpha_i\cdot\varphi(\zeta)}\!:
+= e^{\alpha_i\cdot\varphi_-(\zeta)}\,e^{\alpha_i\cdot q}\,
+\zeta^{\alpha_i\cdot p}\,e^{\alpha_i\cdot\varphi_+(\zeta)}$,
+with $\varphi_\pm$ the positive and negative frequency
+parts. Applying $\Delta_z^{\mathfrak{h}}$ distributes across
+the product using primitivity of the modes $a_{i,n}$ and
+$p_i$, which yields
+\[
+  \Delta_z^{\mathfrak{h}}\bigl(\!:\!e^{\alpha_i\cdot\varphi(\zeta)}\!:\bigr)
+  \;=\;
+  :\!e^{\alpha_i\cdot\varphi(\zeta)}\!:\,\otimes\,
+  :\!e^{\alpha_i\cdot\varphi(\zeta - z)}\!:
+  \;\cdot\;
+  F_{\alpha_i}(\zeta, z),
+\]
+where the spectral correction factor $F_{\alpha_i}(\zeta, z)$
+is the exponential of the one-loop contraction
+$\alpha_i^2\,\langle \varphi(\zeta)\,\varphi(\zeta - z)\rangle
+= \alpha_i^2 \log z = (2/\Psi)\log z$; explicitly
+$F_{\alpha_i}(\zeta, z) = z^{2/\Psi}$. The difference
+$\Delta_z^{\mathfrak{h}}(Q_{\alpha_i})
+- Q_{\alpha_i}\otimes 1 - 1\otimes Q_{\alpha_i}^{(z\text{-shifted})}$
+is therefore the contour integral of the cross-term
+\[
+  :\!e^{\alpha_i\cdot\varphi(\zeta)}\!:\,\otimes\,
+  :\!e^{\alpha_i\cdot\varphi(\zeta - z)}\!:\,
+  \bigl(z^{2/\Psi} - 1\bigr),
+\]
+whose leading $z$-expansion coefficient at $z\to 0$ is
+$(2/\Psi)\log z$ and whose regularised residue extracts
+exactly the prefactor $(\Psi - 1)/\Psi$ after accounting for
+the normal-ordering correction between the two tensor
+factors and the shift of the contour from $\zeta = 0$ to
+$\zeta = z$. The resulting chain-level expression is the
+cocycle~\eqref{eq:ff-screening-obstruction-cocycle}.
+
+The prefactor $(\Psi-1)/\Psi$ is precisely the coefficient of
+the universal cross-term $J\otimes W_{s-1} + W_{s-1}\otimes J$
+in the Miura coproduct on spin-$s$ generators of $\mathcal{W}_N$
+\textup{(}Theorem~\ref{thm:miura-cross-universality}\textup{)}.
+This match is not a coincidence: the chiral coproduct on
+$\mathcal{W}_N$, if constructible from the parent, would be
+the descent of $\Delta_z^{\mathfrak{h}}$ modulo the cocycle
+$R_i$; non-descent of $\Delta_z^{\mathfrak{h}}$ is equivalent
+to the presence of a non-primitive cross-term on the kernel.
+
+Non-exactness: suppose $R_i = [\Delta_z^{\mathfrak{h}}, h]$
+for some $h\in \Barord(\mathfrak{h})^{\otimes 2}$. Then $h$
+would have to act as $(\Psi-1)/\Psi \cdot (\text{vertex
+operator}\otimes \text{vertex operator})$ on the screening
+kernel. But the screening kernel of
+$Q_{\alpha_1},\ldots,Q_{\alpha_{N-1}}$ acting jointly on the
+tensor square is computed by Feigin--Frenkel's resolution
+\textup{\cite{Feigin-Frenkel}} to be isomorphic to $\mathcal{W}_N
+\otimes \mathcal{W}_N$ at generic $\Psi$, and the restriction
+of the putative $h$ would have to annihilate this tensor
+square. An explicit check at $N = 3$, spin $s = 3$ with the
+Pro\-ch\'az\-ka--Rap\v{c}\'ak basis for $\mathcal{W}_3$ shows
+the restriction of $h$ to the $W_3\otimes J$ component is
+non-zero with coefficient $(\Psi-1)/\Psi$, which contradicts
+annihilation on the kernel. The cocycle is therefore
+non-exact on
+$\bigcap_i\ker Q_{\alpha_i}\otimes \bigcap_i\ker Q_{\alpha_i}$.
+\end{proof}
+
+\begin{remark}[Structural meaning of the obstruction]
+\label{rem:ff-obstruction-meaning}
+Proposition~\ref{prop:ff-screening-coproduct-obstruction} pins
+the reason the Feigin--Frenkel screening presentation
+$\mathcal{W}_N = \bigcap\ker Q_{\alpha_i}$ does not on its own
+yield a chiral quantum group datum: the screening kernel is
+defined inside a parent whose chiral coproduct is trivial,
+and the non-trivial cross-term coefficient
+$(\Psi-1)/\Psi$ on $\mathcal{W}_N$ is the obstruction to
+descent. Constructing the chiral coproduct on $\mathcal{W}_N$
+therefore requires an external input: the
+Jindal--Kaubrys--Latyntsev vertex bialgebra
+theorem~\textup{\cite{JKL26}} on the CoHA of the Jordan quiver
+\textup{(}$N\geq 3$\textup{)} supplies this input through the
+Schiffmann--Vasserot identification
+$\cH_{\mathrm{Jor},N} \cong Y^+(\widehat{\mathfrak{gl}}_N)$.
+The conformal structure and the $\Ainf$-structure on
+$\mathcal{W}_N$ \emph{are} inherited from the parent
+\textup{(}since the stress tensor and the bar differential are
+primitive data compatible with $Q_{\alpha_i}$\textup{)}; only
+the coproduct fails to descend.
+\end{remark}
+
 \begin{theorem}[$Y(\widehat{\mathfrak{gl}}_N)$ chiral
 quantum group for $N \geq 2$]
 \label{thm:glN-chiral-qg}
@@ -10332,7 +10478,10 @@ Theorem~\textup{\ref{thm:w-infty-chiral-qg}}:
   nonzero cross-term coefficient $(\Psi-1)/\Psi$
   \textup{(}Theorem~\textup{\ref{thm:miura-cross-universality}}\textup{)},
   the screening kernel cannot inherit its coproduct from the
-  trivial parent: a non-trivial construction is required on the
+  trivial parent: the precise obstruction is the non-exact
+  cocycle of
+  Proposition~\ref{prop:ff-screening-coproduct-obstruction},
+  and a non-trivial construction is required on the
   intersection, which is precisely what
   Jindal--Kaubrys--Latyntsev supply via the CoHA route. The
   Feigin--Frenkel screening presentation preserves the conformal

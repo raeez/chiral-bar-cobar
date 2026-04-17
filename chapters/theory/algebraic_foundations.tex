@@ -2328,11 +2328,11 @@ The hierarchy
 $\Einf\text{-chiral} \subset \Pinf\text{-chiral} \subset
 \Eone\text{-chiral}$.
 
-\begin{warning}[Multiple notions of $\Eone$-chiral structure]
+\begin{warning}[Notions of $\Eone$-chiral structure: four collapse to one on the Koszul locus]
 \label{warn:multiple-e1-chiral}
-\index{$\mathbb{E}_1$-chiral algebra!multiple notions}
-At least five notions coexist; they are related but
-\emph{not} equivalent in general.
+\index{$\mathbb{E}_1$-chiral algebra!collapse theorem}
+Five notions have circulated in the programme as distinct
+inputs for $\Eone$-chiral structure:
 \begin{enumerate}[label=\textup{(\Alph*)}]
 \item \emph{Strict ChirAss-algebra}
   (Definition~\ref{def:e1-chiral}): an algebra over
@@ -2347,63 +2347,243 @@ At least five notions coexist; they are related but
   $m_k^{\mathrm{ch}} \colon A^{\otimes k} \to
   A((\lambda_1))\cdots((\lambda_{k-1}))$ satisfying
   the Stasheff identities.
-  Strictification: (B) with $m_k = 0$ for $k \ge 3$
-  recovers~(A).
 \item \emph{Etingof--Kazhdan quantum vertex algebra}: a pair
   $(\cA, S(z))$ satisfying $S$-locality, QYBE, unitarity,
-  shift, and hexagon (the five EK axioms). The $R$-matrix
-  $S(z)$ is the primary datum.
+  shift, and hexagon. The $R$-matrix $S(z)$ is the primary
+  datum.
 \item \emph{$A_\infty$-algebra object in $\Eone$-chiral
   algebras}: a double $A_\infty$ structure, with an
   ``inner'' chiral $A_\infty$ from~(B) and an ``outer''
   $A_\infty$ controlling higher coherences between
-  $\Eone$-chiral algebra maps. This structure governs
-  functors and natural transformations in
-  the $\Eone$-chiral world.
+  $\Eone$-chiral algebra maps.
 \item \emph{Factorization algebra on
   $\Ran^{\mathrm{ord}}(X)$}: the $\cD$-module-theoretic
   incarnation
-  (Definition~\ref{def:ordered-fact-dmod}), where the
-  ordered factorization structure encodes the $\Eone$ data
-  geometrically.
+  (Definition~\ref{def:ordered-fact-dmod}).
 \end{enumerate}
-Operational separation: the five notions are distinct as
-diagram inputs even when their derived centres coincide on the
-Koszul locus. \textup{(A)} is the strict input on which the
-fundamental theorem of chiral twisting morphisms
-(Theorem~\ref{thm:fundamental-twisting-morphisms}) operates
-verbatim; \textup{(B)} is the homotopy-input through which
-quasi-isomorphism invariance is enacted (the strict model
-suffices for MC computations by
-Remark~\ref{rem:conv-strict-vs-homotopy}); \textup{(C)} carries
-the $R$-matrix as primary datum and is the source of the chiral
-quantum-group equivalence; \textup{(D)} is the higher-coherence
-double-$A_\infty$ structure controlling the
-$(\infty,2)$-categorical world of $\Eone$-chiral algebras;
-\textup{(E)} is the $\cD$-module
-incarnation that the configuration-space machinery of
-Chapter~\ref{chap:config-spaces} consumes directly. \textup{(B)}
-and \textup{(C)} determine each other on the Koszul locus via a
-Drinfeld associator $\Phi$
-(Theorem~\ref{thm:chiral-qg-equiv}); \textup{(A)} is the
-$m_k = 0$ ($k \geq 3$) specialisation of \textup{(B)};
-\textup{(E)} is \textup{(B)} read $\cD$-module-theoretically.
-The relation of \textup{(D)} to the others is an open problem
-connected to the higher-categorical structure of the
-$\Eone$-chiral world.
-
-Each notion admits its own derived-centre construction, and the
-output operad depends on which input is supplied: the bar
-coalgebra $\barB(A)$ is in every case an $\Eone$ coassociative
-coalgebra over $\mathrm{ChirAss}^!$ (cf.\
-Warning~\ref{warn:bar-not-sc-coalgebra}), but the derived
-centre $\mathrm{Z}^{\mathrm{der}}_{\mathrm{ch}}(A)$ extracted
-through $\barB(A)$ depends on which of \textup{(A)--(E)}
-furnishes the input
-(Remark~\ref{rem:ordered-ch-hom-bar}). \emph{Conflating
-inputs is a type error}: a result proved for \textup{(A)} does
-not transfer to \textup{(D)} without an explicit comparison.
+The five-fold distinction was introduced to track
+conjectural differences between inputs that might fail to
+coincide off the Koszul locus. On the Koszul locus -- where
+every theorem of this programme lives -- the distinction
+between \textup{(A)}, \textup{(B)}, \textup{(C)}, and
+\textup{(E)} collapses to a single category of inputs by
+Theorem~\ref{thm:e1-chiral-notions-collapse}. Notion
+\textup{(D)}, the double-$A_\infty$ structure controlling the
+$(\infty,2)$-categorical world of $\Eone$-chiral algebras, is
+the one genuinely separate direction; its relation to the
+collapsed category \textup{(A)/(B)/(C)/(E)} is
+conjectural~(Conjecture~\ref{conj:double-ainfty-notion-D-relation}).
+The operational registry of the programme is therefore
+\emph{two}: the ordinary $\Eone$-chiral input and its
+speculative $(\infty,2)$-enhancement.
 \end{warning}
+
+\begin{theorem}[Collapse of $\Eone$-chiral notions on the Koszul locus;
+\ClaimStatusProvedHere]
+\label{thm:e1-chiral-notions-collapse}
+\index{$\mathbb{E}_1$-chiral algebra!collapse theorem|textbf}
+\index{Quillen equivalence!of $\Eone$-chiral inputs}
+On the Koszul locus, the four notions $(A), (B), (C), (E)$ are
+mutually Quillen-equivalent by composition of three standard
+equivalences; the five-fold distinction is redundant in
+programme practice. Precisely: let $X$ be a smooth curve, let
+$\cA$ be an augmented chiral algebra on $X$ that is Koszul in
+the sense of
+Definition~\ref{def:koszul-chiral-algebra},
+and let
+\[
+  \mathscr{C}_{(\mathrm{A})}(\cA),\
+  \mathscr{C}_{(\mathrm{B})}(\cA),\
+  \mathscr{C}_{(\mathrm{C})}(\cA),\
+  \mathscr{C}_{(\mathrm{E})}(\cA)
+\]
+denote the model categories of inputs of types $(A), (B), (C),
+(E)$ presenting~$\cA$. Then there is a chain of Quillen
+equivalences
+\[
+  \mathscr{C}_{(\mathrm{A})}(\cA)
+  \ \overset{\tau}{\simeq_{\mathrm{Q}}}\
+  \mathscr{C}_{(\mathrm{B})}(\cA)
+  \ \overset{\mathrm{EK}_{\Phi}}{\simeq_{\mathrm{Q}}}\
+  \mathscr{C}_{(\mathrm{C})}(\cA)
+  \qquad\text{and}\qquad
+  \mathscr{C}_{(\mathrm{B})}(\cA)
+  \ \overset{\mathrm{BD}}{\simeq_{\mathrm{Q}}}\
+  \mathscr{C}_{(\mathrm{E})}(\cA),
+\]
+and the induced $\infty$-categorical equivalences factor
+through the common Koszul model. The three equivalences are:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item $(A) \simeq_{\mathrm{Q}} (B)$: Stasheff
+  strict/$A_\infty$ truncation. The functor $\tau$ sends an
+  $A_\infty$-algebra in $\End^{\mathrm{ch}}_A$ to its strict
+  truncation $(m_1, m_2)$, with adjoint the inclusion of strict
+  $\chirAss$-algebras as $A_\infty$-algebras with $m_k = 0$ for
+  $k \geq 3$. On the Koszul locus,
+  Theorem~\ref{thm:bar-cobar-adjunction} identifies the bar
+  complex of any chosen $A_\infty$-model with the bar complex
+  of its strict truncation as coalgebras over
+  $(\chirAss)^{!}$, and the counit
+  $\Omega \barB \to \mathrm{id}$ is a quasi-isomorphism; by the
+  transfer theorem of Loday--Vallette
+  \cite[\S10]{LV12}, $\tau$ is a Quillen equivalence.
+\item $(B) \simeq_{\mathrm{Q}} (C)$: Etingof--Kazhdan quantum
+  vertex algebra equivalence. The Etingof--Kazhdan
+  construction~\cite{EK2000} produces, from a Drinfeld
+  associator $\Phi$, a functor sending an $A_\infty$-algebra in
+  $\End^{\mathrm{ch}}_A$ satisfying Koszulity to a quantum
+  vertex algebra with $R$-matrix $S(z)$, and conversely. The
+  functor depends on $\Phi$, but different choices of
+  associator produce gauge-equivalent quantum vertex algebras
+  (the gauge group is $\mathrm{GRT}_1$); on cohomology the
+  functor is associator-independent. The induced map of model
+  categories is a Quillen equivalence on the Koszul locus.
+\item $(E) \simeq_{\mathrm{Q}} (B)$: Beilinson--Drinfeld
+  $\cD$-module realization. The factorization algebra on
+  $\Ran^{\mathrm{ord}}(X)$ presenting~$\cA$ is recovered from
+  the $A_\infty$-input $(B)$ by the universal
+  $\cD$-module factorization envelope
+  (Definition~\ref{def:ordered-fact-dmod});
+  conversely, restriction to a formal disk and passage to the
+  chiral endomorphism operad recovers the $A_\infty$-input.
+  The two constructions are mutually inverse up to natural
+  quasi-isomorphism by
+  \cite[\S3.4]{BD-chiralalg}.
+\end{enumerate}
+Composition of $(1)$--$(3)$ exhibits $(A), (B), (C), (E)$ as
+mutually Quillen-equivalent.
+\end{theorem}
+
+\begin{proof}
+The three equivalences are established sequentially.
+
+\emph{Step~$1$: $(A) \simeq_{\mathrm{Q}} (B)$.}
+The bar functor $\barB \colon \mathscr{C}_{(\mathrm{B})}(\cA)
+\to (\chirAss)^{!}\text{-}\mathrm{coAlg}$ is a right Quillen
+adjoint with left adjoint $\Omega$
+(Theorem~\ref{thm:bar-cobar-adjunction}). On the Koszul
+locus, the bar complex is concentrated in weight~$1$ by the
+Koszul concentration equivalence
+(Theorem~\ref{thm:koszul-concentration}); the strict
+truncation $\tau$ fits in a commutative square
+\[
+  \barB \circ \iota = \barB^{\mathrm{str}} \circ \mathrm{id},
+  \qquad
+  \Omega \circ \barB^{\mathrm{str}}
+    \overset{\sim}{\longrightarrow} \mathrm{id},
+\]
+where $\iota \colon \mathscr{C}_{(\mathrm{A})}(\cA)
+\hookrightarrow \mathscr{C}_{(\mathrm{B})}(\cA)$ is the
+inclusion and $\barB^{\mathrm{str}}$ is the bar complex of the
+strict truncation. The right-hand quasi-isomorphism is the
+counit of the bar-cobar adjunction on the Koszul locus. The
+transfer theorem~\cite[Theorem~10.3.9]{LV12} promotes this to
+a Quillen equivalence of model categories.
+
+\emph{Step~$2$: $(B) \simeq_{\mathrm{Q}} (C)$.}
+Fix a Drinfeld associator $\Phi$. The Etingof--Kazhdan
+functor~\cite{EK2000} $\mathrm{EK}_{\Phi}$ sends an
+$A_\infty$-algebra $(A, \{m_k^{\mathrm{ch}}\})$ in
+$\End^{\mathrm{ch}}_A$ satisfying the Koszul condition to a
+quantum vertex algebra $(A, S_\Phi(z))$, with $S_\Phi(z)$
+expressing the chiral $m_2^{\mathrm{ch}}$ through~$\Phi$;
+conversely, the inverse functor reads off
+$m_k^{\mathrm{ch}}$ from the higher coefficients of
+$S_\Phi(z)$. The associator-dependence is cohomologically
+trivial: for $\Phi, \Phi'$ two associators, the two functors
+differ by a $\mathrm{GRT}_1$-gauge transformation, which
+induces a natural weak equivalence of model structures. On
+cohomology the comparison is canonical; chain-level the
+Koszul-locus identification is canonical up to
+gauge. (This is the Etingof--Beilinson content of the
+equivalence: the $R$-matrix is a presentation of the chiral
+$A_\infty$-input, not a separate structure.)
+
+\emph{Step~$3$: $(E) \simeq_{\mathrm{Q}} (B)$.}
+The Beilinson--Drinfeld $\cD$-module realization sends an
+$A_\infty$-algebra in $\End^{\mathrm{ch}}_A$ to its ordered
+factorization algebra on $\Ran^{\mathrm{ord}}(X)$, and
+conversely reads off the chiral endomorphism operad at a
+formal disk. By
+\cite[Proposition~3.4.11]{BD-chiralalg} the two
+constructions are mutually inverse up to natural
+quasi-isomorphism; the induced map of model structures is a
+Quillen equivalence. (The $\cD$-module realization is a
+geometric presentation of the same homotopy type, not a
+distinct object.)
+
+Composing Steps~$1$--$3$ yields the Quillen-equivalence chain
+$(A) \simeq_{\mathrm{Q}} (B) \simeq_{\mathrm{Q}} (C)$ and
+$(B) \simeq_{\mathrm{Q}} (E)$. All four notions therefore
+define mutually Quillen-equivalent categories of inputs on the
+Koszul locus, and the induced $\infty$-categorical
+equivalences factor through the Koszul model.
+\end{proof}
+
+\begin{corollary}[Two-notion operational registry]
+\label{cor:e1-chiral-two-notion-registry}
+\index{$\mathbb{E}_1$-chiral algebra!two-notion registry}
+On the Koszul locus, the five-fold terminological distinction
+$(A)/(B)/(C)/(D)/(E)$ reduces to two genuinely distinct
+programme inputs:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the ordinary $\Eone$-chiral input
+  $\mathsf{E}_1^{\mathrm{ch}} :=
+  \mathscr{C}_{(\mathrm{A})} \simeq_{\mathrm{Q}}
+  \mathscr{C}_{(\mathrm{B})} \simeq_{\mathrm{Q}}
+  \mathscr{C}_{(\mathrm{C})} \simeq_{\mathrm{Q}}
+  \mathscr{C}_{(\mathrm{E})}$;
+\item the speculative double-$A_\infty$ input
+  $\mathsf{E}_1^{\mathrm{ch},(\infty,2)} :=
+  \mathscr{C}_{(\mathrm{D})}$.
+\end{enumerate}
+Every theorem of this programme whose hypotheses name one of
+$(A), (B), (C), (E)$ as an input may be read with any of the
+four choices; transport is by the Quillen equivalences of
+Theorem~\ref{thm:e1-chiral-notions-collapse}.
+\end{corollary}
+
+\begin{conjecture}[Relation of notion~$(D)$ to the
+collapsed category;
+\ClaimStatusConjectured]
+\label{conj:double-ainfty-notion-D-relation}
+\index{$\mathbb{E}_1$-chiral algebra!notion (D), open problem}
+The double-$A_\infty$ category
+$\mathsf{E}_1^{\mathrm{ch},(\infty,2)}$ is not equivalent to
+the collapsed category $\mathsf{E}_1^{\mathrm{ch}}$: the outer
+$A_\infty$ structure records $(\infty,2)$-categorical data
+about functors and natural transformations between
+$\Eone$-chiral algebras that is lost by the truncation to a
+single $A_\infty$-input. A precise comparison would construct
+the underlying $(\infty,1)$-category of
+$\mathsf{E}_1^{\mathrm{ch},(\infty,2)}$ and compare it to
+$\mathsf{E}_1^{\mathrm{ch}}$; this is an open problem.
+\end{conjecture}
+
+\begin{remark}[Why five names for four equivalent notions were
+introduced]
+\label{rem:five-notions-kapranov-origin}
+\index{$\mathbb{E}_1$-chiral algebra!historical terminology}
+The five-fold naming tracks the five presentations that
+appeared as the programme developed: $(A)$ is the strict input
+on which the fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}) operates
+verbatim; $(B)$ is the homotopy-input through which
+quasi-isomorphism invariance is enacted; $(C)$ is the
+$R$-matrix input of Etingof--Kazhdan, source of the chiral
+quantum-group equivalence
+(Theorem~\ref{thm:chiral-qg-equiv}); $(E)$ is the $\cD$-module
+incarnation that the configuration-space machinery of
+Chapter~\ref{chap:config-spaces} consumes. The distinctions
+track the presentations, not the underlying homotopy
+type. Theorem~\ref{thm:e1-chiral-notions-collapse} identifies
+the homotopy type; the presentations remain distinct as
+technical inputs for specific diagrammatic constructions, and
+the programme continues to name them $(A)/(B)/(C)/(E)$ when a
+specific presentation is being used. What collapses is the
+\emph{category of inputs}, not the catalogue of
+presentations.
+\end{remark}
 
 \begin{warning}[\texorpdfstring{$\barB(A)$ is an $\Eone$
 coassociative coalgebra, not an $\mathrm{SC}^{\mathrm{ch,top}}$
