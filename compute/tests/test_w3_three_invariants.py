@@ -53,26 +53,65 @@ class TestW3ThreeInvariantsDistinct(unittest.TestCase):
             expected_gap = 30.0 / (n + 1)
             self.assertAlmostEqual(gap, expected_gap, places=6)
 
-    def test_beta_formula_at_small_N(self):
-        """beta_N = (N+1)(N+2)/2: Vol II conjectured formula."""
-        self.assertEqual((2 + 1) * (2 + 2) // 2, 6)   # N=2: Virasoro
-        self.assertEqual((3 + 1) * (3 + 2) // 2, 10)  # N=3: W_3
-        self.assertEqual((4 + 1) * (4 + 2) // 2, 15)  # N=4: W_4 predicted
+    def test_beta_formula_is_harmonic(self):
+        """beta_N = 12*(H_N - 1) is the Vol II first-principles closed form.
 
-    def test_template_prediction_vs_beta_at_s4(self):
-        """The Riccati template (Vol I iter 60) predicts C_s = 4s; at s=4
-        this gives 16. Vol II beta_N = (N+1)(N+2)/2 at N=4 gives 15.
-        At N=4 / s=4 these differ by 1; neither is a priori the correct
-        W-line integer-sequence base. Direct W_4 W^(4)-line computation
-        required to decide.
+        Supersedes earlier candidates (N+1)(N+2)/2 (RETRACTED) and
+        N^2 - N + 4. True value: beta_N = 12*(H_N - 1) for all N >= 2
+        (ProvedHere, Vol II chapters/theory/beta_N_closed_form_all_platonic.tex,
+        thm:beta-N-closed-form-proved-all-N).
         """
-        template_C = 4 * 4
-        beta_N = 5 * 6 // 2
-        self.assertEqual(template_C, 16)
-        self.assertEqual(beta_N, 15)
-        self.assertNotEqual(template_C, beta_N)
-        # Two candidates at N=4: neither is verified until W_4 seed
-        # structure constant is computed from Fateev-Lukyanov OPE data.
+        from fractions import Fraction
+
+        def H(N):
+            return sum(Fraction(1, j) for j in range(1, N + 1))
+
+        def beta_N(N):
+            return 12 * (H(N) - 1)
+
+        self.assertEqual(beta_N(2), Fraction(6))
+        self.assertEqual(beta_N(3), Fraction(10))
+        self.assertEqual(beta_N(4), Fraction(13))
+        # N >= 5 rational, not integer:
+        self.assertEqual(beta_N(5), Fraction(77, 5))
+        self.assertEqual(beta_N(6), Fraction(87, 5))
+
+    def test_per_lane_decomposition_of_beta(self):
+        """beta_N = sum_{s=2}^{N} 12/s (per-spin-s lane contribution)."""
+        from fractions import Fraction
+
+        def beta_N_as_sum(N):
+            return sum(Fraction(12, s) for s in range(2, N + 1))
+
+        def H(N):
+            return sum(Fraction(1, j) for j in range(1, N + 1))
+
+        for N in range(2, 7):
+            self.assertEqual(beta_N_as_sum(N), 12 * (H(N) - 1))
+        # At N=3: T-line (s=2) gives 12/2 = 6; W-line (s=3) gives 12/3 = 4.
+        # Sum = 10 matches beta_{W_3}.
+        self.assertEqual(Fraction(12, 2) + Fraction(12, 3), Fraction(10))
+
+    def test_template_prediction_vs_beta_lane_contribution_at_s_geq_3(self):
+        """Trivial algebraic identity: (12/s) * (4s) = 48.
+
+        Vol II per-lane beta contribution is 12/s; Vol I Riccati template
+        predicts C_lane = 4s for spin-s generator satisfying (H1)-(H4).
+        The product is identically 48 — but this is a consequence of
+        both formulas being correct at s >= 3, NOT a structural theorem.
+
+        At s=2 (Virasoro T-line), (H1) fails, so the template gives 8
+        rather than the actual 6; product there is 6*6 = 36 != 48.
+        """
+        for s in (3, 4, 5, 6):
+            beta_contrib = 12 / s
+            C_template = 4 * s
+            self.assertEqual(beta_contrib * C_template, 48)
+        # At s=2: template predicts 8, actual is 6 (template fails H1)
+        beta_T_line = 12 // 2  # Vol II T-line contribution
+        C_T_actual = 6          # Vol I universal class M theorem
+        self.assertEqual(beta_T_line * C_T_actual, 36)
+        self.assertNotEqual(beta_T_line * C_T_actual, 48)
 
 
 if __name__ == '__main__':
