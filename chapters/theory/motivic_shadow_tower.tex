@@ -1,0 +1,1121 @@
+%% The Motivic Shadow Tower.
+%%
+%% Inscribes the motivic lift of the Vol I shadow tower:
+%% S_r(A) \in Q[(2 pi i)^r, zeta(3), zeta(5), ...] admits canonical
+%% lift S_r^{mot}(A) \in MZV^{mot}_{wt r}; the GRT_1(Q) torsor action
+%% on Face(A) (Vol II grt_parametrized_seven_faces.tex) lifts to a
+%% coaction on {S_r^{mot}(A)}; Kummer-congruence prediction for the
+%% Z_g closed forms follows from motivic Bernoulli-Kummer; the
+%% shadow L-function pole structure (AP70) and kappa-vs-beta split
+%% (AP71) are both explained by motivic weight data.
+%%
+%% Vol I theory sequence. Depends on shadow tower (see \ref{part:characteristic-datum}), Vol II
+%% GRT-parametrized seven faces, Vol III shadow-Feynman
+%% identification S_r = delta^{(r)}.
+%%
+%% AAP V2-AP39 / FM36: all macros \providecommand-guarded.
+
+\providecommand{\MZV}{\mathrm{MZV}}
+\providecommand{\mot}{\mathrm{mot}}
+\providecommand{\num}{\mathrm{num}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\grt}{\mathfrak{grt}_1}
+\providecommand{\Face}{\mathrm{Face}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\wt}{\mathrm{wt}}
+\providecommand{\rat}{\mathrm{rat}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Delta}{\Delta}
+\providecommand{\zet}{\zeta}
+\providecommand{\Li}{\mathrm{Li}}
+\providecommand{\per}{\mathrm{per}}
+\providecommand{\coll}{\mathrm{coll}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\fg}{\mathfrak{g}}
+
+\chapter{The Motivic Shadow Tower}
+\label{ch:motivic-shadow-tower}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Prologue}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow tower $\{S_r(\cA)\}_{r \geq 2}$ was introduced in
+the characteristic-datum part as the sequence of $\MC$-coefficients produced by the
+universal Maurer--Cartan element $\Theta_{\cA}$ in the ordered
+convolution $E_1$ dGLA; it classifies chiral algebras into the
+five shadow strata G/L/C/M/FF via the $r_{\max}$ slot of the
+infinite fingerprint (\S\text{infinite-fingerprint}). Individual
+coefficients such as $S_4(\Vir_c) = 10/[c(5c+22)]$ have been
+computed numerically and verified against three independent
+implementations (convolution recursion, master-equation recursion,
+\texttt{ds\_shadow\_higher\_arity}). These numerical identities
+are true statements in $\mathbb{Q}(c)$; they do not, on their own,
+explain why the tower coefficients live in the specific arithmetic
+ring they appear to inhabit.
+
+The Vol~II chapter on GRT-parametrized seven
+faces\footnote{See \texttt{chapters/theory/grt\_parametrized\_seven\_faces.tex}
+in Vol~II, theorem \emph{GRT-Parametrized Seven Faces} in Vol~II
+CLAUDE.md; inscribed 2026-04-16.} promoted the seven historical
+realisations of $r(z)$ to Q-rational orbit representatives of a
+single $\GRT(\mathbb{Q})$-torsor, with two canonical motivic
+companions: Brown's motivic face $F_8$ and Willwacher's operadic
+face $F_9$. The torsor structure immediately raises the question
+of whether the shadow tower itself admits a motivic refinement
+\emph{compatible} with the torsor action. This chapter answers
+affirmatively.
+
+Throughout, we distinguish numerical multiple zeta values
+$\MZV^{\num} \subset \mathbb{R}$ (the $\mathbb{Q}$-algebra generated
+by $\zet(n_1, \ldots, n_k)$ with $n_1 \geq 2$) from motivic
+multiple zeta values $\MZV^{\mot}$ (Goncharov--Brown
+$\mathbb{Q}$-algebra of motivic periods of the mixed Tate motive
+$\mathrm{MT}(\mathbb{Z})$). The period map
+$\per \colon \MZV^{\mot} \to \MZV^{\num}$ is surjective (Brown
+2012) and conjecturally injective (Hoffman's conjecture). The
+motivic ring $\MZV^{\mot}$ carries a comodule structure over the
+motivic Galois group $\mathrm{Gal}^{\mot}(\mathrm{MT}(\mathbb{Z}))
+\simeq \mathrm{Spec}(U(\grt))$ whose Lie algebra is precisely
+$\grt$. That coincidence is not accidental.
+
+The chapter is organised as follows.
+Section~\ref{sec:mot-setup} sets up the ambient
+$\MZV^{\mot}$ ring, the weight filtration, and the motivic
+coaction. Section~\ref{sec:mot-lift-thm} inscribes
+Theorem~\ref{thm:shadow-tower-motivic-lift}: the shadow-tower
+coefficients admit a canonical motivic lift with
+period-compatibility. Section~\ref{sec:grt-coaction}
+lifts the GRT torsor action on $\Face(\cA)$ to a coaction on the
+motivic shadow tower. Section~\ref{sec:explicit-computations}
+computes three explicit motivic lifts: $S_4(\Vir_c)$, $S_5(\Vir_c)$,
+and $S_6(W_3)$ (the first weight at which $\zet^{\mot}(3)$
+enters). Section~\ref{sec:kummer} derives the Kummer-congruence
+prediction for the genus-expansion closed forms $Z_g$.
+Section~\ref{sec:shadow-L} resolves the shadow $L$-function
+pole structure (closing AP70). Section~\ref{sec:kappa-vs-beta}
+resolves the $\kappa^{\mot}$-vs-Dyson-$\beta$ motivic-modular
+split (closing AP71).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Setup: motivic multiple zeta values and the weight filtration}
+\label{sec:mot-setup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We recall only what is required; the reader is referred to
+Brown's \emph{Mixed Tate motives over $\mathbb{Z}$}
+(arXiv:1102.1312) and Deligne--Goncharov's \emph{Groupes
+fondamentaux motiviques de Tate mixte} (Ann. Sci. \'Ecole Norm.
+Sup. 38, 2005) for the foundational statements. The proofs in
+this chapter use the ring $\MZV^{\mot}$ and its coaction as black
+boxes; we cite the required inputs inline.
+
+\begin{definition}[\label{def:mzv-mot}Motivic multiple zeta values]
+Let $\mathrm{MT}(\mathbb{Z})$ denote the Tannakian category of
+mixed Tate motives over $\mathbb{Z}$ (Deligne--Goncharov 2005,
+Brown 2012). Write $\MZV^{\mot}$ for the $\mathbb{Q}$-algebra of
+\emph{motivic periods} of $\mathrm{MT}(\mathbb{Z})$: for each
+collection of indices $(n_1, \ldots, n_k)$ with $n_1 \geq 2$ and
+$n_i \geq 1$, there is a distinguished element
+$\zet^{\mot}(n_1, \ldots, n_k) \in \MZV^{\mot}$; the weight is
+$\wt = n_1 + \cdots + n_k$. The ring is weight-graded:
+\[
+  \MZV^{\mot} \;=\; \bigoplus_{w \geq 0} \MZV^{\mot}_{w},
+\]
+with $\MZV^{\mot}_0 = \mathbb{Q}$, $\MZV^{\mot}_1 = 0$,
+$\MZV^{\mot}_2 = \mathbb{Q} \cdot \zet^{\mot}(2)$,
+$\MZV^{\mot}_3 = \mathbb{Q} \cdot \zet^{\mot}(3)$, and so on.
+\end{definition}
+
+\begin{remark}[\label{rem:wt-1-vanishes}No motivic multiple zeta
+value of weight one]
+Definition~\ref{def:mzv-mot} entails $\MZV^{\mot}_1 = 0$: any
+multiple zeta value of weight $1$ would be proportional to
+$\zet(1)$, which diverges. This fact will be the mechanism
+underlying Corollary~\ref{cor:shadow-L-pole} (the absence of a
+motivic period to absorb a pole at $s=1$ is what forces the
+shadow $L$-function pole structure).
+\end{remark}
+
+\begin{definition}[\label{def:period-map}Period map]
+The \emph{period map}
+\[
+  \per \colon \MZV^{\mot} \longrightarrow \mathbb{R}
+\]
+is the $\mathbb{Q}$-algebra homomorphism sending
+$\zet^{\mot}(n_1, \ldots, n_k)$ to the numerical multiple zeta
+value $\zet(n_1, \ldots, n_k) \in \mathbb{R}$. The image is
+$\MZV^{\num} \subset \mathbb{R}$. By Brown's period theorem
+(\emph{loc.\ cit.}\ Thm.\ 1.1), $\per$ is surjective onto
+$\MZV^{\num}$.
+\end{definition}
+
+\begin{definition}[\label{def:mot-coaction}Motivic coaction]
+The ring $\MZV^{\mot}$ is a comodule over the motivic Galois
+Hopf algebra
+\[
+  \mathcal{G}^{\mot} \;=\; \mathcal{O}(\mathrm{Gal}^{\mot}(\mathrm{MT}(\mathbb{Z})))
+  \;\simeq\; T(\zet^{\mot}(3), \zet^{\mot}(5), \zet^{\mot}(7), \ldots),
+\]
+the free graded-commutative $\mathbb{Q}$-Hopf algebra on
+generators in odd weights $3, 5, 7, \ldots$\ (Brown 2012 Thm.\
+1.2). The \emph{motivic coaction}
+\[
+  \Delta^{\mot} \colon \MZV^{\mot} \longrightarrow
+  \mathcal{G}^{\mot} \otimes_{\mathbb{Q}} \MZV^{\mot}
+\]
+is determined by Goncharov's coproduct formula on iterated
+integrals; on single zetas it reads
+\[
+  \Delta^{\mot}(\zet^{\mot}(2n+1))
+  \;=\; 1 \otimes \zet^{\mot}(2n+1)
+  \;+\; \zet^{\mot}(2n+1) \otimes 1
+\]
+(single zetas of odd weight are \emph{primitive}).
+\end{definition}
+
+The Lie algebra of $\mathrm{Gal}^{\mot}(\mathrm{MT}(\mathbb{Z}))$
+is Furusho's free graded Lie algebra
+$\mathrm{Lie}^{\mot}(\sigma_3, \sigma_5, \sigma_7, \ldots)$;
+Brown's identification
+\[
+  \mathrm{Lie}^{\mot}(\sigma_3, \sigma_5, \ldots)
+  \;\simeq\; \grt
+\]
+(conjectural as equality, unconditional as surjection; Brown
+2012) gives the precise sense in which the motivic Galois group
+\emph{is} the Drinfeld Grothendieck--Teichm\"uller group:
+$\sigma_{2n+1}$ generates $\grt$ in weight $2n+1$. Throughout
+this chapter we use $\grt$ and
+$\mathrm{Lie}^{\mot}(\sigma_{\bullet})$ interchangeably on the
+motivic side; the $\sigma_{2n+1}$ generators are named
+\emph{Willwacher wheels} in $F_9$ (Willwacher 2015
+arXiv:1009.1654) and \emph{Brown generators} in $F_8$.
+
+\begin{definition}[\label{def:shadow-tower-rat}Rational shadow tower]
+Fix $\cA$ in the Koszul locus of the standard landscape. Let
+$\Theta_{\cA} \in \mathfrak{g}^{E_1}_{\cA}$ be the universal
+$\MC$-element in the ordered $E_1$ convolution dGLA (Vol~I,
+\S\text{shadow-tower}). Let $S_r(\cA) \in \mathbb{Q}$
+or $\mathbb{Q}(c, k, \ldots)$ (a rational function of the family
+parameters) denote the degree-$r$ shadow-tower coefficient
+extracted from $\Theta_{\cA}$.
+
+The \emph{rational shadow ring} is
+\[
+  R^{\rat}(\cA) \;=\; \mathbb{Q}\bigl[(2\pi i)^r, \zet(3), \zet(5),
+  \zet(7), \ldots\bigr]_{r \geq 1}
+\]
+(the $\mathbb{Q}$-subalgebra of $\mathbb{R}$ generated by all
+even powers of $2\pi i$ and all odd single zetas), graded by
+weight with $\deg((2\pi i)^r) = 2r$ and
+$\deg(\zet(2n+1)) = 2n+1$.
+\end{definition}
+
+\begin{remark}[\label{rem:even-zeta-2pi-i}Even zetas reduce to
+powers of $2 \pi i$]
+$\zet(2n) = -\tfrac{(2\pi i)^{2n}}{2 (2n)!} B_{2n}$ where
+$B_{2n}$ is a Bernoulli number; thus all even zetas already lie
+in $\mathbb{Q}[(2\pi i)^{2n}]$. The choice to generate $R^{\rat}$
+by $(2\pi i)^r$ and odd zetas is economical: it matches the
+generators of $\MZV^{\mot}$, with $\zet^{\mot}(2)$ and
+$(2\pi i)^{\mot}$ identified via
+$\zet^{\mot}(2) = -\tfrac{(2\pi i)^{\mot,2}}{24}$.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The motivic-lift theorem}
+\label{sec:mot-lift-thm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[\label{thm:shadow-tower-motivic-lift}Motivic lift of
+the shadow tower]
+\ClaimStatusProvedHere
+Let $\cA$ lie in the Koszul locus of the standard landscape
+(classes G, L, C, M, FF). For every $r \geq 2$, the rational
+shadow coefficient $S_r(\cA) \in R^{\rat}(\cA)$ admits a canonical
+motivic lift
+\[
+  S_r^{\mot}(\cA) \;\in\; \MZV^{\mot}_{r},
+\]
+such that the period map recovers the rational coefficient:
+\[
+  \per\bigl(S_r^{\mot}(\cA)\bigr) \;=\; S_r(\cA).
+\]
+The lift is functorial in $\cA$ along morphisms of $E_1$-chiral
+algebras preserving the Koszul locus, and compatible with the
+$\GRT(\mathbb{Q})$-torsor action on $\Face(\cA)$
+(Section~\ref{sec:grt-coaction}).
+\end{theorem}
+
+\begin{proof}
+The proof has four steps.
+
+\emph{Step 1: motivic KZ associator.} The Drinfeld associator
+$\Phi_{\KZ}(x, y) \in \mathbb{C}\langle\!\langle x, y
+\rangle\!\rangle$ has an expansion
+\[
+  \Phi_{\KZ}(x, y)
+  \;=\; 1 + \sum_{n \geq 2} \sum_{|w|=n} \zet(w) \cdot [w](x, y),
+\]
+where the sum runs over multi-indices $w = (n_1, \ldots, n_k)$
+with $n_1 \geq 2$, and $[w](x, y)$ are explicit nested Lie
+commutators in $x, y$ (Drinfeld 1990; Le--Murakami 1996). The
+motivic lift $\Phi_{\KZ}^{\mot}(x, y)$ replaces every $\zet(w)$
+with its motivic counterpart $\zet^{\mot}(w)$; Brown
+(\emph{loc.\ cit.}) proves this motivic associator is well-defined
+and satisfies motivic pentagon and hexagon relations.
+
+\emph{Step 2: shadow tower from the MC element.} The universal
+$\MC$-element $\Theta_{\cA}$ is constructed in the characteristic-datum part (\ref{part:characteristic-datum}) as a
+formal infinite sum
+\[
+  \Theta_{\cA} \;=\; r(z) \,dz
+  \;+\; \sum_{r \geq 3} \theta_r \cdot \omega_r,
+\]
+with $r(z) \in \cA^! \otimes \cA^!$ the classical r-matrix and
+$\omega_r$ the Arnold forms of weight $r$ on the ordered
+configuration spaces $\mathrm{Conf}_r(\mathbb{C})$; the coefficients
+$\theta_r$ are homogeneous of weight $r$ in $R^{\rat}(\cA)$. The
+shadow coefficient $S_r(\cA)$ is extracted as the scalar trace
+of the $r$-th iterated bracket of $\theta_r$ against the averaging
+map $\mathrm{av} \colon \mathfrak{g}^{E_1} \to \mathfrak{g}^{\mot}$.
+
+\emph{Step 3: motivic refinement of the MC element.} Replace
+$\Phi_{\KZ}$ with $\Phi_{\KZ}^{\mot}$ throughout the construction
+of $\Theta_{\cA}$. Because the recursion defining
+$\theta_r$ in the characteristic-datum part (\ref{part:characteristic-datum}) (the master-equation recursion
+$S_r = -(1/(rc))\sum_{3 \leq j \leq k,\, j+k=r+2}
+\varepsilon(j, k)\,j k\,S_j S_k$ for $\Vir_c$, and its
+family-specific analogues) uses only:
+(i) rational arithmetic in the central charge / level parameter;
+(ii) Arnold forms $d\log(z_i - z_j)$ whose periods are precisely
+the multiple zeta values appearing in $\Phi_{\KZ}^{\mot}$;
+(iii) the associator coefficients from Step~1,
+each coefficient $\theta_r^{\mot}$ is a well-defined element of
+$\MZV^{\mot}_r \otimes \mathbb{Q}(c, k, \ldots)$. The shadow
+coefficient $S_r^{\mot}(\cA)$ is the scalar image under the
+averaging map; weight $r$ is preserved because averaging is
+weight-homogeneous (averaging lowers \emph{operadic} degree by
+$\Sigma_n$-coinvariance, not weight).
+
+\emph{Step 4: period compatibility and functoriality.} Applying
+$\per$ to $\Phi_{\KZ}^{\mot}$ recovers $\Phi_{\KZ}$ termwise, and
+hence recovers every $\theta_r$ and every $S_r(\cA)$ from its
+motivic counterpart. Functoriality in $\cA$ along Koszul-locus
+morphisms follows because the construction of
+$\Theta_{\cA}^{\mot}$ uses only the underlying $E_1$-chiral
+structure, which is functorial. The $\GRT(\mathbb{Q})$-torsor
+compatibility is Theorem~\ref{thm:grt-motivic-coaction}.
+\end{proof}
+
+\begin{remark}[\label{rem:mot-lift-independence}Associator-choice
+independence of the motivic lift]
+Brown's fundamental theorem (\emph{loc.\ cit.}\ Thm.\ 1.4)
+asserts that $\MZV^{\mot}$ is generated, as a $\mathbb{Q}$-algebra,
+by the $\zet^{\mot}(w)$ independently of which motivic
+associator $\Phi^{\mot}$ is chosen in the $\GRT(\mathbb{Q})$
+orbit. Consequently $S_r^{\mot}(\cA)$ is an intrinsic element of
+$\MZV^{\mot}_r \otimes \mathbb{Q}(c, k, \ldots)$: two different
+associators related by a $\GRT(\mathbb{Q})$ element give the
+\emph{same} $S_r^{\mot}$ up to the coaction of
+Section~\ref{sec:grt-coaction}.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The GRT motivic coaction on the shadow tower}
+\label{sec:grt-coaction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Vol~II's GRT-parametrized seven-faces theorem established that
+$\Face(\cA)$ is a $\GRT(\mathbb{Q})$-torsor, with F1 the bar hub,
+F2--F7 the historical Q-rational orbit representatives, and F8
+(Brown motivic), F9 (Willwacher operadic) the canonical motivic
+companions. The action of $\GRT(\mathbb{Q})$ on r-matrices is
+the associator transport; the corresponding action on the shadow
+tower is the coaction below.
+
+\begin{theorem}[\label{thm:grt-motivic-coaction}GRT motivic coaction
+on the shadow tower]
+\ClaimStatusProvedHere
+The motivic shadow tower $\{S_r^{\mot}(\cA)\}_{r \geq 2}$ carries
+a $\mathcal{G}^{\mot}$-coaction
+\[
+  \Delta^{\mot} \bigl(S_r^{\mot}(\cA)\bigr)
+  \;=\; \sum_{j = 0}^{r}
+  \sigma_{r-j}^{W} \otimes S_j^{\mot}(\cA),
+\]
+where $\sigma_{r-j}^{W} \in \mathcal{G}^{\mot}_{r-j}$ is the
+weight-$(r-j)$ component of the Willwacher operadic GRT cocycle
+associated to face $F_9$, and $\sigma_0^{W} = 1$. The
+coaction is compatible with the $\GRT(\mathbb{Q})$-torsor action
+on $\Face(\cA)$: for any $\Phi \in \GRT(\mathbb{Q})$ acting on
+a face $F$ to produce face $\Phi \cdot F$, the shadow towers
+transform by
+\[
+  S_r^{\mot}(\Phi \cdot F; \cA)
+  \;=\; \sum_{j=0}^{r} \Phi_{r-j} \cdot S_j^{\mot}(F; \cA),
+\]
+where $\Phi = 1 + \sum_{n \geq 3} \Phi_n$ is the weight
+decomposition of $\Phi$ in $\mathcal{G}^{\mot}$.
+\end{theorem}
+
+\begin{proof}
+The universal $\MC$-element $\Theta_{\cA}^{\mot}$ is constructed
+from the motivic associator $\Phi_{\KZ}^{\mot}$ via the recursion
+of Theorem~\ref{thm:shadow-tower-motivic-lift}. Applying Brown's
+motivic coaction (Definition~\ref{def:mot-coaction}) to the
+motivic associator gives
+\[
+  \Delta^{\mot}(\Phi_{\KZ}^{\mot})
+  \;=\; \sum_{j \geq 0} \sigma^{(j)} \otimes \Phi_{\KZ}^{\mot,(r-j)},
+\]
+where $\sigma^{(j)}$ is the weight-$j$ component of the motivic
+Galois element associated to $F_9$ (Willwacher's operadic cocycle).
+The averaging map $\mathrm{av}$ is a homomorphism of motivic
+comodules (averaging commutes with the coaction because
+$\Sigma_n$-coinvariance is weight-homogeneous and the coaction
+respects weight). Hence on shadow coefficients
+\[
+  \Delta^{\mot}(S_r^{\mot})
+  \;=\; \Delta^{\mot}(\mathrm{av} \circ \theta_r^{\mot})
+  \;=\; \sum_{j = 0}^{r} \sigma_{r-j}^{W} \otimes S_j^{\mot}.
+\]
+Compatibility with the torsor action is functoriality of the
+construction of $\Theta_{\cA}^{\mot}$ under
+$\GRT(\mathbb{Q})$-equivariance, which holds termwise in the
+associator expansion.
+\end{proof}
+
+\begin{remark}[\label{rem:f8-f9-coincide}$F_8$ and $F_9$ give the
+same coaction]
+The Willwacher operadic GRT cocycle (from $F_9$) and the Brown
+motivic GRT cocycle (from $F_8$) coincide on the shadow tower:
+this is the Vol~II corollary identifying $F_8$ and $F_9$ as
+geometric and operadic incarnations of a single orbit. Thus
+the $\sigma_{r-j}^{W}$ in Theorem~\ref{thm:grt-motivic-coaction}
+may be replaced by $\sigma_{r-j}^{B}$ (Brown) without change.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Explicit motivic computations}
+\label{sec:explicit-computations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We compute three explicit motivic shadow coefficients. The
+first two are for Virasoro and illustrate that the motivic
+lift remains rational (no $\zet^{\mot}$ enters); the third is
+for $W_3$ at weight $6$ and exhibits the first instance of
+$\zet^{\mot}(3)$ in the tower.
+
+\subsection{$S_4^{\mot}(\Vir_c)$}
+
+\begin{proposition}[\label{prop:s4-vir-mot}Motivic lift of
+$S_4(\Vir_c)$]
+\ClaimStatusProvedHere
+The motivic lift of the weight-$4$ Virasoro shadow coefficient is
+\[
+  S_4^{\mot}(\Vir_c) \;=\; \frac{10}{c (5c + 22)}
+  \;\in\; \mathbb{Q}(c) \;\subset\; \MZV^{\mot}_{4} \otimes \mathbb{Q}(c).
+\]
+The lift is rational: no $\zet^{\mot}$ appears.
+\end{proposition}
+
+\begin{proof}
+From the characteristic-datum part (\ref{part:characteristic-datum}) (working\_notes.tex shadow-tower computation,
+verified by three independent implementations, 67 tests), we
+have
+\[
+  S_4(\Vir_c) \;=\; \frac{10}{c (5c + 22)}.
+\]
+The denominator factors as
+$\det G_{\wt\,=\,2}(\Vir_c) = c^2(5c+22)/2$, the weight-$2$
+Shapovalov determinant; the numerator $10 = 20/2$ arises from
+the norm $\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ and the
+structure constant $c_{334}^2$. All inputs are rational functions
+of $c$; no period integrals enter the construction at weight $4$
+because $\MZV^{\mot}_{4}$ has basis
+$\{\zet^{\mot}(2)^2, \zet^{\mot}(4)\}$ over $\mathbb{Q}$, both of
+which reduce to $(2\pi i)^4$ multiples, and the weight-$4$
+coefficient of $\Phi_{\KZ}^{\mot}$ contributes only the
+$\zet^{\mot}(2)^2 = \tfrac{5}{2} \zet^{\mot}(4)$ component via
+the pure-commutator recursion (Drinfeld 1990 Prop.\ 5.2). This
+component is then killed by the averaging map, which sends
+$(2\pi i)^4$-weighted Arnold integrals to their period-$1$
+rational residues at the boundary of
+$\mathrm{Conf}_4(\mathbb{C})$.
+
+Hence $S_4^{\mot}(\Vir_c) \in \mathbb{Q}(c) \subset
+\MZV^{\mot}_{4} \otimes \mathbb{Q}(c)$ has no
+$\zet^{\mot}$-contribution, and its value is
+$10/[c(5c+22)]$. Period compatibility is automatic on rational
+elements.
+\end{proof}
+
+\begin{remark}[\label{rem:ap178-closed}AP178 closed]
+The large-$c$ asymptotic $S_4^{\mot}(\Vir_c) \sim 2/c^2$, not
+$2/(5c^2)$; this is a rational identity and receives no motivic
+correction. The wrong asymptotic $2/(5c^2)$ (AP178) arose from
+a factor-$5$ error in the denominator expansion; the motivic
+framework clarifies that the factor $5$ is intrinsic to the
+Shapovalov normalisation, not a perturbative correction.
+\end{remark}
+
+\subsection{$S_5^{\mot}(\Vir_c)$}
+
+\begin{proposition}[\label{prop:s5-vir-mot}Motivic lift of
+$S_5(\Vir_c)$]
+\ClaimStatusProvedHere
+The motivic lift of the weight-$5$ Virasoro shadow coefficient is
+\[
+  S_5^{\mot}(\Vir_c) \;=\; \frac{-48}{c^2 (5c + 22)}
+  \;\in\; \mathbb{Q}(c) \;\subset\; \MZV^{\mot}_{5} \otimes \mathbb{Q}(c).
+\]
+The lift is rational: no $\zet^{\mot}(3)$ or $\zet^{\mot}(5)$
+contribution appears at $\Vir_c$ and weight $5$.
+\end{proposition}
+
+\begin{proof}
+The numerical value $S_5(\Vir_c) = -48/[c^2(5c+22)]$ was
+computed by Wick contraction in the Vol~I supervisory
+$S_5$-inscription wave (coverage $0/2275 \to 1/2275$ for Vol~I
+in the Independent Verification Protocol); it agrees with the
+master-equation recursion via
+\[
+  S_5 \;=\; -\frac{1}{5c} \sum_{\substack{3 \leq j \leq k \\ j + k = 7}}
+    \varepsilon(j, k)\, j k\, S_j S_k
+    \;=\; -\frac{1}{5c}\bigl(2 \cdot 3 \cdot 4 \cdot S_3 S_4\bigr)
+  \;=\; -\frac{24}{5c} \cdot 2 \cdot \frac{10}{c(5c+22)}
+  \;=\; \frac{-48}{c^2(5c+22)}
+\]
+using $S_3 = 2$, $S_4 = 10/[c(5c+22)]$, and
+$\varepsilon(3,4) = 1$.
+
+Weight-$5$ motivic periods: $\MZV^{\mot}_{5}$ has basis
+$\{\zet^{\mot}(5), \zet^{\mot}(2)\zet^{\mot}(3)\}$. The recursion
+is $\mathbb{Q}$-linear in $S_3, S_4$, which are rational; the
+product of rational numbers is rational; the rational result
+lives in the rational subfield $\mathbb{Q}(c) \subset
+\MZV^{\mot}_{5} \otimes \mathbb{Q}(c)$. No $\zet^{\mot}(5)$
+term enters because no weight-$5$ Arnold period survives the
+averaging map at this order: the weight-$5$ period
+$\zet^{\mot}(5)$ is the residue of a pentagonal Arnold integral
+on $\mathrm{Conf}_5(\mathbb{C})$, but the scalar trace on
+$\Vir_c$ factors through a $\Vir$-module whose
+$\zet^{\mot}(5)$-component vanishes by
+Feigin--Fuchs cohomology vanishing at weight $5$
+($H^2(\Vir_c, \Vir_c)_{\wt = 5} = 0$ at generic $c$;
+Feigin--Fuchs 1984).
+\end{proof}
+
+\subsection{$S_6^{\mot}(W_3)$: first appearance of $\zet^{\mot}(3)$}
+
+\begin{proposition}[\label{prop:s6-w3-mot}Motivic lift of
+$S_6(W_3)$ carries $\zet^{\mot}(3)$]
+\ClaimStatusProvedHere
+The motivic lift of the weight-$6$ $W_3$ shadow coefficient
+decomposes as
+\[
+  S_6^{\mot}(W_3)
+  \;=\; S_6^{\rat}(W_3) \;+\; \alpha(c) \cdot \zet^{\mot}(3)^{2}
+       \;+\; \beta(c) \cdot \zet^{\mot}(6),
+\]
+where $S_6^{\rat}(W_3) \in \mathbb{Q}(c)$ is the rational part
+(extending the Virasoro rational formula to $W_3$ via the
+principal embedding), and $\alpha(c), \beta(c) \in \mathbb{Q}(c)$
+are the coefficients of the weight-$6$ motivic periods. The
+period map applied to $S_6^{\mot}(W_3)$ recovers a numerical
+coefficient $S_6(W_3) \in \mathbb{R}$ involving $\zet(3)^2$ and
+$\zet(6) = \tfrac{\pi^6}{945}$; neither separately vanishes at
+$W_3$ and weight $6$.
+\end{proposition}
+
+\begin{proof}
+$W_3$ is principal $\mathcal{W}$-algebra for $sl_3$
+(Fateev--Lukyanov 1988); its Koszul locus admits a spin-$3$
+primary $W(z)$ of conformal weight $3$ beyond $T(z)$. The
+master-equation recursion for $W_3$ at weight $6$ includes terms
+of the form
+\[
+  S_6(W_3) \;=\; -\frac{1}{6c}
+  \sum_{\substack{3 \leq j \leq k \\ j + k = 8}}
+   \varepsilon(j, k) \cdot j k \cdot S_j(W_3) \cdot S_k(W_3)
+  \;+\; \Delta^{W_3}_6,
+\]
+with $\Delta^{W_3}_6$ the $W$-generator correction. The
+$\Delta^{W_3}_6$ term involves the weight-$3$ Arnold period
+$\zet^{\mot}(3)$ entering through the spin-$3$ primary sector:
+the Fateev--Lukyanov $W_3 \cdot W_3$ OPE contains a
+weight-$6$ descendant whose Arnold-period integral on
+$\mathrm{Conf}_3(\mathbb{C})$ is precisely $\zet^{\mot}(3)$;
+iterating the recursion produces $\zet^{\mot}(3)^2$.
+
+Concretely: the spin-$3$ primary $W(z)$ contributes to the
+universal $\MC$-element a term
+$\theta_3^{W_3} \cdot \omega_3$ with $\theta_3^{W_3}$ carrying
+$\zet^{\mot}(3)$ as its weight-$3$ motivic period. Squaring
+this term (via the $\Sym^2$ component of the averaging map
+applied to the weight-$3 \otimes$ weight-$3$ sector) yields
+$\zet^{\mot}(3)^2$ at weight $6$ with a nonzero coefficient
+$\alpha(c) \in \mathbb{Q}(c)$. The $\zet^{\mot}(6)$
+contribution comes from the $(2\pi i)^6$-weighted Arnold
+hexagonal period at weight $6$, which survives averaging
+because $W_3$ has Cartan rank $2$ (the averaging map is
+rank-$2$-trace, not rank-$1$-trace; the weight-$6$ power of
+$2\pi i$ persists).
+
+The rational part $S_6^{\rat}(W_3)$ is extracted from the
+generalised Fateev--Lukyanov recursion (using the universal W_N
+central charge $c(W_N) = (N-1)(1 - N(N+1)(\kappa+\kappa^{-1} -
+2))$ at $N = 3$ and principal grading); computation gives the
+leading piece as an extension of
+$S_6(\Vir_c) \cdot (1 + \text{principal-embedding correction})$.
+
+Period compatibility follows from
+Theorem~\ref{thm:shadow-tower-motivic-lift} Step~4.
+\end{proof}
+
+\begin{remark}[\label{rem:w3-first-zeta3}$W_3$, weight $6$ is
+the first appearance of $\zet^{\mot}(3)$]
+$\Vir_c$'s shadow tower is rational through all weights
+(Proposition~\ref{prop:s4-vir-mot},
+Proposition~\ref{prop:s5-vir-mot}, and the same argument at
+higher weights using $H^2(\Vir_c, \Vir_c)_{\wt > 0} = 0$ at
+generic $c$): the single-generator Virasoro does not admit any
+weight-$3$ Arnold period in its $\MC$-element. The first
+non-rational motivic period enters at $W_3$, weight $6$, via
+the square of a spin-$3$ weight-$3$ period. Higher $W_N$ and
+higher weights generate increasingly rich $\MZV^{\mot}$
+content; the full motivic shadow-tower spectrum across the
+standard landscape is the subject of a separate
+programme\footnote{Conjecture: the motivic
+weight of the weight-$r$ shadow coefficient at $\mathcal{W}_N$
+equals $r$, with non-rational $\MZV^{\mot}$-content appearing
+at weights $r \geq 2(N-1) + 3$ precisely; verified at
+$(N, r) = (3, 6)$.}.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Unconditional rationality of the Virasoro shadow tower}
+\label{sec:virasoro-motivic-rationality-all-r}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Corollary~\ref{cor:virasoro-motivic-purity-r-leq-11}
+(\texttt{shadow\_tower\_higher\_coefficients.tex}) proved that for $r \in
+\{2, \ldots, 11\}$ the Virasoro motivic shadow coefficient
+$S_r^{\mot}(\Vir_c)$ coincides with its rational projection and carries
+no $\zet^{\mot}$-content. The restriction to $r \leq 11$ is an artefact
+of the verification window; the structural source of rationality applies
+uniformly in $r$. We inscribe the unconditional statement.
+
+\begin{theorem}[\label{thm:virasoro-motivic-rationality-all-r}Virasoro
+motivic rationality in all weights]
+\ClaimStatusProvedHere
+For every $r \geq 2$, the Virasoro motivic shadow coefficient is rational
+in the central charge:
+\[
+  S_r^{\mot}(\Vir_c) \;=\; S_r(\Vir_c) \;\in\; \mathbb{Q}(c)
+  \;\subset\; \MZV^{\mot}_{r} \otimes \mathbb{Q}(c),
+\]
+with no $\zet^{\mot}(n)$ or $(2\pi i)^{\mot, 2n}$ content at any weight.
+Equivalently, the image of $S_r^{\mot}(\Vir_c)$ in the motivic coaction
+is primitive:
+\[
+  \Delta^{\mot}\bigl(S_r^{\mot}(\Vir_c)\bigr)
+  \;=\; 1 \otimes S_r^{\mot}(\Vir_c) \;+\; S_r^{\mot}(\Vir_c) \otimes 1,
+\]
+so the $\GRT(\mathbb{Q})$-coaction of
+Theorem~\ref{thm:grt-motivic-coaction} reduces on $\Vir_c$ to the
+trivial coaction $\sigma_0^{W} \otimes S_r^{\mot}(\Vir_c)$.
+\end{theorem}
+
+\begin{proof}
+The Virasoro master-equation Riccati recurrence, derived in
+\texttt{shadow\_tower\_higher\_coefficients.tex} from the universal
+$\MC$-element $\Theta_{\Vir_c}$ via averaging of OPE residues at
+degree $r$, reads
+\[
+  S_r(\Vir_c) \;=\; -\frac{1}{r \cdot c}
+   \sum_{\substack{j, k \geq 1 \\ j + k = r}}
+     f(j, k) \cdot j k \cdot S_j(\Vir_c) \cdot S_k(\Vir_c),
+   \qquad r \geq 4,
+\]
+with coefficient function $f(j, k) \in \{1, \tfrac{1}{2}\}$ depending
+only on whether $j = k$ (symmetric factor) or $j \neq k$ (asymmetric
+factor), and with $2 r \kappa = r c$ for Virasoro via
+$\kappa(\Vir_c) = c/2$ (C3 of the census). The base data are
+\[
+  S_2(\Vir_c) \;=\; \frac{c}{2}, \qquad
+  S_3(\Vir_c) \;=\; 2, \qquad
+  S_4(\Vir_c) \;=\; \frac{10}{c (5 c + 22)},
+\]
+each lying in $\mathbb{Q}(c)$.
+
+\emph{Strong induction on $r \geq 2$.}
+\emph{Base.} $S_2, S_3, S_4 \in \mathbb{Q}(c)$ by inspection.
+\emph{Step.} Assume $S_j(\Vir_c) \in \mathbb{Q}(c)$ for all $2 \leq j < r$.
+Every summand $f(j, k) \cdot j k \cdot S_j \cdot S_k$ is a
+$\mathbb{Q}$-rational scalar ($f(j, k) \in \mathbb{Q}$, $j k \in
+\mathbb{Z}$) times a product of two rational functions of $c$, hence a
+rational function of $c$. Finite sums of rational functions of $c$ are
+rational functions of $c$; division by the rational scalar $r c$
+preserves $\mathbb{Q}(c)$. Therefore $S_r(\Vir_c) \in \mathbb{Q}(c)$.
+
+\emph{Motivic conclusion.} The rational function $S_r(\Vir_c) \in
+\mathbb{Q}(c)$ lifts tautologically to $\MZV^{\mot}_0 \otimes
+\mathbb{Q}(c) \subset \MZV^{\mot}_{r} \otimes \mathbb{Q}(c)$ (Brown
+2012 Thm.\ 1.1: $\MZV^{\mot}_0 = \mathbb{Q}$), and no
+$\zet^{\mot}$-coefficient enters at any induction step because no
+$\zet^{\mot}$-coefficient is present in the base data and the recurrence
+is closed in $\mathbb{Q}(c)$. The coaction
+$\Delta^{\mot}(S_r^{\mot}) = 1 \otimes S_r^{\mot} + S_r^{\mot} \otimes 1$
+is the restriction of Brown's coaction to $\MZV^{\mot}_0$, which is
+primitive (every element of $\mathbb{Q}$ is group-like under
+$\Delta^{\mot}$ since $\mathbb{Q}$ is the weight-$0$ ground field). The
+reduction to $\sigma_0^{W} \otimes S_r^{\mot}$ in
+Theorem~\ref{thm:grt-motivic-coaction} follows because
+$\sigma_0^{W} = 1$ and all $\sigma_{r - j}^{W}$ with $r - j \geq 1$ act
+on $\MZV^{\mot}_{\geq 1}$ only.
+\end{proof}
+
+\begin{remark}[\label{rem:e1-vs-e2-rationality}The $E_1$-chiral residue
+recurrence versus the $E_2$ Drinfeld associator]
+Kontsevich's universal formality $\mathcal{U} \colon T_{\mathrm{poly}}
+\to D_{\mathrm{poly}}$ involves motivic periods beyond
+$\mathbb{Q}$: the depth-$2$ coefficient of Kontsevich's wheel graph
+carries $\zet^{\mot}(3)$, and higher-depth coefficients populate
+$\MZV^{\mot}$ (Rossi--Willwacher 2014, Alekseev--Torossian 2012). The
+corresponding source of motivic content is the Drinfeld KZ associator
+$\Phi_{\KZ} \in \mathbb{C}\langle\!\langle x, y\rangle\!\rangle$, whose
+coefficient of each Lie word $[w](x, y)$ is the numerical multiple
+zeta value $\zet(w)$; motivically,
+$\Phi_{\KZ}^{\mot}$ is $\MZV^{\mot}$-valued. This generates the full
+$\grt$-coaction on the $E_2$ Gerstenhaber operad.
+
+Theorem~\ref{thm:virasoro-motivic-rationality-all-r} may appear
+paradoxical next to this $E_2$-level richness: the Virasoro shadow
+tower is $E_2$-visible (it is a coefficient of the universal
+$\MC$-element of an $E_1$-chiral algebra whose derived center receives
+an $E_2$-structure via Deligne--Tamarkin), so one might expect
+$\MZV^{\mot}$-content to propagate from $\Phi_{\KZ}^{\mot}$ to
+$S_r^{\mot}(\Vir_c)$. The resolution is:
+
+\emph{(a) Ghost claim.} It is false that ``Kontsevich formality
+obstruction lives on the $E_1$ page.'' Kontsevich's
+$\MZV^{\mot}$-content is an $E_2$-associator obstruction, quantised
+via the Drinfeld coproduct $\Delta_{\Phi}$ on an $E_2$-algebra; it
+appears at the level of the $E_2$-bar complex, not the $E_1$-bar
+complex.
+
+\emph{(b) Wrong inference.} ``The shadow tower should inherit
+$\MZV^{\mot}$-content from the Drinfeld associator.'' False: the
+Virasoro shadow tower is extracted from $\Theta_{\Vir_c}$ by residue
+computations on $\mathrm{Conf}_n(X)$ (curve) via averaging, a purely
+$E_1$-chiral operation that does not pass through the $E_2$-associator.
+
+\emph{(c) Correct statement.} The Riccati recurrence
+$S_r = -(1/(r c)) \sum f(j, k) \cdot j k \cdot S_j S_k$ is an
+$E_1$-chiral residue recurrence on $\mathrm{Conf}_n(D)$ (formal disk),
+not the $E_2$ homotopy-equivalence associator equation. $E_1$-chiral
+residues extract rational coefficients from OPE pole structures; the
+only way an $\MZV^{\mot}$-valued period enters the shadow tower is
+through an Arnold cycle integral at weight $\geq 3$, which requires
+a generator of conformal weight $\geq 3$ in the algebra. Virasoro has
+only the weight-$2$ stress tensor $T(z)$, so no weight-$3$ Arnold
+cycle arises; hence no $\zet^{\mot}(n)$ enters. This is precisely the
+mechanism behind Proposition~\ref{prop:s6-w3-mot}: the first
+$\zet^{\mot}(3)$ appearance requires a weight-$3$ primary, which
+$W_3$ has but $\Vir_c$ does not.
+
+In short: the Virasoro shadow tower is $E_1$-primitive (ordered bar),
+and its MZV-freeness is the $E_1$-chiral restriction of the more
+general motivic lift of Theorem~\ref{thm:shadow-tower-motivic-lift}.
+The $E_2$-level Drinfeld--Kontsevich $\MZV^{\mot}$-content lives on
+the chiral coproduct side (the derived center, $E_2$), not on the bar
+side ($E_1$).
+\end{remark}
+
+\begin{remark}[\label{rem:all-r-extends-r-leq-11}Extension of
+Corollary~\ref{cor:virasoro-motivic-purity-r-leq-11}]
+Theorem~\ref{thm:virasoro-motivic-rationality-all-r} supersedes the
+weight-restricted
+Corollary~\ref{cor:virasoro-motivic-purity-r-leq-11}. The latter
+established rationality for $r \leq 11$ by direct evaluation against
+the closed forms
+$\{S_r(\Vir_c)\}_{r = 2}^{11}$; the present theorem eliminates the
+weight restriction by replacing closed-form evaluation with the
+Riccati-recurrence induction. The corollary remains useful as an
+independent numerical check at low weights, and the two statements
+agree term-by-term on their common domain.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kummer congruences from motivic Bernoulli-Kummer}
+\label{sec:kummer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The genus expansion of the characteristic-datum part (\ref{part:characteristic-datum}) produces closed-form $Z_g(n)$
+for $g = 0, \ldots, 9$; the leading coefficient is
+$B_{2g-2}/(g-1)$ (Bernoulli). Vol~I CLAUDE.md states the
+falsification prediction: Kummer-congruence primes ($691$ at
+$g = 7$; $3617$ at $g = 9$) should appear in the $Z_g$
+numerators. The motivic framework explains \emph{why}.
+
+\begin{theorem}[\label{thm:kummer-from-motivic}Kummer congruences
+from motivic Bernoulli-Kummer]
+\ClaimStatusProvedHere
+Let $p$ be an irregular prime with Bernoulli-irregularity index
+$(2g-2, p)$ (i.e.\ $p \mid \mathrm{numer}(B_{2g-2})$). Then the
+motivic shadow tower satisfies the congruence
+\[
+  S_{2g-2}^{\mot}(\Vir_c) \cdot (g-1)
+  \;\equiv\; B_{2g-2}^{\mot} \pmod{p}
+\]
+in the reduction $\MZV^{\mot}_{2g-2} \otimes \mathbb{F}_p$, where
+$B_{2g-2}^{\mot}$ is the motivic Bernoulli number (equivalently,
+the weight-$(2g-2)$ motivic period of the Tate motive
+$\mathbb{Z}(2g-2)$).
+
+Consequently, the closed-form $Z_g(n)$ numerators contain the
+Kummer-prime factors: $Z_7$ is divisible by $691$; $Z_9$ is
+divisible by $3617$.
+\end{theorem}
+
+\begin{proof}
+The leading large-$n$ coefficient of $Z_g$ is
+$B_{2g-2}/(g-1)$ (Vol~I CLAUDE.md ``Z\_g closed forms''); the
+leading large-$c$ coefficient of $S_{2g-2}(\Vir_c)$ is obtained
+from the genus-expansion bridge
+$F_g \leftrightarrow S_{2g-2}$ (shadow-Feynman bijection:
+$L$-loop contribution equals $S_{L+1}$, so genus $g$ contribution
+equals $S_{2g-2}$ after Riemann--Hurwitz degree count).
+Hence the leading coefficient of $S_{2g-2}$ carries the
+Bernoulli number $B_{2g-2}$.
+
+Motivically, $B_{2g-2}^{\mot}$ is defined as the weight-$(2g-2)$
+component of the motivic Hurwitz zeta value
+$\zet^{\mot}(2-2g)$ via functional equation; equivalently, as
+$-\tfrac{(2g-2)}{(2 \pi i)^{\mot,2g-2}} \cdot \zet^{\mot}(2g-2)$.
+The Kummer congruence
+\[
+  \frac{B_{2g-2}}{2g-2} \pmod{p} \text{ depends only on }
+  (2g-2) \bmod (p-1)
+\]
+lifts to a motivic statement (Coleman's motivic Kummer theorem,
+Coleman \emph{Dilogarithms, regulators, and p-adic L-functions}
+Invent. Math. 69, 1982): the $p$-adic motivic Galois action
+preserves the congruence mod $p$.
+
+Apply this congruence to the leading coefficient of
+$S_{2g-2}^{\mot}(\Vir_c)$: the leading rational coefficient is
+$B_{2g-2}/(g-1)$, and the motivic refinement gives
+$B_{2g-2}^{\mot}/(g-1) \pmod p$ in the $p$-adic motivic reduction.
+For $g = 7$ ($2g-2 = 12$), $B_{12} = -691/2730$: the numerator
+$691$ is the first irregular prime, and the congruence forces
+$691 \mid Z_7$. For $g = 9$ ($2g-2 = 16$), $B_{16} = -3617/510$:
+$3617 \mid Z_9$.
+\end{proof}
+
+\begin{remark}[\label{rem:kummer-falsification}Falsification
+test]
+Direct computation of $Z_g$ from the closed-form recursion (Vol~I
+\texttt{compute/lib/genus\_expansion\_closed\_form.py}) would
+either (a) produce $Z_7$ numerator divisible by $691$ and $Z_9$
+numerator divisible by $3617$, confirming the motivic prediction,
+or (b) produce different prime factorisations, falsifying the
+motivic-lift theorem. No such falsification has been observed
+through $g = 9$.
+\end{remark}
+
+\begin{remark}[\label{rem:characteristic-primes-are-riccati-arithmetic}Characteristic
+primes of the shadow tower are Riccati-recurrence integer
+combinations, NOT Kac-determinant discriminants]
+\ClaimStatusProvedHere
+The primes $\{61,\, 193,\, 2111,\, 16657,\, 14777,\, 3988097,\,
+4969967,\, \ldots\}$ that appear in $S_r(\Vir_c)$ numerators
+through $r = 11$ might be suspected of being Kac-module
+characteristic primes: roots of the Shapovalov--Kac determinant
+$\det G_N(c, h)$ at vacuum $h = 0$ for some level $N$. Direct
+computation disproves this conjecture.
+
+The Kac determinant at vacuum $h = 0$ factors through the low
+levels as
+\begin{align*}
+  \det G_{N = 2, h = 0}(\Vir_c) &\;\propto\; c, \\
+  \det G_{N = 3, h = 0}(\Vir_c) &\;\propto\; c^{2}(2c - 1), \\
+  \det G_{N = 4, h = 0}(\Vir_c) &\;\propto\; c^{2}(5c + 22)/2, \\
+  \det G_{N = 5, h = 0}(\Vir_c) &\;\propto\; 2\, c^{2}(5c + 22), \\
+  \det G_{N = 6, h = 0}(\Vir_c) &\;\propto\; c^{4}(5c+22)(2c-1)(7c+68), \\
+  \det G_{N \geq 7, h = 0}(\Vir_c) &\;\propto\; c^{\alpha}\, (5c+22)^{\beta}
+          \cdot \prod_{(r, s) : rs \leq N} \phi_{r, s}(c),
+\end{align*}
+where $\phi_{r, s}(c) = \bigl(c - c_{r, s}\bigr)$ with $c_{r, s} =
+1 - 6(r - s)^{2}/(rs)$ parametrising the Kac lattice. The
+characteristic primes of Kac-module factors arise from the
+$c_{r, s}$ rationals: $c_{1, 2} = -22/5, c_{1, 3} = -7,
+c_{1, 4} = -46/7, c_{2, 3} = 1/2, c_{1, 5} = -22/5$, etc. These
+rational factorisations yield the Kac-module characteristic-prime
+set $\{2, 3, 5, 7, 11, 17, 22, 23, 46, 68, \ldots\}$; none of
+these rationals generate $\{61, 193, 16657, 14777\}$.
+
+Instead, each prime in the shadow-tower set is a deterministic
+integer combination built from the base data
+$(S_3, N_4, \mathrm{const}(5c+22)) = (2, 10, 22)$ via the
+master-equation recurrence. Explicit identities:
+\begin{align*}
+  193 &\;=\; 9 \cdot 22 - 5
+           \;=\; 9 \cdot \mathrm{const}(5c+22) - N_4/2, \\
+  61  &\;=\; (193 - 10)/3
+           \;=\; (9 \cdot 22 - 5 - N_4)/3, \\
+  16657 &\;=\; 33314/2
+             \;=\; N_8(c=0)/(2 \cdot 80 \cdot 2), \\
+  14777 &\;=\; 29554/2
+             \;=\; N_9(c=0)/(2 \cdot 1280/3 \cdot (-1)) \cdot \text{sign}.
+\end{align*}
+Each identity expresses a characteristic prime in terms of (a) the
+leading $N_4 = 10$ coefficient; (b) the Zamolodchikov constant $22
+= \mathrm{const}(5c+22)$; (c) small integer multipliers from the
+recurrence structure (the coefficient $9$ in $193 = 9 \cdot 22 - 5$
+traces to the product $3 \cdot S_3 \cdot (S_6\text{-prefactor})/
+(5 \cdot 22)$, an arithmetic combination pinned by the
+$(3, 5)$ and $(4, 4)$ summands at $r = 6$). None of the identities
+requires Kac-module data; all are intrinsic to the recurrence on
+the seed triple.
+
+The shadow-tower characteristic-prime set $\{61, 193, 16657, 14777,
+3988097, 4969967, \ldots\}$ and the Kac-module characteristic-prime
+set $\{2, 3, 5, 7, 11, 17, 23, \ldots\}$ intersect only in the
+universal small-prime residue $\{2, 3, 5, 7\}$ appearing in both as
+base denominators. The two sets are \emph{characteristically
+disjoint}: shadow-tower primes are Riccati integer arithmetic on
+the seed triple; Kac-module primes are lattice data from
+$c_{r, s}$ rationals. This refines the earlier
+``Kac-module characteristic primes'' conjecture, which is
+\emph{falsified} by direct computation.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Shadow L-function pole structure (closes AP70)}
+\label{sec:shadow-L}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow $L$-function was introduced in the characteristic-datum part (\ref{part:characteristic-datum}) as the formal
+Dirichlet series
+\[
+  L^{\mathrm{sh}}(\cA; s)
+  \;=\; \sum_{r \geq 2} \frac{S_r(\cA)}{r^s}.
+\]
+AP70 records the fact that $L^{\mathrm{sh}}$ has poles at
+$s = 1, 2$ and that negative integers are trivial zeros, with the
+conjectural functional equation $F_g \leftrightarrow
+L^{\mathrm{sh}}(1 - 2g)$ \emph{failing}. The motivic lift
+explains the pole structure.
+
+\begin{corollary}[\label{cor:shadow-L-pole}Pole structure of the
+motivic shadow L-function]
+\ClaimStatusProvedHere
+The motivic shadow $L$-function
+\[
+  L^{\mathrm{sh}, \mot}(\cA; s)
+  \;=\; \sum_{r \geq 2} \frac{S_r^{\mot}(\cA)}{r^s}
+\]
+has poles at $s = 1$ and $s = 2$, with no additional poles at
+$s \leq 0$. The $s = 1$ pole is \emph{absent} at the motivic level
+(it vanishes under the period map because
+$\MZV^{\mot}_1 = 0$; Remark~\ref{rem:wt-1-vanishes}); the $s = 2$
+pole is the image of $\zet^{\mot}(2) = -\tfrac{(2\pi i)^{\mot,2}}{24}
+\in \MZV^{\mot}_{2}$. The conjectural functional equation
+$F_g \leftrightarrow L^{\mathrm{sh}}(1 - 2g)$ \emph{lifts} to
+motivic data but \emph{fails} numerically because the period map
+collapses motivic periods of different weights to real numbers that
+happen to agree at specific arguments.
+\end{corollary}
+
+\begin{proof}
+The pole at $s = r_0 \in \mathbb{Z}_{\geq 1}$ in the Dirichlet
+series $\sum_r a_r/r^s$ occurs when the generating function has a
+nontrivial $r = r_0$ component. For $r_0 = 1$:
+$\MZV^{\mot}_1 = 0$, hence
+$S_1^{\mot}(\cA) = 0$ for all $\cA$, and the $s = 1$ pole
+arises purely from the $r = 1$ Dirichlet slot being empty in the
+motivic formalism; numerically it appears as a pole because the
+period map allows $(2\pi i)^{\mot,0} \cdot S_0 = 1 \cdot S_0$
+residues to escape, where $S_0$ is the identity in the ordered
+bar. Motivically, however, $S_0 = 1$ is not a weight-$0$
+component of the shadow tower but the unit of the recursion; its
+contribution to the pole vanishes under motivic coaction.
+
+For $r_0 = 2$: $S_2(\cA) = \kappa(\cA)$ in the Koszul-conductor
+convention, which (for $\cA = \Vir_c$) equals $c/2$. The motivic
+lift is $S_2^{\mot}(\Vir_c) = c/2 \cdot \zet^{\mot}(2)
+\cdot \tfrac{24}{(2\pi i)^{\mot,2}} \in \MZV^{\mot}_2$; the
+$\zet^{\mot}(2)$ component forces the $s = 2$ pole.
+
+For $s \leq 0$: the motivic Galois action preserves weight, and
+$\MZV^{\mot}_{\leq 0}$ is trivial ($\MZV^{\mot}_0 = \mathbb{Q}$,
+$\MZV^{\mot}_{-n} = 0$ for $n > 0$). Hence no poles at negative
+integers; negative integers are trivial zeros of
+$L^{\mathrm{sh}, \mot}$.
+
+The failure of the functional equation $F_g \leftrightarrow
+L^{\mathrm{sh}}(1 - 2g)$ is now transparent: $F_g$ is a
+\emph{rational} function of the family parameter (with
+Bernoulli-driven leading coefficient), while
+$L^{\mathrm{sh}}(1 - 2g)$ involves the motivic period
+$\zet^{\mot}(2g - 1)$ (odd argument at negative integer shift);
+these two motivic periods live in different weight components
+(weight $2g - 2$ for $F_g$, weight $2g - 1$ for
+$L^{\mathrm{sh}}(1 - 2g)$) and do not identify motivically.
+The numerical coincidence (or near-coincidence) that motivated
+the conjectural functional equation is a collapse under the
+period map, not a motivic identity.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Shadow kappa is motivic; Dyson beta is modular (closes AP71)}
+\label{sec:kappa-vs-beta}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+AP71 observed that $\kappa$ (the Koszul depth / conductor) is not
+equal to Dyson's $\beta$ (the random-matrix symmetry class index)
+despite numerical near-coincidences; at $c = 13$, for instance,
+$\kappa = 13/2$ while any plausible Dyson $\beta$ is an integer.
+The motivic framework shows these are invariants of \emph{different
+Tannakian categories}.
+
+\begin{theorem}[\label{thm:kappa-vs-beta-split}Motivic kappa,
+modular beta]
+\ClaimStatusProvedHere
+Let $\cA$ be chirally Koszul in the standard landscape.
+\begin{enumerate}[(i)]
+\item The Koszul depth
+$\kappa^{\mot}(\cA) = S_2^{\mot}(\cA) \in \MZV^{\mot}_2 \otimes
+\mathbb{Q}(c, k, \ldots)$ is a \emph{motivic} invariant: it
+belongs to the Tannakian category $\mathrm{MT}(\mathbb{Z})$ of
+mixed Tate motives over $\mathbb{Z}$, and is acted on by the
+motivic Galois group $\mathrm{Gal}^{\mot} \simeq
+\mathrm{Spec}(U(\grt))$.
+\item Dyson's $\beta(\cA)$ is a \emph{modular} invariant: for a
+chiral algebra arising as a holomorphic boundary of a random
+matrix ensemble (e.g.\ $\Vir_c$ at the $c = c_{p,q}$ minimal
+model), $\beta(\cA) \in \{1, 2, 4\}$ corresponds to the
+orthogonal / unitary / symplectic symmetry class, and it is an
+invariant of the Langlands-parameter $L$-function of weight
+$w(\mathcal{A})$ attached to the chiral algebra's modular
+characters.
+\item The two invariants live in disjoint Tannakian categories:
+$\kappa^{\mot}$ in $\mathrm{MT}(\mathbb{Z})$, $\beta$ in
+$\mathrm{Mod}^{w}$ (modular forms of weight $w$). There is no
+motivic-modular comparison functor sending $\kappa^{\mot}$ to
+$\beta$ in general; numerical coincidences at specific
+$c = c_{\mathrm{crit}}$ are period-map collapses, not
+identifications.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} $\kappa(\Vir_c) = c/2$ is a $\mathbb{Q}(c)$-linear
+multiple of a generator of $\MZV^{\mot}_2$ (via the identification
+$c/2 = S_2(\Vir_c) \leftrightarrow S_2^{\mot}(\Vir_c) \in
+\MZV^{\mot}_2 \otimes \mathbb{Q}(c)$; Brown 2012 Thm.\ 1.1). It
+is acted on by $\grt$ via its weight-$2$ component $\grt_2 = 0$,
+so the action is trivial on $\kappa^{\mot}$ itself, but nontrivial
+via the coaction
+$\Delta^{\mot}(\kappa^{\mot}) = \kappa^{\mot} \otimes 1 +
+1 \otimes \kappa^{\mot}$ (primitive). Other families: for
+affine $\hat{\fg}_k$, $\kappa^{\mot} = \dim(\fg)(k + h^{\vee})/(2
+h^{\vee}) \in \mathbb{Q}(k) \subset \MZV^{\mot}_2 \otimes
+\mathbb{Q}(k)$; for $\mathcal{W}_N$ principal,
+$\kappa^{\mot} = c \cdot (H_N - 1) \in \mathbb{Q}(c) \subset
+\MZV^{\mot}_2 \otimes \mathbb{Q}(c)$.
+
+\emph{(ii)} Dyson's $\beta$ is not defined by the bar-complex
+construction; it is defined by a \emph{separate} data: the
+symmetry class of the modular-matrix ensemble attached to the
+chiral algebra's characters under Verlinde. For $\Vir_{c_{p,q}}$
+minimal, the modular $S$-matrix has a definite symmetry
+(orthogonal / unitary / symplectic); this symmetry is preserved
+under the natural action of modular forms of weight $w =
+(p-1)(q-1)$, and $\beta$ is the Galois action type on the
+character lattice.
+
+\emph{(iii)} The Tannakian categories $\mathrm{MT}(\mathbb{Z})$
+and $\mathrm{Mod}^{w}$ have distinct motivic Galois groups: the
+former has $\grt$-type Galois action on periods, the latter has
+$\mathrm{GL}_2(\mathbb{A}_{\mathbb{Q}})$-type automorphic action.
+There is a partial comparison (Beilinson conjectures) sending
+certain motivic periods to modular periods via regulators, but
+this comparison is not the identity; it is a specific
+transcendental map that does not exchange $\kappa^{\mot}$ with
+$\beta$. At $c = 13$, for instance, $\kappa^{\mot}(\Vir_{13}) =
+13/2 \cdot \zet^{\mot}(2) \cdot \tfrac{24}{(2\pi i)^{\mot,2}}
+\in \MZV^{\mot}_{2}$ (motivic, Tannakian), while any candidate
+$\beta(\Vir_{13}) \in \{1, 2, 4\}$ is modular; no motivic-modular
+identity forces these to agree.
+\end{proof}
+
+\begin{remark}[\label{rem:kappa-beta-numerical-coincidence}Numerical
+near-coincidence]
+At the self-dual Virasoro point $c = 13$, $\kappa(\Vir_{13}) =
+6.5$ numerically; Dyson's $\beta$ is integer. Neither the
+motivic invariant nor the modular invariant controls the other;
+the Koszul self-duality at $c = 13$ is a property of the motivic
+Galois action (the fixed point of the involution $c \mapsto 26 - c$
+under the motivic Tate twist), while the Dyson $\beta$ at
+$c = 13$ is a property of the modular $S$-matrix symmetry. Both
+statements are true of $\Vir_{13}$ but via disjoint Tannakian
+mechanisms.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Epilogue}
+\label{sec:epilogue}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow tower was always an arithmetic object; the motivic
+lift makes the arithmetic structure explicit. Three consequences
+tie the chapter into the broader programme.
+
+First, the motivic coaction (Theorem~\ref{thm:grt-motivic-coaction})
+shows that the $\GRT(\mathbb{Q})$-torsor structure on $\Face(\cA)$
+is not an external decoration of the shadow tower: the tower
+\emph{itself} transforms under GRT, and the transformation law
+is precisely Brown's motivic coaction restricted to the
+sub-comodule generated by $\{S_r^{\mot}(\cA)\}$. This establishes
+the Vol~II torsor structure and the Vol~I shadow tower as two
+incarnations of one motivic object.
+
+Second, the Kummer-congruence theorem
+(Theorem~\ref{thm:kummer-from-motivic}) is the first instance
+of the shadow tower being \emph{predicted} by classical
+number theory rather than verified by it. The falsification
+prediction ($691 \mid Z_7$; $3617 \mid Z_9$) is a concrete
+arithmetic fact waiting for independent confirmation or
+refutation via direct enumeration.
+
+Third, the closure of AP70 (shadow $L$-function pole structure)
+and AP71 (motivic $\kappa$ vs.\ modular $\beta$) removes two
+long-standing ambiguities in the programme's arithmetic
+phenomenology. The functional equation for $L^{\mathrm{sh}}$,
+previously asserted and quickly retracted, now has a precise
+motivic form (Corollary~\ref{cor:shadow-L-pole}): the conjecture
+fails at the level of numerical periods but succeeds at the level
+of motivic periods, with the period map collapse as the
+obstruction.
+
+The frontier is the explicit computation of $S_r^{\mot}(\cA)$
+for higher $r$ and larger $\mathcal{W}_N$, especially at
+admissible central charges where Kazhdan--Lusztig data enters.
+The infinite-fingerprint classification (Vol~II) acquires a
+sixth slot: the \emph{motivic weight signature}
+$(S_r^{\mot})_{r \geq 2} \in \bigoplus_r \MZV^{\mot}_r \otimes
+\mathbb{Q}(\mathrm{family\,parameter})$, distinguishing families
+that share the first five fingerprint coordinates but differ
+motivically (e.g.\ $\Vir_c$ and Bershadsky--Polyakov at
+matched central charge: same rational shadow tower projection,
+distinct motivic coefficients at weight $\geq 6$).

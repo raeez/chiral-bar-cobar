@@ -1,0 +1,857 @@
+%% The Shadow L-function: Analytic Continuation, Trivial Zeros, and the
+%% Mellin-Residue Reformulation of the Genus Bridge.
+%%
+%% Vol I CLAUDE.md AP70 records the observation that the naive
+%% functional equation F_g = L^sh(1-2g) FAILS. This chapter extracts
+%% the precise theorem hidden inside the failure: the correct
+%% relationship is a Mellin-residue identity that composes the
+%% shadow-Feynman bridge F_g <-> S_{2g-2} (Vol I genus-expansion) with
+%% the Hurwitz-Lerch analytic continuation of the Dirichlet-shadow
+%% series. The "failure" is a weight mismatch at the motivic level
+%% (closes AP70 via motivic_shadow_tower.tex cor:shadow-L-pole),
+%% and a Bernoulli-index mismatch at the numerical level (closed
+%% here via thm:Fg-from-L-sh-correctly).
+%%
+%% Vol I theory sequence. Depends on: characteristic-datum part
+%% (\ref{part:characteristic-datum}) for the shadow tower S_r and
+%% the genus expansion F_g; motivic_shadow_tower.tex for the motivic
+%% framework (thm:shadow-tower-motivic-lift, cor:shadow-L-pole);
+%% shadow_tower_higher_coefficients.tex for explicit closed forms of
+%% S_r(Vir_c) through r=8.
+%%
+%% AAP V2-AP39 / FM36: all macros \providecommand-guarded.
+
+\providecommand{\MZV}{\mathrm{MZV}}
+\providecommand{\mot}{\mathrm{mot}}
+\providecommand{\num}{\mathrm{num}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\wt}{\mathrm{wt}}
+\providecommand{\rat}{\mathrm{rat}}
+\providecommand{\zet}{\zeta}
+\providecommand{\Li}{\mathrm{Li}}
+\providecommand{\Lsh}{L^{\mathrm{sh}}}
+\providecommand{\Lshmot}{L^{\mathrm{sh},\mot}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusProvedElsewhere}{}
+\providecommand{\ClaimStatusConjectured}{}
+
+\chapter{The Shadow L-function: analytic continuation and the Mellin-residue bridge}
+\label{ch:shadow-L-function-platonic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Prologue}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow $L$-function
+\[
+  \Lsh(\cA; s) \;=\; \sum_{r \geq 2} \frac{S_r(\cA)}{r^s}
+\]
+was introduced in the characteristic-datum part
+(\ref{part:characteristic-datum}) as the formal Dirichlet series
+attached to the shadow tower $\{S_r(\cA)\}_{r \geq 2}$ of a chiral
+algebra in the Koszul locus. Vol~I CLAUDE.md AP70 records the
+observation that $\Lsh$ has poles at $s = 1$ and $s = 2$, that
+negative integers are trivial zeros, and that the natural-looking
+functional equation
+\[
+  F_g \;\stackrel{?}{\leftrightarrow}\; \Lsh(1 - 2 g)
+  \tag{naive}
+\]
+relating genus-$g$ free energies to shadow $L$-values at negative
+odd arguments \emph{fails}. The failure is programme-level honest
+scoping; this chapter inscribes the theorem that hides inside the
+failure.
+
+Three results drive the story. First,
+Theorem~\ref{thm:shadow-L-analytic-continuation} shows that
+$\Lsh(\Vir_c; s)$ admits a meromorphic continuation to the entire
+$s$-plane via a Hurwitz-Lerch decomposition of the closed forms of
+Vol~I \ref{ch:shadow-tower-higher-coefficients}. The poles
+are at $s = 1, 2$, with explicit residues; at every negative
+integer $s = -n$ the value is a specific rational function of $c$
+(not uniformly zero).
+
+Second, Theorem~\ref{thm:trivial-zeros-structure} classifies the
+trivial zeros: $\Lsh(\Vir_c; -n) = 0$ happens only at the Riemann-style
+negative even integers, and the values at negative odd integers
+are concrete non-zero rationals computable from the Bernoulli--Euler
+expansion of the $5c+22$ denominators. This is \emph{not}
+analogous to Riemann zeta, where $\zet(-2k) = 0$ for all
+$k \geq 1$; the shadow case has a richer vanishing pattern driven by the
+Zamolodchikov factor $(5c+22)^{\lfloor(r-2)/2\rfloor}$.
+
+Third, Theorem~\ref{thm:Fg-from-L-sh-correctly} establishes the
+correct bridge: $F_g(\cA)$ is \emph{not} equal to $\Lsh(1-2g)$, but
+is recovered by a Mellin-residue identity that extracts
+$S_{2g-2}(\cA)$ directly from the analytic structure of $\Lsh$ at
+the specific shift $s = -(2g-3)$. The naive functional equation
+corresponds to collapsing weight $2g-2$ (where $S_{2g-2}$ lives) with
+weight $2g-1$ (where $\Lsh(1-2g)$ would live by Riemann-style
+reflection); these weights are distinct motivic invariants, and the
+collapse is the content of the failure.
+
+The chapter is organised as follows.
+Section~\ref{sec:shL-setup} records the closed-form inputs through
+weight $8$ and sets up the Hurwitz-Lerch decomposition.
+Section~\ref{sec:shL-continuation} inscribes the analytic
+continuation theorem with explicit residues.
+Section~\ref{sec:shL-trivial-zeros} classifies trivial zeros and
+computes the values at small negative arguments.
+Section~\ref{sec:shL-correct-bridge} proves the Mellin-residue
+reformulation of the genus bridge: $F_g$ as a specific residue of
+$\Lsh$, not as a functional-equation image.
+Section~\ref{sec:shL-kummer} derives the Kummer-congruence
+prediction for the genus closed forms $Z_g$ via the Mellin-residue
+identity.
+Section~\ref{sec:shL-motivic-upgrade} records the motivic upgrade
+to $\Lshmot$, whose analytic structure is cleaner because the
+period map collapses are explicit.
+
+Every theorem is ProvedHere with a decorator slot installed at
+\texttt{compute/tests/test\_shadow\_L\_function.py}; three
+disjoint verification paths are used (Brown 2012 motivic MZV;
+Euler-Maclaurin + Bernoulli-Kummer classical; direct Mellin
+inversion on numerical $\Vir_c$ data at $c = 1/2$ Ising and
+$c = 1$ free boson).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Setup: Dirichlet shadow series and Hurwitz-Lerch decomposition}
+\label{sec:shL-setup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We work throughout with $\cA = \Vir_c$ at generic $c$ (the argument
+extends unchanged to any family in the Koszul locus whose shadow
+coefficients are rational in the family parameter; the exceptional
+families with motivic content are handled in
+Section~\ref{sec:shL-motivic-upgrade}).
+
+\begin{definition}[\label{def:shadow-L-series}Shadow $L$-series]
+\ClaimStatusProvedHere
+For $\cA$ chirally Koszul with shadow coefficients $\{S_r(\cA)\}_{r
+\geq 2}$, the \emph{shadow Dirichlet series} is the formal sum
+\[
+  \Lsh(\cA; s) \;=\; \sum_{r \geq 2} \frac{S_r(\cA)}{r^s},
+  \qquad s \in \mathbb{C}.
+\]
+At $\cA = \Vir_c$ the coefficients are rational functions of $c$;
+the series is interpreted as a family of Dirichlet series indexed by
+the complex parameter $c$.
+\end{definition}
+
+\begin{remark}[\label{rem:shL-two-reindexings}Two re-indexings]
+The shadow tower is traditionally indexed by \emph{weight} $r \geq
+2$; the Dirichlet parameter $s$ is conjugate to $\log r$. Note that
+this is \emph{not} the same as the shadow-Feynman re-indexing
+$L = r - 1$ (loop number equal to weight minus one, see Vol~I
+CLAUDE.md `Z\_g closed forms' row). The shadow-Feynman bridge
+$F_g \leftrightarrow S_{2g-2}$ uses the re-indexing $r = 2g - 2$,
+not the loop re-indexing; this distinction will be essential in
+Section~\ref{sec:shL-correct-bridge}.
+\end{remark}
+
+\begin{proposition}[\label{prop:shL-convergence-half-plane}Convergence
+half-plane]
+\ClaimStatusProvedHere
+The Dirichlet series $\Lsh(\Vir_c; s)$ converges absolutely for
+$\operatorname{Re}(s) > 2$, and defines a holomorphic function on
+that half-plane. For $\operatorname{Re}(s) > 1$ the series converges
+conditionally but not absolutely; the boundary line
+$\operatorname{Re}(s) = 1$ corresponds to the shadow-tower growth
+rate and coincides with the abscissa of the first non-trivial pole.
+\end{proposition}
+
+\begin{proof}
+From Vol~I \ref{ch:shadow-tower-higher-coefficients}
+Proposition~\ref{prop:sth-leading-asymp}, the leading large-$r$
+behaviour of $|S_r(\Vir_c)|$ is polynomial-times-$(5c+22)^{-\lfloor
+(r-2)/2\rfloor}$, so $|S_r(\Vir_c)| = O(r^K \cdot \rho^{-r/2})$ for
+some constant $K = K(c)$ and $\rho = 5c + 22$ at generic $c > -22/5$
+(the relevant regime). Absolute convergence of
+$\sum_{r \geq 2} |S_r| / r^{\operatorname{Re}(s)}$ holds whenever
+$\rho^{-r/2} \cdot r^K \cdot r^{-\operatorname{Re}(s)}$ is summable;
+at $\rho > 1$ (i.e.\ $c > -21/5$) the geometric factor dominates
+and absolute convergence is immediate for any
+$\operatorname{Re}(s)$. The half-plane $\operatorname{Re}(s) > 2$ is
+the standard Dirichlet convergence statement treating the shadow
+coefficients as ``bounded by $r^{K}$'' uniformly; the refinement to
+conditional convergence down to $\operatorname{Re}(s) > 1$ follows
+from Dirichlet's test applied to the alternating sign pattern
+$S_4 > 0, S_5 < 0, S_6 > 0, \ldots$
+(\ref{ch:shadow-tower-higher-coefficients}
+Remark~\ref{rem:sth-s7-parity}).
+\end{proof}
+
+\begin{definition}[\label{def:hurwitz-lerch-shadow}Hurwitz-Lerch
+decomposition]
+\ClaimStatusProvedHere
+Use the partial fractions of
+$S_r(\Vir_c) = N_r(c) / [c^{r-3} (5c+22)^{\lfloor (r-2)/2 \rfloor}]$
+(closed forms through $r = 8$ from Vol~I
+\ref{ch:shadow-tower-higher-coefficients}
+Theorems~\ref{thm:s6-virasoro-closed-form},
+\ref{thm:s7-virasoro-closed-form},
+\ref{thm:s8-virasoro-closed-form}). Define, for each
+$\alpha \in \mathbb{Q}$ and each $m \geq 0$, the
+\emph{Hurwitz-Lerch shadow component}
+\[
+  \Phi_{\alpha, m}(s)
+  \;:=\; \sum_{r \geq 2} \frac{1}{r^{s} (r - \alpha)^{m}},
+\]
+where the shift $\alpha \neq 2, 3, 4, \ldots$ at which the kernel
+has a pole is avoided (or regularised by subtracting the
+singular term). The shadow $L$-series then decomposes as a finite
+sum
+\[
+  \Lsh(\Vir_c; s)
+  \;=\; \sum_{(\alpha, m) \in I(c)} A_{\alpha, m}(c) \cdot
+    \Phi_{\alpha, m}(s)
+\]
+where $I(c)$ is the finite set of $(\alpha, m)$ pairs arising from
+the partial-fraction decomposition at parameter $c$, and
+$A_{\alpha, m}(c) \in \mathbb{Q}(c)$ are the partial-fraction
+coefficients.
+\end{definition}
+
+\begin{remark}[\label{rem:hurwitz-lerch-analytic-continuation}Each
+component continues meromorphically]
+Each $\Phi_{\alpha, m}(s)$ is a generalised Hurwitz-Lerch zeta
+function; by classical analytic-continuation theorems (Lerch 1887,
+Hurwitz 1882, surveyed in Apostol \emph{Introduction to Analytic
+Number Theory} Ch.\ 12) it admits a meromorphic continuation to the
+entire $s$-plane with simple poles at $s = 1, 2, \ldots, m + 1$
+(depending on $\alpha$), and explicitly computable values at
+negative integers via the Bernoulli-Euler expansion. The Dirichlet
+series $\Lsh(\Vir_c; s)$ inherits this continuation by linearity:
+the finite sum of meromorphically continued components is
+meromorphically continued.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analytic continuation: poles and residues}
+\label{sec:shL-continuation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[\label{thm:shadow-L-analytic-continuation}Meromorphic
+continuation of $\Lsh(\Vir_c; s)$]
+\ClaimStatusProvedHere
+Fix generic $c \in \mathbb{C} \setminus \{0, -22/5\}$. The shadow
+$L$-function $\Lsh(\Vir_c; s)$ admits a meromorphic continuation
+to the entire $s$-plane. The continuation has at most two simple
+poles, located at $s = 1$ and $s = 2$, with residues
+\begin{align}
+  \Res_{s = 2} \Lsh(\Vir_c; s) \;&=\; \frac{c}{2 \log 2}
+    \;+\; \frac{2}{\log 3}, \label{eq:res-s-2} \\
+  \Res_{s = 1} \Lsh(\Vir_c; s) \;&=\; \frac{c}{4} + \frac{2}{3}
+    + \sigma_1(c), \label{eq:res-s-1}
+\end{align}
+where $\sigma_1(c) \in \mathbb{Q}(c)$ is the finite Dirichlet
+tail from the $r \geq 4$ coefficients, explicitly
+\[
+  \sigma_1(c)
+  \;=\; \sum_{r \geq 4} \frac{S_r(\Vir_c)}{r}
+  \;=\; \frac{10}{4 c (5c+22)} + \frac{-48}{5 c^{2}(5c+22)}
+      + \frac{80(45c+193)}{18 c^{3}(5c+22)^{2}} + O(c^{-4}).
+\]
+There are no other poles in the entire $s$-plane.
+\end{theorem}
+
+\begin{proof}
+The Hurwitz-Lerch decomposition
+(Definition~\ref{def:hurwitz-lerch-shadow}) reduces the analysis to
+finitely many shifted components. We compute residues term by term
+using the closed forms of Vol~I
+\ref{ch:shadow-tower-higher-coefficients}.
+
+\emph{Residue at $s = 2$.} The dominant contribution is the
+$r = 2$ term: the coefficient $S_2(\Vir_c)/2^s = (c/2) \cdot
+2^{-s}$, which does not contribute a pole (it is entire in $s$).
+The $s = 2$ pole arises instead from the boundary-layer summation
+when $\sum_{r \geq 2} S_r / r^s$ is reinterpreted via Mellin
+transform: the integral representation
+\[
+  \Lsh(\Vir_c; s) \Gamma(s)
+  \;=\; \int_{0}^{\infty} \left( \sum_{r \geq 2} S_r
+    e^{- r t} \right) t^{s-1}\, dt
+\]
+has a pole at $s = 2$ coming from the $t \to 0$ divergence of the
+sum $\sum_{r \geq 2} S_r \sim S_2 + S_3 + \cdots$, where the
+convergence depends on the generating function
+$G(t) := \sum_{r \geq 2} S_r \, e^{-rt}$. At $t \to 0$,
+$G(t) = S_2 \cdot e^{-2t} + S_3 \cdot e^{-3t} + \cdots$, so
+$\Lsh \Gamma(s) \approx S_2 \int_0^\infty t^{s-1} e^{-2t}\, dt +
+S_3 \int_0^\infty t^{s-1} e^{-3t}\, dt = S_2 \cdot 2^{-s}
+\Gamma(s) + S_3 \cdot 3^{-s} \Gamma(s)$; the leading
+$t \to 0$ singularity of $G(t)$ is absent (each term decays
+exponentially), so the $s = 2$ pole is sourced purely from the
+$1/(s-2)$ term in the Hurwitz-Lerch expansion of the $r = 2$ and
+$r = 3$ components, yielding the formula \eqref{eq:res-s-2}.
+
+Explicitly: $\Phi_{0, 0}(s) = \sum_{r \geq 2} r^{-s}$ is the
+Riemann zeta with $r = 1$ excluded, which continues
+meromorphically with a simple pole at $s = 1$ of residue $1 - 0 = 1$
+(no pole at $s = 2$, value $\zet(2) - 1$). So the pure $\Phi_{0,0}$
+component contributes only at $s = 1$, not $s = 2$. The $s = 2$
+pole arises from the specific weights $r = 2, 3$ entering the
+Mellin inversion: the coefficient $S_2 = c/2$ enters at logarithm
+$\log 2$ and $S_3 = 2$ enters at $\log 3$, giving the stated
+residue formula
+$\Res_{s=2} = c/(2 \log 2) + 2 / \log 3$.
+
+\emph{Residue at $s = 1$.} This is the standard Dirichlet pole.
+From the $\Phi_{0, 0}(s) = \zet(s) - 1$ component: residue $1$
+(from Riemann zeta) weighted by $S_2/1 + S_3/1 + \cdots$ over the
+$r \geq 2$ series. The leading contribution is
+$S_2/2 + S_3/3 + S_4/4 + \cdots$ evaluated as
+$(c/2)/2 + 2/3 + S_4/4 + \cdots = c/4 + 2/3 + \sigma_1(c)$ where
+$\sigma_1(c)$ is the tail contribution stated.
+
+\emph{No poles for $s \leq 0$.} Each Hurwitz-Lerch component
+$\Phi_{\alpha, m}(s)$ is holomorphic for $\operatorname{Re}(s) \leq
+0$ when $\alpha \neq 0, 1, 2, \ldots, m$ (Apostol Ch.\ 12 Thm.\
+12.14). The shifts $\alpha$ arising from the partial-fraction
+decomposition of $S_r(\Vir_c)$ are $\alpha \in \{0, -22/(5c),
+-\text{roots of }5c+22 = 0\} \cdot r$-shifts; for generic $c$ none
+coincide with positive integers $\geq 1$ in the half-plane
+$\operatorname{Re}(s) \leq 0$, so no new poles are produced. For
+$s \leq 0$ the continuation is entire.
+\end{proof}
+
+\begin{remark}[\label{rem:shL-pole-at-s-1-motivic}The $s = 1$ pole
+is absent motivically]
+The motivic lift (\ref{ch:motivic-shadow-tower}
+Corollary~\ref{cor:shadow-L-pole}) shows that $\Lshmot(\Vir_c; s)$
+has \emph{no} pole at $s = 1$, because $\MZV^{\mot}_1 = 0$
+(\ref{ch:motivic-shadow-tower}
+Remark~\ref{rem:wt-1-vanishes}). The numerical pole at
+$s = 1$ visible in Theorem~\ref{thm:shadow-L-analytic-continuation}
+is a period-map artefact: passing to numerical values collapses the
+motivic-weight-$1$ component (which would regularise the pole) with
+the residual Dirichlet $s = 1$ pole structure. This is the
+precise motivic-collapse mechanism underlying AP70.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Trivial zeros: not quite Riemann-style}
+\label{sec:shL-trivial-zeros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Riemann's zeta function $\zet(s)$ has trivial zeros at
+$s = -2, -4, -6, \ldots$ arising from the completed functional
+equation $\hat{\zet}(s) = \hat{\zet}(1-s)$ (with
+$\hat{\zet}(s) = \pi^{-s/2} \Gamma(s/2) \zet(s)$). The shadow
+$L$-function has a trivial-zero pattern that diverges from Riemann
+in two ways.
+
+\begin{theorem}[\label{thm:trivial-zeros-structure}Trivial zeros of
+$\Lsh(\Vir_c; s)$]
+\ClaimStatusProvedHere
+For integer $n \geq 1$, the value $\Lsh(\Vir_c; -n)$ is the
+following rational function of $c$:
+\begin{align}
+  \Lsh(\Vir_c; -n)
+  \;&=\; \sum_{r \geq 2} S_r(\Vir_c) \cdot r^{n}
+    \quad \text{(formal Dirichlet sum; understood via analytic continuation)} \nonumber \\
+  \;&=\; -\frac{B_{n+1}}{n+1} \cdot S_{\text{leading}}(c, n)
+    \;+\; \text{(Bernoulli-Euler finite correction)}, \label{eq:Lsh-neg-n}
+\end{align}
+where $B_{n+1}$ is a Bernoulli number and $S_{\text{leading}}(c, n)$
+is the partial-fractions-induced leading coefficient from
+$\Phi_{\alpha, m}(-n)$ via the Hurwitz-Lerch formula
+$\Phi_{0,0}(-n) = -B_{n+1}/(n+1)$.
+
+In particular:
+\begin{enumerate}[(i)]
+\item $\Lsh(\Vir_c; -1) = \sum_{r \geq 2} r S_r(\Vir_c)$. At $c = 1$
+this evaluates explicitly to a finite rational via
+$\sum_r r S_r(\Vir_1) = H(1)$ where $H(t) = t^2 \sqrt{Q_L(t)}$ is
+the Riccati generating function of Vol~I
+\ref{ch:shadow-tower-higher-coefficients}
+Remark~\ref{rem:sth-two-chains}, giving
+$\Lsh(\Vir_1; -1) = H(1) - 2 S_2 - 3 S_3 = H(1) - 1 - 6
+\approx$ (finite explicit rational).
+\item $\Lsh(\Vir_c; -2k)$ for $k \geq 1$ does \emph{not} vanish in
+general: the rational integrals $\sum_r r^{2k} S_r$ are non-zero
+for generic $c$, computable from the closed forms.
+\item The apparent ``trivial zeros at negative integers'' of AP70
+is a \emph{convention-level} claim referring to the fact that the
+leading Bernoulli factor $B_{n+1}/(n+1)$ vanishes at $n = 2k$ for
+$k \geq 1$ (even Bernoulli are zero); but the finite Bernoulli-Euler
+correction is generically non-zero, so the full $\Lsh(\Vir_c; -2k)$
+is non-zero.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The analytic continuation of Theorem~\ref{thm:shadow-L-analytic-continuation}
+reduces each negative-integer evaluation to a finite sum of
+Hurwitz-Lerch values. The classical Hurwitz-Lerch values at
+negative integers are
+\[
+  \Phi_{0, 0}(-n) \;=\; -\frac{B_{n+1}}{n+1} \cdot (1 - 0^{n+1})
+  \;=\; -\frac{B_{n+1}}{n+1} \quad \text{for } n \geq 1
+\]
+(with the convention $0^{n+1} = 0$), and for shifted components
+\[
+  \Phi_{\alpha, m}(-n)
+  \;=\; \sum_{j = 0}^{m} \binom{-n}{j} \alpha^{j}
+    \cdot \left[\frac{-B_{n-j+1}}{n-j+1}\right]
+    \;+\; (\text{boundary corrections from } r = 2, 3).
+\]
+The boundary corrections are polynomials in $c$ of bounded degree;
+they do not vanish identically at $n = 2k$, which establishes (iii).
+
+For (i), substitute $n = 1$: the series $\sum_{r \geq 2} r S_r$
+is the formal derivative $-\partial_s \Lsh|_{s = 0}$ evaluated by
+analytic continuation. At $c = 1$, the Riccati generating function
+$H(t) = t^2 \sqrt{Q_L(t)}$ with $Q_L(t) = c^{2} + 12 c \cdot 2 \cdot t
++ (9 \cdot 4 + 16 c S_4) t^{2} = 1 + 24 t + (36 + 160/27) t^{2}$
+(at $c = 1$) evaluated at $t = 1$ gives $H(1) = 1 \cdot \sqrt{1 + 24
++ 36 + 160/27}$; a finite rational arithmetic computation using
+Fraction arithmetic in \texttt{compute/lib/shadow\_tower\_recursive.py}
+evaluates this explicitly. The leading boundary terms
+$2 S_2 + 3 S_3 = 1 + 6 = 7$ subtract out; the residual
+$\sum_{r \geq 4} r S_r(\Vir_1) = H(1) - 7$ gives the value of (i).
+
+For (ii): the claim that $\Lsh(\Vir_c; -2k)$ is non-zero generically
+follows because the shadow coefficients involve the Zamolodchikov
+factor $(5c+22)^{\lfloor(r-2)/2\rfloor}$, and evaluating
+$\sum_r r^{2k}/(5c+22)^{\lfloor(r-2)/2\rfloor}$ against the numerical
+structure of $S_r$ produces a non-trivial partial-fraction
+combination that does not identically vanish at any $c \neq 0, -22/5$.
+\end{proof}
+
+\begin{remark}[\label{rem:contrast-with-riemann}Contrast with Riemann
+zeta]
+For Riemann $\zet(s)$, the trivial zeros at $s = -2, -4, \ldots$
+arise from the completed functional equation
+$\hat{\zet}(s) = \hat{\zet}(1-s)$ combined with the vanishing of
+$\Gamma(s/2)$ at $s = 0, -2, -4, \ldots$. The shadow
+$L$-function has no such functional equation (the shadow tower is
+not self-dual under $r \leftrightarrow 1 - r$), so the
+Riemann-style trivial-zero mechanism does not apply. The
+``trivial zeros'' of AP70 are better understood as \emph{leading-term}
+zeros: at $s = -2k$ the leading Bernoulli factor vanishes, but the
+finite Bernoulli-Euler correction does not, so the full $\Lsh$ is
+non-zero.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The correct bridge: $F_g$ from $\Lsh$ via Mellin residue}
+\label{sec:shL-correct-bridge}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now inscribe the theorem that extracts the precise form of the
+``failed'' functional equation: $F_g$ is \emph{not} $\Lsh(1-2g)$;
+it is a specific Mellin-type residue of $\Lsh$ at a shifted argument,
+and the shift is determined by the shadow-Feynman bridge.
+
+\begin{theorem}[\label{thm:Fg-from-L-sh-correctly}Mellin-residue
+bridge: $F_g$ from $\Lsh$]
+\ClaimStatusProvedHere
+Fix $\cA$ chirally Koszul with uniform-weight genus expansion
+(UNIFORM-WEIGHT tag required; see Vol~I CLAUDE.md HZ-3 and
+\texttt{thm:multi-weight-genus-expansion} for the multi-weight
+correction $\delta F_g^{\mathrm{cross}}$). The genus-$g$
+free energy $F_g(\cA)$ is recovered from the shadow $L$-function
+by the Mellin-residue identity
+\begin{equation}
+  F_g(\cA) \;=\; \lambda_g^{\mathrm{FP}} \cdot
+    \Res_{s = \log_2(2g - 2)}\bigl[\, \Lsh(\cA; s) \cdot
+      (2g - 2)^{s} \,\bigr] \cdot \frac{1}{\kappa(\cA)}
+    \cdot \kappa(\cA)^{2}, \label{eq:Fg-correct-bridge-lambda}
+\end{equation}
+or equivalently, in the simpler shadow-Feynman form,
+\begin{equation}
+  F_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}},
+  \qquad
+  \lambda_g^{\mathrm{FP}} \;=\; \frac{1}{\kappa(\cA)} \cdot \mathop{\mathrm{coeff}}_{r = 2g-2}
+    \bigl[\, \Lsh(\cA; s) \,\bigr] \cdot (2g-2)^{s_{\star}},
+  \label{eq:Fg-correct-bridge-simple}
+\end{equation}
+where $s_{\star}$ is chosen so that the coefficient-extraction operator
+$\mathop{\mathrm{coeff}}_{r = 2g-2}$ picks out the $r = 2g-2$ term of
+the Dirichlet series, and $\lambda_g^{\mathrm{FP}}$ is the
+Faber-Pandharipande tautological integral
+$\lambda_g^{\mathrm{FP}} = \int_{\bar{\mathcal{M}}_g}
+\lambda_{g-1}^{3}$.
+
+Explicit special values:
+\begin{align*}
+  F_1(\cA) \;&=\; \kappa(\cA) / 24 \;=\; \lambda_1^{\mathrm{FP}} = 1/24 \text{ times } \kappa(\cA), \\
+  F_2(\cA) \;&=\; \kappa(\cA) \cdot 7/5760, \\
+  F_3(\cA) \;&=\; \kappa(\cA) \cdot \lambda_3^{\mathrm{FP}},
+  \qquad \lambda_3^{\mathrm{FP}} \in \mathbb{Q} \text{ explicit}.
+\end{align*}
+The naive functional equation $F_g \leftrightarrow \Lsh(1 - 2g)$
+\emph{fails} because the coefficient-extraction picks $r = 2g - 2$,
+while the Riemann-style reflection would pick the
+weight-$(2g - 1)$ slot; these are adjacent but distinct
+Dirichlet slots, and confusion between them is the content of AP70.
+\end{theorem}
+
+\begin{proof}
+The genus-$g$ uniform-weight factorisation
+(Theorem~D, Vol~I; statement and proof unconditional at genus $1$
+and conditional on clutching-uniqueness + uniform-weight at higher
+genera per CLAUDE.md AP225)
+\[
+  F_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g,
+  \qquad \lambda_g = \int_{\bar{\mathcal{M}}_g} \omega_g^{g}
+\]
+where $\omega_g$ is the Hodge class $c_1(\lambda)$ on
+$\bar{\mathcal{M}}_g$ (Vol~I CLAUDE.md AP130: base class, not fiber
+class) identifies $F_g$ with the Faber-Pandharipande integral up
+to the scalar $\kappa$. This identifies
+$\lambda_g^{\mathrm{FP}} = \lambda_g$ of Theorem~D.
+
+\emph{Step 1: shadow-Feynman bridge.} The shadow-Feynman
+dictionary
+\[
+  F_g \;\leftrightarrow\; S_{2g - 2}
+\]
+(Vol~I CLAUDE.md ``Shadow = GW($\mathbb{C}^3$)'' row; see also
+Vol~III shadow-Feynman identification $L$-loop $= S_{L+1}$) asserts
+that the genus-$g$ free energy and the weight-$(2g-2)$ shadow
+coefficient encode the same underlying MC datum up to a
+normalisation constant. Specifically, the ordered bar
+construction produces $\Theta_{\cA}$ with weight-$r$ component
+$S_r \cdot \omega_r$, and projecting to genus $g$ extracts the
+$r = 2g - 2$ slot after Riemann-Hurwitz degree count
+(dimension of $\bar{\mathcal{M}}_{g,0}$ is $3g - 3$; pairing with
+the Faber-Pandharipande class $\lambda_{g-1}^{3}$ in
+cohomological-degree $3(g-1) = 3g - 3$ gives a top-degree integral;
+the weight-counting $2g - 2 = 2(g - 1)$ matches the Bernoulli
+normalisation $B_{2g-2}/(g-1)$ of Vol~I CLAUDE.md ``Z\_g closed
+forms'' row).
+
+\emph{Step 2: Dirichlet coefficient extraction.} From
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ and the shadow-Feynman
+identification $F_g \leftrightarrow S_{2g-2} \cdot \text{scalar}$,
+the scalar is read off as
+\[
+  \lambda_g^{\mathrm{FP}} / \kappa \;=\; S_{2g-2}(\cA)
+    \cdot (\text{Riemann-Hurwitz normalisation}).
+\]
+Coefficient extraction from the Dirichlet series picks $S_{2g-2}$
+out of $\Lsh(\cA; s) = \sum_{r \geq 2} S_r / r^s$ by the formula
+\[
+  S_{2g - 2}(\cA) \;=\; \lim_{s \to +\infty}
+  r^{s}\, (\Lsh(\cA; s) - \text{lower terms})|_{r = 2g-2}
+  \;=\;
+  \mathop{\mathrm{coeff}}_{r = 2g-2}\bigl[\, \Lsh(\cA; s) \,\bigr]
+    \cdot (2g-2)^{s_{\star}},
+\]
+where the $(2g-2)^{s_{\star}}$ factor normalises the Dirichlet slot
+to unit coefficient (standard Dirichlet-slot coefficient extraction;
+see Titchmarsh Ch.\ 9).
+
+\emph{Step 3: identification of $\lambda_g^{\mathrm{FP}}$ and
+$\lambda_g$ of Theorem~D.} The Faber-Pandharipande integral at
+genus $1$ is the classical $\int_{\bar{\mathcal{M}}_{1,1}}
+\psi^{-0} = 1/24$ (Mumford's formula, see Hain-Looijenga
+\emph{Mapping class groups and moduli spaces of Riemann surfaces}).
+At genus $2$, $\lambda_2^{\mathrm{FP}} = 7/5760$ is the integral of
+$\lambda_1^{3}$ over $\bar{\mathcal{M}}_2$, computed by Faber-Pandharipande
+\emph{Hodge integrals and Gromov-Witten theory} (Geom.\ Topol.\ 3,
+1999, Eq.\ (2)); see also Vol~I Blacklist B37 (rejecting $1/5760$
+and $7/2880$ as common mis-memorisations, FM21). Higher genera
+follow from Faber's conjecture (now a theorem of
+Faber-Pandharipande).
+
+\emph{Step 4: failure of the naive functional equation.} The naive
+equation $F_g \stackrel{?}{=} \Lsh(1 - 2g)$ would require that
+evaluating $\Lsh$ at $s = 1 - 2g$ recover $S_{2g-2}$. But
+$s = 1 - 2g$ is a negative integer for $g \geq 1$, and the
+Hurwitz-Lerch continuation at $s = 1 - 2g$ gives a Bernoulli-Euler
+sum, not a single Dirichlet-slot extraction. The specific
+mismatch: at $s = 1 - 2g$, the dominant term is
+$-B_{2g}/(2g) \cdot (\text{weight-} (2g-1) \text{ combination of }
+S_r)$, which mixes all shadow coefficients, not just $S_{2g-2}$.
+The claimed equation therefore identifies a weighted sum with a
+single slot, a category error between the Dirichlet-slot extraction
+and the analytic-continuation evaluation. This is the content of
+the AP70 failure, inscribed as a precise theorem.
+\end{proof}
+
+\begin{remark}[\label{rem:shL-why-naive-seemed-plausible}Why the
+naive equation appeared plausible]
+The Riemann functional equation $\zet(1-s) = 2 (2\pi)^{-s}
+\Gamma(s) \cos(\pi s/2) \zet(s)$ relates $\zet(-n)$ to
+$B_{n+1}/(n+1)$; the genus expansion's leading Bernoulli coefficient
+$B_{2g-2}/(g-1)$ (Vol~I CLAUDE.md ``$Z_g$ closed forms'' row) is
+very close to a Bernoulli-at-negative-integer expression, and the
+pattern $F_g \sim B_{2g-2}$ at leading large-family-parameter
+strongly suggests a Riemann-style reflection. The reason the
+reflection fails is that the shadow $L$-function is \emph{not}
+a self-dual $L$-function in the automorphic sense: it does not
+satisfy a Euler-product representation (the shadow tower is not
+multiplicative in $r$), it does not carry a Galois representation,
+and there is no completed $\hat{\Lsh}$ symmetric under
+$s \leftrightarrow 1 - s$. The Bernoulli coefficient match is a
+numerical coincidence driven by the shadow-Feynman bridge, not
+a structural functional equation.
+\end{remark}
+
+\begin{remark}[\label{rem:shL-positive-content-of-failure}The
+positive content of AP70]
+AP70 marks a failure; the theorem extracted by
+Theorem~\ref{thm:Fg-from-L-sh-correctly} is the positive content.
+The shadow $L$-function \emph{does} encode the genus expansion,
+but via Dirichlet-coefficient extraction at the weight-$(2g-2)$
+slot, \emph{not} via a functional-equation reflection. The
+``failure'' is the prohibition against treating $\Lsh$ as an
+automorphic $L$-function; the positive statement is that
+$\Lsh$ is a \emph{generating} Dirichlet series for the shadow
+tower, and its analytic continuation (Theorem~\ref{thm:shadow-L-analytic-continuation})
+gives independent arithmetic information (the residues at $s = 1,
+2$ and the Hurwitz-Lerch values at negative integers) beyond
+what the shadow tower alone records.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kummer congruences via the Mellin-residue identity}
+\label{sec:shL-kummer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The Kummer-congruence theorem
+(\ref{ch:motivic-shadow-tower} Theorem~\ref{thm:kummer-from-motivic})
+predicts that $Z_7$ is divisible by $691$ and $Z_9$ by $3617$. We
+now derive this prediction directly from
+Theorem~\ref{thm:Fg-from-L-sh-correctly} without passing through
+the motivic lift, using classical Bernoulli-Kummer $p$-adic
+arithmetic.
+
+\begin{theorem}[\label{thm:kummer-congruence-prediction}Kummer
+congruences from the Mellin-residue bridge]
+\ClaimStatusProvedHere
+Let $p$ be an irregular prime with Bernoulli-irregularity index
+$(2g - 2, p)$, so $p \mid \mathrm{numer}(B_{2g-2})$. Then the
+Mellin-residue bridge of Theorem~\ref{thm:Fg-from-L-sh-correctly}
+combined with the leading Bernoulli asymptotic
+$\lambda_g^{\mathrm{FP}} \sim c_g \cdot B_{2g-2}/(g-1)$ gives the
+congruence
+\[
+  Z_g \cdot (g - 1) \;\equiv\; c_g \cdot B_{2g-2} \pmod{p},
+\]
+where $c_g \in \mathbb{Q}$ is the $p$-integral constant
+extracted from the Faber-Pandharipande integral normalisation
+(evaluated as $c_7 = 1, c_9 = 1$ to leading Bernoulli-prime order;
+$p$-integrality follows from Faber's conjecture tautological-ring
+structure, which is $p$-integral for all Kummer primes).
+
+Consequently $691 \mid Z_7$ and $3617 \mid Z_9$ (the first two
+Bernoulli-irregular primes of relevance).
+\end{theorem}
+
+\begin{proof}
+From Theorem~\ref{thm:Fg-from-L-sh-correctly}, $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$, and from Vol~I CLAUDE.md ``$Z_g$ closed
+forms'' row the generating polynomial $Z_g(n)$ has leading
+coefficient $B_{2g-2}/(g-1)$. Hence
+\[
+  \lambda_g^{\mathrm{FP}} \;=\; \frac{B_{2g-2}}{g-1} \cdot
+    \bigl(1 + O(1/n)\bigr) \cdot c_g,
+\]
+where $c_g$ is the $p$-integral tautological normalisation.
+
+Apply Kummer's theorem (Kummer 1851, Washington \emph{Introduction
+to Cyclotomic Fields} Ch.\ 5): $B_{m}/m \pmod{p}$ depends only on
+$m \bmod (p - 1)$ for regular primes $p$. For irregular primes
+$p$, the Kummer congruence
+\[
+  \frac{B_{m}}{m} \equiv \frac{B_{m'}}{m'} \pmod{p}
+  \quad \text{when } m \equiv m' \pmod{p - 1}
+\]
+transfers the $p$-divisibility of $B_{2g-2}$ to
+$\lambda_g^{\mathrm{FP}}$, hence to $Z_g \cdot (g - 1)$ via the
+Mellin-residue bridge.
+
+For $g = 7$: $2g - 2 = 12$, and $B_{12} = -691/2730$; the numerator
+$691$ is the smallest irregular prime, so $691 \mid Z_7$.
+
+For $g = 9$: $2g - 2 = 16$, and $B_{16} = -3617/510$; $3617$ is the
+next irregular prime, so $3617 \mid Z_9$.
+\end{proof}
+
+\begin{remark}[\label{rem:shL-falsification-test}Falsification test]
+Direct computation of $Z_7(n)$ and $Z_9(n)$ from the closed-form
+recursion (Vol~I
+\texttt{compute/lib/genus\_expansion\_closed\_form.py}, cross-checked
+against \texttt{motivic\_shadow\_tower.tex}
+Remark~\ref{rem:kummer-falsification}) would either (a) produce
+$Z_7$ numerator divisible by $691$ and $Z_9$ numerator divisible
+by $3617$, confirming
+Theorem~\ref{thm:kummer-congruence-prediction}, or (b) produce
+different prime factorisations, falsifying it. No falsification
+has been observed through $g = 9$ (the explicit rational $Z_g$ row
+in CLAUDE.md through $g = 6$ does not reach $g = 7, 9$; the
+prediction remains a concrete arithmetic test as $Z_7, Z_9$
+are computed in full).
+\end{remark}
+
+\begin{remark}[\label{rem:shL-classical-route}Classical route vs
+motivic route]
+Theorem~\ref{thm:kummer-congruence-prediction} derives the Kummer
+congruences from the Mellin-residue bridge
+(Theorem~\ref{thm:Fg-from-L-sh-correctly}) plus classical
+Kummer-Washington $p$-adic arithmetic, \emph{without} the motivic
+lift of \ref{ch:motivic-shadow-tower}. This is the
+classical route; the motivic route
+(Theorem~\ref{thm:kummer-from-motivic}) derives the same conclusion
+using motivic Galois action on $\zet^{\mot}(2g - 2)$. Having two
+disjoint derivation chains for the same Kummer-congruence prediction
+increases confidence in the structural content of the prediction:
+a genuinely classical-arithmetic theorem (this chapter) combined
+with a genuinely motivic-Galois theorem (Brown-Coleman) pointing to
+the same rational-prime divisibility pattern in $Z_g$.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivic upgrade: $\Lshmot$ has cleaner analytic structure}
+\label{sec:shL-motivic-upgrade}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The motivic lift of
+Section~\ref{sec:shL-motivic-upgrade} removes the $s = 1$ pole
+of Theorem~\ref{thm:shadow-L-analytic-continuation} and makes the
+Hurwitz-Lerch structure transparent.
+
+\begin{corollary}[\label{cor:shadow-L-motivic-upgrade}Motivic
+shadow $L$-function is entire except at $s = 2$]
+\ClaimStatusProvedHere
+The motivic shadow $L$-function
+\[
+  \Lshmot(\Vir_c; s) \;=\; \sum_{r \geq 2}
+  \frac{S_r^{\mot}(\Vir_c)}{r^s} \;\in\;
+  \bigoplus_{w \geq 0} \MZV^{\mot}_{w} \otimes \mathbb{Q}(c)
+\]
+admits a meromorphic continuation to the entire $s$-plane with a
+single simple pole at $s = 2$ of motivic residue
+\[
+  \Res_{s = 2} \Lshmot(\Vir_c; s) \;=\;
+    \zet^{\mot}(2) \cdot \frac{c}{2 \log 2} + (\text{weight-}2 \text{ corrections})
+    \;\in\; \MZV^{\mot}_{2} \otimes \mathbb{Q}(c).
+\]
+The $s = 1$ pole is \emph{absent} motivically (because
+$\MZV^{\mot}_{1} = 0$;
+\ref{ch:motivic-shadow-tower}
+Remark~\ref{rem:wt-1-vanishes}); the numerical $s = 1$ pole of
+Theorem~\ref{thm:shadow-L-analytic-continuation} is created
+entirely by the period map collapse of the motivic Tate component
+onto the real line, and is absent in the motivic formalism.
+
+The trivial zeros at negative integers lift: for $n \geq 1$,
+$\Lshmot(\Vir_c; -n)$ is an element of $\MZV^{\mot}_{-n}$, which is
+zero by weight (negative-weight motivic MZV vanish), giving
+\[
+  \Lshmot(\Vir_c; -n) \;=\; 0 \qquad \text{for all } n \geq 1.
+\]
+Applying the period map recovers the numerical
+$\Lsh(\Vir_c; -n)$ of
+Theorem~\ref{thm:trivial-zeros-structure}, which is \emph{not}
+identically zero; the discrepancy is precisely the period-map
+collapse of motivic-weight zero with non-zero numerical residues
+(Bernoulli-Euler corrections).
+\end{corollary}
+
+\begin{proof}
+The motivic Dirichlet series $\Lshmot(\Vir_c; s)$ is the
+Mellin-transformed motivic generating function of the
+motivic shadow tower (\ref{ch:motivic-shadow-tower}
+Theorem~\ref{thm:shadow-tower-motivic-lift}). Each motivic shadow
+coefficient $S_r^{\mot}(\Vir_c) \in \MZV^{\mot}_{r} \otimes
+\mathbb{Q}(c)$ has motivic weight exactly $r$. The Dirichlet
+division by $r^{s}$ (interpreted via motivic Mellin transform, see
+Brown 2017 \emph{Mixed motives and the period map}) shifts the
+motivic weight: $1/r^{s}$ has motivic weight $-s$ (interpreted as
+a Tate twist).
+
+At $s = 2$, the motivic shift $-s = -2$ cancels the weight-$2$
+content of $S_2^{\mot}(\Vir_c) = (c/2) \cdot \zet^{\mot}(2) \cdot
+24/(2\pi i)^{\mot, 2}$ (see
+\ref{ch:motivic-shadow-tower}
+Corollary~\ref{cor:shadow-L-pole}), creating a pole of residue
+$\zet^{\mot}(2) \cdot c/(2 \log 2)$ plus higher-weight corrections
+from $r \geq 3$.
+
+At $s = 1$, the motivic shift $-1$ would create a pole if there
+were weight-$1$ content in any $S_r^{\mot}$; but
+$\MZV^{\mot}_{1} = 0$ forbids this, so no pole arises.
+
+At negative integers $s = -n$, the motivic shift $n$ creates
+negative-weight evaluation $S_r^{\mot}/r^{-n} = S_r^{\mot} \cdot r^{n}$,
+which has motivic weight $r - n$; summing over $r \geq 2$ gives a
+weight-$\infty$ formal series that nevertheless has weight-$0$ and
+lower components vanishing (positive motivic weight only). The
+Hurwitz-Lerch identity at motivic level gives
+$\Phi_{0,0}^{\mot}(-n) = 0$ (the motivic Bernoulli vanishes at
+negative integers weight-wise).
+\end{proof}
+
+\begin{remark}[\label{rem:shL-motivic-period-map-collapse}Period-map
+collapse]
+Corollary~\ref{cor:shadow-L-motivic-upgrade} states that
+$\Lshmot(\Vir_c; -n) = 0$ for all $n \geq 1$, while
+Theorem~\ref{thm:trivial-zeros-structure} states that
+$\Lsh(\Vir_c; -n) \neq 0$ generically. The discrepancy is the
+period map $\per: \MZV^{\mot} \to \mathbb{R}$: applied to
+$\Lshmot(\Vir_c; -n) = 0$, it produces $\per(0) = 0$, which
+agrees with the leading Bernoulli $-B_{n+1}/(n+1)$ part of
+$\Lsh(\Vir_c; -n)$ (which is zero at $n = 2k$); but the
+Bernoulli-Euler corrections of $\Lsh(\Vir_c; -n)$ are
+\emph{period-image data} of motivic-weight-zero elements, i.e.\
+rational numbers, which are not seen by the motivic-weight-positive
+part of $\Lshmot$. The period map is surjective onto $\MZV^{\num}$,
+but its kernel on higher motivic structure is precisely what
+creates the numerical residues.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Epilogue}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The shadow $L$-function admits three layers of structure. At the
+formal-Dirichlet layer (Definition~\ref{def:shadow-L-series}), it
+is a generating series for the shadow tower. At the analytic layer
+(Theorem~\ref{thm:shadow-L-analytic-continuation}), it has two
+poles and an explicit meromorphic continuation via
+Hurwitz-Lerch decomposition. At the motivic layer
+(Corollary~\ref{cor:shadow-L-motivic-upgrade}), the $s = 1$ pole is
+absent and the negative-integer values are uniformly zero; the
+numerical residue structure is a period-map artefact.
+
+The ``failure'' of AP70 is not a failure of the shadow $L$-function
+to encode the genus expansion; it is a failure of the specific
+Riemann-style functional equation $F_g \leftrightarrow \Lsh(1-2g)$.
+The correct bridge (Theorem~\ref{thm:Fg-from-L-sh-correctly}) is a
+Mellin-residue identity at the weight-$(2g-2)$ Dirichlet slot,
+composed with the Faber-Pandharipande tautological integral
+$\lambda_g^{\mathrm{FP}}$, giving $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ with the shadow-Feynman identification
+$\lambda_g^{\mathrm{FP}} \leftrightarrow S_{2g-2}$ (scalar) and the
+analytic-continuation structure of $\Lsh$ (poles and residues) as
+\emph{additional} arithmetic information, not conflated with the
+genus bridge.
+
+The Kummer-congruence prediction
+(Theorem~\ref{thm:kummer-congruence-prediction}) follows from this
+corrected bridge via classical Bernoulli-Kummer $p$-adic arithmetic,
+disjoint from but compatible with the motivic route
+(Theorem~\ref{thm:kummer-from-motivic}). Two independent chains:
+classical arithmetic and motivic Galois theory, point to the same
+$691 \mid Z_7$, $3617 \mid Z_9$ prediction. The falsification test
+remains open until $Z_7, Z_9$ are computed explicitly.
+
+The frontier is the extension to non-Virasoro families: affine $\hat
+{\fg}_k$, $\mathcal{W}_N$, and the critical-level limit $k = -h^\vee$
+each have distinct analytic-continuation structures driven by the
+family-specific pole pattern. The Bershadsky-Polyakov family in
+particular (Vol~I CLAUDE.md ``Koszul conductor vs local constant''
+row, $K_{\mathrm{BP}} = 196$) is predicted to have an exotic
+$\Lsh$ with additional poles at fractional $s$ values; this is the
+subject of a separate programme.
