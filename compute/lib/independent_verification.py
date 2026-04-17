@@ -250,6 +250,7 @@ def independent_verification(
 class CoverageReport:
     """Summary of ProvedHere coverage vs the registry."""
     proved_here_claims: set[str] = field(default_factory=set)
+    other_valid_claims: set[str] = field(default_factory=set)
     covered_claims: set[str] = field(default_factory=set)
     tautological: list[VerificationEntry] = field(default_factory=list)
 
@@ -259,18 +260,34 @@ class CoverageReport:
 
     @property
     def orphan_entries(self) -> list[VerificationEntry]:
-        """Registry entries whose claim is not actually ProvedHere in any .tex."""
-        return [
-            e for e in _REGISTRY
-            if e.claim not in self.proved_here_claims
-        ]
+        """Registry entries whose claim is not found in any .tex.
+
+        Valid targets include ProvedHere theorems AND other-valid claims
+        (ProvedElsewhere, Conjectured, Conditional, Construction, Definition).
+        Sub-labels of the form ``parent::child`` are accepted if ``parent``
+        exists as a valid target.
+        """
+        valid = self.proved_here_claims | self.other_valid_claims
+        orphans = []
+        for e in _REGISTRY:
+            if e.claim in valid:
+                continue
+            # Accept ``parent::child`` sub-labels if parent exists.
+            if "::" in e.claim:
+                parent = e.claim.split("::", 1)[0]
+                if parent in valid:
+                    continue
+            orphans.append(e)
+        return orphans
 
     def summary(self) -> str:
         n_proved = len(self.proved_here_claims)
+        n_other = len(self.other_valid_claims)
         n_covered = len(self.covered_claims)
         pct = (100.0 * n_covered / n_proved) if n_proved else 0.0
         lines = [
             f"ProvedHere claims found in .tex: {n_proved}",
+            f"Other valid claims (Conj./Cond./Elsewhere/Constr.): {n_other}",
             f"Claims with independent verification:  {n_covered} ({pct:.1f}%)",
             f"Claims WITHOUT independent verification: {len(self.uncovered_claims)}",
             f"Tautological registry entries: {len(self.tautological)}",
@@ -280,16 +297,23 @@ class CoverageReport:
         return "\n".join(lines)
 
 
-def build_coverage_report(proved_here_labels: Iterable[str]) -> CoverageReport:
-    """Combine the current registry with a set of ProvedHere labels.
+def build_coverage_report(
+    proved_here_labels: Iterable[str],
+    other_valid_labels: Iterable[str] = (),
+) -> CoverageReport:
+    """Combine the current registry with sets of valid claim labels.
 
     The caller (lint script) supplies labels scraped from .tex. This module
     stays independent of the scraper so the module is testable without any
-    .tex files present.
+    .tex files present. Decorations on Conjectured/Conditional/Construction/
+    Definition/ProvedElsewhere labels are valid (they verify falsifiable
+    predictions, not the claim's truth itself).
     """
-    labels = set(proved_here_labels)
+    proved_set = set(proved_here_labels)
+    other_set = set(other_valid_labels)
     return CoverageReport(
-        proved_here_claims=labels,
-        covered_claims=claims_covered() & labels,
+        proved_here_claims=proved_set,
+        other_valid_claims=other_set,
+        covered_claims=claims_covered() & proved_set,
         tautological=tautological_entries(),
     )
