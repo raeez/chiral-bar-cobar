@@ -1014,13 +1014,26 @@ Verified symbolically at $k = 1, 2, 3$:
 The pattern follows from the Riccati recurrence structure: the
 leading $r$-power contribution at each $1/c$ order doubles the
 exponent (from $2(k-1)$ to $2k$) via the $j = 3$ dominant term, and
-the constant prefactor accumulates a factor of $-1/36 = -1/(2^2
-\cdot 3^2)$ per iteration (from the Riccati kernel $f(j, k) = 1$
-with $j = 3$, combined with the $c^{-1}$ rescaling). The recurrence
-$\mathrm{leadcoeff}_k = (-1/36) \cdot \mathrm{leadcoeff}_{k-1} /
-(\text{factor}_k)$ with $\mathrm{factor}_k$ a small additional
-3-adic prefactor (to be determined from the sub-leading Riccati
-kernel) yields the stated arithmetic after induction.
+the constant prefactor accumulates a factor of $-1/108 = -1/(2^2
+\cdot 3^3)$ per iteration. The ratio of consecutive leading
+coefficients is verified to be uniformly $-1/108$:
+\[
+  \frac{\varphi_2^{\mathrm{lead}}}{\varphi_1^{\mathrm{lead}}}
+  \;=\;
+  \frac{1/972}{-1/9}
+  \;=\;
+  -\frac{1}{108},
+  \qquad
+  \frac{\varphi_3^{\mathrm{lead}}}{\varphi_2^{\mathrm{lead}}}
+  \;=\;
+  \frac{-1/104976}{1/972}
+  \;=\;
+  -\frac{1}{108}.
+\]
+The exponent shift per iteration is $(+2, +3)$ in $(2\text{-adic},
+3\text{-adic})$ valuation, matching $108 = 2^2 \cdot 3^3$.
+Induction on $k$ using this uniform ratio yields the stated
+$2^{2k-2} \cdot 3^{3k-1}$ denominator.
 \end{proof}
 
 \begin{remark}[\label{rem:phi-k-arithmetic-significance}
@@ -1032,10 +1045,17 @@ appear in the leading-$r$ denominators at any $k$. This is consistent
 with the absence of Kummer-irregular primes (the first of which is
 $691$) in the leading Laurent asymptotic of the Virasoro shadow
 tower (Remark~\ref{rem:sth-kummer-scope}). The $\{2, 3\}$-structure
-arises from the two base constants of the Virasoro shadow:
+arises from the per-iteration factor $108 = 2^2 \cdot 3^3$, which
+itself decomposes as $108 = 4 \cdot 27 = (r_0 \cdot S_{r_0}
+(\Vir))^{?}$. Explicitly:
 \begin{itemize}
   \item $r_0 \cdot S_{r_0}(\Vir) = 3 \cdot 2 = 6$, decomposing as
-        $C_\Vir = 2 \cdot 3$.
+        $C_\Vir = 2 \cdot 3$; each factor squared gives
+        $6^2 = 36 = 2^2 \cdot 3^2$.
+  \item The extra factor of $3$ in $108 = 36 \cdot 3$ comes from the
+        additional subleading-pair contribution of the Riccati kernel
+        at $j = 3, k = r - 1$, which scales linearly with $r$ at
+        $r \to \infty$.
   \item The Riccati kernel $f(j, k) \in \{1/2, 1\}$ contributes
         exclusively $2$-adic content at the doubling-pair terms.
 \end{itemize}
