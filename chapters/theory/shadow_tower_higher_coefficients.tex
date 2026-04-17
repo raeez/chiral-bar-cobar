@@ -794,6 +794,83 @@ $\{A_4, \ldots, A_9\} = \{2, -48/5, 48, -1728/7, 1296, -6912\}$,
 confirming the closed form.
 \end{proof}
 
+\begin{theorem}[\label{thm:shadow-series-closed-form-Virasoro-subleading}
+Closed-form subleading Virasoro shadow series]
+\ClaimStatusProvedHere
+The subleading-asymptotic generating function $\Sigma_\Vir^{(1)}(z)
+:= \sum_{r \ge 4} B_r^\Vir z^r$, where $B_r^\Vir = -4 (-6)^{r-4}
+(5 r^2 - 45 r + 496) / (45 r)$, has the closed form
+\[
+  \Sigma_\Vir^{(1)}(z)
+  \;=\;
+  \frac{16 z^5}{(6z + 1)^2}
+  \;+\; \frac{20 z^4}{9 (6z + 1)^2}
+  \;-\; \frac{992 z^3}{405}
+  \;+\; \frac{248 z^2}{405}
+  \;-\; \frac{248 z}{1215}
+  \;+\; \frac{124 \log(6z + 1)}{3645}.
+\]
+Singular structure at $z = -1/6$: a \emph{double pole} combined
+with a logarithmic branch point.
+\end{theorem}
+
+\begin{proof}
+Starting from $B_r = -(4/45) \cdot (-6)^{r-4} \cdot (5r^2 - 45r + 496)/r$,
+factoring out $1/r$ to get $(5r^2 - 45r + 496)/r = 5r - 45 + 496/r$,
+and evaluating three standard sums under the substitution $u = -6z$:
+\[
+  \sum_{r \ge 4} r \cdot u^{r-4}
+  \;=\;
+  \frac{4 - 3u}{(1 - u)^2},
+  \qquad
+  \sum_{r \ge 4} u^{r-4}
+  \;=\;
+  \frac{1}{1 - u},
+  \qquad
+  \sum_{r \ge 4} \frac{u^{r-4}}{r}
+  \;=\;
+  \frac{1}{u^4}\bigl[-\log(1 - u) - u - \tfrac{u^2}{2} - \tfrac{u^3}{3}\bigr].
+\]
+Substituting these into
+\[
+  \Sigma_\Vir^{(1)}(z) = -\frac{4}{45} z^4
+  \bigl[5 \cdot \textstyle\sum r u^{r-4}
+        - 45 \cdot \sum u^{r-4}
+        + 496 \cdot \sum u^{r-4}/r\bigr],
+\]
+simplifying, and expanding polynomially yields the stated closed
+form. Taylor expansion to order $z^{11}$ (checked symbolically via
+\verb|sympy.series|) reproduces $\{B_4, \ldots, B_{11}\} =
+\{-44/5, 1056/25, -3248/15, 40896/35, -32832/5, 190464/5,
+-5660928/25, 75396096/55\}$, confirming the closed form.
+\end{proof}
+
+\begin{remark}[\label{rem:subleading-sharper-singularity}
+Subleading series strengthens the singularity to a double pole]
+The leading series $\Sigma_\Vir(z)$ has only a logarithmic branch
+point at $z = -1/6$
+(Theorem~\ref{thm:shadow-series-closed-form-Virasoro}). The
+subleading series $\Sigma_\Vir^{(1)}(z)$ has, at the same point,
+both a logarithmic branch AND a double pole $(6z + 1)^{-2}$. The
+singularity strength strictly increases at higher orders of the
+$1/c$ expansion.
+
+Conjectured pattern for higher orders:
+$\Sigma_\Vir^{(k)}(z)$ has a pole of order $2k$ at $z = -1/6$
+plus a logarithmic branch point with residue in a specific
+arithmetic sequence. Verifying this pattern at order $k = 2$
+(sub-subleading, via
+\verb|sub_subleading_asymptotic|) is a natural continuation of
+this Beilinson iteration thread.
+
+The singular surface of the full shadow tower summed over all
+$1/c$ orders is therefore not a pure logarithmic branch point
+but a \emph{confluent} singularity at $z = -1/6$, mixing a
+sequence of polar singularities of increasing order with the
+logarithmic branch. This is the genuine singular structure
+encoded by the shadow-exponential base $C_\Vir = 6$.
+\end{remark}
+
 \begin{remark}[\label{rem:Sigma-branch-singularity}
 The programme's singular surface is the logarithmic branch at $z = -1/6$]
 Theorem~\ref{thm:shadow-series-closed-form-Virasoro} identifies the
