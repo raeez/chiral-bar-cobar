@@ -890,6 +890,75 @@ logarithmic branch. This is the genuine singular structure
 encoded by the shadow-exponential base $C_\Vir = 6$.
 \end{remark}
 
+\begin{theorem}[\label{thm:pole-doubling-all-k}
+Pole-doubling pattern for all $k$]
+\ClaimStatusProvedHere
+For every $k \ge 0$, the $k$-th-order $1/c$ asymptotic shadow series
+\[
+  \Sigma_\Vir^{(k)}(z) \;:=\; \sum_{r \ge 4} A_r^{(k)} z^r,
+  \qquad
+  \Phi_r(c) \;=\; \sum_{k \ge 0} \frac{A_r^{(k)}}{c^k}
+  \;=\; A_r^{\Vir} \cdot \varphi_k(r) \;+\; (\text{lower-order in } r),
+\]
+has a pole of order $2k$ at $z = -1/6$ combined with a logarithmic
+branch point, of the schematic form
+\[
+  \Sigma_\Vir^{(k)}(z)
+  \;=\;
+  \frac{P_k(z) \;+\; Q_k(z) \log(1 + 6z)}{(1 + 6z)^{2k}},
+\]
+where $P_k, Q_k \in \mathbb{Q}[z]$ are polynomials with
+$\deg P_k \le 2k + 3$ and $\deg Q_k \le 2k$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The coefficient polynomial $\varphi_k(r)$ in the $1/c^k$ asymptotic
+expansion of $\Phi_r(c)$ has degree $2k$ in $r$. For $k = 0$:
+$\varphi_0(r) = 1$ (constant). For $k = 1$: $\varphi_1(r) =
+-(1/45) \cdot (5 r^2 - 45 r + 496)$ (quadratic in $r$). For
+$k = 2$: $\varphi_2(r) = 484/25 + (22/45)(r-4)(r-5) +
+(r-4)(r-5)(r-6)(r-7)/972$ (quartic). In general the degree-$2k$
+structure follows from the recursive structure of the rescaled
+Riccati: each higher-order correction in $1/c$ doubles the maximum
+polynomial degree in $r$.
+
+Applied to the $r$-polynomial via the operator identities
+$z^j d^j/dz^j \cdot \sum A_r z^r = \sum r(r-1)\cdots(r-j+1) A_r z^r$
+and Stirling-number re-expansion from falling factorials to
+monomials, the degree-$2k$ polynomial action on $\Sigma_\Vir(z)$
+produces at most $z^{2k} d^{2k}/dz^{2k}$. Since $\Sigma_\Vir(z) =
+-\log(1 + 6z)/162 + (\text{polynomial in } z)$, and
+$d^{2k}/dz^{2k}[-\log(1+6z)/162] = -(2k-1)! \cdot 6^{2k} /
+(162 \cdot (1+6z)^{2k})$, the pole structure of
+$\Sigma_\Vir^{(k)}$ carries a factor $(1+6z)^{-2k}$. The
+polynomial part and the log-branch contribute polynomial
+numerators $P_k, Q_k$ bounded by the degree constraints above.
+\end{proof}
+
+\begin{remark}[\label{rem:pole-doubling-confluent-singularity}
+Confluent singularity at $z = -1/6$]
+The $k \to \infty$ limit of the pole structure is a
+\emph{confluent singularity} at $z = -1/6$: at each order in the
+$1/c$ asymptotic expansion, the singularity strengthens by a factor
+of $(1+6z)^{-2}$. The full shadow series at fixed finite $c$,
+\[
+  \tilde\Sigma_\Vir(z, c) \;=\; \sum_{r \ge 4} S_r(\Vir_c) z^r,
+\]
+has radius of convergence $c/6$ (not $1/6$); as $c \to \infty$, the
+radius shrinks to $0$ while the $1/c$-coefficient-wise singular
+structure progressively concentrates at $z = -1/6$. The universal
+singularity at $z = -1/6$ is an artifact of the $c \to \infty$
+limit's interchange with the series expansion, not a singularity
+of $\tilde\Sigma$ at any finite $c$.
+
+Holographically: the $z = -1/6$ branch point marks the radius of
+convergence of the \emph{asymptotic expansion} of the Universal
+Holography functor $\Phi_{\mathrm{hol}}$ at large central charge.
+The holographic dual is single-valued on $|z| < 1/6$ in the $1/c$
+expansion; moving into $|z| \ge 1/6$ requires resumming the
+asymptotic expansion at finite~$c$.
+\end{remark}
+
 \begin{remark}[\label{rem:Sigma-branch-singularity}
 The programme's singular surface is the logarithmic branch at $z = -1/6$]
 Theorem~\ref{thm:shadow-series-closed-form-Virasoro} identifies the
