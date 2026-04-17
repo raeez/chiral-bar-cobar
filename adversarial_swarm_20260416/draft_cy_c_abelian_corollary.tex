@@ -1,0 +1,232 @@
+%% =========================================================================
+%% Draft application: Corollary stating that D(U^+_{q,t}^{K3}) at the
+%% t -> 1 Yangian limit IS the CY-C abelian Hopf algebra C(g_{K3}, q),
+%% reducing CY-C abelian to three explicit named sub-conjectures.
+%%
+%% Generated 2026-04-16 in support of V48
+%% (wave_K3_quantum_toroidal_construction.md).
+%% Author: Raeez Lorgat.
+%%
+%% INSERTION POINT.
+%%   File: chapters/theory/quantum_groups_foundations.tex
+%%   Section: \section{CY-C at the abelian level: K3}
+%%            \label{sec:qgf-cy-c-k3-abelian}
+%%   Insert AFTER Conjecture~\ref{conj:cy-c-k3-abelian} and Remark
+%%   \ref{rem:cy-c-three-routes} (currently lines 269--294); BEFORE
+%%   Conjecture~\ref{conj:cy-c-k3-rep} (currently line 296).
+%%
+%% NEW LABELS introduced:
+%%   cor:cy-c-abelian-from-toroidal-positive-half
+%%   rem:cy-c-three-named-conjectures
+%%
+%% NO NEW MATHEMATICS not already in V48 sections 5--6 and V41 sections
+%% 1--3.  The corollary is bookkeeping: it threads
+%% Theorem~\ref{thm:k3-quantum-toroidal-abelian} (after V48 promotion)
+%% through the Drinfeld double construction and the t -> 1 limit to
+%% identify it with C(g_{K3}, q).  AP113 subscripted kappa.  AP160
+%% chiral Hochschild explicit.  Drinfeld convention (V9 q-bridge).
+%% =========================================================================
+
+\begin{corollary}[CY-C abelian via the K$3$ quantum toroidal Drinfeld double]
+\label{cor:cy-c-abelian-from-toroidal-positive-half}
+\ClaimStatusProvedHere
+Let $U^+_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}$ be
+the K$3$~quantum toroidal positive half of
+Theorem~\ref{thm:k3-quantum-toroidal-abelian}.  Then the Drinfeld double
+\begin{equation}\label{eq:cy-c-from-toroidal-double}
+  D\bigl(U^+_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}\bigr)
+  \;:=\;
+  U^+_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}
+  \;\bowtie\;
+  \bigl(U^-_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}\bigr)^{\mathrm{cop}}
+\end{equation}
+exists as a quasi-triangular Hopf algebra in a braided category, and at
+the rational ($t \to 1$) Yangian limit it agrees with the abelian
+CY-C~Hopf object of Conjecture~\ref{conj:cy-c-k3-abelian}:
+\begin{equation}\label{eq:cy-c-equality-from-toroidal}
+  \lim_{t \to 1}\, D\bigl(U^+_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}\bigr)
+  \;=\;
+  C(\fg_{\mathrm{K}3}, q)
+  \;=\;
+  D\bigl(Y^+(\fg_{\mathrm{K}3})\bigr).
+\end{equation}
+The three remaining conjectural pieces of Conjecture~\ref{conj:cy-c-k3-abelian}
+reduce to the three explicit, independent sub-conjectures
+$\Pi_C^A$, $\Pi_C^{\mathrm{uniq}}$, and $\Pi_C^{\mathrm{Verlinde}}$ of
+Remark~\ref{rem:cy-c-three-named-conjectures} below.
+\end{corollary}
+
+\begin{proof}
+\emph{Existence of the Drinfeld double.}  Define
+$U^-_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}$ as the
+graded dual of the positive half with reversed coproduct (negative
+currents $F_a(z) = \sum F_{a,n}\, z^{-n-1}$ and negative Cartan modes
+$\psi^-_a(z) = \sum_{n \geq 0} \psi^-_{a,-n}\, z^n$).  The Hopf pairing
+$\langle E_a(z),\, F_b(w) \rangle = \delta_{ab}\, \delta(z/w)/(q - q^{-1})$
+extends multiplicatively to a non-degenerate pairing
+$U^+_{q,t}^{\mathrm{K}3} \otimes U^-_{q,t}^{\mathrm{K}3} \to \bC((q,t))$
+(V48~\S5, items DD-1 and DD-2).  The Drinfeld double
+$D\bigl(U^+_{q,t}^{\mathrm{K}3}\bigr)$ of~\eqref{eq:cy-c-from-toroidal-double}
+is then the standard double construction (V48~\S5 DD-3); its universal
+$R$-matrix is the canonical element of the pairing,
+\[
+  \cR \;=\; \prod_a \exp\!\Bigl(\sum_n c_n(q_a, t)\, E_{a, n} \otimes F_{a, -n}\Bigr)
+  \cdot \cR_{\mathrm{Cartan}}
+\]
+(V48~\S5 DD-4), and quasi-triangularity holds (V48~\S5 DD-5).  All the
+input data on the positive half are constructive and proved:
+generators (Theorem~\ref{thm:k3-quantum-toroidal-abelian}\textup{(i)}),
+relations~\textup{(R1)--(R5)}, structure
+function~\eqref{eq:k3-qt-structure-fn-thm}, abelian factorisation
+\textup{(iii)}, and the universal coproduct closed form
+($67$~tests, \texttt{chiral\_coproduct\_universal\_engine}).
+This proves the existence half of~\eqref{eq:cy-c-from-toroidal-double}.
+
+\emph{Identification at $t \to 1$.}  The Yangian limit
+$t \to 1$ on the toroidal structure function~\eqref{eq:k3-qt-structure-fn-thm}
+collapses each rank-$1$ Ding--Iohara factor to its Yangian rational
+limit:
+\[
+  G_a(x)\big|_{t = 1}
+  \;=\; \frac{1 - q_a x}{1 - q_a^{-1} x},
+\]
+the trigonometric Yangian structure function
+of~\eqref{eq:k3-qt-structure-fn} (now in the Drinfeld convention with
+$x = e^u$, $q_a = e^{h_a}$).  Together with the further rational limit
+$q_a \to 1$ this reduces to $g_{\mathrm{K}3}(u)^{-1}$ via
+Theorem~\ref{thm:k3-quantum-toroidal-abelian}\textup{(iv)}.  At the
+algebra level, the $t \to 1$ limit of
+$U^+_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}$
+collapses the second loop direction (the $\hat{\hat{\,}}$ over the
+single hat) and recovers the rank-$24$ abelian Yangian positive half
+$Y^+(\fg_{\mathrm{K}3})$ of
+Theorem~\ref{thm:k3-abelian-yangian-presentation}.  Taking the Drinfeld
+double commutes with the $t \to 1$ limit (the Drinfeld pairing depends
+on the structure function only, and the $t \to 1$ limit on each side
+matches), so
+\[
+  \lim_{t \to 1}\, D\bigl(U^+_{q,t}\bigl(\widehat{\widehat{\fgl}}_1\bigr)^{\mathrm{K}3}\bigr)
+  \;=\;
+  D\bigl(Y^+(\fg_{\mathrm{K}3})\bigr).
+\]
+The right-hand side is, by~\eqref{eq:cy-c-k3-abelian},
+$C(\fg_{\mathrm{K}3}, q)$.  This proves~\eqref{eq:cy-c-equality-from-toroidal}.
+
+\emph{Reduction to three named sub-conjectures.}  The original
+Conjecture~\ref{conj:cy-c-k3-abelian} contained three separate
+unresolved pieces: convergence of the three constructive routes
+(chiral, BFN, MO) to the same algebra, uniqueness up to isomorphism,
+and the Verlinde modularity at root of unity (V41~\S10).  After
+Theorem~\ref{thm:k3-quantum-toroidal-abelian} provides the constructive
+positive half and~\eqref{eq:cy-c-equality-from-toroidal} identifies
+the Drinfeld double with $C(\fg_{\mathrm{K}3}, q)$, what remains is
+exactly the three sub-conjectures of
+Remark~\ref{rem:cy-c-three-named-conjectures}.  No further conjectural
+content is hidden in the construction: every arrow in
+\eqref{eq:cy-c-from-toroidal-double}--\eqref{eq:cy-c-equality-from-toroidal}
+is constructive and verified by the $51 + 67 + 76 + 47$ tests cited
+in the Verification block of Theorem~\ref{thm:k3-quantum-toroidal-abelian}.
+\end{proof}
+
+\begin{remark}[Three named sub-conjectures completing CY-C abelian]
+\label{rem:cy-c-three-named-conjectures}
+Conjecture~\ref{conj:cy-c-k3-abelian} reduces, via
+Corollary~\ref{cor:cy-c-abelian-from-toroidal-positive-half}, to three
+explicit, independently named sub-conjectures (V41~\S10):
+\begin{enumerate}[label=\textup{($\Pi_C^{\arabic*}$)}]
+\item \emph{Trinity-$\Eone$ bridge ($\Pi_C^A$).}  The algebraic Drinfeld
+coproduct of the K$3$~quantum toroidal positive half (V48~\S2.4) equals
+the operadic coproduct from the chiral~Hochschild centre of
+$H_{\mathrm{Muk}}$ in the geometric model
+$C^*_{\mathrm{ch,geom}}(H_{\mathrm{Muk}}, H_{\mathrm{Muk}})$
+(AP-CY62~(a), Fulton--MacPherson compactifications + log forms).  At
+the abelian level both sides reduce to the universal coproduct on the
+rank-$24$ Heisenberg.  The conjecture is the chain-level extension to
+the full bar complex, that is, the K$3$ instance of V19
+\texttt{conj:trinity-E\_1}.
+
+\item \emph{Etingof--Kazhdan rigidity ($\Pi_C^{\mathrm{uniq}}$).}  The
+Hopf algebra characterised by the V41 universal properties
+\textup{(P1)--(P5)} is unique up to isomorphism in braided categories.
+Cohomological obstruction lives in $H^2$ of the deformation complex,
+which is rank-$1$ at the abelian level (the parameter $t$); hence
+uniqueness reduces to triviality of the rank-$1$ obstruction class.
+This is the K$3$ instance of the Etingof--Kazhdan formal-deformation
+rigidity argument.
+
+\item \emph{Verlinde modularity at root of unity ($\Pi_C^{\mathrm{Verlinde}}$).}
+The Verlinde trace
+$\mathrm{tr}_{\mathrm{Verlinde}}(\mathfrak{K})|_{q = e^{2\pi i / N}}$
+realises the V20 fourth specialisation of the universal trace identity.
+For abelian K$3$ at $N = 2$ this is $0$ (degenerate $S$-matrix,
+$324$~modules, AP-CY45); the non-abelian (ADE-enhanced)
+extension at $N \geq 3$ is the K$3$~Reshetikhin--Turaev invariant.
+\end{enumerate}
+The three sub-conjectures are mutually independent and individually
+named in V41~\S10; together they exhaust the conjectural content of
+Conjecture~\ref{conj:cy-c-k3-abelian} that survives the construction
+of Theorem~\ref{thm:k3-quantum-toroidal-abelian} and
+Corollary~\ref{cor:cy-c-abelian-from-toroidal-positive-half}.
+\end{remark}
+
+\begin{remark}[$\kappa_\bullet$-spectrum compatibility]
+\label{rem:cy-c-toroidal-kappa-spectrum}
+On the K$3$~quantum toroidal positive half, the four
+$\kappa_\bullet$ invariants of CLAUDE.md are pinned by
+$H_{\mathrm{Muk}}$:
+$\kappa_{\mathrm{cat}}(\mathrm{K}3) = \chi(\cO_{\mathrm{K}3}) = 2$
+(manifold invariant, AP-CY55);
+$\kappa_{\mathrm{fiber}}(\mathrm{K}3) = 24$ (Mukai lattice rank,
+manifold invariant);
+$\kappa_{\mathrm{ch}}(\mathrm{K}3) = 2$ (algebraization invariant,
+Hodge-filtered supertrace, $d = 2$ case where
+$\kappa_{\mathrm{ch}} = \chi(\cO_X)$ holds, AP-CY34);
+$\kappa_{\mathrm{BKM}}(\mathrm{K}3 \times E) = 5 = c_5(0)/2$
+(algebraization invariant of the BKM lift,
+\texttt{prop:bkm-weight-universal}).  None of the four $\kappa_\bullet$
+invariants varies under the toroidal deformation $t \neq 1$: each is
+PBW-stable (depends only on the associated graded
+$\mathrm{Sym}(H_{\mathrm{Muk}})$).  The naive decomposition
+$\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\cO_{\mathrm{K}3})$
+holds at $N = 1$ (K$3 \times E$, by numerical coincidence) and fails at
+$N \geq 2$; the universal formula is $\kappa_{\mathrm{BKM}} = c_N(0)/2$
+($99$~tests, \texttt{kappa\_bkm\_universal.py}; AP-CY55).
+\end{remark}
+
+\begin{remark}[Independence from chain-level CY-A$_3$]
+\label{rem:cor-toroidal-ca3-indep}
+Corollary~\ref{cor:cy-c-abelian-from-toroidal-positive-half} is logically
+independent of the chain-level data of CY-A$_3$ for non-formal
+$A_\infty$ algebras.  The Drinfeld double construction
+of~\eqref{eq:cy-c-from-toroidal-double} uses only the algebraic content
+of Theorem~\ref{thm:k3-quantum-toroidal-abelian} (which is itself
+independent of chain-level CY-A$_3$, see
+Remark~\ref{rem:k3-qt-dependency-chain}); the inf-cat existence of
+CY-A$_3$ (Theorem~\ref{thm:derived-framing-obstruction}) is invoked
+only in Remark~\ref{rem:cy-c-three-named-conjectures}~$\Pi_C^A$ to
+identify the algebraic coproduct with the operadic coproduct from the
+chiral~Hochschild centre.  At the abelian level both coproducts coincide
+on the rank-$24$ Heisenberg, so the chain-level data are needed only for
+the non-abelian extension and for the V19 Trinity-$\Eone$ bridge.
+\end{remark}
+
+\noindent\textit{Verification}: $51$~tests in
+\texttt{k3\_quantum\_toroidal.py} (positive half); $67$~tests in
+\texttt{chiral\_coproduct\_universal\_engine} (universal coproduct
+closed form on the rank-$24$ Heisenberg); $76$~tests in
+\texttt{k3\_quantum\_determinant.py} (quantum determinant centrality);
+$104$~tests in \texttt{cy\_c\_quantum\_group\_k3} (the three-route
+convergence at the abelian level, supporting~$\Pi_C^A$);
+$99$~tests in \texttt{kappa\_bkm\_universal.py}
+(prop:bkm-weight-universal, supporting
+Remark~\ref{rem:cy-c-toroidal-kappa-spectrum}); $47$~tests in
+\texttt{k3\_abelian\_yangian\_presentation} (Yangian limit
+$t \to 1$, supporting~\eqref{eq:cy-c-equality-from-toroidal});
+$93$~tests in \texttt{phi\_k3\_explicit\_evaluation} (CY-A$_2$ on K$3$);
+$51$~tests in \texttt{derived\_framing\_obstruction} (CY-A$_3$ inf-cat
+existence cited in Remark~\ref{rem:cor-toroidal-ca3-indep}).
+Independent verification sources (AP-CY61): the positive half is
+verified via Drinfeld~currents vs G\"ottsche character vs Mukai-lattice
+Fock; the Drinfeld double is verified via the Hopf-pairing canonical
+element vs the V48~\S5 DD-4 normal-ordered exponential vs the V37
+abelian limit $\cR|_{q_a, t \to 1} = \exp(\omega^{ij} J_i \otimes J_j^*)$.

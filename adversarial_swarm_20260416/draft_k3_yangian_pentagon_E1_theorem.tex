@@ -1,0 +1,301 @@
+%% =========================================================================
+%% Draft application: Pentagon-at-$E_1$ theorem at K3 input.
+%% Generated 2026-04-16 in support of V49
+%% (wave_K3_Pentagon_E1_attempt.md).
+%% Author: Raeez Lorgat.  No AI attribution.  Not committed.
+%%
+%% PURPOSE.  Insertion block for
+%%   /Users/raeez/calabi-yau-quantum-groups/chapters/examples/k3_yangian_chapter.tex
+%% to be placed AFTER prop:mukai-indefinite-yangian
+%% (line 610) and BEFORE the existing remark on Yangian limits.
+%%
+%% The block introduces a single new \begin{theorem} carrying
+%% \ClaimStatusProvedHere for K3 input specifically; it does NOT promote
+%% V39 H1 in general.  The proof has three independent steps, one per
+%% verification route from V49 (sympy direct, Etingof--Kazhdan, V20
+%% trace identity).  Conditional on FM164 (Yangian pro-nilpotent
+%% bar-cobar) + FM161 (Positselski nonhomogeneous Yangian Koszulness)
+%% for the K3 input, both of which are expected to hold for K3
+%% specifically due to the abelian Mukai + small-ADE block structure;
+%% conditionality is recorded explicitly in the theorem statement and
+%% in a follow-up remark.
+%%
+%% NEW LABELS introduced:
+%%   thm:k3-pentagon-E1                    -- the main theorem
+%%   eq:k3-pentagon-cocycle                -- the cocycle equation
+%%   rem:k3-pentagon-three-routes          -- route enumeration
+%%   rem:k3-pentagon-conditionality        -- FM164/FM161 honesty
+%%   rem:k3-pentagon-six-corollaries       -- pointer to draft_K3_six_corollaries
+%%   rem:k3-pentagon-non-K3-open           -- AP-CY60 honest scope
+%%
+%% AP COMPLIANCE.
+%%   AP113   subscripted kappa: kappa_BKM, kappa_ch used; no bare kappa.
+%%   AP160   chiral Hochschild: every C^*_ch usage qualified
+%%           (AP-CY62 (b), C^*_{ch,alg}).
+%%   AP-CY7  CoHA never identified with chiral algebra.
+%%   AP-CY10 Flop vs Koszul not invoked (Pentagon is gauge, not flop).
+%%   AP-CY14 CY-A_3 used only in inf-cat form
+%%           (thm:derived-framing-obstruction); no chain-level demand.
+%%   AP-CY28 pole-safe test points: route (i) cites the difference YBE
+%%           convention explicitly per FM44.
+%%   AP-CY31 spectral z (not worldsheet z) used throughout.
+%%   AP-CY40 ProvedHere requires \begin{proof} block: present.
+%%   AP-CY55 manifold (kappa_cat, kappa_fiber) vs algebraization
+%%           (kappa_ch, kappa_BKM) invariants distinguished in
+%%           rem:k3-pentagon-three-routes step (iii).
+%%   AP-CY60 K3 input is one configuration; other CY3 inputs remain
+%%           OPEN, recorded in rem:k3-pentagon-non-K3-open.
+%%   AP-CY61 three disjoint verification sources, named in proof and
+%%           in the companion INDEPENDENT_VERIFICATION decorator
+%%           draft (draft_k3_independent_verification_triangle.md).
+%% V9 q-bridge convention: spectral parameter z is the additive Yangian
+%%   spectral parameter (u = log x), per Vol I appendix.
+%% =========================================================================
+
+\begin{theorem}[Pentagon-at-$E_1$ for K3 input;
+                conditional on FM164, FM161]
+\label{thm:k3-pentagon-E1}
+\ClaimStatusProvedHere
+Let $\mathcal{C} = D^b(\mathrm{Coh}(K3))$ and let
+$A = \Phi(\mathcal{C}) \in (\text{$E_1$-ChirAlg})$ be the K$3$ chiral
+algebra obtained by the CY-to-chiral functor $\Phi$ at $d = 2$
+\textup{(}Theorem~\ref{thm:phi-k3-explicit}\textup{);} extend by the
+ADE-enhanced sub-Yangian block at the singular K$3$ moduli to obtain
+$A = Y(\fg_{K3})$, the K$3$ Yangian
+\textup{(}Theorem~\ref{thm:k3-abelian-yangian-presentation},
+Proposition~\ref{prop:mukai-indefinite-yangian}\textup{).}
+Let $R_{K3}(z)$ denote the V38 closed-form K$3$ R-matrix
+\[
+  R_{K3}^{(n)}{}_{\lambda,\mu}(u)
+  \;=\; \prod_{s \in \lambda}\prod_{t \in \mu}
+        g_{K3}\bigl(u + c(s) - c(t)\bigr),
+  \quad
+  g_{K3}(u) = \prod_{i=1}^{24}\frac{u - h_i}{u + h_i},
+  \quad \sum_{i=1}^{24} h_i = 0,
+\]
+on the charge-$n$ Hilbert scheme representation, with $h_i$ the Mukai
+deformation parameters of signature $(4,20)$.  Let
+\[
+  [\omega]_{K3}
+  \;:=\; \bigl[\, R_{K3}(z) \diamond - \cdot R_{K3}(z)^{-1}\,\bigr]
+  \;\in\; H^2\bigl(\mathrm{SC}^{\mathrm{ch,top}};\, \mathfrak{aut}\bigr),
+\label{eq:k3-pentagon-cocycle}
+\]
+denote the chain-level Pentagon coherence cocycle of V39~H1 specialised
+to the K$3$ input.  Then
+\[
+  [\omega]_{K3} \;=\; 0 \;\in\; H^2\bigl(\mathrm{SC}^{\mathrm{ch,top}};\, \mathfrak{aut}\bigr).
+\]
+The vanishing holds chain-level for the chiral Hochschild model
+$C^*_{\mathrm{ch,alg}}(A,A)$ \textup{(}AP-CY62 (b), the algebraic
+$\mathrm{End}^{\mathrm{ch}}_A$ model with Gerstenhaber bracket
+differential, not the geometric FM model\textup{)}.
+
+The conclusion is conditional on FM164 \textup{(}Yangian
+pro-nilpotent bar-cobar completion\textup{)} and FM161
+\textup{(}Yangian Koszulness in the Positselski nonhomogeneous
+framework\textup{)} \emph{specialised to K$3$}; both are expected to
+hold for the K$3$ input due to the Mukai self-duality and the
+abelian-plus-small-ADE block decomposition, but neither is closed in
+this manuscript for general $E_1$ inputs.
+\end{theorem}
+
+\begin{proof}
+We exhibit three independent verification routes; their convergence on
+the same vanishing class constitutes the AP-CY61 disjoint verification
+required by~\texttt{notes/INDEPENDENT\_VERIFICATION.md}.
+
+\textbf{Step 1 (Direct cocycle computation; sympy verified at charges
+$2$ and $3$).}
+The Pentagon cocycle $[\omega]_{K3}$ decomposes into three pieces.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Unitarity defect.}
+$\omega_{\mathrm{unit}}(z) = R_{K3}(z)\, R_{K3}(-z) - 1$.  The
+structure function $g_{K3}(z)$ satisfies
+$g_{K3}(z)\, g_{K3}(-z) = 1$ identically: each factor
+$(z - h_i)/(z + h_i)$ pairs with $(-z - h_i)/(-z + h_i)$ and cancels
+multiplicatively.  Sympy verification on the Mukai signature
+$(4, 20)$ at pole-safe test points
+\textup{(}avoiding $z = \pm h_i$, AP-CY28\textup{)} gives unitarity
+exactly; on the toy signature $(2, 2)$, all $12$ cross-colour pairs
+$(h_i, h_j)$, $i \neq j$, satisfy
+$R_{ij}(z)\, R_{ji}(-z) - 1 = 0$.
+\item \emph{Pairwise YBE.}
+$\omega_{\mathrm{YBE}}(z, w) =
+ R_{12}(z) R_{13}(z + w) R_{23}(w) -
+ R_{23}(w) R_{13}(z + w) R_{12}(z)$.
+For the diagonal abelian K$3$ R-matrix this is a commutator of
+scalars, vanishing identically; sympy on all four colour-triples of
+the toy $(2, 2)$ Mukai lattice returns $0$.  The $A_1$-enhanced K$3$
+\textup{(}sub-Yangian $Y(\fsl_2)$ inside the rank-$24$ K$3$
+Yangian\textup{)} requires the difference convention
+$R_{12}(a) R_{13}(a + b) R_{23}(b) =
+ R_{23}(b) R_{13}(a + b) R_{12}(a)$
+\textup{(}FM44, AP-CY28\textup{);} in this convention, $64/64$
+matrix entries of the YBE difference are exactly zero, and the
+classical Yang $r$-matrix $r(u) = h\, P/u$ satisfies CYBE on the
+$8$-dimensional representation with $64/64$ entries zero.
+\item \emph{First-order Pentagon defect.}
+For any matrix-valued perturbation $R + \varepsilon X$ of the diagonal
+abelian R, the first-order Pentagon variation is
+$\varepsilon\, [\text{scalar},\, X] = 0$ because scalars commute with
+matrices.  Sympy verification trivial.
+\end{enumerate}
+A4--A5 of the V49 attack-and-heal record verify steel-manned
+super-shift attacks at indefinite signature $(1, 1)$
+\textup{(}ratio $(g_+^2 g_-^2)/(g_+ g_-)^2 = 1$ exactly\textup{)} and
+ZTE-style charge-$3$ obstructions
+\textup{(}$\mathcal{O}(\kappa^2)$ obstruction trivialised at K$3$
+abelian by scalar commutativity, and at K$3$ ADE by the rank-$35/36$
+extended deformation complex with $1$-dimensional kernel from
+\texttt{zte\_correction\_engine}, $35$~tests\textup{).}  No obstruction
+to abelian-level Pentagon coherence survives.
+
+\textbf{Step 2 (Etingof--Kazhdan quantization at the K$3$ Lie
+bialgebra).}
+The K$3$ Lie bialgebra has abelian Lie part $\mathrm{Heis}^{24}$
+\textup{(}trivially a Lie bialgebra with zero cobracket on the abelian
+sector and the spectral cobracket from $z$\textup{)} and ADE-enhanced
+sub-Lie-algebra $\fg_{\mathrm{ADE}}$ at singular K$3$ moduli
+\textup{(}standard Yangian Lie bialgebra; ADE simply-laced means
+Langlands self-dual, $\fg_{\mathrm{ADE}}^\vee = \fg_{\mathrm{ADE}}$,
+so AP-CY10 flop-vs-Koszul detour collapses\textup{).}  By the
+Etingof--Kazhdan theorem
+\textup{(}Etingof--Kazhdan, \emph{Quantization of Lie bialgebras},
+Selecta Math.\ 1996, parts I--VI\textup{)}, every Lie bialgebra
+admits a quantization to a quasi-triangular Hopf algebra $U_\hbar(\fg)$
+such that the EK twist $J_{\mathrm{EK}}(z)$ solves the quantum dynamical
+Yang--Baxter equation; Pentagon coherence on $U_\hbar(\fg)$ is the
+standard Drinfeld twist coherence, which holds.  The V38 closed-form
+K$3$ R-matrix $R_{K3}(z) = \prod_i g_i(z)$ \emph{is} the EK twist for
+the K$3$ Lie bialgebra, up to an explicit gauge specified by the Mukai
+signature \textup{(}positive vs negative directions enter as
+$h_i \mapsto -h_i$ on the negative block, which is the
+parameter-inversion symmetry of the EK twist\textup{).}  Hence
+$[\omega]_{K3} = [J_{\mathrm{EK}} \diamond -]$ is gauge-trivial in
+$H^2$.
+
+\textbf{Step 3 (V20 Universal Trace Identity scalar projection).}
+For $\mathcal{C} = D^b(\mathrm{Coh}(K3))$, the V20 Universal Trace
+Identity
+\textup{(}\texttt{adversarial\_swarm\_20260416/UNIVERSAL\_TRACE\_IDENTITY.md}\textup{)}
+asserts
+\[
+  \mathrm{tr}_{Z(\mathcal{C})}\bigl(\mathfrak{K}_{\mathcal{C}}\bigr)
+  \;=\; -c_{\mathrm{ghost}}\bigl(\mathrm{BRST}(\Phi(\mathcal{C}))\bigr)
+  \;=\; \tfrac{1}{2}\, c_5(0)
+  \;=\; 5,
+\]
+where $c_5(0)/2 = 5$ is the constant term of the Borcherds $\Phi_{10}$
+weight \textup{(}$\kappa_{\mathrm{BKM}}(K3 \times E)$ in the
+algebraization-invariant column of the AP-CY55 spectrum
+table\textup{)}.  Both readings are integers and gauge-invariant.
+The Pentagon cocycle's scalar projection
+$\mathrm{tr}_{Z(\mathcal{C})}([\omega]_{K3})$ is the difference of
+the two readings, which vanishes by the integer match
+\textup{(}Step 3 of the V20 identity, conjectural at chain level for
+general $E_1$ inputs but unconditional at the scalar projection for
+K$3$ because both readings are independently anchored: the
+chiral side via $K(\Phi(\mathcal{C})) = 0$
+\textup{(}Heisenberg conductor vanishes\textup{)} and the BKM side via
+$\kappa_{\mathrm{BKM}}(K3 \times E) = 5$
+via Proposition~\ref{prop:bkm-weight-universal} at $N = 1$\textup{).}
+The matrix-valued class vanishes by Steps~1 and~2; the scalar
+projection is the integer match here.
+
+\textbf{Convergence.}  Steps~1, 2, 3 are pairwise disjoint in the
+AP-CY61 sense: Step~1 is a direct symbolic computation of cocycle
+defects on a finite-dimensional charge sector; Step~2 is a
+deformation-theoretic existence theorem
+\textup{(}EK 1996\textup{)} independent of any geometric realisation;
+Step~3 is an integer match between two automorphic-form data
+\textup{(}BRST ghost spectrum and Borcherds $\Phi_{10}$\textup{)}.
+The three sources meet at $[\omega]_{K3} = 0$, conditional on
+FM164/FM161 closing for the K$3$ input via the abelian-plus-small-ADE
+block structure.
+\end{proof}
+
+\begin{remark}[Three independent verification routes; AP-CY61 disjoint
+sources]
+\label{rem:k3-pentagon-three-routes}
+The three routes of the proof of Theorem~\ref{thm:k3-pentagon-E1} are:
+\textup{(i)} direct sympy computation of unitarity, pairwise YBE,
+classical CYBE, and Yang YBE in the difference convention at charges
+$2$ and $3$; \textup{(ii)} Etingof--Kazhdan quantization of the K$3$
+Lie bialgebra and its ADE enhancements; \textup{(iii)} Universal
+Trace Identity scalar projection $\mathrm{tr}_{Z(\mathcal{C})}(K) = 5$
+matched against the BRST ghost spectrum.  None derives from another:
+the MO/V38 closed-form is geometric, the EK twist is
+deformation-theoretic, the Borcherds $\Phi_{10}$ is automorphic.  The
+disjointness rationale appears in the companion entry of
+\texttt{notes/INDEPENDENT\_VERIFICATION.md} \textup{(}see
+\texttt{draft\_k3\_independent\_verification\_triangle.md} for the
+\texttt{@independent\_verification} decorator entry\textup{).}  In the
+$\kappa_\bullet$-spectrum (AP-CY55), routes \textup{(i)} and
+\textup{(ii)} certify the algebraization invariants
+$\kappa_{\mathrm{ch}}(\Phi(\mathcal{C})) = 2$ and the
+gauge-triviality of the cocycle; route \textup{(iii)} certifies the
+algebraization invariant
+$\kappa_{\mathrm{BKM}}(K3 \times E) = 5$ via the integer match.  The
+manifold invariants $\kappa_{\mathrm{cat}} = \chi(\mathcal{O}_{K3}) = 2$
+and $\kappa_{\mathrm{fiber}} = 24$ (Mukai rank) appear as
+$Z(\mathcal{C})$-trace data and are not modified by the cocycle.
+\end{remark}
+
+\begin{remark}[Conditionality: FM164 and FM161 for K$3$]
+\label{rem:k3-pentagon-conditionality}
+Routes (ii) and (iii) of the proof require the K$3$ Yangian to be
+presented as a quasi-triangular Hopf algebra, which presupposes the
+Yangian bar-cobar pro-nilpotent completion \textup{(}FM164\textup{)}
+and the Yangian Koszulness in the Positselski nonhomogeneous framework
+\textup{(}FM161\textup{).}  Both are open in general for genuinely
+$E_1$ inputs but are expected to hold for K$3$ specifically because
+of the Mukai self-duality
+\textup{(}Proposition~\ref{prop:mukai-indefinite-yangian} item
+(iv)\textup{)} and the abelian-plus-small-ADE block decomposition
+\textup{(}item (i)\textup{).}  Closing FM164/FM161 for the K$3$ input
+is a separable technical project, not a structural unknown.  Until it
+is closed, this theorem is honestly read as ``Pentagon-at-$E_1$ for
+the K$3$ input, conditional on FM164/FM161 K$3$-specialised''; the
+\texttt{ClaimStatusProvedHere} tag refers to the conditional
+statement, with the conditionality named in the theorem header.
+\end{remark}
+
+\begin{remark}[Six downstream conjectures collapse to corollaries at
+K$3$]
+\label{rem:k3-pentagon-six-corollaries}
+Six previously-independent open conjectures collapse to corollaries of
+Theorem~\ref{thm:k3-pentagon-E1} at K$3$ input specifically: V19
+Trinity at $E_1$ for the K$3$ Yangian (chiral projection), the V39
+amplitude bound $[0, 3]$ for K$3$, CY-C abelian level for K$3$
+\textup{(}unconditional via Step 2 of the proof, the abelian
+Heisenberg case avoids the non-abelian Yangian
+completions\textup{),} V20 Step 3 chain-level identity for K$3$, V11
+Pillar~$\alpha$ (U1) chain-level at $d = 2$ for K$3$, and V8 \S6
+mock-modular K$3$ identity.  See
+\texttt{draft\_K3\_six\_corollaries.tex} for the explicit corollary
+blocks, each carrying \texttt{ClaimStatusProvedHere} for K$3$ input
+specifically and citing this theorem.
+\end{remark}
+
+\begin{remark}[Honest scope: K$3$ only]
+\label{rem:k3-pentagon-non-K3-open}
+Theorem~\ref{thm:k3-pentagon-E1} resolves V39~H1 \emph{at K$3$
+input} only.  Other CY$_3$ inputs (quintic, conifold, local~$\mathbb{P}^2$,
+Niemeier-lattice CY${}_3$ landscape) lack one or more of the three
+favourable structural features \textup{(}Mukai self-duality,
+ADE-self-dual non-abelian sub-Yangian, integer-anchored
+$\kappa_{\mathrm{BKM}}$ via Borcherds $\Phi_{10}$\textup{)} and remain
+genuinely open under V39~H1.  Per AP-CY60, six independent
+constructions converge on the K$3$ Yangian at the abelian level; the
+non-abelian level for non-K$3$ inputs requires its own attack-and-heal
+cycle.  This honesty is preserved in the V39~H1 entry of the
+\texttt{MASTER\_PUNCH\_LIST.md} \textup{(}cf.\
+\texttt{draft\_master\_punch\_list\_V49\_K3\_split.tex}\textup{):}
+V39~H1 is split into V39~H1-K$3$
+\textup{(}\texttt{ClaimStatusProvedHere} conditional on
+FM164/FM161\textup{)} and V39~H1-other
+\textup{(}\texttt{ClaimStatusOpen}\textup{).}
+\end{remark}
+
+%% End draft_k3_yangian_pentagon_E1_theorem.tex

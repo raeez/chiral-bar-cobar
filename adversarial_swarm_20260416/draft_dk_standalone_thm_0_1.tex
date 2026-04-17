@@ -1,0 +1,105 @@
+% =====================================================================
+% Application draft H3 — DK standalone Theorem 0.1 (Climax attribution).
+%
+% Source: wave_supervisory_climax_main_tex_drafts.md §3 (V22).
+% Target: standalone/drinfeld_kohno_bridge.tex, between
+%   L173  \tableofcontents
+%   L178  \section{Introduction: two incarnations of the same object}
+%
+% Posture: unnumbered \section* block holding the Vol I attribution,
+% a numbered \begin{theorem} block stating the Climax with
+% \ClaimStatusProvedElsewhere, and a \begin{remark} naming the
+% standalone's position in the larger architecture.
+%
+% Conventions verified:
+%   - q = e^{2 pi i / (k + h^vee)}  (Kazhdan–Lusztig canonical
+%     convention, matches existing DK standalone L181-183).
+%   - DK connection \nabla(V^k(g)) carries the explicit level prefix
+%     1/(k + h^vee) (AP126/AP141); at critical level k = -h^vee the
+%     coefficient diverges, signalling boundary of ConnConf.
+%   - \Ydg is defined at L96 of the standalone (no preamble change).
+%   - \ClaimStatusProvedElsewhere is provided at L114 of the standalone
+%     (no preamble change).
+%   - \ChirHoch / "chiral Hochschild" not used here (no AP160 trigger).
+%   - bare \kappa is Vol I convention (AP113 not in force).
+%   - "chiral Hochschild" terminology not invoked; the standalone's
+%     subject is the affine KM specialisation.
+%
+% Status of forward references at insertion time:
+%   - \ref{thm:dk0}    EXISTS (standalone L688).
+%   - \ref{thm:dk1..3} DO NOT EXIST as theorem labels; only the
+%     section labels sec:dk0–sec:dk3 exist (L679, L923, L1194, L1342).
+%     V22 §3 wrote "Theorems~\ref{thm:dk0}--\ref{thm:dk3}" in prose
+%     but used "Sections~\ref{sec:dk0}--\ref{sec:dk3}" in the Remark.
+%     This draft uses the Section form in BOTH places to avoid a
+%     dangling reference.  This is a typographic adjustment to V22's
+%     §3, not a content change.
+%   - \ref{thm:climax} NOT YET INSTALLED in main.tex.  The
+%     \ClaimStatusProvedElsewhere tag attributes the proof to Vol I;
+%     no \ref{thm:climax} appears in the body of the standalone, so
+%     no dangling reference is created.  An explicit cross-reference
+%     can be added once the main.tex Climax theorem environment is
+%     installed (Obstruction §7.1 of the supervisory report).
+% =====================================================================
+
+\section*{Theorem~0.1 (Climax of Volume~I, attribution)}
+\addcontentsline{toc}{section}{Theorem~0.1: Climax of Volume~I}
+\label{sec:dk-climax-attribution}
+
+The Drinfeld--Kohno bridge proved in this article is the affine
+Kac--Moody specialisation of a single structural theorem of
+Volume~I, which the present standalone treats as a black box.
+We state it here because the entire DK ladder
+(Sections~\ref{sec:dk0}--\ref{sec:dk3}) is a corollary.
+
+\begin{theorem}[Vol~I Climax, $\Phi$-pullback identity]
+\label{thm:climax}
+Let $\cA$ be a chirally Koszul $\Einf$-chiral algebra on a smooth
+projective curve $X / \CC$. Let $B^{\mathrm{ord}}(\cA)$ be its
+ordered chiral bar complex on
+$\Conf_{n}^{\mathrm{ord}}(X)$, constructed by the
+Fulton--MacPherson residue extraction at the collision divisors.
+There is a universal functor
+\[
+  \mathrm{KZ} \;:\; \mathrm{ChirAlg}^{\Einf}
+  \;\longrightarrow\; \mathrm{ConnConf}
+\]
+to the category of meromorphic flat connections on configuration
+spaces, such that
+\[
+  d_{\mathrm{bar}}^{B^{\mathrm{ord}}(\cA)}
+  \;=\;
+  \mathrm{KZ}^{*}(\nabla_{\mathrm{Arnold}}),
+  \qquad
+  \kappa(\cA) \;=\; -\,c_{\mathrm{ghost}}(\mathrm{BRST}(\cA)),
+\]
+and the assignment $\cA \mapsto \mathrm{KZ}(\cA)$ is functorial in
+chiral algebra morphisms. Three classical theorems are special
+fibres of the pullback identity:
+\textup{(DK)} for $\cA = V^{k}(\fg)$ on evaluation modules,
+$\rho_{n}^{\mathrm{KZ}} \cong \rho_{n}^{U_{q}(\fg)}$
+at $q = e^{2\pi i/(k+h^{\vee})}$;
+\textup{(Verlinde)} for rational $\cA$ at genus~$0$,
+$N_{ij}^{k} = \sum_{a}S_{ia}S_{ja}\overline{S_{ka}}/S_{0a}$;
+\textup{(Borcherds)} for $\cA = V_{\mathrm{II}_{2,18}}$ at genus~$1$,
+the bar Euler product equals $\Phi_{10}$.
+\ClaimStatusProvedElsewhere
+\end{theorem}
+
+\begin{remark}[Position of the present standalone]
+\label{rem:dk-position-in-climax}
+This standalone proves the (DK) specialisation of
+Theorem~\ref{thm:climax}. The four-stage ladder DK-$0$ through
+DK-$3$ (Sections~\ref{sec:dk0}--\ref{sec:dk3}) is exactly the
+construction of the four levels of the
+$\mathrm{KZ}$-arena fibre over the affine Kac--Moody source:
+DK-$0$ assembles the connection
+$\nabla(V^{k}(\fg)) = d - \sum_{i<j}\Omega_{ij}/(k+h^{\vee})\,
+d\log(z_{i}-z_{j})$
+from the OPE residues; DK-$1$ proves the spectral Drinfeld
+strictification, identified here as the genus-$0$ flatness
+obstruction of $\nabla_{\mathrm{Arnold}}$ pulled back along the
+PBW filtration; DK-$2$ identifies the line-side Koszul dual as
+the dg-shifted Yangian $\Ydg_{\hbar}(\fg)$;
+DK-$3$ extends to all simple types via Kazhdan--Lusztig.
+\end{remark}

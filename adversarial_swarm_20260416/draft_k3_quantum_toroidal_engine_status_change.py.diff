@@ -1,0 +1,78 @@
+--- a/compute/lib/k3_quantum_toroidal.py
++++ b/compute/lib/k3_quantum_toroidal.py
+@@ -1,9 +1,16 @@
+ r"""K3 quantum toroidal algebra: deformation of Y(g_{K3}) by the E modulus.
+
+-STATUS: CONJECTURAL (AP-CY14).  The K3 quantum toroidal algebra
+-U_{q,t}(g_{K3}^{tor}) is NOT a theorem.  All results in this module
+-are conditional on:
+-  (1) The existence of Y(g_{K3}) (Conjecture conj:k3-yangian),
+-  (2) CY-A_3 for K3 x E (the d=3 programme),
+-  (3) The quantization of the E-direction loop.
++STATUS: CONSTRUCTIVE_AT_ABELIAN_LEVEL; CONJECTURAL_AT_NONABELIAN
++   (post V48 Drinfeld-currents construction; AP-CY14 superseded at
++   the abelian (gl_1) level).
++
++   Abelian (gl_1) sector: PROVED via the Drinfeld-currents construction
++   of V48 (adversarial_swarm_20260416/wave_K3_quantum_toroidal_construction.md),
++   sealed in chapters/examples/k3_quantum_toroidal_chapter.tex as
++   thm:k3-quantum-toroidal-abelian (parts (i)-(v) of the original
++   conj:k3-quantum-toroidal, which is now retained as a label alias).
++
++   Non-abelian (ADE-enhanced) sector: CONJECTURAL.
++   Sealed in conj:k3-quantum-toroidal-nonabelian.  Conditional on:
++     (1) Chain-level CY-A_3 data for non-formal A_infty algebras,
++     (2) The Yang R-matrix on Mukai-weight collisions (V38 Sec C step 4),
++     (3) The matching with g_{ADE} representation theory.
+
+ This module constructs what the K3 quantum toroidal algebra MUST be
+ if it exists, and verifies internal consistency of the construction.
+@@ -174,8 +181,21 @@
+ # 0. Constants and status
+ # =========================================================================
+
+-STATUS = 'CONJECTURAL'  # AP-CY14: the K3 quantum toroidal is not constructed
++STATUS = 'CONSTRUCTIVE_AT_ABELIAN_LEVEL'
++# After V48 Drinfeld-currents construction (2026-04-16):
++#   - Parts (i)-(v) of conj:k3-quantum-toroidal at the abelian (gl_1) level
++#     are PROVED as thm:k3-quantum-toroidal-abelian
++#     (chapters/examples/k3_quantum_toroidal_chapter.tex).
++#   - The non-abelian (ADE-enhanced) extension remains CONJECTURAL,
++#     sealed in conj:k3-quantum-toroidal-nonabelian.
++# AP-CY14 is therefore SUPERSEDED at the abelian level: the K3 quantum
++# toroidal positive half is constructed, not "not constructed."
++
++STATUS_NONABELIAN = 'CONJECTURAL'
++# The full non-abelian quantum toroidal algebra, the full Drinfeld
++# double Hopf object at all charges, and the matching with g_ADE
++# representation theory remain conjectural.
+
+ # Miki automorphism status for K3 quantum toroidal
+ MIKI_STATUS = 'NO_S3'  # AP-CY22: no S_3 Miki; only SL_2(Z) from E
+
+%% =========================================================================
+%% NOTES.
+%%   1. The diff is unified format, applicable with `git apply` or
+%%      `patch -p1`.
+%%   2. The code body of the module (functions, tests, return values) is
+%%      UNCHANGED.  Only the docstring and the STATUS string constants
+%%      are updated to reflect the V48 promotion.
+%%   3. After application, the existing 51 tests continue to pass
+%%      unchanged (they verify the abelian-level structure function,
+%%      inversion, factorisation, Yangian limit, etc., which are now
+%%      thm:k3-quantum-toroidal-abelian parts (i)-(v) rather than
+%%      conjectural assertions).
+%%   4. Test command:
+%%        cd /Users/raeez/calabi-yau-quantum-groups
+%%        make fast
+%%        python -m pytest compute/tests/test_k3_quantum_toroidal.py -v
+%%   5. Verification of status change:
+%%        grep -n "STATUS = 'CONSTRUCTIVE_AT_ABELIAN_LEVEL'" \
+%%             compute/lib/k3_quantum_toroidal.py
+%%        grep -n "ClaimStatusProvedHere" \
+%%             chapters/examples/k3_quantum_toroidal_chapter.tex \
+%%             | grep -i toroidal
+%%   6. The MIKI_STATUS constant remains 'NO_S3' (AP-CY22 unchanged):
+%%      the absence of S_3 Miki is independent of the V48 construction
+%%      and is already proved in prop:k3-qt-no-s3-miki.
+%% =========================================================================

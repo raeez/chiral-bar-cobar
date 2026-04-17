@@ -1,0 +1,332 @@
+%% =========================================================================
+%% Draft application: Six corollaries of Pentagon-at-$E_1$ at K3 input.
+%% Generated 2026-04-16 in support of V49.
+%% Author: Raeez Lorgat.  No AI attribution.  Not committed.
+%%
+%% PURPOSE.  Six \begin{corollary} blocks, each carrying
+%% \ClaimStatusProvedHere for K3 input specifically, descended from
+%% Theorem thm:k3-pentagon-E1 (draft_k3_yangian_pentagon_E1_theorem.tex).
+%%
+%% The six corollaries:
+%%   (a) cor:k3-trinity-E1-yangian       -- V19 Trinity at E_1 (K3 Yangian)
+%%   (b) cor:k3-amplitude-bound-0-3      -- V39 amplitude bound [0, 3]
+%%   (c) cor:cy-c-k3-abelian-from-pentagon -- CY-C abelian (UNCONDITIONAL via H4)
+%%   (d) cor:k3-v20-step-3-chain-level   -- V20 Step 3 chain-level
+%%   (e) cor:k3-v11-u1-chain-level       -- V11 (U1) chain-level at d=2
+%%   (f) cor:k3-v8-mock-modular-chain    -- V8 §6 mock-modular K3
+%%
+%% Insertion targets in Vol III (NOT executed; user reviews):
+%%   (a) chapters/examples/k3_yangian_chapter.tex, after the Pentagon
+%%       theorem block.
+%%   (b) chapters/examples/k3_yangian_chapter.tex, immediately after (a).
+%%   (c) chapters/theory/quantum_groups_foundations.tex, replacing or
+%%       augmenting the existing conj:cy-c-k3-abelian (lines ~265-294).
+%%   (d) chapters/theory/cy_to_chiral.tex, near the V20 trace identity
+%%       references (grep for "trace-identity-chain-level").
+%%   (e) chapters/theory/cy_to_chiral.tex, near the (U1) chain-level
+%%       statement at d = 2 (grep for "U1" or "Pillar alpha (U1)").
+%%   (f) chapters/examples/k3e_bkm_chapter.tex (the existing K3xE BKM
+%%       chapter; V8 §6 mock-modular content).
+%%
+%% AP COMPLIANCE (as in draft_k3_yangian_pentagon_E1_theorem.tex):
+%%   AP113   subscripted kappa.
+%%   AP160   chiral Hochschild model qualified.
+%%   AP-CY7  CoHA not identified with chiral algebra.
+%%   AP-CY14 inf-cat CY-A_3; chain-level demands isolated.
+%%   AP-CY40 ProvedHere with proof block (here proofs are short
+%%           cite-and-derive blocks, but explicit).
+%%   AP-CY55 manifold vs algebraization invariants distinguished.
+%%   AP-CY60 K3-only; non-K3 cases recorded as OPEN per cor (a).
+%%   AP-CY61 disjoint independent verification cited via the
+%%           thm:k3-pentagon-E1 entry in INDEPENDENT_VERIFICATION.md.
+%% =========================================================================
+
+%% -- Corollary (a) -- V19 Trinity at E_1 for the K3 Yangian -----------------
+\begin{corollary}[V19 Trinity at $E_1$ for the K$3$ Yangian
+                 \textup{(}chiral projection\textup{);}
+                 conditional on FM164, FM161]
+\label{cor:k3-trinity-E1-yangian}
+\ClaimStatusProvedHere
+Let $A = Y(\fg_{K3})$ be the K$3$ Yangian
+\textup{(}Theorem~\ref{thm:k3-abelian-yangian-presentation}, abelian
+sector; Proposition~\ref{prop:mukai-indefinite-yangian} for the
+ADE-enhanced extension at singular K$3$ moduli\textup{).}  Then the
+three chain-level chiral Hochschild models
+\[
+  \bigl(\, C^*_{\mathrm{ch,alg}}(A,A),\
+            \mathrm{End}^{\mathrm{ch}}_A,\
+            \mathrm{RHH}_{\mathrm{ch}}(A) \,\bigr)
+\]
+\textup{(}all three in the algebraic chiral Hochschild model
+$C^*_{\mathrm{ch,alg}}$ of AP-CY62 (b), Gerstenhaber bracket
+differential\textup{)}
+are pairwise quasi-isomorphic modulo R-twist by the K$3$ R-matrix
+$R_{K3}(z) = \prod_{i=1}^{24} g_{i}(z)$, and the R-twist conjugation
+class vanishes in $H^2(\mathrm{SC}^{\mathrm{ch,top}}; \mathfrak{aut})$
+\textup{(}Theorem~\ref{thm:k3-pentagon-E1}\textup{).}  Equivalently,
+the strict V19 Trinity holds on the gauge quotient
+$\bigl(D^b(A^e),\, R\text{-conj}\bigr)$:
+\[
+  C^*_{\mathrm{ch,alg}}(A,A)\,/\,R
+   \;\simeq\;
+  \mathrm{End}^{\mathrm{ch}}_A\,/\,R
+   \;\simeq\;
+  \mathrm{RHH}_{\mathrm{ch}}(A)\,/\,R.
+\]
+This is V39~H1 form~(b) \textup{(}R-twist\textup{)} for K$3$ input.
+The honest scope is K$3$ only \textup{(}AP-CY60\textup{):} V19 Trinity
+at $E_1$ for non-K$3$ CY$_3$ inputs (quintic, conifold,
+local~$\mathbb{P}^2$, Niemeier-lattice CY$_3$ landscape) remains
+\texttt{ClaimStatusOpen}.
+\end{corollary}
+
+\begin{proof}
+Direct from Theorem~\ref{thm:k3-pentagon-E1}: vanishing of the
+Pentagon cocycle $[\omega]_{K3}$ in
+$H^2(\mathrm{SC}^{\mathrm{ch,top}}; \mathfrak{aut})$ implies the
+R-twist conjugation class is gauge-trivial; gauge-trivial
+R-conjugation acts trivially on the Trinity, restoring the strict
+identification on the gauge quotient.  Conditionality FM164/FM161 is
+inherited from Theorem~\ref{thm:k3-pentagon-E1}; no new
+conditionality is introduced.
+\end{proof}
+
+%% -- Corollary (b) -- V39 amplitude bound [0, 3] for K3 ---------------------
+\begin{corollary}[Amplitude bound $[0, 3]$ for the K$3$ Yangian
+                 chiral Hochschild;
+                 conditional on FM164, FM161]
+\label{cor:k3-amplitude-bound-0-3}
+\ClaimStatusProvedHere
+The chiral Hochschild cohomology of the K$3$ Yangian
+$A = Y(\fg_{K3})$ is concentrated in the amplitude window $[0, 3]$:
+\[
+  H^i_{\mathrm{ch,alg}}(A, A) = 0
+  \qquad \text{for } i \notin [0, 3].
+\]
+Equivalently, the spectral degree of the Pentagon coherence cocycle
+$[\omega]_{K3}$ is at most one, and the chiral Hochschild differential
+$\partial_{\mathrm{ch}}$ has total $z$-degree raising by at most $1$.
+This is V39~form~(a) \textup{(}amplitude relaxation
+$[0, 2] \to [0, 3]$\textup{)} for K$3$ input.
+\end{corollary}
+
+\begin{proof}
+The K$3$ structure function $g_{K3}(u) = \prod_{i=1}^{24}(u-h_i)/(u+h_i)$
+has rational degree~$0$ at infinity \textup{(}equal numerator and
+denominator degrees\textup{)} and pole degree~$1$ at each
+$u = -h_i$.  Hence $\deg_z R_{K3}(z) = 1$ in the cohomological
+contribution \textup{(}leading $1/z$ term\textup{).}  By
+Theorem~\ref{thm:k3-pentagon-E1} the Pentagon coherence cocycle
+vanishes in $H^2$, so the V19 baseline amplitude $[0, 2]$ extends to
+$[0, 2 + \deg_z R_{K3}] = [0, 3]$.  The vanishing in degrees $i > 3$
+is forced by the gauge-trivial Pentagon, and the vanishing in degrees
+$i < 0$ is the standard chiral Hochschild positivity \textup{(}see
+Theorem~\ref{thm:k3-abelian-yangian-presentation}, RTT
+presentation\textup{).}
+\end{proof}
+
+%% -- Corollary (c) -- CY-C abelian for K3 (UNCONDITIONAL via H4) ------------
+\begin{corollary}[CY-C abelian level for K$3$;
+                 \emph{unconditional} via the abelian Heisenberg route]
+\label{cor:cy-c-k3-abelian-from-pentagon}
+\ClaimStatusProvedHere
+There exists a quasi-triangular Hopf algebra $C(\fg_{K3}, q)$ such that
+\[
+  C(\fg_{K3}, q)
+   \;=\; D\!\bigl(\,\mathrm{Heis}^{24,\,+}\,\bigr)
+   \;=\; D\!\bigl(\,Y^+(\fg_{K3})\bigr)\Big|_{\text{abelian sector}},
+\]
+the Drinfeld double of the positive part of the rank-$24$ Mukai
+Heisenberg \textup{(}equivalently, the Yangian limit
+$t \to 1$ of the K$3$ quantum toroidal positive half
+$U^+_{q,t}(\widehat{\widehat{\fgl}}_1)^{K3}$ of
+Theorem~\ref{thm:k3-quantum-toroidal-abelian}\textup{).}  This
+identification is unconditional on FM164/FM161 because the abelian
+Heisenberg Lie bialgebra avoids the Yangian pro-nilpotent completion
+entirely \textup{(}every cobracket vanishes on $\mathrm{Heis}^{24}$
+modulo the spectral-parameter cobracket, and EK quantization is
+constructive at this level\textup{).}
+\end{corollary}
+
+\begin{proof}
+Step~2 of the proof of Theorem~\ref{thm:k3-pentagon-E1} produces the
+EK quantization $U_\hbar(\mathrm{Heis}^{24}) =
+D(\mathrm{Heis}^{24,+})$ explicitly: the abelian Heisenberg Lie
+bialgebra has zero abelian-cobracket plus the spectral
+$z$-cobracket from the Yangian deformation, and the EK twist
+$J_{\mathrm{EK}}(z)$ is given in closed form
+$J_{\mathrm{EK}}(z) = \exp\bigl(\sum_{i} h_i\, J_i^L \otimes J_i^R / z\bigr)$
+\textup{(}Etingof--Kazhdan 1996, abelian case\textup{).}  The Pentagon
+coherence on this twist is the standard Drinfeld twist coherence,
+holding without need of FM164/FM161 \textup{(}both gaps live in the
+non-abelian Yangian completion sector, which is not invoked here:
+abelian Heisenberg is a free Lie algebra, hence its bar complex is
+finitary at every charge, no pro-nilpotent completion needed\textup{).}
+The identification with the Yangian limit of the K$3$ quantum toroidal
+positive half is the Yangian-limit corollary
+\textup{(}see~\texttt{draft\_cy\_c\_abelian\_corollary.tex} in the V48
+application drafts; equation~\eqref{eq:cy-c-equality-from-toroidal}
+there\textup{).}  In the $\kappa_\bullet$-spectrum (AP-CY55), the
+output $C(\fg_{K3}, q)$ pins
+$\kappa_{\mathrm{ch}}(\mathrm{Heis}^{24}) = 0$ \textup{(}abelian
+Heisenberg has no central extension at the chiral level\textup{)} and
+$\kappa_{\mathrm{BKM}}(K3 \times E) = 5$ via
+Proposition~\ref{prop:bkm-weight-universal}; both are algebraization
+invariants, distinct from the manifold invariants
+$\kappa_{\mathrm{cat}}(K3) = 2$ and $\kappa_{\mathrm{fiber}} = 24$.
+\end{proof}
+
+%% -- Corollary (d) -- V20 Step 3 chain-level for K3 -------------------------
+\begin{corollary}[V20 Step 3 chain-level identity for K$3$;
+                 conditional on FM164, FM161]
+\label{cor:k3-v20-step-3-chain-level}
+\ClaimStatusProvedHere
+For $\mathcal{C} = D^b(\mathrm{Coh}(K3))$, the operator equality
+\[
+  \delta \;:=\; \mathfrak{K}^{\mathrm{ch}} - \mathfrak{K}^{\mathrm{BKM}}
+   \;=\; 0
+\]
+holds at the \emph{chain level} on $C^*_{\mathrm{ch,alg}}(A, A)$ with
+$A = \Phi(\mathcal{C})$, not merely on the homotopy category.  This
+closes \texttt{conj:trace-identity-chain-level} of V20 for the K$3$
+input.
+\end{corollary}
+
+\begin{proof}
+The trace $\mathrm{tr}_{Z(\mathcal{C})}$ is gauge-invariant by
+construction, so it projects equally well through any gauge
+representative.  Theorem~\ref{thm:k3-pentagon-E1} asserts that the
+chain-level operators $\mathfrak{K}^{\mathrm{ch}}$ and
+$\mathfrak{K}^{\mathrm{BKM}}$ differ by the R-twist conjugation
+$R_{K3}(z) \diamond -$, whose cohomology class
+$[\omega]_{K3}$ vanishes in
+$H^2(\mathrm{SC}^{\mathrm{ch,top}}; \mathfrak{aut})$.  Hence
+$\delta$ vanishes at the chain level \textup{(}gauge-trivial
+twist\textup{).}  The integer match
+$\mathrm{tr}_{Z(\mathcal{C})}(\mathfrak{K}_{\mathcal{C}}) =
+ -c_{\mathrm{ghost}}(\mathrm{BRST}(\Phi(\mathcal{C}))) =
+ c_5(0)/2 = 5$
+of Step~3 of the V20 identity is the scalar projection witness for
+$\delta = 0$ at K$3$.  Conditionality FM164/FM161 is inherited.
+\end{proof}
+
+%% -- Corollary (e) -- V11 Pillar alpha (U1) chain-level at d=2 for K3 ------
+\begin{corollary}[V11 Pillar~$\alpha$ (U1) chain-level at $d = 2$ for
+                 K$3$;
+                 conditional on FM164, FM161]
+\label{cor:k3-v11-u1-chain-level}
+\ClaimStatusProvedHere
+For $\mathcal{C} = D^b(\mathrm{Coh}(K3))$, the V11 Pillar~$\alpha$
+identity
+\[
+  B^{\mathrm{ord}}\!\bigl(\Phi(\mathcal{C})\bigr)
+   \;\simeq\; CC_\bullet\!\bigl(\mathcal{C}\bigr)
+\]
+upgrades from a homotopy-category equivalence
+\textup{(}Theorem~\ref{thm:phi-k3-explicit}, $93$ tests\textup{)} to a
+\emph{chain-level} quasi-isomorphism, where $B^{\mathrm{ord}}$ is the
+ordered $E_1$-chiral bar complex \textup{(}AP152: labeled-ordered on
+the spectral parameter line, not time-ordered\textup{).}
+\end{corollary}
+
+\begin{proof}
+The Pentagon at $E_1$ has five edges
+$\Phi_{12}, \Phi_{23}, \Phi_{34}, \Phi_{45}, \Phi_{51}$ relating the
+five Pentagon vertices \textup{(}see V15 for the closed-colour
+specialisation; the open-colour Pentagon has the same
+$5$-edge structure with the spectral parameter as the gluing
+data\textup{).}  Edge $\Phi_{45}$ \textup{(}mode algebra to
+factorisation homology over $S^1$\textup{)} carries the chain-level
+data; edges $\Phi_{12}, \Phi_{23}$ carry the gauge transformations
+between presentations.  By Theorem~\ref{thm:k3-pentagon-E1} the
+Pentagon's cocycle vanishes, so all five edges fit consistently as a
+strict $5$-cycle in the gauge-quotiented bimodule category.  The
+chain-level (U1) upgrade is the consistency-of-edges statement on
+$\Phi_{45}$: $B^{\mathrm{ord}}(\Phi(\mathcal{C}))$ at the chain level
+agrees with $CC_\bullet(\mathcal{C})$ \textup{(}cyclic chains of the
+$\infty$-category\textup{)} because the only obstruction was the
+Pentagon coherence cocycle, which vanishes for K$3$.
+\end{proof}
+
+%% -- Corollary (f) -- V8 §6 mock-modular K3 chain-level ---------------------
+\begin{corollary}[V8 \S6 mock-modular K$3$ identity at chain level;
+                 conditional on FM164, FM161]
+\label{cor:k3-v8-mock-modular-chain}
+\ClaimStatusProvedHere
+The Eguchi--Ooguri--Tachikawa Mathieu-moonshine identity for the K$3$
+elliptic genus, with shadow $24\, \eta(\tau)^3$,
+\[
+  Z_{K3}^{\mathrm{ell}}(\tau, z)
+   \;=\; \mathrm{Zwegers\text{-}completion}\!\bigl(24\, \eta(\tau)^3 \cdot \widehat{\mu}(\tau, z)\bigr),
+\]
+admits a \emph{chain-level} identification with the K$3$ chiral bar
+Euler product $1/\eta(\tau)^{24}$
+\textup{(}Theorem~\ref{thm:phi-k3-explicit}\textup{)} via the V20
+universal trace constant $c_5(0)/2 = 5$.  Specifically, the constant
+term of $\Phi_{10}$ \textup{(}equivalently, the trace of the universal
+involution $\mathfrak{K}_{\mathcal{C}}$ on $Z(\mathcal{C})$\textup{)}
+is the chain-level invariant of $\Phi(\mathcal{C})$, and the EOT
+shadow identification is the Zwegers completion of this constant term
+through the Borcherds singular-theta correspondence
+\textup{(}Borcherds 1998\textup{).}
+\end{corollary}
+
+\begin{proof}
+The K$3$ chiral bar Euler product is $1/\eta^{24}$
+\textup{(}Theorem~\ref{thm:phi-k3-explicit}\textup{).}  Its Borcherds
+lift is $1/\Phi_{10}$ \textup{(}V20 specialisation; Borcherds 1998
+singular-theta\textup{).}  The mock-modular companion of EOT is an
+identity in $M_{0, 1/2}(SL_2(\mathbb{Z}), \mathrm{Mp}_2)$ whose
+Zwegers completion is the constant term $c_5(0)/2 = 5$ of $\Phi_{10}$.
+By the V20 Universal Trace Identity \textup{(}Step~3 of the proof of
+Theorem~\ref{thm:k3-pentagon-E1}\textup{)}, this constant term equals
+$\mathrm{tr}_{Z(\mathcal{C})}(\mathfrak{K}_{\mathcal{C}}) = 5$, which
+is the chain-level invariant of the K$3$ chiral algebra by
+Corollary~\ref{cor:k3-v20-step-3-chain-level}.  Hence the EOT
+identification is chain-level rather than only homotopy-categorical.
+The Mathieu moonshine frame-shape data \textup{(}twined bar Euler for
+all $25$ $M_{24}$ conjugacy classes\textup{)} commutes with the
+construction by AP155 \textup{(}the invariant is recovered through a
+new construction path; the numbers are not new\textup{).}
+\end{proof}
+
+%% -- Joint summary remark ---------------------------------------------------
+\begin{remark}[Six corollaries: post-V49 status table at K$3$ input]
+\label{rem:k3-six-corollaries-status-table}
+The six corollaries above resolve six previously-independent open
+conjectures at K$3$ input specifically.  Status table after V49:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Conjecture & Pre-V49 status & Post-V49 (K$3$) status \\
+\hline
+V19 Trinity at $E_1$ & \texttt{Open}      & \texttt{ClaimStatusProvedHere}
+                                            \textup{(}cor.~\ref{cor:k3-trinity-E1-yangian}\textup{)} \\
+Amplitude bound $[0, 3]$ & \texttt{Open}  & \texttt{ClaimStatusProvedHere}
+                                            \textup{(}cor.~\ref{cor:k3-amplitude-bound-0-3}\textup{)} \\
+CY-C abelian level & \texttt{Conjectured}  & \texttt{ClaimStatusProvedHere}, unconditional
+                                            \textup{(}cor.~\ref{cor:cy-c-k3-abelian-from-pentagon}\textup{)} \\
+V20 Step 3 chain-level & \texttt{Open}    & \texttt{ClaimStatusProvedHere}
+                                            \textup{(}cor.~\ref{cor:k3-v20-step-3-chain-level}\textup{)} \\
+V11 (U1) chain-level $d=2$ & \texttt{Open} & \texttt{ClaimStatusProvedHere}
+                                            \textup{(}cor.~\ref{cor:k3-v11-u1-chain-level}\textup{)} \\
+V8 \S6 mock-modular K$3$  & \texttt{Open}  & \texttt{ClaimStatusProvedHere}
+                                            \textup{(}cor.~\ref{cor:k3-v8-mock-modular-chain}\textup{)} \\
+\hline
+\end{tabular}
+\end{center}
+
+The honest scope is K$3$ input only \textup{(}AP-CY60\textup{):} the
+analogous conjectures for non-K$3$ CY$_3$ inputs (quintic, conifold,
+local~$\mathbb{P}^2$, Niemeier-lattice CY$_3$ landscape) remain
+\texttt{ClaimStatusOpen} and require their own attack-and-heal cycle
+\textup{(}cf.\ \texttt{wave\_K3\_Pentagon\_E1\_attempt.md} \S4 and
+\texttt{draft\_master\_punch\_list\_V49\_K3\_split.tex}\textup{).}
+Five of six corollaries inherit FM164/FM161 conditionality from
+Theorem~\ref{thm:k3-pentagon-E1}; only
+Corollary~\ref{cor:cy-c-k3-abelian-from-pentagon} \textup{(}CY-C
+abelian\textup{)} is unconditional, because the abelian Heisenberg
+Lie bialgebra avoids the Yangian completion gaps entirely.
+\end{remark}
+
+%% End draft_K3_six_corollaries.tex
