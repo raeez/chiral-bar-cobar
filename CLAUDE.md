@@ -370,6 +370,15 @@ Vol II 2026-04-12/13 cross-volume (B74-B85):
 - B84. Khan-Zeng scope: 3d Poisson sigma model covers ALL freely-generated PVAs with conformal vector. Check gr_Li(A) first.
 - B85. Orbifold route: Z/n-invariants preserves E_n structure.
 
+Session 2026-04-17 corrections (B86-B92, Beilinson-rectified):
+- B86. Super-Yangian complementarity κ(Y(sl(m|n))) + κ(Y(sl(n|m))^!) = 0 (Virasoro analogy) → CORRECT `= max(m, n)` at Sugawara-shifted dual level. Verified symbolically at small rank.
+- B87. "Tempered stratum obstruction κ^(∞)_orig = 1/e" (dichotomy) → RETRACTED. Stirling factor dropped; correct limsup = 0 universally at generic c.
+- B88. "First Kummer-irregular prime 691" (unqualified) → imprecise. 691 is BERNOULLI-LEADING first (B_12). SIZE-LEADING first Kummer-irregular is 37 (B_32). Always qualify.
+- B89. "Six routes to G(K3×E) converge isomorphically" (CY-C naive) → FALSIFIED. Pentagon of five intertwiners; R_2 source branch; generator rank stratification.
+- B90. "CY-C pentagon κ_ch stratification {3,12,24}" → CATEGORY ERROR. κ_ch = 0 route-independent (Hodge supertrace). The stratification is GENERATOR RANK ρ^{R_i}, orthogonal to κ_ch.
+- B91. "C_2-cofiniteness ⟹ bounded Massey ⟹ tempered" (W(p)) → FAILS. Gurarie 1993 + Flohr 1996 logarithmic CFT amplitudes exhibit unbounded Massey despite finite-dim Zhu. W(p) tempering OPEN.
+- B92. Primes 1423, 3067, 23, 43, 419 labelled Kummer-irregular → VERIFIED REGULAR at primary source. They still appear in S_r numerators as RICCATI-ARITHMETIC characteristic primes, NOT Kummer-arithmetic.
+
 ## Cross-Volume Anti-Patterns
 Before cross-volume edits, Read `notes/cross_volume_aps.md` (Vol II V2-AP* and Vol III AP-CY1..AP-CY61 catalogs). The Geometric/Algebraic Model Conflations (AP-CY62..AP-CY67) are kept inline below under "Geometric vs Algebraic Models."
 
