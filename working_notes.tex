@@ -9409,40 +9409,70 @@ For Virasoro: OPE $T(z)T(w) \sim (c/2)/(z-w)^4 + \ldots$, pole
 order~$4$; but $C_{\mathrm{Vir}} = 6$, not 4. So direct pole-order
 identification fails.
 
-Self-audit of the first-alternative hypothesis: a naive
-identification~$C_{\mathrm{Vir}} = \chi(\partial \mathrm{FM}_4(\bR))$
-\emph{fails}. Stasheff's associahedron $K_4$ has $C_3 = 5$ top-dim
-vertices (Catalan), and $\partial K_4$ has $2 \cdot 4 - 4 = 4$
-codim-$1$ facets (one per cluster-stratum). Neither~$4$ nor~$5$
-equals~$6$.
+\textbf{Iteration 7 (2026-04-17): the origin of $C_{\mathrm{Vir}}=6$
+is derived from the leading-order Riccati kernel.} Re-reading the
+engine's proof sketch (\verb|shadow_tower_higher_vir.py| lines
+260--272) and tracing the leading-order behaviour of the rescaled
+recurrence, the factor of~$6$ is \emph{not} a configuration-space
+Euler characteristic; it is the product of (initial bar depth
+$r_0 = 3$) and (Riccati seed coefficient $S_{r_0}=2$).
 
-What then is~$C_{\mathrm{Vir}} = 6$? Candidates, each requiring
-verification:
-\begin{itemize}
-  \item \textbf{Arnold-form degree.} The Arnold form at bar-depth~3
-        is a product of $3$ one-forms $d\log(z_i - z_j)$ for the
-        $\binom{3}{2} = 3$ pairs; counted with a $2!$ symmetrization
-        factor, rank-reduced by~$1$, gives~$6$.
-  \item \textbf{OPE cube root.} Virasoro OPE
-        $T(z) T(w) \sim (c/2)/(z-w)^4 + 2T/(z-w)^2 + \partial T/(z-w)$
-        has three singular terms; the shadow recursion pulls these
-        through a $2!$ factor for bilinear bracket, giving~$3 \cdot 2
-        = 6$.
-  \item \textbf{Virasoro central constant prefactor.} The shadow seed
-        $\Phi_3 = 2c$ pulled through a threefold Riccati
-        symmetrization gives $2 \cdot 3 = 6$ as the geometric ratio
-        base.
-  \item \textbf{Orlik--Solomon at depth~$r_0$.} The OS algebra
-        $\mathrm{OS}_*(\mathrm{Conf}_4(\mathbb{C}))$ has dimension
-        related to $6 = \binom{4}{2}$ pair-insertions, or to the Betti
-        number $b_2 = \binom{3}{2} = 3$ of a specific component.
-\end{itemize}
-The correct identification requires either direct derivation from
-the Riccati kernel $f(j, k)$ or cross-family comparison: if
-$C_{\cW_3}$, $C_{\cW_4}$ are computed from an extended engine and
-match a pattern, the underlying combinatorial structure reveals
-itself. Without such evidence, the candidate identifications are
-conjectural.
+\textbf{Derivation.} The rescaled Virasoro recurrence
+$r \cdot \Phi_r \cdot c = -\sum_{j+k=r+2,\,3\le j\le k<r}
+f(j,k) j k \Phi_j \Phi_k$ with~$\Phi_3 = 2c$ (the seed) and
+$\Phi_r = A_r + O(1/c)$ for $r \ge 4$ (the leading asymptotic).
+At leading order in~$c$, the only non-trivial contribution comes
+from~$j = r_0 = 3$ (since $\Phi_{r_0}$ is the only one that carries
+an explicit factor of~$c$; all other $\Phi_j$ are $O(1)$ in $c$).
+Extracting the $j = 3$, $k = r-1$ term:
+\[
+  r \cdot A_r \cdot c
+  \;=\; -f(3, r-1) \cdot 3 \cdot (r-1) \cdot \Phi_3 \cdot A_{r-1}
+  \;=\; -1 \cdot 3(r-1) \cdot 2c \cdot A_{r-1}
+  \;=\; -6(r-1) c A_{r-1},
+\]
+so
+\[
+  \frac{A_r}{A_{r-1}} \;=\; -\frac{6(r-1)}{r}
+  \quad\Longrightarrow\quad
+  \biggl|\frac{A_{r+1}}{A_r}\biggr| \;=\; \frac{6r}{r+1} \to 6.
+\]
+The factor~$6$ decomposes as $6 = 3 \cdot 2 = r_0 \cdot S_{r_0}$
+(bar-depth seed times Riccati seed coefficient).
+
+\textbf{Universal identification (Platonic candidate).}
+For a class M chiral algebra~$\cA$ with a lowest non-trivial shadow
+coefficient~$S_{r_0}(\cA) = s_0$ at bar-depth~$r_0$, the
+shadow-exponential base is
+\[
+  C_\cA \;=\; r_0 \cdot s_0 \;=\; r_0 \cdot S_{r_0}(\cA).
+\]
+
+For Virasoro: $r_0 = 3$ (first $T$-line depth), $S_3 = 2$; $C = 6$.
+For any chiral algebra containing Virasoro as a sub-chiral-algebra
+with $S_3 = 2$ inherited from $T$-line: $C = 6$ (dominant channel).
+
+\textbf{Testable prediction for $\cW_3$.} The $T$-line of~$\cW_3$
+inherits~$S_3 = 2$ (from the Virasoro sub-current); the $W$-line
+vanishes at depth~$3$ by $\bZ_2$ parity. Therefore the $T$-line
+dominates the growth and $C_{\cW_3} = 6$ (same as Virasoro).
+
+This prediction is \emph{non-trivial}: naive pattern-matching would
+suggest $C_{\cW_N}$ should depend on~$N$. But the dominant
+Riccati channel at leading order is $T$-line (which equals
+Virasoro), giving $C_{\cW_N} = 6$ uniformly.
+
+\textbf{Verification path.} Compute $A_r^{\cW_3}$ from an extended
+engine; verify $|A_{r+1}/A_r| \to 6$. If the prediction holds, the
+identification $C_\cA = r_0 \cdot S_{r_0}$ is Platonic. If
+$C_{\cW_3} \ne 6$, the T-line-dominance assumption fails and the
+identification requires refinement.
+
+For algebras without a Virasoro subalgebra (pure $\beta\gamma$ at
+non-standard weight, $bc$ ghost at specific $\lambda$): the lowest
+non-trivial shadow depth can be~$4$, the seed coefficient can be
+different, and $C_\cA = r_0 \cdot S_{r_0}$ gives a distinct
+numerical value.
 
 Beilinson attack: is this hypothesis verifiable? The answer requires
 computing the $\cW_N$ shadow leading asymptotic via the programme's
