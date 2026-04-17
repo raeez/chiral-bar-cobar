@@ -9178,4 +9178,43 @@ route is refuted and the retraction stands. If $\alpha \le 4$,
 $\cW(p)$ is tempered via the direct character-amplitude route and
 the Vol~I Theorem~F scope should be re-examined.
 
+\textbf{Correction to the polynomial estimate}
+(2026-04-17 post-inscription review). The heuristic chain above
+conflated two growth indices:
+\emph{character-weight index}~$h$ (via~$\chi(q) = \sum c_h q^h$) with
+\emph{shadow-depth index}~$r$. The Gaberdiel--Kausch graded
+dimensions of~$\cW(2)$ at~$c = -2$ are
+$[1, 0, 1, 4, 5, 8, 19, 28, 49, 84, 135, 216, 356,
+  548, 862, 1296, 1969, 2928, 4389, 6448, 9555]$
+(weights~$h = 0, 1, \ldots, 20$; source
+\verb|compute/lib/triplet_wp_character_engine.py| line~264). A
+log-log fit gives~$c_h \sim h^{6.1}$ as the apparent
+polynomial order; but this is the local
+slope, and the true asymptotic is sub-exponential
+$c_h \sim h^{-3/4}\exp(\pi\sqrt{2h/3})$ (Hardy--Ramanujan plus
+Fuchs correction). Consequently the ODE-order argument yields a
+sub-exponential bound on~$c_h$, \emph{not} polynomial; and the
+shadow depth~$r$ is related to~$h$ by a bar-complex combinatorial
+factor that needs to be extracted.
+
+The refined claim is therefore: $|S_r(\cW(p))|$ grows
+sub-exponentially (Fuchs regime from the~$3p-1$ regular-singular
+ODE on the partition function), hence~$\cW(p)$ sits in the
+\emph{sub-exponential stratum} (one order coarser than polynomial
+but still bounded by~$\exp(C\sqrt r)$, stronger than exponential).
+This is stronger than ``tempered'' in the distributional sense
+(which is polynomial growth) but weaker than ``polynomial'' in the
+strict sense. The programme may need a three-way refinement of
+growth strata: polynomial $\subset$ sub-exponential $\subset$
+tempered~(exp), with~$\cW(p)$ at the sub-exponential level and the
+non-logarithmic standard landscape at the polynomial level.
+
+The independence of \emph{temperedness} and
+\emph{Koszul-locus membership} is preserved under this refinement:
+$\cW(p)$ is sub-exponentially tempered via Fuchs + Hardy--Ramanujan,
+and off the Koszul locus via Gurarie--Flohr. Tempered and Koszul are
+orthogonal axes; the specific \emph{stratum} within ``tempered''
+gives a third axis that the programme should track (polynomial vs
+sub-exponential vs exponential).
+
 \end{document}
