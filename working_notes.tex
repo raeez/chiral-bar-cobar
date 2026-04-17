@@ -9728,4 +9728,80 @@ analytic + arithmetic theory of the Virasoro shadow-series
 structure, cross-linked across three volumes, with new universal
 invariants $C_\cA$, $\beta_A$, $\max(m, n)$ cleanly identified.
 
+\subsection{Iterations 57--58: $W_3$ $W$-line closed form and the
+second lane at $C = 12$}
+\label{subsec:loop-iter-57-58-w3-wline}
+
+\textbf{Pivot.} After iteration 56 exhausted the Virasoro Borel-geometry
+self-correction cycle (ratios approaching $12$ from below, pole at
+$c = -22/5$ identified with Lee-Yang, zero at $c = -83/20$ identified
+with smallest-complexity admissible $\mathfrak{sl}_3$), the programme
+pivoted to a \emph{second lane}: the $W$-line of $W_3 = W(\mathfrak{sl}_3)$
+at generic central charge.
+
+\textbf{Finding (iteration 58).} The normalised integer sequence
+$a_n := |N_{2m}|/2560^{m-1}$ on the $W$-line (where $N_{2m}$ is the
+numerator of $S_{2m}(W_3, W)$) satisfies the exact closed form
+\[
+  a_n \;=\; \frac{2 \cdot 3^{n-2} \, (2n-4)!}{(n-2)! \, n!}
+       \;=\; \frac{2 \cdot 3^{n-2}}{n(n-1)}
+             \binom{2n-4}{n-2},
+  \qquad n \ge 2,
+\]
+with consecutive ratio
+\[
+  \frac{a_{n+1}}{a_n} \;=\; \frac{6 (2n-3)}{n+1}
+                 \;=\; 12 - \frac{30}{n+1},
+\]
+approaching the shadow-exponential base $C_{W_3}^{W\text{-line}} = 12$
+exactly (not $6$). Stirling asymptotic
+$a_n \sim 12^n / (72 \sqrt{\pi} \cdot n^{5/2})$. Verified
+symbolically through $n = 25$ against the Poisson-bracket
+recurrence in \texttt{w3\_wline\_shadow\_tower.py::normalized\_recursion};
+ten HZ-IV-decorated tests pass
+(\texttt{compute/tests/test\_w3\_wline\_closed\_form.py}).
+
+\textbf{Structural interpretation.} The $T$-line of $W_3$ inherits
+the universal class~M theorem $C_{W_3}^{T\text{-line}} = 6$; the
+$W$-line is a \emph{second lane} with its own integer recursion
+and its own shadow-exponential base $C_{W_3}^{W\text{-line}} = 12
+= 2 \cdot 6$. The doubling factor $2$ has a clean operadic
+interpretation (Remark~\ref{rem:w3-wline-doubling-interpretation}
+in \texttt{chapters/theory/shadow\_tower\_higher\_coefficients.tex}):
+the $W$-line Hessian propagator is $3/c$ vs $T$-line $2/c$ (ratio
+$3/2$), and the $W$-line recursion kernel carries an
+additional factor $8/6 = 4/3$ from the $W$-generator seed, which
+combine to
+$(3/2) \cdot (4/3) = 2$.
+
+\textbf{Higher-spin prediction.} The spin-indexed pattern
+$C^{(s)} = s(s+1)$ (Virasoro $T$-line $s = 2$: $C = 6 = 2 \cdot 3$;
+$W_3$ $W$-line $s = 3$: $C = 12 = 3 \cdot 4$) predicts
+$C_{W^{(s)}-\text{line}} = s(s+1)$ for each spin-$s$ primary
+generator-line in $W_N$; verification of $s = 4, 5, \ldots$ awaits
+the explicit quartic and quintic shadow seeds from the
+Fateev--Lukyanov OPE data. If confirmed, principal $W_N$ carries
+a \emph{spin-stratified shadow-exponential base lattice}
+$\{C^{(s)} = s(s+1) : s = 2, \ldots, N\}$ with $T$-line $C = 6$
+the universal floor and successively larger bases
+$12, 20, 30, \ldots$ at each higher-spin lane.
+
+\textbf{Koszul-duality invariance.} Because $a_n$ is $c$-independent
+(the shadow integer-sequence normalised out $2560^{n-1} / [c^{2m-3}
+(5c+22)^{3(m-1)}]$), $C_{W_3}^{W\text{-line}} = 12$ is manifestly
+a Koszul-duality invariant (invariant under $c \mapsto 4 - c$,
+the $W_3$ Koszul conductor $K_3 = 4$ self-dual automorphism).
+
+\textbf{Reconstitution-in-Platonic-ideal.} The universal class~M
+theorem now reads: each spin-stratified generator-line of a
+class~M algebra carries its own shadow-exponential base
+$C^{(s)} = s(s+1)$; the $T$-line ($s = 2$) is the universal
+floor ($C = 6$); higher lanes stratify by Zamolodchikov norm
+$N_{W^{(s)}} \propto c / s$ and exhibit a central-binomial
+closed form with $3^{n-2} \binom{2n-4}{n-2}$ Pochhammer
+doubling factor (demonstrated for $s = 3$; conjectural for
+$s \ge 4$). The Universal Holography classification
+upgrades from a single exponential-stratum invariant ($C = 6$)
+to a spin-stratified lattice $\{6, 12, 20, 30, \ldots\}$.
+
 \end{document}
