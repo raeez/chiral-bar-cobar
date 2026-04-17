@@ -186,9 +186,13 @@ class TestW3WlineHigherSpinConjecture(unittest.TestCase):
         self.assertEqual(4 * 5, 20)      # s(s+1) prediction
         self.assertEqual(6 * 3, 18)      # 6(s-1) prediction
         self.assertEqual(2 * 16 - 16 + 6, 22)  # 2s^2-4s+6 parabola
-        # The three predictions at s=4 are distinct; two-point fit is
-        # insufficient to determine C(s) uniquely.
-        self.assertEqual(len({20, 18, 22}), 3)
+        self.assertEqual(4 * 4, 16)      # 4s = structural Riccati prediction
+        # Four predictions at s=4 are distinct; two-point fit is
+        # insufficient to determine C(s) uniquely. Structural Riccati
+        # derivation (iter 60) gives C = 4s UNDER the W-line template
+        # (j,k >= 2, j+k = n+1, seed a_2 = 1), which matches W_3 at s=3
+        # but NOT Virasoro T-line (different recursion structure).
+        self.assertEqual(len({20, 18, 22, 16}), 4)
 
 
 if __name__ == '__main__':
