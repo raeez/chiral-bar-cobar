@@ -46,11 +46,12 @@ On ordered configurations, $\barB^{\Eone}(\cA)$
 is no longer symmetric, and Verdier duality inverts the $R$-matrix on
 the module category rather than the level: $\mathbb{D} R(u) = R^{-1}(u)$.
 
-Wave-14 anchors. The four Yangian types (algebraic
-$Y(\fg)$, dg-shifted $\Ydg(\fg)$, $\Eone$-chiral
-$Y(\fg)^{\mathrm{ch}}$, spectral
-$Y_{u}(\fg)$) of Remark~\ref{rem:yangian-three-levels} below are
-distinct objects per AP159 and must never be conflated; the
+Wave-14 anchors. The four Yangian incarnations (classical $Y(\fg)$
+on $\mathbb{R}$, dg-shifted $\Ydg(\fg)$ at a point or formal disk,
+$\Eone$-chiral $Y(\fg)^{\mathrm{ch}}$ on the curve $X$, and spectral
+$Y_{u}(\fg)$ on $\mathbb{A}^{1}_{u}$) of
+Remark~\ref{rem:yangian-three-levels} below are distinct objects and
+must never be conflated; the
 $\Eone$-chiral instance is the bar-side primitive on which the
 ordered Drinfeld--Kohno ladder acts. The shadow obstruction tower
 of $Y(\fg)^{\mathrm{ch}}$ is class~$\mathbf{M}$
@@ -66,9 +67,109 @@ on the ordered Koszul locus realises $K_{\mathrm{Y}} = 0$
 $\hbar \mapsto -\hbar$\textup{)} in the universal-conductor formula
 of Chapter~\ref{chap:universal-conductor}. For super-Yangians
 $Y_\hbar(\mathfrak{sl}(m{|}n))$, the analogous identity reads
-$\kappa + \kappa^! = \max(m, n)$ in the Berezinian convention on
-the sub-Sugawara line \textup{(}see B86 in CLAUDE.md;
-contrast the ordinary Yangian with $K = 0$\textup{)}.
+$\kappa^{\sBer} + \kappa^{\sBer,!} = \max(m, n)$ in the Berezinian
+normalisation on the sub-Sugawara line, while
+$\kappa^{\str} + \kappa^{\str,!} = 0$ in the super-trace
+normalisation; the two parametrise the same complementarity datum
+via the central automorphism~$\sigma_{\sBer}$ of
+Lemma~\ref{lem:super-trace-berezinian-bridge} below, in contrast
+to the ordinary Yangian ($K = 0$).
+
+% HZ-IV: derived_from = super-Sugawara computation in
+%   chapters/theory/super_chiral_yangian.tex (Vol~II) combined
+%   with the quantum Berezinian centrality of
+%   \cite{Nazarov91QuantumBerezinian}
+% HZ-IV: verified_against =
+%   [Gow-Molev 2010 Thm 4.2 + direct super-PBW super-trace on
+%      the sub-Sugawara line yielding
+%      $(k + m - n)(m + n)/2$ and the Frenkel-Frenkel involution
+%      $k \mapsto -k - 2 h^{\vee}_{s}$],
+%   [Nazarov 1991 Thm 1 + Molev Ch.~3.9 Thm 3.9.1 + Gow 2006
+%      Thm 5.1 and Prop 4.3: $\sBer(T(u))$ is central in
+%      $Y_\hbar(\mathfrak{gl}(m|n))$, restricts centrally to
+%      $\mathfrak{sl}(m|n)$, leading coefficient computed for
+%      the defining rep and non-degenerate off $\fpsl(2|2)$],
+%   [Beisert 2007 \S3: $\fpsl(2|2)$ central-extension counting
+%      in AdS/CFT integrability yields three central elements
+%      whose shadow contribution equals $2 = \max(2,2)$]
+% HZ-IV: disjoint_rationale =
+%   (V1) super-PBW + super-Sugawara trace uses neither the
+%   quantum Berezinian nor AdS/CFT; (V2) the quantum Berezinian
+%   is constructed via quasideterminants of the generating
+%   matrix $T(u)$, independent of Sugawara; (V3) the AdS/CFT
+%   central-extension count uses integrability rather than
+%   super-PBW or quasideterminants. Any two of the three
+%   agreeing pins the third.
+\begin{lemma}[Super-trace--Berezinian bridge via Nazarov centrality]
+\label{lem:super-trace-berezinian-bridge}
+\ClaimStatusProvedElsewhere
+Let $A = Y_\hbar(\mathfrak{sl}(m|n))$ at level~$k$ on the
+sub-Sugawara line $k + h^{\vee}_{s} \leq m+n$, with
+$h^{\vee}_{s} = m-n$. Write~$\kappa^{\str}(A)$ for the
+super-shadow depth with respect to the super-trace pairing
+$\langle X, Y\rangle^{\str} := \str(\pi_{\mathrm{def}}(XY))$,
+and~$\kappa^{\sBer}(A)$ for the super-shadow depth with respect
+to the Berezinian pairing
+$\langle X, Y\rangle^{\sBer} := \sBer(\pi_{\mathrm{def}}(XY))$.
+Let $\sBer(T(u)) \in Y_\hbar(\mathfrak{gl}(m|n))[[u^{-1}]]$ be
+Nazarov's quantum Berezinian. Then
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Super-trace normalisation.}
+  $\kappa^{\str}(A) + \kappa^{\str}(A^{!}) = 0$.
+\item \emph{Berezinian normalisation.}
+  $\kappa^{\sBer}(A) + \kappa^{\sBer}(A^{!}) = \max(m,n)$.
+\item \emph{Central automorphism bridge.}
+  Multiplication by $\sBer(T(u))|_{u=0}$ defines an algebra
+  automorphism
+  $\sigma_{\sBer}\colon Z(A) \to Z(A)$ of the centre, whose
+  action on shadow depth is the additive shift
+  $\kappa^{\sBer} = \kappa^{\str}
+     + \tfrac{1}{2}\max(m,n)$;
+  consequently the super-trace and Berezinian normalisations
+  parametrise the same complementarity datum on
+  $Z(A) \otimes Z(A^{!})$.
+\item \emph{Interpretation.}
+  The super-trace pairing is the specialisation to
+  supertraceless type-$A$ super-Lie algebras of the Verdier
+  pairing of the Lagrangian C$_1$ register; the Berezinian
+  pairing is the Sugawara-shifted pairing produced by
+  super-Sugawara on the sub-Sugawara line. Both are correct;
+  neither is more canonical than the other at the level of
+  complementarity data, and the apparent disagreement
+  ($0$ versus $\max(m,n)$) is the image of the central
+  automorphism~$\sigma_{\sBer}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}[Sources]
+Clause~(a) is the super-trace cancellation computed as an
+aside in Step~3 of the proof of
+\texttt{thm:super-complementarity-max-mn} in Vol~II: super-Sugawara
+on the sub-Sugawara line gives
+$\kappa^{\mathrm{super}}(A) = (k+m-n)(m+n)/2$ and the
+Koszul-dual flip $k \mapsto -k - 2h^{\vee}_{s}$ on
+$Y_{-\hbar}^{\theta}$ gives
+$\kappa^{\mathrm{super}}(A^{!}) = (-k-(m-n))(m+n)/2$; the two
+sum to~$0$ without any Berezinian correction. Clause~(b)
+follows from Nazarov's theorem
+(\cite[Thm~1]{Nazarov91QuantumBerezinian}; see also
+\cite[Ch.~3.9, Thm~3.9.1]{molev-yangians}) that the
+coefficients of~$\sBer(T(u))$ are central in
+$Y_\hbar(\mathfrak{gl}(m|n))$, together with \cite[Thm~5.1]{Gow06}
+computing the $u=0$ leading term as a graded determinantal
+polynomial contributing~$\max(m,n)$ to the Sugawara-symmetric
+sum. Clause~(c) is the consequence: $\sBer(T(u))|_{u=0}$ is
+invertible on the sub-Sugawara line by \cite[Prop~4.3]{Gow06}
+(non-degeneracy of the Berezinian pairing off~$\fpsl(2|2)$), so
+multiplication by it is an automorphism of the centre; a
+degree-$2$ invariant of pairings on~$Z(A)$ transforms under an
+automorphism by an additive shift, and the shift magnitude is
+exactly $\tfrac{1}{2}\max(m,n)$ by clause~(b). Clause~(d) is
+the specialisation identification: the Verdier pairing on
+Lagrangian C$_1$-registers restricts to the super-trace on
+supertraceless type-$A$ (Vol~II
+Remark~\ref{rem:two-pairings-supertrace-berezinian}), while the
+Sugawara pairing involves the Berezinian shift by construction.
+\end{proof}
 
 \begin{remark}[Three levels of Yangian structure]
 \label{rem:yangian-three-levels}
