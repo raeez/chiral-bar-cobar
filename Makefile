@@ -83,7 +83,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud
+.PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
 icloud: $(PDF)
@@ -321,6 +321,15 @@ test:
 	else \
 		echo "  (no compute tests found — skipping)"; \
 	fi
+
+## verify-independence: Audit ProvedHere claims vs independent-verification registry
+##                     (tautology / orphan check; coverage metric reported)
+verify-independence:
+	@python3 compute/scripts/audit_independent_verification.py
+
+## verify-independence-verbose: Same, with full list of uncovered claims
+verify-independence-verbose:
+	@python3 compute/scripts/audit_independent_verification.py --verbose --show-orphans
 
 ## test-full: Run the complete test suite including slow tests.  Use before commits.
 test-full:
