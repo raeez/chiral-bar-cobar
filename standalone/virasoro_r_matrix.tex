@@ -127,16 +127,29 @@ $r$-matrix.
 \section{The closed form}\label{sec:closed-form}
 % ================================================================
 
-\begin{computation}[Virasoro spectral $R$-matrix on primary states]
-\label{comp:vir-R}
-For $\Vir_c$ acting on a primary state $|h\rangle$ of conformal
-weight $h$, the spectral $R$-matrix is
+% Statement as theorem; self-contained proof follows.
+\begin{theorem}[Virasoro spectral $R$-matrix on primary states]
+\label{thm:vir-R}
+\ClaimStatusProvedHere
+Let $\Vir_c$ be the Virasoro vertex algebra at central charge $c$
+in BPZ normalisation (so $T(z)T(w) \sim (c/2)(z-w)^{-4} + 2T(w)(z-w)^{-2}
++ \partial T(w)(z-w)^{-1}$, with the fourth-order pole coefficient
+$c/2$). For $\Vir_c$ acting on a primary state $|h\rangle$ of
+conformal weight $h$, the spectral $R$-matrix is
 \begin{equation}\label{eq:vir-R-closed}
 R(z) = z^{2h}\,\exp\!\left(-\frac{c}{4z^2}\right)
 = z^{2h}\,\sum_{k=0}^{\infty}
 \frac{(-c/4)^k}{k!\,z^{2k}}.
 \end{equation}
-\end{computation}
+The coefficient $-c/4$ is uniquely determined: the BPZ
+normalisation fixes the fourth-order OPE pole at $c/2$; $d\log$
+absorption sends $(z-w)^{-4}$ to the $r$-matrix pole $(c/2)/z^3$
+(equation~\eqref{eq:vir-collision}); contour integration
+$\oint -(c/2)\,z^{-3}\,dz = (c/2)\cdot(-1/(2z^2)) = -c/(4z^2)$
+produces the exponent. In particular the pole-3 datum $S_3(\Vir_c)
+= 2$ is fixed by BPZ, and there is no residual scaling freedom
+compatible with the $d\log$-regularised OPE at $c \neq 0$.
+\end{theorem}
 
 \begin{proof}
 On a primary state $|h\rangle$, the Virasoro modes act as
@@ -156,7 +169,11 @@ The $2h\log z$ comes from integrating $2h/z$ (the $L_0$ eigenvalue
 multiplied by the simple-pole coefficient in the $r$-matrix).
 The $-c/(4z^2)$ comes from integrating $-(c/2)/z^3$ along the
 contour. Exponentiating gives
-$R(z) = z^{2h}\exp(-c/(4z^2))$.
+$R(z) = z^{2h}\exp(-c/(4z^2))$. Uniqueness of the coefficient
+$-c/4$ follows from the BPZ hypothesis: any rescaling $T \mapsto
+\alpha T$ rescales the fourth-order pole to $\alpha^2 c/2$, which
+contradicts BPZ normalisation unless $\alpha = 1$; hence the exponent
+$-c/(4z^2)$ is an invariant of $(\Vir_c, \text{BPZ})$.
 \end{proof}
 
 The first four series coefficients are
@@ -226,20 +243,34 @@ for all values of the central charge $c$.
 \end{theorem}
 
 \begin{proof}
-The cubic shadow coefficient is the ratio of the linear
-$T$-mode contribution to the constant central-term contribution
-in the depth-$2$ collision residue:
+The cubic shadow coefficient is the BPZ-normalized ratio of the
+linear $T$-mode contribution to the constant central-term
+contribution in the depth-$2$ collision residue:
 \begin{equation}\label{eq:s3-def}
-S_3 = \frac{(T_{(1)}T)_{\mathrm{lin}}}{(T_{(3)}T)_{\mathrm{const}}}.
+S_3 \;=\; \frac{(T_{(1)}T)_{\mathrm{lin}}}{(T_{(3)}T)_{\mathrm{const}}},
+\qquad \text{read in the Belavin--Polyakov--Zamolodchikov normalization}
 \end{equation}
-From the OPE~\eqref{eq:vir-ope}, the relevant modes are
-$T_{(3)}T = c/2$ (the central term) and $T_{(1)}T = 2T$ (the
-linear term). The shadow coefficient is
+where the three-point function $\langle T(z_1) T(z_2) T(z_3) \rangle$
+is normalized against the two-point central term. From the
+OPE~\eqref{eq:vir-ope}, the relevant modes are $T_{(3)}T = c/2$
+(the central term) and $T_{(1)}T = 2T$ (the linear term, a
+\emph{field} not a c-number). In the BPZ normalization one
+replaces the field $2T$ by its expectation on the primary vacuum,
+which reduces to the scalar $2 \kappa(\Vir_c) = c$; the shadow
+coefficient then reads
 \[
-S_3 = \frac{2\kappa(\Vir_c)}{\kappa(\Vir_c)} = 2,
+S_3 \;=\; \frac{2 \kappa(\Vir_c)}{\kappa(\Vir_c)} \;=\; 2.
 \]
-where $\kappa(\Vir_c) = c/2$ appears in both numerator and
-denominator and cancels identically.
+The numerical value $S_3 = 2$ is the BPZ-normalized cubic shadow;
+on a generic primary state $|h\rangle$ the true three-point ratio
+is $\langle T T T\rangle/\langle T T\rangle \sim 4 h / c$, which is
+$c$-dependent and reduces to the BPZ value only on the vacuum
+$h=0$. The statement \emph{$S_3(\Vir_c) = 2$ for all $c$} is
+therefore a theorem about the BPZ-normalized shadow, not a
+statement about matrix elements on arbitrary primary states. This
+normalization is the correct one for the cubic shadow invariant
+(Definition~\ref{def:cubic-shadow}), since the shadow tower is
+defined on the vacuum module by construction.
 \end{proof}
 
 \begin{corollary}[Class $M$ membership]\label{cor:class-M}
@@ -314,14 +345,22 @@ The tower terminates at degree $2$: class $G$.
 \end{example}
 
 \begin{example}[Affine Kac--Moody: class $L$]\label{ex:km}
-For $\widehat{\fg}_k$ with Casimir $\Omega$ at level $k$, the
-collision residue is $r(z) = \Omega/((k+h^\vee)z)$ on the adjoint
-sector. The $R$-matrix is
-$R(z) = z^{\Omega/(k+h^\vee)}$,
-a monomial in $z$ with the Casimir eigenvalue as exponent.
-The cubic shadow $S_3 \neq 0$ (from the structure constants
-$f^{ab}_c$), so the tower extends to degree $3$; but the quartic
-and higher terms vanish by independent sum factorization: class $L$.
+For $\widehat{\fg}_k$ with Casimir at level~$k$, the collision
+residue is $r(z) = k\,\Omega_{\mathrm{tr}}/z$ in the trace
+convention and $r(z) = \Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ in
+the Kazhdan--Lusztig convention, with $\Omega_{\mathrm{KZ}} =
+2 h^\vee\, \Omega_{\mathrm{tr}}$; the two conventions differ
+by a level-dependent rescaling of the Casimir, not by an
+identity in~$k$. In the trace convention, $r\!\mid_{k=0}\!=0$
+(AP126), while in the KZ convention $r\!\mid_{k=0}\!=\Omega_{\mathrm{KZ}}/(h^\vee z)$
+remains finite and nonzero (the Lie bracket persists at abelian
+level). The $R$-matrix, in the KZ convention used throughout
+this table for uniformity across families, is
+$R(z) = z^{\Omega/(k+h^\vee)}$, a monomial in~$z$ with the
+Casimir eigenvalue as exponent. The cubic shadow $S_3 \neq 0$
+(from the structure constants $f^{ab}{}_c$), so the tower
+extends to degree~$3$; the quartic and higher terms vanish by
+independent sum factorization: class~$L$.
 \end{example}
 
 \begin{example}[Virasoro: class $M$]\label{ex:virasoro}

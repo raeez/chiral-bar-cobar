@@ -172,6 +172,37 @@ polynomials via bar-complex monodromy).
 \setcounter{tocdepth}{2}
 \tableofcontents
 
+\begin{remark}[Convention for $q$: Kazhdan--Lusztig vs.\ Drinfeld]
+\label{rem:dk-q-convention}
+This paper uses two closely related but distinct deformation
+parameters, and we fix the convention once and for all.
+\begin{itemize}
+\item \textbf{Canonical (Kazhdan--Lusztig).} We set
+\[
+  q \;:=\; \exp\!\bigl(2\pi i/(k+\hv)\bigr).
+\]
+All $R$-matrices, braiding monodromies, quantum-group
+identifications ($U_q(\fg)$, $\Rep_q(\fg)$, Kazhdan--Lusztig
+equivalence) and the default statements of DK-0, DK-1, DK-2, DK-3
+use this $q$ throughout.
+\item \textbf{Drinfeld.} Where the half-monodromy is displayed
+directly (singlet/triplet eigenvalue tables, half-braiding
+computations), we write
+\[
+  q_{\mathrm{D}} \;:=\; \exp\!\bigl(\pi i/(k+\hv)\bigr),
+  \qquad
+  q \;=\; q_{\mathrm{D}}^{2}.
+\]
+The Drinfeld variable $q_{\mathrm{D}}$ appears ONLY in displays
+explicitly marked with the subscript $\mathrm{D}$.
+\end{itemize}
+\textbf{Bridge to \texttt{en\_koszul\_duality.tex}.} Vol I's
+\texttt{en\_koszul\_duality} uses the Kazhdan--Lusztig convention
+throughout; earlier drafts of the present paper had used both.
+After this note, every new occurrence of $q$ defaults to
+Kazhdan--Lusztig unless explicitly marked $q_{\mathrm{D}}$.
+\end{remark}
+
 % ================================================================
 % SECTION 1: INTRODUCTION
 % ================================================================
@@ -598,12 +629,26 @@ R_{12}
 \]
 Since $\Omega_{12}$ acts as a single endomorphism (not a
 sum of $z$-dependent terms), the path-ordering is trivial
-and $R_{12} = e^{2\pi i k\Omega_{12}}$.
-In the KZ normalization, this is
-$R_{12} = e^{2\pi i\Omega_{12}/(\kp)}
-= e^{\Omega_{12}/(\kp)}$
-after absorbing the $2\pi i$ into the contour integral
-normalization.
+and $R_{12} = e^{2\pi i k\Omega_{12}}$ in the trace
+normalization where $r_{\mathrm{tr}}(z) = k\Omega/z$.
+In the Kazhdan--Lusztig (KZ) normalization where
+$r_{\mathrm{KZ}}(z) = \Omega/((\kp) z)$, the monodromy reads
+\[
+ R_{12}
+ \;=\;
+ \exp\!\left(\frac{2\pi i}{\kp}\,\Omega_{12}\right)
+ \;=\;
+ q^{\Omega_{12}},
+ \qquad
+ q := \exp\!\left(\frac{2\pi i}{\kp}\right).
+\]
+The factor of $2\pi i$ in the exponent is \emph{structural},
+not a contour normalization: it governs the braiding monodromy
+and identifies the Kazhdan--Lusztig root of unity $q$ at integer
+level. In particular, at level $k$ a positive integer, $q$ is
+a primitive $(\kp)$-th root of unity and the braiding restricts
+to the quantum-group $\mathrm{Rep}_q(\mathfrak{g})$ on the
+evaluation-generated core (Kazhdan--Lusztig equivalence).
 
 The Yang--Baxter equation follows from flatness:
 $\nabla^2 = 0$ implies the CYBE~\eqref{eq:dk-cybe},
@@ -645,7 +690,9 @@ representation.
 Let $\fg$ be a simple Lie algebra,
 $k \in \CC \setminus \{-\hv\}$ generic, and
 $V_1, \ldots, V_n$ finite-dimensional $\fg$-modules.
-The monodromy representation
+On the evaluation-generated core
+${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$,
+the monodromy representation
 \[
 \rho_n^{\mathrm{KZ}}
 \;\colon\;
@@ -735,10 +782,14 @@ packages the pentagon into $d_B^2 = 0$ at degree~$3$.
 
 \emph{Step~3: One-loop collapse.}
 For the affine algebra $V^k(\fg)$, the higher $\Ainf$
-operations $m_k$ ($k \geq 3$) vanish on evaluation
-modules.  (This is the one-loop exactness of the BV-BRST
-differential: only the quadratic part of the chiral action
-contributes.)  The full superconnection on the bar complex
+operations $m_k$ ($k \geq 3$) vanish on the
+evaluation-generated core
+${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$.
+(This is the one-loop exactness of the BV--BRST
+differential on the eval core: only the quadratic part of
+the chiral action contributes; see Vol~I,
+Theorem~\ref{V1-thm:chiral-mc3-eval-core} in
+\texttt{five\_theorems\_modular\_koszul.tex}.)  The full superconnection on the bar complex
 therefore collapses to the Kohno connection, and the
 bar-complex monodromy equals the KZ monodromy:
 $\rho_n^{\mathrm{bar}} = \rho_n^{\mathrm{KZ}}$.
@@ -756,7 +807,8 @@ to the quantum group involution $q \mapsto q^{-1}$.
 \label{thm:dk-square}
 \ClaimStatusProvedHere
 For $\fg$ simple and $k$ generic, the following square
-commutes on evaluation modules:
+commutes on the evaluation-generated core
+${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$:
 \begin{equation}\label{eq:dk-square}
 \begin{tikzcd}
 D^b(\Rep_{\mathrm{fd}}^{\mathrm{eval}}(Y_\hbar(\fg)))
@@ -1012,7 +1064,10 @@ E_{\alpha_{i_n}}] \cdots]$ is nonzero.
 \begin{theorem}[Spectral Drinfeld strictification]
 \label{thm:dk-strictification}
 \ClaimStatusProvedHere
-For any simple Lie algebra $\fg$, the spectral Drinfeld
+For any simple Lie algebra $\fg$, on the
+evaluation-generated core
+${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$
+the spectral Drinfeld
 class $\mathfrak{D}_{\mathrm{spec}}(A, \Omega)|_{F^p}$
 vanishes at every filtration $p \geq 2$.  The $\Ainf$
 structure on the ordered bar complex
@@ -1021,6 +1076,20 @@ associative product with spectral parameter: there exists
 a spectral twist $G$ such that the twisted quasi-associator
 $\Phi^G = 1$.
 \end{theorem}
+
+\begin{remark}[Full-category extension]
+\label{rem:dk-eval-core-full-category}
+The eval-core restriction in
+Theorems~\ref{thm:dk0}, \ref{thm:dk-square},
+\ref{thm:dk-strictification}, and~\ref{thm:dk-yangian-koszul}
+is AP47: the bar-cobar identifications are proved on
+${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$,
+where the MC3 cocycle conditions are unconditional.
+Extension to the full category of smooth $V^k(\fg)$-modules
+(beyond evaluation modules and their tensor generates) is
+conjectural; the downstream DK-4 and DK-5 identifications
+are correspondingly conditional on this extension.
+\end{remark}
 
 \begin{proof}
 The proof is an induction on filtration.
@@ -1176,8 +1245,10 @@ of the affine algebra.
 \begin{theorem}[Yangian as Koszul dual]
 \label{thm:dk-yangian-koszul}
 \ClaimStatusProvedHere
-For $\fg$ simple and $k \neq -\hv$ generic, the
-$\Eone$-chiral Koszul duality functor applied to the
+For $\fg$ simple and $k \neq -\hv$ generic, on the
+evaluation-generated core
+${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$
+the $\Eone$-chiral Koszul duality functor applied to the
 affine vertex algebra $V^k(\fg)$ produces the dg-shifted
 Yangian:
 \begin{equation}\label{eq:dk-koszul-yangian}
@@ -1564,19 +1635,27 @@ On the tensor square $V_{1/2} \otimes V_{1/2}$ of the
 fundamental representation, the Casimir $\Omega$ acts with
 eigenvalue $+1/4$ on the symmetric (triplet, $j = 1$)
 component and $-3/4$ on the antisymmetric (singlet,
-$j = 0$) component.  The monodromy is
+$j = 0$) component.  The KZ monodromy is
 \begin{equation}\label{eq:dk-sl2-r}
 R
 \;=\;
-e^{\Omega/(k+2)}
+\exp\!\left(\frac{2\pi i}{k+2}\,\Omega\right)
+\;=\;
+q^{\Omega},
+\qquad
+q \;=\; \exp\!\left(\frac{2\pi i}{k+2}\right),
+\end{equation}
+so that on eigencomponents
+\begin{equation}\label{eq:dk-sl2-r-matrix}
+R
 \;=\;
 \begin{pmatrix}
-e^{1/(4(k+2))} & 0 & 0 & 0 \\
-0 & e^{1/(4(k+2))}\cos\theta
-  & ie^{1/(4(k+2))}\sin\theta & 0 \\
-0 & ie^{1/(4(k+2))}\sin\theta
-  & e^{1/(4(k+2))}\cos\theta & 0 \\
-0 & 0 & 0 & e^{1/(4(k+2))}
+q^{1/4} & 0 & 0 & 0 \\
+0 & q^{1/4}\cos\theta
+  & i\,q^{1/4}\sin\theta & 0 \\
+0 & i\,q^{1/4}\sin\theta
+  & q^{1/4}\cos\theta & 0 \\
+0 & 0 & 0 & q^{1/4}
 \end{pmatrix}
 \end{equation}
 in the basis $\{v_+ \otimes v_+,\, v_+ \otimes v_-,\,
@@ -1590,13 +1669,15 @@ $R$-matrix diagonalizes to
 R
 \;=\;
 \operatorname{diag}(
-\underbrace{q^{1/2}, q^{1/2}, q^{1/2}}_{\text{triplet}},\;
-\underbrace{-q^{-3/2}}_{\text{singlet}}
+\underbrace{q_{\mathrm{D}}^{1/2}, q_{\mathrm{D}}^{1/2}, q_{\mathrm{D}}^{1/2}}_{\text{triplet}},\;
+\underbrace{-q_{\mathrm{D}}^{-3/2}}_{\text{singlet}}
 ),
 \end{equation}
-where $q = e^{i\pi/(k+2)}$.  The relative phase between
-the singlet and triplet is $-q^{-2}$, which is the
-fundamental building block of the colored Jones polynomial.
+written in the Drinfeld normalization $q_{\mathrm{D}} = e^{i\pi/(k+2)}$
+so that $q_{\mathrm{D}}^2 = q$ equals the Kazhdan--Lusztig root of
+unity used in equations~\eqref{eq:dk-sl2-r}--\eqref{eq:dk-sl2-r-matrix}.
+The relative phase between the singlet and triplet is $-q_{\mathrm{D}}^{-2} = -q^{-1}$,
+which is the fundamental building block of the colored Jones polynomial.
 
 \subsection{Four-point conformal blocks}
 

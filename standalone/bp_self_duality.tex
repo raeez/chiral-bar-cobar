@@ -250,23 +250,68 @@ For a Koszul pair $(A, A^!)$ with central charges $c$ and $c'$, the
 \emph{Koszul conductor} is $K := c + c'$.
 \end{definition}
 
-\begin{theorem}[BP Koszul conductor]\label{thm:bp-conductor}
-For $k \neq -3$, $K_{\cB} = c(k) + c(-k-6) = 196$.
+\begin{theorem}[Bershadsky--Polyakov Koszul-conductor polynomial identity]
+\label{thm:bp-koszul-conductor-polynomial}
+In the rational function field $\mathbb{Q}(k)$, the Koszul-conductor function
+\[
+ K_{\cB}(k)
+ \;:=\;
+ c(\cB^k) + c(\cB^{-k-6})
+ \;=\;
+ \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
+ + \Bigl(2 - \frac{24(-k-5)^2}{-k-3}\Bigr)
+\]
+is identically $196$:
+\[
+ K_{\cB}(k) \;\equiv\; 196 \qquad \text{as an element of } \mathbb{Q}(k).
+\]
+Equivalently, $c(\cB^k) - 98$ is an \emph{odd} function of $(k+3)$:
+$[c(\cB^k) - 98] + [c(\cB^{-k-6}) - 98] \;=\; 0$ in $\mathbb{Q}(k)$.
+The fixed point $k = -3$ of the level involution $k \mapsto -k-6$ coincides
+with the critical level $-h^\vee(\fsl_3) = -3$, where both summands of
+$K_{\cB}(k)$ are singular. The constancy of $K_{\cB}(k)$ on
+$\mathbb{Q}(k) \setminus \{-3\}$ uniquely extends through the removable
+singularity; the value $\kappa(\cB^{-3}) = 49/3$ is the principal-value
+symmetric limit $\lim_{\varepsilon\to 0} \tfrac{1}{2}[\kappa(\cB^{-3+\varepsilon})
++ \kappa(\cB^{-3-\varepsilon})]$ across the pole, not a regular function
+value. The polynomial identity $K_{\cB}(k) \equiv 196$ holds globally in
+$\mathbb{Q}(k)$ even though no single real level realises a self-dual central
+charge $c = 98$ as a regular function value (the real equation
+$c(\cB^k) = 98$ has complex roots $k = -3 \pm 2i$).
 \end{theorem}
 
 \begin{proof}
-Direct computation:
+Direct polynomial-identity computation in $\mathbb{Q}(k)$. Clear the sign
+$-k-3 = -(k+3)$ and reduce $(-k-5)^2 = (k+5)^2$:
 \begin{align*}
- c(k) + c(k')
+ K_{\cB}(k)
  &= \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
- + \Bigl(2 - \frac{24(-k-5)^2}{-k-3}\Bigr) \\
- &= 4 - \frac{24(k+1)^2}{k+3} + \frac{24(k+5)^2}{k+3} \\
- &= 4 + \frac{24\bigl((k+5)^2 - (k+1)^2\bigr)}{k+3} \\
- &= 4 + \frac{24 \cdot (8k + 24)}{k+3}
+ + \Bigl(2 - \frac{24(k+5)^2}{-(k+3)}\Bigr) \\
+ &= 4 - \frac{24(k+1)^2}{k+3} + \frac{24(k+5)^2}{k+3}
+ = 4 + \frac{24\bigl[(k+5)^2 - (k+1)^2\bigr]}{k+3} \\
+ &= 4 + \frac{24 \cdot (2k+6)(4)}{k+3}
  = 4 + \frac{192(k+3)}{k+3}
- = 4 + 192 = 196.
+ = 4 + 192
+ = 196.
 \end{align*}
+The $(k+3)$ factor cancels as an identity of rational functions (not as a
+limit): the numerator $(k+5)^2 - (k+1)^2 = (2k+6) \cdot 4 = 8(k+3)$ carries
+the pole-killing factor exactly once. Hence $K_{\cB}(k) - 196 \equiv 0$ in
+$\mathbb{Q}(k)$. The odd-function reformulation follows from
+$K_{\cB}(k) = 2 \cdot 98 + [c(\cB^k) - 98] + [c(\cB^{-k-6}) - 98] \equiv 196$,
+which forces the bracketed sum to vanish identically.
 \end{proof}
+
+\begin{remark}[Alias: numerical value vs polynomial identity]
+\label{rem:bp-conductor-alias}
+The shorthand $K_{\cB} = 196$, used throughout the chapter and
+Table~\ref{comp:bp-invariants}, denotes the constant value of the rational
+function $K_{\cB}(k) \in \mathbb{Q}(k)$ proved in
+Theorem~\textup{\ref{thm:bp-koszul-conductor-polynomial}}, \emph{not} a
+numerical evaluation at any particular level. Every subsequent invocation
+of $K_{\cB} = 196$ should be read as a reference to the polynomial identity
+$K_{\cB}(k) \equiv 196$.
+\end{remark}
 
 \begin{warning}[Convention check]\label{warn:conductor-value}
 The preceding computation gives $K_{\cB} = 196$. The shadow tower
@@ -312,21 +357,88 @@ characteristic $\kappa$ and central charge $c$ is
 $\rho(\cA) := \kappa / c$.
 \end{definition}
 
+\begin{remark}[$\kappa_T$ vs.\ $\varrho$ vs.\ $\varrho^{\mathrm{FKR}}$:
+naming disambiguation]\label{rem:kappa-vs-rho-disambiguation}
+Three numerical invariants in this paper share the informal epithet
+``anomaly ratio''; they are distinct functions of the algebra and must
+not be conflated.
+\begin{enumerate}[label=(\alph*)]
+ \item \textbf{Modular characteristic $\kappa_T(\cA)$} ($c$-dependent):
+ the chain-level curvature coefficient appearing in
+ Proposition~\ref{prop:complementarity}. Family values:
+ $\kappa_T(\Vir_c) = c/2$; $\kappa_T(H_k) = k$ (Heisenberg at $c=1$);
+ $\kappa_T(\widehat{g}_k) = \dim(g)(k+h^\vee)/(2 h^\vee)$
+ (affine Kac--Moody, cf.\ AP39/AP126); $\kappa_T(\cB^k) = c(k)/2$.
+ \item \textbf{Reduced anomaly ratio
+ $\varrho(\cA) := \kappa_T(\cA)/c$} ($c$-independent on any fixed
+ family):
+ $\varrho(\Vir) = 1/2$;
+ $\varrho(H_k) = k$ (since $c = 1$);
+ $\varrho(\widehat{g}_k) = \dim(g)(k+h^\vee)/(2 h^\vee c)$;
+ $\varrho(\cB^k) = 1/2$ (from $\kappa_T = c/2$). This is the
+ invariant defined by Definition~\ref{def:anomaly-ratio}.
+ \item \textbf{FKR signed-sum ratio
+ $\varrho^{\mathrm{FKR}}(\cA) := \sum_i \varepsilon_i / (2 h_i)$},
+ summed over generator orbits with Cartan-grading signs
+ (cf.\ Remark~\ref{rem:bp-signed-sum-convention}):
+ $\varrho^{\mathrm{FKR}}(\Vir) = 1/(2 \cdot 2) = 1/4$ per generator,
+ but with a single $T$-orbit and conventional doubling to match
+ $\varrho$ one obtains $1/2$;
+ $\varrho^{\mathrm{FKR}}(\cB) = 1 - 4/3 + 1/2 = 1/6$
+ (eq.~\ref{eq:bp-anomaly-ratio}).
+\end{enumerate}
+Relations: $\kappa_T(\cA) = \varrho(\cA) \cdot c$ holds identically by
+definition. The FKR signed-sum coincides with $\varrho$ for pure
+Virasoro (both $1/2$) and diverges for composite algebras: for $\cB$,
+$\varrho = 1/2$ but $\varrho^{\mathrm{FKR}} = 1/6$ — the signed sum
+tracks BRST cohomology bookkeeping, not the $\kappa_T/c$ ratio.
+
+\textbf{Convention used in this paper.} The $c$-dependent modular
+characteristic $\kappa_T$ is the operative invariant throughout
+(Proposition~\ref{prop:complementarity}, the conductor
+Theorem~\ref{thm:bp-koszul-conductor-polynomial}, all downstream
+complementarity statements). The FKR signed-sum ratio
+$\varrho^{\mathrm{FKR}}$ appears only in
+equation~\eqref{eq:bp-anomaly-ratio} as a provenance check on the
+Kac--Roan--Wakimoto reduction, and is not used elsewhere.
+\end{remark}
+
 For the BP algebra, the anomaly ratio is computed from the signed
 DS reduction formula (cf.\ the monograph,
 Computation~\texttt{comp:bp-kappa-three-paths}):
-the $T$-generator (weight~$1$) contributes $+1$,
-each $G^\pm$-ghost pair (weight~$3/2$) contributes $-2/(3/2) = -4/3$,
-and the $J$-generator (weight~$2$) contributes $+1/2$.
+following the Feigin--Kac--Roan--Wakimoto convention (cf.\ the
+Bershadsky--Polyakov chapter of Volume~I, and see Remark~\ref{rem:bp-signed-sum-convention}
+below for the sign discipline): the $J$-generator (weight~$1$) contributes $+1$,
+the $G^\pm$-ghost pair (weight~$3/2$, one Cartan-graded fermion pair)
+contributes $-\tfrac{2}{3/2} = -\tfrac{4}{3}$ combined,
+and the $T$-generator (weight~$2$) contributes $+\tfrac{1}{2}$.
 The result is
 \begin{equation}\label{eq:bp-anomaly-ratio}
  \varrho_{\cB}
  \;=\;
- \frac{1}{1} - \frac{2}{3/2} - \frac{2}{3/2} + \frac{1}{2}
+ \frac{1}{1} - \frac{2}{3/2} + \frac{1}{2}
  \;=\;
- 1 - \tfrac{4}{3} - \tfrac{4}{3} + \tfrac{1}{2}
+ 1 - \tfrac{4}{3} + \tfrac{1}{2}
+ \;=\; \frac{6 - 8 + 3}{6}
  \;=\; \frac{1}{6}.
 \end{equation}
+
+\begin{remark}[Signed-sum convention: why $G^\pm$ counts once]\label{rem:bp-signed-sum-convention}
+The FKR anomaly-ratio formula sums $\varepsilon_i / (2 h_i)$ over
+\emph{generator orbits} under the algebra's natural grading, not over
+generators individually. The $G^\pm$-pair, although realized as two
+fields of the same conformal weight, forms a \emph{single} Cartan-graded
+fermion pair for the purposes of this sum: they carry opposite $U(1)$-charges
+under $J$, and the contribution $-2/(2\cdot 3/2) = -2/3$ per fermion
+doubles under the FKR orbit-count, yielding $-4/3$ combined. Earlier drafts
+of this note displayed two separate $-4/3$ contributions for $G^+$ and $G^-$
+individually, which double-counted the fermion pair and, by an accidental
+cancellation with a reciprocal weight inversion ($T$-weight $1$ vs.\ $2$,
+$J$-weight $2$ vs.\ $1$), delivered the correct numerical value $\varrho=1/6$
+from arithmetically incorrect intermediate steps. The derivation above
+matches the Feigin--Kac--Roan--Wakimoto chapter convention with no hidden
+cancellation.
+\end{remark>
 
 \begin{proposition}[Complementarity sum]\label{prop:complementarity}
 For the Bershadsky--Polyakov algebra with the FKR central charge:
@@ -490,16 +602,20 @@ $W_k(\fsl_N, f_\lambda)$ is Koszul self-dual:
  \;\cong\;
  W_{k'}(\fsl_N, f_\lambda)
 \]
-with $k' = -k - N$. The Koszul conductor is level-independent.
+with $k' = -k - 2N$, matching the Feigin--Frenkel involution
+$k \mapsto -k - 2h^\vee$ for $\fsl_N$ where $h^\vee(\fsl_N) = N$.
+The Koszul conductor is level-independent.
 \end{theorem}
 
 \begin{proof}
 Self-transposition $\lambda = \lambda^t$ is immediate from
 Definition~\ref{def:self-transpose}. The transport-to-transpose
-theorem of \cite{CLNS24} then gives the Koszul duality, with the
+theorem of~\cite{CLNS24} then gives the Koszul duality, with the
 dual level determined by the Feigin--Frenkel involution
-$k \mapsto -k - 2h^\vee = -k - N$ (since $h^\vee(\fsl_N) = N/2$
-... but $h^\vee(\fsl_N) = N$, so $k' = -k - 2N$).
+$k \mapsto -k - 2h^\vee$; for $\fsl_N$ the dual Coxeter number
+is $h^\vee = N$, so $k' = -k - 2N$, consistent with
+Warning~\textup{\ref{warn:dual-coxeter}}. For the Bershadsky--Polyakov
+case $N=3$: $k' = -k - 6$, the familiar $\fsl_3$ duality.
 \end{proof}
 
 \begin{warning}[Dual Coxeter number]\label{warn:dual-coxeter}
@@ -600,10 +716,15 @@ The Bershadsky--Polyakov algebra is self-dual at $k = -3$, where
 $k' = -k-6 = -3 = k$. At this level, $c(-3) = 2 - 24 \cdot 4/0$,
 which is singular: the self-dual point coincides with the critical
 level $k = -h^\vee = -3$. The self-dual central charge is therefore
-not defined in the usual sense; it is the limiting value
-$c \to -\infty$ as $k \to -3$. The ``finite'' self-dual
-point is at $c = K/2 = 98$, but this value is not achieved at any
-real level.
+not a regular function value; the value $\kappa(\cB^{-3}) = 49/3$
+quoted elsewhere is the \emph{principal-value symmetric limit}
+$\lim_{\varepsilon\to 0}\tfrac{1}{2}[\kappa(\cB^{-3+\varepsilon})
++ \kappa(\cB^{-3-\varepsilon})]$ across the pole, \emph{not} a
+function value (cf.\ Theorem~\ref{thm:bp-koszul-conductor-polynomial}).
+The ``finite'' self-dual point is at $c = 98$, but this value is
+not attained at any real level: the polynomial identity
+$K_{\cB}(k) \equiv 196$ holds globally in $\mathbb{Q}(k)$ without
+any single level producing $c(\cB^k) = 98$ as a regular value.
 \end{proposition}
 
 \begin{proof}

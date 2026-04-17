@@ -205,7 +205,15 @@ averaging map is a surjective morphism of dg~Lie algebras; all five
 foundational theorems of modular Koszul duality (Theorems A through
 D, together with the chiral Hochschild theorem~H) lift to the ordered side,
 and each symmetric theorem is the $\Sigma_n$-coinvariant image of its
-ordered counterpart. The information lost under $\av$ is geometric,
+ordered counterpart.
+% V2-AP4: ordered -> symmetric descent is R-twisted, not naive coinvariants.
+% On the pole-free subclass this reduces to naive $\Sigma_n$-coinvariants;
+% for non-pole-free $\Einf$-chiral algebras the descent is the
+% $R$-twisted equivariant quotient
+% $\BarSig_n(\cA) \simeq \bigl(\Barord_n(\cA)\bigr)^{R\text{-}\Sigma_n\text{-coinv}}$,
+% where the $\Sigma_n$-action on adjacent tensor factors is intertwined by
+% the chiral Heisenberg $R$-matrix; see Theorem~\ref{thm:formality-failure-standalone}
+% for the genuinely $\Eone$ case where even the $R$-twisted descent fails. The information lost under $\av$ is geometric,
 arithmetic, and physical: the spectral $r$-matrix, the KZ connection,
 the Drinfeld associator, and the full braiding of tensor categories
 of modules all live on the ordered side.
@@ -370,7 +378,10 @@ cooperad $T^c$ underlies the ordered bar $\Barord(\cA)$, where
 the coproduct splits a word along a single internal edge and
 remembers the ordering on the collision points. The averaging map
 $\av$ of Section~\ref{sec:averaging} descends from $T^c$ to
-$\Sym^c$ by external $\Sigma_n$-coinvariants; it does not factor
+$\Sym^c$ by external $R$-twisted $\Sigma_n$-coinvariants
+$\BarSig_n(\cA) \simeq (\Barord_n(\cA))^{R\text{-}\Sigma_n\text{-coinv}}$
+(the $R$-twist is trivial on the pole-free subclass, where naive
+$\Sigma_n$-coinvariants suffice; V2-AP4); it does not factor
 through Harrison unless one further restricts to the Eulerian
 weight-$1$ summand.
 \end{remark}
@@ -495,6 +506,10 @@ collision divisors contribute
 $k\cdot(\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{13}
 + \eta_{13}\wedge\eta_{12}) = 0$.
 \end{example}
+
+\begin{remark}[Heisenberg $R$-matrix convention: curved vs flat]\label{rem:heis-convention-eone-primacy}
+The Heisenberg algebra $\cH_k$ admits two standard presentations of the ordered bar $R$-datum: the \emph{flat} (classical, linear) form $r(z) = k/z$ used throughout this note, and the \emph{curved} (quantum, exponentiated) form $R(z) = \exp(k\hbar/z)$ used in the main chapter and in five companion standalones. They are related by the exponential map: $R(z) = \exp(\hbar\,r(z))$, so that the classical $r$-matrix is the $\hbar^{0}$ coefficient of $\log R$. At every order in $\hbar$ the exponentiation satisfies the quantum Yang--Baxter equation because $r(z)$ is a Casimir (its two tensor slots commute); the curved form is the trivialization of the twist, the flat form its infinitesimal shadow. This is the curved $\leftrightarrow$ flat Heisenberg equivalence (Costello--Witten twist trivialization); at $\hbar = 0$ the classical limit recovers $r(z)$.
+\end{remark}
 
 \begin{example}[Affine Kac--Moody ordered bar]
 \label{ex:km-bar}
@@ -755,9 +770,13 @@ $\cM_\Com(g,n)$ lifts, via any section of the ribbon-forgetting
 quotient, to a homomorphism from $\cM_\Ass(g,n)$.
 Compatibility with the differential: the ribbon edge-contraction
 differential descends to the symmetric edge-contraction differential
-under external $\Sigma_n$-coinvariants; this is the
-Getzler--Kapranov comparison between ribbon and commutative Feynman
-transforms~\cite{GK98}. Compatibility with the Lie bracket:
+under \emph{$R$-twisted} external $\Sigma_n$-coinvariants
+$(-)^{R\text{-}\Sigma_n\text{-coinv}}$ --- the twist is trivial on the
+pole-free subclass ($R=\id$), reducing to naive coinvariants, and
+carries the Heisenberg monodromy $R(z) = \exp(k\hbar/z)$ on curved
+families (V2-AP4). Under this twist the comparison between ribbon and
+commutative Feynman transforms~\cite{GK98} gives the differential
+compatibility. Compatibility with the Lie bracket:
 symmetrisation commutes with the convolution bracket on cooperadic
 Homs because operad composition in $\FMAss$ is
 $\Sigma_n$-equivariant.
@@ -896,7 +915,12 @@ tower $(r(z), r_3, r_4, \ldots)$.
 \begin{proof}
 $\av(D^{\Eone}_\cA) = D_\cA$ because the ordered genus-completed
 bar differential on $\Barord(\cA)$ descends to $\BarSig(\cA)$
-under $\Sigma_n$-coinvariants, and $\av(d_0) = d_0$.
+under $R$-twisted $\Sigma_n$-coinvariants (V2-AP4), and
+$\av(d_0) = d_0$. On the pole-free subclass the twist is trivial
+and descent reduces to naive coinvariants; for Heisenberg, affine
+Kac--Moody, and higher $E_\infty$-chiral families with poles, the
+twist carries the monodromy $R(z)$ along elementary transpositions,
+and the descent remains well-defined by quantum Yang--Baxter.
 Therefore
 \[
   \av(\Theta^{\Eone}_\cA)
@@ -1129,6 +1153,35 @@ spectral scattering data, to the coarser $\Einf$ side, which
 contains only the modular characteristic $\kappa$, the shadow
 obstruction tower, and the five structural theorems.
 \end{principle}
+
+\begin{remark}[Categorical level of the $\Etwo$ braided structure; AP-CY56]
+\label{rem:e2-lives-on-center}
+The principle above states that the $\Eone$-side contains the
+$R$-matrix and the braided category of line operators. To avoid the
+most common conflation (FM40, MP1), we state explicitly \emph{which
+object carries the $\Etwo$ structure}: the braided monoidal structure
+is an $\Etwo$-algebra in $\mathrm{Cat}_\infty$ on
+\emph{the Drinfeld center}
+\[
+  \cZ\!\bigl(\mathrm{Rep}^{\Eone}(\cA)\bigr),
+\]
+\emph{not} on $\cA$ itself. The algebra $\cA$ remains an $\Eone$-object;
+the $\Etwo$ braiding arises one categorical level up, as the universal
+half-braiding $\sigma_M(N)\colon M\otimes N\to N\otimes M$ constructed
+from the $R$-matrix. Quantum groups $U_q(\fg)$ are the prototype: $U_q(\fg)$
+is an $\Eone$-Hopf algebra, and
+$\mathrm{Rep}(U_q(\fg))=\cZ(\mathrm{Rep}(\fg_0)_{\!\!\sqrt{\hbar}})$ is
+$\Etwo$ in $\mathrm{Cat}$. The Deligne conjecture (classical and chiral)
+upgrades this to an $\Etwo$-action on $\cZ_{\mathrm{ch}}^{\mathrm{der}}(\cA)
+=C^\bullet_{\mathrm{ch}}(\cA,\cA)$; the cohomological version is
+unconditional, the chain-level Tamarkin-type statement is conditional
+on formality of $\mathrm{End}^{\mathrm{ch}}_\cA$.
+
+In particular, Dunn additivity $\Eone\otimes\Eone=\Etwo$ applies to
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and $\mathrm{Mod}_\cA$, never
+to $\cA$ itself. Compositions of the form ``$R$-matrix makes $\cA$ into
+an $\Etwo$-algebra'' are category errors.
+\end{remark}
 
 \subsection{The five ordered theorems}
 
@@ -1380,6 +1433,16 @@ degree~$n$:
   \;\xrightarrow{\;\pi_{\Sigma_n}\;}
   (s^{-1}\bar\cA)^{\odot n} \;\to\; 0.
 \end{equation}
+% V2-AP4: the projection $\pi_{\Sigma_n}$ here is the naive coinvariant
+% quotient, valid on the pole-free subclass of $\Einf$-chiral algebras.
+% For $\Einf$-chiral algebras with OPE poles the correct descent is the
+% $R$-twisted quotient
+% $\BarSig_n(\cA) \simeq \bigl(\Barord_n(\cA)\bigr)^{R\text{-}\Sigma_n\text{-coinv}}$,
+% where adjacent-factor transpositions act by the Heisenberg $R$-matrix
+% $S_{i,i+1}(z)$; the bar differential remains $\Sigma_n$-equivariant for
+% this twisted action, and the argument below applies verbatim with the
+% $R$-twisted Maschke decomposition. The naive and $R$-twisted quotients
+% agree exactly when $S_{ij}(z) = \id$ (pole-free tier).
 The bar differential $d_{\mathrm{bar}}$ preserves the
 decomposition~\eqref{eq:maschke-decomp} because the
 $\Einf$-chiral OPE is $\Sigma_n$-equivariant: the collision
@@ -1411,7 +1474,9 @@ quasi-isomorphism
   H^*(\overline{\FM}_n(\CC))
 \]
 depending on the Drinfeld associator~$\Phi$. Tensoring with
-$(s^{-1}\bar\cA)^{\otimes n}$ and taking $\Sigma_n$-coinvariants
+$(s^{-1}\bar\cA)^{\otimes n}$ and taking $R$-twisted $\Sigma_n$-coinvariants
+(equivalently $\BarSig_n(\cA) \simeq (\Barord_n(\cA))^{R\text{-}\Sigma_n\text{-coinv}}$;
+the twist reduces to the naive one on the pole-free subclass; V2-AP4)
 gives the quasi-isomorphism~\eqref{eq:formality-bridge-qi}.
 The dependence on~$\Phi$ is a $\GRT_1$-ambiguity: different
 choices of associator yield homotopic maps.
@@ -1948,14 +2013,45 @@ choice of a Drinfeld associator $\Phi$:
 \item \textup{(Spectral coproduct.)}
   A spectral Drinfeld coproduct
   $\Delta_z\colon Y(\cA) \to Y(\cA) \otimes Y(\cA)$
-  on the ordered Koszul dual Yangian, satisfying the spectral
-  coassociativity identity
+  on the ordered Koszul dual Yangian, satisfying the
+  \emph{associator-twisted} spectral coassociativity identity
   \begin{equation}\label{eq:spectral-coassoc}
-    (\Delta_{z_1} \otimes \id) \circ \Delta_{z_1 + z_2}
+    \Phi_{12,3} \circ (\Delta_{z_1} \otimes \id) \circ \Delta_{z_1+z_2}
     \;=\;
-    (\id \otimes \Delta_{z_2}) \circ \Delta_{z_1}.
+    (\id \otimes \Delta_{z_2}) \circ \Delta_{z_1} \circ \Phi_{1,23},
   \end{equation}
+  where
+  $\Phi = \Phi_{\mathrm{KZ}} \in U(\hat{\mathfrak g})^{\otimes 3}[[\hbar]]$
+  is the Kontsevich--Drinfeld KZ associator, and
+  $\Phi_{12,3}$, $\Phi_{1,23}$ denote its two codegeneracies
+  acting on the triple tensor product.
 \end{enumerate}
+
+\begin{remark}[Pentagon cocycle and hexagon]
+\label{rem:kz-associator-pentagon}
+The associator $\Phi_{\mathrm{KZ}}$ appearing in
+\eqref{eq:spectral-coassoc} is a \emph{pentagon cocycle}:
+it satisfies Drinfeld's pentagon axiom
+\[
+  \Phi_{12,3,4} \cdot \Phi_{1,2,34}
+  \;=\;
+  (\id \otimes \Phi_{2,3,4}) \cdot \Phi_{1,23,4}
+  \cdot (\Phi_{1,2,3} \otimes \id)
+\]
+in $U(\hat{\mathfrak g})^{\otimes 4}[[\hbar]]$, together with the
+two hexagon axioms relating $\Phi$ to the $R$-matrix
+$R(z) = e^{\hbar r(z)/2}$ of clause~(I)
+\cite{Drinfeld89,Drinfeld90,Kontsevich99}. Equivalently,
+$\Phi_{\mathrm{KZ}}$ is the holonomy of the Knizhnik--Zamolodchikov
+connection on $\overline{\FM}_3^{\mathrm{ord}}(\CC)$ between the
+limiting tangential basepoints $(z_1 \to z_2) \to z_3$ and
+$z_1 \to (z_2 \to z_3)$; strictness of
+\eqref{eq:spectral-coassoc} would correspond to $\Phi = 1$, which
+fails already at order $\hbar^2$ by $\zeta(2)$. Ordered chiral
+homology therefore carries an intrinsic Grothendieck--Teichm\"uller
+action (cf.\ the GRT-parametrized face enumeration, Vol II Seven
+Faces Theorem).
+\end{remark}
 The equivalences form a triangle:
 \begin{equation}\label{eq:equiv-triangle-standalone}
 \begin{tikzcd}[column sep=3em, row sep=3em]
@@ -2228,8 +2324,12 @@ The KZ local system has finite monodromy, and the ordered bar
 complex factorises over the handle-sewing boundary strata
 of $\overline\cM_g$.
 
-At genus~$0$: the $S$-matrix unitarity
-$\sum_l S_{jl}^2 = \delta_{j0}$ gives $Z_0 = 1$.
+At genus~$0$: unitarity of the modular $S$-matrix gives
+$\sum_l S_{0l}\,\overline{S_{0l}} = 1$; for the self-dual
+$\widehat{\mathfrak{sl}}_2$ $S$-matrix this reduces to
+$\sum_l S_{0l}^{\,2} = 1$, hence $Z_0 = 1$.
+(The stronger statement $\sum_l S_{jl}\,\overline{S_{il}} = \delta_{ij}$
+holds for every $i,j$; we use only the $i=j=0$ diagonal.)
 At genus~$1$: $S_{0j}^0 = 1$ for all $j$, so $Z_1 = k + 1$,
 matching the count of integrable representations via
 the Zhu algebra $A(V_k(\mathfrak{sl}_2))

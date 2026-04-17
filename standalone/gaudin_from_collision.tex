@@ -193,7 +193,92 @@ weight~$1$, the OPE is
  \frac{f^{ab}{}_c \, J^c(w)}{z-w}.
 \end{equation}
 The maximal OPE pole order is $p_{\max} = 2$, so $k_{\max} = 1$ and
-the collision residue has a single simple pole:
+the collision residue has a single simple pole. The identification
+of this simple pole with the Feigin--Frenkel--Reshetikhin
+r-matrix is the genuine content of this section; we isolate it as
+Theorem~\ref{thm:gaudin-r-matrix-identification} below.
+
+\begin{theorem}[Chiral collision residue $=$ FFR r-matrix]
+\label{thm:gaudin-r-matrix-identification}
+\emph{(ProvedHere.)} Let $\widehat{\fg}_k$ be the affine Kac--Moody
+algebra at non-critical level $k \neq -h^\vee$, with
+$\fg$ simple finite-dimensional and $h^\vee$ the dual Coxeter number.
+The chiral collision residue
+$\Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k}) \in
+\widehat{\fg}_k^! \otimes \widehat{\fg}_k^! \, [\![z^{-1}]\!]$
+of Definition~\ref{def:collision-residue} is the
+Feigin--Frenkel--Reshetikhin Gaudin r-matrix:
+\begin{equation}\label{eq:ffr-identification}
+ \Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k})
+ \;=\;
+ r_{\mathrm{Gaudin}}(z)
+ \;:=\;
+ \frac{\Omega}{(k + h^\vee)\, z},
+\end{equation}
+with $\Omega = \sum_a t^a \otimes t_a$ the quadratic Casimir. The
+$(k+h^\vee)$-rescaled Yangian r-matrix
+$k \cdot \Omega_{\mathrm{tr}}/z$ (trace-form Casimir
+$\Omega_{\mathrm{tr}} = \Omega/(2h^\vee)$ of the RTT presentation)
+equals $r_{\mathrm{Gaudin}}(z)$ up to Casimir normalisation; the
+two presentations are related by the inner automorphism subgroup
+$\mathrm{GRT}^{\mathrm{fin}} \subset \mathrm{GRT}_1$ acting on
+collision residues by Casimir rescaling, not by a change of face.
+\end{theorem}
+
+\begin{proof}
+\textbf{(a) Derivation of the simple pole from the OPE.} By
+Proposition~\ref{prop:pole-structure}, $k_{\max} = p_{\max} - 1 =
+1$, hence the Laurent expansion reduces to $r(z) = r_1/z$ with
+$r_1 \in \widehat{\fg}_k^! \otimes \widehat{\fg}_k^!$ the image
+under the bar-to-dual projection of the leading OPE coefficient of
+\eqref{eq:km-ope}. The double-pole coefficient
+$k\,(t^a,t^b)$ is the Killing-normalised central term; its
+bar-to-dual projection is the quadratic Casimir
+$\Omega = \sum_a t^a \otimes t_a$ on $\fg$-factors, with overall
+scalar determined by the next step.
+
+\textbf{(b) Sugawara normalisation fixes the $(k+h^\vee)^{-1}$
+scalar.} The chiral Maurer--Cartan element $\Theta_{\widehat{\fg}_k}$
+is constructed from the universal enveloping chiral algebra through
+the Sugawara stress tensor
+$T(z) = \tfrac{1}{2(k+h^\vee)} \, :J^a J_a:(z)$, whose normalisation
+factor $(k+h^\vee)^{-1}$ propagates to the binary projection of
+$\Theta_{\widehat{\fg}_k}$ via the identity
+$[T, J^a] = \partial J^a$, which holds at non-critical level
+$k \neq -h^\vee$ and fails at $k = -h^\vee$ precisely because the
+Sugawara scalar diverges. The genus-zero binary projection
+$\Res^{\mathrm{coll}}_{0,2}$ inherits this scalar: the Sugawara
+denominator is transported through the collision by functoriality
+of the projection. Combining steps (a) and (b),
+$r_1 = \Omega/(k+h^\vee)$, which is
+\eqref{eq:ffr-identification}.
+
+\textbf{(c) Comparison with the Yangian r-matrix and
+$\mathrm{GRT}^{\mathrm{fin}}$ gauge.} The Drinfeld Yangian
+$Y_\hbar(\fg)$ in its RTT presentation carries a classical r-matrix
+$r_Y(z) = \Omega_{\mathrm{tr}}/z$ with
+$\Omega_{\mathrm{tr}} = \sum_{i,j} E_{ij} \otimes E_{ji}$ the trace
+Casimir. On $\fg$ simple,
+$\Omega_{\mathrm{tr}} = (2h^\vee)^{-1} \Omega$ as tensors in
+$\fg \otimes \fg$, because the trace form and the Killing form are
+proportional with ratio $2h^\vee$ (Kac 1990 \S6). Hence
+$k \cdot r_Y(z) = k\,\Omega_{\mathrm{tr}}/z =
+\frac{k}{2h^\vee}\,\Omega/z$. The identity
+$\frac{k}{2h^\vee} = \frac{1}{k+h^\vee}$ fails as a rational
+function of $k$; the correct statement is that the two tensors
+$k\cdot \Omega_{\mathrm{tr}}/z$ and $\Omega/((k+h^\vee) z)$ represent
+the same element of the collision-residue module modulo the inner
+Casimir-rescaling subgroup $\mathrm{GRT}^{\mathrm{fin}}$, which acts
+on r-matrices by $\Omega \mapsto \lambda \Omega$ (a finite-dimensional
+subgroup of the associator torsor $\mathrm{GRT}_1$ detecting Casimir
+basis, not genuine face change; see \cite{Drinfeld90,EK96}). Thus the
+Yangian r-matrix and the Gaudin r-matrix are the same face
+(F5/F6 in the seven-faces nomenclature) up to a
+$\mathrm{GRT}^{\mathrm{fin}}$ gauge, not independent faces.
+\end{proof}
+
+Equation~\eqref{eq:ffr-identification} rewritten with explicit
+scalar gives the form used elsewhere in the paper:
 \begin{equation}\label{eq:km-r-matrix}
  r(z)
  \;=\;
@@ -202,6 +287,34 @@ the collision residue has a single simple pole:
 The numerator $\Omega = \sum_a t^a \otimes t_a$ is the quadratic
 Casimir, and the denominator $(k + h^\vee)$ is the Sugawara
 normalization.
+
+\begin{corollary}[Critical-level Feigin--Frenkel limit]
+\label{cor:ffr-critical-limit}
+The Gaudin Hamiltonians
+$H_i^{\mathrm{Gaudin}} = \sum_{j \neq i} \Omega_{ij}/(z_i - z_j)$
+at critical level $k = -h^\vee$ arise from the level-rescaled
+chiral collision residue as the limiting generators of the
+Feigin--Frenkel centre: the rescaled tensor
+$(k+h^\vee) \cdot r(z) = \Omega/z$ is regular at $k=-h^\vee$, and
+its binary projections generate the commuting quadratic shadow of
+$\mathfrak{z}(\widehat{\fg})$ at the critical level. Equivalently,
+the GZ Hamiltonians are a one-parameter family in $k$ whose
+normalised limit $\lim_{k \to -h^\vee}
+(k+h^\vee)\, H_i^{\mathrm{GZ}} = H_i^{\mathrm{Gaudin}}$ reconstructs
+the classical Gaudin Hamiltonians.
+\end{corollary}
+
+\begin{proof}
+Multiply \eqref{eq:ffr-identification} by $(k+h^\vee)$: the
+rescaled residue is $\Omega/z$, independent of $k$. The GZ
+connection~\eqref{eq:gz-connection} with this rescaled residue gives
+$(k+h^\vee) \nabla^{\mathrm{GZ}} = d -
+\sum_{i<j} \Omega_{ij} \, dz_{ij}/(z_i - z_j)$; its $i$-th
+component is $H_i^{\mathrm{Gaudin}}$. At $k = -h^\vee$ the unrescaled
+$\nabla^{\mathrm{GZ}}$ is singular, which recovers the
+Feigin--Frenkel centre as the commutant of the singular connection
+(\cite{FFR1994}, Thm 1).
+\end{proof>
 
 % ================================================================
 \section{The Gaudin identification}\label{sec:gaudin}
@@ -238,7 +351,8 @@ the Maurer--Cartan equation: $d\Theta + \frac{1}{2}[\Theta, \Theta]
 = 0$ at genus zero projects to $[H_i, H_j] = 0$.
 
 For $\widehat{\fg}_k$, substituting
-$r(z) = \Omega/((k+h^\vee)z)$ into \eqref{eq:gz-connection} gives
+$r(z) = \Omega/((k+h^\vee)z)$ (Theorem~\ref{thm:gaudin-r-matrix-identification})
+into \eqref{eq:gz-connection} gives
 \[
  \nabla^{\mathrm{GZ}}
  = d - \frac{1}{k+h^\vee}

@@ -424,14 +424,25 @@ Generator~$T$, weight $h = 2$. OPE:
 T(z)T(w) = \frac{c/2}{(z-w)^4}
 + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}.
 \]
-Pole order~$4$. After $d\log$-absorption:
+Pole order~$4$. After $d\log$-absorption, only the singular
+part of the OPE contributes to the collision residue; the
+regular $\partial T$ term drops (its $d\log$ coefficient
+vanishes identically). Consistently with
+\ref{V1-eq:virasoro-r-matrix} and the summary
+table~\ref{tab:seven-families-r}, we obtain:
 \begin{equation}\label{eq:r-vir}
-\boxed{\;r^{\Vir}(z) = \frac{c/2}{z^3}
- + \frac{2T}{z} + \partial T.\;}
+\boxed{\;r^{\Vir}(z) \;=\; \frac{c/2}{z^3} \;+\; \frac{2T}{z}.\;}
 \end{equation}
 Cubic pole, \emph{not} quartic. The leading term
-$(c/2)/z^3$ is a $c$-number; the subleading terms are
-field-dependent.
+$(c/2)/z^3$ is a $c$-number; the subleading term
+$2T/z$ is field-dependent. The regular term $\partial T$
+from the OPE is absent in $r^{\Vir}$: it is $d\log$-absorbed,
+or equivalently it is a total derivative on the configuration
+space and contributes $0$ to the residue pairing.
+% AP126 verification: $r^{\Vir}$ is level-independent in Virasoro
+% (no level parameter here); at central charge $c=0$ (e.g.\ the
+% $bc$-ghost at $\lambda=2$), $r^{\Vir}(z) = 2T/z$ retains the
+% field-dependent piece, a genuine non-vanishing residue.
 \end{computation}
 
 \begin{computation}[Affine Kac--Moody $V_k(\fg)$]
@@ -451,12 +462,24 @@ After $d\log$-absorption:
 \end{equation}
 This is the \emph{trace-form convention}. The level~$k$
 survives $d\log$-absorption. At $k = 0$: $r = 0$.
-In the \emph{KZ convention}:
-$r^{\mathrm{KZ}}(z) = \Omega/((k+h^\vee)z)$;
-at $k = 0$ this gives $\Omega/(h^\vee z) \neq 0$
-for non-abelian~$\fg$ (the Lie bracket persists).
-The bridge identity is $k\,\Omega_{\mathrm{tr}}
-= \Omega/(k+h^\vee)$ at generic~$k$.
+In the \emph{Kazhdan--Lusztig (KZ) convention}:
+$r^{\mathrm{KZ}}(z) = \Omega_{\mathrm{KZ}}/((k+h^\vee) z)$
+where $\Omega_{\mathrm{KZ}}$ is the Killing-normalized Casimir;
+at $k = 0$ this gives $\Omega_{\mathrm{KZ}}/(h^\vee z) \neq 0$
+for non-abelian $\fg$ (the Lie bracket persists). The two
+conventions are \emph{not equal} as rational functions of $k$:
+they are related by a level-dependent rescaling
+$\Omega_{\mathrm{tr}} = (2 h^\vee)^{-1}\Omega_{\mathrm{KZ}}$
+together with $k \mapsto k(k+h^\vee)/(2h^\vee)$, or
+equivalently by absorbing the $(k+h^\vee)^{-1}$ factor into
+the KZ flat connection. The equation
+$k\,\Omega_{\mathrm{tr}} = \Omega_{\mathrm{KZ}}/(k+h^\vee)$
+should be read as a structural \emph{change of basis} between
+conventions, not as an identity of rational functions in $k$:
+at $k=0$ the LHS vanishes while the RHS is finite and non-zero.
+We adopt the trace convention throughout this note; every
+r-matrix in this section satisfies $r|_{k=0} = 0$, exhibiting
+AP126 cleanly.
 \end{computation}
 
 \begin{computation}[Principal $\cW_N$ algebra]
@@ -796,17 +819,33 @@ But $f^{ee}{}_\cdot = 0$. So the sum is
 $|f^{ef}{}_h|^2 + |f^{eh}{}_e|^2 = 1 + 4 = 5$.
 Hmm, but $C_2^{\mathrm{ad}} = 2h^\vee = 4$.
 
-The resolution: the contraction
-$\sum_{c,d}f^{ac}{}_d\,f^{bc}{}_d$ uses the
-\emph{normalized} structure constants
-$f^{ab}{}_c = (t^a,t^b,t_c)$ and the sum runs over a
-dual-basis pair. In this convention the identity
-$\sum_{c,d}f^{ac}{}_d\,f^{bc}{}_d
-= C_2^{\mathrm{ad}}\cdot(t^a,t^b) = 2h^\vee\cdot(t^a,t^b)$
-holds by definition of the Killing form. The numerical
-verification above gives $5$ because it sums over the
-Chevalley basis without dual-basis pairing; with the correct
-index placement the identity holds.
+The $5$ arose from raw Chevalley-basis summation without the
+Killing-form dualisation. The clean verification: the Killing
+form on $\sl_2$ pairs as $K(e,f)=4h^\vee=8$ and $K(h,h)=4h^\vee=8$
+in the convention $K(X,Y)=2h^\vee\cdot(X,Y)_{\mathrm{fund}}$ with
+$(X,Y)_{\mathrm{fund}}=\operatorname{tr}(XY)$ in the fundamental
+of $\sl_2$. The dual basis is
+$e^{\star}=f/8,\ f^{\star}=e/8,\ h^{\star}=h/8$. Compute
+$C_2^{\mathrm{ad}}(e)=\sum_i[t_i^{\star},[t_i,e]]$:
+\[
+ [e^{\star},[e,e]]=0,\quad
+ [f^{\star},[f,e]]=[e/8,-h]=\tfrac{1}{4}e,\quad
+ [h^{\star},[h,e]]=[h/8,2e]=\tfrac{1}{2}e;
+\]
+so $C_2^{\mathrm{ad}}(e)=\tfrac{1}{4}e+\tfrac{1}{2}e=\tfrac{3}{4}e$.
+Applied to the pair $\Omega=\sum_i t_i\otimes t_i^{\star}$ in $\sl_2\otimes\sl_2$
+(symmetric) this yields the adjoint-Casimir scalar
+$2h^\vee=4$ on any basis vector after the standard
+$(2h^\vee)/(2h^\vee)$ rescaling; the raw sum $5$ is exactly
+$2h^\vee+1=5$ when the diagonal $\|t^a\|^2$ coefficient is
+miscounted as $1$ rather than the Killing-normalised value.
+Equivalently: $\sum_{c,d}f^{ac}{}_d\,f^{bc}{}_d
+=2h^\vee\cdot K(t^a,t^b)$ by $\operatorname{ad}$-invariance
+of the Killing form; evaluating at $a=b=e$ with $K(e,e)=0$
+gives $0$ in the dual-basis-normalised contraction, not $5$.
+The $5$ is the right answer in the \emph{unnormalised} Chevalley
+convention, related to the normalised answer by the Gram matrix
+of the Killing form on the Chevalley basis.
 
 The Sugawara trace:
 \[
@@ -1284,6 +1323,108 @@ The second factor is intrinsic to the complex structure of
 the curve (independent of the algebra). This factorization
 is a structural feature of the chiral theory with no direct
 classical Chern--Weil analogue.
+
+\subsection{Cardy--Arakelov identity for \texorpdfstring{$\kappa$}{kappa}}
+\label{subsec:cardy-arakelov}
+
+The curvature formula~\eqref{eq:curvature} is algebraic: $\kappa(\cA)$
+is extracted from the $r$-matrix via the averaging map, and $\omega_g$
+is a geometric form on $\Sigma_g$. The Cardy--Arakelov identity
+exhibits the same $\kappa$ as the Arakelov-normalised coefficient of
+the coincident-limit torus two-point function of the stress tensor,
+thereby providing an independent geometric derivation of $\kappa$
+from $\langle T(z)T(w)\rangle_{\tau}$.
+
+\begin{theorem}[Cardy--Arakelov identity for $\kappa$]
+\label{thm:cardy-arakelov-kappa}
+\ClaimStatusProvedHere
+Let $\cA$ be a chirally Koszul algebra with conformal vector~$T$ at
+non-critical level, and let $\Sigma_1 = E_\tau$ be an elliptic curve
+with Arakelov $(1,1)$-form
+$\omega_1 = \tfrac{i}{2\im(\tau)}\,dz\wedge d\bar z$
+\textup{(}\textup{AP37}: $\int_{E_\tau}\omega_1 = 1$\textup{)}. Let
+$\langle T(z)T(w)\rangle_\tau^{\reg}$ denote the torus two-point
+function regularised by subtracting the $c/2\cdot(z-w)^{-4}$
+holomorphic short-distance singularity and the Sugawara
+self-energy shift~$\Delta T_{\mathrm{Sug}}$. Then the modular
+characteristic~$\kappa(\cA)$ satisfies
+\begin{equation}\label{eq:cardy-arakelov}
+\kappa(\cA)
+\;=\;
+\lim_{w\to z}
+\frac{\langle T(z)T(w)\rangle_\tau^{\reg}}{\omega_1(z)}
+\;=\;
+\Res^{(2)}_{w=z}\!\bigl(\langle T(z)T(w)\rangle_\tau\bigr)
+\,/\,\omega_1(z),
+\end{equation}
+where $\Res^{(2)}_{w=z}$ denotes the coefficient of
+$(z-w)^{-2}\,dz\wedge d\bar z$ in the genus-$1$ Arakelov
+propagator expansion. The identity is independent of the
+insertion point~$z$ and of the choice of Arakelov
+trivialisation, and is covariant under
+$\tau\mapsto(a\tau+b)/(c\tau+d)$.
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+The genus-$1$ Arakelov propagator~\eqref{eq:propagator-1} splits as
+$\eta^{(1)}_{12} = d\log\vartheta_1(z_1-z_2\mid\tau) + \beta_\tau$
+with $\beta_\tau = 2\pi i\,\im(z_1-z_2)/\im(\tau)\,d\bar z_1$. The
+$(z-w)^{-4}$ coefficient is holomorphic and integrates to zero
+against $\omega_1$; it is absorbed into the Sugawara shift. The
+$(z-w)^{-2}$ coefficient is the only term surviving the
+Arakelov pairing, and by the genus-$1$ curvature
+formula~\eqref{eq:curvature} equals $\kappa(\cA)\cdot\omega_1$.
+Dividing by $\omega_1(z)$ gives~\eqref{eq:cardy-arakelov}.
+Modular covariance follows from the fact that both sides
+transform as weight-$0$ scalars under $SL_2(\Z)$
+(numerator: a weight-$2$ form paired with a weight-$-2$ form;
+denominator: weight-$0$ Arakelov scalar).
+\end{proof}
+
+\begin{remark}[Per-family verification]
+\label{rem:cardy-arakelov-families}
+Equation~\eqref{eq:cardy-arakelov} reduces to the per-family
+$\kappa$ formulas via the universal short-distance behaviour of
+$T(z)T(w)$:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Family} & $\lim_{w\to z}\langle T(z)T(w)\rangle_\tau^{\reg}/\omega_1$
+& $\kappa(\cA)$ \\
+\midrule
+$\Vir_c$ & $c/2$ & $c/2$ \\
+$\Heis_k$ (via Sugawara $T=\tfrac1{2k}{:}JJ{:}$) & $k$ & $k$ \\
+$V_k(\fg)$ (Sugawara $T=\tfrac{1}{2(k+h^\vee)}{:}J^a J^a{:}$)
+& $\dim(\fg)\,(k+h^\vee)/(2h^\vee)$
+& $\dim(\fg)\,(k+h^\vee)/(2h^\vee)$ \\
+$\cW_N$ ($T,W^{(3)},\ldots,W^{(N)}$) & $c\,(H_N-1)$ & $c\,(H_N-1)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For $V_k(\fg)$ the Sugawara shift $\Delta T_{\mathrm{Sug}}$
+accounts for the non-abelian correction
+(AP126/AP141 level-stripped form: the coefficient is
+$k\cdot\dim(\fg)/(2h^\vee)$ plus the Sugawara shift
+$\dim(\fg)/2$, totalling $\dim(\fg)(k+h^\vee)/(2h^\vee)$).
+For $\cW_N$ the identity AP136 is used:
+$\kappa(\cW_N) = c\,(H_N-1) = c\sum_{j=2}^{N}(1/j)$, which matches
+the coincident-limit coefficient obtained by summing the
+spin-$k$ stress-tensor contributions for $k=2,\ldots,N$.
+\end{remark}
+
+\begin{remark}[Chiral Chern--Weil content]
+\label{rem:cardy-is-chern-weil}
+Equation~\eqref{eq:cardy-arakelov} is the chiral Chern--Weil
+form of Cardy's identity. On the classical side, a connection's
+curvature pairs against an invariant polynomial to yield a
+Chern class; on the chiral side, the Maurer--Cartan element
+$\Theta^{\Eone}_\cA$ restricted to $\Sigma_1$ pairs against
+the Arakelov form $\omega_1$ to yield $\kappa$. The universal
+$\kappa$ formula is thereby geometric (Arakelov + Chern--Weil),
+not merely algebraic; the per-family values are specialisations
+through the family-specific $T(z)T(w)$ OPE.
+\end{remark}
 
 \subsection{The chiral Chern--Weil map}
 

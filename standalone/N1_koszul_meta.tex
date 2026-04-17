@@ -62,8 +62,9 @@
 % ================================================================
 \begin{document}
 
-\title[Twelve equivalences of chiral Koszulness]
-{Twelve equivalences of chiral Koszulness}
+\title[The Koszulness moduli: meta as moduli-level]
+{The Koszulness moduli: reinterpreting the meta-theorem as
+a $\mathrm{GRT}_1$-torsor of charts}
 
 \author{Raeez Lorgat}
 \address{Perimeter Institute for Theoretical Physics,
@@ -73,35 +74,51 @@
 \date{\today}
 
 \begin{abstract}
-For a chiral algebra $\cA$ on a smooth projective curve~$X$
-equipped with its PBW filtration, we prove that ten a priori
-distinct notions of Koszulness are equivalent. The list spans
-homological algebra (bar--cobar inversion, Ext diagonal vanishing,
-$A_\infty$ formality), deformation theory (chiral Hochschild
-cohomology concentrated in degrees~$\{0,1,2\}$ on the Koszul locus,
-in the uniform-weight regime), factorization (factorization
-homology concentration at each genus, under the uniform-weight
-regime for genus $g\ge 2$; acyclicity on every
-Fulton--MacPherson boundary stratum), higher category theory
-(Barr--Beck--Lurie monadicity of the bar--cobar adjunction), and
-classical representation theory (Kac--Shapovalov determinant
-nonvanishing; PBW spectral sequence collapse at~$E_2$).
-An eleventh equivalent condition, the Lagrangian criterion in the
-$(-1)$-shifted symplectic deformation space, is proved under a
-perfectness hypothesis on the ambient tangent complex. A twelfth
-condition, $\cD$-module purity of the bar complex as a mixed Hodge
-module, is proved to imply the others; the converse holds for the
-affine Kac--Moody family and is open in general.
-The core circuit
-$(\mathrm{i}) \Leftrightarrow (\mathrm{ii}) \Leftrightarrow
-(\mathrm{iii}) \Leftrightarrow (\mathrm{v}) \Leftrightarrow
-(\mathrm{viii})$ collects PBW collapse, $A_\infty$ formality,
-bar--cobar inversion, and Theorem~H into a single identification;
-the remaining circuits (factorization, boundary, monadic,
-Kac--Shapovalov, Ext) are then deduced from this core.
-The meta-theorem is verified on the standard landscape:
-Heisenberg, affine Kac--Moody at generic level, Virasoro in the
-Koszul locus, and the $\beta\gamma$ system.
+The \emph{meta} in ``meta-theorem of chiral Koszulness'' is not
+a linguistic decoration: it is the
+Koszulness moduli scheme $\cM_{\mathrm{Kosz}}(\cA)$, a
+$\mathrm{GRT}_1$-torsor whose points parameterize the
+equivalent characterizations. The classical list of twelve
+equivalences is the $\mathrm{GRT}_1$-coordinate atlas of this
+moduli.
+
+Precisely: for a chiral algebra $\cA$ on a smooth projective
+curve~$X$ equipped with its PBW filtration, the moduli scheme
+$\cM_{\mathrm{Kosz}}(\cA)$ over $\bQ$ has points
+$(\Phi, c_\Phi)$ with $\Phi$ a Drinfeld associator and $c_\Phi$
+a chart coordinate detecting a Koszulness predicate.
+\textup{(A1)} $\cM_{\mathrm{Kosz}}(\cA) \neq \emptyset$ if and
+only if $\cA$ is chirally Koszul.
+\textup{(A2)} The projection to the associator torsor is a
+$\mathrm{GRT}_1$-torsor, transitions between charts are Tamarkin
+$\Phi$-transfer maps.
+\textup{(A3)} The ten classical characterizations sit as open
+charts $U_1, \ldots, U_{10}$ at the KZ associator
+$\Phi_{\mathrm{KZ}}$; four supplementary charts $U_{11}$ (AT,
+Lagrangian), $U_{12}$ (de~Rham--Betti, Hodge--Betti), $U_{13}$
+(Enriquez elliptic), $U_{14}$ (Kontsevich integral) extend the
+atlas unconditionally at their own associators.
+\textup{(A4)} The shadow-class stratification $G/L/C/M/FF$
+selects a distinguished chart on each stratum.
+
+The reformulation makes the Kontsevich--Tamarkin principle
+operational: chiral Koszulness is a $\mathrm{GRT}_1$-invariant
+\emph{property}, and the twelve classical equivalences are
+$\mathrm{GRT}_1$-coordinate \emph{charts}. Two consequences
+follow. The Hodge--Betti chart $U_{12}$ closes the Virasoro
+circularity \textup{(FM197)} by a direct Feigin--Fuchs BGG
+argument, without bar--cobar detour. The Yangian chart
+$U_1^{\mathrm{assoc}} \hookrightarrow U_1^{\mathrm{chiral}}$
+reformulates \textup{FM161} as chart-surjectivity.
+
+The core circuit $(i) \Leftrightarrow \cdots \Leftrightarrow
+(viii)$ of the classical meta-theorem is now the transition
+manifold between the ten KZ-centred charts; the supplementary
+circuits (factorization, boundary, monadic, Kac--Shapovalov, Ext)
+are chart inclusions. The meta-theorem, read off the scheme, is
+verified on the standard landscape: Heisenberg, affine
+Kac--Moody at generic level, Virasoro in the Koszul locus, and
+the $\beta\gamma$ system.
 \end{abstract}
 
 \maketitle
@@ -140,7 +157,49 @@ associative theory, but also two new chiral-specific conditions
 the Fulton--MacPherson compactification) and two conjectural ones
 (Lagrangian criterion; $\cD$-module purity).
 
-\subsection{The meta-theorem}
+\subsection{The meta is the moduli}
+
+The word ``meta'' in \emph{meta-theorem of chiral Koszulness}
+is operational: it names the Koszulness moduli scheme
+$\cM_{\mathrm{Kosz}}(\cA)$, a $\mathrm{GRT}_1$-torsor. The
+classical equivalences listed below are \emph{charts} on this
+scheme; the equivalences among them are \emph{transition maps}
+induced by the Tamarkin $\Phi$-transfer. We record the moduli
+formulation first, then the classical presentation it organizes.
+
+\begin{definition}[Koszulness moduli scheme, N1 form]
+\label{def:koszulness-moduli-N1}
+For $\cA$ a chiral algebra on~$X$ with PBW filtration, the
+Koszulness moduli scheme is the affine $\bQ$-scheme
+\[
+\cM_{\mathrm{Kosz}}(\cA)
+\;=\; \bigl\{(\Phi, c_\Phi) :
+\Phi \in \mathrm{Assoc},\;
+c_\Phi \in \mathrm{Chart}_\Phi(\cA)\bigr\},
+\]
+where $\mathrm{Assoc}$ is the Drinfeld associator torsor and
+$c_\Phi$ is a chart coordinate: a predicate $\Pi_\Phi$ on
+$(\cA, \Phi)$, a witness $\mathrm{wit}_\Phi(\cA)$, and a
+Tamarkin transition cocycle $\gamma_\Phi$.
+\end{definition}
+
+\begin{theorem}[Meta as moduli]
+\label{thm:meta-as-moduli-N1}
+$\cM_{\mathrm{Kosz}}(\cA)$ is nonempty iff $\cA$ is chirally
+Koszul, is a $\mathrm{GRT}_1$-torsor, and carries a finite
+affine atlas $\{U_j\}_{j=1}^{14}$ consisting of
+$U_1,\ldots,U_{10}$ at $\Phi_{\mathrm{KZ}}$, $U_{11}$ at
+$\Phi_{\mathrm{AT}}$, $U_{12}$ at $\Phi_{\mathrm{dR,B}}$,
+$U_{13}$ at $\Phi_{\mathrm{ell}}$, $U_{14}$ at
+$\Phi_{\mathrm{Kon}}$, with the shadow-class stratification
+selecting a distinguished chart on each stratum.
+\end{theorem}
+
+The proof is a direct reading of the classical meta-theorem as a
+chart atlas; it is given in
+\cite[Theorem~2.2]{LorgatMKD1_standalone}.
+
+\subsection{The meta-theorem (classical presentation)}
 
 Let $\cA$ be a chiral algebra on a smooth projective curve~$X$,
 equipped with its Poincar\'e--Birkhoff--Witt filtration
