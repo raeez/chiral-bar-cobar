@@ -17988,13 +17988,15 @@ genus-$0$ invariants $(\kappa, \alpha, S_4)$.
 \end{theorem}
 
 \begin{proof}
-On~$L$ the master equation reduces to the recursion
+On~$L$, for $r \geq 5$ the master equation reduces to the recursion
 \begin{equation}\label{eq:single-line-inversion}
  S_r
  \;=\;
  -\frac{P}{2r}
- \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k}}
- c_{jk}\,jk\,S_j\,S_k,
+ \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k \\ j < k}}
+ c_{jk}\,jk\,S_j\,S_k
+ \;-\;
+ \frac{P}{2r}\,c_{\frac{r+2}{2},\frac{r+2}{2}}\,\Bigl(\tfrac{r+2}{2}\Bigr)^{\!2}\,S_{(r+2)/2}^{2}\,[r\equiv 0\bmod 2,\,r\geq 6],
  \qquad
  c_{jk} = \begin{cases} 1 & j < k, \\ 1/2 & j = k.\end{cases}
 \end{equation}
@@ -18004,8 +18006,22 @@ and the eigenvalue identity
 $\nabla_H(x^r) = 2r\,x^r$ separate the master equation into
 the $\nabla_H$ term $2r\,S_r\,x^r$ on the left and the
 obstruction sum on the right;
-since $j \geq 3$ forces $k \leq r - 1$, the recursion is
-well-defined.
+since $j \geq 3$ forces $k \leq r - 1$ for $r \geq 5$, the recursion
+is well-defined starting at~$r = 5$.
+The three lowest-weight invariants
+$(\kappa, \alpha, S_4) = (S_2, S_3, S_4)$ are not produced by the
+recursion: $r = 2$ and $r = 3$ admit no solution
+$(j, k)$ with $j + k = r + 2$, $j \geq 3$, $j \leq k$, and $r = 4$
+admits only the exceptional solution $(j, k) = (3, 3)$ which belongs
+to the \emph{initial data}, not the recursion output. The quartic
+invariant $S_4$ is pinned by a second-quantisation datum (the
+Zamolodchikov quasi-primary norm
+$\langle \Lambda \mid \Lambda \rangle = c(5c+22)/10$ for Virasoro,
+after Zamolodchikov \cite{Zamolodchikov1985}; cf.\ the general
+$\cW$-algebra analogue of Bouwknegt--McCarthy--Pilch
+\cite{BouwknegtMcCarthyPilch1991}), not by products of lower $S_j$;
+in particular $S_4$ cannot be recovered from $(\kappa, \alpha)$ via
+the MC recursion alone.
 
 Define $a_n := (n+2)\,S_{n+2}$ for $n \geq 0$, so that
 $H(t) = \sum_{n \geq 0} a_n\,t^{n+2}$.
