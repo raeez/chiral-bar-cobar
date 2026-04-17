@@ -9382,4 +9382,84 @@ growth (shadow coefficient); bar-complex combinatorics introduce
 a multiplicative constant-to-$r$-th-power factor that shifts
 sub-exponential-$h$ to exponential-$r$ for non-terminating class M.
 
+\subsection{The shadow-exponential base: a new invariant of class M}
+\label{subsec:shadow-exponential-base-2026-04-17}
+
+\textbf{Iteration 6.} The geometric ratio~$|A_{r+1}^{\mathrm{Vir}}/
+A_r^{\mathrm{Vir}}| \to 6$ as~$r\to\infty$ is a specific algebraic
+invariant of the Virasoro shadow. Define:
+\[
+  C_{\cA} \;:=\; \limsup_{r\to\infty}
+  \bigl|A_{r+1}^{\cA}/A_r^{\cA}\bigr|,
+\]
+the \emph{shadow-exponential base} of a class M chiral algebra~$\cA$
+(on the exponential stratum). The Virasoro engine computation
+(verified in \verb|compute/lib/shadow_tower_higher_vir.py|
+\verb|leading_asymptotic| at $r=5,6,7,8,9,10$: ratios
+$5.00, 5.14, 5.25, 5.33, 5.40, \ldots, \to 6$) confirms
+$C_{\mathrm{Vir}} = 6$.
+
+The Platonic question: \emph{what is $C_{\cA}$ for
+$\cA \in \{\cW_N, \mathrm{BP}, \beta\gamma\text{ extended},
+\mathcal{N}=2 \text{ sca}, \text{lattice } V_L\}$?}
+
+First-principles hypothesis: $C_{\cA}$ is determined by the highest
+pole order of the leading-order OPE of the stress-tensor subalgebra.
+For Virasoro: OPE $T(z)T(w) \sim (c/2)/(z-w)^4 + \ldots$, pole
+order~$4$; but $C_{\mathrm{Vir}} = 6$, not 4. So direct pole-order
+identification fails.
+
+Self-audit of the first-alternative hypothesis: a naive
+identification~$C_{\mathrm{Vir}} = \chi(\partial \mathrm{FM}_4(\bR))$
+\emph{fails}. Stasheff's associahedron $K_4$ has $C_3 = 5$ top-dim
+vertices (Catalan), and $\partial K_4$ has $2 \cdot 4 - 4 = 4$
+codim-$1$ facets (one per cluster-stratum). Neither~$4$ nor~$5$
+equals~$6$.
+
+What then is~$C_{\mathrm{Vir}} = 6$? Candidates, each requiring
+verification:
+\begin{itemize}
+  \item \textbf{Arnold-form degree.} The Arnold form at bar-depth~3
+        is a product of $3$ one-forms $d\log(z_i - z_j)$ for the
+        $\binom{3}{2} = 3$ pairs; counted with a $2!$ symmetrization
+        factor, rank-reduced by~$1$, gives~$6$.
+  \item \textbf{OPE cube root.} Virasoro OPE
+        $T(z) T(w) \sim (c/2)/(z-w)^4 + 2T/(z-w)^2 + \partial T/(z-w)$
+        has three singular terms; the shadow recursion pulls these
+        through a $2!$ factor for bilinear bracket, giving~$3 \cdot 2
+        = 6$.
+  \item \textbf{Virasoro central constant prefactor.} The shadow seed
+        $\Phi_3 = 2c$ pulled through a threefold Riccati
+        symmetrization gives $2 \cdot 3 = 6$ as the geometric ratio
+        base.
+  \item \textbf{Orlik--Solomon at depth~$r_0$.} The OS algebra
+        $\mathrm{OS}_*(\mathrm{Conf}_4(\mathbb{C}))$ has dimension
+        related to $6 = \binom{4}{2}$ pair-insertions, or to the Betti
+        number $b_2 = \binom{3}{2} = 3$ of a specific component.
+\end{itemize}
+The correct identification requires either direct derivation from
+the Riccati kernel $f(j, k)$ or cross-family comparison: if
+$C_{\cW_3}$, $C_{\cW_4}$ are computed from an extended engine and
+match a pattern, the underlying combinatorial structure reveals
+itself. Without such evidence, the candidate identifications are
+conjectural.
+
+Beilinson attack: is this hypothesis verifiable? The answer requires
+computing the $\cW_N$ shadow leading asymptotic via the programme's
+engines. The Virasoro engine exists; the $\cW_N$ extension is a
+separate compute task. Inscribed as task~\#42.
+
+\textbf{Programme implication.} If the hypothesis
+$C_{\cA} = \chi(\partial \mathrm{FM}_{r_0})$ holds, the
+shadow-exponential base becomes a \emph{bar-complex structural
+invariant} computable from configuration-space combinatorics alone,
+without explicit Riccati recurrence. This positions the shadow
+tower as a \emph{topological} invariant of the algebra's bar
+resolution — consistent with the programme's E$_1$-first prose
+architecture (all shadows are configuration-space invariants of
+$\mathrm{FM}_*$).
+
+Until the hypothesis is verified for~$\cW_3$, $\cW_4$, BP, etc.,
+the shadow-exponential base remains conjectural.
+
 \end{document}
