@@ -3762,6 +3762,32 @@ Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_
 
 **Related**: AP239 (naming-after-physical-source), AP246 (signature type-assignment), AP251 (attribution density).
 
+## Pattern 222: "Rate-limited agents" may be binary-not-found in disguise
+
+**Session**: 2026-04-18 (recovery-infrastructure audit)
+
+**Type**: infrastructure anti-pattern (paired with AP293, AP294, AP295 in CLAUDE.md Wave 13).
+
+**Trigger**: user says "relaunch all rate-limited agents" or "resume the failed campaign"; running `scripts/resume_failed.py --dry-run` reports N agents in `[empty]` or `[timeout]` state; output directory contains many sub-200-byte files.
+
+**Rule**: before classifying the failure as rate-limiting, inspect ONE sample failure file. If the first line matches `ERROR: \[Errno 2\] No such file or directory` or `ERROR: \[Errno 2\]: 'codex'` or `command not found` or `ModuleNotFoundError`, the root cause is PREREQUISITE_MISSING (external CLI absent), not rate-limiting. Relaunching under this condition creates an infinite resume-loop because every retry fails identically.
+
+**Canonical violation**: 2026-04-18 session, user invoked `/loop` asking to "relaunch rate-limited agents". `campaign_dashboard.py` reported 98 failures across 7 campaigns. `resume_failed.py --dry-run` listed them as `[empty]` and `[missing]`. Sampling one file (`resume_20260418_001350/CE01_shadow_engines.md`) revealed 78 bytes of content: `# CE01_shadow_engines — ERROR: [Errno 2] No such file or directory: 'codex'`. The `codex` CLI was not installed on the host. All 98 "rate-limited agents" were binary-not-found failures; relaunching without installing `codex` would permafail identically.
+
+**Counter-check**:
+
+```bash
+# Before accepting "rate-limited" framing, run:
+ls <campaign_out_dir>/*.md | head -1 | xargs head -c 200
+# If output contains "No such file or directory" or "command not found",
+# STOP — install the missing CLI before relaunching.
+which codex || echo "codex CLI MISSING — install before resume_failed.py"
+```
+
+**Regex trigger (pre-resume gate)**: `grep -l "No such file or directory\|command not found\|ModuleNotFoundError" <out_dir>/*.md`. Any hit ≥ 1 ⇒ prerequisite missing, abort resume loop.
+
+**Related**: AP80 (engine without test file — same discipline applied at theorem layer); AP293 (recovery-infrastructure prerequisite guard); AP294 (file-size threshold conflates failure modes); AP295 (dashboard liveness check).
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.

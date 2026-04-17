@@ -887,6 +887,34 @@ now for reference and prove it in \S\ref{sec:ainf2-R-descent}.
 % See adversarial_swarm_20260417/wave1_theorem_A_attack_heal.md items
 % OF1, OF2, OF3, OF5 for the current open ledger.
 
+\begin{remark}[Step~2 Mittag-Leffler: which filtration, which side]
+\label{rem:A-inf-2-ml-step-2}
+\index{Mittag-Leffler!bar-length vs coradical filtration}
+Step~2 of the proof argues convergence of the bar-length spectral sequence
+via Mittag-Leffler. The argument is correctly attached as follows.
+Conilpotent-completeness on the coalgebra side (hypothesis~(H2) dualised)
+ensures $\varprojlim^{1}$ vanishes for the \emph{coradical} filtration on
+the codomain coalgebra $\Omegach_X\Bbarch_X(\cA)$, not directly for the
+bar-length filtration on $\Bbarch_X(\cA)$. The bridge between the two
+filtrations is the augmentation-ideal-completeness hypothesis~(H2) on the
+algebra side: under~(H2), the bar-length filtration on $\Bbarch_X(\cA)$ and
+the coradical filtration on $\Omegach_X\Bbarch_X(\cA)$ are $\varprojlim$-dual,
+and the Mittag-Leffler condition on one transports to the other along the
+bar--cobar adjunction. The explicit cofinal tower is
+$\{\Bbarch_X(\cA/\bar\cA^{\,n})\}_{n\geq 1}$, which under~(H2) presents
+$\Bbarch_X(\cA)$ as a $\varprojlim$, and each finite stage is bar-finite by
+construction. Hypothesis~(H3) (finite-dim graded bar pieces) ensures the
+stage maps are surjective in every cohomological degree; Mittag-Leffler
+follows.
+
+If (H3) fails (the MC4-completion regime, $\Pi 4$ of
+\S\ref{sec:ainf2-platonic-obstructions}), surjectivity of stage maps is
+the obstruction, realised as a $\varprojlim^{1}$-class in
+$H^{\bullet+1}(\Bbarch_X(\cA))$. Vanishing of this class is equivalent to
+chain-level convergence; failure of vanishing is the precise chain-level
+obstruction to extending Theorem~$A^{\infty,2}$ beyond~(H3).
+\end{remark}
+
 \begin{remark}[Scope of Theorem~$A^{\infty,2}$: fixed smooth curve versus
 modular family]\label{rem:A-infinity-2-modular-family-scope}
 The theorem above is proved on a \emph{fixed smooth curve} $X$ over a
@@ -912,6 +940,34 @@ therefore conditional on this outstanding inscription. The
 configuration-space R-twisted $\Sigma_n$-descent of
 Lemma~\ref{lem:R-twisted-descent} is proved on $\mathrm{Conf}^{\ord}_n(X)$
 for a fixed $X$ and is independent of the modular-family question.
+\end{remark}
+
+\begin{remark}[Alternative proof lanes: which alternative belongs to
+Theorem~A and which to Theorem~C]
+\label{rem:A-inf-2-ptvv-scope}
+\index{Theorem A!alternative proof lanes}
+\index{PTVV!belongs to Theorem C, not Theorem A}
+Two alternative proof lanes for Theorem~A have been proposed in the
+programme metadata. The first --- Lurie~HA~\S5.5 factorization algebras
+via little-discs plus factorization envelopes --- is a genuine independent
+verification of the pole-free-point restriction~\ref{A2-ii}
+(it reproduces the classical LV12 Koszul pair without invoking GR17 or
+Francis's star-product) and is installed as verification source~(b) in
+Remark~\ref{rem:ainf2-hziv}. The second --- the $\PTVV$ shifted-symplectic
+construction --- belongs to \emph{Theorem~C}, not Theorem~A: the PTVV lane
+constructs the $(-(3g-3))$-shifted symplectic structure on
+$\RMap(\overline{\cM}_g,BG_\cA)$ as a genuinely disjoint path from the
+fiber-center Koszul identification, relevant to the characteristic-datum
+C0/C1/C2 clauses and to the $\lambda_g$-free formulation of Theorem~D. It
+does not provide an alternative proof of the bar--cobar adjoint
+equivalence or of the involutivity $K^{2}\simeq\mathrm{id}$. Any programme
+metadata claiming a `PTVV alternative for Theorem~A' conflates the
+Theorem~C lane with Theorem~A and should be read as referring to the
+Theorem~C inscription (see $\thm:C$-PTVV-alternative in the Theorem~C
+refinements chapter). The honest set of alternatives for Theorem~A is the
+three verification sources of Remark~\ref{rem:ainf2-hziv}: Francis's
+chiral Deligne conjecture, Lurie~HA~\S5.5, and Hackney--Robertson
+model-independence.
 \end{remark}
 
 \begin{corollary}[Classical Theorem~A from Theorem~$A^{\infty,2}$;
@@ -952,15 +1008,23 @@ Corollary~\ref{cor:eight-cor-R-descent} of the unified Koszul
 reflection (equivalently, of
 Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}).
 
-\begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent;
+\begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent, unitary $R$;
 \ClaimStatusProvedHere]
 \label{lem:R-twisted-descent}
 \index{R-matrix!Sigma-descent}
 \index{descent!R-twisted}
 Let $\cA$ be an $\Eone$-chiral algebra with classical $R$-matrix
-$R(z) \in \End(\cA \otimes \cA)((z))$ satisfying the classical
-Yang--Baxter equation. Let
-$\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ be the ordered-to-symmetric
+$R(z) \in \End(\cA \otimes \cA)((z))$ satisfying
+\begin{enumerate}[label=\textup{(R\arabic*)}]
+\item \label{R1} the classical Yang--Baxter equation
+$R_{12}(z_{12})\,R_{13}(z_{13})\,R_{23}(z_{23})
+=R_{23}(z_{23})\,R_{13}(z_{13})\,R_{12}(z_{12})$ on
+$\{z_1,z_2,z_3\}$-triples; and
+\item \label{R2} \emph{unitarity}: $R(z)\,R^{op}(-z)=\id_{\cA\otimes\cA}$
+on the formal punctured disc, where $R^{op}(w):=\tau\cdot R(w)\cdot\tau$ is
+the swap-conjugate.
+\end{enumerate}
+Let $\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ be the ordered-to-symmetric
 Ran-torsor \textup{(}stratified principal $\Sigma$-bundle, stratum-wise
 principal at each cardinality\textup{)}. Then there exists a
 canonical $\Sigma_n$-equivariant local system $L_R$ on
@@ -986,12 +1050,16 @@ $\cA^{\otimes n}$ at that point (a factorization-trivial line-system),
 and to each elementary transposition $s_i$ crossing the diagonal
 $\Delta_{i,i+1}$ the monodromy $R(z_i - z_{i+1}) \cdot \tau_{i,i+1}$,
 where $\tau$ is the tensor swap and $R$ acts on the $i,i+1$ factors.
-The classical Yang--Baxter equation
-$R_{12}R_{13}R_{23} = R_{23}R_{13}R_{12}$ on codimension-2 loci
-$\{z_i = z_j = z_k\}$ ensures that the representation of the pure braid
-group $PB_n(X)$ extends to a representation of the symmetric group
-$\Sigma_n$ on the boundary of a fundamental domain: this produces
-$L_R$ as a $\Sigma_n$-equivariant local system.
+Hypothesis~\ref{R1} (classical Yang--Baxter) produces a representation of
+the pure braid group $PB_n(X)$ on the local system of fibres $\cA^{\otimes n}$
+by standard monodromy of the Cherednik-type connection. Passage from the
+pure braid representation to a representation of the full symmetric group
+$\Sigma_n$ is \emph{not} a formal consequence of \ref{R1} alone: it requires
+the relation $s_i^{2}=1$ at each elementary transposition, which at the
+monodromy level reads $R(z)\,R^{op}(-z)=\id$. This is precisely
+Hypothesis~\ref{R2} (unitarity). Together, \ref{R1}+\ref{R2} ensure the pure
+braid representation descends along $PB_n\twoheadrightarrow\Sigma_n$; this
+produces $L_R$ as a $\Sigma_n$-equivariant local system.
 
 Extension to the lower strata of $\Ran^{\ord}(X)_{=n}$ is by nearby
 cycles along the diagonal strata (Mok25 log FM nearby-cycle
@@ -1039,6 +1107,33 @@ the two bars differ: $\barB^{\Sigma}_n(\cA)$ carries the monodromy
 twist, matching the identity of the symmetric bar as an E$_{\infty}$-chiral
 cocommutative coalgebra with nontrivial factorization structure.
 \end{proof}
+
+\begin{remark}[Scope of unitarity \textup{\ref{R2}}: which $R$-matrices
+the descent covers]
+\label{rem:R-descent-unitarity-scope}
+\index{R-matrix!unitarity scope}
+\index{descent!scope across families}
+Hypothesis~\ref{R2} is satisfied by the rational Yangian
+$Y_\hbar(\fg)$ for every simple Lie algebra $\fg$ (Drinfeld's unitary
+rational $R$-matrix, $R(z)R^{op}(-z)=\id$ by direct computation on the
+evaluation homomorphism) and by the trigonometric quantum affine
+$U_q(\hat\fg)$ at generic~$q$ (unitary at generic $q$; at roots of unity
+unitarity fails together with Koszulness, so the descent lemma's scope
+matches the Koszul-locus hypothesis). For elliptic $R$-matrices of
+Belavin/Felder type, unitarity is convention-dependent and must be
+checked per presentation. For chiral algebras with trivial
+$R$-matrix~$R(z)=\tau$ (Heisenberg, free fermions, lattice VOAs at
+generic rank), unitarity~\ref{R2} is automatic and~\ref{R1} is vacuous;
+Step~4 of the proof records this degeneration.
+
+The descent lemma is therefore unconditional on the chiral-quantum-group
+locus populated by rational Yangians and generic-$q$ trigonometric
+quantum affine algebras, which exhausts the concrete $\Eone$-chiral
+witnesses of the programme (cf.~\cite[\S3]{Drinfeld85},
+\cite[\S12.3]{ChariPressley1994}). Beyond this locus, any descent claim
+must either verify~\ref{R2} directly or supply an alternative
+symmetric-bar construction.
+\end{remark}
 
 \begin{remark}[Comparison with $\fg^{\Eone}_\cA$ versus $\fg^{\mathrm{mod}}_\cA$]
 \label{rem:av-via-descent}

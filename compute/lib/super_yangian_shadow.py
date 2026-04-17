@@ -47,10 +47,20 @@ Literature sources (three disjoint verification paths for the bridge):
     Prop 4.3).
 
 Cross-references: Vol I chapters/examples/yangians_foundations.tex
-(lem:super-trace-berezinian-bridge, to be inscribed after line 71); Vol II
-chapters/theory/super_chiral_yangian.tex:617-697
-(thm:super-complementarity-max-mn) and lines 699-743
-(rem:two-pairings-supertrace-berezinian).
+(prop:super-berezinian-central-automorphism, proved;
+conj:super-berezinian-shadow-shift-magnitude, conjectural;
+rem:super-berezinian-shift-open); Vol II
+chapters/theory/super_chiral_yangian.tex
+(thm:super-complementarity-supertrace-zero for the super-trace
+identity kappa^str + kappa^str,! = 0, PROVED Steps 1-3;
+conj:super-complementarity-berezinian-max-mn for the Berezinian
+shift kappa^sBer + kappa^sBer,! = max(m,n), CONJECTURED;
+rem:two-pairings-supertrace-berezinian; rem:berezinian-shift-open;
+rem:psl-2-2-shadow-depth). Legacy label
+thm:super-complementarity-max-mn has been split into the
+theorem (super-trace) and conjecture (Berezinian) pair above;
+any engine using max(m,n) is computing a CONJECTURAL value until
+the shift magnitude is closed (Vol I Open Frontier F26').
 """
 
 from __future__ import annotations

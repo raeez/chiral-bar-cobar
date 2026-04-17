@@ -251,8 +251,9 @@ f_g \;:=\; \{f_g^{(\leq N)}\}_{N \geq 0}
 be the induced morphism of pro-objects. Then $f_g$ is a chain-level
 quasi-isomorphism in $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$:
 at each weight-truncation stage $N$, the finite-stage map $f_g^{(\leq N)}$
-is a strict chain-level quasi-isomorphism, and the tower satisfies the
-Mittag--Leffler condition in every cohomological degree.
+is a strict chain-level quasi-isomorphism, the stage cohomologies are
+finite-dimensional, and the tower satisfies the Mittag--Leffler
+condition in every cohomological degree by finite-dimensionality.
 \ClaimStatusProvedHere{}
 \end{theorem}
 
@@ -294,70 +295,108 @@ under the isomorphism
 $F_{\leq w}\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N'}) \xrightarrow{\sim}
 F_{\leq w}\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})$
 of Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv).
-This is the conformal-weight-homogeneity-of-homotopies observation
-recorded in the first-principles cache entry for this chapter; it is
-automatic from the weight-preservation property of the bar differential
-and of $m_0$. Therefore $\{f_g^{(\leq N)}\}_N$ assembles into a morphism
-of pro-objects.
+This compatibility is automatic from the filtration-preservation
+property recorded in
+Equation~\textup{\eqref{eq:bar-weight-preservation}} of
+Proposition~\textup{\ref{prop:standard-strong-filtration}},
+$d_{\mathrm{bar}}(F_{\leq w} C_N) \subset F_{\leq w} C_N$, together
+with clause~(iv) $F_{\leq w}$-stabilisation; the homotopy $h$ is
+constructed stage by stage on each filtration piece and the stabilised
+identification of filtration pieces transports it coherently between
+stages. The stronger grading-preservation property, which holds only
+on the associated graded, is not needed for this step. Therefore
+$\{f_g^{(\leq N)}\}_N$ assembles into a morphism of pro-objects.
 
-\emph{Step 3: Mittag--Leffler condition, bigraded in
-$(\text{cohomological degree},\ \text{total bar weight})$.} We verify
-Mittag--Leffler for the inverse systems
+\emph{Step 3: Mittag--Leffler condition via finite-dimensionality.} We
+verify Mittag--Leffler for the inverse systems
 $\{H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))\}_N$ and
-$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ by bigrading: fix
-\emph{both} the cohomological degree $m \in \Z$ and the total bar
-weight $w \in \Z_{\geq 0}$.
+$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ at every fixed
+cohomological degree $m$.
 
-The bar differential of $\bar B^{\mathrm{ch},(g)}(\cA)$ preserves total
-conformal weight on bar words
-$s^{-1}a_1 | \cdots | s^{-1} a_r$: each Arnold contraction
-replaces a pair $(a_i, a_j)$ of conformal weights $(h_i, h_j)$ by a
-single element of conformal weight $h_i + h_j$, so the total weight
-$w = \sum_j h_j$ is conserved. Hence the bar complex decomposes as a
-product over total weights,
+The bar differential of the standard chiral bar complex is not
+conformal-weight-preserving but conformal-weight weakly decreasing: a
+single OPE step
 \[
-\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})
+\operatorname{wt}(a_{(n)}b)
 \;=\;
-\prod_{w \geq 0}
-\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w,
+\operatorname{wt}(a) + \operatorname{wt}(b) - n - 1,
+\qquad n \geq 0,
 \]
-and the same decomposition holds on the BV side by the
-conformal-weight grading of $C^{\bullet}_{\mathrm{BV}}$. Taking cohomology
-commutes with the product (the product is over weights; cohomology is
-taken in the internal bar/BV degree), so each cohomology group splits
-bigradedly:
+gives $\le \operatorname{wt}(a) + \operatorname{wt}(b)$ with strict
+inequality whenever a singular-mode index $n \geq 1$ is extracted.
+Equation~\textup{\eqref{eq:bar-weight-preservation}} of
+Proposition~\textup{\ref{prop:standard-strong-filtration}} records this
+as $d_{\mathrm{bar}}(F_{\leq w} C_N) \subset F_{\leq w} C_N$: the
+conformal weight sits in the bar complex as a \emph{filtration}, not as
+a grading, and the raw bar complex does not decompose as a product
+over weights. The associated graded $\operatorname{gr}^w C_N$ is
+weight-homogeneous and admits such a decomposition; the raw $C_N$ does
+not. This distinction is the point at which the earlier draft broke,
+and the present argument bypasses it.
+
+Two independent routes furnish Mittag--Leffler; we record both.
+
+\emph{Route (a): finite-dimensionality of each stage.} At each stage
+$N$, $\cA_{\leq N}$ is finite-dimensional
+\textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}(ii)\textup{)}.
+Fix any cohomological degree $m$. Bar words of finite total
+conformal weight contributing to the genus-$g$ bar complex at
+cohomological degree $m$ have bar length $r$ bounded in terms of $m$
+and $g$ through the genus-$g$ conformal-weight budget of the
+factorisation structure. Combined with finite-dimensionality of
+$\cA_{\leq N}$, this forces
 \[
-H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})\bigr)
-\;=\;
-\prod_{w \geq 0}
-H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w\bigr).
+\dim_\C H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})\bigr) < \infty
+\qquad
+\text{for every } N.
 \]
-At each fixed $(m, w)$, the vector space
-$H^m(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w)$ is finite-dimensional
-(each bar word of total weight $w$ has at most $w$ factors of weight
-$\geq 1$, so the weight-$w$ bar complex of $\cA_{\leq N}$ is
-finite-dimensional for every $N$), and it stabilises for $N \geq w$ by
-Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv): at stage
-$N \geq w$, the truncation map
-$\bar B^{\mathrm{ch},(g)}(\cA_{\leq N+1})_w \to
-\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w$ is an isomorphism because
-every $a_j$ with $h_j \leq w \leq N$ already lies in $\cA_{\leq N}$.
+The same bound holds for $H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))$
+by its $L_0$-decomposition. The tower of finite-dimensional images
+\[
+\operatorname{im}\bigl(H^m(C_{N+k}) \longrightarrow H^m(C_N)\bigr),
+\qquad k \geq 0,
+\]
+is a decreasing sequence of finite-dimensional subspaces of a
+finite-dimensional vector space, hence stabilises for $k$ large. This
+is the Mittag--Leffler condition at $m$; in the cited form
+\textup{(}\cite{Weibel94}, Proposition~3.5.7\textup{)} finite-dimensional
+inverse systems are automatically Mittag--Leffler.
 
-Therefore the inverse system $\{H^m(\cdot)_w\}_N$ is eventually
-constant at each $(m,w)$, which trivially satisfies Mittag--Leffler.
-The full inverse system $\{H^m(\cdot)\}_N$ is the product over $w$ of
-the $(m,w)$-bigraded systems, and the Mittag--Leffler property is
-preserved under products of inverse systems (the image filtration
-stabilises in each factor separately). In particular the tower of
-cones $\{\mathrm{Cone}(f_g^{(\leq N)})\}_N$ is Mittag--Leffler in every
-cohomological degree $m$, uniformly via the $(m, w)$ bigrading; the
-$\varprojlim^1$ obstruction vanishes in each $(m, w)$ and hence in the
-product.
+\emph{Route (b): filtration-piece stabilisation, refining
+Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv).} For
+every weight bound $w$ and every $N \geq w$, the filtration piece
+$F_{\leq w} C_N$ stabilises:
+$F_{\leq w} C_{N+1} \xrightarrow{\sim} F_{\leq w} C_N$. Since the
+filtration is exhaustive on each finite-dimensional $C_N$, the image
+of the full transition map $H^m(C_{N+1}) \to H^m(C_N)$ contains the
+entire stabilised filtration image; taking intersections over
+$N' \geq N$ collapses to a single finite-dimensional subspace, which
+is the Mittag--Leffler limit. The two routes agree on the limit image.
 
-This bigrading refinement is what licenses the Mittag--Leffler invocation
-at fixed $m$: weight-stabilisation alone works at fixed $w$ only, but
-the bar differential being weight-preserving promotes fixed-$w$
-stabilisation to fixed-$m$ stabilisation via the product decomposition.
+Either route suffices. Applied to the tower of cones
+$\{\operatorname{Cone}(f_g^{(\leq N)})\}_N$ \textup{(}whose stage maps
+are chain-level quasi-isomorphisms by Step~1\textup{)}, it gives
+$\varprojlim^1_N H^{m-1}(\operatorname{Cone}(f_g^{(\leq N)})) = 0$ in
+every cohomological degree $m$.
+
+\begin{remark}[Honest weight behaviour of the bar differential]
+\label{rem:mc5-honest-weight-filtration}
+\index{bar differential!weakly weight-decreasing, not weight-preserving}%
+The decomposition
+$\bar B^{\mathrm{ch},(g)}(\cA_{\leq N}) = \prod_{w} \bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w$
+holds on the associated graded
+$\operatorname{gr}^{\bullet} \bar B^{\mathrm{ch},(g)}(\cA_{\leq N})$,
+not on the raw bar complex. For class~$\mathsf{M}$ the spectral
+sequence of the weight filtration does not collapse at finite pages:
+the shadow-obstruction tower is nonterminating
+\textup{(}Corollary~\textup{\ref{cor:virasoro-postnikov-nontermination}}\textup{)},
+so each page carries a nonzero differential proportional to a
+higher shadow coefficient $c_r(\cA)$. The bar-cohomology Mittag--Leffler
+condition nevertheless holds by finite-dimensionality of each stage, as
+in Route~(a), so the pro-object statement is unaffected by the
+nontermination. The load-bearing input is finite-dimensionality of
+$\cA_{\leq N}$, not weight-preservation of the differential.
+\end{remark}
 
 \emph{Step 4: pro-object chain-level quasi-isomorphism.} A morphism in
 $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ is a chain-level
@@ -848,6 +887,24 @@ Mittag--Leffler tower of chain-level quasi-isomorphisms, Milnor
 upgrades stage-level strictness to strict chain-level quasi-isomorphism
 on the inverse limit; this is the mechanism by which the pro-object
 statement becomes a chain-level statement on the limit.
+
+\item[PR-MC5-5 \textup{(}filtration vs grading\textup{)}]
+\emph{Ghost.} ``The bar differential is conformal-weight-homogeneous,
+so the bar complex decomposes as a product over weights
+$\bar B = \prod_w \bar B_w$ and cohomology splits accordingly.''
+\emph{Error.} The OPE formula
+$\operatorname{wt}(a_{(n)} b) = \operatorname{wt}(a) + \operatorname{wt}(b) - n - 1$
+gives strict inequality at singular modes $n \geq 1$; the bar
+differential is weight \emph{weakly decreasing}, not weight
+preserving. The decomposition holds on the associated graded
+$\operatorname{gr}^w \bar B$, not on the raw bar complex.
+\emph{Correct.} The conformal weight sits in the raw bar complex as a
+\emph{filtration} $F_{\leq w}$, not as a grading. Mittag--Leffler at
+fixed cohomological degree is secured by finite-dimensionality of each
+stage (the truncation $\cA_{\leq N}$ is finite-dimensional, so
+$H^m(\bar B(\cA_{\leq N}))$ is finite-dimensional, so the tower of
+finite-dimensional images automatically stabilises), not by a product
+decomposition that does not exist.
 \end{description}
 
 \section{Summary: the Platonic form}

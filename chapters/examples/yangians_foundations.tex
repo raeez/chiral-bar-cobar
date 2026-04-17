@@ -66,45 +66,55 @@ on the ordered Koszul locus realises $K_{\mathrm{Y}} = 0$
 \textup{(}canonical for $\Eone$-chiral input via the involution
 $\hbar \mapsto -\hbar$\textup{)} in the universal-conductor formula
 of Chapter~\ref{chap:universal-conductor}. For super-Yangians
-$Y_\hbar(\mathfrak{sl}(m{|}n))$, the analogous identity reads
-$\kappa^{\sBer} + \kappa^{\sBer,!} = \max(m, n)$ in the Berezinian
-normalisation on the sub-Sugawara line, while
-$\kappa^{\str} + \kappa^{\str,!} = 0$ in the super-trace
-normalisation; the two parametrise the same complementarity datum
-via the central automorphism~$\sigma_{\sBer}$ of
-Lemma~\ref{lem:super-trace-berezinian-bridge} below, in contrast
-to the ordinary Yangian ($K = 0$).
+$Y_\hbar(\mathfrak{sl}(m{|}n))$ with $m\neq n$ on the sub-Sugawara
+line, the super-trace normalisation of the shadow pairing gives
+$\kappa^{\str} + \kappa^{\str,!} = 0$
+(Proposition~\ref{prop:super-berezinian-central-automorphism}(a); Vol~II
+Theorem~\texttt{thm:super-complementarity-supertrace-zero}), a
+proved rational-identity cancellation in~$k$ that mirrors the
+$\Eone$-chiral Yangian conductor~$K=0$. The Berezinian normalisation
+formally shifts this sum to $\max(m,n)$
+(Conjecture~\ref{conj:super-berezinian-shadow-shift-magnitude}); the
+shift-magnitude step is open
+(Remark~\ref{rem:super-berezinian-shift-open}) because
+Nazarov~1991 and Gow~2006 establish centrality and non-degeneracy of
+$\sBer(T(u))$ but not the shadow-depth shift magnitude in closed
+form.
 
-% HZ-IV: derived_from = super-Sugawara computation in
-%   chapters/theory/super_chiral_yangian.tex (Vol~II) combined
-%   with the quantum Berezinian centrality of
-%   \cite{Nazarov91QuantumBerezinian}
+% HZ-IV (scope: Proposition \ref{prop:super-berezinian-central-automorphism}(a)
+%  super-trace identity only; the Berezinian shift magnitude of
+%  Conjecture \ref{conj:super-berezinian-shadow-shift-magnitude} is not
+%  verified by any of the three paths below)
+% HZ-IV: derived_from = super-Sugawara super-trace computation in
+%   chapters/theory/super_chiral_yangian.tex:622-709 (Vol~II,
+%   thm:super-complementarity-supertrace-zero Steps 1-3)
 % HZ-IV: verified_against =
 %   [Gow-Molev 2010 Thm 4.2 + direct super-PBW super-trace on
 %      the sub-Sugawara line yielding
 %      $(k + m - n)(m + n)/2$ and the Frenkel-Frenkel involution
-%      $k \mapsto -k - 2 h^{\vee}_{s}$],
+%      $k \mapsto -k - 2 h^{\vee}_{s}$, summing to zero],
 %   [Nazarov 1991 Thm 1 + Molev Ch.~3.9 Thm 3.9.1 + Gow 2006
-%      Thm 5.1 and Prop 4.3: $\sBer(T(u))$ is central in
-%      $Y_\hbar(\mathfrak{gl}(m|n))$, restricts centrally to
-%      $\mathfrak{sl}(m|n)$, leading coefficient computed for
-%      the defining rep and non-degenerate off $\fpsl(2|2)$],
-%   [Beisert 2007 \S3: $\fpsl(2|2)$ central-extension counting
-%      in AdS/CFT integrability yields three central elements
-%      whose shadow contribution equals $2 = \max(2,2)$]
+%      Prop 4.3: $\sBer(T(u))$ is central, invertible off
+%      $\fpsl(2|2)$; used only for Prop (b)-(c), NOT for the
+%      super-trace sum],
+%   [direct rational-function cancellation:
+%      $(k+m-n)(m+n)/2 + (-k-(m-n))(m+n)/2 = 0$ in $\bQ(k)$,
+%      independent of super-PBW via formal Laurent expansion
+%      in $\hbar$ on the Drinfeld presentation]
 % HZ-IV: disjoint_rationale =
-%   (V1) super-PBW + super-Sugawara trace uses neither the
-%   quantum Berezinian nor AdS/CFT; (V2) the quantum Berezinian
-%   is constructed via quasideterminants of the generating
-%   matrix $T(u)$, independent of Sugawara; (V3) the AdS/CFT
-%   central-extension count uses integrability rather than
-%   super-PBW or quasideterminants. Any two of the three
-%   agreeing pins the third.
-\begin{lemma}[Super-trace--Berezinian bridge via Nazarov centrality]
-\label{lem:super-trace-berezinian-bridge}
+%   (V1) super-PBW + super-Sugawara trace; (V2) quasideterminant
+%   quantum-Berezinian input for the centrality claim (b)-(c) only,
+%   orthogonal to the super-trace cancellation; (V3) direct
+%   $\bQ(k)$-rational cancellation bypasses both super-PBW and
+%   quasideterminants. The three paths converge on the super-trace
+%   identity (a) only; they do not, jointly or separately, pin the
+%   Berezinian shift magnitude of
+%   Conjecture~\ref{conj:super-berezinian-shadow-shift-magnitude}.
+\begin{proposition}[Nazarov centrality and super-trace complementarity]
+\label{prop:super-berezinian-central-automorphism}
 \ClaimStatusProvedElsewhere
-Let $A = Y_\hbar(\mathfrak{sl}(m|n))$ at level~$k$ on the
-sub-Sugawara line $k + h^{\vee}_{s} \leq m+n$, with
+Let $A = Y_\hbar(\mathfrak{sl}(m|n))$ with $m\neq n$ at level~$k$ on
+the sub-Sugawara line $k + h^{\vee}_{s} \leq m+n$, with
 $h^{\vee}_{s} = m-n$. Write~$\kappa^{\str}(A)$ for the
 super-shadow depth with respect to the super-trace pairing
 $\langle X, Y\rangle^{\str} := \str(\pi_{\mathrm{def}}(XY))$,
@@ -114,62 +124,78 @@ $\langle X, Y\rangle^{\sBer} := \sBer(\pi_{\mathrm{def}}(XY))$.
 Let $\sBer(T(u)) \in Y_\hbar(\mathfrak{gl}(m|n))[[u^{-1}]]$ be
 Nazarov's quantum Berezinian. Then
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Super-trace normalisation.}
+\item \emph{Super-trace complementarity.}
   $\kappa^{\str}(A) + \kappa^{\str}(A^{!}) = 0$.
-\item \emph{Berezinian normalisation.}
-  $\kappa^{\sBer}(A) + \kappa^{\sBer}(A^{!}) = \max(m,n)$.
-\item \emph{Central automorphism bridge.}
+\item \emph{Nazarov centrality.}
+  The coefficients of $\sBer(T(u))$ are central in
+  $Y_\hbar(\mathfrak{gl}(m|n))$, and $\sBer(T(u))|_{u=0}$ is
+  invertible on the sub-Sugawara line off $\fpsl(2|2)$.
+\item \emph{Central automorphism on the centre.}
   Multiplication by $\sBer(T(u))|_{u=0}$ defines an algebra
   automorphism
-  $\sigma_{\sBer}\colon Z(A) \to Z(A)$ of the centre, whose
-  action on shadow depth is the additive shift
-  $\kappa^{\sBer} = \kappa^{\str}
-     + \tfrac{1}{2}\max(m,n)$;
-  consequently the super-trace and Berezinian normalisations
-  parametrise the same complementarity datum on
-  $Z(A) \otimes Z(A^{!})$.
-\item \emph{Interpretation.}
-  The super-trace pairing is the specialisation to
-  supertraceless type-$A$ super-Lie algebras of the Verdier
-  pairing of the Lagrangian C$_1$ register; the Berezinian
-  pairing is the Sugawara-shifted pairing produced by
-  super-Sugawara on the sub-Sugawara line. Both are correct;
-  neither is more canonical than the other at the level of
-  complementarity data, and the apparent disagreement
-  ($0$ versus $\max(m,n)$) is the image of the central
-  automorphism~$\sigma_{\sBer}$.
+  $\sigma_{\sBer}\colon Z(A) \to Z(A)$ of the centre.
+\item \emph{Pairing specialisations.}
+  The Verdier pairing on Lagrangian~C$_1$-registers specialises to
+  the super-trace pairing on supertraceless type-$A$ super-Lie
+  algebras; the super-Sugawara pairing on the sub-Sugawara line is
+  $\sBer$-shifted by construction.
 \end{enumerate}
-\end{lemma}
+\end{proposition}
 \begin{proof}[Sources]
-Clause~(a) is the super-trace cancellation computed as an
-aside in Step~3 of the proof of
-\texttt{thm:super-complementarity-max-mn} in Vol~II: super-Sugawara
-on the sub-Sugawara line gives
-$\kappa^{\mathrm{super}}(A) = (k+m-n)(m+n)/2$ and the
-Koszul-dual flip $k \mapsto -k - 2h^{\vee}_{s}$ on
-$Y_{-\hbar}^{\theta}$ gives
-$\kappa^{\mathrm{super}}(A^{!}) = (-k-(m-n))(m+n)/2$; the two
-sum to~$0$ without any Berezinian correction. Clause~(b)
-follows from Nazarov's theorem
-(\cite[Thm~1]{Nazarov91QuantumBerezinian}; see also
-\cite[Ch.~3.9, Thm~3.9.1]{molev-yangians}) that the
-coefficients of~$\sBer(T(u))$ are central in
-$Y_\hbar(\mathfrak{gl}(m|n))$, together with \cite[Thm~5.1]{Gow06}
-computing the $u=0$ leading term as a graded determinantal
-polynomial contributing~$\max(m,n)$ to the Sugawara-symmetric
-sum. Clause~(c) is the consequence: $\sBer(T(u))|_{u=0}$ is
-invertible on the sub-Sugawara line by \cite[Prop~4.3]{Gow06}
-(non-degeneracy of the Berezinian pairing off~$\fpsl(2|2)$), so
-multiplication by it is an automorphism of the centre; a
-degree-$2$ invariant of pairings on~$Z(A)$ transforms under an
-automorphism by an additive shift, and the shift magnitude is
-exactly $\tfrac{1}{2}\max(m,n)$ by clause~(b). Clause~(d) is
-the specialisation identification: the Verdier pairing on
-Lagrangian C$_1$-registers restricts to the super-trace on
-supertraceless type-$A$ (Vol~II
-Remark~\ref{rem:two-pairings-supertrace-berezinian}), while the
-Sugawara pairing involves the Berezinian shift by construction.
+Clause~(a) is the super-trace cancellation of Steps~1--3 of Vol~II
+Theorem~\texttt{thm:super-complementarity-supertrace-zero}: super-Sugawara
+gives $\kappa^{\str}(A) = (k+m-n)(m+n)/2$ and the Koszul-dual
+flip $k \mapsto -k - 2h^{\vee}_{s}$ on $Y_{-\hbar}^{\theta}$ gives
+$\kappa^{\str}(A^{!}) = (-k-(m-n))(m+n)/2$; the two
+sum to~$0$ as a rational identity in~$k$. Clause~(b) is
+\cite[Thm~1]{Nazarov91QuantumBerezinian}; see
+\cite[Ch.~3.9, Thm~3.9.1]{molev-yangians}; non-degeneracy is
+\cite[Prop~4.3]{Gow06}. Clause~(c) follows from~(b): invertibility
+promotes multiplication by $\sBer(T(u))|_{u=0}$ to an algebra
+automorphism of the centre. Clause~(d) is the specialisation
+identification used in Vol~II
+Remark~\ref{rem:two-pairings-supertrace-berezinian}.
 \end{proof}
+
+\begin{conjecture}[Berezinian shadow-shift magnitude]
+\label{conj:super-berezinian-shadow-shift-magnitude}
+\ClaimStatusConjectured
+With $A = Y_\hbar(\mathfrak{sl}(m|n))$, $m\neq n$, on the
+sub-Sugawara line, the action of $\sigma_{\sBer}$ of
+Proposition~\ref{prop:super-berezinian-central-automorphism}(c) on
+the shadow depth is the additive shift
+\[
+  \kappa^{\sBer}(A) \;=\; \kappa^{\str}(A) \;+\;
+  \tfrac{1}{2}\max(m, n),
+\]
+and consequently
+\[
+  \kappa^{\sBer}(A) + \kappa^{\sBer}(A^{!}) \;=\; \max(m, n).
+\]
+\end{conjecture}
+
+\begin{remark}[Status of the shift magnitude]
+\label{rem:super-berezinian-shift-open}
+The centrality of $\sBer(T(u))$ and the non-degeneracy of the
+Berezinian pairing are primary-source theorems
+(Nazarov~1991; Gow~2006). The \emph{magnitude}
+$\tfrac{1}{2}\max(m,n)$ of the shadow-depth shift induced by
+$\sigma_{\sBer}$, however, has not been derived in closed form from
+an independent super-Sugawara contraction of the Berezinian
+generator. The value is consistent with the small-rank numerical
+table $(m,n) \in \{(2,1), (3,2), (4,3)\}$ and with the centre-rank
+match at $\fpsl(2|2)$ (Beisert~2007), and it is the unique rational
+constant making the pairing-specialisation clause (d) numerically
+consistent with Vol~II Step~3; these pattern-matches are evidence,
+not a derivation. Closing the magnitude question is the object of
+Open Frontier F26$'$ (super-complementarity canonical pairing), with
+primary-source entry points in the quantum-minor expansion of
+$\sBer(T(u))$ and the orthosymplectic reflection equation of
+\cite{AcdfR2003} for the $Y_{\fosp(m|n)}$ analogue.
+\end{remark}
+
+\phantomsection
+\label{lem:super-trace-berezinian-bridge}
 
 \begin{remark}[Three levels of Yangian structure]
 \label{rem:yangian-three-levels}

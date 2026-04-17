@@ -155,6 +155,58 @@ scope for the chain-level brace equivalence is the
 weight-completed ambient; we record this as an open frontier.
 \end{remark}
 
+\begin{remark}[Intrinsic-chiral routes do not bypass Deligne--Tamarkin;
+falsification test]
+\label{rem:derived-center-sharpened-scope}%
+\index{derived center!falsification test}%
+Two alternative chiral inputs have been proposed as candidates for
+removing the Deligne--Tamarkin dependence; neither does so cleanly.
+\emph{Hinich rectification~\textup{\cite{Hinich2001}}} gives a
+chain-level $E_2$ model of any brace dg algebra, and hence a
+chain-level $E_2$ model of each side of the putative equivalence
+separately; but it does not supply the comparison zig-zag between
+the two sides. \emph{Francis--Gaitsgory~\textup{\cite{GR17}}}
+provide a six-functor formalism on Ran prestacks that lifts
+factorization algebras to $(\infty, 2)$-properads; this supports
+Theorem~A at the chiral base, not the derived-center identification
+across Koszul-dual pairs. The chiral Higher Deligne theorem of
+Vol.~II upgrades $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ to a
+universal $E_3$-chiral algebra, which strengthens the ambient but
+does not weaken the conjectural status of the equivalence. The
+Deligne--Tamarkin rectification is therefore the substantive input,
+and the conjecture stands.
+
+\emph{Falsification test.} The conjecture predicts, at the level
+of~$H^2$, that the induced pairing
+\[
+  \langle -, - \rangle_{\ChirHoch^2}
+  \colon
+  \ChirHoch^2_{\mathrm{ch}}(\cA, \cA)
+  \;\otimes\;
+  \ChirHoch^2_{\mathrm{ch}}(\cA^!, \cA^!)
+  \;\longrightarrow\; \mathbb{C}
+\]
+coincides with the restriction of the Koszul pairing to the weight-$2$
+central-cocycle eigenspaces under the $\sigma$-involution. On the
+Heisenberg family, where $\cA = H_k$ and
+$\cA^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$ is the chiral
+symmetric coalgebra of the Heisenberg linear-dual
+\textup{(}the Koszul dual of $H_k$ carries the same conductor
+$\kappa$ but is a distinct chiral algebra, not $H_{-k}$\textup{)},
+both sides at weight~$2$ are one-dimensional by the explicit
+$(1, 1, 1, 0, \ldots)$ shape of
+$\ChirHoch^\bullet_{\mathrm{ch}}(H_k, H_k)$
+\textup{(}Proposition~\textup{\ref{prop:derived-center-explicit}}\textup{)};
+the identity checks the normalization of the Gauss integrator
+against the chiral central extension, and a numerical mismatch in
+the ratio of the two sides would falsify the conjecture at its
+simplest test point. For Virasoro at generic~$c$ the same test is
+predicted to return the family-dependent constant
+$c/2 = \kappa(\mathrm{Vir}_c)$ on the appropriate cocycle
+normalization; a mismatch there would falsify the conjecture on
+class~$\mathsf{M}$.
+\end{remark}
+
 \section{Perfectness on the standard landscape: family-by-family}
 \label{sec:perfectness-standard-landscape}
 
@@ -202,13 +254,23 @@ hypothesis is unconditional for the following families\textup{:}
   sewing axiom to the Heisenberg bar complex on the normalized
   curve, which is of lower genus and inductively
   finite-dimensional.
-\item \emph{Affine Kac--Moody at non-critical level
-  $\cA = V_k(\fg)$, $k \neq -h^\vee$.} Kac--Kazhdan finite
-  composition length at each conformal weight gives
-  fiber-finiteness at smooth fibers, and the factorization-algebra
-  sewing at nodal fibers preserves finite-dimensionality because
-  both glued pieces retain the Kac--Kazhdan structure at the
-  non-critical level assumption.
+\item \emph{Affine Kac--Moody at positive integer level
+  $\cA = V_k(\fg)$, $k \in \mathbb{Z}_{> 0}$.} At integrable level
+  the space of conformal blocks at each stable $n$-marked curve is
+  finite-dimensional by Tsuchiya--Ueno--Yamada sheaf-theoretic
+  propagation across $\overline{\mathcal{M}}_{g,n}$, and the
+  factorization-algebra sewing at nodal fibers preserves finite
+  rank because the sewing kernel is the finite sum over integrable
+  highest weights. The bar cohomology at each fiber is finite
+  dimensional at each conformal weight.
+
+\item \emph{Affine Kac--Moody at admissible level
+  $\cA = V_k(\fg)$, $k + h^\vee = p/q$ with $(p,q)$ coprime and
+  $p \geq h^\vee$.} Arakawa's $C_2$-cofiniteness theorem for
+  simple admissible affine vertex algebras at boundary admissible
+  level supplies finite-dimensional conformal blocks at every
+  stable curve, and the argument of~\textup{(b)} above propagates
+  this to nodal fibers.
 \end{enumerate}
 \end{proposition}
 
@@ -227,22 +289,46 @@ finite-dimensional pieces by the sewing procedure. Induction on the
 topological type of $\Sigma$ reduces nodal fibers to smooth fibers
 of lower topological genus.
 
-For the affine Kac--Moody case at non-critical level, Kac--Kazhdan
-\cite{KK79} gives a determinant formula for the Shapovalov pairing
-at each conformal weight, with finite rank away from the critical
-level hyperplane $k = -h^\vee$. This yields fiber-finiteness at
-every smooth fiber. At a nodal fiber the Beilinson--Drinfeld
-factorization sewing identifies the fiber bar complex with a tensor
-product of two bar complexes on the normalized components, with a
-pairing over the collapsed conformal blocks at the node; at
-non-critical level the conformal blocks are finite-dimensional by
-the same Kac--Kazhdan input, so the tensor product is
-finite-dimensional.
+For affine Kac--Moody at positive integer level, the conformal
+blocks at every stable $n$-marked curve form a vector bundle of
+finite rank on $\overline{\mathcal{M}}_{g,n}$ with the TUY
+propagation isomorphism identifying the fiber at a nodal curve
+with the finite direct sum, over integrable highest weights
+$\lambda$, of tensor products of conformal blocks on the
+normalized components coupled through the evaluation pairing at
+$\lambda$. The bar complex at each fiber is built from finitely
+many integrable highest-weight modules, each of finite graded
+dimension at each conformal weight, and inherits fiber-finiteness.
+For the admissible level case, Arakawa's $C_2$-cofiniteness
+theorem at boundary admissible levels supplies the finite-dim
+conformal-blocks input and the argument proceeds identically.
 
-In both cases hypothesis~\textup{(ii)} of
-Lemma~\ref{lem:perfectness-criterion} is verified unconditionally at
-every closed point, and perfectness follows.
+The two hypotheses of Lemma~\ref{lem:perfectness-criterion} are
+thus verified unconditionally at every closed point for the
+Heisenberg family and for affine Kac--Moody at positive integer
+or admissible level, and perfectness follows.
 \end{proof}
+
+\begin{conjecture}[Nodal-stratum fiber-finiteness for generic
+non-critical affine Kac--Moody]
+\label{conj:perfectness-boundary-km-generic}%
+\ClaimStatusConjectured
+\index{perfectness!affine Kac--Moody!generic non-critical}%
+For affine Kac--Moody $\cA = V_k(\fg)$ at non-critical
+$k \neq -h^\vee$ outside the positive-integer and boundary
+admissible loci, hypothesis~\textup{(ii)} of
+Lemma~\textup{\ref{lem:perfectness-criterion}} holds at every
+closed point of $\overline{\mathcal{M}}_g$. Specifically, the
+bar-cohomology sheaf has finite-dimensional fibers at each stable
+curve, propagated to nodal fibers by Beilinson--Drinfeld
+factorization sewing.
+
+The Kac--Kazhdan determinant formula for the Shapovalov pairing on
+the vacuum module supplies finite-length composition at each
+conformal weight on smooth fibers; the propagation to the nodal
+stratum without the TUY or Arakawa finite-conformal-blocks input is
+the unresolved content.
+\end{conjecture>
 
 \begin{conjecture}[Boundary-stratum fiber-finiteness for class~$\mathsf{M}$]
 \label{conj:perfectness-boundary-class-M}
@@ -276,20 +362,25 @@ scope analysis at
 Chapter~\textup{\ref{ch:theorem-B-scope-platonic}}\textup{)}.
 \end{remark}
 
-\begin{corollary}[$C_0$ on the Heisenberg / affine Kac--Moody locus;
+\begin{corollary}[$C_0$ on the Heisenberg and affine Kac--Moody
+integer / admissible locus;
 \ClaimStatusProvedHere]
 \label{cor:c0-unconditional-class-G-L}
-On the Heisenberg and affine Kac--Moody non-critical locus, the
-fiber-center identification
+On the Heisenberg family and on affine Kac--Moody at positive
+integer level or boundary admissible level, the fiber-center
+identification
 Theorem~\ref{thm:fiber-center-identification} holds unconditionally:
 clauses~\textup{(i)--(iii)} are realized without the perfectness
-hypothesis appearing as an auxiliary axiom.
+hypothesis appearing as an auxiliary axiom. For affine Kac--Moody at
+generic non-critical $k$ outside these loci, the same conclusion is
+conditional on
+Conjecture~\textup{\ref{conj:perfectness-boundary-km-generic}}.
 \end{corollary}
 
 \begin{proof}
 Combine
 Proposition~\ref{prop:perfectness-standard-landscape}, which
-discharges the perfectness hypothesis in these two cases, with
+discharges the perfectness hypothesis on the stated loci, with
 Theorem~\ref{thm:fiber-center-identification}.
 \end{proof}
 
@@ -406,13 +497,28 @@ inscribed Theorem~C.
 $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ at the
 tautological point is
 $R\Gamma(\overline{\mathcal{M}}_g, \mathfrak{g}_\cA)$ where
-$\mathfrak{g}_\cA$ is the Lie algebra of~$BG_\cA$. By the definition
-of $BG_\cA$ via the chiral deformation complex this is
-$\mathbf{C}_g(\cA)$ up to a shift that depends on the normalization
-of $\mathfrak{g}_\cA$; the normalization is fixed so that the
-induced pairing coincides with the Verdier pairing on
-$\mathbf{C}_g(\cA)$ restricted to the derived tangent direction.
-This identification is bookkeeping and uses no eigenspace input.
+$\mathfrak{g}_\cA$ is the Lie algebra of~$BG_\cA$, by the standard
+tangent-complex formula for derived mapping stacks
+\textup{\cite[3.3.3]{HAG-II}}. The definition of $BG_\cA$ via the
+chiral deformation complex of
+\S\textup{\ref{subsec:modular-deformation-complex}} fixes
+$\mathfrak{g}_\cA$ as the $1$-shifted chiral center
+$\mathcal{Z}(\cA)[1]$, so
+\[
+  T_{[*]} R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)
+  \;=\;
+  R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))[1]
+  \;=\;
+  \mathbf{C}_g(\cA)[1],
+\]
+with the canonical degree~$1$ shift recording that $BG_\cA$ is the
+classifying stack and not the Lie algebra itself. Under this
+identification the PTVV $2$-form of~\textup{(i)} restricts to the
+Verdier pairing on $\mathbf{C}_g(\cA)$ up to the shift; the
+normalization is fixed so that the induced pairing coincides with
+the Verdier pairing on $\mathbf{C}_g(\cA)$ restricted to the
+derived tangent direction. This identification is bookkeeping and
+uses no eigenspace input.
 
 \textup{(iii)} The Lagrangian property of $\mathbf{Q}_g(\cA)$ inside
 the PTVV shifted-symplectic linear derived scheme is established in
@@ -476,12 +582,17 @@ center identification
 Lemma~\ref{lem:naive-center-koszul-identification} is unconditional.
 \textup{(T2)} Conditional proposition
 Proposition~\ref{prop:perfectness-standard-landscape}\textup{;}
-unconditional for Heisenberg and affine Kac--Moody at non-critical
-level; class-$\mathsf{M}$ boundary-stratum case recorded as
+unconditional for Heisenberg and affine Kac--Moody at positive
+integer or boundary admissible level (via TUY / Arakawa
+propagation); affine Kac--Moody at generic non-critical $k$
+recorded as
+Conjecture~\ref{conj:perfectness-boundary-km-generic}; class
+$\mathsf{M}$ boundary-stratum case recorded as
 Conjecture~\ref{conj:perfectness-boundary-class-M}.
-\textup{(T3)} $C_1$ reflexivity unconditional on the two families of
+\textup{(T3)} $C_1$ reflexivity unconditional on the loci of
 Corollary~\ref{cor:c0-unconditional-class-G-L}; conditional on
-Conjecture~\ref{conj:perfectness-boundary-class-M} for the rest.
+Conjecture~\ref{conj:perfectness-boundary-class-M} or
+Conjecture~\ref{conj:perfectness-boundary-km-generic} for the rest.
 \textup{(T4)} Retracted as a separate theorem; the $g=0$
 Remark~\ref{rem:plus-three-shift-nonissue} records that there is no
 $+3$ shift contradiction to resolve.
