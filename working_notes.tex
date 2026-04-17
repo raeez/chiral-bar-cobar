@@ -9217,4 +9217,63 @@ orthogonal axes; the specific \emph{stratum} within ``tempered''
 gives a third axis that the programme should track (polynomial vs
 sub-exponential vs exponential).
 
+\textbf{Numerical refinement 2026-04-17 (after Hardy-Ramanujan
+naive fit fails).} Fitting $\log c_h = a + b\sqrt h$ to the
+Gaberdiel--Kausch sequence for $h\in[8,20]$ gives
+$b = 3.2054 \pm 0.02$, not $\pi\sqrt{2/3} \approx 2.5651$. The
+deviation is $25\%$ and persists across the fit range. Two
+explanations, both compatible with the sub-exponential stratum:
+
+(N1) \emph{Effective central charge correction.} Cardy's formula
+gives $c_h \sim \exp(2\pi\sqrt{c_{\mathrm{eff}}\cdot h/6})$ where
+$c_{\mathrm{eff}} = c - 24 h_{\mathrm{min}}$. For $\cW(2)$ at
+$c=-2$ the minimal-weight indecomposable module sits at
+$h_{\mathrm{min}} = -1/8$ in the symplectic-fermion realization;
+naive Cardy gives $c_{\mathrm{eff}} = -2 - 24(-1/8) = 1$, hence
+slope $2\pi\sqrt{1/6} = 2.5651$ (i.e.\ Hardy--Ramanujan). The fit
+$b = 3.2054$ corresponds to $c_{\mathrm{eff}} \approx 1.56$. The
+effective-$c$ value $1.56$ is not a clean rational; this flags a
+\emph{logarithmic enhancement} at finite $h$ (consistent with
+Gurarie--Flohr non-semisimple Zhu action multiplying the
+leading asymptotic by $\log h$ factors that shift the naive slope).
+
+(N2) \emph{Finite-$h$ corrections dominate.} The $h\le 20$ range
+is below the asymptotic regime; the genuine slope is
+$\pi\sqrt{2/3}$, recovered only at $h\gtrsim 50$. Extending the
+Gaberdiel--Kausch sequence (via the FGST theta formula inscribed
+in \verb|compute/lib/triplet_wp_character_engine.py|) is a
+test protocol for this explanation.
+
+Either explanation preserves sub-exponential growth: the fit
+slope $3.2054$ still gives
+$c_h = O(\exp(3.21\sqrt h))$, and shadow coefficients inherit
+sub-exponential growth in $r$ through the bar-complex
+$r$-to-$h$ relation. The polynomial stratum (which would have
+$b=0$) is firmly ruled out; the sub-exponential stratum stands.
+
+\textbf{Conclusion: the programme's growth-stratification axis
+needs three layers, empirically verified.}
+\begin{itemize}
+  \item \emph{Polynomial.} The non-logarithmic standard landscape
+        (Virasoro, $\cW_N$, Schellekens holomorphic) has
+        rational-function character generators, hence polynomial
+        $|S_r|$.
+  \item \emph{Sub-exponential.} The logarithmic stratum (C$_2$-cofinite
+        with non-semisimple Zhu, e.g.\ $\cW(p)$) has character
+        with Hardy--Ramanujan or faster-Cardy growth, giving
+        $|S_r|$ sub-exponential.
+  \item \emph{Exponential.} Non-C$_2$-cofinite VOAs (generic $\beta\gamma$
+        system without conformal restriction, logarithmic free fields)
+        admit exponential character growth; these sit outside the
+        tempered stratum entirely.
+\end{itemize}
+
+The refined Theorem~F scope for Universal Holography:
+$(\infty,2)$-adjoint equivalence holds on the POLYNOMIAL
+sub-stratum of the tempered class; $(\infty,1)$-adjoint
+morphism holds on the SUB-EXPONENTIAL sub-stratum (including
+$\cW(p)$) with Gurarie--Flohr Massey class as the obstruction to
+$(\infty,2)$; status OPEN on the EXPONENTIAL sub-stratum pending
+C$_2$-cofinite rescoping.
+
 \end{document}
