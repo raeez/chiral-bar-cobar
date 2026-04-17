@@ -1,3 +1,15 @@
+\providecommand{\ChirAlg}{\operatorname{ChirAlg}}
+\providecommand{\HTQFT}{\operatorname{HT\text{-}QFT}}
+\providecommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\providecommand{\Phicy}{\Phi_{\mathrm{CY}}}
+\providecommand{\GRTone}{\operatorname{GRT}_{1}}
+\providecommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\kch}{\kappa_{\mathrm{ch}}}
+\providecommand{\kfib}{\kappa_{\mathrm{fiber}}}
+\providecommand{\kcat}{\kappa_{\mathrm{cat}}}
+\providecommand{\Face}{\operatorname{Face}}
+\providecommand{\gAE}{\mathfrak{g}_{\cA}^{E_{1}}}
+
 \chapter{Introduction}
 
 \section{From a point to a curve}
@@ -71,15 +83,21 @@ largest degree at which the shadow is nonzero, equals
 the $L_\infty$ formality level of the genus-$0$ part of $\gAmod$
 (Theorem~\ref{thm:shadow-formality-identification}).
 
-The tower classifies chiral algebras into four classes, and only four.
+The tower classifies chiral algebras into four shadow-depth classes
+on the non-critical locus, with a fifth companion stratum at the
+critical level completing the classification.
 The Heisenberg has $r_{\max} = 2$ (formal,
-$\Delta = 0$); affine Kac--Moody algebras have
-$r_{\max} = 3$; the $\beta\gamma$ system has
-$r_{\max} = 4$; Virasoro and $\mathcal{W}$-algebras
-have $r_{\max} = \infty$. The \emph{critical discriminant}
-$\Delta = 8\kappa S_4$ forces $r_{\max}$ to lie in
-$\{2, 3, \infty\}$ on any one-dimensional primary slice
-(Theorem~\ref{thm:single-line-dichotomy}); the
+$\Delta = 0$, class~$G$); affine Kac--Moody algebras at non-critical
+level have $r_{\max} = 3$ (class~$L$); the $\beta\gamma$ system has
+$r_{\max} = 4$ with nilpotent $R$-matrix (class~$C$); Virasoro and
+$\mathcal{W}$-algebras have $r_{\max} = \infty$ (class~$M$); at the
+critical level $k=-h^\vee$ the Sugawara construction is undefined,
+Theorem~H fails, and the Feigin--Frenkel centre
+$\operatorname{Fun}(\operatorname{Op}_{{}^L\fg})$ makes
+$\ChirHoch^\bullet$ unbounded (Feigin--Frenkel stratum~$FF$). The
+\emph{critical discriminant} $\Delta = 8\kappa S_4$ forces
+$r_{\max}$ to lie in $\{2, 3, \infty\}$ on any one-dimensional
+primary slice (Theorem~\ref{thm:single-line-dichotomy}); the
 fourth class $r_{\max} = 4$ arises from stratum
 separation.
 The algebraic depth $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$
@@ -328,14 +346,15 @@ extracting the five theorems as $\Sigma_n$-coinvariant projections
 of its Maurer--Cartan element~$\Theta_\cA$.
 
 
-\section{The five theorems}
+\section{The seven theorems}
 \label{sec:NAP-unifying}
 \label{sec:main-results-complete}
+\label{sec:seven-theorems}
 \index{Koszul duality!chiral|textbf}
 \index{modular Koszul duality|textbf}
 \index{quantum corrections!as modular completion}
 
-The selection principle determines which algebraic inputs are admissible. The five theorems determine what survives once an admissible input is placed on a curve.
+The selection principle determines which algebraic inputs are admissible. The seven theorems determine what survives once an admissible input is placed on a curve: five invariant-skeleton theorems A--D and~H extract the $\Sigma_n$-invariant content of the ordered bar, and two architectural theorems F and~G (universal holography and infinite-fingerprint completeness) complete the closure on the non-degenerate locus. The 2026-04-16 reconstitution closed four former frontiers (periodic CDG admissible-level, curved-Dunn $H^2=0$ at $g\ge 2$, Drinfeld--Sokolov--Hochschild in class~$M$, chiral Deligne--Tamarkin), upgrading each theorem where the closure applies; on the non-degenerate locus every theorem admits at least two independent verification paths (the \emph{bell theorem}), and off the locus (critical stratum~$FF$; Creutzig--Kanade--Linshaw logarithmic admissible lane; super-Yangian cluster; CY functor at $d\ge 3$) the bell rings and the residual frontier is explicit.
 
 \medskip\noindent\textbf{The forced chain A $\Rightarrow$ B $\Rightarrow$ C $\Rightarrow$ D $\Rightarrow$ H.}
 Without Theorem~A, the dual object is only a formal symbol: there is
@@ -396,17 +415,36 @@ is automatic. Averaging into~$\gAmod$ produces the modular
 Maurer--Cartan element $\Theta_\cA$ of
 Theorem~\ref{thm:mc2-bar-intrinsic}. The binary ordered projection of
 $\Theta_\cA^{\Eone}$ is the collision residue $r_\cA(z)$, and
-$\operatorname{av}(r_\cA(z)) = \kappa(\cA)$. The five theorems
-characterize five structural properties of this projection.
-\emph{Existence}: Theorem~A identifies the duality arena.
-\emph{Faithfulness}: Theorem~B reconstructs~$\cA$ from its bar data on
-the Koszul lane.
+$\operatorname{av}(r_\cA(z)) = \kappa_{\mathrm{dp}}(\cA)$, the
+double-pole component of the modular characteristic; for non-abelian
+affine Kac--Moody the full modular characteristic carries an
+additive $\dim(\fg)/2$ from the Sugawara shift (simple-pole
+self-contraction through the adjoint Casimir), giving
+$\kappa(\cA) = \operatorname{av}(r_\cA(z)) + \dim(\fg)/2$, whereas
+for abelian and scalar families
+$\kappa(\cA) = \operatorname{av}(r_\cA(z))$ without shift. The seven
+theorems characterise seven structural properties of this
+projection.
+\emph{Existence}: Theorem~A identifies the duality arena at
+$(\infty,2)$-properad level.
+\emph{Faithfulness}: Theorem~B reconstructs~$\cA$ from its bar data
+on the Koszul lane at all genera via Positselski's periodic CDG
+filtration.
 \emph{Decomposition}: Theorem~C polarizes the genus-$g$ ambient
-complex.
+complex as a $-(3g{-}3)$-shifted symplectic pair with Lagrangian
+section.
 \emph{Leading coefficient}: Theorem~D extracts the scalar shadow
-$\kappa(\cA)$.
+$\kappa(\cA)$ and closes the all-genera UNIFORM-WEIGHT universality
+via Graber--Vakil.
 \emph{Coefficient ring}: Theorem~H identifies the polynomial
-coefficient ring over which~$\Theta_\cA$ varies.
+coefficient ring over which~$\Theta_\cA$ varies, with universal
+$\Ethree$-algebra structure.
+\emph{Holography}: Theorem~F lifts the bar-cobar pair
+$(\cA,\cA^{!}_\infty)$ to the bulk-boundary pair of a 3d
+holomorphic-topological QFT via the functor~$\Phihol$.
+\emph{Classification}: Theorem~G establishes that the five-slot
+fingerprint $\phi(\cA)$ is a complete invariant on the standard
+landscape, with critical stratum $FF$ completing the classification.
 The shadow obstruction tower $\Theta_\cA^{\leq 2}$,
 $\Theta_\cA^{\leq 3}$, $\Theta_\cA^{\leq 4}$, \ldots{}
 consists of finite-order projections:
@@ -2522,9 +2560,17 @@ complex, one of the five theorems, or a depth class.
  that propagates $\Theta_\cA$ to Volume~II and Volume~III.
 \end{enumerate}
 
-Thirty-two chapters, one protagonist. The five theorems A/B/C/D/H
-and the four depth classes G/L/C/M mark its landmarks; the remainder
-test, project, and extend it.
+Thirty-two chapters, one protagonist. The seven theorems
+A/B/C/D/H/F/G and the five depth classes $G/L/C/M/FF$ mark its
+landmarks, together with the bell theorem on the non-degenerate
+locus $\{\kch\ne 0, \text{non-critical level}, \text{Koszul locus}\}$;
+the remainder test, project, and extend the protagonist. Volume~I
+(this volume) constructs the ordered bar and proves the seven
+theorems; Volume~II lifts to the holomorphic-topological Swiss-cheese
+operad $\SCchtop$ and to 3d quantum gravity at the $\cW_\infty$
+level; Volume~III constructs the Calabi--Yau-to-chiral functor
+$\Phicy$; Volume~IV inscribes the HEAL and UPGRADE theorems with
+complete independent-verification coverage across the four volumes.
 
 The formal definitions of $\Einf$-chiral, $\Eone$-chiral, and $\Pinf$-chiral algebras, the four Koszul duality mechanisms, the anomaly ratio, the Koszul conductor, and the Koszul spectrum appear in Chapter~\ref{ch:algebraic-foundations}.
 

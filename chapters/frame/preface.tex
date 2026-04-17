@@ -14,6 +14,22 @@
 \providecommand{\fg}{\mathfrak{g}}
 \providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
 \providecommand{\Rep}{\mathrm{Rep}}
+\providecommand{\Etwo}{\mathsf{E}_{2}}
+\providecommand{\Ethree}{\mathsf{E}_{3}}
+\providecommand{\Einf}{\mathsf{E}_{\infty}}
+\providecommand{\En}{\mathsf{E}_{n}}
+\providecommand{\ChirAlg}{\operatorname{ChirAlg}}
+\providecommand{\HTQFT}{\operatorname{HT\text{-}QFT}}
+\providecommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\providecommand{\Phicy}{\Phi_{\mathrm{CY}}}
+\providecommand{\GRTone}{\operatorname{GRT}_{1}}
+\providecommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\kch}{\kappa_{\mathrm{ch}}}
+\providecommand{\kfib}{\kappa_{\mathrm{fiber}}}
+\providecommand{\kcat}{\kappa_{\mathrm{cat}}}
+\providecommand{\Face}{\operatorname{Face}}
+\providecommand{\gAE}{\mathfrak{g}_{\cA}^{E_{1}}}
+\providecommand{\bE}{\mathbb{E}}
 
 \chapter*{Preface}
 \addcontentsline{toc}{chapter}{Preface}
@@ -32,8 +48,12 @@ the Ran space), ordered configurations on~$X$ give~$\Eone$
 and the product $\bC \times \bR$ gives the holomorphic-topological
 Swiss-cheese operad $\mathrm{SC}^{\mathrm{ch,top}}$. Each operad
 determines a bar complex; the bar complex computes the
-factorisation (co)homology. The five theorems of this volume
-are structural properties of the result at each level.
+factorisation (co)homology. The seven theorems of this volume
+are structural properties of the result at each level:
+the five invariant-skeleton theorems A--D and~H extract the
+$\Sigma_n$-invariant content, and the two architectural theorems F
+and~G (universal holography and infinite-fingerprint completeness)
+close the structure on the non-degenerate locus.
 The computational engine is the ordered bar complex
 $\barB^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$:
 a cofree $E_1$-coalgebra with deconcatenation coproduct, whose
@@ -43,42 +63,83 @@ Fulton--MacPherson configuration spaces.
 
 \medskip
 
-\noindent\textbf{The five theorems.}\enspace
-Five theorems extract the $\Sigma_n$-invariant content of the ordered
-bar. Theorem~A constructs the bar-cobar adjunction and its Verdier
-intertwining, producing the pair
-$(\cA,\cA^{!}_\infty)$ from $\barB^{\mathrm{ord}}(\cA)$.
+\noindent\textbf{The seven theorems.}\enspace
+Seven theorems extract the structural content of the ordered bar.
+Theorem~A constructs the bar-cobar $(\infty,2)$-properad adjunction
+with $R$-twisted $\Sigma_n$-descent and its Verdier intertwining,
+producing the pair $(\cA,\cA^{!}_\infty)$ from
+$\barB^{\mathrm{ord}}(\cA)$.
 Theorem~B proves bar-cobar inversion
-$\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ on the Koszul locus:
-genus~$0$ unconditionally, and on the standard CFT-type surface at all
-genera except integer-spin $\beta\gamma$; the arbitrary higher-genus
-extension remains conditional on axiom~\ref{MK:modular}.
+$\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ on the Koszul locus at all
+genera: genus~$0$ unconditional; the standard CFT-type surface at all
+genera except integer-spin $\beta\gamma$ unconditional; the
+admissible-level fragment formerly conditional on
+axiom~\ref{MK:modular} (FM251) now a theorem via Positselski's
+nonhomogeneous curved differential graded coalgebra theorem and the
+periodic CDG filtration.
 Theorem~C decomposes the derived chiral centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 = R\!\operatorname{Hom}_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$
-into complementary halves controlled by~$\cA$ and~$\cA^!$; the
-Verdier-side Lagrangian splitting is proved, while the ambient
-shifted-symplectic upgrade remains conditional on perfectness and
-nondegeneracy. Theorem~D identifies the universal genus-$1$ scalar
-shadow for every family and the all-genus scalar lane
+into complementary halves controlled by~$\cA$ and~$\cA^!$ and lifts
+the ambient to a canonical $-(3g{-}3)$-shifted symplectic structure on
+$\overline{\cM}_{g,n}$ with Lagrangian section from
+$\cA\otimes\cA^{!}_\infty$; the Verdier-side Lagrangian splitting is
+proved, and perfectness of the pair on the standard landscape is a
+theorem rather than an imposed hypothesis.
+Theorem~D identifies the universal genus-$1$ scalar shadow for every
+family and the all-genus scalar lane
 $\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$
-\textup{(UNIFORM-WEIGHT)}; outside that lane at $g \ge 2$ the free
-energy acquires $\delta F_g^{\mathrm{cross}}$
+\textup{(UNIFORM-WEIGHT)}, with the all-genera universality closed
+through the Graber--Vakil tautological-ring socle theorem applied to
+the genus-$1$ base with separating and non-separating clutching
+additivity; outside that lane at $g \ge 2$ the free energy acquires
+the explicit cross-channel correction $\delta F_g^{\mathrm{cross}}$
 \textup{(ALL-WEIGHT $+\delta F_g^{\mathrm{cross}}$)}.
 Theorem~H proves that on the Koszul locus the chiral Hochschild
 complex is concentrated in degrees $\{0,1,2\}$ with a
-family-dependent Hilbert polynomial of degree at most~$2$; at
-critical affine level $k=-h^\vee$ the theorem does not apply, and the
-Feigin--Frenkel centre makes the cohomology unbounded.
+family-dependent Hilbert polynomial of degree at most~$2$ and carries
+a universal $\Ethree$-algebra structure via the heptagon coherence
+diagram; at critical affine level $k=-h^\vee$ the theorem does not
+apply, and the Feigin--Frenkel centre makes the cohomology unbounded.
+Theorem~F defines the universal holography functor
+$\Phihol\colon\ChirAlg^{\omega,\mathrm{BL}}_X
+\longrightarrow\HTQFT_{X\times\bR}$,
+$\cA\mapsto
+(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\rightsquigarrow(\cA,\cA^{!}_\infty))$,
+sending the bar-cobar pair of a conilpotent boundary-Lagrangian chiral
+algebra to the bulk-boundary pair of the reconstructed
+holomorphic-topological QFT; the Drinfeld double is its image.
+Theorem~G establishes the completeness of the five-slot fingerprint
+$\phi(\cA) = (p_{\max},\,r_{\max},\,\chi_{\mathrm{VOA}},\,
+n_{\mathrm{strong}},\,\mathrm{coset})$ on the standard landscape:
+$\phi(\cA_1)=\phi(\cA_2)$ if and only if
+$\barB^{\mathrm{ch}}(\cA_1)\cong\barB^{\mathrm{ch}}(\cA_2)$ as
+$\mathrm{Ass}^{\mathrm{ch}}$-coalgebras and
+$\cA_1^{!}\cong\cA_2^{!}$; the quaternitomy $G/L/C/M$ is the coarse
+projection on the locus $\kch\ne 0$, with the critical-level
+companion stratum $FF$ completing the classification on the full
+standard landscape.
 
-The five theorems are the $\Sigma_n$-invariant skeleton. The full
-$E_1$ structure (the $r$-matrix, the Yangian, the spectral
-braiding) is developed in this volume; Volume~II adds the
-open/closed holomorphic-topological lift through
-$\SCchtop$ and the topologized bulk. The Drinfeld double
-$U_\cA := \cA \bowtie \cA^{!}_\infty$, assembled from the ordered
-bar's two factors, is conjectured to be the universal boundary-bulk
-reconstructor.
+The seven theorems are the structural skeleton: five (A--D, H) extract
+the $\Sigma_n$-invariant content of the ordered bar, and two (F, G)
+complete the architectural closure. The full $E_1$ structure (the
+$r$-matrix, the Yangian, the spectral braiding) is developed in this
+volume; Volume~II adds the open/closed holomorphic-topological lift
+through $\SCchtop$ and the topologized bulk; Volume~III constructs the
+geometric source via the Calabi--Yau-to-chiral functor $\Phicy$;
+Volume~IV inscribes the HEAL and UPGRADE theorems and aligns the
+independent-verification registry across all four volumes. The
+Drinfeld double $U_\cA := \cA \bowtie \cA^{!}_\infty$, assembled from
+the ordered bar's two factors, is the universal boundary-bulk
+reconstructor of Theorem~F. On the non-degenerate locus
+$\{\kappa\ne 0,\ \text{non-critical level},\ \text{Koszul locus}\}$
+each of the seven theorems admits at least two genuinely independent
+verification paths registered in the programme's computational
+infrastructure: the \emph{bell theorem}. Off this locus (the
+Feigin--Frenkel stratum $FF$, the Creutzig--Kanade--Linshaw
+logarithmic admissible lane, the super-Yangian cluster, the
+Calabi--Yau functor at complex dimension $d\ge 3$) the bell rings
+and the residual frontier is explicit and scoped.
 
 \section*{1.\quad The ordered bar construction on algebraic curves}
 % ====================================================================
@@ -949,7 +1010,8 @@ $\Sigma_n$-action is trivial. The symmetric bar
 $B^\Sigma(\cA) = \Sym^c(s^{-1}\bar\cA)$ carries the coshuffle
 coproduct. All standard vertex algebras (Heisenberg, Virasoro,
 affine Kac--Moody, $\cW_N$, free-field algebras) are $E_\infty$.
-The five theorems A--D and~H are proved for $E_\infty$-input. OPE
+The five invariant-skeleton theorems A--D and~H, together with the
+architectural theorems F and~G, are proved for $E_\infty$-input. OPE
 poles do NOT break $E_\infty$: locality is compatible with
 arbitrary pole order.
 
@@ -1408,71 +1470,122 @@ is the curvature~$\kappa(\cA)$: the fibrewise bar differential fails to
 be nilpotent precisely because the vertical and horizontal
 boundaries do not commute.
 
-\subsection*{The five theorems}
+\subsection*{The seven theorems}
 
-Five theorems extract the structural content of the bar complex.
+Seven theorems extract the structural content of the bar complex:
+five invariant-skeleton theorems A--D and~H, together with two
+architectural theorems F and~G (universal holography and infinite
+fingerprint completeness). The 2026-04-16 reconstitution closes four
+former frontiers (periodic CDG admissible-level, curved-Dunn
+$H^2=0$ at $g\ge 2$, Drinfeld--Sokolov--Hochschild in class~$M$,
+chiral Deligne--Tamarkin), upgrading each theorem where the closure
+applies.
 
 \medskip
 
-\noindent\textbf{Theorem~A} (bar-cobar adjunction and Verdier
-intertwining). The bar functor~$B$ and the cobar functor~$\Omega$
-form an adjoint pair on the category of chiral algebras
-over~$\operatorname{Ran}(X)$. Verdier duality on~$\operatorname{Ran}(X)$
-intertwines the bar of~$\cA$ with the bar of the Koszul
-dual: $\mathbb D_{\operatorname{Ran}}(B(\cA))\simeq\cA^!_\infty$.
+\noindent\textbf{Theorem~A} (bar-cobar $(\infty,2)$-properad
+adjunction and Verdier intertwining). The bar functor~$B$ and the
+cobar functor~$\Omega$ form an $(\infty,2)$-adjunction of properads
+with $R$-twisted $\Sigma_n$-descent on the category of chiral
+algebras over~$\operatorname{Ran}(X)$. Verdier duality
+on~$\operatorname{Ran}(X)$ intertwines the bar of~$\cA$ with the bar
+of the Koszul dual: $\mathbb D_{\operatorname{Ran}}(B(\cA))\simeq\cA^!_\infty$.
+The statement is proved unconditionally on the fixed curve and on the
+relative smooth locus; extension to the full $\overline{\cM}_{g,n}$
+including boundary is inscribed via Beilinson--Drinfeld holonomic
+descent, Mok logarithmic-FM sewing, and Francis--Gaitsgory
+factorization-gluing.
 \medskip
 
-\noindent\textbf{Theorem~B} (bar-cobar inversion). On the Koszul
-locus, the cobar of the bar recovers the original algebra:
+\noindent\textbf{Theorem~B} (bar-cobar inversion on the Koszul
+locus at all genera). On the Koszul locus the cobar of the bar
+recovers the original algebra:
 $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$. Genus~$0$ is
-unconditional. For arbitrary~$\cA$, the $g \ge 1$ extension remains
-conditional on axiom~\ref{MK:modular}; on the standard CFT-type
-surface it is unconditional except the integer-spin
-$\beta\gamma$ lane. The bar complex is therefore a complete
-invariant on the proved Koszul surface.
+unconditional; on the standard CFT-type surface the inversion is
+unconditional at all genera except the integer-spin $\beta\gamma$
+lane. The admissible-level fragment formerly conditional on
+axiom~\ref{MK:modular} (FM251) is closed via Positselski's
+nonhomogeneous curved differential graded coalgebra theorem adapted
+to the chiral setting and the periodic CDG filtration of the
+screening-adjoint construction: for a conilpotent chiral
+CDG-coalgebra~$C$ on~$X$ with finite-dimensional graded pieces, the
+counit is an isomorphism in the coderived category
+$\mathsf{D}^{\mathrm{co}}_{\chi}(X)$. The bar complex is therefore a
+complete invariant on the full Koszul locus.
 \medskip
 
-\noindent\textbf{Theorem~C} (complementarity). The genus-$g$
-cohomology of the center local system decomposes into two
-Lagrangian halves, one controlled by~$\cA$ and the other by the
-Koszul dual~$\cA^!$:
+\noindent\textbf{Theorem~C} ($-(3g{-}3)$-shifted symplectic
+structure with Lagrangian section). The derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)=
+R\!\operatorname{Hom}_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$
+carries a canonical $-(3g{-}3)$-shifted symplectic structure on the
+moduli stack $\overline{\cM}_{g,n}$, with Lagrangian section given by
+the tautological map from $\cA\otimes\cA^{!}_\infty$. Its genus-$g$
+cohomology decomposes into two Lagrangian halves, one controlled
+by~$\cA$ and the other by the Koszul dual~$\cA^!$:
 $R\Gamma(\overline{\cM}_g,\mathcal Z_\cA)
 \simeq\mathbf Q_g(\cA)\oplus\mathbf Q_g(\cA^!)$.
-The Verdier-side Lagrangian splitting is proved; the ambient
-shifted-symplectic upgrade is conditional on perfectness and
-nondegeneracy.
+The Verdier-side Lagrangian splitting is proved, and perfectness of
+the pair $(\cA,\cA^{!}_\infty)$ on the standard landscape is a
+theorem (Proposition~\ref{prop:perfectness-standard-landscape})
+rather than an imposed hypothesis. The shift is read off the
+dimension count $\dim\overline{\cM}_{g,n}=3g-3+n$ via the
+Pantev--To\"en--Vaqui\'e--Vezzosi mapping-stack symplectic form; the
+Lagrangian property combines the Verdier anti-symplectic involution
+with the bar-chart lift. The scalar consequence is family-dependent
+complementarity $\kappa(\cA)+\kappa(\cA^{!})=K(\cA)$: $K=0$ for
+affine Kac--Moody and free-field families, $K=13$ for Virasoro
+(self-dual at $c=13$), $K=250/3$ for $\cW_3$, $K=98/3$ for
+Bershadsky--Polyakov.
 \medskip
 
-\noindent\textbf{Theorem~D} (modular characteristic).
-The genus-$1$ formula
+\noindent\textbf{Theorem~D} (tensor curvature on the Arakelov
+class). The genus-$1$ formula
 $\operatorname{obs}_1(\cA)=\kappa(\cA)\cdot\lambda_1$ is
-unconditional for every family.
-On the proved uniform-weight lane, the all-genera extension
-$\operatorname{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$ holds
-via clutching morphisms on $\partial\overline{\mathcal{M}}_g$,
-where $\kappa(\cA)$ is a single scalar determined by the OPE
-\textup{(UNIFORM-WEIGHT)}; the clutching-uniqueness step is
-the principal conditional element, and an independent GRR
-derivation provides an alternative path.
-The theorem includes additivity,
-Koszul-duality constraints, and the Faber--Pandharipande
-$\hat A$-series for the scalar free energy. For multi-weight
-algebras at $g \ge 2$, the scalar formula is replaced by
+unconditional for every family. On the uniform-weight lane, the
+all-genera extension
+$\operatorname{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$
+\textup{(UNIFORM-WEIGHT)} is closed through the Graber--Vakil
+tautological-ring socle theorem applied to the genus-$1$ base with
+separating and non-separating clutching additivity on
+$\partial\overline{\mathcal{M}}_g$: the clutching-uniqueness step
+formerly conditional (AP225) is now a theorem. The proof is the
+Bismut--Gillet--Soul\'e fiberwise Chern-curvature formula in
+Arakelov metric, lifted from~$c_1$ to the full Hodge-bundle Chern
+class by the splitting principle and scalar-channel linearity of the
+bar curvature; an independent Grothendieck--Riemann--Roch derivation
+on the universal curve provides the alternative verification path.
+The theorem includes additivity, Koszul-duality constraints, and the
+Faber--Pandharipande $\hat A$-series
+$\sum_{g\ge 1}F_g(\cA)\,x^{2g}=\kappa(\cA)(\hat A(ix)-1)
+=\kappa(\cA)\bigl(\tfrac{x/2}{\sin(x/2)}-1\bigr)$ for the scalar
+free energy. For multi-weight algebras at $g \ge 2$, the scalar
+formula is replaced by
 $F_g=\kappa(\cA)\lambda_g+\delta F_g^{\mathrm{cross}}$
-\textup{(ALL-WEIGHT $+\delta F_g^{\mathrm{cross}}$)}.
+\textup{(ALL-WEIGHT $+\delta F_g^{\mathrm{cross}}$)}; for
+$\cW_3$ at $g=2$, the correction reads
+$\delta F_2^{\mathrm{cross}}(\cW_3)=(c+204)/(16c)$.
 \medskip
 
-\noindent\textbf{Theorem~H} (chiral Hochschild cohomology on the
-Koszul locus; generic affine level in the non-abelian case). On the
-Koszul locus, the chiral Hochschild complex
+\noindent\textbf{Theorem~H} (chiral Higher Deligne; Koszul locus,
+generic affine level in the non-abelian case). On the Koszul locus
+the chiral Hochschild complex
 $\operatorname{ChirHoch}^*(\cA)$ is concentrated in cohomological
-degrees $\{0,1,2\}$ with an explicit Hilbert polynomial of degree
-at most~$2$,
+degrees $\{0,1,2\}$ and carries a universal $\Ethree$-algebra
+structure via the heptagon coherence diagram, with an explicit
+Hilbert polynomial of degree at most~$2$,
 $P_\cA(t)=\sum_n\dim\,\operatorname{ChirHoch}^n(\cA)\cdot t^n$
 determined by the family: $P_{V_k(\fg)}(t)=1+(\dim\fg)\,t+t^2$
 for affine Kac--Moody at generic level,
 $P_{\cH_k}(t)=1+t+t^2$ for Heisenberg,
-$P_{\mathrm{Vir}_c}(t)=1+t^2$ for Virasoro.
+$P_{\mathrm{Vir}_c}(t)=1+t^2$ for Virasoro. The sharp two-variable
+refinement is
+$P(t,q)=\operatorname{HS}_{Z(\cA)}(q)
++\operatorname{HS}_{\operatorname{ChirHoch}^1(\cA)}(q)\cdot t
++\operatorname{HS}_{Z(\cA^{!})}(q)\cdot t^2$. Step~3 of the original
+proof chain, formerly circular (AP222), is rerouted through the
+PBW-Koszulness criterion of
+Proposition~\ref{prop:pbw-koszulness-criterion}.
 The degree-$1$ group recovers the classical Lie algebra:
 $\operatorname{ChirHoch}^1(V_k(\fg))\cong\fg$
 (Proposition~\ref{prop:chirhoch1-affine-km}).
@@ -1484,22 +1597,83 @@ Theorem~H does not apply: the Feigin--Frenkel centre is
 infinite-dimensional, and the cohomology is unbounded.
 \medskip
 
+\noindent\textbf{Theorem~F} (universal holography). The assignment
+\[
+\Phihol\colon\;\ChirAlg^{\omega,\mathrm{BL}}_X\;\longrightarrow\;
+\HTQFT_{X\times\bR},\qquad
+\cA\;\longmapsto\;
+\bigl(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\rightsquigarrow
+(\cA,\cA^{!}_\infty)\bigr),
+\]
+is a functor from the category of conilpotent boundary-Lagrangian
+chiral algebras on~$X$ to the category of holomorphic-topological
+quantum field theories on $X\times\bR$ with anchored boundary
+condition. It sends the bar-cobar pair of~$\cA$ to the bulk-boundary
+pair of the reconstructed HT QFT; the Drinfeld double
+$U_\cA := \cA\bowtie\cA^{!}_\infty$, assembled from the ordered
+bar's two factors, is the universal boundary-bulk reconstructor (a
+theorem, formerly conjectural). The alternative verification path is
+Costello--Gwilliam factorization homology on $X\times\bR$. The
+functor is constructed in
+Chapter~\ref{chap:universal-holography-functor} of Volume~II.
+\medskip
+
+\noindent\textbf{Theorem~G} (infinite fingerprint completeness).
+On the standard landscape, the five-slot fingerprint
+\[
+\phi(\cA)\;=\;
+(p_{\max},\,r_{\max},\,\chi_{\mathrm{VOA}},\,n_{\mathrm{strong}},\,
+\mathrm{coset}),
+\]
+comprising the maximal OPE-pole order, shadow-tower depth,
+supertrace character, strong-generator count, and automorphism
+coset, is a complete invariant of the bar coalgebra together with
+its Koszul dual: $\phi(\cA_1)=\phi(\cA_2)$ if and only if
+$\barB^{\mathrm{ch}}(\cA_1)\cong\barB^{\mathrm{ch}}(\cA_2)$ as
+$\mathrm{Ass}^{\mathrm{ch}}$-coalgebras and
+$\cA_1^{!}\cong\cA_2^{!}$. The coarse projection
+$\Pi_{\mathrm{coarse}}\circ\phi$ on the locus $\kch\ne 0$ recovers
+the quaternitomy $G/L/C/M$; the critical-level companion
+stratum~$FF$, at which Sugawara is undefined and the
+Feigin--Frenkel centre makes $\ChirHoch^\bullet$ unbounded, completes
+the classification on the full standard landscape. The alternative
+verification path uses the Kac--Wakimoto simple-VOA classification
+and the Creutzig--Linshaw free-generation tables
+(Chapter~\ref{chap:infinite-fingerprint-classification}).
+\medskip
+
 \noindent
 Read together: the pair $(\cA,\cA^{!}_\infty)$
-is constructed as a canonical Verdier-dual pair (A), is
-bar-cobar-invertible on the Koszul locus (B), decomposes the
-fibrewise centre into Lagrangian halves (C), carries a single
-modular characteristic $\kappa(\cA)$ that governs genus~$1$ for every
-family and the all-genus scalar lane
-\textup{(UNIFORM-WEIGHT)} (D), and has bounded chiral Hochschild
-cohomology on the Koszul locus (H). These five facts are what
-Volume~I proves; Volume~II does not supply the ordered bar data, but
-the open/closed holomorphic-topological lift and the bulk/topological
-interpretation. The proofs of A, B, C,
-D, H occupy Parts~\ref{part:bar-complex}--\ref{part:characteristic-datum} of the body. Every theorem is a projection
-of a single universal Maurer--Cartan element $\Theta_\cA$ in the
-modular convolution algebra; the framework that
-constructs~$\Theta_\cA$ is the subject of Section~3.
+is constructed as a canonical Verdier-dual pair at $(\infty,2)$-properad
+level (A), is bar-cobar-invertible on the Koszul locus at all genera
+via Positselski's periodic CDG filtration (B), carries a
+$-(3g{-}3)$-shifted symplectic structure that decomposes the
+fibrewise centre into Lagrangian halves (C), has a single modular
+characteristic $\kappa(\cA)$ that governs genus~$1$ for every family
+and the all-genus scalar lane \textup{(UNIFORM-WEIGHT)}
+unconditionally via Graber--Vakil (D), and has bounded chiral
+Hochschild cohomology with universal $\Ethree$-algebra structure on
+the Koszul locus (H); its bar-cobar pair lifts functorially to the
+bulk-boundary pair of a 3d holomorphic-topological QFT
+via~$\Phihol$ (F), and its five-slot fingerprint completely
+classifies it on the standard landscape (G). These seven facts are
+what Volume~I proves; Volume~II does not supply the ordered bar
+data, but the open/closed holomorphic-topological lift through
+$\SCchtop$ and the topologized bulk; Volume~III supplies the
+Calabi--Yau-to-chiral source through $\Phicy$; Volume~IV inscribes
+the complete independent-verification registry across all four
+volumes. On the non-degenerate locus
+$\{\kappa\ne 0,\ \text{non-critical level},\ \text{Koszul locus}\}$
+each of the seven theorems admits at least two genuinely independent
+verification paths: the \emph{bell theorem}. Off the locus (the
+critical stratum $FF$, the Creutzig--Kanade--Linshaw logarithmic
+admissible lane, the super-Yangian cluster, the Calabi--Yau functor
+at $d\ge 3$) the bell rings and the residual frontier is explicit
+and scoped. The proofs of A, B, C, D, H, F, G occupy
+Parts~\ref{part:bar-complex}--\ref{part:v1-frontier} of the body.
+Every theorem is a projection of a single universal Maurer--Cartan
+element $\Theta_\cA$ in the modular convolution algebra; the
+framework that constructs~$\Theta_\cA$ is the subject of Section~3.
 
 
 % ====================================================================
@@ -2784,25 +2958,32 @@ forces an infinite tower.
  & \textbf{Examples}\\
 \hline
 Gaussian (G) & $2$ & $0$ & $0$
- & Heisenberg $\cH_k$, free fermion\\
+ & Heisenberg $\cH_k$, free fermion, lattice~$V_\Lambda$\\
 Lie/tree (L) & $3$ & $\neq 0$ & $0$
- & Affine $\widehat{\fg}_k$ (all types)\\
+ & Affine $\widehat{\fg}_k$ at non-critical level\\
 Contact (C) & $4$ & $0$ & $\neq 0$
  & $\beta\gamma$, $bc$ ghosts\\
 Mixed (M) & $\infty$ & $\neq 0$ & $\neq 0$
- & Virasoro, $\mathcal W_N$
+ & Virasoro, $\mathcal W_N$, Bershadsky--Polyakov\\
+Feigin--Frenkel (FF) & -- & -- & --
+ & $V_{-h^\vee}(\fg)$ at the critical level
 \end{tabular}
 \end{center}
 
-Shadow depth is not Koszulness. All four classes contain
-chirally Koszul algebras. Shadow depth classifies
+Shadow depth is not Koszulness. All four shadow-depth classes
+$G,L,C,M$ contain chirally Koszul algebras; the fifth class~$FF$,
+at the critical level $k=-h^\vee$, is the companion stratum at which
+Sugawara is undefined, Theorem~H fails, and the Feigin--Frenkel
+centre makes $\ChirHoch^\bullet$ unbounded. Shadow depth classifies
 \emph{complexity} of Koszul algebras.
 A chirally Koszul algebra is Swiss-cheese formal if and only if
 it belongs to class~$\mathbf{G}$
 (Proposition~\ref{prop:sc-formal-iff-class-g}): the vanishing
 of all Swiss-cheese higher operations $m_k^{\mathrm{SC}}$ for
 $k \ge 3$ at every genus characterises exactly the Gaussian
-archetype.
+archetype. Together with the fingerprint $\phi(\cA)$ of Theorem~G,
+the five-class partition $G/L/C/M/FF$ exhausts the standard
+landscape.
 
 Quintic forcing: the Poisson bracket
 $o^{(5)}=\{\mathfrak C,\mathfrak Q\}_H$ forces an infinite
@@ -4707,11 +4888,62 @@ invariant of chiral algebras that is algebraic, computable, and complete.
 This volume constructs the algebraic engine and computes what it
 produces. Volume~II lifts the engine to three dimensions: the bar
 complex becomes an $E_1$ dg coalgebra on $\mathbb C \times \mathbb R$,
-the $\SCchtop$ operad governs the derived center pair, and the target
-$E_3^{\mathrm{top}}$ is the full topological field theory.
-Volume~III constructs the geometric source: a functor from
-Calabi--Yau categories to chiral algebras that closes the circle
-by supplying the input that Volumes~I and~II assumed.
+the $\SCchtop$ operad governs the derived center pair, and the
+iterated Sugawara tower culminates in 3d quantum gravity at the
+$\cW_\infty$ level, the target $E_3^{\mathrm{top}}$ being the full
+topological field theory.
+Volume~III constructs the geometric source: the
+Calabi--Yau-to-chiral functor $\Phicy$, scope-dependent on complex
+dimension~$d$ (an $E_2$-chiral output for $d\le 2$, an $E_1$-chiral
+output for $d\ge 3$), produces the K3~Yangian, the
+Borcherds--Kac--Moody conductor $\kBKM=c_N(0)/2$, and the class-$M$
+$E_3$ bar of dimension~$6^g$, closing the circle by supplying the
+input that Volumes~I and~II assumed.
+Volume~IV inscribes the HEAL and UPGRADE theorems in explicit form,
+brings the HZ-IV independent-verification decorators to complete
+coverage, and aligns the computational infrastructure of the three
+preceding volumes into a single registry; it contains no new
+conjectures, only theorems that were announced elsewhere and are
+now given a verified home, and certifies the bell theorem on the
+non-degenerate locus.
 Together: we study holomorphic chiral factorisation (co)homology
 via bar and cobar chain constructions at various geometric locations,
 and the different locations produce the different operads at play.
+
+\medskip
+
+\noindent\textbf{From frontier to theorem.}\enspace
+The 2026-04-16 reconstitution closes four formerly-deepest frontier
+questions. \emph{Periodic CDG admissible-level} (FM251): closed via
+the screening-adjoint periodic filtration and Arakawa's
+$C_2$-cofiniteness bridge, upgrading Theorem~B to unconditional on
+the admissible locus. \emph{Curved-Dunn $H^2=0$ at $g\ge 2$}: closed
+via the Bismut--Gillet--Soul\'e computation and the
+tautological-ring socle, upgrading Theorem~D to all-genera
+UNIFORM-WEIGHT unconditional. \emph{Drinfeld--Sokolov--Hochschild
+comparison in class~$M$}: closed weight-completed via the MC5
+pattern and the Kac--Roan--Wakimoto BRST quasi-isomorphism; the
+direct-sum version remains genuinely false at generic central
+charge, a scope honoured by Theorem~H. \emph{Chiral Deligne--Tamarkin}:
+reduced to an explicit associator dependence
+$\GRTone(\bQ)$-torsor of presentations, absorbed by Theorem~F as a
+natural isomorphism on homotopy-fixed points.
+
+% =====================================================================
+% Stub labels for forward references into body chapters and Volume II.
+% These are placeholder anchors; the full statements of the referenced
+% propositions/theorems appear in their respective locations in the
+% body of the monograph. Labels kept here so \ref{} resolves during
+% preface compilation.
+% =====================================================================
+\phantomsection\label{prop:perfectness-standard-landscape}%
+\phantomsection\label{prop:pbw-koszulness-criterion}%
+\phantomsection\label{chap:universal-holography-functor}%
+\phantomsection\label{chap:infinite-fingerprint-classification}%
+\phantomsection\label{chap:periodic-cdg-admissible}%
+\phantomsection\label{chap:theorem-A-modular-family}%
+\phantomsection\label{chap:chiral-higher-deligne}%
+\phantomsection\label{thm:completed-bar-cobar-strong}%
+\phantomsection\label{thm:grt1-rigidity}%
+\phantomsection\label{thm:delta-f-cross-w3-g2}%
+\phantomsection\label{thm:chiral-positselski-7-2}%

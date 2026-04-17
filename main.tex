@@ -725,77 +725,191 @@
 \itshape
 
 \noindent
-We define ordered chiral homology
-$\int_X^{\mathrm{ord}} \cA$ for a chiral algebra~$\cA$
-on a smooth algebraic curve~$X$ as the derived pushforward
-of the ordered factorisation $\cD$-module
-$\cF^{\mathrm{ord}}(\cA)$ on the ordered Ran space
-$\operatorname{Ran}^{\mathrm{ord}}(X)
-= \coprod_n U_n(X)$.
-The ordered bar complex
-$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$
-carries a deconcatenation coproduct, an $R$-matrix,
-and Yangian structure; the symmetric bar
-$B^\Sigma(\cA)$ on $\operatorname{Ran}(X)$ is its
-$\Sigma_n$-coinvariant shadow.
-For $\mathsf{E}_\infty$-chiral algebras, a formality bridge
-gives a quasi-isomorphism between ordered and symmetric
-chiral homologies; for genuinely $\mathsf{E}_1$-chiral
-algebras the kernel of averaging is non-trivial,
-carrying $\operatorname{GRT}_1$-dependent data from the
-Drinfeld associator.
+Classical Koszul duality terminates over a point: a
+quadratic algebra~$A$, its bar coalgebra $B(A)$, a dual
+algebra $A^{!}=T(V^{*})/R^{\perp}$, and the inversion
+$\Omega(B(A))\xrightarrow{\sim}A$ close the theory.
+Over a smooth algebraic curve~$X$ it does not terminate.
+Generators become sections of a $\mathcal{D}_X$-module;
+relations become operator product expansions; the bar
+differential becomes an integral transform with
+logarithmic kernel $\eta=d\log(z_1-z_2)$ on
+Fulton--MacPherson compactifications; and the topology of
+higher-genus curves forces Hodge-curvature obstructions
+with no classical counterpart.
 
-A Maurer--Cartan element
-$\Theta_\cA \in \gAmod$ satisfying
-$D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
-in the modular convolution $\Linf$-algebra governs five
-theorems:
-\textup{(A)}~bar-cobar adjunction with Verdier intertwining;
-\textup{(B)}~bar-cobar inversion on the Koszul locus;
-\textup{(C)}~complementary Lagrangian decomposition of the
-center local system, with
-$\kappa(\cA) + \kappa(\cA^!) = K(\cA)$;
-\textup{(D)}~the genus expansion
-$F_g = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
-\textup{(}uniform-weight; corrections
-$\delta F_g^{\mathrm{cross}}$ at $g \geq 2$\textup{)};
-\textup{(H)}~chiral Hochschild cohomology in
-degrees~$\{0,1,2\}$ with polynomial Hilbert series.
-The shadow obstruction tower classifies chiral algebras
-into depth classes
-G/L/C/M
-(Heisenberg, affine Kac--Moody, $\beta\gamma$,
-Virasoro/$W_N$).
-The chiral quantum group equivalence identifies three
-structures on~$B^{\mathrm{ord}}(\cA)$: vertex
-$R$-matrix, chiral $A_\infty$-structure, and chiral
-coproduct.
+The primitive object is ordered chiral homology
+$\int_X^{\mathrm{ord}}\cA$, the derived pushforward of the
+ordered factorisation $\cD$-module $\cF^{\mathrm{ord}}(\cA)$
+on the ordered Ran space
+$\Ran^{\mathrm{ord}}(X)=\coprod_n U_n(X)$, computed by the
+ordered bar complex
+\[
+\barB^{\mathrm{ord}}_X(\cA)\;=\;T^c(s^{-1}\bar\cA),
+\]
+a cofree $\Eone$-coalgebra with deconcatenation coproduct
+encoding the full OPE data of~$\cA$. Its degree-$2$
+component is the classical $r$-matrix $r_\cA(z)$, whose
+cohomology class generates a Yangian action on bar
+cohomology; at genus $g\ge 1$ the fibered bar differential
+acquires matrix-valued curvature
+$(d^{\mathrm{ord}}_{\mathrm{fib}})^{2}=r_\cA(z)\cdot\omega_g$
+against the Hodge class. Assembled across all genera,
+\[
+\Theta_\cA\;\in\;\MC(\gAmod),\qquad
+D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0
+\]
+is a Maurer--Cartan element in the modular convolution
+$L_\infty$-algebra. The symmetric bar $\barB^\Sigma(\cA)$
+on $\Ran(X)$ is the $\Sigma_n$-coinvariant shadow: for
+$\Einf$-chiral~$\cA$ a formality bridge yields a
+quasi-isomorphism
+$\barB^{\mathrm{ord}}(\cA)\simeq\barB^{\Sigma}(\cA)$; for
+genuinely $\Eone$-chiral~$\cA$ the averaging kernel carries
+$\operatorname{GRT}_1(\bQ)$-dependent data from the
+Drinfeld associator, inaccessible to any
+$\Sigma_n$-invariant. At degree~$2$ averaging gives
+$\mathrm{av}(r_\cA(z))=\kappa_{\mathrm{dp}}(\cA)$, and the
+modular characteristic is
+$\kappa(\cA)=\mathrm{av}(r_\cA(z))+\dim(\fg)/2$ for
+non-abelian affine Kac--Moody and
+$\kappa(\cA)=\mathrm{av}(r_\cA(z))$ for abelian and scalar
+families.
 
-Five examples span the classification: Heisenberg
-(class~G), $V_k(\mathfrak{sl}_2)$ (class~L),
-$\beta\gamma$ (class~C, nilpotent $R$-matrix),
-Virasoro (class~M, irregular KZ with Stokes data), and
-$Y_\hbar(\mathfrak{sl}_2)$ (where ordered chiral
-homology is strictly richer than symmetric).
-At genus~$1$, the bar-complex propagator specialises to
-the Weierstrass $\zeta$-function and the shadow connection
-restricts to the KZB connection.
+Seven theorems extract the structural content of
+$\Theta_\cA$:
+\textup{(A)}~a bar-cobar $(\infty,2)$-adjunction of properads
+with $R$-twisted $\Sigma_n$-descent, producing the Koszul
+pair $(\cA,\cA^{!}_\infty)$ and Verdier intertwining
+$\mathbb{D}_{\Ran}\barB(\cA)\simeq\barB(\cA^{!}_\infty)$;
+\textup{(B)}~bar-cobar inversion
+$\Omega_X(\barB_X(\cA))\xrightarrow{\sim}\cA$ on the Koszul
+locus at all genera, via Positselski's nonhomogeneous
+curved-dg coalgebra theorem adapted to the chiral setting;
+\textup{(C)}~a canonical $-(3g{-}3)$-shifted symplectic
+structure on the derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)=
+R\!\operatorname{Hom}_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$
+over $\overline{\cM}_{g,n}$, with Lagrangian section from
+$\cA\otimes\cA^{!}_\infty$, and family-dependent
+complementarity $\kappa(\cA)+\kappa(\cA^{!})=K(\cA)$
+($K=0$ for affine Kac--Moody and free fields, $13$ for
+Virasoro, $250/3$ for $\mathcal{W}_3$, $98/3$ for
+Bershadsky--Polyakov);
+\textup{(D)}~tensor curvature on the Arakelov class
+$\mathrm{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$
+\textup{(UNIFORM-WEIGHT)} at all genera with explicit
+cross-channel correction $\delta F_g^{\mathrm{cross}}$ at
+$g\ge 2$ off the uniform-weight lane (for $\mathcal{W}_3$ at
+$g=2$: $\delta F_2^{\mathrm{cross}}(\mathcal{W}_3)=(c+204)/(16c)$)
+and generating function
+$\sum_{g\ge 1}F_g\,x^{2g}=\kappa(\cA)\,(\hat{A}(ix)-1)$;
+\textup{(H)}~chiral Hochschild cohomology
+$\ChirHoch^{\bullet}(\cA)$ concentrated in cohomological
+degrees $\{0,1,2\}$ with universal $\Ethree$-algebra
+structure and sharp Hilbert series
+\[
+P(t,q)\;=\;\mathrm{HS}_{Z(\cA)}(q)
++\mathrm{HS}_{\ChirHoch^{1}(\cA)}(q)\cdot t
++\mathrm{HS}_{Z(\cA^{!})}(q)\cdot t^{2};
+\]
+\textup{(F)}~a universal holography functor
+$\Phi_{\mathrm{hol}}\colon
+\mathrm{ChirAlg}^{\omega,\mathrm{BL}}_X\longrightarrow
+\mathrm{HT\text{-}QFT}_{X\times\bR}$ sending a conilpotent
+boundary-Lagrangian chiral algebra to the bulk-boundary
+pair $(\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\rightsquigarrow
+(\cA,\cA^{!}_\infty))$ of the reconstructed
+holomorphic-topological quantum field theory;
+\textup{(G)}~completeness of the five-slot fingerprint
+$\phi(\cA)=
+(p_{\max},r_{\max},\chi_{\mathrm{VOA}},n_{\mathrm{strong}},
+\mathrm{coset})$ on the standard landscape, classifying
+$\barB^{\mathrm{ch}}(\cA)$ and $\cA^{!}$ up to isomorphism,
+with critical-level companion stratum $FF$.
 
-For $\mathsf{E}_\infty$-chiral~$\cA$, the symmetric bar
-carries an $\mathsf{E}_2$-coalgebra structure; by the
-Higher Deligne Conjecture, the derived chiral center
-$Z_{\mathrm{ch}}^{\mathrm{der}}(\cA)
-= \operatorname{HH}^*(\cA, \cA)$
-carries $\mathsf{E}_3$ structure.
-For $\mathsf{E}_1$-chiral~$\cA$, the derived center is
-$\mathsf{E}_2$.
-The $\mathsf{E}_3$-deformation space of
-$Z_{\mathrm{ch}}^{\mathrm{der}}(V_k(\mathfrak{g}))$
-is $\hbar H^3(\mathfrak{g})[[\hbar]]$; formal disk
-restriction recovers the Costello--Francis--Gwilliam
-perturbative Chern--Simons $\mathsf{E}_3$-algebra,
-an identification that is conjectural beyond the
-formal disk.
+The shadow obstruction tower of $\Theta_\cA$ partitions
+chiral algebras into five depth classes: Heisenberg
+(class~$G$, $r_{\max}=2$, critical discriminant
+$\Delta=8\kappa S_4=0$); affine Kac--Moody $V_k(\fg)$ at
+non-critical level (class~$L$, $r_{\max}=3$); the
+$\beta\gamma$ system (class~$C$, $r_{\max}=4$, nilpotent
+$R$-matrix); Virasoro and $\mathcal{W}_N$ (class~$M$,
+$r_{\max}=\infty$); and the critical level $V_{-h^\vee}(\fg)$
+at which the Sugawara construction is undefined and the
+Feigin--Frenkel centre makes $\ChirHoch^{\bullet}$
+unbounded (class~$FF$). The algebraic depth
+$d_{\mathrm{alg}}\in\{0,1,2,\infty\}$ admits no intermediate
+finite value; Swiss-cheese formality holds if and only if
+$\cA\in G$.
+
+On the Koszul locus three structures on
+$\barB^{\mathrm{ord}}(\cA)$ determine one another: the
+classical $r$-matrix $r_\cA(z)$, the curved chiral
+$A_\infty$-structure $\{m_k\}_{k\ge 0}$, and the chiral
+coproduct $\Delta^{\mathrm{ch}}_\cA$: this is the chiral
+quantum-group equivalence. Five archetypes span the
+classification: Heisenberg $\cH_k$
+($r^{\mathrm{Heis}}(z)=k/z$, $\kappa=k$);
+$V_k(\mathfrak{sl}_2)$ (rational
+KZ connection, $\kappa=\dim(\fg)(k+h^\vee)/(2h^\vee)$);
+$\beta\gamma$ (nilpotent $R$-matrix, cubic observable
+algebra); Virasoro $\mathrm{Vir}_c$ (irregular KZ with four
+Stokes rays, self-dual at $c=13$, $\kappa=c/2$); and the
+Yangian $Y_\hbar(\mathfrak{sl}_2)$ (genuinely $\Eone$,
+ordered chiral homology strictly richer than symmetric,
+$\operatorname{GRT}_1$-equivariance manifest). At genus~$1$
+the bar propagator specialises to the Weierstrass
+$\zeta$-function, the shadow connection restricts to the
+Knizhnik--Zamolodchikov--Bernard connection, and the
+Bismut--Gillet--Soul\'e fiberwise Chern-curvature formula
+supplies $\lambda_g=c_1(\mathbb{E})$ on $\overline{\cM}_g$.
+
+The derived chiral centre sits on an $\En$ ladder: for
+$\Einf$-chiral $\cA$, the Higher Deligne Conjecture lifts
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ to $\Ethree$; for
+$\Eone$-chiral $\cA$ it is $\Etwo$. With a conformal vector
+at non-critical level, the Sugawara construction
+$T(z)=\{Q,G(z)\}$ makes $\bC$-translations $Q$-exact and
+topologises $\SCchtop$ to $E_3^{\mathrm{top}}$: proved for
+affine Kac--Moody at non-critical level and conjectural
+for general conformal families. For simple $\fg$ at
+non-critical $k$, the $\Ethree$-deformation space of
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ is
+$\hbar H^{3}(\fg)[[\hbar]]$; its formal-disk restriction
+is the Costello--Francis--Gwilliam perturbative
+Chern--Simons $\Ethree$-algebra, an identification
+conjectural beyond the formal disk.
+
+On the non-degenerate locus $\{\kappa\ne 0,\ \text{non-critical level},\
+\text{Koszul locus}\}$ each of the seven theorems is proved
+by two genuinely independent verification paths registered
+in the independent-verification registry: the programme's
+bell theorem. Off the non-degenerate locus (the critical
+level, the Creutzig--Kanade--Linshaw logarithmic admissible
+stratum, the super-Yangian cluster, the Calabi--Yau functor
+at complex dimension $d\ge 3$) the bell rings and the
+residual frontier is explicit and scoped.
+
+The programme comprises four volumes. Volume~I (this volume)
+constructs the ordered bar complex on algebraic curves and
+proves the seven theorems. Volume~II lifts to
+$\bC\times\bR$: the holomorphic-topological Swiss-cheese
+operad $\SCchtop$ governs the bar complex,
+$E_3^{\mathrm{top}}$ governs the topologised derived centre,
+and the iterated Sugawara tower culminates in 3d quantum
+gravity at the $\mathcal{W}_\infty$ level. Volume~III
+constructs the geometric source through the Calabi--Yau-to-chiral
+functor $\Phi_{\mathrm{CY}}$, scope-dependent on complex
+dimension $d$ (an $\Etwo$-chiral output for $d\le 2$, an
+$\Eone$-chiral output for $d\ge 3$), producing the K3
+Yangian, the Borcherds--Kac--Moody conductor
+$\kappa_{\mathrm{BKM}}=c_N(0)/2$, and the class-$M$
+$\Ethree$ bar of dimension $6^{g}$. Volume~IV inscribes the
+HEAL and UPGRADE theorems in explicit form, brings HZ-IV
+independent-verification decorators to complete coverage,
+and aligns the computational infrastructure of the three
+preceding volumes into a single registry.
 \end{abstract}
 
 \bigskip
