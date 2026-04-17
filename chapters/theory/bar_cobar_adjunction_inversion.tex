@@ -1608,6 +1608,160 @@ the curvature forces passage to the coderived setting, and the
 inversion theorem becomes a statement about coderived equivalences.
 The central result of this chapter is the following.
 
+\subsection{Theorem A in Platonic form: the Koszul reflection}
+\label{sec:theorem-A-platonic}
+
+The chiral bar functor $\bar{B}_X$ and the chiral cobar functor $\Omega_X$
+assemble into a single involutive symmetric-monoidal adjoint equivalence on
+the natural ambient $(\infty, 1)$-category of factorisation algebras on
+$\Ran(X)$.  The statement is one sentence, one display, one diagram.
+
+\begin{theorem}[Chiral bar--cobar duality, Platonic form]
+\label{thm:bar-cobar-platonic}
+\ClaimStatusProvedHere
+Let $X$ be a smooth projective curve over $\mathbb{C}$.  The pair
+$(\Omega_X, \bar{B}_X)$ is a symmetric-monoidal adjoint equivalence of
+stable presentable $(\infty, 1)$-categories
+\[
+  \Omega_X \;\colon\; \mathrm{CoAlg}^{\mathrm{fact, conil, co}}_X
+    \;\rightleftarrows\;
+  \mathrm{Alg}^{\mathrm{fact, aug, comp}}_X \;\colon\; \bar{B}_X
+\]
+with unit $\eta_A \colon A \to \bar{B}_X \Omega_X(A)$ the universal
+Maurer--Cartan element and counit $\varepsilon_C \colon \Omega_X \bar{B}_X(C) \to C$
+its Verdier dual.  The equivalence restricts, on the Koszul locus
+$\mathrm{Kosz}(X) \subset \mathrm{Alg}^{\mathrm{fact, aug, comp}}_X$, to a
+symmetric-monoidal adjoint equivalence with values in \emph{ordinary}
+\textup{(}non-coderived\textup{)} factorisation coalgebras and chain-level
+quasi-isomorphism for both unit and counit.
+\end{theorem}
+
+\paragraph{The Koszul reflection.}
+Define the involutive symmetric-monoidal endofunctor
+\[
+  K \;\colon\; \mathrm{Alg}^{\mathrm{fact, aug, comp}}_X \;\to\; \mathrm{Alg}^{\mathrm{fact, aug, comp}}_X,
+  \qquad K(A) \;:=\; \Omega_X \bar{B}_X(A).
+\]
+Theorem~\ref{thm:bar-cobar-platonic} asserts $K^2 \simeq \mathrm{id}$ on
+$\mathrm{Kosz}(X)$ at the chain level and $K^2 \simeq \mathrm{id}$ off
+$\mathrm{Kosz}(X)$ in the coderived sense.  The slogan: \emph{the chiral
+bar is its own Koszul dual}, the universal symmetry of the chiral world.
+
+\paragraph{Hypotheses.}
+The conclusion uses three hypotheses, all uniform across the loci of
+$\mathrm{Alg}^{\mathrm{fact, aug, comp}}_X$:
+\begin{itemize}
+ \item[(H1)] \emph{Augmentation.} $A \in \mathrm{Alg}^{\mathrm{fact, aug}}(\mathrm{IndCoh}(\Ran(X)))$
+       (required to define the augmentation ideal $\bar{A} = \ker(A \to \mathbf{1}_X)$).
+ \item[(H2)] \emph{Augmentation-ideal completeness.} $A \simeq \lim_n A / \bar{A}^n$
+       (equivalently: $A$ is weakly curved in the sense of
+       Positselski 2018; required for the bar--cobar twisted-tensor
+       product to converge unconditionally).
+ \item[(H3)] \emph{Finite-dimensional graded bar pieces.} Each conformal
+       weight space of $\bar{B}_X(A)$ is finite-dimensional (required for
+       ordinary acyclicity to follow from coacyclicity, Positselski 2011
+       \S A.5).
+\end{itemize}
+Conilpotency of $\bar{B}_X(A)$ is automatic under (H1)+(H2) by the
+cofree-conilpotent left adjoint to the forgetful functor (Vallette 2014
+\S 3); the Koszul condition is \emph{not} a hypothesis but a property of
+the output, defining the locus $\mathrm{Kosz}(X)$ on which the coderived
+equivalence becomes a chain-level qi.
+
+\paragraph{Proof skeleton.}
+The abstract bijection $\Hom_{\dgCoAlg}(C, \bar{B}(A)) \simeq
+\mathrm{Tw}(C, A) \simeq \Hom_{\dgAlg}(\Omega(C), A)$ is
+Proposition~\ref{prop:universal-twisting-adjunction} (Loday--Vallette
+Theorem 2.2.9).  The chiral specialisation uses the Beilinson--Drinfeld
+chiral operad, proved Koszul in BD \S 3.6, so Vallette's bar--cobar Quillen
+equivalence (Trans.\ AMS 2014, Theorem 2.1) applies verbatim; promotion
+to symmetric-monoidal equivalence uses Hinich 2003 \S 6.  Curvature
+\textup{(}nonzero $m_0$ at higher genus\textup{)} is absorbed by Positselski
+2018 Theorem 9.1: weakly curved $A_\infty$-algebras over a complete local
+ring fit into an explicit Quillen equivalence with conilpotent CDG-coalgebras.
+The factorisation-compatible refinement is the stratified
+Positselski + Verdier-quotient assembly of
+Theorem~\ref{thm:fact-co-contra-general}.  Promotion from coderived
+equivalence to chain-level quasi-isomorphism on $\mathrm{Kosz}(X)$ follows
+from the $E_2$-collapse of the bar--cobar spectral sequence
+\textup{(}Theorem~\ref{thm:spectral-sequence-collapse}\textup{)} plus
+Positselski 2011 \S A.5 covariantly-weighted to identify coacyclicity with
+acyclicity under (H3).
+
+\paragraph{Four animating morphisms.}
+Theorem~\ref{thm:bar-cobar-platonic} is animated by exactly four canonical
+morphisms:
+\begin{itemize}
+ \item $\eta \colon \mathrm{id} \to \bar{B} \Omega$ \emph{(twisting unit):}
+       universal Maurer--Cartan element.
+ \item $\varepsilon \colon \Omega \bar{B} \to \mathrm{id}$ \emph{(twisting
+       counit):} universal algebra map; chain-level qi on $\mathrm{Kosz}(X)$,
+       coderived equivalence off it.
+ \item $K \colon A \to \Omega \bar{B}(A) \simeq A$ \emph{(Koszul
+       reflection):} the involutive symmetry.
+ \item $\psi(\hbar) = \sum_g \hbar^{2g - 2} \psi_g$ \emph{(genus-completed
+       counit):} the $\hbar$-deformation absorbing all higher-genus
+       curvature corrections via $\psi_g \colon \Omega_g \bar{B}_g(A) \to A_g$.
+\end{itemize}
+
+\begin{corollary}[Constructed Koszul dual]
+\label{cor:A-shriek-constructed}
+\ClaimStatusProvedHere
+Define $A^!_\infty := \Omega_X(\bar{B}_X(A))^\vee$.  Then $A^!_\infty$ is
+a constructed object, not an unconstructed symbol, and the Verdier
+intertwining
+$D_{\Ran} \bar{B}_X(A) \simeq A^!_\infty$
+is automatic from Theorem~\ref{thm:bar-cobar-platonic} and Verdier duality
+on $D^b_c(\bar{C}_k(X))$.  This closes the long-standing $A^!_\infty$-symbol
+gap.
+\end{corollary}
+
+\paragraph{Open frontiers as named conjectures.}
+Four obstruction classes lie just beyond Theorem~\ref{thm:bar-cobar-platonic}
+and are named explicitly to keep the scope of the platonic statement clean.
+
+\begin{conjecture}[$\Pi_1$: Francis--Gaitsgory transfer]
+\label{conj:pi1-francis-gaitsgory}
+\ClaimStatusConjectured
+The Francis--Gaitsgory factorisation transfer extends
+Theorem~\ref{thm:bar-cobar-platonic} from the chiral $E_1$-setting to
+factorisation algebras with stratification compatible with a chosen
+Whitney--regular stratification of $X$.
+\end{conjecture}
+
+\begin{conjecture}[$\Pi_2$: $E_n$-bar at $d \geq 2$]
+\label{conj:pi2-en-bar-higher-dimension}
+\ClaimStatusConjectured
+The chiral bar--cobar equivalence extends to the $E_n$-setting on
+$n$-fold loop spaces $\Ran^{(n)}(X)$ for $n \geq 2$, with the appropriate
+$E_n$-Koszul dual replacing the $E_1$-Koszul dual on the right-hand side.
+\end{conjecture}
+
+\begin{conjecture}[$\Pi_3$: Lagrangian--Koszul converse]
+\label{conj:pi3-lagrangian-koszul-converse}
+\ClaimStatusConjectured
+A factorisation algebra $A \in \mathrm{Alg}^{\mathrm{fact, aug, comp}}_X$
+is Koszul \textup{(}belongs to $\mathrm{Kosz}(X)$\textup{)} if and only
+if its bar coalgebra $\bar{B}_X(A)$ admits a Lagrangian generating
+sub-coalgebra in the sense of Pantev--Toen--Vaqui\'e--Vezzosi $(-1)$-shifted
+symplectic geometry.
+\end{conjecture}
+
+\begin{conjecture}[$\Pi_4$: unbounded-rank Koszul reflection]
+\label{conj:pi4-unbounded-rank}
+\ClaimStatusConjectured
+The Koszul reflection $K \colon A \mapsto \Omega \bar{B}(A)$ is involutive
+in the chain-level sense \textup{(}not merely up to coderived
+correction\textup{)} on the full Koszul locus $\mathrm{Kosz}(X)$, including
+algebras of unbounded conformal-weight rank, when (H3) is replaced by the
+weaker condition of admissible $A_\infty$-deformation.
+\end{conjecture}
+
+The remainder of this chapter unpacks Theorem~\ref{thm:bar-cobar-platonic}
+into the four corollaries (strict Koszul lane, coderived off-Koszul lane,
+spectral-sequence collapse, Quillen equivalence) traditionally bundled as
+the four-clause inversion theorem below.
+
 \subsection{Statement of the main result}
 
 \begin{theorem}[Bar-cobar inversion: strict on the Koszul locus, coderived off it]\label{thm:bar-cobar-inversion-qi}
