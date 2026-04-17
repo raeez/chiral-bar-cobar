@@ -3187,6 +3187,179 @@ could vanish in special representations?
   each citing disjoint external sources; verified at import
   time.
 
+## Pattern family 211-217 (2026-04-17 Beilinson audit of 22-task rewrite map)
+
+Seven new confusion patterns surfaced by adversarial audit of the
+2026-04-17 rewrite-map 22-task reconstitution. Each attacks a
+specific closure from primary source; corresponding inscription at
+`notes/rectification_map_beilinson_audit.md`.
+
+### Pattern 211. Lattice rank vs κ_ch conflation (CY-C pentagon)
+
+- **Ghost.** The CY-C pentagon's six routes produce different
+  algebras at different nodes; rank invariants stratify across the
+  pentagon; a specific stratification {3, 12, 24} corresponds to
+  the halving arrows β_{34}, β_{45}.
+- **Wrong.** Identifying κ_ch(R_i) = 3 or 12 or 24 for the pentagon
+  routes of G(K3 × E). κ_ch is a Hodge invariant, equal by
+  thm:kappa-hodge-supertrace-identification to Σ_q (-1)^q h^{0,q};
+  for K3 × E this is 1 - 1 + 1 - 1 = 0. Lattice rank stratifies as
+  {3, 12, 24} via Kummer × primitive decomposition; κ_ch does not.
+- **Correct statement.** The pentagon stratifies LATTICE RANK
+  (Mukai-like lattice dimension), not κ_ch. κ_ch(Φ_3(K3 × E)) = 0
+  via Hodge supertrace. If the pentagon routes give algebras whose
+  κ_ch differs from 0, they are NOT Φ_3-images of K3 × E; their
+  κ_ch-computation requires separate Hodge data.
+- **Trigger**: Any pentagon arrow labeled β with halving of "κ_ch"
+  as opposed to halving of lattice rank.
+- **Counter**: Separate κ_ch computation (Hodge supertrace) from
+  lattice-rank computation (Mayer-Vietoris, Z/2-invariants,
+  primitive decomposition). For Calabi-Yau d ≥ 3 with h^{1,0} > 0
+  or odd, κ_ch ≠ lattice rank / constant.
+- **Confusion type.** Type 9 (conflation): one scalar invariant
+  (κ_ch, Hodge supertrace) confused with another scalar invariant
+  (lattice rank, linear-algebra dimension). Both on the same
+  algebra; they are not equal.
+
+### Pattern 212. β_N W-algebra Riccati ratio from κ ratio
+
+- **Ghost.** For principal W_N at generic c, the leading-Laurent
+  Riccati recursion ratio β_N governs S_r asymptotic growth; β_N
+  is a computable function of N determined by the W-algebra OPE.
+- **Wrong.** Deriving β_3 = 10 via the argument "β_3/β_2 = κ(W_3)/
+  κ(Vir) = 5/3, hence β_3 = 10." The κ ratio is an r = 2 shadow
+  ratio; β is the LARGE-r Riccati ratio. These are DIFFERENT
+  invariants; equality for N = 3 is a computation, not a
+  corollary of the κ ratio.
+- **Correct statement.** β_N must be derived from the explicit W_N
+  Riccati recurrence on the DOMINANT line at large r, using the
+  Fateev-Lukyanov cubic OPE coupling α_FL^{(N)} and the
+  multi-channel structure with all W-generators (T, W^{(3)}, ...,
+  W^{(N)}). For W_3: β_3 = 10 is PLAUSIBLE but requires explicit
+  two-channel derivation.
+- **Trigger**: any β_N computed via "β_N/β_2 = κ_N/κ_Vir" or
+  similar ratio shortcut.
+- **Counter**: derive β_N from the full Riccati recurrence with
+  all W-generator channels retained; verify numerically against
+  the compute/lib/ engine before writing.
+- **Confusion type.** Type 2 (scope error): r = 2 shadow invariant
+  and r → ∞ asymptotic ratio are different; neither determines
+  the other.
+
+### Pattern 213. C_2-cofiniteness → bounded Massey products (FALSE)
+
+- **Ghost.** For a C_2-cofinite VOA, the Zhu algebra is
+  finite-dimensional; "finite-dim Zhu → bounded Massey products →
+  bounded shadow growth → tempered" is a chain of implications
+  leading to temperedness.
+- **Wrong.** The step "finite-dim Zhu → bounded Massey products"
+  is FALSE in general. log W(p) is C_2-cofinite (Adamovic-Milas
+  2009) but has UNBOUNDED Massey products ⟨Ω, Ω, Ω⟩ ≠ 0 at every
+  weight (Flohr 1996, Gurarie 1993 logarithmic CFT structure). The
+  Zhu algebra's finite-dimensionality refers to MODULE CATEGORY
+  size, not to A_∞ operation structure.
+- **Correct statement.** Tempered stratum membership requires a
+  direct bound on S_r (shadow coefficients); it is NOT implied by
+  C_2-cofiniteness. log W(p) may be non-tempered despite being
+  C_2-cofinite.
+- **Trigger**: "C_2-cofinite, hence tempered" phrasing anywhere.
+- **Counter**: cite direct shadow tower bound (if exists) or
+  acknowledge tempered status is OPEN for log W(p).
+- **Confusion type.** Type 14 (algebraic / topological): finite
+  module category (algebraic) does not control A_∞ operation
+  magnitude (topological / analytic).
+
+### Pattern 214. Three distinct mechanisms (Schellekens)
+
+- **Ghost.** The Schellekens 71 α = 0 classification stratifies
+  via three distinct orbifold-type mechanisms (Type A / B / C).
+- **Wrong.** Type B (Leech Z/2 with Λ^σ = 0) is a DEGENERATE CASE
+  of Type C (Leech Z/n with level-matching), not a third distinct
+  mechanism. At Λ^σ = 0, the level-matching h_tw ∈ (1/n)Z is
+  trivially satisfied; the Λ^σ = 0 shortcut is a specialisation
+  of the level-matching route.
+- **Correct statement.** There are TWO mechanisms: (i) trivial
+  orbifold (Type A; α vacuous in H^3(B{1}; U(1)) = 0); (ii) Leech
+  orbifold with level-matching (Types B ∪ C; α = 0 via h_tw ∈
+  (1/n)Z). Type B is degenerate within (ii).
+- **Trigger**: "three distinct mechanisms" for α = 0 in the
+  Schellekens landscape.
+- **Counter**: reduce to "two mechanisms; Type B is a degenerate
+  case of the level-matching mechanism."
+- **Confusion type.** Type 7 (positive/negative): a cosmetic edge
+  case (Λ^σ = 0) reframed as a genuine mechanism; inverts the
+  stratification.
+
+### Pattern 215. Super-complementarity pairing ambiguity
+
+- **Ghost.** The super-shadow complementarity κ + κ^! = max(m, n)
+  is the natural super-analogue of the bosonic KM identity κ +
+  κ^! = dim(g)/2.
+- **Wrong.** Two pairings exist (straight super-trace and
+  Berezinian-normalised); they give DIFFERENT complementarity
+  identities (max(m, n) vs (m - n) · κ_unit). The programme has
+  not canonicalised which pairing is the C1-Lagrangian-compatible
+  one. Claiming "κ + κ^! = max(m, n)" as the canonical identity
+  without specifying the pairing is ambiguous.
+- **Correct statement.** For the Verdier-pairing-canonicalised
+  Koszul dual, the identity is either max(m, n) OR (m - n) ·
+  κ_unit depending on pairing choice; the canonical Vol I Verdier
+  pairing determines which.
+- **Trigger**: "κ + κ^! = f(m, n)" for super-Yangian without
+  explicit pairing specification.
+- **Counter**: specify Vol I canonical Verdier pairing; compute
+  the complementarity identity via that pairing; state companion
+  identities as non-canonical.
+- **Confusion type.** Type 10 (convention clash): two pairings
+  coexist; omitting the pairing specification creates implicit
+  convention choice.
+
+### Pattern 216. Preface-first rewrite ordering
+
+- **Ghost.** The preface is the entry point; rewriting it first
+  sets the stage for subsequent body edits.
+- **Wrong.** The preface SUMMARISES; it must be the LAST step in
+  any rewrite, not the first. Writing the preface before body
+  theorems are stable produces overclaims that the body does not
+  support. The 2026-04-16 HEAL-SWEEP + 2026-04-17 reconstitution
+  produced several preface paragraphs advertising closures (log
+  W(p) tempered, CY-C pentagon κ_ch stratification) that primary
+  source does not support.
+- **Correct statement.** Rewrite order: (1) verify closures at
+  primary source; (2) update body theorems with correct scope;
+  (3) rewrite preface reflecting verified body content. NEVER
+  rewrite preface first.
+- **Trigger**: rewrite plan that starts with preface.
+- **Counter**: reorder: preface LAST, after all body content is
+  verified.
+- **Confusion type.** Type 11 (construction/narration): workflow
+  error (rewriting summary before summary-content-is-known) is
+  a narration-first failure, analogous to listing results before
+  proving them.
+
+### Pattern 217. Kummer-irregular prime appearance verification
+
+- **Ghost.** Kummer-irregular primes {691, 3617, 43867, 283, ...}
+  appear at specific (r, Tier) coordinates in the shadow tower;
+  the arithmetic-duality table lists these appearances.
+- **Wrong.** Claiming "101 at Tier 2 r = 11, dividing B_68" or
+  "3067 at Tier 3 r = 12" without explicit numerical verification
+  that (a) 101 | num(B_68), (b) 101 appears in the Tier-2
+  coefficient of S_11(Vir_c). Both (a) and (b) are FEASIBLE
+  numerical checks but must be done.
+- **Correct statement.** Before inscribing an arithmetic-duality
+  witness at (p, r, Tier), verify: (a) p | num(B_{2m}) for some
+  2m, (b) p appears in the Tier-specific coefficient of S_r
+  symbolically. Both checks are test-file discipline.
+- **Trigger**: Kummer-irregular prime listed at (r, Tier) without
+  `# VERIFIED: [tests]` comment citing numerical check.
+- **Counter**: compute_engine lookup for every listed Kummer
+  witness; fail the table entry if either check fails.
+- **Confusion type.** Type 9 (conflation): table entry inscribed
+  as derived number-theoretic witness without independent
+  number-theoretic derivation; AP10 variant applied to
+  number-theoretic lists.
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.

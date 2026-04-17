@@ -246,6 +246,7 @@ A (algebra) -- B(A) (bar coalgebra) -- A^i=H*(B(A)) (dual coalgebra) -- A^!=((A^
 
 kappa(KM)=dim(g)(k+h^v)/(2h^v). kappa(Vir)=c/2. kappa(Heis)=k. kappa(W_N)=c*(H_N-1) where H_N=sum_{j=1}^{N} 1/j. Vir^!=Vir_{26-c}. Self-dual at c=13. kappa+kappa'=0 (KM/free), 13 (Vir). QME: hbar*Delta*S+(1/2){S,S}=0. sl_2 bar H^2=5 (not 6). Desuspension: |s^{-1}v|=|v|-1, NOT +1. eta(q)=q^{1/24}*prod(1-q^n). Bar propagator d log E(z,w): ALWAYS weight 1. Prime form: section of K^{-1/2} boxtimes K^{-1/2}. FM_n(X): blowup along diagonals, NOT complement. Grading: COHOMOLOGICAL (|d|=+1). Curved A-inf: m_1^2(a)=[m_0,a]. Bar d^2=0 always; curvature appears as m_1^2 != 0.
 alpha_g = 2*rank + 4*dim*h^v (universal Hilbert-series growth, all simple types). d_alg in {0,1,2,inf} (depth gap: 3 impossible, prop:depth-gap-trichotomy). kappa(BP)+kappa(BP^!)=98/3 (self-dual k=-3).
+C_A := limsup |A_{r+1}/A_r| = 6 uniformly on non-logarithmic class M with Virasoro subalgebra (shadow-exponential base; thm:shadow-exponential-base-Virasoro + thm:universal-class-M-C-is-6 in shadow_tower_higher_coefficients.tex). Equivalent: radius of convergence of Sigma_A(z) = sum A_r z^r equals 1/6 (prop:C-A-inverse-radius). Closed form: Sigma_Vir(z) = 4z^3/9 - z^2/9 + z/27 - log(1+6z)/162 (thm:shadow-series-closed-form-Virasoro). Pole-doubling for all k: Sigma_Vir^{(k)}(z) = [P_k + Q_k*log(1+6z)]/(1+6z)^{2k} (thm:pole-doubling-all-k). Decomposition: 6 = r_0 * S_{r_0} = 3 * 2 (bar-depth seed x Riccati seed coefficient). Cross-volume bridge: beta_A (Vol II tempering rate) equals C_A at leading 1/c; beta_N = (N+1)(N+2)/2 (Vol II) absorbs higher-channel sub-leading corrections at finite c, consistent with C_{W_N} = 6 asymptotic.
 
 ## True Formula Census (top 5 kept inline)
 
@@ -370,6 +371,15 @@ Vol II 2026-04-12/13 cross-volume (B74-B85):
 - B84. Khan-Zeng scope: 3d Poisson sigma model covers ALL freely-generated PVAs with conformal vector. Check gr_Li(A) first.
 - B85. Orbifold route: Z/n-invariants preserves E_n structure.
 
+Session 2026-04-17 corrections (B86-B92, Beilinson-rectified):
+- B86. Super-Yangian complementarity κ(Y(sl(m|n))) + κ(Y(sl(n|m))^!) = 0 (Virasoro analogy) → CORRECT `= max(m, n)` at Sugawara-shifted dual level. Verified symbolically at small rank.
+- B87. "Tempered stratum obstruction κ^(∞)_orig = 1/e" (dichotomy) → RETRACTED. Stirling factor dropped; correct limsup = 0 universally at generic c.
+- B88. "First Kummer-irregular prime 691" (unqualified) → imprecise. 691 is BERNOULLI-LEADING first (B_12). SIZE-LEADING first Kummer-irregular is 37 (B_32). Always qualify.
+- B89. "Six routes to G(K3×E) converge isomorphically" (CY-C naive) → FALSIFIED. Pentagon of five intertwiners; R_2 source branch; generator rank stratification.
+- B90. "CY-C pentagon κ_ch stratification {3,12,24}" → CATEGORY ERROR. κ_ch = 0 route-independent (Hodge supertrace). The stratification is GENERATOR RANK ρ^{R_i}, orthogonal to κ_ch.
+- B91. "C_2-cofiniteness ⟹ bounded Massey ⟹ tempered" (W(p)) → FAILS. Gurarie 1993 + Flohr 1996 logarithmic CFT amplitudes exhibit unbounded Massey despite finite-dim Zhu. W(p) tempering OPEN.
+- B92. Primes 1423, 3067, 23, 43, 419 labelled Kummer-irregular → VERIFIED REGULAR at primary source. They still appear in S_r numerators as RICCATI-ARITHMETIC characteristic primes, NOT Kummer-arithmetic.
+
 ## Cross-Volume Anti-Patterns
 Before cross-volume edits, Read `notes/cross_volume_aps.md` (Vol II V2-AP* and Vol III AP-CY1..AP-CY61 catalogs). The Geometric/Algebraic Model Conflations (AP-CY62..AP-CY67) are kept inline below under "Geometric vs Algebraic Models."
 
@@ -450,6 +460,8 @@ Model-specific recurrent patterns. Full source: opus_46_failure_modes_wave12.md.
 - AP187 (Opus). Miura coefficients from elementary symmetric expansion. T(u)=prod(u+Λ_i) → ψ_s=e_s(Λ_i). Coefficient of :J*W_{s-1}: is 1/Psi at all s>=2 (thm:miura-cross-universality).
 
 ## Theorem Status
+
+**2026-04-17 Beilinson-rectified addendum**: the status table below reflects the 2026-04-16 closure wave inscriptions. Subsequent audit findings (Vol~I `notes/rectification_map_beilinson_audit.md`) refined the following claims: (i) Programme climax `thm:programme-climax` (Vol II) is SCOPE-QUALIFIED to non-logarithmic C_2-cofinite standard landscape + irrational cosets; logarithmic W(p) excluded pending Adamovi\'c-Milas character-amplitude bound (see Open Frontiers section). (ii) CY-C pentagon (Vol III) stratifies generator rank ρ^{R_i}, NOT κ_ch (Hodge-supertrace invariant = 0 route-independent). (iii) Kummer-irregular prime labels 1423, 3067, 23, 43, 419 retracted at primary-source verification. (iv) Super-Yangian max(m, n) complementarity identity replaces naive sum=0 analogy. (v) Topologization class M original-complex chapter carries explicit RETRACTION NOTICE; the 1/e obstruction is a Stirling cancellation error, unconditional heal at `thm:tempered-stratum-contains-virasoro` (Vol II). The theorems A-D+H remain PROVED at their stated scopes; only scope qualifiers and cross-reference labels changed.
 
 | Thm | Status | Key result |
 |-----|--------|------------|
@@ -961,7 +973,17 @@ Condition removal: uniform-weight (H13), Koszul locus (H14), chain-level topol (
 
 **Conjectural:** Topologization chain-level original complex (A-inf coherence), topologization general (non-KM), Theorem A modular-family (relative Ran base-change), off-locus chain qi (beyond class G/L).
 
-**Open frontier (status 2026-04-16 reconstitution):** All five previously-deepest frontiers CLOSED or substantially REDUCED: (1) chain-level E_3 on original complex — CLOSED by Vol II `e_infinity_topologization.tex` (`thm:iterated-sugawara-construction`, `thm:e-infinity-topologization-ladder`) and `chiral_higher_deligne.tex` (`thm:chiral-higher-deligne`); (2) MC5 chain-level class M — CLOSED weight-completed (`prop:bv-bar-class-m-weight-completed`; direct-sum class M genuinely false, correct scope); (3) modular-family Theorem A over M̄_{g,n} — reduced via Thm A^{∞,2} properad equivalence (Vol I `theorem_A_infinity_2.tex`); (4) topologization for general chiral with conformal vector — CLOSED by iterated Sugawara tower giving E_{k+2}-top for depth-k stress tower (Vol II `e_infinity_topologization.tex`); (5) chiral coproduct for non-gauge-theoretic families — CLOSED by unified `Q_g^{k,f,μ}` theorem covering nine specialization fibres (Vol II `unified_chiral_quantum_group.tex`). The sole remaining genuine frontier, `conj:periodic-cdg` for admissible KL (FM251), was CLOSED by Vol I `periodic_cdg_admissible.tex` (`thm:periodic-cdg-is-koszul-compatible`).
+**Open frontier (status 2026-04-16 reconstitution):** All five previously-deepest frontiers CLOSED or substantially REDUCED: (1) chain-level E_3 on original complex — CLOSED by Vol II `e_infinity_topologization.tex` (`thm:iterated-sugawara-construction`, `thm:e-infinity-topologization-ladder`) and `chiral_higher_deligne.tex` (`thm:chiral-higher-deligne`); (2) MC5 chain-level class M — CLOSED weight-completed (`prop:bv-bar-class-m-weight-completed`; direct-sum class M genuinely false, correct scope); (3) modular-family Theorem A over M̄_{g,n} — reduced via Thm A^{∞,2} properad equivalence (Vol I `theorem_A_infinity_2.tex`); (4) topologization for general chiral with conformal vector — CLOSED by iterated Sugawara tower giving E_{k+2}-top for depth-k stress tower (Vol II `e_infinity_topologization.tex`); (5) chiral coproduct for non-gauge-theoretic families — CLOSED by unified `Q_g^{k,f,μ}` theorem covering nine specialization fibres (Vol II `unified_chiral_quantum_group.tex`). The sole remaining genuine frontier of the 2026-04-16 wave, `conj:periodic-cdg` for admissible KL (FM251), was CLOSED by Vol I `periodic_cdg_admissible.tex` (`thm:periodic-cdg-is-koszul-compatible`).
+
+**Beilinson-rectified open frontiers (2026-04-17 audit, surfaced AFTER the 2026-04-16 wave):**
+- **W(p) triplet tempering** — the Vol II commit `a5640de` inscription RETRACTED `thm:tempered-stratum-contains-wp` from ProvedHere to Conjectured. The Zhu-bounded-Massey proof chain fails: Gurarie 1993 (arXiv:hep-th/9303160) and Flohr 1996 (arXiv:hep-th/9605151) construct logarithmic-CFT amplitudes with unbounded Massey products despite finite-dim Zhu. The CORRECT tempered scope is: principal + non-logarithmic + non-minimal standard landscape; W(p) is open pending Adamović-Milas character-amplitude bound.
+- **Non-tempered stratum OVERCLAIM** — the programme-climax statement "non-tempered stratum is EMPTY on the C_2-cofinite standard landscape" is SCOPE-QUALIFIED: emptiness holds on the non-logarithmic subset (Virasoro, W_N, all Schellekens, Monster, irrational cosets). Logarithmic W(p) remains open.
+- **CY-C pentagon invariant** — Vol III commit `cade61c` healed the pentagon stratification `{3, 12, 24}` from `κ_ch^{R_i}` to `ρ^{R_i}` (generator-lattice rank). Category error: κ_ch is route-independent = 0 for K3×E by Hodge supertrace; the stratification is an algebraic invariant orthogonal to κ_ch.
+- **Kummer-irregular prime labelling** — Vol I commit `9668336` retracted primes 1423, 3067, 23, 43, 419 from the Kummer-irregular label (primary-source Bernoulli witness search found no witness). These primes still appear in S_r numerators as Riccati-arithmetic characteristic primes, NOT Kummer-arithmetic. Corrected Tier-3 emergence: {37, 691, 811}; 3067 dropped.
+- **β_N exact closed form for N ≥ 4** — W_N tempering is unconditional via β-independent Stirling dominance; the closed form β_N = (N+1)(N+2)/2 vs N²-N+4 differs at N=4 (15 vs 16). Parameter-question, not structural; Fateev-Lukyanov W_4 explicit structure-constant derivation pending.
+- **Super-complementarity canonical pairing** — the `κ + κ^! = max(m,n)` identity for super-Yangians scopes to sub-Sugawara line; two pairings (super-trace vs Berezinian) coexist without programme-level canonicalisation. Verdier pairing inscription pending.
+
+The Beilinson audit inscribed `notes/rectification_map_beilinson_audit.md` (926 lines) with full verdicts and heal paths; the post-audit priority order places the climax-rewrite and preface-refresh tasks LAST to prevent propagation of unverified closures.
 
 **Recovery infrastructure:** `scripts/resume_failed.py`, `scripts/campaign_dashboard.py`, 9 campaign scripts.
 

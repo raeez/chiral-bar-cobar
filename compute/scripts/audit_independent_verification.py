@@ -49,24 +49,23 @@ from compute.lib.independent_verification import (  # noqa: E402
 
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
 PROVED_HERE_RE = re.compile(r"\\ClaimStatusProvedHere")
+# ProvedElsewhere: claim proved in cited literature; carries decoration-
+# eligible labels (tests verify external proof's predictions).
+PROVED_ELSEWHERE_RE = re.compile(r"\\ClaimStatusProvedElsewhere")
+# Conjectured/Conditional: claim not yet proved; falsifiable predictions
+# can carry @independent_verification decorations.
+CONJECTURED_RE = re.compile(r"\\ClaimStatus(?:Conjectured|Conditional)")
 BEGIN_ENV_RE = re.compile(
     r"\\begin\{(theorem|proposition|lemma|corollary|conjecture|remark|"
-    r"definition)[^}]*\}"
+    r"definition|construction)[^}]*\}"
 )
 
 
-def scrape_proved_here(tex_root: Path) -> dict[str, list[Path]]:
-    """Find every ProvedHere claim and the labels it attaches to.
+def _scrape_status_labels(tex_root: Path,
+                          status_re: re.Pattern[str]) -> dict[str, list[Path]]:
+    """Generic label scraper parametrised by status regex.
 
-    Heuristic: for each `\\ClaimStatusProvedHere`, locate the owning
-    `\\begin{...}` by walking BACKWARD up to 40 lines. Then collect ALL
-    `\\label{...}` occurrences between `\\begin{...}` and up to 6 lines
-    past ProvedHere (captures both the Vol III convention `\\begin{theorem}
-    ...` followed by `\\label{}` on the next line AND the Vol I convention
-    `\\begin{theorem}[\\ClaimStatusProvedHere]` with `\\label{}` on the line
-    after). Theorems with multiple label aliases (e.g. `thm:foo` + `thm:bar`
-    on adjacent lines naming the same result) all register; downstream tests
-    may decorate via either name.
+    Same hybrid heuristic as scrape_proved_here but for any status tag.
 
     The forward-only and backward-only heuristics each miss legitimate
     aliasing and aggressive-forward falsely captures equation/section
@@ -106,9 +105,9 @@ def scrape_proved_here(tex_root: Path) -> dict[str, list[Path]]:
         except OSError:
             continue
         for idx, line in enumerate(lines):
-            if not PROVED_HERE_RE.search(line):
+            if not status_re.search(line):
                 continue
-            # Find the \begin{...} that owns this ProvedHere tag (walk
+            # Find the \begin{...} that owns this status tag (walk
             # backward up to 40 lines).
             begin_idx = -1
             lo = max(0, idx - 40)
@@ -118,9 +117,9 @@ def scrape_proved_here(tex_root: Path) -> dict[str, list[Path]]:
                     break
             # Collect ALL labels within the owning environment's HEADER
             # region. The header extends from the `\begin{...}` through
-            # the ProvedHere marker plus a small look-ahead (labels are
+            # the status marker plus a small look-ahead (labels are
             # typically either immediately before or immediately after
-            # the ProvedHere line; beyond +2 we risk capturing equation
+            # the status line; beyond +2 we risk capturing equation
             # labels deeper in the statement body).
             if begin_idx < 0:
                 scan_lo = max(0, idx - 3)
@@ -145,6 +144,81 @@ def scrape_proved_here(tex_root: Path) -> dict[str, list[Path]]:
                     captured.append(lbl)
             for label in captured:
                 found.setdefault(label, []).append(f)
+    return found
+
+
+def scrape_proved_here(tex_root: Path) -> dict[str, list[Path]]:
+    """Find every ProvedHere claim and the labels it attaches to."""
+    return _scrape_status_labels(tex_root, PROVED_HERE_RE)
+
+
+def scrape_proved_elsewhere(tex_root: Path) -> dict[str, list[Path]]:
+    """Find every ProvedElsewhere claim and the labels it attaches to.
+
+    These are claims proved in cited literature; tests verify the external
+    proof's predictions against disjoint sources.
+    """
+    return _scrape_status_labels(tex_root, PROVED_ELSEWHERE_RE)
+
+
+def scrape_conjectured(tex_root: Path) -> dict[str, list[Path]]:
+    """Find every Conjectured/Conditional claim and the labels it attaches to.
+
+    Decorations on conjecture labels are valid: they verify falsifiable
+    predictions of a conjecture, not its truth.
+    """
+    return _scrape_status_labels(tex_root, CONJECTURED_RE)
+
+
+def scrape_remark_definition_construction(tex_root: Path) -> dict[str, list[Path]]:
+    """Find every \\begin{remark|definition|construction} and its label.
+
+    These environments hold definitional/notational/constructive content
+    that tests can decorate via @independent_verification (the test verifies
+    notational consistency or constructed-object properties via disjoint
+    inputs).
+
+    Heuristic: for each \\begin{remark|definition|construction} match, walk
+    FORWARD up to 8 lines for the nearest \\label{...}.
+    """
+    pattern = re.compile(
+        r"\\begin\{(?:remark|definition|construction)[^}]*\}"
+    )
+    search_dirs = [
+        tex_root / "chapters",
+        tex_root / "appendices",
+    ]
+    aux_files = []
+    wn = tex_root / "working_notes.tex"
+    if wn.exists():
+        aux_files.append(wn)
+    notes_dir = tex_root / "notes"
+    if notes_dir.exists():
+        aux_files.extend(sorted(notes_dir.glob("*.tex")))
+
+    tex_files: list[Path] = []
+    for d in search_dirs:
+        if d.exists():
+            tex_files.extend(sorted(d.rglob("*.tex")))
+    tex_files.extend(aux_files)
+
+    found: dict[str, list[Path]] = {}
+    for f in tex_files:
+        try:
+            lines = f.read_text(encoding="utf-8", errors="replace").splitlines()
+        except OSError:
+            continue
+        for idx, line in enumerate(lines):
+            if not pattern.search(line):
+                continue
+            hi = min(len(lines), idx + 8)
+            for fwd in range(idx, hi):
+                m = LABEL_RE.search(lines[fwd])
+                if m:
+                    label = m.group(1)
+                    if not label.startswith("eq:"):
+                        found.setdefault(label, []).append(f)
+                    break
     return found
 
 
@@ -194,6 +268,18 @@ def main(argv: list[str] | None = None) -> int:
     proved_here = scrape_proved_here(args.tex_root)
     print(f"[audit] found {len(proved_here)} ProvedHere-tagged labels.")
 
+    print(f"[audit] scanning {args.tex_root} for ProvedElsewhere claims...")
+    proved_elsewhere = scrape_proved_elsewhere(args.tex_root)
+    print(f"[audit] found {len(proved_elsewhere)} ProvedElsewhere-tagged labels.")
+
+    print(f"[audit] scanning {args.tex_root} for Conjectured/Conditional claims...")
+    conjectured = scrape_conjectured(args.tex_root)
+    print(f"[audit] found {len(conjectured)} Conjectured/Conditional-tagged labels.")
+
+    print(f"[audit] scanning {args.tex_root} for remark/definition/construction labels...")
+    rdc = scrape_remark_definition_construction(args.tex_root)
+    print(f"[audit] found {len(rdc)} remark/definition/construction labels.")
+
     print(f"[audit] importing test modules from {args.tests_dir}...")
     failures = load_test_modules(args.tests_dir)
 
@@ -219,7 +305,10 @@ def main(argv: list[str] | None = None) -> int:
         for name, exc in other_failures[:5]:
             print(f"         {name}: {type(exc).__name__}: {exc}")
 
-    report = build_coverage_report(proved_here.keys())
+    other_valid = (set(proved_elsewhere.keys())
+                   | set(conjectured.keys())
+                   | set(rdc.keys()))
+    report = build_coverage_report(proved_here.keys(), other_valid)
 
     print()
     print("=" * 72)

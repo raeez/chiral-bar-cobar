@@ -288,6 +288,105 @@ def subleading_asymptotic(r):
     return A_r * phi_r
 
 
+def sub_subleading_asymptotic(r):
+    """Closed form of Gamma_r = lim c^2 * (c^(r-2) S_r - A_r - B_r/c).
+
+    Theorem (thm:shadow-tower-sub-subleading-closed-form):
+
+        Gamma_r / A_r = 484/25 + (22/45)*(r-4)*(r-5)
+                       + (r-4)*(r-5)*(r-6)*(r-7)/972.
+
+    Three-term structure:
+      - 484/25 = (-22/5)^2: geometric-square from the base case
+      - (22/45)(r-4)(r-5): Zamolodchikov-Riccati mixing term
+      - (r-4)(r-5)(r-6)(r-7)/972: pure Riccati sub-subleading
+
+    Proved main-thread 2026-04-17 via the sub-subleading recurrence
+      Gamma_r = -(6(r-1)/r) Gamma_{r-1}
+               - (1/r) Sum_{j,k>=4, j+k=r+2} f(j,k) jk (A_j B_k + B_j A_k),
+    the cubic combinatorial identity Sum f(j,k) P_jk = (r-5)(r-6)(r-7)/3
+    (lem:sub-subleading-cubic-identity), and telescoping
+    Sum_{s=5}^{r} (s-5)(s-6)(s-7) = (r-4)(r-5)(r-6)(r-7)/4.
+
+    Corollary: the Kummer-irregular prime 691 first appears in the
+    Laurent stratification of S_r at r = 8, via
+      Gamma_8 / A_8 = (39204 + 11880 + 50)/2025 = 51134/2025
+                    = 2 * 37 * 691 / 2025.
+
+    Parameters
+    ----------
+    r : int
+        Shadow-tower weight, r >= 4.
+
+    Returns
+    -------
+    sympy.Rational
+        Sub-subleading coefficient Gamma_r.
+    """
+    if r < 4:
+        raise ValueError("sub_subleading_asymptotic requires r >= 4.")
+    A_r = leading_asymptotic(r)
+    gamma_r = (
+        sp.Rational(484, 25)
+        + sp.Rational(22, 45) * (r - 4) * (r - 5)
+        + sp.Rational(1, 972) * (r - 4) * (r - 5) * (r - 6) * (r - 7)
+    )
+    return A_r * gamma_r
+
+
+def sub_sub_subleading_asymptotic(r):
+    """Closed form of Delta_r = lim c^3 * (c^(r-2) S_r - A_r - B_r/c - Gamma_r/c^2).
+
+    Theorem (thm:shadow-tower-tier-4-closed-form, main-thread 2026-04-17):
+
+        Delta_r / A_r = -(22/5)^3
+                       - (242/75) (r-4)(r-5)
+                       - (11/810) (r-4)(r-5)(r-6)(r-7)
+                       - (1/104976) (r-4)(r-5)(r-6)(r-7)(r-8)(r-9).
+
+    Four-term structure (one term per factor pair from (r-4)(r-5)):
+      - (-22/5)^3 = -10648/125: geometric-cube base case (from Phi_4 expansion)
+      - -(242/75)(r-4)(r-5): tau^2 cross correction
+      - -(11/810)(r-4)(r-5)(r-6)(r-7): tau cross correction
+      - -(1/104976)(r-4)(r-5)(r-6)(r-7)(r-8)(r-9): pure Riccati sextic
+
+    Proved via the sub-sub-subleading recurrence
+      Delta_r = -(6(r-1)/r) Delta_{r-1}
+               - (1/r) Sum_{j,k>=4, j+k=r+2} f(j,k) jk (A_j Gamma_k + B_j B_k + Gamma_j A_k),
+    the quintic combinatorial identities
+      Sum f(j,k) Q_jk = (r-5)(r-6)(r-7)(r-8)(r-9)/5   (for Q_jk = single-slot quartic)
+      Sum f(j,k) R_jk = (r-5)(r-6)(r-7)(r-8)(r-9)/60  (for R_jk = cross-slot quadratic product)
+    and variation-of-parameters telescoping with the sextic sum
+      Sum_{s=5}^{r} (s-5)(s-6)(s-7)(s-8)(s-9) = (r-4)(r-5)(r-6)(r-7)(r-8)(r-9)/6.
+
+    This is the first tier where the B_j B_k (subleading-squared) cross-term
+    appears: at Tier 3 (Gamma_r) the B_j B_k term does NOT contribute (it first
+    appears at Tier 4). Tier 4 is therefore the first layer where the full
+    Riccati-source structure is visible.
+
+    Parameters
+    ----------
+    r : int
+        Shadow-tower weight, r >= 4.
+
+    Returns
+    -------
+    sympy.Rational
+        Sub-sub-subleading coefficient Delta_r.
+    """
+    if r < 4:
+        raise ValueError("sub_sub_subleading_asymptotic requires r >= 4.")
+    A_r = leading_asymptotic(r)
+    tau3 = sp.Rational(22, 5) ** 3
+    delta_r = -(
+        tau3
+        + sp.Rational(242, 75) * (r - 4) * (r - 5)
+        + sp.Rational(11, 810) * (r - 4) * (r - 5) * (r - 6) * (r - 7)
+        + sp.Rational(1, 104976) * (r - 4) * (r - 5) * (r - 6) * (r - 7) * (r - 8) * (r - 9)
+    )
+    return A_r * delta_r
+
+
 def subleading_polynomial(r):
     """Return q(r) = 5 r^2 - 45 r + 496 (subleading Riccati polynomial).
 
@@ -310,6 +409,147 @@ def subleading_polynomial(r):
     """
     r = sp.sympify(r)
     return sp.Integer(5) * r**2 - sp.Integer(45) * r + sp.Integer(496)
+
+
+def sub_subleading_asymptotic(r):
+    r"""Closed form of Gamma_r = lim_{c -> oo} c^2 * (c^(r-2) * S_r - A_r - B_r / c).
+
+    Theorem (thm:shadow-tower-sub-subleading-closed-form):
+
+        Gamma_r / A_r = 484/25
+                      + 22 (r-4)(r-5) / 45
+                      + (r-4)(r-5)(r-6)(r-7) / 972.
+
+    Equivalently, writing phi_r := -B_r/A_r = 22/5 + (r-4)(r-5)/18,
+
+        Gamma_r / A_r = phi_r^2 - (r-4)(r-5)(r^2 - 7 r + 9) / 486.
+
+    Proof sketch (variation of parameters, second-order layer).
+    The rescaled recurrence Phi_r := c^(r-2) S_r gives
+
+        Phi_r = -6(r-1)/r * Phi_{r-1}
+              - (1/(r c)) Sum_{j+k=r+2, 4<=j<=k<=r-2} f(j,k) j k Phi_j Phi_k.
+
+    Laurent-expanding Phi_r = A_r + B_r/c + Gamma_r/c^2 + ... and
+    matching the c^(-2) coefficient:
+
+        Gamma_r = -6(r-1)/r * Gamma_{r-1} - sigma_r^(gamma),
+        sigma_r^(gamma) := (1/r) Sum f(j,k) j k (A_j B_k + B_j A_k).
+
+    The source is purely B-linear (there is no B_j B_k contribution at
+    this Laurent order; B^2 appears only at c^(-3)). The leading ratio
+    A_{r-1}/A_r = -r/(6(r-1)) absorbs the transport prefactor, yielding
+
+        Gamma_r / A_r = Gamma_{r-1} / A_{r-1} - sigma_r^(gamma) / A_r.
+
+    Combining the two known identities
+
+        (1/r) Sum f(j,k) j k A_j A_k = (r-5)/9 * A_r (subleading recurrence),
+        Sum_{j=4}^{r-2} (j-4)(j-5) = (r-7)(r-6)(r-5)/3 (hockey stick),
+
+    and substituting B_j/A_j = -[22/5 + (j-4)(j-5)/18] gives
+
+        sigma_r^(gamma) / A_r = -44(r-5)/45 - (r-5)(r-6)(r-7) / 243.
+
+    The closed form for Gamma_r/A_r follows by telescoping from the base
+    case Gamma_4/A_4 = 484/25 = (B_4/A_4)^2 with summations
+
+        Sum_{s=5}^{r} (s-5) = (r-4)(r-5)/2,
+        Sum_{s=5}^{r} (s-5)(s-6)(s-7) = (r-4)(r-5)(r-6)(r-7)/4.
+
+    Parameters
+    ----------
+    r : int
+        Shadow-tower weight, r >= 4.
+
+    Returns
+    -------
+    sympy.Rational
+        Sub-subleading coefficient Gamma_r.
+    """
+    if r < 4:
+        raise ValueError("sub_subleading_asymptotic requires r >= 4.")
+    A_r = leading_asymptotic(r)
+    ratio = (
+        sp.Rational(484, 25)
+        + sp.Rational(22 * (r - 4) * (r - 5), 45)
+        + sp.Rational((r - 4) * (r - 5) * (r - 6) * (r - 7), 972)
+    )
+    return A_r * ratio
+
+
+def sub_subleading_numerator_polynomial(r):
+    r"""Return N(r) := 25 r^4 - 550 r^3 + 16355 r^2 - 122870 r + 729048.
+
+    N(r) is the integer quartic obtained by clearing the common
+    denominator LCM(25, 45, 972) = 24300 in the Gamma_r/A_r closed
+    form:
+
+        Gamma_r / A_r = N(r) / 24300.
+
+    Equivalent factorisation from the variation-of-parameters
+    telescope:
+
+        N(r) = 484 * 972
+             + 22 * 540 * (r-4)(r-5)
+             + 25 * (r-4)(r-5)(r-6)(r-7).
+
+    The polynomial is irreducible over Q (its discriminant has
+    no rational-root reduction). The Kummer-irregular prime 691
+    divides N(8) = 2^3 * 3 * 37 * 691 = 613608; this is a
+    modular coincidence in F_691 (N(r) = 0 mod 691 has roots
+    r in {8, 315, 423, 658}), NOT a Bernoulli structural emergence.
+
+    Parameters
+    ----------
+    r : int or sympy.Integer
+        Shadow-tower weight.
+
+    Returns
+    -------
+    sympy.Integer
+        Value of N(r).
+    """
+    r = sp.sympify(r)
+    return (
+        sp.Integer(25) * r**4
+        - sp.Integer(550) * r**3
+        + sp.Integer(16355) * r**2
+        - sp.Integer(122870) * r
+        + sp.Integer(729048)
+    )
+
+
+def sub_subleading_source_ratio(r):
+    r"""Return sigma_r^(gamma) / A_r, the gamma-level source ratio.
+
+    Closed form (proved as part of
+    thm:shadow-tower-sub-subleading-closed-form):
+
+        sigma_r^(gamma) / A_r = -44 (r-5) / 45
+                              - (r-5)(r-6)(r-7) / 243.
+
+    Empty for r = 5 (linear and cubic terms both vanish); empty-linear
+    and first cubic contribution at r = 6; both terms active for
+    r >= 7. The cubic term is what distinguishes the sub-subleading
+    layer from the subleading (where the source is purely linear in r).
+
+    Parameters
+    ----------
+    r : int
+        Shadow-tower weight, r >= 5.
+
+    Returns
+    -------
+    sympy.Rational
+        Source-to-leading ratio.
+    """
+    if r < 5:
+        raise ValueError("sub_subleading_source_ratio requires r >= 5.")
+    return (
+        -sp.Rational(44 * (r - 5), 45)
+        - sp.Rational((r - 5) * (r - 6) * (r - 7), 243)
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -437,4 +677,19 @@ LEADING_ASYMPTOTIC = {
     6: sp.Integer(48),
     7: sp.Rational(-1728, 7),
     8: sp.Integer(1296),
+}
+
+
+# Sub-subleading coefficients Gamma_r = lim_{c -> infinity} c^2 (c^(r-2) S_r - A_r - B_r/c).
+# Each value verified by two independent chains (Laurent expansion of
+# s_r_virasoro closed form AND variation-of-parameters telescope). See
+# test_sub_subleading_asymptotic.py for the disjoint verification.
+SUB_SUBLEADING_ASYMPTOTIC = {
+    4: sp.Rational(968, 25),
+    5: sp.Rational(-23232, 125),
+    6: sp.Rational(73216, 75),
+    7: sp.Rational(-963072, 175),
+    8: sp.Rational(818144, 25),
+    9: sp.Rational(-15169024, 75),
+    10: sp.Rational(160482816, 125),
 }

@@ -94,17 +94,44 @@ def _riccati_Q(c):
     return 4 * kappa**2 + 12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2
 
 
+def _truncate_poly_in_t(expr, t, deg_max):
+    """Drop every t^k with k > deg_max. Keeps rational-function c
+    coefficients intact."""
+    p = sp.Poly(expr, t)
+    return sum(p.nth(k) * t**k for k in range(0, deg_max + 1))
+
+
 def _riccati_H_expansion(c, r_max):
     """Expand H(t) = t^2 sqrt(Q(t)) to order t^{r_max} in Q(c)[[t]].
     Verification path: binomial series, independent of master-equation
-    recursion."""
+    recursion.
+
+    Implementation: sp.series(sp.sqrt(.)) with rational-function c
+    coefficients is pathologically slow at order >= 9, so we factor
+    sqrt(Q) = (2 kappa) sqrt(1 + u), u = P(t)/(2 kappa)^2 = P(t)/c^2,
+    and apply the binomial expansion sqrt(1 + u) = sum_n binom(1/2, n)
+    u^n. Since u has t-valuation 1, only n <= r_max - 2 contributes.
+    """
     t = sp.Symbol("t")
-    Q = _riccati_Q(c)
-    # sympy series of sqrt(Q) around t=0 to order r_max - 1
-    # (so that t^2 * series reaches order r_max).
-    sqrt_series = sp.series(sp.sqrt(Q), t, 0, r_max - 1).removeO()
-    H = sp.expand(t**2 * sqrt_series)
-    return H
+    kappa = sp.Rational(1, 2) * c  # 2*kappa = c
+    S3 = sp.Integer(2)
+    S4 = _s4_vir_shapovalov(c)
+    two_kappa_sq = (2 * kappa) ** 2  # = c^2
+    u = sp.together(
+        (12 * kappa * S3 * t + (9 * S3**2 + 16 * kappa * S4) * t**2) / two_kappa_sq
+    )
+    n_max = r_max - 2
+    one_half = sp.Rational(1, 2)
+    binomial_series = sp.Integer(0)
+    u_power = sp.Integer(1)
+    for n in range(0, n_max + 1):
+        coeff = sp.binomial(one_half, n)
+        binomial_series += coeff * u_power
+        if n < n_max:
+            u_power = _truncate_poly_in_t(sp.expand(u_power * u), t, n_max)
+    sqrt_Q = (2 * kappa) * binomial_series
+    H = sp.expand(t**2 * sqrt_Q)
+    return _truncate_poly_in_t(H, t, r_max)
 
 
 def _extract_S_r_from_riccati(c, r):
@@ -112,7 +139,7 @@ def _extract_S_r_from_riccati(c, r):
     t = sp.Symbol("t")
     H = _riccati_H_expansion(c, r + 1)
     coeff = sp.Poly(H, t).nth(r)
-    return sp.simplify(coeff / r)
+    return sp.together(coeff / r)
 
 
 # ---------------------------------------------------------------------------
@@ -478,7 +505,7 @@ def test_virasoro_purity_under_central_charge_shift_W3():
 def test_sources_disjoint_self_check():
     """The @independent_verification decorator already asserts disjointness
     at import time; this test documents the invariant for future auditors."""
-    from compute.lib.independent_verification import REGISTRY
+    from compute.lib.independent_verification import registry
 
     claims = [
         "thm:virasoro-motivic-purity",
@@ -488,7 +515,7 @@ def test_sources_disjoint_self_check():
         "cor:vir-purity-propagates-to-dress-reduced",
     ]
     for claim in claims:
-        entries = [e for e in REGISTRY if e.claim == claim]
+        entries = [e for e in registry() if e.claim == claim]
         assert entries, f"No verification entry registered for {claim}"
         for e in entries:
             assert not e.is_tautological(), (

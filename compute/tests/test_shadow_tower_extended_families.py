@@ -308,7 +308,7 @@ class TestBPKoszulConductor:
             assert d4 != sp.oo
 
     @independent_verification(
-        claim="thm:bp-koszul-conductor-k",
+        claim="thm:bp-koszul-conductor-polynomial",
         derived_from=[
             "Virasoro T-line S_4 closed form",
             "Feigin-Frenkel involution c -> 196 - c on BP (K_BP = 196)",
