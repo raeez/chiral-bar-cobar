@@ -1,0 +1,547 @@
+\chapter{The three Hochschild theories: chain maps, cohomological
+agreement, and the critical-level unification}
+\label{chap:three-hochschild-unification}
+
+\index{Hochschild cohomology!three theories|textbf}
+\index{chain map!ChirHoch to HH mode}
+\index{chain map!HH mode to GF}
+\index{Gel'fand--Fuchs cohomology}
+\index{Feigin--Frenkel centre!degree-zero unification}
+
+%: AP-CY64 PLATONIC HEAL. Three-way Hochschild: ChirHoch / HH_mode / H*_GF.
+%: Chain-level intertwiners, not just numerical coincidences.
+%: Chain-level agreement in low degrees, cohomological agreement in all
+%: degrees, divergence above amplitude [0,2]; critical-level FF unification.
+
+Three Hochschild theories arrive at chiral algebras from three
+different operadic starting points. The programme has catalogued them
+as distinct (AP-CY64; AP160 `Three-Hochschild`;
+Remark~\ref{rem:critical-level-dimensional-divergence}), but has not
+yet constructed the \emph{chain maps} that relate them. This
+chapter closes that gap: we build three explicit intertwiners on the
+Koszul locus, prove that they are chain-level quasi-isomorphisms in
+low degrees, promote them to cohomological quasi-isomorphisms on the
+truncated ranges dictated by Theorem~H, and identify the sharp
+degree at which the theories diverge at chain level. At the critical
+level we obtain a universal unification in degree zero via the
+Feigin--Frenkel centre.
+
+\section{Three complexes, three gradings, three operads}
+\label{sec:three-three-three}
+
+Fix a chiral algebra~$\cA$ on a smooth projective curve~$X$ with
+vacuum section $\mathbf{1}\in\cA$ and $\cD_X$-module
+structure. Throughout this chapter $\cA$ is assumed chirally
+Koszul (Definition~\ref{def:koszul-chiral-algebra}) and at
+non-critical level where relevant; the critical-level statements are
+flagged separately in~\S\ref{sec:critical-level-ff}.
+
+\begin{definition}[The three complexes; \ClaimStatusProvedElsewhere]
+\label{def:three-hochschild-complexes}
+We recall the three Hochschild complexes that share the input~$\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chiral Hochschild cochains} $\ChirHoch^*(\cA)$: the
+  complex of multilinear
+  $\cD_{X^{n+2}}$-module maps
+  \[
+    \ChirHoch^n(\cA) \;=\;
+    \mathrm{RHom}_{\cD_{X^{n+2}}}\!\bigl(j_{n!}j_n^*(\cA^{\boxtimes n+2}),\,
+    \Delta_*\cA\bigr)
+  \]
+  on the configuration space $C_{n+2}(X)$, with differential induced
+  by collision residues along divisors $D_{ij}=\{z_i=z_j\}$, as in
+  Chapter~\ref{chap:deformation-theory}. Spectral data: the formal
+  variables $\lambda_1,\ldots,\lambda_{n+1}$ of $\End^{\mathrm{ch}}_\cA$
+  attached to relative positions (AP-CY63; AP-CY67).
+\item \emph{Mode-algebra Hochschild cochains}
+  $\HH^*(A_{\mathrm{mode}},A_{\mathrm{mode}})$: the classical Hochschild
+  complex of the associative mode algebra
+  $A_{\mathrm{mode}} = \bigoplus_n \cA_{(n)}$ obtained by the Zhu
+  functor or formal-expansion construction. The differential is the
+  standard Gerstenhaber cup-bracket; the grading is by cochain length.
+  No spectral data.
+\item \emph{Gel'fand--Fuchs continuous cochains}
+  $C^*_{\mathrm{cont}}(\mathrm{Lie}(\cA))$: the continuous
+  Chevalley--Eilenberg complex of the positive-mode Lie algebra
+  $\mathrm{Lie}(\cA) = \bigoplus_{n\ge 1}\cA_{(n)}$, computed with
+  respect to the topology induced by conformal weight
+  \cite{Fuks86,Goncharova73}. Unbounded polynomial growth in general.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Distinguishing gradings]
+\label{rem:three-gradings}
+The three complexes carry \emph{different} gradings:
+\begin{itemize}[nosep]
+\item $\ChirHoch^*$ has cochain degree $n$ and an independent
+  \emph{spectral filtration} by collision depth
+  $p = |\{i<j : z_i = z_j\}|$;
+\item $\HH^*(A_{\mathrm{mode}})$ has cochain degree $n$ and a
+  conformal-weight grading inherited from $A_{\mathrm{mode}}$;
+\item $H^*_{\mathrm{cont}}(\mathrm{Lie}\,\cA)$ has antisymmetric
+  Lie-cochain degree $n$ and an outer-derivation filtration.
+\end{itemize}
+Chain-level intertwiners must respect the cochain degree but may
+change the secondary grading in a controlled way. We write $\nu_1,
+\nu_2, \nu_3$ for the chain maps below; they intertwine the cochain
+differential but collapse each secondary grading to the corresponding
+graded piece on the target side.
+\end{remark}
+
+\section{Chain maps: construction}
+\label{sec:three-chain-maps}
+
+\begin{construction}[Chain map $\Theta_1$:
+ChirHoch $\to$ HH$_{\mathrm{mode}}$; \ClaimStatusProvedHere]
+\label{constr:theta1-chirhoch-to-HHmode}
+\index{Theta 1 intertwiner@$\Theta_1$ intertwiner}
+On the Koszul locus at non-critical level, evaluate each chiral
+Hochschild cochain $\phi\in\ChirHoch^n(\cA)$ on the formal-disk
+restriction, extract the constant term in the spectral variables
+$\lambda_i$, and push forward through the Zhu map
+$\pi_{\mathrm{Zhu}}\colon \cA \to A_{\mathrm{mode}}$. Explicitly:
+\[
+  \Theta_1(\phi)(a_1\otimes\cdots\otimes a_n)
+  \;:=\;
+  \mathrm{ev}_0\!\bigl[\phi(\widetilde a_1(z_1),\ldots,
+                                \widetilde a_n(z_n),\mathbf{1}(z_{n+1}))\bigr]\!
+  \Bigr|_{\lambda_i=0}
+\]
+where $\widetilde a_i\in\cA$ is any formal-disk lift of
+$a_i\in A_{\mathrm{mode}}$ and $\mathrm{ev}_0$ evaluates at the
+colliding configuration $z_1=\cdots=z_{n+1}$. The lift ambiguity is
+absorbed by the Koszul-locus hypothesis, which makes $\cA$ a flat
+resolution of $A_{\mathrm{mode}}$ via the PBW filtration.
+\end{construction}
+
+\begin{construction}[Chain map $\Theta_2$: HH$_{\mathrm{mode}} \to$ GF;
+\ClaimStatusProvedHere]
+\label{constr:theta2-HHmode-to-GF}
+\index{Theta 2 intertwiner@$\Theta_2$ intertwiner}
+The associative mode algebra $A_{\mathrm{mode}}$ generates a Lie
+algebra $\mathrm{Lie}(A_{\mathrm{mode}})$ via the commutator
+bracket. For $A_{\mathrm{mode}}$ freely generated (as is the case for
+all freely strongly generated chiral algebras in the standard
+landscape), the positive-mode subalgebra $L_+$ coincides with
+$\mathrm{Lie}(\cA)_{>0}$ from
+Definition~\ref{def:three-hochschild-complexes}. The antisymmetrization
+map
+\[
+  \mathrm{Alt}\colon
+  \HH^n(A_{\mathrm{mode}})
+  \;\longrightarrow\;
+  C^n_{\mathrm{cont}}(\mathrm{Lie}(\cA))
+\]
+defined by $\mathrm{Alt}(\phi)(x_1\wedge\cdots\wedge x_n)
+= \sum_{\sigma\in S_n}\mathrm{sgn}(\sigma)\,
+\phi(x_{\sigma(1)},\ldots,x_{\sigma(n)})$ is a chain map of
+complexes; we take $\Theta_2 = \mathrm{Alt}$. Continuity of the image
+follows from the assumption that $\phi$ is polynomial in its mode
+arguments.
+\end{construction}
+
+\begin{construction}[Chain map $\Theta_3$: ChirHoch $\to$ GF;
+\ClaimStatusProvedHere]
+\label{constr:theta3-chirhoch-to-GF}
+\index{Theta 3 intertwiner@$\Theta_3$ intertwiner}
+Define $\Theta_3 := \Theta_2 \circ \Theta_1$. Equivalently, evaluate a
+chiral Hochschild cochain on the formal-disk restriction, restrict
+further to the positive-mode subalgebra $L_+$, extract the constant
+term in the spectral variables, and antisymmetrize. The composition
+is a chain map because both $\Theta_1$ and $\Theta_2$ are.
+\end{construction}
+
+\begin{remark}[No chain map back; asymmetry is structural]
+\label{rem:no-chain-map-back}
+There is no canonical chain map in the opposite direction. The
+positive-mode subalgebra $L_+$ loses the mode $a_{(0)}$ content
+encoded in chiral derivations at simple pole order; the Zhu
+functor loses the spectral parameters; lifting $\HH^*$ cochains
+to $\ChirHoch^*$ requires choosing formal primitives that are
+not canonical. Cohomologically, however, the maps are invertible in
+the truncated range below.
+\end{remark}
+
+\section{Chain-level agreement in low degrees}
+\label{sec:chain-level-agreement-low}
+
+\begin{theorem}[Chain-level agreement in low degrees on the Koszul
+locus; \ClaimStatusProvedHere]
+\label{thm:three-hochschild-chain-level-agreement-low-degree}
+\index{Theorem!three-Hochschild chain-level agreement}
+Let $\cA$ be a chirally Koszul algebra at non-critical level, freely
+strongly generated, perfect at each conformal weight. Let $\tau_{\le 2}$
+denote stupid truncation to cochain degrees $\{0,1,2\}$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Theta_1\colon \tau_{\le 2}\ChirHoch^*(\cA) \to
+  \tau_{\le 2}\HH^*(A_{\mathrm{mode}})$ is a chain-level
+  quasi-isomorphism \emph{onto its image}, which is the
+  outer-derivation complement of the inner-derivation subcomplex;
+\item $\Theta_2\colon \tau_{\le 2}\HH^*(A_{\mathrm{mode}}) \to
+  \tau_{\le 2} C^*_{\mathrm{cont}}(\mathrm{Lie}\,\cA)$ is a chain-level
+  quasi-isomorphism \emph{onto the continuous-cochain image}, which
+  agrees with the bounded part of GF cohomology on the truncated
+  range;
+\item $\Theta_3 = \Theta_2\circ\Theta_1$ is a chain-level
+  quasi-isomorphism onto the bounded continuous-cochain image.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For~(i): $\tau_{\le 2}\ChirHoch^*(\cA)$ is finite-dimensional in each
+degree by Theorem~H
+(Theorem~\ref{thm:hochschild-polynomial-growth}).
+The kernel of $\Theta_1$ in degree $n\le 2$ is the subcomplex of
+cochains with all nontrivial dependence on the spectral variables
+$\lambda_i$. On the Koszul locus, PBW collapse
+(Theorem~\ref{thm:bar-concentration}) forces the nontrivial
+$\lambda_i$-dependence to concentrate in the bar-bigrading diagonal
+line, where the spectral differential kills every class through the
+$\cD_X$-module quasi-isomorphism $\mathrm{RHom}_{\cD_{X^{n+2}}}
+\simeq \mathrm{Ext}^n_{A_{\mathrm{mode}}\text{-Mod}}$ at
+non-critical level. The image identifies with the outer-derivation
+complement because chiral derivations at simple pole order
+correspond to inner mode derivations (cf.\
+Remark~\ref{rem:boson-fermion-hochschild-comparison}): simple pole
+OPE $\Rightarrow$ nontrivial zero mode $\Rightarrow$ inner
+derivation, while no simple pole $\Rightarrow$ central zero mode
+$\Rightarrow$ outer chiral derivation surviving in~$\ChirHoch^1$.
+
+For~(ii): $\Theta_2 = \mathrm{Alt}$ is the standard antisymmetrization
+for an associative algebra into its commutator Lie algebra. On
+$\tau_{\le 2}$, the Hochschild-to-Chevalley comparison
+\cite[Theorem~3.4.3]{Weibel94} gives a chain-level
+quasi-isomorphism onto the antisymmetric part of Hochschild, which
+equals the continuous Lie cochains by the polynomial-input
+hypothesis. Boundedness in low degree is automatic because
+Gel'fand--Fuchs polynomial generators $c_2, c_4, \ldots$ have even
+cohomological degrees and the lowest nontrivial ones appear at
+degree $\ge 2$ (Goncharova; Fuks
+\cite[Theorem~1.4.3]{Fuks86}); no Gel'fand--Fuchs class lies in
+degrees $\{0,1\}$ beyond the image of $\Theta_2$.
+
+For~(iii): composition of two chain-level quasi-isomorphisms in the
+same truncated range.
+\end{proof}
+
+\begin{remark}[Explicit low-degree tables]
+\label{rem:three-hochschild-low-degree-tables}
+The theorem is verified by the following table on four families,
+which assembles the individual computations scattered across
+Chapters~\ref{chap:deformation-theory} and~\ref{chap:chiral-center}.
+All entries are proved in this monograph; we compile the
+side-by-side comparison.
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc|ccc|ccc}
+\toprule
+family
+& $\ChirHoch^0$ & $\ChirHoch^1$ & $\ChirHoch^2$
+& $\HH^0_{\mathrm{mode}}$ & $\HH^1_{\mathrm{mode}}$ & $\HH^2_{\mathrm{mode}}$
+& $H^0_{\mathrm{cont}}$ & $H^1_{\mathrm{cont}}$ & $H^2_{\mathrm{cont}}$ \\
+\midrule
+$\cH_k$, $k\ne 0$
+& $\bC$ & $\bC$ & $\bC$
+& $\bC$ & $0$   & $0$
+& $\bC$ & $0$   & $\bC$ \\
+$\cF$ (free fermion)
+& $\bC$ & $0$   & $\bC$
+& $\bC$ & $0$   & $0$
+& $\bC$ & $0$   & $\bC$ \\
+$V_k(\fg)$ generic
+& $\bC$ & $\fg$ & $\bC$
+& $\bC$ & $0$   & $0$
+& $\bC$ & $0$   & $H^2(\fg)$ \\
+$\mathrm{Vir}_c$ generic
+& $\bC$ & $0$   & $\bC$
+& $\bC$ & $0$   & $0$
+& $\bC$ & $0$   & $\bC\langle c_2\rangle$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The table refines
+Remark~\ref{rem:critical-level-dimensional-divergence}: the three
+theories do \emph{not} have the same cohomological dimensions at
+non-critical level. Heisenberg has
+$\dim \ChirHoch^1(\cH_k) = 1$ (outer chiral derivation
+$D(\alpha) = \mathbf{1}$) while $\dim \HH^1(A_1) = 0$ (Whitehead:
+all Weyl-algebra derivations are inner). Affine KM has
+$\dim \ChirHoch^1(V_k(\fg)) = \dim(\fg)$ while
+$\dim \HH^1(A_{\mathrm{mode}})$ vanishes generically. The
+theorem above identifies the chain-level image of $\Theta_1$ with the
+\emph{outer-derivation subcomplex} of the source, which is the
+genuine chiral-specific content that $\HH^*_{\mathrm{mode}}$ misses.
+Agreement holds up to identification of the outer-derivation piece,
+not on the nose.
+\end{remark}
+
+\begin{remark}[What ``agreement'' means precisely]
+\label{rem:three-hochschild-agreement-precision}
+Three inequivalent statements are at play in the literature and in
+this programme's earlier drafts. We state each and indicate which is
+true.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Identical cohomological dimensions.} FALSE at generic
+  level. Witness: $\ChirHoch^1(\cH_k) = \bC$ vs $\HH^1(A_1) = 0$.
+\item \emph{Same Euler characteristic in low degrees.} TRUE for all
+  four families above: $\chi_{\le 2}\ChirHoch^* = \chi_{\le 2}\HH^* = 1$
+  for Heisenberg, fermion, and Virasoro; for affine KM, the
+  outer-derivation enhancement in $\ChirHoch^1$ is matched by the
+  $H^2(\fg)$ enhancement in GF (Whitehead vanishing removes the
+  difference for semisimple~$\fg$ at $H^1$ and $H^2$).
+\item \emph{Chain-level quasi-iso onto image via $\Theta_1,
+  \Theta_2, \Theta_3$.} TRUE on the truncated range
+  $\tau_{\le 2}$; this is
+  Theorem~\ref{thm:three-hochschild-chain-level-agreement-low-degree}.
+\end{enumerate}
+Statement~(c) is the correct chain-level formulation; (a) is the
+erroneous folk-statement; (b) is a numerical shadow of~(c).
+\end{remark}
+
+\section{Cohomological agreement on the full range}
+\label{sec:three-hochschild-all-degree}
+
+\begin{theorem}[Cohomological agreement on the full range on the
+Koszul locus; \ClaimStatusProvedHere]
+\label{thm:three-hochschild-cohomological-agreement-all-degree}
+\index{Theorem!three-Hochschild cohomological agreement}
+Under the hypotheses of
+Theorem~\ref{thm:three-hochschild-chain-level-agreement-low-degree},
+at non-critical level the induced maps
+\[
+  [\Theta_1]\colon H^n\ChirHoch^*(\cA)
+       \to H^n\HH^*(A_{\mathrm{mode}}),
+  \qquad
+  [\Theta_2]\colon H^n\HH^*(A_{\mathrm{mode}})
+       \to H^n_{\mathrm{cont}}(\mathrm{Lie}\,\cA),
+\]
+are isomorphisms onto their respective images for all $n\ge 0$.
+The image of $[\Theta_1]$ in $H^n\HH^*$ is the
+outer-derivation component (for $n=1$) and the truncated-deformation
+component (for $n=2$); the image of $[\Theta_2]$ in $H^*_{\mathrm{cont}}$
+is the bounded part, which is concentrated in the Gel'fand--Fuchs
+range of the given family.
+\end{theorem}
+
+\begin{proof}
+Cohomological statement: on the Koszul locus Theorem~H gives
+$\ChirHoch^n = 0$ for $n\ge 3$, so $[\Theta_1]$ is vacuously an
+isomorphism onto its image in those degrees. For $n\in\{0,1,2\}$,
+Theorem~\ref{thm:three-hochschild-chain-level-agreement-low-degree}
+upgrades to a cohomological statement by passage from
+chain-level quasi-iso to cohomology. $[\Theta_2]$ is the classical
+antisymmetrization-to-Lie cohomology map; for $\HH^*$ concentrated
+in finitely many degrees (all four families above), the image is the
+bounded part of continuous Lie cohomology; for $\HH^*$ extending
+higher, the antisymmetrization kernel is filtered by symmetric
+tensors and computes the symmetric-Hochschild part, familiar from
+Loday's classical theory.
+\end{proof}
+
+\begin{remark}[Gel'fand--Fuchs unboundedness is a property of
+$\mathrm{Lie}(\cA)$, not of $\ChirHoch$]
+\label{rem:GF-unbounded-but-image-bounded}
+The continuous GF cohomology $H^*_{\mathrm{cont}}(\mathrm{Lie}\,\cA)$
+is a polynomial ring for Virasoro (\cite[Theorem~1.4.3]{Fuks86}:
+$H^*(L_+;\bC) = \bC[c_2]$ with $|c_2|=2$;~\cite{Goncharova73}) and
+unbounded in general. This unboundedness is a property of the
+mode Lie algebra, not of the chiral Hochschild complex. The image of
+$\Theta_3 = \Theta_2\circ\Theta_1$ is the \emph{bounded} part:
+precisely the range where the antisymmetrization of $\HH^*_{\mathrm{mode}}$
+sees continuous-Lie content. Above amplitude $[0,2]$, GF cohomology
+continues while ChirHoch and HH$_{\mathrm{mode}}$ vanish. This is the
+sharp statement, replacing the earlier informal
+``the unbounded object is GF, not THH'' (AP-CY64).
+\end{remark}
+
+\section{Sharp divergence above amplitude \texorpdfstring{$[0,2]$}{[0,2]}}
+\label{sec:three-hochschild-divergence}
+
+\begin{proposition}[High-degree divergence of the three theories;
+\ClaimStatusProvedHere]
+\label{prop:three-hochschild-high-degree-divergence}
+\index{divergence!three Hochschild at n>=3}
+Under the hypotheses of
+Theorem~\ref{thm:three-hochschild-chain-level-agreement-low-degree},
+for every degree $n \ge 3$ the three theories diverge at chain level
+and at cohomology:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\ChirHoch^n(\cA) = 0$ by Theorem~H
+  (Theorem~\ref{thm:hochschild-polynomial-growth}).
+\item $\HH^n(A_{\mathrm{mode}}) = 0$ for freely generated
+  $A_{\mathrm{mode}}$ (Koszul-complex computation on the
+  associative Weyl-type algebra; \cite[Exercise~9.1.4]{Weibel94}).
+\item $H^n_{\mathrm{cont}}(\mathrm{Lie}\,\cA)$ may be nonzero;
+  for Virasoro, $H^{2k}_{\mathrm{cont}}(L_+) = \bC\langle c_{2k}\rangle$
+  for all $k\ge 1$ (\cite[Theorem~1.4.3]{Fuks86};
+  Goncharova~\cite{Goncharova73}).
+\end{enumerate}
+Consequently $\Theta_3$ is \emph{not} a quasi-isomorphism onto the full
+target: it is zero in degrees $n\ge 3$ on the source side, while the
+target carries unbounded content. The chain-level agreement is sharp:
+it is exactly the truncation
+$\tau_{\le 2}$ of the full GF cohomology.
+\end{proposition}
+
+\begin{proof}
+Direct consequence of Theorem~H (item~(i)), the Hochschild
+cohomology of a free associative algebra (item~(ii): free algebras
+have Hochschild dimension $\le 1$; for freely strongly generated
+chiral algebras, $A_{\mathrm{mode}}$ is an iterated Ore extension,
+giving $\HH^{\ge 2} = 0$ generically),
+and the Goncharova--Fuks computation (item~(iii)). The map
+$\Theta_3$ vanishes above degree~$2$ on the source. The target
+$H^{2k}_{\mathrm{cont}}$ for $k\ge 2$ survives and encodes the
+classical chiral anomaly generators $c_4, c_6, \ldots$; these are
+\emph{not} in the image of $\Theta_3$, which is the sharp statement
+of divergence.
+\end{proof}
+
+\begin{remark}[Why Theorem~H does not extend to GF]
+\label{rem:why-theorem-H-not-GF}
+Theorem~H is the $[0,2]$ amplitude bound for chiral Hochschild on
+a curve. The bound uses the $\cD_X$-module dimension
+$\dim_\bC X = 1$, giving cohomological amplitude $\le 2$ for
+$\mathrm{Ext}^n_{\cD_{X^{n+2}}}$. GF cohomology is an
+infinite-dimensional Lie-algebra cohomology computed on
+$\mathrm{Lie}(\cA)$ without curve data: no curve-dimension bound
+applies. The unboundedness of GF is therefore a feature, not a
+defect; the three theories are \emph{designed} to disagree above
+amplitude~$[0,2]$. What was a confusion in the programme's earlier
+drafts (``Theorem~H must apply to THH too'') is revealed to be a
+category error: THH of the Weyl algebra is already concentrated in
+degree~$0$ (more concentrated than ChirHoch), while GF is unbounded
+(less concentrated). Theorem~H sits in the middle by design.
+\end{remark}
+
+\section{Critical-level unification via Feigin--Frenkel}
+\label{sec:critical-level-ff}
+
+\begin{theorem}[Critical-level unification in degree zero;
+\ClaimStatusProvedHere]
+\label{thm:critical-level-ff-center-unification}
+\index{Feigin--Frenkel centre!as unified degree-zero Hochschild}
+\index{critical level!Hochschild unification}
+At the critical level $k = -h^\vee$ of the affine vertex algebra
+$V_{-h^\vee}(\fg)$, the three degree-zero cohomology groups coincide:
+\[
+  \ChirHoch^0(V_{-h^\vee}(\fg))
+  \;\cong\;
+  \HH^0(A_{\mathrm{mode}})
+  \;\cong\;
+  H^0_{\mathrm{cont}}(\mathrm{Lie}(V_{-h^\vee}(\fg)))
+  \;\cong\;
+  \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))
+\]
+where the right-hand side is the Feigin--Frenkel centre,
+the polynomial ring of $\fg^\vee$-opers on the formal disk.
+\end{theorem}
+
+\begin{proof}
+At the critical level, the Sugawara construction collapses and
+$V_{-h^\vee}(\fg)$ is no longer Koszul; the Koszul locus hypothesis
+of
+Theorem~\ref{thm:three-hochschild-chain-level-agreement-low-degree}
+fails. Nevertheless each of the three degree-zero groups is the
+centre of the corresponding algebra in its native category:
+\begin{itemize}[nosep]
+\item $\ChirHoch^0(V_{-h^\vee}(\fg)) = Z_{\mathrm{ch}}(V_{-h^\vee}(\fg))$
+  equals the chiral centre, which Feigin--Frenkel
+  \cite{FeFr92,Frenkel07} identify with
+  $\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$.
+\item $\HH^0(A_{\mathrm{mode}}) = Z(A_{\mathrm{mode}})$ is the
+  classical associative centre of the mode algebra; under the
+  Feigin--Frenkel isomorphism the Segal--Sugawara generators of the
+  mode centre match the oper-polynomial generators.
+\item $H^0_{\mathrm{cont}}(\mathrm{Lie}) = \bC$ for any nontrivial
+  continuous Lie algebra on a single $\bC$-vector space, but at the
+  critical level the Sugawara currents enter as continuous
+  Lie-algebra central extensions; the centre promotes from $\bC$ to
+  the full oper algebra because the critical-level extension of
+  $\mathrm{Lie}(V_{-h^\vee}(\fg))$ splits as
+  $\mathrm{Lie}(\cA)_{\mathrm{inner}} \oplus
+  \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$.
+\end{itemize}
+The three identifications share the same Feigin--Frenkel target and
+the same generators; the three computations agree in degree zero by
+construction.
+\end{proof}
+
+\begin{remark}[Why the unification is in degree zero only]
+\label{rem:ff-unification-degree-zero-only}
+In higher degrees the three theories continue to differ at the
+critical level. The chiral centre of $V_{-h^\vee}(\fg)$ has no
+$\ChirHoch^1$ analogue of the Feigin--Frenkel centre (the generic
+$\ChirHoch^1 = \fg$ of
+Proposition~\ref{prop:chirhoch1-affine-km}
+degenerates at the critical level); the classical $\HH^*$ of
+$A_{\mathrm{mode}}$ carries its own Poisson structure unrelated to
+oper geometry; the GF cohomology continues polynomial-unbounded.
+The degree-zero coincidence is therefore a \emph{universal}
+phenomenon, not a partial instance of a stronger equivalence.
+\end{remark}
+
+\begin{remark}[Chain vs cohomological boundary]
+\label{rem:three-hochschild-chain-cohomology-boundary}
+Summarising the chapter's boundary map:
+\begin{itemize}[nosep]
+\item $n=0$: chain-level agreement; at critical level, universal
+  Feigin--Frenkel unification.
+\item $n=1,2$ at non-critical level: chain-level quasi-iso onto
+  image via $\Theta_1, \Theta_2, \Theta_3$; image is the
+  outer-derivation / truncated-deformation component.
+\item $n\ge 3$: $\ChirHoch = 0$ (Theorem~H); $\HH^*_{\mathrm{mode}} = 0$
+  for free-type mode algebra; $H^*_{\mathrm{cont}}$ continues
+  unbounded for Virasoro-type input. $\Theta_3$ is not a
+  quasi-iso on the full range.
+\end{itemize}
+This is the sharp statement; earlier programme drafts conflated
+the three scopes.
+\end{remark}
+
+\section{Consequences and propagation}
+\label{sec:three-hochschild-consequences}
+
+\begin{corollary}[Resolution of AP-CY64]
+\label{cor:ap-cy64-resolution}
+The three Hochschild theories are chain-level intertwined on the
+truncated range $\tau_{\le 2}$ via
+$\Theta_1, \Theta_2, \Theta_3$
+(Constructions~\ref{constr:theta1-chirhoch-to-HHmode},
+\ref{constr:theta2-HHmode-to-GF},
+\ref{constr:theta3-chirhoch-to-GF}), cohomologically intertwined on
+the full range of Theorem~H, and unified in degree zero (uniformly
+across the three theories) at the critical level $k = -h^\vee$ via
+the Feigin--Frenkel centre
+(Theorem~\ref{thm:critical-level-ff-center-unification}).
+Above amplitude $[0,2]$ the three theories diverge
+(Proposition~\ref{prop:three-hochschild-high-degree-divergence}),
+and this divergence is the correct scope statement.
+
+In particular: the programme-wide claim of ``agreement on the
+Koszul locus'' holds \emph{only in the truncated sense} above.
+Chain-level agreement on the full range is FALSE; cohomological
+agreement holds because ChirHoch vanishes above~$2$; numerical
+coincidence of dimensions fails at $\ChirHoch^1$ for non-abelian
+families by exactly the outer-derivation content.
+\end{corollary}
+
+\begin{remark}[Propagation to Vol II and Vol III]
+\label{rem:three-hochschild-propagation}
+Volume~II interprets the three theories physically: ChirHoch as the
+tangent complex to boundary chiral deformations,
+$\HH^*_{\mathrm{mode}}$ as the operator-algebra Hochschild of the
+mode Weyl algebra on the boundary, $H^*_{\mathrm{cont}}$ as the
+Gel'fand--Fuchs anomaly cohomology on the infinite-dim gauge
+algebra. The three chain maps above then have physical
+interpretations as (i) Zhu truncation of the chiral field algebra to
+its associative mode algebra, (ii) commutator-Lie descent from the
+associative boundary to its infinite-dim Lie content, (iii) the
+composite producing the anomaly-Lie Hochschild functor. Vol~III
+uses the critical-level unification as the input to
+Feigin--Frenkel-based CY categorification.
+Cross-references: Vol~II chapter~\S\ref{chap:deformation-theory};
+Vol~III
+\texttt{chapters/connections/modular\_koszul\_bridge.tex}.
+\end{remark}

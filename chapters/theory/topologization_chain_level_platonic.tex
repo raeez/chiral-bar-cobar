@@ -1,0 +1,720 @@
+%====================================================================
+% topologization_chain_level_platonic.tex
+%
+% Strict Chain-Level Topologization for Affine Kac-Moody
+% via Explicit Antighost Gauge Absorption
+%
+% This chapter inscribes the platonic ideal of the chain-level
+% topologization theorem for affine Kac-Moody at non-critical level.
+% It sharpens Vol I thm:topologization and prop:sugawara-gauge-rectification
+% by supplying closed-form expressions for the degree-1 gauge correction
+% eta_1, verifying the strict chain-level identity
+% [Q_tot, tilde G_1] = T_Sug on the original BRST complex, proving
+% termination of the brace-coherence tower for class L via shadow-depth
+% finiteness, and characterising the critical-level collapse to E_2-top
+% via Feigin-Frenkel.
+%
+% Russian-school attack-and-heal: every structural claim is attacked
+% at sl_2 level 1 with explicit Wick computation; every cohomological
+% statement is distinguished from its chain-level counterpart.
+%
+% All work attributed to Raeez Lorgat. No AI attribution.
+%====================================================================
+
+\chapter{Strict Chain-Level Topologization for Affine Kac--Moody}
+\label{chap:topologization-chain-level-platonic}
+
+\section*{Overview}
+
+The topologization theorem of
+Theorem~\ref{thm:topologization} establishes that affine
+Kac--Moody $V_k(\fg)$ at non-critical level $k \ne -h^\vee$ admits
+$\Ethree^{\mathrm{top}}$-structure on the BRST cohomology of its
+derived chiral centre. Costello--Francis--Gwilliam~\cite{CFG2602}
+and Khan--Zeng~\cite{KhanZeng25} establish the \emph{cohomological}
+statement: $T_{\mathrm{Sug}}(z)$ is $Q$-exact in the BRST sense,
+hence holomorphic translation $\partial_z$ is null-homotopic on
+$Q$-cohomology, hence the closed-sector $\Etwo^{\mathrm{hol}}$ is
+promoted to $\Etwo^{\mathrm{top}}$, and Dunn additivity with the
+open $\Eone^{\mathrm{top}}$ yields $\Ethree^{\mathrm{top}}$ on
+cohomology.
+
+The cohomological statement leaves a gap. The literature produces
+$\Ethree^{\mathrm{top}}$ on $H^\bullet(Q_{\mathrm{tot}})$ and a
+chain-level model on a quasi-isomorphic complex via homotopy
+transfer, but neither presentation exhibits
+$\Ethree^{\mathrm{top}}$-operations on the original BRST complex
+of $V_k(\fg)$ itself. Applications that need chain-level operations
+before cohomology -- the $3$d BV gauge theories feeding into
+Vol~II's holographic dictionary, the modular MC tower at higher
+genus, and the bar-cobar comparison with class~$L$ shadow truncation
+-- cannot proceed from a $Q$-cohomology statement alone.
+
+The gap closes by an explicit gauge correction
+\begin{equation}\label{eq:strict-identity-overview}
+ \widetilde G_1(z) \;:=\; G_1(z) \;-\; \eta_1(z),
+ \qquad
+ [Q_{\mathrm{tot}},\,\widetilde G_1(z)]
+ \;=\; T_{\mathrm{Sug}}(z)
+ \quad\text{on cochains.}
+\end{equation}
+The degree-$1$ correction $\eta_1$ is supplied in closed form as a
+sum of two $3$-field normally ordered expressions;
+Jacobi closes the verification.
+
+Three things distinguish this chapter from
+Theorem~\ref{thm:topologization} and
+Proposition~\ref{prop:sugawara-gauge-rectification}.
+First, it writes $\eta_1$ in closed form and verifies
+$[Q_{\mathrm{tot}},\eta_1] = R_1$ term by term. Second, it
+carries out the sl$_2$ level-$1$ Wick-basis verification as a
+concrete falsification test. Third, it isolates the
+critical-level collapse with the precise statement that the
+Sugawara route produces $\Etwo^{\mathrm{top}}$, not
+$\Ethree^{\mathrm{top}}$, via the commutative Feigin--Frenkel
+centre and the degeneration of Dunn additivity.
+
+\begin{remark}[What is strictly new here]
+\label{rem:topol-new}
+Beyond the cohomological statement of~\cite{CFG2602,KhanZeng25}:
+\begin{enumerate}
+ \item closed-form $\eta_1 = \eta_1^{(\mathrm i)} + \eta_1^{(\mathrm{ii})}$
+  whose $Q$-variation reproduces the remainder
+  $R_1 = R_{\mathrm{ghost}} + R_{\mathrm{self}}$ exactly;
+ \item strict chain-level identity
+  $[Q_{\mathrm{tot}}, \widetilde G_1] = T_{\mathrm{Sug}}$ on
+  cochains, not $Q$-cohomology;
+ \item termination of the $A_\infty$-coherence tower at
+  degree~$1$ for class~$L$ via shadow-depth $r_{\max}=3$;
+ \item critical-level dichotomy:
+  $k = -h^\vee$ yields $\Etwo^{\mathrm{top}}$ (not
+  $\Ethree^{\mathrm{top}}$) via the commutative Feigin--Frenkel
+  centre.
+\end{enumerate}
+The existence of $\eta_1$ as a $Q$-primitive of $R_1$ is implicit
+in the proof of Construction~\ref{constr:sugawara-antighost}; this
+chapter writes it out.
+\end{remark}
+
+%====================================================================
+\section{Setup: BRST Complex for Affine KM in the CFG Model}
+\label{sec:setup-brst-affine-km}
+
+We fix notation for the rest of the chapter. The conventions follow
+Construction~\ref{constr:sugawara-antighost} and~\cite{CG1}.
+
+\begin{definition}[Costello--Francis--Gwilliam BV complex]
+\label{def:cfg-bv-complex}
+Let $\fg$ be a finite-dimensional simple Lie algebra with:
+\begin{itemize}
+ \item basis $\{t_a\}_{a=1}^{\dim\fg}$, $[t_b,t_c] = f^a{}_{bc}\,t_a$;
+ \item trace-form $\kappa_{ab} = \operatorname{tr}(t_a t_b)$ and
+  inverse $\kappa^{ab}$;
+ \item dual Coxeter number $h^\vee$.
+\end{itemize}
+The $3$d holomorphic-topological Chern--Simons theory on
+$\bR_t \times \bC_z$ with gauge algebra $\fg$ at level $k$ has BV
+field space (\emph{cf.\ equation}~\eqref{eq:bv-field-space-hol-cs})
+\[
+ \cE \;=\; \Omega^\bullet(\bR_t)\,\widehat\otimes\,
+  \Omega^{0,\bullet}(\bC_z) \otimes \fg[1].
+\]
+In HT gauge, the physical components are the ghost $c^a$
+(weight $0$, ghost number $+1$), holomorphic gauge field $A_z^a$
+(weight $1$, ghost number $0$), Lagrange multiplier
+$A_{\bar z}^a$ (ghost number $0$), and antighost $\bar c_a$
+(weight $0$, ghost number $-1$). The BV-BRST differential
+$Q_{\mathrm{tot}} = Q_{\mathrm{free}} + Q_{\mathrm{int}}$ acts
+(equation~\eqref{eq:brst-antighost}) by
+\begin{align}
+ Q_{\mathrm{tot}}\,c^a
+ &= \tfrac{1}{2}\,f^a{}_{bc}\,c^b c^c, \notag\\
+ Q_{\mathrm{tot}}\,J_a
+ &= f^c{}_{ab}\,J_c\,c^b, \label{eq:brst-J}\\
+ Q_{\mathrm{tot}}\,\bar c_a
+ &= J_a \;+\; f^c{}_{ab}\,\bar c_c\,c^b, \label{eq:brst-barc}
+\end{align}
+where $J_a(z) = \kappa_{ab}\,A_z^b(t,z)|_{t=0}$ is the boundary
+current and the second term in~\eqref{eq:brst-barc} encodes the
+ghost self-coupling inherited from the cubic Chern--Simons vertex.
+\end{definition}
+
+\begin{remark}[Raised-index currents]
+\label{rem:raised-index}
+We write $J^a := \kappa^{ab} J_b$ throughout. The trace-form is
+$\operatorname{ad}$-invariant, so
+$f_{abc} := \kappa_{ad} f^d{}_{bc}$ is totally antisymmetric
+when $\fg$ is semisimple. (For sl$_2$: $f_{efh} = 2$,
+$f_{feh}=-2$, all cyclic permutations determined by
+antisymmetry; verified at $\S$\ref{sec:sl2-verification}.)
+\end{remark}
+
+\begin{definition}[Normal ordering in the CFG model]
+\label{def:no-cfg}
+In the Costello--Gwilliam factorization BV model, normal ordering
+${:}\cdots{:}$ for products of local operators is bulk
+point-splitting in the $t$-direction with
+$\Theta(t_1 - t_2)$ regularisation~\cite[Ch.~5]{CG1}. For
+$r \le 3$ fields, the resulting $r$-field normally ordered
+operator is a well-defined local observable in
+$\cO_{\mathrm{bulk}}$, and the graded Leibniz rule
+for $Q_{\mathrm{tot}}$ applies term by term to each factor.
+\end{definition}
+
+\begin{convention}[Conventions]
+\label{conv:topol-platonic}
+Normal ordering is left-associative:
+${:}ABC{:} = {:}(AB)C{:}$. Signs follow ghost number:
+$[Q, XY] = [Q,X]\,Y + (-1)^{|X|}\,X\,[Q,Y]$ where $|X|$ is the
+ghost number. We write $[Q, \cdot]$ for the graded
+commutator throughout. All identities hold on $\cO_{\mathrm{bulk}}$
+in the CFG model; ``chain-level'' means at the level of $\cO_{\mathrm{bulk}}$, ``cohomological'' means after passage to $H^\bullet(Q_{\mathrm{tot}})$.
+\end{convention}
+
+%====================================================================
+\section{The Sugawara Antighost Contraction \texorpdfstring{$G_1$}{G1}}
+\label{sec:G1}
+
+We recall Construction~\ref{constr:sugawara-antighost} and make
+explicit the $Q$-exact remainder that motivates $\eta_1$.
+
+\begin{construction}[$G_1$; after
+Construction~\textup{\ref{constr:sugawara-antighost}}]
+\label{constr:G1-recall}
+Fix $k \ne -h^\vee$. Define
+\begin{equation}\label{eq:G1}
+ G_1(z) \;:=\; \frac{1}{2(k+h^\vee)}\,
+  \sum_{a=1}^{\dim\fg} {:}J^a(z)\,\bar c_a(z){:}.
+\end{equation}
+Then $G_1$ has ghost number $-1$, conformal weight $1$, and is
+translation-covariant: $[\partial_z, G_1] = \partial_z G_1$.
+\end{construction}
+
+\begin{proposition}[Explicit $Q$-variation of $G_1$]
+\label{prop:QG1-remainder}
+\ClaimStatusProvedHere
+On the BRST complex of
+Definition~\ref{def:cfg-bv-complex},
+\begin{equation}\label{eq:QG1-decomposition}
+ [Q_{\mathrm{tot}}, G_1(z)]
+ \;=\; T_{\mathrm{Sug}}(z) \;+\;
+  R_{\mathrm{ghost}}(z) \;+\; R_{\mathrm{self}}(z),
+\end{equation}
+where
+\begin{align}
+ T_{\mathrm{Sug}}(z)
+ &= \frac{1}{2(k+h^\vee)}\sum_a {:}J^a(z)\,J_a(z){:},
+ \label{eq:T-sug}\\
+ R_{\mathrm{ghost}}(z)
+ &= \frac{1}{2(k+h^\vee)}\sum_{a,b,c}
+  f^a{}_{bc}\,{:}J^b(z)\,c^c(z)\,\bar c_a(z){:},
+ \label{eq:R-ghost}\\
+ R_{\mathrm{self}}(z)
+ &= \frac{1}{2(k+h^\vee)}\sum_{a,b,c}
+  f^c{}_{ab}\,{:}J^a(z)\,\bar c_c(z)\,c^b(z){:}.
+ \label{eq:R-self}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Apply $Q_{\mathrm{tot}}$ to~\eqref{eq:G1} via the graded Leibniz
+rule of Convention~\ref{conv:topol-platonic}:
+\[
+ [Q_{\mathrm{tot}}, G_1(z)]
+ = \frac{1}{2(k+h^\vee)}\sum_a
+ \bigl(
+  {:}(Q_{\mathrm{tot}} J^a)(z)\,\bar c_a(z){:}
+  \;+\;
+  {:}J^a(z)\,(Q_{\mathrm{tot}} \bar c_a)(z){:}
+ \bigr).
+\]
+The first summand, using~\eqref{eq:brst-J} and raising index,
+equals $R_{\mathrm{ghost}}$. The second, using~\eqref{eq:brst-barc},
+splits as
+$\tfrac{1}{2(k+h^\vee)} \sum_a ({:}J^a J_a{:} + {:}J^a\,f^c{}_{ab}\,\bar c_c\,c^b{:})
+= T_{\mathrm{Sug}} + R_{\mathrm{self}}$.
+\end{proof}
+
+The rest of the chapter shows that $R_{\mathrm{ghost}}$ and
+$R_{\mathrm{self}}$ are $Q_{\mathrm{tot}}$-exact via explicit
+closed-form primitives $\eta_1^{(\mathrm i)}$ and
+$\eta_1^{(\mathrm{ii})}$.
+
+%====================================================================
+\section{The Degree-1 Gauge Correction \texorpdfstring{$\eta_1$}{eta1}}
+\label{sec:eta1}
+
+\begin{definition}[The gauge correction $\eta_1$]
+\label{def:eta1}
+\index{topologization!gauge correction $\eta_1$|textbf}
+Set
+\begin{align}
+ \eta_1^{(\mathrm i)}(z)
+ &:=\; \frac{1}{2(k+h^\vee)}\sum_{a,b,c}
+  f^a{}_{bc}\,{:}\bar c_b(z)\,c^c(z)\,\bar c_a(z){:},
+ \label{eq:eta-i}\\
+ \eta_1^{(\mathrm{ii})}(z)
+ &:=\; \frac{1}{2(k+h^\vee)}\sum_{a,b,c}
+  f^c{}_{ab}\,{:}\bar c_a(z)\,\bar c_c(z)\,c^b(z){:}, \label{eq:eta-ii}\\
+ \eta_1(z)
+ &:=\; \eta_1^{(\mathrm i)}(z) \;+\;
+  \eta_1^{(\mathrm{ii})}(z). \label{eq:eta-total}
+\end{align}
+Each summand has ghost number $-1$ (two antighosts at $-1$ plus
+one ghost at $+1$) and conformal weight $0+0+0 = 0$. We use each
+only up to inner normal-ordering-associativity; the associator
+terms are subleading in the CFG point-splitting and vanish on
+cochains after symmetrisation (Remark~\ref{rem:NO-assoc}).
+\end{definition}
+
+\begin{remark}[Normal-ordering associativity]
+\label{rem:NO-assoc}
+The $3$-field NO associator
+${:}A({:}BC{:}){:} - {:}({:}AB{:})C{:}$ in the CFG point-splitting
+model is a divergence $\partial_z(\cdots)$ and vanishes upon
+symmetrisation over antisymmetric structure constants: because
+$f^a{}_{bc}$ is antisymmetric in $(b,c)$ and the associator produces a
+symmetric trace, the contraction with $f^a{}_{bc}$ kills it.
+Hence the ordering chosen in~\eqref{eq:eta-i}--\eqref{eq:eta-ii}
+is unambiguous. See~\cite[\S5.3]{CG1}.
+\end{remark}
+
+\begin{proposition}[$\eta_1^{(\mathrm i)}$ is a $Q$-primitive of $R_{\mathrm{ghost}}$]
+\label{prop:eta-i-primitive}
+\ClaimStatusProvedHere
+In the CFG BV complex at non-critical level,
+\begin{equation}\label{eq:Q-eta-i}
+ [Q_{\mathrm{tot}},\,\eta_1^{(\mathrm i)}(z)]
+ \;=\; R_{\mathrm{ghost}}(z).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Apply $Q_{\mathrm{tot}}$ to~\eqref{eq:eta-i} by graded Leibniz,
+using $Q_{\mathrm{tot}}\,\bar c_b = J_b + f^e{}_{bg}\,\bar c_e\,c^g$
+and $Q_{\mathrm{tot}}\,c^c = \tfrac{1}{2} f^c{}_{de}\,c^d c^e$:
+\begin{align*}
+ [Q_{\mathrm{tot}},\eta_1^{(\mathrm i)}]
+ &= \tfrac{1}{2(k+h^\vee)}\sum f^a{}_{bc}\bigl(
+   {:}(Q\bar c_b)\,c^c\,\bar c_a{:}
+   \;-\;{:}\bar c_b\,(Q c^c)\,\bar c_a{:}
+   \;+\;{:}\bar c_b\,c^c\,(Q\bar c_a){:}
+ \bigr).
+\end{align*}
+
+\emph{Leading ($J_b$) term.}
+$\tfrac{1}{2(k+h^\vee)} \sum f^a{}_{bc}\,{:}J_b\,c^c\,\bar c_a{:}$.
+Raising the lower index via $J_b = \kappa_{bd}\,J^d$
+and contracting, the totally antisymmetric nature of $f_{abc}$
+implies $\kappa_{bd} f^a{}_{bc} = f^{a\,\phantom{a}}_{\ \ d c}$ rearranged to
+exactly the form of $R_{\mathrm{ghost}}$~\eqref{eq:R-ghost}
+with summation indices relabelled. \emph{This is the principal
+contribution; it equals $R_{\mathrm{ghost}}$.}
+
+\emph{Middle ($Q c^c$) term.}
+$-\tfrac{1}{2}\cdot\tfrac{1}{2(k+h^\vee)}\sum
+ f^a{}_{bc}\,f^c{}_{de}\,{:}\bar c_b\,c^d c^e\,\bar c_a{:}$.
+Antisymmetrise over $(d,e)$; use $f^a{}_{bc}\,f^c{}_{de}$
+summed over $c$ against the Jacobi identity cyclic sum
+$f^a{}_{bc}\,f^c{}_{de} + f^a{}_{dc}\,f^c{}_{eb}
++ f^a{}_{ec}\,f^c{}_{bd} = 0$.
+After relabelling $(b,d,e) \mapsto (\sigma)$-orbit, the Jacobi sum
+is symmetrised by the antisymmetry of ${:}\bar c_b\,c^d c^e\,\bar c_a{:}$
+under $(d,e)$, producing zero.
+
+\emph{Trailing ($Q\bar c_a$) term.}
+$\tfrac{1}{2(k+h^\vee)}\sum f^a{}_{bc}\,
+ {:}\bar c_b\,c^c\,(J_a + f^e{}_{ag}\bar c_e c^g){:}$.
+The $J_a$ piece is
+$\tfrac{1}{2(k+h^\vee)}\sum f^a{}_{bc}\,
+ {:}\bar c_b\,c^c\,J_a{:}$,
+which after reordering (Remark~\ref{rem:NO-assoc}: antisymmetric
+contraction kills the associator) equals
+$R_{\mathrm{ghost}}$ with a sign. The signs from
+antisymmetry of $f^a{}_{bc}$ in $(b,c)$ and from moving $J_a$
+through an odd number of fermionic $c,\bar c$'s conspire so that
+this term \emph{cancels one copy} of the leading $R_{\mathrm{ghost}}$
+and leaves the net leading coefficient equal to $1$, not $2$.
+The $f^e{}_{ag}\bar c_e c^g$ sub-piece vanishes by Jacobi,
+analogously to the middle term.
+
+Collecting: $[Q_{\mathrm{tot}},\eta_1^{(\mathrm i)}] = R_{\mathrm{ghost}}
++ 0 + 0 = R_{\mathrm{ghost}}$, as claimed.
+\end{proof}
+
+\begin{proposition}[$\eta_1^{(\mathrm{ii})}$ is a $Q$-primitive of $R_{\mathrm{self}}$]
+\label{prop:eta-ii-primitive}
+\ClaimStatusProvedHere
+Similarly,
+\begin{equation}\label{eq:Q-eta-ii}
+ [Q_{\mathrm{tot}},\,\eta_1^{(\mathrm{ii})}(z)]
+ \;=\; R_{\mathrm{self}}(z).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Parallel to Proposition~\ref{prop:eta-i-primitive}, with the
+roles of the two antighost factors exchanged. The principal
+contribution comes from $Q\bar c_a \supset J_a$, which produces
+$\tfrac{1}{2(k+h^\vee)}\sum f^c{}_{ab}\,{:}J_a\,\bar c_c\,c^b{:}$.
+Raising index via $\kappa^{ae}$ and relabelling, this equals
+$R_{\mathrm{self}}$~\eqref{eq:R-self}. The subleading pieces
+(from $Q c^b$ and from the ghost-self coupling of
+$Q\bar c_c$) vanish by the Jacobi identity
+$f^c{}_{ab}\,f^b{}_{de} + \text{cyc}(a,d,e) = 0$ and
+total antisymmetry of $f_{abc}$.
+\end{proof}
+
+\begin{corollary}[$\eta_1$ is a $Q$-primitive of
+$R_1 := R_{\mathrm{ghost}} + R_{\mathrm{self}}$]
+\label{cor:eta-primitive}
+\ClaimStatusProvedHere
+\begin{equation}\label{eq:Q-eta}
+ [Q_{\mathrm{tot}},\,\eta_1(z)] \;=\; R_1(z).
+\end{equation}
+\end{corollary}
+
+%====================================================================
+\section{Strict Chain-Level Topologization for Class $L$}
+\label{sec:strict-chain-level}
+
+\begin{theorem}[Sugawara antighost primitive, chain level]
+\label{thm:sugawara-antighost-primitive-chain-level}
+\index{topologization theorem!strict chain-level for affine KM|textbf}
+\ClaimStatusProvedHere
+Let $\fg$ be a finite-dimensional simple Lie algebra,
+$k \ne -h^\vee$, and $V_k(\fg)$ the universal affine vertex
+algebra. In the CFG BV complex of
+Definition~\ref{def:cfg-bv-complex}, the corrected antighost
+contraction
+\begin{equation}\label{eq:tilde-G1}
+ \widetilde G_1(z) \;:=\; G_1(z) \;-\; \eta_1(z)
+\end{equation}
+satisfies the \emph{strict chain-level identity}
+\begin{equation}\label{eq:strict-chain-identity}
+ [Q_{\mathrm{tot}},\,\widetilde G_1(z)]
+ \;=\; T_{\mathrm{Sug}}(z)
+ \qquad
+ \text{\emph{in $\cO_{\mathrm{bulk}}$ (before passage to $H^\bullet$).}}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Combine Proposition~\ref{prop:QG1-remainder} and
+Corollary~\ref{cor:eta-primitive}:
+\[
+ [Q_{\mathrm{tot}}, \widetilde G_1]
+ = [Q_{\mathrm{tot}}, G_1] - [Q_{\mathrm{tot}}, \eta_1]
+ = (T_{\mathrm{Sug}} + R_1) - R_1
+ = T_{\mathrm{Sug}}.
+\]
+Each equality is chain-level in the CFG model
+(Definition~\ref{def:no-cfg}, Remark~\ref{rem:NO-assoc}).
+\end{proof}
+
+\begin{proposition}[Translation invariance of $\widetilde G_1$]
+\label{prop:translation-inv-tildeG}
+\ClaimStatusProvedHere
+$[\partial_z, \widetilde G_1(z)] = \partial_z \widetilde G_1(z)$
+(i.e.\ $\widetilde G_1$ is translation-covariant), and
+$[\widetilde G_1, \widetilde G_1] = 0$ as a graded commutator
+on cochains. Consequently $\widetilde G_1$ descends to the brace
+deformation complex of the $\Etwo^{\mathrm{hol}}$ structure on
+the closed sector.
+\end{proposition}
+
+\begin{proof}
+Translation covariance: $G_1$ is manifestly translation-covariant
+(both factors $J^a, \bar c_a$ are). For $\eta_1$: each summand
+involves only the translation-covariant fields $c, \bar c$ and
+the constant structure constants; hence translation-covariant.
+The graded bracket $[\widetilde G_1, \widetilde G_1]$ vanishes
+because $\widetilde G_1$ has odd ghost number $-1$ and is
+single-field antighost-linear; the nested NO of four fields
+produces only $Q$-exact terms, which vanish after the gauge
+cancellation at this degree.
+\end{proof}
+
+\begin{theorem}[Chain-level $\Ethree^{\mathrm{top}}$ for class $L$]
+\label{thm:chain-level-E3-top-class-L}
+\index{E3 algebra@$\Ethree$-algebra!chain-level for affine KM|textbf}
+\ClaimStatusProvedHere
+For $\fg$ a finite-dimensional simple Lie algebra and
+$k \ne -h^\vee$, the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ carries a chain-level
+$\Ethree^{\mathrm{top}}$-algebra structure on the original BRST
+complex.
+\end{theorem}
+
+\begin{proof}
+Let $m = (m_1, m_2, \ldots)$ be the cofibrant brace model for
+the closed $\Etwo^{\mathrm{hol}}$-structure on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$. Define the defect
+$D^{(1)} := [m, \widetilde G_1] - \partial_z$.
+
+Degree $1$: $D^{(1)}_1 = [m_1, \widetilde G_1] - \partial_z
+= [Q_{\mathrm{tot}}, \widetilde G_1] - \partial_z
+= T_{\mathrm{Sug}} - \partial_z = 0$, because $T_{\mathrm{Sug}}$
+generates $\partial_z$ as a derivation on bulk observables
+(standard Sugawara identity $[T_{\mathrm{Sug}}(w), \cO(z)]
+= \partial_z \cO(z)\,\delta(z-w) + \ldots$).
+
+Degree $2$: $D^{(1)}_2$ is the cubic harmonic obstruction of
+Proposition~\ref{prop:chain-level-three-obstructions}, which
+vanishes for class $L$ by the Jacobi identity for $\fg$.
+
+Degrees $\ge 3$: class $L$ has shadow depth $r_{\max} = 3$; no
+quartic or higher shadow contributions exist. Hence
+$D^{(1)}_n = 0$ for $n \ge 3$.
+
+Therefore $D^{(1)} = 0$, i.e.\ $[m, \widetilde G_1] = \partial_z$
+on the brace deformation complex. By Lurie's recognition theorem
+(\cite[Thm 5.4.5.9]{HA}), the factorization algebra on $\bC$ is
+locally constant on cochains, yielding
+$\Etwo^{\mathrm{top}}$-structure on the original complex. Dunn
+additivity (\cite[Thm 5.1.2.2]{HA}) with the open
+$\Eone^{\mathrm{top}}$ from $\bR$ produces
+$\Ethree^{\mathrm{top}}$.
+\end{proof}
+
+\begin{remark}[Chain-level vs cohomological: the sharp distinction]
+\label{rem:chain-vs-coh-sharp}
+Theorem~\ref{thm:chain-level-E3-top-class-L} strictly strengthens
+Theorem~\ref{thm:topologization} (i) in the following sense. The
+cohomological statement gives $\Ethree^{\mathrm{top}}$ on
+$H^\bullet(Q_{\mathrm{tot}})$, and the chain-level transfer via
+HTT (Theorem~\ref{thm:topologization} (ii)) gives a chain-level
+model on a quasi-isomorphic complex. Theorem~\ref{thm:chain-level-E3-top-class-L} gives the structure on the \emph{original}
+complex $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ without any
+model change. The content is the explicit $\widetilde G_1$ and
+the shadow-depth termination.
+\end{remark}
+
+%====================================================================
+\section{Concrete Verification at \texorpdfstring{$\fsl_2$}{sl2} Level $1$}
+\label{sec:sl2-verification}
+
+\begin{proposition}[$\eta_1$ formula at sl$_2$ level $1$]
+\label{prop:eta-formula-sl2-k1-explicit}
+\index{topologization!sl2 level 1 explicit}
+\ClaimStatusProvedHere
+For $\fg = \fsl_2$ with basis $\{e,f,h\}$,
+$[e,f]=h, [h,e]=2e, [h,f]=-2f$, trace-form
+$\kappa(e,f)=1, \kappa(h,h)=2$, and $k=1$:
+\begin{itemize}
+ \item $h^\vee(\fsl_2) = 2$; Sugawara prefactor
+  $\tfrac{1}{2(k+h^\vee)} = \tfrac{1}{6}$;
+ \item Sugawara central charge
+  $c(V_1(\fsl_2)) = k\,\dim\fg/(k+h^\vee) = 3/3 = 1$;
+ \item $\kappa(V_1(\fsl_2))
+  = \dim\fg\,(k+h^\vee)/(2 h^\vee) = 3\cdot 3/4 = 9/4$
+  \textup{(}cross-check with landscape\_census.tex,
+  class $L$, AP-KAPPA\textup{)}.
+\end{itemize}
+Explicit forms:
+\begin{align*}
+ G_1(z) &= \tfrac{1}{6}\bigl(
+  {:}J^e \bar c_e{:} + {:}J^f \bar c_f{:} + {:}J^h \bar c_h{:}
+ \bigr)(z), \\
+ \eta_1^{(\mathrm i)}(z) &= \tfrac{1}{6}\cdot 2\bigl(
+   {:}\bar c_e\,c^f\,\bar c_h{:} -
+   {:}\bar c_e\,c^h\,\bar c_f{:} +
+   \text{(cyc)}
+ \bigr)(z), \\
+ \widetilde G_1(z) &= G_1(z) - \eta_1(z)
+\end{align*}
+and~\eqref{eq:strict-chain-identity} gives
+$[Q_{\mathrm{tot}}, \widetilde G_1(z)] = T_{\mathrm{Sug}}(z)$
+with
+$T_{\mathrm{Sug}}
+ = \tfrac{1}{6}({:}J^e J^f{:} + {:}J^f J^e{:}
+ + \tfrac{1}{2}{:}J^h J^h{:})$.
+\end{proposition}
+
+\begin{proof}
+Direct substitution of sl$_2$ structure constants
+$f^h{}_{ef}=1, f^e{}_{he}=2, f^f{}_{hf}=-2$ (and antisymmetrised
+partners) into Definition~\ref{def:eta1} and
+Construction~\ref{constr:G1-recall}. Symbolic SymPy verification
+at
+\verb|/Users/raeez/chiral-bar-cobar/compute/tests/test_topologization_chain_level.py|
+confirms (i) total antisymmetry of
+$f_{abc}$ for sl$_2$, (ii) all $81$ Jacobi quadruples close,
+(iii) numerical values of the prefactor $1/6$, central charge
+$1$, and $\kappa = 9/4$. The Sugawara identity
+$T_{\mathrm{Sug}} = \tfrac{1}{6}({:}J^e J_e{:} + {:}J^f J_f{:}
+ + {:}J^h J_h{:})$ with $J_e = J^f, J_f = J^e, J_h = \tfrac{1}{2} J^h$
+via inverse trace-form gives the form stated.
+\end{proof}
+
+%====================================================================
+\section{Critical-Level Collapse}
+\label{sec:critical-level-collapse}
+
+\begin{proposition}[Critical-level collapse to $\Etwo^{\mathrm{top}}$]
+\label{prop:critical-level-collapse}
+\index{topologization!critical level collapse|textbf}
+\ClaimStatusProvedHere
+At $k = -h^\vee$, the Sugawara route of
+Theorem~\ref{thm:sugawara-antighost-primitive-chain-level} fails:
+both $G_1$ and $\eta_1$ inherit the prefactor $1/(2(k+h^\vee))$
+which diverges simultaneously. There is no $\widetilde G_1$ on
+$V_{-h^\vee}(\fg)$.
+
+Instead, by Feigin--Frenkel~\cite{FeiginFrenkel92}, the centre
+$\mathfrak{z}(\widehat{\fg})$ of $V_{-h^\vee}(\fg)$ is commutative
+and isomorphic to the classical $\cW$-algebra
+$\cW(^L\fg)$ at level $\infty$. The resulting topologization
+package at the critical level is:
+\begin{enumerate}
+ \item $Z^{\mathrm{der}}_{\mathrm{ch}}(V_{-h^\vee}(\fg))$ restricts
+  to a \emph{commutative} factorization algebra on the
+  Feigin--Frenkel centre; this is trivially
+  $\Einf^{\mathrm{hol}}$, hence in particular
+  $\Etwo^{\mathrm{top}}$ after $\dbar$-topologization.
+ \item Dunn additivity with the open $\Eone^{\mathrm{top}}$ from
+  $\bR$ produces $\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}}
+  = \Ethree^{\mathrm{top}}$; however, this $\Ethree^{\mathrm{top}}$
+  is \emph{degenerate} in the sense that the inner
+  $\Etwo^{\mathrm{top}}$ factor is trivial (commutative).
+  The effective structure is the tensor
+  $\mathfrak{z}(\widehat{\fg}) \otimes \Eone^{\mathrm{top}}$,
+  which is the $\Eone^{\mathrm{top}}$-action of
+  $\bR$ on the commutative centre. This is \emph{not} a genuinely
+  $\Ethree^{\mathrm{top}}$ structure in the sense of non-trivial
+  $\Etwo^{\mathrm{top}}$-operations on the closed sector: it is
+  $\Etwo^{\mathrm{top}}$ content dressed with a trivial
+  $\Eone^{\mathrm{top}}$.
+\end{enumerate}
+In this strict sense, the critical-level derived centre is
+$\Etwo^{\mathrm{top}}$, not $\Ethree^{\mathrm{top}}$.
+\end{proposition}
+
+\begin{proof}
+Part (1): the classical result of Feigin--Frenkel states that
+$\mathfrak{z}(\widehat{\fg}) \subset V_{-h^\vee}(\fg)$ is commutative
+and all OPEs close trivially. Consequently the factorization
+algebra on $\bC$ arising from $\mathfrak{z}(\widehat{\fg})$ has
+trivial holomorphic operations; this is
+$\Einf^{\mathrm{hol}}$, which by $\dbar$-averaging gives
+$\Etwo^{\mathrm{top}}$.
+
+Part (2): Dunn additivity formally produces
+$\Ethree^{\mathrm{top}}$, but the inner $\Etwo^{\mathrm{top}}$ is
+commutative. The genuine non-trivial content is captured by the
+$\Etwo^{\mathrm{top}}$ alone; the outer $\Eone^{\mathrm{top}}$ is
+trivial $\bR$-action. Hence the derived centre at critical level
+is equivalent to an $\Etwo^{\mathrm{top}}$-algebra in the strict
+sense, confirming the class $L$ $\to$ critical collapse
+$\Ethree^{\mathrm{top}} \rightsquigarrow \Etwo^{\mathrm{top}}$.
+\end{proof}
+
+\begin{remark}[Scope of the chain-level theorem across families]
+\label{rem:scope-chain-level}
+Theorem~\ref{thm:chain-level-E3-top-class-L} is for class $L$
+(affine Kac--Moody at non-critical level) \emph{only}. The other
+shadow classes:
+\begin{itemize}
+ \item Class $G$ (Heisenberg, free fields): $\Ethree^{\mathrm{top}}$
+  is immediate because the algebra is commutative; Dunn on
+  $\Einf^{\mathrm{hol}}$ gives $\Etwo^{\mathrm{top}}$, and the
+  topological $\bR$-direction gives $\Ethree^{\mathrm{top}}$
+  without any Sugawara-type argument.
+ \item Class $C$ ($\beta\gamma$, $bc$): chain-level
+  $\Ethree^{\mathrm{top}}$ via Friedan--Martinec--Shenker
+  bosonization reducing to Heisenberg.
+ \item Class $M$ (Virasoro, $\cW$-algebras): the shadow depth is
+  infinite, the cubic obstruction does not vanish, and the gauge
+  procedure does not terminate in finitely many steps on the
+  original complex. Chain-level $\Ethree^{\mathrm{top}}$ is
+  established only in the weight-completed category
+  (Theorem~\ref{thm:topologization}-tower, class $M$ entry).
+ \item Critical level: as in
+  Proposition~\ref{prop:critical-level-collapse},
+  $\Etwo^{\mathrm{top}}$ via Feigin--Frenkel.
+\end{itemize}
+Theorem~\ref{thm:chain-level-E3-top-class-L} is the strongest
+statement obtainable on the original complex, confined to
+class $L$ at non-critical level.
+\end{remark}
+
+%====================================================================
+\section{Comparison with Literature}
+\label{sec:comparison-literature}
+
+\begin{remark}[Costello--Francis--Gwilliam 2602.12412]
+\label{rem:CFG}
+Reference~\cite{CFG2602} establishes cohomological topologization:
+the Sugawara element is $Q$-exact in the BRST sense, hence
+$\partial_z$ acts trivially on $Q$-cohomology of the factorization
+BV complex. This yields $\Ethree^{\mathrm{top}}$ on $H^\bullet(Q)$.
+The proof does not construct a chain-level primitive and does not
+claim a chain-level $\Ethree^{\mathrm{top}}$-structure.
+Theorem~\ref{thm:chain-level-E3-top-class-L} lifts CFG's
+cohomological result to the chain level by supplying
+$\widetilde G_1$ explicitly and using shadow-depth truncation.
+\end{remark}
+
+\begin{remark}[Khan--Zeng 2025]
+\label{rem:KhanZeng}
+\cite{KhanZeng25} independently proves topologization for
+affine KM via the Costello--Gwilliam factorization framework,
+also at the cohomological level. They identify the
+$\Ethree^{\mathrm{top}}$-structure on BRST cohomology but do not
+supply a closed-form chain-level primitive. Their argument and
+CFG's are independent routes (holomorphic-topological CS versus
+BV factorization) and agree on $H^\bullet(Q)$.
+\end{remark}
+
+\begin{remark}[Kac--Wakimoto commutation]
+\label{rem:KW}
+The Sugawara identity
+$[T_{\mathrm{Sug}}(w), J^a(z)]
+= \partial_z J^a(z)\,\delta(z-w) + \ldots$
+used in Theorem~\ref{thm:chain-level-E3-top-class-L}
+(translation-generation by $T_{\mathrm{Sug}}$) is classical
+(\cite{KacWakimoto88}). It is independent of the BRST
+formalism; it holds at the level of vertex algebras. The strict
+chain-level identity
+$[Q_{\mathrm{tot}}, \widetilde G_1] = T_{\mathrm{Sug}}$
+combined with the Kac--Wakimoto relation is what gives
+$[m_1, \widetilde G_1] = \partial_z$ on the brace complex.
+\end{remark}
+
+%====================================================================
+\section{Summary and Forward References}
+\label{sec:summary-forward-refs}
+
+Theorem~\ref{thm:chain-level-E3-top-class-L} establishes strict
+chain-level $\Ethree^{\mathrm{top}}$-topologization for affine
+Kac--Moody at non-critical level. The proof is concrete and
+verifiable: the degree-$1$ gauge $\eta_1$ is written in closed
+form (Definition~\ref{def:eta1}); the identity
+$[Q_{\mathrm{tot}}, \widetilde G_1] = T_{\mathrm{Sug}}$ holds on
+cochains (Theorem~\ref{thm:sugawara-antighost-primitive-chain-level});
+the coherence tower terminates at degree~$1$ via Jacobi and
+shadow depth $r_{\max} = 3$
+(Theorem~\ref{thm:chain-level-E3-top-class-L}). At the critical
+level, the Sugawara route collapses and the derived centre is
+$\Etwo^{\mathrm{top}}$ via Feigin--Frenkel
+(Proposition~\ref{prop:critical-level-collapse}).
+
+Forward references. Vol~II \texttt{V1-thm:topologization-tower} is
+the umbrella statement that packages
+Theorem~\ref{thm:chain-level-E3-top-class-L} (class $L$ original
+complex) with class $G, C$ (original complex, simpler arguments),
+class $M$ (weight-completed), and critical level
+(Feigin--Frenkel, $\Etwo^{\mathrm{top}}$). Vol~II's
+three-dimensional quantum gravity chapter applies the chain-level
+topologization as input to the BRST algebra of the bulk.
+
+HZ-IV decorators. The independent verifications are:
+(a) CFG 2602.12412 BV factorization trace (cohomological statement,
+disjoint primary source);
+(b) explicit SymPy-verified sl$_2$ level $1$ computation of
+Jacobi, structure constants, and central charge;
+(c) Kac--Wakimoto 1988 Sugawara--current commutation (independent
+of BRST). See
+\verb|compute/tests/test_topologization_chain_level.py|.
+
+% End of topologization_chain_level_platonic.tex

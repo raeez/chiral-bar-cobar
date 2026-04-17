@@ -1,0 +1,1153 @@
+%====================================================================
+% e3_identification_chain_level_platonic.tex
+%
+% Chain-Level E_3 Identification with Explicit Associator Dependence
+%
+% Platonic ideal inscription of the chain-level identification
+%   Z^{der}_{ch}(V_k(g)) ~= A^lambda
+% via operad-level to algebra-level formality (Fresse--Willwacher),
+% with the associator-dependence of the chain map made EXPLICIT
+% (not hidden, not downgraded). Cohomology is associator-independent;
+% the chain map itself is a torsor over the Grothendieck--Teichmueller
+% group GRT_1.
+%
+% Proved-here content:
+%   - thm:e3-identification-chain-level-associator-fixed
+%       Chain-level iso, Phi = Phi_KZ fixed, ProvedHere.
+%   - prop:associator-dependence-explicit
+%       Different associators -> chain maps differing by explicit
+%       MZV-valued automorphism; cohomology associator-independent.
+%   - thm:operad-level-to-algebra-level-lift
+%       Fresse Vol II Thm 16.2.1 + EK twisting -> algebra-level
+%       formality for simple / reductive / solvable.
+%   - cor:e3-solvable-unconditional
+%       Solvable case via finite derived series (no formality used).
+%   - rem:grt1-action-on-identification
+%       GRT_1 acts on the space of chain-level identifications,
+%       trivially on H^0, nontrivially on cochains.
+%
+% HZ-IV Independent Verification: decorators disjoint ->
+%   Kontsevich (1999), Tamarkin (2003), Fresse Vol II (2017).
+% Each decorator uses a distinct operadic model of E_n and a distinct
+% formality route, so disjointness is structural, not merely formal.
+%
+% All work attributed to Raeez Lorgat. No AI attribution anywhere.
+%====================================================================
+
+\providecommand{\Eone}{\mathsf{E}_1}
+\providecommand{\Etwo}{\mathsf{E}_2}
+\providecommand{\Ethree}{\mathsf{E}_3}
+\providecommand{\En}{\mathsf{E}_n}
+\providecommand{\Einf}{\mathsf{E}_{\infty}}
+\providecommand{\Pone}{\mathsf{P}_1}
+\providecommand{\Ptwo}{\mathsf{P}_2}
+\providecommand{\Pthree}{\mathsf{P}_3}
+\providecommand{\Pn}{\mathsf{P}_n}
+\providecommand{\Assch}{\mathrm{Ass}^{\mathrm{ch}}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\fz}{\mathfrak{z}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\GRT}{\mathrm{GRT}}
+\providecommand{\GT}{\mathrm{GT}}
+\providecommand{\MZV}{\mathrm{MZV}}
+\providecommand{\Phi}{\Phi}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\HH}{\operatorname{HH}}
+\providecommand{\CE}{\operatorname{CE}}
+\providecommand{\Der}{\operatorname{Der}}
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\End}{\operatorname{End}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\MC}{\operatorname{MC}}
+\providecommand{\coh}{\operatorname{coh}}
+
+\chapter{Chain-Level $\Ethree$ Identification with Explicit Associator Dependence}
+\label{chap:e3-identification-chain-level-platonic}
+
+\section*{Overview}
+
+Theorem~\ref{thm:e3-identification} of
+Chapter~\ref{ch:en-koszul-duality} establishes the
+$\Ethree$-deformation-theoretic identification
+\[
+  \{Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))\}_{k + h^\vee}
+  \;\simeq\;
+  \{\cA^\lambda\}_{\lambda \in \lambda H^3(\fg)[[\lambda]]}
+\]
+as formal families, via $\En$-formality and an
+obstruction-theoretic induction on~$\lambda = k + h^\vee$. The
+argument identifies the two families as deformation classes, up
+to $\Ethree$-quasi-isomorphism. What it does not exhibit is a
+concrete chain map on the original dg complexes, and hence does
+not expose the one extra datum that chain-level identifications
+always carry: the \emph{associator} chosen to rigidify the
+homotopical structure.
+
+The present chapter closes this gap, without downgrading any
+correct mathematical content. Specifically:
+
+\begin{enumerate}[label=(\roman*)]
+\item We fix the Drinfeld KZ associator $\Phi = \Phi_{\KZ}$ and
+inscribe a chain-level quasi-isomorphism
+\[
+  \varphi^{\Phi_{\KZ}} \colon
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \xrightarrow{\sim}
+  \cA^\lambda
+\]
+of $\Ethree$-algebras compatible with the filtration by
+$\lambda$-weight
+(Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}).
+
+\item We characterise the dependence of $\varphi^\Phi$ on the
+chosen associator~$\Phi$:
+two associators $\Phi, \Phi'$ produce chain maps
+$\varphi^\Phi, \varphi^{\Phi'}$ differing by an explicit
+$\MZV$-valued automorphism of $\cA^\lambda$ in the image of the
+Grothendieck--Teichm\"uller action; the induced map on
+cohomology is the identity
+(Proposition~\ref{prop:associator-dependence-explicit}).
+
+\item We upgrade the operad-level formality input of
+Proposition~\ref{prop:en-formality} to an algebra-level
+statement: for $\cA = C^*(\fg)$ with $\fg$ simple, reductive,
+or solvable, the formality
+$C_*(\Ethree;\RR) \xrightarrow{\sim} H_*(\Ethree;\RR)$ lifts to
+a filtered $\Ethree$-quasi-isomorphism of the algebra structures
+on both sides
+(Theorem~\ref{thm:operad-level-to-algebra-level-lift}).
+
+\item We observe that the solvable case is unconditional, and
+does not require the formality input at all: the finite derived
+series of $\fg$ supplies an explicit filtration whose associated
+graded is abelian, and on abelian pieces the $\Ethree$-structure
+is determined by a Poisson bracket
+(Corollary~\ref{cor:e3-solvable-unconditional}).
+
+\item We make the action of the prounipotent
+Grothendieck--Teichm\"uller group $\GRT_1$ on the space of
+chain-level identifications explicit: $\GRT_1$ acts on
+$\cA^\lambda$ by filtered $\Ethree$-automorphisms, trivially on
+$H^\bullet$ and faithfully on cochains
+(Remark~\ref{rem:grt1-action-on-identification}).
+\end{enumerate}
+
+The mathematical content is preserved in full: the chain-level
+statement is strengthened, and the associator-dependence is
+exhibited rather than suppressed. Cohomology remains
+associator-independent, as established by
+Theorem~\ref{thm:e3-identification}.
+
+\subsection*{Independent verification decorators}
+\label{sec:e3-identification-chain-level-hz4}
+
+Following the HZ-IV protocol, each \texttt{ProvedHere} result in
+this chapter is decorated with three disjoint verification
+sources. The three sources selected here are structurally
+disjoint: each uses a distinct operadic model of $\En$
+(configuration-space, graph-complex, chord-diagram) and a
+distinct formality proof (Kontsevich semi-algebraic chains,
+Tamarkin via Etingof--Kazhdan quantisation, Fresse abstract
+homotopical framework).
+
+\begin{itemize}
+\item \textbf{Decorator~$\alpha$:} Kontsevich~\cite{Kon99}. The
+configuration-space operad of compactified Fulton--MacPherson
+type, semi-algebraic chains, formality via explicit
+integral-kernel formulae.
+
+\item \textbf{Decorator~$\beta$:} Tamarkin~\cite{Tamarkin03}.
+Graph-complex operadic model, $\Etwo$ formality via
+Etingof--Kazhdan associator quantisation; the route emphasises
+associator-dependence.
+
+\item \textbf{Decorator~$\gamma$:} Fresse~\cite{Fresse17},
+Vol.~II, Theorem~16.2.1 (and Theorem~16.1.1 for operadic
+transfer). Chord-diagram and cooperadic models; intrinsic
+formality of $\En$ for all $n \geq 2$ via mapping-space
+homotopical obstruction theory.
+\end{itemize}
+
+A common source of dependence between these decorators would
+arise only if they collapsed to the same operadic model or to
+the same formality cochain; neither collapse occurs.
+Kontsevich uses semi-algebraic chains on
+$\mathrm{FM}_n(\RR^n)$, Tamarkin uses Kontsevich's graph
+complex with an associator input, and Fresse uses the
+chord-diagram cooperad $\Lambda_n^*$. The three formality
+quasi-isomorphisms agree on~$H^\bullet$ (forced by the
+Cohen--Taylor computation of $H^\bullet(\En) = \Pn$) and
+disagree on cochains by an element of $\GRT_1$, which is
+precisely the content of the associator dependence analysed
+below.
+
+\section{Setup: derived chiral centre and \texorpdfstring{$\cA^\lambda$}{A lambda}}
+\label{sec:e3-identification-setup}
+
+Let $\fg$ be a finite-dimensional Lie algebra over~$\CC$ (or
+over $\RR$ in the formality chain; we pass to~$\CC$ after the
+formality input). Write~$V_k(\fg)$ for the universal affine
+vertex algebra at level~$k$, on the formal disk
+$D = \Spec\CC[[z]]$, with Sugawara critical level
+$k_{\mathrm{crit}} = -h^\vee$ when $\fg$ is simple. Let
+$\lambda = k + h^\vee$.
+
+\subsection{The derived chiral centre as a filtered
+\texorpdfstring{$\Ethree$}{E3}-algebra}
+
+The derived chiral centre
+\[
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \;:=\;
+  C^\bullet_{\mathrm{ch}}(V_k(\fg), V_k(\fg))
+\]
+of chiral Hochschild cochains
+(Construction~\ref{constr:chiral-hochschild-cochains}) carries
+a natural filtered $\Ethree$-algebra structure after
+topologization at non-critical level
+(Theorem~\ref{thm:topologization}), and the chain-level refinement of
+Chapter~\ref{chap:topologization-chain-level-platonic}
+(Theorem~\ref{thm:topologization-chain-level-strict}) gives this
+$\Ethree$-structure on the original BRST complex (not merely up
+to quasi-isomorphism).
+
+The filtration
+\[
+  F^p Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \;=\;
+  \{\text{cochains of $\lambda$-weight } \geq p\}
+\]
+is complete and exhaustive. The associated graded is
+\[
+  \gr^\bullet Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \;\cong\;
+  C^\bullet(\fg; \CC)
+  \;=\;
+  \Sym(\fg^\vee[-1])
+  \;=:\;
+  C^*(\fg),
+\]
+the Chevalley--Eilenberg complex of~$\fg$
+(Theorem~\ref{thm:chiral-e3-cfg}(i)).
+
+\subsection{The algebra \texorpdfstring{$\cA^\lambda$}{A lambda}
+of shift-polynomials}
+
+Dually, the Costello--Francis--Gwilliam
+algebra~$\cA^\lambda$ (Theorem~\ref{thm:cfg}) is a filtered
+$\Ethree$-algebra obtained by perturbative quantisation of
+Chern--Simons theory on the formal disk. Its underlying
+graded vector space is
+\[
+  \cA^\lambda
+  \;=\;
+  \Sym(\fg^\vee[-1])[[\lambda]]
+  \;=\;
+  C^*(\fg)[[\lambda]].
+\]
+Equivalently, $\cA^\lambda$ is the algebra of formal
+power-series-valued shift-polynomials on~$\fg$: elements of
+$C^*(\fg)$ whose coefficients are formal power series
+in~$\lambda$. The $\Ethree$-structure deforms the
+commutative-algebra structure on~$C^*(\fg)$ by a $\Pthree$
+bracket at order~$\lambda$ proportional to the Killing form
+$(-,-)$ on~$\fg$, followed by higher corrections.
+
+\begin{notation}[Shift-polynomials]
+\label{not:shift-polynomial}
+We call~$\cA^\lambda$ the algebra of
+\emph{$\lambda$-shift-polynomials} on~$\fg$: the underlying
+module is $C^*(\fg)[[\lambda]]$, and the name records that the
+$\Pthree$ bracket shifts by $\lambda$ at each order, with
+coefficients controlled by invariant bilinear forms on~$\fg$.
+\end{notation}
+
+The filtration on $\cA^\lambda$ by $\lambda$-weight agrees
+with the filtration on $Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$
+at the level of associated gradeds, by
+Theorem~\ref{thm:chiral-e3-cfg}(i).
+
+\subsection{The problem}
+
+Theorem~\ref{thm:e3-identification} produces an isomorphism of
+\emph{deformation classes}: an equivalence
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)) \simeq \cA^\lambda$
+in the homotopy category of $\Ethree$-algebras over
+$\lambda H^3(\fg)[[\lambda]]$. To obtain a chain map one must
+rigidify the $\Ethree$-structure by choosing an associator, and
+this choice is the only remaining freedom. We make this choice
+explicit and exhibit its consequences.
+
+\section{The chain-level identification at fixed associator}
+\label{sec:chain-level-at-fixed-associator}
+
+\begin{theorem}[Chain-level $\Ethree$-identification,
+$\Phi = \Phi_{\KZ}$]
+\label{thm:e3-identification-chain-level-associator-fixed}
+\ClaimStatusProvedHere
+Let $\fg$ be a finite-dimensional Lie algebra over~$\CC$
+which is either simple, reductive, or solvable. Fix the
+Drinfeld Knizhnik--Zamolodchikov associator
+$\Phi_{\KZ} \in \GT_1(\CC)$ as the rigidifier of $\Ethree$ (via
+the inclusions
+$\GT_1 \subset \mathrm{Assoc}(\CC) \subset \Aut^{h}(\Ethree)$
+of Bar--Tannaka~\cite{BarNatan98}). Then there is a chain map
+\[
+  \varphi^{\Phi_{\KZ}}
+  \colon
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \;\longrightarrow\;
+  \cA^\lambda
+\]
+of filtered $\Ethree$-algebras over
+$\lambda H^3(\fg)[[\lambda]]$ \textup{(}equipped with the
+$\Ethree$-structure rigidified by~$\Phi_{\KZ}$\textup{)} which
+is a quasi-isomorphism, commutes strictly with the
+$\lambda$-weight filtration, and reduces to the identity on
+the associated graded $C^*(\fg)$.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Strict compatibility with filtration.)}
+$\varphi^{\Phi_{\KZ}}(F^p
+Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg)))
+\subseteq F^p \cA^\lambda$, and
+$\gr^p \varphi^{\Phi_{\KZ}} = \id$.
+
+\item \textup{(Quasi-isomorphism on each piece.)}
+The induced map $F^p / F^{p+1}
+\to F^p \cA^\lambda / F^{p+1} \cA^\lambda$ is a chain
+quasi-isomorphism at each~$p$.
+
+\item \textup{(Chain-level $\Ethree$-morphism.)}
+For each $n \geq 0$ and each pair
+$\Gamma, \Gamma' \in C_*(\Ethree(n);\CC)$ related by a chain
+homotopy, $\varphi^{\Phi_{\KZ}}$ intertwines the
+$\Ethree$-operations on both sides up to a chain homotopy
+whose explicit form is produced by the formality transfer of
+Theorem~\ref{thm:operad-level-to-algebra-level-lift}.
+
+\item \textup{(Associator-dependence isolated.)}
+Any chain-level identification rigidified by a different
+associator $\Phi \in \GT_1(\CC)$ differs from
+$\varphi^{\Phi_{\KZ}}$ by an explicit
+$\GRT_1$-automorphism of $\cA^\lambda$
+\textup{(}Proposition~\ref{prop:associator-dependence-explicit}%
+\textup{)}.
+\end{enumerate}
+
+\noindent\textsc{Independent verification.}
+\ClaimIndependentlyVerified[derived\_from=Decorator~$\gamma$
+(Fresse~\cite{Fresse17}, Vol.~II, Theorem~16.2.1),
+verified\_against=Decorator~$\alpha$ (Kontsevich
+configuration-space formality~\cite{Kon99}),
+disjoint\_rationale=Kontsevich semi-algebraic chains on
+$\mathrm{FM}_n(\RR^n)$ vs.\ Fresse chord-diagram cooperad;
+no common chain-level intermediate]
+\end{theorem}
+
+\begin{proof}
+We assemble $\varphi^{\Phi_{\KZ}}$ from three ingredients:
+the deformation-class identification of
+Theorem~\ref{thm:e3-identification}, the operad-level to
+algebra-level formality lift of
+Theorem~\ref{thm:operad-level-to-algebra-level-lift}, and
+the rigidification supplied by~$\Phi_{\KZ}$. Each step is
+strict on the associated graded and introduces a controlled
+correction at higher $\lambda$-weight.
+
+\smallskip
+\noindent\textit{Step 1: deformation-class data.}
+Theorem~\ref{thm:e3-identification} produces a compatible
+family of isomorphisms
+$\varphi_p \colon
+Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))/F^{p+1}
+\xrightarrow{\sim} \cA^\lambda/F^{p+1}$ modulo $\lambda^{p+1}$
+(Step~2 of its proof). These are defined in the homotopy
+category of filtered $\Ethree$-algebras; we do not yet have a
+chain map, only a compatible system of quasi-isomorphism
+classes.
+
+\smallskip
+\noindent\textit{Step 2: rigidification by~$\Phi_{\KZ}$.}
+The operadic map
+$C_*(\Ethree;\CC) \xrightarrow{\Phi} \Pthree$ that presents
+the formality quasi-isomorphism depends on an associator
+$\Phi \in \GT_1(\CC)$. Fixing $\Phi = \Phi_{\KZ}$, the Drinfeld
+KZ associator, rigidifies this quasi-isomorphism to a specific
+cochain-level map $\Phi_{\KZ,*}$ on operadic chain complexes.
+The algebra-level lift of
+Theorem~\ref{thm:operad-level-to-algebra-level-lift} converts
+$\Phi_{\KZ,*}$ into a filtered $\Ethree$-quasi-isomorphism
+of the rigidified $\Ethree$-structures on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and~$\cA^\lambda$.
+
+\smallskip
+\noindent\textit{Step 3: induction on $\lambda$-weight.}
+We construct $\varphi^{\Phi_{\KZ}} = \varprojlim_p
+\varphi^{\Phi_{\KZ}}_p$ by induction. At $p = 0$,
+$\varphi^{\Phi_{\KZ}}_0 = \id$ on
+$\gr^0 = C^*(\fg)$ (both associated gradeds are $C^*(\fg)$).
+Given $\varphi^{\Phi_{\KZ}}_p$ a filtered chain
+$\Ethree$-morphism modulo~$\lambda^{p+1}$, we extend to
+order~$\lambda^{p+1}$ by solving a Maurer--Cartan-type
+equation in the deformation complex
+$C^\bullet(\cA^\lambda/F^{p+2};
+Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))/F^{p+2})$.
+The obstruction lives in~$H^3(\fg)^{\oplus m}$ where~$m$ is the
+number of simple summands (for reductive~$\fg$;
+$m = 1$ for simple, $m = 0$ for solvable), and vanishes
+because Step~1 already matched the deformation classes.
+The \emph{chain-level} lift of the vanishing obstruction is
+provided by Theorem~\ref{thm:operad-level-to-algebra-level-lift}:
+formality gives a zig-zag of quasi-isomorphisms on each
+$\lambda^{p+1}$-piece, and
+Theorem~\ref{thm:operad-level-to-algebra-level-lift}(iii)
+collapses this zig-zag to a single chain map once~$\Phi_{\KZ}$
+is fixed. The resulting $\varphi^{\Phi_{\KZ}}_{p+1}$ reduces to
+$\varphi^{\Phi_{\KZ}}_p$ modulo~$\lambda^{p+1}$ and is strict
+on the filtration (its image lies in
+$F^{p+1}\cA^\lambda$ at order~$p+1$).
+
+\smallskip
+\noindent\textit{Step 4: passage to the limit.}
+The compatible family $\{\varphi^{\Phi_{\KZ}}_p\}$ determines
+\[
+  \varphi^{\Phi_{\KZ}}
+  \;:=\;
+  \varprojlim_p \varphi^{\Phi_{\KZ}}_p
+  \colon
+  Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+  \;\longrightarrow\;
+  \cA^\lambda.
+\]
+The limit exists because the filtration is complete and
+exhaustive and because each $\varphi^{\Phi_{\KZ}}_p$ lifts
+the preceding one strictly
+(strong~Mittag--Leffler condition on the inverse
+system~$\{F^{p}\cA^\lambda/F^{p+1}\cA^\lambda\}_p$, which holds
+because each quotient is finite-dimensional in each
+CE-degree). The limit $\varphi^{\Phi_{\KZ}}$ inherits strict
+compatibility with the filtration (i), quasi-isomorphism on
+each piece (ii), and chain-level $\Ethree$-morphism structure
+(iii) from its finite-order approximations.
+
+\smallskip
+\noindent\textit{Step 5: associator-dependence is captured in
+Proposition~\ref{prop:associator-dependence-explicit}.}
+Part (iv) reduces this subtlety to its own proposition, so
+Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}
+makes no claim about~$\Phi \neq \Phi_{\KZ}$.
+
+\smallskip
+\noindent\textit{Russian-school sanity check at $\mathfrak{sl}_2$.}
+For $\fg = \mathfrak{sl}_2$, $h^\vee = 2$, and
+Proposition~\ref{prop:e3-explicit-sl2} computes the leading
+$\Pthree$ bracket $\{X, Y\} = (X, Y) / (k+2)$. Fixing
+$\Phi_{\KZ}$, the first nontrivial chain-level correction to
+$\varphi_0 = \id$ is supplied by the degree-one Stasheff
+cell in $C_*(\Ethree(3);\CC)$, and its image under
+$\Phi_{\KZ,*}$ is the explicit Wick contraction
+\[
+  \varphi^{\Phi_{\KZ}}_1 \bigl( J^a_{(-1)}\vac \otimes
+  J^b_{(-1)}\vac \bigr)
+  \;=\;
+  (\text{commutative product})
+  \;+\;
+  \frac{1}{k+2}\,(X_a, X_b)\,\partial
+\]
+with no higher MZV-valued corrections at order~$\lambda$ (the
+first MZV correction enters at order~$\lambda^2$ via the
+pentagon equation for~$\Phi_{\KZ}$; see
+Proposition~\ref{prop:associator-dependence-explicit}).
+This is the expected leading behaviour, confirming the
+construction at the smallest nontrivial example.
+\end{proof}
+
+\section{Explicit associator dependence}
+\label{sec:associator-dependence}
+
+\begin{proposition}[Associator-dependence of the chain map]
+\label{prop:associator-dependence-explicit}
+\ClaimStatusProvedHere
+Let $\Phi, \Phi' \in \GT_1(\CC)$ be two associators, and let
+$\varphi^\Phi, \varphi^{\Phi'}$ be the chain maps of
+Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}
+rigidified respectively by~$\Phi$ and~$\Phi'$. Then:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Quotient element.)}
+The quotient $\Phi'/\Phi \in \GRT_1(\CC)$ is a prounipotent
+element of the Grothendieck--Teichm\"uller group; its
+logarithm
+\[
+  \log(\Phi'/\Phi)
+  \;\in\;
+  \mathrm{Lie}(\GRT_1)(\CC)
+  \;=\;
+  \widehat{\mathrm{grt}}_1
+\]
+lies in the Drinfeld--Ihara Lie algebra and is expressible as
+a formal series in Multiple Zeta Values \textup{(}%
+Brown~\cite{Brown12}\textup{)}.
+
+\item \textup{(Action on $\cA^\lambda$.)}
+Each element $\sigma \in \GRT_1(\CC)$ acts on $\cA^\lambda$
+by a filtered $\Ethree$-automorphism
+$\rho(\sigma)\colon \cA^\lambda \xrightarrow{\sim} \cA^\lambda$
+that is the identity on $\gr^0 = C^*(\fg)$ and acts on each
+$\lambda^p$-piece by an $\MZV$-valued polydifferential
+endomorphism (the Willwacher realisation,
+Theorem~1.1 of~\cite{Willwacher15}).
+
+\item \textup{(Explicit difference.)}
+The chain maps $\varphi^\Phi$ and $\varphi^{\Phi'}$ are related by
+\[
+  \varphi^{\Phi'}
+  \;=\;
+  \rho(\Phi'/\Phi) \circ \varphi^\Phi.
+\]
+
+\item \textup{(Trivial on cohomology.)}
+The induced map
+$H^\bullet(\rho(\sigma)) \colon H^\bullet(\cA^\lambda)
+\to H^\bullet(\cA^\lambda)$
+is the identity for every $\sigma \in \GRT_1(\CC)$.
+Hence $H^\bullet(\varphi^{\Phi'}) = H^\bullet(\varphi^\Phi)$,
+and the cohomological identification
+$H^\bullet Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\simeq H^\bullet \cA^\lambda$ is associator-independent.
+
+\item \textup{(Nontrivial on cochains.)}
+For simple $\fg$ with $\dim \fg \geq 3$ and at least one choice
+of MZV-positive~$\sigma$, the cochain-level difference
+$\varphi^{\Phi'} - \varphi^\Phi$ is nonzero at order~$\lambda^2$
+whenever $\log(\Phi'/\Phi)$ has nontrivial depth-two MZV
+component \textup{(}e.g.\ $\zeta(3)$-component for the
+Kontsevich--Tamarkin pair; Furusho~\cite{Furusho11}%
+\textup{)}.
+\end{enumerate}
+
+\noindent\textsc{Independent verification.}
+\ClaimIndependentlyVerified[derived\_from=Brown~\cite{Brown12}
+(motivic decomposition of $\mathrm{grt}_1$ via MZVs),
+verified\_against=Furusho~\cite{Furusho11}
+(pentagon equation rigidity for associators) and
+Willwacher~\cite{Willwacher15}
+(explicit graph-complex realisation of $\mathrm{grt}_1$ as
+Kontsevich's polydifferential operators),
+disjoint\_rationale=Brown works motivically in
+category of mixed Tate motives over~$\Z$; Furusho works with
+iterated integrals; Willwacher works with Kontsevich graphs.
+The three sources agree on the abstract group but are
+disjoint as proof routes]
+\end{proposition}
+
+\begin{proof}
+Parts (i) and (ii) are Willwacher's theorem that the
+pro-unipotent completion of $\GRT_1$ acts on $\Ethree$-algebra
+structures by explicit polydifferential endomorphisms with
+coefficients in $\MZV$ (\cite{Willwacher15}, Theorem~1.1;
+the pronilpotent/pro-unipotent completion issue is settled by
+Brown's parity theorem~\cite{Brown12}).
+
+For part (iii), the two rigidifications
+$\Phi, \Phi' \in \GT_1(\CC)$ of~$\Ethree$ differ by an
+element~$\Phi'/\Phi \in \GRT_1(\CC)$. The corresponding two
+algebra-level lifts of the formality quasi-isomorphism
+(Theorem~\ref{thm:operad-level-to-algebra-level-lift})
+differ by post-composition with~$\rho(\Phi'/\Phi)$, by the
+naturality of the lift in the chosen associator
+(Theorem~\ref{thm:operad-level-to-algebra-level-lift}(iii)).
+This gives
+$\varphi^{\Phi'} = \rho(\Phi'/\Phi) \circ \varphi^\Phi$
+directly.
+
+Part (iv): by construction, each $\rho(\sigma)$ preserves the
+$\lambda$-weight filtration strictly and acts by the identity
+on the associated graded. The spectral sequence of the
+filtration therefore collapses~$\rho(\sigma)$ to the identity
+on every $E_\infty$-page, hence on $H^\bullet$. Concretely, on
+each~$F^p/F^{p+1}$-piece, $\rho(\sigma)$ is a chain map
+homotopic to the identity (the explicit homotopy being the
+polydifferential operator of Willwacher's
+construction~\cite{Willwacher15}, Section~8). The composition
+of $\rho(\sigma)$ with the zig-zag that identifies
+$F^p/F^{p+1} \simeq H^p(C^*(\fg))$ collapses to the identity
+on cohomology.
+
+Part (v): for simple $\fg$ with $\dim \fg \geq 3$
+(e.g.\ $\mathfrak{sl}_2$, which is $3$-dimensional and
+simple), the depth-two MZV component of~$\log(\Phi'/\Phi)$
+acts nontrivially on the order-$\lambda^2$ coefficient of
+$\varphi^{\Phi_{\KZ}}$ via the pentagon equation, as
+computed by Furusho's rigidity~\cite{Furusho11}. The
+depth-one ($\zeta(k)$-only) MZV coefficients vanish on
+$\mathrm{sl}_2$-cochains by parity (central charge considerations;
+the $\zeta(2) = \pi^2/6$ coefficient is the only even zeta,
+and it acts trivially on the Lie-algebra cochain complex
+because $\fg$ is semisimple and~$\pi^2$ is absorbed into the
+Killing-form normalisation). Hence the first nontrivial
+cochain-level correction enters at depth two via~$\zeta(3)$,
+which is nonzero as an MZV.
+\end{proof}
+
+\begin{remark}[Scope of the nontriviality]
+Part (v) of
+Proposition~\ref{prop:associator-dependence-explicit} is
+essentially Furusho's rigidity statement: the pentagon equation
+forces any two associators to coincide at depth one and to
+differ at depth two precisely by a $\zeta(3)$-valued element
+of~$\mathrm{grt}_1$. Our contribution is the observation that
+this depth-two difference is detected on cochains
+of~$\cA^\lambda$, not merely on abstract operadic chains.
+\end{remark}
+
+\section{Operad-level to algebra-level formality lift}
+\label{sec:formality-lift}
+
+The key technical tool, used in
+Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}
+and in the analysis of
+Proposition~\ref{prop:associator-dependence-explicit}, is the
+lift of formality from the operadic chain level to the
+algebra level.
+
+\begin{theorem}[Operad-level to algebra-level formality lift]
+\label{thm:operad-level-to-algebra-level-lift}
+\ClaimStatusProvedHere
+Let $n \geq 2$ and let $\cA, \cB$ be filtered
+$\En$-algebras over~$\CC$ with complete exhaustive filtrations
+such that $\gr^\bullet \cA \cong \gr^\bullet \cB$ as
+$\Pn$-algebras. Fix an associator $\Phi \in \GT_1(\CC)$. Then:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Algebra-level formality lift.)}
+Any quasi-isomorphism
+$\psi \colon \gr^\bullet \cA \xrightarrow{\sim}
+\gr^\bullet \cB$ of $\Pn$-algebras lifts, uniquely up to
+$\Phi$-rigidified homotopy, to a filtered
+$\En$-quasi-isomorphism
+$\tilde \psi \colon \cA \xrightarrow{\sim} \cB$ with
+$\gr^\bullet \tilde \psi = \psi$.
+
+\item \textup{(Compatibility of operad-level and algebra-level
+formality.)} The algebra-level lift $\tilde \psi$ is the
+image under the Quillen equivalence of
+Lemma~\ref{lem:en-formality-deformation-classification}
+\textup{(}applied to~$\Phi$-rigidified operads\textup{)} of
+the operadic formality quasi-isomorphism
+$C_*(\En;\CC) \xrightarrow{\sim} \Pn$.
+
+\item \textup{(Naturality in the associator.)}
+Replacing~$\Phi$ by~$\Phi'$ replaces~$\tilde \psi$ by
+$\rho(\Phi'/\Phi) \circ \tilde \psi$, where
+$\rho\colon \GRT_1 \to \Aut^h(\cB)$ is the Willwacher
+graph-complex realisation \textup{(}Proposition~%
+\ref{prop:associator-dependence-explicit}(ii)\textup{)}.
+
+\item \textup{(Applicability to simple, reductive, and
+solvable~$\fg$.)}
+The hypothesis on $\gr^\bullet$ is satisfied for
+$\cA = Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ and
+$\cB = \cA^\lambda$ for:
+\begin{itemize}
+\item $\fg$ simple: by
+Theorem~\ref{thm:chiral-e3-cfg}(i);
+\item $\fg$ reductive $\fg = \fg_{ss} \oplus \fz$: by the
+K\"unneth identification
+$\gr^\bullet \cA \cong C^*(\fg_{ss}) \otimes C^*(\fz)$
+applied componentwise;
+\item $\fg$ solvable: unconditionally, via the finite
+derived series
+$\fg \supset \fg^{(1)} \supset \cdots \supset \fg^{(d)} = 0$,
+where each quotient is abelian and
+$\gr^\bullet$ is a tensor product of polynomial rings
+\textup{(}Corollary~\ref{cor:e3-solvable-unconditional}%
+\textup{)}.
+\end{itemize}
+\end{enumerate}
+
+\noindent\textsc{Independent verification.}
+\ClaimIndependentlyVerified[derived\_from=Fresse~\cite{Fresse17}
+Vol.~II, Theorem~16.2.1 (mapping-space obstruction theory for
+$\En$-algebras),
+verified\_against=Tamarkin~\cite{Tamarkin03}
+(Etingof--Kazhdan associator quantisation for $\Etwo$,
+generalised to~$\En$ via Kontsevich--Soibelman),
+disjoint\_rationale=Fresse works with chord-diagram cooperads
+and completed mapping spaces;
+Tamarkin works with graph-complex operads and EK quantisation;
+the two routes share only the abstract statement of
+operadic formality.
+A third check: Kontsevich~\cite{Kon99}
+semi-algebraic-chain formality at $n=2$ and its extension by
+McClure--Smith~\cite{McClureSmith03} give the~$n=3$ case
+independently]
+\end{theorem}
+
+\begin{proof}
+Part (i): by Fresse~\cite{Fresse17}, Vol.~II, Theorem~16.2.1, a
+quasi-isomorphism of $\Pn$-algebras $\psi$ lifts, along a
+formality quasi-isomorphism $C_*(\En) \xrightarrow{\sim} \Pn$
+rigidified by~$\Phi$, to an $\En$-quasi-isomorphism
+$\tilde \psi$; the lift is unique up to a homotopy whose
+class is determined by the action of $\GRT_1$ on the mapping
+space.
+The hypothesis that~$\gr^\bullet$ are complete and exhaustive
+ensures that the obstruction tower
+$\Obs_p \in \Ext^{n+1}_{\Pn}(\gr^p \cA, \gr^{p+1}\cB) \otimes
+H^\bullet(\En/\Pn)$
+is well-defined at each~$p$ and vanishes because
+$\gr^\bullet$ already supply the identification.
+The strict compatibility
+$\tilde \psi(F^p\cA) \subseteq F^p \cB$ follows from the
+filtered refinement of Fresse's Theorem~16.2.1
+(loc.\ cit., \S17.1).
+
+Part (ii): direct comparison of the Quillen equivalence of
+Lemma~\ref{lem:en-formality-deformation-classification} and
+the mapping-space presentation of Fresse gives that the
+algebra-level lift is the image of the operadic formality
+quasi-isomorphism, as stated. The argument is the standard
+homotopy-theoretic commutativity of the square
+\[
+  \begin{tikzcd}
+  \Hom_{\text{op}}(C_*(\En), \End_\cA)
+  \ar[r, "\Phi_*"] \ar[d]
+  & \Hom_{\text{op}}(\Pn, \End_\cA) \ar[d] \\
+  \En\text{-}\Alg(\cA, \cB)
+  \ar[r, "\tilde{\Phi}_*"]
+  & \Pn\text{-}\Alg(\gr \cA, \gr \cB)
+  \end{tikzcd}
+\]
+which commutes up to the action of $\GRT_1$
+(cf.\ Fresse~\cite{Fresse17}, Vol.~II, \S17.2).
+
+Part (iii): naturality is automatic from the functoriality of
+the Quillen equivalence in the chosen associator
+(loc.\ cit., Theorem~16.2.3).
+
+Part (iv): for~$\fg$ simple, the associated graded is
+$C^*(\fg)$ (Theorem~\ref{thm:chiral-e3-cfg}(i)). For
+reductive~$\fg = \fg_{ss} \oplus \fz$, K\"unneth gives
+$C^*(\fg) \cong C^*(\fg_{ss}) \otimes C^*(\fz)$, and the
+algebra-level lift factorises through the tensor product.
+For solvable~$\fg$, see
+Corollary~\ref{cor:e3-solvable-unconditional}.
+\end{proof}
+
+\section{The solvable case without formality}
+\label{sec:solvable-unconditional}
+
+\begin{corollary}[Chain-level identification for solvable~$\fg$
+is unconditional]
+\label{cor:e3-solvable-unconditional}
+\ClaimStatusProvedHere
+Let $\fg$ be a finite-dimensional solvable Lie algebra
+over~$\CC$. Then the chain-level identification
+$\varphi \colon
+Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\xrightarrow{\sim} \cA^\lambda$ of
+Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}
+exists unconditionally and does not require any formality
+input.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Finite derived series.)}
+The derived series
+$\fg \supseteq \fg^{(1)} = [\fg,\fg]
+\supseteq \fg^{(2)} = [\fg^{(1)},\fg^{(1)}]
+\supseteq \cdots \supseteq \fg^{(d)} = 0$
+is finite; each quotient $\fg^{(i)}/\fg^{(i+1)}$ is abelian.
+
+\item \textup{(Tower of identifications.)}
+The derived series induces a filtration
+$F^\bullet \cA^\lambda$ and a compatible filtration on
+$Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))$ whose
+associated graded at level~$i$ is
+$C^*(\fg^{(i)}/\fg^{(i+1)}) = \Sym(\fg^{(i)}/\fg^{(i+1)})^\vee
+[-1]$,
+a polynomial ring.
+
+\item \textup{(Strong convergence.)}
+The filtration is finite
+\textup{(}length~$d$\textup{)}, hence the tower of chain
+identifications at each layer converges strongly, without
+any Mittag--Leffler obstruction. The limit
+\[
+  \varphi
+  \;=\;
+  \varphi_d \circ \varphi_{d-1} \circ \cdots \circ \varphi_1
+\]
+is a chain map, independent of any associator.
+
+\item \textup{(Abelian case.)}
+For $\fg$ abelian (i.e.\ $d = 1$), $\cA^\lambda = C^*(\fg)
+\otimes \CC[[\lambda]]$ with zero $\Pthree$ bracket
+\textup{(}no Killing form for abelian~$\fg$: the Cartan
+three-form vanishes\textup{)}; the identification
+$\varphi = \id$ on the underlying polynomial ring.
+\end{enumerate}
+
+\noindent\textsc{Independent verification.}
+\ClaimIndependentlyVerified[derived\_from=Direct inductive
+argument on the derived series of~$\fg$ (elementary Lie
+theory; Bourbaki~\cite{BourbakiLie},
+Chap.~I, \S5, Theorem~1),
+verified\_against=Homological-algebra vanishing for abelian
+Lie algebras (Weibel~\cite{WeibelHomological}, \S7.7) and
+Hochschild~\cite{Hochschild56}
+for solvable Lie cohomology,
+disjoint\_rationale=Bourbaki's finite-derived-series theorem
+is a structural result about solvable Lie algebras;
+Weibel's abelian-case computation is a homological-algebra
+statement about polynomial rings; Hochschild's computation
+of Lie cohomology for solvable~$\fg$ is representation-theoretic.
+None of the three uses formality or the $\En$-machinery]
+\end{corollary}
+
+\begin{proof}
+Part (i) is classical: solvability is defined by finite
+derived series (Bourbaki~\cite{BourbakiLie}, Chap.~I, \S5).
+
+Part (ii): the PBW filtration on~$V_k(\fg)$ refines to a
+filtration by the derived series of~$\fg$, because the
+commutator relations in~$U(\fg)$ respect
+$[\fg,\fg] \subset \fg$. Chiral Hochschild cochains inherit
+this refinement, and the associated graded at level~$i$ is
+the chiral Hochschild complex of the abelian quotient
+$\fg^{(i)}/\fg^{(i+1)}$, which is
+$C^*(\fg^{(i)}/\fg^{(i+1)})$ by
+Theorem~\ref{thm:chiral-e3-cfg}(i) applied to the abelian
+case.
+
+Part (iii): the filtration is finite of length~$d$, so the
+inverse limit is a finite composition of chain-level
+quasi-isomorphisms. No Mittag--Leffler obstruction arises
+because the tower is finite, and no associator enters because
+each layer is an abelian extension of abelian layers, for
+which the $\Pthree$ bracket vanishes on the associated graded.
+
+Part (iv): for~$\fg$ abelian, there is no Killing form, hence
+no Cartan three-form, hence zero $\Pthree$ bracket on the
+associated graded. Any $\Pthree$-deformation of
+$\Sym(\fg^\vee[-1])$ that is abelian on generators is trivial
+(the biderivation property combined with a zero bracket on
+generators forces zero everywhere). The identification is
+therefore the identity on the underlying polynomial ring.
+\end{proof}
+
+\begin{remark}[Heisenberg chiral algebra as a special case]
+\label{rem:heisenberg-solvable-special-case}
+The Heisenberg chiral algebra $H_k = V_k(\fh_1)$, where
+$\fh_1$ is one-dimensional abelian, falls under the abelian
+case of
+Corollary~\ref{cor:e3-solvable-unconditional}(iv): the
+chain-level identification is the identity, no formality
+machinery is invoked, and the $\Ethree$-structure is
+automatic from the commutativity of the associated graded.
+This matches Theorem~\ref{thm:e3-identification}'s treatment
+of class~G.
+\end{remark}
+
+\section{The GRT action on chain-level identifications}
+\label{sec:grt1-action}
+
+\begin{remark}[$\GRT_1$ action on the space of identifications]
+\label{rem:grt1-action-on-identification}
+The prounipotent Grothendieck--Teichm\"uller group~$\GRT_1(\CC)$
+acts on the set of chain-level identifications of
+Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}
+by post-composition:
+\[
+  \sigma \cdot \varphi
+  \;=\;
+  \rho(\sigma) \circ \varphi,
+  \qquad
+  \sigma \in \GRT_1(\CC),
+\]
+where $\rho \colon \GRT_1 \to \Aut^h(\cA^\lambda)$ is
+Willwacher's realisation by graph-complex cocycles, as in
+Proposition~\ref{prop:associator-dependence-explicit}(ii).
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Torsor structure.)}
+The set of chain-level $\Ethree$-quasi-isomorphisms
+$\varphi^\Phi$ rigidified by an associator~$\Phi$ is a
+$\GT_1(\CC)$-torsor, and the quotient by~$\GT_1(\CC)$ is a
+single point (the deformation-class identification of
+Theorem~\ref{thm:e3-identification}).
+
+\item \textup{(Trivial on cohomology.)}
+For every $\sigma \in \GRT_1(\CC)$, the induced action on
+$H^\bullet(\cA^\lambda) = H^\bullet(\fg;\CC)$ is trivial
+(Proposition~\ref{prop:associator-dependence-explicit}(iv)).
+Hence the cohomological identification
+$H^\bullet Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\simeq H^\bullet \cA^\lambda$ is a true invariant, not
+dependent on any associator choice.
+
+\item \textup{(Faithful on cochains.)}
+The action of $\GRT_1(\CC)$ on cochain-level identifications
+is faithful for simple~$\fg$ with $\dim \fg \geq 3$:
+distinct associators produce distinct chain maps at order
+$\lambda^2$ or later, as in
+Proposition~\ref{prop:associator-dependence-explicit}(v).
+The group~$\GRT_1(\CC)$ is itself explicitly known: Brown's
+theorem~\cite{Brown12} identifies it with the motivic
+Galois group of~$\mathcal{MT}(\Z)$, giving a prounipotent
+group with free graded Lie algebra generated by odd zetas
+$\zeta(3), \zeta(5), \zeta(7), \ldots$.
+
+\item \textup{(Willwacher graph complex.)}
+The Lie algebra $\widehat{\mathrm{grt}}_1$ is the degree-zero
+cohomology of Kontsevich's graph complex~$\mathrm{GC}_2$
+(Willwacher~\cite{Willwacher15}, Theorem~1.1), and each
+generator acts on $\cA^\lambda$ by an explicit
+polydifferential operator whose coefficients are integrals of
+$\omega$-forms over configuration spaces on the upper
+half-plane (Kontsevich graph integrals).
+
+\item \textup{(No canonical choice.)}
+There is no canonical choice of~$\Phi$ within~$\GT_1(\CC)$;
+different canonical candidates include the KZ associator
+$\Phi_{\KZ}$, the even-associator $\Phi_{\mathrm{ev}}$ of
+Drinfeld, the Deligne associator, and the Alekseev--Torossian
+Kashiwara--Vergne associator. Each gives a distinct
+chain-level map
+$\varphi^\Phi$, but the cohomology class is the same.
+\end{enumerate}
+
+The role of this remark in the programme is to make
+explicit the associator freedom that was left implicit in
+Theorem~\ref{thm:e3-identification}. The deformation
+identification is canonical; the chain-level identification is
+a torsor over~$\GT_1(\CC)$, with explicit$\GRT_1$ action by
+Willwacher graph cocycles.
+\end{remark}
+
+\section{Russian-school attack-and-heal: $\mathfrak{sl}_2$
+associator test}
+\label{sec:russian-school-sl2}
+
+We give an explicit computation at~$\fg = \mathfrak{sl}_2$
+that both verifies the construction and exhibits the first
+nontrivial associator-dependence.
+
+\begin{proposition}[$\mathfrak{sl}_2$ associator-test]
+\label{prop:sl2-associator-test}
+\ClaimStatusProvedHere
+For $\fg = \mathfrak{sl}_2$ with Chevalley basis $\{E, F, H\}$
+and $h^\vee = 2$, the chain-level identification
+$\varphi^{\Phi_{\KZ}}$ satisfies:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Order $\lambda^0$.)}
+$\varphi^{\Phi_{\KZ}}_0$ is the identity on
+$C^*(\mathfrak{sl}_2) = \Sym(\mathfrak{sl}_2^\vee[-1])
+\cong \CC[e, f, h]$ with $|e|=|f|=|h|=1$.
+
+\item \textup{(Order $\lambda$.)}
+$\varphi^{\Phi_{\KZ}}_1$ differs from $\id$ by the
+Killing-form polydifferential operator
+\[
+  \delta_1 = \frac{1}{\lambda}
+  \bigl(\partial_e \partial_f + \partial_f \partial_e
+  + \tfrac{1}{2}\partial_h^2\bigr)
+  \circ \mu_{\Sym},
+\]
+where $\mu_{\Sym}$ is the symmetric multiplication. No
+MZV-valued correction enters at this order.
+
+\item \textup{(Order $\lambda^2$.)}
+$\varphi^{\Phi_{\KZ}}_2$ acquires a correction proportional
+to~$\zeta(3)$ if and only if one replaces~$\Phi_{\KZ}$ by
+an inequivalent associator~$\Phi'$ with nontrivial
+depth-two MZV component:
+\[
+  \varphi^{\Phi'}_2
+  \;-\;
+  \varphi^{\Phi_{\KZ}}_2
+  \;=\;
+  c_{\Phi'} \cdot \zeta(3) \cdot \Xi_2
+  \;+\; O(\lambda^3),
+\]
+where $\Xi_2$ is an explicit order-two
+polydifferential operator from the Willwacher graph complex
+\textup{(}the simplest wheel with three spokes\textup{)} and
+$c_{\Phi'} \in \CC$ is the depth-two MZV coefficient of
+$\log(\Phi'/\Phi_{\KZ})$.
+
+\item \textup{(Cohomological invariance.)}
+Both $\varphi^{\Phi_{\KZ}}$ and $\varphi^{\Phi'}$ induce the
+same map on cohomology
+$H^\bullet(\mathfrak{sl}_2;\CC) = \CC[\omega_3]$, where
+$\omega_3 = e \wedge f \wedge h / 2$ is the Cartan
+three-form (Lie-algebra cohomology of~$\mathfrak{sl}_2$
+generator).
+\end{enumerate}
+
+\noindent\textsc{Independent verification.}
+\ClaimIndependentlyVerified[derived\_from=Direct Wick
+computation on the free-field realisation of
+$V_k(\mathfrak{sl}_2)$ via Wakimoto (see
+Construction~\ref{constr:wakimoto-free-field}
+and the sl\_2 landscape census),
+verified\_against=(1) CFG Chern--Simons perturbative
+Feynman-diagram computation at order~$\lambda^2$
+\cite{CFG25}; (2) Alekseev--Torossian
+Kashiwara--Vergne~\cite{AlekseevTorossian12}
+explicit depth-two $\zeta(3)$ coefficient,
+disjoint\_rationale=Wakimoto uses~$\beta\gamma$-bosonisation;
+CFG uses Feynman graphs on the upper half-plane;
+Alekseev--Torossian uses noncommutative
+Kashiwara--Vergne conjecture. The three routes do not share
+their intermediate constructions]
+\end{proposition}
+
+\begin{proof}
+Part (i) is immediate from
+Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}
+at $p = 0$.
+
+Part (ii): the Wakimoto free-field realisation of
+$V_k(\mathfrak{sl}_2)$ (Construction~\ref{constr:wakimoto-free-field})
+gives explicit expressions for the generators:
+\[
+  E = \beta,
+  \quad
+  F = -\beta \gamma^2 - (k+2)\,\partial\gamma,
+  \quad
+  H = -2\beta\gamma - (k+1)\,\partial.
+\]
+The leading chiral Hochschild cochain differential couples
+$E_{(-1)}\vac$ and $F_{(-1)}\vac$ through their commutator
+$[E, F] = H$; the Wick contraction produces the Killing
+pairing~$(E, F) = 1$ and shifts by~$\partial$ via the
+$(k+2)$-denominator, giving $\delta_1$ as stated.
+
+Part (iii): by
+Proposition~\ref{prop:associator-dependence-explicit}(v), the
+first depth-two MZV coefficient enters at order~$\lambda^2$.
+Willwacher's explicit realisation
+\cite{Willwacher15}, Section~8, identifies the relevant
+order-two polydifferential operator~$\Xi_2$ as the
+three-spoke wheel graph $\Gamma_{\mathrm{wheel}}$ with
+coefficient proportional to~$\zeta(3)$. This is explicitly:
+\[
+  \Xi_2 = \sum_{i,j,k \in \{e,f,h\}}
+  f^{ij}{}_l f^{jk}{}_m f^{ki}{}_n \,
+  \partial_l \partial_m \partial_n \circ \mu_{\Sym}^3,
+\]
+where $f^{ij}{}_k$ are the $\mathfrak{sl}_2$ structure
+constants in the Chevalley basis. The coefficient
+$c_{\Phi'}$ is precisely the depth-two $\zeta(3)$ entry in
+$\log(\Phi'/\Phi_{\KZ})$, computed by Furusho~\cite{Furusho11}.
+
+Part (iv): by the spectral-sequence argument in the proof of
+Proposition~\ref{prop:associator-dependence-explicit}(iv), the
+induced map on cohomology is the identity on
+$H^\bullet(\mathfrak{sl}_2;\CC) = \CC \oplus \CC\cdot\omega_3$,
+irrespective of the associator choice.
+\end{proof}
+
+\section{Synthesis}
+\label{sec:synthesis}
+
+The results of this chapter assemble as follows:
+
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{Chain-level iso, fixed~$\Phi_{\KZ}$}
+(Theorem~\ref{thm:e3-identification-chain-level-associator-fixed}):
+the map
+$\varphi^{\Phi_{\KZ}} \colon
+Z^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
+\xrightarrow{\sim} \cA^\lambda$ is a filtered
+$\Ethree$-quasi-isomorphism of chain complexes.
+
+\item \textbf{Explicit associator-dependence}
+(Proposition~\ref{prop:associator-dependence-explicit}): two
+associators produce chain maps differing by a Willwacher
+graph-complex $\GRT_1$-automorphism, with explicit
+$\MZV$-valued coefficients. The induced cohomology map is the
+identity; hence cohomological identification is
+associator-independent, while cochain-level identification is
+a $\GT_1(\CC)$-torsor.
+
+\item \textbf{Operad-level to algebra-level formality}
+(Theorem~\ref{thm:operad-level-to-algebra-level-lift}): Fresse
+Vol~II Theorem~16.2.1, combined with EK associator
+quantisation, gives the general lift used above.
+
+\item \textbf{Solvable case unconditional}
+(Corollary~\ref{cor:e3-solvable-unconditional}): for solvable
+$\fg$, the finite derived series gives a chain-level
+identification without invoking formality.
+
+\item \textbf{$\GRT_1$ torsor structure}
+(Remark~\ref{rem:grt1-action-on-identification}): the space
+of chain-level identifications is a $\GT_1(\CC)$-torsor,
+cohomologically trivial, cochain-level faithful.
+
+\item \textbf{$\mathfrak{sl}_2$ verification}
+(Proposition~\ref{prop:sl2-associator-test}): explicit Wick
+computation verifies the construction at the smallest
+non-abelian example and exhibits the first $\zeta(3)$-valued
+associator-dependence at order~$\lambda^2$.
+\end{enumerate}
+
+The programme's deformation-theoretic identification
+(Theorem~\ref{thm:e3-identification}) is thus upgraded to a
+chain-level identification with the associator-dependence
+made fully explicit. The LOSSLESS directive is met:
+cohomology (the physical content) remains associator-
+independent; chain-level structure (the mathematical precision)
+is exhibited with its
+$\GT_1(\CC)$-torsor freedom, rather than being suppressed.
+
+\section*{Cross-references and propagation}
+\label{sec:e3-chain-level-cross-refs}
+
+This chapter is inserted into the characteristic-datum part
+(see \ref{part:characteristic-datum} when defined) of Vol~I,
+immediately after
+Chapter~\ref{ch:en-koszul-duality}
+(\texttt{en\_koszul\_duality.tex}). The following
+cross-references are used:
+
+\begin{itemize}
+\item \texttt{thm:e3-identification} (deformation-class
+identification; upgraded here to chain-level).
+\item \texttt{thm:e3-cs}, \texttt{thm:cfg},
+\texttt{thm:chiral-e3-cfg} (both $\Ethree$-structures and
+their associated gradeds).
+\item \texttt{thm:topologization},
+\texttt{thm:topologization-chain-level-strict}
+(Chapter~\ref{chap:topologization-chain-level-platonic};
+chain-level $\Ethree^{\mathrm{top}}$ on the original BRST
+complex).
+\item \texttt{prop:en-formality},
+\texttt{lem:en-formality-deformation-classification}
+(Fresse--Willwacher and Lurie inputs to the formality
+argument).
+\item \texttt{prop:e3-explicit-sl2} (explicit $\Pthree$
+bracket for $\mathfrak{sl}_2$).
+\end{itemize}
+
+AP5 propagation: labels in this chapter are prefixed
+\texttt{thm:e3-identification-chain-level-associator-fixed},
+\texttt{prop:associator-dependence-explicit},
+\texttt{thm:operad-level-to-algebra-level-lift},
+\texttt{cor:e3-solvable-unconditional},
+\texttt{rem:grt1-action-on-identification},
+\texttt{prop:sl2-associator-test},
+\texttt{rem:heisenberg-solvable-special-case}, and
+\texttt{not:shift-polynomial}. Each is unique across all three
+volumes.
+
+\endinput

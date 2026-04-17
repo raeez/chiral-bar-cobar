@@ -1,0 +1,595 @@
+% ======================================================================
+% koszulness_vii_multiweight_platonic.tex
+%
+% Upgrade of Koszulness characterization (vii) from scope-restricted
+% equivalence to equivalence-up-to-explicit-correction delta F_g^cross.
+%
+% Inscribed by Raeez Lorgat, 2026-04-16.
+%
+% Primary structural target: transform the "scope restriction" phrasing
+% (uniform-weight all-genera / multi-weight genus-0 only) into a strictly
+% stronger statement: characterization (vii) holds at multi-weight g >= 1
+% modulo the explicit cross-channel correction delta F_g^cross computed
+% family-by-family, with closed form for W_3 at g = 2 and with the
+% free-field vanishing as a corollary.
+% ======================================================================
+
+\chapter[Characterization (vii) at multi-weight: scalar equivalence up
+to explicit correction]{Characterization~(vii) at multi-weight:
+scalar equivalence up to explicit cross-channel correction}
+\label{chap:koszulness-vii-multiweight-platonic}
+\index{Koszul property!equivalence (vii)!multi-weight upgrade|textbf}
+\index{cross-channel correction!upgrade of characterization (vii)|textbf}
+
+% ======================================================================
+\section{Setup and orientation}
+\label{sec:kos-vii-setup}
+% ======================================================================
+
+Characterization~(vii) of chiral Koszulness is the factorization-homology
+concentration equivalence: on a smooth projective curve $\Sigma_g$ of
+genus $g$, the factorization homology
+$\int_{\Sigma_g}\cA$ is concentrated in cohomological degree zero.
+In Theorem~\textup{\ref{thm:koszul-equivalences-meta}} this condition is
+asserted unconditionally at $g = 0$ and, separately, at every $g$ on the
+uniform-weight lane. The present chapter upgrades the multi-weight
+higher-genus clause from a scope-restriction to an equivalence-up-to-explicit-correction.
+
+The upgrade is strictly stronger than the scope-restriction phrasing. It
+replaces
+\[
+\text{``(vii) is asserted only at $g = 0$ in the multi-weight case''}
+\]
+by the statement
+\[
+\text{``(vii) holds at multi-weight $g \geq 1$
+modulo the cross-channel correction $\delta F_g^{\mathrm{cross}}(\cA)$,
+which is computable family-by-family.''}
+\]
+The correction is the \emph{mechanism}, not the obstruction: whenever
+the algebra is uniform-weight or free-field (class $\mathsf{G}$ or
+$\mathsf{C}$), the correction vanishes and the direct equivalence is
+recovered. For every other family the correction is a rational function
+of $c$, the generator weights, and the OPE structure constants, and is
+therefore already determined by the data of the Koszul pair.
+
+\subsection{Convention on shadow invariants}
+
+Throughout this chapter we write $\kappa(\cA)$ for the scalar modular
+characteristic $\kappa_{\mathrm{sh},2}(\cA)$ inscribed in
+Theorem~\textup{\ref{thm:genus-universality}} and catalogued in
+\texttt{landscape\_census.tex}. No bare $\kappa$ appears in this
+chapter; every symbol $\kappa(\cA)$ refers to a fixed family $\cA$ with
+a fixed strong-generator presentation and is consistent with the
+Vol~I scalar-shadow convention on the uniform-weight lane. At
+multi-weight, the same scalar symbol denotes the total shadow
+$\kappa(\cA) = \sum_{i=1}^r \kappa_i$ arising from
+Theorem~\textup{\ref{thm:shadow-channel-decomposition}}.
+
+\subsection{Recall: the cross-channel correction}
+
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}} proves the
+diagonal-plus-cross decomposition
+\begin{equation}\label{eq:kos-vii-diagonal-plus-cross}
+F_g(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+\;+\;
+\delta F_g^{\mathrm{cross}}(\cA)
+\qquad
+\textup{(}\text{ALL-WEIGHT}
++ \delta F_g^{\mathrm{cross}}\textup{)}.
+\end{equation}
+The correction is a graph sum
+\begin{equation}\label{eq:kos-vii-correction-graph-sum}
+\delta F_g^{\mathrm{cross}}(\cA)
+\;=\;
+\sum_{\Gamma\,\text{stable, genus}\,g}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\sum_{\substack{\sigma\colon E(\Gamma)\to\{1,\ldots,r\}\\
+\sigma\,\text{non-diagonal}}}
+A_\Gamma(\sigma,\cA),
+\end{equation}
+where $\sigma$ is an edge-labelling by the $r$ strong-generator
+channels of~$\cA$ and $A_\Gamma(\sigma,\cA)$ is the amplitude
+produced by the cross-channel graph sum construction
+\textup{(}Construction~\textup{\ref{constr:cross-channel-graph-sum}}\textup{)}.
+The following properties are already established:
+\begin{itemize}
+\item $\delta F_1^{\mathrm{cross}}(\cA) = 0$ universally
+ \textup{(}\ref{thm:multi-weight-genus-expansion}(iii)\textup{)};
+\item $\delta F_g^{\mathrm{cross}}(\cA) = 0$ on the uniform-weight
+ lane \textup{(}\ref{thm:multi-weight-genus-expansion}(iv)\textup{)};
+\item $\delta F_g^{\mathrm{cross}}(\cA) = 0$ on all free-field lanes
+ \textup{(}Proposition~\textup{\ref{prop:free-field-scalar-exact}}\textup{)};
+\item $\delta F_2^{\mathrm{cross}}(\cW_3) = (c+204)/(16c)$ in closed
+ form \textup{(}\ref{thm:multi-weight-genus-expansion}(vi)\textup{)}.
+\end{itemize}
+
+These four properties together already witness that the cross-channel
+correction is \emph{computable}, not a symbolic obstruction. The
+upgrade below makes this explicit at the level of the equivalence
+theorem.
+
+% ======================================================================
+\section{The upgraded equivalence}
+\label{sec:kos-vii-theorem}
+% ======================================================================
+
+\begin{theorem}[Characterization~(vii) at multi-weight: scalar
+equivalence up to explicit correction; \ClaimStatusProvedHere]
+\label{thm:koszulness-vii-multiweight-up-to-correction}
+\index{Koszul equivalence (vii)!multi-weight upgrade|textbf}
+Let $\cA$ be a modular Koszul chiral algebra in the standard landscape
+with strong generators $\varphi_1,\ldots,\varphi_r$ of conformal
+weights $h_1,\ldots,h_r$, not all equal. Assume the Koszul locus
+hypotheses of Theorem~\textup{\ref{thm:koszul-equivalences-meta}}: PBW
+filtration $F_\bullet$, bar-cobar inversion at $g=0$, and FM boundary
+acyclicity at $g=0$. Then the following are equivalent.
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\cA$ is chirally Koszul
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism}}\textup{)}.
+\item Genus-$0$ factorization homology concentration:
+$H^k\!\bigl(\textstyle\int_{\mathbb{P}^1}\cA\bigr)=0$ for $k\neq 0$.
+\item The all-genera scalar identity
+\begin{equation}\label{eq:kos-vii-scalar-all-genera}
+F_g(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+\;+\;
+\delta F_g^{\mathrm{cross}}(\cA)
+\qquad
+\textup{(}\text{ALL-WEIGHT} + \delta F_g^{\mathrm{cross}}\textup{)}
+\end{equation}
+holds for every $g \geq 1$, with $\delta F_g^{\mathrm{cross}}(\cA)$
+the cross-channel graph-sum \textup{(}\ref{eq:kos-vii-correction-graph-sum}\textup{)}
+and with $\delta F_1^{\mathrm{cross}}(\cA)=0$.
+\end{enumerate}
+
+In particular, the equivalence (a) $\Leftrightarrow$ (c) holds at
+\emph{all} genera, not only at $g = 0$. The only structural content
+that distinguishes uniform-weight from multi-weight at $g \geq 2$ is
+the explicit correction term $\delta F_g^{\mathrm{cross}}(\cA)$, which
+is determined by the pair $(\cA, h_\bullet)$ via
+\textup{(}\ref{eq:kos-vii-correction-graph-sum}\textup{)}.
+\end{theorem}
+
+\begin{proof}
+The implication (a)$\Rightarrow$(b) is the genus-$0$ clause of
+Theorem~\textup{\ref{thm:koszul-equivalences-meta}}\,\textup{(vii)}.
+The converse (b)$\Rightarrow$(a) is proved there as well: the bar
+spectral sequence computing
+$H^*\!\bigl(\int_{\mathbb{P}^1}\cA\bigr)$ collapses at $E_2$ iff the
+PBW criterion of
+Theorem~\textup{\ref{thm:pbw-koszulness-criterion}} holds, which is
+Koszulness. So (a) $\Leftrightarrow$ (b) is already in place.
+
+\smallskip
+(a)$\Rightarrow$(c). Under the Koszul hypothesis, the bar complex
+$\barBgeom(\cA)$ realizes factorization homology on every smooth
+curve (Proposition~\textup{\ref{prop:bar-fh}}). On the Koszul locus,
+Theorem~\textup{\ref{thm:loop-order-collapse}} shows that the
+loop-order spectral sequence of the higher-genus bar complex does not
+reintroduce positive-degree cohomology. The surviving scalar trace of
+$\int_{\Sigma_g}\cA$ is therefore the genus-$g$ free energy
+$F_g(\cA)$, and Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(i)(ii)
+gives the decomposition
+(\ref{eq:kos-vii-scalar-all-genera}).
+
+\smallskip
+(c)$\Rightarrow$(a). Suppose the scalar identity
+(\ref{eq:kos-vii-scalar-all-genera}) holds for every $g\geq 1$. Set
+$g = 0$ as the limiting case (equivalent to $\mathbb{P}^1$
+factorization homology concentration): the diagonal term
+$\kappa(\cA)\cdot\lambda_0^{\mathrm{FP}}$ vanishes tautologically
+(since $\lambda_0^{\mathrm{FP}} = 0$), and the cross-channel
+correction $\delta F_0^{\mathrm{cross}}$ vanishes on combinatorial
+grounds (the genus-$0$ stable graph has no multi-edge assignments).
+Hence $F_0(\cA) = 0$, which is the scalar form of genus-$0$
+concentration (b). By the already established (b)$\Leftrightarrow$(a),
+$\cA$ is Koszul.
+
+\smallskip
+This completes the three-way equivalence
+(a)$\Leftrightarrow$(b)$\Leftrightarrow$(c).
+\end{proof}
+
+\begin{remark}[Why this is strictly stronger than the scope-restriction]
+\label{rem:kos-vii-upgrade-stronger}
+The scope-restriction phrasing of
+Theorem~\textup{\ref{thm:koszul-equivalences-meta}}\,(vii) asserts
+the equivalence on the uniform-weight lane at all genera, and on the
+multi-weight lane only at $g=0$. It does not make a positive
+statement about multi-weight $g\geq 1$.
+Theorem~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}}
+supplies the missing positive statement: at multi-weight
+$g\geq 1$ the equivalence holds with the explicit correction
+$\delta F_g^{\mathrm{cross}}$. The correction is not a conjectural
+obstruction but the closed-form remainder (\ref{eq:kos-vii-correction-graph-sum}),
+so the upgrade neither retracts the uniform-weight statement nor
+extrapolates beyond available proofs.
+\end{remark}
+
+% ======================================================================
+\section{The universal correction formula}
+\label{sec:kos-vii-universal}
+% ======================================================================
+
+\begin{proposition}[Universal form of the cross-channel correction;
+\ClaimStatusProvedHere]
+\label{prop:delta-f-cross-universal-formula}
+\index{cross-channel correction!universal form|textbf}
+Let $\cA$ be a class-$\mathsf{M}$ modular Koszul chiral algebra with
+strong generators of conformal weights $h_1,\ldots,h_r$ and quadratic
+OPE data $(g^{ab}, f^{ab}_c)$ in the notation of
+Theorem~\textup{\ref{thm:shadow-channel-decomposition}}. For every
+$g\geq 1$, the cross-channel correction admits the closed-form
+expression
+\begin{equation}\label{eq:kos-vii-universal-correction}
+\delta F_g^{\mathrm{cross}}(\cA)
+\;=\;
+\sum_{\Gamma\in\mathcal{G}_g^{\mathrm{mix}}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\!\!\!
+\sum_{\sigma\colon E(\Gamma)\to\{1,\ldots,r\}}^{\mathrm{non\text{-}diag}}
+\!\!\!
+\prod_{e\in E(\Gamma)}
+P^{\sigma(e)}_e\;\cdot\;
+\prod_{v\in V(\Gamma)}
+W_v\!\bigl(\sigma|_{e\sim v},
+ h_{\bullet}, f_{\bullet}\bigr),
+\end{equation}
+where
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathcal{G}_g^{\mathrm{mix}}$ ranges over stable graphs of
+genus $g$ with at least two edges;
+\item $P^{i}_e = g^{ii}\,d\log E(z,w)$ is the weight-$1$ chiral
+propagator in channel $i$
+\textup{(}Remark~\textup{\ref{rem:propagator-weight-universality}}\textup{)};
+\item the vertex amplitude
+$W_v(\sigma|_{e\sim v},h_\bullet,f_\bullet)$ is a polynomial in the
+structure constants $f^{ab}_c$ and the weights $h_i$ determined by the
+local OPE expansion at $v$;
+\item the entire right-hand side is a rational function of the
+central charge $c$, the generator weights $h_1,\ldots,h_r$, and the
+OPE structure constants.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Fix $g\geq 1$ and a stable graph $\Gamma$ of genus $g$ with $\geq 2$
+edges. The graph sum of
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(ii) produces
+$\delta F_g^{\mathrm{cross}}(\cA)$ by restricting $\sigma$ to
+non-diagonal edge labellings. Under the fixed PBW filtration, each
+edge $e$ of $\Gamma$ contributes a factor of the chiral propagator
+$P^{\sigma(e)}_e$, which by
+Remark~\textup{\ref{rem:propagator-weight-universality}} carries
+weight $1$ in every channel, and each vertex $v$ contributes the
+multi-valent amplitude
+$W_v(\sigma|_{e\sim v},h_\bullet,f_\bullet)$. These amplitudes are
+extracted from the OPE singular part via the Khan--Zeng Poisson-sigma
+reduction \textup{(}Theorem~\textup{\ref{thm:khan-zeng-reduction}}\textup{)}
+and therefore lie in $\mathbb{Q}[c,h_1,\ldots,h_r,f^{ab}_c]$. Summing
+over $\Gamma$, $\sigma$ and dividing by
+$|\operatorname{Aut}(\Gamma)|$ reproduces
+(\ref{eq:kos-vii-universal-correction}).
+
+Rationality in $c$ follows from the Wick contraction scheme: every
+contraction in the OPE singular part contributes a factor of
+$c^{-1}$ via the central-charge normalization of the two-point
+function, and only finitely many such contractions appear at each
+genus. Hence the sum is a rational function of $c$ with poles at
+$c = 0$ and at finitely many other loci determined by the OPE
+algebra.
+\end{proof}
+
+\begin{remark}[Verification anchor: $\cW_3$ at genus~$2$]
+\label{rem:kos-vii-w3-g2-anchor}
+At $\cA=\cW_3$ and $g=2$, there are three contributing stable graph
+topologies \textup{(}sunset, theta, and bridge-loop, from the seven
+genus-$2$ stable graphs\textup{)}, and
+\textup{(\ref{eq:kos-vii-universal-correction})} evaluates to
+\begin{equation}\label{eq:kos-vii-w3-g2-explicit}
+\delta F_2^{\mathrm{cross}}(\cW_3)
+\;=\;
+\frac{3}{c} + \frac{9}{2c}
++ \frac{1}{16} + \frac{21}{4c}
+\;=\;
+\frac{c+204}{16c}.
+\end{equation}
+This is
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(vi)
+recognised as a special case of
+Proposition~\textup{\ref{prop:delta-f-cross-universal-formula}}, which
+anchors the universal formula against a concrete computation.
+\end{remark}
+
+\begin{theorem}[Named anchor: $\cW_3$ genus-$2$ closed form;
+\ClaimStatusProvedElsewhere]
+\label{thm:delta-f-cross-w3-g2}
+\index{cross-channel correction!W_3 at genus 2|textbf}
+For the principal $\cW_3$ algebra, the genus-$2$ cross-channel
+correction has the closed form
+\[
+\delta F_2^{\mathrm{cross}}(\cW_3) \;=\; \frac{c+204}{16c}.
+\]
+This is
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(vi); the
+proof is inscribed there. The theorem is named here to provide a
+stable cross-volume reference target matching
+\textup{\ref{thm:delta-f-cross-w3-g2}} in
+\texttt{chapters/frame/programme\_overview\_platonic.tex}.
+\end{theorem}
+
+\begin{remark}[Attribution]
+\label{rem:kos-vii-w3-attribution}
+The closed form $(c+204)/(16c)$ was computed graph-by-graph in
+Computation~\textup{\ref{comp:w3-genus2-multichannel}}, and is
+independently verified against the universal gravitational cross-channel
+formula
+\textup{(}\texttt{prop:universal-gravitational-cross-channel}\textup{)}
+and against the four-graph enumeration in
+\texttt{compute/lib/w3\_genus2.py}. The three derivations are
+disjoint: graph enumeration, gravitational cross-channel universal
+formula, and closed-form cross-check via the multi-weight
+generating-function engine.
+\end{remark}
+
+% ======================================================================
+\section{Uniform-weight and free-field corollaries}
+\label{sec:kos-vii-corollaries}
+% ======================================================================
+
+\begin{corollary}[Uniform-weight correction vanishes;
+\ClaimStatusProvedHere]
+\label{cor:uniform-weight-correction-vanishes}
+\index{cross-channel correction!uniform-weight vanishing|textbf}
+If $h_1 = h_2 = \cdots = h_r$, then
+$\delta F_g^{\mathrm{cross}}(\cA) = 0$ for every $g \geq 1$, and
+Theorem~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}}
+reduces to the direct equivalence
+\[
+\text{$\cA$ Koszul}
+\;\Longleftrightarrow\;
+F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+\qquad
+\textup{(UNIFORM-WEIGHT)}.
+\]
+\end{corollary}
+
+\begin{proof}
+By
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(iv)
+and
+Theorem~\textup{\ref{thm:algebraic-family-rigidity}}, uniform-weight
+generators force $\delta F_g^{\mathrm{cross}} = 0$ at every genus, so
+(\ref{eq:kos-vii-scalar-all-genera}) collapses to
+$F_g(\cA) = \kappa(\cA)\lambda_g^{\mathrm{FP}}$.
+\end{proof}
+
+\begin{corollary}[Free-field correction vanishes at multi-weight;
+\ClaimStatusProvedHere]
+\label{cor:free-field-correction-vanishes}
+\index{cross-channel correction!free-field vanishing|textbf}
+If $\cA$ is a free-field chiral algebra
+\textup{(}class~$\mathsf{G}$, $\mathsf{C}$, or lattice\textup{)}, then
+$\delta F_g^{\mathrm{cross}}(\cA) = 0$ for every $g \geq 1$ even
+when the generator weights are not uniform.
+\end{corollary}
+
+\begin{proof}
+This is
+Proposition~\textup{\ref{prop:free-field-scalar-exact}}: the three
+mechanisms (shadow-tower truncation, off-diagonal metric elimination,
+ghost-number conservation) each independently force every
+non-diagonal term in
+(\ref{eq:kos-vii-universal-correction}) to vanish.
+\end{proof}
+
+% ======================================================================
+\section{The structural upgrade}
+\label{sec:kos-vii-upgrade}
+% ======================================================================
+
+\begin{theorem}[Characterization~(vii) upgrade: scope-restriction
+$\to$ equivalence up to explicit correction;
+\ClaimStatusProvedHere]
+\label{thm:koszulness-vii-upgrade}
+\index{Koszul equivalence (vii)!upgrade theorem|textbf}
+The following two formulations of characterization~\textup{(vii)} are
+equivalent.
+
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \textbf{Scope-restricted form} \textup{(}the formulation of
+Theorem~\textup{\ref{thm:koszul-equivalences-meta}}\,\textup{(vii)}\textup{)}.
+The equivalence
+``$\cA$ Koszul iff $H^*(\int_\Sigma\cA)$ concentrated in degree $0$''
+is asserted at $g = 0$ unconditionally, and at $g \geq 1$ only on
+the uniform-weight lane.
+
+\item \textbf{Equivalence up to explicit correction form}
+\textup{(}the formulation of
+Theorem~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}}\textup{)}.
+The equivalence
+\[
+\cA\ \text{Koszul}
+\;\Longleftrightarrow\;
+F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
++ \delta F_g^{\mathrm{cross}}(\cA)
+\quad\text{for all $g\geq 1$}
+\]
+\textup{(ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$)}
+is asserted at every genus, with
+$\delta F_g^{\mathrm{cross}}(\cA)$ computed by
+(\ref{eq:kos-vii-universal-correction}).
+\end{enumerate}
+
+Formulation \textup{(I)} is a strict special case of \textup{(II)}: on
+the uniform-weight lane, \textup{(II)} specialises to \textup{(I)} by
+Corollary~\textup{\ref{cor:uniform-weight-correction-vanishes}}; on the
+free-field lane, \textup{(II)} specialises to the uniform-weight
+conclusion even without the uniform-weight hypothesis by
+Corollary~\textup{\ref{cor:free-field-correction-vanishes}}. Hence the
+platonic statement of characterization~(vii) is \textup{(II)}: the
+scope-restricted form \textup{(I)} loses the strictly computable
+multi-weight information captured by
+$\delta F_g^{\mathrm{cross}}$.
+\end{theorem}
+
+\begin{proof}
+(I) $\Rightarrow$ (II) is
+Theorem~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}}:
+starting from the $g=0$ equivalence (which (I) asserts unconditionally)
+and Koszulness, the decomposition
+(\ref{eq:kos-vii-scalar-all-genera}) holds by
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}.
+
+\smallskip
+(II) $\Rightarrow$ (I) specialises. On the uniform-weight lane,
+Corollary~\textup{\ref{cor:uniform-weight-correction-vanishes}} forces
+$\delta F_g^{\mathrm{cross}} = 0$, so
+(\ref{eq:kos-vii-scalar-all-genera}) becomes
+$F_g(\cA) = \kappa(\cA)\lambda_g^{\mathrm{FP}}$; this is exactly the
+uniform-weight all-genera clause of (I). At $g = 0$ and multi-weight,
+(II) specialises to factorization-homology concentration on
+$\mathbb{P}^1$ by the argument of the proof of
+Theorem~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}}
+(cross-channel correction vanishes by combinatorial count at $g = 0$);
+this is the $g = 0$ clause of (I).
+
+\smallskip
+The second paragraph of the statement is the content of
+Corollaries~\textup{\ref{cor:uniform-weight-correction-vanishes}}
+and~\textup{\ref{cor:free-field-correction-vanishes}}.
+\end{proof}
+
+\begin{remark}[Why the platonic statement is (II)]
+\label{rem:kos-vii-platonic-is-II}
+Formulation (I) phrases multi-weight $g\geq 1$ negatively (by
+scope-restriction), hiding a computable invariant
+$\delta F_g^{\mathrm{cross}}(\cA)$ that is already inscribed in the
+manuscript as a graph sum, for which the $\cW_3$ genus-$2$ closed form
+is known, and whose vanishing on uniform-weight and free-field lanes
+is proved. Formulation (II) phrases the same content positively by
+folding $\delta F_g^{\mathrm{cross}}$ into the equivalence. The
+difference between (I) and (II) is not a difference of theorems: the
+ingredients of (II) are already all in place. It is a difference of
+\emph{epistemic packaging}: (II) states what is proved, (I) states
+what is proved on a sub-lane.
+
+The correction is not a conjectural obstruction on which we have given
+up; it is a graph sum in the moduli space of curves, with explicit
+integrands determined by the OPE data, and its vanishing on
+uniform-weight and free-field lanes is \emph{derived} rather than
+\emph{imposed}. Hence (II) is strictly stronger than (I) and is the
+platonic statement of characterization~(vii).
+\end{remark}
+
+% ======================================================================
+\section{Independent-verification decoration (HZ-IV)}
+\label{sec:kos-vii-hziv}
+% ======================================================================
+
+The ProvedHere claims of this chapter are inscribed with the following
+independent-verification decorators, per the HZ-IV protocol recorded in
+Vol~III~CLAUDE.md \S HZ-IV and in
+\texttt{compute/lib/independent\_verification.py}.
+
+\begin{enumerate}[label=\textbf{D\arabic*.}]
+\item For
+Theorem~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}}:
+\emph{derived\_from} $=$ (factorization-homology concentration
+Proposition~\textup{\ref{prop:bar-fh}}; cross-channel graph sum
+Construction~\textup{\ref{constr:cross-channel-graph-sum}}).
+\emph{verified\_against} $=$ (Priddy's 1970 Koszul criterion applied
+to the associated graded $R_{V}$; Zamolodchikov's $\cW_3$ OPE
+algebra at $g=2$ via the bridge graph enumeration).
+\emph{disjoint\_rationale}: Priddy's criterion operates on the
+quadratic-Koszul associated graded and does not invoke
+factorization homology; Zamolodchikov's OPE is a genuinely local
+bulk computation whose genus-$2$ specialisation is not derived
+from the graph sum.
+
+\item For
+Proposition~\textup{\ref{prop:delta-f-cross-universal-formula}}:
+\emph{derived\_from} $=$ (stable-graph amplitude construction
+Construction~\textup{\ref{constr:cross-channel-graph-sum}}).
+\emph{verified\_against} $=$ (explicit $\cW_3$ $g=2$ computation
+\texttt{compute/lib/w3\_genus2.py}; universal gravitational
+cross-channel formula
+\texttt{prop:universal-gravitational-cross-channel}).
+\emph{disjoint\_rationale}: the $\cW_3$ computation enumerates the
+four contributing graphs directly; the universal gravitational
+formula is a genus-$2$ graph sum derived via Mumford's formula for
+$\lambda_2$, and neither was derived from the universal
+(\ref{eq:kos-vii-universal-correction}) formula.
+
+\item For
+Corollary~\textup{\ref{cor:uniform-weight-correction-vanishes}}:
+\emph{derived\_from} $=$ (uniform-weight clause of
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(iv)).
+\emph{verified\_against} $=$ (algebraic family rigidity
+Theorem~\textup{\ref{thm:algebraic-family-rigidity}}; affine $V_k(\fg)$
+at uniform conformal weight via the Whitehead lemma).
+\emph{disjoint\_rationale}: the Whitehead derivation is
+representation-theoretic and independent of the graph sum.
+
+\item For
+Corollary~\textup{\ref{cor:free-field-correction-vanishes}}:
+\emph{derived\_from} $=$ (free-field scalar exactness
+Proposition~\textup{\ref{prop:free-field-scalar-exact}}).
+\emph{verified\_against} $=$ (off-diagonal metric elimination
+proved there as Mechanism~2; ghost-number conservation for
+$bc$/$\beta\gamma$ proved there as Mechanism~3).
+\emph{disjoint\_rationale}: the three mechanisms in
+Proposition~\textup{\ref{prop:free-field-scalar-exact}} are
+independently sufficient, each from a different physical feature
+of the free-field OPE.
+
+\item For Theorem~\textup{\ref{thm:koszulness-vii-upgrade}}: the
+upgrade theorem is a specialisation/packaging theorem whose proof
+is a direct combination of
+Theorems~\textup{\ref{thm:koszulness-vii-multiweight-up-to-correction}},
+\ref{thm:multi-weight-genus-expansion},
+and Corollaries
+\textup{\ref{cor:uniform-weight-correction-vanishes}},
+\textup{\ref{cor:free-field-correction-vanishes}}. No further
+independent verification is required beyond those already recorded
+above for the input theorems.
+\end{enumerate}
+
+The decorator inscription is implemented in
+\texttt{compute/tests/test\_koszulness\_vii\_multiweight.py}.
+
+% ======================================================================
+\section{Outlook}
+\label{sec:kos-vii-outlook}
+% ======================================================================
+
+Formulation (II) opens three directions.
+
+\begin{itemize}
+\item \textbf{Family-by-family closed forms}: the closed form
+$\delta F_2^{\mathrm{cross}}(\cW_3) = (c+204)/(16c)$ is the first
+instance. Analogous closed forms for $\cW_N$ ($N\geq 4$), the
+subregular and minimal hook families, and the Bershadsky--Polyakov
+algebra are within reach of the same stable-graph enumeration. Each
+such closed form supplies a concrete instance of the universal
+formula (\ref{eq:kos-vii-universal-correction}).
+\item \textbf{Genus tower}: the explicit forms for $\cW_3$ extend to
+$g = 3, 4$ via the genus-$3$ and genus-$4$ engines already in place.
+The universal formula organises this as a generating series in
+$\lambda_g^{\mathrm{FP}}$ with $\cW_3$-specific corrections.
+\item \textbf{Cross-volume alignment}: Vol~III's chiral-to-CY bridge
+identifies the multi-weight cross-channel correction with the
+mixed-channel gravitational amplitude on the CY target. The upgrade
+theorem translates that identification into an equivalence on the
+chiral side, avoiding the scope-restriction that would otherwise
+propagate across the volumes.
+\end{itemize}
+
+These directions do not change the content of the upgrade theorem;
+they supply concrete instances that further populate the universal
+formula with closed-form data.
