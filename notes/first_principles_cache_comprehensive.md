@@ -3684,6 +3684,20 @@ Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_
 
 **Related**: AP-RMATRIX (level prefix + Sugawara shift), FM11 (sym(r) = κ_dp for KM, full κ requires +dim(g)/2), AP97 (av:g^{E_1} → g^mod lossy).
 
+### Pattern 225. Wave/campaign identifier leakage into typeset prose (2026-04-17, configuration_spaces.tex:16)
+
+**Type**: CONSTITUTIONAL metadata hygiene (sister to Pattern 221).
+
+**Trigger**: internal campaign/wave/session identifiers ("wave-14", "wave-3 rewrite", "session 2026-04-17", "campaign X closure") appear verbatim in manuscript prose. These label editorial phases that the reader sees as inscrutable timestamps.
+
+**Example**: "The wave-14 reading of this chapter is that $\eta = d\log(z_i - z_j)$ is the connection one-form..." — the mathematical claim is correct; the scaffolding label "wave-14" belongs in commit messages / notes/, not in typeset prose.
+
+**Healing**: replace with neutral prose stating the structural content ("The structural reading", "The organising principle", "The unifying identification"). Keep the math, drop the timestamp.
+
+**Regex trigger**: `\\bwave[- ]?\\d+\\b|\\bcampaign\\b|\\bsession\\b.*\\d{4}|inscription|earlier phrasing|adversarial.*wave` — post-commit grep across all `.tex` under `chapters/`, `standalone/`, `main.tex` (outside `%` comments).
+
+**Related**: AP236 (blacklist-slug leakage), Pattern 221 (the specific `/B\d+` form), the CLAUDE.md "Manuscript Metadata Hygiene (CONSTITUTIONAL, ZERO TOLERANCE)" section.
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.

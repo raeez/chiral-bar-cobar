@@ -13,24 +13,25 @@ decomposition of the boundary produces the coalgebra structure of the
 bar complex over the Feynman transform of the commutative modular
 operad.
 
-The wave-14 reading of this chapter is that $\eta = d\log(z_i - z_j)$
-is the connection one-form of the universal flat connection
-$\nabla_{\mathrm{Arnold}}$ on $\operatorname{Conf}_n(\mathbb{C})$,
-and that the bar differential is its pullback by the KZ functor:
+The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ are the scalar
+coefficients of the universal KZ connection one-form
+$\omega_{\mathrm{Arnold}} = \sum_{i<j} t_{ij}\,\eta_{ij}$ valued in
+the infinitesimal braid Lie algebra $\mathfrak{t}_n$; the
+universal flat connection is
+$\nabla_{\mathrm{Arnold}} = d - \omega_{\mathrm{Arnold}}$ on the
+trivial $U(\mathfrak{t}_n)$-bundle over $\operatorname{Conf}_n(\mathbb{C})$,
+and the bar differential is its pullback along the KZ functor:
 \[
    d_{\mathrm{bar}} \;=\; \mathrm{KZ}^*\bigl(\nabla_{\mathrm{Arnold}}\bigr).
 \]
-The chapter delivers the geometric ingredients on which this
-identity rests: $\overline{C}_n(X)$ as the host
-(\S\ref{sec:FM-compactification}), the logarithmic propagator
-(Definition~\ref{def:log-forms}), the Arnold relation
-(Theorem~\ref{thm:arnold-relations}) as the flatness of
-$\nabla_{\mathrm{Arnold}}$, the residue maps
-(Theorem~\ref{thm:residue-operations}) as the ambient calculus
-that turns ``propagator wedged with OPE'' into ``bar
-differential.'' The KZ pullback identity itself is the
-Climax Theorem of Chapter~\ref{chap:climax-platonic}; the
-ingredients constructed here are the inputs to that theorem.
+Four geometric inputs carry this identity: $\overline{C}_n(X)$
+(\S\ref{sec:FM-compactification}); the logarithmic propagator
+(Definition~\ref{def:log-forms}); the Arnold relation
+(Theorem~\ref{thm:arnold-relations}), which is the flatness of
+$\nabla_{\mathrm{Arnold}}$; and the residue maps
+(Theorem~\ref{thm:residue-operations}), which turn propagator-wedged-with-OPE
+into bar differential. The KZ pullback itself is proved at the climax
+(Chapter~\ref{chap:climax-platonic}).
 
 For the modular extension (Mok logarithmic FM
 \S\ref{sec:log-fm-punctured}; bordered FM
@@ -85,10 +86,12 @@ constructed by iterated blow-up along diagonals
 $\Delta_S = \{x_i = x_j : i,j \in S\}$ for
 $|S| \geq 2$ produces an exceptional divisor~$D_S$ decomposing as
 $D_S \cong \overline{C}_{n-|S|+1}(X)
-\times \overline{C}_{|S|}(\mathbb{A}^1)$,
+\times \overline{C}_{|S|}(\mathbb{A}^1) \bigm/ \mathrm{Aff}(\mathbb{A}^1)$,
 where the first factor records the collision center and surviving
 points on~$X$, the second records relative positions on a
-genus-$0$ tangent-space screen. For nested collisions
+genus-$0$ tangent-space screen modulo the translation-and-dilation
+group $\mathrm{Aff}(\mathbb{A}^1) = \mathbb{C} \rtimes \mathbb{C}^*$
+(full description in Theorem~\ref{thm:FM}). For nested collisions
 ($S_1 \subset S_2 \subset \cdots$), this iterates to produce
 screens within screens, each genus~$0$, giving the full boundary
 stratification by stable trees. Second, the logarithmic
@@ -1126,7 +1129,7 @@ $(z_1-z_2)^{-(h_i+h_j-h_k)}$ by this kernel produces the integrand
 \emph{not} $(z_1-z_2)^{-(h_i+h_j-h_k)}$ alone. Equivalently, after
 absorbing the $d(z_1-z_2)$ factor into the polar part, the bar
 differential effectively reads off the $(h_i+h_j-h_k)$-th OPE mode,
-not the $(h_i+h_j-h_k+1)$-th. In the language , the $d\log$
+not the $(h_i+h_j-h_k+1)$-th. In this language the $d\log$
 kernel \emph{absorbs one pole order} from the OPE: the
 collision residue $r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
 has pole orders \emph{one less} than the OPE itself. For the
@@ -4006,48 +4009,20 @@ is $\prod_{k=1}^{n-1}(1+kt)$, as proved by Arnol'd~\cite{Arnold69}.
 \subsection{Physical interpretation: Jacobi identity and associativity}
 \label{sec:arnold-physical}
 
-\begin{theorem}[Arnold relations = Jacobi identity; \ClaimStatusProvedHere]
+\begin{theorem}[Arnold relation $\Leftrightarrow$ Jacobi for the chiral bracket \cite{LV12}; \ClaimStatusProvedElsewhere]
 \label{thm:arnold-jacobi}
-In conformal field theory, the Arnold relations are equivalent to the Jacobi identity 
-for operator product expansions (OPEs).
+The Arnold cyclic relation on $\Omega^2_{\overline{C}_n(X)}(\log D)$ is equivalent to the Jacobi identity for the chiral bracket $\{a,b\} := a_{(0)}b$; equivalently, to the associativity axiom of the chiral operad (Loday--Vallette \cite[Theorem~7.1.3, \S7.6]{LV12}). This is the simple-pole projection; the full bar differential requires the Borcherds identity, which couples all OPE pole orders (Proposition~\ref{prop:pole-decomposition} in Chapter~\ref{chap:bar-cobar}).
 \end{theorem}
 
-\begin{proof}
-Consider three chiral fields $\phi_i(z_i)$, $\phi_j(z_j)$, $\phi_k(z_k)$. The OPE gives:
+\begin{remark}[Physical mnemonic: crossing symmetry]
+\label{rem:arnold-crossing-symmetry}
+The Arnold relation expresses crossing symmetry of OPE at the simple-pole level: the three iterated residues at the triple-collision stratum $D_{ijk}$ correspond to the three ways of expanding $\phi_i(z_i)\phi_j(z_j)\phi_k(z_k)$ via successive collisions, and Arnold is the identity
 \begin{equation}
-\phi_i(z_i) \phi_j(z_j) = \sum_{\ell} \frac{C_{ij}^{\ell}}{(z_i - z_j)^{\Delta_\ell}} 
-\phi_\ell(z_j) + \ldots
+\operatorname{Res}_{D_{jk}}\operatorname{Res}_{D_{ij}}
++ \operatorname{Res}_{D_{ki}}\operatorname{Res}_{D_{jk}}
++ \operatorname{Res}_{D_{ij}}\operatorname{Res}_{D_{ki}} = 0
 \end{equation}
-
-The Jacobi identity states:
-\begin{equation}
-[[\phi_i, \phi_j], \phi_k] + [[\phi_j, \phi_k], \phi_i] + [[\phi_k, \phi_i], \phi_j] = 0
-\end{equation}
-
-where $[\phi, \psi] = \oint \phi(z) \psi(w) \, dz$ is the commutator.
-
-Expanding using OPEs and integrating over contours, the Jacobi identity becomes:
-\begin{equation}
-\oint_{z_i = z_j} \oint_{z_j = z_k} + \oint_{z_j = z_k} \oint_{z_k = z_i} + 
-\oint_{z_k = z_i} \oint_{z_i = z_j} = 0
-\end{equation}
-
-These contour integrals are precisely the residues:
-\begin{equation}
-\text{Res}_{D_{ij}} \text{Res}_{D_{jk}} + \text{Res}_{D_{jk}} \text{Res}_{D_{ki}} + 
-\text{Res}_{D_{ki}} \text{Res}_{D_{ij}}
-\end{equation}
-
-The Arnold relation ensures this sum vanishes, which is exactly the statement that OPEs
-are associative and satisfy the Jacobi identity.
-\end{proof}
-
-\begin{remark}[Witten's physical perspective]
-Arnold relations are the mathematical expression of
-\emph{crossing symmetry} in scattering amplitudes: different orders of
-taking limits $z_i \to z_j$ must give the same answer. In string
-theory, different ways of degenerating a Riemann surface (bringing
-punctures together) give consistent amplitudes.
+forcing the three expansions to agree on the chiral bracket. In string-theoretic language: different ways of degenerating a Riemann surface by bringing punctures together produce consistent amplitudes.
 \end{remark}
 
 \begin{corollary}[Operadic associativity \cite{LV12}; \ClaimStatusProvedElsewhere]
@@ -5037,3 +5012,6 @@ Total cohomology of Ran space:
 \hline
 \end{tabular}
 \end{table}
+
+\medskip\noindent
+The geometric inputs are now in place. The Fulton--MacPherson compactification $\overline{C}_n(X)$ carries the logarithmic forms $\eta_{ij}$ as sections of $\Omega^1(\log D)$, and the Arnold relation is the codimension-two compatibility that forces $d^2 = 0$ on the bar differential at genus~$0$. The logarithmic FM variant $\mathrm{FM}_m(X\mathbin{|}D)$ and the bordered FM compactification $\overline{C}^{\,\mathrm{oc}}_{k,\vec{m}}$ extend the framework to punctured and tangential-log curves, on which the modular Maurer--Cartan equation with clutching governs the genus expansion of chiral correlators. The Ran space $\operatorname{Ran}(X)$ provides the factorization-theoretic carrier $\operatorname{ChirAlg}(X) \simeq \operatorname{D-mod}_{\mathrm{fact}}(\operatorname{Ran}(X))$ in which the bar coalgebra lives. The universal identification $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$ of the opening is proved at the climax (Chapter~\ref{chap:climax-platonic}); its inputs are assembled here.
