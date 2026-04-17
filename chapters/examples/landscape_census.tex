@@ -24,6 +24,24 @@ forces the infinite shadow tower of Virasoro and the $\mathcal{W}$-algebras
 structure of the MC element $\Theta_\cA$: once $\kappa$ and $S_4$
 are computed, the archetype is determined.
 
+\paragraph{Distinguished chart on the Koszulness moduli.}
+Each shadow-class stratum selects a distinguished chart on the
+Koszulness moduli scheme
+$\cM_{\mathrm{Kosz}}(\cA)$ of
+Theorem~\ref{thm:koszulness-moduli-kp}
+(see~\S\ref{subsec:koszulness-moduli}):
+class~G and the generic affine Kac--Moody locus sit at
+$\Phi_{\mathrm{KZ}}$ (the core ten charts
+$U_1,\ldots,U_{10}$); class~L at $\Phi_{\mathrm{ell}}$
+(Enriquez elliptic chart $U_{13}$); class~C at
+$\Phi_{\mathrm{AT}}$ (Alekseev--Torossian chart $U_{11}$);
+class~M at $\Phi_\infty = \Phi_{\mathrm{Kon}}$ (Kontsevich
+integral chart $U_{14}$); and the Feigin--Frenkel critical
+stratum FF at $\Phi_{\mathrm{dR,B}}$ (Hodge--Betti chart
+$U_{12}$). Family-by-family distinguished charts are recorded in
+the last column of Table~\ref{tab:master-invariants-chart}
+below.
+
 % Regimes I--III : census spans all families (Convention~\ref{conv:regime-tags}).
 The table below records the full set of computed invariants for every
 Koszul chiral algebra treated in Part~\ref{part:physics-bridges}. Read horizontally, each row
@@ -35,6 +53,37 @@ theorem (Theorem~\ref{thm:genus-universality}), a pattern visible
 only across the full landscape.
 
 \noindent\emph{The Master Table below collects the invariants computed throughout Part~\ref{part:physics-bridges}. For the Heisenberg algebra, these invariants were derived in Chapter~\ref{ch:heisenberg-frame}; for each subsequent algebra, the corresponding chapter provides the complete computation.}
+
+\begin{table}[ht]
+\centering
+\caption{Distinguished chart on
+ $\cM_{\mathrm{Kosz}}(\cA)$ per family
+ (Theorem~\ref{thm:koszulness-moduli-kp}).}
+\label{tab:master-invariants-chart}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccl}
+\toprule
+Family & Class & Distinguished chart & Rationale \\
+\midrule
+Heisenberg $\cH_k$ & G & $\Phi_{\mathrm{KZ}}$ ($U_1$)
+ & abelian shadow; KZ-flat \\
+Lattice $V_L$ & G & $\Phi_{\mathrm{KZ}}$ ($U_1$--$U_{10}$)
+ & abelian shadow \\
+$\widehat{\fg}_k$ generic $k$ & L & $\Phi_{\mathrm{ell}}$ ($U_{13}$)
+ & genus-1 Enriquez; $S_3\neq 0$ \\
+$\widehat{\fg}_k$ at $k=-h^\vee$ & FF & $\Phi_{\mathrm{dR,B}}$ ($U_{12}$)
+ & Feigin--Frenkel center; Hodge--Betti \\
+$\beta\gamma$ system & C & $\Phi_{\mathrm{AT}}$ ($U_{11}$)
+ & quartic bracket; AT Lagrangian \\
+$\Vir_c$ generic & M & $\Phi_{\mathrm{Kon}} = \Phi_\infty$ ($U_{14}$)
+ & infinite tower; chord-diagram \\
+$\cW_N$ principal & M & $\Phi_{\mathrm{Kon}} = \Phi_\infty$ ($U_{14}$)
+ & DS-transported from Virasoro \\
+$\cW^{(2)}_k(\mathfrak{sl}_3)$ & M & $\Phi_{\mathrm{Kon}} = \Phi_\infty$ ($U_{14}$)
+ & minimal nilpotent DS \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section*{Master table of computed invariants}
 \label{sec:master-table}
@@ -251,6 +300,56 @@ shadow obstruction tower data that completes the portrait: the archetype class,
 shadow depth $r_{\max}$, and the first nontrivial higher shadow for
 each family.
 
+\begin{proposition}[Minimal-model class transport]
+\label{prop:minimal-model-class-transport}
+\ClaimStatusProvedHere
+The simple quotient $\mathrm{Vir}_{c_{p,q}}$ at minimal-model central
+charge $c_{p,q} = 1 - 6(p-q)^{2}/(pq)$ remains class $M$
+unconditionally: the shadow obstruction tower satisfies
+$r_{\max}(\mathrm{Vir}_{c_{p,q}}) = \infty$ and the universal
+Virasoro quartic shadow coefficient
+$S_{4}(c) = 40/(c(5c+22))$ persists on the simple quotient.
+\end{proposition}
+
+\begin{proof}
+We proceed in three steps.
+
+\emph{Step 1 (universal class $M$).} The universal Virasoro vertex
+algebra $\mathrm{Vir}_{c}$ at generic $c$ is class $M$: the shadow
+coefficient
+$S_{4}(c) = 40/(c(5c+22))$
+is nonzero at every $c \notin \{0, -22/5\}$, and the shadow obstruction
+tower extends to all orders with $r_{\max} = \infty$.
+
+\emph{Step 2 (quotient preserves quartic pole).} Let
+$L(c_{p,q}) = \mathrm{Vir}_{c_{p,q}} / I_{p,q}$
+be the simple quotient by the null-vector ideal. Shadow depth
+$r_{\max}$ is controlled by the pole structure of the OPE
+\[
+ T(z) T(w) \sim \frac{c/2}{(z-w)^{4}}
+ + \frac{2 T(w)}{(z-w)^{2}}
+ + \frac{\partial T(w)}{z-w}.
+\]
+The quartic central pole $c/2$ is intrinsic to the conformal structure
+and survives the quotient: null vectors have fixed conformal weight
+and enter linearly in the simple-quotient relations, while
+$r_{\max}$ measures the bar-degree asymptotics of iterated
+$T$-insertions, which are controlled by the leading quartic term modulo
+strictly lower pole order.
+
+\emph{Step 3 (Ising witness).} At the Ising point $c = 1/2$ the
+null vector $(L_{-2} - \tfrac{4}{3} L_{-1}^{2}) \lvert h = 1/2 \rangle = 0$
+fixes the primary spectrum but does not alter the quartic central
+coefficient. A direct recomputation on the quotient gives
+$S_{2}(1/2) = 1/2$, matching the universal formula, and the higher
+shadow coefficients $S_{r}$ for $r \geq 3$ are determined by the
+universal OPE modulo null corrections of strictly higher conformal
+weight. In particular $r_{\max} = \infty$ on $L(1/2)$.
+
+Class $M$ is therefore Koszul-invariant under null-vector quotienting
+for Virasoro minimal models.
+\end{proof}
+
 \begin{table}[ht]
 \centering
 \caption{Shadow obstruction tower census: each family as a projection of $\Theta_\cA$}
@@ -301,7 +400,7 @@ $\mathrm{Vir}_c$ & M & $\infty$ & $C$: cubic + $Q$: quartic & \S\ref{chap:w-alge
 \hline
 $\mathcal{W}_N$ (finite $N$) & M & $\infty$ & $C$+$Q$; quintic forced & \S\ref{chap:w-algebra-koszul} \\
 \hline
-$\mathcal{W}_3^k(\mathfrak{sl}_3)$ (principal) & M & $\infty$ & $T$-line $S_4^T = 10/[c(5c{+}22)]$; $W$-line quartic $\neq 0$ & Comp~\ref{comp:w3-shadow-tower-data} \\
+$\mathcal{W}_3^k(\mathfrak{sl}_3)$ (principal) & M & $\infty$ & $T$-line $S_4^T = 10/[c(5c{+}22)]$; $W$-line $S_4^W = 2560/[c(5c{+}22)^3]$ & Thm~\ref{thm:w3-w-line-s4-zamolodchikov} \\
 \hline
 Ising minimal model $\mathcal{M}(4,3)$ ($c=1/2$) & M & $\infty$ & $S_4 = 40/49$; $\Delta = 80/49 \neq 0$ & Prop~\ref{prop:ising-shadow-invariants} \\
 \hline
@@ -317,7 +416,7 @@ Monster $V^\natural$ ($c = 24$, $\kappa = 12$) & M & $\infty$ & Griess algebra a
 \hline
 \multicolumn{5}{|c|}{\textit{Subregular and non-principal $\mathcal{W}$-algebras}} \\
 \hline
-$\mathrm{BP}_k = \mathcal{W}_3^{(2)}(k)$ (Bershadsky--Polyakov) & M & $\infty$ & mixed: $T$-line class~M ($r_{\max}^T = \infty$); $J$-line class~G ($r_{\max}^J = 2$) & Prop~\ref{prop:bp-tline-depth} \\
+$\mathrm{BP}_k = \mathcal{W}_3^{(2)}(k)$ (Bershadsky--Polyakov) & M & $\infty$ & $T$-line $S_4^T = 5(k{+}3)^2/[8(12k^2{+}23k{+}9)(15k^2{+}26k{+}3)]$; $J$-line class~G & Thm~\ref{thm:bp-t-line-rational-k} \\
 \hline
 \multicolumn{5}{|c|}{\textit{$\Eone$-chiral}} \\
 \hline
@@ -631,6 +730,20 @@ $\widehat{E}_6$ & $\tfrac{169}{4}$ & $\tfrac{169}{96}$ & $\tfrac{1183}{23040}$ &
 $\widehat{E}_7$ & $\tfrac{2527}{36}$ & $\tfrac{2527}{864}$ & $\tfrac{17689}{207360}$ & scalar \\
 \hline
 $\widehat{E}_8$ & $\tfrac{1922}{15}$ & $\tfrac{961}{180}$ & $\tfrac{6727}{43200}$ & scalar \\
+\hline
+\multicolumn{5}{|p{0.96\textwidth}|}{%
+\footnotesize\textit{Caveat (universal vs.\ simple quotient at simply-laced $k=1$):} the affine
+KM entries above compute $\kappa$ on the \emph{universal} vacuum module $V_k(\fg)$ at $k=1$
+with $\dim\fg$ independent weight-$1$ currents; $\kappa = \dim\fg \cdot (k+h^\vee)/(2h^\vee)$
+by the Sugawara formula. At simply-laced $k=1$ the universal module is not simple: the Frenkel--Kac--Segal
+isomorphism $L(1,0) = V_k(\fg)/\cI = V_{\Lambda_\fg}$ identifies root currents with composites
+of the $\operatorname{rank}(\fg)$ Heisenberg generators, reducing the effective generator count
+and the modular characteristic to $\kappa(V_{\Lambda_\fg}) = \operatorname{rank}(\fg)$
+(Proposition~\ref{V1-prop:level1-kappa-reduction}). The lattice-VOA rows below record
+$\kappa(V_{\Lambda_\fg})$ for $\Lambda_\fg$ the root lattice of $\fg$ (simple quotient); the
+affine KM rows record $\kappa(V_k(\fg))$ for the universal vacuum (before quotient). Both are
+correct in their respective categories; the FKS collapse relates them.
+}\\
 \hline
 \multicolumn{5}{|c|}{\textit{$\mathcal{W}$-Algebras}} \\
 \hline

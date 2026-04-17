@@ -191,6 +191,54 @@ preserves the nilpotent orbit and acts on the level via the
 Feigin--Frenkel involution of the parent algebra
 $\widehat{\mathfrak{sl}}_3$.
 
+\begin{theorem}[Bershadsky--Polyakov Koszul-conductor polynomial identity;\;
+\ClaimStatusProvedHere]
+\label{thm:bp-koszul-conductor-polynomial}
+\index{Bershadsky--Polyakov algebra!Koszul conductor!polynomial identity}
+\index{Koszul conductor!polynomial identity}
+In the rational-function field $\mathbb{Q}(k)$, the Koszul-conductor
+function
+\[
+K_{\mathcal{B}}(k)
+\;:=\;
+c(\mathcal{B}^k) + c(\mathcal{B}^{-k-6})
+\;=\;
+\Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
+ + \Bigl(2 - \frac{24(-k-5)^2}{-k-3}\Bigr)
+\]
+is identically equal to $196$:
+\[
+K_{\mathcal{B}}(k) \;\equiv\; 196 \qquad \text{as an element of }
+\mathbb{Q}(k).
+\]
+Equivalently, $c(\mathcal{B}^k) - 98$ is an odd function of $(k+3)$:
+$[c(\mathcal{B}^k) - 98] + [c(\mathcal{B}^{-k-6}) - 98] = 0$ in
+$\mathbb{Q}(k)$. The fixed point $k = -3$ of the level involution
+$k \mapsto -k-6$ coincides with the critical level
+$-h^\vee(\mathfrak{sl}_3) = -3$, where both summands are singular;
+the polynomial identity holds globally even though no single real
+level attains $c(\mathcal{B}^k) = 98$ as a regular function value.
+\end{theorem}
+
+\begin{proof}
+Direct polynomial-identity computation in $\mathbb{Q}(k)$. Using
+$-k-3 = -(k+3)$ and $(-k-5)^2 = (k+5)^2$,
+\begin{align*}
+K_{\mathcal{B}}(k)
+&= \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
+ + \Bigl(2 - \frac{24(k+5)^2}{-(k+3)}\Bigr) \\
+&= 4 - \frac{24(k+1)^2}{k+3} + \frac{24(k+5)^2}{k+3}
+ = 4 + \frac{24\bigl[(k+5)^2 - (k+1)^2\bigr]}{k+3} \\
+&= 4 + \frac{24 \cdot (2k+6)(4)}{k+3}
+ = 4 + \frac{192(k+3)}{k+3}
+ = 4 + 192 = 196\,.
+\end{align*}
+The numerator $(k+5)^2 - (k+1)^2 = 8(k+3)$ carries the
+pole-killing factor exactly once, so the cancellation is an identity
+of rational functions (not a limit). Hence $K_{\mathcal{B}}(k) - 196
+\equiv 0$ in $\mathbb{Q}(k)$.
+\end{proof}
+
 \begin{proposition}[BP Koszul self-duality;\;
 \ClaimStatusProvedHere]
 \label{prop:bp-self-duality}
@@ -199,27 +247,21 @@ $\widehat{\mathfrak{sl}}_3$.
 For $k \neq -3$ \textup{(}away from the critical level $k = -h^\vee$\textup{)}, the Koszul dual of $\mathcal{B}^k$ is
 $(\mathcal{B}^k)^! \simeq \mathcal{B}^{k'}$ with
 $k' = -k - 6$. The dual central charge is $c' = c(-k-6) = 196 - c$.
-The Koszul conductor is
+The Koszul conductor satisfies
 \begin{equation}\label{eq:bp-conductor}
-K_{\mathcal{B}} \;=\; c(k) + c(-k-6) \;=\; 196\,.
+K_{\mathcal{B}} \;=\; c(k) + c(-k-6) \;=\; 196
+\qquad \text{as a polynomial identity in } \mathbb{Q}(k)
 \end{equation}
+per Theorem~\ref{thm:bp-koszul-conductor-polynomial}.
 \end{proposition}
 
 \begin{proof}
-Direct computation:
-\begin{align*}
-c(k) + c(k')
-&= \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
- + \Bigl(2 - \frac{24(-k-5)^2}{-k-3}\Bigr) \\
-&= 4 - \frac{24(k+1)^2}{k+3} + \frac{24(k+5)^2}{k+3} \\
-&= 4 + \frac{24\bigl((k+5)^2 - (k+1)^2\bigr)}{k+3}
- = 4 + \frac{24 \cdot 8(k+3)}{k+3}
- = 4 + 192 = 196\,.
-\end{align*}
-The self-transposition of $(2,1)$ and the
-Feigin--Frenkel involution $k \mapsto -k - 2h^\vee = -k-6$
-(where $h^\vee(\mathfrak{sl}_3) = 3$) on the DS quotient
-give $(\mathcal{B}^k)^! \simeq \mathcal{B}^{-k-6}$.
+The polynomial identity~\eqref{eq:bp-conductor} is
+Theorem~\ref{thm:bp-koszul-conductor-polynomial}. The
+self-transposition of $(2,1)$ and the Feigin--Frenkel involution
+$k \mapsto -k - 2h^\vee = -k-6$ (where $h^\vee(\mathfrak{sl}_3) = 3$)
+on the DS quotient give $(\mathcal{B}^k)^! \simeq \mathcal{B}^{-k-6}$
+by the hook-transport theorem~\cite{CLNS24,FehilyHook}.
 \end{proof}
 
 \begin{remark}[Comparison of Koszul conductors]
