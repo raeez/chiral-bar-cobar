@@ -3442,6 +3442,179 @@ specific closure from primary source; corresponding inscription at
   simultaneously, breaking grep-based audits and theorem-reference
   integrity.
 
+### Pattern 220. Theorem-preamble throat-clearing ("We now state/prove...")
+
+- **Ghost.** Before a theorem environment one reflexively writes
+  a preamble ("We now state the structural content...",
+  "We now state and prove...") to orient the reader. The
+  mathematical content of the preamble is zero: the theorem
+  itself, with its `\begin{theorem}` line and informative title,
+  already announces its own arrival.
+- **Wrong.** The preamble doubles the theorem's role as a
+  signpost, and the "We now" opener is itself a generic AI
+  tell from Section A.3 of the kickstart. The reader loses one
+  sentence of velocity per occurrence.
+- **Correct statement.** Open the theorem directly. If orientation
+  is needed, state the forcing in one declarative sentence
+  ("The level shift $k \mapsto k+\hv$ is the unique
+  reparametrisation that identifies the two presentations.")
+  and let the theorem environment follow without narration.
+- **Trigger**: grep `^\s*We now (state|prove|show|close|present|turn)` in any `.tex` file; match indicates scaffolding to cut.
+- **Counter**: delete the preamble; if it contained a substantive
+  forcing sentence, reparse it as a standalone declarative
+  paragraph preceding `\begin{theorem}`. Do not replace "We now
+  state X" with "We state X" (still throat-clearing); delete outright.
+- **Confusion type.** Type 6 (construction/narration): the
+  theorem environment IS the construction; a narrative preamble
+  is redundant packaging.
+
+### Vol II Parts V+VI+VII+VIII bundle pass (2026-04-17)
+
+- **Pattern #253 — "We now X" before sections assembling prior material.**
+  Elite rewrite collapses "We now assemble X" to "Assemble X" when
+  followed by a definition/theorem environment; elsewhere replace with
+  the bare verb ("The main result has three layers:"; "Instantiate
+  Theorem~X at each depth").
+  Sites healed: `universal_celestial_holography.tex:205`,
+  `e_infinity_topologization.tex:336`, `celestial_moonshine_bridge.tex:212,349`,
+  `soft_graviton_mellin_shadow_bridge_platonic.tex:257,413`,
+  `chiral_higher_deligne.tex:405,539`,
+  `curved_dunn_higher_genus.tex:441,451`,
+  `super_chiral_yangian.tex:1011`, `foundations.tex:657`,
+  `topologization_class_m_original_complex_platonic.tex:565`,
+  `celestial_holography_core.tex:1126`,
+  `thqg_critical_string_dichotomy.tex:2255`.
+
+- **Pattern #254 — False positive on "pivotal" as AI slop.**
+  `pivotal` is a technical categorical term (pivotal category =
+  category with coherent $V \simeq V^{**}$; Etingof-Gelaki-Nikshych-Ostrik)
+  NOT prose hygiene. In `foundations.tex:391` the word sits next to
+  "rigid" and "dualizable" as a load-bearing invariant. Hook regex
+  `pivotal` needs a preserved-math-term exception. Do NOT rewrite.
+  Trigger: any prose where `pivotal` co-occurs with `rigid`, `ribbon`,
+  `fusion`, `dualizable`, `braided`, `$V^{**}$`, `MTC`, or `modular
+  tensor`.
+
+- **Pattern #255 — "All genera" scope in theorems flagged as AP7/AP32.**
+  When the inscribed theorem is literally
+  `thm:curved-dunn-H2-vanishing-all-genera` (Vol II status table
+  ProvedHere via modular-bootstrap bridge), the "all genera" phrasing
+  in the section heading and abstract matches the proved scope. Rule:
+  before rewriting scope, check whether the surrounding
+  `\begin{theorem}` label carries "all-genera" as part of its stated
+  scope, and whether the ClaimStatus is ProvedHere. If both Y, preserve.
+
+### E10 Vol III examples + connections bundle (2026-04-17, elite-prose rectification)
+
+Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_elliptic, derived_categories_cy, fukaya_categories, matrix_factorizations, quantum_group_reps, super_riccati_shadow_tower_platonic, k3e_cy3_programme, cy_c_six_routes_convergence, cy_c_six_routes_generator_level_platonic, coha_wall_crossing_platonic}.tex` and `chapters/connections/{bar_cobar_bridge, cy_holographic_datum_master, modular_koszul_bridge, geometric_langlands}.tex`.
+
+- **Pattern #256 — Bare $\kappa$ in definition title that disambiguates two senses.**
+  At `modular_koszul_bridge.tex:395` the definition title reads
+  `[Tautological $\kappa$-classes versus modular characteristic]`
+  and item (i) explicitly names $\kappa_j^{\mathrm{taut}} \in
+  R^j(\bar M_g)$ (MMM class) while item (ii) names the programmatic
+  $\kappa_\bullet$-spectrum. The bare $\kappa$ in the title is NOT
+  an AP113 violation — it is the pedagogy that AP113 exists to support.
+  Hook regex `\\kappa(?![_\{a-zA-Z])` fires spuriously in this case;
+  preserved-math-term exception required. Do NOT rewrite.
+
+- **Pattern #257 — "We now X" as paragraph opener in connections bridges.**
+  Sites: `modular_koszul_bridge.tex:714, 762`,
+  `cy_c_six_routes_convergence.tex:580`. Rewrite: start with the subject.
+  "We now develop the other side of the identification" $\to$
+  "The other side of the identification is..."; "We now state the
+  identification" $\to$ "The identification between X and Y is not
+  analogy but equality of automorphisms"; "We now make Theorem X
+  explicit at the level of generators" $\to$ "Theorem X becomes
+  explicit at the level of generators as follows."
+
+- **Pattern #258 — Hardcoded `Part~VI` in cross-volume proof body.**
+  At `cy_c_six_routes_convergence.tex:350, 359` the proof text cites
+  "Vol~II theorem $H^2_{\mathrm{MB}}(g) = 0$ (Part~VI; ...)". V2-AP26
+  / FM10 heal: replace `Part~VI` with `\ref{part:vol2-climax}` or
+  equivalent named-label stub. Flagged for subsequent wave; not fixed
+  in this pass (LOSSLESS invariant).
+
+- **Pattern #259 — Hook over-match on $\kappa+\kappa'=0$ when properly
+  branched.**
+  At `cy_c_six_routes_convergence.tex:1027` the branch-by-branch
+  statement is correct: $K=0$ on free-field/KM, $K=13$ on Virasoro,
+  $K=c(H_N-1)$ on $\cW_N$. Hook fires on the mere co-occurrence of
+  $\kappa+\kappa'$ and $=0$; the statement is scope-qualified per branch.
+  Preserve; trigger exception: `branch.*free-field|branch.*KM|
+  branch.*Virasoro` within 100 chars of $\kappa+\kappa'$.
+
+- **Pattern #260 — Em-dash `---` inside tabular empty cells and
+  `% ---` comment banners.**
+  Sites: `bar_cobar_bridge.tex:545-549`,
+  `cy_d_kappa_stratification.tex:143-146`,
+  `k3e_cy3_programme.tex:1770, 1998-2653 (programme-separator banners)`.
+  NOT AP29 em-dash: tabular uses `---` as empty-value marker and
+  comments use `%%% --- Programme X ---` as section banner in the
+  source (not rendered). Regex exclusion: `---` inside
+  `tabular` environment or on a line starting with `%` or `%%%`.
+
+- **Bundle audit summary.** Banned tokens (moreover, notably, crucially,
+  remarkably, interestingly, furthermore, delve, leverage, tapestry,
+  cornerstone): 0. Hedging (arguably, perhaps, seems to, appears to): 0.
+  Forbidden kappa subscripts (global, BPS, eff, total, naive): 0.
+  Prose-level em-dashes in body text: 0. Three weak-opener rewrites
+  executed. Discipline of prior rectification waves holds across the
+  bundle.
+
+## Pattern: "naturally" as semantic filler (2026-04-17, E5 bundle)
+
+- **Wrong claim.** "X is naturally stated at $q_{\KL}$", "B(A) naturally
+  produces a chain complex", "Y decomposes naturally into three scales",
+  "objects naturally live here".
+- **Ghost theorem.** The real content is a stated identification,
+  construction, or decomposition.
+- **Precise error.** "Naturally" is filler; the technical sense
+  ("naturally isomorphic" with witness) is rare in these hits.
+- **Correct relationship.** Strike "naturally" unless it names a natural
+  transformation. Prefer "is stated at", "produces", "decomposes into".
+- **Type.** Prose hygiene / AP-NATURALLY.
+- **Sites (this pass).** `yangians_computations.tex:5303`,
+  `yangians_drinfeld_kohno.tex:1632-1634`,
+  `thqg_open_closed_realization.tex:893`, `derived_langlands.tex:239`,
+  `bv_brst.tex:2446`, `q_convention_bridge_appendix.tex:216, 218, 333,
+  543-544`.
+
+## Pattern: "Indeed" / "In fact" as throat-clearing (2026-04-17, E5 bundle)
+
+- **Wrong claim.** "Indeed, Koszulness forces ...", "then in fact
+  $\Xi_a(...) = ...$", "nonzero for all $c > 0$ (and indeed for all
+  $c \ne 0,-204$)".
+- **Ghost theorem.** The next sentence delivers the proof step or the
+  refined claim.
+- **Precise error.** "Indeed" / "in fact" signals hedging at the
+  assertion/justification boundary. Elite prose states the refined
+  claim directly.
+- **Correct relationship.** Delete the opener; lead with the content.
+  Join scope extensions with comma.
+- **Type.** Prose hygiene / AP-THROAT-CLEAR.
+- **Sites (this pass).** `yangians_drinfeld_kohno.tex:2019`,
+  `yangians_computations.tex:2426, 3323`,
+  `minimal_model_fusion.tex:453`, `w3_holographic_datum.tex:528`,
+  `yangians_foundations.tex:2359`, `arithmetic_shadows.tex:11079, 12815`.
+
+### E5 bundle audit summary (2026-04-17)
+
+- Files processed: 30+ across `chapters/examples/`,
+  `chapters/connections/`, `chapters/theory/derived_langlands.tex`,
+  `appendices/q_convention_bridge_appendix.tex`.
+- Banned tokens removed: `naturally` (8 filler sites), `indeed` (2),
+  `in fact` (3), `essentially` (1).
+- Em-dashes in body text: `yangians_foundations.tex:3639-3640, 3743`
+  replaced with parens / removed stray dash.
+- Hedging (arguably, seems to, appears to, perhaps): 0.
+- Forbidden kappa subscripts: 0.
+- AP24 (kappa+kappa'=0) sites verified already scoped (Yangian family;
+  KM critical-dual). No unqualified claim introduced.
+- AP8 (Vir self-dual) sites verified already qualified.
+- Cross-volume references preserved.
+- No mathematical content removed.
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.

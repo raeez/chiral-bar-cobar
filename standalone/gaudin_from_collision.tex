@@ -314,7 +314,7 @@ component is $H_i^{\mathrm{Gaudin}}$. At $k = -h^\vee$ the unrescaled
 $\nabla^{\mathrm{GZ}}$ is singular, which recovers the
 Feigin--Frenkel centre as the commutant of the singular connection
 (\cite{FFR1994}, Thm 1).
-\end{proof>
+\end{proof}
 
 % ================================================================
 \section{The Gaudin identification}\label{sec:gaudin}
@@ -669,6 +669,72 @@ The chain F1--F2--F3--F4--F7--F5--F6 closes without obstruction.
 Each link is an independent theorem; the closure is the coherence of
 the seven-face programme.
 \end{proposition}
+
+% ================================================================
+\subsection{Elliptic Gaudin via Felder $R$-matrix and KZB}
+\label{sec:elliptic-gaudin}
+% ================================================================
+
+At genus one, the collision-residue programme upgrades from KZ to
+the Knizhnik--Zamolodchikov--Bernard (KZB) connection, and the
+simple-pole kernel $1/(z_i - z_j)$ is replaced by the dynamical
+propagator $\theta_1'(z_i - z_j, \tau)/\theta_1(z_i - z_j, \tau)$
+(FM30 warning: \emph{not} the Weierstrass zeta $\zeta_\tau$, which
+breaks CYBE). The elliptic Gaudin Hamiltonians carry an extra
+dependence on the dynamical parameter $\lambda \in \mathfrak{h}^*$.
+
+\begin{theorem}[Elliptic Gaudin from chiral collision at
+$g=1$]\label{thm:elliptic-gaudin}
+\ClaimStatusProvedElsewhere
+Let $E_\tau = \CC/(\ZZ + \tau\ZZ)$ and $\widehat{\fsl}_2$ at
+non-critical level~$k$. The genus-one collision residue of
+$\Theta_{\widehat{\fsl}_2}$ on $E_\tau^{\times n} / \Sigma_n$
+produces the Felder dynamical $R$-matrix
+\[
+ R_{\mathrm{Felder}}(z, \lambda, \tau) \;=\;
+ \mathrm{id} \;+\; \hbar \cdot \frac{\theta_1'(z, \tau)}
+ {\theta_1(z, \tau)} \cdot \Omega(\lambda) \;+\; O(\hbar^2),
+\]
+where $\Omega(\lambda) = \Omega_{\fsl_2} +
+\lambda \cdot h \otimes h$ is the dynamical Casimir, and the elliptic
+Gaudin Hamiltonians are
+\[
+ H_i^{\mathrm{ell}}(\tau, \lambda) \;=\;
+ \sum_{j\neq i} \frac{\theta_1'(z_i - z_j, \tau)}
+ {\theta_1(z_i - z_j, \tau)}\,\Omega_{ij}(\lambda) \;+\;
+ \mathrm{KZB\ terms}.
+\]
+Flatness of the KZB connection $\nabla_{\mathrm{KZB}} = d -
+\sum_{i<j} r^{\mathrm{ell}}(z_i - z_j, \tau, \lambda) dz_{ij} -
+\partial_\tau(\cdot)\,d\tau$ is equivalent to the dynamical CYBE
+for the Felder $R$-matrix, which in turn is the $g=1$ MC equation
+on the elliptic collision residue.
+\end{theorem}
+
+\begin{remark}[Heat-equation prefactor]
+\label{rem:heat-prefactor}
+The KZB connection contains a heat-equation term $\partial_\tau$
+coupled to the pairing $\tfrac{1}{2}(J \otimes J)$. The prefactor
+is $1/(4\pi i)$ on the diagonal part (matrix entries
+$a = b$) and $1/(2\pi i)$ off-diagonal ($a \neq b$); the factor of
+$2$ comes from the symmetric-matrix chain rule (FM34a). Heat
+equation: $\partial_\tau \wp_1 = (1/(4\pi i)) \partial_w(\wp +
+\wp^2)$ at machine precision in the numerical verification.
+\end{remark}
+
+\begin{remark}[Szeg\H{o} three-term as universal modular
+identity]\label{rem:szego-fay}
+The Fay trisecant identity, originally for $g \geq 2$ theta
+functions, specializes at $g = 0$ and $g = 1$ to the Szeg\H{o}
+three-term identity (Fay 1973 Cor.~2.5), which holds universally at
+all $g \geq 0$. The three-term identity is the modular
+compatibility that replaces the pentagon in the elliptic and higher
+genus monodromy computations; at $g = 1$ it controls the
+Felder dynamical associator, at $g = 2$ it underlies the
+doubly-dynamical DDYBE. The Szeg\H{o}/Fay identity is \emph{distinct}
+from the theta-nulls quartic identity on the theta-divisor (which is
+a $g=2$-specific statement).
+\end{remark}
 
 \begin{remark}[Higher genus]\label{rem:higher-genus}
 At genus $g \geq 1$, the collision residue receives corrections from

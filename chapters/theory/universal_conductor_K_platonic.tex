@@ -90,6 +90,15 @@ $\kappa_{\BCOV}(X) = \chi_{\mathrm{top}}(X)/24$ instead.
 \section{BRST resolutions and the ghost-charge invariant}
 \label{sec:uc-brst-setup}
 
+The landscape's per-family $\kappa$ formulas admit no single closed
+form in $\kappa$ itself: affine $\dim(\fg)(k+h^\vee)/(2h^\vee)$,
+Virasoro $c/2$, $W_N$ $c(H_N - 1)$, Heisenberg $k$, BP
+$c_{\BP}(k)$-dependent. The common structure hides one level deeper:
+each of these algebras is the BRST cohomology of a free-field complex,
+and the ghost charge of that complex recovers $\kappa$ up to
+convention. The present section names the free-field BRST setup on
+which the universal conductor is built.
+
 We work over $\bbC$ on a smooth complex curve $X$.  The category
 $\mathrm{ChirAlg}^{E_\infty}_X$ of $E_\infty$-chiral algebras on $X$
 is the chiral-algebra category of Beilinson--Drinfeld
@@ -158,7 +167,7 @@ $\lambda = 2$ it gives Polyakov's reparametrisation ghost
 $c_{bc(2)} = -26$ \cite{polyakov1981}.  The bosonic
 $\beta\gamma(\lambda)$ system has the opposite sign
 $c_{\beta\gamma(\lambda)} = +2(6\lambda^2 - 6\lambda + 1)$, by parity
-flip of the FMS formula (cf.~).
+flip of the FMS formula.
 \end{definition}
 
 \begin{definition}[Ghost-charge invariant $K_g$]
@@ -190,11 +199,13 @@ and is proved by Euler--Poincar\'e on the chain $C_\bullet$.
 \subsection{Three definitions, three witnesses}
 \label{ssec:uc-three-definitions}
 
-The bar--cobar adjunction
-$\Omega^{\mathrm{ch}}_X \dashv B^{\mathrm{ch}}_X$ on chiral algebras
-over $X$
-(Theorem~\ref{thm:bar-cobar-platonic}) provides three independent
-candidate conductors.
+The bar--cobar adjunction furnishes three structurally distinct
+candidates for a universal conductor: the Euler character of the bar
+coalgebra, the central-charge sum across the Koszul pair, and the
+negative ghost charge of a quasi-free BRST resolution. Each captures
+a different structural face of $\kappa$; the Trinity
+Theorem~\ref{thm:uc-trinity} proves their numerical coincidence on
+the Koszul-self-dual locus.
 
 \begin{definition}[Three conductors]
 \label{def:uc-three-conductors}
@@ -227,11 +238,11 @@ The ghost-charge definition $K_g$ is canonical for three reasons:
   extends to chiral algebras admitting a perfect chiral Hochschild
   Atiyah class via Theorem~\ref{thm:uc-K-Atiyah}, including algebras
   outside $\KSDual(X)$ where the Koszul dual is undefined or fails to
-  satisfy $\cA^! \simeq \cA$ canonically. (We emphasise: records
-  that all standard-landscape families are chirally Koszul; the
-  extension here is to algebras lacking the SELF-DUAL property
-  $\cA^! \simeq \cA$ in $\KSDual(X)$, not to algebras failing chiral
-  Koszulness; cf.~Section~\ref{sec:uc-frontier}.)
+  satisfy $\cA^! \simeq \cA$ canonically. (All standard-landscape
+  families are chirally Koszul; the extension here is to algebras
+  lacking the SELF-DUAL property $\cA^! \simeq \cA$ in $\KSDual(X)$,
+  not to algebras failing chiral Koszulness;
+  cf.~Section~\ref{sec:uc-frontier}.)
 \end{enumerate}
 
 \subsection{The Universal Conductor Theorem}
@@ -265,8 +276,8 @@ satisfying
   The extension recovers $K_g$ on $\BRSTGauged$ and is well-defined
   for chiral algebras outside the Koszul-self-dual locus
   $\KSDual(X)$ (algebras without canonical $\cA^! \simeq \cA$; this
-  extension is orthogonal to chiral Koszulness, which records as
-  universal across the standard landscape).
+  extension is orthogonal to chiral Koszulness, which holds
+  universally across the standard landscape).
 \item[\textup{(P3)}] \emph{Scaling under level shift.} Under the
   Feigin--Frenkel involution $k \mapsto -k - 2 h^\vee$ on affine
   Kac--Moody, $K$ is INVARIANT (level lives in the matter sector;
@@ -442,10 +453,11 @@ We adopt $K_g$ as the working definition throughout this chapter.
 \section{Per-family corollaries}
 \label{sec:uc-per-family-corollaries}
 
-The Universal Conductor Theorem reduces the per-family conductor table
-of \texttt{landscape\_census.tex} to a single ghost-charge sum.  Each
-corollary below derives its conductor FROM the BRST resolution, not
-independently.
+Each row of the per-family conductor table of
+\texttt{landscape\_census.tex} becomes a corollary of the Universal
+Conductor Theorem. The proof in each case reads the ghost-charge sum
+\eqref{eq:uc-K-g} off the spins and parities of the resolution
+generators; no per-family central-charge formula is invoked.
 
 \subsection{Heisenberg $\mathcal{H}_k$}
 \label{ssec:uc-heisenberg}
@@ -673,7 +685,7 @@ $c_{\BP}(k) + c_{\BP}(-k - 6) \equiv 196$ in the FKR convention
 $c_{\BP}(k) = 2 - 24(k+1)^2/(k+3)$ (Frenkel--Kac--Wakimoto;
 \texttt{landscape\_census.tex}~L207) is the Koszul-self-dual symmetric-sum
 verification.  Note: $K_{\BP} = 196$ in the central-charge convention,
-NOT~$2$ (cf.~Wrong~Formula~Blacklist~B25 /). The modular-characteristic
+NOT~$2$ (cf.\ Wrong-Formula-Blacklist entry B25). The modular-characteristic
 form $K^\kappa(\BP) = K(\BP) \cdot \rho(\BP) = 196 \cdot 1/6 = 98/3$
 appears in \texttt{koszulness\_fourteen\_characterizations.tex}~L1310,
 recognised here as $K^\kappa$, NOT $K^c$.
@@ -853,7 +865,7 @@ that lack a canonical Koszul-self-dual structure
 (no $\cA^! \simeq \cA$) although they remain chirally Koszul.  The
 class-of-extension here is therefore the complement of $\KSDual(X)$
 within the chirally Koszul subcategory, NOT the complement of chiral
-Koszulness (which records as a universal feature of the standard
+Koszulness (which is a universal feature of the standard
 landscape).
 \end{theorem}
 
@@ -900,8 +912,8 @@ canonical), as well as algebras outside chiral Koszulness itself
 characters).  In particular, for logarithmic VOAs $K$ is defined via
 the Atiyah-class formula where $K_g$ would not be (no quasi-free
 resolution).  This is the canonical extension of the conductor beyond
-the Koszul-self-dual locus and beyond chiral Koszulness. records
-that the standard landscape is uniformly chirally Koszul; the
+the Koszul-self-dual locus and beyond chiral Koszulness. The
+standard landscape is uniformly chirally Koszul; the
 non-standard regime where the Atiyah-class extension is nontrivial is
 the logarithmic-VOA frontier
 (Section~\ref{sec:uc-frontier}; Conjecture~\ref{conj:uc-K-logarithmic}).
@@ -1011,7 +1023,7 @@ Theorem~\ref{thm:uc-trinity}, NOT a tautology.
 \section{Cross-volume bridge: $\kappa_{\BKM}(X) = K(\Phi(X))/2$}
 \label{sec:uc-vol-iii-bridge}
 
-The Vol~III convention catalogue (\texttt{}; Vol~III
+The Vol~III convention catalogue (Vol~III
 \texttt{CLAUDE.md} kappa-spectrum section) splits the
 $\kappa$-invariants into manifold invariants (topological:
 $\kappa_{\mathrm{cat}}, \kappa_{\mathrm{fiber}}$) and algebraisation
@@ -1100,7 +1112,7 @@ $\bbZ/N\bbZ$-orbifolds plus the STU model).  For Class~B threefolds
   $\kappa_{\BCOV}(Q) = -25/3$; local $\bP^2$ has shadow depth $3/2$
   via Vol~III \texttt{thm:local-p2-shadow}; conifold has
   $\kappa_{\mathrm{ch}} = 1$ via direct McKay (NOT $\chi/24$, because
-  the conifold is not a local surface; /).
+  the conifold is not a local surface; cf.\ Vol~III~AP-CY34).
 \end{itemize}
 The universal trace identity is THEREFORE NOT a statement about all
 Calabi--Yau threefolds: it is a statement about K3-fibered Class~A
