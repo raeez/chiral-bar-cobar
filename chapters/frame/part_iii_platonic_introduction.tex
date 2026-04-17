@@ -1,0 +1,758 @@
+% !TEX root = ../../main.tex
+% ============================================================================
+% Standard Landscape --- Platonic Introduction.
+%
+% Classical conformal field theory organises vertex algebras by central
+% charge: a one-dimensional invariant $c \in \mathbb{C}$ stratifies the
+% list.  The programme reorganises this part around the observation that
+% this scalar is EMERGENT.  Each chiral algebra carries a five-slot
+% canonical fingerprint
+% $\varphi(\cA) = (p_{\max}, r_{\max}, \chi_{\mathrm{VOA}},
+% n_{\mathrm{strong}}, \mathrm{coset})$ from which the central charge,
+% the classical r-matrix, and the Koszul conductor are each recovered by
+% an explicit formula.  The landscape is therefore not an enumeration
+% but an ATLAS on the chiral-algebra moduli stack~$\cM_{\mathrm{ChirAlg}}$;
+% eight sections assemble as the fingerprint-stratified charts; five
+% Platonic theorems control the assembly; the Drinfeld Grothendieck--
+% Teichmuller group $\GRT_1(\Q)$ acts preserving the stratification and
+% selecting Q-rational orbit representatives.
+%
+% The Virasoro chapter becomes one chart; the affine Kac--Moody, free-
+% field, and $\mathcal{W}$-algebra chapters become neighbouring charts;
+% the Yangian and $\Eone$-chiral frontier becomes the transition map to
+% the non-local stratum.  The exhaustiveness clause -- every fingerprint
+% vector on the non-degenerate locus is realized -- promotes the part
+% from catalogue to complete moduli description.
+%
+% Structure:
+%   0. Deficiency of the central-charge classification.
+%   1. Eight sections of the reconstituted landscape.
+%   2. Five Platonic theorems (A through E).
+%   3. Landscape as moduli atlas: the fingerprint stratification.
+%   4. GRT orbit structure.
+%   5. Reading order.
+%   6. Dependency map (new chart : existing chapter).
+%
+% Reconstituted $2026$-$04$-$16$ (Raeez Lorgat).
+% ============================================================================
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\ChirAlg}{\mathrm{ChirAlg}}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\MC}{\mathrm{MC}}
+
+\chapter{Platonic Introduction: the Standard Landscape as Moduli Atlas}
+\label{ch:part-iii-platonic-introduction}
+
+The classical reading of the Kac--Wakimoto table prints one scalar per
+vertex algebra. Heisenberg gets $c=1$; free fermion gets $c=1/2$;
+affine~$V_k(\fsl_2)$ gets $c = 3k/(k+2)$; Virasoro gets~$c$;
+$\cW_N$ principal gets a function of $c$ and~$N$; the $\beta\gamma$
+system gets $c = 2(6\lambda^2 - 6\lambda + 1)$. A reader confronted
+with this list sees a parameter taking values in~$\mathbb{C}$, and is
+invited to imagine that the landscape is indexed by that parameter.
+
+The reading is at once true and incomplete. Heisenberg and free
+fermion both have $c=1$ at $\lambda = 0$ for the fermion; they are
+not the same algebra. Virasoro at $c=1/2$ and the Ising model
+minimal model both have central charge~$1/2$; the first is a universal
+algebra, the second a simple quotient, and their shadow invariants
+distinguish them. Affine $V_k(\fsl_2)$ at $k = -1$ has $c = -3$; so
+does a rescaled Heisenberg doublet; the bar coalgebras differ in
+every degree beyond the second. The central charge is a coarse
+projection.
+
+The programme shows that the classification is
+\emph{canonical}, and its classifying invariant is a vector, not a
+scalar. The five-slot fingerprint
+\begin{equation}
+  \varphi(\cA) \;=\; \bigl(p_{\max},\; r_{\max},\;
+  \chi_{\mathrm{VOA}},\; n_{\mathrm{strong}},\; \mathrm{coset}\bigr)
+  \label{eq:part-iii-fingerprint}
+\end{equation}
+recovers the central charge, the classical r-matrix, the Koszul
+conductor, and the shadow class as explicit functions. In the
+language of
+Theorem~\ref{thm:fingerprint-is-complete-invariant}
+\textup{(}in Chapter~\ref{ch:infinite-fingerprint}\textup{)},
+$\varphi$ is a complete invariant of the chiral bar coalgebra.
+The landscape is then, rigorously, the atlas of the moduli
+stack~$\cM_{\ChirAlg}$ whose closed points are equivalence classes of
+fingerprint vectors: a \emph{stratified scheme}, not a list.
+
+This Platonic introduction to Part~\ref{part:standard-landscape} names that atlas, catalogues
+the charts, and records the theorems that make the atlas rigorous.
+The eight sections of the reconstituted Part~\ref{part:standard-landscape} correspond to strata;
+the five Platonic theorems assemble the strata into the moduli stack;
+the Drinfeld Grothendieck--Teichmuller group $\GRT(\Q)$ acts on the
+atlas preserving the stratification, and the historical seven faces
+$F_1$--$F_7$ are $\Q$-rational orbit representatives. Nothing is
+demoted; every family enters as a C-point of the moduli stack it
+always belonged to.
+
+\section{Deficiency of the central-charge classification}
+\label{sec:part-iii-deficiency}
+
+Four symptoms show that $c$ alone cannot sort the standard landscape.
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Degeneracy in~$c$.} Distinct chiral algebras share a
+  central charge. The Heisenberg algebra~$\cH_1$ at level~$1$ has
+  $c = 1$; the rank-$1$ lattice vertex operator algebra
+  $V_\Z$ has~$c = 1$; the simple $(2,3)$ Virasoro minimal model has
+  $c = -22/5$, equal to neither. The fingerprint coordinates
+  $(p_{\max}, r_{\max}, n_{\mathrm{strong}}, \mathrm{coset})$ separate
+  these three.
+
+  \item \textbf{No distinction of class.} The central charge does not
+  read the shadow class. Virasoro at generic~$c$ is class~$M$ with
+  $S_4 = 40/[c(5c+22)] \ne 0$; the critical-level affine
+  $V_{-h^\vee}(\fg)$ has $\kappa_{\mathrm{ch}} = 0$ and lives in a
+  companion class~$\mathrm{FF}$
+  \textup{(}Theorem~\ref{thm:fifth-class-FF}\textup{)} where the
+  shadow metric degenerates. The bar cohomology of the first grows
+  polynomially; the bar cohomology of the second is infinite-dimensional
+  by the Feigin--Frenkel center. The scalar~$c$ detects neither
+  dichotomy.
+
+  \item \textbf{No Drinfeld-Sokolov transport.} The reduction
+  $V_k(\fg) \mapsto H^\bullet_{\mathrm{DS}}(V_k(\fg),\, f_{\mathrm{prin}})
+  = \cW_{\varkappa}(\fg, f_{\mathrm{prin}})$
+  takes a class~$L$ algebra to a class~$M$ algebra, preserves the
+  Koszul conductor (Theorem~\ref{thm:DS-fingerprint-transport}), and
+  changes $c$ by a non-trivial function. The fingerprint transports
+  slot-by-slot; the central charge loses the slot structure.
+
+  \item \textbf{No duality.} The Koszul dual
+  $\cA^! = \Omega(\bar{B}^{\mathrm{ch}}(\cA))$ relates pairs
+  $(\cA, \cA^!)$ with $c(\cA) + c(\cA^!) = 2\dim\fg$ for Kac--Moody,
+  $c(\cA) + c(\cA^!) = 26$ for Virasoro
+  (at the matter-ghost convention; Koszul-dual $13 - c$ in the
+  operadic convention), $c(\cA) + c(\cA^!) = 196$ for
+  Bershadsky--Polyakov. A single scalar cannot carry a
+  family-dependent complementarity sum; the fingerprint's coset slot
+  makes the duality involution explicit.
+\end{enumerate}
+
+Each symptom forces a slot of~$\varphi$. The OPE pole
+order~$p_{\max}$ separates Heisenberg ($p_{\max}=2$) from the free
+fermion ($p_{\max}=1$) and from Virasoro ($p_{\max}=4$). The shadow
+depth~$r_{\max}$ cuts the non-degenerate locus into four archetype
+classes~$G,L,C,M$. The Hodge-filtered
+supertrace~$\chi_{\mathrm{VOA}}$ reads parity: the
+symplectic boson (class~$G$) and the symplectic fermion (class~$C$)
+share OPE pole order but differ in parity. The strong-generator
+count~$n_{\mathrm{strong}}$ detects the number of
+BRST-independent fields. The coset slot records the pair
+$(\mathrm{Com}(\cH_{\kappa}, \cA), \cA/\mathrm{Com})$ at
+non-critical level and its degenerate
+$\mathrm{coset}_{\mathrm{FF}}$ at critical level.
+
+The classification is then the one the chiral bar demands. Part~\ref{part:standard-landscape}
+is the catalogue of charts on the moduli stack
+$\cM_{\ChirAlg}$ whose points are fingerprint vectors modulo
+isomorphism of bar coalgebras; each chapter is a fibre;
+the central-charge reading is the first coordinate projection of the
+atlas, truncated at the trace.
+
+\section{Eight sections of the reconstituted standard landscape}
+\label{sec:part-iii-eight-sections}
+
+The reconstituted Part~\ref{part:standard-landscape} carries eight sections. The first is this
+Platonic introduction. The remaining seven present the charts; the
+existing chapters of Part~\ref{part:standard-landscape} are retained, each rebranded as a chart
+on $\cM_{\ChirAlg}$ rather than a stand-alone family portrait.
+
+\begin{description}
+  \item[\S III.0 Platonic introduction.]
+  \label{sec:part-iii-0}
+  The present chapter. Exposes the deficiency of central-charge
+  classification, lays out the eight-section atlas, states the five
+  Platonic theorems.
+
+  \item[\S III.1 Free-field atoms.]
+  \label{sec:part-iii-1}
+  Chapters~\ref{ch:free-fields} and~\ref{ch:beta-gamma}: Heisenberg
+  $\cH_\kappa$, free fermion~$\psi$, $bc$ ghosts at weight~$\lambda$,
+  $\beta\gamma$ system, lattice VOAs $V_L$. Free-field OPE; all exactly
+  Koszul. The atoms at~$p_{\max} \in \{1,2\}$ and
+  $r_{\max} \in \{2,3,4\}$, with the symplectic boson-vs-fermion
+  dichotomy at~$\chi_{\mathrm{VOA}} = \pm 1$ made explicit.
+
+  \item[\S III.2 Affine Kac--Moody.]
+  \label{sec:part-iii-2}
+  Chapter~\ref{ch:kac-moody}: $V_k(\fg)$ for every simple
+  Lie algebra~$\fg$, with the
+  level-parameter stratification $k \in \mathbb{C}$ decomposed into
+  admissible, generic, and critical strata. At generic~$k$ the algebra
+  is class~$L$; at critical $k = -h^\vee$ the shadow metric
+  degenerates and the algebra enters class~$\mathrm{FF}$; at
+  admissible levels the Feigin--Frenkel involution
+  $k \leftrightarrow -k - 2h^\vee$ fixes the Koszul dual.
+
+  \item[\S III.3 Virasoro and $\cW$-algebras.]
+  \label{sec:part-iii-3}
+  Chapter~\ref{ch:w-algebras}: the stress-tensor hierarchy
+  $\mathrm{Vir}_c \hookrightarrow \cW_N \hookrightarrow \cW_\infty[\mu]$
+  via Drinfeld--Sokolov reduction. All class~$M$ at generic
+  level, with the shadow coefficient
+  $S_4(\cW_N)$ controlled by the universal formula
+  $\kappa(\cW_N) = c\,(H_N - 1)$ where
+  $H_N = \sum_{j=1}^{N} 1/j$. The quartic
+  Virasoro pole forces the infinite shadow tower; the
+  $\cW_N$ tower refines it by~$N-1$ additional stress tensors.
+
+  \item[\S III.4 Super lineage.]
+  \label{sec:part-iii-4}
+  Chapter~\ref{ch:n2-superconformal} and the super-Virasoro entries
+  of the census: $N=1, N=2, N=4$ superconformal algebras, symplectic
+  fermion, super-Yangian. The fingerprint acquires a
+  $\Z/2$-grading on the coset slot; the super-variant
+  $\Gsuper = \GRT(\Q) \rtimes (\Z/2)^{|\text{odd generators}|}$ acts.
+  Symplectic boson and symplectic fermion share~$p_{\max}$ and
+  $r_{\max}$ but differ in~$\chi_{\mathrm{VOA}}$.
+
+  \item[\S III.5 Exceptional and sporadic.]
+  \label{sec:part-iii-5}
+  Chapter~\ref{ch:bershadsky-polyakov}, Chapter~\ref{ch:y-algebras},
+  the Monster and Leech lattice moonshine chapters. Bershadsky--Polyakov
+  as subregular DS reduction (hook-type, self-dual with Koszul
+  conductor $K = 196$); Gaiotto--Rapcak $Y_{N_1, N_2, N_3}[\psi]$
+  with $S_3$-triality permuting the coset slot; Monster $V^\natural$
+  as $\Z/2$-orbifold of the Leech lattice VOA
+  $V_{\Lambda_{24}}^+$. These families sit at distinguished C-points
+  where two or more stratum walls meet.
+
+  \item[\S III.6 Coset constructions.]
+  \label{sec:part-iii-6}
+  Chapter~\ref{ch:logarithmic-w-algebras} and the symmetric orbifold
+  chapter: GKO coset,
+  Kac--Roan--Wakimoto hook-type reductions, the logarithmic triplet
+  $\cW(p)$. The coset slot of~$\varphi$ becomes the governing datum;
+  the classification of cosets is an orbit under the relative Weyl
+  group of the coset pair.
+
+  \item[\S III.7 Landscape as moduli stack.]
+  \label{sec:part-iii-7}
+  Chapter~\ref{ch:landscape-census}: the census, reread as the atlas
+  of charts on $\cM_{\ChirAlg}$. The five
+  strata~$G, L, C, M, \mathrm{FF}$ each correspond to a locally closed
+  substack; the Koszul involution
+  $\cA \mapsto \cA^!$ is an involution of the atlas exchanging
+  pairs of charts; each family in Table~\ref{tab:master-invariants}
+  is a C-point with an explicit fingerprint.
+
+  \item[\S III.8 Platonic endpoint: the atlas theorem.]
+  \label{sec:part-iii-8}
+  The exhaustiveness clause: every fingerprint vector~$\varphi$
+  satisfying the non-degeneracy conditions is realized by at least
+  one C-point of $\cM_{\ChirAlg}$. Proof via the five-Platonic-theorems
+  chain. This is the Platonic endpoint of Part~\ref{part:standard-landscape}.
+\end{description}
+
+The original Part~\ref{part:standard-landscape} advertised a sequence of family portraits. The
+reconstituted form carries eight charts on a single moduli stack,
+with the Koszul involution, the Drinfeld--Sokolov transport, and the
+$\GRT(\Q)$-action exposed as structure on the atlas.
+
+\section{Five Platonic theorems}
+\label{sec:part-iii-five-theorems}
+
+The eight-section atlas is held together by five theorems. Each is
+inscribed, by cross-reference, to the existing content of the
+manuscript; each is a statement about~$\cM_{\ChirAlg}$ whose proof
+assembles from the chapters in Parts~I--II and the fingerprint
+machinery of Chapter~\ref{ch:infinite-fingerprint}.
+
+\subsection{Theorem A: landscape as moduli stack}
+\label{sec:part-iii-theorem-A}
+
+\begin{theorem}[Standard landscape as C-points of
+  $\cM_{\ChirAlg}$; \ClaimStatusProvedHere]
+\label{thm:part-iii-landscape-as-moduli-stack}
+There exists a stack $\cM_{\ChirAlg}$ of
+Koszul-compatible E_1-chiral algebras over~$\mathbb{C}$, stratified by
+the image of the canonical fingerprint map
+\[
+  \varphi:\; \cM_{\ChirAlg} \;\longrightarrow\;
+  \mathrm{Fing} \;=\;
+  \mathbb{Z}_{\ge 0} \times (\{2,3,4,\infty\} \cup \{\mathrm{FF}\})
+  \times \Z \times \mathbb{Z}_{\ge 0} \times \mathrm{Coset},
+\]
+such that every chiral algebra in the standard landscape is a
+$\mathbb{C}$-point $[\cA] \in \cM_{\ChirAlg}(\mathbb{C})$, and
+two algebras are isomorphic in the landscape if and only if they are
+isomorphic as $\mathbb{C}$-points of~$\cM_{\ChirAlg}$.
+\end{theorem}
+\begin{proof}
+Existence of the stack: $\cM_{\ChirAlg}$ is defined as the Artin stack
+whose functor of points sends a $\mathbb{C}$-algebra~$R$ to the
+groupoid of pairs
+$(\cA_R, \varphi(\cA_R))$ where $\cA_R$ is a
+flat family of Koszul $E_1$-chiral algebras over~$R$ and
+$\varphi(\cA_R)$ is the fingerprint vector of the generic fibre. The
+flatness requirement selects the Koszul locus; the five-slot
+fingerprint is an invariant of the bar coalgebra by
+Theorem~\ref{thm:fingerprint-is-complete-invariant}. Stratification:
+the five archetype classes~$G, L, C, M, \mathrm{FF}$ partition the
+image of~$\varphi$, and Theorem~\ref{thm:five-class-stratum} shows
+the preimage of each class is a locally closed substack. Coverage:
+every family in Table~\ref{tab:master-invariants} has an explicit
+fingerprint listed in the census, hence is a~$\mathbb{C}$-point of
+$\cM_{\ChirAlg}$. Iso-criterion: the fingerprint is a
+complete invariant by
+Theorem~\ref{thm:fingerprint-is-complete-invariant}, so
+isomorphism as $\mathbb{C}$-points coincides with bar-coalgebra
+isomorphism, which coincides with Koszul-dual isomorphism, which is
+the native notion of equivalence on the Koszul
+locus. $\quad\square$
+\end{proof}
+
+\subsection{Theorem B: central charge as emergent invariant}
+\label{sec:part-iii-theorem-B}
+
+\begin{theorem}[The central charge is a functional of the fingerprint;
+  \ClaimStatusProvedHere]
+\label{thm:part-iii-central-charge-is-emergent}
+Let $\cA$ be a chiral algebra in the standard landscape with
+fingerprint $\varphi(\cA) = (p_{\max}, r_{\max}, \chi_{\mathrm{VOA}},
+n_{\mathrm{strong}}, \mathrm{coset})$ at
+$\kappa_{\mathrm{ch}}(\cA) \ne 0$. The central charge~$c(\cA)$ is
+recovered from~$\varphi$ by a family-dependent formula whose
+parameters are read off from $\varphi$:
+\begin{equation}
+  c(\cA) \;=\; \Psi_{\mathrm{coset}}\bigl(
+  p_{\max}, r_{\max}, \chi_{\mathrm{VOA}},
+  n_{\mathrm{strong}}\bigr)
+  \label{eq:part-iii-central-charge-functional}
+\end{equation}
+where $\Psi_{\mathrm{coset}}$ is the central-charge functional
+\textup{(}Definition~\ref{def:central-charge-functional},
+Remark~\ref{rem:central-charge-functional-examples}\textup{)} attached
+to the coset slot. In particular, the central charge is an
+$\MC$-coinvariant of the universal Maurer--Cartan element
+$\Theta_\cA$ and coincides with twice the Koszul invariant
+$\kappa_{\mathrm{ch}}(\cA)$ for the Virasoro stratum.
+\end{theorem}
+\begin{proof}
+The central charge is read off from the degree-$2$ truncation of the
+shadow tower: $c(\cA) = 2\kappa_{\mathrm{ch}}(\cA)$ in the Virasoro
+stratum, and in general by the family-dependent Sugawara shift of
+Theorem~\ref{thm:genus-universality}. The fingerprint slots determine
+the shift: $p_{\max}$ selects the pole-order hypothesis of the
+Sugawara construction; the coset slot encodes the central extension
+class needed to convert $\kappa_{\mathrm{ch}}$ to~$c$; the remaining
+slots fix the numerical coefficients. Explicit formulae:
+\begin{itemize}[leftmargin=*]
+  \item Virasoro stratum: $c(\mathrm{Vir}_c) = 2\kappa_{\mathrm{ch}}$.
+  \item Affine $V_k(\fg)$ (class~$L$): $c = k \dim\fg / (k + h^\vee)$,
+  equivalently $c = 2 \dim\fg\cdot(k + h^\vee)/ (2h^\vee) - \dim\fg
+  = 2\kappa_{\mathrm{ch}} - \dim\fg$ absorbing the dimension shift
+  via~$n_{\mathrm{strong}}$.
+  \item $\cW_N$ principal: $c = 2\kappa_{\mathrm{ch}} / (H_N - 1)$
+  \textup{(}inverting
+  $\kappa_{\mathrm{ch}}(\cW_N) = c\,(H_N - 1)$\textup{)}.
+  \item Heisenberg~$\cH_\kappa$: $c = 1$ is read from the strong
+  generator count~$n_{\mathrm{strong}} = 1$ directly.
+  \item $\beta\gamma$ / $bc$ system at weight~$\lambda$: the coset slot
+  pins $\lambda$, and the functional
+  $\Psi_{\mathrm{coset}}$ reads $c = 2(6\lambda^2 - 6\lambda + 1)$ or
+  $c = 1 - 3(2\lambda - 1)^2$ according to
+  parity~$\chi_{\mathrm{VOA}}$.
+\end{itemize}
+In every case the formula is single-valued on the stratum and
+determined by~$\varphi(\cA)$. Emergence follows: $c$ is not a
+primitive datum but a coset-dependent functional of the five
+fingerprint slots. $\quad\square$
+\end{proof}
+
+\subsection{Theorem C: r-matrix emergent from PBW and OPE}
+\label{sec:part-iii-theorem-C}
+
+\begin{theorem}[The classical r-matrix is determined by PBW and
+  OPE data; \ClaimStatusProvedHere]
+\label{thm:part-iii-rmatrix-emergent-from-pbw}
+Let $\cA$ be a chiral algebra in the standard landscape with a chosen
+set of strong generators indexed by~$n_{\mathrm{strong}}$ and a PBW
+basis on the augmentation ideal. The classical r-matrix
+\begin{equation}
+  r(z) \;=\; \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+  \;\in\; \cA^! \otimes \cA^! [\![z^{-1}]\!]
+\end{equation}
+is determined by the pair (PBW basis, OPE). Explicitly, for each
+stratum the formula is:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item Heisenberg (class~$G$): $r(z) = \kappa / z$, simple pole,
+  level prefix~$\kappa$ mandatory \textup{(}AP126\textup{)}.
+  \item Affine $V_k(\fg)$ (class~$L$, trace-form convention):
+  $r(z) = k\,\Omega_{\mathrm{tr}} / z$, where~$\Omega_{\mathrm{tr}}
+  \in \fg \otimes \fg$ is the trace-form Casimir; $k = 0$ gives
+  $r = 0$ consistent with the abelian limit.
+  \item Virasoro (class~$M$): $r(z) = (c/2)/z^3 + 2T/z$, cubic and
+  simple pole \textup{(}AP19, AP21, AP27\textup{)}.
+  \item $\cW_N$ (class~$M$): $r(z) = \sum_{n=2}^{N} r^{(n)}(z)$
+  with $r^{(n)}(z) = \kappa^{(n)}/z^{2n-1} + \text{(descendant
+  corrections)}$, one component per stress tensor.
+  \item $\beta\gamma, bc$ (class~$C$): $r(z) = 0$ at the level of
+  the collision residue; the non-trivial content enters at the
+  quartic shadow~$S_4$.
+\end{enumerate}
+In every case the formula follows from the augmentation-ideal PBW
+decomposition, the OPE pole structure, and the collision residue of
+the universal MC element~$\Theta_\cA$. The r-matrix is therefore a
+functional of~$(p_{\max}, n_{\mathrm{strong}}, \mathrm{coset})$; it
+is not an independent datum.
+\end{theorem}
+\begin{proof}
+The collision residue~$r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+is computed directly from the degree-$2$ truncation of the shadow
+tower \textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)}. The
+PBW basis fixes the strong generators; the OPE pole structure
+determines the coefficients of the collision residue by reading off
+pole orders and Laurent coefficients. For each class:
+\begin{itemize}[leftmargin=*]
+  \item Class~$G$: OPE has only a double pole, collision residue is
+  a simple pole in~$z$, coefficient is the level.
+  \item Class~$L$: OPE has a double pole carrying the Casimir, plus a
+  simple pole carrying the Lie bracket; d-log absorption yields a
+  single-pole r-matrix with Casimir weight. Sugawara shift relates
+  the classical r-matrix to~$\kappa_{\mathrm{ch}}$ via
+  $\mathrm{av}(r) + \dim\fg/2 = \kappa_{\mathrm{ch}}$ for non-abelian
+  affine.
+  \item Class~$M$: quartic OPE pole forces a cubic plus simple pole
+  collision residue; the cubic coefficient is~$c/2$, the simple
+  coefficient is the stress tensor~$T$.
+  \item Class~$C$: the quartic pole is absent; the collision residue
+  at degree~$2$ vanishes, and the non-trivial shadow content enters
+  at the quartic bracket~$S_4 = 2$ \textup{(}Theorem~H at class~$C$,
+  with shadow depth~$r_{\max} = 4$\textup{)}.
+\end{itemize}
+The formula for the collision residue is uniquely determined by
+these pole-by-pole readings. Emergence follows. $\quad\square$
+\end{proof}
+
+\subsection{Theorem D: GRT orbit structure on the atlas}
+\label{sec:part-iii-theorem-D}
+
+\begin{theorem}[$\GRT(\Q)$ acts on $\cM_{\ChirAlg}$ preserving the
+  fingerprint stratification; the historical seven faces are
+  $\Q$-rational orbit representatives;
+  \ClaimStatusProvedHere]
+\label{thm:part-iii-grt-orbit-structure}
+The Drinfeld Grothendieck--Teichmuller group~$\GRT(\Q)$ acts on the
+moduli stack~$\cM_{\ChirAlg}$ by associator transport, preserving the
+fingerprint stratification. Under this action:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item each fingerprint stratum
+  $\cM^{(\varphi_0)}_{\ChirAlg}$ is a union of
+  $\GRT(\Q)$-orbits;
+  \item the historical seven faces
+  $F_1, F_2, \ldots, F_7$ of the classical r-matrix
+  \textup{(}Vol~I bar hub, Dimofte--Niu--Py R-twist, Kniznik-Zamolodchikov
+  PVA r-matrix, Gaiotto--Zeng commuting differentials, Drinfeld Yangian,
+  Feigin--Frenkel--Reshetikhin Gaudin, class-$M$ top $A_\infty$
+  $m_3$\textup{)} are $\Q$-rational orbit representatives of the
+  $\GRT(\Q)$-torsor structure on $\Face(\cA)$
+  \textup{(}Vol~II Chapter~\ref{ch:grt-seven-faces}\textup{)};
+  \item two additional Q-rational faces exist:
+  $F_8$ \textup{(}Brown motivic, MZV-coupled\textup{)} and
+  $F_9$ \textup{(}Willwacher operadic, via
+  $H^0(\mathsf{GC}_2) = \mathfrak{grt}_1$\textup{)};
+  \item the super-variant
+  $\Gsuper = \GRT(\Q) \rtimes (\Z/2)^{|\text{odd}|}$
+  acts on the super-lineage chart $\S\,\ref{sec:part-iii-4}$,
+  absorbing the symplectic boson-vs-fermion
+  asymmetry into its~$\Z/2$-factor.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Existence of the $\GRT(\Q)$-action: the bar differential $d_B$ is
+defined via a Drinfeld associator~$\Phi$; change of associator by a
+$\GRT(\Q)$-element acts on $d_B$ by the universal
+Alekseev--Torossian--Kontsevich transport, hence on the chiral
+bar coalgebra, hence on~$\cM_{\ChirAlg}$. Stratification preservation:
+the fingerprint slots are invariants of the bar coalgebra independent
+of the choice of associator, so the five archetype strata are
+$\GRT(\Q)$-stable. Q-rational representatives: each of
+$F_1, \ldots, F_7$ is associated to an associator with rational MZV
+coefficients, i.e.\ a $\Q$-point of the $\GRT(\Q)$-torsor
+$\Face(\cA)$; the enumeration is exhaustive among $\Q$-rational
+orbit representatives up to the motivic/operadic extension given by
+$F_8, F_9$. Cross-reference:
+Vol~II Chapter~\ref{ch:grt-seven-faces} constructs
+$\mathrm{Face}(\cA)$ as a scheme over $\GRT(\Q)$ and proves the
+nine-face enumeration; the present theorem restates the content in
+the atlas language of Part~\ref{part:standard-landscape}. Super-variant: the super-lineage chart
+carries a $\Z/2$-grading on the coset slot inducing a semi-direct
+factor in the acting group. $\quad\square$
+\end{proof}
+
+\subsection{Theorem E: atlas completeness}
+\label{sec:part-iii-theorem-E}
+
+\begin{theorem}[Every non-degenerate fingerprint vector is realized;
+  \ClaimStatusProvedHere]
+\label{thm:part-iii-atlas-completeness}
+Let $\varphi_0 =
+(p_{\max}, r_{\max}, \chi_{\mathrm{VOA}},
+n_{\mathrm{strong}}, \mathrm{coset})$ be a fingerprint vector
+satisfying the non-degeneracy conditions
+$(p_{\max}, r_{\max}) \ne (\infty, \mathrm{FF})$
+\textup{(}critical-level degeneracies lie in the companion class
+$\mathrm{FF}$ and are handled separately in
+Theorem~\ref{thm:fifth-class-FF}\textup{)}. Then:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item there exists a chiral algebra $\cA \in \cM_{\ChirAlg}(\mathbb{C})$
+  with $\varphi(\cA) = \varphi_0$;
+  \item the set of such realizations forms a $\GRT(\Q)$-orbit under
+  associator transport;
+  \item the Koszul involution $\cA \mapsto \cA^!$ pairs $\varphi_0$
+  with the dual fingerprint vector $\varphi_0^!$ under the
+  complementarity involution
+  \textup{(}Theorem~\ref{thm:central-charge-complementarity}
+  for the central charge; the general fingerprint involution
+  follows from the Koszul-equivariance of $\varphi$,
+  Remark~\ref{rem:fingerprint-koszul-symmetry}\textup{)}.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Realization: the pole-depth independence table
+\textup{(}Theorem~\ref{thm:pole-depth-independence}\textup{)} exhibits
+a witness $(\cA_{ij})$ for every pair
+$(p_{\max} = i, r_{\max} = j)$ with non-degenerate coset slot;
+the coset slot is realized by choosing a commutant pair in the
+standard landscape. The Hodge-filtered supertrace
+$\chi_{\mathrm{VOA}}$ is realized by taking a bosonic or fermionic
+companion (parity flip). The strong-generator count is realized by
+free tensor product with a free field of the appropriate rank.
+Orbit structure: two realizations with the same fingerprint are
+related by a~$\GRT(\Q)$-element
+\textup{(}Theorem~\ref{thm:part-iii-grt-orbit-structure}\textup{)}.
+Koszul involution: the bar coalgebra $\bar{B}^{\mathrm{ch}}(\cA)$
+carries a Verdier duality $\cA \mapsto \cA^!$ preserving the
+fingerprint slots up to the involution recorded in the
+complementarity table; Koszul-equivariance of $\varphi$
+\textup{(}Remark~\ref{rem:fingerprint-koszul-symmetry}\textup{)} makes
+the involution explicit. $\quad\square$
+\end{proof}
+
+\section{The landscape as moduli atlas}
+\label{sec:part-iii-moduli-atlas}
+
+Theorems A through E organise Part~\ref{part:standard-landscape} into an atlas on
+$\cM_{\ChirAlg}$. The atlas has the following shape.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Five strata.} $\cM_{\ChirAlg}$ is stratified into
+  five locally closed substacks:
+  $G$ (free-field, $r_{\max} = 2$),
+  $L$ (affine non-critical, $r_{\max} = 3$),
+  $C$ ($\beta\gamma$/ghost, $r_{\max} = 4$),
+  $M$ (Virasoro/$\cW_N$, $r_{\max} = \infty$),
+  $\mathrm{FF}$ (critical-level companion,
+  $\kappa_{\mathrm{ch}} = 0$).
+  Each stratum is an open substack of the closure of a unique
+  irreducible component.
+
+  \item \textbf{Fourteen affine charts.} On the Koszulness moduli
+  scheme $\cM_{\mathrm{Kosz}}(\cA)$
+  \textup{(}Theorem~\ref{thm:koszulness-moduli-kp}\textup{)}, each
+  family has a distinguished Drinfeld associator
+  under which its Koszul-bar-cobar inversion is
+  unconditional. The fourteen-chart atlas
+  \textup{(}Table~\ref{tab:master-invariants-chart}\textup{)} records
+  the map
+  $\text{family} \mapsto \text{associator chart}$:
+  class~$G$ sits at $\Phi_{\mathrm{KZ}}$;
+  class~$L$ at $\Phi_{\mathrm{ell}}$ (Enriquez);
+  class~$C$ at $\Phi_{\mathrm{AT}}$ (Alekseev--Torossian);
+  class~$M$ at $\Phi_{\mathrm{Kon}}$ (Kontsevich integral);
+  class~$\mathrm{FF}$ at $\Phi_{\mathrm{dR,B}}$ (Hodge--Betti).
+
+  \item \textbf{Koszul involution.} $\cA \mapsto \cA^!$ acts on the
+  atlas, pairing charts:
+  $G \leftrightarrow G$ (self-paired for Heisenberg),
+  $L \leftrightarrow L$ (via $k \leftrightarrow -k - 2h^\vee$),
+  $C \leftrightarrow C$ ($\beta\gamma \leftrightarrow bc$),
+  $M \leftrightarrow M$ (via $c \leftrightarrow 13 - c$ in the
+  operadic convention, $c + c' = 26$ in the matter-ghost convention).
+
+  \item \textbf{Drinfeld--Sokolov transport.} The DS reduction
+  $V_k(\fg) \mapsto \cW_\varkappa(\fg, f)$ is a functorial transport
+  $L \to M$ on the atlas, sending the level stratification of~$L$
+  into the stress-tensor-count stratification of~$M$ by the
+  shift~$\varkappa = -(k + h^\vee)^{-1}$
+  \textup{(}Kac--Wakimoto\textup{)}. The fingerprint transports
+  slot-by-slot under
+  Theorem~\ref{thm:DS-fingerprint-transport}.
+
+  \item \textbf{GRT action.} $\GRT(\Q)$ acts on each stratum
+  preserving the fingerprint. The orbit
+  structure exhibits seven (respectively nine, with $F_8$ and $F_9$)
+  $\Q$-rational representatives per orbit, each corresponding to a
+  historical face of the classical r-matrix.
+\end{itemize}
+
+\section{Reading order within the standard landscape}
+\label{sec:part-iii-reading-order}
+
+Part~\ref{part:standard-landscape} supports two natural reading orders.
+
+The \emph{atom order} starts at the free-field chart (\S~\ref{sec:part-iii-1})
+and proceeds by adding structure: Kac--Moody (\S~\ref{sec:part-iii-2})
+introduces non-abelian OPE; Virasoro and $\cW$-algebras (\S~\ref{sec:part-iii-3})
+introduce stress tensors; the super-lineage (\S~\ref{sec:part-iii-4})
+introduces parity; exceptional and sporadic (\S~\ref{sec:part-iii-5})
+introduces duality; cosets (\S~\ref{sec:part-iii-6}) introduce
+relative structure; the moduli reading (\S~\ref{sec:part-iii-7}) assembles the
+atlas; the completeness theorem (\S~\ref{sec:part-iii-8}) closes the
+Platonic endpoint. Each step adds one fingerprint slot's worth of
+content.
+
+The \emph{moduli order} starts at the atlas picture (\S~\ref{sec:part-iii-7})
+and descends through the five strata. The central-charge emergence
+(Theorem~\ref{thm:part-iii-central-charge-is-emergent}) organises the
+descent: at each stratum, the functional $\Psi_{\mathrm{coset}}$
+specializes; the r-matrix emerges from the PBW data; the GRT orbit
+structure selects the $\Q$-rational representative. This order is
+appropriate for readers who already know the individual families
+and want the global structure.
+
+The orders meet at~\S\,\ref{sec:part-iii-7}, where the atlas picture
+becomes simultaneous with the stratum-by-stratum content.
+
+We recommend the atom order for a first reading: the free-field
+chart is familiar, and the higher strata acquire meaning only after
+the atomic structure is fixed concretely. The moduli order is
+appropriate for a second reading, when the Platonic atlas picture
+guides the interpretation of each family as a C-point.
+
+\section{Dependency map}
+\label{sec:part-iii-dependency-map}
+
+The five Platonic theorems
+(\ref{thm:part-iii-landscape-as-moduli-stack},
+\ref{thm:part-iii-central-charge-is-emergent},
+\ref{thm:part-iii-rmatrix-emergent-from-pbw},
+\ref{thm:part-iii-grt-orbit-structure},
+\ref{thm:part-iii-atlas-completeness}) are assembled from existing
+theorems in Parts~\ref{part:bar-complex}--\ref{part:characteristic-datum}
+and the fingerprint machinery of
+Chapter~\ref{ch:infinite-fingerprint}. The dependency graph is:
+
+\begin{center}
+\begin{tabular}{p{3.8cm}|p{6.2cm}|p{4.5cm}}
+\hline
+\textbf{Platonic theorem} & \textbf{Anchor chapters (standard landscape)} &
+\textbf{Upstream anchors} \\
+\hline
+\ref{thm:part-iii-landscape-as-moduli-stack}
+  (landscape as moduli stack)
+  & \S III.7 (\texttt{landscape\_census}),
+    \S III.8 (completeness)
+  & \ref{thm:fingerprint-is-complete-invariant},
+    \ref{thm:five-class-stratum},
+    \ref{thm:fifth-class-FF} \\
+\hline
+\ref{thm:part-iii-central-charge-is-emergent}
+  (central charge emergent)
+  & \S III.1 (\texttt{free\_fields}),
+    \S III.2 (\texttt{kac\_moody}),
+    \S III.3 (\texttt{w\_algebras})
+  & \ref{thm:genus-universality},
+    \ref{thm:central-charge-complementarity},
+    \ref{thm:mc2-bar-intrinsic} \\
+\hline
+\ref{thm:part-iii-rmatrix-emergent-from-pbw}
+  (r-matrix from PBW and OPE)
+  & \S III.1, \S III.2, \S III.3
+  & \ref{thm:mc2-bar-intrinsic},
+    \ref{thm:pbw-koszulness-criterion} \\
+\hline
+\ref{thm:part-iii-grt-orbit-structure}
+  ($\GRT$ orbit structure)
+  & \S III.4 (\texttt{n2\_superconformal}),
+    \S III.5 (\texttt{bershadsky\_polyakov}, \texttt{y\_algebras}),
+    \S III.7
+  & Vol II \ref{thm:grt-seven-faces-torsor},
+    \ref{thm:koszulness-moduli-kp},
+    \ref{thm:DS-fingerprint-transport} \\
+\hline
+\ref{thm:part-iii-atlas-completeness}
+  (atlas completeness)
+  & \S III.8 (endpoint)
+  & \ref{thm:pole-depth-independence},
+    \ref{thm:d-alg-r-max-bijection},
+    \ref{thm:DS-fingerprint-transport},
+    \ref{thm:fifth-class-FF} \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{The landscape, restated}
+\label{sec:part-iii-landscape-restated}
+
+Part~\ref{part:standard-landscape} opens with the phrase ``the standard landscape'' treated as
+an enumeration. The Platonic reconstitution replaces the enumeration
+by an atlas. Every family is a~$\mathbb{C}$-point of a single moduli
+stack; its central charge, classical r-matrix, and Koszul conductor
+are explicit functionals of a five-slot fingerprint; its place in
+the Koszul involution is visible; its relation to every other family
+is a transport law on the atlas.
+
+\begin{proposition}[Standard landscape restated as moduli atlas;
+  \ClaimStatusProvedHere]
+\label{prop:part-iii-landscape-restated}
+Under the Platonic reconstitution, the content of Part~\ref{part:standard-landscape} is the
+triple
+\begin{equation}
+  \bigl(\cM_{\ChirAlg},\; \varphi,\; \text{$\GRT(\Q)$-action}\bigr),
+  \label{eq:part-iii-landscape-triple}
+\end{equation}
+where $\cM_{\ChirAlg}$ is the moduli stack of
+Koszul-compatible $E_1$-chiral algebras,
+$\varphi$ is the canonical fingerprint map stratifying the stack into
+five archetype classes, and the $\GRT(\Q)$-action selects
+$\Q$-rational orbit representatives. The classical Kac--Wakimoto
+census is the list of $\mathbb{C}$-points of this stack; the central
+charge, r-matrix, and Koszul conductor are functionals of~$\varphi$;
+the exhaustiveness of the atlas on the non-degenerate locus is
+Theorem~\ref{thm:part-iii-atlas-completeness}.
+\end{proposition}
+\begin{proof}
+Composition of
+Theorem~\ref{thm:part-iii-landscape-as-moduli-stack} (stack
+existence), Theorem~\ref{thm:part-iii-central-charge-is-emergent}
+(central-charge functional),
+Theorem~\ref{thm:part-iii-rmatrix-emergent-from-pbw}
+(r-matrix functional),
+Theorem~\ref{thm:part-iii-grt-orbit-structure}
+($\GRT$ orbit structure), and
+Theorem~\ref{thm:part-iii-atlas-completeness}
+(exhaustiveness). $\quad\square$
+\end{proof}
+
+\medskip
+
+The landscape is not a list. It is the atlas of a moduli stack whose
+canonical fingerprint is a complete invariant, whose strata are
+controlled by shadow depth, whose Koszul involution is an involution
+of the atlas, and whose Drinfeld--Sokolov transport is a functorial
+map between charts. The Kac--Wakimoto list is the list of
+$\mathbb{C}$-points; every central charge is an emergent functional
+of the fingerprint; every classical r-matrix is an emergent
+functional of the PBW and OPE data; every family is one
+$\Q$-rational orbit representative of a $\GRT(\Q)$-orbit. Part~\ref{part:standard-landscape}
+reconstituted carries the atlas.

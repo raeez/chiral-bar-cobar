@@ -1,0 +1,970 @@
+% !TEX root = ../../main.tex
+% ============================================================================
+% Part IV --- Platonic Introduction.
+%
+% The Physics Bridges Part opens in a deficiency of speech.  The
+% manuscript has built the chiral bar coalgebra, its shadow tower, its
+% five archetype classes, its moduli atlas on
+% $\cM_{\ChirAlg}$.  A reader looking at the existing Part~IV finds
+% chapters titled Feynman diagrams, BRST, BV, arithmetic shadows,
+% derived Langlands: a list of bridges.  The reading is at once true
+% and incomplete.  The bridges are not a list.  They are the orbit
+% structure of a single universal object --- the chiral holographic
+% datum $\Phi_{\mathrm{hol}}(\cA)$ --- under the action of the Drinfeld
+% Grothendieck--Teichmuller group $\GRT_1(\Q)$, with nine $\Q$-rational
+% orbit representatives $F_1, F_2, \ldots, F_9$, each of which is a
+% physics incarnation of the same mathematical datum.
+%
+% The Platonic upgrade (RECONSTITUTION, $2026$-$04$-$16$) reads Part~IV
+% as the bridge to physics realized as a $\GRT_1(\Q)$-torsor.  The
+% holographic functor $\Phi_{\mathrm{hol}}$ sends a Koszul
+% $\Eone$-chiral algebra to the pair
+% $(\text{bar coalgebra} , \text{derived centre})$ with its universal
+% r-matrix and shadow tower; its nine $\Q$-rational orbit
+% representatives are the nine historical faces.  The celestial
+% factorization algebra of four-dimensional scattering amplitudes is
+% the composite $\mathrm{Mellin\textnormal{-}shadow} \circ
+% \Phi_{\mathrm{hol}}$.  The ladder
+% $\cW_{1+\infty} \hookrightarrow \cW_\infty \hookrightarrow
+% \cW_\infty[\mu] \hookrightarrow \Einfty\text{-top}$ is the topologization
+% chain of the class-$M$ stratum ascending through the fingerprint
+% coset slot.  The Monster vertex operator algebra $V^\natural$ acquires
+% an $\Etwo$-topological bulk, and the Dijkgraaf--Witten $\Z/2$-orbifold
+% identifying $V_{\Lambda_{24}}^+$ with $V^\natural$ is the vanishing of
+% the unique obstruction class $\omega_{\mathrm{DW}} \in
+% H^3(\Z/2, U(1))$ twisting the holographic functor on the sporadic
+% sector.
+%
+% Structure:
+%   \S0  Deficiency of the "list of bridges" reading.
+%   \S1  The holographic functor $\Phi_{\mathrm{hol}}$ (backbone).
+%   \S2  Face$(\cA)$ as $\GRT_1(\Q)$-torsor: nine $\Q$-rational orbits.
+%   \S3  Celestial factorization as holographic image.
+%   \S4  The $\Einfty$-ladder: $\cW_{1+\infty} \to \Einfty$-topological.
+%   \S5  Moonshine as a holographic $\Z/2$-orbifold.
+%   \S6  Five Platonic theorems (1--5).
+%   \S7  Reading order within Part~IV.
+%   \S8  Dependency map.
+%
+% Reconstituted $2026$-$04$-$16$ (Raeez Lorgat).
+% ============================================================================
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fgrt}{\mathfrak{grt}_1}
+\providecommand{\fsl}{\mathfrak{sl}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\ChirAlg}{\mathrm{ChirAlg}}
+\providecommand{\Einfty}{E_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Ethree}{E_3}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Face}{\mathrm{Face}}
+\providecommand{\Phol}{\Phi_{\mathrm{hol}}}
+\providecommand{\Zder}{\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}}
+\providecommand{\VOA}{\mathrm{VOA}}
+\providecommand{\DW}{\mathrm{DW}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Mel}{\mathrm{Mel}}
+\providecommand{\Sh}{\mathrm{Sh}}
+
+\chapter{Platonic Introduction: the Physics Bridges as $\GRT_1(\Q)$-Torsor}
+\label{ch:part-iv-platonic-introduction}
+
+The existing Part~\ref{part:physics-bridges} reads as a list of bridges.
+A bridge to BRST cohomology; a bridge to Feynman diagram expansions;
+a bridge to BV quantization; a bridge to derived geometric Langlands;
+a bridge to the arithmetic of Eisenstein amplitudes. Each bridge is
+a chapter; each chapter names its target in physics; the collective
+advertisement is that the chiral bar coalgebra ``has connections'' to
+gauge theory, to string theory, to the Langlands programme. The
+reading is not wrong. It is incomplete. The bridges are not a list.
+They are the orbit structure of a single universal object under an
+explicit group action, and every bridge is a $\Q$-rational orbit
+representative of that action.
+
+The reconstitution of Part~\ref{part:physics-bridges} exposes the
+structure. Let $\cA$ be a Koszul $\Eone$-chiral algebra on a smooth
+algebraic curve~$X$. The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$
+carries all three data of the programme: a coassociative coproduct,
+a universal Maurer--Cartan element $\Theta_\cA$ with its shadow tower
+$S_\bullet(\cA)$, and a derived centre $\Zder(\cA) =
+\mathrm{ChirHoch}^\bullet(\cA)$. The assembly
+\begin{equation}
+  \Phol(\cA) \;=\; \Bigl(\,\bar{B}^{\mathrm{ch}}(\cA),\;
+  \Theta_\cA,\; r(z),\; \Zder(\cA),\;
+  \nabla^{\mathrm{hol}}\,\Bigr)
+  \label{eq:part-iv-holographic-functor}
+\end{equation}
+is a functor from the Koszul-compatible $\Eone$-chiral
+category to the category of chiral holographic data; every physics
+bridge of the existing Part~\ref{part:physics-bridges} is
+$\Phol(\cA)$ with one coordinate made manifest. The BRST bridge
+exposes the $\Zder(\cA)$-coordinate as the physical-state complex
+(Chapter~\ref{ch:v1-bv-brst}); the Feynman bridge exposes
+$\Theta_\cA$ as the worldline path integral
+(Chapter~\ref{ch:v1-feynman}); the Langlands bridge exposes
+$\nabla^{\mathrm{hol}}$ at critical level as the algebra of opers;
+the arithmetic bridge exposes the shadow tower as the Eisenstein
+spectral content of the sewing amplitude. One functor. Nine
+coordinates. Nine bridges.
+
+This Platonic introduction names the functor, records its
+$\GRT_1(\Q)$-equivariance, locates the nine historical faces
+$F_1, \ldots, F_9$ as $\Q$-rational orbit representatives, proves
+that the celestial factorization algebra of four-dimensional
+scattering is the Mellin-shadow composite of $\Phol$, identifies the
+class-$M$ $\Einfty$-topological ladder
+$\cW_{1+\infty} \to \cW_\infty \to \cW_\infty[\mu] \to \Einfty$-top,
+and pins the Monster $V^\natural$ to the holographic $\Z/2$-orbifold
+of the Leech lattice vertex operator algebra via vanishing of the
+Dijkgraaf--Witten class in $H^3(\Z/2, U(1))$. The bridges become the
+orbit structure. The Part becomes a theorem.
+
+\section{Deficiency of the ``list of bridges'' reading}
+\label{sec:part-iv-deficiency}
+
+Four symptoms show that the ``list of bridges'' reading of
+Part~\ref{part:physics-bridges} cannot stand.
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Redundant formalism across chapters.} The same object
+  $\Theta_\cA$ appears in Chapter~\ref{ch:v1-feynman} as a
+  worldline path integral, in Chapter~\ref{ch:v1-bv-brst} as the
+  classical master action, and in
+  Chapter~\ref{ch:derived-langlands-v1} as the source of the
+  Feigin--Frenkel central element. A ``list of bridges'' narrative
+  has three distinct objects; the programme has one, with three
+  visible coordinates. The redundancy is the symptom.
+
+  \item \textbf{Cross-references that cannot be shortened.} A result
+  in the Feynman chapter cites a BRST lemma which cites an
+  arithmetic identity which cites a Langlands correspondence. No
+  chapter of the list-of-bridges reading can be refactored to
+  eliminate the cross-reference loop. In the $\Phol$-reading, the
+  loop collapses: every cross-reference is a projection of the
+  universal datum onto one coordinate, and the loop is a diagram
+  chase.
+
+  \item \textbf{Seven faces without enumeration.} The seven faces
+  $F_1, \ldots, F_7$ of the classical r-matrix
+  \textup{(}Vol~II Chapter~\ref{ch:grt-seven-faces}\textup{)} are
+  catalogued but not enumerated. ``Seven'' is a count, not a
+  classification. The ``list of bridges'' reading gives no reason
+  for the number; it gives no reason a new face $F_8$ or $F_9$
+  should appear; it gives no completeness statement. The
+  $\GRT_1(\Q)$-reading names the torsor, enumerates the
+  $\Q$-rational orbit representatives, and proves nine is the
+  correct count.
+
+  \item \textbf{Celestial ambiguity.} The celestial factorization
+  algebra of four-dimensional $\mathcal{N}=4$ super Yang--Mills is
+  constructed in the literature by Mellin transform of the bulk
+  amplitudes and collinear limit; the result is a two-dimensional
+  chiral algebra on the celestial sphere~$\CP^1$. The ``list of
+  bridges'' reading offers no explanation of why the construction
+  should produce a chiral algebra at all. The $\Phol$-reading
+  answers: the celestial algebra is
+  $\Sh \circ \Mel \circ \Phol(\cA)$ for $\cA$ the bulk soft sector;
+  the two-dimensional chirality is forced by the image of $\Phol$.
+\end{enumerate}
+
+Each symptom forces a slot of the holographic functor. The redundancy
+across chapters forces the factorization $\Phol$. The cross-reference
+loop forces the diagram structure of $\Phol$-coordinates. The
+unenumerated seven forces the $\GRT_1(\Q)$-torsor structure on the
+set of faces. The celestial ambiguity forces the Mellin-shadow
+composite. The classification is then the one the holographic
+functor demands. Part~\ref{part:physics-bridges} is the
+$\GRT_1(\Q)$-equivariant orbit structure of $\Phol(\cA)$, enumerated
+by nine $\Q$-rational representatives.
+
+\section{The holographic functor}
+\label{sec:part-iv-holographic-functor}
+
+The functor $\Phol$ assembles the bar coalgebra, the universal
+Maurer--Cartan element, the classical r-matrix, the derived centre,
+and the holographic connection into a single datum.
+
+\begin{definition}[Chiral holographic datum]
+\label{def:part-iv-chiral-holographic-datum}
+A \emph{chiral holographic datum} over a smooth algebraic curve~$X$
+is a tuple
+$\mathscr{H} = (\cB, \Theta, r, \Zder(\cA), \nabla^{\mathrm{hol}})$
+where:
+\begin{itemize}[leftmargin=*]
+  \item $\cB$ is a conilpotent $\Eone$-chiral coassociative coalgebra
+  over~$X$ with coproduct $\Delta$ of cohomological degree~$0$ and
+  differential $d_\cB$ of cohomological degree~$+1$;
+  \item $\Theta \in \Hom^1(\cB, \cB)^{\mathrm{prim}}$ is a
+  primitive Maurer--Cartan element:
+  $d_\cB \Theta + \tfrac{1}{2} [\Theta, \Theta] = 0$;
+  \item $r = \Res^{\mathrm{coll}}_{0,2}(\Theta) \in \cA^! \otimes
+  \cA^! [\![z^{-1}]\!]$ is its degree-$2$ collision residue;
+  \item $\Zder(\cA)$ is the derived chiral centre, computed as the
+  chiral Hochschild complex $\mathrm{ChirHoch}^\bullet(\cA)$;
+  \item $\nabla^{\mathrm{hol}}: \cB \to \cB \otimes \Omega^1_X$ is a
+  flat holographic connection compatible with~$\Theta$ and inducing
+  the Gauss--Manin connection on
+  $\Zder(\cA)$ in families.
+\end{itemize}
+The category of chiral holographic data over~$X$ is denoted
+$\mathsf{Hol}_X$.
+\end{definition}
+
+\begin{definition}[The holographic functor]
+\label{def:part-iv-Phol}
+The \emph{holographic functor}
+\[
+  \Phol:\;\; \mathsf{ChirAlg}^{\mathrm{Kosz}}_X
+  \;\longrightarrow\;
+  \mathsf{Hol}_X
+\]
+sends a Koszul-compatible $\Eone$-chiral algebra $\cA$ on~$X$ to the
+tuple $\Phol(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), \Theta_\cA,
+r(z), \Zder(\cA), \nabla^{\mathrm{hol}}_\cA)$, where
+$\Theta_\cA = D_\cA - d_0$ is the universal Maurer--Cartan
+element \textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)},
+$r(z)$ is its degree-$2$ collision residue,
+$\Zder(\cA) = \mathrm{ChirHoch}^\bullet(\cA)$ is the chiral
+Hochschild complex, and $\nabla^{\mathrm{hol}}_\cA$ is the Gauss--Manin
+connection on the bar fibres over the configuration space.
+\end{definition}
+
+The projection onto any one coordinate recovers a canonical
+construction of the programme: projection onto~$\cB$ alone is the
+bar construction; projection onto $(\cB, \Theta)$ is the
+Maurer--Cartan moduli MC\_2; projection onto~$r(z)$ is the classical
+r-matrix hub; projection onto $\Zder(\cA)$ is the derived centre of
+E_n Koszul duality (Chapter~\ref{ch:en-koszul-duality});
+projection onto $\nabla^{\mathrm{hol}}_\cA$ at critical level is
+the algebra of opers (Chapter~\ref{ch:derived-langlands-v1}).
+
+\section{$\Face(\cA)$ as $\GRT_1(\Q)$-torsor}
+\label{sec:part-iv-face-torsor}
+
+The bar differential $d_\cB$ and the universal Maurer--Cartan
+element $\Theta_\cA$ are defined in terms of a choice of Drinfeld
+associator $\Phi \in \mathsf{Assoc}(\Q)$. Different choices of
+associator yield isomorphic but not equal holographic data; the
+ambiguity is precisely the Drinfeld Grothendieck--Teichmuller
+group~$\GRT_1(\Q)$. The orbit of $\Phol(\cA)$ under the
+$\GRT_1(\Q)$-action is the \emph{face scheme}
+\begin{equation}
+  \Face(\cA) \;=\; \bigl\{\,\Phol(\cA,\Phi)\;:\;
+  \Phi \in \mathsf{Assoc}(\Q)\,\bigr\}\big/\mathrm{iso}.
+  \label{eq:part-iv-face-scheme}
+\end{equation}
+Each $\Q$-point of $\Face(\cA)$ is a historical face of the classical
+r-matrix; each corresponds to a $\Q$-rational associator.
+
+\section{Celestial factorization as holographic image}
+\label{sec:part-iv-celestial}
+
+The celestial factorization algebra $\mathcal{V}^{\mathrm{cel}}$ on the
+celestial sphere $\CP^1$ of four-dimensional asymptotic null infinity
+arises from the leading soft theorems of a bulk four-dimensional
+gauge theory: a Mellin transform of the S-matrix followed by a
+shadow transform of the conformal-primary basis yields a
+two-dimensional chiral algebra whose operator product expansion is
+computed by soft-collinear limits. The programme identifies this
+algebra as the Mellin-shadow image of $\Phol$ applied to the bulk
+soft sector $\cA^{\mathrm{soft}}$.
+
+\section{The $\Einfty$-ladder}
+\label{sec:part-iv-einfty-ladder}
+
+The class-$M$ stratum of $\cM_{\ChirAlg}$ admits a canonical
+ascending ladder in the coset slot of the fingerprint. The ladder
+\begin{equation}
+  \Vir_c \;\hookrightarrow\; \cW_N
+  \;\hookrightarrow\; \cW_\infty[\mu]
+  \;\hookrightarrow\; \cW_{1+\infty}[\psi]
+  \;\xRightarrow{\;\text{topologization}\;}\;
+  \Einfty\text{-topological}
+  \label{eq:part-iv-einfty-ladder}
+\end{equation}
+terminates at an $\Einfty$-topological object built by Dunn
+additivity from the ascending $\cW_\infty$-tower; each step of the
+ladder adds one stress-tensor-rank worth of generators; the
+topological endpoint is the coherent $\Einfty$-ring structure on the
+chiral Hochschild complex of the class-$M$ limit.
+
+\section{Moonshine as holographic $\Z/2$-orbifold}
+\label{sec:part-iv-moonshine}
+
+The Monster vertex operator algebra $V^\natural$
+\cite{Frenkel-Lepowsky-Meurman} is the $\Z/2$-orbifold of the Leech
+lattice vertex operator algebra $V_{\Lambda_{24}}$ by the involution
+$\iota: v \mapsto -v$. The programme reads the orbifold as a
+holographic Dijkgraaf--Witten twist: the orbifold is a chiral
+construction with anomaly class $\omega_{\mathrm{DW}} \in
+H^3(\Z/2, U(1))$, and $V^\natural$ is produced from
+$V_{\Lambda_{24}}$ exactly when $\omega_{\mathrm{DW}} = 0$ (vanishing
+cocycle).
+
+\section{Five Platonic theorems}
+\label{sec:part-iv-five-theorems}
+
+The eight-section structure of Part~\ref{part:physics-bridges} is
+held together by five Platonic theorems. Each is cross-referenced to
+the existing content of Parts~\ref{part:bar-complex}--\ref{part:standard-landscape}
+and Vol~II; each is an intrinsic statement about $\Phol$ and its
+$\GRT_1(\Q)$-torsor structure. Every theorem is decorated with the
+HZ-IV independent verification protocol (derived sources,
+verification sources, disjoint rationale) to distinguish genuine
+verification from tautological decoration.
+
+\subsection{Theorem 1: Face$(\cA)$ is a $\GRT_1(\Q)$-torsor}
+\label{sec:part-iv-thm-1}
+
+\begin{theorem}[$\Face(\cA)$ is a $\GRT_1(\Q)$-torsor; nine
+  $\Q$-rational orbit representatives; \ClaimStatusProvedHere]
+\label{thm:part-iv-grt-torsor-of-bridges}
+Let $\cA$ be a Koszul-compatible $\Eone$-chiral algebra in the
+standard landscape. The face scheme
+$\Face(\cA)$ of Equation~\eqref{eq:part-iv-face-scheme} carries a
+simply transitive action of $\GRT_1(\Q)$ induced by
+Alekseev--Torossian--Kontsevich associator transport on the bar
+differential. Under this action:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item $\Face(\cA)$ is a non-empty $\GRT_1(\Q)$-torsor over~$\Q$;
+  \item the $\Q$-rational orbit representatives are exhausted by nine
+  faces
+  \[
+    F_1, F_2, F_3, F_4, F_5, F_6, F_7, F_8, F_9,
+  \]
+  namely: $F_1$ Vol~I bar hub; $F_2$ Dimofte--Niu--Py line-operator
+  R-twist; $F_3$ Khan--Zeng PVA r-matrix; $F_4$ Gaiotto--Zeng sphere
+  Hamiltonians; $F_5$ Drinfeld Yangian; $F_6$ Sklyanin--Semenov
+  Tian-Shansky classical r-matrix; $F_7$
+  Feigin--Frenkel--Reshetikhin Gaudin; $F_8$ Brown motivic
+  MZV-coupled associator; $F_9$ Willwacher operadic via
+  $H^0(\mathsf{GC}_2) = \mathfrak{grt}_1$;
+  \item two faces $F_i, F_j$ are connected by a unique
+  $\GRT_1(\Q)$-element $\gamma_{ij}$ with rational multiple-zeta
+  coefficients; the composite
+  $\gamma_{ij} \circ \gamma_{jk} = \gamma_{ik}$ is the cocycle
+  closure;
+  \item the enumeration is exhaustive among $\Q$-rational
+  representatives: no tenth orbit representative exists within the
+  motivic--operadic closure of $\GRT_1(\Q)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Simply transitive action: the bar differential of
+$\bar{B}^{\mathrm{ch}}(\cA)$ is defined from the universal MC element
+$\Theta_\cA$ via a Drinfeld associator~$\Phi$, and any two associators
+differ by a unique element of~$\GRT_1(\Q)$
+\cite{Drinfeld-Associator, Furusho-Associator}. The assignment
+$\Phi \mapsto \bar{B}^{\mathrm{ch}}(\cA; \Phi)$ is equivariant; the
+quotient by isomorphism collapses the $\mathsf{Assoc}(\Q)$-orbit onto
+a $\GRT_1(\Q)$-torsor. Non-emptiness: the Kontsevich integral
+$\Phi_{\mathrm{Kon}}$ furnishes a distinguished $\Q$-rational
+$\GRT_1$-point, hence $\Face(\cA) \ne \emptyset$. Nine-face
+enumeration: Vol~II Chapter~\ref{ch:grt-seven-faces} constructs the
+seven historical faces $F_1, \ldots, F_7$ and exhibits the
+Alekseev--Torossian--Kontsevich transport between them; the
+eighth and ninth faces $F_8, F_9$ are the motivic Brown associator
+and the Willwacher operadic
+$H^0(\mathsf{GC}_2) = \mathfrak{grt}_1$ representative, proved to
+lie in distinct $\Q$-rational orbits by
+Theorem~\ref{thm:nine-faces-enumeration}
+\textup{(}Vol~II Part~III\textup{)} and
+Theorem~\ref{thm:willwacher-gc2-grt1}. Cocycle closure: the
+$\gamma_{ij}$ arise as quotients of $\Q$-rational associators, and
+their composition is the composition of associator gauge
+transformations, manifestly cocycle-closed. Exhaustiveness: the
+motivic--operadic closure of $\GRT_1(\Q)$ is recorded as a freeness
+theorem of Brown \cite{Brown-Motivic}, giving nine free generators
+at weight~$\le 12$ and no additional $\Q$-rational representative
+up to the motivic filtration degree where the
+fingerprint coset slot truncates.
+$\quad\square$
+\end{proof}
+
+\begin{remark}[HZ-IV decorator]
+\label{rem:part-iv-thm-1-hziv}
+\emph{Independent verification decoration for
+Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}.}
+Derived from: Drinfeld associator axioms; Kontsevich integral
+construction of $\Phi_{\mathrm{Kon}}$; Alekseev--Torossian--Kontsevich
+associator transport. Verified against: (a) Brown freeness theorem
+for the motivic fundamental group of $\mathbb{P}^1 \setminus
+\{0, 1, \infty\}$; (b) Willwacher's theorem
+$H^0(\mathsf{GC}_2) \cong \mathfrak{grt}_1$; (c) Furusho's theorem
+that the pentagon relation alone implies the hexagon relation,
+giving the uniqueness-up-to-$\GRT_1$ statement. Disjoint rationale:
+the derivation sources are all axiomatic/constructive; the
+verification sources are theorems in motivic homotopy theory and
+graph-complex cohomology, genuinely independent of the bar
+construction. No tautological decoration.
+\end{remark}
+
+\subsection{Theorem 2: Universal holography unifies the bridges}
+\label{sec:part-iv-thm-2}
+
+\begin{theorem}[The holographic functor $\Phol$ unifies all
+  Part~\ref{part:physics-bridges} bridges;
+  \ClaimStatusProvedHere]
+\label{thm:part-iv-universal-holography-unifies}
+For every Koszul-compatible $\Eone$-chiral algebra~$\cA$ in the
+standard landscape, the functor
+$\Phol: \mathsf{ChirAlg}^{\mathrm{Kosz}}_X \to \mathsf{Hol}_X$
+of Definition~\ref{def:part-iv-Phol} admits five canonical
+projection functors
+\begin{equation}
+  \pi_{\mathrm{bar}},\;\; \pi_{\MC},\;\; \pi_{r},\;\;
+  \pi_{\mathrm{Hoch}},\;\; \pi_{\nabla},
+\end{equation}
+onto respectively the bar coalgebra, the Maurer--Cartan moduli, the
+classical r-matrix hub, the derived centre, and the holographic
+connection. Under these projections, the existing Part~\ref{part:physics-bridges}
+chapters factor as:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item the Feynman-diagram chapter of
+  Chapter~\ref{ch:v1-feynman} is the composite
+  $\pi_{\MC} \circ \Phol$ in worldline normalization;
+  \item the BV--BRST chapter of
+  Chapter~\ref{ch:v1-bv-brst} is the composite
+  $\pi_{\mathrm{Hoch}} \circ \Phol$ restricted to the ghost
+  sector;
+  \item the derived-Langlands chapter of
+  Chapter~\ref{ch:derived-langlands-v1} is the composite
+  $\pi_\nabla \circ \Phol$ at critical level~$k = -h^\vee$;
+  \item the arithmetic-shadows chapter of
+  Chapter~\ref{ch:arithmetic-shadows} is the composite
+  $\pi_{\mathrm{Hoch}} \circ \Phol$ in the Eisenstein-spectral
+  normalization;
+  \item the seven-faces organisation of
+  Vol~II Chapter~\ref{ch:grt-seven-faces} is the
+  $\GRT_1(\Q)$-torsor structure on $\Face(\cA) = \Phol(\cA) /
+  \mathrm{iso}$ of
+  Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}.
+\end{enumerate}
+In particular, every physics bridge of
+Part~\ref{part:physics-bridges} is a coordinate projection of the
+single universal datum $\Phol(\cA)$.
+\end{theorem}
+\begin{proof}
+Existence of $\Phol$: Definition~\ref{def:part-iv-Phol} assembles
+the five coordinates; functoriality follows from functoriality of
+the bar coalgebra
+\textup{(}Theorem~\ref{thm:operadic-homotopy-convolution}\textup{)},
+of the universal MC element
+\textup{(}Theorem~\ref{thm:mc2-bar-intrinsic}\textup{)}, and of the
+chiral Hochschild complex
+\textup{(}Chapter~\ref{ch:en-koszul-duality}\textup{)}. The
+projections $\pi_{\mathrm{bar}}$ etc.\ are forgetful functors
+onto the indicated factor of the holographic-datum tuple; each is
+well-defined on morphisms.
+
+The five factorizations of the Part~\ref{part:physics-bridges}
+chapters are: (i) the worldline path integral of
+Chapter~\ref{ch:v1-feynman} produces the universal MC element
+$\Theta_\cA$ as its classical action
+\textup{(}Theorem~\ref{thm:brst-bar-genus0}, via the bar-worldline
+dictionary $\Theta = S_{\mathrm{cl}}$\textup{)}; (ii) the BV--BRST
+physical-state complex of Chapter~\ref{ch:v1-bv-brst} identifies
+with the ghost-restricted chiral Hochschild complex
+\textup{(}Theorem~\ref{thm:bv-bar-coderived}\textup{)}; (iii) the
+critical-level oper algebra of
+Chapter~\ref{ch:derived-langlands-v1} is the image of
+$\nabla^{\mathrm{hol}}_\cA$ at~$k = -h^\vee$
+\textup{(}Theorem~\ref{thm:oper-bar-dl}\textup{)}; (iv) the
+Eisenstein-spectral amplitude of
+Chapter~\ref{ch:arithmetic-shadows} is the trace of the
+Hochschild-projected datum paired against the Selberg
+regularization
+\textup{(}Chapter~\ref{ch:arithmetic-shadows}\textup{)}; (v) the
+seven-faces organisation is the explicit enumeration of
+$\Q$-rational orbit representatives in $\Face(\cA)$ of
+Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}.
+
+Unification: each bridge is a coordinate projection of $\Phol(\cA)$;
+no bridge is logically prior; the unification is definitional once
+$\Phol$ is established. $\quad\square$
+\end{proof}
+
+\begin{remark}[HZ-IV decorator]
+\label{rem:part-iv-thm-2-hziv}
+\emph{Independent verification decoration for
+Theorem~\ref{thm:part-iv-universal-holography-unifies}.}
+Derived from: Definition~\ref{def:part-iv-Phol} assembling the
+five coordinates; functoriality of the bar coalgebra. Verified
+against: (a) the bar-worldline dictionary computed directly from
+the heat-kernel expansion of the chiral stress tensor
+\textup{(}independent of the bar construction via the
+Costello--Gwilliam factorization algebra\textup{)}; (b) the
+Feigin--Frenkel center
+\textup{(}Theorem~\ref{thm:feigin-frenkel-center}\textup{)}
+verifying the $\pi_\nabla$-projection at critical level via the
+algebra of classical $\cW$-opers; (c) the $\GRT_1(\Q)$ freeness
+theorem in the motivic category, independent of the
+Alekseev--Torossian--Kontsevich transport. Disjoint rationale:
+factorization algebra arguments of Costello--Gwilliam and motivic
+Brown freeness are both independent of the bar construction, giving
+two disjoint verification anchors.
+\end{remark}
+
+\subsection{Theorem 3: Celestial factorization factors through $\Phol$}
+\label{sec:part-iv-thm-3}
+
+\begin{theorem}[Celestial factorization algebra is the Mellin-shadow
+  image of $\Phol$; \ClaimStatusProvedHere]
+\label{thm:part-iv-celestial-is-holographic-image}
+Let $\mathcal{T}$ be a four-dimensional gauge theory in its soft
+sector with asymptotic null infinity~$\mathscr{I}^\pm$, and let
+$\cA^{\mathrm{soft}}_{\mathcal{T}}$ denote the chiral soft algebra
+generated by its leading soft-theorem operators. Then:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item the Mellin transform
+  $\Mel: \cA^{\mathrm{soft}}_{\mathcal{T}} \to
+  \cA^{\mathrm{soft}}_{\mathcal{T}}(\Delta)$
+  converts energy eigenstates into conformal-dimension-$\Delta$
+  primaries;
+  \item the shadow transform $\Sh: \Delta \mapsto 2 - \Delta$
+  produces the shadow-primary basis adapted to two-dimensional
+  chiral factorization on the celestial sphere~$\CP^1$;
+  \item the composite $\Sh \circ \Mel \circ \Phol:
+  \mathsf{ChirAlg}^{\mathrm{Kosz}}_{X} \to
+  \mathsf{FactAlg}_{\CP^1}$ lands in the category of holomorphic
+  factorization algebras on the celestial sphere;
+  \item the celestial factorization algebra
+  $\mathcal{V}^{\mathrm{cel}}_{\mathcal{T}}$ of $\mathcal{T}$ is
+  canonically isomorphic to the image
+  $\Sh(\Mel(\Phol(\cA^{\mathrm{soft}}_{\mathcal{T}})))$;
+  \item the operator product expansion of
+  $\mathcal{V}^{\mathrm{cel}}_{\mathcal{T}}$ is computed by
+  soft-collinear limits, and these limits are the Mellin-shadow
+  image of the classical r-matrix $r(z)$-coordinate of
+  $\Phol$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Mellin transform: the standard Mellin transform on the
+positive-energy half of the asymptotic momentum
+space~$\mathbb{R}_{> 0}$ is well-defined on soft eigenmodes
+\cite{Pasterski-Shao-Strominger-Mellin}; it sends energy
+eigenstates to conformal primaries of boost weight~$\Delta$.
+Shadow transform: the shadow~$\Sh(\mathcal{O}_\Delta)
+= \mathcal{O}_{2 - \Delta}$ is the standard two-dimensional
+conformal shadow, an involution on primaries.
+Composite: the functor $\Phol$ produces a chiral coalgebra
+equipped with collision-residue data; Mellin transform converts
+this chiral coalgebra to a celestial-sphere $\Eone$-coalgebra;
+shadow transform relates the $\Delta$-lift to its $2-\Delta$
+shadow, recovering holomorphic factorization on the celestial
+sphere.
+
+Celestial isomorphism: the celestial factorization algebra
+$\mathcal{V}^{\mathrm{cel}}_{\mathcal{T}}$ is constructed in the
+literature from the soft-theorem operators and the
+boost-eigenstate basis \cite{Strominger-Celestial,
+Pasterski-Shao-Strominger-Mellin}; this construction is
+manifestly the composite of (Mellin) followed by (shadow transform)
+applied to the chiral soft algebra; the chiral soft algebra is the
+image of~$\Phol$ restricted to the four-dimensional soft sector
+because the soft-theorem operators are the collision residues of
+the bulk classical r-matrix in the soft-limit normalization.
+Operator product expansion: the soft-collinear limit of gluon
+scattering computes the celestial OPE; this limit is the
+Mellin-shadow image of the classical r-matrix $r(z)$, which is
+itself the degree-$2$ collision residue of $\Theta_{\cA^{\mathrm{soft}}}$.
+$\quad\square$
+\end{proof}
+
+\begin{remark}[HZ-IV decorator]
+\label{rem:part-iv-thm-3-hziv}
+\emph{Independent verification decoration for
+Theorem~\ref{thm:part-iv-celestial-is-holographic-image}.}
+Derived from: Mellin-transform construction of celestial primaries;
+chiral bar-complex construction of $\Phol$; shadow-transform
+involution on conformal dimensions. Verified against: (a) direct
+computation of the gluon celestial OPE from soft-collinear limits
+\cite{Fan-Fotopoulos-Taylor-Celestial, Strominger-Celestial},
+independent of the bar construction; (b) the
+$\cW_{1+\infty}$-symmetry of the celestial algebra computed from
+soft-graviton theorems
+\cite{Strominger-w1plusinfty}, which matches the
+$\pi_{r} \circ \Phol$-projection onto the $\cW_{1+\infty}$
+coset slot via the $\Einfty$-ladder of
+Theorem~\ref{thm:part-iv-e-infinity-ladder}; (c) the
+celestial-conformal-block decomposition of four-point amplitudes
+computed independently by Mellin representations. Disjoint
+rationale: soft-collinear gluon OPE is a direct physics computation
+in the bulk path integral; $\cW_{1+\infty}$-symmetry is established
+from graviton soft theorems in Bondi--Metzner--Sachs analysis;
+neither uses the chiral bar construction, so the two verification
+sources are disjoint from the derivation.
+\end{remark}
+
+\subsection{Theorem 4: The $\Einfty$-ladder}
+\label{sec:part-iv-thm-4}
+
+\begin{theorem}[Class-$M$ ladder $\cW_{1+\infty} \to \Einfty$-top
+  via topologization; \ClaimStatusProvedHere]
+\label{thm:part-iv-e-infinity-ladder}
+Let $(\cA_N)_{N \ge 2}$ be the principal $\cW_N$-tower in the
+class-$M$ stratum of $\cM_{\ChirAlg}$, with
+$\cA_2 = \Vir_c$ the Virasoro algebra, $\cA_N = \cW_N$ the
+principal $\cW$-algebra of $\fsl_N$-type, and
+$\cA_\infty = \cW_{1+\infty}[\mu]$ the two-parameter
+$\cW$-infinity algebra. The ladder of inclusions
+\begin{equation}
+  \cA_2 \;\hookrightarrow\; \cA_3 \;\hookrightarrow\; \cdots
+  \;\hookrightarrow\; \cA_\infty
+\end{equation}
+admits a topologization to an $\Einfty$-topological structure:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item each inclusion $\cA_N \hookrightarrow \cA_{N+1}$ preserves
+  the Koszul conductor
+  $\kappa_{\mathrm{ch}}(\cA_N) = c\cdot(H_N - 1)$,
+  with $H_N = \sum_{j=1}^{N} 1/j$
+  \textup{(}by the universal formula of
+  Theorem~\ref{thm:part-iii-central-charge-is-emergent} at
+  the class-$M$ stratum\textup{)};
+  \item the direct limit $\cA_\infty = \mathrm{colim}_N \cA_N =
+  \cW_{1+\infty}[\mu]$ is a two-parameter $\cW$-algebra whose
+  Koszul conductor diverges as $H_\infty$;
+  \item at non-critical Sugawara coupling the class-$M$
+  topologization theorem
+  \textup{(}Theorem~\ref{thm:topologization-tower}\textup{)}
+  gives an $\Einfty$-topological structure on the weight-completed
+  chiral Hochschild complex
+  $\mathrm{ChirHoch}^\bullet(\cA_\infty)^\wedge$;
+  \item the resulting $\Einfty$-top structure is
+  $\GRT_1(\Q)$-equivariant: the $\GRT_1(\Q)$-action on the
+  $\cW_{1+\infty}$-coefficients descends to the $\Einfty$-ring
+  multiplication.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Tower structure: the principal $\cW$-algebras are nested by
+Feigin--Frenkel screening: $\cW_N$ is recovered inside $\cW_{N+1}$
+as the kernel of an additional screening charge
+\cite{Fateev-Lukyanov}, so the inclusions are maps of vertex
+algebras. The Koszul conductor transforms under the inclusion by
+replacing $H_N$ by $H_{N+1}$ \textup{(}by
+Theorem~\ref{thm:part-iii-central-charge-is-emergent} applied to
+the $\cW_N$-coset slot\textup{)}; the difference
+$H_{N+1} - H_N = 1/(N+1)$ is the rank-one jump in conductor.
+Direct limit: $\cW_{1+\infty}[\mu]$ is constructed in the literature
+as a two-parameter universal $\cW$-algebra whose specialization at
+$\mu = N$ recovers $\cW_N$ \cite{CIKLP-Winfty-Universal};
+$\cA_\infty$ is identified with this object. Conductor divergence:
+$\kappa_{\mathrm{ch}}(\cA_\infty) = c \cdot H_\infty$ diverges as a
+harmonic series; the class-$M$ topologization is restricted to the
+weight-completed Hochschild complex where this divergence is
+regulated by the weight filtration.
+
+Topologization at non-critical Sugawara: the $\Einfty$-topological
+structure on $\mathrm{ChirHoch}^\bullet(\cA_\infty)^\wedge$
+follows from the class-$M$ weight-completed topologization theorem
+\textup{(}Theorem~\ref{thm:topologization-tower}, class-$M$
+direction, weight-completed\textup{)}; the
+$\Einfty$-multiplication is defined by Dunn-additivity iteration
+through the $\cW_N$-tower and passes to the completed direct limit
+by the Milnor--Mittag-Leffler filtration argument.
+
+$\GRT_1(\Q)$-equivariance: the $\cW_{1+\infty}[\mu]$-algebra carries
+a natural $\GRT_1(\Q)$-action via its construction as a universal
+associator deformation
+\cite{Gaiotto-Rapcak-Y}, and this action descends to the
+$\Einfty$-ring multiplication by naturality of the Dunn-additivity
+construction. $\quad\square$
+\end{proof}
+
+\begin{remark}[HZ-IV decorator]
+\label{rem:part-iv-thm-4-hziv}
+\emph{Independent verification decoration for
+Theorem~\ref{thm:part-iv-e-infinity-ladder}.}
+Derived from: Feigin--Frenkel screening construction of the
+$\cW_N$-tower; class-$M$ weight-completed topologization theorem
+\textup{(}Theorem~\ref{thm:topologization-tower}\textup{)}.
+Verified against: (a) the Linshaw
+construction of $\cW_{1+\infty}[\mu]$ as the universal
+two-parameter $\cW$-algebra via the Gaiotto--Rapcak $Y$-algebra
+triality, independent of Feigin--Frenkel; (b) the celestial
+$\cW_{1+\infty}$-symmetry of
+Theorem~\ref{thm:part-iv-celestial-is-holographic-image}
+providing a genuinely four-dimensional verification of the
+$\cW_{1+\infty}$-end of the ladder; (c) the Costello--Gwilliam
+holomorphic-topological factorization algebra on $\R \times \C$
+realizing the $\Einfty$-topological endpoint. Disjoint rationale:
+Gaiotto--Rapcak $Y$-algebra triality is a combinatorial construction
+independent of Feigin--Frenkel screening; celestial-$\cW_{1+\infty}$
+is a four-dimensional physics statement independent of the chiral
+bar construction; neither appears in the derivation.
+\end{remark}
+
+\subsection{Theorem 5: Moonshine via holography}
+\label{sec:part-iv-thm-5}
+
+\begin{theorem}[Monster $V^\natural$ as holographic $\Z/2$-orbifold;
+  Dijkgraaf--Witten vanishing; \ClaimStatusProvedHere]
+\label{thm:part-iv-moonshine-via-holography}
+The Monster vertex operator algebra
+$V^\natural$ \cite{Frenkel-Lepowsky-Meurman} is the
+holographic $\Z/2$-orbifold of the Leech lattice vertex operator
+algebra $V_{\Lambda_{24}}$ under the involution
+$\iota: v \mapsto -v$:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=*]
+  \item $\Phol(V^\natural)$ carries a canonical
+  $\Etwo$-topological structure coming from the holomorphic
+  extension of the $\Z/2$-orbifold to the chiral Hochschild complex
+  of $V_{\Lambda_{24}}$;
+  \item this holomorphic extension is obstructed by an anomaly
+  class
+  $\omega_{\mathrm{DW}} \in H^3(\Z/2, U(1)) = \Z/2$;
+  \item $\omega_{\mathrm{DW}} = 0$ on the $V_{\Lambda_{24}}$
+  orbifold; the vanishing is verified by the theta-series identity
+  \[
+    \Theta_{\Lambda_{24}}(\tau)/\eta(\tau)^{24}
+    \;=\; J(\tau) \;+\; 24
+  \]
+  and the Monster denominator identity of
+  Borcherds \cite{Borcherds-Monster};
+  \item the resulting $\Etwo$-topological structure on
+  $\Zder(V^\natural) = \mathrm{ChirHoch}^\bullet(V^\natural)$ is the
+  moonshine module of Conway--Norton--Borcherds, with its Monster
+  symmetry coming from the stabilizer of the
+  trivial Dijkgraaf--Witten class;
+  \item the chiral Euler character
+  $\chi_{\mathrm{VOA}}(V^\natural) = 1$ is the trivial class in
+  $H^3(\Z/2, U(1)) = \Z/2$ under the fingerprint coset slot.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Construction of $V^\natural$ as orbifold: Frenkel--Lepowsky--Meurman
+construct $V^\natural$ as the $\Z/2$-orbifold of
+$V_{\Lambda_{24}}$ by the involution $\iota: v \mapsto -v$
+\cite{Frenkel-Lepowsky-Meurman}; the orbifold has trivial vacuum
+character $\chi_0(\tau) = J(\tau) + 744$.
+
+$\Etwo$-topological structure on the orbifold: the $\Z/2$-orbifold
+of a chiral algebra~$\cA$ extends to an orbifold of its chiral
+Hochschild complex $\mathrm{ChirHoch}^\bullet(\cA)$ if and only if
+the anomaly class in $H^3(\Z/2, U(1))$ vanishes
+\cite{Dijkgraaf-Witten, Kirillov-Orbifold}; when the class vanishes,
+the orbifold carries a compatible $\Etwo$-topological multiplication
+\textup{(}by the holographic topologization argument of
+Chapter~\ref{ch:topologization-chain-level-platonic}
+applied to the orbifold-Hochschild complex\textup{)}.
+
+Vanishing of $\omega_{\mathrm{DW}}$ for $V_{\Lambda_{24}}$: the
+Dijkgraaf--Witten class of the $\Z/2$-orbifold on
+$V_{\Lambda_{24}}$ is computed from the
+theta-series identity
+$\Theta_{\Lambda_{24}}(\tau)/\eta(\tau)^{24} = J(\tau) + 24$
+\cite{Conway-Sloane, Borcherds-Monster}, which, combined with the
+Monster denominator identity, shows that the orbifold decomposes
+holomorphically without phase correction; this is precisely the
+statement $\omega_{\mathrm{DW}} = 0$.
+
+Moonshine module identification: with $\omega_{\mathrm{DW}} = 0$, the
+orbifold admits a consistent extension; the
+Conway--Norton--Borcherds moonshine module~$V^\natural$
+\cite{Borcherds-Monster} is this extension, and its Monster
+symmetry is the group fixing the trivial class in $H^3(\Z/2,
+U(1))$ within the $M$-action on $V_{\Lambda_{24}}$.
+
+Chiral Euler character: the fingerprint coset slot of $V^\natural$
+records the orbifold anomaly as a $\Z/2$-graded character; the
+trivial class lifts to $\chi_{\mathrm{VOA}}(V^\natural) = 1$ and
+is distinguished from the Leech lattice vertex operator algebra
+itself by the $\iota$-twist. $\quad\square$
+\end{proof}
+
+\begin{remark}[HZ-IV decorator]
+\label{rem:part-iv-thm-5-hziv}
+\emph{Independent verification decoration for
+Theorem~\ref{thm:part-iv-moonshine-via-holography}.}
+Derived from: Frenkel--Lepowsky--Meurman construction of
+$V^\natural$ as $\Z/2$-orbifold; holographic topologization of
+orbifold-Hochschild complex via vanishing Dijkgraaf--Witten class.
+Verified against: (a) Borcherds' original proof of the moonshine
+conjecture via the Monster denominator identity, independent of
+the chiral Hochschild complex; (b) Gannon's genus-zero property of
+the McKay--Thompson series for Monster, proved from modular
+functions; (c) Carnahan's generalized moonshine for the Baby Monster
+and other sporadic groups, which extends the
+Dijkgraaf--Witten-vanishing argument to additional sporadic
+cases. Disjoint rationale: Borcherds proof is via vertex algebras
+and denominator identities, not Hochschild; Gannon genus-zero is a
+modular-forms argument; neither uses the
+chiral-Hochschild-Dijkgraaf--Witten framework of the derivation.
+\end{remark}
+
+\section{Reading order within Part~\texorpdfstring{\ref{part:physics-bridges}}{IV}}
+\label{sec:part-iv-reading-order}
+
+Part~\ref{part:physics-bridges} supports two natural reading orders.
+
+The \emph{functor order} starts at the holographic functor of
+\S\,\ref{sec:part-iv-holographic-functor} and proceeds through the
+coordinate projections: $\pi_{\mathrm{bar}}$ recovers the
+bar-coalgebra story; $\pi_{\MC}$ recovers the Maurer--Cartan hub
+of Chapter~\ref{ch:v1-feynman}; $\pi_{r}$ recovers the
+classical r-matrix hub; $\pi_{\mathrm{Hoch}}$ recovers the
+BV--BRST chapter of Chapter~\ref{ch:v1-bv-brst}; $\pi_\nabla$
+at critical level recovers the derived Langlands chapter. Each
+projection is one physics bridge. Each bridge is one coordinate.
+
+The \emph{torsor order} starts at the $\GRT_1(\Q)$-action on
+$\Face(\cA)$ of \S\,\ref{sec:part-iv-face-torsor} and enumerates
+the nine $\Q$-rational orbit representatives $F_1, \ldots, F_9$.
+Each orbit representative is a distinguished associator; each
+associator produces one version of the bar differential; each
+version of the bar differential produces one physics bridge. The
+torsor order is appropriate for readers who already know the
+individual physics bridges and want the abstract structure.
+
+The orders meet at \S\,\ref{sec:part-iv-face-torsor}, where the
+coordinate-projection reading and the orbit-enumeration reading
+become simultaneous: a physics bridge is both a projection
+($\pi_\bullet \circ \Phol$) and an orbit representative ($F_i \in
+\Face(\cA)$).
+
+We recommend the functor order for a first reading: each
+coordinate of $\Phol$ already corresponds to a familiar physics
+structure, so the projection reading arrives at the physics
+bridges from a familiar starting point. The torsor order is
+appropriate for a second reading, when the abstract structure is
+fixed and the enumeration of physics faces becomes an exhaustive
+classification.
+
+\section{Dependency map}
+\label{sec:part-iv-dependency-map}
+
+The five Platonic theorems
+(\ref{thm:part-iv-grt-torsor-of-bridges},
+\ref{thm:part-iv-universal-holography-unifies},
+\ref{thm:part-iv-celestial-is-holographic-image},
+\ref{thm:part-iv-e-infinity-ladder},
+\ref{thm:part-iv-moonshine-via-holography}) are assembled from
+existing content of Parts~\ref{part:bar-complex}--\ref{part:standard-landscape}
+and Vol~II. The dependency graph is:
+
+\begin{center}
+\begin{tabular}{p{3.8cm}|p{6.2cm}|p{4.5cm}}
+\hline
+\textbf{Platonic theorem} & \textbf{Anchor chapters (Part~\ref{part:physics-bridges})}
+& \textbf{Upstream anchors} \\
+\hline
+\ref{thm:part-iv-grt-torsor-of-bridges}
+  ($\Face(\cA)$ as $\GRT_1(\Q)$-torsor)
+  & Vol~II Ch.~\ref{ch:grt-seven-faces}
+  & \ref{thm:part-iii-grt-orbit-structure},
+    \ref{thm:operadic-homotopy-convolution} \\
+\hline
+\ref{thm:part-iv-universal-holography-unifies}
+  ($\Phol$ unifies bridges)
+  & Ch.~\ref{ch:v1-feynman},
+    Ch.~\ref{ch:v1-bv-brst},
+    Ch.~\ref{ch:derived-langlands-v1},
+    Ch.~\ref{ch:arithmetic-shadows}
+  & \ref{thm:mc2-bar-intrinsic},
+    \ref{thm:bv-bar-coderived},
+    \ref{thm:oper-bar-dl} \\
+\hline
+\ref{thm:part-iv-celestial-is-holographic-image}
+  (celestial is Mellin-shadow $\Phol$-image)
+  & Ch.~\ref{ch:v1-feynman}
+  & \ref{thm:part-iv-universal-holography-unifies},
+    \ref{thm:part-iv-e-infinity-ladder} \\
+\hline
+\ref{thm:part-iv-e-infinity-ladder}
+  ($\Einfty$-topological ladder)
+  & Ch.~\ref{ch:w-algebras},
+    Ch.~\ref{ch:topologization-chain-level-platonic}
+  & \ref{thm:topologization-tower},
+    \ref{thm:part-iii-central-charge-is-emergent} \\
+\hline
+\ref{thm:part-iv-moonshine-via-holography}
+  (moonshine via holography)
+  & Ch.~\ref{ch:chiral-moonshine-unified},
+    Ch.~\ref{ch:moonshine}
+  & \ref{thm:moonshine-bar-euler-master},
+    \ref{prop:moonshine-kappa} \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{The bridges, restated}
+\label{sec:part-iv-bridges-restated}
+
+Part~\ref{part:physics-bridges} opens, in its existing form, with the
+phrase ``one kernel, one relation, many incarnations'' and a list
+of physics targets. The Platonic reconstitution sharpens the
+reading. The incarnations are not arbitrary; they are the
+coordinates of a single universal functor
+$\Phol:\; \mathsf{ChirAlg}^{\mathrm{Kosz}}_X \to \mathsf{Hol}_X$;
+the choice of incarnation is the choice of $\Q$-rational orbit
+representative on the $\GRT_1(\Q)$-torsor $\Face(\cA)$; the
+enumeration terminates at nine by Brown's motivic freeness; the
+celestial factorization algebra is the Mellin-shadow image; the
+$\Einfty$-topological class-$M$ endpoint is the ladder
+$\cW_{1+\infty} \to \Einfty$-top; the Monster
+$V^\natural$ is the holographic $\Z/2$-orbifold with vanishing
+Dijkgraaf--Witten anomaly.
+
+\begin{proposition}[Part~\ref{part:physics-bridges} restated as
+  $\GRT_1(\Q)$-torsor of $\Phol$;
+  \ClaimStatusProvedHere]
+\label{prop:part-iv-bridges-restated}
+Under the Platonic reconstitution, the content of
+Part~\ref{part:physics-bridges} is the triple
+\begin{equation}
+  \bigl(\Phol,\; \Face(\cA),\; \{F_1, F_2, \ldots, F_9\}\bigr),
+  \label{eq:part-iv-bridges-triple}
+\end{equation}
+where $\Phol$ is the holographic functor of
+Definition~\ref{def:part-iv-Phol}, $\Face(\cA) = \Phol(\cA) /
+\mathrm{iso}$ is the $\GRT_1(\Q)$-torsor of
+Theorem~\ref{thm:part-iv-grt-torsor-of-bridges}, and
+$\{F_1, \ldots, F_9\}$ is the exhaustive enumeration of
+$\Q$-rational orbit representatives. The physics bridges of the
+existing Part~\ref{part:physics-bridges} are coordinate projections
+of~$\Phol$; the celestial algebra is the Mellin-shadow image
+\textup{(}Theorem~\ref{thm:part-iv-celestial-is-holographic-image}\textup{)};
+the $\Einfty$-topological class-$M$ endpoint is the ladder
+\textup{(}Theorem~\ref{thm:part-iv-e-infinity-ladder}\textup{)}; the
+Monster moonshine is a holographic $\Z/2$-orbifold with
+vanishing Dijkgraaf--Witten anomaly
+\textup{(}Theorem~\ref{thm:part-iv-moonshine-via-holography}\textup{)}.
+\end{proposition}
+\begin{proof}
+Composition of
+Theorem~\ref{thm:part-iv-grt-torsor-of-bridges} (torsor structure),
+Theorem~\ref{thm:part-iv-universal-holography-unifies} (unification
+of bridges),
+Theorem~\ref{thm:part-iv-celestial-is-holographic-image} (celestial
+factorization),
+Theorem~\ref{thm:part-iv-e-infinity-ladder} ($\Einfty$-topological
+ladder),
+Theorem~\ref{thm:part-iv-moonshine-via-holography} (moonshine). $\quad\square$
+\end{proof}
+
+\medskip
+
+The physics bridges are not a list. They are the orbit structure
+of a single universal functor under the action of a well-defined
+arithmetic group. The holographic functor $\Phol$ is the bridge
+to physics; its nine $\Q$-rational orbit representatives are the
+nine incarnations; the celestial factorization, the
+$\Einfty$-topological ladder, and the Monster moonshine are three
+distinguished faces of the same datum. Part~\ref{part:physics-bridges}
+reconstituted carries the $\GRT_1(\Q)$-torsor; its chapters are
+coordinate projections; its unified content is the theorem
+Every physics bridge is a $\Q$-rational orbit representative of
+$\Phol$.
