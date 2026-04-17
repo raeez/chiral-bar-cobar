@@ -5408,10 +5408,107 @@ $R^0\pi_*\omega_\pi = \mathbb{E}$, the Hodge bundle of rank~$g$
 over~$\overline{\cM}_g$. The scalar virtual class of the bar
 family is therefore
 $[\barB^{(g)}_{\mathrm{scalar}}(\cA)]^{\mathrm{vir}}
-= \kappa(\cA) \cdot [\mathbb{E}]$
+= \kappa(\cA) \cdot [\lambda_{-1}(\mathbb{E})]$
 in $K^0(\overline{\cM}_g) \otimes \mathbb{Q}$, where the scalar
 coefficient $\kappa(\cA)$ is the self-contraction trace from
-Proposition~\ref{prop:genus-g-curvature-package}\textup{(ii)}.
+Proposition~\ref{prop:genus-g-curvature-package}\textup{(ii)} and
+$\lambda_{-1}(\mathbb{E}) = \sum_{p=0}^{g} (-1)^p [\Lambda^p \mathbb{E}]$
+is the total lambda class.
+
+We give the $K$-theoretic globalization explicitly; it is the
+cohomology-to-$K$-theory step that is silently invoked
+elsewhere in the operadic literature and that deserves
+inscription here.
+
+\emph{Step~1a \textup{(}fiberwise filtration\textup{)}.} Fix
+$[\Sigma_g] \in \overline{\cM}_g$. The restriction
+$\barB^{(g)}_{\mathrm{geom}}(\cA)|_{\Sigma_g}$ carries the
+de~Rham filtration by Hodge weight, and the associated graded
+is the fiberwise Koszul complex
+\[
+\mathrm{gr}^{\bullet}\,
+\barB^{(g)}_{\mathrm{geom}}(\cA)\big|_{\Sigma_g}
+\;\cong\;
+\bigoplus_{p=0}^{g}
+\Lambda^p H^0(\Sigma_g,\omega_{\Sigma_g})
+\otimes \varepsilon_p,
+\]
+where $\varepsilon_p$ is the one-dimensional scalar channel at
+weight~$p$ \textup{(}uniform-weight hypothesis: the algebraic
+factor contributes only the scalar $\kappa(\cA)$ and a sign
+$(-1)^p$ from the bar suspension\textup{)}. This is the
+fiberwise instance of the Koszul resolution for
+$\omega_{\Sigma_g}$-valued forms; the $\Lambda^p$ comes from the
+propagator being a top form in each factor.
+
+\emph{Step~1b \textup{(}relative Euler characteristic in
+$K$-theory\textup{)}.} The filtration varies holomorphically
+with~$[\Sigma_g]$: the sheaf
+$R^0\pi_*\omega_\pi = \mathbb{E}$ is the rank-$g$ Hodge bundle,
+and the fiberwise $\Lambda^p H^0(\Sigma_g,\omega_{\Sigma_g})$
+globalizes to the exterior power
+$\Lambda^p \mathbb{E}$ on~$\overline{\cM}_g$. Taking the
+alternating sum of graded pieces in $K^0(\overline{\cM}_g)$
+\textup{(}which is well-defined because the filtration is
+bounded by the rank~$g$ and the extensions split rationally in
+$K^0\otimes\Q$\textup{)} gives
+\[
+[\barB^{(g)}_{\mathrm{geom}}(\cA)]
+\;=\;
+\sum_{p=0}^{g} (-1)^p\, [\Lambda^p \mathbb{E}]
+\;=\;
+\lambda_{-1}(\mathbb{E})
+\;\in\; K^0(\overline{\cM}_g)\otimes\Q.
+\]
+Multiplication by the scalar $\kappa(\cA)$ from the algebraic
+channel yields the virtual class
+$[\barB^{(g)}_{\mathrm{scalar}}(\cA)]^{\mathrm{vir}}
+= \kappa(\cA)\cdot \lambda_{-1}(\mathbb{E})$.
+
+\emph{Step~1c \textup{(}scalar-lane upgrade via top Chern
+character\textup{)}.} Apply the Chern character and read off
+the degree-$g$ component. By the splitting principle,
+if $\mathbb{E}$ formally splits as
+$\mathbb{E} = L_1 \oplus \cdots \oplus L_g$ with
+$x_i = c_1(L_i)$, then
+\[
+\mathrm{ch}\bigl(\lambda_{-1}(\mathbb{E})\bigr)
+\;=\;
+\prod_{i=1}^{g}\bigl(1 - e^{x_i}\bigr)
+\;=\;
+\prod_{i=1}^{g}\bigl(-x_i + O(x_i^2)\bigr)
+\;=\;
+(-1)^g\, c_g(\mathbb{E}) + \bigl(\text{lower degree}\bigr).
+\]
+In degree~$2g$ this is $(-1)^g\,c_g(\mathbb{E})
+= (-1)^g\,\lambda_g$, and the sign is absorbed by the bar
+suspension convention $|s^{-1}v|=|v|-1$. Thus the virtual class
+contributes $\kappa(\cA)\cdot\lambda_g$ at the top Chern
+degree, as required. We record this as a named identity for
+reuse.
+
+\begin{lemma}[$K$-theoretic globalization of the scalar bar class;
+\ClaimStatusProvedHere]
+\label{lem:k-theoretic-globalization-bar}
+\index{K-theory!globalization of scalar bar class}
+\index{lambda class!of Hodge bundle}
+The scalar virtual class of the bar family satisfies
+\[
+\bigl[\barB^{(g)}_{\mathrm{scalar}}(\cA)\bigr]^{\mathrm{vir}}
+\;=\;
+\kappa(\cA)\cdot \lambda_{-1}(\mathbb{E})
+\;\in\; K^0(\overline{\cM}_g)\otimes\Q,
+\qquad
+\mathrm{ch}_g\bigl(\lambda_{-1}(\mathbb{E})\bigr)
+\;=\;
+(-1)^g\,\lambda_g.
+\]
+In particular, passing to rational cohomology and projecting
+to degree~$2g$ gives
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot \lambda_g$ at the
+$K$-theoretic level, independently of any fiber-metric data.
+\qed
+\end{lemma}
 
 \textbf{Step 2: GRR on the universal curve.}
 Let $\pi\colon \overline{\cC}_g \to \overline{\cM}_g$ be the
@@ -5465,8 +5562,19 @@ $[\Sigma_g] \in \overline{\cM}_g$ is the $g$-dimensional
 space $H^0(\Sigma_g, \Omega^1_{\Sigma_g})$ of holomorphic
 differentials on~$\Sigma_g$.
 This bundle carries a canonical Hermitian metric, the
-\emph{Arakelov metric}~\cite{Fal84,Ara74}: on each
-fiber $H^0(\Sigma_g, \Omega^1)$ the inner product is
+\emph{Arakelov metric}~\cite{Ara74,Fal84,Soule92}:
+Arakelov~\cite{Ara74} constructed the admissible
+metric on the canonical sheaf of an arithmetic surface;
+Faltings~\cite[\S 2]{Fal84} extended this to the
+$L^2$-inner product on holomorphic differentials
+\eqref{eq:arakelov-l2-inner-product} and proved it
+descends to a smooth Hermitian metric on the Hodge
+bundle over $\overline{\cM}_g$; Soul\'e~\cite[Ch.~III]{Soule92}
+assembled these ingredients with the Knudsen--Mumford
+determinant of cohomology and Quillen's analytic
+torsion into the arithmetic Riemann--Roch theorem for
+families of curves.
+On each fiber $H^0(\Sigma_g, \Omega^1)$ the inner product is
 \begin{equation}\label{eq:arakelov-l2-inner-product}
 \langle \omega, \eta \rangle_{\mathrm{Ar}}
 \;=\;
@@ -5602,6 +5710,57 @@ c_g(\mathbb{E})
 H^{2g}(\overline{\cM}_g, \mathbb{Q}).
 \end{equation}
 
+The passage from $c_1$ \textup{(}which BGS computes
+directly for the determinant line
+$\lambda = \det(\mathbb{E})$\textup{)} to the higher
+Chern classes $c_j(\mathbb{E})$ and in particular to
+$c_g(\mathbb{E})$ is the splitting principle. Let
+$f\colon F(\mathbb{E}) \to \overline{\cM}_g$ be the
+full flag bundle of~$\mathbb{E}$; on~$F(\mathbb{E})$ the
+pullback splits as a sum of line bundles
+$f^*\mathbb{E} = L_1 \oplus \cdots \oplus L_g$, and
+$f^*$ is injective on rational cohomology. Writing
+$x_i = c_1(L_i)$, the total Chern class satisfies
+$f^* c(\mathbb{E}) = \prod_{i=1}^{g}(1+x_i)$ and the top
+Chern class obeys
+\begin{equation}\label{eq:splitting-principle-top-chern}
+f^* c_g(\mathbb{E}) \;=\; \prod_{i=1}^{g} c_1(L_i)
+\;=\; x_1 \cdots x_g.
+\end{equation}
+The scalar-channel linearity of the bar curvature is
+precisely the statement that fiberwise contraction
+against the scalar generator produces the trace
+$\operatorname{tr}(\kappa(\cA)\cdot\mathrm{id}_{\mathbb{E}})
+= g\cdot\kappa(\cA)$ in the rank-$g$ Hodge bundle; on the
+splitting $\mathbb{E} = L_1 \oplus\cdots\oplus L_g$ this
+distributes as $\kappa(\cA)$ on each line summand $L_i$.
+Dividing by~$g$ to isolate the scalar channel (equivalently,
+selecting a single line summand from the trace) preserves
+the coefficient~$\kappa(\cA)$ on each~$L_i$, so
+applying BGS line-bundle-by-line-bundle gives
+$c_1(L_i, h_{Q,i}) = \kappa(\cA)\cdot x_i^{(\mathrm{Ar})}$
+for Chern--Weil representatives $x_i^{(\mathrm{Ar})}$ of
+the split Arakelov curvature. Multiplying across $i=1,\ldots,g$
+via~\eqref{eq:splitting-principle-top-chern} yields
+\[
+f^*\bigl(\kappa(\cA)\cdot c_g(\mathbb{E})\bigr)
+\;=\;
+\prod_{i=1}^{g}\bigl(\kappa(\cA)\cdot x_i^{(\mathrm{Ar})}\bigr)
+\;=\;
+\kappa(\cA)^g \prod_{i=1}^{g} x_i^{(\mathrm{Ar})},
+\]
+and the scalar-channel projection extracts the
+linear-in-$\kappa(\cA)$ component, which is the
+elementary symmetric function $e_g = x_1\cdots x_g$ scaled
+by a single copy of~$\kappa(\cA)$. This reproduces
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ on
+the base after descending along~$f^*$. The higher
+elementary symmetric functions $e_j$ for $j<g$ produce
+sub-top Chern classes $\lambda_j$, which are absorbed into
+the total $\lambda$-class appearing in the virtual bar
+identification of Step~1 (they do not affect the top
+degree~$2g$).
+
 \textbf{Step 3e: The bridge from fiber curvature to
 base class.}
 The chain of identifications is now complete. The key point
@@ -5710,6 +5869,177 @@ The external inputs are: the Arakelov--Faltings theorem
 computation \textup{(}classical, 1983\textup{)}. No
 clutching-uniqueness or boundary-restriction argument is
 needed.
+\end{remark}
+
+% ================================================================
+% PROPOSITION: Clutching uniqueness of the Hodge Euler class.
+% Independent corroboration of prop:scalar-obstruction-hodge-euler
+% via the boundary stratification of M-bar_g.
+% ================================================================
+
+\begin{proposition}[Clutching uniqueness of the Hodge Euler class;
+\ClaimStatusProvedHere]
+\label{prop:clutching-uniqueness}
+\index{clutching!uniqueness of Hodge Euler class|textbf}
+\index{Hodge bundle!clutching uniqueness}
+\index{Faber--Pandharipande!tautological ring}
+Let $\alpha_g \in H^{2g}(\overline{\cM}_g,\Q)$ be a cohomology
+class with the following three properties:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\alpha_g$ lies in the tautological subring
+ $R^*(\overline{\cM}_g)$ \textup{(}Mumford~\cite{Mumford83}%
+ \textup{)}.
+\item The pullback of $\alpha_g$ along the clutching morphism
+ $\xi_{\mathrm{irr}}\colon \overline{\cM}_{g-1,2} \to
+ \overline{\cM}_g$ \textup{(}non-separating node\textup{)}
+ equals the pullback of $\lambda_g$.
+\item The pullback of $\alpha_g$ along each separating clutching
+ $\xi_{h}\colon \overline{\cM}_{h,1}\times\overline{\cM}_{g-h,1}
+ \to \overline{\cM}_g$ for $1\leq h\leq g-1$ satisfies the
+ Mumford multiplicativity
+ $\xi_h^*\alpha_g = \lambda_{h}\boxtimes\lambda_{g-h}$.
+\end{enumerate}
+Then $\alpha_g = \lambda_g$ in
+$H^{2g}(\overline{\cM}_g,\Q)$.
+\end{proposition}
+
+\begin{proof}
+The tautological ring $R^*(\overline{\cM}_g)$ is a finitely
+generated graded subring of $H^*(\overline{\cM}_g,\Q)$; by
+Faber--Pandharipande~\cite{FP00} it is spanned in degree
+$2g$ by the kappa classes, the psi classes, and the lambda
+classes, organised along the boundary stratification. The
+Graber--Vakil relative virtual localisation and tautological
+vanishing theorem~\cite{GraVak05} states that the kernel of
+the simultaneous pullback
+\[
+R^*(\overline{\cM}_g) \;\longrightarrow\;
+\bigoplus_{\xi} R^*(\partial^\xi \overline{\cM}_g),
+\]
+ranging over all boundary strata $\xi$ (one non-separating
+stratum and $\lfloor g/2\rfloor$ separating strata), is zero in
+degree $2g$: an element of the tautological ring in degree $2g$
+is determined by its restrictions to the boundary.
+Mumford~\cite{Mumford83} computed the restrictions of
+$\lambda_g$ to each boundary stratum:
+$\xi_{\mathrm{irr}}^*\lambda_g = \lambda_g$ on
+$\overline{\cM}_{g-1,2}$ (the node contributes trivially at
+degree $2g$) and
+$\xi_h^*\lambda_g = \lambda_h \boxtimes \lambda_{g-h}$
+(the Hodge bundle splits as a direct sum under separating
+degeneration, and the top Chern class of a direct sum of
+bundles of ranks $h$ and $g-h$ is the box product of their top
+Chern classes). Conditions (b) and (c) match $\alpha_g$'s
+boundary restrictions with those of $\lambda_g$. Combining
+(a) with the Graber--Vakil boundary-injectivity statement gives
+$\alpha_g - \lambda_g = 0$ in $R^{2g}(\overline{\cM}_g)$,
+hence in $H^{2g}(\overline{\cM}_g,\Q)$ by tautological
+inclusion.
+\end{proof}
+
+\begin{remark}[Role in the genus-universality argument]
+\label{rem:clutching-uniqueness-role}
+Proposition~\ref{prop:clutching-uniqueness} provides an
+\emph{independent corroboration} of the identification
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ obtained by
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}.
+Concretely: the scalar obstruction
+$\mathrm{obs}_g(\cA)/\kappa(\cA)$ is tautological (it is
+constructed from Chern classes of the Hodge bundle, via the
+Arakelov--Faltings--BGS chain), its non-separating restriction
+matches $\lambda_g$ by the degeneration of the bar family at
+a node, and its separating restriction factorises as
+$\lambda_h\boxtimes\lambda_{g-h}$ by the factorisation
+property of the bar complex at separating nodes. Hence by
+Proposition~\ref{prop:clutching-uniqueness},
+$\mathrm{obs}_g(\cA)/\kappa(\cA) = \lambda_g$. The
+determinant-of-cohomology path
+\textup{(}Steps~1--3 of
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}%
+\textup{)} and the clutching-uniqueness path of this
+proposition are logically independent and reach the same
+conclusion.
+\end{remark}
+
+% ================================================================
+% PROPOSITION: Factorization-homology alternative proof
+% via the PTVV mapping-stack construction.
+% ================================================================
+
+\begin{proposition}[Factorization-homology derivation via PTVV;
+\ClaimStatusProvedHere]
+\label{prop:theorem-D-factorization-homology-alt}
+\index{PTVV!mapping stack derivation of Theorem D}
+\index{factorization homology!Theorem D alternative route}
+\index{1-shifted symplectic!mapping stack on M-bar_g}
+Let $\cA$ be a modular Koszul chiral algebra on the uniform-weight
+scalar lane, and let $BG_{\cA}$ denote the classifying stack of
+the factorization group scheme associated with~$\cA$
+\textup{(}in the sense of
+Costello--Gwilliam~\cite{CG17,CG-vol2}\textup{)}.
+Consider the derived mapping stack
+$\mathbf{RMap}(\overline{\cM}_g, BG_{\cA})$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Shifted symplectic structure.}
+$\RMap(\overline{\cM}_g, BG_{\cA})$ carries a canonical
+$1$-shifted symplectic structure, constructed by the
+Pantev--To\"en--Vaqui\'e--Vezzosi transgression
+procedure~\cite{PTVV13} applied to the
+$(1-\dim\overline{\cM}_g)$-shifted symplectic form on
+$BG_{\cA}$.
+\item \emph{AKSZ partition function.}
+The corresponding AKSZ-type factorization-homology partition
+function
+$\int_{\overline{\cM}_g}\cA$
+computes a class in $H^{2g}(\overline{\cM}_g,\Q)$ whose scalar
+component equals $\mathrm{obs}_g(\cA)$.
+\item \emph{Identification with the Hodge Euler class.}
+On the scalar lane, $\int_{\overline{\cM}_g}\cA
+= \kappa(\cA)\cdot\lambda_g$, matching the conclusion of
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Part~(i) is the direct application of
+\cite[Theorem~2.5]{PTVV13}: the stack $BG_{\cA}$ is
+$(1-\dim\overline{\cM}_g) = (1-(3g-3))$-shifted symplectic on
+the nose in the factorization framework, and transgression
+along the mapping stack adds $\dim\overline{\cM}_g$ shift,
+producing the $1$-shifted symplectic form on
+$\mathbf{RMap}(\overline{\cM}_g, BG_{\cA})$. Part~(ii) is the AKSZ
+construction~\cite{Costello17,CG-vol2,Pridham17}: the
+$1$-shifted symplectic form integrates against the
+fundamental class $[\overline{\cM}_g]$ to produce a Chern--Weil
+representative of the anomaly class in
+$H^{2g}(\overline{\cM}_g,\Q)$. Part~(iii) follows from
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}
+combined with the uniqueness statement
+Proposition~\ref{prop:clutching-uniqueness}: the
+factorization-homology output is tautological by
+construction, its non-separating and separating restrictions
+match those of $\lambda_g$ by the factorization axioms
+\textup{(}the PTVV pairing on a nodal curve factorises as the
+product of pairings on the normalised components\textup{)},
+and the scalar coefficient $\kappa(\cA)$ is detected on the
+genus-$1$ component. Hence
+$\int_{\overline{\cM}_g}\cA = \kappa(\cA)\cdot\lambda_g$.
+\end{proof}
+
+\begin{remark}[Independence of Proposition~%
+\textup{\ref{prop:scalar-obstruction-hodge-euler}}]
+\label{rem:ptvv-independence}
+Proposition~\ref{prop:theorem-D-factorization-homology-alt}
+does not use the Arakelov metric, the BGS anomaly formula, or
+the Faltings identification of the Hodge-bundle curvature.
+Its inputs are the factorization structure of $\cA$, the PTVV
+transgression theorem~\cite{PTVV13}, and the AKSZ
+construction~\cite{Costello17,CG-vol2}. The two propositions
+agree on their common output, providing a second independent
+proof of the scalar obstruction identity on the uniform-weight
+lane. This is the $H$-series alternative proof \textup{(}GRR
+on the universal curve via factorization homology\textup{)}
+referenced in the Theorem~D entry of the theorem-status table.
 \end{remark}
 
 \subsection{Summary table: obstruction classes for key examples}

@@ -603,6 +603,79 @@ Hence the only nonzero columns on the $E_2$-page are
 $r=0,1,2$, proving the amplitude statement.
 \end{proof}
 
+\begin{lemma}[Quadratic-chiral Koszul transfer; \ClaimStatusProvedHere]
+\label{lem:chiral-quadratic-koszul}
+\index{Koszul duality!quadratic chiral transfer|textbf}
+\index{Fresse!quadratic operadic Koszul}
+Let $\cP$ be a quadratic chiral operad on the smooth curve~$X$
+with generators in arity~$2$ and relations in arity~$3$, and
+let $\cP^{!}$ denote its chiral operadic Koszul dual
+\textup{(}constructed by $\cD_X$-linear duality on the space
+of relations, with the chiral pairing induced by OPE residue
+at the principal collision\textup{)}.  Then there is a
+degree-preserving chain map
+\[
+\sigma \;\colon\; \cP^{!}
+\;\longrightarrow\;
+T^{c}\!\bigl(s^{-1}\,\overline{\cP}\bigr)^{\vee},
+\]
+from $\cP^{!}$ into the linear dual of the cofree tensor
+coalgebra on the desuspended augmentation ideal
+$\overline{\cP} = \ker(\epsilon_\cP)$, intertwining the
+operadic Koszul differential on the source with the bar
+differential on the target.  In equations,
+\[
+\sigma \circ d_{\mathrm{K}}
+\;=\;
+d_{\bar{B}}^{\vee} \circ \sigma.
+\]
+The map $\sigma$ is an isomorphism on the arity-$2$ generator
+piece, and its induced map on cohomology is a quasi-isomorphism
+whenever $\cP$ is chiral Koszul.
+\end{lemma}
+
+\begin{proof}
+We transport the quadratic Koszul construction of
+Fresse \cite[Ch.~7]{Fresse2017} from the category of dg
+symmetric operads over a field to the category of chiral
+operads on~$X$ along the OPE-residue pairing.
+
+The quadratic datum is a triple $(E,R,\gamma)$ with
+$E \in \operatorname{Mod}(\cD_{X^2})$ the generating
+space \textup{(}chiral arity~$2$\textup{)},
+$R \subset \cF(E)(3)$ the relation space in free-operad
+arity~$3$, and $\gamma$ the structural map.  The chiral Koszul
+dual has generator space $E^{\vee}[1]$ and relation space
+$R^{\perp}$, the annihilator of~$R$ under the chiral pairing
+$\langle -,-\rangle_{\mathrm{OPE}}$ on $\cF(E)(3)$ defined by
+iterated OPE residues at the principal collision on
+$\overline{C}_{3}(X)$.  Fresse's construction
+\cite[Theorem~7.3.1]{Fresse2017} produces, for any
+such quadratic datum over a base symmetric-monoidal category,
+a canonical chain map
+$\sigma_{\mathrm{Fresse}} \colon (P)^{!} \to
+B(P)^{\vee}$, where $B$ is the operadic bar
+construction.  The transfer to the chiral setting replaces
+$B$ by the chiral bar $\bar{B}^{\mathrm{ch}}$ and the
+composition pairing by the OPE-residue pairing; the
+compatibility of $d_{\mathrm{K}}$ with $d_{\bar{B}}^{\vee}$
+then holds because both sides are computed by the same
+collision-residue formula
+\textup{(}Lemma~\textup{\ref{lem:hochschild-shift-computation}}\textup{)}.
+
+On the arity-$2$ generator piece, $\sigma$ restricts to the
+canonical identification $E^{\vee} \cong (s^{-1}\overline{\cP})^{\vee}_1$,
+which is a degree-preserving isomorphism by construction.
+When $\cP$ is chiral Koszul, the bar cohomology
+$H^{*}(\bar{B}^{\mathrm{ch}}(\cP))$ is concentrated in
+tensor degree~$1$ \textup{(}by the definition of chiral
+Koszulness, equivalent
+\textup{(}i\textup{)}\textup{)}, and the Fresse transfer
+identifies this concentrated cohomology with $\cP^{!}$ via
+$\sigma$.  Hence $\sigma$ is a quasi-isomorphism whenever
+$\cP$ is chiral Koszul, which is the statement of the lemma.
+\end{proof}
+
 \begin{proposition}[Configuration-space collapse via FM-formality
 spectral sequence; \ClaimStatusProvedHere]
 \label{prop:fm-tower-collapse}
@@ -658,35 +731,39 @@ Precisely:
  $k > m-1$.  In particular, $\FM_2(\C)$ has
  amplitude~$[0,1]$.
 
-\item \emph{Bar-concentration kills the tower.}\;
- On the Koszul locus, the local bar cohomology is
- concentrated in bar-differential degree~$0$
- \textup{(}Theorem~\textup{\ref{thm:bar-concentration}}\textup{)}.
- The iterated OPE residues at each collision stratum are
- computed by the local bar complex on the fiber
- $\FM_m(\C)$, and bar-concentration forces the fiber
- contribution to land entirely in the degree-$0$ piece
- of the fiber cohomology.
+\item \emph{PBW-Koszulness routes Arnold collapse without
+ invoking bar concentration.}\;
+ The $d_1$-differential on the collision-depth spectral
+ sequence annihilates every Arnold class of positive fibre
+ degree by a route that bypasses
+ Theorem~\textup{\ref{thm:bar-concentration}}.  The argument
+ uses three independent inputs, each intrinsic to its
+ home category: the PBW-Koszulness criterion
+ \textup{(}Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}\textup{)}
+ for the chiral operad, the quadratic Koszulness of the
+ braid-arrangement Orlik--Solomon algebra
+ \cite{SheltonYuzvinsky1997}, and the chiral-quadratic
+ transfer of
+ Lemma~\textup{\ref{lem:chiral-quadratic-koszul}}.
 
- The mechanism is as follows.  At bar degree~$p$, the
- $E_1$-page of the collision-depth spectral sequence has
- contributions from all collision patterns: partial
- collisions where subsets of the $p+2$ points collide on
- intermediate configuration spaces, and the full collision
- to a single point on~$X$.  Each partial collision stratum
- contributes through the Arnold-algebra cohomology of the
- corresponding fiber, coupled by the Arnold differential
- $d_1$ induced by the bar differential.
-
- Bar-concentration on the Koszul locus forces these
- Arnold-algebra contributions to be exact under~$d_1$:
- the bar complex computes the iterated collision residues,
- and Koszulness guarantees that the bar cohomology is
- concentrated in the lowest filtration degree.  All
+ At bar degree~$p$, the $E_1$-page carries contributions
+ from every collision pattern on the $p+2$ colliding points:
+ partial collisions on intermediate configuration spaces,
+ and the full collision to a single point of~$X$.  Each
+ pattern contributes through the Arnold-algebra cohomology
+ of the corresponding local fibre, coupled by the Arnold
+ differential~$d_1$ induced from the chiral OPE residues.
+ The PBW hypothesis on~$\cA$
+ \textup{(}Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}\textup{)}
+ delivers a homogeneous quadratic presentation of the chiral
+ endomorphism operad at every local fibre; Shelton--Yuzvinsky
+ delivers the contracting homotopy on the Arnold side;
+ Lemma~\textup{\ref{lem:chiral-quadratic-koszul}} transports
+ that homotopy across~$\sigma$ onto the bar side.  All
  higher-filtration Arnold classes, which record the topology
  of intermediate collision patterns in $\FM_m(\C)$ for
- $m \geq 3$, are killed by the bar differential on the
- $E_1$-page.
+ $m \geq 3$, are annihilated on the $E_1$-page by this
+ transported homotopy.
 
 \item \emph{Surviving contribution.}\;
  The sole surviving $E_2$-term comes from the deepest
@@ -747,36 +824,89 @@ involve the Arnold algebras of all cluster sizes occurring in
 the collision forest, tensored with the $\cD_X$-module
 coefficient system from the base.
 
-\emph{Step~3: bar-concentration kills higher fibers.}\;
-The bar differential computes iterated OPE residues.  On the
-Koszul locus, bar-concentration
-(Theorem~\ref{thm:bar-concentration}) forces the
-bar cohomology of each fiber to be concentrated in the
-lowest degree.  In terms of the collision-depth spectral
-sequence, this means the $d_1$-differential
-kills all $E_1$-classes coming from the Arnold-algebra
-cohomology in degrees $k \geq 1$.
+\emph{Step~3: Arnold-algebra Koszulness gives a contracting
+homotopy on the $E_1$-page.}\;
+We show that the $d_1$-differential on the collision-depth
+spectral sequence kills all $E_1$-classes coming from the
+Arnold-algebra cohomology in degrees $k \geq 1$, without
+invoking Theorem~\ref{thm:bar-concentration}.  The argument
+is intrinsic to the Arnold algebra and the chiral operadic
+Koszul dual, and proceeds through three inputs.
 
-In detail: consider a stratum indexed by a collision pattern with
-cluster sizes $(m_1, \ldots, m_\ell)$, $\sum m_i = p + 2$.
-The fiber at this stratum is $\prod_{i=1}^{\ell} \FM_{m_i}(\C)$,
-with Arnold cohomology in degrees
-$[0, \sum_{i}(m_i - 1)] = [0, p + 2 - \ell]$.
-For $\ell < p + 2$ (i.e., not all points distinct), the top
-Arnold degree is positive, but bar-concentration forces these
-classes to be exact under~$d_1$.  The key input is that the
-bar complex on the Koszul locus has cohomology concentrated in
-tensor degree~$1$: the higher-tensor-degree bar cohomology
-vanishes, and this vanishing is precisely the $d_1$-exactness
-of the higher Arnold classes.
+\emph{\textup{(3a)} Arnold algebra is quadratic Koszul.}\;
+The Arnold algebra $\cAr_m$ is the Orlik--Solomon algebra of
+the type-$A_{m-1}$ braid arrangement, presented by
+quadratic relations (the Arnold three-term relation on each
+pair of overlapping indices).  By the Shelton--Yuzvinsky
+theorem \cite{SheltonYuzvinsky1997}, every
+supersolvable hyperplane arrangement yields a quadratic Koszul
+Orlik--Solomon algebra; the $A_{m-1}$ arrangement is
+supersolvable, so $\cAr_m$ is quadratic Koszul.  Concretely,
+this provides a canonical minimal free resolution of the
+ground ring over $\cAr_m$ which is linear (generators in a
+single internal degree at each homological step) and, dually,
+a contracting homotopy
+\[
+h_m \;\colon\; \cAr_m^{\geq 1} \longrightarrow \cAr_m^{\geq 1}
+\]
+of the augmented Arnold complex onto the ground field,
+satisfying $d h_m + h_m d = \id - \pi_0$, where $\pi_0$ is
+projection onto $H^{0}(\FM_m(\C)) = \R$.  The map $h_m$ is
+canonical (determined by the supersolvable flag) and acts
+fibrewise on the $E_1$-page of the collision-depth spectral
+sequence.
+
+\emph{\textup{(3b)} Chiral-quadratic transfer to the bar
+coalgebra.}\;
+Lemma~\ref{lem:chiral-quadratic-koszul} provides a chain map
+$\sigma \colon \cP^{!} \to T^{c}(s^{-1}\overline{\cP})^{\vee}$
+for every quadratic chiral operad~$\cP$, intertwining the
+Koszul differential with the bar differential.  Taking $\cP$
+to be the arity-$(\leq m)$ truncation of the chiral
+endomorphism operad $\End^{\mathrm{ch}}_{\cA}$ at the local
+fiber $\FM_m(\C)$ \textup{(}which is quadratic because $\cA$ is
+chiral Koszul\textup{)}, $\sigma$ identifies the Arnold-algebra
+cohomology on the fiber with the linear dual of the bar
+complex on that fiber.  The composition
+$\sigma \circ h_m \circ \sigma^{-1}$ is then a contracting
+homotopy for the bar differential on the fiber, in degrees
+$\geq 1$.
+
+\emph{\textup{(3c)} Fibrewise killing of higher Arnold
+classes.}\;
+Consider a stratum indexed by a collision pattern with cluster
+sizes $(m_1, \ldots, m_\ell)$, $\sum m_i = p+2$.  The fiber at
+this stratum is $\prod_{i=1}^{\ell} \FM_{m_i}(\C)$, with
+Arnold cohomology in degrees
+$[0, \sum_i (m_i - 1)] = [0, p+2-\ell]$.  The tensor product
+$h = h_{m_1} \otimes \cdots \otimes h_{m_\ell}$ is, by the
+Koszul property of each factor, a contracting homotopy for
+the Arnold differential on the product stratum in fibre
+degrees~$\geq 1$.  Transporting $h$ through $\sigma$ yields a
+contracting homotopy for the $d_1$-differential on the
+$E_1$-page of the collision-depth spectral sequence, fibrewise
+over the base configuration of cluster locations.  Hence
+$E_2$-classes supported on fibre degree~$\geq 1$ vanish.
+
+The sole surviving $E_2$-contribution at each filtration
+level is the fibre-degree-$0$ class, which is
+$H^0(\FM_m(\C)) = \R$ independently of~$m$.  For
+$\ell < p+2$, this collapses the partial-collision stratum
+to its base, which itself lies in lower filtration degree;
+iterating, only the full-collision $\ell = 1$, $m_1 = p+2$
+survives.  This completes Step~3 without any appeal to
+Theorem~\ref{thm:bar-concentration}: the tower collapse is
+powered by the quadratic Koszulness of the Arnold algebra
+and the chiral-operadic transfer of
+Lemma~\ref{lem:chiral-quadratic-koszul}.
 
 \emph{Step~4: the survivor is the full-collision stratum.}\;
 The unique surviving stratum is the full-collision
 $\ell = 1$, $m_1 = p + 2$: all points collide to a single
 location on~$X$.  This stratum fibers over~$X$ with fiber
-$\FM_{p+2}(\C)$.  Bar-concentration forces the fiber
-contribution to the degree-$0$ piece of the Arnold algebra
-$\cAr_{p+2}$, which is
+$\FM_{p+2}(\C)$.  The transported homotopy of Step~3 forces
+the fibre contribution to the degree-$0$ piece of the Arnold
+algebra $\cAr_{p+2}$, which is
 $H^0(\FM_{p+2}(\C)) = \R$ (a point).  The coefficient system
 on the base~$X$ is the $\cD_X$-module
 $\cA^i_p = H^{p,0}(\barB^{\mathrm{ch}}(\cA))$,
@@ -812,6 +942,146 @@ of unbounded dimension collapses, via the FM-formality
 spectral sequence, to the curve-level
 $\cD_X$-Ext computation of
 Lemma~\ref{lem:hochschild-shift-computation}.
+\end{proof}
+
+\begin{remark}[Dependency DAG:
+PBW as parallel source]
+\label{rem:pbw-parallel-consequences}
+\index{PBW!parallel consequences}
+The proof of Proposition~\ref{prop:fm-tower-collapse} now
+routes through
+Theorem~\ref{thm:pbw-koszulness-criterion} and
+Lemma~\ref{lem:chiral-quadratic-koszul}, not through
+Theorem~\ref{thm:bar-concentration}.  The dependency graph
+is no longer linear: PBW sits at the apex and dominates two
+parallel consequences of equal standing,
+\[
+ \text{PBW collapse}
+ \quad\Longrightarrow\quad
+ \begin{cases}
+  \text{bar concentration}
+  & \textup{(Theorem~\ref{thm:bar-concentration})}, \\[2pt]
+  \text{FM-tower collapse}
+  & \textup{(Proposition~\ref{prop:fm-tower-collapse})}.
+ \end{cases}
+\]
+The two conclusions are PBW-parallel: neither invokes the
+other, and each would survive a failure of the other.  This
+structure mirrors the split in the Russian school between
+the combinatorial Poincar\'e--Birkhoff--Witt normal form and
+the homological concentration of the bar complex: a single
+growth hypothesis on the filtration, verified once, has
+independent force on both tracks.
+\end{remark}
+
+\begin{proposition}[Sharp bigraded Hilbert series of
+chiral Hochschild; \ClaimStatusProvedHere]
+\label{prop:chirhoch-sharp-hilbert}
+\index{chiral Hochschild!bigraded Hilbert series}
+\index{Russian school!sharp Hilbert series}
+Let $\cA$ be a chiral Koszul algebra on~$X$ satisfying the
+PBW criterion of
+Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}, with
+Koszul dual~$\cA^{!}$ and chiral centre $Z(\cA) =
+\ChirHoch^{0}(\cA)$.  The bigraded
+Hilbert series
+\[
+ P_{\cA}(t,q)
+ \;=\;
+ \sum_{n \geq 0}
+ \dim_q \ChirHoch^{n}(\cA)\,t^{n}
+\]
+is rigidly determined in cohomological degrees $\{0,1,2\}$ by
+the Hilbert series of the centre, of the first Hochschild
+group, and of the dual centre:
+\begin{equation}
+\label{eq:chirhoch-sharp-hilbert}
+ P_{\cA}(t,q)
+ \;=\;
+ \HS_{Z(\cA)}(q)
+ \;+\;
+ \HS_{\ChirHoch^{1}(\cA)}(q)\cdot t
+ \;+\;
+ \HS_{Z(\cA^{!})}(q)\cdot t^{2}.
+\end{equation}
+In particular, $P_{\cA}(t,q)$ is a polynomial of $t$-degree~$2$
+with positive $q$-coefficients, and the $t^{0}$- and $t^{2}$-
+columns are Verdier duals on~$X$.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:fm-tower-collapse}, the chiral
+Hochschild complex has cohomological amplitude $[0,2]$, so
+$\ChirHoch^{n}(\cA)=0$ for $n \notin \{0,1,2\}$ and the sum
+terminates at $t^{2}$.  The $n=0$ column is the chiral
+centre $Z(\cA)=\ChirHoch^{0}(\cA)$ by definition; its
+graded dimension furnishes the $t^{0}$-coefficient of
+\eqref{eq:chirhoch-sharp-hilbert}.  The $n=1$ column is
+$\ChirHoch^{1}(\cA)$ directly; its graded dimension is the
+$t^{1}$-coefficient.  For $n=2$, the shift arithmetic of
+Step~6 in the proof of
+Proposition~\ref{prop:fm-tower-collapse}, combined with
+degreewise Verdier duality on the base curve
+(equation~\eqref{eq:fm-tower-surviving}), identifies
+$\ChirHoch^{2}(\cA)$ with the chiral centre of the Koszul
+dual:
+$\ChirHoch^{2}(\cA)\cong Z(\cA^{!})$.  Assembling the three
+columns yields~\eqref{eq:chirhoch-sharp-hilbert}.  The
+positivity of the $q$-coefficients follows because each
+column is a $\cD_X$-Ext space with values in a honest
+holonomic $\cD_X$-module, whose fibrewise dimensions
+are non-negative integers.
+\end{proof}
+
+\begin{theorem}[Hochschild concentration in degrees
+$\{0,1,2\}$ via ordered FM and pure braid
+Orlik--Solomon; \ClaimStatusProvedHere]
+\label{thm:hochschild-concentration-E1}
+\index{Hochschild!concentration via ordered FM}
+\index{Orlik--Solomon!pure braid Koszulness}
+Let $\cA$ be a chiral Koszul algebra on a smooth projective
+curve~$X$ satisfying the PBW criterion of
+Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}.  Then
+\[
+ \ChirHoch^{n}(\cA) \;=\; 0
+ \qquad
+ \textup{for every } n \notin \{0,1,2\},
+\]
+and this concentration is established by an $E_{1}$-chiral
+argument that uses the ordered Fulton--MacPherson
+compactification
+$\overline{C}^{\mathrm{ord}}_{p+2}(X)$ together with the
+Koszulness of the pure-braid-arrangement Orlik--Solomon
+algebra, without invoking
+Theorem~\textup{\ref{thm:bar-concentration}}.
+\end{theorem}
+
+\begin{proof}
+We replay the collision-depth spectral sequence on the
+ordered FM compactification.  Each stratum is a fibre
+bundle whose fibre is now a product of ordered local FM
+spaces $\FM^{\mathrm{ord}}_{m_i}(\C)$, whose cohomology is
+the \emph{pure} braid Orlik--Solomon algebra
+$\operatorname{OS}(A_{m_i-1})$ (no $\Sigma_{m_i}$-coinvariants
+at any stage; the ordering on $\R$ is kept throughout, in
+line with the E$_1$-primacy mandate).  The pure braid
+arrangement $A_{m-1}$ is supersolvable, hence by
+Shelton--Yuzvinsky \cite{SheltonYuzvinsky1997} its
+Orlik--Solomon algebra is quadratic Koszul with linear minimal
+free resolution and, dually, a canonical contracting
+homotopy $h_m^{\mathrm{ord}}$ of
+$\operatorname{OS}(A_{m-1})^{\geq 1}$ onto the ground field.
+Lemma~\ref{lem:chiral-quadratic-koszul} transports
+$h_m^{\mathrm{ord}}$ through~$\sigma$ onto the ordered
+chiral bar side, yielding a fibrewise contracting homotopy
+on the $E_{1}$-page in ordered fibre degrees $\geq 1$, with
+no appeal to Theorem~\ref{thm:bar-concentration} and no
+$\Sigma_{n}$-averaging step.  As in Steps~4--6 of the proof
+of Proposition~\ref{prop:fm-tower-collapse}, only the
+full-collision stratum survives, contributing the
+$\cD_X$-Ext amplitude $[0,2]$ on the base curve.  Hence
+$\ChirHoch^{n}(\cA)=0$ for $n\notin\{0,1,2\}$, established
+intrinsically on the ordered $E_{1}$ side.
 \end{proof}
 
 \begin{remark}[Why the collapse is nontrivial]

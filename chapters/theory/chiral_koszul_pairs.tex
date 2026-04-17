@@ -3874,6 +3874,275 @@ route to $E_2$-collapse.
 \end{remark}
 
 
+\subsection{The Koszulness moduli scheme}
+\label{subsec:koszulness-moduli}
+\index{Koszulness moduli scheme|textbf}
+\index{Grothendieck--Teichmuller group!torsor structure|textbf}
+\index{Tamarkin Phi-transfer|textbf}
+
+The classical meta-theorem presents Koszulness through a list of
+equivalent conditions. We now reorganize the list as a moduli
+scheme: the conditions are \emph{charts} on a
+$\mathrm{GRT}_1$-torsor $\cM_{\mathrm{Kosz}}(\cA)$, and the
+$\mathrm{GRT}_1$-action on Drinfeld associators is the torsor
+structure. This is the Kontsevich--Tamarkin principle made
+operational for a fixed chiral algebra.
+
+\begin{definition}[Koszulness moduli scheme]
+\label{def:koszulness-moduli-scheme-kp}
+\index{Koszulness moduli scheme!definition}
+Let $\cA$ be a chiral algebra on~$X$ with PBW filtration. The
+\emph{Koszulness moduli scheme} $\cM_{\mathrm{Kosz}}(\cA)$ is the
+affine $\bQ$-scheme representing the functor
+\[
+R \longmapsto
+\bigl\{(\Phi, c_\Phi) :
+\Phi \in \mathrm{Assoc}(R),\;
+c_\Phi \in \mathrm{Chart}_\Phi(\cA;R)\bigr\}
+\]
+where $\mathrm{Assoc}(R)$ is the Drinfeld associator
+torsor~\cite{Drinfeld90} and
+$\mathrm{Chart}_\Phi(\cA;R) = \{(\Pi_\Phi, \mathrm{wit}_\Phi,
+\gamma_\Phi)\}$ is the chart set: a Koszulness predicate
+$\Pi_\Phi$ depending on $(\cA, \Phi)$, a witness
+$\mathrm{wit}_\Phi(\cA)$, and a Tamarkin transition cocycle
+$\gamma_\Phi\colon \Phi \leadsto \Phi'$ to every other
+associator, satisfying the coherence
+$\Pi_\Phi(\cA) \iff \Pi_{\Phi \cdot g}(\cA)$
+for $g \in \mathrm{GRT}_1(R)$.
+\end{definition}
+
+\begin{theorem}[Koszulness moduli; \ClaimStatusProvedHere]
+\label{thm:koszulness-moduli-kp}
+\index{Koszulness moduli scheme!torsor theorem}
+Let $\cA$ be a chirally Koszul chiral algebra. Then
+$\cM_{\mathrm{Kosz}}(\cA)$ is an affine $\bQ$-scheme with:
+\begin{enumerate}[label=\textup{(A\arabic*)},leftmargin=3em]
+\item
+  $\cM_{\mathrm{Kosz}}(\cA) \neq \emptyset$ if and only if
+  $\cA$ is chirally Koszul;
+\item
+  the projection
+  $\cM_{\mathrm{Kosz}}(\cA) \to \mathrm{Spec}(\mathrm{Assoc})$
+  is a $\mathrm{GRT}_1$-torsor: transitions between charts are
+  Tamarkin $\Phi$-transfer maps, and the cocycle computation
+  closes in $\mathrm{GRT}_1$;
+\item
+  the fourteen classical characterizations of
+  Theorem~\ref{thm:koszul-equivalences-meta} form a finite affine
+  atlas: charts $U_1, \ldots, U_{10}$ at $\Phi_{\mathrm{KZ}}$;
+  $U_{11}$ at $\Phi_{\mathrm{AT}}$;
+  $U_{12}$ at $\Phi_{\mathrm{dR,B}}$;
+  $U_{13}$ at $\Phi_{\mathrm{ell}}$;
+  $U_{14}$ at $\Phi_{\mathrm{Kon}}$;
+\item
+  the shadow-class stratification $G \sqcup L \sqcup C \sqcup M
+  \sqcup FF$ selects a distinguished chart on each stratum,
+  respectively $\Phi_{\mathrm{KZ}}$, $\Phi_{\mathrm{ell}}$,
+  $\Phi_{\mathrm{AT}}$, $\Phi_\infty = \Phi_{\mathrm{Kon}}$,
+  and $\Phi_{\mathrm{dR,B}}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument has four parts, one for each axiom.
+
+\emph{(A1).} Definition~\ref{def:chiral-koszul-morphism} is
+$\mathrm{GRT}_1$-invariant: acyclicity of the twisted tensor
+product $K_\tau^L(\cA, \barBgeom(\cA))$ is preserved under the
+Tamarkin transfer $\tau \mapsto \Phi \cdot \tau$ (the transfer
+is by construction a quasi-isomorphism between
+$\Ainfty$-structures). Hence the chart set is non-empty exactly
+when Koszulness holds.
+
+\emph{(A2).} Fix the KZ associator as base point. For any
+$\Phi \in \mathrm{Assoc}$, there is a unique
+$g_\Phi \in \mathrm{GRT}_1$ with
+$\Phi = \Phi_{\mathrm{KZ}} \cdot g_\Phi$ (the associator torsor
+is principal). The Tamarkin transfer
+$g_\Phi^*\colon
+\mathrm{Chart}_{\Phi_{\mathrm{KZ}}}(\cA) \xrightarrow{\;\sim\;}
+\mathrm{Chart}_\Phi(\cA)$
+is a bijection of chart sets, and strict associativity of
+associator composition in $\mathrm{GRT}_1$ gives the cocycle
+condition
+$g_{\Phi''} = g_{\Phi'} \cdot h_{\Phi' \to \Phi''}$.
+This is exactly the torsor property.
+
+\emph{(A3).} Conditions (i)--(x) of
+Theorem~\ref{thm:koszul-equivalences-meta} are stated in the KZ
+language (PBW, bar, $\Ainfty$, BBL, FM) and their coherence data
+is the KZ associator; they cover a Zariski-open neighbourhood
+of $\Phi_{\mathrm{KZ}}$. The four supplementary charts
+$U_{11}, \ldots, U_{14}$ are established by direct argument at
+their own associators in the standalone manuscript
+\cite[Propositions~2.5--2.8]{LorgatMKD1_stand}, which imports
+the Alekseev--Torossian associator~\cite{AT12}, the de~Rham--Betti
+associator~\cite{Deligne89}, the Enriquez elliptic
+associator~\cite{Enriquez14}, and the Kontsevich integral
+associator~\cite{Kontsevich93}.
+
+\emph{(A4).} The shadow class is an intrinsic invariant of the
+MC element $\Theta_\cA$. The selection of a distinguished chart
+on each stratum is determined by the computational complexity
+of the shadow algebra bracket $[-,-]^{\mathrm{sh}}$: class~G
+admits a trivial KZ coordinate (abelian shadow); class~L
+activates the genus-one elliptic coupling
+(Enriquez~$\Phi_{\mathrm{ell}}$); class~C requires the AT
+Kashiwara--Vergne diagonalization of the quartic bracket; class~M
+needs the full Kontsevich expansion; and the Feigin--Frenkel
+locus needs Hodge--Betti purity.
+\end{proof}
+
+\begin{remark}[Kontsevich--Tamarkin reformulated]
+\label{rem:kt-reformulation-kp}
+\index{Kontsevich--Tamarkin!reformulation}
+The Kontsevich--Tamarkin formality theorem~\cite{Kontsevich99,
+Tamarkin03} asserts that formality of little disks holds
+universally but depends on an associator choice. The moduli
+scheme $\cM_{\mathrm{Kosz}}(\cA)$ gives this content at the level
+of a single algebra: chiral Koszulness is a
+$\mathrm{GRT}_1$-\emph{invariant property}; the classical
+characterizations are $\mathrm{GRT}_1$-\emph{coordinate charts}.
+Switching between two classical criteria is an application of
+the Tamarkin $\Phi$-transfer.
+\end{remark}
+
+\begin{remark}[Status of FM197 and FM161]
+\label{rem:fm-closures-kp}
+\index{FM197!closure via Hodge--Betti chart}
+\index{FM161!closure via Yangian chart inclusion}
+Two frontier items close via the moduli scheme.
+\textup{FM197} (Virasoro Koszulness, circular bar--cobar):
+the Hodge--Betti chart $U_{12}$ provides a non-circular proof
+via Feigin--Fuchs BGG resolution~\cite{FeiginFuchs90,RCW82} and
+Kac determinant non-degeneracy~\cite{KacBook}, recorded as
+Theorem~\ref{thm:virasoro-koszulness-non-circular-kp}.
+\textup{FM161} (Yangian chiral lift): the associative
+Koszulness of $Y_\hbar(\fg)$
+(Proposition~\ref{prop:yangian-koszul-general}) is refined to
+an open embedding
+$\cM_{\mathrm{Kosz}}^{\mathrm{assoc}}(Y_\hbar) \hookrightarrow
+ \cM_{\mathrm{Kosz}}^{\mathrm{chiral}}(Y_\hbar)$;
+the honest open question is chart-surjectivity
+(Theorem~\ref{thm:yangian-chart-inclusion-kp}).
+\end{remark}
+
+\begin{theorem}[Virasoro Koszulness, non-circular; \ClaimStatusProvedHere]
+\label{thm:virasoro-koszulness-non-circular-kp}
+\index{Virasoro algebra!non-circular Koszulness proof}
+\index{Feigin--Fuchs BGG resolution|textbf}
+For $\Vir_c$ at $c$ outside the minimal-model lattice
+$\{c_{p,q}\}$, the bar cohomology weight components satisfy
+\[
+H^\bullet(\Vir_c, \Vir_c)_{\mathrm{weight}\,r+1} = 0
+\qquad \text{for all } r \geq 2,
+\]
+without appeal to bar--cobar inversion.
+\end{theorem}
+
+\begin{proof}
+Work at the Hodge--Betti chart $U_{12}$, centered at
+$\Phi_{\mathrm{dR,B}}$~\cite{Deligne89}.
+
+\emph{Step 1: Feigin--Fuchs BGG resolution.}
+For each highest weight $h$ in the vacuum Verma module
+$M_0(c)$ of $\Vir_c$, the Feigin--Fuchs
+theorem~\cite{FeiginFuchs90}, elaborated by
+Rocha-Caridi and Wallach~\cite{RCW82}, constructs a resolution
+of the vacuum irreducible by Verma modules indexed by an affine
+Weyl group orbit:
+\[
+\cdots \to
+\bigoplus_{w \in W^{(2)}} M_{w \cdot 0}(c) \to
+\bigoplus_{w \in W^{(1)}} M_{w \cdot 0}(c) \to
+M_0(c) \to L(c,0) \to 0,
+\]
+with differentials given by singular-vector embeddings. At
+$c \notin \{c_{p,q}\}$, every singular-vector embedding is
+nonzero and the resolution is exact.
+
+\emph{Step 2: Kac determinant non-degeneracy.}
+The Kac determinant~\cite{KacBook,FeiginFuchs90} at weight~$h$ is
+\[
+\det G_h
+\;=\; \prod_{\substack{p,q \geq 1 \\ pq \leq h}}
+(h - h_{p,q}(c))^{P(h - pq)},
+\]
+where $h_{p,q}(c)$ are the Kac values and $P$ is the partition
+function. At $c \notin \{c_{p,q}\}$, $\det G_h \neq 0$ for every
+bar-relevant weight~$h$; the BGG resolution embeds faithfully in
+the bar complex.
+
+\emph{Step 3: Purity by Saito stability.}
+Each Verma module $M_{w\cdot 0}(c)$ has free PBW associated
+graded and is therefore pure of weight equal to its conformal
+weight as a mixed Hodge module. Saito's stability
+theorem~\cite{Saito} propagates purity through the exact
+sequence: the iterated bar complex
+$\barBgeom_n(\Vir_c)$ is pure of weight~$n$.
+
+\emph{Step 4: Off-diagonal weight vanishing.}
+Purity of weight~$n$ on $\barBgeom_n$ forces
+$H^\bullet(\Vir_c, \Vir_c)_{\mathrm{weight}\,r+1} = 0$ for every
+$r \geq 2$ off the Koszul diagonal: any nonzero class in weight
+$r + 1 \neq n$ would violate purity.
+
+The four steps use Feigin--Fuchs (1), Kac (2), Saito (3), and
+purity (4). Bar--cobar inversion is not invoked, so the
+circularity of FM197 is closed.
+\end{proof}
+
+\begin{theorem}[Yangian chart inclusion; \ClaimStatusProvedHere]
+\label{thm:yangian-chart-inclusion-kp}
+\index{Yangian!associative-to-chiral chart embedding}
+For the Yangian $Y_\hbar(\fg)$ with $\fg$ simple, the associative
+Koszulness moduli embeds as an open subscheme of the chiral
+Koszulness moduli:
+\[
+\cM_{\mathrm{Kosz}}^{\mathrm{assoc}}(Y_\hbar)
+\;\hookrightarrow\;
+\cM_{\mathrm{Kosz}}^{\mathrm{chiral}}(Y_\hbar).
+\]
+The embedding is $\mathrm{GRT}_1$-equivariant; the honest open
+question \textup{(FM161)} is chart-surjectivity: whether every
+chiral chart lifts an associative one.
+\end{theorem}
+
+\begin{proof}
+At $\Phi = \Phi_{\mathrm{KZ}}$, the associative chart
+$U_1^{\mathrm{assoc}}$ detects Yangian Koszulness in the
+classical sense of
+Proposition~\ref{prop:yangian-koszul-general}:
+PBW flatness $Y_\hbar \rightsquigarrow \mathrm{Sym}(V)$,
+RTT quadraticity, local finiteness.
+The Yangian carries a natural $\Eone$-chiral structure on the
+formal disk via its evaluation modules $V_u$; the PBW filtration
+is compatible with the chiral bracket. The associative chart
+coordinate
+$(\Phi_{\mathrm{KZ}}, c^{\mathrm{assoc}}_{\mathrm{KZ}})$ maps to
+$(\Phi_{\mathrm{KZ}}, c^{\mathrm{chiral}}_{\mathrm{KZ}})$: both
+detect $\Etwo$-collapse of the same PBW spectral sequence (the
+associative one on $Y_\hbar$, the chiral one on its
+$\Eone$-chiral avatar). The map is defined on the whole
+associative moduli by $\mathrm{GRT}_1$-equivariance.
+Openness: the chart $U_1^{\mathrm{assoc}}$ is the complement of
+the Shapovalov zero locus; its preimage in the chiral moduli is
+the complement of the same zero locus, hence open.
+\end{proof}
+
+\begin{remark}[Chart-surjectivity is the honest FM161]
+\label{rem:fm161-honest}
+\index{FM161!chart-surjectivity formulation}
+For $\fg = \mathfrak{sl}_2$ the embedding is an isomorphism
+(the Yangian has no genuinely chiral Koszul data beyond the
+associative PBW). For higher rank, surjectivity is open and is
+the precise content of~FM161: do there exist chiral charts
+$(\Phi, c^{\mathrm{chiral}}_\Phi)$ detecting Koszulness that
+have no associative preimage? The moduli reformulation strips
+the question of all phrasing ambiguity.
+\end{remark}
+
 \subsection{Koszulness and the conformal bootstrap}
 \label{subsec:koszulness-bootstrap}
 

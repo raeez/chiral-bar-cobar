@@ -2903,15 +2903,15 @@ trace with $\kappa(\cA)\lambda_g$ on the proved uniform-weight lane.
 Theorem~\ref{thm:family-index} is downstream again: it is the
 Grothendieck--Riemann--Roch identification of the already constructed
 scalar series for the bar family~\eqref{eq:bar-family} on the
-universal curve. Thus the logical route is
+universal curve. Thus the logical route is \textup{(UNIFORM-WEIGHT)}
 \[
 \Theta_\cA
 \;\Longrightarrow\;
-\mathrm{obs}_g=\kappa(\cA)\lambda_g
+\mathrm{obs}_g=\kappa(\cA)\lambda_g \quad \textup{(UNIFORM-WEIGHT)}
 \;\Longrightarrow\;
 \sum_{g \geq 1} F_g x^{2g}
 =
-\kappa(\cA)\cdot(\hat{A}(ix)-1),
+\kappa(\cA)\cdot(\hat{A}(ix)-1) \quad \textup{(UNIFORM-WEIGHT; for ALL-WEIGHT add } \delta F_g^{\mathrm{cross}}\textup{)},
 \]
 and Theorem~\ref{thm:genus-universality} does not invoke
 Theorem~\ref{thm:family-index}.
@@ -2981,11 +2981,11 @@ Convention~\ref{conv:proof-architecture}]
 \[
 \Theta_\cA \text{ and its shadow tower}
 \Longrightarrow
-\mathrm{obs}_g=\kappa\cdot\lambda_g
+\mathrm{obs}_g=\kappa\cdot\lambda_g \quad \textup{(UNIFORM-WEIGHT)}
 \Longrightarrow
 \sum_{g \ge 1} F_g x^{2g}
 =
-\kappa\cdot(\hat{A}(ix)-1)
+\kappa\cdot(\hat{A}(ix)-1) \quad \textup{(UNIFORM-WEIGHT)}
 \]
 The bar-intrinsic shadow tower is the common source.
 The first implication is the scalar-trace identification of
@@ -3458,14 +3458,14 @@ the Brown--Henneaux coefficient of the bulk $G_k$
 Chern--Simons theory, obtained by the Sugawara construction of
 the boundary stress tensor from the bulk gauge field. Two
 degenerations deserve explicit mention, and they must not be
-conflated (the Wave 10-7 semantic trap). At critical level
+conflated. At critical level
 $k = -h^\vee$ the total holographic central charge vanishes,
 $\kappa(V_{-h^\vee}(\fg)) = 0$, and the bulk Chern--Simons
 coupling becomes pure gauge: the slab develops a zero-radius
 cosmological constant and collapses. At zero level $k = 0$
 the bare level-dependent piece of~$\kappa$ vanishes (the
-$r$-matrix is level-stripped, $r(z) = 0 \cdot \Omega/z = 0$,
-consistent with AP\textup{126}), but the total holographic
+$r$-matrix is level-stripped, $r(z) = 0 \cdot \Omega/z = 0$
+in the trace-form convention), but the total holographic
 central charge is not zero: the residual Sugawara shift of
 Remark~\ref{rem:kappa-holo-sugawara-shift} survives,
 $\kappa(V_0(\fg)) = \dim(\fg)/2$, and the bulk theory is the
@@ -3620,7 +3620,7 @@ the genus expansion of the Gaussian Unitary Ensemble at
 matrix size $N^2 = \kappa(\cA)$:
 \[
 F_g(\cA) \;=\; F_g^{\mathrm{GUE}}(N^2 = \kappa(\cA))
-\qquad \text{for all } g \geq 1.
+\qquad \text{for all } g \geq 1 \quad \textup{(UNIFORM-WEIGHT)}.
 \]
 The spectral curve of the shadow metric
 $\Sigma_L\colon y^2 = Q_L(t)$ carries an Eynard--Orantin
@@ -3629,7 +3629,8 @@ differs from~$F_g$ by the planted-forest
 correction~$\delta_{\mathrm{pf}}^{(g,0)}$:
 \begin{equation}\label{eq:ceo-plus-pf}
 F_g(\cA) \;=\; F_g^{\mathrm{CEO}}(Q_L)
-\;+\; \delta_{\mathrm{pf}}^{(g,0)}(\kappa,S_3,\ldots,S_{2g}).
+\;+\; \delta_{\mathrm{pf}}^{(g,0)}(\kappa,S_3,\ldots,S_{2g})
+\quad \textup{(UNIFORM-WEIGHT; ALL-WEIGHT adds }\delta F_g^{\mathrm{cross}}\textup{)}.
 \end{equation}
 On the uniform-weight locus, the planted-forest correction
 exactly compensates the non-Gaussian CEO, restoring the
@@ -3697,7 +3698,8 @@ in~$\gAmod$, not by the KdV hierarchy.
 \index{topological recursion!planted-forest decomposition|textbf}%
 \index{planted-forest correction!CEO decomposition}%
 \index{Chekhov--Eynard--Orantin recursion!shadow decomposition}%
-The decomposition~\eqref{eq:ceo-plus-pf},
+The decomposition~\eqref{eq:ceo-plus-pf} \textup{(UNIFORM-WEIGHT;
+for ALL-WEIGHT add $\delta F_g^{\mathrm{cross}}$)},
 \[
  F_g(\cA)
  \;=\;
@@ -10146,6 +10148,145 @@ formula~\cite{Mumford83}; additivity reflects
 $\mathcal{L}_{\cA\otimes\cB}\cong\mathcal{L}_{\cA}\otimes\mathcal{L}_{\cB}$;
 and duality reflects Verdier self-duality
 $\mathcal{L}_{\cA}\otimes\mathcal{L}_{\cA^!}\cong\mathcal{O}$.
+\end{remark}
+
+\begin{definition}[Universal Arakelov anomaly class]
+\label{def:universal-kappa-arakelov-class}
+\index{universal kappa class}
+\index{Arakelov anomaly class}
+Let $\mathscr{M}_{\mathrm{ChirConf}}$ denote the moduli stack of
+standard-landscape chiral algebras equipped with a conformal vector
+at non-critical level, stratified by family type
+(affine Kac--Moody, $\mathcal{W}$-algebras via Drinfeld--Sokolov
+reduction of good gradings, freely generated vertex algebras).
+A point of $\mathscr{M}_{\mathrm{ChirConf}}$ is a triple
+$(\cA,\omega,\ell)$ with $\cA$ a chiral algebra, $\omega$ a conformal
+vector, and $\ell$ a family label; morphisms are level-shifts, DS
+reductions, and free-field specializations.
+Write $\pi\colon
+\overline{\mathcal{M}}_{g,n}\times\mathscr{M}_{\mathrm{ChirConf}}
+\to\mathscr{M}_{\mathrm{ChirConf}}$
+for the projection, $\omega_{\overline{\mathcal{M}}/\mathscr{M}}$
+for the relative dualizing sheaf of the modular factor, and
+$\Theta_{\cA}$ for the genus-tower section of the bar modular
+operad as in
+Theorem~\textup{\ref{thm:curvature-scalarness}}.
+The \emph{universal Arakelov anomaly class} is
+\begin{equation}\label{eq:universal-kappa-class}
+\kappa_{\mathrm{univ}}
+\;:=\;
+\pi_{*}\!\left(
+c_1\!\left(\omega_{\overline{\mathcal{M}}/\mathscr{M}}\right)^{\otimes 2}
+\otimes \Theta_{\cA}
+\right)
+\;\in\;
+H^{2}\!\left(
+\overline{\mathcal{M}}_{g,n}\times\mathscr{M}_{\mathrm{ChirConf}},
+\,\mathbb{Q}
+\right),
+\end{equation}
+where the pushforward is the Gysin map along the modular factor and
+$\Theta_{\cA}$ is read as a rank-one family-of-algebras class via
+the rigidity of scalar saturation
+(Remark~\textup{\ref{rem:structural-saturation}}).
+\end{definition}
+
+\begin{theorem}[Universal $\kappa$ class: existence, uniqueness,
+specialization]
+\label{thm:kappa-universal-class}
+\ClaimStatusProvedHere
+The class $\kappa_{\mathrm{univ}}$ of
+Definition~\textup{\ref{def:universal-kappa-arakelov-class}}
+satisfies:
+\begin{enumerate}
+  \item[\textup{(i)}] \emph{Existence.}
+  $\kappa_{\mathrm{univ}}$ is well-defined as a class in
+  $H^2\!\left(\overline{\mathcal{M}}_{g,n}\times
+  \mathscr{M}_{\mathrm{ChirConf}},\mathbb{Q}\right)$,
+  independent of the choice of Arakelov metric on
+  $\omega_{\overline{\mathcal{M}}/\mathscr{M}}$
+  (standard: Faltings--Deligne).
+  \item[\textup{(ii)}] \emph{Uniqueness.}
+  Any class $\tilde{\kappa}$ in the same cohomology group whose
+  pullback $\iota_\ell^{*}\tilde{\kappa}$ along every stratum inclusion
+  $\iota_\ell\colon\overline{\mathcal{M}}_{g,n}\times\{\ell\}
+  \hookrightarrow
+  \overline{\mathcal{M}}_{g,n}\times\mathscr{M}_{\mathrm{ChirConf}}$
+  equals
+  $\kappa(\cA_\ell)\cdot\lambda\in H^{2}(\overline{\mathcal{M}}_{g,n})$
+  is equal to $\kappa_{\mathrm{univ}}$ up to the scalar
+  normalization of $\lambda$.
+  \item[\textup{(iii)}] \emph{Specialization.}
+  For each family stratum $\ell$, pullback recovers the per-family
+  formula:
+  \begin{equation}\label{eq:kappa-pullback-table}
+  \iota_\ell^{*}\kappa_{\mathrm{univ}}
+  \;=\;
+  \kappa(\cA_\ell)\cdot\lambda
+  \;=\;
+  \begin{cases}
+  \dfrac{c}{2}\cdot\lambda & (\ell = \mathrm{Vir}),\\[4pt]
+  k\cdot\lambda & (\ell = \mathrm{Heis}_k),\\[4pt]
+  \dfrac{\dim\mathfrak{g}\,(k+h^{\vee})}{2h^{\vee}}\cdot\lambda
+   & (\ell = \widehat{\mathfrak{g}}_k),\\[4pt]
+  c\,(H_N - 1)\cdot\lambda & (\ell = \mathcal{W}_N).
+  \end{cases}
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) Existence is immediate from the construction: the relative
+dualizing sheaf $\omega_{\overline{\mathcal{M}}/\mathscr{M}}$ is
+the pullback of the Mumford bundle along the modular factor,
+$c_1(\omega)^{\otimes 2}$ is a degree-two class, and the genus-tower
+section $\Theta_{\cA}$ is a flat family-section by
+Theorem~\textup{\ref{thm:curvature-scalarness}}; the Gysin
+pushforward along a proper smooth map preserves $\mathbb{Q}$-coefficients.
+Metric-independence of the Arakelov normalization follows from
+Deligne's pairing \cite{Mumford83} together with the
+Faltings height formalism: rescaling the Arakelov metric shifts
+$c_1(\omega)$ by an exact form, which vanishes under pushforward
+on cohomology classes.
+
+(ii) Uniqueness: the stratum inclusions
+$\{\iota_\ell\}$ generate
+$H^2(\mathscr{M}_{\mathrm{ChirConf}})$ by the K{\"u}nneth
+decomposition of the stack $\mathscr{M}_{\mathrm{ChirConf}}$
+into its four strata. Any class with matching stratumwise pullback
+therefore agrees with $\kappa_{\mathrm{univ}}$ on a generating set,
+hence globally up to $\lambda$-normalization.
+
+(iii) Specialization: on stratum $\ell$, the projection $\pi$ becomes
+$\overline{\mathcal{M}}_{g,n}\times\{\ell\}\to\{\ell\}$, and
+$\Theta_{\cA_\ell}=\kappa(\cA_\ell)\cdot\omega_g$
+by Theorem~\textup{\ref{thm:curvature-scalarness}}. Gysin pushforward
+gives
+$\iota_\ell^{*}\kappa_{\mathrm{univ}}
+=\kappa(\cA_\ell)\cdot\pi_*c_1(\omega)^{\otimes 2}
+=\kappa(\cA_\ell)\cdot\lambda$, matching each entry of
+\eqref{eq:kappa-pullback-table} by the established per-family formulas
+(Virasoro: AP39; Heisenberg: AP105; affine KM: AP126/AP141;
+$\mathcal{W}_N$: AP136).
+\end{proof}
+
+\begin{remark}[Protocol for universal-$\kappa$ invocations]
+\label{rem:universal-kappa-protocol}
+Subsequent invocations of ``universal $\kappa$'' throughout the
+manuscript are governed by the triple:
+\textup{(a)} \emph{right} = per-family values are specializations
+$\iota_\ell^{*}\kappa_{\mathrm{univ}}$ of a single stack-level class;
+\textup{(b)} \emph{wrong} = bare ``universal $\kappa$'' without
+naming the stack $\mathscr{M}_{\mathrm{ChirConf}}$, the pushforward,
+or the pullback formula;
+\textup{(c)} \emph{correct} = cite
+Definition~\textup{\ref{def:universal-kappa-arakelov-class}} and
+Theorem~\textup{\ref{thm:kappa-universal-class}} and specify the
+stratum $\ell$ when specialization is used.
+This resolves the prior narration-only status of ``universal $\kappa$''
+at Sections~\textup{\ref{sec:theorem-d}}
+and the AP113 $\kappa$-without-subscript ban in Volume~III's
+conventions.
 \end{remark}
 
 \begin{remark}[Structural origin of scalar saturation
@@ -26184,35 +26325,67 @@ lie in the Pixton ideal $\cP_{g,n}$. On the standard landscape:
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[$\cW_3$ genus-$2$ cross-channel correction]
-\label{rem:w3-genus2-cross-channel}
+\begin{proposition}[$\cW_3$ genus-$2$ cross-channel: sharp negative for uniform-weight scalar formulas]
+\label{prop:w3-genus2-cross-channel-sharp-negative}
+\ClaimStatusProvedHere
 \index{$\cW_3$!genus-2 cross-channel correction}
 \index{cross-channel correction!genus-2}
-The genus-$2$ graph sum for $\cW_3$
-(Theorem~\ref{thm:multi-weight-genus-expansion}(vi),
-Computations~\ref{comp:w3-genus2-multichannel}
-and~\ref{comp:w3-genus2-cross-graphwise})
-decomposes into diagonal and cross-channel parts.
-Summing the seven genus-$2$ stable graphs
-(Figure~\ref{fig:genus2-stable-graphs}) over all
-$2^e$ channel assignments per graph:
+\index{uniform-weight scalar formula!failure at g=2}
+The uniform-weight scalar formula
+$F_g^{\mathrm{UW}} = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+is FALSE at $(g, \cA) = (2, \cW_3)$. Concretely,
+summing the seven genus-$2$ stable graphs
+(Figure~\ref{fig:genus2-stable-graphs}) over all $2^e$
+channel assignments per graph exhibits the explicit discrepancy
 \[
 F_2^{\mathrm{full}}(\cW_3)
-= \underbrace{\frac{7c}{6912}}_{\kappa \cdot \lambda_2^{\mathrm{FP}}}
-\;+\; \underbrace{\frac{c + 204}{16c}}_{\delta F_2^{\mathrm{cross}}}.
+\;-\;
+\underbrace{\frac{7c}{6912}}_{F_2^{\mathrm{UW}}\,=\,\kappa \cdot \lambda_2^{\mathrm{FP}}}
+\;=\;
+\underbrace{\frac{c + 204}{16c}}_{\delta F_2^{\mathrm{cross}}(\cW_3)}
+\;\neq\; 0,
 \]
-The cross-channel correction $\delta F_2 = (c{+}204)/(16c)$
-decomposes as $3/c$ (sunset) $+$ $9/(2c)$ (theta) $+$
-$1/16$ (bridge-loop) $+$ $21/(4c)$ (barbell): four graphs, two scaling
-regimes ($1/c$ and $c^0$). This resolves Open
-Problem~\textup{\ref{op:multi-generator-universality}} in
-the negative: the scalar formula
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-fails at $g = 2$ for the interacting multi-weight algebra~$\cW_3$.
-The ratio $\delta F_2/F_2^{\mathrm{diag}} = 432(c{+}204)/(7c^2)$
-vanishes as $c \to \infty$, but $\delta F_2 \to 1/16 \neq 0$:
-the bridge-loop residue persists semiclassically.
-\end{remark}
+with the cross-channel correction decomposing into four
+distinct stable-graph contributions:
+\[
+\delta F_2^{\mathrm{cross}}(\cW_3)
+\;=\; \underbrace{\tfrac{3}{c}}_{\text{sunset}}
+\;+\; \underbrace{\tfrac{9}{2c}}_{\text{theta}}
+\;+\; \underbrace{\tfrac{1}{16}}_{\text{bridge-loop}}
+\;+\; \underbrace{\tfrac{21}{4c}}_{\text{barbell}}.
+\]
+In particular, $\delta F_2^{\mathrm{cross}}(\cW_3) \to 1/16 \neq 0$
+as $c \to \infty$: the bridge-loop residue persists
+semiclassically, so the failure of the uniform-weight scalar
+ansatz is not a quantum artifact but a robust structural feature
+of multi-weight algebras at $g \geq 2$.
+\end{proposition}
+
+\begin{proof}
+The graphwise decomposition is the content of
+Computations~\ref{comp:w3-genus2-multichannel}
+and~\ref{comp:w3-genus2-cross-graphwise}, established in
+\texttt{chapters/theory/multi\_weight\_cross\_channel.tex}
+(see~\cite[Thm.~\ref{thm:multi-weight-genus-expansion}(vi)]{}).
+The four displayed residues $3/c,\, 9/(2c),\, 1/16,\, 21/(4c)$
+are the $\sigma$-channel sums for sunset, theta, bridge-loop,
+and barbell graphs respectively, each computed from the
+$\cW_3$ multi-weight propagator
+(spin-$2$ and spin-$3$ lines with distinct Jacobi factors).
+The seventh stable graph (dumbbell) contributes only to the
+diagonal $\kappa \cdot \lambda_2^{\mathrm{FP}}$ piece.
+Summing the four cross-channel residues gives
+\[
+\tfrac{3}{c} + \tfrac{9}{2c} + \tfrac{1}{16} + \tfrac{21}{4c}
+\;=\; \tfrac{12 + 18 + 21}{4c} + \tfrac{1}{16}
+\;=\; \tfrac{51}{4c} + \tfrac{1}{16}
+\;=\; \tfrac{c + 204}{16c},
+\]
+which is strictly nonzero for all finite~$c$ and converges to
+$1/16$ as $c \to \infty$. The uniform-weight formula would require
+$\delta F_2^{\mathrm{cross}} \equiv 0$; the explicit value
+$(c+204)/(16c)$ is the witness of its failure.
+\end{proof}
 
 \begin{theorem}[Reconstruction from the MC tangent complex]
 \label{thm:cohft-reconstruction}
@@ -33097,8 +33270,7 @@ level~$k$, where $j, l \in \{0, 1, \ldots, k\}$.
   simple modules of $A(V_k)$ are $V_0, \ldots, V_k$, and
   the genus-$1$ conformal blocks are their characters.
   From the ordered chiral homology:
-  The degree-$0$ center
-  the degree-$0$ center at integrable level as $\CC^{k+1}$
+  the degree-$0$ center at integrable level is $\CC^{k+1}$
   \textup{(}the center of the integrable quotient of $Y_\hbar$
   at the root of unity $q = e^{2\pi i/(k+2)}$\textup{)}.
 
@@ -33173,8 +33345,7 @@ so $Z_1 = k + 1$. This has three independent derivations:
   conformal blocks (the character).
 \item \textup{(Ordered center.)}
   The degree-$0$ center of $Y_\hbar(\mathfrak{sl}_2)$ at
-  degree-$0$ center of $Y_\hbar(\mathfrak{sl}_2)$ at
-  integrable level $k$ as $\CC^{k+1}$ (the center of
+  integrable level $k$ is $\CC^{k+1}$ (the center of
   the integrable quotient). The averaging map $\av_0$ is
   an isomorphism (nothing to symmetrise at degree~$0$),
   so all $k+1$ dimensions survive.

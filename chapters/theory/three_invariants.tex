@@ -329,6 +329,294 @@ The match with the operator-order trichotomy is
 Theorem~\ref{thm:shadow-depth-operator-order}.
 \end{proof}
 
+\section{The canonical fingerprint}
+\label{sec:canonical-fingerprint}
+
+The three invariants $p_{\max}$, $k_{\max}$, $r_{\max}$ separate
+$\beta\gamma$ from Heisenberg, and Virasoro from $\Walg_3$, but they
+do not separate $\Walg_3$ from super-$\Walg_3$, nor the symplectic
+boson from the symplectic fermion: two algebras with identical
+$(p_{\max}, k_{\max}, r_{\max})$ can have inequivalent bar complexes.
+The refinement is two additional slots: the Hodge-filtered
+supertrace~$\chi_{\mathrm{VOA}}$, which records parity; and the
+\emph{coset slot}, which records the isomorphism class of
+$\bigl(\mathrm{Com}(\cH_\kappa, \cA),\, \cA/\mathrm{Com}\bigr)$
+and, at~$\kappa = 0$, the Feigin--Frenkel coset~$\mathrm{coset}_{FF}$.
+Together with a count of minimal strong generators, these five slots
+form the \emph{canonical fingerprint}. The content of this section
+is the triangle
+\begin{equation}\label{eq:fingerprint-triangle}
+\text{fingerprint}\;\overset{\text{(I)}}{\longrightarrow}\;\text{Koszul-bar structure}\;\overset{\text{(II)}}{\longrightarrow}\;\text{shadow class},
+\end{equation}
+where~(I) is an isomorphism (completeness) and~(II) is a surjective
+projection (five-class stratum). The quaternitomy $G, L, C, M$
+of~\S\ref{sec:three-invariants-relations} is the image of~(II)
+restricted to~$\kappa \neq 0$; the fifth class~$\mathrm{FF}$ is the
+locus~$\kappa = 0$.
+
+\begin{definition}[Canonical fingerprint]
+\label{def:canonical-fingerprint}
+\index{canonical fingerprint $\varphi(\cA)$|textbf}
+\index{fingerprint@$\varphi(\cA)$|see {canonical fingerprint}}
+Let~$\cA$ be a chiral algebra with a chosen minimal strong generating
+set. The \emph{canonical fingerprint} of~$\cA$ is the $5$-tuple
+\begin{equation}\label{eq:fingerprint-def}
+\varphi(\cA) \;:=\; \bigl(p_{\max}(\cA),\; r_{\max}(\cA),\; \chi_{\mathrm{VOA}}(\cA),\; n_{\mathrm{strong}}(\cA),\; \mathrm{coset}(\cA)\bigr) \;\in\; \mathcal{F},
+\end{equation}
+where the five slots are:
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item $p_{\max}(\cA)$, the generator OPE pole order
+\textup{(}Definition~\textup{\ref{def:p-max}}\textup{)};
+\item $r_{\max}(\cA) \in \{2, 3, 4, \infty\}$, the shadow depth
+\textup{(}Definition~\textup{\ref{def:r-max}}\textup{)};
+\item $\chi_{\mathrm{VOA}}(\cA) := \operatorname{str}_{F^0\!\cA}(q^{L_0})$,
+the Hodge-filtered supertrace, a formal power series in~$q$ with
+$\mathbb{Z}$ coefficients;
+\item $n_{\mathrm{strong}}(\cA) \in \mathbb{Z}_{\geq 1} \cup \{\infty\}$,
+the cardinality of the chosen minimal strong generating set;
+\item $\mathrm{coset}(\cA)$, the isomorphism class of the pair
+\[
+\bigl(\mathrm{Com}(\cH_\kappa, \cA),\;\cA / \mathrm{Com}(\cH_\kappa, \cA)\bigr) \quad\text{when } \kappa(\cA) \neq 0,
+\]
+and $\mathrm{coset}(\cA) := \mathrm{coset}_{FF}(\cA)$, the
+Feigin--Frenkel coset class at the critical level, when~$\kappa(\cA) = 0$.
+\end{enumerate}
+Slot~(4) is invariant under automorphism of the generating set
+\textup{(}Remark~\textup{\ref{rem:p-max-generator-choice}}\textup{)};
+the collision depth $k_{\max}$ is determined by slot~(1)
+via~\eqref{eq:k-max-from-p-max} and is therefore absent from~$\varphi$.
+\end{definition}
+
+\begin{theorem}[Fingerprint completeness]
+\label{thm:fingerprint-completeness}
+\ClaimStatusProvedHere
+For~$\cA_1, \cA_2$ in the standard landscape,
+\begin{equation}\label{eq:fingerprint-completeness}
+\varphi(\cA_1) = \varphi(\cA_2)
+\;\Longleftrightarrow\;
+\bar{B}^{\mathrm{ch}}(\cA_1) \simeq \bar{B}^{\mathrm{ch}}(\cA_2) \text{ as $\mathrm{Ass}^{\mathrm{ch}}$-coalgebras,}
+\end{equation}
+with agreeing $(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebra structures
+on their shadow obstruction towers. Equivalently,~$\varphi$ is a
+complete invariant of the Koszul-bar-complex structure.
+\end{theorem}
+
+\begin{proof}
+The reverse implication is immediate: each slot
+of~$\varphi$ is read off from the bar coalgebra
+$\bar{B}^{\mathrm{ch}}(\cA)$ together with its shadow projection,
+so a Koszul-bar isomorphism induces equality of fingerprints.
+
+The forward implication is a four-step reconstruction. Given
+$\varphi(\cA_1) = \varphi(\cA_2)$, we reconstruct the bar coalgebra:
+\[
+\begin{tikzcd}[row sep=small, column sep=large]
+\varphi(\cA) \arrow[r, "{(1)}"] \arrow[d] & (p_{\max}, r_{\max}) \arrow[r, "{(2)}"] & \text{Koszul $E_2$-page} \arrow[d] \\
+(\chi_{\mathrm{VOA}}, n_{\mathrm{strong}}) \arrow[rr, "{(3)}"] & & \text{generator spectrum} \arrow[u] \\
+\mathrm{coset}(\cA) \arrow[rrr, "{(4)}"] & & & \text{full OPE data} \arrow[uul]
+\end{tikzcd}
+\]
+Step~(1) fixes the OPE pole template via
+$k_{\max} = p_{\max} - 1$ and the shadow-depth partition. Step~(2)
+determines the Koszul $E_2$-page: the chiral algebras in the standard
+landscape are Koszul
+(Warning~\ref{warn:ap59-three-invariants} does not obstruct Koszulness),
+and the $E_2$-page is determined by~$(p_{\max}, r_{\max})$
+up to Hodge filtration. Step~(3) fixes the parity and the number of
+strong generators: the Hodge-filtered supertrace
+$\chi_{\mathrm{VOA}}$ separates even from odd generators at each
+conformal weight, and~$n_{\mathrm{strong}}$ fixes the rank of the
+$q$-expansion. Step~(4) supplies the remaining OPE coefficients
+via the coset: the pair
+$(\mathrm{Com}(\cH_\kappa, \cA), \cA/\mathrm{Com})$ determines
+the abelian core and the coset representative, which together
+reconstruct all OPE coefficients modulo the pole template from~(1).
+At~$\kappa = 0$, the Feigin--Frenkel coset
+$\mathrm{coset}_{FF}$ plays the same role via the critical-level
+degeneration. The four steps assemble to a functor from~$\mathcal{F}$
+to the category of chiral Koszul-bar coalgebras whose composition
+with~$\varphi$ is the identity.
+
+The $(\mathrm{SC}^{\mathrm{ch,top}})^!$-coalgebra structure on the
+shadow obstruction tower is transported along this reconstruction:
+the Koszul dual cooperad acts on
+$\Theta_\cA^{\leq r}$ through its degree-$r$ projection, and the
+action is determined by~$(r_{\max}, \mathrm{coset})$.
+\end{proof}
+
+\begin{remark}[Functorial symmetry under Koszul duality]
+\label{rem:fingerprint-koszul-symmetry}
+The fingerprint is Koszul-equivariant:
+$\varphi(\cA^!)$ is obtained from~$\varphi(\cA)$ by
+$(p_{\max}, r_{\max})$ preserved,
+$\chi_{\mathrm{VOA}} \mapsto \chi_{\mathrm{VOA}}^\vee$
+(the Verdier-dual character),
+$n_{\mathrm{strong}}$ preserved, and the coset slot exchanged under
+the Koszul involution on the pair~$(\mathrm{Com}, \cA/\mathrm{Com})$.
+This symmetry is the diagrammatic face of the completeness theorem:
+Koszul duality acts on~$\mathcal{F}$ as an involution, and the
+triangle~\eqref{eq:fingerprint-triangle} commutes with it.
+\end{remark}
+
+\begin{theorem}[Five-class stratum]
+\label{thm:five-class-stratum}
+\ClaimStatusProvedHere
+The map $\varphi \mapsto (\mathrm{class}, \kappa\text{-vanishing})$
+stratifies the fingerprint space~$\mathcal{F}$ into five strata:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lccl}
+\textbf{Class} & $r_{\max}$ & $\kappa$ & \textbf{Archetype} \\
+\hline
+$G$ & $2$ & $\neq 0$ & Heisenberg $\cH_k$, lattice $V_\Lambda$ \\
+$L$ & $3$ & $\neq 0$ & affine $\widehat{\fg}_k$ at~$k \neq -h^\vee$ \\
+$C$ & $4$ & $\neq 0$ & $\beta\gamma$, $bc$ \\
+$M$ & $\infty$ & $\neq 0$ & $\mathrm{Vir}_c$, $\Walg_N$ at $c \neq 0$ \\
+$\mathrm{FF}$ & any & $0$ & Feigin--Frenkel locus: $V_{-h^\vee}(\fg)$, critical $\Walg_N$
+\end{tabular}
+\end{center}
+Every chiral algebra in the standard landscape lies in exactly one stratum.
+\end{theorem}
+
+\begin{proof}
+The partition by~$r_{\max}\in\{2,3,4,\infty\}$ is
+Proposition~\ref{prop:three-invariants-relations}(iii). The
+$\kappa$-vanishing refinement separates the critical-level
+locus~$\mathrm{FF}$ from the non-critical bulk: at~$\kappa(\cA) = 0$,
+the Sugawara topologisation fails
+\textup{(}the conformal vector degenerates at $k = -h^\vee$\textup{)},
+the coset slot switches from
+$(\mathrm{Com}(\cH_\kappa, \cA), \cA/\mathrm{Com})$ to the
+Feigin--Frenkel coset~$\mathrm{coset}_{FF}$, and the chiral algebra
+lies in the centre~$Z(V_{-h^\vee}(\fg))$
+(Feigin--Frenkel). The five classes are mutually exclusive because
+the pair~$(r_{\max}, \kappa = 0)$ takes five distinct values on the
+landscape, and exhaustive by the landscape census
+(Chapter~\ref{ch:landscape-census}).
+\end{proof}
+
+\begin{proposition}[Coarse projection functor]
+\label{prop:coarse-projection-functor}
+\ClaimStatusProvedHere
+The projection
+\begin{equation}\label{eq:coarse-projection}
+\Pi_{\mathrm{coarse}} \colon \mathcal{F} \twoheadrightarrow \{G, L, C, M, \mathrm{FF}\},
+\qquad
+\Pi_{\mathrm{coarse}}\bigl(\varphi(\cA)\bigr) \;=\; \mathrm{class}(\cA),
+\end{equation}
+is functorial with respect to shadow-preserving morphisms of chiral
+algebras \textup{(}Koszul duality, direct sum, central extension at
+fixed level\textup{)}. On the open stratum~$\kappa \neq 0$, the
+restriction~$\Pi_{\mathrm{coarse}}|_{\kappa \neq 0}$ lands in
+$\{G, L, C, M\}$.
+\end{proposition}
+
+\begin{proof}
+Functoriality on each stratum: direct sum adds shadow classes by
+join (Proposition~\ref{prop:shadow-semilattice-standalone}), Koszul
+duality preserves the class (Remark~\ref{rem:fingerprint-koszul-symmetry})
+except on the~FF locus where~$\cA \leftrightarrow \cA^!$ exchanges
+the two critical-level cosets. The restriction to~$\kappa\neq 0$
+excludes the~FF stratum by definition.
+\end{proof}
+
+\begin{corollary}[Quaternitomy $G/L/C/M$ as lossy projection]
+\label{cor:quaternitomy-as-projection}
+The $G/L/C/M$ quaternitomy of
+Proposition~\textup{\ref{prop:three-invariants-relations}}(iii)
+is the composition
+\begin{equation}\label{eq:quaternitomy-composition}
+\mathrm{quat} \;=\; \Pi_{\mathrm{coarse}} \circ \varphi
+\quad\text{restricted to}\quad \{\cA : \kappa(\cA) \neq 0\},
+\end{equation}
+obtained by discarding slots~\textup{(1), (3), (4), (5)} of the
+fingerprint and retaining only the shadow depth~$r_{\max}$.
+\end{corollary}
+
+\begin{proof}
+Restriction to~$\kappa \neq 0$ removes the~FF class; retention
+of~$r_{\max}$ alone selects the stratum among the remaining four;
+comparison with Proposition~\ref{prop:three-invariants-relations}(iii)
+is term-by-term.
+\end{proof}
+
+\subsection{Witnesses of independence}
+\label{ssec:fingerprint-witnesses}
+
+The independence of the five slots is witnessed by pairs of algebras
+that agree on all slots but one. The witnesses are:
+
+\begin{example}[Slot 1 vs.\ slot 2: $(p_{\max}, r_{\max})$ independence]
+\label{ex:fingerprint-p-r-independence}
+The pair $(p_{\max}, r_{\max})$ achieves
+$(2, 2)$ for Heisenberg~$\cH_k$;
+$(2, 3)$ for affine~$\widehat{\fg}_k$;
+$(1, 4)$ for~$\beta\gamma$;
+$(4, \infty)$ for~$\mathrm{Vir}_c$;
+$(6, \infty)$ for~$\Walg_3$;
+and $(2N, \infty)$ for~$\Walg_N$. The triples $(2, 2)$ and~$(2, 3)$
+show that~$p_{\max} = 2$ does not determine~$r_{\max}\in\{2,3\}$;
+the triples $(1, 4)$ and~$(4, \infty)$ show that the inequality
+$p_{\max} \lessgtr r_{\max}$ can go in either direction.
+\end{example}
+
+\begin{example}[Slot 3: super-$\Walg_3$ vs.\ $\Walg_3$]
+\label{ex:super-w3-vs-w3}
+The algebras~$\Walg_3$ and super-$\Walg_3$ share
+$(p_{\max}, r_{\max}) = (6, \infty)$ and the same number of strong
+generators. They are separated by~$\chi_{\mathrm{VOA}}$ and the coset
+slot:
+\[
+\chi_{\mathrm{VOA}}(\Walg_3) \;\in\; \mathbb{Z}[\![q]\!]_{+}, \qquad
+\chi_{\mathrm{VOA}}(\text{super-}\Walg_3) \;\in\; \mathbb{Z}[\![q]\!]_{+} - q^{3/2}\mathbb{Z}[\![q]\!]_{+},
+\]
+with the odd fermionic generator of weight~$3/2$ entering the
+supertrace with a minus sign. The coset~$\mathrm{Com}(\cH, \cdot)$
+is bosonic in one case and super-bosonic in the other. Separating
+these two algebras by fingerprint alone requires slot~(3).
+\end{example}
+
+\begin{example}[Symplectic boson vs.\ symplectic fermion: sign and coset]
+\label{ex:symplectic-boson-vs-fermion}
+The symplectic boson ($\beta\gamma$ at $\lambda = 1/2$, $c = -1$)
+and the symplectic fermion~$\mathcal{SF}$ ($c = -2$) both belong to
+class~$C$: $r_{\max} = 4$ with quartic contact invariant.
+Slots~(1) and~(2) agree:
+$(p_{\max}, r_{\max}) = (1, 4)$ in both cases. They are separated by
+the sign of~$\chi_{\mathrm{VOA}}$ and by the coset:
+\[
+\chi_{\mathrm{VOA}}(\text{symp.\ boson})\;=\;+\mathrm{ch}(\beta\gamma_{1/2}), \quad
+\chi_{\mathrm{VOA}}(\mathcal{SF})\;=\;-\mathrm{ch}(\mathcal{SF}),
+\]
+and the coset slot records~$\mathrm{Sp}(2)$ for the symplectic boson
+(abelian symplectic automorphism group) versus
+$\mathrm{OSp}(1|2)$ for the symplectic fermion (orthosymplectic,
+involving the odd direction). Neither slot~(3) nor slot~(5) alone
+suffices: their combination supplies the full separation.
+\end{example}
+
+\begin{remark}[Disambiguation: $k_{\max}$-trichotomy vs.\ $r_{\max}$-quaternitomy]
+\label{rem:trichotomy-vs-quaternitomy}
+Two distinct classifications live in this chapter and must not be
+conflated. The $k_{\max}$-\emph{trichotomy}
+\textup{(}Theorem~\textup{\ref{thm:k-max-trichotomy}}, three
+operator-order regimes $0, 1, \geq 3$\textup{)} classifies
+commuting-Hamiltonian behaviour at degree~$2$; its output has three
+cells. The $r_{\max}$-\emph{quaternitomy}
+\textup{(}Proposition~\textup{\ref{prop:three-invariants-relations}}(iii),
+four classes $G, L, C, M$\textup{)} classifies shadow-depth behaviour
+across all degrees; its output has four cells. The five-class stratum
+\textup{(}Theorem~\textup{\ref{thm:five-class-stratum}}\textup{)}
+extends the quaternitomy by the~FF locus. None of these three
+classifications refines another on the nose: the trichotomy groups
+Virasoro with~$\Walg_N$ ($k_{\max} \geq 3$), whereas the quaternitomy
+places them together in class~$M$ but separates~$\beta\gamma$
+($k_{\max} = 0$, class~$C$) from Heisenberg ($k_{\max} = 1$, class~$G$).
+The canonical fingerprint subsumes all three: the trichotomy is read
+from slot~(1), the quaternitomy from slot~(2), and the~FF locus from
+slot~(5) via~$\kappa$-vanishing.
+\end{remark}
+
 \section{Compute-layer verification}
 \label{sec:three-invariants-compute}
 
