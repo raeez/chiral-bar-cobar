@@ -189,6 +189,17 @@ Anti-pattern catalogue (working notebook, not in manuscript):
 
 Top of document (§1–§4) is the definitive state. Sections below — "Part I-VII", "F1-F36", "Session Memorials", "Cross-Volume" — are HISTORICAL RECORD preserved for provenance. Every claim in those sections should be read with the §1–§3 closures / qualifiers applied; where they conflict, §1–§3 wins.
 
+### 6. Typeset synchronization (Part VI `outlook.tex`, 2026-04-17 Wave 10)
+
+Vol~I `chapters/connections/outlook.tex` §"Open frontiers" and five-theorem table synchronised with §§1–3 above:
+- Theorem~D row: $g\geq 2$ now explicitly conditional on modular-family A (CL2) and Faber's $\lambda_g$-conjecture (AP225 residue).
+- MC5 paragraph: "class~M chain-level false" retracted; replaced with pro/J-adic/weight-completed three-ambient statement and direct-sum scope qualifier (former OF1 closure).
+- MC3: "all simple types" qualified with `conj:dk-compacts-completion` type-A unconditional / other simple types conjectural / silent non-coverage list.
+- "Active growth directions" expanded from 4 items to 10: non-hook-type W duality with $(3,2)\vdash 5$ test case; modular-family A over $\overline{\mathcal M}_{g,n}$; Grand Completion pronilpotent closure; D-module purity converse (Vir/W); three-layer analytic realization gap; Givental--Stokes extraction of $A_{\mathrm{cross}}$; three-stratum chiral QG beyond formal disk; CY-A$_3$ chain-level for non-formal CY$_3$ (Vol~III pointer); factorization-envelope technology; holographic modular Koszul datum.
+- Cross-volume bridges §expanded with Vol~II/Vol~III open items.
+
+Audit file: `adversarial_swarm_20260417/wave10_part_vi_frontier_attack_heal.md`.
+
 ---
 
 ## Prior Status as of 2026-04-13 (HISTORICAL; superseded by §1–§4 above)

@@ -19,13 +19,13 @@ These summaries follow the concordance. The precise chapter statements retain th
 
 | Theorem | Statement | Status |
 |:-------:|-----------|--------|
-| **(A)** | Bar-cobar equivalence at properad level in the Francis-Gaitsgory factorization ambient on Ran(X); R-twisted Σ_n-descent relates ordered and symmetric bars | Proved here (upgraded to `thm:A-infinity-2`, ∞,2-categorical) |
+| **(A)** | Bar-cobar equivalence at properad level in the Francis-Gaitsgory factorization ambient on Ran(X); R-twisted Σ_n-descent relates ordered and symmetric bars | Proved here on a fixed smooth curve (`thm:A-infinity-2`, ∞,2-categorical); modular-family extension over `M̄_{g,n}` including boundary is conditional on Francis-Gaitsgory six-functor base-change (GR17 Vol II) and Mok25 log-FM nodal-sewing at chain level |
 | **(B)** | Strict bar-cobar inversion on the Koszul locus via explicit MacLane-splitting for class G/L; coderived/coacyclic refinement off the locus; class M direct-sum genuinely false, weight-completed proved | Proved here |
 | **(C)** | Complementarity package: C0/C1 unconditional on Koszul locus; the shifted-symplectic/BV upgrade C2 conditional only on BV package; +3 shift contradiction at g = 0 resolved via `thm:theorem-C-g0` | C0/C1 proved here; C2 conditional on BV package |
 | **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g uniform-weight all g >= 1; multi-weight carries explicit cross-channel correction delta F_g^cross; clutching-uniqueness pins the scalar | Proved here |
 | **(H)** | Chiral Hochschild on the Koszul locus at generic level: concentrated in {0,1,2}, duality shift [2], sharp Hilbert series; Feigin-Frenkel companion at k = -h^v (infinite-dim center, non-exclusion) | Proved here |
 
-Programme status 2026-04-17: Four previously-irreducible frontiers CLOSED or REDUCED on the non-degenerate locus — curved-Dunn H² = 0 at g ≥ 2 (Vol II `curved_dunn_higher_genus.tex`); DS-Hochschild bridge for class M (Vol II `chiral_higher_deligne.tex`); `conj:periodic-cdg` admissible KL (Vol I `periodic_cdg_admissible.tex`); chain-level chiral Deligne-Tamarkin (reduced to associator-dependence). Single remaining open: original-complex chain-level E_3-topological for class M (weight-completed proof is unconditional).
+Programme status 2026-04-17: Four previously-irreducible frontiers CLOSED or REDUCED on the non-degenerate locus — curved-Dunn H² = 0 at g ≥ 2 (Vol II `curved_dunn_higher_genus.tex`); DS-Hochschild bridge for class M (Vol II `chiral_higher_deligne.tex`); `conj:periodic-cdg` admissible KL (Vol I `periodic_cdg_admissible.tex`); chain-level chiral Deligne-Tamarkin (reduced to associator-dependence). Three open directions remain on topologization, surfaced by the Wave-1 audit: (i) class M original-complex chain-level E_3-topological in `Ch(Vect)` (weight-completed / pro-object / J-adic ambients are unconditional); (ii) class L original-complex chain-level via explicit `η_1^{(i)}`, `η_1^{(ii)}` antighost-contact cochains making `[Q, G̃_1] = T_Sug` strict rather than cohomological; (iii) antighost BRST-commutativity `[G^{(n)}, G^{(m)}] = Q`-exact at spin `n, m ≥ 3` (currently an axiom of the higher-spin stress tower, not derived).
 
 ## The Five Objects
 
@@ -54,7 +54,7 @@ The programme keeps the five canonical objects distinct:
 | A | Five Theorems of Modular Koszul Duality | 27 |
 | B | The Shadow Obstruction Tower | 43 |
 | C | The Ordered Bar Complex and E_1 Primacy | 27 |
-| D | Chiral Koszulness: 14 Characterizations | 22 |
+| D | Chiral Koszulness: bidirectional and conditional characterizations | 22 |
 | E | E_n-Chiral Algebras and the Operadic Circle | 37 |
 | F | Chiral Quantum Groups and the gl_N Tower | 81 |
 | G | The Drinfeld-Kohno Bridge | 19 |
@@ -81,9 +81,9 @@ Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
 | Source tree | 106 chapter `.tex`; 16 appendices; 67+ standalone `.tex` |
 | Standalone papers | 16 papers + 2 MC5 successors (theorem + analytic), all CG-rectified |
 | Survey paper | 8,500+ lines / 122pp |
-| Koszulness programme | 14 characterizations on GRT-equivariant moduli atlas `M_Kosz(A)` |
-| Master conjectures MC1-MC5 | ALL PROVED (MC5 weight-completed class M; direct-sum class M genuinely false as scope) |
-| Main proofs adversarially verified | 10/10 SOUND through April 2026 (>732-agent campaigns) |
+| Koszulness programme | 8 genuinely independent bidirectional characterizations + 1 one-way ChirHoch concentration + 1 perfectness-conditional Lagrangian + 1 one-directional D-module purity + 1 uniform-weight-conditional genus refinement, on the GRT-equivariant moduli atlas `M_Kosz(A)` |
+| Master conjectures MC1-MC5 | Proved at their inscribed scopes per Wave-1 audit (MC3 on the evaluation-generated core per AP47; MC5 weight-completed / pro-object / J-adic for class M, with direct-sum class M genuinely false as an ambient-choice artefact) |
+| Main proofs reviewed | Backbone theorems A/B/C/D/H, MC1-MC5, topologization, chiral QG equivalence standing at their Wave-1 scope qualifiers (fixed-curve vs modular family; on-the-nose vs weight-completed; Koszul-locus vs off-locus) rather than as unqualified "SOUND" verdicts |
 | First-principles cache | 750+ lines, cross-programme enforcement verified clean |
 | HZ-IV decorators installed | ~45 Wave-1 / Wave-2 installations across theorem labels |
 | Shadow tower S_r | closed forms through r = 11 with three-tier arithmetic stratification |
@@ -212,9 +212,14 @@ body. Items added since the last README revision:
   `K_E = K_c = K_g`. K_BP = 196 polynomial identity (Arakawa convention)
   inscribed as `thm:bp-koszul-conductor-polynomial`; FM22/B25 explicitly
   guarded. Cross-volume bridge to Vol III's K3-fibered Class A
-  `κ_BKM = c_N(0)/2` is scoped to the Class A locus only (cached
-  confusion #15: the additive `κ_BKM = κ_ch + χ(O_fiber)` is the N=1
-  K3×E coincidence and FAILS at N≥2 per the 62-test adversarial witness).
+  `κ_BKM = c_N(0)/2` is scoped to the Class A locus only. The additive
+  decomposition `κ_BKM = κ_ch + χ(O_fiber)` fails at every N, including
+  N = 1: Gritsenko's `Δ_5` weight-5 paramodular form of level 1
+  (Gritsenko 1999) gives `κ_BKM(Φ_1) = c_1(0)/2 = 5`, whereas the naive
+  decomposition predicts `0 + 0 = 0`. The prior "N = 1 K3×E coincidence"
+  narrative is retracted as confabulation; the universal identity is
+  `κ_BKM(Φ_N) = c_N(0)/2` across `N ∈ {1, 2, 3, 4, 6}` with no
+  matter/fiber split at any N.
 
 - **Shadow Tower Quadrichotomy master chapter**
   `chapters/theory/shadow_tower_quadrichotomy_platonic.tex` (1,193 lines,
