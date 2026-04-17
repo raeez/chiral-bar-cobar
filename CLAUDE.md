@@ -20,7 +20,7 @@ Load the file behind any headline you intend to extend. Each is a self-contained
 
 - `notes/cross_volume_aps.md` — Vol II V2-AP1-39 + Vol III AP-CY1-67 (AP-CY62..67 added 2026-04-16). Read before any cross-volume edit.
 - `notes/true_formula_census.md` — Full C1-C31 census (externalized 2026-04-16). The top-5 most-violated stay inline below.
-- `appendices/first_principles_cache.md` — 210+ confusion-pattern registry with regex triggers. Append new patterns there per the first-principles protocol.
+- `notes/first_principles_cache_comprehensive.md` — 210+ confusion-pattern registry with regex triggers. Append new patterns there per the first-principles protocol.
 - `chapters/examples/landscape_census.tex` — Canonical kappa / r(z) / central charges per family. AP1 MANDATES reading this file (not memory) before any formula.
 
 # Modular Koszul Duality Programme (Canonical Reference)
@@ -227,7 +227,7 @@ Three separate cleanup commits in Vol II prove aspirational instructions insuffi
 
 ## Manuscript Metadata Hygiene (CONSTITUTIONAL, ZERO TOLERANCE)
 
-**The anti-pattern catalogue, the confusion-pattern cache, and all metacognitive accounting stay out of the manuscript and out of the standalone papers.** They live only in `CLAUDE.md`, `appendices/first_principles_cache.md`, `MEMORY.md`, `notes/`, and the `memory/` directory. The manuscript and standalones are the mathematics; the metacognitive architecture is scaffolding that the reader must never see.
+**The anti-pattern catalogue, the confusion-pattern cache, and all metacognitive accounting stay out of the manuscript and out of the standalone papers.** They live only in `CLAUDE.md`, `notes/first_principles_cache_comprehensive.md`, `MEMORY.md`, `notes/`, and the `memory/` directory. The manuscript and standalones are the mathematics; the metacognitive architecture is scaffolding that the reader must never see.
 
 **FORBIDDEN tokens in any typeset line** of `chapters/**/*.tex`, `standalone/**/*.tex`, `main.tex` (outside `%` comments), or any `.tex` file that compiles into the monograph or a standalone paper:
 
@@ -243,7 +243,7 @@ Three separate cleanup commits in Vol II prove aspirational instructions insuffi
 **ALLOWED:**
 
 - LaTeX comments starting with `%` (invisible in the PDF). `% AP126 check: k=0 gives r=0.` is fine as scaffolding.
-- References in `CLAUDE.md`, `MEMORY.md`, `appendices/first_principles_cache.md`, `notes/`, `memory/`, `adversarial_swarm_*/`, `compute/` Python files, test files.
+- References in `CLAUDE.md`, `MEMORY.md`, `notes/first_principles_cache_comprehensive.md`, `notes/`, `memory/`, `adversarial_swarm_*/`, `compute/` Python files, test files.
 - Referring to a mathematical pattern by its mathematical content (e.g. "level-prefix convention", "trace-form r-matrix at k=0", "family-dependent anomaly ratio"). Rename and describe in substance, not by catalogue index.
 
 **Healing protocol** when an AP reference is found in typeset prose:
@@ -267,7 +267,7 @@ grep -rn '\bAP[0-9]\+\b\|\bHZ-[0-9IVX]\+\b\|V[0-9]-AP[0-9]\+\|AP-CY[0-9]\+\|\bPa
 
 Zero hits is the commit-gate. If any hit appears: stop, heal via the protocol above, re-grep until zero.
 
-**Cross-volume.** The rule applies identically to all four volumes. The two anti-patterns catalogued in this session (AP234: K-notation collision; AP235: quaternitomy/quadrichotomy drift) and the two cache entries (Pattern 218, Pattern 219) are registered in `CLAUDE.md` and `appendices/first_principles_cache.md` only; the Vol~I preface, introduction, and main-abstract edits that resolved them contain the mathematical substance of the healing without any catalogue label.
+**Cross-volume.** The rule applies identically to all four volumes. The two anti-patterns catalogued in this session (AP234: K-notation collision; AP235: quaternitomy/quadrichotomy drift) and the two cache entries (Pattern 218, Pattern 219) are registered in `CLAUDE.md` and `notes/first_principles_cache_comprehensive.md` only; the Vol~I preface, introduction, and main-abstract edits that resolved them contain the mathematical substance of the healing without any catalogue label.
 
 **Why.** The manuscript is the object of study for the reader; the catalogue is the author's working notebook. A reader who opens the PDF and encounters `(AP225)` in a theorem statement sees scaffolding, not mathematics. Catalogue indices also rot: they renumber, reorganise, and get retired; prose coupled to them breaks. Every AP-labelled sentence must be rewritten to stand on its mathematical content alone.
 
