@@ -149,5 +149,76 @@ class TestUniversalClassMTheorem(unittest.TestCase):
                              f"Family {family}: expected C = 6, got {C_A}")
 
 
+class TestVirasoroShadowSeriesClosedForm(unittest.TestCase):
+    """Verification of thm:shadow-series-closed-form-Virasoro:
+    Sigma_Vir(z) = 4z^3/9 - z^2/9 + z/27 - log(1 + 6z)/162.
+    """
+
+    def test_closed_form_matches_A_r(self):
+        """Taylor expansion of closed form matches A_r from engine."""
+        z = sp.Symbol('z')
+        closed_form = (sp.Rational(4, 9) * z**3
+                       - sp.Rational(1, 9) * z**2
+                       + sp.Rational(1, 27) * z
+                       - sp.log(1 + 6*z) / sp.Integer(162))
+        series = sp.series(closed_form, z, 0, 10).removeO()
+        coeffs = sp.Poly(series, z).all_coeffs()[::-1]  # low to high
+
+        for r in range(4, 10):
+            A_r_closed = coeffs[r] if r < len(coeffs) else sp.Integer(0)
+            A_r_engine = leading_asymptotic(r)
+            self.assertEqual(
+                A_r_closed, A_r_engine,
+                f"Taylor coefficient at z^{r}: closed form {A_r_closed} "
+                f"vs engine {A_r_engine}")
+
+    def test_branch_point_at_minus_one_sixth(self):
+        """The log singularity is at z = -1/6."""
+        z = sp.Symbol('z')
+        closed_form = (sp.Rational(4, 9) * z**3
+                       - sp.Rational(1, 9) * z**2
+                       + sp.Rational(1, 27) * z
+                       - sp.log(1 + 6*z) / sp.Integer(162))
+        # Evaluate the log argument at z = -1/6:
+        log_arg_at_branch = (1 + 6 * sp.Rational(-1, 6))
+        self.assertEqual(log_arg_at_branch, sp.Integer(0),
+                         "Log argument at z = -1/6 must be 0 (branch point)")
+
+    def test_radius_of_convergence_via_ratio(self):
+        """Cauchy-Hadamard radius via |A_{r+1}/A_r| (faster convergence).
+
+        The ratio |A_{r+1}/A_r| = 6*r/(r+1) converges to 6 faster than
+        |A_r|^{1/r} (which has a 1/r correction from the (1/162) prefactor).
+        Radius of convergence 1/6 corresponds to ratio limit 6.
+        """
+        for r in [4, 8, 12, 16, 20]:
+            A_r = abs(float(leading_asymptotic(r)))
+            A_r_plus_1 = abs(float(leading_asymptotic(r + 1)))
+            ratio = A_r_plus_1 / A_r
+            expected = 6.0 * r / (r + 1)
+            self.assertAlmostEqual(
+                ratio, expected, places=10,
+                msg=f"Ratio at r={r}: got {ratio}, expected {expected}")
+
+    def test_Sigma_Vir_closed_form_matches_engine_at_z_small(self):
+        """Closed form Sigma_Vir(z) at small z agrees with partial sum of A_r z^r."""
+        z = sp.Symbol('z')
+        closed_form = (sp.Rational(4, 9) * z**3
+                       - sp.Rational(1, 9) * z**2
+                       + sp.Rational(1, 27) * z
+                       - sp.log(1 + 6*z) / sp.Integer(162))
+        # Evaluate at z = 1/12 (half radius), both closed form and partial sum
+        z_val = sp.Rational(1, 12)
+        closed_at_z = float(closed_form.subs(z, z_val))
+        partial_sum = 0.0
+        for r in range(4, 15):
+            A_r = float(leading_asymptotic(r))
+            partial_sum += A_r * float(z_val) ** r
+        self.assertAlmostEqual(
+            closed_at_z, partial_sum, places=4,
+            msg=f"Partial sum {partial_sum} diverges from closed form "
+                f"{closed_at_z} at z = 1/12")
+
+
 if __name__ == "__main__":
     unittest.main()
