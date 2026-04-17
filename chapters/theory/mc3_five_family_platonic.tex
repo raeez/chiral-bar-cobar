@@ -130,7 +130,7 @@ general simple $\mathfrak{g}$
 $E_{\rho,\eta}(\mathrm{sl}_N)$ elliptic
  & elliptic Bethe / DYBE
  & theta divisor $\Theta \subset \mathcal{E}_\rho^{N-1}$ \\
-$Y_\hbar(\mathrm{gl}_{m|n})$ super
+$Y_\hbar(\mathrm{gl}_{m|n})$ super (parity-balance sub-case)
  & $\mathbb{Z}/2$-graded Berezinian
  & parity-balance hyperplane \\
 \bottomrule
@@ -143,6 +143,31 @@ together with a central or invariant witness (quantum determinant,
 Sklyanin determinant, quantum Berezinian) guaranteeing that
 iterated tensor products remain in the evaluation-generated core.
 \end{theorem}
+
+\begin{remark}[Super-Yangian scope: gl-super and osp-super sub-cases]
+\label{rem:super-yangian-scope}
+The super-Yangian row of the mechanism table covers the
+$Y_\hbar(\mathfrak{gl}_{m|n})$ series via the parity-balance
+hyperplane mechanism with the Nazarov quantum Berezinian as
+witness. The sibling orthosymplectic series $Y_\hbar(\mathfrak{osp}(m|2n))$
+is NOT in the parity-balance scope: its reflection equation
+(Arnaudon--Cramp\'e--Doikou--Frappat--Ragoucy 2003,
+\texttt{arXiv:math/0304188}) is a $\mathbb{Z}/2$-graded analogue of the
+twisted $B/C/D$ reflection equation, and its thick-generation
+witness is the super-Sklyanin--Berezinian determinant
+$\operatorname{sBer} K(u)$, not the Nazarov quantum Berezinian on
+the Baxter operator. The osp-super series therefore belongs to
+the twisted $B/C/D$ reflection-equation mechanism of
+Proposition~\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}
+in its $\mathbb{Z}/2$-graded form, not to the parity-balance
+mechanism of Proposition~\ref{prop:mc3-super-parity-balance-platonic}.
+Vol~III's K3 super-Yangian target $Y_{\mathfrak{osp}(4|20)}$,
+forced by the Mukai signature $(4,20)$ being symmetric indefinite
+orthogonal, lies in the osp-super sub-case and is covered via the
+reflection-equation route. This scope split is uniform across
+super families whose bilinear form is symmetric indefinite
+(orthogonal) versus super-graded with parity swap (general linear).
+\end{remark}
 
 \begin{proof}
 The five cases are Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
@@ -247,7 +272,11 @@ boundary Yang--Baxter equation
 The evaluation-generated core of
 $\widehat{\mathcal{O}}(Y^{\mathrm{tw}}_\hbar)$ is thickly generated
 by the family $\{V_{\omega_1,a}\}_{a\in\mathbb{C}}$ at generic
-parameters. The Sklyanin determinant
+parameters in the Zariski-open sense on the joint parameter space
+$(q, a)$, excluding in particular the primitive-root-of-unity
+locus of $q$; root-of-unity specializations are out of scope per
+Corollary~\ref{cor:five-family-union-coverage}. The Sklyanin
+determinant
 $\operatorname{sdet}K(u) \in Z(Y^{\mathrm{tw}}_\hbar)[[u^{-1}]]$ is
 central and supplies the generation witness.
 \end{proposition}
@@ -272,13 +301,15 @@ equation encodes the boundary spectral data uniformly.
 \subsection{Uniform: multiplicity-free $\ell$-weights}
 
 \begin{proposition}[Chari--Moura multiplicity-free $\ell$-weights:
- uniform simple types; \ClaimStatusProvedHere]
+ classical and simply-laced exceptional types; \ClaimStatusProvedHere]
 \label{prop:mc3-uniform-chari-moura-platonic}
 \index{MC3!uniform!multiplicity-free $\ell$-weights}%
 \index{Chari-Moura!$\ell$-weight theorem}%
 \index{Frenkel-Mukhin!algorithm}%
-Let $\mathfrak{g}$ be any simple Lie algebra. For every fundamental
-weight $\omega_i$ the evaluation module $V_{\omega_i,a}$ of
+Let $\mathfrak{g}$ be a simple Lie algebra of classical type
+$A_n, B_n, C_n, D_n$ or simply-laced exceptional type
+$E_6, E_7, E_8$. For every fundamental weight $\omega_i$ the
+evaluation module $V_{\omega_i,a}$ of
 $Y_\hbar(\mathfrak{g})$ has multiplicity-free $\ell$-weight
 decomposition, and the evaluation-generated core of
 $\mathcal{O}(Y_\hbar(\mathfrak{g}))$ is thick.
@@ -286,13 +317,10 @@ $\mathcal{O}(Y_\hbar(\mathfrak{g}))$ is thick.
 
 \begin{proof}
 Multiplicity-freeness of $\chi_q(V_{\omega_i,a})$ is established
-by three complementary inputs depending on type: quiver-variety
-geometry for simply-laced types (Nakajima), explicit $q$-character
-formulas for classical types (Chari--Moura), and the
-Frenkel--Mukhin algorithm for exceptional types (the fundamental
-representations are \emph{special} in the sense of Frenkel--Mukhin,
-so the algorithm terminates with the true $q$-character and one
-verifies each $\ell$-weight space is one-dimensional).
+by two complementary inputs depending on type: quiver-variety
+geometry for simply-laced types (Nakajima, arXiv:math/0105173)
+and explicit $q$-character formulas for classical types
+(Chari--Moura).
 The Kirillov--Reshetikhin conjecture, proved in full generality,
 closes the induction on the fusion products of KR modules;
 combined with density of the simple joint spectrum, separation of
@@ -302,20 +330,70 @@ property of the full $\ell$-character, not of a rank-$1$ singular
 vector.
 \end{proof}
 
+\begin{proposition}[Multiplicity-free $\ell$-weights:
+ non-simply-laced exceptional types $G_2, F_4$; \ClaimStatusProvedElsewhere]
+\label{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic}
+\index{MC3!non-simply-laced exceptional!multiplicity-free $\ell$-weights}%
+Let $\mathfrak{g}$ be a simple Lie algebra of non-simply-laced
+exceptional type $G_2$ or $F_4$. For every fundamental weight
+$\omega_i$ the evaluation module $V_{\omega_i,a}$ of
+$Y_\hbar(\mathfrak{g})$ has multiplicity-free $\ell$-weight
+decomposition, and the evaluation-generated core of
+$\mathcal{O}(Y_\hbar(\mathfrak{g}))$ is thick. The proof proceeds
+per-case for the $2$ fundamentals of $G_2$ and the $4$ fundamentals
+of $F_4$.
+\end{proposition}
+
+\begin{remark}[Frenkel--Mukhin algorithm is not uniformly valid
+ at non-simply-laced exceptional types]
+\label{rem:fm-nonsimplylaced-failure}
+The Frenkel--Mukhin algorithm, which gives a uniform construction
+of the true $q$-character of fundamental representations at
+simply-laced types (where every fundamental is \emph{special} in
+the sense of Frenkel--Mukhin), is not uniformly valid for
+fundamentals of non-simply-laced types: at type $G_2$ and $F_4$
+the algorithm can fail to terminate on a true $q$-character, or
+can produce an output that does not coincide with the true
+$q$-character of certain fundamentals, and the algorithm does
+not by itself establish multiplicity-freeness of each
+$\ell$-weight space. Case-by-case verification of the $2$
+fundamental $q$-characters of $G_2$ and the $4$ fundamental
+$q$-characters of $F_4$, together with their multiplicity-freeness,
+is a finite computation carried out in
+Hernandez~(arXiv:math/0606381) and Hernandez~(2010), building on
+Hernandez--Jimbo and subsequent work. These references supply the
+multiplicity-free $\ell$-character data used in
+Proposition~\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic};
+the thickness argument for the evaluation-generated core is the
+same as in the simply-laced case, and depends only on
+multiplicity-freeness of the $\ell$-character plus the
+Kirillov--Reshetikhin conjecture.
+\end{remark}
+
 \begin{remark}[Relation to the asymptotic-prefundamental route]
 \label{rem:chari-moura-vs-hernandez-jimbo}
 At $\mathfrak{g} = \mathrm{sl}_N$ the two routes (asymptotic
 prefundamentals,
 Proposition~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic};
 multiplicity-free $\ell$-weights,
-Proposition~\ref{prop:mc3-uniform-chari-moura-platonic}) produce the same
-thick generation statement by structurally different mechanisms.
-The first is global in spectral parameter (product factorization
-on the pro-limit); the second is pointwise
-(one-dimensional $\ell$-weight spaces). They agree on the common
-domain and provide complementary proofs, not a circular one.
-The Gautam--Toledano Laredo equivalence ties the Yangian and
-quantum-loop versions of each route together in type~$A$.
+Proposition~\ref{prop:mc3-uniform-chari-moura-platonic}) produce
+structurally distinct thick-generation statements at two distinct
+category levels, not two proofs of a single theorem. The asymptotic
+route proves thickness in the pro-completed category
+$\widehat{\mathcal{O}}(Y_\hbar(\mathfrak{sl}_N))$: the
+prefundamentals $L^\pm_{\omega_i,a}$ exist only as pro-objects
+obtained as Hernandez--Jimbo limits of finite-dimensional
+Kirillov--Reshetikhin modules, and the proof is global in the
+spectral parameter via the product factorization of the
+$q$-character. The multiplicity-free route proves thickness in the
+uncompleted $\mathcal{O}(Y_\hbar(\mathfrak{sl}_N))$: the evaluation
+modules $V_{\omega_i}(a)$ are finite-dimensional, and the proof is
+pointwise via one-dimensional $\ell$-weight spaces. The two routes
+are complementary at two category levels, not equivalent proofs of
+one statement; each theorem is the MC3 thick-generation assertion
+in its own category. The Gautam--Toledano Laredo equivalence ties
+the Yangian and quantum-loop versions of each route together within
+each category level.
 \end{remark}
 
 \subsection{Elliptic: theta-divisor complement}
@@ -387,6 +465,27 @@ $Q(u) = Q^+(u) \otimes Q^-(u)$ ensures that the parity-balance
 constraint is a single codimension-$1$ condition, not a higher
 intersection of even and odd Baxter loci.
 \end{proof}
+
+\begin{remark}[Scope is Y(gl(m|n)) only; osp-super sibling covered
+ elsewhere]
+\label{rem:parity-balance-scope-gl-only}
+Proposition~\ref{prop:mc3-super-parity-balance-platonic} covers the
+general-linear super-Yangian $Y_\hbar(\mathfrak{gl}_{m|n})$ only.
+The orthosymplectic super-Yangian $Y_\hbar(\mathfrak{osp}(m|2n))$,
+constructed via the $\mathbb{Z}/2$-graded reflection equation of
+Arnaudon--Cramp\'e--Doikou--Frappat--Ragoucy~(\texttt{arXiv:math/0304188}),
+is NOT in the parity-balance mechanism scope. Its thick-generation
+witness is a super-Sklyanin--Berezinian determinant
+$\operatorname{sBer}K(u)$ defined off the reflection-equation
+fixed locus, not the Nazarov quantum Berezinian
+$\operatorname{Ber}(u)$ on the Baxter operator. The osp-super
+series is covered by
+Proposition~\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}
+generalised to $\mathbb{Z}/2$-graded reflection equations, an
+instance of the twisted $B/C/D$ mechanism rather than the
+parity-balance mechanism. See
+Remark~\ref{rem:super-yangian-scope} for the cross-volume context.
+\end{remark}
 
 \section{Baxter retraction: a type-A rational artifact}
 \label{sec:mc3-platonic-baxter-retraction}
@@ -529,14 +628,23 @@ The union of the five families of
 Theorem~\ref{thm:mc3-evaluation-core-five-family} covers:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item every simple Lie algebra $\mathfrak{g}$ of classical type
- $A_n, B_n, C_n, D_n$ and exceptional type $E_6, E_7, E_8, F_4,
- G_2$, via either Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
+ $A_n, B_n, C_n, D_n$ and simply-laced exceptional type $E_6, E_7,
+ E_8$ via either
+ Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
  \ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}, or
- \ref{prop:mc3-uniform-chari-moura-platonic};
+ \ref{prop:mc3-uniform-chari-moura-platonic}; non-simply-laced
+ exceptional type $G_2, F_4$ via
+ Proposition~\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic}
+ (per-case verification of fundamental $q$-characters,
+ Remark~\ref{rem:fm-nonsimplylaced-failure});
 \item elliptic Yangians $E_{\rho,\eta}(\mathrm{sl}_N)$ over an
  elliptic curve, via Proposition~\ref{prop:mc3-elliptic-theta-divisor-platonic};
-\item super-Yangians $Y_\hbar(\mathrm{gl}_{m|n})$ via
- Proposition~\ref{prop:mc3-super-parity-balance-platonic}.
+\item super-Yangians split into two sub-cases:
+ $Y_\hbar(\mathfrak{gl}_{m|n})$ via the parity-balance mechanism of
+ Proposition~\ref{prop:mc3-super-parity-balance-platonic}, and
+ $Y_\hbar(\mathfrak{osp}(m|2n))$ via the $\mathbb{Z}/2$-graded
+ reflection-equation sub-case of
+ Proposition~\ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}.
 \end{enumerate}
 The union does not cover: logarithmic W-algebras $W(p)$ in the
 Adamovi\'c--Milas sense, $N=2$ superconformal vertex algebras,
@@ -547,8 +655,11 @@ not covered by the five-family synthesis.
 \end{corollary}
 
 \begin{proof}
-Classical and exceptional simple types are covered by
-Proposition~\ref{prop:mc3-uniform-chari-moura-platonic} uniformly; type
+Classical and simply-laced exceptional simple types are covered by
+Proposition~\ref{prop:mc3-uniform-chari-moura-platonic};
+non-simply-laced exceptional types $G_2, F_4$ are covered by
+Proposition~\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic}
+per-case. Type
 $A$ admits the additional route of
 Proposition~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic}; the
 twisted forms B/C/D admit the reflection-equation route of

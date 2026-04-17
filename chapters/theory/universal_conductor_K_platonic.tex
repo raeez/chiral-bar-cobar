@@ -372,17 +372,55 @@ $K_g(\cA \otimes \cB) = K_g(\cA) + K_g(\cB)$.
 \section{Trinity Theorem: $K_E = K_c = K_g$}
 \label{sec:uc-trinity}
 
-\begin{theorem}[\textbf{Trinity}]
+\begin{theorem}[\textbf{Trinity: per-family}]
 \label{thm:uc-trinity}
 \ClaimStatusProvedHere
-On the Koszul-self-dual subcategory
-$\KSDual(X) \cap \BRSTGauged \subset \mathrm{ChirAlg}^{E_\infty}_X$,
+Let
+$\cA \in \{\mathcal{H}_k, \psi, bc(\lambda), \beta\gamma(\lambda),
+V_k(\fg), \Vir_c, W_N, \BP, V_L\}$
+belong to one of the nine inscribed standard-landscape families, with
+$V_k(\fg)$ at non-critical level and $V_L$ on even unimodular $L$.  Then
 the three conductors of Definition~\ref{def:uc-three-conductors}
 coincide:
 \[
   K_E(\cA) \;=\; K_c(\cA) \;=\; K_g(\cA) \;=\; K(\cA).
 \]
+The arrow $K_E = K_c$ is uniform on the Koszul-self-dual locus (bar
+Euler theorem, Theorem~\ref{thm:bar-cobar-platonic}).  The arrow
+$K_c = K_g$ is verified per-family via the family's own matter
+reflection: Feigin--Fuks $c \mapsto 26 - c$ for Virasoro extended to
+principal $W_N$ by Feigin--Frenkel screening; Sugawara reflection
+$k \mapsto -k - 2 h^\vee$ for affine Kac--Moody; Bershadsky--Polyakov
+$k \mapsto -k - 6$ for $W_3^{(2)}$; unimodular self-duality for
+$V_L$.
 \end{theorem}
+
+\begin{remark}[Scope: families outside the per-family list are open]
+\label{rem:uc-trinity-scope}
+Families outside the per-family list of Theorem~\ref{thm:uc-trinity} ---
+logarithmic $W(p)$, the $\cN = 2$ superconformal algebra, non-principal
+$W$-algebras without matching Drinfeld--Sokolov dual, roots-of-unity
+small quantum groups, indefinite non-rational lattice vertex algebras ---
+admit no verified matter reflection $c_{\mathrm{matter}}(\cA) =
+-\,c_{\mathrm{matter}}(\cA^!)$; the $K_c = K_g$ arrow is open for each.
+Predictions~\ref{pred:uc-K-W-sl4-22}--\ref{pred:uc-K-twisted-A22}
+extend the per-family list computationally, but each extension is its
+own verification.
+\end{remark}
+
+\begin{conjecture}[Uniform Trinity]
+\label{conj:uc-trinity-uniform}
+\ClaimStatusConjectured
+A single universal matter-reflection theorem
+$c_{\mathrm{matter}}(\cA) = -\,c_{\mathrm{matter}}(\cA^!)$
+holds across the full Koszul-self-dual BRST-gauged subcategory
+$\KSDual(X) \cap \BRSTGauged \subset \mathrm{ChirAlg}^{E_\infty}_X$.  On
+the $\mathrm{C}_2$-cofinite non-logarithmic subcategory admitting a
+principal Drinfeld--Sokolov reduction from a simple affine Kac--Moody
+algebra, the conjecture reduces to Feigin--Frenkel screening and is
+proved.  The frontier is logarithmic $W(p)$ and the roots-of-unity
+small quantum group locus.
+\end{conjecture>
 
 \begin{proof}
 The proof has three arrows.
@@ -407,9 +445,22 @@ $(C_\bullet, Q) \to \cA$ the Euler--Poincar\'e principle gives
 \[
   c(\cA) \;=\; c_{\mathrm{matter}}(\cA) - c_{\mathrm{ghost}}(\cA).
 \]
-Applying this to both $\cA$ and $\cA^!$ and using the Koszul reflection
-on matter $c_{\mathrm{matter}}(\cA) = -\,c_{\mathrm{matter}}(\cA^!)$
-\cite{polyakov_wiegmann1984}, we obtain
+The matter-reflection
+$c_{\mathrm{matter}}(\cA) = -\,c_{\mathrm{matter}}(\cA^!)$ is not a
+single universal theorem but the union of per-family involutions:
+the Feigin--Fuks $c \mapsto 26 - c$ symmetry for Virasoro
+\cite{feiginfuks1983}; the Sugawara denominator reflection
+$k \mapsto -\,k - 2 h^\vee$ for affine Kac--Moody
+\cite{kacpeterson1984,kac1998}; the Bershadsky--Polyakov
+$k \mapsto -\,k - 6$ self-duality for $W_3^{(2)}$
+\cite{polyakov1990,bershadsky1991,arakawa2005}; the Feigin--Frenkel
+screening symmetry on principal $W_N$
+\cite{feiginfrenkel1992,arakawa2017}; and lattice $\ZZ_N$
+self-duality for rational lattice vertex algebras.  Each family's
+reflection is cited separately; the $K_c = K_g$ arrow closes on the
+union over the Koszul-self-dual locus.  Applying the Euler--Poincar\'e
+identity to both $\cA$ and $\cA^!$ and invoking the family-appropriate
+reflection, we obtain
 \[
   K_c(\cA) \;=\; c(\cA) + c(\cA^!)
         \;=\; -\bigl(c_{\mathrm{ghost}}(\cA) + c_{\mathrm{ghost}}(\cA^!)\bigr)
@@ -421,7 +472,8 @@ not to $\cA$ vs $\cA^!$).  The convention $K_g := -\,c_{\mathrm{ghost}}$
 absorbs the factor of $2$ via the symmetric sum: for affine
 Kac--Moody, $K_g(\widehat{\fg}_k) = 2\dim(\fg)
 = K_c(\widehat{\fg}_k) = c(\widehat{\fg}_k) + c(\widehat{\fg}_{-k-2h^\vee})$
-(verified family-by-family in Wave~13 Appendix~A).
+(verified per-family via
+Corollaries~\ref{cor:uc-K-heisenberg}--\ref{cor:uc-K-lattice}).
 
 \smallskip
 \emph{Arrow $K_E = K_g$ (transitivity).}  By the two arrows above.
@@ -465,10 +517,12 @@ generators; no per-family central-charge formula is invoked.
 \begin{corollary}[Heisenberg]
 \label{cor:uc-K-heisenberg}
 \ClaimStatusProvedHere
-$K(\mathcal{H}_k) = -k$ for any level $k$.  Equivalently, in the
-Koszul-self-dual symmetric form
-$K^c(\mathcal{H}_k) = c(\mathcal{H}_k) + c(\mathcal{H}_k^!)
-= 1 + 1 = 2$.
+$K(\mathcal{H}_k) = -2$ for any level $k \neq 0$.  The value is
+level-independent (the single free boson has central charge $c = 1$
+regardless of $k$, the level being absorbed into the rescaling
+$J \to J/\sqrt{k}$), and matches the symmetric-form value
+$K^c(\mathcal{H}_k) = c(\mathcal{H}_k) + c(\mathcal{H}_k^!) = 1 + 1 = 2$
+up to the sign convention $K := -c_{\mathrm{ghost}}$.
 \end{corollary}
 
 \begin{proof}
@@ -478,21 +532,34 @@ is itself quasi-free: $C_\bullet = \mathcal{H}_k$ in degree zero,
 $Q = 0$.  The single bosonic generator $J$ has spin $\lambda = 1$,
 $\varepsilon = 0$, contributing
 \[
-  K(\mathcal{H}_k) \;=\; (-1)^1 \cdot 2(6 - 6 + 1) \;=\; -2 \cdot 1 \;=\; -2,
+  K(\mathcal{H}_k) \;=\; (-1)^{0+1} \cdot 2(6 - 6 + 1) \;=\; -2,
 \]
-in the spin-$1$ ghost convention $\lambda = 1$.  The level $k$ enters
-the matter normalisation, not the ghost weight, so
-$K(\mathcal{H}_k)$ is read off the spin alone.  The conductor value
-$-k$ for the level-$k$ Heisenberg algebra (cited in
-\texttt{landscape\_census.tex}, $\kappa(\mathcal{H}_k) = k$,
-\texttt{landscape\_census.tex}~L132) recovers the level-dependent
-$\kappa$-conductor via the convention
-$\kappa = K/2$ for the abelian case, with sign correction for the
-matter-vs-ghost grading.  The symmetric form $K^c$ is computed
-from $c(\mathcal{H}_k) = 1$ for any non-degenerate level (a single free
-boson has central charge $1$ regardless of $k$, the level being absorbed
-into the rescaling $J \to J/\sqrt{k}$).
+via \eqref{eq:uc-K-g}.  The level $k$ enters the matter normalisation,
+not the ghost weight, so $K(\mathcal{H}_k)$ is read off the spin alone.
 \end{proof}
+
+\begin{remark}[$K_g$ vs the $\kappa$-complementarity sum]
+\label{rem:uc-heisenberg-scope-distinction}
+The working conductor $K_g(\mathcal{H}_k) = -2$ is distinct from the
+$\kappa$-complementarity sum
+$\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!)
+= k + (-k) = 0$
+recorded at
+Proposition~\ref{V1-prop:complementarity-landscape} in
+\texttt{higher\_genus\_complementarity.tex}~Table
+\ref{V1-tab:complementarity-landscape} and on the free-field block of
+\texttt{landscape\_census.tex}~L132.  The two invariants compute
+different structural traces: $K_g$ is the negative ghost charge of a
+fixed BRST resolution (here trivial), and
+$\kappa + \kappa^!$ is the scalar complementarity of the
+modular-characteristic $\kappa$ across the Koszul pair.  They are
+related by $\kappa(\cA) + \kappa(\cA^!) = \varrho_\cA \cdot K(\cA)$
+with $\varrho_{\mathcal{H}} = 0$ on free-field class G
+(cf.~Remark~\ref{rem:uc-harmonic-density-WN} for the $W_N$ analogue
+with $\varrho_N = H_N - 1$).  The coincidence of letter $K$ across the
+two invariants is historical; the level-dependent form
+``$K(\mathcal{H}_k) = -k$'' conflates the two and is RETIRED.
+\end{remark>
 
 \subsection{Virasoro $\Vir_c$}
 \label{ssec:uc-virasoro}
@@ -615,7 +682,9 @@ $\sum_{j=2}^{N} j = N(N+1)/2 - 1$, give
 Factoring: $2(N - 1)(2 N^2 + 2 N + 1) = 2(N - 1)(N^2 + (N+1)^2)$.
 The third forward difference of any cubic $a N^3 + b N^2 + c N + d$
 equals $6 a$; with $a = 4$ this is $\Delta^3 K(W_N) = 24$.  Sympy
-verification for $N = 2, \ldots, 8$ in Wave~13 Appendix~A.
+verification for $N = 2, \ldots, 8$ via the
+\texttt{compute/lib/conductor\_W\_N.py} engine
+(cross-referenced against \texttt{landscape\_census.tex}~L199).
 \end{proof}
 
 \begin{remark}[The harmonic anomaly density of $W_N$]
@@ -804,7 +873,7 @@ distinct conductor values reflect distinct algebras
 \textbf{Family $\cA$} & $\boldsymbol{K(\cA)}$ & \textbf{Generators (spin, $\varepsilon$)}
  & \textbf{Census ref} \\
 \hline
-Heisenberg $\mathcal{H}_k$ & $-k$ & $(1, 0) \cdot 1$
+Heisenberg $\mathcal{H}_k$ & $-2$ & $(1, 0) \cdot 1$
  & L132, Cor.\ref{cor:uc-K-heisenberg} \\
 \hline
 Free fermion $\psi$ & $-1$ & $(1/2, 1) \cdot 2$
@@ -1112,7 +1181,8 @@ $\bbZ/N\bbZ$-orbifolds plus the STU model).  For Class~B threefolds
   $\kappa_{\BCOV}(Q) = -25/3$; local $\bP^2$ has shadow depth $3/2$
   via Vol~III \texttt{thm:local-p2-shadow}; conifold has
   $\kappa_{\mathrm{ch}} = 1$ via direct McKay (NOT $\chi/24$, because
-  the conifold is not a local surface; cf.\ Vol~III~AP-CY34).
+  the conifold is not a local surface; cf.\ the conifold /
+  local-surface distinction at $d=3$ in Vol~III).
 \end{itemize}
 The universal trace identity is THEREFORE NOT a statement about all
 Calabi--Yau threefolds: it is a statement about K3-fibered Class~A
@@ -1231,7 +1301,7 @@ tensor product) and the Trinity identity $K = K_E = K_c = K_g$
 Eight per-family corollaries derive the per-family conductor table of
 \texttt{landscape\_census.tex}:
 \begin{itemize}
-\item Heisenberg $\mathcal{H}_k$: $K = -k$
+\item Heisenberg $\mathcal{H}_k$: $K = -2$ (spin-$1$ bosonic, level-independent; the level-dependent $\kappa(\mathcal{H}_k) = k$ is a different invariant with $\kappa + \kappa^! = 0$, Remark~\ref{rem:uc-heisenberg-scope-distinction})
   (Cor.~\ref{cor:uc-K-heisenberg}; \texttt{landscape\_census.tex}~L132).
 \item Free fermion $\psi$: $K = -1$
   (Cor.~\ref{cor:uc-K-free-fermion}; \texttt{landscape\_census.tex}~L123).

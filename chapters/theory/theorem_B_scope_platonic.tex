@@ -243,6 +243,8 @@ full direct-sum bar coalgebra fails to be conilpotent.
 \begin{theorem}[Chiral Positselski on the weight-completed bar
  coalgebra; \ClaimStatusProvedHere]
 \label{thm:chiral-positselski-weight-completed}
+\phantomsection\label{thm:chiral-positselski-7-2}%
+\phantomsection\label{thm:chiral-positselski-5-3}%
 Let $\cA$ be as in
 Theorem~\ref{thm:chiral-positselski-at-each-weight}, and let
 $\widehat{C} = \widehat{\bar{B}}^{\mathrm{ch}}(\cA)$ be the
@@ -282,13 +284,41 @@ pro-conilpotent: every element of $\widehat{C}$ has an image in some
 $C/F^{\leq w}$ where the iterated coproduct eventually vanishes.
 
 \emph{Step~2: coderived inverse limit.}
-The coderived category commutes with inverse limits of conilpotent
-CDG-coalgebras with surjective transition maps and with
-finite-dimensional graded pieces, by the chiral analogue of
-\cite[Theorem~4.6]{Positselski11} (comodule-side stability of the
-coderived construction under pro-completion). The first isomorphism
-in \eqref{eq:chiral-positselski-weight-completed} is this
-general fact applied to the tower $\{C/F^{\leq w}\}$.
+We claim the natural functor
+\[
+D^{\mathrm{co}}\bigl(\widehat{C}\text{-}
+  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
+\;\longrightarrow\;
+\varprojlim_{w}
+  D^{\mathrm{co}}\bigl((C/F^{\leq w})\text{-}
+  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
+\]
+is an equivalence. A conilpotent chiral CDG-comodule over
+$\widehat{C}$ is, by definition, a $\mathcal{D}_X$-module $M$
+equipped with a coaction $M \to \widehat{C} \chirtensor M$ whose
+image at each element lies in the Mittag--Leffler-completed
+$F^{\leq w}$-truncation for some finite $w$. Concretely,
+conilpotency forces the coaction to factor through some $C/F^{\leq w}$
+(with $w$ depending on the element), so the category
+$\widehat{C}\text{-}\mathrm{comod}^{\mathrm{conil,\,ch}}$ is the
+filtered colimit of the categories $(C/F^{\leq w})\text{-}
+\mathrm{comod}^{\mathrm{conil,\,ch}}$ along the truncation tower.
+
+The coderived construction is built from null-homotopic objects
+plus total complexes of exact triples, both of which commute with
+filtered colimits of abelian categories on the comodule side
+(Positselski~\cite[Theorem~4.6]{Positselski11} gives the classical
+one-variable statement; the chiral analogue is immediate because
+the chiral tensor $\chirtensor$ preserves filtered colimits in each
+variable and the $\mathcal{D}_X$-module structure descends
+levelwise). Passing to the inverse limit on the coderived-category
+side therefore matches the levelwise coderived categories of the
+tower, yielding the first isomorphism in
+\eqref{eq:chiral-positselski-weight-completed}. The surjectivity of
+the transition maps $C/F^{\leq w+1} \twoheadrightarrow C/F^{\leq w}$
+supplies the Mittag--Leffler condition needed for the
+$\varprojlim^1$-term in the Milnor exact sequence to vanish in each
+cohomological degree.
 
 \emph{Step~3: apply the finite-weight Positselski equivalence along
  the tower.}
@@ -298,12 +328,20 @@ on both sides yields the middle isomorphism in
 \eqref{eq:chiral-positselski-weight-completed}.
 
 \emph{Step~4: contraderived inverse limit.}
-The contraderived category dually commutes with inverse limits along
-surjective transition maps of CDG-coalgebras with finite-dimensional
-graded pieces (chiral analogue of the projective-class argument in
-Positselski's co-contra correspondence). Composing the three
-equivalences gives
-\eqref{eq:chiral-positselski-weight-completed}.
+Dually, a chiral CDG-contramodule over $\widehat{C}$ is a
+$\mathcal{D}_X$-module $P$ with a contraaction
+$\mathrm{Hom}^{\mathrm{ch}}(\widehat{C}, P) \to P$; finite-type
+conilpotency of $\widehat{C}$ implies the contraaction factors
+through $\mathrm{Hom}^{\mathrm{ch}}(C/F^{\leq w}, P)$ for some $w$
+(on each fixed element), so the contramodule category is again the
+filtered colimit of the truncation-tower categories. The
+contraderived construction is stable under this filtered-colimit
+presentation by the dual of the argument in Step~2
+(projective-class stability along surjective quotient towers,
+chiral analogue of Positselski~\cite[Theorem~5.3]{Positselski11});
+the Mittag--Leffler condition on the tower supplies vanishing of
+the $\varprojlim^1$-obstruction. Composing the three equivalences
+yields \eqref{eq:chiral-positselski-weight-completed}.
 
 \emph{Step~5: unconditional scope.}
 The hypotheses of Steps~1--4 are satisfied by every chiral algebra
@@ -385,6 +423,28 @@ direct-sum chiral Positselski is chain-level false for class M, and
 remains false at the derived level for class-M reasons that no
 repackaging of the coderived construction can circumvent.
 \end{proof}
+
+\begin{remark}[Chain-level class G and L: external attribution;
+ \ClaimStatusProvedElsewhere]
+\label{rem:theorem-B-chain-level-G-L-attribution}
+The strict chain-level quasi-isomorphism
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA)) \to \cA$ for class
+$\mathsf{G}$ (Heisenberg) and class $\mathsf{L}$ (affine
+Kac--Moody at non-critical level) is not inscribed locally in Vol~I:
+the theorem home is Vol~II
+\textsf{chapters/connections/bv\_brst.tex}, theorem
+\textsf{thm:bv-bar-coderived} clauses~(ii) and~(iii), whose proof
+exhibits the strict chain-level intertwining via the Hodge
+decomposition of the BV propagator and the PBW associated graded
+of $V_k(\mathfrak{g})$. The present chapter's raw-level
+applicability for $\mathsf{G}$ and $\mathsf{L}$
+(Remark~\ref{rem:class-G-L-survive-raw}) is the coderived-level
+consequence of that chain-level equivalence; the converse direction
+(raw-level coderived equivalence from chain-level quasi-isomorphism)
+is automatic. Consumers of the raw-level statement for
+$\mathsf{G}/\mathsf{L}$ should cite Vol~II
+\textsf{thm:bv-bar-coderived} as the load-bearing source.
+\end{remark}
 
 \begin{remark}[Why class G and L survive on the raw direct sum]
 \label{rem:class-G-L-survive-raw}

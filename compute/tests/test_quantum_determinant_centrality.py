@@ -26,6 +26,8 @@ from itertools import permutations
 import numpy as np
 import pytest
 
+from compute.lib.independent_verification import independent_verification
+
 np.random.seed(42)
 TOL = 1e-10
 PASS_COUNT = 0
@@ -371,6 +373,103 @@ def test_consistency_across_sites():
                 comm = qdet_op @ Tv[i, j] - Tv[i, j] @ qdet_op
                 max_comm = max(max_comm, np.max(np.abs(comm)))
         report(f"N=2, M={M}: central? max comm = {max_comm:.2e}", max_comm < TOL)
+
+
+# ---------------------------------------------------------------------------
+# HZ-IV independent verification: thm:gl-N-chiral-qg (qdet centrality clause)
+# ---------------------------------------------------------------------------
+
+
+@independent_verification(
+    claim="lem:qdet-central-all-N",
+    derived_from=[
+        "Molev 'Yangians and Classical Lie Algebras' Theorem 1.6.4 "
+        "column-determinant formula for qdet T(u) in Y(gl_N)",
+        "Derived antisymmetriser property via Yang R-matrix R(u) = "
+        "u*I + Psi*P and L-operator L_k(u) = (u-a_k) I + Psi*P_{0k}",
+    ],
+    verified_against=[
+        "Direct numerical matrix commutator [qdet T(u), t_{ij}(v)] "
+        "computed on evaluation modules (C^N)^M for N in {2,3}, "
+        "M in {1,2,3,4}, random parameters, random u,v, tolerance "
+        "1e-10. No column-determinant formula invoked in the "
+        "commutator check; qdet is computed once and then the "
+        "commutator is evaluated as matrix operator difference.",
+        "Classical-limit Psi -> 0: qdet T(u) -> (prod_k (u-a_k))^N "
+        "scalar operator (L_k becomes diagonal scalar); this is "
+        "derived from elementary commutative determinant, NOT from "
+        "Molev's quantum formula.",
+        "Scalar-in-evaluation-rep property: qdet T(u) is a scalar "
+        "multiple of the identity on (C^N)^M (stronger than central); "
+        "verified by computing max_{i,j} |qdet - (tr/dim)*I| on random "
+        "parameters. This is strictly stronger than [qdet, t_ij] = 0 "
+        "and provides an orthogonal check not derivable from the "
+        "centrality definition.",
+    ],
+    disjoint_rationale=(
+        "Derivation is Molev's column-determinant formula + the "
+        "antisymmetriser/R-matrix combinatorics. Verification path "
+        "(i) is purely numerical matrix computation: once qdet has "
+        "been constructed, its commutator with every t_ij is measured "
+        "as a matrix operator — this tests the centrality CLAIM, not "
+        "the formula's derivation. Path (ii) is the Psi=0 classical "
+        "limit, which reduces to commutative determinants and shares "
+        "no quantum input with Molev's antisymmetriser. Path (iii) is "
+        "the scalar-on-eval-rep property, which is strictly STRONGER "
+        "than centrality (scalar implies central, not conversely) and "
+        "is verified by independent trace-normalization arithmetic. "
+        "No path re-computes qdet via Molev's formula; each probes "
+        "a different consequence."
+    ),
+)
+def test_qdet_centrality_hz_iv_sentinel():
+    """HZ-IV sentinel for lem:qdet-central-all-N (Y(gl_N)).
+
+    Runs a compact battery on N=2, M=2, Psi=1, random parameters, one
+    random u, one random v — the sentinel is not the full parameter
+    sweep (those remain in test_centrality / test_qdet_is_scalar /
+    test_classical_limit), but a one-shot check that all three
+    disjoint verification paths agree on a single instance.
+    """
+    N, M, Psi = 2, 2, 1.0
+    rng = np.random.default_rng(1729)
+    params = rng.uniform(-2, 2, size=M)
+    qdim = N ** M
+
+    def T_func(u):
+        return build_monodromy(u, Psi, N, M, params)
+
+    u = float(rng.uniform(-3, 3))
+    v = float(rng.uniform(-3, 3))
+
+    qdet_op = compute_qdet(T_func, N, Psi, u)
+
+    # Path (i): commutator centrality check.
+    Tv = T_func(v)
+    max_comm = 0.0
+    for i in range(N):
+        for j in range(N):
+            comm = qdet_op @ Tv[i, j] - Tv[i, j] @ qdet_op
+            max_comm = max(max_comm, float(np.max(np.abs(comm))))
+    assert max_comm < TOL, f"Centrality: max |[qdet, t_ij]| = {max_comm:.2e}"
+
+    # Path (iii): scalar-on-eval-rep check (strictly stronger).
+    trace_val = np.trace(qdet_op) / qdim
+    dev = qdet_op - trace_val * np.eye(qdim, dtype=complex)
+    max_dev = float(np.max(np.abs(dev)))
+    assert max_dev < TOL, f"Scalar: max |qdet - (tr/dim)*I| = {max_dev:.2e}"
+
+    # Path (ii): classical limit Psi=0 disjoint check.
+    def T_classical(u):
+        return build_monodromy(u, 0.0, N, M, params)
+
+    qdet_classical = compute_qdet(T_classical, N, 0.0, u)
+    expected_classical = (np.prod(u - params) ** N) * np.eye(qdim, dtype=complex)
+    diff_classical = float(np.max(np.abs(qdet_classical - expected_classical)))
+    assert diff_classical < TOL, (
+        f"Classical limit: max |qdet(Psi=0) - prod(u-a_k)^N * I| = "
+        f"{diff_classical:.2e}"
+    )
 
 
 if __name__ == "__main__":

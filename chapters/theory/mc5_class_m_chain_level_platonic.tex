@@ -251,8 +251,9 @@ f_g \;:=\; \{f_g^{(\leq N)}\}_{N \geq 0}
 be the induced morphism of pro-objects. Then $f_g$ is a chain-level
 quasi-isomorphism in $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$:
 at each weight-truncation stage $N$, the finite-stage map $f_g^{(\leq N)}$
-is a strict chain-level quasi-isomorphism, and the tower satisfies the
-Mittag--Leffler condition in every cohomological degree.
+is a strict chain-level quasi-isomorphism, the stage cohomologies are
+finite-dimensional, and the tower satisfies the Mittag--Leffler
+condition in every cohomological degree by finite-dimensionality.
 \ClaimStatusProvedHere{}
 \end{theorem}
 
@@ -294,22 +295,108 @@ under the isomorphism
 $F_{\leq w}\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N'}) \xrightarrow{\sim}
 F_{\leq w}\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})$
 of Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv).
-This is the conformal-weight-homogeneity-of-homotopies observation
-recorded in the first-principles cache entry for this chapter; it is
-automatic from the weight-preservation property of the bar differential
-and of $m_0$. Therefore $\{f_g^{(\leq N)}\}_N$ assembles into a morphism
-of pro-objects.
+This compatibility is automatic from the filtration-preservation
+property recorded in
+Equation~\textup{\eqref{eq:bar-weight-preservation}} of
+Proposition~\textup{\ref{prop:standard-strong-filtration}},
+$d_{\mathrm{bar}}(F_{\leq w} C_N) \subset F_{\leq w} C_N$, together
+with clause~(iv) $F_{\leq w}$-stabilisation; the homotopy $h$ is
+constructed stage by stage on each filtration piece and the stabilised
+identification of filtration pieces transports it coherently between
+stages. The stronger grading-preservation property, which holds only
+on the associated graded, is not needed for this step. Therefore
+$\{f_g^{(\leq N)}\}_N$ assembles into a morphism of pro-objects.
 
-\emph{Step 3: Mittag--Leffler condition.} We verify that for every
-cohomological degree $m$ the inverse system
+\emph{Step 3: Mittag--Leffler condition via finite-dimensionality.} We
+verify Mittag--Leffler for the inverse systems
 $\{H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))\}_N$ and
-$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ satisfy
-Mittag--Leffler. This is immediate from
-Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv): at each
-fixed cohomological degree and each fixed total-conformal-weight
-filtration piece, the tower stabilises after finitely many stages. In
-particular the tower of cones $\{\mathrm{Cone}(f_g^{(\leq N)})\}_N$ is
-Mittag--Leffler in every degree.
+$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ at every fixed
+cohomological degree $m$.
+
+The bar differential of the standard chiral bar complex is not
+conformal-weight-preserving but conformal-weight weakly decreasing: a
+single OPE step
+\[
+\operatorname{wt}(a_{(n)}b)
+\;=\;
+\operatorname{wt}(a) + \operatorname{wt}(b) - n - 1,
+\qquad n \geq 0,
+\]
+gives $\le \operatorname{wt}(a) + \operatorname{wt}(b)$ with strict
+inequality whenever a singular-mode index $n \geq 1$ is extracted.
+Equation~\textup{\eqref{eq:bar-weight-preservation}} of
+Proposition~\textup{\ref{prop:standard-strong-filtration}} records this
+as $d_{\mathrm{bar}}(F_{\leq w} C_N) \subset F_{\leq w} C_N$: the
+conformal weight sits in the bar complex as a \emph{filtration}, not as
+a grading, and the raw bar complex does not decompose as a product
+over weights. The associated graded $\operatorname{gr}^w C_N$ is
+weight-homogeneous and admits such a decomposition; the raw $C_N$ does
+not. This distinction is the point at which the earlier draft broke,
+and the present argument bypasses it.
+
+Two independent routes furnish Mittag--Leffler; we record both.
+
+\emph{Route (a): finite-dimensionality of each stage.} At each stage
+$N$, $\cA_{\leq N}$ is finite-dimensional
+\textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}(ii)\textup{)}.
+Fix any cohomological degree $m$. Bar words of finite total
+conformal weight contributing to the genus-$g$ bar complex at
+cohomological degree $m$ have bar length $r$ bounded in terms of $m$
+and $g$ through the genus-$g$ conformal-weight budget of the
+factorisation structure. Combined with finite-dimensionality of
+$\cA_{\leq N}$, this forces
+\[
+\dim_\C H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})\bigr) < \infty
+\qquad
+\text{for every } N.
+\]
+The same bound holds for $H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))$
+by its $L_0$-decomposition. The tower of finite-dimensional images
+\[
+\operatorname{im}\bigl(H^m(C_{N+k}) \longrightarrow H^m(C_N)\bigr),
+\qquad k \geq 0,
+\]
+is a decreasing sequence of finite-dimensional subspaces of a
+finite-dimensional vector space, hence stabilises for $k$ large. This
+is the Mittag--Leffler condition at $m$; in the cited form
+\textup{(}\cite{Weibel94}, Proposition~3.5.7\textup{)} finite-dimensional
+inverse systems are automatically Mittag--Leffler.
+
+\emph{Route (b): filtration-piece stabilisation, refining
+Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv).} For
+every weight bound $w$ and every $N \geq w$, the filtration piece
+$F_{\leq w} C_N$ stabilises:
+$F_{\leq w} C_{N+1} \xrightarrow{\sim} F_{\leq w} C_N$. Since the
+filtration is exhaustive on each finite-dimensional $C_N$, the image
+of the full transition map $H^m(C_{N+1}) \to H^m(C_N)$ contains the
+entire stabilised filtration image; taking intersections over
+$N' \geq N$ collapses to a single finite-dimensional subspace, which
+is the Mittag--Leffler limit. The two routes agree on the limit image.
+
+Either route suffices. Applied to the tower of cones
+$\{\operatorname{Cone}(f_g^{(\leq N)})\}_N$ \textup{(}whose stage maps
+are chain-level quasi-isomorphisms by Step~1\textup{)}, it gives
+$\varprojlim^1_N H^{m-1}(\operatorname{Cone}(f_g^{(\leq N)})) = 0$ in
+every cohomological degree $m$.
+
+\begin{remark}[Honest weight behaviour of the bar differential]
+\label{rem:mc5-honest-weight-filtration}
+\index{bar differential!weakly weight-decreasing, not weight-preserving}%
+The decomposition
+$\bar B^{\mathrm{ch},(g)}(\cA_{\leq N}) = \prod_{w} \bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w$
+holds on the associated graded
+$\operatorname{gr}^{\bullet} \bar B^{\mathrm{ch},(g)}(\cA_{\leq N})$,
+not on the raw bar complex. For class~$\mathsf{M}$ the spectral
+sequence of the weight filtration does not collapse at finite pages:
+the shadow-obstruction tower is nonterminating
+\textup{(}Corollary~\textup{\ref{cor:virasoro-postnikov-nontermination}}\textup{)},
+so each page carries a nonzero differential proportional to a
+higher shadow coefficient $c_r(\cA)$. The bar-cohomology Mittag--Leffler
+condition nevertheless holds by finite-dimensionality of each stage, as
+in Route~(a), so the pro-object statement is unaffected by the
+nontermination. The load-bearing input is finite-dimensionality of
+$\cA_{\leq N}$, not weight-preservation of the differential.
+\end{remark}
 
 \emph{Step 4: pro-object chain-level quasi-isomorphism.} A morphism in
 $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ is a chain-level
@@ -651,6 +738,109 @@ class-$\mathsf{M}$-obstructed; this is an ambient-choice fact, not a
 mathematical obstruction.
 \end{remark}
 
+\section{Uniqueness of the central degree-2 curvature $m_0$: two
+ independent inputs}
+\label{sec:mc5-central-m0-uniqueness}
+
+The harmonic discrepancy
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+depends on a choice of central degree-2 curvature element $m_0$. A
+prior healing statement routed this uniqueness through a single phrase
+\textup{(}``Hodge plus vacuum-proportionality''\textup{)}. This section
+separates the two inputs explicitly: a trivial dimension count on the
+curve fibre, and a substantive representation-theoretic argument
+from translation invariance and vacuum action. The second input is the
+load-bearing one; the first is merely a clean-up. Conflating the two
+was the textual source of earlier confusion.
+
+\begin{lemma}[Curve-fibre Hodge dimension]
+\label{lem:curve-H20-vanishing}
+\index{Hodge dimension!curve fibre}
+Let $\Sigma$ be a smooth proper curve over a field of characteristic
+zero. Then $H^{p,q}(\Sigma) = 0$ whenever $p + q > 1$; in particular
+$H^{2,0}(\Sigma) = 0$ by dimension.
+\ClaimStatusProvedElsewhere{}
+\end{lemma}
+
+\begin{proof}
+A smooth proper curve has complex dimension $1$, so its Hodge
+decomposition has only $(0,0), (1,0), (0,1), (1,1)$ pieces. Every
+$(p,q)$ with $p + q > 1$ reduces to $(1,1)$ or vanishes; $H^{2,0}$
+has $p + q = 2$ with $p = 2 > \dim_\C \Sigma = 1$, hence vanishes.
+\end{proof}
+
+\begin{remark}[Sub-argument (a): what the Hodge input kills]
+\label{rem:central-m0-sub-a-hodge}
+Lemma~\textup{\ref{lem:curve-H20-vanishing}} removes from consideration
+any central degree-2 element obtained as the image of a
+curve-fibre Hodge class of bidegree $(2,0)$: there are none. This
+is a triviality; it excludes a nonexistent class of candidates.
+It is \emph{not} the uniqueness mechanism.
+\end{remark}
+
+\begin{proposition}[Sub-argument (b): vacuum-proportionality uniqueness
+ of the central degree-2 curvature]
+\label{prop:central-m0-vacuum-proportionality}
+\index{central degree-2 curvature!uniqueness|textbf}
+\index{vacuum-proportionality!uniqueness of central m\_0}
+Let $\cA$ be a chiral algebra on $X$ equipped with a vacuum vector
+$|0\rangle \in \cA_0$. Let $m_0^{(1)}, m_0^{(2)} \in
+\bar B^{\mathrm{ch},(g)}(\cA)$ be two central elements of total bar
+length $2$ and cohomological degree $2$, each transforming as a
+\emph{scalar} under the chiral translation $T_\cA$-action on
+$\bar B^{\mathrm{ch},(g)}(\cA)$ \textup{(}equivalently: each lies in
+the kernel of the action of the Virasoro mode $L_{-1}$ on the relevant
+bar-length-2 piece\textup{)}. Then $m_0^{(1)}$ and $m_0^{(2)}$ are
+equal up to bar-coboundary.
+\ClaimStatusProvedHere{}
+\end{proposition}
+
+\begin{proof}
+Translation invariance forces every $L_{-1}$-invariant element of
+$\bar B^{\mathrm{ch},(g)}(\cA)$ of bar-length 2 and cohomological
+degree 2 to factor through the vacuum module $\cA_{|0\rangle} \subset
+\cA$ generated by $|0\rangle$ under the chiral operations: any
+$L_{-1}$-invariant bar insertion of the form
+$s^{-1} a \,|\, s^{-1} b$ satisfies
+$L_{-1}(a) = L_{-1}(b) = 0$ because $L_{-1}$ is a derivation of the bar
+product and acts as a derivation on each slot. The kernel of $L_{-1}$
+on $\cA$ is spanned by the vacuum $|0\rangle$ up to
+$L_{-1}$-coboundaries: this is the vacuum-axiom of a chiral algebra
+\textup{(}Borcherds, Kac\textup{)}, namely $\ker(L_{-1}) = \C\cdot
+|0\rangle \oplus \mathrm{im}(L_{-1})$. Thus any $L_{-1}$-invariant
+degree-2 bar length-2 element is cohomologous to a scalar multiple of
+$s^{-1}|0\rangle \,|\, s^{-1}|0\rangle$.
+
+Writing $m_0^{(i)} = \lambda_i \cdot (s^{-1}|0\rangle | s^{-1}|0\rangle)
++ d_{\mathrm{bar}}(\eta_i)$ for scalars $\lambda_i$ and
+$\eta_i \in \bar B^{\mathrm{ch},(g)}(\cA)$, we find
+$m_0^{(1)} - m_0^{(2)}$ is $(\lambda_1 - \lambda_2)$ times the vacuum
+bar-insertion modulo coboundaries. Centrality then forces
+$\lambda_1 = \lambda_2$: pairing both sides against any bar-length-$2$
+non-vacuum test element yields zero on $\lambda_i \cdot
+(s^{-1}|0\rangle | s^{-1}|0\rangle)$ uniformly in $i$, but any
+difference with nonzero $\lambda_1 - \lambda_2$ would pair nontrivially
+against the dual vacuum insertion. Hence $m_0^{(1)} = m_0^{(2)}$ up to
+bar-coboundary.
+\end{proof}
+
+\begin{remark}[How (a) and (b) combine in the harmonic discrepancy]
+\label{rem:central-m0-sub-a-sub-b-combined}
+The harmonic discrepancy
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+is unambiguous once $m_0$ is chosen. Lemma~\textup{\ref{lem:curve-H20-vanishing}}
+ensures that there are no competing $H^{2,0}$-valued candidates for
+$m_0$ coming from the curve fibre
+\textup{(}trivial dimension count\textup{)};
+Proposition~\textup{\ref{prop:central-m0-vacuum-proportionality}} is
+the load-bearing step that pins $m_0$ up to bar-coboundary via
+translation invariance and the vacuum axiom. Neither input suffices
+alone; but the two together determine $m_0$ uniquely and so make the
+harmonic discrepancy a well-defined invariant of~$\cA$. Separating
+the two inputs resolves the earlier ambiguity in which ``Hodge plus
+vacuum-proportionality'' read as a single argument.
+\end{remark}
+
 \section{First-principles cache entries}
 \label{sec:mc5-cache-entries}
 
@@ -697,6 +887,24 @@ Mittag--Leffler tower of chain-level quasi-isomorphisms, Milnor
 upgrades stage-level strictness to strict chain-level quasi-isomorphism
 on the inverse limit; this is the mechanism by which the pro-object
 statement becomes a chain-level statement on the limit.
+
+\item[PR-MC5-5 \textup{(}filtration vs grading\textup{)}]
+\emph{Ghost.} ``The bar differential is conformal-weight-homogeneous,
+so the bar complex decomposes as a product over weights
+$\bar B = \prod_w \bar B_w$ and cohomology splits accordingly.''
+\emph{Error.} The OPE formula
+$\operatorname{wt}(a_{(n)} b) = \operatorname{wt}(a) + \operatorname{wt}(b) - n - 1$
+gives strict inequality at singular modes $n \geq 1$; the bar
+differential is weight \emph{weakly decreasing}, not weight
+preserving. The decomposition holds on the associated graded
+$\operatorname{gr}^w \bar B$, not on the raw bar complex.
+\emph{Correct.} The conformal weight sits in the raw bar complex as a
+\emph{filtration} $F_{\leq w}$, not as a grading. Mittag--Leffler at
+fixed cohomological degree is secured by finite-dimensionality of each
+stage (the truncation $\cA_{\leq N}$ is finite-dimensional, so
+$H^m(\bar B(\cA_{\leq N}))$ is finite-dimensional, so the tower of
+finite-dimensional images automatically stabilises), not by a product
+decomposition that does not exist.
 \end{description}
 
 \section{Summary: the Platonic form}

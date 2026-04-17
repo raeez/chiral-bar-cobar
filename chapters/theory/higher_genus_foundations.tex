@@ -5069,6 +5069,49 @@ Therefore \textup{(g=1 only; all-weight at g=1 is unconditional)}
 = \frac{3}{32}\]
 \end{proof}
 
+\begin{remark}[Scope of the Kac--Moody obstruction at higher genus]%
+\label{rem:kac-moody-obs-scope}%
+\index{Kac--Moody obstruction!scope at higher genus}%
+\index{scalar-diagonal hypothesis!Kac--Moody instance}%
+Step~2 of the proof writes the fiberwise genus-$g$ obstruction as
+$\mathrm{obs}_g^{\mathrm{fib}} = \omega_g^{\mathrm{Ar}}\otimes m_0$ and
+Step~3 sums over the $\dim(\fg)$ adjoint currents assuming each
+contributes a copy of the scalar curvature $m_0$. This summation is
+the scalar-diagonal hypothesis
+\textup{(}Definition~\textup{\ref{def:scalar-diagonal-hypothesis}}%
+\textup{)} applied to $\widehat{\fg}_k$: it requires the fiberwise
+curvature to decompose as $\kappa(\cA)$ acting uniformly on every
+weight-$p$ channel of the associated graded
+$\bigoplus_p \Lambda^p H^0(\Sigma_g,\omega)\otimes\varepsilon_p$,
+with $\kappa(\cA)$ independent of~$g$.
+
+At genus~$1$ the identification is unconditional because
+$H^2(\overline{\cM}_{1,1},\Q) = \Q\cdot\lambda_1$ is one-dimensional;
+no scalar-diagonal hypothesis is needed.
+
+At $g\geq 2$ with $\fg$ non-abelian, scalar-diagonality of
+$V_k(\fg)$ is discharged for positive-integer levels via the
+Frenkel--Kac lattice realisation: at level~$1$ the
+affine vertex algebra is isomorphic to the lattice VOA $V_{Q}$ of the
+root lattice~$Q\subset\fh^*$, and on that realisation the currents
+reduce to rank-$r$ Heisenberg plus lattice vertex operators
+$e^{\pm\alpha}$, each of which satisfies scalar-diagonality by the
+rank-$1$ automaticity of Heisenberg together with the scalar
+lattice pairing $\langle\alpha,\alpha\rangle$. At higher positive-integer
+level the same conclusion follows from the parafermionic coset
+$\widehat{\fg}_k / (\widehat{\mathfrak h})^{\oplus r}$.
+
+At generic (non-integer) level~$k\neq -h^\vee$, scalar-diagonality
+is open: the Wakimoto realisation provides a rank-$r$ Heisenberg
+plus $\dim(\fg/\mathfrak h)$ copies of the $\beta\gamma$ ghost
+system, and scalar-diagonality on the ghost sector is neither proved
+nor disproved in the present inscription. The genus-$g$ formula
+$\mathrm{obs}_g = ((k+h^\vee)\dim(\fg)/(2h^\vee))\cdot\lambda_g$ at
+$g\geq 2$ is therefore conditional on scalar-diagonality of
+$V_k(\fg)$ at the level in question; the unconditional genus-$1$
+case and the genus-$g$ cases at positive-integer level are proved.
+\end{remark}
+
 \begin{remark}[Level-rank duality]\label{rem:level-rank-obstruction}
 The obstruction formula exhibits level-rank duality explicitly For $\mathfrak{sl}_N$
 at level $k$ (with $h^\vee(\mathfrak{sl}_N) = N$, $\dim(\mathfrak{sl}_N) = N^2-1$):
@@ -5383,6 +5426,34 @@ for \emph{all} $g \geq 1$, by Mumford's relation.
 % (B) Chern--Weil on the Hodge bundle in the Arakelov metric.
 % ================================================================
 
+\begin{definition}[Scalar-diagonal hypothesis;
+\ClaimStatusProvedElsewhere]
+\label{def:scalar-diagonal-hypothesis}
+\index{scalar-diagonal hypothesis|textbf}
+A modular Koszul chiral algebra $\cA$ satisfies the
+\emph{scalar-diagonal hypothesis} if, on every fiber
+$\Sigma_g$, the fiberwise bar curvature
+$\dfib^{\,2}$ acts on the fiberwise associated graded
+$\mathrm{gr}^{\bullet}\barB^{(g)}_{\mathrm{geom}}(\cA)|_{\Sigma_g}
+= \bigoplus_{p=0}^{g}\Lambda^p H^0(\Sigma_g,\omega)
+\otimes \varepsilon_p$ as multiplication by the same
+scalar $\kappa(\cA)$ on every weight-$p$ channel
+$\varepsilon_p$, with $\kappa(\cA)$ independent of~$g$.
+Equivalently: the algebraic factor of the bar tower is
+a single one-dimensional representation on which the
+curvature endomorphism is central at every weight, and
+the weight-$p$ channels $\varepsilon_p$ are mutually
+orthogonal as $\kappa(\cA)$-eigenspaces.
+Automatic for rank-$1$ strong-generator families
+\textup{(}Heisenberg, Virasoro, every rank-$1$ free-field
+family\textup{)}; a genuine hypothesis for multi-generator
+uniform-weight families such as affine Kac--Moody
+$V_k(\fg)$ with $\fg$ non-abelian, where the Sugawara
+identification $\mathrm{av}(r(z)) + \dim(\fg)/2 = \kappa$ is
+established at $g=1$ but its $g$-independence at higher
+genus is the content of the hypothesis.
+\end{definition}
+
 \begin{proposition}[Scalar obstruction equals Hodge Euler class;
 \ClaimStatusProvedHere]
 \label{prop:scalar-obstruction-hodge-euler}
@@ -5392,7 +5463,10 @@ for \emph{all} $g \geq 1$, by Mumford's relation.
 \index{Grothendieck--Riemann--Roch!scalar obstruction}
 Let $\cA$ be a modular Koszul chiral algebra on the Koszul locus
 whose strong generators all have the same conformal weight
-\textup{(}the uniform-weight hypothesis\textup{)}.
+\textup{(}the uniform-weight hypothesis\textup{)} and which
+satisfies the scalar-diagonal hypothesis
+\textup{(}Definition~\textup{\ref{def:scalar-diagonal-hypothesis}}%
+\textup{)}.
 Consider the family of genus-$g$ bar complexes
 $\barB^{(g)}(\cA)|_{[\Sigma_g]}$ parametrized by
 $[\Sigma_g] \in \overline{\cM}_g$, and let
@@ -5406,12 +5480,41 @@ Then for all $g \geq 1$:
 \kappa(\cA) \cdot c_g(\mathbb{E})
 \;=\;
 \kappa(\cA) \cdot \lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)},
+\qquad \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)},
 \end{equation}
 where $\mathbb{E} = R^0\pi_*\omega_\pi$ is the Hodge bundle over
 $\overline{\cM}_g$ and $\lambda_g = c_g(\mathbb{E})$ its top
 Chern class.
 \end{proposition}
+
+\begin{remark}[Honest reading: what Step~1 does and does not prove]
+\label{rem:scalar-diagonal-honest}
+\index{scalar-diagonal hypothesis!honest scope}
+The $K$-theoretic construction of Step~1 below
+\textup{(}Lemma~\textup{\ref{lem:k-theoretic-globalization-bar}}%
+\textup{)} \emph{defines} the scalar obstruction class
+by projection of the virtual $K$-class to the one-dimensional
+weight-$p$ channel $\varepsilon_p \subset \mathrm{gr}^p
+\barB^{(g)}$, and then reads off the degree-$2g$ component
+of its Chern character. Under this definition, the
+identification
+$\mathrm{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$ reduces to the
+\emph{cohomological} identity
+$\mathrm{ch}_g(\lambda_{-1}(\mathbb{E}))=(-1)^g\,c_g(\mathbb{E})$,
+which is unconditional. The \emph{substantive} content of
+the proposition is that this \emph{projected} class
+coincides with the physical bar-curvature obstruction
+extracted from the fiberwise chain-level curvature
+$\dfib^{\,2}$ on the nose; equivalently, that the
+non-scalar weight channels contribute zero to the base
+cohomology class at degree~$2g$. The scalar-diagonal
+hypothesis is precisely the statement that this non-scalar
+contribution vanishes weight-by-weight on the fiberwise
+associated graded; it is the hypothesis required for the
+splitting-principle / BGS chain of Step~3 to produce
+$\kappa(\cA)\cdot\lambda_g$ rather than a higher polynomial
+in $\kappa(\cA)$.
+\end{remark}
 
 \begin{proof}
 The proof proceeds in three steps: identify the relevant
@@ -5502,10 +5605,18 @@ $x_i = c_1(L_i)$, then
 \;=\;
 \prod_{i=1}^{g}\bigl(-x_i + O(x_i^2)\bigr)
 \;=\;
-(-1)^g\, c_g(\mathbb{E}) + \bigl(\text{lower degree}\bigr).
+(-1)^g\, c_g(\mathbb{E}) + \bigl(\text{higher-degree corrections
+to the top $(-1)^g c_g(\mathbb{E})$ contribution that vanish
+after projection to degree $2g$}\bigr).
 \]
-In degree~$2g$ this is $(-1)^g\,c_g(\mathbb{E})
-= (-1)^g\,\lambda_g$, and the sign is absorbed by the bar
+The expansion $\prod_{i=1}^{g}(1 - e^{x_i})$ begins in degree
+$2g$ (each factor starts at degree~$2$, and their product has
+minimal total degree~$2g$); corrections arise from the
+$O(x_i^2)$ remainders inside each factor and contribute in
+degree strictly greater than~$2g$. Projection of
+$\mathrm{ch}(\lambda_{-1}(\mathbb{E}))$ to degree~$2g$
+extracts exactly $(-1)^g\,c_g(\mathbb{E})
+= (-1)^g\,\lambda_g$; the sign is absorbed by the bar
 suspension convention $|s^{-1}v|=|v|-1$. Thus the virtual class
 contributes $\kappa(\cA)\cdot\lambda_g$ at the top Chern
 degree, as required. We record this as a named identity for
@@ -5734,56 +5845,94 @@ c_g(\mathbb{E})
 H^{2g}(\overline{\cM}_g, \mathbb{Q}).
 \end{equation}
 
-The passage from $c_1$ \textup{(}which BGS computes
-directly for the determinant line
-$\lambda = \det(\mathbb{E})$\textup{)} to the higher
-Chern classes $c_j(\mathbb{E})$ and in particular to
-$c_g(\mathbb{E})$ is the splitting principle. Let
-$f\colon F(\mathbb{E}) \to \overline{\cM}_g$ be the
-full flag bundle of~$\mathbb{E}$; on~$F(\mathbb{E})$ the
-pullback splits as a sum of line bundles
-$f^*\mathbb{E} = L_1 \oplus \cdots \oplus L_g$, and
-$f^*$ is injective on rational cohomology. Writing
-$x_i = c_1(L_i)$, the total Chern class satisfies
-$f^* c(\mathbb{E}) = \prod_{i=1}^{g}(1+x_i)$ and the top
-Chern class obeys
-\begin{equation}\label{eq:splitting-principle-top-chern}
-f^* c_g(\mathbb{E}) \;=\; \prod_{i=1}^{g} c_1(L_i)
-\;=\; x_1 \cdots x_g.
-\end{equation}
-The scalar-channel linearity of the bar curvature is
-precisely the statement that fiberwise contraction
-against the scalar generator produces the trace
-$\operatorname{tr}(\kappa(\cA)\cdot\mathrm{id}_{\mathbb{E}})
-= g\cdot\kappa(\cA)$ in the rank-$g$ Hodge bundle; on the
-splitting $\mathbb{E} = L_1 \oplus\cdots\oplus L_g$ this
-distributes as $\kappa(\cA)$ on each line summand $L_i$.
-Dividing by~$g$ to isolate the scalar channel (equivalently,
-selecting a single line summand from the trace) preserves
-the coefficient~$\kappa(\cA)$ on each~$L_i$, so
-applying BGS line-bundle-by-line-bundle gives
-$c_1(L_i, h_{Q,i}) = \kappa(\cA)\cdot x_i^{(\mathrm{Ar})}$
-for Chern--Weil representatives $x_i^{(\mathrm{Ar})}$ of
-the split Arakelov curvature. Multiplying across $i=1,\ldots,g$
-via~\eqref{eq:splitting-principle-top-chern} yields
+% HEAL 2026-04-17: Step 3d's prior splitting-principle argument
+% conflated kappa^g * prod(x_i) (a single monomial of degree g
+% in kappa) with a polynomial in kappa possessing a linear-in-kappa
+% component to project onto. The correct route is Step 1c's
+% K-theoretic class kappa * lambda_{-1}(E), which is linear in
+% kappa by construction; Chern-character top-degree extraction
+% then yields kappa * c_g(E) = kappa * lambda_g. Step 3's
+% BGS/Arakelov argument provides a differential-geometric
+% representative for the class identified in Step 1; it
+% CORROBORATES rather than independently derives the linear
+% scaling. This reorganization does not change the Theorem D
+% conclusion at g in {1, 2} but makes the g >= 3 dependence on
+% Faber's lambda_g-conjecture (numerical-equivalence kernel
+% N^g = 0 on M-bar_g) explicit.
+%
+\emph{Step~3 is Chern--Weil corroboration, not an independent
+proof path.} The linearity of $\mathrm{obs}_g(\cA)$
+in~$\kappa(\cA)$ is established in Step~1c: the virtual class
+$[\barB^{(g)}_{\mathrm{scalar}}(\cA)]^{\mathrm{vir}}
+= \kappa(\cA)\cdot \lambda_{-1}(\mathbb{E})$
+\textup{(}Lemma~\ref{lem:k-theoretic-globalization-bar}\textup{)}
+is \emph{linear} in~$\kappa(\cA)$ by construction, as the
+prefactor of a fixed $K$-theory class. Applying the Chern
+character and projecting to degree~$2g$ gives
 \[
-f^*\bigl(\kappa(\cA)\cdot c_g(\mathbb{E})\bigr)
+\mathrm{obs}_g(\cA)
 \;=\;
-\prod_{i=1}^{g}\bigl(\kappa(\cA)\cdot x_i^{(\mathrm{Ar})}\bigr)
+\mathrm{ch}_g\bigl(\kappa(\cA)\cdot\lambda_{-1}(\mathbb{E})\bigr)
 \;=\;
-\kappa(\cA)^g \prod_{i=1}^{g} x_i^{(\mathrm{Ar})},
+\kappa(\cA)\cdot\mathrm{ch}_g\bigl(\lambda_{-1}(\mathbb{E})\bigr)
+\;=\;
+\kappa(\cA)\cdot\lambda_g,
 \]
-and the scalar-channel projection extracts the
-linear-in-$\kappa(\cA)$ component, which is the
-elementary symmetric function $e_g = x_1\cdots x_g$ scaled
-by a single copy of~$\kappa(\cA)$. This reproduces
-$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ on
-the base after descending along~$f^*$. The higher
-elementary symmetric functions $e_j$ for $j<g$ produce
-sub-top Chern classes $\lambda_j$, which are absorbed into
-the total $\lambda$-class appearing in the virtual bar
-identification of Step~1 (they do not affect the top
-degree~$2g$).
+where the last equality uses
+$\mathrm{ch}_g(\lambda_{-1}(\mathbb{E})) = (-1)^g\,\lambda_g$
+\textup{(}with the sign absorbed by the bar suspension
+convention\textup{)}. This is the load-bearing derivation:
+the $K$-theoretic class carries the linear-in-$\kappa$
+scaling, and the Chern character is a ring map that commutes
+with scalar multiplication, so no "projection onto a
+linear-in-$\kappa$ component" of any higher polynomial is
+needed.
+
+Step~3's differential-geometric machinery (Arakelov--Faltings
+curvature identification, Quillen metric, BGS anomaly formula)
+provides an explicit \emph{Chern--Weil representative} for the
+class $\kappa(\cA)\cdot c_g(\mathbb{E})$ already identified in
+Step~1c. Concretely, the splitting principle applied to the
+Hodge bundle $\mathbb{E}$ on the flag bundle
+$f\colon F(\mathbb{E}) \to \overline{\cM}_g$ gives
+$f^*\mathbb{E} = L_1 \oplus \cdots \oplus L_g$ with
+$f^* c_g(\mathbb{E}) = x_1\cdots x_g$ where $x_i = c_1(L_i)$
+\textup{(}$f^*$ injective on rational cohomology\textup{)}.
+The BGS anomaly formula~\eqref{eq:bgs-anomaly}, applied
+line-bundle-by-line-bundle on $F(\mathbb{E})$, yields
+Chern--Weil representatives $x_i^{(\mathrm{Ar})}$ for each
+$x_i$ in terms of the fiberwise Arakelov curvature. Assembling
+these representatives via the splitting principle gives a de
+Rham representative for $c_g(\mathbb{E}) = \lambda_g$, and
+scalar multiplication by $\kappa(\cA)$ on the ambient
+$K$-theory class (independently of the splitting) yields a de
+Rham representative for $\kappa(\cA)\cdot\lambda_g$. This is a
+differential-geometric \emph{presentation} of the class
+established in Step~1c, not an independent derivation.
+
+\emph{Scope qualifier (Faber's $\lambda_g$-conjecture).}
+At $g \in \{1, 2\}$, the identification
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ is
+unconditional on the nose: at $g=1$, $H^2(\overline{\cM}_{1,1})
+= \Q\cdot\lambda_1$ is one-dimensional and the scalar channel
+forces the coefficient to be~$\kappa(\cA)$; at $g=2$, the
+tautological ring $R^*(\overline{\cM}_2)$ is known completely
+(Mumford~\cite{Mumford83}) and the degree-$4$ piece is spanned
+by~$\lambda_2$, so the $K$-theoretic identification of
+Step~1c and Mumford's $c_g(\mathbb{E}) = \lambda_g$ suffice.
+At $g \geq 3$, the identification continues to hold in the
+tautological ring $R^{2g}(\overline{\cM}_g)$ \emph{modulo}
+classes numerically equivalent to zero. Faber's
+$\lambda_g$-conjecture~\cite{FP00} (proved for
+$\overline{\cM}_g$ in the socle degree~$g-2$ but still open
+in higher Chow degree for $g \geq 3$) predicts that the
+kernel~$\mathcal{N}^{g}$ of the numerical-equivalence map on
+$R^{2g}(\overline{\cM}_g)$ vanishes, which would upgrade the
+identification to an equality on the nose. Until that
+conjecture is settled, the $g \geq 3$ statement is
+\emph{unconditional at the level of numerical classes} and
+conditional on Faber's conjecture as a statement of
+cohomological equality.
 
 \textbf{Step 3e: The bridge from fiber curvature to
 base class.}
@@ -5901,8 +6050,8 @@ needed.
 % via the boundary stratification of M-bar_g.
 % ================================================================
 
-\begin{proposition}[Clutching uniqueness of the Hodge Euler class;
-\ClaimStatusProvedHere]
+\begin{proposition}[Clutching uniqueness of the Hodge Euler
+class, socle scope; \ClaimStatusProvedHere]
 \label{prop:clutching-uniqueness}
 \index{clutching!uniqueness of Hodge Euler class|textbf}
 \index{Hodge bundle!clutching uniqueness}
@@ -5923,43 +6072,61 @@ class with the following three properties:
  Mumford multiplicativity
  $\xi_h^*\alpha_g = \lambda_{h}\boxtimes\lambda_{g-h}$.
 \end{enumerate}
-Then $\alpha_g = \lambda_g$ in
-$H^{2g}(\overline{\cM}_g,\Q)$.
+Then $\alpha_g$ and $\lambda_g$ coincide in the socle quotient
+$R^g(\overline{\cM}_g)/\cN^g(\overline{\cM}_g)$, where
+$\cN^g(\overline{\cM}_g)$ denotes the numerical-equivalence
+kernel at degree~$g$. At $g \in \{1,2\}$, $\cN^g = 0$ and
+the identification lifts to on-the-nose equality
+$\alpha_g = \lambda_g$ in $H^{2g}(\overline{\cM}_g,\Q)$; at
+$g \geq 3$, the lift requires the $\lambda_g$-conjecture
+\textup{(}Faber--Pandharipande~\cite{FP00}\textup{)}, which
+is open in general.
 \end{proposition}
 
 \begin{proof}
-The tautological ring $R^*(\overline{\cM}_g)$ is a finitely
-generated graded subring of $H^*(\overline{\cM}_g,\Q)$; by
-Faber--Pandharipande~\cite{FP00} it is spanned in degree
-$2g$ by the kappa classes, the psi classes, and the lambda
-classes, organised along the boundary stratification. The
-Graber--Vakil relative virtual localisation and tautological
-vanishing theorem~\cite{GraVak05} states that the kernel of
-the simultaneous pullback
-\[
-R^*(\overline{\cM}_g) \;\longrightarrow\;
-\bigoplus_{\xi} R^*(\partial^\xi \overline{\cM}_g),
-\]
-ranging over all boundary strata $\xi$ (one non-separating
-stratum and $\lfloor g/2\rfloor$ separating strata), is zero in
-degree $2g$: an element of the tautological ring in degree $2g$
-is determined by its restrictions to the boundary.
-Mumford~\cite{Mumford83} computed the restrictions of
-$\lambda_g$ to each boundary stratum:
-$\xi_{\mathrm{irr}}^*\lambda_g = \lambda_g$ on
-$\overline{\cM}_{g-1,2}$ (the node contributes trivially at
-degree $2g$) and
-$\xi_h^*\lambda_g = \lambda_h \boxtimes \lambda_{g-h}$
-(the Hodge bundle splits as a direct sum under separating
-degeneration, and the top Chern class of a direct sum of
-bundles of ranks $h$ and $g-h$ is the box product of their top
-Chern classes). Conditions (b) and (c) match $\alpha_g$'s
-boundary restrictions with those of $\lambda_g$. Combining
-(a) with the Graber--Vakil boundary-injectivity statement gives
-$\alpha_g - \lambda_g = 0$ in $R^{2g}(\overline{\cM}_g)$,
-hence in $H^{2g}(\overline{\cM}_g,\Q)$ by tautological
-inclusion.
+The socle-projection argument is carried out in detail in
+Theorem~\ref{thm:clutching-uniqueness-socle-projection} of
+\texttt{clutching\_uniqueness\_platonic.tex}. The tautological
+ring $R^*(\overline{\cM}_g)$ is a finitely generated graded
+subring of $H^*(\overline{\cM}_g,\Q)$
+\textup{(}Faber--Pandharipande~\cite{FP00}\textup{)}. The
+boundary-restriction induction of
+Theorem~\ref{thm:clutching-uniqueness-socle-projection}
+shows that conditions~(a)--(c) force
+$\alpha_g - \lambda_g \in \cN^g(\overline{\cM}_g)$, which is
+precisely the socle-projection identity
+$\pi_{\mathrm{soc}}(\alpha_g) = \pi_{\mathrm{soc}}(\lambda_g)$.
+At $g = 1$, $R^1(\overline{\cM}_{1,1}) = \Q\cdot\lambda_1$ is
+one-dimensional so $\cN^1 = 0$; at $g = 2$, Mumford's
+computation of $R^*(\overline{\cM}_2)$ gives $\cN^2 = 0$ by
+explicit check of the socle pairing~\cite{Mumford83}. At
+$g \geq 3$, the kernel $\cN^g$ is the content of Faber's
+$\lambda_g$-conjecture, known only in specific low-genus
+cases.
 \end{proof}
+
+\begin{remark}[AP225 scope correction]
+\label{rem:ap225-scope-correction}
+\index{AP225!scope correction socle vs on-the-nose}
+The status-table entry "AP225 resolved via
+clutching-uniqueness pinning $\mathrm{obs}_g/\kappa = \lambda_g$
+uniquely" should be read as: uniquely pinned on the socle
+quotient $R^g/\cN^g$, equivalently under the Faber socle
+pairing $\int_{\overline{\cM}_g}(\cdot)\cdot\omega_{\mathrm{soc}}$
+for every admissible~$\omega_{\mathrm{soc}}$. On-the-nose
+equality in $R^g(\overline{\cM}_g)$ is unconditional at
+$g \in \{1,2\}$ and conditional on the
+$\lambda_g$-conjecture at $g \geq 3$. The direct
+Arakelov--Faltings--BGS path
+\textup{(}Proposition~\ref{prop:scalar-obstruction-hodge-euler}%
+\textup{)} produces on-the-nose equality in
+$H^{2g}(\overline{\cM}_g,\Q)$ under the scalar-diagonal
+hypothesis
+\textup{(}Definition~\ref{def:scalar-diagonal-hypothesis}%
+\textup{)}; the clutching-uniqueness path above operates at
+the \emph{socle} level for $g \geq 3$ but requires neither
+scalar-diagonality nor Arakelov input.
+\end{remark}
 
 \begin{remark}[Role in the genus-universality argument]
 \label{rem:clutching-uniqueness-role}
@@ -5991,7 +6158,7 @@ conclusion.
 % ================================================================
 
 \begin{proposition}[Factorization-homology derivation via PTVV;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:theorem-D-factorization-homology-alt}
 \index{PTVV!mapping stack derivation of Theorem D}
 \index{factorization homology!Theorem D alternative route}
@@ -6036,34 +6203,107 @@ construction~\cite{Costello17,CG-vol2,Pridham17}: the
 $1$-shifted symplectic form integrates against the
 fundamental class $[\overline{\cM}_g]$ to produce a Chern--Weil
 representative of the anomaly class in
-$H^{2g}(\overline{\cM}_g,\Q)$. Part~(iii) follows from
-Proposition~\ref{prop:scalar-obstruction-hodge-euler}
-combined with the uniqueness statement
-Proposition~\ref{prop:clutching-uniqueness}: the
-factorization-homology output is tautological by
-construction, its non-separating and separating restrictions
-match those of $\lambda_g$ by the factorization axioms
-\textup{(}the PTVV pairing on a nodal curve factorises as the
-product of pairings on the normalised components\textup{)},
-and the scalar coefficient $\kappa(\cA)$ is detected on the
-genus-$1$ component. Hence
-$\int_{\overline{\cM}_g}\cA = \kappa(\cA)\cdot\lambda_g$.
+$H^{2g}(\overline{\cM}_g,\Q)$.
+
+Part~(iii) is derived \emph{internally to the PTVV framework},
+without citation back to
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}. The
+AKSZ partition function $\int_{\overline{\cM}_g}\cA$ is
+tautological by construction: it is assembled from the PTVV
+pairing on a nodal curve, which factorises as the product of
+pairings on the normalised components. On the genus-$1$
+component $\overline{\cM}_{1,1}$, the AKSZ integral reduces
+to the one-dimensional cohomology class
+$\kappa(\cA)\cdot\lambda_1$ determined by the PTVV pairing
+on the universal elliptic curve; this is where the scalar
+coefficient $\kappa(\cA)$ is \emph{detected}, as the
+unique scalar in $H^2(\overline{\cM}_{1,1},\Q) =
+\Q\cdot\lambda_1$ making the AKSZ output match the genus-$1$
+bar curvature. The boundary restrictions of the AKSZ output
+satisfy the Mumford multiplicativity
+$\xi_h^*(\int_{\overline{\cM}_g}\cA) = (\int_{\overline{\cM}_{h,1}}\cA)
+\boxtimes (\int_{\overline{\cM}_{g-h,1}}\cA)$ by the
+factorisation axioms, and the non-separating restriction
+$\xi_{\mathrm{irr}}^*(\int_{\overline{\cM}_g}\cA)$ degenerates
+to the genus-$(g-1)$ AKSZ integral with two marked points.
+Conditions (a)--(c) of
+Proposition~\ref{prop:clutching-uniqueness} are therefore
+satisfied, and clutching-uniqueness on the socle yields
+$\int_{\overline{\cM}_g}\cA = \kappa(\cA)\cdot\lambda_g$ in
+the socle quotient $R^g/\cN^g$. At $g \in \{1,2\}$ the
+identification lifts to on-the-nose equality in
+$H^{2g}(\overline{\cM}_g,\Q)$; at $g \geq 3$ it is
+conditional on the $\lambda_g$-conjecture
+\textup{(}inherited from
+Proposition~\ref{prop:clutching-uniqueness}\textup{)}.
 \end{proof}
 
-\begin{remark}[Independence of Proposition~%
-\textup{\ref{prop:scalar-obstruction-hodge-euler}}]
+\begin{remark}[Scope]
+\label{rem:ptvv-aksz-chain-level-scope}
+Part~(iii) invokes AKSZ boundary factorisation at separating and
+non-separating nodes of $\overline{\cM}_g$ via the factorisation
+axioms of~$\cA$. The chain-level inscription of this
+factorisation-at-nodes input relies on Mok~\cite{Mok25} logarithmic
+Fulton--MacPherson compactification and the Francis--Gaitsgory
+six-functor base-change for the relative Ran prestack. Per
+Theorem~\ref{thm:A-infinity-2} modular-family scope, these inputs
+are conditional; see
+Remark~\ref{rem:A-infinity-2-modular-family-scope}.
+\end{remark}
+
+\begin{remark}[Status of the PTVV route relative to
+Proposition~\textup{\ref{prop:scalar-obstruction-hodge-euler}}]
 \label{rem:ptvv-independence}
 Proposition~\ref{prop:theorem-D-factorization-homology-alt}
-does not use the Arakelov metric, the BGS anomaly formula, or
-the Faltings identification of the Hodge-bundle curvature.
+does not use the Arakelov metric, the BGS anomaly formula,
+or the Faltings identification of the Hodge-bundle curvature.
 Its inputs are the factorization structure of $\cA$, the PTVV
-transgression theorem~\cite{PTVV13}, and the AKSZ
-construction~\cite{Costello17,CG-vol2}. The two propositions
-agree on their common output, providing a second independent
-proof of the scalar obstruction identity on the uniform-weight
-lane. This is the $H$-series alternative proof \textup{(}GRR
-on the universal curve via factorization homology\textup{)}
-referenced in the Theorem~D entry of the theorem-status table.
+transgression theorem~\cite{PTVV13}, the AKSZ
+construction~\cite{Costello17,CG-vol2}, and the socle
+clutching-uniqueness
+\textup{(}Proposition~\ref{prop:clutching-uniqueness}%
+\textup{)}. It does \emph{not} invoke
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}, the
+scalar-diagonal hypothesis, or any Chern--Weil/BGS machinery:
+the scalar coefficient $\kappa(\cA)$ is detected on the
+genus-$1$ component directly from the PTVV pairing, and the
+all-$g$ identification is achieved by clutching.
+\medskip
+
+\emph{Honest status assessment.}
+The two propositions furnish \emph{distinct presentations}
+of the same underlying obstruction class
+$\int_{\overline{\cM}_g}\cA = \mathrm{obs}_g(\cA)$:
+Proposition~\ref{prop:scalar-obstruction-hodge-euler} via
+differential-geometric Chern--Weil representatives
+\textup{(}needing scalar-diagonality\textup{)}, and the
+present proposition via derived-algebraic AKSZ + socle
+clutching \textup{(}needing the $\lambda_g$-conjecture at
+$g \geq 3$ for on-the-nose equality, but \emph{not} needing
+scalar-diagonality\textup{)}. The two sides of their proof
+chain are algebraically independent in the sense that no
+intermediate lemma or definition is shared, but they each
+access only a \emph{partial} scope of the full all-genus
+all-family identification: the PTVV path gives the result
+for \emph{all} uniform-weight families on the socle
+\textup{(}without scalar-diagonality\textup{)}, while the
+Arakelov--BGS path gives it on the nose for scalar-diagonal
+families \textup{(}without requiring the
+$\lambda_g$-conjecture\textup{)}. The intersection of their
+scopes, i.e.\ scalar-diagonal uniform-weight families at
+$g \in \{1,2\}$, is where both yield on-the-nose equality.
+This should be recorded as \emph{complementary} rather than
+\emph{genuinely-disjoint} verification: an HZ-IV decorator
+built on the present proposition must declare
+\texttt{verified\_against}\,=\,
+\texttt{clutching\_socle\_PTVV}
+and \texttt{disjoint\_rationale}\,=\,
+\texttt{no Chern--Weil/Arakelov input; scope
+restricted to socle at $g\ge3$}, recognising that the
+coincidence-of-output with
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}
+is not by construction but by the abstract uniqueness
+statement of Proposition~\ref{prop:clutching-uniqueness}.
 \end{remark}
 
 \subsection{Summary table: obstruction classes for key examples}
@@ -6071,13 +6311,18 @@ referenced in the Theorem~D entry of the theorem-status table.
 
 \begin{table}[ht]
 \centering
-\caption{Genus-$g$ obstruction classes. For single-generator families, $\mathrm{obs}_g = \kappa \cdot \lambda_g$
- \textup{(}UNIFORM-WEIGHT\textup{)} holds unconditionally at all genera. For multi-weight families
- \textup{(}$W_3$\textup{)}, the formula is unconditional at $g = 1$;
- at $g \geq 2$, a cross-channel correction
- $\delta F_g^{\mathrm{cross}} \neq 0$
- \textup{(all-weight, with cross-channel correction $\delta F_g^{\mathrm{cross}}$)} is present
- \textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)}.}
+\caption{Genus-$g$ obstruction classes. For single-generator scalar-diagonal families, $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+ \textup{(}UNIFORM-WEIGHT, SCALAR-DIAGONAL\textup{)} holds unconditionally at all genera for
+ $g \in \{1, 2\}$ and on the socle quotient $R^g/\cN^g$ for $g \geq 3$
+ \textup{(}on the nose conditional on the $\lambda_g$-conjecture\textup{)}.
+ For multi-weight families \textup{(}$W_3$\textup{)}, the scalar formula is unconditional at $g = 1$;
+ at $g = 2$ a cross-channel correction
+ $\delta F_2^{\mathrm{cross}}(W_3) = (c+204)/(16c)$
+ \textup{(}ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$; explicit closed form proved at $g=2$%
+ \textup{)} is present
+ \textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)};
+ at $g \geq 3$ the cross-channel correction is named via the graph-sum construction but its closed form
+ is conjectural.}
 \label{tab:obstruction-summary}
 \begin{tabular}{|l|c|c|}
 \hline

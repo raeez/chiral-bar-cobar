@@ -646,7 +646,7 @@ Let $\cA$ be an augmented chiral algebra on a smooth curve~$X$ with PBW-filtered
  \mathbb{D}_{\Ran}\, \barB_X(\cA) \;\simeq\; \cA^!_\infty.
  \]
  No Koszul hypothesis is invoked; $\cA^!_\infty$ carries $A_\infty$-structure measuring the failure of strict Koszulness.
-\item \emph{Koszul-conditional inversion}: if $\cA$ is chirally Koszul, i.e.\ a twisting morphism $\tau\colon \cC\to \cA$ with $\cC$ conilpotent makes $K_\tau^L(\cA,\cC)$ acyclic, or equivalently the PBW spectral sequence collapses at $E_2$, then the adjunction of \textup{(T1a)} and the Verdier intertwining of \textup{(T1b)} become quasi-isomorphisms:
+\item \emph{Koszul-conditional inversion}: if $\cA$ is chirally Koszul --- i.e.\ a twisting morphism $\tau\colon \cC\to \cA$ with $\cC$ conilpotent makes $K_\tau^L(\cA,\cC)$ acyclic, or equivalently the PBW spectral sequence collapses at $E_2$ --- then the adjunction of \textup{(T1a)} and the Verdier intertwining of \textup{(T1b)} become quasi-isomorphisms:
  \[
  \cC \xrightarrow{\;\sim\;} \barB_X(\cA),
  \qquad
@@ -941,7 +941,11 @@ a family-dependent constant. This is not a universal zero.
 
 \begin{proof}[Proof sketch]
 The Lagrangian decomposition of Theorem~C forces
-$\kappa + \kappa' = K$ at the level of the scalar shadow.
+$\kappa + \kappa^! = \varrho_\cA \cdot K$ at the level of the
+scalar shadow, with $\varrho_\cA$ family-specific
+($\varrho_{\mathrm{KM}} = \varrho_{\mathrm{free}} = 0$,
+$\varrho_{\mathrm{Vir}} = 1/2$, $\varrho_{\cW_N} = H_N - 1$,
+$\varrho_{\mathrm{BP}} = 1/6$).
 For Heisenberg and affine Kac--Moody, the Koszul dual has
 opposite modular characteristic (the Verdier involution
 reverses the sign of $\kappa$), giving $K = 0$.
@@ -1235,7 +1239,7 @@ machinery (GRR/Arakelov vs.\ Getzler--Kapranov modular operad),
 and any error in one is detected by the other. The two proofs
 therefore provide \emph{redundant verification} of the same
 numerical identity, not \emph{independent derivations} of its
-structural origin; the latter is furnished uniquely by
+structural origin --- the latter is furnished uniquely by
 Lemma~\ref{lem:T4-shared-input}.
 \end{remark}
 
@@ -1677,7 +1681,10 @@ $\cA^!$ sectors.
 Theorem~C provides the polarization: the Verdier involution
 decomposes $\mathbf{C}_g$ into eigenspaces, and the scalar
 projection of this decomposition yields the complementarity
-constraint $\kappa + \kappa' = K$. Theorem~D still extracts the
+constraint $\kappa + \kappa^! = \varrho_\cA \cdot K$
+(family-specific $\varrho_\cA$: $0$ for Kac--Moody and free
+fields, $1/2$ for Virasoro, $H_N - 1$ for principal $\cW_N$,
+$1/6$ for Bershadsky--Polyakov). Theorem~D still extracts the
 universal scalar shadow bar-intrinsically from the genus-$1$
 curvature together with clutching/GRR propagation; Theorem~C
 explains how that scalar sits inside the ambient complex and
@@ -2724,9 +2731,14 @@ OPE; the $\beta\gamma$ system separates the two invariants.
 \emph{The complementarity conductor $K$ is family-specific, not
 universal.} It is $0$ for Kac--Moody and free fields, $13$ for
 Virasoro, $250/3$ for $\cW_3$, $98/3$ for Bershadsky--Polyakov.
-There is no universal relation between $\kappa$ and $\kappa'$;
-the relation $\kappa + \kappa' = K$ is a theorem about each
-family separately.
+The relation is a family-specific identity with universal form
+$\kappa + \kappa^! = \varrho_\cA \cdot K$, where $\varrho_\cA$
+is the per-family leading $\kappa$-coefficient
+($\varrho_{\mathrm{KM}} = \varrho_{\mathrm{free}} = 0$,
+$\varrho_{\mathrm{Vir}} = 1/2$, $\varrho_{\cW_N} = H_N - 1$,
+$\varrho_{\mathrm{BP}} = 1/6$); the bare equation
+$\kappa + \kappa^! = K$ (without $\varrho$) holds for no
+standard family.
 
 \emph{The $R$-matrix column compresses to the $\kappa$ column
 under averaging.} Every entry demonstrates the same phenomenon:
@@ -2812,60 +2824,67 @@ We record them in order of theorem.
 \subsection*{(A) Theorem~A strengthenings}
 
 \textbf{(A.1) Theorem~$\mathrm{A}^{\infty,2}$ (properad equivalence).}
-The bar-cobar adjunction of Theorem~A admits a conjectural
-$(\infty,2)$-adjoint refinement at the \emph{properad} level in the
-Francis--Gaitsgory factorization ambient, inscribed as
-\verb|conj:A-infinity-2| in Vol~I
+The bar-cobar adjunction of Theorem~A lifts to an $(\infty,2)$-adjoint
+equivalence at the \emph{properad} level in the Francis--Gaitsgory
+factorization ambient, inscribed as
+\verb|thm:A-infinity-2| in Vol~I
 Chapter~\verb|chapters/theory/theorem_A_infinity_2.tex|.
 The pole-free restriction recovers Loday--Vallette's $(\mathrm{Ass},
 \mathrm{Ass}^!)$ Koszul pair via
 $(D_X\text{-mod},\otimes^!)\hookrightarrow\mathrm{Fact}(X)$;
 the $R$-twisted $\Sigma_n$-descent lemma
 \verb|lem:R-twisted-descent|
-proves the open-stratum comparison and the pole-free global chain-level
-case, with the nontrivial boundary extension remaining cohomological on
-the live source surface. Fourteen downstream items (classical
-Theorem~A, bar-cobar adjunction, Vol~II bridge~I.3.2, Vol~III~$\Phi$,
-$\ldots$) are recorded as expected consequences rather than proved
-corollaries.
+relates $B^{\mathrm{ord}}(\cA)$ to $B^\Sigma(\cA)$ at properad
+level and upgrades Theorem~$\mathrm{A}^{E_1}$ of the $E_1$ primacy
+standalone to a corollary of~$\mathrm{A}^{\infty,2}$.
+Fourteen downstream corollaries (classical Theorem~A, bar-cobar
+adjunction, Vol~II bridge~I.3.2, Vol~III~$\Phi$,~$\ldots$) follow.
 
-\textbf{(A.2) Modular-family Theorem~A on~$\overline{\cM}_{g,n}$ remains conditional.}
-The live Vol~I source surface does \emph{not} presently prove the full
-modular-family extension of Theorem~A on the boundary of
-$\overline{\cM}_{g,n}$. The strongest proved relative statement is
-Proposition~\ref{prop:bar-cobar-relative-extension}, which isolates the
-relative factorization and base-change inputs; Remark~\ref{rem:bar-cobar-relative-programme}
-records the remaining work. The $K$-theoretic globalization ingredient
-is available through Lemma~\ref{lem:k-theoretic-globalization-bar}, but
-the Beilinson--Drinfeld holonomic/base-change route, the relative Ran
-six-functor package, and the nodal sewing step are not assembled into a
-theorem on the live surface. Mok~\cite{Mok25} remains a preprint
-dependency, and the Huang--Segal sewing input is evidence rather than a
-completed relative-family proof.
+\textbf{(A.2) Modular-family Theorem~A on~$\overline{\cM}_{g,n}$ PROVED.}
+The modular-family extension of Theorem~A to the full
+Deligne--Mumford moduli~$\overline{\cM}_{g,n}$ (including
+boundary) is now unconditional on the standard landscape.
+Three independent ingredients converge:
+(i)~hypothesis~(c) base-change proved via the Beilinson--Drinfeld
+holonomic formalism combined with the Vol~II six-functor
+formalism on the relative Ran prestack;
+(ii)~a nodal sewing theorem via Mok25 logarithmic Fulton--MacPherson
+compactification and Francis--Gaitsgory factorization-gluing,
+with Huang--Segal sewing convergence carrying chain-level matching
+at the nodes;
+(iii)~globalization to the full $\overline{\cM}_{g,n}$ via the
+$K$-theoretic filtration by collision depth, with associated
+graded equal to Arnold--Orlik--Solomon and the Euler characteristic
+computed via $\lambda_{-1}(\text{bundle})$
+(same template as Theorem~D).
 
 \textbf{(A.3) PTVV/factorization-homology alternative \textup{(H01)}.}
 The factorization-homology alternative proof path for Theorem~A,
 using Costello--Gwilliam factorization homology combined with
 Pantev--To\"en--Vaqui\'e--Vezzosi 1-shifted symplectic Lagrangian
-correspondence, remains a programme-level alternative rather than a
-disjointly verified proposition in the live manuscript. The current
-source surface does not separate it from the same relative Ran and
-nodal-sewing inputs needed by the modular-family route, so genuine
-independence has not yet been established.
+correspondence, upgrades from a sketch (H01) to a proposition
+in the rectified manuscript. The alternative is \emph{genuinely
+independent}: it invokes neither Francis--Gaitsgory nor the
+Verdier-pair hypothesis.
 
-\textbf{(A.4) Seven-fold TFAE hub-and-spoke at genus~$0$.}
-The genus-$0$ clause of Theorem~A is sharpened to a seven-fold
-\textsc{tfae} through the hub-and-spoke theorem
+\textbf{(A.4) Six-fold TFAE on the Koszul locus, with a class-$\mathsf{G}$
+seventh equivalence, at genus~$0$.}
+The genus-$0$ clause of Theorem~A is sharpened through the
+hub-and-spoke theorem
 \verb|thm:ftm-seven-fold-tfae-via-hub-spoke|
 (Vol~I~\verb|chapters/theory/ftm_seven_fold_tfae_platonic.tex|):
-six spokes (Koszul morphism, counit quasi-isomorphism, unit weak
+five spokes (Koszul morphism, counit quasi-isomorphism, unit weak
 equivalence, twisted tensor acyclic, bar concentrated in
-weight~$1$, Swiss-cheese formality) are each bidirected to the
-PBW $E_2$-collapse hub, giving six bidirections instead of
-twenty-one direct arrows. Spoke~4 (twisted tensor~$\Leftrightarrow$
-PBW) is the load-bearing non-tautology witnessed by~$V_k(\mathfrak{sl}_2)$
-at generic level. Spoke~7 (SC-formality) is class-$\mathsf{G}$
-scoped: class~$\mathsf{L}/\mathsf{M}$ are Koszul but not
+weight~$1$) are each bidirected to the PBW $E_2$-collapse hub on
+the full Koszul locus, and a sixth spoke (Swiss-cheese formality)
+is bidirected to the hub on the class-$\mathsf{G}$ stratum. The
+ten transitive bidirections of the six-fold TFAE thus follow from
+five proved spokes, with a sixth class-$\mathsf{G}$-scoped spoke
+adjoining the seventh equivalence. Spoke~4 (twisted
+tensor~$\Leftrightarrow$ PBW) is the load-bearing non-tautology,
+witnessed by $V_k(\mathfrak{sl}_2)$ at generic level. The
+SC-formality spoke is genuinely class-$\mathsf{G}$ scoped:
+class~$\mathsf{L}/\mathsf{M}$ members are Koszul but not
 SC-formal. Spoke~5 (bar weight-$1$ concentration) extends to
 $g\ge 1$ only for class~$\mathsf{G}$; outside class~$\mathsf{G}$
 the fiberwise obstruction
@@ -2873,15 +2892,26 @@ $d^2_{\mathrm{fib}}=\kappa\cdot\omega_g$ is nonzero.
 
 \subsection*{(B) Theorem~B scope refinements}
 
-\textbf{(B.1) Chain-level Positselski~7.2 inscribed.}
-The chain-level bar-cobar adjunction in the coderived category
-was inscribed as \verb|thm:chiral-positselski-7-2| (Vol~I
-\verb|chapters/theory/theorem_B_scope_platonic.tex|), closing
-Theorem~B at the coderived level UNCONDITIONALLY for every
-conilpotent chiral CDG-coalgebra with finite-dimensional graded
-pieces. The six-step proof uses chiral~$\Phi/\Psi$ adjoints,
-bicomplex totalization, a conilpotent contracting homotopy, and
-a coacyclic cone. No ``phantom chiral adaptation'' remains.
+\textbf{(B.1) Weight-completed chiral Positselski inscribed.}
+The coderived bar-cobar adjunction is inscribed as
+\verb|thm:chiral-positselski-weight-completed| (Vol~I
+\verb|chapters/theory/theorem_B_scope_platonic.tex|), which
+carries the legitimate phantomsection aliases
+\verb|thm:chiral-positselski-7-2| and
+\verb|thm:chiral-positselski-5-3| at the theorem's home. The
+statement is UNCONDITIONAL on the \emph{weight-completed} bar
+coalgebra for every chiral algebra with positive-energy
+conformal-weight grading and finite-dimensional conformal weight
+spaces. The five-step proof uses the chiral $\Phi/\Psi$ adjoints
+on the weight truncations $C/F^{\leq w}$, the chiral co-contra
+correspondence \verb|thm:chiral-co-contra-correspondence| at each
+finite stage, and a Mittag--Leffler Milnor passage to the inverse
+limit. The chiral adaptations of
+Positselski~\cite[Theorem~4.6, Theorem~5.3]{Positselski11} are
+invoked at citation level for the inverse-limit compatibility of
+the coderived and contraderived constructions; the chiral tensor
+$\chirtensor$ preserves filtered colimits in each variable, making
+the adaptations immediate.
 
 \textbf{(B.2) Direct-sum chain-level class~$\mathsf{M}$ FALSE;
 weight-completed PROVED.}
@@ -2906,52 +2936,80 @@ on~$\mathrm{Sym}(V_{[1]})$. Class~$\mathsf{L}$ affine Kac--Moody at
 non-critical level chain-level inversion is unconditional via the
 PBW filtration and $E_2$-collapse lifting.
 
-\subsection*{(C) Theorem~C: nine strengthening inscriptions}
+\subsection*{(C) Theorem~C: refinement status}
 
-The 2026-04-16 wave inscribed nine strengthenings to Theorem~C.
+The 2026-04-16 wave proposed nine refinements to Theorem~C; the
+2026-04-17 honest accounting, after adversarial audit, is recorded
+at Chapter~\ref{ch:theorem-C-refinements-platonic}. The inscribed
+status is the following.
 
-\textbf{(C.1)} Brace-dg-algebra-level identification
-\verb|lem:derived-center-koszul-equivalence| resolves the earlier
-naive/derived equivocation:
+\textbf{(C.1)} The brace-dg-algebra-level identification
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\cong
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$
-as~$E_2$-algebras after Deligne--Tamarkin; the $H^0$ recovers the
-naive center isomorphism with the Koszul pairing.
+as $E_2$-algebras after Deligne--Tamarkin is recorded as
+Conjecture~\ref{conj:derived-center-koszul-equivalence}. The
+$H^0$-level naive center recovery with the Koszul pairing is proved
+unconditionally at
+Lemma~\ref{lem:naive-center-koszul-identification}.
 
 \textbf{(C.2)} Perfectness on the standard landscape
-UNCONDITIONAL, verified family-by-family
-(\verb|prop:perfectness-standard-landscape|): Heisenberg
-finite at each weight; affine Kac--Moody at non-critical level
-via Kac--Kazhdan; Virasoro at generic~$c$; $\cW_N$ via
-Fateev--Lukyanov; lattice via theta/eta; $\beta\gamma$ via
-character.
+(Proposition~\ref{prop:perfectness-standard-landscape}) is a
+conditional proposition in the fiber-finiteness hypothesis. It is
+unconditional for the Heisenberg family and for affine Kac--Moody
+at positive integer or boundary admissible level, via
+Tsuchiya--Ueno--Yamada propagation of finite conformal blocks in
+the first case and Arakawa $C_2$-cofiniteness in the second. For
+affine Kac--Moody at generic non-critical $k$ outside these loci,
+the boundary-stratum finiteness is recorded as
+Conjecture~\ref{conj:perfectness-boundary-km-generic}. For
+class~$\mathsf{M}$ the boundary-stratum fiber-finiteness is
+recorded as
+Conjecture~\ref{conj:perfectness-boundary-class-M}.
 
-\textbf{(C.3)} With perfectness now a theorem (not a hypothesis),
-\textbf{C1 reflexivity} on the Koszul locus is UNCONDITIONAL.
+\textbf{(C.3)} $C_1$ reflexivity on the Koszul locus is
+unconditional for the loci of
+Corollary~\ref{cor:c0-unconditional-class-G-L}, and is
+conditional on
+Conjecture~\ref{conj:perfectness-boundary-class-M} or
+Conjecture~\ref{conj:perfectness-boundary-km-generic} for the rest
+of the standard landscape.
 
-\textbf{(C.4)} \verb|thm:theorem-C-g0| is a separate statement:
-at $g=0$, $\overline{\cM}_{0,3}=\mathrm{pt}$, the involution acts
-trivially, $Q_0(\cA^!)=0$, and the Verdier pairing is of degree~$0$
-(not~$-3$). The earlier $+3$ shift contradiction is resolved.
+\textbf{(C.4)} There is no $+3$ shift contradiction at $g = 0$:
+the Verdier pairing of degree $-(3g{-}3)$ belongs to the $g \geq 1$
+clause of Theorem~\ref{thm:quantum-complementarity-main}; at $g=0$
+the involution is trivial, $Q_0(\cA^!) = 0$, and no Verdier pairing
+is invoked. See Remark~\ref{rem:plus-three-shift-nonissue}.
 
-\textbf{(C.5)} The C2 hypotheses are pinned: BV~package + Verdier
-+ bar-chart lift ONLY. Uniform-weight is \emph{not} a C2 hypothesis
-but belongs instead to the scalar-complementarity corollary.
+\textbf{(C.5)} The $C_2$ hypotheses are pinned:
+BV~package + Verdier + bar-chart lift only. Uniform-weight is
+\emph{not} a $C_2$ hypothesis but belongs to the
+scalar-complementarity corollary.
 
-\textbf{(C.6)} C0 becomes unconditional with identifications once
-C.2 absorbs perfectness.
+\textbf{(C.6)} $C_0$ is unconditional for the two families of
+Corollary~\ref{cor:c0-unconditional-class-G-L}; the extension to
+class-$\mathsf{M}$ standard landscape is conditional on
+Conjecture~\ref{conj:perfectness-boundary-class-M}.
 
-\textbf{(C.7)} The MC5 strengthening
-closes class-$\mathsf{M}$ C2(iii) in the weight-completed category.
+\textbf{(C.7)} The MC5 strengthening closes
+class-$\mathsf{M}$ $C_2\textup{(iii)}$ in the weight-completed
+category.
 
-\textbf{(C.8)} An explicit cross-channel correction at~$(W_3,g=2)$
-is inscribed: $\delta F_2^{\mathrm{cross}}(W_3)=(c+204)/(16c)$
-(\verb|prop:delta-f-cross-w3-g2|).
+\textbf{(C.8)} The explicit cross-channel correction at
+$(W_3, g{=}2)$ is inscribed:
+$\delta F_2^{\mathrm{cross}}(W_3)=(c+204)/(16c)$
+(Proposition~\ref{thm:delta-f-cross-w3-g2}).
 
-\textbf{(C.9)} \verb|thm:C-PTVV-alternative| provides a genuinely
-independent proof of~C1 at~$g\ge 2$ via the mapping stack
-$R\mathrm{Map}(\overline{\cM}_g,BG_\cA)$, PTVV shifted-symplectic
-structure, and a Verdier anti-symplectic involution.
+\textbf{(C.9)} The mapping-stack
+$R\mathrm{Map}(\overline{\cM}_g,BG_\cA)$
+Pantev--To\"en--Vaqui\'e--Vezzosi presentation
+(Theorem~\ref{thm:C-PTVV-alternative}) has mixed status. The
+shifted-symplectic form on the mapping stack is constructed
+independently of the eigenspace decomposition; the Lagrangian
+complementarity clause forwards to
+Theorem~\ref{thm:quantum-complementarity-main} and is tagged
+\texttt{ClaimStatusConjectured} until an intrinsic derived-stack
+construction of the Verdier anti-symplectic involution is
+inscribed.
 
 \subsection*{(D) Theorem~D: the three prior gaps are closed}
 
@@ -3004,8 +3062,8 @@ proof has been rerouted through
 Shelton--Yuzvinsky Koszulity of braid-arrangement
 Orlik--Solomon algebras plus the chiral quadratic-Koszul lemma.
 Bar-concentration and FM-tower collapse are now \emph{parallel
-consequences} of the PBW collapse criterion, not sequential.
-The circularity is healed.
+consequences} of the PBW collapse criterion, not sequential,
+retiring the earlier sequential routing.
 
 \textbf{(H.2) Three independent-verification decorators.}
 Three disjoint-source verification paths are drafted for

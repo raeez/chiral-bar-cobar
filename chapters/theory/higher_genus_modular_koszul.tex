@@ -2725,7 +2725,8 @@ The package~$\mathcal{C}_{\cA}$ has four structural properties:
  of modular Koszul objects;
 \item \emph{Dualizable}: the duality $\cA \leftrightarrow \cA^!$
  acts on each component
- ($\kappa + \kappa' = K$, $\Delta_{\cA^!}$ determined by
+ ($\kappa + \kappa^! = \varrho_\cA \cdot K$ with $\varrho_\cA$
+ family-specific, $\Delta_{\cA^!}$ determined by
  $\Delta_{\cA}$, etc.);
 \item \emph{Modular}: compatible with clutching and
  boundary degeneration on~$\overline{\mathcal{M}}_{g,n}$;
@@ -13567,7 +13568,10 @@ following properties:
 \smallskip\noindent
 \emph{Step~2: Each truncation is MC in the quotient.}
 The bar-intrinsic construction
-(Theorem~\ref{thm:mc2-bar-intrinsic}) produces a canonical
+(Theorem~\ref{thm:mc2-bar-intrinsic}, proved independently via
+$D_\cA^2 = 0$ at the operadic level and therefore not assuming the
+conclusion of the present theorem)
+produces a canonical
 MC element $\Theta_\cA = D_\cA - \dzero$ in the completed
 algebra $\widehat{\gAmod}$. Define the truncations
 \[
@@ -17988,13 +17992,15 @@ genus-$0$ invariants $(\kappa, \alpha, S_4)$.
 \end{theorem}
 
 \begin{proof}
-On~$L$ the master equation reduces to the recursion
+On~$L$, for $r \geq 5$ the master equation reduces to the recursion
 \begin{equation}\label{eq:single-line-inversion}
  S_r
  \;=\;
  -\frac{P}{2r}
- \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k}}
- c_{jk}\,jk\,S_j\,S_k,
+ \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k \\ j < k}}
+ c_{jk}\,jk\,S_j\,S_k
+ \;-\;
+ \frac{P}{2r}\,c_{\frac{r+2}{2},\frac{r+2}{2}}\,\Bigl(\tfrac{r+2}{2}\Bigr)^{\!2}\,S_{(r+2)/2}^{2}\,[r\equiv 0\bmod 2,\,r\geq 6],
  \qquad
  c_{jk} = \begin{cases} 1 & j < k, \\ 1/2 & j = k.\end{cases}
 \end{equation}
@@ -18004,8 +18010,22 @@ and the eigenvalue identity
 $\nabla_H(x^r) = 2r\,x^r$ separate the master equation into
 the $\nabla_H$ term $2r\,S_r\,x^r$ on the left and the
 obstruction sum on the right;
-since $j \geq 3$ forces $k \leq r - 1$, the recursion is
-well-defined.
+since $j \geq 3$ forces $k \leq r - 1$ for $r \geq 5$, the recursion
+is well-defined starting at~$r = 5$.
+The three lowest-weight invariants
+$(\kappa, \alpha, S_4) = (S_2, S_3, S_4)$ are not produced by the
+recursion: $r = 2$ and $r = 3$ admit no solution
+$(j, k)$ with $j + k = r + 2$, $j \geq 3$, $j \leq k$, and $r = 4$
+admits only the exceptional solution $(j, k) = (3, 3)$ which belongs
+to the \emph{initial data}, not the recursion output. The quartic
+invariant $S_4$ is pinned by a second-quantisation datum (the
+Zamolodchikov quasi-primary norm
+$\langle \Lambda \mid \Lambda \rangle = c(5c+22)/10$ for Virasoro,
+after Zamolodchikov \cite{Zamolodchikov1985}; cf.\ the general
+$\cW$-algebra analogue of Bouwknegt--McCarthy--Pilch
+\cite{BouwknegtMcCarthyPilch1991}), not by products of lower $S_j$;
+in particular $S_4$ cannot be recovered from $(\kappa, \alpha)$ via
+the MC recursion alone.
 
 Define $a_n := (n+2)\,S_{n+2}$ for $n \geq 0$, so that
 $H(t) = \sum_{n \geq 0} a_n\,t^{n+2}$.
@@ -18287,11 +18307,52 @@ Thus $d_{\mathrm{alg}}(\beta\gamma_\lambda) = 2$.
 The same statement holds for $bc_\lambda$ by the same
 stratum-separation mechanism.
 
+\emph{Multi-generator closure: the decouple-or-cubic-pump dichotomy.}
+The single-line argument handles $\cA$ whose shadow data live on one
+primary line with $\kappa \neq 0$. For multi-generator algebras
+$\cA = \bigoplus_q \mathrm{Def}^{\mathrm{cyc},(q)}$ graded by a
+charge lattice, the non-nilpotence of the cubic pump
+$\mathrm{ad}_{S_3^{(\mathbf{q}_0)}}$ in one Hamiltonian dimension
+is established in
+Remark~\textup{\ref{rem:contact-stratum-separation}}; we use it
+here. The charge-graded master equation
+$S_r^{(\mathbf{q})} = -(P/(2r))\sum c_{jk}\,jk\,
+S_j^{(\mathbf{q}_1)} S_k^{(\mathbf{q}_2)}$
+(sum over $j+k = r+2$, $\mathbf{q}_1 + \mathbf{q}_2 = \mathbf{q}$)
+forces the dichotomy of
+Remark~\ref{rem:contact-stratum-separation}: either distinct
+sectors decouple (vanishing mixed OPE, so
+$\mathrm{Def}^{\mathrm{cyc}}(L_1 \oplus L_2)
+= \mathrm{Def}^{\mathrm{cyc}}(L_1) \oplus
+\mathrm{Def}^{\mathrm{cyc}}(L_2)$
+by Proposition~\ref{prop:independent-sum-factorization}, giving
+$d_{\mathrm{alg}}(\cA) \leq \max_i d_{\mathrm{alg}}(L_i) \leq 2$),
+or they couple through a nonvanishing mixed bracket, in which case
+the cubic pump $\alpha \neq 0$ on the mixed sector is
+non-nilpotent in one dimension and forces
+$r_{\max}^{(\mathbf{q})} = \infty$ on every reachable sector,
+hence $d_{\mathrm{alg}}(\cA) = \infty$.
+No intermediate coupling regime is algebraically admissible: a
+rank-$n$ abelian system with cross-sector quartic sewing would
+require $\dim \mathrm{Def}^{\mathrm{cyc},(\mathbf{q}_1 +
+\mathbf{q}_2)} > 0$ for distinct fundamental charges, but for
+decoupled sectors this dimension vanishes and for coupled sectors
+the cubic pump re-activates. The $\beta\gamma_\lambda$
+realisation of $d_{\mathrm{alg}} = 2$ is the single admissible
+boundary case, supplied by the vanishing of the quartic contact
+invariant $\mu_{\beta\gamma} = 0$ via rank-one abelian rigidity
+(Theorem~\ref{thm:betagamma-rank-one-rigidity}): the quartic lives
+on a charged stratum where $\kappa|_L = 0$, outside the hypothesis
+of the single-line Riccati mechanism.
+
 The classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$, and
 $\mathbf{M}$ are therefore witnessed by Heisenberg/lattice/free
 families, affine Kac--Moody, $\beta\gamma_\lambda$/$bc_\lambda$,
 and Virasoro/$\mathcal{W}_N$, respectively. No finite value
-$d_{\mathrm{alg}} \geq 3$ remains.
+$d_{\mathrm{alg}} \geq 3$ remains admissible: single-line Riccati
+forbids finite-$d \geq 3$ in each charge sector, and the
+decouple-or-cubic-pump dichotomy forbids assembling finite
+$d \geq 3$ from cross-sector interaction.
 \end{proof}
 
 \begin{remark}[Structural content of the depth gap]
@@ -34543,7 +34604,10 @@ give $N_{1,1}^0 = 1$ (always integrable) and
 $N_{1,1}^2 = 1$ (integrable for $k \geq 2$).
 Each channel contributes
 $\mathrm{CB}_{2,1}(j) = \sum_m (S_{jm}/S_{0m})^{-2}$,
-a genus-$2$ one-point conformal block count.
+the genus-$2$ zero-point conformal block count in
+channel $j$ after fusion of the two fundamentals
+\textup{(}the exponent $-2 = -(2g-2+n)$ at
+$g = 2$, $n = 0$\textup{)}.
 Direct computation using $S_{jm}$ gives
 $\mathrm{CB}_{2,2}(k) = \sum_j N_{1,1}^j \cdot
 \mathrm{CB}_{2,1}(j)$, which evaluates to

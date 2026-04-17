@@ -12,7 +12,7 @@ Theorems covered:
     thm:pole-depth-independence            (table witness)
     thm:d-alg-r-max-bijection              (closes FM110)
     thm:DS-fingerprint-transport           (closes FM108)
-    thm:quaternitomy-is-coarse-projection  (strengthens prop:coarse-projection-functor)
+    thm:quadrichotomy-is-coarse-projection  (strengthens prop:coarse-projection-functor)
     cor:fingerprint-separates-landscape    (corollary of above)
 
 Disjoint sources (HZ-IV menu):
@@ -309,7 +309,7 @@ def test_DS_transport_slots_sl3():
 
 
 @independent_verification(
-    claim="thm:quaternitomy-is-coarse-projection",
+    claim="thm:quadrichotomy-is-coarse-projection",
     derived_from=(
         "prop:coarse-projection-functor (three_invariants.tex)",
         "ex:symplectic-boson-vs-fermion",
@@ -349,7 +349,7 @@ def test_quaternitomy_fibres_nontrivial():
     claim="cor:fingerprint-separates-landscape",
     derived_from=(
         "thm:fingerprint-is-complete-invariant",
-        "thm:quaternitomy-is-coarse-projection",
+        "thm:quadrichotomy-is-coarse-projection",
     ),
     verified_against=(
         "DC: exhaustive pair-by-pair check across Table 1 rows",

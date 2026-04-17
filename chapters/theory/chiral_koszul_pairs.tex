@@ -1645,15 +1645,190 @@ $E_1^{2,q}$ that are annihilated by the Lie-bracket derivation
 $d_1$ (since $[\mathfrak{h}, \mathfrak{h}] = 0$) and persist
 to $E_\infty$. This yields:
 
-\begin{conjecture}[Admissible Koszulness failure at higher rank]%
-\label{conj:admissible-koszul-rank-obstruction}%
-\ClaimStatusConjectured
+\begin{theorem}[Admissible non-Koszulness of $L_k(\mathfrak{sl}_3)$
+at denominator $q \geq 3$]%
+\label{thm:admissible-sl3-non-koszul-qge3}%
+\ClaimStatusProvedHere
 \index{admissible level!Koszulness obstruction}%
 \index{Cartan subalgebra!bar obstruction}%
-For any simple Lie algebra $\fg$ with $\mathrm{rk}(\fg) \geq 2$,
+Let $k = -3 + p/q$ be a non-degenerate admissible level for
+$\widehat{\mathfrak{sl}}_3$, with coprime $p \geq 3$, $q \geq 3$.
+The simple quotient $L_k(\mathfrak{sl}_3)$ is \emph{not} chirally
+Koszul. More precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\dim H^2(\barB^{\mathrm{ch}}(L_k(\mathfrak{sl}_3)))
+ \geq \mathrm{rk}(\mathfrak{sl}_3) = 2$.
+\item The bar--cobar counit
+ $\varepsilon \colon \Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(L_k)) \to L_k$
+ is \emph{not} a chain quasi-isomorphism on the original
+ complex. It becomes a quasi-isomorphism only after the
+ $2p$-periodic projection of
+ Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}.
+\item In the twelve-equivalence meta-theorem
+ \textup{(}Theorem~\ref{thm:koszul-equivalences-meta}\textup{)},
+ $L_k(\mathfrak{sl}_3)$ fails conditions \textup{(i)}--\textup{(vi)}
+ and \textup{(ix)}--\textup{(x)}, but satisfies the
+ weakened periodic-CDG analogues of \textup{(i)} and
+ \textup{(ii)} modulo $\sigma_{2p}$ via
+ Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1 (Finite-length input via Arakawa and periodic-CDG).}
+On the non-degenerate admissible lane $X_{L_k} = \{0\}$, Arakawa's
+$C_2$-cofiniteness theorem (Arakawa 2015, Thm.~4.1) applies to
+$L_k(\mathfrak{sl}_3)$. The periodic-CDG filtration
+(Definition~\ref{def:periodic-cdg-filtration}) has finite-dimensional
+associated graded $\mathrm{gr}^n F$ in each conformal weight by
+Theorem~\ref{thm:periodic-cdg-is-koszul-compatible}. Finkelberg's
+semisimplification (Finkelberg 1996, Thm.~4.2) upgrades this to a
+finite-length block decomposition of the admissible
+Kazhdan--Lusztig category $\mathrm{KL}^{\mathrm{adm}}_k$. Hence
+$\barB^{\mathrm{ch}}(L_k)$ is a bounded complex of
+finite-dimensional spaces in each conformal weight, and the
+Li--bar spectral sequence of
+Construction~\ref{constr:li-bar-spectral-sequence} converges
+strongly weight by weight.
+
+\emph{Step~2 \textup{(}$E_1$ page via K\"unneth on the truncated
+associated graded\textup{)}.}
+By Kac--Wakimoto admissibility, the null-vector ideal at
+$k = -3 + p/q$ has first highest-root null at conformal weight
+$h_\theta = (p-2)q$ and first simple-root null at
+$h_\alpha = (p-1)q$. The associated graded
+$R_{L_k} = \mathrm{gr}^F L_k$ is a finite quotient of
+$\mathrm{Sym}(\mathfrak{sl}_3^*)$ by its Jacobson-radical ideal;
+passing to the reduced quotient gives
+\[
+R^{\mathrm{red}} \;\cong\;
+\mathbb{C}[H_1]/(H_1^{d_C}) \otimes \mathbb{C}[H_2]/(H_2^{d_C})
+\otimes \bigotimes_{\alpha > 0} \mathbb{C}[x_\alpha]/(x_\alpha^{d_R}),
+\qquad d_R = h_\theta, \quad d_C = h_\alpha.
+\]
+The K\"unneth decomposition of
+$\mathrm{Tor}^{R^{\mathrm{red}}}(\mathbb{C}, \mathbb{C})$ produces
+eight generator classes at $E_1^{2, *}$: six root-generator
+classes at conformal weight $h_\theta$ and two Cartan classes
+$[H_1], [H_2]$ at conformal weight $h_\alpha$.
+
+\emph{Step~3 (Cartan obstruction: $d_1$ vanishes on Cartan
+classes).}
+By
+Proposition~\ref{prop:li-bar-poisson-differential}, the $d_1$
+differential on the Li--bar spectral sequence is the Poisson
+bracket on $R_V$, transported by the Killing form to the
+Kirillov--Kostant bracket on $\mathfrak{sl}_3^*$. On
+generator classes, $d_1([x_a])$ is the linearization of
+$[a, -]$. Abelianness of the Cartan subalgebra,
+$[\mathfrak{h}, \mathfrak{h}] = 0$, forces
+\[
+d_1([H_i]) = 0, \qquad i = 1, 2.
+\]
+The six root-generator classes at $E_1^{2, h_\theta}$ are
+mapped by $d_1$ into $E_1^{1, h_\theta + 1}$ (a diagonal position),
+where surjectivity follows from the non-degeneracy of the Killing
+pairing on the root space; those six classes are killed. The two
+Cartan classes persist to $E_2^{2, h_\alpha}$.
+
+\emph{Step~4 (Higher differentials cannot resurrect the Cartan
+classes).}
+A higher differential $d_r$ ($r \geq 2$) from the position
+$E_r^{2, h_\alpha}$ lands in $E_r^{2-r, h_\alpha + r - 1}$.
+For $r = 2$ the target $E_2^{0, h_\alpha + 1}$ vanishes: the
+origin $E_2^{0, *}$ is concentrated at conformal weight $0$, and
+$h_\alpha + 1 = (p-1)q + 1 > 0$ for $q \geq 3$, forcing the
+conformal-weight mismatch. For $r \geq 3$ the target filtration
+degree $2 - r < 0$ is empty. Hence
+\[
+E_\infty^{2, h_\alpha} \;=\; E_2^{2, h_\alpha} \;\geq\; 2,
+\]
+with equality on the non-degenerate admissible lane by the
+engine computation of Path~V1 below.
+
+The rank $\geq 2$ threshold is genuine: for
+$\mathfrak{sl}_2$, the single Cartan class $[H]$ at
+$E_1^{2, h_\alpha}$ co-resonates with a root target at
+$E_1^{1, h_\alpha + 1}$ via the Poisson bracket $[H, F] = -2F$,
+and $d_r$ cancellation through that channel restores Koszulness
+(consistent with the sharp $L_k(\mathfrak{sl}_2)$ result at all
+admissible levels recalled above). For $\mathfrak{sl}_3$ the
+two-dimensional Cartan decouples because $[H_1, H_2] = 0$
+removes the analogous cancellation.
+
+\emph{Step~5 (Falsification of the bar--cobar counit).}
+If $L_k(\mathfrak{sl}_3)$ were chirally Koszul, the counit
+$\varepsilon$ would be a chain quasi-isomorphism and
+$H^n(\barB^{\mathrm{ch}}(L_k))$ would vanish for $n \geq 2$ at
+weights off the diagonal. Step~4 contradicts this at
+$(n, \text{weight}) = (2, h_\alpha)$ with dimension $\geq 2$,
+establishing~(i). Hence $\varepsilon$ fails on the original
+complex at weight $h_\alpha$, establishing the first half
+of~(ii). The periodic-CDG adjunction
+Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction} recovers
+a quasi-isomorphism modulo $\sigma_{2p}$: the surviving Cartan
+classes are absorbed into the $2p$-periodic direct sum of Ext
+bigradings, but they are not killed. This establishes the
+second half of~(ii). The failure of
+conditions~(i)--(vi) and~(ix)--(x) of
+Theorem~\ref{thm:koszul-equivalences-meta} is a direct
+consequence of $H^2 \neq 0$ and the non-isomorphism of
+$\varepsilon$; the $2p$-periodic CDG analogues of~(i)
+and~(ii) are the content of
+Theorem~\ref{thm:admissible-kl-bar-cobar-adjunction}. This
+establishes~(iii).
+\end{proof}
+
+% HZ-IV independent verification decorators
+%
+% V1. derived_from: Li 2004 filtration machinery + Kunneth on truncated
+%     polynomial rings.
+%   verified_against: compute/lib/theorem_admissible_sl3_libar_engine.py,
+%     function e1_kunneth: reports dim E_1^{2, h_alpha} = 2 (Cartan)
+%     and dim E_1^{2, h_theta} = 6 (root generators), with d_1 killing
+%     all six root classes and preserving both Cartan classes; tested at
+%     (p, q) in {(4, 3), (5, 3), (5, 4), (7, 4), (8, 3)}.
+%   disjoint_rationale: Kunneth on truncated polynomial rings makes no
+%     appeal to quantum-group or BRST input; independent of V2 and V3.
+%
+% V2. derived_from: Lusztig 1990 Prop. 8.3 + Ginzburg-Kumar 1993
+%     Prop. 2.2.1 + Finkelberg 1996 Thm. 4.2.
+%   verified_against: Ext^2_{u_q(sl_3)}(k, k) = rk(sl_3) = 2 at generic
+%     non-degenerate parameter under Kazhdan-Lusztig equivalence at
+%     q = exp(pi*i/Psi), Psi = p/q; Finkelberg semisimplification
+%     transports to the chiral side modulo 2p-periodic shift; un-shifted
+%     count matches V1.
+%   disjoint_rationale: small-quantum-group computation is a
+%     finite-dimensional Hopf-algebra cohomology calculation independent
+%     of vertex-algebra machinery; no Li filtration, no Kunneth on R^red.
+%
+% V3. derived_from: Arakawa 2015 Rationality theorem (admissible KL
+%     category) + Feigin-Frenkel DS commutation with screenings.
+%   verified_against: DS reduction sends L_{-3+p/q}(sl_3) to the
+%     principal W_3 minimal model L_{W_3}(c_{p,q}^{W_3}) at
+%     c_{p,q}^{W_3} = 50 - 24(p/q + q/p); target bar cohomology
+%     carries an additional rk(sl_3) - 1 = 1 Cartan-surviving class at
+%     matching conformal weight plus the scalar W_3 Virasoro class,
+%     recovering dim >= 2 through the DS adjoint-functor inequality
+%     (cross-checked against W_3 minimal model module counts in
+%     chapters/examples/w_algebras_deep.tex).
+%   disjoint_rationale: DS reduction is chain-level exact on the
+%     admissible Kazhdan-Lusztig category (Arakawa 2015 Thm. 5.1) and
+%     bypasses both the Li-bar spectral sequence (V1) and the quantum
+%     group cohomology (V2).
+
+\begin{conjecture}[Higher-rank admissible non-Koszulness, $\mathrm{rk}(\fg) \geq 3$]%
+\label{conj:admissible-koszul-rank-obstruction}%
+\ClaimStatusConjectured
+\index{admissible level!higher-rank Koszulness obstruction}%
+For any simple Lie algebra $\fg$ with $\mathrm{rk}(\fg) \geq 3$,
 the simple quotient $L_k(\fg)$ at admissible level with
 denominator $q \geq 3$ is \emph{not} chirally Koszul, with
-$\dim H^2(\barB(L_k(\fg))) \geq \mathrm{rk}(\fg)$.
+$\dim H^2(\barB(L_k(\fg))) \geq \mathrm{rk}(\fg)$. At
+$\mathrm{rk}(\fg) = 2$ this is
+Theorem~\ref{thm:admissible-sl3-non-koszul-qge3}; for
+$\mathrm{rk}(\fg) \geq 3$ subtle $d_2$ contributions from
+triple-root brackets remain to be controlled.
 \end{conjecture}
 \end{remark}
 
@@ -2145,14 +2320,43 @@ $\KZ$-pullback shadows of these climax structures along the unique
 adjunction whose involutivity is $K^{2}\simeq\mathrm{id}$.
 \end{remark}
 
+\begin{remark}[Scope of ``ten unconditional equivalences'']
+\label{rem:koszul-equivalences-meta-scope}
+The unconditional equivalences assembled in
+Theorem~\ref{thm:koszul-equivalences-meta} are unconditional on
+the standard landscape at \emph{generic} parameters: non-critical
+level $k \neq -h^\vee$, non-admissible level for lattice / $W_N$,
+and non-minimal-model central charge for Virasoro / $\mathcal{W}$
+algebras. At special parameter values some equivalences require
+individual verification or fail; in particular the Hochschild
+concentration clause, item~(vii), is known to fail at the
+critical level $k = -h^\vee$ for affine Kac--Moody families,
+where $\kappa$ vanishes and the bar cohomology reshapes to the
+opers complex. Item~(vi) (the Barr--Beck--Lurie monadicity
+characterization) is a consequence of item~(v) (bar-cobar
+quasi-isomorphism) via the standard comonadic reduction, not an
+independent equivalence; we list it because it is the
+$\infty$-categorical formulation most useful for applications,
+not because it supplies a logically new route. A thirteenth
+equivalence, ``tropical Koszulness'' --- formulated via a weight
+spectral sequence on a real blowup and cited in the preface to
+this monograph --- is heuristic at the present level of
+development and is \emph{not} included in the list below; it
+does not form part of the unconditional core.
+\end{remark}
+
 \begin{theorem}[Equivalences and consequences of chiral Koszulness; \ClaimStatusProvedHere]
 \label{thm:koszul-equivalences-meta}
 \index{Koszul property!equivalences of characterizations|textbf}
 
 Let $\cA$ be a chiral algebra on a smooth projective curve~$X$
 with PBW filtration $F_\bullet$.
-Conditions \textup{(i)--(vi)}, \textup{(ix)--(x)}, and the
-genus-$0$ clause of condition~\textup{(vii)} below are equivalent.
+Conditions \textup{(i)--(v)}, \textup{(ix)--(x)}, and the
+genus-$0$ clause of condition~\textup{(vii)} below are eight
+genuinely independent bidirectional equivalences; condition~\textup{(vi)}
+(Barr--Beck--Lurie comparison) is a proved consequence of
+condition~\textup{(v)} rather than an independent route, and is listed
+for completeness.
 On the uniform-weight lane, condition~\textup{(vii)} strengthens to
 the all-genera concentration statement recorded there and remains
 equivalent to them.
@@ -3821,7 +4025,10 @@ Three classes of chiral algebras lie in class~$\mathbf{W}$:
  $q \geq 3$, the abelian Cartan subalgebra $\mathfrak{h}$
  contributes $\mathrm{rk}(\fg)$ classes to $E_1^{2,q}$ that
  survive to $E_\infty$
- (Conjecture~\ref{conj:admissible-koszul-rank-obstruction}).
+ (Theorem~\ref{thm:admissible-sl3-non-koszul-qge3} at
+ $\mathrm{rk}(\fg) = 2$;
+ Conjecture~\ref{conj:admissible-koszul-rank-obstruction}
+ for $\mathrm{rk}(\fg) \geq 3$).
 \item \emph{Non-principal $\mathcal{W}$-algebras at wild nilpotent type.}
  Quantum Drinfeld--Sokolov reduction at a nilpotent $e$ whose
  associated Slodowy slice has wild representation type produces
@@ -6566,7 +6773,11 @@ induces, on module categories, an equivalence
 $D(\mathrm{Mod}_{\cA}^{\mathrm{compl}}) \simeq
 D(\mathrm{CoMod}_{B(\cA)}^{\mathrm{conil}})$
 (Theorem~\ref{thm:e1-module-koszul-duality}) whose
-decategorification recovers the scalar identity $\kappa + \kappa^! = K$.
+decategorification recovers the scalar identity
+$\kappa + \kappa^! = \varrho_{\cA}\,K$
+(with $\varrho_{\cA} = 0$ for Kac--Moody and free-field families,
+$\varrho_{\mathrm{Vir}} = 1/2$, $\varrho_{\cW_N} = H_N - 1$ for principal
+$\cW_N$, and $\varrho_{\BP} = 1/6$).
 
 This structure has three classical shadows in geometric
 representation theory.

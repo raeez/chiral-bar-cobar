@@ -46,11 +46,12 @@ On ordered configurations, $\barB^{\Eone}(\cA)$
 is no longer symmetric, and Verdier duality inverts the $R$-matrix on
 the module category rather than the level: $\mathbb{D} R(u) = R^{-1}(u)$.
 
-Wave-14 anchors. The four Yangian types (algebraic
-$Y(\fg)$, dg-shifted $\Ydg(\fg)$, $\Eone$-chiral
-$Y(\fg)^{\mathrm{ch}}$, spectral
-$Y_{u}(\fg)$) of Remark~\ref{rem:yangian-three-levels} below are
-distinct objects per AP159 and must never be conflated; the
+Wave-14 anchors. The four Yangian incarnations (classical $Y(\fg)$
+on $\mathbb{R}$, dg-shifted $\Ydg(\fg)$ at a point or formal disk,
+$\Eone$-chiral $Y(\fg)^{\mathrm{ch}}$ on the curve $X$, and spectral
+$Y_{u}(\fg)$ on $\mathbb{A}^{1}_{u}$) of
+Remark~\ref{rem:yangian-three-levels} below are distinct objects and
+must never be conflated; the
 $\Eone$-chiral instance is the bar-side primitive on which the
 ordered Drinfeld--Kohno ladder acts. The shadow obstruction tower
 of $Y(\fg)^{\mathrm{ch}}$ is class~$\mathbf{M}$
@@ -65,10 +66,136 @@ on the ordered Koszul locus realises $K_{\mathrm{Y}} = 0$
 \textup{(}canonical for $\Eone$-chiral input via the involution
 $\hbar \mapsto -\hbar$\textup{)} in the universal-conductor formula
 of Chapter~\ref{chap:universal-conductor}. For super-Yangians
-$Y_\hbar(\mathfrak{sl}(m{|}n))$, the analogous identity reads
-$\kappa + \kappa^! = \max(m, n)$ in the Berezinian convention on
-the sub-Sugawara line \textup{(}see B86 in CLAUDE.md;
-contrast the ordinary Yangian with $K = 0$\textup{)}.
+$Y_\hbar(\mathfrak{sl}(m{|}n))$ with $m\neq n$ on the sub-Sugawara
+line, the super-trace normalisation of the shadow pairing gives
+$\kappa^{\str} + \kappa^{\str,!} = 0$
+(Proposition~\ref{prop:super-berezinian-central-automorphism}(a); Vol~II
+Theorem~\texttt{thm:super-complementarity-supertrace-zero}), a
+proved rational-identity cancellation in~$k$ that mirrors the
+$\Eone$-chiral Yangian conductor~$K=0$. The Berezinian normalisation
+formally shifts this sum to $\max(m,n)$
+(Conjecture~\ref{conj:super-berezinian-shadow-shift-magnitude}); the
+shift-magnitude step is open
+(Remark~\ref{rem:super-berezinian-shift-open}) because
+Nazarov~1991 and Gow~2006 establish centrality and non-degeneracy of
+$\sBer(T(u))$ but not the shadow-depth shift magnitude in closed
+form.
+
+% HZ-IV (scope: Proposition \ref{prop:super-berezinian-central-automorphism}(a)
+%  super-trace identity only; the Berezinian shift magnitude of
+%  Conjecture \ref{conj:super-berezinian-shadow-shift-magnitude} is not
+%  verified by any of the three paths below)
+% HZ-IV: derived_from = super-Sugawara super-trace computation in
+%   chapters/theory/super_chiral_yangian.tex:622-709 (Vol~II,
+%   thm:super-complementarity-supertrace-zero Steps 1-3)
+% HZ-IV: verified_against =
+%   [Gow-Molev 2010 Thm 4.2 + direct super-PBW super-trace on
+%      the sub-Sugawara line yielding
+%      $(k + m - n)(m + n)/2$ and the Frenkel-Frenkel involution
+%      $k \mapsto -k - 2 h^{\vee}_{s}$, summing to zero],
+%   [Nazarov 1991 Thm 1 + Molev Ch.~3.9 Thm 3.9.1 + Gow 2006
+%      Prop 4.3: $\sBer(T(u))$ is central, invertible off
+%      $\fpsl(2|2)$; used only for Prop (b)-(c), NOT for the
+%      super-trace sum],
+%   [direct rational-function cancellation:
+%      $(k+m-n)(m+n)/2 + (-k-(m-n))(m+n)/2 = 0$ in $\bQ(k)$,
+%      independent of super-PBW via formal Laurent expansion
+%      in $\hbar$ on the Drinfeld presentation]
+% HZ-IV: disjoint_rationale =
+%   (V1) super-PBW + super-Sugawara trace; (V2) quasideterminant
+%   quantum-Berezinian input for the centrality claim (b)-(c) only,
+%   orthogonal to the super-trace cancellation; (V3) direct
+%   $\bQ(k)$-rational cancellation bypasses both super-PBW and
+%   quasideterminants. The three paths converge on the super-trace
+%   identity (a) only; they do not, jointly or separately, pin the
+%   Berezinian shift magnitude of
+%   Conjecture~\ref{conj:super-berezinian-shadow-shift-magnitude}.
+\begin{proposition}[Nazarov centrality and super-trace complementarity]
+\label{prop:super-berezinian-central-automorphism}
+\ClaimStatusProvedElsewhere
+Let $A = Y_\hbar(\mathfrak{sl}(m|n))$ with $m\neq n$ at level~$k$ on
+the sub-Sugawara line $k + h^{\vee}_{s} \leq m+n$, with
+$h^{\vee}_{s} = m-n$. Write~$\kappa^{\str}(A)$ for the
+super-shadow depth with respect to the super-trace pairing
+$\langle X, Y\rangle^{\str} := \str(\pi_{\mathrm{def}}(XY))$,
+and~$\kappa^{\sBer}(A)$ for the super-shadow depth with respect
+to the Berezinian pairing
+$\langle X, Y\rangle^{\sBer} := \sBer(\pi_{\mathrm{def}}(XY))$.
+Let $\sBer(T(u)) \in Y_\hbar(\mathfrak{gl}(m|n))[[u^{-1}]]$ be
+Nazarov's quantum Berezinian. Then
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Super-trace complementarity.}
+  $\kappa^{\str}(A) + \kappa^{\str}(A^{!}) = 0$.
+\item \emph{Nazarov centrality.}
+  The coefficients of $\sBer(T(u))$ are central in
+  $Y_\hbar(\mathfrak{gl}(m|n))$, and $\sBer(T(u))|_{u=0}$ is
+  invertible on the sub-Sugawara line off $\fpsl(2|2)$.
+\item \emph{Central automorphism on the centre.}
+  Multiplication by $\sBer(T(u))|_{u=0}$ defines an algebra
+  automorphism
+  $\sigma_{\sBer}\colon Z(A) \to Z(A)$ of the centre.
+\item \emph{Pairing specialisations.}
+  The Verdier pairing on Lagrangian~C$_1$-registers specialises to
+  the super-trace pairing on supertraceless type-$A$ super-Lie
+  algebras; the super-Sugawara pairing on the sub-Sugawara line is
+  $\sBer$-shifted by construction.
+\end{enumerate}
+\end{proposition}
+\begin{proof}[Sources]
+Clause~(a) is the super-trace cancellation of Steps~1--3 of Vol~II
+Theorem~\texttt{thm:super-complementarity-supertrace-zero}: super-Sugawara
+gives $\kappa^{\str}(A) = (k+m-n)(m+n)/2$ and the Koszul-dual
+flip $k \mapsto -k - 2h^{\vee}_{s}$ on $Y_{-\hbar}^{\theta}$ gives
+$\kappa^{\str}(A^{!}) = (-k-(m-n))(m+n)/2$; the two
+sum to~$0$ as a rational identity in~$k$. Clause~(b) is
+\cite[Thm~1]{Nazarov91QuantumBerezinian}; see
+\cite[Ch.~3.9, Thm~3.9.1]{molev-yangians}; non-degeneracy is
+\cite[Prop~4.3]{Gow06}. Clause~(c) follows from~(b): invertibility
+promotes multiplication by $\sBer(T(u))|_{u=0}$ to an algebra
+automorphism of the centre. Clause~(d) is the specialisation
+identification used in Vol~II
+Remark~\ref{rem:two-pairings-supertrace-berezinian}.
+\end{proof}
+
+\begin{conjecture}[Berezinian shadow-shift magnitude]
+\label{conj:super-berezinian-shadow-shift-magnitude}
+\ClaimStatusConjectured
+With $A = Y_\hbar(\mathfrak{sl}(m|n))$, $m\neq n$, on the
+sub-Sugawara line, the action of $\sigma_{\sBer}$ of
+Proposition~\ref{prop:super-berezinian-central-automorphism}(c) on
+the shadow depth is the additive shift
+\[
+  \kappa^{\sBer}(A) \;=\; \kappa^{\str}(A) \;+\;
+  \tfrac{1}{2}\max(m, n),
+\]
+and consequently
+\[
+  \kappa^{\sBer}(A) + \kappa^{\sBer}(A^{!}) \;=\; \max(m, n).
+\]
+\end{conjecture}
+
+\begin{remark}[Status of the shift magnitude]
+\label{rem:super-berezinian-shift-open}
+The centrality of $\sBer(T(u))$ and the non-degeneracy of the
+Berezinian pairing are primary-source theorems
+(Nazarov~1991; Gow~2006). The \emph{magnitude}
+$\tfrac{1}{2}\max(m,n)$ of the shadow-depth shift induced by
+$\sigma_{\sBer}$, however, has not been derived in closed form from
+an independent super-Sugawara contraction of the Berezinian
+generator. The value is consistent with the small-rank numerical
+table $(m,n) \in \{(2,1), (3,2), (4,3)\}$ and with the centre-rank
+match at $\fpsl(2|2)$ (Beisert~2007), and it is the unique rational
+constant making the pairing-specialisation clause (d) numerically
+consistent with Vol~II Step~3; these pattern-matches are evidence,
+not a derivation. Closing the magnitude question is the object of
+Open Frontier F26$'$ (super-complementarity canonical pairing), with
+primary-source entry points in the quantum-minor expansion of
+$\sBer(T(u))$ and the orthosymplectic reflection equation of
+\cite{AcdfR2003} for the $Y_{\fosp(m|n)}$ analogue.
+\end{remark}
+
+\phantomsection
+\label{lem:super-trace-berezinian-bridge}
 
 \begin{remark}[Three levels of Yangian structure]
 \label{rem:yangian-three-levels}
@@ -1014,10 +1141,8 @@ integrals on $\mathcal{M}_{g,1}^{\partial}$. The
 closest existing work is the Swiss-cheese operad
 (Voronov~\cite{Voronov99}), which governs open-closed
 homotopy algebras.
-The toroidal algebra
-\ifannalsedition\else
-(Remark~\ref{rem:toroidal-three-theorems})
-\fi faces the
+The toroidal algebra (the two-parameter double-loop
+extension $U_{q,t}(\ddot{\mathfrak{sl}}_N)$, treated in Vol~III) faces the
 same obstruction.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I (existence).
@@ -3626,7 +3751,7 @@ The remaining work is sharply localized:
 \section{Elliptic chiral quantum groups: a supplementary frontier}
 \label{sec:elliptic-chiral-qg-supplement}
 
-The rational chiral quantum group equivalence of the preceding
+The rational chiral bialgebra equivalence of the preceding
 development is proved abstractly on the Koszul locus, and verified
 concretely for the $\slnn{2}$ Yangian and affine Kac--Moody
 presentations. At higher genus the curve $\Sigma_1 = E_\tau$ forces
@@ -3797,8 +3922,18 @@ locus at leading $\hbar$; Proposition
 \ref{prop:sl2-elliptic-yangian-triangle} is an order-$\hbar$
 coherence check; the full triangle at all orders and the $E_3$
 identification are conjectural. The toroidal two-parameter
-analogue (conj:toroidal-two-param-coprod) remains open. The
-supplement does not modify the rational chiral QG equivalence
+analogue --- the chiral quantum group structure on
+$U_{q,t}(\ddot{\mathfrak{sl}}_N)$ in its Ding--Iohara--Miki presentation,
+with Schiffmann--Vasserot cohomological Hall algebra realisation on the
+instanton moduli space and Miki triality $S_3$ identified with the
+Weyl group of the $\Omega$-background $(q_1, q_2, q_3)$ under
+$q_1 q_2 q_3 = 1$ --- is proved at the formal disk level in
+Vol~III and remains open at global
+$\mathbb{P}^1 \times \mathbb{P}^1$ pending the class-$M$
+chain-level topologization frontier; the inscription is the
+standalone theorem \texttt{thm:chiral-qg-equiv-toroidal-sf} of
+\texttt{standalone/seven\_faces.tex}, not a Vol~I chapter-level
+theorem. The
 (Theorem~\ref{thm:chiral-qg-equiv}): it adds an elliptic layer
 above it.
 \end{remark}

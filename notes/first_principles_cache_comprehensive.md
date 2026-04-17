@@ -982,9 +982,9 @@ Step 6 (hypotheses used). (i) conilpotency; (ii) finite-dim graded pieces; (iii)
 
 Status: \ClaimStatusProvedHere. Non-circular: does not use thm:bar-cobar-inversion-qi or thm:higher-genus-inversion.
 
-#### Target 2: thm:chiral-positselski-5-3 (renaming)
+#### Target 2: thm:chiral-positselski-5-2 (renaming)
 
-Already isolated as thm:chiral-co-contra-correspondence. Add secondary \label{thm:chiral-positselski-5-3} and update rem:fact-positselski-comparison to cite both names, pairing with thm:chiral-positselski-7-2.
+Already isolated as thm:chiral-co-contra-correspondence. Add secondary \label{thm:chiral-positselski-5-2} (Positselski 2011 §5.2, co-contra correspondence) and update rem:fact-positselski-comparison to cite both names, pairing with thm:chiral-positselski-7-2.
 
 #### Target 3: Theorem B clause (2) to unconditional
 
@@ -3697,6 +3697,96 @@ Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_
 **Regex trigger**: `\\bwave[- ]?\\d+\\b|\\bcampaign\\b|\\bsession\\b.*\\d{4}|inscription|earlier phrasing|adversarial.*wave` — post-commit grep across all `.tex` under `chapters/`, `standalone/`, `main.tex` (outside `%` comments).
 
 **Related**: AP236 (blacklist-slug leakage), Pattern 221 (the specific `/B\d+` form), the CLAUDE.md "Manuscript Metadata Hygiene (CONSTITUTIONAL, ZERO TOLERANCE)" section.
+
+### Pattern 226. Mukai signature → orthogonal / orthosymplectic series (2026-04-17, AP246)
+
+**Type**: type-assignment discipline for Yangians attached to lattices. (The task-directive called this "Pattern #222"; local numbering continues sequentially after Pattern 225 to avoid collision with prior entries.)
+
+**Trigger**: any Yangian $Y(\mathfrak{g})$ whose $\mathfrak{g}$ is inferred from a lattice signature (Mukai $(4,20)$, Narain $(22,6)$, Niemeier $(24,0)$, $K3$ $(3,19)$, $K3 \times E$ $(4,20)$).
+
+**Rule**: symmetric INDEFINITE bilinear forms with signature $(p,q)$, $p,q > 0$ point to $SO(p,q)$ or $OSP(p|q)$ via reflection equations (Arnaudon-Crampé-Doikou-Frappat-Ragoucy 2003, arXiv:math/0304188), NOT $GL(p|q)$ super-Yangian. The latter requires Z/2-supergrading with parity swap, not signature splitting. Symplectic forms → C-type Yangians.
+
+**Canonical violation**: $Y(\mathfrak{gl}(4|20))$ named from K3 × E Mukai pairing; correct candidate is $Y_{osp}(4|20)$ via OSP reflection equation.
+
+**Counter-check**: before writing $Y(\mathfrak{g})$ for a lattice signature $(p,q)$, substitute $p=q$: if the form becomes degenerate or trivially definite, the original was indefinite orthogonal; if Z/2-parity structure is present, super-linear; if symplectic, C-type.
+
+**Regex trigger**: `Y\(\\(mathfrak|operatorname)\{gl\}\([0-9]+\|[0-9]+\)\)` over Vol III `chapters/` with signature keywords in surrounding context.
+
+**Related**: AP246 (signature type-assignment), AP239 (naming-after-physical-source), Vol III `thm:k3-abelian-yangian-presentation`.
+
+### Pattern 227. Taylor / Chern-character expansion degree direction (2026-04-17, AP252)
+
+**Type**: degree-accounting discipline. (Task-directive "Pattern #223"; local numbering continues to avoid collision.)
+
+**Trigger**: prose phrases "lower-degree corrections", "higher-degree corrections", "sub-leading terms", "correction terms vanish in lower degree" in the context of a splitting-principle expansion, Chern character series, or Taylor expansion of a polynomial functor.
+
+**Rule**: $\prod_{i=1}^g (1 - e^{x_i}) = \prod_{i=1}^g (-x_i + O(x_i^2))$ begins at degree $2g$ (top-degree monomial $(-1)^g \prod x_i$); higher-order corrections from $O(x_i^2)$ remainders live in degree strictly GREATER than $2g$. Similarly $(1-t)^{-1} = \sum_n t^n$ expands UPWARD from $n=0$. "Lower degree" than the leading term is empty.
+
+**Canonical violation**: Vol I `higher_genus_foundations.tex:5505` wrote "lower-degree corrections to $\lambda_{-1}(\mathbb{E})$" where "higher-degree" was meant; healed 2026-04-17.
+
+**Counter-check**: before writing "lower-degree" or "higher-degree" in a Chern-character / Taylor / splitting-principle expansion, substitute $x_i = 0.01$ numerically; verify expansion direction by checking sign of degree-$(2g+2)$ term vs degree-$2g$ term.
+
+**Regex trigger**: `lower[- ]order corrections|lower[- ]degree corrections|sub[- ]leading.*expansion` with $\lambda_{-1}$, Chern, or splitting-principle context nearby.
+
+**Related**: AP252 (degree-direction), AP237 (splitting-principle degree accounting), AP225 (genus-universality gap).
+
+### Pattern 228. Venue inflation at ~2× realistic (2026-04-17, Publication Roadmap audit)
+
+**Type**: hostile-referee simulation discipline. (Task-directive "Pattern #224"; local numbering continues.)
+
+**Trigger**: Publication Roadmap or FRONTIER.md entries claiming N papers at top-5 venues (Annals / Invent. / JAMS / Publ. IHES / Duke).
+
+**Rule**: realistic top-5 acceptance count is typically $\sim 1/3$ to $1/2$ of claimed. Hostile-referee simulation: would a top-5 referee accept this paper based on (a) novelty relative to Drinfeld-Jimbo-Faddeev-Reshetikhin / Beilinson-Drinfeld / Costello-Gwilliam; (b) attribution density (AP251); (c) scope = unconditional or scope = conditional-on-Koszul-locus?
+
+**Canonical violation**: "12 papers at top-5 venues" Publication Roadmap claim; realistic ~2-4 at top-5, balance at Selecta / JEMS / Advances / CMP.
+
+**Counter-check**: before listing a paper at a specific venue, simulate hostile referee: "Does this match the top-5 novelty bar? Does the scope qualifier make it conditional?" Default to Selecta / JEMS / Advances / CMP / Compositio for scope-qualified results.
+
+**Regex trigger**: `Annals|Invent(iones)?|JAMS|Publ\.\s*IHES|Duke.*Mathematical.*Journal` in `FRONTIER.md` / `notes/publication_*.md` with count ≥ 5.
+
+**Related**: AP251 (attribution density floor), AP229 (Vol III stale scope claims), AP224 (README scope inflation).
+
+### Pattern 229. Physical-source name vs used geometric content (2026-04-17, AP239/AP246)
+
+**Type**: naming discipline paired with AP239. (Task-directive "Pattern #225"; local numbering continues.)
+
+**Trigger**: theorem or proposition named after a physical source (K3-$X$, Monster-$Y$, Kummer-$Z$, CY_d-$W$, heterotic-$V$) whose proof uses only lattice-theoretic input.
+
+**Rule**: audit what geometric input is ACTUALLY USED in the proof. If only lattice rank + signature + discriminant + DGMS formality enter, the theorem is LATTICE-THEORETIC; the physical-source name is decorative and should be either (a) renamed to "rank-$N$ signature-$(p,q)$ $X$" with a remark noting physical inspiration, or (b) strengthened to use genuinely K3-specific / Monster-specific input (Mukai transform, Conway module, Borcherds product).
+
+**Canonical violation**: Vol III `thm:k3-abelian-yangian-presentation` — proof uses only rank-24 signature-$(4,20)$ even unimodular lattice + CY_2 constraint; no K3-specific geometry enters beyond Mukai pairing. Candidate rename: "signature-$(4,20)$ even-unimodular abelian Yangian, with K3 × E as motivating example."
+
+**Counter-check**: for every named object (K3-X, Monster-Y, CY-Z), list what geometric input beyond rank + signature + discriminant is USED in the theorem. If none, the physical-source name is decorative. Disclose scope explicitly in a scope-qualifier remark.
+
+**Regex trigger**: `K3|Monster|Kummer|Niemeier|Leech|heterotic` in theorem titles or `\label{thm:}` slugs; cross-check proof body for non-lattice-theoretic geometric input.
+
+**Related**: AP239 (naming-after-physical-source), AP246 (signature type-assignment), AP251 (attribution density).
+
+## Pattern 222: "Rate-limited agents" may be binary-not-found in disguise
+
+**Session**: 2026-04-18 (recovery-infrastructure audit)
+
+**Type**: infrastructure anti-pattern (paired with AP293, AP294, AP295 in CLAUDE.md Wave 13).
+
+**Trigger**: user says "relaunch all rate-limited agents" or "resume the failed campaign"; running `scripts/resume_failed.py --dry-run` reports N agents in `[empty]` or `[timeout]` state; output directory contains many sub-200-byte files.
+
+**Rule**: before classifying the failure as rate-limiting, inspect ONE sample failure file. If the first line matches `ERROR: \[Errno 2\] No such file or directory` or `ERROR: \[Errno 2\]: 'codex'` or `command not found` or `ModuleNotFoundError`, the root cause is PREREQUISITE_MISSING (external CLI absent), not rate-limiting. Relaunching under this condition creates an infinite resume-loop because every retry fails identically.
+
+**Canonical violation**: 2026-04-18 session, user invoked `/loop` asking to "relaunch rate-limited agents". `campaign_dashboard.py` reported 98 failures across 7 campaigns. `resume_failed.py --dry-run` listed them as `[empty]` and `[missing]`. Sampling one file (`resume_20260418_001350/CE01_shadow_engines.md`) revealed 78 bytes of content: `# CE01_shadow_engines — ERROR: [Errno 2] No such file or directory: 'codex'`. The `codex` CLI was not installed on the host. All 98 "rate-limited agents" were binary-not-found failures; relaunching without installing `codex` would permafail identically.
+
+**Counter-check**:
+
+```bash
+# Before accepting "rate-limited" framing, run:
+ls <campaign_out_dir>/*.md | head -1 | xargs head -c 200
+# If output contains "No such file or directory" or "command not found",
+# STOP — install the missing CLI before relaunching.
+which codex || echo "codex CLI MISSING — install before resume_failed.py"
+```
+
+**Regex trigger (pre-resume gate)**: `grep -l "No such file or directory\|command not found\|ModuleNotFoundError" <out_dir>/*.md`. Any hit ≥ 1 ⇒ prerequisite missing, abort resume loop.
+
+**Related**: AP80 (engine without test file — same discipline applied at theorem layer); AP293 (recovery-infrastructure prerequisite guard); AP294 (file-size threshold conflates failure modes); AP295 (dashboard liveness check).
 
 ### Attribution
 
