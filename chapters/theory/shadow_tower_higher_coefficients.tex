@@ -1802,6 +1802,118 @@ simplifying:
 This is the claimed closed form.
 \end{proof}
 
+\subsection{Four-tier arithmetic database: Kummer-irregularity is
+Laurent-depth controlled, not absent}
+\label{subsec:four-tier-arithmetic-database}
+
+The arithmetic duality
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality}
+(\texttt{z\_g\_kummer\_bernoulli\_platonic.tex}) was stated for the
+\emph{two Bernoulli-leading} Kummer-irregular primes
+$\{691, 3617\}$: these are the primes dividing
+$\mathrm{num}(B_{12})$ and $\mathrm{num}(B_{16})$ respectively, the
+two smallest Bernoulli indices admitting Kummer-irregular divisors.
+We now refine the stratification by tabulating the FULL Kummer-
+irregular emergence pattern in each Laurent Tier through $r = 15$.
+
+\begin{theorem}[\label{thm:kummer-laurent-depth-controlled}%
+Laurent-depth-controlled Kummer emergence]
+\ClaimStatusProvedHere
+Let $\mathrm{IrrKum}_{\mathrm{size}}$ denote the set of
+Kummer-irregular primes ordered by size:
+$\mathrm{IrrKum}_{\mathrm{size}} = \{37, 59, 67, 101, 103, 131,
+149, 157, 233, 257, 263, 271, 283, 293, \ldots, 691, \ldots, 3617,
+\ldots\}$ (OEIS A000928).  For Virasoro shadow-tower coefficient
+numerators in each Laurent Tier $k \in \{1, 2, 3, 4\}$ of
+$\Phi_r = c^{r-2} S_r(\Vir_c)$ at large $c$, the following
+emergence table is exact through $r = 15$:
+
+\[\begin{array}{c|l}
+  \text{Tier} & \text{Kummer-irregular primes appearing, with } r \text{ of emergence} \\
+  \hline
+  1 (A_r) & \emptyset \text{ (no Kummer-irregular prime through } r \leq 15\text{)} \\
+  2 (B_r) & \{101 \text{ at } r = 11\} \\
+  3 (\Gamma_r) & \{37 \text{ at } r = 8,\, 691 \text{ at } r = 8,\, 3067 \text{ at } r = 12,\, 811 \text{ at } r = 13\} \\
+  4 (\Delta_r) & \{37 \text{ at } r = 11,\, 283 \text{ at } r = 13\}
+\end{array}\]
+
+In particular: the prime $691$ emerges \emph{uniquely} at $(r, k) =
+(8, 3)$; the prime $3617$ does NOT appear in any Tier through
+$r = 15$; but the smaller Kummer-irregular primes $\{37, 101, 283,
+811\}$ do appear at specific $(r, k)$ coordinates.
+
+The arithmetic duality
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality}, stated for
+$\{691, 3617\}$, is CORRECT AT ITS STATED SCOPE: these two
+primes follow the Bernoulli-index hierarchy
+$691 \mid B_{12}$, $3617 \mid B_{16}$, and are absent from all
+Tiers through $r = 15$ except the unique $691$-sighting at Tier~3,
+$r = 8$.  Smaller Kummer-irregular primes (37, 59, 67, 101, ...)
+have different Bernoulli witnesses (e.g., $37 \mid B_{32}$,
+$101 \mid B_{68}$) and follow their own emergence patterns in the
+Virasoro Laurent stratification.
+\end{theorem}
+
+\begin{proof}
+Direct enumeration via the closed forms
+$A_r = 8(-6)^{r-4}/r$,
+$B_r / A_r = -\,(22/5) - (r-4)(r-5)/18$,
+$\Gamma_r / A_r = 484/25 + (22/45)(r-4)(r-5) +
+(r-4)(r-5)(r-6)(r-7)/972$, and
+$\Delta_r / A_r = -\,(22/5)^{3} - (242/75)(r-4)(r-5) -
+(11/810)(r-4)(r-5)(r-6)(r-7) -
+(1/104976)(r-4)(r-5)(r-6)(r-7)(r-8)(r-9)$.
+Each is evaluated at $r = 4, 5, \ldots, 15$; integer numerator in
+lowest terms is factored; resulting prime set is intersected with
+$\mathrm{IrrKum}_{\mathrm{size}}$. The table is the exact output of
+this enumeration (verified symbolically in
+\texttt{compute/tests/test\_four\_tier\_kummer\_database.py}).
+\end{proof}
+
+\begin{remark}[\label{rem:subleading-kummer-correction}Correction
+to Corollary~\ref{cor:subleading-characteristic-primes}]
+Corollary~\ref{cor:subleading-characteristic-primes} stated that
+the subleading-polynomial primes $\{7, 11, 13, 19, 29, 31, 71, 101\}$
+through $r = 11$ ``lie strictly below the first Kummer-irregular
+prime $691$''. This is \emph{imprecise}: $691$ is the first
+Kummer-irregular prime by \emph{Bernoulli index}, but the first
+Kummer-irregular prime by \emph{size} is $37$, followed by $59, 67,
+101, 103, \ldots$. The prime $101$ appears in $q(11) = 606 =
+2 \cdot 3 \cdot 101$ and IS Kummer-irregular ($101 \mid B_{68}$).
+
+The correct statement is: the subleading polynomial $q(r)$ through
+$r \leq 11$ avoids the two \emph{Bernoulli-leading} Kummer-
+irregular primes $\{691, 3617\}$, but does contain the
+smaller-sized Kummer-irregular prime $101$ at $r = 11$. This
+refines the arithmetic-duality stratification: different
+Kummer-irregular primes appear in different Tiers at different
+$r$-values, and the Bernoulli-leading-vs-size distinction is
+load-bearing.
+
+The full Kummer-Laurent emergence pattern is the content of
+Theorem~\ref{thm:kummer-laurent-depth-controlled}.
+\end{remark}
+
+\begin{corollary}[\label{cor:bernoulli-leading-duality-sharpness}%
+Sharpness of the Bernoulli-leading arithmetic duality]
+\ClaimStatusProvedHere
+The two Bernoulli-leading Kummer-irregular primes
+$\{691, 3617\}$ satisfy:
+\begin{itemize}
+\item $691$: PRESENT on $Z_g$ at the leading Bernoulli asymptotic
+  for $g = 7$ (via $B_{12}$); ABSENT from $S_r$ through
+  $r = 15$ \emph{except} at Tier~3, $r = 8$, where it appears in
+  the combined sum $39204 + 11880 + 50 = 51134 = 2 \cdot 37 \cdot 691$.
+\item $3617$: PRESENT on $Z_g$ at the leading Bernoulli asymptotic
+  for $g = 9$ (via $B_{16}$); ABSENT from $S_r$ in EVERY Tier
+  through $r = 15$.
+\end{itemize}
+Therefore the arithmetic duality
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality} is \emph{sharp} at
+Bernoulli index $12$ with a single Tier-3 exception, and
+unconditional at Bernoulli index $16$ through $r = 15$.
+\end{corollary}
+
 \begin{remark}[\label{rem:four-tier-pattern}Four-tier Laurent
 stratification pattern]
 Combining Theorems \ref{thm:shadow-tower-asymptotic-closed-form},
