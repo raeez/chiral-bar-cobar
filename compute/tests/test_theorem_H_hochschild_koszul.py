@@ -41,6 +41,11 @@ This test registers the independent-verification relationship.
 from __future__ import annotations
 
 from compute.lib.independent_verification import independent_verification
+from compute.lib.chirhoch_dimension_engine import (
+    chirhoch_heisenberg,
+    chirhoch_affine_km,
+    chirhoch_virasoro,
+)
 
 
 @independent_verification(
@@ -80,14 +85,37 @@ def test_theorem_H_chirhoch_concentration_structure():
     theorem's assertion. Any disagreement would surface in the
     family-specific engines.
     """
-    vir_feigin_fuchs_gives_012 = True
-    w_n_wang_brst_gives_012 = True
-    affine_sl2_whitehead_kunneth_gives_012 = True
-    assert (
-        vir_feigin_fuchs_gives_012
-        and w_n_wang_brst_gives_012
-        and affine_sl2_whitehead_kunneth_gives_012
-    ), (
-        "Theorem H concentration {0, 1, 2} must match all three "
-        "disjoint classical routes (Feigin-Fuchs, Wang, Whitehead)."
+    # Heisenberg H_k: Hilbert triple (1, 1, 1), total 3; concentration
+    # in {0, 1, 2} confirmed by the no-simple-pole mechanism
+    # (cf. Feigin-Fuchs-style Fock resolution for free bosons).
+    heis = chirhoch_heisenberg()
+    assert heis.hilbert_triple == (1, 1, 1), (
+        f"Heisenberg ChirHoch Hilbert triple expected (1, 1, 1), "
+        f"got {heis.hilbert_triple}."
+    )
+    assert heis.total == 3
+    assert heis.concentrated_in_012
+
+    # Virasoro Vir_c: Hilbert triple (1, 0, 1), total 2; Feigin-Fuchs
+    # BRST/Fock resolution is the disjoint verification path.
+    vir = chirhoch_virasoro()
+    assert vir.hilbert_triple == (1, 0, 1), (
+        f"Virasoro ChirHoch Hilbert triple expected (1, 0, 1), "
+        f"got {vir.hilbert_triple}."
+    )
+    assert vir.concentrated_in_012, (
+        "Virasoro ChirHoch must be concentrated in degrees {0, 1, 2} "
+        "per Feigin-Fuchs resolution."
+    )
+
+    # Affine V_k(sl_2): Hilbert triple (1, 3, 1), total 5; verified
+    # via Whitehead + Kunneth (the disjoint route from the bar complex).
+    sl2 = chirhoch_affine_km("sl_2")
+    assert sl2.hilbert_triple == (1, 3, 1), (
+        f"Affine sl_2 ChirHoch Hilbert triple expected (1, 3, 1), "
+        f"got {sl2.hilbert_triple}."
+    )
+    assert sl2.total == 5, (
+        f"Affine V_k(sl_2) ChirHoch total dimension expected 5, "
+        f"got {sl2.total}."
     )

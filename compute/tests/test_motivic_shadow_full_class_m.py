@@ -48,10 +48,14 @@ Target claims (ProvedHere) and their disjoint verification paths:
                       check at k = 1, 2, 4, 10).
 
   prop:bp-fl-convention-caveat
-    Derivation: FL convention c_BP^FL(k) = -(2k+3)(3k+1)/(k+3) has
-                K_BP^FL meromorphic at k = -3.
-    Verification: direct sympy evaluation of K_BP^FL at several
-                  k values; check the pole at k = -3.
+    Derivation: FL convention c_BP^FL(k) = -(2k+3)(3k+1)/(k+3) gives
+                K_BP^FL(k) = [(2k+9)(3k+17)-(2k+3)(3k+1)]/(k+3)
+                            = 50(k+3)/(k+3) = 50 in Q(k); the apparent
+                pole at k = -3 is removable.
+    Verification: direct sympy evaluation of K_BP^FL at several k
+                  values confirms the constant 50; Arakawa and FL
+                  both produce polynomial-constant conductors that
+                  differ only in numerical value (196 vs 50).
 
   thm:w-infty-motivic-rationality-all-r
     Derivation: large-N limit of W_N T-line tower + Miura

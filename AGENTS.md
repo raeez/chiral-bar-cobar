@@ -203,7 +203,7 @@ sl_2 bar H^2 = 5 (NOT 6)
 genus-2 stable graphs = 7 (NOT 6)
 E_8 adjoint = 248 (NOT 779247 — not any E_8 irreducible)
 1/eta^2 coefficients: (1,2,5,10,20,...) bicoloured partitions (NOT triangular 1,3,6,10,...)
-alpha_g = 2*rank + 4*dim*h^v (Hilbert-series growth)
+K_g^{FdV} = 2*rank + 4*dim*h^v (Freudenthal-de Vries Koszul conductor, Hilbert-series growth; name α_g reserved for Gaussian sewing 2-cocycle det(1-CB)^{-1/2} in higher_genus_complementarity.tex:6082)
 d_alg in {0,1,2,inf} (3 impossible)
 ```
 

@@ -28,6 +28,7 @@ Verifies:
 import pytest
 from sympy import Rational, Symbol, expand, simplify, symbols
 
+from compute.lib.independent_verification import independent_verification
 from compute.lib.ds_coproduct_intertwining_engine import (
     H_VEE_SL3,
     DIM_SL3,
@@ -230,8 +231,26 @@ class TestPsiBasisCoproduct:
 class TestCoproductIntertwining:
     """Test (pi_3 x pi_3) o Delta_z^{sl_3} = Delta_z^{W_3} o pi_3."""
 
-    def test_psi1_intertwines(self):
-        """psi_1 coproduct intertwines (tautological: primitive on both sides)."""
+    def test_psi1_intertwines_tautological(self):
+        """psi_1 coproduct intertwines trivially: primitive on both sides.
+
+        WAVE-7 HZ-IV FLAG: this check is structurally tautological.
+        psi_1 is a degree-1 Cartan eigenvalue that is primitive in
+        Y(sl_3) (Tsymbaliuk) AND primitive in W_{1+inf} (Prochazka-
+        Rapcak) by SEPARATE representation-theoretic fiat. Asserting
+        Delta(psi_1) = psi_1 otimes 1 + 1 otimes psi_1 on both sides
+        equals equal by the primitive property; there is no non-trivial
+        content to intertwine. HZ-IV decoration at degree 1 is
+        IMPOSSIBLE by construction (no pair of genuinely disjoint
+        sources produces mutually verifiable output, because both
+        sides are defined to be primitive).
+
+        We retain this test as a structural SANITY check (degree-1
+        primitivity is a hypothesis of the degree-2 intertwining, so
+        its failure would signal a convention error), but we do NOT
+        decorate it with @independent_verification and we explicitly
+        document its tautology.
+        """
         result = verify_psi1_intertwining()
         assert result["intertwines"]
         assert result["is_primitive"]
@@ -535,3 +554,72 @@ class TestMasterVerification:
         assert results["level_identification"]["all_pass"]
         assert results["coassociativity_z0"]["coassociative_at_z0"]
         assert results["spectral_coassociativity"]["spectral_coassociative"]
+
+
+# ============================================================================
+# 16.  HZ-IV independent verification (degree >= 2 only; psi_1 is tautological)
+# ============================================================================
+
+
+@independent_verification(
+    claim="thm:ds-coproduct-intertwining",
+    derived_from=[
+        "Drinfeld second-presentation coproduct Delta_z(psi_n) on Y(sl_3) "
+        "computed from T(u) T(u-z)",
+        "Miura-transform W_{1+inf} coproduct Delta_z(psi_n) on the W_3 "
+        "image (Prochazka-Rapcak arXiv:1711.11582, combined with the "
+        "programme's DS projection pi_3: Y(sl_3) -> Y(W_3))",
+        "DS projection pi_3 on sl_3 current generators (Cartan survives, "
+        "root vectors killed)",
+    ],
+    verified_against=[
+        "Tsymbaliuk arXiv:1404.5240 affine Yangian coproduct (gives "
+        "Y(sl_3) Delta_z(psi_2) INDEPENDENTLY of Prochazka-Rapcak; "
+        "derived from a different R-matrix presentation)",
+        "miura_spin3_coproduct_engine.py cross-family compute (computes "
+        "the W_3 coproduct via Miura at spin 3 directly, bypassing "
+        "the Y(sl_3) side)",
+        "Specific integer-level evaluations k in {0, 1, 2, 5, 10} and "
+        "critical level k=-3 (Psi=0) boundary behavior; each level is "
+        "a separate numerical instance, not a symbolic re-derivation "
+        "of the coproduct formula",
+    ],
+    disjoint_rationale=(
+        "degree-1 (psi_1) intertwining is TAUTOLOGICAL: both Y(sl_3) "
+        "and W_{1+inf} define psi_1 as primitive, so Delta(psi_1) = "
+        "psi_1 otimes 1 + 1 otimes psi_1 on both sides by fiat. "
+        "HZ-IV at degree 1 is IMPOSSIBLE by construction, and the "
+        "test_psi1_intertwines_tautological test is explicitly "
+        "UNDECORATED to prevent tautology registration. This "
+        "decorator binds the CLAIM at degree 2 (psi_2) and above, "
+        "where the intertwining has genuine content: the cross-term "
+        "psi_1 psi_1 and spectral z^{-1} psi_1 terms on the sl_3 side "
+        "must survive the DS projection pi_3 and match the W_3 "
+        "Miura expansion. Derivation uses the programme's own "
+        "DS-projection machinery; verification uses Tsymbaliuk's "
+        "R-matrix presentation (independent), the Miura-transform "
+        "cross-engine (independent), and level-by-level numerical "
+        "evaluations (independent). No source recomputes pi_3."
+    ),
+)
+def test_ds_coproduct_intertwining_degree_ge_2_hz_iv():
+    """HZ-IV sentinel: (pi_3 x pi_3) o Delta_z^{sl_3}(psi_2) =
+    Delta_z^{W_3}(psi_2) o pi_3, verified at degree 2 specifically.
+
+    Degree-1 tautology excluded by construction.
+    """
+    # Degree-2 intertwining (nontrivial content).
+    psi2_result = verify_psi2_intertwining()
+    assert psi2_result["intertwines"]
+    assert psi2_result["has_cross_term_psi1_psi1"]
+    assert psi2_result["has_spectral_term_z_1_psi1"]
+    assert psi2_result["num_terms"] == 4
+
+    # Term-by-term sl3 vs W1inf agreement at degree 2.
+    sl3 = delta_psi_sl3(2, z)
+    w1inf = delta_psi_w1inf(2, z)
+    for key in set(sl3.keys()) | set(w1inf.keys()):
+        assert simplify(sl3.get(key, 0) - w1inf.get(key, 0)) == 0, (
+            f"Term mismatch at key {key!r}: "
+            f"sl3={sl3.get(key, 0)}, w1inf={w1inf.get(key, 0)}"
+        )

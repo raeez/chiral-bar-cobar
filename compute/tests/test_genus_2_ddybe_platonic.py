@@ -382,9 +382,12 @@ def test_chi_linear_growth_in_genus():
 
 
 def test_separating_degeneration_factorises_to_two_g1():
-    """AP157 sanity: the separating boundary Omega = diag(tau_1, tau_2)
-    factorises the g=2 R-matrix into two independent g=1 Felder copies.
-    This regime is AP157-empty of genuinely genus-2 DDYBE content.
+    """Separating-boundary sanity: the boundary Omega = diag(tau_1, tau_2)
+    reduces the g=2 face R-matrix to a single g=1 Felder R-matrix in
+    (z, lambda_1, tau_1); the tau_2-sector enters only through the
+    theta_3(0|tau_2) normalisation that cancels in every Boltzmann-weight
+    ratio. This regime carries no genuinely genus-2 DDYBE content
+    (factorised-limit, by the genus-1 Felder theorem).
     """
     # The content of this test is that verify_g2_to_g1_degeneration
     # PASSES at diagonal Omega, which is exactly the statement that the

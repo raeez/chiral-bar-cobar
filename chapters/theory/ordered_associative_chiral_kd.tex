@@ -8500,14 +8500,23 @@ Theorem~\textup{\ref{thm:chiral-qg-equiv}} produces three compatible
 descriptions of a \emph{chiral bialgebra}: $R$-matrix, chiral
 $A_\infty$-algebra, and chiral coproduct with counit. It does not
 produce an antipode. The classical formula $S(T(u)) = T(u)^{-1}$
-does not lift to a vertex-algebraic map on the spectral parameter:
-the two structural obstructions, one from the OPE pole in $T(u) T(u)$
-and one from the Hopf axiom $m \circ (S \otimes \id) \circ \Delta = \eta \varepsilon$
-incompatible with locality, are established in this chapter. We
-therefore reserve the name ``chiral bialgebra equivalence'' for this
-statement; the phrase ``chiral quantum group'' continues to denote
-the underlying structural package, with the understanding that no
-Hopf antipode exists at the vertex-algebraic level.
+does not lift to a vertex-algebraic map on the spectral parameter;
+the precise content is
+Proposition~\textup{\ref{prop:w-infty-antipode-obstruction}}, which
+exhibits two independent structural obstructions. The first is an
+OPE-locality obstruction: the quartic pole of $S(T)$ with itself
+agrees with the Virasoro value $c/2$ only at the two isolated points
+$\Psi \in \{1, 2\}$. The second is a Hopf-axiom obstruction: the
+residual of $m_z \circ (S \otimes \mathrm{id}) \circ \Delta_z$ on $T$
+contains a term $z \cdot J$ that survives at every value of $\Psi$,
+reflecting the $z$-dependence of the spectral coproduct. The two
+obstructions vanish on disjoint loci (OPE on $\Psi \in \{1,2\}$, Hopf
+nowhere), so they are not two symptoms of a single defect but two
+genuinely independent structural failures. We therefore reserve the
+name ``chiral bialgebra equivalence'' for this statement; the phrase
+``chiral quantum group'' continues to denote the underlying
+structural package, with the understanding that no Hopf antipode
+exists at the vertex-algebraic level.
 \end{remark}
 
 \begin{remark}[Associator class: cohomological vs.\ cochain canonicality]
@@ -9643,6 +9652,24 @@ $m_z(a \otimes b) = Y(a, z)\, b$:
 Since $\varepsilon(T) = 0$ (positive conformal weight),
 the right-hand side of the Hopf axiom is zero,
 and the obstruction is the nonzero expression above.
+
+\smallskip
+\noindent\emph{Independence of the two obstructions.}
+The OPE obstruction~\eqref{eq:antipode-quartic-obstruction}
+vanishes on the locus $\Psi \in \{1, 2\}$, while the
+Hopf-axiom obstruction~\eqref{eq:antipode-hopf-obstruction}
+contains the $z \cdot J$ tail for every value of~$\Psi$.
+Substituting $\Psi = 1$ into (ii) and (iii):
+$S(T)_{(3)}\, S(T) - c/2 = 2(0)(-1) = 0$, while
+$m_z \circ (S \otimes \mathrm{id}) \circ \Delta_z(T)
+= z \cdot J \neq 0$.
+The OPE locus and the Hopf locus are therefore disjoint, so the
+two obstructions are independent: neither reduces to the other,
+and lifting the antipode requires resolving both simultaneously.
+The $z \cdot J$ tail encodes the spectral covariance of
+$\Delta_z$, which has no counterpart in the classical Yangian
+antipode; it is this covariance, not the OPE singularity, that is
+the genuinely chiral obstruction.
 \end{proof}
 
 \begin{lemma}[Miura inversion of the spectral coproduct at
@@ -9918,9 +9945,10 @@ absorbs the mismatch through $u \mapsto u - z$.
 \label{rem:stokes-wN-monograph}
 The $\cW_N$ KZ connection at degree~$2$ has Poincar\'e rank
 $2N - 2$ \textup{(}from the $W_N$--$W_N$ OPE pole $2N$,
-d-log absorption to $2N - 1$\textup{)} and
-$4N - 4$ Stokes rays. $\cW_2$: $4$ rays.
-$\cW_3$: $8$ rays. Linear growth in $N$.
+d-log absorption to $2N - 1$\textup{)} and, in the
+generic anti-Stokes / Stokes-sector convention of
+Boalch and Jimbo--Miwa--Ueno, $2r = 4N - 4$ Stokes rays.
+$\cW_2$: $4$ rays. $\cW_3$: $8$ rays. Linear growth in $N$.
 \end{remark}
 
 \begin{remark}[The antipode does not lift]
@@ -10656,15 +10684,24 @@ in $Y(\mathfrak{gl}_N)$: for every matrix entry $t_{ij}(v)$,
  [\mathrm{qdet}\, T(u),\, t_{ij}(v)] \;=\; 0
  \quad \text{in } Y(\mathfrak{gl}_N)[[u^{\pm1}, v^{\pm1}]].
 \]
-The classical (non-chiral) statement is Molev's antisymmetriser
-theorem~\textup{\cite{Molev07}}, Theorem~$1.11.2$: the $N$-fold
-antisymmetriser $A_N = \frac{1}{N!}\sum_{\sigma\in S_N}
+The classical (non-chiral) statement combines two results of
+Molev~\textup{\cite{Molev07}}: Theorem~$1.6.4$ gives the
+column-determinant formula with DECREASING column
+index~\textup{(}$j = N{-}1$ leftmost, $j = 0$ rightmost\textup{)},
+and Theorem~$1.11.2$ proves centrality via the antisymmetriser
+presentation. The $N$-fold antisymmetriser
+$A_N = \frac{1}{N!}\sum_{\sigma\in S_N}
 \mathrm{sgn}(\sigma)\, P_\sigma$ acts on
 $(\bC^N)^{\otimes N}$ with one-dimensional image, and iterating the
 RTT relation contracts the action of $T_1(u)T_2(u-\Psi)\cdots
 T_N(u-(N-1)\Psi)$ against this image to the scalar
 $\mathrm{qdet}\, T(u) \cdot A_N$, which commutes with every
-$T_i(v)$ by construction of the antisymmetriser.
+$T_i(v)$ by construction of the antisymmetriser. The DECREASING
+column-index convention is the unique product ordering
+\textup{(}up to the global spectral shift
+$u \mapsto u - (N{-}1)\Psi$\textup{)} that collapses the
+antisymmetriser iteration to a scalar element of the Yangian; other
+orderings do not telescope.
 
 The chiral version introduces a spectral parameter $z$ through the
 Drinfeld coproduct~\eqref{eq:glN-drinfeld-coprod}
@@ -10684,6 +10721,47 @@ $[\mathrm{qdet}\, \Delta_z(T)(u), \Delta_z(t_{ij})(v)] = 0$
 at $N = 2, 3$ and generic $(z, u, v, \Psi)$ provides an independent
 verification path.
 \end{lemma}
+
+\begin{remark}[Decreasing-column ordering is load-bearing at
+$N \geq 3$]
+\label{rem:qdet-decreasing-ordering}
+The column-index ordering in~\eqref{eq:glN-qdet} is not a cosmetic
+choice. Define the INCREASING-index variant
+\[
+  \mathrm{qdet}^\uparrow T(u)
+  \;:=\;
+  \sum_{\sigma \in S_N}
+  \mathrm{sgn}(\sigma)\,
+  \prod_{i=1}^{N}
+  T_{i,\sigma(i)}\bigl(u - (N{-}i)\Psi\bigr),
+\]
+with product ordered $j = 0$ leftmost to $j = N-1$ rightmost. At
+$N = 2$, the two variants
+$\mathrm{qdet}\, T(u)$ and $\mathrm{qdet}^\uparrow T(u)$
+differ by the exchange of $t_{11}$ and $t_{22}$ factors and the
+transpose of the spectral shift pattern; both are central by direct
+RTT expansion, because $S_2 = \{\mathrm{id}, (12)\}$ has a single
+non-trivial cycle and the antisymmetriser image in
+$(\bC^2)^{\otimes 2}$ has codimension~$1$, forcing alignment
+between the two orderings. This is a coincidence of rank, not a
+structural feature.
+
+At $N \geq 3$, the antisymmetriser image in
+$(\bC^N)^{\otimes N}$ has codimension $N! - 1 \geq 5$, and the
+iteration of the RTT relation fails to telescope for
+$\mathrm{qdet}^\uparrow T(u)$: the commutator
+$[\mathrm{qdet}^\uparrow T(u), t_{ij}(v)]$ is generically nonzero
+at order $\Psi^2$ in the trigonometric expansion. Only the
+decreasing-index formula~\eqref{eq:glN-qdet} produces a central
+element, because it is the unique (up to the overall shift
+$u \mapsto u - (N-1)\Psi$) ordering that aligns the spectral
+shifts $u - (i-1)\Psi$ with the antisymmetriser image. In the
+chiral setting, both orderings are preserved by $\Delta_z$ (the
+argument of Lemma~\textup{\ref{lem:qdet-central-all-N}} is
+ordering-agnostic), so the decreasing-index qdet is the chirally
+central element for every $N \geq 1$, and the increasing-index
+variant is chirally central only at $N = 1, 2$.
+\end{remark}
 
 \begin{remark}[The $N = 1 \to N \geq 2$ transition]
 \label{rem:glN-transition}
@@ -11897,8 +11975,17 @@ $\Lambda^2 V$; multiplied by $k = -2$ these give $-4$ and $0$,
 both integers, so $\exp(2\pi i \cdot k\, c_2) = 1$ on every
 eigenspace.
 Part~(iii): trivial monodromy gives $H^0 = V \otimes V$
-(all flat sections are global), and
-$\chi = 4 \cdot (2 - 0 - 1) = -4$ forces $H^1 = 8$.
+(all flat sections are global), so $\dim H^0 = \dim(V \otimes V) = 4$.
+The Euler characteristic
+$\chi_{\rm ord, 2} = \dim H^0_{\rm ord, 2} - \dim H^1_{\rm ord, 2}$
+of the degree-$2$ ordered chiral homology is an invariant of the
+underlying graded vector space, independent of the choice of
+differential in the bicomplex $d_k = d_{\rm crit} + (k + 2)\delta$;
+at generic $k$ one has $\dim H^0_{\rm ord,2} = 0$ and
+$\dim H^1_{\rm ord,2} = 4$, giving $\chi_{\rm ord, 2} = -4$. Hence
+at $k = -2$, $\dim H^1_{\rm ord, 2} = \dim H^0_{\rm ord, 2} -
+\chi_{\rm ord, 2} = 4 - (-4) = 8$ (total dimension $12 = 3 \cdot 4$,
+triple the generic~$4$).
 Part~(iv): the Feigin--Frenkel theorem identifies the center
 $Z(V_{-h^\vee}(\fg)) \cong
 \operatorname{Fun}(\operatorname{Op}_{\fg^\vee}(D))$;
@@ -11914,6 +12001,31 @@ $E_2 = E_1 = H^*(d_{\mathrm{crit}})
 At $\lambda \neq 0$, $d_1$ is an isomorphism on the
 contractible part, leaving the Koszul residue in degree~$1$.
 \end{proof}
+
+\begin{remark}[Shadow stratum vs bar Koszulness at critical level]
+\label{rem:critical-shadow-vs-bar-koszul}
+Under the quadrichotomy classification of the shadow tower
+(Theorem~\ref{thm:quadrichotomy} of
+Chapter~\ref{chap:shadow-quadrichotomy-platonic}) the critical-level
+affine KM algebra $V_{-h^\vee}(\fg)$ sits on the discriminant
+locus $\{\kappa = 0\} = \{\Delta = 0,\ \alpha = 0\}$ on the
+universal vacuum line: the principal-line Riccati polynomial
+$Q_c(t) = (2\kappa)^{2}$ collapses identically to zero, which is
+the \emph{class G} stratum of the shadow tower. The shadow classification
+therefore records critical level as shadow-depth-$2$ truncated, same
+as Heisenberg. The full bar complex is \emph{not} Koszul, however:
+it is quasi-isomorphic to the de~Rham algebra
+$\Omega^{*}(\operatorname{Op}_{\fg^\vee}(D))$, which is spread over
+all degrees, not concentrated in degree~$1$. Hence shadow truncation
+depth and bar Koszulness are \emph{different} invariants: the former
+is a discriminantal quadratic classification on a finite-dimensional
+parameter space, the latter is a cohomological concentration
+statement on the infinite-dimensional bar complex. At integrable
+level $k \in \ZZ_{>0}$ and at generic $k$ the two agree (class L,
+bar Koszul); at critical level they diverge (shadow class G, bar
+non-Koszul). This divergence is a genuine feature of the critical
+locus, not a mislabelling.
+\end{remark}
 
 \begin{remark}[Three-level contrast]
 \label{rem:three-level-contrast}

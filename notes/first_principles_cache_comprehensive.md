@@ -982,9 +982,9 @@ Step 6 (hypotheses used). (i) conilpotency; (ii) finite-dim graded pieces; (iii)
 
 Status: \ClaimStatusProvedHere. Non-circular: does not use thm:bar-cobar-inversion-qi or thm:higher-genus-inversion.
 
-#### Target 2: thm:chiral-positselski-5-3 (renaming)
+#### Target 2: thm:chiral-positselski-5-2 (renaming)
 
-Already isolated as thm:chiral-co-contra-correspondence. Add secondary \label{thm:chiral-positselski-5-3} and update rem:fact-positselski-comparison to cite both names, pairing with thm:chiral-positselski-7-2.
+Already isolated as thm:chiral-co-contra-correspondence. Add secondary \label{thm:chiral-positselski-5-2} (Positselski 2011 §5.2, co-contra correspondence) and update rem:fact-positselski-comparison to cite both names, pairing with thm:chiral-positselski-7-2.
 
 #### Target 3: Theorem B clause (2) to unconditional
 
