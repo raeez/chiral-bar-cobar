@@ -1285,6 +1285,34 @@ The Vol~I and Vol~III characterizations are ORTHOGONAL:
 Vol~I asks the radius of convergence of $\tilde\Sigma$ (answer:
 $c_0/6$); Vol~III asks the Gevrey type of $S_r/r!$ (answer:
 Borel-summable, Gevrey-$1$). Both are correct simultaneously.
+
+\textbf{Numerical tightening (iter 27).} Vol~III's Gevrey-$1$ bound
+$|S_k| \le C \cdot M^k \cdot k!$ is VALID but NOT TIGHT. At
+Virasoro $c = 1$, direct numerical evaluation via
+\verb|shadow_tower_higher_vir.py| (Vol~I):
+\begin{center}
+\begin{tabular}{crrr}
+$r$ & $S_r(\Vir_{c=1})$ & $|S_{r+1}/S_r|$ & $(r+1)$ if factorial \\
+\hline
+$6$ & $8.7060$ & $4.93$ & $7$ \\
+$7$ & $-42.8924$ & $4.91$ & $8$ \\
+$8$ & $210.5736$ & --- & --- \\
+\end{tabular}
+\end{center}
+The ratio $|S_{r+1}/S_r| \approx 4.9$ is BOUNDED, not growing like
+$r + 1$ (which factorial growth would require). Hence
+$|S_r(\Vir_{c=1})|$ grows \emph{geometrically} (Gevrey-$0$),
+specifically with base $\approx 5 < 6 = 6/c$. The asymptotic limit
+approaches $6/|c| = 6$ as $r \to \infty$ (Vol~I prediction);
+finite-$r$ corrections produce the observed $4.9$ at $r = 6, 7, 8$.
+
+The Vol~III Gevrey-$1$ bound $|S_k| \le C \cdot M^k \cdot k!$
+trivially holds since $k! > 1$; but the ACTUAL growth at $c = 1$ is
+exponential (Gevrey-$0$) with base $\approx 6$. Vol~I's
+Theorem~\ref{thm:universal-class-M-C-is-6} provides the TIGHT
+$|S_r|^{1/r} \to 6/|c|$ limit; Vol~III's Gevrey-$1$ is a weaker
+upper bound preserving the Borel-summability statement without
+invoking the sharper exponential rate.
 \end{remark}
 
 \begin{remark}[\label{rem:shadow-stratification-at-r-index}
