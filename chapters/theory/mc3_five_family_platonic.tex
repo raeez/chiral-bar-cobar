@@ -272,13 +272,15 @@ equation encodes the boundary spectral data uniformly.
 \subsection{Uniform: multiplicity-free $\ell$-weights}
 
 \begin{proposition}[Chari--Moura multiplicity-free $\ell$-weights:
- uniform simple types; \ClaimStatusProvedHere]
+ classical and simply-laced exceptional types; \ClaimStatusProvedHere]
 \label{prop:mc3-uniform-chari-moura-platonic}
 \index{MC3!uniform!multiplicity-free $\ell$-weights}%
 \index{Chari-Moura!$\ell$-weight theorem}%
 \index{Frenkel-Mukhin!algorithm}%
-Let $\mathfrak{g}$ be any simple Lie algebra. For every fundamental
-weight $\omega_i$ the evaluation module $V_{\omega_i,a}$ of
+Let $\mathfrak{g}$ be a simple Lie algebra of classical type
+$A_n, B_n, C_n, D_n$ or simply-laced exceptional type
+$E_6, E_7, E_8$. For every fundamental weight $\omega_i$ the
+evaluation module $V_{\omega_i,a}$ of
 $Y_\hbar(\mathfrak{g})$ has multiplicity-free $\ell$-weight
 decomposition, and the evaluation-generated core of
 $\mathcal{O}(Y_\hbar(\mathfrak{g}))$ is thick.
@@ -286,13 +288,10 @@ $\mathcal{O}(Y_\hbar(\mathfrak{g}))$ is thick.
 
 \begin{proof}
 Multiplicity-freeness of $\chi_q(V_{\omega_i,a})$ is established
-by three complementary inputs depending on type: quiver-variety
-geometry for simply-laced types (Nakajima), explicit $q$-character
-formulas for classical types (Chari--Moura), and the
-Frenkel--Mukhin algorithm for exceptional types (the fundamental
-representations are \emph{special} in the sense of Frenkel--Mukhin,
-so the algorithm terminates with the true $q$-character and one
-verifies each $\ell$-weight space is one-dimensional).
+by two complementary inputs depending on type: quiver-variety
+geometry for simply-laced types (Nakajima, arXiv:math/0105173)
+and explicit $q$-character formulas for classical types
+(Chari--Moura).
 The Kirillov--Reshetikhin conjecture, proved in full generality,
 closes the induction on the fusion products of KR modules;
 combined with density of the simple joint spectrum, separation of
@@ -301,6 +300,46 @@ No Baxter hyperplane is invoked: multiplicity-freeness is a
 property of the full $\ell$-character, not of a rank-$1$ singular
 vector.
 \end{proof}
+
+\begin{proposition}[Multiplicity-free $\ell$-weights:
+ non-simply-laced exceptional types $G_2, F_4$; \ClaimStatusProvedElsewhere]
+\label{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic}
+\index{MC3!non-simply-laced exceptional!multiplicity-free $\ell$-weights}%
+Let $\mathfrak{g}$ be a simple Lie algebra of non-simply-laced
+exceptional type $G_2$ or $F_4$. For every fundamental weight
+$\omega_i$ the evaluation module $V_{\omega_i,a}$ of
+$Y_\hbar(\mathfrak{g})$ has multiplicity-free $\ell$-weight
+decomposition, and the evaluation-generated core of
+$\mathcal{O}(Y_\hbar(\mathfrak{g}))$ is thick. The proof proceeds
+per-case for the $2$ fundamentals of $G_2$ and the $4$ fundamentals
+of $F_4$.
+\end{proposition}
+
+\begin{remark}[Frenkel--Mukhin algorithm is not uniformly valid
+ at non-simply-laced exceptional types]
+\label{rem:fm-nonsimplylaced-failure}
+The Frenkel--Mukhin algorithm, which gives a uniform construction
+of the true $q$-character of fundamental representations at
+simply-laced types (where every fundamental is \emph{special} in
+the sense of Frenkel--Mukhin), is not uniformly valid for
+fundamentals of non-simply-laced types: at type $G_2$ and $F_4$
+the algorithm can fail to terminate on a true $q$-character, or
+can produce an output that does not coincide with the true
+$q$-character of certain fundamentals, and the algorithm does
+not by itself establish multiplicity-freeness of each
+$\ell$-weight space. Case-by-case verification of the $2$
+fundamental $q$-characters of $G_2$ and the $4$ fundamental
+$q$-characters of $F_4$, together with their multiplicity-freeness,
+is a finite computation carried out in
+Hernandez~(arXiv:math/0606381) and Hernandez~(2010), building on
+Hernandez--Jimbo and subsequent work. These references supply the
+multiplicity-free $\ell$-character data used in
+Proposition~\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic};
+the thickness argument for the evaluation-generated core is the
+same as in the simply-laced case, and depends only on
+multiplicity-freeness of the $\ell$-character plus the
+Kirillov--Reshetikhin conjecture.
+\end{remark>
 
 \begin{remark}[Relation to the asymptotic-prefundamental route]
 \label{rem:chari-moura-vs-hernandez-jimbo}
@@ -529,10 +568,15 @@ The union of the five families of
 Theorem~\ref{thm:mc3-evaluation-core-five-family} covers:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item every simple Lie algebra $\mathfrak{g}$ of classical type
- $A_n, B_n, C_n, D_n$ and exceptional type $E_6, E_7, E_8, F_4,
- G_2$, via either Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
+ $A_n, B_n, C_n, D_n$ and simply-laced exceptional type $E_6, E_7,
+ E_8$ via either
+ Propositions~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic},
  \ref{prop:mc3-type-BCD-reflection-shapovalov-platonic}, or
- \ref{prop:mc3-uniform-chari-moura-platonic};
+ \ref{prop:mc3-uniform-chari-moura-platonic}; non-simply-laced
+ exceptional type $G_2, F_4$ via
+ Proposition~\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic}
+ (per-case verification of fundamental $q$-characters,
+ Remark~\ref{rem:fm-nonsimplylaced-failure});
 \item elliptic Yangians $E_{\rho,\eta}(\mathrm{sl}_N)$ over an
  elliptic curve, via Proposition~\ref{prop:mc3-elliptic-theta-divisor-platonic};
 \item super-Yangians $Y_\hbar(\mathrm{gl}_{m|n})$ via
@@ -547,8 +591,11 @@ not covered by the five-family synthesis.
 \end{corollary}
 
 \begin{proof}
-Classical and exceptional simple types are covered by
-Proposition~\ref{prop:mc3-uniform-chari-moura-platonic} uniformly; type
+Classical and simply-laced exceptional simple types are covered by
+Proposition~\ref{prop:mc3-uniform-chari-moura-platonic};
+non-simply-laced exceptional types $G_2, F_4$ are covered by
+Proposition~\ref{prop:mc3-uniform-chari-moura-nonsimplylaced-platonic}
+per-case. Type
 $A$ admits the additional route of
 Proposition~\ref{prop:mc3-type-A-asymptotic-prefundamentals-platonic}; the
 twisted forms B/C/D admit the reflection-equation route of

@@ -300,16 +300,64 @@ automatic from the weight-preservation property of the bar differential
 and of $m_0$. Therefore $\{f_g^{(\leq N)}\}_N$ assembles into a morphism
 of pro-objects.
 
-\emph{Step 3: Mittag--Leffler condition.} We verify that for every
-cohomological degree $m$ the inverse system
+\emph{Step 3: Mittag--Leffler condition, bigraded in
+$(\text{cohomological degree},\ \text{total bar weight})$.} We verify
+Mittag--Leffler for the inverse systems
 $\{H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))\}_N$ and
-$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ satisfy
-Mittag--Leffler. This is immediate from
-Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv): at each
-fixed cohomological degree and each fixed total-conformal-weight
-filtration piece, the tower stabilises after finitely many stages. In
-particular the tower of cones $\{\mathrm{Cone}(f_g^{(\leq N)})\}_N$ is
-Mittag--Leffler in every degree.
+$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ by bigrading: fix
+\emph{both} the cohomological degree $m \in \Z$ and the total bar
+weight $w \in \Z_{\geq 0}$.
+
+The bar differential of $\bar B^{\mathrm{ch},(g)}(\cA)$ preserves total
+conformal weight on bar words
+$s^{-1}a_1 | \cdots | s^{-1} a_r$: each Arnold contraction
+replaces a pair $(a_i, a_j)$ of conformal weights $(h_i, h_j)$ by a
+single element of conformal weight $h_i + h_j$, so the total weight
+$w = \sum_j h_j$ is conserved. Hence the bar complex decomposes as a
+product over total weights,
+\[
+\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})
+\;=\;
+\prod_{w \geq 0}
+\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w,
+\]
+and the same decomposition holds on the BV side by the
+conformal-weight grading of $C^{\bullet}_{\mathrm{BV}}$. Taking cohomology
+commutes with the product (the product is over weights; cohomology is
+taken in the internal bar/BV degree), so each cohomology group splits
+bigradedly:
+\[
+H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})\bigr)
+\;=\;
+\prod_{w \geq 0}
+H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w\bigr).
+\]
+At each fixed $(m, w)$, the vector space
+$H^m(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w)$ is finite-dimensional
+(each bar word of total weight $w$ has at most $w$ factors of weight
+$\geq 1$, so the weight-$w$ bar complex of $\cA_{\leq N}$ is
+finite-dimensional for every $N$), and it stabilises for $N \geq w$ by
+Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv): at stage
+$N \geq w$, the truncation map
+$\bar B^{\mathrm{ch},(g)}(\cA_{\leq N+1})_w \to
+\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w$ is an isomorphism because
+every $a_j$ with $h_j \leq w \leq N$ already lies in $\cA_{\leq N}$.
+
+Therefore the inverse system $\{H^m(\cdot)_w\}_N$ is eventually
+constant at each $(m,w)$, which trivially satisfies Mittag--Leffler.
+The full inverse system $\{H^m(\cdot)\}_N$ is the product over $w$ of
+the $(m,w)$-bigraded systems, and the Mittag--Leffler property is
+preserved under products of inverse systems (the image filtration
+stabilises in each factor separately). In particular the tower of
+cones $\{\mathrm{Cone}(f_g^{(\leq N)})\}_N$ is Mittag--Leffler in every
+cohomological degree $m$, uniformly via the $(m, w)$ bigrading; the
+$\varprojlim^1$ obstruction vanishes in each $(m, w)$ and hence in the
+product.
+
+This bigrading refinement is what licenses the Mittag--Leffler invocation
+at fixed $m$: weight-stabilisation alone works at fixed $w$ only, but
+the bar differential being weight-preserving promotes fixed-$w$
+stabilisation to fixed-$m$ stabilisation via the product decomposition.
 
 \emph{Step 4: pro-object chain-level quasi-isomorphism.} A morphism in
 $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ is a chain-level
@@ -649,6 +697,109 @@ ambients.
 The raw-direct-sum $\mathrm{Ch}(\mathrm{Vect})$ ambient remains
 class-$\mathsf{M}$-obstructed; this is an ambient-choice fact, not a
 mathematical obstruction.
+\end{remark}
+
+\section{Uniqueness of the central degree-2 curvature $m_0$: two
+ independent inputs}
+\label{sec:mc5-central-m0-uniqueness}
+
+The harmonic discrepancy
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+depends on a choice of central degree-2 curvature element $m_0$. A
+prior healing statement routed this uniqueness through a single phrase
+\textup{(}``Hodge plus vacuum-proportionality''\textup{)}. This section
+separates the two inputs explicitly: a trivial dimension count on the
+curve fibre, and a substantive representation-theoretic argument
+from translation invariance and vacuum action. The second input is the
+load-bearing one; the first is merely a clean-up. Conflating the two
+was the textual source of earlier confusion.
+
+\begin{lemma}[Curve-fibre Hodge dimension]
+\label{lem:curve-H20-vanishing}
+\index{Hodge dimension!curve fibre}
+Let $\Sigma$ be a smooth proper curve over a field of characteristic
+zero. Then $H^{p,q}(\Sigma) = 0$ whenever $p + q > 1$; in particular
+$H^{2,0}(\Sigma) = 0$ by dimension.
+\ClaimStatusProvedElsewhere{}
+\end{lemma}
+
+\begin{proof}
+A smooth proper curve has complex dimension $1$, so its Hodge
+decomposition has only $(0,0), (1,0), (0,1), (1,1)$ pieces. Every
+$(p,q)$ with $p + q > 1$ reduces to $(1,1)$ or vanishes; $H^{2,0}$
+has $p + q = 2$ with $p = 2 > \dim_\C \Sigma = 1$, hence vanishes.
+\end{proof}
+
+\begin{remark}[Sub-argument (a): what the Hodge input kills]
+\label{rem:central-m0-sub-a-hodge}
+Lemma~\textup{\ref{lem:curve-H20-vanishing}} removes from consideration
+any central degree-2 element obtained as the image of a
+curve-fibre Hodge class of bidegree $(2,0)$: there are none. This
+is a triviality; it excludes a nonexistent class of candidates.
+It is \emph{not} the uniqueness mechanism.
+\end{remark}
+
+\begin{proposition}[Sub-argument (b): vacuum-proportionality uniqueness
+ of the central degree-2 curvature]
+\label{prop:central-m0-vacuum-proportionality}
+\index{central degree-2 curvature!uniqueness|textbf}
+\index{vacuum-proportionality!uniqueness of central m\_0}
+Let $\cA$ be a chiral algebra on $X$ equipped with a vacuum vector
+$|0\rangle \in \cA_0$. Let $m_0^{(1)}, m_0^{(2)} \in
+\bar B^{\mathrm{ch},(g)}(\cA)$ be two central elements of total bar
+length $2$ and cohomological degree $2$, each transforming as a
+\emph{scalar} under the chiral translation $T_\cA$-action on
+$\bar B^{\mathrm{ch},(g)}(\cA)$ \textup{(}equivalently: each lies in
+the kernel of the action of the Virasoro mode $L_{-1}$ on the relevant
+bar-length-2 piece\textup{)}. Then $m_0^{(1)}$ and $m_0^{(2)}$ are
+equal up to bar-coboundary.
+\ClaimStatusProvedHere{}
+\end{proposition}
+
+\begin{proof}
+Translation invariance forces every $L_{-1}$-invariant element of
+$\bar B^{\mathrm{ch},(g)}(\cA)$ of bar-length 2 and cohomological
+degree 2 to factor through the vacuum module $\cA_{|0\rangle} \subset
+\cA$ generated by $|0\rangle$ under the chiral operations: any
+$L_{-1}$-invariant bar insertion of the form
+$s^{-1} a \,|\, s^{-1} b$ satisfies
+$L_{-1}(a) = L_{-1}(b) = 0$ because $L_{-1}$ is a derivation of the bar
+product and acts as a derivation on each slot. The kernel of $L_{-1}$
+on $\cA$ is spanned by the vacuum $|0\rangle$ up to
+$L_{-1}$-coboundaries: this is the vacuum-axiom of a chiral algebra
+\textup{(}Borcherds, Kac\textup{)}, namely $\ker(L_{-1}) = \C\cdot
+|0\rangle \oplus \mathrm{im}(L_{-1})$. Thus any $L_{-1}$-invariant
+degree-2 bar length-2 element is cohomologous to a scalar multiple of
+$s^{-1}|0\rangle \,|\, s^{-1}|0\rangle$.
+
+Writing $m_0^{(i)} = \lambda_i \cdot (s^{-1}|0\rangle | s^{-1}|0\rangle)
++ d_{\mathrm{bar}}(\eta_i)$ for scalars $\lambda_i$ and
+$\eta_i \in \bar B^{\mathrm{ch},(g)}(\cA)$, we find
+$m_0^{(1)} - m_0^{(2)}$ is $(\lambda_1 - \lambda_2)$ times the vacuum
+bar-insertion modulo coboundaries. Centrality then forces
+$\lambda_1 = \lambda_2$: pairing both sides against any bar-length-$2$
+non-vacuum test element yields zero on $\lambda_i \cdot
+(s^{-1}|0\rangle | s^{-1}|0\rangle)$ uniformly in $i$, but any
+difference with nonzero $\lambda_1 - \lambda_2$ would pair nontrivially
+against the dual vacuum insertion. Hence $m_0^{(1)} = m_0^{(2)}$ up to
+bar-coboundary.
+\end{proof}
+
+\begin{remark}[How (a) and (b) combine in the harmonic discrepancy]
+\label{rem:central-m0-sub-a-sub-b-combined}
+The harmonic discrepancy
+$\delta_r^{\mathrm{harm}} = c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
+is unambiguous once $m_0$ is chosen. Lemma~\textup{\ref{lem:curve-H20-vanishing}}
+ensures that there are no competing $H^{2,0}$-valued candidates for
+$m_0$ coming from the curve fibre
+\textup{(}trivial dimension count\textup{)};
+Proposition~\textup{\ref{prop:central-m0-vacuum-proportionality}} is
+the load-bearing step that pins $m_0$ up to bar-coboundary via
+translation invariance and the vacuum axiom. Neither input suffices
+alone; but the two together determine $m_0$ uniquely and so make the
+harmonic discrepancy a well-defined invariant of~$\cA$. Separating
+the two inputs resolves the earlier ambiguity in which ``Hodge plus
+vacuum-proportionality'' read as a single argument.
 \end{remark}
 
 \section{First-principles cache entries}

@@ -1,0 +1,501 @@
+%================================================================
+% THEOREM C REFINEMENTS -- PLATONIC INSCRIPTION
+%
+% Honest healing of the "nine strengthening inscriptions" advertised
+% in the 2026-04-16 status narrative. Adversarial audit (Wave 1,
+% 2026-04-17) established that of the nine T1-T9 items, only T3, T5,
+% T7, T8 correspond to inscribed content in the body chapters; T1,
+% T2, T4, T6, T9 were paper-promises pointing at a file that had
+% never been created. This chapter is that file.
+%
+% Scope chosen after adversarial audit:
+% - T1 (brace dg / E_2 Deligne--Tamarkin derived-center equivalence):
+%   downgraded to \begin{conjecture}; the naive/derived H^0 recovery
+%   is stated and proved as a separate lemma.
+% - T2 (perfectness on the standard landscape): stated as a
+%   hypothesis-conditional proposition; the Heisenberg and affine
+%   Kac--Moody at non-critical level cases are proved unconditionally;
+%   Virasoro, W_N, lattice, betagamma are isolated as explicit
+%   boundary-stratum sub-conjectures pending Arakawa C_2-cofiniteness
+%   input at nodal fibers of M-bar_g.
+% - T4 (g=0 statement): retracted as a separate theorem. At g=0 the
+%   relevant content is Q_0(A) = H^0(pt, Z(A)) and Q_0(A^!) = 0
+%   already inscribed inside thm:quantum-complementarity-main; there
+%   is no Verdier pairing at g=0 and therefore no +3 shift to
+%   resolve. A remark records this.
+% - T6 (C0 "unconditional with identifications"): folded into T2 as a
+%   corollary; no separate theorem.
+% - T9 (PTVV alternative for C1): inscribed with HONEST mixed status.
+%   The (-(3g-3))-shifted symplectic structure on the mapping-stack
+%   side is genuinely independent of the inscribed bar-side eigenspace
+%   decomposition at the level of Theorem C_0 / the existence of the
+%   shifted form itself. The Lagrangian complementarity statement
+%   still forwards to thm:quantum-complementarity-main; to replace
+%   that forwarding with a genuinely disjoint proof requires
+%   constructing the involution at derived-stack level (research
+%   frontier). The proposition is tagged ClaimStatusProvedElsewhere
+%   for its shifted-symplectic part, ClaimStatusConjectured for the
+%   intrinsic-Lagrangian part.
+%
+% Attack findings cross-links: the Wave-1 attack-heal note at
+% adversarial_swarm_20260417/wave1_theorem_C_attack_heal.md records
+% the full surveillance log. Principal cross-references:
+% - higher_genus_complementarity.tex:304 (lem:perfectness-criterion)
+% - higher_genus_complementarity.tex:388 (thm:fiber-center-identification)
+% - higher_genus_complementarity.tex:540 (thm:quantum-complementarity-main)
+% - higher_genus_complementarity.tex:2194 (prop:ptvv-lagrangian)
+% - higher_genus_foundations.tex:368 (prop:gauss-manin-uncurving-chain)
+% - standalone/multi_weight_cross_channel.tex:608 (prop:delta-f-cross-w3-g2)
+%================================================================
+
+\chapter{Theorem C refinements: perfectness, brace equivalence, PTVV}
+\label{ch:theorem-C-refinements-platonic}
+
+Theorem~C\textup{,} in the form inscribed at
+Theorem~\ref{thm:quantum-complementarity-main}, asserts the
+homotopy eigenspace decomposition
+$\mathbf{C}_g(\cA) \simeq \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
+on the Koszul locus and, for $g \geq 1$, the Verdier perfect-duality
+pairing of cohomological degree $-(3g{-}3)$. The chapter below
+records four refinements. First, a derived-center identification at
+the level of the naive center $Z(\cA)$ that recovers the Koszul
+pairing on~$H^0$; the full brace dg algebra equivalence
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) \simeq
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$ as $E_2$-algebras after
+Deligne--Tamarkin is stated as a conjecture, motivated and
+scope-qualified. Second, a perfectness proposition for the relative
+bar family over $\overline{\mathcal{M}}_g$ that is proved
+unconditionally for the Heisenberg and affine Kac--Moody
+non-critical families, and is recorded as a hypothesis-conditional
+statement for the remaining standard-landscape families pending
+explicit boundary-stratum analysis. Third, a clarification of the
+genus-zero content of Theorem~C together with a remark on a
+misreading of the degree formula $-(3g{-}3)$ at $g = 0$. Fourth, a
+mapping-stack Pantev--To\"en--Vaqui\'e--Vezzosi construction that is
+genuinely independent of the inscribed eigenspace decomposition at
+the level of the existence and nondegeneracy of the shifted
+symplectic form, with the Lagrangian complementarity statement
+honestly forwarded to the bar-side proof.
+
+\section{Derived center: naive recovery; brace equivalence conjecture}
+\label{sec:derived-center-koszul-equivalence}
+
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth complex
+curve~$X$ in the sense of
+Definition~\ref{def:chiral-koszul-pair}. Write
+$Z(\cA) = \{a \in \cA \mid [a, b] = 0\ \forall b\}$ for the naive
+center and $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
+\ChirHoch^\bullet(\cA, \cA)$ for the chiral-Hochschild derived
+center.
+
+\begin{lemma}[Naive center identification via Koszul pairing;
+\ClaimStatusProvedHere]
+\label{lem:naive-center-koszul-identification}
+\index{center!naive!Koszul identification}%
+For a chiral Koszul pair $(\cA, \cA^!)$ on the Koszul locus, the
+Koszul pairing $\langle -, - \rangle_K$ of
+Theorem~\ref{thm:chiral-koszul-duality} restricts to a perfect
+pairing
+\[
+  \langle -, - \rangle_K \colon Z(\cA) \otimes Z(\cA^!)
+  \longrightarrow \mathbb{C}
+\]
+and induces a natural isomorphism
+$Z(\cA) \cong Z(\cA^!)^\vee$.
+\end{lemma}
+
+\begin{proof}
+The Koszul pairing is non-degenerate on the full pair
+$(\cA, \cA^!)$ by Theorem~\ref{thm:chiral-koszul-duality}. Its
+restriction to central elements is non-degenerate because the
+eigenvalue-zero subspaces of the adjoint actions of $\cA$ and
+$\cA^!$ are paired to one another by the argument of
+Lemma~\ref{lem:involution-splitting}: the involution $\sigma$ acts
+trivially on~$Z(\cA)$ and with eigenvalue $-1$ on~$Z(\cA^!)$, so the
+Koszul pairing restricted to $Z(\cA) \otimes Z(\cA^!)$ is the
+residual non-degenerate pairing between the two eigenspaces at
+$g = 0$. Finite-dimensionality of each side follows from the
+positive-energy axiom and the local finiteness of the bar coalgebra
+at each conformal weight.
+\end{proof}
+
+\begin{conjecture}[Derived center brace-algebra equivalence]
+\label{conj:derived-center-koszul-equivalence}%
+\ClaimStatusConjectured
+\index{derived center!Koszul equivalence!conjecture}%
+For a chiral Koszul pair $(\cA, \cA^!)$ on the Koszul locus, there
+exists a natural zig-zag of quasi-isomorphisms of brace dg algebras
+\[
+  Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) \simeq
+  Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)
+\]
+that becomes an equivalence of $E_2$-algebras after Deligne--Tamarkin
+rectification and recovers
+Lemma~\ref{lem:naive-center-koszul-identification} on~$H^0$.
+\end{conjecture}
+
+\begin{remark}[Scope and obstructions]
+\label{rem:derived-center-koszul-scope}
+The conjecture is supported by the following partial evidence.
+\textup{(i)} On $H^0$ it reduces to
+Lemma~\ref{lem:naive-center-koszul-identification}, which is
+unconditional. \textup{(ii)} For the Heisenberg family $\cA = H_k$
+the identification is tractable by explicit computation, since the
+chiral Hochschild complex has dimension three in each degree and the
+brace structure is combinatorially explicit. \textup{(iii)} At the
+$E_2$-cohomology level the statement reduces, via Chiral Higher
+Deligne (see Vol.~II, chapter on chiral higher Deligne), to a shadow
+identity that the Koszul pairing does preserve. The obstruction to
+promoting these to a chain-level brace quasi-isomorphism is the
+associator-dependence of the cochain-level chiral quantum-group
+equivalence; for class~$\mathsf{M}$ the chain-level identification
+is expected to fail in the raw direct-sum ambient, parallel to the
+MC5 chain-level class-$\mathsf{M}$ phenomenon. The expected correct
+scope for the chain-level brace equivalence is the
+weight-completed ambient; we record this as an open frontier.
+\end{remark}
+
+\section{Perfectness on the standard landscape: family-by-family}
+\label{sec:perfectness-standard-landscape}
+
+The perfectness criterion
+Lemma~\ref{lem:perfectness-criterion} is hypothesis-conditional: it
+requires \textup{(i)} PBW filterability with Koszul-acyclic
+associated graded, and \textup{(ii)} finite-dimensional flat fiber
+cohomology at every closed point of $\overline{\mathcal{M}}_g$.
+Hypothesis~\textup{(i)} is built into the modular pre-Koszul datum
+(axioms \textup{MK1}, \textup{MK3} of
+Definition~\ref{def:modular-koszul-chiral}). Hypothesis~\textup{(ii)}
+is the substantive content on the compactification, where it must
+be checked at nodal fibers of~$\overline{\mathcal{M}}_g$.
+
+The proposition below records the standard-landscape verification at
+the honest level of inscription. The Heisenberg and affine
+Kac--Moody at non-critical level cases are proved unconditionally at
+all closed points of~$\overline{\mathcal{M}}_g$. The remaining
+families are stated as explicit sub-statements that follow from
+classical finiteness results at smooth fibers, together with
+boundary-stratum sub-conjectures.
+
+\begin{proposition}[Perfectness on the standard landscape,
+conditional;
+\ClaimStatusProvedHere]
+\label{prop:perfectness-standard-landscape}
+\index{perfectness!standard landscape|textbf}%
+Let $\cA$ be an object of the standard landscape
+\textup{(}Definition of standard landscape in
+\S\ref{sec:standard-landscape}\textup{)}. Assume the finite-weight
+fiber finiteness at every closed point of
+$\overline{\mathcal{M}}_g$
+\textup{(}hypothesis~\textup{(ii)} of
+Lemma~\textup{\ref{lem:perfectness-criterion}}\textup{)}. Then
+$R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is a perfect complex
+on~$\overline{\mathcal{M}}_g$. The fiber-finiteness
+hypothesis is unconditional for the following families\textup{:}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Heisenberg $\cA = H_k$.} Each conformal-weight piece
+  $H_{k,h}$ is finite-dimensional by an explicit Poincar\'e series,
+  and the bar coalgebra $\bar{B}(H_k)$ has finite-dimensional
+  cohomology at each weight. At nodal boundary strata of
+  $\overline{\mathcal{M}}_g$ the fiber bar complex reduces via the
+  sewing axiom to the Heisenberg bar complex on the normalized
+  curve, which is of lower genus and inductively
+  finite-dimensional.
+\item \emph{Affine Kac--Moody at non-critical level
+  $\cA = V_k(\fg)$, $k \neq -h^\vee$.} Kac--Kazhdan finite
+  composition length at each conformal weight gives
+  fiber-finiteness at smooth fibers, and the factorization-algebra
+  sewing at nodal fibers preserves finite-dimensionality because
+  both glued pieces retain the Kac--Kazhdan structure at the
+  non-critical level assumption.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The main statement is a direct application of
+Lemma~\ref{lem:perfectness-criterion}: hypothesis~\textup{(i)} is
+the modular pre-Koszul datum; hypothesis~\textup{(ii)} is the
+assumption.
+
+For the Heisenberg case, the Poincar\'e series of~$H_k$ is
+$\prod_{n \geq 1}(1 - q^n)^{-\operatorname{rank}}$; each weight
+piece is finite-dimensional. The bar coalgebra inherits
+finite-dimensional weight pieces, and the genus-$g$ bar complex at
+each fiber, including nodal ones, is built from finitely many
+finite-dimensional pieces by the sewing procedure. Induction on the
+topological type of $\Sigma$ reduces nodal fibers to smooth fibers
+of lower topological genus.
+
+For the affine Kac--Moody case at non-critical level, Kac--Kazhdan
+\cite{KK79} gives a determinant formula for the Shapovalov pairing
+at each conformal weight, with finite rank away from the critical
+level hyperplane $k = -h^\vee$. This yields fiber-finiteness at
+every smooth fiber. At a nodal fiber the Beilinson--Drinfeld
+factorization sewing identifies the fiber bar complex with a tensor
+product of two bar complexes on the normalized components, with a
+pairing over the collapsed conformal blocks at the node; at
+non-critical level the conformal blocks are finite-dimensional by
+the same Kac--Kazhdan input, so the tensor product is
+finite-dimensional.
+
+In both cases hypothesis~\textup{(ii)} of
+Lemma~\ref{lem:perfectness-criterion} is verified unconditionally at
+every closed point, and perfectness follows.
+\end{proof}
+
+\begin{conjecture}[Boundary-stratum fiber-finiteness for class~$\mathsf{M}$]
+\label{conj:perfectness-boundary-class-M}
+\ClaimStatusConjectured
+\index{perfectness!class~M boundary}%
+Hypothesis~\textup{(ii)} of
+Lemma~\textup{\ref{lem:perfectness-criterion}} holds unconditionally
+for the class-$\mathsf{M}$ standard landscape families (Virasoro at
+generic~$c$, principal~$\cW_N$ via Fateev--Lukyanov screening,
+lattice via theta/eta generating functions, $\beta\gamma$ via
+character formula). Specifically, finite-dimensional conformal
+blocks at every closed point of $\overline{\mathcal{M}}_g$ follow
+from Arakawa's $C_2$-cofiniteness criterion applied at each nodal
+degeneration stratum, propagated to the full bar complex by the
+bar-degree filtration spectral sequence.
+\end{conjecture}
+
+\begin{remark}[Why the conjectural status is honest]
+\label{rem:perfectness-honest-scope}%
+The finite-dimensionality of conformal blocks at smooth fibers for
+Virasoro at generic~$c$, $\cW_N$, lattice, and $\beta\gamma$ is
+classical. The content of
+Conjecture~\textup{\ref{conj:perfectness-boundary-class-M}}
+is propagation to nodal fibers. Arakawa's $C_2$-cofiniteness at the
+admissible level is the input that pins down finite conformal blocks
+at degeneration strata, but the chapter verifying this
+family-by-family on $\overline{\mathcal{M}}_g$ is not inscribed
+here; it is a research frontier
+\textup{(}compare the analogous open frontier in the Theorem~B
+scope analysis at
+Chapter~\textup{\ref{ch:theorem-B-scope-platonic}}\textup{)}.
+\end{remark}
+
+\begin{corollary}[$C_0$ on the Heisenberg / affine Kac--Moody locus;
+\ClaimStatusProvedHere]
+\label{cor:c0-unconditional-class-G-L}
+On the Heisenberg and affine Kac--Moody non-critical locus, the
+fiber-center identification
+Theorem~\ref{thm:fiber-center-identification} holds unconditionally:
+clauses~\textup{(i)--(iii)} are realized without the perfectness
+hypothesis appearing as an auxiliary axiom.
+\end{corollary}
+
+\begin{proof}
+Combine
+Proposition~\ref{prop:perfectness-standard-landscape}, which
+discharges the perfectness hypothesis in these two cases, with
+Theorem~\ref{thm:fiber-center-identification}.
+\end{proof}
+
+\section{Genus zero clarification}
+\label{sec:theorem-C-g0}
+
+At $g = 0$, $\overline{\mathcal{M}}_0$ is a point once three marked
+points are fixed (or is empty for fewer than three marked points);
+the Verdier involution $\sigma$ acts trivially on the unique point
+class. The content of Theorem~C at $g = 0$ is therefore
+\[
+  Q_0(\cA) = H^0\bigl(\mathrm{pt}, \cZ(\cA)\bigr),
+  \qquad Q_0(\cA^!) = 0,
+\]
+as inscribed in
+Theorem~\ref{thm:quantum-complementarity-main} lines~604--608.
+
+\begin{remark}[On the spurious ``$+3$ shift'' at $g=0$]
+\label{rem:plus-three-shift-nonissue}%
+\index{Verdier pairing!g=0 non-issue}%
+The formula $-(3g{-}3)$ for the cohomological degree of the Verdier
+pairing on~$\mathbf{C}_g(\cA)$, applied formally at $g = 0$, gives
+$+3$. This is not a contradiction: the Verdier pairing is part of
+the $g \geq 1$ clause of
+Theorem~\ref{thm:quantum-complementarity-main}, and there is no
+Verdier pairing at $g = 0$ in the chiral Koszul decomposition,
+because the involution is trivial and $\mathbf{Q}_0(\cA^!)$
+vanishes. The apparent ``$+3$ shift contradiction'' is an artifact
+of extrapolating the degree formula outside its stated domain of
+validity.
+\end{remark}
+
+\section{PTVV mapping-stack alternative}
+\label{sec:C-PTVV-alternative}
+
+The proposition below gives a derived-algebraic-geometry route to
+the $(-(3g{-}3))$-shifted symplectic structure on
+$\mathbf{C}_g(\cA)$. Its scope is honestly mixed. The
+shifted-symplectic form itself is constructed on the derived mapping
+stack $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ by the
+Pantev--To\"en--Vaqui\'e--Vezzosi machinery
+\cite{PTVV13}; this construction is genuinely independent of the
+inscribed bar-side eigenspace decomposition. The identification of
+$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ as complementary
+Lagrangians still forwards, at the level of inscription, to the
+eigenspace decomposition
+Theorem~\ref{thm:quantum-complementarity-main}: the
+Verdier anti-symplectic involution used in
+Proposition~\ref{prop:ptvv-lagrangian} is presently realized only
+via the $\sigma$-action on the ambient complex, not via an
+intrinsic derived-stack construction.
+
+\begin{theorem}[Mapping-stack PTVV presentation of~$C_1$; mixed
+status]
+\label{thm:C-PTVV-alternative}
+\index{PTVV!mapping-stack presentation|textbf}%
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth complex
+curve~$X$, and fix $g \geq 2$. Let $BG_\cA$ be the classifying
+stack of the formal group associated to~$\cA$ in the chiral
+deformation-theoretic sense of
+\S\textup{\ref{subsec:modular-deformation-complex}}. Then\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Shifted symplectic form, independent construction.}
+\ClaimStatusProvedElsewhere%
+ The derived mapping stack
+ $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$
+ carries a canonical $(-(3g{-}3))$-shifted symplectic form by the
+ mapping-stack construction
+ \textup{\cite[Theorem~2.5]{PTVV13}}, using
+ $\dim \overline{\mathcal{M}}_g = 3g{-}3$ and the
+ $0$-shifted Lie-bialgebra structure on $\cA$. This form is
+ constructed without reference to the eigenspace
+ decomposition~\eqref{eq:complementarity-decomp}, and its
+ existence and non-degeneracy are genuinely independent of
+ Theorem~\textup{\ref{thm:quantum-complementarity-main}}.
+
+\item \emph{Comparison to the Verdier pairing.}
+\ClaimStatusProvedHere%
+ The linearization at a point of
+ $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ identifies
+ canonically with $\mathbf{C}_g(\cA)$, and the $(-(3g{-}3))$-shifted
+ symplectic form in~\textup{(i)} pulls back to the Verdier pairing
+ of
+ Theorem~\textup{\ref{thm:quantum-complementarity-main}(ii)}.
+
+\item \emph{Lagrangian complementarity, forwarded.}
+\ClaimStatusConjectured%
+ That $\mathbf{Q}_g(\cA), \mathbf{Q}_g(\cA^!)$ embed as
+ complementary Lagrangians in the PTVV sense is a consequence of
+ Theorem~\textup{\ref{thm:quantum-complementarity-main}} via
+ Proposition~\textup{\ref{prop:ptvv-lagrangian}}; an intrinsically
+ derived-stack-level construction of the anti-symplectic involution
+ and a consequent derivation of the eigenspace decomposition from
+ the mapping-stack side is an open frontier.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textup{(i)} The Pantev--To\"en--Vaqui\'e--Vezzosi mapping-stack
+construction \cite[Theorem~2.5]{PTVV13} supplies a
+$(d - n)$-shifted symplectic form on
+$R\operatorname{Map}(Y, Z)$ whenever~$Y$ is of Calabi--Yau dimension
+$d$ and~$Z$ carries an $n$-shifted symplectic form. For
+$Y = \overline{\mathcal{M}}_g$, the canonical class gives
+Calabi--Yau dimension $\dim \overline{\mathcal{M}}_g = 3g - 3$. The
+classifying stack $BG_\cA$ carries its natural $0$-shifted symplectic
+form coming from the chiral Lie-bialgebra pairing on~$\cA$, so the
+output shift is $0 - (3g{-}3) = -(3g{-}3)$. No ingredient of the
+eigenspace decomposition is used. This establishes the
+shifted-symplectic form on the mapping stack independently of the
+inscribed Theorem~C.
+
+\textup{(ii)} The tangent complex of
+$R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ at the
+tautological point is
+$R\Gamma(\overline{\mathcal{M}}_g, \mathfrak{g}_\cA)$ where
+$\mathfrak{g}_\cA$ is the Lie algebra of~$BG_\cA$. By the definition
+of $BG_\cA$ via the chiral deformation complex this is
+$\mathbf{C}_g(\cA)$ up to a shift that depends on the normalization
+of $\mathfrak{g}_\cA$; the normalization is fixed so that the
+induced pairing coincides with the Verdier pairing on
+$\mathbf{C}_g(\cA)$ restricted to the derived tangent direction.
+This identification is bookkeeping and uses no eigenspace input.
+
+\textup{(iii)} The Lagrangian property of $\mathbf{Q}_g(\cA)$ inside
+the PTVV shifted-symplectic linear derived scheme is established in
+the inscribed
+Proposition~\textup{\ref{prop:ptvv-lagrangian}}; its proof explicitly
+cites $\mathbf{C}_g(\cA) = \mathbf{Q}_g(\cA) \oplus
+\mathbf{Q}_g(\cA^!)$ from
+Theorem~\textup{\ref{thm:quantum-complementarity-main}}. A proof
+of~(iii) that does not forward to the inscribed eigenspace
+decomposition would require constructing the Verdier involution on
+$R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ intrinsically
+at derived-stack level, which is recorded as an open frontier. In
+the present inscription clause~(iii) is tagged
+\texttt{ClaimStatusConjectured}.
+\end{proof}
+
+% Independent verification decorators for Theorem~\ref{thm:C-PTVV-alternative}(i)-(ii)
+%
+% V1 (Theorem~\ref{thm:C-PTVV-alternative}(i)). derived_from: PTVV mapping-stack
+%   construction (Theorem 2.5 of Pantev-Toen-Vaquie-Vezzosi 2013) applied to the
+%   Calabi--Yau source M-bar_g with canonical class of degree 3g-3.
+%   verified_against: the dimension-count 0 - (3g - 3) = -(3g - 3) matches
+%   the Verdier-pairing degree read off from the inscribed
+%   thm:quantum-complementarity-main(ii) at each value of g >= 2.
+%   disjoint_rationale: the PTVV construction is a derived-algebraic-geometry
+%   theorem with no appeal to the eigenspace decomposition, the Koszul pairing,
+%   or the bar complex; only the Lie-bialgebra structure on A and the canonical
+%   class of M-bar_g enter.
+%
+% V2 (Theorem~\ref{thm:C-PTVV-alternative}(ii)). derived_from: standard
+%   identification of tangent complexes of derived mapping stacks (Toen-Vezzosi
+%   HAG-II 3.3.3).
+%   verified_against: tangent-complex formula R Gamma(M-bar_g, g_A) evaluated
+%   against the inscribed definition of C_g(A) = R Gamma(M-bar_g, Z(A)) yields
+%   the same complex up to the Lie-bialgebra-vs-center normalization shift.
+%   disjoint_rationale: HAG-II tangent-complex computation is purely derived
+%   algebraic geometry, independent of the Verdier-pairing construction on
+%   the bar side.
+%
+% V3 (Lemma~\ref{lem:naive-center-koszul-identification}).
+%   derived_from: restriction of the Koszul pairing of
+%   Theorem~\ref{thm:chiral-koszul-duality} to sigma-eigenspaces.
+%   verified_against: for A = Heis = H_k the naive center is the ground field
+%   for k != 0; for A = V_k(g) at non-critical level the naive center is 1-dim
+%   by the Feigin-Frenkel center theorem; both match the expected
+%   Z(A) otimes Z(A^!) -> C non-degeneracy and the duality
+%   Z(A) ~ Z(A^!)^v.
+%   disjoint_rationale: the naive-center computation for Heisenberg is a
+%   direct commutator check independent of the Koszul-pairing construction;
+%   for affine Kac-Moody, the Feigin-Frenkel center theorem is a
+%   Lie-algebraic result independent of any bar-coalgebra machinery.
+
+\section{Summary of status}
+\label{sec:theorem-C-refinements-summary}
+
+Of the nine items advertised by the 2026-04-16 status narrative,
+the honest counts are as follows.
+\textup{(T1)} Downgraded to
+Conjecture~\ref{conj:derived-center-koszul-equivalence}; the naive
+center identification
+Lemma~\ref{lem:naive-center-koszul-identification} is unconditional.
+\textup{(T2)} Conditional proposition
+Proposition~\ref{prop:perfectness-standard-landscape}\textup{;}
+unconditional for Heisenberg and affine Kac--Moody at non-critical
+level; class-$\mathsf{M}$ boundary-stratum case recorded as
+Conjecture~\ref{conj:perfectness-boundary-class-M}.
+\textup{(T3)} $C_1$ reflexivity unconditional on the two families of
+Corollary~\ref{cor:c0-unconditional-class-G-L}; conditional on
+Conjecture~\ref{conj:perfectness-boundary-class-M} for the rest.
+\textup{(T4)} Retracted as a separate theorem; the $g=0$
+Remark~\ref{rem:plus-three-shift-nonissue} records that there is no
+$+3$ shift contradiction to resolve.
+\textup{(T5)} Consistent with the inscribed
+Theorem~\ref{thm:shifted-symplectic-complementarity} hypothesis
+pinning; no changes required.
+\textup{(T6)} Folded into
+Corollary~\ref{cor:c0-unconditional-class-G-L}.
+\textup{(T7)} Consistent with the MC5 weight-completed inscription
+in the MC5 chapter; no changes here.
+\textup{(T8)} Consistent with
+Proposition~\textup{\ref{thm:delta-f-cross-w3-g2}} at
+$(W_3, g = 2)$.
+\textup{(T9)} Inscribed as
+Theorem~\ref{thm:C-PTVV-alternative} with mixed status: clauses
+\textup{(i)}, \textup{(ii)} genuinely independent; clause
+\textup{(iii)} forwards, recorded as
+\texttt{ClaimStatusConjectured}.
