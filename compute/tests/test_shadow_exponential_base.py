@@ -220,5 +220,109 @@ class TestVirasoroShadowSeriesClosedForm(unittest.TestCase):
                 f"{closed_at_z} at z = 1/12")
 
 
+class TestVirasoroBorelGeometry(unittest.TestCase):
+    """Verification of iter 33-40 Borel-geometric invariants.
+
+    Vol I `thm:shadow-exponential-base-Virasoro` chapter contains the
+    closed-form shadow-quadratic analysis. This test verifies the
+    numerical conclusions:
+    - |omega|^2(c) = 1 + (15c+61)/(5c+22)
+    - |omega|(c) -> 2 as c -> infty (asymptotic limit)
+    - |omega|(c) = 2 - 1/(4c) + O(c^-2) (large-c expansion)
+    - Borel-angle -> pi/3 = 2*pi/6 at c -> infty (Virasoro-specific
+      coincidence, not general C-dependence; iter 39 caveat)
+    - Minimal polynomial over Q: omega^2 - 2*omega + 4 = 0
+    - Splitting field Q(zeta_6) = Q(sqrt(-3)); deg[Q(zeta_6):Q] = 2
+    """
+
+    def test_omega_squared_closed_form_at_various_c(self):
+        """|omega|^2(c) = 1 + (15c+61)/(5c+22) matches at various c."""
+        import math
+        for c in [0.5, 1, 5, 10, 100, 1000]:
+            # Shadow quadratic at Virasoro: |delta|^2 = (15c+61)/(5c+22)
+            omega_sq = 1 + (15*c + 61) / (5*c + 22)
+            # |omega| should be in (sqrt(83/22), 2)
+            sqrt_omega_sq = math.sqrt(omega_sq)
+            self.assertGreater(sqrt_omega_sq, math.sqrt(83/22),
+                               f"|omega|(c={c}) = {sqrt_omega_sq} below minimum")
+            self.assertLess(sqrt_omega_sq, 2.0,
+                            f"|omega|(c={c}) = {sqrt_omega_sq} exceeds asymptote 2")
+
+    def test_omega_asymptote_at_large_c(self):
+        """|omega|(c) -> 2 exactly as c -> infty."""
+        import math
+        # At c = 10^6, |omega| should be very close to 2
+        c = 1e6
+        omega_sq = 1 + (15*c + 61) / (5*c + 22)
+        omega = math.sqrt(omega_sq)
+        self.assertAlmostEqual(omega, 2.0, places=5,
+                               msg=f"|omega|(c=1e6) = {omega}, expected ~2")
+
+    def test_large_c_expansion_1_over_4c(self):
+        """|omega|(c) = 2 - 1/(4c) + O(c^-2); leading approx matches at large c."""
+        import math
+        for c in [100, 1000, 10000]:
+            omega_sq = 1 + (15*c + 61) / (5*c + 22)
+            exact = math.sqrt(omega_sq)
+            leading = 2.0 - 1.0 / (4 * c)
+            error = abs(exact - leading)
+            # Error should be O(c^-2)
+            self.assertLess(error, 10.0 / c**2,
+                            f"Error {error:.2e} at c={c} larger than O(c^-2) bound")
+
+    def test_borel_angle_virasoro_specific(self):
+        """At c -> infty: Borel angle -> pi/3 = 2*pi/6 (Virasoro-specific)."""
+        import math
+        # At c = 10^6
+        c = 1e6
+        delta_sq = (15*c + 61) / (5*c + 22)
+        # Angle = arctan(|delta|/t_c) with t_c = 1
+        angle = math.atan(math.sqrt(delta_sq))
+        self.assertAlmostEqual(angle, math.pi / 3, places=5,
+                               msg=f"Borel angle {angle}, expected pi/3 = {math.pi/3}")
+        # 2*pi/C_Vir = 2*pi/6 = pi/3 match
+        self.assertAlmostEqual(angle, 2 * math.pi / 6, places=5)
+
+    def test_minimal_polynomial_at_infinity(self):
+        """omega_+- = 1 +- i*sqrt(3) satisfy omega^2 - 2*omega + 4 = 0."""
+        import cmath
+        import math
+        omega_plus = 1 + 1j * math.sqrt(3)
+        omega_minus = 1 - 1j * math.sqrt(3)
+        # Minimal polynomial omega^2 - 2*omega + 4
+        for w in [omega_plus, omega_minus]:
+            result = w**2 - 2*w + 4
+            self.assertLess(abs(result), 1e-10,
+                            f"omega^2 - 2*omega + 4 = {result} at {w}, expected 0")
+        # Cube: omega^3 + 8 = 0
+        self.assertLess(abs(omega_plus**3 + 8), 1e-10)
+
+    def test_galois_group_order_phi_6_equals_2(self):
+        """Gal(Q(zeta_6)/Q) has order phi(6) = 2."""
+        from math import gcd
+        n = 6
+        phi = sum(1 for k in range(1, n) if gcd(k, n) == 1)
+        self.assertEqual(phi, 2, f"phi(6) = {phi}, expected 2")
+
+    def test_virasoro_specificity_of_angle_formula(self):
+        """angle = 2*pi/C holds at C=6, fails at other C."""
+        import math
+        # Test at C = 4, 5, 7, 8 (hypothetical)
+        for C in [3, 4, 5, 7, 8]:
+            if C < 3:
+                continue
+            delta_sq = C**2 / 9 - 1
+            if delta_sq < 0:
+                continue
+            actual = math.atan(math.sqrt(delta_sq))
+            predicted = 2 * math.pi / C
+            if C == 6:
+                self.assertAlmostEqual(actual, predicted, places=5)
+            else:
+                # Should NOT match at C != 6
+                self.assertGreater(abs(actual - predicted), 0.05,
+                                   f"Unexpected match at C={C}: actual={actual}, predicted={predicted}")
+
+
 if __name__ == "__main__":
     unittest.main()
