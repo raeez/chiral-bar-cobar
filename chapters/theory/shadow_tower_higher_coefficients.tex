@@ -1654,6 +1654,187 @@ Kummer-irregular prime $3617$ does not appear in any
 $\Gamma_r / A_r$ for $r \leq 11$.
 \end{corollary}
 
+\subsection{Sub-sub-subleading asymptotic: Tier 4 and the Riccati-
+source signature}
+\label{subsec:tier-4-asymptotic}
+
+We now complete the Laurent stratification one further tier down, to
+the sub-sub-subleading coefficient
+\[
+  \Delta_r \;:=\; \lim_{c \to \infty} c^{3}
+   \bigl( c^{r - 2} S_r(\Vir_c) - A_r - B_r / c - \Gamma_r / c^{2} \bigr).
+\]
+This is the first tier where the $B_j B_k$ cross-term (subleading
+squared) enters the recurrence: Tier 3 recovers the purely linear
+$(A_j B_k + B_j A_k)$ source, while Tier 4 introduces the quadratic
+$B_j B_k$ self-coupling.
+
+\begin{theorem}[\label{thm:shadow-tower-tier-4-closed-form}Closed
+form for the Tier-4 sub-sub-subleading asymptotic]
+\ClaimStatusProvedHere
+For every $r \geq 4$, the sub-sub-subleading coefficient admits the
+four-term closed form
+\[
+  \frac{\Delta_r}{A_r}
+   \;=\; -\,\frac{10648}{125}
+    \;-\; \frac{242}{75}\,(r-4)(r-5)
+    \;-\; \frac{11}{810}\,(r-4)(r-5)(r-6)(r-7)
+    \;-\; \frac{(r-4)(r-5)(r-6)(r-7)(r-8)(r-9)}{104976}.
+\]
+The first term is the geometric-cube base $-\,(-22/5)^{3} =
+-10648/125$ inherited from $\Phi_{4}(c) = 10 c/(5 c + 22)$. The
+three $(r-4)(r-5)$ polynomial corrections are iterated Riccati
+source contributions at successive Tier depths.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: Tier-4 recurrence.} Matching the $c^{-1}$ coefficient
+on the left-hand side of $r c \Phi_r = -\sum f(j,k) j k \Phi_j \Phi_k$
+yields
+\[
+  \Delta_r \;=\; -\,\frac{6(r-1)}{r}\,\Delta_{r-1}
+   \;-\; \frac{1}{r} \sigma_r^{\Delta},
+\]
+where the Tier-4 source
+\[
+  \sigma_r^{\Delta} \;=\;
+   \sum_{\substack{j + k = r + 2 \\ 4 \le j \le k \le r-2}}
+   f(j, k)\, j k\, \bigl( A_j \Gamma_k + B_j B_k + \Gamma_j A_k \bigr).
+\]
+The novel $B_j B_k$ contribution makes this the first tier carrying
+the quadratic Riccati-source self-coupling.
+
+\emph{Step 2: source decomposition.} Using
+$\Gamma_k / A_k = \gamma_k$ and $B_j B_k = A_j A_k \cdot (22/5 +
+(j-4)(j-5)/18)(22/5 + (k-4)(k-5)/18)$, the source $\sigma_r^{\Delta}$
+decomposes as
+\[
+  \frac{\sigma_r^{\Delta}}{A_r} \;=\;
+   \frac{64 r}{288}\,\bigl[
+     \underbrace{(968/25) (r-5)/2}_{\gamma\text{-sum at }m=0}
+     + \underbrace{(22/45) (r-5)(r-6)(r-7)/3}_{\gamma\text{-sum at }m=2}
+     + \underbrace{(1/972) \Sigma_Q}_{\gamma\text{-sum at }m=4}
+   \]
+   \[
+     + (22/5)^{2} (r-5)/2
+     + \underbrace{(22/90) (r-5)(r-6)(r-7)/3}_{\text{cross}}
+     + (1/324) \Sigma_R
+   \bigr]
+\]
+where $\Sigma_Q := \sum f(j,k) Q_{jk}$ with
+$Q_{jk} = (j-4)(j-5)(j-6)(j-7) + (k-4)(k-5)(k-6)(k-7)$, and
+$\Sigma_R := \sum f(j,k) R_{jk}$ with
+$R_{jk} = (j-4)(j-5)(k-4)(k-5)$.
+
+\emph{Step 3: quintic combinatorial identities
+(\label{lem:quintic-identities}).}
+
+\begin{lemma}[\label{lem:quintic-combinatorial}Quintic combinatorial
+identities]
+\ClaimStatusProvedHere
+For every $r \geq 5$:
+\[
+  \Sigma_Q \;:=\; \sum_{\substack{j+k=r+2 \\ 4 \le j \le k \le r-2}}
+  f(j,k) Q_{jk} \;=\; \frac{(r-5)(r-6)(r-7)(r-8)(r-9)}{5},
+\]
+\[
+  \Sigma_R \;:=\; \sum_{\substack{j+k=r+2 \\ 4 \le j \le k \le r-2}}
+  f(j,k) R_{jk} \;=\; \frac{(r-5)(r-6)(r-7)(r-8)(r-9)}{60}.
+\]
+\end{lemma}
+\noindent \emph{Proof of Lemma.} By symmetry $(j,k) \leftrightarrow (k,j)$,
+$\Sigma_Q = 2 \sum f_i i(i-1)(i-2)(i-3)$ with $i = j-4$; polynomial
+interpolation on values $0,0,0,0,24,144,504,1344$ at $r = 6,\ldots,13$
+gives constant fifth differences equal to $2$ and the unique degree-5
+interpolant $(r-5)(r-6)(r-7)(r-8)(r-9)/5$. Similarly
+$\Sigma_R$ interpolates to $(r-5)(r-6)(r-7)(r-8)(r-9)/60$; the
+coefficient ratio $12$ between the two sums reflects
+$Q_{jk}/R_{jk} \sim 12$ averaged over the index set.  \qedlem
+
+\emph{Step 4: source-to-leading ratio for $\Delta$.}  The $\Sigma_Q$
+and $\Sigma_R$ contributions combine at the quintic level:
+\[
+  \frac{1}{972} \cdot \frac{1}{5} + \frac{1}{324} \cdot \frac{1}{60}
+   \;=\; \frac{1}{4860} + \frac{1}{19440}
+   \;=\; \frac{4 + 1}{19440}
+   \;=\; \frac{1}{3888}.
+\]
+Using also the identity $968/25 + (22/5)^2 = 1452/25$ at $m = 0$ and
+$22/45 + 22/90 = 11/15$ at $m = 2$:
+\[
+  \frac{\sigma_r^{\Delta}}{A_r}
+  \;=\; \frac{2 r}{9}\, (r-5)
+  \left[ \frac{726}{25}
+        + \frac{11}{45} (r-6)(r-7)
+        + \frac{1}{3888} (r-6)(r-7)(r-8)(r-9) \right].
+\]
+
+\emph{Step 5: variation-of-parameters telescoping.}  Writing
+$\Delta_r = A_r \delta_r$:
+\[
+  \delta_r - \delta_{r-1} \;=\; -\,\frac{2}{9} (r-5)
+  \left[ \frac{726}{25}
+        + \frac{11}{45} (r-6)(r-7)
+        + \frac{1}{3888} (r-6)(r-7)(r-8)(r-9) \right].
+\]
+Base case $\delta_4 = -\,(22/5)^{3} = -10648/125$ from direct
+geometric expansion of $\Phi_4 = 10 c/(5 c + 22)$ at third order in
+$1/c$.
+
+\emph{Step 6: telescoping sums.}  Three identities are used:
+\begin{align*}
+  \sum_{s=5}^{r} (s-5) &= (r-4)(r-5)/2, \\
+  \sum_{s=5}^{r} (s-5)(s-6)(s-7) &= (r-4)(r-5)(r-6)(r-7)/4, \\
+  \sum_{s=5}^{r} (s-5)(s-6)(s-7)(s-8)(s-9) &=
+   (r-4)(r-5)(r-6)(r-7)(r-8)(r-9)/6.
+\end{align*}
+Applying these to the three polynomial terms in Step 5 and
+simplifying:
+\begin{align*}
+  \delta_r + (22/5)^{3}
+   &= -\,(2/9)(726/25) \cdot (r-4)(r-5)/2
+   \;-\; (2/9)(11/45) (r-4)(r-5)(r-6)(r-7)/4 \\
+   &\quad\;-\; (2/9)(1/3888) (r-4)(r-5)(r-6)(r-7)(r-8)(r-9)/6 \\
+   &= -\,(242/75)(r-4)(r-5)
+   \;-\; (11/810) (r-4)(r-5)(r-6)(r-7) \\
+   &\quad\;-\; (1/104976) (r-4)(r-5)(r-6)(r-7)(r-8)(r-9).
+\end{align*}
+This is the claimed closed form.
+\end{proof}
+
+\begin{remark}[\label{rem:four-tier-pattern}Four-tier Laurent
+stratification pattern]
+Combining Theorems \ref{thm:shadow-tower-asymptotic-closed-form},
+\ref{thm:shadow-tower-subleading-closed-form},
+\ref{thm:shadow-tower-sub-subleading-closed-form}, and
+\ref{thm:shadow-tower-tier-4-closed-form}, the four-tier Laurent
+stratification of the Virasoro shadow tower at $c = \infty$ has a
+remarkable structural pattern:
+\[\begin{array}{c|l|l}
+  \text{Tier} & \text{coefficient} & \text{closed-form structure} \\
+  \hline
+  1 & A_r & \tau^{0}, \text{ universal } \{2,3\}\text{-smooth} \\
+  2 & B_r / A_r & -\tau - (r-4)(r-5)/18 \\
+  3 & \Gamma_r / A_r & \tau^{2} + (\tau/?) (r-4)(r-5) + (r-4)(r-5)(r-6)(r-7)/972 \\
+  4 & \Delta_r / A_r & -\tau^{3} - (?) (r-4)(r-5) - (?) (r-4)\cdots(r-7) - (?)(r-4)\cdots(r-9)
+\end{array}\]
+where $\tau = 22/5$.  Each Tier $k$ has exactly $k$ terms (at
+polynomial degrees $0, 2, 4, \ldots, 2(k-1)$ in $(r-4)(r-5)\ldots
+(r-4-(2m-1))$ for $m = 0, 1, \ldots, k-1$), and the signs alternate
+$+, -, +, -, \ldots$ per Tier.  This regularity is consistent with an
+all-tier closed form
+\[
+  \text{Tier-}k(r) / A_r \;=\; (-1)^{k+1}\sum_{m=0}^{k-1}
+    c^{(k)}_m \cdot \prod_{\ell=0}^{2m-1}(r - 4 - \ell),
+\]
+with explicit rational coefficients $c^{(k)}_m$ determined by
+nested telescoping of the Tier-$k$ combinatorial identities. The
+Tier-5 and above closed forms are an open forward extension,
+accessible via the same variation-of-parameters technique applied
+to the higher partial differences of $A_j B_k + B_j A_k + \Gamma_j A_k
++ A_j \Gamma_k + B_j B_k + \ldots$ (Tier-$k$ source).
+\end{remark}
+
 \begin{remark}[\label{rem:three-tier-arithmetic-picture}Three-tier
 arithmetic of the Virasoro shadow tower]
 Combining

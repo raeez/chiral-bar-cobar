@@ -334,6 +334,59 @@ def sub_subleading_asymptotic(r):
     return A_r * gamma_r
 
 
+def sub_sub_subleading_asymptotic(r):
+    """Closed form of Delta_r = lim c^3 * (c^(r-2) S_r - A_r - B_r/c - Gamma_r/c^2).
+
+    Theorem (thm:shadow-tower-tier-4-closed-form, main-thread 2026-04-17):
+
+        Delta_r / A_r = -(22/5)^3
+                       - (242/75) (r-4)(r-5)
+                       - (11/810) (r-4)(r-5)(r-6)(r-7)
+                       - (1/104976) (r-4)(r-5)(r-6)(r-7)(r-8)(r-9).
+
+    Four-term structure (one term per factor pair from (r-4)(r-5)):
+      - (-22/5)^3 = -10648/125: geometric-cube base case (from Phi_4 expansion)
+      - -(242/75)(r-4)(r-5): tau^2 cross correction
+      - -(11/810)(r-4)(r-5)(r-6)(r-7): tau cross correction
+      - -(1/104976)(r-4)(r-5)(r-6)(r-7)(r-8)(r-9): pure Riccati sextic
+
+    Proved via the sub-sub-subleading recurrence
+      Delta_r = -(6(r-1)/r) Delta_{r-1}
+               - (1/r) Sum_{j,k>=4, j+k=r+2} f(j,k) jk (A_j Gamma_k + B_j B_k + Gamma_j A_k),
+    the quintic combinatorial identities
+      Sum f(j,k) Q_jk = (r-5)(r-6)(r-7)(r-8)(r-9)/5   (for Q_jk = single-slot quartic)
+      Sum f(j,k) R_jk = (r-5)(r-6)(r-7)(r-8)(r-9)/60  (for R_jk = cross-slot quadratic product)
+    and variation-of-parameters telescoping with the sextic sum
+      Sum_{s=5}^{r} (s-5)(s-6)(s-7)(s-8)(s-9) = (r-4)(r-5)(r-6)(r-7)(r-8)(r-9)/6.
+
+    This is the first tier where the B_j B_k (subleading-squared) cross-term
+    appears: at Tier 3 (Gamma_r) the B_j B_k term does NOT contribute (it first
+    appears at Tier 4). Tier 4 is therefore the first layer where the full
+    Riccati-source structure is visible.
+
+    Parameters
+    ----------
+    r : int
+        Shadow-tower weight, r >= 4.
+
+    Returns
+    -------
+    sympy.Rational
+        Sub-sub-subleading coefficient Delta_r.
+    """
+    if r < 4:
+        raise ValueError("sub_sub_subleading_asymptotic requires r >= 4.")
+    A_r = leading_asymptotic(r)
+    tau3 = sp.Rational(22, 5) ** 3
+    delta_r = -(
+        tau3
+        + sp.Rational(242, 75) * (r - 4) * (r - 5)
+        + sp.Rational(11, 810) * (r - 4) * (r - 5) * (r - 6) * (r - 7)
+        + sp.Rational(1, 104976) * (r - 4) * (r - 5) * (r - 6) * (r - 7) * (r - 8) * (r - 9)
+    )
+    return A_r * delta_r
+
+
 def subleading_polynomial(r):
     """Return q(r) = 5 r^2 - 45 r + 496 (subleading Riccati polynomial).
 
