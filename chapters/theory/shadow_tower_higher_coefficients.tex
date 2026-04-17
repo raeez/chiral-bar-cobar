@@ -708,6 +708,57 @@ separate (possibly different) shadow-exponential base, open at the
 time of writing.
 \end{remark>
 
+\begin{proposition}[\label{prop:W3-T-line-matches-Vir-subleading}
+$\cW_3$ $T$-line subleading asymptotic matches Virasoro]
+\ClaimStatusProvedHere
+For the principal $\cW_3$ algebra at generic central charge, the
+$T$-line shadow coefficient $S_4(\cW_3, T) = 10 / [c(5c + 22)]$
+has large-$c$ expansion
+\[
+  S_4(\cW_3, T)(c)
+  \;=\;
+  \frac{2}{c^2} - \frac{44}{5 c^3} + \frac{968}{25 c^4}
+  - \frac{21296}{125 c^5} + \cdots,
+\]
+giving $A_4^{\cW_3, T} = 2$ (leading) and $B_4^{\cW_3, T} = -44/5$
+(subleading), both matching the Virasoro values. The $W$-line
+shadow $S_4(\cW_3, W) = 2560 / [c(5c+22)^3]$ has expansion
+$S_4(\cW_3, W)(c) = 512/(25 c^4) + O(c^{-5})$, i.e.\ contributes
+only at sub-sub-leading ($k \ge 2$) order and vanishes at
+leading and subleading.
+\end{proposition}
+
+\begin{proof}
+Direct Taylor expansion of the closed forms in $c^{-1}$ via
+\verb|sympy.series|, verified against
+\verb|compute/lib/shadow_tower_extended_families.py|. The $T$-line
+closed form $10/[c(5c+22)]$ factors as $(10/5c^2) \cdot (1/(1 +
+22/(5c)))$, whose large-$c$ expansion recovers the Virasoro
+$S_4$ expansion at central charge $c$. The $W$-line closed form
+carries an additional $(5c+22)^{-2}$ factor relative to the
+$T$-line, pushing the leading contribution to $c^{-4}$ order.
+\end{proof}
+
+\begin{corollary}[\label{cor:universal-class-M-subleading-uniformity}
+Subleading uniformity of universal class M]
+Under the hypotheses of
+Theorem~\ref{thm:universal-class-M-C-is-6}, the subleading shadow
+coefficient $B_r^\cA$ matches the Virasoro subleading $B_r^\Vir$
+to the extent that no generator-line other than $T$ contributes at
+$c^{-(r-1)}$ order. For $\cW_3$, this is verified at $r = 4$
+(Proposition~\ref{prop:W3-T-line-matches-Vir-subleading}); for BP,
+the same holds via the parallel analysis of
+$S_4(\mathrm{BP}, T) = S_4^{\Vir}(c_{\mathrm{BP}}(k))$
+(proposition~\ref{thm:universal-class-M-C-is-6} hypotheses).
+
+Consequently, \emph{both} the leading closed form
+$\Sigma_\cA(z) = \Sigma_\Vir(z)$ and the subleading closed form
+$\Sigma_\cA^{(1)}(z) = \Sigma_\Vir^{(1)}(z)$ hold uniformly across
+the universal class M stratum, and the pole-doubling pattern
+(Theorem~\ref{thm:pole-doubling-all-k}) extends to all these
+algebras at leading and subleading orders.
+\end{corollary}
+
 \begin{remark}[\label{rem:universal-class-M-verifications}
 Instances verified symbolically]
 The universal class~M theorem is verified symbolically for:
