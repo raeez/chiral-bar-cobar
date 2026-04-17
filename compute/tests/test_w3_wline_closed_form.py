@@ -152,25 +152,43 @@ class TestW3WlineKoszulDualInvariance(unittest.TestCase):
             self.assertEqual(a.denominator, 1, f"a_{n} is not integer: {a}")
 
 
-class TestW3WlineHigherSpinPrediction(unittest.TestCase):
-    r"""Prediction from rem:w3-wline-higher-spin-prediction:
-    C_{W^{(s)}} = s(s+1).
+class TestW3WlineHigherSpinConjecture(unittest.TestCase):
+    r"""Conjecture (rem:w3-wline-higher-spin-prediction):
+    C_{W^{(s)}} = s(s+1); based on 2 data points and structural motivation.
+    Higher-s verification pending explicit W^(s) OPE data.
     """
 
-    def test_prediction_at_spin_2(self):
-        """T-line (Virasoro), s=2: C = 2*3 = 6."""
-        # This is the universal class M theorem
+    def test_conjecture_consistent_at_spin_2(self):
+        """T-line (Virasoro), s=2: 2*3 = 6 matches proven C_Vir = 6."""
         self.assertEqual(2 * 3, 6)
 
-    def test_prediction_at_spin_3(self):
-        """W-line (W_3), s=3: C = 3*4 = 12."""
-        # Matches thm:w3-wline-exponential-base
+    def test_conjecture_consistent_at_spin_3(self):
+        """W-line (W_3), s=3: 3*4 = 12 matches proven C = 12 from recursion."""
         self.assertEqual(3 * 4, 12)
         # Numerical verification from the actual computation
         a_rec = normalized_recursion(40)
         ratio = float(a_rec[40]) / float(a_rec[39])
         # Ratio at n=39 is 11.25; limit is 12
         self.assertAlmostEqual(12 - ratio, 30.0 / 40, places=6)
+
+    def test_two_points_do_not_uniquely_determine_conjecture(self):
+        """Two data points (s=2: C=6, s=3: C=12) fit multiple forms.
+        C(s) = s(s+1), 6(s-1), and 2s^2-4s+6 all match at s=2,3 but differ
+        at s=4 (20, 18, and 22 respectively).
+        """
+        for s in (2, 3):
+            c_s_s1 = s * (s + 1)           # s(s+1) form: 6, 12
+            c_6_sm1 = 6 * (s - 1)          # linear 6(s-1): 6, 12
+            c_para = 2 * s**2 - 4 * s + 6  # parabola: 6, 12
+            self.assertEqual(c_s_s1, c_6_sm1, f"At s={s}, s(s+1) matches 6(s-1)")
+            self.assertEqual(c_s_s1, c_para, f"At s={s}, s(s+1) matches parabola")
+        # At s=4 they diverge
+        self.assertEqual(4 * 5, 20)      # s(s+1) prediction
+        self.assertEqual(6 * 3, 18)      # 6(s-1) prediction
+        self.assertEqual(2 * 16 - 16 + 6, 22)  # 2s^2-4s+6 parabola
+        # The three predictions at s=4 are distinct; two-point fit is
+        # insufficient to determine C(s) uniquely.
+        self.assertEqual(len({20, 18, 22}), 3)
 
 
 if __name__ == '__main__':

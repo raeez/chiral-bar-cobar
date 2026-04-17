@@ -1933,49 +1933,68 @@ which rearranges to~\eqref{eq:w3-wline-stirling}.
 \end{proof}
 
 \begin{remark}[\label{rem:w3-wline-doubling-interpretation}
-The doubling $12 = 2 \cdot 6$: additional lane, same universal seed]
+The doubling $12 = 2 \cdot 6$: structural origin]
 The factor-of-two between $C_{W_3}^{W\text{-line}} = 12$ and
-$C_{W_3}^{T\text{-line}} = 6$ has a structural origin.
+$C_{W_3}^{T\text{-line}} = 6$ admits a structural decomposition.
 The $W$-line has seed data $a_2 = 1$, $a_3 = 2$ (from the $W\!W$
 OPE structure constant $2T/(z-w)^4$), with recursion kernel
 \eqref{eq:w3-wline-recursion} carrying explicit prefactor
 $3/n$ rather than $2/n$ (reflecting the $W$-line Hessian
 $P_W = 3/c$ versus $P_T = 2/c$). The central-binomial closed
 form~\eqref{eq:w3-wline-central-binomial}
-shows that the $W$-line integer growth carries an EXTRA factor of
-$2$ per bar-depth relative to $T$-line. Concretely: the
+shows that the $W$-line integer growth carries an extra factor of
+$2$ per bar-depth relative to the $T$-line: the
 $T$-line Riccati has $A_r \sim 8 (-6)^{r-4}/r$, so
 $|A_{r+1}/A_r| \to 6$; the $W$-line ratio
 $a_{n+1}/a_n = 6(2n-3)/(n+1) \to 12$ picks up the factor $2$ via the
 $(2n-3)$ numerator (Pochhammer-shifted combinatorial weight) against
-the $(n+1)$ denominator (not the $(n-1)/r$ damping on $T$-line).
-The interpretation is that the $W$-line lives \emph{one level
-deeper} in the Koszul stratification: each $W$-insertion
-contributes twice the combinatorial damping of a $T$-insertion.
+the $(n+1)$ denominator (versus the $r/(r+1) \to 1$ damping on
+$T$-line).
+\end{remark}
+
+\begin{remark}[\label{rem:w3-wline-decomposition-is-circular}
+Caveat on the ``$3/2 \times 4/3 = 2$'' decomposition]
+A natural temptation is to decompose the doubling $2 = (3/2) \cdot
+(4/3)$ with $3/2 = P_W / P_T$ (Hessian-propagator ratio) and $4/3$
+a ``kernel factor''. This decomposition is \emph{post-hoc}: it
+holds because $C = s(s+1)$ for $s = 2, 3$ gives ratio
+$(s+2)/s = (3 \cdot 4)/(2 \cdot 3) = 2$, and this rational number
+factorises as $(3/2) \cdot (4/3)$. The decomposition does \emph{not}
+provide an independent derivation of $C = s(s+1)$; it is a
+consequence of the formula, not a proof of it.
 \end{remark}
 
 \begin{remark}[\label{rem:w3-wline-higher-spin-prediction}
-Conjectural generalisation to $W^{(s)}$-lines in $W_N$]
-The $T$-line has weight~$s = 2$ and base $C = 6 = s(s+1)|_{s=2}$; the
-$W$-line has weight~$s = 3$ and base $C = 12 = s(s+1)|_{s=3}$.
-This is consistent with the prediction that each spin-$s$
-primary generator-line in $W_N$ (for $s = 2, \ldots, N$) carries
-its own shadow-exponential base
+Two-point extrapolation to $W^{(s)}$-lines in $W_N$]
+The $T$-line ($s = 2$) has base $C = 6$; the $W$-line ($s = 3$)
+has base $C = 12$. Two data points fit multiple functional forms
+($s(s+1)$, $6(s-1)$, $4s^2 - 4s + 6$, $\ldots$). Among these, the
+candidate $C(s) = s(s+1)$ is distinguished by:
+\begin{enumerate}[label=(\roman*)]
+  \item Matching the Zamolodchikov-norm scaling $N_{W^{(s)}}
+        \propto c / s$ (equivalently Hessian $P_s = s/c$) via the
+        prefactor in the Riccati recursion.
+  \item Consistency with the central-binomial closed form
+        \eqref{eq:w3-wline-central-binomial}: the ``$3^{n-2}$''
+        factor in the $W_3$ $W$-line would naturally generalise
+        to ``$s^{n-2}$'' at arbitrary weight.
+\end{enumerate}
+These structural reasons motivate the \emph{conjecture}
 \[
-  C_{W_N}^{W^{(s)}\text{-line}} \;\stackrel{?}{=}\; s\,(s+1)
+  C_{W_N}^{W^{(s)}\text{-line}} \;\stackrel{\text{conj}}{=}\;
+     s\,(s+1), \qquad s = 2, \ldots, N,
 \]
-matching the Zamolodchikov norm pattern $N_{W^{(s)}} \propto c / s$
-and the binomial Stirling-type growth with index doubled by
-spin-shift. The prediction has been verified numerically for $s = 2$
-($T$-line, $C = 6$ universal) and proved for $s = 3$ ($W$-line in
-$W_3$, Theorem~\ref{thm:w3-wline-exponential-base}); the $s = 4$
-case ($W^{(4)}$-line in $W_4$) awaits the explicit quartic
-shadow seed in the Fateev--Lukyanov $W\!W\!W\!W$ OPE.
-This would place the full principal $W_N$ on a
-\emph{spin-stratified} shadow-exponential base lattice
-$\{C^{(s)} = s(s+1) : s = 2, \ldots, N\}$, with $T$-line $C = 6$
-the universal floor and higher-spin lanes carrying successively
-larger bases $12, 20, 30, \ldots$.
+but rigorous verification at $s \ge 4$ requires either
+(a) explicit computation of the Fateev--Lukyanov
+$W^{(s)} W^{(s)}$ OPE seed structure constant and subsequent
+recursive tower, or (b) a seed-scaling theorem relating
+$W_N$ $W^{(s)}$-line integer sequences across weights. The
+prediction is therefore marked \ClaimStatusConjectured.
+Alternative functional forms such as $6(s-1)$ or $4s^2 - 4s + 6$
+cannot be ruled out from two data points alone; verification at
+$s = 4$ (predicted value $20$ under $s(s+1)$; $18$ under
+$6(s-1)$; $54$ under the second parabola) would decisively
+distinguish.
 \end{remark}
 
 \begin{remark}[\label{rem:w3-wline-koszul-duality-partner}
