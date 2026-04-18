@@ -170,28 +170,39 @@ $c_{\beta\gamma(\lambda)} = +2(6\lambda^2 - 6\lambda + 1)$, by parity
 flip of the FMS formula.
 \end{definition}
 
-\begin{definition}[Ghost-charge invariant $K_g$]
+\begin{definition}[Raw signed FMS sum of a chosen presentation]
 \label{def:uc-K-g}
 For $\cA$ admitting a quasi-free BRST resolution
 $(C_\bullet, Q) \to \cA$ in the sense of
 Definition~\ref{def:uc-brst-resolution}, define
 \begin{equation}
-  K_g(\cA) \;:=\; -\,c_{\mathrm{ghost}}(C_\bullet)
-            \;=\; \sum_{\alpha \in I}
-                  (-1)^{\varepsilon_\alpha + 1}
-                  \cdot 2\bigl(6 \lambda_\alpha^2 - 6 \lambda_\alpha + 1\bigr).
+  K_g^{\mathrm{raw}}(\cA; C_\bullet)
+  \;:=\;
+  -\,c_{\mathrm{ghost}}(C_\bullet)
+  \;=\;
+  \sum_{\alpha \in I}
+  (-1)^{\varepsilon_\alpha + 1}
+  \cdot 2\bigl(6 \lambda_\alpha^2 - 6 \lambda_\alpha + 1\bigr).
   \label{eq:uc-K-g}
 \end{equation}
-The sign convention ensures that for the canonical adjoint $bc(1)$
-gauge BRST of an affine Kac--Moody algebra,
-$K_g(\widehat{\fg}_k) = +2\dim(\fg)$ is positive
-(see Corollary~\ref{cor:uc-K-affine-KM}).
+This is the signed Friedan--Martinec--Shenker sum attached to the
+chosen free-field presentation $C_\bullet$.
 \end{definition}
 
-The well-definedness of $K_g$ as an invariant of $\cA$ (independent of
-the choice of resolution) is the content of Property~(P1) of the
-Universal Conductor Theorem (Theorem~\ref{thm:uc-universal-conductor})
-and is proved by Euler--Poincar\'e on the chain $C_\bullet$.
+\begin{remark}[Raw sum versus canonical ghost conductor]
+\label{rem:uc-raw-vs-canonical}
+The raw signed sum \eqref{eq:uc-K-g} is useful bookkeeping, but it is
+\emph{not} the Trinity invariant on the full standard landscape.  It
+depends on which free-field presentation is chosen.  The rank-$1$
+Heisenberg algebra already exhibits the obstruction: the bare free-boson
+presentation contributes $K_g^{\mathrm{raw}} = -2$, while the abelian
+affine gauge presentation uses one fermionic $bc(1)$ pair and gives the
+canonical value $+2$ of the Trinity conductor.  Frenkel--Kac--Segal
+level-$1$ lattice presentations similarly change the raw sum without
+changing the algebra.  The Trinity theorem therefore uses only the
+canonical gauge/Drinfeld--Sokolov BRST complexes listed in
+Definition~\ref{def:uc-three-conductors}.
+\end{remark}
 
 \section{The universal conductor functor $K$}
 \label{sec:uc-definition}
@@ -200,49 +211,67 @@ and is proved by Euler--Poincar\'e on the chain $C_\bullet$.
 \label{ssec:uc-three-definitions}
 
 The bar--cobar adjunction furnishes three structurally distinct
-candidates for a universal conductor: the Euler character of the bar
-coalgebra, the central-charge sum across the Koszul pair, and the
-negative ghost charge of a quasi-free BRST resolution. Each captures
-a different structural face of $\kappa$; the Trinity
+candidates for a conductor on the canonical gauge/Drinfeld--Sokolov
+witness lane: the Euler character of the bar coalgebra, the
+central-charge sum across the Koszul pair, and the negative ghost
+charge of the \emph{canonical} BRST complex.  Each captures a
+different structural face of the same constant; the Trinity
 Theorem~\ref{thm:uc-trinity} proves their numerical coincidence on
-the Koszul-self-dual locus.
+that witness lane.
 
 \begin{definition}[Three conductors]
 \label{def:uc-three-conductors}
-For $\cA \in \KSDual(X) \cap \BRSTGauged$ define
+For
+\[
+  \cA \in \{
+    \mathcal{H}_k = V_k(\mathbb{C}),
+    \ V_k(\fg),\ \Vir_c,\ W_N^k(\mathfrak{sl}_N),\ \BP_k
+  \}
+\]
+with $V_k(\fg)$ and $W_N^k(\mathfrak{sl}_N)$ non-critical and
+$\mathcal{H}_k$ viewed as the abelian affine specialisation
+$V_k(\mathbb{C})$, define
 \begin{align*}
   K_E(\cA) &\;:=\; \chi\bigl(B^{\mathrm{ch}}_X(\cA)\bigr)
     && \text{(\emph{Euler-pairing}: bar Euler character),}\\[2pt]
   K_c(\cA) &\;:=\; c(\cA) + c(\cA^!)
     && \text{(\emph{central-charge sum} across the Koszul pair),}\\[2pt]
-  K_g(\cA) &\;:=\; -\,c_{\mathrm{ghost}}\bigl(\BRST(\cA)\bigr)
-    && \text{(\emph{ghost central charge} of any quasi-free resolution).}
+  K_g(\cA) &\;:=\; -\,c_{\mathrm{ghost}}\bigl(\BRST_{\mathrm{can}}(\cA)\bigr)
+    && \text{(\emph{canonical ghost central charge}).}
 \end{align*}
 $K_E$ is well-defined when the bar coalgebra has finite-dimensional
 conformal-weight pieces (hypothesis~(H3) of
 Theorem~\ref{thm:bar-cobar-platonic}); $K_c$ requires the existence of
-a Koszul dual $\cA^!$ in $\KSDual(X)$; $K_g$ requires only a
-quasi-free BRST resolution.
+a Koszul dual $\cA^!$ in $\KSDual(X)$; $K_g$ uses the family's
+canonical gauge/DS BRST complex:
+\[
+  \BRST_{\mathrm{can}}(\mathcal{H}_k)=bc(1),\quad
+  \BRST_{\mathrm{can}}(V_k(\fg))=bc(1)^{\oplus \dim(\fg)},\quad
+  \BRST_{\mathrm{can}}(\Vir_c)=bc(2),
+\]
+\[
+  \BRST_{\mathrm{can}}(W_N)=\bigoplus_{j=2}^{N} bc(j),\qquad
+  \BRST_{\mathrm{can}}(\BP_k)=\text{the minimal DS complex for }
+  W^k(\mathfrak{sl}_3,f_{(2,1)}).
+\]
 \end{definition}
 
-The ghost-charge definition $K_g$ is canonical for three reasons:
+On this witness lane the ghost conductor $K_g$ is canonical for three
+reasons:
 
 \begin{enumerate}
-\item \emph{Independence of presentation.} $K_g$ depends only on the
-  quasi-isomorphism class of $\cA$, by Euler--Poincar\'e on chain
-  complexes (Property~(P1) below).
+\item \emph{The BRST model is fixed by the family.}  The affine,
+  Virasoro, principal DS, and minimal DS constructions come with a
+  preferred ghost complex; Heisenberg uses the abelian affine
+  specialisation.  No auxiliary free-field presentation is chosen.
 \item \emph{Computability without dual.} $K_g$ is computed from the
-  resolution data alone; the central-charge $K_c$ definition requires
+  canonical ghost data alone; the central-charge definition requires
   identifying $\cA^!$ explicitly.
-\item \emph{Universality beyond the Koszul-self-dual locus.} $K_g$
-  extends to chiral algebras admitting a perfect chiral Hochschild
-  Atiyah class via Theorem~\ref{thm:uc-K-Atiyah}, including algebras
-  outside $\KSDual(X)$ where the Koszul dual is undefined or fails to
-  satisfy $\cA^! \simeq \cA$ canonically. (All standard-landscape
-  families are chirally Koszul; the extension here is to algebras
-  lacking the SELF-DUAL property $\cA^! \simeq \cA$ in $\KSDual(X)$,
-  not to algebras failing chiral Koszulness;
-  cf.~Section~\ref{sec:uc-frontier}.)
+\item \emph{The boundary obstruction is explicit.}  Outside the
+  witness lane, the raw signed sum \eqref{eq:uc-K-g} is
+  presentation-dependent and is therefore \emph{not} used in the
+  Trinity theorem.  Free-field systems, lattice VOAs, and generic
+  non-principal $W$-algebras sit exactly at that boundary.
 \end{enumerate}
 
 \subsection{The Universal Conductor Theorem}

@@ -725,14 +725,14 @@ $I_p$\textup{)}. There is a canonical quasi-isomorphism
 \begin{equation}\label{eq:thqg-annulus-trace}
 \int_{S^1_p} \mathcal{M}
 \;\simeq\;
-HH_*(\mathcal{M}).
+\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{M}).
 \end{equation}
 In a chart $\mathcal{M} \simeq \operatorname{Perf}(A_b)$
 \textup{(}Theorem~\textup{\ref{thm:thqg-local-global-bridge}(i)}\textup{)},
-the right side is the categorical Hochschild homology of the $A_\infty$-algebra
-$A_b$:
+the right side is computed by the classical algebraic Hochschild
+homology of the $A_\infty$-algebra $A_b$:
 \begin{equation}\label{eq:thqg-hochschild-bar-model}
-HH_*(A_b)
+\mathrm{HH}_{\bullet,\mathrm{alg}}(A_b)
 \;=\; H_*\!\bigl(B^{\mathrm{cyc}}(A_b), \, d_{\mathrm{cyc}}\bigr),
 \end{equation}
 where $B^{\mathrm{cyc}}(A_b) = \bigoplus_{n \ge 0}
@@ -901,10 +901,10 @@ $(a_0, a_1, \ldots, a_n, a_{n+1})
 (a_{n+1}, a_0, a_1, \ldots, a_n)$
 (cyclic permutation of the unsuspended slots). The
 differential~\eqref{eq:thqg-bar-differential} becomes the
-standard topological Hochschild boundary operator under this identification,
+standard algebraic Hochschild boundary operator under this identification,
 because the last face map wraps $a_n$ past $a_{n+1}$ to compose
 with $a_0$; this is the cyclic trace term that
-distinguishes the topological Hochschild differential from the bar
+distinguishes the algebraic Hochschild differential from the bar
 differential.
 
 Therefore:
@@ -912,13 +912,13 @@ Therefore:
 A_b \;\underset{A_b^e}{\overset{\mathbf{L}}{\otimes}}\; A_b
 \;\simeq\;
 H_*\!\bigl(B^{\mathrm{cyc}}(A_b),\, d_{\mathrm{cyc}}\bigr)
-\;=\; HH_*(A_b).
+\;=\; \mathrm{HH}_{\bullet,\mathrm{alg}}(A_b).
 \end{equation}
 The first equivalence is that the two-sided bar complex computes
 the derived tensor product (it is a free $A_b^e$-resolution of
 $A_b$; see~\cite[\S5.3]{Loday98},
 \cite[\S2.2]{LV12}). The second is the
-definition of topological Hochschild homology.
+definition of algebraic Hochschild homology in chain complexes.
 
 \medskip
 \noindent\textit{Step~5: Morita invariance.}
@@ -932,7 +932,8 @@ produce canonically quasi-isomorphic factorization homology:
 if $b' \in \mathcal{M}$ is another compact generator with
 $A_{b'} = \operatorname{RHom}(b', b')$, the Morita bimodule
 $M = \operatorname{RHom}(b, b')$ induces a quasi-isomorphism
-$HH_*(A_b) \simeq HH_*(A_{b'})$ via the derived trace
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A_b)
+\simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(A_{b'})$ via the derived trace
 $\operatorname{Tr}_M\colon
 A_b \otimes_{A_b^e}^{\mathbf{L}} A_b
 \xrightarrow{\sim}
@@ -942,8 +943,8 @@ A_{b'} \otimes_{A_{b'}^e}^{\mathbf{L}} A_{b'}$
 Combining Steps~1--5:
 $\int_{S^1_p} \mathcal{M}
 \simeq A_b \otimes_{A_b^e}^{\mathbf{L}} A_b
-\simeq HH_*(A_b)
-= HH_*(\mathcal{M})$.
+\simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(A_b)
+= \mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{M})$.
 \end{proof}
 
 \begin{remark}[Relation to the Ayala--Francis excision axiom]
@@ -959,8 +960,10 @@ circle among closed $1$-manifolds (the unique non-simply-connected
 case). This is why factorization homology of an $E_1$-algebra
 over $S^1$ produces a two-sided bar construction (two external
 modules tensored over an enveloping algebra from two intersection
-components), hence topological Hochschild homology, rather than something more
-exotic.
+components), hence the algebraic/categorical Hochschild trace.
+After Eilenberg--Mac Lane spectrification the analogous spectral
+trace is $\mathrm{THH}$, but the present theorem remains in chain
+complexes.
 
 For higher-dimensional manifolds $M$, the excision axiom still
 holds but the resulting complex involves higher-degree factorization
@@ -975,13 +978,16 @@ The annulus $S^1_p \times [0, 1]$ is the simplest bordered surface
 with two boundary components. Its partition function in the
 open-closed theory is the \emph{trace} of the open sector:
 $Z_{\mathrm{ann}} = \mathrm{Tr}_{\mathcal{M}}(\mathrm{Id})$.
-By the annulus trace theorem, this is the topological Hochschild homology
-class $[1] \in HH_0(A_b)$.
+By the annulus trace theorem, this is the categorical Hochschild
+trace class corresponding in a chart to the algebraic Hochschild
+class $[1] \in \mathrm{HH}_{0,\mathrm{alg}}(A_b)$.
 This is the \emph{first modular shadow of the open sector}: a trace
 of the open world that precedes the genus-$1$ curvature
 $\kappa(\cA) \lambda_1$ in the modular hierarchy. The
 Calabi--Yau/cyclic structure on $\mathcal{M}$ (when it exists)
-upgrades $HH_*(A_b) \simeq HH^{2 - *}(A_b)$ by Poincar\'e
+upgrades
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A_b)
+\simeq \mathrm{HH}^{2 - *}_{\mathrm{alg}}(A_b)$ by Poincar\'e
 duality, connecting the annulus trace to the derived center.
 \end{remark}
 
@@ -992,7 +998,8 @@ duality, connecting the annulus trace to the derived center.
 \index{kappa@$\kappa$!from annulus degeneration}
 Let\/ $\cA$ be a modular Koszul chiral algebra with boundary
 category~$\mathcal{M}$ and annulus trace class
-$\operatorname{Tr}_\cA = [1] \in HH_0(\mathcal{M})$.
+$\operatorname{Tr}_\cA
+= [1] \in \mathrm{HH}_{0,\mathrm{cat}}(\mathcal{M})$.
 The non-separating nodal degeneration of the annulus
 $S^1_p \times [0, 1]$ to a once-punctured torus $\Sigma_{1,1}$
 sends the annulus trace to the genus-$1$ curvature:
@@ -1001,7 +1008,8 @@ sends the annulus trace to the genus-$1$ curvature:
 \;=\;
 \kappa(\cA) \cdot \lambda_1,
 \end{equation}
-where $\Delta_{\mathrm{ns}} \colon HH_*(\mathcal{M})
+where
+$\Delta_{\mathrm{ns}} \colon \mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{M})
 \to H^*(\overline{\mathcal{M}}_{1,1})$ is the clutching map
 associated to the non-separating degeneration, and
 $\lambda_1 \in H^2(\overline{\mathcal{M}}_{1,1})$ is the first
@@ -1014,7 +1022,7 @@ components of the annulus $S^1 \times [0, 1]$ to create a
 genus-$1$ surface. In the open/closed MC framework
 (Theorem~\ref{thm:thqg-oc-mc-equation}(d)), the clutching
 operator $\Delta_{\mathrm{clutch}}$ acts on the annulus amplitude
-$\operatorname{Tr}_\cA \in HH_0(\mathcal{M})$ by contracting
+$\operatorname{Tr}_\cA \in \mathrm{HH}_{0,\mathrm{cat}}(\mathcal{M})$ by contracting
 the two boundary insertions using the cyclic pairing of the
 Calabi--Yau structure. At the bar-complex level, this is
 precisely the genus-$1$ component $\Theta_\cA^{(1,0)}$ of the

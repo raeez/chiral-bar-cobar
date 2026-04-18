@@ -6114,6 +6114,28 @@ $\lambda_g$-conjecture, known only in specific low-genus
 cases.
 \end{proof}
 
+\begin{conjecture}[Conjecture F6: clutching-uniqueness of the Hodge
+Euler class; \ClaimStatusConjectured]
+\label{conj:F6-lambda-g-clutching-uniqueness}
+\index{F6 conjecture!clutching-uniqueness of $\lambda_g$|textbf}
+\index{lambda-g conjecture@$\lambda_g$ conjecture!clutching-uniqueness form}
+For every $g \geq 3$, if
+$\alpha_g \in R^g(\overline{\cM}_g)$ is a tautological class whose
+separating and non-separating clutching pullbacks agree with those of
+$\lambda_g = c_g(\mathbb{E})$, then
+\[
+\alpha_g \;=\; \lambda_g
+\qquad \text{in } R^g(\overline{\cM}_g).
+\]
+Equivalently, the numerical-equivalence kernel
+$\cN^g(\overline{\cM}_g)$ vanishes, so the socle identity of
+Proposition~\ref{prop:clutching-uniqueness} lifts to on-the-nose
+equality. This is the residual open statement of the
+clutching-only proof route; it is \emph{not} an input to the
+all-weight free-energy formula of
+Theorem~\ref{thm:genus-universality}.
+\end{conjecture}
+
 \begin{remark}[AP225 scope correction]
 \label{rem:ap225-scope-correction}
 \index{AP225!scope correction socle vs on-the-nose}
@@ -6349,8 +6371,12 @@ statement of Proposition~\ref{prop:clutching-uniqueness}.
  \textup{(}ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$; explicit closed form proved at $g=2$%
  \textup{)} is present
  \textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)};
- at $g \geq 3$ the cross-channel correction is named via the graph-sum construction but its closed form
- is conjectural.}
+ for $\cW_3$ at $g = 3$ one has the closed form
+ $\delta F_3^{\mathrm{cross}}(\cW_3)
+ = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240\,c^2)$
+ \textup{(}Proposition~\textup{\ref{prop:w3-genus3-cross-channel}}\textup{)};
+ beyond these first examples the graph-sum construction remains the
+ general source of explicit higher-genus corrections.}
 \label{tab:obstruction-summary}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -6378,21 +6404,51 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Let $\cA$ be a modular Koszul chiral algebra whose strong generators
-all have the \emph{same} conformal weight. There exists a
-genus-independent scalar $\kappa(\cA)$, determined by the genus-$1$
-curvature, such that \begin{equation}\label{eq:genus-universality}
-\mathrm{obs}_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}
-\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g)
-\quad \text{for all } g \geq 1,
+Let $\cA$ be a modular Koszul chiral algebra with strong generators of
+conformal weights $h_1,\ldots,h_r$. There exists a genus-independent
+scalar $\kappa(\cA)$, determined by the genus-$1$ curvature, and an
+explicit mixed-channel correction $\delta F_g^{\mathrm{cross}}(\cA)$
+for each $g \geq 1$ such that
+\begin{equation}\label{eq:genus-universality}
+F_g(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+\;+\;
+\delta F_g^{\mathrm{cross}}(\cA)
+\qquad
+\textup{(}\text{ALL-WEIGHT} + \delta F_g^{\mathrm{cross}}\textup{})
 \end{equation}
-where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the
-Hodge bundle $\mathbb{E} = R^0\pi_*\omega$.
-For algebras with generators of \emph{several} conformal weights,
-the genus-$1$ specialization is unconditional; the higher-genus
-extension is conditional on the strong scalar ansatz of
-Theorem~\ref{thm:multi-generator-universality}.
+for all $g \geq 1$, where
+$\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge
+bundle $\mathbb{E} = R^0\pi_*\omega$ and
+$\lambda_g^{\mathrm{FP}}
+= \int_{\overline{\mathcal{M}}_{g,1}}\psi_1^{2g-2}\lambda_g$.
+The correction satisfies
+$\delta F_1^{\mathrm{cross}}(\cA)=0$ universally.
+If $h_1=\cdots=h_r$ \textup{(}the uniform-weight scalar lane of
+Definition~\textup{\ref{def:scalar-lane}}\textup{)}, then
+$\delta F_g^{\mathrm{cross}}(\cA)=0$ for all $g \geq 1$, and the
+cohomological obstruction class satisfies
+\[
+\mathrm{obs}_g(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_g
+\qquad \textup{(}UNIFORM-WEIGHT\textup{})
+\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g).
+\]
+In particular,
+$\delta F_g^{\mathrm{cross}}(\Vir_c)=0$ for every $g \geq 1$, while
+for the first multi-weight family one has
+\[
+\delta F_2^{\mathrm{cross}}(\cW_3)
+\;=\;
+\frac{c+204}{16c},
+\qquad
+\delta F_3^{\mathrm{cross}}(\cW_3)
+\;=\;
+\frac{5c^3 + 3792c^2 + 1149120c + 217071360}{138240\,c^2}.
+\]
+\]
 
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Explicit values.}
@@ -6434,11 +6490,23 @@ consistent with the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ being curved w
 curvature $m_0 = -\kappa$. The complementarity constant $c + c'$ is not defined
 in the usual sense because the dual is a curved (non-conformal) chiral algebra.
 \item[\textup{(iii)}] \emph{Faber--Pandharipande formula.}
-On the scalar lane (Definition~\ref{def:scalar-lane}), the genus-$g$ free energy is $F_g = \kappa \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$,
+On the scalar lane (Definition~\ref{def:scalar-lane}), the genus-$g$
+free energy is
+$F_g = \kappa \cdot \frac{2^{2g-1}-1}{2^{2g-1}}
+\cdot \frac{|B_{2g}|}{(2g)!}$,
 where $B_{2g}$ are Bernoulli numbers.
 For arbitrary modular Koszul algebras, the unconditional scalar
 statement is the genus-$1$ identity
-$F_1 = \kappa/24$ \textup{(g=1 only; all-weight at g=1 is unconditional)}.
+$F_1 = \kappa/24$
+\textup{(g=1 only; all-weight at g=1 is unconditional)},
+and the full generating series decomposes as
+\[
+\sum_{g \geq 1} F_g(\cA)\,x^{2g}
+\;=\;
+\kappa(\cA)\cdot\left(\frac{x/2}{\sin(x/2)} - 1\right)
+\;+\;
+\sum_{g \geq 2}\delta F_g^{\mathrm{cross}}(\cA)\,x^{2g}.
+\]
 \end{enumerate}
 \end{theorem}
 
@@ -6455,55 +6523,33 @@ one has
 \textup{(g=1 only; all-weight at g=1 is unconditional)}.
 \]
 
-For all $g \geq 1$ on the uniform-weight scalar lane:
-Proposition~\ref{prop:scalar-obstruction-hodge-euler} proves
+For the uniform-weight scalar lane,
+Proposition~\ref{prop:scalar-obstruction-hodge-euler} gives
 \[
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\,\lambda_g
-\qquad \textup{(}UNIFORM-WEIGHT\textup{)}.
+\qquad \textup{(}UNIFORM-WEIGHT\textup{)}
 \]
-The proof chain is:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item The fiberwise curvature operator satisfies
- $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g^{\mathrm{Ar}}
- \cdot\mathrm{id}$
- \textup{(}Proposition~\textup{\ref{prop:chain-level-curvature-operator}(i)},
- from the quantum Arnold relations,
- Theorem~\textup{\ref{thm:quantum-arnold-relations})}.
-\item Every scalar propagator is the standard weight-$1$
- form $d\!\log E(z,w)$
- \textup{(}Remark~\textup{\ref{rem:propagator-weight-universality}}\textup{)},
- so the geometric zero-mode sector as the curve varies is the
- Hodge bundle $\mathbb{E} = R^0\pi_*\omega_\pi$; no higher Hodge
- bundle $R^0\pi_*\omega_\pi^{\otimes h}$ with $h \neq 1$ enters
- the scalar channel.
-\item The Arakelov--Faltings theorem~\cite{Fal84} identifies
- the Arakelov form~$\omega_g^{\mathrm{Ar}}$ on each fiber with the
- fiberwise restriction of the curvature of the Hodge
- bundle in the $L^2$ metric
- \textup{(}\eqref{eq:arakelov-curvature-identification}\textup{)}.
-\item Chern--Weil applied to this curvature gives
- $c_g(\mathbb{E}) = \lambda_g$; alternatively,
- GRR on the universal curve
- $\pi\colon\overline{\cC}_g \to \overline{\cM}_g$ computes
- the same Chern classes~\cite{Mumford83}
- \textup{(}\eqref{eq:grr-hodge}\textup{)}.
-\end{enumerate}
-This completes the identification
-\eqref{eq:genus-universality} at all genera.
-
-For multi-generator algebras: each channel contributes
-$\kappa_{h_i} \cdot \omega_g$ through the \emph{same}
-weight-$1$ propagator
-(Remark~\ref{rem:propagator-weight-universality}).
-At genus~$1$ this gives $\mathrm{obs}_1 = \kappa \cdot \lambda_1$
-\textup{(g=1 only; all-weight at g=1 is unconditional)}
-unconditionally.
-At $g \geq 2$ for multi-weight algebras: every edge uses the standard
-Hodge bundle~$\mathbb{E}$; conformal weights enter only through
-the OPE coefficients
-(Proposition~\ref{prop:multi-generator-obstruction}).
+for all $g \geq 1$ in the scalar-diagonal regime. For a general
+modular Koszul algebra, Theorem~\ref{thm:multi-weight-genus-expansion}
+gives the all-weight decomposition
+\[
+F_g(\cA)
+\;=\;
+\kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+\;+\;
+\delta F_g^{\mathrm{cross}}(\cA)
+\qquad
+\textup{(}\text{ALL-WEIGHT} + \delta F_g^{\mathrm{cross}}\textup{}),
+\]
+with $\delta F_1^{\mathrm{cross}}(\cA)=0$ universally and
+$\delta F_g^{\mathrm{cross}}(\cA)=0$ on the uniform-weight lane.
+Since $\Vir_c$ has a single strong generator, it lies on that lane and
+hence $\delta F_g^{\mathrm{cross}}(\Vir_c)=0$ for every $g \geq 1$.
+The explicit $\cW_3$ formulas are
+Theorem~\ref{thm:multi-weight-genus-expansion}\textup{(vi)} at genus~$2$
+and Proposition~\ref{prop:w3-genus3-cross-channel} at genus~$3$.
 
 Part~(i) follows from the explicit genus-$1$ computations
 (Heisenberg: Theorem~\ref{thm:heisenberg-obs};
@@ -6515,9 +6561,10 @@ For $\mathcal{W}$-algebras, $\kappa = c \cdot \varrho(\fg)$ where
 $\varrho = \sum 1/(m_i+1)$
 (Theorem~\ref{thm:wn-obstruction}), and
 $c \mapsto K - c$ gives
-$\kappa' = \varrho K - \kappa$.
+ $\kappa' = \varrho K - \kappa$.
 Part~(iii) is the Faber--Pandharipande evaluation
-(Theorem~\ref{thm:mumford-formula}).
+(Theorem~\ref{thm:mumford-formula}) together with the
+all-weight decomposition above, summed over $g$.
 \end{proof}
 
 The content of Theorem~\ref{thm:genus-universality} is that genus
