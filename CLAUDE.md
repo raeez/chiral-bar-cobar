@@ -171,6 +171,60 @@ $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ (derived centre = bulk).
 $\Omega(B(A)) = A$ is **inversion**, not Koszul duality. $A^!$ via
 **Verdier**. Bulk via **Hochschild** cochains.
 
+## Chain-level and $(\infty,1)$-categorical: equal status
+
+Both **chain-level** mathematics (explicit complexes, named
+differentials, witnessed homotopies, $L_\infty$-formalism,
+Mittag–Leffler towers, ambient-qualified statements like
+`mc5_class_m_chain_level_platonic.tex:229`) and **$(\infty,1)$-categorical**
+mathematics (derived/$\infty$-stable categories, Lurie's $\mathrm{HA}$
+formalism, factorisation $\infty$-categories, $\infty$-operadic
+constructions a la Costello–Gwilliam, Francis–Gaitsgory) are **equally
+load-bearing** in this programme. Neither is "the better lane"; neither
+"replaces" or "subsumes" the other.
+
+A theorem stated and proved at chain level (with explicit chain
+homotopy $h$ satisfying $[d, h] = \mathrm{id} - p$, witnessed at a
+file:line) is just as valid as the same theorem stated and proved at
+$(\infty,1)$-categorical level (with the homotopy-coherent adjunction
+exhibited via Lurie's $\mathrm{HA}.5.5$ machinery). The two lanes
+**inform each other**:
+
+- Chain-level lets you **compute** with named generators, named
+  differentials, named pole-orders. It exposes the arithmetic that an
+  $(\infty,1)$-statement abstracts away. Use chain-level for $\kappa$
+  computations, shadow-tower entries $S_k$, OPE pole orders, explicit
+  bar–cobar contractions on a finite generating set, and any concrete
+  numerical claim that has to be verified against a primary source.
+- $(\infty,1)$-categorical lets you **state** the universal property
+  cleanly: bar–cobar as the adjunction of $(\infty,1)$-categories
+  (Pattern 269), $\mathrm{ChirAlg}^{\mathrm{ch}}_X$ as a presentable
+  $\infty$-category, factorisation as an $\infty$-operadic structure,
+  Hochschild cochains as the derived endomorphism object in an
+  $\infty$-stable category. Use $(\infty,1)$-categorical for stating
+  universal properties, for working with derived categories of
+  $D$-modules / sheaves, and for any theorem whose statement requires
+  passing to the homotopy category to even be true on the nose.
+
+**Operating rule**: state every theorem in the lane in which its proof
+actually works. If chain-level: name the chain homotopy / Mittag–Leffler
+witness / explicit MC element / explicit OPE pole. If
+$(\infty,1)$-categorical: name the $(\infty,1)$-functor / adjunction /
+limit-colimit construction. If both: state both, label which lane each
+status applies to (Pattern 236 ambient-qualifier discipline). **Never**
+write "this is just the chain-level / $(\infty,1)$-categorical
+shadow of the real theorem": both shadows are real, both are the
+theorem, viewed through different lenses.
+
+Pattern 269 (adjunction-strictness conflation: chain-level adjunctions
+need explicit splitting witnesses; $(\infty,1)$-categorical
+adjunctions are the natural home for chiral bar–cobar) is a *scope
+declaration*, not a hierarchy. The chain-level statement at
+`mc5_class_m_chain_level_platonic.tex:229` (pro-object /
+weight-completed ambient) and the $(\infty,1)$-statement (derived
+category of factorisation $D$-modules) are **two different theorems**
+about two different mathematical objects, both proved, both load-bearing.
+
 ## Where the bookkeeping lives
 
 The following files hold the accounting and disciplinary content that

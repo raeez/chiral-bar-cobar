@@ -1946,55 +1946,378 @@ It remains to verify that $d_\Omega$ is a derivation. Since $\mathrm{Free}_{\mat
 
 \subsection{Geometric bar-cobar composition}
 
-\begin{theorem}[Geometric unit of adjunction; \ClaimStatusProvedHere]\label{thm:geom-unit}
-\label{thm:bar-cobar-adjunction}
-\index{bar-cobar adjunction|textbf}
-The unit of the bar-cobar adjunction $\eta: \mathcal{A} \to \Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}))$ is geometrically realized by:
+\begin{theorem}[Chiral bar-cobar adjunction backbone, geometric form;
+\ClaimStatusProvedHere]
+\label{thm:geom-unit}%
+\label{thm:bar-cobar-adjunction}%
+\index{bar-cobar adjunction|textbf}%
+\index{Theorem A!chiral bar-cobar adjunction backbone}%
+\textup{[Regime: any augmented chiral algebra; no Koszul hypothesis required for the
+adjunction. Quasi-isomorphism is the content of
+Theorem~\ref{thm:bar-cobar-inversion-qi} (Theorem~B), not of this
+theorem; cf.\ Remark~\ref{rem:eta-adjunction-vs-qi-scope},
+Remark~\ref{rem:fundamental-distinction}.]}
+
+Let $\cA$ be an augmented chiral algebra on a smooth curve~$X$, valued in
+holonomic $\cD_X$-modules
+\textup{(}Convention~\ref{subsec:ambient-category}\textup{)}, and write
+$\bar{\cA} = \ker(\varepsilon\colon \cA \to \omega_X)$.
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Existence of the counit.} There is a canonical morphism of dg
+chiral algebras
 \[
-\eta(\phi)(z) = \sum_{n \geq 0} \int_{\overline{C}_{n+1}(X)} \phi(z) \wedge \text{ev}^*_{0}\left(\bar{B}_n^{\text{ch}}(\mathcal{A})\right) \wedge \omega_n
+\psi_{\cA} \;\colon\; \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
+ \;\longrightarrow\; \cA,
 \]
-where:
-\begin{itemize}
-\item $\text{ev}_0: \overline{C}_{n+1}(X) \to X$ evaluates at the 0-th point
-\item $\omega_n$ is the Poincaré dual of the small diagonal
-\item The sum converges due to nilpotency/completeness conditions
-\end{itemize}
+the \emph{counit of the bar-cobar adjunction
+$\Omega^{\mathrm{ch}} \dashv \bar{B}^{\mathrm{ch}}$}
+\textup{(}Remark~\ref{rem:adjunction-direction-convention}\textup{)},
+characterised by the universal property
+\textup{(}Proposition~\ref{prop:universal-twisting-adjunction}(ii)\textup{)}:
+$\psi_{\cA}$ is the unique chiral-algebra extension of the chiral universal
+twisting morphism
+$\pi \colon \bar{B}^{\mathrm{ch}}(\cA) \to \cA$ along the desuspension
+inclusion
+$\iota \colon \bar{B}^{\mathrm{ch}}(\cA) \xrightarrow{s^{-1}}
+s^{-1}\overline{\bar{B}^{\mathrm{ch}}(\cA)}
+\hookrightarrow \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$.
+Concretely, $\psi_{\cA}$ is the augmentation map of
+Proposition~\ref{prop:cobar-bar-augmentation}.
+
+\item \emph{Geometric Fulton--MacPherson realisation.} On the
+configuration-space side, $\psi_{\cA}$ is realised on each tensor power by
+the residue pairing
+\begin{equation}\label{eq:psi-FM-realisation}
+\psi_{\cA}\bigl(s^{-1}b_1 \cdots s^{-1}b_{n+1}\bigr)(z)
+\;=\;
+\int_{\overline{C}_{n+1}(X)}
+ \mathrm{Res}_{\mathrm{ev}_0 = z}\,(b_1 \boxtimes \cdots \boxtimes b_{n+1})
+ \;\wedge\; \omega_n,
+\end{equation}
+where $\mathrm{ev}_0 \colon \overline{C}_{n+1}(X) \to X$ evaluates at the
+zeroth point, $\omega_n$ is the Poincar\'e--Verdier dual of the small
+diagonal $X \hookrightarrow X^{n+1}$, and the residue is taken along the
+divisor where the remaining $n$ points collide with~$z$. The sum
+$\psi_{\cA} = \sum_{n\geq 0} \psi_{\cA,n}$ converges as a section of
+$\cA$ when $\bar{B}^{\mathrm{ch}}(\cA)$ is conilpotent or $\cA$ is complete
+with respect to the augmentation ideal
+\textup{(}Hypothesis (H1)+(H2) of
+Theorem~\ref{thm:bar-cobar-platonic}\textup{)}: each weight piece of $\cA$
+receives contributions from only finitely many bar degrees.
+
+\item \emph{Naturality.} For every morphism $f \colon \cA \to \cA'$ of
+augmented chiral algebras, the diagram
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
+ \arrow[r, "\psi_{\cA}"]
+ \arrow[d, "\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(f))"'] \&
+\cA \arrow[d, "f"] \\
+\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA'))
+ \arrow[r, "\psi_{\cA'}"'] \&
+\cA'
+\end{tikzcd}
+\]
+commutes; that is, $\psi$ is a natural transformation
+$\Omega^{\mathrm{ch}} \circ \bar{B}^{\mathrm{ch}} \Rightarrow \mathrm{id}$
+on $\mathrm{Alg}^{\mathrm{ch,aug}}_X$.
+
+\item \emph{Adjunction Hom-bijection.} For every coaugmented conilpotent
+chiral coalgebra $\cC$ on~$X$, the counit~$\psi_{\cA}$ together with the
+unit
+$\eta_{\cC} \colon \cC \to \bar{B}^{\mathrm{ch}}\Omega^{\mathrm{ch}}(\cC)$
+\textup{(}coalgebra side, by the dual of
+Lemma~\ref{lem:cobar-derivation-extension}\textup{)} implement the natural
+bijection
+\begin{equation}\label{eq:psi-eta-hom-bijection}
+\Hom_{\mathrm{dg\,Alg}^{\mathrm{ch}}_X}\bigl(\Omega^{\mathrm{ch}}(\cC), \cA\bigr)
+\;\cong\;
+\mathrm{Tw}^{\mathrm{ch}}(\cC, \cA)
+\;\cong\;
+\Hom_{\mathrm{dg\,CoAlg}^{\mathrm{ch,conil}}_X}\bigl(\cC, \bar{B}^{\mathrm{ch}}(\cA)\bigr),
+\end{equation}
+which is the chiral specialisation of LV12 Theorem~2.2.9 and which is the
+content of the bar-cobar \emph{adjunction}
+$\Omega^{\mathrm{ch}} \dashv \bar{B}^{\mathrm{ch}}$ \textup{(}Theorem~A of
+the programme\textup{)}.
+The counit $\psi_{\cA}$ is a quasi-isomorphism if and only if $\cA$ lies on
+the Koszul locus
+\textup{(}Theorem~\ref{thm:bar-cobar-inversion-qi}\textup{)}; off the
+Koszul locus the conclusion of (1)--(4) still holds, but $\psi_{\cA}$ is
+only an isomorphism in the coderived category
+\textup{(}Theorem~\ref{thm:off-koszul-ran-inversion}\textup{)}.
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}[Geometric proof]
-The unit $\eta_{\mathcal{A}} \colon \mathcal{A} \to \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is constructed as follows. The tautological inclusion $s^{-1}\bar{\mathcal{C}} \hookrightarrow T^a(s^{-1}\bar{\mathcal{C}})$ (where $\mathcal{C} = \bar{B}^{\mathrm{ch}}(\mathcal{A})$) into the degree-1 component of the tensor algebra, composed with the canonical projection from the tensor algebra to the cobar construction, gives a map of graded $\mathcal{D}_X$-modules from $\mathcal{A}$ to $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ (identifying $\mathcal{A}$ with $s^{-1}s\bar{\mathcal{A}} \subset s^{-1}\bar{\mathcal{C}}$ at bar degree~$1$). At higher tensor degrees, the formula in the theorem statement extends this inclusion via configuration space integrals over the Fulton--MacPherson compactifications $\overline{C}_{n+1}(X)$.
+\emph{Step 1: existence and chiral-algebra-map property.}
+By Theorem~\ref{thm:cobar-free}, the underlying graded chiral algebra of
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$ is the free chiral algebra
+$\mathrm{Free}_{\mathrm{ch}}(s^{-1}\overline{B})$ on the desuspended reduced
+bar coalgebra. The desuspension identification
+$\bar{\cA} \xrightarrow{\sim} s^{-1}s\bar{\cA} = s^{-1}\bar{B}^{\mathrm{ch}}_1(\cA)$
+together with the universal property of the free chiral algebra
+\textup{(}Lemma~\ref{lem:cobar-derivation-extension}\,(i)\textup{)} produces
+a unique chiral-algebra morphism extending the generator-level projection
+$s^{-1}\overline{B} \xrightarrow{s^{-1}\pi_1} s^{-1}\bar{B}^{\mathrm{ch}}_1(\cA)
+\xrightarrow{\sim} \bar{\cA} \hookrightarrow \cA$. This is exactly the
+augmentation~$\varepsilon$ of
+Proposition~\ref{prop:cobar-bar-augmentation}, which we rename
+$\psi_{\cA}$ here to align with the canonical adjunction-counit notation of
+Remark~\ref{rem:adjunction-direction-convention}.
 
-\begin{center}
-\begin{tikzcd}[row sep=large, column sep=large]
-\mathcal{A} \arrow[r, "\text{bar}"] \arrow[dr, "\eta"', bend right=20] &
-\bar{B}^{\text{ch}}(\mathcal{A}) \arrow[d, "\text{cobar}"] \\
-& \Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}))
-\end{tikzcd}
-\end{center}
+\emph{Step 2: chain-map property.}
+By Lemma~\ref{lem:cobar-derivation-extension}\,(ii), to verify
+$\psi_{\cA} \circ d_\Omega = d_{\cA} \circ \psi_{\cA}$ it suffices to check
+the identity on generators. This is the content of Step~1 of the proof of
+Proposition~\ref{prop:cobar-bar-augmentation}: bar degree $n=1$ produces
+$d_\Omega(s^{-1}[s\bar{a}]) = 0$; bar degree $n=2$ uses the Maurer--Cartan
+equation for the chiral universal twisting morphism
+$\pi = \psi_{\cA}|_{s^{-1}\overline{B}}$
+\textup{(}\cite[\S2.2, Proposition~2.2.6]{LV12}\textup{)}; bar degrees
+$n \geq 3$ vanish because $\psi_{\cA}$ kills generators from bar
+degree $\geq 2$.
 
-That $\eta_{\mathcal{A}}$ is a quasi-isomorphism follows from the spectral sequence associated to the bar filtration $F^p = \bigoplus_{n \geq p} \bar{B}^n$. At the $E_1$ page, the unit reduces to the classical Koszul resolution of $\mathcal{A}$ by $\Omega(\bar{B}(\mathcal{A}))$, which is acyclic by the Koszul hypothesis (Remark~\ref{rem:koszul-chiral}). The spectral sequence converges to $H^*(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))$ by the completeness of the filtration (Theorem~\ref{thm:completion-necessity}), so $E_1$-acyclicity implies $\eta_{\mathcal{A}}$ is a quasi-isomorphism.
+\emph{Step 3: geometric Fulton--MacPherson formula.}
+Each tensor power $\Omega^{\mathrm{ch}}_{(n+1)}(\bar{B}^{\mathrm{ch}}(\cA))$
+is the chiral product on $\overline{C}_{n+1}(X)$ of $n+1$ desuspended bar
+generators
+\textup{(}Definition~\ref{def:geom-cobar-precise}\textup{)}; the
+small-diagonal class $\omega_n$ is its Poincar\'e--Verdier dual under the
+configuration-stratum residue pairing
+\textup{(}Theorem~\ref{thm:bar-cobar-verdier},
+Lemma~\ref{lem:bar-holonomicity}\textup{)}.
+The formula~\eqref{eq:psi-FM-realisation} matches the algebraic $\psi_{\cA}$
+of Step~1 termwise on each FM stratum because the residue of the bar
+generator on the boundary stratum $\partial_{ij}\overline{C}_{n+1}(X)$
+equals the chiral OPE of $\cA$ at the merged point; this is the chiral
+incarnation of the residue-distribution duality
+\textup{(}Theorem~\ref{thm:bar-cobar-verdier} Step~3\textup{)}, applied
+inductively along the FM degeneration tower as in
+Proposition~\ref{prop:cobar-bar-augmentation} Step~1.
 
-At the geometric level, the spectral sequence collapse rests on the identity
+\emph{Step 4: convergence.}
+Conilpotency of $\bar{B}^{\mathrm{ch}}(\cA)$
+\textup{(}automatic under (H1)+(H2) by
+Theorem~\ref{thm:coalgebra-via-NAP}(4) and the conformal-weight grading;
+cf.\ the geometric inputs in Chapter~\ref{chap:bar-cobar-adjunction}
+preceding Theorem~\ref{thm:bar-cobar-inversion-qi}\textup{)} ensures that
+each weight piece of $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$ has
+only finitely many bar-degree contributions, so the sum
+$\psi_{\cA} = \sum_n \psi_{\cA,n}$ stabilises in each weight piece.
+Equivalently, $I$-adic completeness of $\cA$
+\textup{(}Hypothesis (H2)\textup{)} produces the same finite-stage
+stabilisation by the $I$-adic-vs-conilpotent equivalence of
+\S\ref{sec:i-adic-completion}.
+
+\emph{Step 5: naturality.}
+Both $\bar{B}^{\mathrm{ch}}$ and $\Omega^{\mathrm{ch}}$ are functorial on
+$\mathrm{Alg}^{\mathrm{ch,aug}}_X$ and $\mathrm{CoAlg}^{\mathrm{ch,conil}}_X$
+respectively
+\textup{(}functoriality of the underlying tensor coalgebra/algebra by
+Lemma~\ref{lem:cobar-derivation-extension}, naturality of the differential
+by the same generator-restriction principle\textup{)}. The square in (3) is
+the generator-restriction comparison: both composites agree on
+$s^{-1}\bar{B}^{\mathrm{ch}}_1(\cA) \cong \bar{\cA}$ via the morphism~$f$,
+hence on all of $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$ by
+Lemma~\ref{lem:cobar-derivation-extension}\,(ii).
+
+\emph{Step 6: Hom-bijection.}
+This is Proposition~\ref{prop:universal-twisting-adjunction}(iii) applied to
+the chiral universal twisting morphism: the bijections
+$\psi_\cA \mapsto \pi$ and $\eta_\cC \mapsto \pi$ exhibit
+$\Omega^{\mathrm{ch}} \dashv \bar{B}^{\mathrm{ch}}$ via the universal
+twisting bifunctor $\mathrm{Tw}^{\mathrm{ch}}(-,-)$, and the chiral
+specialisation works verbatim because $\bar{B}^{\mathrm{ch}}$ is computed in
+the symmetric monoidal $(\infty,1)$-category of factorisation $\cD$-modules
+on $\Ran(X)$
+\textup{(}Theorem~\ref{thm:bar-cobar-platonic}\textup{)} where the
+convolution dGLA is well-defined in each weight piece by
+Hypothesis~(H3).
+
+\emph{Step 7: scope of qi.}
+Whether $\psi_{\cA}$ is a quasi-isomorphism is governed by
+Theorem~\ref{thm:bar-cobar-inversion-qi}: on the strict Koszul lane it is a
+genus-graded qi; off the Koszul locus it is the cone of an
+$\mathrm{IndCoh}(\Ran(X))$-coderived isomorphism whose promotion to a
+chain-level qi requires the collapse input of clause~(4) of
+Theorem~\ref{thm:bar-cobar-inversion-qi} or the flat case
+$\kappa(\cA) = 0$. The present theorem makes \emph{no} qi claim for
+$\psi_{\cA}$ off the Koszul locus, correcting a scope conflation in the
+historical statement of this result; see
+Remark~\ref{rem:eta-adjunction-vs-qi-scope} below.
+\end{proof}
+
+\begin{lemma}[Cobar derivation extension; \ClaimStatusProvedHere]
+\label{lem:cobar-derivation-extension}
+Let $\cC$ be a coaugmented chiral coalgebra on~$X$ with reduced
+comultiplication
+$\bar{\Delta} \colon \bar{\cC} \to \bar{\cC} \otimes \bar{\cC}$,
+and write $V := s^{-1}\bar{\cC}$ for the desuspension. Let
+$\Omega^{\mathrm{ch}}(\cC) = \mathrm{Free}_{\mathrm{ch}}(V)$ be the free
+chiral algebra on~$V$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Universal extension.} For every chiral algebra~$\cA$ and every
+$\cD_X$-module morphism $f \colon V \to \cA$, there is a unique
+chiral-algebra morphism
+$\widetilde{f} \colon \Omega^{\mathrm{ch}}(\cC) \to \cA$ extending~$f$.
+\item \emph{Generator-determined chain maps.} If
+$g, g' \colon \Omega^{\mathrm{ch}}(\cC) \to \cA$ are two chiral-algebra
+morphisms whose restrictions to~$V$ agree and which both intertwine the
+cobar differential $d_\Omega$ with the differential of~$\cA$, then $g = g'$.
+\item \emph{Sign-tracked desuspension.} The cobar differential
+$d_\Omega \colon \Omega^{\mathrm{ch}}(\cC) \to \Omega^{\mathrm{ch}}(\cC)$ is
+the unique degree-$+1$ derivation whose restriction to generators
+$V = s^{-1}\bar{\cC}$ is the composite
 \[
-\int_{\partial \overline{C}_n} \text{Res}_{D_{ij}}[\cdots] = \int_{\overline{C}_n} d[\cdots] = \int_{C_n} \delta_{D_{ij}} \wedge [\cdots]
+s^{-1}\bar{\cC}
+ \xrightarrow{\;s\;} \bar{\cC}
+ \xrightarrow{\;-\bar{\Delta}\;}
+ \bar{\cC} \otimes \bar{\cC}
+ \xrightarrow{\;(s^{-1} \otimes s^{-1})\,\sigma\;}
+ V \otimes V
+ \;\hookrightarrow\;
+ \mathrm{Free}_{\mathrm{ch}}(V),
 \]
-which shows that residue extraction (bar) and distributional integration (cobar) are inverse operations up to exact terms, so their composition is homotopic to the identity.
+where $\sigma$ inserts the Koszul sign $(-1)^{|c'|}$ from the desuspension
+of the leftmost factor in $\bar{\Delta}(c) = \sum c' \otimes c''$
+\textup{(}cf.\ \cite[\S2.2.5]{LV12}\textup{)}. The same sign convention
+makes $d_\Omega$ a derivation of degree~$+1$ for the chiral product on
+$\mathrm{Free}_{\mathrm{ch}}(V)$, and yields $d_\Omega^2 = 0$ on generators
+from coassociativity of $\bar{\Delta}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\emph{Statement (i)} is the universal property of the free chiral algebra:
+$\mathrm{Free}_{\mathrm{ch}} \dashv \mathrm{forget}$ on $\cD_X$-modules
+\textup{(}Theorem~\ref{thm:cobar-free}\textup{)}.
+
+\emph{Statement (ii)} follows from~(i) because the difference $g - g'$ is a
+chiral-algebra-derivation that vanishes on generators, hence on the whole
+free algebra by the Leibniz rule; the chain-map condition is a closed
+condition on this derivation, also generator-determined.
+
+\emph{Statement (iii).}
+The desuspension $s^{-1}$ shifts cohomological degree by $-1$, so the
+bigraded reduced coproduct $\bar{\Delta}$ at internal bidegree $(p,q)$
+produces, after $(s^{-1}\otimes s^{-1}) \circ s$, a map of bidegree
+$(p+1, q-1)$ on $V$ — degree $+1$ as required for a cobar differential.
+The Koszul sign $(-1)^{|c'|}$ in $\sigma$ records the transposition
+$V \otimes V \cong s^{-1}(\bar{\cC} \otimes \bar{\cC})$ mediated by
+$s \otimes s$ followed by the desuspension of the leftmost factor:
+explicitly, $(s^{-1} \otimes s^{-1})(c' \otimes c'') = (-1)^{|c'|}\,
+s^{-1}c' \otimes s^{-1}c''$.
+The additional global sign $-1$ in front of $\bar{\Delta}$ is the
+convention $d_\Omega := -s^{-1} \circ \bar{\Delta} \circ s$ that ensures
+$d_\Omega$ has the same orientation as the cobar differential of
+\cite[\S2.2]{LV12} and extends to a derivation rather than a coderivation.
+Coassociativity of $\bar{\Delta}$ then gives $d_\Omega^2 = 0$ on
+generators by the standard \cite[Proposition~2.2.6]{LV12} computation:
+the two iterated coproducts $(\bar{\Delta} \otimes \mathrm{id}) \bar{\Delta}$
+and $(\mathrm{id} \otimes \bar{\Delta}) \bar{\Delta}$ produce equal
+contributions to $d_\Omega^2$ with opposite signs, hence cancel. The
+derivation property extends $d_\Omega^2 = 0$ to all of
+$\mathrm{Free}_{\mathrm{ch}}(V)$ by the Leibniz rule. This is the
+generator-level reformulation of
+Corollary~\ref{cor:cobar-nilpotence-verdier}.
+\end{proof}
+
+\begin{remark}[Scope of the chiral bar-cobar adjunction $\psi$ vs.\ qi]
+\label{rem:eta-adjunction-vs-qi-scope}
+\index{bar-cobar adjunction!scope}%
+\index{Theorem A!scope vs Theorem B}%
+The counit $\psi_{\cA}$ of Theorem~\ref{thm:bar-cobar-adjunction} \emph{exists}
+without any Koszul hypothesis: it is determined by
+Lemma~\ref{lem:cobar-derivation-extension}\,(i) from the augmentation alone,
+and is the same map as the augmentation~$\varepsilon$ of
+Proposition~\ref{prop:cobar-bar-augmentation}. This is the substance of
+Theorem~A of the programme: the backbone adjunction
+$\Omega^{\mathrm{ch}} \dashv \bar{B}^{\mathrm{ch}}$ is uniformly available
+on the full category of augmented chiral algebras.
+
+The further claim that $\psi_{\cA}$ is a \emph{quasi-isomorphism} is
+\emph{Theorem~B} \textup{(}Theorem~\ref{thm:bar-cobar-inversion-qi}\textup{)};
+it requires the Koszul hypothesis on the strict lane and a coderived
+collapse input off it. The historical conflation of these two statements
+into a single ``geometric unit theorem'' \textup{(}with backwards arrow
+direction\textup{)} obscured the dichotomy of
+Convention~\ref{conv:regime-tags}; we keep them separate here.
+
+In particular, the prior wording ``unit
+$\eta\colon\cA\to\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$'' was
+doubly incorrect: the canonical natural transformation in this geometric
+direction is the \emph{counit} $\psi$, not a unit, and it points
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA)) \to \cA$, not the reverse.
+The reverse arrow $\cA \to \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$
+exists (and is canonical) only when $\psi_{\cA}$ is a qi, in which case it
+is the homotopy inverse of $\psi_{\cA}$ -- and that is exactly the Koszul-
+locus content of Theorem~\ref{thm:bar-cobar-inversion-qi}.
+\end{remark}
+
+\begin{corollary}[Chiral bar-cobar Hom-bijection backbone; \ClaimStatusProvedHere]
+\label{cor:chiral-adjunction-hom-bijection}
+For every augmented chiral algebra $\cA$ on~$X$ and every coaugmented
+conilpotent chiral coalgebra~$\cC$ on~$X$, both valued in holonomic
+$\cD_X$-modules, the counit and unit of
+Theorem~\ref{thm:bar-cobar-adjunction} realise the natural bijection
+\[
+\Hom_{\mathrm{dg\,Alg}^{\mathrm{ch}}_X}\bigl(\Omega^{\mathrm{ch}}(\cC), \cA\bigr)
+\;\cong\;
+\mathrm{Tw}^{\mathrm{ch}}(\cC, \cA)
+\;\cong\;
+\Hom_{\mathrm{dg\,CoAlg}^{\mathrm{ch,conil}}_X}\bigl(\cC, \bar{B}^{\mathrm{ch}}(\cA)\bigr).
+\]
+This is the chiral specialisation of LV12 Theorem~2.2.9, exhibiting
+$\Omega^{\mathrm{ch}} \dashv \bar{B}^{\mathrm{ch}}$ \textup{(}Theorem~A of
+the programme\textup{)}, verified independently of any Koszulness or
+quasi-isomorphism hypothesis on $\cA$ or~$\cC$.
+\end{corollary}
+
+\begin{proof}
+The first bijection
+$\Hom_{\mathrm{dg\,Alg}^{\mathrm{ch}}}(\Omega^{\mathrm{ch}}(\cC), \cA)
+\cong \mathrm{Tw}^{\mathrm{ch}}(\cC, \cA)$
+is the chiral instance of \cite[Theorem~2.2.7]{LV12}: a chiral-algebra map
+$\Omega^{\mathrm{ch}}(\cC) \to \cA$ is determined by its restriction to the
+generators $s^{-1}\bar{\cC}$
+\textup{(}Lemma~\ref{lem:cobar-derivation-extension}\,(i)\textup{)}, and
+the chain-map condition translates to the Maurer--Cartan equation for the
+corresponding $\cD_X$-linear map $\cC \to \cA$, i.e.\ to membership in
+$\mathrm{Tw}^{\mathrm{ch}}(\cC, \cA)$.
+
+The second bijection
+$\mathrm{Tw}^{\mathrm{ch}}(\cC, \cA)
+\cong \Hom_{\mathrm{dg\,CoAlg}^{\mathrm{ch,conil}}}(\cC, \bar{B}^{\mathrm{ch}}(\cA))$
+is dually the chiral instance of \cite[Theorem~2.2.4]{LV12}: by the
+universal property of the cofree-conilpotent factorisation coalgebra
+$T^c(s^{-1}\bar{\cA})$
+\textup{(}Theorem~\ref{thm:coalgebra-via-NAP}\textup{)}, a coalgebra map
+into $\bar{B}^{\mathrm{ch}}(\cA)$ is determined by its component projection
+to $s^{-1}\bar{\cA}$, and the chain-map condition becomes the same
+Maurer--Cartan equation.
+
+Composition of the two bijections is the abstract bar-cobar adjunction. The
+counit $\psi_{\cA}$ corresponds to
+$\mathrm{id}_{\bar{B}^{\mathrm{ch}}(\cA)}$ under the second bijection; the
+unit $\eta_{\cC}$ corresponds to $\mathrm{id}_{\Omega^{\mathrm{ch}}(\cC)}$
+under the first. No Koszulness or qi hypothesis enters.
 \end{proof}
 
 \begin{remark}[Cobar inversion as the inverse half of the Koszul reflection]
 \label{rem:cobar-as-koszul-reflection-inverse}
 \index{cobar construction!inverse half of Koszul reflection}%
 \index{Koszul reflection!cobar as $K^{-1}$}%
-The unit $\eta\colon \cA \to \Omegach(\barBch(\cA))$ of
-Theorem~\ref{thm:bar-cobar-adjunction} is the unit of the unified
-\emph{Koszul reflection} of
-Theorem~\ref{thm:koszul-reflection}\,\ref{KR-i}: the bar and
-cobar functors $K = \barBch$ and $K^{-1} = \Omegach$ assemble
-into an involutive symmetric-monoidal adjoint equivalence
-$K^{2}\simeq\mathrm{id}$ on the Koszul locus $\Kosz(X)$
-\textup{(}clause~\ref{KR-ii}\textup{)}, and a coderived
-involution $K^{2}\simeq\mathrm{id}$ in
-$D^{\co}(\barBch\text{-}\mathrm{CoFact})$ off it
+The counit $\psi\colon \Omegach(\barBch(\cA)) \to \cA$ of
+Theorem~\ref{thm:bar-cobar-adjunction} is, under the Koszul reflection of
+Theorem~\ref{thm:koszul-reflection}\,\ref{KR-i}, the counit of the
+involutive symmetric-monoidal adjunction $K \dashv K^{-1}$ with
+$K = \barBch$ and $K^{-1} = \Omegach$. On the Koszul locus $\Kosz(X)$
+this counit is a chain-level qi
+\textup{(}clause~\ref{KR-ii}: $K^{2}\simeq\mathrm{id}$\textup{)}; off it,
+$\psi_{\cA}$ is a coderived isomorphism in
+$D^{\co}(\barBch\text{-}\mathrm{CoFact})$
 \textup{(}clause~\ref{KR-iii}\textup{)}. The cobar functor is
 \emph{not} the Koszul dual of $\cA$ (Remark~\ref{rem:cobar-three-functors});
 it is the inverse half of the reflection that sends $\cA$ to its bar

@@ -4332,3 +4332,138 @@ $U^{\mathrm{mod}}_X \dashv \operatorname{Prim}^{\mathrm{mod}}$ and downstream pr
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 240: Sub-agent shallow-termination from missing persistence directive
+
+**Session**: 2026-04-18 attack-heal swarm (Vol II original agent `a215891e0b5051dd7` terminated after 33 s / 9 tool uses with one-sentence stub output `Let me search for the central definitions and the bar-differential / coproduct identifications.`).
+
+**Type**: orchestration / agent-prompt structural defect. When an Agent prompt lacks an explicit persistence directive and explicit Phase 0 starting moves, the sub-agent treats its first-round exploration as a complete answer — emits a short transitional sentence and the runtime registers `status: completed` even though no work has been done. Subsequent loops see `completed` and do not relaunch. Lost throughput compounds across waves.
+
+**Rule**: every attack-heal Agent prompt must front-load:
+(i) An explicit persistence directive: "Plan for ~50+ tool uses across ~15–30 minutes; do not stop after the first round of exploration; if you appear to budget-cut on a tool call, retry."
+(ii) A "Concrete starting moves (DO THESE FIRST)" block listing 3–5 specific commands or reads that the agent must perform before any phase work.
+(iii) Explicit Phase 0 / Phase 1 / Phase 2 / Phase 3 / Phase 4 structure with re-attack convergence criteria.
+(iv) A final-report template under a strict word budget (so the agent doesn't pad the transcript at the end).
+
+When a notification arrives with `duration_ms < 90000` AND `tool_uses < 15` AND the result text is a one-sentence transitional stub, treat as budget-cut, NOT legitimate completion. Relaunch with the enriched prompt template above; do not let the loop count this as a converged agent.
+
+**Regex trigger** (notification post-processing):
+
+```
+# Pseudo-trigger inside the loop's notification handler:
+if (duration_ms < 90000) && (tool_uses < 15) && (result starts with "Let me|Let's|I will|First,|To begin,|Now I will"):
+    treat as budget-cut; relaunch with persistence-enriched prompt template;
+    do NOT count as converged agent in the 5-agent swarm headcount.
+```
+
+**Counter-check one-liner**: every Agent prompt for an attack-heal target must contain the literal strings `"Be PERSISTENT"`, `"DO THESE FIRST"`, `"Phase 0"`, `"Phase 4"`, and a final-report word budget; otherwise the prompt is not loop-safe.
+
+**Canonical violation healed (this session)**: Vol II original prompt lacked persistence directive and concrete-starting-moves; relaunch (`ab7df562c805e249e`) added "Be PERSISTENT — plan for ~50+ tool uses across ~15-30 minutes" and "Concrete starting moves (DO THESE FIRST, THEN GO DEEPER)" preface, Phase 0–4 explicit structure, 400-word final-report budget.
+
+**Related**: Pattern 222 ("Rate-limited agents may be binary-not-found in disguise"); Pattern 224 (async-Agent running-count is not directly observable); Pattern 225 (`status: completed` ≠ agent success).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 241: /loop cron prompt requires verbatim /loop-prefix self-reference
+
+**Session**: 2026-04-18 attack-heal swarm (cron `ea44ce3f` → `0f6e8f68` rotation; CronCreate prompt must be the literal `/loop ...` text so the next firing re-enters the /loop skill).
+
+**Type**: orchestration / cron-loop self-reference defect. The /loop skill works by scheduling a recurring CronCreate that fires the SAME `/loop ...` text on each interval. If the CronCreate's `prompt` field is the unwrapped task text (not the `/loop ...` wrapper), the next firing executes the task directly without re-entering the loop, the cron is then deleted (because /loop's own re-entrance does the rotation), and the loop dies silently after one or two firings.
+
+**Rule**: every CronCreate scheduled by the /loop skill MUST have its `prompt` field set to the literal `/loop <interval> <body>` text — verbatim, including the leading `/loop`. The /loop's own logic depends on re-entering the skill on each fire to:
+(i) re-check agent headcount against the 5-agent target;
+(ii) relaunch any stopped agents;
+(iii) rotate the cron itself (delete-and-recreate to maintain "only one /loop cron" invariant);
+(iv) continue main-thread metacognitive work.
+
+If the cron prompt is not a /loop-prefixed string, none of these happen on subsequent fires.
+
+**Regex trigger** (CronList audit):
+
+```
+# Verify every /loop-style cron has a /loop-prefixed prompt body.
+CronList | grep -E '/loop' | grep -vE '^[a-f0-9]+ — Every .+ \[.+\]: /loop '
+# Any line that comes back is a non-self-referential /loop cron — delete and recreate with /loop prefix.
+```
+
+**Counter-check one-liner**: before every CronCreate from the /loop skill, verify the prompt parameter starts with the literal token `/loop ` (slash-loop-space); if not, prepend it.
+
+**Canonical violation prevented**: the /loop skill's spec explicitly mandates the verbatim self-reference (Dynamic Mode step 3 and Fixed-Interval Mode step 1); when the body of a /loop call carries multi-paragraph instructions, the schedule must wrap the entire body in `/loop <interval> <body>` to preserve loop semantics.
+
+**Related**: Pattern 240 (sub-agent shallow termination — a /loop that drops the prefix loses self-rotation, so dead agents accumulate); the /loop skill's own dynamic-mode self-pacing.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 242: Premature convergence declaration in attack-heal loops (relabelling ≠ new mathematics)
+
+**Session**: 2026-04-18 attack-heal swarm (golden rule #1: "Mere ambient/status relabelling without new mathematics does NOT count as convergence").
+
+**Type**: meta-mathematical / convergence-criterion defect. The attack-heal loop's stopping criterion is two-conjunct: (a) round (N+1) lands no NEW weaknesses that round N had not already healed, AND (b) at least one genuine new mathematical result is inscribed (bridge lemma with proof body, counterexample with falsifying parameters, sharpened hypothesis with proof, OR cite-repair that unlocks a previously-unverifiable claim). When an agent reports "convergence" after only relabelling claim-status tags, narrowing scope qualifiers across files, or propagating ambient annotations, the loop has NOT converged — the agent has only swept bookkeeping. Stopping at this point silently degrades the programme: the headline status improves while the underlying mathematics is unchanged.
+
+**Rule**: every attack-heal agent's final-report must explicitly identify ONE of:
+- `\begin{lemma|proposition|theorem|corollary} ... \begin{proof} ... \end{proof}` block newly inscribed at a specific file:line, OR
+- a falsifying parameter point that demonstrates a prior claim is wrong (with the failing computation), OR
+- a sharpened hypothesis whose proof body has been rewritten to use the sharpened (rather than original) hypothesis, OR
+- a `\cite{...}` repair that resolves a `[?]` and unlocks a downstream claim.
+
+If the report says only "narrowed Theorem X to ambient Y", "renamed label", "propagated scope across N files", "synced status table", or similar, the agent has NOT converged — relaunch with an explicit instruction to inscribe genuine new mathematics OR shrink the target scope to one specific provable lemma.
+
+**Regex trigger** (final-report audit, semi-automatic):
+
+```
+# Final-report has the substring "convergence" but lacks any new-mathematics signature.
+grep -lE '(converge|convergence)' adversarial_swarm_*/wave_*/agent_*.md \
+  | xargs -I{} sh -c 'grep -L "(\\\\begin\{(lemma|proposition|theorem|corollary)\}|\\\\cite\{|counterexample|falsifying)" "{}"'
+# Any file that comes back is a relabelling-only "convergence" — re-attack required.
+```
+
+**Counter-check one-liner**: before accepting an agent's "converged" verdict, grep its inscription diff for `\begin{lemma|proposition|theorem|corollary}` or `\begin{proof}` or a new `\cite{...}` resolving a previous `[?]`; if none, the loop is not yet converged.
+
+**Canonical convergences accepted (this session)**:
+- Vol I Theorem C heal (`bershadsky_polyakov.tex:306-342`): new `\begin{proposition}` inscribing the sl_3 unified shift formula $K_\lambda = 4 + 96 s_\lambda$ with elementary difference-of-squares proof — qualifies as bridge identity.
+- Vol III CY-Φ heal (`drinfeld_center.tex:1395-1442`): new `lem:mo-bypass-local-to-global` with Mukai-vanishing proof; counterexample to "MO bypass is unconditional" — qualifies as falsifying lemma + scope-restriction.
+
+**Related**: Pattern 235 (reverse-drift after narrowing — the bookkeeping that masquerades as convergence); golden rule #1 of the attack-heal swarm; CLAUDE.md §"What counts as progress".
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 243: Wave-merge push rejection from concurrent agent commits
+
+**Session**: 2026-04-18 attack-heal swarm (Vol I and Vol III pushes rejected; Vol II pushed cleanly because no concurrent agent had advanced its main).
+
+**Type**: orchestration / multi-repo wave-commit defect. When a wave of agents is committing back to the same upstream branch (main) on the same repo concurrently with main-thread commits, a `git push origin main` from the main thread will be rejected by remote if any agent committed-and-pushed first (or if a prior wave's push has just landed). The main thread must `git pull --rebase origin main` before retrying the push; otherwise the push fails and the wave's metadata-commit (skill file, cache entry, etc.) is lost.
+
+**Rule**: every main-thread commit during an active swarm wave must:
+1. Stage the change locally and commit.
+2. `git pull --rebase origin main` IMMEDIATELY before push.
+3. If rebase fails on conflict, resolve by reading both diffs (deep semantic merge: preserve both sets of inscribed mathematics, renumber cache-entry collisions, re-run consistency checks).
+4. Push.
+5. If push is rejected again, repeat from step 2 — do NOT force-push to overwrite agent commits.
+
+**Regex trigger** (push-failure recovery, manual):
+
+```
+# After a push, check for "Updates were rejected" or "non-fast-forward" in stderr.
+# If present, immediately:
+git pull --rebase origin main && git push origin main
+# Inspect the rebased commit graph — if any commit body shows duplicate label inscription, deep-semantic-merge.
+```
+
+**Counter-check one-liner**: never `git push --force` to main on any of the three volumes during an active swarm wave; pull-rebase only.
+
+**Canonical violation healed (this session)**:
+- Vol I push of `1a4cab5c` (skill file commit): rejected by remote, pulled-rebased onto `1df1b991`, pushed cleanly.
+- Vol III push of `9483e1b` → `2b0e39a` (skill file commit): rejected by remote, pulled-rebased onto `26fa0fb`, pushed cleanly.
+- Vol II push: clean (no concurrent advance).
+
+**Related**: CLAUDE.md "git stash forbidden — use `git diff > patch.diff && git apply` to pause"; CLAUDE.md "do not amend commits without explicit instruction"; Pattern 235 (reverse-drift — concurrent commits can introduce drift across the metadata surfaces if not deep-semantically-merged).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.

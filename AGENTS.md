@@ -132,6 +132,27 @@ Tests — run only the module you have edited, not the full suite.
   $r^{KM}(z) = k\Omega/z$, $r^{\mathrm{Heis}}(z) = k/z$,
   $r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$.
 
+## Chain-level and $(\infty,1)$-categorical: equal status
+
+Both **chain-level** (explicit complexes, named differentials,
+witnessed homotopies, $L_\infty$ formalism, Mittag–Leffler towers,
+ambient-qualified statements) and **$(\infty,1)$-categorical**
+(derived $\infty$-stable categories, Lurie $\mathrm{HA}$ formalism,
+factorisation $\infty$-categories, $\infty$-operads) mathematics are
+**equally load-bearing**. Neither is "the better lane"; neither
+"replaces" or "subsumes" the other.
+
+State each theorem in the lane in which its proof actually works.
+Chain-level: name the chain homotopy / Mittag–Leffler witness /
+explicit MC element / explicit OPE pole. $(\infty,1)$-categorical:
+name the $(\infty,1)$-functor / adjunction / colimit. If both lanes
+are needed: state both, ambient-qualified (Pattern 236).
+
+Pattern 269 (chain-level vs $(\infty,1)$-adjunction strictness) is a
+*scope declaration*, not a hierarchy. Both shadows are real, both are
+the theorem, viewed through different lenses. **Never** write "this
+is just the chain-level / $(\infty,1)$-shadow of the real theorem".
+
 ## Build (session-end only)
 
 ```bash
