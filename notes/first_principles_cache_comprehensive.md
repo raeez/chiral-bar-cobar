@@ -51,7 +51,7 @@ For each wrong claim: what it gets RIGHT, what it gets WRONG, the correct relati
 | 8 | "kappa(K3xE) = 3 vs 5 contradiction" | Both values real | DIFFERENT kappas of DIFFERENT algebras | kappa_ch=3 (chiral), kappa_BKM=5 (Igusa). No contradiction. | conflation |
 | 9 | "Algebraizations share kappa_cat" as meaningful | kappa_cat IS same | VACUOUS: kappa_cat is manifold invariant | Like "both share gravity." AP-CY55 | vacuous/meaningful |
 | 10 | kappa_ch = Sigma(-1)^i dim HH_i | Gives a real invariant | Gives chi_top (=24 for K3), NOT kappa_ch (=2) | Correct: Hodge-filtered supertrace str_{F^0}(q^{L_0}). AP-CY36 | formula error |
-| 11 | kappa_ch additive under fiber products | Additive under direct sums | NOT under fiber products | kappa_ch(K3xE)=3 but chi(O_{K3xE})=2*0=0. Additivity vs multiplicativity. | additive/multiplicative |
+| 11 | kappa_ch additive under fiber products | Additive under direct sums | NOT under fiber products | Route A canonical (Hodge supertrace Φ_d): kappa_ch(K3×E) = 2·0 = 0 (Künneth-multiplicative, AP-CY68). Route B (Heisenberg rank-additive, outside Φ_d): kappa_ch^{Heis}(K3×E) = 2+1 = 3. Two DIFFERENT invariants under explicit notational split per AP-CY69 + cy_d_kappa_stratification.tex:411-426. Legacy "kappa_ch(K3×E)=3" is Route B; canonical Φ_d value is 0. | additive/multiplicative (Route A Künneth) / Route B split |
 
 ## IV. E_n Level Confusions (8 types)
 
@@ -96,7 +96,7 @@ For each wrong claim: what it gets RIGHT, what it gets WRONG, the correct relati
 |---|-------------|---------------|---------------|---------------------|------|
 | 34 | MF(W): A^n->A^1 is CY_{n-1} | MF IS a CY category | CY dim is n-2, not n-1 | ADE in 2 vars: CY_0. Need 5 vars for CY_3. AP-CY17 | off-by-one |
 | 35 | A-hat convergence radius = pi | A-hat IS relevant | Argument halved: (x/2)/sinh(x/2) | Radius = 2*pi. The /2 doubles the radius. AP-CY19 | mechanism error |
-| 36 | phi_{0,1} c(-1)=1 vs c(-1)=2 | Both normalizations exist | Factor of 2 = kappa_ch(K3) propagated silently | State convention. K3 elliptic genus = 2*phi_{0,1}. AP-CY42 | convention clash |
+| 36 | phi_{0,1} c(-1)=1 vs c(-1)=2 | Both normalizations exist | Factor of 2 = kappa_ch(K3) propagated silently | State convention. K3 elliptic genus = 2*phi_{0,1}. kappa_ch(K3) = 2 is Route A canonical (Hodge supertrace; coincides with Route B at K3 since h^{1,0}=0). See AP-CY42 + AP-CY69 + cy_d_kappa_stratification.tex:428-431 | convention clash |
 | 37 | Verdier inverts sigma_2 for k^!=-k | k^!=-k IS correct | sigma_2 is even under h_i->-h_i | k^! from Shapovalov form transposition, not sigma_2 inversion. AP-CY26 | mechanism error |
 | 38 | B-cycle i^2=1 instead of i^2=-1 | B-cycle integrals needed | Sign error gives |q|=1, kills convergence | Verify |q|<1 and Im(tau)>0 after B-cycle computation. FM24 | sign error |
 
@@ -321,8 +321,8 @@ chi(O_{K3xE}) = sum_q (-1)^q h^{0,q}(K3 x E). Kunneth: h^{0,q}(K3 x E) = sum_{a+
 
 | # | Wrong Claim | Ghost Theorem | Precise Error | Correct Relationship | Type | Location |
 |---|-------------|---------------|---------------|---------------------|------|----------|
-| 144 | kappa_ch = rank(Lambda) for lattice VOA | Bar curvature = rank*level | Conflates kappa_ch with kappa_fiber in CY context | kappa_ch(K3)=2 (algebraization); kappa_fiber=24 (lattice rank). For abstract rank-r Heis at level k: curvature=rk | kappa conflation | toroidal_elliptic.tex L437 |
-| 145 | kappa_ch(A_E) = 24 "(rank of free-boson lattice)" | Central charge of boundary algebra IS 24 | Parenthetical describes kappa_fiber not kappa_ch | 24 = central charge of A_E = kappa_fiber. kappa_ch(K3)=2. Coincidence at level 1 | kappa conflation | toroidal_elliptic.tex L1526 |
+| 144 | kappa_ch = rank(Lambda) for lattice VOA | Bar curvature = rank*level | Conflates kappa_ch (Route A Hodge supertrace) with kappa_fiber (lattice rank) in CY context; also distinct from Route B kappa_ch^{Heis} (Heisenberg-level rank-additive, outside Φ_d functor) | Route A: kappa_ch(K3) = 2 = Ξ(K3) (Hodge supertrace, AP-CY69). kappa_fiber = 24 (lattice rank of Λ, topological). For abstract rank-r Heisenberg at level k, Route B kappa_ch^{Heis} = rk. Three distinct invariants; never write bare "kappa_ch = rank" without Route qualifier. See cy_d_kappa_stratification.tex:411-426 | kappa conflation / Route A vs Route B vs fiber | toroidal_elliptic.tex L437 |
+| 145 | kappa_ch(A_E) = 24 "(rank of free-boson lattice)" | Central charge of boundary algebra IS 24 | Parenthetical describes kappa_fiber not kappa_ch; three-way confusion with Route A Ξ(E) = 0 and Route B kappa_ch^{Heis}(H_1) = 1 | 24 = kappa_fiber (lattice rank, topological). Route A canonical: kappa_ch(A_E) = Ξ(E) = 1 - 1 = 0. Route B Heisenberg: kappa_ch^{Heis}(H_1) = 1 (level). Three distinct invariants; see AP-CY69 + cy_d_kappa_stratification.tex:411-426 | kappa conflation / Route A vs Route B vs fiber | toroidal_elliptic.tex L1526 |
 | 146 | Two hbar conventions without bridge (hbar_1,hbar_2 vs plain hbar) | Both conventions valid | No explicit bridge identity connecting them | Need: q=e^{hbar_1}, t=e^{-hbar_2}; rational limit hbar=hbar_1 | convention clash | toroidal_elliptic.tex L402 vs L1440 |
 | 147 | chi(K3)=24 bare without chi_top subscript | chi_top(K3)=24 correct | Bare chi risks confusion with chi(O_{K3})=2 in kappa context | Use chi_top(K3)=24 or dim H*(K3)=24 explicitly | label/content | toroidal_elliptic.tex L1515 |
 | 148 | vartheta_1 vs theta_1 notation inconsistency | Same function | Notation switch mid-file | Harmonize to theta_1 throughout | convention | toroidal_elliptic.tex L131 vs L506+ |

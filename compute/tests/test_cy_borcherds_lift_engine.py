@@ -29,6 +29,7 @@ from fractions import Fraction
 
 import pytest
 
+from compute.lib.independent_verification import independent_verification as _iv
 from compute.lib.cy_borcherds_lift_engine import (
     F,
     KAPPA_K3E,
