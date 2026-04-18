@@ -654,6 +654,153 @@ Hence the only nonzero columns on the $E_2$-page are
 $r=0,1,2$, proving the amplitude statement.
 \end{proof}
 
+\begin{lemma}[Per-bar-degree to totalization amplitude transport;
+\ClaimStatusProvedHere]
+\label{lem:totalization-amplitude}
+\index{Hochschild!totalization amplitude}
+\textup{[Regime: ordered $E_{1}$-chiral, before averaging;
+Convention~\textup{\ref{conv:regime-tags}}.]}
+Let $\cA$ be a chiral Koszul algebra on a smooth projective
+curve~$X$. Let
+\[
+RHH_{\mathrm{ch}}(\cA)
+\;=\;
+\operatorname{Tot}\!\Bigl(
+\bigoplus_{p \geq 0}
+CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]
+\Bigr)
+\]
+be the bigraded chiral Hochschild totalization
+\textup{(}Definition~\textup{\ref{def:bigraded-hochschild})}.
+Suppose that, after the constant shift~$[2]$ established in
+Lemma~\textup{\ref{lem:hochschild-shift-computation}}\textup{(iii)},
+each bar-degree-$p$ summand
+$CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]$ has cohomological
+amplitude~$[0, 2]$ as an object of $D^{\mathrm{b}}(\Vect)$,
+independently of $p$. Then the totalization
+$RHH_{\mathrm{ch}}(\cA)$ has cohomological amplitude~$[0, 2]$,
+i.e., $H^n(RHH_{\mathrm{ch}}(\cA)) = 0$ for $n \notin \{0, 1, 2\}$.
+\end{lemma}
+
+\begin{proof}
+The key point is that the totalization is a \emph{direct sum},
+not a direct product. By
+Definition~\textup{\ref{def:bigraded-hochschild}}, the underlying
+bigraded vector space is
+\[
+RHH_{\mathrm{ch}}(\cA)
+\;=\;
+\bigoplus_{p \geq 0}
+\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)
+\]
+with a total differential
+$d_{\mathrm{tot}} = d_{\mathrm{int}} + d_{\mathrm{bar}}$, where
+$d_{\mathrm{int}}$ acts within each bar-degree-$p$ summand and
+$d_{\mathrm{bar}}$ is the bar-degree-increasing differential
+of weight $+1$.
+
+Filter $RHH_{\mathrm{ch}}(\cA)$ by bar degree:
+$F^p = \bigoplus_{q \geq p} CH^{q,\bullet}_{\mathrm{ch}}(\cA)[-q]$.
+This is a decreasing filtration. The associated graded is
+$\operatorname{gr}_F^{\,p} = CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]$
+with the differential induced by $d_{\mathrm{int}}$ alone, since
+$d_{\mathrm{bar}}$ strictly increases the bar-degree filtration
+and is therefore zero on $\operatorname{gr}_F$.
+
+The induced spectral sequence has
+\[
+E_1^{p,q}
+\;=\;
+H^{p+q}\!\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)
+\;=\;
+H^{q+p+(-p)}\!\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)\bigr)
+\;\Longrightarrow\;
+H^{p+q}\!\bigl(RHH_{\mathrm{ch}}(\cA)\bigr).
+\]
+By the per-bar-degree amplitude hypothesis, after the constant
+shift~$[2]$ the cohomology
+$H^{n}\!\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)$
+vanishes outside $n \in \{0, 1, 2\}$. Hence
+$E_1^{p,q} = 0$ unless $p + q \in \{0, 1, 2\}$, equivalently
+$q \in \{-p, 1-p, 2-p\}$.
+
+\smallskip
+\emph{Convergence.}\;
+The filtration $F^p$ is exhaustive
+$\bigl(\bigcup_p F^p = RHH_{\mathrm{ch}}(\cA)\bigr)$ and
+Hausdorff $\bigl(\bigcap_p F^p = 0\bigr)$, since each total
+degree~$n$ has only finitely many bar-degree contributions:
+in total degree~$n$, only the bar degrees~$p$ with
+$0 \leq p \leq n + ($\,fibre amplitude\,$) = n + 2$ can
+contribute (because the per-summand amplitude is $[0, 2]$ and
+the totalization shift is~$[-p]$, so contributions appear
+only in total degrees $\geq -p + 0$ and $\leq -p + 2$,
+i.e., $p \in [-n, 2-n]$ for the contribution to lie in
+total degree~$n$; the constraint $p \geq 0$ then gives
+$p \in [\max(0,-n), \max(0,2-n)]$, a finite set for each
+fixed $n$). Therefore the spectral sequence converges
+strongly to $H^*\!\bigl(RHH_{\mathrm{ch}}(\cA)\bigr)$.
+
+\smallskip
+\emph{Amplitude transport.}\;
+By the convergence and the $E_1$-page support,
+$H^n\!\bigl(RHH_{\mathrm{ch}}(\cA)\bigr)$ vanishes for
+$n \notin \{0, 1, 2\}$. The bound $n \geq 0$ uses the
+explicit interval $p + q \in \{0, 1, 2\}$ on the $E_1$-page;
+the bound $n \leq 2$ likewise.
+
+\smallskip
+\emph{No cancellation across bar degrees.}\;
+A potential concern is that the bar-degree differential
+$d_{\mathrm{bar}}$, which is zero on $\operatorname{gr}_F$
+but nonzero on the totalization, could in principle create
+new cohomology classes outside $\{0, 1, 2\}$ from boundaries
+that pair across bar degrees. However, the spectral sequence
+of a filtered complex is precisely the device that tracks all
+such pairings: the $E_1$-page records the $d_{\mathrm{int}}$
+cohomology, and higher differentials~$d_r$ for $r \geq 1$
+record the contributions of $d_{\mathrm{bar}}$ at depth~$r$.
+By the Koszul-locus hypothesis and the FM-formality of
+Proposition~\textup{\ref{prop:fm-tower-collapse}}, every
+$d_r$ with $r \geq 2$ vanishes; so the only nontrivial higher
+differential is $d_1$, which moves $(p,q) \mapsto (p+1, q)$
+and therefore preserves $p + q \mapsto p + q + 1$ — keeping
+the support of the spectral sequence within
+$p + q \in \{0, 1, 2, 3\}$. The amplitude bound $p + q \leq 2$
+on $E_\infty$ then follows because $d_1$-targets in
+$p + q = 3$ that are nontrivial would require $E_2$-classes
+in $p + q = 3$, but the per-summand vanishing of
+$H^{p+q}\!\bigl(CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)$
+for $p + q = 3$ already kills these on the $E_1$-page.
+Hence $E_\infty^{p,q} = 0$ for $p + q \notin \{0, 1, 2\}$,
+and the totalization has amplitude $[0, 2]$.
+\end{proof}
+
+\begin{remark}[Why the bridging lemma is non-trivial]
+\label{rem:totalization-amplitude-non-triviality}
+A direct sum of complexes each with amplitude $[0, 2]$ has
+amplitude $[0, 2]$ \emph{as a graded vector space}, but the
+totalization of a bicomplex (with a bar-degree-increasing
+$d_{\mathrm{bar}}$ on top of the internal $d_{\mathrm{int}}$)
+is \emph{not} just the direct-sum complex: the bar
+differential creates cross-bar-degree pairings.
+Lemma~\textup{\ref{lem:totalization-amplitude}} verifies
+that, on the Koszul locus, no such cross-bar-degree pairing
+spreads cohomology outside the $\{0, 1, 2\}$ window. The
+bookkeeping is supplied by the bar-degree filtration spectral
+sequence, whose $E_1$-page support is controlled by the
+per-bar-degree amplitude bound and whose higher differentials
+are killed by FM-formality
+\textup{(}Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}.
+Without this bridging step, the proof of
+Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}\textup{(a)}
+would be incomplete: the slogan ``every column has
+amplitude $[0,2]$, hence the totalization does'' is true
+only after one verifies that the bar-degree differential
+does not create new cohomology classes in degrees outside
+$\{0, 1, 2\}$.
+\end{remark}
+
 \begin{lemma}[Quadratic-chiral Koszul transfer; \ClaimStatusProvedHere]
 \label{lem:chiral-quadratic-koszul}
 \index{Koszul duality!quadratic chiral transfer|textbf}
@@ -1882,9 +2029,10 @@ Because $X$ is a smooth projective curve,
 \]
 so every bar-degree summand of the Hochschild total complex has
 cohomological amplitude~$[0,2]$.
-The totalization is again first-quadrant, hence
-$\ChirHoch^n(\cA)=0$ for $n<0$, and the amplitude bound gives
-$\ChirHoch^n(\cA)=0$ for $n>2$.
+The totalization amplitude is then bounded by
+Lemma~\ref{lem:totalization-amplitude} below, which transports the
+per-bar-degree amplitude to the totalization. Hence
+$\ChirHoch^n(\cA)=0$ for $n<0$ and $n>2$.
 Thus the only possible nonzero degrees are $0$, $1$, and~$2$.
 
 Part~(b): part~(a) implies that $P_\cA(t)$ is a polynomial of
