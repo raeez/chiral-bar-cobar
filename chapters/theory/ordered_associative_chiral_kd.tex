@@ -12381,6 +12381,80 @@ $\Omega$ self-commutes and so the two-point case is
 structurally uninformative at the matrix level.
 \end{remark}
 
+\begin{remark}[$n \geq 3$ KZB flatness: Felder dynamical shift +
+Halphen--Ramanujan]
+\label{rem:kzb-n-point-dynamical-closure}
+\ClaimStatusProvedElsewhere
+\index{KZB connection!three-point flatness}
+\index{R-matrix!Felder dynamical}
+At three or more points on $E_\tau$, the Cartan-sector affine
+Kac--Moody $r$-matrix $r_{\widehat{\fg}_k}^{(1)}(z,\tau) =
+\Omega\,\zeta_\tau(z)/(k+h^\vee)$ appearing in the KZB connection
+\eqref{eq:kzb} does NOT satisfy the ordinary classical Yang--Baxter
+equation on the full tensor space $V^{\otimes 3}$: the cross-pair
+commutators $[\Omega_{12},\Omega_{13}]$, $[\Omega_{12},\Omega_{23}]$,
+$[\Omega_{13},\Omega_{23}]$ combine with the three
+$\zeta_\tau(z_{ij})$ into a residual that vanishes identically only
+in the Cartan-diagonal sector. Felder \textup{(}ICM $1994$,
+\cite{Felder94}\textup{)} showed that the correct object closing
+$3$-point KZB flatness is the \emph{dynamical} elliptic $R$-matrix
+$r(z,\lambda,\tau)$ with $\lambda \in \fh^*$ the Cartan dynamical
+variable, satisfying the modified \emph{dynamical} CYBE
+\[
+[r_{12}(z_{12},\lambda),\,r_{13}(z_{13},\lambda + \hbar \Omega^{(2)})]
++ [r_{12}(z_{12},\lambda),\,r_{23}(z_{23},\lambda)]
++ [r_{13}(z_{13},\lambda+\hbar\Omega^{(1)}),\,r_{23}(z_{23},\lambda)]
+\;=\; 0
+\]
+(Etingof--Varchenko \cite{EV98}). The rearrangement of the
+$\zeta_\tau(z_{12})\zeta_\tau(z_{13})$ products required by the
+dynamical-CYBE identity uses the Szeg\H{o} three-term
+\textup{(}Fay trisecant\textup{)} specialisation on the torus,
+\[
+\wp(a,\tau) - \wp(b,\tau)
+\;=\; -\,\frac{\vartheta_1(a+b,\tau)\,\vartheta_1(a-b,\tau)}
+                 {\vartheta_1(a,\tau)^2\,\vartheta_1(b,\tau)^2}
+        \,\vartheta_1'(0,\tau)^2
+\]
+\textup{(}Fay $1973$, Cor.~$2.5$; Mumford \emph{Tata Lectures on
+Theta I}, Ch.~I \S $5$\textup{)}. The
+$\tau$-derivative closure at each pair uses the full Bernard
+identity \eqref{eq:bernard-zeta-identity}; the $\tau$-derivative
+closure of the quasi-period $\eta_1(\tau) = (\pi^2/6) E_2(\tau)$
+uses the Halphen--Ramanujan system
+\[
+\partial_\tau E_2 = \tfrac{1}{12}(E_2^2 - E_4),\qquad
+\partial_\tau E_4 = \tfrac{1}{3}(E_2 E_4 - E_6),\qquad
+\partial_\tau E_6 = \tfrac{1}{2}(E_2 E_6 - E_4^2),
+\]
+which forms a closed algebraic-differential system in the ring
+$\bC[E_2, E_4, E_6]$.
+
+\medskip
+\noindent\emph{Putting it all together.} Chain-level $n$-point KZB
+flatness (the statement
+$[\nabla^{\mathrm{KZB}}_z, \nabla^{\mathrm{KZB}}_{z'}] = 0$,
+$[\nabla^{\mathrm{KZB}}_z, \nabla^{\mathrm{KZB}}_\tau] = 0$ for all
+pairs on $\mathrm{Conf}_n(E_\tau)$ at $n \geq 3$) is proved at
+leading order in $\hbar$ in Felder \cite{Felder94}; the full
+dynamical/quantum closure on the universal KZB bundle over
+$\overline{\cM}_{1,n}$ is \cite[Thm.~$1$ + Thm.~$5$]{CEE09}
+\textup{(}Calaque--Enriquez--Etingof,
+\emph{Universal KZB equations: the elliptic case},
+Progress in Mathematics $269$, $2010$\textup{)}. Neither result
+is inscribed as a theorem body in Vol~I; the scope here is
+attribution-level. The
+non-dynamical Belavin obstruction at $n \geq 3$ is witnessed
+numerically by the xfail test \texttt{test\_cybe\_generic\_points}
+at \texttt{compute/tests/test\_theorem\_genus1\_seven\_faces\_engine.py}
+(residual $\sim 1$ at generic $(z_{12}, z_{13})$; not a numerical
+precision issue). The Cartan-diagonal $2$-point restriction is
+trivially flat at the matrix level because $\Omega$ self-commutes
+(\S\ref{rem:bernard-heat-identity-zeta}); the genuine $2$-point
+content is the scalar Bernard identity
+\eqref{eq:bernard-zeta-identity}.
+\end{remark}
+
 
 \appendix
 
