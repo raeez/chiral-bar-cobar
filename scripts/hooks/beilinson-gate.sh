@@ -27,6 +27,15 @@ WARNINGS=""
 # ---------------------------------------------------------------------------
 if [[ "$FILE_PATH" == *.tex ]]; then
 
+  # --- Pattern 244: HTML-entity leakage into LaTeX environments ---
+  # Realized this session: \end{proof&gt; (Vol I Theorem A heal) and three
+  # \end{...&gt; typos (Vol III CY-Phi heal) all from agent-side HTML
+  # encoding leaking into .tex source. Conservative signature.
+  if grep -qE '&(gt|lt|amp|quot|apos);' "$FILE_PATH" 2>/dev/null; then
+    MATCHES=$(grep -nE '&(gt|lt|amp|quot|apos);' "$FILE_PATH" | head -5)
+    ISSUES="${ISSUES}Pattern 244 (HTML-entity leakage): &gt;/&lt;/&amp;/&quot;/&apos; in .tex source. Replace with literal characters. Likely typo in \\end{...} or other LaTeX command. Lines: ${MATCHES}\n"
+  fi
+
   # --- AP24: Unqualified κ+κ'=0 ---
   if grep -q 'kappa.*+.*kappa.*=.*0' "$FILE_PATH" 2>/dev/null; then
     MATCHES=$(grep -n 'kappa.*+.*kappa.*=.*0' "$FILE_PATH" | grep -v 'Kac--Moody\|Kac-Moody\|free.field\|self-contragredient\|type~I\|type I\|lattice\|principal' | head -3)

@@ -3087,6 +3087,106 @@ Feigin--Frenkel centre (if nontrivial at $k = -h^\vee$) is
 uniform-weight lane covered by Theorem~D.
 \end{remark}
 
+\begin{proposition}[Falsification of the universal $\kappa = 0 \iff$
+critical level claim;
+\ClaimStatusProvedHere]
+\label{prop:kappa-zero-noniff-critical-level}
+\index{kappa@$\kappa$!vanishing locus is lane-internal|textbf}
+\index{critical level!iff with $\kappa = 0$ is lane-internal}
+\index{Pattern 283!consolidated witnesses}
+The implication ``$\kappa(\cA) = 0$ implies $\cA$ is at affine
+critical level $k = -h^\vee$'' is \emph{false} as a universal
+statement across the standard landscape; explicit witnesses
+\textup{(}from
+Chapter~\textup{\ref{ch:landscape-census}}, Table of standard
+families\textup{)}\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Class M (Virasoro witness).}
+$\kappa(\mathrm{Vir}_{c=0}) = 0/2 = 0$, but $\mathrm{Vir}_{c=0}$
+is not affine: it has no Lie algebra $\fg$, no dual Coxeter
+number $h^\vee$, and no notion of ``critical level'' in the
+$k = -h^\vee$ sense. The vanishing $\kappa = 0$ correctly reports
+the trivial scalar curvature of the $c = 0$ Virasoro algebra
+(its bar complex is uncurved at $c = 0$), but it does not arise
+via the affine Feigin--Frenkel mechanism.
+\item \emph{Class C ($\beta\gamma$ witness).}
+$\kappa(\beta\gamma_\lambda) = 6\lambda^2 - 6\lambda + 1 = 0$ at
+the two irrational values
+\[
+\lambda \;=\; \frac{3 \pm \sqrt{3}}{6}
+\;=\; \frac{1}{2} \pm \frac{1}{2\sqrt{3}},
+\]
+roots of the quadratic $6\lambda^2 - 6\lambda + 1$. At these
+points $\beta\gamma_\lambda$ is again a non-affine chiral algebra
+(the bosonic ghost system at the irrational weight $\lambda$):
+no $h^\vee$, no Feigin--Frenkel involution. The vanishing
+$\kappa = 0$ is the genuine geometric vanishing of the central
+charge $c_{\beta\gamma_\lambda} = 12\lambda^2 - 12\lambda + 2$
+at the same points; it is unrelated to ``critical level''.
+\item \emph{Class L (Heisenberg witness).}
+$\kappa(\mathcal{H}_k) = k = 0$ at $k = 0$. The Heisenberg
+algebra at level $0$ is the abelian (commutative) chiral algebra
+$\mathrm{Sym}^{\mathrm{ch}}(V)$; it is the abelian
+Kac--Moody algebra with $h^\vee = 0$, and the formal substitution
+$k = -h^\vee = 0$ is degenerate (the formula
+$\kappa = (k+h^\vee)\dim\fg/(2h^\vee)$ has a removable
+singularity at $h^\vee = 0$). Calling this ``critical level''
+is a notational artefact of analytic continuation, not a
+substantive identification.
+\end{enumerate}
+The correct uniform statement is the lane-stable equivalence
+$\kappa(\cA) = 0 \iff [\Theta_{\cA}^{(1)}]_{\mathrm{scalar}} = 0$,
+which is the unfolded definition: $\kappa(\cA)$ is by definition
+the scalar coefficient of the genus-$1$ curvature, and its
+vanishing is equivalent to the vanishing of that coefficient.
+The ``iff critical level'' upgrade only holds lane-internally on
+the affine Kac--Moody family (Theorem~\ref{thm:genus-universality},
+duality clause).
+\end{proposition}
+
+\begin{proof}
+For class M, $\kappa(\mathrm{Vir}_c) = c/2$
+(Theorem~\ref{thm:vir-genus1-curvature}); at $c = 0$ this is $0$.
+$\mathrm{Vir}$ is not realised as an affine algebra
+$\widehat{\fg}_k$ for any simple Lie algebra $\fg$
+(Virasoro is the conformal-symmetry algebra, not a Kac--Moody
+algebra); the affine notion of critical level $k = -h^\vee$
+therefore does not apply.
+For class C, $\kappa(\beta\gamma_\lambda) = c_{\beta\gamma_\lambda}/2
+= 6\lambda^2 - 6\lambda + 1$
+(Computation~\ref{comp:betagamma-curvature-table};
+\texttt{chapters/examples/beta\_gamma.tex}, line 1262); the
+quadratic vanishes at $\lambda = (3 \pm \sqrt{3})/6$ by direct
+solution of $6\lambda^2 - 6\lambda + 1 = 0$ via the discriminant
+$\Delta = 36 - 24 = 12$. The $\beta\gamma$ system is not affine.
+For class L, the Heisenberg level-$0$ singularity is recorded in
+the abelian-case discussion of
+Theorem~\ref{thm:genus-universality} part~(ii). The lane-stable
+equivalence is the definition of $\kappa$ via the genus-$1$
+curvature coefficient, hence vacuously biconditional. \qedhere
+\end{proof}
+
+\begin{remark}[Cross-volume scope]
+\label{rem:kappa-zero-noniff-cross-volume}
+\index{cross-volume!Vol II SC^{ch,top}!critical-level scope}
+\index{cross-volume!Vol III CY-functor!critical-level scope}
+Volume~II's $\mathsf{SC}^{\mathrm{ch,top}}$ bar differential
+inherits the same lane-internal scope on its $\beta\gamma$
+factor (Vol~II,
+\texttt{chapters/connections/thqg\_critical\_string\_dichotomy.tex},
+lines 1730--1733: the table records ``$\kappa = 0$ iff
+$k = -h^\vee$'' for affine and ``$\kappa = 0$ iff $c = 0$'' for
+Virasoro as separate lane-internal entries, never as a universal
+biconditional). Volume~III's CY-to-chiral functor $\Phi$
+preserves the lane structure: a CY threefold with vanishing
+chiral characteristic $\kappa(\Phi(X)) = 0$ corresponds to the
+analogous degeneration on the image lane, not to a uniform
+``critical-level'' phenomenon (Vol~III,
+\texttt{compute/lib/kodaira\_spencer\_e1\_engine.py}, line 438:
+``$\kappa = 0 \iff \chi(X) = 0 \iff h^{1,1} = h^{2,1}$'' is the
+CY-internal lane-stable form).
+\end{remark}
+
 \begin{remark}[The trace and the construction]%
 \label{rem:theorem-d-integrability}%
 \index{modular characteristic theorem!as integrability condition}%

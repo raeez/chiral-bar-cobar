@@ -4682,6 +4682,42 @@ all-weight theorem back to its weaker scalar corollary.
 AP289 (defensive scoping as silent downgrading), the Vol I
 `thm:modular-characteristic` / `thm:genus-universality` repair, and the
 new `conj:F6-lambda-g-clutching-uniqueness` theorem-surface split.
+## Pattern 245: Mid-substantive-work budget cut (distinct from Pattern 240 shallow termination)
+
+**Session**: 2026-04-18 attack-heal swarm Wave 2. Vol I Theorem B agent terminated at 62 tool uses / 513s with substantive inscription in `theorem_B_scope_platonic.tex` but mid-final-report (last action: "Now I'll add a forward-reference note about the new theorem and run Phase 4"). Vol III K3 Yangian agent terminated at 57 tool uses / 497s with 5-file inscription but mid-fix on `\bC^*_E` typo at `k3_quantum_toroidal_chapter.tex:136`.
+
+**Type**: orchestration / agent-completion-classification defect. Distinct from Pattern 240 (shallow first-round termination at <90s/<15 tool uses with one-sentence transitional stub):
+- Pattern 240 = budget cut BEFORE substantive work, treat as zero progress, relaunch.
+- Pattern 245 = budget cut DURING substantive work after 30+ tool uses with multi-file inscription, but BEFORE the agent emits a clean final-report convergence statement.
+
+If the wave-handler conflates these two failure modes, it either (a) discards real Pattern 245 work as if it were a Pattern 240 stub, or (b) accepts a Pattern 245 mid-work cut as if it were a clean convergence — neither is correct. The Pattern 245 work IS valid and SHOULD be committed (the inscriptions are real), BUT the convergence verdict is unverified.
+
+**Rule**: classify agent terminations along three axes:
+- (A) Tool-use count: $< 15$ → Pattern 240; $\geq 30$ → Pattern 245; in between → manual triage.
+- (B) Substantive file edits: zero → Pattern 240; $\geq 1$ file with $\geq 50$ lines added → Pattern 245.
+- (C) Final-report present: clean structured 1/2/3/4/5 report → converged; truncated mid-report ("Now I will...", "Let me also...", "Final report follows...") → Pattern 245.
+
+For Pattern 245 terminations, the wave-handler must:
+1. Commit the inscribed work with a commit message acknowledging "partial-completion budget cut at N tool uses; convergence verdict unverified".
+2. Schedule the next wave to include a re-attack on the same target with explicit instructions to (a) re-verify the prior wave's inscription against live source (Pattern 237), (b) run the missing Phase 4 re-attack, (c) emit a clean final report.
+3. Do NOT count the Pattern 245 termination as a "converged" agent in the wave's headcount; it is a "partial-completion" agent that requires follow-up.
+
+**Regex trigger** (notification post-processing):
+
+```
+if (tool_uses >= 30) && (modified_files >= 1) && (result starts with "Now|Let me also|Final report follows|Wait|Continuing"):
+    classify as Pattern 245 (mid-work budget cut, partial-completion).
+    commit inscription with explicit "partial-completion budget cut" acknowledgement.
+    schedule re-attack in next wave with re-verification instructions.
+```
+
+**Counter-check one-liner**: never count a Pattern 245 termination toward the wave's convergence headcount; always schedule a follow-up re-attack.
+
+**Canonical Pattern 245 healed (this session)**:
+- Vol I Theorem B (Wave 2): 62 tool uses, `theorem_B_scope_platonic.tex` modified; committed in `9af19925` with explicit acknowledgement.
+- Vol III K3 Yangian (Wave 2): 57 tool uses, 5 files modified; committed in `15b5a30` with explicit acknowledgement.
+
+**Related**: Pattern 240 (shallow first-round termination, distinct failure mode); Pattern 237 (stale attacks waste cycles — re-verify before re-healing); Pattern 293 (premature convergence — partial-completion is not convergence).
 
 ### Attribution
 
@@ -4723,9 +4759,15 @@ git pull --rebase origin main && git push origin main
 | 290 | `71 = 24 + 1 + 46` is itself the Schellekens/Niemeier classification theorem. | Classification equals the integer identity; once the numbers add up, the classification is closed. | Counting is being substituted for naming. The three summands are not identified as structured subsets of Schellekens's numbered list; the `24` is allowed to slide between Niemeier rank, number of Niemeier lattices, and fake-monster Leech multiplicity; and the claimed common threshold is asserted without proving that bar-cobar, chiral Hochschild, and derived-center all stabilize at the same low-weight stage. Equation `=`, by itself, proves none of disjointness, exhaustiveness, or row-by-row identification. | The honest theorem is a structured-subset derivation: identify the `24` Niemeier rows explicitly in Schellekens's table, isolate the Monster singleton, identify the `46`-row complement as the non-lattice sector, and only then read off `71 = 24 + 1 + 46` as a corollary. Separately prove `24 = rank(N) = #\{\text{Niemeier rows}\}` by three independent paths (Niemeier classification, equal-Coxeter ADE list + Leech, Schellekens-row intersection), and prove the uniform threshold `w_* = 2` independently in the three machineries (ordered bar differential on weight-one OPE data, Theorem-H Hochschild amplitude `{0,1,2}`, derived-center lane via `Z^{der}_{ch}(A)=\ChirHoch^\bullet(A,A)`). | Classification-vs-Counting |
 
 **Verification ledger required by AP290**:
-- `71 = 24 + 1 + 46`: verify by the explicit Schellekens row partition, by `24` Niemeier + `1` Monster + complement subtraction, and by the vEMS/M\"oller--Scheithauer orbifold/deep-hole realization.
-- `24 = rank(N) = #\{\text{Niemeier rows}\}`: verify by Niemeier 1973, by Venkov's common-Coxeter-number ADE enumeration plus Leech, and by the Schellekens-table intersection.
-- `w_* = 2`: verify by the `V_1`-classification plus Monster exception, by the ordered bar differential on weight-one residues, and by Hochschild/derived-center concentration in degrees `{0,1,2}`.
+- `71 = 24 + 1 + 46`: verify by the explicit Schellekens row partition \textup{(}1993, §3, numbered table on scan pp. 24--27 / article pp. 177--182\textup{)}, by `24` Niemeier \textup{(}Niemeier 1973, p. 142 abstract; Conway--Sloane Table 16.1, p. 407\textup{)} + `1` Monster \textup{(}FLM88, Chapters 8--11\textup{)} + complement subtraction, and by M\"oller--Scheithauer 2023 \textup{(}Theorems 6.6, 6.7, 6.9\textup{)}.
+- `24 = rank(N) = #\{\text{Niemeier rows}\}`: verify by Niemeier 1973 \textup{(}p. 142 abstract\textup{)}, by Conway--Sloane Table 16.1 \textup{(}p. 407\textup{)} together with the in-place ADE rank-24 enumeration plus Leech, and by the Schellekens-table intersection.
+- `w_* = 2`: verify by Schellekens 1993 \textup{(}pp. 4, 23--24\textup{)} plus the Monster exception, by the ordered bar differential on weight-one residues, and by Hochschild/derived-center concentration in degrees `{0,1,2}`.
+
+**Cross-family verification state**:
+- Vol I: `chapters/examples/landscape_census.tex` is synchronized to the structured-subset theorem; the master-table surface now names the `24+1+46` decomposition as a theorematic corollary rather than a frontier slogan.
+- Vol II: `/Users/raeez/chiral-bar-cobar-vol2/main.tex:1149-1152` and `/Users/raeez/chiral-bar-cobar-vol2/chapters/connections/programme_climax_platonic.tex:450-457` still advertise `71 = 24 + 1 + 46` as a bare three-stratum classification formula. The drift is identified but not healable in this session because those files lie outside the writable root.
+- Vol III BKM: `/Users/raeez/calabi-yau-quantum-groups/main.tex:561-564` and `/Users/raeez/calabi-yau-quantum-groups/chapters/examples/k3e_bkm_chapter.tex:1617-1619` were checked against AP290. The honest transport is `24 =` Leech/Niemeier rank datum, not full holomorphic-`c=24` family count.
+- Vol III CY$_3$ DT: `/Users/raeez/calabi-yau-quantum-groups/chapters/theory/cy_to_chiral.tex:1541-1550` was checked against AP290. The portable statement is the low-degree / weight-two threshold, not a new integer-decomposition theorem. This drift is likewise blocked from in-place repair by the current sandbox.
 
 **Namespace note**: Pattern 230 already contains a legacy local `AP290` handle for a distinct `\kappa`-subscript mismatch. The present row records the 2026-04-19 AP290 session-handle on the integer-decomposition/classification surface.
 

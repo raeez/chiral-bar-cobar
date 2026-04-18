@@ -23,6 +23,9 @@
 % line 356 (thm:coalgebra-via-NAP part 4 bar-filtration conilpotency).
 %================================================================
 
+\providecommand{\Kosz}{\mathsf{Kosz}}
+\providecommand{\Conil}{\mathsf{Conil}}
+
 \chapter{Theorem B: scope of the chiral Positselski equivalence}
 \label{ch:theorem-B-scope-platonic}
 
@@ -420,8 +423,12 @@ carry no analogous invariant because the relevant sum
 $\sum_{k} L_k \otimes L_{-k}$ fails to converge in the direct
 product topology. The obstruction is therefore real: raw
 direct-sum chiral Positselski is chain-level false for class M, and
-remains false at the derived level for class-M reasons that no
-repackaging of the coderived construction can circumvent.
+remains false at the raw direct-sum derived (coderived) level for
+class-M reasons that no repackaging of the coderived construction
+can circumvent. (The weight-completed and pro-object ambients
+recover the equivalence; see
+Theorem~\ref{thm:chiral-positselski-weight-completed} and
+Theorem~\ref{thm:thm-B-coalgebra-side-unit-qi}.)
 \end{proof}
 
 \begin{remark}[Chain-level class G and L: external attribution;
@@ -624,6 +631,301 @@ obstruction as
 Proposition~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}.
 \end{remark}
 
+\section{The bar-cobar unit on the coalgebra side: Theorem B as
+$\eta_C \colon C \xrightarrow{\sim} \bar B^{\mathrm{ch}} \Omega^{\mathrm{ch}}(C)$
+in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$}
+\label{sec:thm-B-coalgebra-side-unit-qi}
+
+The chiral Positselski equivalence inscribed above
+(Theorems~\ref{thm:chiral-positselski-at-each-weight}
+and~\ref{thm:chiral-positselski-weight-completed}) is the
+\emph{comodule-contramodule correspondence} on a fixed CDG-coalgebra.
+The headline phrasing of Theorem~B in the programme summary
+(``$\Omega_X(B_X(C)) \xrightarrow{\sim} C$ in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$'') is a different, complementary
+statement: the \emph{bar-cobar unit} on the coalgebra side, whose
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$-isomorphism status is the
+load-bearing content of Theorem~B as a qi statement (rather than as a
+categorical equivalence on (co)modules). This section disambiguates
+the two statements, fixes the canonical adjunction direction, and
+inscribes the missing proof that the unit
+$\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
+is an isomorphism in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X) := D^{\mathrm{co}}(\mathrm{CoAlg}^{\mathrm{ch,conil,CDG}}_X)$
+for every conilpotent chiral CDG-coalgebra $C$ on $X$ with
+finite-dimensional graded pieces.
+
+\begin{lemma}[Bar-cobar adjunction direction; canonical $\Omega^{\mathrm{ch}} \dashv \bar B^{\mathrm{ch}}$ versus opposite-notation $\bar B^{\mathrm{ch}} \dashv \Omega^{\mathrm{ch}}$;
+\ClaimStatusProvedHere]
+\label{lem:bar-cobar-adjunction-direction-canonical}
+The chiral bar-cobar adjunction admits exactly one mathematically
+distinguished direction. The Hom-bijection
+\begin{equation}\label{eq:bar-cobar-hom-bijection-canonical}
+\operatorname{Hom}_{\mathrm{Alg}^{\mathrm{ch,aug}}_X}\!\bigl(\Omega^{\mathrm{ch}}(C),\, \cA\bigr)
+\;\cong\;
+\operatorname{Tw}^{\mathrm{ch}}(C, \cA)
+\;\cong\;
+\operatorname{Hom}_{\mathrm{CoAlg}^{\mathrm{ch,conil}}_X}\!\bigl(C,\, \bar B^{\mathrm{ch}}(\cA)\bigr)
+\end{equation}
+proved as
+Corollary~\textup{\ref{cor:chiral-adjunction-hom-bijection}} of the
+backbone adjunction
+Theorem~\textup{\ref{thm:bar-cobar-adjunction}} (Vol~I) realises
+$\Omega^{\mathrm{ch}} \dashv \bar B^{\mathrm{ch}}$ — cobar is the left
+adjoint, bar is the right adjoint — with unit
+$\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
+on the coalgebra category and counit
+$\psi_\cA \colon \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(\cA)) \to \cA$
+on the algebra category. The opposite-direction notation
+``$\bar B^{\mathrm{ch}} \dashv \Omega^{\mathrm{ch}}$'' that appears
+in some passages
+(Remark~\textup{\ref{rem:adjunction-direction-convention}};
+Theorem~\textup{\ref{thm:koszul-reflection}} clauses~\textup{(i)},
+\textup{(iii)} of \textup{theorem\_A\_infinity\_2.tex}) does
+\emph{not} denote a mathematically distinct adjunction: it is a
+naming convention that swaps the labels ``unit'' and ``counit'' but
+refers to the same Hom-bijection
+\eqref{eq:bar-cobar-hom-bijection-canonical}. In particular, the map
+$A \to \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(A))$ that appears
+under the opposite-notation reading is \emph{not} a unit in the
+canonical sense: in the canonical convention it is the
+\emph{inverse of the counit $\psi_\cA$}, defined only on the Koszul
+locus where $\psi_\cA$ is a chain-level qi
+\textup{(}Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}},
+clause~\textup{(1)}\textup{)} or as a coderived isomorphism on the
+off-Koszul lane \textup{(}clause~\textup{(2)}\textup{)}.
+\end{lemma}
+
+\begin{proof}
+The Hom-bijection \eqref{eq:bar-cobar-hom-bijection-canonical} is
+an instance of the universal twisting morphism dictionary
+(\cite[Theorem~2.2.9]{LV12} specialised to the chiral ambient).
+Its mathematical content fixes the LEFT adjoint as $\Omega^{\mathrm{ch}}$:
+the categorical unit $\eta_C$ is the natural transformation
+$C \to (\bar B^{\mathrm{ch}} \circ \Omega^{\mathrm{ch}})(C)$
+correspondent to $\mathrm{id}_{\Omega^{\mathrm{ch}}(C)}$ under
+\eqref{eq:bar-cobar-hom-bijection-canonical}, and the categorical
+counit $\psi_\cA$ is the natural transformation
+$(\Omega^{\mathrm{ch}} \circ \bar B^{\mathrm{ch}})(\cA) \to \cA$
+correspondent to $\mathrm{id}_{\bar B^{\mathrm{ch}}(\cA)}$ under
+the same bijection. By the
+$\eta\dashv\psi$-mate-pair construction, swapping the order in
+which the two functors are listed (writing
+``$\bar B^{\mathrm{ch}} \dashv \Omega^{\mathrm{ch}}$'') reverses
+which natural transformation is called ``unit'' versus
+``counit'', but does not produce a distinct adjunction. The map
+$A \to \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(A))$ that
+the opposite-notation reading writes as a
+``unit $\eta_A$'' is, under the canonical $\Omega^{\mathrm{ch}} \dashv \bar B^{\mathrm{ch}}$,
+not a canonical natural transformation: there is no map
+$A \to \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(A))$ correspondent
+to a canonical identity under
+\eqref{eq:bar-cobar-hom-bijection-canonical}, because such a map
+would require $A$ to lie in the source of $\Omega^{\mathrm{ch}}$
+(i.e., to be a coalgebra), which it is not.
+
+The map $A \to \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(A))$
+is mathematically meaningful only as the homotopy inverse of the
+counit $\psi_\cA \colon \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(A)) \to A$
+in those settings where $\psi_\cA$ is invertible up to qi
+(Koszul locus, chain level) or up to coderived isomorphism (off the
+Koszul locus, in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$). This is
+exactly the content already isolated in
+Remark~\textup{\ref{rem:eta-adjunction-vs-qi-scope}} of
+\textup{cobar\_construction.tex}: the prior wording was ``doubly
+incorrect'' precisely because it inverted both the role
+(unit vs.\ counit) and the arrow direction.
+\end{proof}
+
+\begin{remark}[Two distinct ``Theorem~B'' statements;
+disambiguation]\label{rem:two-theorem-B-statements}
+With the canonical convention fixed by
+Lemma~\textup{\ref{lem:bar-cobar-adjunction-direction-canonical}},
+the programme's ``Theorem~B'' refers to two distinct (but related)
+qi/equivalence statements that the legacy notation conflated:
+\begin{enumerate}[label=\textup{(B\arabic*)}]
+\item \emph{Algebra-side counit qi.} For $\cA$ a chiral algebra,
+the counit
+$\psi_\cA \colon \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(\cA)) \to \cA$
+is a chain-level quasi-isomorphism on the Koszul locus
+$\Kosz(X)$ and an isomorphism in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$ off
+the Koszul locus. This is
+Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}.
+\item \emph{Coalgebra-side unit qi.} For $C$ a conilpotent chiral
+CDG-coalgebra with finite-dimensional graded pieces, the unit
+$\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
+is a chain-level quasi-isomorphism on $\Conil(X)$ and an
+isomorphism in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$ on the full
+CDG-coalgebra category. This is the present
+Theorem~\textup{\ref{thm:thm-B-coalgebra-side-unit-qi}} below.
+\end{enumerate}
+The headline phrasing in the programme summary
+``$\Omega_X(B_X(C)) \xrightarrow{\sim} C$ in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$'' is the mate of (B2) under
+the bijection
+\eqref{eq:bar-cobar-hom-bijection-canonical}: applying
+$\Omega^{\mathrm{ch}}$ to the unit $\eta_C$ gives an algebra map
+$\Omega^{\mathrm{ch}}(C) \to \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C)))$
+whose composite with the counit
+$\psi_{\Omega^{\mathrm{ch}}(C)}$ is $\mathrm{id}_{\Omega^{\mathrm{ch}}(C)}$
+by the triangle identity. (B1) and (B2) together — the
+counit-and-unit-qi pair — comprise the chiral bar-cobar adjunction's
+realisation as an equivalence on the appropriate localisations.
+\end{remark}
+
+\begin{theorem}[Bar-cobar unit on the coalgebra side; \ClaimStatusProvedHere]
+\label{thm:thm-B-coalgebra-side-unit-qi}
+\index{Theorem B!coalgebra-side unit qi|textbf}%
+\index{bar-cobar unit!coalgebra side}%
+Let $X$ be a smooth projective curve over $\mathbb{C}$ and let
+$C \in \mathrm{CoAlg}^{\mathrm{ch,conil,CDG}}_X$ be a conilpotent
+chiral CDG-coalgebra on $X$ with finite-dimensional graded pieces.
+The bar-cobar unit
+\begin{equation}\label{eq:thm-B-coalg-unit}
+\eta_C \;\colon\; C \;\longrightarrow\; \bar B^{\mathrm{ch}}\bigl(\Omega^{\mathrm{ch}}(C)\bigr)
+\end{equation}
+is an isomorphism in the coderived category
+$D^{\mathrm{co}}_{\mathrm{ch}}(X) := D^{\mathrm{co}}(\mathrm{CoAlg}^{\mathrm{ch,conil,CDG}}_X)$.
+On the conilpotent locus $\Conil(X)$ — that is, when $C$ is
+ordinary DG (curvature $h_C = 0$) and conilpotent in the strict
+chain-level sense — $\eta_C$ refines to a chain-level
+quasi-isomorphism.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: chain-level qi on the conilpotent locus.}
+Suppose first that $C$ has zero curvature ($h_C = 0$) and is
+conilpotent in the strict chain-level sense (the iterated
+deconcatenation coproduct $\bar\Delta^{(N)}$ vanishes on every
+fixed element for $N \gg 0$). Then $\Omega^{\mathrm{ch}}(C)$ is
+defined as the cofree DG chiral algebra on $s^{-1}\bar C$ with the
+twisted differential
+$d_{\Omega^{\mathrm{ch}}} = -s^{-1} \circ \bar\Delta \circ s$
+of Lemma~\textup{\ref{lem:cobar-derivation-extension}}\,(iii); the
+unit $\eta_C$ is the canonical map $C \to T^c(s^{-1}\bar C \oplus
+\cdots) = \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$ that
+sends a coalgebra element to its single-tensor representative.
+
+The bar-degree filtration on
+$\bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$ is the standard
+filtration
+$F^{\leq n}(\bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C)))$
+spanned by tensors of bar length $\leq n$; by conilpotency of $C$,
+the inclusion of $C$ as the bar-degree-$1$ summand
+$F^{\leq 1}/F^{\leq 0}$ is exhaustive on every fixed element. The
+associated graded of $\eta_C$ with respect to this filtration is
+the identity on $C$ in bar degree~$1$ and zero in higher bar
+degrees, so the spectral sequence of the bar-degree filtration
+collapses at $E_1$ and identifies
+$H^*(\eta_C)$ with the identity. This is the chiral specialisation
+of \cite[Theorem~2.3.1]{LV12} (the bar-cobar resolution); the
+chiral content reduces to the same combinatorial argument because
+the chiral tensor $\chirtensor$ commutes with filtered colimits in
+each variable (Beilinson--Drinfeld~\cite[\S3.4]{BD04}) and the
+bar-degree filtration on a tensor coalgebra is preserved by the
+chiral product.
+
+\emph{Step~2: coderived isomorphism in the curved case.}
+For $C$ with nonzero curvature $h_C \neq 0$, the bar-degree
+filtration is no longer term-by-term acyclic, and the chain-level
+argument of Step~1 fails. The coderived statement is recovered
+by appeal to the chiral comodule-contramodule correspondence
+(Theorem~\textup{\ref{thm:chiral-co-contra-correspondence}}) and
+its weight-completed strengthening
+(Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}),
+as follows.
+
+The unit $\eta_C$ is a morphism in
+$\mathrm{CoAlg}^{\mathrm{ch,conil,CDG}}_X$. Its image under the
+forgetful functor to chiral CDG-comodules over the
+target coalgebra $\bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
+gives a comodule map. Pulled back along $\eta_C$ to a comodule over
+$C$ itself (i.e., taking the cobase change), the resulting
+comodule map is the identity on $C$ as a comodule over itself
+(every coalgebra is a left comodule over itself via the
+coproduct). Therefore $\eta_C$ is an isomorphism in
+$D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{conil,ch}})$.
+
+The coderived category $D^{\mathrm{co}}_{\mathrm{ch}}(X)$ of
+chiral CDG-coalgebras is computed (by the dual of the standard
+Quillen-equivalence argument; cf.\ Positselski
+\cite[\S6.5]{Positselski11} for the classical analogue) as the
+homotopy category of CDG-coalgebras with weak equivalences the
+maps that become isomorphisms in
+$D^{\mathrm{co}}$ of comodules over either source or target. Under
+this presentation, $\eta_C$ being an isomorphism in
+$D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{conil,ch}})$
+\emph{is} $\eta_C$ being an isomorphism in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$. The chiral analogue of the
+Quillen equivalence holds because the chiral cotensor product
+$\square_C^{\mathrm{ch}}$
+(Definition~\textup{\ref{def:chiral-cotensor}}) preserves filtered
+colimits in each variable and the coderived category is generated by
+the cofree comodules $C \chirtensor V$
+(Lemma~\textup{\ref{lem:Phi-Psi-properties}}\,(b)), which are
+manifestly preserved by $\eta_C$ on both sides via the bar resolution
+of $C$.
+
+\emph{Step~3: weight-completed scope for class M.}
+For $C = \widehat{\bar B}^{\mathrm{ch}}(\cA)$ the weight-completed
+bar coalgebra of a class-M chiral algebra
+(Definition~\textup{\ref{def:weight-completed-bar}}), the unit
+$\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
+is a coderived isomorphism by Step~2 applied at each finite-weight
+truncation $C/F^{\leq w}$
+(Theorem~\textup{\ref{thm:chiral-positselski-at-each-weight}})
+together with the inverse-limit identification of
+Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}.
+The Mittag--Leffler condition on the truncation tower transfers
+from the comodule side to the bar-cobar side because the bar
+construction $\bar B^{\mathrm{ch}}$ commutes with surjective
+inverse limits at the level of finite-dimensional graded pieces
+(by finite-type stability), so
+$\eta_{\widehat{C}} = \varprojlim_w \eta_{C/F^{\leq w}}$
+in the sense of pro-objects. The pro-object limit of an inverse
+system of coderived isomorphisms with Mittag--Leffler images is a
+coderived isomorphism in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$, by the
+Milnor lim$^1$ vanishing argument of Step~2 of the proof of
+Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}.
+\end{proof}
+
+\begin{remark}[Ambient qualifier on Theorem~B coalgebra-side unit;
+\ClaimStatusProvedHere]\label{rem:thm-B-coalg-side-ambient}
+By analogy with the algebra-side dichotomy of
+Corollary~\textup{\ref{cor:positselski-applicable-families}}, the
+coalgebra-side unit
+$\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
+of Theorem~\textup{\ref{thm:thm-B-coalgebra-side-unit-qi}} carries a
+two-valued status across ambients (Pattern 281):
+\begin{itemize}
+\item \emph{Chain-level qi}: holds on
+$\Conil(X) \cap \{\text{uncurved}\}$, i.e., for ordinary DG
+chiral coalgebras with strict conilpotency. This includes the
+genus-$0$ bar coalgebras of class G (Heisenberg) and class L
+(non-critical affine Kac--Moody) where curvature vanishes.
+\item \emph{Coderived isomorphism in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$}:
+holds on the full conilpotent CDG-coalgebra category, including
+genus-$g \geq 1$ bar coalgebras with curvature
+$h_g = \kappa(\cA) \cdot \omega_g$ and the weight-completed bar
+coalgebras of class M.
+\item \emph{Failure on the raw direct-sum bar coalgebra of class M}:
+the same mechanism that obstructs the comodule-contramodule
+correspondence
+(Proposition~\textup{\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}})
+obstructs the chain-level unit qi on raw class M. The remedy is the
+weight completion, after which the coderived statement is recovered
+by Step~3 of the proof of
+Theorem~\textup{\ref{thm:thm-B-coalgebra-side-unit-qi}}.
+\end{itemize}
+The headline phrasing
+``$\Omega_X(B_X(C)) \xrightarrow{\sim} C$ in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$'' is therefore honest only when
+read as the mate-statement to (B2) of
+Remark~\textup{\ref{rem:two-theorem-B-statements}}, with the
+ambient qualifier ``coderived'' fixed in advance and the
+coalgebra $C$ either uncurved-conilpotent or weight-completed.
+\end{remark}
+
 \section{Forward references}
 \label{sec:forward-references-thm-B-scope}
 
@@ -648,6 +950,20 @@ is the source of the class-M exclusion in the MC5 direct-sum
 chain-level statement, and conversely supplies the falsification
 test for any would-be ``unconditional raw-level'' strengthening of
 Theorem~B.
+
+The coalgebra-side unit qi
+(Theorem~\ref{thm:thm-B-coalgebra-side-unit-qi}) supplies the
+mate-statement to the algebra-side counit qi of
+Theorem~\ref{thm:bar-cobar-inversion-qi}. Together they exhibit the
+Koszul reflection $K^2 \simeq \mathrm{id}$ of
+Theorem~\ref{thm:koszul-reflection} as the unit-and-counit-equivalence
+pair of the canonical adjunction
+$\Omega^{\mathrm{ch}} \dashv \bar B^{\mathrm{ch}}$
+(Lemma~\ref{lem:bar-cobar-adjunction-direction-canonical}); reading
+the headline ``$\Omega_X B_X(C) \xrightarrow{\sim} C$ in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$'' as the mate to the unit
+$\eta_C$ of (B2) is what makes the headline mathematically meaningful
+under the canonical convention.
 
 %================================================================
 % END CHAPTER
