@@ -3,7 +3,7 @@
 
 \begin{abstract}
 A single mathematical object, the genus-zero binary collision
-residue $r(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ of
+residue $r_\cA(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ of
 the bar-intrinsic modular MC element of a chiral algebra~$\cA$,
 appears under seven different names in seven different mathematical
 frameworks. It is the universal twisting morphism of the bar-cobar
@@ -32,7 +32,7 @@ all of them. When two faces disagree, both are wrong.
 
 When seven independent mathematical frameworks produce the same
 object, the object is not merely well-defined: it is
-\emph{inevitable}. The collision residue~$r(z)$ appears as a
+\emph{inevitable}. The collision residue~$r_\cA(z)$ appears as a
 twisting morphism, a spectral $R$-matrix, a $\lambda$-bracket
 coefficient, a differential-operator symbol, a Yangian structure
 constant, a Sklyanin bracket kernel, and a Gaudin Hamiltonian
@@ -46,10 +46,14 @@ reconcile seven constructions: it proves that the single object
 from which they all descend exists.
 
 The theorem is subordinate to a
-larger claim. The holographic modular Koszul datum
+larger claim. Fix a standard chiral algebra~$\cA$ in the standard
+landscape \textup{(}Heisenberg, affine Kac--Moody, $\beta\gamma/bc$,
+Virasoro, or principal $\mathcal{W}_N$\textup{)}, or more generally a
+modular Koszul chiral algebra together with the extra hypotheses named
+when the line-side comparison is invoked. We pin the six-slot datum
 \[
 \mathcal{H}(T) \;=\;
-\bigl(\cA,\; \cA^!,\; \cC,\; r(z),\; \Theta_\cA,\; \nabla^{\mathrm{hol}}\bigr),
+\bigl(\cA,\; \cA^!,\; \cC,\; r_\cA(z),\; \Theta_\cA,\; \nabla^{\mathrm{hol}}\bigr),
 \]
 formally introduced in
 Definition~\ref{def:holographic-modular-koszul-datum}, is not a
@@ -61,46 +65,107 @@ Each slot of $\mathcal{H}(T)$ captures one aspect of the
 boundary-bulk reconstruction, and the six aspects are interlocking
 projections of the one algebra~$U_\cA$:
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item $\cA$ is the boundary VOA, the primary factor of~$U_\cA$.
-\item $\cA^{!}_\infty$ is the second boundary of the Dimofte slab,
- the Verdier-dual factor of~$U_\cA$.
-\item $\cC$ is the bulk/line comparison slot. On the open/closed side
- it is modeled by
- $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$; on the line side it is
- presented by the dg-category of line operators or its compact-generator
- algebra when that comparison is available. The base curve is ambient
- data and is not itself a slot of~$\mathcal{H}(T)$.
-\item $r(z)$ is the spectral $R$-matrix of the quasitriangular
- structure of~$U_\cA$, the genus-zero binary collision residue that
- controls boundary-bulk scattering.
-\item $\Theta_\cA$ is the universal Maurer--Cartan element, the
- all-degree boundary-bulk coupling produced by the bar-intrinsic
- differential on the $U_\cA$-convolution algebra.
-\item $\nabla^{\mathrm{hol}}$ is the modular shadow connection, the
- flat connection whose higher-order terms are the shadow tower
- corrections to the boundary-bulk reconstruction.
+\item \emph{Boundary slot.} $\cA$ is the boundary chiral algebra,
+ the primary factor of~$U_\cA$.
+\item \emph{Verdier/Koszul slot.} $\cA^!$ means the strict chiral
+ Koszul dual obtained from the Verdier-dual factorization companion
+~$\cA^{!}_\infty$ when the rectification map
+ $\cA^{!}_\infty \to \cA^!$ is proved. We never identify
+ $\cA^!$ with $\Omega(\barB(\cA))$: $\Omega(\barB(\cA))\simeq \cA$ is
+ bar--cobar inversion, not Koszul duality, and
+ $(H^*(\barBch(\cA)))^\vee$ is only the linear shadow of the Verdier
+ construction.
+\item \emph{Bulk/line slot.} We pin
+ \[
+ \cC \;:=\; \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ \;:=\; \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA,\cA)
+ \]
+ on the formal disk, and for the global variant we use the same symbol
+ for the corresponding object on $X_{\mathrm{dR}}$. Every later
+ appearance of~$\cC$ in this chapter refers to this pin. The line-side
+ presentation $\cC_{\mathrm{line}} \simeq
+ \cA^!_{\mathrm{line}}\text{-}\mathsf{mod}$ is a second model for the
+ same slot only on the boundary-linear / Drinfeld--Sokolov lanes where
+ the compact-generator comparison is proved.
+\item \emph{$R$-matrix slot.} We pin the fourth slot to the
+ family-normalized binary collision residue
+ \[
+ r_\cA(z) \;:=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA).
+ \]
+ In the standard families this specializes to
+ \[
+ r^{\mathrm{Heis}}_k(z)=\frac{k}{z}\,J\otimes J,\qquad
+ r^{KM,\fg}_k(z)=\frac{k\,\Omega_{\mathrm{tr}}}{z}
+ \ \text{or}\ 
+ r^{KM,\fg}_k(z)=\frac{\Omega}{(k+h^\vee)z},
+ \]
+ and
+ \[
+ r^{\mathrm{Vir}}_c(z)=\frac{c/2}{z^3}+\frac{2T}{z}.
+ \]
+ Bare $r(z)$ will therefore not be used below.
+\item \emph{Maurer--Cartan slot.} In the chain-level lane we pin
+ $\Theta_\cA$ to the degree-$1$ Maurer--Cartan element of the ordered
+ convolution dGLA
+ \[
+ \mathfrak{g}^{E_1}_\cA
+ \;:=\;
+ \operatorname{Conv}\bigl(B^{\mathrm{ord}}(\cA),\cA\bigr),
+ \qquad
+ D\cdot\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA]=0.
+ \]
+ Its averaged image in the modular convolution dGLA is denoted by the
+ same symbol. The gauge class is presentation-independent on the
+ generic cyclic-rigid locus, so the slot is universal up to gauge.
+\item \emph{Holomorphic-connection slot.} We pin
+ \[
+ \nabla^{\mathrm{hol}}_{g,n}
+ \;:=\;
+ d-\operatorname{Sh}_{g,n}(\Theta_\cA)
+ \]
+ as the flat holomorphic connection on the ordered bar bundle over
+ $\mathrm{Conf}_n(X)$ induced by the universal MC element. On the
+ Heisenberg and affine Kac--Moody lanes this specializes to the KZ
+ connections built from $r^{\mathrm{Heis}}_k(z)$ and
+ $r^{KM,\fg}_k(z)$; on the Virasoro lane it specializes to the
+ $\mathrm{SL}_2$-type conformal connection built from
+ $r^{\mathrm{Vir}}_c(z)$. Every later appearance of
+ $\nabla^{\mathrm{hol}}$ refers to this pin.
 \end{enumerate}
+
+In this chapter, the words \emph{holographic}, \emph{boundary-bulk},
+and \emph{open/closed} always refer to the chain-level comparison
+between the boundary object~$\cA$ and the bulk object~$\cC$ along the
+restriction map $\rho_{\partial}\colon \cC \to \cA$ and the operadic
+inclusion $\mathrm{Ass}^{\mathrm{ch}} \hookrightarrow
+\mathrm{SC}^{\mathrm{ch,top}}$, witnessed by the same trio
+$(r_\cA(z),\Theta_\cA,\nabla^{\mathrm{hol}})$. The proved scope is the
+modular-Koszul, boundary-linear, and principal DS comparison surfaces
+named below; off those surfaces the obstruction is explicit: either the
+strict edge $\cA^{!}_\infty \to \cA^!$ fails, or the global triangle
+relating the bulk slot to the line model does not close.
 
 Under this reading, the three structural constants of the thesis have
 the following content. The chiral derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the bulk algebra, computed
-from~$\cA$ by the bar--cobar pair. The modular
-characteristic~$\kappa(\cA)$ is the holographic central charge, the
-degree-$2$ scalar component of $\Theta_\cA$ and the Brown--Henneaux
-coefficient of the bulk partition function
+from~$\cA$ by chiral Hochschild cochains. The modular
+characteristic~$\kappa(\cA)$ is the degree-$2$ scalar component of
+$\Theta_\cA$ and the Brown--Henneaux coefficient of the bulk partition
+function
 (Theorem~\ref{thm:genus-universality}). The shadow obstruction tower
-$\{S_r(\cA)\}_{r \geq 2}$ is the holographic correction hierarchy, the
+$\{S_r(\cA)\}_{r \geq 2}$ is the correction hierarchy, the
 sequence of finite-order projections of~$\Theta_\cA$ whose termination
 controls the depth of boundary-bulk reconstruction; and
 $U_\cA = \cA \bowtie \cA^{!}_\infty$ is the universal boundary-bulk
-algebra that reconstructs the gravitational theory from the VOA
+algebra organizing the proved comparison maps from the boundary VOA to
+the bulk slot
 (introduction, Remark~\ref{rem:five-facets-boundary-bulk}).
 
-The collision residue~$r(z)$, which is the subject of this chapter,
+The collision residue~$r_\cA(z)$, which is the subject of this chapter,
 is slot~(4) of this six-tuple: the spectral $R$-matrix of the
 quasitriangular structure of~$U_\cA$. The seven-face master theorem
 is the verification checklist for slot~(4): seven independent
-computations of~$r(z)$ across seven independent frameworks must
+computations of~$r_\cA(z)$ across seven independent frameworks must
 agree, and when they do, the $R$-matrix slot of~$U_\cA$ is verified.
 The chapter therefore has two readings. Narrowly, it proves the
 unification of seven computations of one spectral $r$-matrix.
@@ -115,11 +180,23 @@ Proposition~\ref{prop:hdm-u-a-recoverability} below.
 \section{The collision residue as universal object}
 \label{sec:hdm-collision-residue}
 
-The bar-intrinsic MC element
-$\Theta_\cA = D_\cA - d_0 \in
+The ordered chain-level starting point is the degree-$1$
+Maurer--Cartan element of the ordered convolution dGLA
+\[
+\Theta_\cA \in \mathfrak{g}^{E_1,1}_\cA
+= \operatorname{Conv}\bigl(B^{\mathrm{ord}}(\cA),\cA\bigr)^1,
+\qquad
+D\cdot\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0.
+\]
+Its averaged modular image is the bar-intrinsic element
+\[
+\Theta_\cA = D_\cA - d_0 \in
 \mathrm{MC}(\Defcyc(\cA) \,\widehat{\otimes}\, \mathcal{G}_{\mathrm{mod}})$
-is the central object of this monograph
-(Theorem~\ref{thm:mc2-bar-intrinsic}). It is the unique element of
+,
+\]
+which is the central object of this monograph
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)}. It is
+the unique element of
 the modular cyclic deformation complex satisfying
 $D_\cA \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
 that lifts the chiral bracket to all degrees and all genera. The
@@ -149,7 +226,8 @@ cyclic complex. Uniqueness up to gauge equivalence is the content
 of generic cyclic rigidity
 (Theorem~\ref{thm:cyclic-rigidity-generic}): the cyclic deformation
 complex has one-dimensional second cohomology in degree~$2$ on the
-generic locus. The collision residue is
+generic locus. On that locus the gauge class is therefore
+presentation-independent. The collision residue is
 therefore a canonical invariant of~$\cA$.
 
 \begin{theorem}[Seven-face master theorem; \ClaimStatusProvedElsewhere]
@@ -310,11 +388,27 @@ Face~1. The result is documented in Vol.~II, line-operators
 chapter.
 \end{proof}
 
-Face~2 is the holographic incarnation of the collision residue: it
-identifies $r_\cA(z)$ with the physical $r$-matrix that braids line
-defects in the bulk three-dimensional holomorphic-topological
-theory. The DNP framework is geometric, the bar-cobar framework is
-algebraic, and the master theorem says they compute the same object.
+The chirally Koszul qualifier is sharp: off that locus the bar
+spectral sequence need not collapse at~$E_2$, the Verdier-dual
+companion need not rectify to a strict~$\cA^!$, and the line-operator
+kernel need not admit a proved identification with the pinned bulk
+slot~$\cC$.
+
+Face~2 is the open/closed face of the collision residue. The boundary
+object is~$\cA$, the bulk object is the DNP holomorphic-topological
+line-operator package, and the comparison map is the chain-level
+identification of the restriction map
+$\rho_{\partial}\colon \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\to \cA$
+with the operadic inclusion
+$\mathrm{Ass}^{\mathrm{ch}}\hookrightarrow\mathrm{SC}^{\mathrm{ch,top}}$
+transported through the Vol.~II equivalence between line operators and
+$\barBch(\cA)$-comodules. The witnesses are the same three pieces of
+homotopy data as in the chapter-top pin:
+$r^{\mathrm{DNP}}(z)=r_\cA(z)$, the universal MC element~$\Theta_\cA$,
+and the genus-zero shadow connection~$\nabla^{\mathrm{hol}}_{0,2}$.
+Its exact scope is the chirally Koszul DNP-realized closed-colour
+lane of Theorem~\ref{thm:hdm-face-2}; outside that lane the comparison
+with the pinned bulk slot~$\cC$ remains conjectural.
 
 \section{Face 3: the classical $\lambda$-bracket of Khan--Zeng \textup{(}genus~$0$ only\textup{)}}
 \label{sec:hdm-face-3}
@@ -380,13 +474,17 @@ Conjecture~\ref{conj:ht-deformation-quantization}, whose formal
 algebraic content is proved in Vol.~II).
 \end{proof}
 
-Face~3 (genus~$0$ only; higher-genus extension open) is the classical-Poisson incarnation of the collision
+Face~3 \textup{(}genus~$0$ only\textup{)} is the classical-Poisson incarnation of the collision
 residue. Where Face~1 produces a morphism in the dg category of
 twisting morphisms and Face~2 produces a quantum spectral $r$-matrix,
 Face~3 produces the classical limit: the binary leading coefficient
 of the classical $\lambda$-bracket. The Khan--Zeng paper provides
 the geometric realization of this classical limit as a 3d Poisson
-sigma model.
+sigma model. The higher-genus extension is not merely unwritten: the
+missing input is a proved comparison between higher-genus chiral
+Hochschild classes and the Khan--Zeng sigma-model moduli problem, so
+the face is presently pinned only on the genus-zero formal-disk/sphere
+sector.
 
 \section{Face 4: the commuting sphere Hamiltonians of Gaiotto--Zeng}
 \label{sec:hdm-face-4}
@@ -397,7 +495,11 @@ in their framework, a family of commuting differential operators
 $\{H_i^{\mathrm{GZ}}\}_{i=1}^n$ on the configuration space
 $\mathrm{Conf}_n(\mathbb{P}^1)$ of $n$ marked points on the sphere.
 The operators are derived from the chiral OPE data via a contour
-manipulation in the holographic setup. Their commutativity
+manipulation in the holomorphic-topological bulk theory, pulled back to
+the boundary sphere by the restriction map
+$\rho_{\partial}\colon \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)\to \cA$ and
+the binary part of the shadow connection~$\nabla^{\mathrm{hol}}_{0,n}$.
+Their commutativity
 $[H_i^{\mathrm{GZ}}, H_j^{\mathrm{GZ}}] = 0$ is a non-trivial
 consequence of the OPE structure. The order of $H_i^{\mathrm{GZ}}$
 as a differential operator on $\mathrm{Conf}_n(\mathbb{P}^1)$
@@ -424,6 +526,12 @@ on the sphere. In particular, the GZ26 sphere reconstruction
 theorem is a consequence of the sphere flatness theorem
 \textup{(}Theorem~\textup{\ref{thm:sphere-reconstruction})}.
 \end{theorem}
+
+The sphere qualifier is essential: beyond genus~$0$ one would have to
+identify the higher-genus shadow connection
+$\nabla^{\mathrm{hol}}_{g,n}$ with the GZ contour construction on
+$\mathrm{Conf}_n(X)$, and no such physical comparison is presently
+proved.
 
 \begin{proof}
 The GZ26 commuting differential operators are defined by a contour
@@ -927,7 +1035,7 @@ and the antisymmetric part lies in $\ker\av$.
 double-pole OPE $J(z)J(w) \sim k/(z-w)^2$ is symmetric in
 $(J, J)$ by the abelian commutation relation. The $d\log$
 absorption preserves this symmetry, so the chain-level lift
-of $r(z) = (k/z) J\otimes J$ at every face $F_i$ is
+of $r^{\mathrm{Heis}}_k(z) = (k/z)\,J\otimes J$ at every face $F_i$ is
 $\Sigma_2$-invariant: $\tau \cdot (J\otimes J) = J\otimes J$.
 Therefore $\av(r^{(F_i),E_1}_{\cH_k}(z)) = r^{(F_i),E_1}_{\cH_k}(z)
 = r_{\cH_k}^{(F_i)}(z)$ pointwise. The Sugawara correction
@@ -942,7 +1050,8 @@ Killing form) and antisymmetric simple-pole part
 $f^{ab}{}_c J^c$ (because $f^{ab}{}_c = -f^{ba}{}_c$). The
 $d\log$ absorption strips the simple pole, leaving only the
 symmetric Casimir $\Omega^{ab} = \kappa^{ab} I_a \otimes I_b$.
-Hence at the bar hub $F_1$ the chain-level lift of $r(z)$ is
+Hence at the bar hub $F_1$ the chain-level lift of the
+family-normalized Kac--Moody kernel $r^{KM,\fg}_k(z)$ is
 $\Sigma_2$-invariant: $\av$ is the identity. The transport
 to any other face $F_i$ ($i = 2, \ldots, 7$) is via a finite
 inner gauge $\Phi_{1i} \in \GRT^{\mathrm{fin}}$
@@ -994,7 +1103,7 @@ deconcatenation chain model is $\tau$-equivalent up to a
 $d\log$-derivative, and the simple-pole $\partial T(w)/(z-w)$
 contributes the antisymmetric component that $d\log$
 absorption removes. The chain-level lift of
-$r(z) = (c/2)/z^3 + 2T/z$ at every face is therefore
+$r^{\mathrm{Vir}}_c(z) = (c/2)/z^3 + 2T/z$ at every face is therefore
 $\Sigma_2$-invariant once the
 $d\log$-absorption is applied (Definition~C11 of CLAUDE.md;
 the cubic+simple pattern, NOT quartic, is the post-absorption
@@ -1608,19 +1717,23 @@ through a wave-$14$ structural anchor:
  $\pi_\cA$ of Face~1 is the unit of the Koszul reflection theorem
  (Theorem~\ref{thm:koszul-reflection}, the Vol~I Platonic
  Theorem~A): the bar-cobar adjunction
- $\Omega \dashv B$ is an involution on the Koszul-self-dual
- locus, and $\pi_\cA$ is its tautological twisting datum. This
+ $\Omega \dashv B$ is the fixed-curve chain/factorization
+ reflection on the Koszul locus, with coderived correction off the
+ strict lane, and $\pi_\cA$ is its tautological twisting datum. This
  is slot~(1) of $\mathcal{H}(T)$ verified \emph{by}
  reflection.
 \item \emph{Universal conductor.} Slot~(5), the universal MC
  element $\Theta_\cA$ at the genus-$0$, scalar projection,
- evaluates to the modular characteristic
- $\kappa(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$ inscribed in
- Chapter~\ref{chap:universal-conductor}. The collision residue
- $r_\cA(z)$ and the universal conductor $K(\cA)$ are therefore
- \emph{linked} invariants: the leading
- $\Theta_\cA$ slot fixes both objects through a single
- trace-supertrace identity on the BRST-Koszul pair $(\cA, \cA^!)$.
+ evaluates on the verified standard-landscape canonical BRST models to
+ the modular characteristic
+ $\kappa(\cA) = -c_{\mathrm{ghost}}(\BRST^{\mathrm{can}}(\cA))$
+ inscribed in Chapter~\ref{chap:universal-conductor}. No stronger
+ universal BRST functor is claimed at this surface. The collision
+ residue $r_\cA(z)$ and the conductor pair
+ $(\kappa(\cA),K(\cA))$ are therefore \emph{linked} invariants: the
+ leading $\Theta_\cA$ slot fixes the scalar $\kappa(\cA)$ directly and
+ fixes the conductor $K(\cA)=c(\cA)+c(\cA^!)$ after passing to the
+ Verdier partner.
 \item \emph{Climax identity.} The full datum $\mathcal{H}(T)$
  condenses into the climax identity
  $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
@@ -1642,8 +1755,10 @@ heuristic to a chain-level theorem on the gauge-theoretic
 landscape; Vol~III's CY-to-chiral functor~$\Phi$ realises the
 seven faces of $r_{\Phi(X)}(z)$ for K3-fibered Class~A
 threefolds, with the universal trace identity
-$\kappa_{\BKM}(X) = K(\Phi(X))/2$ supplying the conductor side
-of slot~(5) in the BPS-counting category.
+conjecturally comparing the Vol~I conductor with the proved
+Borcherds weight $c_N(0)/2$ on the five verified Borcherds families
+$N \in \{1,2,3,4,6\}$, supplying the conductor side of slot~(5) in the
+BPS-counting category.
 \end{remark}
 
 \begin{remark}[Boundary-linear bulk versus global triangle]

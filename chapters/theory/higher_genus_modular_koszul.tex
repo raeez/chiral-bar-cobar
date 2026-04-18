@@ -17,11 +17,19 @@ The bar complex $\barB^{(g)}(\cA)$ acquires curvature
  d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g \neq 0,
 \]
 %: d^2_bar = 0 always; d^2_fib = kappa*omega_g is FIBERWISE, g >= 1
-where $\omega_g = c_1(\lambda)$ is the Hodge class on
-$\overline{\mathcal{M}}_g$ and $\kappa(\cA)$ is the modular
+where $\omega_g = c_1(\det\mathbb{E})$ is the degree-$2$
+Hodge class on $\overline{\mathcal{M}}_g$ and $\kappa(\cA)$ is the modular
 characteristic of~$\cA$ (Definition~\ref{def:modular-characteristic-package}).
 The fiberwise differential no longer squares to zero; cobar inversion,
 as stated, does not extend.
+The higher-degree Hodge Euler class of Theorem~D is obtained only
+after the family-index lift:
+the scalar lane carries
+$\mathrm{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$ with
+$\lambda_g = c_g(\mathbb{E})$, while the full all-weight free energy
+is
+$F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
++\delta F_g^{\mathrm{cross}}(\cA)$.
 
 %% UNIQUE SURVIVOR: the total bar differential D_A still squares to zero.
 
@@ -2895,12 +2903,26 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
 
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Universality.}
- \begin{enumerate}[label=\textup{(\alph*)}]
- \item \emph{Cohomological\textup{:}} The genus-$g$ obstruction class
- factors as
- $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
- \textup{(}UNIFORM-WEIGHT\textup{}) in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$
- \textup{(}UNIFORM-WEIGHT; unconditional at $g = 1$\textup{)}.
+ The genus-$g$ free energy satisfies the all-weight formula
+ \begin{equation}\label{eq:modular-characteristic-all-weight}
+ F_g(\cA)
+ \;=\;
+ \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}
+ \;+\;
+ \delta F_g^{\mathrm{cross}}(\cA)
+ \qquad
+ \textup{(}\text{ALL-WEIGHT} + \delta F_g^{\mathrm{cross}}\textup{})
+ \end{equation}
+ for every $g \geq 1$, with
+ $\delta F_1^{\mathrm{cross}}(\cA)=0$ universally
+ \textup{(}Theorem~\textup{\ref{thm:genus-universality}},
+ Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)}.
+ On the uniform-weight scalar lane
+ \textup{(}Definition~\textup{\ref{def:scalar-lane}}\textup{}) the
+ correction vanishes, so the cohomological obstruction class factors as
+ $\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$
+ \textup{(}UNIFORM-WEIGHT\textup{}) in
+ $H^{2g}(\overline{\mathcal{M}}_g)$.
  Here $\lambda_g := c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$
  is the top Chern class of the Hodge bundle
  $\mathbb{E} = R^0\pi_*\omega_\pi$ over the universal curve
@@ -2916,34 +2938,27 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
  The scalar prefactor admits the wave-14 universal-conductor reading
  $\kappa(\cA) = K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$
  (Chapter~\ref{chap:universal-conductor}, Trinity Theorem;
- Chapter~\ref{chap:climax-platonic}, climax pairing), so the
- universality identity rewrites as
- $\mathrm{obs}_g(\cA) = K(\cA)\cdot\lambda_g$
- (UNIFORM-WEIGHT). The all-genera extension uses
- clutching uniqueness (Chapter~\ref{chap:clutching-uniqueness-socle},
- healing) plus Chern--Weil scalar-channel linearity
- (Proposition~\ref{prop:chain-level-curvature-operator}).
- \end{enumerate}
- For multi-generator algebras \textup{(}$\mathcal{W}_N$ with
- $N \geq 3$\textup{)}, the genus-$1$ factorization is unconditional,
- while the higher-genus extension remains conditional on the
- strong scalar ansatz
- \textup{(}Theorem~\textup{\ref{thm:multi-generator-universality})}.
+ Chapter~\ref{chap:climax-platonic}, climax pairing).
+ In particular,
+ $\delta F_g^{\mathrm{cross}}(\Vir_c)=0$ for all $g \geq 1$,
+ while
+ $\delta F_2^{\mathrm{cross}}(\cW_3)=(c+204)/(16c)$ and
+ $\delta F_3^{\mathrm{cross}}(\cW_3)
+ = (5c^3 + 3792c^2 + 1149120c + 217071360)/(138240\,c^2)$.
 \item \emph{Generating function.}
  The genus free energies
  assemble as
  \begin{equation}\label{eq:modular-char-gf}
  \sum_{g=1}^{\infty} F_g(\cA)\, x^{2g}
  \;=\; \kappa(\cA) \cdot
- \left(\frac{x/2}{\sin(x/2)} - 1\right),
+ \left(\frac{x/2}{\sin(x/2)} - 1\right)
+ + \sum_{g=2}^{\infty}\delta F_g^{\mathrm{cross}}(\cA)\,x^{2g},
  \end{equation}
- recovering the $\hat{A}$-genus as topological generating function
- \textup{(UNIFORM-WEIGHT)}.
- At genus~$1$ this holds unconditionally for all families;
- at genus $g \geq 2$ with multi-weight algebras, the scalar
- formula fails and a cross-channel correction
- $\delta F_g^{\mathrm{cross}}$ is required
- \textup{(}Theorem~\textup{\ref{thm:multi-generator-universality})}.
+ recovering the $\hat{A}$-genus as the scalar-lane generating function
+ and adding the explicit cross-channel series in general. On the
+ uniform-weight lane the correction series vanishes and
+ \eqref{eq:modular-char-gf} reduces to the pure
+ $\hat{A}$-expansion.
 \item \emph{Duality.}
  Under Koszul duality, $\kappa$ satisfies a family-indexed duality
  constraint $\kappa(\cA) + \kappa(\cA^!) = \kappa_\Sigma(\cA)$,
@@ -2991,28 +3006,33 @@ The non-circular anchor is the bar-intrinsic shadow tower.
 Theorem~\ref{thm:mc2-bar-intrinsic} constructs $\Theta_\cA$ and its
 scalar trace. Theorem~\ref{thm:genus-universality} is the first
 downstream step: it identifies the genus-$g$ scalar component of that
-trace with $\kappa(\cA)\lambda_g$ on the proved uniform-weight lane.
+trace with the diagonal $\kappa(\cA)\lambda_g$ package and the full
+all-weight free energy
+$F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
++\delta F_g^{\mathrm{cross}}(\cA)$.
 Theorem~\ref{thm:family-index} is downstream again: it is the
 Grothendieck--Riemann--Roch identification of the already constructed
 scalar series for the bar family~\eqref{eq:bar-family} on the
-universal curve. Thus the logical route is \textup{(UNIFORM-WEIGHT)}
+universal curve. Thus the logical route is
 \[
 \Theta_\cA
 \;\Longrightarrow\;
-\mathrm{obs}_g=\kappa(\cA)\lambda_g \quad \textup{(UNIFORM-WEIGHT)}
+\bigl(
+\mathrm{obs}_g=\kappa(\cA)\lambda_g
+\text{ on the scalar lane,\ }
+F_g=\kappa(\cA)\lambda_g^{\mathrm{FP}}
++\delta F_g^{\mathrm{cross}}(\cA)
+\text{ in general}
+\bigr)
 \;\Longrightarrow\;
 \sum_{g \geq 1} F_g x^{2g}
 =
-\kappa(\cA)\cdot(\hat{A}(ix)-1) \quad \textup{(UNIFORM-WEIGHT; for ALL-WEIGHT add } \delta F_g^{\mathrm{cross}}\textup{)},
+\kappa(\cA)\cdot(\hat{A}(ix)-1)
++ \sum_{g \geq 2}\delta F_g^{\mathrm{cross}}(\cA)x^{2g},
 \]
 and Theorem~\ref{thm:genus-universality} does not invoke
 Theorem~\ref{thm:family-index}.
-Part~(i) is Theorem~\ref{thm:genus-universality} for
-uniform-weight algebras. For multi-generator algebras
-($\mathcal{W}_N$, $N \geq 3$), only the genus-$1$ factorization
-is unconditional; the higher-genus extension is conditional on the
-strong scalar ansatz of
-Theorem~\ref{thm:multi-generator-universality}.
+Part~(i) is Theorem~\ref{thm:genus-universality}.
 Part~(ii) is Theorem~\ref{thm:universal-generating-function}.
 Part~(iii) is the duality clause of
 Theorem~\ref{thm:genus-universality}(ii).

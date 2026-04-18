@@ -1618,6 +1618,169 @@ Before writing an `@independent_verification(claim=L)` decorator:
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
+## Pattern 244: Soft-graviton order is a Mellin-residue/shadow-degree grading, not raw \texorpdfstring{$A_\infty$}{A-infinity} arity
+
+**Session**: 2026-04-18 Vol II physical-consequences audit.
+
+**Type**: grading conflation / low-order misidentification. The slogan
+`m_r <-> sub^{r-2}` collapses three distinct gradings that only meet
+after the Mellin dictionary:
+- $\Ainf$ arity $r$,
+- bar/cohomological degree \textup{(}$|m_r| = 2-r$\textup{)},
+- conformally soft / low-energy order \textup{(}pole
+  $\Delta_s = 4-r$, equivalently soft-energy power
+  $\omega_s^{\,r-2}$\textup{)}.
+
+On the Virasoro lane the collapse fails immediately. The binary OPE
+\[
+T(z)\cO(w)\sim \frac{h\,\cO(w)}{(z-w)^2}+\frac{\partial\cO(w)}{z-w}
+\]
+already produces both the leading and subleading soft factors, so
+`m_2` accounts for soft orders `0` and `1`. The ternary operation
+`m_3` is the first chain-level homotopy, but on the scalar Virasoro
+lane its cubic shadow is gauge-trivial; the first new gauge-invariant
+contact coefficient is
+\[
+S_4(\Vir_c)=\frac{10}{c(5c+22)}.
+\]
+Hence the correct bridge is
+\[
+\Res_{\Delta_s = 4-r}\,\widetilde{\cM}_n
+=
+S_r(\Vir_c)\,\cD_s^{(r)}\,\widetilde{\cM}_{n-1},
+\]
+not the raw identification `m_r = S^{(r-2)}`.
+
+**Rule**: whenever a chapter claims a direct dictionary between
+`m_r` and the `r-2` soft order, force a three-step check:
+1. compute the actual pole structure of the binary OPE;
+2. identify whether the relevant degree-$3$ class is gauge-trivial or
+   gauge-invariant on the scalar lane;
+3. write the Mellin-residue statement explicitly. If step 3 is absent,
+   the claim surface is over-compressed.
+
+**Counter-check one-liner**: before accepting an `m_r <-> soft order`
+sentence, ask whether `m_2` has only one pole. For Virasoro it has two,
+so the raw slogan is already false at the first nontrivial step.
+
+**Canonical application (this session)**:
+- `/Users/raeez/chiral-bar-cobar-vol2/chapters/theory/introduction.tex`
+  advertised `r=2` leading, `r=3` subleading, `r>=4` higher soft order.
+  The healed surface separates the proved residue theorem from the false
+  raw-arity slogan.
+- `/Users/raeez/chiral-bar-cobar-vol2/chapters/connections/3d_gravity.tex`
+  contained the stronger statement
+  `m_r \leftrightarrow \mathrm{sub}^{r-2}`. The audit replaced it by
+  the Mellin-shadow residue identity plus the low-order correction:
+  `m_2` already covers leading and subleading; `m_3` is homotopical;
+  `S_4` is the first new gauge-invariant contact coefficient.
+
+**Related**: entry 246 (`13-c` versus `26-c` Virasoro-duality
+conventions); AP113 (never leave `\kappa` bare at a scope interface);
+Pattern 230 (symbol-overloading across distinct lanes).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 246: Universal-trace scope drift across volumes
+
+**Session**: 2026-04-19 morning (Universal Trace Identity cross-volume attack/heal sweep).
+
+**Type**: cross-volume claim-surface drift. Canonical violation: Vol~I, Vol~II, and Vol~III advertise the same bridge with different family lists, different status splits, or different functor scopes.
+
+**Rule**: the same cross-volume bridge must carry the same three pieces of data everywhere it appears:
+1. the proved lane,
+2. the conjectural lane,
+3. the exact family list on which each lane is asserted.
+If one surface says ``five Borcherds families $N \in \{1,2,3,4,6\}$'' and another says ``eight diagonal orbifolds plus STU,'' the claim surface is unstable until the mismatch is resolved or downgraded.
+
+**Diagnostic split**:
+
+1. **Borcherds lane.** Is the statement only $\kappa_{\mathrm{BKM}} = c_N(0)/2$, or is it claiming a chiral comparison too?
+2. **Bridge lane.** Is the statement asserting a proved equality with $K(\Phi_3(\cdot))$, or only a conjectural comparison conditional on a BRST resolution?
+3. **Family lane.** Are the families explicitly the five Borcherds families $N \in \{1,2,3,4,6\}$, or is a larger slogan being advertised without enumeration?
+4. **Class-B lane.** Is Class~B marked out-of-scope, or is a different formula being smuggled in as though it were the same identity?
+
+**Regex trigger**:
+
+```bash
+rg -n 'universal trace identity|eight diagonal orbifolds|STU model|c_N\\(0\\)/2|K\\(\\Phi|K\\(A_X\\)|Class~A|Class~B' \
+  ~/chiral-bar-cobar ~/chiral-bar-cobar-vol2 ~/calabi-yau-quantum-groups
+```
+
+**Counter-check one-liner**: after every hit, ask:
+1. What is the proved lane?
+2. What is conjectural?
+3. What exact family list is inscribed?
+4. Is Class~B out of scope or being substituted by a different invariant?
+
+If any answer differs across live surfaces, the sentence is a Pattern-246 violation.
+
+**Canonical violation healed (this session)**:
+Vol~I mixed the five-family Borcherds theorem, the ``eight diagonal orbifolds'' slogan, and the STU add-on across `main.tex`, `preface.tex`, `universal_conductor_K_platonic.tex`, and `chiral_climax_platonic.tex`. The honest live surface now records:
+- proved Borcherds lane only on $N \in \{1,2,3,4,6\}$;
+- conjectural conductor comparison only after fixing the $d=3$ output and a BRST resolution;
+- Class~B explicitly out of scope.
+
+**Related**: Pattern 235 (reverse drift after narrowing); Pattern 238 (theorem scope exceeds proof body); AP-CY58 (dimension-dependent $\Phi$ output).
+
+## Pattern 247: ``Per-family verified'' without an enumerated family table
+
+**Session**: 2026-04-19 morning (Universal Trace Identity per-family audit).
+
+**Type**: verification-surface incompleteness. Canonical violation: prose says ``verified per-family'' while omitting the actual family list, action type, invariant value, and primary citation for each family.
+
+**Rule**: never write ``per-family verified'' unless the manuscript or surrounding proof block gives, for each family:
+1. the family name or orbifold type,
+2. the action type,
+3. the numerical invariant,
+4. the primary source.
+Without all four, the phrase is advertising confidence the reader cannot audit.
+
+**Regex trigger**:
+
+```bash
+rg -n 'per-family verified|verified per-family|eight diagonal orbifolds|five Borcherds families|STU model' chapters/
+```
+
+**Counter-check one-liner**: convert the claim to a four-column table
+`family | action | value | source`. If any column is blank, the prose is not yet allowed to say ``per-family verified''.
+
+**Canonical violation healed (this session)**:
+The universal-trace slogans advertised ``per-family verified'' while leaving the family list implicit. The healed surface now narrows the verified lane to the five Borcherds families and explicitly records that the extra ``eight orbifolds'' / STU advertisements are not yet backed by a primary-source-complete list.
+
+**Related**: Pattern 246 (scope drift); Pattern 231 (citation drift); HZ-IV disjoint verification protocol.
+
+## Pattern 248: Cross-volume bridge forgets that $\{\Phi_d\}$ is $d$-dependent
+
+**Session**: 2026-04-19 morning (AP-CY58 audit on the Universal Trace Identity).
+
+**Type**: dimension-stratification collapse. Canonical violation: a bridge sentence writes bare ``$\Phi$'' as though the CY-to-chiral programme were a single functor with $d$-uniform output, then feeds that blurred symbol into a conductor formula.
+
+**Rule**: every cross-volume sentence using the CY-to-chiral bridge must either:
+1. name the family $\{\Phi_d\}_{d \ge 1}$, or
+2. fix the relevant evaluation $\Phi_3$ (or $\Phi_2$, etc.) before any conductor or trace comparison is written.
+
+**Regex trigger**:
+
+```bash
+rg -n 'universal trace identity.*\\Phi|K\\(\\Phi|\\PhiCY\\(X\\)|CY-to-chiral functor \\$\\\\Phi' chapters/
+```
+
+**Counter-check one-liner**: after every hit, ask:
+1. What is $d$?
+2. What is the target operadic level at that $d$?
+3. Does the formula use the generic programme $\{\Phi_d\}$ or a fixed evaluation $\Phi_3$?
+
+If (1) or (3) is missing, the sentence is a Pattern-245 violation.
+
+**Canonical violation healed (this session)**:
+Vol~I universal-trace slogans wrote bare $\Phi$ and fed it directly into $K(\Phi(X))$. The healed surface now fixes the $d=3$ output
+$A_X := \Phi_3(D^b(\mathrm{Coh}(X)))$ before any BRST-conductor comparison is stated.
+
+**Related**: AP-CY58; Pattern 246 (scope drift); Pattern 230 (same symbol, different objects).
+
 ## Pattern 240: Drinfeld double named before the chiral construction exists
 
 **Session**: 2026-04-18 evening (Vol II Dimofte Drinfeld-double adversarial attack).
@@ -4433,6 +4596,97 @@ grep -lE '(converge|convergence)' adversarial_swarm_*/wave_*/agent_*.md \
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
+## Pattern 303: Theorem D silent downgrade by collapsing all-weight formula, Hodge Euler lift, and clutching residue
+
+**Session**: 2026-04-18 iterated attack-heal loop on Vol I Theorem D.
+
+**Type**: theorem-surface / class-conflation defect, aligned with AP289.
+The failure mode is not merely "uniform-weight stated too narrowly."
+The stronger and more dangerous collapse is:
+
+1. the degree-$2$ fiberwise curvature class
+   `omega_g = c_1(det E)` coming directly from the Bismut--Gillet--Soul\'e
+   curvature computation;
+2. the scalar-lane Hodge Euler class
+   `lambda_g = c_g(E)` obtained only after the Euler-form / family-index
+   lift;
+3. the proved all-weight free-energy formula
+   `F_g(A) = kappa(A) * lambda_g^FP + delta F_g^cross(A)`; and
+4. the separate clutching-only residue at `g >= 3`.
+
+When these four layers are compressed into the single slogan
+`obs_g = kappa * lambda_g (uniform-weight)` with an "open
+lambda_g-conjecture" rider, the actual theorem is silently weakened in
+two ways:
+
+- the all-weight theorem is downgraded to its scalar-lane corollary;
+- F6 is misreported as an input to Theorem D rather than the residue of
+  one proof route.
+
+### Strongest true split
+
+The converged form inscribed in Vol I is:
+
+- **Theorem D / modular characteristic**: for every modular Koszul
+  chiral algebra,
+  `F_g(A) = kappa(A) * lambda_g^FP + delta F_g^cross(A)` for all
+  `g >= 1`, with `delta F_1^cross = 0` universally.
+- **Uniform-weight lane**: if all strong generators have the same
+  conformal weight, then `delta F_g^cross(A) = 0` for all `g`, hence
+  `obs_g(A) = kappa(A) * lambda_g` with `lambda_g = c_g(E)`.
+- **Fiberwise curvature**: the chain-level curvature defect lives first
+  in the degree-$2$ Hodge class `omega_g = c_1(det E)`. The top Hodge
+  Euler class `c_g(E)` appears only after the Chern--Weil Euler-form /
+  GRR lift.
+- **F6 residue**: the only open part is the clutching-uniqueness lift:
+  if a tautological class in `R^g(Mbar_g)` has the same separating and
+  non-separating clutching pullbacks as `lambda_g = c_g(E)`, must it
+  equal `lambda_g` on the nose for `g >= 3`?
+
+### Concrete witness family
+
+The silent downgrade is exposed immediately by `W_3`:
+
+- `delta F_2^cross(W_3) = (c+204)/(16c)` is nonzero generically, so the
+  bare scalar formula fails off the uniform-weight lane.
+- `delta F_3^cross(W_3) = (5c^3 + 3792c^2 + 1149120c + 217071360) /
+  (138240 c^2)` gives the next obstruction and shows the correction
+  persists, not just at genus `2`.
+- Virasoro is the control family: `delta F_g^cross(Vir_c) = 0` for all
+  `g`, so the theorem really does specialize to the old scalar form on
+  the uniform-weight lane.
+
+### Manuscript consequence
+
+Whenever a theorem surface mentions Theorem D, it must preserve the
+four-way split above. The forbidden compressed form is any sentence of
+the shape:
+
+`Theorem D says obs_g = kappa * lambda_g, open beyond genus 2.`
+
+The repaired form must instead say:
+
+`Theorem D proves the all-weight free-energy formula with explicit
+cross-channel correction; the scalar-lane identity is the special case
+delta F^cross = 0; the clutching-only lift is Conjecture F6.`
+
+### Counter-check one-liner
+
+Before accepting any Theorem D summary, grep for all three tokens
+`delta F_g^{cross}`, `c_g(E)`, and `Conjecture F6`.
+If one of them is missing, the summary is probably collapsing the
+all-weight theorem back to its weaker scalar corollary.
+
+### Related
+
+AP289 (defensive scoping as silent downgrading), the Vol I
+`thm:modular-characteristic` / `thm:genus-universality` repair, and the
+new `conj:F6-lambda-g-clutching-uniqueness` theorem-surface split.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
 ## Pattern 243: Wave-merge push rejection from concurrent agent commits
 
 **Session**: 2026-04-18 attack-heal swarm (Vol I and Vol III pushes rejected; Vol II pushed cleanly because no concurrent agent had advanced its main).
@@ -4461,6 +4715,26 @@ git pull --rebase origin main && git push origin main
 - Vol I push of `1a4cab5c` (skill file commit): rejected by remote, pulled-rebased onto `1df1b991`, pushed cleanly.
 - Vol III push of `9483e1b` → `2b0e39a` (skill file commit): rejected by remote, pulled-rebased onto `26fa0fb`, pushed cleanly.
 - Vol II push: clean (no concurrent advance).
+
+## XXVIII. AP290 structured-subset derivation audit (2026-04-19)
+
+| # | Wrong Claim | Ghost Theorem | Precise Error | Correct Relationship | Type |
+|---|-------------|---------------|---------------|---------------------|------|
+| 290 | `71 = 24 + 1 + 46` is itself the Schellekens/Niemeier classification theorem. | Classification equals the integer identity; once the numbers add up, the classification is closed. | Counting is being substituted for naming. The three summands are not identified as structured subsets of Schellekens's numbered list; the `24` is allowed to slide between Niemeier rank, number of Niemeier lattices, and fake-monster Leech multiplicity; and the claimed common threshold is asserted without proving that bar-cobar, chiral Hochschild, and derived-center all stabilize at the same low-weight stage. Equation `=`, by itself, proves none of disjointness, exhaustiveness, or row-by-row identification. | The honest theorem is a structured-subset derivation: identify the `24` Niemeier rows explicitly in Schellekens's table, isolate the Monster singleton, identify the `46`-row complement as the non-lattice sector, and only then read off `71 = 24 + 1 + 46` as a corollary. Separately prove `24 = rank(N) = #\{\text{Niemeier rows}\}` by three independent paths (Niemeier classification, equal-Coxeter ADE list + Leech, Schellekens-row intersection), and prove the uniform threshold `w_* = 2` independently in the three machineries (ordered bar differential on weight-one OPE data, Theorem-H Hochschild amplitude `{0,1,2}`, derived-center lane via `Z^{der}_{ch}(A)=\ChirHoch^\bullet(A,A)`). | Classification-vs-Counting |
+
+**Verification ledger required by AP290**:
+- `71 = 24 + 1 + 46`: verify by the explicit Schellekens row partition, by `24` Niemeier + `1` Monster + complement subtraction, and by the vEMS/M\"oller--Scheithauer orbifold/deep-hole realization.
+- `24 = rank(N) = #\{\text{Niemeier rows}\}`: verify by Niemeier 1973, by Venkov's common-Coxeter-number ADE enumeration plus Leech, and by the Schellekens-table intersection.
+- `w_* = 2`: verify by the `V_1`-classification plus Monster exception, by the ordered bar differential on weight-one residues, and by Hochschild/derived-center concentration in degrees `{0,1,2}`.
+
+**Namespace note**: Pattern 230 already contains a legacy local `AP290` handle for a distinct `\kappa`-subscript mismatch. The present row records the 2026-04-19 AP290 session-handle on the integer-decomposition/classification surface.
+
+## XXIX. Theorem D generating-function audit (2026-04-18)
+
+| # | Wrong Claim | Ghost Theorem | Precise Error | Correct Relationship | Type |
+|---|-------------|---------------|---------------|---------------------|------|
+| 304 | `\widehat{A}(x)=1+\frac{x^2}{24}+\cdots`, hence `\widehat{A}(ix)-1=-\frac{x^2}{24}+\cdots` | The scalar genus series is genuinely the Wick-rotated $\widehat{A}$-series | The sign convention is reversed: $\widehat{A}(x)=\frac{x/2}{\sinh(x/2)}=1-\frac{x^2}{24}+\frac{7x^4}{5760}-\frac{31x^6}{967680}+\cdots$, so substituting $x\mapsto ix$ makes every Faber--Pandharipande coefficient positive. | Correct: $\widehat{A}(ix)-1=\frac{x^2}{24}+\frac{7x^4}{5760}+\frac{31x^6}{967680}+\cdots=\frac{x/2}{\sin(x/2)}-1$. The theorematic scalar generating function uses the Wick-rotated series, not the alternating real-argument series. | convention clash |
+| 305 | `F_g=\int_{\overline{\mathcal{M}}_g}\lambda_g` or any bare identification of the numerical coefficient with the top Hodge class | The cohomological statement $\mathrm{obs}_g=\kappa\lambda_g$ on the proved scalar lane is real | Bare $\int_{\overline{\mathcal{M}}_g}\lambda_g$ is dimensionally false for $g\ge2$: $\lambda_g$ has complex degree $g$, whereas $\dim \overline{\mathcal{M}}_g=3g-3$. The numerical coefficient lives on $\overline{\mathcal{M}}_{g,1}$ with the compensating insertion $\psi_1^{2g-2}$. | Keep the layers separate: cohomology class $\mathrm{obs}_g=\kappa\lambda_g$ in $H^{2g}(\overline{\mathcal{M}}_g)$, scalar coefficient $F_g=\kappa\lambda_g^{\mathrm{FP}}$ with $\lambda_g^{\mathrm{FP}}=\int_{\overline{\mathcal{M}}_{g,1}}\psi_1^{2g-2}\lambda_g$. | conflation |
 
 **Related**: CLAUDE.md "git stash forbidden — use `git diff > patch.diff && git apply` to pause"; CLAUDE.md "do not amend commits without explicit instruction"; Pattern 235 (reverse-drift — concurrent commits can introduce drift across the metadata surfaces if not deep-semantically-merged).
 
