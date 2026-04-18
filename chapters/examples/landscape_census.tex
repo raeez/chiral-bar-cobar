@@ -10,8 +10,9 @@ $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$, three
 algebras with no apparent algebraic relation. These are the patterns
 that organize the landscape, and they are visible only in the census.
 
-Each chiral algebra in the standard landscape is determined, up to
-archetype, by a finite set of shadow invariants: the scalar
+Each chirally Koszul algebra in the currently computed and
+Koszul-closed rows of the standard-landscape census is determined, up
+to archetype, by a finite set of shadow invariants: the scalar
 $\kappa$, the cubic and quartic shadow coefficients $S_3$ and $S_4$,
 and the critical discriminant $\Delta = 8\kappa S_4$. The
 vanishing locus of these invariants stratifies the census into the
@@ -22,7 +23,9 @@ $S_4 = 0$ singles out affine Kac--Moody (class~L), and $\Delta \neq 0$
 forces the infinite shadow tower of Virasoro and the $\mathcal{W}$-algebras
 (class~M). The classification is not imposed but forced by the
 structure of the MC element $\Theta_\cA$: once $\kappa$ and $S_4$
-are computed, the archetype is determined.
+are computed, the archetype is determined. Frontier rows whose
+Koszul-dual or shadow surfaces are not yet closed are recorded below
+as honest non-coverage rather than folded into this statement.
 
 \paragraph{Distinguished chart on the Koszulness moduli.}
 Each shadow-class stratum selects a distinguished chart on the
@@ -1513,6 +1516,176 @@ Three structural features are visible from the table:
  sense of the other rows.
 \end{enumerate}
 \end{remark}
+
+\begin{theorem}[Witness-family complementarity from Verdier duality;
+\ClaimStatusProvedHere]
+\label{thm:census-witness-complementarity}
+\index{complementarity!witness-family derivation|textbf}
+\index{Verdier duality!witness-family complementarity}
+For the four witness families of the shadow classes
+\[
+ \cH_k,\qquad
+ \widehat{\fg}_k,\qquad
+ \beta\gamma_\lambda,\qquad
+ \mathrm{Vir}_c,
+\]
+their Koszul dual partners determined by Verdier duality on the bar
+coalgebra are represented on the scalar lane by
+\[
+ \cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*),\qquad
+ \kappa(\widehat{\fg}_k^!)
+ = \kappa(\widehat{\fg}_{-k-2h^\vee}),\qquad
+ (\beta\gamma_\lambda)^! \simeq bc_\lambda,\qquad
+ \mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}.
+\]
+The corresponding dual obstruction coefficients are
+\[
+ \kappa(\cH_k^!) = -k,\qquad
+ \kappa(\widehat{\fg}_k^!)
+ = -\frac{\dim(\fg)(k+h^\vee)}{2h^\vee},\qquad
+ \kappa((\beta\gamma_\lambda)^!)
+ = -(6\lambda^2 - 6\lambda + 1),\qquad
+ \kappa(\mathrm{Vir}_c^!) = \frac{26-c}{2}.
+\]
+Hence the witness-family complementarity sums are
+\[
+ \kappa(\cH_k) + \kappa(\cH_k^!) = 0,\qquad
+ \kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_k^!) = 0,\qquad
+ \kappa(\beta\gamma_\lambda) + \kappa((\beta\gamma_\lambda)^!) = 0,\qquad
+ \kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_c^!) = 13.
+\]
+For the broader $\mathcal{W}$-side, the analogous constants are
+\[
+ \kappa(\mathcal{W}_3^k) + \kappa(\mathcal{W}_3^{k'})
+ = \frac{250}{3},
+ \qquad
+ \kappa(\mathrm{BP}_k) + \kappa(\mathrm{BP}_{-k-6})
+ = \frac{98}{3},
+\]
+so the scalar complementarity constant is family-dependent and is not
+determined by the coarse archetype class~$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$.
+\end{theorem}
+
+\begin{proof}
+For Heisenberg, Theorem~\ref{thm:heisenberg-koszul-dual-early}
+identifies the Verdier dual partner with the curved symmetric chiral
+algebra $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ carrying curvature
+$m_0 = -k \cdot \mathbf{1}$. Since $\kappa$ is the scalar coefficient
+of the genus-$1$ curvature, this gives
+$\kappa(\cH_k^!) = -k$ and hence
+$\kappa(\cH_k) + \kappa(\cH_k^!) = k + (-k) = 0$.
+The sign is checked three ways on the witness lane:
+directly from the curvature term, at the uncurved point $k=0$, and by
+additivity, which reproduces the lattice identity
+$\kappa(V_\Lambda^!) = -\operatorname{rank}(\Lambda)$ for rank-$1$
+summands.
+
+For affine Kac--Moody, Verdier duality gives the Feigin--Frenkel level
+involution $k' = -k - 2h^\vee$, so
+\[
+ \kappa(\widehat{\fg}_k^!)
+ =
+ \frac{\dim(\fg)(k' + h^\vee)}{2h^\vee}
+ =
+ \frac{\dim(\fg)(-k-h^\vee)}{2h^\vee}
+ =
+ -\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}
+ =
+ -\kappa(\widehat{\fg}_k).
+\]
+This is confirmed by the critical check $k=-h^\vee$, where both sides
+vanish, and by the concrete specialization
+$\fg=\mathfrak{sl}_2$, where
+$3(k+2)/4 + 3(-k-2)/4 = 0$.
+
+For $\beta\gamma_\lambda$, Theorem~\ref{thm:betagamma-bc-koszul}
+identifies the Verdier dual partner with $bc_\lambda$.
+Proposition~\ref{prop:betagamma-bc-koszul-detailed} gives
+\[
+ c_{\beta\gamma} = 2(6\lambda^2 - 6\lambda + 1),
+ \qquad
+ c_{bc} = -2(6\lambda^2 - 6\lambda + 1),
+\]
+so
+\[
+ \kappa((\beta\gamma_\lambda)^!)
+ =
+ \kappa(bc_\lambda)
+ =
+ \frac{c_{bc}}{2}
+ =
+ -(6\lambda^2 - 6\lambda + 1)
+ =
+ -\kappa(\beta\gamma_\lambda).
+\]
+Three independent checks are immediate: the bosonic symmetry
+$\lambda \leftrightarrow 1-\lambda$ leaves
+$\kappa(\beta\gamma_\lambda)$ unchanged but does not change the dual
+partner; at $\lambda=\tfrac{1}{2}$ one gets
+$-\tfrac{1}{2} + \tfrac{1}{2} = 0$; and at $\lambda=1$ one gets
+$1 + (-1) = 0$.
+
+For Virasoro, Proposition~\ref{prop:virasoro-generic-koszul-dual}
+gives the same-family Verdier partner
+$\mathrm{Vir}_{26-c}$, hence
+\[
+ \kappa(\mathrm{Vir}_c^!)
+ =
+ \kappa(\mathrm{Vir}_{26-c})
+ =
+ \frac{26-c}{2},
+ \qquad
+ \kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_c^!)
+ =
+ \frac{c}{2} + \frac{26-c}{2}
+ =
+ 13.
+\]
+This is checked again at the self-dual point $c=13$, where the sum is
+$2 \cdot 13/2 = 13$, and at the two uncurved endpoints
+$c=0$ and $c=26$, where one member of the pair has vanishing scalar
+curvature.
+
+For $\mathcal{W}_3$, Corollary~\ref{cor:general-w-obstruction} gives
+$\kappa(\mathcal{W}_3) = \tfrac{5}{6}c$ and
+Theorem~\ref{thm:central-charge-complementarity} gives
+$c+c' = 100$, so
+\[
+ \kappa(\mathcal{W}_3^k) + \kappa(\mathcal{W}_3^{k'})
+ =
+ \frac{5}{6}(c+c')
+ =
+ \frac{5}{6}\cdot 100
+ =
+ \frac{250}{3}.
+\]
+The same number is recovered from the anomaly-ratio route
+$(H_3-1)K_3 = \tfrac{5}{6}\cdot 100$ and from the self-dual check
+$2\kappa(\mathcal{W}_{3,c_*}) = 2 \cdot \tfrac{5}{6}\cdot 50$ at
+$c_* = 50$.
+
+For Bershadsky--Polyakov, Proposition~\ref{prop:bp-kappa} gives
+$\kappa(\mathrm{BP}_k) = c(k)/6$ and
+Proposition~\ref{prop:bp-self-duality} gives
+$c(k) + c(-k-6) = 196$, hence
+\[
+ \kappa(\mathrm{BP}_k) + \kappa(\mathrm{BP}_{-k-6})
+ =
+ \frac{c(k) + c(-k-6)}{6}
+ =
+ \frac{196}{6}
+ =
+ \frac{98}{3}.
+\]
+Again this agrees with the anomaly-ratio route
+$(1/6)\cdot 196$ and with the self-dual check
+$2 \cdot 98/6$ at the fixed central charge $c_* = 98$.
+
+Therefore the four witness families contribute only the values
+$0,0,0,13$, while $250/3$ and $98/3$ belong to distinct
+$\mathcal{W}$-type families. The scalar complementarity constant is
+thus family-dependent, not archetype-dependent.
+\end{proof}
 
 \begin{remark}[Koszul conductor for \texorpdfstring{$\mathcal{W}_N$}{WN}]\label{rem:koszul-conductor-explicit}
 \index{Koszul conductor!explicit formula}
