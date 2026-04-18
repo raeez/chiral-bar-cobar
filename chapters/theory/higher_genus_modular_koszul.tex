@@ -2901,6 +2901,18 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
  $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
  \textup{(}UNIFORM-WEIGHT\textup{}) in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$
  \textup{(}UNIFORM-WEIGHT; unconditional at $g = 1$\textup{)}.
+ Here $\lambda_g := c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$
+ is the top Chern class of the Hodge bundle
+ $\mathbb{E} = R^0\pi_*\omega_\pi$ over the universal curve
+ $\pi \colon \overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$
+ \textup{(}the Mumford class~\cite{Mumford83}\textup{)}, not the
+ tautological class $\kappa_1 \in H^2(\overline{\mathcal{M}}_g)$
+ and not a $\psi$-class sum; the scalar on the right is the
+ algebra's \emph{own} derived central charge $\kappa(\cA)$,
+ not $\kappa(\cA^!)$ or $\kappa(\cA){+}\kappa(\cA^!)$
+ \textup{(}contrast part~\textup{(iii)} below, which records a
+ \emph{separate} Verdier-dual constraint on the pair
+ $(\kappa(\cA),\kappa(\cA^!))$\textup{)}.
  The scalar prefactor admits the wave-14 universal-conductor reading
  $\kappa(\cA) = K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$
  (Chapter~\ref{chap:universal-conductor}, Trinity Theorem;
@@ -2933,9 +2945,21 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
  $\delta F_g^{\mathrm{cross}}$ is required
  \textup{(}Theorem~\textup{\ref{thm:multi-generator-universality})}.
 \item \emph{Duality.}
- Under Koszul duality, $\kappa$ satisfies a duality constraint:
- $\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody and
- free-field algebras. For the principal $\mathcal{W}$-algebra
+ Under Koszul duality, $\kappa$ satisfies a family-indexed duality
+ constraint $\kappa(\cA) + \kappa(\cA^!) = \kappa_\Sigma(\cA)$,
+ where the Verdier sum $\kappa_\Sigma(\cA)$ depends on the family:
+ $\kappa_\Sigma = 0$ for affine Kac--Moody and free-field algebras;
+ $\kappa_\Sigma = 13$ for the Virasoro family at the Koszul self-dual
+ central charge $c = 13$;
+ $\kappa_\Sigma = 250/3$ for $\mathcal{W}_3$;
+ $\kappa_\Sigma = 98/3$ for the Bershadsky--Polyakov family;
+ see Chapter~\ref{chap:higher-genus} and the $\mathcal{W}$-algebra
+ complementarity derivations of
+ \texttt{chapters/examples/w\_algebras\_deep.tex}
+ (the canonical tabulation is recorded in
+ \texttt{chapters/examples/landscape\_census.tex} per programme
+ convention). For the principal
+ $\mathcal{W}$-algebra
  $\mathcal{W}^k(\mathfrak{g})$ under Drinfeld--Sokolov reduction,
  $\kappa(\mathcal{W}^k) + \kappa(\mathcal{W}^{k'}) =
  K_\fg \cdot \varrho(\fg)$
@@ -2946,7 +2970,12 @@ $\kappa(\cA) \in \mathbb{C}$. More precisely:
  ratio \textup{(}$r = \operatorname{rank}(\fg)$,
  $m_1, \ldots, m_r$ the exponents;
  $\varrho(\mathfrak{sl}_N) = H_N - 1$\textup{)}.
- In particular, $\kappa = 0$ if and only if $\cA$ is at critical level.
+ On the affine Kac--Moody lane specifically,
+ $\kappa(V_k(\fg)) = 0$ if and only if $k = -h^\vee$, the
+ critical level \textup{(}the iff is lane-internal: it does
+ \emph{not} claim that every algebra with $\kappa = 0$ is
+ Kac--Moody at critical level; e.g.\ $\mathrm{Vir}_{c=0}$ has
+ $\kappa = 0$ without being an affine algebra\textup{)}.
 \item \emph{Additivity.}
  $\kappa(\cA \otimes \cB) = \kappa(\cA) + \kappa(\cB)$.
  Combined with~(iii), the vanishing
@@ -3004,6 +3033,38 @@ $\mathcal{L} \hookrightarrow \mathcal{M}$ varies over
 $\overline{\mathcal{M}}_g$, and $\kappa(\cA)$ is the first-order
 deformation of the embedding, measured by the Atiyah class of the
 normal bundle.
+\end{remark}
+
+\begin{remark}[Critical level and the Feigin--Frenkel migration of
+content]
+\label{rem:theorem-d-critical-level}
+\index{critical level!Theorem D behaviour}
+\index{Feigin--Frenkel centre!obs_g vanishing}
+At the affine Kac--Moody critical level $k = -h^\vee$, the scalar
+modular characteristic vanishes, $\kappa(V_{-h^\vee}(\fg)) = 0$, so
+Theorem~D reads
+$\mathrm{obs}_g(V_{-h^\vee}(\fg)) = 0 \cdot \lambda_g = 0
+\in H^{2g}(\overline{\mathcal{M}}_g)$.
+This vanishing is \emph{not} a defect of the formula: the
+curved-central bar package is uncurved at $k = -h^\vee$
+\textup{(}\S\ref{rem:theorem-d-fg-comparison}\textup{)}, and the
+content of the algebra migrates from the scalar curvature channel
+to the bar cohomology channel, where
+$H^0\!\bigl(\barBch(\widehat{\fg}_{-h^\vee})\bigr) \cong
+\mathrm{Fun}\!\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)$
+recovers the Feigin--Frenkel centre
+\cite{FeiginFrenkel92,BD04}.
+Theorem~D is therefore consistent with --- not a loss of information
+at --- critical level: the obstruction-class identity
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ correctly reports the
+scalar curvature ($=0$), and the surviving structure
+(opers, Hitchin integrable system) lives in the orthogonal
+cohomological axis, outside the scope of the scalar lane on
+which Theorem~D is stated. A subleading correction term
+$\delta\mathrm{obs}_g^{\mathrm{FF}}$ controlled by the
+Feigin--Frenkel centre (if nontrivial at $k = -h^\vee$) is
+\ClaimStatusConjectured; its derivation is orthogonal to the
+uniform-weight lane covered by Theorem~D.
 \end{remark}
 
 \begin{remark}[The trace and the construction]%

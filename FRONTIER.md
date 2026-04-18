@@ -40,7 +40,7 @@ The 2026-04-16 wave closed every surviving open frontier from the 2026-04-13 "Pl
 
 **CL16 (SC^{ch,top} heptagon 7 edges, Vol II). PROVED.** Five classical faces + face (6) Drinfeld-centre `Z(Rep_fact(A)) ≃ Rep_fact(Z^{der}_ch(A))^{E_2}` via categorified bar-cobar with half-braiding + face (7) derived-AG via PTVV on Map(X×R_≥0, B SC-Alg). SC^{ch,top} is the GENERIC case; topologization to E_3^top at affine KM non-critical is proved on the original complex.
 
-**CL17 (Universal Celestial Holography, Vol II). PROVED chain-level.** `thm:uch-main`: SC^{ch,top}-structure on (A^cel, Z^{der}_ch(A^cel)) + celestial OPE = chiral factorization homology on P^1_cel + shadow-tower coefficients = soft-factor hierarchy. Coverage: self-dual gauge (KM), gauge+matter (DS), gravity (Virasoro + w_{1+∞}), YM (Beem-Rastelli χ-functor). Chain-level class M at g ≥ 1 retained as `conj:uch-gravity-chain-level`.
+**CL17 (Universal Celestial Holography, Vol II). PROVED chain-level.** `thm:uch-main`: SC^{ch,top}-structure on (A^cel, Z^{der}_ch(A^cel)) + celestial OPE = chiral factorization homology on P^1_cel + shadow-tower coefficients = soft-factor hierarchy. Coverage: self-dual gauge (KM), gauge+matter (DS), gravity (Virasoro + w_{1+∞}), YM (Beem-Rastelli χ-functor). Chain-level class M (raw direct-sum ambient `Ch(Vect)`; the coderived / pro-object / weight-completed ambient is PROVED per concordance.tex:1980) at g ≥ 1 retained as `conj:uch-gravity-chain-level`.
 
 **CL18 (Curved-Dunn H²=0 at g ≥ 2, Vol II). PROVED.** `prop:modular-bootstrap-to-curved-dunn-bridge`: chain map Φ on H². `prop:genus1-twisted-tensor-product`: explicit Gauss-Manin uncurving + Arakelov pairing (phantom FM87 resolved). `thm:curved-dunn-H2-vanishing-all-genera`. `thm:irregular-singular-kzb-regularity`: Jimbo-Miwa replaces KZ Stokes.
 
@@ -58,7 +58,7 @@ The 2026-04-16 wave closed every surviving open frontier from the 2026-04-13 "Pl
 
 **Also closed: Φ functor Vol III universal trace identity** unifying Vol I K = −c_ghost with Vol III κ_BKM = c_N(0)/2 (`adversarial_swarm_20260416/wave14_reconstitute_phi_functor_volIII.md`).
 
-After CL1–CL24 + 2026-04-16 wave closures on the Vol II/III side (inherited cross-volume), the only item retained from the prior "Platonic Ideal Roadmap (2026-04-13) open frontier" list is **chain-level class M on the ORIGINAL complex** (topologization direct-sum form). Everything else is either proved on the original complex, proved weight-completed, or has a scope-qualifier stating so.
+After CL1–CL24 + 2026-04-16 wave closures on the Vol II/III side (inherited cross-volume), the only item retained from the prior "Platonic Ideal Roadmap (2026-04-13) open frontier" list is **chain-level class M (raw direct-sum ambient `Ch(Vect)`) on the ORIGINAL complex** (topologization direct-sum form; the coderived / pro-object / weight-completed ambient is PROVED, per concordance.tex:1980). Everything else is either proved on the original complex, proved weight-completed, or has a scope-qualifier stating so.
 
 ### 2. Newly-Open Frontiers from the 2026-04-17 Beilinson Audit
 
@@ -212,7 +212,7 @@ Audit file: `adversarial_swarm_20260417/wave10_part_vi_frontier_attack_heal.md`.
 
 | Theorem | Statement | Key label |
 |---------|-----------|-----------|
-| **A** | Bar-cobar adjunction + Verdier intertwining on Ran(X) | thm:bar-cobar-adjunction |
+| **A** | Bar-cobar adjunction + Verdier intertwining on Ran(X); unconditional in the weight-completed / pro-conilpotent Francis-Gaitsgory ambient (classes G, L direct-sum; class M weight-completed only — raw direct-sum class M fails conilpotency by the L_0 witness, same ambient carve-out as Theorem B.2) | thm:bar-cobar-adjunction |
 | **B** | Bar-cobar inversion: Omega(B(A)) -> A quasi-iso on Koszul locus | thm:bar-cobar-inversion |
 | **C** | Complementarity: Q_g(A) + Q_g(A!) = H*(M_g, Z(A)); Lagrangian geometry | thm:complementarity |
 | **D** | Modular characteristic: obs_g = kappa(A) * lambda_g for uniform-weight algebras; unconditional at g ∈ {1, 2}, conditional on Faber's λ_g-conjecture at g ≥ 3 (numerical-class equality unconditional) | thm:modular-characteristic |
@@ -226,7 +226,7 @@ Audit file: `adversarial_swarm_20260417/wave10_part_vi_frontier_attack_heal.md`.
 | **MC2** | PROVED | Bar-intrinsic construction: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic) |
 | **MC3** | PROVED all simple types | Thick generation on evaluation-generated core (cor:mc3-all-types) |
 | **MC4** | PROVED | Strong completion-tower theorem (thm:completed-bar-cobar-strong) |
-| **MC5** | ANALYTIC PART PROVED; BV/BRST/bar identification CONJECTURAL | Analytic HS-sewing at all genera (thm:general-hs-sewing, thm:heisenberg-sewing); genus 0 algebraic BRST/bar comparison proved (thm:algebraic-string-dictionary); tree-level amplitude pairing conditional on cor:string-amplitude-genus0; genuswise BV/BRST/bar identification open at g>=1 |
+| **MC5** | ANALYTIC, CODERIVED, AND CANONICAL-AMBIENT CHAIN-LEVEL PROVED (per concordance.tex:1980); tree-level amplitude pairing conditional | Analytic HS-sewing at all genera (thm:general-hs-sewing, thm:heisenberg-sewing); genus 0 algebraic BRST/bar comparison proved (thm:algebraic-string-dictionary); tree-level amplitude pairing conditional on cor:string-amplitude-genus0; BV/BRST/bar identification proved chain-level on the coderived / pro-object / weight-completed / J-adic presentations of the raw bar complex (thm:mc5-class-m-chain-level-pro-ambient, thm:mc5-class-m-topological-chain-level-j-adic); class M raw direct-sum ambient `Ch(Vect)` genuinely false (S_4(Vir_c) ≠ 0 at generic c), exception marked as ambient-choice artefact |
 
 ### Koszulness Characterisation Programme
 
@@ -270,7 +270,7 @@ The four-class partition G/L/C/M is structural, forced by the single-line dichot
 - BV = bar in coderived category D^co for ALL classes (thm:bv-bar-coderived)
 - E_3-topological: PROVED for KM (Costello-Li), ALL W-algebras via DS (any nilpotent), ALL free PVAs (Khan-Zeng). Conjectural only for non-free (Monster VOA).
 - Modular operad: composition PROVED (KZ pentagon + KL regularity, genus 0 all levels + all genera integrable); equivariance PROVED (quasi-triangularity + YBE); unitality PROVED (all genera all classes). Heisenberg full axioms all genera PROVED. Sole gap: Stokes regularity at generic non-integral level, genus >= 1.
-- Global triangle: PROVED for classes G/L/C (boundary-linear). OPEN for class M (chain-level A_inf obstruction).
+- Global triangle: PROVED for classes G/L/C (boundary-linear). Class M: PROVED chain-level on the coderived / pro-object / weight-completed ambient; OPEN for the raw direct-sum ambient `Ch(Vect)` (A_inf obstruction; S_4(Vir_c) ≠ 0 at generic c).
 - R=PT: Eberhardt Route D (shift-equation uniqueness) reduces to meromorphicity. Level-by-level rationality PROVED.
 - Bar chain models: D* (punctured disk), nodal curves, pair-of-pants — all with dedicated constructions.
 - 25 arXiv papers (2024-2026) engaged. ~1,704pp.
@@ -316,7 +316,7 @@ CY-to-chiral functor proved for d=2 (unconditional) and d=3 (inf-categorical, th
 1. conj:pixton-from-shadows -> thm:pixton-from-mc-semisimple (Pixton ideal generation, semisimple locus)
 2. L_k(sl_2) admissible Koszulness at all admissible levels (RESOLVED)
 3. conj:operadic-complexity PROVED (shadow depth = A-infinity depth = L-infinity formality level)
-4. BV = bar for classes G, L, C at genus 1 (class-by-class resolution; class M false chain-level, true in D^co)
+4. BV = bar for classes G, L, C at genus 1 (class-by-class resolution; class M chain-level proved on coderived / pro-object / weight-completed ambient, false on raw direct-sum ambient `Ch(Vect)`; true in D^co)
 5. conj:master-bv-brst RESOLVED: BV = bar in D^co(A) for ALL classes including M
 6. Y-algebra Koszulness (thm:y-algebra-koszulness)
 7. delta_F_2, delta_F_3 universal N-formulas (closed form for all W_N): A_2(N) = (N-2)(3N^3+14N^2+22N+33)/24
@@ -464,8 +464,8 @@ L_k(sl_2) is Koszul at ALL admissible levels. For sl_3: sharp transition at q=2 
 Label: rem:admissible-koszul-status (chiral_koszul_pairs.tex:1387).
 Next step: Explicit sl_3 at k = -3/2 Li-bar E_2 page computation.
 
-**OP5. BV/BRST = bar at chain level for class M.**
-Proved for classes G, L (unconditional), C (three-mechanism decoupling), and ALL classes in D^co (thm:bv-bar-coderived). Chain-level FAILS for class M at genus 1. The coderived resolution absorbs the discrepancy.
+**OP5. BV/BRST = bar at chain level for class M (raw direct-sum ambient `Ch(Vect)`; the coderived / pro-object / weight-completed ambient is PROVED).**
+Proved for classes G, L (unconditional), C (three-mechanism decoupling), and ALL classes in D^co (thm:bv-bar-coderived). Class M chain-level: PROVED on the coderived / pro-object / weight-completed / J-adic ambient (thm:mc5-class-m-chain-level-pro-ambient); FAILS on the raw direct-sum ambient `Ch(Vect)` (S_4(Vir_c) ≠ 0 at generic c). The coderived resolution absorbs the naive-ambient discrepancy.
 
 Label: conj:master-bv-brst (editorial_constitution.tex:433).
 
@@ -692,7 +692,7 @@ Three consecutive swarms: ~22 SC/bar agents, ~105 frontier research agents, ~90 
 ## Appendix A: The Five Ranked Open Problems
 
 1. **Drinfeld double at the E1-chiral level.** Assembling A bowtie A! from ordered-bar ingredients.
-2. **BV/BRST = bar at chain level for class M.** Proved for G/L/C and all classes in D^co.
+2. **BV/BRST = bar at chain level for class M (raw direct-sum ambient `Ch(Vect)`).** Proved for G/L/C; class M PROVED chain-level on the coderived / pro-object / weight-completed ambient, and all classes in D^co.
 3. **D-module purity converse.** Reduced to PBW = Saito weight. Proved for KM.
 4. **Admissible-level Koszulness at rank >= 2.** sl_2 all admissible PROVED. sl_3 transition at q=2.
 5. **CY-to-chiral at d=3.** Conditional on chain-level S^3-framing.
@@ -727,7 +727,7 @@ Tests: 119,081 collected across 1,315+ files. Engines: 1,255+.
 Key Vol III results affecting Vol I:
 - **A_∞ coproduct = shadow tower**: shadow S_k = coefficient of A_∞ correction δ^{(k)} to coproduct. Shadow tower encodes coproduct corrections, not just classification.
 - **ZTE failure**: factored S=RRR does NOT solve tetrahedron at O(κ²). E_3 corrections needed.
-- **E_3 bar cohomology**: class L → (1+t)^{3g}, class C → (1+t)^{3g}, class M → ∞-dim.
+- **E_3 bar cohomology**: class L → (1+t)^{3g}, class C → (1+t)^{3g}, class M → ∞-dim in the raw direct-sum ambient (6^g on the coderived / pro-object / weight-completed ambient, cf. Vol III `cor:class-m-higher-genus`).
 - **E_1-chiral bialgebra**: ordered bar B^{ord} with deconcatenation = correct Hopf framework. Symmetric bar B^Σ kills Hopf via averaging.
 - **Conductors**: G/L: ρ_K=0. M(Vir): 13. K3×E: 0 (free-field). Family-dependent.
 - See ~/calabi-yau-quantum-groups/FRONTIER.md F13-F24 for full details.
@@ -862,7 +862,7 @@ Generic dim H^1 = 12 is topological (Euler characteristic). Degree-2 CB count is
 **Rate-limited agents to relaunch:**
 - FRONTIER-03: DDYBE via vertex-IRF transform
 - FRONTIER-06: Elliptic R-matrix coproduct for E_{tau,eta}(sl_2)
-- FRONTIER-07: Chain-level E_3 for class M via coderived category
+- FRONTIER-07: Chain-level E_3 for class M (raw direct-sum ambient `Ch(Vect)`; the coderived / pro-object / weight-completed ambient is PROVED) via coderived category
 - FRONTIER-08: Drinfeld center = bulk (conj:drinfeld-center-equals-bulk) for Heisenberg
 - FRONTIER-09: 6d hCS defect algebra = W_{1+infinity}
 - FRONTIER-10: Jones polynomial from ordered chiral homology
@@ -874,7 +874,7 @@ Generic dim H^1 = 12 is topological (Euler characteristic). Degree-2 CB count is
 **Mathematical open problems:**
 1. ~~Miura universality: conjecture → theorem~~ RESOLVED (thm:miura-cross-universality, proved from Prochazka-Rapcak Miura factorization)
 2. DDYBE at genus 2 (the vertex-IRF correspondence is the obstruction)
-3. Chain-level E_3 for class M (coderived category path via conj:coderived-e3)
+3. Chain-level E_3 for class M on the raw direct-sum ambient `Ch(Vect)` (coderived / pro-object / weight-completed ambient is PROVED; coderived category path via conj:coderived-e3)
 4. The Drinfeld center conjecture (the deepest single conjecture)
 5. Standalone trimming: 118pp → ~75pp gateway paper
 6. Full regression suite: make test-full (~120K tests, ~1hr)
@@ -907,7 +907,7 @@ The Pixton ideal generators (thm:pixton-from-mc-semisimple) connect to CY bar co
 
 ### Class M E_3 bar = 6^g (PROVED at g ∈ {1, 2, 3}; g ≥ 4 CONDITIONAL)
 
-E_3 bar cohomology depends on shadow class: L,C give (1+t)^{3g} = dim 2^{3g}. **Class M: dim = 6^g** (PROVED at g ∈ {1, 2, 3} per cor:class-m-higher-genus at en_factorization.tex:1028-1076; closed form via Kunneth; d_4 survives giving 6=2*3 per handle). Extension to g ≥ 4 conditional on d_5 degeneration (S_5 = −16/9 at c=1). Chain level: P(q)^{6g}. This extends the F1 class M chain-level failure to the E_3 setting.
+E_3 bar cohomology depends on shadow class: L,C give (1+t)^{3g} = dim 2^{3g}. **Class M (coderived / pro-object / weight-completed ambient): dim = 6^g** (PROVED at g ∈ {1, 2, 3} per cor:class-m-higher-genus at en_factorization.tex:1028-1076; closed form via Kunneth; d_4 survives giving 6=2*3 per handle). Extension to g ≥ 4 conditional on d_5 degeneration (S_5 = −16/9 at c=1). Chain level on the raw direct-sum ambient `Ch(Vect)`: P(q)^{6g} (genuine failure; S_4(Vir_c) ≠ 0 at generic c). This extends the class M raw direct-sum ambient chain-level failure to the E_3 setting.
 
 ### Conductors
 
@@ -924,7 +924,7 @@ Vol III ~230-agent comprehensive wave brought totals to ~693pp, ~34,000 tests, ~
 - **ZTE correction EXISTS**: Extended deformation complex rank 35/36. The correction T is constructible from 1-dim kernel.
 - **kappa_BKM = c_N(0)/2 universal**: The ONLY correct formula for all K3-fibered CY3. Naive decomposition kappa_BKM = kappa_ch + chi(O_fiber) is numerical coincidence for N=1.
 - **Shadow-Feynman dictionary extended**: L-loop = S_{L+1} at all loop orders. Class G = tree exact. Class M = all-loop.
-- **E_3 bar = 6^g for class M**: Closed form via Kunneth, proved at g ∈ {1, 2, 3} (cor:class-m-higher-genus, en_factorization.tex:1028-1076); g ≥ 4 conditional on d_5 degeneration (S_5 = −16/9 at c=1).
+- **E_3 bar = 6^g for class M (coderived / pro-object / weight-completed ambient)**: Closed form via Kunneth, proved at g ∈ {1, 2, 3} (cor:class-m-higher-genus, en_factorization.tex:1028-1076); g ≥ 4 conditional on d_5 degeneration (S_5 = −16/9 at c=1); raw direct-sum ambient `Ch(Vect)` is chain-level genuinely false (S_4(Vir_c) ≠ 0 at generic c).
 - **CFG25 comparison**: 24% lift rate at perturbative genus-0.
 - **Super-Yangian Y(gl(4|20))**: Conjectural BKM-to-Yangian lift from Mukai signature (4,20).
 - **6 routes to G(K3xE)**: Kummer, Borcherds, MO, McKay, FH, Costello.

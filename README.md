@@ -20,7 +20,7 @@ These summaries follow the concordance. The precise chapter statements retain th
 | Theorem | Statement | Status |
 |:-------:|-----------|--------|
 | **(A)** | Bar-cobar equivalence at properad level in the Francis-Gaitsgory factorization ambient on Ran(X); R-twisted Σ_n-descent relates ordered and symmetric bars | Proved here on a fixed smooth curve (`thm:A-infinity-2`, ∞,2-categorical); modular-family extension over `M̄_{g,n}` including boundary is conditional on Francis-Gaitsgory six-functor base-change (GR17 Vol II) and Mok25 log-FM nodal-sewing at chain level |
-| **(B)** | Strict bar-cobar inversion on the Koszul locus via explicit MacLane-splitting for class G/L; coderived/coacyclic refinement off the locus; class M direct-sum genuinely false, weight-completed proved | Proved here |
+| **(B)** | Strict bar-cobar inversion on the Koszul locus via explicit MacLane-splitting for class G/L; coderived/coacyclic refinement off the locus; class M (raw direct-sum ambient `Ch(Vect)`) genuinely false, class M (coderived / pro-object / weight-completed ambient) proved, per concordance.tex:1980 | Proved here |
 | **(C)** | Complementarity package: C0/C1 unconditional on Koszul locus; the shifted-symplectic/BV upgrade C2 conditional only on BV package; +3 shift contradiction at g = 0 resolved via `thm:theorem-C-g0` | C0/C1 proved here; C2 conditional on BV package |
 | **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g uniform-weight all g >= 1; multi-weight carries explicit cross-channel correction delta F_g^cross; clutching-uniqueness pins the scalar | Proved here |
 | **(H)** | Chiral Hochschild on the Koszul locus at generic level: concentrated in {0,1,2}, duality shift [2], sharp Hilbert series; Feigin-Frenkel companion at k = -h^v (infinite-dim center, non-exclusion) | Proved here |
@@ -82,7 +82,7 @@ Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
 | Standalone papers | 16 papers + 2 MC5 successors (theorem + analytic), all CG-rectified |
 | Survey paper | 8,500+ lines / 122pp |
 | Koszulness programme | 8 genuinely independent bidirectional characterizations + 1 one-way ChirHoch concentration + 1 perfectness-conditional Lagrangian + 1 one-directional D-module purity + 1 uniform-weight-conditional genus refinement, on the GRT-equivariant moduli atlas `M_Kosz(A)` |
-| Master conjectures MC1-MC5 | Proved at their inscribed scopes per Wave-1 audit (MC3 on the evaluation-generated core per AP47; MC5 weight-completed / pro-object / J-adic for class M, with direct-sum class M genuinely false as an ambient-choice artefact) |
+| Master conjectures MC1-MC5 | Proved at their inscribed scopes per Wave-1 audit (MC3 on the evaluation-generated core per AP47; MC5 analytic, coderived, and canonical-ambient chain-level proved — class M on the coderived / pro-object / weight-completed / J-adic ambient — with class M raw direct-sum ambient `Ch(Vect)` genuinely false marked as the naive-ambient exception, per concordance.tex:1980) |
 | Main proofs reviewed | Backbone theorems A/B/C/D/H, MC1-MC5, topologization, chiral QG equivalence standing at their Wave-1 scope qualifiers (fixed-curve vs modular family; on-the-nose vs weight-completed; Koszul-locus vs off-locus) rather than as unqualified "SOUND" verdicts |
 | First-principles cache | 750+ lines, cross-programme enforcement verified clean |
 | HZ-IV decorators installed | ~45 Wave-1 / Wave-2 installations across theorem labels |

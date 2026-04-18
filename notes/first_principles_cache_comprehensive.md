@@ -3942,3 +3942,273 @@ grep -rn '\\kappa[^_{a-zA-Z]' chapters/ standalone/ \
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
+## Pattern 231: Dangling citation key (`\cite{X}` with no `\bibitem{X}`)
+
+**Session**: 2026-04-18 evening (F07 attack on Theorem C perfectness).
+
+**Type**: bibliographic integrity. Specific canonical violation: `chapters/theory/theorem_C_refinements_platonic.tex:166` cited `\cite{Hinich2001}` but `bibliography/references.tex` had no `\bibitem{Hinich2001}`; only `HS87`, `HS93`, `Hin97` existed. A substantive adversarial reader lands on the bibliography layer first and the remark's entire logical claim becomes unverifiable because the source cannot be located.
+
+**Rule**: every cite key used in `chapters/`, `standalone/`, `appendices/` must resolve to a live `\bibitem` in `bibliography/references.tex` (Vol I) or the corresponding per-volume bibliography. Cite keys from memory are a Pattern 231 violation.
+
+**Regex trigger** (pre-commit sweep, Vol I; adapt per volume):
+
+```
+# Extract every cite key used in the chapters layer.
+grep -rhoE '\\cite[tp]?\{[^}]+\}' chapters/ standalone/ appendices/ \
+  | sed -E 's/\\cite[tp]?\{//; s/\}//; s/,\s*/\n/g' | sort -u > /tmp/cite_keys.txt
+# Extract every defined bibitem.
+grep -oE '\\bibitem\{[^}]+\}' bibliography/references.tex \
+  | sed -E 's/\\bibitem\{//; s/\}//' | sort -u > /tmp/bib_keys.txt
+# Report undefined keys.
+comm -23 /tmp/cite_keys.txt /tmp/bib_keys.txt
+```
+
+**Counter-check one-liner**: before typing `\cite{X}`, grep `bibliography/references.tex` for `bibitem{X}`. If absent, either select the correct extant key (Hin97 in the Hinich case) or add a new bibitem with full author/title/journal/year/arxiv.
+
+**Canonical violation averted (this session)**: Hinich2001 → Hin97 (Hinich, "Homological algebra of homotopy algebras", Comm. Algebra 25 (1997), 3291–3323). Same paper, canonical key.
+
+**Related**: AP281 bibkey audit campaign; wave6/wave7 bibkey sweeps; AP284 DAG report on bibliography propagation.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 232: Prose-attribution drift from bibkey-author
+
+**Session**: 2026-04-18 evening (F07 audit; stale at time of heal but worth cache-inscribing).
+
+**Type**: bibliographic-surface mismatch. Canonical violation: a cite key `GR17` was prose-attributed "Francis–Gaitsgory" in a remark body while `bibliography/references.tex:649-650` defined `GR17` as Gaitsgory–Rozenblyum, *A Study in Derived Algebraic Geometry*. The bibkey was valid; the prose attribution drifted to the author names of a DIFFERENT paper (Francis–Gaitsgory 2012, "Chiral Koszul duality"). A reader following the cite finds a book, not a paper on chiral Koszul duality, and the remark's authority is undermined.
+
+**Rule**: prose attributions adjacent to a `\cite{K}` ("by Francis–Gaitsgory \cite{K}", "as shown by Etingof–Kazhdan \cite{K}") must exactly match the author list of the `\bibitem{K}` at point of citation. The bibkey is NOT self-documenting — a key named `GR17` could intend to encode "Gaitsgory + Rozenblyum 2017" but prose must not assume the reader decodes the key.
+
+**Regex trigger** (manual audit, hard to fully automate):
+
+```
+# For each chapters-layer \cite{K}, extract nearest ±5-line prose and cross-check author names.
+grep -nE '([A-Z][a-z]+)--([A-Z][a-z]+)[^]]*\\cite' chapters/ standalone/
+# For each hit, open bibliography/references.tex \bibitem{K} and verify author surnames match.
+```
+
+**Counter-check one-liner**: when writing `Name1--Name2 \cite{K}`, open the bibitem for K and paste its surnames verbatim; do not rely on the cite key itself to encode the authorship.
+
+**Canonical violation**: the F07 attack reported "Francis--Gaitsgory" prose on a GR17 cite; the actual inscription was already correct (Gaitsgory--Rozenblyum). The attack was stale, but the hazard class is real — an earlier session had fixed this; the sweep that follows every narrowing (Pattern 235) catches it.
+
+**Related**: Pattern 231 (dangling cite); bibliographic-cleanliness category.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 233: Hypothesis-weakening slippage between a proposition and its invoked lemma
+
+**Session**: 2026-04-18 evening (F07 attack on `prop:perfectness-standard-landscape` discharging `lem:perfectness-criterion`).
+
+**Type**: semantic drift in the quantifier on a fiber-finiteness hypothesis. Canonical violation: `lem:perfectness-criterion` at `chapters/theory/higher_genus_complementarity.tex:331-336` required TOTAL finite-dimensional fiber cohomology `\dim H^n(\bar B^{(g)}_{flat}(A)|_\Sigma) < \infty` for all $n$. `prop:perfectness-standard-landscape` at `chapters/theory/theorem_C_refinements_platonic.tex:234-312` purported to discharge this lemma but its proof body only produced WEIGHTWISE finiteness ("finite dimensional at each conformal weight", line 266-267, 301-303). Total-finiteness across all weights is strictly stronger; a pointwise-at-each-weight bound does not imply it when the weight grading is unbounded.
+
+**Rule**: a proof that claims to discharge the hypothesis of an invoked lemma MUST produce the exact hypothesis (quantifier, type, scope) the lemma requires. Weightwise finiteness is not total finiteness. Degree-wise boundedness is not total boundedness. Local finiteness is not global finiteness. A proposition whose output is weaker than the lemma's input must either (i) narrow its own claim to match, or (ii) insert an explicit BRIDGE LEMMA that upgrades the weaker output to the stronger input.
+
+**Regex trigger** (difficult to fully automate; semantic pre-commit check on proof bodies ending in "verifies the hypothesis of Lemma~\ref{...}" or "apply Lemma~\ref{...}"):
+
+```
+# Extract proposition proofs that terminate by invoking a lemma, and spot-check.
+grep -nE '(verifies|discharges|satisfies|applies|applying) (the hypothesis of )?Lemma' chapters/ standalone/
+# For each, read ±15 lines before and compare quantifier shape with the lemma's statement.
+```
+
+**Counter-check one-liner**: at the end of every proof that ends with "this verifies Lemma X's hypothesis", copy-paste Lemma X's hypothesis VERBATIM on the next line, then verify each quantifier — for all vs. for each, total vs. weightwise, finite vs. locally finite — matches the proposition's output.
+
+**Canonical violation healed (this session)**: `prop:perfectness-standard-landscape` proof now explicitly invokes `prop:conformal-blocks-bar` (chiral_modules.tex:541-554) to identify $H^0$ with finite-rank TUY conformal blocks, then the degree-0 concentration clause of `lem:perfectness-criterion` to upgrade weightwise finiteness to total finiteness. The bridge was missing; inscribing it closes the gap.
+
+**Related**: AP33 (H_k^! dualization, quantifier-level structural confusion); AP186 (Hochschild degree-0/positive degree conflation); AP1982 (Drinfeld centre dim-1 four-way collision — a weightwise-total-analog); wave5_sc_formality (SC formality attack, weightwise/global drift).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 234: Circular bypass — proposition claims independence from X while importing X in its proof
+
+**Session**: 2026-04-18 evening (F07 attack on `prop:ptvv-lagrangian` purporting PTVV-independence of Theorem C).
+
+**Type**: circular reasoning in an independence claim. Canonical violation: `prop:ptvv-lagrangian` was marked `ClaimStatusProvedHere` and advertised as a derived-stack bypass of Theorem C, but the proof at `chapters/theory/higher_genus_complementarity.tex:2219-2222` imported the Verdier pairing (which IS the output of Theorem C), and at `:2240-2245` imported `thm:quantum-complementarity-main`, which is a downstream application of Theorem C. The "independent bypass" is therefore void; the proposition is conditional on Theorem C, not independent of it. The repair (`thm:C-PTVV-alternative` at theorem_C_refinements_platonic.tex:432-476) downgrades clause (iii) to conjectural and inscribes that only clauses (i)-(ii) are genuinely independent.
+
+**Rule**: any proposition, theorem, or remark framed as "X is independent of Y", "bypass of Y", "alternative to Y", "avoiding Y" MUST have a proof body that does NOT invoke Y, any corollary of Y, any object constructed via Y, or any named theorem whose proof uses Y. If the proof body contains `\ref{Y}`, `\cite{Y}`, or any object defined via Y, the independence claim is void and the proposition must be (a) restated without the independence framing, (b) split into an independent core plus a Y-conditional remainder, or (c) marked conditional on Y.
+
+**Regex trigger** (semi-automatic):
+
+```
+# Find every "independent of / bypass of / alternative to" proposition-frame.
+grep -nE '(independent of|bypass of|alternative to|without (requiring|invoking|using)|does not (require|invoke|use)).*(Theorem|Lemma|Proposition)' chapters/ standalone/
+# For each hit, walk the proof body and grep for \ref{}, \cite{}, \label{} of the claimed-avoided target.
+```
+
+**Counter-check one-liner**: before writing "this proves X independently of Y", list every input the proof uses (hypotheses, lemmas, cited theorems, constructed objects) and verify none derive from Y or from any Y-corollary.
+
+**Canonical violation healed**: `prop:ptvv-lagrangian` now has a companion `thm:C-PTVV-alternative` which narrows the independence claim to clauses (i)-(ii) only; clause (iii) is explicitly marked conditional on Theorem C's Verdier pairing.
+
+**Related**: AP7/AP8 (overclaim detectors); wave7_theorem_A_R_twisted_unitarity (unitarity-independence attack); circularity category broadly; five-theorem independence audit.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 235: Reverse-drift after theorem narrowing (metadata surfaces preserve pre-narrowing headline)
+
+**Session**: 2026-04-18 evening (F07 + F09 both observed the same pattern).
+
+**Type**: metadata-hygiene drift. Canonical violations: after Theorem C's perfectness clause was narrowed from "unconditional for affine KM at non-critical level" to "unconditional for Heisenberg + affine KM at positive-integer level (TUY) + boundary admissible level (Arakawa)", the following metadata surfaces STILL preserved the pre-narrowing advertisement:
+
+1. The prose paragraph IMMEDIATELY PRECEDING the narrowed theorem in the SAME FILE (`theorem_C_refinements_platonic.tex:226-229`). This is the most surprising location — editors narrow the theorem block and forget the preceding "Main result:" paragraph.
+2. `standalone/theorem_index.tex` summary rows (e.g. `:2375-2376` for Theorem C).
+3. `AGENTS.md` status lines (`:614`).
+4. `FRONTIER.md` headline rows (`:23`, `:215`).
+5. `CLAUDE.md` status tables and summary lines (`:1374`, `:1378`, `:586` for MC5 class M).
+6. Session memorials in `notes/session_*.md`, `notes/programme_synthesis*.md`, `adversarial_swarm_*/` — harder to sweep, accept one-way drift.
+
+**Rule**: every narrowing edit to a `\begin{theorem}...\end{theorem}` hypothesis, quantifier, class-restriction, or ambient qualifier MUST be accompanied by a five-surface sweep:
+
+  (a) the paragraph immediately PRECEDING the theorem in the same file (check introductory "We now show ...", "Main result: ..." prose);
+  (b) `standalone/theorem_index.tex` row for the theorem's label;
+  (c) `AGENTS.md` status lines mentioning the theorem or its label;
+  (d) `FRONTIER.md` rows mentioning the theorem;
+  (e) `CLAUDE.md` status tables + any summary lines mentioning the theorem or its narrowed clause.
+
+**Regex trigger** (post-commit advisory):
+
+```
+# After any edit to a theorem block, grep the narrowed theorem's label across metadata.
+LABEL="thm:perfectness-standard-landscape" # or the edited label
+grep -n "$LABEL" standalone/theorem_index.tex AGENTS.md FRONTIER.md CLAUDE.md
+# Compare each hit's summary text to the newly-narrowed theorem body.
+```
+
+**Counter-check one-liner**: after narrowing a theorem, immediately grep the label across the five metadata surfaces and verify none still reads as the pre-narrowing statement.
+
+**Canonical violations (this session's programme)**: AP271 reverse-drift campaign (programme-wide sweep); F07 paragraph-above-theorem fix; F09 class-M ambient-qualifier sweep (Pattern 236).
+
+**Related**: AP271 reverse-drift; AP236 cleanup sweep; wave6_phantom_label_programme_sweep; wave7_session_ledger_retraction_sweep; wave9_ap_catalog_self_audit.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 236: Ambient-qualifier required for class-M / class-C status lines
+
+**Session**: 2026-04-18 evening (F09 attack; reinforced by Theorem A heal).
+
+**Type**: semantic-ambiguity-at-distance in status lines. Canonical violation: the shorthand "MC5 chain-level (class M false)" at `CLAUDE.md:1374` is readable in isolation as "MC5 is false for class M", but the true mathematical statement is:
+
+- FALSE in the raw bounded direct-sum ambient `Ch(Vect)` — witnessed by $L_0 \in B^1(\mathrm{Vir})$ with $\bar\Delta^{(N)}(L_0) \neq 0$ for every $N \geq 1$ (a genuine mathematical failure, not a proof-gap artifact);
+- PROVED in the pro-object / weight-completed / coderived ambient (`pro-Ch(Vect)` with Mittag--Leffler towers at `mc5_class_m_chain_level_platonic.tex:229`).
+
+The canonical formulation lives in `concordance.tex:1980`: "analytic, coderived, and canonical-ambient chain-level proved; bounded direct-sum failure marked as the naive-ambient exception". Every status line must be a FAITHFUL SHORTENING of that composite, never a single-side headline.
+
+**Rule**: any status line, headline row, or summary entry that mentions "class M", "class C", "MC5", "Theorem B", "Theorem A" in connection with bar-cobar / bar / cobar / coderived equivalence MUST carry an explicit ambient qualifier, one of: "raw bounded direct-sum", "pro-object / weight-completed", "coderived", "canonical (Francis--Gaitsgory) factorization". Bare class-M headlines are prohibited at any surface that can be read in isolation.
+
+**Regex trigger** (metadata-surface sweep):
+
+```
+# Class-M / MC5 / class-C mentions without an ambient qualifier within ±2 lines.
+grep -nE '(class M|class-M|MC5|class C|class-C)' CLAUDE.md AGENTS.md FRONTIER.md standalone/theorem_index.tex \
+  | grep -vE '(raw|bounded|direct.sum|pro-object|weight.completed|coderived|canonical|Francis.Gaitsgory)'
+```
+
+**Counter-check one-liner**: before writing "class M status ...", ask "in which ambient?" and write the ambient qualifier into the status line; if the status is two-valued across ambients, write BOTH on adjacent lines so they cannot be conflated.
+
+**Canonical violations healed (this session)**:
+- `CLAUDE.md:1374` shorthand expanded to two-line ambient-split (Pattern 235 companion sweep).
+- `standalone/five_theorems_modular_koszul.tex:631-663` Theorem A T1a narrowed to ambient-qualified statement with class-M carve-out explicit at `rem:T1a-ambient-classM` (lines 665-667).
+- `FRONTIER.md:215` Theorem A row narrowed with weight-completed ambient and Theorem B.2 carve-out cross-reference.
+- `chapters/connections/concordance.tex:282-294` ambient qualifier + class-M direct-sum carve-out.
+
+**Related**: Pattern 235 (reverse-drift, superset); F09 headline adjudication; AP-MC5-ambient-family; wave5_sc_formality (formality-with-ambient); wave8_koszul_count_realignment.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 237: Stale-attack artifact from iterative rectification
+
+**Session**: 2026-04-18 evening (F07 + Theorem A heals both reported "attack was stale on items X, Y, Z" — previously flagged issues had already been healed).
+
+**Type**: process artifact, not a mathematical AP — but worth caching because it prevents wasted cycles and mis-inscribed heal reports. When adversarial swarms are iterated (every 3-minute fire of `/loop`), some fraction of the flagged issues from one iteration will already have been healed by a prior iteration's sub-agents. The second agent's "heal" is therefore a no-op on those items, and its report should explicitly mark each item as "heal already applied in prior session" rather than silently ignoring.
+
+**Rule**: any attack-heal agent, before executing its heal edits, must re-verify each flagged item against the LIVE source. If an item is already fixed, the heal report must explicitly annotate "stale attack — prior heal in place at file:line" rather than claim the heal.
+
+**Regex trigger** (manual process, not file-greppable): build into the agent brief — "verify each flagged item is still live before healing".
+
+**Counter-check one-liner**: in every attack-heal agent brief, include "re-verify each flagged item against the live source before writing a heal; annotate stale items explicitly."
+
+**Canonical violations annotated (this session)**:
+- F07 agent: Hinich2001 fix was genuine, GR17 attribution was stale (already Gaitsgory--Rozenblyum), bridge lemma was stale (already inscribed), `standalone/theorem_index.tex:2376` narrowing was stale (already narrow). Only Hinich2001 + paragraph-above-theorem were genuinely new heals.
+- Theorem A agent: T1a re-scoping and two remarks WERE new; the pre-existing factorization-ambient scope in the surrounding inscription was stale in the attack brief.
+
+**Implication for swarm design**: longer gaps between iterations (or monitor-gated launches rather than unconditional 3-minute fires) reduce stale-attack waste. Trade-off: faster cadence catches drift earlier, slower cadence reduces stale overhead.
+
+**Related**: Pattern 235 (reverse-drift, what the swarm is catching); iterative-rectification cost analysis.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 238: Theorem conclusion's scope exceeds proof body's scope (ordered / symmetric, chain / cohomology, local / global)
+
+**Session**: 2026-04-18 evening (Theorem H heal on `thm:hochschild-concentration-E1`).
+
+**Type**: quantifier/scope mismatch between stated conclusion and actual proof output. Canonical violation: `thm:hochschild-concentration-E1` at `chapters/theory/chiral_hochschild_koszul.tex:1377-1428` concluded a bound on the SYMMETRIC chiral Hochschild object $\ChirHoch^\bullet(\cA)$, but the proof body explicitly disclaimed the $\Sigma_n$-averaging step ("no $\Sigma_n$-averaging step"). The proof therefore produced only the ORDERED bound $\ChirHoch^{\mathrm{ord},\bullet}(\cA)$, and the symmetric conclusion was an overclaim. Adjacent `rem:E1-scope-hochschild-concentration` had flagged the gap honestly, yet the theorem body still overreached — the remark's existence did not repair the overclaim because the theorem statement is what gets cited.
+
+**Rule**: the theorem's stated conclusion must name the exact object the proof actually produces. If the proof produces an ORDERED bound, the conclusion must state an ordered bound; symmetric (averaged) conclusions require an explicit averaging step in the proof (or a subsequent averaging corollary). Analogously:
+- CHAIN-level output → state chain-level conclusion; cohomological conclusion requires taking $H^\bullet$.
+- LOCAL / WEIGHTWISE / FIBERWISE output → state with that qualifier; global / total / family conclusion requires an upgrading argument.
+- UNIT-counit quasi-iso → state as quasi-iso; equivalence requires inverting.
+
+**Regex trigger** (semi-automatic, proof-body audit):
+
+```
+# Find theorems where the stated conclusion-type and the proof's terminal computation may differ.
+grep -nE '\\begin\{theorem\}|\\end\{theorem\}|\\begin\{proof\}|\\end\{proof\}' chapters/theory/chiral_hochschild_koszul.tex
+# Manual: compare "conclusion: $X = Y$" in the theorem body to the proof's terminal line.
+# Specific signatures:
+grep -nE 'ordered|symmetric|\\Sigma_n|\\text\{averag' chapters/theory/chiral_hochschild_koszul.tex
+```
+
+**Counter-check one-liner**: at the final line of every proof, write the theorem's stated conclusion verbatim and verify the ordered/symmetric, chain/cohomological, local/global, unit/equivalence qualifiers match exactly.
+
+**Canonical violation healed (this session)**:
+- `thm:hochschild-concentration-E1` narrowed to the ordered object $\ChirHoch^{\mathrm{ord},\bullet}$; new `cor:hochschild-averaging-symmetric` inscribed at lines 1432-1471 with explicit averaging step; `conj:hochschild-concentration-E1-only` at 1473-1494 captures the un-averaged $E_1$ case.
+- `conj:hochschild-concentration-class-M-non-generic` at 1496-1525 captures minimal-models and admissible W-algebra levels where Shapovalov degeneracy may produce $\ChirHoch^3$ classes; narrows from prior unconditional all-classes claim.
+- Critical-level exclusion inscribed at `rem:critical-level-lie-vs-chirhoch`; $\ChirHoch^\bullet$ at $k=-h^\vee$ is unbounded via Feigin–Frenkel / BD comparison, so the {0,1,2} concentration there was literally false for class L.
+
+**Concordance update**: `chapters/connections/concordance.tex:71-97` Theorem H row now reads "$E_\infty$-chiral PBW completion + generic level", with proved-vs-conjectural lanes separated.
+
+**Related**: Pattern 233 (hypothesis-weakening, dual failure mode: proof input too weak); Pattern 230 (symbol-overloading, different scope on same symbol); AP186 (Hochschild degree-0/positive-degree); wave7_chirhoch_general_propagation.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 239: iff-narrowing missing counterexamples from other families
+
+**Session**: 2026-04-18 evening (Theorem D heal on critical-level iff).
+
+**Type**: cross-family counterexample missed in an iff-narrowing. Canonical violation: Theorem D's part (iii) stated "$\kappa(A) = 0$ iff $A$ is at critical level", which is too strong — $\mathrm{Vir}_{c=0}$ also has $\kappa(\mathrm{Vir}_{c=0}) = c/2 = 0$ but is not at critical level of an affine Kac–Moody algebra. The iff is valid only when restricted to the KM-internal lane: $\kappa(V_k(\mathfrak{g})) = 0$ iff $k = -h^\vee$. The unqualified cross-family iff is false against the Virasoro counterexample.
+
+**Rule**: before writing "$P(A)$ iff $Q(A)$" across the standard landscape, iterate $A$ through each of the four archetypes (G, L, C, M) and check whether there is a counterexample on the other side of the iff. Zero values of $\kappa$, $\kappa^!$, $\kappa + \kappa^!$, central charges, and shadow-tower entries must be checked at each family's canonical parameter (Heisenberg at all levels, KM at $k=0$ and $k=-h^\vee$, $\beta\gamma$ at $c=26$, Virasoro at $c=0$ and $c=1$). If any family has a zero that the iff-converse disallows, narrow the iff to the family where it holds, and inscribe the counterexample as a remark.
+
+**Regex trigger** (semi-automatic):
+
+```
+# Find iff / equivalence statements in theorems.
+grep -nE '(iff|\\iff|\\Leftrightarrow|if and only if)' chapters/theory/
+# For each hit, audit the converse against Heisenberg, KM, βγ, Virasoro at canonical levels.
+```
+
+**Counter-check one-liner**: for every cross-family iff, enumerate Heisenberg, KM (level 0 and critical), βγ (central charges 26 and 2), Virasoro (central charges 0, 1, 13, 25) and verify both directions hold at each.
+
+**Canonical violation healed (this session)**: Theorem D's part (iii) narrowed from "$\kappa = 0$ iff critical level" to the KM-internal iff "$\kappa(V_k(\mathfrak{g})) = 0$ iff $k = -h^\vee$". New `rem:theorem-d-critical-level` at `chapters/theory/higher_genus_modular_koszul.tex:3035-3065` documents the Virasoro-at-$c=0$ counterexample and inscribes the content-migration from scalar lane to bar-cohomology lane (Feigin–Frenkel centre $H^0(\bar B(\hat\mathfrak{g}_{-h^\vee})) \simeq \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D))$).
+
+**Related**: AP24 (unqualified $\kappa + \kappa' = 0$); Pattern 230 (symbol-overloading — $\kappa$ family-dependent); type 21 necessary/sufficient; wave8_theorem_A_E1_phantom_heal (cross-family scope audit).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
