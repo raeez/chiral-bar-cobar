@@ -1,0 +1,125 @@
+# Patch (proposed): Theorem A modular-family OF1 sharpening
+# AP821-AP840. Author: Raeez Lorgat.
+# Status: proposed. Not yet applied. See
+# adversarial_swarm_20260418/attack_heal_thmA_modular_20260418.md
+# for the full attack-and-heal report.
+#
+# RETRACTED 2026-04-18 per Wave-X Mok25 programme-wide audit
+# (adversarial_swarm_20260418/attack_heal_mok25_programme_audit_20260418.md).
+# The header comment below ("Mok25 ... resolves against no arXiv, DOI, or
+# venue" and "attributed author-title combination does not match any known
+# work of Chung-Pang Mok") is SUPERSEDED. Mok25 is REAL: Siao Chi Mok
+# (Cambridge/Imperial), arXiv:2503.17563, "Logarithmic Fulton--MacPherson
+# configuration spaces", March 2025 (v2 May 2025). The iteration-2 audit
+# conflated Siao Chi Mok (algebraic geometry) with Chung-Pang Mok
+# (automorphic forms) due to drifted bibkey author/title. E2 below (the
+# bibkey note-field edit) is SUPERSEDED by bibkey harmonization: author =
+# {Mok, Siao Chi}, title = {Logarithmic Fulton--MacPherson configuration
+# spaces}, eprint = {2503.17563}, archivePrefix = {arXiv}. E1/E3/E4
+# retain their intent (GR17 section drift, honest-scope remarks, FRONTIER
+# registration) but the sharpened-obstruction inscription is no longer
+# blocking on "fabricated mechanism" — it is blocking on
+# single-preprint-pillar risk (AP1241).
+#
+# This patch documents four edits E1-E4 that sharpen the OF1 open
+# frontier after primary-source verification failed to locate either
+# (a) GR17 Ch. III §10 as a six-functor base-change theorem on the
+# relative Ran prestack (the correct GR17 location is Vol I Part IV
+# + Part V, and the Ran specialisation is not inscribed in GR17
+# itself; drift is AP285 section-number), or
+# (b) Mok25 "Log FM compactifications and tropicalization of planted
+# forests" as a locatable primary source. The Mok25 bibkey resolves
+# against no arXiv, DOI, or venue, and the attributed author-title
+# combination does not match any known work of Chung-Pang Mok.
+#
+# Heal is AP266 sharpened-obstruction: two named obstruction classes
+# [alpha_BC] and [beta_nodal] inscribed as programme-internal
+# inscription targets. OF1 remains honestly open.
+
+## E1. chapters/theory/theorem_A_infinity_2.tex:927
+## Replace the drifted GR17 section citation with the correct Part IV
+## + Part V location, and name the Ran specialisation via Francis-
+## Gaitsgory 2012.
+
+- prestack \cite[Chapter~III, \S10]{GR17}, used to propagate the
++ prestack \cite[Part~IV (Categories of correspondences) and
++ Part~V, \S1 (IndCoh)]{GR17}, specialised to the Ran prestack along
++ \cite[\S2--3]{Francis2012}, used to propagate the
+
+## E2. standalone/references.bib:601-607
+## Append honest-citation scope to the Mok25 note field.
+
+   @article{Mok25,
+     author  = {Mok, Chung-Pang},
+     title   = {Log {F}ulton--{M}ac{P}herson compactifications and
+                tropicalization of planted forests},
+     year    = {2025},
+-    note    = {Preprint},
++    note    = {Preprint; primary source not currently located at
++               programme-internal discipline level. Treated as
++               aspirational pointer to a log-FM nodal factorization-
++               gluing theorem that would discharge OF1-b if
++               available. See
++               adversarial\_swarm\_20260418/attack\_heal\_thmA\_
++               modular\_20260418.md for the sharpened-obstruction
++               inscription target.},
+   }
+
+## E3. chapters/theory/theorem_A_infinity_2.tex:918-943
+## Extend the scope remark with the two named obstruction classes.
+## Inserted as an additional sentence after the current enumeration
+## (a) and (b), before the "Neither is inscribed..." sentence.
+
++ The programme-internal shape of what is missing at the obstruction
++ level is twofold. For (a), the failure of the base-change natural
++ transformation
++ $f^! \pi^{\Ran}_* \Rightarrow \pi'^{\Ran}_* f'^{!}$
++ on factorization sheaves over a smooth family $\pi: \mathcal{C} \to S$
++ of curves is measured by a class
++ $[\alpha_{\mathrm{BC}}] \in \Ext^1_{\Shv^{\DR}(S')}
++ (f^! \pi^{\Ran}_* \mathcal{F},\,\pi'^{\Ran}_* f'^! \mathcal{F})$
++ for a representative factorization sheaf $\mathcal{F}$; its universal
++ vanishing on $(H1)+(H2)+(H3)$-satisfying sheaves is the
++ inscription target `prop:fg-relative-ran-base-change`. For (b), the
++ obstruction to chain-level nodal gluing along the clutching map is a
++ logarithmic-derivation class
++ $[\beta_{\mathrm{nodal}}] \in H^1_{\mathrm{ch}}(\Fact^{\log}(C_0),\,
++ \text{cotangent at node})$
++ whose vanishing is the chain-level gluing; the inscription target is
++ `prop:log-fm-nodal-factorization-gluing`. Clearing $[\alpha_{\mathrm{BC}}]$
++ extends the theorem to $\mathcal{M}_{g,n}$; clearing
++ $[\beta_{\mathrm{nodal}}]$ extends it across the boundary divisor.
+
+## E4. CLAUDE.md Theorem A status row (line 578)
+## Precision update: correct GR17 citation from "Ch. III §10" to
+## "Part IV + Part V, specialised via Francis-Gaitsgory 2012", and
+## flag Mok25 as unverified at primary-source level.
+
+- is CONDITIONAL on two uninscribed ingredients, both cited at citation
+- level only: (a) Francis-Gaitsgory six-functor base-change on the
+- relative Ran prestack (GR17 Ch. III §10), used to propagate the
+- Hackney-Robertson properad-level equivalence horizontally across
+- families of smooth curves; (b) Mok25 logarithmic factorization-gluing
+- at the nodal boundary, to globalise the equivalence across the full
+- compactified base. Neither (a) nor (b) is inscribed as a theorem in
+- Vol I.
++ is CONDITIONAL on two uninscribed ingredients, both cited at citation
++ level only: (a) Francis-Gaitsgory-style six-functor base-change on
++ the relative Ran prestack (GR17 Vol I Part IV + Part V, specialised
++ to Ran via Francis-Gaitsgory 2012 \S2--3; drift from prior "Ch. III
++ §10" citation corrected 2026-04-18, AP285), used to propagate the
++ Hackney-Robertson properad-level equivalence horizontally across
++ families of smooth curves; (b) a log-FM chain-level nodal
++ factorization-gluing theorem at the boundary (aspirational Mok25
++ bibkey unverified at primary-source level 2026-04-18; sharpened
++ programme-internal obstruction class $[\beta_{\mathrm{nodal}}]$
++ inscribed as target `prop:log-fm-nodal-factorization-gluing`).
++ Neither (a) nor (b) is inscribed as a theorem in Vol I; the two
++ named programme-internal inscription targets
++ `prop:fg-relative-ran-base-change` and
++ `prop:log-fm-nodal-factorization-gluing` carry the residual
++ cohomological obstructions $[\alpha_{\mathrm{BC}}]$ and
++ $[\beta_{\mathrm{nodal}}]$.
+
+# End of proposed patch. No edits applied; all are flagged for
+# follow-up in the next Vol I commit touching the affected files.

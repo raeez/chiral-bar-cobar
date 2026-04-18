@@ -3502,8 +3502,9 @@ path integral on a solid torus produces exactly
 $F_1 = k/24$, matching the boundary computation at the
 genus-$1$ level. The cosmological constant of the bulk is
 trivial (the theory is topological), which is why the shadow
-obstruction tower is flat and Heisenberg is the atom of the
-single-generator ladder.
+obstruction tower is flat and Heisenberg is the CG opening
+of the single-generator ladder ($\Einf$-commutative base case;
+the genuine $\Eone$ atom is the Yangian).
 \end{remark}
 
 \begin{remark}[Affine Kac--Moody: non-abelian Chern--Simons]
@@ -3615,11 +3616,17 @@ the matter-ghost $c$-sum cancels at the critical dimension.
 \index{chiral de Rham complex!holographic central charge}%
 For the chiral de~Rham complex of the Calabi--Yau threefold
 $K3 \times E$,
-$\kappa(\Omega^{\mathrm{ch}}(K3 \times E))
-= \kappa(K3) + \kappa(E) = 2 + 1 = 3 = \dim_{\mathbb{C}}(K3 \times E)$
+$\kappa^{\mathrm{Heis}}(\Omega^{\mathrm{ch}}(K3 \times E))
+= \kappa^{\mathrm{Heis}}(K3) + \kappa^{\mathrm{Heis}}(E) = 2 + 1 = 3 = \dim_{\mathbb{C}}(K3 \times E)$
 (additivity clause of
 Theorem~\ref{thm:modular-characteristic}(iv), applied to the
-K\"unneth decomposition). The bulk theory is the
+K\"unneth decomposition; this is the Heisenberg-level additive
+invariant, distinct from the Hodge-supertrace $\kappa_{\mathrm{ch}} = \Xi$
+which is K\"unneth-multiplicative and gives
+$\Xi(K3 \times E) = \Xi(K3) \cdot \Xi(E) = 2 \cdot 0 = 0$; see
+Volume~III Remark~\ref{V3-rem:beauville-kappa-formula-subscript-split}
+for the Route~A / Route~B adjudication, and AP289
+for the multiplicative-vs-additive discipline). The bulk theory is the
 holomorphic-topological theory of Costello--Dimofte--Gaiotto
 associated to the Calabi--Yau geometry; its Brown--Henneaux
 coefficient is~$3$, matching the complex dimension of the
@@ -4604,6 +4611,14 @@ degrees for different families (Heisenberg at~$2$, affine
 at~$3$, $\beta\gamma$ at~$4$; Virasoro at~$\infty$),
 and this complexity is genuine even though the
 parametrization is one-dimensional.
+Equivalently, $\Theta_\cA$ exists as a pro-object limit
+in $\widehat{\gAmod} = \varprojlim_N \gAmod/F^{N+1}\gAmod$
+along the operadic weight filtration
+$w(g,r,d) = 2g-2+r+d$; chain-level termination in
+$\gAmod$ on the nose is a class property
+(G/L/C finite, M transfinite), and the Maurer--Cartan
+equation holds in $\widehat{\gAmod}$ rather than in
+$\gAmod$ for class~M.
 
 In the \emph{multi-channel} regime
 ($\dim H^2_{\mathrm{cyc}} > 1$), the minimal-model MC element
@@ -13701,6 +13716,63 @@ The content of the theorem is not ``assume $\Theta_\cA$ exists,
 therefore it exists'' but rather: \emph{the bar-intrinsic
 construction provides an explicit element in the completed space,
 and its weight-truncations are the recursive tower}.
+\end{remark}
+
+\begin{remark}[Scope: pro-object ambient versus chain-level termination]
+\label{rem:recursive-existence-scope-ambient}
+\index{recursive existence!pro-object scope}
+\index{shadow obstruction tower!chain-level termination}
+The convergence claim of
+Theorem~\ref{thm:recursive-existence}(ii) is a statement in the
+weight-completion $\widehat{\gAmod}$, i.e.\ in the pro-object
+ambient $\mathrm{pro}\text{-}\mathrm{Ch}(\gAmod)$ with respect to
+the descending filtration $\{F^N \gAmod\}$. It is
+\emph{class-uniform}: the proof uses only the formal properties of
+the weight filtration (exhaustive, separated, complete,
+pronilpotent, with finite-dimensional quotients and surjective
+transitions) and makes no appeal to the shadow class
+$G/L/C/M$ of $\cA$. In particular, the pro-object limit
+$\Theta_\cA = \varprojlim_N \Theta_\cA^{\leq N}$ exists
+unconditionally for every modular Koszul chiral algebra.
+
+Chain-level termination of the tower in the uncompleted algebra
+$\gAmod$ itself is a separate and strictly finer question. It is
+\emph{class-dependent} and is not a claim of the present theorem.
+The archetype classification
+\textup{(}Theorem~\textup{\ref{thm:shadow-archetype-classification}}\textup{)}
+records the four strata:
+\begin{itemize}
+ \item Class $G$ (Heisenberg, rank-$2$ strong generator): shadow
+ tower terminates at degree $2$, so
+ $\Theta_\cA^{\leq N} = \Theta_\cA^{\leq 2}$ for all $N \geq 2$
+ and $\Theta_\cA$ is already polynomial in $\gAmod$.
+ \item Class $L$ (affine Kac-Moody at non-critical level,
+ rank-$3$): tower terminates at degree $3$.
+ \item Class $C$ ($\beta\gamma$, $bc$, rank-$4$): tower terminates
+ at degree $4$.
+ \item Class $M$ (Virasoro, principal $\mathcal{W}_N$,
+ rank-$\infty$): tower does NOT terminate at any finite degree;
+ convergence is genuinely pro-object only, and the chain-level
+ element $\Theta_\cA$ lives in the completion $\widehat{\gAmod}$
+ but not in $\gAmod$.
+\end{itemize}
+The depth-gap trichotomy
+\textup{(}Proposition~\textup{\ref{prop:depth-gap-trichotomy}}\textup{)}
+is the rank-side companion: $d_{\mathrm{alg}} \in \{0, 1, 2,
+\infty\}$, with class $G/L/C$ supplying the finite depths and
+class $M$ the transfinite case. No intermediate finite chain-level
+termination depth occurs.
+
+Thus the uniform-across-classes claim of
+Theorem~\ref{thm:recursive-existence} is pro-object convergence in
+$\widehat{\gAmod}$; the class-dependent finite-vs-transfinite
+statement is inherited from the archetype classification and the
+depth-gap trichotomy, not from the present theorem. Consumers
+invoking $\Theta_\cA$ in class-$M$ chain-level arguments should
+route through the weight-completed ambient
+$\widehat{\gAmod}$ or through the class-specific finite-termination
+lemmas for $G/L/C$, never through an unscoped appeal to
+Theorem~\ref{thm:recursive-existence} on its own.
 \end{remark}
 
 \begin{remark}[Relation to the shadow calculus]
@@ -33369,7 +33441,7 @@ blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
 \begin{proposition}[Verlinde formula from ordered chiral
 homology]
 \label{prop:verlinde-from-ordered}
-\ClaimStatusProvedHere
+\ClaimStatusProvedElsewhere
 Let $k \geq 1$ be a positive integer, and let
 $S_{jl} = \sqrt{2/(k+2)}\,\sin\!\bigl(\pi(j+1)(l+1)/(k+2)\bigr)$
 be the modular $S$-matrix for $\widehat{\mathfrak{sl}}_2$ at
@@ -33502,20 +33574,85 @@ $Z_{g+1} = \sum_j H_j \cdot S_{0j}^{2-2g}$.
 
 \textup{(v)} Separating factorization: the bar complex
 factorization under separating degeneration
-(Theorem~A for the ordered bar complex on $\Ran^{\mathrm{ord}}$)
+(Theorem~$A^{\infty,2}$, \ref{thm:A-infinity-2}, applied to the
+ordered bar complex on $\Ran^{\mathrm{ord}}(X)$)
 decomposes the genus-$g$ partition function into a sum over
 channels of the product of the two lower-genus contributions,
-normalized by the propagator $S_{0j}^{-2}$.
+normalized by the propagator $S_{0j}^{-2}$. Clauses~(iv) and~(v)
+are conditional on the modular-family extension of
+Theorem~$A^{\infty,2}$ from a fixed smooth curve to the
+Deligne--Mumford boundary of $\overline{\cM}_{g,n}$; that
+extension is cited at citation level (Francis--Gaitsgory
+relative Ran six-functor base change~\cite{GR17}, Mok
+logarithmic factorization sewing~\cite{Mok25}) and is not
+inscribed in Vol~I (Remark~\ref{rem:A-infinity-2-modular-family-scope}).
+The classical identification of conformal blocks with
+coinvariants at the boundary is Tsuchiya--Ueno--Yamada
+factorization~\cite{TUY89}; we use it here rather than
+re-derive it.
 
 All numerical values in the table have been verified by
 direct computation in
 \texttt{verlinde\_ordered\_engine.py}
-using three independent code paths
-(direct $S$-matrix summation, quantum-dimension formula,
-and handle recursion), cross-checked against the Verlinde
-table of \texttt{verlinde\_shadow\_algebra.py}
-($198$ tests, all passing).
+against the Verlinde table of
+\texttt{verlinde\_shadow\_algebra.py} ($198$ tests, all
+passing). The three numerical code paths in
+\texttt{verlinde\_Z2\_three\_paths} (direct $S$-matrix sum,
+quantum-dimension rewrite, and handle recursion seeded from
+$Z_1$) are algebraically identical rewrites of
+$\sum_j S_{0j}^{-2}$ and agree as trigonometric identities;
+they supply code-level cross-validation but do not constitute
+three genuinely disjoint derivations. The disjoint-verification
+infrastructure for the proposition lives at the boundary
+genera ($Z_0 = 1$ from $S$-matrix unitarity, $Z_1 = k+1$ from
+the integrable representation count and the Zhu algebra of
+Frenkel--Zhu~\cite{FZ92}, Zhu's theorem~\cite{Zhu96}) and at
+the algebro-geometric Beauville--Laszlo/Faltings
+interpretation of $Z_g$ as the rank of the
+Verlinde bundle over $\cM_G(\Sigma_g)$.
 \end{proof}
+
+\begin{remark}[Scope of
+\protect\ref{prop:verlinde-from-ordered}: what is proved
+elsewhere, what is conditional]
+\label{rem:verlinde-from-ordered-scope}
+\index{Verlinde formula!scope of Vol~I inscription}
+The proposition is tagged $\ClaimStatusProvedElsewhere$ to
+record that its load-bearing content is classical: the
+$S$-matrix sum formula $Z_g(k) = \sum_j S_{0j}^{2-2g}$
+is Verlinde~\cite{Verlinde88}; the identification of the
+ordered chiral chain complex coinvariants with the space
+of conformal blocks is the Vol~I
+proposition~\ref{prop:conformal-blocks-bar} combined with
+Tsuchiya--Ueno--Yamada factorization~\cite{TUY89} for the
+nodal boundary; the genus-$1$ count $Z_1 = k + 1$ passes
+through the Frenkel--Zhu presentation of the Zhu
+algebra~\cite{FZ92} and Zhu's modular invariance
+theorem~\cite{Zhu96}. Clauses~(iv) and~(v), which present
+handle attachment and separating factorization as
+consequences of the ordered bar complex factorization, use
+the modular-family extension of Theorem~$A^{\infty,2}$ to
+the Deligne--Mumford boundary; that extension is cited (not
+inscribed) per Remark~\ref{rem:A-infinity-2-modular-family-scope}.
+What the proposition \emph{does} supply, beyond a restatement
+of classical Verlinde, is the explicit dictionary: each
+isospin channel $j \in \{0, \ldots, k\}$ of the integer-level
+KZB local system contributes a one-dimensional block of
+ordered-bar coinvariants at genus~$1$ and, recursively
+through the (cited) boundary factorization, a weight
+$S_{0j}^{2-2g}$ to the genus-$g$ partition function. The
+precise \emph{novel} content of Vol~I concerning Verlinde is
+the \emph{generic-level ancestor} picture
+(Remark~\ref{rem:verlinde-shadow-truncation}): the shadow
+tower $\{F_g\}$ encodes the curvature of the Verlinde
+bundle at generic $k$, with the Verlinde integers recovered
+at integer $k$ as the ranks of the associated modular
+functor. The shadow--Verlinde numerical distinction
+(Remark~\ref{rem:verlinde-shadow-numerical}) and the Verlinde
+polynomial family
+(Theorem~\ref{thm:verlinde-polynomial-family}) are the
+genuinely Vol-I-specific downstream results.
+\end{remark}
 
 \begin{remark}[Shadow tower truncation at integer level]
 \label{rem:verlinde-shadow-truncation}
@@ -34464,13 +34601,29 @@ At genus~$2$, $\theta_1$ is replaced by the genus-$2$
 odd theta function $\Theta[{{}^{1/2,0}_{1/2,0}}]$, and
 the doubly-dynamical YBE is verified numerically at
 generic off-diagonal period matrix $\Omega$ to relative
-error $< 10^{-12}$
-\textup{(}$29$ compute tests in
-\texttt{face\_model\_ddybe\_engine.py}\textup{)}.
-The genus-$2$ odd theta factorises at diagonal $\Omega$
-as $-\theta_1(x|\tau_1) \cdot \theta_3(0|\tau_2)$; the
-sign cancels in all Boltzmann-weight ratios, giving exact
-degeneration to two copies of the genus-$1$ DYBE.
+residual $< 10^{-4}$ across four generic-$\Omega$ compute
+instances, with a tier-(T3) diagonal-$\Omega$ consistency
+check at residual $< 10^{-6}$
+\textup{(}$30$ face-model tests in
+\texttt{face\_model\_ddybe\_engine.py}\textup{;}
+$4$ are genuinely generic-$\Omega$ at
+\texttt{relative\,<\,1e-4}\textup{)}.
+The $10^{-4}$ ceiling is an engineering budget ($N=8$
+truncation of the genus-$2$ theta series), not a
+theoretical error term; this is numerical evidence, not
+proof. The genus-$2$ odd theta factorises at diagonal
+$\Omega$ as
+$\epsilon_\delta\,\theta_1(x|\tau_1) \cdot
+\theta_3(0|\tau_2)$; the $\theta_3(0|\tau_2)$ factor
+cancels in every Boltzmann-weight ratio, giving exact
+degeneration to a single genus-$1$ Felder DYBE in
+variable $\tau_1$ (the $\tau_2$-sector trivialising). The
+Platonic-ideal inscription of this structure is
+Chapter~\ref{ch:genus-2-ddybe-platonic}; in particular
+Theorem~\ref{thm:g2-face-model-bypass-scope-restricted}
+separates the diagonal regime (exact), the generic
+regime (numerical), and the separating-degeneration
+regime (no genuinely $g=2$ content).
 \end{remark}
 
 \begin{proposition}[Degree-$2$ ordered chiral homology on

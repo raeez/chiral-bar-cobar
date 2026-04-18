@@ -433,7 +433,7 @@ Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}, which gives bar
 concentration in weight~$1$ at $g=0$ for any class
 $\cA\in\Kosz(X)$. At $g\geq 1$, the fiberwise differential
 $d_{\mathrm{fib}}^{2}=\kappa\cdot\omega_g$ obstructs weight-$1$
-concentration unless $\kappa=0$, which (per AP-class) holds in
+concentration unless $\kappa=0$, which holds in
 class~$\mathsf{G}$ only.
 \end{proof}
 
@@ -464,13 +464,18 @@ PBW-collapse-to-strict criterion, which by the hub-and-spoke TFAE
 class~$\mathsf{G}$ condition exactly.
 \end{proof}
 
-\begin{corollary}[$R$-twisted $\Sigma_n$-descent
+\begin{corollary}[$R$-twisted $\Sigma_n$-descent (unitary $R$)
 $\barB^{\Sigma}(\cA)\simeq B^{\ord}(\cA)^{R\text{-}\Sigma_n}$;
 \ClaimStatusProvedHere]
 \label{cor:eight-cor-R-descent}
 \index{R-twisted descent!corollary form}
-For $\cA$ an $\Eone$-chiral algebra with classical $R$-matrix~$R(z)$,
-the symmetric bar $\barB^{\Sigma}_n(\cA)$ is the $R$-twisted
+For $\cA$ an $\Eone$-chiral algebra with classical $R$-matrix~$R(z)$
+satisfying the classical Yang--Baxter equation
+(Lemma~\ref{lem:R-twisted-descent}~\ref{R1}) \emph{and} unitarity
+$R(z)\,R^{op}(-z) = \id$ (Lemma~\ref{lem:R-twisted-descent}~\ref{R2};
+automatic for rational Yangians and for generic-$q$ trigonometric
+$U_q(\widehat{\fg})$; vacuous when $R(z)=\tau$), the symmetric bar
+$\barB^{\Sigma}_n(\cA)$ is the $R$-twisted
 $\Sigma_n$-coinvariant descent of the ordered bar
 $B^{\ord}_n(\cA)$ along the Ran-torsor
 $\pi\colon\Ran^{\ord}(X)\to\Ran(X)$:
@@ -728,7 +733,15 @@ respect to that filtration is an equivalence.
 $(\infty,2)$-equivalence at properad level;
 \ClaimStatusProvedHere]
 \label{thm:A-infinity-2}
+% Co-alias: Theorem A^{E_1} (E_1-ordered variant). Clause (iii) below
+% "Ordered-to-symmetric descent (unitary R)" is the E_1-ordered Theorem A
+% via pure-braid Orlik-Solomon Koszulity (Shelton-Yuzvinsky 1997), routed
+% through Lemma~\ref{lem:R-twisted-descent}; Yangian instance concrete via
+% Cherednik monodromy + Etingof-Kazhdan flatness. Co-label resolves the
+% CLAUDE.md-advertised name thm:theorem-A-E1 onto the canonical inscription.
+\label{thm:theorem-A-E1}
 \index{Theorem A-infinity-2}
+\index{Theorem A!E_1-ordered variant}
 \index{bar-cobar!(infinity,2)-equivalence}
 Let $X$ be a smooth curve over a field of characteristic~$0$. In the
 Francis--Gaitsgory factorization ambient $\Fact(X)$
@@ -779,9 +792,11 @@ Explicitly: the pullback along $\{\mathrm{pt}\}$ of $\Bbarch_X$ and
 $\Omegach_X$ agrees with the $k$-linear bar--cobar adjunction of
 \cite[Theorem~11.4.1]{LV12} for $\Ass$.
 
-\item \label{A2-iii} \emph{Ordered-to-symmetric descent.}
-The equivalence relates the ordered bar $B^{\ord}(\cA)$ of an
-$\Eone$-chiral algebra and the symmetric bar $\barB^{\Sigma}(\cA)$ via
+\item \label{A2-iii} \emph{Ordered-to-symmetric descent (unitary $R$).}
+Assume $\cA$ carries a classical $R$-matrix $R(z)$ satisfying the
+classical Yang--Baxter equation \emph{and} unitarity
+$R(z)\,R^{op}(-z) = \id$. Then the equivalence relates the ordered bar
+$B^{\ord}(\cA)$ and the symmetric bar $\barB^{\Sigma}(\cA)$ via
 \emph{$R$-matrix-twisted $\Sigma_n$-descent} along the Ran-torsor
 $\Ran(X)^{\ord} \to \Ran(X)$:
 \[
@@ -789,8 +804,15 @@ $\Ran(X)^{\ord} \to \Ran(X)$:
 \bigl(B^{\ord}_n(\cA)\bigr)^{\Sigma_n\text{-coinv},\; L_R\text{-twisted}},
 \]
 where $L_R$ is the $\Sigma_n$-equivariant local system on
-$\Ran^{\ord}(X)$ determined by the classical $R$-matrix $R(z)$ of $\cA$
-(Lemma~\ref{lem:R-twisted-descent}).
+$\Ran^{\ord}(X)$ determined by $R(z)$
+(Lemma~\ref{lem:R-twisted-descent}, hypotheses~\ref{R1}+\ref{R2}).
+Unitarity is automatic for rational Yangians $Y_\hbar(\fg)$ and for
+trigonometric $U_q(\widehat{\fg})$ at generic~$q$, and vacuous for
+chiral algebras with $R(z)=\tau$ (Heisenberg, free fermions, lattice
+VOAs at generic rank; Step~4 of the lemma's proof). For elliptic
+$R$-matrices of Belavin/Felder type it is convention-dependent, and
+the descent of~\ref{A2-iii} is to be read scoped to a unitary
+presentation (Remark~\ref{rem:R-descent-unitarity-scope}).
 \end{enumerate}
 \end{theorem}
 
@@ -924,12 +946,21 @@ two additional ingredients that are cited but not inscribed at chain
 level in this volume:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item Francis--Gaitsgory six-functor base-change on the relative Ran
-prestack \cite[Chapter~III, \S10]{GR17}, used to propagate the
-Hackney--Robertson properad-level equivalence horizontally across
-families of smooth curves;
+prestack, used to propagate the Hackney--Robertson properad-level
+equivalence horizontally across families of smooth curves. The abstract
+six-functor framework is
+\cite[Part~IV (Categories of correspondences), and Part~V, \S1
+(IndCoh)]{GR17}; the specialisation to factorization sheaves on the
+Ran prestack for a fixed smooth curve is \cite[\S2--3]{Francis2012}.
+Its relative version over a family $\pi: \mathcal{C} \to S$ of smooth
+curves is the load-bearing missing inscription (see the sharpened
+obstruction class $[\alpha_{\mathrm{BC}}]$ below).
 \item Mok25 logarithmic factorization-gluing at the boundary (nodal
 degenerations), to globalise the equivalence across the full
-compactified base.
+compactified base. Mok25 is cited as a March 2025 arXiv preprint
+(arXiv:2503.17563, Siao Chi Mok, ``Logarithmic Fulton--MacPherson
+configuration spaces''; its chain-level nodal factorization-gluing
+for the bar/cobar pair is not independently inscribed in Vol~I).
 \end{enumerate}
 Neither is inscribed as a theorem in Vol~I; both are invoked only at
 the citation level. Downstream results whose statements implicitly
@@ -940,6 +971,162 @@ therefore conditional on this outstanding inscription. The
 configuration-space R-twisted $\Sigma_n$-descent of
 Lemma~\ref{lem:R-twisted-descent} is proved on $\mathrm{Conf}^{\ord}_n(X)$
 for a fixed $X$ and is independent of the modular-family question.
+
+\emph{Sharpened obstruction for (a) (relative-Ran base-change).} Let
+$\pi: \mathcal{C} \to S$ be a smooth projective family of genus-$g$
+curves with $n$ marked sections, and let $\Ran^{\rel}(\mathcal{C}/S)
+\to S$ be the relative Ran prestack. For a morphism $f: S' \to S$ of
+smooth schemes, let $f': \Ran^{\rel}(\mathcal{C}'/S') \to
+\Ran^{\rel}(\mathcal{C}/S)$ be the induced map on relative Ran
+prestacks and let $\pi^{\Ran}_*$ denote the Ran-direct image of
+factorization sheaves. The base-change natural transformation
+\[
+\alpha_{\mathrm{BC}}:\;
+f^{!} \pi^{\Ran}_*
+\;\Longrightarrow\;
+\pi'^{\Ran}_* f'^{!}
+\]
+on $\Fact^{\rel}(\mathcal{C}/S)$ is, by GR17 Part~IV--V, an equivalence
+on the abstract six-functor formalism restricted to the IndCoh
+realisation; its failure on the factorization subcategory is measured
+by a class
+\[
+[\alpha_{\mathrm{BC}}]
+\;\in\;
+\mathrm{Ext}^{1}_{\Shv^{\DR}(S')}
+\bigl(f^{!}\pi^{\Ran}_* \mathcal{F},\;
+       \pi'^{\Ran}_* f'^{!}\mathcal{F}\bigr)
+\]
+for a representative factorization sheaf $\mathcal{F}$ satisfying
+hypotheses (H1)+(H2)+(H3) relative over $\mathcal{M}_g$.
+Universal vanishing of $[\alpha_{\mathrm{BC}}]$ on this subcategory is
+the programme-internal inscription target; clearing it alone extends
+Theorem~$A^{\infty,2}$ horizontally across $\mathcal{M}_{g,n}$ (the
+interior of $\overline{\mathcal{M}}_{g,n}$). The nodal boundary
+requires, in addition, clearance of the companion logarithmic class
+$[\beta_{\mathrm{nodal}}]$ supplied by ingredient~(b).
+
+\emph{Sharpened obstruction for (b) (nodal factorization-gluing).} What
+Mok~\cite{Mok25} supplies and what it does not. The log-FM
+compactification $\FM_n(X \!\mid\! D)$ of
+Definition~\ref{def:log-fm-compactification} is a fixed-curve object:
+$(X,D)$ is kept fixed and the only boundary components are the FM
+collision divisors $D^{\mathrm{FM}}_{ij}$ and the puncture-collision
+divisors $D^{\mathrm{punc}}_{i,\alpha}$ (see
+Remark~\ref{rem:log-fm-fixed-vs-relative}). Mok's inscribed machinery
+-- smoothness + normal-crossings boundary
+\cite[Theorem~3.3.1]{Mok25}, flatness of the universal degeneration
+$W \to B$ \cite[Theorem~5.2.3]{Mok25}, and the degeneration formula
+\cite[Corollary~5.3.4]{Mok25} expressing the special fibre as a
+subdivision of products
+$\prod_{v \in V(S_\rho)} \FM_{I_v}(Y_v \!\mid\! D_v)$ -- governs the
+boundary geometry of the relative log-FM space
+$\FM_n(\mathcal{C}/\overline{\mathcal{M}}_{g,n})$ at each node of the
+universal stable curve. What Mok25 does \emph{not} inscribe is the
+induced chain-level behaviour of a factorization sheaf
+$\mathcal{F} \in \Fact(\mathcal{C})$ satisfying (H1)+(H2)+(H3) under
+the degeneration: specifically, the claim that the factorization nearby-cycle functor
+$\Psi_{D_{\Delta}}$ along the boundary divisor
+$D_{\Delta} \subset \overline{\mathcal{M}}_{g,n}$ of the $\Delta$-clutching
+identifies $\mathcal{F}\!\mid_{D_{\Delta}}$ with the chiral sewing
+$\mathcal{F}(C')\otimes_{\mathcal{F}(\widehat{D}_p)} \mathcal{F}(C'')$
+along the formal disk $\widehat{D}_p$ at the node. Let
+$\jmath_\Delta: D_{\Delta} \hookrightarrow \overline{\mathcal{M}}_{g,n}$
+be the $\Delta$-boundary inclusion, $\pi_{\log}:
+\FM_n(\mathcal{C}/\overline{\mathcal{M}}_{g,n}) \to
+\overline{\mathcal{M}}_{g,n}$ the relative log-FM structure morphism, and
+$\Psi_\Delta$ factorization nearby cycles in the Beilinson--Drinfeld sense.
+The nodal-sewing natural transformation
+\[
+ \beta_{\mathrm{nodal}}:\;
+ \Psi_\Delta\,\bigl(\pi_{\log}\bigr)_*\mathcal{F}
+ \;\Longrightarrow\;
+ \bigl(\pi_{\log}\bigr)_{*,D_{\Delta}}
+ \!\bigl(\mathcal{F}(C')\otimes_{\mathcal{F}(\widehat{D}_p)}\mathcal{F}(C'')\bigr)
+\]
+is the comparison between the factorization nearby-cycle limit along the
+boundary divisor and the chiral-sewn factorization algebra on the
+normalised nodal curve $\widetilde{C} = C' \sqcup C''$. Its failure on
+the full (H1)+(H2)+(H3) subcategory is measured by a class
+\[
+ [\beta_{\mathrm{nodal}}]
+ \;\in\;
+ \mathrm{Ext}^{1}_{\Shv^{\DR}(D_{\Delta})}
+ \bigl(\Psi_\Delta\,\bigl(\pi_{\log}\bigr)_*\mathcal{F},\;
+  \bigl(\pi_{\log}\bigr)_{*,D_{\Delta}}
+  \!\bigl(\mathcal{F}(C')\otimes_{\mathcal{F}(\widehat{D}_p)}\mathcal{F}(C'')\bigr)\bigr).
+\]
+Universal vanishing of $[\beta_{\mathrm{nodal}}]$ on the conilpotent-complete
+(H1)+(H2)+(H3) subcategory, at every irreducible boundary divisor
+$D_{\Delta}$ of the stable-graph stratification, is the programme-internal
+inscription target for ingredient~(b). We record three structural
+observations that sharpen the honest load-bearing claim:
+\begin{enumerate}[label=\textup{(b\arabic*)}]
+\item \emph{Mok25 is geometric, not factorization-sheaf-valued.} The
+degeneration formula \cite[Corollary~5.3.4]{Mok25} expresses the
+special fibre of the log-FM degeneration geometrically as a subdivision
+of products $\prod_v \FM_{I_v}(Y_v \!\mid\! D_v)$, but does not, as
+inscribed, transport a factorization sheaf $\mathcal{F}$ through the
+subdivision with (H1)+(H2)+(H3) preservation. Mok25 supplies the
+boundary-space geometry; the factorization-sheaf nearby-cycle functor
+$\Psi_\Delta$ is a separate Beilinson--Drinfeld construction
+\cite[Ch.~3]{BD04}, not inscribed at chain level in Vol~I.
+\item \emph{Chain-level vs cohomological.} Mok's degeneration formula
+yields a decomposition on the level of the special fibre; transport to a
+chain-level properad-equivalence across the boundary stratum requires
+preservation of the Mittag-Leffler condition of
+Remark~\ref{rem:A-inf-2-ml-step-2} across the sewing. (H1)+(H2)+(H3) are
+proved to be preserved across nodal sewing only in the class-G locus
+(free chiral algebras: Heisenberg, lattice at generic rank; preservation
+is direct) and the class-L locus (affine Kac--Moody at generic non-critical
+level: Beilinson--Drinfeld chiral sewing preserves the factorization
+structure; the finite-dim-graded hypothesis (H3) is satisfied on the
+Koszul locus). For class-M (Virasoro, principal $\mathcal{W}_N$) the
+sewing-level preservation of (H3) is an independent frontier item
+(Vol~II `universal_celestial_holography.tex` and the MC5 chain-level
+class-M weight-completed inscription propagate here; the raw direct-sum
+class-M sewing behaviour is scope-restricted).
+\item \emph{Fixed-curve versus relative log-FM.} Mok25's log-FM space
+is inscribed for a FIXED pointed curve $(X,D)$
+(cf.~Remark~\ref{rem:log-fm-fixed-vs-relative}). The curve-degeneration
+strata -- the FACTORISATION analogues of nodal sewing across
+$\overline{\mathcal{M}}_{g,n}$ -- appear only in the RELATIVE log-FM
+compactification over the universal stable family. This relative
+construction is referenced by Mok25 as a companion object but is not the
+content of \cite[Theorem~3.3.1]{Mok25}; it is the load-bearing missing
+ingredient. The geometry of the special fibre at a $\Delta$-boundary
+point is controlled by Mok's Theorem~5.2.3 + Corollary~5.3.4 applied to
+the local formal-disk presentation of the node, but the global
+factorization-sheaf gluing requires, in addition, a Ran-level relative
+compatibility that is not in Mok25.
+\end{enumerate}
+An honest reading: (b) reduces to vanishing of
+$[\beta_{\mathrm{nodal}}]$; Mok25 supplies the boundary geometry over
+which the class is defined, and the factorization nearby-cycle
+functor $\Psi_\Delta$ plus the chiral sewing $\otimes_{\mathcal{F}(\widehat{D}_p)}$
+define the target of the comparison. Vanishing is unconditional on
+class-G; conditional (Beilinson--Drinfeld chiral sewing + generic
+non-critical level) on class-L; and the scope-restricted weight-completed
+class-M behaviour inherits from Vol~II. The clutching-uniqueness
+statements used in Theorem~D at $g \geq 2$ (Vol~I
+`clutching_uniqueness_platonic.tex`) are a downstream consequence once
+$[\beta_{\mathrm{nodal}}]$ is cleared, on the families where the logarithmic
+kernel inscription of
+\S\ref{subsec:log-clutching-kernels}
+(Definition~\ref{def:log-clutching-kernel},
+Theorem~\ref{thm:log-clutching-degeneration},
+Construction~\ref{constr:log-fm-chain-map}) is available at chain level.
+
+\emph{AP1241 single-preprint-pillar registration.} Both
+$[\alpha_{\mathrm{BC}}]$-style ingredients cite GR17 + Francis2012
+(peer-reviewed) and Mok25 (2025 arXiv preprint, v2 May 2025, not yet
+venue-published). The programme-wide load on Mok25 as a single pillar
+for boundary factorization-gluing across three volumes is a scope item,
+not a soundness item: should Mok25 be revised, the effect localises to
+the degeneration-geometry layer (Theorem~3.3.1 + Cor~5.3.4) and does not
+propagate upward into the algebraic/operadic backbone of
+Theorem~$A^{\infty,2}$, which remains unconditional on the fixed smooth
+curve $X$.
 \end{remark}
 
 \begin{remark}[Alternative proof lanes: which alternative belongs to
@@ -1207,6 +1394,10 @@ hub are immediate from the $(\infty,2)$-adjoint equivalence
 restricted to classes of objects. The seventh spoke
 (SC-formality) is a class~$\mathsf{G}$ equivalence via
 \textup{\textup{\ref{A2-iii}}} and the shadow tower truncation at depth~$2$;
+the unitarity hypothesis~\ref{R2} of~\ref{A2-iii} is vacuous on
+class~$\mathsf{G}$ where $R(z)=\tau$ (Heisenberg, free fermions,
+lattice VOAs at generic rank), so the descent applies unconditionally
+on the class-$\mathsf{G}$ stratum.
 Spoke~5 (bar concentration in weight~1) extends to $g\geq 1$
 only for class~$\mathsf{G}$.
 \item \label{D8} Vol~II bridge-table entry for chiral bar--cobar

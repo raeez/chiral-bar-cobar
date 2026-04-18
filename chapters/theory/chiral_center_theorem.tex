@@ -2212,6 +2212,85 @@ degrees $\{0, 1, 2\}$ with polynomial growth, but no universal bound
 on the total dimension. The dimension of $\ChirHoch^1$ grows with
 $\dim(\fg)$: it is $8$ for $\mathfrak{sl}_3$, $15$ for
 $\mathfrak{sl}_4$, $248$ for type $E_8$.
+The rank-1 instance $\ChirHoch^2(V_k(\mathfrak{sl}_2)) = \bC$
+from Proposition~\ref{prop:derived-center-explicit}(ii) is an
+explicit witness for a uniform statement across all simple $\fg$:
+see Proposition~\ref{prop:chirhoch2-affine-km-general} below.
+\end{remark}
+
+\begin{proposition}[Generic affine second chiral Hochschild group;
+\ClaimStatusProvedHere]
+\label{prop:chirhoch2-affine-km-general}
+Let $\fg$ be a simple Lie algebra and let $V_k(\fg)$ be the
+affine vertex algebra at generic level $k \neq -h^\vee$. Then
+\[
+\ChirHoch^2(V_k(\fg)) \;=\; \bC,
+\qquad
+\dim \ChirHoch^*(V_k(\fg)) \;=\; \dim(\fg) + 2.
+\]
+\end{proposition}
+
+\begin{proof}
+The affine vertex algebra $V_k(\fg)$ is quadratic (OPE poles
+of order $\leq 2$) and chirally Koszul at generic level
+(Corollary~\ref{cor:universal-koszul}). On the Koszul locus,
+the general Koszul-duality identification
+$\dim \ChirHoch^2(\cA) = \dim Z(\cA^!)$
+(from the fiber-center description of
+$\ChirHoch^2$ at~(ii) on page~\pageref{subsec:chiral-hoch-cochain})
+applies. The Koszul dual of $V_k(\fg)$ under chiral Feigin--Frenkel
+self-duality is $V_{-k - 2h^\vee}(\fg)$: the dual level is the
+fixed point of the involution $k \mapsto -k - 2h^\vee$ of the
+Kac--Moody complementarity locus, and the Sugawara conformal
+structure transports across the involution with central-charge
+flip $c(k) + c(-k-2h^\vee) = 2\dim(\fg)$ (compatible with the
+Trinity $K$ value $2\dim(\fg)$ for affine Kac--Moody).
+
+The condition $k \neq -h^\vee$ on the primary side is equivalent
+to $-k - 2h^\vee \neq -h^\vee$ on the dual side; both levels are
+simultaneously non-critical. At non-critical dual level the
+Kac--Shapovalov determinant is nonvanishing and the center
+$Z(V_{-k-2h^\vee}(\fg))$ collapses to the vacuum line:
+\[
+Z(V_{-k-2h^\vee}(\fg)) \;=\; \bC \cdot |0\rangle,
+\qquad \dim \;=\; 1,
+\]
+since the Feigin--Frenkel center only acquires its polynomial-on
+-$\operatorname{rank}(\fg)$-generators structure AT the critical
+level $k = -h^\vee$ (Feigin--Frenkel~\cite{FF}), and reduces to
+scalars off it. Hence $\ChirHoch^2(V_k(\fg)) = \bC$.
+
+Combining with $\ChirHoch^0(V_k(\fg)) = \bC$ (vacuum center at
+generic level), $\ChirHoch^1(V_k(\fg)) \cong \fg$
+(Proposition~\ref{prop:chirhoch1-affine-km}), and
+$\ChirHoch^{\geq 3}(V_k(\fg)) = 0$ (Theorem~H polynomial
+concentration, Theorem~\ref{thm:hochschild-polynomial-growth}):
+\[
+\dim \ChirHoch^*(V_k(\fg))
+\;=\; 1 + \dim(\fg) + 1
+\;=\; \dim(\fg) + 2.
+\]
+The rank-1 instance $\fg = \mathfrak{sl}_2$ recovers the explicit
+computation of
+Proposition~\ref{prop:derived-center-explicit}(ii) with
+total dimension $1 + 3 + 1 = 5$.
+\end{proof}
+
+\begin{remark}[Beilinson-falsification test and engine verification]
+\label{rem:chirhoch2-affine-km-general-falsification}
+The argument reduces to vanishing of the Kac--Shapovalov
+determinant at the dual level $-k - 2h^\vee$. A direct numerical
+falsification test: for $\fg = \mathfrak{sl}_3, \mathfrak{sl}_4$
+and small integer levels $k \in \{1, 2, 3\}$, extend the engine
+\texttt{derived\_center\_explicit.py} to compute
+$Z(V_{-k-2h^\vee}(\fg))$ via Kac--Shapovalov and verify
+$\dim = 1$; this converts
+Proposition~\ref{prop:chirhoch2-affine-km-general}
+from "proved via general Koszul-duality machinery" to
+"proved with independent per-family numerical witness". The
+exceptional types $E_{6,7,8}, F_4, G_2$ are covered by the
+general Koszul-duality proof; engine verification is a
+triangulation path, not a closure condition.
 \end{remark}
 
 \begin{proposition}[Gerstenhaber bracket on

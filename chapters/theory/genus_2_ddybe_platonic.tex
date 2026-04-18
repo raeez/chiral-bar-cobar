@@ -424,13 +424,22 @@ qualitatively distinct status.
   \texttt{compute/lib/face\_model\_ddybe\_engine.py} function
   \texttt{verify\_face\_ddybe\_g2}, which asserts
   \texttt{result['passed']} under the threshold
-  \texttt{relative < 1e-4}, across four distinct generic-$\Omega$
-  parameter choices: two distinct $\boldsymbol\lambda$, two
-  distinct $(z,w)$ spectral pairs, and $\eta=0.25, 0.2, 0.4$
-  (levels $k=2,3$ and strong-coupling $\eta=0.4$). The sweep
-  covers a codimension-$0$ subset of the three-complex-dimensional
-  moduli $\HHH_2$ and provides pointwise, not uniform, evidence.
-  A fifth test at $\Omega=\mathrm{diag}(1\mathrm{i},1.3\mathrm{i})$,
+  \texttt{relative < 1e-4}, across four distinct
+  $(z,w,\boldsymbol\lambda,\eta)$ parameter tuples sharing the
+  single $\Omega$ value
+  $\Omega_0 = \begin{pmatrix}1.1\mathrm{i} & 0.15+0.05\mathrm{i}\\
+  0.15+0.05\mathrm{i} & 1.3\mathrm{i}\end{pmatrix}$
+  (two distinct $\boldsymbol\lambda$, two distinct $(z,w)$ spectral
+  pairs, $\eta=0.25, 0.2, 0.4$: levels $k=2,3$ and strong-coupling
+  $\eta=0.4$), plus a second-$\Omega$ spot check at
+  $\Omega_1 = \begin{pmatrix}2\mathrm{i} & 0.3+0.1\mathrm{i}\\
+  0.3+0.1\mathrm{i} & 1.5\mathrm{i}\end{pmatrix}$.
+  The sweep covers a positive-codimension subset of the
+  three-complex-dimensional moduli $\HHH_2$ and provides
+  pointwise, not uniform, evidence; the bulk of the sampling
+  concentrates at the single point $\Omega_0$, with a single
+  second-$\Omega$ witness. A sixth test at
+  $\Omega=\mathrm{diag}(1\mathrm{i},1.3\mathrm{i})$,
   $\boldsymbol\lambda=(\lambda_1,0)$ is included as a diagonal-$\Omega$
   sanity check at tier~(T3); it carries no genuinely $g=2$
   content by regime~(i).
@@ -458,7 +467,19 @@ $\epsilon_\delta$ sign fixed by $\delta_2$. Each Boltzmann
 weight in~\eqref{eq:g2-boltzmann} is a ratio of theta values
 at the SAME $z$-direction ($z e_1 + \text{shifts}$), so the
 $\theta_3(\cdot\mid\tau_2)$ factor appears identically in
-numerator and denominator and cancels. The resulting
+numerator and denominator and cancels. The cancellation is
+\emph{algebraic}, taking place at the level of the theta series
+BEFORE any lattice-truncation is applied; the numerical
+regression gate
+\texttt{verify\_g2\_to\_g1\_degeneration}
+(\texttt{compute/lib/face\_model\_ddybe\_engine.py}, tested at
+\texttt{test\_degeneration\_to\_g1} and
+\texttt{test\_degeneration\_different\_params}) records
+element-wise equality
+$R^{\mathrm{face}}_{g=2}(z,\lambda_1,\eta,\mathrm{diag}(\tau_1,\tau_2))
+= R^{\mathrm{face}}_{g=1}(z,\lambda_1,\eta,\tau_1)$
+to relative residual $<10^{-6}$ at $N=10$, corroborating the
+algebraic identity. The resulting
 weights are exactly the genus-$1$ Felder Boltzmann weights
 in the variable $z$ with parameter $\tau_1$, and the
 composite $R$-matrix becomes
@@ -483,16 +504,22 @@ TestFaceDDYBEG2}
 (\texttt{test\_ddybe\_generic\_omega},
 \texttt{test\_ddybe\_different\_spectral},
 \texttt{test\_ddybe\_different\_eta},
-\texttt{test\_ddybe\_strong\_coupling}), and the diagonal-$\Omega$
-sanity check
+\texttt{test\_ddybe\_strong\_coupling}), the second-$\Omega$
+spot check
+\texttt{test\_ddybe\_generic\_omega\_second\_sample}, and the
+diagonal-$\Omega$ sanity check
 \texttt{test\_ddybe\_diagonal\_omega} (tier T3, consistency
 with regime~(i)), the residual passes the stated threshold.
-The $10^{-4}$ ceiling reflects the $N=8$ truncation of the
-genus-$2$ theta series (an engineering budget, not a theoretical
-error term of the form $O(\hbar^2)$); at $N=12$ the residual
-empirically drops to $10^{-6}$, and the $10^{-12}$ figure
-advertised in the prior CLAUDE.md row is not attained without
-a higher-precision arithmetic backend. This is \emph{numerical
+The $10^{-4}$ ceiling is an engineering budget chosen
+conservatively above the float-$64$ accumulated roundoff of a
+cascade of $8\times 8$ matrix products ($\sim 10^{-14}$)
+and the $N=8$ truncation error of the genus-$2$ theta series;
+it is NOT a theoretical error term of the form $O(\hbar^2)$.
+The falsification-ladder test
+\texttt{test\_ddybe\_ladder\_plateau} records the residual at
+$N\in\{8,12,16\}$; the manuscript prior assertion that the
+residual drops to $10^{-6}$ at $N=12$ is now a regression gate,
+not a standalone empirical remark. This is \emph{numerical
 evidence} for \texttt{conj:g2-ddybe} at finitely many parameter
 points, not a proof and not a uniform bound across $\HHH_2$.
 
@@ -503,9 +530,19 @@ Direct consequence of (i).
 \begin{remark}[What regime~(ii) does and does not establish]
 \label{rem:g2p-regime-ii-scope}
 Regime~(ii) establishes: the face-model DDYBE
-\eqref{eq:ddybe} holds to one part in $10^4$ across five
-generic $\Omega\ne \mathrm{diag}$ parameter instances. It
-does NOT establish: an exact proof of \eqref{eq:ddybe} at
+\eqref{eq:ddybe} holds to one part in $10^4$ across
+$(z,w,\boldsymbol\lambda,\eta)$ parameter instances
+sampled at TWO distinct $\Omega$ values
+$\Omega_0, \Omega_1 \in \HHH_2 \setminus
+\{\text{diagonal locus}\}$:
+four parameter tuples at $\Omega_0$ plus one at $\Omega_1$.
+The sampling is POINTWISE at a pair of $\Omega$ values;
+it does NOT witness the full three-complex-dimensional
+$\Omega$-dependence of the claim, nor does it probe the
+non-separating boundary stratum where $\Omega_{22}\to
+i\infty$ with $\Omega_{12}$ fixed nonzero
+(Remark~\ref{rem:g2-nonseparating-untested}). It does NOT
+establish: an exact proof of \eqref{eq:ddybe} at
 arbitrary $\Omega$, nor the stronger coupling
 condition~\eqref{eq:ddybe-coupling} at chain level. The
 latter remains conjectural and forms the open content of
@@ -544,11 +581,37 @@ drift.
 \end{center}
 Tier~(T4) is the genuinely $g=2$ content; tiers~(T1)--(T3)
 are preparatory or degeneration checks. Total face-model
-test count: $30$ (across \texttt{TestThetaFunctions},
+test count: $32$ after the 2026-04-18 attack-heal additions
+(across \texttt{TestThetaFunctions},
 \texttt{TestBoltzmannWeightsG1}, \texttt{TestFaceDYBEG1},
 \texttt{TestClassicalLimit}, \texttt{TestGenus2Theta},
-\texttt{TestBoltzmannWeightsG2}, \texttt{TestFaceDDYBEG2},
+\texttt{TestBoltzmannWeightsG2}, \texttt{TestFaceDDYBEG2}
+(now including \texttt{test\_ddybe\_generic\_omega\_second\_sample}
+and \texttt{test\_ddybe\_ladder\_plateau}),
+\texttt{TestFaceSzegoThreeTerm} (new,
+\texttt{test\_szego\_three\_term\_g2}),
 and \texttt{TestFullSuite}).
+\end{remark}
+
+\begin{remark}[Falsification-ladder discipline]
+\label{rem:tolerance-ladder-falsification}
+The $N=8$ truncation of the $32$ face-model tests above is a
+single snapshot on a falsification ladder. The regression test
+\texttt{test\_ddybe\_ladder\_plateau} runs
+\texttt{verify\_face\_ddybe\_g2} at $N\in\{8,12,16\}$ for two
+distinct generic-$\Omega$ parameter instances and asserts that
+the residual at $N\geq 12$ is below $10^{-6}$ and decreases
+(or plateaus) from $N=8$ to $N=12$ to $N=16$. Any failure of the
+$N\geq 12$ bound would indicate a finite-$\hbar$ DDYBE residual
+that the current engineering-budget bound $10^{-4}$ is not
+sensitive enough to rule out, and would force a downgrade of
+regime~(ii) from ``numerical evidence'' to ``numerical
+evidence with explicit residual $r_{\infty}>0$.'' As of the
+present session the ladder itself has not been numerically
+executed in the sandbox (numpy unavailable); the deferred
+execution is logged in
+\texttt{adversarial\_swarm\_20260418/attack\_heal\_g2\_ddybe\_20260418.md}
+\S6.
 \end{remark}
 
 \begin{remark}[Two distinct identities both due to Fay]
@@ -601,8 +664,8 @@ $V=\CC^2$) has twisted Euler characteristic
 \begin{equation}\label{eq:g2p-euler}
   \chi\bigl(\Sigma_2\setminus\{0\},\cL^{(2)}_{\mathrm{KZB}}\bigr)
   \;=\; r\cdot\chi_{\mathrm{top}}(\Sigma_2\setminus\{0\})
-  \;=\; 4\cdot(1-2g-s)\big|_{g=2,s=1}
-  \;=\; -12.
+  \;=\; 4\cdot(2-2g-s)\big|_{g=2,s=1}
+  \;=\; 4\cdot(-3) \;=\; -12.
 \end{equation}
 For generic $\hbar$, $H^0=H^2=0$ and
 $\dim H^1_{\mathrm{dR}}=12$ decomposes along isospin as

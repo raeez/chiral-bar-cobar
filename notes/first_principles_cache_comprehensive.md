@@ -51,7 +51,7 @@ For each wrong claim: what it gets RIGHT, what it gets WRONG, the correct relati
 | 8 | "kappa(K3xE) = 3 vs 5 contradiction" | Both values real | DIFFERENT kappas of DIFFERENT algebras | kappa_ch=3 (chiral), kappa_BKM=5 (Igusa). No contradiction. | conflation |
 | 9 | "Algebraizations share kappa_cat" as meaningful | kappa_cat IS same | VACUOUS: kappa_cat is manifold invariant | Like "both share gravity." AP-CY55 | vacuous/meaningful |
 | 10 | kappa_ch = Sigma(-1)^i dim HH_i | Gives a real invariant | Gives chi_top (=24 for K3), NOT kappa_ch (=2) | Correct: Hodge-filtered supertrace str_{F^0}(q^{L_0}). AP-CY36 | formula error |
-| 11 | kappa_ch additive under fiber products | Additive under direct sums | NOT under fiber products | kappa_ch(K3xE)=3 but chi(O_{K3xE})=2*0=0. Additivity vs multiplicativity. | additive/multiplicative |
+| 11 | kappa_ch additive under fiber products | Additive under direct sums | NOT under fiber products | Route A canonical (Hodge supertrace Φ_d): kappa_ch(K3×E) = 2·0 = 0 (Künneth-multiplicative, AP-CY68). Route B (Heisenberg rank-additive, outside Φ_d): kappa_ch^{Heis}(K3×E) = 2+1 = 3. Two DIFFERENT invariants under explicit notational split per AP-CY69 + cy_d_kappa_stratification.tex:411-426. Legacy "kappa_ch(K3×E)=3" is Route B; canonical Φ_d value is 0. | additive/multiplicative (Route A Künneth) / Route B split |
 
 ## IV. E_n Level Confusions (8 types)
 
@@ -96,7 +96,7 @@ For each wrong claim: what it gets RIGHT, what it gets WRONG, the correct relati
 |---|-------------|---------------|---------------|---------------------|------|
 | 34 | MF(W): A^n->A^1 is CY_{n-1} | MF IS a CY category | CY dim is n-2, not n-1 | ADE in 2 vars: CY_0. Need 5 vars for CY_3. AP-CY17 | off-by-one |
 | 35 | A-hat convergence radius = pi | A-hat IS relevant | Argument halved: (x/2)/sinh(x/2) | Radius = 2*pi. The /2 doubles the radius. AP-CY19 | mechanism error |
-| 36 | phi_{0,1} c(-1)=1 vs c(-1)=2 | Both normalizations exist | Factor of 2 = kappa_ch(K3) propagated silently | State convention. K3 elliptic genus = 2*phi_{0,1}. AP-CY42 | convention clash |
+| 36 | phi_{0,1} c(-1)=1 vs c(-1)=2 | Both normalizations exist | Factor of 2 = kappa_ch(K3) propagated silently | State convention. K3 elliptic genus = 2*phi_{0,1}. kappa_ch(K3) = 2 is Route A canonical (Hodge supertrace; coincides with Route B at K3 since h^{1,0}=0). See AP-CY42 + AP-CY69 + cy_d_kappa_stratification.tex:428-431 | convention clash |
 | 37 | Verdier inverts sigma_2 for k^!=-k | k^!=-k IS correct | sigma_2 is even under h_i->-h_i | k^! from Shapovalov form transposition, not sigma_2 inversion. AP-CY26 | mechanism error |
 | 38 | B-cycle i^2=1 instead of i^2=-1 | B-cycle integrals needed | Sign error gives |q|=1, kills convergence | Verify |q|<1 and Im(tau)>0 after B-cycle computation. FM24 | sign error |
 
@@ -321,8 +321,8 @@ chi(O_{K3xE}) = sum_q (-1)^q h^{0,q}(K3 x E). Kunneth: h^{0,q}(K3 x E) = sum_{a+
 
 | # | Wrong Claim | Ghost Theorem | Precise Error | Correct Relationship | Type | Location |
 |---|-------------|---------------|---------------|---------------------|------|----------|
-| 144 | kappa_ch = rank(Lambda) for lattice VOA | Bar curvature = rank*level | Conflates kappa_ch with kappa_fiber in CY context | kappa_ch(K3)=2 (algebraization); kappa_fiber=24 (lattice rank). For abstract rank-r Heis at level k: curvature=rk | kappa conflation | toroidal_elliptic.tex L437 |
-| 145 | kappa_ch(A_E) = 24 "(rank of free-boson lattice)" | Central charge of boundary algebra IS 24 | Parenthetical describes kappa_fiber not kappa_ch | 24 = central charge of A_E = kappa_fiber. kappa_ch(K3)=2. Coincidence at level 1 | kappa conflation | toroidal_elliptic.tex L1526 |
+| 144 | kappa_ch = rank(Lambda) for lattice VOA | Bar curvature = rank*level | Conflates kappa_ch (Route A Hodge supertrace) with kappa_fiber (lattice rank) in CY context; also distinct from Route B kappa_ch^{Heis} (Heisenberg-level rank-additive, outside Φ_d functor) | Route A: kappa_ch(K3) = 2 = Ξ(K3) (Hodge supertrace, AP-CY69). kappa_fiber = 24 (lattice rank of Λ, topological). For abstract rank-r Heisenberg at level k, Route B kappa_ch^{Heis} = rk. Three distinct invariants; never write bare "kappa_ch = rank" without Route qualifier. See cy_d_kappa_stratification.tex:411-426 | kappa conflation / Route A vs Route B vs fiber | toroidal_elliptic.tex L437 |
+| 145 | kappa_ch(A_E) = 24 "(rank of free-boson lattice)" | Central charge of boundary algebra IS 24 | Parenthetical describes kappa_fiber not kappa_ch; three-way confusion with Route A Ξ(E) = 0 and Route B kappa_ch^{Heis}(H_1) = 1 | 24 = kappa_fiber (lattice rank, topological). Route A canonical: kappa_ch(A_E) = Ξ(E) = 1 - 1 = 0. Route B Heisenberg: kappa_ch^{Heis}(H_1) = 1 (level). Three distinct invariants; see AP-CY69 + cy_d_kappa_stratification.tex:411-426 | kappa conflation / Route A vs Route B vs fiber | toroidal_elliptic.tex L1526 |
 | 146 | Two hbar conventions without bridge (hbar_1,hbar_2 vs plain hbar) | Both conventions valid | No explicit bridge identity connecting them | Need: q=e^{hbar_1}, t=e^{-hbar_2}; rational limit hbar=hbar_1 | convention clash | toroidal_elliptic.tex L402 vs L1440 |
 | 147 | chi(K3)=24 bare without chi_top subscript | chi_top(K3)=24 correct | Bare chi risks confusion with chi(O_{K3})=2 in kappa context | Use chi_top(K3)=24 or dim H*(K3)=24 explicitly | label/content | toroidal_elliptic.tex L1515 |
 | 148 | vartheta_1 vs theta_1 notation inconsistency | Same function | Notation switch mid-file | Harmonize to theta_1 throughout | convention | toroidal_elliptic.tex L131 vs L506+ |
@@ -3787,6 +3787,156 @@ which codex || echo "codex CLI MISSING — install before resume_failed.py"
 **Regex trigger (pre-resume gate)**: `grep -l "No such file or directory\|command not found\|ModuleNotFoundError" <out_dir>/*.md`. Any hit ≥ 1 ⇒ prerequisite missing, abort resume loop.
 
 **Related**: AP80 (engine without test file — same discipline applied at theorem layer); AP293 (recovery-infrastructure prerequisite guard); AP294 (file-size threshold conflates failure modes); AP295 (dashboard liveness check).
+
+## Pattern 223: Exact-weight vs filtration-level bigrading for bar-complex Mittag-Leffler
+
+**Session**: 2026-04-18 (MC5 Wave 14 heal).
+
+**Type**: bar-complex mathematical anti-pattern (paired with AP296 in CLAUDE.md Wave 14).
+
+**Trigger**: bar-complex proof writes `B(A_{≤N}) = ∏_w B(A_{≤N})_w` with product over "total conformal weight"; OR writes Mittag-Leffler in $(m, w)$ with $w$ = "exact bar-word weight".
+
+**Rule**: the bar differential does NOT preserve exact conformal weight on class-M standard-landscape algebras. Simple-pole OPE summands strictly decrease total weight (Virasoro $T_{(3)} T = c/2$ drops weight $4 \to 0$; affine Kac-Moody $J^a_{(0)} J^b = [a,b]$ drops weight $2 \to 1$). The correct bigrading is $(m, w)$ with $w$ = FILTRATION LEVEL, not exact weight. Product decomposition over exact weight fails; filtered colimit + associated graded on the decreasing filtration $\{F_{\leq w}\}$ succeeds.
+
+**Canonical violation**: Vol I `chapters/theory/mc5_class_m_chain_level_platonic.tex:311-323` Step 3 of `thm:mc5-class-m-chain-level-pro-ambient` wrote "bar differential preserves total conformal weight on bar words" and decomposed the pro-object bar complex as $\prod_w$ over exact weight.
+
+**Counter-check**: before writing any bar-complex product decomposition $\prod_w B^{ch}(A)_w$, substitute a Virasoro or affine KM bar word at weight $w = 4$ and compute the simple-pole summand of $d_{\mathrm{bar}}$. If the output lands at weight $w' < w$, the decomposition is filtration-level; rewrite as a filtered colimit + associated-graded pair.
+
+**Regex trigger**: `\\prod_w.*B\^?\{ch\}.*A` in `.tex`.
+
+**Primary sources**: Etingof-Frenkel-Kirillov Vol II (OPE weight identity); Frenkel-Ben-Zvi "Vertex Algebras on Algebraic Curves" §3.5.
+
+**Related**: AP261 (single-index vs bigraded ML) catches "wrong arity of grading"; AP296 catches "wrong OBJECT of bigrading"; AP260 (scalar-channel linearity without constructed projector) same error class in K-theoretic Chern-character accounting.
+
+## Pattern 224: Async-Agent running-count is not directly observable
+
+**Session**: 2026-04-18 (Wave 15 /loop harness audit).
+
+**Type**: infrastructure anti-pattern (paired with AP303 in CLAUDE.md Wave 15).
+
+**Trigger**: a /loop directive says "if under N agents, launch more"; the loop tries to compute the running count by inspecting task output files, subagent jsonl symlinks, or mtime.
+
+**Rule**: the reliable running-count is the difference between (agents launched over current /loop session) minus (received `<task-notification>` with `status: completed` entries). All three observable-file heuristics fail:
+- File size stays tiny throughout the agent's run (jsonl grows but cannot be read).
+- Mtime is set at symlink creation only, not on activity.
+- Symlink exists from launch until Claude process cleanup.
+
+**Counter-check**: maintain a ledger `.claude/agent_ledger_YYYYMMDD.json` with `{launched: [ids], completed: [ids]}` updated atomically on launch and on notification.
+
+**Canonical violation**: 2026-04-18 session cron iteration 2 attempted to count running agents by listing task output files; the listing does not distinguish "running" from "completed-but-notification-pending" without reading the forbidden jsonl.
+
+**Related**: AP303, AP313, Pattern 225.
+
+## Pattern 225: `status: completed` on async-Agent ≠ agent success
+
+**Session**: 2026-04-18 (Wave 15 agent observability).
+
+**Type**: infrastructure anti-pattern (paired with AP313 in CLAUDE.md Wave 15).
+
+**Trigger**: a `<task-notification>` arrives with `status: completed`, and the `result` field is a short fragment ("Acknowledged.", "Now update...", "Those are pre-existing lines...", a bare continuation sentence with no mission summary, an inline diff line, or a JSON error snippet).
+
+**Rule**: do NOT trust the status field as a success signal. The agent's turn ended, but the announced heals may not have landed on disk.
+
+**Counter-check**: verify via three concrete probes:
+- (i) `ls adversarial_swarm_YYYYMMDD/attack_heal_<target>.md` for the Phase 5 deliverable.
+- (ii) `grep -rn '\label{thm:<target>}' chapters/ standalone/` for claimed inscriptions.
+- (iii) `git diff --stat` in the agent's worktree for actual file modifications.
+
+If any of the three returns empty, treat completion as AMBIGUOUS-PARTIAL and either re-launch or downgrade status to "attempted".
+
+**Canonical violations**: W(p) Massey swarm returned `"Note: $\mathcal{SF}^{\Z_2}$ not..."` (mid-Edit-retry); Theorem C swarm returned `"Those are pre-existing lines in the standalone, not my edit. My edits are correct. Now update CLAUDE.md Theorem C row:"` (mid-update-announcement); Chiral QG swarm returned `"Acknowledged — no commits."` (bare terminator).
+
+**Related**: Pattern 224, AP313, AP255.
+
+## Pattern 226: Cross-check all bibliography files before calling a citation a phantom
+
+**Session**: 2026-04-18 (Mok25 programme-wide audit).
+
+**Type**: audit-discipline anti-pattern (paired with AP1241 in CLAUDE.md Wave X).
+
+**Trigger**: a preprint or reference is cited across multiple files; bibliography entry looks incomplete in one file (no arXiv, no DOI, wrong author); tempted to classify as "fabricated mechanism territory" per AP269.
+
+**Rule**: before calling a cited preprint phantom or fabricated, cross-check ALL bibliography files in the programme (not just the first one encountered). Vol I may have `standalone/references.bib` + `bibliography/references.tex`; Vol II + Vol III have their own. Title variants, arXiv ID, and author can drift across files while the underlying paper is real.
+
+**Counter-check**: for every phantom candidate,
+- (i) Grep all `references.bib` + `bibliography/references.tex` in all three volumes.
+- (ii) Extract title/author/year/arXiv from each.
+- (iii) Web search arXiv for the title.
+- (iv) Only declare phantom if zero match across all sources.
+
+**Canonical violation**: iteration-2 Theorem A modular-family OF1 agent declared Mok25 "fabricated-mechanism territory" based on `standalone/references.bib:601-607` (wrong author "Chung-Pang Mok", wrong title, no arXiv). Wave-X programme-wide audit verified the paper is real: arXiv:2503.17563 "Logarithmic Fulton-MacPherson configuration spaces" by Siao Chi Mok (Cambridge/Imperial, March 2025); `bibliography/references.tex:1022-1023` + Vol III `bibliography/references.tex:185-186` had correct title + arXiv ID but ambiguous initial `C.-P. Mok`.
+
+**Related**: AP1241 (preprint-pillar single-source infection), AP281 (bibkey drift), AP269 (SDR fabrication).
+
+## Pattern 227: OPE-pole-order discriminates ChirHoch^1 ≠ 0 from rank ≠ 1
+
+**Session**: 2026-04-18 (ChirHoch Vir_c audit, Wave X).
+
+**Type**: chiral-algebra structural anti-pattern (paired with AP925 inscribed-in-report).
+
+**Trigger**: ChirHoch^1(A) computation for a rank-1 chiral algebra; tempted to conclude `ChirHoch^1 = 0 iff rank ≠ 1` or `ChirHoch^1 = rank` universally.
+
+**Rule**: the correct discriminator for ChirHoch^1(A) ≠ 0 is NOT rank but OPE-pole-order. Quadratic-Koszul algebras (double-pole only like Heisenberg, or double+simple like affine KM) support nonzero ChirHoch^1. Quartic-pole algebras (Virasoro $T_{(3)}T = c/2$) force all derivations inner, giving ChirHoch^1 = 0.
+
+**Canonical witness table** (at generic level/central charge):
+- Heisenberg (pole order 2, rank 1): ChirHoch^1 = 1, total dim 3.
+- Affine KM $V_k(\fg)$ (pole order 2, rank = dim $\fg$): ChirHoch^1 = $\fg$ as vector space, total dim $\dim(\fg) + 2$.
+- Virasoro (pole order 4, rank 1): ChirHoch^1 = 0, total dim 2.
+- $W_N$ (pole order $2N$, rank $N-1$): ChirHoch^1 = 0 (expected via same OPE mechanism), needs verification.
+- $bc$/$βγ$ ghosts (pole order 1-2, rank 1): ChirHoch^1 = 0 or 1 depending on convention.
+
+**Counter-check**: compute OPE pole order; if $\geq 3$, ChirHoch^1 likely 0 via inner-derivation argument.
+
+**Canonical violation averted**: "rank-1 → ChirHoch^1 = 1" reasoning fails at Virasoro (rank 1, ChirHoch^1 = 0).
+
+**Related**: AP925, ChirHoch dim formula audit (earlier this session's Wave-4 prop:chirhoch2-affine-km-general heal).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 230: Symbol-overloading across mathematical contexts (meta-pattern)
+
+**Session**: 2026-04-18 (meta-pattern consolidation, AP2121).
+
+**Type**: notational discipline at context-interfaces. Meta-pattern consolidating AP234, AP290, AP311, AP1982, AP2001, AP2041-2043.
+
+**Rule**: one programme-level symbol ($\kappa$, $\varrho$, $Z$, $H^i$, $K$, $\chi$, $c$, $S_r$) may denote multiple distinct mathematical objects across independently-developed contexts. Each context is internally consistent. Collisions are load-bearing only at context-interfaces (cross-volume identities, product formulas, subscript audits, derived-versus-naive disambiguations). Bare symbol use at an interface is prohibited; subscript is mandatory.
+
+**Regex trigger** (grep gate before commits touching chapters or standalones):
+
+```
+# Bare kappa at context-interfaces (union of Trinity K + complementarity contexts):
+grep -rn '\\kappa[^_{a-zA-Z]' chapters/ standalone/ \
+  | grep -v '^\s*%' \
+  | xargs -I{} awk -v ctx=50 '...'
+# Similarly for \varrho, \chi, and H^i with numeric superscript.
+```
+
+**First-principles counter-derivation protocol** (5 steps per symbol occurrence at any interface):
+
+1. **Identify the context-set**. What are the independently-developed contexts in which the symbol appears? Examples: for $\kappa$, the set is {chiral shadow, categorical Euler, BKM Borcherds weight, fiber correction}; for $K$, the set is {scalar complementarity $\kappa + \kappa^{!}$, Trinity ghost-charge $c + c^{!}$}; for $Z$, the set is {braided-monoidal centre, naive commutant, derived chiral centre, cohomological slice}; for $\varrho$, the set is {$\kappa$-linearity coefficient, KRW generator-profile harmonic}.
+
+2. **Enumerate subscripts explicitly**. For each context, write the symbol with its context-specific subscript ($\kappa_{\mathrm{ch}}$, $\kappa_{\mathrm{cat}}$, $\kappa_{\mathrm{BKM}}$, $\kappa_{\mathrm{fiber}}$; $K_{\kappa}$ vs $K_{\mathrm{Trinity}}$; $Z_{\mathrm{br}}$ vs $Z_{\mathrm{nv}}$ vs $Z^{\mathrm{der}}_{\mathrm{ch}}$; $\varrho_{\mathrm{lin}}$ vs $\varrho_{\mathrm{gen}}$).
+
+3. **Boundary-value cross-check per subscript**. At one canonical boundary value per context, evaluate the symbol numerically; if two subscripts yield the same number at the boundary (Heisenberg centre at all three $Z$-variants equals $\bC$; $\varrho_{\mathrm{lin}} = \varrho_{\mathrm{gen}}$ on principal $\cW_N$), flag the COINCIDENCE as a hazard — coincidences mask the overload.
+
+4. **Interface-invariant inscription**. If the context-interface has a known closed-form relation ($\kappa + \kappa^{!} = \varrho_A \cdot K$ bridges Trinity $K$ and complementarity $\kappa$; Künneth-multiplicative reconciles additive and multiplicative $\kappa_{\mathrm{ch}}$ at products), inscribe the relation as a named proposition or remark instead of deriving inline.
+
+5. **Prohibit bare symbol at the interface**. Any paragraph, theorem statement, product formula, or audit spreadsheet that references two or more contexts from the context-set MUST use the subscripted form; bare symbol is a Pattern-230 violation.
+
+**Canonical violations registered this session**:
+
+- **AP234** — two $K$'s: $\kappa + \kappa^{!}$ (family-dependent 0 / 13 / 250/3 / 98/3) vs Trinity $K = c + c^{!}$ ($-k$ / $2\dim(\fg)$ / 26 / 100 / 196). Bridge: $\kappa + \kappa^{!} = \varrho_A \cdot K$.
+- **AP290** — HZ-7 $\kappa$ subscript type-swap: $\kappa_{\mathrm{cat}}$ used with Sugawara-shift formula that belongs to $\kappa_{\mathrm{ch}}$. Subscript present, body mismatched.
+- **AP311** — two $\varrho$'s: $\varrho_{\mathrm{lin}}$ (linear-in-$c$) vs $\varrho_{\mathrm{gen}}$ (KRW harmonic). BP value $1/2$ vs $1/6$.
+- **AP1982** — "Drinfeld center dim 1" four-way collision. Naive vs braided vs derived vs $H^0$ slice; all $\bC$ for Heisenberg by coincidence; derived is dim 3.
+- **AP2001** — $\kappa_{\mathrm{ch}}^{\mathrm{Heis}}$ lattice-additive vs $\kappa_{\mathrm{ch}}$ Hodge-multiplicative at K3 $\times$ E.
+- **AP2041-2043** — $H^1(\fsl_2)$ four-way: generic full-bar (3), degree-2 ordered (4/8), KZB Frobenius (4), critical-level $\Omega^{\bullet}(\mathrm{Op})$ (infinite).
+
+**Counter-check one-liner**: when writing a programme-level symbol in a cross-context paragraph, stop and ask "which of the N contexts in the symbol-table applies?"; if the answer is "more than one" the symbol needs a subscript and the interface needs an inscribed bridge identity.
+
+**Related**: AP2121 (meta-AP); AP244 (overcounted foundational terms, dual failure mode: name-inflation collapsing to fewer objects); HZ-7 (Vol III bare-$\kappa$ prohibition, special case of Pattern 230 for $\kappa$ only); AP290 (subscript-body mismatch, subtler variant); AP234, AP311, AP1982, AP2001, AP2041-2043, AP289 (instance-level entries).
 
 ### Attribution
 

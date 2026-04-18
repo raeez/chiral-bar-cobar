@@ -1,5 +1,21 @@
 # Wave 3 / MC1–MC4 cluster: adversarial attack, verdicts, heals
 
+> **HISTORICAL — partial retraction of MC4⁰ narrative (AP288 banner, added 2026-04-18).**
+> Sections of this ledger that treat "MC4⁰ generic" / "Wakimoto one-step SDR" /
+> `h_htpy = (1 − ιp)/(L_0 − h − N + 1)` as UNCONDITIONAL reflect the pre-retraction
+> 2026-04-17 narrative. The MC4⁰ status was retracted 2026-04-18 per the AP269/AP421
+> fabrication audit (`adversarial_swarm_20260418/attack_heal_mc4_0_20260418.md`,
+> `adversarial_swarm_20260418/wave2_mc4_zero_wakimoto_attack_heal.md`). The authoritative
+> post-retraction scope is: MC4⁰ CONJECTURAL at generic parameters for class M
+> principal (`conj:n4-mc4-zero-generic-parameters` in `standalone/N4_mc4_completion.tex`),
+> with `prop:mc4-zero-wakimoto-sdr-obstruction` inscribing the `(Ψ−1)/Ψ` cocycle
+> class as a sharpened obstruction (AP266 pattern). The "explicit SDR via Wakimoto
+> one-step / Feigin-Frenkel screening" mechanism attributed to CLAUDE.md at the
+> time of this writing has zero manuscript witness outside the standalone's
+> candidate-route remark `rem:mc4-zero-sdr-candidate-gaps`, which enumerates six
+> unresolved gaps. See Vol I `CLAUDE.md` MC1-4 row and `FRONTIER.md` CL11 for the
+> post-retraction authoritative statement.
+
 Raeez Lorgat — 2026-04-17 — adversarial pass on the Master-Conjecture cluster
 following the 2026-04-16 inscriptions (`mc3_five_family_platonic.tex`,
 `compact_completed_mc3_comparison_platonic.tex`,

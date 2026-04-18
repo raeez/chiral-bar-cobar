@@ -152,3 +152,23 @@ Triggers (all FIRE): "spectral parameters from FM_k(C)"; "chiral endomorphism op
 ### Higher-order ramification guards (AP-CY62--AP-CY67)
 
 WRONG chains: (1) "ChirHoch finite-dim → Drinfeld center finite" WRONG (conflates ChirHoch with HH; Drinfeld center is a CATEGORY). (2) "Spectral parameter distinguishes chiral from topological" WRONG (Yangian's Drinfeld center has spectral parameters despite being "topological"). (3) "Curve geometry is what makes quantum groups possible" PARTIALLY RIGHT (curve creates τ_z → evaluation modules → spectral parameters; once Yangian constructed, spectral parameters persist regardless).
+
+## Künneth-multiplicative + Route A/B Collision (AP-CY68 -- AP-CY69, 2026-04-18 Wave-10 inscription)
+
+### AP-CY68: Künneth-multiplicative Hodge supertrace
+
+Trigger: Vol III prose / chapters / tests writing `κ_ch(X × Y) = κ_ch(X) + κ_ch(Y)` (additive) for compact CY products. Canonical violation: `κ_ch(K3 × E) = 2 + 0 = 2` OR `= 2 + 1 = 3`. Correct form: Hodge supertrace Ξ(X) = Σ_q (-1)^q h^{0,q}(X) is Künneth MULTIPLICATIVE: Ξ(X × Y) = Ξ(X) · Ξ(Y). So Ξ(K3 × E) = Ξ(K3) · Ξ(E) = 2 · 0 = 0.
+Counter: for every κ_ch(X × Y) site, verify the expression is `Ξ(X) · Ξ(Y)` not `Ξ(X) + Ξ(Y)`. Euler characteristic is additive under disjoint union but multiplicative under product; Hodge supertrace inherits multiplicative behaviour.
+Heal: rewrite additive sites to multiplicative per Hodge supertrace. Mirrored from Vol I AP289; see Wave-12 heal at `cy_d_kappa_stratification.tex:411-426`.
+Related: Vol I AP289 (same content, Vol I sibling), AP234 (symbol-collision sibling), AP244 (overcounted foundational terms), AP290 (κ type-swap discipline).
+Triggers (all FIRE): `κ_ch(X × Y) = κ_ch(X) + κ_ch(Y)`; additive `Ξ` under Cartesian product; "κ_ch(K3 × E) = 2"; "κ_ch(K3 × E) = 3"; any super-trace or Hodge-characteristic identity using `+` where `·` is required.
+
+### AP-CY69: κ_ch Route A / Route B notational collision
+
+Trigger: Vol III uses ONE symbol κ_ch for TWO distinct legitimate invariants — Route A (canonical, Φ_d functor Hodge supertrace Ξ(X), Künneth-multiplicative) and Route B (Heisenberg-level rank-additive outside Φ_d functor). Canonical disambiguation inscribed at `cy_d_kappa_stratification.tex:411-426`. Canonical violation: single proposition operates across both routes without scope qualifier (Wave-6 CY-C six-routes agent flagged: clause (iii) uses Route B c=6 → κ_ch=2, clause (i) collapses κ_cat = κ_ch Route A).
+Counter: every κ_ch site must carry a Route A or Route B scope qualifier when both values are plausible. Route A gives Ξ(K3) = 2, Ξ(E) = 0, Ξ(K3×E) = 0. Route B gives κ_ch(H_k) = k, κ_ch(H_1) = 1, κ_ch(K3×E under Heisenberg lattice) = 3.
+Heal: add one-line scope qualifier `% Route A (Hodge supertrace Φ_d canonical)` or `% Route B (Heisenberg-level rank-additive, outside Φ_d functor); Route A canonical = 0 per cy_d_kappa_stratification.tex:411-426` per site. Wave-10 AP234 disambiguation sweep patches ~30 drift sites.
+Related: Vol I AP234 (two-Koszul-conductors-under-K-letter sibling), AP244, AP290 (κ type-swap), Wave-6 κ(K3×E) retraction finding, Wave-10 disambiguation sweep.
+Triggers (all FIRE): bare `κ_ch(X)` in Vol III where both Route A and Route B values are defined without a Route-qualifying comment; κ_cat equated with κ_ch without specifying Route A; Heisenberg-level rank-additive κ_ch computation coexisting with Φ_d-functor κ_ch in the same proposition without scope split.
+
+**Wave-10/11 adjudication (2026-04-18): H3 two-subscript split adopted.** Per `adversarial_swarm_20260418/wave10_anchor_a_vs_b_adjudication.md`, Anchor A (Hodge supertrace Ξ = χ(O_X) Künneth-multiplicative, `thm:kappa-hodge-supertrace-identification`) is mathematically unambiguous (textbook Hirzebruch--Riemann--Roch); Anchor B (Beauville reduction formula, rank-additive Heisenberg-level sum, `prop:beauville-kappa-formula`) is also correct within its own (Heisenberg-level) scope. Neither can be retracted (H1/H2 mathematically impossible); H4 scope-restriction is programme-destructive (deletes 65-test product-branch Vol I bridge). H3 rename adopted: **Route A retains `κ_ch := Ξ`** (Hodge supertrace, canonical Φ_d); **Route B renamed `κ_ch → κ_ch^{Heis}`** (Heisenberg-level, outside Φ_d functor). HZ-7 approved-subscript set extends by one entry. Canonical inscription at `cy_to_chiral.tex:293` with scope-disambiguation `rem:beauville-kappa-formula-subscript-split`. Programme-wide propagation (~35 Route-B consumer sites) pending as Wave-11 atomic rename patch at `adversarial_swarm_20260418/wave11_h3_rename_patch.md`.

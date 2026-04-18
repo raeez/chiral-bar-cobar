@@ -1,0 +1,36 @@
+From: Raeez Lorgat <raeez@momentum.inc>
+Date: 2026-04-18
+Subject: [PATCH] CLAUDE.md: Wave-4 critical-level-jump row scope/convention heal
+
+Per Wave-4 attack-and-heal ledger at
+adversarial_swarm_20260418/attack_heal_critical_level_20260418.md.
+
+Scope qualifiers added per H1..H8:
+  - "monodromy trivial" annotated with convention (trace-form vs Killing vs KZ).
+  - "H^1 doubles (4 -> 8)" scoped to sl_2 fundamental with sl_n
+    generalisation pattern.
+  - "bar H* = Omega*(Op)" annotated ProvedHere modulo FT06 ProvedElsewhere.
+  - Test count corrected: 72 + 65 = 137 across two engines.
+  - Explicit obstruction class [dS_2] added (AP266 sharpened form).
+  - Bar-route / irregular-de-Rham bypass noted.
+  - g^v glossed as Langlands dual.
+
+No .tex inscription edits; manuscript bodies are already honest.
+No mathematical retraction. No commits by this patch; review and
+apply at the discretion of the author.
+
+---
+
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 0000000..0000001 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -613,7 +613,7 @@
+ | ChirHoch*(H_k) explicit | **PROVED** | `prop:derived-center-explicit` (chiral_center_theorem.tex:1967, ClaimStatusProvedHere): $\ChirHoch^*(\cH_k) = (\bC, \bC, \bC, 0, \ldots)$ with generators $\{1, \xi_k, \eta\}$; $P_{\cH_k}(t) = 1 + t + t^2$. Naive Drinfeld center dim 1; derived chiral center dim 3. 72+ tests. |
+ | Drinfeld double vs derived center (Heis) | **CONJECTURED** | `conj:v1-drinfeld-center-equals-bulk` (preface.tex:4228): $Z(U_{\cH_k}) \simeq \cZ^{\mathrm{der}}_{\mathrm{ch}}(\cH_k)$ as $E_3^{\mathrm{top}}$-algebras, conditional on topologization hypotheses of preface §10.2. Three obstructions flagged (pointwise reduction at class M; Verdier dual factorisation; bar-cobar/Hochschild compatibility). |
+ | Toroidal chiral QG (formal disk) | PROVED on formal disk | `thm:chiral-qg-equiv-toroidal-sf` (standalone/seven_faces.tex:1020, ClaimStatusProvedElsewhere): Drinfeld-Miki toroidal algebra $U_{q,t}(\ddot{\fsl}_N)$ with two spectral parameters $(u,v)$ is the chiral quantum group of an ordered-Koszul factorization algebra on the formal disk $(\mathrm{Spec}\,\bC[\![z]\!])^{\times 2}$, witnessed via SV CoHA on instanton moduli. Global extension to $\PP^1 \times \PP^1$ CONDITIONAL on class-M chain-level topologisation frontier. Companion label `thm:chiral-qg-equiv-toroidal-formal-disk` at standalone/N3_e1_primacy.tex:1160. |
+-| Critical level jump | PROVED | At k=-h^v: kappa=0, monodromy trivial, H^1 doubles (4→8), Koszulness fails, bar H* = Omega*(Op_g^v(D)). 72 tests. |
++| Critical level jump | PROVED at k = -h^v for all simple g | kappa(V_{-h^v}(g)) = 0 (C3 tautology via Sugawara shift); curvature m_0 vanishes; Feigin-Frenkel center Z = Fun(Op_{g-dual}(D)) (Feigin-Frenkel 1992, Frenkel 2007 Thm 4.3.2, ProvedElsewhere); bar cohomology H^n(bar) = Omega^n(Op_{g-dual}(D)) for all n >= 0 (thm:oper-bar-dl at derived_langlands.tex:648, ProvedHere modulo Frenkel-Teleman 2006 ProvedElsewhere); classical Koszulness fails (bar cohom spreads across degrees 0..dim(g)-rank(g)); explicit degree-1 obstruction class [dS_2] generates weight-2 piece of Omega^1(Op) (prop:oper-bar-h1-dl, AP266 sharpened form). sl_2 arity-2 trace-form jump: H^0: 0 -> 4, H^1: 4 -> 8 on E_tau \ {0} from integer residue eigenvalues (-1 on Sym^2, +3 on wedge^2); for sl_n fundamental the pattern generalises to H^0 -> n^2, H^1 -> 2 n^2 (general simple g per-pair-of-reps). Convention note: trace-form gives trivial monodromy; Killing normalisation gives order-2; KZ normalisation diverges. Bar route bypasses irregular-de-Rham via bicomplex d_k = d_crit + (k + h^v) delta (only d_crit survives at k = -h^v). 72 + 65 = 137 tests across test_ordered_chirhoch_critical_sl2_engine.py (72) + test_theorem_fle_critical_level_engine.py (65). |
+ | Genus-2 degree decomp | PROVED | CB_{2,2}(k) = 2k(k+1)(k+2)/3 (cubic). At k=1: 4. Singlet+triplet channels (prop:g2-conformal-block-degree). |
+ | Miura coefficient | PROVED (thm:miura-cross-universality) | (Psi-1)/Psi on J⊗W_{s-1}+W_{s-1}⊗J at ALL spins s>=2. Three-step proof; verified spins 2-6, 142 tests. |
+ | Z_g closed forms | DISCOVERED g=0..9; PROVED all g via Hurwitz-Bernoulli; arithmetic duality at leading Kummer-irregular primes {691, 3617} PROVED through r=11 | P_g(n) = n^{g-1}(n²-1)·R_{p-2}(n²), n=k+2. Leading = B_{2g-2}/(g-1). Kummer-congruence prediction (691 at Z_7, 3617 at Z_9) is falsification test. Arithmetic duality `thm:z-g-s-r-arithmetic-duality` (z_g_kummer_bernoulli_platonic.tex): leading Kummer-irregular primes {691, 3617} present on Z_g (via B_{2g-2}) AND absent on S_r(Vir_c) through r=11 `thm:s-r-kummer-absent-through-r-11` (shadow_tower_higher_coefficients.tex). Sharp at {691, 3617}: the higher Kummer-irregular prime 2111 appears in N_9 (via 29554 = 2·7·2111), but is not witnessed on Z_g at g≤9 since 2111 ∤ num(B_{2m}) for 2m≤16. Geometric disjointness: Z_g localises on Bun_{SL_2}(Σ_g), S_r on ChirHoch(Vir_c). Characteristic S_r primes include {61, 193, 2111, 16657, 3988097}. HZ-IV decorator at compute/tests/test_z_g_s_r_arithmetic_duality.py. |
