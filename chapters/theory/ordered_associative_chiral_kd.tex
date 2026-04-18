@@ -10898,45 +10898,67 @@ at $N = 2, 3$ and generic $(z, u, v, \Psi)$ provides an independent
 verification path.
 \end{lemma}
 
-\begin{remark}[Decreasing-column ordering is load-bearing at
-$N \geq 3$]
+\begin{remark}[Spectral-shift pattern is load-bearing at
+$N \geq 3$; product order is not]
 \label{rem:qdet-decreasing-ordering}
-The column-index ordering in~\eqref{eq:glN-qdet} is not a cosmetic
-choice. Define the INCREASING-index variant
-\[
-  \mathrm{qdet}^\uparrow T(u)
-  \;:=\;
-  \sum_{\sigma \in S_N}
-  \mathrm{sgn}(\sigma)\,
-  \prod_{i=1}^{N}
-  T_{i,\sigma(i)}\bigl(u - (N{-}i)\Psi\bigr),
-\]
-with product ordered $j = 0$ leftmost to $j = N-1$ rightmost. At
-$N = 2$, the two variants
-$\mathrm{qdet}\, T(u)$ and $\mathrm{qdet}^\uparrow T(u)$
-differ by the exchange of $t_{11}$ and $t_{22}$ factors and the
-transpose of the spectral shift pattern; both are central by direct
-RTT expansion, because $S_2 = \{\mathrm{id}, (12)\}$ has a single
-non-trivial cycle and the antisymmetriser image in
-$(\bC^2)^{\otimes 2}$ has codimension~$1$, forcing alignment
-between the two orderings. This is a coincidence of rank, not a
-structural feature.
+The load-bearing feature of~\eqref{eq:glN-qdet} is the
+SPECTRAL-SHIFT PATTERN (column $j$ carries the shift
+$u - j\Psi$), not the product order. A first-principles
+computation on the evaluation representation
+$(\bC^N)^{\otimes M}$ with exact rational arithmetic confirms:
 
-At $N \geq 3$, the antisymmetriser image in
-$(\bC^N)^{\otimes N}$ has codimension $N! - 1 \geq 5$, and the
-iteration of the RTT relation fails to telescope for
-$\mathrm{qdet}^\uparrow T(u)$: the commutator
-$[\mathrm{qdet}^\uparrow T(u), t_{ij}(v)]$ is generically nonzero
-at order $\Psi^2$ in the trigonometric expansion. Only the
-decreasing-index formula~\eqref{eq:glN-qdet} produces a central
-element, because it is the unique (up to the overall shift
-$u \mapsto u - (N-1)\Psi$) ordering that aligns the spectral
-shifts $u - (i-1)\Psi$ with the antisymmetriser image. In the
-chiral setting, both orderings are preserved by $\Delta_z$ (the
-argument of Lemma~\textup{\ref{lem:qdet-central-all-N}} is
-ordering-agnostic), so the decreasing-index qdet is the chirally
-central element for every $N \geq 1$, and the increasing-index
-variant is chirally central only at $N = 1, 2$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textbf{Product order is free.} The reversed
+  column-determinant
+  \[
+    \mathrm{qdet}^{\leftarrow} T(u)
+    \;:=\;
+    \sum_{\sigma \in S_N}\mathrm{sgn}(\sigma)\,
+    T_{\sigma(0),0}(u-(N{-}1)\Psi)\,
+    T_{\sigma(1),1}(u-(N{-}2)\Psi)\cdots
+    T_{\sigma(N-1),N-1}(u),
+  \]
+  obtained by reading the product~\eqref{eq:glN-qdet} right-to-left
+  while preserving the spectral shifts, equals
+  $\mathrm{qdet}\, T(u)$ as an element of $Y(\mathfrak{gl}_N)$;
+  the symmetric sum over $S_N$ and the signs absorb the
+  reorientation. Both are central.
+\item \textbf{Shift pattern is rigid.} The reversed-shift variant
+  \[
+    \mathrm{qdet}^{\uparrow} T(u)
+    \;:=\;
+    \sum_{\sigma \in S_N}\mathrm{sgn}(\sigma)\,
+    \prod_{i=1}^{N}
+    T_{i,\sigma(i)}\bigl(u - (N{-}i)\Psi\bigr)
+    \qquad\textup{(row-det; leftmost factor
+    carries shift $(N{-}1)\Psi$)}
+  \]
+  produces a non-central element at $N \geq 3$:
+  $[\mathrm{qdet}^\uparrow T(u), t_{ij}(v)]$ is generically nonzero
+  at order $\Psi^3$ in the small-$\Psi$ expansion (log--log
+  slope $\to 3$ as $\Psi \to 0$ at $N = 3$, $M = 2$, exact-
+  \texttt{Fraction} verification). The same is true of the plain
+  row-determinant with the canonical shift pattern: it is a
+  \emph{different} Yangian element from the column-determinant
+  and fails centrality at $N \geq 3$.
+\item \textbf{$N = 2$ rank coincidence.} At $N = 2$, column-det,
+  row-det, and both orientations of the shift pattern
+  coincide as elements of $Y(\mathfrak{gl}_2)$. The
+  antisymmetriser image in $(\bC^2)^{\otimes 2}$ has
+  codimension~$1$, forcing alignment. This is a coincidence of
+  rank, not a structural feature.
+\end{enumerate}
+
+The structural distinction at $N \geq 3$ is therefore:
+\emph{column-determinant with the canonical shifts $u - j\Psi$ is
+central}; row-determinants and shift-reversed variants are not.
+In the chiral setting, both product orientations are preserved by
+$\Delta_z$ (the argument of
+Lemma~\textup{\ref{lem:qdet-central-all-N}} is product-order
+agnostic), so the canonically-shifted column-determinant
+$\mathrm{qdet}\, T(u)$ is the chirally central element for every
+$N \geq 1$, independently of whether its factors are written
+left-to-right or right-to-left.
 \end{remark}
 
 \begin{remark}[The $N = 1 \to N \geq 2$ transition]
