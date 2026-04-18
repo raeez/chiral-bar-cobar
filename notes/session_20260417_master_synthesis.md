@@ -237,8 +237,10 @@ landscape. The remaining open frontiers are:
 
 All inscribed theorems PROVED at stated scope. The programme's
 main climax (original-complex chain-level E_3-topological for
-class M at generic parameter) is UNCONDITIONAL on the entire
-C_2-cofinite standard landscape.
+class M (coderived / pro-object / weight-completed ambient; the
+raw direct-sum ambient `Ch(Vect)` is the scope-qualified
+exception per concordance.tex:1980) at generic parameter) is
+UNCONDITIONAL on the entire C_2-cofinite standard landscape.
 
 The remaining open frontiers (F1)-(F5) are PARAMETER questions
 and edge-case extensions; they do not affect the main theorem

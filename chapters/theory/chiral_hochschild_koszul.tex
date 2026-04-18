@@ -1374,27 +1374,33 @@ because the spectral-sequence formulation absorbs the
 homotopy inverse implicit in any quasi-isomorphic transport.
 \end{remark}
 
-\begin{theorem}[Hochschild concentration in degrees
-$\{0,1,2\}$ via ordered FM and pure braid
-Orlik--Solomon; \ClaimStatusProvedHere]
+\begin{theorem}[Ordered-bar Hochschild concentration via
+ordered FM and pure braid Orlik--Solomon;
+\ClaimStatusProvedHere]
 \label{thm:hochschild-concentration-E1}
-\index{Hochschild!concentration via ordered FM}
+\index{Hochschild!ordered-bar concentration}
 \index{Orlik--Solomon!pure braid Koszulness}
+\textup{[Regime: ordered $E_{1}$-chiral side, before averaging.]}
 Let $\cA$ be a chiral Koszul algebra on a smooth projective
 curve~$X$ satisfying the PBW criterion of
-Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}.  Then
+Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}.
+Write $\ChirHoch^{\mathrm{ord},n}(\cA)$ for the ordered
+chiral Hochschild groups computed on
+$\overline{C}^{\mathrm{ord}}_{p+2}(X)$ without
+$\Sigma_{n}$-coinvariants. Then
 \[
- \ChirHoch^{n}(\cA) \;=\; 0
+ \ChirHoch^{\mathrm{ord},n}(\cA) \;=\; 0
  \qquad
  \textup{for every } n \notin \{0,1,2\},
 \]
-and this concentration is established by an $E_{1}$-chiral
-argument that uses the ordered Fulton--MacPherson
-compactification
-$\overline{C}^{\mathrm{ord}}_{p+2}(X)$ together with the
-Koszulness of the pure-braid-arrangement Orlik--Solomon
-algebra, without invoking
-Theorem~\textup{\ref{thm:bar-concentration}}.
+and this ordered concentration is established on the first
+page of the collision-depth spectral sequence on
+$\overline{C}^{\mathrm{ord}}_{p+2}(X)$ via pure-braid
+Orlik--Solomon Koszulness, without invoking
+Theorem~\textup{\ref{thm:bar-concentration}}. The symmetric
+statement $\ChirHoch^{n}(\cA)=0$ for $n\notin\{0,1,2\}$ is
+obtained by the averaging step of
+Corollary~\textup{\ref{cor:hochschild-averaging-symmetric}}.
 \end{theorem}
 
 \begin{proof}
@@ -1423,9 +1429,121 @@ $\Sigma_{n}$-averaging step.  As in Steps~4--6 of the proof
 of Proposition~\ref{prop:fm-tower-collapse}, only the
 full-collision stratum survives, contributing the
 $\cD_X$-Ext amplitude $[0,2]$ on the base curve.  Hence
-$\ChirHoch^{n}(\cA)=0$ for $n\notin\{0,1,2\}$, established
-intrinsically on the ordered $E_{1}$ side.
+$\ChirHoch^{\mathrm{ord},n}(\cA)=0$ for $n\notin\{0,1,2\}$,
+established intrinsically on the ordered $E_{1}$ side.
 \end{proof}
+
+\begin{corollary}[Averaging to symmetric ChirHoch;
+\ClaimStatusProvedHere]
+\label{cor:hochschild-averaging-symmetric}
+\index{Hochschild!averaging step}
+Let $\cA$ be as in
+Theorem~\textup{\ref{thm:hochschild-concentration-E1}}, and
+assume in addition the $E_{\infty}$-chiral completion
+hypothesis of Theorem~\textup{\ref{thm:pbw-koszulness-criterion}}
+(flat PBW filtration with commutative-chiral associated
+graded). Let
+$\mathrm{av}\colon \mathfrak{g}^{E_{1}} \to
+\mathfrak{g}^{\mathrm{mod}}$
+denote the averaging map from the ordered to the symmetric
+chiral convolution dGLA. Then $\mathrm{av}$ descends to a
+quasi-isomorphism on Hochschild cochains in degrees $n\ge 3$
+\textup{(}both sides vanish\textup{)} and is surjective on
+cohomology in degrees $0,1,2$, so that
+\[
+ \ChirHoch^{n}(\cA) \;=\; 0
+ \qquad
+ \textup{for every } n \notin \{0,1,2\}.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:hochschild-concentration-E1},
+$\ChirHoch^{\mathrm{ord},n}(\cA) = 0$ for $n \notin \{0,1,2\}$.
+The $E_{\infty}$-chiral hypothesis provides a
+$\Sigma_{n}$-equivariant null-homotopy of the ordered
+Hochschild complex in ordered degrees $\ge 3$ at the level
+of cochains (the PBW filtration is $\Sigma_{n}$-stable by
+construction, and its commutative-chiral associated graded
+carries the standard Koszul homotopy equivariantly).
+Taking $\Sigma_{n}$-coinvariants commutes with the
+null-homotopy in these degrees, hence
+$\ChirHoch^{n}(\cA) = (\ChirHoch^{\mathrm{ord},n}(\cA))_{\Sigma_{n}}
+= 0$ for $n \ge 3$. The degree-$\le 2$ groups are preserved
+by averaging because the averaging map is already acyclic
+in those degrees on both sides (the Koszul resolution
+computes the same $\cD_{X}$-Ext on the curve). The bound
+$n<0$ is trivial.
+\end{proof}
+
+\begin{remark}[Scope of the averaging corollary]
+\label{rem:hochschild-averaging-scope}
+Corollary~\textup{\ref{cor:hochschild-averaging-symmetric}}
+uses the $E_{\infty}$-chiral completion hypothesis in an
+essential way. Outside that hypothesis --- for example,
+on an $E_{1}$-chiral input without a flat PBW filtration,
+such as the chiral Yangian
+$Y_{\hbar}(\fg)^{\mathrm{ch}}$ --- only the ordered bound
+of Theorem~\textup{\ref{thm:hochschild-concentration-E1}}
+survives; the symmetric bound is conjectural (see
+Conjecture~\textup{\ref{conj:hochschild-concentration-E1-only}}).
+\end{remark}
+
+\begin{conjecture}[Symmetric concentration for $E_{1}$-chiral
+inputs without PBW; \ClaimStatusConjectured]
+\label{conj:hochschild-concentration-E1-only}
+\index{Hochschild!conjectural symmetric concentration}
+\textup{[Regime: ordered $E_{1}$-chiral without PBW.]}
+For an $E_{1}$-chiral algebra $\cA$ on a smooth projective
+curve $X$ that satisfies ordered bar Koszulity but does
+\emph{not} admit a flat PBW filtration with commutative-chiral
+associated graded, the symmetric chiral Hochschild
+cohomology still vanishes in degrees $n \ge 3$:
+\[
+ \ChirHoch^{n}(\cA) \;=\; 0
+ \qquad
+ \textup{for every } n \ge 3.
+\]
+Equivalently, the averaging map
+$\mathrm{av}\colon \ChirHoch^{\mathrm{ord},*}(\cA)
+\to \ChirHoch^{*}(\cA)$
+is quasi-isomorphic in degrees $\ge 3$ even without
+$E_{\infty}$-completion. Witnessing candidate: the chiral
+Yangian $Y_{\hbar}(\fg)^{\mathrm{ch}}$, whose ordered bar
+cohomology is supported in ordered degree $1$ but whose
+symmetric Hochschild has not been computed directly.
+\end{conjecture}
+
+\begin{conjecture}[Hochschild concentration at admissible
+and critical levels for class M; \ClaimStatusConjectured]
+\label{conj:hochschild-concentration-class-M-non-generic}
+\index{Hochschild!non-generic level conjecture}
+\textup{[Regime: class M, non-generic level.]}
+For the Virasoro algebra $\mathrm{Vir}_{c}$ at minimal-model
+central charges $c = c_{p,q} = 1 - 6(p-q)^{2}/(pq)$ and for
+the principal W-algebra $\Walg^{k}(\fg)$ at admissible
+levels, the chiral Hochschild concentration bound of
+Theorem~\textup{\ref{thm:hochschild-polynomial-growth}} is
+expected to hold only in the pro-object or coderived sense:
+there exist discrete parameter points where the Shapovalov
+form degenerates and Toda-bracket obstructions may produce
+classes in $\ChirHoch^{3}$. A rigorous statement at these
+points requires either a coderived reinterpretation
+\textup{(}analogous to the coderived scope of
+Theorem~\textup{\ref{thm:hochschild-concentration-E1}}
+for $E_{1}$ inputs\textup{)} or a case-by-case vanishing
+argument invoking the concrete Kac-determinant structure.
+Unconditional $\{0,1,2\}$ concentration for class M is
+proved only at generic level
+\textup{(}Theorem~\textup{\ref{thm:virasoro-hochschild}}
+and
+Theorem~\textup{\ref{thm:w-algebra-hochschild}}\textup{)};
+the critical level $k = -h^{\vee}$ is excluded
+unconditionally
+\textup{(}Remark~\textup{\ref{rem:critical-level-lie-vs-chirhoch}};
+the BD/Feigin--Frenkel comparison yields an unbounded
+$\ChirHoch^{*}$\textup{)}.
+\end{conjecture}
 
 \begin{remark}[Meaning of ``$E_{1}$'' in the label: spectral-sequence
 page, not E$_{1}$-chiral input]

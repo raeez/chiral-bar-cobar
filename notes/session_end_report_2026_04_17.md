@@ -43,14 +43,16 @@ cross-linked.
 
 Closures by propagation-gap discovery:
 
-- **OF1 (class M chain-level Koszul duality).** Closed by the pro-ambient
-  weight-completed mechanism already inscribed in Vol II `chapters/theory/
-  completed_bar_cobar_strong.tex` (`thm:completed-bar-cobar-strong`) together
-  with Vol I `prop:standard-strong-filtration`. Direct-sum chain-level
-  Koszulity for class M genuinely fails at weight 4 because `S_4(Vir_c) =
-  10 / [c(5c+22)]` is non-zero at generic c; the failure is not a gap but a
-  theorem. The correct scope is the weight-completed category, and that
-  scope is already theorem-level.
+- **OF1 (class M (raw direct-sum ambient `Ch(Vect)`) chain-level Koszul duality).**
+  Closed per concordance.tex:1980: chain-level proved on the coderived /
+  pro-object / weight-completed / J-adic ambient by the mechanism already
+  inscribed in Vol II `chapters/theory/completed_bar_cobar_strong.tex`
+  (`thm:completed-bar-cobar-strong`) together with Vol I
+  `prop:standard-strong-filtration`; raw direct-sum ambient `Ch(Vect)` is
+  genuinely false at weight 4 because `S_4(Vir_c) = 10 / [c(5c+22)]` is
+  non-zero at generic c — the naive-ambient failure is not a gap but a
+  theorem, and the correct ambient is the coderived / pro-object /
+  weight-completed one.
 
 - **OF17 (E_1 Verdier duality compatibility on ordered bar).** Closed by
   linear-duality on coloured pure-braid Orlik–Solomon (Shelton–Yuzvinsky) +

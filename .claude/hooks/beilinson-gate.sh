@@ -138,6 +138,20 @@ if [[ "$FILE_PATH" == *.tex ]]; then
     ISSUES="${ISSUES}AAP1: TOOL MARKUP LEAK in .tex file. Remove immediately. Lines: ${MATCHES}\n"
   fi
 
+  # --- Pattern 236: class M / MC5 status line without ambient qualifier ---
+  # Trigger: lines mentioning class M / MC5 in a status context without one of the
+  # canonical ambient qualifiers within the same line. Advisory only — proof bodies
+  # and pedagogical prose may legitimately reference class M without a status qualifier.
+  if grep -qE '(class M|class-M|MC5)' "$FILE_PATH" 2>/dev/null; then
+    CANDIDATES=$(grep -nE '(class M|class-M|MC5)' "$FILE_PATH" \
+      | grep -vE '(raw|bounded|direct.sum|pro-object|weight.completed|coderived|canonical|Francis.Gaitsgory|naive.ambient|proof|proof of|Lemma|Proposition|Theorem[ ]|\\label|\\ref|^\s*%|witnesses |realizing |section |chapter )' \
+      | grep -E '(proved|false|conditional|unconditional|status|PROVED|FALSE|open|OPEN|headline|headlines)' \
+      | head -3)
+    if [ -n "$CANDIDATES" ]; then
+      WARNINGS="${WARNINGS}Pattern236: class M / MC5 status line without ambient qualifier. Add one of {raw direct-sum, pro-object / weight-completed, coderived, canonical Francis--Gaitsgory}. Lines: ${CANDIDATES}\n"
+    fi
+  fi
+
   # --- AP45: Desuspension direction (common sign error) ---
   if grep -qi '|s.*{-1}.*|.*=.*|.*|.*+.*1\||s.*{-1}.*|.*|v|+1' "$FILE_PATH" 2>/dev/null; then
     MATCHES=$(grep -n -i '|s.*{-1}.*|.*+.*1' "$FILE_PATH" | head -2)
