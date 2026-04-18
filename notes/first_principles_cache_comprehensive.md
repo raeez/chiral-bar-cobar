@@ -4884,3 +4884,39 @@ grep -q "DO NOT PUSH" <agent-prompt> || REJECT "agent prompt missing Pattern 251
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 252: Cache-file pattern-number collision after silent auto-merge
+
+**Session**: 2026-04-18 Wave 5 deep-semantic merge. Local Vol I metacog commit `bc690548` added Patterns 246/247/248 to `notes/first_principles_cache_comprehensive.md` and appendix rows 298/299/300 to `appendices/first_principles_cache.md`. Concurrent upstream commits `4abf0861..882a1afc` (upstream "Vol I wave 9" through "Vol I wave 13") had *also* added Patterns 246/247/248 (different mathematical content: universal-trace scope drift, per-family enumerated, $\Phi_d$ $d$-dependence) and appendix rows 298-307. The cache-notes rebase SUCCEEDED without conflict markers because the two sets of additions landed in widely separated regions of the file (upstream around line 1686; mine around line 4787). The appendix-file rebase FAILED with explicit conflict markers because both sets ended up adjacent at the file's tail. Only post-rebase grep surfaced the duplicate pattern-number headings in the cache notes.
+
+**Type**: orchestration / post-rebase verification defect. Distinct from Pattern 243 (which manifests as `Updates were rejected`/`non-fast-forward` *from the remote* on push, catchable by stderr inspection) and Pattern 235 (which manifests as prose drift *across metadata surfaces*). Pattern 252 manifests as *silent success* with duplicate pattern-number headings that no existing hook or merge driver catches. The duplicates compile fine, grep by pattern number returns two hits, and the cache-as-index becomes ambiguous (any downstream `Pattern N` reference no longer uniquely resolves).
+
+**Rule**: after every rebase that touches `notes/first_principles_cache_comprehensive.md`, `appendices/first_principles_cache.md`, or any file that uses numbered-heading / numbered-row scheme (AP-CY registers, theorem-index tables):
+1. Grep headings: `grep -oE '^## Pattern [0-9]+:' notes/first_principles_cache_comprehensive.md | sort | uniq -d`. Any output means duplicates exist.
+2. Grep rows: `grep -oE '^\| [0-9]+ ' appendices/first_principles_cache.md | sort | uniq -d`. Same.
+3. If duplicates: renumber the **rebased** commit's entries (never the upstream's) to the next free integer above both sides' maxima; preserve upstream's numbering verbatim.
+4. Update all internal cross-references within the renumbered entries: the `**Related**: Pattern N` lines, the "See Pattern N" appendix pointers, the regex-trigger blocks that mention `Pattern N`, and any `REJECT "agent prompt missing Pattern N ..."` string.
+5. Re-run step 1-2; both must return empty output. Only then `git add -u && git rebase --continue` (or `git commit` if post-rebase). CLAUDE.md forbids amending pushed commits; if the duplicate-ridden commit was already pushed, a *new* renumbering commit is required, not an amend.
+
+**Regex trigger** (post-rebase sweep; runnable as a one-liner):
+
+```
+# Run immediately after any rebase that touched cache files:
+F1=notes/first_principles_cache_comprehensive.md
+F2=appendices/first_principles_cache.md
+D1=$(grep -oE '^## Pattern [0-9]+:' "$F1" 2>/dev/null | sort | uniq -d)
+D2=$(grep -oE '^\| [0-9]+ ' "$F2" 2>/dev/null | sort | uniq -d)
+[ -n "$D1$D2" ] && echo "Pattern252: DUPLICATE PATTERN NUMBERS — renumber before push" && echo "$D1$D2"
+```
+
+**Counter-check one-liner**: never consider a cache-file rebase complete without running the duplicate-pattern-number grep and verifying it is empty.
+
+**Canonical application** (this session): my 246/247/248 collided with upstream's — renumbered to 249/250/251. Appendix 298/299/300 collided with upstream's 298-307 — renumbered to 308/309/310. All internal cross-references (`Pattern 246` → `Pattern 249`, `Pattern 248 commit-don't-push directive` → `Pattern 251 commit-don't-push directive`, "See Pattern 246/247/248" → "See Pattern 249/250/251") updated in the same commit before push.
+
+**Hook addition**: `.claude/hooks/beilinson-gate.sh` now carries a conservative Edit/Write-time check — if the new content introduces a `## Pattern N:` heading whose N already appears in the target cache file, flag as Pattern 252. This catches the collision before it enters git, complementing the post-rebase grep for the cases where the collision comes from auto-merge rather than from direct edit.
+
+**Related**: Pattern 243 (wave-merge push rejection — push-time failure mode; Pattern 252 is the silent-success-at-merge-time counterpart); Pattern 124 (AP124 duplicate `\label{thm:...}` — the analogous discipline for theorem labels, already hook-enforced); Pattern 249 (wave-scope deduplication at target level — Pattern 252 is the cache-entry-level companion).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
