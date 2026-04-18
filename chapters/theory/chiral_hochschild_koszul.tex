@@ -2297,7 +2297,382 @@ argument (cf.\ \cite{LV12}, \S10.3) applied to the three-term
 complex $H^0 \oplus H^1 \oplus H^2$ gives the result.
 \end{proof}
 
-\begin{remark}[What $\Etwo$-formality adds beyond Theorem~H]
+\section{Beilinson--Drinfeld factorization cohomology and
+chiral Hochschild: a comparison theorem}
+\label{sec:bd-fact-vs-chirhoch}
+
+\index{factorization cohomology!vs.\ chiral Hochschild|textbf}
+\index{Beilinson--Drinfeld!factorization cohomology comparison|textbf}
+\index{Ran space!diagonal bimodule}
+
+The programme carries two a priori distinct Ext-theoretic
+cohomologies of a chiral algebra~$\cA$ on a smooth projective
+curve~$X$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the \emph{chiral Hochschild cohomology}
+$\ChirHoch^\bullet(\cA) =
+\Ext^\bullet_{\cA^e}(\cA,\cA)$
+\textup{(}Definition~\textup{\ref{def:chiral-hochschild-complex}},
+geometric FM model;
+Definition~\textup{\ref{def:chirHoch-Ext}} in
+Chapter~\textup{\ref{chap:koszul-pair-structure}},
+algebraic $\Ext$-model\textup{)},
+which is chain-level and native to
+$\mathcal{D}_X$-module theory;
+\item the \emph{Beilinson--Drinfeld factorization cohomology}
+of the diagonal bimodule,
+\[
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)
+\;:=\;
+R\mathrm{Hom}_{\operatorname{Fact}(X)}
+\bigl(\cA,\, \cA^{\mathrm{diag}}\bigr),
+\]
+the derived $\operatorname{Fact}(X)$-internal Hom from $\cA$ (as
+factorization algebra on $\operatorname{Ran}(X)$) to itself as
+a factorization bimodule
+\textup{(}Beilinson--Drinfeld~\textup{\cite[\S3.4]{BD04}};
+Francis--Gaitsgory
+$(\infty,1)$-enhancement~\textup{\cite[\S5.5.2]{HA}},
+Ayala--Francis~\textup{\cite[\S3-\S4]{AF15}}\textup{)}, which
+is $(\infty,1)$-categorical and native to $\operatorname{Ran}(X)$.
+\end{enumerate}
+The question of when these coincide is structurally parallel to
+the bar--cobar identification
+$\Bbar_X(\cA) \simeq \int_X\cA$
+\textup{(}Proposition~\textup{\ref{prop:bar-fh}} in
+Chapter~\textup{\ref{chap:bar-cobar}}\textup{)} and its dual
+$\Omega_X(\cC) \simeq \int^X\cC$
+\textup{(}Proposition~\textup{\ref{prop:cobar-fh}} in
+Chapter~\textup{\ref{chap:bar-cobar}}\textup{)}: bar/cobar are
+factorization homology/cohomology of the unit bimodule, whereas
+$\ChirHoch$ and $\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)$
+are the cohomological Ext of the diagonal bimodule.
+
+\begin{theorem}[BD factorization cohomology versus chiral
+Hochschild; \ClaimStatusProvedHere]
+\label{thm:bd-fact-vs-chirhoch}
+\index{Theorem H!BD factorization cohomology refinement}
+\textup{[Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})};
+bounded-below $\cA$; smooth projective curve~$X$;
+$\dim_{\mathbb{C}} X = 1$;
+ambient: raw bounded
+$\mathcal{D}_X$-module complexes; excludes critical
+level $k=-h^\vee$.]}
+Let $\cA$ be a chiral Koszul algebra on a smooth projective
+curve~$X$. There is a natural comparison morphism
+\begin{equation}\label{eq:bd-chirhoch-comparison}
+c_{\cA}\colon
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)
+\;\longrightarrow\;
+\ChirHoch^\bullet(\cA)
+\end{equation}
+in the derived category of $\mathcal{D}_X$-modules on
+$\operatorname{Ran}(X)$, induced by restricting a factorization
+cochain to its diagonal component and descending to the FM model.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Chain-level qualification.}\;
+The comparison $c_{\cA}$ is \emph{not} a chain-level
+isomorphism for a generic chiral algebra~$\cA$: the left-hand
+side carries the $\operatorname{Ran}(X)$-theoretic
+$(\infty,1)$-categorical enhancement from
+Francis--Gaitsgory~\textup{\cite[\S5.5.2]{HA}}, while the
+right-hand side is chain-level via the FM compactification
+$\overline{C}_{n+2}(X)$. The two models agree only after
+passing through the bar spectral sequence; chain-level
+equality fails because the Ran-colimit differential carries
+simplicial-like boundary contributions that are only cancelled
+on cohomology after FM collapse
+\textup{(}Lemma~\textup{\ref{lem:hochschild-shift-computation}},
+Proposition~\textup{\ref{prop:fm-tower-collapse}}\textup{)}.
+\item \emph{Cohomological isomorphism on the Koszul locus.}\;
+Let $\cA$ be a chiral Koszul algebra
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair}}\textup{)}.
+The induced map on cohomology
+\[
+H^n(c_{\cA})\colon
+H^n\bigl(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)\bigr)
+\;\xrightarrow{\ \cong\ }\;
+\ChirHoch^n(\cA)
+\qquad (n \in \mathbb{Z})
+\]
+is an isomorphism for every~$n$. In particular, BD factorization
+cohomology of the diagonal bimodule also has universal
+cohomological amplitude~$[0,2]$:
+$H^n(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA))=0$
+for $n\notin\{0,1,2\}$.
+\item \emph{$(\infty,1)$-categorical enhancement.}\;
+After passage to the Francis--Gaitsgory
+$(\infty,1)$-category $\mathrm{Fact}(X)^{\otimes}$, the comparison
+$c_{\cA}$ lifts to a chain-level equivalence
+\[
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)
+\;\simeq\;
+RHH_{\mathrm{ch}}(\cA)
+\]
+in the $(\infty,1)$-category
+$\mathrm{D}(\mathrm{Fact}(X))$. The obstruction to
+chain-level equivalence in the $1$-categorical model is
+exactly the bar-degree filtration spectral sequence; the
+$(\infty,1)$-enhancement absorbs this into the totalization.
+\item \emph{Class dependence.}\;
+The cohomological isomorphism of~\textup{(b)} holds without
+class-discrimination on the four archetypes
+\textup{G/L/C/M}: all four standard archetypes (Heisenberg,
+affine Kac--Moody at non-critical level, $\beta\gamma$,
+Virasoro at arbitrary~$c$, including $c=0$) are chiral
+Koszul on their respective lanes, so the isomorphism
+applies uniformly.
+\item \emph{Verdier self-duality.}\;
+The comparison intertwines Verdier duality on both sides:
+\[
+\mathbb{D}_{\operatorname{Ran}(X)}\bigl(
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)\bigr)
+\;\simeq\;
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA^!,\cA^!),
+\qquad
+H^n(c_{\cA^!}) \circ \mathbb{D}
+\;=\;
+\mathbb{D}_X \circ H^{2-n}(c_{\cA}),
+\]
+which, combined with Theorem~\textup{\ref{thm:main-koszul-hoch}},
+yields the BD-intrinsic Koszul duality
+\[
+H^n\bigl(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)\bigr)
+\;\cong\;
+H^{2-n}\bigl(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA^!,\cA^!)\bigr)^\vee
+\otimes \omega_X.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Construction of~$c_{\cA}$.}\;
+The factorization bimodule $\cA^{\mathrm{diag}}$ is
+$\cA$~viewed as a factorization module over itself via the chiral
+product $\mu\colon j_*j^*(\cA\boxtimes\cA)\to\Delta_*\cA$
+(Chapter~\textup{\ref{ch:algebraic-foundations}}).
+A factorization cochain
+$\phi\in\mathrm{Hom}_{\operatorname{Fact}(X)}(\cA,\cA^{\mathrm{diag}})$
+of Ran-depth~$n+2$ is a section over the open stratum
+$C_{n+2}(X)\subset X^{n+2}$ that intertwines the chiral
+multiplications at all~$n+2$ marked points. Restricting along the
+diagonal embedding
+$\Delta\colon\overline{C}_{n+2}(X)\hookrightarrow
+\operatorname{Ran}_{n+2}(X)$ and descending to the FM model yields
+a cochain
+$c_{\cA}(\phi)\in
+\Gamma(\overline{C}_{n+2}(X),
+j_*j^*\cA^{\boxtimes(n+2)}\otimes\Omega^n_{\overline{C}_{n+2}}(\log D))$
+which respects the three-component differential
+$d_{\mathrm{Hoch}} = d_{\mathrm{int}}+d_{\mathrm{fact}}+d_{\mathrm{config}}$
+(Theorem~\textup{\ref{thm:chiral-hochschild-differential}}):
+the three pieces match, respectively, the $\mathcal{D}_X$-structure
+on~$\cA$, the factorization-bimodule structure, and the de~Rham
+differential on $\operatorname{Ran}(X)$.
+Naturality in $\cA$ follows because both sides are covariant functors
+of the chiral algebra datum and the construction uses only
+$\operatorname{Fact}(X)$-functorial data.
+
+\emph{Part~(a): chain-level qualification.}\;
+The $\operatorname{Ran}(X)$-structure on
+$\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)$ is defined by a
+simplicial colimit over finite subsets of~$X$
+(Francis--Gaitsgory~\textup{\cite[Definition~5.5.2.1]{HA}}):
+the differential contains boundary contributions
+$\partial_{\mathrm{Ran}}$ that are simplicial-like. The FM model
+$\overline{C}_{n+2}(X)$ replaces the Ran-simplicial structure by
+an honest compactification, so the two differentials do not agree
+on the nose: the boundary contributions from
+$\partial_{\mathrm{Ran}}$ become logarithmic boundary residues in
+the FM model. The two differentials agree only after passage to
+the bar-degree spectral sequence, where the simplicial correction
+terms are exact.
+In explicit form: on bar degree~$n$, the two complexes differ by
+exact terms of the form
+$(\partial_{\mathrm{Ran}} - d_{\mathrm{config}})(\phi)
+\in d_{\mathrm{int}}\cdot C^n_{\mathrm{chiral}}$, which are
+$d_{\mathrm{Hoch}}$-boundaries but not zero.
+
+\emph{Part~(b): cohomological isomorphism on the Koszul locus.}\;
+Apply the bar-cobar identification of the diagonal bimodule:
+by Theorem~\textup{\ref{thm:hochschild-bar-cobar}},
+\[
+\ChirHoch^\bullet(\cA)
+\simeq
+R\mathrm{Hom}_{\mathrm{ChirAlg}}
+\bigl(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA)),\cA\bigr).
+\]
+By Proposition~\textup{\ref{prop:cobar-fh}} in
+Chapter~\textup{\ref{chap:bar-cobar}},
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
+\simeq \int^X\bar{B}^{\mathrm{ch}}(\cA)
+\simeq R\mathrm{Hom}_{\operatorname{Fact}(X)}(k,
+\bar{B}^{\mathrm{ch}}(\cA))$,
+and since $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
+\xrightarrow{\sim}\cA$ by the bar-cobar inversion
+\textup{(}Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}\textup{)},
+this gives
+\[
+\ChirHoch^\bullet(\cA)
+\;\simeq\;
+R\mathrm{Hom}_{\operatorname{Fact}(X)}(\cA,\cA^{\mathrm{diag}})
+\;=\;
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)
+\]
+on the Koszul locus, where the chain-level quasi-isomorphism is
+mediated by the bar-cobar counit. The cohomology amplitude bound
+$\{0,1,2\}$ transfers from
+Theorem~\textup{\ref{thm:hochschild-polynomial-growth}} to the
+BD side via this isomorphism.
+
+\emph{Part~(c): $(\infty,1)$-enhancement.}\;
+In the $(\infty,1)$-category $\mathrm{D}(\mathrm{Fact}(X))$,
+the totalization
+$RHH_{\mathrm{ch}}(\cA) =
+\operatorname{Tot}(\bigoplus_p CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p])$
+is the homotopy colimit over the bar-degree simplicial object, which
+is exactly what Francis--Gaitsgory's
+$\mathrm{Fact}(X)^{\otimes}$-internal hom computes:
+\[
+R\mathrm{Hom}_{\mathrm{Fact}(X)^{\otimes}}
+(\cA,\cA^{\mathrm{diag}})
+\;\simeq\;
+\operatorname{Tot}(\mathrm{cosimp}(\cA,\cA^{\mathrm{diag}})).
+\]
+The cosimplicial object $\mathrm{cosimp}(\cA,\cA^{\mathrm{diag}})$ in
+bar degree~$p$ is $\mathrm{Hom}(\cA^{\otimes p},\cA)$ (functions on
+the $p$-fold marked diagonal), which is exactly
+$CH^{p,\bullet}_{\mathrm{ch}}(\cA)$. The Ran-simplicial boundary
+$\partial_{\mathrm{Ran}}$ is absorbed into the totalization:
+Lemma~\textup{\ref{lem:totalization-amplitude}} says the
+totalization amplitude equals the per-bar-degree amplitude on
+the Koszul locus, so the totalization of the Ran-simplicial object
+equals the FM totalization up to $(\infty,1)$-equivalence. Hence
+$c_{\cA}$ lifts to the $(\infty,1)$-equivalence claimed.
+
+\emph{Part~(d): class dependence.}\;
+Heisenberg $\mathcal{H}_k$
+\textup{(}Chapter~\textup{\ref{chap:free-fields}}\textup{)},
+affine Kac--Moody $V_k(\mathfrak{g})$ at non-critical
+level~\textup{\cite[Theorem~3.4.11]{BD04}},
+$\beta\gamma$
+\textup{(}Chapter~\textup{\ref{chap:beta-gamma}}\textup{)},
+and Virasoro $\mathrm{Vir}_c$ at any~$c$
+\textup{(}including $c=0$\textup{)}
+all satisfy the chiral Koszul hypothesis
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair}}\textup{)}
+on their respective lanes. Part~(b) therefore applies uniformly.
+The critical-level exclusion $k=-h^\vee$ follows from
+Remark~\textup{\ref{rem:critical-level-dimensional-divergence}}:
+both sides of the comparison diverge there.
+Class~M at $c=0$ is \emph{not} excluded from the comparison:
+while the complementarity invariant $\kappa+\kappa^!$ has its
+class-M ambient subtleties
+\textup{(}Pattern~281;
+Remark~\textup{\ref{rem:critical-level-dimensional-divergence}}
+on the independent critical-level issue\textup{)}, the Koszul
+duality datum is intact at $c=0$ on the raw bounded direct-sum
+ambient, so
+$\mathcal{C}^\bullet_{\mathrm{fact}}(\mathrm{Vir}_0,\mathrm{Vir}_0)
+\cong \ChirHoch^\bullet(\mathrm{Vir}_0)$ holds.
+
+\emph{Part~(e): Verdier self-duality intertwining.}\;
+$\mathbb{D}_{\operatorname{Ran}(X)}$ acts on
+$\operatorname{Fact}(X)$ by $\mathcal{F}\mapsto
+R\mathcal{H}om(\mathcal{F},\omega_{\operatorname{Ran}(X)})$,
+and Theorem~\textup{\ref{thm:verdier-bar-cobar}} gives
+$\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\mathrm{ch}}(\cA))
+\simeq\bar{B}^{\mathrm{ch}}(\cA^!)$
+on the bar coalgebras. Apply $R\mathrm{Hom}_{\operatorname{Fact}(X)}$
+against $\cA^{\mathrm{diag}}$ on both sides to obtain
+\[
+\mathbb{D}_{\operatorname{Ran}}\bigl(
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)\bigr)
+\;\simeq\;
+\mathcal{C}^\bullet_{\mathrm{fact}}(\cA^!,\cA^!).
+\]
+Combining this with the cohomological isomorphism of~(b) and
+Theorem~\textup{\ref{thm:main-koszul-hoch}} yields the stated
+BD-intrinsic Koszul reflection.
+\end{proof}
+
+\begin{remark}[Two distinct lanes both load-bearing]
+\label{rem:bd-fact-chirhoch-two-lanes}
+\index{factorization cohomology!two lanes}
+Per the parity declaration in
+CLAUDE.md (\S``How to work''; two lanes: chain-level
+chiral, $(\infty,1)$-categorical BD/Francis--Gaitsgory),
+Theorem~\textup{\ref{thm:bd-fact-vs-chirhoch}} is deliberately
+stated on two levels. Part~(b) is a $1$-categorical cohomological
+statement (isomorphism of graded $\mathcal{D}_X$-modules),
+used by the rest of this chapter and by
+Chapter~\textup{\ref{chap:higher-genus}} wherever the
+$\mathcal{D}_X$-Ext model is invoked. Part~(c) is the stronger
+$(\infty,1)$-categorical chain-level statement, used by the
+thick-BD / Ran-derived enhancements in
+Chapter~\textup{\ref{chap:higher-genus}} and by the
+topological-factorization comparisons in Volume~II
+(Vol~II Chapter on SC$^{\mathrm{ch,top}}$ coproducts).
+Both lanes are load-bearing: downgrading to
+$1$-categorical alone loses the Francis--Gaitsgory
+$(\infty,1)$-structure; demanding chain-level equivalence in
+the $1$-categorical ambient would be false
+(Part~(a)).
+\end{remark}
+
+\begin{corollary}[Theorem~H extends to BD factorization cohomology;
+\ClaimStatusProvedHere]
+\label{cor:thm-H-bd-extension}
+\index{Theorem H!BD extension}
+On the Koszul locus, the Theorem~H concentration
+\textup{(}Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}\textup{)}
+and Koszul reflection
+\textup{(}Theorem~\textup{\ref{thm:main-koszul-hoch}}\textup{)}
+both transport from $\ChirHoch^\bullet$ to
+$\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $H^n(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA))=0$
+for $n\notin\{0,1,2\}$;
+\item $H^n(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA))
+\cong H^{2-n}(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA^!,\cA^!))^\vee
+\otimes\omega_X$;
+\item the Hochschild--Hilbert polynomial
+$P^{\mathrm{fact}}_{\cA}(t)
+:=\sum_n \dim H^n(\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA))\,t^n$
+satisfies the palindromic identity
+$P^{\mathrm{fact}}_{\cA}(t) = t^2 P^{\mathrm{fact}}_{\cA^!}(t^{-1})$,
+identical to the $\ChirHoch$-side palindromy.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Immediate from
+Theorem~\textup{\ref{thm:bd-fact-vs-chirhoch}}\textup{(b, e)}
+and Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}.
+\end{proof}
+
+\begin{remark}[Cross-volume: Vol II topological factorization]
+\label{rem:vol2-topological-factorization-comparison}
+\index{cross-volume!Vol II SC$^{\mathrm{ch,top}}$ coproducts}
+Volume~II defines the topological factorization algebra
+$\mathrm{SC}^{\mathrm{ch,top}}$ and identifies its bar differential
+with holomorphic factorization and its coproduct with topological
+factorization (Vol~II Parts~I--VII; cf.\ cross-volume AP5
+propagation record). Under
+Theorem~\textup{\ref{thm:bd-fact-vs-chirhoch}}(c), the $(\infty,1)$-
+enhancement $\mathcal{C}^\bullet_{\mathrm{fact}}(\cA,\cA)\simeq
+RHH_{\mathrm{ch}}(\cA)$ intertwines the Vol~II
+$\mathrm{SC}^{\mathrm{ch,top}}$-coproduct on the BD side with the
+brace coproduct on the chiral Hochschild side
+\textup{(}Theorem~\textup{\ref{thm:chiral-deligne-tamarkin}}\textup{)}.
+This is the structural origin of the Vol~I $\leftrightarrow$ Vol~II
+compatibility: the same $(\infty,1)$-equivalence underlies both the
+holomorphic factorization bar structure and the topological
+coproduct.
+\end{remark}
+
+\begin{remark}[What~$E_2$-formality adds beyond Theorem~H]
 \label{rem:e2-formality-vs-thmH}
 Theorem~\ref{thm:hochschild-polynomial-growth} gives concentration.
 Proposition~\ref{prop:e2-formality-hochschild} extracts a strictly

@@ -13,9 +13,9 @@ INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 
-# Only fire for .tex and .py files
+# Only fire for .tex, .py, and the cache-index markdown file
 case "$FILE_PATH" in
-  *.tex|*.py) ;;
+  *.tex|*.py|*first_principles_cache_comprehensive.md) ;;
   *) exit 0 ;;
 esac
 
@@ -145,6 +145,20 @@ if [[ "$FILE_PATH" == *.tex ]]; then
   if grep -q 'antml\|</invoke>\|<tool_call>\|<function_calls>' "$FILE_PATH" 2>/dev/null; then
     MATCHES=$(grep -n 'antml\|</invoke>\|<tool_call>\|<function_calls>' "$FILE_PATH" | head -3)
     ISSUES="${ISSUES}AAP1: TOOL MARKUP LEAK in .tex file. Remove immediately. Lines: ${MATCHES}\n"
+  fi
+
+  # --- Pattern 236: class M / MC5 status line without ambient qualifier ---
+  # Trigger: lines mentioning class M / MC5 in a status context without one of the
+  # canonical ambient qualifiers within the same line. Advisory only — proof bodies
+  # and pedagogical prose may legitimately reference class M without a status qualifier.
+  if grep -qE '(class M|class-M|MC5)' "$FILE_PATH" 2>/dev/null; then
+    CANDIDATES=$(grep -nE '(class M|class-M|MC5)' "$FILE_PATH" \
+      | grep -vE '(raw|bounded|direct.sum|pro-object|weight.completed|coderived|canonical|Francis.Gaitsgory|naive.ambient|proof|proof of|Lemma|Proposition|Theorem[ ]|\\label|\\ref|^\s*%|witnesses |realizing |section |chapter )' \
+      | grep -E '(proved|false|conditional|unconditional|status|PROVED|FALSE|open|OPEN|headline|headlines)' \
+      | head -3)
+    if [ -n "$CANDIDATES" ]; then
+      WARNINGS="${WARNINGS}Pattern236: class M / MC5 status line without ambient qualifier. Add one of {raw direct-sum, pro-object / weight-completed, coderived, canonical Francis--Gaitsgory}. Lines: ${CANDIDATES}\n"
+    fi
   fi
 
   # --- AP45: Desuspension direction (common sign error) ---
@@ -361,6 +375,21 @@ if [[ "$FILE_PATH" == *.tex ]]; then
   NEW_CONTENT=$(echo "$INPUT" | jq -r '(.tool_input.new_string // .tool_input.content) // empty' 2>/dev/null)
   if echo "$NEW_CONTENT" | grep -q '\\kappa\|\\Theta\|\\lambda_g\|F_g\|Q\^{contact}\|\\delta_\\kappa' 2>/dev/null; then
     PROPAGATION="AP5: Formula edit detected. After this edit, grep ALL THREE volumes for variant forms: ~/chiral-bar-cobar, ~/chiral-bar-cobar-vol2, ~/calabi-yau-quantum-groups"
+  fi
+fi
+
+# ---------------------------------------------------------------------------
+# SECTION 5: CACHE-FILE PATTERN-NUMBER COLLISION (Pattern 252)
+# ---------------------------------------------------------------------------
+# Conservative auto-detection of duplicate `## Pattern N:` headings in the
+# cache-index file (notes/first_principles_cache_comprehensive.md). Triggered
+# both by direct edits and by post-rebase auto-merge results that silently
+# concatenate two sides' additions when they live in widely separated regions
+# of the file. Mirrors AP124's discipline for `\label{thm:...}` duplicates.
+if [[ "$FILE_PATH" == *first_principles_cache_comprehensive.md ]]; then
+  DUPES=$(grep -oE '^## Pattern [0-9]+:' "$FILE_PATH" 2>/dev/null | sort | uniq -d)
+  if [ -n "$DUPES" ]; then
+    ISSUES="${ISSUES}Pattern252: Duplicate '## Pattern N:' heading(s) in cache notes — renumber the rebased side's entries to next free integers above both maxima before commit. Duplicates: ${DUPES}\n"
   fi
 fi
 

@@ -387,16 +387,20 @@ residue: $\wp(z, \tau) = -\zeta_\tau'(z)$.
 \begin{proof}
 \textbf{Part (i).} The affine Kac--Moody collision residue at
 genus~$1$ is
-$r_{\widehat{\fg}_k}^{(1)}(z, \tau) = \Omega\, \zeta_\tau(z)/(k + h^\vee)$,
+$r_{\widehat{\fg}_k}^{(1)}(z, \tau) = k\,\Omega_{\mathrm{KZ}}\, \zeta_\tau(z)/(k + h^\vee)$,
 by Theorem~\ref{thm:g1sf-elliptic-regularization} applied to the
-genus-$0$ collision residue
-$r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$
-% AP148: KZ convention from thm:hdm-face-5; at k=0 gives Omega/(h^v z) != 0.
-(Theorem~\ref{thm:hdm-face-5}). Since affine Kac--Moody has
+Killing-form-Casimir presentation of the genus-$0$ collision residue,
+consistent with the KZB connection~\cite{Bernard88} and the
+Casimir-convention bridge of Lemma~\ref{lem:g1sf-casimir-bridge}.
+% AP288: level prefix k/(k+h^v) mandatory in Killing-form convention;
+% at k=0 residue vanishes in this convention. The k=0, non-vanishing
+% KZ-convention object Omega_{KZ}/(h^v z) is a distinct r-matrix (not
+% this face's k=0 specialization); see Lemma g1sf-casimir-bridge.
+Since affine Kac--Moody has
 $p_{\max} = 2$ and $k_{\max} = 1$ (the OPE has poles of order
 $2$ and $1$; the bar propagator absorbs one order), the
-collision expansion has $c_0 = \Omega/(k+h^\vee)$ and $c_n = 0$ for
-$n \geq 1$. The
+collision expansion has $c_0 = k\,\Omega_{\mathrm{KZ}}/(k+h^\vee)$
+and $c_n = 0$ for $n \geq 1$. The
 elliptic regularization~\eqref{eq:g1sf-elliptic-expansion} therefore
 gives $r_{\widehat{\fg}_k}^{(1)} = c_0\, \zeta_\tau(z)$.
 Substituting into the Gaiotto--Zeng formula~\eqref{eq:hdm-face-4}
@@ -558,6 +562,204 @@ identification~\eqref{eq:g1sf-elliptic-rmatrix} holds for all simple
 $\fg$.
 \end{remark}
 
+\begin{lemma}[Casimir-convention bridge at genus~$1$;
+\ClaimStatusProvedHere]
+\label{lem:g1sf-casimir-bridge}
+\index{Casimir!convention bridge, genus-1|textbf}
+\index{r-matrix@$r$-matrix!level prefix discipline|textbf}
+Two Casimir normalizations circulate in the seven-face literature and
+must be carefully distinguished when the level prefix is audited
+\textup{(}AP288\textup{)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Omega_{\mathrm{tr}} := \sum_a t^a \otimes t^a \in \fg \otimes \fg$,
+with $\{t^a\}$ orthonormal for the normalized trace form
+$\langle X,Y\rangle_{\mathrm{tr}} = -\operatorname{tr}_{\mathrm{adj}}(XY)/(2h^\vee)$.
+This Casimir is $k$-independent. It appears in the Drinfeld
+spectral $r$-matrix~\cite{Drinfeld85} as $r^{\mathrm{Dr}}_k(z) = k\,\Omega_{\mathrm{tr}}/z$
+\textup{(}explicit level prefix\textup{)}.
+\item $\Omega_{\mathrm{KZ}} := \sum_a I^a \otimes I_a$, with
+$\{I^a\},\{I_a\}$ dual bases for the Killing form of~$\fg$. This
+Casimir is $k$-independent and related to $\Omega_{\mathrm{tr}}$ by
+$\Omega_{\mathrm{KZ}} = \Omega_{\mathrm{tr}}/(2h^\vee)$ on
+simple~$\fg$, since the Killing form equals $2h^\vee$ times the
+normalized trace form and the Casimir built from dual bases scales
+inversely with the form
+\textup{(}normalization of \cite[\S 1]{EK96}\textup{)}. It appears in
+the Etingof--Kazhdan KZ/Kazhdan-normalized $r$-matrix as
+$r^{\mathrm{KZ}}_k(z) = \Omega_{\mathrm{KZ}}/((k+h^\vee)z)$
+\textup{(}implicit level prefix, absorbed in the denominator\textup{)}.
+\end{enumerate}
+\textbf{Two presentations, two $r$-matrices.} The Drinfeld and KZ
+presentations are \emph{distinct} classical $r$-matrices on
+$\fg \otimes \fg$: they coincide $k$-generically on their spectral
+behaviour only when the Casimir tensors are rescaled in a
+$k$-dependent way. Setting $r^{\mathrm{Dr}}_k(z) = r^{\mathrm{KZ}}_k(z)$
+forces $k\,\Omega_{\mathrm{tr}} = \Omega_{\mathrm{KZ}}/(k+h^\vee)$;
+combined with the $k$-independent identity
+$\Omega_{\mathrm{KZ}} = \Omega_{\mathrm{tr}}/(2h^\vee)$
+\textup{(}intrinsic to the Lie algebra\textup{)}, this reduces to
+$k(k+h^\vee) = 1/(2h^\vee)$, which is a quadratic condition on
+$k$ with two specific solutions, not an identity in $k$.
+\emph{The two $r$-matrices are therefore genuinely different families,}
+distinguished by the level prefix they carry; they are not the same
+$r$-matrix in two notations. The landscape census
+\textup{(}Chapter~\ref{chap:landscape-census}, class-$L$ row\textup{)}
+writes ``$k\,\Omega_{\mathrm{tr}}/z = \Omega/((k+h^\vee)z)$'' as an
+\emph{abuse of notation}, with the understanding that a single
+uniformly-scaled Casimir symbol $\Omega$ is used that makes the
+equation hold tautologically; the unrescaled intrinsic Casimirs
+$\Omega_{\mathrm{tr}}$ and $\Omega_{\mathrm{KZ}}$ do \emph{not} satisfy
+this equation at all $k$. This is the AP288 level-prefix discipline
+pitfall: the symbol ``$\Omega$'' in literature is a placeholder whose
+meaning depends on whether the Drinfeld or the KZ spectral form is
+displayed.
+
+\noindent
+\textbf{Edge-case dichotomy.} The two normalizations behave differently
+at $k \in \{0, -h^\vee\}$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Vanishing level $k = 0$.} In the Drinfeld
+normalization, $r^{\mathrm{Dr}}_0(z) = 0$: the entire $r$-matrix
+vanishes with the level. The associated Yang--Baxter equation becomes
+trivial and carries no Lie-theoretic content. In the KZ
+normalization, $r^{\mathrm{KZ}}_0(z) = \Omega_{\mathrm{KZ}}/(h^\vee z)$,
+which is non-zero: the Lie bracket of $\fg$ persists and generates
+the rational KZ connection at residual level. These are
+\emph{distinct $r$-matrices}, not the same $r$-matrix viewed in two
+ways; the level prefix has full load-bearing content. In this chapter,
+equations~\eqref{eq:g1sf-kzb-full},
+\textup{\eqref{eq:g1sf-kzb-z-component}},
+\textup{\eqref{eq:g1sf-elliptic-rmatrix}},
+\textup{\eqref{eq:g1sf-elliptic-gaudin}},
+and~\eqref{eq:g1sf-master-equation} use the \emph{Killing-form
+Casimir} convention with explicit $k/(k+h^\vee)$ prefix
+\textup{(}matching the Belavin--Drinfeld elliptic $r$-matrix and the
+Bernard--Felder KZB connection~\cite{Bernard88}\textup{)}; at $k=0$
+the stated collision residue $r^{(1)}_{\widehat{\fg}_k}(z,\tau)
+= k\,\Omega_{\mathrm{KZ}}\,\zeta_\tau(z)/(k+h^\vee)$ vanishes.
+The non-vanishing limit $\Omega_{\mathrm{KZ}}/(h^\vee z)$ stated in
+Theorem~\ref{thm:hdm-face-5} and repeated in the genus-$0$
+degeneration is the KZ-convention object $r^{\mathrm{KZ}}_0$, not the
+$k\to 0$ specialization of the Killing-form-Casimir face identified
+in Theorem~\ref{thm:g1sf-face-5}. The two are not related by any
+$k$-independent Casimir rescaling; they are distinct spectral
+$r$-matrices that agree only on the quadratic locus
+$2h^\vee\,k(k+h^\vee) = 1$ and differ at $k=0$, where the first
+vanishes while the second does not.
+\item \emph{Critical level $k = -h^\vee$.} Both normalizations
+are singular, but in complementary ways. The KZ denominator
+$1/(k+h^\vee)$ diverges; the Drinfeld prefactor $k$ stays finite at
+$-h^\vee$. The combination $k/(k+h^\vee)$ diverges. The resolution is
+that at the critical level the Sugawara construction collapses
+(Feigin--Frenkel centre enlarges; Theorem~\ref{thm:hdm-face-5} states
+$k\neq -h^\vee$ explicitly) and the collision residue
+$r^{(1)}_{\widehat{\fg}_{-h^\vee}}$ is \emph{not defined as a spectral
+$r$-matrix} in $\fg \otimes \fg[\![z^{-1}]\!]$: the Sugawara
+denominator's zero is the category-theoretic manifestation of the
+enlarged centre. The Faces~F5$^{(1)}$--F7$^{(1)}$ identifications are
+therefore scoped to $k \neq -h^\vee$ throughout this chapter.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i)--(ii): The intrinsic relation
+$\Omega_{\mathrm{KZ}} = \Omega_{\mathrm{tr}}/(2h^\vee)$ on
+simple~$\fg$ follows from the standard identity
+$\kappa_{\mathrm{Kil}}(X,Y) = \operatorname{tr}_{\mathrm{adj}}(\mathrm{ad}_X \mathrm{ad}_Y)
+= 2h^\vee\,\langle X,Y\rangle_{\mathrm{tr}}$ on the Cartan of
+simple~$\fg$~\cite[\S 1.1]{EK96}, combined with the observation that
+the Casimir $\sum_a I^a \otimes I_a$ built from dual bases scales as
+the inverse of the form under rescaling. Explicitly: if
+$\{t^a\}$ is $\langle\cdot,\cdot\rangle_{\mathrm{tr}}$-orthonormal
+then $\{t^a/(2h^\vee)^{1/2}\}$ would be Killing-orthonormal up to
+conventions of basis duality; working with the genuine non-degenerate
+pairing gives $\Omega_{\mathrm{KZ}} = \Omega_{\mathrm{tr}}/(2h^\vee)$.
+This is a $k$-independent relation between the two intrinsic Casimir
+tensors.
+
+The intertwining constraint $r^{\mathrm{Dr}}_k = r^{\mathrm{KZ}}_k$
+reads $k\,\Omega_{\mathrm{tr}}/z = \Omega_{\mathrm{KZ}}/((k+h^\vee)z)$.
+Substituting the intrinsic relation:
+$k\,\Omega_{\mathrm{tr}}/z = \Omega_{\mathrm{tr}}/(2h^\vee(k+h^\vee)z)$,
+which reduces to $2h^\vee\,k(k+h^\vee) = 1$, a quadratic equation in
+$k$ with two specific solutions. The Drinfeld and KZ $r$-matrices
+therefore coincide only at two (generically irrational) levels; they
+are otherwise distinct. The symbolic identity
+``$k\,\Omega_{\mathrm{tr}} = \Omega/(k+h^\vee)$'' that appears in the
+literature is an abuse of notation: a level-dependent rescaling of
+``$\Omega$'' is silently performed to force the equation. The
+non-trivial mathematical content is the dual-Coxeter shift: the
+denominator $k+h^\vee$ is the $\sigma_{\widehat{\fg}}$-symmetric level
+(Theorem C complementarity), not a purely algebraic normalization.
+
+(a): The Drinfeld formula $r^{\mathrm{Dr}}_k = k\,\Omega_{\mathrm{tr}}/z$
+specialises to $0$ at $k=0$ by direct evaluation. The KZ formula
+$r^{\mathrm{KZ}}_k = \Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ specialises
+to $\Omega_{\mathrm{KZ}}/(h^\vee z) \neq 0$ at $k=0$. These are
+distinct classical $r$-matrices on $\fg \otimes \fg$: the first
+satisfies a trivial classical Yang--Baxter equation (since it
+vanishes), while the second satisfies the non-trivial infinitesimal
+braid relation $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$
+evaluated on the Killing-form Casimir~\cite{Bernard88}. This is not
+a contradiction: they are two different $r$-matrices corresponding to
+two different physical/algebraic regimes. The Drinfeld prefactor
+$k$ measures the ``quantum'' level of a Kac--Moody symmetry that
+vanishes at $k=0$ (abelian limit of the current algebra); the KZ
+denominator $k+h^\vee$ measures the inverse Sugawara parameter that
+stays finite and non-zero at $k=0$. The two capture different
+invariants of the same underlying chiral algebra.
+
+(b): At $k = -h^\vee$, $r^{\mathrm{KZ}}_{-h^\vee}$ is singular (pole
+in $k+h^\vee$). The Sugawara construction
+$T^{\mathrm{Sug}} = \sum_a {:}J^a J^a{:}/(2(k+h^\vee))$ is
+singular at the same point. The Feigin--Frenkel centre
+$\mathfrak{z}(\widehat{\fg}) \subset V_{-h^\vee}(\fg)$ is
+infinite-dimensional at $k = -h^\vee$ \textup{(}and trivial for
+$k \neq -h^\vee$\textup{)}, providing the categorical resolution of
+the Sugawara singularity. The collision residue
+$r_\cA^{(1)}(z,\tau)$ as defined by
+equation~\eqref{eq:g1sf-collision-residue} still makes sense as a
+formal element of $\End_\cA(2)[\![z^{-1}]\!] \otimes
+\mathbb{C}[\![\tau]\!]$ at $k=-h^\vee$, but its identification with
+the Belavin--Drinfeld elliptic $r$-matrix \textup{(}which requires the
+$k/(k+h^\vee)$ prefactor to be finite\textup{)} fails. The chapter's
+convention $k \neq -h^\vee$ is therefore a \emph{genuine hypothesis}
+on the Faces~F5$^{(1)}$--F7$^{(1)}$ identifications, not a
+typographical convenience.
+\end{proof}
+
+\begin{remark}[Cross-volume cross-check]
+\label{rem:g1sf-cross-volume}
+The Casimir-convention bridge of Lemma~\ref{lem:g1sf-casimir-bridge}
+reveals an abuse-of-notation in the cross-volume table in
+Chapter~\ref{chap:landscape-census} of this volume
+\textup{(}landscape census, class~$L$ row\textup{)}: there, the
+collision residue is written
+``$r^{\mathrm{coll}}(z) = k\Omega_{\mathrm{tr}}/z = \Omega/((k+h^\vee)z)$''
+with a single Casimir symbol ``$\Omega$'' whose implicit definition is
+$\Omega := k(k+h^\vee)\,\Omega_{\mathrm{tr}}$ \textup{(}a
+level-dependent rescaling that forces the equality at all $k$ by
+definition\textup{)}. This differs from the intrinsic
+Killing-form Casimir $\Omega_{\mathrm{KZ}} = \Omega_{\mathrm{tr}}/(2h^\vee)$
+of Lemma~\ref{lem:g1sf-casimir-bridge} by a factor of
+$2h^\vee\,k(k+h^\vee)$, which equals~$1$ on the quadratic locus and
+differs generically. Readers applying the landscape-census formula
+numerically must fix the level $k$ and the Casimir convention
+simultaneously.
+
+Volume~II \textup{(}$A_\infty$ Chiral Algebras and 3D~HT~QFT,
+$\mathsf{SC}^{\mathrm{ch,top}}$ bar differential\textup{)} and
+Volume~III \textup{(}CY Categories, K3 Yangian\textup{)} use the
+Drinfeld normalization with explicit level prefix throughout; the
+translation between volumes is Lemma~\ref{lem:g1sf-casimir-bridge}.
+AP5 propagation requires that any statement involving a numerical
+value of $r(z)$ at fixed $z = z_0$, $k = k_0$ be tagged with which
+Casimir convention is in force at that statement; the present chapter
+tags all Face~F5$^{(1)}$--F7$^{(1)}$ statements with the Killing-form
+convention $r^{(1)} = k\,\Omega_{\mathrm{KZ}}\zeta_\tau/(k+h^\vee)$
+\textup{(}explicit $k$ prefix, matching Bernard--Felder KZB\textup{)}.
+\end{remark}
+
 
 %% ====================================================================
 %% 6. FACE 7: THE ELLIPTIC GAUDIN MODEL
@@ -603,8 +805,9 @@ equation~\eqref{eq:g1sf-elliptic-cybe}.
 
 \begin{proof}
 The identification of $H_i^{\mathrm{ell}}$ with the collision residue
-is immediate from Theorem~\ref{thm:g1sf-face-1}:
-$r_{\widehat{\fg}_k}^{(1)}(z, \tau) = k\,\Omega\, \zeta_\tau(z)/(k+h^\vee)$,
+is immediate from Theorem~\ref{thm:g1sf-face-1} in the Killing-form
+convention (Lemma~\ref{lem:g1sf-casimir-bridge}):
+$r_{\widehat{\fg}_k}^{(1)}(z, \tau) = k\,\Omega_{\mathrm{KZ}}\, \zeta_\tau(z)/(k+h^\vee)$,
 and the Gaiotto--Zeng formula~\eqref{eq:hdm-face-4} produces the
 sum~\eqref{eq:g1sf-elliptic-gaudin}.
 
@@ -977,13 +1180,21 @@ kernel $r^{\mathrm{rat}}_\fg(z)$, through the
 intermediate trigonometric $r$-matrix:
 $r^{\mathrm{ell}} \to r^{\mathrm{trig}} \to r^{\mathrm{rat}}$.
 The collision residue~\eqref{eq:g1sf-elliptic-rmatrix} inherits
-the level normalization:
-$r^{(1)}_{\widehat{\fg}_k}(z, \tau) \to \Omega/((k+h^\vee)z)$.
-% AP148: KZ convention; at k=0 gives Omega/(h^v z) != 0 (Lie bracket persists).
+the Killing-form-Casimir level normalization
+\textup{(}Lemma~\ref{lem:g1sf-casimir-bridge}\textup{)}:
+$r^{(1)}_{\widehat{\fg}_k}(z, \tau) \to k\,\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$.
+% AP288: level prefix k/(k+h^v) in Killing-form convention; at k=0 the
+% Killing-form-convention r-matrix vanishes (distinct from KZ-convention
+% residue). See Lemma g1sf-casimir-bridge for reconciliation.
 At the critical level $k = -h^\vee$ the normalized rational
-$r$-matrix is singular; at $k = 0$ the collision residue
-$r^{(1)}_{\widehat{\fg}_k}$ reduces to $\Omega/(h^\vee z)$
-(the Lie bracket of~$\fg$ persists at vanishing level).
+$r$-matrix is singular \textup{(}Feigin--Frenkel centre
+enlarges\textup{)}; at $k = 0$ the Killing-form-Casimir collision
+residue $r^{(1)}_{\widehat{\fg}_0}$ vanishes, reflecting the
+Drinfeld-normalization vanishing $r^{\mathrm{Dr}}_0 = 0$, not to be
+confused with the KZ-normalization object
+$\Omega_{\mathrm{KZ}}/(h^\vee z)$ of Theorem~\ref{thm:hdm-face-5},
+which is a distinct spectral $r$-matrix
+\textup{(}Lemma~\ref{lem:g1sf-casimir-bridge}(a)\textup{)}.
 \item \textup{(}Elliptic Gaudin $\to$ rational Gaudin.\textup{)}
 $H_i^{\mathrm{ell}} \to H_i^{\mathrm{Gaudin}}$, the standard rescaled
 Gaudin Hamiltonian of Theorem~\ref{thm:hdm-face-7}.
@@ -1014,12 +1225,20 @@ The elliptic $r$-matrix degeneration: as $q \to 0$,
 $\phi_\pm(z, \tau) \to \pi/\sin(\pi z) + O(q)$, recovering the
 trigonometric $r$-matrix. A further limit $z \mapsto z/L$,
 $L \to \infty$ gives $\pi/\sin(\pi z/L) \to L/z$, recovering the
-rational $r$-matrix $\Omega/((k+h^\vee)z)$ in the Kazhdan
-normalization used throughout this chapter
-% AP148: KZ convention from thm:hdm-face-5.
-\textup{(}cf.\ Eq.~\eqref{eq:g1sf-kzb-z-component} and the collision
-residue $r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$\textup{)}.
-Both limits are continuous in the topology of formal Laurent series.
+rational $r$-matrix
+$k\,\Omega_{\mathrm{KZ}}/((k+h^\vee)z) = k\,r^{\mathrm{rat}}_\fg(z)/(k+h^\vee)$
+in the Killing-form-Casimir normalization used throughout this chapter
+% AP288: level prefix k/(k+h^v); equivalent to Drinfeld k*Omega_tr/z on
+% k-generic locus via Lemma g1sf-casimir-bridge, but distinct at k=0.
+\textup{(}cf.\ Eq.~\eqref{eq:g1sf-elliptic-rmatrix} and the
+Killing-form-Casimir presentation of the genus-$0$ collision residue
+$r_{\widehat{\fg}_k}(z) = k\,\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$,
+which equals the KZ-convention residue
+$\Omega_{\mathrm{KZ}}/((k+h^\vee)z)$ of Theorem~\ref{thm:hdm-face-5}
+$k$-generically under Lemma~\ref{lem:g1sf-casimir-bridge} but differs
+at $k = 0$\textup{)}.
+Both limits are continuous in the topology of formal Laurent series
+for $k \neq 0, -h^\vee$.
 \end{proof}
 
 The degeneration theorem provides the consistency check between
