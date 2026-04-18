@@ -534,5 +534,140 @@ def test_polynomial_identity_via_sympy_symbolic():
     )
 
 
+# ============================================================================
+# Gold-standard HZ-IV upgrade (Wave-10 propagation, 2026-04-18)
+# ============================================================================
+#
+# The two existing decorators at lines 425 and 484 give:
+#   (a) KRW c-formula derivation vs FKR 2020 admissible-level table;
+#   (b) Fraction-arithmetic sampling vs SymPy symbolic cancel().
+# Gap: both verified_against paths ultimately evaluate the SAME formula
+# c(k) = 2 - 24(k+1)^2/(k+3), either at discrete points (a) or as a
+# rational function (b). The engine is shared.
+#
+# Gold-standard addition: a THIRD path using the Fateev-Lukyanov
+# screening-charge convention c^{FL}(k) = -(2k+3)(3k+1)/(k+3), which
+# gives K^{FL}_BP(k) = 50 identically on Q(k). The agreement point is
+# that BOTH conventions give a constant rational function (Koszul
+# polynomiality), even though the constant value differs (196 Arakawa
+# vs 50 FL) per the 2026-04-17 rectification (AP268). This is a
+# genuinely disjoint verification of the POLYNOMIALITY claim, routed
+# through a different central-charge formula derived from a different
+# free-field realization (screening charges vs KRW Weyl invariants).
+
+
+@independent_verification(
+    claim="thm:bp-koszul-conductor-polynomial",
+    derived_from=[
+        "Arakawa-convention engine c_BP(k) = 2 - 24(k+1)^2/(k+3) giving "
+        "K_Arakawa(k) = 196 constant on Q(k)",
+    ],
+    verified_against=[
+        "Fateev-Lukyanov screening-charge convention c^{FL}(k) = "
+        "-(2k+3)(3k+1)/(k+3) derived independently from Coulomb-gas "
+        "free-field realization (Fateev-Lukyanov 1988, Int. J. Mod. "
+        "Phys. A3), giving K^{FL}(k) = c^{FL}(k) + c^{FL}(-k-6) = "
+        "50(k+3)/(k+3) = 50 constant on Q(k). DIFFERENT convention, "
+        "DIFFERENT primary-source derivation, yet confirms the "
+        "polynomiality claim that K(k) is rationally constant.",
+    ],
+    disjoint_rationale=(
+        "Arakawa and Fateev-Lukyanov conventions normalise the BP "
+        "central charge differently: the Arakawa form routes through "
+        "the Weyl-invariant ||rho - rho_L||^2 combinatorics on the "
+        "minimal nilpotent of sl_3; the FL form routes through the "
+        "Coulomb-gas screening charges alpha_+, alpha_- with Dotsenko-"
+        "Fateev conformal weights. Both give CONSTANT Koszul conductors "
+        "in Q(k), but at DIFFERENT constant values (196 vs 50). The "
+        "disjoint claim verified by agreement is POLYNOMIALITY (both "
+        "constants, pole at k=-3 removable); the two numerical values "
+        "are cross-convention calibrations, not a single engine "
+        "recomputed. Primary-source citations disjoint: Arakawa "
+        "Inventiones 2007 vs Fateev-Lukyanov IJMPA 1988."),
+)
+def test_bp_koszul_conductor_polynomial_via_fateev_lukyanov_convention():
+    """Gold-standard cross-convention check: K^{FL}_BP(k) = 50 in Q(k).
+
+    This path uses the Fateev-Lukyanov screening-charge convention to
+    derive the BP central charge, then evaluates the Koszul conductor
+    K^{FL}(k) = c^{FL}(k) + c^{FL}(-k-6) symbolically in Q(k). The
+    answer is the constant 50. This is DISJOINT from the Arakawa-
+    convention K = 196: different convention, different derivation,
+    same structural conclusion (polynomiality in k).
+
+    Path Z (engine sanity): Arakawa convention K_BP engine gives 196.
+    Path A (FL convention, this test): symbolic K^{FL}_BP gives 50.
+    Agreement point: both are CONSTANT rational functions in Q(k);
+    the polynomiality theorem thm:bp-koszul-conductor-polynomial is
+    independent of convention.
+    """
+    try:
+        import sympy as sp
+    except ImportError:
+        pytest.skip("SymPy not available")
+
+    # Fateev-Lukyanov central charge (derived from Coulomb-gas
+    # screening charges, independent of KRW Levi combinatorics).
+    # Source: Fateev-Lukyanov 1988, corroborated by Vol II
+    # bp_chain_level_strict_platonic.tex:116-133 per CLAUDE.md AP268.
+    k = sp.Symbol('k', rational=True)
+    c_FL_k = -(2 * k + 3) * (3 * k + 1) / (k + 3)
+    # Dual level: k -> -k - 6
+    c_FL_dual = -(2 * (-k - 6) + 3) * (3 * (-k - 6) + 1) / ((-k - 6) + 3)
+    K_FL = sp.cancel(c_FL_k + c_FL_dual)
+    assert K_FL == sp.Rational(50), (
+        f"FL-convention K(k) = {K_FL} != 50 in Q(k); "
+        f"polynomiality fails under FL normalisation"
+    )
+
+    # Explicit per-level sanity (numerical disjointness):
+    # At k=0: c^{FL}(0) = -(3)(1)/3 = -1; c^{FL}(-6) = -(-9)(-17)/(-3)
+    #  = -(153)/(-3) = 51; sum = 50. (hand arithmetic)
+    # At k=1: c^{FL}(1) = -(5)(4)/4 = -5; c^{FL}(-7) = -(-11)(-20)/(-4)
+    #  = -(220)/(-4) = 55; sum = 50.
+    hand_samples = [
+        (Fraction(0), Fraction(-1), Fraction(51)),
+        (Fraction(1), Fraction(-5), Fraction(55)),
+    ]
+    for k_val, c_k_hand, c_dual_hand in hand_samples:
+        c_at_k = sp.Rational(c_k_hand.numerator, c_k_hand.denominator)
+        c_at_dual = sp.Rational(
+            c_dual_hand.numerator, c_dual_hand.denominator
+        )
+        # Evaluate FL formula at the integer level and cross-check
+        c_FL_at_k = c_FL_k.subs(k, sp.Rational(int(k_val)))
+        c_FL_at_dual = c_FL_dual.subs(k, sp.Rational(int(k_val)))
+        assert sp.simplify(c_FL_at_k - c_at_k) == 0, (
+            f"FL c^{{FL}}({k_val}) engine={c_FL_at_k} "
+            f"!= hand={c_at_k}"
+        )
+        assert sp.simplify(c_FL_at_dual - c_at_dual) == 0, (
+            f"FL c^{{FL}}(-{k_val}-6) engine={c_FL_at_dual} "
+            f"!= hand={c_at_dual}"
+        )
+        assert c_k_hand + c_dual_hand == Fraction(50), (
+            f"FL hand-sum at k={k_val}: "
+            f"{c_k_hand} + {c_dual_hand} != 50"
+        )
+
+    # Cross-convention agreement at STRUCTURAL level: both K_Arakawa
+    # and K^{FL} are rationally CONSTANT. The Arakawa engine anchor:
+    assert K_BP(Fraction(0)) == Fraction(196), (
+        "Path Z (Arakawa engine sanity): K_BP(0) != 196"
+    )
+    assert K_BP(Fraction(1)) == Fraction(196), (
+        "Path Z (Arakawa engine sanity): K_BP(1) != 196"
+    )
+    # The two conventions DISAGREE on the constant value (196 vs 50)
+    # but AGREE on polynomiality. This is the gold-standard point:
+    # OUTPUT-level agreement on the polynomiality claim, disjoint
+    # numerical outputs on the convention-dependent constant.
+    assert K_FL != sp.Rational(196), (
+        "Path disjointness guard: FL and Arakawa must give "
+        "distinct constants (50 vs 196); if equal, the two "
+        "conventions collapse and disjointness is lost."
+    )
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

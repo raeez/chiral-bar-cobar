@@ -5,6 +5,25 @@
 
 Author: Raeez Lorgat.
 
+> **RETRACTED 2026-04-18** per Wave-X Mok25 programme-wide audit
+> (`adversarial_swarm_20260418/attack_heal_mok25_programme_audit_20260418.md`).
+> Phase 1 verdict below (lines ~88-96) labelling the `Mok25` bibkey as
+> "fabricated-mechanism territory" / "resolves against no primary source" is
+> SUPERSEDED. Mok25 is REAL: Siao Chi Mok (Cambridge/Imperial College London,
+> algebraic geometry), arXiv:2503.17563, "Logarithmic Fulton--MacPherson
+> configuration spaces", submitted 21 March 2025, v2 21 May 2025. The earlier
+> audit confused Siao Chi Mok with Chung-Pang Mok (Purdue, automorphic forms)
+> due to the drifted `author = {Mok, Chung-Pang}` field in
+> `standalone/references.bib:601-607`. The mechanism is NOT fabricated; the
+> bibkey is author-drifted and title-drifted. Per the Mok25 programme-wide
+> audit, the correct heal is bibkey harmonization (author: Siao Chi Mok;
+> title: "Logarithmic Fulton--MacPherson configuration spaces"; eprint:
+> 2503.17563; year: 2025) plus AP1241 single-preprint-pillar registration.
+> Theorem A modular-family extension remains CONDITIONAL on Mok25 as a
+> March 2025 arXiv preprint cited at citation level (not independently
+> inscribed as a Vol I theorem), which is distinct from "fabricated
+> mechanism".
+
 Target: the modular-family extension of `thm:A-infinity-2` from fixed
 smooth curve $X$ to $\overline{\mathcal{M}}_{g,n}$ including the nodal
 boundary divisor, as advertised in CLAUDE.md Theorem A status row
