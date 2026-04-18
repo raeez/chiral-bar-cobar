@@ -4433,6 +4433,47 @@ grep -lE '(converge|convergence)' adversarial_swarm_*/wave_*/agent_*.md \
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
+## Pattern 245: Mid-substantive-work budget cut (distinct from Pattern 240 shallow termination)
+
+**Session**: 2026-04-18 attack-heal swarm Wave 2. Vol I Theorem B agent terminated at 62 tool uses / 513s with substantive inscription in `theorem_B_scope_platonic.tex` but mid-final-report (last action: "Now I'll add a forward-reference note about the new theorem and run Phase 4"). Vol III K3 Yangian agent terminated at 57 tool uses / 497s with 5-file inscription but mid-fix on `\bC^*_E` typo at `k3_quantum_toroidal_chapter.tex:136`.
+
+**Type**: orchestration / agent-completion-classification defect. Distinct from Pattern 240 (shallow first-round termination at <90s/<15 tool uses with one-sentence transitional stub):
+- Pattern 240 = budget cut BEFORE substantive work, treat as zero progress, relaunch.
+- Pattern 245 = budget cut DURING substantive work after 30+ tool uses with multi-file inscription, but BEFORE the agent emits a clean final-report convergence statement.
+
+If the wave-handler conflates these two failure modes, it either (a) discards real Pattern 245 work as if it were a Pattern 240 stub, or (b) accepts a Pattern 245 mid-work cut as if it were a clean convergence — neither is correct. The Pattern 245 work IS valid and SHOULD be committed (the inscriptions are real), BUT the convergence verdict is unverified.
+
+**Rule**: classify agent terminations along three axes:
+- (A) Tool-use count: $< 15$ → Pattern 240; $\geq 30$ → Pattern 245; in between → manual triage.
+- (B) Substantive file edits: zero → Pattern 240; $\geq 1$ file with $\geq 50$ lines added → Pattern 245.
+- (C) Final-report present: clean structured 1/2/3/4/5 report → converged; truncated mid-report ("Now I will...", "Let me also...", "Final report follows...") → Pattern 245.
+
+For Pattern 245 terminations, the wave-handler must:
+1. Commit the inscribed work with a commit message acknowledging "partial-completion budget cut at N tool uses; convergence verdict unverified".
+2. Schedule the next wave to include a re-attack on the same target with explicit instructions to (a) re-verify the prior wave's inscription against live source (Pattern 237), (b) run the missing Phase 4 re-attack, (c) emit a clean final report.
+3. Do NOT count the Pattern 245 termination as a "converged" agent in the wave's headcount; it is a "partial-completion" agent that requires follow-up.
+
+**Regex trigger** (notification post-processing):
+
+```
+if (tool_uses >= 30) && (modified_files >= 1) && (result starts with "Now|Let me also|Final report follows|Wait|Continuing"):
+    classify as Pattern 245 (mid-work budget cut, partial-completion).
+    commit inscription with explicit "partial-completion budget cut" acknowledgement.
+    schedule re-attack in next wave with re-verification instructions.
+```
+
+**Counter-check one-liner**: never count a Pattern 245 termination toward the wave's convergence headcount; always schedule a follow-up re-attack.
+
+**Canonical Pattern 245 healed (this session)**:
+- Vol I Theorem B (Wave 2): 62 tool uses, `theorem_B_scope_platonic.tex` modified; committed in `9af19925` with explicit acknowledgement.
+- Vol III K3 Yangian (Wave 2): 57 tool uses, 5 files modified; committed in `15b5a30` with explicit acknowledgement.
+
+**Related**: Pattern 240 (shallow first-round termination, distinct failure mode); Pattern 237 (stale attacks waste cycles — re-verify before re-healing); Pattern 293 (premature convergence — partial-completion is not convergence).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
 ## Pattern 243: Wave-merge push rejection from concurrent agent commits
 
 **Session**: 2026-04-18 attack-heal swarm (Vol I and Vol III pushes rejected; Vol II pushed cleanly because no concurrent agent had advanced its main).
