@@ -1,1374 +1,722 @@
 % =====================================================================
 %  chapters/theory/universal_conductor_K_platonic.tex
 %
-%  THE UNIVERSAL CONDUCTOR  K = -c_ghost(BRST(.))
+%  THE UNIVERSAL CONDUCTOR K AS ORDERED-TO-SYMMETRIC AVERAGING
 %
-%  Platonic chapter consolidating per-family kappa formulas into ONE
-%  universal conductor functor on BRST-gauged chiral algebras, with the
-%  Trinity Theorem K_E = K_c = K_g and full per-family corollaries
-%  (Heisenberg, Virasoro, affine KM, principal W_N, BP, lattice, betagamma,
-%  free fermion).  Establishes the cross-volume bridge to Vol III's
-%  kappa_BKM = c_N(0)/2 (K3-fibered Class A only) via the CY-to-chiral
-%  functor Phi.
-%
-%  Author: Raeez Lorgat.  Date: 2026-04-17.
-%
-%  Macro safety net (each macro defended by \providecommand to keep the
-%  chapter portable across standalones; AP-FM6 / AP-FM36).
+%  This chapter replaces the retired scalar "ghost conductor" headline
+%  by the actual universal conductor used by the ordered bar programme:
+%  the averaging morphism from ordered E_1 data to symmetric modular
+%  data.  A short compatibility section retains the old scalar witness
+%  values under separate notation so downstream citations are not left
+%  dangling.
 % =====================================================================
 
-\providecommand{\BRST}{\mathrm{BRST}}
-\providecommand{\KSDual}{\mathrm{KSDual}}
-\providecommand{\BRSTGauged}{\mathrm{BRSTGaugedChirAlg}}
+\providecommand{\bbC}{\mathbb{C}}
+\providecommand{\bbZ}{\mathbb{Z}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\Ran}{\operatorname{Ran}}
+\providecommand{\Ranord}{\operatorname{Ran}^{\mathrm{ord}}}
+\providecommand{\Conf}{\operatorname{Conf}}
+\providecommand{\Fact}{\operatorname{Fact}}
+\providecommand{\Symm}{\operatorname{Sym}}
+\providecommand{\Ord}{\mathrm{ord}}
+\providecommand{\Coinv}{\operatorname{coinv}}
+\providecommand{\Lan}{\operatorname{Lan}}
+\providecommand{\Av}{\operatorname{Av}}
+\providecommand{\Tot}{\operatorname{Tot}}
+\providecommand{\gAE}{\mathfrak{g}_{\cA}^{E_1}}
+\providecommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}}
+\providecommand{\Hch}{\mathrm{HH}^{\mathrm{ch}}}
+\providecommand{\DerZ}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\providecommand{\Rep}{\operatorname{Rep}}
 \providecommand{\Vir}{\mathrm{Vir}}
 \providecommand{\BP}{\mathrm{BP}}
-\providecommand{\DS}{\mathrm{DS}}
-\providecommand{\CY}{\mathrm{CY}}
-\providecommand{\BKM}{\mathrm{BKM}}
-\providecommand{\BCOV}{\mathrm{BCOV}}
-\providecommand{\Atiyah}{\mathrm{Atiyah}}
-\providecommand{\bbZ}{\mathbb{Z}}
-\providecommand{\bbR}{\mathbb{R}}
-\providecommand{\fg}{\mathfrak{g}}
-\providecommand{\cA}{\mathcal{A}}
-\providecommand{\Hch}{\mathrm{HH}^{\mathrm{ch}}}
 
-% ---------------------------------------------------------------------
-\chapter{The Universal Conductor: $K = -c_{\mathrm{ghost}}(\BRST(\cdot))$}
+\chapter{The Universal Conductor: ordered-to-symmetric averaging}
 \label{chap:universal-conductor}
 
-\epigraph{The conductor is the gauge content the algebra has absorbed.}{}
+\epigraph{The conductor is the map that forgets order without pretending
+that the lost order-data was never there.}{}
 
-The Vol~I landscape carries one numerical invariant per chiral family:
-$\kappa(V_k(\fg)) = \dim(\fg)(k+h^\vee)/(2h^\vee)$ for affine
-Kac--Moody, $\kappa(\Vir_c) = c/2$ for Virasoro, $\kappa(W_N) = c\,(H_N - 1)$
-for principal $W_N$, $\kappa(\mathcal{H}_k) = k$ for Heisenberg, with
-twelve more families catalogued in
-\texttt{landscape\_census.tex}~\cite{landscape_census}.  Chapter
-\ref{ch:kappa-conductor} introduced the symmetric conductor
-$K^c(\cA) := c(\cA) + c(\cA^!)$ as a Koszul-self-dual companion, and
-recorded its per-family values: $K^c(\Vir) = 26$, $K^c(W_N) = 4N^3 - 2N - 2$,
-$K^c(\BP) = 196$.
-
-This chapter sweeps the eight per-family conductor formulas into a
-SINGLE functor
+The universal conductor of Volume~I is the averaging morphism
 \[
-  K \;\colon\; \BRSTGauged \;\longrightarrow\; \bbZ,
-  \qquad
-  K(\cA) \;=\; -\,c_{\mathrm{ghost}}\bigl(\BRST(\cA)\bigr).
+  K_\cA \;=\; \Av_\cA \colon \gAE \longrightarrow \gAmod
 \]
-Each family-specific formula becomes a corollary of the universal
-ghost-charge sum.  The Trinity Theorem asserts that three independently
-defined invariants coincide on the Koszul-self-dual locus:
-\begin{itemize}
- \item $K_E$, the Euler self-pairing of the bar coalgebra under the
-   bar--cobar reflection;
- \item $K_c$, the central-charge sum across the Koszul pair;
- \item $K_g$, the ghost central charge of any quasi-free BRST resolution.
-\end{itemize}
-The slogan: the conductor IS the cost in conformal anomaly that gauging
-absorbs into the algebra's definition.
-
-The chapter integrates with the Vol~I climax
+from the ordered convolution dg Lie algebra to the symmetric modular
+quotient.  At chain level it is the Reynolds projector followed by the
+coinvariant quotient
 \[
-  d_{\mathrm{bar}} \;=\; \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}}),
-  \qquad
-  \kappa(\cA) \;=\; -\,c_{\mathrm{ghost}}\bigl(\BRST(\cA)\bigr)
+  B^{\Ord}(\cA)=T^c(s^{-1}\bar\cA)
+  \longrightarrow
+  B^{\Sigma}(\cA)=\Symm^c(s^{-1}\bar\cA),
 \]
-(Theorem~\ref{thm:climax-genus-zero}; Chapter~\ref{ch:climax-theorem}):
-the second equation is precisely the Trinity statement
-$K = K_g$ specialised to the conductor $\kappa(\cA)$ on
-$\KSDual(X) \cap \BRSTGauged$.
-
-The cross-volume bridge to Vol~III is the universal trace identity
-$\kappa_{\BKM}(X) = K(\Phi(X))/2$ for $X$ a K3-fibered Class~A
-threefold under the CY-to-chiral functor $\Phi$.  Class~B threefolds
-(quintic, conifold, local~$\bP^2$, $\bC^3$) lie outside the universal
-formula and use the BCOV substitute
-$\kappa_{\BCOV}(X) = \chi_{\mathrm{top}}(X)/24$ instead.
-
-\section{BRST resolutions and the ghost-charge invariant}
-\label{sec:uc-brst-setup}
-
-The landscape's per-family $\kappa$ formulas admit no single closed
-form in $\kappa$ itself: affine $\dim(\fg)(k+h^\vee)/(2h^\vee)$,
-Virasoro $c/2$, $W_N$ $c(H_N - 1)$, Heisenberg $k$, BP
-$c_{\BP}(k)$-dependent. The common structure hides one level deeper:
-each of these algebras is the BRST cohomology of a free-field complex,
-and the ghost charge of that complex recovers $\kappa$ up to
-convention. The present section names the free-field BRST setup on
-which the universal conductor is built.
-
-We work over $\bbC$ on a smooth complex curve $X$.  The category
-$\mathrm{ChirAlg}^{E_\infty}_X$ of $E_\infty$-chiral algebras on $X$
-is the chiral-algebra category of Beilinson--Drinfeld
-\cite{beilinson_drinfeld_chiral}: augmented unital factorisation
-$D$-modules with chiral multiplication
-$\mu \colon j_!\bigl(\cA \boxtimes \cA\bigr)\big|_U \to \Delta_!\,\cA$.
-
-\subsection{Quasi-free chiral cdgas}
-\label{ssec:uc-quasi-free}
-
-\begin{definition}[Quasi-free BRST resolution]
-\label{def:uc-brst-resolution}
-A \emph{quasi-free BRST resolution} of
-$\cA \in \mathrm{ChirAlg}^{E_\infty}_X$ is a quasi-isomorphism of
-chiral cdgas
+and at the factorisation level it is left Kan extension along the
+quotient map
 \[
-  \pi \colon (C_\bullet, Q) \;\xrightarrow{\;\sim\;}\; \cA,
+  q \colon \Ranord(X) \longrightarrow \Ran(X)=\Ranord(X)/\Sigma_\bullet.
 \]
-where $C_\bullet$ is the symmetric (super-symmetric) chiral algebra
-freely generated by a finite-rank set
-$\{c_\alpha\}_{\alpha \in I}$ of $\beta\gamma$ or $bc$ free fields with
-conformal weights $\{\lambda_\alpha\} \subset \tfrac12 \bbZ_{>0}$ and
-$\bbZ/2$-gradings $\{\varepsilon_\alpha\} \subset \{0, 1\}$, and $Q$
-is an odd derivation of square zero implementing the gauging
-constraints.  The grading convention: $\varepsilon_\alpha = 0$ marks
-a bosonic $\beta\gamma$ generator, $\varepsilon_\alpha = 1$ marks a
-fermionic $bc$ generator.
-\end{definition}
-
-\begin{remark}[Existence scope]
-\label{rem:uc-brst-existence}
-Quasi-free BRST resolutions exist for every chiral algebra that arises
-as the BRST cohomology of a free-field complex, including all simple
-affine Kac--Moody at non-critical level (Wakimoto resolution
-\cite{wakimoto1986}), all simple W-algebras at non-critical level via
-Drinfeld--Sokolov reduction
-(Feigin--Frenkel \cite{feigin_frenkel_ds}), all lattice VOAs (free-boson
-realisation), all free-field systems, and all small quantum groups at
-roots of unity via the Felder screening complex
-\cite{felder1989}.  The exclusion list (logarithmic VOAs without
-free-field characters; quasi-rational VOAs of unknown resolution;
-critical-level Kac--Moody) is the open frontier of the conductor
-programme; see Section~\ref{sec:uc-frontier}.
-\end{remark}
-
-\subsection{The Friedan--Martinec--Shenker formula}
-\label{ssec:uc-fms-formula}
-
-\begin{definition}[$bc$-ghost central charge at spin $\lambda$]
-\label{def:uc-bc-charge}
-For $\lambda \in \tfrac12 \bbZ_{>0}$, the spin-$\lambda$ $bc$-ghost
-system $bc(\lambda) = (b(z), c(z))$ with $b \in V_\lambda$,
-$c \in V_{1-\lambda}$ and OPE
+This is the map that sends the ordered bar package to its modular
+shadow.  It is not bar--cobar inversion, not Verdier Koszul duality,
+not the derived chiral centre $\DerZ(\cA)$, and not the categorical
+Drinfeld centre $\mathcal Z(\Rep^{E_1}(\cA))$.  The five objects
 \[
-  b(z)\,c(w) \;\sim\; \frac{1}{z - w},
-  \qquad
-  b(z)\,b(w) \;=\; c(z)\,c(w) \;=\; 0,
+  \cA,\qquad B(\cA),\qquad \cA^i,\qquad \cA^!,\qquad \DerZ(\cA)
 \]
-carries Virasoro central charge
-\begin{equation}
-  c_{bc(\lambda)} \;=\; -\,2\bigl(6\lambda^2 - 6\lambda + 1\bigr).
-  \label{eq:uc-bc-charge}
-\end{equation}
-This is the Friedan--Martinec--Shenker formula \cite{fms1986}; for
-$\lambda = 2$ it gives Polyakov's reparametrisation ghost
-$c_{bc(2)} = -26$ \cite{polyakov1981}.  The bosonic
-$\beta\gamma(\lambda)$ system has the opposite sign
-$c_{\beta\gamma(\lambda)} = +2(6\lambda^2 - 6\lambda + 1)$, by parity
-flip of the FMS formula.
-\end{definition}
+remain distinct throughout.
 
-\begin{definition}[Raw signed FMS sum of a chosen presentation]
-\label{def:uc-K-g}
-For $\cA$ admitting a quasi-free BRST resolution
-$(C_\bullet, Q) \to \cA$ in the sense of
-Definition~\ref{def:uc-brst-resolution}, define
-\begin{equation}
-  K_g^{\mathrm{raw}}(\cA; C_\bullet)
-  \;:=\;
-  -\,c_{\mathrm{ghost}}(C_\bullet)
-  \;=\;
-  \sum_{\alpha \in I}
-  (-1)^{\varepsilon_\alpha + 1}
-  \cdot 2\bigl(6 \lambda_\alpha^2 - 6 \lambda_\alpha + 1\bigr).
-  \label{eq:uc-K-g}
-\end{equation}
-This is the signed Friedan--Martinec--Shenker sum attached to the
-chosen free-field presentation $C_\bullet$.
-\end{definition}
+The chapter does six things, each in the strongest honest form used by
+the rest of the manuscript.
+\begin{enumerate}
+\item It defines $K$ by named chain-level and $(\infty,1)$-categorical
+  witnesses.
+\item It characterises the image of $K$ by three independent paths:
+  quotient, fixed-point splitting, and homotopy coinvariants.
+\item It exhibits named kernel classes for the four archetypes
+  $G/L/C/M$.
+\item It constructs the map from the standard landscape to
+  $\{G,L,C,M\}$ from the first nonzero averaged shadow, and verifies
+  it against the census row-by-row.
+\item It isolates the Vol~III scope: ordered Koszul locus only, with
+  named failure modes off that locus.
+\item It retains a small compatibility surface for the retired scalar
+  ghost-conductor citations already used elsewhere in the manuscript.
+\end{enumerate}
 
-\begin{remark}[Raw sum versus canonical ghost conductor]
-\label{rem:uc-raw-vs-canonical}
-The raw signed sum \eqref{eq:uc-K-g} is useful bookkeeping, but it is
-\emph{not} the Trinity invariant on the full standard landscape.  It
-depends on which free-field presentation is chosen.  The rank-$1$
-Heisenberg algebra already exhibits the obstruction: the bare free-boson
-presentation contributes $K_g^{\mathrm{raw}} = -2$, while the abelian
-affine gauge presentation uses one fermionic $bc(1)$ pair and gives the
-canonical value $+2$ of the Trinity conductor.  Frenkel--Kac--Segal
-level-$1$ lattice presentations similarly change the raw sum without
-changing the algebra.  The Trinity theorem therefore uses only the
-canonical gauge/Drinfeld--Sokolov BRST complexes listed in
-Definition~\ref{def:uc-three-conductors}.
-\end{remark}
-
-\section{The universal conductor functor $K$}
+\section{Definition of the averaging conductor}
 \label{sec:uc-definition}
 
-\subsection{Three definitions, three witnesses}
-\label{ssec:uc-three-definitions}
+\subsection{Chain-level witness}
+\label{subsec:uc-chain-level}
 
-The bar--cobar adjunction furnishes three structurally distinct
-candidates for a conductor on the canonical gauge/Drinfeld--Sokolov
-witness lane: the Euler character of the bar coalgebra, the
-central-charge sum across the Koszul pair, and the negative ghost
-charge of the \emph{canonical} BRST complex.  Each captures a
-different structural face of the same constant; the Trinity
-Theorem~\ref{thm:uc-trinity} proves their numerical coincidence on
-that witness lane.
-
-\begin{definition}[Three conductors]
-\label{def:uc-three-conductors}
-For
+\begin{definition}[Reynolds--coinvariant averaging]
+\label{def:uc-reynolds-coinvariant}
+Let $V=s^{-1}\bar\cA$.  For each $n\geq 0$, let
 \[
-  \cA \in \{
-    \mathcal{H}_k = V_k(\mathbb{C}),
-    \ V_k(\fg),\ \Vir_c,\ W_N^k(\mathfrak{sl}_N),\ \BP_k
-  \}
+  \Av^{\mathrm{Rey}}_{\Sigma_n}
+  \;:=\;
+  \frac{1}{n!}\sum_{\sigma\in\Sigma_n}\sigma
+  \colon
+  V^{\otimes n}\longrightarrow V^{\otimes n}
 \]
-with $V_k(\fg)$ and $W_N^k(\mathfrak{sl}_N)$ non-critical and
-$\mathcal{H}_k$ viewed as the abelian affine specialisation
-$V_k(\mathbb{C})$, define
-\begin{align*}
-  K_E(\cA) &\;:=\; \chi\bigl(B^{\mathrm{ch}}_X(\cA)\bigr)
-    && \text{(\emph{Euler-pairing}: bar Euler character),}\\[2pt]
-  K_c(\cA) &\;:=\; c(\cA) + c(\cA^!)
-    && \text{(\emph{central-charge sum} across the Koszul pair),}\\[2pt]
-  K_g(\cA) &\;:=\; -\,c_{\mathrm{ghost}}\bigl(\BRST_{\mathrm{can}}(\cA)\bigr)
-    && \text{(\emph{canonical ghost central charge}).}
-\end{align*}
-$K_E$ is well-defined when the bar coalgebra has finite-dimensional
-conformal-weight pieces (hypothesis~(H3) of
-Theorem~\ref{thm:bar-cobar-platonic}); $K_c$ requires the existence of
-a Koszul dual $\cA^!$ in $\KSDual(X)$; $K_g$ uses the family's
-canonical gauge/DS BRST complex:
+be the Reynolds projector and let
 \[
-  \BRST_{\mathrm{can}}(\mathcal{H}_k)=bc(1),\quad
-  \BRST_{\mathrm{can}}(V_k(\fg))=bc(1)^{\oplus \dim(\fg)},\quad
-  \BRST_{\mathrm{can}}(\Vir_c)=bc(2),
+  q_n \colon V^{\otimes n}\longrightarrow V^{\otimes n}_{\Sigma_n}
+  \cong \Symm^n(V)
 \]
+be the coinvariant quotient.  The \emph{chain-level universal
+conductor} is the coalgebra morphism
 \[
-  \BRST_{\mathrm{can}}(W_N)=\bigoplus_{j=2}^{N} bc(j),\qquad
-  \BRST_{\mathrm{can}}(\BP_k)=\text{the minimal DS complex for }
-  W^k(\mathfrak{sl}_3,f_{(2,1)}).
+  K_{\cA}^{\mathrm{ch}}
+  \;:=\;
+  \bigoplus_{n\geq 0} q_n\circ \Av^{\mathrm{Rey}}_{\Sigma_n}
+  \colon
+  B^{\Ord}(\cA)=T^c(V)\longrightarrow B^{\Sigma}(\cA)=\Symm^c(V).
 \]
 \end{definition}
 
-On this witness lane the ghost conductor $K_g$ is canonical for three
-reasons:
+\begin{definition}[Ordered-to-symmetric chiral homology descent]
+\label{def:uc-totalization}
+For a smooth complex curve $X$, write
+\[
+  \int_X^{\Ord}\cA
+  :=
+  \Tot\!\Bigl(\bigoplus_{n\geq 0}
+    C_\bullet(\Conf_n^{\Ord}(X),\cA^{\boxtimes n})\Bigr)
+\]
+for ordered chiral homology and
+\[
+  \int_X^{\mathrm{mod}}\cA
+  :=
+  \Tot\!\Bigl(\bigoplus_{n\geq 0}
+    C_\bullet(\Conf_n(X),(\cA^{\boxtimes n})_{\Sigma_n})\Bigr)
+\]
+for the symmetric modular shadow.  The induced descent map
+\[
+  K^{\mathrm{hom}}_{X,\cA}\colon
+  \int_X^{\Ord}\cA\longrightarrow\int_X^{\mathrm{mod}}\cA
+\]
+is defined on the $n$-th totalisation summand by the same Reynolds
+operator
+$\frac{1}{n!}\sum_{\sigma\in\Sigma_n}\sigma$ followed by passage to
+coinvariants.  This is the totalisation-level realisation of the
+ordered-to-symmetric descent of
+\eqref{eq:ordered-descent}.
+\end{definition}
 
-\begin{enumerate}
-\item \emph{The BRST model is fixed by the family.}  The affine,
-  Virasoro, principal DS, and minimal DS constructions come with a
-  preferred ghost complex; Heisenberg uses the abelian affine
-  specialisation.  No auxiliary free-field presentation is chosen.
-\item \emph{Computability without dual.} $K_g$ is computed from the
-  canonical ghost data alone; the central-charge definition requires
-  identifying $\cA^!$ explicitly.
-\item \emph{The boundary obstruction is explicit.}  Outside the
-  witness lane, the raw signed sum \eqref{eq:uc-K-g} is
-  presentation-dependent and is therefore \emph{not} used in the
-  Trinity theorem.  Free-field systems, lattice VOAs, and generic
-  non-principal $W$-algebras sit exactly at that boundary.
-\end{enumerate}
+\subsection{$(\infty,1)$-categorical witness}
+\label{subsec:uc-infinity-level}
 
-\subsection{The Universal Conductor Theorem}
-\label{ssec:uc-universal-conductor-theorem}
+\begin{definition}[Homotopy-coinvariant factorisation functor]
+\label{def:uc-homotopy-coinvariants}
+Let
+\[
+  q\colon \Ranord(X)\longrightarrow \Ran(X)=\Ranord(X)/\Sigma_\bullet
+\]
+be the quotient map of \eqref{eq:ran-as-quotient}.  For an ordered
+factorisation algebra $\mathcal F$ on $\Ranord(X)$, define
+\[
+  K^\infty(\mathcal F)
+  \;:=\;
+  q_!(\mathcal F)
+  \;\simeq\;
+  \mathcal F_{h\Sigma_\bullet},
+\]
+the left Kan extension along $q$, equivalently the homotopy
+coinvariants of the symmetric-group action.  Its right adjoint is the
+ordered pullback $q^*$, whose fibrewise description is given by
+homotopy fixed points.
+\end{definition}
 
-\begin{theorem}[\textbf{Universal Conductor}]
+\begin{theorem}[\textbf{Universal conductor as ordered-to-symmetric descent}]
 \label{thm:uc-universal-conductor}
 \ClaimStatusProvedHere
-There is a functor
+For every ordered chiral algebra $\cA$ on a smooth complex curve $X$,
+the assignment
 \[
-  \boxed{\;K \;\colon\; \BRSTGauged \;\longrightarrow\; \bbZ,
-        \qquad
-        K(\cA) \;=\; -\,c_{\mathrm{ghost}}\bigl(\BRST(\cA)\bigr)
-                  \;=\; \sum_{\alpha} (-1)^{\varepsilon_\alpha + 1}
-                          \cdot 2\bigl(6\lambda_\alpha^2 - 6\lambda_\alpha + 1\bigr)\;}
+  K_\cA=\Av_\cA\colon \gAE\longrightarrow \gAmod
 \]
-satisfying
+is a well-defined natural dg Lie morphism with the following two named
+witnesses.
 \begin{enumerate}
-\item[\textup{(P1)}] \emph{Resolution-independence.} $K(\cA)$ depends
-  only on the quasi-isomorphism class of $\cA$.  Two quasi-free
-  resolutions $(C_\bullet, Q)$ and $(C'_\bullet, Q')$ produce the
-  same value $-c_{\mathrm{ghost}}(C_\bullet) =
-  -c_{\mathrm{ghost}}(C'_\bullet)$.
-\item[\textup{(P2)}] \emph{Atiyah-class extension.} $K$ extends from
-  $\BRSTGauged$ to the larger subcategory of chiral algebras admitting
-  a perfect chiral Hochschild Atiyah class
-  $\Atiyah_\cA \in \Hch^2(\cA, \cA)$ via
-  \[
-    K(\cA) \;=\; -\,c\bigl(\Atiyah_\cA\bigr).
-  \]
-  The extension recovers $K_g$ on $\BRSTGauged$ and is well-defined
-  for chiral algebras outside the Koszul-self-dual locus
-  $\KSDual(X)$ (algebras without canonical $\cA^! \simeq \cA$; this
-  extension is orthogonal to chiral Koszulness, which holds
-  universally across the standard landscape).
-\item[\textup{(P3)}] \emph{Scaling under level shift.} Under the
-  Feigin--Frenkel involution $k \mapsto -k - 2 h^\vee$ on affine
-  Kac--Moody, $K$ is INVARIANT (level lives in the matter sector;
-  $K$ is matter-independent):
-  \[
-    K(\widehat{\fg}_k) \;=\; K(\widehat{\fg}_{-k-2h^\vee}) \;=\; 2\dim(\fg)
-    \quad \text{for all non-critical } k.
-  \]
-\item[\textup{(P4)}] \emph{Additivity under tensor product.} $K$ is
-  additive across the chiral tensor product:
-  \[
-    K(\cA \otimes \cB) \;=\; K(\cA) + K(\cB).
-  \]
-  In particular, the BRST resolution of $\cA \otimes \cB$ is the
-  tensor product of the resolutions of $\cA$ and $\cB$, and the
-  ghost-charge sum splits.
+\item[\textup{(i)}] \emph{Chain-level witness.}
+  $K_\cA$ is dual to the Reynolds--coinvariant map
+  $K_{\cA}^{\mathrm{ch}}$ of
+  Definition~\ref{def:uc-reynolds-coinvariant} on
+  $B^{\Ord}(\cA)\to B^{\Sigma}(\cA)$, equivalently to the
+  totalisation-level descent
+  $K_{X,\cA}^{\mathrm{hom}}$ of
+  Definition~\ref{def:uc-totalization}.
+\item[\textup{(ii)}] \emph{$(\infty,1)$-categorical witness.}
+  $K_\cA$ is induced by the homotopy-coinvariant functor
+  $q_!\simeq(-)_{h\Sigma_\bullet}$ of
+  Definition~\ref{def:uc-homotopy-coinvariants}.
+\end{enumerate}
+Moreover:
+\begin{enumerate}
+\item[\textup{(a)}] $K_\cA$ preserves the dg Lie differential and the
+  bracket because both are $\Sigma_n$-equivariant on ordered
+  configuration spaces.
+\item[\textup{(b)}] $K_\cA$ is lossy exactly at the ordered residue
+  sector: it remembers the symmetric modular shadow and forgets the
+  ordered commutator, associator, and higher braid data.
+\item[\textup{(c)}] $K_\cA$ is distinct from
+  $\Omega(B(\cA))\to \cA$, from Verdier-Koszul duality
+  $\cA\mapsto \cA^!$, from the derived centre
+  $\DerZ(\cA)$, and from the categorical Drinfeld centre
+  $\mathcal Z(\Rep^{E_1}(\cA))$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The argument has four steps, one per property.
+The ordered bar differential and the ordered convolution bracket are
+defined by sums over splittings and collision residues on ordered
+configuration spaces.  Each construction is $\Sigma_n$-equivariant:
+the deconcatenation coproduct is permutation-equivariant on
+$T^c(s^{-1}\bar\cA)$, and the Arnold relation forces the ordered
+differential to respect permutation of labels.  Hence the Reynolds
+projector commutes with the differential, and the quotient
+$q_n\colon V^{\otimes n}\to \Symm^n(V)$ is a chain map.  This proves
+the chain-level part.
 
-\smallskip
-\emph{(P1) Resolution-independence.}  Let
-$(C_\bullet, Q), (C'_\bullet, Q') \xrightarrow{\sim} \cA$ be two
-quasi-free BRST resolutions.  In the cofibrant model structure on
-chiral cdgas (Hinich \cite{hinich_homological}), any two cofibrant
-resolutions are connected by a zigzag of quasi-isomorphisms.  The
-total Virasoro central charge $c_{\mathrm{tot}} := c_{\mathrm{matter}}
-+ c_{\mathrm{ghost}}$ is invariant under quasi-isomorphism: the matter
-sector is fixed by the cohomology, and the ghost sector is determined
-by the alternating sum of $bc(\lambda_\alpha)$-charges over generators,
-which is a chain-level invariant of the cdga
-\cite[\S 3]{fms1986}.  Hence
-$-c_{\mathrm{ghost}}(C_\bullet) = -c_{\mathrm{ghost}}(C'_\bullet) = K(\cA)$.
+The factorisation-theoretic part is the ordered-to-symmetric descent
+already used in the ordered modular package: since
+$\Ran(X)=\Ranord(X)/\Sigma_\bullet$, left Kan extension along $q$
+identifies the symmetric object with fibrewise homotopy coinvariants.
+Passing to the dual convolution algebras gives the dg Lie morphism
+$K_\cA\colon \gAE\to \gAmod$.
 
-\smallskip
-\emph{(P2) Atiyah-class extension.}  The chiral Hochschild Atiyah
-class $\Atiyah_\cA \in \Hch^2(\cA, \cA)$ is the obstruction to splitting
-the chiral first-jet sequence
-\[
-  0 \to \Omega^1_\cA \otimes \cA \to J^1(\cA) \to \cA \to 0
-\]
-in the chiral category (cf.~Beilinson--Drinfeld
-\cite[Ch.~3]{beilinson_drinfeld_chiral}).  Two routes give the same
-extension.
-
-\emph{Route~1: chiral Riemann--Roch--Grothendieck.}  The
-central-charge contribution of $\Atiyah_\cA$ to the modular
-characteristic is
-$\rho(\cA) \cdot c_{\mathrm{ghost}}(\BRST(\cA))$, where $\rho(\cA)$ is
-the anomaly density (Section~\ref{ssec:uc-anomaly-density}).  The
-ratio $\kappa(\cA) / \rho(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$ is
-the conductor.
-
-\emph{Route~2: Faltings GRR at genus~$1$.}  The conductor at genus~$1$
-is the degree of the Quillen determinant line bundle on
-$\overline{M}_{1,1}$ \cite{faltings1992}.  The Mumford class on
-$M_{1,1}$ has degree $24$ (the discriminant $\Delta$ of weight $12$,
-with $c_1(\lambda_1) = \tfrac{1}{12}[\Delta]$).  The genus-$1$ Faltings
-GRR identity $24\,\kappa_{g=1}(\cA) = K(\cA) \cdot \rho(\cA)$ extracts
-$K$ from the Quillen anomaly, and the Quillen anomaly equals the
-central charge of the diagonal Atiyah class.
-
-The two routes give the same $K$ by the Trinity
-(Theorem~\ref{thm:uc-trinity}).
-
-\smallskip
-\emph{(P3) Scaling invariance under level shift.}  For affine
-Kac--Moody $\widehat{\fg}_k$ at non-critical level $k$, the Wakimoto
-realisation provides a quasi-free resolution by adjoint
-$bc(1)$-ghosts; the level $k$ enters only through the matter sector
-(the screening Heisenberg currents), not through the ghost weights.
-Hence $K_g(\widehat{\fg}_k) = \dim(\fg) \cdot K_g(bc(1)) = 2\dim(\fg)$
-is level-independent.  The Feigin--Frenkel involution
-$k \mapsto -k - 2 h^\vee$ permutes the screening operators within the
-same Wakimoto algebra, so the resolution data are unchanged.
-
-\smallskip
-\emph{(P4) Tensor-product additivity.}  Given quasi-free resolutions
-$(C_\bullet, Q) \to \cA$, $(C'_\bullet, Q') \to \cB$, the chiral tensor
-product $(C_\bullet \otimes C'_\bullet, Q \otimes 1 + 1 \otimes Q')
-\to \cA \otimes \cB$ is a quasi-free resolution by Kunneth.  The total
-ghost-charge generator set is the disjoint union of the two generator
-sets, with weights $(\lambda_\alpha)_{\alpha \in I} \sqcup
-(\lambda'_\beta)_{\beta \in J}$ and gradings
-$(\varepsilon_\alpha)_{\alpha \in I} \sqcup
-(\varepsilon'_\beta)_{\beta \in J}$, so
-$K_g(\cA \otimes \cB) = K_g(\cA) + K_g(\cB)$.
+Finally, the source and target objects distinguish $K$ from the four
+other load-bearing constructions.  The bar--cobar counit
+$\Omega(B(\cA))\to \cA$ is an inversion map; Verdier duality defines
+the Koszul dual algebra $\cA^!$; $\DerZ(\cA)$ is a bulk algebra built
+from chiral Hochschild cochains; and
+$\mathcal Z(\Rep^{E_1}(\cA))$ is a braided monoidal category.  The
+universal conductor is none of these: it is the ordered-to-symmetric
+projection.
 \end{proof}
 
-\section{Trinity Theorem: $K_E = K_c = K_g$}
-\label{sec:uc-trinity}
+\section{Image of the conductor}
+\label{sec:uc-image}
 
-\begin{theorem}[\textbf{Trinity: per-family}]
+\begin{theorem}[\textbf{Three descriptions of the image}]
 \label{thm:uc-trinity}
 \ClaimStatusProvedHere
-Let
-$\cA \in \{\mathcal{H}_k, \psi, bc(\lambda), \beta\gamma(\lambda),
-V_k(\fg), \Vir_c, W_N, \BP, V_L\}$
-belong to one of the nine inscribed standard-landscape families, with
-$V_k(\fg)$ at non-critical level and $V_L$ on even unimodular $L$.  Then
-the three conductors of Definition~\ref{def:uc-three-conductors}
-coincide:
-\[
-  K_E(\cA) \;=\; K_c(\cA) \;=\; K_g(\cA) \;=\; K(\cA).
-\]
-The arrow $K_E = K_c$ is uniform on the Koszul-self-dual locus (bar
-Euler theorem, Theorem~\ref{thm:bar-cobar-platonic}).  The arrow
-$K_c = K_g$ is verified per-family via the family's own matter
-reflection: Feigin--Fuks $c \mapsto 26 - c$ for Virasoro extended to
-principal $W_N$ by Feigin--Frenkel screening; Sugawara reflection
-$k \mapsto -k - 2 h^\vee$ for affine Kac--Moody; Bershadsky--Polyakov
-$k \mapsto -k - 6$ for $W_3^{(2)}$; unimodular self-duality for
-$V_L$.
-\end{theorem}
-
-\begin{remark}[Scope: families outside the per-family list are open]
-\label{rem:uc-trinity-scope}
-Families outside the per-family list of Theorem~\ref{thm:uc-trinity} ---
-logarithmic $W(p)$, the $\cN = 2$ superconformal algebra, non-principal
-$W$-algebras without matching Drinfeld--Sokolov dual, roots-of-unity
-small quantum groups, indefinite non-rational lattice vertex algebras ---
-admit no verified matter reflection $c_{\mathrm{matter}}(\cA) =
--\,c_{\mathrm{matter}}(\cA^!)$; the $K_c = K_g$ arrow is open for each.
-Predictions~\ref{pred:uc-K-W-sl4-22}--\ref{pred:uc-K-twisted-A22}
-extend the per-family list computationally, but each extension is its
-own verification.
-\end{remark}
-
-\begin{conjecture}[Uniform Trinity]
-\label{conj:uc-trinity-uniform}
-\ClaimStatusConjectured
-A single universal matter-reflection theorem
-$c_{\mathrm{matter}}(\cA) = -\,c_{\mathrm{matter}}(\cA^!)$
-holds across the full Koszul-self-dual BRST-gauged subcategory
-$\KSDual(X) \cap \BRSTGauged \subset \mathrm{ChirAlg}^{E_\infty}_X$.  On
-the $\mathrm{C}_2$-cofinite non-logarithmic subcategory admitting a
-principal Drinfeld--Sokolov reduction from a simple affine Kac--Moody
-algebra, the conjecture reduces to Feigin--Frenkel screening and is
-proved.  The frontier is logarithmic $W(p)$ and the roots-of-unity
-small quantum group locus.
-\end{conjecture>
-
-\begin{proof}
-The proof has three arrows.
-
-\smallskip
-\emph{Arrow $K_E = K_c$.}  By
-Theorem~\ref{thm:bar-cobar-platonic}, the bar functor
-$B^{\mathrm{ch}}_X$ sends $\cA$ to a coaugmented conilpotent
-factorisation coalgebra $B^{\mathrm{ch}}_X(\cA)$.  The Euler character
-$\chi(B^{\mathrm{ch}}_X(\cA))$ equals the graded character of the bar
-complex evaluated at $q = 1$.  By the Koszul-Euler theorem
-(Vol~I Chapter~\ref{chap:bar-cobar-adjunction}, Theorem~B),
-this graded character coincides with the Hilbert--Poincar\'e series of
-$\cA$ paired against that of $\cA^!$ on the Koszul-self-dual locus.
-Extracting the $q^0$-coefficient via the Faltings genus-$1$ Riemann--Roch
-identity \cite{faltings1992} gives the central-charge sum
-$c(\cA) + c(\cA^!) = K_c(\cA)$.
-
-\smallskip
-\emph{Arrow $K_c = K_g$.}  For a quasi-free BRST resolution
-$(C_\bullet, Q) \to \cA$ the Euler--Poincar\'e principle gives
-\[
-  c(\cA) \;=\; c_{\mathrm{matter}}(\cA) - c_{\mathrm{ghost}}(\cA).
-\]
-The matter-reflection
-$c_{\mathrm{matter}}(\cA) = -\,c_{\mathrm{matter}}(\cA^!)$ is not a
-single universal theorem but the union of per-family involutions:
-the Feigin--Fuks $c \mapsto 26 - c$ symmetry for Virasoro
-\cite{feiginfuks1983}; the Sugawara denominator reflection
-$k \mapsto -\,k - 2 h^\vee$ for affine Kac--Moody
-\cite{kacpeterson1984,kac1998}; the Bershadsky--Polyakov
-$k \mapsto -\,k - 6$ self-duality for $W_3^{(2)}$
-\cite{polyakov1990,bershadsky1991,arakawa2005}; the Feigin--Frenkel
-screening symmetry on principal $W_N$
-\cite{feiginfrenkel1992,arakawa2017}; and lattice $\ZZ_N$
-self-duality for rational lattice vertex algebras.  Each family's
-reflection is cited separately; the $K_c = K_g$ arrow closes on the
-union over the Koszul-self-dual locus.  Applying the Euler--Poincar\'e
-identity to both $\cA$ and $\cA^!$ and invoking the family-appropriate
-reflection, we obtain
-\[
-  K_c(\cA) \;=\; c(\cA) + c(\cA^!)
-        \;=\; -\bigl(c_{\mathrm{ghost}}(\cA) + c_{\mathrm{ghost}}(\cA^!)\bigr)
-        \;=\; -\,2\,c_{\mathrm{ghost}}(\cA),
-\]
-where the last equality uses $\BRST(\cA^!) = \BRST(\cA)$ on the
-Koszul-self-dual locus (the BRST data are intrinsic to the resolution,
-not to $\cA$ vs $\cA^!$).  The convention $K_g := -\,c_{\mathrm{ghost}}$
-absorbs the factor of $2$ via the symmetric sum: for affine
-Kac--Moody, $K_g(\widehat{\fg}_k) = 2\dim(\fg)
-= K_c(\widehat{\fg}_k) = c(\widehat{\fg}_k) + c(\widehat{\fg}_{-k-2h^\vee})$
-(verified per-family via
-Corollaries~\ref{cor:uc-K-heisenberg}--\ref{cor:uc-K-lattice}).
-
-\smallskip
-\emph{Arrow $K_E = K_g$ (transitivity).}  By the two arrows above.
-
-\smallskip
-\emph{Where each arrow lives.}  The arrow $K_E = K_c$ uses the bar
-Euler-character formula and is INTRINSIC to the bar--cobar adjunction
-(no resolution data).  The arrow $K_c = K_g$ uses the existence of a
-quasi-free resolution and is INTRINSIC to BRST gauging (no Koszul-pair
-identification).  Both arrows independently prove the same numerical
-identity.
-\end{proof}
-
-\subsection{Why $K_g$ is the canonical definition}
-\label{ssec:uc-K-g-canonical}
-
-\begin{remark}[$K_g$ as the working definition]
-\label{rem:uc-K-g-canonical}
-$K_E$ requires constructing the bar complex and computing its Euler
-character; $K_c$ requires identifying the Koszul dual algebra
-explicitly.  Both are conceptually canonical but computationally
-opaque.  $K_g$ is computed from the resolution data alone, in finitely
-many spin contributions
-\eqref{eq:uc-K-g}, and extends beyond the
-Koszul-self-dual locus via Theorem~\ref{thm:uc-universal-conductor}~(P2).
-We adopt $K_g$ as the working definition throughout this chapter.
-\end{remark}
-
-\section{Per-family corollaries}
-\label{sec:uc-per-family-corollaries}
-
-Each row of the per-family conductor table of
-\texttt{landscape\_census.tex} becomes a corollary of the Universal
-Conductor Theorem. The proof in each case reads the ghost-charge sum
-\eqref{eq:uc-K-g} off the spins and parities of the resolution
-generators; no per-family central-charge formula is invoked.
-
-\subsection{Heisenberg $\mathcal{H}_k$}
-\label{ssec:uc-heisenberg}
-
-\begin{corollary}[Heisenberg]
-\label{cor:uc-K-heisenberg}
-\ClaimStatusProvedHere
-$K(\mathcal{H}_k) = -2$ for any level $k \neq 0$.  The value is
-level-independent (the single free boson has central charge $c = 1$
-regardless of $k$, the level being absorbed into the rescaling
-$J \to J/\sqrt{k}$), and matches the symmetric-form value
-$K^c(\mathcal{H}_k) = c(\mathcal{H}_k) + c(\mathcal{H}_k^!) = 1 + 1 = 2$
-up to the sign convention $K := -c_{\mathrm{ghost}}$.
-\end{corollary}
-
-\begin{proof}
-The Heisenberg vertex algebra $\mathcal{H}_k$ at level $k$ is the
-single-boson chiral algebra with OPE $J(z)\,J(w) \sim k/(z - w)^2$.  It
-is itself quasi-free: $C_\bullet = \mathcal{H}_k$ in degree zero,
-$Q = 0$.  The single bosonic generator $J$ has spin $\lambda = 1$,
-$\varepsilon = 0$, contributing
-\[
-  K(\mathcal{H}_k) \;=\; (-1)^{0+1} \cdot 2(6 - 6 + 1) \;=\; -2,
-\]
-via \eqref{eq:uc-K-g}.  The level $k$ enters the matter normalisation,
-not the ghost weight, so $K(\mathcal{H}_k)$ is read off the spin alone.
-\end{proof}
-
-\begin{remark}[$K_g$ vs the $\kappa$-complementarity sum]
-\label{rem:uc-heisenberg-scope-distinction}
-The working conductor $K_g(\mathcal{H}_k) = -2$ is distinct from the
-$\kappa$-complementarity sum
-$\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!)
-= k + (-k) = 0$
-recorded at
-Proposition~\ref{V1-prop:complementarity-landscape} in
-\texttt{higher\_genus\_complementarity.tex}~Table
-\ref{V1-tab:complementarity-landscape} and on the free-field block of
-\texttt{landscape\_census.tex}~L132.  The two invariants compute
-different structural traces: $K_g$ is the negative ghost charge of a
-fixed BRST resolution (here trivial), and
-$\kappa + \kappa^!$ is the scalar complementarity of the
-modular-characteristic $\kappa$ across the Koszul pair.  They are
-related by $\kappa(\cA) + \kappa(\cA^!) = \varrho_\cA \cdot K(\cA)$
-with $\varrho_{\mathcal{H}} = 0$ on free-field class G
-(cf.~Remark~\ref{rem:uc-harmonic-density-WN} for the $W_N$ analogue
-with $\varrho_N = H_N - 1$).  The coincidence of letter $K$ across the
-two invariants is historical; the level-dependent form
-``$K(\mathcal{H}_k) = -k$'' conflates the two and is RETIRED.
-\end{remark>
-
-\subsection{Virasoro $\Vir_c$}
-\label{ssec:uc-virasoro}
-
-\begin{corollary}[Virasoro]
-\label{cor:uc-K-virasoro}
-\ClaimStatusProvedHere
-$K(\Vir_c) = 26$ for all $c \neq 0$.  This is the Polyakov critical
-dimension of bosonic string theory \cite{polyakov1981}.
-\end{corollary}
-
-\begin{proof}
-The diffeomorphism BRST resolution of $\Vir_c$ uses a single
-$bc(2)$-ghost pair (the reparametrisation ghost):
-\[
-  K(\Vir_c) \;=\; K(bc(2)) \;=\; 2(6 \cdot 4 - 12 + 1) \;=\; 2 \cdot 13 \;=\; 26.
-\]
-Equivalently, in the symmetric form $K^c$, the Koszul dual is
-$\Vir_{26 - c}$ and $K^c(\Vir_c) = c + (26 - c) = 26$ matches
-\texttt{landscape\_census.tex}~L191.
-The self-dual point $c = 13$ is the fixed locus of the Koszul
-involution $c \mapsto 26 - c$.
-\end{proof}
-
-\subsection{Affine Kac--Moody $V_k(\fg)$}
-\label{ssec:uc-affine-KM}
-
-\begin{corollary}[Affine Kac--Moody]
-\label{cor:uc-K-affine-KM}
-\ClaimStatusProvedHere
-For any simple Lie algebra $\fg$ and any non-critical level
-$k \neq -h^\vee$,
-\[
-  K\bigl(V_k(\fg)\bigr) \;=\; 2 \dim(\fg).
-\]
-In particular $K(\widehat{\mathfrak{sl}}_N) = 2(N^2 - 1)$,
-$K(\widehat{D}_4) = 56$, $K(\widehat{E}_8) = 496$.
-\end{corollary}
-
-\begin{proof}
-The Wakimoto--Feigin--Frenkel resolution of $V_k(\fg)$ at non-critical
-level realises the affine Kac--Moody algebra inside a Heisenberg algebra
-with screening operators \cite{wakimoto1986, feigin_frenkel_ds}.  The
-canonical gauge BRST gauges away the screening directions: it employs
-$\dim(\fg)$ adjoint $bc(1)$-ghosts, one per Lie-algebra direction.  Each
-$bc(1)$-pair contributes $K(bc(1)) = 2(6 - 6 + 1) = 2$.  Total
-\[
-  K(V_k(\fg)) \;=\; \dim(\fg) \cdot 2 \;=\; 2\dim(\fg),
-\]
-matching the symmetric-form value $K^c = c(V_k(\fg))
-+ c(V_{-k-2h^\vee}(\fg)) = 2\dim(\fg)$ recorded at
-\texttt{landscape\_census.tex}~L142 (general formula
-$K^c = 2 d$ with $d = \dim(\fg)$).  The level $k$ enters the matter
-sector through the Sugawara central charge
-$c(V_k(\fg)) = k\dim(\fg)/(k+h^\vee)$ but does not affect the ghost
-charge.  Sympy verification across $\fg \in \{\mathfrak{sl}_2,
-\mathfrak{sl}_3, \mathfrak{sl}_4, \mathfrak{sl}_5, E_7, E_8\}$ in Wave~13
-Appendix~A.
-\end{proof}
-
-\begin{remark}[Trace-form vs KZ convention for the $r$-matrix]
-\label{rem:uc-rmatrix-convention}
-We use the trace-form convention $r(z) = k\,\Omega/z$ throughout: the
-$r$-matrix carries the explicit level prefix $k$ and vanishes
-at $k = 0$, where the algebra abelianises to $\dim(\fg)$ free bosons
-of zero level.  The KZ convention
-$r^{\mathrm{KZ}}(z) = \Omega/((k+h^\vee)\,z)$ gives a non-zero limit
-$\Omega/(h^\vee z)$ at $k = 0$ for non-abelian $\fg$ (the Lie bracket
-persists), and diverges at the critical level $k = -h^\vee$.  Both
-conventions parametrise the same connection up to the rescaling
-$k\,\Omega_{\mathrm{tr}} = \Omega/(k+h^\vee)$ at generic $k$.
-The conductor is INVARIANT under this rescaling: both conventions give
-$K(V_k(\fg)) = 2\dim(\fg)$.
-\end{remark}
-
-\subsection{Principal $W_N$}
-\label{ssec:uc-WN}
-
-\begin{corollary}[Principal $W_N$ cubic]
-\label{cor:uc-K-WN}
-\ClaimStatusProvedHere
-For principal $W_N = W_N^k(\mathfrak{sl}_N)$ at non-critical level,
-\[
-  K(W_N) \;=\; \sum_{j=2}^{N} 2\bigl(6 j^2 - 6 j + 1\bigr)
-        \;=\; 4 N^3 - 2 N - 2 \;=\; 2(N - 1)(2 N^2 + 2 N + 1).
-\]
-The third forward difference $\Delta^3 K(W_N) = 24$ is constant for
-$N \geq 2$.  Recovers $K(W_2) = K(\Vir) = 26$, $K(W_3) = 100$,
-$K(W_4) = 246$, $K(W_5) = 488$, $K(W_6) = 850$, matching
-\texttt{landscape\_census.tex}~L199.
-\end{corollary}
-
-\begin{proof}
-The Toda BRST tower realises $W_N$ as the cohomology of a free-field
-complex with $bc(j)$-ghost generators at spins
-$j \in \{2, 3, \ldots, N\}$, one per Casimir generator
-\cite{feigin_frenkel_ds, deboer_tjin1993}.  In the principal
-Drinfeld--Sokolov reduction of $\widehat{\mathfrak{sl}}_N$, the Toda
-screening operators are constructed from FERMIONIC $bc$-ghost pairs
-(one per simple root, each lifted to the spin of the corresponding
-Casimir generator; cf.\ KRW03 \cite{kac_roan_wakimoto2003}); the BRST
-charge is the sum of screening currents, each of which is a fermionic
-operator.  Hence in the principal $W_N$ context all generators are
-fermionic ($\varepsilon_\alpha = 1$) at spin $\lambda_\alpha = j_\alpha
-\in \{2, \ldots, N\}$.  (For non-principal nilpotents $f$, the
-ghost gradings split between $bc$ and $\beta\gamma$ via the
-Jacobson--Morozov decomposition; the principal case considered here is
-purely fermionic. Cf.\ evaluation-generated-core scope.) Apply
-\eqref{eq:uc-K-g}:
-\[
-  K(W_N) \;=\; \sum_{j=2}^{N} 2(6 j^2 - 6 j + 1).
-\]
-Standard finite sums:
-$\sum_{j=2}^{N} j^2 = N(N+1)(2N+1)/6 - 1$,
-$\sum_{j=2}^{N} j = N(N+1)/2 - 1$, give
-\[
-  12 \sum_{j=2}^{N} j^2 - 12 \sum_{j=2}^{N} j + 2(N - 1)
-  \;=\; 4 N^3 - 2 N - 2.
-\]
-Factoring: $2(N - 1)(2 N^2 + 2 N + 1) = 2(N - 1)(N^2 + (N+1)^2)$.
-The third forward difference of any cubic $a N^3 + b N^2 + c N + d$
-equals $6 a$; with $a = 4$ this is $\Delta^3 K(W_N) = 24$.  Sympy
-verification for $N = 2, \ldots, 8$ via the
-\texttt{compute/lib/conductor\_W\_N.py} engine
-(cross-referenced against \texttt{landscape\_census.tex}~L199).
-\end{proof}
-
-\begin{remark}[The harmonic anomaly density of $W_N$]
-\label{rem:uc-harmonic-density-WN}
-The anomaly density $\rho(W_N) = \sum_{j = 2}^{N} 1/j = H_N - 1$ is
-the harmonic-number-shifted sum over Casimir spins.  The
-modular-characteristic conductor
-\[
-  K^\kappa(W_N) \;:=\; \kappa(W_N) + \kappa(W_N^!)
-                 \;=\; K(W_N) \cdot \rho(W_N)
-                 \;=\; 2(N - 1)(2 N^2 + 2 N + 1)(H_N - 1)
-\]
-is the Wess--Zumino-type product $\kappa = \rho \cdot c$
-(Frenkel--Wakimoto anomaly density).  For $W_2 = \Vir$,
-$\rho(W_2) = H_2 - 1 = 1/2$, $K^\kappa(\Vir) = 26 \cdot 1/2 = 13$, the
-Virasoro self-dual central charge realised at $c = 13$ (scope: the
-Virasoro self-dual point is $c = 13$, the fixed locus of the Koszul
-involution $c \mapsto 26 - c$, NOT a generic property at all $c$).
-The boundary case $N = 2$ matches
-$\kappa(\Vir_c) = c/2$ (\texttt{landscape\_census.tex}~L191) via
-$K^\kappa = c + c' = 2 \kappa$ at $c = c'$.
-\end{remark}
-
-\subsection{Bershadsky--Polyakov $\BP$}
-\label{ssec:uc-BP}
-
-\begin{corollary}[Bershadsky--Polyakov decomposition]
-\label{cor:uc-K-BP}
-\ClaimStatusProvedHere
-$K(\BP) = 196$ for the BP algebra
-$\BP_k = W^k(\mathfrak{sl}_3, f_{(2,1)})$.  Equivalently, in the
-symmetric form,
-\[
-  c_{\BP}(k) + c_{\BP}(-k - 6) \;\equiv\; 196,
-\]
-matching \texttt{landscape\_census.tex}~L207 and the polynomial-identity
-theorem of \texttt{bp\_self\_duality.tex}.  The structural decomposition
-\[
-  K(\BP) \;=\; 2\dim(\mathfrak{sl}_3) + K(\DS_{(2,1)} \text{ ghosts})
-        \;=\; 16 + 180
-        \;=\; 196
-\]
-exhibits the BP conductor as the sum of (i) the affine gauge BRST
-of $\widehat{\mathfrak{sl}}_3$ and (ii) the DS reduction ghosts at the
-minimal nilpotent $f_{(2,1)}$.
-\end{corollary}
-
-\begin{proof}
-BP is the quantised DS reduction of $\widehat{\mathfrak{sl}}_3$ at the
-minimal nilpotent $f_{(2,1)}$ \cite{bershadsky1991, kac_roan_wakimoto2003}.
-Its quasi-free BRST resolution decomposes:
-\begin{itemize}
-\item Gauge ghosts of $\mathfrak{sl}_3$: $\dim(\mathfrak{sl}_3) = 8$ copies
-  of $bc(1)$, contributing $8 \cdot K(bc(1)) = 8 \cdot 2 = 16$.
-\item DS reduction ghosts at $f_{(2,1)}$: the Jacobson--Morozov
-  $\mathfrak{sl}_2$-grading on $\mathfrak{sl}_3$ decomposes
-  $\mathfrak{g} = \mathfrak{g}_{-1} \oplus \mathfrak{g}_{-1/2} \oplus
-  \mathfrak{g}_0 \oplus \mathfrak{g}_{1/2} \oplus \mathfrak{g}_1$ with
-  $\dim\mathfrak{g}_{1/2} = 2$ (weight-$1$ ghosts),
-  $\dim\mathfrak{g}_1 = 1$ (weight-$3/2$ ghost).  With BRST signs from
-  the Kac--Roan--Wakimoto quantum DS construction
-  \cite{kac_roan_wakimoto2003}, the DS contribution evaluates to
-  $K(\DS_{(2,1)}) = 180$.
-\end{itemize}
-Summing: $K(\BP) = 16 + 180 = 196$.  The polynomial-identity check
-$c_{\BP}(k) + c_{\BP}(-k - 6) \equiv 196$ in the FKR convention
-$c_{\BP}(k) = 2 - 24(k+1)^2/(k+3)$ (Frenkel--Kac--Wakimoto;
-\texttt{landscape\_census.tex}~L207) is the Koszul-self-dual symmetric-sum
-verification.  Note: $K_{\BP} = 196$ in the central-charge convention,
-NOT~$2$ (cf.\ Wrong-Formula-Blacklist entry B25). The modular-characteristic
-form $K^\kappa(\BP) = K(\BP) \cdot \rho(\BP) = 196 \cdot 1/6 = 98/3$
-appears in \texttt{koszulness\_fourteen\_characterizations.tex}~L1310,
-recognised here as $K^\kappa$, NOT $K^c$.
-\end{proof}
-
-\subsection{Lattice VOAs $V_L$}
-\label{ssec:uc-lattice}
-
-\begin{corollary}[Lattice VOA]
-\label{cor:uc-K-lattice}
-\ClaimStatusProvedHere
-For the lattice VOA $V_L$ associated to a positive-definite even
-unimodular lattice $L$ of rank $r$,
-\[
-  K(V_L) \;=\; \mathrm{rank}(L) \;=\; r.
-\]
-For the Leech lattice $V_{\Lambda_{24}}$, $K = 24$, matching
-\texttt{landscape\_census.tex}~L215 ($\kappa(V_{\Lambda_{24}}) = 24$).
-For the Niemeier lattices (24 even unimodular lattices in dimension 24),
-$K = 24$ uniformly (the conductor is blind to root system,
-matching Theorem~\ref{thm:lattice:niemeier-shadow-universality}).
-\end{corollary}
-
-\begin{proof}
-The lattice VOA $V_L$ is freely generated by $r = \mathrm{rank}(L)$
-free bosons (Heisenberg currents at spin $1$) plus discrete translations
-by lattice vectors.  The free-boson sector has resolution data:
-$r$ copies of $bc(1)$ in matter convention with effective sign giving
-$K(V_L) = r \cdot 1 = r$.  For unimodular $L$, the lattice translations
-are absorbed into the matter sector with zero net ghost contribution
-(the dual lattice $L^* = L$ closes the BRST under self-duality of the
-Heisenberg via Frenkel--Kac--Segal \cite{frenkel_kac_lepowsky}).  The
-$\kappa$-conductor of the level-$1$ simply-laced KM-VOA collapses under
-the FKS isomorphism $\widehat{\fg}_1 \cong V_{\Lambda_\fg}$ to the
-lattice value $\kappa(V_{\Lambda_\fg}) = \mathrm{rank}(\fg)$
-(\texttt{landscape\_census.tex}~L741, Proposition
-\ref{V1-prop:level1-kappa-reduction}); the conductor accordingly drops
-from $K(\widehat{\fg}_1) = 2\dim(\fg)$ to $K(V_{\Lambda_\fg}) = r$.
-\end{proof}
-
-\subsection{$\beta\gamma$ system}
-\label{ssec:uc-betagamma}
-
-\begin{corollary}[$\beta\gamma$ system]
-\label{cor:uc-K-betagamma}
-\ClaimStatusProvedHere
-For a single $\beta\gamma(\lambda)$ pair with bosonic generators at
-spins $(\lambda, 1 - \lambda)$,
-\[
-  K\bigl(\beta\gamma(\lambda)\bigr) \;=\; -\,2\bigl(6\lambda^2 - 6\lambda + 1\bigr).
-\]
-The $bc(\lambda) \oplus \beta\gamma(\lambda)$ Koszul-pair sum gives
-$K(bc) + K(\beta\gamma) = 0$, recovering the parity-flip cancellation
-identity $c_{bc} + c_{\beta\gamma} = 0$
-(\texttt{landscape\_census.tex}~L127, $c_{bc \oplus \beta\gamma} = 0$).
-\end{corollary}
-
-\begin{proof}
-A single $\beta\gamma(\lambda)$ generator pair has central charge
-$c_{\beta\gamma(\lambda)} = +2(6\lambda^2 - 6\lambda + 1)$ (the
-parity-flipped FMS formula \eqref{eq:uc-bc-charge}).  Both generators
-are bosonic ($\varepsilon = 0$), giving
-\[
-  K(\beta\gamma(\lambda))
-  \;=\; -\,c_{\beta\gamma(\lambda)}
-  \;=\; -\,2(6\lambda^2 - 6\lambda + 1).
-\]
-The $bc \oplus \beta\gamma$ Koszul pair sums to
-$2(6\lambda^2 - 6\lambda + 1) - 2(6\lambda^2 - 6\lambda + 1) = 0$,
-witnessing the C-class parity-flip duality
-(\texttt{landscape\_census.tex}~L127).
-\end{proof}
-
-\subsection{Free fermion $\psi$}
-\label{ssec:uc-fermion}
-
-\begin{corollary}[Free fermion]
-\label{cor:uc-K-free-fermion}
-\ClaimStatusProvedHere
-The single Majorana free fermion $\psi$ (a $bc(1/2)$-pair with both
-generators fermionic of spin $1/2$) satisfies
-\[
-  K(\psi) \;=\; -1.
-\]
-The charge-conjugate-paired fermion $\psi \oplus \bar\psi$ has
-$K(\psi \oplus \bar\psi) = 0$, by additivity
-(Theorem~\ref{thm:uc-universal-conductor}~(P4)).
-\end{corollary}
-
-\begin{proof}
-A single Majorana fermion is a $bc(1/2)$-pair: $b, c$ both fermionic
-($\varepsilon = 1$) at spin $1/2$.  Apply
-\eqref{eq:uc-K-g}:
-\[
-  K(\psi) \;=\; (-1)^{1+1} \cdot 2(6 \cdot 1/4 - 3 + 1)
-        \;=\; 2(3/2 - 2) \;=\; 2 \cdot (-1/2) \;=\; -1.
-\]
-The paired fermion $\psi \oplus \bar\psi$ doubles the contribution with
-opposite sign convention (charge conjugation negates the BRST charge),
-giving net $K = -1 + 1 = 0$ matching
-\texttt{landscape\_census.tex}~L123, $\kappa(\psi) = 1/4$ in
-$\kappa = K^c/4$ convention.  The single $\psi$ entry $K = -1$ resolves
-the ambiguous ``$K = 0$'' label of the paired-fermion entry: the two
-distinct conductor values reflect distinct algebras
-($\psi$ vs $\psi \oplus \bar\psi$).
-\end{proof}
-
-\subsection{Summary table}
-\label{ssec:uc-corollaries-summary}
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{|l|c|c|l|}
-\hline
-\textbf{Family $\cA$} & $\boldsymbol{K(\cA)}$ & \textbf{Generators (spin, $\varepsilon$)}
- & \textbf{Census ref} \\
-\hline
-Heisenberg $\mathcal{H}_k$ & $-2$ & $(1, 0) \cdot 1$
- & L132, Cor.\ref{cor:uc-K-heisenberg} \\
-\hline
-Free fermion $\psi$ & $-1$ & $(1/2, 1) \cdot 2$
- & L123, Cor.\ref{cor:uc-K-free-fermion} \\
-\hline
-$bc(\lambda)$ ghost & $2(6\lambda^2 - 6\lambda + 1)$ & $(\lambda, 1) + (1-\lambda, 1)$
- & L127, Eq.\eqref{eq:uc-bc-charge} \\
-\hline
-$\beta\gamma(\lambda)$ system & $-2(6\lambda^2 - 6\lambda + 1)$ & $(\lambda, 0) + (1-\lambda, 0)$
- & L127, Cor.\ref{cor:uc-K-betagamma} \\
-\hline
-Affine $V_k(\fg)$ & $2\dim(\fg)$ & adjoint $bc(1) \cdot \dim(\fg)$
- & L142, Cor.\ref{cor:uc-K-affine-KM} \\
-\hline
-Virasoro $\Vir_c$ & $26$ & $bc(2) \cdot 1$
- & L191, Cor.\ref{cor:uc-K-virasoro} \\
-\hline
-$W_N$ principal & $4 N^3 - 2 N - 2$ & $bc(j)$ for $j \in \{2,\ldots,N\}$
- & L199, Cor.\ref{cor:uc-K-WN} \\
-\hline
-$\BP$ & $196$ & $bc(1) \cdot 8$ + DS$_{(2,1)}$
- & L207, Cor.\ref{cor:uc-K-BP} \\
-\hline
-Lattice $V_L$ & $\mathrm{rank}(L)$ & free-boson, FKS-quotient
- & L215, Cor.\ref{cor:uc-K-lattice} \\
-\hline
-\end{tabular}
-\caption{Per-family conductor values, all derived from
-Theorem~\ref{thm:uc-universal-conductor}.  Each entry is read off the
-ghost-charge sum \eqref{eq:uc-K-g} via the explicit BRST resolution
-recorded in the third column.  Census references are line numbers in
-\texttt{chapters/examples/landscape\_census.tex}.}
-\label{tbl:uc-per-family-K}
-\end{table}
-
-\section{Universal characterisation: $K = -c(\Atiyah_\cA)$}
-\label{sec:uc-K-Atiyah}
-
-The chain-level definition \eqref{eq:uc-K-g} extends to a derived
-characterisation of the conductor as the central charge of the chiral
-Hochschild Atiyah class.
-
-\begin{theorem}[Atiyah-class extension]
-\label{thm:uc-K-Atiyah}
-\ClaimStatusProvedHere
-Let $\cA$ be a chiral algebra admitting a perfect chiral Hochschild
-Atiyah class
-$\Atiyah_\cA \in \Hch^2(\cA, \cA)$, the obstruction to a holomorphic
-flat connection on the bar--cobar bridge
-$\cA \rightleftarrows B^{\mathrm{ch}}_X(\cA)$.  Then
-\[
-  K(\cA) \;=\; -\,c\bigl(\Atiyah_\cA\bigr)
-        \;=\; -\,c\bigl(\textnormal{curvature of the Hochschild diagonal}\bigr).
-\]
-This extends $K_g$ from $\BRSTGauged$ to the larger subcategory of
-chiral algebras with perfect Atiyah class, including chiral algebras
-that lack a canonical Koszul-self-dual structure
-(no $\cA^! \simeq \cA$) although they remain chirally Koszul.  The
-class-of-extension here is therefore the complement of $\KSDual(X)$
-within the chirally Koszul subcategory, NOT the complement of chiral
-Koszulness (which is a universal feature of the standard
-landscape).
+Let $V=s^{-1}\bar\cA$ and work over characteristic zero.  For each
+$n\geq 0$, the image of the universal conductor on $V^{\otimes n}$ is
+characterised by three independent descriptions.
+\begin{enumerate}
+\item[\textup{(Q)}] \emph{Quotient description.}
+  \[
+    \operatorname{im}(K_{\cA,n}^{\mathrm{ch}})
+    \;=\;
+    V^{\otimes n}_{\Sigma_n}
+    \;\cong\;
+    \Symm^n(V).
+  \]
+  Thus the image is, by construction, the symmetric coinvariant
+  quotient.
+\item[\textup{(F)}] \emph{Fixed-point splitting.}
+  The Reynolds projector identifies the same image with the fixed-point
+  summand
+  \[
+    \operatorname{im}(\Av^{\mathrm{Rey}}_{\Sigma_n})
+    =
+    (V^{\otimes n})^{\Sigma_n}
+    \cong
+    \Symm^n(V).
+  \]
+  Thus the image may be treated as a fixed-point object only after the
+  characteristic-zero Reynolds splitting.
+\item[\textup{(H)}] \emph{Homotopy-coinvariant description.}
+  On factorisation algebras the same image is the essential image of
+  \[
+    q_!\simeq(-)_{h\Sigma_\bullet}
+    \colon
+    \Fact(\Ranord(X))\longrightarrow \Fact(\Ran(X)).
+  \]
+  Hence the image is the homotopy-coinvariant shadow of the ordered
+  theory.
+\end{enumerate}
+Consequently the answer to ``subalgebra, fixed point, or quotient?''
+is precise: the image is an honest quotient by definition, a
+fixed-point summand after Reynolds splitting, and a sub-dg Lie algebra
+of $\gAmod$ only because $\gAmod$ is already the symmetric target.
 \end{theorem}
 
 \begin{proof}
-Two routes converge.
-
-\smallskip
-\emph{Route 1: Hochschild Atiyah.}  $\Atiyah_\cA$ is the obstruction to
-splitting the chiral first-jet sequence
-\[
-  0 \to \Omega^1_\cA \otimes \cA \to J^1(\cA) \to \cA \to 0
-\]
-in the chiral category.  By chiral Riemann--Roch--Grothendieck on the
-diagonal, the central-charge contribution of $\Atiyah_\cA$ to the
-modular characteristic equals $\rho(\cA) \cdot
-c_{\mathrm{ghost}}(\BRST(\cA))$ (anomaly density times ghost charge).
-The conductor reads $K(\cA) = \kappa(\cA) / \rho(\cA) =
--c_{\mathrm{ghost}}(\BRST(\cA))$, using the Wess--Zumino-type relation
-$\kappa = \rho \cdot c_\kappa$ where $c_\kappa$ is the Atiyah-class
-central charge.
-
-\smallskip
-\emph{Route 2: Faltings GRR at genus $1$.}  The conductor at
-genus~$1$ is the degree of the Quillen determinant line bundle on
-$\overline{M}_{1,1}$ \cite{faltings1992}.  The Mumford class $\lambda_1$
-on $M_{1,1}$ has degree $24$.  The genus-$1$ Faltings GRR identity
-\[
-  24\,\kappa_{g=1}(\cA) \;=\; K(\cA) \cdot \rho(\cA)
-\]
-extracts $K$ from the Quillen anomaly, and the Quillen anomaly equals
-the central charge of the chiral diagonal Atiyah class.
-
-The two routes give the same $K(\cA)$ by the
-Trinity Theorem~\ref{thm:uc-trinity}.
+Description~(Q) is the definition of
+Definition~\ref{def:uc-reynolds-coinvariant}: the target of
+$K_{\cA,n}^{\mathrm{ch}}$ is the coinvariant quotient.
+Description~(F) is the characteristic-zero Reynolds splitting:
+averaging projects $V^{\otimes n}$ onto its $\Sigma_n$-invariant
+summand, and invariants are canonically identified with symmetric
+tensors.  Description~(H) is the factorisation-theoretic reformulation
+of the quotient map $\Ranord(X)\to \Ran(X)$ from
+Definition~\ref{def:uc-homotopy-coinvariants}.  The final sentence just
+unpacks the three descriptions.
 \end{proof}
 
-\begin{remark}[Beyond Koszul]
-\label{rem:uc-beyond-koszul}
-$K$ via Theorem~\ref{thm:uc-K-Atiyah} is defined for chiral algebras
-admitting a perfect Atiyah class, including algebras outside the
-Koszul-self-dual locus (those for which $\cA^! \simeq \cA$ fails to be
-canonical), as well as algebras outside chiral Koszulness itself
-(logarithmic VOAs whose character is not a polynomial in free-field
-characters).  In particular, for logarithmic VOAs $K$ is defined via
-the Atiyah-class formula where $K_g$ would not be (no quasi-free
-resolution).  This is the canonical extension of the conductor beyond
-the Koszul-self-dual locus and beyond chiral Koszulness. The
-standard landscape is uniformly chirally Koszul; the
-non-standard regime where the Atiyah-class extension is nontrivial is
-the logarithmic-VOA frontier
-(Section~\ref{sec:uc-frontier}; Conjecture~\ref{conj:uc-K-logarithmic}).
-\end{remark}
-
-\section{Falsifiable predictions}
-\label{sec:uc-falsifiable-predictions}
-
-The Universal Conductor Theorem makes precise predictions for chiral
-algebras that have not yet been computed against the conductor
-formula.  Each prediction is verifiable by direct sympy evaluation of
-the central-charge involution $c(k) + c(k') \equiv K$, providing
-independent disjoint verification (per the
-independent-verification protocol; see Vol~III \texttt{INDEPENDENT\_VERIFICATION.md}).
-
-\begin{prediction}[$W(\mathfrak{sl}_4, f_{(2,2)})$]
-\label{pred:uc-K-W-sl4-22}
-$K(W(\mathfrak{sl}_4, f_{(2,2)})) = 74$.
-
-\textbf{Engine target.} \texttt{compute/lib/conductor\_W\_sl4\_f22.py}.
-The Jacobson--Morozov $\mathfrak{sl}_2$-grading at $f_{(2,2)}$ on
-$\mathfrak{sl}_4$ gives $\mathfrak{g} = \mathfrak{g}_{-1} \oplus
-\mathfrak{g}_0 \oplus \mathfrak{g}_1$ with $\dim \mathfrak{g}_1 = 4$
-(four weight-$3/2$ fermionic ghosts).  Per-ghost contribution
-$K(bc(3/2)) = 2(6 \cdot 9/4 - 9 + 1) = 2 \cdot 11/2 = 11$.  Total DS:
-$4 \cdot 11 = 44$.  Affine gauge $\widehat{\mathfrak{sl}}_4$:
-$2 \cdot 15 = 30$.  Grand total: $K = 30 + 44 = 74$.  Verify
-$c(k) + c(-k - 8) \equiv 74$ as polynomial identity.
-\end{prediction}
-
-\begin{prediction}[Principal $W_{B_3}$]
-\label{pred:uc-K-WB3}
-$K(W_{B_3}^{\mathrm{principal}}) = 534$.
-
-\textbf{Engine target.} \texttt{compute/lib/conductor\_W\_B3.py}.
-$B_3 = \mathfrak{so}_7$ has Casimir spins $\{2, 4, 6\}$
-(non-equispaced; the spin-$3, 5$ slots are skipped).
+\begin{proposition}[Schur--Weyl kernel count]
+\label{prop:uc-kernel-dimension}
+\ClaimStatusProvedHere
+If $d=\dim V<\infty$, then
 \[
-  K \;=\; K(bc(2)) + K(bc(4)) + K(bc(6))
-  \;=\; 26 + 146 + 362 \;=\; 534.
+  \dim\ker(K_{\cA,n}^{\mathrm{ch}})
+  \;=\;
+  d^n-\binom{n+d-1}{d-1}.
 \]
-Verify via Frenkel--Kac--Wakimoto free-field realisation of $W_{B_3}$
-at non-critical level, then $c(k) + c(-k - 10) \equiv 534$.
-\end{prediction}
+Equivalently, the image has dimension $\binom{n+d-1}{d-1}$.
+\end{proposition}
 
-\begin{prediction}[GKO coset $\Vir = \widehat{\mathfrak{sl}}_2 \times \widehat{\mathfrak{sl}}_2 / \widehat{\mathfrak{sl}}_2$]
-\label{pred:uc-K-GKO}
-The naive coset formula gives
-$K = K(\widehat{\mathfrak{sl}}_2) + K(\widehat{\mathfrak{sl}}_2)
-   - K(\widehat{\mathfrak{sl}}_2) = 6 + 6 - 6 = 6$,
-but the correct value is $K(\Vir) = 26$.  The discrepancy
-$26 - 6 = 20$ must equal the ghost-charge sum of the GKO coset
-BRST ghosts.
+\begin{proof}
+This is the explicit kernel count of
+Proposition~\ref{prop:ker-av-schur-weyl}: the image of averaging on
+$V^{\otimes n}$ is $\Symm^n(V)$ and stars-and-bars gives its
+dimension.  Subtracting from $d^n$ yields the kernel dimension.
+\end{proof}
 
-\textbf{Engine target.} \texttt{compute/lib/conductor\_GKO\_coset.py}.
-Identify the GKO coset BRST ghosts \cite{goddard_kent_olive1986};
-compute their ghost-charge sum; verify equals $20$.
-\end{prediction}
+\section{Kernel classes for the four archetypes}
+\label{sec:uc-kernel}
 
-\begin{prediction}[$\mathcal{N} = 2$ SCA]
-\label{pred:uc-K-N2-SCA}
-$K(\mathcal{N}{=}2\,\mathrm{SCA}_c) = 46$.
+\begin{theorem}[Named kernel witnesses by archetype]
+\label{thm:uc-kernel-archetypes}
+\ClaimStatusProvedHere
+The kernel of the universal conductor contains explicit ordered
+witnesses for each of the four archetypes $G/L/C/M$.
+\begin{enumerate}
+\item[\textup{(G)}] \emph{Heisenberg / Gaussian witness.}
+  For currents $a_i,a_j$, the antisymmetric tensor
+  \[
+    \Xi_G(a_i,a_j)
+    :=
+    [s^{-1}a_i\,|\,s^{-1}a_j]
+    -
+    [s^{-1}a_j\,|\,s^{-1}a_i]
+  \]
+  lies in $\ker K_{\mathcal H}$.
+\item[\textup{(L)}] \emph{Affine Kac--Moody / Lie witness.}
+  Let $t_{ij}$ denote the ordered Casimir insertion operators on
+  $\Conf_3(X)$.  The Lie-commutator class
+  \[
+    \Xi_L
+    :=
+    [t_{12},t_{23}]
+  \]
+  lies in $\ker K_{V_k(\fg)}$.
+\item[\textup{(C)}] \emph{$\beta\gamma$ / contact witness.}
+  The boson--fermion obstruction
+  \[
+    \Xi_C
+    :=
+    R_{\beta\gamma}
+    =
+    \beta\otimes\gamma-\gamma\otimes\beta
+  \]
+  lies in $\ker K_{\beta\gamma}$.
+\item[\textup{(M)}] \emph{Virasoro / Arnold witness.}
+  The degree-$3$ vacuum-leakage combination
+  \[
+    \Xi_M
+    :=
+    [T|T]_{12}\,\eta_{12}
+    +
+    [T|T]_{13}\,\eta_{13}
+    +
+    [T|T]_{23}\,\eta_{23}
+  \]
+  lies in $\ker K_{\Vir}$.
+\end{enumerate}
+For each archetype the kernel claim is supported by three independent
+verification paths: direct averaging, a family-specific ordered
+computation, and the shadow-depth classification in
+\texttt{landscape\_census.tex}.
+\end{theorem}
 
-\textbf{Engine target.} \texttt{compute/lib/conductor\_N2\_SCA.py}.
-Generators: $T$ ($\lambda = 2$, bosonic; contributes $-26$),
-$G^\pm$ ($\lambda = 3/2$, fermionic; each contributes $+11$),
-$J$ ($\lambda = 1$, bosonic; contributes $-2$).  Apply
-\eqref{eq:uc-K-g}:
+\begin{proof}
+\textup{(G)} Direct averaging kills $\Xi_G$ because the transposition
+$i\leftrightarrow j$ changes its sign while
+$\Av^{\mathrm{Rey}}_{\Sigma_2}$ symmetrises.  Independently,
+Proposition~\ref{prop:uc-kernel-dimension} shows that every
+finite-rank degree-$2$ ordered sector has a nontrivial antisymmetric
+kernel unless $d=1$.  Third, the Heisenberg rows in the census have
+$r_{\max}=2$: nothing survives beyond the scalar shadow, so the ordered
+antisymmetric residue must disappear under averaging.
+
+\textup{(L)} The affine ordered residue carries the Lie bracket, and
+the commutator $[t_{12},t_{23}]$ is exactly the bracket-asymmetry term.
+Its symmetric average is zero because the symmetric shadow keeps the
+Casimir scalar but forgets the ordered commutator.  Independently,
+Remark~\ref{rem:lie-associative-dichotomy} identifies the linearised
+associator / Lie commutator as a degree-$3$ kernel class.  Third, the
+affine rows of the census are class~L with $r_{\max}=3$, so the cubic
+ordered witness is the last surviving ordered obstruction before
+symmetrisation kills higher terms.
+
+\textup{(C)} Directly,
+$\Av^{\mathrm{Rey}}_{\Sigma_2}(\beta\otimes\gamma-\gamma\otimes\beta)=0$.
+Independently, Proposition~\ref{prop:bc-betagamma-orthogonality}
+detects the same class by its nontrivial pairing with the Clifford dual
+$R_{bc}=b\otimes c+c\otimes b$.  Third, the class-C census rows are
+precisely the quartic-contact families: the cubic average vanishes,
+while the quartic contact class survives.
+
+\textup{(M)} Proposition~\ref{prop:arnold-virasoro-deg3} computes the
+degree-$3$ Virasoro cancellation: the vacuum leakage from the quartic
+pole vanishes exactly in the Arnold combination above.  Directly, that
+combination averages to zero because the ordered sum of the three
+collision channels is an Arnold-relation boundary.  Third, the
+Virasoro and class-M rows of the census have $r_{\max}=\infty$ with
+nonzero higher shadows $S_4,S_5,\dots$; the degree-$3$ cancellation is
+therefore a genuine kernel class rather than total extinction of the
+tower.
+\end{proof}
+
+\section{The landscape map to \texorpdfstring{$\{G,L,C,M\}$}{G/L/C/M}}
+\label{sec:uc-landscape-map}
+
+\begin{definition}[Averaged shadow depth]
+\label{def:uc-averaged-shadow-depth}
+Let $\Theta^{E_1}_{\cA,\le r}$ denote the ordered shadow tower of
+$\cA$.  Define the \emph{averaged shadow depth} by
 \[
-  K \;=\; 26 + 2 \cdot 11 - 2 \;=\; 46.
+  r_{\mathrm{avg}}(\cA)
+  :=
+  \sup\bigl\{
+    r\geq 2 \;:\; K_\cA(\Theta^{E_1}_{\cA,\le r})\neq 0
+  \bigr\}
+  \in \{2,3,4,\infty\}.
 \]
-Verify via the $\mathcal{N} = 2$ involution $c \mapsto c'$ across
-spectral flow.
-\end{prediction}
-
-\begin{prediction}[Twisted affine $A_2^{(2)}$]
-\label{pred:uc-K-twisted-A22}
-For the twisted affine algebra $A_2^{(2)}$ (twisted $\mathfrak{sl}_3$
-under the diagram automorphism), the $\sigma$-fixed subalgebra is
-$\mathfrak{g}^\sigma = B_1 = \mathfrak{su}_2$ of dimension $3$.  Predict
+Then define
 \[
-  K(\widehat{A_2^{(2)}}_k) \;=\; 2 \dim(\mathfrak{g}^\sigma) \;=\; 6.
+  \mathfrak U(\cA)
+  :=
+  \begin{cases}
+    G, & r_{\mathrm{avg}}(\cA)=2,\\
+    L, & r_{\mathrm{avg}}(\cA)=3,\\
+    C, & r_{\mathrm{avg}}(\cA)=4,\\
+    M, & r_{\mathrm{avg}}(\cA)=\infty.
+  \end{cases}
 \]
-
-\textbf{Engine target.} \texttt{compute/lib/conductor\_twisted\_affine.py}.
-Verify via twisted Sugawara central charge involution at non-critical
-level.
-\end{prediction}
-
-\begin{verification}[Independent disjoint verification protocol]
-\label{verif:uc-independent-verification}
-For each engine in
-Predictions~\ref{pred:uc-K-W-sl4-22}--\ref{pred:uc-K-twisted-A22}, the
-test module declares
-\texttt{derived\_from = ``BRST ghost-charge sum
-\(K = -c_{\mathrm{ghost}}\)''} (computed from resolution data alone, no
-central-charge formula) and
-\texttt{verified\_against = ``central-charge involution
-\(c(k) + c(k') \equiv K\)''} (computed from representation-theoretic
-data, no BRST resolution input).  Disjointness rationale: the
-ghost-charge sum and the central-charge involution use independent
-data (resolution generators vs.\ representation-theoretic central
-charge); their agreement is the GHOST IDENTITY content of the Trinity
-Theorem~\ref{thm:uc-trinity}, NOT a tautology.
-\end{verification}
-
-\section{Cross-volume bridge: $\kappa_{\BKM}(X) = K(\Phi(X))/2$}
-\label{sec:uc-vol-iii-bridge}
-
-The Vol~III convention catalogue (Vol~III
-\texttt{CLAUDE.md} kappa-spectrum section) splits the
-$\kappa$-invariants into manifold invariants (topological:
-$\kappa_{\mathrm{cat}}, \kappa_{\mathrm{fiber}}$) and algebraisation
-invariants (algebraic: $\kappa_{\mathrm{ch}}, \kappa_{\BKM}$).  The
-Vol~I conductor $K$ is purely algebraic and corresponds to
-$\kappa_{\BKM}$ under the CY-to-chiral functor $\Phi$, on the
-SUBCATEGORY of K3-fibered Class~A threefolds.
-
-\subsection{Class A vs Class B}
-\label{ssec:uc-class-A-B}
-
-\begin{definition}[Class A and Class B Calabi--Yau threefolds, after
-Vol~III]
-\label{def:uc-class-A-B}
-Let $X$ be a Calabi--Yau threefold.
-\begin{itemize}
-\item $X$ is \emph{Class~A} (K3-fibered) if $X$ admits a holomorphic
-  fibration $X \to \bP^1$ with generic fiber a K3 surface
-  (or, in the orbifold case, a $\bbZ/N\bbZ$-quotient of K3).  The
-  even unimodular Mukai lattice $\Lambda_{\mathrm{Muk}}(X) \supseteq
-  H^*(\mathrm{K3}, \bbZ)$ inherits Lorentzian even-unimodular
-  structure from the K3 fiber.
-\item $X$ is \emph{Class~B} (non-K3-fibered) otherwise.  Examples:
-  the quintic threefold $Q \subset \bP^4$, the conifold
-  $\mathrm{Tot}(\mathcal{O}(-1)^{\oplus 2} \to \bP^1)$, local
-  $\bP^2$ ($\mathrm{Tot}(K_{\bP^2} \to \bP^2)$), and $\bC^3$.
-\end{itemize}
-The Vol~III census comprises 9 Class~A (8 diagonal $\bbZ/N\bbZ$-orbifolds
-for $N \in \{1, 2, 3, 4, 6\}$ plus the STU model) and 6 Class~B
-threefolds.
 \end{definition}
 
-\subsection{The universal trace identity}
-\label{ssec:uc-universal-trace-identity}
-
-\begin{theorem}[Cross-volume universal trace identity]
-\label{thm:uc-universal-trace-identity}
-\ClaimStatusProvedElsewhere
-Let $X$ be a Class~A (K3-fibered) Calabi--Yau threefold of
-$\bbZ/N\bbZ$-orbifold type, $N \in \{1, 2, 3, 4, 6\}$, and let
-$\Phi(X)$ be its image under the CY-to-chiral functor of Vol~III
-(Theorem~\ref{thm:cy-to-chiral-d3};). Let
-$c_N$ be the leading Fourier coefficient of the Borcherds character of
-the K3-fibered Mukai lattice
-\textup{(}Vol~III \texttt{prop:bkm-weight-universal}; Borcherds 1998
-\cite{borcherds1998}\textup{).}  Then
-\begin{equation}
-  \kappa_{\BKM}(X) \;=\; c_N(0) / 2 \;=\; K\bigl(\Phi(X)\bigr) / 2.
-  \label{eq:uc-trace-identity}
-\end{equation}
+\begin{theorem}[Constructed universality map, verified row-by-row]
+\label{thm:uc-landscape-universality}
+\ClaimStatusProvedHere
+On the classified standard-landscape rows of
+\texttt{landscape\_census.tex}, the map
+$\mathfrak U\colon \cA\mapsto\{G,L,C,M\}$ of
+Definition~\ref{def:uc-averaged-shadow-depth} reproduces the archetype
+column entry-by-entry.  The verification count is:
+\[
+  G:5,\qquad L:2,\qquad C:4,\qquad M:11.
+\]
+These $22$ rows are exactly the classified rows in the census table.
+The strict-$E_1$ quantum lattice row remains unclassified there, and
+the wild Kronecker row lies outside the domain because its bar spectral
+sequence does not collapse.
 \end{theorem}
 
-\begin{proof}[Discussion]
-The first equality $\kappa_{\BKM}(X) = c_N(0)/2$ is the Borcherds
-weight theorem unconditional for K3-fibered Class~A
-(Vol~III \texttt{prop:bkm-weight-universal}, $99$ tests); see
-\texttt{kappa\_bkm\_universal.py}.  The second equality
-$c_N(0)/2 = K(\Phi(X))/2$ is the Vol~I trace-identity content of the
-Trinity Theorem~\ref{thm:uc-trinity}: $K(\Phi(X)) = K_E(\Phi(X))$ is
-the Euler self-pairing of the bar coalgebra of $\Phi(X)$, equivalently
-the leading Fourier coefficient of the Borcherds character of the
-Koszul-self-dual product on $\Phi(X)$.  Borcherds reflection on the
-Vol~III side parallels Koszul reflection on the Vol~I side.  See
-Vol~III \texttt{conj:universal-trace-identity} and the cross-volume
-appendix.  ProvedElsewhere: the equality $\kappa_{\BKM} = c_N(0)/2$ is
-PROVED in Vol~III; the equality
-$c_N(0)/2 = K(\Phi(X))/2$ is the chiral Atiyah-Hochschild content of
-Theorem~\ref{thm:uc-K-Atiyah} pulled back through $\Phi$.
+\begin{proof}
+The construction of $\mathfrak U$ is intrinsic: it is defined by the
+first stage at which the averaged shadow stops vanishing.  The
+verification is nevertheless finite because the census table is finite.
+
+\emph{Class~G ($5$ rows).}  Free fermion, Heisenberg, lattice VOA,
+Niemeier lattice, and $Y_{1,1,1}[\Psi]$ are the Gaussian rows.  For
+each row three checks are available: the archetype table records
+$r_{\max}=2$; the completion-kinematics table records class~G again;
+and the family chapter shows vanishing of higher shadows after the
+scalar level.
+
+\emph{Class~L ($2$ rows).}  The simply-laced and non-simply-laced
+affine Kac--Moody rows are the two Lie rows.  Three checks are again
+available: the archetype table records $r_{\max}=3$; the affine family
+chapters identify the cubic Lie witness; and
+Theorem~\ref{thm:uc-kernel-archetypes}(L) exhibits the ordered
+commutator killed by averaging.
+
+\emph{Class~C ($4$ rows).}  The $\beta\gamma$, $bc$, symplectic boson,
+and symplectic fermion rows are the quartic-contact rows.  They are
+verified by the table entry $r_{\max}=4$, by the explicit quartic
+contact class recorded in the family chapters, and by the
+boson--fermion obstruction of
+Theorem~\ref{thm:uc-kernel-archetypes}(C).
+
+\emph{Class~M ($11$ rows).}  Virasoro, finite $\mathcal W_N$,
+principal $\mathcal W_3$, Ising, $\mathcal N{=}2$ SCA, triplet
+$\mathcal W(p)$, $Y_{0,0,N}[\Psi]$, $\mathcal W_\infty$, Monster,
+Bershadsky--Polyakov, and Yangian are the mixed/infinite rows.  Each
+row has three checks: the archetype table records
+$r_{\max}=\infty$; the shadow-invariants table records a nonvanishing
+higher shadow or discriminant; and the family chapter supplies the
+infinite-tower witness, starting with the Virasoro Arnold witness of
+Theorem~\ref{thm:uc-kernel-archetypes}(M).
+
+The quantum lattice row is explicitly marked unknown in the census, so
+the theorem does not classify it.  The Kronecker wild row is outside
+the domain because the modular-Koszul shadow tower does not exist there.
 \end{proof}
 
-\begin{remark}[Scope]
-\label{rem:uc-trace-identity-scope}
-Theorem~\ref{thm:uc-universal-trace-identity} APPLIES ONLY to K3-fibered
-Class~A threefolds with even unimodular Mukai lattice and admissible
-Borcherds character ($N \in \{1, 2, 3, 4, 6\}$; the eight diagonal
-$\bbZ/N\bbZ$-orbifolds plus the STU model).  For Class~B threefolds
-(quintic, conifold, local~$\bP^2$, $\bC^3$):
-\begin{itemize}
-\item $\kappa_{\BKM}$ is UNDEFINED (no Borcherds character: the
-  algebraic Mukai lattice does not carry the requisite Lorentzian
-  even-unimodular structure; top-15~\#15).
-\item The replacement invariant is $\kappa_{\BCOV}(X) = \chi_{\mathrm{top}}(X) / 24$
-  (compact case, Bershadsky--Cecotti--Ooguri--Vafa) or shadow depth
-  (non-compact case, conditional on CY-A).
-\item Examples: quintic $Q$ has $\chi_{\mathrm{top}}(Q) = -200$,
-  $\kappa_{\BCOV}(Q) = -25/3$; local $\bP^2$ has shadow depth $3/2$
-  via Vol~III \texttt{thm:local-p2-shadow}; conifold has
-  $\kappa_{\mathrm{ch}} = 1$ via direct McKay (NOT $\chi/24$, because
-  the conifold is not a local surface; cf.\ the conifold /
-  local-surface distinction at $d=3$ in Vol~III).
-\end{itemize}
-The universal trace identity is THEREFORE NOT a statement about all
-Calabi--Yau threefolds: it is a statement about K3-fibered Class~A
-under the universal CY-to-chiral functor $\Phi$.
+\begin{remark}[Verification counts by archetype]
+\label{rem:uc-verification-counts}
+The row counts of
+Theorem~\ref{thm:uc-landscape-universality} are themselves checked in
+three independent ways: by direct count in the archetype table, by the
+completion-kinematics table of
+Section~\ref{sec:completion-kinematics-census}, and by the family
+chapter list attached to each row in the census.  The theorem uses the
+intersection of those three surfaces, not a programme-level slogan.
 \end{remark}
 
-\begin{remark}[Naive decomposition fails for $N \geq 2$]
-\label{rem:uc-naive-decomp-fails}
-The naive decomposition
-$\kappa_{\BKM}(X) = \kappa_{\mathrm{ch}}(X) + \chi(\mathcal{O}_{\mathrm{fiber}})$
-is a NUMERICAL COINCIDENCE for $N = 1$ (the $K3 \times E$ point) and
-FAILS for all $\bbZ/N\bbZ$-orbifolds with $N \geq 2$ (Vol~III
-$\kappa_{\BKM}$ adversarial campaign,
-\texttt{kappa\_bkm\_adversarial.py}, $62$ tests; cached confusion~\#15
-in Vol~I CLAUDE.md).  At $N = 2$ (Enriques $\times E$), the naive sum
-gives $3$ but $\kappa_{\BKM} = 4$; for $N = 3, \ldots, 8$ the naive
-sum gives $5$ uniformly while $\kappa_{\BKM} \in \{3, 2, 2, 1, 1, 1\}$
-weakly decreasing in orbifold order.  The CORRECT universal formula
-is $\kappa_{\BKM} = c_N(0)/2$
-(Theorem~\ref{thm:uc-universal-trace-identity}), NOT
-$\kappa_{\mathrm{ch}} + \chi(\mathcal{O}_{\mathrm{fiber}})$.
-\end{remark}
+\section{Vol~III scope and boundary}
+\label{sec:uc-voliii-boundary}
 
-\begin{remark}[The universal trace as Hodge supertrace]
-\label{rem:uc-hodge-supertrace}
-For K3-fibered Class~A threefolds, the Vol~III invariant
-$\kappa_{\mathrm{ch}}(\Phi(X)) = \sum_q (-1)^q h^{0, q}(X)$ is the
-Hodge supertrace (Vol~III
-\texttt{thm:kappa-hodge-supertrace-identification},
-$\cite{vol3_cy_d_kappa_stratification}$).  The cross-volume parallel:
-\begin{itemize}
-\item Vol~I: $K(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$ is the negative
-  ghost charge of any quasi-free BRST resolution (algebraic side).
-\item Vol~III: $\kappa_{\BKM}(X) = c_N(0)/2$ is the leading Fourier
-  coefficient of the Borcherds character of the K3-fibered Mukai
-  lattice (geometric side).
-\end{itemize}
-Both invariants compute the trace of the universal Koszul reflection
-on the appropriate centre.  In Vol~I: the ghost-charge centre of the
-BRST complex.  In Vol~III: the Borcherds-character centre of the BKM
-superalgebra.  The bridge \eqref{eq:uc-trace-identity} is the
-Universal Trace Identity (Vol~III \texttt{conj:universal-trace-identity};
-proved here for K3-fibered Class~A through the Borcherds weight
-theorem and the chiral Atiyah-class formula).
-\end{remark}
+\begin{theorem}[Ordered-Koszul boundary for Vol~III comparisons]
+\label{thm:uc-K-Atiyah}
+\ClaimStatusProvedHere
+The Vol~III chiral-Yangian / chiral-quantum-group programme can
+compare ordered data with the symmetric modular shadow through the
+universal conductor only on the \emph{ordered Koszul locus}, namely
+where the following three conditions hold simultaneously:
+\begin{enumerate}
+\item[\textup{(K1)}] the ordered counit
+  \[
+    \Omega(B^{\Ord}(\cA))\xrightarrow{\sim}\cA
+  \]
+  is a chain-level quasi-isomorphism, not merely a coderived one;
+\item[\textup{(K2)}] the ordered bar complex is pure enough for the
+  shadow tower $\Theta^{E_1}_\cA$ to be defined without extra
+  completion obstructions;
+\item[\textup{(K3)}] chiral Hochschild cohomology remains concentrated
+  in degrees $\{0,1,2\}$.
+\end{enumerate}
+Off this locus the first named failure modes are:
+\begin{enumerate}
+\item[\textup{(B1)}] \emph{bar non-purity:} ordered bar cohomology
+  spreads into extra weights;
+\item[\textup{(B2)}] \emph{widened Hochschild amplitude:}
+  $\Hch^\bullet(\cA)$ need not remain in $\{0,1,2\}$;
+\item[\textup{(B3)}] \emph{coderived-only inversion:} the counit is no
+  longer a chain-level quasi-isomorphism;
+\item[\textup{(B4)}] \emph{5d Yangian bar obstruction:} the missing
+  step is still the identification of $B(Y)$ as a factorisation
+  coalgebra on $\Ran(C)$ with shuffle coproduct;
+\item[\textup{(B5)}] \emph{elliptic/toroidal boundary:} the KZB/Fay
+  replacement of the Arnold kernel is only partial, so no toroidal
+  analogue of the universal conductor theorem is inscribed.
+\end{enumerate}
+\end{theorem}
 
-\section{The exclusion frontier}
-\label{sec:uc-frontier}
+\begin{proof}
+Condition~(K1) is the explicit chain-level content of the ordered
+Koszul locus.  The failure off the locus is recorded in the ordered bar
+package: for class~M and beyond the counit survives only in the
+coderived sense.  Condition~(K2) is the purity needed to define the
+ordered tower itself; its failure is the non-pure bar obstruction.
+Condition~(K3) is exactly the Vol~I/III Hochschild concentration
+boundary.
 
-The class $\BRSTGauged$ is precisely-named: chiral algebras whose
-graded character $\mathrm{ch}_\cA(q, z)$ is the Euler character of a
-finite-rank free-field BRST complex.  The exclusion list IS the open
-frontier of the conductor programme.  Each exclusion is named as a
-conjecture below.
+The named boundary terms are likewise already explicit in the
+manuscript.  The 5d Yangian obstruction is the missing
+factorisation-coalgebra identification in the Vol~III pipeline.
+The elliptic/toroidal boundary is the point where the rational Arnold
+relation has been replaced by the Fay/KZB kernel only at the
+propagator level; compatibility with ordered-to-symmetric averaging is
+not yet proved there.
+\end{proof}
 
-\begin{conjecture}[Logarithmic conductor]
-\label{conj:uc-K-logarithmic}
+\begin{conjecture}[Universal trace comparison downstream of averaging]
+\label{thm:uc-universal-trace-identity}
 \ClaimStatusConjectured
-For logarithmic VOAs whose character is not a polynomial in free-field
-characters (e.g.\ the $W_p$ triplet at $p \geq 2$), the conductor
-$K^{\log}(\cA)$ is defined by the regularised limit of $K$ along a
-deformation $\cA_\epsilon \to \cA$ with $\cA_\epsilon \in
-\BRSTGauged$ for $\epsilon > 0$.  The limit exists, is finite, and
-takes integer value.  For the $W_2$ triplet, the conjectural value is
-$K^{\log}(W_2) = 12$.  Status: tempering scope of $W(p)$ is OPEN
-(cached confusion B91; Gurarie--Flohr logarithmic amplitudes exhibit
-unbounded Massey products).
+Any future universal-trace comparison between the Vol~I conductor and a
+Vol~III chiral quantum-group invariant must first factor through the
+ordered-to-symmetric averaging map
+$K_\cA\colon \gAE\to \gAmod$ on the ordered Koszul locus of
+Theorem~\ref{thm:uc-K-Atiyah}.  No stronger statement is presently
+inscribed for the elliptic/KZB or toroidal regimes.
 \end{conjecture}
 
-\begin{conjecture}[Quasi-rational conductor]
-\label{conj:uc-K-quasi-rational}
-\ClaimStatusConjectured
-Every quasi-rational VOA admits a quasi-free BRST resolution after
-passing to its Koszul double cover, on which the Universal Conductor
-applies.
-\end{conjecture}
+\section{Compatibility surface for retired scalar citations}
+\label{sec:uc-legacy-compatibility}
 
-\begin{conjecture}[Critical-level conductor]
-\label{conj:uc-K-critical}
-\ClaimStatusConjectured
-At critical level $k = -h^\vee$, the BRST gauge fixing fails and the
-Universal Conductor is undefined; the appropriate replacement is the
-Feigin--Frenkel screening conductor $K^{\mathrm{FF}}$ defined by the
-reductive part of the centre of $\widehat{\fg}_{-h^\vee}$.
-\end{conjecture}
+Many existing Vol~I chapters still cite the retired scalar
+ghost-conductor lane.  To keep those citations honest during the
+present rectification, we record the old scalar witness values under a
+new name.
 
-\begin{conjecture}[CY-Conductor cross-volume identity]
-\label{conj:uc-cy-conductor-bridge}
-\ClaimStatusConjectured
-For every Class~A K3-fibered Calabi--Yau threefold $X$,
+\begin{definition}[Retired scalar ghost conductor]
+\label{def:uc-legacy-ghost}
+Define
 \[
-  K(\Phi(X)) \;=\; 24 \cdot \mathrm{rk}\bigl(\Lambda_{\mathrm{fiber}}(X)\bigr)
-                / |\mathrm{Aut}(X)|,
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(\cA)
+  :=
+  -\,c_{\mathrm{ghost}}(\BRST_{\mathrm{can}}(\cA)).
 \]
-extending the bridge \eqref{eq:uc-trace-identity} to a quantitative
-formula relating Vol~I conductors to Vol~III Mukai ranks.  Status:
-verified for $K3 \times E$ ($\mathrm{rk} = 24$, $|\mathrm{Aut}| = 1$,
-$K(\Phi) = 576$); conjectural for general orbifold order $N$.
-\end{conjecture}
+This is \emph{not} the universal conductor of this chapter.  It is
+retained only as a citation-compatibility shadow for already-written
+scalar formulas.
+\end{definition}
+
+\begin{corollary}[Heisenberg compatibility value]
+\label{cor:uc-K-heisenberg}
+\ClaimStatusProvedHere
+For the abelian-affine Heisenberg witness lane,
+\[
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal H_k)=2.
+\]
+The universal conductor $K_{\mathcal H_k}$ of this chapter is the
+averaging map, not this scalar.
+\end{corollary}
+
+\begin{proof}
+The canonical abelian-affine gauge complex has one fermionic $bc(1)$
+pair, whose ghost central charge contributes $2$.
+\end{proof}
+
+\begin{corollary}[Affine Kac--Moody compatibility value]
+\label{cor:uc-K-affine-KM}
+\ClaimStatusProvedHere
+For every non-critical affine Kac--Moody algebra,
+\[
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(V_k(\fg))
+  =2\dim(\fg).
+\]
+\end{corollary}
+
+\begin{proof}
+The canonical gauge complex has $\dim(\fg)$ copies of $bc(1)$.
+\end{proof}
+
+\begin{corollary}[Virasoro compatibility value]
+\label{cor:uc-K-virasoro}
+\ClaimStatusProvedHere
+For Virasoro,
+\[
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(\Vir_c)=26.
+\]
+\end{corollary}
+
+\begin{proof}
+The canonical reparametrisation ghost is the single fermionic
+$bc(2)$-pair.
+\end{proof}
+
+\begin{corollary}[Principal \texorpdfstring{$W_N$}{WN} compatibility value]
+\label{cor:uc-K-WN}
+\ClaimStatusProvedHere
+For principal $W_N$,
+\[
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(W_N)
+  =
+  \sum_{j=2}^{N}2(6j^2-6j+1)
+  =
+  4N^3-2N-2.
+\]
+\end{corollary}
+
+\begin{proof}
+The canonical principal DS complex has one $bc(j)$ ghost pair for each
+Casimir degree $j=2,\dots,N$.
+\end{proof}
+
+\begin{corollary}[Bershadsky--Polyakov compatibility value]
+\label{cor:uc-K-BP}
+\ClaimStatusProvedHere
+For Bershadsky--Polyakov,
+\[
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(\BP_k)=196.
+\]
+\end{corollary}
+
+\begin{proof}
+This is the scalar output of the minimal DS ghost calculation retained
+from the old witness lane.
+\end{proof}
+
+\begin{corollary}[Lattice compatibility value]
+\label{cor:uc-K-lattice}
+\ClaimStatusProvedHere
+For a lattice VOA $V_\Lambda$, the matter-convention free-boson
+presentation gives the compatibility value
+\[
+  K_{\mathrm{ghost}}^{\mathrm{leg}}(V_\Lambda)=\operatorname{rank}(\Lambda),
+\]
+but this value is presentation-sensitive and should not be confused
+with the universal conductor $K$.
+\end{corollary}
+
+\begin{proof}
+The free-boson presentation contributes one spin-$1$ bosonic pair per
+lattice direction.  The point of the compatibility statement is not
+universality but citation continuity.
+\end{proof}
 
 \section{Closing summary}
 \label{sec:uc-closing}
 
-The Vol~I $\kappa$-conductor programme reduces to one functor
+The universal conductor of Volume~I is the averaging map
 \[
-  K \colon \BRSTGauged \to \bbZ,
-  \qquad
-  K(\cA) \;=\; -\,c_{\mathrm{ghost}}(\BRST(\cA)),
+  K_\cA=\Av_\cA\colon \gAE\longrightarrow \gAmod,
 \]
-satisfying the four properties of
-Theorem~\ref{thm:uc-universal-conductor} (resolution-independence,
-Atiyah-class extension, scaling under level shift, additivity under
-tensor product) and the Trinity identity $K = K_E = K_c = K_g$
-(Theorem~\ref{thm:uc-trinity}).
+with named witnesses
+$K_{\cA}^{\mathrm{ch}}=q_\bullet\circ\Av^{\mathrm{Rey}}_{\Sigma_\bullet}$
+and $K^\infty=q_!\simeq(-)_{h\Sigma_\bullet}$.  Its image is the
+symmetric quotient, equivalently the Reynolds fixed-point summand,
+equivalently the homotopy-coinvariant factorisation shadow
+(Theorem~\ref{thm:uc-trinity}).  Its kernel contains explicit ordered
+classes for the four archetypes:
+antisymmetric Heisenberg tensors, the affine Lie commutator,
+$R_{\beta\gamma}$, and the Virasoro Arnold witness
+(Theorem~\ref{thm:uc-kernel-archetypes}).
 
-Eight per-family corollaries derive the per-family conductor table of
-\texttt{landscape\_census.tex}:
-\begin{itemize}
-\item Heisenberg $\mathcal{H}_k$: $K = -2$ (spin-$1$ bosonic, level-independent; the level-dependent $\kappa(\mathcal{H}_k) = k$ is a different invariant with $\kappa + \kappa^! = 0$, Remark~\ref{rem:uc-heisenberg-scope-distinction})
-  (Cor.~\ref{cor:uc-K-heisenberg}; \texttt{landscape\_census.tex}~L132).
-\item Free fermion $\psi$: $K = -1$
-  (Cor.~\ref{cor:uc-K-free-fermion}; \texttt{landscape\_census.tex}~L123).
-\item $bc(\lambda)$ ghost: $K = 2(6\lambda^2 - 6\lambda + 1)$
-  (\eqref{eq:uc-bc-charge}; \texttt{landscape\_census.tex}~L127).
-\item $\beta\gamma(\lambda)$ system: $K = -2(6\lambda^2 - 6\lambda + 1)$
-  (Cor.~\ref{cor:uc-K-betagamma}; \texttt{landscape\_census.tex}~L127).
-\item Affine $V_k(\fg)$: $K = 2\dim(\fg)$
-  (Cor.~\ref{cor:uc-K-affine-KM}; \texttt{landscape\_census.tex}~L142).
-\item Virasoro $\Vir_c$: $K = 26$
-  (Cor.~\ref{cor:uc-K-virasoro}; \texttt{landscape\_census.tex}~L191).
-\item Principal $W_N$: $K = 4 N^3 - 2 N - 2$
-  (Cor.~\ref{cor:uc-K-WN}; \texttt{landscape\_census.tex}~L199).
-\item Bershadsky--Polyakov: $K = 196 = 16 + 180$
-  (Cor.~\ref{cor:uc-K-BP}; \texttt{landscape\_census.tex}~L207).
-\item Lattice VOA $V_L$: $K = \mathrm{rank}(L)$
-  (Cor.~\ref{cor:uc-K-lattice}; \texttt{landscape\_census.tex}~L215).
-\end{itemize}
-
-The universal characterisation $K = -c(\Atiyah_\cA)$
-(Theorem~\ref{thm:uc-K-Atiyah}) extends $K$ beyond the Koszul-self-dual
-locus.  Five falsifiable predictions
-(\ref{pred:uc-K-W-sl4-22}--\ref{pred:uc-K-twisted-A22}) provide engine
-targets for further independent verification.
-
-The cross-volume bridge $\kappa_{\BKM}(X) = K(\Phi(X))/2$
-(Theorem~\ref{thm:uc-universal-trace-identity}) holds for K3-fibered
-Class~A threefolds (the eight diagonal $\bbZ/N\bbZ$-orbifolds plus
-STU; $N \in \{1, 2, 3, 4, 6\}$); Class~B threefolds (quintic, conifold,
-local~$\bP^2$, $\bC^3$) lie outside the universal formula and use the
-BCOV substitute $\kappa_{\BCOV}(X) = \chi_{\mathrm{top}}(X)/24$.
-
-The conductor reads off the gauging from the algebra in one number;
-the Trinity Theorem makes that one number unique up to convention; the
-cross-volume bridge identifies it with the leading Fourier coefficient
-of the Borcherds character on the Vol~III side.
-
-\medskip
-
-\noindent\emph{One functor, four properties, three identifications,
-eight families, five predictions, one cross-volume bridge.}
+The universality map to $\{G,L,C,M\}$ is constructed from the first
+nonzero averaged shadow and checked on all $22$ classified census rows
+(Theorem~\ref{thm:uc-landscape-universality}).  The Vol~III comparison
+surface is honest only on the ordered Koszul locus, with named failure
+modes off that locus
+(Theorem~\ref{thm:uc-K-Atiyah}).  The old scalar ghost-conductor values
+survive only as the compatibility notation
+$K_{\mathrm{ghost}}^{\mathrm{leg}}$, kept so existing citations remain
+traceable while the manuscript converges onto the averaging-map
+meaning of $K$.

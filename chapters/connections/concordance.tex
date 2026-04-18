@@ -30,19 +30,26 @@ Their proved core and conditional refinements are recorded explicitly below.
 & \textbf{Theorem} & \textbf{Statement} & \textbf{Status} \\
 \hline
 \textbf{A} & Bar-cobar adjunction
- & $\barBch \dashv \Omegach$ on $\Ran(X)$,
- with the algebra-level Verdier half only after
- $\mathbb{D}_{\Ran}$:
- $\mathbb{D}_{\Ran}\barB_X(\cA_i)\simeq \Omega_X(\cC_j)\simeq \cA_j$,
- \textup{(}Thm~\ref{thm:bar-cobar-isomorphism-main}\textup{)}
+ & Chain-level bar-cobar adjunction with universal twisting morphism
+ and Verdier-intertwined counit witness, together with the
+ factorization-$\infty$ adjunction on $\Ran(X)$; the algebra-level
+ Verdier half appears only after $\mathbb{D}_{\Ran}$:
+ $\mathbb{D}_{\Ran}\barB_X(\cA_i)\simeq \cA^!_{\infty,i}$
+ \textup{(}Thms~\ref{thm:bar-cobar-isomorphism-main},
+ \ref{thm:A-infinity-2}\textup{)}
  & \ClaimStatusProvedHere \\
 \textbf{B} & Bar-cobar inversion
  & Strict quasi-isomorphism on the Koszul locus
  $\Omegach(\barBch(\cA)) \xrightarrow{\sim} \cA$
  \textup{(}Thms~\ref{thm:higher-genus-inversion},
- \ref{thm:bar-cobar-inversion-qi}\textup{)}; off the locus,
- the counit is an unconditional coderived coacyclic-equivalence,
- promoted back to an ordinary quasi-isomorphism on collapse loci
+ \ref{thm:bar-cobar-inversion-qi}\textup{)}; off the strict lane,
+ the explicit weight-completed model
+ $\widehat{C}=\widehat{\barB}^{\mathrm{ch}}(\cA)$ in holonomic
+ factorization $\mathcal{D}$-modules carries the unconditional
+ coderived/contraderived Positselski equivalence
+ \textup{(}Thm~\ref{thm:chiral-positselski-weight-completed}\textup{)},
+ while raw direct-sum class-$M$ chain inversion fails
+ \textup{(}Prop.~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}\textup{)}
  & \ClaimStatusProvedHere \\
 \textbf{C} & Complementarity
  & C0: coderived fiber-center identification unconditional,
@@ -54,22 +61,28 @@ Their proved core and conditional refinements are recorded explicitly below.
  \textup{(}Thm~\ref{thm:quantum-complementarity-main}\textup{)}.
  C2: shifted-symplectic/BV upgrade conditional on the
  uniform-weight perfectness package
- \textup{(}Thm~\ref{thm:shifted-symplectic-complementarity}\textup{)}
+ \textup{(}Thm~\ref{thm:shifted-symplectic-complementarity}\textup{)}.
+ Verified scalar Verdier sums on the canonical families are
+ $0,13,250/3,98/3$
  & C0/C1: \ClaimStatusProvedHere; C2: \ClaimStatusConditional \\
 \textbf{D} & Modular characteristic
- & $\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$
- on the proved uniform-weight lane at all genera
+ & $F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
+ + \delta F_g^{\mathrm{cross}}(\cA)$ at all genera, with
+ $\delta F_1^{\mathrm{cross}}=0$ universally and
+ $\delta F_g^{\mathrm{cross}}=0$ on the uniform-weight lane,
+ where this specializes to
+ $\mathrm{obs}_g(\cA)=\kappa(\cA)\lambda_g$ with
+ $\lambda_g=c_g(\mathbb{E})$
  \textup{(}Definition~\ref{def:scalar-lane},
- Thm~\ref{thm:modular-characteristic}\textup{)};
- genus~$1$ is universal for all families;
- multi-weight $g \geq 2$ acquires the cross-channel term
- $\delta F_g^{\mathrm{cross}}$
- \textup{(}Thm~\ref{thm:multi-weight-genus-expansion}\textup{)};
+ Thms~\ref{thm:modular-characteristic},
+ \ref{thm:multi-weight-genus-expansion}\textup{)};
  the routing
  $\Theta_\cA \to \mathrm{obs}_g \to$ family index is non-circular
  & \ClaimStatusProvedHere \\
 \textbf{H} & Chiral Hochschild
- & On the Koszul locus at generic level with
+ & This is the chiral Hochschild theory only
+ \textup{(}not topological or categorical Hochschild\textup{)}.
+ On the Koszul locus at generic level with
  $E_{\infty}$-chiral PBW completion:
  $\ChirHoch^*(\cA)$ has cohomological amplitude $[0,2]$,
  satisfies the duality shift~$[2]$, has degree-$\leq 2$
@@ -91,7 +104,10 @@ Their proved core and conditional refinements are recorded explicitly below.
  and for class M at minimal-model / admissible levels
  \textup{(}Conj.~\textup{\ref{conj:hochschild-concentration-class-M-non-generic}}\textup{)};
  unbounded at critical level $k=-h^{\vee}$
- \textup{(}Rem.~\textup{\ref{rem:critical-level-lie-vs-chirhoch}}\textup{)}
+ \textup{(}Rem.~\textup{\ref{rem:critical-level-lie-vs-chirhoch}}\textup{)}.
+ The Swiss-cheese structure belongs to
+ $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\cA)$; $\barB(\cA)$ remains an
+ $E_1$-coalgebra
  & \ClaimStatusProvedHere
 \end{tabular}
 \end{center}
@@ -4976,7 +4992,12 @@ The symbol~$\kappa$ appears in at least four distinct roles across the programme
 \end{enumerate}
 These coincide for Heisenberg ($\kappa = k$), Virasoro ($\kappa = c/2$), and affine KM at generic level ($\kappa = \dim(\mathfrak{g})(k{+}h^\vee)/(2h^\vee)$). They diverge for K3-fibered CY$_3$ (where (ii) and (iv) differ by a factor of $5/0 = \infty$) and for non-compact toric CY$_3$ (where (ii) and (iii) differ by a factor of $12$). The modular characteristic $\kappa(\cA)$ in the sense of (i) is the intrinsic invariant; the others are geometric proxies valid in restricted contexts.
 
-The full genus stratification of $K3 \times E$, including the Borcherds multiplicative lift from the genus-$1$ elliptic genus $\phi_{0,1}$ to the genus-$2$ Igusa cusp form $\Phi_{10}$, the BKM superalgebra $\mathfrak{g}_{\Delta_5}$, and the Schottky barrier at genus~$4$, is developed in the toroidal and elliptic algebras chapter of Volume~III (Chapter~\ref{chap:toroidal-elliptic}). The same chapter develops the CY local-to-global gluing via McKay quiver charts and $A_\infty$-bimodule transitions, the K3 chiral algebra ($\cN = 4$ SCA at $c = 6$, $\kappa = 2$, bar complex, Mathieu moonshine, Gepner model, CDR), the Hodge diamond, HKR decomposition, Brauer group, and factorization homology of $K3 \times E$, the enumerative geometry (reduced GW, KKV, BPS integrality, Bridgeland stability), the BPS spectrum and black hole entropy (charge lattice, BMPV, DVV, OSV), the Costello--Li twisted holography ($c = 24$ boundary algebra, holographic Koszul datum), and the mock modular / BKM root system. Forty-two CY/BKM compute engines with $5{,}700{+}$ tests back the numerical claims (grand atlas: \texttt{cy\_grand\_atlas\_k3e\_engine.py}).
+The full genus stratification of $K3 \times E$, including the Borcherds multiplicative lift from the genus-$1$ elliptic genus $\phi_{0,1}$ to the genus-$2$ Igusa cusp form $\Phi_{10}$, the BKM superalgebra $\mathfrak{g}_{\Delta_5}$, and the Schottky barrier at genus~$4$, is developed in the toroidal and elliptic algebras chapter of Volume~III (Chapter~\ref{chap:toroidal-elliptic}). The same volume keeps three K3 algebraizations distinct: the Mukai Heisenberg $\Phi_2(D^b(\Coh(K3)))$, the K3 sigma-model $\cN = 4$ SCA at $c = 6$, and the conjectural Yangian / BKM enhancements; the shared value $\kappa = 2$ on the first two is not an identification. On the CY-D lane, the operational $\kappa_{\mathrm{ch}}$ is separated from the Hodge comparator $\chi(\cO_X)$, with witness $K3 \times E$: $\kappa_{\mathrm{ch}} = 3$, $\chi(\cO_{K3 \times E}) = 0$, and $\kappa_{\mathrm{BKM}} = 5$. On the categorical-DT lane, the proved statement is the Hilbert-scheme Fock / cohomology bridge
+\[
+  \bigoplus_{n \ge 0} H^\bullet(\Hilb^n(K3), \Q)
+  \cong \operatorname{Fock}(H_{\mathrm{Muk}}),
+\]
+while the categorical lift to $D^b(\Hilb^n(K3))$ remains conjectural pending construction of the bar-side category and the derived-McKay functor. Forty-two CY/BKM compute engines with $5{,}700{+}$ tests back the numerical claims (grand atlas: \texttt{cy\_grand\_atlas\_k3e\_engine.py}).
 \end{remark}
 
 \noindent
@@ -11006,12 +11027,13 @@ well-defined algebraic object.
  $\kappa^{\mathrm{Heis}}(\cA_{K3})$; the bar complex provides the
  universal moonshine multiplier $A_n = \kappa^{\mathrm{Heis}} \cdot
  \dim(\rho_n)$.
- \item $\kappa_{\mathrm{BKM}} = \kappa^{\mathrm{Heis}}(K3)
- + \kappa^{\mathrm{Heis}}(K3 \times E)
- = 2 + 3 = 5$; ratio
- $\kappa_{\mathrm{BKM}}/\kappa_{\mathrm{ch}}^{\mathrm{Heis}} = 5/3
- = \operatorname{wt}(\Phi_{10})/(2\,\dim_\bC)$;
- Hilbert--Chow exceptional $= \chi(K3) = 24$
+ \item The three scalars on $K3 \times E$ stay separated:
+ $\kappa^{\mathrm{Heis}}(K3 \times E)=3$,
+ $\Xi(K3 \times E)=0$ by K\"unneth multiplicativity on the
+ Hodge column, and $\kappa_{\mathrm{BKM}}(K3 \times E)=5$.
+ The identity $5=3+2$ uses the K3 fiber value
+ $\chi(\cO_{K3})=2$ and is only the $N=1$ numerical
+ coincidence, not a product formula; it fails at $N\ge 2$
  (Proposition~\ref{prop:kappa-bps-decomposition}).
  \item Shadow $\neq \Phi_{10}$: four structural obstructions
  O1--O4 (Theorem~\ref{thm:shadow-siegel-gap}).

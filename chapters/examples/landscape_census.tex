@@ -4,7 +4,10 @@
 
 The complementarity sum $c + c' = 2d$ holds for every Kac--Moody
 algebra. The universal generating function $x/\sin x$ governs the
-$\hat{A}$-genus across all standard families. The spectral
+scalar Faber--Pandharipande genus series on the proved
+uniform-weight lane through the Wick-rotated identity
+$(x/2)/\sin(x/2)=\widehat{A}(ix)$; multi-weight families carry
+additional cross-channel corrections. The spectral
 discriminant $\Delta(x) = 1 - 2x - 3x^2$ is shared by
 $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$, three
 algebras with no apparent algebraic relation. These are the patterns
@@ -321,17 +324,21 @@ HF = honest frontier (inscribed scope, invariant not yet closed).
     (Part~\ref{part:standard-landscape}).
 \end{itemize}
 
-\noindent The Schellekens $71$~holomorphic VOAs at $c = 24$
-are represented in this master table only by the
-Monster~$V^{\natural}$ and Leech~$V_{\Lambda_{24}}$ rows; the
-$69$ non-Monster Schellekens algebras carry $c = 24$ with
-$\kappa = 24$ uniformly \textup{(}lattice-type bound inherited
-from rank\textup{)} but differ in strong-generator content
-and in the genus field $\operatorname{ek}(V) \in \{0,1,2,\dots\}$;
-a family-by-family row inscription for the full $71$-list is
-a frontier task
-(Part~\ref{part:v1-frontier};
-Remark~\ref{rem:census-silent-non-coverage}).
+\noindent The Schellekens $71$~holomorphic VOAs at $c = 24$ are no
+longer a frontier gap on the classification surface:
+Theorem~\ref{thm:schellekens-structured-subset} identifies the
+structured decomposition
+\[
+71 = 24_{\mathrm{Niemeier}} + 1_{\mathrm{Monster}} + 46_{\mathrm{nonlat}}
+\]
+as a corollary of an explicit partition of Schellekens's numbered list.
+This master table still records only the \emph{coarse} $\kappa/r_{\max}$
+rows represented by the Niemeier and Monster entries, because the
+remaining $46$ non-lattice cases do not collapse to a single extra row
+at this granularity; they are organized by their Schellekens slot and
+the weight-two threshold of
+Proposition~\ref{prop:schellekens-weight-two-threshold}, not by a new
+universal master-table line.
 
 \medskip
 
@@ -472,7 +479,7 @@ Heisenberg $\mathcal{H}_\kappa$ & G & 2 & none & \S\ref{ch:heisenberg-frame} \\
 \hline
 Lattice VOA $V_\Lambda$ & G & 2 & none & \S\ref{sec:lattice-genera} \\
 \hline
-Niemeier $V_\Lambda$ (all 24; $\kappa = 24$) & G & 2 & none: blind to root system & Thm~\ref{thm:lattice:niemeier-shadow-universality} \\
+Niemeier $V_\Lambda$ (all 24; $\kappa = 24$) & G & 2 & none: blind to root system & Thm~\ref{thm:lattice:niemeier-shadow-universality}; Thm~\ref{thm:schellekens-structured-subset} \\
 \hline
 $Y_{1,1,1}[\Psi]$ (corner VOA, $c = 0$) & G & 2 & none: cubic vanishes ($J$ abelian) & Rem~\ref{rem:y111-class-g} \\
 \hline
@@ -510,7 +517,7 @@ $Y_{0,0,N}[\Psi]$ ($N \geq 2$; $\mathcal{W}_N$-type) & M & $\infty$ & contains $
 \hline
 $\mathcal{W}_\infty$ (limit) & M$^*$ & $\infty$ & one-dimensional cyclic line at the limit ($\dim H^2_{\mathrm{cyc}}=1$) & Thm~\ref{thm:winfty-scalar} \\
 \hline
-Monster $V^\natural$ ($c = 24$, $\kappa = 12$) & M & $\infty$ & Griess algebra at weight~$2$; $\Delta \neq 0$ & Rem~\ref{rem:lattice:monster-shadow} \\
+Monster $V^\natural$ ($c = 24$, $\kappa = 12$) & M & $\infty$ & Griess algebra at weight~$2$; $\Delta \neq 0$ & Rem~\ref{rem:lattice:monster-shadow}; Thm~\ref{thm:schellekens-structured-subset} \\
 \hline
 \multicolumn{5}{|c|}{\textit{Subregular and non-principal $\mathcal{W}$-algebras}} \\
 \hline
@@ -3967,11 +3974,13 @@ From~\eqref{eq:gf-betagamma}: $P_{\beta\gamma}(x) = \sqrt{(1+x)/(1-3x)} = (1+x)/
 \index{Faber--Pandharipande formula!numerical values}
 
 By the genus universality theorem
-(Theorem~\ref{thm:genus-universality}), the genus-$g$ obstruction
-for uniform-weight algebras
-is $\operatorname{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g^{FP}$ where
+(Theorem~\ref{thm:genus-universality}), the scalar genus-$g$
+coefficient for uniform-weight algebras is
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$, while the
+cohomology class is
+$\operatorname{obs}_g(\cA)=\kappa(\cA)\cdot\lambda_g$. Here
 \[
-\lambda_g^{FP}
+\lambda_g^{\mathrm{FP}}
  = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}\,.
 \]
 The first ten values are:
@@ -3981,34 +3990,34 @@ The first ten values are:
 \label{prop:fp-coefficients}
 \index{Bernoulli numbers!obstruction coefficients}
 \begin{align}
-\lambda_1 &= \tfrac{1}{2} \cdot \tfrac{1/6}{2}
+\lambda_1^{\mathrm{FP}} &= \tfrac{1}{2} \cdot \tfrac{1/6}{2}
  = \tfrac{1}{24}\,,
  \label{eq:lambda1} \\
-\lambda_2 &= \tfrac{7}{8} \cdot \tfrac{1/30}{24}
+\lambda_2^{\mathrm{FP}} &= \tfrac{7}{8} \cdot \tfrac{1/30}{24}
  = \tfrac{7}{5760}\,,
  \label{eq:lambda2} \\
-\lambda_3 &= \tfrac{31}{32} \cdot \tfrac{1/42}{720}
+\lambda_3^{\mathrm{FP}} &= \tfrac{31}{32} \cdot \tfrac{1/42}{720}
  = \tfrac{31}{967680}\,,
  \label{eq:lambda3} \\
-\lambda_4 &= \tfrac{127}{128} \cdot \tfrac{1/30}{40320}
+\lambda_4^{\mathrm{FP}} &= \tfrac{127}{128} \cdot \tfrac{1/30}{40320}
  = \tfrac{127}{154828800}\,,
  \label{eq:lambda4} \\
-\lambda_5 &= \tfrac{511}{512} \cdot \tfrac{5/66}{3628800}
+\lambda_5^{\mathrm{FP}} &= \tfrac{511}{512} \cdot \tfrac{5/66}{3628800}
  = \tfrac{73}{3503554560}\,,
  \label{eq:lambda5} \\
-\lambda_6 &= \tfrac{2047}{2048} \cdot \tfrac{691/2730}{479001600}
+\lambda_6^{\mathrm{FP}} &= \tfrac{2047}{2048} \cdot \tfrac{691/2730}{479001600}
  = \tfrac{1414477}{2678117105664000}\,,
  \label{eq:lambda6} \\
-\lambda_7 &= \tfrac{8191}{8192} \cdot \tfrac{7/6}{87178291200}
+\lambda_7^{\mathrm{FP}} &= \tfrac{8191}{8192} \cdot \tfrac{7/6}{87178291200}
  = \tfrac{8191}{612141052723200}\,,
  \label{eq:lambda7} \\
-\lambda_8 &= \tfrac{32767}{32768} \cdot \tfrac{3617/510}{20922789888000}
+\lambda_8^{\mathrm{FP}} &= \tfrac{32767}{32768} \cdot \tfrac{3617/510}{20922789888000}
  = \tfrac{16931177}{49950709902213120000}\,,
  \label{eq:lambda8} \\
-\lambda_9 &= \tfrac{131071}{131072} \cdot \tfrac{43867/798}{6402373705728000}
+\lambda_9^{\mathrm{FP}} &= \tfrac{131071}{131072} \cdot \tfrac{43867/798}{6402373705728000}
  = \tfrac{5749691557}{669659197233029971968000}\,,
  \label{eq:lambda9} \\
-\lambda_{10} &= \tfrac{524287}{524288} \cdot \tfrac{174611/330}{2432902008176640000}
+\lambda_{10}^{\mathrm{FP}} &= \tfrac{524287}{524288} \cdot \tfrac{174611/330}{2432902008176640000}
  = \tfrac{91546277357}{420928638260761696665600000}\,.
  \label{eq:lambda10}
 \end{align}
@@ -4020,7 +4029,8 @@ $B_{20} = -174611/330$.
 The rapid growth of $|B_{2g}|$ (asymptotically
 $|B_{2g}| \sim 2 \cdot (2g)! / (2\pi)^{2g}$) is exactly
 compensated by the $(2g)!$ denominator, so
-$\lambda_g \sim 2/(2\pi)^{2g}$ decreases super-exponentially.
+$\lambda_g^{\mathrm{FP}} \sim 2/(2\pi)^{2g}$ decreases
+super-exponentially.
 \end{proposition}
 
 \begin{proof}
@@ -4030,12 +4040,12 @@ Theorem~\ref{thm:genus-universality}(iii).
 \end{proof}
 
 Table~\ref{tab:genus-obstructions} gives the explicit values
-$\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$ for
+$F_g(\cA) = \kappa \cdot \lambda_g^{\mathrm{FP}}$ for
 $g = 1, \ldots, 5$ .
 
 \begin{table}[ht]
 \centering
-\caption{Genus-$g$ obstruction coefficients $\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$ through $g = 5$ }
+\caption{Scalar genus-$g$ coefficients $F_g(\cA) = \kappa \cdot \lambda_g^{\mathrm{FP}}$ through $g = 5$ }
 \label{tab:genus-obstructions}
 \index{obstruction!numerical values}
 \renewcommand{\arraystretch}{1.5}
@@ -4491,12 +4501,14 @@ honest frontier, not silently skipped.
   admissible levels are not yet inscribed as a separate family row
   (they sit under $V_{k}(\mathfrak{g})$ with a level restriction).
 \end{enumerate}
-The $\mathcal{N}{=}1,2,4$ superconformal rows, the super-Yangian
-row, and the Schellekens $71$~holomorphic VOAs at $c=24$ are
-covered in parts and appear in dedicated chapters but are not
-re-inscribed in this master table. The sixth Niemeier--Monster
-coincidence $c = 24$ and the $71$ Schellekens algebras are
-listed only implicitly through the Monster / Leech rows.
+The $\mathcal{N}{=}1,2,4$ superconformal rows and the super-Yangian
+row are covered in parts and appear in dedicated chapters but are not
+re-inscribed in this master table. The Schellekens $71$~holomorphic
+VOAs at $c=24$ are now governed explicitly by
+Theorem~\ref{thm:schellekens-structured-subset}: the master table keeps
+the coarse Niemeier / Monster rows, while the full
+$24+1+46$ structured decomposition lives in the
+infinite-fingerprint chapter rather than as bare numerology.
 \end{remark}
 
 \medskip
