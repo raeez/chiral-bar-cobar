@@ -1,0 +1,323 @@
+% Transfer target:
+%   /Users/raeez/chiral-bar-cobar-vol2/chapters/connections/3d_gravity.tex
+%
+% Summary-surface sync required after insertion:
+% - /Users/raeez/chiral-bar-cobar-vol2/main.tex
+% - /Users/raeez/chiral-bar-cobar-vol2/chapters/frame/preface.tex
+% - /Users/raeez/chiral-bar-cobar-vol2/chapters/theory/introduction.tex
+%
+% Replace the current over-strong slogans by:
+% - soft hierarchy: shadow residues S_r govern the conformally soft tower;
+%   the literal m_r <-> sub^{r-2} identification is false on the nose.
+% - Page time: t_P = 3 S_BH / 13 is the crossing time of the two-rate
+%   complementarity model, and its interpretation as the physical Page time
+%   remains conjectural.
+% - de Sitter entropy in 3D: S_dS = pi ell /(2G) = pi c_dS / 3; the
+%   algebraic sign change of kappa is distinct from the geometric
+%   AdS_3 -> dS_3 analytic continuation.
+
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Mel}{\widetilde}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\cD}{\mathcal D}
+\providecommand{\cM}{\mathcal M}
+\providecommand{\cO}{\mathcal O}
+\providecommand{\ClaimStatusProvedHere}{}
+\providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusHeuristic}{}
+
+\subsection{Three physical consequences for 3d HT quantum gravity}
+\label{subsec:gravity-three-physical-consequences}
+
+This subsection records the strongest surviving forms of the three
+physical consequences advertised on the Virasoro gravitational lane.
+The guiding rule is scope discipline: the algebraic statements proved by
+the ordered bar complex are kept as theorems, while the extra physical
+identifications are marked explicitly when they remain heuristic.
+
+\subsubsection*{(a) The soft-graviton tower: residue statement versus raw arity}
+
+\begin{theorem}[Celestial soft hierarchy on the Virasoro lane;
+parts~\textup{(i)--(ii)} \ClaimStatusProvedHere,
+part~\textup{(iii)} \ClaimStatusConjectured]
+\label{thm:gravity-three-soft}
+For the Virasoro celestial chiral algebra $\Vir_c$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For every integer $r \ge 2$, the genus-$0$ conformally soft
+residue is governed by the shadow coefficient $S_r(\Vir_c)$:
+\begin{equation}\label{eq:gravity-three-soft-residue}
+\Res_{\Delta_s = 4-r}\,
+\Mel\cM_n(\Delta_s; \Delta_j, z_j, \bar z_j)
+\;=\;
+S_r(\Vir_c)\,\cD_s^{(r)}(z_s,\bar z_s)\,
+\Mel\cM_{n-1}(\Delta_j; z_j, \bar z_j).
+\end{equation}
+\item At low orders this reproduces the standard hierarchy
+\[
+r=2 \Longrightarrow \text{Weinberg leading},\qquad
+r=3 \Longrightarrow \text{Cachazo--Strominger subleading},\qquad
+r=4 \Longrightarrow \text{sub-subleading soft graviton},
+\]
+with
+\[
+S_2(\Vir_c)=\frac{c}{2},\qquad
+S_3(\Vir_c)=2,\qquad
+S_4(\Vir_c)=\frac{10}{c(5c+22)}.
+\]
+\item The stronger slogan
+\[
+m_r \;\leftrightarrow\; \mathrm{sub}^{\,r-2}\text{-leading}
+\]
+is false on the nose on the Virasoro lane. The binary operation
+$m_2$ already contains both the simple and double poles of
+$T(z)\cO(w)$, hence already accounts for the leading and subleading
+soft factors; the ternary operation $m_3$ is the first chain-level
+homotopy but its scalar shadow is gauge-trivial for Virasoro; the
+first new gauge-invariant contact coefficient is $S_4$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is the explicit Mellin--shadow correspondence on the Virasoro
+lane: the bar-cohomology class of depth $r-1$ acts on the hard
+insertions through the universal kinematic operator $\cD_s^{(r)}$ with
+scalar coefficient $S_r(\Vir_c)$. This is the correct bridge between
+the bar complex and the conformally soft expansion; it uses the Mellin
+pole $\Delta_s = 4-r$, not a direct equality of gradings.
+
+For part~(ii), the stress-tensor OPE with a primary field gives
+\[
+T(z)\cO_i(w)
+\sim
+\frac{h_i\,\cO_i(w)}{(z-w)^2}
+\;+\;
+\frac{\partial\cO_i(w)}{z-w}.
+\]
+The simple pole produces the leading soft factor and the double pole
+produces the subleading soft factor. Thus both of the first two soft
+orders already sit in the binary stress-tensor action. The next new
+gauge-invariant contact coefficient is the quartic shadow
+$S_4(\Vir_c)=10/[c(5c+22)]$, which is the first non-binary scalar
+correction and matches the sub-subleading residue statement.
+
+For part~(iii), the failure of the raw-arity slogan is visible already
+at the first two steps: $m_2$ contributes to both soft orders
+$0$ and $1$, while $m_3$ is a chain-level compensating homotopy rather
+than a new independent scalar soft factor. The correct invariant is the
+shadow coefficient $S_r$ extracted after passing through the Mellin
+residue dictionary~\eqref{eq:gravity-three-soft-residue}.
+\end{proof}
+
+\begin{remark}[Three-path verification for the soft tower]
+\label{rem:gravity-three-soft-verification}
+The numerical and structural checks are independent:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item Direct OPE computation:
+$T(z)\cO(w)$ has only simple and double poles, so the leading and
+subleading soft factors already occur at the binary level.
+\item Mellin--shadow dictionary:
+equation~\eqref{eq:gravity-three-soft-residue} packages the order-$r$
+conformally soft pole as the scalar shadow coefficient $S_r(\Vir_c)$
+times the universal operator $\cD_s^{(r)}$.
+\item Low-order literature checks:
+the cases $r=2,3,4$ agree with the leading, subleading, and
+sub-subleading soft graviton theorems, while the higher $r$ terms are
+best read as the bar-complex realisation of the higher conformally soft
+Ward identities rather than as a literal arity-by-arity dictionary.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[On degrees]
+\label{rem:gravity-three-soft-degrees}
+The bar degree and the soft-energy weight are different gradings.
+The $\Ainf$ operation $m_r$ has cohomological degree $2-r$, whereas the
+soft expansion is ordered by the Mellin pole $\Delta_s = 4-r$ or,
+equivalently, by the soft-energy power $\omega_s^{\,r-2}$. The bridge
+between them is the residue theorem
+\eqref{eq:gravity-three-soft-residue}, not a direct identity
+$|m_r| = r-2$.
+\end{remark}
+
+\subsubsection*{(b) The factor $3/13$: crossing time versus Page interpretation}
+
+\begin{proposition}[Complementarity crossing time;
+formula \ClaimStatusProvedHere, Page interpretation
+\ClaimStatusConjectured]
+\label{prop:gravity-three-page}
+Let
+\[
+\kappa(\Vir_c)=\frac{c}{2},
+\qquad
+\kappa(\Vir_{26-c})=\frac{26-c}{2},
+\qquad
+\kappa(\Vir_c)+\kappa(\Vir_{26-c})=13
+\]
+be the Virasoro complementarity pair from
+Volume~I, Theorem~\ref{V1-thm:quantum-complementarity-main}. Assume the
+two-branch linear model
+\begin{equation}\label{eq:gravity-three-page-model}
+S_{\mathrm{early}}(t)=\frac{\kappa(\Vir_c)}{3}\,t,
+\qquad
+S_{\mathrm{late}}(t)=S_{\mathrm{BH}}
+-\frac{\kappa(\Vir_{26-c})}{3}\,t.
+\end{equation}
+Then the crossing time is
+\begin{equation}\label{eq:gravity-three-page-time}
+t_* \;=\; \frac{3\,S_{\mathrm{BH}}}{13},
+\end{equation}
+and the crossing entropy is
+\begin{equation}\label{eq:gravity-three-page-entropy}
+S_* \;=\; \frac{c\,S_{\mathrm{BH}}}{26}.
+\end{equation}
+At the self-dual point $c=13$, one gets
+$S_* = S_{\mathrm{BH}}/2$.
+\end{proposition}
+
+\begin{proof}
+By the scalar entanglement formula on the Virasoro lane,
+$c/6 = \kappa(\Vir_c)/3$ and $(26-c)/6 = \kappa(\Vir_{26-c})/3$.
+Thus the factor $3$ in~\eqref{eq:gravity-three-page-time} comes from
+rewriting the linear coefficients in terms of $\kappa$, not from the
+number of stress-tensor components.
+
+The crossing time is determined by
+\[
+\frac{\kappa(\Vir_c)}{3}\,t_*
+=
+S_{\mathrm{BH}}
+-\frac{\kappa(\Vir_{26-c})}{3}\,t_*.
+\]
+Solving gives
+\[
+t_*
+=
+\frac{3S_{\mathrm{BH}}}
+{\kappa(\Vir_c)+\kappa(\Vir_{26-c})}
+=
+\frac{3S_{\mathrm{BH}}}{13},
+\]
+using the Virasoro complementarity constant
+$\kappa+\kappa^!=13$.
+Substituting back yields
+\[
+S_*
+=
+\frac{\kappa(\Vir_c)}{3}\,t_*
+=
+\frac{c/2}{3}\cdot\frac{3S_{\mathrm{BH}}}{13}
+=
+\frac{cS_{\mathrm{BH}}}{26}.
+\]
+At $c=13$ the two rates are equal, so
+$S_* = (13/6)\cdot(3S_{\mathrm{BH}}/13)=S_{\mathrm{BH}}/2$.
+\end{proof}
+
+\begin{remark}[Three-path verification for the $3/13$ factor]
+\label{rem:gravity-three-page-verification}
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item Direct $\kappa$-computation:
+$t_* = 3S_{\mathrm{BH}}/(\kappa+\kappa^!)$ and
+$\kappa+\kappa^!=13$.
+\item Central-charge form:
+$t_* = 6S_{\mathrm{BH}}/(c+(26-c)) = 3S_{\mathrm{BH}}/13$.
+\item Limiting checks:
+at $c=0$ or $c=26$ one branch becomes static but the same crossing time
+survives because only the sum enters; at $c=13$ the curve is symmetric
+and $S_*=S_{\mathrm{BH}}/2$.
+\end{enumerate}
+The physical identification of $t_*$ with the Page time is still
+heuristic: Page's original argument fixes the crossing principle, not
+the model-specific coefficient $3/13$.
+\end{remark}
+
+\begin{remark}[Dimensional analysis]
+\label{rem:gravity-three-page-dimensions}
+$S_{\mathrm{BH}}$ is dimensionless and the coefficients
+$\kappa/3$, $\kappa^!/3$ are dimensionless in the units of the linear
+model~\eqref{eq:gravity-three-page-model}, so the prefactor $3/13$ is
+dimensionless as required. The dimensional input is entirely in the
+time variable $t$.
+\end{remark}
+
+\subsubsection*{(c) de Sitter entropy in 3d: area law versus curvature sign}
+
+\begin{proposition}[3d de~Sitter entropy and analytic continuation;
+\ClaimStatusProvedHere]
+\label{prop:gravity-three-desitter}
+On the $3$-dimensional gravitational lane, the de~Sitter entropy is
+\begin{equation}\label{eq:gravity-three-desitter}
+S_{\mathrm{dS}_3}
+\;=\;
+\frac{A_{\mathrm{dS}_3}}{4G}
+\;=\;
+\frac{2\pi\ell_{\mathrm{dS}}}{4G}
+\;=\;
+\frac{\pi\ell_{\mathrm{dS}}}{2G}
+\;=\;
+\frac{\pi c_{\mathrm{dS}}}{3},
+\qquad
+c_{\mathrm{dS}}=\frac{3\ell_{\mathrm{dS}}}{2G}.
+\end{equation}
+The algebraic sign change
+\[
+\kappa(\Vir_{26-c})=\frac{26-c}{2}<0
+\qquad (c>26)
+\]
+describes the negative-curvature Koszul-dual lane, but it is not by
+itself the operation that produces
+\eqref{eq:gravity-three-desitter}. In particular, the slogan
+$\kappa \mapsto -|\kappa|$ is not a derivation of the
+$3$-dimensional de~Sitter entropy formula.
+\end{proposition}
+
+\begin{proof}
+Gibbons--Hawking gives the entropy of a cosmological horizon as
+$A/(4G)$. In $3$ dimensions the de~Sitter horizon is a circle of length
+$A_{\mathrm{dS}_3}=2\pi\ell_{\mathrm{dS}}$, so
+\[
+S_{\mathrm{dS}_3}
+=
+\frac{2\pi\ell_{\mathrm{dS}}}{4G}
+=
+\frac{\pi\ell_{\mathrm{dS}}}{2G}.
+\]
+If one packages the same quantity in the standard $3$-dimensional
+central-charge normalization
+$c_{\mathrm{dS}} = 3\ell_{\mathrm{dS}}/(2G)$, then
+\[
+\frac{\pi c_{\mathrm{dS}}}{3}
+=
+\frac{\pi}{3}\cdot\frac{3\ell_{\mathrm{dS}}}{2G}
+=
+\frac{\pi\ell_{\mathrm{dS}}}{2G},
+\]
+which is the same area law written in central-charge variables.
+
+By contrast, the inequality $c>26$ puts the Koszul-dual Virasoro
+algebra on a negative-curvature scalar lane,
+$\kappa(\Vir_{26-c})<0$. That is a statement about the sign of the
+fiberwise curvature term $d_{\mathrm{fib}}^2=\kappa\,\omega_g$, not
+about the geometric size of a de~Sitter horizon. The geometric
+analytic continuation $\ell_{\mathrm{AdS}} \mapsto i\ell_{\mathrm{dS}}$
+and the algebraic sign change of $\kappa$ are therefore distinct
+operations and must not be conflated.
+\end{proof}
+
+\begin{remark}[Three-path verification for de~Sitter entropy]
+\label{rem:gravity-three-desitter-verification}
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item Geometric area law:
+$S_{\mathrm{dS}_3}=A/(4G)$ with
+$A_{\mathrm{dS}_3}=2\pi\ell_{\mathrm{dS}}$.
+\item Central-charge rewrite:
+$c_{\mathrm{dS}}=3\ell_{\mathrm{dS}}/(2G)$ implies
+$\pi c_{\mathrm{dS}}/3=\pi\ell_{\mathrm{dS}}/(2G)$.
+\item Sign-convention check:
+the negative-curvature regime $c>26$ changes the sign of the scalar
+curvature coefficient on the Koszul-dual lane but leaves the geometric
+area law untouched.
+\end{enumerate}
+The formula $S_{\mathrm{dS}}=\pi\ell^2/G$ belongs to a different
+dimension and should not appear on the $3$-dimensional Virasoro lane.
+\end{remark}
