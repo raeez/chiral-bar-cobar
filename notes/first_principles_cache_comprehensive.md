@@ -3895,3 +3895,50 @@ If any of the three returns empty, treat completion as AMBIGUOUS-PARTIAL and eit
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
+## Pattern 230: Symbol-overloading across mathematical contexts (meta-pattern)
+
+**Session**: 2026-04-18 (meta-pattern consolidation, AP2121).
+
+**Type**: notational discipline at context-interfaces. Meta-pattern consolidating AP234, AP290, AP311, AP1982, AP2001, AP2041-2043.
+
+**Rule**: one programme-level symbol ($\kappa$, $\varrho$, $Z$, $H^i$, $K$, $\chi$, $c$, $S_r$) may denote multiple distinct mathematical objects across independently-developed contexts. Each context is internally consistent. Collisions are load-bearing only at context-interfaces (cross-volume identities, product formulas, subscript audits, derived-versus-naive disambiguations). Bare symbol use at an interface is prohibited; subscript is mandatory.
+
+**Regex trigger** (grep gate before commits touching chapters or standalones):
+
+```
+# Bare kappa at context-interfaces (union of Trinity K + complementarity contexts):
+grep -rn '\\kappa[^_{a-zA-Z]' chapters/ standalone/ \
+  | grep -v '^\s*%' \
+  | xargs -I{} awk -v ctx=50 '...'
+# Similarly for \varrho, \chi, and H^i with numeric superscript.
+```
+
+**First-principles counter-derivation protocol** (5 steps per symbol occurrence at any interface):
+
+1. **Identify the context-set**. What are the independently-developed contexts in which the symbol appears? Examples: for $\kappa$, the set is {chiral shadow, categorical Euler, BKM Borcherds weight, fiber correction}; for $K$, the set is {scalar complementarity $\kappa + \kappa^{!}$, Trinity ghost-charge $c + c^{!}$}; for $Z$, the set is {braided-monoidal centre, naive commutant, derived chiral centre, cohomological slice}; for $\varrho$, the set is {$\kappa$-linearity coefficient, KRW generator-profile harmonic}.
+
+2. **Enumerate subscripts explicitly**. For each context, write the symbol with its context-specific subscript ($\kappa_{\mathrm{ch}}$, $\kappa_{\mathrm{cat}}$, $\kappa_{\mathrm{BKM}}$, $\kappa_{\mathrm{fiber}}$; $K_{\kappa}$ vs $K_{\mathrm{Trinity}}$; $Z_{\mathrm{br}}$ vs $Z_{\mathrm{nv}}$ vs $Z^{\mathrm{der}}_{\mathrm{ch}}$; $\varrho_{\mathrm{lin}}$ vs $\varrho_{\mathrm{gen}}$).
+
+3. **Boundary-value cross-check per subscript**. At one canonical boundary value per context, evaluate the symbol numerically; if two subscripts yield the same number at the boundary (Heisenberg centre at all three $Z$-variants equals $\bC$; $\varrho_{\mathrm{lin}} = \varrho_{\mathrm{gen}}$ on principal $\cW_N$), flag the COINCIDENCE as a hazard — coincidences mask the overload.
+
+4. **Interface-invariant inscription**. If the context-interface has a known closed-form relation ($\kappa + \kappa^{!} = \varrho_A \cdot K$ bridges Trinity $K$ and complementarity $\kappa$; Künneth-multiplicative reconciles additive and multiplicative $\kappa_{\mathrm{ch}}$ at products), inscribe the relation as a named proposition or remark instead of deriving inline.
+
+5. **Prohibit bare symbol at the interface**. Any paragraph, theorem statement, product formula, or audit spreadsheet that references two or more contexts from the context-set MUST use the subscripted form; bare symbol is a Pattern-230 violation.
+
+**Canonical violations registered this session**:
+
+- **AP234** — two $K$'s: $\kappa + \kappa^{!}$ (family-dependent 0 / 13 / 250/3 / 98/3) vs Trinity $K = c + c^{!}$ ($-k$ / $2\dim(\fg)$ / 26 / 100 / 196). Bridge: $\kappa + \kappa^{!} = \varrho_A \cdot K$.
+- **AP290** — HZ-7 $\kappa$ subscript type-swap: $\kappa_{\mathrm{cat}}$ used with Sugawara-shift formula that belongs to $\kappa_{\mathrm{ch}}$. Subscript present, body mismatched.
+- **AP311** — two $\varrho$'s: $\varrho_{\mathrm{lin}}$ (linear-in-$c$) vs $\varrho_{\mathrm{gen}}$ (KRW harmonic). BP value $1/2$ vs $1/6$.
+- **AP1982** — "Drinfeld center dim 1" four-way collision. Naive vs braided vs derived vs $H^0$ slice; all $\bC$ for Heisenberg by coincidence; derived is dim 3.
+- **AP2001** — $\kappa_{\mathrm{ch}}^{\mathrm{Heis}}$ lattice-additive vs $\kappa_{\mathrm{ch}}$ Hodge-multiplicative at K3 $\times$ E.
+- **AP2041-2043** — $H^1(\fsl_2)$ four-way: generic full-bar (3), degree-2 ordered (4/8), KZB Frobenius (4), critical-level $\Omega^{\bullet}(\mathrm{Op})$ (infinite).
+
+**Counter-check one-liner**: when writing a programme-level symbol in a cross-context paragraph, stop and ask "which of the N contexts in the symbol-table applies?"; if the answer is "more than one" the symbol needs a subscript and the interface needs an inscribed bridge identity.
+
+**Related**: AP2121 (meta-AP); AP244 (overcounted foundational terms, dual failure mode: name-inflation collapsing to fewer objects); HZ-7 (Vol III bare-$\kappa$ prohibition, special case of Pattern 230 for $\kappa$ only); AP290 (subscript-body mismatch, subtler variant); AP234, AP311, AP1982, AP2001, AP2041-2043, AP289 (instance-level entries).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
