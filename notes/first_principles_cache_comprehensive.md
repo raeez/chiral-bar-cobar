@@ -4254,10 +4254,6 @@ grep -nE 'ordered|symmetric|\\Sigma_n|\\text\{averag' chapters/theory/chiral_hoc
 
 **Related**: Pattern 233 (hypothesis-weakening, dual failure mode: proof input too weak); Pattern 230 (symbol-overloading, different scope on same symbol); AP186 (Hochschild degree-0/positive-degree); wave7_chirhoch_general_propagation.
 
-### Attribution
-
-No AI attribution. All work attributed to Raeez Lorgat.
-
 ## Pattern 239: iff-narrowing missing counterexamples from other families
 
 **Session**: 2026-04-18 evening (Theorem D heal on critical-level iff).
@@ -4279,6 +4275,59 @@ grep -nE '(iff|\\iff|\\Leftrightarrow|if and only if)' chapters/theory/
 **Canonical violation healed (this session)**: Theorem D's part (iii) narrowed from "$\kappa = 0$ iff critical level" to the KM-internal iff "$\kappa(V_k(\mathfrak{g})) = 0$ iff $k = -h^\vee$". New `rem:theorem-d-critical-level` at `chapters/theory/higher_genus_modular_koszul.tex:3035-3065` documents the Virasoro-at-$c=0$ counterexample and inscribes the content-migration from scalar lane to bar-cohomology lane (Feigin–Frenkel centre $H^0(\bar B(\hat\mathfrak{g}_{-h^\vee})) \simeq \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D))$).
 
 **Related**: AP24 (unqualified $\kappa + \kappa' = 0$); Pattern 230 (symbol-overloading — $\kappa$ family-dependent); type 21 necessary/sufficient; wave8_theorem_A_E1_phantom_heal (cross-family scope audit).
+
+## Pattern 242: Averaging is not a proof that universality descends
+
+**Session**: 2026-04-18 night (factorization-envelope adversarial attack on $U^{\mathrm{mod}}_X$).
+
+**Type**: categorical/convolution-layer conflation. Canonical violation: a chapter states or implies that the ordered-side universal envelope descends under the averaging map
+$\mathrm{av}\colon \mathfrak{g}^{E_1}_\cA \to \mathfrak{g}^{\mathrm{mod}}_\cA$
+to a universal modular envelope, even though the only inscribed data are the envelope construction and the induced Maurer--Cartan class.
+
+**Rule**: never use averaging as a substitute for an adjunction proof. Averaging is a map between ordered and modular convolution algebras of a \emph{fixed} chiral algebra. A universal property for
+$U^{\mathrm{mod}}_X$ requires a functor
+$U^{\mathrm{mod}}_X\colon \mathcal{C} \to \mathcal{D}$,
+a named primitive/forgetful functor
+$\operatorname{Prim}^{\mathrm{mod}}\colon \mathcal{D} \to \mathcal{C}$,
+and an inscribed Hom-isomorphism or initiality statement with unit/counit. The projection
+$\mathrm{av}(\Theta^{E_1}_\cA)=\Theta_\cA$
+does none of that by itself.
+
+**Diagnostic split**:
+
+1. **Construction layer.** What object is actually built from Lie conformal input?
+   Here: $U^{\mathrm{mod}}_X(L)=\Fact_X(L)\widehat\otimes_{\mathrm{cyc}}\mathbb{G}_{\mathrm{mod}}$.
+2. **Maurer--Cartan layer.** What class is attached to the constructed object?
+   Here: $\Theta_{U^{\mathrm{mod}}_X(L)}=D_{U^{\mathrm{mod}}_X(L)}-\dzero$.
+3. **Averaging layer.** What does averaging do?
+   It projects ordered data to symmetric/coinvariant data:
+   $\mathrm{av}\colon \mathfrak{g}^{E_1}_\cA \twoheadrightarrow \mathfrak{g}^{\mathrm{mod}}_\cA$,
+   sending $\Theta^{E_1}_\cA$ to $\Theta_\cA$ for a fixed ambient $\cA$.
+4. **Universal-property layer.** Is there a proved adjunction?
+   Only if the source/target categories, primitive functor, and Hom-isomorphism are stated and proved. If not, the word "universal" must be downgraded.
+
+**Regex trigger** (audit before accepting any sentence with both "averaging" and "universal" / "adjoint"):
+
+```bash
+rg -n 'averag|coinvariant|\\mathrm\\{av\\}.*(universal|adjoint)|universal.*averag|adjoint.*averag' chapters/
+```
+
+**Counter-check one-liner**: after every such hit, ask four questions in order.
+1. What is the domain/codomain of averaging?
+2. Are they convolution algebras or categories of factorization algebras?
+3. Where are the unit and counit?
+4. Where is the Hom-isomorphism?
+If (2)-(4) are missing, the sentence is a Pattern-242 violation.
+
+**Canonical violation healed (this session)**:
+Vol~I `higher_genus_modular_koszul.tex` had a proved theorem surface advertising
+$U^{\mathrm{mod}}_X \dashv \operatorname{Prim}^{\mathrm{mod}}$ and downstream prose using the envelope as the "universal recipient of all MC data." The honest proved core is now separated into:
+- the construction theorem for $U^{\mathrm{mod}}_X(L)$;
+- the canonical current-sector MC comparison;
+- the explicit remark that averaging acts on convolution algebras, not on the envelope functor;
+- the conjectural Hom-isomorphism recorded as frontier-only.
+
+**Related**: entry 285 in `appendices/first_principles_cache.md` (universal without universal property); AP269 (adjunction-strictness conflation); Pattern 235 (reverse drift after theorem narrowing).
 
 ### Attribution
 

@@ -8,10 +8,14 @@ compactification the graph sums diverge, and without a boundary
 stratification the coalgebra structure has no geometric source. The
 Fulton--MacPherson compactification $\overline{C}_n(X)$ resolves both
 problems simultaneously: the propagator extends as a logarithmic form,
-the Arnold relations force $d^2 = 0$ at genus~$0$, and the cooperadic
-decomposition of the boundary produces the coalgebra structure of the
-bar complex over the Feynman transform of the commutative modular
-operad.
+the genus-$0$ Arnold relation controls the local collision screens,
+and the cooperadic decomposition of the boundary produces the
+coalgebra structure of the bar complex over the Feynman transform of
+the commutative modular operad. For $X = \mathbb{P}^1$ one must add
+the projective linear relations coming from the $\mathrm{PSL}_2$
+action; for $g(X) \geq 1$ one must add the surface classes and mixed
+period relations recorded in
+Proposition~\ref{prop:arnold-higher-genus}.
 
 The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ are the scalar
 coefficients of the universal KZ connection one-form
@@ -28,7 +32,10 @@ Four geometric inputs carry this identity: $\overline{C}_n(X)$
 (\S\ref{sec:FM-compactification}); the logarithmic propagator
 (Definition~\ref{def:log-forms}); the Arnold relation
 (Theorem~\ref{thm:arnold-relations}), which is the flatness of
-$\nabla_{\mathrm{Arnold}}$; and the residue maps
+$\nabla_{\mathrm{Arnold}}$ on the affine genus-$0$ screen; and the
+projective/period corrections of
+Proposition~\ref{prop:arnold-higher-genus}, which govern the global
+curve geometry away from that screen; and the residue maps
 (Theorem~\ref{thm:residue-operations}), which turn propagator-wedged-with-OPE
 into bar differential. The KZ pullback itself is proved at the climax
 (Chapter~\ref{chap:climax-platonic}).
@@ -37,9 +44,11 @@ For the modular extension (Mok logarithmic FM
 \S\ref{sec:log-fm-punctured}; bordered FM
 \S\ref{sec:bordered-fm}; period coordinates at higher genus
 \S~\ref{sec:normal-crossings-higher-genus}) the Arnold relation
-acquires elliptic and prime-form corrections
-(Proposition~\ref{prop:elliptic-arnold-relations}; \cite{Fay73}
-prime forms): the deficit is absorbed into the curvature
+remains the local tangent-screen identity, but the global
+configuration-space package acquires projective and period corrections
+(Proposition~\ref{prop:arnold-higher-genus};
+Proposition~\ref{prop:elliptic-arnold-relations}; \cite{Fay73}
+for prime forms): the deficit is absorbed into the curvature
 $\kappa(\cA) \cdot \omega_g$, which the universal-conductor
 chapter (Chapter~\ref{chap:universal-conductor}) reads as
 $K(\cA) = -c_{\mathrm{ghost}}(\mathrm{BRST}(\cA))$ on the
@@ -110,18 +119,20 @@ Third, this relation forces $d_{\mathrm{residue}}^2 = 0$
 (Theorem~\ref{thm:bar-nilpotency-complete}): the
 bar differential at degree~$2$ is a sum of double residues
 at pairs of collision divisors $D_{ij} \cap D_{jk}$, and
-the Arnold relation is the precise cancellation identity
-ensuring that these contributions sum to zero. The
-equivalence between the Arnold relation and nilpotency of
-the bar differential is
-Theorem~\ref{thm:arnold-iff-nilpotent}; at genus~$0$ the
-Arnold relation is the \emph{only} obstruction, and its
-vanishing gives $d^2 = 0$ unconditionally. At
-genus~$g \geq 1$, the Arnold relation is modified by
-elliptic corrections
-(Proposition~\ref{prop:elliptic-arnold-relations}), and
-the failure of strict nilpotency is measured by the
-curvature $\kappa(\cA) \cdot \omega_g$.
+the genus-$0$ Arnold relation is the precise local cancellation
+identity ensuring that these contributions sum to zero on an affine
+screen. The equivalence between the local Arnold relation and
+nilpotency of the bar differential is
+Theorem~\ref{thm:arnold-iff-nilpotent}; at genus~$0$ it is the
+\emph{only} relation on the scalar propagator classes. On
+$\mathbb{P}^1$ one must also quotient by the projective linear
+relations, and on $\Sigma_g$ with $g \geq 1$ one must adjoin the
+surface generators and mixed period relations of
+Proposition~\ref{prop:arnold-higher-genus}. The further elliptic and
+prime-form corrections
+(Proposition~\ref{prop:elliptic-arnold-relations}) measure the
+failure of strict nilpotency by the curvature
+$\kappa(\cA) \cdot \omega_g$.
 
 \section{Fulton--MacPherson compactification}
 \label{sec:FM-compactification}
@@ -810,10 +821,14 @@ The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy fundamental relat
 \item \emph{Arnold relation:} For distinct $i,j,k$:
 \[\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0\]
 
-\item \emph{Completeness (genus $0$):} For $\Sigma_0 = \mathbb{C}$, the classes $\eta_{ij}$ generate
-$H^*(C_n(\mathbb{C}); \mathbb{C})$ and the Arnold relations generate all
-relations (the Arnol'd--Brieskorn--Orlik--Solomon theorem).
-For $g \geq 1$, additional generators from $H^*(\Sigma_g)$ (pulled back via projections $\pi_k: C_n(\Sigma_g) \to \Sigma_g$) and additional ``surface relations'' are required.
+\item \emph{Completeness (genus split):} For $\Sigma_0 = \mathbb{C}$, the
+classes $\eta_{ij}$ generate $H^*(C_n(\mathbb{C}); \mathbb{C})$ and the
+Arnold relations generate all relations. For $X = \mathbb{P}^1$, the
+same pairwise forms descend only after imposing the projective linear
+relations $\sum_{j \neq i}\bar\eta_{ij} = 0$. For $g \geq 1$, the
+cohomology is computed by the Totaro--K\v{r}\'{\i}\v{z}--Bezrukavnikov
+model with additional generators pulled back from $H^*(\Sigma_g)$ and
+mixed relations $\eta_{ij}(\pi_i^*\xi-\pi_j^*\xi)=0$.
 \end{enumerate}
 \end{theorem}
 
@@ -873,7 +888,287 @@ The bracketed expression reduces by partial fractions over the common denominato
 This completes the proof for any triple of distinct indices and any~$n \geq 3$.
 
 \emph{Part 3: Completeness.}
-This is the main theorem of \cite{Arnold69, }. The proof uses intersection theory on $\overline{C}_n(\Sigma_g)$ and is beyond our scope here.
+The genus split is proved in
+Proposition~\ref{prop:arnold-higher-genus}: the affine case follows by
+the Fadell--Neuwirth fibration and a Hilbert-series comparison with the
+Arnol'd--Orlik--Solomon algebra, the projective case adds the
+$\mathrm{PSL}_2$ gauge relations, and the higher-genus case is computed
+by the Totaro model \cite[Theorems~1 and~3]{Totaro96} together with its
+rational-model refinements due to K\v{r}\'{\i}\v{z} and
+Bezrukavnikov.
+\end{proof}
+
+\begin{proposition}[Higher-genus correction to the Arnold-only presentation; \ClaimStatusProvedHere]
+\label{prop:arnold-higher-genus}
+\index{configuration space!genus split}
+\index{Totaro relations|textbf}
+Let $X$ be a smooth complex curve.
+\begin{enumerate}
+\item \textup{\textbf{Affine line / formal disk.}}
+For $X = \mathbb{A}^1$ \textup{(}equivalently, on a genus-$0$ tangent
+screen or formal disk\textup{)}, the algebra
+$H^*(C_n(\mathbb{A}^1);\mathbb{Q})$ is generated by the degree-$1$
+classes $\eta_{ij} = d\log(z_i-z_j)$ subject only to
+$\eta_{ji}=\eta_{ij}$, $\eta_{ij}^2=0$, and the Arnold relations
+\[
+\eta_{ij}\wedge\eta_{jk}
+\;+\;
+\eta_{jk}\wedge\eta_{ki}
+\;+\;
+\eta_{ki}\wedge\eta_{ij}
+\;=\;0.
+\]
+Its Poincar\'e polynomial is
+\[
+P_{C_n(\mathbb{A}^1)}(t)
+\;=\;
+\prod_{k=1}^{n-1}(1+kt).
+\]
+
+\item \textup{\textbf{Projective line.}}
+For $X = \mathbb{P}^1$ and $n \geq 3$, the unique M\"obius
+transformation sending $(z_1,z_2,z_3)$ to $(0,1,\infty)$ yields
+\[
+C_n(\mathbb{P}^1)
+\;\cong\;
+\mathrm{PSL}_2(\mathbb{C})
+\times
+C_{n-3}\!\bigl(\mathbb{C}\setminus\{0,1\}\bigr).
+\]
+Hence
+\[
+H^*(C_n(\mathbb{P}^1);\mathbb{Q})
+\;\cong\;
+\Lambda(u)
+\otimes
+H^*\!\bigl(C_{n-3}(\mathbb{C}\setminus\{0,1\});\mathbb{Q}\bigr),
+\qquad |u|=3.
+\]
+On the gauge-fixed factor, with moving points
+$z_4,\ldots,z_n$, the degree-$1$ generators
+\[
+a_i := d\log z_i,\qquad
+b_i := d\log(z_i-1),\qquad
+c_{ij} := d\log(z_i-z_j)
+\quad (4\leq i<j\leq n)
+\]
+satisfy the complete relations
+\begin{align}
+a_i\wedge b_i &= 0,\label{eq:p1-projective-rel-1}\\
+a_i\wedge c_{ij} + c_{ij}\wedge a_j + a_j\wedge a_i &= 0,\label{eq:p1-projective-rel-2}\\
+b_i\wedge c_{ij} + c_{ij}\wedge b_j + b_j\wedge b_i &= 0,\label{eq:p1-projective-rel-3}\\
+c_{ij}\wedge c_{jk} + c_{jk}\wedge c_{ki} + c_{ki}\wedge c_{ij} &= 0.\label{eq:p1-projective-rel-4}
+\end{align}
+Equivalently, if $\bar\eta_{ij}$ denotes the descended pairwise class
+on $C_n(\mathbb{P}^1)$, then one has Arnold together with the projective
+linear relations
+\[
+\sum_{j\neq i}\bar\eta_{ij}=0
+\qquad (1\leq i\leq n).
+\]
+
+\item \textup{\textbf{Positive genus.}}
+Let $X=\Sigma_g$ with $g\geq 1$, let
+$p_i\colon \Sigma_g^n\to\Sigma_g$ be the coordinate projections, choose
+a symplectic basis
+$\alpha_1,\beta_1,\ldots,\alpha_g,\beta_g\in H^1(\Sigma_g;\mathbb{Q})$,
+and write $\omega\in H^2(\Sigma_g;\mathbb{Q})$ for the orientation
+class. Then $H^*(C_n(\Sigma_g);\mathbb{Q})$ is computed by the
+commutative differential graded algebra
+\[
+A_{g,n}
+\;:=\;
+\frac{H^*(\Sigma_g^n;\mathbb{Q})[\eta_{ij}]_{1\leq i<j\leq n}}
+{\bigl(
+\eta_{ij}^2,\;
+\eta_{ij}\eta_{jk}+\eta_{jk}\eta_{ki}+\eta_{ki}\eta_{ij},\;
+\eta_{ij}(p_i^*\xi-p_j^*\xi)\ \forall\,\xi\in H^*(\Sigma_g;\mathbb{Q})
+\bigr)}
+\]
+with $|\eta_{ij}|=1$, $d|_{H^*(\Sigma_g^n)}=0$, and
+\begin{equation}
+\label{eq:totaro-curve-differential}
+d\eta_{ij}
+\;=\;
+\Delta_{ij}
+\;:=\;
+\omega_i+\omega_j
+\;+\;
+\sum_{r=1}^g
+\bigl(\alpha_{r,i}\beta_{r,j}-\beta_{r,i}\alpha_{r,j}\bigr).
+\end{equation}
+In particular,
+\begin{align}
+\eta_{ij}(\alpha_{r,i}-\alpha_{r,j}) &= 0,\label{eq:totaro-curve-rel-1}\\
+\eta_{ij}(\beta_{r,i}-\beta_{r,j}) &= 0,\label{eq:totaro-curve-rel-2}\\
+\eta_{ij}(\omega_i-\omega_j) &= 0.\label{eq:totaro-curve-rel-3}
+\end{align}
+Thus the Arnold relation is only the genus-$0$ part of the relation
+package: for $g\geq 1$ one must also keep the surface generators and the
+mixed period relations, and $\eta_{ij}$ are no longer closed classes in
+cohomology.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part 1: $X=\mathbb{A}^1$.}
+Let
+$p_n\colon C_n(\mathbb{A}^1)\to C_{n-1}(\mathbb{A}^1)$
+forget the last point. By Fadell--Neuwirth~\cite{FadellNeuwirth62},
+this is a locally trivial fibration with fiber
+\[
+F_n
+\;=\;
+\mathbb{A}^1\setminus\{z_1,\ldots,z_{n-1}\}.
+\]
+The fiber cohomology is concentrated in degrees $0$ and $1$:
+$H^0(F_n)=\mathbb{Q}$ and
+$H^1(F_n)=\bigoplus_{i=1}^{n-1}\mathbb{Q}\,[\gamma_i]$, where
+$\gamma_i$ is a small positively oriented loop around the puncture
+$z_i$. The pure braid monodromy fixes each puncture individually, hence
+acts trivially on $H^1(F_n)$. Therefore the Serre spectral sequence has
+\[
+E_2^{p,q}
+\;=\;
+H^p\!\bigl(C_{n-1}(\mathbb{A}^1);\mathbb{Q}\bigr)
+\otimes
+H^q(F_n;\mathbb{Q}),
+\qquad q\in\{0,1\}.
+\]
+The class $\eta_{in}=d\log(z_i-z_n)$ restricts on the fiber to
+$d\log(z_i-w)$, whose period on $\gamma_i$ is $2\pi i$ and whose period
+on $\gamma_j$ for $j\neq i$ is $0$; thus
+$[\eta_{1n}],\ldots,[\eta_{n-1,n}]$ form the fiber basis and kill the
+only possible transgression. Hence
+\[
+P_n(t)
+\;=\;
+(1+(n-1)t)\,P_{n-1}(t),
+\qquad
+P_1(t)=1,
+\]
+so
+$P_n(t)=\prod_{k=1}^{n-1}(1+kt)$.
+
+Let $\mathrm{OS}_n$ be the graded algebra generated by symbols
+$e_{ij}=e_{ji}$, modulo $e_{ij}^2=0$ and the Arnold relations.
+Sending $e_{ij}\mapsto[\eta_{ij}]$ defines a surjective map
+$\mathrm{OS}_n\twoheadrightarrow H^*(C_n(\mathbb{A}^1);\mathbb{Q})$.
+Using the Arnold relation with the index $n$,
+\[
+e_{in}e_{jn}
+\;=\;
+e_{ij}(e_{jn}-e_{in}),
+\]
+every monomial in $\mathrm{OS}_n$ rewrites as a sum of monomials with at
+most one factor involving the index $n$. Hence
+$\mathrm{OS}_n$ is spanned by
+$\mathrm{OS}_{n-1}$ and
+$\mathrm{OS}_{n-1}e_{in}$ for $1\leq i\leq n-1$, so
+\[
+\operatorname{Hilb}(\mathrm{OS}_n;t)
+\;\leq\;
+(1+(n-1)t)\operatorname{Hilb}(\mathrm{OS}_{n-1};t).
+\]
+Starting from $\operatorname{Hilb}(\mathrm{OS}_1;t)=1$, this gives
+\[
+\operatorname{Hilb}(\mathrm{OS}_n;t)
+\;\leq\;
+\prod_{k=1}^{n-1}(1+kt)
+\;=\;
+P_n(t).
+\]
+Because $\mathrm{OS}_n\twoheadrightarrow H^*(C_n(\mathbb{A}^1);\mathbb{Q})$
+is surjective and the target has the same Poincar\'e polynomial, the
+map is an isomorphism. This is precisely the
+Arnol'd--Brieskorn--Orlik--Solomon presentation.
+
+\emph{Part 2: $X=\mathbb{P}^1$.}
+For every ordered triple of distinct points on $\mathbb{P}^1$ there is a
+unique M\"obius transformation carrying it to $(0,1,\infty)$, so
+\[
+(g,w_4,\ldots,w_n)
+\longmapsto
+\bigl(g(0),g(1),g(\infty),g(w_4),\ldots,g(w_n)\bigr)
+\]
+is an isomorphism
+$\mathrm{PSL}_2(\mathbb{C})\times
+C_{n-3}(\mathbb{C}\setminus\{0,1\})
+\xrightarrow{\sim}
+C_n(\mathbb{P}^1)$.
+The group $\mathrm{PSL}_2(\mathbb{C})$ deformation retracts onto
+$\mathrm{SO}(3)$, so
+$H^*(\mathrm{PSL}_2(\mathbb{C});\mathbb{Q})\cong\Lambda(u)$ with
+$|u|=3$, giving the stated tensor-product decomposition.
+
+On the gauge-fixed factor, the forms $a_i$, $b_i$, and $c_{ij}$ are the
+pairwise logarithmic differentials of the points
+$0,1,z_4,\ldots,z_n$. The four displayed relations are exactly the
+Arnold relations for the triples $(0,1,i)$, $(0,i,j)$, $(1,i,j)$, and
+$(i,j,k)$. Forgetting the last moving point gives a fibration with fiber
+$\mathbb{C}$ minus the marked set $\{0,1,z_4,\ldots,z_{n-1}\}$, so the
+same argument as in Part~1 yields the recurrence
+\[
+P_m^{01}(t)
+\;=\;
+(1+(m+1)t)P_{m-1}^{01}(t)
+\qquad
+(m=n-3)
+\]
+for the Poincar\'e polynomial of
+$C_m(\mathbb{C}\setminus\{0,1\})$.
+Thus the gauge-fixed algebra has exactly the size forced by the
+displayed relations, and the equivalent projective formulation
+$\sum_{j\neq i}\bar\eta_{ij}=0$ is obtained by undoing the gauge fixing.
+So $\mathbb{P}^1$ already carries more than the affine Arnold relation:
+projective rigidity contributes a linear relation at each marked point.
+
+\emph{Part 3: $X=\Sigma_g$ with $g\geq 1$.}
+Again forget the last point:
+\[
+p_n\colon C_n(\Sigma_g)\to C_{n-1}(\Sigma_g),
+\qquad
+F_n=\Sigma_g\setminus\{z_1,\ldots,z_{n-1}\}.
+\]
+Now
+$H^1(F_n;\mathbb{Q})$
+has the ambient classes from $H^1(\Sigma_g;\mathbb{Q})$ together with
+the puncture classes. Unlike the affine case, the point-pushing action
+of $\pi_1(C_{n-1}(\Sigma_g))$ on this $H^1(F_n)$ is nontrivial: moving
+the $i$-th marked point around an $A_r$- or $B_r$-cycle changes the
+puncture class by the corresponding handle class. So the Serre spectral
+sequence is no longer a constant-coefficient copy of the affine proof;
+the mixed geometry of punctures and periods must be recorded.
+
+Totaro computes exactly this correction for smooth projective
+varieties. Specializing \cite[Theorem~1]{Totaro96} to a complex curve
+gives the differential graded algebra generated by
+$H^*(\Sigma_g^n;\mathbb{Q})$ and degree-$1$ classes $\eta_{ij}$, with
+Arnold, $\eta_{ij}^2=0$, and the mixed relations
+$\eta_{ij}(p_i^*\xi-p_j^*\xi)=0$, together with the differential
+$d\eta_{ij}=\Delta_{ij}$ of~\eqref{eq:totaro-curve-differential}. For a
+curve, the diagonal class is
+\[
+\Delta_{ij}
+\;=\;
+\omega_i+\omega_j
+\;+\;
+\sum_{r=1}^g
+\bigl(\alpha_{r,i}\beta_{r,j}-\beta_{r,i}\alpha_{r,j}\bigr),
+\]
+which is exactly the Abel--Jacobi/period correction tying the puncture
+generator to the ambient cohomology. Because $\Sigma_g$ is smooth and
+projective, Totaro's degeneration theorem
+\cite[Theorem~3]{Totaro96} shows that no further rational differentials
+survive, so this CDGA computes
+$H^*(C_n(\Sigma_g);\mathbb{Q})$.
+The resulting model is equivalent to the rational models of
+K\v{r}\'{\i}\v{z}~\cite{Kriz94} and
+Bezrukavnikov~\cite{Bezrukavnikov94}. In particular,
+equations~\eqref{eq:totaro-curve-rel-1}--\eqref{eq:totaro-curve-rel-3}
+show that the higher-genus obstruction is not additional Arnold
+relations among closed $\eta_{ij}$ alone, but rather the interaction of
+the puncture generators with the period classes of the curve.
 \end{proof}
 
 \begin{proposition}[Geometric realization of the universal twisting
@@ -3157,17 +3452,32 @@ $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta
 as a 2-form identity on $C_3(\mathbb{C})$. (Note: the \emph{sum} of 1-forms
 $\eta_{12} + \eta_{23} + \eta_{13} = d\log[(z_1{-}z_2)(z_2{-}z_3)(z_3{-}z_1)]$
 is exact but nonzero; this is a different identity.)
-\item \emph{Genus 1:} Elliptic Arnold relations with modular corrections (the genus-$1$ case is formalized in Proposition~\ref{prop:elliptic-arnold-relations}; the higher-genus generalization remains to be established)
-\item \emph{Genus $g \geq 2$:} Siegel modular corrections from period integrals
+\item \emph{Genus 0, projective screen:} on $C_n(\mathbb{P}^1)$ one must add
+the projective linear relations
+$\sum_{j\neq i}\bar\eta_{ij}=0$
+from Proposition~\ref{prop:arnold-higher-genus}.
+\item \emph{Genus $g \geq 1$:} the curve model carries the mixed period
+relations
+$\eta_{ij}(p_i^*\xi-p_j^*\xi)=0$
+and the diagonal differential
+$d\eta_{ij}=\Delta_{ij}$
+of Proposition~\ref{prop:arnold-higher-genus}; on elliptic and
+higher-genus compactifications these appear analytically as the modular
+and prime-form corrections of
+Proposition~\ref{prop:elliptic-arnold-relations}.
 \end{itemize}
 
 At genus~$0$, the Arnold relation between propagator forms is the precise
 identity that forces $d^2 = 0$ on the bar differential at degree~$2$:
 the composition of two residue operations is a wedge product of two
 propagators, and the Arnold sum vanishes. At genus~$g \geq 1$ the
-elliptic and prime-form propagators satisfy modified Arnold relations
-(Proposition~\ref{prop:elliptic-arnold-relations} for $g = 1$), and the
-extra terms are absorbed into the curvature class
+elliptic and prime-form propagators satisfy period-corrected relations:
+the local Arnold term survives on the tangent screen, but the global
+configuration-space complex also sees the projective or mixed
+Totaro-type relations of Proposition~\ref{prop:arnold-higher-genus}.
+The remaining analytic corrections
+\textup{(}Proposition~\ref{prop:elliptic-arnold-relations} for $g = 1$\textup{)}
+are absorbed into the curvature class
 $\kappa(\cA)\cdot \omega_g$.
 
 Configuration spaces therefore encode local OPE data through the
@@ -4083,7 +4393,10 @@ Each face corresponds to a term in the Arnold relation.
 
 \begin{corollary}[Bar differential squares to zero; \ClaimStatusProvedHere]
 \label{cor:bar-d-squared-zero}
-The Arnold relations ensure $d^2 = 0$ for the bar differential.
+On an affine genus-$0$ screen, the Arnold relations ensure $d^2 = 0$
+for the bar differential. For $X=\mathbb{P}^1$ or $g(X)\geq 1$, one
+must add the projective or period relations of
+Proposition~\ref{prop:arnold-higher-genus}.
 \end{corollary}
 \begin{proof}
 This is Theorem~\ref{thm:bar-nilpotency-complete}.
