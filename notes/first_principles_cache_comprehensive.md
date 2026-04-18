@@ -4783,3 +4783,104 @@ git pull --rebase origin main && git push origin main
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 249: Wave-N target-scope selection must subtract Waves $1{\ldots}N-1$ healed targets
+
+**Session**: 2026-04-18 attack-heal swarm Wave 5 launch. Observed that recent waves (Wave 2 Theorems B/D/H; Wave 3 averaging functoriality + seven-faces GRT cocycle + cross-volume triangle; Wave 4 BD-fact vs ChirHoch + av-kernel graded Lie + Koszul self-dual locus census + Vol II ff-chirhoch-critical + Vol III cy-d-shadow-class-stratification) had already covered a substantial slice of the obvious low-hanging targets across all three volumes. Spawning Wave-5 agents without an explicit EXCLUDE-LIST risks sending them back to already-healed material, where they would either (a) re-heal what is already in a materially stronger state (waste of tool budget), or (b) produce inscribe-over-inscribe collisions that the post-wave deep-semantic merge must untangle.
+
+**Type**: orchestration / wave-scope-selection defect. **Hook-invisible**: this pattern manifests at agent-spawn time in the main thread, not during file edits; `.claude/hooks/beilinson-gate.sh` cannot gate it. The gate is the spawner's discipline.
+
+**Rule**: before composing any Wave-N agent prompt:
+1. Run `git log --oneline -30` in each of the three volumes (Vol I `/Users/raeez/chiral-bar-cobar`, Vol II `/Users/raeez/chiral-bar-cobar-vol2`, Vol III `/Users/raeez/calabi-yau-quantum-groups`).
+2. Extract explicit healed-target labels from commit titles matching `/[Ww]ave.*heal/` or `/heal:/` — the label is usually a `thm:XXX` / `prop:YYY` / `lem:ZZZ` name or a named construction (e.g., "BD fact vs ChirHoch comparison", "av-kernel graded Lie").
+3. Build EXCLUDE-LIST for Wave N: union of the last four waves' healed labels/targets.
+4. Each Wave-N agent prompt must include an explicit "TARGET SCOPE" paragraph that names the agent's lane AND states which labels/targets are EXCLUDED (pointing the agent toward orthogonal sub-scopes).
+5. On agent completion, verify the healed target was NOT on the EXCLUDE-LIST. If it was, the agent's work is still valid (may be a deeper re-heal or a different claim under the same label), but the main thread must flag it for reviewer attention.
+
+**Regex trigger** (spawner-side, pre-agent-launch):
+
+```
+# Before composing agent prompts:
+for vol in ~/chiral-bar-cobar ~/chiral-bar-cobar-vol2 ~/calabi-yau-quantum-groups; do
+  (cd "$vol" && git log --oneline -30 | grep -iE "wave|heal:|fortif") >> /tmp/wave-exclude.txt
+done
+# Extract thm:.* / prop:.* / lem:.* tokens; union → EXCLUDE-LIST.
+# Every Wave-N agent prompt must reference EXCLUDE-LIST with "SCOPE MUST AVOID:" clause.
+```
+
+**Counter-check one-liner**: no Wave-N agent prompt is composed without an EXCLUDE-LIST derived from Waves $1{\ldots}N-1$ git-log; the spawner's final check before launching is "does my prompt's stated target intersect EXCLUDE-LIST?"
+
+**Canonical application** (this session): Wave 5 agent prompts (this file's enclosing session) explicitly list Wave 2/3/4 healed targets in their TARGET SCOPE paragraphs and direct agents to pick distinct scopes (Vol I Theorem A infrastructure vs Vol I Theorem C $\kappa+\kappa^!$ cross-family; Vol II Part IV/V vs Vol II Part VI/VII; Vol III CY3/DT/BKM).
+
+**Related**: Pattern 237 (stale attacks waste cycles — applies to re-verifying *within* an agent; Pattern 249 is the spawner-side analogue applied *across* agents); Pattern 250 (same-volume multi-agent partition — complementary discipline at the in-wave level); Pattern 293 (premature convergence — re-healing already-healed material can falsely look like convergence without new mathematics).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 250: Same-volume multi-agent scope-partition mandatory
+
+**Session**: 2026-04-18 Wave 5 spawn. Vol II received two agents (agent 3 targeting Part VI/VII = 3D HT QFT / boundary sector; agent 4 targeting Part IV/V = curved / secondary product / BD algebra). Without an explicit partition directive, both agents could plausibly land on the same highest-priority target (e.g., `thm:bar-diff-eq-holfact` or `thm:bulk-to-boundary-ope-consistency`), producing concurrent edits to the same files and a post-wave merge-conflict burden.
+
+**Type**: orchestration / intra-wave-coordination defect. **Hook-invisible**: this pattern manifests at spawn time and at mid-agent file-selection time; it cannot be caught by an edit-time hook.
+
+**Rule**: when a Wave-N assignment puts $\geq 2$ agents on a single volume, the spawner must:
+1. Pick orthogonal sub-scopes for each agent — a clean partition of the volume's candidate-target space, typically along Part / chapter-subtree / theorem-family lines. Canonical partitions:
+   - Vol I: Theorem A / Theorem B / Theorem C / Theorem D / Theorem H (five orthogonal lanes).
+   - Vol II: Part I/II (foundations), Part III (SC$^{\mathrm{ch,top}}$), Part IV/V (curved / BD), Part VI/VII (HT QFT / boundary) — four orthogonal lanes.
+   - Vol III: K3 Yangian / K3 CY-$\Phi$ / CY3 DT / BKM–Borcherds / Monster moonshine — five orthogonal lanes.
+2. Each agent's prompt must include a "COORDINATION" paragraph naming the other agents' scopes on the same volume and giving an explicit STOP-AND-PICK-DIFFERENT-TARGET directive if the agent finds itself about to edit a file in a peer's lane.
+3. Agents must include a mid-work check: `cd <volume> && git log --oneline -5`. If a peer Wave-N commit has landed on a file they are about to edit, STOP, pick a different target, update the healed target announcement, and proceed.
+4. Post-wave, record any observed merge conflicts as evidence of partition-failure; refine the volume's lane-table (above) for the next wave.
+
+**Regex trigger** (spawner-side, multi-agent same-volume composition):
+
+```
+# Per-volume agent count check before launch:
+for vol in I II III; do
+  agent_count_on_vol[$vol] = count(wave-N agents assigned to vol)
+  if agent_count_on_vol[$vol] >= 2:
+    require "COORDINATION:" clause in each agent's prompt naming peers' scopes
+    require explicit STOP-AND-SWITCH directive
+done
+```
+
+**Counter-check one-liner**: the spawner never launches two agents on the same volume without writing the peer-scope list into each agent's prompt.
+
+**Canonical application** (this session): Wave 5 agent 4's prompt includes COORDINATION paragraph: "Agent 3 is also working in Vol II on Part VI/VII. Stay strictly in Part IV/V to avoid merge conflicts. If you touch a Part-VI/VII file, STOP and pick a different Part IV/V target."
+
+**Related**: Pattern 243 (wave-merge push rejection from concurrent commits — the downstream symptom when partition fails); Pattern 249 (cross-wave EXCLUDE-LIST — the cross-wave analogue at spawner level); Pattern 224 (async-Agent running-count not directly observable — informs the mid-work git-log check in step 3).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+## Pattern 251: Agent commit-don't-push when main thread orchestrates merge/push
+
+**Session**: 2026-04-18 Wave 5 spawn. The /loop prompt explicitly delegates deep-semantic merge and push to the main thread after all five agents report. Agents that nevertheless push on their own (by default habit or unconstrained prompt) trigger Pattern 243 push-rejection storms, and the main thread's post-wave deep-semantic merge must then also reconcile agent-pushed state against its own staged inscriptions.
+
+**Type**: orchestration / agent-commit-policy defect. **Hook-invisible**: the push action happens in an agent's Bash call to `git push`, not in a file edit; the beilinson-gate.sh is an Edit/Write hook on .tex/.py files and does not fire on git commands.
+
+**Rule**: every swarm-agent prompt must include the literal phrase "DO NOT PUSH (main thread handles push/merge)" in its COMMIT section. The agent's mandate is:
+1. Single commit at end, authored Raeez Lorgat ONLY.
+2. Commit lands on the local `main` branch of the agent's working volume.
+3. Agent does NOT push.
+4. Main thread, after all agents report, executes the post-wave flow on each volume: `git pull --rebase origin main` → resolve conflicts (deep-semantic merge per Pattern 243) → consistency checks → `git push origin main`.
+5. If the agent did push despite the directive, Pattern 243 applies (pull-rebase, deep-merge, retry). Do NOT force-push. Then: add the offending agent-type to a prompt-audit list and refine next wave's COMMIT template.
+
+**Regex trigger** (spawner-side, per-agent-prompt pre-launch lint):
+
+```
+# Before launching any swarm agent:
+grep -q "DO NOT PUSH" <agent-prompt> || REJECT "agent prompt missing Pattern 251 commit-don't-push directive"
+```
+
+**Counter-check one-liner**: no swarm agent is launched without the literal "DO NOT PUSH" directive in its COMMIT paragraph.
+
+**Canonical application** (this session): all five Wave-5 agent prompts include "DO NOT PUSH (main thread handles push/merge)" in their COMMIT paragraph. The main thread's post-wave flow (Task #3) handles push + deep-semantic merge on all three volumes.
+
+**Related**: Pattern 243 (wave-merge push rejection — the downstream symptom when agents push concurrently); Pattern 235 (reverse-drift — concurrent pushes can introduce drift across metadata surfaces); Pattern 250 (same-volume multi-agent partition — orthogonal partition minimizes the merge surface; Pattern 251 minimizes the push surface).
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
