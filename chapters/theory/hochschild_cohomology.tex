@@ -966,25 +966,28 @@ consistent with the periodic cyclic duality
 (Corollary~\ref{cor:cyclic-homology-duality}).
 \end{remark}
 
-\section{Derived center and topological Hochschild cochains (M4)}
+\section{Derived center, categorical Hochschild cohomology, and the algebraic shadow (M4)}
 \label{sec:derived-center-hochschild-cochains}
 
 \index{derived center|textbf}
 \index{Morita equivalence!Hochschild cohomology}
 \index{compact generator|textbf}
 
-The derived center of a dg-category is the derived endomorphisms of
-the identity functor. For a category with a compact generator, this
-reduces, via the Morita equivalence, to the topological Hochschild cochain
-complex of the endomorphism algebra. The argument is categorical in
-nature and depends on three classical inputs: Morita theory for
-dg-categories, the identification of endofunctors with bimodules, and
-the definition of topological Hochschild cochains as bimodule self-Ext.
-The topological Hochschild cohomology in this section is the classical
-(topological) $\mathrm{HH}^\bullet(A,A) = \RHom_{A^e}(A,A)$ of
-associative dg-algebras; the chiral upgrade to $\ChirHoch^*$
-incorporating OPE data and curve geometry is developed in the
-earlier sections of this chapter.
+The derived center of a dg-category is its \emph{categorical}
+Hochschild cohomology: the derived endomorphisms of the identity
+functor. For a category with a compact generator, Morita theory
+identifies this categorical theory with the \emph{classical
+algebraic} Hochschild cochain complex of the endomorphism
+dg-algebra. The input in this section is therefore a dg-category
+or, after choosing a compact generator, a dg-algebra in chain
+complexes; the output is a dg-algebra of endofunctor endomorphisms,
+not the spectrum-valued $\mathrm{THH}$ of an $E_1$-ring spectrum.
+The argument depends on three classical inputs: Morita theory for
+dg-categories, the identification of endofunctors with bimodules,
+and the definition of algebraic Hochschild cochains as bimodule
+self-Ext. The chiral upgrade to $\ChirHoch^*$ incorporating OPE
+data and curve geometry is developed in the earlier sections of
+this chapter.
 
 \subsection{Compact generators and the Morita equivalence}
 
@@ -1074,8 +1077,8 @@ homotopy category $[\mathcal{C}]$.
 
 \subsection{Endofunctors as bimodules}
 
-The bridge between the derived center and topological Hochschild cochains is the
-identification of endofunctors with bimodules.
+The bridge between the derived center and categorical Hochschild
+cohomology is the identification of endofunctors with bimodules.
 
 \begin{proposition}[Endofunctor--bimodule equivalence {\cite{Toen07,BZFN10}};
 \ClaimStatusProvedElsewhere]
@@ -1124,7 +1127,7 @@ right multiplication. This is the diagonal bimodule.
 
 \subsection{The main identification}
 
-\begin{theorem}[Derived center $=$ topological Hochschild cochains;
+\begin{theorem}[Derived center $=$ categorical Hochschild cohomology $=$ algebraic Hochschild cochains via a compact generator;
 \ClaimStatusProvedHere]
 \label{thm:derived-center-hochschild}
 \index{derived center!Hochschild identification}
@@ -1135,7 +1138,9 @@ natural quasi-isomorphism of dg-algebras
 \begin{equation}\label{eq:derived-center-HH}
 Z_{\mathrm{der}}(\mathcal{C})
 \;\simeq\;
-\mathrm{HH}^\bullet(A, A)
+\mathrm{HH}^\bullet_{\mathrm{cat}}(\mathcal{C})
+\;\simeq\;
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A)
 := \RHom_{A^e}(A, A).
 \end{equation}
 In particular, the derived center depends on $\mathcal{C}$ only up to
@@ -1182,7 +1187,7 @@ is the diagonal bimodule. Therefore:
 Z_{\mathrm{der}}(\mathrm{Perf}(A))
 \;\simeq\;
 \RHom_{A^e}(A, A)
-= \mathrm{HH}^\bullet(A, A).
+= \mathrm{HH}^\bullet_{\mathrm{alg}}(A).
 \]
 
 \emph{Naturality.} Each step is natural: the Morita equivalence is
@@ -1194,8 +1199,11 @@ in~$\mathcal{C}$.
 
 \begin{remark}[Provenance]
 \label{rem:derived-center-provenance}
-The identification $Z_{\mathrm{der}}(\mathcal{C}) \simeq
-\mathrm{HH}^\bullet(A)$ is implicit in Keller~\cite{Keller06} and
+The identification
+$Z_{\mathrm{der}}(\mathcal{C}) \simeq
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A)$, equivalently
+$\mathrm{HH}^\bullet_{\mathrm{cat}}(\mathcal{C})$ after Morita
+reduction, is implicit in Keller~\cite{Keller06} and
 made explicit in the framework of $(\infty,1)$-categories by
 Ben-Zvi--Francis--Nadler~\cite{BZFN10} and
 To\"en~\cite{Toen07}. The argument presented here distills the
@@ -1206,9 +1214,9 @@ Costello--Gwilliam~\cite[Chapter~5]{CG17}.
 \end{remark}
 
 \subsection{Independence of generator: Morita invariance of
-topological Hochschild cohomology}
+algebraic Hochschild cohomology}
 
-\begin{theorem}[Morita invariance of $\mathrm{HH}^\bullet$;
+\begin{theorem}[Morita invariance of algebraic Hochschild cohomology;
 \ClaimStatusProvedHere]
 \label{thm:morita-invariance-HH}
 \index{Hochschild cohomology!Morita invariance|textbf}
@@ -1218,7 +1226,9 @@ there exists a dg-category $\mathcal{C}$ with compact generators
 $b, b'$ such that $A \simeq \RHom(b,b)$ and
 $A' \simeq \RHom(b',b')$. Then there is a natural quasi-isomorphism
 \[
-\mathrm{HH}^\bullet(A, A) \;\simeq\; \mathrm{HH}^\bullet(A', A').
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A)
+\;\simeq\;
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A').
 \]
 \end{theorem}
 
@@ -1228,11 +1238,11 @@ quasi-isomorphic to $Z_{\mathrm{der}}(\mathcal{C})$, which depends
 only on the dg-category~$\mathcal{C}$ and not on the choice of
 generator. Concretely, the chain of quasi-isomorphisms is:
 \[
-\mathrm{HH}^\bullet(A)
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A)
 \xleftarrow{\;\sim\;}
 Z_{\mathrm{der}}(\mathcal{C})
 \xrightarrow{\;\sim\;}
-\mathrm{HH}^\bullet(A').
+\mathrm{HH}^\bullet_{\mathrm{alg}}(A').
 \]
 \end{proof}
 
@@ -1249,8 +1259,8 @@ $P \otimes_{A'}^{\mathbf{L}} P^\vee \simeq A$ and
 $P^\vee \otimes_A^{\mathbf{L}} P \simeq A'$. The Morita transfer
 map
 \begin{equation}\label{eq:morita-transfer-map}
-\Phi\colon \mathrm{HH}^\bullet(A)
-\;\longrightarrow\; \mathrm{HH}^\bullet(A'),
+\Phi\colon \mathrm{HH}^\bullet_{\mathrm{alg}}(A)
+\;\longrightarrow\; \mathrm{HH}^\bullet_{\mathrm{alg}}(A'),
 \qquad
 f \;\longmapsto\;
 P^\vee \otimes_A^{\mathbf{L}} f \otimes_A^{\mathbf{L}} P,
@@ -1263,7 +1273,8 @@ We verify $\Phi$ is well-defined, multiplicative, and a
 quasi-isomorphism.
 
 \emph{Well-definedness.}
-An element $f \in \mathrm{HH}^n(A) = \RHom_{A^e}(A, A)^n$
+An element
+$f \in \mathrm{HH}^n_{\mathrm{alg}}(A) = \RHom_{A^e}(A, A)^n$
 is an $A$-bimodule map $A \to A[n]$. The conjugation
 $\Phi(f) := P^\vee \otimes_A f \otimes_A P$ is the composition
 \[
@@ -1276,10 +1287,10 @@ P^\vee \otimes_A A[n] \otimes_A P
 which uses $A \otimes_A P \simeq P$ and
 $P^\vee \otimes_A A \simeq P^\vee$ (left/right unit). The
 composite is an $A'$-bimodule map $A' \to A'[n]$, hence an element
-of $\mathrm{HH}^n(A')$.
+of $\mathrm{HH}^n_{\mathrm{alg}}(A')$.
 
 \emph{Multiplicativity.}
-For $f, g \in \mathrm{HH}^\bullet(A)$, the composition
+For $f, g \in \mathrm{HH}^\bullet_{\mathrm{alg}}(A)$, the composition
 $\Phi(f) \circ \Phi(g)$ is
 $P^\vee \otimes_A f \otimes_A P \circ P^\vee \otimes_A g \otimes_A P$.
 Using $P \otimes_{A'} P^\vee \simeq A$ to contract the inner
@@ -1350,20 +1361,26 @@ uncountably-generated module categories, which do not arise in
 the Lie-theoretic landscape.
 \end{remark}
 
-\section{Factorization homology on the annulus: topological Hochschild chains (M7)}
+\section{Factorization homology on the annulus: algebraic Hochschild chains and the circle trace (M7)}
 \label{sec:annulus-hochschild-chains}
 
 \index{factorization homology!annulus|textbf}
-\index{topological Hochschild homology!excision|textbf}
+\index{algebraic Hochschild homology!circle trace and excision|textbf}
 \index{excision!factorization homology|textbf}
 
-The complementary side of topological Hochschild theory is homological: while
-topological Hochschild cochains are the derived center (deformations of the
-identity functor), topological Hochschild chains are the derived trace
-(factorization homology over the circle). The excision axiom for
-factorization homology reduces the circle computation to a tensor
-product over an interval, yielding the identification of factorization
-homology on $S^1$ with topological Hochschild chains.
+The complementary side of the categorical/algebraic Hochschild
+picture is homological: while the derived center computes
+categorical Hochschild cochains, the circle trace computes the
+categorical Hochschild homology of the boundary category and, in a
+compact-generator chart, the algebraic Hochschild chains of the
+endomorphism dg-algebra. The input here is a locally constant
+factorization algebra with values in $\Ch(k)$, so the output stays
+in chain complexes. Spectral $\mathrm{THH}$ appears only after
+spectrifying the interval algebra by an Eilenberg--Mac Lane
+construction. The excision axiom for factorization homology
+reduces the circle computation to a tensor product over an interval,
+yielding the identification of factorization homology on $S^1$
+with algebraic Hochschild chains.
 
 \subsection{Factorization homology: recollections}
 
@@ -1409,11 +1426,11 @@ $M_\pm$ are the two halves. Then there is a natural equivalence
 
 \subsection{The circle computation by excision}
 
-\begin{theorem}[Factorization homology on $S^1$ $=$ topological Hochschild chains;
+\begin{theorem}[Factorization homology on $S^1$ $=$ algebraic Hochschild chains;
 \ClaimStatusProvedHere]
 \label{thm:circle-fh-hochschild}
 \index{factorization homology!circle}
-\index{topological Hochschild homology!factorization homology}
+\index{algebraic Hochschild homology!factorization homology}
 Let $\mathcal{F}$ be a locally constant factorization algebra on
 $S^1$ with values in $\Ch(k)$, and let $\mathcal{C}$ be the
 associated $\Eone$-category \textup{(}the dg-category of modules
@@ -1422,8 +1439,9 @@ $I \subset S^1$\textup{)}. Then there is a natural equivalence
 \begin{equation}\label{eq:circle-fh-HH}
 \int_{S^1} \mathcal{F}
 \;\simeq\;
-\mathrm{HH}_\bullet(\mathcal{C})
-:= A \otimes^{\mathbf{L}}_{A^e} A,
+\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{C})
+:= \mathrm{HH}_{\bullet,\mathrm{alg}}(A)
+= A \otimes^{\mathbf{L}}_{A^e} A,
 \end{equation}
 where $A^e = A \otimes A^{\mathrm{op}}$.
 \end{theorem}
@@ -1500,11 +1518,11 @@ of the $A^{\mathrm{op}}$ in
 $A^e = A \otimes A^{\mathrm{op}}$.
 
 The tensor product over $A \otimes A$ of two copies of the diagonal
-bimodule is, by definition, the topological Hochschild chain complex:
+bimodule is, by definition, the algebraic Hochschild chain complex:
 \[
 A \otimes^{\mathbf{L}}_{A \otimes A^{\mathrm{op}}} A
 = A \otimes^{\mathbf{L}}_{A^e} A
-=: \mathrm{HH}_\bullet(A).
+=: \mathrm{HH}_{\bullet,\mathrm{alg}}(A).
 \]
 Here $A \otimes A$ acts on the left copy of~$A$
 via $(a_1, a_2) \cdot x = a_1 \cdot x \cdot a_2$
@@ -1512,24 +1530,30 @@ via $(a_1, a_2) \cdot x = a_1 \cdot x \cdot a_2$
 right copy of~$A$ symmetrically; the tensor product over this action
 contracts the two bimodules into the cyclic bar complex
 $\cdots \to A^{\otimes 3} \to A^{\otimes 2} \to A$ computing
-$\mathrm{HH}_\bullet(A)$.
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$.
 
 \emph{Step~5} (Passage to the categorical statement).
 If $\mathcal{C} = \mathrm{Perf}(A)$ is the dg-category of perfect
-$A$-modules, then $\mathrm{HH}_\bullet(\mathcal{C})$ is defined as
-$\mathrm{HH}_\bullet(A)$ via the Morita-invariant cyclic bar
-construction. Combining with Step~4 gives the stated equivalence
-$\int_{S^1} \mathcal{F} \simeq \mathrm{HH}_\bullet(\mathcal{C})$.
+$A$-modules, then
+$\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{C})$ is defined as
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$ via the Morita-invariant
+cyclic bar construction. Combining with Step~4 gives the stated
+equivalence
+$\int_{S^1} \mathcal{F} \simeq
+\mathrm{HH}_{\bullet,\mathrm{cat}}(\mathcal{C})$.
 \end{proof}
 
 \begin{remark}[Provenance]
 \label{rem:annulus-provenance}
-The identification of factorization homology on $S^1$ with topological Hochschild
-homology is due (in the topological setting) to
+The identification of factorization homology on $S^1$ with the
+circle-trace/Hochschild construction is due (in the spectral
+topological setting, where it computes $\mathrm{THH}$) to
 Ben-Zvi--Francis--Nadler~\cite{BZFN10} and
 Ayala--Francis~\cite{AF15}; in the vertex algebra setting, the
 parallel result appears in Costello--Gwilliam~\cite[Chapter~5]{CG17}.
-The excision argument above follows the treatment in~\cite{AF15}.
+The chain-complex formula recorded here is the algebraic/categorical
+shadow of that spectral statement. The excision argument above
+follows the treatment in~\cite{AF15}.
 \end{remark}
 
 \subsection{The monodromy subtlety: from chiral to locally constant}
@@ -1617,16 +1641,16 @@ $(\alpha,\alpha)/2$, so $\mathfrak{m}(e^\alpha) = e^{2\pi i
 $(\alpha,\alpha)/2 \in \Z$, so the phase is~$1$.
 \end{proof}
 
-\begin{remark}[Twisted topological Hochschild homology]
+\begin{remark}[Twisted algebraic Hochschild homology]
 \label{rem:twisted-hochschild}
-\index{topological Hochschild homology!twisted}
+\index{algebraic Hochschild homology!twisted}
 When the monodromy $\mathfrak{m}\colon A \to A$ is nontrivial, the
 factorization homology on $S^1$ computes the
-\emph{$\mathfrak{m}$-twisted topological Hochschild homology}:
+\emph{$\mathfrak{m}$-twisted algebraic Hochschild homology}:
 \begin{equation}\label{eq:twisted-HH}
 \int_{S^1} \mathcal{F}
 \;\simeq\;
-\mathrm{HH}_\bullet(A;\, {}_{\mathfrak{m}}A)
+\mathrm{HH}_{\bullet,\mathrm{alg}}(A;\, {}_{\mathfrak{m}}A)
 := A \otimes^{\mathbf{L}}_{A^e} {}_{\mathfrak{m}}A,
 \end{equation}
 where ${}_{\mathfrak{m}}A$ is $A$ as a right $A$-module but with
@@ -1650,7 +1674,7 @@ cylinder.
 
 \begin{remark}[The $(g{=}1, k{=}0)$ modular MC component]
 \label{rem:mc-hh-identification}
-\index{Maurer--Cartan!genus-1 and topological Hochschild}
+\index{Maurer--Cartan!genus-1 and algebraic Hochschild trace}
 The $(g=1, n=0)$ component of the modular MC equation
 (Chapter~\ref{ch:en-koszul-duality}) is:
 \[
@@ -1660,11 +1684,11 @@ d\Theta_{\cA}^{(1,0)} + \tfrac{1}{2}
 \]
 The sewing operator $\Delta_{\mathrm{sew}}$ contracts two external
 legs of $\Theta^{(0,2)}_{\cA}$ using the propagator on the torus.
-This is the genus-$1$ topological Hochschild differential: the annulus
+This is the genus-$1$ algebraic Hochschild differential: the annulus
 amplitude $\Theta^{(0,2)}_{\cA}$ evaluated on two inputs and sewn
 into a torus is the trace $\mathrm{Tr}(m_2(-,-))$, the standard
-generator of $\mathrm{HH}_0(A)$. The identification of
-$\int_{S^1}\cA$ with $\mathrm{HH}_\bullet(A)$
+generator of $\mathrm{HH}_{0,\mathrm{alg}}(A)$. The identification
+of $\int_{S^1}\cA$ with $\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$
 (Theorem~\ref{thm:circle-fh-hochschild})
 is therefore the $n=0$ case of the general MC$\to$sewing
 correspondence.
@@ -1672,19 +1696,24 @@ correspondence.
 
 \subsection{Heisenberg verification}
 
-\begin{example}[Topological Hochschild chains of the Heisenberg algebra;
+\begin{example}[Algebraic Hochschild chains of the Heisenberg interval algebra;
 \ClaimStatusProvedHere]
 \label{ex:heisenberg-HH-chains}
-\index{Heisenberg algebra!topological Hochschild chains}
+\index{Heisenberg algebra!algebraic Hochschild chains}
 We verify the identification
-$\int_{S^1} \mathcal{H}_k \simeq \mathrm{HH}_\bullet(\mathcal{H}_k)$
+$\int_{S^1} \mathcal{H}_k \simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(\mathcal{H}_k)$
 against the known genus-$1$ partition function.
+Here $\mathrm{HH}_{\bullet,\mathrm{alg}}(\mathcal{H}_k)$ is
+shorthand for the algebraic Hochschild homology of the interval
+algebra extracted from the locally constant Heisenberg
+factorization algebra.
 
 \emph{Step~1} (The algebra).
 The Heisenberg vertex algebra $\mathcal{H}_k$ at level $k \neq 0$
 is generated by a single current $J(z) = \sum_{n \in \Z} J_n
 z^{-n-1}$ with OPE $J(z) J(w) \sim k/(z-w)^2$. The mode
-algebra is the Weyl algebra on infinitely many generators:
+algebra, which we denote by $A$, is the Weyl algebra on infinitely
+many generators:
 $[J_m, J_n] = k\,m\,\delta_{m+n,0}$. The zero mode $J_0$
 acts on the vacuum Fock module $\mathcal{H}_k = F_0$
 (with $J_0$-eigenvalue~$0$); the full module category
@@ -1703,8 +1732,10 @@ is the fundamental class of $S^1$ in the cyclic direction.
 
 \emph{Step~3} (Genus-1 partition function).
 The factorization homology $\int_{S^1} \mathcal{H}_k
-\simeq \mathrm{HH}_\bullet(\mathcal{H}_k)$ computes
-topological Hochschild chains. The \emph{torus partition function} is
+\simeq \mathrm{HH}_{\bullet,\mathrm{alg}}(\mathcal{H}_k)$ computes
+algebraic Hochschild chains of the interval algebra encoded by the
+locally constant Heisenberg factorization algebra. The \emph{torus
+partition function} is
 the Euler characteristic of $\int_{T^2}\mathcal{H}_k$,
 which by the sewing formula reduces to
 $\mathrm{Tr}_{F_0}(q^{L_0 - c/24})$ where $F_0$ is the
@@ -1720,11 +1751,13 @@ where $\eta(\tau) = q^{1/24} \prod_{n \geq 1}(1-q^n)$ is the
 Dedekind eta function.
 
 \emph{Step~4} (Consistency check: $\mathrm{HH}_0$).
-The degree-$0$ topological Hochschild homology $\mathrm{HH}_0(\mathcal{H}_k) =
+The degree-$0$ algebraic Hochschild homology
+$\mathrm{HH}_{0,\mathrm{alg}}(\mathcal{H}_k) =
 A / [A, A]$ is the abelianization of the mode algebra. For the Weyl
 algebra generated by $\{J_n\}$, all commutators $[J_m, J_n] = km\,
 \delta_{m+n,0}$ are scalar, so $A / [A, A]$ is the symmetric algebra
-on the generators modulo the scalars: $\mathrm{HH}_0 \cong \C$
+on the generators modulo the scalars:
+$\mathrm{HH}_{0,\mathrm{alg}} \cong \C$
 (one-dimensional, generated by the vacuum class). This is consistent
 with the partition function $Z_{T^2}$ being a single function
 (not a vector): the space of conformal blocks on the torus is
@@ -1733,31 +1766,37 @@ one-dimensional for the Heisenberg algebra at any level.
 \emph{Step~5} (Comparison with Theorem~\ref{thm:partition-cyclic}).
 The cyclic homology $\mathrm{HC}_0(\mathcal{H}_k) = \C$ matches the
 one-dimensional space of genus-$1$ conformal blocks. The full
-topological Hochschild chain complex $\mathrm{HH}_\bullet(\mathcal{H}_k) = \C[c]
-\otimes \Lambda(\sigma)$ encodes the deformation theory of the torus
-partition function: $c$ controls the variation of $Z_{T^2}$ with
-respect to the level~$k$, and $\sigma$ represents the circle
-direction in the torus.
+algebraic Hochschild chain complex
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(\mathcal{H}_k)
+= \C[c] \otimes \Lambda(\sigma)$ encodes the deformation theory of
+the torus partition function: $c$ controls the variation of
+$Z_{T^2}$ with respect to the level~$k$, and $\sigma$ represents
+the circle direction in the torus. After Eilenberg--Mac Lane
+spectrification this chain complex is the rational shadow of the
+corresponding $\mathrm{THH}$, but the present computation remains
+in chain complexes.
 \end{example}
 
 \begin{remark}[Annulus vs torus]
 \label{rem:annulus-vs-torus}
 \index{annulus!vs torus}
 The factorization homology $\int_{S^1} \mathcal{F}$ over the circle
-gives the topological Hochschild chains $\mathrm{HH}_\bullet(A)$. The partition
+gives the algebraic Hochschild chains
+$\mathrm{HH}_{\bullet,\mathrm{alg}}(A)$. The partition
 function on the torus $T^2 = S^1 \times S^1$ involves a further
 circle integral, which gives the cyclic homology
 $\mathrm{HC}_\bullet(A)$ (the $S^1$-equivariant version of
-$\mathrm{HH}_\bullet$). Schematically:
+$\mathrm{HH}_{\bullet,\mathrm{alg}}$). Schematically:
 \[
-\int_{S^1} \mathcal{F} = \mathrm{HH}_\bullet(A),
+\int_{S^1} \mathcal{F} = \mathrm{HH}_{\bullet,\mathrm{alg}}(A),
 \qquad
 \int_{T^2} \mathcal{F}
 = \mathrm{HC}_\bullet(A)
-= \mathrm{HH}_\bullet(A)_{hS^1}.
+= \mathrm{HH}_{\bullet,\mathrm{alg}}(A)_{hS^1}.
 \]
-The first circle is the spatial circle (excision gives HH); the second
-is the thermal circle (the $S^1$-action on HH gives HC).
+The first circle is the spatial circle (excision gives algebraic
+Hochschild chains); the second is the thermal circle (the
+$S^1$-action on the chain complex gives cyclic homology).
 For the Heisenberg:
 $\mathrm{HC}_0(\mathcal{H}_k) = \C$, and the character
 $\mathrm{Tr}_{F_0}(q^{L_0-c/24}) = 1/\eta(\tau)$ is the
@@ -1767,18 +1806,19 @@ generating function for the graded dimensions of the cyclic complex.
 \begin{remark}[Relation to Theorem~C \textup{(}complementarity\textup{)}]
 \label{rem:annulus-complementarity}
 \index{complementarity!annulus}
-The topological Hochschild chain identification provides the genus-$1$ input to
+The algebraic Hochschild chain identification provides the genus-$1$ input to
 the complementarity theorem
 (Theorem~\ref{thm:quantum-complementarity-main}). At genus~$1$, the
 complementarity formula reads
 $Q_1(\cA) \oplus Q_1(\cA^!) \cong H^*(\overline{\mathcal{M}}_{1,1},
 \mathcal{Z}(\cA))$.
-The left-hand side is computed by topological Hochschild chains of $\cA$ and
-$\cA^!$ respectively (via the annulus identification); the right-hand
-side is the cohomology of the moduli space with coefficients in the
+The left-hand side is computed by categorical/algebraic Hochschild
+chains of $\cA$ and $\cA^!$ respectively (via the annulus
+identification in a compact-generator chart); the right-hand side
+is the cohomology of the moduli space with coefficients in the
 center sheaf. The complementarity is the statement that the two
-topological Hochschild chain complexes assemble into a complete basis for the
-modular functor at genus~$1$.
+categorical circle-trace complexes assemble into a complete basis
+for the modular functor at genus~$1$.
 \end{remark}
 
 \subsection{Summary and future directions}
