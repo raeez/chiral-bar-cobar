@@ -1,0 +1,194 @@
+\chapter{Hochschild Conventions and Crosswalk}
+\label{app:hochschild-conventions}
+
+\providecommand{\THH}{\mathrm{THH}}
+\providecommand{\HHcat}{\mathrm{HH}_{\mathrm{cat}}}
+\providecommand{\HHalg}{\mathrm{HH}_{\mathrm{alg}}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\id}{\mathrm{id}}
+
+\index{Hochschild conventions|textbf}
+\index{Hochschild cohomology!crosswalk}
+\index{topological Hochschild homology!distinguished from classical Hochschild cochains}
+\index{categorical Hochschild cohomology!distinguished from chiral and topological}
+\index{chiral Hochschild cohomology!distinguished from topological and categorical}
+
+This appendix fixes the Hochschild notation used across the programme.
+There are three constitutional Hochschild theories and one auxiliary
+algebraic notation. The constitutional theories are chiral,
+topological, and categorical. The auxiliary notation
+$\HHalg^\bullet(A)$ is retained because several comparisons pass
+through mode algebras or compact generators before returning to the
+categorical or chiral side.
+
+\begin{proposition}[Three Hochschild theories: type signatures,
+scope, and comparison rules; \ClaimStatusProvedHere]
+\label{prop:hochschild-crosswalk}
+The programme uses the following typed Hochschild constructions.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chiral Hochschild cohomology.}
+ Let $\cA$ be a chiral algebra on a smooth curve~$X$, regarded as an
+ algebra object in factorizable $\cD$-modules on~$X$. Its chiral
+ Hochschild cohomology is
+ \[
+ \ChirHoch^\bullet(\cA)
+ := \RHom^{\mathrm{ch}}_{\cA \otimes^{\mathrm{ch}} \cA^{\mathrm{op}}}
+ (\cA,\cA).
+ \]
+ Input type: chiral algebra on~$X$.
+ Output type: derived object in the chiral/factorization module
+ category on~$X$, carrying the chiral brace/Gerstenhaber structure and
+ recovering the derived chiral centre
+ $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+ On the Koszul locus this is the Hochschild theory of Theorem~H and is
+ concentrated in cohomological degrees~$\{0,1,2\}$.
+
+\item \emph{Topological Hochschild homology.}
+ Let $R$ be an $E_1$-ring spectrum. Its topological Hochschild
+ homology is
+ \[
+ \THH(R)
+ := R \otimes^{\mathbf L}_{R \otimes R^{\mathrm{op}}} R.
+ \]
+ Input type: $E_1$-ring spectrum.
+ Output type: $S^1$-equivariant spectrum.
+ This is the closed trace of the spectrum-level bar construction.
+ When a discrete or dg algebra~$A$ is viewed through its
+ Eilenberg--Mac Lane realization, the classical Hochschild chain
+ complex is the rational shadow of the passage
+ $B^{\mathrm{Sp}}(A) \to \THH(A)$
+ \textup{(}Chapter~\textup{\ref{chap:en-koszul-duality}},
+ Conjecture~\textup{\ref{conj:spectrum-bar-lift}} and
+ Remark~\textup{\ref{rem:spectrum-bar-lift-evidence}}\textup{)}.
+ In particular, the phrase ``topological Hochschild'' in these
+ volumes names $\THH$, not the cochain complex
+ $\RHom_{A^e}(A,A)$ of a discrete algebra.
+
+\item \emph{Categorical Hochschild cohomology.}
+ Let $\cC$ be a dg, $A_\infty$, or stable $\infty$-category. Its
+ categorical Hochschild cohomology is
+ \[
+ \HHcat^\bullet(\cC)
+ := \RHom_{\cC \otimes \cC^{\mathrm{op}}}(\id_{\cC}, \id_{\cC}).
+ \]
+ Input type: dg/$A_\infty$/stable $\infty$-category.
+ Output type: $E_2$-algebra; for a Calabi--Yau category it also
+ carries the shifted Poisson/BV structures recorded in
+ Chapter~\textup{\ref{ch:hochschild-calculus}}.
+ The homology variant $\HH_{\bullet,\mathrm{cat}}(\cC)$ is the cyclic
+ bar complex $\mathrm{CC}_\bullet(\cC)$.
+\end{enumerate}
+
+\noindent
+Alongside these three theories we use the auxiliary notation
+\[
+ \HHalg^\bullet(A)
+ := \RHom_{A \otimes A^{\mathrm{op}}}(A,A)
+\]
+for the classical algebraic Hochschild cochains of a discrete or
+dg algebra~$A$. This is not a fourth constitutional theory:
+it is the single-object / compact-generator algebra model for the
+categorical theory.
+
+\smallskip\noindent
+The comparison rules used in the programme are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Categorical = algebraic on a compact generator.}
+ If $\cC \simeq \Perf(A)$ for a compact generator with endomorphism
+ algebra~$A$, then
+ \[
+ \HHcat^\bullet(\cC) \simeq \HHalg^\bullet(A),
+ \qquad
+ \HH_{\bullet,\mathrm{cat}}(\cC) \simeq \HH_{\bullet,\mathrm{alg}}(A),
+ \]
+ by Morita invariance of Hochschild theory
+ \textup{(}Chapter~\textup{\ref{ch:hochschild-calculus}},
+ Remark~\textup{\ref{rem:hh-morita}};
+ Volume~II, Remark~\textup{\ref{rem:bulk-categorical}}\textup{)}.
+
+\item \emph{Chiral is not algebraic in general.}
+ For a chiral algebra~$\cA$ on a curve and its mode algebra
+ $A_{\mathrm{mode}}$, one does \emph{not} have a general
+ identification
+ \[
+ \ChirHoch^\bullet(\cA) \simeq \HHalg^\bullet(A_{\mathrm{mode}}).
+ \]
+ The left-hand side uses OPE/factorization products on the curve and
+ Fulton--MacPherson collision data; the right-hand side uses the
+ cartesian bimodule theory of an associative algebra at a point.
+ The comparison available in Volume~I is the fibrewise spectral
+ sequence
+ \textup{(}Theorem~\textup{\ref{thm:hochschild-classical-comparison}}\textup{)}
+ and, on the formal-disk side, the separate chain maps to
+ mode/Gel'fand--Fuchs complexes in
+ Chapter~\textup{\ref{chap:three-hochschild-unification}}.
+
+\item \emph{Topological and algebraic agree only on the rational
+ discrete shadow.}
+ In the discrete/dg regime accessed through Eilenberg--Mac Lane
+ realizations, the dg Hochschild chain complex is the rational shadow
+ of the spectrum-level closed trace
+ $B^{\mathrm{Sp}}(A) \to \THH(A)$
+ \textup{(}Chapter~\textup{\ref{chap:en-koszul-duality}},
+ Remark~\textup{\ref{rem:spectrum-bar-lift-evidence}}\textup{)}.
+ Outside that rational shadow the comparison is not an identification:
+ $\THH$ retains torsion/chromatic information invisible to the
+ classical dg Hochschild complex.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Theorem~H is exclusively chiral]
+\label{rem:theorem-h-chiral-only}
+Every statement of Theorem~H in these volumes refers to the chiral
+ complex $\ChirHoch^\bullet(\cA)$ of a chiral algebra on a curve.
+ The proof uses curve-valued inputs at every step: ordered and
+ symmetric Fulton--MacPherson configuration spaces, OPE residue
+ compositions, PBW/Koszul collapse for the chiral bar complex,
+ and the curve-level Verdier shift~$[2]$. None of these steps is a
+ statement about $\THH$, and none is a statement about
+ $\HHcat^\bullet(\cC)$ of a dg category.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Occurrence-pattern crosswalk for Hochschild terminology in
+the programme}
+\label{tab:hochschild-occurrence-crosswalk}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.2cm}p{3.2cm}p{6.2cm}}
+\toprule
+\textbf{Occurrence pattern} & \textbf{Correct theory} &
+\textbf{Why this theory is load-bearing} \\
+\midrule
+Curve $X$, $\Ran(X)$, OPE residues, FM compactifications,
+$Z^{\mathrm{der}}_{\mathrm{ch}}$, Theorem~H,
+Drinfeld--Sokolov transport of chiral classes &
+$\ChirHoch^\bullet$ &
+The input is a chiral algebra on a curve and the proof uses
+factorization/OPE geometry rather than cartesian bimodules or cyclic
+bar constructions. \\
+\addlinespace
+Mode algebra, Zhu algebra, bar resolution of an associative algebra,
+$\Ext_{A^e}(A,A)$, classical Gerstenhaber bracket at a point &
+$\HHalg^\bullet$ &
+The input is a discrete or dg algebra over a point; this is the
+single-object algebra model used for categorical comparisons and
+fibrewise classical limits. \\
+\addlinespace
+Circle factorization homology of an $E_1$-ring spectrum,
+spectrum-level closed trace, chromatic redshift, $S^1$-equivariant
+spectrum &
+$\THH$ &
+The output is a spectrum with an $S^1$-action; the comparison is
+bar-spectrum to closed trace, not an algebraic cochain complex. \\
+\addlinespace
+dg category, $\Perf(A)$, compact generator, Morita invariance, Serre
+pairing, CY shifted Poisson/BV, derived center
+$\RHom_{\cC \otimes \cC^{\mathrm{op}}}(\id,\id)$ &
+$\HHcat^\bullet$ &
+The input is a category rather than an algebra on a curve or a ring
+spectrum; Morita invariance and CY duality are categorical, not
+chiral, statements. \\
+\bottomrule
+\end{tabular}
+\end{table}

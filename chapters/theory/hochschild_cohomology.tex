@@ -14,19 +14,22 @@ chiral algebra on a curve $X$ as input and outputs an object
 of cohomological amplitude~$[0,2]$ on the Koszul locus
 \textup{(}Theorem~H, see Theorem~\textup{\ref{thm:main-koszul-hoch}}
 in Chapter~\textup{\ref{chap:deformation-theory}}\textup{)}. The
-topological Hochschild $\mathrm{HH}^*_{\mathrm{top}}$ takes an
-$E_1$-algebra in spectra and outputs an $E_2$-Gerstenhaber algebra
-\textup{(}Deligne\textup{)}. The categorical Hochschild
-$\mathrm{HH}^*_{\mathrm{cat}}$ takes a dg category and outputs an
-$E_2$-algebra carrying CY shifted Poisson structure. The geometry
-selects which Hochschild: a curve produces $\ChirHoch^*$, a formal
-disk over a point produces $\mathrm{HH}^*_{\mathrm{top}}$, a CY dg
-category produces $\mathrm{HH}^*_{\mathrm{cat}}$. The present
-chapter works exclusively with $\ChirHoch^*$; the other two appear
-only in explicit comparison statements
+topological Hochschild homology $\mathrm{THH}(R)$ takes an
+$E_1$-ring spectrum and outputs an $S^1$-equivariant spectrum.
+Its classical algebraic cochain shadow for a discrete or dg algebra
+$A$ is $\mathrm{HH}^\bullet_{\mathrm{alg}}(A)=\RHom_{A^e}(A,A)$.
+The categorical Hochschild $\mathrm{HH}^*_{\mathrm{cat}}$ takes a
+dg category and outputs an $E_2$-algebra carrying CY shifted Poisson
+structure. The geometry selects which Hochschild: a curve produces
+$\ChirHoch^*$, a circle-spectrum trace produces $\mathrm{THH}$, a
+pointed dg algebra produces $\mathrm{HH}^\bullet_{\mathrm{alg}}$,
+and a CY dg category produces $\mathrm{HH}^*_{\mathrm{cat}}$.
+The present chapter works exclusively with $\ChirHoch^*$; the other
+theories appear only in explicit comparison statements
 \textup{(}Theorem~\textup{\ref{thm:hochschild-classical-comparison}}
-records the spectral sequence relating $\mathrm{HH}^*_{\mathrm{top}}$ at
-the fibre to $\ChirHoch^*$ on the curve\textup{)}.
+records the spectral sequence relating
+$\mathrm{HH}^\bullet_{\mathrm{alg}}$ at the fibre to
+$\ChirHoch^*$ on the curve\textup{)}.
 \end{remark}
 
 The chiral Hochschild cohomology $\ChirHoch^*(\cA)$ is the
@@ -40,8 +43,11 @@ computed by OPE residues on FM configuration spaces.
 In the classical limit (fiber at a point), it recovers
 Gerstenhaber's bracket~\cite{Ger63} on associative Hochschild
 cochains. The chiral bracket is the strict shadow of a full
-$L_\infty$ bracket on the chiral Hochschild complex. In the strict model, $\mathrm{HH}^2$ classifies
-first-order deformations and $\mathrm{HH}^3$ contains obstructions;
+$L_\infty$ bracket on the chiral Hochschild complex. In the
+classical algebraic strict model,
+$\mathrm{HH}^2_{\mathrm{alg}}$ classifies first-order
+deformations and $\mathrm{HH}^3_{\mathrm{alg}}$ contains
+obstructions;
 the $L_\infty$ extension records coherent homotopies governing
 convergence of formal deformations and transfer of Koszul properties
 across quasi-isomorphisms. The cyclic structure (Connes'
@@ -70,8 +76,10 @@ curve, and the $A_\infty$ structure of the bar complex.
 \index{Hochschild cohomology!canonical conventions}
 \index{cyclic homology!canonical conventions}
 \index{periodic cyclic homology!canonical conventions}
-The definitions and sign conventions for classical Hochschild cohomology
-$\mathrm{HH}^*$, classical Hochschild homology $\mathrm{HH}_*$, cyclic homology
+The definitions and sign conventions for classical algebraic
+Hochschild cohomology $\mathrm{HH}^\bullet_{\mathrm{alg}}$,
+classical algebraic Hochschild homology
+$\mathrm{HH}_{\bullet,\mathrm{alg}}$, cyclic homology
 $\mathrm{HC}_*$, negative cyclic homology $\mathrm{HC}_*^{\mathrm{neg}}$,
 and periodic cyclic homology $\mathrm{HP}_*$ are as follows. In particular:
 \begin{itemize}
@@ -84,8 +92,9 @@ and periodic cyclic homology $\mathrm{HP}_*$ are as follows. In particular:
  Corollary~\ref{cor:connes-SBI}),
 \end{itemize}
 are all defined here and should be cited from here throughout the text.
-Other chapters that use chiral Hochschild, topological Hochschild, or cyclic invariants
-(the deformation theory and Poincar\'e duality chapters)
+Other chapters that use chiral Hochschild, topological Hochschild
+homology, or cyclic invariants
+\textup{(}the deformation theory and Poincar\'e duality chapters\textup{)}
 reference these definitions rather than re-establishing them.
 \end{remark}
 
@@ -93,7 +102,21 @@ reference these definitions rather than re-establishing them.
 
 \subsection{Review of classical Hochschild}
 
-For an associative algebra $A$ over $\mathbb{C}$ and an $A$-bimodule~$M$, the Hochschild cohomology $HH^*(A, M) = \mathrm{Ext}^*_{A^e}(A, M)$ classifies the deformation theory of~$A$: $HH^0$ is the center, $HH^1$ classifies outer derivations, $HH^2$ classifies first-order deformations, and $HH^3$ contains the obstructions to extending them. The full structure is computed by the bar resolution $\cdots \to A^{\otimes(n+2)} \xrightarrow{b} A^{\otimes(n+1)} \to \cdots$ with differential $b(a_0 \otimes \cdots \otimes a_{n+1}) = \sum_{i=0}^n (-1)^i a_0 \otimes \cdots \otimes a_ia_{i+1} \otimes \cdots \otimes a_{n+1}$, and the resulting cohomology carries a Gerstenhaber bracket governing the Maurer--Cartan equation for formal deformations (Gerstenhaber~\cite{Ger63}).
+For an associative algebra $A$ over $\mathbb{C}$ and an
+$A$-bimodule~$M$, the classical algebraic Hochschild cohomology
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(A, M) = \mathrm{Ext}^*_{A^e}(A, M)$
+classifies the deformation theory of~$A$:
+$\mathrm{HH}^0_{\mathrm{alg}}$ is the center,
+$\mathrm{HH}^1_{\mathrm{alg}}$ classifies outer derivations,
+$\mathrm{HH}^2_{\mathrm{alg}}$ classifies first-order deformations,
+and $\mathrm{HH}^3_{\mathrm{alg}}$ contains the obstructions to
+extending them. The full structure is computed by the bar resolution
+$\cdots \to A^{\otimes(n+2)} \xrightarrow{b} A^{\otimes(n+1)} \to
+\cdots$ with differential $b(a_0 \otimes \cdots \otimes a_{n+1})
+= \sum_{i=0}^n (-1)^i a_0 \otimes \cdots \otimes a_ia_{i+1}
+\otimes \cdots \otimes a_{n+1}$, and the resulting cohomology
+carries a Gerstenhaber bracket governing the Maurer--Cartan equation
+for formal deformations \textup{(}Gerstenhaber~\cite{Ger63}\textup{)}.
 
 \subsection{Chiral enhancement}
 
@@ -111,7 +134,11 @@ The chain-level model is Definition~\ref{def:chiral-hochschild}.
 
 \begin{theorem}[Comparison with classical theory {\cite{BD04}}; \ClaimStatusProvedElsewhere]\label{thm:hochschild-classical-comparison}
 There is a spectral sequence:
-\[E_2^{p,q} = HH^p(\mathcal{A}_0, H^q(\Omega^*_X)) \Rightarrow \ChirHoch^{p+q}(\mathcal{A})\]
+\[
+E_2^{p,q}
+= \mathrm{HH}^p_{\mathrm{alg}}(\mathcal{A}_0, H^q(\Omega^*_X))
+\Rightarrow \ChirHoch^{p+q}(\mathcal{A})
+\]
 where $\mathcal{A}_0$ is the fiber at a point.
 \end{theorem}
 
@@ -430,7 +457,12 @@ For free fermions (with OPE $\psi(z)\psi^*(w) \sim (z-w)^{-1}$):
 0 & n = 1 \text{ (all derivations of the Clifford algebra are inner)} \\
 \mathbb{C} & n = 2 \text{ (one-dimensional deformation space)}
 \end{cases}\]
-(The computation follows from the Clifford algebra structure: $HH^0$ is the center $\mathbb{C}$; $HH^1 = 0$ by the standard result that all derivations of a Clifford algebra are inner \cite[Ch.~9]{Weibel94}; $HH^2 \cong \mathbb{C}$ represents the unique deformation parametrized by the level.)
+(The computation follows from the Clifford algebra structure:
+$\mathrm{HH}^0_{\mathrm{alg}}$ is the center $\mathbb{C}$;
+$\mathrm{HH}^1_{\mathrm{alg}} = 0$ by the standard result that all
+derivations of a Clifford algebra are inner \cite[Ch.~9]{Weibel94};
+$\mathrm{HH}^2_{\mathrm{alg}} \cong \mathbb{C}$ represents the unique
+deformation parametrized by the level.)
 \section{Chiral Hochschild-cyclic spectral sequence for chiral algebras}
 \label{sec:hochschild-cyclic-spectral}
 
@@ -748,7 +780,23 @@ The spectral sequence \emph{degenerates at $E_2$} (all higher differentials are 
 because the only possible higher differentials $d_r: E_r^{1,q} \to E_r^{0,q+r}$ would require $r \geq 2$, but $E_r^{p,q} = 0$ for $p \geq 2$, so all higher differentials vanish.
 
 \emph{Comparison with classical Hochschild cohomology.}
-The polynomial $E_2$ page above should not be confused with the ordinary classical Hochschild cohomology $HH^*(\mathcal{H})$, which is computed in Example~\ref{ex:HH-heisenberg-complete}. The latter uses the Koszul resolution (length~$2$) and gives $HH^n(\mathcal{H}) = \mathbb{C}$ for $n = 0, 1, 2$ and $HH^n(\mathcal{H}) = 0$ for $n \geq 3$. The difference is that the $E_2$ page here is computed from chiral Hochschild \emph{homology} $HH_*(\mathcal{H}) = \mathbb{C}[c] \otimes \Lambda(\sigma)$, which is polynomial and does not vanish in high degrees. Classical Hochschild cohomology (the $\mathrm{Ext}$-computation) and chiral Hochschild homology (the $\mathrm{Tor}$-computation) are distinct invariants; the former detects deformations, while the latter feeds the cyclic spectral sequence.
+The polynomial $E_2$ page above should not be confused with the
+ordinary classical Hochschild cohomology
+$\mathrm{HH}^*(\mathcal{H})_{\mathrm{alg}}$, which is computed in
+Example~\ref{ex:HH-heisenberg-complete}. The latter uses the Koszul
+resolution (length~$2$) and gives
+$\mathrm{HH}^n_{\mathrm{alg}}(\mathcal{H}) = \mathbb{C}$ for
+$n = 0, 1, 2$ and
+$\mathrm{HH}^n_{\mathrm{alg}}(\mathcal{H}) = 0$ for $n \geq 3$.
+The difference is that the $E_2$ page here is computed from chiral
+Hochschild \emph{homology}
+$\mathrm{HH}^{\mathrm{ch}}_*(\mathcal{H})
+= \mathbb{C}[c] \otimes \Lambda(\sigma)$, which is polynomial and
+does not vanish in high degrees. Classical Hochschild cohomology
+\textup{(}the $\mathrm{Ext}$-computation\textup{)} and chiral
+Hochschild homology \textup{(}the $\mathrm{Tor}$-computation\textup{)}
+are distinct invariants; the former detects deformations, while the
+latter feeds the cyclic spectral sequence.
 \end{example}
 
 \begin{example}[Second page for affine sl3]

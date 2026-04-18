@@ -87,7 +87,7 @@ with scalar shadow $\kappa+\kappa^!=\varrho_\cA K$
 (Theorem~C, $\varrho_\cA$ family-specific, $K$ the Koszul conductor
 of \textup{(G1)}), the genus tensor curvature
 $\mathrm{obs}_g=\kappa\lambda_g$ \textup{(UNIFORM-WEIGHT)} (Theorem~D), the chiral
-Hochschild concentration in $\{0,1,2\}$ (Theorem~H), the universal
+Hochschild concentration theorem in $\{0,1,2\}$ (Theorem~H), the universal
 holography functor $\Phi_{\mathrm{hol}}$ (Theorem~F), and the
 infinite-fingerprint completeness $\phi(\cA)$ (Theorem~G). Five
 extract the $\Sigma_n$-invariant content of the ordered bar; two
@@ -1141,11 +1141,14 @@ computed via the chiral endomorphism operad $\End^{\mathrm{ch}}_\cA$,
 whose formal spectral variables $\lambda_i$ arise as relative position
 coordinates on the formal disk
 (Proposition~\ref{prop:bd-algebraic-bridge}). This is \emph{not}
-topological Hochschild $\RHom_{\cA^e}(\cA,\cA)$
-(not THH in the stable homotopy sense; this is classical
-$\HH^*(\cA_{\mathrm{mode}})$): the chiral and
-topological constructions use different operadic inputs and produce
-different outputs.
+the classical algebraic Hochschild cochain complex
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(\cA_{\mathrm{mode}})
+= \RHom_{\cA_{\mathrm{mode}}^e}
+(\cA_{\mathrm{mode}},\cA_{\mathrm{mode}})$,
+and it is \emph{not} the spectral closed trace
+$\mathrm{THH}(H\cA_{\mathrm{mode}})$.
+The chiral, algebraic, and topological constructions use different
+ambient categories and produce different outputs.
 
 From $E_1$ input, the derived centre carries $E_2$ structure
 (the Deligne conjecture, proved). From $E_2$ input, the derived
@@ -1165,13 +1168,18 @@ chiral Hochschild construction, not in the bar complex.
 Three Hochschild theories coexist:
 (i)~chiral Hochschild (OPE composition on $\Ran(\C)$, producing
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}$);
-(ii)~topological Hochschild (= classical $\HH^*$, not THH in the
-stable-homotopy sense; $E_1$-bar composition on $\R$,
-producing $\HH^*(\cA, \cA)$);
-(iii)~categorical Drinfeld centre ($E_1$-monoidal, producing the
-$E_2$-braided module category). The geometry determines which:
-curve $\to$ chiral; circle $\to$ topological; category $\to$
-Drinfeld.
+(ii)~topological Hochschild homology
+$\mathrm{THH}(R)=R\otimes^{\mathbf L}_{R\otimes R^{\mathrm{op}}}R$
+for an $E_1$-ring spectrum, with algebraic cochain shadow
+$\mathrm{HH}^\bullet_{\mathrm{alg}}(A)=\RHom_{A^e}(A,A)$ in the
+discrete/dg regime;
+(iii)~categorical Hochschild cohomology
+$\mathrm{HH}^\bullet_{\mathrm{cat}}(\cC)
+=\RHom_{\cC\otimes\cC^{\mathrm{op}}}(\id,\id)$, whose
+representation-theoretic avatar is the Drinfeld center.
+The geometry determines which: curve $\to$ chiral;
+circle/spectrum $\to$ topological; dg category $\to$
+categorical.
 
 The $E_3$ identification theorem: for simple $\fg$,
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(V_k(\fg))
@@ -4224,20 +4232,24 @@ appear in the programme:
  Polynomial Hilbert series, concentrated in degrees
  $\{0,1,2\}$.
 \item \emph{Topological Hochschild homology}
- $\mathrm{THH}(\cA)$: factorisation homology over~$S^1$,
- using the $E_1$-structure. The topological avatar of
- the genus-$1$ trace.
-\item \emph{Categorical Drinfeld center}
- $Z(\cA\text{-}\mathsf{mod})$: the $E_2$-braided monoidal
- category of modules equivariant for the half-braiding.
- Arrow~3 of the $E_n$ circle.
+ $\mathrm{THH}(R)$: factorisation homology over~$S^1$
+ for an $E_1$-ring spectrum~$R$, with $S^1$-equivariant
+ spectrum output. In the discrete/dg regime its algebraic
+ cochain shadow is
+ $\mathrm{HH}^\bullet_{\mathrm{alg}}(A)=\RHom_{A^e}(A,A)$.
+\item \emph{Categorical Hochschild cohomology}
+ $\mathrm{HH}^\bullet_{\mathrm{cat}}(\cC)
+ = \RHom_{\cC\otimes\cC^{\mathrm{op}}}(\id,\id)$:
+ the $E_2$-algebra attached to a dg/$A_\infty$-category~$\cC$.
+ Its representation-theoretic avatar is the Drinfeld center
+ $Z(\cC)$.
 \end{enumerate}
 The geometry determines which theory applies: chiral
 Hochschild lives on algebraic curves and uses the
 $\Einf$-factorisation structure; topological Hochschild
-lives on~$S^1$ and uses the $E_1$-structure; the Drinfeld
-center lives in the representation category and uses the
-$E_1$-monoidal structure
+lives on~$S^1$ and uses the $E_1$-structure; categorical
+Hochschild lives in dg categories and uses the
+$E_1$-monoidal/enriched structure
 (Principle~\ref{princ:geometric-origin-hochschild};
 Convention~\ref{conv:three-hochschild}).
 
@@ -4815,8 +4827,11 @@ modular Koszul datum
 $\Pi_X(L)=(\mathrm{Fact}_X(L),\barB_X(L),\Theta_L,\cL_L,
 (V^{\mathrm{br}}_L,T^{\mathrm{br}}_L),R_4^{\mathrm{mod}}(L))$, each
 component functorially determined by~$L$. The target: a universal
-modular factorization envelope $U^{\mathrm{mod}}_X(L)$ as left adjoint
-of the modular primitive-current functor. Drinfeld--Sokolov reduction on
+modular factorization envelope construction
+$U^{\mathrm{mod}}_X(L)=\Fact_X(L)\widehat\otimes_{\mathrm{cyc}}
+\mathbb{G}_{\mathrm{mod}}$; the stronger left-adjoint statement
+$U^{\mathrm{mod}}_X \dashv \operatorname{Prim}^{\mathrm{mod}}$
+remains a frontier conjecture. Drinfeld--Sokolov reduction on
 total modular Koszul datums gives
 $\Theta_{\mathcal W_N}
 =H^0_{Q_{\mathrm{DS}}}(\Theta_{V_k(\fg)\otimes F_{\mathrm{gh}}})$:

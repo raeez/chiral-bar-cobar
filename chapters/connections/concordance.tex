@@ -135,12 +135,15 @@ They differ in input, output, and geometric origin;
 conflating them is a category error.
 
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Topological Hochschild cohomology} $\HH^*(A, A)$.
- Input: an $E_1$-algebra~$A$ (associative up to homotopy).
- Output: an $E_2$-algebra (Deligne conjecture, proved by
- many authors). Geometric origin: the real line~$\bR$
- and its interval compactifications.
- This is the classical theory of deformation complexes.
+\item \emph{Topological Hochschild homology}
+ $\mathrm{THH}(R) = R \otimes^{\mathbf L}_{R \otimes R^{\mathrm{op}}} R$.
+ Input: an $E_1$-ring spectrum~$R$.
+ Output: an $S^1$-equivariant spectrum.
+ Geometric origin: factorization homology over the circle.
+ Its classical algebraic cochain shadow for a discrete or dg algebra
+ $A$ is $\mathrm{HH}^\bullet_{\mathrm{alg}}(A)
+ = \RHom_{A^e}(A,A)$, but that cochain complex is not the
+ definition of~$\mathrm{THH}$.
 
 \item \emph{Chiral Hochschild cohomology}
  $\ChirHoch^*(\cA) = \ChirHoch^*(\cA, \cA)$.
@@ -153,13 +156,15 @@ conflating them is a category error.
  Fulton--MacPherson compactifications.
  This is the theory developed in the present monograph.
 
-\item \emph{Categorical Hochschild homology}
- $\HH_*(\cC)$.
+\item \emph{Categorical Hochschild cohomology}
+ $\mathrm{HH}^\bullet_{\mathrm{cat}}(\cC)
+ = \RHom_{\cC \otimes \cC^{\mathrm{op}}}(\id_\cC,\id_\cC)$.
  Input: a dg or $A_\infty$-category~$\cC$
  (e.g.\ $\operatorname{Rep}_q(\fg)$).
- Output: a chain complex carrying an $E_2$-structure
- with Calabi--Yau shifted Poisson structure when~$\cC$
- is proper Calabi--Yau.
+ Output: an $E_2$-algebra, with Calabi--Yau shifted Poisson
+ structure when~$\cC$ is proper Calabi--Yau.
+ Its homology variant $\HH_{\bullet,\mathrm{cat}}(\cC)$ is the
+ cyclic bar complex.
  Geometric origin: the circle~$S^1$ and its
  cyclic bar construction.
 \end{enumerate}
@@ -179,6 +184,11 @@ classical (topological) theory; in all other
 contexts, one of the three adjectives
 \emph{topological}, \emph{chiral}, or
 \emph{categorical} is required.
+Appendix~\ref{app:hochschild-conventions} records the typed formulas,
+the compact-generator comparison
+$\mathrm{HH}^\bullet_{\mathrm{cat}}(\Perf(A))
+\simeq \mathrm{HH}^\bullet_{\mathrm{alg}}(A)$,
+and the occurrence-pattern crosswalk used in this monograph.
 \end{convention}
 
 \subsection*{The three structure theorems and the discriminant}
@@ -1073,20 +1083,25 @@ where:
  (Definition~\ref{def:nms-modular-quartic-resonance-class}).
 \end{enumerate}
 The slogan: \emph{envelope $+$ bar coalgebra $+$
-universal MC class $=$ modular form datum}.
+canonical MC class $=$ modular form datum}.
 Every invariant (scalar anomaly, spectral
 sheet, nonlinear resonance) is a shadow of~$\Theta_L$.
 \end{construction}
 
 \begin{remark}[The modular factorization adjunction]
 \label{rem:concordance-platonic-adjunction}
-The modular factorization adjunction is proved in
-Theorem~\ref{thm:platonic-adjunction}: the modular factorization
-envelope functor $U_X^{\mathrm{mod}}$ is left adjoint to the
-primitive-current functor $\operatorname{Prim}^{\mathrm{mod}}$
-on cyclically admissible Lie conformal algebras.
+Theorem~\ref{thm:platonic-adjunction} proves the modular envelope
+construction
+$U_X^{\mathrm{mod}}(L)=\Fact_X(L)\widehat\otimes_{\mathrm{cyc}}
+\mathbb{G}_{\mathrm{mod}}$
+and the canonical current map
+$L \to U_X^{\mathrm{mod}}(L)$.
 At genus~$0$, this recovers the Nishinaka--Vicedo
-envelope~\cite{Nish26,Vic25}. The full modular envelope carries
+envelope~\cite{Nish26,Vic25}. The stronger adjunction
+$U_X^{\mathrm{mod}} \dashv \operatorname{Prim}^{\mathrm{mod}}$
+is not proved here: it is the frontier statement of
+Conjecture~\ref{conj:universal-modular-factorization-envelope}.
+The full modular envelope carries
 the modular Koszul datum~$\Pi_X(L)$
 (Construction~\ref{constr:v1-platonic-package-concordance}) functorially.
 \end{remark}
@@ -10713,9 +10728,10 @@ well-defined algebraic object.
  (the modular extension of the factorization envelope adjunction).
 
  \smallskip\noindent
- \emph{Original statement.}
- The modular factorization envelope $U^{\mathrm{mod}}_X$ is
- left adjoint to the modular primitive-current functor
+ \emph{Conjectural statement.}
+ The modular factorization envelope construction
+ $U^{\mathrm{mod}}_X$ is expected to be left adjoint to the
+ modular primitive-current functor
  $\operatorname{Prim}^{\mathrm{mod}}$.
 
  \smallskip\noindent
@@ -10727,7 +10743,7 @@ well-defined algebraic object.
  is extended by the open/closed data to the eight-fold
  completed modular Koszul datum $\Pi^{\mathrm{oc}}_X(\cA)$
  (Definition~\ref{def:thqg-completed-platonic-datum}). The
- adjunction asserts that
+ conjectural adjunction asks whether
  $\Theta^{\mathrm{oc}}_\cA$ is \emph{universal} among MC
  elements in open-closed convolution algebras over cyclically
  admissible Lie conformal algebras:

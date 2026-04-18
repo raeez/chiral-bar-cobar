@@ -1618,6 +1618,78 @@ Before writing an `@independent_verification(claim=L)` decorator:
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
+## Pattern 240: Drinfeld double named before the chiral construction exists
+
+**Session**: 2026-04-18 evening (Vol II Dimofte Drinfeld-double adversarial attack).
+
+**Type**: construction/status mismatch across slab, line, and bulk surfaces.
+
+**Trigger regex**:
+
+```
+rg -n 'Drinfeld double.*(is|realises|gives)|U_\\cA\\s*=\\s*\\cA ?\\\\bowtie ?\\\\cA\\^!|universal algebra of line operators' \
+  chapters/frame/preface.tex \
+  chapters/connections/ht_bulk_boundary_line_core.tex \
+  chapters/connections/ordered_associative_chiral_kd_core.tex \
+  chapters/connections/ordered_associative_chiral_kd_frontier.tex \
+  chapters/connections/hochschild.tex
+```
+
+**Confusion**: the slab bimodule geometry, the proved line-category model
+$\cC_{\mathrm{line}} \simeq \cA^!_{\mathrm{line}}\text{-mod}$ on the chirally Koszul locus,
+and the conjectural Hopf-like reconstructor $D^{\mathrm{ch}}(\cA)$ are three different layers.
+Naming $\cA \bowtie \cA^!$ as though already constructed upgrades a sketch into a theorem and
+silently conflates candidate (i) with the already-constructed bulk/line objects.
+
+**Correction**: state the chiral Drinfeld double only as a conjectural quasi-triangular
+$E_1$-chiral Hopf object internal to the meromorphic line-operator category, with universal
+property relative to the slab fibre functor. Keep it distinct from
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ (bulk) and from
+$\mathrm{R}\!\operatorname{Hom}_{\cA\otimes \cA^{\mathrm{op}}}(\cA,\cA)$ (Yoneda/bimodule centre).
+Any line or bulk claim that factors through $D^{\mathrm{ch}}(\cA)$ inherits
+`\ClaimStatusConjectured`.
+
+**Primary source**: Drinfeld 1985/1990 for the classical double; Beilinson--Drinfeld 2004 for
+the chiral/factorization background; Dimofte PIRSA 25110067 for the slab/fibre-functor motivation;
+Vol II `ordered_associative_chiral_kd_core.tex:1395-1436`,
+`ordered_associative_chiral_kd_frontier.tex:5799-6254`,
+`hochschild.tex:4702-5052`.
+
+## Pattern 241: Downstream Dimofte workpackages silently inherit the Drinfeld-double gap
+
+**Session**: 2026-04-18 evening (Vol II Dimofte Drinfeld-double adversarial attack).
+
+**Type**: dependency/scope drift across multi-workpackage programmes.
+
+**Trigger regex**:
+
+```
+rg -n 'slab|line operators|\\\\hat Z|holomorphic blocks|gravity climax|Drinfeld double' \
+  chapters/frame/preface.tex \
+  chapters/connections/3d_gravity.tex \
+  chapters/connections/line-operators.tex \
+  chapters/connections/ht_bulk_boundary_line_core.tex
+```
+
+**Confusion**: a six-workpackage narrative can flatten proved line-operator and gravity results
+together with Drinfeld-double-dependent identifications. This hides that WP3--WP6 split into
+independent pieces and pieces that require WP2.
+
+**Correction**: expose the dependency matrix explicitly. WP3 line operators are proved
+independently as $\cA^!$-module / braided evaluation-category results; only the upgrade
+$\cC_{\mathrm{line}} \simeq \Rep(D^{\mathrm{ch}}(\cA))$ depends on WP2.
+WP4 $\widehat Z$ and WP5 holomorphic blocks become conjectural when interpreted as characters or
+matrix coefficients of $D^{\mathrm{ch}}(\cA)$-modules. WP6 gravity-climax theorems on the
+Maurer--Cartan tower, shadow hierarchy, and complementarity remain independent, but any
+identification of the full gravitational line algebra or slab reconstructor with
+$D^{\mathrm{ch}}(\mathrm{Vir}_c)$ is conjectural and inherits the WP2 obstruction.
+
+**Primary source**: Costello--Dimofte--Gaiotto 2020; Dimofte--Niu--Py 2025; Vol II
+`ht_bulk_boundary_line_core.tex:55-107,245-263`,
+`line-operators.tex:352-428`,
+`log_ht_monodromy_core.tex:2035-2042`,
+`3d_gravity.tex:107-121,2185-2225`.
+
 ---
 
 ## Entry 240 (2026-04-16). Unified chiral moonshine chapter: four sporadic sectors, one bar-Euler master identity
@@ -4211,4 +4283,3 @@ grep -nE '(iff|\\iff|\\Leftrightarrow|if and only if)' chapters/theory/
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
-
