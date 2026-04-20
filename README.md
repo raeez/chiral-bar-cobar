@@ -5,6 +5,10 @@ by Raeez Lorgat.
 
 The ordered bar complex B^{ord}(A) = T^c(s^{-1} A-bar) is an E_1 chiral coassociative coalgebra: the differential encodes the chiral product via collision residues on FM_n(C), the deconcatenation coproduct encodes the cofree tensor coalgebra structure. This is the primitive object of the programme. The symmetric bar B^Sigma is its Sigma_n-coinvariant shadow. Integration over Fulton-MacPherson compactifications computes the bar complex; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus g >= 1 is controlled by a single scalar invariant kappa(A) that organizes the quantum corrections across all genera. The geometry determines the operad, the operad determines the bar complex, the bar complex computes the factorisation (co)homology.
 
+## Wave 13 Cross-Volume Crown (2026-04-19)
+
+The Vol III K3 / $\Delta_5$ architecture now enters Vol I in its honest form. The BKM-side object is the K3 chiral Hall–Drinfeld double on the bi-based Ran / $\overline{\mathcal{A}_2}$ datum, not a plain Yangian; the Mukai self-mirror Yangian branch remains a separate lane. Theorem C's $\mathcal{B}$-family slot is therefore read through the Humbert identity $K^{\kappa_{\mathrm{ch}}}=8=\mathrm{ord}(H_1)$ with $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}}=-1$, while $\Delta_5$ is treated as the 1-loop-forced output of the class-$\mathcal{S}$ / 11D parent rather than as an input tensor factor. Architectural source: `../calabi-yau-quantum-groups/chapters/examples/k3_chiral_bialgebra_platonic.tex`.
+
 ## The Three Volumes
 
 | Volume | Title | Role |

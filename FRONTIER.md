@@ -1,8 +1,35 @@
 # FRONTIER — The Complete Research Programme (Vol I)
 
-## DEFINITIVE STATUS AS OF 2026-04-17 (Beilinson-rectified)
+## DEFINITIVE STATUS AS OF 2026-04-19 (Beilinson-rectified, Wave-13-propagated)
 
-This supersedes every prior status line in this document. Sections marked "Prior status" and "F1-F36" below are HISTORICAL RECORD of the 2026-04-07 through 2026-04-14 session state; every closure and qualifier in this top section takes precedence. The authoritative audit that forced these updates is `notes/rectification_map_beilinson_audit.md` (926 lines, inscribed 2026-04-17).
+This supersedes every prior status line in this document. Sections marked "Prior status" and "F1-F36" below are HISTORICAL RECORD of the 2026-04-07 through 2026-04-14 session state; every closure and qualifier in this top section takes precedence. The authoritative audit that forced these updates is `notes/rectification_map_beilinson_audit.md` (926 lines, inscribed 2026-04-17). Wave 13 additionally imports the Vol III K3 / $\Delta_5$ architecture from `../calabi-yau-quantum-groups/notes/k3_nonabelian_yangian_swarm_wave13_20260419/SYNTHESIS_WAVE13.md` and `../calabi-yau-quantum-groups/chapters/examples/k3_chiral_bialgebra_platonic.tex`: the BKM-side object is the K3 chiral Hall–Drinfeld double, not a plain Yangian.
+
+## Wave 13 platonic-ideal crown
+
+The K3 / $\Delta_5$ crown now constrains every Vol I cross-volume reference to Theorem C, CY-C, and the BKM conductor lane. The load-bearing chapter is `../calabi-yau-quantum-groups/chapters/examples/k3_chiral_bialgebra_platonic.tex`.
+
+- **R1. Classification invariant.** The K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$ is classified by $H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2,\,K(1)} \cong \mathbb{C}\cdot\Delta_5$, so $\Delta_5$ is the classification invariant itself.
+- **R2. Presentation.** The BKM-side presentation is the Hall–Drinfeld double of $\mathrm{CoHA}_{K3\times E}$ with the Siegel–Borcherds associator and the dynamical $R$-matrix, not a Drinfeld Yangian. Plain BKM-side "K3 Yangian" is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.5.
+- **R3. Hosted base.** The geometry is bi-based: smooth Ran of the nodal discriminant curve, nearby-cycles at the 24 nodes, and the parameter-side Francis–Gaitsgory factorization category on $\overline{\mathcal{A}_2}$ linked by the averaging morphism. Direct nodal BD-chirality is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.7.
+- **R4. Koszul shift.** The bar-cobar shift is CY-2 $[2]$ with the $\widetilde{M}_{24}$ Schur cocycle, not CY-3 $[3]$; the old shift is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.8.
+- **R5. 4d parent.** The parent theory is class-$\mathcal{S}$ $A_1$ on $\Sigma_{0,24}$; the Schur relation is the composite arrow to $\phi_{0,1}^{K3}$ and then to $\Delta_5$, not a direct equality. Direct Schur $=1/\Delta_5$ is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.10.
+- **R6. 1-loop origin.** $\Delta_5$ is the 1-loop-forced output of the 11D / heterotic / IIA / IIB duality web, not an input tensor factor. The input-side reading is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.9.
+- **R7. Abelian-at-Lie discipline.** The Lie/Hopf level is abelian up to the 24 Heisenberg / Miki copies; BKM non-abelianity emerges only after vertex-operator closure. This is the naming discipline that keeps the Hall–Drinfeld lane separate from the Mukai self-mirror Yangian branch.
+- **Vol I conductor consequence.** Theorem C's $\mathcal{B}$-family bucket now carries $K^{\kappa_{\mathrm{ch}}}=8=\mathrm{ord}(H_1)$ on the Humbert-$H_1$ face, with $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}}=-1$ as the universal identity on that lane.
+- **Wave 13 cache.** 59 AP-CY-W13-* anti-patterns are now part of the cross-volume first-principles discipline.
+
+## Wave 14 handoff queue
+
+1. Adjudicate the $c_{2d}$ bridge between the stalk-level and global class-$\mathcal{S}$ central charges.
+2. Compute the first 10 Schur coefficients of $\mathcal{T}[A_1,\Sigma_{0,24}]$ and verify the composite arrow to $\Delta_5$.
+3. Reframe `../calabi-yau-quantum-groups/chapters/examples/k3e_bkm_chapter.tex` so the ambient theory sits on the left and $\Delta_5$ appears as 1-loop output.
+4. Verify the Beem–Rastelli flavour-level convention against the published tables.
+5. Compute explicit $A_\infty$ quasi-Hopf structure constants at the Humbert walls.
+6. Inscribe the Arthur packet $\psi_{\Delta_{10}}$ with explicit Hecke eigenvalues.
+7. Prioritise the Wave 13 compute modules for the Gritsenko lift, twisted 11D 1-loop output, class-$\mathcal{S}$ parent, bi-based Ran datum, and Hall–Drinfeld double.
+8. Enlarge Vol I Theorem C so the $\mathcal{B}$-family slot records $K^{\kappa_{\mathrm{ch}}}=2c_+=8$ as the Humbert-$H_1$ monodromy identity.
+9. Append the 59 AP-CY-W13-* anti-patterns to the first-principles cache and concordance.
+10. Complete the nomenclature sweep from plain "K3 Yangian" to the Hall–Drinfeld vocabulary on the BKM-side lane.
 
 ### 1. Closures since 2026-04-14 — 2026-04-16 Programme-Wide Wave
 
@@ -52,7 +79,7 @@ The 2026-04-16 wave closed every surviving open frontier from the 2026-04-13 "Pl
 
 **CL22 (Chiral QG equivalence — post-AP241/AP305 healing 2026-04-18, honest phantom-retirement).** BASE INSCRIPTION: `thm:chiral-qg-equiv` at `ordered_associative_chiral_kd.tex:8404` (`\ClaimStatusProvedHere`, title "Chiral bialgebra equivalence on the Koszul locus"; in build via `main.tex:1394`). Triangle (I) R-matrix ↔ (II) chiral $A_\infty$ in $\End^{ch}_\cA$ ↔ (III) chiral coproduct coassociative up to $\Phi$; canonical at $H^0$, non-canonical up to $\GRT_1(\Q)$ at cochain level. LOAD-BEARING on JKL26 at $N \geq 3$ via `prop:ff-screening-coproduct-obstruction`. AP263 Hopf-antipode caveat at `rem:chiral-bialgebra-not-hopf`:8496. GRT_1 torsor content at `rem:chiral-qg-grt1-torsor`:8522. Of 8 formerly-advertised strengthening labels: 1 inscribed theorem (`thm:glN-chiral-qg` at :10324), 1 inscribed remark absorbing intended content (`rem:chiral-qg-grt1-torsor`, consumer retargeted 2026-04-18), 6 AP241 PHANTOMS with ZERO live consumer refs after retarget: `def:ordered-koszul-chiral-algebra`, `prop:yangian-ordered-koszul`, `thm:chiral-qg-equiv-ordered` (retargeted to base `thm:chiral-qg-equiv`), `prop:sl2-yangian-triangle-concrete`, `thm:w-infty-chiral-qg-completed`, chapter-level elliptic/toroidal. `\phantomsection\label{thm:grt1-rigidity}` stub at preface retired 2026-04-18. Elliptic + toroidal formal-disk: standalone-only inscriptions at `seven_faces.tex:1006,1020`; `seven_faces.tex` NOT `\input`-ed into `main.tex`, chapter-level inscription is FRONTIER. Concrete verification of triangle beyond sl_2 Yangian + affine KM + gl_N is OPEN.
 
-**CL23 (CY-D dimension stratification, Vol III). PROVED.** `thm:kappa-hodge-supertrace-identification`: κ_ch(A_X) = Σ_q (-1)^q h^{0,q}(X) unconditionally for compact CY_d via HKR + Mukai pairing + HC^-_d trace. `thm:kappa-stratification-by-d`: explicit across d ∈ {1,2,3,4,5}. `cor:conifold-non-local-surface`: conifold is NOT local surface at d=3; κ_ch=1 via direct McKay. `thm:borcherds-weight-kappa-BKM-universal`: κ_BKM(Φ_N) = c_N(0)/2 universal across N ∈ {1,2,3,4,6}. Naive decomposition κ_BKM = κ_ch + χ(O_fiber) is numerical coincidence at N=1.
+**CL23 (CY-D dimension stratification, Vol III, Wave-13-propagated). PROVED.** `thm:kappa-hodge-supertrace-identification`: `$\kappa_{\mathrm{ch}}(A_X)=\sum_q (-1)^q h^{0,q}(X)$` unconditionally for compact CY_d via HKR + Mukai pairing + HC$^-_d$ trace. `thm:kappa-stratification-by-d`: explicit across d ∈ {1,2,3,4,5}. `cor:conifold-non-local-surface`: conifold is NOT local surface at d=3; `$\kappa_{\mathrm{ch}}=1$` via direct McKay. `thm:borcherds-weight-kappa-BKM-universal`: `$\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$` universal across $N\in\{1,2,3,4,6\}$. The naive decomposition `$\kappa_{\mathrm{BKM}}=\kappa_{\mathrm{ch}}+\chi(\mathcal{O}_{\mathrm{fiber}})$` fails at every $N$, not just generically. Wave 13 also fixes the Theorem-C $\mathcal{B}$-family face: $K^{\kappa_{\mathrm{ch}}}=8=\mathrm{ord}(H_1)$ and $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}}=-1`.
 
 **CL24 (BP Koszul conductor polynomial identity, both conventions). HEALED 2026-04-17.** `thm:bp-koszul-conductor-polynomial` (standalone/bp_self_duality.tex:253-297): c(BP_k) = 2 − 24(k+1)²/(k+3); K^{Arakawa}_BP(k) := c(BP_k) + c(BP_{-k-6}) ≡ 196 as constant rational function; c(BP_k) − 98 is odd in (k+3). Fixed point k=-3 coincides with critical level −h^v(sl_3); κ(BP_{-3}) = 49/3 principal-value symmetric limit. **Convention caveat (corrected)**: Fateev-Lukyanov screening gives c^{FL}(k) = −(2k+3)(3k+1)/(k+3); direct substitution yields K^{FL}_BP(k) ≡ 50 polynomial-constant (the apparent pole at k=-3 in any −12(k+3) − 48/(k+3) expression is removable by residue cancellation and is an arithmetic artefact). Both conventions are polynomial-constant; the differing values (50 vs 196, differing by 146 = 2·73) reflect central-charge normalisation between FL screening and Arakawa DS reduction. Vol II `bp_chain_level_strict_platonic.tex` uses FL convention. The heal is inscribed at `chapters/theory/motivic_shadow_full_class_m_platonic.tex` rem:bp-conductor-healing-2026-04-17 and `standalone/bp_self_duality.tex` prop:bp-fl-convention-caveat.
 
@@ -68,7 +95,7 @@ The 2026-04-16 closure wave forced a re-audit, which surfaced scope-qualifiers a
 
 **NF2. Non-tempered stratum emptiness — SCOPE-QUALIFIED.** "Non-tempered stratum is EMPTY on the C_2-cofinite standard landscape" is scope-qualified to the NON-LOGARITHMIC subset (Virasoro, W_N, all Schellekens, Monster, irrational cosets). Logarithmic W(p) remains open. The programme-climax statement must carry this scope tag; every standalone paper citing the climax must be re-audited.
 
-**NF3. CY-C pentagon invariant — CATEGORY ERROR CORRECTED.** Vol III commit `cade61c` healed the pentagon stratification {3, 12, 24} from `κ_ch^{R_i}` to `ρ^{R_i}` (generator-lattice rank). κ_ch is route-independent = 0 for K3×E by Hodge supertrace; the stratification is an ALGEBRAIC invariant (generator rank) ORTHOGONAL to κ_ch. (B89-B90.) The prior claim "six routes to G(K3×E) converge isomorphically" is FALSIFIED: the actual structure is a pentagon of five intertwiners with R_2 source branch, generator-rank stratified.
+**NF3. CY-C pentagon invariant — Wave 13 architectural correction.** Vol III commit `cade61c` healed the pentagon stratification {3, 12, 24} from `$\kappa_{\mathrm{ch}}^{R_i}$` to `$\rho^{R_i}$` (generator-lattice rank). `$\kappa_{\mathrm{ch}}$` is route-independent = 0 for $K3\times E$ by Hodge supertrace; the stratification is an ALGEBRAIC invariant orthogonal to `$\kappa_{\mathrm{ch}}$`. Wave 13 additionally fixes the object at the centre of the pentagon: the Hall–Drinfeld double $\mathbf{H}_{\Delta_5}$ on the bi-based Ran / $\overline{\mathcal{A}_2}$ datum with CY-2 $[2]$ shift, class-$\mathcal{S}$ parent, and 1-loop $\Delta_5$ output. The old plain-"K3 Yangian" narration is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.5; the old input-side $\Delta_5$ narration is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.9.
 
 **NF4. Kummer-irregular prime labels RETRACTED.** Vol I commit `9668336` retracted primes {1423, 3067, 23, 43, 419} from the Kummer-irregular label (primary-source Bernoulli witness search found no witness). They still appear in S_r numerators as RICCATI-ARITHMETIC characteristic primes, NOT Kummer-arithmetic. Corrected Tier-3 emergence: {37, 691, 811}; 3067 dropped. (B92.) Always qualify "first Kummer-irregular": Bernoulli-leading is 691 (B_12); size-leading is 37 (B_32). (B88.) Primes 1423, 3067, 23, 43, 419 VERIFIED REGULAR at primary source.
 
@@ -146,7 +173,7 @@ The 2026-04-17 audit initially listed 25 open frontiers (OF1–OF25). Wave 1 of 
 
 **OF17. Drinfeld double at the E_1-chiral level.** Assembling A ⋈ A^! from ordered-bar ingredients. Would reduce holographic modular Koszul datum H(T) from 6-tuple to (U, Θ_A). **Note (2026-04-17 Wave-2):** Vol I CLAUDE.md cites a PHANTOM label `thm:glN-drinfeld-double-internal`; the correct reference is `thm:glN-chiral-qg` at `ordered_associative_chiral_kd.tex:10111` — the existing theorem covers the BIALGEBRA half, not the full Drinfeld double A ⋈ A^!. Separately, `prop:w-infty-antipode-obstruction` at `ordered_associative_chiral_kd.tex:9462-9509` PROVES that the antipode does NOT lift for W_{1+∞}[Ψ] at generic Ψ — so the W-infinity bowtie is GENUINELY OBSTRUCTED, not an open-direction frontier.
 
-**OF18. Non-abelian K3 Yangian and Y(gl(4|20)).** Abelian K3 Yangian PROVED (`thm:k3-abelian-yangian-presentation`, 47 tests). Non-abelian requires BKM real root generators. Super-Yangian Y(gl(4|20)) conjectural — grading compatibility verified, Lie bracket (supercommutator vs commutator) missing.
+**OF18. Hall–Drinfeld double / self-mirror Yangian split.** Abelian K3 Yangian remains PROVED on the Mukai self-mirror branch (`thm:k3-abelian-yangian-presentation`, 47 tests), but the BKM-side object is the Hall–Drinfeld double $\mathbf{H}_{\Delta_5}$, not a plain Yangian. The old BKM-side "K3 Yangian" label is retracted by Wave 13, see `SYNTHESIS_WAVE13.md` §C.5. The live frontier is therefore split: construct the Hall–Drinfeld double beyond the abelian 24-Miki / Heisenberg presentation, and settle the orthosymplectic reflection-equation candidate without collapsing it back into the retracted label.
 
 **OF19. CY-A_3 chain-level explicit for non-formal CY_3.** Inf-cat resolved (`thm:derived-framing-obstruction`). Coefficient convergence proved (`prop:cech-htt-coefficient-convergence`, radius ≥ 1/(4‖s·δ‖)). S³ framing non-decomposable (`prop:hopf-fibration-decomposition`). Chain-level A_∞-compatible S³-framing on HC^-_3(C) for non-formal CY_3 remains open.
 
@@ -187,7 +214,7 @@ Anti-pattern catalogue (working notebook, not in manuscript):
 
 ### 5. Reading guide
 
-Top of document (§1–§4) is the definitive state. Sections below — "Part I-VII", "F1-F36", "Session Memorials", "Cross-Volume" — are HISTORICAL RECORD preserved for provenance. Every claim in those sections should be read with the §1–§3 closures / qualifiers applied; where they conflict, §1–§3 wins.
+Top of document through "Programme totals", including the Wave 13 platonic-ideal crown and Wave 14 handoff queue, is the definitive state as of 2026-04-19. Sections below — "Part I-VII", "F1-F36", "Session Memorials", "Cross-Volume" — are HISTORICAL RECORD preserved for provenance. Every historical K3 / BKM reference there must be read with the Wave 13 retractions applied: plain BKM-side "K3 Yangian" retracted by `SYNTHESIS_WAVE13.md` §C.5, direct nodal BD-chirality by §C.7, CY-3 $[3]$ shift by §C.8, input-side $\Delta_5$ narration by §C.9, and direct Schur $=1/\Delta_5$ by §C.10. Where the historical record conflicts with the crown or the closures above, the crown and closures win.
 
 ### 6. Typeset synchronization (Part VI `outlook.tex`, 2026-04-17 Wave 10)
 
@@ -202,7 +229,7 @@ Audit file: `adversarial_swarm_20260417/wave10_part_vi_frontier_attack_heal.md`.
 
 ---
 
-## Prior Status as of 2026-04-13 (HISTORICAL; superseded by §1–§4 above)
+## Prior Status as of 2026-04-13 (HISTORICAL; superseded by the 2026-04-19 crown, queue, and definitive closures above)
 
 ---
 
