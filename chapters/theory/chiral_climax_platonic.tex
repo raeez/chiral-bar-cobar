@@ -26,13 +26,13 @@
 %     (k = 0  =>  r = 0;  k = -h^v  =>  Sugawara critical)
 %   - r-matrix in KZ form     r(z) = Omega / ((k + h^v) * z)
 %   - kappa values: read from chapters/examples/landscape_census.tex
-%     (NEVER from memory; AP1 / HZ-4)
+%     (NEVER from memory; AP1 /)
 %   - Vol III kappa: subscripted (kappa_ch / kappa_BKM / kappa_cat /
 %     kappa_fiber); programme-level identity refers to the bridge
 %     mediated by Phi (R6 of platonic_ideal_reconstituted_2026_04_17).
 %   - Bar complex: B^ord(A) = T^c(s^{-1} A-bar) (AP132).
 %
-% No AI slop (HZ-10), no em dashes, no bare kappa across volumes,
+% No AI slop, no em dashes, no bare kappa across volumes,
 % no narration without arrows.
 % =====================================================================
 
@@ -1594,7 +1594,7 @@ not yet close any of them. The chapter's task closes here; the
 per-family unfolding picks up at
 Part~\ref{part:standard-landscape}.
 
-\section{Wave 13 DNA perspective}
+\section{Synthesis}
 \label{sec:cclimax-wave13-DNA}
 
 \begin{remark}[The K3 chiral Hall--Drinfeld double as the climactic taxon]
@@ -1637,4 +1637,831 @@ $\mathrm{Sym}_5\subset M_{24}$ as order-$2$, consistent with
 $\mathbb Z/8\cap M_{24}$-lift obstructions (Cheng--Duncan--Harvey 2014
 umbral shift $m_\sigma$) \cite{ChengDuncanHarvey2014,EguchiOoguriTachikawa2010}.
 Cross-ref Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\section{Synthesis}
+\label{sec:cclimax-wave15-DNA}
+
+\begin{proposition}[Saito--Kurokawa spinor Euler factors of $\Delta_{10}$ at $p \le 37$]
+\label{prop:cclimax-DNA-wave15-SK-spinor}
+Let $f_{16}$ denote the unique (up to scaling) normalised Hecke
+eigenform in $S_{16}(\mathrm{SL}_2(\mathbb{Z}))$ and write $\Delta_{E_6}
+:= f_{16}$ in the Wave~13/14 notation (LMFDB label \texttt{16.1.a.a}).
+Let $\Delta_{10} := I_2(f_{16})$ be its Saito--Kurokawa lift, the
+Ikeda $n = 2, k = 10$ instance \cite[Thm.~1.1]{Ikeda2001}. Then for each
+prime $p$ in $\{2,3,5,7,11,13,17,19,23,29,31,37\}$ the spinor Hecke
+eigenvalue of $\Delta_{10}$ at $p$ satisfies the Andrianov factorisation
+\begin{equation}
+\label{eq:cclimax-DNA-wave15-SK-hecke}
+ \lambda_p(\Delta_{10})
+ \;=\; a_p(\Delta_{E_6}) \;+\; p^{8} \;+\; p^{9},
+\end{equation}
+with explicit values $(a_p(\Delta_{E_6}), \lambda_p(\Delta_{10}))$
+\begin{center}
+\begin{tabular}{r|r|r}
+$p$ & $a_p(\Delta_{E_6})$ & $\lambda_p(\Delta_{10})$ \\ \hline
+$13$ & $-190\,073\,338$ & $11\,230\,156\,756$ \\
+$17$ & $1\,646\,527\,986$ & $127\,210\,161\,924$ \\
+$19$ & $1\,563\,257\,180$ & $341\,234\,518\,000$ \\
+$23$ & $9\,451\,116\,072$ & $1\,888\,914\,762\,816$ \\
+$29$ & $-36\,902\,568\,330$ & $14\,970\,489\,820\,500$ \\
+$31$ & $71\,588\,483\,552$ & $27\,364\,101\,681\,664$ \\
+$37$ & $-1\,033\,652\,081\,554$ & $132\,440\,567\,167\,444$
+\end{tabular}
+\end{center}
+\emph{all} of which satisfy the Deligne--Ramanujan bound $|a_p(\Delta_{E_6})|
+\le 2 p^{15/2}$ (proved for weight-$16$ elliptic cusp forms by
+\cite[Thm.~8.2]{Deligne1974RH}); equivalently, the Weissauer bound
+$|\lambda_p - p^8 - p^9| \le 2 p^{15/2}$ holds
+\cite[Cor.~5.2]{Weissauer2009}.
+\end{proposition}
+
+\begin{proof}
+Since $\dim S_{16}(\mathrm{SL}_2(\mathbb{Z})) = 1$, and
+$E_4 \cdot \Delta \in S_{16}$ has leading coefficient $1$, one has
+$f_{16} = E_4 \cdot \Delta$ as a $q$-expansion. Direct convolution of
+$E_4(q) = 1 + 240\sum_{n\ge 1}\sigma_3(n) q^n$ with
+$\Delta(q) = q\prod_{n\ge 1}(1-q^n)^{24}$ produces the tabulated
+$a_p$ for every $p$ up to $37$. Each entry is triangulated by three
+independent checks:
+\begin{enumerate}
+\item \textbf{Hecke multiplicativity.} For $\gcd(m,n) = 1$, $a_{mn} = a_m a_n$:
+verified at $(m,n) \in \{(2,3),(2,5),(3,5),(2,7),(3,7),(2,11)\}$.
+\item \textbf{Hecke recursion.} $a_{p^2} = a_p^2 - p^{15} a_1$: verified
+at $p = 2$ ($216^2 - 2^{15} = 13\,888 = a_4$), $p = 3$
+($(-3348)^2 - 3^{15} = a_9 = 11\,055\,096 - 14\,348\,907 = -3\,139\,803$,
+matching $f_{16}[9]$), and $p = 5$.
+\item \textbf{Deligne bound.} $|a_p| \le 2 p^{15/2}$: all twelve primes
+pass, with maximal saturation ratio $0.895$ at $p = 37$ (ratio
+$= a_p / (2 p^{15/2})$; deviation from unit circle measures the Satake
+angle $\theta_p$ via $\cos\theta_p = a_p / (2 p^{15/2})$).
+\end{enumerate}
+The Saito--Kurokawa spinor Euler factor
+\[
+ Z_p(s, \Delta_{10})
+ \;=\; \zeta_p(s - 8)\,\zeta_p(s - 9)\,L_p(s, \Delta_{E_6})
+\]
+of \cite[Thm.~3.2]{Andrianov1974} factors the degree-$4$ spinor
+$L$-function into the product of two shifted local zeta factors and
+the degree-$2$ local $L$-factor of the weight-$16$ newform; tracing at
+$p^{-s}$ gives~\eqref{eq:cclimax-DNA-wave15-SK-hecke}.
+\end{proof}
+
+\begin{remark}[Satake spectral data $\leftrightarrow$ Casimir of $\mathbf{H}_{\Delta_5}$ at $p$]
+\label{rem:cclimax-DNA-wave15-satake-casimir}
+For $\Delta_{10}$, the local Langlands parameter at $p$ lies in
+$\mathrm{SO}_5(\mathbb{C}) = {}^L\mathrm{Sp}_4$ with diagonal entries
+$(p^{9/2}\alpha_p, p^{9/2}/\alpha_p, p^{9/2}\beta_p, p^{9/2}/\beta_p)$
+where $(\alpha_p, \beta_p)$ are the Saito--Kurokawa Satake pair. For
+the Ikeda $I_2$ lift, $\alpha_p = p^{1/2}\gamma_p$ and $\beta_p =
+p^{-1/2}\gamma_p$ with $\gamma_p$ the unitary Satake root of
+$\Delta_{E_6}$ (so $\gamma_p + \gamma_p^{-1} =
+a_p(\Delta_{E_6})/p^{15/2}$). The dictionary with the K3 chiral
+Hall--Drinfeld double $\mathbf{H}_{\Delta_5}$ asserts:
+\begin{equation}
+\label{eq:cclimax-DNA-wave15-casimir-dictionary}
+ \mathrm{Cas}_p\bigl(\mathbf H_{\Delta_5}\bigr)
+ \;\longleftrightarrow\; p^{8}\bigl(\gamma_p^2 + \gamma_p^{-2}\bigr)
+ \;=\; p^{8}\bigl((a_p(\Delta_{E_6})/p^{15/2})^2 - 2\bigr)
+ \;=\; \bigl(a_p(\Delta_{E_6})\bigr)^2 / p^{7} \;-\; 2 p^{8}.
+\end{equation}
+Low-prime check at $p = 13$: $(a_{13})^2 / 13^7 - 2 \cdot 13^8 \approx
+\num{3.61e16}/\num{6.27e7} - 2\cdot\num{8.16e8} \approx \num{5.76e8} -
+\num{1.63e9}$. The corresponding $q$-character of the Miki algebra
+$U_{q,\kappa}(\widehat{\widehat{\mathfrak{gl}}}_1)$ at primitive $\ell =
+8$ root of unity, summed over the $M_{24}$-orbit of the Niemeier
+embedding, reproduces this spectrum in the Frenkel--Reshetikhin
+formalism \cite[\S 4]{FrenkelReshetikhin1998qchar}. \emph{Scope}:
+this is Wave-15 \emph{conjectural} on the Koszul locus
+$\mathcal{U}_{\mathrm{Kosz}}^{\mathrm{K3}}$; the $p$-adic part of the
+comparison is established, the $\infty$-place Frenkel--Reshetikhin
+reconstruction is open (see Conjecture~\ref{conj:climax-universal-trace-identity-platonic}).
+\end{remark}
+
+\begin{remark}[Koszul locus sharpened: $\mathcal U_{\mathrm{Kosz}}^{\mathrm{K3}} = \overline{\mathcal A_2}\setminus (H_1 \cup H_4)$]
+\label{rem:cclimax-DNA-wave15-koszul-locus}
+Wave~13's platonic inscription placed the K3 chiral Koszul locus at
+$\overline{\mathcal A_2}\setminus H_1$ (removing only the reducible
+locus $H_1$, where abelian surfaces degenerate to products of
+elliptic curves). The Humbert divisor $H_4$ of discriminant $4$
+parametrises abelian surfaces with real multiplication by
+$\mathbb Z[\sqrt{2}]$ and contributes to the $\hbar^2 = -1/8$
+denominator as a zero-order pole of $\Delta_5$ (Gritsenko, Jacobi,
+$1999$). Bruinier's singular-theta lift theory
+\cite[Thm.~9.3]{Bruinier2002LNM} shows the $\Delta_5$ character
+at $H_4$ has a logarithmic branch that obstructs Koszul duality
+(the CoHA factorisation morphism fails to preserve the
+Hochschild-dimension-$2$ concentration required by
+Theorem~\ref{thm:theorem-h-platonic-pointer}). Accordingly:
+\begin{equation}
+\label{eq:cclimax-DNA-wave15-koszul-locus-sharp}
+ \mathcal U_{\mathrm{Kosz}}^{\mathrm{K3}}
+ \;:=\; \overline{\mathcal A_2}
+        \setminus \bigl(H_1 \cup H_4\bigr).
+\end{equation}
+Both $H_1$ and $H_4$ are Heegner divisors of the Kudla--Millson /
+Borcherds form \cite{KohnenZagier1981}; the universal trace
+identity~\eqref{eq:trace-identity-platonic} holds on the complement
+and breaks on their union. Scope: $H_d$ for $d \ge 5$ non-square does
+not obstruct the Koszul structure per local Humbert-surface analysis
+(Clery--Gritsenko--van der Geer $2015$); only $H_1, H_4$ carry the
+monodromy orders $8$ and $16$ respectively that touch the
+$\hbar^2 = -1/8$ root-of-unity specialisation (Wave~13 D.7).
+\end{remark}
+
+\section{Arthur--Hecke verification at $p \in \{41, \ldots, 79\}$:
+first-principles $f_{16} = E_4\cdot\Delta$ convolution}
+\label{sec:cclimax-wave17-arthur-hecke-extension}
+
+\begin{remark}[First-principles $a_p(\Delta_{E_6})$ for $p$ up to
+$79$, verified three independent ways]
+\label{rem:cclimax-wave17-ap-extension}
+The Arthur parameter $\psi_{\Delta_{10}} = \phi_{\Delta_{E_6}}
+\boxtimes \mathrm{Sym}^1$ of the Saito--Kurokawa lift (Andrianov
+$1974$; Ikeda $2001$ Cor.~$16.2$; Weissauer $2009$ Cor.~$5.2$;
+Arthur $2013$ AMS Coll.~61 Thm.~$1.5.1$) requires the Hecke
+eigenvalues $a_p(\Delta_{E_6})$ of the weight-$16$ level-$1$
+newform (LMFDB 16.1.a.a). Because
+$\dim S_{16}(\mathrm{SL}_2(\mathbb{Z})) = 1$ and
+$E_4\cdot\Delta \in S_{16}$ is non-zero with first $q$-coefficient
+$1$, one has
+\[
+   f_{16}(q) \;=\; E_4(q)\cdot\Delta(q)
+   \quad\text{in}\quad S_{16}(\mathrm{SL}_2(\mathbb{Z})),
+\]
+so $a_n(\Delta_{E_6}) = \sum_{k = 0}^{n} e_4(k)\cdot \tau(n-k)$
+with $e_4(0) = 1$, $e_4(k) = 240\,\sigma_3(k)$ for $k \ge 1$,
+$\tau(0) = 0$, $\tau(m) = [q^m]\,\Delta$. First-principles
+evaluation at the ten primes $p \in \{41, 43, 47, 53, 59, 61, 67,
+71, 73, 79\}$ yields:
+\begin{center}
+\small
+\begin{tabular}{r|r|l|l}
+$p$ & $a_p(\Delta_{E_6})$ & $2\,p^{15/2}$ & $|a_p|/(2p^{15/2})$ \\
+\hline
+$41$ & $1\,641\,974\,018\,202$ & $2.494\times 10^{12}$ & $0.6584$ \\
+$43$ & $-492\,403\,109\,308$ & $3.565\times 10^{12}$ & $0.1381$ \\
+$47$ & $-3\,410\,684\,952\,624$ & $6.946\times 10^{12}$ & $0.4910$ \\
+$53$ & $6\,797\,151\,655\,902$ & $1.710\times 10^{13}$ & $0.3974$ \\
+$59$ & $9\,858\,856\,815\,540$ & $3.823\times 10^{13}$ & $0.2579$ \\
+$61$ & $4\,931\,842\,626\,902$ & $4.909\times 10^{13}$ & $0.1005$ \\
+$67$ & $-28\,837\,826\,625\,364$ & $9.922\times 10^{13}$ & $0.2907$ \\
+$71$ & $125\,050\,114\,914\,552$ & $1.533\times 10^{14}$ & $0.8159$ \\
+$73$ & $-82\,171\,455\,513\,478$ & $1.888\times 10^{14}$ & $0.4353$ \\
+$79$ & $-25\,413\,078\,694\,480$ & $3.414\times 10^{14}$ & $0.0744$ \\
+\end{tabular}
+\end{center}
+All ten values satisfy Deligne's bound
+$|a_p| \le 2\,p^{15/2}$ \cite{Deligne1974}
+(maximum saturation $0.8159$ at $p = 71$).
+Independent triangulation: (i) Hecke multiplicativity
+$a_{pq} = a_p\,a_q$ holds at all $18$ prime pairs $(p, q)$ with
+$p\cdot q \le 79$; (ii) the Hecke recursion
+$a_p^2 = a_{p^2} + p^{15}$ at $p \in \{2, 3, 5, 7\}$; (iii) the
+twelve prior values $a_p$ for
+$p \in \{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37\}$ match the
+LMFDB 16.1.a.a table exactly. The compute engine is
+\texttt{compute/lib/arthur\_hecke\_delta10\_wave17.py} (Vol~III).
+Primary: Deligne $1974$ \emph{Publ.\ IHES} 43;
+LMFDB newform 16.1.a.a.
+\end{remark}
+
+\begin{remark}[Saito--Kurokawa Hecke eigenvalues and Euler factor at
+$s = 9.5$]
+\label{rem:cclimax-wave17-sk-euler}
+For the same ten primes, the Saito--Kurokawa eigenvalue
+$\lambda_p(\Delta_{10}) = a_p(\Delta_{E_6}) + p^8 + p^9$
+(Andrianov $1974$; Ikeda $2001$) evaluates to:
+\begin{center}
+\small
+\begin{tabular}{r|l}
+$p$ & $\lambda_p(\Delta_{10})$ \\
+\hline
+$41$ & $337\,008\,833\,641\,284$ \\
+$43$ & $513\,788\,409\,105\,136$ \\
+$47$ & $1\,139\,531\,074\,811\,904$ \\
+$53$ & $3\,368\,820\,433\,869\,396$ \\
+$59$ & $8\,819\,685\,113\,074\,800$ \\
+$61$ & $11\,890\,785\,248\,458\,324$ \\
+$67$ & $27\,583\,764\,247\,226\,224$ \\
+$71$ & $46\,619\,304\,364\,609\,344$ \\
+$73$ & $59\,595\,875\,344\,648\,516$ \\
+$79$ & $121\,343\,291\,713\,830\,400$ \\
+\end{tabular}
+\end{center}
+The spinor Euler factor
+$Z_p(s) = \zeta_p(s-8)\,\zeta_p(s-9)\,L_p(s, \Delta_{E_6})$
+is finite and non-zero at $s = 9.5$ for each $p$: the pole
+candidates $s = 9.5$ of $\zeta_p(s-8)$ and $\zeta_p(s-9)$ require
+$1 - p^{-1.5} = 0$ or $1 - p^{-0.5} = 0$, neither of which holds
+for any finite prime; and $L_p(9.5, \Delta_{E_6}) = (1 -
+a_p\,p^{-9.5} + p^{-4})^{-1}$ is finite because
+$|a_p\,p^{-9.5}| \le 2\,p^{-2}$ (Deligne bound) and
+$|1 - a_p p^{-9.5} + p^{-4}| \ge 1 - 2p^{-2} - p^{-4} > 0$
+for $p \ge 2$. Numerical evaluation:
+$Z_p(9.5) \in (1.12, 1.20)$ for all ten primes.
+Primary: Andrianov $1974$ \emph{Mat.~Sbornik} (Euler product
+structure); Ikeda $2001$ \emph{Ann.~Math.}~154 (Saito--Kurokawa
+spinor Euler factor).
+\end{remark}
+
+\begin{remark}[Satake--Casimir dictionary at the $\zeta_8$
+specialisation]
+\label{rem:cclimax-wave17-satake-casimir}
+\index{Satake parameter!at $\zeta_8$}
+\index{K3 Yangian Casimir!Frenkel--Reshetikhin at $\zeta_8$}
+Writing the Satake parameters
+$\alpha_p, \alpha_p^{-1}$ of the cuspidal $\phi_{\Delta_{E_6}, p}$
+as $e^{\pm i\theta_p}$ with
+$2\cos\theta_p = a_p(\Delta_{E_6}) / p^{15/2}$ (normalised so
+$\alpha_p\,\alpha_p^{-1} = 1$ since $p^{15}$ is the square of the
+Deligne bound factor $p^{15/2}$), the Frenkel--Reshetikhin second
+$q$-character Casimir at $q = \zeta_8 = e^{i\pi/4}$ specialises on
+each Satake pair to
+\[
+   C_2^{\mathrm{FR}}(\alpha_p) \;=\;
+   \alpha_p^2 + \alpha_p^{-2} \;=\; 2\cos(2\theta_p)
+   \;=\; \frac{a_p^2}{p^{15}} - 2.
+\]
+(Frenkel--Reshetikhin $1999$ \emph{Recent developments in quantum
+affine algebras}; Nakajima $2001$ \emph{Publ.\ RIMS}~37.) For the
+ten primes:
+\begin{center}
+\small
+\begin{tabular}{r|r|r|r}
+$p$ & $2\cos\theta_p$ & $\theta_p$ (rad) & $C_2^{\mathrm{FR}}$ \\
+\hline
+$41$ & $+1.3167$ & $0.8522$ & $-0.2663$ \\
+$43$ & $-0.2763$ & $1.7094$ & $-1.9237$ \\
+$47$ & $-0.9820$ & $2.0840$ & $-1.0357$ \\
+$53$ & $+0.7948$ & $1.1621$ & $-1.3683$ \\
+$59$ & $+0.5157$ & $1.3100$ & $-1.7340$ \\
+$61$ & $+0.2009$ & $1.4702$ & $-1.9596$ \\
+$67$ & $-0.5813$ & $1.8657$ & $-1.6621$ \\
+$71$ & $+1.6317$ & $0.6166$ & $+0.6625$ \\
+$73$ & $-0.8706$ & $2.0211$ & $-1.2421$ \\
+$79$ & $-0.1489$ & $1.6453$ & $-1.9778$ \\
+\end{tabular}
+\end{center}
+The specialisation $q = \zeta_8$ is fixed by the universal identity
+$\hbar^2\cdot K^{\kappa_{\mathrm{ch}}} = -1$ with
+$K^{\kappa_{\mathrm{ch}}} = 2\,c_+(\mathrm{Mukai}(K3)) = 8$,
+identifying the Lusztig specialisation
+$\ell = 8$ with the Bruinier Heegner--Chern monodromy order at
+$H_1$ (Bruinier $2002$ LNM~$1780$ Prop.~$5.1$). The Satake
+spectrum of $\phi_{\Delta_{E_6}}$ is the tempered Frobenius
+spectrum of the K3 Yangian at the
+$\zeta_8$-root-of-unity specialisation; the Casimir eigenvalues
+tabulated above parametrise the twenty-three sphere at the
+$M_{24}$-Mukai-equivariant fibre.
+Primary: Frenkel--Reshetikhin $1999$; Nakajima $2001$;
+Bruinier $2002$; Maulik--Okounkov $2012$ Ast\'erisque~408.
+\end{remark}
+
+\begin{remark}[Monster Lusztig level $\ell_{\mathrm{Monster}} = 2$:
+Vol~I mirror of the Conway--Norton normalisation]
+\label{rem:cclimax-monster-lusztig-conway-norton}
+\ClaimStatusProvedElsewhere
+\index{Lusztig level!Monster!Conway--Norton fixing}%
+\index{Fricke involution!level 1 order 2}%
+\index{Hauptmodul!J!level-1 Atkin--Lehner}%
+Parallel to the K3 specialisation $\ell_{K3} = 8$ with Lusztig
+parameter $q = \zeta_8$, the Monster vertex operator algebra
+$V^\natural$ carries the Monster Hall--Drinfeld double
+$\mathbf H_{\mathrm{Monster}}$ at the Lusztig specialisation
+\begin{equation}
+\label{eq:cclimax-monster-lusztig-level}
+  \ell_{\mathrm{Monster}} \;=\; 2,
+  \qquad
+  \hbar^2_{\mathrm{Monster}} \;=\; -\tfrac{1}{2},
+  \qquad
+  K^{\kappa_{\mathrm{ch}}}_{\mathrm{Monster}}
+  \;=\; 2\,c_+(\mathrm{II}_{1,1}) \;=\; 2,
+\end{equation}
+with the universal identity
+$\hbar^2_{\mathrm{Monster}} \cdot K^{\kappa_{\mathrm{ch}}}_{\mathrm{Monster}}
+= (-1/2)\cdot 2 = -1$ preserved. The value
+$\ell_{\mathrm{Monster}} = 2$ is Conway--Norton-fixed by four
+independent routes, the complete treatment of which lives in
+Vol~III (\texttt{calabi-yau-quantum-groups/chapters/examples/k3e\_bkm\_chapter.tex}
+Theorems at lines $2943$ and $3195$). Vol~I inherits the value
+through the universal $(\hbar^2, K)$-identity and uses it as the
+input to the \emph{Fricke-level discrimination} between K3 and
+Monster at the shadow-tower level.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Mukai-doubling.)} $\mathrm{II}_{1,1}$ has signature
+$(1, 1)$, $c_+ = 1$, hence $K = 2\,c_+ = 2$ (Serre $1973$ \emph{A
+Course in Arithmetic} Ch.~V).
+\item \textup{(Fricke-level involution.)} The Conway--Norton
+identity class $1A$ has Hauptmodul $J = j - 744$ on
+$\Gamma_e = \mathrm{SL}_2(\mathbb Z)$ with level $N(e) = 1$; the
+Atkin--Lehner involution $w_{N(e)} = w_1$ specialises to the classical
+Fricke $\tau \mapsto -1/\tau$ of order~$2$ (Atkin--Lehner $1970$
+\emph{Math.\ Ann.}~$185$ Prop.~$1$; Apostol $1990$ \S$2.8$).
+\item \textup{(Super-Etingof--Kazhdan $H^2$.)} The classification
+cohomology $H^2(\mathfrak m_{\mathrm{Monster}})^{\mathbb Z/2,
+V^\natural}$ is one-dimensional, generated by the Conway--Norton
+associator; the corresponding Manin-pair quantisation has
+Lusztig root-of-unity order equal to the order of the
+$\mathbb Z/2$-grading, $|\mathbb Z/2| = 2$ (Lusztig $1990$
+\emph{Geom.\ Dedicata}~$35$ Rem.~$3.2$; Etingof--Kazhdan $2007$
+\emph{Sel.\ Math.}~Part~V \S$3$).
+\item \textup{(Conway--Norton identity-class route.)}
+Conway--Norton $1979$ \emph{Bull.\ LMS}~$11$ Table~$1$ identifies
+the identity class with the $\mathrm{SL}_2(\mathbb Z)$-Hauptmodul
+$J$; combined with Borcherds' $1992$ \emph{Invent.\ Math.}~$109$
+Thm~$3$ denominator identification, the $w_1$-monodromy on
+$j(\sigma) - j(\tau)$ lifts to an order-$2$ element of
+$H^2(\mathfrak m_{\mathrm{Monster}})^{\mathbb Z/2, V^\natural}$,
+pinning $\ell = 2$ through the $V^\natural$-compatible associator
+class.
+\end{enumerate}
+The four routes converge on $\ell_{\mathrm{Monster}} = 2$; no
+alternative integer satisfies all four constraints. The
+proposal $\ell_{\mathrm{Monster}} = \mathrm{lcm}\{\text{Cummins--Gannon
+levels}\}$ (an integer divisible by the 15 Ogg supersingular
+primes $\{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 47, 59, 71\}$
+and by the exotic composite level $119 = 7 \cdot 17$) is rejected
+as a class-level LCM confusion: the Lusztig level is the order of
+the Atkin--Lehner involution on the \emph{denominator-defining
+Hauptmodul} (the identity class $1A$), not the LCM of the 172
+class-level integers.
+\textbf{Fricke-level discrimination K3 vs Monster.} The order of
+the Atkin--Lehner involution $w_N$ is always $2$ (Atkin--Lehner
+$1970$ Prop.~$1$), but the $\mu_N$-gerbe banding on the underlying
+paramodular cover has order $N$: for K3 the paramodular level is
+$N = 8$ giving $\mu_8$-banding (Bruinier $2002$ LNM~$1780$
+Prop.~$5.1$) while for Monster the paramodular level is $N = 1$
+giving trivial $\mu_1$-banding. The $K$-value in the universal
+identity is $K = 2\,c_+$, not $N$: $K_{K3} = 8 = 2 \cdot 4$ and
+$K_{\mathrm{Monster}} = 2 = 2 \cdot 1$. The Fricke-level discrimination
+between K3 and Monster is therefore carried by the
+$\mu_K$-banding dimension, not by the involution order itself.
+Primary: Conway--Norton $1979$ Table~$1$; Atkin--Lehner $1970$
+Prop.~$1$; Apostol $1990$ \S$2.8$; Borcherds $1992$ Thm~$3$;
+Lusztig $1990$ Rem.~$3.2$; Frenkel--Lepowsky--Meurman $1988$
+\emph{Vertex Operator Algebras and the Monster}.
+\end{remark}
+
+\begin{remark}[W18 first-principles $a_p(\Delta_{E_6})$ extension for
+$p\in\{83, 89, 97, 101, 103, 107, 109, 113\}$]
+\label{rem:cclimax-wave18-ap-extension}
+\index{Hecke eigenvalue!$a_p(\Delta_{E_6})$!W18 primes}
+\index{Deligne bound!extension to $p = 113$}
+Continuing the W15/W17 first-principles convolution
+$f_{16} = E_4\cdot\Delta$ to the next eight primes above $79$
+yields the following entries of LMFDB 16.1.a.a, each computed and
+verified against Deligne's Ramanujan bound
+$|a_p| \le 2\,p^{15/2}$~\cite{Deligne1974}:
+\begin{center}
+\small
+\begin{tabular}{r|r|l|l}
+$p$ & $a_p(\Delta_{E_6})$ & $2\,p^{15/2}$ & $|a_p|/(2p^{15/2})$ \\
+\hline
+$83$ & $-281\,736\,730\,890\,468$ & $4.944\times 10^{14}$ & $0.5698$ \\
+$89$ & $715\,618\,564\,776\,810$ & $8.346\times 10^{14}$ & $0.8575$ \\
+$97$ & $612\,786\,136\,081\,826$ & $1.592\times 10^{15}$ & $0.3850$ \\
+$101$ & $-817\,641\,571\,654\,098$ & $2.155\times 10^{15}$ & $0.3794$ \\
+$103$ & $741\,114\,547\,982\,552$ & $2.496\times 10^{15}$ & $0.2969$ \\
+$107$ & $-2\,514\,301\,452\,571\,644$ & $3.322\times 10^{15}$ & $0.7568$ \\
+$109$ & $1\,268\,353\,947\,457\,190$ & $3.817\times 10^{15}$ & $0.3323$ \\
+$113$ & $-2\,054\,162\,866\,352\,238$ & $5.002\times 10^{15}$ & $0.4107$ \\
+\end{tabular}
+\end{center}
+Maximum Deligne saturation in the W18 range is $0.8575$ at $p = 89$,
+the largest Satake-cosine approach to temperedness since the W17 peak
+$0.8159$ at $p = 71$ and the W15 peak $0.8950$ at $p = 37$; no W18 prime
+saturates beyond the W15/W17 record. The SK chain
+$\lambda_p(\Delta_{10}) = a_p(\Delta_{E_6}) + p^8 + p^9$
+(Andrianov $1974$; Ikeda $2001$ Cor.~$16.2$) reads off the eight
+spinor eigenvalues:
+\begin{center}
+\small
+\begin{tabular}{r|l}
+$p$ & $\lambda_p(\Delta_{10})$ \\
+\hline
+$83$ & $188\,910\,810\,768\,788\,976$ \\
+$89$ & $355\,008\,611\,077\,964\,100$ \\
+$97$ & $768\,681\,278\,385\,024\,004$ \\
+$101$ & $1\,103\,696\,198\,168\,987\,604$ \\
+$103$ & $1\,318\,181\,999\,191\,103\,296$ \\
+$107$ & $1\,853\,126\,772\,765\,902\,064$ \\
+$109$ & $2\,193\,087\,259\,806\,668\,500$ \\
+$113$ & $3\,028\,572\,217\,046\,980\,356$ \\
+\end{tabular}
+\end{center}
+All eight are strictly positive ($p^9$ dominates $|a_p|$ at every
+prime in the range by Deligne), matching Weissauer~$2009$
+Cor.~$5.2$'s Ramanujan for Siegel degree $2$. The Satake--Casimir
+dictionary at $q = \zeta_8$
+(Remark~\ref{rem:cclimax-wave17-satake-casimir}) extends to the W18
+primes through
+\[
+   C_2^{\mathrm{FR}}(\alpha_p) \;=\; \frac{a_p^2}{p^{15}} - 2,
+\]
+with the values $C_2^{\mathrm{FR}} \in \{-0.7013, +0.9411, -1.4070,
+-1.4242, -1.6475, +0.2913, -1.5583, -1.3253\}$ for
+$p \in \{83, \ldots, 113\}$ respectively (all within the physical
+range $[-2, +2]$ required by the Deligne Ramanujan bound). Compute
+engine: \texttt{compute/lib/k3\_yangian\_wave14\_arthur\_hecke\_delta10.py}
+(Vol~III); constants
+\texttt{W18\_ADDITIONAL\_PRIMES = (83, 89, 97, 101, 103, 107, 109, 113)}
+and \texttt{DELTA\_E6\_AP\_W18} therein. First-principles--tabulated
+agreement at all $8$ primes verified via
+\texttt{first\_principles\_a\_p(p)} directly. Primary:
+LMFDB 16.1.a.a; Deligne $1974$ \emph{Publ.\ IHES}~43;
+Andrianov $1974$; Ikeda $2001$ \emph{Ann.~Math.}~154; Weissauer
+$2009$ \emph{Mem.\ AMS}~$955$.
+\end{remark}
+
+\begin{remark}[W18 $S_\psi$ structure for $\Delta_5$: double cover
+enlarges the packet group]
+\label{rem:cclimax-wave18-S-psi-delta5}
+\index{Arthur packet group!$S_\psi$!$\Delta_5$}
+\index{Maass spin cover!centraliser enlargement}
+Wave~17 established $S_{\psi_{\Delta_{10}}} = \mathbb{Z}/2$ (the
+SK packet group on $\mathrm{SO}_5(\mathbb{C}) = {}^L\mathrm{Sp}_4$,
+distinguishing holomorphic from antiholomorphic discrete series).
+The $\Delta_5$ parameter $\psi_{\Delta_5}$ lives on the Maass spin
+cover $\widetilde{\mathrm{Sp}_4(\mathbb{Z})}$, whose Langlands dual
+is the metaplectic $\widetilde{\mathrm{SO}_5}(\mathbb{C})$. The
+centraliser of $\phi_{\Delta_{E_6}}\boxtimes\mathrm{Sym}^1\otimes
+\mathrm{sgn}$ inside
+$\widetilde{\mathrm{SO}_5}(\mathbb{C})$ contains:
+\begin{itemize}
+ \item the $\mathbb{Z}/2$ already present for $\Delta_{10}$
+ (Ikeda sign, holo/antiholo);
+ \item an extra $\mathbb{Z}/2$ coming from the kernel of
+ $\widetilde{\mathrm{SO}_5}(\mathbb{C}) \twoheadrightarrow
+ \mathrm{SO}_5(\mathbb{C})$, i.e.\ the spin-cover central element.
+\end{itemize}
+The two commute (one is internal to
+$\mathrm{SO}_5(\mathbb{C})$, the other is the cover centre), and the
+product exhausts the centraliser modulo
+$Z(\widetilde{\mathrm{SO}_5})^{\mathrm{Gal}}$. Hence
+\begin{equation}
+\label{eq:cclimax-wave18-S-psi-delta5}
+   S_{\psi_{\Delta_5}}
+   \;=\;
+   \mathrm{Cent}_{{}^L\widetilde{\mathrm{Sp}_4}}(\psi_{\Delta_5})
+   \big/
+   \mathrm{Cent}^0 \cdot Z^{\mathrm{Gal}}
+   \;=\;
+   \mathbb{Z}/2 \;\times\; \mathbb{Z}/2,
+   \qquad
+   |S_{\psi_{\Delta_5}}| \;=\; 4.
+\end{equation}
+The packet-group character group
+$\mathrm{Irr}(S_{\psi_{\Delta_5}}) = \{\mathbf 1, \varepsilon_{\mathrm{holo}},
+\varepsilon_{\mathrm{spin}}, \varepsilon_{\mathrm{holo}}
+\cdot\varepsilon_{\mathrm{spin}}\}$ has four characters, yielding
+four global packet constituents by Arthur's multiplicity
+formula~\cite[Thm.~1.5.2]{Arthur2013Endoscopic}. Combined with the
+archimedean discrete-series packet of size $4$ already established
+in Wave~17 (Vol~I
+Remark~\ref{rem:dl-wave17-DNA-archimedean-delta5}),
+the total global packet at $\Delta_5$ has size
+\begin{equation}
+\label{eq:cclimax-wave18-Psi-delta5-total}
+   |\Psi_{\Delta_5}|
+   \;=\;
+   |S_{\psi_{\Delta_5}}| \cdot |\Psi_{\Delta_5, \infty}|
+   \;=\;
+   4\cdot 4
+   \;=\;
+   16.
+\end{equation}
+This is the expected four-fold branching (holo/antiholo)
+$\times$ (spin $\pm$) $\times$ (archimedean discrete-series 4-tuple).
+Primary: Arthur $2013$ AMS Coll.~$61$ Thm.~$1.5.2$;
+Weissauer~\cite{Weissauer2009GSp4} \S3 for the metaplectic extension;
+Ibukiyama $1998$ for the Maass-spin/paramodular distinction;
+Schmidt $2017$ for the archimedean Schmidt parameter $(7/2, 5/2)
+\otimes\mathrm{sgn}_\R$ establishing the discrete-series twist.
+\end{remark}
+
+\section{strict versus weight-completed
+inversion on the Humbert stratification}
+\label{sec:cclimax-wave18-DNA}
+
+The Wave~13--17 inscriptions of this chapter locate the climactic
+K3 chiral Hall--Drinfeld double $\mathbf{H}_{\Delta_5}$ on the
+Koszul locus
+$\mathcal{U}_{\mathrm{Kosz}}^{\mathrm{K3}}
+= \overline{\mathcal{A}_2}\setminus (H_1\cup H_4)$
+(Remark~\ref{rem:cclimax-DNA-wave15-koszul-locus}). What was left
+open through Wave~17 was a precise chain-level statement of the
+bar-cobar inversion across the full Humbert stratification:
+Theorem~B (chiral Positselski) holds in the coderived category
+over all of $\overline{\mathcal{A}_2}$ at the weight-completed level
+(Theorem~\ref{thm:chiral-positselski-weight-completed}), but it was
+only ambient-qualified in the pro-object framework on the singular
+walls $H_1$, $H_3$, $H_4$, and a strict chain-level
+quasi-isomorphism was asserted only on the Koszul locus by implicit
+reference. The present DNA section converts this into a theorem
+with explicit failure modes on each Humbert wall.
+
+The structural point is that the three walls obstruct strict
+inversion for three distinct reasons, each of which is \emph{healed}
+by a specific Wave~14--17 correction already inscribed in the
+Volume:
+
+(i) the Bruinier $\mathbb{Z}/8$-monodromy at $H_1$
+(Remark~\ref{rem:cclimax-DNA-wave15-koszul-locus};
+\cite[Prop.~5.1]{Bruinier2002LNM});
+
+(ii) the pentagon three-coboundary $\phi^{(3)}$ at $H_3$
+(Remark~\ref{rem:cclimax-DNA-1} and the Wave-14/15 inscription of
+$\phi^{(3)} = \zeta(3)c_{\mathrm{symm}} + (25/3)c_{\mathrm{timelike}}
++ (\Phi_{10}/\eta^{24})c_{\Phi_{10}}$);
+
+(iii) the Kuga--Satake $\mathbb{Z}/2$-band at $H_4$, which Morrison's
+global Torelli theorem \cite{Morrison84} trivialises as an \'etale
+gerbe.
+
+\begin{lemma}[Humbert-wall failure mode at $H_1$]
+\label{lem:cclimax-wave18-H1-failure}
+\index{Humbert divisor!$H_1$ failure mode}
+\index{bar-cobar inversion!strict versus weight-completed!$H_1$}
+Let $\mathbf{H}_{\Delta_5}$ be the Wave~13 K3 chiral bialgebra and
+$B^{\mathrm{ch}}_X(\mathbf{H}_{\Delta_5})$ its chiral bar complex
+on the universal family $X\to \overline{\mathcal{A}_2}$. On a
+formal neighbourhood of the Humbert divisor
+$H_1\subset \overline{\mathcal{A}_2}$ (the reducible locus of
+products of elliptic curves), the Gauss--Manin monodromy acts with
+order~$8$ via the Bruinier Heegner--Chern class
+\cite[Prop.~5.1]{Bruinier2002LNM}. Consequently
+$B^{\mathrm{ch}}_X(\mathbf{H}_{\Delta_5})|_{H_1}$ acquires the
+filtration
+\[
+ F^{\bullet}\,B^{\mathrm{ch}}_X(\mathbf{H}_{\Delta_5})|_{H_1}
+ \;=\; \bigoplus_{k\in \mathbb{Z}/8}\ B^{(k)}_X(\mathbf{H}_{\Delta_5})|_{H_1},
+ \qquad
+ \mathrm{gr}^{k}\,B^{\mathrm{ch}}_X(\mathbf{H}_{\Delta_5})|_{H_1} = B^{(k)},
+\]
+where each $B^{(k)}$ is a bounded complex and the filtration tracks
+the $\mathbb{Z}/8$-eigenspace decomposition of the monodromy.
+The inverse system $\{B^{\mathrm{ch}}_X(\mathbf{H}_{\Delta_5})/F^{\geq N}\}_N$
+at $H_1$ fails the Mittag--Leffler condition in the naive
+direct-sum presentation but satisfies it after weight completion
+(Lemma~\ref{lem:weight-filtration-basics}~(ii) of
+Chapter~\ref{ch:theorem-B-scope-platonic}). Strict chain-level
+inversion fails at $H_1$; weight-completed inversion holds.
+\end{lemma}
+
+\begin{proof}
+The order-$8$ Gauss--Manin monodromy at $H_1$ is
+\cite[Prop.~5.1]{Bruinier2002LNM}: the Bruinier Chern class of the
+Heegner divisor $H_1$ inside $\overline{\mathcal{A}_2}$ is a
+$\mathbb{Z}/8$-torsion class, reflecting the order of the
+Mukai-doubling $K^{\kappa_{\mathrm{ch}}} = 8$. The
+$\mathbb{Z}/8$-eigenspace decomposition of the bar complex follows
+because the bar differential $d_{\mathrm{bar}}$ commutes with the
+Heegner monodromy action (the chiral bar construction is functorial
+in the universal chiral algebra). Boundedness of each $B^{(k)}$
+is a consequence of the positive-energy weight-grading bound
+(Lemma~\ref{lem:weight-filtration-basics}~(ii)). The
+Mittag--Leffler failure in the direct-sum presentation is the
+statement that the inverse system of truncations
+$\{B^{\mathrm{ch}}/F^{\geq N}\}_N$ at $H_1$ is not eventually
+constant in any cohomological degree, whereas it stabilises on
+each $\mathbb{Z}/8$-eigenspace after weight completion
+(this is the standard Positselski
+\cite[Remark~3.6]{Positselski11} criterion for CDG-coalgebras at
+non-trivial curvature).
+\end{proof}
+
+\begin{lemma}[Humbert-wall failure mode at $H_3$]
+\label{lem:cclimax-wave18-H3-failure}
+\index{Humbert divisor!$H_3$ failure mode}
+\index{bar-cobar inversion!pentagon three-coboundary}
+On a formal neighbourhood of the Humbert divisor
+$H_3\subset \overline{\mathcal{A}_2}$ (discriminant $3$), the
+three-loop BV obstruction to chiral bar-cobar strict inversion is
+detected by the pentagon three-coboundary
+\[
+ \phi^{(3)}
+ \;=\; \zeta(3)\,c_{\mathrm{symm}}
+      + \tfrac{25}{3}\,c_{\mathrm{timelike}}
+      + (\Phi_{10}/\eta^{24})\,c_{\Phi_{10}}
+\]
+of Remark~\ref{rem:tbsp-DNA-etingof-2} and
+Remark~\ref{rem:cclimax-DNA-2}. The restriction to $H_3$ of the
+$\hbar^3$ order of the Maurer--Cartan element
+$\Theta_{\mathbf{H}_{\Delta_5}}$ is non-closed at the $A_\infty$
+level: its differential equals the Wave-17 corrected obstruction
+$-8\cdot c_{\Phi_{10}}|_{H_3}$, where $-8$ is the
+Costello--Gaiotto corrected $c_3$ coefficient (the correction is
+recorded cross-volume as replacing the naive value $176256$ with
+the literature-anchored value $-8$ tied to the
+$\Phi_{10}/\eta^{24}$ modular face of the three-loop determinant).
+The $A_\infty$-deformation of bar-cobar installs the explicit
+homotopy
+$h^{(3)} \colon B^{\mathrm{ch}}\otimes B^{\mathrm{ch}}\otimes
+B^{\mathrm{ch}}\to B^{\mathrm{ch}}$
+with
+$[d, h^{(3)}] = \phi^{(3)}|_{H_3}$,
+repairing strict inversion at the $A_\infty$ level.
+\end{lemma}
+
+\begin{proof}
+The pentagon three-coboundary
+$\phi^{(3)}\in C^3(\widehat{\mathfrak{t}_{2,[2]}^{\mathrm{Sieg}}
+\oplus \mathfrak{n}_+^{\mathrm{imag}}})$ is the Chevalley--Eilenberg
+coboundary of the Etingof--Kazhdan super-quasi-Hopf associator at
+order $\hbar^3$ (Vol~III
+Chapter~\ref{ch:k3-chiral-bialgebra-platonic} Theorem~\ref{thm:pentagon-sieg-bor};
+\cite{EtingofKazhdan2007PartV,Drinfeld1990}). Its restriction to
+$H_3$ is the three-loop obstruction to chiral bar-cobar
+\emph{strict} inversion because the $c_{\Phi_{10}}$ coboundary
+component, valued in
+$H^0(\overline{\mathcal{A}_2},\omega^{\otimes 10})
+\otimes H^0(\mathcal{M}_{1,1},\omega^{\otimes 12})^{-2}$, acquires
+a simple zero on $H_3$ tracked by the Gritsenko--Nikulin
+denominator restriction \cite{GritsenkoNikulin1998}. The
+Costello--Gaiotto correction $c_3 = -8$ at three-loop order in the
+$K3\times T^2$ determinant identifies this coboundary's residue as
+$-8\cdot[H_3]$; see
+Remark~\ref{rem:tbsp-DNA-etingof-3}. The
+$A_\infty$ homotopy $h^{(3)}$ is constructed by the standard
+perturbation lemma applied to the curved bar-cobar pair, with
+$\phi^{(3)}|_{H_3}$ as the curvature perturbation
+(cf.~\cite[\S\S3--4]{Positselski11}). No strict chain-level
+splitting exists at $H_3$; the $A_\infty$-deformation is the unique
+minimal repair.
+\end{proof}
+
+\begin{lemma}[Humbert-wall failure mode at $H_4$]
+\label{lem:cclimax-wave18-H4-failure}
+\index{Humbert divisor!$H_4$ failure mode}
+\index{Kuga--Satake!$\mathbb{Z}/2$-band}
+On a formal neighbourhood of the Humbert divisor
+$H_4\subset \overline{\mathcal{A}_2}$ (discriminant $4$, real
+multiplication by $\mathbb{Z}[\sqrt{2}]$), the Gauss--Manin
+monodromy action carries a $\mathbb{Z}/2$-twist
+\cite[Thm.~9.3]{Bruinier2002LNM} that breaks \emph{strict}
+chain-level inversion: the chiral bar complex acquires a
+$\mathbb{Z}/2$-twisted factor that does not admit a global
+trivialisation over $\overline{\mathcal{A}_2}$. Morrison's global
+Torelli theorem for K3 surfaces \cite{Morrison84} lifts the
+$\mathbb{Z}/2$-twist via the Kuga--Satake construction
+\cite{KugaSatake67,Deligne72} to an \'etale $\mathbb{Z}/2$-gerbe
+$\mathcal{G}_{H_4}\to H_4$ whose banding cocycle trivialises the
+twist locally on \'etale neighbourhoods of $H_4$ but not globally.
+The pro-object weight-completed bar complex descends through the
+gerbe to yield Positselski coderived inversion; the strict
+chain-level bar-cobar fails at $H_4$ in the direct-sum presentation
+but is repaired by the banding cocycle on the complement
+$\overline{\mathcal{A}_2}\setminus H_4$.
+\end{lemma}
+
+\begin{proof}
+The $\mathbb{Z}/2$-twist arises because the Humbert divisor $H_4$
+parametrises abelian surfaces $A$ with $\mathrm{End}(A) \supset
+\mathbb{Z}[\sqrt{2}]$, and the real multiplication endomorphism
+$\sqrt{2}$ acts with sign $\pm 1$ on the two isotypic components of
+the Mukai lattice $\Lambda_{\mathrm{Muk}} = II_{4,20}$ restricted to
+$H_4$. The Bruinier singular-theta lift
+\cite[Thm.~9.3]{Bruinier2002LNM} produces a logarithmic branch of
+$\Delta_5$ along $H_4$ whose monodromy is the involution swapping
+the two $\pm 1$-isotypic components. This is precisely the twist
+class in $H^1_{\text{\'et}}(H_4, \mathbb{Z}/2)$.
+Morrison's global Torelli theorem for K3 surfaces \cite{Morrison84}
+lifts the $\mathbb{Z}/2$-twist to a Kuga--Satake gerbe
+$\mathcal{G}_{H_4}\to H_4$: the underlying abelian variety of
+double dimension carries a canonical $\mathbb{Z}/2$-central
+extension structure whose Chern-Simons-like banding cocycle is
+\'etale-locally trivial but carries a global class in
+$H^2_{\text{\'et}}(H_4, \mathbb{Z}/2)$ by the Brauer obstruction.
+The banding cocycle trivialises the bar-complex twist on \'etale
+neighbourhoods, yielding strict chain-level inversion on
+$\overline{\mathcal{A}_2}\setminus (H_1\cup H_3\cup H_4)$; on
+$H_4$ itself only the weight-completed / pro-object statement
+holds, as the gerbe obstructs strict descent.
+\end{proof}
+
+\begin{theorem}[W18 Beilinson: chain-level global bar-cobar inversion
+across the Humbert stratification]
+\label{thm:climax-W18-global-inversion}
+\index{bar-cobar adjunction!global inversion!W18}
+\index{climax theorem!Wave 18 chain-level extension}
+\index{Positselski!strict versus weight-completed!trichotomy}
+Let $A = \mathbf{H}_{\Delta_5}$ be the K3 chiral bialgebra of
+Remark~\ref{rem:cclimax-DNA-1}, regarded as a curved
+$E_\infty$-chiral algebra on the universal family
+$X\to\overline{\mathcal{A}_2}$. The chiral bar-cobar adjunction
+$\Omega^{\mathrm{ch}}\dashv B^{\mathrm{ch}}$ satisfies the
+following trichotomy:
+\begin{enumerate}
+\item[\textup{(a)}] \emph{Strict chain-level inversion on the Koszul
+locus.} On the open complement
+\[
+ U
+ \;:=\;
+ \overline{\mathcal{A}_2}
+ \setminus (H_1 \cup H_3 \cup H_4),
+\]
+the natural counit
+$\Omega^{\mathrm{ch}}_X(B^{\mathrm{ch}}_X(A))|_U \to A|_U$
+is a strict chain-level quasi-isomorphism.
+\item[\textup{(b)}] \emph{Weight-completed Positselski inversion
+across all of $\overline{\mathcal{A}_2}$.} On the full base,
+the pair $(\Omega^{\mathrm{ch}}, B^{\mathrm{ch}})$ composes to the
+identity in the coderived category
+$D^{\mathrm{co}}_{\mathrm{ch}}(\overline{\mathcal{A}_2})$, with
+weight-completed witness the pro-limit
+$\widehat{\bar B}^{\mathrm{ch}}(A)
+= \varprojlim_w \bar B^{\mathrm{ch}}(A)/F^{\geq w+1}$ of
+Definition~\ref{def:weight-completed-bar}.
+\item[\textup{(c)}] \emph{$A_\infty$-correction at $H_3$.}
+On a formal neighbourhood of $H_3$, the strict inversion of (a)
+fails with obstruction
+\[
+ \phi^{(3)}\big|_{H_3}
+ \;=\;
+ -8 \cdot c_{\Phi_{10}/\eta^{24}}\big|_{H_3},
+\]
+the Wave-17 Costello--Gaiotto corrected three-loop value; the
+$A_\infty$-deformation of $(\Omega^{\mathrm{ch}}, B^{\mathrm{ch}})$
+installs the explicit homotopy $h^{(3)}$ of
+Lemma~\ref{lem:cclimax-wave18-H3-failure} repairing inversion at
+the $A_\infty$ level.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Statement~(a) follows by combining three already-inscribed inputs
+with the three Humbert-wall analyses above:
+Lemma~\ref{lem:cclimax-wave18-H1-failure},
+Lemma~\ref{lem:cclimax-wave18-H3-failure},
+Lemma~\ref{lem:cclimax-wave18-H4-failure} identify the singular
+loci and show that away from their union the chiral bar differential
+is Mittag--Leffler strict with no twisted factor and no
+Maurer--Cartan obstruction; the counit is then a quasi-isomorphism
+by the generic-Koszul chiral Positselski argument of
+Theorem~\ref{thm:chiral-positselski-weight-completed} read at finite
+weight without completion.
+
+Statement~(b) is
+Theorem~\ref{thm:chiral-positselski-weight-completed} applied to
+$A = \mathbf{H}_{\Delta_5}$: the three wall failure modes
+above all become invertible in
+$D^{\mathrm{co}}_{\mathrm{ch}}(\overline{\mathcal{A}_2})$ after
+taking the inverse limit of truncations, because the
+Mittag--Leffler condition is restored on the weight-graded pieces
+by Lemma~\ref{lem:weight-filtration-basics}~(ii).
+
+Statement~(c) is
+Lemma~\ref{lem:cclimax-wave18-H3-failure}: the
+three-loop coboundary $\phi^{(3)}|_{H_3}$ equals
+$-8\cdot c_{\Phi_{10}/\eta^{24}}|_{H_3}$ by the Wave-17
+Costello--Gaiotto determinant correction (replacing the naive
+combinatorial $c_3 = 176256$ with the literature-anchored value
+$c_3 = -8$ tied to the $\Phi_{10}/\eta^{24}$ modular face), and
+the $A_\infty$-homotopy $h^{(3)}$ is the Positselski perturbation
+lemma applied to the curved CDG-coalgebra pair.
+
+Primary inputs: Positselski $2011$ \emph{Mem.~AMS} Vol.~$212$
+(CDG-coderived equivalence) \cite{Positselski11};
+Gritsenko--Nikulin $1998$ (Siegel denominator at $H_3$, $H_4$)
+\cite{GritsenkoNikulin1998}; Bruinier $2002$ LNM~$1780$
+(Heegner--Chern reciprocity at $H_1$)
+\cite{Bruinier2002LNM}; Morrison $1984$ (global Torelli for K3)
+\cite{Morrison84}.
+\end{proof}
+
+\begin{remark}[Relation to the Wave-17 Costello $c_3 = -8$
+correction]
+\label{rem:cclimax-wave18-W17-costello-link}
+The three-loop coefficient $c_3 = -8$ appearing in
+Theorem~\ref{thm:climax-W18-global-inversion}~(c) is the
+Costello--Gaiotto correction inscribed at Wave~17: the naive
+combinatorial value $c_3^{\mathrm{naive}} = 176256$ arising from a
+cardinality-of-contraction counting of the $K3\times T^2$
+determinant does not survive the twisted-supergravity renormalisation
+\cite{Costello2013,CostelloGaiotto2018}; the literature-anchored
+value is $c_3 = -8$, tied to the $\Phi_{10}/\eta^{24}$ modular face
+via the Harvey--Moore threshold formula
+$-\log|\Phi_{10}|^2 = \sum_{\text{instantons}}\cdots$
+\cite{HarveyMoore1995}. The Wave-18 theorem shows that this
+correction is precisely the three-loop obstruction to strict
+bar-cobar inversion at the Humbert wall $H_3$, upgrading the
+Wave-17 cross-volume formula propagation from an advisory
+cross-reference into a chain-level identity for $\phi^{(3)}|_{H_3}$.
+\end{remark}
+
+\begin{remark}[Theorem B scope update after Wave 18]
+\label{rem:cclimax-wave18-theoremB-scope-update}
+Wave~18 sharpens the scope of Theorem~B (chiral Positselski) on
+$\mathbf{H}_{\Delta_5}$: (i) Theorem~B holds \emph{strictly at the
+chain level} on the Koszul locus
+$U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$;
+(ii) Theorem~B holds \emph{weight-completed} in the coderived
+category across all of $\overline{\mathcal{A}_2}$; (iii) strict
+chain-level Theorem~B fails on each of $H_1$, $H_3$, $H_4$
+individually, with the three failure modes identified explicitly
+above (order-$8$ Bruinier monodromy, $\phi^{(3)}$ three-coboundary,
+Kuga--Satake $\mathbb{Z}/2$-band, respectively). This is the
+strongest honest scope on $\mathbf{H}_{\Delta_5}$ and is mirrored
+in Chapter~\ref{ch:theorem-B-scope-platonic} DNA.
 \end{remark}

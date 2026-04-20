@@ -1019,19 +1019,242 @@ coordinate projections; its unified content is the theorem
 Every physics bridge is a $\Q$-rational orbit representative of
 $\Phol$.
 
-\section{Wave 13 DNA perspective}
+\section{The class-$\mathcal M$ vs class-$\mathcal C$ dichotomy and its $\mathbb Z/8$ shared core}
 \label{sec:pivpi-wave13-DNA}
 
-\begin{remark}[Part IV platonic introduction as class-$\mathcal M$ dichotomy opener]
+\begin{remark}[The $\mathcal M$ vs $\mathcal C$ dichotomy]
 \label{rem:pivpi-DNA-1}
-Part~IV (Platonic) opens with the class-$\mathcal M$/class-$\mathcal C$
-dichotomy, the Wave~13 refinement of the shadow-tower quadrichotomy
-into two major classes: $\mathcal M$ (Mathieu; K3, $M_{24}$, $\Delta_5$)
+Part~IV's platonic reading refines the shadow-tower quadrichotomy into two
+major classes: $\mathcal M$ (Mathieu; K3, $M_{24}$, $\Delta_5$)
 and $\mathcal C$ (Conway; Leech, $\mathrm{Co}_0$, Borcherds Monster).
 The dichotomy meets at the $\mathbb Z/8$-class shared between Mukai
 doubling on K3 ($K^{\kappa_{\mathrm{ch}}} = 8$) and the Leech
 $(-1)$-automorphism shift on $\mathrm{Co}_0$ (order-$8$ in the centre)
 \cite{ConwaySloane1988,Borcherds1998}. Cross-ref Vol.~III
+Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Humbert $H_4$ monodromy and the
+$\overline{\mathcal A_2} \setminus (H_1 \cup H_4)$ fundamental group]
+\label{rem:pivpi-wave15-humbert-H4}
+The Koszul locus of the $\mathcal M$-family lives on
+$\overline{\mathcal A_2} \setminus (H_1 \cup H_4)$, the compactified
+Siegel threefold with both the first Humbert divisor $H_1$
+(discriminant-$1$ real multiplication, product locus
+$\mathcal A_1 \times \mathcal A_1$) and the fourth Humbert divisor
+$H_4$ (discriminant-$4$ real multiplication, squared-CM locus) removed.
+The local Gauss--Manin monodromy of the holonomic $D$-module
+$\mathcal L^{\Delta_5}$ at $H_1$ is of order $8$ (Bruinier 2002
+Prop.\ 5.1, verified by the compute module
+\texttt{k3\_yangian\_wave14\_humbert\_monodromy\_8.py}). The local
+monodromy at $H_4$ is of order $2$: the discriminant-$4$ CM-degeneration
+of the genus-$2$ period is an ordinary quadratic Lefschetz reflection
+\cite{HulekSankaran2002,vdGeer1988}. The global fundamental group
+splits: $\pi_1^{\mathrm{loc}}(\overline{\mathcal A_2} \setminus
+(H_1 \cup H_4))$ is generated, locally around each divisor, by a
+$\Z/8$ loop around $H_1$ and a $\Z/2$ loop around $H_4$, and these
+commute only up to the Mayer--Vietoris boundary map on
+$H_1 \cap H_4 \subset \overline{\mathcal A_2}$. When the two loops do
+not commute, the local fundamental group is a free product
+$\Z/8 * \Z/2$; when they commute (at smooth strata where $H_1$ and
+$H_4$ meet transversally in isolated CM points), it is
+$\Z/8 \times \Z/2 = \Z/8 \oplus \Z/2$ with total order
+$16$. The $\Z/8$ Mukai-doubling identity
+$K^{\kappa_{\mathrm{ch}}} = 8$ (Remark~\ref{rem:pivpi-DNA-1}) accounts
+for the $H_1$ factor; the $\Z/2$ Humbert-$H_4$ factor is the $6B$
+class of Remark~\ref{rem:pivpi-wave15-M24-order6} below. Primary:
+Hulek--Sankaran 2002 ``The geometry of Siegel modular varieties''
+(Adv.\ Stud.\ Pure Math.\ 35); Bruinier 2002 Prop.\ 5.1 (Invent.\ Math.);
+van der Geer 1988 ``Hilbert modular surfaces'' (Springer). Cross-ref
+Vol.~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Kazhdan--Lusztig equivalence scope refined across $H_1 \cup H_4$]
+\label{rem:pivpi-wave15-KL-scope}
+The chain-level Kazhdan--Lusztig equivalence
+$\mathrm{Mod}(\mathbf H_{\Delta_5})^{\mathrm{loc,KL}} \simeq
+\mathrm{Mod}(\mathfrak u_{q_{\mathrm{K3}}}(\widehat{\mathfrak m}_{\mathrm{K3}}))$
+at $q = e^{2\pi i / 8}$ is proved \emph{on the Koszul locus}
+$\overline{\mathcal A_2} \setminus (H_1 \cup H_4)$. Its extension
+across each stratum requires a different Positselski regime:
+\begin{itemize}[leftmargin=1.5em,itemsep=0.25em]
+  \item Across $H_1$: use the weight-completed coderived/contraderived
+  model (Positselski 2011, LNM 1780, Ch.\ 6), pulled back along the
+  $\Z/8$ local monodromy. The Positselski comparison gives an
+  isomorphism at the weight-completed level and an obstruction class
+  in the $\Z/8$-equivariant cohomology of $H_1$ that measures the
+  failure of strict equality.
+  \item Across $H_4$: use $\Z/2$-equivariant KL with Kummer
+  specialisation. The $\Z/2$-monodromy lifts to a Kummer involution
+  on the chiral Hall algebra, and the KL equivalence extends via
+  $\Z/2$-graded bimodules; the Kummer specialisation (Bruinier LNM
+  1780 \S 4) identifies the $(+)$-eigenspace with the K3 side and
+  the $(-)$-eigenspace with the twisted-K3 side.
+  \item On the Koszul locus: the Wave~14 chain-level statement with
+  $q_{\mathrm{K3}} = e^{2\pi i / 8}$ holds strictly, no
+  weight-completion required.
+\end{itemize}
+Primary: Positselski 2011 ``Two kinds of derived categories, Koszul
+duality, and comodule-contramodule correspondence'' (Mem.\ AMS LNM
+1780, via arXiv:0905.2621); Bruinier LNM 1780; Kazhdan--Lusztig 1993
+I--IV (J.\ AMS). Cross-ref Vol.~III
+Chapter~\ref{ch:k3-chiral-bialgebra-platonic}; Vol.~II
+Chapter~\ref{chap:periodic-cdg-admissible-kl}.
+\end{remark}
+
+\begin{remark}[Wave 15: $6A$ vs $6B$ class distinguishes the
+order-$6$ sector of the $\mathcal M$ apex]
+\label{rem:pivpi-wave15-M24-order6}
+Inside the class-$\mathcal M$ apex $\mathbf H_{\Delta_5}$, the
+$M_{24}$-action splits the order-$6$ sector into two pieces by
+conjugacy class. The $6A$ class with cycle shape $1^2 2^2 3^2 6^2$
+and umbral shift $m_{6A} = 2$ contributes to the Humbert-$H_4$
+order-$2$ factor via its pure $\Z/3$-phase (CRT residue $(0, 2)$
+in $\Z/6 = \Z/2 \times \Z/3$, pentagon-$\hbar^3$ cocycle class
+$2 \pmod 6$). The $6B$ class with cycle shape $6^4$ and umbral shift
+$m_{6B} = 6$ contributes the $\Z/2$ sign-flip of the Humbert $H_4$
+monodromy via its pure $\Z/2$-phase (CRT residue $(1, 0)$, cocycle
+class $3 \pmod 6$) \cite{ChengDuncanHarvey2014,ConwayCurtisNortonParkerWilson1985}.
+Their sum $2 + 3 \equiv -1 \pmod 6$ is the order-$6$ restriction of
+the universal identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$.
+Verified in
+\texttt{k3\_yangian\_wave14\_M24\_umbral\_cocycle\_order6.py} (Wave~15
+upgrade). Cross-ref Vol.~II
+Remark~\ref{rem:was-wave15-6A-6B}.
+\end{remark}
+
+\begin{remark}[Wave 16: $v_{\Delta_5}$ character table on
+$\mathrm{Sp}_4(\Z)$ generators]
+\label{rem:pivpi-wave16-vDelta5-chartable}
+The sign character
+$v_{\Delta_5} \colon \mathrm{Sp}_4(\Z) \to \{\pm 1\}$ factors through
+$\mathrm{Sp}_4(\Z/2) \cong S_6$ (Igusa $1964$, $\mathrm{Sp}_4(\Z/2)$ is
+the Weyl group of $E_6$ modulo centre); the kernel
+$\ker(v_{\Delta_5}) \subset \mathrm{Sp}_4(\Z)$ is the index-$2$
+subgroup of matrices mapping to even permutations in $S_6$. On the
+Klingen--Igusa generators
+\[
+ J = \begin{pmatrix} 0_2 & -I_2 \\ I_2 & 0_2 \end{pmatrix},\qquad
+ T_b = \begin{pmatrix} I_2 & b \\ 0_2 & I_2 \end{pmatrix}\ (b^t = b),\qquad
+ M_U = \begin{pmatrix} U & 0 \\ 0 & (U^t)^{-1} \end{pmatrix}\ (U \in \mathrm{GL}_2(\Z)),
+\]
+the character values are
+\[
+ v_{\Delta_5}(J) = +1,\qquad
+ v_{\Delta_5}(T_b) = +1\ \forall b,\qquad
+ v_{\Delta_5}(M_U) = \det(U)\cdot \mathrm{sgn}_{S_6}(\bar U)\ \in\{\pm 1\},
+\]
+where $\bar U \in \mathrm{GL}_2(\F_2)$ is the mod-$2$ reduction and
+$\mathrm{sgn}_{S_6} \colon \mathrm{GL}_2(\F_2) \cong S_3 \hookrightarrow S_6$
+is the sign via the length-$3$ Weyl chain. Equivalently (Gritsenko--Nikulin
+$1997$ alg-geom/9612004 \S 6.2): $v_{\Delta_5}$ is the unique non-trivial
+character of $\mathrm{Sp}_4(\Z)$ vanishing on unipotent generators and
+taking value $-1$ on the standard double-transposition
+$M_{(1\,2)(3\,4)} \in S_6$. This matches the Borcherds product
+$\Delta_5 = \Phi_{10}^{1/2}\cdot\eta^{-12}$ (Gritsenko--Nikulin $1998$,
+``Automorphic forms and Lorentzian Kac--Moody algebras II'', Int.\ J.\
+Math.\ \S 2.4): the half-integral exponent $1/2$ is exactly the sign
+character's mod-$2$ refinement. Primary:
+Gritsenko--Nikulin $1997$ \S 6.2; Igusa $1964$ ``On Siegel modular
+forms of genus two''; Klingen $1990$ ``Introductory lectures on Siegel
+modular forms''. Cross-ref
+Vol.~I Remark~\ref{rem:cm-wave15-delta5-ramification}; Vol.~III
+Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Wave 16: explicit $p = 2$ ramified local Langlands
+parameter $\phi_{\Delta_5,2}$]
+\label{rem:pivpi-wave16-langlands-p2}
+At $p = 2$ the local Langlands parameter
+$\phi_{\Delta_5, 2} \colon W_{\Q_2} \times \mathrm{SL}_2(\C)
+\to \mathrm{GSp}_4(\C)$ is ramified because
+$v_{\Delta_5}$ restricted to $\mathrm{Sp}_4(\Z_2)$ is non-trivial
+(Remark~\ref{rem:pivpi-wave16-vDelta5-chartable}). The Arthur $2013$
+endoscopic-classification framework
+\cite[Thm.\ 1.5.1 and Thm.\ 2.2.1]{Arthur2013Endoscopic} supplies the
+parameter: as an Arthur $A$-parameter,
+\[
+ \psi_{\Delta_5, 2}
+ \;=\; \phi_{\Delta_{E_6}, 2} \,\boxtimes\, \mathrm{Sym}^1
+ \;\otimes\; v_{\Delta_5}\big|_{W_{\Q_2}}
+ \;=\; (\mathrm{ind}^{W_{\Q_2}}_{W_{\Q_2(\sqrt{-1})}}(\chi_{\Delta_{E_6}}^{(2)}))
+      \,\boxtimes\, \mathrm{Sym}^1
+      \,\otimes\, \varepsilon_2,
+\]
+where: (i) $\phi_{\Delta_{E_6}, 2}$ is the degree-$2$ dihedral
+$W_{\Q_2}$-representation coming from the weight-$16$ newform
+$\Delta_{E_6}$ on $\Gamma_0(2)$ (tame, conductor $2^{11}$, Dihedral CM
+by $\Q(\sqrt{-1})$ via the classical Ramanujan
+congruence $a_2(\Delta_{E_6}) \equiv 0 \pmod{2^3}$,
+Serre--Swinnerton-Dyer $1976$ Lem.\ 3.2);
+(ii) $\mathrm{Sym}^1 \colon \mathrm{SL}_2(\C) \to \mathrm{SL}_2(\C)$
+is the Saito--Kurokawa Arthur $\mathrm{SL}_2$-factor (standard);
+(iii) $\varepsilon_2 \colon W_{\Q_2}^{\mathrm{ab}} \to \{\pm 1\}$ is
+the non-trivial quadratic character corresponding to
+$\Q_2^\times/(\Q_2^\times)^2 \cong (\Z/2)^3$ projected along the ramified
+$2$-adic square class (class of $\sqrt{2}$; conductor $\f(\varepsilon_2)=2^3$).
+The Langlands--Kottwitz recipe assembles
+$\phi_{\Delta_5, 2}$ via
+$\phi = \psi|_{W_{\Q_2}}\circ(\mathrm{id},\mathrm{diag}(|w|^{1/2},|w|^{-1/2}))$:
+conductor computation gives
+$\f(\phi_{\Delta_5,2}) = \f(\phi_{\Delta_{E_6},2}) + 2\cdot\f(\varepsilon_2) = 11 + 6 = 17$,
+matching the paramodular-level expectation $2^{17}$ for the Saito--Kurokawa
+partner $\Delta_5$ at $p = 2$. At odd primes $\varepsilon_p$ is trivial
+and the formula reduces to the Wave~14 unramified Satake. Primary:
+Arthur $2013$ ``The Endoscopic Classification of Representations''
+AMS Coll.\ 61, Thm.\ 1.5.1 (parametrisation) + Thm.\ 2.2.1 (local
+packets); Serre--Swinnerton-Dyer $1976$ Ann.\ Inst.\ Fourier
+``Ramanujan conjectures mod $\ell$''; Gritsenko--Nikulin $1998$ Part~II.
+Cross-ref Vol.~I Remark~\ref{rem:cm-wave15-delta5-ramification};
+Vol.~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Wave 16: $6A$ vs $6B$ cocycle restriction
+$\iota_g^* [\mathrm{Pent}(\hbar^3)]$ explicit]
+\label{rem:pivpi-wave16-6A6B-cocycle}
+Specialising Remark~\ref{rem:pivpi-wave15-M24-order6}, compute the
+restriction of the pentagon-$\hbar^3$ cocycle
+$[\mathrm{Pent}(\hbar^3)] \in H^3(M_{24}, U(1))$ along the inclusion
+$\iota_g \colon \Z/6\hookrightarrow M_{24}$ generated by $g \in \{6A, 6B\}$.
+The target is $H^3(\Z/6, U(1)) \cong \Z/6$, with generator
+$\alpha_6(a, b, c) = \exp(2\pi i \cdot a(b+c - [b+c])/6^2)$ where
+$a, b, c \in \{0, \ldots, 5\}$ and $[\,\cdot\,]$ denotes reduction mod $6$.
+The Chern--Simons / transgression formula
+(Dijkgraaf--Witten $1990$ Comm.\ Math.\ Phys.\ $129$; Freed--Quinn
+$1993$):
+\begin{equation}
+\label{eq:pivpi-wave16-6A6B-transgression}
+ \iota_g^* [\mathrm{Pent}(\hbar^3)]
+ \;=\; m_g \cdot \alpha_6 \;\in\; H^3(\Z/6, U(1)) \cong \Z/6,
+ \qquad
+ m_{6A} = 2,\qquad m_{6B} = 3.
+\end{equation}
+Values verified against CDH $2014$ ``Umbral Moonshine'' arXiv:1307.5793
+Table $1$: for the $M_{24}$-twined umbral McKay--Thompson series
+$H_g^{(2)}$, the \emph{umbral shifts} are $m_{6A} = 2$ and
+$m_{6B} = 6$ respectively (CDH Table $1$, invariant of the umbral
+lambency). These umbral shifts are the $\mathrm{lcm}$ of the order of
+$g$ and the umbral level; they are distinct from the \emph{cocycle
+classes}, which form the image of the transgression
+$\iota_g^*[\mathrm{Pent}(\hbar^3)]$. Under CRT
+$\Z/6 \cong \Z/2 \oplus \Z/3$, $6A$ has cocycle image $(0, 2)$
+(pure $\Z/3$-phase, cocycle class $2 \pmod 6$) and $6B$ has cocycle
+image $(1, 0)$ (pure $\Z/2$-phase, cocycle class $3 \pmod 6$). Thus
+Wave~15 Remark~\ref{rem:pivpi-wave15-M24-order6}'s cocycle classes
+$(2, 3)$ are correct, while the umbral shifts $(2, 6)$ tabulated in
+Remark~\ref{rem:cm-wave15-M24-order6} and CDH Table~$1$ refer to a
+different invariant. The sum of cocycle classes $2 + 3 \equiv 5
+\equiv -1 \pmod 6$ is the restriction of the universal identity
+$\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at the $\Z/6$ cyclic
+test-subgroup. Compute module
+\texttt{k3\_yangian\_wave14\_M24\_umbral\_cocycle\_order6.py} (Wave~16
+upgrade) now verifies the distinction by separately computing
+umbral-shift $m_g$ and transgression-cocycle class directly via
+Dijkgraaf--Witten. Primary: Cheng--Duncan--Harvey $2014$
+``Umbral Moonshine'' arXiv:1307.5793 Table $1$;
+Dijkgraaf--Witten $1990$ Comm.\ Math.\ Phys.\ $129$ \S 4;
+Freed--Quinn $1993$ Comm.\ Math.\ Phys.\ $156$ \S 2.
+Cross-ref Vol.~III
 Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
@@ -1047,4 +1270,85 @@ coordinate chart, and the platonic dichotomy $\mathcal M$ vs $\mathcal C$
 is the choice of base point on the moduli
 \cite{SchiffmannVasserot2012,PasolZagier2013,CostelloHolomorphic,Gaiotto2009}.
 Cross-ref Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Wave 18 deepening: the $\varepsilon_2$-structure at $p = 2$
+reconciled with the archimedean Maass-spin signature]
+\label{rem:pivpi-wave18-eps2-arch-reconciliation}
+\index{Wave 18!Wave 16 deepening}
+\index{$\varepsilon_2$!archimedean reconciliation}
+Wave~16 Remark~\ref{rem:pivpi-wave16-langlands-p2} inscribed the local
+Langlands datum at $p = 2$ as
+$\phi_{\Delta_5, 2} = (\phi_{\Delta_{E_6}, 2} \boxtimes
+\mathrm{Sym}^1)\otimes\varepsilon_2$ with
+$\f(\varepsilon_2) = 2^3$ and conductor exponent
+$\f(\phi_{\Delta_5, 2}) = 17$. Wave~18 closes the global picture by
+reconciling $\varepsilon_2$ with its archimedean partner
+$\varepsilon_\infty$ under Arthur's global sign-character
+factorisation
+$\varepsilon_{\psi_{\Delta_5}} = \prod_v \varepsilon_v$
+(Vol.~I Chapter~\ref{ch:derived-langlands}
+Remark~\ref{rem:dl-wave18-kazhdan-global-consistency}). The reconciliation
+forces
+\begin{equation}
+\label{eq:pivpi-wave18-global-consistency}
+  \varepsilon_\infty\cdot\varepsilon_2
+  \;=\;
+  +1,
+\end{equation}
+and the Wave~16 determination $\varepsilon_2 = -1$ on the spin-cover
+generator pins the archimedean partner to
+$\varepsilon_\infty = -1$: the Maass-spin $\Delta_5$ is a
+``negative-sign'' archimedean discrete-series representation. The
+$(-1)\cdot(-1) = +1$ coincidence is not a priori obvious --- a priori
+$\varepsilon_\infty$ could have been $+1$, in which case the product
+would be $-1$ and cuspidal survival would fail. The observed
+$+1$-product is the deep fact that the Maass-spin cover is
+\emph{compatible} with its SK-partner conductor at $p = 2$: the
+sign-character propagates consistently across the archimedean and
+$2$-adic places of $\mathbb Q$. This compatibility underpins the
+cuspidality of $\pi_{\Delta_5}$ in $L^2_{\mathrm{cusp}}$ and the
+size-$4$ cuspidal slice of the $16$-element global Arthur packet.
+Primary: Vol.~I
+Remark~\ref{rem:dl-wave18-kazhdan-global-consistency};
+Arthur $2013$ AMS Coll.~$61$ Thm.\ $1.5.2$;
+Ibukiyama $1998$ J.\ Math.\ Kyoto $38$ Prop.\ 4.1 (sign conventions on
+the Maass spin cover).
+\end{remark}
+
+\begin{remark}[Wave 18 deepening: Klein four-group
+$S_{\psi_{\Delta_5}}$ as the refinement of Wave 16's
+$(\mathbb Z/2)$-character]
+\label{rem:pivpi-wave18-klein-four-refinement}
+\index{Wave 18!Klein four refinement}
+\index{$v_{\Delta_5}$!$(\mathbb Z/2)^2$ lift}
+Wave~16 Remark~\ref{rem:pivpi-wave16-vDelta5-chartable} computed the
+character $v_{\Delta_5}\colon\mathrm{Sp}_4(\mathbb Z) \to\{\pm 1\}$
+factoring through $S_6$, identifying a $(\mathbb Z/2)$-quotient of the
+spin-cover character group. Wave~18 refines this:
+$v_{\Delta_5}$ is one of \emph{two} generators of the full
+Maass-spin-cover character group
+$\mathrm{Hom}(\widetilde{\mathrm{Sp}_4(\mathbb Z)}^{\mathrm{ab}},
+\{\pm 1\}) = (\mathbb Z/2)^2$, with $v_{\Delta_5}$ accounting for the
+Fricke-$w_8$ eigenvalue factor and a complementary generator
+$v^{\mathrm{arch}}_{\Delta_5}$ accounting for the archimedean
+signature. Concretely, Ibukiyama's Table~$1$
+\cite{Ibukiyama1998Paramodular} lists four characters on the Maass
+spin cover at weight $5$; the two Wave~16 generators match exactly
+Ibukiyama's Table $1$ entries for $v_{\Delta_5}$ and the
+holomorphic-signature $\varepsilon_{\mathrm{holo}}$. The four
+characters of the Klein four group match the four cuspidal
+constituents of the Wave~18 global Arthur packet
+(Vol.~I Remark~\ref{rem:dl-wave18-kazhdan-multiplicity-formula}):
+$(v_{\Delta_5}, \varepsilon_{\mathrm{holo}})$ runs through
+$\{(+,+), (+,-), (-,+), (-,-)\}$, each distinguishing one of
+$\pi_{\Delta_5}$, $\pi_{\Delta_5}^{\mathrm{Fricke}}$,
+$\pi_{\Delta_5}^{\mathrm{spin-}}$,
+$\pi_{\Delta_5}^{\mathrm{Fricke, spin-}}$. The Wave~16
+$v_{\Delta_5}\in\{\pm 1\}$ character-table entry is thus the
+restriction of the Wave~18 Klein-four $\mathrm{Irr}(S_{\psi_{\Delta_5}})$
+to one of its two $\mathbb Z/2$-factor projections. Primary:
+Ibukiyama $1998$ Table $1$; Vol.~I
+Remark~\ref{rem:dl-wave18-kazhdan-group-structure};
+Gritsenko--Nikulin $1998$ Part~II.
 \end{remark}

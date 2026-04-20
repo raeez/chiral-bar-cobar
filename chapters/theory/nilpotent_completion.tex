@@ -1319,7 +1319,7 @@ and the identification of the H-level Koszul dual via
 the higher pages of the spectral sequence.
 \end{remark}
 
-\section{Wave 13 DNA perspective}
+\section{Synthesis}
 \label{sec:nc-wave13-DNA}
 
 \begin{remark}[Siegel-elliptic dynamical $R$-matrix and Hall completion]
@@ -1350,4 +1350,456 @@ weight-$5$ (since $K^{\kappa_{\mathrm{ch}}} = 8 = 2\cdot 4$, $c_+ = 4$),
 consistent with $\Delta_5$ as the completion's classifying cocycle
 \cite{Lusztig1990,GritsenkoNikulin1998}. Cross-ref
 Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\section{higher-coherence obstruction tower}
+\label{sec:nc-wave15-DNA}
+
+\begin{remark}[Pentagon coboundary at $\hbar^3, \hbar^4, \hbar^5$]
+\label{rem:nc-wave15-DNA-phi3-4-5}
+The Wave~14 pentagon identity for the twisted Siegel--Borcherds
+associator $\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}/\eta^{24}]$
+closes at $\hbar^{\le 3}$ with the explicit three-coboundary
+\[
+\phi^{(3)} \;=\; \zeta(3)\,c_{\mathrm{symm}}
+              \;+\;(25/3)\,c_{\mathrm{timelike}}
+              \;+\;(\Phi_{10}/\eta^{24})\cdot c_{\Phi_{10}},
+\qquad c_{\Phi_{10}}^{\mathrm{leading}} = -2,
+\]
+the leading Fourier coefficient $-2$ being the
+Gritsenko--Nikulin 1997 Theorem~2.1 singular-theta lift coefficient
+at $(q_\rho^1 q_\tau^1 y^0)$, with Eguchi--Ooguri--Tachikawa 2011
+normalisation $c_{\phi_{0,1}^{K3}}(-1) = 2$ entering with the
+singular-theta involution sign
+\cite{GritsenkoNikulin1997,EguchiOoguriTachikawa2011}.
+Wave~15 extends the obstruction tower to $\hbar^4,\hbar^5$:
+\[
+\phi^{(4)} \;=\; \tfrac{1}{24}\,\zeta(3)\,c_4^{(1)}
+              \;+\;\tfrac{1}{6}\,(\Phi_{10}/\eta^{24})^2\,c_4^{(K3)},
+\qquad
+\phi^{(5)} \;=\; \tfrac{1}{240}\,\zeta(5)\,c_5^{(1)}
+              \;+\;\tfrac{1}{120}\,\Phi_{10}^{5/2}/\eta^{60}\,c_5^{(K3)}.
+\]
+At weight~$4$ no new multiple-zeta irreducibles appear (Brown 2011
+``Mixed Tate motives over $\mathbb Z$''); the rational coefficient
+$1/24$ is fixed by the Etingof--Kazhdan 2000 super-Drinfeld associator
+$(2\pi i)^4/4!$ normalisation of the 4-leg Knizhnik--Zamolodchikov
+iterated integral.  At weight~$5$ the new irreducible is $\zeta(5)$;
+the would-be $\zeta(3)^2$ leg vanishes at $\hbar^5$ because
+$\zeta(3)^2$ is a weight-$6$ object (it re-enters at $\hbar^6$,
+reducible via the Zagier double-shuffle relations).
+Cross-ref
+\texttt{compute/lib/k3\_yangian\_wave15\_pentagon\_coboundary\_hbar45.py}.
+\cite{Brown2011,EtingofKazhdan2000,EnriquezGomezGonzalezMaassarani2022,
+      GritsenkoNikulin1998,Drinfeld1990,MarklShniderStasheff2002}.
+\end{remark}
+
+\begin{remark}[$A_\infty$-quasi-Hopf: the tower does not truncate]
+\label{rem:nc-wave15-DNA-Ainfty-open}
+The Wave~15 conclusion is structural.  For BKM-flavoured inputs
+(Borcherds 1992 monstrous Lie superalgebras, Gritsenko--Nikulin 1998
+automorphic forms) the imaginary-root cone of
+$\widehat{\mathfrak{g}}^{\mathrm{super}}_{\Delta_5}$ is infinite-dimensional
+and contributes to every order in $\hbar$: the higher-coherence
+$\phi^{(n)}$ is non-zero for \emph{every} $n \ge 3$, with
+asymptotic dimension-count
+\[
+\dim\,c_n^{(K3)} \;\sim\; n^{-27/4}\,\exp\!\bigl(4\pi\sqrt{n}\bigr)
+\]
+by Hardy--Ramanujan asymptotics applied to the Gritsenko--Nikulin~1998
+Section~4 imaginary-root counting formula
+\cite{GritsenkoNikulin1998,Borcherds1992,HardyRamanujan1918}.
+Consequently, $\mathbf H_{\Delta_5}$ is a \emph{genuine} $A_\infty$-quasi-Hopf
+algebra, not a quasi-Hopf algebra in Drinfeld's original sense: the
+Markl--Shnider--Stasheff 2002 obstruction tower is infinite.  The
+controlling universal object is the chain-level Markl--Shnider--Stasheff
+complex $\mathrm{MSS}^\bullet(\widehat{\mathfrak g}^{\mathrm{super}}_{\Delta_5})$
+over the \emph{pro-}Lie-bialgebra
+$t^{\mathrm{Sieg},\mathrm{super}}_{2,[2]} \oplus \mathfrak n_+^{\mathrm{imag}}$
+(the super-Manin pair of the K3 BKM); the nilpotent completion of the
+present appendix is exactly the weight-completed ambient that makes
+this universal object well-defined.  Pattern~236 ambient-qualifier
+discipline applies: the chain-level statement holds on the
+pro-object ambient; the $(\infty,1)$-categorical statement holds in
+the category of presentable $A_\infty$-Hopf $\infty$-operads
+(Pattern~269).  Cross-ref Vol.~III
+Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\section{deep motivic coherences $\phi^{(8,9,10)}$}
+\label{sec:nc-wave17-DNA}
+
+\begin{remark}[Brown's motivic dimension and Deligne's weight-$8$/$9$/$10$ bases]
+\label{rem:nc-wave17-DNA-brown-deligne}
+Brown~2011 \emph{Ann.\ Math.}~175 Theorem~1.1 gives, for every
+weight~$n$, the dimension $d_n$ of the motivic multiple-zeta
+subspace at weight~$n$; the values satisfy the recurrence
+$d_n = d_{n-2} + d_{n-3}$ from weight~$8$ onward, with table
+\[
+d_3 = d_4 = d_5 = 1,\quad d_6 = d_7 = 2,\quad d_8 = 3,\quad
+d_9 = 4,\quad d_{10} = 5.
+\]
+Deligne~2013 Bourbaki~$1054$ ``Multiple zeta values, mixed Tate motives''
+exhibits explicit bases:
+\begin{itemize}
+\item weight~$8$: $\{\zeta(3,5),\,\zeta(3)\zeta(5),\,\zeta(5,3)\}$ --
+  three generators, all depth~$\le 2$;
+\item weight~$9$: $\{\zeta(9),\,\zeta(3)\zeta(3,3),\,\zeta(3,3,3),\,\zeta(3,6)\}$
+  -- four generators, the new irreducible $\zeta(3,3,3)$ is the
+  \emph{first depth-$3$ MZV in the tower};
+\item weight~$10$:
+  $\{\zeta(3)^2\zeta(3,3),\,\zeta(3)\zeta(7),\,\zeta(5)^2,\,\zeta(3,7),\,\zeta(5,5)\}$
+  -- five generators, all depth~$\le 2$ (depth-$4$ irreducible
+  $\zeta(3,3,3,3)$ enters only at weight~$12$; the weight-$10$
+  entry $\zeta(3)^2\zeta(3,3)$ is a product-reducible monomial).
+\end{itemize}
+The pentagon coboundary $\phi^{(n)}$ therefore carries, at each
+weight~$n \in \{8,9,10\}$, exactly $d_n$ MZV legs plus one Borcherds
+leg from the Phi$_{10}$-BKM imaginary-root cone.
+\cite{Brown2011,Deligne2013,Hoffman1997,Zagier1994}.
+\end{remark}
+
+\begin{remark}[$\phi^{(8)}$: three MZV legs, one Borcherds leg]
+\label{rem:nc-wave17-DNA-phi8}
+Weight~$8$ has three irreducibles.  The Wave-$17$ decomposition reads
+\[
+\phi^{(8)} \;=\; \sum_{i=1}^{3}\frac{\mathrm{MZV}_i^{(8)}}{8!}\,
+                 c_8^{(i)}
+             \;+\; \frac{\Phi_{10}^{4}/\eta^{96}}{8!}\,
+                 c_8^{(K3)},
+\qquad
+8! = 40320,
+\]
+with $\mathrm{MZV}_1^{(8)} = \zeta(3,5)$,
+$\mathrm{MZV}_2^{(8)} = \zeta(3)\zeta(5)$,
+$\mathrm{MZV}_3^{(8)} = \zeta(5,3)$ (Deligne~$2013$ basis).
+The denominator $8! = 40320$ is the $8$-leg Knizhnik--Zamolodchikov
+iterated-integral normalisation from the Etingof--Kazhdan~$2000$
+super-Drinfeld associator $(2\pi i)^8/8!$
+\cite{Brown2011,EtingofKazhdan2000,Deligne2013}.  The Borcherds-leg
+raw modular weight is
+$\mathrm{wt}(\Phi_{10}^{4}/\eta^{96}) = 4\cdot 10 - 96\cdot\tfrac12 = -8$,
+paired with the weight-$48$ imaginary-root multiplicity (Hardy--Ramanujan)
+to produce a total in-tower Borcherds weight $5n = 40$, matching
+the mission Borcherds weight tracking.
+\cite{GritsenkoNikulin1998,Borcherds1995,HardyRamanujan1918}.
+\end{remark}
+
+\begin{remark}[$\phi^{(9)}$: four MZV legs, depth-$3$ $\zeta(3,3,3)$ enters]
+\label{rem:nc-wave17-DNA-phi9}
+Weight~$9$ has four irreducibles, with the new depth-$3$ MZV
+$\zeta(3,3,3)$ appearing for the first time in the entire tower
+(Brown~$2011$ Theorem~$1.1$; Goncharov~$2001$ depth filtration):
+\[
+\phi^{(9)} \;=\; \sum_{i=1}^{4}\frac{\mathrm{MZV}_i^{(9)}}{9!}\,
+                 c_9^{(i)}
+             \;+\; \frac{\Phi_{10}^{9/2}/\eta^{108}}{9!}\,
+                 c_9^{(K3)},
+\qquad
+9! = 362880,
+\]
+with $\mathrm{MZV}_1^{(9)} = \zeta(9)$,
+$\mathrm{MZV}_2^{(9)} = \zeta(3)\zeta(3,3)$,
+$\mathrm{MZV}_3^{(9)} = \zeta(3,3,3)$,
+$\mathrm{MZV}_4^{(9)} = \zeta(3,6)$.
+The depth-$3$ leg $\zeta(3,3,3)$ pairs with an explicit
+Stasheff-$(7,2)$ pentagon face in the Markl--Shnider--Stasheff~$2002$
+obstruction complex, distinct from the depth-$\le 2$ legs.
+The Borcherds leg $\Phi_{10}^{9/2}/\eta^{108}$ lives on the
+double cover of $\mathrm{Sp}_4(\mathbb Z)$ that supports
+half-integral Siegel weights; its raw weight is $-9$ and its
+in-tower weight is $45 = 5\cdot 9$.
+\cite{Brown2011,Deligne2013,Goncharov2001,MarklShniderStasheff2002,
+      GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[$\phi^{(10)}$: five MZV legs, product-reducible depth-$2$ at weight~$10$]
+\label{rem:nc-wave17-DNA-phi10}
+Weight~$10$ has five irreducibles:
+\[
+\phi^{(10)} \;=\; \sum_{i=1}^{5}\frac{\mathrm{MZV}_i^{(10)}}{10!}\,
+                 c_{10}^{(i)}
+             \;+\; \frac{\Phi_{10}^{5}/\eta^{120}}{10!}\,
+                 c_{10}^{(K3)},
+\qquad
+10! = 3628800,
+\]
+with $\mathrm{MZV}_1^{(10)} = \zeta(3)^2\zeta(3,3)$,
+$\mathrm{MZV}_2^{(10)} = \zeta(3)\zeta(7)$,
+$\mathrm{MZV}_3^{(10)} = \zeta(5)^2$,
+$\mathrm{MZV}_4^{(10)} = \zeta(3,7)$,
+$\mathrm{MZV}_5^{(10)} = \zeta(5,5)$ (Deligne~$2013$).
+The entry $\zeta(3)^2\zeta(3,3)$ is the \emph{first product-reducible
+depth-$2$ generator in the basis} -- it is motivically irreducible as a
+Deligne basis element but factorises through the lower-weight
+irreducibles $\zeta(3)$ and $\zeta(3,3)$.  The depth-$4$ irreducible
+$\zeta(3,3,3,3)$ first appears at weight~$12$, not weight~$10$
+(Brown~$2011$ depth-weight bigrading).
+\cite{Brown2011,Deligne2013,Zagier1994,Hoffman1997}.
+\end{remark}
+
+\begin{remark}[Asymptotic dominance of the Borcherds leg]
+\label{rem:nc-wave17-DNA-asymptotic}
+The Padovan-polynomial MZV basis size $d_n$ grows as
+$d_n = O(\phi_{\mathrm{plastic}}^{n})$ where $\phi_{\mathrm{plastic}} \approx 1.3247$
+is the unique positive root of $x^3 = x + 1$ (Brown~$2011$ Theorem~$1.1$
+asymptotics).  The Hardy--Ramanujan imaginary-root dimension of the
+$\Phi_{10}$-BKM grows super-exponentially:
+\[
+\dim c_n^{(K3)} \;\sim\; n^{-27/4}\exp\!\bigl(4\pi\sqrt n\bigr)
+\qquad (n \to \infty)
+\]
+(Hardy--Ramanujan~$1918$ circle-method applied to the
+Gritsenko--Nikulin~$1998$ Section~$4$ imaginary-root counting formula;
+Borcherds~$1995$ singular-theta lift).  At $n = 10$, the ratio
+$\dim c_n^{(K3)} / d_n \sim 3.3 \cdot 10^{10} / 5 \sim 6.5 \cdot 10^{9}$;
+the Borcherds leg dominates the total pentagon coboundary space by
+roughly ten orders of magnitude already at weight~$10$, and the
+dominance grows asymptotically.  The $A_\infty$-tower therefore has a
+\emph{genuine infinite tail} that is K3-specific and not present for
+pure MZV inputs.
+\cite{Brown2011,HardyRamanujan1918,GritsenkoNikulin1998,Borcherds1995}.
+\end{remark}
+
+\begin{remark}[Pro-object limit $\mathrm{obs}_\infty$ is well-defined]
+\label{rem:nc-wave17-DNA-obs-infty}
+The genus-$g$ obstruction
+$\mathrm{obs}_g = \sum_{n \le g+1}\phi^{(n)}\cdot c_{g,n}$
+is a finite sum for every finite~$g$, but the \emph{pro-limit}
+$\mathrm{obs}_\infty \in \varprojlim_{m}(\mathrm{tower}/W^{\ge m})$
+over the weight filtration $W^{\ge m}$ of the Markl--Shnider--Stasheff
+complex is well-defined as a formal $\hbar$-series: each truncation
+$\mathrm{tower}/W^{\ge m}$ has \emph{finite} Borcherds
+imaginary-root dimension by the Hardy--Ramanujan cap
+(Remark~\ref{rem:nc-wave17-DNA-asymptotic} gives bounded growth per
+weight), and the projection maps
+$\mathrm{tower}/W^{\ge m+1}\to\mathrm{tower}/W^{\ge m}$
+are surjections by construction of the weight filtration
+(Brown~$2011$ motivic-Galois filtered realisation;
+Deligne~$2013$ exactness of the weight filtration on mixed Tate
+motives).  Hence the Mittag--Leffler condition holds, $\lim^1 = 0$,
+and $\mathrm{obs}_\infty$ is a well-defined object of the
+weight-filtered completion (Pattern~$236$ ambient-qualifier
+discipline; Pattern~$269$ adjunction-strictness scope).  Cross-ref
+\texttt{compute/lib/k3\_yangian\_wave17\_pentagon\_coboundary\_hbar8\_9\_10.py}
+and Vol.~II
+Chapter~\ref{ch:curved-dunn-higher-genus-topologisation}
+Remark~\ref{rem:cdhg-wave17-DNA-obs-infty}.
+\cite{Brown2011,Deligne2013,MarklShniderStasheff2002,
+      GritsenkoNikulin1998,HardyRamanujan1918}.
+\end{remark}
+
+\begin{remark}[Wave-$18$ DNA: $\phi^{(11)}$ explicit decomposition at weight~$11$]
+\label{rem:nc-wave18-DNA-phi11}
+Extending Wave-$17$ into the deeper motivic regime, the pentagon
+coboundary $\phi^{(11)}$ at $\hbar^{11}$ receives the explicit
+decomposition
+\[
+\phi^{(11)}
+\;=\;
+\sum_{i = 1}^{7}\frac{\mathrm{MZV}_i^{(11)}}{11!}\,c_{11}^{(i)}
+\;+\;
+\frac{\Phi_{10}^{11/2}\,\eta^{-132}}{11!}\,c_{11}^{(K3)}
+\]
+with $11! = 39\,916\,800$ and the Padovan-dimension count
+$d_{11} = d_9 + d_8 = 4 + 3 = 7$ (Brown $2011$, Ann.~Math.~$175$
+Thm~$1.1$).  The seven irreducibles are
+\[
+\bigl\{\zeta(11),\;\zeta(3)\zeta(3,5),\;\zeta(3)\zeta(5,3),\;\zeta(5)\zeta(3,3),\;
+      \zeta(3,8),\;\zeta(5,6),\;\zeta(3,3,5)\bigr\},
+\]
+all of depth~$\le 3$; depth-$3$ is realised by the single new entry
+$\zeta(3,3,5)$ (Brown $2011$ Table).  The Borcherds leg
+$\Phi_{10}^{11/2}/\eta^{132}$ has raw modular weight $-11$ and
+in-tower total weight $5\cdot 11 = 55$; because $n = 11$ is odd, the
+fractional exponent $11/2$ places the Borcherds leg on the
+$\mathrm{Sp}_4(\mathbb{Z})$ \emph{double cover} of half-integral-weight
+Siegel modular forms (Gritsenko--Nikulin $1998$ \S$4$;
+Borcherds $1998$ Thm~$10.1$).  The Hardy--Ramanujan asymptotic
+$\dim c_{11}^{(K3)} \sim 11^{-27/4}\exp(4\pi\sqrt{11})$ amplifies the
+ratio to Borcherds over MZV well beyond the $10^{10}$ level witnessed
+at weight~$10$.  Cross-ref
+\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}.
+\cite{Brown2011,Deligne2013,GritsenkoNikulin1998,Borcherds1998,
+      HardyRamanujan1918}.
+\end{remark}
+
+\begin{remark}[Wave-$18$ DNA: $\phi^{(12)}$ and the first depth-$4$ irreducible $\zeta(3,3,3,3)$]
+\label{rem:nc-wave18-DNA-phi12}
+At $\hbar^{12}$ the pentagon coboundary admits the explicit decomposition
+\[
+\phi^{(12)}
+\;=\;
+\sum_{i = 1}^{9}\frac{\mathrm{MZV}_i^{(12)}}{12!}\,c_{12}^{(i)}
+\;+\;
+\frac{\Phi_{10}^{6}\,\eta^{-144}}{12!}\,c_{12}^{(K3)}
+\]
+with $12! = 479\,001\,600$ and $d_{12} = d_{10} + d_9 = 5 + 4 = 9$
+irreducibles (Brown $2011$ Ann.~Math.~$175$ Thm~$1.1$).  The
+Brown~$2011$ Table basis at weight~$12$ is
+\[
+\bigl\{\zeta(3)^4,\;\zeta(3)\zeta(9),\;\zeta(3)\zeta(3,6),\;
+      \zeta(5)\zeta(7),\;\zeta(5,7),\;\zeta(3,9),\;
+      \zeta(3,5,4),\;\zeta(5,3,3,1),\;\zeta(3,3,3,3)\bigr\}.
+\]
+The final entry $\zeta(3,3,3,3)$ is the \emph{first depth-$4$ motivic
+MZV irreducible in the programme}: Brown $2011$ Ann.~Math.~$175$
+Thm~$1.2$ proves that $\zeta(3,3,3,3)$ cannot be reduced to a
+polynomial combination of lower-depth MZVs via Euler /
+double-shuffle / stuffle relations; it represents a genuinely new
+motivic period at weight~$12$.  The coefficient $c_{12}^{(9)}$
+multiplying $\zeta(3,3,3,3)$ in $\phi^{(12)}$ is therefore a \emph{new
+motivic invariant} of the K3-BKM quantum group, inaccessible from the
+Wave-$17$ weight-$10$ data.  The Borcherds leg $\Phi_{10}^{6}/\eta^{144}$
+has raw weight $-12$ and in-tower weight $5\cdot 12 = 60$; since
+$n = 12$ is even, the exponent $12/2 = 6$ is integer and the leg
+lives on the full $\mathrm{Sp}_4(\mathbb{Z})$ paramodular quotient
+(Gritsenko--Nikulin $1998$ \S$4$).  Weight~$12$ is the \emph{highest
+weight at which Brown's motivic MZV theorem is proved on the nose};
+weights~$\ge 13$ become conjectural on the Zagier--Hoffman
+depth-reduction conjecture (Brown $2012$
+\texttt{arXiv:$1301.3053$}; partial progress in Brown $2017$ on the
+depth-$2$ slice).  Cross-ref
+\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
+and Vol.~III
+Remark~\ref{rem:cycainf-wave18-DNA-depth-4}.
+\cite{Brown2011,Brown2012,Deligne2013,Hoffman1997,Zagier1994,
+      GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[Wave-$18$ DNA: Mittag--Leffler pro-limit through weight~$12$]
+\label{rem:nc-wave18-DNA-ML-prolimit-12}
+The Wave-$17$ pro-limit statement
+(Remark~\ref{rem:nc-wave17-DNA-obs-infty}) strengthens at weight~$12$:
+the projection
+$\mathrm{tower}/W^{\ge 13}\to\mathrm{tower}/W^{\ge 12}$
+is a split surjection whose kernel is the free graded-commutative
+module generated by the nine weight-$12$ irreducibles listed in
+Remark~\ref{rem:nc-wave18-DNA-phi12}, including the depth-$4$
+irreducible $\zeta(3,3,3,3)$ (Brown $2011$ Thm~$1.2$ exactness of
+the motivic weight filtration).  Each graded piece $W^{=m}$ for
+$3\le m\le 12$ has \emph{finite} dimension $d_m$ given by the Padovan
+recurrence, and the Borcherds leg at each $m$ has finite
+imaginary-root dimension by Hardy--Ramanujan; hence
+$\lim^1 = 0$ and $\mathrm{obs}_\infty$ restricted to
+weight~$\le 12$ is a well-defined object of the weight-filtered
+completion on the nose, without any recourse to the Zagier--Hoffman
+conjecture.  Above weight~$12$ the statement becomes conditional on
+that conjecture; the $A_\infty$-tower continues to admit the
+Mittag--Leffler formalism assuming Zagier--Hoffman
+depth-reduction holds, with an explicit recovery of the
+on-the-nose statement for each concrete weight where the
+conjecture is verified.
+\cite{Brown2011,Brown2012,Deligne2013,MarklShniderStasheff2002,
+      HardyRamanujan1918}.
+\end{remark}
+
+\begin{remark}[Motivic Galois $\mathrm{GRT}_1$ structure at weight $12$]
+\label{rem:nc-wave18-DNA-grt1-weight-12}
+The Deligne-Goncharov motivic fundamental group
+$\pi_1^{\mathrm{mot}}(\mathbb P^1\smallsetminus\{0,1,\infty\}, \vec{01})$
+is pro-unipotent, and its Lie algebra carries the Goncharov depth
+filtration $\mathcal D_\bullet$.  The graded-depth pieces are governed
+by the Broadhurst--Kreimer motivic Lie coalgebra
+$\mathcal L_{\mathrm{mot}}$ whose weight-$w$/depth-$d$ bigraded piece
+$\mathcal L_{\mathrm{mot}}^{(w, d)}$ has generating-function conjecture
+\[
+\sum_{w, d\ge 1}\dim \mathcal L_{\mathrm{mot}}^{(w, d)}\,x^w y^d
+\;=\;\frac{x^3 y}{1 - y(x^2 + x^4 - x^2 y^2)}
+\]
+(Broadhurst--Kreimer $1997$ \texttt{arXiv:hep-th/9609128}; proved
+through depth~$2$ by Zagier, through weight~$12$ by Brown $2017$
+\texttt{arXiv:1301.3053} in the depth-$2$ stratum).  The weight-$12$
+depth-$4$ irreducible $\zeta(3, 3, 3, 3)$ in
+Remark~\ref{rem:nc-wave18-DNA-phi12} is precisely the class in
+$\mathcal L_{\mathrm{mot}}^{(12, 4)}/\mathcal L_{\mathrm{mot}}^{(12, \le 3)}$
+detected by Brown $2011$ Thm~$1.2$, and it is the first weight where the
+$(x^2 - x^2 y^2)$ factor of the Broadhurst--Kreimer generating series
+produces a depth-$4$ generator.
+
+Under the Drinfeld--Deligne isomorphism
+$\mathfrak{grt}_1 \cong \mathrm{Lie}(\pi_1^{\mathrm{mot, U}})$ between
+the Grothendieck--Teichm\"uller Lie algebra $\mathfrak{grt}_1$ and the
+Lie algebra of the unipotent motivic fundamental group
+(Drinfeld $1990$; Deligne~Bourbaki~$1054$~$2013$; Brown $2012$
+\emph{Ann.\ Math.}~$175$), the depth-$4$ generator $\zeta(3, 3, 3, 3)$
+defines a new element $\mathsf g_{3,3,3,3}\in \mathrm{gr}^4_{\mathcal D}\mathfrak{grt}_1$
+at weight~$12$.  The pentagon coboundary coefficient $c_{12}^{(9)}$
+multiplying $\zeta(3, 3, 3, 3)$ in $\phi^{(12)}$ is the pairing
+\[
+  c_{12}^{(9)}\;=\;\bigl\langle \mathsf g_{3, 3, 3, 3},\,
+                                \Theta^{(12)}_{\mathrm{KZ}}\bigr\rangle
+\]
+between $\mathsf g_{3,3,3,3}$ and the weight-$12$ Knizhnik--Zamolodchikov
+universal connection on $\overline{M}_{0, 5}$, normalised by $12!$.
+This pairing is the explicit chain-level witness of the pro-unipotent
+motivic-Galois action on the pentagon face of Stasheff's $K_4$ at
+weight~$12$, and inscribes the \emph{first depth-$4$ associator datum}
+of the programme on the nose.
+\cite{Brown2011,Brown2012,Brown2017,BroadhurstKreimer1997,
+      Deligne2013,Drinfeld1990,Goncharov2001}.
+\end{remark}
+
+\begin{remark}[Fake-Monster non-interference at weight $12$]
+\label{rem:nc-wave18-DNA-fake-monster-non-interference}
+The Borcherds leg at order $\hbar^{12}$ is $\Phi_{10}^{6}/\eta^{144}$
+on the rank-$3$ K$3$ lattice $\Lambda^{2, 1}_{\mathrm{II}}$.  Because
+$6$ is integer, the leg lives on the full
+$\mathrm{Sp}_4(\mathbb{Z})$ paramodular quotient rather than on the
+double cover needed at odd $n$, and its raw modular weight
+$10\cdot 6 - 12\cdot 12\cdot\tfrac12 = -12$ coincides numerically
+with the weight of the Igusa cusp form $\Phi_{12}$ --- the
+Fake-Monster BKM denominator of Borcherds~$1998$ Thm~$13.1$.
+This weight-$12$ coincidence is \emph{not} a shared automorphic form.
+The Fake-Monster BKM $\mathfrak m_{\mathrm{FakeMonster}}$ has Cartan
+$\mathrm{II}_{25, 1} = \Lambda_{24}\oplus \mathrm{II}_{1, 1}$ of signature
+$(25, 1)$ and rank~$26$; the K$3$-BKM $\mathfrak g_{\Delta_5}$ has
+Cartan $\Lambda^{2, 1}_{\mathrm{II}}$ of signature $(2, 1)$ and rank~$3$.
+The signatures are incompatible and admit no signature-preserving
+embedding; the two BKMs are independent points in the BKM landscape
+\cite[Table and discussion surrounding the three independent BKMs]{%
+latfnd-w17-II-25-1,Borcherds1998,GritsenkoNikulin1998}.
+Consequently $\Phi_{12}$ does \emph{not} appear as a factor of
+$\phi^{(12)}$; the unique Borcherds contribution to $\phi^{(12)}$ is
+the K$3$-lattice-compatible $\Phi_{10}^{6}/\eta^{144}$.  The
+classification invariant and the Fake-Monster invariant at weight~$12$
+are independent observables, consistent with the
+$\Delta_5$~vs~$\Phi_{12}$ cache entry (\texttt{W16-BORCH-GRIT-WEIGHT})
+in \texttt{chapters/examples/w\_algebras\_deep.tex}.  Cross-ref
+\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
+\texttt{borcherds\_leg\_is\_fake\_monster()}.
+\cite{Borcherds1998,GritsenkoNikulin1998}.
+\end{remark}
+
+\begin{remark}[Asymptotic dominance refinement through weight $12$]
+\label{rem:nc-wave18-DNA-asymptotic-11-12}
+The ratio $\dim c_n^{(K3)}/d_n$ tracked at Wave~$17$
+(Remark~\ref{rem:nc-wave17-DNA-asymptotic}) grows strictly monotonically
+in $n$ through the Wave-$18$ regime.  With the Hardy--Ramanujan leading
+estimate $\dim c_n^{(K3)}\sim n^{-27/4}\exp(4\pi\sqrt n)$ and the
+Padovan dimension $d_n$ supplied by the Brown~$2011$ recurrence
+(Brown $2011$ Thm~$1.1$; $d_{11} = 7$, $d_{12} = 9$),
+\[
+\frac{\dim c_{10}^{(K3)}}{d_{10}}\sim 6.4\cdot 10^{9},
+\qquad
+\frac{\dim c_{11}^{(K3)}}{d_{11}}\sim 1.7\cdot 10^{10},
+\qquad
+\frac{\dim c_{12}^{(K3)}}{d_{12}}\sim 4.6\cdot 10^{10}.
+\]
+(Numerical evaluation from
+\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
+\texttt{borcherds\_over\_mzv\_ratio}; matches the Wave-$17$ $6.5\cdot 10^{9}$
+at $n = 10$ to within the rounding of the leading Hardy--Ramanujan term.)
+The Wave-$18$ regime therefore confirms that the infinite tail of the
+$A_\infty$-tower is K$3$-specific: for every finite weight truncation,
+the Borcherds leg contributes roughly ten orders of magnitude more
+independent coefficient directions than the motivic MZV legs, and the
+Mittag--Leffler pro-limit is unconditionally well-defined on the nose
+through weight~$12$ because each truncated weight still has finite
+Hardy--Ramanujan dimension (circle method of
+Hardy--Ramanujan~$1918$ applied to $1/\Phi_{10}$ Fourier expansion,
+Gritsenko--Nikulin~$1998$ Sec~$4$).  Cross-ref
+\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
+\texttt{borcherds\_over\_mzv\_ratio()}.
+\cite{HardyRamanujan1918,GritsenkoNikulin1998,Brown2011}.
 \end{remark}

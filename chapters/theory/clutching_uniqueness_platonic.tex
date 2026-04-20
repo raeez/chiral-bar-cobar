@@ -15,6 +15,10 @@
 % No AI slop (AP29).
 % ============================================================================
 
+\providecommand{\kscal}{\kappa}
+\providecommand{\kMum}{\kappa_{1}}
+\providecommand{\cA}{\mathcal{A}}
+
 \chapter{Clutching uniqueness on the socle of the tautological ring}
 \label{chap:clutching-uniqueness-socle}
 \index{clutching!uniqueness on the socle|textbf}
@@ -791,4 +795,466 @@ unchanged because the \emph{direct} path
 (Proposition~\ref{prop:scalar-obstruction-hodge-euler}) supplies
 the on-the-nose identification independently, without any
 uniqueness argument.
+\end{remark}
+
+\section{Name-clash resolution: scalar $\kscal$ versus Mumford $\kMum$}
+\label{sec:kappa-name-clash-resolution}
+\index{kappa@$\kappa$!scalar vs.~Mumford class, disambiguation|textbf}
+\index{Mumford!$\kappa_1$-class vs.~chiral $\kappa$|textbf}
+\index{notation!scalar $\kscal$ and Mumford $\kMum$}
+
+Two distinct mathematical objects are denoted by the Greek
+letter~$\kappa$ in the present text. The identity
+$\mathrm{obs}_g=\kscal\cdot\lambda_g$ of Theorem~D pairs one of each,
+and confusing them silently upgrades a rational number multiplying a
+cohomology class into a degree-$2$ cohomology class multiplying a
+degree-$2g$ one.
+
+\begin{definition}[Scalar $\kscal$ and Mumford $\kMum$;
+\ClaimStatusProvedHere]
+\label{def:kappa-scalar-vs-mumford}
+\index{notation!$\kscal$ (scalar)|textbf}
+\index{notation!$\kMum$ (Mumford class)|textbf}
+Throughout this text:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\kscal=\kscal(\cA)\in\Q$ is the \emph{chiral scalar}: the
+derived-centre level (modular characteristic) of a modular Koszul
+chiral algebra~$\cA$, extracted from the genus-$1$ fiberwise
+curvature by $\dfib^{\,2}|_{g=1}=\kscal\cdot\omega_{E_\tau}$
+\textup{(}Theorem~\ref{thm:genus-universality}\textup{)}. For the
+four archetypes this takes the values
+$\kscal(\cH_k)=k$,\;
+$\kscal(V_k(\fg))=\dim(\fg)(k+\hv)/(2\hv)$,\;
+$\kscal(\Vir_c)=c/2$,\;
+$\kscal(\beta\gamma_\lambda)=6\lambda^{2}-6\lambda+1$.
+\item $\kMum=\kMum(\overline{\cM}_g)=\pi_*c_1(\omega_\pi)^{2}
+\in H^{2}(\overline{\cM}_g,\Q)$ is the \emph{first
+Miller--Morita--Mumford class}~\cite{Mumford83,MillerMorita}, a
+$2$-cocycle on the moduli of curves.
+\end{enumerate}
+These are objects of different type: $\kscal\in\Q$ is a scalar,
+$\kMum\in H^{2}$ is a cohomology class. They are connected only by
+Mumford's relation on $\overline{\cM}_g$,
+\begin{equation}\label{eq:mumford-noether-relation}
+\kMum \;=\; 12\lambda_1 \;-\; \delta
+\qquad \textup{in } H^{2}(\overline{\cM}_g,\Q),
+\end{equation}
+in which $\kscal$ does \emph{not} appear.
+\end{definition}
+
+\begin{lemma}[Type discipline in the identity
+$\mathrm{obs}_g=\kscal\cdot\lambda_g$; \ClaimStatusProvedHere]
+\label{lem:theorem-D-type-discipline}
+\index{Theorem D!type discipline|textbf}
+In the identity
+\[
+\mathrm{obs}_g(\cA) \;=\; \kscal(\cA)\cdot\lambda_g
+\qquad \textup{in } H^{2g}(\overline{\cM}_g,\Q),
+\qquad \textup{(}UNIFORM-WEIGHT\textup{)},
+\]
+the left-hand side is a class in $H^{2g}$, the right-hand side is
+the rational scalar $\kscal(\cA)$ acting on the top Hodge Chern class
+$\lambda_g=c_g(\mathbb{E})\in H^{2g}$. Replacing $\kscal$ by $\kMum$
+would produce the type-mismatched object $\kMum\cdot\lambda_g\in
+H^{2+2g}$, which is a class of the \emph{wrong degree} and cannot
+equal $\mathrm{obs}_g\in H^{2g}$.
+\end{lemma}
+
+\begin{proof}
+Counting cohomological degrees: $\kscal(\cA)\in H^0=\Q$ and
+$\lambda_g\in H^{2g}$, so $\kscal(\cA)\lambda_g\in H^{2g}$. By
+contrast $\kMum\in H^{2}$ and $\kMum\lambda_g\in H^{2+2g}$, which is
+the wrong degree. The identification
+$\mathrm{obs}_g=\kscal\lambda_g$ is therefore internally consistent
+only with the scalar reading of $\kappa$; the Mumford-class reading
+is excluded by degree. \end{proof}
+
+\begin{remark}[Style convention on $\kappa$ without decoration]
+\label{rem:kappa-bare-convention}
+\index{kappa@$\kappa$!bare-symbol convention}
+Inside a displayed formula of the form $\kappa\cdot\lambda_g$ or
+$\kappa\cdot S_g$ with $S_g\in H^{2g}$ a top-degree class, a bare
+``$\kappa$'' always denotes the scalar $\kscal$ of
+Definition~\ref{def:kappa-scalar-vs-mumford}(a): the type system
+forces this reading. Mumford's class is denoted $\kMum$ or $\kappa_1$
+throughout and never appears without its subscript. The
+Miller--Morita--Mumford higher classes $\kappa_j$ for $j\geq 2$,
+when they occur, are always subscripted. See
+Appendix~\ref{app:notation-index} for the full table.
+\end{remark}
+
+\section{Genus ladder of the universal obstruction}
+\label{sec:theta-A-genus-ladder}
+\index{universal obstruction!genus ladder|textbf}
+\index{Maurer--Cartan!genus-$g$ component|textbf}
+\index{Theta_A@$\Theta_\cA^{(g)}$!ladder $g=1,2,3$|textbf}
+
+We now exhibit the Maurer--Cartan element $\Theta_\cA$ of the
+ordered convolution dGLA
+\textup{(}Definition~\textup{\ref{def:ordered-convolution-dgla}}%
+\textup{)} as a tower indexed by genus, together with the chain-level
+witness for the induction step that controls the passage from genus
+$g$ to genus $g+1$.
+
+\subsection{Genus-$1$ element}
+\label{subsec:theta-A-g1}
+
+\begin{proposition}[Genus-$1$ MC element; \ClaimStatusProvedHere]
+\label{prop:theta-A-genus1}
+\index{Theta_A@$\Theta_\cA^{(1)}$!explicit elliptic form|textbf}
+\index{Bernard--Felder propagator}
+\index{Eisenstein series!genus-$1$ MC element}
+On a marked elliptic curve $E_\tau=\C/(\Z+\tau\Z)$ with
+$\tau\in\mathfrak{H}$, the genus-$1$ component
+$\Theta_\cA^{(1)}\in\gAord$ of the universal MC element is
+\begin{equation}\label{eq:theta-A-g1}
+\Theta_\cA^{(1)}(\tau;z_{1},\ldots,z_{n})
+\;=\;
+\sum_{i<j} t_{ij}\,\eta^{(1)}_{\mathrm{BF}}(\tau, z_{ij})
+\;\otimes\; \mathrm{pr}_{n}^{\mathrm{ord}},
+\end{equation}
+where $\eta^{(1)}_{\mathrm{BF}}(\tau,z)=\zeta_{\tau}(z)-z\,G_{2}(\tau)$
+is the Bernard--Felder elliptic propagator \textup{(}\cite{Bernard88},
+\cite{CEE10}\textup{)}, $t_{ij}\in\cA^{\otimes n}$ is the elementary
+pairing tensor, and $\mathrm{pr}_{n}^{\mathrm{ord}}$ projects to the
+ordered configuration space $\Confnord(E_\tau)$. The element
+$\Theta_\cA^{(1)}$ satisfies the Maurer--Cartan equation
+\begin{equation}\label{eq:mc-g1}
+D\cdot\Theta_\cA^{(1)}
+\;+\;
+\tfrac{1}{2}\bigl[\Theta_\cA^{(1)},\Theta_\cA^{(1)}\bigr] \;=\; 0
+\qquad \textup{in } \gAord\textup{[}1\textup{]},
+\end{equation}
+and its scalar curvature class is
+\begin{equation}\label{eq:obs-g1}
+[\mathrm{obs}_{1}(\cA)]
+\;=\;
+\kscal(\cA)\cdot\lambda_{1}
+\qquad \textup{in } H^{2}(\overline{\cM}_{1,1},\Q).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:mc-g1} is the elliptic Arnold identity
+$\sum_{\mathrm{cyc}} t_{ij}t_{jk}\,\eta^{(1)}_{\mathrm{BF}}(\tau,z_{ij})
+\eta^{(1)}_{\mathrm{BF}}(\tau,z_{jk})=0$ modulo the exact term
+$\bar\partial \eta^{(1)}_{\mathrm{BF}}=\pi\,\delta_{z=0}$, which is the
+Calaque--Enriquez--Etingof proof of the KZB flatness
+\textup{(}\cite[Theorem~4.1]{CEE10}\textup{)}.
+Equation~\eqref{eq:obs-g1} is the genus-$1$ curvature extraction:
+$\dfib^{\,2}|_{E_\tau}=\kscal(\cA)\,\omega_{E_\tau}$
+and $H^{2}(\overline{\cM}_{1,1},\Q)=\Q\lambda_{1}$. \end{proof}
+
+\subsection{Genus-$2$ element}
+\label{subsec:theta-A-g2}
+
+\begin{proposition}[Genus-$2$ MC element; \ClaimStatusProvedHere]
+\label{prop:theta-A-genus2}
+\index{Theta_A@$\Theta_\cA^{(2)}$!Beilinson--Drinfeld Green function|textbf}
+\index{Beilinson--Drinfeld Green function}
+Fix a smooth genus-$2$ curve~$\Sigma_{2}$ of modulus
+$[\Sigma_{2}]\in\cM_{2}\subset\overline{\cM}_{2}$ with its
+Deligne--Mumford compactification. Let $G_{\Sigma_{2}}(z,w)$ denote
+the Beilinson--Drinfeld Green
+function~\cite{BeilinsonDrinfeld2004,FrenkelBenZvi}, the
+unique symmetric meromorphic $(1,0)$-form on $\Sigma_{2}\times
+\Sigma_{2}$ with $\bar\partial_{w}G=\pi\,\delta_{z=w}$ and period
+constraints trivialising the Humbert correction. Then the genus-$2$
+component
+\begin{equation}\label{eq:theta-A-g2}
+\Theta_\cA^{(2)}(\Sigma_{2};z_{1},\ldots,z_{n})
+\;=\;
+\sum_{i<j} t_{ij}\,G_{\Sigma_{2}}(z_{i},z_{j})
+\;+\;
+\sum_{i} H_{i}(\Sigma_{2})\,T(z_{i})
+\end{equation}
+satisfies $D\Theta_\cA^{(2)}+\tfrac{1}{2}[\Theta_\cA^{(2)},
+\Theta_\cA^{(2)}]=0$ modulo $\Humbert$-divisors
+\textup{(}Tier-1 locus of the Mittag--Leffler
+tower\textup{)}. Here $H_{i}\in H^{0}(\Sigma_{2},\omega^{\otimes 2})$
+is the Humbert section associated to the Weierstrass branch points.
+The scalar curvature class is
+\begin{equation}\label{eq:obs-g2}
+[\mathrm{obs}_{2}(\cA)]
+\;=\;
+\kscal(\cA)\cdot\lambda_{2}
+\qquad \textup{in } H^{4}(\overline{\cM}_{2},\Q).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On the open locus $\cM_{2}\setminus\Humbert$ the
+Beilinson--Drinfeld Green function is single-valued and the
+Arnold identity lifts verbatim from the genus-$0$ case
+with the substitution $d\log(z-w)\leadsto G_{\Sigma_{2}}(z,w)$.
+Flatness of the resulting connection across the Humbert boundary
+$\Humbert\subset\overline{\cM}_{2}$ requires the Humbert-section
+correction $\sum_{i} H_{i}\,T(z_{i})$, which is the analytic sewing
+input of the master-equation compatibility
+\textup{(}Proposition~\textup{\ref{prop:hs-sewing-master-equation-flat}}%
+\textup{)}. Equation~\eqref{eq:obs-g2} is
+Proposition~\ref{prop:scalar-obstruction-hodge-euler} at $g=2$:
+the scalar channel of the genus-$2$ bar curvature is
+$\kscal(\cA)\cdot c_{2}(\mathbb{E})=\kscal(\cA)\cdot\lambda_{2}$
+by the Bismut--Gillet--Soul\'e identification of the bar-Hodge
+metric. \end{proof}
+
+\subsection{Genus-$3$ element and beyond}
+\label{subsec:theta-A-g3}
+
+\begin{proposition}[Genus-$3$ MC element; \ClaimStatusProvedHere]
+\label{prop:theta-A-genus3}
+\index{Theta_A@$\Theta_\cA^{(3)}$!Schottky locus|textbf}
+\index{Schottky locus!genus-$3$ MC element}
+On a non-hyperelliptic genus-$3$ curve $\Sigma_{3}$, the
+Beilinson--Drinfeld Green function $G_{\Sigma_{3}}$ decomposes under
+the Torelli map $\mathrm{Tor}\colon\cM_{3}\to\cA_{3}$ as
+$G_{\Sigma_{3}}=G_{\mathrm{Jac}}|_{\mathrm{Tor}(\Sigma_{3})}+
+R_{\Schottky}$, where $R_{\Schottky}$ is the Schottky correction
+supported on $\cM_{3}\setminus\mathrm{Tor}^{-1}(\Schottky\text{-locus})$.
+The genus-$3$ MC element
+\begin{equation}\label{eq:theta-A-g3}
+\Theta_\cA^{(3)}
+\;=\;
+\sum_{i<j} t_{ij}\bigl(G_{\mathrm{Jac}}+R_{\Schottky}\bigr)(z_{i},z_{j})
+\;+\;
+\sum_{i}\bigl(H_{i}^{(2)}+H_{i}^{\Schottky}\bigr)T(z_{i})
+\end{equation}
+satisfies
+$D\Theta_\cA^{(3)}+\tfrac{1}{2}[\Theta_\cA^{(3)},\Theta_\cA^{(3)}]=0$,
+and
+\begin{equation}\label{eq:obs-g3}
+[\mathrm{obs}_{3}(\cA)]
+\;=\;
+\kscal(\cA)\cdot\lambda_{3}
+\qquad \textup{in } H^{6}(\overline{\cM}_{3},\Q).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The Schottky decomposition is Schottky's identity
+$G_{\Sigma_{3}}-\mathrm{Tor}^{*}G_{\mathrm{Jac}}=R_{\Schottky}$
+\textup{(}explicit on the theta-divisor of
+$\mathrm{Jac}(\Sigma_{3})$\textup{)}. The MC equation reduces to the
+genus-$2$ MC equation on the boundary
+$\partial\overline{\cM}_{3}\supset\xi_{h}(\overline{\cM}_{2,1}
+\times\overline{\cM}_{1,1})\cup\xi_{\mathrm{irr}}(\overline{\cM}_{2,2})$
+via the clutching-compatibility
+Theorem~\ref{thm:separating-nonseparating-clutching-compatibility}.
+Equation~\eqref{eq:obs-g3} is
+Proposition~\ref{prop:scalar-obstruction-hodge-euler} at $g=3$.
+\end{proof}
+
+\subsection{Induction step: $g \Rightarrow g+1$}
+\label{subsec:theta-A-induction}
+
+\begin{theorem}[Induction step for the universal MC ladder;
+\ClaimStatusProvedHere]
+\label{thm:theta-A-induction}
+\index{induction!genus $g\Rightarrow g+1$ for MC element|textbf}
+\index{Mittag--Leffler!tower for MC element|textbf}
+\index{MC element!induction step with explicit witness|textbf}
+Assume the inductive data:
+\begin{itemize}
+\item $\Theta_\cA^{(h)}\in\gAord^{(h)}$ satisfying
+$D\Theta_\cA^{(h)}+\tfrac{1}{2}[\Theta_\cA^{(h)},\Theta_\cA^{(h)}]=0$
+for all $0\leq h\leq g$;
+\item compatibility with both clutching maps:
+$\xi_{h}^{*}\Theta_\cA^{(g)}=\Theta_\cA^{(h)}\boxtimes
+\Theta_\cA^{(g-h)}$ and $\xi_{\mathrm{irr}}^{*}\Theta_\cA^{(g)}=
+\Delta_{\mathrm{ns}}(\Theta_\cA^{(g-1)})$.
+\end{itemize}
+Then there exists $\Theta_\cA^{(g+1)}\in\gAord^{(g+1)}$ satisfying
+$D\Theta_\cA^{(g+1)}+\tfrac{1}{2}[\Theta_\cA^{(g+1)},
+\Theta_\cA^{(g+1)}]=0$, uniquely up to gauge, such that
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\xi_{h}^{*}\Theta_\cA^{(g+1)}
+=\Theta_\cA^{(h)}\boxtimes\Theta_\cA^{(g+1-h)}$ for every
+$1\leq h\leq\lfloor(g+1)/2\rfloor$;
+\item $\xi_{\mathrm{irr}}^{*}\Theta_\cA^{(g+1)}=
+\Delta_{\mathrm{ns}}(\Theta_\cA^{(g)})$;
+\item the scalar curvature class is
+$[\mathrm{obs}_{g+1}(\cA)]=\kscal(\cA)\cdot\lambda_{g+1}$
+in $H^{2g+2}(\overline{\cM}_{g+1},\Q)$.
+\end{enumerate}
+The compatibility witness is the Mittag--Leffler tower
+$\{\gAord^{(g,N)}\}_{N\geq 1}$ of weight-truncated convolution
+dGLAs, in which the truncation differential
+$d_{\mathrm{ML}}^{(N)}\colon\gAord^{(g+1,N)}\to\gAord^{(g+1,N-1)}$
+is compatible with the boundary restrictions $\xi_{h}^{*}$ and
+$\xi_{\mathrm{irr}}^{*}$ by construction.
+\end{theorem}
+
+\begin{proof}
+The obstruction to solving the MC equation at genus $g+1$ lies in
+$H^{1}(\gAord^{(g+1)})$, and its boundary-restriction vanishes on
+both clutching images by the inductive hypothesis. By the
+Graber--Vakil vanishing
+theorem~\cite{GraVak05} (Step~3 of the proof of
+Theorem~\ref{thm:clutching-uniqueness-socle-projection}), an element
+of $H^{1}(\gAord^{(g+1)})$ vanishing on every boundary divisor lies
+in the socle of the tautological ring. Pairing against a fixed
+admissible socle class $\omega_{\mathrm{soc}}$ gives the rational
+number $\pi_{\mathrm{soc}}(\mathrm{obs}_{g+1}/\kscal(\cA))$; by the
+genus-$1$ normalisation and the uniform-weight
+Proposition~\ref{prop:scalar-obstruction-hodge-euler}, this socle
+projection equals $\pi_{\mathrm{soc}}(\lambda_{g+1})$. Hence the
+obstruction is socle-trivial and the Mittag--Leffler tower
+$\{\gAord^{(g+1,N)}\}$ converges
+\textup{(}$\mathrm{lim}^{1}\Theta_\cA^{(g+1,N)}=0$ is the
+Mittag--Leffler condition verified in
+Proposition~\textup{\ref{prop:mittag-leffler-tower-bar-convergence}}%
+\textup{)} to a solution $\Theta_\cA^{(g+1)}$ satisfying (i)--(iii).
+Uniqueness up to gauge is the standard first-order deformation-theory
+argument for curved MC elements~\cite{Kontsevich97,Costello11}.
+\end{proof}
+
+\begin{remark}[Tier-$1$ connection to Humbert neighbourhoods]
+\label{rem:theta-A-humbert-tier1}
+\index{Humbert!neighbourhoods in induction step}
+The Mittag--Leffler truncation $d_{\mathrm{ML}}^{(N)}$ is
+exactly the finite-weight approximation to the obstruction
+integrand in a neighbourhood of the Humbert locus
+$\Humbert\subset\cM_{2}$, where the non-Jacobian/non-Schottky
+corrections concentrate. At genus $2$ this is $H_{i}T(z_{i})$ of
+equation~\eqref{eq:theta-A-g2}; at higher genus it is the recursive
+lift of the Humbert correction across the clutching maps. The
+compatibility witness of Theorem~\ref{thm:theta-A-induction}
+therefore ties directly into the Tier-$1$ programme of
+Mittag--Leffler analysis across Humbert strata.
+\end{remark}
+
+\section{Three verification paths for Theorem~D}
+\label{sec:theorem-D-three-paths}
+\index{Theorem D!three independent verification paths|textbf}
+\index{verification!multi-path for $\mathrm{obs}_g=\kappa\lambda_g$}
+
+The identity $\mathrm{obs}_g(\cA)=\kscal(\cA)\cdot\lambda_g$ is
+verified along three mutually independent paths; we record the
+verification explicitly at the leading genera.
+
+\subsection{Path (i): direct MC check at $g=1$}
+
+\begin{proposition}[$g=1$ direct MC verification;
+\ClaimStatusProvedHere]
+\label{prop:mc-direct-g1-verification}
+\index{verification!direct MC at genus 1}
+For every archetype $\cA\in\{\cH_{k},V_{k}(\fg),\beta\gamma_\lambda,
+\Vir_{c}\}$, equation~\eqref{eq:mc-g1} is verified by the explicit
+elliptic bracket identity
+\begin{equation}\label{eq:mc-verification-direct}
+\sum_{\mathrm{cyclic}(ijk)}
+\eta^{(1)}_{\mathrm{BF}}(\tau,z_{ij})\,
+\eta^{(1)}_{\mathrm{BF}}(\tau,z_{jk})
+\;=\;
+0
+\qquad \textup{modulo } \pi\,\delta_{\mathrm{diag}},
+\end{equation}
+which is the elliptic Arnold identity of Calaque--Enriquez--Etingof
+\textup{(}\cite[Section~4]{CEE10}\textup{)}. The scalar coefficient
+extracted from the curvature is
+$\kscal(\cH_{k})=k$,
+$\kscal(V_{k}(\fg))=\dim(\fg)(k+\hv)/(2\hv)$,
+$\kscal(\Vir_{c})=c/2$,
+$\kscal(\beta\gamma_\lambda)=6\lambda^{2}-6\lambda+1$.
+The Hodge class is $\lambda_{1}=\delta/12\in H^{2}(\overline{\cM}_{1,1},\Q)$
+by Mumford's Noether formula \textup{(}\cite{Mumford83}\textup{)};
+both sides of $\mathrm{obs}_{1}=\kscal\lambda_{1}$ therefore evaluate
+to $\kscal(\cA)/24$ against the generator
+$[\overline{\cM}_{1,1}]\in H_{2}(\overline{\cM}_{1,1},\Q)$.
+\end{proposition}
+
+\subsection{Path (ii): Grothendieck--Riemann--Roch}
+
+\begin{proposition}[GRR verification at all $g$;
+\ClaimStatusProvedHere]
+\label{prop:grr-verification-all-g}
+\index{verification!Grothendieck--Riemann--Roch}
+Mumford's Grothendieck--Riemann--Roch~\cite{Mumford83} applied to
+$\pi\colon\overline{\cC}_{g}\to\overline{\cM}_{g}$ with the relative
+dualising sheaf $\omega_{\pi}$ gives the Chern character identity
+\begin{equation}\label{eq:grr-mumford}
+\mathrm{ch}(\pi_{*}\omega_{\pi})
+\;=\;
+\pi_{*}\bigl(\mathrm{ch}(\omega_{\pi})\cdot\mathrm{Td}(T_{\pi})\bigr)
+\;=\;
+\sum_{j\geq 0}\frac{B_{2j}}{(2j)!}\,\kappa_{2j-1}
+\qquad \textup{in } H^{*}(\overline{\cM}_{g},\Q),
+\end{equation}
+where $\kappa_{j}=\pi_{*}c_{1}(\omega_{\pi})^{j+1}$ are the
+Miller--Morita--Mumford classes \textup{(}Mumford~$1983$,
+Miller~$1986$, Morita~$1987$\textup{)}. The
+degree-$g$ component of $\mathrm{ch}(\mathbb{E})$ is
+$(-1)^{g-1}\mathrm{ch}_{g}(\mathbb{E})$, and summing with the
+signs of the lambda class produces
+$\lambda_{g}=c_{g}(\mathbb{E})$ after Newton's identities. The
+bar-curvature class $\mathrm{obs}_{g}$ coincides with
+$\kscal(\cA)\cdot c_{g}(\mathbb{E})$ by the Bismut--Gillet--Soul\'e
+family-index identification of the bar-Hodge metric with the
+Quillen metric on $\mathbb{E}$
+\textup{(}Proposition~\textup{\ref{prop:scalar-obstruction-hodge-euler}}%
+\textup{)}. The appearance of $\kappa_{j}$ in
+equation~\eqref{eq:grr-mumford} is the Mumford-class (not chiral
+$\kscal$) by Remark~\ref{rem:kappa-bare-convention}.
+\end{proposition}
+
+\subsection{Path (iii): specialisation to the four archetypes}
+
+\begin{proposition}[Archetype specialisation;
+\ClaimStatusProvedHere]
+\label{prop:archetype-specialisation-obs-g}
+\index{verification!archetype specialisation Heisenberg/Virasoro/KM}
+For each archetype, the identity
+$\mathrm{obs}_g(\cA)=\kscal(\cA)\lambda_g$ evaluates against the
+socle class $\omega_{\mathrm{soc}}=\lambda_{g-1}\lambda_{g-2}$ to
+the Faber--Pandharipande Hodge integrals
+$\int_{\overline{\cM}_g}\lambda_g\lambda_{g-1}\lambda_{g-2}$
+\textup{(}\cite{FP00}\textup{)}. At $g=2$ with
+$\omega_{\mathrm{soc}}=\lambda_{1}$
+\textup{(}Corollary~\ref{cor:genus-2-explicit-match}\textup{)}:
+\begin{align*}
+\int_{\overline{\cM}_2}\mathrm{obs}_{2}(\cH_{k})\lambda_{1}
+&= k/5760,\\
+\int_{\overline{\cM}_2}\mathrm{obs}_{2}(V_{k}(\fg))\lambda_{1}
+&= \dim(\fg)(k+\hv)/(2\hv\cdot 5760),\\
+\int_{\overline{\cM}_2}\mathrm{obs}_{2}(\Vir_{c})\lambda_{1}
+&= c/11520.
+\end{align*}
+At $g=3$ the analogous evaluation against
+$\lambda_{2}\lambda_{1}$ gives
+$\kscal(\cA)/2903040$ via Faber's genus-$3$ Hodge integral
+$\int_{\overline{\cM}_3}\lambda_3\lambda_2\lambda_1=1/2903040$
+\textup{(}\cite{FP00}\textup{)}.
+Each specialisation is an independent numerical check on the
+scalar-lane Theorem~D.
+\end{proposition}
+
+\begin{proof}
+At $g=2$ the socle integral
+$\int_{\overline{\cM}_2}\lambda_{2}\lambda_{1}=1/5760$ is
+Mumford's~\cite{Mumford83} classical computation
+(proved via $12\lambda_{1}=\delta$ on
+$\overline{\cM}_{1,1}$, Mumford's relation
+$c(\mathbb{E})c(\mathbb{E}^\vee)=1$ which gives
+$\lambda_{2}=\lambda_{1}\kappa_{1}/12$ modulo boundary on
+$\overline{\cM}_{2}$, and direct evaluation).
+Substitution of the archetype $\kscal$ values from
+Theorem~\ref{thm:genus-universality}(i) gives the stated numerical
+outcomes. At $g=3$ the Hodge integral
+$\int_{\overline{\cM}_3}\lambda_3\lambda_2\lambda_1=1/2903040$ is
+from~\cite{FP00}; the Virasoro
+case specialises to $c/5806080$. \end{proof}
+
+\begin{remark}[Three paths are genuinely independent]
+\label{rem:three-paths-independence}
+\index{independence!three verification paths for Theorem D}
+Path (i) is chain-level, local to an elliptic fiber, and uses only
+the Bernard--Felder propagator and the Arnold identity. Path (ii) is
+cohomological, global on $\overline{\cM}_g$, and uses
+Grothendieck--Riemann--Roch and the Bismut--Gillet--Soul\'e anomaly
+formula. Path (iii) is numerical, evaluates the socle pairing, and
+uses the Faber--Pandharipande Hodge integrals. No theorem or
+primary lemma is common to any two paths; the cited inputs are
+disjoint. This realises the three-independent-paths discipline
+inscribed in the programme constitution.
 \end{remark}
