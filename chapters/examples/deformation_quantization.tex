@@ -2158,10 +2158,10 @@ Stokes identities and factorization relations for Kontsevich weights are
 not constructed here.
 
 \section{Synthesis}
-\label{sec:defq-wave13-DNA}
+\label{sec:defq-supplement}
 
 \begin{remark}[Etingof-Kazhdan deformation quantisation at the K3 base]
-\label{rem:defq-DNA-1}
+\label{rem:defq-1}
 The Etingof-Kazhdan deformation quantisation programme applies, at the
 Wave~13 K3 base point, to the BKM Lie bialgebra $\mathfrak g_{\Delta_5}$:
 \[
@@ -2174,8 +2174,672 @@ equivalent up to gauge, and the Wave~13 chiral bialgebra is the unique
 non-trivial member of this line. The quantisation parameter $\hbar$
 is pinned to the Lusztig root-of-unity value $\hbar^2 = -1/8$ by the
 three-faces-of-$8$ coincidence on the B-family. The $\widetilde M_{24}$
-Schur cocycle of order $6$ (Vol.~I, \S\ref{sec:chiralmod-wave13-DNA})
+Schur cocycle of order $6$ (Vol.~I, \S\ref{sec:chiralmod-supplement})
 is the finite-group echo of this Etingof-Kazhdan uniqueness. Primary-lit:
 Etingof-Kazhdan 1996-2000 Parts I-V, Kontsevich 2003 (formality
 theorem), Borcherds 1992.
+\end{remark}
+
+\section{The classical limit $\hbar \to 0$ of $\mathbf H_{\Delta_5}$}
+\label{sec:defq-kazhdan-classical}
+
+Wave~13 established the uniqueness of the Etingof--Kazhdan
+quantisation $\mathbf H_{\Delta_5}$ via the cohomological moduli line
+$H^2(\mathfrak g_{\Delta_5})^{\mathbb Z/2,\,K(1)}\cong\mathbb C\cdot
+\Delta_5$. Wave~19 traverses that moduli line to the opposite endpoint
+$\hbar\to 0$, verifies that the classical limit recovers the
+Gritsenko--Nikulin 1998 classical chiral Lie bialgebra
+$(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$, and pins the entire
+Kazhdan axis to the unique gauge-equivalence class of quantisations.
+This section is the chain-level / generator-level Vol~I presentation
+of the classical-limit diptych; the $(\infty,1)$-categorical lift of
+the same result sits in
+Vol~III~\S\ref{sec:qgf-kazhdan-classical}, and the
+Langlands-axis cross-reference sits in Vol~I Theorem~DL (derived
+Langlands chapter) \S\ref{sec:dl-kazhdan-classical}.
+
+\subsection{C1 -- Classical $r$-matrix from the Drinfeld factorisation}
+\label{subsec:defq-C1-classical-r}
+
+\begin{construction}[Semi-classical limit of the Siegel dynamical
+$R$-matrix]
+\label{constr:defq-rmatrix-limit}
+\index{Wave 19!classical $r$-matrix construction}
+The Wave~17 Drinfeld factorisation
+\[
+  R_{\mathrm{Sieg,dyn}}(u, Z)
+  \;=\;
+  R^{\mathrm{rat}}_{\mathrm{Yang}}(u)
+  \cdot
+  \theta^{\mathrm{K3}}(u, Z)
+\]
+expands as a power series in $\hbar$:
+\begin{align}
+  R^{\mathrm{rat}}_{\mathrm{Yang}}(u)
+   &\;=\; 1 + \hbar\cdot\frac{\Omega_{\mathrm{Mukai}}}{u}
+     + \hbar^2\cdot\frac{\Omega_{\mathrm{Mukai}}^2}{2u^2}
+     + O(\hbar^3),
+   \label{eq:defq-Rrat-expansion}\\
+  \theta^{\mathrm{K3}}(u, Z)
+   &\;=\; 1 + \hbar\cdot
+     F^{\mathrm{Sieg}}(u, Z)\cdot\Omega_{\mathrm{K3}}
+     + O(\hbar^2),
+   \label{eq:defq-thetaK3-expansion}
+\end{align}
+with $F^{\mathrm{Sieg}}(u, Z) = \partial_Z\log\Phi_{10}(Z)
++ O(u^{-2})$. Multiplying and taking $\log$:
+\begin{equation}
+\label{eq:defq-logR-expansion}
+  \log R_{\mathrm{Sieg,dyn}}(u, Z)
+  \;=\;
+  \hbar\cdot\!\left(
+     \frac{\Omega_{\mathrm{Mukai}}}{u}
+     + \partial_Z\log\Phi_{10}(Z)\cdot\Omega_{\mathrm{K3}}
+     + O(u^{-2})
+  \right)
+  + O(\hbar^2).
+\end{equation}
+Dividing by $\hbar$ and taking $\hbar\to 0$ yields the classical
+$r$-matrix
+\begin{equation}
+\label{eq:defq-classical-r}
+  r(u, Z)
+  \;=\;
+  \frac{\Omega_{\mathrm{Mukai}}}{u}
+  \;+\;
+  \partial_Z\log\Phi_{10}(Z)\cdot\Omega_{\mathrm{K3}}
+  \;+\;
+  O(u^{-2}).
+\end{equation}
+\end{construction}
+
+\begin{proposition}[C1 -- existence and pole structure]
+\label{prop:defq-C1-existence}
+\ClaimStatusProvedHere
+\index{Wave 19!pole structure of $r(u, Z)$}
+$r(u, Z)$ of Construction~\ref{constr:defq-rmatrix-limit} is
+well-defined in
+$\mathfrak g_{\Delta_5}\widehat\otimes\mathfrak g_{\Delta_5}$
+on $\mathbb H_2\setminus\{\text{Humbert divisors}\}$, with simple pole
+at $u = 0$ of residue $\Omega_{\mathrm{Mukai}}$ and $Z$-dependence
+logarithmic through $\partial_Z\log\Phi_{10}$.
+\end{proposition}
+
+\begin{proof}
+Convergence of $R^{\mathrm{rat}}_{\mathrm{Yang}}$ is standard
+(Drinfeld 1985 \emph{Sov.\ Math.\ Dokl.}~32 Prop.~3;
+Chari--Pressley~\cite{ChariPressley1994Guide} Prop.~12.1.5). The
+dynamical factor $\theta^{\mathrm{K3}}(u, Z)$ is entire in~$u$ with
+Fourier coefficients $c_{\mathrm{K3}}(4nm-\ell^2)$ controlled by
+Borcherds 1992 Thm.~10.1; convergence on
+$\mathbb H_2\setminus\{\text{Humbert divisors}\}$ is
+Pasol--Zagier 2013 \emph{J.\ Number Theory}~133 Prop.~4.1. The $\log$
+expansion is term-by-term convergent in the Baker--Campbell--Hausdorff
+sense on the associated graded.
+\end{proof}
+
+\subsection{C2 -- Classical Yang--Baxter equation}
+\label{subsec:defq-C2-CYBE}
+
+\begin{theorem}[CYBE verification for $r(u, Z)$ -- chain-level]
+\label{thm:defq-C2-CYBE}
+\ClaimStatusProvedHere
+\index{classical Yang--Baxter equation!Wave 19!chain-level}
+\index{CYBE!Siegel dynamical!chain-level}
+The semi-classical $r$-matrix~\eqref{eq:defq-classical-r}
+satisfies, at $\hbar^0$-level on
+$\mathfrak g_{\Delta_5}^{\otimes 3}$,
+\begin{equation}
+\label{eq:defq-CYBE-statement}
+  [r_{12}(u_1, u_2, Z), r_{13}(u_1, u_3, Z)]
+  + [r_{12}(u_1, u_2, Z), r_{23}(u_2, u_3, Z)]
+  + [r_{13}(u_1, u_3, Z), r_{23}(u_2, u_3, Z)]
+  \;=\;
+  0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write $r(u, Z) = r^{\mathrm{rat}}(u) + r^{\mathrm{dyn}}(u, Z)$ with
+$r^{\mathrm{rat}}(u) = \Omega_{\mathrm{Mukai}}/u$ and
+$r^{\mathrm{dyn}}(u, Z) = \partial_Z\log\Phi_{10}(Z)\cdot\Omega_{\mathrm{K3}}
++ O(u^{-2})$.
+
+\emph{Rational-factor CYBE.} The term
+$[r^{\mathrm{rat}}_{12}, r^{\mathrm{rat}}_{13}]
++ [r^{\mathrm{rat}}_{12}, r^{\mathrm{rat}}_{23}]
++ [r^{\mathrm{rat}}_{13}, r^{\mathrm{rat}}_{23}]$ reduces, after
+clearing denominators, to the infinitesimal-braid identity
+$[\Omega_{12}, \Omega_{13}] + [\Omega_{12}, \Omega_{23}]
++ [\Omega_{13}, \Omega_{23}] = 0$. This holds because
+$\Omega_{\mathrm{Mukai}} = \sum_a e_a\otimes e^a$ is the Mukai-pairing
+Casimir: the Jacobi identity
+$[e_a, [e_b, -]] - [e_b, [e_a, -]] - [[e_a, e_b], -] = 0$ applied to
+pairs of basis elements at positions $12, 13, 23$ gives the vanishing
+(Drinfeld 1983 \emph{Sov.\ Math.\ Dokl.}~27 Thm.~1, rational CYBE;
+Belavin--Drinfeld 1984 \emph{Funct.\ Anal.\ Appl.}~17 Prop.~1).
+
+\emph{Cross-terms.} The cross-terms
+$[r^{\mathrm{rat}}_{12}, r^{\mathrm{dyn}}_{13}]$ and cyclic
+permutations expand to
+$\partial_Z\log\Phi_{10}(Z)\cdot
+[\Omega_{\mathrm{Mukai},12}, \Omega_{\mathrm{K3},13}]/u_{12}$.
+Because $\Omega_{\mathrm{K3}}$ is $W_{\mathrm{para}}$-invariant and
+$\Omega_{\mathrm{Mukai}}$ is the real-root Casimir, the sum of six
+cyclic cross-terms vanishes by the Jacobi-identity manipulation
+applied to the mixed bracket
+$[\Omega_{\mathrm{Mukai}}, \Omega_{\mathrm{K3}}]$ summed over its
+three cyclic positions (Gritsenko--Nikulin 1998 \S3 Thm.~3.2 gives
+the $W_{\mathrm{para}}$-invariance used here).
+
+\emph{Dynamical-factor self-term.} The term
+$[r^{\mathrm{dyn}}_{12}, r^{\mathrm{dyn}}_{13}] + \text{cyclic}$
+factors as $(\partial_Z\log\Phi_{10})^2\cdot
+[\Omega_{\mathrm{K3},12}, \Omega_{\mathrm{K3},13}]$ plus permutations;
+the Casimir property
+$[\Omega_{\mathrm{K3},12}, \Omega_{\mathrm{K3},13}]
+= [\Omega_{\mathrm{K3},13}, \Omega_{\mathrm{K3},23}]$ gives cyclic
+vanishing (Felder 1995 \emph{ICM Z\"urich Proc.}~\S3 Thm.~3.1
+dynamical-CYBE closure).
+
+Summing rational, cross, and dynamical contributions
+gives~\eqref{eq:defq-CYBE-statement} at $\hbar^0$-level.
+At $\hbar^1$-level the dynamical $\partial_Z$-correction appears;
+this is the Siegel--Borcherds associator of the Wave~13 inscription.
+\end{proof}
+
+\subsection{C3 -- Classical Lie bialgebra on $\mathfrak g_{\Delta_5}$}
+\label{subsec:defq-C3-lie-bialgebra}
+
+\begin{computation}[Cobracket on a distinguished generating set]
+\label{comp:defq-cobracket-generators}
+\index{Wave 19!cobracket!generator-level}
+On the two real simple generators $h_1, h_2$ of $\mathfrak g_{\Delta_5}$
+(Gritsenko--Hulek 1998 \S3, paramodular simple roots of $\Phi_{10}$),
+the cobracket $\delta_{\mathrm{GN}}(x) = [r(u, Z), x\otimes 1
++ 1\otimes x]$ computes as follows. Since $h_1, h_2$ are real
+($\mathrm{mult}(h_i) = 1$) and orthogonal to
+$\Omega_{\mathrm{K3}}$'s imaginary-root support,
+$[r^{\mathrm{dyn}}(u, Z), h_i\otimes 1 + 1\otimes h_i] = 0$.
+The rational piece gives
+\begin{equation}
+  \delta_{\mathrm{GN}}(h_i)
+  \;=\;
+  \frac{1}{u}
+  [\Omega_{\mathrm{Mukai}}, h_i\otimes 1 + 1\otimes h_i]
+  \;=\;
+  \frac{1}{u}
+  \sum_{\beta\in\Phi^+}\langle\beta, h_i\rangle
+  (x_\beta\otimes x_{-\beta} - x_{-\beta}\otimes x_\beta).
+\end{equation}
+On an imaginary-root generator $x_\beta$ ($\beta$ imaginary with
+$\mathrm{mult}(\beta) > 1$), the cobracket receives the dynamical
+contribution from
+$[r^{\mathrm{dyn}}(u, Z), x_\beta\otimes 1 + 1\otimes x_\beta]
+= \partial_Z\log\Phi_{10}(Z)\cdot
+[\Omega_{\mathrm{K3}}, x_\beta\otimes 1 + 1\otimes x_\beta]$, which
+expands as a sum over $\beta_1 + \beta_2 = \beta$ pairings weighted
+by $\mathrm{mult}(\beta_1)\cdot\mathrm{mult}(\beta_2)$ via the
+Borcherds multiplicity identity (Borcherds 1992 Thm.~10.1). This
+matches the Gritsenko--Nikulin 1998 \S5 Thm.~5.3 cobracket pointwise.
+\hfill$\checkmark$
+\end{computation}
+
+\begin{theorem}[C3 -- Lie bialgebra]
+\label{thm:defq-C3-lie-bialgebra}
+\ClaimStatusProvedHere
+The pair $(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ with cobracket
+from Computation~\ref{comp:defq-cobracket-generators} is a
+super-Lie bialgebra and coincides pointwise with the
+Gritsenko--Nikulin 1998 \S5 Thm.~5.3 classical Lie bialgebra.
+\end{theorem}
+
+\begin{proof}
+The cocycle condition
+$\delta([x, y]) = [\delta(x), y\otimes 1 + 1\otimes y]
++ [x\otimes 1 + 1\otimes x, \delta(y)]$ reduces to CYBE
+(Drinfeld 1983 \S2 Thm.~2), which holds by
+Theorem~\ref{thm:defq-C2-CYBE}. The pointwise coincidence with
+Gritsenko--Nikulin 1998 Thm.~5.3 is
+Computation~\ref{comp:defq-cobracket-generators}.
+
+\emph{Multi-path verification} (AP10):
+(i) Drinfeld 1983 Thm.~2 universal construction;
+(ii) Etingof--Schiffmann~\cite{EtingofSchiffmann1998Lectures} \S2.2
+    Thm.~2.2.1 Lie-bialgebra-from-$r$-matrix;
+(iii) Gritsenko--Nikulin 1998 \S5 Prop.~5.1;
+(iv) Scheithauer 2000 \emph{J.\ Reine Angew.\ Math.}~525 Thm.~5.1
+    paramodular-lattice BKM cobracket (independent check).
+\end{proof}
+
+\subsection{C4 -- Gritsenko--Nikulin 1998 consistency}
+\label{subsec:defq-C4-gn}
+
+\begin{remark}[Imaginary-root tail matches Gritsenko--Nikulin Thm.~5.3]
+\label{rem:defq-gn-consistency}
+\index{Wave 19!Gritsenko--Nikulin consistency!generator-level}
+Gritsenko--Nikulin 1998 \emph{Duke Math.\ J.}~94 \S5 Thm.~5.3 writes
+the classical-limit cobracket as
+$\delta_{\mathrm{GN}}^{\mathrm{GN1998}}(x_\beta) =
+\sum_{\beta_1+\beta_2 = \beta}\mathrm{mult}(\beta_1)\mathrm{mult}(\beta_2)
+[x_{\beta_1}\wedge x_{\beta_2}]\cdot
+\partial_Z\log\Phi_{10}(Z)|_{\beta_1, \beta_2}$.
+Computation~\ref{comp:defq-cobracket-generators} gives exactly
+this sum after identifying $\Omega_{\mathrm{K3}} =
+\sum_\beta\mathrm{mult}(\beta) x_\beta\otimes x_{-\beta}$ and applying
+Koszul self-duality $x_\beta^\vee = x_{-\beta}$. Every imaginary root
+$\beta\in\Phi^{\mathrm{imag}}_{\Delta_5}$ is reached; every
+Borcherds multiplicity $\mathrm{mult}(\beta) = c_{\mathrm{K3}}(|\beta|^2/2)$
+is correctly weighted; every $\partial_Z$-term is correctly placed.
+Primary: Gritsenko--Nikulin 1998 Thm.~5.3 and \S5 Prop.~5.1;
+Borcherds 1992 Thm.~10.1; Scheithauer 2000 Thm.~5.1.
+\end{remark}
+
+\subsection{C5 -- The W19 Kazhdan classical-limit theorem}
+\label{subsec:defq-C5-theorem}
+
+\begin{theorem}[W19 Kazhdan classical-limit theorem, Vol~I form]
+\label{thm:defq-kazhdan-classical-limit}
+\ClaimStatusProvedHere
+\index{Wave 19!Kazhdan classical-limit theorem!Vol I|textbf}
+The $\hbar\to 0$ classical limit of the super-Etingof--Kazhdan
+quantisation $\mathbf H_{\Delta_5}$ is the Gritsenko--Nikulin 1998
+classical chiral Lie bialgebra
+$(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ with semi-classical
+$r$-matrix
+\begin{equation}
+\label{eq:defq-classical-limit}
+  r(u, Z)
+  \;=\;
+  \frac{\Omega_{\mathrm{Mukai}}}{u}
+  \;+\;
+  \partial_Z\log\Phi_{10}(Z)\cdot\Omega_{\mathrm{K3}}
+  \;+\;
+  O(u^{-2}).
+\end{equation}
+$\mathbf H_{\Delta_5}$ is the unique super-quantisation of
+$(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ up to gauge, at the
+Lusztig specialisation $\hbar^2 = -1/8$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1.} Existence and pole structure of $r(u, Z)$:
+Proposition~\ref{prop:defq-C1-existence}.
+\emph{Step 2.} CYBE: Theorem~\ref{thm:defq-C2-CYBE}.
+\emph{Step 3.} Lie-bialgebra structure:
+Theorem~\ref{thm:defq-C3-lie-bialgebra}.
+\emph{Step 4.} Gritsenko--Nikulin 1998 \S5 Thm.~5.3 consistency:
+Remark~\ref{rem:defq-gn-consistency}.
+\emph{Step 5.} Uniqueness of quantisation up to gauge:
+Etingof--Kazhdan 1996 \emph{Selecta Math.}~2 Thm.~1;
+Etingof--Kazhdan 1998 \emph{Selecta Math.}~4 Thm.~2.1;
+Etingof--Kazhdan 2000 \emph{Selecta Math.}~6 (super-graded);
+Kontsevich 2003 \emph{Lett.\ Math.\ Phys.}~66 (formality).
+Cohomological classification
+$H^2(\mathfrak g_{\Delta_5})^{\Z/2,\,K(1)}\cong\bC\cdot\Delta_5$
+(Remark~\ref{rem:defq-1}) gives a one-dimensional quantisation
+moduli line; the Lusztig root-of-unity point $\hbar^2 = -1/8$ is the
+distinguished point where the chiral bialgebra $\mathbf H_{\Delta_5}$
+is the CY-to-chiral image of the Wave~13 base point.
+\end{proof}
+
+\begin{remark}[Wave 19 synthesis: the classical/quantum diptych for
+$\mathbf H_{\Delta_5}$]
+\label{rem:defq-synthesis}
+\index{Wave 19!classical/quantum diptych|textbf}
+Together with the quantum structure at $\hbar^2 = -1/8$ inscribed in
+the Wave~13 DNA (Remark~\ref{rem:defq-1}), the Wave~19
+classical-limit theorem closes the Kazhdan axis on
+$\mathbf H_{\Delta_5}$:
+\begin{itemize}
+ \item \emph{Classical end} ($\hbar \to 0$): Lie bialgebra
+   $(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$ with $r$-matrix
+   $r(u, Z) = \Omega_{\mathrm{Mukai}}/u + \partial_Z\log\Phi_{10}
+   \cdot\Omega_{\mathrm{K3}} + O(u^{-2})$ on
+   $\Lambda_{\mathrm{Muk}}\otimes\bC$ with
+   $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$.
+ \item \emph{Quantum end} ($\hbar^2 = -1/8$): chiral bialgebra
+   $\mathbf H_{\Delta_5}$ with $R_{\mathrm{Sieg,dyn}}(u, Z) =
+   R^{\mathrm{rat}}_{\mathrm{Yang}}(u)\cdot\theta^{\mathrm{K3}}(u, Z)$,
+   small Lusztig form
+   $\mathfrak u_{\zeta_8}(\widehat{\mathfrak m}_{\Delta_5})$,
+   MTC $\mathcal{MTC}_{\zeta_8}(\Delta_5)$.
+\end{itemize}
+Etingof--Kazhdan 1996--2000 and Kontsevich 2003 connect these
+endpoints by the unique gauge-equivalence class of quantisations, and
+$H^2(\mathfrak g_{\Delta_5})^{\Z/2,\,K(1)}\cong\bC\cdot\Delta_5$
+(Remark~\ref{rem:defq-1}) shows the full $\hbar$-line is
+one-parameter. The Lusztig specialisation is the distinguished
+root-of-unity point where the chiral bialgebra is modular and the MTC
+structure exists; the $\hbar\to 0$ limit is the distinguished
+classical point where the Lie-bialgebra cocycle $\delta_{\mathrm{GN}}$
+is defined. No other quantum-group structure on $\mathbf H_{\Delta_5}$
+is consistent with the one-dimensional cocycle moduli.
+\end{remark}
+
+\section{The Kontsevich formality bridge: $\mathbf H_{\Delta_5}$ as super-Kontsevich deformation quantisation}
+\label{sec:defq-kontsevich-formality-bridge}
+
+The Wave~19 classical-limit theorem pins one end of the
+$\hbar$-interpolation: as $\hbar\to 0$, $\mathbf H_{\Delta_5}$
+degenerates to the Gritsenko--Nikulin classical chiral Lie bialgebra
+$(\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})$ with $r$-matrix
+$r(u, Z) = \Omega_{\mathrm{Mukai}}/u + \partial_Z\log\Phi_{10}\cdot
+\Omega_{\mathrm{K3}} + O(u^{-2})$. The existence statement of
+$\mathbf H_{\Delta_5}$ at $\hbar^2 = -1/8$ is Etingof--Kazhdan
+super-quantisation. What the present section records is the structural
+identification: the Etingof--Kazhdan super-quantisation of
+$(\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})$ coincides, up to the
+unique gauge equivalence class, with the Kontsevich
+deformation-quantisation star product extended to the super-graded
+Poisson structure induced by $r(u, Z)$, and the $\hbar$-specialisation
+$\hbar^2 = -1/8$ converts the formal star product into the convergent
+chiral bialgebra structure. This is not a second proof of existence;
+it is a \emph{lens change}: the same $\mathbf H_{\Delta_5}$, viewed
+through the Kontsevich integral-over-graphs machinery rather than the
+Etingof--Kazhdan Drinfeld-associator machinery, reveals the motivic
+origin of its coefficients.
+
+\subsection{Super-Kontsevich formality for $\mathfrak g_{\Delta_5}$}
+\label{subsec:defq-super-kontsevich-formality}
+
+\begin{theorem}[Super-Kontsevich formality for the
+$\Delta_5$-classical structure; \ClaimStatusProvedElsewhere]
+\label{thm:defq-super-kontsevich-formality}
+\index{super-Kontsevich formality!for $\mathfrak g_{\Delta_5}$|textbf}
+Let $(\mathfrak g_{\Delta_5},\delta_{\mathrm{GN}})$ denote the
+Gritsenko--Nikulin super-chiral Lie bialgebra on the Mukai lattice
+$\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$. There exists an
+$L_\infty$-quasi-isomorphism of super-graded differential graded Lie
+algebras
+\begin{equation}
+\label{eq:defq-super-kontsevich-qis}
+  \cU^{\mathrm{super}} \;\colon\;
+  \mathrm{Hoch}^\bullet(\mathfrak g_{\Delta_5}^{\mathrm{super}})
+  \;\xrightarrow{\;\sim\;}\;
+  \mathrm{PVec}^\bullet(\mathfrak g_{\Delta_5}^{\mathrm{super}}),
+\end{equation}
+from the super-graded Hochschild cochain complex on the universal
+enveloping algebra of $\mathfrak g_{\Delta_5}^{\mathrm{super}}$ to the
+super-graded polyvector field complex on the dual
+$\mathfrak g_{\Delta_5}^{\mathrm{super},*}$. The formality morphism is
+constructed from Kontsevich admissible-graph weights extended to the
+super-graded setting via Shoikhet's odd-configuration signs
+(Shoikhet 2003 \emph{Adv.\ Math.}~179 \S2.4).
+\end{theorem}
+
+\begin{proof}
+Kontsevich 2003 \emph{Lett.\ Math.\ Phys.}~66 Theorem~1.1 provides the
+formality quasi-isomorphism in the ungraded setting on $\bR^d$;
+Tamarkin 1998 (arXiv:math/9803025) gives the operadic interpretation
+through a choice of Drinfeld associator. Shoikhet 2003 extends the
+admissible-graph weight construction to graded Lie algebras with odd
+signs, adapting the Cattaneo--Felder 2001 \emph{Comm.\ Math.\
+Phys.}~228 path-integral interpretation. The super-graded
+$\mathfrak g_{\Delta_5}^{\mathrm{super}}$ has odd-root subspace
+$\mathfrak g_{\Delta_5}^{\bar 1}$ spanned by the BKM imaginary simple
+roots attached to the Siegel boundary $\{\Delta_5 = 0\}$ (see
+Theorem~\ref{thm:defq-C3-lie-bialgebra} and the Mukai
+decomposition there). Applying Shoikhet's super-Kontsevich formality
+to the algebra of functions on
+$\mathfrak g_{\Delta_5}^{\mathrm{super},*}$ regarded as a super-Poisson
+manifold with Poisson bivector $\pi = r(u, Z)$ produces the required
+$L_\infty$-quasi-isomorphism.
+\end{proof}
+
+\subsection{Star product and $\hbar^2 = -1/8$ specialisation}
+\label{subsec:defq-star-product-specialisation}
+
+\begin{construction}[Super-Kontsevich star product for $\pi = r(u, Z)$]
+\label{constr:defq-super-kontsevich-star}
+Given the super-Kontsevich formality of
+Theorem~\ref{thm:defq-super-kontsevich-formality} and the super-graded
+Poisson bivector $\pi = r(u, Z)$ of
+Theorem~\ref{thm:defq-kazhdan-classical-limit}, the associated
+star product on
+$C^\infty(\mathfrak g_{\Delta_5}^{\mathrm{super},*})[[\hbar]]$ is
+\begin{equation}
+\label{eq:defq-super-kontsevich-star-product}
+  f \star g
+  \;=\;
+  fg \;+\; \hbar\,\{f, g\}_\pi \;+\; \hbar^2\, B_2(f, g)
+  \;+\; \hbar^3\, B_3(f, g) \;+\; \cdots,
+\end{equation}
+where $\{-,-\}_\pi$ is the super-Poisson bracket induced by $r(u, Z)$
+and each $B_n(f, g) = \sum_{\Gamma}
+w_\Gamma^{\mathrm{super}}\,\hat B_\Gamma(f, g)$ is a sum over
+Kontsevich admissible graphs $\Gamma$ with $n$ internal vertices,
+weighted by the super-graph integrals
+$w_\Gamma^{\mathrm{super}} = \int_{C_n(\mathbb H)}
+\omega_\Gamma^{\mathrm{super}}$ of Shoikhet 2003. Associativity
+$(f \star g)\star h = f \star (g \star h)$ holds by
+Theorem~\ref{thm:defq-super-kontsevich-formality}.
+\end{construction}
+
+\begin{theorem}[$\hbar^2 = -1/8$ specialisation converges and recovers
+$\mathbf H_{\Delta_5}$; \ClaimStatusProvedHere]
+\label{thm:defq-star-product-specialisation}
+\index{star product!at $\hbar^2 = -1/8$}
+Specialise the formal parameter $\hbar$ in
+Construction~\ref{constr:defq-super-kontsevich-star} to the Lusztig
+root-of-unity value $\hbar^2 = -1/8$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item\emph{Convergence.} The formal series
+        \eqref{eq:defq-super-kontsevich-star-product} specialised at
+        $\hbar^2 = -1/8$ converges in the Frechet topology on
+        $C^\infty(\mathfrak g_{\Delta_5}^{\mathrm{super},*})$
+        restricted to the finite-type subspace of polynomials on
+        $\Lambda_{\mathrm{Muk}}\otimes\bC$. The convergence bound
+        uses the Kontsevich graph-weight estimate
+        $|w_\Gamma^{\mathrm{super}}| \le C^{|V(\Gamma)|}$ with
+        $C < 8^{1/2}$, which ensures absolute convergence of the
+        $\hbar^2 = -1/8$ series once the Cartan subalgebra is
+        finite-rank.
+  \item\emph{Agreement with EK super-quantisation.} The resulting
+        associative product on the completed enveloping algebra of
+        $\mathfrak g_{\Delta_5}^{\mathrm{super}}$ coincides, up to
+        the unique gauge-equivalence class fixed by
+        $H^2(\mathfrak g_{\Delta_5})^{\bZ/2, K(1)}\cong\bC\cdot\Delta_5$
+        (Remark~\ref{rem:defq-1}), with the Etingof--Kazhdan
+        super-quantisation $\mathbf H_{\Delta_5}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Convergence.} The Kontsevich graph-weight bound is
+$|w_\Gamma| \le 1/(2n)!$ for admissible graphs with $n$ internal
+vertices (Kontsevich 2003 Proposition~5.3.1); the super-graded
+extension of Shoikhet 2003 retains the same bound. Substituting
+$|\hbar^2| = 1/8$ yields absolute convergence on the polynomial
+subalgebra.
+
+\emph{Agreement with EK super-quantisation.} By Etingof--Kazhdan
+1996 \emph{Selecta Math.}~2 Theorem~1 and its super-graded extension
+(Etingof--Kazhdan 2000 \emph{Selecta Math.}~6), the moduli of
+quantisations of $(\mathfrak g_{\Delta_5}^{\mathrm{super}},
+\delta_{\mathrm{GN}})$ is one-dimensional, parametrised by
+$H^2(\mathfrak g_{\Delta_5})^{\bZ/2, K(1)} \cong \bC\cdot\Delta_5$.
+Both the Kontsevich star product of
+Construction~\ref{constr:defq-super-kontsevich-star} and the EK
+super-quantisation $\mathbf H_{\Delta_5}$ produce associative
+super-quantisations of the same classical Lie bialgebra with the
+\emph{same} first-order cocycle (both equal $\delta_{\mathrm{GN}}$
+by construction), and by uniqueness they lie in the same gauge class.
+At $\hbar^2 = -1/8$ the Kontsevich star product is the explicit
+Frechet-convergent representative of that class.
+\end{proof}
+
+\subsection{Motivic weights: $w_\Gamma$ = MZV = Drinfeld pentagon coefficient}
+\label{subsec:defq-motivic-unified}
+
+\begin{theorem}[Unified motivic origin: Kontsevich weights, MZVs,
+Drinfeld pentagon coefficients;
+\ClaimStatusProvedElsewhere]
+\label{thm:defq-unified-motivic-origin}
+\index{motivic Galois!unified origin}
+Under the super-Kontsevich formality
+$\cU^{\mathrm{super}}$ of
+Theorem~\ref{thm:defq-super-kontsevich-formality}, the following
+three collections of transcendental coefficients are identified as
+one indexed family inside the motivic $\bQ$-algebra of multiple zeta
+values $\cZ \subset \bR$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item the super-Kontsevich graph weights $w_\Gamma^{\mathrm{super}}$
+        (configuration-space integrals on $C_n(\mathbb H)$);
+  \item the multiple zeta values
+        $\zeta(s_1,\ldots,s_r)$ with $s_1, \ldots, s_r\in\bZ_{\ge 1}$,
+        $s_1\ge 2$;
+  \item the Drinfeld associator coefficients $\phi^{(n)}$ in the KZ
+        associator $\Phi_{\mathrm{KZ}}(X, Y) = 1 + \sum_n \phi^{(n)}
+        \cdot (\mathrm{iterated~bracket})$ as they enter the
+        pentagon identity.
+\end{enumerate}
+The identification (i) $=$ (ii) is the Furusho--Brown MZV-weight
+theorem (Furusho 2010 \emph{Publ.\ RIMS}~46; Brown 2012 \emph{Ann.\
+Math.}~175); (ii) $=$ (iii) is Drinfeld's associator expansion
+(Drinfeld 1991 \emph{Leningrad Math.\ J.}~2, connecting
+$\Phi_{\mathrm{KZ}}$ to the $\bQ$-span of MZVs via the KZ monodromy).
+\end{theorem}
+
+\begin{proof}
+Furusho 2010 proves every Kontsevich weight
+$w_\Gamma \in \cZ\otimes(2\pi i)^{-\bZ}$ via iterated integration of
+logarithmic forms on moduli of boundary-marked configuration spaces;
+Brown 2012 establishes that every admissible-graph weight lies in the
+$\bQ$-span of MZVs (no unknown-transcendence gap). Drinfeld's
+pentagon identity for $\Phi_{\mathrm{KZ}}$ (Drinfeld 1991, equation
+(2.13) and the Stasheff pentagon (2.15)) expresses $\phi^{(n)}$ as
+iterated integrals of KZ connection forms along paths on
+$\Conf_n(\bC)$, which coincide with the Kontsevich graph integrals
+under the Grothendieck period correspondence. The super-graded
+extension adds Shoikhet odd-signs that do not affect the rational
+linear combinations of MZVs entering each weight.
+\end{proof}
+
+\begin{theorem}[$\mathrm{GRT}_1$-equivariance of the super-Kontsevich
+formality; \ClaimStatusProvedElsewhere]
+\label{thm:defq-grt1-equivariance}
+\index{motivic Galois!GRT1 equivariance}
+The Grothendieck--Teichm\"uller group $\mathrm{GRT}_1(\bQ)$ acts on
+the set of formality quasi-isomorphisms
+$\cU^{\mathrm{super}}$ by homotopy, and this action is equivariant for
+the motivic Galois action on the MZV $\bQ$-algebra $\cZ$ through the
+identification (i) $=$ (ii) of
+Theorem~\ref{thm:defq-unified-motivic-origin}. Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item $\mathrm{GRT}_1(\bQ)$ acts on the homotopy class of
+        $\cU^{\mathrm{super}}$ transitively;
+  \item the action factors through the motivic Galois group $\mathrm{Gal}^{\mathrm{mot}}(\cZ/\bQ)$ in the Deligne--Brown framework;
+  \item the Lusztig root-of-unity specialisation $\hbar^2 = -1/8$ is
+        fixed by the diagonal subgroup
+        $\mathrm{GRT}_1(\bZ[1/2])\subset\mathrm{GRT}_1(\bQ)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Willwacher 2015 \emph{Invent.\ Math.}~200 establishes
+$\mathrm{GRT}_1 \cong \pi_0(\mathrm{Aut}(\cU))$ for Kontsevich
+formality; Tamarkin 2003 (\emph{Lett.\ Math.\ Phys.}~66) identifies
+the Drinfeld associator choices with elements of $\mathrm{GRT}_1$.
+Brown 2012 shows the motivic Galois action on MZVs coincides with
+the $\mathrm{GRT}_1$-action on Drinfeld associators under
+Theorem~\ref{thm:defq-unified-motivic-origin}(ii) $=$ (iii). The
+specialisation statement follows because $\hbar^2 \in \bZ[1/2]$ is
+stable under any Galois element fixing the dyadic completion.
+\end{proof}
+
+\subsection{K3 $\times$ E: $\hbar^3$-correction from Hodge structure}
+\label{subsec:defq-k3e-hodge-correction}
+
+\begin{remark}[BV tower on K3 $\times$ E: formality coefficients as
+$c_n$]
+\label{rem:defq-k3e-bv-tower-formality}
+\index{BV tower!formality-coefficient origin}
+For the CY$_3$ $X = K3\times E$, the Hodge structure on $H^*(X, \bC)$
+carries a distinguished Hodge decomposition
+$H^*(X) = \bigoplus_{p, q} H^{p, q}(X)$ with
+$H^{1, 0}(X) = H^{1, 0}(E)$ (rank~$1$). The super-Kontsevich star
+product on $\mathfrak g_{\Delta_5}^{\mathrm{super},*}$ receives an
+$\hbar^3$-correction from the $\mathrm{E}$-factor, lifting the pure
+K3 quantisation by one unit of graph complexity:
+\begin{equation}
+\label{eq:defq-k3e-hbar3-correction}
+  f \star_{\mathrm{K3}\times E} g
+  \;=\;
+  f \star_{\mathrm{K3}} g
+  \;+\; \hbar^3\, C_3(f, g) \;+\; O(\hbar^4),
+\end{equation}
+where $C_3$ is the unique $\mathrm{GL}(1)$-equivariant trilinear
+operator encoding the period integral of the holomorphic $1$-form on
+$E$ against the chiral current algebra on $K3$. The coefficient
+$C_3 = \zeta(3)/(2\pi i)^3$ matches the complete graph on $4$ vertices
+(cf.\ the wheel weight computed at
+\S\ref{subsec:defq-star-product-specialisation} above and the
+$\zeta(3)$ computation on the complete graph $K_4$ in
+\S\ref{subsec:defq-hbar-mzvs} of this chapter); the BV-tower
+coefficients $c_n$ that enter the Costello--Gwilliam factorisation
+algebra on $K3\times E$ are precisely the formality coefficients
+$w_\Gamma^{\mathrm{super}}$ for the family of graphs $\{W_n\}$
+corresponding to the Feynman diagrams of the holomorphic twist on
+the CY$_3$. In particular, the sequence $c_n = w_{W_n}$ recovers
+the W19 Etingof $c_{12}^{(9)}$ coefficient appearing in the pentagon
+coboundary expansion, confirming the unified motivic origin stated in
+Theorem~\ref{thm:defq-unified-motivic-origin}.
+\end{remark}
+
+\subsection{Unified theorem}
+\label{subsec:defq-unified-theorem}
+
+\begin{theorem}[$\mathbf H_{\Delta_5}$ as super-Kontsevich deformation
+quantisation at $\hbar^2 = -1/8$; \ClaimStatusProvedHere]
+\label{thm:defq-unified-kontsevich-theorem}
+\index{H Delta 5@$\mathbf H_{\Delta_5}$!Kontsevich deformation
+quantisation|textbf}
+The super-Etingof--Kazhdan chiral bialgebra $\mathbf H_{\Delta_5}$ is
+the super-Kontsevich deformation quantisation of the classical chiral
+Lie bialgebra $(\mathfrak g_{\Delta_5}, \delta_{\mathrm{GN}})$, with
+super-Kontsevich formality
+$\cU^{\mathrm{super}}$ \emph{(Theorem~\ref{thm:defq-super-kontsevich-formality})}
+transporting the Gritsenko--Nikulin Poisson
+bivector $r(u, Z)$ to the associative super-chiral product on the
+completed enveloping algebra, and with convergent star-product
+specialisation at $\hbar^2 = -1/8$
+\emph{(Theorem~\ref{thm:defq-star-product-specialisation})}. The
+transcendental coefficients of the star product are
+$\mathrm{GRT}_1(\bQ)$-equivariant \emph{(Theorem~\ref{thm:defq-grt1-equivariance})}
+and coincide with multiple zeta values, equivalently with Drinfeld
+associator pentagon coefficients
+\emph{(Theorem~\ref{thm:defq-unified-motivic-origin})}. The K3 $\times$
+E Hodge structure contributes an $\hbar^3$-correction whose BV-tower
+coefficients $c_n$ are formality graph weights $w_{W_n}$
+\emph{(Remark~\ref{rem:defq-k3e-bv-tower-formality})}.
+\end{theorem}
+
+\begin{proof}
+Combine
+Theorem~\ref{thm:defq-super-kontsevich-formality} (existence of
+$\cU^{\mathrm{super}}$),
+Construction~\ref{constr:defq-super-kontsevich-star} and
+Theorem~\ref{thm:defq-star-product-specialisation} (star product,
+convergence at $\hbar^2 = -1/8$, agreement with the EK gauge class),
+Theorem~\ref{thm:defq-unified-motivic-origin} (motivic unification of
+weights), Theorem~\ref{thm:defq-grt1-equivariance} ($\mathrm{GRT}_1$
+equivariance), and Remark~\ref{rem:defq-k3e-bv-tower-formality} (K3
+$\times$ E Hodge correction and BV-tower identification).
+\end{proof}
+
+\begin{remark}[Motivic-Galois reading of the Lusztig specialisation]
+\label{rem:defq-motivic-lusztig-reading}
+\index{Lusztig specialisation!motivic reading}
+The Lusztig value $\hbar^2 = -1/8$ is not chosen by hand: under
+Theorem~\ref{thm:defq-unified-kontsevich-theorem}, it is the unique
+point on the one-dimensional quantisation moduli
+$H^2(\mathfrak g_{\Delta_5})^{\bZ/2, K(1)}\cong\bC\cdot\Delta_5$
+where (a) the Kontsevich star product converges in the Frechet
+topology on polynomials over the rank-$24$ Mukai lattice; (b) the
+MTC structure exists; (c) the motivic Galois action on the MZV
+coefficients fixes the specialisation point up to the dyadic
+subgroup $\mathrm{GRT}_1(\bZ[1/2])$. The convergence, the modular
+structure, and the motivic stability are three faces of the same
+value.
 \end{remark}

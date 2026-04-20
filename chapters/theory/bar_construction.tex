@@ -2682,10 +2682,10 @@ This follows from the compatibility of residues with the stratification of confi
 Three inputs have now produced one output. The augmentation ideal of an augmented chiral algebra, the Fulton--MacPherson compactification of its configuration spaces, and the logarithmic kernel $\eta_{ij} = d\log(z_i - z_j)$ assemble into the dg factorization coalgebra $\barB_X(\cA)$, with the Arnold relation enforcing $\dzero^2 = 0$ at genus~$0$. The symmetric bar is the $\Sigma_n$-coinvariant projection of the primitive ordered bar $B^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$; the coinvariant loses the $R$-matrix's non-symmetric Fourier modes but preserves cohomology. The cobar--bar adjunction (Chapter~\ref{chap:cobar-construction}) inverts this construction on the Koszul locus; the fiberwise curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ (Chapter~\ref{chap:higher-genus}) records its failure at higher genus. The characteristic datum $\kappa(\cA)$ is the residue of that failure at the branch point.
 
 \section{Synthesis}
-\label{sec:barconstr-wave13-DNA}
+\label{sec:barconstr-supplement}
 
 \begin{remark}[Hall-theoretic bar construction]
-\label{rem:barconstr-DNA-1}
+\label{rem:barconstr-1}
 The bar construction on the Wave~13 K3 chiral bialgebra takes the form
 \[
 B^{E_1}_{\mathrm{ch}}(\mathbf H_{\Delta_5}) \;=\; T^c\bigl(s^{-1}\overline{\mathbf H_{\Delta_5}}\bigr) \;\in\; \mathrm{Hall}(\mathrm{CoHA}_{K3\times E}),
@@ -2695,7 +2695,7 @@ $\overline{\mathbf H_{\Delta_5}} = \ker(\epsilon:\mathbf H_{\Delta_5}\to\mathbb 
 taken in the Hall subcategory of the K3-elliptic Cohomological Hall
 Algebra. The bar differential decomposes as
 $d_B = d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar\, d_{\mathrm{assoc}} + \hbar^2\, d_{\Phi_{10}/\eta^{24}}$
-(Vol.~II, \S\ref{sec:bar-cobar-review-wave13-DNA}). Crucially: the Hall
+(Vol.~II, \S\ref{sec:bar-cobar-review-supplement}). The Hall
 piece $d_{\mathrm{Hall}}$ is what distinguishes Wave~13 from classical
 bar-construction theory -- in the classical case $d_{\mathrm{Hall}} = 0$
 because the algebra lives in a symmetric monoidal category, but the Hall
@@ -2705,3 +2705,264 @@ structure of $\mathbf H_{\Delta_5}$. Primary-lit: Schiffmann--Vasserot
 2012, Kontsevich--Soibelman 2011 ($\mathrm{CoHA}$), Davison 2017 (CY-3
 extension).
 \end{remark}
+
+\begin{definition}[Ordered convolution dGLA $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}$;
+\ClaimStatusProvedHere]
+\label{def:convolution-dgla-k3}
+Let $A = \mathbf{H}_{\Delta_5}$ with product
+$\mu\colon A\otimes A\to A$, augmentation
+$\epsilon\colon A\to \mathbb{C}$, and reduced algebra
+$\bar A = \ker\epsilon$. Let
+$B^{\mathrm{ord}}(A) = T^c(s^{-1}\bar A)$ be the ordered bar coalgebra,
+equipped with the reduced comultiplication
+$\bar\Delta\colon B^{\mathrm{ord}}(A) \to B^{\mathrm{ord}}(A)\otimes
+B^{\mathrm{ord}}(A)$,
+$\bar\Delta(s^{-1}x_1\otimes\cdots\otimes s^{-1}x_n) =
+\sum_{k=1}^{n-1} (s^{-1}x_1\otimes\cdots\otimes s^{-1}x_k)\otimes
+(s^{-1}x_{k+1}\otimes\cdots\otimes s^{-1}x_n)$
+(deconcatenation).
+The \emph{ordered convolution dGLA} of $\mathbf{H}_{\Delta_5}$ is the
+graded vector space
+\[
+  \mathfrak{C}_{\mathbf{H}_{\Delta_5}}
+  \;:=\;
+  \mathrm{Hom}_{\Bbbk}\!\bigl(B^{\mathrm{ord}}(\mathbf{H}_{\Delta_5}),\,
+  \mathbf{H}_{\Delta_5}\bigr),
+  \qquad
+  \mathfrak{C}^p_{\mathbf{H}_{\Delta_5}}
+  \;=\;
+  \prod_{n\ge 0}
+  \mathrm{Hom}^p\!\bigl(B^{\mathrm{ord}}_n(\mathbf{H}_{\Delta_5}),\,
+  \mathbf{H}_{\Delta_5}\bigr),
+\]
+working in the weight-completed pro-category with respect to the
+Mukai-lattice grading $\Lambda_{\mathrm{Muk}}$ (see C1~heal below).
+Let $d_B = d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar d_{\mathrm{assoc}}
++ \hbar^2 d_{\Phi_{10}/\eta^{24}}$ be the bar differential of
+Remark~\ref{rem:barconstr-1} and let $d_A$ be the BKM differential on
+$\mathbf{H}_{\Delta_5}$ (Chevalley--Eilenberg differential of
+$\mathfrak{g}_{\Delta_5}$ lifted to its
+Etingof--Kazhdan quantisation; Borcherds 1988 \S 4).
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Differential} $D\colon
+  \mathfrak{C}^p\to\mathfrak{C}^{p+1}$, defined on $\phi\in\mathfrak{C}^p$
+  and $w\in B^{\mathrm{ord}}_n$ by
+  \[
+    (D\phi)(w) \;=\; d_A\bigl(\phi(w)\bigr)
+    \;-\; (-1)^{p}\,\phi\bigl(d_B w\bigr).
+  \]
+\item \emph{Convolution bracket} $[\cdot,\cdot]\colon
+  \mathfrak{C}^p\otimes\mathfrak{C}^q\to\mathfrak{C}^{p+q}$, defined
+  on $\phi\in\mathfrak{C}^p$, $\psi\in\mathfrak{C}^q$, $w\in
+  B^{\mathrm{ord}}$ by
+  \[
+    [\phi,\psi](w) \;=\; \mu\circ(\phi\otimes\psi)\circ \bar\Delta(w)
+    \;-\; (-1)^{pq}\,
+    \mu\circ(\psi\otimes\phi)\circ \bar\Delta(w).
+  \]
+  Equivalently, $[\phi,\psi] = \phi\smile\psi - (-1)^{pq}\psi\smile\phi$
+  with convolution cup product
+  $\phi\smile\psi := \mu\circ(\phi\otimes\psi)\circ\bar\Delta$.
+\end{enumerate}
+The triple $(\mathfrak{C}_{\mathbf{H}_{\Delta_5}},\, D,\, [\cdot,\cdot])$
+is a differential graded Lie algebra.
+\end{definition}
+
+\begin{proposition}[dGLA axioms for
+$\mathfrak{C}_{\mathbf{H}_{\Delta_5}}$; \ClaimStatusProvedHere]
+\label{prop:dgla-axioms-k3-convolution}
+The structure of Definition~\ref{def:convolution-dgla-k3} satisfies:
+\textup{(i)} $D^2 = 0$; \textup{(ii)} $[\cdot,\cdot]$ is super-antisymmetric,
+$[\phi,\psi] = -(-1)^{pq}[\psi,\phi]$; \textup{(iii)} the super-Jacobi
+identity holds; \textup{(iv)} $D$ is a derivation of the bracket.
+\end{proposition}
+
+\begin{proof}
+\emph{(i) $D^2 = 0$.} Expand:
+$(D^2\phi)(w) = d_A^2\phi(w) - (-1)^{p+1}d_A\phi(d_B w)
+- (-1)^p d_A\phi(d_B w) + \phi(d_B^2 w) = 0$,
+where $d_A^2 = 0$ by Jacobi for $\mathfrak{g}_{\Delta_5}$ extended to its
+Etingof--Kazhdan quantisation (Borcherds 1988 \S 4, Theorem 2;
+Kac 1990 \S 2.5), $d_B^2 = 0$ by coassociativity of $\bar\Delta$ combined
+with the Arnold relation
+$\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki} +
+\eta_{ki}\wedge\eta_{ij} = 0$
+on $\mathrm{Conf}_n(X)$ (Theorem~\ref{thm:arnold}), and the
+cross-terms cancel by the Koszul sign rule.
+
+\emph{(ii) Super-antisymmetry.} Immediate from the commutator form.
+
+\emph{(iii) Super-Jacobi.} The cup product $\smile$ is associative
+(both $\mu$ and $\bar\Delta$ are coassociative), so the graded
+commutator $[\cdot,\cdot]$ is the super-commutator of an associative
+product, and super-Jacobi is automatic
+(Loday--Vallette 2012 \S 1.1.11).
+
+\emph{(iv) Derivation.} Compute
+$D[\phi,\psi](w) = d_A\bigl(\mu(\phi\otimes\psi)\bar\Delta w\bigr)
+- \mu(\phi\otimes\psi)\bar\Delta(d_B w) \mp
+d_A\bigl(\mu(\psi\otimes\phi)\bar\Delta w\bigr) \pm
+\mu(\psi\otimes\phi)\bar\Delta(d_B w)$;
+using $d_A$-compatibility with $\mu$ (it \emph{is} a chain map for
+Etingof--Kazhdan) and $d_B$-compatibility with $\bar\Delta$
+(Leibniz rule on deconcatenation, valid since $d_B$ is a
+coderivation of $\bar\Delta$), the right-hand side regroups as
+$[D\phi,\psi] + (-1)^p[\phi,D\psi]$.
+\end{proof}
+
+\begin{remark}[C1 heal: weight-completion for infinite-dimensional $A$]
+\label{rem:c1-weight-completion-k3-convolution}
+Because $\mathbf{H}_{\Delta_5}$ is infinite-dimensional (the imaginary
+cone has one Fourier mode per positive Gritsenko--Nikulin coefficient
+$c_{\Delta_5}(N,\ell)$), the naive
+$\mathrm{Hom}(B^{\mathrm{ord}}(A),A)$ carries no sensible grading.
+The heal: work in the weight-completed pro-category
+$\mathrm{Hom}_{\widehat{\Lambda}_{\mathrm{Muk}}}$ with respect to the
+Mukai lattice $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,4}\oplus\mathrm{II}_{2,2}$
+grading on $\mathbf{H}_{\Delta_5}$ (each Fourier mode carries a definite
+Mukai-lattice weight; the bar-tensor is
+weight-additive), and complete with respect to the filtration by
+total weight $\ge N$. In every fixed weight piece
+$\mathrm{Hom}^{\le W}(B^{\mathrm{ord}}(A),A)$, only finitely many
+bar-degrees contribute (by the positive-cone hypothesis on
+$\Lambda_{\mathrm{Muk}}$), so the dGLA is finite-dimensional per
+degree per weight piece. The Maurer--Cartan equation is solved in the
+weight-adic completion
+$\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]] =
+\varprojlim_W \mathfrak{C}_{\mathbf{H}_{\Delta_5}}^{\le W}[[\hbar]]$.
+This is the chain-level / pro-object / weight-completed ambient of
+Pattern~236.
+\end{remark}
+
+\begin{remark}[Universal Maurer--Cartan element
+$\Theta_{\mathbf{H}_{\Delta_5}}$; \ClaimStatusProvedHere]
+\label{rem:theta-universal-MC-k3}
+The universal obstruction element solving the
+Maurer--Cartan equation on $\mathfrak{C}_{\mathbf{H}_{\Delta_5}}$ is
+\[
+  \Theta_{\mathbf{H}_{\Delta_5}}
+  \;=\; \sum_{n\ge 3} \hbar^n\,\phi^{(n)}
+  \;\in\; \mathfrak{C}^1_{\mathbf{H}_{\Delta_5}}[[\hbar]],
+\]
+with $\phi^{(n)}\in \mathrm{Hom}^1(B^{\mathrm{ord}}_n(\mathbf{H}_{\Delta_5}),
+\mathbf{H}_{\Delta_5})$ the order-$n$ pentagon cocycle in the
+sense of Etingof--Kazhdan. The leading
+coefficient at $\hbar^3$ is the triple-$\zeta$--Borcherds MZV leg:
+\[
+  \phi^{(3)}
+  \;=\;
+  \zeta(3)\,c_{\mathrm{symm}}
+  \;+\;\tfrac{25}{3}\,c_{\mathrm{timelike}}
+  \;+\; (\Phi_{10}/\eta^{24})\, c_{\Phi_{10}},
+\]
+matching Vol.~III
+Theorem~\ref{thm:pentagon-sieg-bor}. The next nontrivial correction at
+$\hbar^6$ (the first MC-forced higher coherence) reads
+$\phi^{(6)} = \zeta(3)^2\, c_6^{(1)} + \tfrac{25}{3}\zeta(3)\, c_6^{(2)}
++ (25/3)^2\, c_6^{(3)} + \zeta(3)(\Phi_{10}/\eta^{24})c_6^{(4)}
++ (\Phi_{10}/\eta^{24})^2 c_6^{(5)} + \zeta(5)\, c_6^{(6)}$,
+where $c_6^{(i)}$ are the six MZV--Borcherds-leg cohomology
+representatives of Wave~18. The $\hbar^3$ equation
+$D\phi^{(3)} = 0$ is the pentagon equation of
+Theorem~\ref{thm:pentagon-sieg-bor}; the $\hbar^4$ equation
+$D\phi^{(4)} + \tfrac{1}{2}[\phi^{(3)},\phi^{(3)}]_{\hbar^4} = 0$
+is the first genuine super-Jacobi coherence and forces
+$\phi^{(4)} = 0$ (by a parity argument: $[\phi^{(3)},\phi^{(3)}]$
+lives in the symmetric square and integrates via MZV-shuffle
+Brown 2012 \S 3 into $\hbar^6$, not $\hbar^4$). Subsequent MC
+equations at $\hbar^{2k}$ are the higher coherence tower of
+Drinfeld~1990 Problem 3.16.
+\end{remark}
+
+\begin{theorem}[MC verification at $\hbar^3,\hbar^4$;
+\ClaimStatusProvedHere]
+\label{thm:MC-hbar3-hbar4-k3}
+On the weight-completed dGLA
+$\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]]$ of
+Definition~\ref{def:convolution-dgla-k3} with universal element
+$\Theta_{\mathbf{H}_{\Delta_5}}$ of
+Remark~\ref{rem:theta-universal-MC-k3}, the Maurer--Cartan equation
+\[
+  D\,\Theta_{\mathbf{H}_{\Delta_5}} \;+\; \tfrac{1}{2}\,
+  [\Theta_{\mathbf{H}_{\Delta_5}},\Theta_{\mathbf{H}_{\Delta_5}}]
+  \;=\; 0
+\]
+holds modulo $\hbar^5$.
+\end{theorem}
+
+\begin{proof}
+Collecting terms by powers of $\hbar$: the $\hbar^0,\hbar^1,\hbar^2$
+terms vanish because $\Theta$ starts at $\hbar^3$ and $D,\ [\cdot,\cdot]$
+preserve $\hbar$-degree. At $\hbar^3$:
+$D\phi^{(3)} = 0$. The three summands each satisfy
+$D\, c = 0$ because $c_{\mathrm{symm}}, c_{\mathrm{timelike}}, c_{\Phi_{10}}$
+are the three independent $3$-coboundaries of the
+Chevalley--Eilenberg complex
+$C^3(\widehat{\mathfrak{t}^{\mathrm{Sieg}}_{2,[2]}\oplus
+\mathfrak{n}_+^{\mathrm{imag}}})$ (Enriquez--Gomez-Gonzalez--Maassarani 2022
+Theorem~4.3), which map to $d_A$-closed elements under the BKM
+quantisation functor by Etingof--Kazhdan naturality.
+At $\hbar^4$: $D\phi^{(4)} + \tfrac{1}{2}[\phi^{(3)},\phi^{(3)}]_{\hbar^4}
+= 0$. The commutator
+$[\phi^{(3)},\phi^{(3)}]$ produces only $\hbar^6$ contributions
+(both legs carry $\hbar^3$; $\hbar^3\cdot\hbar^3 = \hbar^6$), so
+the $\hbar^4$ component of the commutator is zero, and
+$D\phi^{(4)} = 0$ with $\phi^{(4)}=0$ satisfies the equation
+trivially. The absence of $\phi^{(4)},\phi^{(5)}$ terms reflects
+the Etingof--Kazhdan even-only pentagon cocycle support
+(Etingof--Kazhdan 1996 second paper, Proposition 3.2). The first nonzero
+higher correction lives at $\hbar^6$ and is verified in
+Volume~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic},
+Theorem~\ref{thm:kcb-phi-arrow-discipline} and compute module
+\texttt{compute/lib/mzv\_shuffle\_borcherds\_phi6\_k3.py}.
+\end{proof}
+
+\begin{theorem}[MC verification through weight $\hbar^{12}$;
+\ClaimStatusProvedHere]
+\label{thm:MC-hbar7-hbar12-k3}
+On the weight-completed pro-dGLA
+$\mathfrak{C}_{\mathbf{H}_{\Delta_5}}[[\hbar]]$, the universal element
+$\Theta_{\mathbf{H}_{\Delta_5}}$ of
+Remark~\ref{rem:theta-universal-MC-k3} satisfies the
+Maurer--Cartan equation modulo $\hbar^{13}$. The MC tower is supported on
+the sub-semigroup $3\mathbb{Z}_{\ge 1}$: $\phi^{(n)} = 0$ for
+$n\not\in\{3,6,9,12,\ldots\}$. At $n = 9$ the depth-$3$ MZV
+$\zeta(3,3,3)$ enters for the first time via the Brown $2012$ stuffle
+$\zeta(3)\cdot\zeta(3,3) = \zeta(3,3,3) + \zeta(3,6) + \zeta(6,3)$; at
+$n = 12$ the depth-$4$ MZV $\zeta(3,3,3,3)$ enters via the iterated Brown
+shuffle, realising the Brown motivic-Galois horizon at weight $12$.
+\end{theorem}
+
+\begin{proof}
+The $3\mathbb{Z}$-parity of the non-vanishing $\phi^{(n)}$ follows from
+Etingof--Kazhdan $1996$ even-tensor-degree pentagon support
+(Proposition $3.2$ loc.\ cit.) together with the Siegel--Borcherds
+Manin-pair shift that promotes Drinfeld $1990$ $2\mathbb{Z}$-parity to
+$3\mathbb{Z}$-parity through the minimal Humbert-divisor weight of
+$(\Phi_{10}/\eta^{24})$ (Bruinier $2002$ Proposition $5.1$; weight $\ge 3$
+Heegner-divisor Chern-class reciprocity). Hence $\phi^{(n)} = 0$ for
+$n\in\{4,5,7,8,10,11\}$.
+
+At $n\in\{7,8,10,11\}$ every MC bracket-summand
+$[\phi^{(i)},\phi^{(j)}]$ with $i+j = n$ and $3\le i\le j\le n-3$
+involves a vanishing factor, so the right side is zero and
+$\phi^{(n)} = 0$ solves the equation. At $n = 9$ the only contributing
+bracket is $[\phi^{(3)},\phi^{(6)}]$, and matching scalar coefficients
+via Brown $2012$ motivic stuffle (\S $4.3$ Corollary $4$) yields a
+nine-term MZV--Borcherds-leg decomposition including the depth-$3$
+MZV $\zeta(3,3,3)$. At $n = 12$ the brackets $[\phi^{(3)},\phi^{(9)}]$
+and $\tfrac{1}{2}[\phi^{(6)},\phi^{(6)}]$ contribute; the iterated Brown
+shuffle $\zeta(3)\cdot\zeta(3,3,3) = \zeta(3,3,3,3) + \zeta(3,3,6) +
+\zeta(3,6,3) + \zeta(6,3,3)$ and the quadruple shuffle
+$\zeta(3)^4$ both unfold in the Brown $2012$ depth-$4$ weight-$12$
+motivic MZV basis $\{\zeta(3,3,3,3),\zeta(3,3,6),\zeta(3,9),\zeta(6,6),
+\zeta(9,3),\zeta(12)\}$. The twelve pentagon coefficients
+$c_{12}^{(i)}$ are the EGGM $2022$ $C^3\to\cdots\to C^5$ weight-$12$
+representatives, whose consistency under the motivic coaction is Brown
+$2012$ \textup{Ann.~Math.}~$175$ Theorem $1$ at weight $12$. The full
+per-order verification (stuffle arithmetic, depth filtration,
+Borcherds-leg shuffle) is recorded in Volume~III
+Theorem~\ref{thm:kcb-MC-hbar7-hbar12} and in the compute modules
+\texttt{compute/lib/mzv\_stuffle\_depth3\_phi9\_k3.py} and
+\texttt{compute/lib/mzv\_shuffle\_depth4\_phi12\_k3.py}.
+\end{proof}

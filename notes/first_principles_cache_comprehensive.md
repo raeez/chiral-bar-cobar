@@ -4917,6 +4917,276 @@ D2=$(grep -oE '^\| [0-9]+ ' "$F2" 2>/dev/null | sort | uniq -d)
 
 **Related**: Pattern 243 (wave-merge push rejection — push-time failure mode; Pattern 252 is the silent-success-at-merge-time counterpart); Pattern 124 (AP124 duplicate `\label{thm:...}` — the analogous discipline for theorem labels, already hook-enforced); Pattern 249 (wave-scope deduplication at target level — Pattern 252 is the cache-entry-level companion).
 
+## Pattern 253: Humbert $H_D$ discriminant convention ($D \equiv 0, 1 \pmod 4$; $H_4 \neq \mathbb{Q}(\sqrt 2)$-RM)
+
+**Session**: 2026-04-20 (Wave 16 KAZHDAN — explicit ramified Langlands + Humbert $H_4$ structure).
+
+**Type**: convention conflation at Vol III / Vol I boundary.
+
+The Humbert surface $H_D \subset \mathcal A_2$ (van der Geer $1988$ Ch.\ IX) is indexed by discriminants $D > 0$ with $D \equiv 0, 1 \pmod 4$. The indexing rule:
+
+| Humbert | RM order | Interpretation |
+|---|---|---|
+| $H_1$ | $\mathbb Z$ (trivial) | product locus $\mathcal A_1 \times \mathcal A_1$ |
+| $H_4$ | $\mathbb Z[\phi]$, $\phi^2 = 4$ | $(2,2)$-isogeny quotient of $E_1 \times E_2$ |
+| $H_5$ | $\mathbb Z[(1+\sqrt 5)/2]$ | genuine $\mathbb Q(\sqrt 5)$-RM |
+| $H_8$ | $\mathbb Z[\sqrt 2]$ | genuine $\mathbb Q(\sqrt 2)$-RM |
+| $H_9$ | $\mathbb Z[\sqrt 3 \cdot(1/2)]$-equivalent | conductor-3 suborder |
+
+**Key conflation** (Wave-15 → Wave-16 correction): $H_4$ is \emph{not} the $\mathbb Q(\sqrt 2)$-RM locus — that is $H_8$. $H_4$ is the \emph{squared-CM} / $(2,2)$-isogeny locus, where $\mathrm{End}(A) \supset \mathbb Z[\phi]$ with $\phi^2 = 4$ (i.e.\ $\phi = 2$ acting diagonally plus an order-$2$ off-diagonal twist). Under Kuga–Satake, $H_4$ maps to the locus of K3 surfaces whose transcendental lattice has imaginary-CM by $\mathbb Z[2i] = \mathbb Z[\sqrt{-4}]$; the Hodge-weight inversion (weight $1 \to $ weight $2$) flips real-RM $\Z[\phi],\ \phi^2=4$ on $\mathcal A_2$ to imaginary-CM $\Z[\psi],\ \psi^2=-4$ on K3.
+
+**Regex trigger** (hook): `Humbert.*H_4.*sqrt.?2` or `H_4.*disc.*sqrt.?2` flag as Wave-16 conflation; must read as $\mathbb Z[\phi], \phi^2 = 4$ or as $(2,2)$-isogeny. `H_8` is the correct label for $\mathbb Q(\sqrt 2)$-RM.
+
+**Canonical application** (Wave 16): Vol III `drinfeld_center.tex` remark `rem:dc-wave16-humbert-H4-RM` inscribes the corrected $\mathbb Z[\phi], \phi^2 = 4$ reading and the Kuga–Satake lift to imaginary-CM $\mathbb Z[2i]$. Vol I Wave-15 `rem:cclimax-DNA-wave15-koszul-locus` line 1748 contains the imprecise phrasing "$\mathbb Z[\sqrt 2]$"; Wave 16 leaves that witness in place (Pattern 231: never cut content) and supplements with the sharpened Vol III reading.
+
+**Related**: Pattern 124 (label discipline); Pattern 231 (never cut witness); Wave 15 Humbert monodromy order at $H_4$ = $\Z/2$, at $H_1$ = $\Z/8$ (`rem:pivpi-wave15-humbert-H4`).
+
+## Pattern 254: umbral shift $m_g$ vs transgression cocycle class — two distinct $\Z/|g|$-valued invariants
+
+**Session**: 2026-04-20 (Wave 16 KAZHDAN — $6A/6B$ cocycle-order verification).
+
+**Type**: invariant conflation at CDH-moonshine / transgression-cohomology interface.
+
+The $M_{24}$-twined McKay–Thompson series $H_g^{(2)}$ (Cheng–Duncan–Harvey $2014$) carries two distinct $\Z/|g|$-valued invariants:
+
+1. **Umbral shift** $m_g \in \Z$: the level of the vector-valued mock modular form attached to $g$. CDH Table $1$: $m_{6A} = 2$, $m_{6B} = 6$. Equal to $\mathrm{lcm}(|g|, \mathrm{umb\text{-}level})$.
+
+2. **Transgression cocycle class** $[\mathrm{tr}_g] \in H^3(\Z/|g|, U(1)) \cong \Z/|g|$: the image of the pentagon-$\hbar^3$ class $[\mathrm{Pent}(\hbar^3)] \in H^3(M_{24}, U(1))$ along $\iota_g \colon \Z/|g| \hookrightarrow M_{24}$. Order-$6$ case: $6A \mapsto 2 \pmod 6$, $6B \mapsto 3 \pmod 6$.
+
+**The two invariants are distinct**, though both take values in $\Z/|g|$. Wave 15 Vol I Remark~`rem:cm-wave15-M24-order6` tabulated umbral shifts $(2, 6)$; Wave 15 Vol I Remark~`rem:pivpi-wave15-M24-order6` tabulated cocycle classes $(2, 3)$. Both are correct, but a reader scanning both remarks could conflate them because both appear next to the label "$6A, 6B$".
+
+**Key identity**: sum of cocycle classes $2 + 3 = 5 \equiv -1 \pmod 6$ is the restriction of the universal identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at the $\Z/6$ cyclic test-subgroup, via Dijkgraaf–Witten / Freed–Quinn transgression. The sum of umbral shifts $2 + 6 = 8 \equiv 2 \pmod 6$ is a different numerological fact (umbral-level enumeration).
+
+**Regex trigger** (hook): flag `m_\{6.\}\s*=\s*[0-9]+` near `cocycle` as Wave-16 conflation candidate; require reader to check which invariant.
+
+**Canonical application** (Wave 16): Vol I `part_iv_platonic_introduction.tex` remark `rem:pivpi-wave16-6A6B-cocycle` explicitly separates the two invariants and cites the Dijkgraaf–Witten transgression formula.
+
+**Related**: Pattern 253 (Humbert convention); CDH 2014 Table 1; Freed–Quinn 1993 Comm. Math. Phys. 156 §2.
+
+## Pattern 255: $\phi_{\Delta_5, 2}$ is ramified — Arthur endoscopic + Serre–Swinnerton-Dyer conductor calculus
+
+**Session**: 2026-04-20 (Wave 16 KAZHDAN — $p=2$ ramified local Langlands parameter).
+
+**Type**: ramification-scope discipline at number-theoretic / Langlands interface.
+
+The Saito–Kurokawa lift $\Delta_5 \in S_5(\mathrm{Sp}_4(\Z), v_{\Delta_5})$ (Ibukiyama 1984; Gritsenko–Nikulin 1997 §6) is twisted by the sign character $v_{\Delta_5}$ which factors through $\mathrm{Sp}_4(\Z/2) \cong S_6$. This introduces ramification exactly at $p = 2$.
+
+**Wave 14 formula** (valid at odd primes): $\psi_{\Delta_5, p} = \phi_{\Delta_{E_6}, p} \boxtimes \mathrm{Sym}^1$ (Arthur A-parameter; Saito–Kurokawa unramified).
+
+**Wave 16 correction at $p = 2$** (Arthur 2013 Thm 1.5.1 + Thm 2.2.1):
+$$\psi_{\Delta_5, 2} = \phi_{\Delta_{E_6}, 2} \boxtimes \mathrm{Sym}^1 \otimes \varepsilon_2$$
+with $\varepsilon_2 \colon W_{\Q_2}^{\mathrm{ab}} \to \{\pm 1\}$ the quadratic character of conductor $2^3$ (class of $\sqrt 2 \in \Q_2^\times/(\Q_2^\times)^2$).
+
+**Conductor calculus** (Langlands–Kottwitz): $\f(\phi_{\Delta_5, 2}) = \f(\phi_{\Delta_{E_6}, 2}) + 2\cdot\f(\varepsilon_2) = 11 + 6 = 17$. Matches paramodular-level expectation $2^{17}$ at $p = 2$.
+
+**Regex trigger** (hook): flag `phi_\{Delta_5.*p\}` or `Langlands.*Delta_5` without explicit $p = 2$ vs $p \neq 2$ split as scope-inflation candidate.
+
+**Related**: Pattern 253 (Humbert convention); Wave 15 `rem:cm-wave15-delta5-ramification`; Arthur 2013 AMS Coll. 61.
+
+## Pattern 256: CY-$d$ fibre upgrades Theorem H concentration from $\{0,1,2\}$ to $\{0,\ldots,d\}$
+
+**Session**: 2026-04-20 (Wave 16 KAZHDAN — Theorem H scope on CY-3 fibre).
+
+**Type**: theorem-scope extension at Vol I / Vol III boundary.
+
+Volume I Theorem H states $\ChirHoch^\bullet(A) \subset \mathrm{CohDeg}\{0,1,2\}$ for ordinary chiral algebra $A$ on smooth curve $X$ (Hinich 2010; Francis 2013 Thm 1.1). An "ordinary" chiral algebra has $\dim(\text{chiral direction}) = 1$.
+
+For CY-$d$ fibre under $\Phi$: $\dim(\text{transverse cotangent}) = d - 1$, so Theorem H extends to $\{0, 1, 2, \ldots, d\}$:
+- CY-$0$ (point / associative with cyclic pairing): $\{0,1,2\}$ — standard Theorem H.
+- CY-$2$ (K3): $\{0,1,2\}$ — (Koszul locus, $\ChirHoch^3 = 0$).
+- CY-$3$ (K3 × E, Wave 16 case): $\{0,1,2,3\}$ — degree-3 class is the CY-volume.
+- CY-$4$ (Kuga–Satake of K3 × K3): $\{0,1,2,3,4\}$.
+
+**Koszul-locus discipline**: $\ChirHoch^d$ vanishes on the Koszul locus $\mathcal U_{\mathrm{Kosz}}$ and is non-zero along $H_1 \cup H_4$ (Humbert boundary). Theorem H strict on Koszul locus; weakens by one along Humbert divisors.
+
+**Regex trigger**: flag `ChirHoch\^3` or `ChirHoch\^\{3\}` in Vol III without CY-$d$-scope qualifier; must include CY-dimension context.
+
+**Related**: Pattern 253 (Humbert boundary); Theorem H Vol I; Caldararu 2005 Mukai-pairing degree-$d$ volume class.
+
+## Pattern 257: Monster/K3/Fake-Monster BKM Cartan ranks distinct (2/3/26) — NOT nested
+
+**Session**: 2026-04-20 (Wave 17 DRINFELD — universal $\Psi$ functor).
+
+**Type**: rank-conflation anti-pattern across the BKM landscape.
+
+The three flagship Borcherds-Kac-Moody algebras in the CY-Siegel-automorphic-product
+landscape have \emph{distinct} hyperbolic Cartan ranks, attached to distinct even
+unimodular lattices, not nested by any signature-preserving embedding:
+
+| BKM | Hyperbolic Cartan rank | Even unimodular lattice | Automorphic weight | Primary |
+|-----|-------------------------|--------------------------|---------------------|---------|
+| Monster $\mathfrak m_{\mathrm{Monster}}$ | 2 | $\mathrm{II}_{1,1}$ | 0 ($j(\sigma)-j(\tau)$) | Borcherds 1992 |
+| K3-BKM $\mathfrak g_{\Delta_5}$ | 3 | $\Lambda^{2,1}_{II}$ | 5 ($\Delta_5$) | Gritsenko-Nikulin 1998 |
+| Fake-Monster $\mathfrak m_{\mathrm{FakeMonster}}$ | 26 | $\mathrm{II}_{25,1}$ | 12 ($\Phi_{12}$) | Borcherds 1998 |
+
+**Anti-pattern**: writing Monster Cartan as rank-$26$ (confuses Monster with Fake-Monster
+since Fake-Monster lives on $\mathrm{II}_{25,1} = \Lambda_{24}\oplus\mathrm{II}_{1,1}$
+with rank $26$ hyperbolic Cartan), or claiming K3-BKM is a sub-algebra of Monster (since
+rank-$3$ hyperbolic lattice does not embed in rank-$2$ $\mathrm{II}_{1,1}$).
+
+**Independence**: K3 Mukai lattice $\mathrm{II}_{4,20}$ signature $(4,20)$ does NOT embed
+signature-preservingly in Leech $\mathrm{II}_{25,1}$ signature $(25,1)$
+(Gritsenko-Nikulin 1998 Prop~2.5). Therefore the three BKMs are co-siblings, not nested.
+
+**Regex trigger**: flag `Monster.*rank.{0,20}26` or `\text{rank.?}2[46].*Monster\b`
+(catches Monster-with-large-rank claim) and `K3.*subalgebra.*Monster`.
+
+**Related**: Pattern 250 (CY-Siegel-automorphic-product datum); Pattern 253 (Humbert).
+Primary: Borcherds 1992, Borcherds 1998, Gritsenko-Nikulin 1998.
+
+## Pattern 258: Universal $\Psi$ functor $\mathrm{CY}^{\mathrm{Siegel-aut}}_2 \to \mathrm{QHopf}^{\mathrm{BKM}}$
+
+**Session**: 2026-04-20 (Wave 17 DRINFELD).
+
+**Type**: positive pattern — universal construction, not an anti-pattern.
+
+The Wave 17 functor
+$\Psi: \mathrm{CY}^{\mathrm{Siegel-aut}}_2 \to \mathrm{QHopf}^{\mathrm{BKM}}$
+assigns to each CY-2 Siegel-automorphic-product datum $(L, \phi_L, \Sigma(\phi_L))$
+(even lattice $L$ of signature $(n,2)$, weak Jacobi form $\phi_L$ of weight $0$
+and index $L$, Borcherds singular-theta lift $\Sigma(\phi_L)$) the Hall-Drinfeld
+double $\mathbf H_{\Sigma(\phi_L)}$ whose BKM denominator identity is $\Sigma(\phi_L)$.
+
+Three flagship values:
+- $\Psi(\mathrm{II}_{1,1}, J^{\mathrm{Monster}}, j(\sigma)-j(\tau)) = \mathbf H_{\mathrm{Monster}}$.
+- $\Psi(\Lambda^{2,1}_{II}, \phi_{0,1}^{K3}, \Delta_5) = \mathbf H_{\Delta_5}$.
+- $\Psi(\mathrm{II}_{25,1}, \theta_{\Lambda_{24}}/\eta^{24}, \Phi_{12}) = \mathbf H_{\mathrm{FakeMonster}}$.
+
+$\Psi$ is NOT injective on iso classes but IS a genuine functor: lattice embeddings
+$L\hookrightarrow L'$ compatible with Jacobi-form pullback induce quasi-Hopf
+morphisms $\Psi(L,\cdot,\cdot)\to\Psi(L',\cdot,\cdot)$ via Schiffmann-Vasserot shuffle
+functoriality (Schiffmann-Vasserot 2012 \S4.3).
+
+**Anti-pattern to avoid (AP-CY70)**: writing $\Psi$ as a classification ``$\Psi$ exhausts
+all BKMs'' -- $\Psi$-image is strictly automorphic-product BKMs (Gritsenko-Nikulin 1998
+classification), NOT arbitrary BKMs (e.g.\ affine Lie algebras are BKMs without
+Siegel-automorphic product denominators and are not in $\Psi$-image).
+
+**Related**: Pattern 257 (flagship Cartan ranks); Gritsenko-Nikulin 1998 classification;
+Etingof-Kazhdan 2007 Part V (super-quasi-Hopf quantisation functor).
+
+## Pattern 259: Monster super-EK on Manin pair $(\mathfrak m_{\mathrm{Monster}}, \mathfrak{imag})$
+
+**Session**: 2026-04-20 (Wave 17 DRINFELD).
+
+**Type**: construction pattern.
+
+The Monster Hall-Drinfeld double
+$\mathbf H_{\mathrm{Monster}} = \mathcal D_\hbar(\mathcal Y^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{\mathrm{Leech}}),
+\widetilde\Phi^{\mathrm{Conway-Norton}}, R_{j-744})$
+is the super-EK quantisation of the Manin pair
+$(\mathfrak m_{\mathrm{Monster}}, \mathfrak{imag})$ where
+$\mathfrak{imag}$ is the codimension-$24$ subalgebra of imaginary simple roots.
+
+Classification cohomology
+$H^2(\mathfrak m_{\mathrm{Monster}};\mathbb C)^{\mathbb Z/2, V^\natural} \cong \mathbb C
+\cdot \widetilde\Phi^{\mathrm{Conway-Norton}}$
+is one-dimensional, generated by the Conway-Norton associator.
+
+**Primary**: Frenkel-Lepowsky-Meurman 1988 ($V^\natural$), Borcherds 1992 (denominator),
+Dong-Mason 1994 (vertex superalgebra), Etingof-Kazhdan 2007 Part V (super-EK).
+
+**Scope**: $\mathbf H_{\mathrm{Monster}}$ is DISTINCT from $V^\natural$. The former
+is a quasi-Hopf algebra quantising $U(\mathfrak m_{\mathrm{Monster}})$; the latter
+is an $E_\infty$-chiral vertex operator algebra. They are connected by
+Borcherds's BRST identification of $\mathfrak m_{\mathrm{Monster}}$ as
+$(V^\natural\otimes V_{\mathrm{II}_{1,1}})$-BRST cohomology at conformal weight 1,
+but are NOT identical objects.
+
+**Regex trigger**: flag `\mathbf H_\{\mathrm\{Monster\}\} = V\^\\natural` or similar
+``$H_{\mathrm{Monster}} = V^\natural$'' conflations.
+
+**Related**: AP-CY7 (CoHA $\neq$ chiral); Pattern 258 ($\Psi$).
+
+## Pattern 260 (AP176): pro-limit vs finite-dim for BKM small quantum group
+
+**Session**: 2026-04-20 (Wave 18 GELFAND).
+
+**Type**: confusion pattern.
+
+**Confusion**: treating $\mathfrak u_\ell(\widehat{\mathfrak m}_{\mathrm{BKM}})$
+at a root of unity as a finite-dimensional algebra. The BKM imaginary-root
+cone is dense in height, so Lusztig 1993 Ch.~35 finite-type PBW does not
+apply directly; the positive-root sublattice has infinite-many generators.
+
+**Correct statement**: $\mathfrak u_\ell$ is the pro-limit of a
+Mittag-Leffler tower of finite-dim weight-$N$ truncations
+$\{\mathfrak u_\ell^{\leq N}\}_N$, each with exact PBW dimension
+$\ell^{d(N)+\mathrm{rank}_{\mathrm{real}}}$ where
+$d(N) = \sum_{m\leq N} c_{\mathrm{K3}}(\Delta(\alpha_m))$ is the
+cumulative EOT K3-elliptic-genus Fourier-coefficient sum.
+For $\ell = 8$ and $\Delta_5$ BKM: $d(1)=2, d(2)=22, d(3)=238$
+giving $8^5, 8^{25}, 8^{241}$ at the first three stages.
+Pro-limit is a pro-finite Hopf algebra, not finite-dim.
+
+**Regex trigger**: flag
+`\dim\s*\\mathfrak u_\\{\\?(?:\\\\zeta|\\\\ell)` followed by single
+exponent without pro-limit / truncation qualifier.
+
+**Primary**: Lusztig 1990 *JAMS* 3 \S5 (finite case); Lusztig 1993
+*Introduction to Quantum Groups* Ch.~35 (symmetrisable KM);
+Borcherds 1992 *Invent.* 109 Thm.~10.1 (BKM denominator);
+Eguchi-Ooguri-Tachikawa 2011 arXiv:1004.0956 Table~1 (coefficients);
+Weibel 1994 \S3.5.8 (Mittag-Leffler); Lurie HTT \S5.3.5 (Pro-category).
+
+**Location**: inscribed in
+`/Users/raeez/calabi-yau-quantum-groups/chapters/theory/quantum_groups_foundations.tex`
+Def/Prop/Thm `def:qgf-wave18-weight-truncated-small-form`,
+`prop:qgf-wave18-truncation-dims`, `thm:qgf-wave18-PBW-pro-limit`,
+`rem:qgf-wave18-AP-prolimit-finitedim`.
+
+**Related**: AP165 (B(A) E_1 coassoc, not SC); AP167 (topologisation
+scope); Pattern 258 ($\Psi$-image is Siegel-automorphic BKM).
+
+## Pattern 261 (AP177): Plancherel measure support is pro-finite index set, not finite
+
+**Session**: 2026-04-20 (Wave 18 GELFAND).
+
+**Type**: confusion pattern (companion to Pattern 260).
+
+**Confusion**: stating the Kerler-Lyubashenko Plancherel measure on
+a non-semisimple MTC built from $\mathfrak u_{\zeta_8}(\widehat
+{\mathfrak m}_{\Delta_5})$ is supported on a finite index set
+$\Lambda = |\Lambda^{\leq N_{\mathrm{real}}}|$ (e.g.\ $8^{129}$)
+conflates a specific truncation level with the true categorical object.
+
+**Correct statement**: the measure lives on the pro-finite index set
+$\Lambda_\infty = \lim_N \Lambda^{\leq N}$; the identity
+$\int\mathrm{tr}\,\mathrm d\mu_{\mathrm{Plan}} = 1/\Phi_{10}$ holds as
+a Mittag-Leffler limit in the $q_\rho q_\tau y$-adic topology on
+$\mathbb Z[[q_\rho, q_\tau, y, y^{-1}]]$, i.e.\
+$\lim_N \mathcal T_N = 1/\Phi_{10}$ where
+$\mathcal T_N = \sum_{\lambda \in \Lambda^{\leq N}}
+\dim_{\mathrm{qu}}(P_\lambda)\,\mathrm{ch}(P_\lambda)
+\mathrm{ch}(P_\lambda^\vee)$.
+
+**Maulik-Okounkov extension discipline**: Maulik-Okounkov 2019
+\S8 Thm.~2.4.1 gives a strict $U_q(\widehat{\mathfrak h}_{\mathrm{Muk}})$-module
+structure on $H^*_T(\mathrm{Hilb}^{[n]}(\mathrm K3))$; the BKM
+extension to $\mathbf H_{\Delta_5}$ requires the pro-category
+$\mathrm{Pro}(\mathrm{Mod}_{\mathbf H_{\Delta_5}})$ because the BKM
+positive cone is dense-in-height, not locally finite like Kac-Moody.
+
+**Regex trigger**: flag `|\\Lambda| = 8\^\{?129` or similar finite
+cardinality claims for the Plancherel index set without pro-limit
+qualifier.
+
+**Primary**: Nakajima 1997 *Ann.\ Math.* 145 Thm.~3.10 (Heisenberg
+Fock); Maulik-Okounkov 2019 *Ast\'erisque* 408 \S8 Thm.~2.4.1
+(stable envelope); Schiffmann-Vasserot 2013 *Duke* 162 Thm.~4.5.2
+(CoHA lightlike extension); Borcherds 1992 Thm.~10.1 (BKM Serre
+compatibility); Kerler-Lyubashenko 2001 LMS LNS 262 \S5 (coend);
+Etingof-Ostrik 2004 *Moscow Math.~J.* 4 Thm.~2.16 (projective covers).
+
+**Location**: inscribed in
+`/Users/raeez/calabi-yau-quantum-groups/chapters/theory/modular_trace.tex`
+Thm `thm:modtr-wave18-Plancherel-ML-limit`,
+`thm:modtr-wave18-Plancherel-HS-convergence`; cross-ref
+Rem `rem:modtr-wave18-HS-scope`, `rem:modtr-wave18-MO-extension`.
+
+**Related**: Pattern 260 (AP176 pro-limit); AP-CY70 ($\Psi$-scope);
+Pattern 259 (Monster super-EK).
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
