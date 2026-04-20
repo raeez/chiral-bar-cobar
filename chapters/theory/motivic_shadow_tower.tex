@@ -1120,6 +1120,135 @@ motivically (e.g.\ $\Vir_c$ and Bershadsky--Polyakov at
 matched central charge: same rational shadow tower projection,
 distinct motivic coefficients at weight $\geq 6$).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Nekrasov $\Omega$-background as motivic weight grading}
+\label{sec:nekrasov-omega-motivic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\ep}{\epsilon}
+
+A physical incarnation of the motivic weight filtration
+$\MZV^{\mot} = \bigoplus_w \MZV^{\mot}_w$ appears in the
+$\Omega$-deformed partition function
+$Z_{\mathrm{inst}}(\ep_1,\ep_2)$ of a $4d$ $\mathcal{N}=2$ theory
+placed on the $\Omega$-background $\mathbb{R}^4_{\ep_1,\ep_2}$
+(Nekrasov, \texttt{hep-th/0206161}; Nekrasov--Okounkov 2006). The
+equivariant parameters $(\ep_1,\ep_2)$ are weight-$1$ motivic
+variables; the $\Omega$-deformed free energy
+\[
+  \mathcal F(\ep_1,\ep_2)
+  \;=\;
+  \ep_1\ep_2\,\log Z_{\mathrm{inst}}(\ep_1,\ep_2)
+\]
+admits a Taylor expansion in $\ep_1,\ep_2$ whose coefficients lie in
+$\MZV^{\mot}$ with weight tracking the total $\ep$-degree
+\cite{NakajimaYoshioka2003,ErnstromNaganoNakajima2015}. The
+self-dual phase $\ep_1 = -\ep_2 = \ep$ collapses the two-variable
+grading to the single $\hbar$-grading via $\hbar^2 = -\ep^2 =
+\ep_1\ep_2$; under this collapse the motivic weight of a monomial
+$\ep^n$ equals $n$, so $\hbar^{2k}$ carries motivic weight $2k$.
+The bar-cobar convolution dGLA of Vol~I, restricted to families
+carrying an $\Omega$-deformation, inherits this grading: the
+shadow coefficient $S_r(\cA)$ couples to the order-$\ep^r$ term in
+the $\Omega$ expansion of the partition function of the $4d$
+parent theory whose $2d$ chiral sector is $\cA$ under
+Beem--Rastelli.
+
+\begin{conjecture}[\label{conj:omega-motivic-weight-match}
+$\Omega$-weight equals shadow motivic weight]
+Let $\cA$ be a $C_2$-cofinite non-logarithmic chiral algebra that
+arises as the Beem--Rastelli chiral sector of a $4d$ $\mathcal{N}=2$
+superconformal theory $\mathcal T$ on the $\Omega$-background
+$\mathbb{R}^4_{\ep_1,\ep_2}$. Then the shadow-tower coefficient
+$S_r^{\mot}(\cA)\in \MZV^{\mot}_{r}$ coincides, up to a rational
+family-dependent prefactor, with the
+$(\ep_1\ep_2)^{\lfloor r/2\rfloor}$-coefficient of the
+Nekrasov--Okounkov refined free energy expanded at the
+Nekrasov--Shatashvili self-dual phase:
+\[
+  S_r^{\mot}(\cA)
+  \;\sim_{\mathbb{Q}(\mathrm{family})}\;
+  \bigl[\,\ep^r\,\bigr]\,
+  \mathcal F_{\mathrm{NO}}\bigl(\mathcal T;\,\ep,-\ep\bigr).
+\]
+\end{conjecture}
+
+\begin{remark}[Evidence and proof strategy for
+Conjecture~\ref{conj:omega-motivic-weight-match}]
+\label{rem:omega-motivic-weight-match-strategy}
+Nekrasov--Okounkov (2006) express the $\Omega$-deformed free energy
+via equivariant integration over the moduli of framed instantons;
+the resulting formula evaluates to a sum over partitions with
+hook-length weights. Under the AGT correspondence with $\mathcal T$
+a class-$\mathcal S$ theory, the series is the conformal block of
+the corresponding Liouville/Toda CFT whose vertex algebra is the
+Beem--Rastelli $\cA$. The Liouville/Toda conformal block admits a
+motivic expansion in $\MZV^{\mot}$ (Andr\'e~2009; Brown 2012) whose
+weights track the $\ep$-grading. The shadow coefficients $S_r(\cA)$
+are the collisional limits of the same conformal block evaluated at
+$(z-w)\to 0$, and the motivic refinement $S_r^{\mot}$ of
+Theorem~\ref{thm:shadow-tower-motivic-lift} inherits this weight.
+The self-dual phase $\ep_1 = -\ep_2$ restricts to the single
+$\hbar$-expansion used in the convolution dGLA. The remaining
+step is matching normalisation constants; these are family-dependent
+rational numbers controlled by the Beem--Rastelli dictionary
+$c_{2d} = -12 c_{4d}$ and are absorbed in the
+$\sim_{\mathbb{Q}(\mathrm{family})}$ equivalence. The conjecture
+is open beyond the family-by-family checks for $\Vir_c$ (Liouville,
+Nekrasov--Shatashvili 2009) and affine Kac--Moody (Nekrasov--Pestun
+2012).
+\end{remark}
+
+\begin{remark}[K3 instance: $\hbar^2 = -1/8$ vs.\ self-dual
+$\ep^2 = 1/8$]
+\label{rem:omega-k3-self-dual}
+For the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$ of Vol~III, the
+parameter $\hbar^2 = -1/8$ (Etingof Wave~13 C6; compute module
+\texttt{k3\_yangian\_wave14\_pentagon\_coboundary\_hbar3.py})
+corresponds under $\hbar^2 = \ep_1\ep_2$ at the self-dual phase to
+$\ep_1 = -\ep_2 = \pm 1/(2\sqrt{2})$, which is the
+Nekrasov--Shatashvili self-dual point of the $\Omega$-deformed
+class-$\mathcal S$ $A_1$ theory on $\Sigma_{0,24}$. At this phase
+the chiral algebra is the Bethe-subalgebra of a quantum-integrable
+system, the Humbert walls are its Bethe wall-crossing loci, and
+the Maulik--Okounkov stable-envelope $R$-matrix becomes the
+Siegel-elliptic dynamical $R_{\mathrm{Sieg,dyn}}$
+\cite{NekrasovShatashvili2009,MaulikOkounkov12}. This is the first
+Vol~I/Vol~III instance of the Nekrasov-voice motivic weight
+grading; its generalisation to other CY-$2$ base inputs of $\Phi$
+is open.
+\end{remark}
+
+\begin{remark}[Pentagon coboundary at $\hbar^3$: $25/3$ is not a
+central charge]
+\label{rem:omega-pentagon-coboundary}
+The pentagon-equation coboundary at order $\hbar^3$ of the K3
+Siegel--Borcherds associator decomposes as
+\[
+  \phi^{(3)}
+  \;=\;
+  \zeta(3)\,c_{\mathrm{symm}}
+  \;+\;
+  \tfrac{25}{3}\,c_{\mathrm{timelike}}
+  \;+\;
+  (\Phi_{10}/\eta^{24})\,c_{\Phi_{10}}
+\]
+(compute module
+\texttt{k3\_yangian\_wave14\_pentagon\_coboundary\_hbar3.py}). The
+coefficient $25/3$ equals
+$\mathrm{rk}(\mathrm{II}_{25,1}) - 1$ divided by the triple-leg
+antisymmetrisation denominator~$3$, i.e.\ the Fake Monster Cartan
+rank minus the timelike Cartan direction. This is \emph{not} a
+Virasoro central charge: there is no $c = 25/3$ minimal model
+controlling this coefficient. Anti-pattern: the motivic weight-$3$
+component $\zeta^{\mot}(3)\,c_{\mathrm{symm}}$ sits in $\MZV^{\mot}_3$,
+while the $25/3$ coefficient is a weight-$0$ rational. Conflating
+motivic weight-$3$ with a central-charge interpretation at the
+pentagon coboundary is a Nekrasov-voice Wave~14 register;
+primary-lit frame: Drinfeld 1990 quasi-Hopf, Etingof--Kazhdan
+Parts~I--V.
+\end{remark}
+
 \section{Wave 13 DNA perspective}
 \label{sec:mst-wave13-DNA}
 
