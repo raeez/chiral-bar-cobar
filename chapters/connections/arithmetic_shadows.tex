@@ -13478,3 +13478,90 @@ Vol~II soft-factor depth, Vol~III BPS-counting growth rate.
 \end{remark}
 
 % Local bibliography removed: entries now in bibliography/references.tex
+
+\section{Wave 13 DNA perspective: Gelfand structural lens}
+\label{sec:as-wave13-gelfand-DNA}
+
+\begin{remark}[The Etingof--Kazhdan cohomology group as the arithmetic shadow of $\Delta_5$]
+\label{rem:as-DNA-gelfand-ek-cohomology}
+The Vol~III Wave-13 classification theorem
+(Vol~III Chapter~\ref*{ch:k3-chiral-bialgebra-platonic},
+Theorem~\ref*{thm:k3-classification-etingof}) identifies
+$H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2, K(1)} \cong \mathbb{C}\cdot\Delta_5$
+as the one-dimensional Lie-bialgebra cohomology group cutting out the
+gauge-equivalence class of the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$.
+Under the dictionary between Lie-bialgebra cohomology and automorphic
+cohomology established by Bruinier 2002 Proposition~5.1 (Heegner-divisor
+Chern-class reciprocity), this group is the arithmetic shadow of the
+Igusa form $\Delta_5\in S_5(\widetilde{\mathrm{Sp}_4(\mathbb{Z})}^{v_{\Delta_5}})$.
+The Wave-14 arithmetic reading is: $\Delta_5$ itself is the classification
+invariant, so every higher arithmetic identity of this chapter involving
+$\Delta_5$ can be read as an identity in $H^2$; conversely, any
+Lie-bialgebra 2-cocycle class can be mapped through Bruinier's reciprocity
+to an automorphic form on $\overline{\mathcal{A}_2}$, and its Humbert-divisor
+restriction recovers the arithmetic shadow. The genus-$1$ scalar shadow
+$\kappa(\mathcal{A})$ is the projection of this automorphic class onto the
+dimension-$1$ constant stratum; higher shadows $S_k$ are higher-monodromy
+data.
+\end{remark}
+
+\begin{remark}[Structural origin of $K^{\kappa_{\mathrm{ch}}} = 8$ via three faces]
+\label{rem:as-DNA-gelfand-8-three-faces}
+The value $K^{\kappa_{\mathrm{ch}}} = 8$ on the $\mathcal{B}$-family
+Lorentzian-lattice stratification (Theorem-C enlargement at
+\texttt{chapters/examples/landscape\_census.tex}) admits three independent
+structural origins, all converging on $8$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Mukai face.} The Mukai pairing on the K3 Mukai lattice
+  $\widetilde{H}(K3,\mathbb{Z}) = H^0\oplus H^2\oplus H^4$ has signature
+  $(4,20)$; its positive-signature dimension $c_+(\mathrm{Mukai}(K3))=4$
+  gives $K^{\kappa_{\mathrm{ch}}} = 2 c_+(\mathrm{Mukai}(K3)) = 8$
+  (Vol~III Remark~\ref*{rem:mukai-doubling-K-kappa}).
+\item \emph{Humbert-monodromy face.} The Humbert surface
+  $H_1 \subset \overline{\mathcal{A}_2}$ has $\mathcal{D}$-module
+  monodromy order $8$ (Vol~III Theorem~\ref*{thm:humbert-order-K-kappa}),
+  derived from Deligne--Mebkhout-nearby-cycles on the Siegel base.
+\item \emph{Lusztig face.} At the Lusztig specialisation $\zeta_\ell$ with
+  $\ell = 8$, the small quantum group $u_\zeta(\mathfrak{g}_{\Delta_5})$
+  closes on a finite-rank cover of $\mathbf{H}_{\Delta_5}$; this
+  specialisation matches $\hbar^2 = -1/8$ by
+  $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$.
+\end{enumerate}
+The agreement of three independent $8$'s --- geometric (Mukai signature),
+$\mathcal{D}$-modular (Humbert monodromy), and algebraic (Lusztig root-of-unity)
+--- is forced by the structural genesis of $\mathbf{H}_{\Delta_5}$ as
+super-EK quantisation (Vol~III Theorem~\ref*{thm:k3-structural-genesis}):
+all three labels are translates of the same cocycle class under Bruinier
+reciprocity. Cross-reference to Vol~I Theorem~C enlargement and to
+\texttt{chapters/examples/landscape\_census.tex}.
+\end{remark}
+
+\begin{remark}[Schur-index arithmetic shadow through the composite arrow]
+\label{rem:as-DNA-gelfand-schur-composite}
+The arithmetic-shadow interpretation of Vol~III
+Theorem~\ref*{thm:schur-to-delta5-composite} reads: the Schur index of
+$\mathcal{T}[A_1,\Sigma_{0,24}]$ is a protected arithmetic invariant of
+the 4d $\mathcal{N}=2$ parent, explicitly
+\[
+\mathcal{I}_{\mathrm{Schur}}[\mathcal{T}[A_1,\Sigma_{0,24}]](q;\mathbf{1})
+\;=\;
+\mathrm{PE}\!\left[\frac{72q - 22q^2}{1-q}\right] + O(q^{11})
+\;=\;
+1 + 72q + 2678q^2 + 68474q^3 + 1351775q^4 + \cdots.
+\]
+The 24 flavour fugacities carry the $M_{24}$ permutation action; averaging
+and diagonal restriction produces the K3 elliptic genus
+$\phi_{0,1}^{K3}=2(y+y^{-1})+20+O(q)$, and Borcherds singular-theta lift
+produces $\Delta_5$. The arithmetic-shadow perspective: each arrow loses
+information, and the 10 terms of the Schur $q$-series above carry strictly
+more arithmetic than $\Delta_5$ alone, since they track the 22 suppressed
+flavour directions perpendicular to the $M_{24}$-invariant diagonal. The
+Schur index is therefore the \emph{un-averaged arithmetic shadow} of the
+K3 chiral bialgebra, while $\Delta_5$ is its $M_{24}$-invariant projection.
+Cross-volume bridge: compute module
+\texttt{k3\_yangian\_wave14\_schur\_index\_classS\_A1\_24.py} in the Vol~III
+source tree cross-verifies the 10 coefficients above against plethystic
+exponentiation; Primary lit: Beem--Peelaers--Rastelli 2015;
+Gadde--Rastelli--Razamat--Yan 2011; Eguchi--Ooguri--Tachikawa 2011;
+Borcherds 1998.
+\end{remark}

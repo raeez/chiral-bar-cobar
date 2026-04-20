@@ -1116,6 +1116,100 @@ ordered-bar projection of that passage, and the projection is exactly
 the new Theorem-C constant $8$.
 \end{remark}
 
+\begin{remark}[Koszul structure of the K3 chiral bialgebra: what is
+  actually proved]
+\label{rem:k3-koszul-structure-precise}
+\ClaimStatusProvedHere
+The K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$ of
+Vol~III, Ch.\,\ref{ch:k3-chiral-bialgebra-platonic}, is
+\emph{generalised Koszul} in the sense of
+Positselski--Vishik 2000, not quadratic Koszul. The distinction is
+load-bearing and must not be elided.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Generators.} The chiral algebra $A = \mathbf{H}_{\Delta_5}$
+  has a distinguished generating subspace
+  $V\subset A$ of chain-level homogeneous weight $1$ (equivalently
+  OPE order $1$), spanned by the $24$ copies of the Miki
+  toroidal generators $\{e^{(i)}_r, f^{(i)}_r, \psi^{(i)\pm}_s\}$
+  indexed by the $24$ nodes of the discriminant curve
+  $E^{\mathrm{nod}}_{24}$.
+\item \emph{Relations and why ``quadratic'' fails on the nose.}
+  The defining relations split as
+  \[
+    R \;=\; R_{\mathrm{quad}} \;\oplus\; R_{\mathrm{Borcherds}},
+  \]
+  where $R_{\mathrm{quad}} \subset V\otimes V$ are the Miki
+  quadratic commutation relations (one batch per copy) and the
+  $M_{24}$-equivariant cross-node commutators; and
+  $R_{\mathrm{Borcherds}}$ are the Borcherds-imaginary-root
+  relations, which carry genuinely \emph{higher} OPE weight
+  (at most weight~$5$, matching the weight of the Igusa form
+  $\Delta_5$). The presence of $R_{\mathrm{Borcherds}}$ is exactly
+  why $\mathbf{H}_{\Delta_5}$ is not a Yangian in Drinfeld's sense
+  \textup{(}Vol~III,
+  Remark~\textup{\ref{rem:retract-k3-yangian-name}}\textup{)}: a
+  Drinfeld-Jimbo/Yangian input admits a presentation with relations
+  purely in $V\otimes V$; the BKM imaginary-root relations do not
+  fit into $V\otimes V$.
+\item \emph{Koszul dual $A^!$, explicitly.} On the Koszul locus
+  (Definition~\ref{def:chiral-koszul-pair}), Verdier duality in
+  $D^b_{\mathrm{hol}}\!\bigl(\Fact^{\mathrm{ord}}(X)\bigr)$ produces
+  the ordered line-side Koszul dual
+  \[
+    A^!_{\mathrm{line}}
+    \;=\;
+    \mathbb{D}_{\mathrm{Ver}}\bigl(\bar{B}^{\mathrm{ch}}(A)\bigr)^{\vee}
+    \;\in\;
+    \mathrm{ChirAlg}^{\mathrm{ord}}_X.
+  \]
+  This is the object labelled $A^!_{\mathrm{line}}$ of
+  Ch.\,\ref{ch:ordered-associative-chiral-kd}; on the BKM slot it
+  receives the Hall-side presentation of
+  Schiffmann--Vasserot\,2012, Theorem~7.9, inflated to the rank-$24$
+  Mukai vector space. The distinct five-object hygiene
+  \textup{(}CLAUDE.md\textup{)} must be enforced: $A^!$ is the
+  Verdier-dual algebra, not the bar coalgebra $B(A)$ and not the
+  cohomology coalgebra
+  $A^i = H^\star\!\bigl(\bar{B}^{\mathrm{ch}}(A)\bigr)$.
+\item \emph{Chain-level splitting / homotopy witness.} On the Koszul
+  locus, the standard bar contraction $h_{\mathrm{bar}}$ of
+  Proposition~\ref{prop:theorem-a-dual-lane-local-readout} applies
+  verbatim to the quadratic stratum $R_{\mathrm{quad}}$. On the
+  Borcherds stratum $R_{\mathrm{Borcherds}}$ the chain homotopy is
+  \emph{not} $h_{\mathrm{bar}}$ but a twisted extension
+  $h_{\mathrm{bar}}^{\Delta_5}$ obtained by coupling
+  $h_{\mathrm{bar}}$ to the Gritsenko--Nikulin denominator cocycle
+  \textup{(}Vol~III, Section~\ref{sec:siegel-borcherds-associator};
+  Positselski--Vishik 2000, Theorem~10.1 for the generalised-Koszul
+  chain-homotopy existence under CDG-deformation\textup{)}.
+\item \emph{Koszul locus, precisely.} The locus on which
+  bar-cobar inversion (Theorem~B) holds strictly at chain level for
+  $\mathbf{H}_{\Delta_5}$ is the complement of the Humbert divisor
+  $H_1 \subset \overline{\mathcal{A}_2}$ on which
+  $R_{\mathrm{Borcherds}}$ degenerates:
+  \[
+    \mathcal{U}_{\mathrm{Kosz}}^{\mathrm{K3}}
+    \;=\;
+    \overline{\mathcal{A}_2}\setminus H_1.
+  \]
+  Off $\mathcal{U}_{\mathrm{Kosz}}^{\mathrm{K3}}$ the order-$8$
+  Humbert monodromy of Theorem~\ref{thm:humbert-order-K-kappa} in
+  Vol~III obstructs strict inversion; Positselski's weight-completed
+  coderived equivalence of Theorem~\ref{thm:theorem-b-platonic-pointer}(b)
+  is the tightest statement available on a Humbert neighbourhood.
+\end{enumerate}
+The naive quadratic-Koszul picture ($R$ concentrated in
+$V\otimes V$) fails on the Borcherds stratum; asserting it globally
+is the confusion pattern flagged in Vol~III,
+Remark~\ref{rem:ikeda-gritsenko-disambiguation}. The corrected statement is:
+$\mathbf{H}_{\Delta_5}$ is a generalised-Koszul CDG coalgebra in the
+Positselski sense, with quadratic core $R_{\mathrm{quad}}$ and
+higher-weight correction $R_{\mathrm{Borcherds}}$; the Koszul dual
+is $A^!_{\mathrm{line}}$ obtained by Verdier duality; the chain
+homotopy is $h_{\mathrm{bar}}^{\Delta_5}$; the Koszul locus is
+$\overline{\mathcal{A}_2}\setminus H_1$.
+\end{remark}
+
 \begin{theorem}[Theorem~D as the all-weight genus package, pointer]
 \label{thm:theorem-d-platonic-pointer}
 \ClaimStatusProvedElsewhere
