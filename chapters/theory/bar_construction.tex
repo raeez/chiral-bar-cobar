@@ -2966,3 +2966,134 @@ Theorem~\ref{thm:kcb-MC-hbar7-hbar12} and in the compute modules
 \texttt{compute/lib/mzv\_stuffle\_depth3\_phi9\_k3.py} and
 \texttt{compute/lib/mzv\_shuffle\_depth4\_phi12\_k3.py}.
 \end{proof}
+
+\section{Admissibility filtration on the pentagon tower}
+\label{sec:bc-admissibility-filtration}
+
+On the $A_\infty$-Humbert regime of the pentagon tower
+$\{\phi^{(n)}\}_{n\ge 3}$, the strict $3\mathbb{Z}$-parity of
+Theorem~\ref{thm:MC-hbar7-hbar12-k3} dissolves into a denser support on
+which every $\phi^{(n)}$ admits a Fourier-theoretic primitive-count
+description. The pentagon coherences index via the discriminant
+$D_n = (n-3)/2$ against the Jacobi-index-$1$ lattice $4NM - \ell^2$
+carried by the K3 elliptic genus $\phi^{K3}_{0,1}$. The question of
+which $\phi^{(n)}$ survives is then not a motivic-depth question but a
+polar-support question, and the polar cutoff of
+Eichler--Zagier $1985$ supplies an unconditional answer.
+
+\begin{lemma}[Polar support of the K3 elliptic genus; cross-volume
+reference]
+\label{lem:bc-polar-support-phi-K3}
+\ClaimStatusProvedElsewhere
+The K3 elliptic genus $\phi^{K3}_{0,1}$ has Fourier coefficients
+$c(N, \ell) = C(4N - \ell^2)$ depending only on the discriminant
+$\Delta = 4N - \ell^2$, with
+$C(-1) = 2$, $C(0) = 20$, and
+$C(\Delta) = 0$ for all $\Delta < -1$. Proved in Volume~III
+Lemma~\ref{lem:polar-support-phi-K3}; primary source
+Eichler--Zagier $1985$ \textup{Prog.~Math.}~$55$ Theorem~$9.1$
+(index-$m$ weak Jacobi forms vanish in discriminants below $-m^2$, here
+$m = 1$).
+\end{lemma}
+
+\begin{theorem}[Unconditional depth-reduction of the pentagon tower on
+the K3 side]
+\label{thm:bc-unconditional-depth-reduction}
+\ClaimStatusProvedHere
+Consider the pentagon $A_\infty$-tower $\{\phi^{(n)}\}_{n\ge 3}$ of
+$\mathbf{H}_{\Delta_5}$ on the $A_\infty$-Humbert regime
+(Volume~III
+Proposition~\ref{prop:A-infty-structure-constants-humbert}), where
+\[
+  \phi^{(n)} \;=\; \sum_{\substack{(N, \ell, M)\\ 4NM - \ell^2 = -D_n}}
+    c_{\Phi_{10}/\eta^{24}}(N, \ell, M)\,
+    [\mathrm{generator}]^{\otimes n},
+  \qquad D_n = (n-3)/2.
+\]
+Admissibility $D_n \bmod 4 \in \{0, 1\}$, equivalently
+$n \equiv 3, 5 \pmod 8$, is necessary for the lattice sum to be
+non-empty. On the admissible locus:
+\begin{itemize}
+\item $n = 3$: $\phi^{(3)} \ne 0$, the Etingof--Kazhdan pentagon
+  cocycle of Theorem~\ref{thm:pentagon-sieg-bor}
+  (Volume~III).
+\item $n = 5$: $\phi^{(5)} = 2\,[\mathrm{generator}]^{\otimes 5} \ne 0$,
+  one-term lattice sum with Heegner coefficient
+  $C(-1) = 2$.
+\item $n \ge 11$ admissible: $\phi^{(n)} = 0$ because every lattice
+  representative $(N, \ell, M)$ has $\Delta = -D_n \le -4 < -1$, and
+  $C(\Delta) = 0$ for $\Delta < -1$ by
+  Lemma~\ref{lem:bc-polar-support-phi-K3}.
+\end{itemize}
+The non-admissible $n$'s have $\phi^{(n)} = 0$ by empty lattice sum.
+Hence the $A_\infty$-Humbert pentagon tower is concentrated at
+$n \in \{3, 5\}$: the strict quasi-Hopf obstruction plus a single
+higher coherence at $n = 5$. The vanishing for $n \ge 11$ is
+\emph{unconditional}: it follows from Eichler--Zagier $1985$ Theorem~$9.1$
+(index-$m$ polar support $\Delta \ge -m^2$, here $m = 1$), a
+structural property of weak Jacobi forms that does not depend on
+motivic-depth arithmetic.
+\end{theorem}
+
+\begin{proof}
+The admissibility congruence $D_n \bmod 4 \in \{0, 1\}$ is the
+discriminant form's signature: $4NM - \ell^2 \equiv -\ell^2 \pmod 4$
+takes values in $\{0, -1\} \pmod 4$, so $-D_n$ is representable by the
+form iff $D_n \in \{0, 1\} \pmod 4$. Combined with the odd-$n$
+constraint (else $D_n \notin \mathbb{Z}$), this is $n \equiv 3, 5
+\pmod 8$.
+
+Case $n = 3$: $D_3 = 0$, the lattice sum has representative
+$(N, \ell, M) = (0, 0, 0)$ or any $(N, \ell, M)$ with $4NM = \ell^2$;
+Heegner coefficient $C(0) = 20 \ne 0$; $\phi^{(3)}$ is non-vanishing
+and is the strict pentagon obstruction of Drinfeld $1990$ Problem
+$3.16$ transported to the Manin-pair quantisation.
+
+Case $n = 5$: $D_5 = 1$, lattice representative $(0, 1, 0)$ gives
+$\Delta = -1$; $C(-1) = 2 \ne 0$; the lattice sum is one-term and
+$\phi^{(5)} = 2\,[\mathrm{generator}]^{\otimes 5}$.
+
+Case $n \ge 11$ admissible ($n \in \{11, 13, 19, 21, 27, 29, \ldots\}$):
+$D_n \ge 4$, so every lattice representative $(N, \ell, M)$ of
+$-D_n$ has $\Delta = -D_n \le -4$. By
+Lemma~\ref{lem:bc-polar-support-phi-K3} (Eichler--Zagier $1985$
+Theorem~$9.1$), $C(\Delta) = 0$ for $\Delta < -1$. Hence every
+summand in the lattice sum vanishes and $\phi^{(n)} = 0$.
+
+Case $n$ non-admissible: the congruence $D_n \in \{0, 1\} \pmod 4$
+fails, so there exists no $(N, \ell, M)\in\mathbb{Z}_{\ge 0}\times
+\mathbb{Z}\times\mathbb{Z}_{\ge 0}$ with $4NM - \ell^2 = -D_n$; the
+lattice sum is empty and $\phi^{(n)} = 0$ by vacuity.
+
+The unconditionality statement: Brown $2012$ \textup{Ann.~Math.}~$175$
+Theorem~$1$ establishes the motivic-MZV basis through weight $12$, and
+Theorem~\ref{thm:MC-hbar7-hbar12-k3} of this chapter uses that input
+to close the MC tower in the strict quasi-Hopf regime through
+$\hbar^{12}$. Higher weights $n \ge 13$ in the strict regime require
+the Zagier--Hoffman conjecture on the motivic-depth filtration (Hoffman
+$1997$ \textup{Pac.~J.~Math.}~$194$; Zagier $1994$
+\textup{Prog.~Math.}~$120$; unproved beyond Brown's horizon). The
+present theorem bypasses this entirely on the $A_\infty$-Humbert regime:
+the vanishing of $\phi^{(n)}$ for admissible $n \ge 11$ comes from
+Eichler--Zagier $1985$ Theorem~$9.1$, which is unconditional and
+structural to the theory of index-$1$ weak Jacobi forms, reaching all
+$n$ with $D_n > 1$.
+\end{proof}
+
+\begin{remark}[Contrast with Brown's weight-$12$ horizon]
+\label{rem:bc-brown-horizon-contrast}
+Theorem~\ref{thm:MC-hbar7-hbar12-k3} closes the strict quasi-Hopf
+pentagon tower modulo $\hbar^{13}$ through the motivic MZV basis at
+weight $12$, whose existence is Brown $2012$
+\textup{Ann.~Math.}~$175$ Theorem~$1$. Weights $15$ and beyond
+require the depth-$5$ motivic generator $\zeta(3,3,3,3,3)$ and
+depend on the Zagier--Hoffman conjectural depth filtration.
+Theorem~\ref{thm:bc-unconditional-depth-reduction} is orthogonal: on
+the $A_\infty$-Humbert regime the vanishing is polar-cutoff driven
+and reaches arbitrarily high $n$, without any motivic-basis input. The
+K3-side cross-volume reference is Volume~III
+Theorem~\ref{thm:filtration-sharpness} (filtration sharpness), where
+the admissibility table through $n \le 30$ is recorded with explicit
+Jacobi-lattice representatives $(N, \ell, M)$ and Heegner coefficients
+$H_n = C(-D_n)$.
+\end{remark}

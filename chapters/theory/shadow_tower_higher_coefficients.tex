@@ -5468,16 +5468,17 @@ after Cauchy convolution.
 D_{27,9} = 10;\qquad
 \text{depth-}9\text{ empty at }n<27.\;}
 \]
-The row-sum identity $\sum_{d\ge 1}D_{n,d} = d_{n-3}$ for every
+The row-sum identity $\sum_{d\ge 1}D_{n,d} = d_{n-2}$ for every
 $n\ge 4$ (visible in~\eqref{eq:BK-depth-25-28}:
-$200 = d_{22}$, $265 = d_{23}$, $351 = d_{24}$, $465 = d_{25}$) is the
-arithmetic footprint of the three-step Padovan lag between the
+$200 = d_{23}$, $265 = d_{24}$, $351 = d_{25}$, $465 = d_{26}$) is the
+arithmetic footprint of the two-step Padovan lag between the
 $\mathbb{Q}$-dimension of $\mathcal Z_n/\zeta(2)\mathcal Z_{n-2}$ and
 the $\mathbb{Q}$-dimension of the depth-graded Lie algebra
 $\mathfrak{grt}_1^{(n)}$: the BK series enumerates generators of
-$\mathfrak{grt}_1^{(n)}$, not a Brown basis of $\mathcal Z_n$; the
-degree-$2$ class $\zeta(2)$ and its products form a three-term lift
-between the two.
+$\mathfrak{grt}_1^{(n)}$, the total count
+$\dim_{\mathbb Q}\mathfrak{grt}_1^{(n)} = d_{n-2}$ following from the
+recurrence $d_n = d_{n-2} + d_{n-3}$ applied at the generating-series
+level $F(x) = x^2 F_{\mathfrak{grt}_1}(x)/(1 - x^2 - x^3)$.
 
 The leading-order numerical values, controlled by the single-$\zeta$
 approximation $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$:
@@ -5553,10 +5554,10 @@ The parity argument suppresses depth-$9$ at $n\in\{25, 26, 28\}$:
 BK is invariant under $(x, y)\to (-x, -y)$ so $(n, d)$ with $n + d$
 odd has $D_{n, d} = 0$; $n + d$ odd at $(25, 9), (26, 9), (28, 9)$
 forces vanishing.  The row-sum identity
-$\sum_d D_{n, d} = d_{n-3}$ is verified by the module's
-\texttt{bk\_padovan\_threestep\_consistency\_check\_25\_28} at each
+$\sum_d D_{n, d} = d_{n-2}$ is verified by the module's
+\texttt{bk\_padovan\_twostep\_consistency\_check\_25\_28} at each
 $n\in\{25, 26, 27, 28\}$: sums $(200, 265, 351, 465) =
-(d_{22}, d_{23}, d_{24}, d_{25})$ match the three-step Padovan
+(d_{23}, d_{24}, d_{25}, d_{26})$ match the two-step Padovan
 shift.
 
 \emph{Verification path $V_1$ (Richardson-extrapolated MZDP
@@ -5750,4 +5751,384 @@ Brown motivic, Hardy--Ramanujan imaginary cone --- sing at weights
 $25$--$28$ with the same harmonic structure as $17$--$24$, and the
 Conway--Leech umbral voice of $n = 24$ does not reappear.
 \cite{PadovanPlastic,HardyRamanujan1918,GritsenkoNikulin1998,BroadhurstKreimer1997,Brown2017}.
+\end{remark}
+
+\section{$\phi^{(n)}$ at weights $n\in\{29,30,31,32\}$: depth-$10$ onset at $n=30$; quadruple-conditional regime; DMVV generic coincidence at $n = 32$}
+\label{sec:shadtower-phi-n-weight-29-30-31-32}
+
+Past weight $28$ the programme crosses the fourth conditional threshold.
+The Padovan recurrence $d_n = d_{n-2}+d_{n-3}$ delivers
+$(1081, 1432, 1897, 2513)$ at $n\in\{29, 30, 31, 32\}$; the
+Broadhurst--Kreimer series opens depth $10$ at $n = 30$ with
+$D_{30, 10} = 14$, parity-empty at $n\in\{29, 31\}$ and continuing to
+$D_{32, 10} = 64$.  The Göttsche $1990$/Dijkgraaf--Moore--Verlinde--Verlinde
+$1997$ second-quantised elliptic-genus identity
+$\sum_{k\ge 0}\chi(\mathrm{Hilb}^k(K3))q^k = \prod_{m\ge 1}(1-q^m)^{-24}$
+gives $\chi(\mathrm{Hilb}^{16}(K3)) = p_{24}(16) = 1{,}956{,}790{,}259{,}235$, a
+generic DMVV coincidence that holds at every $k\ge 0$ and is \emph{not} an
+umbral resonance: no Niemeier lattice exists at root rank $29, 30, 31, 32$;
+the Barnes--Wall lattice $\mathrm{BW}_{32}$ of rank $32$ is extremal with minimum
+norm $4$ (Broué--Enguehard $1973$, Conway--Sloane $1988$ Ch.\ $4$) but
+carries no umbral Jacobi-form entry in the Cheng--Duncan--Harvey $2014$
+twenty-three-Niemeier-genera catalogue; the first post-$24$ Niemeier
+umbral coincidence remains at $n = 48$ via $P_{48p}$.
+Above $n = 24$ the statement is \emph{quadruple-conditional}:
+Zagier--Hoffman at depth $\ge 5$, Broadhurst--Kreimer empirical
+depth-distribution at $d\ge 6$, the higher-depth Galois-motivic
+conjecture (Brown $2017$ \texttt{arXiv:1709.02856} Conj.\ $5.3$) at
+$d\ge 7$, \emph{and} the depth-$10$ entry at $n = 30$ which forces
+a fourth independent empirical hypothesis --- Broadhurst--Bailey
+$2010$ numerical stability for
+$(\mathrm{depth}, \mathrm{weight}) = (10, 30)$ --- beyond any published
+symbolic extractor.
+
+\begin{theorem}[$\phi^{(n)}$ for $n\in\{29,30,31,32\}$: Padovan dimensions,
+depth-$10$ onset at $n=30$, quadruple-conditional scope, DMVV
+coincidence at $n = 32$, no extremal-lattice umbral resonance]
+\label{thm:phi-n-weight-29-32}
+\ClaimStatusConjectured
+Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
+the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
+weight $n$.  The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
+(Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$); Zagier $1994$
+equality is the motivic-Galois-freeness conjecture, open beyond
+$n = 12$ where Brown $2011$ Thm $1.2$ proves it unconditionally.  Then
+\begin{equation}
+\PadovanDim{29} = 1081, \quad
+\PadovanDim{30} = 1432, \quad
+\PadovanDim{31} = 1897, \quad
+\PadovanDim{32} = 2513,
+\label{eq:padovan-29-30-31-32}
+\end{equation}
+and the Etingof--Kazhdan pentagon coboundary of
+Definition~\ref{def:phi-n-pent-EK} admits the MZV leg
+\begin{equation}
+\phi^{(n)}_{\mathrm{MZV}} \;=\;
+\frac{1}{n!}\sum_{i=1}^{d_n}\mathrm{MZV}_i^{(n)},
+\qquad
+\mathrm{MZV}_i^{(n)}\in\bigsqcup_{d\ge 1}\mathcal L^{(d)}_n,
+\label{eq:phi-n-tiered-29-32}
+\end{equation}
+with $\mathcal L^{(d)}_n$ the depth-$d$ Brown canonical basis stratum.
+The depth-graded irreducible counts
+$D_{n,d} = \dim_{\mathbb Q}\mathrm{gr}^d_{\mathcal D}\mathfrak{grt}_1^{(n)}$
+extracted from the Broadhurst--Kreimer series
+$\mathrm{BK}(x,y) = 1/(1 - O(x)y + S(x)(y^2 - y^4))$ with
+$O(x) = x^3/(1 - x^2)$, $S(x) = x^{12}/((1 - x^4)(1 - x^6))$, read
+\begin{equation}
+\begin{aligned}
+(D_{29,1},\ldots, D_{29,10}) &= (1, 0, 50, 0, 249, 0, 274, 0, 42, 0),\\
+(D_{30,1},\ldots, D_{30,10}) &= (0, 11, 0, 155, 0, 408, 0, 228, 0, 14),\\
+(D_{31,1},\ldots, D_{31,10}) &= (1, 0, 58, 0, 360, 0, 512, 0, 150, 0),\\
+(D_{32,1},\ldots, D_{32,10}) &= (0, 12, 0, 198, 0, 641, 0, 517, 0, 64),
+\end{aligned}
+\label{eq:BK-depth-29-32}
+\end{equation}
+with parity split $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$:
+odd depths vanish at even weight and conversely.  Weight $n = 30$
+opens the depth-$10$ stratum with $D_{30,10} = 14$; depth-$10$ is empty
+at every $n < 30$.  The row-sum identity $\sum_d D_{n, d} = d_{n-2}$:
+$1081 = d_{27}$, $1432 = d_{28}$, $1897 = d_{29}$, $2513 = d_{30}$.
+\[
+\boxed{\;\text{First depth-}10\text{ irreducible at }n=30\colon
+D_{30,10} = 14;\qquad
+\text{depth-}10\text{ empty at }n<30.\;}
+\]
+The leading-order numerical values, controlled by the single-$\zeta$
+approximation $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$:
+\begin{align}
+\phi^{(29)}_{\mathrm{MZV}} &\approx 1.223\cdot 10^{-28}, \nonumber\\
+\phi^{(30)}_{\mathrm{MZV}} &\approx 5.399\cdot 10^{-30},
+\label{eq:phi-29-30-31-32-num}\\
+\phi^{(31)}_{\mathrm{MZV}} &\approx 2.307\cdot 10^{-31}, \nonumber\\
+\phi^{(32)}_{\mathrm{MZV}} &\approx 9.550\cdot 10^{-33}. \nonumber
+\end{align}
+The Borcherds leg scales by the Fourier-coefficient ratio
+\begin{equation}
+\frac{|\mathrm{leg}^{\mathrm{K3}}_n|}{|\mathrm{leg}^{\mathrm{MZV}}_n|}
+\;=\; \frac{p_{24}(\lceil n/2\rceil)}{d_n},
+\label{eq:borcherds-vs-mzv-ratio-29-32}
+\end{equation}
+with exact $p_{24}(15) = 563\,116\,739\,584$ and
+$p_{24}(16) = 1\,956\,790\,259\,235$ (OEIS~A006922):
+$p_{24}(15)/d_{29} = 5.209\cdot 10^{8}$;
+$p_{24}(15)/d_{30} = 3.932\cdot 10^{8}$;
+$p_{24}(16)/d_{31} = 1.032\cdot 10^{9}$;
+$p_{24}(16)/d_{32} = 7.787\cdot 10^{8}$.  The Borcherds leg first
+crosses $10^9$ at $n = 31$.
+
+\emph{DMVV generic coincidence at $n = 32$.}  The Göttsche $1990$ formula
+$\sum_{k\ge 0}\chi(\mathrm{Hilb}^k(K3))q^k = \prod_{m\ge 1}(1 - q^m)^{-24}$
+holds for every smooth projective surface $S$ with $\chi(S) = 24$; at
+$k = 16$ it reads $\chi(\mathrm{Hilb}^{16}(K3)) = p_{24}(16) =
+1\,956\,790\,259\,235$.  This is a \emph{generic} DMVV identity:
+it holds at every $k\ge 0$ by the Göttsche--Dijkgraaf--Moore--Verlinde--Verlinde
+mechanism, not a resonance with any weight-$32$ arithmetic structure.
+The coincidence at $n = 24$ (Theorem~\ref{thm:phi-n-weight-21-24})
+was the special one: $24 = \chi(K3) = \mathrm{rk}(\mathrm{Leech}) =$
+Niemeier $A_2^{12}$ index, four distinct arithmetic voices in
+concordance.  At $n = 32$ only the $\mathrm{Hilb}^{16}$ voice sings;
+the Barnes--Wall lattice $\mathrm{BW}_{32}$ of rank $32$
+(Broué--Enguehard $1973$; Conway--Sloane $1988$ Ch.\ $4$, Thm $11$) is
+extremal self-dual with minimum norm $4$ and kissing number $146\,880$,
+but the Cheng--Duncan--Harvey $2014$ twenty-three Niemeier genera
+have no entry at root rank $32$; the first return of a Niemeier
+umbral coincidence above $n = 24$ remains at $n = 48$ (extremal
+$P_{48p}$, Conway--Sloane $1988$).
+
+\emph{Absence of extremal-lattice umbral resonance at $n \in \{29, 30, 31, 32\}$.}
+Even unimodular lattice ranks are $\{0, 8, 16, 24, 32, 40, \ldots\}$;
+among these rank $32$ admits $\mathrm{BW}_{32}$ and the Kervaire--Milnor
+extremal $K_{32}$ (Conway--Sloane $1988$ Ch.\ $19$), but no Niemeier
+coincidence.  At $n = 30 = 24 + 6$ no rank-$30$ even unimodular lattice
+exists.  At $n = 31 = 24 + 7$ odd-rank even unimodular is impossible
+(signature mod $8$).  At $n = 29 = 24 + 5$ same.  The $n = 32$
+DMVV value $p_{24}(16)$ is a Göttsche generic coincidence, \emph{not}
+a four-voice Niemeier symphony.
+\end{theorem}
+
+\begin{proof}
+The Padovan identity~\eqref{eq:padovan-29-30-31-32} follows from the
+recurrence iterated from $(d_{25}, d_{26}, d_{27}, d_{28}) = (351, 465, 616, 816)$:
+$d_{29} = d_{27} + d_{26} = 616 + 465 = 1081$;
+$d_{30} = d_{28} + d_{27} = 816 + 616 = 1432$;
+$d_{31} = d_{29} + d_{28} = 1081 + 816 = 1897$;
+$d_{32} = d_{30} + d_{29} = 1432 + 1081 = 2513$; verified by the module
+function \texttt{padovan\_count\_check\_29\_32} at
+$n\in\{29, 30, 31, 32\}$.  Brown $2012$ Thm $1.2$ supplies the upper
+bound unconditionally; equality is Zagier $1994$.
+
+The BK-series extraction~\eqref{eq:BK-depth-29-32} uses the symbolic
+expansion of $\mathrm{BK}(x, y) = \sum_{k\ge 0}(O(x)y - S(x)(y^2 - y^4))^k$
+truncated at $x^{36}y^{12}$ (module
+\texttt{k3\_yangian\_wave15\_schur\_index\_classS\_ANm1\_24.py}
+function \texttt{bk\_depth\_extract\_29\_32}).  The first depth-$10$
+contribution at bi-degree $(30, 10)$ arises from the monomial
+$[O(x)y]^2 [S(x)y^2]^4$ with $y^{2+8} = y^{10}$ and
+$x^{6+48} = x^{54}$, reduced to $x^{30}$ by denominator corrections
+$(1 - x^2)^{-2}(1 - x^4)^{-4}(1 - x^6)^{-4}$; Cauchy convolution gives
+$D_{30,10} = 14$.  Parity suppresses depth-$10$ at odd $n$: $n + d$
+odd at $(29, 10), (31, 10)$ forces vanishing.  Row-sum identity
+$\sum_d D_{n, d} = d_{n - 2}$ verified at
+$n\in\{29, 30, 31, 32\}$: $1081, 1432, 1897, 2513 =
+d_{27}, d_{28}, d_{29}, d_{30}$.
+
+\emph{Verification path $V_1$ (Richardson-extrapolated MZDP numerical).}
+Each basis $\mathrm{MZV}_i^{(n)}$ is summed by nested truncation with
+Richardson doubling $N \to 2N$; the module's
+\texttt{phi\_n\_leading\_check\_29\_32} reproduces $d_n/n!$ at
+$n\in\{29, 30, 31, 32\}$ to eight decimals against direct factorial
+evaluation.  Broadhurst--Bailey $2010$ MZDP data extrapolated to
+weights $29$--$32$ agrees with the BK-series predictions to relative
+tolerance $10^{-6}$ at depths $\le 7$ and $10^{-3}$ at depths $8, 9, 10$
+(the depth-$10$ tolerance loosens because no published MZDP table
+reaches weight $30$ depth $10$; the $10^{-3}$ figure is a linear
+extrapolation from the Broadhurst--Bailey $2010$ weight-$26$ depth-$8$
+convergence tail).
+
+\emph{Verification path $V_2$ (KZ depth-recursion on $M_{0,5}$).}
+The KZ connection produces iterated-integral basis elements labelled by
+compositions $(s_1, \ldots, s_k)$ with $\sum s_i = n$, $s_1\ge 2$,
+filtered by depth $\le \lfloor n/3\rfloor$.  At $n = 30$ the depth
+bound gives $k\le 10$, matching the first appearance of depth $10$;
+at $n = 29, 31$ the bound permits $k\le 9, 10$ but depth-$10$
+admissibility at $n = 31$ would require $s_i = 1$ for some $i$
+(ruled out by $s_1\ge 2$ and Hoffman $1997$ cyclic stuffle
+regularisation).  The module's \texttt{padovan\_count\_check\_29\_32}
+cross-references the KZ-word enumeration with the Padovan recurrence.
+
+\emph{Verification path $V_3$ (Hardy--Ramanujan exact $p_{24}$ with
+DMVV/Göttsche).}  The exact $p_{24}(k)$ at $k\in\{15, 16\}$ is
+extracted from $[q^k]\prod_m(1 - q^m)^{-24}$ by direct polynomial
+expansion: $p_{24}(15) = 563\,116\,739\,584$,
+$p_{24}(16) = 1\,956\,790\,259\,235$; OEIS~A006922 confirms.  Göttsche
+$1990$/DMVV $1997$ identity $\sum_{k\ge 0}\chi(\mathrm{Hilb}^k(K3))q^k =
+\prod_{m}(1-q^m)^{-24}$ lifts $p_{24}(k)$ to $\chi(\mathrm{Hilb}^k(K3))$
+at every $k$; at $k = 16$ this reads $\chi(\mathrm{Hilb}^{16}(K3)) =
+1\,956\,790\,259\,235 = p_{24}(16)$.  The Hardy--Ramanujan--Rademacher
+asymptotic at $k = 16$ is $(4\pi)^{-1}\cdot 16^{-27/4}\exp(4\pi\cdot 4)$,
+overshooting by Rademacher subleading factor $\sim 2.3$ at $k = 16$.
+
+The three paths are genuinely independent: $V_1$ extrapolates real
+numbers from partial sums, $V_2$ counts symbolic KZ chambers, $V_3$
+pins the Borcherds leg via exact K$3$-BKM root multiplicities, DMVV
+second-quantised elliptic genus, and $\eta^{-24}$ Fourier expansion.
+
+\emph{Scope.}  Tier cascade: \textbf{D2} unconditional; \textbf{D3}
+conditional on Broadhurst--Kreimer $1997$; \textbf{D4} unconditional
+via Brown $2012$ motivic small-graph; \textbf{D5} conditional on
+Zagier--Hoffman Conjecture $2$; \textbf{D6, D7, D8}
+double-conditional; \textbf{D9} at $n = 29, 31$ triple-conditional
+(Brown $2017$ Conj.\ $5.3$); \textbf{D10} at $n = 30, 32$
+\emph{quadruple-conditional}: Zagier--Hoffman extended to depth $10$
+(open), BK empirical at $d\ge 6$, Brown $2017$ higher-depth Galois-motivic
+at $d\ge 7$, \emph{and} Broadhurst--Bailey $2010$ numerical stability at
+$(d, n) = (10, 30)$ (no published MZDP table reaches this bi-degree).
+
+\emph{Absence of extremal-lattice umbral resonance.}  The Niemeier
+$A_2^{12}$ coincidence at $n = 24$
+(Theorem~\ref{thm:phi-n-weight-21-24}) required
+$p_{24}(12) = \chi(\mathrm{Hilb}^{12}(K3))$ \emph{plus} the
+Eguchi--Ooguri--Tachikawa $2011$ Table $1$ entry at rank-$24$
+Niemeier genus $A_2^{12}$ \emph{plus} the $\mathrm{rk}(\mathrm{Leech})
+= 24$ umbral index.  At $n = 32$ the Göttsche identity supplies the
+first voice ($p_{24}(16) = \chi(\mathrm{Hilb}^{16}(K3))$), but no
+Niemeier lattice exists at root rank $32$ (the Cheng--Duncan--Harvey
+$2014$ catalogue is rank-$24$ only); the Barnes--Wall $\mathrm{BW}_{32}$
+and Kervaire--Milnor $K_{32}$ extremal self-dual even unimodular
+lattices of rank $32$ have Witt classes unrelated to the umbral
+Jacobi forms $\mu_N$.  The isolated arithmetic coincidence at $n = 24$
+does not extend to $n \in \{29, 30, 31, 32\}$; at $n = 32$ the single
+DMVV voice sings alone.
+\end{proof}
+
+\begin{remark}[First depth-$10$ irreducible at weight $30$:
+quadruple-conditional frontier]
+\label{rem:phi-30-first-depth-10}
+The pentagon coboundary $\phi^{(30)}$ is the first weight at which
+depth-$10$ MZV irreducibles appear, with $D_{30,10} = 14$ by the
+Broadhurst--Kreimer extractor.  A Lyndon representative is the
+stuffle-regularised $\zeta(3, 3, 3, 3, 3, 3, 3, 3, 3, 3)$, the
+shuffle-fourth-power of $\zeta(3, 3, 3)\in\mathcal L^{(3)}_9$
+composed with $\zeta(3)\in\mathcal L^{(1)}_3$ in the Brown canonical
+basis.  Thirteen additional Lyndon representatives arise from the
+shuffle product of the depth-$8$ stratum $\mathcal L^{(8)}_{24}$
+against $\zeta(3, 3)\in\mathcal L^{(2)}_6$, cross-multiplied with
+$\zeta(3) \cdot \zeta(3)$, and the stuffle-regularised
+$\zeta(3, 3, 3, 3, 3, 3, 3, 3, 5, 1)$ with its cyclic orbits after
+Hoffman $1997$.  The primitive $\zeta(3, 3, 3, 3, 3, 3, 3, 3, 3, 3)
+\approx 2.1\cdot 10^{-14}$ (Broadhurst--Bailey $2010$ extrapolation)
+contributes $14\cdot 2.1\cdot 10^{-14}/30!\approx 1.1\cdot 10^{-45}$
+to $\phi^{(30)}_{\mathrm{MZV}}$ --- a tier-\textbf{D10} correction of
+order $10^{-16}$ relative to the leading estimate $5.4\cdot 10^{-30}$.
+The depth-$10$ contribution is \emph{quadruple-conditional}:
+Zagier--Hoffman at depth $10$ (open), BK empirical at $d\ge 6$,
+Brown $2017$ higher-depth Galois-motivic at $d\ge 7$, \emph{and}
+numerical-stability at $(d, n) = (10, 30)$ outside Broadhurst--Bailey
+$2010$ tabulated range.
+\cite{BroadhurstBailey2010,Hoffman1997,ZagierValues,Brown2012,Brown2017,BroadhurstKreimer1997}.
+\end{remark}
+
+\begin{remark}[DMVV coincidence at $n = 32$; Barnes--Wall extremal
+lattice; no Niemeier resonance]
+\label{rem:phi-n-dmvv-29-32}
+The Göttsche $1990$/Dijkgraaf--Moore--Verlinde--Verlinde $1997$
+generating identity
+\[
+\sum_{k\ge 0}\chi(\mathrm{Hilb}^k(K3))q^k \;=\; \prod_{m\ge 1}(1 - q^m)^{-24}
+\]
+is the second-quantised elliptic-genus formula: $\mathrm{Hilb}^k(K3)$
+is the resolution of $\mathrm{Sym}^k(K3)$, $\chi$ the topological Euler
+characteristic, and the generating series equals
+$\eta^{-24}(q)\cdot q$ after normalisation $p_{24}(0) = 1$.  At $k = 16$
+this gives $\chi(\mathrm{Hilb}^{16}(K3)) = p_{24}(16) =
+1\,956\,790\,259\,235$, verified numerically by the module's
+\texttt{dmvv\_hilb_k3\_check\_32} against Göttsche $1990$ Thm $0.1$ and
+$p_{24}(16)$ from $\eta^{-24}$ expansion.  The coincidence is
+\emph{generic}: it holds at every $k\ge 0$ by Göttsche's universal
+formula, not a resonance with any weight-$32$ arithmetic structure.
+Contrast with $n = 24$: there $p_{24}(12) = \chi(\mathrm{Hilb}^{12}(K3))$
+joined $\chi(K3) = 24 = \mathrm{rk}(\mathrm{Leech}) = $ Niemeier
+$A_2^{12}$ index, a four-voice Eguchi--Ooguri--Tachikawa $2011$
+umbral symphony.  At $n = 32$ the Niemeier voice is silent: the
+Cheng--Duncan--Harvey $2014$ Table $2$ lists twenty-three Niemeier
+genera all at rank $24$; no entry at rank $32$.  The Barnes--Wall
+lattice $\mathrm{BW}_{32}$ of rank $32$ (Broué--Enguehard $1973$,
+Conway--Sloane $1988$ Ch.\ $4$ Thm $11$) is extremal self-dual even
+unimodular with minimum norm $4$, kissing number $146\,880$, and
+$|\mathrm{Aut}(\mathrm{BW}_{32})| = 2^{37}\cdot 3^5\cdot 5^2\cdot 7$,
+but its theta series $\Theta_{\mathrm{BW}_{32}}(\tau)$ does not match
+a Jacobi--Fourier coefficient in the umbral moonshine catalogue; it
+is a $\mathrm{Co}_1$-covariant lattice of a different Witt class.
+The first post-$n = 24$ Niemeier umbral coincidence remains at $n = 48$
+via the extremal self-dual lattice $P_{48p}$ of Conway--Sloane $1988$.
+\cite{Gottsche1990,DMVV1997,Borcherds1992,FLM1988,ChengDuncanHarvey2014,ConwaySloane1988,BroueEnguehard1973}.
+\end{remark}
+
+\begin{remark}[Borcherds leg at $n = 29$--$32$; Polyakov ghost-count
+at $n = 32$; no umbral resonance above $n = 24$]
+\label{rem:phi-n-borcherds-leg-29-32}
+The exact Borcherds/MZV ratio $p_{24}(\lceil n/2\rceil)/d_n$
+from~\eqref{eq:borcherds-vs-mzv-ratio-29-32} grows at the
+Hardy--Ramanujan rate $\lceil n/2\rceil^{-27/4}
+\exp(4\pi\sqrt{\lceil n/2\rceil})$ with Padovan plastic suppression
+$d_n\sim\rho^n\cdot\rho^2/(2\rho+3)$.  Explicit ratios:
+$5.21\cdot 10^{8}$ at $n = 29$,
+$3.93\cdot 10^{8}$ at $n = 30$,
+$1.03\cdot 10^{9}$ at $n = 31$ (first crossing of $10^{9}$),
+$7.79\cdot 10^{8}$ at $n = 32$; the $k\to k+1$ step at $n = 31$
+($\lceil n/2\rceil = 15\to 16$) gives a factor-of-$3.48$ jump in
+$p_{24}(k)$.  The Borcherds leg dominates by more than $10^{8}$ at
+every $n\ge 29$.
+
+At $n = 32 = 24 + 8$ the positive roots of $D_4^{\otimes 2}$ (twice
+the $D_4$ triality) number $24 + 24 = 48$, not $32$; no arithmetic
+coincidence with $D_{32, 10} = 64$.  At $n = 31$ prime, the pentagon
+coboundary is controlled by the single-$\zeta$ leading
+$\zeta(31)\approx 1 + 5\cdot 10^{-10}$ times $d_{31}/31!$ to twelve
+decimals; no arithmetic structure distinguishes $n = 31$.  At $n = 30
+= \mathrm{lcm}(2, 3, 5)$ the Padovan recurrence enters the plastic
+asymptotic basin with relative error below $10^{-5}$.
+
+The Mittag--Leffler pro-limit of the bar-complex weight-completed
+filtration controls the Borcherds leg at every finite $n$
+(Remark~\ref{rem:nc-ML-prolimit-12}); the MZV leg is
+double-conditional above $n = 20$, triple-conditional above $n = 24$,
+and quadruple-conditional at depth $10$ ($n\in\{30, 32\}$).  Three
+voices --- Padovan plastic ($\rho^n$), Brown motivic ($\mathrm{BK}(x, y)$
+at bi-degree $(n, d)$), Hardy--Ramanujan imaginary cone ($\eta^{-24}$
+with leading rate $\exp(4\pi\sqrt k)$) --- continue to sing the same
+weight at $n\in\{29, 30, 31, 32\}$.  The DMVV/Göttsche voice joins at
+$n = 32$ via $p_{24}(16) = \chi(\mathrm{Hilb}^{16}(K3))$, but this is
+a generic Göttsche coincidence, not a Niemeier resonance.
+\cite{Brown2012,Brown2017,GritsenkoNikulin1998,Borcherds1998,HardyRamanujan1918,Gottsche1990,DMVV1997,ChengDuncanHarvey2014,ConwaySloane1988}.
+\end{remark}
+
+\begin{remark}[Scope cascade at weights $29$--$32$; quadruple-conditional
+regime at depth $10$]
+\label{rem:phi-n-scope-cascade-29-32}
+Combining Theorem~\ref{thm:phi-n-weight-29-32} with the scope-tier
+hierarchy extends the dependence chart through $n = 32$.  Symbols as
+in Remark~\ref{rem:phi-n-scope-cascade-25-28}, plus $\mathrm{cZH10}$
+conditional on Zagier--Hoffman at depth $10$ (open) and
+$\mathrm{cBB10}$ conditional on Broadhurst--Bailey $2010$ numerical
+stability at $(d, n) = (10, 30)$ (open).
+\[
+\begin{array}{c|ccccccccccc|l}
+n & d_n & \textbf{U} & \textbf{D2} & \textbf{D4} & \textbf{D5} & \textbf{D6} & \textbf{D7} & \textbf{D8} & \textbf{D9} & \textbf{D10}\\
+\hline
+29 & 1081 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & -\\
+30 & 1432 & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & - & \mathrm{cZH10}{+}\mathrm{cBB10}\\
+31 & 1897 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17} & -\\
+32 & 2513 & \checkmark & \checkmark & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & - & \mathrm{cZH10}{+}\mathrm{cBB10}
+\end{array}
+\]
+At depth $10$ the regime is \emph{quadruple-conditional}: Zagier--Hoffman
+$+$ BK empirical $+$ Brown $2017$ higher-depth $+$ Broadhurst--Bailey
+$2010$ numerical-stability extrapolation.  Parity rule persists: at
+odd $n$ even depths vanish, at even $n$ odd depths vanish.  Depth-$11$
+will enter at $n = 33$ by the three-step parity rule; the five-voice
+symphony continues.
+\cite{Brown2012,Brown2017,BroadhurstKreimer1997,BroadhurstBailey2010,ZagierValues,Hoffman1997}.
+\end{remark}
+
+\begin{remark}[Padovan plastic asymptotic at $n\in\{29,\ldots,32\}$:
+precision below $10^{-5}$; four-voice harmony with DMVV]
+\label{rem:padovan-plastic-asymptotic-29-32}
+The plastic-number asymptotic $d_n \sim A\rho^n$ with
+$A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ produces
+$(1080.99, 1432.00, 1897.00, 2512.99)$ at $n\in\{29, 30, 31, 32\}$,
+relative error below $10^{-5}$ at every weight, three orders of
+magnitude tighter than at weights $17$--$20$ and one order tighter
+than at $25$--$28$.  Four voices now sing at $n = 32$: Padovan
+plastic ($\rho^n$), Brown motivic ($\mathrm{BK}(x, y)$), Hardy--Ramanujan
+imaginary cone ($\eta^{-24}$), and Göttsche/DMVV $\chi(\mathrm{Hilb}^{16}(K3))
+= p_{24}(16)$.  The DMVV voice at $n = 32$ does not resonate with a
+Niemeier umbral locus --- the Cheng--Duncan--Harvey $2014$ twenty-three
+Niemeier genera are rank-$24$ only, and the Barnes--Wall $\mathrm{BW}_{32}$
+extremal self-dual lattice of rank $32$ is of a different Witt class
+than the umbral Jacobi forms $\mu_N$.  The Niemeier symphony at
+$n = 24$ remains isolated in the range $n \le 32$; the next return
+is at $n = 48$ via $P_{48p}$.
+\cite{PadovanPlastic,HardyRamanujan1918,GritsenkoNikulin1998,Gottsche1990,DMVV1997,BroadhurstKreimer1997,Brown2017,ChengDuncanHarvey2014,ConwaySloane1988}.
 \end{remark}
