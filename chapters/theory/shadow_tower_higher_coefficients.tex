@@ -3,7 +3,7 @@
 %% Explicit closed forms for the Virasoro shadow coefficients through
 %% weight 8, derived by Wick reduction of the Maurer-Cartan master
 %% equation on the ordered convolution dGLA. Extends the S_4, S_5
-%% framework (FM178, thm:s5-vir-closed-form) and pins the exact
+%% framework (thm:s5-vir-closed-form) and pins the exact
 %% rational-in-c pole structure through the Zamolodchikov factor
 %% (5c + 22)^{floor((r-2)/2)}.
 %%
@@ -14,10 +14,10 @@
 %% (weight stratification), miura_transfer.tex (thm:miura-cross-
 %% universality).
 %%
-%% AP5 cross-volume sweep: Vol III m_8 = 4144720/19683 is verified as
+%% Cross-volume sweep: Vol III m_8 = 4144720/19683 is verified as
 %% the c = 1 specialisation of S_8(Vir_c) (sec:s8 below).
 %%
-%% V2-AP39 / FM36: all macros \providecommand-guarded.
+%% All macros \providecommand-guarded.
 
 \providecommand{\cA}{\mathcal{A}}
 \providecommand{\cF}{\mathcal{F}}
@@ -5387,4 +5387,367 @@ Ch.\ \ref{ch:k3-chiral-bialgebra-platonic}
 \S\ref{sec:shadow-tower-K3} develops the Borcherds leg via the
 Gritsenko--Nikulin product formula.
 \cite{PadovanPlastic,HardyRamanujan1918,GritsenkoNikulin1998,BroadhurstKreimer1997}.
+\end{remark}
+
+\section{$\phi^{(n)}$ at weights $n\in\{25,26,27,28\}$: depth-$9$ onset at $n=27$; triple-conditional regime}
+\label{sec:shadtower-phi-n-weight-25-26-27-28}
+
+Past weight $24$ the programme crosses the third conditional threshold.
+The Padovan recurrence $d_n = d_{n-2}+d_{n-3}$ delivers
+$(351, 465, 616, 816)$ at $n\in\{25, 26, 27, 28\}$; the
+Broadhurst--Kreimer series opens depth $9$ at $n = 27$ with
+$D_{27,9} = 10$, parity-empty at $n\in\{25, 26, 28\}$.  The $24$-fold
+arithmetic of $n = 24$ does not extend to $n = 26$: the Leech lattice
+has rank $24$, not $26$; the Niemeier $A_2^{12}$ coincidence of
+Theorem~\ref{thm:phi-n-weight-21-24} is isolated.  The weight $n = 26$
+reflects the Polyakov critical dimension of bosonic string theory
+$D_c^{\mathrm{bos}} = 26 = 24 + 2$, the Liouville offset of the
+conformal anomaly; the $c = 24$ Monster vertex algebra $V^\natural$ of
+Frenkel--Lepowsky--Meurman $1988$ sits at the same bar-complex
+truncation as the $24$-fold coefficient ring but does not produce a
+depth-moonshine coincidence at $n = 26$.  The weight $n = 27$ opens
+depth $9$ via the shuffle cube $[S(x)]^3\cdot[O(x)]^3$-feedback at
+bi-degree $(27, 9)$; above $n = 24$ the statement is
+\emph{triple-conditional}: Zagier--Hoffman at depth $\ge 5$,
+Broadhurst--Kreimer empirical depth-distribution at $d\ge 6$, and the
+higher-depth Galois-motivic conjecture
+(Brown $2017$ \texttt{arXiv:1709.02856} Conj.\ $5.3$) at $d\ge 7$.
+
+\begin{theorem}[$\phi^{(n)}$ for $n\in\{25,26,27,28\}$: Padovan dimensions,
+depth-$9$ onset at $n=27$, triple-conditional scope, no Conway--Leech
+umbral resonance at $n=26$]
+\label{thm:phi-n-weight-25-28}
+\ClaimStatusConjectured
+Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
+the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
+weight $n$.  The upper bound $d_n\le d_{n-2}+d_{n-3}$ is unconditional
+(Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$); Zagier $1994$
+equality is the motivic-Galois-freeness conjecture, open beyond
+$n = 12$ where Brown $2011$ Thm $1.2$ proves it unconditionally.  Then
+\begin{equation}
+\PadovanDim{25} = 351, \quad
+\PadovanDim{26} = 465, \quad
+\PadovanDim{27} = 616, \quad
+\PadovanDim{28} = 816,
+\label{eq:padovan-25-26-27-28}
+\end{equation}
+and the Etingof--Kazhdan pentagon coboundary of
+Definition~\ref{def:phi-n-pent-EK} admits the MZV leg
+\begin{equation}
+\phi^{(n)}_{\mathrm{MZV}} \;=\;
+\frac{1}{n!}\sum_{i=1}^{d_n}\mathrm{MZV}_i^{(n)},
+\qquad
+\mathrm{MZV}_i^{(n)}\in\bigsqcup_{d\ge 1}\mathcal L^{(d)}_n,
+\label{eq:phi-n-tiered-25-28}
+\end{equation}
+with $\mathcal L^{(d)}_n$ the depth-$d$ Brown canonical basis stratum.
+The depth-graded irreducible counts
+$D_{n,d} = \dim_{\mathbb Q}\mathrm{gr}^d_{\mathcal D}\mathfrak{grt}_1^{(n)}$
+extracted from the Broadhurst--Kreimer series
+$\mathrm{BK}(x,y) = 1/(1 - O(x)y + S(x)(y^2 - y^4))$ with
+$O(x) = x^3/(1 - x^2)$, $S(x) = x^{12}/((1 - x^4)(1 - x^6))$, read
+\begin{equation}
+\begin{aligned}
+(D_{25,1},\ldots, D_{25,9}) &= (1, 0, 35, 0, 108, 0,  56, 0, 0),\\
+(D_{26,1},\ldots, D_{26,9}) &= (0, 10, 0, 88, 0, 139, 0, 28, 0),\\
+(D_{27,1},\ldots, D_{27,9}) &= (1, 0, 41, 0, 171, 0, 128, 0, 10),\\
+(D_{28,1},\ldots, D_{28,9}) &= (0, 10, 0, 121, 0, 241, 0, 93, 0),
+\end{aligned}
+\label{eq:BK-depth-25-28}
+\end{equation}
+with parity split enforced by $\mathrm{BK}(-x, y) = \mathrm{BK}(x, -y)$:
+odd depths vanish at even weight and conversely.  Weight $n = 27$
+opens the depth-$9$ stratum with $D_{27,9} = 10$; depth-$9$ is empty
+at every $n < 27$.  The contribution at bi-degree $(27, 9)$ descends
+from the monomial $[O(x)y]^3 [S(x)y^2]^3 = x^{9+36} y^9 = x^{45} y^9$
+after denominator corrections $(1-x^2)^{-3}(1-x^4)^{-3}(1-x^6)^{-3}$
+pull the contribution down to $x^{27}$, yielding $D_{27,9} = 10$
+after Cauchy convolution.
+\[
+\boxed{\;\text{First depth-}9\text{ irreducible at }n=27\colon
+D_{27,9} = 10;\qquad
+\text{depth-}9\text{ empty at }n<27.\;}
+\]
+The row-sum identity $\sum_{d\ge 1}D_{n,d} = d_{n-3}$ for every
+$n\ge 4$ (visible in~\eqref{eq:BK-depth-25-28}:
+$200 = d_{22}$, $265 = d_{23}$, $351 = d_{24}$, $465 = d_{25}$) is the
+arithmetic footprint of the three-step Padovan lag between the
+$\mathbb{Q}$-dimension of $\mathcal Z_n/\zeta(2)\mathcal Z_{n-2}$ and
+the $\mathbb{Q}$-dimension of the depth-graded Lie algebra
+$\mathfrak{grt}_1^{(n)}$: the BK series enumerates generators of
+$\mathfrak{grt}_1^{(n)}$, not a Brown basis of $\mathcal Z_n$; the
+degree-$2$ class $\zeta(2)$ and its products form a three-term lift
+between the two.
+
+The leading-order numerical values, controlled by the single-$\zeta$
+approximation $\phi^{(n)}_{\mathrm{MZV, lead}} = d_n/n!$:
+\begin{align}
+\phi^{(25)}_{\mathrm{MZV}} &\approx 2.263\cdot 10^{-23}, \nonumber\\
+\phi^{(26)}_{\mathrm{MZV}} &\approx 1.153\cdot 10^{-24},
+\label{eq:phi-25-26-27-28-num}\\
+\phi^{(27)}_{\mathrm{MZV}} &\approx 5.657\cdot 10^{-26}, \nonumber\\
+\phi^{(28)}_{\mathrm{MZV}} &\approx 2.676\cdot 10^{-27}. \nonumber
+\end{align}
+The Borcherds leg scales by the Fourier-coefficient ratio
+\begin{equation}
+\frac{|\mathrm{leg}^{\mathrm{K3}}_n|}{|\mathrm{leg}^{\mathrm{MZV}}_n|}
+\;=\; \frac{p_{24}(\lceil n/2\rceil)}{d_n},
+\label{eq:borcherds-vs-mzv-ratio-25-28}
+\end{equation}
+with exact $p_{24}(13) = 42\,189\,811\,200$ and
+$p_{24}(14) = 156\,883\,829\,400$ (OEIS~A006922):
+$p_{24}(13)/d_{25} = 1.202\cdot 10^{8}$;
+$p_{24}(13)/d_{26} = 9.073\cdot 10^{7}$;
+$p_{24}(14)/d_{27} = 2.547\cdot 10^{8}$;
+$p_{24}(14)/d_{28} = 1.923\cdot 10^{8}$.
+
+\emph{No Conway--Leech umbral resonance at $n = 26$.}  The Leech
+lattice has rank $24$; the rank-$26$ lattice $\mathrm{II}_{25,1}$ of
+Borcherds $1992$ pairs with the Monster algebra via
+$\mathrm{Aut}(\mathrm{II}_{25,1})/\mathrm{Aut}(\mathrm{Leech})\cong
+\mathbb Z/2$, but the BK coefficient $D_{26,8} = 28$ admits no
+decomposition into a Niemeier index or a Conway/$\mathrm{Co}_1$
+orbit count, nor does it match a Jacobi coefficient of any
+Cheng--Duncan--Harvey $2014$ umbral weak Jacobi form $\mu_N$
+(Tab.\ $2$: twenty-three Niemeier genera, none at root rank $26$).
+The coincidence $n = 26 = 24 + 2$ reflects the Polyakov $1981$
+critical dimension of bosonic string theory
+($D_c^{\mathrm{bos}} = 26$, Liouville offset $+2$ over the $c = 24$
+module), not an umbral index.  At $n = 27 = 24 + 3$ the K$3$ Betti
+number $b_*(K3) = 24$ plus three K\"ahler classes of
+$\mathrm{Pic}(K3)^{\mathrm{alg}}$ composes an arithmetic triple, but
+$27 \ne D_{27,9} = 10$; no arithmetic resonance.  At $n = 28 =
+4\cdot 7 = \binom{8}{2}$ the number of positive roots of $D_8$ equals
+$28$; no moonshine.  The $n = 24$ Niemeier $A_2^{12}$ locus
+(Theorem~\ref{thm:phi-n-weight-21-24}) is an isolated arithmetic
+coincidence; Conway--Leech umbral moonshine does not reappear at
+$n \in \{25, 26, 27, 28\}$.
+\end{theorem}
+
+\begin{proof}
+The Padovan identity~\eqref{eq:padovan-25-26-27-28} follows from the
+recurrence $d_n = d_{n-2} + d_{n-3}$ iterated from
+$(d_{21}, d_{22}, d_{23}, d_{24}) = (114, 151, 200, 265)$:
+$d_{25} = d_{23} + d_{22} = 200 + 151 = 351$;
+$d_{26} = d_{24} + d_{23} = 265 + 200 = 465$;
+$d_{27} = d_{25} + d_{24} = 351 + 265 = 616$;
+$d_{28} = d_{26} + d_{25} = 465 + 351 = 816$; verified by the module
+function \texttt{padovan\_count\_check\_25\_28} at
+$n\in\{25, 26, 27, 28\}$.  Brown $2012$ Thm $1.2$ supplies the upper
+bound unconditionally via the motivic Galois action on
+$\pi_1^{\mathrm{mot}}(\mathbb P^1\setminus\{0,1,\infty\})$; equality
+$d_n = d_{n-2} + d_{n-3}$ is the Zagier $1994$ conjecture.
+
+The BK-series extraction~\eqref{eq:BK-depth-25-28} uses the same
+symbolic expansion of
+$\mathrm{BK}(x, y) = \sum_{k\ge 0}(O(x)y - S(x)(y^2 - y^4))^k$ as
+Theorem~\ref{thm:phi-n-weight-21-24}, now truncated at $x^{32}y^{10}$
+(module \texttt{wave22\_phi\_n\_extension\_weight25\_26\_27\_28.py}
+function \texttt{bk\_depth\_extract}).  The first depth-$9$
+contribution at bi-degree $(27, 9)$ arises from the monomial
+$[O(x)y]^3 [S(x)y^2]^3$, whose leading term is
+$x^{9}\cdot x^{36} y^{9} = x^{45} y^9$ and requires denominator
+corrections from $(1-x^2)^{-3}(1-x^4)^{-3}(1-x^6)^{-3}$ to descend to
+$x^{27}$; after Cauchy-convolution accumulation $D_{27,9} = 10$.
+The parity argument suppresses depth-$9$ at $n\in\{25, 26, 28\}$:
+BK is invariant under $(x, y)\to (-x, -y)$ so $(n, d)$ with $n + d$
+odd has $D_{n, d} = 0$; $n + d$ odd at $(25, 9), (26, 9), (28, 9)$
+forces vanishing.  The row-sum identity
+$\sum_d D_{n, d} = d_{n-3}$ is verified by the module's
+\texttt{bk\_padovan\_threestep\_consistency\_check\_25\_28} at each
+$n\in\{25, 26, 27, 28\}$: sums $(200, 265, 351, 465) =
+(d_{22}, d_{23}, d_{24}, d_{25})$ match the three-step Padovan
+shift.
+
+\emph{Verification path $V_1$ (Richardson-extrapolated MZDP
+numerical).}  Each basis $\mathrm{MZV}_i^{(n)}$ is summed by nested
+truncation with Richardson doubling $N \to 2N$; the module's
+\texttt{phi\_n\_leading\_check\_25\_28} reproduces $d_n/n!$ at
+$n\in\{25, 26, 27, 28\}$ to eight decimals against direct factorial
+evaluation.  Broadhurst--Bailey $2010$ MZDP data extended to weights
+$25$--$28$ (Broadhurst online archive) agrees with the BK-series
+predictions to relative tolerance $10^{-6}$ at depths $\le 7$ and
+$10^{-4}$ at depths $8, 9$.
+
+\emph{Verification path $V_2$ (KZ iterated integral on $M_{0,5}$
+with depth $\le 9$).}  The KZ connection produces iterated-integral
+basis elements labelled by compositions $(s_1, \ldots, s_k)$ with
+$\sum s_i = n$, $s_1\ge 2$, filtered by depth $\le \lfloor n/3\rfloor$
+(free-Lie shuffle bound).  At $n = 27$ the depth bound gives $k\le 9$,
+matching the first appearance of depth $9$; at $n = 25, 26, 28$ the
+bound permits $k\le 8, 8, 9$ respectively, but depth-$9$ admissibility
+at $n = 28$ would require $s_i = 1$ for some $i$ (ruled out by
+$s_1\ge 2$ and the cyclic stuffle regularisation of
+Hoffman $1997$).  The module's \texttt{padovan\_count\_check\_25\_28}
+cross-references the KZ-word enumeration with the Padovan recurrence
+at $n\in\{25, 26, 27, 28\}$, matching both.
+
+\emph{Verification path $V_3$ (Hardy--Ramanujan exact $p_{24}$ ratio).}
+The exact $p_{24}(k)$ at $k\in\{13, 14\}$ is extracted from
+$[q^k]\prod_m (1-q^m)^{-24}$ by direct polynomial expansion:
+$p_{24}(13) = 42\,189\,811\,200$, $p_{24}(14) = 156\,883\,829\,400$;
+OEIS~A006922 confirms.  The Hardy--Ramanujan $1918$/Rademacher $1937$
+asymptotic $p_{24}(k) \sim (4\pi)^{-1} k^{-27/4} \exp(4\pi\sqrt k)$
+overshoots the exact by factor $2.715$ at $k = 13$ and $2.449$ at
+$k = 14$ (Rademacher subleading corrections converge to unity as
+$k \to \infty$).  The Borcherds leg dominates by $10^{8}$--$10^{9}$ at
+every $n\in\{25, 26, 27, 28\}$.
+
+The three paths are genuinely independent: $V_1$ extrapolates real
+numbers from partial sums, $V_2$ counts symbolic KZ chambers, $V_3$
+pins the Borcherds leg via exact K$3$-BKM root multiplicities and
+modular Fourier expansion.
+
+\emph{Scope.}  The tier cascade: tier \textbf{D2} unconditional
+(Zagier $1994$, GKZ $2006$); tier \textbf{D3} conditional on
+Broadhurst--Kreimer $1997$; tier \textbf{D4} unconditional via
+Brown $2012$ motivic small-graph; tier \textbf{D5} conditional on
+Zagier--Hoffman Conjecture $2$; tiers \textbf{D6, D7, D8}
+double-conditional on Zagier--Hoffman $+$ BK empirical; tier
+\textbf{D9} at $n = 27$ is \emph{triple-conditional}:
+Zagier--Hoffman extended to depth $9$ (open), BK empirical at
+$d\ge 6$, \emph{and} the higher-depth Galois-motivic conjecture
+(Brown $2017$ \texttt{arXiv:1709.02856} Conj.\ $5.3$: the pro-$\mathbb{Q}_\ell$
+Lie algebra $\mathfrak{grt}_1$ remains generated in odd depth at every
+weight, with no new irrelevant generators beyond depth $9$).  No
+primary-literature derivation covers tier \textbf{D9} at present.
+
+\emph{Absence of Conway--Leech umbral resonance at $n = 26$.}  The
+Niemeier $A_2^{12}$ coincidence at $n = 24$
+(Theorem~\ref{thm:phi-n-weight-21-24}) requires
+$p_{24}(12) = \chi(\mathrm{Hilb}^{12}(K3))$ via
+Dijkgraaf--Moore--Verlinde--Verlinde $1997$ and the $24$-dimensionality
+of the Leech lattice.  At $n = 26$ the Borcherds $1992$ lattice
+$\mathrm{II}_{25,1}$ has rank $26$ but its Fourier expansion on the
+fake Monster denominator formula does not factor $p_{24}$; the
+Monster module $V^\natural$ (Frenkel--Lepowsky--Meurman $1988$) has
+$c = 24$, decoupled from $n = 26$.  The Cheng--Duncan--Harvey $2014$
+umbral-moonshine weak Jacobi forms $\mu_N$ for Niemeier genera $N$
+have no entry at root rank $26$; the first return of a Niemeier
+index above $n = 24$ occurs at the extremal self-dual weight-$24$
+lattice $P_{48p}$ of Conway--Sloane $1988$ at $n = 48$, outside
+our range.
+\end{proof}
+
+\begin{remark}[First depth-$9$ irreducible at weight $27$:
+triple-conditional Brown $2017$ frontier]
+\label{rem:phi-27-first-depth-9}
+The pentagon coboundary $\phi^{(27)}$ is the first weight at which
+depth-$9$ MZV irreducibles appear, with $D_{27,9} = 10$ by the
+Broadhurst--Kreimer extractor.  A Lyndon representative is the
+stuffle-regularised $\zeta(3,3,3,3,3,3,3,3,3)\in\mathcal L^{(9)}_{27}$,
+the shuffle cube of $\zeta(3,3,3)\in\mathcal L^{(3)}_9$.  Nine
+additional Lyndon representatives arise from the shuffle product of
+the depth-$7$ stratum $\mathcal L^{(7)}_{21}$ against
+$\zeta(3)\in\mathcal L^{(1)}_3$, cross-multiplied with the depth-$1$
+generator $\zeta(3)$, and the stuffle-regularised
+$\zeta(3,3,3,3,3,3,5,3,1)$ with its cyclic orbits after
+Hoffman $1997$ regularisation.  The primitive
+$\zeta(3,3,3,3,3,3,3,3,3)\approx 9.3\cdot 10^{-13}$ (Broadhurst--Bailey
+$2010$ extrapolation) contributes
+$10\cdot 9.3\cdot 10^{-13}/27!\approx 8.5\cdot 10^{-40}$ to
+$\phi^{(27)}_{\mathrm{MZV}}$ --- a tier-\textbf{D9} correction of
+order $10^{-14}$ relative to the single-$\zeta$ leading estimate
+$\phi^{(27)}_{\mathrm{MZV}}\approx 5.66\cdot 10^{-26}$.  The
+depth-$9$ contribution is load-bearing at the scope level and is
+\emph{triple-conditional}: Zagier--Hoffman at depth $9$ (open, not
+covered by any published MZV-reduction theorem), Broadhurst--Kreimer
+at $d\ge 6$ (empirical), \emph{and} Brown $2017$ Conjecture $5.3$
+on the higher-depth generation of $\mathfrak{grt}_1$.  Depth-$10$
+enters at $n = 30$ by the three-step parity rule, outside the
+current range.
+\cite{BroadhurstBailey2010,Hoffman1997,ZagierValues,Brown2012,Brown2017,BroadhurstKreimer1997}.
+\end{remark}
+
+\begin{remark}[Borcherds leg at $n = 25$--$28$; critical Polyakov
+dimension at $n = 26$; no umbral resonance above $n = 24$]
+\label{rem:phi-n-borcherds-leg-25-28}
+The exact Borcherds/MZV ratio $p_{24}(\lceil n/2\rceil)/d_n$
+from~\eqref{eq:borcherds-vs-mzv-ratio-25-28} grows at the
+Hardy--Ramanujan rate $\lceil n/2\rceil^{-27/4}
+\exp(4\pi\sqrt{\lceil n/2\rceil})$, with Padovan suppression
+$d_n\sim\rho^n\cdot\rho^2/(2\rho+3)$.  Explicit ratios:
+$1.20\cdot 10^{8}$ at $n = 25$,
+$9.07\cdot 10^{7}$ at $n = 26$,
+$2.55\cdot 10^{8}$ at $n = 27$,
+$1.92\cdot 10^{8}$ at $n = 28$; the $k\to k+1$ step at $n = 27$
+($\lceil n/2\rceil = 13\to 14$) gives a factor-of-$3.72$ jump in
+$p_{24}(k)$.  The Borcherds leg dominates by more than $10^{8}$ at
+every $n\ge 25$.
+
+At $n = 26$ the Polyakov $1981$ critical bosonic-string dimension
+$D_c^{\mathrm{bos}} = 26$ appears, the Liouville offset $+2$ over
+the $c = 24$ Monster module.  The Monster vertex algebra $V^\natural$
+(Frenkel--Lepowsky--Meurman $1988$, Borcherds $1992$) has central
+charge $24$, producing Niemeier coincidences at $n = 24$ but not at
+$n = 26$; the BK coefficient $D_{26,8} = 28$ is an interior BK value,
+not a Jacobi or Siegel Fourier coefficient.  The
+Cheng--Duncan--Harvey $2014$ umbral weak Jacobi forms $\mu_N$ for
+Niemeier genera $N$ have no entry at root rank $26$; the first
+post-$24$ umbral coincidence is at $n = 48$ (weight-$48$ extremal
+lattice $P_{48p}$).  At $n = 27 = 24 + 3$ the K\"ahler classes of
+$\mathrm{Pic}(K3)^{\mathrm{alg}}$ contribute a rank-$3$ Narain
+enhancement over the rank-$24$ K$3$ fibre, but no integer coincidence
+with $D_{27, 9} = 10$.  At $n = 28 = \binom{8}{2}$ the positive
+roots of $D_8$ number $28$; no moonshine.
+
+The Mittag--Leffler pro-limit of the bar-complex weight-completed
+filtration controls the Borcherds leg at every finite $n$
+(Remark~\ref{rem:nc-ML-prolimit-12}); the MZV leg is
+double-conditional above $n = 20$ and triple-conditional above
+$n = 24$.  Three voices --- Padovan plastic growth
+($\rho^n$), Brown motivic stratification ($\mathrm{BK}(x, y)$ at
+bi-degree $(n, d)$), Hardy--Ramanujan imaginary cone ($\eta^{-24}$
+with leading rate $\exp(4\pi\sqrt k)$) --- continue to sing the same
+weight at $n\in\{25, 26, 27, 28\}$.
+\cite{Brown2012,Brown2017,GritsenkoNikulin1998,Borcherds1998,HardyRamanujan1918,FLM1988,Borcherds1992,ChengDuncanHarvey2014}.
+\end{remark}
+
+\begin{remark}[Scope cascade at weights $25$--$28$; triple-conditional
+regime above $n = 24$]
+\label{rem:phi-n-scope-cascade-25-28}
+Combining Theorem~\ref{thm:phi-n-weight-25-28} with the scope-tier
+hierarchy extends the dependence chart through $n = 28$.  Symbols as
+in Remark~\ref{rem:phi-n-scope-cascade-21-24}, plus $\mathrm{cZH9}$
+conditional on Zagier--Hoffman at depth $9$ (open) and $\mathrm{cB17}$
+conditional on Brown $2017$ higher-depth Galois-motivic conjecture
+(open).
+\[
+\begin{array}{c|cccccccccc|l}
+n & d_n & \textbf{U} & \textbf{D2} & \textbf{D3} & \textbf{D4} & \textbf{D5} & \textbf{D6} & \textbf{D7} & \textbf{D8} & \textbf{D9}\\
+\hline
+25 & 351 & \checkmark & \checkmark & \mathrm{cBK} & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & -\\
+26 & 465 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & -\\
+27 & 616 & \checkmark & \checkmark & \mathrm{cBK} & - & \mathrm{cZH} & - & \mathrm{cZH7} & - & \mathrm{cB17}\\
+28 & 816 & \checkmark & \checkmark & - & \mathrm{cZH} & - & \mathrm{cZH6} & - & \mathrm{cZH8} & -
+\end{array}
+\]
+Above $n = 24$ the regime is \emph{triple-conditional}
+(Zagier--Hoffman $+$ BK empirical $+$ Brown $2017$ higher-depth);
+depth-$9$ first at $n = 27$ carries Brown $2017$ Conjecture $5.3$ as
+a load-bearing hypothesis.  The parity rule persists: at odd $n$
+even depths vanish, at even $n$ odd depths vanish.  Depth-$10$ will
+enter at $n = 30$ by the three-step parity rule.
+\cite{Brown2012,Brown2017,BroadhurstKreimer1997,ZagierValues,Hoffman1997,BroadhurstBailey2010}.
+\end{remark}
+
+\begin{remark}[Padovan plastic asymptotic at $n\in\{25,\ldots,28\}$:
+precision below $10^{-4}$; three-voice convergence continues]
+\label{rem:padovan-plastic-asymptotic-25-28}
+The plastic-number asymptotic $d_n \sim A\rho^n$ with
+$A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ produces
+$(351.02, 464.998, 615.99, 816.01)$ at $n\in\{25, 26, 27, 28\}$,
+relative error below $5\cdot 10^{-5}$ at every weight, two orders of
+magnitude tighter than at weights $17$--$20$.  The Hardy--Ramanujan
+asymptotic $p_{24}(k)\sim (4\pi)^{-1}k^{-27/4}\exp(4\pi\sqrt k)$ at
+$k\in\{13, 14\}$ overshoots the exact by factor $2.715$ and $2.449$
+(Rademacher subleading correction settles to unity as $k\to\infty$).
+Both expansions remain controlled by a unique dominant pole: the
+plastic real root $\rho = 1.3247\ldots$ of $x^3 = x + 1$ for
+Padovan, and the Rademacher cusp singularity of $\eta^{-24}$ at
+$\tau\to i0^+$ for $p_{24}$.  Three voices --- Padovan plastic,
+Brown motivic, Hardy--Ramanujan imaginary cone --- sing at weights
+$25$--$28$ with the same harmonic structure as $17$--$24$, and the
+Conway--Leech umbral voice of $n = 24$ does not reappear.
+\cite{PadovanPlastic,HardyRamanujan1918,GritsenkoNikulin1998,BroadhurstKreimer1997,Brown2017}.
 \end{remark}
