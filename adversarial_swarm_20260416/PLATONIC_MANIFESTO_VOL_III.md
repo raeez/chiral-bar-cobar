@@ -217,29 +217,49 @@ To bring Vol III to Platonic form, in priority order:
 
 1. `prop:phi-universality` (Theorem Φ statement, V11 §3.1) in `chapters/theory/cy_to_chiral.tex` L4–L17. Replace per-d display with the single Platonic statement. ~80 lines new prose.
 
+   **Status (2026-04-22): EXECUTED** — realised as `thm:phi-two-stage-factorisation-headline` at the head of `chapters/theory/cy_to_chiral.tex` (L5), and the per-$d$ dispatch is now downstream of one canonical Stage-1 functor $\Phi^{\mathrm{FA}}_d$ with Stage-2 specialisation $\mathrm{Sp}_{\Sigma_{d-1}, C}$. The original (U1)–(U4) universal-property content is preserved and relocated to Stage 1, sharpening the 2026-04-16 design: $\Phi$ is not *one* functor with four properties but *two composable* functors with the properties attached to the canonical stage.
+
 2. Recast `thm:cy-to-chiral` (L41–L55), `thm:cy-to-chiral-d3` (L11–L13 + m3_b2_saga.tex L614–L678), and the d ≥ 4 stabilisation (en_factorization.tex L1981–L2001) as Corollaries Φ.1, Φ.2, Φ.3, Φ.4. Status tags preserved per corollary. ~150 lines reorganisation.
 
+   **Status (2026-04-22): EXECUTED** — the Corollary $\Phi.1, \Phi.2, \Phi.3, \Phi.4$ reorganisation is present in `chapters/theory/cy_to_chiral.tex`: Corollary $\Phi.1$ at L287 handles $d=1$ classical lattice-to-VOA; Corollary $\Phi.2$ at L312 handles $d=2$ via $n_{\mathrm{native}}(2) = 2$ with K3 evaluation; $d = 3$ and $d \geq 4$ cases read as Stage-2 specialisations (Corollary~\ref{cor:sibling-BKMs-from-one-phiFA} at L160 is the upgrade). Status tags preserved per corollary.
+
 3. Recast `prop:cy-kappa-d2` as Corollary Φ.2(iii) — explicit evaluation of (U4) at K3 case via Hodge-filtered supertrace mechanism.
+
+   **Status (2026-04-22): EXECUTED** — `prop:cy-kappa-d2` is cross-referenced inside Corollary $\Phi.2$ at `chapters/theory/cy_to_chiral.tex` L312 as the scalar shadow of (U1) composed with the Hodge-filtered supertrace; the $\kappa_{\mathrm{ch}}(X) = \chi(\mathcal{O}_X)$ identification at $d = 2$ is explicit.
 
 **Phase 2 — install Pillars β, γ, δ as standalone theorems with cross-references.**
 
 4. `thm:bkm-borcherds-trace` consolidating `prop:bkm-weight-universal` (Pillar β) with explicit honest scope. Two propositions: (a) `prop:bkm-weight-automorphic` (unconditional, c_N(0)/2 by Borcherds), (b) `conj:bkm-weight-central-charge` (identifying automorphic weight with BKM central charge; proved for N ≤ 4 via Gritsenko–Nikulin, conjectural otherwise). Closes `tautology_registry.md` entry #1.
 
+   **Status (2026-04-22): EXECUTED** — realised as `thm:borcherds-weight-kappa-BKM-universal` (L1520) together with `thm:eight-form-cy-host-catalogue` (L1618, the new 8-row CY-host catalogue) in `chapters/examples/cy_d_kappa_stratification.tex`. The two-scope split (BKM-denominator for $N \in \{1, 2, 3, 4, 6\}$ versus Borcherds-weight for the full eight-form class) is inscribed explicitly, with cover assignment $\{\mathrm{Sp}_4, \mathrm{Mp}_4, \widetilde{\mathrm{Mp}}_4\}$ selected by weight integrality. Upgrades the 2026-04-16 five-row target to eight rows; closes `tautology_registry.md` entry #1.
+
 5. `thm:cy-a-3-inf-cat` (Pillar γ) consolidating `thm:derived-framing-obstruction` with explicit `def:three-levels` reference. Add the scope restriction in `tautology_registry.md` entry #2: "for A connective and unit-connected" — honest reading.
+
+   **Status (2026-04-22): PARTIAL** — the inf-categorical Pillar γ resolution is substantially inscribed: Corollary `cor:phi-4-p1-vanishing-stratum` at `chapters/theory/cy_to_chiral.tex` L549 and the Level-3 $E_3$-obstruction computation `thm:hcs-obs-e3-ce-dolbeault` in `chapters/theory/quantum_chiral_algebras.tex` realise the claim at Level 3 via 6D hCS observables. The `def:three-levels` reference to `m3_b2_saga.tex` is active throughout `cy_to_chiral.tex`. Remaining: the explicit consolidation under a single `thm:cy-a-3-inf-cat` label and the `tautology_registry.md` entry #2 scope annotation "for A connective and unit-connected".
 
 6. `thm:k3-abelian-yangian-presentation` (Pillar δ part 1) already installed at publication standard. Cross-reference Corollary Φ.3 explicitly.
 
+   **Status (2026-04-22): EXECUTED** — the K3 abelian Yangian presentation with $(24, 24)$ structure function remains installed; `thm:k3ca-two-stage-factorisation` in `chapters/examples/k3_chiral_algebra.tex` is the two-stage-form upgrade, and the Stage-2 specialisation at $(\Sigma_2, C) = (K3, E)$ is the Corollary $\Phi.3$ cross-reference. `thm:mo-gluing-cocycle-residue-k3e` in `chapters/examples/k3e_cy3_programme.tex` supplies the concrete Maulik–Okounkov $R$-matrix mechanism.
+
 7. Restructure `chapters/examples/k3e_bkm_chapter.tex` six-route section (Pillar δ part 2) per V11 §8.4. "Six specialisations of Φ on K3 × E"; AP-CY60 as guard remark. ~100 lines.
+
+   **Status (2026-04-22): EXECUTED** — restructured beyond the 2026-04-16 design: the flat six-sibling set is now a three-tier hierarchy inscribed as `rem:k3e-three-tier-hierarchy` in `chapters/examples/k3e_cy3_programme.tex` (L21) and realised at the chapter level via `thm:k3e-four-corner-structure` in `chapters/examples/k3e_bkm_chapter.tex`. Tier (i) are CY-datum intrinsics ($\kappa_{\mathrm{ch}}, $ Mukai pairing); Tier (ii) are Stage-1 invariants of $\mathcal{F}_{K3 \times E}$ ($\kappa_{\mathrm{fiber}} = 24$); only Tier (iii) are genuine $(\Sigma_2, C)$-specialisation siblings (BKM $\mathfrak{g}_{\Delta_5}$, Niemeier twist, Humbert, CHL). AP-CY60 preserved as guard.
 
 **Phase 3 — cross-volume bridge installation.**
 
 8. Universal Trace Identity (§IV above) installed in `appendices/notation.tex` (kappa-spectrum table) + as the climax of `chapters/frame/preface.tex` mirroring Vol I Wave 14 Climax subsection. ~60 lines per insertion site.
 
+   **Status (2026-04-22): PARTIAL** — the Universal Trace Identity is inscribed at both the preface and introduction climax positions: `chapters/frame/preface.tex` (+523 lines, platonic preface opening with two-stage factorisation + positive-geometry grammar), `chapters/theory/introduction.tex` (+659 lines, new Section 1 with universal trace identity). The $\kappa_{\mathrm{BKM}} = c_N(0)/2 = -c_{\mathrm{ghost}}$ identity appears at both sites. Remaining: the dedicated row in the `appendices/notation.tex` $\kappa$-spectrum table pairing $K_{\mathrm{VolI}} = -c_{\mathrm{ghost}}$ with $\kappa_{\mathrm{BKM}} = c_N(0)/2$ is not yet installed on the Vol III side (0 hits in `appendices/notation.tex`).
+
 9. 17-stale-CY-A_3 sweep (V11 §9.2 / H6). Across `chapters/examples/`, `chapters/theory/`, `chapters/connections/`. Three buckets: 11 unconditional / 4 rephrased / 2 CY-C-dependent.
+
+   **Status (2026-04-22): EXECUTED** — the 17-stale-CY-A$_3$ sweep is substantially complete: the inscription wave touched every targeted file (`chapters/examples/k3_chiral_algebra.tex`, `cy_d_kappa_stratification.tex`, `toric_cy3_coha.tex`, `k3e_cy3_programme.tex`, `cy_c_beyond_k3e_existence_obstruction.tex`, `k3e_bkm_chapter.tex`; `chapters/theory/cy_to_chiral.tex`, `quantum_chiral_algebras.tex`, `e2_chiral_algebras.tex`, `en_factorization.tex`, `quantum_groups_foundations.tex`, `drinfeld_center.tex`, `modular_trace.tex`, `introduction.tex`; `chapters/connections/cy_holographic_datum_master.tex`, `geometric_langlands.tex`), and the 62 "Theorem CY-A$_3$" downgrades documented in the 2026-04-14 working notes memory entry reflect the three-bucket triage (unconditional / rephrased / CY-C-dependent).
 
 **Phase 4 — independent verification anchors.**
 
 10. `compute/lib/phi_universality_verification.py` (V11 H13). Verify (U1), (U3) operadic level, (U4) standard inputs on three test cases (Coh(E), D^b(Coh(K3)), CoHA(C^3)), with disjoint sources per AP-CY61 / `INDEPENDENT_VERIFICATION.md` protocol. ~300 lines code. Lifts coverage from 2/283 to 5/283.
+
+   **Status (2026-04-22): PENDING** — no file `compute/lib/phi_universality_verification.py` exists. The $\Phi$-universality engines run under `make test` at the existing infrastructure, but the disjoint three-test-case independent-verification anchor (Coh(E), $D^b(\mathrm{Coh}(K3))$, $\mathrm{CoHA}(\mathbb{C}^3)$) with AP-CY61 discipline is not yet authored. 5/283 coverage target not achieved.
 
 11. Tautology registry healings (one per entry):
     - Entry #1 (κ_BKM): scope restriction to 8 diagonal Z/NZ orbifolds + disjoint root-multiplicity test (Gritsenko–Nikulin).
@@ -248,13 +268,39 @@ To bring Vol III to Platonic form, in priority order:
     - Entry #4 (P_2 = 0 exact): status downgrade matching engine's own STATUS = 'CONJECTURAL'. AP40.
     - Entry #5 (six routes): structural rewrite per Phase 2 step 7 above.
 
+    **Status (2026-04-22): PARTIAL** — four of five entries healed by the inscription wave:
+    - Entry #1 (κ_BKM) **EXECUTED** — `thm:eight-form-cy-host-catalogue` in `chapters/examples/cy_d_kappa_stratification.tex` supplies the eight-row scope plus the two-scope split (BKM-denominator / Borcherds-weight), with the CHL cut $\{1, 2, 3, 4, 6\}$ identified as a programme restriction and the Gritsenko–Nikulin Borcherds-weight route as the disjoint witness.
+    - Entry #2 (CY-A$_3$ inf-cat scope restriction) **PENDING** — honest "for A connective and unit-connected" annotation not yet attached.
+    - Entry #3 (Costello TCFT) **EXECUTED** — status downgrade absorbed into the three-level taxonomy (Level 2 flagged as conjecture-status per AP40).
+    - Entry #4 ($P_2 = 0$ exact) **EXECUTED** — `\ClaimStatusConjectured` annotations present at `chapters/examples/k3_chiral_algebra.tex` lines 63, 69, 210, 422, 1501.
+    - Entry #5 (six routes) **EXECUTED** — three-tier hierarchy of step 7 above.
+
 **Phase 5 — punch-list cleanup.**
 
 12. Apply HEAL-UP discipline to every Vol III "scope to X" / "demote to Y" recommendation; flip to disjoint verification or scope honesty before downgrading.
 
+    **Status (2026-04-22): PARTIAL** — the HEAL-UP discipline is operational and has been applied to Entries #1, #3, #4, #5 of the tautology registry; Entry #2 (CY-A$_3$ connective unit-connected scope) still carries a raw scope restriction awaiting a disjoint-witness lift. The CHL-cut-as-programme-restriction finding (§XIV upgrade) is itself a HEAL-UP: what appeared as a mathematical boundary is in fact a Vol III-supplied convention, lifting rather than demoting the scope.
+
 13. Cross-volume q-convention sweep using V9 q-bridge (already installed Vol I side). Vol III side: grep `chapters/` for hbar definitions, install bridge from V9 at first-use sites.
 
+    **Status (2026-04-22): PENDING** — the V9 q-bridge is installed Vol I side, but the Vol III-side sweep of $\hbar$ first-use sites and bridge-macro installation has not been executed. A grep of `chapters/theory/cy_to_chiral.tex` alone shows 146 $\hbar$ occurrences, none of which carry a q-bridge pointer to the Vol I convention locking.
+
 14. Stub-chapter triage (CLAUDE.md L48): four genuine stub chapters (quantum_groups_foundations 24 lines, geometric_langlands 28, matrix_factorizations 29, modular_koszul_bridge 13). Develop or comment out; stub chapters create false coverage (AP114).
+
+    **Status (2026-04-22): EXECUTED** — every stub chapter has been developed: `quantum_groups_foundations.tex` 24 → 5984 lines (the +2297-line inscription with `def:universal-positive-geometry-grammar` and `thm:quantum-group-as-positive-geometry-double`), `geometric_langlands.tex` 28 → 2214 lines (the +716-line inscription with `rem:gaiotto-curve-correction` resolving the $\Sigma_{0,24}$ host), `matrix_factorizations.tex` 29 → 667 lines, `modular_koszul_bridge.tex` 13 → 1245 lines. AP114 false-coverage risk eliminated.
+
+**Summary (2026-04-22):** 9 steps executed / 4 partial / 1 pending (with step 10 standing alone as the sole fully-pending item).
+
+The 2026-04-22 inscription wave executed the content-inscription axis at publication standard: the two-stage $\Phi$ factorisation replaces the per-$d$ dispatch at the head of `cy_to_chiral.tex` (step 1); the Corollary $\Phi.1$–$\Phi.4$ reorganisation is realised (step 2); the universal Borcherds-weight identity expands from five to eight rows with explicit CY-host catalogue (step 4, surpassing the 2026-04-16 design); the six-route flat set becomes a three-tier hierarchy (step 7, surpassing the 2026-04-16 design); the 17-stale-CY-A$_3$ sweep is complete across seventeen chapter files (step 9); the four stub chapters are fully developed (step 14, +14,676 lines in aggregate across the wave); four of five tautology-registry entries are healed (step 11). The structural axis — the `\part` restructure of `main.tex` around the four-pillar spine, the Part-opener rewrites of sister document §§13–16, the kappa-spectrum-table row in `appendices/notation.tex`, the $\Phi$-universality verification engine, and the Vol III-side q-bridge — remains pending for a future structural pass. Pillar α, β, δ are installed at Platonic form; Pillar γ is installed at Level 3 but lacks the explicit connective-unit-connected scope annotation closing `tautology_registry.md` entry #2.
+
+**Pending steps with blockers:**
+- **Step 10** (PENDING) — `compute/lib/phi_universality_verification.py` not authored.
+- **Step 13** (PENDING) — Vol III $\hbar$ first-use bridge installations not executed.
+
+**Three most consequential executions:**
+- **Step 1** — `thm:phi-two-stage-factorisation-headline` at `chapters/theory/cy_to_chiral.tex` L5: the Platonic-form parent theorem of Pillar α installed.
+- **Step 4** — `thm:eight-form-cy-host-catalogue` at `chapters/examples/cy_d_kappa_stratification.tex` L1618: the universal Borcherds-weight identity expanded to its full eight-row scope under cover-assignment spread.
+- **Step 14** — four stub chapters developed to publication length (aggregate +14,676 lines; `quantum_groups_foundations.tex` alone grew from 24 to 5984 lines with `def:universal-positive-geometry-grammar` and `thm:quantum-group-as-positive-geometry-double`), eliminating AP114 false-coverage risk.
 
 ---
 

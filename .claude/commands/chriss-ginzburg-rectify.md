@@ -196,12 +196,67 @@ If ANY structural issue remains at severity >= SERIOUS: loop back to 2B. The str
 
 This is the core of the programme. You step through the chapter sequentially in chunks of ~50-100 lines. For each chunk, you run a convergent inner loop with FIVE GATES. A chunk cannot advance until ALL FIVE GATES pass simultaneously.
 
-### The Five Gates
+### The Six Gates
 
-Every chunk is examined through five independent lenses. Each gate has a clear pass/fail criterion. ALL must pass for the chunk to converge.
+Every chunk is examined through six independent lenses. Each gate has a clear pass/fail criterion. ALL must pass for the chunk to converge.
+
+**GATE 0: CATALOGUE CONSULTATION** *(pre-flight: load the live catalogues)*
+Before examining the chunk through any other lens, consult the two live catalogues that track what the programme has learned the hard way:
+
+1. **first_principles_cache.md** — the growing index of
+   "wrong claim $\to$ ghost theorem $\to$ precise error $\to$ correct
+   relationship" confusion patterns. Read the top-20 entries at minimum;
+   grep the full file for any entry whose subject keywords overlap with
+   the current chunk.
+2. **antipatterns_catalogue.md** (Vol III narrative) and any
+   volume-local AP-catalogue file — the indexed AP catalogue with
+   severity levels. Read every Critical and High severity entry;
+   skim Medium.
+
+For EVERY substantive claim in the chunk, check it against BOTH
+catalogues. If a claim matches a wrong-claim column in the cache or
+triggers a catalogued AP, the chunk fails Gate 0 until fixed. This
+gate catches the repeated-failure patterns before they propagate again.
+
+**Paths per volume** (consult your current volume's files first, then
+the other two volumes via AP5 cross-volume discipline):
+
+- Vol I cache: `~/chiral-bar-cobar/appendices/first_principles_cache.md`;
+  `~/chiral-bar-cobar/notes/first_principles_cache_comprehensive.md`;
+  `~/chiral-bar-cobar/notes/first_principles_cache_chiral_qg_strengthening.md`
+- Vol I AP catalogue: `~/chiral-bar-cobar/notes/antipatterns_catalogue.md`;
+  `~/chiral-bar-cobar/notes/cross_volume_aps.md`
+- Vol II cache: `~/chiral-bar-cobar-vol2/notes/first_principles_cache.md`;
+  `~/chiral-bar-cobar-vol2/notes/first_principles_cache_comprehensive.md`
+- Vol II AP catalogue: `~/chiral-bar-cobar-vol2/notes/antipatterns_catalogue.md`
+- Vol III cache: `~/calabi-yau-quantum-groups/appendices/first_principles_cache.md`;
+  `~/calabi-yau-quantum-groups/notes/first_principles_cache_comprehensive.md`
+- Vol III AP catalogue: `~/calabi-yau-quantum-groups/notes/antipatterns_catalogue.md`
+- Vol III AP-TeX mirror (reader-facing): `~/calabi-yau-quantum-groups/appendices/antipatterns.tex`
+
+**Cross-volume sweep:** when in any volume, also grep the other two
+volumes' caches — a confusion pattern catalogued in Vol III may be
+propagating through Vol I or Vol II prose, and AP5 forbids leaving
+that residue.
+
+**Novel-pattern capture:** if you find a confusion pattern in the
+chunk that is NOT already in the cache (or matches a pattern that
+recurs ≥ 2 times across the session), STEP 3 of the First-Principles
+Protocol REQUIRES you to append a new entry to
+`first_principles_cache.md` (use the Edit tool to append the row:
+`| # | Wrong Claim | Ghost Theorem | Precise Error | Correct Relationship | Type |`).
+The cache is a living catalogue; failing to update it lets the pattern
+recur silently.
+
+Gate 0 verdict: HARD FAIL if any claim triggers a Critical-severity AP
+or matches an exact wrong-claim entry in the cache. List each hit with
+cache entry number / AP index.
 
 **GATE 1: MATHEMATICAL TRUTH** *(Beilinson, Drinfeld, Kontsevich)*
-Falsification from first principles. Every formula recomputed, every proof step checked, every scope qualified, every convention verified.
+Falsification from first principles. Every formula recomputed, every
+proof step checked, every scope qualified, every convention verified.
+In addition to Gate 0's catalogue hits, verify against the live
+`compute/tests/` + `compute/lib/` layers.
 
 **GATE 2: DEFINE-BEFORE-USE** *(Gelfand's Law)*
 Every symbol defined at or before first use. Every standard concept gets a parenthetical first-principles definition. This is a HARD GATE: if any symbol is used before definition, the chunk cannot converge.

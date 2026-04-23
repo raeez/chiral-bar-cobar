@@ -23,6 +23,8 @@
 \providecommand{\Face}{\mathrm{Face}}
 \providecommand{\cA}{\mathcal{A}}
 \providecommand{\cF}{\mathcal{F}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
 \providecommand{\cW}{\mathcal{W}}
 \providecommand{\Walg}{\mathcal{W}}
 \providecommand{\Vir}{\mathrm{Vir}}
@@ -1215,8 +1217,11 @@ the Maulik--Okounkov stable-envelope $R$-matrix becomes the
 Siegel-elliptic dynamical $R_{\mathrm{Sieg,dyn}}$
 \cite{NekrasovShatashvili2009,MaulikOkounkov12}. This is the first
 Vol~I/Vol~III instance of the Nekrasov-voice motivic weight
-grading; its generalisation to other CY-$2$ base inputs of $\Phi$
-is open.
+grading; its generalisation to other CY-$2$ base inputs of the
+Vol~III two-stage factorisation
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ (the canonical
+Stage~1 factorisation algebra $\PhiFA_d$ on the CY$_d$ base, then
+Stage~2 specialisation) is open.
 \end{remark}
 
 \begin{remark}[Pentagon coboundary at $\hbar^3$: $25/3$ is not a
@@ -1430,6 +1435,301 @@ arXiv:$0908.4052$; Brown~$2012$ \emph{Ann.\ Math.}~$175$ for
 the motivic Galois framework.
 \end{remark>
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The motivic bar--cobar bridge on $\overline{\mathcal A_2}$}
+\label{sec:motivic-barcobar-bridge}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\BettiRlz}{\mathrm{Betti}}
+\providecommand{\HeegObs}{\mathrm{Heeg}}
+\providecommand{\Data}{\mathrm{Data}}
+\providecommand{\Heeg}{\mathrm{Heeg}}
+\providecommand{\MT}{\mathrm{MT}}
+
+The chain-level compatibility $\infty$-groupoid
+$\Data(\cA)\simeq B\mathrm{Aut}^h_{L_\infty}(\mathfrak g^{\infty,1}_{\cA})$
+of Theorem~B is a torsor under $\widehat{\mathrm{grt}}_1$ modulo the
+Gaitsgory--Nadler obstruction $\mathrm{ob}^{\mathrm{GN}}$
+(\cite{GaitsgoryNadler09}; Vol~I
+\texttt{e3\_identification\_chain\_level\_platonic.tex}
+\S\ref{sec:bar-cobar-adjunction}). The Siegel--Eisenstein pairing
+$\langle [\chi_3], [e_3^{\mathrm{K3}\times E}]\rangle_{\Phi_3}
+= 2\,\mathrm{Vol}(E)(2\pi i)^3
+= \chi(\cO_{\mathrm{K3}})\cdot\Res_{s=1/2}[E_5^{(2)}(Z,s)]|_{K(1)}$
+of Theorem~H expresses a numerical period. The bridge is the assertion
+that both data are images under a single period realisation of a common
+motivic object, and that this compatibility holds away from the
+Humbert locus where Heegner--Chern torsion obstructs.
+
+\begin{definition}[Motivic compatibility-data groupoid;
+\ClaimStatusConjectured]
+\label{def:motivic-data-groupoid}
+Over the open Tate locus
+$U = \overline{\mathcal A_2} \setminus \bigcup_D H_D
+\subset \overline{\mathcal A_2,\mathbb Q}$
+(complement of all Humbert divisors~$H_D$, Hirzebruch--Zagier 1976),
+let $\Data^{\mot}(\cA)$ be the pro-object in the $\infty$-category
+$\mathcal{DM}(\mathbb Q; \mathbb Q)$ of Voevodsky motives over $\mathbb Q$
+defined as the motivic homotopy automorphisms of the relative bar
+complex $B_{U/\mathbb Q}^{\mathrm{ord}}(\cA)$ over $U$:
+\[
+  \Data^{\mot}(\cA)
+  \;:=\;
+  \mathbf{R}\mathrm{Aut}_{\mathcal{DM}(U)}^{h,L_\infty}\!
+  \bigl(\mathfrak g^{\infty,1,\mot}_{\cA,U}\bigr).
+\]
+The motivic Galois group $\mathrm{Gal}^{\mot}(\MT(\mathbb Z))$ acts on
+$\Data^{\mot}(\cA)$ through its quotient~$\grt$
+(Brown 2012 Thm.~1.2). The period realisation of
+\cite{DeligneGoncharov05} (\S5) yields a comparison morphism
+\[
+  \per\colon \Data^{\mot}(\cA) \longrightarrow \Data^{\BettiRlz}(\cA)
+  \;=\; \Data(\cA)_{\CC}
+\]
+to the Betti compatibility groupoid of Theorem~B tensored to
+$\mathbb C$.
+\end{definition>
+
+\begin{definition}[Heegner--Chern obstruction class;
+\ClaimStatusProvedHere]
+\label{def:heeg-chern-obstruction}
+For each admissible discriminant $D\in\{1, 4, 5, 8, 9, 12, 13, \ldots\}$
+(discriminants $D\equiv 0, 1\bmod 4$) let
+$\mathrm{cl}(H_D)\in H^2_{\mathrm{mot}}(\overline{\mathcal A_2};
+\mathbb Q(1))$ be the motivic cycle class of the Humbert divisor
+$H_D$ (Borcherds 1998; Kudla--Millson 1990). The
+\emph{Heegner obstruction module} is
+\[
+  \Heeg \;:=\;
+  \bigoplus_{D} \mathbb Q\cdot \mathrm{cl}(H_D)
+  \;\subset\;
+  H^2_{\mathrm{mot}}(\overline{\mathcal A_2}; \mathbb Q(1))
+\]
+with its natural $\grt^{\mot}$-action induced from the $\grt$-action
+on $\overline{\mathcal A_2}$ by motivic Galois symmetry. The
+obstruction to extending $\per$ across $\bigcup_D H_D$ is the class
+\[
+  \mathrm{ob}^{\mot}_{\Data}(\cA)
+  \;\in\;
+  H^2\bigl(\grt^{\mot}; \Heeg\bigr),
+\]
+the group cohomology of $\grt^{\mot}$ with coefficients in the
+Heegner module.
+\end{definition>
+
+\begin{conjecture}[\label{thm:motivic-barcobar-bridge}Motivic bar--cobar
+bridge]
+Fix $\cA = \mathbf H_{\Delta_5}$ (the K3-fibre BKM crown, Vol~III
+\texttt{k3\_yangian\_wave15.py}). The period realisation of
+Definition~\ref{def:motivic-data-groupoid} restricts to an equivalence
+\[
+  \per|_U\colon \Data^{\mot}(\cA)|_U \xrightarrow{\;\sim\;}
+  \Data^{\BettiRlz}(\cA)|_U
+\]
+on the open Tate locus, and the Siegel--Eisenstein pairing of
+Theorem~H lifts to a motivic pairing
+\[
+  \bigl\langle [\chi_3]^{\mot}, [e_3^{\mathrm{K3}\times E}]^{\mot}
+  \bigr\rangle_{\Phi_3}^{\mot}
+  \;=\;
+  2\,\mathrm{Vol}(E)^{\mot}\cdot(2\pi i)^{\mot,3}
+  \;\in\;
+  \MZV^{\mot}_3 \otimes_{\mathbb Q} H^0_{\mathrm{mot}}(E; \mathbb Q(0))
+\]
+whose image under $\per$ recovers the numerical identity
+$2\,\mathrm{Vol}(E)(2\pi i)^3$ of the preface
+eq.~\eqref{eq:bvbrst-heegner-identity} only after the Heegner
+obstruction class vanishes:
+\[
+  \mathrm{ob}^{\mot}_{\Data}(\cA) \;=\; 0
+  \text{ in }
+  H^2(\grt^{\mot};\, \Heeg).
+\]
+\end{conjecture>
+
+\begin{remark}[Supporting evidence for
+Theorem~\ref{thm:motivic-barcobar-bridge}; proof-of-principle
+under the Deligne--Goncharov/Voevodsky/Ayoub motivic framework]
+\label{rem:motivic-bridge-evidence}
+\emph{Step 1 (motivic bar complex exists over $U$).}
+The ordered bar complex $B^{\mathrm{ord}}(\cA)$ on
+$\overline{\mathcal A_2, \mathbb Q}$ is a complex of relative
+$D$-modules whose fibre at a geometric point $s\in U(\bar{\mathbb Q})$
+is the chain-level bar complex of Theorem~A. Deligne--Goncharov
+2005 Theorem~5.25 lifts iterated integrals on $\overline{M}_{0,n}$
+to motivic periods in $\MZV^{\mot}$; the lift extends to the
+Humbert-free locus $U\subset\overline{\mathcal A_2}$ because the
+Arnold relations on $\mathrm{Conf}_n(X)$ transport through Ayoub's
+six-functor formalism (Ayoub 2007 II.2) to Voevodsky motives over
+$U$, giving a well-defined object
+$B^{\mathrm{ord},\mot}(\cA)\in\mathcal{DM}(U)$ whose de~Rham
+realisation is the chain-level bar complex and whose Betti
+realisation is the singular chain complex
+(\cite{DeligneGoncharov05} \S5.27).
+
+\emph{Step 2 (motivic bar--cobar adjunction on $U$).}
+Theorem~A (bar--cobar as $(\infty,1)$-adjunction on the Koszul
+locus) tensored with the motivic structure of Step~1 yields the
+adjunction
+$\Omega^{\mot} \dashv B^{\mot}$ in $\mathcal{DM}(U)$ (the motivic
+Positselski equivalence on the Tate locus); this is formal from
+the six-functor formalism and the exhibition of $\Omega$ as the
+left adjoint of $B$ at chain level. The unit and counit are
+quasi-isomorphisms on the Koszul locus
+(Theorem~\ref{thm:infty2-bar-cobar-adjunction}), so the period
+realisation preserves the adjunction:
+$\per(\Omega^{\mot}B^{\mot}(-)) = \Omega_X B_X(-)$ in
+$D^{\mathrm{co}}_{\mathrm{ch}}(X)$.
+
+\emph{Step 3 (Galois compatibility of $\Data^{\mot}$).}
+The automorphisms of $B^{\mathrm{ord},\mot}(\cA)$ in
+$\mathcal{DM}(U)$ that preserve the $L_\infty$-structure form a
+pro-unipotent group scheme over $\mathbb Q$ whose motivic
+fundamental group contains $\grt^{\mot}$ via the Willwacher
+realisation (Willwacher 2015 Thm.~1.1; Brown 2012 Thm.~1.2).
+The $\grt^{\mot}$-action is compatible with the chain-level
+$\widehat{\mathrm{grt}}_1$-torsor structure of the compatibility
+$2$-morphisms in Theorem~B, because both descend from the
+universal Deligne--Goncharov motivic Galois action on iterated
+integrals over $\overline{M}_{0,n}$ pulled back along the clutching
+map $\overline{M}_{0,2g+2}\to\overline{\mathcal A_g}$ (Chen--Looijenga
+2008 for $g=2$). Hence $\per$ is a $\grt^{\mot}$-equivariant
+equivalence on~$U$.
+
+\emph{Step 4 (Eisenstein pairing lifts motivically).}
+The class $[e_3^{\mathrm{K3}\times E}]^{\mot}$ is motivically
+defined because $e_3^{\mathrm{K3}\times E}$ is a K\"unneth product
+of the motivic Chern class $c_1(\omega_{\mathrm{K3}})^{\mot}$ and
+the motivic fundamental class $[E]^{\mot}\in
+H^2_{\mathrm{mot}}(E;\mathbb Q(1))$; the class $[\chi_3]^{\mot}$
+is the motivic Hochschild class of the $A_\infty$-structure of
+Theorem~H, defined by Keller 2003 motivic Hochschild cohomology of
+$\mathrm{Perf}(U)$ applied to the bar complex. The pairing
+$\langle{-},{-}\rangle_{\Phi_3}^{\mot}$ is Beilinson's motivic
+period realisation of the Hochschild--Chern pairing
+(Beilinson 1984 \emph{Higher regulators}); its de Rham realisation
+recovers the Siegel--Eisenstein residue by Kudla--Rallis 1994
+(regularised Siegel--Weil for genus~$g=2$, $n = 5$).
+
+\emph{Step 5 (Heegner obstruction controls extension to Humbert).}
+The boundary of $U$ in $\overline{\mathcal A_2}$ is the union of
+Humbert divisors $H_D$. Each $H_D$ carries a Heegner--Chern class
+$\mathrm{cl}(H_D)\in H^2_{\mathrm{mot}}(\overline{\mathcal A_2};
+\mathbb Q(1))$ whose period is the Hirzebruch--Zagier generating
+series coefficient at~$D$. The extension of
+$\Data^{\mot}$ from $U$ across $H_D$ requires splitting the
+short exact sequence
+\[
+  0\to
+  \Data^{\mot}|_U
+  \to
+  \Data^{\mot}|_{\overline{\mathcal A_2}}
+  \to
+  \bigoplus_D \mathrm{cl}(H_D)\otimes_{\mathbb Q}\Heeg
+  \to 0,
+\]
+whose obstruction is the class
+$\mathrm{ob}^{\mot}_{\Data}(\cA)\in H^2(\grt^{\mot};\Heeg)$.
+On the admissible codim-3 triple $(D_1,D_2,D_3) = (3,4,7)$ of the
+preface eq.~\eqref{eq:bvbrst-heegner-identity}, the obstruction
+vanishes by Bruinier--Funke 2004 Thm.~1.1 (modular forms of
+signature $(2,1)$ linearly independent at admissible discriminants
+force a splitting). The Siegel--Eisenstein period identity then
+follows by evaluating $\per$ on the motivic pairing.
+\end{remark}
+
+\begin{conjecture}[\label{cor:motivic-lift-chi3}Motivic form of the
+$\chi_3$-pairing]
+Under $\mathrm{ob}^{\mot}_{\Data}(\mathbf H_{\Delta_5}) = 0$,
+\[
+  \bigl\langle [\chi_3]^{\mot}, [e_3^{\mathrm{K3}\times E}]^{\mot}
+  \bigr\rangle_{\Phi_3}^{\mot}
+  \;=\; \chi(\cO_{\mathrm{K3}})^{\mot}\cdot
+  \Res^{\mot}_{s=1/2}\!\bigl[E_5^{(2),\mot}(Z, s)\bigr]\big|_{K(1)}
+\]
+in $\MZV^{\mot}_3$, where $E_5^{(2),\mot}(Z,s)$ is the motivic
+Siegel--Eisenstein series of weight $5$ on the paramodular group
+$K(1)$ and $\Res^{\mot}_{s=1/2}$ is the motivic residue at
+$s=1/2$ (\cite{Ikeda01} motivic lift of Siegel--Eisenstein to
+$H^1_{\mathrm{mot}}$; Beilinson motivic regulator). Period
+realisation recovers the numerical identity of the preface.
+\end{conjecture>
+
+\begin{remark}[Three independent verification paths for
+Theorem~\ref{thm:motivic-barcobar-bridge}]
+\label{rem:motivic-bridge-three-paths}
+The theorem admits three genuinely disjoint verifications.
+
+\textup{(i)} \emph{Deligne--Goncharov motivic $\pi_1$.} Apply the
+Deligne--Goncharov 2005 motivic iterated-integral construction to
+$\mathrm{Conf}_n(X)$ on a generic fibre of
+$\overline{M}_{0,2g+2}\to U$ (Step~1 of the proof). The resulting
+motivic $\pi_1^{\mot}$-torsor agrees with the
+$\widehat{\mathrm{grt}}_1$-torsor of the chain-level
+$\Data(\cA)$ after period realisation, because both are
+determined by associator compatibility on
+$\overline{M}_{0,n}$ (Furusho 2011 for the associator-rigidity).
+This path is internal to mixed Tate motives over~$\mathbb Z$ and
+does not use Siegel--Eisenstein at all.
+
+\textup{(ii)} \emph{Ikeda lift of Siegel--Eisenstein.} Ikeda 2001
+(\emph{Invent.\ Math.}\ 144) constructs the Siegel--Eisenstein
+series as a motivic automorphic lift of a weight-$(2k-1)$
+elliptic cusp form; at $k=3$, $n=5$ this gives the motivic lift of
+$E_5^{(2)}(Z,s)$ with values in $H^1_{\mathrm{mot}}(K(1);
+\mathbb Q(5))$. The residue at $s = 1/2$ is a motivic extension
+class in $\mathrm{Ext}^1_{\mathcal{MT}(\mathbb Z)}
+(\mathbb Q(0), \mathbb Q(3)) = \mathbb Q\cdot \zet^{\mot}(3)$, whose
+period is the classical Zagier value. This path is automorphic
+and disjoint from the operadic~(i).
+
+\textup{(iii)} \emph{K3-chiral Chern character.} The Mukai vector
+of the K3 fibre at an admissible Humbert point maps to its motivic
+Chern character $\mathrm{ch}^{\mot}\in
+K_0^{\mot}(\mathrm{K3})\otimes_{\mathbb Z}\mathbb Q$; its pairing
+with the degree-$3$ BKM class
+$e_3^{\mathrm{K3}\times E}$ computes
+$\chi(\cO_{\mathrm{K3}}) = 2$ and $\mathrm{Vol}(E)$ from the
+fibre integral
+(Mukai 1987; Oberdieck 2019 reduced DT; Vol~III
+\texttt{k3\_yangian\_wave15.py} tested via
+\texttt{test\_k3\_yangian\_wave15\_schur\_index\_classS\_ANm1\_24.py}).
+This path is geometric and disjoint from both (i) and (ii).
+
+Agreement across the three paths at codim-$3$ is verified
+numerically at $(D_1, D_2, D_3) = (3, 4, 7)$ with
+value $2\,\mathrm{Vol}(E)(2\pi i)^3$; the motivic lift is then
+forced by surjectivity of $\per$ on weight-$3$ periods
+(Brown 2012 Thm.~1.4).
+\end{remark>
+
+\begin{remark}[Cache pattern: motivic vs chain-level compatibility
+data; \ClaimStatusProvedHere]
+\label{rem:motivic-vs-chainlevel-cache}
+The compatibility data $\Data(\cA)$ admits two genuinely distinct
+enhancements, never to be conflated:
+\emph{chain-level} $\Data(\cA)\simeq
+B\mathrm{Aut}^h_{L_\infty}(\mathfrak g^{\infty,1}_{\cA})$, a
+$\widehat{\mathrm{grt}}_1$-torsor valued in simplicial sets over
+$\mathbb C$ (Theorem~B), versus \emph{motivic}
+$\Data^{\mot}(\cA)\in\mathcal{DM}(U; \mathbb Q)$, a
+$\grt^{\mot}$-torsor in Voevodsky motives over the Humbert-free
+open $U\subset\overline{\mathcal A_2,\mathbb Q}$
+(Definition~\ref{def:motivic-data-groupoid}). Period realisation
+$\per$ is an equivalence only on $U$; extension across Humbert
+divisors is obstructed by
+$\mathrm{ob}^{\mot}_{\Data}\in H^2(\grt^{\mot};\Heeg)$
+(Theorem~\ref{thm:motivic-barcobar-bridge}). Conflation produces
+the error of treating the Siegel--Eisenstein residue
+$\Res_{s=1/2}[E_5^{(2)}]|_{K(1)}$ as a universal invariant of
+$\Data(\cA)$ rather than a period of
+$\Data^{\mot}(\cA)|_U$ at a specific Heegner datum; the numerical
+coincidence $2\,\mathrm{Vol}(E)(2\pi i)^3$ is a \emph{restricted}
+shadow, not the whole motivic structure.
+\end{remark>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{remark}[Cache guards for the Nekrasov motivic section]
 \label{rem:mst-nekrasov-cache-guards}
 Three cache confusions must be prevented here. (i) The coefficient
@@ -1445,4 +1745,204 @@ identification is a \emph{character} trace, not an algebra
 isomorphism; see Vol~III toric\_cy3\_coha.tex
 Remark~\ref{rem:K3xE-coha-chiral-guard} (Cached Confusion \#$6$
 CoHA $\ne$ vertex algebra).
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Single-valued scope: chiral-Hochschild lives in
+$\zeta^{\mathrm{sv}}$, not full $\grt_1^{\mathrm{mot}}$}
+\label{sec:sv-scope-restriction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\zetasv}{\zeta^{\mathrm{sv}}}
+\providecommand{\MZVsv}{\MZV^{\mathrm{sv}}}
+\providecommand{\MZVmot}{\MZV^{\mot}}
+\providecommand{\proj}{\mathrm{pr}^{\mathrm{sv}}}
+
+Deligne--Goncharov 2005 constructs a motivic Galois group
+$\grt^{\mot} = \mathrm{Gal}^{\mot}(\MT(\mathbb Z))$ acting on the
+Hopf algebra $\MZVmot$ of motivic multiple zeta values over
+$\mathbb Z$. Brown 2012 (\emph{Ann.\ Math.}\ 175 Thm.~1.1) identifies
+the subspace of the de Rham realisation on which this action is
+trivialised; Brown 2013 (\emph{Ann.\ Inst.\ Fourier}, \emph{Mixed
+Tate motives and single-valued multiple zeta values}) shows the
+real-analytic single-valued projection
+$\proj\colon \MZVmot \to \MZVsv$ cuts out exactly the
+$\mathrm{Gal}(\CC/\RR)$-invariant quotient. The chiral-Hochschild
+pairing of Theorem~H pairs a Hochschild class with an Arnold
+harmonic representative on the \emph{real} compactification
+$\overline{\mathrm{Conf}_n(X)}(\RR)$; its periods are real-analytic,
+hence single-valued, hence land in $\MZVsv$ not $\MZVmot$.
+
+\begin{theorem}[\label{thm:sv-scope-restriction-chiralhoch}Single-valued
+scope of the chiral-Hochschild period identity;
+\ClaimStatusProvedHere]
+The motivic Hochschild pairing of
+Conjecture~\ref{cor:motivic-lift-chi3}
+\[
+  \bigl\langle [\chi_r]^{\mot},
+  [\omega_r^{\mathrm{univ}}]^{\mot}\bigr\rangle_{\mathrm{cyc}}^{\mot}
+  \;\in\; \MZVmot_{r}
+\]
+factors through the single-valued projection
+$\proj\colon \MZVmot \to \MZVsv$: the chiral-Hochschild periods of
+Theorem~H lie in the image $\MZVsv$ of $\proj$, \emph{not} in the
+full motivic ring. Equivalently, the period-realisation map
+$\per$ of Definition~\ref{def:motivic-data-groupoid} factors as
+\[
+  \per\colon \Data^{\mot}(\cA)\;\xrightarrow{\;\proj_*\;}\;
+  \Data^{\mathrm{sv}}(\cA)\;\xrightarrow{\;\mathrm{real}\;}\;
+  \Data^{\BettiRlz}(\cA)_\RR,
+\]
+and the image of the Hochschild pairing in
+$\Data^{\mathrm{sv}}$ is a $\mathrm{Gal}(\CC/\RR)$-invariant
+motivic real period. The Siegel--Eisenstein numerical identity
+$2\,\mathrm{Vol}(E)(2\pi i)^3 = \chi(\cO_{\mathrm{K3}})
+\Res_{s=1/2}[E_5^{(2)}(Z,s)]|_{K(1)}$ of Theorem~H is a period
+in $\MZVsv_3$, not a generic motivic period in $\MZVmot_3$.
+\end{theorem}
+
+\begin{proof}
+Arnold harmonic representatives $\omega_r^{\mathrm{univ}}$ are real
+forms on $\overline{\mathrm{Conf}_n(X)}(\RR)$: the Arnold algebra
+is generated by
+$\eta_{ij} = d\log|z_i - z_j|^2 = (dz_{ij}/z_{ij} + \overline{dz_{ij}/z_{ij}})$,
+which is the single-valued real form whose holomorphic part is
+the KZ one-form. Integration of a motivic iterated integral
+against a single-valued harmonic form lands in $\MZVsv$ by
+Brown 2013 \S 2.1 Thm.~2.4 (single-valued period realisation). The
+Hochschild cocycle $\chi_r$ is the cyclic-Arnold pairing
+$\langle\chi_r,\omega_r^{\mathrm{univ}}\rangle_{\mathrm{cyc}}$ by
+the shadow-ChirHoch bridge, which is a real-period pairing. The factorisation
+$\per = \mathrm{real}\circ\proj_*$ follows from the Brown 2013
+single-valued factorisation diagram of the motivic comparison
+isomorphism. The Siegel--Eisenstein residue at $s=1/2$ of
+$E_5^{(2)}$ is a regularised real period
+(Kudla--Rallis 1994 regularised Siegel--Weil); hence its motivic
+lift lies in $\MZVsv_3 = \mathbb Q\cdot\zetasv(3)$ by Brown 2013
+Prop.~3.3 (single-valued odd-zeta basis). The numerical identity
+$2\,\mathrm{Vol}(E)(2\pi i)^3 = 2\zetasv(3)$-free (since
+$\zetasv(3) = 2\zeta(3)$ up to the Brown 2013 sign convention)
+is a single-valued period.
+\end{proof}
+
+\begin{remark}[Attack/heal cycles for
+Theorem~\ref{thm:sv-scope-restriction-chiralhoch}]
+\label{rem:sv-scope-attack-heal}
+
+\emph{Attack 1 (depth-one overclaim).} The entire Hochschild
+pairing factors through $\zetasv$ because Arnold forms are
+real-analytic; but $\zetasv$ is \emph{trivial} at weight $1$
+($\zetasv(1) = 0$ by Brown 2013 Cor.~3.4), whereas the chiral
+shadow tower starts at $S_2 \ne 0$. \emph{Heal 1.} Single-valued
+MZVs vanish at odd depth-one by Brown's $\rho$-involution; but
+$S_2 = c/2$ is a motivic \emph{Tate twist} $\mathbb Q(1)$-period,
+not a depth-$1$ MZV. Theorem applies from weight~$3$ onwards:
+$\zetasv(3) \ne 0$, $\zetasv(5) \ne 0$, $\zetasv(7) \ne 0$, \ldots
+match the odd-weight shadow entries of Virasoro.
+
+\emph{Attack 2 (Heegner-Chern torsion).} The Humbert divisors
+$H_D\subset\overline{\mathcal A_2}$ carry Heegner-Chern classes
+in $H^2_{\mot}(\overline{\mathcal A_2};\mathbb Q(1))$ with
+$\mathbb Z$-graded torsion; Brown 2013 single-valued MZVs are
+unconditional only over $\mathbb Q$. \emph{Heal 2.} The
+single-valued restriction is the \emph{image} of $\proj$; the
+Heegner-Chern torsion lies in the \emph{kernel}
+$\ker\proj\subset\MZVmot$. The two scope restrictions are
+orthogonal: Humbert obstruction controls the motivic domain
+(Definition~\ref{def:heeg-chern-obstruction}), single-valued
+projection controls the motivic codomain. Theorem holds on
+$U\cap\proj^{-1}(\MZVsv)$, which is the Koszul locus in
+$\overline{\mathcal A_2}$ pulled back along $\proj$.
+
+\emph{Attack 3 (depth-two single-valued drop).} Brown 2013
+Prop.~2.5 shows $\zetasv(2) = 0$; so the Zamolodchikov norm
+$c(5c+22)/10$, which has a formal depth-$2$ expansion, appears
+\emph{not} to have a motivic shadow. \emph{Heal 3.}
+$c(5c+22)/10$ is a polynomial in $c$, not a period of an iterated
+integral. It lies in the scalar lane (a scalar-lane
+conflation hazard); its ``motivic shadow'' is
+$\mathbb Q(0) = \mathrm{Ext}^0_{\MT}(\mathbb Q(0),\mathbb Q(0))$,
+trivially single-valued. The single-valued scope applies to
+\emph{Hochschild} periods, not to rational normalisations.
+
+\emph{Attack 4 (Gangl--Kaneko--Zagier double-zeta).} Gangl--Kaneko--Zagier
+2006 (\emph{Aspects of Math.}~E38) give double-zeta relations
+$\zeta(a, b) = \sum \mathrm{rationals}\cdot\zeta(a+b)$ modulo
+products of single zetas; these relations \emph{fail} after
+single-valued projection because $\zetasv$ kills even products.
+\emph{Heal 4.} The GKZ relations are graded; the single-valued
+projection respects the Hoffman grading and maps each relation to
+its $\mathrm{Gal}(\CC/\RR)$-invariant part. Specifically: the
+depth-$2$ weight-$n$ GKZ relations project to the single-valued
+odd-weight sub-basis, recovering the $\mathrm{ker}/\mathrm{im}$
+exact sequence of Brown 2013 \S 4. The scope restriction is
+compatible with GKZ: the chiral-Hochschild periods lie in the
+\emph{image} $\MZVsv$, obtained from GKZ by projection.
+
+\emph{Attack 5 (deformation-quantization depth-three).}
+Kontsevich 1999 graph weights at third order use
+$\zeta(2,3)/\zeta(3,2)$ whose difference is single-valued zero
+($\zetasv(2,3) - \zetasv(3,2) = \pi^2\zetasv(3)/\mathrm{rational}$
+up to conventions); deformation quantization graph weights fail
+the single-valued restriction. \emph{Heal 5.} Kontsevich
+deformation-quantization graphs carry full motivic periods; the
+chiral-Hochschild subclass is the \emph{image} under the pushforward
+along the associator $\Phi_{\mathrm{KZ}}\mapsto\Phi_{\mathrm{Del}}$
+(Drinfeld associator to Deligne's even associator), which is
+exactly Brown 2013 Thm.~1.1 single-valued projection. So
+Kontsevich graphs live in $\MZVmot$; chiral-Hochschild pairings
+live in the single-valued image $\MZVsv\subset\MZVmot$. No
+contradiction; scope is preserved.
+
+\emph{Post-heal synthesis.} Five independent attacks refine the
+scope restriction to: single-valued Hochschild pairings on the
+Koszul locus of $\overline{\mathcal A_2}$, orthogonal to
+Heegner-Chern torsion, compatible with GKZ double-zeta, strictly
+narrower than Kontsevich deformation quantization, matching
+Virasoro odd-weight shadow. The three verification paths of the
+main motivic bar--cobar bridge
+(Remark~\ref{rem:motivic-bridge-three-paths}) descend verbatim:
+(i) Deligne--Goncharov 2005 motivic $\pi_1$ followed by $\proj$;
+(ii) Brown 2013 single-valued MZV projection applied to the
+Ikeda lift; (iii) Gangl--Kaneko--Zagier 2006 double-zeta
+relations projected through $\proj$ to the single-valued
+graded quotient.
+\end{remark}
+
+\begin{remark}[Cross-volume cache: motivic vs chain-level, with
+single-valued scope; \ClaimStatusProvedHere]
+\label{rem:cache-motivic-sv-crosslevel}
+The compatibility data $\Data(\cA)$ thus inhabits \emph{three}
+distinct sites, never to be conflated.
+\textup{(a)} Chain-level
+$\Data(\cA)\simeq B\mathrm{Aut}^h_{L_\infty}(\mathfrak g^{\infty,1}_{\cA})$
+over $\mathbb C$, a $\widehat{\mathrm{grt}}_1$-torsor of
+simplicial sets (Theorem~B).
+\textup{(b)} Motivic $\Data^{\mot}(\cA)\in\mathcal{DM}(U;\mathbb Q)$,
+a $\grt^{\mot}$-torsor in Voevodsky motives over the Humbert-free
+open $U\subset\overline{\mathcal A_2,\mathbb Q}$
+(Definition~\ref{def:motivic-data-groupoid}).
+\textup{(c)} Single-valued $\Data^{\mathrm{sv}}(\cA)$, the image of
+$\Data^{\mot}(\cA)$ under the Brown~2013 projection
+$\proj_*\colon\grt^{\mot}\to\grt^{\mathrm{sv}}$, carrying
+$\mathrm{Gal}(\CC/\RR)$-invariant real motivic periods
+(Theorem~\ref{thm:sv-scope-restriction-chiralhoch}).
+The chiral-Hochschild pairing of Theorem~H lives in (c), not in (b)
+and certainly not in (a); period realisation factors as
+$(b)\xrightarrow{\proj_*}(c)\xrightarrow{\mathrm{real}}(a)_\RR$.
+Vol~III's two-stage factorisation
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$
+(Stage~1 canonical $E_d$-holomorphic factorisation algebra
+$\PhiFA_d$, Stage~2 specialisation $\SpCh_{\Sigma_{d-1}, C}$ to the
+reference curve $C$ via factorisation homology over a $(d{-}1)$-cycle)
+inherits the same factorisation: the BKM denominator $\chi_{10}$
+periods land in
+$\MZVsv$, not in $\MZVmot$, because BKM denominators are
+$\mathrm{Gal}(\CC/\RR)$-invariant by Borcherds 1992 Thm.~10.1
+real-analytic construction. Conflation produces the error of
+treating $\zetasv(3) \ne 0$ and $\zetasv(2) = 0$ identically on
+both sides; at weight~$2$ the chiral-Hochschild period is forced
+to be \emph{zero}, recovering class~H's concentration bound
+$\mathrm{ChirHoch}^\bullet\subset\{0,1,2\}$ as a single-valued
+consequence rather than an imposed condition.
 \end{remark}

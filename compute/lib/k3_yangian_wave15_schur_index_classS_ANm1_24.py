@@ -888,7 +888,36 @@ _WAVE19_UMBRAL_ANCHORS: Dict[int, Dict[str, object]] = {
                 "X = A_24, unique root system containing A_24 "
                 "summand). Coxeter slot h = 25 matches h(A_24).",
     },
+    # Wave 21.9 extension: N = 10 substitute Niemeier anchor.
+    # N = 10: h(A_9) = 10, naive 2 A_9 has rank 18 < 24 (fails,
+    # (N-1)=9 does not divide 24). Substitute 2 A_9 D_6 has
+    # h(A_9) = h(D_6) = 10 and rank 2*9 + 6 = 24 (unique Niemeier
+    # at h = 10 containing A_9; the alternative 4 D_6 has no A_9
+    # summand). CDH 2014 Tab. 1 row X = 2 A_9 D_6: umbral group Z/2.
+    10: {
+        "niemeier_root_system": "2 A_9 D_6",
+        "coxeter_h": 10,
+        "umbral_group": "Z/2",
+        "umbral_order": 2,
+        "naive_valid": False,
+        "rank_deficit": 6,  # 24 - 2*9 = 6 = rank(D_6); single-D6 absorption.
+        "note": "Naive 2 A_9 has rank 18 (fails). Substitute "
+                "2 A_9 D_6 has h = 10 and rank 2*9 + 6 = 24 "
+                "(the only Niemeier at h = 10 with A_9 summand; "
+                "alternative 4 D_6 has h = 10 but no A_9 sector). "
+                "CDH 2014 Tab. 1: umbral group Z/2.",
+    },
 }
+
+
+# Wave 21.9: Coxeter-void slots. These are N for which
+# (a) (N-1) does not divide 24, AND
+# (b) no Niemeier has common Coxeter number h = N.
+# The first such slot is N = 11 (h(A_10) = 11; no simple Lie algebra
+# other than A_10 has h = 11; 10 does not divide 24).
+# Within N in [2, 25], the complete list of Coxeter-void slots is
+# {11, 15, 17, 19, 20, 21, 23}.
+_WAVE21_9_COXETER_VOID_N: Tuple[int, ...] = (11, 15, 17, 19, 20, 21, 23)
 
 
 def wave19_umbral_anchor(N: int) -> Dict[str, object]:
@@ -938,6 +967,32 @@ def wave19_divisor_rule_holds(N: int) -> bool:
     system iff $(N - 1) \mid 24$.
     """
     return naive_labelling_valid(N)
+
+
+def wave21_9_is_coxeter_void(N: int) -> bool:
+    r"""Wave 21.9: True iff $N$ is a Coxeter-void slot, i.e. both
+    $(N-1) \nmid 24$ and no Niemeier has common Coxeter number $N$.
+
+    Within $N \in [2, 25]$ the void slots are
+    $\{11, 15, 17, 19, 20, 21, 23\}$.
+    The void at $N = 24$ is distinct: it escapes to the Leech lattice
+    and Conway moonshine (Theorem walgdeep-N24-conway), so $N = 24$
+    is NOT a Coxeter-void in this sense.
+    """
+    if N < 2:
+        return False
+    # Void requires (N - 1) not divide 24 AND no Niemeier at h = N.
+    if naive_labelling_valid(N):
+        return False
+    return len(niemeiers_at_coxeter_slot(N)) == 0 and N != 24
+
+
+def wave21_9_coxeter_void_slots() -> Tuple[int, ...]:
+    r"""Wave 21.9: return the tuple of Coxeter-void $N$ values in
+    $[2, 25]$, i.e. $N$ such that no Niemeier anchor exists and
+    the Leech escape (Conway moonshine) is unavailable.
+    """
+    return _WAVE21_9_COXETER_VOID_N
 
 
 def wave19_summary_record(N: int) -> Dict[str, object]:

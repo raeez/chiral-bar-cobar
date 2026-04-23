@@ -45,9 +45,18 @@ of these by the averaging principle.
 |---|---|---|
 | **A** | bar–cobar equivalence (backbone adjunction) | $\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}$ |
 | **B** | chiral Positselski | $\Omega_X(B_X(C)) \xrightarrow{\sim} C$ in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$ |
-| **C** | derived-centre complementarity | $\kappa + \kappa^! \in \{0, 13, 250/3, 98/3\}$ (family-dependent) |
+| **C** | derived-centre complementarity | $\kappa + \kappa^! \in \{0, 8, 13, 250/3, 98/3\}$ (family-dependent, $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$ five-archetype ceiling; classical $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ subset is $\{0, 13, 250/3, 98/3\}$; the $\mathsf{B}$-row ceiling $K^\kappa = 8$ is the Vol III Mukai-enhanced K3 Heisenberg witness via Bruinier Heegner Chern-class reciprocity) |
 | **D** | obstruction-tower universality | $\mathrm{obs}_g = \kappa \cdot \lambda_g$ |
 | **H** | Hochschild concentration | $\mathrm{ChirHoch}^\bullet(A)$ lives in $\{0, 1, 2\}$ |
+
+On $\mathrm{CY}_d$-categories arising from Calabi–Yau $d$-folds, the
+Vol III functor $\Phi_d$ factors through holomorphic factorisation
+algebras, $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d$; Theorem A's bar–cobar adjunction is the
+$E_1$-chiral shadow on the reference curve $C$ after Stage-2
+specialisation. A single CY$_d$ category admits a family of
+$E_1$-chiral shadows indexed by $(\Sigma_{d-1}, C)$; Theorem A governs
+each shadow on its curve.
 
 Everything in this repository — chapters, standalones, compute modules,
 tests, diagrams — is a concentric ring around those five theorems, or
@@ -65,8 +74,16 @@ Three volumes hold this structure:
   holomorphic factorisation, coproduct as topological factorisation,
   seven parts culminating in 3D quantum gravity.
 - **Vol III** *CY Categories, Quantum Groups, and BPS Algebras* —
-  `~/calabi-yau-quantum-groups`, ~693 pp. The CY-to-chiral functor
-  $\Phi$, K3 Yangian, CY landscape, Borcherds/Monster BKM algebras.
+  `~/calabi-yau-quantum-groups`, ~693 pp. The CY-to-chiral two-stage
+  factorisation $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+  \circ \Phi^{\mathrm{FA}}_d$ (stage 1: canonical $E_d$-holomorphic
+  factorisation algebra on a CY$_d$ variety, pinned by
+  Kontsevich–Tamarkin $E_d$-formality + Costello–Gwilliam–Li
+  locality; stage 2: factorisation homology over a $(d-1)$-cycle
+  $\Sigma_{d-1}$ followed by restriction to a reference curve $C$),
+  K3 Yangian, CY landscape, Borcherds/Monster BKM algebras. A single
+  CY$_d$ category admits a FAMILY of $E_1$-chiral shadows indexed by
+  $(\Sigma_{d-1}, C)$.
 
 ## What counts as progress
 
@@ -112,6 +129,29 @@ evaluation).
 
 Before every assertion: *"How do I know this? Read the source, computed
 it, or assumed it?"* If assumed, stop and verify.
+
+## The manuscript is self-complete, self-coherent, self-consistent
+
+The current version stands for itself and only itself. All LaTeX
+mathematical writing is standalone, up-to-date, consistent, coherent.
+The manuscript does not reference its own previous versions. There is
+no place in this research programme for references to previous
+versions, intermediate ansätze, earlier drafts, retracted values,
+superseded formulas, or any other drafting-history commentary. If a
+formula used to be $X$ and now it is $Y$, the manuscript says $Y$;
+it does not say "$Y$ (previously $X$, now retracted)", does not say
+"$Y$ supersedes the earlier $X$", does not explain how the author
+arrived at $Y$.  The mathematical argument proves $Y$; the drafting
+trajectory is not part of the mathematics.
+
+When a mathematical retraction is genuinely informative --- a proof
+that was attempted and failed, whose failure illuminates why the
+successful proof is forced --- state the failed argument and its
+flaw as mathematics: "the identity $[m_k, B^{(2)}] = 0$ fails
+per-$k$ because cyclic invariance controls adjacent contractions
+but not non-adjacent terms (Proposition~X)". Do not frame it as
+"the author initially attempted $X$ but retracted in favour of $Y$".
+The mathematics is the Gap/Flaw, not the drafting record.
 
 ## Writing standard: Chriss–Ginzburg north star
 
@@ -213,6 +253,24 @@ builds. Compilation errors surface on the session-end build.
 edited. `make test` (fast, ~1 min) or `make test-full` (~119K tests,
 ~minutes) are last resorts.
 
+**Compute engine** — `compute/` holds the numerical-verification surface
+(per-family $\kappa$, shadow-tower entries, bar cohomology, landscape
+identities). When a new $\kappa$ or shadow-tower entry is inscribed, add
+the verification test alongside it: direct computation sits at the top
+of the epistemic hierarchy. Venv auto-detected at `compute/.venv/`.
+
+**Validation gates** (automations of Beilinson's dictum — run when
+sharpening scope or auditing a cascade, not on every edit):
+`make integrity` (strict rebuild + claim-tag coverage),
+`make audit` (Beilinson proof-chain audit on the theorem DAG),
+`make verify-independence` (ProvedHere tautology / orphan check),
+`make verify` (anti-pattern scan across all `.tex`),
+`make census` (claim-tag accounting).
+
+**Standalone papers** — `standalone/` holds extraction papers (A--P
+plus surveys), built with `make standalone`. They pull from the
+chapters; they are not independent drafts and never fork a formula.
+
 ## Essential constants (for quick cross-reference)
 
 - $\kappa(V_k(\mathfrak{g})) = \dim(\mathfrak{g})(k+h^\vee)/(2h^\vee)$
@@ -297,12 +355,27 @@ The following files hold the accounting and disciplinary content that
 used to clutter this file. Grep them when you need a specific index;
 do not let them occupy cognitive space.
 
+- **`notes/antipatterns_catalogue.md`** — the live Vol I AP catalogue
+  (AP register plus cross-volume additions through AP936, including
+  the 2026-04-22 Vol III two-stage factorisation wave: AP929--AP936
+  covering single-stage $\Phi_d$ framing, six-routes-as-$\Phi_3$,
+  Fake-Monster dimension discipline, Super-Yangian envelope
+  trichotomy, $\kappa_{\mathrm{cat}}(K3 \times E) = 0$ manifesto
+  reinforcement, $\mathrm{CoHA}(\C^3) = Y^+$ reinforcement, warning
+  environment prohibition, discipline-token leakage). Every
+  `/chriss-ginzburg-rectify` invocation consults this at Gate 0
+  alongside the cache. Append new APs here; do not add to the legacy
+  file.
+- **`notes/cross_volume_aps.md`** — cross-volume AP reference
+  (AP-CY* from Vol III, V2-AP* from Vol II) consulted when editing
+  material that spans volumes.
 - **`notes/claude_md_legacy_20260418.md`** — the full prior CLAUDE.md
-  (1408 lines, lossless). Contains the complete AP/FM/B/HZ/PE
-  catalogues, the theorem-status table, the constitutional trust
-  warning, the metadata hygiene protocol, Opus quirks, prose-hygiene
-  rules, and the pre-edit verification protocol templates. Grep by
-  index (`AP126`, `FM30`, `PE-5`, `HZ-4`, `B28`). Do not read whole.
+  (1408 lines, lossless). Historical snapshot; the AP catalogue has
+  moved to `notes/antipatterns_catalogue.md`. Still contains the
+  theorem-status table, the constitutional trust warning, the
+  metadata hygiene protocol, Opus quirks, prose-hygiene rules, and
+  the pre-edit verification protocol templates. Grep by index for
+  historical context. Do not read whole.
 - **`notes/agents_md_legacy_20260418.md`** — the full prior
   AGENTS.md, lossless.
 - **`notes/first_principles_cache_comprehensive.md`** — ~250-entry
@@ -318,12 +391,22 @@ do not let them occupy cognitive space.
 - **`chapters/connections/concordance.tex`** — the repo's constitution
   and authoritative convention document.
 - **Volume-specific** `CLAUDE.md` in `~/chiral-bar-cobar-vol2` and
-  `~/calabi-yau-quantum-groups`.
-- **`FRONTIER.md`**, **`AGENTS.md`**, **`README.md`**, theorem-status
-  tables, adversarial-swarm logs in `adversarial_swarm_*/`, session
-  memorials in `memory/` — *working notebooks*, not canonical
-  references. They drift. When they conflict with
-  `landscape_census.tex` or a primary paper, the primary wins.
+  `~/calabi-yau-quantum-groups`. Vol III carries the canonical
+  CY$_d$ $\kappa_\bullet$ table
+  (`~/calabi-yau-quantum-groups/chapters/examples/cy_d_kappa_stratification.tex`)
+  and the two-stage factorisation
+  $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
+  \Phi^{\mathrm{FA}}_d$
+  (`~/calabi-yau-quantum-groups/chapters/theory/cy_to_chiral.tex`).
+- **`README.md`** — public-facing programme status: the five-theorem
+  table, shadow-depth table, 16-paper standalone map, page counts.
+  Canonical for the headline shape; lags the live chapters by days.
+  Read it when orienting a new agent to the programme.
+- **`FRONTIER.md`**, **`AGENTS.md`**, theorem-status tables,
+  adversarial-swarm logs in `adversarial_swarm_*/`, session memorials
+  in `memory/` — *working notebooks*, not canonical references. They
+  drift. When they conflict with `landscape_census.tex` or a primary
+  paper, the primary wins.
 
 ## Git and authorship
 
@@ -396,9 +479,82 @@ the scope in the inscription and move on — do not argue with the hook.
 7. Do not read `notes/claude_md_legacy_20260418.md` or
    `notes/first_principles_cache_comprehensive.md` whole — grep them
    by the specific anchor you need.
-8. Do not confuse this file with a configuration manual. This file is
-   a mathematician's working manifesto. If it ever grows again to the
-   shape of a config manual, shrink it back.
+8. Do not build on a new theorem without auditing its proof first.
+   When you sharpen one theorem, re-check every theorem that cites
+   it — the Beilinson cascade is a real failure mode. Prefer a
+   smaller audited theorem to a larger unaudited one.
+9. Do not defend prior output by sampling files and citing AP
+   discipline. When the user says content is wrong, believe the user
+   and ask what to fix. Self-audit of one's own mathematics is
+   negative yield; it rationalises rather than corrects.
+10. Do not confuse this file with a configuration manual. This file is
+    a mathematician's working manifesto. If it ever grows again to the
+    shape of a config manual, shrink it back.
+
+## 2026-04-22 cross-volume sharpenings
+
+Four load-bearing markers from the Vol III programme now anchor Vol I
+material. These are not decorative cross-references; the Vol I
+landscape examples, the $\mathsf{B}$-row of derived-centre
+complementarity, and the BRST ghost identity each refactor through
+them.
+
+**Eight-form spread.** The $\mathsf{B}$-row ceiling $K^\kappa = 8$ in
+Theorem C sits at the $N = 1$ vertex of a universal eight-form
+Gritsenko--Cl\'ery spread. Weights
+$w(N) \in \{5, 2, 1, 1, 1/2, 1, 1/4, 0\}$ and Fourier zero-coefficients
+$c_N(0) \in \{10, 4, 2, 2, 1, 2, 1/2, 0\}$ give
+$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2 \in \{5, 2, 1, 1, 1/2, 1, 1/4, 0\}$
+for $N \in \{1, 2, 3, 4, 6\}$ and the half-integer / quarter-integer
+continuations. Cover assignment: integer weight rides
+$\mathrm{Sp}_4(\Z)$, half-integer weight rides $\mathrm{Mp}_4$,
+quarter-integer weight rides the double cover
+$\widetilde{\mathrm{Mp}}_4$; the weight-zero form is the degenerate
+terminal fibre. Vol I's $\kappa_{\mathrm{BKM}} = 5$ is the $N = 1$
+anchor; the remaining five $N$-rows are witnessed in Vol III.
+
+**Universal Borcherds weight identity.** The formula
+$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ is the canonical form for
+every $N \in \{1, 2, 3, 4, 6\}$. Primary sources: Borcherds 1995
+(singular-theta lift and denominator-formula weight), Gritsenko 1999
+(explicit $\Delta_5$, $\Delta_2$, $\Delta_1$ series and their Fourier
+expansions). Vol I's lattice examples --- the Monster $V^\natural$
+denominator, the fake-Monster lattice $\mathrm{II}_{25,1}$, the
+Niemeier family --- cite this universal form rather than any additive
+split $\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} +
+\chi(\mathcal{O}_{\mathrm{fiber}})$, which fails at every $N$ (at
+$N = 1$ the left side is $5$, the right side is $0 + 0 = 0$).
+
+**Three-factor Universal Trace Identity.** On the Koszul-self-dual
+subcategory whose objects admit a BRST resolution and a Calabi--Yau
+target supporting a Borcherds product,
+$$
+\mathrm{tr}_{\mathrm{ghost}}(Q_{\mathrm{BRST}}^2)
+= \mathrm{tr}_{\mathrm{Pentagon}}
+= \omega_{\mathrm{Borcherds}}
+= c_N(0)/2.
+$$
+Vol I supplies the ghost-scope reading: $Q_{\mathrm{BRST}}^2 = 0$ is
+the nilpotency that forces the trace to land in the Euler-characteristic
+class of the $\Sigma_{d-1}$-cycle. Vol II supplies the Pentagon-scope
+reading on the $\mathsf{SC}^{\mathrm{ch,top}}$ boundary. Vol III
+supplies the Borcherds-scope reading as the singular-theta weight. The
+three scopes agree where they all apply; they do not compete.
+
+**Universal positive-geometry grammar.** Every standard-landscape
+example in Vol I --- Heisenberg $\mathcal{H}_k$, free fermion,
+$bc(\lambda)$, $\beta\gamma(\lambda)$, affine Kac--Moody
+$V_k(\mathfrak{g})$, Virasoro $\mathrm{Vir}_c$, $\mathcal{W}_N$,
+Bershadsky--Polyakov $BP$ --- fits the template
+$Y^+(X) = H^\bullet_{\mathrm{eq}}(\mathcal{M}^+_{\mathrm{eff}}(X), \phi_W)$
+for some Calabi--Yau target $X$ via Stage-1 $\Phi^{\mathrm{FA}}_d$,
+with Drinfeld double $G(X) = D(Y^+(X))$. Four equivariance strata
+discriminate the examples: toric $T^d$ (local surfaces), reduced
+$\C^\times + \mathrm{Aut}(X)$ (K3, K3 $\times$ E, abelian surfaces),
+orbifold inertia $I(X/G)$ (Mathieu / McKay lattices), and
+lattice-polarised period domain (Borcherds / Gritsenko lifts). The
+shadow tower on a given example is the specialisation of $Y^+(X)$ to
+$C = \mathbb{P}^1$ with the stratum-appropriate equivariance.
 
 ## Branch and worktree reconciliation -- DEEP SEMANTIC MERGES ONLY
 

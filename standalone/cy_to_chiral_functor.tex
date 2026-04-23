@@ -75,6 +75,8 @@
 \newcommand{\MF}{\mathrm{MF}}
 \newcommand{\Coh}{\mathrm{Coh}}
 \newcommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch},\mathrm{top}}}
+\newcommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\newcommand{\PhiFA}{\Phi^{\mathrm{FA}}}
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\Spec}{Spec}
 
@@ -102,19 +104,32 @@ paper constructs it.
 A Calabi--Yau category $\cC$ of dimension~$d$ carries a cyclic
 $\Ainf$-structure: a non-degenerate trace
 $\Tr \colon \HC^{-}_{d}(\cC) \to k$ on negative cyclic homology.
-We construct a functor
+The CY-to-chiral functor
 \[
- \Phi \colon \CY_d\text{-}\mathrm{Cat} \longrightarrow
- \Etwo\text{-}\mathrm{ChirAlg}
+ \Phi_d \;=\; \SpCh_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d
+ \colon \CY_d\text{-}\mathrm{Cat} \longrightarrow
+ \En\text{-}\mathrm{ChirAlg}
 \]
-in four steps: extract the Lie conformal algebra
-$\fL_\cC$ from the Gerstenhaber bracket on
-$\HH^\bullet(\cC)$; pass to the factorization envelope
-$\Fact_X(\fL_\cC)$ on a curve~$X$; enhance via the
-$\Sd$-framing to an $\En$-chiral algebra; quantize using the CY
-trace.  The functor is proved at $d = 2$
-(Theorem~CY-A$_2$) and at $d = 3$ (Theorem~CY-A$_3$,
-$\infty$-categorical proof).
+factors in two stages. Stage~1, $\Phi^{\mathrm{FA}}_d$, produces a
+canonical holomorphic $E_d$-factorisation algebra
+$\Phi^{\mathrm{FA}}_d(\cC)$ on a CY$_d$ variety~$X$, pinned up to
+contractible choice by Kontsevich--Tamarkin $E_d$-formality on the
+Gerstenhaber bracket of degree $1 - d$ on $\HH^\bullet(\cC)$ together
+with Costello--Gwilliam--Li locality on~$X$. Stage~2,
+$\SpCh_{\Sigma_{d-1}, C}$, is factorisation homology over a
+closed $(d-1)$-cycle $\Sigma_{d-1} \subset X$ followed by restriction
+to a reference curve $C \subset X$. The four computational steps --
+Lie conformal algebra $\fL_\cC$ from the Gerstenhaber bracket,
+factorisation envelope $\Fact_C(\fL_\cC)$, $\Sd$-framing
+enhancement, CY-trace quantisation -- are the explicit realisation
+of the composite. The functor is proved at $d = 2$
+(Theorem~CY-A$_2$, $\Etwo$-chiral on any curve~$C$) and at $d = 3$
+(Theorem~CY-A$_3$, $\Eone$-chiral output in the $\infty$-categorical
+formulation). A single CY$_d$ category admits a family of
+$\Eone$-chiral shadows indexed by the choice of $(\Sigma_{d-1}, C)$;
+the Borcherds--$\Delta_5$, Igusa--$\chi_{10}$, and paramodular
+Gritsenko--Cl\'ery outputs at $d = 3$ are distinct specialisations of
+one canonical $\Phi^{\mathrm{FA}}_3$.
 
 A single CY manifold admits multiple chiral algebraizations, each
 with its own modular characteristic.  We introduce the
@@ -125,7 +140,7 @@ $\Spec_{\kappa_\bullet}(X) = \{\kappa_{\mathrm{cat}},
 the same manifold.  For $K3 \times E$:
 $\Spec_{\kappa_\bullet} = \{2, 3, 5, 24\}$.  The shadow--Siegel
 gap theorem identifies four structural obstructions separating
-$\kappa_{\mathrm{ch}} = 3$ from $\kappa_{\mathrm{BKM}} = 5$.
+$\kappa_{\mathrm{ch}}^{\mathrm{Heis}} = 3$ from $\kappa_{\mathrm{BKM}} = 5$.
 
 For toric CY$_3$, the functor interfaces with the critical
 cohomological Hall algebra: $\CoHA(Q_X, W_X) \simeq
@@ -171,15 +186,20 @@ must be supplied by hand.  The question is: what functor connects
 geometric input to chiral algebraic output, and what structure
 must it preserve?
 
-The answer is the CY-to-chiral functor $\Phi$.  A Calabi--Yau
-category $\cC$ carries a cyclic $\Ainf$-structure encoding a
-$d$-dimensional Frobenius condition at the chain level.  The
-functor converts this datum into a chiral algebra $A_\cC$ on a
-curve, with three preservation properties: the bar complex of
-$A_\cC$ recovers the cyclic bar complex of $\cC$, the modular
-characteristic $\kappa_{\mathrm{ch}}(A_\cC)$ equals the CY Euler
-characteristic $\chi^{\CY}(\cC)$, and the $\Sd$-framing
-determines the operadic level.
+The answer is the CY-to-chiral functor
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d$.
+A Calabi--Yau category $\cC$ carries a cyclic $\Ainf$-structure
+encoding a $d$-dimensional Frobenius condition at the chain level.
+The first stage $\Phi^{\mathrm{FA}}_d$ converts this datum into a
+canonical $E_d$-holomorphic factorisation algebra on the CY$_d$
+variety~$X$; the second stage $\SpCh_{\Sigma_{d-1}, C}$
+specialises along a closed $(d-1)$-cycle $\Sigma_{d-1} \subset X$
+and restricts to a reference curve $C \subset X$, producing the
+chiral algebra $A_\cC$ on~$C$ with three preservation properties:
+the bar complex of $A_\cC$ recovers the cyclic bar complex
+of~$\cC$, the modular characteristic $\kappa_{\mathrm{ch}}(A_\cC)$
+equals the CY Euler characteristic $\chi^{\CY}(\cC)$, and the
+$\Sd$-framing determines the operadic level on~$C$.
 
 \subsection{The $\kappa_\bullet$-spectrum}
 
@@ -206,7 +226,7 @@ $\Spec_{\kappa_\bullet} = \{2, 3, 5, 24\}$.  The four numbers
 measure four faces of the same manifold: holomorphic Euler
 characteristic, boundary chiral algebra, bulk BKM superalgebra,
 and lattice frame.  The chiral-holographic pair
-$(\kappa_{\mathrm{ch}}, \kappa_{\mathrm{BKM}}) = (3, 5)$ governs
+$(\kappa_{\mathrm{ch}}^{\mathrm{Heis}}, \kappa_{\mathrm{BKM}}) = (3, 5)$ governs
 the boundary--bulk axis of Volumes~I--II.  The
 $\kappa_\bullet$-spectrum is invisible from any single chiral
 algebra; it is intrinsic to the CY category.
@@ -393,12 +413,34 @@ from $\pi_k(BU) = \pi_{k-1}(U)$ and Bott periodicity for~$U$).
 \section{The CY-to-chiral functor}
 \label{sec:functor}
 
-\subsection{The four-step construction}
+\subsection{The two-stage factorisation and its four-step
+realisation}
 
-The functor $\Phi \colon \CY_d\text{-}\mathrm{Cat} \to
-\En\text{-}\mathrm{ChirAlg}$ decomposes into four steps, each
-consuming a specific piece of the CY data and producing a specific
-algebraic structure.
+The CY-to-chiral functor factorises as
+\[
+ \Phi_d \;=\; \SpCh_{\Sigma_{d-1}, C} \circ
+ \Phi^{\mathrm{FA}}_d
+ \colon \CY_d\text{-}\mathrm{Cat} \longrightarrow
+ \En\text{-}\mathrm{ChirAlg}.
+\]
+Stage~1 produces the canonical $E_d$-holomorphic factorisation
+algebra $\Phi^{\mathrm{FA}}_d(\cC)$ on the CY$_d$ variety~$X$:
+Kontsevich--Tamarkin $E_d$-formality acts on the Gerstenhaber
+bracket of degree $1 - d$ on $\HH^\bullet(\cC)$, and
+Costello--Gwilliam--Li locality pins the factorisation cosheaf
+up to contractible choice. Stage~2 takes the factorisation
+homology of $\Phi^{\mathrm{FA}}_d(\cC)$ over a closed
+$(d-1)$-cycle $\Sigma_{d-1} \subset X$ and restricts to a
+reference curve $C \subset X$. A single CY$_d$ category thus
+admits a family of $\Eone$-chiral shadows indexed by
+$(\Sigma_{d-1}, C)$.
+
+The four-step construction below is the computational incarnation
+of the composite $\SpCh_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d$ along a codimension-one cycle followed by
+curve restriction; each step consumes a specific piece of the CY
+data and produces a specific algebraic structure on the reference
+curve~$C$.
 
 \begin{construction}[The functor $\Phi$]
 \label{con:v3-st-phi}
@@ -954,45 +996,51 @@ rebuild the braiding categorically through the Drinfeld center.
 
 
 %%% ================================================================
-%%% Wave-14 reconception addendum: $\Phi$ functor scope, CY-D
-%%%   $\kappa$-stratification, universal trace identity (2026-04-17)
+%%% Three consolidated structural theorems: native $\En$ output,
+%%%   CY-dimension stratification, universal trace identity
 %%% ================================================================
 
-\section{Wave-14 reconception: $\Phi$ scope, CY-D stratification,
- universal trace}
-\label{sec:wave14-phi}
+\section{$\Phi$ scope, CY-dimension stratification, universal
+  trace}
+\label{sec:phi-scope-stratification-trace}
 
-The CY-to-chiral functor $\Phi$ is sharpened against three 2026-04-17
-platonic-ideal anchors: the explicit $\En$-output scope
-(\emph{FM43}), the dimension-stratified
+Three consolidated structural theorems pin the CY-to-chiral
+functor to its precise scope: the native $\En$-output level on the
+reference curve, the dimension-stratified
 $\kappa_{\mathrm{ch}}$ spectrum, and the universal trace identity
 connecting the Vol~I conductor $K = -c_{\mathrm{ghost}}$ with the
-Vol~III Borcherds $\kappa_{\mathrm{BKM}} = c_N(0)/2$.
+Vol~III Borcherds weight $\kappa_{\mathrm{BKM}} = c_N(0)/2$.
 
-\begin{theorem}[$\En$ output scope of $\Phi$; FM43]
-\label{thm:wave14-phi-scope}
-The CY-to-chiral functor
-$\Phi \colon \CY_d\text{-}\mathrm{Cat} \longrightarrow \En\text{-}\mathrm{ChirAlg}$
-has
+\begin{theorem}[Native $\En$-output scope of the two-stage $\Phi_d$]
+\label{thm:phi-native-en-scope}
+Let $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d \colon \CY_d\text{-}\mathrm{Cat}
+\longrightarrow \En\text{-}\mathrm{ChirAlg}(C)$ be the CY-to-chiral
+functor on a reference curve $C \subset X$ and closed
+$(d-1)$-cycle $\Sigma_{d-1} \subset X$. Its native operadic level
+is
 \[
-n \;=\; \begin{cases} 2 & d \le 2, \\ 1 & d \ge 3. \end{cases}
+n \;=\; \begin{cases} \infty & d = 1, \\ 2 & d = 2, \\
+1 & d \ge 3. \end{cases}
 \]
-At $d \le 2$ the native $\bS^2$-framing on
-$\HH_\bullet(\cC)$ supplies a genuine $\Etwo$-chiral structure
+At $d = 2$ the native $\bS^2$-framing on $\HH_\bullet(\cC)$
+supplies a genuine $\Etwo$-chiral structure
 (Kontsevich--Vlassopoulos; Theorem~\textup{CY-A$_2$}).
-At $d \ge 3$ the $E_d$-structure becomes symmetric
-($\pi_1(\Conf_2(\bR^d)) = \bZ/2$), and the functor output is
-natively $\Eone$-chiral; the braided monoidal structure is
-recovered \emph{categorically} via the Drinfeld centre, closing
-the $\En$ operadic circle on $Z^{\mathrm{der}}_{\mathrm{ch}}$
-rather than on~$\Phi(\cC)$.
+At $d \ge 3$ the $E_d$-structure on stage~1 becomes symmetric
+under stage-2 specialisation ($\pi_1(\Conf_2(\bR^d)) = \bZ/2$),
+and the functor output on~$C$ is natively $\Eone$-chiral; the
+braided monoidal structure is recovered \emph{categorically} via
+the Drinfeld centre, closing the $\En$ operadic circle on
+$Z^{\mathrm{der}}_{\mathrm{ch}}$ rather than on~$\Phi_d(\cC)$.
 \end{theorem}
 
 \begin{theorem}[$\kappa_{\mathrm{ch}}$ stratification by
- CY-dimension]\label{thm:wave14-kappa-stratification}
-For a compact Calabi--Yau manifold $X$ of dimension $d$,
-\begin{equation}\label{eq:wave14-kappa-hodge-supertrace}
-\kappa_{\mathrm{ch}}(\Phi(D^b\Coh(X)))
+ CY-dimension]\label{thm:phi-kappa-stratification}
+For a compact Calabi--Yau manifold $X$ of dimension $d$ and a
+reference curve $C \subset X$ with specialisation cycle
+$\Sigma_{d-1} \subset X$,
+\begin{equation}\label{eq:phi-kappa-hodge-supertrace}
+\kappa_{\mathrm{ch}}\bigl(\Phi_d(D^b\Coh(X))\bigr)
 \;=\; \sum_{q=0}^{d} (-1)^q h^{0,q}(X),
 \end{equation}
 the Hodge supertrace. The stratification across the canonical
@@ -1039,15 +1087,18 @@ a surface, so the local-surface formula is inapplicable.
 \end{proof}
 
 \begin{theorem}[Universal trace identity: $K = -c_{\mathrm{ghost}} =
- 2\,\kappa_{\mathrm{BKM}}$]\label{thm:wave14-universal-trace}
+ 2\,\kappa_{\mathrm{BKM}}$]\label{thm:phi-universal-trace}
 On the overlap of the Vol~I standard landscape and the Vol~III
 Borcherds-admissible locus (the Fricke-type paramodular locus
 $N \in \{1,2,3,4,6\}$), the Koszul conductor, the BRST ghost
-charge, and the Borcherds weight unify in a single identity:
-\begin{equation}\label{eq:wave14-universal-trace}
+charge, and the Borcherds weight of the specialisation
+$\SpCh_{\Sigma_2, C}\bigl(\Phi^{\mathrm{FA}}_3(\cC_{X})\bigr)$
+unify in a single identity:
+\begin{equation}\label{eq:phi-universal-trace}
 K(\cA) \;=\; -\,c_{\mathrm{ghost}}(\cA) \;=\; 2\,\kappa_{\mathrm{BKM}}(\Phi_N),
 \end{equation}
-where $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ is the
+where $\cA = \Phi_3(\cC_X)$ on the reference curve $C$ and
+$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ is the
 $\Phi_N$-leading Fourier coefficient of the Borcherds product
 defining~$\cA^!$.
 \end{theorem}
@@ -1067,29 +1118,42 @@ Monster module; complementarity $K = 24$ on the Leech shadow).
 \end{proof}
 
 \begin{remark}[$\kappa$ subscript conventions (all subscripts explicit)]
-\label{rem:wave14-hz7}
-Every $\kappa$ in this addendum carries an approved Vol~III
+\label{rem:phi-kappa-subscripts}
+Every $\kappa$ in this section carries an approved Vol~III
 subscript from the closed set $\{\mathrm{ch}, \mathrm{cat},
 \mathrm{BKM}, \mathrm{fiber}\}$. Bare $\kappa$ is
 forbidden in Vol~III. The identifications
 $\kappa_{\mathrm{ch}} \to \chi(\cO)$ (Hodge supertrace),
 $\kappa_{\mathrm{BKM}} \to c_N(0)/2$, and the bridge
 $K = -c_{\mathrm{ghost}} = 2\kappa_{\mathrm{BKM}}$ are the three
-precise uses in this section.
+precise uses here.
 \end{remark}
 
-\begin{remark}[Epistemic tags: $\Phi$ status]
-\label{rem:wave14-phi-status}
-$\Phi$ at $d=1$: trivial ($\Ainf = \mathrm{comm}$).
-$d=2$: \emph{proved}, Theorem~\textup{CY-A$_2$}, $\Etwo$-chiral
-output. $d=3$: \emph{proved},
-Theorem~\textup{CY-A$_3$}, $\infty$-categorical, $\Eone$-chiral
-output. $d=4$: obstructed by $\pi_4(BU) = \bZ$; the
+\begin{remark}[Status of $\Phi_d$ across CY dimensions]
+\label{rem:phi-status-dimensional}
+Stage~1 $\Phi^{\mathrm{FA}}_d$ is unconditional for $d \in \{1, 2, 3\}$
+by Kontsevich--Tamarkin $E_d$-formality applied to the Gerstenhaber
+bracket of degree $1 - d$ on $\HH^\bullet(\cC)$ together with
+Costello--Gwilliam--Li locality on~$X$. Stage~2
+$\SpCh_{\Sigma_{d-1}, C}$ is factorisation homology followed by
+curve restriction, well-defined for any closed $(d-1)$-cycle
+$\Sigma_{d-1}$ and reference curve $C \subset X$.
+$\Phi_d$ at $d = 1$: trivial ($\Ainf = \mathrm{comm}$).
+$d = 2$: proved (Theorem~\textup{CY-A$_2$}), $\Etwo$-chiral
+output. $d = 3$: proved (Theorem~\textup{CY-A$_3$},
+$\infty$-categorical), $\Eone$-chiral output on any reference
+curve~$C$; the family of specialisations
+$\{\SpCh_{\Sigma_2, C}(\Phi^{\mathrm{FA}}_3(\cC))\}_{\Sigma_2}$
+over choices of $K3$-, $T^4$-, or Enriques-fibres produces
+the Borcherds--$\Delta_5$, Igusa--$\chi_{10}$, and
+Gritsenko--Cl\'ery paramodular shadows respectively.
+$d = 4$: stage~1 obstructed by $\pi_4(BU) = \bZ$; the
 $p_1$-twisted double current algebra is proved where the
 Pontryagin obstruction vanishes (e.g.\ $K3 \times K3$); elsewhere
-conjectural. $d=5,6$: open; conjectural Hodge supertrace formula
-recovers $\kappa_{\mathrm{ch}} = 0$ for generic smooth CY.
-The unconditional range is $d \in \{1,2,3\}$; $d=4$ is family-conditional.
+conjectural. $d = 5, 6$: open; conjectural Hodge supertrace
+formula recovers $\kappa_{\mathrm{ch}} = 0$ for generic smooth CY.
+The unconditional range is $d \in \{1, 2, 3\}$; $d = 4$ is
+family-conditional.
 \end{remark}
 
 

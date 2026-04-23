@@ -9,6 +9,8 @@
 % Defended by \providecommand to keep this chapter portable under
 % standalone extraction.
 \providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
 
 Everything up to this point takes place at genus zero; but
 genus zero on a curve is not the same as ``over a point.''
@@ -2860,7 +2862,7 @@ Lemma~\ref{lem:hochschild-shift-computation}
 
 \begin{remark}[Genus as quantum number]
 \label{rem:genus-quantum}
-The genus $g$ organizes corrections: at genus~$0$ the bar differential satisfies~$d^{(0)2} = 0$ exactly (the Arnold relation ensures nilpotency on the curve; on the formal disk this recovers the classical statement), genus~$1$ produces central extensions, and genus $g \geq 2$ introduces modular structures.
+The genus $g$ organizes corrections: at genus~$0$ the bar differential satisfies~$d^{(0)2} = 0$ exactly (the Arnold relation ensures nilpotency on the curve; on the formal disk this recovers the classical statement), genus~$1$ produces central extensions, and genus $g \geq 2$ introduces Feynman-transform modular-operad structure (sense (iii) of T15: genus-raising $\Sigma_g \leadsto \Sigma_{g+1}$ via modular composition, not sense (ii) MTC).
 
 This parallels the loop expansion in quantum field theory:
 \begin{equation}
@@ -3973,10 +3975,10 @@ At genus~$0$, the bar differential satisfies $\dzero^2 = 0$ exactly,
 the propagator is the rational function $(z - w)^{-1}$, and there
 are no moduli. At genus~$1$, all three change: the propagator
 becomes the elliptic function $\theta_1'(z-w|\tau)/\theta_1(z-w|\tau)$,
-the modular parameter $\tau$ parametrizes a one-dimensional moduli
+the elliptic modulus $\tau \in \mathfrak H / \mathrm{SL}_2(\Z)$ parametrizes a one-dimensional moduli
 space, and the fiberwise differential acquires curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_1$ proportional to the central
 charge. This single step, from genus~$0$ to genus~$1$, is
-the birth of the modular theory.
+the birth of the programme's modular-Koszul theory (T15 sense (iii)).
 
 In the language of Remark~\ref{rem:nilpotence-periodicity}: at
 genus~$0$ the logarithm $\eta = d\log(z-w)$ is single-valued and
@@ -3986,10 +3988,10 @@ $B$-cycle (since
 $\theta_1(z + \tau|\tau) = -e^{-\pi i\tau - 2\pi i z}\,
 \theta_1(z|\tau)$), and this monodromy is the \emph{exponential} of
 the nilpotence defect~$\kappa\cdot\omega_1$. The birth of the
-modular theory is the birth of non-trivial monodromy of the
+modular-Koszul theory (T15 sense (iii)) is the birth of non-trivial monodromy of the
 categorical logarithm.
 
-\subsection{Elliptic curves and modular parameter}
+\subsection{Elliptic curves and elliptic modulus \texorpdfstring{$\tau$}{tau}}
 
 \begin{definition}[Elliptic curve \texorpdfstring{$E_\tau$}{E-tau}]
 \label{def:elliptic-curve-tau}
@@ -8719,7 +8721,13 @@ homology at all genera.
 \begin{remark}[Universal $\Phi$-trace identity binding Vol~I higher-genus to Vol~III]
 \label{rem:hgf-phi-trace-identity}
 The five pillars above admit a single cross-volume synthesis via the
-CY-to-chiral functor $\Phi$. On the higher-genus Vol~I side, the
+CY-to-chiral two-stage factorisation
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ of Vol~III, with
+stage~$1$ a canonical $E_d$-holomorphic factorisation algebra on the
+CY$_d$ variety (pinned by Kontsevich--Tamarkin $E_d$-formality and
+Costello--Gwilliam--Li locality) and stage~$2$ factorisation homology
+along a closed $(d-1)$-cycle $\Sigma_{d-1}$ followed by restriction to
+a reference curve $C$. On the higher-genus Vol~I side, the
 modular-Koszul supertrace of the bar-curvature class aggregates the
 all-genus data $\{\lambda_g\}_{g \geq 1}$ against the family $\kappa$-class:
 \[
@@ -8729,15 +8737,20 @@ all-genus data $\{\lambda_g\}_{g \geq 1}$ against the family $\kappa$-class:
 \in
 H^{\bullet}(\overline{\mathcal{M}}_{g,n}).
 \]
-On the Vol~III side, the Borcherds pushforward of the
+On the Vol~III side, for the $K3$-fibre specialisation of the
+canonical $E_3$-holomorphic factorisation algebra
+$\PhiFA_3(\cC_{K3 \times E})$, the Borcherds pushforward of the
 BKM $\kappa$-invariant over $K3 \times E$ gives
 \[
 \mathrm{push}_{K3 \times E}^{\mathrm{Borcherds}}\!\bigl(\kappa_{\mathrm{BKM}}\bigr)
 \;=\;
-\mathrm{STr}_{\mathrm{bar}}^{\mathrm{mod-Koszul}}\!\bigl(\Phi^{-1}(\mathcal{A})\bigr),
+\mathrm{STr}_{\mathrm{bar}}^{\mathrm{mod-Koszul}}\!\bigl(\Phi_3^{-1}(\mathcal{A})\bigr)
+\qquad
+\bigl(\mathcal{A} = \SpCh_{\Sigma_2, C}(\PhiFA_3(\cC_{K3 \times E}))\bigr),
 \]
-a single numerical-class identity that binds the higher-genus modular-Koszul
-trace (this chapter) to the BKM side of Vol~III via the functor $\Phi$.
+a single numerical-class identity that binds the higher-genus
+modular-Koszul trace (this chapter) to the BKM side of Vol~III via
+the stage-$2$ shadow of $\PhiFA_3$.
 This is the universal $\Phi$-trace identity: it states that the
 all-genus obstruction-tower aggregate on the chiral side is computed by
 the Borcherds pushforward on the CY side, with the Igusa cusp form

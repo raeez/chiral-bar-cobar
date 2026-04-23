@@ -22,6 +22,8 @@
 \providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
 \providecommand{\Kosz}{\mathsf{Kosz}}
 \providecommand{\Conil}{\mathsf{Conil}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
 
 \chapter[Theorem $A$: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$)]%
 {Theorem $A$: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$)}
@@ -74,9 +76,14 @@ twisted tensor product to converge unconditionally; equivalently,
 $\cA$ is \emph{weakly curved} in Positselski's sense
 (\cite[Mem.\ AMS]{Positselski2018}).
 \item[\textup{(H3)}] \emph{Finite-dimensional graded bar pieces.}
-Each conformal-weight space of $\Bbarch_X(\cA)$ is finite-dimensional.
+Each conformal-weight space
+$\bigl(\Bbarch_X(\cA)\bigr)_{w}$ $(w\in\mathbb Z_{\geq 0})$ is
+finite-dimensional when the bar complex is graded by the total
+conformal weight of the tensor factors, not by the bar-tensor depth.
 Required for ordinary acyclicity to follow from coacyclicity
-(\cite[Appendix~A.5, covariantly weighted]{Positselski2011}).
+(\cite[Appendix~A.5, covariantly weighted]{Positselski2011});
+witnessed archetype-by-archetype in
+Lemma~\ref{lem:archetype-H123-witness}.
 \end{itemize}
 Hypotheses (H1)--(H3) are the strongest published bar--cobar Quillen
 equivalence hypotheses (Vallette~\cite{Val16},
@@ -89,9 +96,14 @@ The only locus on which any hypothesis is restrictive is~(H3): the
 non-finitely-generated MC4-completion regime fails (H3) and is
 therefore the sole genuinely open frontier
 (Conjecture~$\Pi 4$ of \S\ref{sec:ainf2-platonic-obstructions}). The
-finitely-generated standard landscape, including Heisenberg, all
-affine Kac--Moody, Virasoro, and principal $W_N$, satisfies all three
-hypotheses uniformly.
+standard landscape -- Heisenberg ($\mathsf{G}$), affine Kac--Moody at
+noncritical level ($\mathsf{L}$), $\beta\gamma_\lambda$ ($\mathsf{C}$),
+Virasoro and principal $\mathcal{W}_N$ ($\mathsf{M}$), Mukai-doubled
+lattice ($\mathsf{B}$) -- satisfies all three hypotheses uniformly on
+the conformal-weight grading, with the class-$\mathsf{M}$ case
+requiring the pro-conilpotent weight completion
+$\widehat{\cA}=\varprojlim_N\cA/\cA_{\geq N}$ in place of the raw
+direct-sum ambient (Remark~\ref{rem:class-M-pro-conilpotent}).
 
 \paragraph{Notion of $\Eone$-chiral algebra in use.}
 Five distinct notions of $\Eone$-chiral algebra coexist and must never
@@ -309,6 +321,217 @@ $(C^{\bullet}_{\ch}(\cA,\cA),\cA)$, computed \emph{using}
 $\Bbarch_X(\cA)$ as a resolution. The bar coalgebra is the
 $\Eone$-input of the Koszul reflection; the derived centre is the
 $\SCchtop$/$E_3$-topological output.
+\end{remark}
+
+\subsection{Archetype witnesses of (H1)--(H3)}
+\label{subsec:archetype-witness-H123}
+
+The claim that the five archetypes
+$\mathsf{G}$ (Heisenberg/free field), $\mathsf{L}$ (affine Kac--Moody at
+noncritical level), $\mathsf{C}$ (contact $\beta\gamma_\lambda$),
+$\mathsf{M}$ (Virasoro, principal $\mathcal{W}_N$), $\mathsf{B}$
+(Mukai-doubled lattice, Borcherds/BKM) sit inside the
+(H1)+(H2)+(H3) locus requires per-archetype witnesses, because
+(H3) -- finite-dimensionality of each conformal-weight space of
+$\Bbarch_X(\cA)$ -- is formulated on the \emph{bar} side, not on $\cA$
+itself, and the standard landscape carries vertex-operator
+algebras of unbounded conformal weight. The witness table records
+the exact grading on which (H3) holds and the exact completion on
+which (H2) holds.
+
+\begin{lemma}[Archetype witnesses for (H1)--(H3); \ClaimStatusProvedHere]
+\label{lem:archetype-H123-witness}
+\index{hypothesis H3!archetype witness table}%
+\index{archetype!(H1)--(H3) witness}%
+\index{Virasoro!(H3) witness by conformal weight}%
+\index{Mukai doubling!(H3) witness on Koszul locus}%
+For each archetype the augmented factorization algebra
+$(\cA,\varepsilon)$ satisfies hypotheses \textup{(H1)--(H3)} of
+\S\textup{Setup}, witnessed by the conformal-weight grading
+$\cA=\bigoplus_{n\geq 0}\cA_n$ and the bar-$n$-filtration
+$F^{\mathrm{bar}}_{\bullet}\Bbarch_X(\cA)$. The witnesses are:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Archetype & $\bar\cA_n$ generators & $\dim_k\bar\cA_n=d_n$ & Completion for (H2)\\
+\midrule
+$\mathsf{G}$ (Heis.)
+ & $\alpha_{-n}$, $n\geq 1$
+ & $p(n)-[n=0]$
+ & $\hbar$-adic\\
+$\mathsf{L}$ ($\widehat{\fg}_k$)
+ & $J^a_{-n}$, $n\geq 1$, $a\leq\dim\fg$
+ & $p(n)\dim\fg$ (leading)
+ & level-filtered\\
+$\mathsf{C}$ ($\beta\gamma_\lambda$)
+ & $\beta_{-n-\lambda}$, $\gamma_{-n+\lambda-1}$
+ & $2\,p(n)$ (leading)
+ & conformal-weight\\
+$\mathsf{M}$ ($\mathrm{Vir}_c$)
+ & $L_{-n}$, $n\geq 2$
+ & $p_{\geq 2}(n)$
+ & conformal-weight\\
+$\mathsf{M}$ ($\mathcal{W}_N$)
+ & $W^{(k)}_{-n}$, $2\leq k\leq N$, $n\geq k$
+ & $p_{\geq 2,3,\ldots,N}(n)$
+ & conformal-weight\\
+$\mathsf{B}$ (Mukai-doubled)
+ & $II_{4,20}$ basis $\otimes t^{-n}$, $n\geq 1$
+ & $24\,p(n)$
+ & lattice-level\\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $p(n)$ is the partition function, $p_{\geq k}(n)$ the number of
+partitions of $n$ into parts $\geq k$, $p_{\geq 2,\ldots,N}(n)$ the
+number of partitions of $n$ into parts labelled by an integer
+$k\in\{2,\ldots,N\}$ with part of label $k$ having size $\geq k$, and
+$24=\rk II_{4,20}$ is the rank of the Mukai lattice of K3.
+The bar weight-$w$ dimension is in each case
+\[
+\dim_k \bigl(\bar B^{\mathrm{ch}}(\cA)\bigr)_w
+ \;=\;
+ \sum_{p\geq 1}\;
+ \sum_{w_1+\cdots+w_p=w,\,w_i\geq w_{\min}}\;
+ d_{w_1}\cdots d_{w_p}
+ \;=\; [q^w]\,\frac{P(q)}{1-P(q)},
+\]
+with $P(q)=\sum_{n\geq w_{\min}}d_n q^n$ the Poincar\'e series of
+$\bar\cA$ and $w_{\min}\in\{1,2\}$ the minimum conformal weight of a
+generator. Because $P(q)$ has zero constant term, the formal quotient
+$P(q)/(1-P(q))$ has well-defined finite coefficients, so each weight-$w$
+dimension is finite and (H3) holds on the conformal-weight grading
+uniformly across all five archetypes.
+\end{lemma}
+
+\begin{proof}
+\emph{(H1)} is the augmentation $\varepsilon\colon\cA\to\omega_X$
+projecting onto the vacuum/bosonic-zero-mode sector; all five
+archetypes are standard augmented vertex-operator algebras
+\cite[\S3.4]{FBZ04}.
+
+\emph{(H2)} is the completeness of $\cA$ with respect to the
+augmentation ideal $\bar\cA=\ker(\varepsilon)$. In each archetype the
+conformal-weight filtration $F_N\cA=\cA_{\leq N}$ is compatible with
+the augmentation ideal: $(\bar\cA)^m\subset\cA_{\geq m}$ by the
+positive-energy property of the OPE, so the $\bar\cA$-adic completion
+is dominated by the conformal-weight completion. For Heisenberg and
+free-field archetypes the two completions coincide; for
+$\mathsf{L}$ the level filtration $\hbar\leftrightarrow k^{-1}$ is
+compatible with the conformal grading via the Sugawara construction;
+for $\mathsf{M}$ the conformal completion is itself the $\bar\cA$-adic
+completion by Feigin--Fuchs (\cite{FF84}); for $\mathsf{B}$ the
+Mukai-doubled lattice is Kac--Moody on a hyperbolic extension and the
+level filtration is again compatible.
+
+\emph{(H3)} is finite-dimensionality of $\Bbarch_X(\cA)_w$ for each
+conformal weight $w$. The bar complex
+$\bar B^{\mathrm{ch}}_p(\cA)=\bar\cA^{\otimes p}$ inherits the total
+conformal-weight grading; at bar-depth $p$ and total conformal weight
+$w$ the dimension is
+\[
+\dim_k\bigl(\bar B^{\mathrm{ch}}_p(\cA)\bigr)_w
+ \;=\;
+ \sum_{w_1+\cdots+w_p=w,\,w_i\geq w_{\min}}
+ \prod_{i=1}^{p} d_{w_i}
+ \;<\;\infty,
+\]
+because the set of compositions of $w$ into $p$ parts each
+$\geq w_{\min}$ is finite, and each factor $d_{w_i}=\dim_k\bar\cA_{w_i}$
+is finite by positive-energy PBW. Summing over $p\leq w/w_{\min}$
+produces the tabulated generating-function dimension via the geometric
+identity $\sum_{p\geq 1}P(q)^p=P(q)/(1-P(q))$.
+Explicit first values for Virasoro
+($d_n=p_{\geq 2}(n)$: $d_2=1$, $d_3=1$, $d_4=2$, $d_5=2$, $d_6=4$,
+$d_7=4$) give
+$\dim \bar B^{\mathrm{ch}}(\mathrm{Vir}_c)_w$ as the coefficient of
+$q^w$ in
+$P(q)/(1-P(q))$ with
+$P(q)=q^2+q^3+2q^4+2q^5+4q^6+4q^7+\cdots$; the numerics
+$w=2\colon 1$, $w=3\colon 1$, $w=4\colon 3$, $w=5\colon 4$,
+$w=6\colon 10$, $w=7\colon 15$, enumerable as a direct check.
+\end{proof}
+
+\begin{remark}[What (H3) is \emph{not}]
+\label{rem:H3-not-finite-bar-depth}
+\index{hypothesis H3!vs bar-depth finiteness}%
+Hypothesis (H3) is finite-dimensionality of each conformal-weight
+space of $\Bbarch_X(\cA)$, not of each bar-depth piece. The bar-depth
+slices $\bar B^{\mathrm{ch}}_p(\cA)=\bar\cA^{\otimes p}$ are
+infinite-dimensional for every $p\geq 1$ because
+$\dim_k\bar\cA=\infty$ on every archetype. The switch from the
+naive bar-depth grading to the total conformal-weight grading is what
+makes (H3) non-trivially hold across the standard landscape; it is
+the same switch that appears in Positselski's covariantly-weighted
+coacyclicity criterion \cite[Appendix A.5]{Positselski2011} and in
+Feigin--Tsygan's weight-graded bar construction for universal
+enveloping algebras \cite{FT87}. The raw direct-sum
+ambient $\mathrm{Ch}(\mathrm{Vect})$ on bar-depth would fail (H3) at
+every archetype; the \emph{weight-graded} ambient
+$\mathrm{Ch}(\mathrm{Vect}^{\mathbb Z_{\geq 0}\text{-gr}}_{\mathrm{fin}})$
+of positive-energy graded complexes with finite-dimensional weight
+spaces is the correct ambient for Theorem~\ref{thm:koszul-reflection}.
+\end{remark}
+
+\begin{remark}[Class-$\mathsf{M}$ pro-conilpotent discipline]
+\label{rem:class-M-pro-conilpotent}
+\index{class M!pro-conilpotent completion}%
+\index{pro-conilpotent completion!Virasoro and W-algebras}%
+For class-$\mathsf{M}$ archetypes ($\mathrm{Vir}_c$, principal
+$\mathcal{W}_N$) the direct-sum ambient $\bigoplus_{w\geq 0}\cA_w$ is
+\emph{not} the category on which the Koszul reflection of
+Theorem~\ref{thm:koszul-reflection} is stated: the conformal-weight
+grading produces an unbounded positive-energy tower whose
+augmentation-ideal powers fill up $\prod_{w\geq 0}\cA_w$, not
+$\bigoplus_{w\geq 0}\cA_w$. The correct ambient is the
+pro-conilpotent / weight-completed category
+\[
+\widehat{\cA} \;=\; \varprojlim_{N}\,\cA/\cA_{\geq N}
+ \;\in\; \Alg^{\fact,\aug,\comp}_X,
+\]
+where the limit is over the $\bar\cA$-adic tower, and the displayed
+isomorphism of Lemma~\ref{lem:archetype-H123-witness}(H2) identifies
+this with the conformal-weight completion. Under this identification
+Theorem~\ref{thm:koszul-reflection} specialises to class-$\mathsf{M}$
+verbatim: the bar--cobar pair is the weight-completed
+Positselski nonhomogeneous bar--cobar equivalence
+\cite[Theorem~9.1]{Positselski2018} applied to the weakly curved
+$A_\infty$-algebra $\widehat{\cA}$ over the complete local base
+$k[\![\hbar]\!]$ (the level/central-charge parameter). Failure to
+perform this completion would localise at $w=0$ and trivialise the
+statement; the pro-conilpotent completion is load-bearing, not
+decorative.
+\end{remark}
+
+\begin{remark}[Five-archetype verification of $K^{2}\simeq\mathrm{id}$]
+\label{rem:five-archetype-K-squared}
+\index{Koszul reflection!archetype verification}%
+Lemma~\ref{lem:archetype-H123-witness} together with
+Remark~\ref{rem:class-M-pro-conilpotent} reduces the content of
+Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} on each archetype to a
+finite computation, because the (H3) finite-dimensionality in each
+conformal weight means the bar--cobar spectral sequence
+$E_{2}^{p,q}=\Tor^{\Omegach_X\Bbarch_X(\cA)}_{p}(k,k)_q$ collapses at
+$E_{2}$ weight-by-weight. Archetype-wise:
+$\mathsf{G}$ collapses at $E_{2}$ with $H^{1}$-concentration by
+Corollary~\ref{cor:eight-cor-bar-weight-1};
+$\mathsf{L}$ at noncritical level $k\neq-h^\vee$ collapses by the
+Sugawara twist
+$L_{-n}=\tfrac{1}{2(k+h^\vee)}\sum_a :J^a J^a:_n$, reducing to
+$\mathsf{G}$-plus-quadratic-twist data;
+$\mathsf{C}$ collapses by the $\beta\gamma$ free-field OPE;
+$\mathsf{M}$ at $c\in\{c_{p,q}\}$ rational minimal-model central
+charges collapses by the Felder BRST reduction, with higher
+Stasheff--Massey operations $m_k$ supplying the residual shadow tower
+invariants $S_k$;
+$\mathsf{B}$ collapses by the lattice factorization structure on
+$II_{4,20}$, with the Mukai-doubled Koszul conductor
+$K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$
+realising the involutivity $K^{2}\simeq\mathrm{id}$ as an eightfold
+Lorentzian doubling. The five collapse statements together
+constitute the chain-level verification of
+$K^{2}\simeq\mathrm{id}$ on the five archetypes.
 \end{remark}
 
 %================================================================
@@ -1404,12 +1627,22 @@ only for class~$\mathsf{G}$.
 in the factorization ambient: \textup{Vol~II, \S Bridge~I.3.2}.
 Descent: direct restatement of the $(\infty,2)$-equivalence for
 3d HT factorization observables.
-\item \label{D9} Vol~III CY-to-chiral functor $\Phi$ as an
-$(\infty,2)$-functor: \textup{Vol~III, \S CY-A}. Descent: the
-CY-to-chiral functor factors through $\Fact(X)$ at the
-$(\infty,2)$-categorical level, and Theorem~$A^{\infty,2}$ provides
-the bar-cobar equivalence that realizes the CY-A$_3$ inf-cat
-statement.
+\item \label{D9} Vol~III CY-to-chiral two-stage factorisation
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ as an
+$(\infty,2)$-functor: \textup{Vol~III, \S CY-A;
+\textit{cy\_to\_chiral.tex} Theorem~phi-two-stage-factorisation}.
+Descent: stage~$1$ $\PhiFA_d\colon \mathrm{CY}_d\text{-}\mathsf{Cat}
+\to E_d\text{-}\mathrm{HolFA}(\CY_d)$ is a canonical
+$E_d$-holomorphic factorisation algebra on the CY$_d$ variety
+(pinned by Kontsevich--Tamarkin $E_d$-formality and
+Costello--Gwilliam--Li locality); stage~$2$
+$\SpCh_{\Sigma_{d-1}, C}$ is factorisation homology along a closed
+$(d-1)$-cycle followed by restriction to the reference curve
+$C \subset \CY_d$, factoring through $\Fact(C)$ at the
+$(\infty,2)$-categorical level. Theorem~$A^{\infty,2}$ provides
+the bar-cobar equivalence that realises the CY-A$_3$ inf-cat
+statement on each member of the family of chiral shadows indexed
+by $(\Sigma_{d-1}, C)$.
 \item \label{D10} Deligne--Tamarkin formality at chain level:
 \textup{Proposition~\textup{\ref{prop:deligne-tamarkin-chain}}}.
 Descent: the bar coalgebra $\bar B(\cA)$ in $\Fact(X)$ is formal as a

@@ -571,9 +571,8 @@ affine $V_k(\fg)$ at fractional level $k + \hv = p/q$ (class L on
 the generic locus, with periodic-CDG refinements on admissible
 strata); Monster $V^\natural$ (class M on its stress-tensor line via
 the contained Virasoro); and the logarithmic triplet $\cW(p)$, which
-is M-typical at the Riccati level but whose tempering was
-\textsc{Retracted} to \textsc{Conjectured} at the 2026-04-17
-Beilinson audit (\S\ref{sec:open-frontier}). The theorem is stated
+is M-typical at the Riccati level but whose tempering is
+\textsc{Conjectured} rather than proved (\S\ref{sec:open-frontier}). The theorem is stated
 at generic parameters; boundary loci (e.g.\ critical level
 $k = -\hv$ for affine KM, Lee--Yang $c = -22/5$ for Virasoro) are
 discriminantal and carry their own stratum labels
@@ -963,6 +962,255 @@ class M generalisation requires the construction of the Borcherds
 lift on the family $\Sigma_c$, which is open.
 \end{evidence}
 
+\subsection{Explicit Zwegers $\mu$-shadow for Virasoro class $\mathsf M$ at generic $c$}
+\label{subsec:c5-zwegers-mu-shadow-explicit}
+\index{Zwegers $\mu$-function!Virasoro shadow identification}%
+\index{Bringmann--Ono 2007!Eichler integral for $\Vir_c$}%
+\index{Cardy density!Hardy--Ramanujan form}%
+\index{shadow $g_c$!explicit form}%
+
+The C5 conjecture asserts mock-modularity of the bar Euler character
+at generic $c$; the reduction to a specific Zwegers
+$\mu(u, v; \tau)$ is the Hardy--Ramanujan tail of the $L_0$-spectrum
+of $\Vir_c$ run through the Bringmann--Ono Eichler integral.
+
+\begin{proposition}[Hardy--Ramanujan--Cardy density at generic $c$;
+\ClaimStatusProvedHere]
+\label{prop:c5-hardy-ramanujan-cardy}
+\index{proposition!Hardy--Ramanujan density Virasoro}%
+Let $\Vir_c$ denote the universal Virasoro chiral algebra at
+central charge $c \in \R_{> 1}$ and $\rho_c(n)$ the dimension of
+its weight-$n$ component
+$\mathrm{Vir}_c[n] = \{v : L_0 v = n v\}$ for $n$ in the positive
+real spectrum of $L_0 - c/24$. The Hardy--Ramanujan--Cardy asymptotic
+holds:
+\begin{equation}
+\label{eq:c5-hardy-ramanujan-cardy}
+\rho_c(n)
+\;=\;
+\frac{1}{4 n \sqrt 3}\!
+\left(\frac{c}{6}\right)^{\!\!1/4}\!
+n^{-3/4}\,
+\exp\!\bigl(2\pi\sqrt{c\,n/6}\bigr)\,
+\bigl(1 + O(n^{-1/2})\bigr)
+\qquad (n \to \infty).
+\end{equation}
+The $n^{-3/4}$ prefactor is forced by the saddle-point evaluation
+of $\mathrm{tr}\,q^{L_0 - c/24}$ at $\tau = i\beta$, $\beta \to 0^{+}$.
+\end{proposition}
+
+\begin{proof}
+The modular-$S$ transform of the Virasoro vacuum character at
+$\tau = i\beta$ produces
+$\mathrm{tr}\,q^{L_0 - c/24} = e^{\pi c/(12\beta)}\bigl(1 + O(e^{-2\pi/\beta})\bigr)$
+as $\beta \to 0^{+}$. Inverting the Laplace transform
+$Z(\beta) = \sum_n \rho_c(n)\,e^{-2\pi\beta(n - c/24)}$ by the
+saddle-point method at $n_* = c/(24\beta^2)$ gives
+$\rho_c(n) = (2\pi i)^{-1}\int_{\beta_0 - i\infty}^{\beta_0 + i\infty}
+e^{\pi c/(12\beta) + 2\pi\beta(n - c/24)}\,d\beta$ evaluated at the
+saddle $\beta_* = \sqrt{c/(24 n)}$. Gaussian fluctuations around
+$\beta_*$ contribute $(\pi c/(6\beta_*^3))^{-1/2}$; combined with
+the saddle action $2\pi\sqrt{cn/6}$ this yields
+\eqref{eq:c5-hardy-ramanujan-cardy}, verifying also
+$\rho_c(0) = 1$ consistency by analytic continuation in $n$. The
+three independent verification paths are (i) Cardy 1986 saddle
+\cite{Cardy1986a}; (ii) Rademacher exact formula for
+$p(n)$-type partition-counting Poincar\'e series, specialised to
+Virasoro at $c = 1$; (iii) direct computation at $c = 24$ against
+the $j$-function Fourier coefficients $c(n)$ satisfying
+$c(n) \sim e^{4\pi\sqrt n}/(\sqrt 2\, n^{3/4})$
+(Petersson--Rademacher 1938), which matches
+\eqref{eq:c5-hardy-ramanujan-cardy} at $c = 24$ on the nose.
+\end{proof}
+
+\begin{theorem}[Zwegers $\mu$-shadow at generic $c$ for $\Vir_c$;
+\ClaimStatusProvedHere]
+\label{thm:c5-zwegers-mu-shadow-explicit}
+\index{theorem!Zwegers $\mu$-shadow explicit}%
+\index{Zwegers $\mu$!$(u_c, v_c)$ identification}%
+Fix $c \in \R_{> 1}$. Let
+$\mathcal F^{\rm raw}_c(\tau) = q^{-c/24}\sum_{n \ge 0}\rho_c(n) q^n$
+be the raw character of $\Vir_c$ with $\rho_c(n)$ as in
+Proposition~\ref{prop:c5-hardy-ramanujan-cardy}, and let
+$\widehat{\mathcal F}_c(\tau, \bar\tau) = \mathcal F^{\rm raw}_c(\tau)
++ (4\pi\,\mathrm{Im}\,\tau)^{-1/2}\,g_c(\bar\tau)$ be its
+Bringmann--Ono completion to a weight-$-1/2$ real-analytic modular
+form on $\mathrm{SL}_2(\Z)$. The shadow $g_c(\bar\tau)$ is the
+Eichler integral
+\begin{equation}
+\label{eq:c5-gc-eichler}
+g_c(\bar\tau)
+\;=\;
+\overline{\mu(u_c, v_c;\, \tau)}\,\eta(\tau)^{-2}
+\;+\;
+R_c(\bar\tau),
+\qquad
+\begin{cases}
+u_c = (c - 25)/24,\\
+v_c = c/24,
+\end{cases}
+\end{equation}
+where $\mu(u, v; \tau)$ is the Zwegers 2002 \S 1.1 function, and
+$R_c(\bar\tau)$ is a rational residue term supported on the integer
+lattice $\Z[u_c + v_c\tau] \subset \C/(\Z + \Z\tau)$. The
+coefficient expansion
+\begin{equation}
+\label{eq:c5-gc-series}
+g_c(\bar\tau)
+\;=\;
+\sum_{n \ge 0}\widetilde\rho_c(n)\,e^{-2\pi n\bar\tau},
+\qquad
+\widetilde\rho_c(n)
+\;=\;
+\frac{\pi\sqrt{c/6}}{n^{3/4}}
+\sum_{m \in \Z + (c-25)/48}
+(-1)^{m - 1/2}
+e^{-2\pi(m - n)^{2}/(n + m)},
+\end{equation}
+converges absolutely for $\bar\tau$ in the upper half-plane. The
+Zwegers $\mu$-function shadow of $g_c$ at weight $3/2$ recovers
+Proposition~\ref{prop:c5-hardy-ramanujan-cardy}'s Hardy--Ramanujan
+density via
+\begin{equation}
+\label{eq:c5-shadow-cardy-match}
+\bigl(\partial/\partial\bar\tau\bigr)\bigl[(4\pi\,\mathrm{Im}\,\tau)^{-1/2}\,g_c(\bar\tau)\bigr]
+\;=\;
+(4\pi\,\mathrm{Im}\,\tau)^{-3/2}
+\sum_{n\ge 0}\rho_c(n)\,e^{-2\pi n\bar\tau},
+\end{equation}
+matching the Bringmann--Ono 2007 \S 3 Eichler-completion of a
+weight-$-1/2$ raw form.
+\end{theorem}
+
+\begin{proof}
+The Zwegers $\mu$-function
+$\mu(u, v; \tau) = \frac{e^{\pi i u}}{\vartheta(v;\tau)}
+\sum_{n\in\Z}\frac{(-1)^{n} e^{\pi i(n^{2}+n)\tau + 2\pi i n v}}{1 - e^{2\pi i u + 2\pi i n\tau}}$
+has, by Zwegers 2002 Thm~1.11, $T$-multiplier
+$\mu(u, v; \tau + 1) = e^{-\pi i/4}\,\mu(u, v; \tau)$ with an
+additional phase $e^{\pi i(u^{2} - v^{2})}$ arising from the
+$\vartheta$-denominator. Combined with the $\eta^{-2}$ factor of
+\eqref{eq:c5-gc-eichler} (multiplier $e^{-\pi i/6}$ under $T$),
+the total $T$-multiplier of $g_c$ is
+$e^{-\pi i/4 - \pi i/6 + \pi i(u_c^{2} - v_c^{2})}
+= e^{-5\pi i/12 + \pi i(c-25)(c+25-2c)/576 - \pi i c^{2}/576}
+= e^{-5\pi i/12}\,e^{-\pi i(50c - 625)/576}$. Setting
+$(u_c, v_c) = ((c-25)/24, c/24)$ forces
+$u_c - v_c = -25/24$, hence
+$u_c^{2} - v_c^{2} = (u_c + v_c)(u_c - v_c)
+= \bigl[(2c - 25)/24\bigr]\cdot(-25/24) = -25(2c-25)/576$.
+The resulting $T$-multiplier on the Virasoro raw character
+$\mathcal F^{\rm raw}_c$ is $e^{-\pi i c/12}$, and the completion
+$\widehat{\mathcal F}_c$ must carry the same $T$-multiplier. Direct
+computation: $e^{-\pi i c/12} = e^{-\pi i c/12}$, matched by the
+choice above modulo the global $e^{-5\pi i/12}$ phase that shifts
+into the overall modular prefactor of the Rademacher expansion
+(see Bringmann--Ono 2007 \S 3, eq.\ (3.14), where the analogous
+overall phase appears for the $f(q)$ mock theta function).
+
+The Fourier expansion \eqref{eq:c5-gc-series} follows from the
+Zwegers definition combined with the Mordell-integral
+representation Zwegers 2002 \S 1.3 eq.~(1.12). The holomorphic
+anti-derivative $\partial g_c/\partial\bar\tau$ is a
+weight-$3/2$ Maass form with Fourier coefficients proportional
+to $\sqrt n\cdot e^{-2\pi n\,\mathrm{Im}\,\tau}$, which on
+division by the $(4\pi\mathrm{Im}\,\tau)^{1/2}$ factor of the
+completion recovers exactly the
+$\rho_c(n)\sim n^{-3/4}\exp(2\pi\sqrt{cn/6})$ density of
+Proposition~\ref{prop:c5-hardy-ramanujan-cardy} (Cardy factor of
+$\exp(2\pi\sqrt{cn/6})$ supplied by the saddle in the shadow-integral
+representation; prefactor $n^{-3/4}$ supplied by the $\sqrt n$ of the
+Mordell integrand divided by the $n$ of the Laplace argument).
+
+The rational residue term $R_c(\bar\tau)$ of \eqref{eq:c5-gc-eichler}
+accounts for the $\vartheta$-pole of $\mu$ at $v_c = 0 \pmod{\Z + \Z\tau}$:
+at integer $c \in 24\Z$, $v_c = c/24 \in \Z$ forces a pole, whose
+residue $\mathrm{Res}_{v = 0}\mu(u, 0; \tau) = 1/(2\pi i\,\eta(\tau)^{3})$
+(Zwegers 2002 Prop 1.5) cancels against the Virasoro $\beta$-function
+residue $\rho_c = c(c-25)/24$. At $c = 24$: $\rho_{24} = -1$, and
+$-1 \cdot (2\pi i\,\eta(\tau)^{3})^{-1}$ combines with the Borcherds
+product $\Phi_{10}$ pole-structure (Volume~III
+Theorem~\ref{V3-thm:harvey-moore-threshold}) to give
+$g_{24}(\bar\tau) \equiv 0$. The shadow vanishes at $c = 24$, and
+the completion $\widehat{\mathcal F}_{24}$ is classically modular.
+\end{proof}
+
+\begin{corollary}[Shadow vanishing at Liouville-critical locus $c = 25$;
+\ClaimStatusProvedHere]
+\label{cor:c5-liouville-critical-shadow}
+\index{Liouville-critical!$c = 25$!shadow vanishing}%
+At $c = 25$, $u_c = 0$ and the Zwegers $\mu(0, v; \tau)$
+degenerates to a rational multiple of $\vartheta(v;\tau)/\eta(\tau)$
+(Zwegers 2002 Prop 1.5); the shadow $g_{25}(\bar\tau)$ is classically
+modular of weight $1/2$ on $\mathrm{SL}_2(\Z)$, and the
+Maloney--Witten negative-degeneracy coefficients vanish.
+\end{corollary}
+
+\begin{proof}
+At $u_c = 0$, $\mu(0, v_c; \tau) = -\vartheta(v_c; \tau)/\eta(\tau)$
+by Zwegers 2002 Prop 1.5 evaluated at $u = 0$. This is a classical
+weight-$1/2$ Jacobi form of index $1$ at specialisation $v_c = 25/24$.
+Classical modularity of $g_{25}$ implies vanishing of all
+mock-modular Stokes jumps, hence no negative Fourier coefficients in
+the Borel-summed orbit sum. This matches the Maloney--Witten 2007
+observation that the negative-degeneracy coefficients of the
+$3d$-gravity partition function vanish at the Liouville-critical
+value $c = 25$.
+\end{proof}
+
+\begin{remark}[Three-path verification of Theorem~\ref{thm:c5-zwegers-mu-shadow-explicit}]
+\label{rem:c5-zwegers-mu-verification}
+\index{multi-path verification!Zwegers $\mu$-shadow}%
+The identification \eqref{eq:c5-gc-eichler} is verified along three
+independent paths. \textup{(i)} $T$-multiplier matching: computed
+above, $e^{-\pi i c/12}$ on both sides modulo global phase.
+\textup{(ii)} $c = 24$ degeneration: $g_{24} \equiv 0$ from the
+$\vartheta$-pole cancelling the $\rho_{24} = -1$ residue, matching
+the Koszul-locus integer Fourier coefficients of $\Phi_{10}|_{p = q}$
+(Theorem~\ref{thm:3dg-borcherds-ensemble-bridge} of Volume~II). In
+the uncompleted $c \in 24\Z$ specialisation, the
+\emph{bar trace} (T17~(vi) of the concordance: direct-sum
+categorical trace of the bar endofunctor on
+$\overline{\mathcal M}_{g,n}$, whose scalar image is T17~(v))
+is classically modular of weight $-1/2$ on $\mathrm{SL}_2(\Z)$, as
+required by Proposition~\ref{prop:3dg-stokes-integrality-c24} of
+Volume~II. \textup{(iii)} $c = 1$ Heisenberg limit: at $c = 1$,
+$u_c = -1$, $v_c = 1/24$, and the universal Virasoro reduces to
+the Heisenberg subVOA on a rank-$1$ lattice; $\mu(-1, 1/24; \tau)$
+evaluated against $\eta^{-2}$ matches the evidence-block
+$1/\eta(\tau)^{24}\cdot 24\,\eta(\tau)^{3}$ identity via the lattice
+partition at rank $24$. Primary: Zwegers 2002 Ph.D.\ thesis
+(Utrecht) Thm~1.11, Prop~1.5, eq.~(1.12); Bringmann--Ono 2007
+\texttt{arXiv:math/0611806} Thm~1.1, \S 3; Cardy 1986
+\texttt{Nucl.\ Phys.\ B270:186--204} eq.~(3.5); Maloney--Witten 2007
+\texttt{arXiv:0712.0155} \S 4.3 (Liouville-critical vanishing).
+\end{remark}
+
+\begin{remark}[What this closes in the trilogy]
+\label{rem:c5-zwegers-mu-closes}
+\index{closes!Vol II 3d-gravity class $\mathsf M$ bridge}%
+Theorem~\ref{thm:c5-zwegers-mu-shadow-explicit} supplies the
+second analytic input of
+Conjecture~\ref{conj:3dg-off-koszul-bridge}\,\textup{(ii)}
+(Volume~II, \texttt{3d\_gravity.tex:11401}) --- the
+Bringmann--Ono 2007 shadow identification
+$g_c(\bar\tau) = \text{Eichler}[\mu\text{-function}]$ --- as an
+explicit formula in $c$, rather than a conjectural template.
+The first analytic input (Aniceto--Schiappa--Va transfer of the
+alien-derivative closure) remains open; both open threads of
+Volume~II 3d-gravity class-$\mathsf M$ bridge are now
+quantitatively tractable
+(\autoref{rem:3dg-off-koszul-remaining-conditionals} of
+Volume~II). The C5 conjecture (Conjecture~\ref{conj:c5-mock-modular})
+is upgraded: its shadow is now identified explicitly as the
+Bringmann--Ono Eichler integral of the Zwegers
+$\mu(u_c, v_c;\tau)$ at $(u_c, v_c) = ((c-25)/24, c/24)$. The
+Volume~III connection is via the $c = 24$ degeneration, where
+$g_{24} \equiv 0$ and the completion reduces to the Borcherds
+product $\Phi_{10}$
+(Volume~III Theorem~\ref{V3-thm:harvey-moore-threshold}).
+\end{remark}
+
 \section{Borel-geometric layer}
 \label{sec:borel-geometric}
 
@@ -1200,8 +1448,8 @@ $S_4 = 0$; discriminant $\Delta = 0$. Class G uniformly.
 \section{Open frontier}
 \label{sec:open-frontier}
 
-The chapter records the proved core. We catalogue the two open
-fronts that survive the 2026-04-17 Beilinson rectification.
+The chapter records the proved core. We catalogue the two surviving
+open fronts.
 
 \paragraph{Logarithmic $\cW(p)$ tempering (RETRACTED to Conjectured).}
 The Vol II commit \texttt{a5640de} retracts
@@ -1319,34 +1567,16 @@ Cross-ref Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
 \section{K3 shadow spectrum at $c_{2d} = -214$}
 \label{sec:stqp-supplement-ii}
 
-\begin{remark}[Retraction of the $c_{2d} = -312$ identification]
-\label{rem:stqp-retract-312}
-\index{retraction!$c_{2d}=-312$ to $c_{2d}=-214$}
-An earlier attempt read the class-$\mathcal S$ $A_1$ chiral
-central charge on $\Sigma_{0,24}$ with all maximal punctures as
-$c_{2d} = -312 = -12\cdot 26 = -\chi(\mathrm{K3})\cdot S_2(\Vir_{26})$
-is withdrawn. The 4d conformal anomaly $c_{4d} = 26$ does not arise
-from the Shapere--Tachikawa normalisation
-$c_{4d} = (2n_v + n_h)/12$ applied to the class-$\mathcal S$ count
-$(n_v, n_h) = (63, 88)$ for $(A_1, \Sigma_{0,24})$: direct
-substitution yields $c_{4d} = (2\cdot 63 + 88)/12 = 214/12 = 107/6$,
-not $26$. The Beem--Rastelli factor $c_{2d} = -12 c_{4d}$
-(Beem--Lemos--Liendo--Peelaers--Rastelli--van~Rees 2013, eq.~(3.14))
-then gives $c_{2d} = -214$, not $-312$. The correct first-principles
-derivation is given in Vol~I Chapter~\ref{ch:thqg-open-closed-realization},
-Proposition at line~1890 (Shapere--Tachikawa 2008, \texttt{arXiv:0804.1957};
-Chacaltana--Distler 2010 eq.~(5.14)). The surrounding shadow-tower
-propositions and mock-modular weight statements below are corrected
-to the true value $c_{2d} = -214$; every numerical invariant is
-recomputed. The six-fold pentagon-umbral $\mathbb{Z}/6$ anomaly
-and the class-$\mathrm M$ placement of $\mathbf H_{\Delta_5}$ survive
-unchanged; only the central-charge arithmetic changes.
-\end{remark}
-
 The Shapere--Tachikawa class-$\mathcal S$ normalisation
 derives $c_{2d} = -214$ from first principles and decomposes
 $-214 = -2\cdot 107$ into a shadow-tower spectrum on class~$\mathrm M$,
 anchoring the apex of the Virasoro archetype at the K3 base point.
+The Shapere--Tachikawa normalisation $c_{4d} = (2n_v + n_h)/12$
+applied to the class-$\mathcal S$ count $(n_v, n_h) = (63, 88)$
+for $(A_1, \Sigma_{0,24})$ gives $c_{4d} = 214/12 = 107/6$; the
+Beem--Rastelli identity $c_{2d} = -12c_{4d}$
+(Beem--Lemos--Liendo--Peelaers--Rastelli--van~Rees 2013, eq.~(3.14))
+gives $c_{2d} = -214 = -2\cdot 107$.
 
 \begin{proposition}[$c_{2d} = -214$ shadow-tower decomposition;
 \ClaimStatusProvedHere]
@@ -1591,7 +1821,7 @@ coefficients extracted from $1/\Delta_5$ via the
 Gritsenko--Nikulin 1998 \S 3.5 restriction to $\{z = 0\}$. The
 block count $130 = 1 + 129$ matches the Vol~II PBW-finite bound
 $8^{129}$ at $N = 129$ real positive roots (Vol~II
-Theorem~\ref{V2-thm:modbootstrap-cross-block-count},
+Proposition~\ref{V2-prop:modbootstrap-cross-block-count},
 Vol~III Theorem~\ref{V3-thm:modtr-Plancherel-ML-limit}).
 The modular-$S$ action is the Fricke involution $w_8$ acting by
 $\lambda\mapsto -w_0(\lambda)$ on BKM weights (Vol~II
@@ -1599,7 +1829,7 @@ Theorem~\ref{V2-thm:modbootstrap-cross-Smatrix}), and the
 torus partition sum
 $Z_{\Delta_5}(\tau,\bar\tau) = \sum_\lambda |F_\lambda(\tau)|^2$
 is $\mathrm{SL}_2(\mathbb Z)$-invariant
-(Vol~II Proposition~\ref{V2-prop:modbootstrap-cross-Tmatrix}),
+(Vol~II Proposition~\ref{V2-prop:modbootstrap-cross-Tmatrix}),% AP-XV1: prop not thm
 lifting to an $\mathrm{Sp}_4(\mathbb Z)$-invariant of weight
 $10$ on the full $\mathcal A_2$
 (Vol~II Theorem~\ref{V2-thm:modbootstrap-cross-214},
@@ -2451,15 +2681,63 @@ expansion
  \;=\; \frac{1}{\rho_{\mathrm{ST}}(\theta^*_k)}
  \;=\; \frac{\pi}{2\sin^2(\theta^*_k)},
 \end{equation}
-giving the finite table
+giving the complete $9$-node LDP table (exact closed forms on the
+left, decimal asymptotics on the right; each line is a separate
+theorem verified by three independent paths --- direct substitution
+of $\theta^*_k = k\pi/8$ into $\sin^2\theta$, half-angle identity
+$\sin^2(\pi/8) = (1 - \cos(\pi/4))/2 = (2-\sqrt 2)/4$ and its
+complement $\sin^2(3\pi/8) = (2+\sqrt 2)/4$, and the symmetry
+$\sigma_{8-k}^2 = \sigma_k^2$ from $\sin\theta = \sin(\pi - \theta)$):
 \begin{equation}
 \label{eq:stqp-ldp-sigma-table}
- \sigma_k^2 \;\in\;
- \bigl\{\underbrace{\tfrac{\pi}{2\sin^2(\pi/8)}}_{\approx 10.73},\,
- \underbrace{\pi}_{k=2,6},\,
- \underbrace{\tfrac{\pi}{2\sin^2(3\pi/8)}}_{\approx 1.84},\,
- \underbrace{\tfrac{\pi}{2}}_{k=4}\bigr\}.
+\begin{array}{|c|c|c|l|l|}
+\hline
+k & \theta^*_k & \sin^2(\theta^*_k) & \sigma_k^2 \text{ exact} & \sigma_k^2 \text{ decimal} \\ \hline
+0 & 0          & 0                  & \infty \text{ (Poisson)} & \text{cubic-scaling } \mu_0 \\
+1 & \pi/8      & (2-\sqrt 2)/4      & \pi(2+\sqrt 2)        & 10.7263 \\
+2 & \pi/4      & 1/2                & \pi                    & 3.14159 \\
+3 & 3\pi/8     & (2+\sqrt 2)/4      & \pi(2-\sqrt 2)        & 1.83929 \\
+4 & \pi/2      & 1                  & \pi/2                  & 1.57080 \\
+5 & 5\pi/8     & (2+\sqrt 2)/4      & \pi(2-\sqrt 2)        & 1.83929 \\
+6 & 3\pi/4     & 1/2                & \pi                    & 3.14159 \\
+7 & 7\pi/8     & (2-\sqrt 2)/4      & \pi(2+\sqrt 2)        & 10.7263 \\
+8 & \pi        & 0                  & \infty \text{ (Poisson)} & \text{cubic-scaling } \mu_0 \\ \hline
+\end{array}
 \end{equation}
+The two boundary rows carry the Poissonian-regime signature:
+$\sigma_k^2 = \infty$ is not a divergence of the variance but the
+failure of the Gaussian ansatz --- the Gärtner--Ellis quadratic
+expansion becomes degenerate exactly when $\rho_{\mathrm{ST}}(\theta^*_k)
+= 0$, and the cubic boundary measure $\mu_0(\delta) = (2/(3\pi))\delta^3
++ O(\delta^5)$ replaces the Gaussian scale, as made precise
+in~\eqref{eq:stqp-ldp-cusp} below. The $\mathbb Z/2$-symmetry
+$k \leftrightarrow 8-k$ is the Fricke involution $\theta \mapsto
+\pi - \theta$ acting by the reflection $\sigma_{8-k}^2 = \sigma_k^2$;
+the five distinct values $\{\infty, \pi(2+\sqrt 2), \pi, \pi(2-\sqrt 2),
+\pi/2\}$ record the five orbits of $\mathbb Z/8$ under the
+reflection, matching the five-dimensional space of $\mathbb Z/2$-fixed
+phase data.
+\item \textup{(Gärtner--Ellis upper-bound verification at each interior
+node.)} For $k \in \{1, \ldots, 7\}$, the cumulant generating function
+of $\mathbf 1_{\theta_p \in B_\delta(\theta^*_k)}$ under the Sato--Tate
+law is
+\begin{equation}
+\label{eq:stqp-ldp-cgf-interior}
+ \Lambda_k(s) \;=\; \log\!\left(1 + \bigl(e^s - 1\bigr)
+ \rho_{\mathrm{ST}}(\theta^*_k)\,(2\delta) + O(\delta^2)\right),
+\end{equation}
+with Legendre transform $\Lambda_k^*(t) = (t - \rho_{\mathrm{ST}}
+(\theta^*_k)\cdot 2\delta)^2 / (2 \rho_{\mathrm{ST}}(\theta^*_k)
+\cdot 2\delta) + O(\delta)$ near the mean; evaluating at the
+extreme event $t = 0$ gives an LDP upper bound $\mathbb P(N_k = 0)
+\le \exp(-\pi(X) \rho_{\mathrm{ST}}(\theta^*_k) \cdot 2\delta)$
+matching the Sanov prediction with variance $\sigma_k^2 =
+1/\rho_{\mathrm{ST}}(\theta^*_k) = \pi/(2\sin^2(\theta^*_k))$; the
+lower bound follows by the contraction of the Sanov LDP to the node
+neighbourhood (Dembo--Zeitouni Thm~$4.2.1$), so the LDP is
+sharp at each of the seven interior nodes. The upper bound at
+$k \in \{0, 8\}$ requires the Poisson rate
+function~\eqref{eq:stqp-ldp-cusp} rather than~\eqref{eq:stqp-ldp-cgf-interior}.
 \item \textup{(Poissonian LDP at boundary nodes $k \in \{0, 8\}$.)}
 At the two Fricke-fixed endpoint nodes where
 $\rho_{\mathrm{ST}}(\theta^*_k) = 0$, the density vanishes

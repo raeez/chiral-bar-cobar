@@ -104,7 +104,7 @@ At $n = 24$: $p_{24}(12) = \chi(\mathrm{Hilb}^{12}(\mathrm{K3})) = 10{,}914{,}31
 
 ## Arithmetic anchors
 
-- **Pseudo-character $S^{\mathrm{ps}}$** (W20.4): 4-dim on paramodular Hecke algebra $\mathbb T^{\mathrm{par}}_1$; $S^{\mathrm{ps}}_1(T_p) = \lambda_p = a_p(f_{16}) + p^8 + p^9$; $S^{\mathrm{ps}}_4(T_p, T_p, T_p, T_p) = p^{32}$; verified on 22 primes $p \le 79$.
+- **Pseudo-character $S^{\mathrm{ps}}$** (W20.4) -- $\perp$ retracted per canonical preamble: the programme-canonical object is the Chenevier 2014 determinant $D^{\mathrm{Chen}}$ (see Pattern 295 / W25 in `notes/first_principles_cache_comprehensive.md`; Vol I `chapters/theory/derived_langlands.tex` Remark `rem:dl-w25-determinant-not-pseudocharacter`). Rename $S^{\mathrm{ps}}\to D^{\mathrm{Chen}}$; axioms shift from Taylor--Wiles symmetric-polarisation triple to Chenevier 2014 arXiv:1301.0635 \S1.2 polynomial law. The numerical content below is preserved (the polarisations of $D^{\mathrm{Chen}}$ recover the Taylor--Wiles tuple on the reduced ring $\mathbb T^{\mathrm{par}}_1$, Chenevier 2014 Thm.~2.12): 4-dim on paramodular Hecke algebra $\mathbb T^{\mathrm{par}}_1$; $S^{\mathrm{ps}}_1(T_p) = \lambda_p = a_p(f_{16}) + p^8 + p^9$; $S^{\mathrm{ps}}_4(T_p, T_p, T_p, T_p) = p^{32}$; verified on 22 primes $p \le 79$.
 - **Hecke $a_p$**: continued through $p = 109$ via $E_4 \cdot \Delta$ convolution.
 - **Siegel weight ladder** (W20.5, W21.9): $k_N^{\mathrm{honest}} = N + 3$, $k_N^{\mathrm{spin}} = (N + 3)/2$, continuous through $N \in \{2, 3, 4, 5, 6, 7, 8\}$ with Niemeier labellings $24A_1, 12A_2, 8A_3, 6A_4, A_5^4 D_4, 4A_6, 2A_7 D_5^2$; first genuine failure at $N = 24$ (Conway-moonshine escape to $\Lambda_{24}$).
 

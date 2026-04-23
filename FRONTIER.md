@@ -1,5 +1,47 @@
 # FRONTIER — The Complete Research Programme (Vol I)
 
+## DEFINITIVE STATUS AS OF 2026-04-22 (Waves 11-19 synthesis, Vol I lens)
+
+This section supersedes the 2026-04-19 text below wherever the two disagree; the 2026-04-19 section and all prior status are preserved in full. The Vol~III synthesis of 2026-04-22 (see `adversarial_swarm_20260416/PLATONIC_MANIFESTO_UPGRADE_20260422.md` and the sister Vol~II / Vol~III manifestos) propagates into Vol~I through five structural readings, detailed below.
+
+### The Koszul Reflection as Stage 1 of $\Phi$ (theorem, reading)
+
+The Vol~III two-stage factorisation $\Phi_d = \mathrm{Sp}_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d$ reads on the Vol~I internal ChirAlg: the Koszul Reflection $A \mapsto A^!$ realises Stage 1 $\Phi^{\mathrm{FA}}_d$ on the subcategory of Vol~I CY-decorated chiral algebras. Where Vol~I takes a chiral algebra $A$ to its Koszul dual $A^!$ and reads both as objects of an $(\infty,2)$-properad, Vol~III reads the same construction as the canonical Kontsevich-Tamarkin $E_d$-formality output on the holomorphic factor of a CY target, before specialisation. Stage 2 $\mathrm{Sp}_{\Sigma_{d-1}, C}$ is the $(\Sigma_{d-1}, C)$-specialisation that picks a single $E_1$-chiral shadow of the Stage-1 factorisation algebra on the fixed curve $C$ Vol~I always works on. Consequently the Vol~I standard landscape $\mathsf{G} / \mathsf{L} / \mathsf{C} / \mathsf{M} / \mathsf{B}$ is five canonical Stage-2 specialisations: the Stage-1 factorisation algebra is a single object, and the five rows are five curves / slicings of the same CY Stage-1 source. The $\mathsf{B}$-row $K^{\kappa_{\mathrm{ch}}} = 8$ is the Mukai-enhanced K3 Heisenberg Stage-2 witness.
+
+### The BRST ghost identity as the ghost-scope reading of the three-factor trace (theorem, reading)
+
+The Vol~III three-factor Universal Trace Identity
+\[ \mathrm{tr}_{\mathrm{ghost}}(Q_{\mathrm{BRST}}^2) \;=\; \mathrm{tr}_{\mathrm{Pentagon}} \;=\; \omega_{\mathrm{Borcherds}} \;=\; c_N(0)/2 \]
+(verified at $N \in \{1,2,3,4,6\}$, giving $\{5,4,3,2,2\}$) upgrades the Vol~I Universal Trace Identity $K = -c_{\mathrm{ghost}}(\mathrm{BRST})$ from a two-factor to a three-factor identity. The ghost trace sits on the left as a theorem about $Q_{\mathrm{BRST}}^2$ on the Vol~I BRST complex; the Pentagon trace (Vol~II) sits in the middle as the single-colour coherence trace of the $E_3$-algebra underlying 3D holomorphic-topological QFT at $d=3$; the Borcherds weight (Vol~III) sits on the right. The Vol~I reading of the identity is the leftmost factor; its equality with the rightmost factor is the Vol~I ghost-scope reading of the full identity.
+
+### The Universal Trace Identity is three-factor (theorem)
+
+The prior two-factor form $K = -c_{\mathrm{ghost}}(\mathrm{BRST}) = \omega_{\mathrm{Borcherds}}$ is now a corollary. The full identity has three synchronised factors across the three volumes; each volume carries its own independent chain-level / $(\infty,1)$-categorical witness; all three agree at every verified row.
+
+### Conductor face B-row upgraded (theorem, reading)
+
+On the $\mathcal{B}$-family slot of Theorem~C, the quantum complementarity carries the Humbert-$H_1$ monodromy identity $K^{\kappa_{\mathrm{ch}}} = 2c_+ = 8 = \mathrm{ord}(H_1)$ with $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$. This is the Vol~I reading of the $d=3$ Mukai-enhanced K3 Heisenberg Bruinier Heegner Chern-class reciprocity; Wave-13 fixed it numerically, the 2026-04-22 synthesis relocates it under the two-stage factorisation as the $(\Sigma_2, C) = (H_1, E)$-specialisation of the Stage-1 factorisation algebra on K3 $\times$ E.
+
+### Nine retractions, Vol~I inheritance (retractions, labelled)
+
+Of the nine Vol~III retractions, four carry direct Vol~I content:
+1. $\widehat{\mathfrak{sl}_3}$ Gaiotto-shadow \emph{retracted}; the true structure is the $F_3$ Feingold-Frenkel real-root subalgebra of $\mathfrak{g}_{\Delta_5}$. Vol~I cross-volume references to $\widehat{\mathfrak{sl}_3}$ as Gaiotto-shadow stay; the anchor name changes at cross-volume citation.
+2. $L_{-6}(\mathfrak{e}_8)$ for $V_{24}$ \emph{retracted}; Vol~I affine-KM lane reads the Vol~III $V_{24}$ via iterated Drinfeld-Sokolov reduction $V_{24} = H^0_{\mathrm{DS}}(L_{-2+1/22}(\mathfrak{sl}_2)^{\otimes 22})$.
+3. "$\Phi$ natively produces $E_n$-chiral on curve" \emph{retracted}; Vol~I $(\infty,2)$-properad formulation of Theorem A is the Stage-1 side; Vol~I's curve-level bar-cobar is the Stage-2 specialisation target. Vol~III's two-stage factorisation pins which parts of Vol~I are canonical (Stage 1) versus specialisation-dependent (Stage 2).
+4. Uniform $H^3$-vanishing \emph{retracted}; Vol~I Hochschild-concentration Theorem~H retains chain-level class-independent status, but the Vol~III class-dependent $H^3$ reading (2A carries $\mathbb{Z}/2$, 2B carries $\mathbb{Z}/4$) constrains the 3D-HT holography downstream of Theorem~H.
+
+The remaining five retractions (Gritsenko Fourier coefficient decomposition, Fake Monster dimension, $V_{24}$ character identity, Gaiotto curve punctures, shifted-symplectic $d=5$ row) are Vol~III-internal and carry no Vol~I-load-bearing witness.
+
+### Cross-volume three-tier reading of the seven faces (reading)
+
+The Vol~III three-tier hierarchy on the seven faces of $r_{\mathrm{CY}}$ sorts Vol~I's own Theorem~C five-row $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$ landscape: the sub-Sugawara $\kappa + \kappa^!$ data is a Stage-1 invariant (CY-datum intrinsic / Stage-1 invariant, independent of $(\Sigma_2, C)$); the BRST ghost trace is a Stage-1 invariant; the Borcherds-specialisation face ($\mathsf{B}$-row $K^{\kappa_{\mathrm{ch}}}=8$) is a $(\Sigma_2, C)$-specialisation invariant. The $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ rows, being Stage-1, are curve-independent; the $\mathsf{B}$-row is curve-specialisation-dependent, and its numerics are the first-principles source of the $(\Sigma_2, C) = (H_1, E)$ specialisation witness.
+
+### Programme totals (cross-volume)
+
+The Waves 11-19 synthesis keeps Vol~I's totals ($\sim$177K tests and $\sim$4,186 engines across the three volumes) and folds the two-stage factorisation, the three-factor trace, and the four inherited retractions into the running status. No Vol~I theorem label is deleted; every cross-volume K3 / BKM reference now reads against the 2026-04-22 spine and the 2026-04-19 Wave-13 retractions.
+
+---
+
 ## DEFINITIVE STATUS AS OF 2026-04-19 (Beilinson-rectified, Wave-13-propagated)
 
 This supersedes every prior status line in this document. Sections marked "Prior status" and "F1-F36" below are HISTORICAL RECORD of the 2026-04-07 through 2026-04-14 session state; every closure and qualifier in this top section takes precedence. The authoritative audit that forced these updates is `notes/rectification_map_beilinson_audit.md` (926 lines, inscribed 2026-04-17). Wave 13 additionally imports the Vol III K3 / $\Delta_5$ architecture from `../calabi-yau-quantum-groups/notes/k3_nonabelian_yangian_swarm_wave13_20260419/SYNTHESIS_WAVE13.md` and `../calabi-yau-quantum-groups/chapters/examples/k3_chiral_bialgebra_platonic.tex`: the BKM-side object is the K3 chiral Hall–Drinfeld double, not a plain Yangian.

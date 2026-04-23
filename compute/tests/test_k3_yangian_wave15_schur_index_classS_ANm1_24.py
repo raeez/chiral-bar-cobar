@@ -481,6 +481,7 @@ def test_wave19_rank_deficit_formula(N, deficit):
     (7,  "4 A_6",        True),
     (8,  "2 A_7 D_5^2",  False),
     (9,  "3 A_8",        True),
+    (10, "2 A_9 D_6",    False),
     (12, "A_11 D_7 E_6", False),
     (13, "2 A_12",       True),
     (25, "A_24",         True),
@@ -503,6 +504,7 @@ def test_wave19_umbral_anchor_niemeier(N, niemeier, naive_valid):
     (7,  "SL_2(3)", 24),
     (8,  "Z/2",     2),
     (9,  "Dih_4",   8),
+    (10, "Z/2",     2),
     (12, "1",       1),
     (13, "Z/4",     4),
     (25, "Z/2",     2),
@@ -748,3 +750,140 @@ def test_wave19_fourier_coefficient_linear_extended():
         assert f0 == 2 * (N + 3)
         assert f0 % 2 == 0
         assert f0 // 2 == N + 3
+
+
+# -- (K) WAVE 21.9 EXTENDED LADDER N in {9, 10, 11, 12} --------------------
+#
+# Theorem walgdeep-N9-N12-re-anchor in chapters/examples/w_algebras_deep.tex:
+#   N = 9:  naive    3 A_8         umbral Dih_4    k_9  = 12
+#   N = 10: sub      2 A_9 D_6     umbral Z/2      k_10 = 13
+#   N = 11: void     none          none            k_11 = 14 (Coxeter void)
+#   N = 12: sub      A_11 D_7 E_6  umbral trivial  k_12 = 15
+#
+# The first genuine Coxeter-void inside the non-Leech range is N = 11:
+# h(A_10) = 11 is the only solution of h(simple Lie algebra) = 11, and
+# 10 does not divide 24.
+
+from compute.lib.k3_yangian_wave15_schur_index_classS_ANm1_24 import (
+    wave21_9_coxeter_void_slots,
+    wave21_9_is_coxeter_void,
+)
+
+
+def test_wave21_9_coxeter_void_at_h11():
+    """Wave 21.9 headline: no Niemeier has common Coxeter number h = 11.
+    The Cartan-Killing classification admits h = 11 only via h(A_10),
+    and 10 does not divide 24 (so no pure-A Niemeier); D_n forces
+    2n - 2 = 11 which fails integrality; E_6/E_7/E_8 have h in {12,18,30}.
+    """
+    # h = 11 slot is empty in the Niemeier Coxeter table.
+    from compute.lib.k3_yangian_wave15_schur_index_classS_ANm1_24 import (
+        niemeiers_at_coxeter_slot,
+    )
+    assert niemeiers_at_coxeter_slot(11) == []
+    # Adjacent slots do exist:
+    assert len(niemeiers_at_coxeter_slot(10)) >= 1  # 2 A_9 D_6 or 4 D_6.
+    assert len(niemeiers_at_coxeter_slot(12)) >= 1  # A_11 D_7 E_6 or 4 E_6.
+
+
+def test_wave21_9_N11_is_coxeter_void_N24_is_not():
+    """Wave 21.9: N = 11 is Coxeter-void; N = 24 is NOT (Leech escape)."""
+    assert wave21_9_is_coxeter_void(11) is True
+    # N = 24 escapes via Leech; not classified as Coxeter-void here.
+    assert wave21_9_is_coxeter_void(24) is False
+    # Valid naive slots are not void.
+    for N in (2, 3, 4, 5, 7, 9, 13, 25):
+        assert wave21_9_is_coxeter_void(N) is False
+
+
+def test_wave21_9_coxeter_void_slot_list():
+    """The complete list of Coxeter-void slots in [2, 25] is
+    {11, 15, 17, 19, 20, 21, 23}: each N where h(A_{N-1}) = N is
+    absent from the Niemeier Coxeter spectrum {2,3,4,5,6,7,8,9,10,
+    12,13,14,16,18,22,25,30,46} and N != 24.
+    """
+    assert wave21_9_coxeter_void_slots() == (11, 15, 17, 19, 20, 21, 23)
+
+
+def test_wave21_9_N10_substitute_anchor_2A9_D6():
+    """Wave 21.9: N = 10 substitute anchor is 2 A_9 D_6 with umbral Z/2.
+    Rank deficit 24 - 2*9 = 6 is absorbed by a single D_6 summand
+    (rank 6, h(D_6) = 10). Uniqueness: the only Niemeier at h = 10
+    containing A_9 summand."""
+    from compute.lib.k3_yangian_wave15_schur_index_classS_ANm1_24 import (
+        wave19_umbral_anchor,
+        wave19_niemeier_root_system,
+        wave19_umbral_group,
+    )
+    rec = wave19_umbral_anchor(10)
+    assert rec["niemeier_root_system"] == "2 A_9 D_6"
+    assert rec["coxeter_h"] == 10
+    assert rec["umbral_group"] == "Z/2"
+    assert rec["umbral_order"] == 2
+    assert rec["naive_valid"] is False
+    assert rec["rank_deficit"] == 6
+    assert wave19_niemeier_root_system(10) == "2 A_9 D_6"
+    assert wave19_umbral_group(10) == "Z/2"
+
+
+def test_wave21_9_siegel_weight_at_N11_without_anchor():
+    """Wave 21.9: at N = 11 the Siegel weight k_11 = 14 (honest) = 7
+    (spin) is set by the Jacobi-form input f^{(11)}(0, 0) = 28 via
+    Borcherds 1998 Theorem 13.3, independent of any Niemeier anchor
+    (which does not exist at h = 11). The ladder k_N = N + 3
+    continues through the Coxeter-void slot without gap."""
+    assert constant_fourier_coefficient(11) == 28
+    assert borcherds_weight(11, honest=True) == Fraction(14)
+    assert borcherds_weight(11, honest=False) == Fraction(7)
+    assert siegel_weight(11, spin=False) == Fraction(14)
+    assert siegel_weight(11, spin=True) == Fraction(7)
+    assert gritsenko_weight(11) == Fraction(7)
+
+
+def test_wave21_9_extended_ladder_N9_to_N12_continuity():
+    """Wave 21.9: (k_9, k_10, k_11, k_12)^honest = (12, 13, 14, 15)
+    forms an arithmetic progression of common difference 1, uniformly
+    across the four regimes (naive, substitute, void, substitute)."""
+    expected = [(9, 12), (10, 13), (11, 14), (12, 15)]
+    for (N, kN_hon) in expected:
+        assert siegel_weight(N, spin=False) == Fraction(kN_hon)
+        assert constant_fourier_coefficient(N) == 2 * kN_hon
+    # Finite-difference check.
+    for i in range(1, len(expected)):
+        N_prev, k_prev = expected[i - 1]
+        N_this, k_this = expected[i]
+        assert N_this - N_prev == 1
+        assert k_this - k_prev == 1
+
+
+@pytest.mark.parametrize("N,expected_void", [
+    (9, False),    # naive, (N-1)=8|24.
+    (10, False),   # substitute, Niemeier 2 A_9 D_6 exists at h = 10.
+    (11, True),    # Coxeter void: h = 11 absent from Niemeier spectrum.
+    (12, False),   # substitute, Niemeier A_11 D_7 E_6 exists at h = 12.
+])
+def test_wave21_9_void_classification_N9_to_N12(N, expected_void):
+    """Wave 21.9: classify each N in {9, 10, 11, 12} as naive /
+    substitute / Coxeter-void according to the three-regime theorem."""
+    assert wave21_9_is_coxeter_void(N) is expected_void
+
+
+def test_wave21_9_three_path_coxeter_void_N11():
+    """Wave 21.9 three verification paths for the N = 11 Coxeter void:
+    Path 1: no root system has Coxeter number 11 matching the rank
+            constraint k*10 = 24 (arithmetic).
+    Path 2: niemeiers_at_coxeter_slot(11) returns [] (exhaustive
+            inspection of Niemeier 1973 / SPLAG Tab. 16.1).
+    Path 3: wave21_9_is_coxeter_void(11) returns True (composite
+            diagnostic combining the above).
+    """
+    from compute.lib.k3_yangian_wave15_schur_index_classS_ANm1_24 import (
+        niemeiers_at_coxeter_slot,
+        naive_labelling_valid,
+    )
+    # Path 1: naive invalid at N = 11 (10 does not divide 24).
+    assert naive_labelling_valid(11) is False
+    # Path 2: empty Niemeier slot at h = 11.
+    assert niemeiers_at_coxeter_slot(11) == []
+    # Path 3: composite diagnostic.
+    assert wave21_9_is_coxeter_void(11) is True

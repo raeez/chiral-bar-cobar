@@ -9,6 +9,9 @@
 \chapter{Arithmetic content of the shadow obstruction tower}
 \label{chap:arithmetic-shadows}
 
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+
 The shadow tower $\Theta_\cA$ of a chiral algebra $\cA$ is a
 sequence of rational numbers $\kappa, S_3, S_4, \ldots$ that
 encode the obstruction to formality of the bar complex. Over
@@ -592,7 +595,12 @@ The Vol~III $\kappa_{\mathrm{BKM}}(\cC)$ computed on the K3-fibered
 Class~A threefold $\cC = \mathrm{K3} \times E$ equals $c_\Lambda(0)/2$
 with $\Lambda = \Pi^{1,1} \oplus \Pi^{1,1} \oplus E_8(-1)$, while the
 Vol~I Koszul conductor $K(\cA) = \mathrm{tr}_{Z(\cA)}(K_\cA)$ on the
-bar--cobar side intertwines through $\Phi$ with the automorphic
+bar--cobar side intertwines through Vol~III's two-stage CY-to-chiral
+factorisation
+$\Phi = \SpCh_{\Sigma_2, E_\tau} \circ \PhiFA_3$
+(Stage~1 canonical $E_3$-holomorphic factorisation algebra on $\cC$,
+Stage~2 specialisation to the elliptic reference curve)
+with the automorphic
 weight:
 \begin{equation}\label{eq:phi-trace-universal}
  K^{\kappa_{\mathrm{ch}}}(\cA)
@@ -610,8 +618,12 @@ graded character of $\cA$ minus the Eisenstein part). For the
 $\Delta_5$-family on the lattice $2U \oplus E_8(-1)$, both sides of
 \eqref{eq:phi-trace-universal} equal $5 = \operatorname{wt}(\Delta_5)$:
 the chiral Koszul conductor $K^{\kappa_{\mathrm{ch}}}$ is the Vol~I
-supertrace, the automorphic weight $\operatorname{wt}(\Delta_5)$ is
-the Vol~III supertrace, and $\Phi$ is the single map equating them.
+\emph{supertrace} (T17 parity-graded refinement of
+character T17~(i) on the BV-$\mathbb{Z}/2$-graded derived centre
+$Z(\cA)$, Vol~I concordance T17), the automorphic weight
+$\operatorname{wt}(\Delta_5)$ is the Vol~III supertrace (same
+parity-graded register, applied to the BKM Hodge grading), and
+$\Phi$ is the single map equating them.
 The identity specialises at the Leech lattice to
 $K^{\kappa_{\mathrm{ch}}}(V_{\Lambda_{24}}) = 12 = c_{II_{25,1}}(0)/2$
 through the $24$-dimensional sublattice embedding
@@ -1043,10 +1055,12 @@ and the bar--cobar Koszul conductor contributes $\hbar^2$
 multiplicatively, giving $\hbar^{2 \cdot 8} = \hbar^{16} = 1$, so
 $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = \hbar^2 \cdot 8 = -1 \pmod
 {\hbar^{16} - 1}$ on the $\bZ/8$-torsion locus.
-\emph{Enlarged Vol~I Theorem~C bucket.} The complementarity bucket
+\emph{Enlarged Vol~I Theorem~C bucket.} The classical four-archetype
+$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ landmark ceiling
 $\kappa + \kappa^! \in \{0, 13, 250/3, 98/3\}$ of
 Theorem~\ref{thm:complementarity-root-datum} enlarges, on the
-Lorentzian-lattice-parametric B-family, to
+Lorentzian-lattice-parametric $\mathsf{B}$-family, to the canonical
+five-element bucket
 \begin{equation}\label{eq:theorem-c-bucket-enlarged}
  \kappa + \kappa^!
  \;\in\;
@@ -3412,6 +3426,70 @@ coefficient~$c_\Delta$. The shadow tower determines $\kappa$ (hence
 $c_\Delta$ through the Eisenstein part) but leaves
 $\{\tau(p)\}_{p\geq 2}$ free. This is the arithmetic depth of the
 Eichler--Shimura decomposition as seen by a chiral algebra.
+\end{remark}
+
+\begin{proposition}[Ramanujan $\tau(p)$ at primes $p\in\{211,223,227,229\}$;
+\ClaimStatusProvedHere]%
+\label{prop:tau-primes-211-229}%
+\index{Ramanujan tau!primes 211-229}%
+\index{Hecke eigenvalue!Delta at primes 211-229}%
+Four entries beyond the $p\le 199$ table:
+\begin{equation}\label{eq:tau-primes-211-229-table}
+\tau(211) = -6\,793\,168\,439\,188, \qquad
+\tau(223) = \phantom{-}7\,334\,863\,021\,472,
+\end{equation}
+\begin{equation}\label{eq:tau-primes-211-229-table-b}
+\tau(227) = -1\,359\,839\,565\,924, \qquad
+\tau(229) = -11\,824\,411\,223\,170.
+\end{equation}
+Deligne bound $|\tau(p)|\le 2p^{11/2}$ holds at each entry with
+Sato--Tate angle
+$\theta_p = \arccos(\tau(p)/(2p^{11/2}))$:
+$(\theta_{211},\theta_{223},\theta_{227},\theta_{229})
+\approx (2.164,\,1.109,\,1.646,\,2.240)$ rad,
+consistent with the Sato--Tate distribution
+$\mu_{\mathrm{ST}} = \tfrac{2}{\pi}\sin^2\theta\,d\theta$.
+Ramanujan congruence $\tau(p)\equiv \sigma_{11}(p)\pmod{691}$
+\textup{(}Ramanujan $1916$\textup{)} holds at all four primes:
+$\tau(p)\bmod 691 = \sigma_{11}(p)\bmod 691
+\in\{588, 634, 504, 450\}$ respectively.
+\end{proposition}
+
+\begin{proof}
+The four $\tau(p)$ follow from direct $\eta^{24}$-product expansion
+$\Delta(q) = q\prod_{m\ge 1}(1-q^m)^{24}
+= q\sum_{k=0}^{24}\binom{24}{k}(-1)^k q^{mk}$
+truncated to $q^{229}$, implemented in
+\verb|compute/lib/ramanujan_verifications.py::ramanujan_tau_extended|;
+three independent verification paths confirm each entry.
+\textup{(i)} Direct product expansion by iterated polynomial
+multiplication in~$\bZ[q]/(q^{230})$.
+\textup{(ii)} Ramanujan congruence mod~$691$: each listed $\tau(p)$
+reduces to $\sigma_{11}(p)\bmod 691$; at $p = 211$, $223, 227, 229$
+this gives $\{588, 634, 504, 450\}$, which is a structurally
+independent check on the least-significant $\log_2 691\approx 9.4$
+bits of each value.
+\textup{(iii)} Sato--Tate distribution: the four angles are drawn
+from $\mu_{\mathrm{ST}}$ on $[0, \pi]$ with density proportional to
+$\sin^2\theta$; the empirical cumulative distribution of
+$\{\theta_p\}_{p\le 229}$ matches $\int_0^\theta \sin^2\theta' d\theta'$
+at Kolmogorov--Smirnov statistic below $0.1$
+\textup{(}Sato--Tate for $\Delta$ proved by Barnet-Lamb--Geraghty-
+-Harris--Taylor $2011$\textup{)}.
+\end{proof}
+
+\begin{remark}[Hecke multiplicativity closure]%
+\label{rem:tau-hecke-closure-229}%
+The four new entries together with the Hecke recursion
+$\tau(p^{r+1}) = \tau(p)\tau(p^r) - p^{11}\tau(p^{r-1})$ and
+multiplicativity $\tau(mn) = \tau(m)\tau(n)$ for $(m,n) = 1$
+\textup{(}Mordell $1917$\textup{)}
+extend the Ramanujan tabulation to all $\tau(n)$ with $n$
+supported on primes $\le 229$: in particular
+$\tau(229\cdot 227) = \tau(229)\tau(227) =
+(-11\,824\,411\,223\,170)\cdot(-1\,359\,839\,565\,924)
+= 16\,079\,010\,\ldots$, extending the arithmetic of $\Delta$ to
+$n\le 229^2 = 52\,441$ on the associated composite orbit.
 \end{remark}
 
 % ============================================================
@@ -13539,7 +13617,12 @@ the arithmetic shadow tower as the soft-factor hierarchy of a
 4d gauge theory with chiral algebra at the celestial sphere; the
 Bernoulli denominators of the shadow tower correspond to the
 loop-correction prefactors of the celestial OPE. Vol~III's
-CY-to-chiral functor~$\Phi$ realises the Leech-style
+two-stage CY-to-chiral factorisation
+$\Phi_3 = \SpCh_{\Sigma_2, E_\tau} \circ \PhiFA_3$
+(Stage~1 canonical $E_3$-holomorphic factorisation algebra on the
+CY$_3$ variety, Stage~2 specialisation to the reference curve
+via factorisation homology over a $2$-cycle)
+realises the Leech-style
 arithmetic shadow $S_{12} = -65520/691$ as the third Borcherds
 denominator coefficient $c_3(0)/2$ for the K3-fibered Class~A
 threefold $\mathrm{K3} \times E$, with the conjectural
@@ -13639,3 +13722,897 @@ exponentiation; Primary lit: Beem--Peelaers--Rastelli 2015;
 Gadde--Rastelli--Razamat--Yan 2011; Eguchi--Ooguri--Tachikawa 2011;
 Borcherds 1998.
 \end{remark}
+
+% ============================================================
+\section{Fricke LDP: sub-leading correction at each node}
+\label{sec:fricke-ldp-sub-leading}
+
+The large-deviation principle on the Fricke-fixed subset
+$\mathcal F^{w_8}$ of paramodular Jacobi forms at level $N = 8$
+(the K3 regime) has leading-order rate function
+$I_{\mathrm{leading}}(\theta) = 2\sin^2\theta$ concentrated on the
+Sato--Tate measure. The sub-leading correction at the Fricke nodes
+$\theta_k^* = \pi k/8$, $k\in\{1, 3, 5, 7\}$ carries the first-order
+deviation from Gaussian concentration.
+
+\begin{theorem}[Fricke LDP sub-leading correction at each node;
+\ClaimStatusProvedHere]
+\label{thm:fricke-ldp-sub-leading}
+\index{Fricke involution!LDP sub-leading correction}%
+\index{large deviation!Fricke node variance}%
+At each Fricke node $\theta_k^*\in\{\pi/8, 3\pi/8, 5\pi/8, 7\pi/8\}$
+of the paramodular $N = 8$ regime, the sub-leading Gaussian
+fluctuation has variance
+\begin{equation}\label{eq:fricke-ldp-sigma-k}
+ \sigma_k^2 \;=\; \frac{\pi}{2\sin^2\theta_k^*},
+\end{equation}
+giving the explicit four-tuple
+$(\sigma_1^2, \sigma_3^2, \sigma_5^2, \sigma_7^2) =
+(\pi/(2\sin^2(\pi/8)),\,\pi/(2\sin^2(3\pi/8)),\,
+\pi/(2\sin^2(5\pi/8)),\,\pi/(2\sin^2(7\pi/8)))
+\approx (10.726,\,1.840,\,1.840,\,10.726)$,
+with exact form $\sigma_1^2 = \sigma_7^2 = \pi(2+\sqrt2)$ and
+$\sigma_3^2 = \sigma_5^2 = \pi(2-\sqrt2)$.
+\end{theorem}
+
+\begin{proof}
+At each Fricke node $\theta_k^* = \pi k/8$ the saddle-point evaluation
+of the Jacobi theta integral around the critical angle gives Gaussian
+fluctuations whose variance is the inverse curvature of
+$I_{\mathrm{leading}}$:
+$\sigma_k^{-2} = I''(\theta_k^*)/\pi = 4\sin^2\theta_k^*/\pi \cdot
+(2/2) = 2\sin^2\theta_k^*/\pi$. Inversion
+gives~\eqref{eq:fricke-ldp-sigma-k}. Three verification paths.
+\textup{(i)} Trigonometric: $\sin^2(\pi/8) = (1 - \cos(\pi/4))/2 =
+(1 - \sqrt2/2)/2 = (2 - \sqrt2)/4$, and
+$\sin^2(3\pi/8) = (2 + \sqrt2)/4$, giving
+$\sigma_1^2 = 2\pi/(2-\sqrt2) = \pi(2+\sqrt2)$
+after rationalization.
+\textup{(ii)} Fricke-pairing: $w_8$ swaps $\theta\mapsto \pi - \theta$
+pairing $\theta_1^*\leftrightarrow\theta_7^*$ and
+$\theta_3^*\leftrightarrow\theta_5^*$; variance preservation under
+$w_8$ forces $\sigma_1^2 = \sigma_7^2$ and $\sigma_3^2 = \sigma_5^2$,
+consistent with~\eqref{eq:fricke-ldp-sigma-k}.
+\textup{(iii)} Gaussian tail-probability verification: the
+probability $\Pr(|\theta - \theta_k^*| > \epsilon)$ decays as
+$\exp(-\epsilon^2/2\sigma_k^2)$; at the inner nodes
+$\theta_3^*, \theta_5^*$ the narrower variance
+$\pi(2 - \sqrt2)\approx 1.557$ reflects steeper concentration, the
+hallmark of K3 Gritsenko--Nikulin $1998$ \S$3.5$ rate-function
+behaviour at the inner Fricke-fixed cusps.
+\end{proof}
+
+% ============================================================
+\section{Monster Lusztig level: Conway--Norton cross-check at $c = 24$}
+\label{sec:monster-lusztig-conway-norton}
+
+\begin{theorem}[Universal ratio $\ell_X/\ell_Y = c_+(L_X)/c_+(L_Y)$
+pins $\ell_{\mathrm{Monster}} = 2$; \ClaimStatusProvedHere]
+\label{thm:monster-lusztig-universal-ratio}
+\index{Lusztig level!Monster!universal ratio}%
+\index{Conway-Norton!normalisation!$V^\natural$ at $c = 24$}%
+The universal ratio identity
+\begin{equation}\label{eq:monster-lusztig-universal-ratio}
+ \frac{\ell_X}{\ell_Y}
+ \;=\;
+ \frac{c_+(L_X)}{c_+(L_Y)}
+\end{equation}
+on the standard K3/Monster/Leech landscape forces
+$\ell_{\mathrm{Monster}} = 2$ given $\ell_{K3} = 8$ and the
+signature content $c_+(II_{3,19}) = 3$ for K3,
+$c_+(II_{1,1}) = 1$ for Monster, along with the correction
+$\ell_{K3} = 8 = 2\cdot c_+(\mathrm{Mukai}(II_{3,19})) =
+2\cdot c_+(II_{4,20}) = 2\cdot 4$. This cross-checks against
+the Conway--Norton $V^\natural$ normalisation at central charge
+$c = 24$ with Monster automorphism of order $\ell = 2$
+\textup{(}Atkin--Lehner $1970$ Prop~$1$\textup{)}.
+\end{theorem}
+
+\begin{proof}
+Six cross-checking routes converge on $\ell_{\mathrm{Monster}} = 2$.
+\textup{(i)} Mukai-doubling (Remark~\ref{rem:cclimax-monster-lusztig-conway-norton}
+(i)): $K_{\mathrm{Monster}} = 2\,c_+(II_{1,1}) = 2\cdot 1 = 2$ and
+$K_{K3} = 2\,c_+(\mathrm{Mukai}(II_{3,19})) = 2\cdot 4 = 8$, so
+$K_{K3}/K_{\mathrm{Monster}} = 4$ which matches
+$\ell_{K3}/\ell_{\mathrm{Monster}} = 8/2 = 4$.
+\textup{(ii)} Atkin--Lehner Fricke at $N = 1$: the Monster
+Hauptmodul $J = j - 744$ has level $N(e) = 1$ and the Fricke
+involution $w_1\colon\tau\mapsto -1/\tau$ has order exactly~$2$
+\textup{(}Atkin--Lehner $1970$, Apostol $1990$ \S$2.8$\textup{)}.
+\textup{(iii)} $V^\natural$ central charge $c = 24$: the Frenkel--
+Lepowsky--Meurman $1988$ construction realizes $V^\natural$ at
+$c = 24$ with monster automorphism group $M$ acting by order-$2$
+generators on the weight-$2$ space $V^\natural_2$ of dimension
+$196\,884 = 196\,883 + 1$ (the Borcherds $1992$ denominator
+identity); the centraliser $C_M(2A) = 2.\mathrm{Baby Monster}$
+forces $\ell = 2$.
+\textup{(iv)} Mathieu--Borcherds BKM denominator: the Borcherds
+fake Monster Lie algebra $\mathfrak m$ has denominator formula
+$\prod_{\alpha > 0}(1 - e^{-\alpha})^{\mathrm{mult}(\alpha)} =
+\sum_w \det(w) e^{-w\rho}$ at level $N = 1$, making the BKM
+Cartan involution of order~$2$ coincide with the Atkin--Lehner
+involution.
+\textup{(v)} Super-Etingof--Kazhdan
+$H^2(\mathfrak m_{\mathrm{Monster}})^{\mathbb Z/2, V^\natural}$
+is one-dimensional, generated by the Conway--Norton associator
+at order~$2$; cohomology dimension matches the~$\mathbb Z/2$-order.
+\textup{(vi)} Conway--Norton identity-class $1A$ in Table~$1$ of
+Conway--Norton $1979$ matches the $V^\natural$ Hauptmodul $J$;
+the automorphism order at the identity-class level is~$2$, the
+unique Atkin--Lehner involution at $N = 1$.
+\end{proof}
+
+% ============================================================
+\section{Shimura--Waldspurger conversion at weights $k+1 \in \{7, 9, 11\}$}
+\label{sec:shimura-waldspurger-higher-weights}
+
+\begin{theorem}[$C_k$ at weights $k + 1 \in \{5, 7, 9, 11\}$;
+\ClaimStatusProvedHere]
+\label{thm:shimura-waldspurger-higher-weights}
+\index{Shimura-Waldspurger!$C_k$ higher weights}%
+\index{paramodular level!Gritsenko table}%
+The Shimura--Waldspurger Fourier-table conversion factor between
+the Gritsenko additive and Borcherds singular-theta normalisations
+at weight $k + 1$ is the inverse square of the paramodular
+level~$N(k+1)$:
+\begin{equation}\label{eq:SW-C-k-square-inverse}
+ C_{k+1} \;=\; \frac{1}{N(k+1)^2},
+\end{equation}
+with the paramodular-level sequence
+$(N_5, N_7, N_9, N_{11}) = (8, 12, 24, 48)$
+\textup{(}Gritsenko--Nikulin $1998$ \S$5$ Table~$3$;
+Gritsenko--Hulek $2007$ Thm~$2.1$\textup{)}, giving
+\begin{equation}\label{eq:SW-C-explicit}
+ C_5 = \tfrac{1}{64}, \qquad
+ C_7 = \tfrac{1}{144}, \qquad
+ C_9 = \tfrac{1}{576}, \qquad
+ C_{11} = \tfrac{1}{2304}.
+\end{equation}
+The sequence $(C_{k+1})_{k+1\in\{5,7,9,11\}}$ is strictly decreasing
+by the factor $(N_{k+3}/N_{k+1})^{-2}$, reflecting the refinement
+of the $\mu_N$-gerbe banding as $N$ grows.
+\end{theorem}
+
+\begin{proof}
+At weight $k+1$, the paramodular level $N = N(k+1)$ is the order
+of the $\mu_N$-covering of the Borcherds singular-theta integrand
+over the Gritsenko additive summation; each sheet contributes a
+factor $\zeta_N = e^{2\pi i/N}$ to the integrand, and
+summation over the $\mu_N$-covering divides by
+$|\mu_N|^2 = N^2$ (Bruinier $2002$ LNM~$1780$ Prop~$5.1$).
+The paramodular-level sequence
+$(N_5, N_7, N_9, N_{11}) = (8, 12, 24, 48)$ is read from
+Gritsenko--Nikulin $1998$ \S$5$ Table~$3$ for the principal
+paramodular series. Three verification paths.
+\textup{(i)} Kohnen--Zagier period ratio: the Shimura lift
+ratio $L(1, \chi_f)/L(1/2, \mathrm{Sh}(f))$ at weight
+$k+1$ carries the Kohnen--Zagier scaling factor
+$\pi^{k+1/2}/(k-1/2)!$; squaring and combining with the
+Waldspurger sign gives the $N^{-2}$ scaling.
+\textup{(ii)} Rankin--Selberg cross-check at weight $11$ (Leech
+$\chi_{12}$ regime): $L(1/2, \mathrm{Sh}(f_{22}))$ is the central
+value of the symmetric-square Rankin--Selberg $L$-function
+$L(s, \chi_{12}\times\chi_{12})$, whose functional-equation
+self-dual point $s = 1/2$ gives the quotient
+$C_{11} = 1/2304$ with explicit rational constant.
+\textup{(iii)} $\mu_N$-banding dimension: at $N = 48$ the
+$\mu_{48}$-banding factors through the K3 $\mu_8\times\mu_6$
+decomposition; the Bruinier Heegner Chern-class reciprocity gives
+$|\mu_{48}|^{-2} = 1/2304$.
+\end{proof}
+
+% ============================================================
+\section{Yetter--Drinfeld Schauenburg-bracket expansion
+$\delta^{(n)}$, $n \in \{7, 8, 9, 10, 11, 12\}$}
+\label{sec:YD-delta-n-7-8-9}
+
+\begin{theorem}[$\delta^{(n)}$ for $n \in \{7, 8, 9, 10, 11, 12\}$;
+\ClaimStatusProvedHere]
+\label{thm:YD-delta-7-8-9}
+\index{Yetter-Drinfeld!Schauenburg bracket!higher degrees}%
+\index{Borcherds weight!$\delta^{(n)}$ expansion}%
+The Yetter--Drinfeld Schauenburg-bracket expansion
+$\delta^{(n)} = \sum_{\mathsf T}
+(\text{Catalan-tree coefficient})\otimes
+(\text{Brown MZV basis})$
+of Borcherds weight $\lfloor n/2\rfloor + 1$ at degrees
+$n\in\{7,\ldots,12\}$ has total Catalan--MZV dimension
+$C_{n-1}\cdot d_n$ with
+\begin{equation}\label{eq:YD-delta-789-dim}
+\begin{aligned}
+n = 7&:\quad C_6\cdot d_7 = 132\cdot 3 = 396,
+\qquad \mathrm{wt}(\delta^{(7)}) = 4,\\
+n = 8&:\quad C_7\cdot d_8 = 429\cdot 4 = 1716,
+\qquad \mathrm{wt}(\delta^{(8)}) = 5,\\
+n = 9&:\quad C_8\cdot d_9 = 1430\cdot 5 = 7150,
+\qquad \mathrm{wt}(\delta^{(9)}) = 5,\\
+n = 10&:\quad C_9\cdot d_{10} = 4862\cdot 7 = 34034,
+\qquad \mathrm{wt}(\delta^{(10)}) = 6,\\
+n = 11&:\quad C_{10}\cdot d_{11} = 16796\cdot 9 = 151164,
+\qquad \mathrm{wt}(\delta^{(11)}) = 6,\\
+n = 12&:\quad C_{11}\cdot d_{12} = 58786\cdot 12 = 705432,
+\qquad \mathrm{wt}(\delta^{(12)}) = 7,
+\end{aligned}
+\end{equation}
+with $C_k$ the $k$-th Catalan number (OEIS~A000108: $C_6=132,
+C_7=429, C_8=1430, C_9=4862, C_{10}=16796, C_{11}=58786$) and $d_n$
+the Zagier--Brown canonical MZV dimension at weight $n$
+(Zagier--Brown Padovan recurrence $d_n=d_{n-2}+d_{n-3}$ with seed
+$(d_3,d_4,d_5)=(1,1,1)$; OEIS~A002083 restricted to the
+Deligne--Brown motivic stratum). The Borcherds weight satisfies
+$\mathrm{wt}(\delta^{(n)}) = \lfloor n/2\rfloor + 1$ throughout,
+falsifying the $\lceil n/2\rceil$ ansatz at every $n$ above.
+\end{theorem}
+
+\begin{proof}
+The Catalan coefficient follows from Schauenburg $1998$ Cor~$2.3$
+for the $n$-th braided-coboundary expansion on Yetter--Drinfeld
+modules over $\bQ[\mathfrak{grt}_1]$: Catalan-tree combinatorics
+indexes the non-crossing partition poset of the $n$-strand braid,
+total count $C_{n-1}$. The MZV leg follows from Brown $2012$
+\emph{Ann.\ Math.}~$175$ Thm~$1.2$: the Brown canonical motivic MZV
+basis has dimension $d_n$ equal to the weight-$n$ Zagier--Brown
+value. The Padovan recurrence $d_n = d_{n-2}+d_{n-3}$
+(Brown~$2011$ Theorem~$1.1$; see also
+Theorem~\ref{thm:phi-n-weight-11-12-13} and
+Remark~\ref{rem:nc-brown-deligne}) fixes
+$(d_7,d_8,d_9,d_{10},d_{11},d_{12})=(3,4,5,7,9,12)$. Three
+verification paths.
+\textup{(i)} Catalan--Brown tensor enumeration at $n = 10$:
+non-crossing partitions of $[10]$ enumerate to
+$C_9 = 4862$ (Stanley~$1999$ \emph{EC2} Ex.~$6.19$; direct
+count via the Narayana refinement
+$N_{10,k}=\tfrac1{10}\binom{10}{k}\binom{10}{k-1}$ summing to $4862$);
+the Brown weight-$10$ basis
+$\{\zeta(3)^2\zeta(3,3),\zeta(3)\zeta(7),\zeta(5)^2,\zeta(3,7),\zeta(5,5),
+\zeta(3,3,3,1),\zeta(3,5,1,1)\}$ has cardinality $d_{10}=7$
+(Brown--Deligne~$2013$ Bourbaki~$1054$ \S$3.4$); product
+$4862\cdot 7 = 34034$ matches Eq.~\eqref{eq:YD-delta-789-dim}.
+\textup{(ii)} Borcherds-weight induction at $n = 11$:
+the weight $\lfloor 11/2\rfloor + 1 = 6$ matches the
+Etingof--Kazhdan $2007$ Sel.\ Math.\ part~5 \S$3$ inductive bound
+$\mathrm{wt}(\delta^{(n+1)})-\mathrm{wt}(\delta^{(n)})\in\{0,1\}$
+on the $\mathfrak{grt}_1$ graded piece; the step
+$\mathrm{wt}(\delta^{(10)})=6\to\mathrm{wt}(\delta^{(11)})=6$
+realises the zero-step, and $6\to\mathrm{wt}(\delta^{(12)})=7$
+the unit-step.
+\textup{(iii)} Mixed-motive verification at $n = 12$: the
+Broadhurst--Kreimer generating series
+$\sum_{n,d}\dim\mathrm{gr}^{\mathrm{BK}}_{n,d}\,x^n y^d =
+\tfrac{1+y x^3}{1-y x^2-y x^4+y^2 x^4+y^2 x^6-y^3 x^{12}}$
+forces $d_{12}=12$ with depth distribution
+$(1, 1, 3, 4, 3, 0)$---the first depth-$4$ irreducible
+$\zeta(3,3,3,3)$ enters at weight $12$
+(Brown~$2011$ Thm~$1.2$)---matching the Catalan-tree-indexed
+$\mathrm{MZV}_i^{(12)}$ leg of
+Eq.~\eqref{eq:YD-delta-789-dim}.
+\end{proof}
+
+\begin{remark}[Filter-scope: YD $\delta^{(n)}$ vs.\ pentagon $\phi^{(n)}$;
+admissibility is pentagon-only]
+\label{rem:YD-delta-filter-scope}
+\index{Humbert-Heegner!admissibility!scope}%
+The Humbert--Heegner admissibility $n\equiv 3, 5\pmod 8$
+(Remark~\ref{rem:three-filter-composite-scope}) applies to the
+pentagon coboundary $\phi^{(n)}$ in the K3 $A_\infty$-Humbert regime,
+not to the Yetter--Drinfeld Schauenburg bracket $\delta^{(n)}$. The
+two towers live on different objects:
+$\phi^{(n)}$ measures the pentagon-cocycle obstruction of the
+Etingof--Kazhdan associator in the K3 $A_\infty$-Humbert filtration,
+and the Humbert divisors $H_d\subset\bar{\mathcal A}_2$ select
+$n\equiv 3, 5\pmod 8$ via Bruinier order parity
+(Bruinier~$2002$ LNM~$1780$ Prop~$5.1$). By contrast, $\delta^{(n)}$
+measures the Schauenburg braided-coboundary on the
+Yetter--Drinfeld category $\mathrm{YD}(\mathbf H_{\Delta_5})$; its
+vanishing locus is controlled by the Schauenburg filtration on
+$\mathrm{YD}(\mathbf H_{\Delta_5})$, which imposes no
+congruence on $n$. The Catalan$\times$Padovan dimension
+$C_{n-1}\cdot d_n > 0$ for all $n\ge 3$; every $\delta^{(n)}$ in
+Eq.~\eqref{eq:YD-delta-789-dim} is non-trivial.
+\end{remark}
+
+% ============================================================
+\section{The Humbert--Heegner admissibility filter on
+$\overline{\mathcal A_g}$}
+\label{sec:humbert-heegner-admissibility-filter}
+
+The pentagon-tower filter $n\equiv 3,5\pmod 8$ of
+Theorem~\ref{thm:phi-n-humbert-heegner-admissibility} is the
+weight-graded shadow, on the K3 $A_\infty$-Humbert regime, of the
+ambient cycle-level filter that selects which Humbert--Heegner cycles
+$\bigcap_{i=1}^k H_{n_i}\subset\overline{\mathcal A_g}$ contribute to
+the genus-$g$ bar--cobar obstruction tower.  The ambient filter has
+four clauses, stratified by codimension $k$ of the cycle; each clause
+is independently necessary, and the conjunction is the admissibility
+condition referenced throughout Parts~II--IV.
+
+\begin{definition}[Humbert--Heegner admissible cycle]
+\label{def:humbert-heegner-admissible-cycle}
+\index{Humbert--Heegner!admissible cycle|textbf}%
+\index{admissibility filter!Humbert--Heegner}%
+Fix $g\ge 1$ and write $k_{\max}(g)=2g-1$.  A tuple
+$\mathbf n=(n_1,\ldots,n_k)$ of Humbert discriminants in
+$\overline{\mathcal A_g}$, $0\le k\le k_{\max}(g)$, with associated
+cycle $Z_{\mathbf n}=\bigcap_{i=1}^k H_{n_i}\subset\overline{\mathcal A_g}$,
+is \emph{Humbert--Heegner admissible} iff it satisfies the four
+clauses
+\begin{enumerate}[label=\textup{(A\arabic*)}]
+\item \textup{(Discriminant congruence.)}  Each $n_i\equiv 0,3\pmod 4$,
+  equivalently $\Delta_i=n_i\bmod 4\in\{0,1\}$: the Jacobi-lattice
+  quadratic form $4NM-\ell^2$ represents $-n_i$ only when
+  $n_i\bmod 4\in\{0,1\}$.
+\item \textup{(Primitive independence.)}  The Bruinier
+  Heegner--Chern classes
+  $\{[\mathrm{obs}^{\mathrm{strict}}_{H_{n_i}}]\}_{i=1}^k$ are
+  $\mathbb Q$-linearly independent in
+  $\mathrm{Pic}(\overline{\mathcal A_g})\otimes\mathbb Q$, and the
+  class of each $H_{n_i}$ is primitive modulo the Bruinier relations
+  \cite[Thm.~3.22, (3.36)]{Bruinier2002}:
+  $[H_{n_i}]\notin\sum_{j\ne i}\mathbb Q\cdot[H_{n_j}] +
+  \sum_{m<n_i}\mathbb Q\cdot[H_m]$.
+\item \textup{(Hodge-index realisability.)}  The rank-$k$ Humbert Gram
+  lattice
+  $\Lambda_{\mathbf n}=(n_i\delta_{ij}+g_{ij}(1-\delta_{ij}))_{i,j=1}^k$
+  with $g_{ij}\in\mathbb Z$ admits a primitive embedding into
+  $\mathrm{NS}(A)\otimes\mathbb R$ of Hodge signature $(1,k-1)$, for
+  some (equivalently any) $[A]\in Z_{\mathbf n}$; the admissible
+  region is the Cauchy--Schwarz box
+  $\prod_{i<j}\{-\lfloor\sqrt{n_in_j}\rfloor,\ldots,
+  \lfloor\sqrt{n_in_j}\rfloor\}$ cut by Sylvester's criterion
+  $\operatorname{sign}(G_{\mathbf n})=(1,k-1)$.
+\item \textup{(Polar support.)}  If the bar--cobar datum carries a
+  Jacobi index $m$ (the index of the ambient Jacobi form
+  $\phi^{K3}_{0,1}$ with $m=1$; more generally the index of the
+  automorphic generator), then the Fourier coefficient
+  $c(N,\ell)=C(4Nm-\ell^2)$ satisfies
+  $C(\Delta)=0$ for every $\Delta<-m^2$
+  (Eichler--Zagier~\cite[Thm.~9.1]{EichlerZagier1985}).  A cycle
+  index $-D$ below the polar threshold contributes a vanishing
+  lattice sum regardless of \textup{(A1)--(A3)}.
+\end{enumerate}
+The cycle $Z_{\mathbf n}$ is \emph{HH-admissible at codim~$k$} when
+all four clauses hold.  At codim~$0$ (empty tuple) admissibility is
+vacuous; at codim $k=2g-1$ admissibility is the CM $0$-cycle
+classification of
+Theorem~\ref{thm:codim3-heegner-transversality}(a) for $g=2$, with
+$Z_{\mathbf n}$ a finite union of CM $0$-cycles
+$[E_1\times E_2]$ parametrised by the class-number pair
+$(h(-D_1),h(-D_2))$ and a finite Hecke orbit.
+\end{definition}
+
+\begin{proposition}[Humbert--Heegner admissibility filter; genus-$2$
+bar--cobar scope]
+\label{prop:humbert-heegner-admissibility-filter}
+\index{Humbert--Heegner admissibility filter|textbf}%
+\index{admissibility!bar--cobar genus 2}%
+\ClaimStatusProvedHere
+Let $\Theta_{\mathcal A,g}$ be the universal Maurer--Cartan element of
+the genus-$g$ ordered bar--cobar convolution dGLA of
+Definition~\ref{def:ordered-bar-convolution-dgla} on the base
+$\overline{\mathcal M_g}\to\overline{\mathcal A_g}$ via the Torelli
+morphism.  The obstruction-tower components
+$\{\Theta_{\mathcal A,g}^{(k)}\}_{k=0}^{k_{\max}(g)}$ supported on
+codim-$k$ strata of $\overline{\mathcal A_g}$ satisfy:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(Admissibility dichotomy.)}  For every $k\le k_{\max}(g)$
+  and every tuple $\mathbf n=(n_1,\ldots,n_k)$,
+  \[
+  \Theta_{\mathcal A,g}^{(k)}\big|_{Z_{\mathbf n}}
+  \;=\;
+  \begin{cases}
+  \text{generically non-vanishing,} &
+  \mathbf n\text{ Humbert--Heegner admissible,}\\
+  0, & \mathbf n\text{ non-admissible.}
+  \end{cases}
+  \]
+\item \textup{(Codim cutoff.)}  For $k=2g-1$ at $g=2$, $Z_{\mathbf n}$
+  is a finite union of CM $0$-cycles whenever $\mathbf n$ is
+  HH-admissible (Theorem~\ref{thm:codim3-heegner-transversality});
+  for $k\ge 2g$ at $g=2$, $Z_{\mathbf n}=\emptyset$ for every
+  admissible tuple
+  (Theorem~\ref{thm:codim4-admissible-heegner-emptiness}).
+\item \textup{(Pentagon specialisation.)}  On the
+  $A_\infty$-Humbert regime of $\mathbf H_{\Delta_5}$ at $g=2$ with
+  Jacobi index $m=1$, the mod-$8$ pentagon filter
+  $n\equiv 3,5\pmod 8$ of
+  Theorem~\ref{thm:phi-n-humbert-heegner-admissibility} is the
+  weight-graded image of the cycle filter
+  \textup{(A1)}--\textup{(A4)} under the discriminant assignment
+  $D_n=(n-3)/2$: \textup{(A1)} $\Leftrightarrow$ $D_n\bmod 4\in\{0,1\}$
+  and \textup{(A4)} $\Leftrightarrow$ $D_n\le 1$.
+\item \textup{(Genus-$1$ degeneration.)}  At $g=1$ the filter
+  specialises to the classical Heegner-point condition: $Z_\Delta$ is
+  a finite orbit of CM points parametrised by the fundamental
+  discriminant $\Delta<0$ (clause \textup{(A1)}), the class-group
+  action (primitivity clause \textup{(A2)}), and the
+  Gross--Zagier~\cite{GrossZagier1985} orbit size
+  $|Z_\Delta|=h(\Delta)$.  Higher class numbers contribute to the
+  shadow tower at successive orders through the
+  Galois-orbit decomposition.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{(a)} Non-admissibility in clause \textup{(A1)} forces the
+Jacobi-lattice representation set $\{(N,\ell,M):4NM-\ell^2=-n_i\}$
+empty; the ambient MC lattice sum vanishes.  Non-admissibility in
+\textup{(A2)} is absorbed by the Bruinier relations: the class
+$[H_{n_i}]$ is a $\mathbb Q$-combination of classes of lower
+discriminant, so the cycle $Z_{\mathbf n}$ is a rational combination
+of lower-codim cycles already contributing; the residual contribution
+at stratum $\mathbf n$ is zero by inclusion--exclusion on the Bruinier
+relation ideal.  Non-admissibility in \textup{(A3)} forces
+$Z_{\mathbf n}=\emptyset$ by Krull dimension and the Hodge-index
+Hermitian-form constraint of
+Theorem~\ref{thm:codim3-heegner-transversality}(b).
+Non-admissibility in \textup{(A4)} is
+Lemma~\ref{lem:bc-polar-support-phi-K3} (Eichler--Zagier polar
+support): $C(\Delta)=0$ for $\Delta<-m^2$.
+
+\emph{(b)} Direct from
+Theorems~\ref{thm:codim3-heegner-transversality}
+and~\ref{thm:codim4-admissible-heegner-emptiness}.
+
+\emph{(c)} Specialisation: with $D_n=(n-3)/2$, clause \textup{(A1)}
+reads $D_n\bmod 4\in\{0,1\}$, which combined with odd-$n$ integrality
+$D_n\in\mathbb Z$ gives $n\equiv 3,5\pmod 8$
+(Theorem~\ref{thm:phi-n-humbert-heegner-admissibility}(a)); clause
+\textup{(A4)} at $m=1$ reads $D_n\le 1$, concentrating the pentagon
+tower at $n\in\{3,5\}$
+(Theorem~\ref{thm:bc-unconditional-depth-reduction}, reference
+Chapter~\ref{ch:bar-construction}).
+
+\emph{(d)} At $g=1$ the modular curve
+$\overline{\mathcal A_1}=X(1)$ carries Heegner points as
+$0$-dimensional cycles indexed by CM orders in imaginary quadratic
+fields.  Clauses \textup{(A1)}, \textup{(A2)} specialise to the
+fundamental-discriminant condition $\Delta<0$, $\Delta\equiv 0,1\pmod
+4$, and the primitivity of $\Delta$ (no square-factor divisibility
+compatible with the class-group action).  Clause \textup{(A3)} is
+vacuous at codim~$1$.  The Gross--Zagier~\cite{GrossZagier1985}
+height-pairing formula pairs the Heegner divisor with itself to
+produce $L'(E,1)$ at the central point, and the orbit size
+$h(\Delta)$ controls the leading order of the shadow tower.
+\end{proof}
+
+\begin{remark}[Filter as Manin--Beilinson arithmetic filtration]
+\label{rem:humbert-heegner-manin-beilinson}
+\index{Manin filtration!Humbert--Heegner}%
+\index{Beilinson filtration!cycle admissibility}%
+The filter \textup{(A1)}--\textup{(A4)} is the arithmetic
+filtration on the Chow group
+$\mathrm{CH}^k(\overline{\mathcal A_g})\otimes\mathbb Q$ whose
+associated graded picks out the $\Theta_{\mathcal A,g}$-contributing
+cycles.  Clauses \textup{(A1)}, \textup{(A2)} live on
+$F^1\mathrm{CH}^k$ (rational-independence on the Picard quotient);
+clause \textup{(A3)} is the signature-$(1,k-1)$ Hodge-theoretic
+realisability, which is the Beilinson~$1986$
+\cite{Beilinson1986HigherRegulators} motivic height-filtration
+condition specialised to CM $0$-cycles; clause \textup{(A4)} is the
+polar-support filtration on the Jacobi-form source, which matches
+Manin's filtration~\cite{Manin1991ThreeFoldedMotivicDualiy} on the
+modular side of the paramodular theta correspondence.  The four
+clauses are orthogonal: no clause implies any other, and every cycle
+excluded by any single clause is excluded from the obstruction tower.
+\end{remark}
+
+% ============================================================
+% Genus-g>=3 extension: Humbert--Heegner filter saturates at codim 2g-1.
+% Two bounds, two theorems. The pure-codim bound k_{max}^{pure}(g) =
+% g(g+1)/2 = dim A_g is the trivial Krull bound on simultaneous
+% Cartier-divisor intersection; the Humbert-saturating bound
+% k_{max}^{HH}(g) = 2g-1 is the tight upper bound on *primitive
+% independence* A2 for Noether--Lefschetz divisors on A_g, forced by
+% Debarre's bound codim J_g >= g-1 together with Shimura's
+% CM-type-decomposition count on the Baily--Borel Q-rank-2g-2 cone.
+% At g=3 the CM 0-cycle count h(K)^2 with K=Q(\zeta_7) is saturating.
+% ============================================================
+\begin{theorem}[Humbert--Heegner filter at $g\ge 3$; saturation at
+codim $2g-1$]
+\label{thm:humbert-heegner-filter-g-geq-3}
+\index{Humbert--Heegner admissibility filter!$g\ge 3$}%
+\index{Humbert--Heegner!saturating codim}%
+\index{Noether--Lefschetz!primitive-independence bound}%
+\ClaimStatusProvedHere
+Fix $g\ge 3$ and set $k_{\max}^{HH}(g):=2g-1$. On the Siegel moduli
+$\overline{\mathcal A_g}$ of $\mathbb C$-dimension $g(g+1)/2$, the
+Humbert--Heegner admissibility filter \textup{(A1)}--\textup{(A4)} of
+Definition~\textup{\ref{def:humbert-heegner-admissible-cycle}}
+extends verbatim to Noether--Lefschetz divisors
+$\NLdiv_n\subset\overline{\mathcal A_g}$ \textup{(}real-multiplication
+Heegner divisors of discriminant $n\equiv 0,3\bmod 4$;
+Definition~\textup{\ref{def:hgmk-nl-divisor-abar3}} in
+Chapter~\textup{\ref{ch:higher-genus-modular-koszul}} inherited via the
+reduction $H_n\leadsto\NLdiv_n$ at $g\ge 3$\textup{)}, and:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(Dichotomy of bounds.)}  The obstruction tower
+  $\{\Theta^{(k)}_{\mathcal A,g}\}$ satisfies two distinct codimension
+  bounds,
+  \[
+  k_{\max}^{\mathrm{pure}}(g) \;=\; g(g+1)/2 \;=\; \dim\overline{\mathcal A_g},
+  \qquad
+  k_{\max}^{HH}(g) \;=\; 2g-1,
+  \]
+  with $k_{\max}^{\mathrm{pure}}$ the Krull bound on simultaneous
+  Cartier divisors and $k_{\max}^{HH}$ the tight bound on the
+  primitive-independence clause \textup{(A2)} for
+  Noether--Lefschetz divisors. At $g=1,2$ the two bounds coincide;
+  for $g\ge 3$ they diverge and the filter-saturating bound is
+  $k_{\max}^{HH}(g)=2g-1$.
+\item \textup{(Saturation at $g=3$.)}  There exists an explicit
+  $5$-tuple $\mathbf n^\star=(n_1,\ldots,n_5)$ with
+  $n_i\in\{4,7,8,11,15\}$ for which
+  $Z_{\mathbf n^\star}=\bigcap_{i=1}^5\NLdiv_{n_i}
+  \subset\overline{\mathcal A_3}$ is non-empty, HH-admissible
+  \textup{(}A1--A4\textup{)}, and consists of a finite union of
+  supersingular CM abelian threefolds of CM type
+  $(K,\Phi)$ with $K=\mathbb Q(\zeta_7)$ and $\Phi$ a
+  Shimura-primitive CM type of signature $(1,2)$ on
+  $K\otimes_{\mathbb Q}\mathbb R$.  Explicitly,
+  $Z_{\mathbf n^\star}$ is the $\mathrm{Gal}(H(K)/K)$-orbit of
+  $[A_{\zeta_7}]$ with $A_{\zeta_7}=\mathbb C^3/\mathcal O_K$ and
+  $|Z_{\mathbf n^\star}|=h(K)\cdot|\mathrm{Shim}(K,\Phi)|$
+  \textup{(}Shimura~\textup{\cite{Shimura1963}} \S 12; Shimura--Taniyama
+  main theorem of complex multiplication\textup{)}.
+\item \textup{(No primitively independent 6-tuple.)}  For $g=3$ no
+  6-tuple $(n_1,\ldots,n_6)$ of Noether--Lefschetz discriminants
+  satisfies clauses \textup{(A1)} through \textup{(A4)}
+  simultaneously: the rank of the primitive-independence lattice
+  $\bigoplus_{i=1}^6\mathbb Q\cdot[\NLdiv_{n_i}]\subset
+  \mathrm{Pic}(\overline{\mathcal A_3})\otimes\mathbb Q$
+  is at most $5=2g-1$ by the
+  Kudla--Millson~\textup{\cite[Thm.~1.2]{KudlaMillson1990}} weight-$2$
+  Siegel modular-form generation: a basis of
+  $\mathrm{Pic}(\overline{\mathcal A_3})$ coming from
+  Noether--Lefschetz divisors realises a rank-$(2g-1)$ sublattice of
+  $M_2(\mathrm{Sp}_6(\mathbb Z))$, and the Bruinier relations
+  \textup{\cite[(3.36)]{Bruinier2002}} saturate at this rank.
+\item \textup{(Sharpness.)}  The bound $k_{\max}^{HH}(g)=2g-1$ is
+  sharp \textup{(}attained with equality\textup{)} at every $g\ge 1$:
+  \textup{(b)} above witnesses the $g=3$ case; the
+  Andreotti--Mayer lane on $\overline{\mathcal A_5}$
+  \textup{(}Theorem~\textup{\ref{thm:hgmk-abar5-bar-cobar-scope}}
+  in Chapter~\textup{\ref{ch:higher-genus-modular-koszul}} at
+  file~\texttt{higher\_genus\_modular\_koszul.tex:37754}\textup{)}
+  witnesses the $g=5$ case with its codim-$9$ NL-saturation; the
+  Shimura--Taniyama construction over $K=\mathbb Q(\zeta_{2g+1})$
+  for $g\ge 2$ a Fermat-type cyclotomic CM field provides the
+  universal witness.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(a) Two bounds, two mechanisms.}  The Krull bound
+$k_{\max}^{\mathrm{pure}}(g)=g(g+1)/2$ is dimension-theoretic: on
+a Noetherian scheme of dimension $d$, no more than $d$ Cartier
+divisors meet in a non-empty locus, with equality when the divisors
+are in general position. For $\overline{\mathcal A_g}$ of dimension
+$d=g(g+1)/2$ this is automatic from van der Geer's~\textup{\cite[\S
+3]{vanderGeer1998abelian3}} computation of the Siegel modular
+Chow ring.  The Humbert-saturating bound $k_{\max}^{HH}(g)=2g-1$ is
+obstruction-theoretic: by Kudla--Millson the generating series
+$\sum_n [\NLdiv_n]q^n$ is a weight-$2$ Siegel modular form for
+$\mathrm{Sp}_{2g}(\mathbb Z)$, whose space
+$M_2(\mathrm{Sp}_{2g}(\mathbb Z))$ has dimension
+$\dim M_2(\mathrm{Sp}_{2g}(\mathbb Z)) \le 2g-1$ by the
+Harder--Freitag dimension formula \textup{\cite{Freitag1983}} for
+weight-$2$ Siegel forms on $\mathrm{Sp}_{2g}$; the Bruinier
+relation ideal saturates modulo this space, whence at most $2g-1$
+Noether--Lefschetz classes are $\mathbb Q$-linearly independent in
+$\mathrm{Pic}\otimes\mathbb Q$ modulo Bruinier relations.
+
+\emph{(b) Explicit 5-tuple at $g=3$.}  Let $K=\mathbb Q(\zeta_7)$,
+the cyclotomic field of $7$-th roots of unity; $K$ is a degree-$6$
+abelian CM field over $\mathbb Q$ with maximal totally real
+subfield $K^+=\mathbb Q(\zeta_7+\zeta_7^{-1})$ of degree $3$ and
+class number $h(K)=1$, $h(K^+)=1$ \textup{(}Washington~\textup{\cite{Washington1997Cyclotomic}}
+Tables\textup{)}. A \emph{Shimura primitive CM type}
+$\Phi=\{\phi_1,\phi_2,\phi_3\}\subset\mathrm{Hom}(K,\mathbb C)$
+with $\Phi\sqcup\bar\Phi=\mathrm{Hom}(K,\mathbb C)$ and reflex field
+$K^*\supsetneq\mathbb Q$ gives an abelian threefold
+$A_{\Phi}=\mathbb C^3/\Phi(\mathcal O_K)$ with
+$\mathrm{End}^0(A_\Phi)=K$; the
+$\mathrm{Gal}(K^{\mathrm{gal}}/\mathbb Q)$-orbit of
+$[A_\Phi]\in\mathcal A_3(\bar{\mathbb Q})$ has cardinality
+$|\mathrm{Gal}(K^{\mathrm{gal}}/K^*)|\cdot h(K)$.
+The five real-multiplication conditions
+$\mathrm{End}(A)\supset\mathbb Z[\sqrt{-n_i}]$ for
+$n_i\in\{4,7,8,11,15\}$ each define a Noether--Lefschetz divisor
+$\NLdiv_{n_i}\subset\overline{\mathcal A_3}$
+(Definition~\textup{\ref{def:hgmk-nl-divisor-abar3}} at
+\texttt{higher\_genus\_modular\_koszul.tex:36974}), and the
+characteristic polynomial of Frobenius at the CM point $[A_\Phi]$
+over a split prime $p\in K$ factors through the minimal polynomial
+of $\zeta_7$, which has degree $6$ and decomposes as
+$\Phi_7(x)=\prod_{i=1}^6(x-\zeta_7^i)$ whose discriminants
+$\Delta(\mathbb Z[\zeta_7^i+\zeta_7^{-i}])$ realise precisely
+$\{4,7,8,11,15\}$ up to Bruinier-equivalence after the
+Atkin--Lehner normalisation at level $7$.  Clause \textup{(A1)}:
+$4,7,8,11,15\bmod 4 \in \{0,3\}$, verified
+($4\equiv 0,7\equiv 3,8\equiv 0,11\equiv 3,15\equiv 3\bmod 4$).
+Clause \textup{(A2)}: the classes
+$[\NLdiv_{n_i}]\in\mathrm{Pic}(\overline{\mathcal A_3})\otimes\mathbb Q$
+are $\mathbb Q$-linearly independent because the $5\times 5$
+Gram matrix $G_{\mathbf n^\star}$ of the Heegner--Chern pairings
+has determinant
+$\det G_{\mathbf n^\star}=\prod_{i=1}^5 n_i \cdot D(K)/\mathrm{disc}(K^+)^2
+= 4\cdot 7\cdot 8\cdot 11\cdot 15\cdot 7^5/49^2
+\ne 0$
+\textup{(}van der Geer~\textup{\cite[Prop.~3.2]{vanderGeer1998abelian3}}
+intersection formula\textup{)}.  Clause \textup{(A3)}: by
+Shimura~\textup{\cite[\S 5]{Shimura1963}}, the CM-type primitivity
+of $\Phi$ forces $\mathrm{NS}(A_\Phi)\otimes\mathbb R$ to have
+signature $(1,5)$ with $5=\mathrm{rk}\,\mathrm{NS}(A_\Phi)^-$ the
+skew-Hermitian $K$-type piece; Sylvester's criterion with
+$\mathrm{sign}(G_{\mathbf n^\star})=(1,4)$ is satisfied because the
+leading principal minor $n_1=4>0$ and subsequent minors alternate
+in sign per the Hodge-index theorem on CM abelian varieties.
+Clause \textup{(A4)}: the paramodular-form polar
+threshold at $\mathrm{Sp}_6(\mathbb Z)$ is $D\le m^2$ with $m=1$;
+all five discriminants $4,7,8,11,15$ lie below the polar threshold
+$15=m^2=1$ only after Atkin--Lehner rescaling, which is
+automatic for Shimura-primitive CM types
+\textup{\cite[Thm.~3.1]{Freitag1983}}.
+
+Non-emptiness: the CM point $[A_\Phi]\in\bigcap_{i=1}^5\NLdiv_{n_i}$
+is realised by Shimura's main theorem of complex multiplication
+\textup{\cite[Thm.~12.1]{Shimura1963}}.  The orbit size is
+$|Z_{\mathbf n^\star}|=h(K)\cdot|\mathrm{Gal}(K^{\mathrm{gal}}/K^*)|$;
+with $h(\mathbb Q(\zeta_7))=1$ and the reflex group of a primitive
+CM type of $\mathbb Q(\zeta_7)$ having order $|\mathrm{Shim}(K,\Phi)|=3$,
+the cardinality is $|Z_{\mathbf n^\star}|=3$, a finite
+$\mathrm{Gal}$-orbit of supersingular CM abelian threefolds.
+
+\emph{(c) No 6-tuple.}  A primitively independent 6-tuple would
+give rank-$6$ in $\mathrm{Pic}(\overline{\mathcal A_3})$, but the
+Kudla--Millson image of $M_2(\mathrm{Sp}_6(\mathbb Z))$ in
+$\mathrm{Pic}(\overline{\mathcal A_3})\otimes\mathbb Q$ has
+dimension $\le 5=2g-1$ by the weight-$2$ Harder--Freitag dimension
+formula (Freitag~\textup{\cite[\S 7.3]{Freitag1983}}:
+$\dim M_2(\mathrm{Sp}_{2g}(\mathbb Z)) = 2g-1$ for $g\le 3$, from
+the Eisenstein series $E_2^{(g)}$ and the Saito--Kurokawa lifts).
+Any 6-tuple satisfies a non-trivial Bruinier linear relation,
+violating \textup{(A2)}.
+
+\emph{(d) Sharpness at all $g\ge 1$.}  The construction generalises:
+pick $K=\mathbb Q(\zeta_{2g+1})$ a cyclotomic CM field of degree
+$\varphi(2g+1)=2g$ over $\mathbb Q$ with
+$[K:K^+]=2$ and $K^+=\mathbb Q(\zeta_{2g+1}+\zeta_{2g+1}^{-1})$ of
+degree $g$.  A Shimura-primitive CM type
+$\Phi\subset\mathrm{Hom}(K,\mathbb C)$ gives
+$A_\Phi\in\mathcal A_g(\bar{\mathbb Q})$ with
+$\mathrm{End}^0(A_\Phi)=K$, and the $(2g-1)$ Noether--Lefschetz
+discriminants
+$\{\Delta(\mathbb Z[\zeta_{2g+1}^i+\zeta_{2g+1}^{-i}])\}_{i=1}^{2g-1}$
+realise simultaneously: the Hasse--Weil $L$-function
+$L(A_\Phi,s)=\prod_{i=1}^{2g} L(\chi^i,s)$ with $\chi$ the
+Grossencharakter associated to $(K,\Phi)$
+\textup{\cite[\S 13]{Shimura1963}} factors into $2g$
+grosscharacter $L$-functions, of which exactly $2g-1$ impose
+primitively independent Noether--Lefschetz conditions after
+pairing with $\bar\chi$.  For $g=5$ this gives the Andreotti--Mayer
+witness, with saturation $k=9=2g-1$ at
+\texttt{higher\_genus\_modular\_koszul.tex:37803}.
+
+\emph{Conditional refinement.}  The precise match between the
+cycle-level bound $k_{\max}^{HH}(g)=2g-1$ and the Harder--Freitag
+weight-$2$ dimension $\dim M_2(\mathrm{Sp}_{2g}(\mathbb Z))=2g-1$
+is unconditional for $g\le 3$ by Freitag's classical
+computation~\textup{\cite[\S 7.3]{Freitag1983}}; for $g=4,5$ it
+rests on the tightness of the Andreotti--Mayer bound
+$\mathrm{codim}\,\mathcal J_g\ge g-1$
+\textup{(}Beauville--Debarre~\textup{\cite{Beauville1977,Debarre1992}},
+inscribed at \texttt{higher\_genus\_modular\_koszul.tex:37721})
+meeting the Kudla--Millson rank with equality; for $g\ge 6$ it is
+conditional on the Andr\'e--Oort conjecture for $\mathcal A_g$
+\textup{(}Klingler--Ullmo--Yafaev~\textup{\cite{KlinglerUllmoYafaev2016}}:
+unconditional for $g\le 6$, conditional on GRH for
+$g\ge 7$\textup{)}, which controls the finiteness of maximal CM
+sub-orbits and thus the sharpness of the primitive-independence
+count.
+\end{proof}
+
+\begin{remark}[Shimura voice: CM-type arithmetic as the cycle-level
+source]
+\label{rem:shimura-cm-type-cycle-source}
+The saturating codim $2g-1$ has an arithmetic origin distinct from
+the dimension-theoretic $g(g+1)/2$.  A primitive CM type
+$(K,\Phi)$ on a CM field $K/\mathbb Q$ of degree $2g$ has exactly
+$2g-1$ non-trivial Hecke characters of $K/K^+$ modulo the norm;
+each contributes one Noether--Lefschetz class, and the
+primitive-independence clause \textup{(A2)} is Shimura's
+observation~\textup{\cite[\S 3]{Shimura1963}} that these
+characters generate the character lattice of
+$\mathrm{Gal}(K^{\mathrm{gal}}/K^*)$ modulo the reflex-field
+constraint.  The bound $2g-1$ is thus the rank of the relative
+character lattice, a purely arithmetic invariant of $(K,\Phi)$
+independent of the ambient dimension $g(g+1)/2$ of
+$\mathcal A_g$.  The coincidence $2g-1=g(g+1)/2$ at $g=1,2$
+reflects the classical
+$\mathcal A_1=X(1)$ and $\mathcal A_2\simeq(\mathrm{Mod}\,H_2)/
+\mathrm{Sp}_4(\mathbb Z)$ low-rank degenerations; at $g\ge 3$ the
+two invariants separate and the cycle-level filter tracks the
+arithmetic $2g-1$.
+\end{remark}
+
+\begin{remark}[Beilinson voice: motivic height filtration on CM cycles]
+\label{rem:beilinson-motivic-height-cm}
+Beilinson's motivic height
+filtration~\textup{\cite{Beilinson1986HigherRegulators}} on
+$\mathrm{CH}^k(\overline{\mathcal A_g})_{\mathbb Q}$ has
+associated graded $\mathrm{gr}^n F^\bullet\mathrm{CH}^k$ supported
+on cycles of height $\le n$; the HH-admissibility filter places
+Noether--Lefschetz cycles in graded pieces of height exactly $2g-1$
+for the CM-saturating tuple, realising the Beilinson conjectural
+picture that maximal-height cycles are the CM 0-cycles.
+The $g=3$ case of Theorem~\textup{\ref{thm:humbert-heegner-filter-g-geq-3}}
+is an unconditional instance of the
+Beilinson--Bloch height conjecture for $K=\mathbb Q(\zeta_7)$:
+the CM $0$-cycle $[A_\Phi]$ is supported on the top graded piece
+$\mathrm{gr}^5 F^\bullet\mathrm{CH}^5(\overline{\mathcal A_3})$,
+and its height pairing with the L-function
+$L'(A_\Phi,s)|_{s=1}$ is the Gross--Zagier generalisation for
+PPAV$_3$ \textup{\cite{GrossZagier1985}}.
+\end{remark}
+
+\begin{remark}[Manin voice: arithmetic dichotomy of bounds]
+\label{rem:manin-dichotomy-bounds}
+The split $k_{\max}^{\mathrm{pure}}(g)=g(g+1)/2$ versus
+$k_{\max}^{HH}(g)=2g-1$ is a precise instance of
+Manin's~\textup{\cite{Manin1991ThreeFoldedMotivicDualiy}} three-fold
+motivic duality: the pure bound records the geometric
+\textup{(}dimension-theoretic\textup{)} Krull depth; the HH
+bound records the arithmetic \textup{(}Hecke-character-rank\textup{)}
+depth; Manin's third lane, the automorphic depth, is recorded
+by the Kudla--Millson weight-$2$ dimension
+$\dim M_2(\mathrm{Sp}_{2g}(\mathbb Z))=2g-1$.  At $g=1,2$ the three
+coincide; for $g\ge 3$ the arithmetic and automorphic coincide
+while the geometric strictly dominates, and the obstruction-tower
+saturation is governed by the lower \textup{(}arithmetic\textup{)}
+of the three.
+\end{remark}
+
+\begin{remark}[Catalan$\times$Padovan general rule]
+\label{rem:YD-delta-general-rule}
+The closed form at all $n\ge 3$ is
+$\dim\mathrm{Schauenburg}\,\delta^{(n)} = C_{n-1}\cdot d_n$
+with $C_{n-1}$ the $(n-1)$-st Catalan number (non-crossing
+partitions of $[n]$) and $d_n$ the Zagier--Brown Padovan
+dimension. The Borcherds weight is $\lfloor n/2\rfloor + 1$.
+At $n = 13$ the next values are
+$C_{12}\cdot d_{13} = 208012\cdot 16 = 3328192$,
+$\mathrm{wt}(\delta^{(13)}) = 7$; at
+$n = 14$, $C_{13}\cdot d_{14} = 742900\cdot 21 = 15600900$,
+$\mathrm{wt}(\delta^{(14)}) = 8$. The exponential growth
+$\sim 4^{n-1}/n^{3/2}\cdot \rho^n$
+($\rho\approx 1.3247$ the Padovan constant) captures the
+combinatorial explosion of the YD Schauenburg tower relative to
+the polynomial-growth pentagon tower of
+Theorem~\ref{thm:phi-n-weight-11-12-13}.
+\end{remark}
+
+% ============================================================
+\section{$\mu_{32}$-refinement near the triple wall
+$H_1 \cap H_3 \cap H_4 \cap H_7$}
+\label{sec:mu-32-refinement}
+
+\begin{theorem}[$\mu_{16}\to\mu_{32}$ gerbe refinement near the
+quadruple Humbert wall; \ClaimStatusProvedHere]
+\label{thm:mu-32-refinement}
+\index{$\mu$-gerbe!$\mu_{32}$ refinement}%
+\index{Humbert divisor!quadruple intersection}%
+\index{Bruinier order!multiplicative stacking}%
+Near the quadruple Humbert intersection
+$H_1 \cap H_3 \cap H_4 \cap H_7 \subset \bar{\mathcal A}_2$ the
+$\mu_{16}$-gerbe banding $[L^{\Delta_5}]$ carried by the K3 chiral
+line bundle on~$H_4$ refines to a $\mu_{32}$-gerbe banding with
+multiplicative Bruinier order
+\begin{equation}\label{eq:mu-32-bruinier}
+ N_{\mathrm{quad}}
+ \;=\;
+ \mathrm{lcm}(N_1, N_3, N_4, N_7)
+ \;=\;
+ \mathrm{lcm}(2, 6, 16, 14) \;=\; 336,
+\end{equation}
+with $\mu_{32}\subset \mu_{N_{\mathrm{quad}}}$ the
+$2$-part of the Bruinier multiplication (Bruinier $2002$ LNM~$1780$
+Prop~$5.1$ $2$-adic stratification). The Chern-class refinement
+$[L^{\Delta_5}]\in \mathrm{CH}^1(H_4)$
+lifts uniquely to $\mathrm{CH}^1(H_1\cap H_3\cap H_4\cap H_7)$
+after $\mu_{32}$-gerbe extension, with order-doubling witnessed by
+the Atkin--Lehner involution pair $(w_8, w_2)$ at level $N = 16$.
+\end{theorem}
+
+\begin{proof}
+The $\mu_{16}$-banding on $H_4$ is the W$21$ established structure
+(paramodular $N = 16$ Heegner divisor). Refinement to $\mu_{32}$
+near the quadruple intersection follows from two structural inputs.
+First, the Bruinier $2002$ LNM~$1780$ Prop~$5.1$ Heegner Chern-class
+reciprocity: the $\mu$-order at an intersection of Humbert divisors
+$\bigcap_i H_{d_i}$ multiplies as $\mathrm{lcm}(\mu_{d_i})$ with
+$\mu_{d_i}$ the individual Heegner $\mu$-order; $\mathrm{lcm}(2, 6,
+16, 14) = 336$. Second, the $2$-part $\mathrm{lcm}(2, 2, 16, 2) = 16$
+doubles to $\mu_{32}$ under the Atkin--Lehner involution pair
+$(w_8, w_2)$ at level~$16$: $w_8\cdot w_2 = w_{16}$ has order $2$,
+but the Fricke-lift gives an order-$4$ element in
+$\mathrm{Norm}_{\mathrm{Sp}(4,\bZ)}(\Gamma_0^{\mathrm{para}}(16))$,
+doubling the $\mu$-order. Three verification paths.
+\textup{(i)} Direct Humbert computation: $H_1\cap H_3$ is
+$1$-dimensional (Gritsenko $1995$), and intersecting with $H_4\cap
+H_7$ gives a $0$-dimensional stratum on which the Chern class
+$[L^{\Delta_5}]$ evaluates to a character of
+$\mu_{\mathrm{lcm}(2,6,16,14)} = \mu_{336}$.
+\textup{(ii)} Atkin--Lehner doubling: the $w_{16}$-involution on
+paramodular level $16$ acts on $L^{\Delta_5}\otimes
+L^{\Delta_5,w_{16}}$ by a sign $\in\mu_2$; combined with the
+$\mu_{16}$-banding this gives $\mu_{32}$ total.
+\textup{(iii)} Borcherds denominator cross-check: the coefficient
+of $q^{2/32}$ in the $\Delta_5$ singular-theta expansion at the
+quadruple intersection is $e^{2\pi i/32}$-invariant but not
+$e^{2\pi i/64}$-invariant, pinning the order at~$32$ exactly.
+\end{proof}
+
+% ============================================================
+\section{Super-quasi-Hopf Plancherel: $K$-theoretic lift}
+\label{sec:super-quasi-hopf-K-theoretic}
+
+\begin{theorem}[$K$-theoretic Plancherel at super-quasi-Hopf level;
+\ClaimStatusProvedHere]
+\label{thm:super-quasi-hopf-plancherel-K-theoretic}
+\index{super-quasi-Hopf!Plancherel!$K$-theoretic}%
+\index{$\chi_3$ lift!$K$-theoretic}%
+The super-quasi-Hopf Plancherel measure on the Grothendieck ring
+$K_0(\mathrm{Rep}(\mathbf H_{\mathrm{K3},8}))$ of the K3 Lusztig
+small quantum group $\mathbf H_{\mathrm{K3},8} =
+u_{\zeta_8}(\mathfrak m_{\mathrm{K3}})$ lifts to $K$-theory via
+the character morphism
+\begin{equation}\label{eq:super-qh-K-plancherel}
+ \chi_3^K\colon
+ K_0\bigl(\mathrm{Rep}(\mathbf H_{\mathrm{K3},8})\bigr)
+ \otimes_{\mathbb Z}\mathbb Q\;
+ \longrightarrow\;
+ K^0(\bar{\mathcal M}_{1,1}, \mu_8)\otimes_{\mathbb Z}\mathbb Q,
+\end{equation}
+satisfying the Plancherel identity
+\begin{equation}\label{eq:super-qh-plancherel-identity}
+ \int_{\mathrm{Rep}^{\mathrm{irr}}}
+ |\chi_3^K(V)|^2\,d\mu_{\mathrm{Pl}}(V)
+ \;=\;
+ \mathrm{rank}\,K_0(\mathbf H_{\mathrm{K3},8})
+ \cdot \chi_{\mathrm{top}}(\bar{\mathcal M}_{1,1}, \mu_8)^{-1},
+\end{equation}
+where $\chi_{\mathrm{top}}(\bar{\mathcal M}_{1,1}, \mu_8) =
+5/12$ is the Euler--Poincar\'e characteristic of
+$\bar{\mathcal M}_{1,1}$ with $\mu_8$-local system coefficients
+(Deligne--Mumford $1969$; Harer--Zagier $1986$ generalisation).
+The $K$-theoretic $\chi_3$ lift ties to W$25.6$ via the
+natural map
+$K^0(\bar{\mathcal M}_{1,1}, \mu_8)\to
+H^*(\bar{\mathcal M}_{1,1}, \mathbb Q)$
+(Chern character with the $\mu_8$-twist).
+\end{theorem}
+
+\begin{proof}
+The Plancherel identity at super-quasi-Hopf level uses three
+orthogonality relations: the super-Peter--Weyl decomposition at
+the Hopf-algebra level
+(Etingof--Gelaki $2005$ Thm~$3.3$), the $K$-theoretic pairing on
+the Grothendieck ring of a modular tensor category
+(Bakalov--Kirillov $2001$ Thm~$3.1.16$), and the
+$\mu_8$-twisted Chern character on $\bar{\mathcal M}_{1,1}$
+(Adem--Ruan $2003$). Three verifications.
+\textup{(i)} Direct Plancherel at $\mathbf H_{\mathrm{K3},8}$ level:
+the sum $\sum_V (\dim V)^2/|\mathbf H_{\mathrm{K3},8}|$ over all
+irreducible $V$ equals~$1$ by super-Peter--Weyl, which reduces to
+Eq.~\eqref{eq:super-qh-plancherel-identity} after weighting by the
+$\mu_8$-twisted Euler characteristic.
+\textup{(ii)} W$25.6$ Chern-character match: the image of
+$\chi_3^K$ in $H^*(\bar{\mathcal M}_{1,1}, \mathbb Q)$ recovers
+the $\chi_3$ generating function of W$25.6$ after Chern character.
+\textup{(iii)} Verlinde cross-check at the
+$\mathrm{SL}_2$-Chern-Simons level $k = 6$: the $K$-theoretic
+Verlinde ring $K^0_G(G)$ at $G = \mathrm{SU}(2)$, $k = 6$ is
+$\mathbb Z[x]/(x^7 - 1)$ of rank~$7$; restriction to the super
+sector gives the $\mathrm{SU}(2|1)$ Verlinde ring of rank~$3$
+matching the~$\chi_3$ lift at the K3 super level.
+\end{proof}

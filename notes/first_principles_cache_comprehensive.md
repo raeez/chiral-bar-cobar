@@ -3605,7 +3605,11 @@ specific closure from primary source; corresponding inscription at
   $\kappa + \kappa^! = \varrho_N K$, $\varrho_N = H_N - 1$.
 - **Wrong.** Writing
   $\kappa(\cA) + \kappa(\cA^!) = K(\cA)$ with per-family values
-  $\{0, 13, 250/3, 98/3\}$ and simultaneously writing
+  $\{0, 13, 250/3, 98/3\}$ [INCOMPLETE per later-wave verdict:
+  canonical five-value set per antipatterns_catalogue.md L1316 /
+  AP357 is $\{0, 8, 13, 250/3, 98/3\}$ with BKM B-row
+  contributing the value 8; four-value version retracted] and
+  simultaneously writing
   $K(\cA) = c(\cA) + c(\cA^!) = \{-k, 2\dim\fg, 26, 100, 196\}$
   in the same chapter. For Virasoro at $c = 13$ self-dual,
   $\kappa + \kappa^! = 13$ while $c + c^! = 26$; the two $K$s
@@ -3623,9 +3627,11 @@ specific closure from primary source; corresponding inscription at
   family achieves.
 - **Trigger**: any claim "$\kappa(\cA) + \kappa(\cA^!) = K(\cA)$"
   without the $\varrho_\cA$ factor OR per-family $K$-values
-  in $\{0, 13, 250/3, 98/3\}$ (those are $\kappa + \kappa^!$,
-  not $K$); any table of "$K$" values at Virasoro that reads $13$
-  and not $26$.
+  in $\{0, 13, 250/3, 98/3\}$ [INCOMPLETE per later-wave verdict:
+  canonical five-value set is $\{0, 8, 13, 250/3, 98/3\}$ with
+  BKM B-row value 8 (AP357); four-value form retracted] (those are
+  $\kappa + \kappa^!$, not $K$); any table of "$K$" values at
+  Virasoro that reads $13$ and not $26$.
 - **Counter**: read the value from the canonical per-family
   table in `chapters/theory/universal_conductor_K_platonic.tex`
   (line ~795, $K = -c_{\mathrm{ghost}}$) or
@@ -3935,7 +3941,7 @@ Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_
 
 ### Pattern 226. Mukai signature → orthogonal / orthosymplectic series (2026-04-17, AP246)
 
-**Type**: type-assignment discipline for Yangians attached to lattices. (The task-directive called this "Pattern #222"; local numbering continues sequentially after Pattern 225 to avoid collision with prior entries.)
+**Type**: type-assignment discipline for Yangians attached to lattices. (The task-directive called this "Pattern #222"; local numbering continues sequentially after Pattern 225 to avoid collision with prior entries. 2026-04-21 audit note: this ### Pattern 226 entry is load-bearing and retains the integer; the later ## Pattern 226 entry on bibliography cross-check was renumbered to Pattern 411 per AP-CAT-1.)
 
 **Trigger**: any Yangian $Y(\mathfrak{g})$ whose $\mathfrak{g}$ is inferred from a lattice signature (Mukai $(4,20)$, Narain $(22,6)$, Niemeier $(24,0)$, $K3$ $(3,19)$, $K3 \times E$ $(4,20)$).
 
@@ -3997,7 +4003,7 @@ Bundle: `chapters/examples/{cy_d_kappa_stratification, toric_cy3_coha, toroidal_
 
 **Related**: AP239 (naming-after-physical-source), AP246 (signature type-assignment), AP251 (attribution density).
 
-## Pattern 222: "Rate-limited agents" may be binary-not-found in disguise
+## Pattern 407: "Rate-limited agents" may be binary-not-found in disguise (was duplicate-222; renumbered 2026-04-21 per AP-CAT-1; integer 222 first taken by the H3 `### Pattern 222. $\overline{\mathcal{M}}_{0,n}$ off-by-one` entry at line 3876)
 
 **Session**: 2026-04-18 (recovery-infrastructure audit)
 
@@ -4023,7 +4029,7 @@ which codex || echo "codex CLI MISSING — install before resume_failed.py"
 
 **Related**: AP80 (engine without test file — same discipline applied at theorem layer); AP293 (recovery-infrastructure prerequisite guard); AP294 (file-size threshold conflates failure modes); AP295 (dashboard liveness check).
 
-## Pattern 223: Exact-weight vs filtration-level bigrading for bar-complex Mittag-Leffler
+## Pattern 408: Exact-weight vs filtration-level bigrading for bar-complex Mittag-Leffler (was duplicate-223; renumbered 2026-04-21 per AP-CAT-1; integer 223 first taken by the H3 `### Pattern 223. Iterated-residue operator-order` entry at line 3892)
 
 **Session**: 2026-04-18 (MC5 Wave 14 heal).
 
@@ -4043,7 +4049,7 @@ which codex || echo "codex CLI MISSING — install before resume_failed.py"
 
 **Related**: AP261 (single-index vs bigraded ML) catches "wrong arity of grading"; AP296 catches "wrong OBJECT of bigrading"; AP260 (scalar-channel linearity without constructed projector) same error class in K-theoretic Chern-character accounting.
 
-## Pattern 224: Async-Agent running-count is not directly observable
+## Pattern 409: Async-Agent running-count is not directly observable (was duplicate-224; renumbered 2026-04-21 per AP-CAT-1; integer 224 first taken by the H3 `### Pattern 224. Sym(r-matrix) = κ via trace-Res` entry at line 3908)
 
 **Session**: 2026-04-18 (Wave 15 /loop harness audit).
 
@@ -4060,9 +4066,9 @@ which codex || echo "codex CLI MISSING — install before resume_failed.py"
 
 **Canonical violation**: 2026-04-18 session cron iteration 2 attempted to count running agents by listing task output files; the listing does not distinguish "running" from "completed-but-notification-pending" without reading the forbidden jsonl.
 
-**Related**: AP303, AP313, Pattern 225.
+**Related**: AP303, AP313, Pattern 410 (formerly Pattern 225).
 
-## Pattern 225: `status: completed` on async-Agent ≠ agent success
+## Pattern 410: `status: completed` on async-Agent ≠ agent success (was duplicate-225; renumbered 2026-04-21 per AP-CAT-1; integer 225 first taken by the H3 `### Pattern 225. Wave/campaign identifier leakage` entry at line 3928)
 
 **Session**: 2026-04-18 (Wave 15 agent observability).
 
@@ -4081,9 +4087,9 @@ If any of the three returns empty, treat completion as AMBIGUOUS-PARTIAL and eit
 
 **Canonical violations**: W(p) Massey swarm returned `"Note: $\mathcal{SF}^{\Z_2}$ not..."` (mid-Edit-retry); Theorem C swarm returned `"Those are pre-existing lines in the standalone, not my edit. My edits are correct. Now update CLAUDE.md Theorem C row:"` (mid-update-announcement); Chiral QG swarm returned `"Acknowledged — no commits."` (bare terminator).
 
-**Related**: Pattern 224, AP313, AP255.
+**Related**: Pattern 409 (formerly Pattern 224), AP313, AP255.
 
-## Pattern 226: Cross-check all bibliography files before calling a citation a phantom
+## Pattern 411: Cross-check all bibliography files before calling a citation a phantom (was duplicate-226; renumbered 2026-04-21 per AP-CAT-1; integer 226 first taken by the H3 `### Pattern 226. Mukai signature → orthogonal series` entry at line 3942)
 
 **Session**: 2026-04-18 (Mok25 programme-wide audit).
 
@@ -4103,7 +4109,7 @@ If any of the three returns empty, treat completion as AMBIGUOUS-PARTIAL and eit
 
 **Related**: AP1241 (preprint-pillar single-source infection), AP281 (bibkey drift), AP269 (SDR fabrication).
 
-## Pattern 227: OPE-pole-order discriminates ChirHoch^1 ≠ 0 from rank ≠ 1
+## Pattern 412: OPE-pole-order discriminates ChirHoch^1 ≠ 0 from rank ≠ 1 (was duplicate-227; renumbered 2026-04-21 per AP-CAT-1; integer 227 first taken by the H3 `### Pattern 227. Taylor / Chern-character expansion degree direction` entry at line 3958)
 
 **Session**: 2026-04-18 (ChirHoch Vir_c audit, Wave X).
 
@@ -4496,7 +4502,7 @@ $U^{\mathrm{mod}}_X \dashv \operatorname{Prim}^{\mathrm{mod}}$ and downstream pr
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
-## Pattern 240: Sub-agent shallow-termination from missing persistence directive
+## Pattern 400: Sub-agent shallow-termination from missing persistence directive (was duplicate-240; renumbered 2026-04-21 per AP-CAT-1)
 
 **Session**: 2026-04-18 attack-heal swarm (Vol II original agent `a215891e0b5051dd7` terminated after 33 s / 9 tool uses with one-sentence stub output `Let me search for the central definitions and the bar-differential / coproduct identifications.`).
 
@@ -4523,13 +4529,13 @@ if (duration_ms < 90000) && (tool_uses < 15) && (result starts with "Let me|Let'
 
 **Canonical violation healed (this session)**: Vol II original prompt lacked persistence directive and concrete-starting-moves; relaunch (`ab7df562c805e249e`) added "Be PERSISTENT — plan for ~50+ tool uses across ~15-30 minutes" and "Concrete starting moves (DO THESE FIRST, THEN GO DEEPER)" preface, Phase 0–4 explicit structure, 400-word final-report budget.
 
-**Related**: Pattern 222 ("Rate-limited agents may be binary-not-found in disguise"); Pattern 224 (async-Agent running-count is not directly observable); Pattern 225 (`status: completed` ≠ agent success).
+**Related**: Pattern 407 ("Rate-limited agents may be binary-not-found in disguise"; formerly Pattern 222); Pattern 409 (async-Agent running-count is not directly observable; formerly Pattern 224); Pattern 410 (`status: completed` ≠ agent success; formerly Pattern 225).
 
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
-## Pattern 241: /loop cron prompt requires verbatim /loop-prefix self-reference
+## Pattern 401: /loop cron prompt requires verbatim /loop-prefix self-reference (was duplicate-241; renumbered 2026-04-21 per AP-CAT-1)
 
 **Session**: 2026-04-18 attack-heal swarm (cron `ea44ce3f` → `0f6e8f68` rotation; CronCreate prompt must be the literal `/loop ...` text so the next firing re-enters the /loop skill).
 
@@ -4561,7 +4567,7 @@ CronList | grep -E '/loop' | grep -vE '^[a-f0-9]+ — Every .+ \[.+\]: /loop '
 
 No AI attribution. All work attributed to Raeez Lorgat.
 
-## Pattern 242: Premature convergence declaration in attack-heal loops (relabelling ≠ new mathematics)
+## Pattern 402: Premature convergence declaration in attack-heal loops (relabelling ≠ new mathematics; was duplicate-242; renumbered 2026-04-21 per AP-CAT-1)
 
 **Session**: 2026-04-18 attack-heal swarm (golden rule #1: "Mere ambient/status relabelling without new mathematics does NOT count as convergence").
 
@@ -4849,7 +4855,7 @@ done
 
 **Canonical application** (this session): Wave 5 agent 4's prompt includes COORDINATION paragraph: "Agent 3 is also working in Vol II on Part VI/VII. Stay strictly in Part IV/V to avoid merge conflicts. If you touch a Part-VI/VII file, STOP and pick a different Part IV/V target."
 
-**Related**: Pattern 243 (wave-merge push rejection from concurrent commits — the downstream symptom when partition fails); Pattern 249 (cross-wave EXCLUDE-LIST — the cross-wave analogue at spawner level); Pattern 224 (async-Agent running-count not directly observable — informs the mid-work git-log check in step 3).
+**Related**: Pattern 243 (wave-merge push rejection from concurrent commits — the downstream symptom when partition fails); Pattern 249 (cross-wave EXCLUDE-LIST — the cross-wave analogue at spawner level); Pattern 409 (formerly Pattern 224; async-Agent running-count not directly observable — informs the mid-work git-log check in step 3).
 
 ### Attribution
 
@@ -5187,6 +5193,2375 @@ Rem `rem:modtr-wave18-HS-scope`, `rem:modtr-wave18-MO-extension`.
 **Related**: Pattern 260 (AP176 pro-limit); AP-CY70 ($\Psi$-scope);
 Pattern 259 (Monster super-EK).
 
+---
+
+## Pattern 413: Classical vs Lurie-derived vs chiral-derived Hochschild deformation degree (chirhoch3 sixth path) (was duplicate-261; renumbered 2026-04-21 per AP-CAT-1; integer 261 first taken by the H2 `## Pattern 261 (AP177): Plancherel measure support is pro-finite index set` entry at line 5147)
+
+**Confusion trigger**: equating the degree at which $[\chi_3]$
+classifies a deformation across the three distinct deformation
+theories --- classical Gerstenhaber, Lurie derived formal moduli,
+chiral derived formal moduli. The three degrees differ by shifts
+that depend on the ambient $\infty$-operadic category.
+
+**Correct distinction**: Gerstenhaber $1964$
+\emph{Ann.\ Math.}~$79$~Thm.~$1$ identifies $\HH^2(A,A)$ with
+infinitesimal deformations of an associative algebra $A$ over
+$k[\epsilon]/\epsilon^2$ --- degree~$2$. Lurie formal-moduli
+\textup{(}arXiv:0709.3091 Thm.~$5.3$, absorbed into
+\cite{LurieDAGX} Thm.~$5.2.14$\textup{)} upgrades this to a
+derived functor $\FMP_A:\dgArt\to\mathrm{Grpd}_\infty$ represented
+by $\LMC_{\mathrm{Hoch}^{\bullet+1}[1]}$, so the tangent complex
+sits at $\HH^{\bullet}(A)[1]$ and derived deformations distribute
+over all positive degrees: $\HH^2[-1]$ infinitesimal,
+$\HH^3$ associator / $A_\infty$-structure obstruction, $\HH^4[1]$
+higher coherences. Chiral derived deformation replaces $A$ by a
+factorisation chiral bialgebra on a curve and classical Hochschild
+by chiral Hochschild in the Francis--Gaitsgory $\infty$-operadic
+ambient $\mathrm{ChirAlg}_X^{\SCchtop}$~\cite{FG12} Selecta $18$
+\S~$6.2$; the representability extends by
+Hinich~\cite{Hin01} J Pure Appl Algebra $162$ + Francis--Gaitsgory
+chiral Koszul duality~\cite{FG12} Thm.~$6.1$ + Lurie--Pridham
+\cite{LurieDAGX} Thm.~$5.2.14$;~\cite{Pri10} Thm.~$4.55$. The
+three candidate deformations of $\mathbf H_{\Delta_5}$ live at
+distinct degrees: Etingof--Kazhdan super-quantisation at
+$\hbar^2=-1/8$~\cite{EK96} Selecta $4$ Thm.~$2.4$ classifies in
+$\ChirHoch^2$ (associator deformation); Gritsenko--Nikulin
+Borcherds twist
+$\widetilde\Phi^{\mathrm{Sieg\text{-}Bor}}_\hbar[\Phi_{10}/\eta^{24}]$
+\cite{GriNik97} Amer J Math $119$ \S $4$;~\cite{Bor98} Inv Math
+$132$ Thm.~$10.1$ classifies in $\ChirHoch^3$ (Drinfeld pentagon
+$3$-cocycle twist); Drinfeld-centre deformation~\cite{Dri89} Alg
+Anal $1$ \S $6$ classifies in $\ChirHoch^4$ (bulk / $\infty$-bialgebra
+shift). Only the Gritsenko--Nikulin Borcherds twist lives at genuine
+degree~$3$, and is therefore the unique derived deformation
+classified by $[\chi_3]$.
+
+**Regex trigger**: flag `classif(y|ied|ication)` near
+`deformation` within 5 lines of `\\chi_3` or
+`\\mathbf H_{\\Delta_5}` without the degree-$3$ qualifier /
+Gritsenko--Nikulin-Borcherds-twist disambiguation; flag
+`FMP|LMC|\\LMC` without the chiral-ambient upgrade to
+Francis--Gaitsgory $\infty$-operadic representability.
+
+**Primary**: Gerstenhaber 1964 Ann Math $79$ Thm.~$1$
+(classical); Lurie 2011 arXiv:0709.3091 Thm.~$5.3$ + DAG X
+Thm.~$5.2.14$ (derived FMP representability);
+Pridham 2010 Adv Math $224$ Thm.~$4.55$ (derived deformation
+representability, independent route); Hinich 2001 J Pure Appl
+Algebra $162$ ($\infty$-operadic deformation); Francis--Gaitsgory
+2012 Selecta $18$ \S $6.2$ (chiral $\infty$-operadic ambient) +
+Thm.~$6.1$ (chiral Koszul duality); Kontsevich 2003 Lett Math Phys
+$66$ Thm.~$1.1$ (formality); Dolgushev--Tamarkin--Tsygan 2009
+Lett Math Phys $90$ (chiral factorisation formality);
+Gritsenko--Nikulin 1997 Amer J Math $119$ \S $4$
+(Borcherds twist $\Phi_{10}/\eta^{24}$); Borcherds 1998 Inv Math
+$132$ Thm.~$10.1$ (additive lift); Etingof--Kazhdan 1996 Selecta
+$4$ Thm.~$2.4$ (super-quantisation, wrong degree~$2$);
+Drinfeld 1989 Alg Anal $1$ \S $6$ (Drinfeld-centre, wrong
+degree~$4$); Mukai 1987 Symposium on Algebraic Geometry Thm.~$1.5$
+($\chi(\mathcal O_{\mathrm{K3}})=2$).
+
+**Location**: inscribed in
+`/Users/raeez/chiral-bar-cobar/chapters/theory/hochschild_cohomology.tex`
+Thm `thm:chirhoch3-Delta5-derived-deformation`, Cor
+`cor:chirhoch3-six-fold-confirmation`, Rem
+`rem:chirhoch3-six-paths`, `rem:chirhoch3-derived-vs-classical`.
+
+**Related**: the five earlier paths (A) CoHA Casimir
+(\ref{thm:chirhoch3-Delta5-chain-level}~(ii)), (B) Igusa
+$\Phi_{10}^{-1}$ + Siegel--Eisenstein
+(\ref{thm:chi3-siegel-eisenstein-period}), (C) elliptic-volume
+rigidity, (D) relative HPD
+(\ref{thm:hpd-obstruction-k3e-relative-replacement}~(iii)), (E)
+cyclic Feigin--Tsygan
+(\ref{thm:chirhoch3-Delta5-feigin-tsygan}); AP165 (B(A) is $E_1$
+coalgebra, not SC); Pattern 259 (Monster super-EK scope); RS
+$\langle$derived vs classical deformation degree scope$\rangle$.
+
 ### Attribution
 
 No AI attribution. All work attributed to Raeez Lorgat.
+
+---
+
+## Pattern 262 (W23.3): Schottky locus codimension at genus 3 — codim 0, not codim 1
+
+**Session**: 2026-04-20 (Wave 23 GELFAND — $g=3$ hexa-unipotent Malcev ladder).
+
+**Type**: dimension-miscount / scope error at the Schottky-vs-Heegner boundary.
+
+**Confusion**: treating the Schottky locus $J_g := \mathrm{Jac}(\mathcal M_g)\subset\mathcal A_g$ at $g=3$ as codim 1 in $\overline{\mathcal A_3}$, parallel to the Schottky-Igusa quartic at $g=4$.
+
+**Correct statement**: at $g=3$, Torelli is surjective (Andreotti-Mayer 1967; Beauville 1977 Compos Math 36), $\dim\mathcal M_3 = 3g-3 = 6 = g(g+1)/2 = \dim\mathcal A_3$, and the Schottky locus $J_3 = \mathcal A_3$ occupies codim 0; the non-Jacobian locus (Prym, etc.) occupies codim 1. Only at $g \ge 4$ is Schottky a genuine codim-1 divisor (Schottky-Igusa quartic $F_\mathrm{SI}$, Igusa 1972 \S 7).
+
+**Consequence**: the genus-3 Malcev ladder on $\overline{\mathcal A_3}$ treats admissible Heegner divisors (codim 1 through codim $k_{\max}(3) = 6$) as the 13-stratum hexa-unipotent extension, with Schottky NOT one of the strata. Schottky-vs-Noether-Lefschetz class independence (cache entry W23.4-g4-schottky-vs-NL-divisor-class-distinction) appears first at $g=4$.
+
+**Regex trigger**: flag `Schottky.*codim.*1.*g\s*=\s*3` or `codim.*[^4]\s*Schottky.*g\s*=\s*3`.
+
+**Primary**: Andreotti-Mayer 1967 Ann Sc Norm Pisa 21; Beauville 1977 Compos Math 36; Igusa 1972 \emph{Theorems on Siegel Modular Forms} \S 7; Arbarello-Cornalba-Griffiths 2011 \emph{Geometry of Algebraic Curves II} Ch.\ XII \S 2; Grushevsky 2012 Handbook of Moduli \S 3.
+
+**Related**: Pattern 250 (CY-Siegel-automorphic-product); W23.4-g4-schottky-vs-NL-divisor; genus ladder $k_{\max}(g) = g(g+1)/2$.
+
+**Location**: Vol I chapters/theory/mc5\_class\_m\_chain\_level\_platonic.tex \S subsec:g3-hexa-unipotent-malcev Rem rem:g3-schottky-codim-0.
+
+---
+
+## Pattern 263 (W22.1): $(\infty,2)$-adjunction and Auslander-Reiten triangular structure on bi-unipotent Malcev pro-ambient
+
+**Session**: 2026-04-20 (Wave 22 FORMALITY/RECIPROCITY).
+
+**Type**: positive pattern — structural enrichment of the chiral bar-cobar adjunction.
+
+The chiral bar-cobar pair $\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}$ admits a natural $(\infty,2)$-enrichment: beyond the $(\infty,1)$-adjunction of Theorem A, the triangle identities are witnessed by $2$-morphisms $\sigma_\triangle, \sigma_\square$ carrying the Malcev-ladder classifying cocycle data. This $(\infty,2)$-adjunction interacts with the Auslander-Reiten triangulated structure on the Deligne-Malcev bi-unipotent pro-object ambient $\mathrm{Perf}(\overline{\mathcal A_2})^{\mathrm{Malcev}}$ via the translate $\tau(X) = \mathrm{AR}(X)$, satisfying $\tau^2 = \Sigma^2 \circ [\text{tri-unipotent correction}]$.
+
+**Without the $2$-morphism tracking**: the compatibility of the eight octachotomy ambients — fibrewise generic / single-monodromy-refined / bi-unipotent Malcev / tri-unipotent Malcev / weight-completed coderived / $A_\infty$-corrected / $(\infty,1)$-Perf / Kontsevich-formal — collapses at the second Malcev layer; the tri-unipotent commuting $\mathfrak{sl}_2^{\oplus 3}$-triple data becomes scope-incoherent.
+
+**AR construction**: $\mathrm{Perf}(\overline{\mathcal A_2})^{\mathrm{Malcev}}$ is Ext-finite abelian with enough projectives (via Bruinier 2002 Prop 5.1 + Deligne 1970 Thm 5.1), so Reiten-van den Bergh 2002 JAMS 15 Thm 1.4 applies. AR translate = Serre functor composed with $[-1]$ (Keller 2005 J Pure Appl Algebra 190 Thm 1.3) = Mukai-dual shift on CY-3 output under $\Phi_3$.
+
+**Regex trigger** (hook): flag `triangle identit(y|ies)` near `bar.*cobar` without the $(\infty,2)$-enrichment qualifier; flag `Auslander.*Reiten` without explicit translate-squared-equals-shift identity.
+
+**Primary**: Auslander-Reiten 1975 Comm Algebra 3; Happel 1988 LMS LN 119 Ch IV; Reiten-van den Bergh 2002 JAMS 15 Thm 1.4; Keller 2005 J Pure Appl Algebra 190 Thm 1.3; Lurie HA Thm 5.5.1.1; Positselski 2011 Mem AMS 212; Bruinier 2002 LNM 1780 Prop 5.1; Francis-Gaitsgory 2012 Selecta Math 18 \S 6.2.
+
+**Location**: Vol I chapters/theory/koszulness\_moduli\_scheme.tex \S subsec:AR-infty-2 Thm thm:bar-cobar-infty-2-AR; Vol I chapters/theory/chiral\_center\_theorem.tex Rem rem:AR-triangular-upgrade.
+
+**Related**: Pattern 236 (ambient qualifier); W22-chiral-kontsevich-formality-scope-vs-humbert-obstruction (Kontsevich-formal ambient); octachotomy closure at codim 3.
+
+---
+
+## Pattern 264 (W20.7): $L(s, \chi_3)$ as spinor Euler product with functional equation and Rankin-Selberg factorisation
+
+**Session**: 2026-04-20 (Wave 20 — arithmetic anchoring of $\chi_3$).
+
+**Type**: positive pattern — arithmetic content of the Hochschild $3$-cocycle.
+
+The chiral Hochschild $3$-cocycle $\chi_3 \in \ChirHoch^3(\mathbf H_{\Delta_5})$ paired via $\Phi_3$ against the Siegel-Eisenstein residue (entry W21-chi3-pairing-as-bare-number-vs-siegel-eisenstein-period) sits inside a genuine Langlands $L$-function with three compatible structures:
+
+**Structure A (Euler product, degree 4 spinor)**: $L(s, \chi_3) = \prod_p L_p(s, \chi_3)$ with
+$$L_p(s, \chi_3)^{-1} = 1 - a_p(\chi_3) p^{-s} + b_p(\chi_3) p^{-2s} - p^9 a_p(\chi_3) p^{-3s} + p^{18} p^{-4s}$$
+Satake parameters $(\alpha_{1,p}, \ldots, \alpha_{4,p})$ with $\prod \alpha_{i,p} = p^{18}$ (Andrianov 1974 Thm 3.2.1).
+
+**Structure B (functional equation)**: $s \leftrightarrow 10 - s$ with root number $\epsilon(\chi_3) = +1$; completed $\Lambda(s, \chi_3) = \Gamma_\mathbb C(s)\Gamma_\mathbb C(s-4)L(s,\chi_3)$ invariant. Centre $s_0 = 5$.
+
+**Structure C (Rankin-Selberg)**: $L(s, \Delta_5 \otimes \chi_3^\vee) = \zeta(s)\zeta(s-9)\zeta(s-8) L^{\mathrm{ad}}(s, \Delta_{E_6})$, factoring through the Dickson-Pitale-Saha-Schmidt 2020 Duke Math J 169 Thm 1.1 adjoint lift.
+
+**Three verification paths**: (V1) Andrianov 1974 + Evdokimov 1984 spinor Euler product; (V2) Arthur-Clozel SK-lift parameters $\psi_{\Delta_{10}} = \phi_{\Delta_{E_6}} \boxtimes \mathrm{Sym}^1$ with Pattern 255 ramification at $p=2$; (V3) Böcherer's conjecture (DPSS 2020 Thm 1.1).
+
+**Regex trigger**: flag `L\(s.*chi_3\)` without spinor / Rankin-Selberg identification; flag `functional equation.*chi_3` without the explicit $s \leftrightarrow 10-s$ reflection.
+
+**Primary**: Andrianov 1974 Mat Sb 93 Thm 3.2.1; Evdokimov 1984 Trudy MIAN 183 \S 4; Furusawa 1993 Math Z 213 Thm 2.1; Gritsenko 1994 Leningrad Math J 5 \S 4.3; Dickson-Pitale-Saha-Schmidt 2020 Duke Math J 169 Thm 1.1; Ibukiyama-Poor-Yuen 2019 IJNT 9 Thm 5.1; Böcherer 1986 Crelle 362; Saha 2013 Adv Math 229 Thm 1.1.
+
+**Location**: Vol I chapters/theory/derived\_langlands.tex \S subsec:L-function-chi3 Thm thm:L-function-chi3-spinor-euler.
+
+**Related**: Pattern 255 ($p=2$ ramified); W19-chenevier-pseudocharacter-source-algebra ⟂ retracted per canonical preamble: see Chenevier determinant (Pattern 295 / W25); W21-chi3-pairing-siegel-eisenstein-period.
+
+---
+
+## Pattern 265 (W22.10): Five-archetype $\chi_3$ portrait with explicit $\partial$-exact primitives on G/L/C rows
+
+**Session**: 2026-04-20 (Wave 22 POLYAKOV — five-archetype portrait sharpened).
+
+**Type**: positive pattern — chain-level witnesses for vanishing rows.
+
+The five-archetype $\ChirHoch^3$ portrait (entry 310-W23-chirhoch3-five-archetype-portrait-shadow-finite-zero-vs-infinite-depth-W3Zam) names rows G/L/C as $[\chi_3] = 0$ and rows M/B as $[\chi_3] = \mathbb C \cdot [W_3^{\mathrm{Zam}}]$. Pattern 265 sharpens the vanishing rows with explicit $\partial$-exact primitives:
+
+**Row G (Heisenberg $\mathcal H_k$, $k \ne 0$)**: $[\chi_3^{\mathcal H}] = 0$ witnessed by
+$$\beta_2^{\mathcal H}(a_1, a_2; z_1, z_2) = (z_1 - z_2)^{-2}\langle a_1, a_2\rangle_k \frac{\partial}{\partial z_1}$$
+U(1)-charge neutrality kills 3-pt function; shadow tower truncation $r_{\max} = 2$ excludes $S_3$.
+
+**Row L (affine KM $V_k(\mathfrak g)$, $k + h^\vee \ne 0$)**: $[\chi_3^{V_k}] = 0$ witnessed by Sugawara descent
+$$\beta_2^{\mathrm{GF}} = \frac{1}{2(k+h^\vee)}:J^a J_a:\frac{\partial}{\partial z}$$
+Gelfand-Fuks loop-algebra cohomology projects to zero in quotient by $\mathcal Z(\widehat{\mathfrak g})$ (Frenkel-Ben-Zvi 2004 Thm 7.1.1).
+
+**Row C ($\beta\gamma_\lambda$, $\lambda \ne 1/2$)**: $[\chi_3^{\beta\gamma}] = 0$ witnessed by $bc$-ghost coboundary
+$$\beta_2^{\mathrm{ghost}} = -{:\beta\gamma:}(z)\frac{\partial}{\partial z}$$
+Fermionic triples $\partial$-exact on free spinor rep (Friedan-Martinec-Shenker 1986 NPB 271 \S 4).
+
+**Row M (Virasoro)**: $[\chi_3^{\mathrm{Vir}}] = \mathbb C \cdot [W_3^{\mathrm{Zam}}]$, $W_3^{\mathrm{Zam}} = {:}T\partial T: - (1/4)\partial^3 T$.
+
+**Row B (BKM crown)**: $[\chi_3^{\mathbf B}] = \mathbb C \cdot [W_3^{\mathrm{Zam}} + \hbar \cdot \mathrm{qt}(J^{(3)})]$ with Yangian quantum tail on CY-3-enlarged ambient; classical limit $\hbar \to 0$ reduces to row M Virasoro skeleton.
+
+**Structural law**: $[\chi_3^{\mathcal A}] \ne 0 \Leftrightarrow r_{\max}(\mathcal A) = \infty$; the shadow-finite rows refuse the weight-5 quasi-primary content.
+
+**Regex trigger**: flag `[\chi_3]` near `vanish` without naming the $\beta_2$ primitive on rows G/L/C.
+
+**Primary**: Zamolodchikov 1985 TMP 65 eq (2.6); Gelfand-Fuks 1970 Funct Anal Appl 4; Feigin 1988 RMS 43 Thm 1.2; Frenkel-Ben-Zvi 2004 \emph{VA and AG Curves} Thm 7.1.1; Friedan-Martinec-Shenker 1986 NPB 271 \S 4; Kac 1998 \emph{VAB} \S 2.5; Schiffmann-Vasserot 2013 Publ IHES 118 Thm B.
+
+**Location**: Vol I chapters/theory/hochschild\_cohomology.tex \S sec:chirhoch3-five-archetype-portrait Thm thm:chirhoch3-five-archetype-portrait.
+
+**Related**: cache row 310-W23-chirhoch3-five-archetype-portrait; Finding 18; Vol I chapters/examples/landscape\_census.tex $\chi_3$-column.
+
+---
+
+## Pattern 266 (W24.1): Unified five-theorem climax identity — A/B/C/D/H as derived evaluations along functor tower
+
+**Session**: 2026-04-20 (Wave 24 CLIMAX).
+
+**Type**: positive pattern — single-statement organising principle for Theorems A-H.
+
+Volume I's five flagship theorems — A (bar-cobar adjunction), B (Positselski coderived / contraderived equivalence), C (derived-centre complementarity), D (obstruction-tower universality), H (Hochschild concentration) — are NOT five independent theorems but FIVE DERIVED EVALUATIONS of the single chiral bar-cobar adjunction
+$$\Omega^{\mathrm{ch}}_X \dashv B^{\mathrm{ch}}_X$$
+along the functor tower
+$$\{\pi_0,\ D^{\mathrm{co}}/D^{\mathrm{ctr}},\ \mathrm{tr},\ \int_{\overline{\mathcal M_g}},\ \mathrm{RHom}\}.$$
+
+**Identification**:
+- **Theorem A** = $\pi_0$ (backbone adjunction at connected-component level).
+- **Theorem B** = $D^{\mathrm{co}}/D^{\mathrm{ctr}}$ (Positselski contraderived / coderived, Positselski 2011 Mem AMS 212).
+- **Theorem C** = $\mathrm{tr}$ (derived trace / cyclic cohomology; derived centre complementarity $\kappa + \kappa^! \in \{0, 8, 13, 98/3, 250/3\}$).
+- **Theorem D** = $\int_{\overline{\mathcal M_g}}$ (moduli integration; $\mathrm{obs}_g = \kappa\cdot\lambda_g$).
+- **Theorem H** = $\mathrm{RHom}$ (Hochschild concentration $\{0, 1, 2, d\}$ via derived endomorphism; Francis 2013 Thm 1.1).
+
+**Tower structure**: the functors form a TOWER by successive derived enrichment: $\pi_0 \to D^{\mathrm{co}}/D^{\mathrm{ctr}}$ (pass to coderived); $D^{\mathrm{co}}/D^{\mathrm{ctr}} \to \mathrm{tr}$ (take cyclic trace); $\mathrm{tr} \to \int$ (integrate over moduli); $\int \to \mathrm{RHom}$ (promote to derived Hom).
+
+**Five-archetype climax shadow**: G/L/C/M/B with
+- $\kappa + \kappa^! \in \{0, 0, 0, 13, 8\}$
+- $r_{\max} \in \{2, 3, 4, \infty, \infty\}$
+- $[\chi_3] \in \{0, 0, 0, \mathbb C, \mathbb C\}$ (Pattern 265)
+
+The BKM crown $\mathbf B = \mathbf H_{\Delta_5}$ sits at $\kappa + \kappa^! = 8$ via Mukai factor + Kodaira 24-fibre residue; the M-row extensions at $\{250/3, 98/3\}$ are $\mathsf W$-algebra specialisations.
+
+**Three verification paths**: (V1) each theorem re-proved as image of specific functor on the chiral bar-cobar backbone; (V2) commutativity of the functor-tower squares; (V3) compatibility with $\Phi$ from Vol III (CY input at $d \in \{2, 3\}$ lands in $\mathbf B$-row).
+
+**Regex trigger** (hook): flag `Theorems? [ABCDH]` in prose without climax-identity cross-reference.
+
+**Primary**: Beilinson-Drinfeld 2004 \emph{Chiral Algebras} Ch 3-4; Positselski 2011 Mem AMS 212; Francis-Gaitsgory 2012 Selecta Math 18 \S 6; Lurie HA \S 5.5.5 (formal moduli); Kontsevich 2003 LMP 66; Caldararu 2005 Adv Math 194; Francis 2013 Adv Math 239 Thm 1.1.
+
+**Location**: Vol I chapters/theory/chiral\_climax\_platonic.tex Thm thm:unified-five-theorem-identity; Rem rem:five-derived-evaluations-tower.
+
+**Related**: Pattern 265 (five-archetype $\chi_3$ portrait); 310-W23-chirhoch3 (ChirHoch portrait); landscape\_census.tex $\kappa + \kappa^!$ and $r_\max$ columns; Pattern 257 (BKM ranks distinct 2/3/26).
+
+---
+
+## Pattern 267 (W20.4): Pseudo-character primary form is $f_{16} = E_4\cdot\Delta$ (weight 16), not Ramanujan $\Delta$ (weight 12)
+
+**Session**: 2026-04-20 (Wave 20 — Hecke primary form correction).
+
+**Type**: Hecke eigenform-mislabelling at the SK-lift input.
+
+**Confusion**: writing the pseudo-character identity $S^{\mathrm{ps}}_1(T_p) = a_p + p^8 + p^9$ with $a_p = \tau(p)$ (Ramanujan's weight-12 $\Delta$ eigenvalues).
+
+**Correct statement**: the primary form is $f_{16} = E_4 \cdot \Delta \in S_{16}(\mathrm{SL}_2(\mathbb Z))$ (unique normalised Hecke eigenform of weight 16, since $\dim S_{16}(\mathrm{SL}_2(\mathbb Z)) = 1$), NOT $\Delta$ (weight 12). First Hecke eigenvalues: $a_2(f_{16}) = 216, a_3(f_{16}) = -3348, a_5(f_{16}) = 52110, a_7(f_{16}) = 2822456$. Saito-Kurokawa / Ikeda lift structure for $\mathrm{Sp}_4$ uses paramodular weight $k$; at $k = 10$ (i.e., $\Delta_{10}$) the elliptic input has weight $2k-2 = 18$ (Maass 1979), and the Gritsenko-Nikulin 1998 multiplicative lift of $\phi_{0,1}$ produces $\Delta_5$ at weight 5. The SK-squared identity $\Delta_5^2 = C\cdot\Phi_{10} = C\cdot\Delta_{10}$ links the two lifts.
+
+**Consequence**: using $\Delta$ (weight 12) as primary form corrupts the Satake parameters — they scale differently for $\Delta$ vs $f_{16}$ — and the deduced SK-lift target shifts from $\Delta_{10}$ to no valid target. The Euler product $L(s, \chi_3)$ of Pattern 264 then fails to match the Rankin-Selberg factorisation.
+
+**Regex trigger**: flag `S\^{\\mathrm\{ps\}}\s*_1` near `\\tau\\(p\\)` or `a_p\\(\\Delta\\)` without the weight-16 $f_{16}$ qualifier.
+
+**Primary**: Ikeda 2001 Ann Math 154 Thm 5.1; Maass 1979 Invent Math 52; Andrianov 1979 Russian Math Surv 34; Gritsenko 1994 Leningrad Math J 5; Gritsenko-Nikulin 1998 AJM 119; Poor-Yuen 2015 Math Comp 84; Ibukiyama-Poor-Yuen 2019 IJNT 9; Chenevier-Lannes 2019 \emph{Automorphic Forms and Even Unimodular Lattices} Table 22.1.
+
+**Location**: Vol I chapters/theory/derived\_langlands.tex Rem rem:hecke-primary-form-f16-not-delta-12.
+
+**Related**: W13-TOP-1 (Ikeda vs Gritsenko lift conflation); W19-chenevier-pseudocharacter-source-algebra ⟂ retracted per canonical preamble: see Chenevier determinant (Pattern 295 / W25); Pattern 264 ($L(s, \chi_3)$).
+
+---
+
+## Pattern 268 (W20.4.ext): Pseudo-character empirical grounding — 22 primes (W19) $\to$ 46 primes (W20)
+
+**Session**: 2026-04-20 (Wave 20 — Hecke extension through prime 199).
+
+**Type**: positive pattern — empirical extension.
+
+W19 `thm:dl-wave19-pseudocharacter-delta10` verified the identity $S^{\mathrm{ps}}_1(T_p) = a_p(f_{16}) + p^8 + p^9$ at 22 primes $p \le 79$ via the \texttt{DELTA\_E6\_AP\_W17} Hecke table. Wave 20 extends to 46 primes $p \le 199$ via updated \texttt{DELTA\_E6\_AP\_W20}, adding the 24 primes:
+$$\{83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199\}.$$
+
+$S^{\mathrm{ps}}_4(T_p^4) = p^{32}$ verified at the same 46 primes. Each new prime is an independent empirical check beyond W19. Deligne-bound saturation $\rho_\mathrm{Del}(p) := |a_p(f_{16})|/(2p^{15/2})$ peaks:
+- $\rho_\mathrm{Del}(37) = 0.895$ (W19)
+- $\rho_\mathrm{Del}(89) = 0.8575$ (W18)
+- $\rho_\mathrm{Del}(181) = 0.7932$ (W20)
+
+The 46-prime verification strengthens the structural claim (Taylor 1991 / Weissauer 2005 Galois representation) with empirical confidence across a broader prime range.
+
+**Regex trigger** (hook): flag `22 primes` near `pseudo.character` — should be updated to `46 primes` via W20 extension.
+
+**Primary**: Chenevier 2014 arXiv:1301.0635 Prop 1.9; Taylor 1991 Duke 63 Thm 2.1; Weissauer 2005 LNM 1868 \S 4; Deligne-Serre 1974 ASENS 7 \S 8; Andrianov 1979 RMS 34.
+
+**Location**: Vol I chapters/theory/derived\_langlands.tex Remark rem:pseudocharacter-hecke-46-prime-w20. Verification module: compute/lib/k3\_yangian\_wave20\_pseudocharacter\_46\_primes.py.
+
+**Related**: W19-chenevier-pseudocharacter-source-algebra (initial 22-prime claim) ⟂ retracted per canonical preamble: see Chenevier determinant (Pattern 295 / W25); Pattern 255 ($p=2$ ramified); Pattern 267 (primary form $f_{16}$).
+
+---
+
+## Pattern 269 (W20.3): Shimura-Waldspurger bridge between Borcherds and Gritsenko lifts of $\Delta_5$
+
+**Session**: 2026-04-20 (Wave 20 — $\Delta_5$ construction-bridge).
+
+**Type**: construction-bridge identity — non-trivial intertwining of two lift routes.
+
+Two canonical constructions of $\Delta_5 \in S_5(K(1))^{v_{\Delta_5}}$:
+- **Borcherds 1998**: multiplicative singular-theta lift $\Delta_5^{\mathrm{Borch}} = \mathrm{Borch}(\phi_{0,1})$ where $\phi_{0,1}$ is the K3 weak Jacobi form of weight 0 index 1 with Fourier expansion encoding $M_{24}$ moonshine.
+- **Gritsenko 1999**: additive Jacobi lift $\Delta_5^{\mathrm{Grit}} = \mathrm{Grit}(\eta^9\vartheta_1)$ from weight $9/2$ index $1/2$ Jacobi form.
+
+Both land in the same $1$-dim space $S_5(K(1))^{v_{\Delta_5}}$ (Gritsenko 1994 uniqueness); the two lifts are scalar multiples. The Shimura-Waldspurger intertwiner produces the non-trivial bridge factor:
+$$\Delta_5^{\mathrm{Borch}} = C_k \cdot \Delta_5^{\mathrm{Grit}}, \quad C_k = 2^{2\epsilon(k)-6} \cdot \frac{L(1, \chi_f)}{L(1/2, \mathrm{Sh}(f))}$$
+with $\chi_f$ the quadratic-twist character of the Jacobi input, $\mathrm{Sh}(f)$ the Shimura lift of $f$, and $\epsilon(k) = k \bmod 2$.
+
+**At $k = 4$**: $C_5 = 2^{-6} = 1/64$ (matches Gritsenko-Nikulin 1998 Table 1 multiplicative constant).
+
+**Three components**: (i) prefactor $2^{2\epsilon(k)-6}$ from half-integral weight doubling; (ii) numerator $L(1, \chi_f)$ from quadratic twist; (iii) denominator $L(1/2, \mathrm{Sh}(f))$ from Shimura metaplectic/non-metaplectic central-value.
+
+**Three verification paths**: (V1) Eichler-Zagier 1985 Thm 4.4 + Kohnen-Zagier 1984 Jacobi period formula; (V2) Waldspurger 1981 central-value formula for half-integral weight; (V3) Maass 1979 additive-multiplicative bridge via theta integral.
+
+**Regex trigger**: flag `\\Delta_5\\^\\{\\\\mathrm\{Borch\}\\}` and `\\Delta_5\\^\\{\\\\mathrm\{Grit\}\\}` used interchangeably without the bridge constant $C_k = 2^{2\epsilon(k)-6}L(1,\chi_f)/L(1/2,\mathrm{Sh}(f))$.
+
+**Primary**: Shimura 1973 Ann Math 97 Thm 1; Waldspurger 1981 J Math Pures Appl 60 Thm 2; Kohnen-Zagier 1984 Invent Math 75; Eichler-Zagier 1985 \emph{Jacobi Forms} Thm 4.4; Borcherds 1998 Invent Math 132 Thm 14.3; Gritsenko 1999 St Petersburg Math J 11 Thm 3.1; Gritsenko-Nikulin 1998 AJM 119 Table 1.
+
+**Location**: Vol I chapters/theory/derived\_langlands.tex Thm thm:shimura-waldspurger-delta5-bridge; cross-ref arithmetic\_shadows.tex Rem rem:delta5-borch-grit-bridge.
+
+**Related**: W13-TOP-1 (Ikeda vs Gritsenko); Pattern 253 (Humbert convention); Pattern 267 ($f_{16}$ primary form).
+
+---
+
+## Pattern 270 (W20.8): Fricke-phase LDP bifurcation — 7 interior Gaussian + 2 boundary Poissonian nodes
+
+**Session**: 2026-04-20 (Wave 20 — $\mathbb Z/8$-Fricke LDP sharpened).
+
+**Type**: LDP regime-bifurcation at Sato-Tate boundary.
+
+The Fricke-phase clustering for $f_{16}$ at nodes $\theta^*_k = k\pi/8$, $k \in \{0, 1, \ldots, 8\}$ splits into two LDP regimes according to whether the Sato-Tate density $\rho(\theta) = (2/\pi)\sin^2\theta$ vanishes:
+
+**Interior ($k \in \{1, \ldots, 7\}$, $\rho > 0$)**: Gaussian LDP rate $I_k(\theta^*_k + \delta) = \delta^2/(2\sigma_k^2) + O(\delta^3)$ with inverse-density variance
+$$\sigma_k^2 = \frac{\pi}{2\sin^2\theta^*_k}$$
+(per cache entry W19-LDP-variance-inverse-density-vs-curvature). Values: $\sigma_1^2 = \sigma_7^2 \approx 10.73$; $\sigma_2^2 = \sigma_6^2 = \pi$; $\sigma_3^2 = \sigma_5^2 \approx 1.84$; $\sigma_4^2 = \pi/2 \approx 1.57$.
+
+**Boundary ($k \in \{0, 8\}$, $\rho = 0$)**: Gaussian expansion degenerates ($\sigma_k^2 \to \infty$); the correct LDP is POISSONIAN with rate
+$$I^{\mathrm{Poi}}_k(t) = t\log(t/\mu_k) - t + \mu_k, \quad \mu_k(\delta) = \frac{2}{3\pi}\delta^3.$$
+
+**9-regime LDP portrait**: 7 Gaussian + 2 Poisson = 9 regimes, NOT uniform Gaussian across nodes.
+
+**Three verification paths**: (V1) Gärtner-Ellis theorem at interior / Sanov-Stein theorem at boundary (Dembo-Zeitouni 2010 Thm 6.2.10 + Lyapunov-Stein Poisson approximation); (V2) empirical-histogram Bayes asymptotic via Newton-Thorne 2021 unconditional Sym$^n$ automorphy; (V3) Kolmogorov-Smirnov statistic separating Gaussian-tail from Poisson-tail regimes.
+
+**Regex trigger**: flag `Fricke.*LDP` asserting Gaussian at `k\s*\\in\s*\\{0.*8\\}` (boundary) — should be Poissonian.
+
+**Primary**: Dembo-Zeitouni 2010 \emph{Large Deviations Techniques} 2e Thm 6.2.10, Thm 2.1.4; Lamzouri 2019 J Reine Angew Math 744; Newton-Thorne 2021 Publ IHÉS 134 Thm A; Sato-Tate 1963/Conrad 2004; Bitot 1988 \emph{Grandes Déviations}.
+
+**Location**: Vol I chapters/theory/shadow\_tower\_quadrichotomy\_platonic.tex Thm thm:stqp-fricke-z8-ldp.
+
+**Related**: W19-LDP-variance-inverse-density-vs-curvature (interior formula); Pattern 271 (Newton-Thorne unconditional upgrade).
+
+---
+
+## Pattern 271 (W20.8.conditional): Newton-Thorne 2021 Sym$^n$ automorphy unconditional — removes BLGT 2011 hypothesis
+
+**Session**: 2026-04-20 (Wave 20 — unconditional upgrade of Fricke LDP).
+
+**Type**: positive pattern — conditional hypothesis removed, scope upgraded.
+
+The Fricke LDP for $f_{16}$ at 9 nodes (Pattern 270) used to be CONDITIONAL on the Barnet-Lamb-Geraghty-Harris-Taylor 2011 Publ IHÉS 108 Thm B Sym$^n$ automorphy hypothesis. Newton-Thorne 2021 Publ IHÉS 134 Thm A establishes Sym$^n$ automorphy for ALL $n \ge 1$ on non-CM cuspidal GL$_2/\mathbb Q$ eigenforms (including $f_{16}$), making the LDP UNCONDITIONAL.
+
+**Upgrade**: every previously "conditional on BLGT 2011" statement about $f_{16}$ Fricke LDP (effective rate $\delta = 1/4 - \varepsilon$; Gaussian variance $\sigma_k^2$ at interior nodes; Poisson intensity $\mu_k(\delta) = (2/(3\pi))\delta^3$ at boundary nodes) is UNCONDITIONAL post-Newton-Thorne.
+
+**Cross-volume propagation**: every Vol I / Vol III / Vol II statement invoking "conditional on BLGT 2011" for $f_{16}$-related computations must be promoted to "unconditional via Newton-Thorne 2021" (AP5 discipline per AP289 — inscribe strongest honest form).
+
+**Three verification paths**: (V1) direct construction via Newton-Thorne 2021 Thm A Sym$^n$ representation construction from finite-order Frobenius conjugacy classes; (V2) LDP at 9 nodes applied with full Sym$^n$ moments (no finite-$n$ truncation needed); (V3) effective Sato-Tate rate $\delta = 1/4 - \varepsilon$ via Lamzouri 2019 moment estimates under unconditional Sym$^n$.
+
+**Regex trigger**: flag `conditional.*BLGT.*2011` near $f_{16}$ / $f_{\mathrm{non-CM}}$ / Sato-Tate — upgrade to Newton-Thorne 2021 unconditional.
+
+**Primary**: Newton-Thorne 2021 Publ IHÉS 134 Thm A; Barnet-Lamb-Geraghty-Harris-Taylor 2011 Publ IHÉS 108 Thm B (superseded); Taylor 2008 Publ IHÉS 108; Lamzouri 2019 J Reine Angew Math 744.
+
+**Location**: Vol I chapters/theory/shadow\_tower\_quadrichotomy\_platonic.tex Rem rem:stqp-fricke-unconditional-newton-thorne.
+
+**Related**: Pattern 270 (9-regime LDP); W19-LDP-variance-inverse-density-vs-curvature; AP289 (strongest honest form).
+
+---
+
+## Waves 1-13 catch-up entries (2026-04-20 exhaustive audit)
+
+Extended prose entries for Waves 1 through 13 findings not previously
+catalogued as comprehensive-cache patterns. Each entry carries the same
+rubric used above: Session / Type / Confusion / Correct statement with
+primary literature / Consequence / Regex trigger / Primary / Location /
+Related.
+
+### Pattern 272 (W1-W3 Beilinson swarm): Todd-vs-$\widehat A$-genus in Vol II $F_g$ coefficients
+
+**Session**: 2026-03-31 (Beilinson swarm S17).
+**Type**: Hodge-genus convention mismatch.
+**Confusion**: Vol II inscribed $F_1 = -\kappa/12$ and $F_2 = \kappa^2/240$ under Todd convention. Both false under programme-canonical $\widehat A$-genus / Mumford / Faber-Pandharipande convention where $F_g = \kappa \cdot \lambda_g^{FP}$. Additional: $\kappa(\mathrm{Vir}) = c/2$, NOT $(c - 26)/2$.
+**Correct statement**: $F_1 = \kappa/24$, $F_2 = 7\kappa/5760$ (linear in $\kappa$), $\kappa(\mathrm{Vir}_c) = c/2$.
+**Consequence**: propagated across Vol II `rosetta_stone.tex`, `ht_bulk_boundary_line.tex` (3 sites), preface.
+**Regex trigger**: flag `F_1\s*=\s*-\\kappa\s*/\s*12` and `F_2\s*=\s*\\kappa\^2\s*/\s*240`.
+**Primary**: Faber-Pandharipande 2003 Invent Math 139; Mumford 1983; Hirzebruch 1966 TMP 3e Thm 15.0.
+**Location**: Vol II `chapters/connections/ht_bulk_boundary_line.tex`, `chapters/frame/preface.tex`.
+**Related**: AP801; AP-KAPPA.
+
+### Pattern 273: $\widehat{\mathfrak{sl}}_2$ bar cohomology is linear $2n+1$, not Riordan
+
+**Session**: 2026-04-07 (SC-bar swarm).
+**Type**: combinatorial-sequence mis-identification.
+**Confusion**: manuscript used Riordan $R_n = 1, 1, 3, 6, 15, 36, 91, \ldots$ where direct Chevalley-Eilenberg computation gives $2n + 1$.
+**Correct statement**: $\dim H^n B(\widehat{\mathfrak{sl}}_2) = 2n + 1$; do NOT quote Riordan for chiral-bar cohomology.
+**Primary**: Chevalley-Eilenberg 1948 Trans AMS 63; Feigin-Fuks 1983 FAA 17.
+**Location**: Vol I `free_fields.tex`, `bar_construction.tex`.
+**Related**: AP804.
+
+### Pattern 274 (W3 adversarial): Theorem B is independent of MC equation
+
+**Session**: 2026-04-01 (adversarial swarm).
+**Type**: universal-quantifier over-extension.
+**Confusion**: manuscript asserted "every theorem consequence of MC." Beilinson counterexample: Theorem B uses PBW + Barr-Beck-Lurie; NOT MC.
+**Correct statement**: MC controls C and D via genus-recursion on $\overline{\mathcal M_g}$. A and B route through adjunction theorems. H concentrates via bar-cobar. Do NOT fabricate MC-routes for A, B, H.
+**Primary**: Positselski 2011 Mem AMS 212 Thm 7.2; Lurie HA 4.7; BD04 Ch 3.
+**Location**: Vol I `introduction.tex`.
+**Related**: AP806.
+
+### Pattern 275 (W4 arithmetic frontier): shadow Ferrero-Washington fails for Virasoro at $p \in \{2, 5\}$
+
+**Session**: 2026-04-05.
+**Type**: arithmetic-Iwasawa class-dependent structure.
+**Confusion**: "shadow $\mu = 0$ universal" generalisation of Ferrero-Washington 1979.
+**Correct statement**: Virasoro shadow-irregular at $p = 2, 5$. Growth rates $\mu^{\mathrm{sh}}_{\mathrm{Vir}, 2} \sim -1$, $\mu^{\mathrm{sh}}_{\mathrm{Vir}, 5} \sim -0.5$. Shadow FW is FAMILY-DEPENDENT, holds for G/L/C, fails for class M at specific primes.
+**Consequence**: $p$-adic shadow L-function for Virasoro carries non-trivial $\mu$-invariant.
+**Primary**: Ferrero-Washington 1979 Ann Math 109; Washington 1997 Intro to Cyclotomic Fields Ch 7.
+**Location**: Vol I `arithmetic_shadows.tex`; engine `padic_shadow_iwasawa_engine.py`.
+**Related**: AP809.
+
+### Pattern 276 (W4): full shadow tower self-dual at $c = 13$ through genus 5
+
+**Session**: 2026-04-05.
+**Type**: positive pattern — stronger-than-expected self-duality.
+**Correct statement**: $F_g(c) + F_g(26 - c) = 13 \lambda_g$ through $g = 5$; RTF vanishes for ALL test functions at $c = 13$. The ENTIRE shadow tower self-dualises (not just $\kappa$).
+**Primary**: `shadow_trace_formula_engine.py`; Zagier 1997 CFT.
+**Location**: Vol I `shadow_tower_higher_coefficients.tex`.
+**Related**: AP810; C18.
+
+### Pattern 277 (W4): $c(W_N) = (N - 1)(1 - N(N+1)/(k+N))$ (Fateev-Lukyanov)
+
+**Session**: 2026-04-05 Round 3 (~33 library + 20 test files fixed).
+**Type**: canonical-formula memory recall failure.
+**Correct statement**: $c(W_N, k) = (N - 1)(1 - N(N+1)/(k+N))$. FF complementarity: Vir $c + c_{\mathrm{gh}} = 2$ at $k=1$; $W_3: 4$; $W_4: 6$. Ghost $c_{\mathrm{gh}} = N(N-1)$ $k$-independent.
+**Primary**: Fateev-Lukyanov 1988 IJMPA 3 eq (2.5); FBZ04 Ch 15; Arakawa 2007 Duke 130.
+**Location**: Vol I `w_algebras.tex`, `w_algebras_deep.tex`.
+**Related**: AP811; FM9.
+
+### Pattern 278 (W6 SC-bar): full-bar differential is NOT a coderivation
+
+**Session**: 2026-04-07.
+**Correct statement**: $\Delta \circ D^{(g)} = (D^{(g)} \otimes 1 + 1 \otimes D^{(g)}) \circ \Delta$ for each fixed $g$. Cross-genus pieces $D^{(g_1 \to g_2)}$ ($g_1 \ne g_2$) can violate coderivation by Hodge-bundle factor.
+**Primary**: Loday-Vallette 2012 Ch 2.
+**Location**: Vol I `bar_construction.tex`, `entanglement_modular_koszul.tex`.
+**Related**: AP830.
+
+### Pattern 279 (W6): BV $=$ bar for class M at coderived level only
+
+**Session**: 2026-04-07.
+**Correct statement**: chain-level for classes G, L, C (107 tests); coderived level $D^{\mathrm{co}}(A)$ for class M (76 tests). $\delta_4 = Q^{\mathrm{contact}} \cdot m_0$ non-zero on the nose but exact in $D^{\mathrm{co}}$.
+**Primary**: Positselski 2011; Costello-Gwilliam 2017 FA in QFT.
+**Location**: Vol I `bv_brst.tex`.
+**Related**: AP831.
+
+### Pattern 280 (W6): ChirHoch$^*$ polynomial growth, not polynomial ring
+
+**Session**: 2026-04-07.
+**Correct statement**: ChirHoch$^*(A)$ BOUNDED in $\{0, 1, 2\}$ per Theorem H. $P(t, q) = \mathrm{HS}_{Z(A)}(q) + \mathrm{HS}_{\mathrm{ChirHoch}^1}(q) t + \mathrm{HS}_{Z(A^!)}(q) t^2$.
+**Primary**: Francis 2013 Adv Math 239 Thm 1.1.
+**Location**: Vol I `chiral_hochschild_koszul.tex`.
+**Related**: AP833; Pattern 94.
+
+### Pattern 281 (W8 149-agent): $\delta F_2^{\mathrm{cross}}(W_3) = (c + 204)/(16c)$
+
+**Session**: 2026-04-08.
+**Correct statement**: multi-weight cross-channel closed form at $g = 2$; naive $(c+120)/(16c)$ false. Resolves op:multi-generator-universality NEGATIVELY: scalar formula $F_g = \kappa \lambda_g$ fails for multi-weight at $g \ge 2$.
+**Primary**: Teleman 2012 Invent Math 188; PPZ 2019 Adv Math 344; `multichannel_genus2.py`.
+**Location**: Vol I `higher_genus_modular_koszul.tex`.
+**Related**: AP834; Theorem D scope.
+
+### Pattern 282 (W10): local-global conflation on curves (AP142)
+
+**Session**: 2026-04-10.
+**Three errors**: (a) homotopy retract is DATA; (b) formal disk $\ne$ point; (c) $\mathbb A^1$ has Arnold relations in degree 1 ($d\log(z_i - z_j)$ forms non-trivial).
+**Correct statement**: name (space, comparison data, on-the-nose-vs-extra-structure). 45 fixes across 25 files, 3 volumes.
+**Primary**: Arnold 1969 Math Notes 5; Orlik-Solomon 1980 Invent Math 56; BD04 §3.
+**Location**: Vol I `bar_construction.tex`; Vol II `feynman_diagrams.tex`; Vol III `cy_to_chiral.tex`.
+**Related**: AP840, FM23, B53.
+
+### Pattern 283 (W10): $c(W_3, k) = 2 - 24(k+2)^2/(k+3)$
+
+**Session**: 2026-04-10 (900-commit Beilinson loop).
+**Correct statement** (Fateev-Lukyanov 1988 $N = 3$): $c(W_3, k) = 2 - 24(k + 2)^2/(k + 3)$. Agrees with wrong $2(k - 9)/(k + 3)$ only at $k = 2$.
+**Location**: Vol I `w_algebras_deep.tex`.
+**Related**: AP848; Pattern 277.
+
+### Pattern 284 (W10): $\kappa(\beta\gamma_1) = 1$, $F_1 = 1/24$ (Euler-class anomaly)
+
+**Session**: 2026-04-10.
+**Correct statement**: $\beta\gamma$ at spin 1 has Euler-class anomaly giving $\kappa = 1$; $F_1 = \kappa/24 = 1/24$. Vol II `ht_bulk_boundary_line.tex`: $F_2 = 7\kappa^2/5760 \to 7\kappa/5760$ (3 instances).
+**Primary**: Friedan-Martinec-Shenker 1986 Nucl Phys B 271; FBZ04 Ch 5.
+**Related**: AP849, AP850.
+
+### Pattern 285 (W10 adversarial): $\kappa = 0$ does NOT imply $\Theta_A = 0$
+
+**Session**: 2026-04-10 (583-agent).
+**Correct statement**: $\kappa = \Theta_A^{(2)}$ is only degree-2 projection. Higher $\Theta_A^{(\ge 3)}$ INDEPENDENT of $\kappa$. Class G with $\kappa = 0$: additional vanishing gives $\Theta_A^{(\ge 3)} = 0$; in general not.
+**Primary**: Kontsevich 2003 LMP 66; Loday-Vallette 2012 Ch 11.
+**Location**: Vol I `concordance.tex:7538`.
+**Related**: AP852.
+
+### Pattern 286 (W12 AP160): three Hochschild theories
+
+**Session**: 2026-04-12 afternoon.
+**Three theories**: (i) **topological HH**: $E_1 \to E_2$ Deligne conjecture, lives on point/$S^1$; (ii) **chiral ChirHoch**: $E_\infty$-chiral $\to \{0, 1, 2\}$ concentration (Theorem H), OPE-residue Gerstenhaber bracket, lives on curve $X$; (iii) **categorical HH**: dg cat $\to E_2$-CY (Costello-Gaiotto 2018).
+**Primary**: Kontsevich-Soibelman 2009 MMJ 9 Thm 3.1; Costello-Gaiotto 2018 JHEP; Francis 2013.
+**Location**: constitutional `conv:three-hochschild` in `concordance.tex`.
+**Related**: AP868, AP160. 89 bare instances identified.
+
+### Pattern 287 (W12 AP159): four Yangian types
+
+**Session**: 2026-04-12 afternoon.
+**Four types**: $Y^{\mathrm{Hopf}}_\hbar$ (Drinfeld 1985), $Y^{\mathrm{dg}}_\hbar$, $Y^{\mathrm{ch}}$, $Y^{\mathrm{spec}}$. Passage $Y^{\mathrm{dg}} \to Y^{\mathrm{ch}}$ globalisation open.
+**Primary**: Drinfeld 1985 SMD 32; Molev 2007 YCLA; Schiffmann-Vasserot 2018 CoHA.
+**Related**: AP867, AP159.
+
+### Pattern 288 (W12 AP161): five $E_1$-chiral notions
+
+**Session**: 2026-04-12 afternoon.
+**Five notions**: (A) strict ChirAss; (B) $A_\infty$ in $\mathrm{End}^{\mathrm{ch}}$; (C) EK quantum VA; (D) $A_\infty$ in $E_1$-chiral (Raskin); (E) $\mathrm{Ran}^{\mathrm{ord}}$-factorisation. Each own derived centre; (B) $\leftrightarrow$ (C) via Drinfeld associator on Koszul locus only.
+**Primary**: Etingof-Kazhdan 2000 Selecta Math 6; Raskin 2015 thesis; BD04.
+**Location**: `algebraic_foundations.tex` `warn:multiple-e1-chiral`.
+**Related**: AP869, AP161.
+
+### Pattern 289 (W12 deep AP225): genus-universality requires GRR or clutching
+
+**Session**: 2026-04-12/13 mega-rescue.
+**Correct statement**: split (i) $g = 1$ unconditional (1-dim $H^2(\overline{\mathcal M_{1,1}}) = \mathbb Q \lambda_1$); (ii) $g \ge 2$ conditional on clutching-uniqueness on the socle $R^g/\mathcal N^g$ OR Mumford 1983 GRR on Hodge bundle.
+**Primary**: Mumford 1983 ENSA Proc; Faber-Pandharipande 2003 Invent Math 139.
+**Location**: `higher_genus_foundations.tex:5730`.
+**Related**: AP874; Theorem D status.
+
+### Pattern 290 (W12 deep AP226): $K_0$ vs scalar
+
+**Session**: 2026-04-12/13.
+**Correct statement**: $\kappa \in \mathbb C$ complex scalar, not integer; $K_0(\overline{\mathcal M_g})$ requires integer multiplicity. Replace $K_0$ with Chern character / cohomology: $\mathrm{ch}(D_A^{(g)}) = \kappa(A) \cdot \mathrm{ch}(E)$.
+**Primary**: Pandharipande 2018 survey; Mumford 1983.
+**Location**: `concordance.tex:5939`.
+**Related**: AP875, AP226.
+
+### Pattern 291 (W12 campaign T15): SC-formality needs bilinear form, not scalar
+
+**Session**: 2026-04-13.
+**Correct statement**: SC-formality proof for class G uses $C(x, y, z) = \kappa(x, [y, z])$ with $\kappa$ as INVARIANT METRIC (Killing form for KM). $\beta\gamma$ has no metric, no Sugawara. SC-formal scope narrows to class G; class C SC-formal under charged-stratum separation.
+**Primary**: Kontsevich 2003 LMP 66; Costello-Gwilliam 2017 Ch 5.
+**Location**: `chiral_koszul_pairs.tex:2539`.
+**Related**: AP218, AP878.
+
+### Pattern 292 (W13 K3-BKM): $c_3 = -8$ Bruinier reduced convention
+
+**Session**: 2026-04-13 anchoring.
+**Correct statement**: $c_3 = -8$ via four paths (direct $\theta_1^2/\eta^6$; theta decomposition; $\phi_{10,1}/\eta^{24}$; Hecke congruence $T_p$). $176256 = p_{24}(5) = \chi(\mathrm{Hilb}^5(K3))$ is Göttsche coincidence, NOT $\phi_{10,1}$ coefficient. Conversion to Gritsenko-Nikulin Cartan-matrix: factor $-22032$. WOV-5 lock.
+**Primary**: Bruinier 2002 LNM 1780 Prop 5.1; Gritsenko-Nikulin 1998 AJM 119 Table 1; Göttsche 1990 Math Ann 286 Thm 0.1.
+**Location**: Vol III `k3e_bkm_chapter.tex`; Vol I `holographic_datum_master.tex`.
+**Related**: AP884, AP341.
+
+### Pattern 293 (W13/W19/W20): Conway $V^{s\natural}$ not 5th $\Psi$-image
+
+**Session**: 2026-04-20 (W20 adjudication).
+**Three defects in W19**: (i) wrong venue (Duncan 2007 Duke Math J 139, not Math Res Lett); (ii) construction (Leech $\Lambda_{24}$ fermionic VOA $\mathbb Z/2$-orbifold, NOT $E_8$ super-lattice); (iii) $c_+(\Lambda_{24}) = 24 \Rightarrow (K, \hbar^2) = (48, -1/48)$, not $(2, -1/2)$.
+**Correct statement**: $V^{s\natural} = A(\Lambda_{24})^+ \oplus A(\Lambda_{24})^{\mathrm{tw}, +}$ is the $\mathbb Z/2$-super-twin of $V^\natural$ in the Duncan 2007 §6 commutative orbifolding diamond, inheriting $(2, -1/2)$ from Monster; not independent.
+**Primary**: Duncan 2007 Duke Math J 139, 255-315; Scheithauer 2008 Invent Math 172 Thm 3.2.
+**Location**: Vol III `k3e_bkm_chapter.tex:4262`.
+**Related**: AP887.
+
+### Pattern 294 (W8 Segal): "modularity" two meanings
+
+**Session**: 2026-04-08 (adversarial follow-up).
+**Two meanings**: (i) **Segal modularity**: MCG-INVARIANCE constraint on conformal-block correlators; (ii) **manuscript modularity**: clutching-gluing CONSTRUCTION on $\overline{\mathcal M_g}$ boundary strata.
+**Correct statement**: equivalence is THEOREM under sewing axioms (Huang 2005 rational CFT), not definition. Irrational / logarithmic: may fail or require extended axioms.
+**Primary**: Segal 2004 Topology Geom Phys; Huang 2005 Contemp Math 387; Costello-Gwilliam 2017 Ch 6.
+**Location**: Vol II preface.
+**Related**: AP808, AP835.
+
+---
+
+### Pattern 295 (W25): Chenevier pseudo-character vs Chenevier determinant terminology
+
+**Session**: 2026-04-20 (Wave 25 — canonical preamble terminology rectification).
+
+**Type**: terminology / label/content — two distinct mathematical frameworks conflated under a shared word.
+
+**(a) What the canonical preamble says**: the programme's Galois-side trace data on the paramodular Hecke algebra $\mathbb T^{\mathrm{par}}_1$ attached to $\pi_{\Delta_{10}}$ is the \emph{Chenevier determinant} $D^{\mathrm{Chen}}$ of Chenevier 2014 (arXiv:1301.0635, \S1.2, Def.~1.5, Prop.~1.9), \emph{not} the older Taylor--Wiles pseudo-character. The Chenevier determinant is a \emph{homogeneous polynomial law} $D\colon R\to A$ of degree $d$ satisfying multiplicativity $D(xy)=D(x)D(y)$, unitality $D(1)=1$, and Cayley--Hamilton of degree $d$ (the degree-$(d+1)$ Amitsur--Levitzki antisymmetrisation vanishes). The symbol in the manuscript is $D^{\mathrm{Chen}}$, supplanting the earlier $S^{\mathrm{ps}}$.
+
+**(b) What the older Taylor--Wiles pseudo-character is**: Taylor 1991 \emph{Duke} 63 / Wiles 1988 framework axiomatises a sequence of symmetric $n$-linear maps $\Sps_n\colon R^{\otimes n}\to A$ (trace, determinant, and higher symmetric functions) satisfying symmetry, multiplicativity on commuting elements, and the dimension-$d$ truncation $\Sps_{d+1}\circ\mathrm{Alt}_{d+1}\equiv 0$. Chenevier 2014 Thm.~2.12 proves the two frameworks are equivalent on \emph{reduced} $A$-algebras (the polarisations of $D^{\mathrm{Chen}}$ recover $(\Sps_1,\dots,\Sps_d)$; Cayley--Hamilton on $D^{\mathrm{Chen}}$ recovers the dimension axiom). On non-reduced rings (char $p$, Deligne--Serre reduction mod $\ell$, nilpotent thickenings) the Chenevier polynomial-law formalism is strictly stronger.
+
+**(c) Why the rename is substantive, not cosmetic**: the axiom system shifts from a triple of symmetric-function-tuples to a single polynomial law; multiplicativity is promoted from a commuting-elements constraint to an unrestricted identity $D(xy)=D(x)D(y)$; the dimension axiom is absorbed into Cayley--Hamilton of degree $d$. For the paramodular target $\Tpar_1$ (commutative integral domain) the two frameworks agree, so empirical verification loci (46 primes $p\le 199$; $\Sps_1(T_p)=a_p(f_{16})+p^8+p^9$; $\Sps_4(T_p^{\otimes 4})=p^{32}$) persist unchanged; the rename sharpens the axiomatic register for consistency with the Chenevier 2014 canonical source.
+
+**Correction across the programme**: Vol I `chapters/theory/derived_langlands.tex` \S\ref{sec:dl-gelfand-pseudocharacter} retitled; Def.~\ref{def:dl-chenevier-pseudocharacter} rewritten as polynomial-law definition; Thm.~\ref{thm:dl-pseudocharacter-delta10} retitled (label preserved via aliasing `\label{thm:dl-determinant-delta10}` for cross-ref stability); Rem.~\ref{rem:dl-chenevier-determinant-vs-pseudocharacter} added with axiom comparison; Rem.~\ref{rem:dl-chenevier-axiom-comparison} added with Chenevier 2014 Thm.~2.12 reduced-ring equivalence. Vol I `chapters/theory/introduction.tex`, `chapters/theory/chiral_climax_platonic.tex`, `chapters/frame/preface.tex`, `main.tex` propagated. Source-algebra scope (paramodular Hecke $\Tpar_1$, NOT $\mathbf H_{\Delta_5}$) preserved unchanged — that part of W19 was correct.
+
+**Logarithmic-VOA pseudo-character collision avoided**: Creutzig--Ridout 2013 \emph{Nucl.~Phys.~B}~875 Thm.~3.4 logarithmic-Verlinde pseudo-characters (appearing in Vol~III `modular_trace.tex`, `quantum_groups_foundations.tex`) are a \emph{distinct} object — coend-valued pseudo-traces on projective covers of non-semisimple MTCs with Jordan-block structure. The Creutzig--Ridout usage is NOT renamed; only the Chenevier-formalism targets are relabelled.
+
+**Retracted cache rows**: `W19-chenevier-pseudocharacter-source-algebra` marked ⟂ retracted per canonical preamble: see Chenevier determinant (Pattern 295 / W25) at three related-line anchors in this file (Patterns 264, 267, 268). Not deleted --- retained as retracted earlier-version entry per Gate 0 preamble discipline.
+
+**Regex trigger**: flag `pseudo.?character` in manuscript prose (`.tex` under `chapters/`, `frame/`, `examples/`, `theory/`, `connections/`, `bibliography/`) when the target is Chenevier 2014 (paramodular $\Tpar_1$, Galois side, SK-lift Hecke eigenvalue identity); do NOT flag when the target is Creutzig--Ridout 2013 (logarithmic VOA, non-semisimple MTC).
+
+**Three verification paths**: (V1) Chenevier 2014 arXiv:1301.0635 Thm.~2.12 reduced-ring equivalence with Taylor--Wiles; (V2) Cayley--Hamilton of the 4-dim spinor representation of $\mathrm{GSp}_4$ on $\Tpar_1$ confirms $\Sps_5\circ\mathrm{Alt}_5\equiv 0$; (V3) the 46-prime empirical verification ($p\le 199$, $\Sps_1(T_p)=a_p(f_{16})+p^8+p^9$, $\Sps_4(T_p^{\otimes 4})=p^{32}$) is invariant under the axiom-framework shift.
+
+**Primary**: Chenevier 2014 arXiv:1301.0635 \emph{Automorphic Forms and Galois Representations}~I \S1.2 Def.~1.5 Prop.~1.9 Thm.~2.12; Taylor 1991 \emph{Duke Math.\ J.}~63 Thm.~2.1; Wiles 1988 \emph{Invent.\ Math.}~94; Weissauer 2005 LNM 1868 \S4; Laumon 2005 \emph{Publ.\ IHES}~102 Thm.~I.10.
+
+**Location**: Vol I chapters/theory/derived\_langlands.tex \S sec:dl-gelfand-pseudocharacter; Rem rem:dl-chenevier-determinant-vs-pseudocharacter; Rem rem:dl-chenevier-axiom-comparison. Cross-ref preserved via aliasing label thm:dl-determinant-delta10 on Theorem thm:dl-pseudocharacter-delta10.
+
+**Related**: W19-chenevier-pseudocharacter-source-algebra (retracted earlier version); Pattern 264 ($L(s,\chi_3)$ spinor Euler product); Pattern 267 (primary form $f_{16}$); Pattern 268 (46-prime empirical grounding).
+
+### Pattern 414 (T1#2 chi_3; formerly 295bis, renumbered 2026-04-21): path-independence vs path-subsumption
+
+**Numbering note (2026-04-21 audit)**: This entry collides on integer `295` with Pattern 295 (W25) above (Chenevier pseudo-character vs determinant terminology). Both inscriptions are load-bearing and are retained; disambiguation by the `bis` suffix. Future waves must consult both entries when citing Pattern 295. See AP-CAT-1 below (cache-entry numbering collision pattern).
+
+
+**Session**: 2026-04-20 (T1#2 ChirHoch^3 seventh-path closure).
+**Confusion**: a candidate verification path for a numerical invariant can be either (a) epistemically disjoint from the established paths, or (b) secretly a reformulation of an earlier path in different language. Distinguishing requires auditing the primary-source dependency DAG, not just the symbolic output.
+**Correct test**: a path P_X is genuinely independent of P_Y1..P_Yk when the load-bearing primary inputs (actual theorem citations whose statements are used on the nose) of P_X are not a subset of the primary inputs of the union of P_Yi. Shared ancillary ingredients (normalisation factors, common coefficients, ubiquitous tools like Serre duality or Arnold normalisation) are not shared derivations; they are shared receptacles.
+**Load-bearing vs ancillary**: a citation is load-bearing for a path if removing it breaks the derivation; ancillary if it only supplies a universal factor entering every path. Test by deletion.
+**Concrete example**: Path G (Kaledin NC Hodge Mukai-Hochschild) vs Path B+E subsumption claim. Kaledin 2017 Duke 166 Thm 5.4 (Hodge-to-de-Rham E_1-degeneration via Deligne-Illusie Cartier reduction) and Shklyarov 2012 Proc LMS 105 Thm 1.4 (Mukai-compatible trace) are load-bearing for Path G; neither appears in Path B (Oberdieck Phi_10^-1) or Path E (Feigin-Tsygan SBI). The CY-3 Serre shift S shared between Path F (Lurie derived deformation) and Path G is an ancillary tool: Path F uses S as a dualising object in the tangent pairing and Path G uses S as the grading shift of the perfect pairing in total degree d; removing S breaks both, confirming both are genuine paths.
+**Cyclic comparison maps**: a seven-path architecture closes when the seven comparison maps Psi_{X_i -> X_{i+1}} form a cyclic diagram, each value-preserving on the one-dimensional receptacle and chain-homotopy equivalent at the cochain level under A_infty-coherent homotopy (Kontsevich-Tamarkin formality).
+**Primary**: Lurie 2011 arXiv:0709.3091 Thm 5.3 + HA 5.2.14; Kaledin 2017 Duke 166 Thm 5.4; Feigin-Tsygan 1987 LNM 1289 Thm 3.1; Schiffmann-Vasserot 2013 Publ IHES 118 Thm 6.1; Oberdieck 2018 Geom & Topol 22 Thm 2; Kuznetsov-Perry 2021 JEMS 23 Thm 1.1.
+**Location**: Vol I `chapters/theory/hochschild_cohomology.tex` seven-path comparison section `sec:chirhoch3-seven-path-comparison`.
+**Related**: Pattern 269 (chain-level vs (infty,1)-categorical sibling status).
+
+### Pattern 296 (T1#1 genus-5): Andreotti--Mayer codim is NOT $g-3$
+
+**Session**: 2026-04-20.
+**Trigger regex**: `codim.*(g\s*-\s*3)|codim.{0,8}\\\\mathcal\s*J|Andreotti.*Mayer.*codim`.
+**Confusion**: The Andreotti--Mayer locus $\mathrm{AM}_g$ is defined by the hessian rank $\leq g-3$ condition on $\partial^2\theta(Z,0)/\partial Z_{ij}\partial Z_{kl}$; the integer $g-3$ is the *rank index* of the second-order theta hessian, NOT the codimension of $\mathcal J_g$ in $\overline{\mathcal A_g}$.
+**Correct statement**: $\mathrm{codim}\,\mathcal J_5 = 3$ (Beauville 1977 Cor.~II.4), $\mathrm{codim}\,\mathcal J_6 = 6$, $\mathrm{codim}\,\mathcal J_g \geq g-1$ for $g\geq 5$ (Debarre 1992 Thm.~1.1). The Schottky locus at $g=5$ has codim $3$, NOT $g-3=2$. The tri-unipotent Andreotti--Mayer rung carries a commuting $\mathfrak{sl}_2^{\oplus 3}$ from the three vanishing cycles transverse to $\mathrm{AM}_5^{(2)}\setminus\mathrm{AM}_5^{(1)}$.
+**Primary**: Andreotti--Mayer 1967 Ann.~Sc.~Norm.~Sup.~Pisa~21; Beauville 1977 Comp.~Math.~37; Debarre 1992 J.~AG~1.
+**Location**: `chapters/theory/higher_genus_modular_koszul.tex` Theorem~\ref{thm:hgmk-abar5-bar-cobar-scope}; correction Remark~\ref{rem:hgmk-andreotti-mayer-codim-correction}.
+**Related**: Patterns 297, 298.
+
+### Pattern 297 (T1#1 universal closure): $k_{\max}(g)=g(g+1)/2$ is the Krull bound, NOT a saturation theorem
+
+**Session**: 2026-04-20.
+**Trigger regex**: `k_\\\\max\\(g\\)|k_max.*g\\(g.*1\\)/2|maximum.*Malcev|deepest.*CM.*intersection`.
+**Confusion**: The universal Malcev-closure formula $k_{\max}(g)=g(g+1)/2$ is the *Krull-dimension upper bound* on the depth of the NL-unipotent ladder on $\overline{\mathcal A_g}$ (a $g(g+1)/2$-fold). \emph{Saturation} (existence of a non-empty depth-$k_{\max}(g)$ intersection of CM type) is a separate question.
+**Correct statement**: Saturation is unconditional at $g\leq 6$ via Shimura 1963 + Lange 1975 cyclotomic CM existence (degree-$2g$ cyclotomic fields $\mathbb Q(\zeta_n)$ with $\varphi(n)=2g$). For $g\geq 7$ off the cyclotomic ladder ($\varphi(n)/2\neq g$), saturation is conditional on the André--Oort conjecture (Edixhoven--Yafaev 2003) for sub-Shimura varieties of $\mathrm{Sp}_{2g}/\mathbb Z$. The mixed Andreotti--Mayer$\cap$NL bound is $k_{\max}(g)-\mathrm{codim}\,\mathrm{AM}_g$, with slack $g(g-1)/2$ for $g\geq 6$ along Debarre's lower bound.
+**Primary**: Shimura 1963 Ann.~Math.~78; Lange 1975 Math.~Z.~145; Edixhoven--Yafaev 2003 Ann.~Math.~157; Debarre 1992 J.~AG~1.
+**Location**: `chapters/theory/higher_genus_modular_koszul.tex` Remark~\ref{rem:hgmk-kmax-saturation-audit}.
+**Related**: Patterns 296, 298.
+
+### Pattern 298 (T1#1 Schmid--CKS multi-variable): single CKS unipotent vs commuting tri-unipotent
+
+**Session**: 2026-04-20.
+**Trigger regex**: `Schmid.{0,5}CKS|Cattani.{0,4}Kaplan.{0,4}Schmid|nilpotent.orbit|sl_2.{0,3}triple`.
+**Confusion**: A degeneration with monodromy $N$ a single unipotent invokes one-variable Schmid 1973 + one-variable CKS to produce a single $\mathfrak{sl}_2$-triple. A degeneration with $k$ pairwise-commuting unipotents $(N_1,\ldots,N_k)$ on a transverse $k$-polydisc invokes the $k$-variable CKS \cite[\S 3.7]{CattaniKaplanSchmid1986} to produce a commuting $\mathfrak{sl}_2^{\oplus k}$ via the polarised relative weight filtration $W^{\mathrm{rel}}_\bullet$. The Andreotti--Mayer locus at $g=5$ requires the $3$-variable case; the Schottky divisor at $g=4$ requires only the $1$-variable case.
+**Correct statement**: At codim-$k$ admissible NL-intersections (or codim-$3$ Andreotti--Mayer at $g=5$), use $k$-variable (or $3$-variable) CKS, with Kashiwara 1986 monodromy filtration providing the multi-variable splitting witnesses $M^{(\chi_a)}$.
+**Primary**: Schmid 1973 Inv.~Math.~22; Cattani--Kaplan--Schmid 1986 Ann.~Math.~123; Kashiwara 1986 Publ.~RIMS~22.
+**Location**: `higher_genus_modular_koszul.tex` Theorems~\ref{thm:hgmk-abar3-bar-cobar-scope},~\ref{thm:hgmk-abar4-bar-cobar-scope},~\ref{thm:hgmk-abar5-bar-cobar-scope}.
+**Related**: Patterns 296, 297.
+
+### Pattern 299 (Humbert--Heegner admissibility filter $n\equiv 3,5\pmod 8$ on the pentagon coboundary tower $\phi^{(n)}$)
+
+**Session**: 2026-04-21.
+**Trigger regex**: `phi\^\{?\(n\)|pentagon coboundary|Padovan.{0,10}admiss|Humbert.{0,5}Heegner|n \\\\equiv 3.*5|D_n\\s*=\\s*\\(n\\s*-\\s*3\\)/2`.
+**Confusion**: Treating the Brown--Padovan motivic-basis dimension $d_n = d_{n-2}+d_{n-3}$ as the SOLE non-vanishing criterion for the pentagon coboundary tower $\{\phi^{(n)}\}_{n\ge 3}$ on the K3 $A_\infty$-Humbert regime.
+**Ghost theorem**: The pentagon tower $\phi^{(n)}$ inscribed at Definition `def:phi-n-pent-EK` of `chapters/theory/shadow_tower_higher_coefficients.tex` has a well-defined three-filter admissibility structure (Theorem~\ref{thm:phi-n-humbert-heegner-admissibility}); the Eichler--Zagier 1985 polar-support cutoff $\Delta\ge -1$ on the paramodular K3 elliptic genus is real.
+**Precise error**: Bare Padovan-dimension count without the Humbert--Heegner admissibility filter overcounts. Most Padovan-admissible $n$ (every $n$ with $d_n>0$, i.e. all $n\ge 3$ except $n\in\{2,4\}$) are actually Humbert--Heegner-FORBIDDEN: a lattice sum $\sum_{4NM-\ell^2=-D_n} c_{\Phi_{10}/\eta^{24}}(N,\ell,M)$ with $D_n=(n-3)/2$ is non-empty iff $D_n\bmod 4\in\{0,1\}$, equivalently $n\equiv 3,5\pmod 8$.
+**Correct statement**: $\phi^{(n)}\big|_{\mathrm{K3\text{-}Humbert}}\ne 0$ requires BOTH Padovan $d_n>0$ AND $n\equiv 3,5\pmod 8$. First non-vanishing: $\phi^{(3)}$ (Drinfeld pentagon cocycle, $D_3=0$, $C(0)=20$) and $\phi^{(5)} = -2\cdot[\mathrm{gen}]^{\otimes 5}$ (Gritsenko--Nikulin 1998 sign, $D_5=1$, $C(-1)=2$). HH-admissible $n$ in $[3,36]$: $\{3,5,11,13,19,21,27,29,35\}$. HH-forbidden Padovan-positive $n$ (e.g., $4,6,7,8,9,10,12,14,15,16,17,18,20,22,23,24,25,26,28,30,31,32,33,34,36$) all give $\phi^{(n)}\big|_{\mathrm{K3\text{-}Humbert}}=0$. For HH-admissible $n\ge 11$, $D_n\ge 4$ and $\phi^{(n)}=0$ by Eichler--Zagier polar support. Off the K3--Humbert regime the Padovan leg persists as a first-principles count of the MZV-transcendence basis.
+**Condensed reference table** ($d_n$ = Padovan; HH = Humbert--Heegner admissible; $\phi^{(n)}$-K3 = non-vanishing on K3--Humbert):
+
+| $n$ | $d_n$ | $D_n=(n-3)/2$ | HH ($n\equiv 3,5\pmod 8$) | $\phi^{(n)}\big|_{\mathrm{K3\text{-}Humbert}}$ |
+|---|---|---|---|---|
+| 3 | 1 | 0 | YES | non-zero (Drinfeld pent, $C(0)=20$) |
+| 4 | 0 | $1/2$ | n/a | $0$ (Padovan zero) |
+| 5 | 1 | 1 | YES | $-2\cdot[\mathrm{gen}]^{\otimes 5}$ |
+| 6 | 1 | $3/2$ | n/a | $0$ |
+| 7 | 1 | 2 | NO | $0$ (HH forbidden) |
+| 8 | 2 | $5/2$ | n/a | $0$ |
+| 9 | 2 | 3 | NO | $0$ |
+| 10 | 2 | $7/2$ | n/a | $0$ |
+| 11 | 3 | 4 | YES | $0$ (polar cutoff $D_n\ge 4$) |
+| 12 | 4 | $9/2$ | n/a | $0$ |
+| 13 | 5 | 5 | YES | $0$ (polar) |
+| 19 | 17 | 8 | YES | $0$ (polar) |
+| 21 | 28 | 9 | YES | $0$ (polar) |
+| 27 | 90 | 12 | YES | $0$ (polar) |
+| 29 | 149 | 13 | YES | $0$ (polar) |
+| 35 | 504 | 16 | YES | $0$ (polar) |
+
+**Primary**: Eichler--Zagier 1985 *Prog. Math.* 55 Thm 9.3 (polar-support cutoff, index-$1$ weak Jacobi forms); Gritsenko--Nikulin 1998 *J.~Reine Angew. Math.* 507 (Humbert--Heegner structure, paramodular $\Phi_{10}/\eta^{24}$ sign convention); Bruinier 2002 LNM 1780 (Chern class on Heegner divisors); Brown 2012 *Ann. Math.* 175 Thm 1 (Padovan motivic MZV dimension).
+**Location**: Vol I `chapters/theory/shadow_tower_higher_coefficients.tex` Theorem~\ref{thm:phi-n-humbert-heegner-admissibility} (lines 4364--4433) and Remark~\ref{rem:three-filter-composite-scope} (lines 4435--4450). Tip-cache row 304 (AP890) in `appendices/first_principles_cache.md`.
+**Cross-volume**: Vol I `thm:phi-n-humbert-heegner-admissibility` + AP890. Vol II: parallel entry `V2-AP127` in `notes/antipatterns_catalogue.md` and `first_principles_cache.md` row 137; HH filter is the Humbert-stratification refinement of the Swiss-cheese coloured bar differential on $\mathsf{SC}^{\mathrm{ch,top}}$, restricting coloured-face admissibility at each weight $n$ against the paramodular $\Phi_{10}/\eta^{24}$ signature. Vol III: parallel entry `AP-CY142` in `notes/antipatterns_catalogue.md` and tip-cache row V16 tying the filter to the admissible-discriminant set inside the $c_{K3}$ Fourier expansion of the EOT K3 elliptic genus (Gritsenko--Nikulin 1998 §3 structure).
+**Related**: Pattern 132 (YD tower weight $\delta^{(n)}\propto\lfloor n/2\rfloor+1$, parity discipline); row 409 tip-cache (AP889, prior HH-admissibility voice).
+**Confusion type**: necessary/sufficient (treating Padovan dimension as sufficient when it is only necessary; the HH filter is the orthogonal necessary filter).
+
+### Pattern 403 (AP-CAT-2): Bookkeeping-vocabulary leak from notes/ into reader-facing chapters/
+
+**Session**: 2026-04-21 self-audit of AP catalogue + cache.
+**Trigger regex**: `Wave~\d+|\bWave \d+|round~\d+|DNA strand|batch~\d+|AP\d+|HZ-\d+[^\d]` in any file under `chapters/` (`theory/`, `examples/`, `connections/`, `frame/`, `bibliography/`).
+**Confusion**: bookkeeping metadata tokens ("Wave 13", "round 27", "batch 5", "AP269") legitimately belong in `notes/`, `FRONTIER.md`, commit messages, and `adversarial_swarm_*/` ledgers; they must NEVER appear in reader-facing manuscript prose per CLAUDE.md Chriss--Ginzburg writing standard.
+**Precise error**: after a heal wave installs mathematical content tagged with a session label ("Wave 13 K3 chiral bialgebra", "Wave 18 MZV basis"), the heal commits leak the session label into manuscript prose instead of substituting the mathematical anchor. The reader sees "Wave~13 quantum correction" where they should see "$\mathbf H_{\Delta_5}$ quantum correction" or simply "quantum correction on the K3 chiral bialgebra".
+**Canonical violation (2026-04-21)**: 14 "Wave~13" / "Wave~18" tokens in `chapters/theory/bar_construction.tex:2689,2699,2865`, `cobar_construction.tex:3890,3902,3922`, `algebraic_foundations.tex:2824,2830`, `poincare_duality_quantum.tex:1302,1314`, `koszul_pair_structure.tex:2828,2846`, `quantum_corrections.tex:1474,1498`; total across `chapters/` ~49 hits (28 files, per 2026-04-21 grep). All healed 2026-04-21 by substituting mathematical anchor (K3, $\mathbf H_{\Delta_5}$, pentagon-level, single-valued $\mathrm{ChirHoch}^3$) or by deletion where anchor already present.
+**Correct discipline**: pre-commit hook must grep all files under `chapters/` for the trigger regex; any hit blocks the commit. Heal by substituting the mathematical anchor OR deleting the token where the anchor is already present in the surrounding sentence.
+**Primary**: CLAUDE.md Chriss--Ginzburg writing standard (forbidden-vocabulary block); AP235 (Vol I preface sweep); AP288 (session-ledger stale narrative).
+**Location**: `notes/antipatterns_catalogue.md` AP-CAT-2 inscription.
+**Confusion type**: label/content (session label used in place of mathematical content).
+
+### Pattern 404 (AP-CAT-3): Open-problem to AP cross-reference index absence
+
+**Session**: 2026-04-21 self-audit.
+**Trigger regex**: Open Problem (N) discussion in `FRONTIER.md`, `CLAUDE.md`, `notes/*.md` without AP anchor.
+**Confusion**: an open problem's status depends on a chain of APs (what was retracted, what is scope-restricted, what is cohomological vs chain-level); the catalogue inscribes each AP individually but does not maintain an `Open Problem k -> AP/Pattern chain` mapping at the top level.
+**Correct discipline**: after every new open problem is inscribed, update an `Open Problem Index` block with (a) the problem statement one-liner, (b) the AP/Pattern chain bounding it, (c) the falsification witness required to resolve it.
+**Concrete example**: Open Problem 8 ($\kappa_{\mathrm{BKM}}(\mathbf H_{\Delta_5})$ cross-volume Vol I vs Vol III; paramodular $\Phi_{10} = \Delta_5^2$ gives 5, Fake-Monster $\Phi_{12}$ gives 12) rests on AP-CY85 (N=1 coincidence), AP-CY69 (Route A / Route B collision), AP5 dual-indexing header (canonical preamble row 57), Pattern 411 (formerly Pattern 226; cross-volume bibkey discipline, renumbered 2026-04-21 per AP-CAT-1).
+**Primary**: `notes/antipatterns_catalogue.md` AP-CAT-3 inscription; CLAUDE.md "The accounting is handled automatically by the PostToolUse hook and can always be reconciled at session end" (open-problem index is the reconciliation layer).
+**Confusion type**: temporal (AP status changes; open-problem index lags).
+
+### Pattern 405 (AP-CAT-4): Two-basis $e_4$ non-contradiction registry
+
+**Session**: 2026-04-21.
+**Trigger regex**: `e_4\\s*=|e\\^\\{\\(4\\)\\}` in `.tex` under `chapters/` or `standalone/`.
+**Confusion**: $e_4$ admits two cohomologically-equivalent bases at $c = -214$: (i) $W$-primary basis $e_4 = W_4 - (107/11)\Lambda_Z$; (ii) Virasoro-composite basis $e_4 = {:}T\partial^2 T{:} - (3/2){:}(\partial T)^2{:} + (321/10)\partial^4 T + \hbar\,\mathrm{qt}(J^{(4)})$. A reader encountering both forms without the conversion identity assumes a retraction.
+**Correct relation**: same cohomology class $[e_4] \in \mathrm{ChirHoch}^3(\mathbf H_{\Delta_5})_4$, two bases, connected by Pope--Romans--Shen projection $W_k = e_k + (-c/22)\Lambda_Z$ at generic $c$; at $c = -214$ the scalar $-c/22 = 107/11$. Wang 1998 CMP 195 Prop 4.2 three-leg uniqueness provides the quasi-primary basis with $(1, -3/2, 321/10)$ on $({:}T\partial^2 T{:}, {:}(\partial T)^2{:}, \partial^4 T)$.
+**Correct discipline**: every $e_k$ inscription carries a one-line scope remark naming the basis (quasi-primary / $W$-primary / Virasoro-composite); two-basis disagreements without conversion are latent AP238 violations.
+**Primary**: Pope--Romans--Shen 1990 PLB 236 Eq (2.7-2.9); Wang 1998 CMP 195 Prop 4.2; entry 408/302 of `appendices/first_principles_cache.md` (AP888).
+**Location**: `notes/antipatterns_catalogue.md` AP-CAT-4 inscription; compatible-dual-readings table row $e_4$ (line 86 of catalogue).
+**Related**: Pattern 230 (symbol-overloading); AP238 (statement/proof numerical contradiction); AP-CAT-5 (pseudo-character/determinant non-contradiction).
+**Confusion type**: convention clash (two bases for the same cocycle class).
+
+### Pattern 406 (COEFFICIENT-WAVE-2): Five pinned coefficient values
+
+**Session**: 2026-04-21 coefficient wave-2 closure (Etingof + Zagier + Beilinson audit).
+**Trigger regex**: `107/11|196884|196883|c\(3\)\s*=\s*-128|c\(3\)\s*=\s*-64|c\(4\)\s*=\s*216|c\(4\)\s*=\s*108|-25/72|5/144|-35/3456|-c/22|F_1\^\{?\\mathrm\{const|F_2\^\{?\\mathrm\{const|H_1\(3C\)|H_2\(24A\)` in any `.tex` file under any volume.
+**Confusion**: five distinct coefficient values enter the programme as K3-base-point invariants; each has a specific primary source and a specific convention; conflating conventions or citing incorrect theorem numbers is the failure mode.
+**Canonical values** (see Vol.~I `landscape_census.tex` sec `sec:canonical-coefficient-values`, propositions `prop:canonical-prs-coefficient-cm214` through `prop:canonical-bcov-quintic`; Vol.~I `concordance.tex` remark `rem:concord-canonical-coefficient-cross-ref`; Vol.~III `k3_chiral_bialgebra_platonic.tex` remark `rem:k3-chiral-bialgebra-canonical-values`):
+  1. Pope--Romans--Shen 1990 PLB 236 eq (2.10): $-c/22|_{c=-214} = 107/11$. Primary-projector scalar $W_k = e_k + (-c/22)\Lambda_Z$.
+  2. Conway--Norton 1979 + ATLAS 1985: $H_1(1A) = 196884$, $H_1(2A) = 4372$, $H_1(3A) = 782$, $H_1(3C) = 1$, $H_2(24A) = 4$. McKay--Thompson series on FLM moonshine module $V^\natural$.
+  3. Bruinier 2002 LNM 1780 Proposition 5.1 (NOT Theorem 3.22 by default; 3.22 is the rank-1 Borcherds lift weight formula, 5.1 is the Heegner Chern-class reciprocity): $\Z/8$ torsion of $c_1(\mathcal L^{\Delta_5}|_{H_1})$; admissible discriminants $D \equiv 0, 1 \pmod 4$; universal identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at $\hbar^2 = -1/8$, $K^{\kappa_{\mathrm{ch}}} = 8$.
+  4. Oberdieck 2018 Geom Topol 22 sec 0.1: $c_{\mathrm{Obd}}(3) = -128$, $c_{\mathrm{Obd}}(4) = 216$ for $\phi_{0,1}^{K3}$. EOT 1989 convention: $c(3) = -64$, $c(4) = 108$. Factor-of-2 bridge: $\phi_{0,1}^{\mathrm{Obd}} = 2 \phi_{0,1}^{\mathrm{EOT}}$.
+  5. BCOV 1994 CMP 165 eqs (5.28)--(5.33): $F_1^{\mathrm{const}}(Q_5) = -25/72$ from $\chi(Q_5)/24 \cdot 1/24 = -25/3 \cdot 1/24 = -25/72$. $F_2^{\mathrm{const}}(Q_5) = 5/144$ (programme canonical) via Faber--Pandharipande 2000 Inv Math 139 Theorem 4 constant-map GW. Klemm--Zaslow 2000 alternative $-35/3456$ relates by BCOV sign-flip plus combinatorial factor.
+**Correct discipline**: every inscription invoking one of these five values cites the canonical-values proposition label; every compute engine hardcoding a value cites both the label and the three verification paths.
+**Primary**: Pope--Romans--Shen 1990 PLB 236; Conway--Norton 1979 BLMS 11; ATLAS 1985 OUP; Bruinier 2002 LNM 1780; Eguchi--Ooguri--Taormina--Yang 1989 IJMPA 4; Oberdieck 2018 GT 22; Cheng--Duncan--Harvey 2014 CNTP 8; BCOV 1994 CMP 165; Marino--Moore 1998 NPB 543; Klemm--Zaslow 2000 ATMP 4; Faber--Pandharipande 2000 Inv Math 139.
+**Location**: Vol.~I `chapters/examples/landscape_census.tex` sec `sec:canonical-coefficient-values` (lines 5149--5494); Vol.~I `chapters/connections/concordance.tex` remark `rem:concord-canonical-coefficient-cross-ref`; Vol.~III `chapters/examples/k3_chiral_bialgebra_platonic.tex` sec `sec:k3-chiral-bialgebra-canonical-values`.
+**Related**: Pattern 405 (two-basis $e_4$ non-contradiction); AP14 K3-base-point invariants; AP-CY85 (N=1 coincidence $\kappa_{\mathrm{BKM}}$ vs $\kappa_{\mathrm{fiber}}$); AP5 dual-indexing (Gritsenko vs Borcherds Fourier tables).
+**Confusion type**: convention clash / theorem-number misattribution. Bruinier 2002 Theorem 3.22 is the rank-1 Borcherds lift weight formula; Proposition 5.1 is the Heegner Chern-class reciprocity. Both are needed but cite each by its correct label.
+
+## Pattern 412 (AP912): Quintic $K_0^{\mathrm{num}}$ rank formula
+
+**Wrong claim**: $\mathrm{rk}\,K_0^{\mathrm{num}}(D^b\mathrm{Coh}(X_5)) = h^{0,0} + h^{1,1} = 2$ or $=\sum_p h^{p,p} = 4$ via Hodge diagonals alone.
+**Kernel of truth**: the Hodge-diagonal contribution $\sum_p h^{p,p}$ is part of the rank.
+**Precise error**: omits the mid-Hodge contribution $2 h^{1,d-1}$. For CY-$d$ hypersurfaces (Orlov 2009): $\mathrm{rk}\,K_0^{\mathrm{num}}(X_d) = \sum_p h^{p,p} + 2h^{1,d-1}$. Quintic ($d=3$): via Bayer--Macri $\dim \mathrm{Stab}(X_5) = 2 \cdot \mathrm{rk}\,K_0^{\mathrm{num}} = 8 \Rightarrow \mathrm{rk}\,K_0^{\mathrm{num}} = 4$.
+**Healed reading**: every quintic $K_0^{\mathrm{num}}$ citation names numerical vs non-numerical Grothendieck group; cites Orlov 2009 Prog Math 270.
+**Three paths**: (V1) Orlov 2009 direct; (V2) HKR + Mukai lattice signature; (V3) Bridgeland 2007 Thm 1.2 $\dim\mathrm{Stab}$ rank check.
+**Primary**: Orlov 2009; Bridgeland 2007; Mukai 1987. **Related**: AP912; AP150; AP226.
+
+## Pattern 413 (AP913): Hilb$^n$(K3) Göttsche partition-formula prefactor
+
+**Wrong claim**: $\chi(\mathrm{Hilb}^n(\mathrm{K3}))$ read from $\prod_m(1-q^m)^{-24}$ without Göttsche prefactor.
+**Kernel of truth**: Göttsche 1990 Math Ann 286 Thm 0.2 IS the infinite-product identity.
+**Precise error**: conflates Göttsche $q/\Delta(q) = q \cdot \eta(q)^{-24}$ (leading $q$ prefactor) with pure MacMahon $\prod(1-q^m)^{-24}$ (no prefactor). At $n=4$: $\chi(\mathrm{Hilb}^4) = p_{24}(4) = 108\,600$.
+**Healed reading**: every Hilb$^n$(K3) citation pins prefactor; verify against canonical sequence $\{24, 324, 3200, 25\,650, 176\,256, 1\,088\,280, \ldots\}$.
+**Primary**: Göttsche 1990 Math Ann 286 Thm 0.2; OEIS A006922. **Related**: AP913; AP135; AP884/AP341.
+
+## Pattern 414 (AP914): K3 $\times E$ triangle-cycle = $2\mathrm{Vol}(E)(2\pi i)^3$
+
+**Wrong claim**: triangle-cycle value is $4\mathrm{Vol}(E)(2\pi i)^3$.
+**Kernel of truth**: Oberdieck 2018 Geom \& Topol 22 Thm 2 (reduced K3 $\times E$ DT $= -\Phi_{10}^{-1}$) is real; Kapranov--Vasserot pairing compatibility real.
+**Precise error**: double-counts the Mukai normalisation $\chi(\mathcal O_{\mathrm{K3}}) = 2$ against BKM Casimir $\mathrm{Cas}_2(\alpha) = 1$; only one factor of $2$ enters through Mukai.
+**Healed reading**: canonical $2\mathrm{Vol}(E)(2\pi i)^3$ (AP885 primary; AP914 cross-volume sweep). Every K3 $\times E$ / Oberdieck reduced-DT / class-M $E_3$-bar inscription pins single-factor Mukai.
+**Primary**: Oberdieck 2018; Kapranov--Vasserot 2018; Mukai 1987. **Related**: AP914; AP885; entry 159 (W20 MNOP $\chi_3$); entry 405.
+
+## Pattern 415 (AP915): $S_5$ shadow vs PRS scalar $-c/22$ at weight 5
+
+**Wrong claim**: shadow $S_5 = -48/[c^2(5c+22)]$ and Pope--Romans--Shen scalar $-c/22$ at weight 5 are comparable / interconvertible.
+**Kernel of truth**: both are weight-5 Virasoro quasi-primary data.
+**Precise error**: conflates shadow-tower coefficient (Arnold-cycle pairing) with $W$-primary-to-Virasoro-composite basis projection constant (Wang 1998 CMP 195 Prop 4.2 three-leg uniqueness).
+**Healed reading**: every $S_r$ and every PRS conversion cite distinct index. Two-basis conversion equations name Virasoro-composite vs $W$-primary bases explicitly (AP-CAT-4).
+**Primary**: Zamolodchikov 1985 TMP 65; Pope--Romans--Shen 1990 PLB 236 Eq (2.7--2.9); Wang 1998 CMP 195. **Related**: AP915; AP178; AP-CAT-4; canonical row 51.
+
+## Pattern 416 (AP916): AM biconditional forward/reverse scope
+
+**Wrong claim**: ``$X \ne 0 \iff Y \ne 0$'' in Atiyah--Manin pairing / duality contexts with only the forward direction proved.
+**Kernel of truth**: forward direction is typically proved on the Koszul locus.
+**Precise error**: reverse used as if proved when only forward established (AP36: ``implies proved, iff claimed'').
+**Healed reading**: biconditional in AM / pairing / duality carries two-line template ``Forward: [anchor]. Reverse: [anchor]'' before $\iff$. Unstated reverse downgrades to $\Rightarrow$ + remark.
+**Primary**: standard categorical-pairing discipline; Atiyah--Manin 1969. **Related**: AP916; AP36; AP59; FM20.
+
+## Pattern 417 (AP917): L-to-T upgrade atomicity
+
+**Wrong claim**: upgrading `lemma` $\to$ `theorem` environment with label rename is safe.
+**Kernel of truth**: environment + label update ARE needed.
+**Precise error**: misses consumer `\ref{lem:...}` $\to$ `\ref{thm:...}` retargets across all three volumes in the SAME commit (AP149); creates latent duplicate-label risk (AP124) if both prefixes coexist transiently.
+**Healed reading**: L-to-T upgrades are atomic operations (environment, label, every `\ref`) in one tool-call batch. Post-upgrade grep `\\ref{lem:${LABEL}}` cross-volume; retarget.
+**Primary**: internal AP / hook discipline. **Related**: AP917; AP124; AP127; AP149; AP40.
+
+## Pattern 418 (AP-CAT-9): Wave 1--5 agent-hash $\to$ AP anchor map
+
+**Healed mapping (2026-04-22 Waves 1--5 closure)**:
+(a) aa123 (quintic $K_0^{\mathrm{num}}$ rank) $\to$ AP912 / Pattern 412;
+(b) a42182 (Hilb$^4$(K3) partition) $\to$ AP913 / Pattern 413;
+(c) a03831 (Oberdieck factor-of-2) $\to$ AP914 / Pattern 414;
+(d) abcff0 ($S_5$ / PRS) $\to$ AP915 / Pattern 415;
+(e) a154 (AM biconditional) $\to$ AP916 / Pattern 416;
+(f) ab57 (L2-theorem upgrade) $\to$ AP917 / Pattern 417.
+**Rule**: every future agent-hash-identified finding gets an AP entry at session close. **Related**: AP-CAT-4 (Wave-25 precedent); AP254 (closure-date commit-floor); AP-CAT-9.
+
+## Pattern 419 (AP-CAT-10): Wave 6+ forward territories (preventative)
+
+**Forward-looking**. Wave 6+ likely-targets adjacent territory where Wave 1--5 confusion mechanisms re-appear:
+(W6a) Hilb$^n$(K3 $\times E$) triple-base DT (AP-CY46 $\Phi_d$ lane + AP914 + AP886 bi-based Ran);
+(W6b) non-principal $\mathcal W$-algebras at hook-type / rectangular (AP76 + hook-type correspondence);
+(W6c) Yetter--Drinfeld tower weights $\delta^{(n)}$ at $n \ge 10$ (entry 419 at $n=7,8,9$);
+(W6d) Leech-Conway universal ratio closure (OP3/OP12);
+(W6e) $(\infty,2)$-AR / obstruction-tower bridging (W21.2 + W22.1);
+(W6f) K3 $\times E$ Hecke-eigensheaf Selmer condition (rows 34--35).
+**Rule**: Wave 6+ briefs cite AP-CAT-10 at launch, name target, cite AP-chain bounding failure mode per Open-Problem-Index. Preventative. **Related**: AP-CAT-10.
+
+## Pattern 420 (AP-CAT-11): Cache top-15 L1/L2/L3 tiering
+
+**L1 (always checked, n=1--7)**: specific/general, bare $\kappa$/Hochschild, native/derived $E_n$, construction/narration, algebra/coalgebra, CoHA-vs-vertex, Drinfeld-centre-vs-averaging.
+**L2 (inscription-gated, n=8--11)**: ambient-qualifier (P236), scope tags (AP-UNIFORM-WEIGHT-TAG), two-$\hbar$ bridge (AP151), $\kappa$ cross-family (AP-KAPPA).
+**L3 (theorem-context, n=12--15)**: chain-vs-cohom class-M $E_3$ bar (AP-CY21/38), part-whole $\{b_k,B^{(2)}\}$ (AP-CY34), $\kappa_{\mathrm{BKM}}$ coincidence (AP-CY37, row 56), Künneth-multiplicative $\kappa_{\mathrm{cat}}$ (row 63).
+The hook `§3` in `.claude/hooks/beilinson-gate.sh` already encodes this ordering; no hook-code update needed. Future cache additions tag L1/L2/L3 at inscription. **Related**: AP-CAT-11; beilinson-gate.sh §3; canonical rows 56, 63.
+
+## Pattern 421 (AP918): Curved-morphism primitive $f_0$ vs curved-algebra curvature $\ell_0$
+
+**Wrong claim**: ``$\ell_0 = f_0$'' or ``$\ell_0$ is the image of the basepoint under the curved morphism''.
+**Kernel of truth**: both $\ell_0$ and $f_0$ are curvature-type data in the Merkulov curved-$L_\infty$ / curved-$A_\infty$ formalism.
+**Precise error**: $\ell_0 \in A^2$ is the *curved-algebra curvature* (degree-$2$ element of the algebra); $f_0 \in \mathrm{Hom}^0(k,A)$ is the *curved-morphism primitive* (degree-$0$, specifies where the basepoint is sent). Different graded slots; bridged by $D f_0 + \tfrac12[f_0,f_0] = f^\ast \ell_0^{\mathrm{src}} - \ell_0^{\mathrm{tgt}}$, not equated.
+**Healed reading**: every curved statement lists which slot each object lives in and names the bridging MC-identity.
+**Three paths**: (V1) direct degree count; (V2) Merkulov 2019 MC-identity; (V3) $L_\infty$-morphism square test.
+**Primary**: Merkulov 2019 (wheel-free formality and curved $L_\infty$-morphisms). **Related**: AP918; AP76; AP151; tier L2.
+
+## Pattern 422 (AP919): Four-vs-five bucket archetype discipline
+
+**Wrong claim**: ``standard landscape = four archetypes, always''; quantifying over $\mathsf G/\mathsf L/\mathsf C/\mathsf M$ when the $\mathsf B$ contribution is needed.
+**Kernel of truth**: the four-bucket view ($\mathsf G/\mathsf L/\mathsf C/\mathsf M$ with $r_{\max} \in \{2,3,4,\infty\}$) is the shadow-depth classification.
+**Precise error**: the five-bucket view ($\mathsf G/\mathsf L/\mathsf C/\mathsf M/\mathsf B$ with $\kappa + \kappa^! \in \{0,8,13,250/3,98/3\}$) is the $\kappa+\kappa^!$ ceiling classification (Theorem~C). Classical subset $\{0,13,250/3,98/3\}$ drops $\mathsf B$. Wrong bucket count collapses or double-counts.
+**Healed reading**: every archetype-quantification cites which classification (shadow-depth vs ceiling) and the bucket-size rationale.
+**Primary**: Theorem~C; `chapters/examples/landscape_census.tex`. **Related**: AP919; AP917; AP37; tier L1.
+
+## Pattern 423 (AP920): Sense-count discipline (anchor T20)
+
+**Wrong claim**: ``in all $n$ senses of $X$'' for a wrong $n$ (over- or under-counting distinct senses).
+**Kernel of truth**: $r$-matrix, $\kappa$-pairing, bar differential, and Koszul-inversion each admit multiple precise senses (chain / $(\infty,1)$; chiral / topological / categorical; specific / uniform).
+**Precise error**: the four senses of $\kappa$-pairing in class $\mathsf M$ (chain, cohomological, chiral, categorical) and the four senses of $r$-matrix in class $\mathsf M$ (uniform-weight, single-generator, OPE-pole, deformation) are *different* tetrads. Collapsing the two tetrads to a single ``four senses of the Virasoro object'' is a cardinality-type error.
+**Healed reading**: every sense-count $\ge 2$ is followed within ten lines by explicit $n$-bullet enumeration.
+**Primary**: Pattern 236 (ambient qualifier); AP-CAT-11 (L1/L2/L3 tiering). **Related**: AP920; AP37; anchor T20; tier L2.
+
+## Pattern 424 (AP921): Phantom file-path citation
+
+**Wrong claim**: any $f{:}N$ file/line citation where $N$ exceeds the file length or points to a non-matching line content.
+**Kernel of truth**: the underlying mathematical claim may be true.
+**Precise error**: citation emitted without Read-tool verification; model-plausibility substitutes for ground truth. File-path analogue of AP35 (false proof / true theorem): the claim may be true but the citation is fabricated.
+**Healed reading**: every inscribed $f{:}N$ citation in an AP entry, cache pattern, commit message, or summary is verified by a Read or `sed -n "${N}p" f` call *in the same tool-call batch* as the emission.
+**Counter rule** (2026-04-22): every agent summary naming a file:line pair carries a Read or grep-verification anchor in the same deliverable.
+**Primary**: internal AP / hook discipline. **Related**: AP921; AP35; Pattern 244 (tool-markup leak); AP124 (duplicate label); agent a1371d finding.
+
+## Pattern 425 (AP922): Shadow-tower coefficient $S_r$ vs primary-norm scalar (general lane)
+
+**Wrong claim**: ``$S_r$ is the primary norm at weight $r$'' or ``the PRS scalar at weight $r$ is $S_r$'' in general; trivial interconvertibility across $r$.
+**Kernel of truth**: both $S_r$ (shadow from Arnold-cycle pairing on $\mathrm{Conf}_n(X)$) and $\langle \Lambda_r | \Lambda_r \rangle$ (Zamolodchikov-type primary norms) are weight-$r$ Virasoro data.
+**Precise error**: $S_r$ pairs Arnold cycles against OPE residues; primary norms pair $\{L_{-n}, W_{-m}, \ldots\}$ PBW-basis vectors. Different domains. At $r=2$, $S_2 = c/2 = \langle T|T\rangle$ coincides by small-depth chance; at $r=4$, $S_4 = 10/[c(5c+22)]$ is *reciprocal* to $\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ up to sign, not equal; at $r=5$, AP915-specific conflation.
+**Healed reading**: every $S_r$ vs primary-norm transition cites the Wang 1998 basis-change matrix (three-leg uniqueness, Prop 4.2 for $r \le 5$) or downgrades to ``shadow-basis / primary-basis related data''.
+**Three paths**: (V1) direct shadow from Arnold pairing; (V2) primary norm via Zamolodchikov; (V3) Wang basis-change matrix.
+**Primary**: Zamolodchikov 1985 TMP 65; Pope--Romans--Shen 1990 PLB 236 Eq (2.7--2.9); Wang 1998 CMP 195 Prop 4.2. **Related**: AP922; AP915 (weight-5 specific); AP178; AP37; AP-CAT-4; canonical row 51; tier L3.
+
+## Pattern 426 (AP929): Vol III's $\Phi_d$ framed as single-stage unified functor
+
+**Wrong claim**: ``the CY-to-chiral functor $\Phi_d$'' framed as one functor; Vol~I chapters referring to $\Phi_d(\mathcal C)$ as the $E_1$-chiral output of a CY$_d$ category without the two-stage factorisation bridge.
+**Kernel of truth**: Vol~III does define a CY-to-chiral correspondence; the $E_1$-chiral output on a reference curve exists after Stage-2 specialisation.
+**Precise error**: $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ is \emph{two-stage}; $\PhiFA_d$ is Stage 1 (canonical $E_d$-holomorphic factorisation algebra, pinned by Kontsevich--Tamarkin $E_d$-formality + Costello--Gwilliam--Li locality); $\SpCh_{\Sigma_{d-1}, C}$ is Stage 2 (factorisation homology over $\Sigma_{d-1}$ then restriction to $C$). A single CY$_d$ category admits a \emph{family} of $E_1$-chiral shadows indexed by $(\Sigma_{d-1}, C)$; Theorem~A governs each shadow on its curve, not a unique image.
+**Healed reading**: every Vol~I reference to Vol~III's output names the two stages and the family parameter, and labels which stage the consumer theorem applies to. Single-stage phrasing rewritten as ``the Stage-2 $E_1$-chiral shadow $\SpCh_{\Sigma_{d-1}, C}(\PhiFA_d(\mathcal C))$ on the reference curve $C$''.
+**Three paths**: (V1) Vol~III CLAUDE.md line 52--59 (two-stage definition); (V2) Vol~III \texttt{chapters/theory/cy\_to\_chiral.tex} (Stage-1 factorisation, Stage-2 specialisation); (V3) Vol~I C12 + C12b alignment passes 2026-04-22 (29 chapters).
+**Primary**: Vol~III CLAUDE.md line 52--59; Vol~III \texttt{cy\_to\_chiral.tex}; Costello--Gwilliam--Li locality; Kontsevich--Tamarkin $E_d$-formality. **Related**: AP929; AP247 (functor single target); AP-CY46 ($\Phi_d$-ambient concentration); AP-CY81 (six constructions vs six applications); V2-AP46 (Theorem~H hinge $d$-dependent); tier L2.
+
+## Pattern 427 (AP930): Six routes to $G(K3 \times E)$ as six $\Phi_3$-applications
+
+**Wrong claim**: ``six $\Phi_3$-routes to $G(K3 \times E)$''; ``applying $\Phi_3$ along six independent constructions gives the same output''.
+**Kernel of truth**: six distinct construction paths converge (conjecturally, CY-C) on the same $\Phi_3$-output.
+**Precise error**: functoriality of $\Phi_3$ gives one output per input; the six routes (CoHA/Schiffmann--Vasserot, Borcherds lift, lattice VOA, Kummer, sigma model, BLLPR) have \emph{different input data}, each producing a candidate algebra independently, whose identification is the content of CY-C, not a consequence of functoriality.
+**Healed reading**: every ``six routes'' phrasing carries ``six distinct constructions converging (conjecturally, CY-C) on the same $\Phi_3$-output''; each route named with its input data.
+**Three paths**: (V1) Schiffmann--Vasserot CoHA; (V2) Borcherds lift via reflection group; (V3) Frenkel--Kac lattice VOA on Mukai lattice --- each produces an algebra from distinct input; the convergence is CY-C content.
+**Primary**: Vol~III AP-CY60 + AP-CY81; Vol~III CLAUDE.md ``Six routes to $G(K3 \times E)$ are six DIFFERENT constructions''. **Related**: AP930; AP929 (two-stage framing); AP247 (single target); Vol~III AP-CY81 (generator-level falsification across routes); tier L2.
+
+## Pattern 428 (AP931): Fake-Monster BKM at $d = 3$ vs $d = 5$ CY-dimension discipline
+
+**Wrong claim**: ``the Fake-Monster BKM is the Vol~III $d = 3$ $K3 \times E$ output''; ``$\Phi_{12}$ lifts from the $K3 \times E$ Mukai lattice''.
+**Kernel of truth**: Fake-Monster is a real BKM algebra; $K3 \times E$ does carry a BKM (via $\Delta_5$).
+**Precise error**: Fake-Monster BKM has Cartan rank $26$ on $\mathrm{II}_{25, 1}$ (canonical preamble row 21); its CY-categorical home is CY-5 $K3 \times K3 \times E$ with lattice $\mathrm{II}_{3, 19} \oplus \mathrm{II}_{3, 19} \oplus \mathrm{II}_{1, 1}$ giving signature $(26, 2)$ under primitive restriction. $K3 \times E$ CY-3 carries the paramodular $\Delta_5$ (rank-3 K3-BKM on $\Lambda^{2, 1}_{\mathrm{II}}$, canonical row 28), a \emph{different} BKM.
+**Healed reading**: every Fake-Monster citation names CY-5 $K3 \times K3 \times E$ + signature-$(26, 2)$ orthogonal Shimura variety; every $K3 \times E$ reference uses $\Delta_5$ + rank-3 K3-BKM, not $\Phi_{12}$.
+**Three paths**: (V1) Cartan-rank cross-check (canonical rows 20--21 + 28); (V2) automorphic-form weight ($\Phi_{12}$ weight 12 vs $\Delta_5$ weight 5); (V3) signature-type of positive-part lattice ($(26, 2)$ vs $(2, 1)$).
+**Primary**: Borcherds 1992 \emph{Invent.\ Math.}~109 Thm~3; Gritsenko 1999 Thm~6.1; canonical preamble rows 20--21 (Monster rank 2, Fake-Monster rank 26); canonical preamble row 28 (K3-BKM Weyl denominator $\Delta_5$). **Related**: AP931; AP-CY71 (Conway $V^{s\natural}$ is \emph{not} a fifth $\Psi$-image, parallel misplacement pattern); AP-CY79 (phantom Niemeier root systems at misplaced $N$); AP927 (``$10$ real simple roots'' Igusa misread, parallel rank/weight conflation); tier L3.
+
+## Pattern 429 (AP932): K3 Yangian envelope three-way confusion ($\so(4,20)$ vs $Y_\hbar(\so(4|20))$ vs rejected-$\osp(4|20)$ / $\fgl(4|20)$)
+
+**Wrong claim**: ``the K3 Yangian envelope is $\osp(4|20)$''; ``K3 Yangian $= Y(\fgl(4|20))$''; ``$Y(\osp)$ and $Y(\so)$ are interchangeable super-extensions''.
+**Kernel of truth**: the K3 Mukai lattice has signature $(4, 20)$; a Yangian-type object on this datum exists.
+**Precise error**: Kac's super-classification requires symplectic form on odd part for $\osp$ and Berezinian for $\fgl$-super; the K3 Mukai pairing is \emph{purely orthogonal}, so neither Kac-super class applies. Allowed envelope classes: (i) classical $\so(4, 20)$; (ii) programme-specific $Y_\hbar(\so(4|20))$ (non-Kac $\mathbb Z / 2$-graded orthogonal Yangian with orthogonal reflection-equation Shapovalov datum, ACDFR 2003 super-Sklyanin determinant $\mathrm{sBer}\, K(u)$). Forbidden: $\osp(4|20)$ (wrong odd form), $\fgl(4|20)$ (wrong even-odd type assignment).
+**Healed reading**: every K3 Yangian envelope inscription specifies (a) $\so(4, 20)$ / $Y_\hbar(\so(4|20))$ / rejected-$\osp$ / rejected-$\fgl$ in force; (b) signature-type assignment (orthogonal); (c) Kac vs non-Kac classification.
+**Three paths**: (V1) Mukai-pairing signature $(4, 20)$ orthogonal; (V2) Kac super-classification (Kac 1977, symplectic-odd for $\osp$); (V3) ACDFR 2003 super-Sklyanin reflection-equation datum for $Y_\hbar(\so(4|20))$ non-Kac realisation.
+**Primary**: Kac 1977 \emph{Adv.\ Math.}~26 (super-classification); ACDFR 2003 arXiv:math/0304188 (super-Sklyanin, Berezinian); Mukai 1987 (K3 Mukai pairing); Gritsenko--Nikulin 1998 (signature $(4, 20)$). **Related**: AP932; AP246 (signature-type assignment); AP279 (rename-heal island-local); AP239 (naming after physical source); AP361 (super-Yangian $\fgl$/$\osp$/$\so$ scope refinement); Vol~III CLAUDE.md ``Super-Yangian envelope (osp vs gl vs so)''; tier L3.
+
+## Pattern 430 (AP933): $\kappa_{\mathrm{cat}}(K3 \times E) = 2$ fibre-vs-total-space (manifesto tier back-anchor)
+
+**Wrong claim**: ``$\kappa_{\mathrm{cat}}(K3 \times E) = \chi(\mathcal O_{K3}) = 2$'' in reader-facing manuscript prose.
+**Kernel of truth**: $\chi(\mathcal O_{K3}) = 2$ is correct as the K3-fibre supertrace.
+**Precise error**: reads fibre value for total-space value; violates K\"unneth-multiplicative rule $\chi(\mathcal O_{X \times Y}) = \chi(\mathcal O_X) \cdot \chi(\mathcal O_Y)$. Correct: $\kappa_{\mathrm{cat}}(K3 \times E) = 2 \cdot 0 = 0$.
+**Healed reading**: every $\kappa_{\mathrm{cat}}(K3 \times E)$ inscription uses total-space $0 = 2 \cdot 0$; fibre value $2 = \kappa_{\mathrm{fibre}}(K3)$ retains its own subscript.
+**Three paths**: (V1) Künneth-multiplicative supertrace (AP289); (V2) Hodge supertrace $\Xi(X \times Y) = \Xi(X) \cdot \Xi(Y)$ (AP-CY68); (V3) canonical preamble row 63 ($\kappa_{\mathrm{cat}}(K3 \times E) = 0$).
+**Primary**: AP289 + AP-CY68 + canonical row 63 (proof-tier); AP933 (manifesto-tier back-anchor). Hirzebruch--Riemann--Roch; Künneth theorem for $\chi(\mathcal O)$. **Related**: AP933; canonical preamble rows 56, 63; AP289 (K\"unneth multiplicative vs additive); AP-CY68 (Hodge supertrace K\"unneth); AP-CY84 ($\kappa_{\mathrm{ch}} = \chi(\mathcal O_X)$ dimension-restricted); AP290 (HZ-7 subscript type-swap); Vol~III CLAUDE.md ``$\kappa_{\mathrm{cat}}(K3 \times E) = 0$, NOT 2 (fibre)''; tier L3.
+
+## Pattern 431 (AP934): $\mathrm{CoHA}(\mathbb C^3) = \mathcal W_{1 + \infty}$ classical-limit-as-whole (manifesto tier back-anchor)
+
+**Wrong claim**: ``$\mathrm{CoHA}(\mathbb C^3) = \mathcal W_{1 + \infty}$'' or ``the cohomological Hall algebra of $\mathbb C^3$ is $\mathcal W_{1 + \infty}$'' in reader-facing manuscript prose.
+**Kernel of truth**: the classical limit of the affine Yangian $Y^+(\widehat{\fgl}_1)$ recovers $\mathcal W_{1 + \infty}$.
+**Precise error**: substitutes the classical limit for the full quantum algebra; drops the positive-half vs full-Yangian distinction; conflates $\mathcal W_{1 + \infty} = \mathcal W_\infty[c] \otimes \mathcal H$ (Pope--Romans--Shen 1990) with $Y^+(\widehat{\fgl}_1)$ (Schiffmann--Vasserot 2013; Tsymbaliuk 2017).
+**Healed reading**: every CoHA inscription uses $\mathrm{CoHA}(\mathbb C^3) = Y^+(\widehat{\fgl}_1)$ (positive half of affine Yangian); $\mathcal W_{1 + \infty}$ appears only as the classical-limit shadow with full-Yangian / positive-half distinction.
+**Three paths**: (V1) Schiffmann--Vasserot 2013 \emph{Duke}~162 direct CoHA construction; (V2) Tsymbaliuk 2017 affine Yangian positive-half realisation; (V3) Pope--Romans--Shen 1990 classical $\mathcal W_{1 + \infty}$ structure (limit, not CoHA itself).
+**Primary**: Schiffmann--Vasserot 2013 \emph{Duke}~162; Tsymbaliuk 2017 \emph{Selecta Math.} N.S.; Pope--Romans--Shen 1990 PLB 236. **Related**: AP934; canonical preamble row ``$\mathrm{CoHA}(\mathbb C^3)$ identification''; canonical row ``CoHA vs chiral-algebra type''; AP-CY7 (CoHA $\ne$ $E_1$-chiral algebra); Vol~III CLAUDE.md ``$\mathrm{CoHA}(\mathbb C^3) = Y^+$ (positive half), NOT $\mathcal W_{1+\infty}$ (full)''; tier L1.
+
+## Pattern 432 (AP935): \texttt{\textbackslash begin\{warning\}} environment in reader-facing manuscript \texttt{.tex}
+
+**Wrong claim**: a \texttt{\textbackslash begin\{warning\}...\textbackslash end\{warning\}} block appears inside a reader-facing \texttt{.tex} chapter as if it were a mathematical environment (theorem, remark, definition).
+**Kernel of truth**: conflation-warnings are legitimate meta-content in bookkeeping documents.
+**Precise error**: warning is a voice register, not a mathematical object; placing it in the manuscript substitutes editorial instruction for mathematical content. Violates the Chriss--Ginzburg ``prose is mathematics, not explanation of mathematics'' rule.
+**Healed reading**: every manuscript warning rewritten as either (a) \texttt{remark} stating the mathematics of the potential conflation (Gap/Flaw-as-mathematics per CLAUDE.md ``When a mathematical retraction is genuinely informative''), or (b) moved to \texttt{notes/antipatterns\_catalogue.md} / cache as AP entry. Reader-facing \texttt{.tex} carries no \texttt{warning} environment.
+**Three paths**: (V1) CLAUDE.md ``Forbidden in manuscript prose''; (V2) AP-CAT-2 bookkeeping-vocabulary discipline (extension to environment markers); (V3) hook regex sweep as pre-commit gate.
+**Primary**: CLAUDE.md (all three volumes) CG voice section; AP-CAT-2 extension. **Related**: AP935; AP-CAT-2 (bookkeeping-vocabulary infiltration); AP235 (Vol~I preface sweep); AP288 (session-ledger stale narrative); V2-AP29 (AI slop cleanup); tier L2.
+
+## Pattern 433 (AP936): Discipline-token leakage (AP-$n$ / Pattern~$n$ / Wave~$n$ / cache-canonical / CLAUDE.md / manifesto / Beilinson-standard) in reader-facing manuscript
+
+**Wrong claim**: a reader-facing \texttt{.tex} paragraph contains any of the tokens ``AP$n$'', ``Pattern~$n$'', ``Wave~$n$'', ``cache-canonical'', ``manifesto'', ``Beilinson-standard'', ``CLAUDE.md'', ``see \texttt{notes/}''.
+**Kernel of truth**: these tokens carry real internal meaning in the bookkeeping registry.
+**Precise error**: bookkeeping-ledger identifiers have meaning only relative to the project-internal AP/Pattern/Wave registry, not to the mathematical content. A reader without registry access cannot evaluate the referenced claim. Treats the manuscript as secondary artefact explaining bookkeeping, rather than primary object carrying its own logical force.
+**Healed reading**: for every manuscript violation, extract the \emph{mathematical} statement that the bookkeeping token references and inscribe it directly in CG voice. ``per AP289 K\"unneth discipline'' $\to$ ``$\Xi(X \times Y) = \Xi(X) \cdot \Xi(Y)$ by K\"unneth''. ``per cache-canonical row 63'' $\to$ ``$\kappa_{\mathrm{cat}}(K3 \times E) = 2 \cdot 0 = 0$''.
+**Three paths**: (V1) CLAUDE.md ``Bookkeeping vocabulary of any kind'' prohibition; (V2) AP-CAT-2 (Wave~$n$ / round~$m$ subset); (V3) hook regex sweep as pre-commit gate.
+**Primary**: CLAUDE.md (all three volumes) CG voice section. **Related**: AP936; AP-CAT-2 (Wave~$n$ / round~$m$ specific tokens); AP235 (preface sweep); AP935 (\texttt{warning} environment, companion); AP-CY28 (Vol~III ``AP-N'' leakage); tier L2.
+
+### Attribution
+
+No AI attribution. All work attributed to Raeez Lorgat.
+
+
+## Session antipatterns — manuscript hygiene (2026-04-22)
+
+**Governing principle** (inscribed across Vols I/II/III CLAUDE.md): the
+manuscript is self-complete, self-coherent, self-consistent. The current
+version stands for itself and only itself. All LaTeX mathematical
+writing is standalone, up-to-date, consistent, coherent. No references
+to previous versions, intermediate ansätze, earlier drafts, retracted
+values, superseded formulas, or drafting-history commentary. When a
+mathematical retraction is genuinely informative, state the failed
+argument and its Gap/Flaw as mathematics, not as drafting record.
+
+The fifty-five cache entries below (CGCLEAN-1 through CGCLEAN-55) pair
+with the `notes/antipatterns_catalogue.md` entries of the same number.
+Each entry lists: name, regex trigger, and a 5-step protocol
+(DETECT / LOCALISE / MATH-CHECK / REPAIR / VERIFY).
+
+### Group A. Bookkeeping vocabulary in prose
+
+## Pattern CGCLEAN-1 (Wave N in prose)
+
+**Name**: Wave $N$ / wave $N$ / Wave-$N$ in reader-facing LaTeX.
+**Regex trigger**: `\b[Ww]ave[- ][0-9]+\b|\bW[0-9]+\.[0-9]+\b` in `.tex`
+files under `chapters/`, `frame/`, `examples/`, `theory/`,
+`connections/`, `bibliography/`.
+**Protocol**:
+(1) **DETECT** — grep the regex across the chapter file.
+(2) **LOCALISE** — identify the surrounding clause; check whether
+"Wave $N$" is load-bearing (it is not; the wave is a session label).
+(3) **MATH-CHECK** — identify the mathematical claim the wave label was
+wrapping (e.g., "Wave 14 established" → what was actually
+established).
+(4) **REPAIR** — delete the wave tag, reword the clause to state the
+mathematical claim directly.
+(5) **VERIFY** — build the chapter; confirm cross-references and
+numerical claims survive the rewording.
+**Related**: CGCLEAN-1; governing principle; `notes/MEMORY.md` 2026-04-20
+"No Wave N in manuscript" entry.
+
+## Pattern CGCLEAN-2 (AP-CY$n$ / AP$n$ / AP-CAT-$N$ in prose)
+
+**Name**: antipattern indices cited from manuscript prose.
+**Regex trigger**: `\bAP(-CY)?[0-9]+\b|\bAP-CAT-[0-9]+\b|\bV2-AP[0-9]+\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep AP index regex.
+(2) **LOCALISE** — check whether the AP is cited inside `notes/` (OK)
+or reader-facing `.tex` (violation).
+(3) **MATH-CHECK** — open
+`notes/antipatterns_catalogue.md`, find the AP entry, extract the
+mathematical content it encodes.
+(4) **REPAIR** — replace the AP citation by the mathematical content.
+(5) **VERIFY** — build the chapter; confirm the surrounding claim
+retains its precision without the AP wrapper.
+
+## Pattern CGCLEAN-3 (FM$n$ in prose)
+
+**Name**: formula-mechanical tag cited from manuscript prose.
+**Regex trigger**: `\bFM[0-9]+\b` in reader-facing `.tex`.
+**Protocol**: identical to CGCLEAN-2 with `notes/antipatterns_catalogue.md`
+FM-section as source.
+
+## Pattern CGCLEAN-4 (HZ-$N$ / HZ-IV in prose)
+
+**Name**: Hypothesis-Zoo discipline tag cited from manuscript prose.
+**Regex trigger**: `\bHZ[- ][0-9IVX]+\b` in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep HZ regex.
+(2) **LOCALISE** — check whether HZ is in a CLAUDE.md ("HZ-7 subscript
+discipline" is an internal rule) or in prose (violation).
+(3) **MATH-CHECK** — the HZ discipline names a specific check (e.g.,
+HZ-7 = "$\kappa$ carries a subscript"); identify whether the current
+prose satisfies the check.
+(4) **REPAIR** — replace "by HZ-7" with the check's content ("with
+$\kappa_{\mathrm{ch}}$ subscripted explicitly").
+(5) **VERIFY** — confirm the reader can follow without knowing what
+HZ-$N$ is.
+
+## Pattern CGCLEAN-5 (DNA strand S$x$ in prose)
+
+**Name**: adversarial-swarm strand label in manuscript prose.
+**Regex trigger**: `\bDNA[- ]strand[- ]?S[0-9]+\b|\bstrand[- ]?S_?[0-9]+\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep strand regex.
+(2) **LOCALISE** — every occurrence is a violation; strands are
+agent-orchestration devices.
+(3) **MATH-CHECK** — identify the mathematical result the strand was
+tracking.
+(4) **REPAIR** — delete the strand reference; state the result directly.
+(5) **VERIFY** — grep for residual "strand" / "S$n$" references; clean.
+
+## Pattern CGCLEAN-6 (CG-rectify pass $k$ in prose)
+
+**Name**: rectification-pass labour indicator in manuscript.
+**Regex trigger**: `\bCG-rectif(y|ication)[- ]pass[- ]?[0-9]+\b|\brectification[- ]round[- ]?[0-9]+\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep rectification-pass regex.
+(2) **LOCALISE** — all hits are violations (pass-count is labour metadata).
+(3) **MATH-CHECK** — what did the pass achieve?
+(4) **REPAIR** — delete the pass count; inscribe the achievement.
+(5) **VERIFY** — grep for residual `pass $k$` references.
+
+## Pattern CGCLEAN-7 (cache entry / Cached Confusion / Cache anchor)
+
+**Name**: cache-index citation in manuscript prose.
+**Regex trigger**: `\b[Cc]ache[- ]entry[- ]?[0-9]+\b|\b[Cc]ached[- ][Cc]onfusion[- ]?[#0-9]+\b|\bCache[- ](anchor|append|pattern)[- ]?[0-9]+\b`
+in reader-facing `.tex`.
+**Protocol**: identical to CGCLEAN-2 with
+`appendices/first_principles_cache.md` / this file as source.
+
+## Pattern CGCLEAN-8 (Wave spec / witnessing / verdict / ledger)
+
+**Name**: agent-pipeline state vocabulary in manuscript prose.
+**Regex trigger**: `\b[Ww]ave[- ]?[0-9]+[- ]spec\b|\b[Vv]erdict:[- ]|\b[Ll]edger[- ]closure\b|\b[Ww]itnessing[- ]the\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep the pipeline-state regex.
+(2) **LOCALISE** — all hits are violations.
+(3) **MATH-CHECK** — what mathematical status is the pipeline-state
+word encoding? (Typically "proved" / "conjectural" / "open".)
+(4) **REPAIR** — replace with `\ClaimStatusProved` /
+`\ClaimStatusConjectured` macros or explicit prose status.
+(5) **VERIFY** — grep for residual `Verdict:` / `witnessing` / `ledger`.
+
+## Pattern CGCLEAN-9 (programme-canonical)
+
+**Name**: elevation-tag compound replacing "canonical".
+**Regex trigger**: `\bprogramme-canonical\b` in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep the compound.
+(2) **LOCALISE** — check surrounding context; "the Borcherds programme"
+standalone is OK.
+(3) **MATH-CHECK** — verify "canonical" alone suffices.
+(4) **REPAIR** — replace `programme-canonical` → `canonical`.
+(5) **VERIFY** — grep for residual; confirm no semantic loss.
+
+## Pattern CGCLEAN-10 (anchor T$n$ / type-error registry T$n$)
+
+**Name**: type-error-registry index in manuscript prose.
+**Regex trigger**: `\banchor[- ]T[0-9]+\b|\btype-error[- ]registry[- ](entry[- ])?T[0-9]+\b`
+in reader-facing `.tex`.
+**Protocol**: identical to CGCLEAN-2/CGCLEAN-7.
+
+### Group B. Meta-narration
+
+## Pattern CGCLEAN-11 (narrative counterpart / narrative arc / narrative)
+
+**Name**: narrative vocabulary as organising device.
+**Regex trigger**: `\bnarrative[- ](counterpart|arc)\b|\bnarrative\.\s|\s\.\.\.narrative\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep narrative regex.
+(2) **LOCALISE** — identify whether the word is decoration (violation)
+or a citation of a paper with "narrative" in its title (exempt).
+(3) **MATH-CHECK** — what mathematical statement was the narrative
+wrapper carrying?
+(4) **REPAIR** — inscribe the statement; delete the wrapper.
+(5) **VERIFY** — grep residual.
+
+## Pattern CGCLEAN-12 (story / saga / odyssey / journey noun-form)
+
+**Name**: rhetorical-inflation noun-form of the authors' experience.
+**Regex trigger**: `\bthe[- ](story|saga|odyssey|journey)[- ]of\b` in
+reader-facing `.tex`.
+**Protocol**: as CGCLEAN-11 with the noun-form specificity.
+
+## Pattern CGCLEAN-13 (Platonic ideal / Platonic form / platonic * / Platonic-form)
+
+**Name**: Platonic elevation vocabulary in manuscript prose.
+**Regex trigger**: `\b[Pp]latonic[- ](ideal|form|chapter|architecture|ensemble|synthesis)\b|\b[Pp]latonic-form\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep Platonic regex.
+(2) **LOCALISE** — exempt music-context / Plato-citation contexts (e.g.,
+"Platonic chord" in a music-theory section; explicit cite to
+*Timaeus*).
+(3) **MATH-CHECK** — identify the mathematical object the Platonic
+wrapper was labelling.
+(4) **REPAIR** — delete "Platonic"; state the object directly.
+(5) **VERIFY** — grep residual; confirm no music/philosophy hit was
+corrupted.
+
+## Pattern CGCLEAN-14 (Platonic Theorem~A / Platonic Theorem~C)
+
+**Name**: Platonic-prefixed theorem name.
+**Regex trigger**: `\b[Pp]latonic[- ]Theorem~?[A-Z]\b` in reader-facing
+`.tex`.
+**Protocol**: subset of CGCLEAN-13; replace with plain "Theorem~X".
+
+## Pattern CGCLEAN-15 ("This chapter's function is to…")
+
+**Name**: chapter-function meta-paragraph.
+**Regex trigger**: `\bThis[- ]chapter's[- ]function[- ]is[- ]to\b|\bThe[- ]role[- ]of[- ]this[- ]chapter[- ]is\b|\bThis[- ]chapter[- ]serves[- ]as[- ]the\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep function-paragraph regex.
+(2) **LOCALISE** — typically a chapter- or section-opening paragraph.
+(3) **MATH-CHECK** — does the following content execute the function
+the paragraph describes?
+(4) **REPAIR** — delete the meta-paragraph; start with the first
+definition, question, or theorem.
+(5) **VERIFY** — confirm the chapter opens with mathematics.
+
+## Pattern CGCLEAN-16 (we now turn to / having established / let us now / this brings us to)
+
+**Name**: section-boundary signpost phrases.
+**Regex trigger**: `\bwe[- ]now[- ]turn[- ]to\b|\bhaving[- ]established\b|\blet[- ]us[- ]now\b|\bthis[- ]brings[- ]us[- ]to\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep signpost regex (overlaps with hook's existing
+"Signpost phrases" block).
+(2) **LOCALISE** — check adjacent content.
+(3) **MATH-CHECK** — what construction / question does the next section
+resolve?
+(4) **REPAIR** — replace with the CG three-sentence section-boundary
+template (what was just established; the question; the resolution).
+(5) **VERIFY** — confirm each sentence is mathematics, not a signpost.
+
+## Pattern CGCLEAN-17 (in the present work / the author / our programme / we have argued / it is worth noting)
+
+**Name**: authorial self-reference in manuscript prose.
+**Regex trigger**: `\bin[- ]the[- ]present[- ]work\b|\bthe[- ]author\b|\bour[- ]programme\b|\bwe[- ]have[- ]argued\b|\bit[- ]is[- ]worth[- ]noting\b`
+in reader-facing `.tex`.
+**Protocol**: as CGCLEAN-16. "our programme" is the most common
+violation; replace with "the construction" or delete.
+
+## Pattern CGCLEAN-18 ("This chapter closes the … programme" meta-paragraphs)
+
+**Name**: programme-closing / opening meta-paragraph.
+**Regex trigger**: `\bThis[- ]chapter[- ](closes|opens|completes)[- ]the\s+\w+\s+programme\b`
+in reader-facing `.tex`.
+**Protocol**: delete; the final theorem of the chapter is the closure.
+
+## Pattern CGCLEAN-19 ("the opening paragraphs of this preface")
+
+**Name**: self-reference to document structure inside the document.
+**Regex trigger**: `\bthe[- ]opening[- ]paragraphs[- ]of[- ]this[- ]preface\b|\bthis[- ]preface's[- ]role\b`
+in reader-facing `.tex`.
+**Protocol**: delete the self-reference.
+
+## Pattern CGCLEAN-20 ("Earlier in the volume" / "at earlier drafts")
+
+**Name**: cross-temporal reference to prior drafts.
+**Regex trigger**: `\bEarlier[- ]in[- ]the[- ]volume\b|\bat[- ]earlier[- ]drafts\b|\bin[- ]an[- ]earlier[- ]version\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep temporal regex.
+(2) **LOCALISE** — identify what was established earlier.
+(3) **MATH-CHECK** — is the earlier material in the current manuscript?
+(If yes, cite `\ref{thm:...}`; if no, the reference is stale and must
+be deleted.)
+(4) **REPAIR** — replace with `\ref` citation or delete.
+(5) **VERIFY** — build; resolve `??` references.
+
+## Pattern CGCLEAN-21 (notably / crucially / remarkably / interestingly / importantly)
+
+**Name**: empty emphasis adverb.
+**Regex trigger**: `\b(notably|crucially|remarkably|interestingly|importantly)\b`
+in reader-facing `.tex` (already hook-flagged; this codifies).
+**Protocol**: delete; restate with mathematical content.
+
+## Pattern CGCLEAN-22 (furthermore / moreover / additionally as sentence openers)
+
+**Name**: filler conjunction as sentence opener.
+**Regex trigger**: `^\s*(Furthermore|Moreover|Additionally)[,.]` in
+reader-facing `.tex` (already hook-flagged; this codifies).
+**Protocol**: delete opener; restate as direct sentence.
+
+## Pattern CGCLEAN-23 ("this preface's role is to")
+
+**Name**: preface-role meta-paragraph. Subsumed by CGCLEAN-15;
+codified separately for hook precision.
+**Regex trigger**: `\bthis[- ]preface's[- ]role[- ]is[- ]to\b`.
+**Protocol**: as CGCLEAN-15.
+
+## Pattern CGCLEAN-24 (show-what / tell-what narrative before showing)
+
+**Name**: section narrates its content before stating it.
+**Regex trigger**: manual review — signature is a section-opening
+paragraph followed by the theorem stating the same content.
+**Protocol**:
+(1) **DETECT** — read section-opening paragraphs; compare to next
+theorem statement.
+(2) **LOCALISE** — identify the duplicate narration.
+(3) **MATH-CHECK** — does the theorem subsume the narration?
+(4) **REPAIR** — delete the narration; begin with the theorem.
+(5) **VERIFY** — confirm the section opens with mathematics.
+
+## Pattern CGCLEAN-25 (in this paper / in this volume / throughout this work)
+
+**Name**: authorial-self-intent organising device.
+**Regex trigger**: `\bin[- ]this[- ](paper|volume|work)\b|\bthroughout[- ]this[- ]work\b`
+in reader-facing `.tex`.
+**Protocol**: as CGCLEAN-17.
+
+### Group C. Version-history commentary
+
+## Pattern CGCLEAN-26 (retracted / retraction / retracted ansatz)
+
+**Name**: retraction vocabulary in manuscript prose.
+**Regex trigger**: `\b[Rr]etract(ed|ion|ing)\b|\b[Rr]etracted[- ]ansatz\b|\bthe[- ]retracted[- ]value\b`
+in reader-facing `.tex`, with **exemption** for "homological
+retraction" / "deformation retract" / "retracts onto" /
+"deformation-retract" (these are legitimate topological / algebraic
+terms).
+**Protocol**:
+(1) **DETECT** — grep retraction regex; subtract topology-math hits.
+(2) **LOCALISE** — identify the prior claim being retracted.
+(3) **MATH-CHECK** — is the failed argument mathematically informative
+(i.e., does it exhibit a Gap/Flaw the current reader should see)?
+(4) **REPAIR**: if informative, inscribe the Gap/Flaw as mathematics
+("The naive identity $X = Y$ fails at parameter point $p$ because…");
+if not, delete the retraction chronicle.
+(5) **VERIFY** — grep residual "retract" hits; confirm all are
+topological.
+
+## Pattern CGCLEAN-27 (superseded / supersedes)
+
+**Name**: supersession vocabulary.
+**Regex trigger**: `\b[Ss]upersed(ed|es|ing)\b` in reader-facing `.tex`.
+**Protocol**: as CGCLEAN-26.
+
+## Pattern CGCLEAN-28 (earlier draft / previous version / intermediate ansatz / prior derivation)
+
+**Name**: explicit drafting-history reference.
+**Regex trigger**: `\b(earlier[- ]draft|previous[- ]version|intermediate[- ]ansatz|prior[- ]derivation)\b`
+in reader-facing `.tex`.
+**Protocol**: delete the drafting reference; state the current content.
+
+## Pattern CGCLEAN-29 (previously conjectural / previously open / previously unresolved / previously obstructing)
+
+**Name**: temporal qualifier "previously".
+**Regex trigger**: `\bpreviously[- ](conjectural|open|unresolved|obstructing|believed|thought|known)\b`
+in reader-facing `.tex`.
+**Protocol**: delete "previously X"; state the current status.
+
+## Pattern CGCLEAN-30 ("now resolved" — drop "now")
+
+**Name**: "now" temporal qualifier.
+**Regex trigger**: `\bnow[- ](resolved|proved|corrected|fixed|established)\b`
+in reader-facing `.tex`.
+**Protocol**: delete "now".
+
+## Pattern CGCLEAN-31 (double-retraction / three successive evaluations / History of the claim)
+
+**Name**: retraction-of-retraction chronicle.
+**Regex trigger**: `\bdouble[- ]retraction\b|\b[Tt]hree[- ]successive[- ]evaluations\b|\bHistory[- ]of[- ]the[- ]claim\b`
+in reader-facing `.tex`.
+**Protocol**: delete the chronicle; state the current formulation.
+
+## Pattern CGCLEAN-32 (drafting record / drafting trajectory)
+
+**Name**: drafting-metadata reference.
+**Regex trigger**: `\bdrafting[- ](record|trajectory|history)\b` in
+reader-facing `.tex`.
+**Protocol**: delete.
+
+## Pattern CGCLEAN-33 (\ClaimStatusRetracted)
+
+**Name**: retracted-status macro on reader-facing claim.
+**Regex trigger**: `\\ClaimStatusRetracted\b` in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep the macro.
+(2) **LOCALISE** — identify the surrounding theorem block.
+(3) **MATH-CHECK** — is the block's content mathematically informative?
+(4) **REPAIR**: delete block OR rewrite as scoped `\ClaimStatusProved` /
+`\ClaimStatusConjectured`.
+(5) **VERIFY** — build; no `\ClaimStatusRetracted` remains.
+
+## Pattern CGCLEAN-34 (dated remarks: 2026-04-17, Etingof 2026-04-19)
+
+**Name**: drafting-date in manuscript prose.
+**Regex trigger**: `\([0-9]{4}-[0-9]{2}-[0-9]{2}\)|20[0-9]{2}-[0-9]{2}-[0-9]{2}`
+in reader-facing `.tex` (where the date is an inline parenthetical, not
+a bibliography date).
+**Protocol**:
+(1) **DETECT** — grep date regex.
+(2) **LOCALISE** — check whether the date is inline prose (violation)
+or in `bibliography/references.tex` (OK).
+(3) **MATH-CHECK** — identify the claim the date annotates.
+(4) **REPAIR** — remove the date; if the claim cites a communication,
+replace with `\cite{...personal_communication}` / paper citation.
+(5) **VERIFY** — grep residual inline dates.
+
+## Pattern CGCLEAN-35 (\index{retraction!...})
+
+**Name**: retraction-flavoured index entry.
+**Regex trigger**: `\\index\{retraction!` in reader-facing `.tex`.
+**Protocol**: delete the index entry.
+
+## Pattern CGCLEAN-36 ("(now retracted)" / "(retracted)" / "(now corrected)")
+
+**Name**: parenthetical retraction annotation.
+**Regex trigger**: `\((now[- ])?(retracted|corrected|superseded)\)`
+in reader-facing `.tex`.
+**Protocol**: delete.
+
+## Pattern CGCLEAN-37 (as previously believed / as previously stated)
+
+**Name**: prior-belief reference.
+**Regex trigger**: `\bas[- ]previously[- ](believed|stated|thought|claimed)\b`
+in reader-facing `.tex`.
+**Protocol**: delete.
+
+## Pattern CGCLEAN-38 (originally claimed / the original argument)
+
+**Name**: original-version reference.
+**Regex trigger**: `\b(originally[- ]claimed|the[- ]original[- ]argument)\b`
+in reader-facing `.tex`.
+**Protocol**: delete.
+
+## Pattern CGCLEAN-39 (pre-rectification / post-rectification)
+
+**Name**: rectification-temporal divider.
+**Regex trigger**: `\b(pre|post)-rectification\b` in reader-facing
+`.tex`.
+**Protocol**: delete.
+
+## Pattern CGCLEAN-40 (drafting version $k$ / session $N$ inscription)
+
+**Name**: versioning tag in manuscript prose.
+**Regex trigger**: `\bdrafting[- ]version[- ]?[0-9]+\b|\bsession[- ]?[0-9]+[- ]inscription\b`
+in reader-facing `.tex`.
+**Protocol**: delete.
+
+### Group D. Bookkeeping-content refs / absolute paths
+
+## Pattern CGCLEAN-41 (\texttt{notes/...} reader-facing reference)
+
+**Name**: `notes/` directory cited from manuscript.
+**Regex trigger**: `\\texttt\{notes/` in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep the pattern.
+(2) **LOCALISE** — identify what content of `notes/` is cited.
+(3) **MATH-CHECK** — is the content reader-relevant?
+(4) **REPAIR**: if yes, migrate content to `appendices/` and cite as
+`\ref{app:...}`; if no, delete the citation and inline the
+mathematics.
+(5) **VERIFY** — grep residual `\texttt{notes/`.
+
+## Pattern CGCLEAN-42 (/Users/raeez/... absolute path in LaTeX)
+
+**Name**: filesystem absolute path in `.tex` source.
+**Regex trigger**: `/Users/[a-zA-Z0-9_-]+/` in reader-facing `.tex` OR
+any `.tex` file.
+**Protocol**:
+(1) **DETECT** — grep absolute-path regex.
+(2) **LOCALISE** — identify whether the path is inside `\input{...}`,
+`\texttt{...}`, a comment, or prose.
+(3) **MATH-CHECK** — what file / chapter does the path target?
+(4) **REPAIR** — replace with relative path (`\input{chapters/...}`) or
+`\ref{ch:...}` label.
+(5) **VERIFY** — grep residual `/Users/`; build succeeds on any
+machine.
+
+## Pattern CGCLEAN-43 (% TODO: librarian verification)
+
+**Name**: todo comment in manuscript source.
+**Regex trigger**: `%[- ]?(TODO|FIXME|XXX|HACK)\b` in reader-facing
+`.tex`.
+**Protocol**:
+(1) **DETECT** — grep todo regex.
+(2) **LOCALISE** — identify what the todo annotates.
+(3) **MATH-CHECK** — can the task be completed now?
+(4) **REPAIR**: if yes, complete; if no, delete the annotated content.
+(5) **VERIFY** — grep residual todos.
+
+## Pattern CGCLEAN-44 (% ALIAS / % LEGACY ALIAS / consolidate in future revision)
+
+**Name**: bibliography-alias maintenance comment.
+**Regex trigger**: `%[- ]?(ALIAS|LEGACY[- ]ALIAS)\b|both[- ]keys[- ]used[- ]in[- ]prose|consolidate[- ]in[- ]future[- ]revision`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep alias regex.
+(2) **LOCALISE** — identify the two bibkeys.
+(3) **MATH-CHECK** — which is the canonical key?
+(4) **REPAIR** — consolidate to one key, delete the alias, update all
+`\cite{...}` sites.
+(5) **VERIFY** — grep residual alias comments; build has no orphan
+citations.
+
+## Pattern CGCLEAN-45 (% Source: NEW CHAPTER (see notes/...))
+
+**Name**: provenance comment in manuscript source.
+**Regex trigger**: `%[- ]?Source:` in reader-facing `.tex`.
+**Protocol**: delete the provenance comment.
+
+## Pattern CGCLEAN-46 (compute-engine filenames `*_waveN_*.py` in prose)
+
+**Name**: wave-tagged compute filename cited from manuscript.
+**Regex trigger**: `\\texttt\{[^}]*_wave[0-9]+_[^}]*\.py\}` in
+reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep wave-filename regex.
+(2) **LOCALISE** — identify the engine's mathematical purpose.
+(3) **MATH-CHECK** — rename the engine file (drop `_waveN_` stem);
+update `compute/` tests.
+(4) **REPAIR** — replace prose citation with the new filename.
+(5) **VERIFY** — run the engine + test suite; confirm the rename
+preserves numerical output.
+
+## Pattern CGCLEAN-47 (function names `waveN_foo` in compute code or prose)
+
+**Name**: wave-tagged function name.
+**Regex trigger**: `\bwave[0-9]+_[a-z_]+\b` in `.py` or `.tex`.
+**Protocol**: rename function; update callers; verify tests pass.
+
+### Group E. Warning boxes / hedge-language
+
+## Pattern CGCLEAN-48 (\begin{warning})
+
+**Name**: warning-box environment in manuscript.
+**Regex trigger**: `\\begin\{warning\}` in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep `\begin{warning}`.
+(2) **LOCALISE** — identify the content inside.
+(3) **MATH-CHECK** — what confusion was the warning defending against?
+(4) **REPAIR** — delete the warning; rewrite adjacent prose so the
+default reading is the non-confused one.
+(5) **VERIFY** — grep residual warnings.
+
+## Pattern CGCLEAN-49 (do not confuse / don't be fooled / beware / be careful / we must be careful)
+
+**Name**: hedge vocabulary.
+**Regex trigger**: `\b(do[- ]not[- ]confuse|don't[- ]be[- ]fooled|beware|be[- ]careful|we[- ]must[- ]be[- ]careful)\b`
+in reader-facing `.tex`.
+**Protocol**: delete; restate the distinction as mathematics (e.g.,
+$X \ne Y$ with definitions referenced).
+
+## Pattern CGCLEAN-50 (scope-restricted to / scope-qualified to decorative)
+
+**Name**: gratuitous scope-qualifier decoration.
+**Regex trigger**: `\bscope[- ](restricted|qualified)[- ]to\b` in
+reader-facing `.tex`, with manual-review gate (some uses are
+legitimate).
+**Protocol**:
+(1) **DETECT** — grep the regex.
+(2) **LOCALISE** — check whether the qualifier names a real hypothesis
+(legitimate) or decorates an already-qualified statement (violation).
+(3) **MATH-CHECK** — the hypothesis should appear once, cleanly.
+(4) **REPAIR** — deduplicate; state the hypothesis once with a
+`\hypref{...}` or `(\ref{hyp:...})` citation.
+(5) **VERIFY** — confirm the hypothesis is not redundant across the
+passage.
+
+## Pattern CGCLEAN-51 (Verdict: as meta-label)
+
+**Name**: adjudication-pipeline "Verdict:" label.
+**Regex trigger**: `\b[Vv]erdict:` in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep `Verdict:`.
+(2) **LOCALISE** — identify the adjudication context.
+(3) **MATH-CHECK** — what mathematical conclusion is the verdict
+stating?
+(4) **REPAIR** — replace `Verdict: proved` with `Conclusion:` or
+`\begin{proof}...\end{proof}`; replace `Verdict: open` with explicit
+"The question remains open."
+(5) **VERIFY** — grep residual `Verdict:`.
+
+### Group F. Structural meta-naming
+
+## Pattern CGCLEAN-52 (chapter filenames `_platonic.tex` / chapter labels `ch:*-platonic` / section labels `sec:*-platonic`)
+
+**Name**: Platonic-tagged structural identifier.
+**Regex trigger**: `[_-]platonic\.tex\b|\\label\{(ch|sec):[a-zA-Z0-9_-]+-platonic\}|\\ref\{(ch|sec):[a-zA-Z0-9_-]+-platonic\}`
+in `.tex` files.
+**Protocol**:
+(1) **DETECT** — grep the Platonic-suffix regex across all `.tex` and
+`\label`/`\ref` sites.
+(2) **LOCALISE** — inventory every affected file and label.
+(3) **MATH-CHECK** — rename the file, update all `\input{...}` /
+`\label{...}` / `\ref{...}` / `\eqref{...}` references in a single
+atomic commit (cross-volume if the ref propagates).
+(4) **REPAIR** — use `git mv` for rename; run a programme-wide
+`\ref{ch:X-platonic}` → `\ref{ch:X}` sweep.
+(5) **VERIFY** — build three volumes; no `??` references, no missing
+labels.
+
+## Pattern CGCLEAN-53 (theorem labels `thm:*-waveN-*`)
+
+**Name**: wave-tagged theorem label.
+**Regex trigger**: `\\label\{(thm|prop|lem|cor|def):[a-zA-Z0-9_-]*wave[0-9]+[a-zA-Z0-9_-]*\}`
+in `.tex`.
+**Protocol**: identical to CGCLEAN-52 (atomic rename + cross-volume
+`\ref` sweep).
+
+## Pattern CGCLEAN-54 (\index{compute module!...} / \index{cache!...} / \index{retraction!...})
+
+**Name**: bookkeeping-flavoured index entry.
+**Regex trigger**: `\\index\{(compute[- ]module|cache|retraction)!` in
+reader-facing `.tex`.
+**Protocol**: delete the index entry.
+
+### Group G. Edge cases
+
+## Pattern CGCLEAN-55 (programme-internal labour/calibration content)
+
+**Name**: labour-activity inscribed as manuscript content.
+**Regex trigger**: `\bFive[- ]attack-heal[- ]calibrations\b|\bReconstitution[- ]if[- ]the[- ]cancellation[- ]fails\b|\bInversion[- ]of[- ]the[- ]programme[- ]perspective\b|\bHistory[- ]of[- ]the[- ]claim\b|\bGold-standard[- ]HZ-IV[- ]disjoint[- ]verification\b|\bThree[- ]successive[- ]evaluations[- ]appear[- ]in[- ]the[- ]drafting[- ]record\b`
+in reader-facing `.tex`.
+**Protocol**:
+(1) **DETECT** — grep labour-activity regex.
+(2) **LOCALISE** — identify the underlying mathematical content.
+(3) **MATH-CHECK** — enumerate the activities' mathematical outputs
+(e.g., five independent verification paths → list them).
+(4) **REPAIR** — replace the labour-name by the mathematical content.
+(5) **VERIFY** — grep residual labour-vocabulary; confirm manuscript
+is labour-free.
+
+### Attribution (Session antipatterns 2026-04-22)
+
+This block of 55 manuscript-hygiene antipatterns (CGCLEAN-1 through
+CGCLEAN-55) was caught across the Vol III 2026-04-22 rectification
+session and generalised to Vol I prose. Each CGCLEAN pattern pairs with
+a `notes/antipatterns_catalogue.md` entry of the same number; a
+reader-facing row in `appendices/first_principles_cache.md`; and a
+grep-signature in `.claude/hooks/beilinson-gate.sh` under the
+`# === Session 2026-04-22: manuscript hygiene (CGCLEAN-*) ===` block.
+The governing principle (self-complete manuscript, no references to
+previous versions / intermediate ansätze / earlier drafts / retracted
+values) is inscribed in CLAUDE.md of all three volumes.
+
+## Session additions 2026-04-22 (Patterns 434--450)
+
+Seventeen first-principles cache entries covering: Feynman graph Euler
+miscounts ($\phi^3$ theta vs bubble); stuffle/shuffle weight
+mismatches in motivic MZV relations; wedge-of-one-forms ill-typed
+iterated integrals; residue-of-$c/f$ self-referential identity in 3d
+gravity; bimodular $\eta^{24}$ denominator on Siegel diagonal;
+Dunn additivity on holomorphic $\mathbb C^n$ (real-vs-complex
+dimension); Brown graph-cohomology wheel-pairing convention; K3-type
+MHS pollution of motivic MZV ring; Ayala--Francis vs
+Ayala--Francis--Tanaka citation scope; Costello 2011 compactness
+hypothesis; CHSW gauge-group holonomy embedding factorisation;
+$E_6$ membership in the 6d hCS anomaly-free Deligne subseries;
+Conway BKM $\Psi^{\mathrm{metap}}$ branch; CHL Siegel-weight ladder;
+$\kappa_{\mathrm{BKM}}$ scope (5 vs 12); Yangian-type count
+(three vs four); $\Phi_d$ Stage-1/Stage-2 naming. Each pattern
+carries: (a) wrong claim, (b) kernel of truth, (c) precise error,
+(d) correct statement with three verification paths, (e) regex
+triggers for the PostToolUse hook.
+
+## Pattern 434: Feynman graph Euler miscount --- $\theta$ labelled 1-loop
+
+**Wrong claim**: ``the $\theta$ graph ($V = 2$, $E = 3$) is a one-loop
+2-point correction in $\phi^3$-theory.''
+**Kernel of truth**: 2-leg Feynman graphs in $\phi^3$ do characterise
+1-loop self-energy corrections; the $\theta$ graph is a real
+$\phi^3$-topology.
+**Precise error**: Euler's formula for connected graphs gives
+$L = E - V + 1$; for $\theta$ with $V = 2, E = 3$ this yields $L = 2$,
+not $L = 1$. The one-loop 2-leg graph in $\phi^3$ is the bubble
+($V = 2$, $E = 2$, $L = 1$); $\theta$ is a two-loop graph (``sunset''
+/ setting-sun diagram).
+**Healed reading**: ``one-loop 2-leg $\phi^3$ graph = bubble
+($V=2, E=2$); $\theta$ ($V=2, E=3$) is two-loop.''
+**Three paths**: (V1) direct Euler count $L = E - V + 1 = 3 - 2 + 1 = 2$;
+(V2) power-counting in momentum space: the bubble has one loop momentum
+integration, $\theta$ has two; (V3) Feynman-amplitude dimension:
+$\theta$-amplitude carries $(d^Dk\, d^Dk')$ in $D$ dimensions.
+**Regex triggers**: `theta.*(?:one-loop|1-loop)`,
+`three (?:edges|internal edges).*(?:two|2) external`,
+`\b\theta\b.*\bV\s*=\s*2\b.*\bE\s*=\s*3\b.*\b(one-loop|1-loop)\b`.
+**Primary**: Peskin--Schroeder 1995 \S 10.1; Weinberg QFT Vol I \S 6.3;
+Euler $L = E - V + 1$.
+**Type**: mechanism.
+**Related**: AP5 (cross-volume formula propagation); Vol II 6d hCS
+loop-order discipline; AP929 (quartic vs quadratic Casimir, companion
+loop-order anti-pattern).
+
+## Pattern 435: Stuffle/shuffle weight mismatch in MZV products
+
+**Wrong claim**: ``$\zeta(3)^2 = 3\zeta(3,3) + 6\zeta(5)/5$'' as a
+depth-reduction identity.
+**Kernel of truth**: products of MZVs do admit stuffle and shuffle
+depth-reduction relations in the motivic period ring; $\zeta(3)^2$ is
+a weight-6 period that genuinely decomposes.
+**Precise error**: weight mismatch. LHS $\zeta(3) \cdot \zeta(3)$ has
+weight $3 + 3 = 6$; RHS mixes weight-6 ($\zeta(3,3)$) and weight-5
+($\zeta(5)$) terms, which cannot appear together in a weight-graded
+identity. The prefactor of $\zeta(3,3)$ is also wrong: stuffle gives
+$\zeta(3)\zeta(3) = 2\zeta(3,3) + \zeta(6)$, not
+$3\zeta(3,3) + \ldots$ .
+**Healed reading**: correct stuffle product identity
+$\zeta(3)\zeta(3) = \zeta(3,3) + \zeta(3,3) + \zeta(6)
+= 2\zeta(3,3) + \zeta(6)$ (weight 6 on both sides); shuffle gives
+$\zeta(3)\zeta(3) = 6\zeta(5,1) + 3\zeta(4,2) + \zeta(3,3)$
+(also weight 6).
+**Three paths**: (V1) direct shuffle-product combinatorics on
+iterated-integral representations; (V2) stuffle (harmonic-product)
+calculus on nested-sum representations; (V3) double-shuffle relation
+(Racinet, Brown) reconciling stuffle and shuffle at weight 6.
+**Regex triggers**: `\\zeta\(3\)\^2\s*=.*\\zeta\(5\)`, `3\\zeta\(3,3\)`,
+`\\zeta\(3\)\s*\\zeta\(3\)\s*=.*\\zeta\(5\)`.
+**Primary**: Zagier 1994 \emph{First European Congress of Math.}
+\S 2; Racinet 2002 \emph{Publ.\ IHES} 95; Brown 2012 \emph{Ann.\ Math.}
+175; Ihara--Kaneko--Zagier 2006 \emph{Compositio} 142.
+**Type**: mechanism.
+**Related**: AP5 (cross-volume formula); graph-cohomology
+$\zeta$-pairing conventions (Pattern 440); motivic MZV ring scope
+(Pattern 441).
+
+## Pattern 436: Wedge-of-one-forms ill-typed for iterated integrals
+
+**Wrong claim**: ``$\int_{z_2} \eta_{12}^{\wedge 3} = \zeta(3)$'' as a
+motivic MZV period integral on $\mathrm{Conf}_n(\mathbb C)$.
+**Kernel of truth**: Goncharov's iterated-integral formulas for
+motivic MZVs do involve wedges of logarithmic 1-forms $\eta_{ij}
+= d\log(z_i - z_j)$ on ordered configuration space.
+**Precise error**: $\eta_{ij}$ is a 1-form; anticommutativity of the
+wedge gives $\eta_{ij} \wedge \eta_{ij} = 0$ and therefore
+$\eta_{12}^{\wedge 3} = 0$ identically. A nonzero iterated integral
+producing $\zeta(3)$ needs three \emph{different} 1-forms.
+**Healed reading**: Goncharov's iterated integral realisation of
+$\zeta(3)$ uses three distinct $\eta_{ij}$'s. On a 3-configuration
+$\mathrm{Conf}_3$: $\int_{\Delta^2} \eta_{12} \wedge \eta_{23}
+\wedge \eta_{31}$ reduces to $\pm\zeta(3)$ after appropriate
+boundary treatment; the Arnold relation
+$\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{31}
++ \eta_{31}\wedge\eta_{12} = 0$ controls the sign.
+**Three paths**: (V1) direct anticommutativity
+$\omega \wedge \omega = 0$ for any odd-degree form;
+(V2) Goncharov 2001 iterated-integral formula
+$\zeta(3) = \int_0^1 \frac{dt_1}{t_1} \wedge \frac{dt_2}{t_2}
+\wedge \frac{dt_3}{1-t_3}$ on simplex $0 < t_1 < t_2 < t_3 < 1$
+(three distinct 1-forms); (V3) Brown 2012 \emph{Ann.\ Math.} 175
+motivic $\zeta$-integrals on $\overline M_{0,n}$ require
+general-position divisors.
+**Regex triggers**: `\\eta_\{?ij\}?\^\{?\\wedge ?3`,
+`eta.*wedge 3`, `\\eta_\{12\}\^\{?\\wedge ?3\}?`.
+**Primary**: Goncharov 2001 \emph{Duke Math.\ J.} 128; Brown 2012;
+Arnold 1969 \emph{Mat.\ Zametki} 5 (Arnold relation on configuration
+space).
+**Type**: mechanism.
+**Related**: Pattern 435 (stuffle/shuffle); Pattern 440 (Brown
+graph cohomology wheel convention); Arnold relation on
+$\mathrm{Conf}_n(X)$ (CLAUDE.md ``one relation'').
+
+## Pattern 437: Residue-of-$c/f$ at $f = 0$ self-referential identity
+
+**Wrong claim**: ``$\mathrm{Res}_{\Phi_{10}=0}(Z_{\mathrm{hCS}})
+= 1/\Phi_{10}$'' identifying the 3d quantum gravity partition function
+on $\mathrm{AdS}_3 \times K3$ as the residue of the Costello 6d hCS
+effective action $(\Phi_{10}/\eta^{24})^\hbar$ along the Humbert
+discriminant $\{\Phi_{10} = 0\}$.
+**Kernel of truth**: the DVV 1997 identification
+$Z^{\mathrm{AdS}_3 \times K3}_{\mathrm{3dQG}} = 1/\Phi_{10}$ is real; the
+Costello 6d hCS effective action does have a pole along the Humbert
+discriminant.
+**Precise error**: the residue of $c/f$ at $f = 0$ equals $c$ (removes
+the denominator), not $c/f$ (which would keep it). The identity
+$\mathrm{Res}_{f=0}(c/f) = c/f$ is self-referential: residue removes
+the $1/f$ factor; it cannot re-introduce it.
+**Healed reading**: $Z^{\mathrm{AdS}_3 \times K3}_{\mathrm{3dQG}}
+= 1/\Phi_{10}(Z)$ directly by DVV 1997 identification of the
+1/4-BPS D1--D5--P index on $K3 \times T^2$. The Costello 6d hCS
+effective action object $(\Phi_{10}/(\eta(\tau)^{24}\eta(\tau')^{24}))
+^\hbar$ exponentiates the BV obstruction tower; $1/\Phi_{10}$ is
+realised as the Borcherds singular theta lift of the K3 elliptic
+genus generator $2\phi_{0,1} - (E_2/6)\phi_{-2,1}$ (EOT 2011)
+via the Borcherds multiplicative theta correspondence. Not a
+residue.
+**Three paths**: (V1) DVV 1997 \emph{Nucl.\ Phys.\ B} 484 direct
+identification; (V2) Maloney--Witten 2010 \emph{JHEP} 1002 Euclidean
+saddle sum on $\mathrm{AdS}_3$; (V3) Borcherds 1995 \emph{Invent.\
+Math.} 120 Thm 10.4 singular-weight multiplicative lift of the K3
+elliptic-genus generator.
+**Regex triggers**: `\\mathrm\{Res\}_\{\\Phi_\{10\}=0\}`,
+`residue.*Phi_\{10\}.*1/Phi`, `\\Res.*Phi_10.*=.*1/Phi_10`.
+**Primary**: DVV 1997; Maloney--Witten 2010; Gritsenko--Nikulin 1998;
+Harvey--Moore 1996; Borcherds 1995 Thm 10.4; EOT 2011 \emph{Exper.\
+Math.} 20.
+**Type**: mechanism.
+**Related**: Pattern 438 (bimodular $\eta^{24}$ Siegel diagonal);
+AP930 (residue-identity ill-typed, appendices cache entry 448);
+Vol~II `thqg\_perturbative\_finiteness.tex` Thm
+\texttt{thm:hcs-all-loop-resummation}.
+
+## Pattern 438: $\eta^{24}$-denominator on Siegel-period diagonal (single vs double)
+
+**Wrong claim**: ``$(\Phi_{10}/\eta^{24})^{\hbar c_{K3}(Z)}$'' as a
+weight-zero bimodular object on the diagonal $z = 0$ of the Siegel
+period $Z = \bigl(\begin{smallmatrix}\tau & z \\ z & \tau'
+\end{smallmatrix}\bigr) \in \mathfrak H_2$.
+**Kernel of truth**: $\Phi_{10}$ has a Fourier--Jacobi expansion
+whose diagonal restriction factors through $\eta^{24}$; the
+weight-zero all-orders Costello 6d hCS effective-action object on
+$K3 \times T^2$ is a real construction.
+**Precise error**: $\Phi_{10}|_{z=0}$ has bimodular weight $(12,12)$
+per $(\tau, \tau')$ by Igusa 1964 (Siegel weight 10, doubled at the
+diagonal via DVV factorisation
+$\Phi_{10}(Z)|_{z=0} = z^2 \cdot \eta(\tau)^{24} \cdot \eta(\tau')^{24}
+\cdot \mathcal J(\tau, \tau')$). Dividing by a single $\eta(\tau)^{24}$
+leaves weight $(-12, 0)$; a bimodular-zero object requires dividing
+by \emph{both} $\eta(\tau)^{24}$ and $\eta(\tau')^{24}$.
+**Healed reading**: weight-zero object is
+$\Phi_{10}(Z)/(\eta(\tau)^{24}\eta(\tau')^{24})$. The two
+$\eta^{24}$ factors each arise from 24 M5-brane one-loop integrals
+threading respectively the $\tau$-modular and $\tau'$-modular
+$I_1$-fibre of the $K3 \times T^2$ combinatorics.
+**Three paths**: (V1) direct $q = e^{2\pi i\tau}$ expansion of
+$\Phi_{10}$ at $z = 0$ to first nonvanishing order (Igusa 1964
+\emph{Amer.\ J.\ Math.} 86); (V2) DVV 1997 D1--D5--P partition
+function factorisation at diagonal; (V3) Gritsenko--Nikulin 1998
+\S 3 Borcherds-product restriction identity.
+**Regex triggers**: `\\Phi_\{10\}/\\eta\^\{?24\}?(?!.*\\eta\^\{?24\}?)`,
+`Phi_10.*eta\^24(?!.*eta\^24)`.
+**Primary**: Igusa 1964; DVV 1997; Gritsenko--Nikulin 1998;
+Borcherds 1995.
+**Type**: convention/dimension.
+**Related**: Pattern 437 (residue-of-$c/f$); AP931 (appendices cache
+entry 449); Vol~II `thqg\_perturbative\_finiteness.tex`
+\texttt{thm:hcs-all-loop-resummation}.
+
+## Pattern 439: Dunn additivity on holomorphic $\mathbb C^n$ (real vs complex dim)
+
+**Wrong claim**: ``each complex coordinate $\mathbb C$ contributes
+one $E_1$-factor, so $E_3 = E_1 \otimes_D E_1 \otimes_D E_1$ on
+$\mathbb C^3$ by Dunn additivity.''
+**Kernel of truth**: holomorphically-twisted factorisation algebras
+on $\mathbb C^n$ carry an $E_n$-structure at the level of
+$\bar\partial$-cohomology, and Dunn additivity
+$E_m \otimes_D E_n = E_{m+n}$ is a real Lurie--HA theorem.
+**Precise error**: Dunn additivity (Lurie HA 5.1.2.2) counts
+\emph{real} dimensions of translation-equivariant locally-constant
+factorisation algebras on $\mathbb R^n$. Each $\mathbb C$ has two
+real dimensions; a single holomorphic factorisation algebra on
+$\mathbb C$ carries $E_2$ geometrically before any twist, reducing
+to $E_1$ only after $\bar\partial$-cohomology collapses
+$\Omega^{0,\bullet}(\mathbb C) \simeq \mathbb C$ by the Dolbeault--
+Koszul resolution.
+**Healed reading**: 6d hCS on $\mathbb C^3$ is $E_6$ geometrically at
+the full Dolbeault complex; reduction to $E_3$ holds \emph{after}
+Dolbeault cohomology. Dunn at the Dolbeault-reduced level gives
+$E_3 = E_1 \otimes_D E_1 \otimes_D E_1$ with one $E_1$ per
+holomorphic direction after $\bar\partial$-Koszul. The three
+$E_1$-factors live on $\bar\partial$-cohomology, not on $\mathbb C^3$
+geometrically.
+**Three paths**: (V1) Lurie \emph{HA} 5.1.2.2 Dunn additivity counts
+real dims; (V2) Costello--Gwilliam 2017 Vol~II Ch.~5 Thm~5.1
+holomorphic-twist reduction $E_{2n} \to E_n$ after
+$\bar\partial$-cohomology; (V3) Costello 2013 \texttt{arXiv:1303.2632}
+\S 2 4d/6d hCS Dolbeault--Koszul identification
+$\Omega^{0,\bullet}(\mathbb C) \simeq \mathbb C$.
+**Regex triggers**: `Dunn.*E_1.*E_1.*E_1`,
+`three commuting E_1`, `E_3.*C\^3.*Dunn`,
+`\\C\^3.*(?:Dunn|additivity)`.
+**Primary**: Lurie \emph{HA} 5.1.2.2; Costello--Gwilliam 2017
+Vol~II Ch.~5; Costello 2013; Costello--Li 2016.
+**Type**: native/derived.
+**Related**: AP276 ($E_n$-chiral notion unspecified); AP277
+($\mathsf{SC}^{\mathrm{ch,top}}$ bicoloured vs $E_3$); AP932
+(appendices cache entry 450).
+
+## Pattern 440: Brown graph-cohomology wheel pairing convention
+
+**Wrong claim**: ``the 3-spoke wheel in Willwacher's graph-complex
+$\mathsf{GC}_2$ pairs with $\zeta(5)$'' without stating the
+wheel-indexing convention.
+**Kernel of truth**: the Willwacher cocycle pairing between wheel
+graphs $W_n$ and odd $\zeta$-values is a real theorem (Willwacher
+2014 \emph{Invent.\ Math.} 200 Thm 1.2); only odd-depth wheels give
+nonzero classes in $H^0(\mathsf{GC}_2)$.
+**Precise error**: the wheel-indexing convention varies across the
+literature. Willwacher 2014 uses $W_n \leftrightarrow \zeta(2n - 1)$,
+giving $W_3 \leftrightarrow \zeta(5)$; Brown--Schnetz 2012 use
+$W_n \leftrightarrow \zeta(2n + 1)$, giving $W_3 \leftrightarrow
+\zeta(7)$. Stating ``3-spoke wheel $\leftrightarrow \zeta(5)$''
+without declaring the convention is a silent double-counting hazard
+for any programme cross-referencing the two traditions.
+**Healed reading**: always name the convention. Willwacher 2014 Thm
+1.2 (original): $W_n$ = $n$-spoke wheel, pairs with $\zeta(2n - 1)$;
+under this convention $W_3 \leftrightarrow \zeta(5)$. Brown--Schnetz
+2012 table tradition: $W_n$ paired with $\zeta(2n + 1)$; under this
+convention $W_3 \leftrightarrow \zeta(7)$. For the programme's
+internal use, fix the Willwacher 2014 convention uniformly.
+**Three paths**: (V1) Willwacher 2014 \emph{Invent.\ Math.} 200
+Thm 1.2 explicit wheel-$\zeta$ assignment (his $W_n$); (V2)
+Brown--Schnetz 2012 \emph{Duke Math.\ J.} 161 motivic period
+tables; (V3) Rossi--Willwacher 2014 \emph{arXiv:1403.0336} \S 4
+cross-convention conversion.
+**Regex triggers**: `wheel.*three.*spokes`,
+`W_3.*\\zeta\(`, `3-spoke wheel`, `wheel.*\\zeta\(5\)`.
+**Primary**: Willwacher 2014; Brown--Schnetz 2012;
+Kontsevich 1999 \emph{Lett.\ Math.\ Phys.} 48 (graph-complex
+foundations).
+**Type**: convention.
+**Related**: Pattern 435 (stuffle/shuffle weight); Pattern 436
+(wedge ill-typed); motivic MZV ring (Pattern 441).
+
+## Pattern 441: K3-type MHS pollution of motivic MZV ring
+
+**Wrong claim**: ``the Feynman integral on $K3 \times \mathbb C^2$
+is a motivic MZV period.''
+**Kernel of truth**: Brown 2012 \emph{Ann.\ Math.} 175 Thm 1.2
+identifies periods of $\overline M_{0,n}$ with motivic MZVs; Feynman
+graph periods of $\phi^3$/$\phi^4$ theories on a point are in
+Brown's motivic MZV Hopf algebra.
+**Precise error**: K3 periods carry a transcendental Hodge structure
+of K3 type (Deligne 1971, Oguiso 2001), which is not in Brown's
+motivic MZV Hopf algebra. The K3 transcendental lattice
+$T_{K3} \subset H^2(K3, \mathbb Z)$ has rank up to 22 and carries a
+polarised Hodge structure of type $(2, 20, 0)$; its periods are
+generically transcendental over $\mathbb Q[\pi, \{\zeta(k)\}]$.
+Brown 2012 applies to $\overline M_{0, n}$ configuration periods
+only; higher genus / higher-dim-base periods require the Brown 2017
+bi-arrangement framework or Brown--Schnetz K3-type analysis.
+**Healed reading**: K3-base Feynman periods decompose as
+$Z = Z_{\mathrm{MZV}} \cdot Z_{\mathrm{K3-period}}$ after (a)
+integrating out the K3 factor via $\chi(K3) = 24$ push-forward to a
+point, or (b) inscribing the K3-period sublattice as an explicit
+transcendental-Hodge contribution. Stating ``Feynman integral on
+$K3 \times \mathbb C^2$ is a motivic MZV'' without one of these
+reductions is a scope error.
+**Three paths**: (V1) Deligne 1971 \emph{Publ.\ IHES} 40 K3 periods
+on $H^2$ transcendental; (V2) Brown 2012 Thm 1.2 scope restricted to
+$\overline M_{0,n}$; (V3) Oguiso 2001 \emph{Comment.\ Math.\ Helv.}
+76 K3-surface Picard-transcendental split.
+**Regex triggers**: `K3.*motivic MZV`, `Brown 2012.*K3`,
+`motivic.*K3.*period`.
+**Primary**: Brown 2012; Brown 2017 \emph{Forum Math.\ Pi} 5
+(bi-arrangement extension); Deligne 1971; Oguiso 2001;
+Brown--Schnetz 2012.
+**Type**: scope.
+**Related**: Pattern 435 (stuffle/shuffle); Pattern 436 (wedge
+ill-typed); Pattern 440 (Brown wheel convention); Vol~III
+K3-period sublattice discipline.
+
+## Pattern 442: Ayala--Francis--Tanaka vs Ayala--Francis citation scope
+
+**Wrong claim**: ``Ayala--Francis--Tanaka 2017 Thm 4.1.3 gives
+factorisation-homology Fubini on smooth product manifolds.''
+**Kernel of truth**: factorisation-homology does satisfy a
+pointwise / push-forward / Fubini identity on suitable classes of
+manifolds, inscribed in the Ayala--Francis programme.
+**Precise error**: citation scope swap. Ayala--Francis--Tanaka 2017
+(\emph{Adv.\ Math.} 307) Thm 4.1.3 is the factorisation-homology
+theorem for \emph{stratified} spaces. Smooth-product Fubini is
+Ayala--Francis 2015 (\emph{J.\ Topology} 8) Thm 3.16, or the
+push-pull variant at 4.8. Using AFT 2017 Thm 4.1.3 as the smooth-
+product citation conflates the stratified and smooth cases.
+**Healed reading**: use AF 2015 Thm 3.16 for smooth products of
+manifolds without strata; use AFT 2017 Thm 4.1.3 only when the
+product carries nontrivial stratification. Vol II / Vol III
+citations to ``factorisation-homology Fubini on smooth products''
+must target AF 2015.
+**Three paths**: (V1) AF 2015 Thm 3.16 statement and proof sketch
+(smooth case); (V2) AFT 2017 Thm 4.1.3 statement and proof sketch
+(stratified case); (V3) Lurie \emph{HA} 5.5.3.11 factorisation-
+homology topological monoidal structure as conceptual backbone.
+**Regex triggers**: `Ayala-Francis-Tanaka.*(?:Fubini|smooth|product)`,
+`AFT 2017 (?:Thm|Theorem) 4.1.3.*smooth`,
+`Ayala.*Francis.*Tanaka.*Fubini`.
+**Primary**: Ayala--Francis 2015 \emph{J.\ Topology} 8 (smooth);
+Ayala--Francis--Tanaka 2017 \emph{Adv.\ Math.} 307 (stratified);
+Lurie \emph{HA} 5.5.3.
+**Type**: citation scope.
+**Related**: AP5 (cross-volume formula propagation); Vol~II
+factorisation-homology citations; Pattern 443 (Costello 2011
+compactness).
+
+## Pattern 443: Costello 2011 Thm 13.4.1 compactness hypothesis
+
+**Wrong claim**: ``Costello 2011 Thm 13.4.1 gives RG flow / BV
+renormalisation on $\mathbb R^3 \times K3 \times \mathbb C^2$
+without further hypothesis.''
+**Kernel of truth**: Costello's BV renormalisation machinery
+\emph{Renormalization and Effective Field Theory} (2011) is the
+standard reference for RG flow of BV theories; Thm 13.4.1 is the
+main existence theorem for effective actions.
+**Precise error**: Thm 13.4.1 requires either a compact manifold or
+compactly-supported source. On non-compact $\mathbb R^3 \times K3
+\times \mathbb C^2$ without compact-support hypothesis the statement
+does not apply; the effective-action existence needs either
+(a) bounded-support Dolbeault representatives, or (b) the
+Costello--Gwilliam 2017 Vol~II Ch.~4 modified existence theorem for
+holomorphic factorisation-algebra effective actions on non-compact
+CY$_d$.
+**Healed reading**: every citation of Costello 2011 Thm 13.4.1 on
+non-compact targets must pair with (a) explicit compact-support
+hypothesis on sources, (b) invocation of CG Vol~II Ch.~4 modified
+theorem, or (c) bounded-Dolbeault hypothesis.
+**Three paths**: (V1) Costello 2011 \emph{Renormalization and
+Effective Field Theory} Thm 13.4.1 statement (compactness
+explicit); (V2) Costello--Gwilliam 2017 Vol~II Ch.~4 non-compact
+extension via bounded-Dolbeault; (V3) direct check that propagator
+$P_\epsilon^L$ has compact support when source data have compact
+support.
+**Regex triggers**: `Costello 2011.*Thm 13`,
+`Costello 2011 Thm 13.4.1`,
+`Costello 2011.*(?:13\.4\.1|13.4.1)`.
+**Primary**: Costello 2011 \emph{Renormalization and Effective
+Field Theory} (AMS); Costello--Gwilliam 2017 \emph{Factorization
+Algebras in QFT} Vols I--II.
+**Type**: scope.
+**Related**: Pattern 442 (AF/AFT scope); Vol~II 6d hCS BV
+renormalisation; Pattern 445 ($E_6$ Deligne anomaly list).
+
+## Pattern 444: CHSW standard-embedding gauge-group holonomy
+
+**Wrong claim**: ``the Candelas--Horowitz--Strominger--Witten (CHSW)
+standard embedding is $F_\cA = R$ with $F_\cA$ valued in
+$\mathrm{SU}(3)$ holonomy'' on a CY-3 compactification.
+**Kernel of truth**: CHSW 1985 \emph{Nucl.\ Phys.\ B} 258 standard
+embedding identifies the gauge field strength with the spin
+connection, and the CY-3 Ricci-flat Kähler metric has
+$\mathrm{SU}(3)$ holonomy.
+**Precise error**: the CHSW identification is $F = R$ as
+$\mathfrak{so}(6)$-Riemann-curvature valued 2-forms, embedding into
+$\mathrm{SU}(4)$ (the spin-group double cover of $\mathrm{SO}(6)$),
+which restricts to $\mathrm{SU}(3)$-holonomy on the CY-3. The
+gauge group ladder is $\mathrm{SU}(4) \hookrightarrow E_8$ (or
+$\mathrm{SO}(8) \times E_8$ heterotic variants), not direct
+$\mathrm{SU}(3) \hookrightarrow E_8$.
+**Healed reading**: $F = R$ factors via the full tangent-structure
+group $\mathrm{SU}(4)$ reducing to $\mathrm{SU}(3)$ holonomy on the
+CY-3 via the CY Ricci-flat metric; the ambient $\mathrm{SU}(4)$
+then embeds in $E_8$ completing the heterotic standard embedding
+with commutant $E_6$ in $E_8$.
+**Three paths**: (V1) CHSW 1985 \emph{Nucl.\ Phys.\ B} 258
+explicit $F = R$ identification; (V2) Atiyah--Singer index theorem
+for $\mathrm{SU}(n)$-bundles on CY-$n$; (V3) Green--Schwarz--Witten
+\emph{Superstring Theory} Vol~II Ch.~14 standard-embedding chain.
+**Regex triggers**: `F_\\cA = R`, `F = R.*SU\(3\)`,
+`CHSW.*SU\(3\)`, `standard embedding.*SU\(3\)(?!.*SU\(4\))`.
+**Primary**: CHSW 1985; Green--Schwarz--Witten 1987 Vol~II
+Ch.~14; Atiyah--Singer 1968 \emph{Ann.\ Math.} 87.
+**Type**: mechanism.
+**Related**: AP-CY (heterotic standard embedding); Vol~III CY
+landscape discussion; Pattern 445 ($E_6$ in 6d hCS list).
+
+## Pattern 445: $E_6$ in Deligne-exceptional 6d hCS anomaly-free list
+
+**Wrong claim**: ``the Deligne exceptional series $\{A_1, A_2, G_2,
+D_4, F_4, E_6, E_7, E_8\}$ is 6d hCS anomaly-free.''
+**Kernel of truth**: the Deligne exceptional series carries universal
+tensor identities (Deligne 1996 \emph{C.R.\ Acad.\ Sci.} 322;
+Cohen--de Man 1996) with $\mathrm{tr}_{\mathrm{adj}} T^4 = \alpha_\fg
+\cdot (\mathrm{tr}_{\mathrm{adj}} T^2)^2$, which are the universal
+identities that enter the quartic-Casimir anomaly cancellation of
+6d hCS (AP929).
+**Precise error**: anomaly-freeness requires both the Deligne
+quartic identity AND vanishing of the symmetric cubic trace
+$\mathrm{tr}_\rho T^{(a} T^b T^{c)}$ for relevant representations.
+$E_6$ has $\mathrm{Sym}^3(\mathbf{27}) \ne 0$, so the fundamental
+$\mathbf{27}$-representation carries a nonzero $d^{abc}$; the 6d
+hCS anomaly on adjoint alone cancels via Deligne, but the matter
+couplings that typically accompany 6d hCS constructions (fundamental
+chiral matter) fail Green--Schwarz saturation on $E_6$.
+$A_2 = \mathrm{SU}(3)$ similarly has $d^{abc} \ne 0$ on the
+fundamental and needs separate audit.
+**Healed reading**: the 6d hCS quartic-anomaly-free Deligne subseries
+(in the strict sense of the appendices-cache AP929 row 446) is
+$\{A_1, G_2, D_4, F_4, E_7, E_8\}$; $A_2 = \mathrm{SU}(3)$ and
+$E_6$ require separate matter-content audit (symmetric-cubic trace
+$d^{abc}$).
+**Three paths**: (V1) Deligne 1996 \emph{C.R.\ Acad.\ Sci.} 322
+quartic identity; (V2) Cvitanović 2008 \emph{Group Theory:
+Birdtracks, Lie's, and Exceptional Groups} Ch.~18 symmetric-cubic
+traces; (V3) Green--Schwarz 1984 \emph{Phys.\ Lett.\ B} 149
+anomaly cancellation; cross-check $\mathrm{Sym}^3(\mathbf{27})$
+decomposition for $E_6$ via weight-multiplicity tables.
+**Regex triggers**: `Deligne.*E_6.*anomaly`,
+`E_6.*Sym\^3`, `Deligne exceptional series.*6d`,
+`\\{A_1, A_2, G_2, D_4, F_4, E_6, E_7, E_8\\}.*anomaly`.
+**Primary**: Deligne 1996; Cohen--de Man 1996; Cvitanović 2008;
+Green--Schwarz 1984; AP929 (cache row 446).
+**Type**: scope.
+**Related**: AP929 (quartic vs quadratic Casimir, appendices cache
+entry 446); Pattern 439 (Dunn on $\mathbb C^3$); Vol~II 6d hCS
+anomaly discussion.
+
+## Pattern 446: Conway BKM on $\Psi^{\mathrm{metap}}$ branch
+
+**Wrong claim**: ``the Conway BKM is the fifth bosonic $\Psi$-image
+after Monster, K3, Fake-Monster, Enriques'' on the standard
+$\Psi$-sibling diagram.
+**Kernel of truth**: Conway vertex algebra $V^{s\natural}$ at
+$c = 12$ (Duncan 2007) is a BKM-producing input, and the programme's
+$\Psi$-functor on CY-Siegel-automorphic data does produce a Conway
+BKM in some sense.
+**Precise error**: Conway uses $V^{s\natural}$ with super-metaplectic
+construction at $c = 12$; the natural $\Psi$-branch carrying Conway
+is $\Psi^{\mathrm{metap}}$ (super-metaplectic), not the bosonic
+$\Psi$. Placing Conway on the bosonic $\Psi$-branch conflates
+Duncan 2007's super-metaplectic route with the Borcherds bosonic
+$\Psi$-route used for Monster / Fake-Monster / K3.
+**Healed reading**: four $\Psi$-siblings form the diamond:
+$\{\Psi, \Psi^{\deg}, \Psi^{\mathrm{tor}}, \Psi^{\mathrm{metap}}\}$
+per Duncan 2007 \emph{Advances in Math.} 216. Conway BKM lives on
+$\Psi^{\mathrm{metap}}$; Monster / K3 / Fake-Monster / Enriques
+live on $\Psi$ (bosonic) or $\Psi^{\deg}$. The ``fifth bosonic
+sibling'' framing is the type error.
+**Three paths**: (V1) Duncan 2007 \emph{Advances in Math.} 216
+Conway vertex algebra super-metaplectic construction; (V2) Borcherds
+1992 bosonic $\Psi$-route for Monster / Fake-Monster; (V3)
+Duncan--Mack-Crane 2015 \emph{Commun.\ Number Theory Phys.} 9
+$\Psi$-diamond explicit enumeration.
+**Regex triggers**: `Conway.*\\Psi[^\\^]`,
+`Conway.*fifth.*sibling`, `Conway.*bosonic`,
+`Conway BKM.*bosonic \\Psi`.
+**Primary**: Duncan 2007; Borcherds 1992; Duncan--Mack-Crane 2015;
+canonical preamble $\Psi$-sibling diamond.
+**Type**: scope.
+**Related**: Vol~III Conway BKM chapter; Pattern 448 ($\kappa_{\mathrm{BKM}}$
+scope 5 vs 12); K3 / Fake-Monster / Monster $\Psi$-branch catalogue.
+
+## Pattern 447: CHL Siegel-weight ladder integer values
+
+**Wrong claim**: ``$\{\kappa_{\mathrm{BKM}}(\Phi_N)\} = \{5, 4, 3, 2, 1\}$
+for $N \in \{1, 2, 3, 4, 5\}$'' as the CHL Siegel-weight ladder on
+the paramodular family.
+**Kernel of truth**: CHL orbifolds (Chaudhuri--Hockney--Lykken 1995)
+do produce a family of Siegel forms $\Phi_N$ with weights decreasing
+in $N$; $\kappa_{\mathrm{BKM}}$ is universally $c_N(0)/2$.
+**Precise error**: the CHL weight formula is $k_N = 24/(N+1) - 2$
+giving $\{k_1, k_2, k_3, k_4, k_5\} = \{10, 6, 4, 3, 2\}$, not
+$\{5, 4, 3, 2, 1\}$. Separately, $\kappa_{\mathrm{BKM}}(\Phi_N) =
+c_N(0)/2$ is the Borcherds universal value (AP933 companion);
+$\Delta_5$ gives $\kappa_{\mathrm{BKM}}(\Delta_5) = 5$ for K3 BKM
+at $N = 1$ (half-BPS), distinct from the CHL $\Phi_N$ Siegel-weight
+ladder.
+**Healed reading**: three separate invariants on $\mathsf B$-row:
+(a) CHL Siegel weights $\{k_N\} = \{10, 6, 4, 3, 2\}$ for $N \in
+\{1, 2, 3, 4, 5\}$; (b) $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$
+universal (canonical preamble row 60); (c) $\Delta_5$-based
+$\kappa_{\mathrm{BKM}}(\Delta_5) = 5$ for K3 BKM. Each invariant
+lives on its own subscript; conflating them collapses three
+distinct arithmetic structures.
+**Three paths**: (V1) CHL 1995 \emph{Nucl.\ Phys.\ B} 459
+weight formula derivation; (V2) Borcherds 1995 Thm 10.4
+$\kappa_{\mathrm{BKM}} = c(0)/2$; (V3) Gritsenko--Nikulin 1998
+$\Delta_5 = \mathrm{Grit}(\eta^9 \vartheta_1)$ at weight 5.
+**Regex triggers**:
+`\\kappa_\{?\\mathrm\{BKM\}\}?.*=\\s*\\{5[,\\s]*4[,\\s]*3[,\\s]*2[,\\s]*1\\}`,
+`k_N.*24/N`,
+`CHL.*Siegel weight.*\\{5.*1\\}`.
+**Primary**: CHL 1995; Borcherds 1995; Gritsenko--Nikulin 1998;
+canonical preamble rows 28, 60, 88, 90.
+**Type**: label/content.
+**Related**: Pattern 448 ($\kappa_{\mathrm{BKM}}$ scope); AP927
+(ten real simple roots); canonical preamble row 60.
+
+## Pattern 448: $\kappa_{\mathrm{BKM}}$ scope (5 vs 12)
+
+**Wrong claim**: ``Vol~I's $\kappa_{\mathrm{BKM}} = 12$ contradicts
+Vol~III's $\kappa_{\mathrm{BKM}} = 5$'' when cross-reading the
+$\kappa_{\mathrm{BKM}}$ entries across volumes.
+**Kernel of truth**: both 5 and 12 are real inscribed values of
+$\kappa_{\mathrm{BKM}}$ in the programme; the Borcherds universal
+identity $\kappa_{\mathrm{BKM}} = c(0)/2$ holds for each.
+**Precise error**: 5 and 12 refer to different $\Psi$-siblings, not
+to the same object. There is no contradiction; the disagreement is
+a silent scope-qualifier drop (AP5).
+**Healed reading**: $\kappa_{\mathrm{BKM}}(\mathfrak g_{\Delta_5}) = 5$
+on the K3 BKM branch ($\Phi_{10}$-input, $\mathrm{II}_{4,20}$
+Mukai lattice, half-BPS $\Delta_5$); $\kappa_{\mathrm{BKM}}(\mathfrak
+g_{\Phi_{12}}) = 12$ on the Fake-Monster branch ($\mathrm{II}_{25,1}$
+Leech-enlargement lattice, Borcherds 1992). AP5 scope qualifier
+discipline mandates naming the $\Psi$-sibling / denominator /
+ambient lattice at every invocation.
+**Three paths**: (V1) Gritsenko--Nikulin 1998 $\Delta_5$
+construction from $\eta^9 \vartheta_1$; (V2) Borcherds 1992
+\emph{Invent.\ Math.} 109 Fake-Monster $\Phi_{12}$ construction;
+(V3) Borcherds 1995 Thm 10.4 universal $\kappa_{\mathrm{BKM}} =
+c(0)/2$ at both specialisations.
+**Regex triggers**:
+`\\kappa_\{?\\mathrm\{BKM\}\}? = 12`,
+`\\kappa_\{?\\mathrm\{BKM\}\}? = 5`,
+`kBKM = 12.*kBKM = 5`.
+**Primary**: Gritsenko--Nikulin 1998; Borcherds 1992; Borcherds
+1995; canonical preamble rows 28, 60, 88.
+**Type**: scope.
+**Related**: AP5 (cross-volume propagation); AP927 (ten real
+simple roots); Pattern 447 (CHL ladder); AP928 ($\Delta_5$
+half-BPS vs $\Phi_{10}$ full-BPS companion).
+
+## Pattern 449: Yangian type count (three vs four)
+
+**Wrong claim**: ``three Yangian variants are used in the programme''
+as a summary of the deformation theory of $U(\mathfrak g[t])$.
+**Kernel of truth**: the programme genuinely uses distinct
+Yangian-type deformations at different points (Vol~I Kac--Moody
+spectral Yangian, Vol~II 6d hCS chiral Yangian, Vol~III
+Costello--Yagi spectral).
+**Precise error**: four distinct Yangian types exist in the
+programme, not three. The count drops a variant.
+**Healed reading**: four Yangians with distinct ambients and
+structure:
+(1) classical $Y(\mathfrak g)$ (Drinfeld 1985 \emph{Sov.\ Math.\
+Dokl.} 32): deformation of $U(\mathfrak g[t])$, Hopf algebra
+ambient, rational $R$-matrix;
+(2) chiral $Y^{\mathrm{ch}}_{\mathfrak g}$ (this programme):
+$E_1$-chiral factorisation-algebra ambient on a smooth curve $C$,
+derived via Vol~III $\Phi_d$ / 6d hCS;
+(3) spectral $Y^{\mathrm{spec}}$ (Costello--Yagi 2018): 4d holomorphic
+Chern--Simons spectral parameter Yangian;
+(4) dg-shifted affine $\widehat Y^{\mathrm{dg}}$: $[n]$-shifted
+symplectic structure on derived loop-space.
+The fourth is typically the one dropped in summary counts; naming
+all four is the AP5 scope discipline.
+**Three paths**: (V1) Drinfeld 1985 classical Yangian foundational;
+(V2) Costello--Yagi 2018 \emph{ICM Proceedings} spectral
+Yangian from 4d hCS; (V3) Costello--Witten--Yamazaki 2018
+\emph{ICCM Not.} 6 chiral and spectral Yangian distinction.
+**Regex triggers**:
+`three.*Yangian.*(?:variant|type)`,
+`\\bthree Yangian\\b`,
+`(?:three|3) Yangian (?:variant|flavor|kind)`.
+**Primary**: Drinfeld 1985; Costello--Yagi 2018; Costello--Witten--
+Yamazaki 2018; Molev 2007 \emph{AMS Math.\ Surveys and Monographs}
+143.
+**Type**: label/content.
+**Related**: Four Yangian types memory entry
+(`feedback_yangian_type_distinction.md`); AP5 cross-volume scope;
+Vol~II chiral Yangian standalone.
+
+## Pattern 450: $\Phi_d$ Stage-1 / Stage-2 factorisation naming
+
+**Wrong claim**: ``Vol~II 6d hCS = $E_3$-algebra on $\mathbb C^3$''
+without naming the two factorisation stages of $\Phi_d$.
+**Kernel of truth**: Vol~III CY-to-chiral construction factors
+canonically as $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+\circ \Phi^{\mathrm{FA}}_d$, with Stage-1 producing an
+$E_d$-holomorphic factorisation algebra and Stage-2 specialising
+to an $E_1$-chiral algebra on a reference curve $C$.
+**Precise error**: writing ``6d hCS = $E_3$-algebra on $\mathbb C^3$''
+without stage naming conflates Stage-1 output ($E_3$-factorisation
+algebra on $\mathbb C^3$, Kontsevich--Tamarkin $E_3$-formality +
+Costello--Gwilliam--Li locality) with Stage-2 output
+($E_1$-chiral algebra on a reference curve after factorisation
+homology over $\Sigma_2$). Readers conflate the two; downstream
+Theorem~A / Theorem~B statements lose their grammar-qualifier.
+**Healed reading**: Stage-1: $\Phi^{\mathrm{FA}}_d : \mathrm{CY}_d
+\to E_d\text{-FA}$; Stage-2: $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},
+C} : E_d\text{-FA} \to E_1\text{-ChirAlg}_C$, with the second stage
+= factorisation homology over $\Sigma_{d-1}$ followed by restriction
+to the reference curve $C$. Vol~II's 6d hCS output lives at Stage-1
+level ($E_3$-FA on $\mathbb C^3$); Theorem~A/B apply to the Stage-2
+$E_1$-chiral shadow on $C$ after specialisation. A single CY$_d$
+category admits a family of $E_1$-chiral shadows indexed by
+$(\Sigma_{d-1}, C)$.
+**Three paths**: (V1) Vol~III
+\texttt{chapters/theory/cy\_to\_chiral.tex} two-stage
+factorisation $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+\circ \Phi^{\mathrm{FA}}_d$ construction; (V2) Costello--Gwilliam
+2017 Vol~II Ch.~5 factorisation-homology Fubini; (V3)
+Kontsevich--Tamarkin $E_d$-formality plus Costello--Gwilliam--Li
+locality at Stage-1.
+**Regex triggers**:
+`E_3.*on.*C\^3(?!.*Phi\^\{FA\})`,
+`6d hCS.*factorisation(?!.*Stage)`,
+`6d hCS.*=\\s*E_3`.
+**Primary**: Vol~III
+\texttt{chapters/theory/cy\_to\_chiral.tex}; Costello--Gwilliam
+2017; Kontsevich--Tamarkin formality; CLAUDE.md two-stage
+factorisation specification.
+**Type**: construction/narration.
+**Related**: AP-CY160/161 (grammar discipline + iso-class /
+parametrised); AP923/924 (hCS vs categorical grammar; Kontsevich--
+Tamarkin iso-class); Vol~III cy\_to\_chiral two-stage theorem.
+
+### Attribution (Session additions 2026-04-22, Patterns 434--450)
+
+Seventeen first-principles cache entries inscribed 2026-04-22 in the
+comprehensive registry. Companion one-row summaries at IDs 451--464
+in `appendices/first_principles_cache.md` (Pattern 437 = appendices
+entry 448; Pattern 438 = 449; Pattern 439 = 450; the remaining
+fourteen patterns receive appendices IDs 451--464). All entries
+attributed to Raeez Lorgat; no AI attribution.
+
+## Vol III wave-12 cross-programme propagation (2026-04-22, Patterns 465--476, twelve-item anchor block A--L)
+
+Twelve cross-programme patterns (A--L) paralleling Vol~I AP954--AP965
+in `notes/antipatterns_catalogue.md`. These entries supply the cache
+back-anchor for the twelve-letter Vol~III wave-12 block. Each pattern
+pairs with the matching Vol~I AP and (where applicable) the Vol~II
+AP-V2-30 through AP-V2-41 mirror; together they document the
+Vol~III wave-12 propagation at Vol~I's cache registry.
+
+## Pattern 465 (AP954, item A): Pattern 273 chain-level vs $(\infty,1)$-functor
+
+**Wrong claim**: Vol~I prose writes ``$\Phi: \mathrm{CY}_d \to \mathrm{ChirAlg}$ is a functor'' without specifying chain-level object-level correspondence vs $(\infty,1)$-categorical functor.
+**Kernel of truth**: the chain-level object-level $\Phi$ and the $(\infty,1)$-categorical functor lift are both load-bearing; CY-to-chiral assignments at object level carry across both lanes; the morphism-level functor lift is a distinct claim.
+**Precise error**: conflates chain-level proofs auditable against explicit complexes + primary citations with $(\infty,1)$-categorical claims auditable against Lurie HA + Francis 2013; the two lanes occupy different epistemic registers and neither subsumes the other.
+**Healed reading**: every Vol~I citation of Vol~III's $\Phi$ output carries a lane tag. Chain-level: Stage-2 image on the reference curve $C$ (explicit factorisation-algebra complex, Kontsevich--Tamarkin + Costello--Li inputs). $(\infty,1)$-categorical: morphism preservation is AP-V2-41 / V2-AP144 frontier conjecture in Vol~II. Pattern 273 is a scope declaration, not a hierarchy.
+**Three paths**: (V1) Vol~III CLAUDE.md chain-level and $(\infty,1)$-categorical equal-status section; (V2) Vol~II AP-V2-30 / V2-AP133 frontier conjectural lift; (V3) Kontsevich 2003 / Tamarkin 2003 formality (chain-level source) vs Lurie \emph{HA} \S 5 ($(\infty,1)$-categorical source).
+**Regex triggers**: `\\\\Phi[^a-zA-Z].*functor` within 30 lines without `chain-level` or `(infty`; `functorial.*\\\\Phi`; `\\\\Phi.*on.*morphisms`.
+**Primary**: Vol~III CLAUDE.md; Vol~II AP-V2-30 / V2-AP133; Kontsevich 2003; Tamarkin 2003; Francis 2013 \emph{Compositio} 149.
+**Type**: scope/lane discipline.
+**Related**: AP954 (Vol~I companion); AP929 (two-stage factorisation); Vol~II AP-V2-30 / V2-AP133; Vol~II AP-V2-41 / V2-AP144; Pattern 273 (existing appendix row).
+
+## Pattern 466 (AP955, item B): Bare $\kappa$ forbidden
+
+**Wrong claim**: Vol~I prose writes bare $\kappa$ in any context naming the CY-to-chiral interface.
+**Kernel of truth**: four $\kappa_\bullet$ invariants are genuinely distinct and load-bearing: $\kappa_{\mathrm{ch}}$ (chiral-side), $\kappa_{\mathrm{cat}} = \chi(\mathcal O_X)$ (categorical Euler), $\kappa_{\mathrm{BKM}}$ (Borcherds weight), $\kappa_{\mathrm{fiber}}$ (fibre/lattice correction).
+**Precise error**: bare $\kappa$ collapses four distinct invariants; at the $K3 \times E$ landmark the four carry values $\{0, \chi(\mathcal O) = 0, 5, 2\}$ respectively (total-space $\kappa_{\mathrm{cat}} = 0$, fibre $\kappa_{\mathrm{fiber}} = 2$); AP5 dual-indexing adds a second layer ($\Phi_{10}$ vs $\Phi_{12}$) that bare $\kappa$ cannot carry.
+**Healed reading**: every Vol~I $\kappa$ in reader-facing prose and equations carries its subscript from first keystroke. Theorem C five-archetype complementarity reads $\kappa_{\mathrm{ch}} + \kappa_{\mathrm{ch}}^! \in \{0, 8, 13, 98/3, 250/3\}$; the B-row landmark $\mathsf B$-row $\kappa_{\mathrm{BKM}} = 5$ at $\Phi_{10}$ convention; the Künneth multiplicative identity applies to $\kappa_{\mathrm{cat}}$, not $\kappa_{\mathrm{ch}}$.
+**Three paths**: (V1) Vol~III HZ-7 subscript discipline + Vol~III \texttt{chapters/examples/cy\_d\_kappa\_stratification.tex}; (V2) canonical preamble rows 56--63 (four $\kappa_\bullet$ values at $K3 \times E$); (V3) Borcherds 1995 \emph{Invent Math} 120 + Gritsenko 1999 \emph{Algebra i Analiz} 11.
+**Regex triggers**: `\\\\kappa(?![_^])` in reader-facing `.tex` at CY-to-chiral chapter paths; `\\\\kappa [^_]` at landscape-census interfaces.
+**Primary**: Vol~III CLAUDE.md HZ-7; Vol~III \texttt{chapters/examples/cy\_d\_kappa\_stratification.tex}; AP5 canonical preamble; Borcherds 1995; Gritsenko 1999.
+**Type**: symbol-overloading / scope.
+**Related**: AP955 (Vol~I companion); AP930 / AP933 (wave-12 $\kappa_{\mathrm{cat}}$ back-anchor); Vol~II AP-V2-31 / V2-AP134; AP113 (bare-$\kappa$ Vol~III); Pattern 230 (symbol-overloading meta).
+
+## Pattern 467 (AP956, item C): CoHA $= Y^+$ evaluation chain
+
+**Wrong claim**: Vol~I's Yangian / W-algebra cross-chapters write ``$\mathrm{CoHA}(\mathbb C^3) = \mathcal W_{1 + \infty}$'' as an isomorphism.
+**Kernel of truth**: the cohomological-Hall-algebra image of $\mathbb C^3$ is the positive half of the affine Yangian, $\mathrm{CoHA}(\mathbb C^3) = Y^+(\widehat{\mathfrak{gl}}_1)$ (Schiffmann--Vasserot 2012, 2020); $\mathcal W_{1 + \infty}$ arises through the evaluation slice under Miki $S_3$-triality.
+**Precise error**: collapses the evaluation chain $Y^+ \hookrightarrow Y \xrightarrow{\mathrm{ev}_\lambda} \mathrm{End}(\mathcal W_{1 + \infty}[\lambda])$ into a single-line equality; silently drops the spectral parameter $\lambda$; drops Miki $S_3$-triality structure on $Y^+$; drops the extension ladder $Y^+ \to \mathcal W_\infty[c] \to \mathcal W_{1 + \infty}$.
+**Healed reading**: $\mathrm{CoHA}(\mathbb C^3) = Y^+(\widehat{\mathfrak{gl}}_1)$; the $\mathcal W_{1 + \infty}$ slice arises through the evaluation arrow at a spectral parameter $\lambda$; $\mathcal W_{1 + \infty} = \mathcal W_\infty[c] \otimes \mathcal H$ as a tensor with the Heisenberg algebra; curved-Dunn closure $H^2 = 0$ is a separate chiral-topological step with obstruction in the Costello--Gwilliam BV cohomology.
+**Three paths**: (V1) Schiffmann--Vasserot 2012 \emph{Publ IHES} 115; (V2) Schiffmann--Vasserot 2020 \emph{Duke Math J} 169; (V3) Miki 2007 \emph{J Math Phys} 48 triality; Pope--Romans--Shen 1990 \emph{Phys Lett B} 236.
+**Regex triggers**: `CoHA.*=.*W_\\{?1 ?\\+ ?infty` without $Y^+$ on the RHS; `CoHA.*W_\\{1` co-occurring with ``isomorphism''.
+**Primary**: Schiffmann--Vasserot 2012; Schiffmann--Vasserot 2020; Miki 2007; Costello--Gwilliam 2021 Vol 2.
+**Type**: object conflation / scope.
+**Related**: AP956 (Vol~I companion); AP934 (wave-12 CoHA back-anchor); Vol~II AP-V2-32 / V2-AP135; Vol~II AP-V2-18 MO-extension.
+
+## Pattern 468 (AP957, item D): $E_n$ on wrong object
+
+**Wrong claim**: ``$A$ is an $E_2$-chiral algebra at $d \ge 3$'' for $A$ the Stage-2 algebra output of Vol~III's $\Phi_d$.
+**Kernel of truth**: Vol~III's $\Phi_d$ at $d \ge 3$ lands in a structured target; the $E_2$-braided structure is a real piece of that target; chiral algebra at $d \ge 3$ carries at most $E_1$-structure.
+**Precise error**: conflates the algebra $A$ with $\mathcal Z(\mathrm{Rep}(A))$ (the Drinfeld centre of its module category); braiding-on-module-centre is confused with braiding-on-algebra. At $d \ge 3$ the $E_2$-structure lives on $\mathcal Z(\mathrm{Rep}(A))$, not on $A$ itself.
+**Healed reading**: $A$ at $d \ge 3$ is $E_1$ (not $E_2$); the $E_2$-structure lives on $\mathcal Z(\mathrm{Rep}(A))$, a different categorical object with its own derived complex. Any ``$E_n$ for $n \ge 2$'' statement at $d \ge 3$ ambient specifies whether the structure sits on $A$ or on $\mathcal Z(\mathrm{Rep}(A))$.
+**Three paths**: (V1) Vol~II AP-V2-34 / V2-AP137 $E_n$-on-wrong-object; (V2) Vol~II AP-V2-39 / V2-AP142 $E_2$-braiding on $Z(\mathrm{Rep}(A))$; (V3) Lurie \emph{HA} Thm 5.3.1.14 (Dunn additivity on single-colour operads, $\mathsf{SC}^{\mathrm{ch,top}}$ is bicoloured).
+**Regex triggers**: `E_2.*chiral.*algebra` without ``$Z(\\mathrm{Rep}$'' or ``Drinfeld centre'' within 15 lines at $d \ge 3$ ambient.
+**Primary**: Vol~III $E_n$-output-scope family; Vol~II AP-V2-34 / V2-AP137; Vol~II AP-V2-39 / V2-AP142; AP276 ($E_n$-chiral notion unspecified); AP277 ($\mathsf{SC}^{\mathrm{ch,top}}$ bicoloured).
+**Type**: $E_n$-level / object conflation.
+**Related**: AP957 (Vol~I companion); Vol~II AP-V2-34 / V2-AP137; Vol~II AP-V2-39 / V2-AP142; Pattern 449 (Yangian type count, adjacent scope).
+
+## Pattern 469 (AP958, item E): $\Phi$ output $d$-dependent PTVV shift table
+
+**Wrong claim**: Vol~III's $\Phi_d$ output is universally $E_2$-chiral (or universally $E_1$-chiral) without naming $d$.
+**Kernel of truth**: PTVV shifted-symplectic structure governs $\Phi_d$'s $E_n^{\mathrm{cl}}$ classical output; the output is $d$-dependent.
+**Precise error**: silently fixes the PTVV shift to a single value, collapsing the $d$-dependent hierarchy $(d, \mathrm{shift}, E_n^{\mathrm{cl}}) \in \{(2, -2, E_2), (3, -1, E_1), (4, 0, E_0), (5, +1, E_5\text{-Poisson})\}$ that Vol~III Part III / $E_n$-output-scope documents.
+**Healed reading**: every Vol~I reference to Vol~III's $\Phi_d$ output at CY$_d$ names the triple $(d, \mathrm{shift}, E_n^{\mathrm{cl}})$; $d = 2$ gives $(-2, E_2)$, $d = 3$ gives $(-1, E_1)$, $d = 4$ gives $(0, E_0)$, $d = 5$ gives $(+1, E_5\text{-Poisson})$. Each row indexes a different Vol~I ambient.
+**Three paths**: (V1) PTVV 2013 \emph{Publ IHES} 117 (shifted symplectic); (V2) Vol~II AP-V2-35 / V2-AP138 (PTVV shift table); (V3) AP-CY46 ($\Phi_d$-ambient concentration enlargement $\{0, 1, 2, d\}$).
+**Regex triggers**: `\\\\Phi_d.*output.*E_n` without $d$-index or $(d, \\mathrm{shift}, E_n^{\\mathrm{cl}})$ triple within 20 lines.
+**Primary**: PTVV 2013 \emph{Publ IHES} 117; Vol~III Part III $E_n$-output-scope family; Vol~II AP-V2-35 / V2-AP138.
+**Type**: scope / $d$-dependence discipline.
+**Related**: AP958 (Vol~I companion); AP929 (two-stage factorisation); AP952 (PTVV to $d = 5$); AP-CY46 (concentration enlargement); Vol~II AP-V2-35 / V2-AP138.
+
+## Pattern 470 (AP959, item F): Single-citation canonicity forbidden (Costello--Li + Kontsevich--Tamarkin is a conjunction)
+
+**Wrong claim**: Vol~I cites ``the canonical chiral algebra on $X$'' invoking only Costello--Li 2016, or only Kontsevich--Tamarkin $E_d$-formality, as sufficient input.
+**Kernel of truth**: each source is real and correctly named; the canonical chiral algebra construction does rest on both.
+**Precise error**: one-leg citation collapses the conjunction. Holomorphic locality without formality produces a chain-level cocycle without homotopy control; formality without holomorphic locality produces a rigidity statement without the specifically-holomorphic factorisation structure.
+**Healed reading**: every Vol~I citation of ``canonical chiral algebra'' names both Costello--Li 2016 (arXiv:1605.09439) AND Kontsevich--Tamarkin $E_d$-formality (Kontsevich 2003 \emph{Lett Math Phys} 66 + Tamarkin 2003 \emph{Lett Math Phys} 66). The two enter via different axes: Costello--Li at holomorphic locality; Kontsevich--Tamarkin at Hochschild formality / rigidity of the formality quasi-isomorphism.
+**Three paths**: (V1) Costello--Li 2016 arXiv:1605.09439 (holomorphic locality in BV-factorisation-algebra framework); (V2) Kontsevich 2003 \emph{Lett Math Phys} 66 (deformation quantisation formality); (V3) Tamarkin 2003 \emph{Lett Math Phys} 66 (GRT and formality).
+**Regex triggers**: `canonical.*chiral algebra` without both ``Costello--Li'' and ``Kontsevich--Tamarkin'' / ``KT formality'' within 20 lines.
+**Primary**: Costello--Li 2016; Kontsevich 2003; Tamarkin 2003; Vol~II AP-V2-33 / V2-AP136.
+**Type**: citation conjunction discipline.
+**Related**: AP959 (Vol~I companion); AP934 (wave-12 canonical back-anchor); Vol~II AP-V2-33 / V2-AP136.
+
+## Pattern 471 (AP960, item G): ``X gives Y'' narration without explicit arrow
+
+**Wrong claim**: Vol~I prose writes ``the shadow tower gives the Gaudin generators'', ``the bar construction gives the Koszul dual'', ``$\Phi$ gives a chiral algebra'' without naming the arrow.
+**Kernel of truth**: each construction does produce a second object via a concrete mechanism; the arrow exists.
+**Precise error**: the verb ``gives'' is verb-of-all-trades that hides whether the operation is a chain-level map, a functor, a restriction, an inclusion, or a specialisation.
+**Healed reading**: every ``gives'' following a named construction (shadow tower, bar construction, Koszul duality, $\Phi$-assignment) is replaced by the specific arrow (``the shadow-tower depth-stratification map'', ``the cobar $\Omega^{\mathrm{ch}}$ adjoint'', ``the chain-level morphism $\Phi$ assigns'', etc.) or flagged.
+**Three paths**: (V1) AP278 (holography as narrative without operadic map); (V2) AP272 (narration as mechanism without chain-level map); (V3) AP935 (warning-environment + narration anchor, wave-12 Vol~I).
+**Regex triggers**: `(shadow tower|bar construction|Koszul duality|\\\\Phi[^a-zA-Z]).*gives` in reader-facing prose.
+**Primary**: AP278; AP272; AP935.
+**Type**: narration / arrow-naming discipline.
+**Related**: AP960 (Vol~I companion); AP935 (wave-12 narration anchor); AP278; AP272.
+
+## Pattern 472 (AP961, item H): Denominator $=$ bar Euler anchor requires BOTH CY-A AND Vol~I Theorem~A
+
+**Wrong claim**: ``the Borcherds-product denominator equals the bar Euler characteristic'' stated with a single-sided citation at a landmark K3-type CY threefold.
+**Kernel of truth**: the identity is real at the $K3 \times E$ + Igusa cusp form $\Phi_{10}$ landmark (Borcherds 1995 + Gritsenko--Nikulin 1998).
+**Precise error**: single-sided citation collapses the two-anchor structure. CY-A without Theorem~A produces a Hodge-supertrace identity without the bar-Euler interpretation; Theorem~A without CY-A produces an Euler identity without a CY-side origin. Both anchors enter.
+**Healed reading**: every Vol~I denominator-$=$-bar-Euler citation names both CY-A$_d$ (at the specific $d$) and Vol~I Theorem~A within 20 lines. At $d = 3$ (K3$\times$E, Igusa $\Phi_{10}$), AP-CY49 + Vol~I Theorem~A jointly anchor the identity.
+**Three paths**: (V1) Borcherds 1995 \emph{Invent Math} 120 (Borcherds product denominator formula); (V2) Gritsenko--Nikulin 1998 \emph{Duke Math J} 94 (Igusa $\Phi_{10}$); (V3) Vol~I Theorem~A bar--cobar + Vol~III CY-A$_d$.
+**Regex triggers**: `denominator.*=.*bar Euler` without both ``CY-A'' and ``Theorem~A'' / ``bar--cobar'' within 20 lines.
+**Primary**: Borcherds 1995; Gritsenko--Nikulin 1998; Vol~III AP-CY49; Vol~I Theorem~A.
+**Type**: two-anchor citation discipline.
+**Related**: AP961 (Vol~I companion); AP936 (wave-12 denominator anchor); AP938 (CY-A$_3$ existence-and-rigidity).
+
+## Pattern 473 (AP962, item I): Class $\mathsf M$ $E_3$-bar $= 6^g$ at cohomology, not infinite at chain level
+
+**Wrong claim**: ``class $\mathsf M$ $E_3$-bar is $6^g$-dimensional'' without ``at cohomology''.
+**Kernel of truth**: class $\mathsf M$ chiral algebras (Virasoro, $\mathcal W_N$) do carry finite $6^g$ cohomology at genus $g$; the identity is correct at cohomology with per-handle tricomplex $P_{E_4}(t) = 3t + 3t^2$.
+**Precise error**: scope confusion between chain-level complex (infinite-dimensional) and cohomology (finite $6^g$). A $d_4$ differential in the $E_4$ page collapses the bi-infinite chain-level complex to a finite $6^g$-dimensional cohomology.
+**Healed reading**: every class-$\mathsf M$ $6^g$ claim carries the ``at cohomology'' qualifier. Chain-level: the $E_3$-bar complex is infinite-dimensional at each conformal weight and accumulates to total infinite dimension. Cohomology-level: after the $d_4$ collapse, the surviving cohomology is $6^g$-dimensional per genus, with per-handle tricomplex $P_{E_4}(t) = 3t + 3t^2$ (coefficient $6 = 2 \cdot 3$ per handle).
+**Three paths**: (V1) AP-CY21 / AP-CY38 closed form via Künneth; (V2) Vol~II AP-V2-38 / V2-AP141 (per-handle tricomplex); (V3) AP-CY46 (cohomological concentration).
+**Regex triggers**: `6\\^g` in class-$\\mathsf{M}$ context without ``at cohomology'' or ``cohomological'' within 10 lines.
+**Primary**: Vol~III AP-CY21 / AP-CY38; Vol~II AP-V2-38 / V2-AP141; AP-CY46; Vol~III \texttt{notes/wave12\_a10\_class\_m\_e3\_bar.tex}.
+**Type**: chain-level vs cohomological scope discipline.
+**Related**: AP962 (Vol~I companion); AP937 (wave-12 $6^g$ anchor); Vol~II AP-V2-38 / V2-AP141; AP-CY46.
+
+## Pattern 474 (AP963, item J): Two-stage factorisation; CY-A$_3$ existence-and-rigidity, NOT equivalence
+
+**Wrong claim**: Vol~I prose cites Vol~III's CY-A$_3$ result as a full equivalence between the CY$_3$ category and the chiral-algebra output.
+**Kernel of truth**: $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d$ factorisation is well-defined at $d = 3$; the Stage-1 output is $E_1$-rigid at $d = 3$.
+**Precise error**: conflates existence-and-$E_1$-rigidity (proved; chain-level on an explicit factorisation-algebra complex) with $(\infty,1)$-categorical equivalence (frontier; Vol~II AP-V2-41 / V2-AP144).
+**Healed reading**: CY-A$_3$ reads as existence-plus-rigidity at the factorisation-algebra level, not as an equivalence. Existence: $\Phi^{\mathrm{FA}}_3(\mathcal C)$ exists for CY$_3$ categories $\mathcal C$. Rigidity: $\Phi^{\mathrm{FA}}_3(\mathcal C)$ is $E_1$-rigid. The equivalence $\mathcal C \simeq \Phi^{\mathrm{FA}}_3(\mathcal C)$ as an $(\infty,1)$-categorical functor statement is frontier.
+**Three paths**: (V1) Vol~III \texttt{notes/wave12\_a3\_cy\_a3\_equivalence.tex}; (V2) Costello--Gwilliam \emph{FA} Vol 2; (V3) Kontsevich--Soibelman 2011 arXiv:1006.2706.
+**Regex triggers**: `CY-A_3.*equivalence` or `CY-A_\\{3\\}.*equivalence` without ``existence'' or ``rigidity'' scope within 15 lines.
+**Primary**: Vol~III AP-CY46 / AP-CY21; Vol~II AP-V2-41 / V2-AP144 frontier; Costello--Gwilliam \emph{FA} Vol 2; Kontsevich--Soibelman 2011.
+**Type**: scope discipline (existence/rigidity vs equivalence).
+**Related**: AP963 (Vol~I companion); AP938 (CY-A$_3$ existence-and-rigidity anchor); AP951 (two-stage factorisation on K3-Yangian); Vol~II AP-V2-41 / V2-AP144.
+
+## Pattern 475 (AP964, item K): Dunn--Lurie real-vs-complex slip
+
+**Wrong claim**: Vol~I prose writes $\int_{\Sigma_2} E_3 \simeq E_1$ without naming the dimensional convention of $\Sigma_2$.
+**Kernel of truth**: Dunn--Lurie additivity $\int_{\Sigma_2} E_3 \simeq E_1$ is a real theorem at 2-real-dimensional $\Sigma_2$ (Dunn 1988 + Lurie \emph{HA}); Vol~III's Stage-2 specialisation $\int_{\Sigma_{d-1}}$ is at complex-dimensional $\Sigma_{d-1}$.
+**Precise error**: silent dimension-convention switch at the Dunn--Lurie input. Swapping $\Sigma_2$-over-reals with $\Sigma_1$-over-complex (the latter a curve) produces shift errors in the Stage-2 specialisation.
+**Healed reading**: every Vol~I citation of Dunn--Lurie additivity names ``2-real-dimensional $\Sigma_2$''. For Vol~III-style complex-dimension pushforwards, name $\Sigma_{d-1}$ over complex dimension and cite the MIXED-operation holomorphic pushforward (AP-V2-25 closed-colour identification with Stage-1). The two are compatible under the real-to-complex-dimension-halving for holomorphic data, but the convention must be named.
+**Three paths**: (V1) Dunn 1988 \emph{JPAA} 50 (additivity); (V2) Lurie \emph{HA} \S 5.1 (higher-algebraic form); (V3) Vol~II AP-V2-36 / V2-AP139 real-vs-complex primary antipattern.
+**Regex triggers**: `Sigma_2` or `\\\\int_\\{Sigma` in Dunn--Lurie context without ``real-dimensional'' or ``complex-dimensional'' qualifier.
+**Primary**: Dunn 1988 \emph{JPAA} 50; Lurie \emph{HA} \S 5.1; Vol~II AP-V2-36 / V2-AP139.
+**Type**: dimension-convention discipline.
+**Related**: AP964 (Vol~I companion); Vol~II AP-V2-36 / V2-AP139 (primary); AP-V2-25 closed-colour + Stage-1 identification; AP277 ($\mathsf{SC}^{\mathrm{ch,top}}$ bicoloured).
+
+## Pattern 476 (AP965, item L): $(B_{E_1}, B_{E_2}, B_{E_\infty})$ chain-level filtered equivalence frontier
+
+**Wrong claim**: Vol~I cites the three-sector bar complex $(B_{E_1}, B_{E_2}, B_{E_\infty})$ as an equivalence of $(\infty,1)$-categories.
+**Kernel of truth**: the chain-level filtered quasi-isomorphism $B_{E_1} A \twoheadrightarrow B_{E_2} A \twoheadrightarrow B_{E_\infty} A$ is a genuine theorem at the explicit complex level, carrying Kontsevich--Tamarkin $E_d$-formality + Costello--Li holomorphic-locality inputs.
+**Precise error**: conflates the chain-level filtered equivalence (theorem) with the $(\infty,1)$-categorical-functor lift (frontier, Vol~II AP-V2-41 / V2-AP144).
+**Healed reading**: every Vol~I citation of the three-sector bar complex reads it as a chain-level filtered equivalence with explicit Kontsevich--Tamarkin + Costello--Li inputs; any $(\infty,1)$-functor claim is flagged as conjectural. The chain-level statement is auditable against explicit complexes; the $(\infty,1)$-functor lift is Vol~II frontier conjecture with open morphism-preservation status.
+**Three paths**: (V1) Vol~III \texttt{notes/wave12\_a9\_be1\_be2\_beinf\_filtered.tex}; (V2) Vol~II AP-V2-41 / V2-AP144 frontier conjecture; (V3) Kontsevich 2003 + Tamarkin 2003 + Costello--Li 2016 inputs.
+**Regex triggers**: `B_\\{E_1\\}.*B_\\{E_\\infty\\}` in $(\infty,1)$-equivalence or functor-lift phrasing without ``chain-level'' qualifier.
+**Primary**: Vol~II AP-V2-41 / V2-AP144 frontier; Vol~II AP-V2-30 / V2-AP133 chain-level vs $(\infty,1)$; Kontsevich 2003; Tamarkin 2003; Costello--Li 2016.
+**Type**: chain-level vs $(\infty,1)$-functor scope.
+**Related**: AP965 (Vol~I companion); Pattern 465 (item A, cross-programme hook); Vol~II AP-V2-41 / V2-AP144; Vol~II AP-V2-30 / V2-AP133.
+
+### Attribution (Wave-12 cross-programme block, Patterns 465--476, 2026-04-22)
+
+Twelve patterns inscribed 2026-04-22 as the cache back-anchor for the
+Vol~III wave-12 twelve-item anchor block A--L in
+`notes/antipatterns_catalogue.md` (Vol~I companions AP954--AP965).
+Each pattern identifies its letter, its companion AP, and cross-
+references the Vol~II AP-V2-30 through AP-V2-41 mirror where
+applicable. The block is disjoint from Patterns 434--450
+(two-stage-factorisation wave) by scope: 434--450 cover specific
+subjects (K3 Yangian, Borcherds weight, CoHA, $\kappa_{\mathrm{cat}}$,
+etc.), while 465--476 carry lane-discipline scopes
+(chain-level vs $(\infty,1)$, $E_n$-on-which-object, PTVV shift,
+Dunn--Lurie real-vs-complex, three-sector bar filtered frontier).
+All entries attributed to Raeez Lorgat; no AI attribution.

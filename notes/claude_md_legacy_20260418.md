@@ -1,3 +1,11 @@
+> **Vol I AP catalogue has moved.** The anti-pattern register below
+> is a historical snapshot preserved for archaeology. The live
+> `notes/antipatterns_catalogue.md` is the live AP catalogue; every
+> `/chriss-ginzburg-rectify` invocation consults it (plus the
+> `first_principles_cache.md` family) at Gate 0 of every chunk.
+> Do not add new APs to this legacy file. Append them to
+> `notes/antipatterns_catalogue.md` instead.
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.

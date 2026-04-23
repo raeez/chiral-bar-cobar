@@ -9,6 +9,10 @@
 \chapter{\texorpdfstring{$E_1$}{E1} Modular Koszul Duality}
 \label{chap:e1-modular-koszul}
 
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\HolFA}{\mathrm{HolFA}}
+
 \begin{remark}[$\Eone$-chiral notion used in this chapter]
 \label{rem:e1-modular-notion-fixed}
 \index{$\mathbb{E}_1$-chiral algebra!notion fixed in chapter}
@@ -77,7 +81,7 @@ deconcatenation coproduct: the tensor coalgebra on the desuspended
 augmentation ideal, before any symmetric-group averaging has been
 performed. Its $\Sigma_n$-coinvariant shadow
 $\Barch(\cA) = {\Barch}^{\mathrm{ord}}(\cA)_{\Sigma_n}$
-is what the commutative modular theory sees, and the projection is
+is what the commutative modular-Koszul theory sees, and the projection is
 irreversible. The averaging map
 $\mathrm{av}\colon \fg^{E_1} \to \fg^{\mathrm{mod}}$ provably does
 not split at genus~$0$ (the obstruction is controlled by the
@@ -1000,8 +1004,8 @@ algebra morphisms; \ClaimStatusProvedHere]
 \index{averaging map!functoriality|textbf}
 \index{averaging map!2-natural transformation}
 \index{averaging map!morphism class delimitation}
-\index{Pattern 292!functoriality scope established}
-\index{Pattern 282!ordered conclusion separated from symmetric}
+\index{averaging map!functoriality scope}
+\index{averaging map!ordered conclusion separated from symmetric}
 Let $\ChirAlg^{\Eone,\mathrm{cyc}}_X$ denote the category of cyclic
 $E_1$-chiral algebras on the smooth proper curve $X$ in the sense
 of Definition~\textup{\ref{def:e1-chiral}} \textup{(}morphisms:
@@ -1168,7 +1172,7 @@ algebra, never a functor between algebra categories. \qedhere
 class-by-class, at degree~3; \ClaimStatusProvedHere]
 \label{cor:av-kernel-deg3-split}
 \index{averaging map!ordered/symmetric kernel split degree 3}
-\index{Pattern 282!healed at degree 3}
+\index{averaging map!ordered conclusion separated from symmetric!degree 3}
 For each shadow class $\mathbf{X} \in \{\mathbf{G}, \mathbf{L},
 \mathbf{C}, \mathbf{M}\}$ with archetype $\cA_\mathbf{X} \in
 \{\cH_k, \widehat{\fg}_k, \beta\gamma, \mathrm{Vir}_c\}$ and a
@@ -1254,7 +1258,7 @@ functoriality]
 \label{rem:av-functoriality-xvol}
 \index{averaging map!cross-volume functoriality}
 \index{cross-volume bridge!averaging functoriality}
-\index{Pattern 292!cross-volume scope honored}
+\index{averaging map!cross-volume functoriality scope}
 The on-the-nose square of
 Theorem~\textup{\ref{thm:av-functoriality}}~\textup{(ii)} is the
 Vol~I shadow of two cross-volume compatibilities.
@@ -1273,19 +1277,33 @@ bulk morphism on factorisation algebras, the squares of
 parts~\textup{(ii)} on $\cA$ and $\cB$ glue into a cube whose
 commutation realises the boundary-to-bulk averaging
 compatibility.
-\emph{(b) Vol~III CY-to-chiral functor $\Phi$ \textup{(}Vol~III
+\emph{(b) Vol~III CY-to-chiral factorisation $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ \textup{(}Vol~III
+\texttt{chapters/theory/cy\_to\_chiral.tex} Theorem~\textup{phi-two-stage-factorisation};
 \texttt{compute/lib/kodaira\_spencer\_e1\_engine.py}\textup{)}\textup{:}}
-$\Phi\colon \mathrm{CY}_d \to \ChirAlg^{\Eone}_X$ is an
+stage~$1$ $\PhiFA_d\colon \mathrm{CY}_d\text{-}\mathsf{Cat} \to
+E_d\text{-}\HolFA(\CY_d)$ is a canonical holomorphic factorisation
+algebra on the CY$_d$ variety, pinned up to contractible choice by
+Kontsevich--Tamarkin $E_d$-formality and Costello--Gwilliam--Li
+locality; stage~$2$ $\SpCh_{\Sigma_{d-1}, C}\colon
+E_d\text{-}\HolFA(\CY_d) \to \ChirAlg^{\Eone}_C$ is factorisation
+homology over a closed $(d-1)$-cycle $\Sigma_{d-1}$ followed by
+restriction to a reference curve $C \subset \CY_d$, producing an
+$E_1$-chiral algebra on the curve at $d \geq 3$. The composite
+$\Phi_d\colon \mathrm{CY}_d \to \ChirAlg^{\Eone}_C$ is an
 object-level construction \textup{(}Pattern~$273$, not
 established as functorial in CY morphisms beyond the named
 defect-bimodule cases\textup{)}; under the Vol~III hypothesis
-that $\Phi$ does extend to a functor on a sub-$2$-category of
+that $\Phi_d$ does extend to a functor on a sub-$2$-category of
 shifted-Lagrangian correspondences, Theorem~\textup{\ref{thm:av-functoriality}}
 guarantees that the CY-internal averaging
-$\operatorname{av}_{\Phi(X)}$ is natural in those
+$\operatorname{av}_{\Phi_d(X)}$ is natural in those
 correspondences. The Vol~III claim therefore reduces to the
 established Vol~I 2-naturality plus the Vol~III object-level
-$\Phi$-data, with no further functoriality input required.
+two-stage data $(\PhiFA_d, \SpCh_{\Sigma_{d-1}, C})$, with no
+further functoriality input required. A single CY$_d$ category
+produces a family of chiral shadows indexed by $(\Sigma_{d-1}, C)$;
+the 2-naturality discipline applies separately on each member of
+the family.
 \emph{(c) Pattern~$292$ cross-volume scope honoured.}
 The non-existence of a global functor
 $\mathrm{Av}\colon \ChirAlg^{\Eone,\mathrm{cyc}}_X \to
@@ -1307,7 +1325,7 @@ map to $\mathfrak{grt}_1$; \ClaimStatusProvedHere]
 \index{kernel of averaging!structural description|textbf}
 \index{Drinfeld--Kohno algebra!realises kernel of averaging}
 \index{Ihara bracket!kernel of averaging at degree 3}
-\index{Pattern 293!genuinely new structural result (not relabelling)}
+\index{averaging map!kernel structural description}
 Let $\cA$ be a chirally Koszul $E_1$-chiral algebra of shadow class
 $\mathbf{X}\in\{\mathbf{G},\mathbf{L},\mathbf{C},\mathbf{M}\}$ on the
 formal disc $D$, and let
@@ -1849,7 +1867,7 @@ on the binary slot, completing the four-class check.
 SC$^{\mathrm{ch,top}}$ heptagon]
 \label{rem:av-kernel-xvol-vol2}
 \index{averaging map!kernel cross-volume bridge}
-\index{Pattern 282!kernel structure propagates to Vol~II}
+\index{averaging map!kernel propagation to Vol~II}
 Theorem~\textup{\ref{thm:av-kernel-graded-lie-structure}} is the
 Vol~I \emph{chain-level} statement of the kernel structure
 underlying Vol~II's
@@ -3359,7 +3377,7 @@ $\Sigma_1$--$\Sigma_5$, hook-length formula, 120+ tests).
 \index{ribbon structure!from cyclic trace|textbf}%
 \index{t Hooft expansion@'t~Hooft expansion!from ribbon structure|textbf}
 
-The $E_1$ modular theory organises amplitudes by genus through the
+The $E_1$ modular-Koszul theory organises amplitudes by genus through the
 ribbon modular operad, but a bare stable graph carries no canonical
 $N$-weight: the Euler characteristic $\chi(\Sigma_\Gamma)$ requires
 a ribbon surface, hence a cyclic ordering at each vertex. The
@@ -3666,9 +3684,9 @@ weight-completed statement is unconditional.
 
 \begin{remark}[// conformance of the bridge]
 \label{rem:e1-bridge-ap-conformance}
-\index{anti-pattern! conformance}
-\index{anti-pattern! conformance}
-\index{anti-pattern! conformance}
+\index{bridge conventions!$E_1$ notion, ambient, ordering}
+\index{bridge conventions!$E_1$ notion, ambient, ordering}
+\index{bridge conventions!$E_1$ notion, ambient, ordering}
 The bridge reads correctly only after pinning three
 conventions.
 
