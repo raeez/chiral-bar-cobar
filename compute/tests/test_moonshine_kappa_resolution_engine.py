@@ -921,7 +921,7 @@ from compute.lib.independent_verification import independent_verification
 
 
 @independent_verification(
-    claim="thm:v-natural-kappa-equals-12",
+    claim="prop:moonshine-kappa",
     derived_from=[
         "FLM 1988 V^natural = Z/2 orbifold of V_Leech construction",
         "Zhu 1996 modular invariance trace function on C_2-cofinite VOAs",

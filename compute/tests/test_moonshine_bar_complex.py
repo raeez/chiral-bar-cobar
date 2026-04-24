@@ -1028,7 +1028,7 @@ from compute.lib.independent_verification import independent_verification as _iv
 
 
 @_iv_v14_mbc(
-    claim="thm:v-natural-kappa-equals-12",
+    claim="prop:moonshine-kappa",
     derived_from=[
         "moonshine_bar_complex.moonshine_kappa engine",
         "V^natural central charge c = 24 lattice-VOA orbifold input",

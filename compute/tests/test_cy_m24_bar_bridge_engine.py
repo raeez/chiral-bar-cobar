@@ -829,7 +829,7 @@ from compute.lib.independent_verification import (
 
 
 @_iv_w15_m24br(
-    claim="thm:kappa-K3-bar-bridge-equals-2",
+    claim="rem:k3-kappa-two-shared-not-identification",
     derived_from=[
         "cy_m24_bar_bridge_engine.kappa_from_bar_curvature",
         "Vol III thm:kappa-stratification-by-d",

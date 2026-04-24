@@ -1387,7 +1387,7 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
     def test_monotone_decreasing_for_positive_c(self):
         """delta_F2 is monotone decreasing for c > 0.
 
-        d/dc [(c+204)/(16c)] = d/dc [1/16 + 120/(16c)]
+        d/dc [(c+204)/(16c)] = d/dc [1/16 + 204/(16c)]
                               = -204/(16c^2) < 0.
         """
         c_values = [Fraction(1), Fraction(5), Fraction(10), Fraction(50),

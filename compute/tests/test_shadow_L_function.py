@@ -95,7 +95,7 @@ def test_shadow_L_residue_at_s_equals_1_c_half_ising():
     """Verify Res_{s=1} Lsh(Vir_{1/2}; s) matches Hurwitz-Lerch prediction."""
     c = Rational(1, 2)
     # Shadow coefficients at c = 1/2 from Vol I closed forms
-    # S_2 = c/2 = 1/4; S_3 = 2; S_4 = 10/[c(5c+22)] = 10/[(1/2)(49/2)] = 80/49
+    # S_2 = c/2 = 1/4; S_3 = 2; S_4 = 10/[c(5c+22)] = 10/[(1/2)(49/2)] = 40/49
     s2 = c / 2
     s3 = Rational(2)
     s4 = Rational(10) / (c * (5 * c + 22))
@@ -109,11 +109,9 @@ def test_shadow_L_residue_at_s_equals_1_c_half_ising():
     # the leading coefficient structure.
     assert s2 == Rational(1, 4)
     assert s3 == 2
-    assert s4 == Rational(80, 49)
+    assert s4 == Rational(40, 49)
     # The leading c/4 + 2/3 agrees between Hurwitz-Lerch and direct partial sum
     check = c / 4 + Rational(2, 3)
-    assert check == Rational(11, 12)  # 1/8 + 2/3 = 3/24 + 16/24 = 19/24?
-    # Correction: c/4 at c=1/2 is 1/8; 1/8 + 2/3 = 3/24 + 16/24 = 19/24.
     assert check == Rational(19, 24)
 
 

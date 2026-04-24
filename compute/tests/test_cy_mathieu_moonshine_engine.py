@@ -708,7 +708,7 @@ from compute.lib.independent_verification import (
 
 
 @_iv_w15_m24mm(
-    claim="thm:kappa-k3-sigma-model-equals-2",
+    claim="rem:k3-kappa-two-shared-not-identification",
     derived_from=[
         "cy_mathieu_moonshine_engine.KAPPA_K3 constant",
         "Vol III thm:kappa-hodge-supertrace-identification",

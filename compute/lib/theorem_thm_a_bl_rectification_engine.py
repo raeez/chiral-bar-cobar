@@ -48,11 +48,9 @@ RELATIONSHIP TO THE MONOGRAPH:
        >= 1 theory needs.
 
 FINDING REGISTER:
-    F1 (MODERATE): Bibliography cites BL24 (2406.04684) but not BL-GKD
-       (2304.08409).  The concordance references "monoidal model
-       structures" from BL24, but BL-GKD is the paper that directly
-       addresses the curved Quillen equivalence needed at genus >= 1.
-       FIX: Add BL-GKD to bibliography and cite in rem:coderived-status.
+    F1 (RESOLVED): Bibliography carries BL24 (2406.04684) for monoidal
+       model structures and BL23 (2304.08409) for Global Koszul
+       duality.  Keep the two citations separate.
 
     F2 (MODERATE): rem:coderived-status (bar_cobar_adjunction_inversion.tex,
        lines 716-719) says "the abstract framework (Positselski,
@@ -780,7 +778,7 @@ def check_bibliography_discrepancy() -> Dict:
     - BL24 = Booth-Lazarev, "Monoidal model structures on comodule
       categories", arXiv:2406.04684, 2024.
 
-    The monograph should ALSO cite:
+    The monograph also cites:
     - BL-GKD = Booth-Lazarev, "Global Koszul duality",
       arXiv:2304.08409, rev. 2026.
 
@@ -788,10 +786,10 @@ def check_bibliography_discrepancy() -> Dict:
     BL24 is about monoidal model structures.
     BL-GKD is about the curved Quillen equivalence.
 
-    The concordance (line 614) references BL24 for "monoidal model
-    structures", which is correct for that paper.  But the curved
-    Quillen equivalence relevant to rem:coderived-status is from
-    BL-GKD, which is NOT cited.
+    The concordance references BL24 for "monoidal model structures",
+    which is correct for that paper.  The curved Quillen equivalence
+    relevant to rem:coderived-status is from BL-GKD and is now present
+    as BL23.
     """
     return {
         'currently_cited': {
@@ -800,18 +798,17 @@ def check_bibliography_discrepancy() -> Dict:
             'title': 'Monoidal model structures on comodule categories',
             'year': 2024,
         },
-        'should_also_cite': {
-            'suggested_key': 'BL23',
+        'also_cited': {
+            'key': 'BL23',
             'arxiv': '2304.08409',
             'title': 'Global Koszul duality',
             'year': '2023 (rev. 2026)',
         },
-        'discrepancy': True,
-        'severity': 'MODERATE',
+        'discrepancy': False,
+        'severity': 'NONE',
         'fix': (
-            'Add BL-GKD (arXiv:2304.08409) to bibliography as a separate '
-            'entry. Cite in rem:coderived-status and in the literature '
-            'section of bar_cobar_adjunction_curved.tex.'
+            'No bibliography insertion required. Keep BL23 for Global '
+            'Koszul duality and BL24 for monoidal model structures.'
         ),
     }
 
@@ -841,22 +838,22 @@ def check_cross_volume_consistency() -> Dict:
       CONSISTENT.
     - Quillen reference: Val16 consistently cited for genus-0 model
       structure.  CONSISTENT.
-    - BL reference: Only in concordance (BL24) and compute layer
-      (BL-GKD).  NOT IN .tex theory files.  NEEDS FIX.
+    - BL reference: BL23 and arXiv:2304.08409 now occur in the
+      bibliography and theory files.  CONSISTENT.
     """
     return {
         'adjunction_direction': 'CONSISTENT (notational convention explained)',
         'verdier_intertwining': 'CONSISTENT (A^!_infty is algebra)',
         'counit_direction': 'CONSISTENT',
         'quillen_reference': 'CONSISTENT (Val16 for genus 0)',
-        'bl_reference': 'INCONSISTENT (BL-GKD not cited in theory files)',
+        'bl_reference': 'CONSISTENT (BL23 / arXiv:2304.08409 cited in bibliography and theory files)',
         'vol2_checked': True,
         'vol2_bl_references': 0,
-        'issues_found': 1,
+        'issues_found': 0,
         'issue_description': (
-            'BL-GKD (2304.08409) discussed in compute layer but not cited '
-            'in the .tex theory files. The concordance cites BL24 '
-            '(2406.04684, monoidal), not BL-GKD (2304.08409, curved Quillen).'
+            'BL23 records Booth--Lazarev Global Koszul duality '
+            '(2304.08409); BL24 remains the separate monoidal model '
+            'structures paper.'
         ),
     }
 
@@ -902,19 +899,19 @@ def verify_theorem_a_bl_rectification_all() -> Dict:
         'cross_volume': check_cross_volume_consistency(),
         'finding_register': {
             'F1': {
-                'severity': 'MODERATE',
-                'description': 'BL-GKD (2304.08409) not in bibliography',
-                'fix': 'Add bibentry and cite in rem:coderived-status',
+                'severity': 'RESOLVED',
+                'description': 'BL-GKD (2304.08409) present as BL23',
+                'fix': 'No action; keep BL23 separate from BL24',
             },
             'F2': {
-                'severity': 'MODERATE',
-                'description': 'rem:coderived-status understates BL-GKD contribution',
-                'fix': 'Update to cite BL-GKD alongside Positselski',
+                'severity': 'LOW',
+                'description': 'rem:coderived-status should retain explicit BL23 scope',
+                'fix': 'Audit citation placement during the next Theorem A pass',
             },
             'F3': {
-                'severity': 'MINOR',
-                'description': 'Concordance mentions BL24 but not BL-GKD',
-                'fix': 'Add sentence about BL-GKD curved Quillen equivalence',
+                'severity': 'RESOLVED',
+                'description': 'BL24 and BL23 are distinct and both represented',
+                'fix': 'No action',
             },
             'F4': {
                 'severity': 'MODERATE',

@@ -1288,7 +1288,7 @@ from compute.lib.independent_verification import independent_verification as _iv
 
 
 @_iv_v14_mhs(
-    claim="thm:monster-griess-primitive-dim-196883",
+    claim="cor:as-monster-196884-as-cplus-weighted",
     derived_from=[
         "moonshine_higher_shadow_engine.DIM_V2_PRIM constant",
         "j-function q^1 coefficient = 196884 table lookup",

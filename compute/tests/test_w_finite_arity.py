@@ -354,18 +354,16 @@ class TestShadowData:
         assert simplify(c - (3 - Rational(60) / (k + 4))) == 0
 
     def test_complementarity_partner(self):
-        """Complementarity constant C_N = N^2 - 1.
+        """Full Drinfeld--Sokolov complementarity constant.
 
-        For N=2: C = 3 (wrong: should be 26 for full Virasoro).
-        Wait, this is the slab-reduction value.
-        For N=2: one (2,-1) betagamma pair gives c = 3.
-        For N=3: pairs (2,-1) + (3,-2) give 3 + 5 = 8 = 9-1.
-        For N=4: 3 + 5 + 7 = 15 = 16-1.
+        The slab-reduction ghost count gives N^2 - 1.  The full
+        Feigin--Frenkel complementarity constant is
+        2(N-1) + 4N(N^2-1).
         """
-        assert wn_complementarity_partner(2) == 3
-        assert wn_complementarity_partner(3) == 8
-        assert wn_complementarity_partner(4) == 15
-        assert wn_complementarity_partner(5) == 24
+        assert wn_complementarity_partner(2) == 26
+        assert wn_complementarity_partner(3) == 100
+        assert wn_complementarity_partner(4) == 246
+        assert wn_complementarity_partner(5) == 488
 
 
 # =========================================================================

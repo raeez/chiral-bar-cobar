@@ -178,7 +178,7 @@ class TestCofibrantInBL:
         assert result['genus_ge1_cofibrant'] is True
 
     def test_virasoro_cofibrant(self):
-        """Virasoro: cofibrant in BL but NOT in Vallette (not conilpotent)."""
+        """Virasoro: cofibrant in BL; Vallette finite-type surface needs completion."""
         result = verify_bar_cofibrant_in_bl(virasoro())
         assert result['cofibrant_in_bl'] is True
         assert result['cofibrant_in_vallette'] is False  # needs completion
@@ -473,27 +473,27 @@ class TestConjecturalSteps:
 class TestBibliography:
     """Test bibliography discrepancy between BL24 and BL-GKD."""
 
-    def test_discrepancy_exists(self):
+    def test_discrepancy_resolved(self):
         result = check_bibliography_discrepancy()
-        assert result['discrepancy'] is True
+        assert result['discrepancy'] is False
 
     def test_currently_cited_is_2406(self):
         result = check_bibliography_discrepancy()
         assert result['currently_cited']['arxiv'] == '2406.04684'
 
-    def test_should_cite_2304(self):
+    def test_bl23_cites_2304(self):
         result = check_bibliography_discrepancy()
-        assert result['should_also_cite']['arxiv'] == '2304.08409'
+        assert result['also_cited']['arxiv'] == '2304.08409'
 
     def test_different_papers(self):
         """BL24 and BL-GKD are DIFFERENT papers."""
         result = check_bibliography_discrepancy()
         assert (result['currently_cited']['arxiv']
-                != result['should_also_cite']['arxiv'])
+                != result['also_cited']['arxiv'])
 
-    def test_severity_moderate(self):
+    def test_severity_none(self):
         result = check_bibliography_discrepancy()
-        assert result['severity'] == 'MODERATE'
+        assert result['severity'] == 'NONE'
 
 
 # ============================================================================
@@ -519,10 +519,10 @@ class TestCrossVolume:
         result = check_cross_volume_consistency()
         assert 'CONSISTENT' in result['quillen_reference']
 
-    def test_bl_reference_inconsistent(self):
-        """BL-GKD reference is INCONSISTENT (missing from theory files)."""
+    def test_bl_reference_consistent(self):
+        """BL-GKD reference is present as BL23 / arXiv:2304.08409."""
         result = check_cross_volume_consistency()
-        assert 'INCONSISTENT' in result['bl_reference']
+        assert 'CONSISTENT' in result['bl_reference']
 
     def test_vol2_checked(self):
         result = check_cross_volume_consistency()

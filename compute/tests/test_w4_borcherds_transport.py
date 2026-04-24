@@ -194,7 +194,7 @@ from compute.lib.independent_verification import (
 
 
 @_iv_w17_w4bt(
-    claim="thm:w4-borcherds-transport-5-7",
+    claim="prop:winfty-stage4-visible-borcherds-transport",
     derived_from=[
         "Vol I conj:winfty-stage4-visible-borcherds-transport "
         "(higher_genus_modular_koszul.tex): "

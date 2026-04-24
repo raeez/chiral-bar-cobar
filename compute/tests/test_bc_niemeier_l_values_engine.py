@@ -887,7 +887,34 @@ from compute.lib.independent_verification import independent_verification as _iv
 
 
 @_iv_v14_nlv(
-    claim="thm:niemeier-count-24-and-leech-kissing-196560",
+    claim="rem:latfnd-conway-fourier",
+    derived_from=[
+        "bc_niemeier_l_values_engine.ALL_LABELS registry table",
+        "Conway-Sloane SPLAG Niemeier-lattice data table",
+    ],
+    verified_against=[
+        "Niemeier 1973 'Definite quadratische Formen der "
+        "Dimension 24 und Diskriminante 1' J. Number Theory 5 "
+        "(original classification of the 24 even unimodular "
+        "lattices in rank 24)",
+        "Conway-Sloane 1988 SPLAG Chapter 16 (independent "
+        "derivation via deep holes in Leech lattice; 23 non-Leech "
+        "Niemeier lattices correspond to 23 deep-hole classes)",
+        "Borcherds 1985 'The Leech lattice and other lattices' "
+        "PhD thesis (Siegel mass formula total mass of genus of "
+        "rank-24 even unimodular lattices gives 24 classes)",
+    ],
+    disjoint_rationale=(
+        "The same endpoint computation verifies the Leech Fourier-data "
+        "anchor: the identity-class Leech theta coefficient at q^2 is "
+        "196560, and the surrounding Niemeier count is checked by "
+        "Niemeier's root-system classification, Conway-Sloane deep "
+        "holes, and Borcherds' mass-formula route.  The engine table is "
+        "regression-only."
+    ),
+)
+@_iv_v14_nlv(
+    claim="thm:lattice:niemeier-shadow-universality",
     derived_from=[
         "bc_niemeier_l_values_engine.ALL_LABELS registry table",
         "Conway-Sloane SPLAG Niemeier-lattice data table",

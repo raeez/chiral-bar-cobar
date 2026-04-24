@@ -3,7 +3,7 @@ r"""Tests for entanglement_entropy_engine.
 Verifies:
   1. Kappa values for all standard families (exact Fraction arithmetic)
   2. Cross-family consistency checks (W_2=Vir, complementarity, critical level)
-  3. S_EE = (2*kappa/3)*log(L/eps) at multiple (L, eps) pairs
+  3. S_EE = (c/3)*log(L/eps) and S_shadow = (2*kappa/3)*log(L/eps)
   4. Tabulation completeness
 
 Ground truth:
@@ -33,10 +33,22 @@ from compute.lib.entanglement_entropy_engine import (
     kappa_bc,
     kappa_super_virasoro,
     kappa_lattice,
+    central_charge_heisenberg,
+    central_charge_affine_km,
+    central_charge_affine_sl2,
+    central_charge_affine_sl3,
+    central_charge_affine_so4,
+    central_charge_affine_g2,
+    central_charge_affine_e8,
+    central_charge_wn,
+    central_charge_super_virasoro,
+    central_charge_lattice,
     c_betagamma,
     c_bc,
     entanglement_entropy,
     entanglement_entropy_exact,
+    shadow_entropy_prefactor,
+    shadow_entropy_from_kappa,
     tabulate,
     LIE_DATA,
     FAMILIES,
@@ -347,59 +359,65 @@ class TestKappaLattice:
 # ===================================================================
 
 class TestEntanglementEntropy:
-    """S_EE = (2*kappa/3)*log(L/eps)."""
+    """Physical S_EE = (c/3)*log(L/eps); shadow S = (2*kappa/3)*log(L/eps)."""
 
     def test_virasoro_calabrese_cardy(self):
         """For Vir_c, S_EE = (c/3)*log(L/eps).  [Calabrese-Cardy 2004]"""
         # VERIFIED [DC] 2*(c/2)/3 = c/3; [LT] hep-th/0405152
         c = 1
-        kap = kappa_virasoro(c)
         L, eps = 100.0, 1.0
-        s_ee = entanglement_entropy(kap, L, eps)
+        s_ee = entanglement_entropy(c, L, eps)
         expected = (c / 3) * math.log(100.0)
         assert abs(s_ee - expected) < 1e-12
 
     def test_virasoro_c13(self):
         """S_EE(Vir_13) = (13/3)*log(L/eps)."""
-        # VERIFIED [DC] 2*(13/2)/3 = 13/3; [CF] self-dual
-        kap = kappa_virasoro(13)
+        # VERIFIED [DC] 13/3; [CF] self-dual
         L, eps = 1000.0, 0.1
-        s_ee = entanglement_entropy(kap, L, eps)
+        s_ee = entanglement_entropy(13, L, eps)
         expected = float(Fraction(13, 3)) * math.log(10000.0)
         assert abs(s_ee - expected) < 1e-10
 
     def test_heisenberg_k0_vanishes(self):
-        """S_EE(H_0) = 0 because kappa = 0."""
-        # VERIFIED [DC] kappa=0 -> S_EE=0; [LC] trivial
-        assert entanglement_entropy(kappa_heisenberg(0), 100.0, 1.0) == 0.0
+        """The degenerate H_0 row is treated as the zero algebra."""
+        # VERIFIED [DC] c=0 -> S_EE=0; [LC] degenerate zero row
+        assert entanglement_entropy(central_charge_heisenberg(0), 100.0, 1.0) == 0.0
 
     def test_virasoro_c0_vanishes(self):
-        """S_EE(Vir_0) = 0 because kappa = 0."""
-        # VERIFIED [DC] kappa=0 -> S_EE=0; [LC] trivial
-        assert entanglement_entropy(kappa_virasoro(0), 100.0, 1.0) == 0.0
+        """S_EE(Vir_0) = 0 because c = 0."""
+        # VERIFIED [DC] c=0 -> S_EE=0; [LC] trivial
+        assert entanglement_entropy(0, 100.0, 1.0) == 0.0
 
-    def test_km_critical_vanishes(self):
-        """S_EE at critical level k=-h^v vanishes because kappa = 0."""
-        # VERIFIED [DC] kappa=0; [LC] critical level
-        assert entanglement_entropy(kappa_affine_sl2(-2), 100.0, 1.0) == 0.0
-        assert entanglement_entropy(kappa_affine_sl3(-3), 100.0, 1.0) == 0.0
+    def test_km_critical_undefined(self):
+        """Sugawara central charge is undefined at critical level k=-h^v."""
+        # VERIFIED [DC] denominator k+h^v vanishes.
+        with pytest.raises(ValueError):
+            central_charge_affine_sl2(-2)
+        with pytest.raises(ValueError):
+            central_charge_affine_sl3(-3)
 
     def test_multiple_L_eps(self):
         """S_EE scales as log(L/eps) for fixed kappa."""
         # VERIFIED [DC] S_EE(L2/eps2)/S_EE(L1/eps1) = log(L2/eps2)/log(L1/eps1)
-        kap = kappa_virasoro(1)  # kappa = 1/2
+        c = 1
         pairs = [(10.0, 1.0), (100.0, 1.0), (1000.0, 0.01)]
         for L, eps in pairs:
-            s_ee = entanglement_entropy(kap, L, eps)
-            expected = (2 * 0.5 / 3) * math.log(L / eps)
+            s_ee = entanglement_entropy(c, L, eps)
+            expected = (1 / 3) * math.log(L / eps)
             assert abs(s_ee - expected) < 1e-12, f"Failed at L={L}, eps={eps}"
 
     def test_exact_prefactor(self):
-        """entanglement_entropy_exact returns 2*kappa/3."""
+        """entanglement_entropy_exact returns c/3."""
         # VERIFIED [DC] direct
-        assert entanglement_entropy_exact(Fraction(13, 2)) == Fraction(13, 3)
-        assert entanglement_entropy_exact(Fraction(1)) == Fraction(2, 3)
+        assert entanglement_entropy_exact(Fraction(13)) == Fraction(13, 3)
+        assert entanglement_entropy_exact(Fraction(1)) == Fraction(1, 3)
         assert entanglement_entropy_exact(Fraction(0)) == Fraction(0)
+
+    def test_shadow_prefactor_keeps_kappa_readout(self):
+        """The old 2*kappa/3 coefficient survives only as shadow entropy."""
+        assert shadow_entropy_prefactor(Fraction(13, 2)) == Fraction(13, 3)
+        assert shadow_entropy_prefactor(Fraction(1)) == Fraction(2, 3)
+        assert shadow_entropy_prefactor(Fraction(0)) == Fraction(0)
 
     def test_eps_positive(self):
         """eps must be positive."""
@@ -414,20 +432,26 @@ class TestEntanglementEntropy:
             entanglement_entropy(Fraction(1), 0.0, 1.0)
 
     def test_heisenberg_k1_numerical(self):
-        """S_EE(H_1) = (2/3)*log(L/eps)."""
-        # VERIFIED [DC] 2*1/3 = 2/3; [CF] prefactor = 2/3
+        """S_EE(H_1) = (1/3)*log(L/eps); S_shadow(H_1) = (2/3)*log."""
+        # VERIFIED [DC] c=1, kappa=1; [CF] separates physical and shadow coefficients
         L, eps = 100.0, 1.0
-        s_ee = entanglement_entropy(kappa_heisenberg(1), L, eps)
-        expected = (2.0 / 3.0) * math.log(100.0)
+        s_ee = entanglement_entropy(central_charge_heisenberg(1), L, eps)
+        expected = (1.0 / 3.0) * math.log(100.0)
         assert abs(s_ee - expected) < 1e-12
+        assert abs(
+            shadow_entropy_from_kappa(kappa_heisenberg(1), L, eps)
+            - (2.0 / 3.0) * math.log(100.0)
+        ) < 1e-12
 
     def test_sl2_k1_numerical(self):
-        """S_EE(sl_2, k=1) = (2*(9/4)/3)*log(L/eps) = (3/2)*log(L/eps)."""
-        # VERIFIED [DC] 2*(9/4)/3 = 18/12 = 3/2; [CF] cross-check
+        """For affine sl_2 at k=1, physical c=1 and shadow coefficient is 3/2."""
+        # VERIFIED [DC] c=3/(1+2)=1; kappa=9/4 gives shadow coefficient 3/2.
         L, eps = 100.0, 1.0
-        s_ee = entanglement_entropy(kappa_affine_sl2(1), L, eps)
-        expected = 1.5 * math.log(100.0)
+        s_ee = entanglement_entropy(central_charge_affine_sl2(1), L, eps)
+        expected = (1.0 / 3.0) * math.log(100.0)
         assert abs(s_ee - expected) < 1e-12
+        shadow = shadow_entropy_from_kappa(kappa_affine_sl2(1), L, eps)
+        assert abs(shadow - 1.5 * math.log(100.0)) < 1e-12
 
 
 # ===================================================================
@@ -439,23 +463,22 @@ class TestCrossFamilyConsistency:
 
     def test_virasoro_complementarity_entropy(self):
         """S_EE(Vir_c) + S_EE(Vir_{26-c}) = (26/3)*log(L/eps)."""
-        # kappa(c)+kappa(26-c) = c/2 + (26-c)/2 = 13.
-        # S_EE(c) + S_EE(26-c) = (2/3)*(kappa+kappa')*log = (26/3)*log.
-        # VERIFIED [DC] 2*13/3 = 26/3; [SY] Virasoro duality
+        # c + (26-c) = 26, hence physical entropy sum = 26/3 log.
+        # VERIFIED [DC] direct; [SY] Virasoro duality
         L, eps = 100.0, 1.0
         for c in [1, 5, 13, 26, Fraction(1, 2)]:
-            s1 = entanglement_entropy(kappa_virasoro(c), L, eps)
-            s2 = entanglement_entropy(kappa_virasoro(26 - c), L, eps)
+            s1 = entanglement_entropy(c, L, eps)
+            s2 = entanglement_entropy(26 - c, L, eps)
             expected = float(Fraction(26, 3)) * math.log(L / eps)
             assert abs(s1 + s2 - expected) < 1e-10, f"Failed at c={c}"
 
     def test_bg_bc_entropy_cancellation(self):
-        """S_EE(bg) + S_EE(bc) = 0 for all lambda (kappa_bg + kappa_bc = 0)."""
+        """S_EE(bg) + S_EE(bc) = 0 for all lambda (c_bg + c_bc = 0)."""
         # VERIFIED [DC] complementarity; [SY] C7
         L, eps = 100.0, 1.0
         for lam in [Fraction(1, 2), 1, 2]:
-            s_bg = entanglement_entropy(kappa_betagamma(lam), L, eps)
-            s_bc = entanglement_entropy(kappa_bc(lam), L, eps)
+            s_bg = entanglement_entropy(c_betagamma(lam), L, eps)
+            s_bc = entanglement_entropy(c_bc(lam), L, eps)
             assert abs(s_bg + s_bc) < 1e-12, f"Failed at lambda={lam}"
 
     def test_w2_equals_virasoro_entropy(self):
@@ -463,8 +486,8 @@ class TestCrossFamilyConsistency:
         # VERIFIED [DC] kappa(W_2)=c/2=kappa(Vir); [CF] W_2=Vir identity
         L, eps = 100.0, 1.0
         for c in [1, 13, 26]:
-            s_w2 = entanglement_entropy(kappa_wn(2, c), L, eps)
-            s_vir = entanglement_entropy(kappa_virasoro(c), L, eps)
+            s_w2 = entanglement_entropy(central_charge_wn(2, c), L, eps)
+            s_vir = entanglement_entropy(c, L, eps)
             assert abs(s_w2 - s_vir) < 1e-12, f"Failed at c={c}"
 
     def test_leech_equals_24_heisenberg(self):
@@ -500,17 +523,30 @@ class TestTabulation:
 
     def test_tabulate_row_keys(self):
         results = tabulate(100.0, 1.0)
-        required_keys = {"family", "params", "kappa", "kappa_float", "S_EE", "L", "eps", "prefactor"}
+        required_keys = {
+            "family", "params", "kappa", "kappa_float",
+            "central_charge", "central_charge_float",
+            "S_EE", "S_shadow", "L", "eps",
+            "prefactor", "shadow_prefactor",
+        }
         for r in results:
             assert required_keys <= set(r.keys()), f"Missing keys in {r['family']}"
 
     def test_tabulate_consistency(self):
-        """Each row's S_EE matches (2*kappa/3)*log(L/eps)."""
+        """Each row's S_EE matches c/3 log; shadow row matches 2*kappa/3 log."""
         L, eps = 100.0, 1.0
         results = tabulate(L, eps)
         for r in results:
-            expected = (2 * r['kappa_float'] / 3) * math.log(L / eps)
-            assert abs(r['S_EE'] - expected) < 1e-10, f"Inconsistent for {r['family']}"
+            shadow_expected = (2 * r['kappa_float'] / 3) * math.log(L / eps)
+            assert abs(r['S_shadow'] - shadow_expected) < 1e-10, (
+                f"Shadow inconsistent for {r['family']}"
+            )
+            if r["central_charge"] is None:
+                assert r["S_EE"] is None
+                assert r["prefactor"] is None
+            else:
+                expected = (r['central_charge_float'] / 3) * math.log(L / eps)
+                assert abs(r['S_EE'] - expected) < 1e-10, f"Inconsistent for {r['family']}"
 
     def test_tabulate_at_least_25_families(self):
         """We tabulate at least 25 representative parameter points."""
@@ -526,11 +562,11 @@ class TestTabulation:
         if r1[0]['kappa'] != 0:
             assert r1[0]['S_EE'] != r2[0]['S_EE']
 
-    def test_zero_kappa_entries(self):
-        """Entries with kappa=0 have S_EE=0."""
+    def test_zero_central_charge_entries(self):
+        """Entries with c=0 have physical S_EE=0."""
         results = tabulate(100.0, 1.0)
         for r in results:
-            if r['kappa'] == Fraction(0):
+            if r['central_charge'] == Fraction(0):
                 assert r['S_EE'] == 0.0, f"Nonzero S_EE at kappa=0: {r['family']}"
 
 

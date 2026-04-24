@@ -1,22 +1,29 @@
 """theorem_shadow_langlands_engine.py
 
-Numerical investigation of the Langlands-type structure of the shadow
-L-function and the arithmetic packet connection.
+Numerical investigation of the Langlands-type structure of the
+scalar-normalized genus-1 amplitude Dirichlet kernel and the arithmetic
+packet connection.
 
-The shadow Eisenstein theorem (conj:shadow-eisenstein, downgraded from
-thm:shadow-eisenstein; see rem:shadow-eisenstein-correct-scope) states
+The corrected Eisenstein theorem (thm:shadow-eisenstein, with scope fixed
+by rem:shadow-eisenstein-correct-scope) concerns the Fourier coefficients
+of the genus-1 degree-2 amplitude, not the formal shadow L-function
+sum_{r >= 2} S_r(A) r^{-s}.  In the manuscript normalization
 
-    L^sh_A(s) := sum_{r >= 2} S_r(A) r^{-s} = -kappa(A) zeta(s) zeta(s-1).
+    D_2(A, s) = -24 kappa(A) zeta(s) zeta(s-1).
 
-This engine investigates five questions at the interface between the shadow
-obstruction tower and the Langlands programme:
+This engine keeps the historical API name ``shadow_l_function`` for the
+scalar-normalized kernel D_2(A, s)/24.  It must not be read as the formal
+shadow L-function of rem:shadow-eisenstein-correct-scope.
+
+This engine investigates five questions at the interface between the genus-1
+amplitude kernel and the Langlands programme:
 
 (a) GL(2) EISENSTEIN IDENTIFICATION.  The product zeta(s)*zeta(s-1) is the
     standard L-function of the GL(2) Eisenstein series induced from the
-    trivial and identity characters of GL(1).  In Langlands terms, L^sh is
-    the L-function of a non-tempered automorphic representation of GL(2,A_Q)
-    -- the Eisenstein series E(s; 1, |.|) -- and is NOT cuspidal.  The local
-    Langlands parameters at each prime p are:
+    trivial and identity characters of GL(1).  In Langlands terms, D_2/24 is
+    the scalar multiple of a non-tempered automorphic L-function for
+    GL(2,A_Q) -- the Eisenstein series E(s; 1, |.|) -- and is NOT cuspidal.
+    The local Langlands parameters at each prime p are:
 
         sigma_p = diag(1, p) : W_p -> GL(2,C),
 
@@ -25,13 +32,14 @@ obstruction tower and the Langlands programme:
 
 (b) DEPENDENCE ON N FOR AFFINE sl_N.  The kappa formula for sl_N at level k
     is kappa = dim(sl_N)(k+N)/(2N) = (N^2-1)(k+N)/(2N).  The shadow
-    L-function L^sh = -kappa * zeta(s) * zeta(s-1) scales by kappa but the
-    STRUCTURE (product of two Riemann zetas) does NOT change.  It stays
-    GL(2) Eisenstein for all N.  This is a negative result: the shadow
-    L-function does NOT detect the GL(N) Langlands structure of sl_N.
+    amplitude kernel D_2/24 = -kappa * zeta(s) * zeta(s-1) scales by kappa
+    but the STRUCTURE (product of two Riemann zetas) does NOT change.  It
+    stays GL(2) Eisenstein for all N.  This is a negative result: the
+    genus-1 degree-2 kernel does NOT detect the GL(N) Langlands structure of
+    sl_N.
 
-(c) RESIDUE AT s=2 AND REPRESENTATION THEORY.  L^sh has poles at s=1 and
-    s=2.  The residue at s=2 is -kappa * zeta(2) = -kappa * pi^2/6.  The
+(c) RESIDUE AT s=2 AND REPRESENTATION THEORY.  The D_2/24 kernel has poles
+    at s=1 and s=2.  The residue at s=2 is -kappa * zeta(2) = -kappa * pi^2/6.  The
     residue at s=1 is kappa/2 (since zeta(0) = -1/2).  The ratio of
     residues is -pi^2/3.  These residues have the following meaning: the
     pole at s=2 comes from zeta(s-1) at its pole s-1=1, and the value
@@ -39,12 +47,13 @@ obstruction tower and the Langlands programme:
     GL(1) Eisenstein spectrum.
 
 (d) MOONSHINE MODULE.  kappa(V-natural) = c/2 = 12 (AP48: the Virasoro
-    formula, not the lattice formula).  L^sh(V-natural) = -12 zeta(s)
-    zeta(s-1).  The Ramanujan tau-function appears in the CUSPIDAL part of
-    the Leech lattice constrained Epstein zeta (through Delta_12 in
-    S_12(SL(2,Z))), NOT in the shadow L-function itself.  For the Leech
-    lattice VOA (kappa=24), the constrained Epstein zeta DOES involve
-    L(s, Delta_12), but the shadow L-function is still purely Eisenstein.
+    formula, not the lattice formula).  The scalar-normalized genus-1
+    kernel is -12 zeta(s) zeta(s-1).  The Ramanujan tau-function appears in
+    the CUSPIDAL part of the Leech lattice constrained Epstein zeta (through
+    Delta_12 in S_12(SL(2,Z))), not in the degree-2 Eisenstein kernel.  For
+    the Leech lattice VOA (kappa=24), the constrained Epstein zeta DOES
+    involve L(s, Delta_12), but this genus-1 degree-2 kernel is still purely
+    Eisenstein.
 
 (e) FRONTIER DEFECT FORM.  Omega_A = d log Lambda_Eis - d log phi, where
     phi(s) = Lambda*(1-s)/Lambda*(s) is the automorphic scattering matrix
@@ -55,7 +64,7 @@ obstruction tower and the Langlands programme:
     states Omega exact iff Lambda_Eis/phi is single-valued.
 
 Verification paths:
-  V1: Direct GL(2) Eisenstein L-function formula vs shadow L-function.
+  V1: Direct GL(2) Eisenstein L-function formula vs the D_2/24 kernel.
   V2: Local Langlands parameters at primes vs Hasse-Weil of P^1.
   V3: Kappa scaling across families (sl_N, Virasoro, W_N, moonshine).
   V4: Residue structure and ratio invariance.
@@ -153,7 +162,8 @@ def gl2_eisenstein_l_function(s, kappa_val) -> mp.mpc:
 
         L(s, E(.; 1, |.|)) = zeta(s) * zeta(s - 1).
 
-    The shadow L-function is L^sh(s) = -kappa * L(s, E(.; 1, |.|)).
+    The scalar-normalized genus-1 amplitude kernel is
+    D_2(A, s)/24 = -kappa * L(s, E(.; 1, |.|)).
 
     In Langlands terms, E(.; 1, |.|) is the automorphic representation of
     GL(2, A_Q) parabolically induced from the characters 1 and |.|^1 of
@@ -164,10 +174,13 @@ def gl2_eisenstein_l_function(s, kappa_val) -> mp.mpc:
 
 
 def shadow_l_function(s, kappa_val) -> mp.mpc:
-    """L^sh_A(s) = -kappa * zeta(s) * zeta(s-1).
+    """Legacy API for the scalar-normalized genus-1 kernel D_2(A, s)/24.
 
-    Identical to gl2_eisenstein_l_function -- they are the same object.
-    This function exists to make the identification explicit in tests.
+    It returns -kappa*zeta(s)*zeta(s-1).  By
+    rem:shadow-eisenstein-correct-scope this is not the formal shadow
+    L-function sum_{r >= 2} S_r(A) r^{-s}; it is D_2/24, where the full
+    manuscript amplitude Dirichlet series has coefficients
+    -24*kappa*sigma_1(n).
     """
     s_mp = mp.mpc(s)
     return -mp.mpf(kappa_val) * mp.zeta(s_mp) * mp.zeta(s_mp - 1)
@@ -216,7 +229,7 @@ def satake_parameters(p: int) -> Tuple[mp.mpf, mp.mpf]:
 
     The key point: the Ramanujan conjecture states |alpha_p| = |beta_p| = 1
     for CUSPIDAL representations.  The Eisenstein representation has
-    beta_p = p, violating Ramanujan.  The shadow L-function is non-tempered.
+    beta_p = p, violating Ramanujan.  The genus-1 kernel is non-tempered.
     """
     return (mp.mpf(1), mp.mpf(p))
 
@@ -227,7 +240,7 @@ def satake_parameters(p: int) -> Tuple[mp.mpf, mp.mpf]:
 
 
 def shadow_l_residue_at_one(kappa_val) -> mp.mpf:
-    """Res_{s=1} L^sh(s) = kappa / 2.
+    """Res_{s=1} D_2(A, s)/24 = kappa / 2.
 
     zeta(s) has a simple pole at s=1 with residue 1.
     zeta(0) = -1/2.
@@ -237,7 +250,7 @@ def shadow_l_residue_at_one(kappa_val) -> mp.mpf:
 
 
 def shadow_l_residue_at_two(kappa_val) -> mp.mpf:
-    """Res_{s=2} L^sh(s) = -kappa * pi^2 / 6.
+    """Res_{s=2} D_2(A, s)/24 = -kappa * pi^2 / 6.
 
     zeta(s-1) has a simple pole at s=2 with residue 1.
     zeta(2) = pi^2/6.
@@ -329,16 +342,16 @@ def frontier_defect_form_value(s, rank: int) -> mp.mpc:
 def kappa_sl_n_family(k, N_values: List[int]) -> Dict[int, mp.mpf]:
     """Compute kappa(sl_N, k) for a list of N values at fixed level k.
 
-    Demonstrates that kappa grows as N^2 while the L-function
+    Demonstrates that kappa grows as N^2 while the Eisenstein kernel
     STRUCTURE stays GL(2) Eisenstein.
     """
     return {N: kappa_sl_n(N, k) for N in N_values}
 
 
 def shadow_l_ratio_sl_n(s, N1: int, N2: int, k) -> mp.mpc:
-    """L^sh(sl_{N1}) / L^sh(sl_{N2}) = kappa(sl_{N1}) / kappa(sl_{N2}).
+    """D_2(sl_{N1}) / D_2(sl_{N2}) = kappa(sl_{N1}) / kappa(sl_{N2}).
 
-    The ratio is independent of s because the L-function STRUCTURE
+    The ratio is independent of s because the Eisenstein STRUCTURE
     (zeta(s)*zeta(s-1)) is the same for all N.  Only the scalar
     prefactor kappa changes.
     """
@@ -379,7 +392,7 @@ def ramanujan_tau(n: int) -> int:
 
     tau(n) is the n-th Fourier coefficient of Delta_12 = q prod (1-q^n)^24.
     The tau function appears in the CUSPIDAL part of the Leech lattice
-    constrained Epstein zeta, NOT in the shadow L-function.
+    constrained Epstein zeta, NOT in the degree-2 Eisenstein kernel.
     """
     # Hardcoded from OEIS A000594, independently verified
     tau_values = {
@@ -396,7 +409,7 @@ def ramanujan_l_function_partial(s, n_terms: int = 12) -> mp.mpc:
     """Partial sum of L(s, Delta_12) = sum tau(n) n^{-s}.
 
     This is a CUSPIDAL L-function, fundamentally different from the
-    shadow L-function which is Eisenstein.
+    degree-2 Eisenstein kernel.
     """
     s_mp = mp.mpc(s)
     total = mp.mpc(0)
@@ -450,14 +463,14 @@ class ShadowLanglandsEngine:
     # -- (a) GL(2) Eisenstein identification -----------------------------------
 
     def gl2_eisenstein_equals_shadow(self, s, kappa_val) -> mp.mpc:
-        """Residual: gl2_eisenstein_l_function - shadow_l_function. Should be 0."""
+        """Residual: GL(2) Eisenstein formula minus legacy D_2/24 API."""
         return gl2_eisenstein_l_function(s, kappa_val) - shadow_l_function(s, kappa_val)
 
     def shadow_is_not_cuspidal(self, p: int) -> bool:
         """Satake parameters violate Ramanujan => non-cuspidal.
 
         For a cuspidal representation, |alpha_p| = |beta_p| = 1.
-        For the Eisenstein shadow: alpha_p = 1, beta_p = p, so |beta_p| = p > 1.
+        For the Eisenstein kernel: alpha_p = 1, beta_p = p, so |beta_p| = p > 1.
         """
         alpha, beta = satake_parameters(p)
         return abs(beta) > 1
@@ -467,9 +480,9 @@ class ShadowLanglandsEngine:
     def shadow_l_structure_invariant_under_N(
         self, s, N1: int, N2: int, k
     ) -> mp.mpc:
-        """L^sh(sl_{N1}) / L^sh(sl_{N2}) should equal kappa_{N1}/kappa_{N2}.
+        """D_2(sl_{N1}) / D_2(sl_{N2}) should equal kappa_{N1}/kappa_{N2}.
 
-        If this holds, the L-function STRUCTURE is independent of N
+        If this holds, the Eisenstein STRUCTURE is independent of N
         (only the scalar kappa changes).
         """
         lhs = shadow_l_function(s, kappa_sl_n(N1, k)) / shadow_l_function(
@@ -493,15 +506,15 @@ class ShadowLanglandsEngine:
     # -- (d) Moonshine ---------------------------------------------------------
 
     def moonshine_shadow_l(self, s) -> mp.mpc:
-        """L^sh(V-natural, s) = -12 * zeta(s) * zeta(s-1)."""
+        """D_2(V-natural, s)/24 = -12 * zeta(s) * zeta(s-1)."""
         return shadow_l_function(s, kappa_moonshine())
 
     def leech_shadow_l(self, s) -> mp.mpc:
-        """L^sh(V_Leech, s) = -24 * zeta(s) * zeta(s-1)."""
+        """D_2(V_Leech, s)/24 = -24 * zeta(s) * zeta(s-1)."""
         return shadow_l_function(s, kappa_leech())
 
     def moonshine_leech_ratio(self, s) -> mp.mpc:
-        """L^sh(V-natural) / L^sh(V_Leech) = kappa(V-nat)/kappa(V_Leech) = 1/2."""
+        """D_2(V-natural) / D_2(V_Leech) = kappa(V-nat)/kappa(V_Leech) = 1/2."""
         return self.moonshine_shadow_l(s) / self.leech_shadow_l(s)
 
     # -- (e) Frontier defect form ----------------------------------------------

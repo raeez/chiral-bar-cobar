@@ -1063,7 +1063,7 @@ from compute.lib.independent_verification import independent_verification as _iv
 
 
 @_iv_v14_leech(
-    claim="thm:leech-kappa-equals-rank-24",
+    claim="thm:lattice:curvature-braiding-orthogonal",
     derived_from=[
         "leech_genus2_sewing_engine.LEECH_KAPPA constant",
         "Leech lattice rank = 24 input table",

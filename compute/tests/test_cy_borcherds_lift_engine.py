@@ -1335,7 +1335,7 @@ class TestMultiPathVerification:
 
 
 @_iv(
-    claim="thm:borcherds-weight-kappa-BKM-universal",
+    claim="rem:ap5-gate-0-lifted",
     derived_from=[
         "Gritsenko-Nikulin 1997 Phi_10 Borcherds multiplicative lift",
         "Vol III thm:kappa-bkm-universal c_N(0)/2 identification",
@@ -1399,9 +1399,9 @@ def test_gold_standard_kappa_bkm_phi10_three_disjoint_paths():
 
     # -- Path Z: engine regression sanity (not counted disjoint) --
     # The cy_borcherds_lift_engine tracks Phi_10 as its Tier-1 case;
-    # confirm c_0 = 1 leading multiplicity agrees with Path Z.
+    # confirm the K3 elliptic-genus polar multiplicity c_0(-1) = 2.
     # (This is a regression guard, not a disjoint path.)
     from compute.lib.cy_borcherds_lift_engine import root_multiplicity
     # Lowest-discriminant root multiplicity, independent of kappa_BKM
     # identity; verifies engine remains consistent with Tier-1 input.
-    assert root_multiplicity(-1) == 1
+    assert root_multiplicity(-1) == 2

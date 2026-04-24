@@ -29,7 +29,9 @@ from compute.lib.independent_verification import independent_verification
 # HZ-IV GOLD-STANDARD UPGRADE (Wave 12 propagation, AP277/AP287/AP288 heal)
 #
 # Three genuinely disjoint verification paths for
-#   thm:leading-asymptote-virasoro   (a_r = 2 (-3)^{r-4} / r, r >= 4).
+#   thm:shadow-tower-asymptotic-closed-form
+#   (a_r = 2 (-3)^{r-4} / r, r >= 4, equivalently
+#    A_r = 8 (-6)^{r-4} / r in the manuscript normalization).
 #
 # Each path independently produces the closed form at test time. No shared
 # intermediate. Engine calls are demoted to Path Z sanity anchors (not in
@@ -38,7 +40,7 @@ from compute.lib.independent_verification import independent_verification
 
 
 @independent_verification(
-    claim="thm:leading-asymptote-virasoro",
+    claim="thm:shadow-tower-asymptotic-closed-form",
     derived_from=[
         "Riccati master-equation recursion S_r = -3(r-1) P / r * S_{r-1} at leading order in 1/c (Vol I chapters/theory/shadow_tower_asymptotics_platonic.tex)",
         "H-Poisson bracket {C, Sh_{r-1}}_H from the cubic shadow C = 2 x^3",

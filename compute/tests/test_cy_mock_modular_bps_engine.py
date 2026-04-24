@@ -1067,7 +1067,7 @@ from compute.lib.independent_verification import (
 
 
 @_iv_w15_bps(
-    claim="thm:kappa-N4-c6-virasoro-equals-3",
+    claim="prop:virasoro-shadow-canonical",
     derived_from=[
         "cy_mock_modular_bps_engine.k3_sigma_model_shadow_data kappa field",
         "Vol I census C4 Virasoro kappa formula",

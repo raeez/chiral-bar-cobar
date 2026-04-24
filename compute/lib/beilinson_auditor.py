@@ -562,6 +562,33 @@ class BeilinsonAuditor:
 
         return genuine, forward_ref
 
+    def classify_cycle_edge(self, source: str, target: str) -> str:
+        """Classify one edge in the combined claim graph.
+
+        The distinction is load-bearing for AP13 triage: a cycle with at
+        least one statement-only or editorial edge is not a proof-level
+        circularity, but it should remain visible as forward-reference debt.
+        """
+        if target in self.proof_adj.get(source, set()):
+            if target in self.editorial_refs.get(source, set()):
+                return 'proof-editorial'
+            return 'proof-logical'
+        if target in self.stmt_adj.get(source, set()):
+            return 'statement-only'
+        return 'combined-only'
+
+    def summarize_forward_ref_cycle(self, cycle: List[str]) -> str:
+        """Return the non-logical break edges that keep a cycle non-fatal."""
+        breaks = []
+        for i, source in enumerate(cycle):
+            target = cycle[(i + 1) % len(cycle)]
+            kind = self.classify_cycle_edge(source, target)
+            if kind != 'proof-logical':
+                breaks.append(f'{source} -> {target} [{kind}]')
+        if not breaks:
+            return 'no non-logical break edge detected'
+        return '; '.join(breaks)
+
     def _compute_strength_on_dag(
         self, sorted_nodes: List[str], adj: Dict[str, Set[str]]
     ) -> Tuple[Dict[str, int], Dict[str, str]]:
@@ -1119,6 +1146,20 @@ class BeilinsonAuditor:
                 lines.append('  AP4-STMT details (first 10):')
                 for f in ap4_stmt[:10]:
                     lines.append(f'    {f.claim_label}: {f.message}')
+            lines.append('')
+
+        if report.forward_ref_cycles:
+            lines.append('## AP13-FWD Forward-Reference Triage')
+            lines.append(
+                'These cycles are non-fatal because at least one edge is '
+                'statement-only or editorial, not a logical proof dependency.'
+            )
+            for idx, cycle in enumerate(report.forward_ref_cycles, 1):
+                head = cycle[0] if cycle else '?'
+                lines.append(
+                    f'  {idx:02d}. {head}: '
+                    f'{self.summarize_forward_ref_cycle(cycle)}'
+                )
             lines.append('')
 
         # Bottlenecks (top 20)

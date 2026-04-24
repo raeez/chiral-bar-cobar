@@ -561,34 +561,27 @@ def _virasoro_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis
     Single weight-2 generator T(z) with
     T(z)T(w) ~ c/2/(z-w)⁴ + 2T(w)/(z-w)² + ∂T(w)/(z-w).
 
-    The Virasoro algebra has a unique deformation parameter: c.
-    All other apparent deformations are gauge-equivalent (by
-    field redefinitions).
+    The Virasoro algebra has a unique deformation parameter, c, but in
+    the chiral Hochschild convention that parameter is a deformation
+    class in degree 2, not a derivation class in degree 1.  The quartic
+    pole in the T(z)T(w) OPE forces every generic degree-1 chiral
+    derivation to be inner.
 
-    Derivation: c-deformation T(z) → T(z) + ε·∂_c T(z).
-    This is unobstructed because Vir_c exists at all c.
-
-    NOTE: Per Theorem H (AP94/AP95), ChirHoch^*(Vir_c) is
-    concentrated in degrees {0,1,2} with total dim <= 4,
-    with dim ChirHoch^0 = dim ChirHoch^1 = dim ChirHoch^2 = 1
-    at generic c.  The historical "polynomial-ring" model
+    NOTE: Per Theorem H, ChirHoch^*(Vir_c) is concentrated in degrees
+    {0,1,2} with dim ChirHoch^0 = dim ChirHoch^2 = 1 and
+    dim ChirHoch^1 = 0 at generic c.  The historical "polynomial-ring" model
     (ChirHoch^*(Vir_c) = C[Theta] with |Theta|=2, unbounded)
     is REFUTED: that is continuous Lie cohomology of the
     Witt algebra (Gelfand-Fuchs), a DIFFERENT functor.
-    The derivation analysis below captures ChirHoch^1.
 
-    Result: dim ChirHoch^1(Vir_c) = 1 (c-deformation class).
+    Result: dim ChirHoch^1(Vir_c) = 0.
     """
     return DerivationAnalysis(
-        total_derivations=1,
+        total_derivations=0,
         inner_derivations=0,
-        outer_derivations=1,
-        derivation_types={
-            'central_charge_deformation': 1,
-        },
-        obstruction_to_extension={
-            'c_deformation': True,  # Vir_c exists at all c
-        },
+        outer_derivations=0,
+        derivation_types={},
+        obstruction_to_extension={},
     )
 
 
@@ -604,7 +597,7 @@ def _w3_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis:
     by the Jacobi identity and the Virasoro subalgebra; the normalization
     is fixed by convention (e.g., W·W OPE coefficient = c/3).
 
-    Any derivation D of W_3 must satisfy:
+    Any degree-1 derivation D of W_3 must satisfy:
     - D(T) ∈ W_3 of weight 2 → D(T) = α·T + β·∂²|0⟩ for constants α, β
     - D(W) ∈ W_3 of weight 3 → D(W) = γ·W + δ·∂T for constants γ, δ
     - Compatibility with OPE: D([T, T]_OPE) = [D(T), T] + [T, D(T)]
@@ -614,24 +607,22 @@ def _w3_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis:
     α and β via the W-algebra OPE relations.
 
     Inner derivations: L_0 (conformal weight grading).
-    Outer: c-deformation only.
+    The central-charge deformation is a Hochschild degree-2 deformation
+    class.  In degree 1 the OPE constraints leave no generic outer
+    derivation.
 
-    Result: dim ChirHoch^1(W_3) = 1 (the c-deformation).
+    Result: dim ChirHoch^1(W_3) = 0.
 
     VERIFICATION: W_3^k exists as a 1-parameter family parametrized
     by k (or equivalently c). The deformation c → c + ε is unobstructed
     because W_3 exists at all generic c. [ξ_c, ξ_c] = 0 in ChirHoch^2.
     """
     return DerivationAnalysis(
-        total_derivations=1,
+        total_derivations=0,
         inner_derivations=0,
-        outer_derivations=1,
-        derivation_types={
-            'central_charge_deformation': 1,
-        },
-        obstruction_to_extension={
-            'c_deformation': True,  # W_3 exists at all generic c
-        },
+        outer_derivations=0,
+        derivation_types={},
+        obstruction_to_extension={},
     )
 
 
@@ -641,22 +632,19 @@ def _wN_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis:
     W_N = W^k(sl_N, f_prin) has N-1 generators of weights 2, 3, ..., N.
 
     The W_N algebra is a 1-parameter family (parametrized by c or k).
-    All higher generators are determined by the Virasoro generator T(z)
-    and the W_3-type generator via the OPE bootstrap. The only continuous
-    deformation parameter is the central charge.
+    That parameter contributes to the degree-2 deformation group.  The
+    degree-1 chiral derivations are killed generically by the same
+    higher-pole and OPE-bootstrap constraints as in the Virasoro and
+    W_3 cases.
 
-    Result: dim ChirHoch^1(W_N) = 1 for all N ≥ 2.
+    Result: dim ChirHoch^1(W_N) = 0 for all principal W_N at generic c.
     """
     return DerivationAnalysis(
-        total_derivations=1,
+        total_derivations=0,
         inner_derivations=0,
-        outer_derivations=1,
-        derivation_types={
-            'central_charge_deformation': 1,
-        },
-        obstruction_to_extension={
-            'c_deformation': True,  # W_N exists at all generic c
-        },
+        outer_derivations=0,
+        derivation_types={},
+        obstruction_to_extension={},
     )
 
 
@@ -777,10 +765,10 @@ class WAlgebraHochschild:
     Per AP94 and thm:hochschild-polynomial-growth, ChirHoch^*(W^k(g))
     is concentrated in {0, 1, 2} with
       dim ChirHoch^0 = dim Z(W^k(g))   = 1  (vacuum center)
-      dim ChirHoch^1                    = 1  (c-deformation class)
+      dim ChirHoch^1                    = 0  (generic higher-pole rigidity)
       dim ChirHoch^2 = dim Z(W^k(g)^!) = 1
       dim ChirHoch^n = 0 for n not in {0, 1, 2}
-    Total dim = 3 (satisfies the Theorem-H bound dim <= 4).
+    Total dim = 2 (satisfies the Theorem-H bound dim <= 4).
 
     The field ``gen_degrees`` records the strong-generator weights
     of the underlying W-algebra (for reference and OPE bookkeeping);
@@ -792,9 +780,9 @@ class WAlgebraHochschild:
     def dim_n(self, n: int) -> int:
         """dim ChirHoch^n under Theorem-H bounded amplitude.
 
-        Returns 1 for n in {0, 1, 2} and 0 otherwise (AP94).
+        Returns 1 for n in {0, 2} and 0 otherwise.
         """
-        if 0 <= n <= 2:
+        if n in (0, 2):
             return 1
         return 0
 
@@ -1154,16 +1142,14 @@ def _ope_derivation_check_virasoro() -> Dict[str, Any]:
     Comparing: D(c)/2 = 2α·c/2 ⟹ D(c) = 2αc.
     And the T-dependent terms automatically match.
 
-    So: 1-parameter family of derivations D_α: T → αT, c → 2αc.
+    So: 1-parameter family of scaling derivations D_alpha: T -> alpha T,
+    c -> 2 alpha c.
     Modding out by inner (L_0): L_0 gives T → 2T (weight grading).
     The inner derivation ad(T_{(1)}) = L_0 has α = 2.
 
-    The space of outer derivations = C·D_α / C·L_0 is STILL 1-dimensional
-    when we include the c-deformation as an independent direction.
-    The c-deformation D_c: c → c+ε, T → T is outer (not induced by
-    any element of Vir_c).
-
-    Outer derivation space: 1-dimensional, generated by D_c.
+    The central-charge variation is not a degree-1 derivation in the
+    chiral Hochschild convention; it is the degree-2 deformation class.
+    Therefore the generic degree-1 outer quotient is zero.
     """
     c = Symbol('c')
 
@@ -1173,8 +1159,8 @@ def _ope_derivation_check_virasoro() -> Dict[str, Any]:
         'derivation_D_T': 'α·T',
         'ope_constraint': 'D(c) = 2α·c',
         'inner_derivation': 'L_0 (α = 2, weight grading)',
-        'outer_quotient_dim': 1,
-        'outer_generator': 'c-deformation (D_c: c → c+ε)',
+        'outer_quotient_dim': 0,
+        'outer_generator': 'none; c-deformation lies in ChirHoch^2',
         'consistent': True,
     }
 
@@ -1208,19 +1194,14 @@ def _ope_derivation_check_w3() -> Dict[str, Any]:
     Inner derivation from L_0: D(T) = 2T, D(W) = 3W.
     This has α=2, γ=3, δ=0.
 
-    For the outer derivation D_c:
-    D_c(T) = 0, D_c(W) = ?, D_c(c) = 1.
-    The W·W OPE has c-dependent coefficients, so D_c(W) is determined
-    by the Jacobi identity. In fact D_c(W) must compensate for the
-    change in the :TT: coefficient 16/(22+5c).
-
-    The key point: there is exactly 1 independent outer derivation
-    (the c-deformation), because:
+    The central-charge variation changes the W.W OPE coefficients and is
+    counted in ChirHoch^2, the deformation group.  The degree-1 quotient
+    is zero because:
     - D_T type (D(T) ∝ T): absorbed by inner (L_0) + c-rescaling
     - D_W type (D(W) ∝ W): forced by D_T via OPE compatibility
     - δ (D(W) ∝ ∂T): forced to be 0 by W·W OPE at order (z-w)^{-5}
 
-    Result: dim ChirHoch^1(W_3) = 1.
+    Result: dim ChirHoch^1(W_3) = 0.
     """
     c = Symbol('c')
 
@@ -1236,8 +1217,8 @@ def _ope_derivation_check_w3() -> Dict[str, Any]:
             'WW: δ = 0, γ determined by α and c-dependence of :TT: coefficient',
         ],
         'inner_derivation': 'L_0 (α=2, γ=3, δ=0)',
-        'outer_quotient_dim': 1,
-        'outer_generator': 'c-deformation',
+        'outer_quotient_dim': 0,
+        'outer_generator': 'none; c-deformation lies in ChirHoch^2',
         'consistent': True,
     }
 

@@ -562,7 +562,7 @@ class TestMasterVerification:
 
 
 @independent_verification(
-    claim="thm:ds-coproduct-intertwining",
+    claim="rem:ds-intertwining-w3",
     derived_from=[
         "Drinfeld second-presentation coproduct Delta_z(psi_n) on Y(sl_3) "
         "computed from T(u) T(u-z)",
@@ -769,7 +769,7 @@ class TestGoldStandardDisjointPathsDSIntertwining:
 
 
 @independent_verification(
-    claim="thm:ds-coproduct-intertwining",
+    claim="lem:coprod-T-miura",
     derived_from=[
         "Direct binomial evaluation of Drinfeld formula T(u).T(u-z) at "
         "n=2 (Path A hand-arithmetic, independent of engine delta_psi)",

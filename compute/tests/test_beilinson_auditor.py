@@ -632,6 +632,33 @@ class TestReportFormat:
         assert 'Forward-ref cycles' in text
         assert 'By anti-pattern' in text
 
+    def test_report_lists_forward_ref_break_edges(self, tmp_path):
+        claims = [
+            {"label": "thm:A", "env_type": "theorem", "status": "ProvedHere",
+             "file": "ch/a.tex", "line": 1, "refs_in_block": ["thm:B"]},
+            {"label": "thm:B", "env_type": "theorem", "status": "ProvedHere",
+             "file": "ch/a.tex", "line": 5},
+        ]
+        tex = {
+            "ch/a.tex": (
+                "\\begin{theorem}[\\ClaimStatusProvedHere]\\label{thm:A}\n"
+                "Forward reference to Theorem~\\ref{thm:B}.\\end{theorem}\n"
+                "\n"
+                "\\begin{theorem}[\\ClaimStatusProvedHere]\\label{thm:B}\n"
+                "Result.\\end{theorem}\n"
+                "\\begin{proof}By Theorem~\\ref{thm:A}.\\end{proof}\n"
+            ),
+        }
+        repo = _make_repo(tmp_path, claims, tex)
+        auditor = BeilinsonAuditor(repo)
+        report = auditor.run_audit()
+        text = auditor.format_report(report)
+
+        assert len(report.genuine_cycles) == 0
+        assert len(report.forward_ref_cycles) == 1
+        assert '## AP13-FWD Forward-Reference Triage' in text
+        assert 'thm:A -> thm:B [statement-only]' in text
+
 
 # ==================================================================
 # Integration tests on real manuscript data

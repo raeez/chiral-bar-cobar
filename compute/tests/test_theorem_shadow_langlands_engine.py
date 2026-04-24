@@ -1,12 +1,12 @@
 """Tests for theorem_shadow_langlands_engine.
 
-Verifies the shadow-Langlands interface along five investigation
+Verifies the genus-1 amplitude/Langlands interface along five investigation
 directions, each with multiple independent verification paths:
 
-  (a) GL(2) Eisenstein identification: shadow L-function equals the
-      L-function of the GL(2) Eisenstein series E(.; 1, |.|).
-  (b) sl_N dependence: L^sh(sl_N) scales by kappa(sl_N) but the
-      L-function STRUCTURE stays GL(2) Eisenstein for all N.
+  (a) GL(2) Eisenstein identification: the scalar-normalized D_2/24
+      kernel equals the GL(2) Eisenstein L-function E(.; 1, |.|).
+  (b) sl_N dependence: D_2(sl_N)/24 scales by kappa(sl_N) but the
+      Eisenstein STRUCTURE stays GL(2) for all N.
   (c) Residue structure: Res_{s=2}/Res_{s=1} = -pi^2/3 universally.
   (d) Moonshine: kappa(V-natural) = 12 != kappa(V_Leech) = 24;
       the Ramanujan tau lives in the CUSPIDAL part, not the shadow.
@@ -72,12 +72,12 @@ def engine():
 
 
 class TestGL2EisensteinIdentification:
-    """The shadow L-function IS the GL(2) Eisenstein L-function."""
+    """The scalar-normalized D_2/24 kernel is GL(2) Eisenstein."""
 
     @pytest.mark.parametrize("s", [3, 4, 5, 6])
     @pytest.mark.parametrize("kappa", [1, 2, mp.mpf("0.5"), mp.mpf("13")])
     def test_gl2_equals_shadow_at_concrete_values(self, s, kappa):
-        """Path V1: gl2_eisenstein_l_function == shadow_l_function."""
+        """Path V1: gl2_eisenstein_l_function == legacy D_2/24 API."""
         lhs = gl2_eisenstein_l_function(s, kappa)
         rhs = shadow_l_function(s, kappa)
         assert abs(lhs - rhs) < mp.mpf("1e-45")
@@ -146,7 +146,7 @@ class TestGL2EisensteinIdentification:
 
 
 class TestSlNDependence:
-    """L^sh(sl_N) scales by kappa but stays GL(2) Eisenstein."""
+    """The D_2/24 kernel scales by kappa but stays GL(2) Eisenstein."""
 
     def test_kappa_sl2_at_level_1(self):
         """kappa(sl_2, k=1) = dim(sl_2)(1+2)/(2*2) = 3*3/4 = 9/4."""
@@ -171,9 +171,9 @@ class TestSlNDependence:
 
     @pytest.mark.parametrize("s", [3, 4, 5])
     def test_shadow_l_ratio_is_kappa_ratio(self, s):
-        """L^sh(sl_3)/L^sh(sl_2) = kappa(sl_3)/kappa(sl_2) at any s.
+        """D_2(sl_3)/D_2(sl_2) = kappa(sl_3)/kappa(sl_2) at any s.
 
-        This proves the L-function STRUCTURE is the same.
+        This proves the Eisenstein STRUCTURE is the same.
         """
         k = 1
         lsh_3 = shadow_l_function(s, kappa_sl_n(3, k))
@@ -184,24 +184,25 @@ class TestSlNDependence:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5, 6, 7, 8])
     def test_shadow_l_structure_invariant(self, engine, N):
-        """For any N1, N2: L^sh(sl_{N1})/L^sh(sl_{N2}) is independent of s."""
+        """For any N1, N2: D_2(sl_{N1})/D_2(sl_{N2}) is independent of s."""
         k = 1
         residual = engine.shadow_l_structure_invariant_under_N(3, N, 2, k)
         assert abs(residual) < mp.mpf("1e-40")
 
     def test_shadow_l_is_not_gl_n(self):
-        """NEGATIVE RESULT: L^sh(sl_N) is NOT a GL(N) L-function for N >= 3.
+        """NEGATIVE RESULT: the D_2 kernel is not a GL(N) L-function for N >= 3.
 
-        A GL(N) L-function has N Satake parameters per prime. The shadow
-        L-function always has exactly 2 (alpha = 1, beta = p), regardless
-        of N. This proves the shadow does NOT see the GL(N) structure.
+        A GL(N) L-function has N Satake parameters per prime. The genus-1
+        degree-2 kernel always has exactly 2 (alpha = 1, beta = p),
+        regardless of N. This proves this kernel does not see the GL(N)
+        structure.
         """
-        # For all N, the shadow L-function factors as zeta(s) * zeta(s-1)
+        # For all N, the D_2/24 kernel factors as zeta(s) * zeta(s-1)
         # which has exactly 2 local factors per prime
         for N in [3, 4, 5, 10]:
             k = 1
             kap = kappa_sl_n(N, k)
-            # The shadow L-function at any s is always -kappa * zeta(s) * zeta(s-1)
+            # The D_2/24 kernel at any s is always -kappa*zeta(s)*zeta(s-1)
             # regardless of N. This is a GL(2) object, not GL(N).
             s = mp.mpf(4)
             val = shadow_l_function(s, kap)
@@ -293,13 +294,13 @@ class TestMoonshine:
         assert kappa_moonshine() != kappa_leech()
 
     def test_moonshine_leech_ratio(self, engine):
-        """L^sh(V-natural) / L^sh(V_Leech) = 12/24 = 1/2."""
+        """D_2(V-natural) / D_2(V_Leech) = 12/24 = 1/2."""
         s = mp.mpf(4)
         ratio = engine.moonshine_leech_ratio(s)
         assert abs(ratio - mp.mpf("0.5")) < mp.mpf("1e-40")
 
     def test_moonshine_shadow_l_is_eisenstein(self):
-        """L^sh(V-natural) = -12 * zeta(s) * zeta(s-1), purely Eisenstein."""
+        """D_2(V-natural, s)/24 = -12 * zeta(s) * zeta(s-1), Eisenstein."""
         s = mp.mpf(3)
         val = shadow_l_function(s, 12)
         expected = -12 * mp.zeta(3) * mp.zeta(2)
@@ -425,8 +426,8 @@ class TestCrossCuttingVerification:
     def test_kappa_additivity_heisenberg_virasoro(self):
         """For H_k tensor Vir_c: kappa = k + c/2 (additivity).
 
-        The shadow L-function of the tensor product is
-        L^sh(H_k x Vir_c) = -(k + c/2) * zeta(s) * zeta(s-1).
+        The scalar-normalized D_2 kernel of the tensor product is
+        D_2(H_k x Vir_c, s)/24 = -(k + c/2) * zeta(s) * zeta(s-1).
         """
         k, c = 3, 10
         kappa_tensor = mp.mpf(k) + kappa_virasoro(c)
@@ -438,13 +439,13 @@ class TestCrossCuttingVerification:
     def test_kappa_sl2_at_critical_level_is_zero(self):
         """At critical level k = -h^vee = -2: kappa(sl_2, -2) = 0.
 
-        The bar complex becomes uncurved and the shadow L-function vanishes.
+        The bar complex becomes uncurved and the scalar D_2 kernel vanishes.
         """
         val = kappa_sl_n(2, -2)
         assert abs(val) < mp.mpf("1e-40")
 
     def test_shadow_l_vanishes_at_critical_level(self):
-        """L^sh(sl_2, k=-2) = 0 for all s (kappa = 0)."""
+        """D_2(sl_2, k=-2)/24 = 0 for all s (kappa = 0)."""
         s = mp.mpf(4)
         val = shadow_l_function(s, kappa_sl_n(2, -2))
         assert abs(val) < mp.mpf("1e-40")
@@ -452,16 +453,16 @@ class TestCrossCuttingVerification:
 
 # =========================================================================
 # HZ-IV Gold Standard (Wave-14): three genuinely disjoint primary-source
-# paths verifying the shadow L-function ratio L^sh(V^natural) / L^sh(V_Leech)
-# at s = 4 equals 1/2, pinning kappa(V^natural) = 12 and kappa(V_Leech) = 24.
-# This is the Langlands-side verification of the Monster/Leech kappa ratio
-# that underlies kappa_BKM(Phi_Monster) identification.
+# paths verifying the Monster/Leech scalar kappa ratio
+# kappa(V^natural) / kappa(V_Leech) = 12/24 = 1/2.  This is the
+# genus-1 free-energy discrimination recorded in the manuscript, not the
+# formal shadow L-function (whose naive Eisenstein identification is false).
 #
 # Engine calls (engine.moonshine_leech_ratio, shadow_l_function) appear
 # only as Path Z regression sanity.
 #
 # AP277 numerical body (not assert True).
-# AP287 ratio 1/2 is a non-trivial L-function identity.
+# AP287 ratio 1/2 is a non-trivial kappa/free-energy identity.
 # AP288 Paths A/B/C source DISJOINT classical theorems: Conway-Norton
 #   1979 McKay-Thompson J-function constant term; Frenkel-Lepowsky-
 #   Meurman 1988 V^natural Z/2-orbifold of V_Leech; Borcherds 1992
@@ -475,10 +476,10 @@ from compute.lib.independent_verification import independent_verification as _iv
 
 
 @_iv_v14_sl(
-    claim="thm:shadow-l-monster-leech-ratio-one-half",
+    claim="rem:census-moonshine-leech-discrimination",
     derived_from=[
-        "theorem_shadow_langlands_engine.moonshine_leech_ratio "
-        "numerical L-function evaluator",
+        "theorem_shadow_langlands_engine kappa_moonshine/kappa_leech "
+        "numerical evaluator",
         "kappa_moonshine = 12 and kappa_leech = 24 engine constants",
     ],
     verified_against=[
@@ -496,9 +497,9 @@ from compute.lib.independent_verification import independent_verification as _iv
         "Class-G/M dichotomy",
     ],
     disjoint_rationale=(
-        "The shadow L-function ratio L^sh(V^natural) / L^sh(V_Leech) "
-        "at any s > 2 equals kappa_moonshine / kappa_leech = 12/24 = 1/2 "
-        "by thm:shadow-l-ratio-is-kappa-ratio. Each kappa is "
+        "The scalar genus-1 free-energy ratio "
+        "F_1(V^natural) / F_1(V_Leech) equals "
+        "kappa_moonshine / kappa_leech = 12/24 = 1/2. Each kappa is "
         "established by an independent classical theorem: "
         "Path A (Conway-Norton 1979) by McKay-Thompson T_1 constant "
         "term; Path B (FLM 1988) by Z/2-orbifold halving; Path C "
@@ -507,7 +508,7 @@ from compute.lib.independent_verification import independent_verification as _iv
     ),
 )
 def test_gold_standard_monster_leech_shadow_ratio_three_disjoint_paths():
-    """Three inline paths for L^sh(V^natural)/L^sh(V_Leech) = 1/2 from
+    """Three inline paths for kappa(V^natural)/kappa(V_Leech) = 1/2 from
     disjoint classical theorems pinning kappa_monster = 12 and
     kappa_leech = 24.  Wave-14 HZ-IV gold-standard upgrade.
     """

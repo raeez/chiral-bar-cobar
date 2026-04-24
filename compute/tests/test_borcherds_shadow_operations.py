@@ -969,13 +969,10 @@ class TestD2EqualsF3:
 # =========================================================================
 # HZ-IV gold-standard upgrade (AP319 three-disjoint-paths)
 # Scope note: this file sits adjacent to the Vol I kappa_BKM cluster
-# because of the "Borcherds" token, but it concerns Borcherds *secondary
-# operations* F_n = o_n (shadow identification for chiral kappa), NOT
-# the Borcherds *lift* c_N(0)/2 that defines kappa_BKM. We decorate the
-# load-bearing anchor kappa(V_k(sl_2)) = 2k from the bilinear-form
-# extraction (arity-2 shadow Sigma_a a_{(1)} a |_vacuum) with three
-# disjoint primary-literature paths, discharging the HZ-IV coverage
-# obligation under AP287/AP319/AP320 discipline.
+# because of the "Borcherds" token, but this gold-standard check verifies
+# the direct modular-curvature trace in the affine sl_2 trace-form channel:
+# the arity-2 shadow Sigma_a a_{(1)} a |_vacuum equals 2k. It is not a
+# Borcherds-lift c_N(0)/2 statement.
 # =========================================================================
 
 
@@ -985,7 +982,7 @@ from compute.lib.independent_verification import (
 
 
 @_iv_w17_bso(
-    claim="prop:borcherds-shadow-identification-kappa-affine-sl2",
+    claim="def:modular-curvature-direct",
     derived_from=[
         "Vol I prop:borcherds-shadow-identification "
         "(higher_genus_modular_koszul.tex): F_n = o_n shadow identification",

@@ -215,38 +215,38 @@ class TestChirHoch1AffineSl3:
 
 
 class TestChirHoch1Virasoro:
-    """ChirHoch^1(Vir_c) = C (c-deformation)."""
+    """ChirHoch^1(Vir_c) = 0 at generic c."""
 
     def test_dim_h1(self):
         da = derivation_analysis(virasoro_data())
-        assert da.dim_chirhoch1 == 1
+        assert da.dim_chirhoch1 == 0
 
-    def test_c_deformation(self):
+    def test_c_deformation_is_degree_2_not_degree_1(self):
         da = derivation_analysis(virasoro_data())
-        assert 'central_charge_deformation' in da.derivation_types
+        assert 'central_charge_deformation' not in da.derivation_types
 
     def test_unobstructed(self):
-        """Vir_c exists at all c — c-deformation unobstructed."""
+        """There are no generic degree-1 Virasoro deformations to obstruct."""
         da = derivation_analysis(virasoro_data())
         for v in da.obstruction_to_extension.values():
             assert v is True
 
 
 class TestChirHoch1W3:
-    """ChirHoch^1(W_3) = C (c-deformation).
+    """ChirHoch^1(W_3) = 0 at generic c.
 
     W_3 has generators T (weight 2) and W (weight 3), but the only
-    continuous deformation parameter is c. All other apparent
-    deformations are gauge-equivalent.
+    continuous deformation parameter c belongs to Hochschild degree 2.
+    All apparent degree-1 deformations are gauge-equivalent.
     """
 
     def test_dim_h1(self):
         da = derivation_analysis(w3_data())
-        assert da.dim_chirhoch1 == 1
+        assert da.dim_chirhoch1 == 0
 
-    def test_c_deformation(self):
+    def test_c_deformation_is_degree_2_not_degree_1(self):
         da = derivation_analysis(w3_data())
-        assert 'central_charge_deformation' in da.derivation_types
+        assert 'central_charge_deformation' not in da.derivation_types
 
     def test_unobstructed(self):
         da = derivation_analysis(w3_data())
@@ -310,7 +310,7 @@ class TestChirHoch1KMParametric:
 
 
 class TestChirHoch1WNParametric:
-    """dim ChirHoch^1(W_N) = 1 for all N >= 2."""
+    """dim ChirHoch^1(W_N) = 0 for principal W_N at generic c."""
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5, 6, 7, 8])
     def test_dim_h1_wN(self, N):
@@ -319,7 +319,7 @@ class TestChirHoch1WNParametric:
         else:
             data = wN_data(N)
         da = derivation_analysis(data)
-        assert da.dim_chirhoch1 == 1
+        assert da.dim_chirhoch1 == 0
 
 
 # ===================================================================
@@ -464,10 +464,9 @@ class TestDeformationObstruction:
         assert all_deformations_unobstructed(betagamma_data())
 
     def test_obstruction_list(self):
-        """Deformation obstruction list is non-empty for each family."""
+        """Virasoro has no generic degree-1 deformation obstruction list."""
         obs = deformation_obstruction_analysis(virasoro_data())
-        assert len(obs) >= 1
-        assert obs[0].is_unobstructed
+        assert obs == []
 
     def test_all_standard_unobstructed(self):
         """All standard families have unobstructed deformations."""
@@ -568,10 +567,10 @@ class TestWAlgebraVirasoro:
         assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
     def test_dim_in_range(self):
-        """ChirHoch^n(Vir_c) = 1 for n in {0,1,2}."""
+        """ChirHoch^n(Vir_c) is nonzero only for n in {0,2}."""
         w = compute_w_algebra_hochschild(virasoro_data())
         assert w.dim_n(0) == 1
-        assert w.dim_n(1) == 1
+        assert w.dim_n(1) == 0
         assert w.dim_n(2) == 1
 
     def test_dim_vanishes_above_2(self):
@@ -581,9 +580,9 @@ class TestWAlgebraVirasoro:
             assert w.dim_n(n) == 0
 
     def test_poincare_series(self):
-        """Bounded Poincaré series: [1,1,1,0,0,...,0]."""
+        """Bounded Poincare series: [1,0,1,0,0,...,0]."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        expected = [1, 1, 1] + [0] * 8
+        expected = [1, 0, 1] + [0] * 8
         assert w.poincare_series(10) == expected
 
 
@@ -610,9 +609,9 @@ class TestWAlgebraW3:
         assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
     def test_first_values_bounded(self):
-        """dim ChirHoch^n bounded: 1 for n in {0,1,2}, 0 otherwise."""
+        """dim ChirHoch^n bounded: 1 for n in {0,2}, 0 otherwise."""
         w = compute_w_algebra_hochschild(w3_data())
-        expected = [1, 1, 1] + [0] * 10
+        expected = [1, 0, 1] + [0] * 10
         assert w.poincare_series(12) == expected
 
 
@@ -639,9 +638,9 @@ class TestWAlgebraWN:
         """W_5 ChirHoch bounded by Theorem H."""
         w = compute_w_algebra_hochschild(wN_data(5))
         series = w.poincare_series(10)
-        # Amplitude [0,2]: 1 in {0,1,2}, 0 elsewhere.
+        # Amplitude [0,2]: 1 in {0,2}, 0 elsewhere.
         assert series[0] == 1
-        assert series[1] == 1
+        assert series[1] == 0
         assert series[2] == 1
         for n in range(3, 11):
             assert series[n] == 0
@@ -652,18 +651,15 @@ class TestWAlgebraWN:
             w = compute_w_algebra_hochschild(wN_data(N))
             assert w.dim_n(0) == 1
 
-    def test_w_algebra_dim1_c_deformation(self):
-        """ChirHoch^1 = 1 (c-deformation class) for all W_N per Theorem H.
+    def test_w_algebra_dim1_rigidity(self):
+        """ChirHoch^1 = 0 for principal W_N at generic c.
 
-        Per AP94/AP95: ChirHoch is bounded by Theorem H amplitude
-        [0,2] with dim ChirHoch^1 = 1 (the c-deformation).  The old
-        "ChirHoch^1 = 0 in the polynomial ring sense" was a
-        Gelfand-Fuchs artefact (minimum generator degree 2), NOT a
-        property of chiral Hochschild, and is REFUTED.
+        The central-charge parameter is a degree-2 deformation class,
+        not a degree-1 derivation.
         """
         for N in range(2, 9):
             w = compute_w_algebra_hochschild(wN_data(N))
-            assert w.dim_n(1) == 1
+            assert w.dim_n(1) == 0
 
     # --- AP10 multi-path verification ---
 
@@ -672,12 +668,12 @@ class TestWAlgebraWN:
 
         Path 1: engine total_dim property.
         Path 2: sum of Poincaré series entries up to any cutoff.
-        Path 3: Theorem H structural formula 1 + 1 + 1 = 3.
+        Path 3: Theorem H structural formula 1 + 0 + 1 = 2.
         """
         w = compute_w_algebra_hochschild(virasoro_data())
         total_path1 = w.total_dim
         total_path2 = sum(w.poincare_series(20))
-        total_path3 = 3  # Theorem H structural formula
+        total_path3 = 2  # Theorem H structural formula
         assert total_path1 == total_path2 == total_path3
 
     def test_wN_amplitude_cross_family(self):
@@ -697,15 +693,15 @@ class TestWAlgebraWN:
                     f"W_{N}: ChirHoch^{n} = {series[n]} violates amplitude [0,2]")
 
     def test_wN_total_dim_vs_structural_formula(self):
-        """Cross-family: total dim agrees with structural formula 1 + 1 + 1.
+        """Cross-family: total dim agrees with structural formula 1 + 0 + 1.
 
         Path 1: engine total_dim.
-        Path 2: explicit sum 1 + 1 + 1 = 3.
+        Path 2: explicit sum 1 + 0 + 1 = 2.
         Path 3: Theorem H bound <= 4.
         """
         for N in range(2, 6):
             w = compute_w_algebra_hochschild(wN_data(N))
-            assert w.total_dim == 3  # Path 1 vs Path 2
+            assert w.total_dim == 2  # Path 1 vs Path 2
             assert w.bounded_by_theorem_h is True  # Path 3
             assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
@@ -761,12 +757,12 @@ class TestOPEVerification:
     def test_virasoro_ope(self):
         result = _ope_derivation_check_virasoro()
         assert result['consistent'] is True
-        assert result['outer_quotient_dim'] == 1
+        assert result['outer_quotient_dim'] == 0
 
     def test_w3_ope(self):
         result = _ope_derivation_check_w3()
         assert result['consistent'] is True
-        assert result['outer_quotient_dim'] == 1
+        assert result['outer_quotient_dim'] == 0
 
 
 # ===================================================================
@@ -796,7 +792,7 @@ class TestSpectralSequence:
     def test_virasoro_E2_row0(self):
         """E_2^{p,0} = dim ChirHoch^p for Virasoro."""
         E2 = hochschild_spectral_sequence_E2(virasoro_data(), max_p=10)
-        expected = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+        expected = [1, 0, 1] + [0] * 8
         for p in range(11):
             assert E2[p][0] == expected[p]
 
@@ -846,7 +842,7 @@ class TestMasterComputation:
     def test_virasoro_master(self):
         result = compute_chirhoch(virasoro_data())
         assert result.dim_H0 == 1
-        assert result.dim_H1 == 1
+        assert result.dim_H1 == 0
         assert result.dim_H2 == 1
         assert result.w_hochschild is not None
         assert result.w_hochschild.gen_degrees == [2]
@@ -854,7 +850,7 @@ class TestMasterComputation:
     def test_w3_master(self):
         result = compute_chirhoch(w3_data())
         assert result.dim_H0 == 1
-        assert result.dim_H1 == 1
+        assert result.dim_H1 == 0
         assert result.dim_H2 == 1
         assert result.w_hochschild.gen_degrees == [2, 3]
 
@@ -864,7 +860,7 @@ class TestMasterComputation:
         for name, result in all_results.items():
             assert result.dim_H0 == 1, f"Z({name}) ≠ C"
             assert result.dim_H2 == 1, f"Z({name}!) ≠ C"
-            assert result.dim_H1 >= 1, f"H^1({name}) = 0"
+            assert result.dim_H1 >= 0, f"H^1({name}) < 0"
             assert result.all_unobstructed, f"Obstructed deformation in {name}"
 
 

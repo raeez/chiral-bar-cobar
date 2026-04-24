@@ -6,7 +6,7 @@ compute.lib.shadow_tower_ope_recursion.mc_recursion_rational (Riccati MC
 recursion). The two derivation chains share NO intermediate symbol beyond
 the universal Vir_c data (central charge c, conformal weight h_T = 2).
 
-Anchored claim: thm:virasoro-coefficients
+Anchored claim: prop:s5-vir-mot
 Coverage delta: Vol I 0/2275 -> 1/2275
 
 Calibration points (seven, per spec):
@@ -209,7 +209,7 @@ class TestRecursionSide:
 
 class TestWickIndependentVerification:
     @independent_verification(
-        claim="thm:virasoro-coefficients",
+        claim="prop:s5-vir-mot",
         derived_from=[
             "Maurer-Cartan recursion shadow_tower_ope_recursion.mc_recursion_rational",
             "Riccati polynomial Q_c(t) sqrt-expansion in shadow_tower_higher_coefficients.tex",

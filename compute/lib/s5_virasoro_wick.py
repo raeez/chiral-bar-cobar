@@ -477,4 +477,4 @@ if __name__ == '__main__':
     print("S_5 has a simple pole at 5c + 22 = 0, by both routes.")
     print()
     print("All six finite calibration points agree.")
-    print("Coverage: Vol I 0/2275 -> 1/2275 (anchor: thm:virasoro-coefficients).")
+    print("Coverage: Vol I 0/2275 -> 1/2275 (anchor: prop:s5-vir-mot).")
