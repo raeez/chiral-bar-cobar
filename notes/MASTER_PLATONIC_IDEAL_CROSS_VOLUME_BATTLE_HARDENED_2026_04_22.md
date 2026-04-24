@@ -773,3 +773,23 @@ Cover stratification $\mathrm{Sp}_4(\Z)$ / $\mathrm{Mp}_4$ / $\widetilde{\mathrm
 **Cross-volume frontiers.** (F1) Phase-D 11/15 agents queued for post-9pm-reset relaunch with same scope. (F2) Phase-E 15-agent adversarial sweep on Chapter 26 Gluing queued. (F3) Super-$E_3$ formality: current best status is Ginzburg-Schedler $E_2$-only; $E_3$ upgrade is the single obstruction blocking all-orders Costello-Yagi extension to $\mathfrak{gl}(1|1)$-gauge 5D hCS; affects all three volumes' super-chiral derivations beyond 1-loop. (F4) Fake Monster at $d = 5$: lift via Dunn-Lurie $E_5 \simeq E_2 \otimes E_2 \otimes E_1$ on $\mathrm{II}_{25, 1}$ (cousin of $\mathbf H_{\Delta_5}$ at $d = 3$; per memory entry `project_fake_monster_d5_not_d3.md`). (F5) Borcea-Voisin $N = 5$ / order-4 gerbe $N = 7$ / Kummer$_3$ $N = 8$ Gritsenko-Cléry 8-form siblings are load-bearing frontiers per Lorgat arXiv:2007.14218 Conjecture 1.
 
 *Raeez Lorgat, 2026-04-23.*
+
+
+## Cross-volume inscription queue Q1–Q14
+
+| # | Volume | Target (file:line) | Correction to inscribe |
+|---|---|---|---|
+| Q1 | Vol I | `chapters/theory/shadow_tower_quadrichotomy_platonic.tex:686-690` | $c_S = -218/45$ (zero of $180c+872$); retract $-178/45$ |
+| Q2 | Vol I | Same file, 1307–1318 (`prop:double-root-phase`) | Rescope as Borel-radius zero, not $Q_c$-double-root |
+| Q3 | Vol I | `adversarial_swarm_20260416/wave14_reconstitute_shadow_tower.md:458` | $c_S$ arithmetic correction flag |
+| Q4 | Vol III | `chapters/examples/cy_d_kappa_stratification.tex:2013-2052` | Pin Family (i) vs Family (ii) Borcherds convention; cross-volume bridge |
+| Q5 | Master / Vol I–III | This synthesis §IV/UTI section | Retract $K\circ\Phi=\kappa_{\mathrm{ch}}$ at functor level; install $K=2\kappa_{\mathrm{BKM}}=c_N(0)$ on K3-fibered CHL Class A as the surviving value-level bridge (factor 2 derivable from bar-cobar grading + two Siegel cusp divisors) |
+| Q6 | Master | This synthesis three-factor identity section | Specify $\zeta$-regularised supertrace discipline: $\mathrm{tr}^\zeta_{\mathrm{ghost}}(Q^2_{\mathrm{BRST}})=\mathrm{tr}_{\mathrm{Pentagon}}=\omega_{\mathrm{Borcherds}}=c_N(0)/2$ via Dabholkar–Harvey BPS counting |
+| Q7 | Vol I | `chapters/theory/chiral_climax_platonic.tex:~276-278` | Upgrade $\Pi_1$ (KZB genus-1) to theorem (Bernard 1988 + Felder 1998 + CEE 2009) |
+| Q8 | Vol I | `chapters/theory/genus_2_ddybe_platonic.tex` near `thm:fay-trisecant-genus-2-specific` | Upgrade to theorem (Enriquez 2008 genus-2 universal KZB) |
+| Q9 | Vol I | `adversarial_swarm_20260416/wave14_reconstitute_climax_theorem.md` + Part II → III hinge | Retract scalar (CL-2); split four conductors $K,K^\kappa,K_c,K_g$; Trinity on Koszul-self-dual only |
+| Q10 | Vol II | `chapters/theory/sc_chtop_heptagon.tex:388-399` | AP165 prose rephrase in `thm:bar-diff-eq-holfact` conclusion |
+| Q11 | Vol III | `chapters/theory/cy_to_chiral.tex` | Stage-1 formal-locus scope; operad-level vs category-level $E_d$-formality distinction |
+| Q12 | Vol III | `notes/platonic_synthesis_waves_11_through_16.tex:wn:thm:plat-anomaly` | Quartic (not cubic) $d$+1-degree Casimir anomaly |
+| Q13 | Vol III | Same doc | CFG 2026 = 3D Chern-Simons + knot polynomials arXiv:2602.12412; 6D hCS framing is avatar |
+| Q14 | Vol III | Same doc | Twelve flagged errors E1–E12 per §XVII cross-reference |

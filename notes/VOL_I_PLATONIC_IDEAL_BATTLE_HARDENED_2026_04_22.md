@@ -825,3 +825,16 @@ This session added 13 cross-volume AP sibling entries to Vol I's antipattern cat
 **Cross-volume convergence with Vol III.** The Vol I bar-cobar backbone reads at each CY$_3$ through Vol III's two-stage factorisation $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ \Phi^{\mathrm{FA}}_d$: Vol III's Stage-2 $\mathrm{Sp}^{\mathrm{ch}}$ is Vol I's stratum-(iv) Borcherds lift restricted to the reference curve $C$; Vol III's four-stratum classification (toric / reduced-Aut / orbifold-inertia / lattice-polarised) corresponds arity-by-arity to Vol I's operadic reading of the Dolbeault reduction of the ordered bar complex at real-dim $d$. The master $\mathbf H_{\Delta_5}$ canonical at $\hbar^2 = -1/8$ is the Vol III climax; Vol I sees it as the arity-limit of the $\mathrm{FM}_{2d} \to \mathrm{FM}_d$ Hopf reduction morphism at $d = 2$ on the Mukai-enhanced K3. The three-faces identity $\hbar^2 K^{\kappa_{\mathrm{ch}}} = -1$ reads in Vol I as the Koszul-duality conductor on the Mukai lattice $\mathrm{II}_{4, 20}$ with Theorem-C B-row complementarity $\kappa_{\mathrm{ch}} + \kappa_{\mathrm{ch}}^! = 2 c_+ = 8$.
 
 *Raeez Lorgat, 2026-04-23.*
+
+
+## Inscription queue (Vol I targets)
+
+| # | Target (file:line) | Correction to inscribe |
+|---|---|---|
+| Q1 | `chapters/theory/shadow_tower_quadrichotomy_platonic.tex:686-690` | Replace $c_S = -178/45$ with $c_S = -218/45$ (zero of $180c+872$); convergent regime $5c+22=20/9>0$ at $c=-178/45$ cannot be Stokes line |
+| Q2 | Same file, lines 1307–1318 (`prop:double-root-phase`) | Rescope $c=-83/20$ as zero of Borel-radius rational function, not double root of $Q_c(t)$; $\mathrm{disc}_t(Q_c)=-320c^2/(5c+22)$ vanishes only at $c=0$ |
+| Q3 | `adversarial_swarm_20260416/wave14_reconstitute_shadow_tower.md:458` | Flag $c_S$ arithmetic correction |
+| Q7 | `chapters/theory/chiral_climax_platonic.tex:~276-278` | Upgrade `conj:climax-kzb-genus-one-platonic` ($\Pi_1$) from conjectural to theorem via Bernard 1988 + Felder 1998 + Calaque–Enriquez–Etingof 2009 |
+| Q8 | `chapters/theory/genus_2_ddybe_platonic.tex` near `thm:fay-trisecant-genus-2-specific` | Upgrade from conjectural to theorem via Enriquez 2008 universal genus-2 KZB + Fay trisecant |
+| Q9 | `adversarial_swarm_20260416/wave14_reconstitute_climax_theorem.md` + Part II $\to$ III hinge chapter | Retract scalar form of (CL-2) $K(A)=-c_{\mathrm{ghost}}(\mathrm{BRST}(A))$; split into four conductors $K,K^\kappa,K_c,K_g$ with Trinity $K_E=K_c=K_g$ coincident on Koszul-self-dual locus only |
+| Q10-site | `theorem_A_infinity_2.tex:~209` | Priddy-vs-Positselski lane split: class $\mathsf G$ Priddy classical quadratic; $\mathsf L/\mathsf C/\mathsf M/\mathsf B$ Positselski non-homogeneous weakly curved |
