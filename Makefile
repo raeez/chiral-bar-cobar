@@ -423,8 +423,10 @@ standalone:
 		build_failed=0; \
 		cd standalone && TEXINPUTS=".:..:$$TEXINPUTS"; export TEXINPUTS; for i in 1 2 3; do \
 			if ! $(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1; then \
-				build_failed=1; \
-				break; \
+				if grep -aE '(^! |Undefined control sequence|LaTeX Error|Package .* Error|Emergency stop|Fatal error|Runaway argument|File ended while scanning|No pages of output|Double subscript|Double superscript|Missing \{|Missing \})' ../$(LOG_DIR)/standalone-$$paper.log >/dev/null 2>&1; then \
+					build_failed=1; \
+					break; \
+				fi; \
 			fi; \
 		done; cd ..; \
 		if [ $$build_failed -eq 0 ] && [ -f standalone/$$paper.pdf ]; then \
