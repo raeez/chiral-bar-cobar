@@ -6,6 +6,15 @@
 > Do not add new APs to this legacy file. Append them to
 > `notes/antipatterns_catalogue.md` instead.
 
+> **T5 supersession note (2026-04-24).** Historical lines below that
+> describe Vol II principal $\mathcal W_N$ or generic
+> $\mathcal W_\infty[\mu]$ topologisation as conditional on an
+> unproved higher-spin antighost axiom are superseded. Vol II now proves
+> principal-Casimir T5 in `thm:casimir-antighost-commutativity` and
+> writes the finite raw homotopies in
+> `prop:closed-normal-ordered-antighost-homotopies`; T5 remains an
+> abstract axiom only for arbitrary non-Casimir stress towers.
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.

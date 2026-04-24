@@ -1,5 +1,12 @@
 # AGENTS.md -- Modular Koszul Duality Programme (Canonical)
 
+> **T5 supersession note (2026-04-24).** Any legacy status below saying
+> the Vol II $\mathcal W_N$ or $\mathcal W_\infty[\mu]$ endpoint is
+> conditional on an unproved higher-spin antighost axiom is superseded by
+> Vol II `thm:casimir-antighost-commutativity` and
+> `prop:closed-normal-ordered-antighost-homotopies`. T5 remains only as
+> an abstract non-Casimir stress-tower axiom.
+
 This file is the always-on operating constitution for Codex/GPT-5.4 in `~/chiral-bar-cobar` (Vol I). It is optimized for mathematical correction at `xhigh` reasoning effort. `CLAUDE.md` is the encyclopedic atlas; `AGENTS.md` is the load-bearing operational layer that steers correct behavior after compaction, context loss, model drift, or long multi-tool sessions. Every line changes behavior or it gets cut.
 
 **Three volumes by Raeez Lorgat.** Vol I *Modular Koszul Duality* (this repo, ~2,700pp, 139,568 tests, 3,726 engines). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (`~/chiral-bar-cobar-vol2`, ~1,749pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (`~/calabi-yau-quantum-groups`, ~693pp, ~34,000 tests, ~460 engines). Total ~5,142pp, ~177K tests, ~4,186 engines, 3,500+ tagged claims.

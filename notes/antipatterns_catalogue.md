@@ -2,6 +2,16 @@
 
 Extracted from the legacy CLAUDE.md (2026-04-18). The live CLAUDE.md
 
+> **T5 supersession note (2026-04-24).** Entries below written before
+> the Vol II T5 repair may still record the principal
+> $\mathcal W_N$ or generic $\mathcal W_\infty[\mu]$ topologisation
+> ladder as conditional on an unproved higher-spin antighost axiom.
+> That status is superseded: Vol II proves principal-Casimir T5 in
+> `thm:casimir-antighost-commutativity` and gives closed raw
+> normal-ordered homotopies in
+> `prop:closed-normal-ordered-antighost-homotopies`. The T5 axiom
+> remains only for arbitrary non-Casimir stress towers.
+
 ## Canonical values at the latest-wave verdict (2026-04-21)
 
 When any entry in this catalogue or the first-principles cache appears
