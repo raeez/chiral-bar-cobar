@@ -385,7 +385,8 @@ dist: working-notes
 standalone:
 	@echo "  ── Building standalone papers ──"
 	@mkdir -p $(LOG_DIR) $(OUT_DIR)
-	@for paper in \
+	@failures=0; \
+	for paper in \
 		shadow_towers shadow_towers_v2 shadow_towers_v3 \
 		seven_faces classification_trichotomy virasoro_r_matrix \
 		w3_holographic_datum bp_self_duality three_parameter_hbar \
@@ -409,6 +410,7 @@ standalone:
 		programme_summary_sections9_14; do \
 		if [ -f standalone/$$paper.tex ]; then \
 			echo "    Building $$paper.tex ..."; \
+			rm -f standalone/$$paper.pdf; \
 			cd standalone && TEXINPUTS=".:..:$$TEXINPUTS"; export TEXINPUTS; for i in 1 2 3; do \
 				$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
 			done && cd ..; \
@@ -418,9 +420,14 @@ standalone:
 				echo "    ✓  out/$$paper.pdf"; \
 			else \
 				echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
+				failures=$$((failures + 1)); \
 			fi; \
 		fi; \
-	done
+	done; \
+	if [ $$failures -ne 0 ]; then \
+		echo "  ✗  $$failures standalone paper(s) failed."; \
+		exit 1; \
+	fi
 
 ## editorial: Build the editorial companion → out/editorial.pdf
 editorial:
