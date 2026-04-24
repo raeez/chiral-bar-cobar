@@ -2,135 +2,6 @@
 
 *Raeez Lorgat, Perimeter Institute. Waves 14–26 + 2026-04-22 6d hCS cross-volume audit + R2/R3/R4 elite audits.*
 
-*Extended 2026-04-24 with Wave-17 addendum (§0-α below). 2026-04-22 battle-hardened content preserved verbatim from §I onward.*
-
----
-
-## §0-α. Wave-17 Addendum (2026-04-24) — Cross-Volume Master Synthesis
-
-Wave-17 deployed 30 adversarial agents (15 Opus 4.7 elite-voice + 15 Codex) against the 2026-04-17 master synthesis. Agent deliverables under `notes/wave17_opus_20260424/` and `notes/wave17_codex_20260424/` (49 files, ~30K lines; committed Vol I `f30e4a1`). Summary across all three volumes: **12 retractions, 31 refinements, 5 new theorems, 10 open frontiers F1–F10**.
-
-### 12 Retractions (full mathematical content)
-
-| # | Claim | Source | Replacement |
-|---|-------|--------|-------------|
-| R1 | Theorem P1 as single identification "av IS particle indistinguishability" | opus_01, agent_01, codex_01 | Three-lane separation: Lane A chain-level $\Sigma_n$-coinvariant / Lane B R-twisted plethystic average / Lane C class-G pedagogy |
-| R2 | Corollary P1.1 "r(z) IS scattering phase" | opus_01, codex_01 | Retracted — r(z) has poles, unitary $U(1)$ scattering impossible; surviving is formal-R-matrix reading |
-| R3 | n!/1 dimensional ratio = Gibbs factor 1/n! exactly | opus_01 | Asymptotic: $d^n / \binom{d+n-1}{n} \to n!$ as $d \to \infty$; Gibbs is asymptotic not exact |
-| R4 | UTI-1 $K \circ \Phi = \kappa_{\mathrm{ch}}$ as functor equality | opus_07, agent_06, codex_07 | Functor-level retracted; surviving $K = 2\kappa_{\mathrm{BKM}} = c_N(0)$ on K3-fib CHL; $\kappa_{\mathrm{ch}}(K3 \times E) = 0$ by Serre at $d=3$, not 10 |
-| R5 | Climax (CL-2): $K(A) = -c_{\mathrm{ghost}}(\mathrm{BRST}(A))$ scalar | opus_10, agent_09, codex_08 | False generically (Vir $c_{\mathrm{ghost}}(bc(2)) = -26$ but $K = c/2 \ne 26$); split 4 conductors $K, K^\kappa, K_c, K_g$; Trinity only on Koszul-self-dual |
-| R6 | $\kappa_{\mathrm{BKM}} = \kappa_{\mathrm{ch}} + \chi(\mathcal O_{\mathrm{fiber}})$ at N=1 K3×E coincidence | opus_07, agent_14, 62 adv tests | Fails at N=1 TOO (0 + 2 = 2 ≠ 5), not just N≥2 |
-| R7 | Shadow tower $c_S = -178/45$ | opus_09, agent_08 | Correct: $c_S = -218/45$, zero of $180c + 872$ (wave-14 arithmetic error) |
-| R8 | Shadow tower $c = -83/20$ is $Q_c$-double-root | opus_09 | $\mathrm{disc}_t(Q_c) = -320c^2/(5c+22)$ vanishes only at $c=0$; $c = -83/20$ is Borel-radius zero |
-| R9 | Riccati master equation $H^2 = t^4 Q_c$ literally | opus_09, agent_08 | Quadratic-algebraic; genuine Riccati on $U = (\log H)' - 2/t$ |
-| R10 | 6D hCS 1-loop anomaly = cubic Casimir $d^{abc}$ | opus_13, codex_11 | Local holomorphic gauge anomaly degree-$(d+1)$; for $d=3$ QUARTIC Casimir $\int_X \mathrm{Tr}_{\mathrm{ad}}(A(F_A)^3)$ |
-| R11 | CFG 2026 line-by-line 6D hCS match | codex_11 | CFG 2026 = arXiv:2602.12412 is 3D CS with knot invariants; NOT 6D hCS on CY_3. The 6D hCS story is AVATAR only |
-| R12 | Class C $\beta\gamma(\lambda)$ trichotomy line-wise | opus_09, agent_08 | EXTERNAL-$\lambda$-FAMILY-level; line-wise fits G/L/M by $\lambda$ |
-
-### 5 New Theorems (full mathematical content)
-
-**N1 Universal Chain-Homotopy Normalisation** (agent_02, opus_03):
-$$
-h_A = h_{\mathrm{LV}} / (\kappa(A) + \kappa^!(A))
-$$
-for chirally Koszul $A$. Per-archetype: $h_{\mathsf G}$ trivial; $h_{\mathsf L}$ Sugawara $1/(2(k+h^\vee))$ diverges at critical; $h_{\mathsf C}$ free-field; $h_{\mathsf M}$ Zamolodchikov $c(5c+22)/10$ diverges at $c = 0, -22/5, -218/45$. **Chain-level bridge Thm A ↔ Thm C.**
-
-**N2 Exact Borel-radius closed form** (opus_09):
-$$
-|\omega|^2(c) = c^2(5c+22) / [4(45c+218)],\qquad |\omega|(c) = c/6 - 1/27 + O(c^{-1}).
-$$
-
-**N3 Shadow coefficient** $S_6(\mathrm{Vir}_c) = 40(45c+188)/[3c^3(5c+22)^2]$ (opus_09), forced by $[t^6] H^2 = 0$.
-
-**N4 F5 Drinfeld-double cohomological obstruction** (opus_15, agent_03):
-$$
-\mathrm{obs}^{(1)}_{\mathrm{double}} \in H^2(\mathfrak{grt}^{\mathrm{ell}}, \mathfrak{sp}(A) \otimes \mathfrak{sp}(A^!)),\quad \omega_{\mathrm{ell}} = \wp(\tau)\langle\cdot,\cdot\rangle_{\mathfrak{sp}}.
-$$
-Vanishes iff $r_{\max}(A) = 2$ (class $\mathsf G$ only); L/C/M $g \ge 1$ structurally obstructed.
-
-**N5 Chenevier arithmetic shadow at $p = 691$** (agent_10):
-$$
-\det \rho_{S_{11}(V_1(\mathfrak g)),\ 691} = \chi_{\mathrm{cyc}}^{11} \cdot \varepsilon_{B_{12}} \pmod{691}
-$$
-via Kubota-Leopoldt + Herbrand-Ribet ($B_{12} = -691/2730$ irregular). $\mathrm{GRT}_1(\mathbb Q)$ transport $F_2 \to F_3$ = Drinfeld associator.
-
-### 10 Open Frontiers F1–F10
-
-F1 Logarithmic $\mathcal W(p)$ tempering (retracted from Proved; Adamovic-Milas path); F2 Periodic CDG $\mathfrak{sl}_{N \ge 3}$; F3 Class-M chain-level original complex; F4 Super-complementarity canonical pairing; F5 Irregular-singular KZB g≥2 + Drinfeld-double obstruction N4; F6 Thm B at nodal boundary without Koszul (new); F7 MC4 completion $H_3$-failure regime (new); F8 Stage-1 chain-level $d \ge 4$ (new); F9 Category-level $E_d$-formality $d \ge 4$ (new); F10 Bracket-level BPS Lie algebra on K3×E: $\mathfrak g_{\mathrm{BPS}} \cong \mathfrak g_{\Delta_5}$ (new).
-
-### Key refinements
-
-**G2 Arnold-KZB tower of per-level theorems** (opus_04, agent_03): $n=2$ trivial, $n=3$ CYBE ↔ Arnold 3-term, $n=4$ pentagon+hexagon, $n \ge 5$ coherence. Genus 0 unconditional (Kohno); g=1 theorem-grade (Bernard-Felder-CEE); g=2 theorem-grade (Enriquez 2008); g≥3 conjectural (Sabbah 2008).
-
-**G3 Universal Holography three-tier discipline** (opus_05, agent_04): Tier I cohomological + Tier II qi-model unconditional; Tier III strict chain-level original-complex: G/L/C closed, M open (F3). Sugawara at $V_1(\mathfrak{sl}_2)$: $T_{\mathrm{Sug}} = (1/6)\sum$ terms; $G_{\mathrm{Sug}} = (1/3) \sum :\bar c_a J^a:$; $[Q_{\mathrm{tot}}, G_{\mathrm{Sug}}] = T_{\mathrm{Sug}}$ on BRST cohomology. $W_N \to E_{N+1}$-top unconditional at $N \le 3$; $N \ge 4$ conjectural on antighost commutativity C4.
-
-**3d QG partition function explicit** (opus_05): $Z_{\mathrm{3d\ QG, Vir}}(S^2 \times S^1_\tau) = q^{(1-c)/24}(1-q)/\eta(\tau)$ (Virasoro vacuum character = perturbative Brown-Henneaux = ordered bar trace).
-
-**G4 (U1)-(U4) uniqueness on Koszul-self-dual locus ONLY** (opus_06, agent_05, codex_06). Stage-1 $\Phi^{FA}_d$ FORMAL-LOCUS ONLY: $d=1$ always; $d=2$ generically; $d=3$ on K3×E via $\mathrm{At}(T_E) = 0 + \Omega^3_{K3} = 0$; $d=3$ quintic obstructed; $d \ge 4$ open (F9). Native-level dispatch $n(d) \in \{\infty, 2, 1\}$ is PTVV-forced via $(2-d)$-shift + Dunn-Lurie.
-
-**E_n circle → SPIRAL framing** (opus_08, agent_07): closure (arrow 5) depends on `conj:drinfeld-center-equals-bulk`. Arrows 2,3,4 unconditional; arrow 1 proved G/L/C non-critical; arrow 5 conjectural with patches. $\pi_1(\mathrm{Conf}_2(\mathbb R^n)) = \pi_1(S^{n-1})$; n=3 gives 0, $\mathrm{res}_{3 \to 2}$ lands in $E_\infty$ symmetric. Drinfeld centre is RIGHT-adjoint universal property; categorified averaging $Z: E_1\text{-Cat} \to E_2\text{-Cat}$.
-
-**Three distinct $E_2$'s:** $E_2^{\mathrm{holo}}$ (SC^{ch,top} closed colour), $E_2^{\mathrm{chir}} = Z(\mathrm{Rep}^{E_1}(A))$, $E_2^{\mathrm{braided}}$ (abstract). Not the same.
-
-**Two $\lambda$-parameters in CoHA → W_{1+∞}** (opus_14 cycle 7): $\lambda_{\mathrm{Tr}} = (\varepsilon_1 + \varepsilon_2)/\varepsilon_3$ pre-CY_3 becomes $-1$ identically; $\lambda_W$ free (Gaiotto-Rapčák); conflation gives false statements.
-
-**Seven faces GRT two-scope theorem** (opus_15): Scope I strict chain-level via Tamarkin 1998; Scope II cohomology-class via Brown 2012 motivic Galois. Cover assignment Sp_4 / Mp_4 / widetilde{Mp}_4 derived from Weil representation.
-
-### Cross-volume inscription queue Q1–Q14
-
-| # | Target | Correction |
-|---|--------|-----------|
-| Q1 | Vol I `shadow_tower_quadrichotomy_platonic.tex:686-690` | c_S: -178/45 → -218/45 |
-| Q2 | Vol I same file 1307-1318 | Double-root rescope Borel-radius zero |
-| Q3 | Vol I `adversarial_swarm_20260416/wave14_reconstitute_shadow_tower.md:458` | c_S flag |
-| Q4 | Vol III `cy_d_kappa_stratification.tex:2013-2052` vs CLAUDE.md | Pin Family (i) vs (ii) Borcherds convention |
-| Q5 | Master §4 | Retract UTI-1 functor-level; install K = 2κ_BKM |
-| Q6 | Master §4 three-factor | ζ-regularised supertrace discipline |
-| Q7 | Vol I `chiral_climax_platonic.tex:~276-278` | Π_1 upgrade to theorem g=1 |
-| Q8 | Vol I `genus_2_ddybe_platonic.tex` Fay trisecant | Upgrade to theorem g=2 |
-| Q9 | Vol I wave-14 climax draft + Part II→III hinge | Retract scalar (CL-2); 4-conductor split |
-| Q10 | Vol II `sc_chtop_heptagon.tex:388-399` | AP165 prose rephrase |
-| Q11 | Vol III `cy_to_chiral.tex` | Stage-1 formal-locus scope |
-| Q12 | Vol III wave-15 `waves_11_through_16.tex:wn:thm:plat-anomaly` | Quartic not cubic |
-| Q13 | Same doc | CFG 2026 is 3D CS avatar framing |
-| Q14 | Same doc | 12 flagged errors E1-E12 |
-
-### Agent deliverable index (master summary)
-
-| Wave-17 axis | Opus agents | Codex agents | Size |
-|--------------|-------------|--------------|------|
-| Atom + P1 | opus_01 (922L), agent_01 (889L) | codex_01 attack + audit (18K) | |
-| Three lenses | opus_02 (787L) | codex_02 (3.5K) | |
-| Theorem A | opus_03 (923L), agent_02 (845L) | codex_03 (3.6K) | |
-| G2 Arnold-KZB | opus_04 (1052L), agent_03 (1086L) | codex_04 attack + topologisation (20K) | |
-| G3 Universal Holography | opus_05 (1352L), agent_04 (877L) | codex_05 (3.8K) | |
-| G4 Phi + Stage-1 | opus_06 (1110L), agent_05 (887L), agent_11 (1350L) | codex_06 attack + stage1 (17K) | |
-| UTI | opus_07 (825L), agent_06 (1242L) | codex_07 (3.2K) | |
-| E_n circle/spiral | opus_08 (844L), agent_07 (1108L) | codex_08 attack + climax audit (24K) | |
-| Shadow tower | opus_09 (864+L), agent_08 (864L) | | |
-| Climax theorem | opus_10 (948L), agent_09 (1061L) | codex_08 climax audit (21K) | |
-| SC heptagon | opus_11 | | |
-| κ_ch stratification | opus_12 (879L) | codex_10 kappa (2.8K) | |
-| 6D hCS | opus_13 (1059L), agent_11 (1350L), agent_12 (1547L) | codex_11 full CFG (58K!), codex_12 (4.4K) | |
-| CoHA → W_{1+∞} | opus_14 (1004L), agent_13 (1456L) | codex_13 (dispatched, didn't land) | |
-| Seven faces GRT | opus_15 (711L), agent_03 | | |
-| Universal Borcherds | agent_14 (943L) | | |
-| Local-global MG | agent_10 (900L) | codex_09 (4.7K) | |
-| F5 Drinfeld double | opus_15, agent_03 | codex_10 (40K deep audit) | |
-| Six routes K3×E | opus_06, agent_05 | codex_14 (5.1K) | |
-| Harmonies audit wave-15 | agent_15 (1079L) | | |
-| Cross-consistency | | codex_15 (dispatched, didn't land) | |
-
-**Total: 30 Opus + 17 Codex = 47 files landed; ~30K lines adversarial mathematical content.**
-
-**Memory-layer updates** (under `~/.claude/projects/-Users-raeez-chiral-bar-cobar/memory/`, not git-tracked):
-- `platonic_ideal_reconstituted_2026_04_24.md` (1287 lines, new master synthesis superseding 2026-04-17 preserved unchanged);
-- `project_vol{1,2,3}_platonic_ideal.md` extended with Wave-17 STATUS UPDATE sections + 14 inline retraction markers;
-- `MEMORY.md` index pointing to 2026-04-24 reconstitution.
-
-**The healed North Star:** Three volumes, ONE chiral-categorical fact (Koszul reflection on chirally Koszul algebras), read through THREE lenses (operadic Vol I / holographic Vol II / geometric Vol III), with FOUR generating identities G1–G4 closing into ONE commuting spiral (UTI value-level $K = 2\kappa_{\mathrm{BKM}} = c_N(0)$ on K3-fibered CHL Class A via $\Phi$). Closure to circle depends on `conj:drinfeld-center-equals-bulk`. Twelve over-reached claims retracted honestly; five new theorems inscribed; ten open frontiers named.
-
----
 
 ## I. Atomic phenomenon
 
@@ -219,6 +90,26 @@ Codim 3 over $\overline{\mathcal A_2}$, eight ambients: generic; $H_n$; $H_i\cap
 **Canonical resolutions.** Three Jacobi ladders (Gritsenko 1999 Thm 6.1 $(5,4,3,2,1)$; CHP 2014 $(5,2,1,1,1)$; JS 2005 $(10,6,4,2,1,0)$). $\kappa_{\mathrm{BKM}}$ denominator-named 12/10/5 Vol I/II/III. Four Yangian types (Drinfeld/dg-shifted/CWY/MO) on distinct spaces. Conway placement: $(K,\hbar^2)=(2,-1/2)$ Monster-transported on the $\Psi^{\mathrm{metap}}$-branch via Duncan 2007 super-twin orbifold-sign transport + Scheithauer 2008 metaplectic stratum; structural boundary of $\hbar^2 K=-1$, not a reflective-crown row. The nominal $K=12$ pattern-match with $c_{V^{s\natural}}$ is retracted (Nekrasov r5-redux); host-lattice candidates $\{\Lambda_{24}\text{ at }K=48,\,\mathrm{II}_{25,1}\text{ at }K=50\text{ witnesses FM not Conway},\,\text{metaplectic weight-doubling not conductor-doubling}\}$ all fail four-route convergence. Enriques $K=4$ (Allcock 2000 + GN 1997 + Mukai–Kondo $M_{12}$); $\{2,8,12\}$ alternatives collapse: $2$ discards $E_8(-1)$, $8$ ignores $\mathbb Z/2$-halving, $12$ is pre-quasi-pullback FM weight. $\kappa_{\mathrm{BKM}}=\kappa_{\mathrm{ch}}+\chi(\mathcal O_{\mathrm{fiber}})$ FALSE at $N=1$ ($5\ne 0+0$).
 
 Chain-level and $(\infty,1)$ equal status (Pattern 269). Two loci: Humbert $\mathcal U^{\mathrm{adm}}\subset\overline{\mathcal A_2}$ Vol I/II Stage-2; Atiyah $\mathcal U_{\mathrm{at}}^{\mathrm{adm}}\subset X$ Vol III Stage-1.
+
+---
+
+## IX-bis. Chain-homotopy, Borel closed-form, arithmetic
+
+**Universal chain-homotopy normalisation.** For each chirally Koszul $A$,
+$$
+h_A\;=\;h_{\mathrm{LV}}/(\kappa(A)+\kappa^!(A))
+$$
+with $h_{\mathrm{LV}}$ the universal Loday-Vallette contracting homotopy on $T^c(s^{-1}\bar A)$. Per-archetype rescaling: $h_{\mathsf G}$ trivial; $h_{\mathsf L}$ Sugawara twist $1/(2(k+h^\vee))$ diverges at critical level; $h_{\mathsf C}$ free-field; $h_{\mathsf M}$ Zamolodchikov $c(5c+22)/10$ diverges at $c=0,-22/5,-218/45$. Chain-level bridge Theorem A (G1) $\leftrightarrow$ Theorem C (complementarity ceiling).
+
+**Virasoro Borel-radius closed form.** $|\omega|^2(c)=c^2(5c+22)/[4(45c+218)]$; large-$c$ asymptotic $|\omega|(c)=c/6-1/27+O(c^{-1})$; Stokes pole $c_S=-218/45$ (zero of $180c+872$).
+
+**Shadow coefficient $S_6$.** $S_6(\mathrm{Vir}_c)=40(45c+188)/[3c^3(5c+22)^2]$ forced by $[t^6]H^2=0$.
+
+**F5 Drinfeld-double cohomological obstruction at $g\ge 2$.** $\mathrm{obs}^{(1)}_{\mathrm{double}}\in H^2(\mathfrak{grt}^{\mathrm{ell}},\mathfrak{sp}(A)\otimes\mathfrak{sp}(A^!))$, elliptic 2-cocycle $\omega_{\mathrm{ell}}=\wp(\tau)\langle\cdot,\cdot\rangle_{\mathfrak{sp}}$. Vanishes iff $r_{\max}(A)=2$ (class $\mathsf G$ only).
+
+**Shadow-Galois Chenevier at $p=691$.** $\det\rho_{S_{11}(V_1(\mathfrak g)),691}=\chi_{\mathrm{cyc}}^{11}\cdot\varepsilon_{B_{12}}\pmod{691}$ (Kubota-Leopoldt + Herbrand-Ribet, $B_{12}=-691/2730\equiv 0\bmod 691$). GRT transport $F_2\to F_3$ is Drinfeld associator: $R(z)=1+\hbar\Phi_{\mathrm{KZ}}(z/\hbar,\Omega)$.
+
+**$\beta_N=12(H_N-1)$** verified at $N=2,\ldots,6$: $\{6,10,13,77/5,87/5\}$. Competitors $(N+1)(N+2)/2$ and $N^2-N+4$ fail at $N=4$.
 
 ---
 
