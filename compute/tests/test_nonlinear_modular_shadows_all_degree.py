@@ -15,6 +15,10 @@ from compute.lib.nonlinear_modular_shadows_all_degree import (
     scalar_master_residual,
     virasoro_generating_function_tower,
     virasoro_master_tower,
+    virasoro_null_state_s6,
+    virasoro_null_state_s6_residual,
+    virasoro_weighted_metric_s6,
+    virasoro_weighted_metric_s6_residual,
 )
 
 
@@ -141,3 +145,35 @@ def test_virasoro_low_degree_rational_witnesses():
     assert simplify(tower[5].subs(c, 26) - Rational(-3, 6422)) == 0
     assert simplify(tower[6].subs(c, 26) - Rational(6815, 76139232)) == 0
     assert simplify(tower[7].subs(c, 26) - Rational(-20295, 1154778352)) == 0
+
+
+@independent_verification(
+    claim="thm:S6-Vir-closed",
+    derived_from=[
+        "chapters/theory/shadow_tower_quadrichotomy_platonic.tex order-t^8 null-state equation",
+        "census values S_2=c/2, S_3=2, S_4=10/[c(5c+22)], S_5=-48/[c^2(5c+22)]",
+    ],
+    verified_against=[
+        "Separate weighted Riccati-metric residual for H_w=sum r*S_r*t^r",
+        "Exact symbolic residual comparison distinguishing the two normalisations",
+    ],
+    disjoint_rationale=(
+        "The manuscript proof solves the null-state equation. This test "
+        "keeps the older square-root metric coefficient as an explicit "
+        "auxiliary value and checks that each value annihilates only its "
+        "own defining residual."
+    ),
+)
+def test_virasoro_sextic_null_state_distinct_from_weighted_metric():
+    """The corrected S_6 and the weighted metric coefficient are distinct."""
+    null_s6 = virasoro_null_state_s6()
+    metric_s6 = virasoro_weighted_metric_s6()
+
+    assert simplify(null_s6 - metric_s6) != 0
+    assert virasoro_null_state_s6_residual(null_s6) == 0
+    assert virasoro_weighted_metric_s6_residual(metric_s6) == 0
+    assert virasoro_null_state_s6_residual(metric_s6) != 0
+    assert virasoro_weighted_metric_s6_residual(null_s6) != 0
+
+    assert simplify(null_s6.subs(c, 1) - Rational(5084, 729)) == 0
+    assert simplify(metric_s6.subs(c, 1) - Rational(19040, 2187)) == 0

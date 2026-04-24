@@ -164,9 +164,9 @@ Stokes pole at $c_S=-218/45$, zero of $180c+872$. At $c=-178/45$ the denominator
 
 **Shadow coefficient $S_6$.** Forced by $[t^6]H^2=0$ in the master equation $H^2=t^4 Q_c$:
 $$
-S_6(\mathrm{Vir}_c)\;=\;\frac{40(45c+188)}{3\,c^3\,(5c+22)^2}.
+S_6(\mathrm{Vir}_c)\;=\;\frac{4(240c+1031)}{c^3\,(5c+22)^2}.
 $$
-Higher coefficients $S_{r\ge 7}$ are recursive from the Riccati-in-$U$ reduction with $U:=(\log H)'-2/t$ satisfying $U'+2U^2=Q_c''/(2Q_c)$. The master equation $H^2=t^4Q_c$ is quadratic-algebraic (three synonymous forms: quadratic-algebraic, Picard-Fuchs-linear, Riccati-in-$U$). The point $c=-83/20$ is a zero of the Borel-radius function, a phase transition in Borel-singularity topology, not a double root of $Q_c(t)$ in $t$ ($\mathrm{disc}_t(Q_c)=-320c^2/(5c+22)$ vanishes only at $c=0$).
+Higher coefficients $S_{r\ge 7}$ are recursive from the Riccati-in-$U$ reduction with $U:=(\log H)'-2/t$ satisfying $U'+2U^2=Q_c''/(2Q_c)$. The master equation $H^2=t^4Q_c$ is quadratic-algebraic (three synonymous forms: quadratic-algebraic, Picard-Fuchs-linear, Riccati-in-$U$). The point $c=-83/20$ is a zero of the secondary rational function $(20c+83)/(5c+22)$ in the Borel-radius algebra, a phase transition in Borel-singularity topology, not a double root of $Q_c(t)$ in $t$ ($\mathrm{disc}_t(Q_c)=-320c^2/(5c+22)$ vanishes only at $c=0$).
 
 **$\beta_N=12(H_N-1)$ verified.** With $H_N=\sum_{j=1}^N 1/j$: $\beta_2=6$, $\beta_3=10$, $\beta_4=13$, $\beta_5=77/5$, $\beta_6=87/5$. Derivation by $12/s$ per-spin at $s=2,\ldots,N$. Competitors $(N+1)(N+2)/2=15$ and $N^2-N+4=16$ both fail at $N=4$.
 

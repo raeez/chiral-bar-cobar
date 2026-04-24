@@ -115,7 +115,7 @@ with $h_{\mathrm{LV}}$ the universal Loday-Vallette contracting homotopy on $T^c
 
 **Virasoro Borel-radius closed form.** $|\omega|^2(c)=c^2(5c+22)/[4(45c+218)]$; large-$c$ asymptotic $|\omega|(c)=c/6-1/27+O(c^{-1})$; Stokes pole $c_S=-218/45$ (zero of $180c+872$).
 
-**Shadow coefficient $S_6$.** $S_6(\mathrm{Vir}_c)=40(45c+188)/[3c^3(5c+22)^2]$ forced by $[t^6]H^2=0$.
+**Shadow coefficient $S_6$.** $S_6(\mathrm{Vir}_c)=4(240c+1031)/[c^3(5c+22)^2]$ forced by the order-$t^8$ null-state equation $2S_2S_6+2S_3S_5+S_4^2=0$. The weighted Riccati-metric coefficient remains $\widehat S_6=80(45c+193)/[3c^3(5c+22)^2]$.
 
 **F5 Drinfeld-double cohomological obstruction at $g\ge 2$.** $\mathrm{obs}^{(1)}_{\mathrm{double}}\in H^2(\mathfrak{grt}^{\mathrm{ell}},\mathfrak{sp}(A)\otimes\mathfrak{sp}(A^!))$, elliptic 2-cocycle $\omega_{\mathrm{ell}}=\wp(\tau)\langle\cdot,\cdot\rangle_{\mathfrak{sp}}$. Vanishes iff $r_{\max}(A)=2$ (class $\mathsf G$ only).
 
