@@ -178,3 +178,63 @@ reader-facing mathematics.
   `223 passed`.
 - [ ] Full LaTeX builds were not run; builds remain user-opt-in
   session-end verification.
+
+## O. Three-Volume Front-Matter and Session-Spoils Rectification
+
+- [x] Re-audit Vol I, Vol II, and Vol III dirty working state after the
+  interrupted merge/build work, including live worktrees and background TeX
+  processes.
+- [x] Re-read the Chriss--Ginzburg rectification instructions and the
+  cross-volume propagation instructions before writing into front matter.
+- [x] Locate the active abstract, preface, and introduction surfaces in all
+  three volumes and distinguish them from superseded notes, standalones, and
+  extraction PDFs.
+- [x] Load each volume's concordance and theorem registry around the
+  front-matter claims that will be named explicitly.
+- [x] Extract the session-spoils spine from the recent commits: Vol I sextic
+  shadow correction, Stokes pole \(c_S=-218/45\), Borel radius
+  \(|\omega|^2(c)=c^2(5c+22)/[4(45c+218)]\), Riccati-on-\(U\) master
+  equation, BP conductor label hygiene, \(\beta_N=12(H_N-1)\), W2
+  Monster--K3 \(c_+\)-product \(24\), and
+  \(c_{25}^{(\mathrm{depth}\ 5)}=\zeta(3,3,5,5,9)/25!\).
+- [x] Extract the Vol II session-spoils spine: the
+  \(\mathsf{SC}^{\mathrm{ch,top}}\) heptagon, the chain model
+  \(C^\bullet_{\mathrm{ch}}(A,A)\simeq
+  \Omega^{\mathrm{ch}}(B^{\mathrm{ch}}(A))\), the normalization
+  \(h_A=h_{\mathrm{LV}}/(\kappa+\kappa^!)\), fat-diagonal BD
+  associativity, weight-completed class-\(\mathsf M\) topologisation,
+  celestial \(W_{1+\infty}\) endpoint scope, and the KZ/BV analytic-SDR
+  conditional package.
+- [x] Extract the Vol III session-spoils spine: two-stage
+  \(\Phi_d=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ
+  \Phi^{\mathrm{FA}}_d\), six-route \(K3\times E\) common-limit cone,
+  \(\mathfrak{so}(4,20)\) K3 Yangian trichotomy, K3 Hall--Drinfeld
+  crown, \(S^3\)-framing on generic compact CY\(_3\) Lagrangians,
+  generic CY\(_3\) MNOP via Joyce \(V_X\) and KPS orientation, and
+  class-\(\mathsf M\) \(E_3\)-bar past genus \(3\).
+- [x] Rewrite Vol I abstract losslessly, preserving every mathematical claim
+  while inserting the new session spine in CG voice.
+- [x] Rewrite Vol I preface in place where the old front-matter architecture
+  does not yet carry the session spine.
+- [x] Rewrite Vol I introduction in place, including body-proper propagation
+  where the front matter names a theorem whose proof surface has moved.
+- [x] Rewrite Vol II abstract losslessly, including the KZ/BV conditional
+  status and the heptagon/topologisation/celestial scope.
+- [x] Rewrite Vol II preface and introduction without upgrading conditional
+  KZ/BV claims to proved claims.
+- [x] Rewrite Vol III abstract if present, otherwise insert the equivalent
+  abstract/front-matter opening into the active preface/introduction surface.
+- [x] Rewrite Vol III preface and introduction so the two-stage functor,
+  K3 Yangian, Hall--Drinfeld, and generic CY\(_3\) statements are stated
+  with subscripted \(\kappa_\bullet\)-discipline.
+- [x] Run cross-volume phrase sweeps for the old unsafe claims: unconditional
+  KZ all-loop recursion, single-output \(\Phi_d\) wording, raw class-\(\mathsf
+  M\) direct-sum topologisation, bare \(\kappa\), and stale sextic/Borel
+  formulas.
+- [x] Regenerate metadata in each edited volume if claim-status-bearing
+  manuscript sources changed. No regeneration needed: edits changed prose only,
+  added no labels, and changed no claim-status tags.
+- [x] Run conflict-marker scans and `git diff --check` across all edited
+  volumes.
+- [ ] Commit source/front-matter changes separately from generated metadata
+  or binary artifacts, with Raeez-only exhaustive messages.
