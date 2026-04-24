@@ -85,12 +85,13 @@ The CLEAN N^3 LEADING TERM extracted from the shadow tower is
    kappa_lead(M5_N) = N^3   (leading large-N coefficient,
                               with subleading log(N) correction)
 
-In contrast,
+In contrast, the reduced scalar ABJM convention used for M2 comparisons is
 
-   kappa(M2_N) = -N^2     (ABJM, exact, see abjm_holographic_datum.py)
+   kappa_red(M2_N) = -N^2     (see abjm_holographic_datum.py)
 
-So kappa(M5)/kappa(M2) ~ -N at large N, which is the relative scaling
-between the M5 and M2 brane physics.
+So the reduced comparison ratio kappa(M5)/kappa_red(M2) ~ -N at large N,
+which is the relative scaling between the M5 and M2 brane physics.  The
+full pre-BRST ABJM characteristic is -(N^2+1).
 
 THE GENUS EXPANSION F_g
 =======================
@@ -158,7 +159,7 @@ The hallmark distinction:
                                          Beem-Rastelli-vR)
 
 In the SHADOW PICTURE:
-   M2 boundary VOA:  kappa(M2_N) = -N^2
+   M2 boundary VOA:  kappa_red(M2_N) = -N^2
    M5 boundary VOA:  kappa(M5_N) ~ N^3 (leading)
 
 The difference of one power of N comes from the dimension of the
@@ -359,12 +360,15 @@ class M5Data:
 
     @property
     def kappa_full(self) -> Fraction:
-        """Full kappa including subleading terms for N M5 branes.
+        """M5 stack-anomaly kappa proxy including the first subleading term.
 
-        kappa(M5_N) = N^3 - N    (matching the Henningson-Skenderis
-                                   a-anomaly leading + subleading)
+        This property is retained for the stack anomaly scalar
+        kappa_stack(M5_N) = N^3 - N.  It is not the same invariant as
+        the protected chiral stress-tensor value
+        kappa_chiral(M5_N) = c_2d/2 = (4N^3 - 3N - 1)/2, returned by
+        ``kappa_from_chiral``.
 
-        Multi-path verification:
+        Distinct verification lanes:
             (i) Henningson-Skenderis: a(N) = (4N^3 - 3N - 1)/12 + 1/12
                 = (4N^3 - 3N)/12 = N(4N^2 - 3)/12.  The shadow extracts
                 the (4N^3 - 3N) numerator stripped of the 1/12 normalisation.
@@ -377,7 +381,7 @@ class M5Data:
                   is a free symplectic boson + free fermion + ... with
                   kappa = 0 (anomaly-free at the linear level).
 
-        We use the BEEM-RASTELLI-VAN REES exact formula:
+        The BEEM-RASTELLI-VAN REES exact formula instead gives:
             c_{2D}(M5_N) = 4 N^3 - 3 N - 1
         and hence
             kappa(M5_N) = (4 N^3 - 3 N - 1) / 2
@@ -514,12 +518,12 @@ def m5_anomaly_polynomial_leading(N: int) -> Fraction:
 
 
 def m5_vs_m2_kappa_ratio(N: int) -> Fraction:
-    """Ratio kappa(M5_N) / kappa(M2_N) at large N.
+    """Ratio kappa(M5_N) / kappa_red(M2_N) at large N.
 
     M5: kappa ~ N^3 (Henningson-Skenderis)
-    M2: kappa ~ -N^2 (ABJM, abjm_holographic_datum.py)
+    M2: kappa_red ~ -N^2 (ABJM, abjm_holographic_datum.py)
 
-    Ratio: kappa(M5)/kappa(M2) ~ -N
+    Ratio: kappa(M5)/kappa_red(M2) ~ -N
 
     The negative sign is the indefinite metric of the ABJM symplectic
     bosons; the |ratio| ~ N reflects the relative dimensionality:
@@ -603,10 +607,12 @@ def kappa_m5_path3_brane_counting(N: int) -> Fraction:
 
 
 def kappa_m5_multi_path(N: int) -> Dict[str, Fraction]:
-    """Three independent paths to kappa(M5_N).
+    """Three independent M5 kappa readouts with their exact normalisations.
 
-    Returns a dictionary with paths 1, 2, 3 and their leading-N
-    consistency.  All three paths agree at leading N^3 order.
+    Path 1 is the protected chiral stress-tensor scalar and has leading
+    coefficient 2 in units of N^3. Paths 2 and 3 are the clean geometric
+    N^3 proxy and agree exactly. The returned dictionary keeps the three
+    scalars separate instead of forcing a false equality.
     """
     p1 = kappa_m5_path1_anomaly(N)   # (4N^3 - 3N - 1)/2
     p2 = kappa_m5_path2_w_algebra(N)  # N^3 (clean leading)
@@ -702,11 +708,12 @@ def m5_genus_expansion_decimal(N: int, max_genus: int = 5,
 # ===========================================================================
 
 def m2_kappa_abjm(N: int) -> Fraction:
-    """ABJM (M2 brane) modular characteristic.
+    """ABJM (M2 brane) reduced scalar modular characteristic.
 
-    kappa(ABJM_N) = -N^2
+    kappa_red(ABJM_N) = -N^2
 
-    Source: compute/lib/abjm_holographic_datum.py and CLAUDE.md.
+    Source: compute/lib/abjm_holographic_datum.py.  The full pre-BRST
+    characteristic -(N^2+1) is kept separate in the comparison engine.
     Sign: negative because ABJM boundary VOA is non-unitary
     (symplectic bosons).
 
@@ -726,7 +733,7 @@ def m5_kappa_leading(N: int) -> Fraction:
 def brane_scaling_dichotomy(N: int) -> Dict[str, object]:
     """The N^{3/2} vs N^3 brane scaling dichotomy.
 
-    M2: F_0 ~ N^{3/2}, kappa ~ -N^2
+    M2: F_0 ~ N^{3/2}, kappa_red ~ -N^2
     M5: F_0 ~ N^3,     kappa ~ +N^3
 
     Returns the comparison dictionary.
@@ -735,7 +742,7 @@ def brane_scaling_dichotomy(N: int) -> Dict[str, object]:
     kappa_m5 = m5_kappa_leading(N)
 
     # Free energy genus-1 ratio
-    F1_m2 = kappa_m2 * lambda_fp(1)  # = -N^2/24
+    F1_m2 = kappa_m2 * lambda_fp(1)  # reduced scalar = -N^2/24
     F1_m5 = kappa_m5 * lambda_fp(1)  # = +N^3/24
 
     return {
@@ -747,7 +754,7 @@ def brane_scaling_dichotomy(N: int) -> Dict[str, object]:
         "F1_ratio_M5_over_M2": (F1_m5 / F1_m2) if F1_m2 != 0 else None,
         "F0_scaling_M2": "N^{3/2}",
         "F0_scaling_M5": "N^3",
-        "kappa_scaling_M2": "-N^2",
+        "kappa_scaling_M2": "kappa_red=-N^2",
         "kappa_scaling_M5": "+N^3",
         "scaling_difference_explanation": (
             "M2 (3d worldvolume): F_0 ~ N^{3/2} from Airy function. "
@@ -895,7 +902,7 @@ def costello_gaiotto_paquette_summary() -> Dict[str, object]:
     """
     return {
         "framework": "twisted holography for M-theory",
-        "M2_corner": "ABJM BRST reduction; kappa ~ -N^2",
+        "M2_corner": "ABJM BRST reduction; kappa_red ~ -N^2",
         "M5_corner": "W_{1+inf}[lambda=N]; kappa ~ +N^3",
         "M2_M5_corner": "Y_{N,N,N} Gaiotto-Rapcak corner VOA",
         "S_duality": "M2 <-> M5 via S^4 / S^7 swap, lambda <-> 1/lambda",
@@ -1138,7 +1145,7 @@ def cross_engine_consistency_with_abjm(N: int) -> Dict[str, object]:
 def verify_kappa_multi_path(N: int) -> Dict[str, bool]:
     """Verify the multi-path kappa computation.
 
-    Three paths must agree at the leading N^3 order:
+    Three paths have compatible N^3 scaling but not the same coefficient:
         Path 1: chiral algebra c/2 ~ 2 N^3 (factor 2 from c = 4N^3)
         Path 2: W-algebra formula leading ~ N^3
         Path 3: dof counting ~ N^3

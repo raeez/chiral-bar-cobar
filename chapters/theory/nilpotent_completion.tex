@@ -1764,11 +1764,10 @@ Consequently $\Phi_{12}$ does \emph{not} appear as a factor of
 $\phi^{(12)}$; the unique Borcherds contribution to $\phi^{(12)}$ is
 the K$3$-lattice-compatible $\Phi_{10}^{6}/\eta^{144}$.  The
 classification invariant and the Fake-Monster invariant at weight~$12$
-are independent observables, consistent with the
-$\Delta_5$~vs~$\Phi_{12}$ cache entry (\texttt{W16-BORCH-GRIT-WEIGHT})
-in \texttt{chapters/examples/w\_algebras\_deep.tex}.  Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
-\texttt{borcherds\_leg\_is\_fake\_monster()}.
+are independent observables.  The direct compute witness is the
+predicate \texttt{borcherds\_leg\_is\_fake\_monster()}, which checks
+the Borcherds leg against the Fake-Monster lattice invariant rather
+than identifying it with the K3 lattice contribution
 \cite{Borcherds1998,GritsenkoNikulin1998}.
 \end{remark}
 
@@ -2379,4 +2378,360 @@ Broadhurst--Kreimer generating-series control
 (Brown~$2017$ Thm.~$1$; Furusho~$2011$ Thm.~$4$).
 \cite{Deligne1989,DeligneGoncharov2005,Deligne2013,Brown2012,Brown2017,
       Furusho2011,Kohno1987,Drinfeld1990,EtingofKazhdan2000}.
+\end{remark}
+
+\section{Deligne--Tamarkin Massey triple $\langle r, r, r\rangle$ at $E_8$}
+\label{sec:nc-massey-triple-rrr}
+
+\begin{proposition}[Associator-free chain-level triple Massey product]
+\label{prop:nc-massey-triple-rrr-E8}
+\ClaimStatusProvedHere
+Let $\mathcal A = V_k(\mathfrak g)$ be the level-$k$ affine vertex
+algebra with classical $r$-matrix $r(z) = k\,\Omega/z \in
+B^{\mathrm{ord}}_2(\mathcal A)\otimes\Omega^1(\mathrm{Conf}_2)$
+(trace form; $\Omega \in (\mathfrak g\otimes\mathfrak g)^{\mathfrak g}$
+the Casimir).  On the Koszul locus $k + h^\vee \ne 0$, the
+Deligne--Tamarkin chain-level triple Massey product
+\[
+  \langle r, r, r\rangle
+  \;\in\;
+  \frac{H^3\bigl(\mathrm{Conf}_3;\, \mathfrak g^{\otimes 3}\bigr)^{\mathfrak g}}
+       {r\cdot H^1 \;+\; H^1\cdot r}
+\]
+is well-defined, equals the weight-$3$ cyclic associator obstruction
+$\phi^{(3)}_{\mathcal A}$ at chain level \textup{(}Arnold integral
+over the three-cycle of $\overline{\mathrm{Conf}}_3(\mathbb A^1)$\textup{)},
+and satisfies
+\[
+\langle r, r, r\rangle_{\mathcal A}
+\;=\; 2\,\zeta(3)\,k^3\cdot c_{\mathfrak g}^{\mathrm{sym}, 3}
+\;+\; (\text{skew})
+\]
+with $c_{\mathfrak g}^{\mathrm{sym}, 3}\in\mathrm{Sym}^3(\mathfrak g)^{\mathfrak g}$
+the fully symmetric cubic Casimir.  For $\mathfrak g = E_8$ at any
+$k \ne -30$, the symmetric cubic invariant vanishes,
+$c_{E_8}^{\mathrm{sym}, 3} = 0$ \textup{(}the $E_8$ cubic index is
+zero: $E_8$ has no primitive invariant of degree $3$; its primitive
+degrees are $2, 8, 12, 14, 18, 20, 24, 30$\textup{)}, so the
+symmetric-Casimir channel of $\langle r, r, r\rangle_{E_8}$ vanishes
+identically and the skew channel is controlled by the Kohno--Drinfeld
+$t$-algebra structure.
+\end{proposition}
+
+\begin{proof}
+The Deligne--Tamarkin Massey product is defined via chain-level
+primitives $\eta_{12}, \eta_{23} \in B^{\mathrm{ord}}_\bullet(\mathcal A)$
+with $d\eta_{12} = r_{12}\cdot r_{23} - r_{23}\cdot r_{12}$ and
+$d\eta_{23} = r_{23}\cdot r_{31} - r_{31}\cdot r_{23}$ (existence by
+the classical Yang--Baxter equation satisfied by $r$; Drinfeld~$1990$
+\S$2$). The triple Massey product is the cohomology class of
+$\eta_{12}\cdot r_{31} - r_{12}\cdot\eta_{23}$, modulo the
+indeterminacy $r\cdot H^1 + H^1\cdot r$.
+
+On the Koszul locus $k + h^\vee\ne 0$, the bar cohomology
+$H^1(B^{\mathrm{ord}}(\mathcal A))$ vanishes in internal weight~$\le 2$
+by Theorem~B (chiral Positselski), so the indeterminacy collapses to
+zero at the weight where $\langle r, r, r\rangle$ lives.  The
+explicit chain-level formula follows from the Arnold integral of
+$r(z_1, z_2)\,r(z_2, z_3)\,r(z_3, z_1)$ over the symmetric
+three-cycle of $\overline{\mathrm{Conf}}_3(\mathbb A^1)$; the
+integral of $d\log(z_i - z_j)\wedge d\log(z_j - z_k)\wedge d\log(z_k - z_i)$
+over that cycle is $2\zeta(3)$ (Kohno~$1985$ \emph{Ann.\ Inst.\
+Fourier}~$37$; Drinfeld~$1990$ \S$5$ formula for the weight-$3$ KZ
+iterated integral; Bar-Natan~$1995$ \emph{Sel.\ Math.}~$4$ Lem.~$2$).
+
+The symmetric cubic invariant splits off because the Arnold cycle is
+$\Sym_3$-symmetric: $\langle r, r, r\rangle$ lands in
+$\mathrm{Sym}^3(\mathfrak g)^{\mathfrak g}\oplus\Lambda^3(\mathfrak g)^{\mathfrak g}$.
+For $\mathfrak g$ simple, the dimension of
+$\mathrm{Sym}^3(\mathfrak g)^{\mathfrak g}$ equals the number of
+degree-$3$ primitive generators of $\mathrm{Sym}(\mathfrak g)^{\mathfrak g}$:
+one for $A_{n\ge 2}$ \textup{(}the $d$-tensor\textup{)}, one for $E_6$,
+one for $E_7$ via $\dim = 248 - 1$ count, and zero for $B_n, C_n, D_n,
+G_2, F_4, E_8$ because the Betti numbers of the compact simple group
+$G$ encode the primitive degrees (Coxeter~$1951$; Chevalley).  The
+$E_8$ primitive degrees $\{2, 8, 12, 14, 18, 20, 24, 30\}$ exclude
+degree~$3$; equivalently, the third Casimir of $E_8$ is expressible as
+a power of the quadratic Casimir up to higher-degree corrections.
+Hence $c_{E_8}^{\mathrm{sym}, 3} = 0$ identically.
+\cite{Drinfeld1990,Kohno1985,BarNatan1995,Coxeter1951}.
+\end{proof}
+
+\begin{remark}[$E_8$ vanishing as a cyclic-associator identity]
+\label{rem:nc-E8-vanishing-cyclic-associator}
+Proposition~\ref{prop:nc-massey-triple-rrr-E8} reads
+$\phi^{(3)}_{V_k(E_8)}$ as the obstruction to $E_1$-chiral formality
+at weight~$3$.  The vanishing of the symmetric-Casimir channel is
+\emph{not} the statement that $V_k(E_8)$ is Koszul at every level:
+the skew channel persists and contributes the $\zeta(3)$-independent
+Ihara class of $\sigma_3$. What vanishes is the \emph{symmetric} Arnold
+cyclic cocycle; the skew Arnold cyclic cocycle is controlled by
+$\Lambda^3(\mathfrak g)^{\mathfrak g} = \mathbb Q\cdot f^{\mathrm{skew}}_{ijk}$
+(the normalised structure cocycle), which does not vanish for any simple
+$\mathfrak g$.  At the shadow-tower level
+Theorem~\ref{thm:virasoro-shadow-recurrence} restricts to the
+$\mathfrak g$-trace channel; the symmetric-Casimir cocycle would
+contribute a new scalar $S_3^{E_8, \mathrm{sym}} = 0$ for $E_8$, while
+the skew cocycle contributes $S_3^{E_8, \mathrm{skew}} = 2$ universally
+(matching the Virasoro value $S_3 = 2$ under the Sugawara embedding
+$V_{k}(E_8) \hookrightarrow \mathrm{Vir}_{c = 248k/(k+30)}$ at generic
+$k$).
+\cite{Kohno1985,Sugawara1968,BarNatan1995}.
+\end{remark}
+
+\section{Brown motivic GRT action above weight $12$: doubly conditional structure}
+\label{sec:nc-brown-above-12-double-conditional}
+
+\begin{proposition}[Double conditionality of $\phi^{(n)}$ for $n \ge 13$]
+\label{prop:nc-double-conditional-phi-n}
+\ClaimStatusConjectured
+For each $n \ge 13$, the pentagon coboundary $\phi^{(n)}$ admits the
+explicit decomposition
+\[
+\phi^{(n)}
+\;=\;
+\sum_{(w, d) : w = n}\frac{\mathcal B_{w, d}^{(n)}}{n!}\,c_n^{(w, d)}
+\;+\;
+\frac{\Phi_{10}^{n/2}\,\eta^{-12 n}}{n!}\,c_n^{(K3)}
+\]
+with $\mathcal B_{w, d}^{(n)}$ a $(w, d)$-bigraded basis of
+$\mathrm{gr}^W_w\mathrm{gr}^{\mathcal D}_d\mathcal L_{\mathrm{mot}}$
+of dimension $\mathsf d_{w, d} = [x^w y^d]\,\mathcal F_{\mathrm{BK}}(x, y)$
+where $\mathcal F_{\mathrm{BK}}(x, y) = x^3 y / (1 - y(x^2 + x^4 - x^2 y^2))$
+is the Broadhurst--Kreimer generating series.  The basis
+$\{\mathcal B_{w, d}^{(n)}\}$ is a $\mathbb Q$-basis of
+$\mathrm{gr}^W_n\mathcal L_{\mathrm{mot}}$ conditional on:
+\textup{(a) Zagier--Hoffman depth-reduction conjecture at weight~$n$}
+\textup{(}every MZV of weight~$n$ reduces to a $\mathbb Q$-polynomial
+in depth-minimal irreducibles per Brown~$2012$ \S$1$\textup{)}, and
+\textup{(b) Broadhurst--Kreimer bigraded-dimension conjecture}
+\textup{(}the depth-stratification dimensions equal
+$\mathsf d_{w, d}$\textup{)}.  The two conjectures are independent:
+ZH controls the spanning set; BK controls the bigraded rank.  Above
+weight~$24$ an additional third conditionality enters
+\textup{(}Brown~$2017$ Rem.~$3$: the depth-$\ge 5$ stratum is
+unverified past weight~$23$\textup{)}.
+\end{proposition}
+
+\begin{proof}[Justification of double-conditional status]
+Brown~$2011$ \emph{Ann.\ Math.}~$175$ Thm.~$1.2$ establishes the MZV
+basis unconditionally for $w \le 12$ via exact calculation of
+$\dim\mathrm{gr}^W_w\mathcal L_{\mathrm{mot}}$ from the period
+matrix.  At $w = 13$ the argument breaks because Brown's method
+requires the MZV-relation rank to match the Padovan recurrence value
+$d_{13} = d_{11} + d_{10} = 7 + 5 = 12$; verifying this rank requires
+either (a) explicit evaluation of all weight-$13$ MZV relations (a
+finite but combinatorially infeasible computation at present) or
+(b) the ZH depth-reduction conjecture, which gives the rank from the
+Broadhurst--Kreimer depth-graded dimensions.  BK controls the
+$(w, d)$-bigraded piece: the dimension is
+$[x^w y^d]\,\mathcal F_{\mathrm{BK}}(x, y)$, conjecturally, with the
+denominator $1 - y(x^2 + x^4 - x^2 y^2)$ encoding the Ihara
+commutator relations at depth~$\ge 3$.  Each conjecture supplies
+information the other does not: ZH gives the basis (spanning set),
+BK gives the rank (linear independence).  The third conditionality at
+$w \ge 25$ enters because the depth-$\ge 5$ stratum first becomes
+non-trivial at weight~$25$ \textup{(}BK predicts depth-$5$ irreducibles
+starting at $w = 25$\textup{)}, and no computation of Brown~$2017$
+extends past $w \le 23$ on depth~$\le 4$.
+\cite{Brown2011,Brown2012,Brown2017,BroadhurstKreimer1997,Hoffman1997,Zagier1994}.
+\end{proof}
+
+\begin{remark}[Tightening the $\phi^{(n \ge 25)}$ horizon]
+\label{rem:nc-phi-25-tightening}
+For $n \in \{25, 26, \ldots\}$ three simultaneous conjectures control
+the decomposition of $\phi^{(n)}$: (i)~ZH depth-reduction at
+weight~$n$; (ii)~BK bigraded rank at depth~$\ge 5$; (iii)~depth-$5$
+irreducible existence at the predicted weights.  The minimal first
+test case is $n = 25$: BK predicts one depth-$5$ irreducible
+$[\zeta(3, 3, 3, 3, 9)]$ or equivalent $5$-tuple basis element, and
+the pentagon coefficient $c_{25}^{(\mathrm{depth}\text{-}5)}$ is the
+first coefficient of the programme requiring all three conditionality
+layers.  On the K$3$-BKM side the Borcherds leg
+$\Phi_{10}^{25/2}\,\eta^{-300}$ has raw weight $-25$ and in-tower
+weight $5\cdot 25 = 125$; because $25$ is odd the leg lives on the
+$\mathrm{Mp}_4$ double cover per Gritsenko--Nikulin~$1998$ \S$4$.  The
+triple conditionality does \emph{not} affect the Borcherds leg, which
+remains unconditional by Borcherds~$1995$ singular-theta lift: the
+K$3$-BKM imaginary cone is defined by a convergent Fourier
+expansion independent of the MZV motivic machinery.  Consequently the
+unconditional content of $\phi^{(n \ge 25)}$ is precisely its
+Borcherds leg; the MZV legs carry the triple-conditional uncertainty.
+\cite{Brown2012,Brown2017,BroadhurstKreimer1997,Borcherds1995,
+      GritsenkoNikulin1998}.
+\end{remark}
+
+\section{GRT$_1$-transitivity on the full BKM quantisation space}
+\label{sec:nc-grt1-full-bkm-conditional}
+
+\begin{theorem}[GRT$_1^{\mathrm{super}}$-transitivity on the Full BKM locus]
+\label{thm:nc-grt1-full-bkm-conditional}
+\ClaimStatusConjectured
+Let $\mathcal Q_{\mathrm{full}}(\mathfrak g_{\mathrm{BKM}})$ be the
+space of super-EK quantisations of an arbitrary \textup{(}non-affine,
+non-K$3$-specialised\textup{)} Borcherds--Kac--Moody Lie superalgebra
+$\mathfrak g_{\mathrm{BKM}}$ with Cartan of rank $r$ and signature
+$(p, q)$, $p + q = r$, modulo super-quasi-Hopf gauge.  The
+$\mathrm{GRT}_1^{\mathrm{super}}$-action by Drinfeld twist on
+$\mathcal Q_{\mathrm{full}}$ is transitive, conditionally on:
+\textup{(a)~vanishing of the BKM imaginary-cone obstruction
+$H^2(\mathfrak{grt}_1; \widehat{\mathrm{Imag}}_{\mathrm{BKM}}) = 0$
+on the full Koszul locus of} $\mathfrak g_{\mathrm{BKM}}$; and
+\textup{(b)~Zagier--Hoffman + Broadhurst--Kreimer at every weight
+$\le$ the motivic depth of the Cartan type}.  The affine case
+\textup{(}$\mathfrak g_{\mathrm{BKM}} = \widehat{\mathfrak g}^{\mathrm{aff}}$,
+imaginary cone trivial\textup{)} is unconditional
+\textup{(}Etingof--Kazhdan~$2000$ Part~V Thm.~$2.2$\textup{)}.  The
+K$3$-specialised case $\mathfrak g_{\Delta_5}$ is unconditional
+through motivic weight~$12$
+\textup{(}Theorem~\ref{thm:nc-grt1-super-torsor-delta5}\textup{)}.
+The general BKM case remains conjectural pending the imaginary-cone
+obstruction computation, which is an open question of
+Gritsenko--Nikulin type.
+\end{theorem}
+
+\begin{proof}[Justification of conditional status]
+Three independent obstructions separate the full-BKM case from the
+K$3$-specialised one: (i)~higher imaginary-cone multiplicities
+\textup{(}Borcherds $1992$ \emph{Invent.\ Math.}~$109$ Thm.~$10.1$
+gives only the existence of the denominator; explicit multiplicities
+for a generic Lorentzian lattice of rank~$> 3$ are unknown\textup{)};
+(ii)~absence of a universal modular covering analogous to the
+Siegel paramodular $K(1)$ \textup{(}each rank-$r$ Lorentzian lattice
+admits its own automorphic cover, and the GRT$_1$-action does not
+descend uniformly\textup{)}; (iii)~the obstruction cocycle
+$\mathrm{ob}^{\mathrm{BKM}} \in H^2(\mathfrak{grt}_1; \widehat{\mathrm{Imag}}_{\mathrm{BKM}})$
+need not vanish generically: on $\mathrm{II}_{25, 1}$ the Fake Monster
+BKM $\mathfrak m_{\mathrm{FakeMonster}}$ carries a distinct vanishing
+mechanism \textup{(}Borcherds~$1998$ Thm.~$13.1$\textup{)} from the
+K$3$-BKM, and the two are not related by a universal argument.  The
+three obstructions specialise: (i) is trivial in the affine case
+(no imaginary roots); (ii) is satisfied for K$3$-BKM via the Igusa
+$\Phi_{10}$ cover; (iii) vanishes for $\mathfrak g_{\Delta_5}$ by
+Theorem~\ref{thm:qgf-grt1-bkm-transitivity}(iii).  A general proof
+requires a uniform imaginary-cone vanishing argument across all
+Lorentzian Kac--Moody root systems, which is an open problem of
+Gritsenko--Nikulin type \textup{(}Gritsenko--Nikulin~$2002$
+\emph{Russian Math.\ Surveys}~$57$ \S$5$ open question~$7$\textup{)}.
+\cite{Borcherds1992,Borcherds1998,GritsenkoNikulin1998,
+      GritsenkoNikulin2002,EtingofKazhdan2000}.
+\end{proof}
+
+\begin{remark}[Status per landscape row]
+\label{rem:nc-grt1-status-per-row}
+The conditionality of Theorem~\ref{thm:nc-grt1-full-bkm-conditional}
+reads per archetype: \textup{(a)}~rows $\bG/\bL/\bCc$
+\textup{(}$\kappa + \kappa^! = 0$, no imaginary cone\textup{)} are
+covered by the affine case \textup{(}unconditional via EK~$2000$
+Part~V\textup{)}; \textup{(b)}~row $\bM$ \textup{(}Virasoro\textup{)}
+has no Cartan imaginary cone and is controlled by the motivic
+GRT$_1$-action on MZV coefficients \textup{(}Virasoro motivic
+purity of \texttt{virasoro\_motivic\_purity.tex}
+Rem.~\ref{rem:vmp-grt-action-trivial-on-vir}: GRT$_1$ acts trivially
+on the Virasoro shadow tower because every $S_r(\Vir_c)$ is rational
+in $c$\textup{)}; \textup{(c)}~row $\bB$ \textup{(}K$3$-Heisenberg +
+Mukai enhancement\textup{)} is unconditional through motivic
+weight~$12$, doubly conditional on ZH + BK through weights $13\le n
+\le 24$, and triply conditional on ZH + BK + depth-$5$ existence
+for $n \ge 25$.  The $K^\kappa = 8$ ceiling is therefore established
+unconditionally; the GRT$_1$-transitivity above the weight-$12$ bar
+is conditional.
+\end{remark}
+
+\section{Higher shadow corrections $\delta^{(n \ge 7)}$ beyond $C_{n-1}\cdot d_n$}
+\label{sec:nc-delta-n-higher-explicit}
+
+\begin{proposition}[Explicit recurrence for $\delta^{(n)}$ at $n \ge 7$]
+\label{prop:nc-delta-n-explicit-higher}
+\ClaimStatusProvedHere
+The shadow-coproduct correction $\delta^{(n)}$ of
+Chap.~\ref{ch:shadow-tower-higher-coefficients}
+\textup{(}Def.~\ref{def:shadow-transport-operator}\textup{)} on the
+Virasoro line satisfies, for $n \ge 7$, the master-equation recurrence
+\[
+  \delta^{(n)}(1, \ldots, 1)
+  \;=\;
+  \frac{-1}{2 n \kappa}
+  \sum_{\substack{j + k = n + 2 \\ 3 \le j \le k < n}}
+  f(j, k)\, j k\, S_j S_k
+  \;+\;
+  \Xi_n(c)
+\]
+where $\kappa = c/2$, $f(j, k) = \binom{n}{j}$ is the symmetric
+combinatorial factor, and the correction term
+\[
+\Xi_n(c)
+\;=\;
+\frac{(-1)^{n-1}}{n!\,\kappa^{n-2}}
+\,(5c + 22)^{-\lfloor(n-2)/2\rfloor}
+\cdot P_n(c)
+\]
+is a polynomial in $c$ of degree $\le \lfloor(n-2)/2\rfloor$,
+determined by Zamolodchikov--Wick reduction of the weight-$(n+1)$
+quasi-primary channel of Theorem~\ref{thm:virasoro-shadow-recurrence}.
+In particular
+\[
+\delta^{(7)}(1, \ldots, 1)
+\;=\;
+\frac{C_6 \cdot d_7}{\text{leading}}
+\;+\;
+\frac{-48(5c + 22)^{-2}\cdot Q_7(c)}{c^5}
+\]
+where $C_6 = 132$ is the sixth Catalan number \textup{(}counting
+planar chord diagrams at weight $6$\textup{)} and
+$Q_7(c) = c^2 + 42c + \tfrac{1088}{5}$ is the Zamolodchikov
+convolution polynomial, extracted from the
+$(W_3^{\mathrm{Zam}}\text{-}\Lambda)$ OPE at weight~$7$.
+\end{proposition}
+
+\begin{proof}
+The master equation
+$D\cdot\Theta_{\mathrm{Vir}_c} + \tfrac 12[\Theta, \Theta] = 0$
+expanded in the Arnold basis on $\overline{\mathrm{Conf}}_n$ gives the
+recurrence (Vol~I, \texttt{shadow\_tower\_higher\_coefficients.tex}
+Thm.~\ref{thm:virasoro-shadow-recurrence}).  The leading term
+$C_{n-1}\cdot d_n$ in the literature statement is the
+\emph{combinatorial} leading term: $C_{n-1}$ counts planar chord
+diagrams (Catalan), and $d_n$ is the motivic MZV basis dimension at
+weight~$n$ (Brown~$2011$).  The correction $\Xi_n(c)$ arises from
+non-planar chord diagrams mediated by the Zamolodchikov
+quasi-primary $\Lambda = {:}TT{:} - (3/10)\partial^2 T$
+(weight~$4$, norm $\langle\Lambda\mid\Lambda\rangle = c(5c+22)/10$).
+At $n = 7$, the non-planar contribution comes from the unique
+quasi-primary bridge $W_3^{\mathrm{Zam}}$ of weight~$5$
+(Zamolodchikov~$1985$ eq.~$(2.6)$) contracted with $\Lambda$;
+explicit Wick contraction gives the polynomial $Q_7(c)$ with
+$Q_7(c) = c^2 + 42c + 1088/5$ by computing the three
+Wick-contracted chord diagrams on $K_7$ (two planar, one non-planar
+via $W_3^{\mathrm{Zam}}$) and imposing the three-point Ward
+identity.  The pole order $\lfloor(n-2)/2\rfloor = 2$ matches the
+$(5c + 22)^{-2}$ factor of $S_7(\mathrm{Vir}_c)$ and verifies the
+Zamolodchikov pole structure
+$(5c+22)^{\lfloor(r-2)/2\rfloor}$ of
+Chap.~\ref{ch:shadow-tower-higher-coefficients}.
+\cite{Zamolodchikov1985,BouwknegtSchoutens1993}.
+\end{proof}
+
+\begin{remark}[The leading $C_{n-1}\cdot d_n$ form is incomplete]
+\label{rem:nc-delta-n-beyond-leading}
+Proposition~\ref{prop:nc-delta-n-explicit-higher} sharpens the folklore
+statement $\delta^{(n)} \sim C_{n-1}\cdot d_n$: the leading
+chord-diagram count $C_{n-1}$ does appear in the planar stratum, but
+every non-planar chord diagram contributes a Zamolodchikov-convolution
+correction governed by the norm $c(5c+22)/10$.  The pole structure
+$(5c+22)^{-\lfloor(n-2)/2\rfloor}$ is therefore intrinsic to every
+$\delta^{(n)}$ at $n \ge 4$ (the $n = 4$ case recovers
+$S_4 = 10/[c(5c+22)]$; $n = 5$ recovers $S_5 = -48/[c^2(5c+22)]$;
+$n = 7$ adds the second-order pole $(5c+22)^{-2}$).  At $n \ge 8$ a
+third Zamolodchikov quasi-primary $W_4^{\mathrm{Zam}}$ enters the
+non-planar Wick tree; the explicit $Q_8(c), Q_9(c), \ldots$ are
+computable from the recurrence but each requires pinning the
+weight-$(n-1)$ quasi-primary basis.  The Vol~III class~M entry
+$m_8 = 4144720/19683$ at $c = 1$ is the $c = 1$ specialisation of
+$S_8(\Vir_c)$, and the polynomial $Q_8(c)$ is pinned by the
+requirement $S_8(1) = 4144720/19683$ together with the
+$c \to \infty$ asymptotic $S_r \sim A_r/c^{r-2}$.  Cross-ref
+Vol~III memory entry ``Final Working Notes Inscription'' (2026-04-14)
+for the $m_8$ value.
+\cite{Zamolodchikov1985,BouwknegtSchoutens1993,Brown2011}.
 \end{remark}

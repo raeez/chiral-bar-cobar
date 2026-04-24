@@ -1,8 +1,8 @@
 %================================================================
 % THEOREM B SCOPE — PLATONIC INSCRIPTION
 %
-% Adversarial attack target: the CLAUDE.md Thm B row asserts
-% "PROVED unconditional at coderived level"; the manuscript's own
+% Scope target: the slogan "unconditional at coderived level" must be
+% read in the weight-completed ambient; the manuscript's own
 % ex:virasoro-not-conilpotent (bar_cobar_adjunction_curved.tex:715)
 % declares that B(Vir) is NOT conilpotent, so the chiral Positselski
 % hypothesis (conilpotent + finite-dim graded pieces) fails for the
@@ -101,6 +101,12 @@ w(\xi) = n + \sum_{i=1}^{n} h_i.
 \end{equation}
 The \emph{weight filtration} $F^{\leq w} \bar{B}^{\mathrm{ch}}(\cA)$
 is the subspace spanned by tensors of total bar weight at most $w$.
+The conformal grading splits the bar object into weight summands; write
+$F^{>w}\bar{B}^{\mathrm{ch}}(\cA)$ for the complementary closed
+high-weight tail. Then
+$\bar{B}^{\mathrm{ch}}(\cA)/F^{>w}\bar{B}^{\mathrm{ch}}(\cA)
+\cong F^{\leq w}\bar{B}^{\mathrm{ch}}(\cA)$ is the finite weight
+truncation.
 \end{definition}
 
 \begin{lemma}[Filtration basics]
@@ -147,11 +153,11 @@ The \emph{weight-completed chiral bar coalgebra} is the inverse limit
 \widehat{\bar{B}}^{\mathrm{ch}}(\cA)
 \;=\;
 \varprojlim_{w \to \infty}
-\bigl(\bar{B}^{\mathrm{ch}}(\cA)/F^{\leq w}\bigr).
+\bigl(\bar{B}^{\mathrm{ch}}(\cA)/F^{>w}\bigr).
 \end{equation}
 Equivalently, $\widehat{\bar{B}}^{\mathrm{ch}}(\cA)$ is the
-$F$-adic completion of $\bar{B}^{\mathrm{ch}}(\cA)$ along the weight
-filtration.
+completion of $\bar{B}^{\mathrm{ch}}(\cA)$ by finite total-weight
+truncations.
 \end{definition}
 
 \begin{remark}[Why the weight filtration, not the bar-degree filtration]
@@ -185,35 +191,35 @@ positive-energy conformal-weight grading and finite-dimensional
 weight spaces, and let
 $C = \bar{B}^{\mathrm{ch}}(\cA)$ be its curved chiral CDG bar
 coalgebra. For every $w \geq 0$, the finite-weight truncation
-$C/F^{\leq w}$ is a conilpotent chiral CDG-coalgebra with
+$C/F^{>w}$ is a conilpotent chiral CDG-coalgebra with
 finite-dimensional graded pieces, and the chiral Positselski
 equivalence holds on the truncation:
 \begin{equation}\label{eq:chiral-positselski-at-each-weight}
-D^{\mathrm{co}}\bigl((C/F^{\leq w})\text{-}
+D^{\mathrm{co}}\bigl((C/F^{>w})\text{-}
  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\simeq\;
-D^{\mathrm{ctr}}\bigl((C/F^{\leq w})\text{-}
+D^{\mathrm{ctr}}\bigl((C/F^{>w})\text{-}
  \mathrm{contra}^{\mathrm{ch}}\bigr).
 \end{equation}
 The equivalence is natural in $w$, compatible with the tower of
-surjections $C/F^{\leq w+1} \twoheadrightarrow C/F^{\leq w}$.
+surjections $C/F^{>w+1} \twoheadrightarrow C/F^{>w}$.
 \end{theorem}
 
 \begin{proof}
 \emph{Step~1: hypotheses on the truncation.}
 Lemma~\ref{lem:weight-filtration-basics}(2),(4) shows that
-$C/F^{\leq w}$ is finite-dimensional in each cohomological degree
+$C/F^{>w}$ is finite-dimensional in each cohomological degree
 (a finite direct sum of finite-dimensional graded pieces). The
 conilpotency is witnessed by the bar-degree-plus-weight filtration:
-on any element of $C/F^{\leq w}$, the iterated deconcatenation
+on any element of $C/F^{>w}$, the iterated deconcatenation
 coproduct $\bar{\Delta}^{(N)}$ vanishes once $N$ exceeds the maximum
-bar degree in $C/F^{\leq w}$, which is bounded by~$w$ itself (since
+bar degree in $C/F^{>w}$, which is bounded by~$w$ itself (since
 $n \leq w$ when $n + \sum h_i \leq w$ with $h_i \geq 0$).
 
 \emph{Step~2: apply the chiral co-contra correspondence.}
 The hypotheses of
 Theorem~\ref{thm:chiral-co-contra-correspondence} are met on
-$C/F^{\leq w}$: conilpotency is Step~1, finite-dimensional graded
+$C/F^{>w}$: conilpotency is Step~1, finite-dimensional graded
 pieces is Lemma~\ref{lem:weight-filtration-basics}(2), and the
 chiral/$\cD_X$-module structure descends from $C$ along the
 filtration. Applying the co-contra correspondence gives
@@ -221,7 +227,7 @@ filtration. Applying the co-contra correspondence gives
 
 \emph{Step~3: naturality in $w$.}
 The truncation maps
-$C/F^{\leq w+1} \twoheadrightarrow C/F^{\leq w}$ are surjective chiral
+$C/F^{>w+1} \twoheadrightarrow C/F^{>w}$ are surjective chiral
 CDG-coalgebra maps; the induced pushforward on comodules and the
 induced pullback on contramodules intertwine the Positselski
 equivalence (this is the naturality clause in
@@ -233,7 +239,7 @@ localizations compatible with short exact sequences).
 
 \begin{remark}[Independence from the conformal-weight boundary value]
 \label{rem:independence-from-boundary}
-The truncation $C/F^{\leq w}$ is defined for every $w \geq 0$ and
+The truncation $C/F^{>w}$ is defined for every $w \geq 0$ and
 does not require a choice of minimum or maximum conformal weight on
 $\cA$. In particular, the statement applies to Virasoro, $W_N$,
 critical-level Kac--Moody, and any other class-M target where the
@@ -261,11 +267,11 @@ D^{\mathrm{co}}\bigl(\widehat{C}\text{-}
  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\simeq\;
 \varprojlim_{w}
- D^{\mathrm{co}}\bigl((C/F^{\leq w})\text{-}
+ D^{\mathrm{co}}\bigl((C/F^{>w})\text{-}
  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\simeq\;
 \varprojlim_{w}
- D^{\mathrm{ctr}}\bigl((C/F^{\leq w})\text{-}
+ D^{\mathrm{ctr}}\bigl((C/F^{>w})\text{-}
  \mathrm{contra}^{\mathrm{ch}}\bigr)
 \;\simeq\;
 D^{\mathrm{ctr}}\bigl(\widehat{C}\text{-}
@@ -279,12 +285,12 @@ landscape.
 \begin{proof}
 \emph{Step~1: pro-conilpotency of $\widehat{C}$.}
 By construction
-$\widehat{C} = \varprojlim_w C/F^{\leq w}$ in the category of chiral
-CDG-coalgebras. Each $C/F^{\leq w}$ is conilpotent
+$\widehat{C} = \varprojlim_w C/F^{>w}$ in the category of chiral
+CDG-coalgebras. Each $C/F^{>w}$ is conilpotent
 (Theorem~\ref{thm:chiral-positselski-at-each-weight}, Step~1), and
 the transition maps are surjective, so $\widehat{C}$ is
 pro-conilpotent: every element of $\widehat{C}$ has an image in some
-$C/F^{\leq w}$ where the iterated coproduct eventually vanishes.
+$C/F^{>w}$ where the iterated coproduct eventually vanishes.
 
 \emph{Step~2: coderived inverse limit.}
 We claim the natural functor
@@ -293,7 +299,7 @@ D^{\mathrm{co}}\bigl(\widehat{C}\text{-}
   \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\longrightarrow\;
 \varprojlim_{w}
-  D^{\mathrm{co}}\bigl((C/F^{\leq w})\text{-}
+  D^{\mathrm{co}}\bigl((C/F^{>w})\text{-}
   \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \]
 is an equivalence. A conilpotent chiral CDG-comodule over
@@ -301,10 +307,10 @@ $\widehat{C}$ is, by definition, a $\mathcal{D}_X$-module $M$
 equipped with a coaction $M \to \widehat{C} \chirtensor M$ whose
 image at each element lies in the Mittag--Leffler-completed
 $F^{\leq w}$-truncation for some finite $w$. Concretely,
-conilpotency forces the coaction to factor through some $C/F^{\leq w}$
+conilpotency forces the coaction to factor through some $C/F^{>w}$
 (with $w$ depending on the element), so the category
 $\widehat{C}\text{-}\mathrm{comod}^{\mathrm{conil,\,ch}}$ is the
-filtered colimit of the categories $(C/F^{\leq w})\text{-}
+filtered colimit of the categories $(C/F^{>w})\text{-}
 \mathrm{comod}^{\mathrm{conil,\,ch}}$ along the truncation tower.
 
 The coderived construction is built from null-homotopic objects
@@ -318,7 +324,7 @@ levelwise). Passing to the inverse limit on the coderived-category
 side therefore matches the levelwise coderived categories of the
 tower, yielding the first isomorphism in
 \eqref{eq:chiral-positselski-weight-completed}. The surjectivity of
-the transition maps $C/F^{\leq w+1} \twoheadrightarrow C/F^{\leq w}$
+the transition maps $C/F^{>w+1} \twoheadrightarrow C/F^{>w}$
 supplies the Mittag--Leffler condition needed for the
 $\varprojlim^1$-term in the Milnor exact sequence to vanish in each
 cohomological degree.
@@ -335,7 +341,7 @@ Dually, a chiral CDG-contramodule over $\widehat{C}$ is a
 $\mathcal{D}_X$-module $P$ with a contraaction
 $\mathrm{Hom}^{\mathrm{ch}}(\widehat{C}, P) \to P$; finite-type
 conilpotency of $\widehat{C}$ implies the contraaction factors
-through $\mathrm{Hom}^{\mathrm{ch}}(C/F^{\leq w}, P)$ for some $w$
+through $\mathrm{Hom}^{\mathrm{ch}}(C/F^{>w}, P)$ for some $w$
 (on each fixed element), so the contramodule category is again the
 filtered colimit of the truncation-tower categories. The
 contraderived construction is stable under this filtered-colimit
@@ -468,10 +474,9 @@ by the finite-generation of $V_k(\mathfrak{g})$ and the finite
 branching of the chiral bracket in each conformal weight; the
 finite-dimensional weight spaces together with the
 $(k+h^\vee)^{-1}$-scaled bracket give conilpotency directly.
-This is the structural reason the CLAUDE.md Thm B row's
-``chain-level class G/L via explicit MacLane-splitting'' scope is
-tight: G and L are the two classes on which conilpotency holds on
-the nose without weight completion.
+This is the structural reason the chain-level class
+$\mathsf{G}/\mathsf{L}$ scope is tight: G and L are the two classes
+on which conilpotency holds on the nose without weight completion.
 \end{remark}
 
 \section{Family-by-family applicability}
@@ -538,13 +543,11 @@ then has finite-dimensional graded pieces, and
 Theorem~\ref{thm:chiral-positselski-weight-completed} applies.
 \end{proof}
 
-\begin{remark}[Status of the ``unconditional'' claim in the Vol I
- theorem-status table]
+\begin{remark}[Scope of coderived unconditionality]
 \label{rem:unconditional-scope-clarification}
-The Vol I theorem-status table records Theorem~B as
-``PROVED unconditional at coderived level; chain-level class G/L via
-explicit MacLane-splitting.'' With the separation of scopes made explicit
-above, this reads as follows:
+Theorem~B is unconditional at the coderived level only after the
+bar coalgebra is placed in its weight-completed ambient category.
+The separation of scopes is:
 \begin{itemize}
 \item ``unconditional at coderived level'' means unconditional on the
  weight-completed bar coalgebra
@@ -559,13 +562,12 @@ above, this reads as follows:
  quasi-isomorphism, which is a separate (strictly stronger)
  property from the coderived/contraderived categorical equivalence.
 \end{itemize}
-The ``unconditional'' framing is therefore honest once one reads
-``coderived level'' as including the weight completion, and
-\emph{not} honest if one reads it as applying to the raw
-direct-sum bar coalgebra for class M targets.
+Thus the unconditional statement is the weight-completed coderived
+statement. It is false for the raw direct-sum bar coalgebra on
+class~$\mathsf{M}$ targets.
 \end{remark}
 
-\section{Attack findings and first-principles triples}
+\section{Scope separation for Theorem~B}
 \label{sec:attack-findings-thm-B-scope}
 
 The attack surface for Theorem B's ``unconditional'' claim is the
@@ -578,10 +580,10 @@ gap between:
  (Virasoro, $W_N$, critical Kac--Moody): these fail conilpotency on
  the nose.
 \end{itemize}
-The first-principles triple is:
+The proof separates three facts:
 
 \begin{enumerate}
-\item \textbf{Ghost theorem.}
+\item \textbf{Valid theorem.}
  Positselski 2011 Mem. AMS 212 Theorem~7.3 (the classical
  comodule-contramodule correspondence for conilpotent CDG-coalgebras
  with finite-dim graded pieces, over a field) is a genuine theorem.
@@ -589,12 +591,9 @@ The first-principles triple is:
  Theorem~\ref{thm:chiral-co-contra-correspondence} is a genuine
  theorem. On inputs satisfying the hypotheses, the equivalence
  holds.
-\item \textbf{Precise error.}
- The Vol I theorem-status table labels Theorem B
- ``unconditional at coderived level'' without qualifying that
- ``unconditional'' means ``unconditional on the weight-completed
- bar coalgebra.'' Read literally (raw direct-sum bar coalgebra),
- the claim fails for class M on the nose, because
+\item \textbf{False extension.}
+ Extending the coderived equivalence to the raw direct-sum bar
+ coalgebra fails for class M on the nose, because
  Example~\ref{ex:virasoro-not-conilpotent} exhibits a concrete
  non-conilpotent element.
 \item \textbf{Correct relationship.}
@@ -616,15 +615,11 @@ share a common cause: infinite-type coproducts on the generators of
 class-M algebras, localized to any fixed bar degree by summation over
 the full Cartan of Virasoro or $W_N$.
 
-\begin{remark}[Confusion type]
+\begin{remark}[Sharp replacement]
 \label{rem:thm-B-scope-confusion-type}
-The confusion pattern is \emph{scope error + temporal}: the Vol I
-theorem-status table carried the ``unconditional'' wording from a
-stage at which the distinction between raw and weight-completed bar
-coalgebras had not yet been isolated. The stronger honest statement
-is that the equivalence is unconditional on the weight-completed
-side, and sharp (class-M false, G/L/C true) on the raw direct-sum
-side. The present chapter establishes this pair of statements as
+The sharp statement is that the equivalence is unconditional on the
+weight-completed side, and sharp (class-M false, G/L/C true) on the
+raw direct-sum side. The present chapter establishes this pair of statements as
 Theorems~\ref{thm:chiral-positselski-at-each-weight} and
 \ref{thm:chiral-positselski-weight-completed} and the
 obstruction as
@@ -872,7 +867,7 @@ bar coalgebra of a class-M chiral algebra
 (Definition~\textup{\ref{def:weight-completed-bar}}), the unit
 $\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
 is a coderived isomorphism by Step~2 applied at each finite-weight
-truncation $C/F^{\leq w}$
+truncation $C/F^{>w}$
 (Theorem~\textup{\ref{thm:chiral-positselski-at-each-weight}})
 together with the inverse-limit identification of
 Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}.
@@ -881,7 +876,7 @@ from the comodule side to the bar-cobar side because the bar
 construction $\bar B^{\mathrm{ch}}$ commutes with surjective
 inverse limits at the level of finite-dimensional graded pieces
 (by finite-type stability), so
-$\eta_{\widehat{C}} = \varprojlim_w \eta_{C/F^{\leq w}}$
+$\eta_{\widehat{C}} = \varprojlim_w \eta_{C/F^{>w}}$
 in the sense of pro-objects. The pro-object limit of an inverse
 system of coderived isomorphisms with Mittag--Leffler images is a
 coderived isomorphism in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$, by the
@@ -1572,7 +1567,7 @@ $\Omega^{\mathrm{ch}} B^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})
 strict inversion genuinely obstructed there? The total-bar-weight
 filtration of Definition~\ref{def:total-bar-weight} alone does not
 decide the question: the transition maps
-$C/F^{\leq w+1}\twoheadrightarrow C/F^{\leq w}$ are surjective on
+$C/F^{>w+1}\twoheadrightarrow C/F^{>w}$ are surjective on
 cohomology fibre by fibre, but on a formal neighbourhood of a Humbert
 wall the Gauss--Manin monodromy mixes fibres. Fibrewise Mittag--Leffler
 does not imply Mittag--Leffler of the pro-system of sheaves on the

@@ -53,12 +53,13 @@ For the symplectic boson system at N=1 (4 pairs, lambda = 1/2):
 per pair, so for 4 pairs:
   kappa(A_{ABJM}(1,1)) = 4 * (-1/2) = -2
 
-For general N at level k, the BRST reduction gives:
-  kappa(A_{ABJM}(N,k)) = kappa_CS + kappa_matter
-  = [N^2*k/(2*1) + N^2*(-k)/(2*1)] + 4N^2 * (-1/2)
-  = 0 - 2N^2 = -2N^2
-
-(The two CS sectors cancel; the matter dominates.)
+This module uses the reduced scalar convention in which the two
+level-opposite CS sectors are cancelled before the matter shadow is
+read:
+  kappa_red(A_{ABJM}(N,k)) = -N^2.
+The full pre-BRST modular characteristic of
+V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2} is computed in
+twisted_holography_comparison_engine.py and equals -(N^2+1).
 
 ABJM PARTITION FUNCTION (Fuji-Hirano-Moriyama / Marino-Putrov):
 
@@ -81,8 +82,8 @@ ONE-LOOP FREE ENERGY AND SHADOW:
 The one-loop (genus-1) contribution is:
   F_1 = kappa(A) / 24
 
-For A_{ABJM}(N,k) with kappa = -2N^2:
-  F_1 = -2N^2 / 24 = -N^2 / 12
+For A_{ABJM}(N,k) in the reduced scalar convention:
+  F_1 = -N^2 / 24
 
 At large N with fixed lambda = N/k:
   F_1 = -N^2 / 12 ~ -k * lambda * N / 12
@@ -203,11 +204,13 @@ class ABJMData:
 
     @property
     def kappa(self) -> Fraction:
-        """Modular characteristic kappa(A_{ABJM}).
+        """Reduced modular characteristic kappa_red(A_{ABJM}).
 
-        kappa = c/2 for the boundary VOA.
-
-        For ABJM: kappa = -2N^2 / 2 = -N^2.
+        This is the reduced scalar convention used by the ABJM Airy
+        shadow tests: the level-opposite CS pair is cancelled before
+        the matter shadow is read. The full pre-BRST package has
+        kappa = -(N^2 + 1), computed in
+        twisted_holography_comparison_engine.kappa_abjm.
 
         Physical interpretation: the negative sign reflects that the
         ABJM boundary VOA is non-unitary (symplectic bosons have
@@ -307,11 +310,11 @@ def abjm_free_energy_large_N(N: int, k: int) -> sympy.Expr:
 
 
 def abjm_free_energy_one_loop(N: int, k: int) -> Fraction:
-    """One-loop (genus-1) free energy from the shadow formula.
+        """One-loop (genus-1) free energy from the reduced shadow formula.
 
     F_1 = kappa(A) / 24 = -N^2 / 24
 
-    Note the sign: kappa is negative for the ABJM boundary VOA.
+        Note the sign: kappa_red is negative for the ABJM matter shadow.
 
     CAREFUL: this is the PERTURBATIVE one-loop around the trivial
     saddle. The full localization result has additional contributions.
@@ -617,7 +620,8 @@ def abjm_F_g(N: int, k: int, g: int) -> Fraction:
 
     F_g(A) = kappa(A) * lambda_g^FP
 
-    For ABJM: kappa = -N^2, so F_g = -N^2 * lambda_g^FP.
+    For ABJM in the reduced scalar convention:
+    kappa_red = -N^2, so F_g = -N^2 * lambda_g^FP.
 
     This is the PERTURBATIVE genus expansion (small kappa regime).
     The full non-perturbative answer is the Airy function, which
@@ -905,10 +909,11 @@ def compare_airy_vs_matrix_model(N: int, k: int) -> Dict[str, float]:
 def abjm_complementarity_check(N: int, k: int) -> Dict[str, object]:
     """Verify complementarity for the ABJM holographic datum.
 
-    kappa(A) + kappa(A!) should equal 0 (affine KM type anti-symmetry
-    for the CS sector; free-field anti-symmetry for the matter sector).
+    kappa_red(A) + kappa_red(A!) equals 0 in the reduced scalar
+    convention (affine KM anti-symmetry for the CS sector already
+    cancelled; free-field anti-symmetry for the matter sector).
 
-    For ABJM: kappa = -N^2, kappa' = N^2, sum = 0.
+    For ABJM: kappa_red = -N^2, kappa_red' = N^2, sum = 0.
     """
     data = ABJMData(N=N, k=k)
     return {

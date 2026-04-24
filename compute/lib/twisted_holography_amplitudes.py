@@ -12,11 +12,14 @@ encodes the full system.
 This module computes twisted holography amplitudes for two key examples:
 
   1. D3 BRANE (twisted N=4 SYM): boundary chiral algebra = affine gl_N at level 1.
-     kappa(gl_N) = N (at level 1).  Shadow obstruction tower gives genus expansion of
-     twisted N=4 amplitudes.
+     c(gl_N)=N, while the modular characteristic is
+     kappa(gl_N)=(N^2-1)(N+1)/(2N)+1.  The shadow obstruction tower gives
+     the genus expansion of twisted N=4 amplitudes.
 
   2. M2 BRANE (ABJM): boundary VOA from BRST reduction of two copies of
-     affine gl(N) with bifundamental matter.  kappa(ABJM) = -N^2.
+     affine gl(N) with bifundamental matter.  This module computes the
+     reduced scalar ABJM convention kappa_red(ABJM)=-N^2; the full pre-BRST
+     characteristic -(N^2+1) is recorded in twisted_holography_comparison_engine.
 
 Both examples produce:
   - Shadow invariants (kappa, cubic C, quartic Q)
@@ -262,7 +265,9 @@ class ABJMShadowData:
     """Shadow invariants for ABJM at rank N, level k.
 
     Boundary VOA: BRST reduction of V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2}.
-    kappa(ABJM) = -N^2 (two CS sectors cancel, matter dominates).
+    This class stores the reduced scalar convention
+    kappa_red(ABJM) = -N^2.  The full pre-BRST characteristic, which keeps
+    the residual gauge ghost scalar, is -(N^2+1) in the comparison engine.
     Shadow depth: 4 for N=1 (contact class C), infinity for N >= 2 (class M).
     """
     N: int
@@ -270,7 +275,7 @@ class ABJMShadowData:
 
     @property
     def kappa(self) -> Fraction:
-        """kappa(A_ABJM) = -N^2."""
+        """Reduced scalar ABJM characteristic kappa_red(A_ABJM) = -N^2."""
         return Fraction(-self.N * self.N)
 
     @property
@@ -279,7 +284,7 @@ class ABJMShadowData:
         return Fraction(self.N, self.k)
 
     def F_g(self, g: int) -> Fraction:
-        """Genus-g free energy: F_g = kappa * lambda_g^FP = -N^2 * lambda_g^FP."""
+        """Reduced scalar genus-g free energy: F_g = -N^2 * lambda_g^FP."""
         return self.kappa * _lambda_fp_exact(g)
 
     @property
@@ -293,7 +298,8 @@ class ABJMShadowData:
 def abjm_shadow_invariants(N: int, k: int, n_invariants: int = 3) -> Dict[str, Fraction]:
     """First n shadow invariants for ABJM.
 
-    Shadow 1 (arity 2): kappa = -N^2 (the modular characteristic)
+    Shadow 1 (arity 2): kappa_red = -N^2 in the reduced scalar convention.
+        The full pre-BRST characteristic is -(N^2+1).
     Shadow 2 (arity 3): cubic shadow C. For class C (N=1) or M (N>=2),
         the cubic shadow arises from the commutator term in the BRST reduction.
         At the scalar level: C = 0 for the abelian (N=1) case.
@@ -784,7 +790,8 @@ def holographic_r_matrix_m2(N: int, k: int) -> HolographicRMatrix:
     BRST cohomology. The surviving r-matrix is a single Casimir/z
     with eigenvalue determined by the gauge group.
 
-    The scalar trace of the r-matrix gives kappa(ABJM) = -N^2.
+    The scalar trace of the reduced r-matrix gives kappa_red(ABJM) = -N^2.
+    It is not the full pre-BRST characteristic -(N^2+1).
     """
     kappa_val = Fraction(-N * N)
     return HolographicRMatrix(
@@ -974,11 +981,12 @@ def koszul_complementarity_d3(N: int) -> Dict[str, Fraction]:
 
 
 def koszul_complementarity_m2(N: int, k: int) -> Dict[str, Fraction]:
-    """Koszul complementarity for M2 brane: kappa(A) + kappa(A!) = 0.
+    """Reduced scalar Koszul complementarity for M2 brane.
 
-    For ABJM: kappa(A) = -N^2, kappa(A!) = N^2 (by 3d mirror symmetry).
-    Sum = 0. Anti-symmetry holds because the matter sector (free-field type)
-    has anti-symmetric kappa under Koszul duality.
+    In the reduced convention, kappa_red(A) = -N^2 and
+    kappa_red(A!) = N^2 by 3d mirror symmetry, so the reduced scalar sum
+    is zero.  This statement is separate from the full pre-BRST ABJM
+    characteristic -(N^2+1).
     """
     kappa_A = Fraction(-N * N)
     kappa_A_dual = Fraction(N * N)

@@ -2,11 +2,11 @@
 %
 % Chapter: Z_g(k) — Verlinde SL_2 closed form and Kummer–Bernoulli leading term
 %
-% Platonic-ideal exposition: four ProvedHere theorems pin Z_g(k) (Verlinde
-% partition function for SL_2 Chern–Simons / affine sl_2 conformal blocks on
-% a genus-g Riemann surface at level k) as a polynomial of degree 3g-3 in
-% n = k+2, factored through a leading Bernoulli quotient, and check two
-% prime-divisibility witnesses (Kummer-type) as falsification tests.
+% Verlinde SL_2 partition function for affine sl_2 conformal blocks on a
+% genus-g Riemann surface at level k.  The leading coefficient is the
+% Hurwitz--Bernoulli scalar
+% (-1)^g 2^{g-1} B_{2g-2}/(2g-2)!, and the first Bernoulli-index
+% Kummer witnesses occur at B_12 and B_16.
 %
 % Author: Raeez Lorgat.
 
@@ -34,27 +34,25 @@ $S_{\ell m} = \sqrt{2/n}\,\sin(\pi (\ell+1)(m+1)/n)$ and the Verlinde formula,
 this rewrites as a sum over nonzero $S$-entries; Equation~\eqref{eq:zg-verlinde-raw}
 is the standard starting point.
 
-We prove four theorems.
+The arithmetic rests on four facts.
 
 \begin{itemize}
-\item \textbf{Thm~\ref{thm:z-g-closed-form-polynomial}} rewrites $Z_g(k)$ as a
+\item Theorem~\ref{thm:z-g-closed-form-polynomial} rewrites $Z_g(k)$ as a
 finite cosecant sum and promotes the cosecant sum to a polynomial of degree
 $2g - 2$ in $n^2$.
-\item \textbf{Thm~\ref{thm:z-g-polynomial-form}} refines the polynomial to
+\item Theorem~\ref{thm:z-g-polynomial-form} refines the polynomial to
 $P_g(n) = n^{g-1}(n^2-1)\,R_{g-2}(n^2)$, degree $3g - 3$ in $n$.
-\item \textbf{Thm~\ref{thm:z-g-leading-coefficient-bernoulli}} identifies the
-leading coefficient of $R_{g-2}$ as $B_{2g-2}/(g-1)$ via Hurwitz's cosecant
-series.
-\item \textbf{Thm~\ref{thm:z-g-kummer-congruence}} derives Kummer-type
+\item Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} identifies the
+leading coefficient of $R_{g-2}$ as
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ via Hurwitz's cosecant series.
+\item Theorem~\ref{thm:z-g-kummer-congruence} derives Kummer-type
 divisibility witnesses: the irregular primes $691 \mid Z_7$ leading and
 $3617 \mid Z_9$ leading.
 \end{itemize}
 
 The engine is Hurwitz's 1890 cosecant expansion, the Witten~1991 symplectic
-volume interpretation (which pins the normalisation), and the Verlinde~1988
-fusion formula (which pins the spectral side). All four theorems are
-independently verified against disjoint sources per the independent
-verification protocol (\S~independent-verification).
+volume interpretation, and the Verlinde~1988 fusion formula. The three
+routes meet on the same leading coefficient with the same normalisation.
 
 \section{Cosecant reduction: Theorem~\ref{thm:z-g-closed-form-polynomial}}
 
@@ -189,9 +187,10 @@ R_1(x) &= \tfrac{1}{180}(x + 11), \\
 R_2(x) &= \tfrac{1}{7560}(2 x^2 + 23 x + 191).
 \end{align}
 The leading coefficients $1/6, 1/180, 2/7560 = 1/3780$ match
-Thm~\ref{thm:z-g-leading-coefficient-bernoulli}: $B_2/(1) = 1/6$,
-$B_4/2 = -1/60$, $B_6/3 = 1/126$, up to sign normalisation and the
-absorbed $2^{-(g-1)}$ (details in the next proof).
+Thm~\ref{thm:z-g-leading-coefficient-bernoulli}: for
+$g=2,3,4$ the formula
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ gives respectively
+$1/6$, $1/180$, and $1/3780$.
 \end{remark}
 
 \begin{remark}[uniform $(n^2-1)$ factor]
@@ -212,7 +211,9 @@ For $g \ge 2$, the leading coefficient of $R_{g-2}$ (as a polynomial of degree
 $g-2$ in $n^2$) is
 \begin{equation}
 \label{eq:leading-coeff}
-[n^{2(g-2)}]\,R_{g-2}(n^2) \;=\; \frac{B_{2g-2}}{g-1},
+[n^{2(g-2)}]\,R_{g-2}(n^2)
+\;=\;
+(-1)^g\,\frac{2^{g-1}B_{2g-2}}{(2g-2)!},
 \end{equation}
 where $B_{2g-2}$ denotes the $(2g-2)$-th Bernoulli number in the sign
 convention $B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$, $B_8 = -1/30$,
@@ -288,38 +289,21 @@ The leading $n^{3g-3}$ term comes from $n^{g-1}\cdot n^2 \cdot
 \end{equation}
 Therefore
 \begin{equation}
-[n^{2(g-2)}]\,R_{g-2}(n^2) \;=\; \frac{2^{g-1}|B_{2g-2}|}{(2g-2)!}.
+[n^{2(g-2)}]\,R_{g-2}(n^2)
+\;=\;
+\frac{2^{g-1}|B_{2g-2}|}{(2g-2)!}.
 \end{equation}
-This is a valid leading-coefficient formula; to rewrite in the form
-\eqref{eq:leading-coeff}, observe that the sign-corrected Bernoulli number
-satisfies $B_{2g-2} = (-1)^{g}|B_{2g-2}|$ and we absorb the sign by noting
-that for even-genus/odd-genus parity the leading coefficient of $R_{g-2}$
-agrees in absolute value with $|B_{2g-2}|/(g-1)$ up to the combinatorial
-factor $2^{g-1}(g-1)/(2g-2)!$, which equals $1/(g-1)$ once the Witten
-normalisation of $Z_g$ absorbs the remaining factorial and power-of-two. The
-cleanest invariant statement, independent of normalisation choice, is that
-\begin{equation}
-\boxed{\,[n^{2(g-2)}]\,R_{g-2}(n^2) \;=\; \frac{B_{2g-2}}{g-1}\,}
-\end{equation}
-in the convention of~\eqref{eq:pg-factored} after absorbing the universal
-prefactor $2^{g-1}(g-1)!/(2g-2)!$ into the definition of $R_{g-2}$; this is
-the canonical form used in Kummer-type divisibility analysis and is how
-Thm~\ref{thm:z-g-kummer-congruence} is stated. \checkmark
+Since $B_{2g-2}=(-1)^g|B_{2g-2}|$, this is exactly
+\eqref{eq:leading-coeff}. \checkmark
 \end{proof}
 
 \begin{remark}[low-genus verification]
 \label{rem:low-genus-bernoulli}
-At $g=2$: $B_2/(g-1) = B_2/1 = 1/6$, matching $R_0 = 1/6$ from
-Rem~\ref{rem:r-explicit}. At $g=3$: $B_4/(g-1) = (-1/30)/2 = -1/60$;
-Rem~\ref{rem:r-explicit} gives $[x^1]\,R_1(x) = 1/180$. The discrepancy by a
-universal factor $-1/3$ (and sign) is exactly the prefactor
-$2^{g-1}(g-1)!/(2g-2)!$ at $g=3$: $2^2\cdot 2!/4! = 8/24 = 1/3$. Confirming
-the boxed form~\eqref{eq:leading-coeff} as the canonical normalisation. At
-$g=4$: $B_6/3 = (1/42)/3 = 1/126$; the raw leading of $R_2$ is $2/7560 =
-1/3780 = (1/126)\cdot(1/30)$, and the prefactor $2^{g-1}(g-1)!/(2g-2)! = 8
-\cdot 6 / 720 = 48/720 = 1/15$ times the further combinatorial absorption
-$1/2$ recovers $1/30$; consistency holds at every genus checked through
-$g = 9$.
+At $g=2$, \eqref{eq:leading-coeff} gives
+$2B_2/2!=1/6$, matching $R_0=1/6$. At $g=3$ it gives
+$-4B_4/4!=1/180$, matching $[x]R_1(x)$. At $g=4$ it gives
+$8B_6/6!=1/3780$, matching $[x^2]R_2(x)$. These three cases fix the
+normalisation against the explicit polynomials.
 \end{remark}
 
 \begin{remark}[Witten symplectic volume check]
@@ -339,9 +323,9 @@ series (step 1 above).
 \label{thm:z-g-kummer-congruence}
 \ClaimStatusProvedHere
 Let $[n^{3g-3}]\,Z_g(k)$ denote the leading coefficient of $Z_g$ as a
-polynomial in $n$ (equivalently, the leading coefficient of $R_{g-2}$ times
-a universal prefactor absorbed by the normalisation of
-Thm~\ref{thm:z-g-leading-coefficient-bernoulli}). Then:
+polynomial in $n$; by
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} this coefficient equals
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$. Then:
 \begin{enumerate}
 \item ($g=7$ witness) $B_{12} = -691/2730$, so the prime $691$ divides the
 numerator of the $R_5$ leading coefficient; hence $691$ divides the
@@ -360,61 +344,72 @@ is wrong.
 
 \begin{proof}
 From Thm~\ref{thm:z-g-leading-coefficient-bernoulli}, the leading coefficient
-of $R_{g-2}$ in $n^2$ equals $B_{2g-2}/(g-1)$.
+of $R_{g-2}$ in $n^2$ equals
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$.
 
 (1) At $g = 7$: $2g-2 = 12$, $g-1 = 6$. Thus
 \begin{equation}
-[n^{10}]\,R_5(n^2) \;=\; \frac{B_{12}}{6} \;=\; \frac{-691/2730}{6}
-\;=\; -\frac{691}{16380}.
+[n^{10}]\,R_5(n^2)
+\;=\;
+-\,\frac{64B_{12}}{12!}
+\;=\;
+\frac{691}{20432412000}.
 \end{equation}
-The numerator is $-691$; in particular $691 \mid \mathrm{num}(R_5\text{-leading})$.
-Since the leading coefficient of $Z_7(k)$ in $n^{3g-3} = n^{18}$ differs from
-this by a universal prefactor $c_7 \in \mathbb{Q}^\times$ containing no factor
-of $691$ (the prefactor $c_g = 2^{g-1}(g-1)!/(2g-2)!$ has
-$c_7 = 64 \cdot 720 / 12! = 46080/479001600$, whose numerator $46080 = 2^{10}\cdot
-45$ is coprime to $691$), the prime $691$ divides the numerator of
-$[n^{18}]\,Z_7(k)$. \checkmark
+The numerator is $691$; hence $691$ divides the numerator of
+$[n^{18}]\,Z_7(k)$.
 
 (2) At $g = 9$: $2g-2 = 16$, $g-1 = 8$. Thus
 \begin{equation}
-[n^{14}]\,R_7(n^2) \;=\; \frac{B_{16}}{8} \;=\; \frac{-3617/510}{8}
-\;=\; -\frac{3617}{4080}.
+[n^{14}]\,R_7(n^2)
+\;=\;
+-\,\frac{256B_{16}}{16!}
+\;=\;
+\frac{3617}{41682120480000}.
 \end{equation}
-The numerator is $-3617$; in particular $3617 \mid \mathrm{num}(R_7\text{-leading})$.
-The prefactor $c_9 = 2^{8}\cdot 8!/16! = 256 \cdot 40320 / 16!$ has
-numerator coprime to $3617$ (direct computation: $c_9$ reduces to
-$1/2027025$, denominator $3^4\cdot 5^2\cdot 7\cdot 11\cdot 13$, numerator $1$,
-so no $3617$ factor; verified independently by expanding
-$2^{8}\cdot 40320 = 10321920$ against $16! = 20922789888000$ and
-reducing). Therefore $3617$ divides the numerator of
-$[n^{24}]\,Z_9(k)$. \checkmark
+The numerator is $3617$; hence $3617$ divides the numerator of
+$[n^{24}]\,Z_9(k)$.
 
 Kummer's theorem identifies an odd prime $p$ as \emph{irregular} iff $p$
 divides the numerator of some $B_{2m}$ with $2 \le 2m \le p-3$. For $p=691$,
 $m=6$ gives $B_{12}$ with numerator $-691$; for $p=3617$, $m=8$ gives
-$B_{16}$ with numerator $-3617$. These are the two smallest irregular primes
-(OEIS A000928). The divisibility statements above therefore expose
-irregular-prime structure directly in the Verlinde polynomial.
+$B_{16}$ with numerator $-3617$. These are the two earliest
+irregular-prime witnesses in Bernoulli-index order for this chapter, not
+the first irregular primes by size. The size order begins with
+$37,59,67,\ldots$, whose Bernoulli witnesses occur at later indices. The
+divisibility statements above therefore expose irregular-prime structure
+directly in the Verlinde polynomial.
 
 \emph{Falsification}. If a numerical computation of $Z_7(k)$ for a range
 $k = 1, 2, \ldots, K$ yields a fitted leading coefficient whose numerator is
 coprime to $691$, then one of the three theorems
 Thms~\ref{thm:z-g-closed-form-polynomial}--\ref{thm:z-g-leading-coefficient-bernoulli}
-is wrong. Symmetrically for $3617$ and $Z_9$. We have verified these
-divisibilities via SymPy: computing
-\verb|bernoulli(12) == Rational(-691,2730)| and
-\verb|bernoulli(16) == Rational(-3617,510)|, and cross-checking the
-leading-coefficient extraction against the closed form~\eqref{eq:pg-factored}
-through $g \le 9$ at level $k \le 20$.
+is wrong. Symmetrically for $3617$ and $Z_9$. The rational identities
+$B_{12}=-691/2730$ and $B_{16}=-3617/510$, together with the closed
+form~\eqref{eq:pg-factored}, give the leading coefficients displayed
+above.
 \end{proof}
 
 \begin{remark}[next witnesses]
 \label{rem:next-witnesses}
-Further irregular primes appear at $g = 19$ ($B_{36}$ has numerator divisible
-by $37$ and $683$), $g = 29$ ($B_{56}$ divisible by $59$), and so on. Each
-provides a further Kummer-type divisibility witness for the leading
-coefficient of $Z_g$. The sequence of denominators of $B_{2m}$ follows the
-von Staudt--Clausen theorem,
+The Bernoulli-index order and the prime-size order are different.  After
+$B_{12}$ and $B_{16}$, the next low-index Bernoulli witnesses are
+\[
+  B_{18}=\frac{43867}{798},\qquad
+  B_{20}=-\frac{283\cdot 617}{330},\qquad
+  B_{22}=\frac{11\cdot 131\cdot 593}{138}.
+\]
+The factor $11$ in $B_{22}$ is regular, since its index violates
+Kummer's bound $2m\leq p-3$; the factors $43867,283,617,131,593$ are
+irregular.  By contrast, the first irregular primes by size have later
+Bernoulli witnesses:
+\[
+  37\mid \mathrm{num}(B_{32}),\qquad
+  59\mid \mathrm{num}(B_{44}),\qquad
+  67\mid \mathrm{num}(B_{58}).
+\]
+Each such numerator prime gives a Kummer-type divisibility witness for
+the leading coefficient of the corresponding $Z_g$. The sequence of
+denominators of $B_{2m}$ follows the von Staudt--Clausen theorem,
 $\mathrm{denom}(B_{2m}) = \prod_{(p-1) \mid 2m} p$, and this too is visible
 in the denominators of $R_{g-2}$-leading coefficients.
 \end{remark}
@@ -431,158 +426,125 @@ factorisation, the leading coefficient, and the prime divisibility. This is
 the preferred falsification protocol for this chapter.
 \end{remark}
 
-\section{Independent verification decorators}
-\label{sec:hziv-decorators}
+\section{Independent verification anchors}
+\label{sec:zg-independent-verification}
 
-Each of the four ProvedHere theorems above is decorated with a
-\texttt{derived\_from / verified\_against / disjoint\_rationale} triple per
-the Independent Verification Protocol (\S independent-verification of \texttt{CLAUDE.md}). The
-sources are disjoint: Hurwitz 1890 (cosecant series) and Verlinde 1988
-(fusion formula / modular $S$-matrix) are classical-analytic; Witten 1991
-(symplectic volume) is geometric; SymPy Bernoulli verification is numerical.
-No two decorators share a common intermediate.
+The four theorem proofs above are checked against independent mathematical
+routes.
 
-\begin{decorator}
-\label{decorator:thm-closed-form}
-\textbf{Theorem~\ref{thm:z-g-closed-form-polynomial}.}
-\begin{itemize}
-\item \texttt{derived\_from}: Verlinde 1988 fusion formula; modular
-$S$-matrix $S_{\ell m} = \sqrt{2/n}\sin(\pi(\ell+1)(m+1)/n)$ for
-$\widehat{\mathfrak{sl}}_2$ at level $k$.
-\item \texttt{verified\_against}: (i) Direct count of conformal blocks for
-$g = 2, k = 1$ ($Z_2(1) = 4$) and $g = 3, k = 1$ ($Z_3(1) = 8$) via the
-fusion ring $\mathbb{Z}[V]/(V^{k+1})$; (ii) Witten 1991 symplectic-volume
-large-$k$ asymptotic matches leading $n^{3g-3}$ term.
-\item \texttt{disjoint\_rationale}: Verlinde-fusion input is the
-Moore--Seiberg modular $S$-matrix; conformal-block direct count uses the
-integrable-representation ring; symplectic-volume check is geometric
-(moduli of flat connections). These three intermediates share no common
-lemma.
-\end{itemize}
-\end{decorator}
+\begin{remark}[Verification anchor: Verlinde closed form]
+\label{rem:zg-verify-closed-form}
+Theorem~\ref{thm:z-g-closed-form-polynomial} starts from the
+Verlinde~1988 fusion formula and the modular matrix
+$S_{\ell m}=\sqrt{2/n}\sin(\pi(\ell+1)(m+1)/n)$ for
+$\widehat{\mathfrak{sl}}_2$. The low-genus values
+$Z_2(1)=4$ and $Z_3(1)=8$ are recovered directly from the fusion ring, and
+the Witten~1991 symplectic-volume asymptotic gives the same
+$n^{3g-3}$ leading degree.
+\end{remark}
 
-\begin{decorator}
-\label{decorator:thm-polynomial}
-\textbf{Theorem~\ref{thm:z-g-polynomial-form}.}
-\begin{itemize}
-\item \texttt{derived\_from}: Thm~\ref{thm:z-g-closed-form-polynomial} plus
-the elementary evaluation $S_{g-1}(1) = 0$ (empty sum).
-\item \texttt{verified\_against}: (i) Explicit low-genus polynomials
-(Rem~\ref{rem:low-genus}, Rem~\ref{rem:r-explicit}) where the factor
-$n^2 - 1$ is visible by inspection; (ii) SymPy polynomial interpolation of
-$Z_g(k)$ values for $k = 0, 1, \ldots, 3g-3$ at fixed $g \in \{2, \ldots, 9\}$,
-matching factorisation~\eqref{eq:pg-factored}.
-\item \texttt{disjoint\_rationale}: the empty-sum evaluation is
-combinatorial; the polynomial interpolation is numerical; the explicit
-low-genus factorisation is algebraic. No shared intermediate.
-\end{itemize}
-\end{decorator}
+\begin{remark}[Verification anchor: polynomial factorisation]
+\label{rem:zg-verify-polynomial}
+The factor $n^2-1$ in Theorem~\ref{thm:z-g-polynomial-form} follows from
+the empty cosecant sum at $n=1$. The explicit polynomials
+in Remarks~\ref{rem:low-genus} and~\ref{rem:r-explicit} exhibit the
+factor in genera $2,3,4$, and interpolation from Verlinde values for
+$k=0,\ldots,3g-3$ checks the same factorisation for $2\leq g\leq9$.
+\end{remark}
 
-\begin{decorator}
-\label{decorator:thm-leading}
-\textbf{Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}.}
-\begin{itemize}
-\item \texttt{derived\_from}: Hurwitz 1890 cosecant expansion
-$(\pi x/\sin \pi x)^2 = 1 + \sum c_m x^{2m}$ with $c_m$ explicit in
-$B_{2m}$; Euler's even-zeta identity
-$\zeta(2m) = (2\pi)^{2m}|B_{2m}|/(2(2m)!)$.
-\item \texttt{verified\_against}: (i) Witten 1991 symplectic volume
-$\mathrm{vol}(\mathcal{M}_g(\mathrm{SU}(2))) = 2(2\pi^2)^{g-1}\zeta(2g-2)/(g-1)!$
-provides an independent route to $B_{2g-2}/(g-1)$ in the large-$k$ limit;
-(ii) SymPy verification
-\verb|bernoulli(2g-2)/(g-1)| matches symbolic extraction of the leading
-$R_{g-2}$ coefficient for $g \in \{2, \ldots, 9\}$.
-\item \texttt{disjoint\_rationale}: Hurwitz cosecant series is an analytic
-identity for the generating function of $B_{2m}$; the Witten
-symplectic-volume route is geometric (integration over moduli of flat
-connections); SymPy verification is algorithmic (symbolic computation of
-Bernoulli numbers via the recursion $\sum_{k=0}^n \binom{n+1}{k} B_k = 0$).
-None shares a common lemma.
-\end{itemize}
-\end{decorator}
+\begin{remark}[Verification anchor: Bernoulli leading coefficient]
+\label{rem:zg-verify-leading}
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} has two disjoint
+derivations: Hurwitz's cosecant expansion together with Euler's
+even-zeta identity, and Witten's large-level symplectic-volume formula.
+Both give
+\[
+  [n^{2(g-2)}]R_{g-2}(n^2)
+  =
+  (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+The explicit values $1/6$, $1/180$, and $1/3780$ at $g=2,3,4$ verify
+the normalisation against the displayed polynomials.
+\end{remark}
 
-\begin{decorator}
-\label{decorator:thm-kummer}
-\textbf{Theorem~\ref{thm:z-g-kummer-congruence}.}
-\begin{itemize}
-\item \texttt{derived\_from}: Thm~\ref{thm:z-g-leading-coefficient-bernoulli}
-applied at $g = 7, 9$; classical Bernoulli numerator values
-$B_{12} = -691/2730$, $B_{16} = -3617/510$ (Kummer 1851, von
-Staudt--Clausen 1840).
-\item \texttt{verified\_against}: (i) SymPy:
-\verb|bernoulli(12) == Rational(-691, 2730)| and
-\verb|bernoulli(16) == Rational(-3617, 510)|; (ii) irregular-prime tables
-(OEIS A000928) list $691$ and $3617$ as the first two irregular primes;
-(iii) direct polynomial computation of $Z_7(k), Z_9(k)$ for
-$k \in \{1, \ldots, 20\}$ via the Verlinde fusion formula confirms the
-fitted leading coefficient's numerator divisibility by $691$ and $3617$
-respectively.
-\item \texttt{disjoint\_rationale}: Kummer's irregularity criterion comes
-from cyclotomic class-field theory; OEIS A000928 is an independent
-computational tabulation; direct Verlinde-fusion polynomial fitting is
-algebraic. All three are genuinely disjoint from Hurwitz's cosecant series
-and from Witten's symplectic-volume formula.
-\end{itemize}
-\end{decorator}
+\begin{remark}[Verification anchor: Kummer witnesses]
+\label{rem:zg-verify-kummer}
+Theorem~\ref{thm:z-g-kummer-congruence} uses
+$B_{12}=-691/2730$ and $B_{16}=-3617/510$. Direct rational reduction gives
+\[
+  [n^{18}]Z_7(k)=\frac{691}{20432412000},
+  \qquad
+  [n^{24}]Z_9(k)=\frac{3617}{41682120480000}.
+\]
+The prime divisibilities are therefore visible in the reduced leading
+coefficients themselves.
+\end{remark}
 
-\section{Status and cross-references}
+\section{Dependencies}
 
 \begin{itemize}
-\item Thm~\ref{thm:z-g-closed-form-polynomial}: ProvedHere. Primary engine:
-Verlinde 1988. Independent verification: Witten 1991 + direct fusion-ring
-count.
-\item Thm~\ref{thm:z-g-polynomial-form}: ProvedHere. Primary engine: empty-sum
-evaluation + polynomial structure of cosecant power sums. Independent
-verification: low-genus explicit computation + SymPy interpolation.
-\item Thm~\ref{thm:z-g-leading-coefficient-bernoulli}: ProvedHere. Primary
-engine: Hurwitz 1890 cosecant series + Euler even-zeta. Independent
-verification: Witten symplectic-volume large-$k$ limit + SymPy Bernoulli.
-\item Thm~\ref{thm:z-g-kummer-congruence}: ProvedHere. Primary engine:
-Bernoulli-denominator von Staudt--Clausen + Kummer irregularity. Independent
-verification: OEIS A000928 + direct Verlinde polynomial fitting.
+\item Theorem~\ref{thm:z-g-closed-form-polynomial} uses the
+Verlinde~1988 formula; Witten's 1991 volume asymptotic and the
+low-genus fusion-ring counts check the normalisation.
+\item Theorem~\ref{thm:z-g-polynomial-form} uses the empty cosecant sum
+at $n=1$ and the polynomial structure of cosecant power sums; the
+low-genus polynomials check the factor $n^2-1$.
+\item Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} uses
+Hurwitz's 1890 cosecant series and Euler's even-zeta identity; Witten's
+large-level volume formula gives the same Bernoulli factor.
+\item Theorem~\ref{thm:z-g-kummer-congruence} uses von Staudt--Clausen
+and Kummer irregularity; direct interpolation of the Verlinde polynomial
+checks the displayed leading numerators.
 \end{itemize}
 
-Cross-references: this chapter's closed form is the $G = \mathrm{SL}_2$
-specialisation of the universal Verlinde polynomial $P_g$ mentioned in the
-Theorem-Status table under ``Z\_g closed forms'' (Vol I CLAUDE.md); the
-Kummer-congruence prediction is the falsification witness recorded in the
-Vol I. Hot Zone. The Hurwitz--Bernoulli leading coefficient
-generalises to arbitrary simple $G$ via the Macdonald denominator formula
-and the Kac--Peterson character-theoretic derivation of $Z_g^G(k)$, which
-we leave outside this chapter's scope.
+This chapter's closed form is the $G = \mathrm{SL}_2$
+specialisation of the universal Verlinde polynomial $P_g$. The
+Hurwitz--Bernoulli leading coefficient generalises to arbitrary simple
+$G$ via the Macdonald denominator formula and the Kac--Peterson
+character-theoretic derivation of $Z_g^G(k)$; this chapter fixes only the
+$\mathrm{SL}_2$ normalisation.
 
 \section{Arithmetic duality with the Virasoro shadow tower}
 \label{sec:zg-arithmetic-duality}
 
 The four theorems of this chapter pin the arithmetic of $Z_g(k)$ on
 $\mathrm{Bun}_{\mathrm{SL}_2}(\Sigma_g)$ through the Hurwitz--Bernoulli
-leading coefficient $B_{2g-2}/(g-1)$ and its Kummer-irregular prime
-witnesses $\{691, 3617, \ldots\}$. The present section inscribes the
-programme-level duality with the Virasoro shadow tower
-$\{S_r(\Vir_c)\}_{r \geq 2}$: the two arithmetic invariants are
-geometrically disjoint (different localisations), and the two
-\emph{leading} Kummer-irregular primes $\{691, 3617\}$ that appear on
-the $Z_g$ side at genera $g = 7, 9$ are provably \emph{absent} on the
-$S_r$ side through $r = 11$. Higher Kummer-irregular primes (such as
-$2111$) can appear in $S_r$ coefficients without contradicting the
-duality, because no such higher prime is witnessed on the $Z_g$ side
-in the verified range $g \leq 9$.
+leading coefficient
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ and its Kummer-irregular prime
+witnesses $\{691, 3617, \ldots\}$. The Virasoro shadow tower
+$\{S_r(\Vir_c)\}_{r \geq 2}$ carries the complementary arithmetic:
+the two invariants are geometrically disjoint (different localisations),
+and the two
+\emph{Bernoulli-leading} Kummer witnesses $\{691, 3617\}$ that appear
+on the $Z_g$ side at genera $g = 7, 9$ are provably \emph{absent} on
+the $S_r$ side through $r = 11$. Kummer-irregular primes ordered by size
+belong to a different filtration; for instance $2111$ can appear in an
+$S_r$ coefficient without contradicting the stated Bernoulli-index
+duality.
 
-\begin{theorem}[$Z_g$ vs $S_r(\Vir_c)$ arithmetic duality at the leading
-Kummer-irregular primes]
+\begin{theorem}[$Z_g$ vs $S_r(\Vir_c)$ arithmetic duality at the
+Bernoulli-leading Kummer pair]
 \label{thm:z-g-s-r-arithmetic-duality}
 \ClaimStatusProvedHere
-Let $\mathrm{IrrKum}_{2} := \{691, 3617\}$ denote the two smallest
-Kummer-irregular primes (OEIS~A000928). Then:
+Let
+\[
+  \mathrm{IrrKum}_{\mathrm{Bern},2}:=\{691,3617\}
+\]
+denote the Kummer-irregular primes appearing at the two smallest
+Bernoulli indices that contain irregular numerator factors:
+$691\mid\mathrm{num}(B_{12})$ and
+$3617\mid\mathrm{num}(B_{16})$. Then:
 \begin{enumerate}
-\item (Presence on the $Z_g$ side.) For $g \geq 2$, the leading
-coefficient $[n^{3g-3}]\,Z_g(k)$ (equivalently the $[n^{2(g-2)}]$
-coefficient of $R_{g-2}$, up to the universal prefactor
-$c_g = 2^{g-1}(g-1)!/(2g-2)!$) is divisible, as a rational number with
-integer numerator, by a prime $p \in \mathrm{IrrKum}_{2}$ if and only if
-$p \mid \mathrm{num}(B_{2g-2})$. Explicitly, $691$ divides the leading
-coefficient of $Z_7$ (via $B_{12} = -691/2730$) and $3617$ divides the
-leading coefficient of $Z_9$ (via $B_{16} = -3617/510$).
+\item (Presence on the $Z_g$ side.) The prime $691$ divides the reduced
+integer numerator of the leading coefficient $[n^{18}]Z_7(k)$, and the
+prime $3617$ divides the reduced integer numerator of
+$[n^{24}]Z_9(k)$. Equivalently,
+\[
+  691\mid \mathrm{num}(B_{12}),\qquad
+  3617\mid \mathrm{num}(B_{16}),
+\]
+and in both cases the scalar multiplier
+$(-1)^g2^{g-1}/(2g-2)!$ is a $p$-adic unit.
 \item (Absence on the $S_r$ side through $r = 11$.) For every $r$ in the
 range $2 \leq r \leq 11$, neither $691$ nor $3617$ divides the numerator
 of $S_r(\Vir_c) \cdot c^{r-3} (5c + 22)^{\lfloor (r-2)/2 \rfloor}$
@@ -593,49 +555,42 @@ regarded as an integer polynomial in $c$. Explicitly
   \qquad\text{for all } 2 \leq r \leq 11.
 \]
 \end{enumerate}
-In particular the two smallest Kummer-irregular primes $691$ (seen at
+In particular the two Bernoulli-leading Kummer witnesses $691$ (seen at
 $g = 7$, $B_{12}$) and $3617$ (seen at $g = 9$, $B_{16}$) are
 \emph{present} in the $Z_g$ leading coefficients at those genera and
 \emph{absent} from every $S_r(\Vir_c)$ coefficient through weight
-$r = 11$. The duality is sharp at the two leading Kummer-irregular
-primes; higher Kummer-irregular primes (such as $2111$, which divides
-the constant-term coefficient $29554$ of $N_9$) can appear in $S_r$
-without contradicting the duality: they are not witnessed on the $Z_g$
-side at any $g \leq 9$, since the $g$-th $Z_g$ Kummer-presence is
-entirely controlled by $\mathrm{num}(B_{2g-2})$, and
-$2111 \notin \mathrm{num}(B_{2m})$ for $2m \leq 16$.
+$r = 11$. The duality is sharp for this Bernoulli-index pair; it is not
+a global absence theorem for Kummer-irregular primes in the Virasoro
+shadow tower.
 \end{theorem}
 
 \begin{proof}
 Part (1) is a direct composition of
 Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}
-(leading coefficient of $R_{g-2}$ equals $B_{2g-2}/(g-1)$ after absorbing
-the universal prefactor $c_g$) with the Kummer-irregularity criterion
-for $\mathrm{IrrKum}_{2} = \{691, 3617\}$: $691 \mid \mathrm{num}(B_{12})$
-(with $g = 7$, $2g - 2 = 12$) and $3617 \mid \mathrm{num}(B_{16})$
-(with $g = 9$, $2g - 2 = 16$). Explicit witnesses at $g = 7$ and
-$g = 9$ are Theorem~\ref{thm:z-g-kummer-congruence} (1) and (2). The
-prefactor $c_g = 2^{g-1}(g-1)!/(2g-2)!$ has numerator in
-$\{1, 2\}^{\mathbb{N}} \cdot (g-1)!$ and therefore can contribute only
-small primes $\leq 2g - 2$, which are never $691$ or $3617$ for
-$g \leq 9$ (since $691 > 2 \cdot 9 - 2 = 16$).
+(leading coefficient of $R_{g-2}$ equals
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$) with the Kummer-irregularity criterion
+for the pair $\{691, 3617\}$:
+$691 \mid \mathrm{num}(B_{12})$ (with $g = 7$, $2g - 2 = 12$) and
+$3617 \mid \mathrm{num}(B_{16})$ (with $g = 9$, $2g - 2 = 16$).
+Explicit witnesses at $g = 7$ and $g = 9$ are
+Theorem~\ref{thm:z-g-kummer-congruence} (1) and (2). The factor
+$2^{g-1}/(2g-2)!$ has no factor $691$ at $g=7$ and no factor $3617$ at
+$g=9$, so the Bernoulli numerator survives rational reduction.
 
-Part (2) is Theorem~\ref{thm:s-r-kummer-absent-through-r-11}
-(\texttt{shadow\_tower\_higher\_coefficients.tex}), which pins the
+Part (2) is exactly Theorem~\ref{thm:s-r-kummer-absent-through-r-11},
+which pins the
 $\mathbb{Z}$-polynomial numerator
 $N_r(c) = S_r(\Vir_c) \cdot c^{r-3} (5c+22)^{\lfloor (r-2)/2 \rfloor}$
 through $r = 11$ and confirms that $691, 3617$ do not appear among the
-primes in $\mathcal{P}_{\le 11}$. The verification is a direct
-\texttt{sympy.factorint} computation of every coefficient of
-$N_2, \ldots, N_{11}$, cross-checked against $\{691, 3617\}$; see the
-decorator (\ref{decorator:thm-zg-sr-arithmetic-duality}) below.
+primes in $\mathcal{P}_{\le 11}$. Exact integer factorisation of every
+coefficient of $N_2,\ldots,N_{11}$ checks the claim.
 
-The two statements together constitute the duality at the two leading
-Kummer-irregular primes: $\{691, 3617\}$ are present on the $Z_g$ side
-(via the Hurwitz--Bernoulli leading factor) and absent on the $S_r$
+The two statements together constitute the duality at the two
+Bernoulli-leading Kummer witnesses: $\{691, 3617\}$ are present on the
+$Z_g$ side (via the Hurwitz--Bernoulli leading factor) and absent on the $S_r$
 side (through $r = 11$, verified). The statement does not extend to
 every Kummer-irregular prime: the prime $2111$ is Kummer-irregular (via
-$2111 \mid \mathrm{num}(B_{1038})$, verified by SymPy) and simultaneously
+$2111 \mid \mathrm{num}(B_{1038})$) and simultaneously
 $2111 \mid 29554$, with $29554$ the constant-term coefficient of $N_9$.
 This coincidence does not violate the stated duality because $2111$ is
 not witnessed on the $Z_g$ side: the $g$-th Kummer-presence is
@@ -677,7 +632,7 @@ $\mathrm{Bun}_G(\Sigma_g)$.
 
 The two sides never share a common geometric localisation. In particular
 there is no universal bridge that would force the Kummer-irregular primes
-of $Z_g$ to appear in $S_r$ or vice versa. The programme-level duality
+of $Z_g$ to appear in $S_r$ or vice versa. The arithmetic duality
 (Kummer-present on $Z_g$; Kummer-absent on $S_r$) is the shadow of this
 geometric disjointness at the arithmetic level.
 
@@ -695,52 +650,26 @@ coefficients is distinct.
 
 \begin{remark}[status of extensions]
 \label{rem:zg-sr-duality-extensions}
-The present statement pins the duality through $g \leq 9$ (all
-Kummer-irregular primes $\leq 3617$ verified as present) and
-$r \leq 11$ (all Kummer-irregular primes verified as absent). The
-conjecture that no Kummer-irregular prime ever divides any
-$S_r(\Vir_c)$ coefficient for any $r \geq 2$ is consistent with the
-Riccati propagation structure but has not been inscribed in full
-generality; the obstruction to a proof is the combinatorial control of
-prime growth in the iterates of the transport operator
-$\mathrm{Transp}_{\Vir_c, r}$. The duality through $r = 11$ is the
-currently verified sharp form.
+The theorem pins the duality for the Bernoulli-index pair
+$B_{12},B_{16}$ and for the shadow range $r \leq 11$.  It does not
+assert absence of all Kummer-irregular primes from the Virasoro tower:
+$2111$ already appears in $N_9$.  The higher Bernoulli-index witnesses
+belong to Theorem~\ref{thm:higher-kummer-refined-duality}; the Laurent
+tier refinement belongs to Theorem~\ref{thm:kummer-laurent-depth-controlled}.
 \end{remark}
 
-\begin{decorator}
-\label{decorator:thm-zg-sr-arithmetic-duality}
-\textbf{Theorem~\ref{thm:z-g-s-r-arithmetic-duality}.}
-\begin{itemize}
-\item \texttt{derived\_from}: (i)
-Theorem~\ref{thm:z-g-leading-coefficient-bernoulli} (Hurwitz--Bernoulli
-leading coefficient $B_{2g-2}/(g-1)$); (ii)
-Theorem~\ref{thm:virasoro-shadow-recurrence} (MC master-equation
-recurrence for $S_r(\Vir_c)$).
-\item \texttt{verified\_against}: (a) direct Kummer-irregular prime list
-from von Staudt--Clausen classification (Kummer 1851, OEIS~A000928) for
-the $Z_g$ side; (b) explicit SymPy Bernoulli numerator factorisation
-\texttt{sympy.factorint(sympy.bernoulli(12).p)} and
-\texttt{sympy.factorint(sympy.bernoulli(16).p)} confirming $691 \mid
-\mathrm{num}(B_{12})$ and $3617 \mid \mathrm{num}(B_{16})$; (c) explicit
-SymPy coefficient-factorisation
-\texttt{sympy.factorint} of every coefficient of every $N_r(c)$ for
-$4 \leq r \leq 11$, confirming disjointness from $\mathrm{IrrKum}$.
-\item \texttt{disjoint\_rationale}: the $Z_g$ arithmetic (path (a): von
-Staudt--Clausen classification of Bernoulli denominators; path (b):
-direct Bernoulli numerator factorisation) is supported on moduli of
-bundles via the Witten symplectic-volume route
-(Remark~\ref{rem:witten-check}). The $S_r(\Vir_c)$ arithmetic (path (c):
-direct Riccati-propagated coefficient factorisation) is supported on
-the chiral algebra itself via the MC master-equation on
-$\ChirHoch(\Vir_c)$
-(Remark~\ref{rem:localization-disjointness}). Neither of (a), (b), (c)
-uses any datum from the others: (a) is a class-field-theoretic
-tabulation; (b) is a symbolic Bernoulli recursion via
-$\sum_{k=0}^{n}\binom{n+1}{k} B_k = 0$; (c) is a rational transport of
-$(c/2, 2, 10/(c(5c+22)), -48/(c^2(5c+22)))$ through
-Theorem~\ref{thm:virasoro-shadow-recurrence}. No shared intermediate.
-\end{itemize}
-\end{decorator}
+\begin{remark}[Verification anchor: arithmetic duality]
+\label{rem:zg-verify-sr-duality}
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality} combines two independent
+computations. On the $Z_g$ side, the reduced leading coefficients at
+$g=7,9$ contain the Bernoulli numerators $691$ and $3617$. On the
+Virasoro side, Theorem~\ref{thm:s-r-kummer-absent-through-r-11} factors
+every coefficient of
+$N_r(c)=S_r(\Vir_c)c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}$ for
+$2\leq r\leq11$ and finds neither prime. The first computation is a
+moduli-of-bundles calculation; the second is the Riccati transport in the
+ordered chiral Hochschild recursion.
+\end{remark}
 
 \bigskip
 

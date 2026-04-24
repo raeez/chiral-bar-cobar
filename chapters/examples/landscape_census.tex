@@ -409,14 +409,18 @@ each family.
 \label{prop:minimal-model-class-transport}
 \ClaimStatusProvedHere
 The simple quotient $\mathrm{Vir}_{c_{p,q}}$ at minimal-model central
-charge $c_{p,q} = 1 - 6(p-q)^{2}/(pq)$ remains class $M$
-unconditionally: the shadow obstruction tower satisfies
+charge $c_{p,q} = 1 - 6(p-q)^{2}/(pq)$ remains class $M$ on the
+non-singular Virasoro shadow surface
+$c_{p,q}\notin\{0,-22/5\}$: the shadow obstruction tower satisfies
 $r_{\max}(\mathrm{Vir}_{c_{p,q}}) = \infty$ and the universal
 Virasoro quartic shadow coefficient
 $S_{4}(c) = 10/[c(5c+22)]$ persists on the simple quotient
 (Zamolodchikov 1985, Belavin--Polyakov--Zamolodchikov 1984; the
 critical discriminant $\Delta = 8\kappa S_4 = 40/(5c+22)$ is a
 distinct downstream invariant, not to be confused with $S_4$ itself).
+At the exceptional minimal charges $c=0$ and $c=-22/5$ this proposition
+does not assert a class-M transport theorem; a renormalized quotient
+calculation is required there.
 \end{proposition}
 
 \begin{proof}
@@ -821,7 +825,10 @@ poles are generically present.
 
 \begin{table}[ht]
 \centering
-\caption{Free energies $F_1 = \kappa/24$ and $F_2 = 7\kappa/5760$ for $21$ standard families}
+\caption{Scalar-lane free energies $F_1 = \kappa/24$ and
+$F_2^{\mathrm{scalar}} = 7\kappa/5760$ for $21$ standard families;
+multi-weight rows require the scalar term plus
+$\delta F_2^{\mathrm{cross}}$}
 \label{tab:free-energy-landscape}
 \index{free energy!landscape table}
 \renewcommand{\arraystretch}{1.5}
@@ -5251,15 +5258,16 @@ The landscape census's K3$\times$E row is the canonical K3 base
 point, with the four $\kappa_\bullet$-invariants:
 \[
  \begin{aligned}
-  \kappa_{\mathrm{cat}}(K3\times E) &= \chi(\cO_{K3})\cdot\chi(\cO_E) = 2\cdot 0 = 0,\\
-  \kappa_{\mathrm{ch}}(K3\times E) &= 0,\\
-  \kappa_{\mathrm{BKM}}(\Phi_{10}) &= c_{10}(0)/2 = 5,\\
-  \kappa_{\mathrm{fiber}}(K3) &= 2,
- \end{aligned}
+	 \kappa_{\mathrm{cat}}(K3\times E) &= \chi(\cO_{K3})\cdot\chi(\cO_E) = 2\cdot 0 = 0,\\
+	  \kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3\times E) &= 3,\\
+	  \kappa_{\mathrm{BKM}}(\Delta_5) &= c_{1}(0)/2 = 5,\\
+	  \kappa_{\mathrm{fiber}}(K3) &= 24,
+	 \end{aligned}
 \]
-and K3-specific spectrum $\{2, 3, 5, 24\}$ from four distinct
-constructions (Mukai lattice, Igusa $\Phi_{10}$ via Gritsenko $\Delta_5$,
-BKM Borcherds weight, K3 fibre-rank). The Mukai-doubling identity
+and the separate K3 fibre witness $\kappa_{\mathrm{cat}}(K3)=2$.
+The values $\{0,3,5,24\}$ and the witness~$2$ come from distinct
+constructions (K\"unneth Hodge supertrace, Heisenberg shadow, Gritsenko
+$\Delta_5$ Borcherds weight, and K3 fibre rank). The Mukai-doubling identity
 $K^{\kappa_{\mathrm{ch}}} = 2c_+(\mathrm{Mukai}(K3)) = 8$ at the Lusztig
 specialisation $\hbar^2 = -1/8$ selects this row as the canonical
 entry \cite{Borcherds1992,Gritsenko1999,GritsenkoNikulin1998,Mukai1987}.
@@ -5273,13 +5281,46 @@ Extending the K3 base point through the landscape: (i) CY-$1$
 BKM weight; (ii) CY-$2$ (K3) $\kappa_{\mathrm{ch}}$ is the Hodge
 supertrace $\sum_q (-1)^q h^{0,q}(K3) = 2$ at the $\chi(\cO_{K3}) = 2$ face,
 with $\Delta_5$ BKM weight $5$ and Mukai-doubling $8$; (iii) CY-$3$
-(K3$\times$E or quintic) $\kappa_{\mathrm{ch}} = 0$ with $\kappa_{\mathrm{BKM}} = 5$
+(K3$\times$E or quintic) $\kappa_{\mathrm{ch}} = 0$ with $\kappa_{\mathrm{BKM}}(\Delta_5) = 5$
 still via the product structure; (iv) CY-$4$ (local $\mathbb P^2$)
 $\kappa_{\mathrm{ch}} = 3/2$ via McKay/direct shadow. Each row at
 $d\geq 2$ has an (in principle) BKM lift with the universal identity
 $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N\in\{1,2,3,4,6\}$
 \cite{Borcherds1998,Gritsenko1999}. Cross-ref
 Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+\end{remark}
+
+\begin{remark}[Fake-Monster landscape row: lattice ambient $\mathrm{II}_{25,1}$, weight $12$]
+\label{rem:landscape-fake-monster-row}
+Parallel to the paramodular K3$\times$E row but with a disjoint lattice
+ambient, the Fake-Monster Hall--Drinfeld double
+$\mathbf H_{\mathrm{FakeMonster}}$ carries the Borcherds product
+$\Phi_{12}$ on the Grassmannian of $\mathrm{II}_{26,2}$ as its
+automorphic denominator, with BKM weight
+\[
+ \kappa_{\mathrm{BKM}}(\Phi_{12}) \;=\; \tfrac{1}{2}\,c^{\mathrm{FM}}(0) \;=\; 12
+ \qquad\bigl(\text{Borcherds~\cite{Bor95} Thm~$13.1$;
+ lift of $\theta_{\Lambda_{24}}/\eta^{24}$}\bigr).
+\]
+The Cartan $\mathrm{II}_{25,1} = \Lambda_{24}\oplus\mathrm{II}_{1,1}$
+has signature $(25,1)$, rank~$26$; all imaginary-root multiplicities
+equal the Leech rank~$24$. This row is \emph{not} a re-indexing of the
+paramodular K3$\times$E row of
+Remark~\ref{rem:landscape-1}: the Cartans
+$\Lambda^{2,1}_{\mathrm{II}}$ and $\mathrm{II}_{25,1}$ admit no
+signature-preserving embedding, the K3 lattice $\mathrm{II}_{3,19}$ is
+not a sublattice of the Leech lattice
+(Gritsenko--Nikulin~\cite{GritsenkoNikulin1998} Prop.~$2.5$), and the
+Fourier channels at weight~$12$ do not interfere
+(Remark~\ref{rem:nc-fake-monster-non-interference}). The cross-volume
+placement is fixed in
+Proposition~\ref{prop:kappa-bkm-cross-volume-reconciliation}:
+$\kappa_{\mathrm{BKM}}(\Delta_5) = 5$ records the paramodular row at
+$d = 3$ on CY$_3$ ambient $K3\times E$, while
+$\kappa_{\mathrm{BKM}}(\Phi_{12}) = 12$ records the Fake-Monster row on
+the lattice vertex algebra $V_{\mathrm{II}_{25,1}}$. The universal
+identity $\kappa_{\mathrm{BKM}}(\Phi) = c^\Phi(0)/2$ applies on each
+row with its own Fourier-zero coefficient.
 \end{remark}
 
 \section*{Canonical coefficient values}

@@ -17,8 +17,9 @@ PRINCIPAL OBJECTS:
 2. **GL(N) Chern-Simons at level k**: boundary = affine gl(N)_k, bulk =
    W_{1+infty} at c = N via large-N duality (Gaberdiel-Gopakumar).
 
-3. **M2 brane (ABJM)**: boundary = N=(2,0) chiral algebra from BRST reduction,
-   kappa = -N^2, bulk = 11d supergravity on AdS_4 x S^7.
+3. **M2 brane (ABJM)**: boundary = chiral algebra from BRST reduction.
+   This engine stores the reduced scalar convention kappa_red = -N^2;
+   the full pre-BRST package has kappa = -(N^2+1).
 
 4. **Twisted M-theory on CY5**: boundary = chiral algebra on M5 wrapping divisor,
    holographic datum from Calabi-Yau data.
@@ -435,7 +436,10 @@ def make_abjm(N: int, k: int) -> TwistedHolographicAlgebra:
     """ABJM boundary VOA at rank N and CS level k.
 
     From BRST reduction of V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2}.
-    c = -2N^2, kappa = -N^2.
+    This constructor records the reduced scalar convention
+    c_red = -2N^2, kappa_red = -N^2 after cancelling the
+    level-opposite CS pair. The full pre-BRST modular characteristic
+    is -(N^2+1), computed in twisted_holography_comparison_engine.py.
     Shadow depth = 4 (contact, class C) for N=1, infinite for N >= 2.
     """
     c = Fraction(-2 * N * N)
@@ -833,7 +837,8 @@ def abjm_holographic_datum(N: int, k: int) -> HolographicDatum:
     """ABJM holographic datum at rank N, CS level k.
 
     Boundary: BRST reduction of V_k(gl_N) x V_{-k}(gl_N) x Sb^{4N^2}.
-    c = -2N^2, kappa = -N^2.
+    This datum uses the reduced scalar convention
+    c_red = -2N^2, kappa_red = -N^2.
     Bulk: 11d SUGRA on AdS_4 x S^7/Z_k.
     """
     A = make_abjm(N, k)
@@ -843,8 +848,8 @@ def abjm_holographic_datum(N: int, k: int) -> HolographicDatum:
 def abjm_shadow_data(N: int, k: int) -> Dict[str, object]:
     """Shadow data for the ABJM boundary VOA.
 
-    kappa = -N^2.
-    F_1 = kappa/24 = -N^2/24.
+    kappa_red = -N^2.
+    F_1 = kappa_red/24 = -N^2/24.
     Shadow depth: 4 for N=1 (contact), infinity for N >= 2 (mixed).
     """
     kappa = Fraction(-N * N)

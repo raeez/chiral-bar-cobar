@@ -2,15 +2,13 @@
 % chapters/theory/genus_2_ddybe_platonic.tex
 %
 % Platonic-ideal inscription of the genus-2 doubly-dynamical
-% Yang-Baxter equation programme. Resolves the CLAUDE.md
-% source-of-truth drift ("generic Omega to 10^{-12}" vs engine
-% tolerance 1e-4) and disambiguates the two statements called
+% Yang-Baxter equation programme. Separates the generic Omega
+% weight-zero check at 10^{-12} from the full engine tolerance 1e-4
+% and disambiguates the two statements called
 % "Fay trisecant" (Szego three-term identity universal at all
 % genera vs Riemann theta-nulls quartic identity on the theta
 % divisor).
 %
-% Attribution: Raeez Lorgat. No AI attribution anywhere.
-% Wave: Russian-School Adversarial Attack, 2026-04-16.
 % ========================================================
 
 \providecommand{\cA}{\mathcal{A}}
@@ -36,22 +34,19 @@
 
 \section*{Preface to this chapter}
 
-The CLAUDE.md theorem-status row for the genus-$2$ construction
-carries two distinct claims. One is correct: the degree-$2$
-ordered chiral homology on a Torelli-marked genus-$2$ surface is
-computed (Proposition~\ref{prop:g2-degree2}) and produces the
-Euler characteristic $\chi=-12$. The other is overstated: the
-advertised numerical tolerance $10^{-12}$ for the generic-$\Omega$
-doubly-dynamical Yang-Baxter equation (DDYBE) reflects the
-single-entry weight-zero check, not the full three-term identity.
-The actual engine tolerance
+The genus-$2$ construction contains two logically separate facts.
+The degree-$2$ ordered chiral homology on a Torelli-marked genus-$2$
+surface is computed in Proposition~\ref{prop:g2-degree2} and gives
+Euler characteristic $\chi=-12$. The generic-$\Omega$
+doubly-dynamical Yang--Baxter equation (DDYBE) is weaker: the
+$10^{-12}$ agreement belongs to the single-entry weight-zero check,
+while the full three-term identity is certified by the engine
 (\texttt{face\_model\_ddybe\_engine.py},
-\texttt{verify\_face\_ddybe\_g2}) is
-$\mathrm{relative}<10^{-4}$. The present chapter reconciles the
-two, separates what is proved from what is conjectured, and
-installs the Platonic-ideal form.
+\texttt{verify\_face\_ddybe\_g2}) only to tolerance
+$\mathrm{relative}<10^{-4}$. The chapter keeps these facts on
+separate status surfaces.
 
-Four theorems replace the informal status row:
+Four statements form the genus-$2$ package:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item \textbf{Existence of the flat KZB connection at $g=2$}
   (\cref{thm:genus-2-kzb-connection-platonic}): the
@@ -710,47 +705,34 @@ not a doubly-dynamical invariant.
 \end{remark}
 
 % ========================================================
-\section{Corrigenda and source-of-truth reconciliation}
+\section{Scope reconciliation}
 \label{sec:g2-corrigenda}
 
-\begin{remark}[Corrigenda to prior CLAUDE.md theorem-status
-row]
+\begin{remark}[Scope of the genus-$2$ DDYBE checks]
 \label{rem:g2-corrigenda}
-The Vol~I CLAUDE.md rows
-``\textsf{Genus-$2$ construction | CONSTRUCTED | KZB with
-$2\times 2$ Siegel period matrix, $\chi=-12$ at degree $2$,
-doubly-dynamical (\texttt{conj:g2-ddybe})}''
-and
-``\textsf{DDYBE face model | VERIFIED | Face-model bypasses
-vertex-IRF. Genus-$2$ DDYBE at generic $\Omega$ to $10^{-12}$.
-Fay trisecant extends to genus~$2$. $29$ tests.}''
-are corrected as follows.
+The genus-$2$ DDYBE checks separate into two statements:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item ``$10^{-12}$'' $\rightarrow$ ``$10^{-4}$ (numerical
-  evidence, $5$ generic-$\Omega$ compute tests)''.
-\item ``VERIFIED'' $\rightarrow$ ``NUMERICAL EVIDENCE'';
-  \texttt{conj:g2-ddybe} remains \texttt{\ClaimStatusConjectured}.
-\item ``Fay trisecant extends to genus~$2$'' $\rightarrow$
-  ``Fay~1973 Corollary~2.5 (Szeg\H{o} three-term identity)
-  holds uniformly at all $g\ge 0$ by direct application, no
-  extension argument needed; distinct from both the
-  four-theta-nulls quartic identity on the theta divisor and
-  the Boltzmann-weight unitarity identity
-  $\alpha\beta-\gamma\delta = \Theta(z-\eta)/\Theta(z+\eta)$
-  tested numerically''.
-\item ``$29$ tests'' $\rightarrow$ ``$30$ face-model tests, of
-  which $4$ are genuinely generic-$\Omega$ DDYBE at
-  \texttt{relative < 1e-4}; a $5$th DDYBE test uses
-  diagonal-$\Omega$ as a tier-(T3) consistency check with the
-  genus-$1$ Felder theorem, and the remaining $25$ tests
-  verify genus-$1$ DYBE, $\theta$ antisymmetry, unitarity,
-  crossing, classical limit, degeneration''.
-\item ``doubly-dynamical'' remains, but with the caveat of
-  Remark~\ref{rem:chi-not-dd}: the \emph{topological}
-  $\chi=-12$ is not itself doubly-dynamical; doubly-dynamical
-  content lives in the $R$-matrix
-  $R(\boldsymbol\lambda,\Omega,z)$ and is currently the
-  content of \texttt{conj:g2-ddybe}.
+\item The single-entry weight-zero check has agreement at
+  $10^{-12}$; the generic-$\Omega$ DDYBE computation has numerical
+  evidence at \texttt{relative < 1e-4} across five compute tests.
+\item The DDYBE face-model statement remains conjectural:
+  \texttt{conj:g2-ddybe} carries \texttt{\ClaimStatusConjectured}.
+\item Fay~1973 Corollary~2.5 is the Szeg\H{o} three-term identity and
+  holds uniformly at all $g\ge 0$ by direct application. It is
+  distinct from the four-theta-nulls quartic identity on the theta
+  divisor and from the numerically tested Boltzmann-weight unitarity
+  identity
+  $\alpha\beta-\gamma\delta = \Theta(z-\eta)/\Theta(z+\eta)$.
+\item There are $30$ face-model tests: four genuinely
+  generic-$\Omega$ DDYBE tests at \texttt{relative < 1e-4}, one
+  diagonal-$\Omega$ tier-(T3) consistency check against the genus-$1$
+  Felder theorem, and $25$ tests for genus-$1$ DYBE, $\theta$
+  antisymmetry, unitarity, crossing, classical limit, and degeneration.
+\item The topological value $\chi=-12$ is not itself
+  doubly-dynamical; by Remark~\ref{rem:chi-not-dd}, the
+  doubly-dynamical content lives in
+  $R(\boldsymbol\lambda,\Omega,z)$ and is currently the content of
+  \texttt{conj:g2-ddybe}.
 \end{enumerate}
 \end{remark}
 
@@ -820,8 +802,3 @@ Full DDYBE~\eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}
 \bottomrule
 \end{tabular}
 \end{center}
-
-\section*{Attribution}
-
-All mathematics in this chapter attributed to Raeez Lorgat.
-No AI attribution anywhere.

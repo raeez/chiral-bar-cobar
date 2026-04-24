@@ -47,8 +47,10 @@ KEY FINDINGS
        on N NS5 branes).
 
    (D) M2 Koszul dual analogy:
-       For M2 (ABJM): kappa(M2_N) = -N^2.  The Koszul dual has
-       kappa(M2_N^!) = +N^2 (by AP24 for KM-type: kappa + kappa! ~ 0).
+       For M2 (ABJM) in the reduced scalar convention:
+       kappa_red(M2_N) = -N^2.  The Koszul dual has
+       kappa_red(M2_N^!) = +N^2 (by AP24 for KM-type: kappa + kappa! ~ 0).
+       The full pre-BRST characteristic -(N^2+1) is a separate datum.
        The M2 Koszul dual is related to the S-dual boundary condition
        via the 3d mirror symmetry of Gaiotto-Witten.
        For M5: the situation is DIFFERENT because the (2,0) theory
@@ -454,9 +456,9 @@ def m2_koszul_dual_analogy(N: int) -> Dict:
     """Compare M5 and M2 Koszul dual structures.
 
     M2 (ABJM):
-        kappa(M2_N) = -N^2
-        kappa(M2_N^!) = +N^2  (by S-duality of 3d mirror, approximately)
-        Complementarity: kappa + kappa^! ~ 0 (KM-type)
+        kappa_red(M2_N) = -N^2
+        kappa_red(M2_N^!) = +N^2  (by S-duality of 3d mirror, approximately)
+        Reduced scalar complementarity: kappa_red + kappa_red^! ~ 0 (KM-type)
 
     M5:
         kappa(M5_N) = +N^3

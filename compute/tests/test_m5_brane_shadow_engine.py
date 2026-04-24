@@ -178,7 +178,7 @@ class TestHenningsonSkenderis:
 # ===========================================================================
 
 class TestKappaMultiPath:
-    """Three independent paths to kappa(M5_N) must agree at leading N^3."""
+    """M5 kappa has three compatible N^3 readouts with distinct normalisations."""
 
     def test_path1_n1_zero(self):
         """Path 1 (chiral algebra): kappa = (4N^3 - 3N - 1)/2.
@@ -264,7 +264,7 @@ class TestBeemRastelli:
             assert abs(ratio - 1.0) < 0.01
 
     def test_kappa_full_subleading(self):
-        """kappa_full = N^3 - N (leading + subleading correction)."""
+        """kappa_full stores the stack anomaly proxy N^3 - N."""
         d = M5Data(N=5)
         assert d.kappa_full == 125 - 5
         d = M5Data(N=10)

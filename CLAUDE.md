@@ -95,10 +95,10 @@ Three volumes hold this structure:
   proof body a reader can verify against primary literature.
 - A new example: compute $\kappa$, the shadow tower, bar cohomology,
   derived centre, for an algebra not yet tabulated.
-- A falsified claim: demonstrating an asserted identity fails at a
-  specific parameter point.
-- A sharpened scope: restricting a theorem to the narrowest hypothesis
-  on which its proof actually holds.
+- A falsified claim repaired by a corrected statement, construction, or
+  proof obligation.
+- A healed statement: the natural hypothesis and proof on which the
+  intended theorem actually holds.
 - A concrete first-principles computation that replaces a
   citation-only black box (e.g. the in-place derivation of
   $\langle \Lambda | \Lambda \rangle = c(5c+22)/10$ from the Virasoro
@@ -433,10 +433,10 @@ Macros live in `main.tex`'s preamble. Inside chapters, use
 
 Claim-status tags (`\ClaimStatusProvedHere`,
 `\ClaimStatusProvedElsewhere`, `\ClaimStatusConjectured`,
-`\ClaimStatusHeuristic`) are reader-facing bookkeeping. Default to
-`\ClaimStatusConjectured` when uncertain — downgrading is cheaper than
-overclaiming. Do not spend cognitive cycles tuning them; the hook and
-session review catch drift.
+`\ClaimStatusHeuristic`) are reader-facing bookkeeping, not repairs. When
+uncertain, name the exact proof obligation and heal the proof, statement,
+or construction; do not downgrade the manuscript to close. Do not spend
+cognitive cycles tuning labels; the hook and session review catch drift.
 
 ## Ambient hooks (automatic)
 
@@ -465,6 +465,33 @@ session review catch drift.
 The hook is advisory. When it flags a false positive (e.g., a
 legitimate Heisenberg or affine-KM $\kappa + \kappa^\vee = 0$), note
 the scope in the inscription and move on — do not argue with the hook.
+
+## Long-form proof harness
+
+For Claude Code, Codex CLI, and any GPT-5.5 / GPT-5-Codex-class agent,
+frontier mathematics runs in maximum-effort mode. Use the deepest
+host-exposed model and reasoning budget. If the host offers a
+GPT-5.5 Pro / Heavy or `xhigh` setting, use it for theorem repair,
+cross-volume synthesis, adversarial review, and primary-source
+reconstruction. The private ChatGPT Pro harness is not public; this is
+the open local analogue.
+
+Long runs are normal. A 30-60 minute agent run is acceptable when a
+proof obligation requires it. The agent first loads the relevant
+context (`CLAUDE.md`, `AGENTS.md`, target chapter, dependencies,
+bibliography, compute files, cross-volume anchors), builds an internal
+outline, then works through independent proof routes: worked example,
+formal argument, primary source, computation, and cross-volume
+consistency. Private scratch stays private; the deliverable is the
+checked proof trace and the exact remaining obstruction.
+
+After every proposed repair, run an attack-heal loop: strongest
+counterexample, sign/convention check, ambient-category check, missing
+hypothesis, false functoriality, unproved equivalence, numerical
+constant. Heal and attack again until the theorem closes or the exact
+obstruction is named for the next repair cycle. Do not downgrade the
+manuscript to close the loop. Subagents provide evidence, not authority;
+the main thread integrates by deep semantic merge.
 
 ## What not to do
 

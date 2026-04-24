@@ -100,7 +100,7 @@ shares no intermediate symbol with the Riccati MC recursion: the latter
 takes $(\kappa, S_3, S_4)$ as inputs, while the Wick chain derives the
 $\Lambda$-norm and $S_3$ from the Virasoro algebra and OPE. The
 implementation is at \texttt{compute/lib/s5\_virasoro\_wick.py} with the
-independent-verification decorator at
+independent verification check at
 \texttt{compute/tests/test\_s5\_virasoro\_wick.py::TestWickIndependentVerification}
 covering all six finite calibration points
 $c \in \{\tfrac12, \tfrac{7}{10}, \tfrac{4}{5}, 1, 2, 24\}$. (At
@@ -615,7 +615,8 @@ Theorem~\ref{thm:kummer-from-motivic}
 $Z_g(n)$ genus-expansion numerators, linked to
 $S_{2g-2}(\Vir_c)$ through the shadow-Feynman bridge
 $F_g \leftrightarrow S_{2g - 2}$ and the leading Bernoulli
-normalisation $B_{2g-2}/(g-1)$. The Kummer content is transferred
+normalisation
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$. The Kummer content is transferred
 to $Z_g$ through the genus Bernoulli factor, not through the
 Virasoro leading-$c$ behaviour of $S_{2g-2}$. The two statements
 measure different arithmetic invariants and are not in conflict.
@@ -2423,21 +2424,23 @@ side) are the natural next questions.
 
 The Virasoro shadow tower and the Verlinde polynomial $Z_g(k)$ record two
 arithmetically distinct invariants of the same underlying programme. The
-present section establishes the first half of the duality: the shadow
+first half of the duality is a shadow-side absence statement: the shadow
 coefficients $S_r(\Vir_c)$ through weight $r = 11$ are localised on the
 chiral algebra itself (residues of $\ChirHoch(\cA)$) and carry arithmetic
 disjoint from the Hurwitz--Bernoulli content of $Z_g$. The complementary
 statement -- that the Kummer-irregular primes $\{691, 3617\}$ appear in the
-$Z_g$ leading coefficients via $B_{2g-2}$ -- is proved at
-Theorem~\ref{thm:z-g-s-r-arithmetic-duality} of
-\texttt{z\_g\_kummer\_bernoulli\_platonic.tex}.
+$Z_g$ leading coefficients through
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ -- is proved in
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality}.
 
-\begin{theorem}[\label{thm:s-r-kummer-absent-through-r-11}The first two
-Kummer-irregular primes $\{691, 3617\}$ are absent from $S_r(\Vir_c)$
+\begin{theorem}[\label{thm:s-r-kummer-absent-through-r-11}The
+Bernoulli-leading Kummer pair $\{691, 3617\}$ is absent from $S_r(\Vir_c)$
 through $r = 11$]
 \ClaimStatusProvedHere
-Let $\mathrm{IrrKum}_{2} := \{691,\, 3617\}$ denote the first two
-Kummer-irregular primes (OEIS~A000928). Then for every $r$ in the range
+Let $\mathrm{IrrKum}_{\mathrm{Bern},2} := \{691,\, 3617\}$ denote the
+Kummer-irregular primes appearing at the two smallest Bernoulli indices
+with irregular numerator factors, $B_{12}$ and $B_{16}$. Then for every
+$r$ in the range
 $2 \leq r \leq 11$, neither $691$ nor $3617$ divides any integer
 coefficient of the cleared numerator
 \[
@@ -2450,7 +2453,7 @@ higher Kummer-irregular primes can and do appear. In particular the prime
 $2111$, which is Kummer-irregular (it divides $\mathrm{num}(B_{1038})$
 with $1038 \leq 2111 - 3$), enters the constant-term numerator of $N_9$
 via $29554 = 2 \cdot 7 \cdot 2111$. The arithmetic-disjointness statement
-is therefore restricted to the \emph{leading two} Kummer-irregular primes;
+is therefore restricted to the \emph{Bernoulli-leading} pair;
 the global claim ``no Kummer-irregular prime divides any $N_r$ through
 $r = 11$'' is false.
 \end{theorem}
@@ -2500,20 +2503,20 @@ prefactors and GCD reduction, are
     11 & \{-91125,\ -990225,\ -3500190,\ -3988097\}
   \end{array}
 \]
-The prime content of every entry, verified by \texttt{sympy.factorint}
+The prime content of every entry, by exact integer factorisation
 coefficient by coefficient, is supported on the finite set
 \[
   \mathcal{P}_{\le 11} \;=\; \{2,\, 3,\, 5,\, 7,\, 17,\, 61,\, 163,\, 173,\,
   193,\, 2111,\, 16657,\, 38891,\, 292351,\, 3988097\}.
 \]
-The first two Kummer-irregular primes $691$ and $3617$ satisfy $691,\,
-3617 \notin \mathcal{P}_{\le 11}$. The Kummer-irregular primes
-$\leq 10000$ (OEIS A000928) begin $37, 59, 67, 101, 103, 131, 149, 157,
-233, \ldots, 691, \ldots, 3617, \ldots$; no element of this list
-appears in $\mathcal{P}_{\le 11}$.
+The Bernoulli-leading pair $691,3617$ satisfies
+$691,3617 \notin \mathcal{P}_{\le 11}$. The Kummer-irregular primes by
+size begin $37,59,67,101,103,131,149,157,233,\ldots,691,\ldots,3617$;
+this size-ordered set is not disjoint from $\mathcal{P}_{\le 11}$,
+because $2111\in\mathcal{P}_{\le 11}$.
 
 Explicit prime factorisations of the characteristic Riccati-propagated
-coefficients (all verified by \texttt{sympy.factorint}):
+coefficients are:
 \begin{align*}
   193 &= 193 \text{ prime (appears in } N_6{:}\;45c+193) \\
   61  &= 61 \text{ prime (appears in } N_7{:}\;15c+61) \\
@@ -2533,35 +2536,27 @@ coefficients (all verified by \texttt{sympy.factorint}):
 The primes $691$ and $3617$ do not appear in $\mathcal{P}_{\le 11}$;
 this is the stated sharp positive claim.
 
-For the negative (sharpness) clause: the prime $2111$ is
-Kummer-irregular (SymPy verifies $2111 \mid \mathrm{num}(B_{1038})$,
-with $1038 \leq 2111 - 3 = 2108$; the general Kummer-irregularity
-criterion $p \mid \mathrm{num}(B_{2m})$ for $2 \leq 2m \leq p - 3$
-applies). At the same time $2111 \mid 29554$ (the constant-term
+For the negative sharpness clause, the prime $2111$ is Kummer-irregular:
+$2111 \mid \mathrm{num}(B_{1038})$ and
+$1038 \leq 2111 - 3 = 2108$, so Kummer's criterion applies. At the same
+time $2111 \mid 29554$ (the constant-term
 coefficient of $N_9$, since $29554 = 2 \cdot 7 \cdot 2111$). Hence
 $2111 \in \mathrm{IrrKum}$ and $2111$ divides a coefficient of $N_9$;
 this is the negative witness. The statement restricted to $\{691,
 3617\}$ is therefore sharp in the sense that it cannot be strengthened
 to ``every'' Kummer-irregular prime without falsification at $r = 9$,
 $p = 2111$.
-
-The complete positive computation is reproducibly executed by the SymPy
-independent-verification decorator at
-\texttt{compute/tests/test\_z\_g\_s\_r\_arithmetic\_duality.py}
-(\texttt{test\_kummer\_primes\_absent\_from\_S\_r\_through\_r\_11}),
-covering both (a) direct coefficient factorisation via
-\texttt{sympy.factorint} and (b) irregular-prime list lookup via
-\texttt{sympy.ntheory.bernoulli}.
 \end{proof}
 
 \begin{remark}[\label{rem:sth-arithmetic-duality}Arithmetic duality with
 $Z_g$ Kummer-presence]
 Theorem~\ref{thm:s-r-kummer-absent-through-r-11} is the shadow-side
-half of the programme-level arithmetic duality with
+half of the arithmetic duality with
 Theorem~\ref{thm:z-g-s-r-arithmetic-duality}
-(\texttt{z\_g\_kummer\_bernoulli\_platonic.tex}): the first two
-Kummer-irregular primes $\{691, 3617\}$ are present in the $Z_g$ leading
-coefficients via the Hurwitz--Bernoulli quotient $B_{2g-2}/(g-1)$
+(\texttt{z\_g\_kummer\_bernoulli\_platonic.tex}): the Bernoulli-leading
+pair $\{691, 3617\}$ is present in the $Z_g$ leading
+coefficients via the Hurwitz--Bernoulli factor
+$(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$
 (observed at $g = 7$ with $691 \mid B_{12}$ and $g = 9$ with
 $3617 \mid B_{16}$); the same two primes are absent from the
 $S_r(\Vir_c)$ coefficients through $r = 11$. The statement is sharp in
@@ -2579,11 +2574,9 @@ coefficient is a chiral Hochschild residue of the Virasoro algebra
 itself, extracted from the Maurer--Cartan tower of the universal element
 $\Theta_{\Vir_c}$ on $\ChirHoch(\Vir_c)$ (no moduli-of-bundles input).
 The localisations of the two invariants are disjoint: $Z_g$ on moduli
-of bundles, $S_r$ on the chiral algebra. The programme-level duality
-records this clean separation for the two smallest Kummer-irregular
-primes $\{691, 3617\}$, which are the ones genuinely witnessed on the
-$Z_g$ side at genera $g = 7, 9$ (the currently verified range for the
-$Z_g$ Kummer-presence theorem).
+of bundles, $S_r$ on the chiral algebra. The arithmetic duality
+records this clean separation for the Bernoulli-leading pair
+$\{691, 3617\}$, witnessed on the $Z_g$ side at genera $g = 7, 9$.
 
 Mechanism, in one line: $B_{2g-2}$ enters $Z_g$ by
 Euler's even-zeta identity composed with the Hurwitz cosecant series
@@ -2925,10 +2918,9 @@ contributions from $\{2, 3\}$-rough divisors of $r$ (e.g.
 $5 \mid \mathrm{denom}(A_5)$, $7 \mid \mathrm{denom}(A_7)$,
 $5 \mid \mathrm{denom}(A_{10})$, $11 \mid \mathrm{denom}(A_{11})$).
 
-Kummer-irregular primes $\{691, 3617, 43867, \ldots\}$ all satisfy
-$p > 11$. Hence for $r \leq 11$, no such $p$ can divide $r$, and no
-such $p$ appears in the $\{2, 3\}$-smooth numerator. The claim
-holds through $r = 11$.
+Kummer-irregular primes ordered by size begin at $37$. Hence for
+$r \leq 11$, no Kummer-irregular prime can divide $r$, and none appears
+in the $\{2, 3\}$-smooth numerator. The claim holds through $r = 11$.
 \end{proof}
 
 \begin{corollary}[\label{cor:virasoro-motivic-purity-r-leq-11}Motivic
@@ -3166,27 +3158,25 @@ $r = 9/2$. The prime factorizations of $q(r)$ control the
   q(10) = 2 \cdot 3 \cdot 7 \cdot 13, \quad
   q(11) = 2 \cdot 3 \cdot 101.
 \]
-None of these primes lies in the Kummer-irregular set
-$\mathrm{IrrKum} = \{691, 3617, 43867, 283, \ldots\}$. In
-particular, the sharpness caveat of
+Among these primes, only $101$ is Kummer-irregular by size, with
+$101 \mid \mathrm{num}(B_{68})$. None of the displayed primes belongs
+to the Bernoulli-leading pair $\{691,3617\}$. In particular, the
+sharpness caveat of
 Theorem~\ref{thm:s-r-kummer-absent-through-r-11} (stating that the
-two \emph{leading} Kummer-irregular primes $\{691, 3617\}$ are
+two \emph{Bernoulli-leading} Kummer witnesses $\{691, 3617\}$ are
 absent from $S_r$ as rational function through $r = 11$) extends to
 the entire subleading asymptotic layer through $r = 11$.
 \end{corollary}
 
 \begin{proof}
-The discriminant computation is elementary. For the prime
-factorizations, substitute $r = 4, 5, \ldots, 11$ into $q(r)$ and
-factor (confirmed symbolically in
-\texttt{compute/tests/test\_subleading\_asymptotic.py}). The primes
-$\{7, 11, 13, 19, 29, 31, 71, 101\}$ that appear: with the
-exception of $101$ (which is Kummer-irregular via $101 \mid
-\mathrm{num}(B_{68})$, verified by primary-source
-check), all lie below the smallest-by-size Kummer-irregular prime
-$37$; hence $\{7, 11, 13, 19, 29, 31, 71\} \cap
-\mathrm{IrrKum} = \varnothing$, and only the single Kummer
-emergence $101$ at $r = 11$ sits inside $\mathrm{IrrKum}$. The two
+The discriminant computation is elementary. Substituting
+$r = 4,5,\ldots,11$ into $q(r)$ gives the displayed factorisations.
+The primes $\{7,11,13,19,29,31\}$ are below the first
+Kummer-irregular prime by size, namely $37$. The prime $71$ is regular:
+no numerator $\mathrm{num}(B_{2m})$ with $2 \leq 2m \leq 68$ is
+divisible by $71$. The prime $101$ is Kummer-irregular via
+$101\mid\mathrm{num}(B_{68})$. Thus the only Kummer emergence in
+$q(r)$ through $r=11$ is the single prime $101$ at $r=11$. The two
 \emph{Bernoulli-leading} Kummer-irregular primes $\{691, 3617\}$
 (smallest by Bernoulli index, $691 \mid B_{12}$ and $3617 \mid
 B_{16}$) are absent from $q(r)$ for every $r \le 11$. See
@@ -3564,7 +3554,7 @@ Theorem~\ref{thm:z-g-s-r-arithmetic-duality}
 $\{691, 3617\}$: these are the primes dividing
 $\mathrm{num}(B_{12})$ and $\mathrm{num}(B_{16})$ respectively, the
 two smallest Bernoulli indices admitting Kummer-irregular divisors.
-The stratification refines by tabulating the FULL Kummer-irregular
+The stratification refines by tabulating the full Kummer-irregular
 emergence pattern in each Laurent Tier through $r = 15$.
 
 \begin{theorem}[\label{thm:kummer-laurent-depth-controlled}%
@@ -3589,14 +3579,14 @@ emergence table is exact through $r = 15$:
 \end{array}\]
 
 In particular: the prime $691$ emerges \emph{uniquely} at $(r, k) =
-(8, 3)$; the prime $3617$ does NOT appear in any Tier through
+(8, 3)$; the prime $3617$ does not appear in any Tier through
 $r = 15$; but the smaller Kummer-irregular primes $\{37, 101, 283,
 811\}$ do appear at specific $(r, k)$ coordinates.
 
 The arithmetic duality
 Theorem~\ref{thm:z-g-s-r-arithmetic-duality}, stated for
-$\{691, 3617\}$, is CORRECT AT ITS STATED SCOPE: these two
-primes follow the Bernoulli-index hierarchy
+$\{691, 3617\}$, has exactly this scope: these two primes follow
+the Bernoulli-index hierarchy
 $691 \mid B_{12}$, $3617 \mid B_{16}$, and are absent from all
 Tiers through $r = 15$ except the unique $691$-sighting at Tier~3,
 $r = 8$.  Smaller Kummer-irregular primes (37, 59, 67, 101, ...)
@@ -3622,11 +3612,11 @@ this enumeration (verified symbolically in
 \end{proof}
 
 \begin{remark}[\label{rem:kummer-witness-verification-20260417}%
-Primary-source Kummer-witness verification]
-Retraction of earlier Kummer-irregular labels after explicit Bernoulli-
-numerator verification:
+Bernoulli-numerator verification of Kummer witnesses]
+The Kummer-irregular labels used in the Laurent-tier table are fixed by
+explicit Bernoulli-numerator witnesses:
 
-\emph{Confirmed Kummer-irregular} (primary-source Bernoulli witness):
+\emph{Kummer-irregular} (Bernoulli witness):
 \[
   37 \mid B_{32},\quad
   101 \mid B_{68},\quad
@@ -3637,8 +3627,7 @@ numerator verification:
   3617 \mid B_{16}.
 \]
 
-\emph{Confirmed Kummer-regular} (earlier inscriptions falsely labelled
-as Kummer-irregular):
+\emph{Kummer-regular in the checked range}:
 \[
   23 \; (B_{2m}, 2m \leq 20,\; \text{no witness}),\quad
   43 \; (2m \leq 40,\; \text{no witness}),\quad
@@ -3646,8 +3635,7 @@ as Kummer-irregular):
   1423 \; (2m \leq 1420,\; \text{no witness}).
 \]
 
-\emph{Retracted from Tier~3 emergence table}: the prime $3067$ (earlier
-claimed to emerge at $r = 12$, Tier~3) has no Bernoulli witness in
+\emph{The prime $3067$.} The prime $3067$ has no Bernoulli witness in
 $B_{2m}$ for $2m \leq 2000$. Under the Kummer criterion
 $p \mid \mathrm{num}(B_{2k})$ for some $2 \leq 2k \leq p - 3$, this
 covers the regime $2m \leq 2000 < 3064 = p - 3$; extension to
@@ -3655,14 +3643,14 @@ $2m \leq 3064$ exceeds the current symbolic-computation cost budget
 but the failure through $B_{2000}$ makes Kummer-regularity the honest
 label at available verification depth. The prime $3067$ still appears
 in the $\Gamma_{12}$ numerator as a Riccati-arithmetic characteristic
-prime, NOT as Kummer-arithmetic.
+prime, not as Kummer-arithmetic.
 
-The corrected Tier~3 emergence table of
+The Tier~3 emergence table of
 Theorem~\ref{thm:kummer-laurent-depth-controlled} retains three
 entries $\{37, 691, 811\}$; the four-tier emergence statement is
-otherwise unchanged. The programme-level arithmetic-duality theorem
-for the Bernoulli-leading pair $\{691, 3617\}$ is UNAFFECTED by this
-correction: both leading primes are verified Kummer-irregular and
+otherwise unchanged. The arithmetic-duality theorem
+for the Bernoulli-leading pair $\{691, 3617\}$ is unaffected by the
+$3067$ computation: both leading primes are verified Kummer-irregular and
 the absence / presence pattern on $S_r$ vs $Z_g$ holds at the stated
 scope.
 \end{remark}
@@ -3697,12 +3685,12 @@ Sharpness of the Bernoulli-leading arithmetic duality]
 The two Bernoulli-leading Kummer-irregular primes
 $\{691, 3617\}$ satisfy:
 \begin{itemize}
-\item $691$: PRESENT on $Z_g$ at the leading Bernoulli asymptotic
-  for $g = 7$ (via $B_{12}$); ABSENT from $S_r$ through
+\item $691$ appears on $Z_g$ at the leading Bernoulli asymptotic
+  for $g = 7$ (via $B_{12}$) and is absent from $S_r$ through
   $r = 15$ \emph{except} at Tier~3, $r = 8$, where it appears in
   the combined sum $39204 + 11880 + 50 = 51134 = 2 \cdot 37 \cdot 691$.
-\item $3617$: PRESENT on $Z_g$ at the leading Bernoulli asymptotic
-  for $g = 9$ (via $B_{16}$); ABSENT from $S_r$ in EVERY Tier
+\item $3617$ appears on $Z_g$ at the leading Bernoulli asymptotic
+  for $g = 9$ (via $B_{16}$) and is absent from every $S_r$ tier
   through $r = 15$.
 \end{itemize}
 Therefore the arithmetic duality
@@ -3785,9 +3773,8 @@ The three-tier picture separates the universal classical limit
 (Tier~2), and the Kummer-Bernoulli content inherited from the
 Hurwitz-formal cotangent of $\mathrm{Bun}_{\SL_{2}}(\Sigma_{g})$
 (Tier~3). The arithmetic duality
-Theorem~\ref{thm:z-g-s-r-arithmetic-duality}
-(\texttt{z\_g\_kummer\_bernoulli\_platonic.tex}) is refined by this
-stratification: the two leading Kummer-irregular primes
+Theorem~\ref{thm:z-g-s-r-arithmetic-duality} is refined by this
+stratification: the two Bernoulli-leading Kummer witnesses
 $\{691, 3617\}$ are absent from \emph{all three tiers} of $S_r$
 through $r = 11$ except the unique sighting of $691$ in
 $\Gamma_{8}$, and are present on $Z_g$ already at the leading

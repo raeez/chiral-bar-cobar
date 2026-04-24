@@ -2,7 +2,7 @@
 
 Verifies:
   1. D3 brane (twisted N=4 SYM): kappa, genus expansion, R-matrix, anomaly matching
-  2. M2 brane (ABJM): shadow invariants, genus expansion, R-matrix, anomaly matching
+  2. M2 brane (ABJM): reduced scalar shadow invariants, genus expansion, R-matrix, anomaly matching
   3. Bulk-boundary propagator: genus 0 and genus 1
   4. Witten diagrams from shadow obstruction tower: 3-point, 4-point, vacuum, tadpole
   5. Sphere reconstruction (GZ 2026): Sh_{0,n} for n = 2,3,4,5
@@ -233,20 +233,20 @@ class TestTwistedN4GenusExpansion:
 # ========================================================================
 
 class TestABJMShadowData:
-    """Test ABJM shadow data."""
+    """Test reduced scalar ABJM shadow data."""
 
     def test_kappa_N1_k1(self):
-        """kappa(ABJM(1,1)) = -1."""
+        """kappa_red(ABJM(1,1)) = -1."""
         data = ABJMShadowData(N=1, k=1)
         assert data.kappa == Fraction(-1)
 
     def test_kappa_N2_k1(self):
-        """kappa(ABJM(2,1)) = -4."""
+        """kappa_red(ABJM(2,1)) = -4."""
         data = ABJMShadowData(N=2, k=1)
         assert data.kappa == Fraction(-4)
 
     def test_kappa_N3_k2(self):
-        """kappa(ABJM(3,2)) = -9."""
+        """kappa_red(ABJM(3,2)) = -9."""
         data = ABJMShadowData(N=3, k=2)
         assert data.kappa == Fraction(-9)
 
@@ -256,7 +256,7 @@ class TestABJMShadowData:
         assert data.thooft_coupling == Fraction(3, 2)
 
     def test_F1(self):
-        """F_1(ABJM(N,k)) = -N^2/24."""
+        """Reduced scalar F_1(ABJM(N,k)) = -N^2/24."""
         for N in [1, 2, 3, 5]:
             data = ABJMShadowData(N=N, k=1)
             assert data.F_g(1) == Fraction(-N * N, 24)
@@ -277,7 +277,7 @@ class TestABJMShadowInvariants:
     """Test the first 3 shadow invariants for ABJM."""
 
     def test_kappa_invariant(self):
-        """Shadow 1 = kappa = -N^2."""
+        """Shadow 1 = kappa_red = -N^2."""
         result = abjm_shadow_invariants(3, 1, n_invariants=1)
         assert result["kappa"] == Fraction(-9)
 
@@ -472,7 +472,7 @@ class TestHolographicRMatrix:
         assert r.satisfies_cybe is True
 
     def test_m2_scalar_trace(self):
-        """Scalar trace for ABJM = kappa = -N^2."""
+        """Reduced scalar trace for ABJM = kappa_red = -N^2."""
         r = holographic_r_matrix_m2(3, 1)
         assert r.scalar_trace == Fraction(-9)
 
@@ -559,14 +559,14 @@ class TestKoszulComplementarity:
             assert result["kappa_A_dual"] == -kappa
 
     def test_m2_anti_symmetric(self):
-        """M2: kappa(ABJM) + kappa(ABJM!) = 0."""
+        """M2 reduced scalar: kappa_red(ABJM) + kappa_red(ABJM!) = 0."""
         for N in [1, 2, 3]:
             result = koszul_complementarity_m2(N, 1)
             assert result["anti_symmetric"] is True
             assert result["sum"] == Fraction(0)
 
     def test_m2_kappa_dual(self):
-        """kappa(ABJM!) = N^2 = -kappa(ABJM)."""
+        """kappa_red(ABJM!) = N^2 = -kappa_red(ABJM)."""
         result = koszul_complementarity_m2(3, 1)
         assert result["kappa_A_dual"] == Fraction(9)
 

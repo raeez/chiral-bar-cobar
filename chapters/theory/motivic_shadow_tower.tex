@@ -39,6 +39,7 @@
 \providecommand{\coll}{\mathrm{coll}}
 \providecommand{\Res}{\operatorname{Res}}
 \providecommand{\fg}{\mathfrak{g}}
+\providecommand{\ClaimStatusConditional}{}
 
 \chapter{The Motivic Shadow Tower}
 \label{ch:motivic-shadow-tower}
@@ -63,8 +64,7 @@ ring they appear to inhabit.
 
 The Vol~II chapter on GRT-parametrized seven
 faces\footnote{See \texttt{chapters/theory/grt\_parametrized\_seven\_faces.tex}
-in Vol~II, theorem \emph{GRT-Parametrized Seven Faces} in Vol~II
-CLAUDE.md.} promoted the seven historical
+in Vol~II.} promoted the seven historical
 realisations of $r(z)$ to Q-rational orbit representatives of a
 single $\GRT(\mathbb{Q})$-torsor, with two canonical motivic
 companions: Brown's motivic face $F_8$ and Willwacher's operadic
@@ -286,7 +286,14 @@ configuration spaces $\mathrm{Conf}_r(\mathbb{C})$; the coefficients
 $\theta_r$ are homogeneous of weight $r$ in $R^{\rat}(\cA)$. The
 shadow coefficient $S_r(\cA)$ is extracted as the scalar trace
 of the $r$-th iterated bracket of $\theta_r$ against the averaging
-map $\mathrm{av} \colon \mathfrak{g}^{E_1} \to \mathfrak{g}^{\mot}$.
+map
+\[
+  \mathrm{av}^{\mathrm{mod}}
+  \colon \mathfrak{g}^{E_1} \longrightarrow \mathfrak{g}^{\mathrm{mod}}.
+\]
+The motivic refinement enters only after this ordered-to-symmetric
+averaging, by replacing the scalar coefficient ring of
+$\mathfrak{g}^{\mathrm{mod}}$ with $\MZV^{\mot}$.
 
 \emph{Step 3: motivic refinement of the MC element.} Replace
 $\Phi_{\KZ}$ with $\Phi_{\KZ}^{\mot}$ throughout the construction
@@ -379,13 +386,18 @@ motivic associator gives
 \]
 where $\sigma^{(j)}$ is the weight-$j$ component of the motivic
 Galois element associated to $F_9$ (Willwacher's operadic cocycle).
-The averaging map $\mathrm{av}$ is a homomorphism of motivic
-comodules (averaging commutes with the coaction because
-$\Sigma_n$-coinvariance is weight-homogeneous and the coaction
-respects weight). Hence on shadow coefficients
+The averaged motivic map
+\[
+  \mathrm{av}^{\mot}:=\mathrm{av}^{\mathrm{mod}}\otimes_{\mathbb Q}
+  \mathrm{id}_{\MZV^{\mot}}
+\]
+is a homomorphism of motivic comodules: the ordered-to-symmetric
+$\Sigma_n$-coinvariance is rational and weight-homogeneous, while the
+coaction is entirely on the motivic coefficient ring. Hence on shadow
+coefficients
 \[
   \Delta^{\mot}(S_r^{\mot})
-  \;=\; \Delta^{\mot}(\mathrm{av} \circ \theta_r^{\mot})
+  \;=\; \Delta^{\mot}(\mathrm{av}^{\mot} \circ \theta_r^{\mot})
   \;=\; \sum_{j = 0}^{r} \sigma_{r-j}^{W} \otimes S_j^{\mot}.
 \]
 Compatibility with the torsor action is functoriality of the
@@ -483,11 +495,8 @@ contribution appears at $\Vir_c$ and weight $5$.
 \end{proposition}
 
 \begin{proof}
-The numerical value $S_5(\Vir_c) = -48/[c^2(5c+22)]$ was
-computed by Wick contraction in the Vol~I supervisory
-$S_5$-inscription wave (coverage $0/2275 \to 1/2275$ for Vol~I
-in the Independent Verification Protocol); it agrees with the
-master-equation recursion via
+The numerical value $S_5(\Vir_c) = -48/[c^2(5c+22)]$ is computed by
+Wick contraction and agrees with the master-equation recursion:
 \[
   S_5 \;=\; -\frac{1}{5c} \sum_{\substack{3 \leq j \leq k \\ j + k = 7}}
     \varepsilon(j, k)\, j k\, S_j S_k
@@ -761,27 +770,34 @@ agree term-by-term on their common domain.
 \label{sec:kummer}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The genus expansion of the characteristic-datum part (\ref{part:characteristic-datum}) produces closed-form $Z_g(n)$
-for $g = 0, \ldots, 9$; the leading coefficient is
-$B_{2g-2}/(g-1)$ (Bernoulli). Vol~I CLAUDE.md states the
-falsification prediction: Kummer-congruence primes ($691$ at
-$g = 7$; $3617$ at $g = 9$) should appear in the $Z_g$
-numerators. The motivic framework explains \emph{why}.
+The genus expansion of the characteristic-datum part
+(\ref{part:characteristic-datum}) produces closed-form $Z_g(n)$ for
+$g = 0,\ldots,9$. In the $\mathrm{SL}_2$ normalisation of
+Chapter~\ref{ch:z-g-kummer-bernoulli}, the leading coefficient is
+\[
+  [n^{3g-3}]Z_g(k)
+  =
+  (-1)^g\frac{2^{g-1}B_{2g-2}}{(2g-2)!}.
+\]
+Thus the Bernoulli-irregular primes $691$ and $3617$ appear at
+$g=7$ and $g=9$ respectively. The motivic framework supplies a
+conditional lift of this Bernoulli--Kummer arithmetic to motivic weight.
 
 \begin{theorem}[\label{thm:kummer-from-motivic}Kummer congruences
 from motivic Bernoulli-Kummer]
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let $p$ be an irregular prime with Bernoulli-irregularity index
-$(2g-2, p)$ (i.e.\ $p \mid \mathrm{numer}(B_{2g-2})$). Then the
-motivic shadow tower satisfies the congruence
+$(2g-2, p)$ (i.e.\ $p \mid \mathrm{numer}(B_{2g-2})$). Assume the
+motivic shadow-Feynman comparison identifies the motivic genus-$g$
+slot with the $\mathrm{SL}_2$ Verlinde leading coefficient up to a
+$p$-adic unit. Then the motivic genus slot carries the Bernoulli class
 \[
-  S_{2g-2}^{\mot}(\Vir_c) \cdot (g-1)
-  \;\equiv\; B_{2g-2}^{\mot} \pmod{p}
+  (-1)^g\frac{2^{g-1}B_{2g-2}^{\mot}}{(2g-2)!}
+  \quad \in\quad
+  \MZV^{\mot}_{2g-2}\otimes\mathbb F_p
 \]
-in the reduction $\MZV^{\mot}_{2g-2} \otimes \mathbb{F}_p$, where
-$B_{2g-2}^{\mot}$ is the motivic Bernoulli number (equivalently,
-the weight-$(2g-2)$ motivic period of the Tate motive
-$\mathbb{Z}(2g-2)$).
+and this class is divisible by $p$ precisely when
+$p\mid \mathrm{numer}(B_{2g-2})$, provided $p\nmid(2g-2)!$.
 
 Consequently, the closed-form $Z_g(n)$ numerators contain the
 Kummer-prime factors: $Z_7$ is divisible by $691$; $Z_9$ is
@@ -789,15 +805,11 @@ divisible by $3617$.
 \end{theorem}
 
 \begin{proof}
-The leading large-$n$ coefficient of $Z_g$ is
-$B_{2g-2}/(g-1)$ (Vol~I CLAUDE.md ``Z\_g closed forms''); the
-leading large-$c$ coefficient of $S_{2g-2}(\Vir_c)$ is obtained
-from the genus-expansion bridge
-$F_g \leftrightarrow S_{2g-2}$ (shadow-Feynman bijection:
-$L$-loop contribution equals $S_{L+1}$, so genus $g$ contribution
-equals $S_{2g-2}$ after Riemann--Hurwitz degree count).
-Hence the leading coefficient of $S_{2g-2}$ carries the
-Bernoulli number $B_{2g-2}$.
+The leading coefficient formula is
+Theorem~\ref{thm:z-g-leading-coefficient-bernoulli}. Its scalar
+multiplier $(-1)^g2^{g-1}/(2g-2)!$ is a $p$-adic unit whenever
+$p>2g-2$. This holds for the first two relevant cases:
+$691>12$ and $3617>16$.
 
 Motivically, $B_{2g-2}^{\mot}$ is defined as the weight-$(2g-2)$
 component of the motivic Hurwitz zeta value
@@ -813,10 +825,8 @@ Coleman \emph{Dilogarithms, regulators, and p-adic L-functions}
 Invent. Math. 69, 1982): the $p$-adic motivic Galois action
 preserves the congruence mod $p$.
 
-Apply this congruence to the leading coefficient of
-$S_{2g-2}^{\mot}(\Vir_c)$: the leading rational coefficient is
-$B_{2g-2}/(g-1)$, and the motivic refinement gives
-$B_{2g-2}^{\mot}/(g-1) \pmod p$ in the $p$-adic motivic reduction.
+Apply this congruence to the assumed motivic genus-slot comparison.
+The $p$-adic-unit multiplier cannot remove a Bernoulli numerator prime.
 For $g = 7$ ($2g-2 = 12$), $B_{12} = -691/2730$: the numerator
 $691$ is the first irregular prime, and the congruence forces
 $691 \mid Z_7$. For $g = 9$ ($2g-2 = 16$), $B_{16} = -3617/510$:
@@ -830,8 +840,8 @@ Direct computation of $Z_g$ from the closed-form recursion (Vol~I
 either (a) produce $Z_7$ numerator divisible by $691$ and $Z_9$
 numerator divisible by $3617$, confirming the motivic prediction,
 or (b) produce different prime factorisations, falsifying the
-motivic-lift theorem. No such falsification has been observed
-through $g = 9$.
+Verlinde leading-coefficient formula or the motivic comparison
+assumption. No such contradiction has been observed through $g = 9$.
 \end{remark}
 
 \begin{remark}[\label{rem:characteristic-primes-are-riccati-arithmetic}Characteristic

@@ -55,7 +55,7 @@ class TestVirasoroTower:
         assert simplify(S[5] - expected) == 0
 
     def test_denominator_pattern(self):
-        """S_r has denominator c^{r-2} * (5c+22)^{floor((r-2)/2)}."""
+        """S_r has denominator c^{r-3} * (5c+22)^{floor((r-2)/2)} for r >= 4."""
         S = virasoro_tower(10)
         # Check at c=1: denominators should be nonzero
         for r in range(2, 11):

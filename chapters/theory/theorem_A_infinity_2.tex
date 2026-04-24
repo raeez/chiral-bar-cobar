@@ -1,8 +1,9 @@
-% Theorem A: the Koszul Reflection (K^2 = id) -- single unified statement.
+% Theorem A: bar-cobar reconstruction and Verdier duality -- single unified statement.
 %
-% This chapter establishes Theorem~A as ONE theorem: the Koszul reflection
-% K = (Bbarch_X, Omegach_X) is a symmetric-monoidal adjoint equivalence
-% on the conilpotent-complete locus, with K^2 ~= id on Kosz(X).
+% This chapter establishes Theorem~A as ONE theorem: the bar-cobar
+% adjunction Omega^ch_X -| Bbarch_X, the reconstruction counit
+% Omega^ch_X Bbarch_X(A) -> A on the Koszul locus, and the separate
+% Verdier-dualized Koszul-duality functor.
 % Eight prior parallel statements -- twisting morphism, counit qi, unit
 % weak equivalence, twisted tensor acyclicity, bar concentration in
 % weight 1, SC-formality, R-twisted Sigma_n descent, Francis-Gaitsgory
@@ -25,39 +26,41 @@
 \providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
 \providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
 
-\chapter[Theorem $A$: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$)]%
-{Theorem $A$: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$)}
+\chapter[Theorem $A$: Bar--Cobar Reconstruction and Verdier Duality]%
+{Theorem $A$: Bar--Cobar Reconstruction and Verdier Duality}
 \label{ch:theorem-A-infinity-2}\label{chap:theorem-A-infinity-2}
 
 \section*{Setup and orientation}
 
 Theorem~A of the Modular Koszul Duality Programme is, in its strongest
-form, a \emph{single} structural statement: the chiral bar and chiral
-cobar functors assemble into one \emph{Koszul reflection}
+proved form, a \emph{single} structural statement: the chiral cobar and
+chiral bar functors form the adjunction
 \[
-K\;:\;\Alg^{\fact,\aug,\comp}_X
-\;\rightleftarrows\;\CoAlg^{\fact,\conil,\co}_X
-\;:\;K^{-1},
-\qquad K(\cA):=\Bbarch_X(\cA),
-\quad K^{-1}(\cC):=\Omegach_X(\cC),
+\Omegach_X\;:\;\CoAlg^{\fact,\conil,\co}_X
+\;\rightleftarrows\;\Alg^{\fact,\aug,\comp}_X
+\;:\;\Bbarch_X,
+\qquad \Omegach_X\dashv \Bbarch_X,
 \]
-which is a symmetric-monoidal adjoint equivalence of stable presentable
-$(\infty,1)$-categories satisfying the involutive identity
+and the algebra-side counit reconstructs a Koszul algebra:
 \[
-K^{2}\;\simeq\;\mathrm{id}
+\varepsilon_\cA\colon \Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA
+\qquad (\cA\in\Kosz(X)).
 \]
-on the Koszul locus $\Kosz(X)\subset\Alg^{\fact,\aug,\comp}_X$ and up
-to the canonical coderived correction off $\Kosz(X)$. The slogan is
-\emph{the chiral bar is its own Koszul dual}; the diagram is one
-display; the equation is one line.
+The Verdier-dualized Koszul duality functor is the different operation
+\[
+K_X(\cA):=\Omegach_X\mathbb D_{\Ran}\Bbarch_X(\cA).
+\]
+The slogan is not that the chiral bar is its own Koszul dual.  The
+proved statement is that bar-cobar reconstruction is inversion on the
+Koszul locus, while Koszul duality enters only after Verdier duality on
+the Ran bar coalgebra.
 
-The eight parallel statements that previously dispatched the content of
-Theorem~A across six files of Vol~I and three files of the standalone
-suite (twisting-morphism adjunction, counit quasi-isomorphism, unit
+Theorem~A has eight standard facets: twisting-morphism adjunction,
+counit quasi-isomorphism, unit
 weak equivalence, twisted tensor acyclicity, bar concentration in
 weight~$1$, SC-formality, $R$-twisted $\Sigma_n$-descent, and the
-Francis--Gaitsgory $(\infty,2)$-equivalence at properad level) are
-here recovered as Corollaries~1--8 of the single Koszul reflection
+Francis--Gaitsgory $(\infty,2)$-equivalence at properad level. They are
+here recovered as Corollaries~1--8 of the single reconstruction theorem
 form. The entire proof skeleton, the $R$-twisted descent lemma, the
 $14$ downstream corollaries, the formal-smoothness consequence, and
 the resolutions are preserved.
@@ -146,57 +149,68 @@ corollary for chirally Koszul algebras.
 \S\ref{sec:ainf2-platonic-obstructions} frames the four obstructions
 $\Pi 1$--$\Pi 4$ to a fully universal Koszul reflection as named open
 conjectures.
-\S\ref{sec:ainf2-hziv} records the independent-verification
-decorator package.
+\S\ref{sec:ainf2-hziv} records the independent verification package.
 
 %================================================================
-\section{The Koszul reflection: unified Theorem~A}\label{sec:ainf2-koszul-reflection}
+\section{Bar-cobar reconstruction and Verdier duality: unified Theorem~A}\label{sec:ainf2-koszul-reflection}
 %================================================================
 
 \subsection{Statement}
 
-\begin{theorem}[Theorem~A: the Koszul Reflection ($K^{2}\simeq\mathrm{id}$);
+\begin{theorem}[Theorem~A: bar-cobar adjunction, reconstruction, and Verdier duality;
 \ClaimStatusProvedHere]
 \label{thm:koszul-reflection}
-\index{Theorem A!Koszul reflection unified form}
-\index{Koszul reflection!K-squared involutive}
-\index{bar-cobar!unified Koszul reflection}
+\index{Theorem A!bar-cobar reconstruction and Verdier duality}
+\index{Koszul duality!Verdier-dualized chiral form}
+\index{bar-cobar!reconstruction}
 Let $X$ be a smooth projective curve over a field~$k$ of
 characteristic~$0$. Under hypotheses \textup{(H1)}--\textup{(H3)} of
-\S\textup{Setup}, the chiral bar and chiral cobar functors assemble
-into a \emph{Koszul reflection}
+\S\textup{Setup}, the canonical chiral bar-cobar adjunction is
 \[
-K\;:\;\Alg^{\fact,\aug,\comp}_X
-\;\rightleftarrows\;\CoAlg^{\fact,\conil,\co}_X
-\;:\;K^{-1},
-\qquad K(\cA):=\Bbarch_X(\cA),
-\quad K^{-1}(\cC):=\Omegach_X(\cC),
+\Omegach_X\;:\;\CoAlg^{\fact,\conil,\co}_X
+\;\rightleftarrows\;
+\Alg^{\fact,\aug,\comp}_X
+\;:\;\Bbarch_X,
+\qquad \Omegach_X\dashv\Bbarch_X .
 \]
-which is a symmetric-monoidal adjoint equivalence of stable presentable
-$(\infty,1)$-categories with the following involutive structure:
+The reconstruction and Koszul-duality functors are different:
+\[
+R_X(\cA):=\Omegach_X\Bbarch_X(\cA),
+\qquad
+K_X(\cA):=\Omegach_X\,\mathbb{D}_{\Ran}\Bbarch_X(\cA).
+\]
+The first is bar-cobar reconstruction. The second is the
+Verdier-dualized chiral Koszul duality functor. The following
+statements hold in the stable presentable factorization ambient:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \label{KR-i} \emph{Adjoint equivalence.}
-$K\dashv K^{-1}$ with unit
-$\eta_\cA\colon\cA\xrightarrow{\sim}K^{-1}K(\cA)=\Omegach_X\Bbarch_X(\cA)$
-the universal Maurer--Cartan element, and counit
-$\varepsilon_\cC\colon KK^{-1}(\cC)=\Bbarch_X\Omegach_X(\cC)
-\xrightarrow{\sim}\cC$ its dual.
-\item \label{KR-ii} \emph{Involutivity on $\Kosz(X)$.}
+$\Omegach_X\dashv\Bbarch_X$ with unit
+$\eta_\cC\colon\cC\to\Bbarch_X\Omegach_X(\cC)$ on coalgebras and
+counit
+$\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$ on algebras.
+\item \label{KR-ii} \emph{Reconstruction on $\Kosz(X)$.}
 On the Koszul locus
 $\Kosz(X)\subset\Alg^{\fact,\aug,\comp}_X$, the equivalence restricts
 to one valued in \emph{ordinary} (non-coderived) factorization
-coalgebras, with chain-level quasi-isomorphisms for both unit and
-counit:
+coalgebras. The counit is a chain-level quasi-isomorphism
 \[
-K^{2}\;\simeq\;\mathrm{id}\quad\text{on}\quad\Kosz(X).
+\varepsilon_\cA\colon R_X(\cA)=\Omegach_X\Bbarch_X(\cA)
+\xrightarrow{\sim}\cA .
 \]
-\item \label{KR-iii} \emph{Coderived involutivity off $\Kosz(X)$.}
+\item \label{KR-iii} \emph{Weight-completed coderived continuation off
+$\Kosz(X)$.}
 For $\cA\in\Alg^{\fact,\aug,\comp}_X\setminus\Kosz(X)$, the identity
-$K^{2}\simeq\mathrm{id}$ holds in the coderived
-$(\infty,1)$-category $D^{\co}(\Bbarch\text{-}\CoFact)$, with the
-canonical coderived correction supplied by the
-covariantly-weighted Positselski equivalence
-$D^{\co}\simeq D^{\ctr}$ \textup{(}\cite{Positselski2011}\textup{)}.
+$R_X(\cA)\simeq\cA$ is asserted only on the verified
+weight-completed / pro-conilpotent Positselski surface. The raw
+direct-sum class-$\mathsf M$ bar coalgebra is not covered by this
+clause.
+\item \label{KR-iv} \emph{Verdier duality.}
+The chiral Koszul dual is obtained by applying Verdier duality to
+the bar object before cobar:
+$K_X(\cA)=\Omegach_X\mathbb{D}_{\Ran}\Bbarch_X(\cA)$.
+This is the lane that identifies
+$\mathbb{D}_{\Ran}\Bbarch_X(\cA)$ with the factorization
+Koszul-dual coalgebra $\cA^!_{\infty}$.
 \end{enumerate}
 \end{theorem}
 
@@ -230,12 +244,15 @@ $E_2$-collapse of the bar--cobar spectral sequence
 \cite[Appendix~A.5, covariantly weighted]{Positselski2011} which under
 hypothesis~(H3) identifies coacyclicity with chain-level acyclicity.
 
-The involutivity $K^{2}\simeq\mathrm{id}$ of \ref{KR-ii} is the unit
-plus counit equivalence: $K^{-1}K(\cA)=\Omegach_X\Bbarch_X(\cA)
-\xrightarrow{\sim}\cA$ via the chain-level counit on $\Kosz(X)$, and
-$KK^{-1}(\cC)=\Bbarch_X\Omegach_X(\cC)\xrightarrow{\sim}\cC$ via the
-unit. Off~$\Kosz(X)$, the same chain of equivalences holds in the
-coderived category, giving \ref{KR-iii}.
+The reconstruction statement \ref{KR-ii} is the counit equivalence
+$R_X(\cA)=\Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA$ on the
+Koszul locus. The unit
+$\cC\to\Bbarch_X\Omegach_X(\cC)$ belongs to the coalgebra side of the
+same adjunction. Off~$\Kosz(X)$, \ref{KR-iii} is the corresponding
+statement after weight completion and passage to the verified
+coderived/contraderived Positselski surface. Clause~\ref{KR-iv}
+records the separate Verdier-dualized Koszul-duality functor; it is
+not the bar-cobar reconstruction functor.
 
 Functoriality and Koszul-locus properties extend to the symmetric
 monoidal $(\infty,2)$-level by the universal property of the adjoint
@@ -245,55 +262,50 @@ Theorem~\ref{thm:A-infinity-2} in \S\ref{sec:ainf2-main}.
 
 \subsection{The single diagram and the single equation}
 
-The Koszul reflection is captured by one diagram:
+The bar-cobar adjunction is captured by one diagram:
 \[
 \begin{tikzcd}[column sep=large,row sep=large]
-\Alg^{\fact,\aug,\comp}_X
-  \arrow[r,bend left=15,"K\,=\,\Bbarch_X"]
+\CoAlg^{\fact,\conil,\co}_X
+  \arrow[r,bend left=15,"\Omegach_X"]
   \arrow[r,phantom,"\rotatebox{90}{$\dashv$}"description]
 &
-\CoAlg^{\fact,\conil,\co}_X
-  \arrow[l,bend left=15,"K^{-1}\,=\,\Omegach_X"]
+\Alg^{\fact,\aug,\comp}_X
+  \arrow[l,bend left=15,"\Bbarch_X"]
 \end{tikzcd}
 \qquad
-K^{2}\;\simeq\;\mathrm{id}.
+\Omegach_X\dashv\Bbarch_X .
 \]
 And by one equation:
 \[
 \boxed{
-\Bbarch_X\dashv\Omegach_X,\qquad
-\Omegach_X\Bbarch_X\simeq\mathrm{id}\text{ on }\Kosz(X),\qquad
-\Bbarch_X\Omegach_X\simeq\mathrm{id}\text{ on }\Conil(X).
+\Omegach_X\dashv\Bbarch_X,\qquad
+\Omegach_X\Bbarch_X\simeq\mathrm{id}_{\Alg}\text{ on }\Kosz(X),\qquad
+\id_{\CoAlg}\to\Bbarch_X\Omegach_X\text{ is the coalgebra unit}.
 }
 \]
 
-\begin{remark}[Inner poetry: $K$ is the invariant, $\Bbarch_X$ and
-$\Omegach_X$ are coordinates]
+\begin{remark}[Reconstruction and duality are separate operations]
 \label{rem:K-squared-id-poetry}
-\index{Koszul reflection!invariance vs coordinates}
-The Koszul reflection $K$ is the invariant categorical observable; the
-factorisation
-$K=\Bbarch_X$ versus $K^{-1}=\Omegach_X$ is a coordinate choice. In
-the same way that Pontryagin duality is captured neither by
-$\Hom(-,S^1)$ nor by its inverse but by the involutivity
-$\Hom(\Hom(-,S^1),S^1)\simeq\mathrm{id}$, chiral bar--cobar duality is
-captured by $K^{2}\simeq\mathrm{id}$, with bar and cobar interchanged
-by the same reflection that interchanges algebras and coalgebras. One
-symmetry, one diagram, one theorem.
+\index{bar-cobar!reconstruction versus Verdier duality}
+The counit $\Omegach_X\Bbarch_X(\cA)\to\cA$ is reconstruction. The
+Verdier-dualized object
+$\mathbb D_{\Ran}\Bbarch_X(\cA)$ is the Koszul-dual coalgebra lane.
+Conflating these two operations turns inversion into a false
+involutivity statement.
 \end{remark}
 
-\begin{remark}[Inner motion: four named morphisms animate Theorem~A]
+\begin{remark}[Four named morphisms in Theorem~A]
 \label{rem:four-named-morphisms}
 \index{Koszul reflection!four named morphisms}
-Four canonical morphisms animate the Koszul reflection:
+Four canonical morphisms organize the theorem:
 \begin{itemize}
-\item $\eta\colon\mathrm{id}\to K^{-1}K$ -- the \emph{twisting unit},
-universal Maurer--Cartan element;
-\item $\varepsilon\colon KK^{-1}\to\mathrm{id}$ -- the
-\emph{twisting counit}, dual to $\eta$ and chain-level qi on
+\item $\eta_\cC\colon\cC\to\Bbarch_X\Omegach_X(\cC)$ -- the
+coalgebra-side unit;
+\item $\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$ -- the
+algebra-side counit, chain-level qi on
 $\Kosz(X)$;
-\item $K$ itself -- the \emph{Koszul reflection}, involutive symmetry
-$K^{2}\simeq\mathrm{id}$;
+\item $K_X(\cA)=\Omegach_X\mathbb D_{\Ran}\Bbarch_X(\cA)$ -- the
+Verdier-dualized Koszul-duality functor;
 \item $\psi(\hbar)$ -- the \emph{genus-completed counit}, the
 $\hbar$-adic series
 $\psi(\hbar)=\sum_g\hbar^{2g-2}\psi_g$ over the genus filtration on
@@ -301,8 +313,6 @@ $\Bbarch_g(\cA)$, with quantum correction
 $m_0^{(g)}=\kappa(\cA)\,\omega_g$ as the $\hbar$-flatness
 obstruction.
 \end{itemize}
-A reader asked ``what does Theorem~A do?'' should be able to point to
-one of these four.
 \end{remark}
 
 \begin{remark}[Bar coalgebra structure is over $(\chirAss)^{!}$,
@@ -504,9 +514,9 @@ statement; the pro-conilpotent completion is load-bearing, not
 decorative.
 \end{remark}
 
-\begin{remark}[Five-archetype verification of $K^{2}\simeq\mathrm{id}$]
+\begin{remark}[Five-archetype verification of bar-cobar reconstruction]
 \label{rem:five-archetype-K-squared}
-\index{Koszul reflection!archetype verification}%
+\index{bar-cobar reconstruction!archetype verification}%
 Lemma~\ref{lem:archetype-H123-witness} together with
 Remark~\ref{rem:class-M-pro-conilpotent} reduces the content of
 Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} on each archetype to a
@@ -528,19 +538,19 @@ invariants $S_k$;
 $\mathsf{B}$ collapses by the lattice factorization structure on
 $II_{4,20}$, with the Mukai-doubled Koszul conductor
 $K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$
-realising the involutivity $K^{2}\simeq\mathrm{id}$ as an eightfold
-Lorentzian doubling. The five collapse statements together
-constitute the chain-level verification of
-$K^{2}\simeq\mathrm{id}$ on the five archetypes.
+pinning the B-row conductor without identifying it with the
+Verdier-dualized functor $K_X$. The five collapse statements together
+constitute the chain-level verification that the counit
+$\Omegach_X\Bbarch_X(\cA)\to\cA$ is a quasi-isomorphism on the five
+archetype witnesses.
 \end{remark}
 
 %================================================================
 \section{The eight statements as corollaries}\label{sec:ainf2-eight-corollaries}
 %================================================================
 
-The eight prior parallel statements that previously dispatched
-Theorem~A across six chapters of Vol~I and the standalone suite are
-here recovered as corollaries of the unified Koszul reflection
+The eight standard facets of Theorem~A are recovered as corollaries of
+the unified Koszul reflection
 Theorem~\ref{thm:koszul-reflection}.
 
 \begin{corollary}[Twisting morphism $\tau\colon\Bbarch_X(\cA)\to\cA$
@@ -559,9 +569,9 @@ d\tau+\tfrac{1}{2}[\tau,\tau]=0.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:koszul-reflection}\ref{KR-i}, the unit~$\eta_\cA$
-is a coalgebra morphism that under the bar--cobar adjunction
-$\Bbarch_X\dashv\Omegach_X$ corresponds bijectively to a twisting
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-i}, the unit and counit
+of the adjunction $\Omegach_X\dashv\Bbarch_X$ encode, by adjunction,
+the universal twisting
 morphism $\tau\colon\Bbarch_X(\cA)\to\cA$ (LV12 Theorem~2.2.9
 specialised to the chiral ambient). The Maurer--Cartan condition
 $d\tau+\tfrac{1}{2}[\tau,\tau]=0$ is exactly the compatibility
@@ -580,10 +590,9 @@ quasi-isomorphism.
 \end{corollary}
 
 \begin{proof}
-This is exactly the involutive identity
-$K^{-1}K(\cA)\xrightarrow{\sim}\cA$ of
-Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} on the Koszul locus,
-read as a statement about the counit~$\varepsilon_\cA$.
+This is exactly the reconstruction clause
+$\Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA$ of
+Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} on the Koszul locus.
 \end{proof}
 
 \begin{corollary}[Unit weak equivalence on $\Conil(X)$;
@@ -597,7 +606,7 @@ weak equivalence.
 
 \begin{proof}
 Apply Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} to
-$K^{-1}K(\cC)\xrightarrow{\sim}\cC$ on the conilpotent side; under
+$\cC\xrightarrow{\sim}\Bbarch_X\Omegach_X(\cC)$ on the conilpotent side; under
 hypothesis~(H2), the conilpotent-completeness condition makes the
 unit a chain-level qi (not merely a coderived equivalence).
 \end{proof}
@@ -647,9 +656,9 @@ obstructs concentration in weight~$1$.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}, the involutivity
-$K^{2}\simeq\mathrm{id}$ on $\Kosz(X)$ is equivalent (via the PBW
-spectral sequence of the bar filtration) to the $E_2$-collapse of the
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-ii}, reconstruction on
+$\Kosz(X)$ is equivalent (via the PBW spectral sequence of the bar
+filtration) to the $E_2$-collapse of the
 bar--cobar spectral sequence at $E_2$-page. The $E_2$-collapse is
 exactly the seven-fold hub-and-spoke TFAE of
 Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}, which gives bar
@@ -744,10 +753,11 @@ Theorem~\ref{thm:A-infinity-2}.
 \end{proof}
 
 These eight corollaries, taken together, account for the full content
-of the eight previously parallel Theorem~A statements. The unified
-Koszul reflection Theorem~\ref{thm:koszul-reflection} is
-\emph{prior} to any of them; each prior statement specialises to a
-single facet of the involutive identity $K^{2}\simeq\mathrm{id}$.
+of the standard Theorem~A facets. The unified reconstruction theorem
+Theorem~\ref{thm:koszul-reflection} is \emph{prior} to any of them;
+each facet specialises to a
+single facet of the adjunction, reconstruction counit, or
+Verdier-dualized Koszul-duality functor.
 
 %================================================================
 \section{Francis--Gaitsgory factorization ambient}\label{sec:ainf2-setup}
@@ -968,21 +978,21 @@ $(\infty,2)$-equivalence at properad level;
 \index{bar-cobar!(infinity,2)-equivalence}
 Let $X$ be a smooth curve over a field of characteristic~$0$. In the
 Francis--Gaitsgory factorization ambient $\Fact(X)$
-\textup{(}Definition~\ref{def:fg-ambient}\textup{)}, the bar and cobar functors
+\textup{(}Definition~\ref{def:fg-ambient}\textup{)}, the cobar and bar functors
 \[
-\Bbarch_X \;\colon\; \Fact^{\aug}(X)
+\Omegach_X \;\colon\; \CoFact^{\conil,\comp}(X)
 \;\rightleftarrows\;
-\CoFact^{\conil,\comp}(X)
-\;\colon\; \Omegach_X
+\Fact^{\aug}(X)
+\;\colon\; \Bbarch_X
 \]
 constitute an \textup{($\infty,2$)}-categorical adjoint equivalence on
 the conilpotent-complete locus:
 \[
-\Bbarch_X \dashv \Omegach_X,
+\Omegach_X \dashv \Bbarch_X,
 \qquad
-\mathrm{unit}\colon \id \xrightarrow{\sim} \Omegach_X \circ \Bbarch_X,
+\mathrm{unit}\colon \id_{\CoFact} \xrightarrow{\sim} \Bbarch_X \circ \Omegach_X,
 \qquad
-\mathrm{counit}\colon \Bbarch_X \circ \Omegach_X \xrightarrow{\sim} \id.
+\mathrm{counit}\colon \Omegach_X \circ \Bbarch_X \xrightarrow{\sim} \id_{\Fact}.
 \]
 The equivalence satisfies three additional properties:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -990,12 +1000,13 @@ The equivalence satisfies three additional properties:
 The adjunction lifts along the inclusion of factorization operads
 into factorization properads
 \textup{(}Theorem~\ref{thm:hackney-robertson-model}\textup{)}:
-$\Bbarch_X$ and $\Omegach_X$ extend to functors between factorization
-properads and conilpotent-complete factorization coproperads, inducing
+$\Omegach_X$ and $\Bbarch_X$ extend to functors between
+conilpotent-complete factorization coproperads and factorization
+properads, inducing
 an adjoint equivalence
 \[
-\Bbarch_X \colon \FactProp^{\aug}(X)
-\rightleftarrows \CoFactProp^{\conil,\comp}(X) \colon \Omegach_X
+\Omegach_X \colon \CoFactProp^{\conil,\comp}(X)
+\rightleftarrows \FactProp^{\aug}(X) \colon \Bbarch_X
 \]
 that restricts to the operadic statement above along the
 Hackney--Robertson adjunction
@@ -1121,9 +1132,9 @@ marked point, yielding the classical statement verbatim.
 now for reference and prove it in \S\ref{sec:ainf2-R-descent}.
 \end{proof}
 
-% HEAL 2026-04-17: Theorem A^{\infty,2} is proved on a fixed smooth curve X.
-% Extension over \bar M_{g,n} including boundary (and hence "modular-family
-% Theorem A" per the programme status row) requires Francis-Gaitsgory
+% Scope note: Theorem A^{\infty,2} is proved on a fixed smooth curve X.
+% Extension over \bar M_{g,n} including boundary (the modular-family
+% form of Theorem A) requires Francis-Gaitsgory
 % six-functor base-change on the relative Ran prestack (GR17 Vol II,
 % relative Ran six-functor layer); this base-change is cited but not
 % established in Vol I. The extension is load-bearing for downstream theorems
@@ -1369,8 +1380,8 @@ constructs the $(-(3g-3))$-shifted symplectic structure on
 $\RMap(\overline{\cM}_g,BG_\cA)$ as a genuinely disjoint path from the
 fiber-center Koszul identification, relevant to the characteristic-datum
 C0/C1/C2 clauses and to the $\lambda_g$-free formulation of Theorem~D. It
-does not provide an alternative proof of the bar--cobar adjoint
-equivalence or of the involutivity $K^{2}\simeq\mathrm{id}$. Any programme
+does not provide an alternative proof of the bar--cobar adjunction or
+of the reconstruction counit $\Omegach_X\Bbarch_X(\cA)\to\cA$. Any programme
 metadata claiming a `PTVV alternative for Theorem~A' conflates the
 Theorem~C lane with Theorem~A and should be read as referring to the
 Theorem~C inscription (see $\thm:C$-PTVV-alternative in the Theorem~C
@@ -1705,10 +1716,11 @@ differential.
 \item \textbf{Universal conductor chapter}
 \textup{(}\ref{chap:universal-conductor}) proving
 $K=-c_{\mathrm{ghost}}(\mathrm{BRST})$ as the universal ghost-charge
-conductor: the involutivity~$K^{2}\simeq\mathrm{id}$ of the
-reflection makes the conductor $K(\cA)=\kappa(\cA)+\kappa(\cA^{!})$
-the canonical numerical observable of the reflection's failure to be
-the identity functor at $\hbar\neq 0$.
+conductor: the conductor
+$K^{\kappa}(\cA)=\kappa(\cA)+\kappa(\cA^{!})$ is the numerical
+observable of the Verdier-dualized Koszul pair. It is not the
+bar-cobar reconstruction functor and it does not assert
+$K_X^2\simeq\mathrm{id}$.
 \end{itemize}
 \end{remark}
 
@@ -1914,17 +1926,16 @@ definition of formal smoothness at properad level.
 \begin{remark}[Compatibility with the five-theorem architecture]
 \label{rem:ainf2-architecture}
 The unified Theorem~A
-(Theorem~\ref{thm:koszul-reflection}) is the upgrade of the previous
-six-file dispatcher to the Platonic form of the programme
-(\S\ref{sec:platonic-reconstitution-2026-04-13}). Under the
-seven-theorem extension \textup{(}Vol~II,
-\S\textup{seven-theorems}\textup{)}, it takes the position `A' in
-the list `A, B, C, D, H, F, G' with the seven parts labelled I--VIII
-and the seven-volume axis realized by including
-Vol~IV = Realization (decorators + HEAL + UPGRADE theorems). The
-14 downstream corollaries of
-Corollary~\ref{cor:ainf2-downstream-list} are precisely the
-`descent ledger' entries of the unified Koszul reflection cluster.
+(Theorem~\ref{thm:koszul-reflection}) is the bar--cobar spine of the
+volume. It occupies the first place in the five-package architecture
+$A,B,C,D,H$: Theorems~B and~D use its ambient-qualified inversion and
+obstruction theory, Theorem~C uses its Koszul-dual Verdier surface,
+and Theorem~H uses its chiral Hochschild control on the Koszul/generic
+locus. The reconstruction and classification surfaces denoted by
+$F$ and $G$ are downstream consequences of this spine rather than
+additional main theorem packages. The 14 downstream corollaries of
+Corollary~\ref{cor:ainf2-downstream-list} record these consequences
+without changing the five-package theorem count.
 \end{remark}
 
 %================================================================
@@ -2065,10 +2076,10 @@ source disjointness (\texttt{IndependentVerificationError} raised at
 import time if overlap is detected).
 \end{remark}
 
-\begin{remark}[Independent-verification protocol for the unified Koszul reflection]
+\begin{remark}[Independent-verification protocol for bar-cobar reconstruction]
 \label{rem:ainf2-hziv-koszul-reflection}
-\index{independent-verification!Koszul reflection unified form}
-The unified Koszul reflection
+\index{independent-verification!bar-cobar reconstruction}
+The unified bar-cobar reconstruction theorem
 Theorem~\ref{thm:koszul-reflection} carries
 \texttt{ClaimStatusProvedHere} jointly with
 Theorem~\ref{thm:A-infinity-2}. Its derivation sources are the four
@@ -2077,17 +2088,17 @@ equivalence + properad equivalence) plus the cited primary literature
 (Francis--Gaitsgory, Vallette, Positselski, Hinich); its independent
 verification sources are the three listed in
 Remark~\ref{rem:ainf2-hziv} above, each of which provides a
-$K^{2}\simeq\mathrm{id}$ check that does not route through the
-$\star$-product adjunction. Specifically:
+bar-cobar reconstruction check that does not route through the
+$\star$-product adjunction alone. Specifically:
 \begin{itemize}
 \item Francis~2012 chiral Deligne conjecture provides a brace-level
-check of $K^{2}\simeq\mathrm{id}$ via the brace algebra structure on
+check of the reconstruction counit via the brace algebra structure on
 the derived endomorphisms.
 \item Lurie HA~\S5.5 little-discs construction provides a topological
-check of the $E_1$-input version of $K^{2}\simeq\mathrm{id}$ via
+check of the $E_1$-input bar-cobar comparison via
 factorization homology of the bar coalgebra.
 \item Hackney--Robertson model-independent properad framework provides
-a transfer-level check that the involutivity persists across the
+a transfer-level check that the reconstruction comparison persists across the
 operad-to-properad lift.
 \end{itemize}
 The decorators are installed jointly with those for
@@ -2099,9 +2110,9 @@ Theorem~\ref{thm:A-infinity-2} in
 \section*{Closing remark}
 %================================================================
 
-One symmetry, one diagram, one equation: $K^{2}\simeq\mathrm{id}$.
-The eight prior parallel statements unfold as eight categorical
-directions through the single involutive identity; the fourteen
+One adjunction, one reconstruction counit, one Verdier-dualized
+duality functor. The eight prior parallel statements unfold as eight
+categorical directions through that single structure; the fourteen
 downstream corollaries unfold as fourteen pullbacks of
 Theorem~$A^{\infty,2}$ along restriction, cohomological truncation, or
 sub-$(\infty,2)$-specialisation. The four obstructions

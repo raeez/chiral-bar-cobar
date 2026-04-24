@@ -25,12 +25,11 @@
 %% structure, and higher_genus_modular_koszul.tex (thm:obstruction-
 %% recursion) for the master-equation recurrence.
 %%
-%% AP5 cross-volume sweep: the closed form Gamma_r/A_r is stated
-%% here and verified at compute/tests/test_sub_subleading_asymptotic.py
-%% (14 tests, 8 decorated with @independent_verification). Vol II and
-%% Vol III do not currently carry a sub-subleading asymptotic claim.
+%% The closed form Gamma_r/A_r is stated here and checked by
+%% compute/tests/test_sub_subleading_asymptotic.py. Vol II and Vol III
+%% do not currently carry a sub-subleading asymptotic claim.
 %%
-%% V2-AP39 / FM36: all macros \providecommand-guarded.
+%% All local macros are providecommand-guarded.
 
 \providecommand{\cA}{\mathcal{A}}
 \providecommand{\cF}{\mathcal{F}}
@@ -57,16 +56,14 @@ Laurent expansion takes the form
 \[
   \Phi_r(c) \;=\; A_r + \frac{B_r}{c} + \frac{\Gamma_r}{c^2} + \frac{\Delta_r}{c^3} + \cdots,
 \]
-with $A_r = 8(-6)^{r-4}/r$ and $B_r = -A_r[22/5 + (r-4)(r-5)/18]$.  The
-present chapter pins the next Laurent datum $\Gamma_r$ as a closed
-rational function of $r$, proves the closed form by a second-order
-variation-of-parameters telescope on the master-equation recurrence,
-and dissects the seemingly Kummer-irregular arithmetic that appears
-at $r = 8$ (where the numerator of $\Gamma_8$ carries the prime $691$).
-The arithmetic turns out to be a modular coincidence in
-$\mathbb{F}_{691}$; no Bernoulli structural mechanism is at work, and
-we explicitly cross-check this by verifying the absence of the next
-Kummer-irregular prime $3617$ through $r = 15$.
+with $A_r = 8(-6)^{r-4}/r$ and $B_r = -A_r[22/5 + (r-4)(r-5)/18]$.
+The next Laurent datum $\Gamma_r$ is a closed rational function of $r$,
+obtained by a second-order variation-of-parameters telescope on the
+master-equation recurrence.  The apparently Kummer-irregular arithmetic
+at $r = 8$, where the numerator of $\Gamma_8$ carries the prime $691$,
+is a modular coincidence in $\mathbb{F}_{691}$; no Bernoulli structural
+mechanism is present, and the next Kummer-irregular prime $3617$ is
+absent through $r = 15$.
 
 Section~\ref{sec:stss-setup} fixes notation: $\Phi_r$, the Laurent
 recurrence in $\Phi$, the base cases $\Phi_3 = 2c$ and
@@ -80,8 +77,8 @@ Section~\ref{sec:stss-kummer} addresses the $r = 8$ arithmetic and
 establishes sporadicity
 (Remark~\ref{rem:gamma-691-emergence-sporadic},
 Remark~\ref{rem:gamma-irregular-primes-dense-but-structureless}).
-Section~\ref{sec:stss-verification} lists the independent verification
-decorators.
+Section~\ref{sec:stss-verification} records the independent
+verification paths.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Setup}
@@ -334,10 +331,9 @@ Expand the bracket: $(r-6)(r-7) - 3(r-4)(r-5) = r^2 - 13 r + 42 - 3(r^2 - 9 r + 
 \]
 as stated.
 
-Independent verification chain: the closed form is cross-checked by
-direct Laurent expansion of the explicit $S_r(\Vir_c)$ quartics for
-$r = 4, 5, 6, 7, 8, 9, 10$ at
-\texttt{compute/tests/test\_sub\_subleading\_asymptotic.py}.
+For a coefficient-level check, direct Laurent expansion of the explicit
+$S_r(\Vir_c)$ quartics for $4 \leq r \leq 10$ gives the same
+$\Gamma_r/A_r$ values.
 \end{proof}
 
 \begin{remark}[\label{rem:gamma-base-case}Base cases]
@@ -350,10 +346,9 @@ measures the departure from pure squaring.
 \end{remark}
 
 \begin{remark}[\label{rem:gamma-riccati-origin}Riccati interpretation]
-The quadratic $\sqrt{Q_L}$ Riccati expansion of
-\texttt{higher\_genus\_modular\_koszul.tex}
-(thm:riccati-algebraicity) predicts that $\Phi_r$ is a truncated
-binomial expansion of a square root, so the Laurent coefficients
+The quadratic $\sqrt{Q_L}$ Riccati expansion
+(Theorem~\ref{thm:riccati-algebraicity}) predicts that $\Phi_r$ is a
+truncated binomial expansion of a square root, so the Laurent coefficients
 $A_r, B_r, \Gamma_r, \ldots$ follow a Taylor hierarchy with each
 successive layer contributing a polynomial correction to the
 previous square.  The theorem makes this hierarchy explicit for the
@@ -464,41 +459,33 @@ signal is present.
 \label{sec:stss-verification}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Every $\ClaimStatusProvedHere$ claim in this chapter carries a
-decorator in
-\texttt{compute/tests/test\_sub\_subleading\_asymptotic.py} with
-disjoint-source rationale.  The principal pairs are:
+The verification surface separates each closed-form identity from the
+calculation used to discover it.  The principal independent checks are:
 
 \begin{itemize}
-\item \texttt{test\_sub\_subleading\_r\{4..10\}}: chain A (telescope)
-  against chain B (Laurent expansion of explicit $S_r$ quartics).
-  Shared: only the closed-form $S_r(\Vir_c)$; no shared derivation
-  of $\Gamma_r$.
-\item \texttt{test\_source\_ratio\_closed\_form}: chain A
-  (\ref{lem:gamma-source-ratio-closed-form} via $jk A_j A_k$
-  identity and hockey-stick) against chain B (pair-by-pair
-  numerical evaluation from explicit $A_j, B_j$).  Shared: only
-  base-case $A_j, B_j$ formulas.
-\item \texttt{test\_telescope\_recurrence}: iterative recurrence
-  against closed-form polynomial evaluation.  Shared: only the base
-  case $G_4 = 484/25$.
-\item \texttt{test\_numerator\_polynomial\_matches\_ratio}: symbolic
-  expansion (chain A) vs integer substitution into $N(r)$ (chain B).
-\item \texttt{test\_691\_emergence\_is\_sporadic}: modular root
-  enumeration in $\mathbb{F}_{691}$ (chain A) vs Bernoulli-content
-  absence (chain B).
-\item \texttt{test\_kummer\_absence\_3617\_through\_r\_15}:
-  exhaustive prime-factor enumeration (chain A) against reference
-  Kummer set (chain B).
-\item \texttt{test\_numerator\_polynomial\_irreducible\_over\_Q}:
-  rational root theorem (chain A) vs sympy Q-factorisation (chain B).
-\item \texttt{test\_gamma\_vs\_subleading\_square\_difference}: direct
-  form (chain A) vs Riccati-square form (chain B) via
-  $G_r - \phi_r^2$ identity.
+\item The variation-of-parameters telescope is checked against the
+Laurent expansion of the explicit $S_r(\Vir_c)$ quartics for
+$4 \leq r \leq 10$; the shared input is only the closed form for
+$S_r(\Vir_c)$, not the derivation of $\Gamma_r$.
+\item Lemma~\ref{lem:gamma-source-ratio-closed-form} is checked both
+from the $jkA_jA_k$ identity with hockey-stick summation and by
+pair-by-pair numerical evaluation from the explicit $A_j,B_j$.
+\item The recurrence for the telescoping variable is checked by
+iterative evaluation and by substitution into the closed polynomial in
+$r$, with only the base value $G_4=484/25$ common to both calculations.
+\item The numerator polynomial is checked by symbolic expansion and by
+integer substitution into
+$N(r)=25r^4-550r^3+16355r^2-122870r+729048$.
+\item The occurrence of $691$ is checked by modular root enumeration in
+$\mathbb{F}_{691}$ and by the independent absence of Bernoulli content.
+\item The absence of $3617$ through $r=15$ is checked by exhaustive
+prime-factor enumeration against the Kummer witness set.
+\item Irreducibility of $N(r)$ over $\mathbb{Q}$ is checked by the
+rational-root theorem and by exact polynomial factorisation.
+\item The identity relating $\Gamma_r$ to the subleading square is checked
+from the direct closed form and from the Riccati-square expression
+$G_r-\phi_r^2$.
 \end{itemize}
-
-The test suite passes with $14$ tests; $8$ carry
-\texttt{@independent\_verification} decorators.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
@@ -520,9 +507,15 @@ four roots $\{8, 315, 423, 658\}$.  No Bernoulli structural identity
 is at work.  The next Kummer-irregular prime $3617$ does not appear
 through $r = 15$, confirming the absence of structure.
 
-The genuinely number-theoretic content of the Virasoro shadow tower
-lives at the \emph{leading} layer $A_r$ (pure $2^a 3^b$ rationals) and
+The number-theoretic content of the Virasoro shadow tower lives at the
+\emph{leading} layer $A_r$ (pure $2^a 3^b$ rationals) and
 at the genus-tower image $F_g \leftrightarrow S_{2g-2}$ via the
-Bernoulli normalisation $B_{2g-2}/(g-1)$, where Kummer congruences
-genuinely act.  The sub-subleading layer $\Gamma_r$ is rational in
-$r$ with no Kummer content; the $691$ at $r = 8$ is accidental.
+Bernoulli normalisation
+\[
+  [n^{2g-4}]R_{g-2}(n^2)
+  =
+  (-1)^g\,\frac{2^{g-1}B_{2g-2}}{(2g-2)!},
+\]
+where Kummer congruences act.  The sub-subleading layer $\Gamma_r$ is
+rational in $r$ with no Kummer content; the $691$ at $r = 8$ is
+accidental.
