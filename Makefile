@@ -44,6 +44,7 @@ PYTEST_FULL_HEARTBEAT ?= 60
 PYTEST_FULL_NODEIDS_PER_SHARD ?= 10
 PYTEST_FULL_TARGET_SHARD_SECONDS ?= 60
 PYTEST_FULL_STATE_DIR ?= .pytest-full-state
+PYTHON_BIN ?= $(shell if [ -x compute/.venv/bin/python ]; then echo compute/.venv/bin/python; elif [ -x .venv/bin/python ]; then echo .venv/bin/python; else echo python3; fi)
 
 # iCloud destination for release PDFs
 ICLOUD_DIR := /Users/raeez/Library/Mobile Documents/com~apple~CloudDocs/research
@@ -279,15 +280,15 @@ count:
 ## metadata: Regenerate metadata artefacts and the proved-claim registry from .tex sources.
 metadata:
 	@echo "  ── Generating metadata ──"
-	@python3 scripts/generate_metadata.py
+	@$(PYTHON_BIN) scripts/generate_metadata.py
 
 ## census: Print claim census from generated metadata.
 census: metadata
-	@python3 -c "import json; d=json.load(open('metadata/census.json')); t=d['totals']; print(f'  PH={t[\"ProvedHere\"]} PE={t[\"ProvedElsewhere\"]} CJ={t[\"Conjectured\"]} H={t[\"Heuristic\"]} O={t[\"Open\"]} total={t[\"total_claims\"]}')"
+	@$(PYTHON_BIN) -c "import json; d=json.load(open('metadata/census.json')); t=d['totals']; print(f'  PH={t[\"ProvedHere\"]} PE={t[\"ProvedElsewhere\"]} CJ={t[\"Conjectured\"]} H={t[\"Heuristic\"]} O={t[\"Open\"]} total={t[\"total_claims\"]}')"
 
 ## audit: Run Beilinson proof-chain integrity audit on theorem dependency DAG.
 audit: metadata
-	@python3 -c "from compute.lib.beilinson_auditor import BeilinsonAuditor; a = BeilinsonAuditor('.'); r = a.run_audit(); print(a.format_report(r))"
+	@$(PYTHON_BIN) -c "from compute.lib.beilinson_auditor import BeilinsonAuditor; a = BeilinsonAuditor('.'); r = a.run_audit(); print(a.format_report(r))"
 
 ## verify: Run anti-pattern verification on all .tex files.
 verify:
@@ -325,11 +326,11 @@ test:
 ## verify-independence: Audit ProvedHere claims vs independent-verification registry
 ##                     (tautology / orphan check; coverage metric reported)
 verify-independence:
-	@python3 compute/scripts/audit_independent_verification.py
+	@$(PYTHON_BIN) compute/scripts/audit_independent_verification.py
 
 ## verify-independence-verbose: Same, with full list of uncovered claims
 verify-independence-verbose:
-	@python3 compute/scripts/audit_independent_verification.py --verbose --show-orphans
+	@$(PYTHON_BIN) compute/scripts/audit_independent_verification.py --verbose --show-orphans
 
 ## test-full: Run the complete test suite including slow tests.  Use before commits.
 test-full:

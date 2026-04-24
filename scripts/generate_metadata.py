@@ -209,9 +209,20 @@ def extract_claims(path: Path) -> list[Claim]:
         env_start = i
         env_end = find_env_end(lines, i, env_name)
 
-        # Get the full block text
+        # Get the full claim block text.  Refs/cites are extracted from
+        # this block plus the immediately following proof, since most
+        # load-bearing dependencies live in the proof body rather than
+        # the theorem statement.
         block_lines = lines[env_start:env_end + 1]
         block_text = "\n".join(block_lines)
+        analysis_end = env_end
+        j = env_end + 1
+        while j < len(lines) and not lines[j].strip():
+            j += 1
+        proof_match = BEGIN_RE.search(lines[j]) if j < len(lines) else None
+        if proof_match and proof_match.group(1) == "proof":
+            analysis_end = find_env_end(lines, j, "proof")
+        analysis_text = "\n".join(lines[env_start:analysis_end + 1])
 
         # Check for ClaimStatus
         status_match = STATUS_RE.search(block_text)
@@ -235,17 +246,17 @@ def extract_claims(path: Path) -> list[Claim]:
         # Find all labels in this block
         block_labels = LABEL_RE.findall(block_text)
 
-        # Find all refs in this block
+        # Find all refs in this claim plus its proof, if present.
         block_refs = []
-        for ref_match in REF_RE.finditer(block_text):
+        for ref_match in REF_RE.finditer(analysis_text):
             for raw in ref_match.group(1).split(","):
                 key = raw.strip()
                 if key:
                     block_refs.append(key)
 
-        # Find all citations in this block
+        # Find all citations in this claim plus its proof, if present.
         block_cites = []
-        for cite_match in CITE_RE.finditer(block_text):
+        for cite_match in CITE_RE.finditer(analysis_text):
             for raw in cite_match.group(1).split(","):
                 key = raw.strip()
                 if key:
@@ -290,14 +301,28 @@ def extract_all_labels(path: Path) -> list[LabelEntry]:
     lines = text.splitlines()
     entries: list[LabelEntry] = []
 
+    env_stack: list[str] = []
     for i, line in enumerate(lines):
+        for begin_match in BEGIN_RE.finditer(line):
+            env_stack.append(begin_match.group(1))
         for match in LABEL_RE.finditer(line):
             label = match.group(1)
+            env_type = next(
+                (env for env in reversed(env_stack) if env in CLAIM_ENVS),
+                None,
+            )
             entries.append(LabelEntry(
                 label=label,
                 file=rel_path,
                 line=i + 1,
+                env_type=env_type,
             ))
+        for end_match in re.finditer(r"\\end\{([a-zA-Z]+)\}", line):
+            env_name = end_match.group(1)
+            for stack_idx in range(len(env_stack) - 1, -1, -1):
+                if env_stack[stack_idx] == env_name:
+                    del env_stack[stack_idx:]
+                    break
 
     return entries
 
@@ -525,8 +550,9 @@ def write_theorem_registry(
     active_files: list[Path],
     all_tex_files: list[Path],
 ) -> None:
-    """Write metadata/theorem_registry.md — synchronized proved-claim registry."""
-    proved_claims = [claim for claim in claims if claim.status == "ProvedHere"]
+    """Write metadata/theorem_registry.md — synchronized proved-surface registry."""
+    proved_statuses = {"ProvedHere", "ProvedElsewhere"}
+    proved_claims = [claim for claim in claims if claim.status in proved_statuses]
     status_counts = Counter(claim.status for claim in claims)
     env_counts = Counter(claim.env_type for claim in proved_claims)
     part_counts = Counter()
@@ -553,15 +579,16 @@ def write_theorem_registry(
     )
     lines.append("")
     lines.append(
-        "This registry now tracks every `\\ClaimStatusProvedHere` block directly "
-        "from source, so the proved surface cannot silently drift behind the TeX tree."
+        "This registry now tracks every `\\ClaimStatusProvedHere` and "
+        "`\\ClaimStatusProvedElsewhere` block directly from source, so the "
+        "proved surface cannot silently drift behind the TeX tree."
     )
     lines.append("")
     lines.append("## Snapshot")
     lines.append("")
     lines.append("| Metric | Value |")
     lines.append("|---|---:|")
-    lines.append(f"| ProvedHere claims | {len(proved_claims)} |")
+    lines.append(f"| Proved surface claims | {len(proved_claims)} |")
     lines.append(f"| Total tagged claims | {len(claims)} |")
     lines.append(f"| Active files in `main.tex` | {len(active_files)} |")
     lines.append(f"| Total `.tex` files scanned | {len(all_tex_files)} |")
@@ -573,14 +600,14 @@ def write_theorem_registry(
     for status in ["ProvedHere", "ProvedElsewhere", "Conjectured", "Conditional", "Heuristic", "Open"]:
         lines.append(f"| `{status}` | {status_counts.get(status, 0)} |")
     lines.append("")
-    lines.append("## ProvedHere By Environment")
+    lines.append("## Proved Surface By Environment")
     lines.append("")
     lines.append("| Environment | Count |")
     lines.append("|---|---:|")
     for env_type, count in sorted(env_counts.items(), key=lambda item: (-item[1], item[0])):
         lines.append(f"| `{env_type}` | {count} |")
     lines.append("")
-    lines.append("## ProvedHere By Part")
+    lines.append("## Proved Surface By Part")
     lines.append("")
     lines.append("| Part | Count |")
     lines.append("|---|---:|")
@@ -589,7 +616,7 @@ def write_theorem_registry(
     lines.append("")
     lines.append("## Most Populated Proved Files")
     lines.append("")
-    lines.append("| File | ProvedHere claims |")
+    lines.append("| File | Proved surface claims |")
     lines.append("|---|---:|")
     for file_name, count in sorted(file_counts.items(), key=lambda item: (-item[1], item[0]))[:20]:
         lines.append(f"| `{file_name}` | {count} |")
@@ -607,12 +634,14 @@ def write_theorem_registry(
             entries = file_map[file_name]
             lines.append(f"#### `{file_name}` ({len(entries)})")
             lines.append("")
-            lines.append("| Label | Env | Line | Title |")
-            lines.append("|---|---|---:|---|")
+            lines.append("| Label | Env | Status | Line | Refs | Cites | Title |")
+            lines.append("|---|---|---|---:|---:|---:|---|")
             for claim in entries:
                 lines.append(
                     f"| `{escape_md_cell(claim.label)}` | `{escape_md_cell(claim.env_type)}` | "
-                    f"{claim.line} | {escape_md_cell(claim.title)} |"
+                    f"`{escape_md_cell(claim.status)}` | {claim.line} | "
+                    f"{len(claim.refs_in_block)} | {len(claim.cites_in_block)} | "
+                    f"{escape_md_cell(claim.title)} |"
                 )
             lines.append("")
 
@@ -624,12 +653,14 @@ def write_theorem_registry(
             entries = other_files[file_name]
             lines.append(f"#### `{file_name}` ({len(entries)})")
             lines.append("")
-            lines.append("| Label | Env | Line | Title |")
-            lines.append("|---|---|---:|---|")
+            lines.append("| Label | Env | Status | Line | Refs | Cites | Title |")
+            lines.append("|---|---|---|---:|---:|---:|---|")
             for claim in entries:
                 lines.append(
                     f"| `{escape_md_cell(claim.label)}` | `{escape_md_cell(claim.env_type)}` | "
-                    f"{claim.line} | {escape_md_cell(claim.title)} |"
+                    f"`{escape_md_cell(claim.status)}` | {claim.line} | "
+                    f"{len(claim.refs_in_block)} | {len(claim.cites_in_block)} | "
+                    f"{escape_md_cell(claim.title)} |"
                 )
             lines.append("")
 
@@ -777,7 +808,10 @@ def main() -> None:
     all_labels: dict[str, LabelEntry] = {}
     for path in all_tex_files:
         for entry in extract_all_labels(path):
-            if entry.label not in all_labels:  # first occurrence wins
+            existing = all_labels.get(entry.label)
+            if existing is None:
+                all_labels[entry.label] = entry
+            elif existing.env_type is None and entry.env_type is not None:
                 all_labels[entry.label] = entry
 
     print(f"\n  Extracted {len(all_claims)} tagged claims from {len(all_tex_files)} files")

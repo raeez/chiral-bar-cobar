@@ -244,7 +244,12 @@ Wave 1 outcome by category: 2 CLOSED / 6 SPLIT / 4 GENUINELY OPEN. This validate
 | Vol III | ~693 | ~34,000 | ~460 |
 | Total  | ~5,142 | ~177K | ~4,186 |
 
-Cross-volume: ~3,500+ tagged claims; HZ-IV independent-verification coverage: Vol I 0/2275 baseline (working queue seeded as adversarial audits identify candidates), Vol II 0/1134, Vol III 2/283 (seed in `notes/tautology_registry.md`).
+Cross-volume: Vol I metadata now records 3,919 structured tagged claims
+(PH=1,951; PE=456; CJ=369; H=29; CD=1,111; O=3) after comment stripping.
+HZ-IV independent-verification coverage in the current Vol I audit is
+133/2017 raw-scanned ProvedHere labels (6.6%), with zero tautological
+decorations and zero orphan decorator entries; Vol II and Vol III coverage
+baselines remain tracked in their own trees.
 
 Anti-pattern catalogue (working notebook, not in manuscript):
 - AP1–AP235 (+ AP236 blacklist-slug leakage, 2026-04-17 bar_construction rectification).
@@ -991,11 +996,11 @@ Vol III ~230-agent comprehensive wave brought totals to ~693pp, ~34,000 tests, ~
 - **CY-A_3 RESOLVED (inf-cat)**: thm:derived-framing-obstruction. Chain-level [m_3,B^{(2)}]!=0 is NOT an obstruction. HH^{-2}_{E_1}=0, Goodwillie vanishing, E_3-liftings contractible. Vol I cross-ref in rem:shadow-ainfty-coproduct-vol3 (higher_genus_complementarity.tex) is now grounded.
 - **K3 abelian Yangian PROVED**: RTT presentation of Y(g_{K3}). Degree-(24,24) structure function. Quantum determinant central. Serre from BKM imaginary roots at D=3.
 - **ZTE correction EXISTS**: Extended deformation complex rank 35/36. The correction T is constructible from 1-dim kernel.
-- **kappa_BKM = c_N(0)/2 universal**: The ONLY correct formula for all K3-fibered CY3. Naive decomposition kappa_BKM = kappa_ch + chi(O_fiber) is numerical coincidence for N=1.
+- **kappa_BKM = c_N(0)/2 universal**: The ONLY correct formula for the Borcherds-weight lane of K3-fibered CY3. Naive decomposition kappa_BKM = kappa_ch + chi(O_fiber) fails at every N, including N=1 in the total-space convention (5 != 0 + 0).
 - **Shadow-Feynman dictionary extended**: L-loop = S_{L+1} at all loop orders. Class G = tree exact. Class M = all-loop.
 - **E_3 bar = 6^g for class M (coderived / pro-object / weight-completed ambient)**: Closed form via Kunneth, proved at g ∈ {1, 2, 3} (cor:class-m-higher-genus, en_factorization.tex:1028-1076); g ≥ 4 conditional on d_5 degeneration (S_5 = −16/9 at c=1); raw direct-sum ambient `Ch(Vect)` is chain-level genuinely false (S_4(Vir_c) ≠ 0 at generic c).
 - **CFG25 comparison**: 24% lift rate at perturbative genus-0.
-- **Super-Yangian Y(gl(4|20))**: Conjectural BKM-to-Yangian lift from Mukai signature (4,20).
+- **Orthosymplectic Super-Yangian Y_{osp}(4|20)**: Conjectural reflection-equation lift from Mukai signature (4,20); do not collapse the Hall-Drinfeld/BKM branch into a plain K3 Yangian.
 - **6 routes to G(K3xE)**: Kummer, Borcherds, MO, McKay, FH, Costello.
 - **Borcherds spectral flow**: Automorphisms of Y(g_{K3}) from vertex operators.
 - **3 wrong proofs caught**: Bidegree decomposition, Tsygan formality, kappa_BKM naive decomposition.

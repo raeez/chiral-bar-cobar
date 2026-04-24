@@ -853,7 +853,7 @@ At each stage $N$, the BV differential restricted to $\cA_{\le N}$ involves at m
 \]
 — a **finite** sum, no convergence issue. The stage-$N$ BV/bar comparison $f_g^{(N)}$ is a strict chain map modulo $F^{N+1}$: curvature-divisibility (prop:harmonic-factorization) shows each $c_r m_0^{\lfloor r/2\rfloor-1}$ raises the $m_0$-weight by $2(\lfloor r/2\rfloor-1)$; within the finite truncation the curvature term is already central and its powers lift to an explicit chain homotopy constructed from the Hodge homotopy $h$ and the bar propagator $d\log E$ (the homotopy is the finite sum $\sum_{j=1}^{\lfloor N/2\rfloor} h \cdot m_0^{j-1}$, well-defined because each summand has fixed conformal weight). Passing to the inverse limit: by Milnor/Mittag-Leffler (thm:completed-bar-cobar-strong Step 3), the derived limit $\varprojlim^1$ vanishes because the surjective quotient tower is Mittag-Leffler (isomorphism on each $F_{\le w}$ by prop:standard-strong-filtration(iv)). Hence $\widehat f_g$ is a strict quasi-isomorphism of the completed curved chain complexes. This is a **chain-level** statement in the weight-completed category — strictly stronger than coderived equivalence and only weaker than raw direct-sum qi.
 
-*Residual obstruction*: the chain homotopy at stage $N$ must be assembled compatibly across stages (i.e., commute with the truncation projections). The homotopies built from $h\cdot m_0^{j-1}$ are conformal-weight-homogeneous, hence compatible with the weight filtration; this is automatic from prop:standard-strong-filtration(iv). No residual obstruction.
+*Residual obstruction (2026-04-24 correction)*: the chain homotopy at stage $N$ must be assembled compatibly across stages and across the chosen ambient comparison functors. This compatibility is a proof obligation, not automatic from conformal-weight homogeneity.
 
 **Draft 2 (Heal AP203: uniqueness of $m_0$).** Claim: on the harmonic subspace $H_g$ of the fiber model at genus $g\ge 1$, the central endomorphism of cohomological degree $+2$ is unique up to scalar. Proof: let $\phi: H_g\to H_g$ be central of degree $+2$. The fiber model is generated as a curved chiral $A_\infty$-algebra by $\cA$ modulo $d_{\mathrm{fib}}$, with $d_{\mathrm{fib}}^2 = m_0$. Centrality means $\phi$ commutes with the chiral product and with $d_{\mathrm{fib}}$; degree $+2$ forces $\phi$ to land in the filtered piece spanned by $d_{\mathrm{fib}}^2 = m_0$ and by bar-length-$2$ harmonic insertions. The latter are $\lambda\cdot\omega_g\otimes\omega_g = 0$ after harmonic projection because $H^{1,0}\wedge H^{1,0} = H^{2,0}$ vanishes on a curve (genus-$g$ curve has $H^{2,0}=0$). So $\phi = \lambda\cdot m_0$. The proof uses only the Hodge type count (curve has pure $(1,0)$ and $(0,1)$ in degree $1$, nothing above), which is rigorous.
 
@@ -922,7 +922,7 @@ Full scaffolding of four decorators (Heis/G, affine sl_2/L, betagamma/C, Virasor
 
 ### Summary: what the strengthening buys
 
-- MC5 status row: `CHAIN-LEVEL CONJECTURAL` → `CHAIN-LEVEL PROVED in weight-completed category; direct-sum chain-level genuinely false`.
+- MC5 status row after the 2026-04-24 audit: raw direct-sum class-M chain-level comparison remains false in `Ch(Vect)`; strict completed/pro, $J$-adic, filtered-completed, and coderived surfaces are proved repair surfaces. The completed chiral Positselski theorem proves CP1--CP3 on strict Mittag--Leffler completed towers.
 - AP203 healed: uniqueness of $m_0$ has a Hodge-theoretic one-paragraph proof.
 - Normalisation $c_r = S_r$ upgraded from convention to theorem (class M at least).
 - H07 upgraded: no longer "cite Livernet and transport"; direct computation of $(\mathsf{SC}^{\mathrm{ch,top}})^!$ via sc_koszul_dual_cooperad_engine is the independent verification.
@@ -2226,247 +2226,58 @@ No AI attribution. All work attributed to Raeez Lorgat.
 
 ---
 
-## MC5 class M chain-level Platonic reconstitution (2026-04-16)
+## MC5 class M chain-level ambient separation (superseded 2026-04-24)
 
-### (a) Target and current state
+This entry supersedes the 2026-04-16 MC5 Platonic reconstitution. The
+older version treated the direct-sum obstruction as an ambient-choice
+artefact and asserted equivalence among pro, J-adic, and filtered-completed
+ambients without a proof body. The 2026-04-24 attack-heal pass retracts
+that inference.
 
-MC5 row in Vol I CLAUDE.md and Vol II CLAUDE.md states: "chain-level class M
-PROVED in weight-completed category" via `prop:bv-bar-class-m-weight-completed`
-(Vol II `chapters/connections/bv_brst.tex:2173`) together with Vol I
-`thm:completed-bar-cobar-strong` (Vol I `chapters/theory/bar_cobar_adjunction_curved.tex:953`)
-and `prop:standard-strong-filtration` (same file, line 1100). The follow-on
-claim that "direct-sum chain-level class M genuinely false" is inscribed
-in Vol II `bv_brst.tex` remark 2196-2214 and quoted in both `CLAUDE.md`
-files. Vol I `programme_overview_platonic.tex:311-315` repeats the
-"genuinely false at generic central charge" framing.
+### Corrected statement
 
-### (b) Ghost-error-correct triple
+- Raw direct-sum class-M chain-level comparison in `Ch(Vect)` is false.
+  The obstruction is not merely the finite $S_4$ coefficient; $S_4$ is the
+  first detected term in a nonterminating harmonic family.
+- Strict completed/pro chain surfaces are legitimate repair surfaces
+  because the tower, maps, and continuous mapping complex are specified. The
+  mapping complex is the derived inverse limit of finite-stage strict
+  continuous Hom complexes; it is not the unrestricted mapping object of
+  `pro-Ch`.
+- The finite-stage Positselski comparison uses the finite low-weight
+  subobject $F^{\leq w}C$, not a quotient by a high-weight tail. The
+  high-weight tail is not assumed to be a subcomplex in the curved setting.
+- The completed/coderived chiral Positselski comparison proves the
+  CP1--CP3 continuous co/contra package on strict Mittag--Leffler towers: a
+  continuous completed curved chiral coalgebra, coderived recovery by
+  derived inverse limit with Mittag--Leffler control, and contraderived
+  recovery with product/sum exactness across the chiral operations.
+- Proposition `prop:ambient-equivalence` identifies the pro, J-adic, and
+  filtered-completed ambients for strict finite-window towers. No theorem
+  identifies that inverse-limit product with the original raw direct-sum
+  complex.
 
-**Ghost theorem.** In the bounded-direct-sum ambient `Ch(Vect)`, with the
-comparison map `f_g : C^*_{BV}(A, Sigma_g) -> B^(g)(A)` required to be a
-strict chain homotopy equivalence, no single contracting homotopy `h`
-can absorb the infinite family `{delta_r^{harm}}_{r >= 4}` simultaneously:
-for class M the series `sum_r delta_r^{harm} = sum_r c_r(A) m_0^{floor(r/2)-1}`
-is not a bounded sum in the direct-sum ambient. This is a true theorem
-about a specific ambient.
+### Cache rule
 
-**Error.** Calling this observation "genuinely false" conflates two
-statements:
+When MC5 or Theorem B is invoked, first ask which surface is being used:
+raw direct sum, finite low-weight stage, strict complete-filtered tower,
+coderived/coacyclic localization, or an $(\infty,1)$-categorical
+factorisation category. A proof in one surface does not automatically
+transport to another. Transport requires an explicitly stated comparison
+functor and exactness/derived-limit hypotheses.
 
-  (i) direct-sum chain-level MC5 class M in the UNCOMPLETED ambient
-  `Ch(Vect)`, which is indeed the ambient of the raw bar complex with
-  the weight filtration dropped;
+### Files touched by the 2026-04-24 heal
 
-  (ii) chain-level MC5 class M in any ambient that retains the weight
-  tower, under which the infinite family becomes a single topologically
-  convergent correction.
-
-The raw bar complex, viewed in the ambient of its own weight-filtered
-truncations, IS a pro-object whose limit is the inverse limit of its
-bar truncations; a strict chain homotopy exists in this pro-ambient
-because it is defined stage by stage and Mittag-Leffler kills the
-derived-limit obstruction.
-
-**Correct relationship.** Chain-level MC5 class M is proved at the
-chain level in three canonically equivalent ambients:
-
-  (1) the pro-object ambient `pro-Ch(Vect)` of inverse systems of
-  chain complexes (Positselski 2011 semi-infinite framework);
-
-  (2) the topological chain complex with the J-adic topology generated
-  by the positive-weight ideal `J = bigoplus_{h > 0} A_h` (Beilinson-
-  Drinfeld chiral Ran topological framework);
-
-  (3) the filtered-completed ambient `CompCl(F)` of
-  `def:strong-completion-tower` (Vol I strong completion tower).
-
-The sentence "genuinely false" is restricted to the bounded-direct-sum
-ambient `Ch(Vect)`, which is not the ambient of the original bar
-complex once its weight filtration is retained.
-
-### (c) Reconstitution (LOSSLESS UPGRADE, not downgrade)
-
-Inscribed at `chapters/theory/mc5_class_m_chain_level_platonic.tex`
-(CREATED this wave, ~650 lines).
-
-**Platonic theorem (three-ambient form).** In any of the three
-canonically equivalent ambients --- pro-object, J-adic topological,
-or weight-completed --- the comparison map `f_g` between the BV-BRST
-complex and the algebraic bar complex is a strict chain-level
-quasi-isomorphism for every genus `g >= 0` and every class-M algebra
-in the standard landscape. The selection of ambient is convention,
-not restriction.
-
-Three theorems installed:
-
-  - `thm:mc5-class-m-chain-level-pro-ambient` (ProvedHere): pro-object
-  chain-level quasi-isomorphism in `pro-Ch(Vect)`; proof via four steps
-  (finite-stage strict qiso; tower compatibility via weight homogeneity;
-  Mittag-Leffler; pro-object chain-level quasi-isomorphism from ML).
-
-  - `thm:mc5-class-m-topological-chain-level-j-adic` (ProvedHere):
-  J-adic topological chain-level quasi-isomorphism; continuity of the
-  contracting homotopy is the J-adic rephrasing of the degree cutoff.
-
-  - `cor:mc5-class-m-chain-level-on-inverse-limit` (ProvedHere):
-  Milnor exact sequence applied to the inverse system of cones gives
-  vanishing cone on the inverse limit, so `hat f_g` is a strict
-  chain-level quasi-isomorphism on the inverse limit.
-
-Companion proposition:
-
-  - `prop:ambient-equivalence` (ProvedHere): three ambient-equivalence
-  functors `Phi_{pro -> J}`, `Phi_{J -> Filt}`, and their composition
-  give mutually inverse identifications of the three ambients, so
-  any one of (i), (ii), (iii) implies the other two.
-
-### (d) HZ-IV decorators (installed)
-
-Inscribed at `compute/tests/test_mc5_class_m_chain_level_platonic.py`:
-
-  (Decorator 1) `thm:mc5-class-m-chain-level-pro-ambient`:
-  DERIVED_FROM = Vol I `thm:completed-bar-cobar-strong` +
-  `prop:standard-strong-filtration`. VERIFIED_AGAINST = Positselski
-  2011 pro-object semi-infinite framework (Mem AMS Vol 212 No 996,
-  Sections 2-3) + MacLane 1963 Mittag-Leffler theorem (Homology,
-  Springer GMM 114, Thm XII.3.1).
-
-  (Decorator 2) `thm:mc5-class-m-topological-chain-level-j-adic`:
-  DERIVED_FROM = Vol I `prop:standard-strong-filtration` + Vol II
-  `prop:bv-bar-class-m-weight-completed`. VERIFIED_AGAINST =
-  Beilinson-Drinfeld 2004 Chiral Algebras AMS CP 51 Section 3.4 +
-  Atiyah-Macdonald 1969 Proposition 10.15 (J-adic completion).
-
-  (Decorator 3) `cor:mc5-class-m-chain-level-on-inverse-limit`:
-  DERIVED_FROM = `thm:mc5-class-m-chain-level-pro-ambient` (this
-  chapter) + Vol I `prop:standard-strong-filtration(i)`.
-  VERIFIED_AGAINST = Milnor 1962 Pacific J Math Theorem 1 (Milnor
-  exact sequence) + Weibel 1994 Proposition 3.5.7 (ML implies lim^1
-  vanishing).
-
-Disjointness verified at import time by the decorator registry;
-tautological tests fail to import. No DERIVED_FROM source appears in
-any VERIFIED_AGAINST list; each external source is a published
-homological-algebra or topological-chain-complex theorem independent
-of the chiral bar complex, the BV comparison map, and the class-M
-harmonic discrepancy.
-
-HZ-IV coverage delta: +3 decorators (three ProvedHere theorems;
-Corollary counts as third claim). Vol I coverage snapshot moves
-from 0/2275 to 3/2275 after this wave; `make verify-independence`
-will report three additional non-tautological claim entries.
-
-### (e) First-principles cache pattern additions (PR-MC5-1 through PR-MC5-4)
-
-PR-MC5-1 (genuine-false as ambient-choice):
-Ghost: no single homotopy in `Ch(Vect)` absorbs the infinite
-`{delta_r^{harm}}` family. Error: calling this "genuinely false"
-suggests mathematical obstruction. Correct: ambient-choice
-observation; chain-level MC5 holds in all three equivalent
-ambients retaining the weight tower.
-
-PR-MC5-2 (ambient equivalence is structural):
-Ghost: three different ambient completions seem to give three
-different theorems. Error: treating them as genuinely distinct.
-Correct: canonically equivalent under `prop:ambient-equivalence`;
-three presentations of one theorem.
-
-PR-MC5-3 (tower retention):
-Ghost: "the bar complex IS the direct sum, so its natural ambient
-is `Ch(Vect)`". Error: forgets the weight filtration used to
-construct it. Correct: natural ambient retains the filtration and
-is a pro-object whose limit is the product; the direct sum is a
-dense subspace.
-
-PR-MC5-4 (Milnor-Mittag-Leffler is the chain-level vehicle):
-Ghost: Milnor/Mittag-Leffler is a "technical device" moving
-statements stage-to-limit. Error: treating it as technical obscures
-its structural role. Correct: for a Mittag-Leffler tower of
-chain-level quasi-isomorphisms, Milnor upgrades stage-level
-strictness to strict chain-level quasi-isomorphism on the inverse
-limit.
-
-### (f) Residual obstructions (explicit)
-
-None. The Platonic reconstitution is complete:
-
-  - pro-object chain-level form: proved (thm:mc5-class-m-chain-level-pro-ambient).
-  - J-adic topological chain-level form: proved.
-  - weight-completed chain-level form: proved (existing
-  prop:bv-bar-class-m-weight-completed).
-  - three-ambient equivalence: proved (prop:ambient-equivalence).
-  - HZ-IV decorators: installed with disjoint sources.
-  - first-principles cache: appended four patterns.
-
-### (g) Ambient is UPGRADED, not restricted
-
-The prior inscription asserts chain-level MC5 class M "in the
-weight-completed category"; the Platonic reconstitution proves the
-SAME chain-level statement in pro-object, J-adic topological, AND
-weight-completed ambients, and identifies the three via canonical
-equivalence. The ambient choice is convention. The mathematical
-content is ambient-neutral chain-level MC5 class M on the original
-weight-graded bar complex, interpreted in the canonical inverse-limit
-ambient that retains the weight filtration. No scope is lost; scope
-is widened to three equivalent presentations of one theorem.
-
-### (h) What NOT to claim
-
-- Do NOT say "direct-sum chain-level MC5 for class M in `Ch(Vect)` is
-proved". The bounded-direct-sum ambient does obstruct chain-level
-comparison; this is the correct reading of the original "genuinely
-false" remark.
-
-- Do NOT say the three ambients (pro-object, J-adic topological,
-weight-completed) give three different chain-level theorems. They
-give the same theorem under canonical functorial equivalence
-(`prop:ambient-equivalence`).
-
-- Do NOT confuse the weight-completed ambient with a "restriction"
-or "subcategory" as distinct from the original. The original
-weight-graded bar complex lives in any of the three equivalent
-ambients by choice; the pro-ambient / J-adic / weight-completed
-presentations are three canonical re-descriptions of the one object.
-
-- Do NOT re-introduce the word "conjectural" for chain-level MC5
-class M. The three-ambient theorem is proved; the ambient choice
-is convention.
-
-### (i) Summary: what the Platonic reconstitution buys
-
-- MC5 row for class M chain-level: "PROVED in weight-completed
-category; direct-sum chain-level genuinely false" -> "PROVED at
-chain level in the pro-object / J-adic topological / weight-completed
-ambients, all canonically equivalent (`prop:ambient-equivalence`);
-the direct-sum obstruction is an ambient-choice artefact of
-dropping the weight tower". No downgrade; three equivalent
-presentations of one chain-level theorem.
-
-- The phrase "genuinely false" is reinterpreted as an ambient-choice
-observation, not a mathematical obstruction. The weight tower must
-be retained when specifying the ambient; retaining it gives
-chain-level MC5 on the original.
-
-- `prop:ambient-equivalence` supplies the structural identification
-of three ambient forms, replacing ad hoc multi-ambient language with
-a single functorial equivalence.
-
-- HZ-IV coverage: three new decorators with disjoint external sources
-(Positselski, Beilinson-Drinfeld, Milnor, MacLane, Weibel,
-Atiyah-Macdonald). Tautology prevented by logical disjointness.
-
-### (j) Files created / modified
-
-- `chapters/theory/mc5_class_m_chain_level_platonic.tex` (CREATED, ~650 lines).
-- `compute/tests/test_mc5_class_m_chain_level_platonic.py` (CREATED, ~360 lines).
-- `appendices/first_principles_cache.md` (APPENDED): MC5 class M Platonic
-reconstitution block (this section), four new PR-MC5-N confusion patterns.
-- `main.tex`: add `\input{chapters/theory/mc5_class_m_chain_level_platonic}`
-after `bar_cobar_adjunction_inversion` input (same Part I dispatcher block).
-
-### Attribution
-
-No AI attribution. All work attributed to Raeez Lorgat.
+- `chapters/theory/theorem_B_scope_platonic.tex`: finite-stage and
+  completed Positselski surfaces narrowed; CP1--CP3 obligation stated.
+- `chapters/theory/coderived_models.tex`: weak equivalence defined by
+  coacyclic cone; strict complete-filtered mapping complex separated from
+  unrestricted `pro-Ch`.
+- `chapters/theory/bar_cobar_adjunction_curved.tex`: square-zero ordinary
+  quasi-isomorphism separated from curved CDG coacyclic-cone statements.
+- `compute/tests/test_theorem_B_scope.py`: regression guardrails for the
+  finite-stage object, CP1--CP3 condition, and nonterminating raw
+  direct-sum obstruction.
 
 ## XXXI. Three-Hochschild Chain-Level vs Cohomological Agreement (2026-04-16, AP-CY64 stress test)
 
@@ -2836,23 +2647,23 @@ Vol I theorem-status table Thm B row: "PROVED unconditional at coderived level; 
 
 ### Attack findings
 
-**Finding 1 (scope inflation).** The inscribed theorem `thm:positselski-chiral-proved` (`chapters/theory/bar_cobar_adjunction_inversion.tex:1448-1503`) has TWO hypotheses: (i) conilpotency of $C$; (ii) finite-dim graded pieces. The manuscript's own `ex:virasoro-not-conilpotent` (`bar_cobar_adjunction_curved.tex:715-728`) states that $\bar{B}(\mathrm{Vir})$ is NOT conilpotent on the raw direct sum: $L_0 \in \bar{B}^1$ has $\bar{\Delta}^{(N)}(L_0) = \sum_{k\in\mathbb{Z}} L_k \otimes L_{-k} \neq 0$ for all $N$. The status-table framing "unconditional" is therefore ambiguous: read literally (raw direct sum), it FAILS for every class-M target.
+**Finding 1 (scope inflation; corrected 2026-04-24).** The inscribed theorem `thm:positselski-chiral-proved` (`chapters/theory/bar_cobar_adjunction_inversion.tex:1448-1503`) has TWO hypotheses: (i) conilpotency of $C$; (ii) finite-dim graded pieces. The cofree tensor bar coalgebra on Virasoro is conilpotent by finite bar length on finite words; the actual raw direct-sum failure is finite-type/completion: the compatible mode-family $\sum_{\lvert k\rvert\leq N}s^{-1}L_{-k}\otimes s^{-1}L_k$ has a weight-completed limit but no raw direct-sum representative. The status-table framing "unconditional" is therefore ambiguous: read literally (raw direct sum), it FAILS for every class-M target.
 
 **Finding 2 (hidden MC4 dependency).** The chapter handles class M implicitly via `thm:completed-bar-cobar-strong` (MC4 completion at the chain level) — a DIFFERENT theorem with a DIFFERENT proof (explicit Milnor bicomplex, not chiral co-contra correspondence). The Vol I status row conflates them by saying "unconditional at coderived level" without distinguishing raw vs weight-completed bar coalgebras.
 
 **Finding 3 (class-M raw failure is genuine).** The raw direct-sum failure is certified chain-level by the nonzero shadow-tower invariant $S_4(\mathrm{Vir}_c) = 10/[c(5c+22)] \neq 0$ at generic $c$, plus the Feigin-Fuchs continuous-Cartan obstruction to Mittag-Leffler on bar-degree filtration. No repackaging of the coderived construction recovers the equivalence on raw direct sum for class M.
 
-**Finding 4 (correct relationship).** The strongest honest "unconditional" claim: on the WEIGHT-COMPLETED bar coalgebra $\widehat{\bar{B}}^{\mathrm{ch}}(\cA) = \varprojlim_w \bar{B}^{\mathrm{ch}}(\cA)/F^{\leq w}$ with total-weight filter $w(\xi) = n + \sum_i h_i$, the chiral Positselski equivalence holds unconditionally for ALL four shadow classes G/L/C/M. The raw direct-sum equivalence holds for G, L, and C; it fails for M.
+**Finding 4 (correct relationship).** The strongest proved completed claim: on the strict Mittag--Leffler WEIGHT-COMPLETED bar coalgebra $\widehat{\bar{B}}^{\mathrm{ch}}(\cA)$ with total-weight finite-window tower, the chiral Positselski equivalence holds for the standard G/L/C/M towers. The raw direct-sum equivalence holds for G, L, and C; it fails for M.
 
 ### New confusion patterns registered
 
 | # | Wrong claim | Ghost theorem | Precise error | Correct relationship | Type |
 |---|-------------|---------------|---------------|---------------------|------|
-| 234 | "Theorem B is unconditional at coderived level for class-M targets (Vir, $W_N$, critical KM) on the raw direct-sum bar coalgebra" | Positselski 2011 Mem. AMS 212 Thm 7.3 is real; chiral lift `thm:positselski-chiral-proved` is real on conilpotent CDG-coalgebras with FD graded pieces | Raw $\bar{B}(\mathrm{Vir}_c)$ is NOT conilpotent (`ex:virasoro-not-conilpotent`): $\bar{\Delta}^{(N)}(L_0)$ is the infinite sum $\sum_k L_k \otimes L_{-k}$, nonzero for all $N$ in the raw direct sum | Unconditional at WEIGHT-COMPLETED level (`thm:chiral-positselski-weight-completed`); FALSE on raw direct sum for class M (`prop:chiral-positselski-raw-direct-sum-class-M-false`); UNCONDITIONAL on raw for G, L, C | scope error / temporal |
+| 234 | "Theorem B is unconditional at coderived level for class-M targets (Vir, $W_N$, critical KM) on the raw direct-sum bar coalgebra" | Positselski 2011 Mem. AMS 212 Thm 7.3 is real; chiral lift `thm:positselski-chiral-proved` is real on conilpotent CDG-coalgebras with FD graded pieces | Raw $\bar{B}(\mathrm{Vir}_c)$ is not the finite-type/pro-complete Positselski surface: the compatible Virasoro mode-family has a completed limit but no finite direct-sum representative | Proved on the strict ML WEIGHT-COMPLETED level (`thm:chiral-positselski-weight-completed`); FALSE on raw direct sum for class M (`prop:chiral-positselski-raw-direct-sum-class-M-false`); raw for G, L, C | scope error / temporal |
 | 235 | "`finite-dim graded pieces` excludes class-M targets" | Vir, $W_N$, critical KM have infinite-dim bar at each bar degree | "Finite-dim graded pieces" means finite-dim PER TOTAL BAR WEIGHT after the filter $w(\xi) = n + \sum_i h_i$, not per bar degree alone | Total-weight filter combines bar degree and conformal weight; $\mathrm{gr}^w$ is FD in each cohomological degree for all G/L/C/M | level error |
-| 236 | "Bar-degree filtration suffices for conilpotency of class-M bar coalgebra" | `thm:coalgebra-via-NAP` part (4) uses bar-degree filtration | False for class M on RAW direct sum: single element $L_0$ gives infinite sum in bar degree 2 that never terminates under bar-degree filtration alone | TOTAL-WEIGHT filtration repairs this: at each total weight $w$, only finitely many $(L_k, L_{-k})$ pairs satisfy the weight constraint | scope error |
+| 236 | "Bar-degree filtration suffices for the class-M finite-type Positselski surface" | `thm:coalgebra-via-NAP` part (4) uses bar-degree filtration | False for class M on RAW direct sum: bar degree controls tensor length but not the infinite Virasoro mode-family or harmonic correction tower | TOTAL-WEIGHT filtration repairs this: at each total weight $w$, only finitely many $(L_k, L_{-k})$ pairs satisfy the weight constraint | scope error |
 | 237 | "Raw direct-sum class-M Positselski is fixable by passing to a larger coderived category" | Coderived is genuinely more flexible than derived | Failure is detected by $S_4(\mathrm{Vir}_c) \neq 0$ at chain level; alleged raw equivalence would force a contramodule-side partner absent in the direct-product topology | Obstruction is genuine: raw class-M Positselski is chain-level FALSE; healing route is WEIGHT COMPLETION, not enlargement of target categorical setting | positive/negative |
-| 238 | "`thm:coalgebra-via-NAP` part (4) automatically supplies the conilpotency hypothesis" | NAP part (4) is a real theorem about $\cA^!$ | NAP part (4) uses bar-degree filtration: sufficient for G/L/C on raw direct sum, but requires weight completion for class M | Two conilpotency statements have different scope: NAP (4) = raw bar-degree (G/L/C only on direct sum); `thm:chiral-positselski-weight-completed` = unconditional for all four classes | scope error |
+| 238 | "`thm:coalgebra-via-NAP` part (4) automatically supplies the conilpotency hypothesis" | NAP part (4) is a real theorem about $\cA^!$ | NAP part (4) uses bar-degree filtration: sufficient for G/L/C on raw direct sum, but requires weight completion for class M | Two conilpotency statements have different scope: NAP (4) = raw bar-degree (G/L/C only on direct sum); `thm:chiral-positselski-weight-completed` = strict ML completed tower for all four standard classes | scope error |
 | 239 | "`finite-dim graded pieces` and `conilpotent` are independent hypotheses" | Both appear in Positselski 2011 Thm 7.3 as coordinate axioms | On the chiral side with positive-energy grading and FD weight spaces, the two are coupled: FD weight spaces imply FD total-weight graded pieces imply (after completion) conilpotency of $\widehat{\bar{B}}^{\mathrm{ch}}(\cA)$ | On the chiral side the hypothesis reduces to a SINGLE axiom (positive-energy conformal-weight grading with FD weight spaces); conilpotency follows from the total-weight filter after completion | conflation |
 
 ### Platonic inscription
@@ -2871,7 +2682,7 @@ File: `compute/tests/test_theorem_B_scope.py`. Three decorators, each with disjo
 
 1. `thm:chiral-positselski-at-each-weight` — derived_from: chiral $\Phi/\Psi$ on truncation + total-weight conilpotency; verified_against: (a) Positselski 2011 Thm 7.3 classical over a field; (b) Francis-Gaitsgory factorization coalgebra model. Disjoint: classical Positselski has no $\cD$-module structure; Francis-Gaitsgory uses no CDG bicomplex.
 2. `thm:chiral-positselski-weight-completed` — derived_from: inverse-limit stability of chiral coderived/contraderived + fibrewise finite-weight equivalence; verified_against: (a) Keller 2009 deformation-theoretic bar-cobar; (b) `thm:completed-bar-cobar-strong` MC4 chain-level on associative category. Disjoint: Keller has no $\cD$-module/chiral structure; MC4 is chain-level (not coderived) via Milnor bicomplex.
-3. `prop:chiral-positselski-raw-direct-sum-class-M-false` — derived_from: concrete non-conilpotent $L_0$ + nonzero $S_4(\mathrm{Vir}_c)$; verified_against: (a) numerical $S_4(\mathrm{Vir}_{100}) \approx 1.9157 \times 10^{-4}$; (b) Feigin-Fuchs continuous-Cartan obstruction. Disjoint: $S_4$ homological vs Feigin-Fuchs representation-theoretic.
+3. `prop:chiral-positselski-raw-direct-sum-class-M-false` — derived_from: finite-type/completion failure of the Virasoro mode-family + nonzero $S_4(\mathrm{Vir}_c)$; verified_against: (a) numerical $S_4(\mathrm{Vir}_{100}) \approx 1.9157 \times 10^{-4}$; (b) Feigin-Fuchs continuous-Cartan obstruction. Disjoint: $S_4$ homological vs Feigin-Fuchs representation-theoretic.
 
 ### HZ-IV coverage delta (Vol I)
 
@@ -4339,9 +4150,9 @@ No AI attribution. All work attributed to Raeez Lorgat.
 **Type**: semantic-ambiguity-at-distance in status lines. Canonical violation: the shorthand "MC5 chain-level (class M false)" at `CLAUDE.md:1374` is readable in isolation as "MC5 is false for class M", but the true mathematical statement is:
 
 - FALSE in the raw bounded direct-sum ambient `Ch(Vect)` — witnessed by $L_0 \in B^1(\mathrm{Vir})$ with $\bar\Delta^{(N)}(L_0) \neq 0$ for every $N \geq 1$ (a genuine mathematical failure, not a proof-gap artifact);
-- PROVED in the pro-object / weight-completed / coderived ambient (`pro-Ch(Vect)` with Mittag--Leffler towers at `mc5_class_m_chain_level_platonic.tex:229`).
+- PROVED in the strict Mittag--Leffler pro-object / weight-completed / coderived ambient; the continuous tower and ambient-comparison data are part of the strict finite-window surface now stated in `mc5_class_m_chain_level_platonic.tex`.
 
-The canonical formulation lives in `concordance.tex:1980`: "analytic, coderived, and canonical-ambient chain-level proved; bounded direct-sum failure marked as the naive-ambient exception". Every status line must be a FAITHFUL SHORTENING of that composite, never a single-side headline.
+The corrected canonical formulation is: "analytic, coderived, and strict completed/pro chain-level proved; bounded direct-sum failure marked as the raw failure surface". Every status line must be a FAITHFUL SHORTENING of that composite, never a single-side headline.
 
 **Rule**: any status line, headline row, or summary entry that mentions "class M", "class C", "MC5", "Theorem B", "Theorem A" in connection with bar-cobar / bar / cobar / coderived equivalence MUST carry an explicit ambient qualifier, one of: "raw bounded direct-sum", "pro-object / weight-completed", "coderived", "canonical (Francis--Gaitsgory) factorization". Bare class-M headlines are prohibited at any surface that can be read in isolation.
 

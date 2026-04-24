@@ -92,7 +92,7 @@ Each item one-line; the inscribed anchor; propagation status across the three vo
 ## Section 5: CLAUDE.md corrections
 
 - Vol I `CLAUDE.md`: phantom label `thm:glN-drinfeld-double-internal` replaced with `thm:glN-chiral-qg` (done by batch-1 propagation).
-- Vol I `CLAUDE.md` MC5 row: upgraded per concordance.tex:1980 to analytic / coderived / canonical-ambient chain-level proved (class M on the coderived / pro-object / J-adic / weight-completed ambient), with class M raw direct-sum ambient `Ch(Vect)` genuinely false marked as the naive-ambient exception (done).
+- Vol I `CLAUDE.md` MC5 row (corrected 2026-04-24): analytic / coderived pieces remain proved; class M chain-level on the strict ML coderived / pro-object / J-adic / weight-completed ambients is proved; raw direct-sum ambient `Ch(Vect)` remains a genuine failure surface.
 - Vol III `CLAUDE.md`: stale "BKM Serre P_2 = 0 EXACT (70 tests)" corrected to leading-ε¹ proved / ε² conjectural (done).
 - Vol III `CLAUDE.md` F28: demote "Chiral Satake C³ PROVED (99 tests)" to "ingredients match, DG equiv conjectural" (pending batch-2 propagation).
 - Vol I `FRONTIER.md` OF6 cross-volume contradiction: Vol I overview vs foundations disagreement on canonical super-Yangian pairing (super-trace vs Berezinian); resolution pending inscription decision.

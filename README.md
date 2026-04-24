@@ -29,7 +29,7 @@ These summaries follow the concordance. The precise chapter statements retain th
 | **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g uniform-weight all g >= 1; multi-weight carries explicit cross-channel correction delta F_g^cross; clutching-uniqueness pins the scalar | Proved here |
 | **(H)** | Chiral Hochschild on the Koszul locus at generic level: concentrated in {0,1,2}, duality shift [2], sharp Hilbert series; Feigin-Frenkel companion at k = -h^v (infinite-dim center, non-exclusion) | Proved here |
 
-Programme status 2026-04-24: Four previously-irreducible frontiers CLOSED or REDUCED on the non-degenerate locus — curved-Dunn H² = 0 at g ≥ 2 (Vol II `curved_dunn_higher_genus.tex`); DS-Hochschild bridge for class M (Vol II `chiral_higher_deligne.tex`); `conj:periodic-cdg` admissible KL (Vol I `periodic_cdg_admissible.tex`); chain-level chiral Deligne-Tamarkin (reduced to associator-dependence). Two open directions remain on topologization, surfaced by the Wave-1 audit: (i) class M original-complex chain-level E_3-topological in `Ch(Vect)` (weight-completed / pro-object / J-adic ambients are unconditional); (ii) class L original-complex chain-level via explicit `η_1^{(i)}`, `η_1^{(ii)}` antighost-contact cochains making `[Q, G̃_1] = T_Sug` strict rather than cohomological. The former T5 item is now closed for principal Casimir towers by Vol II `thm:casimir-antighost-commutativity` and `prop:closed-normal-ordered-antighost-homotopies`; T5 remains an abstract axiom only for arbitrary non-Casimir higher-spin stress towers.
+Frontier boundary: the non-degenerate locus contains proved surfaces for curved-Dunn H² = 0 at g ≥ 2 (Vol II `curved_dunn_higher_genus.tex`), the DS-Hochschild bridge for class M (Vol II `chiral_higher_deligne.tex`), admissible-KL periodic CDG compatibility (Vol I `periodic_cdg_admissible.tex`), and chain-level chiral Deligne-Tamarkin modulo associator dependence. Two topologization directions remain outside the proved surface: (i) class M original-complex chain-level E_3-topological structure in `Ch(Vect)` (the weight-completed, pro-object, and J-adic ambients are unconditional); (ii) class L original-complex chain-level strictness via explicit `η_1^{(i)}`, `η_1^{(ii)}` antighost-contact cochains making `[Q, G̃_1] = T_Sug` strict rather than cohomological. Principal Casimir towers satisfy Vol II `thm:casimir-antighost-commutativity` and `prop:closed-normal-ordered-antighost-homotopies`; T5 remains an abstract axiom only for arbitrary non-Casimir higher-spin stress towers.
 
 ## The Five Objects
 
@@ -80,16 +80,16 @@ Survey paper: 122pp (standalone/survey_modular_koszul_duality_v2.tex).
 |--------|------:|
 | Pages (annals edition) | ~2,700 |
 | Pages (total with Platonic reconstitutions) | ~2,900 |
-| Tagged claims (Vol I registry) | ~3,550 |
+| Tagged claims (Vol I registry) | 3,919 (PH=1,951; PE=456; CJ=369; H=29; CD=1,111; O=3) |
 | Compute tests | 125,000+ |
 | Source tree | 106 chapter `.tex`; 16 appendices; 67+ standalone `.tex` |
 | Standalone papers | 16 papers + 2 MC5 successors (theorem + analytic), all CG-rectified |
 | Survey paper | 8,500+ lines / 122pp |
 | Koszulness programme | 8 genuinely independent bidirectional characterizations + 1 one-way ChirHoch concentration + 1 perfectness-conditional Lagrangian + 1 one-directional D-module purity + 1 uniform-weight-conditional genus refinement, on the GRT-equivariant moduli atlas `M_Kosz(A)` |
-| Master conjectures MC1-MC5 | Proved at their inscribed scopes per Wave-1 audit (MC3 on the evaluation-generated core per AP47; MC5 analytic, coderived, and canonical-ambient chain-level proved — class M on the coderived / pro-object / weight-completed / J-adic ambient — with class M raw direct-sum ambient `Ch(Vect)` genuinely false marked as the naive-ambient exception, per concordance.tex:1980) |
+| Master conjectures MC1-MC5 | Proved at their inscribed scopes: MC3 on the evaluation-generated core per AP47; MC5 analytic, coderived, and canonical-ambient chain-level proved; class M holds on the coderived / pro-object / weight-completed / J-adic ambient, while the raw direct-sum ambient `Ch(Vect)` is the naive-ambient exception recorded in concordance.tex:1980 |
 | Main proofs reviewed | Backbone theorems A/B/C/D/H, MC1-MC5, topologization, chiral QG equivalence standing at their Wave-1 scope qualifiers (fixed-curve vs modular family; on-the-nose vs weight-completed; Koszul-locus vs off-locus) rather than as unqualified "SOUND" verdicts |
 | First-principles cache | 750+ lines, cross-programme enforcement verified clean |
-| HZ-IV decorators installed | ~45 Wave-1 / Wave-2 installations across theorem labels |
+| HZ-IV decorators installed | 133 active ProvedHere coverage entries; 0 orphan decorator entries |
 | Shadow tower S_r | closed forms through r = 11 with three-tier arithmetic stratification |
 | Reconstitution waves | 14 completed 2026-04-16 (105-agent sweep); Platonic ideal form inscribed |
 
@@ -156,12 +156,15 @@ The decorator enforces token-level disjointness between the programme-internal
 derivation and the external-source verification; tautological decoration fails
 at import, not silently.
 
-**Audit state (2026-04-17, post-rewrite-loop):** Vol I audit is **PASSing**
-with zero tautological decorations and zero orphan entries. Coverage snapshot:
-166/2718 ProvedHere labels with installed IV (6.1%). 490 ProvedElsewhere +
-348 Conjectured/Conditional + 3237 remark/definition/construction labels all
-recognised as valid decoration targets by the upgraded audit. The audit
-infrastructure was extended to accept the four semantic categories
+**Audit state (2026-04-24, post-metadata-regeneration):** Vol I metadata is
+current after comment stripping: 3,919 structured tagged claims
+(PH=1,951; PE=456; CJ=369; H=29; CD=1,111; O=3). The HZ-IV audit
+passes with zero tautological decorations and zero orphan decorator entries.
+Coverage snapshot: 133/2017 raw-scanned ProvedHere labels with installed IV
+(6.6%). 479 ProvedElsewhere + 1518 Conjectured/Conditional + 4154
+remark/definition/construction labels are recognised as valid decoration
+targets by the upgraded audit. The audit infrastructure accepts the four
+semantic categories
 (theorems, conjectures, constructions, ProvedElsewhere citations) uniformly
 across the three volumes.
 
@@ -313,9 +316,10 @@ These inscriptions realise the reconstituted-platonic-ideal architecture of
 (supersedes the 2026-04-13 reconstitution).
 
 Forward direction. The two systemic debts surviving the 2026-04-17 wave
-are (a) the HZ-IV decorator coverage campaign (Vol I 0/2275, Vol II
-0/1134, Vol III 2/283 at installation; Vol I now ~45 with the wave-14
-installations) and (b) the line-by-line elite-prose rectification swarm
+are (a) the HZ-IV decorator coverage campaign (current Vol I audit:
+133/2017 raw-scanned ProvedHere labels covered, with zero orphan entries;
+Vol II/III baselines remain tracked in their own trees) and
+(b) the line-by-line elite-prose rectification swarm
 queued by `notes/elite_prose_rectification_swarm_kickstart.md`. Both are
 mechanical-but-substantial multi-session efforts. Confidence interval on
 the timeline to full IV coverage: 6-12 sessions assuming 5-10 decorators

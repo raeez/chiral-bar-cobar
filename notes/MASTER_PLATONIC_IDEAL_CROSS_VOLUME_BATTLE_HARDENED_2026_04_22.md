@@ -2,6 +2,18 @@
 
 *Raeez Lorgat, Perimeter Institute. Waves 14–26 + 2026-04-22 6d hCS cross-volume audit + R2/R3/R4 elite audits.*
 
+**2026-04-24 correction.** This 2026-04-22 synthesis is superseded on
+the universal-anomaly surface by
+`standalones/universal_anomaly_four_climax_simultaneously_2026_04_22.tex`
+and the 2026-04-24 attack-heal reports.  In particular,
+`H^{1,3}(K3\times E)=0` is not a proof that the current
+Atiyah--Connes obstruction vanishes: the corrected obstruction lives in
+$H^2(K3\times E,\Omega^1)$, the mixed K3 deformation component cancels
+by product naturality, and the remaining elliptic scalar
+$\lambda_{\mathrm{Cyc}}$ is open.  All "four-climax equivalence" claims
+below should be read as archived programme synthesis unless they have
+been re-inscribed in the standalone with an explicit conditional status.
+
 
 ## I. Atomic phenomenon
 
@@ -15,7 +27,7 @@ $\mathcal H_1$ concrete: $b_2(s^{-1}a_{-1}\otimes s^{-1}a_{-1})=s^{-1}\cdot 1_{\
 
 ## II. Four generators + backbone B
 
-**B (chiral Positselski).** On $U^{\mathrm{adm}}=\overline{\mathcal A_2}\setminus\bigcup_{n\equiv 3,5\bmod 8}H_n$: $\Omega_X(B_X(C))\xrightarrow{\sim}C$ in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$.
+**B (chiral Positselski).** On $U^{\mathrm{adm}}=\overline{\mathcal A_2}\setminus\bigcup_{n\ \mathrm{admissible}}H_n$: $\Omega_X(B_X(C))\xrightarrow{\sim}C$ in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$.
 
 **G1** $d_{\mathrm{bar}}(s^{-1}v_1\otimes\cdots\otimes s^{-1}v_n)=\sum_{i<j}\pm\mathrm{Res}_{z_i=z_j}\eta_{ij}\wedge(\cdots s^{-1}(v_iv_j)\cdots)$ on $B^{\mathrm{ord}}(A)=T^c(s^{-1}\bar A)$; $\eta_{ij}=d\log(z_i-z_j)$. **G2** Topological factorisation on $\R$; open colour. **G3** $Z^{\mathrm{der}}_{\mathrm{ch}}(A)\cap\mathrm{obs}_g=\kappa\lambda_g$. **G4** $\mathrm{at}_X\in H^1(\Omega^1_X\otimes T_X)$ vanishing on $\mathcal U^{\mathrm{adm}}$ forces bar-cobar equivalence.
 
@@ -266,6 +278,16 @@ $[\mathrm{Obs}_1]=(2\pi i)^{-3}\int_Y\Omega_Y\wedge\mathrm{ch}_4^{\mathrm{ad}}(\
 | **Costello R2** (five cycles) | Cost-M.1 compactness checked three-lens comparison; Cost-M.2 heat-kernel; Cost-M.3 RG-flow Arnold-residue; Cost-M.4 quartic coefficient cross-volume; Cost-M.5 CS descent ↔ universal trace identity | proved leading |
 | **Gelfand R2** (five cycles) | R2-1 Thm C five-archetype realisability; R2-2 $\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$ universality; R2-3 three-faces $\{5,5,5\}$ at $N=1$; R2-4 24-fold equivalence chain; R2-5 three-lens commutativity on K3$\times E$ | proved |
 | **Manin-Gaitsgory R2** (five cycles) | MG-R2-i three-lens baseline averaging; MG-R2-ii Ran-lift; MG-R2-iii chart-vs-curve; MG-R2-iv three denominators; MG-R2-v Betti + $\ell$-adic three lenses | proved |
+
+**2026-04-24 local correction for the following R4 rows.** The
+archived rows below still use the old shorthand "four-climax closure"
+and the false K3$\times E$ Kunneth-vanishing mechanism.  Current
+status: the standalone's theorem-grade core is the conditional
+Atiyah--Connes bridge
+`sp_{\Sigma,C}(\alpha_X)=o^{(0)}_3(A_C)`; the K3$\times E$ branch
+reduces to the scalar $\lambda_{\mathrm{Cyc}}$; the five-vertex
+comparison is conjectural.
+
 | **Manin-Gaitsgory R4 cross-volume** (five cycles, $\Phi_3$-canonicity non-emptiness on $K3\times E$) | **MG-M.R4.1 Intersection theorem.** $\mathcal U^{\mathrm{canonical}}_{\Phi_d}=\mathcal U^{\mathrm{adm}}_{\mathrm{at}}(X)\cap\mathcal P^{-1}(U^{\mathrm{adm}})$ (r3 definition) is non-empty and dense-open for $X=K3\times E$. Three-lens convergence: Vol I operadic Atiyah vanishing on $\mathcal M_{\mathrm{cx}}$; Vol II holographic heptagon face-closure on $\mathsf{SC}^{\mathrm{ch,top}}$; Vol III geometric two-stage $\Phi_3$ Stage-1 canonicity locus. **MG-M.R4.2 Atiyah lens (Stage-1 Costello-Li).** $\mathrm{at}_{K3\times E}=\pi_1^*\mathrm{at}_{K3}+\pi_2^*\mathrm{at}_E\in H^1(\Omega^1\otimes T)=0$: $\mathrm{at}_{K3}=0$ via $h^{0,1}(K3)=0$ + DGMS 1975 Thm 2.1 formality of compact simply-connected Kähler with $c_1=0$; $\mathrm{at}_E=0$ via $T_E=\mathcal O_E$. CGL 2016 Prop 5.2 Atiyah-ideal admissibility holds on full 21-dim $\mathcal M_{\mathrm{cx}}(K3\times E)$, codim 0. Agrees with Kontsevich-M.R4.4 universal cocycle $[m_3,B^{(2)}]_{K3\times E}=d_{\mathrm{tot}}(h)$ coboundary via $H^{1,3}(K3\times E)=0$ Künneth. **MG-M.R4.3 Humbert lens (Stage-2 Kuga-Satake).** $U^{\mathrm{adm}}=\overline{\mathcal A_2}\setminus\bigcup_{n\equiv 3,5\bmod 8}H_n$ (EZ 1985 §II Thm 3.4 polar cutoff). $\mathcal P\colon\mathcal M_{\mathrm{cx}}(K3\times E)\to\mathcal A_2$ via Morrison 1984 Thm 6.3 + Shioda-Inose 1977 Thm 6.3 + Nikulin 1980 transcendental-lattice KS, sending $(K3,E)\mapsto\mathrm{KS}(T_{K3}(-\rho))\otimes_{\mathbb Z}E$. $\mathcal P^{-1}(U^{\mathrm{adm}})$ dense open by Morrison 1984 Thm 5.2 dominance + countable-codim-1 of Humbert in $\mathcal A_2$. **MG-M.R4.4 Explicit witness $(K3^{\mathrm{gen}}_{\rho=2},E_\tau)$ transcendental-$\tau$.** Generic elliptic K3 of Picard rank 2 (NS $=\mathrm{II}_{1,1}=\langle F,\sigma+F\rangle$, no extra CM) combined with $\tau\in\mathbb H$ transcendental over $\overline{\mathbb Q}$: KS image $A_\tau$ generic Picard 1, hits no Humbert divisor. CM branches fail: $E_{\zeta_3}$ has $\mathbb Z[\zeta_3]$-RM, norm form $N(a+b\zeta_3)=a^2-ab+b^2$ represents $n=3\equiv 3\bmod 8$ ($a=b=1$) and $n=13\equiv 5\bmod 8$, landing on $H_3\cup H_{13}$; $E_i$ has $\mathbb Z[i]$-RM, norm form $a^2+b^2$ represents $n=5\equiv 5$ ($a=1,b=2$) and $n=13\equiv 5$, landing on $H_5\cup H_{13}$. Transcendental-$\tau$ is the GENERIC admissible CM-free branch, dense in $\mathcal M_{\mathrm{cx}}(K3\times E)$; carries three-route $K^\kappa=8$ convergence unconditionally (Mukai $2c_+$, Humbert monodromy, Lusztig $\ell=8$). **MG-M.R4.5 Dimension $\dim_{\mathbb C}=21$; climax triple tethered to dense open.** $\dim_{\mathbb C}\mathcal U^{\mathrm{canonical}}_{\Phi_3}(K3\times E)=\dim_{\mathbb C}\mathcal M_{\mathrm{cx}}(K3\times E)=20+1=21$ via Künneth splitting of deformation theory $H^1(T_{K3\times E})=H^1(T_{K3})\oplus H^1(T_E)$ with $\dim_{\mathbb C}H^1(T_{K3})=20$ (via Serre duality to $h^{1,1}(K3)=20$ on K3 with $\omega_{K3}=\mathcal O_{K3}$) and $\dim_{\mathbb C}H^1(T_E)=h^{1,1}(E)=1$. Atiyah contributes codim 0 (automatic on all $\mathcal M_{\mathrm{cx}}$); Humbert exclusion codim 0 (open complement of countable codim-1 union). Scope-tightening (Beilinson r5-redux-B, Cycle 5): the period map $\mathcal P\colon\mathcal M_{\mathrm{cx}}(K3\times E)\to\mathcal A_2$ is not the full Kuga-Satake of $H^2(K3)$ (which would land in $\mathcal A_{2^{20}}$) but the Shioda-Inose--Nikulin projection onto a principally-polarised factor via a rank-3 Lorentzian sublattice of the Mukai extension (Vol III `k3_chiral_bialgebra_platonic.tex:1017`; Morrison 1984 Thm 6.3; cf.\ Vol III `k3e_cy3_programme.tex:4182` for rank-5 transcendental signature $(2,3)$ variant). This factors through a discrete choice of rank-3 Lorentzian sublattice; the 21-dim-preserving preimage $\mathcal P^{-1}(U^{\mathrm{adm}})$ is dense-open in the 21-dim source precisely when this choice is made consistently across the moduli. The "countable-codim-1 of Humbert in $\mathcal A_2$" pulls back to countable codim-1 on the 21-dim source under the generic submersion hypothesis; dense-open complement has the same codim-0 dimension 21. Canonical $\mathbf H_{\Delta_5}$ construction-1 super-EK at $\hbar^2=-1/8$ now lives on this 21-dim dense-open family (not a single point). AF 2015 Thm 3.16 elliptic-pencil Stage-2 specialisation: family-of-shadows fibred over the 21-dim base; $Z^{\mathrm{AdS}_3\times K3}_{\mathrm{3dQG}}=1/\Phi_{10}$ DVV 1997 integral constant along Kuga-Satake fibres above $U^{\mathrm{adm}}$ (holomorphic-anomaly decoupling). Three-volume climax triple $(1/\Phi_{10},\mathbf H_{\Delta_5},\text{Theorem B})$ pinned to this SAME 21-dim admissible locus under all three lenses simultaneously, confirming the four-climax coincidence (Kontsevich-M.R4.6) at geometric level: Vol I $\mathcal U^{\mathrm{adm}}\subset\overline{\mathcal A_2}$ face, Vol II $\mathsf{SC}^{\mathrm{ch,top}}$-heptagon face, Vol III two-stage $\Phi_3$ face, all intersect on the 21-dim $\mathcal U^{\mathrm{canonical}}_{\Phi_3}(K3\times E)$ witnessed by generic transcendental-$\tau$ | non-empty, dense, $\dim_{\mathbb C}=21$; three-volume canonicity witnessed modulo the Shioda-Inose--Nikulin projection-choice; generic-submersion preimage-codim-preservation assumed in computing Humbert-preimage codim 1 |
 | **Nekrasov R2** | 3/5 earned (§XX) | 3/5 |
 | **BK R2** (BK-M.R2.1–5) | Functoriality lock cross-volume: colim preservation, symm-monoidal, stability+compact-gen, Kuznetsov block, CoHA Künneth three-faces reading | proved smooth CY$_{\le 3}$ |
@@ -644,7 +666,13 @@ commutes by Lunts–Orlov 2010 Adv.\ Math.\ 223 Thm 2.8 DG-enhancement uniquenes
 
 ---
 
-## Kontsevich r5-redux --- universal anchor theorem: $[m_3,B^{(2)}]_X=0$ on Koszul locus $\iff$ four climaxes (cross-volume master)
+## Kontsevich r5-redux --- archived universal-anchor synthesis
+
+**2026-04-24 local correction.** The block below is archived as a
+programme synthesis. Its theorem-grade replacement is the conditional
+Atiyah--Connes bridge in the standalone; K3$\times E$ is a scalar
+$\lambda_{\mathrm{Cyc}}$ residue problem, and the four-target
+comparison is not proved as an equivalence.
 
 The single anchor theorem of the r5-redux round. Five cycles establish the four-way synchronisation across the three-lens square, assembling the primary sources Kapranov 1999, Caldararu-Willerton 2010, Quillen 1969, Willwacher 2014, Costello-Li 2016, Bruinier 2002 into one commuting pentagon that synchronises Theorem B, Stage-1 canonicity of $\Phi^{\mathrm{FA}}_3$, $\mathbf H_{\Delta_5}$ canonicity, and $\hbar^2K=-1$.
 
@@ -668,7 +696,15 @@ Three-lens reading: Vol I ordered bar complex chain-level weight-3 Malcev cocycl
 $$\begin{array}{c}[m_3,B^{(2)}]_X=0\\ \swarrow\quad\uparrow\quad\downarrow\quad\searrow\\ \text{Thm B}\;\;\;\;\;\text{Stage-1 canonical}\;\;\;\;\;\mathbf H_{\Delta_5}\text{ canonical}\;\;\;\;\;\hbar^2K=-1\end{array}$$
 Each implication proved via a published primary source (five in the citation block). The five edges of the pentagon and the five vertices form a single commutative diagram in the derived category of factorisation algebras on $C\times\R$ (cross-volume Ran-space setting; FA-M.1). Cross-volume AP5: the pentagon is not a five-term exact sequence; it is a five-vertex commuting diagram with one shared object (the cocycle $[m_3,B^{(2)}]_X$) and four distinct vertices (the four climaxes), each implicated by and implying the anchor. The five pentagon cycles demonstrate five $\Rightarrow/\Leftarrow$ implications that together close the pentagon into a commuting diagram of equivalences.
 
-**Explicit verification on K3$\times E$ cross-volume.** $H^{1,3}(K3\times E)=0$ by Künneth (BHPV 2004 §VIII.3 K3 Hodge diamond $h^{1,0}=h^{1,2}=h^{1,3}=0$; elliptic curve $h^{0,2}=h^{0,3}=0$). Hence $[m_3,B^{(2)}]_{K3\times E}\cdot\Omega_{K3\times E}=0$ unconditionally. Combined with Humbert admissibility on the Kuga-Satake image $\mathcal P(K3\times E)\in\mathcal U^{\mathrm{adm}}_{\overline{\mathcal A_2}}$ at generic transcendental $\tau$ (Deligne 1972 \emph{Invent.}\ 15 §6 Kuga-Satake), the 21-dim MG-R4 dense open $\mathcal U^{\mathrm{adm}}_{\mathrm{at}}(K3\times E)\cap\mathcal P^{-1}(\mathcal U^{\mathrm{adm}}_{\overline{\mathcal A_2}})$ witnesses all four climaxes unconditionally. Three-volume concordance $\{5,5,5\}$ at $N=1$ is the triple reading of the universal cocycle vanishing on this locus.
+**Corrected K3$\times E$ obstruction status.** The earlier line
+"$H^{1,3}(K3\times E)=0$ by Kunneth, hence
+$[m_3,B^{(2)}]_{K3\times E}\cdot\Omega_{K3\times E}=0$" is not a valid
+proof for the current Atiyah--Connes target.  The obstruction lies in
+$H^2(K3\times E,\Omega^1)$; product naturality kills the mixed
+$20$-dimensional K3 deformation component, but a scalar elliptic line
+$\lambda_{\mathrm{Cyc}}(S,E,c)[\bar\sigma_S]\otimes\eta_E$ remains.
+Thus the 21-dimensional K3$\times E$ surface is a principal comparison
+test, not an unconditional four-target closure.
 
 **Explicit failure on $Q_5$.** $\mathrm{at}_{Q_5}\cdot\Omega_{Q_5}\ne 0$ in $H^{1,3}(Q_5)\simeq\C^{101}$ (Kapranov 1999 §4 101-dim bracket matches $h^{2,1}(Q_5)=101$ Dolbeault dimension on Fermat quintic). The universal anchor fails strictly on the quintic; all four climaxes fail (Stage-1 non-canonical, Theorem B on reference curve non-standard, $\mathbf H_{\Delta_5}$-analog absent, $\hbar^2K=-1$ no Heegner-Chern target). Partial homotopy-coherent correction via Tradler arXiv:math/0108027 strictification holds up to contractible choices.
 

@@ -28,7 +28,7 @@ cd "$SRC_DIR"
 
 MAX_PASSES=${1:-7}
 TEX="pdflatex"
-TEXFLAGS="-interaction=batchmode -file-line-error -synctex=0 -cnf-line=buf_size=1000000 -cnf-line=stack_size=20000"
+TEXFLAGS="-interaction=batchmode -file-line-error -synctex=0 -cnf-line=buf_size=1000000 -cnf-line=stack_size=30000"
 LOG_DIR="$SRC_DIR/.build_logs"
 
 mkdir -p "$LOG_DIR"
