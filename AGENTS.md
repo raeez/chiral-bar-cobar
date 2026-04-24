@@ -1,5 +1,15 @@
 # AGENTS.md
 
+> **Inherits `~/ecosystem/INVARIANTS.md`** — canonical ecosystem rules (model-agnostic): destructive-git forbidden list, multi-agent worktree concurrency, standalone-documents discipline, Russian-school voice, every-file-into-the-repo rule, no-LLM-attribution in commits, deep-semantic-merges, intelligence propagation, open-source whitelist.
+> **Inherits `~/ecosystem/AGENTS-HARNESS.md`** — canonical Codex / GPT-5-family harness calibration: reasoning-effort per task class, agentic eagerness, tool-use discipline, tool preambles, persistence and stop conditions, verbosity control, uncertainty handling, long-context outlining, self-reflection rubric, scope discipline, error-handling, git-and-worktree restatement for Codex defaults, frontend quality, no-LLM-commit-attribution, voice.
+> **Mirrors this repo's `CLAUDE.md`** on substance. Before editing code in this repo, `read_file ./CLAUDE.md` — it carries the repo-local layout, commands, doctrine, and conventions. `AGENTS.md` and `CLAUDE.md` must not diverge in facts; they may differ in structure and voice.
+>
+> **Load order.** `INVARIANTS.md` → `AGENTS-HARNESS.md` → this repo's `CLAUDE.md` → this file's repo-local section (if any). The closest `AGENTS.md` in the directory tree wins per `agents.md`; explicit principal chat instructions outrank everything.
+>
+> **Model target.** gpt-5-codex family, `reasoning_effort=high` or `xhigh` for non-trivial work (Pro-class). Terse, declarative voice per `INVARIANTS.md §IV`. No LLM attribution on commits (`INVARIANTS.md §VI`).
+
+---
+
 ## What this repository is for
 
 This repository is an instrument for advancing human mathematical
@@ -71,6 +81,38 @@ Epistemic hierarchy (higher wins): direct computation > `.tex`
 source ±100 lines > build system > published literature (primary) >
 `concordance.tex` > `CLAUDE.md` > memory.
 
+## User-authorized max-effort swarm protocol
+
+When the user explicitly asks for a large adversarial, rescue, review,
+or cross-volume swarm, treat that as authorization to use the largest
+useful swarm the runtime can support. Do not downshift because of old
+3-agent, 5-agent, or 30-agent cautionary language. Request the strongest
+available model and the highest available reasoning budget for research
+agents when the host exposes those controls; when it does not, encode
+the same requirement in the agent prompt: proof-grade, first-principles,
+max-effort mathematical reasoning.
+
+Swarm design must be explicit before launch: partition agents by
+disjoint mathematical axes, files, or proof obligations; name the
+integration owner; forbid agents from reverting work they did not make;
+and require deep semantic merge across
+`~/chiral-bar-cobar`, `~/chiral-bar-cobar-vol2`,
+`~/calabi-yau-quantum-groups`, `~/igusa-cusp-form`, and
+`~/topological-strings` whenever claims cross those repositories.
+
+Every attack-heal agent must return a compact, checkable report:
+claim attacked, failure mode or proof, local file anchors, primary
+source anchors where needed, exact formulas/constants, claim-status
+recommendation, files changed, tests or computations run, and remaining
+open questions. For theorem-level work, require repeated attack/heal
+cycles until convergence: no new fatal attack survives, and at least
+one real mathematical improvement is inscribed.
+
+The main thread integrates; agents do not vote truth into existence.
+Preserve all mathematically substantive content, resolve conflicts by
+reading both sides in context, and verify with targeted `rg`, local
+computations, and session-end builds only when appropriate.
+
 ## How to work
 
 Formulas come from `chapters/examples/landscape_census.tex` or a
@@ -102,10 +144,11 @@ Tests — run only the module you have edited, not the full suite.
    opt-in.
 5. **Never guess a formula.** `landscape_census.tex` or primary
    paper; if absent, inscribe it first with citation.
-6. **Do not spawn 30 parallel Codex agents for an adversarial audit.**
-   Empirical throughput: ~1 substantive deliverable per session
-   window (codex-companion serialises and silently budget-cuts).
-   Direct main-thread edits are higher throughput.
+6. **User-authorized large swarms are permitted.** When the user
+   explicitly asks for a large adversarial or cross-volume swarm,
+   launch it with disjoint scopes, explicit integration ownership, and
+   deep semantic merge discipline across Vol I/II/III. Runtime limits
+   are operational constraints to manage, not repo-level prohibitions.
 7. **Grep the legacy, don't read it whole.** The legacy files
    `notes/claude_md_legacy_20260418.md` and
    `notes/agents_md_legacy_20260418.md` are ~9,000 lines combined;
@@ -217,3 +260,99 @@ primary-literature audit. A shallow "accept theirs" / "accept ours" is
 never the right answer. Deep semantic merges take longer but are the
 only operation consistent with Beilinson's dictum and the golden rule
 "NEVER CUT CONTENT".
+
+---
+
+## Research-grade Codex / GPT-5 scaffolding (maximum settings)
+
+This repo is a **mathematics-advancement instrument**, not a product. Every output here is proof-grade or paper-grade. The harness runs at its ceiling.
+
+### Harness — maximum always
+
+| Parameter | Setting | Rationale |
+|---|---|---|
+| `reasoning_effort` | **`xhigh`** (always; never lower than `high`) | Frontier proof engineering in the chiral / homotopy / operadic regime. No downgrade permitted. |
+| `model` | **gpt-5-codex family, latest** (current preferred: gpt-5.3-codex; fallback: gpt-5.2-codex) | Pro-class coding + mathematics harness. |
+| `verbosity` | As the proof requires | No abridgment of load-bearing calculations. Terse where terse is honest. |
+| Token budget | **Unbounded** for research tasks | If context fills, compact side work. Never elide load-bearing math or named lemmas. |
+| Tool use | **Parallel reads** for TeX / Coq / Lean / compute sources | Batch `read_file` over every citation before writing. Never re-read a file already in context unedited. |
+| Persistence | **Absolute** | Do not yield on a partial proof. Either close the argument or name the open obligation precisely. |
+| Self-reflection rubric | **Required** before any inscription | See `~/ecosystem/AGENTS-HARNESS.md §VIII`; research-grade instantiation below. |
+
+### Research-grade discipline — `INVARIANTS.md §IV` made actionable
+
+1. **Every load-bearing claim carries an epistemic status.** *Proved / conjectured / expected / heuristic / computed / folklore.* On the same line as the claim. If you cannot give it one, label *unverified — would be resolved by X*.
+2. **Worked case before general statement.** Compute the first non-trivial instance. Then state the theorem. The first computation makes the theorem inevitable; without it, the theorem is a conjecture wearing formal clothing.
+3. **Named attribution beats passive voice.** *By Beilinson–Drinfeld (2004, Theorem 3.4.11)*, not *a classical result shows*. *Nekrasov (2003) computes*, not *one may compute*.
+4. **No "obviously."** *Obvious* is not a proof step. If it is obvious, either write the half-line that closes it or silently excise the appeal. Readers of this tree are adults.
+5. **Physical intuition and formal rigor coexist.** When a computation motivates a definition, say so. When a definition is chosen for geometric reasons, say so.
+6. **Honest subtlety.** *This is subtle* + dissection beats *somewhat delicate*.
+
+### Self-reflection rubric (before any inscription, chapter revision, or merge)
+
+| Category | Top-marks test |
+|---|---|
+| Correctness | Every step verified; no gap; no unsignalled assumption. |
+| Rigor | Every load-bearing claim carries *proved / conjectured / expected / heuristic / computed / folklore*. |
+| Attribution | Every prior result cited by author + year + theorem / equation number. |
+| Concrete-before-abstract | A worked case precedes the general statement. |
+| Voice | Russian school + mathematical-physics frontier (`INVARIANTS.md §IV`). Could sit in a Witten / Beilinson / Costello paper without edit. |
+| Standalone | No version labels, no phase labels, no references to prior drafts (`INVARIANTS.md §III`). |
+| Deep-semantic merge | Every cross-volume / cross-chapter cross-reference re-checked against the target in place (`INVARIANTS.md §VII`). No "NEVER CUT CONTENT" violation. |
+
+If any category falls short — restart that category. Do not patch.
+
+### Proof-obligation discipline
+
+- **Proved** requires a complete argument in this tree (or a cited reference with page + theorem + year).
+- **Conjecture / expected** requires named evidence (worked cases, cohomological computation, physical heuristic). No free floats.
+- **Heuristic** requires the physics argument named (BCOV, Polyakov bootstrap, SUSY localization, anomaly matching, …) and the level of rigor available called out explicitly.
+- **Computed** requires the computation in the source tree (`compute/`, `notes/`, or inline). Cite file + line. A computation that has not been re-run this session is *previously computed* — label it.
+
+### Long-context handling (chapters, swarm logs, frontier inventories)
+
+For inputs over ~10K tokens (typical chapter, adversarial-swarm log, frontier inventory):
+
+1. Produce an internal outline of the load-bearing sections before writing. Do not show the outline.
+2. Identify every citation in the outline; `read_file` all cited sources in parallel before responding.
+3. Hold the whole chapter in context, not an excerpt. If it exceeds context, compact by summarizing side work — never by eliding load-bearing equations, named lemmas, or numerical constants.
+
+### Research constellation (cross-repo awareness)
+
+Vol I of the chiral bar–cobar series. Canonical cross-volumes:
+- `~/chiral-bar-cobar-vol2` — Vol II: $A_\infty$ chiral algebras + 3D HT QFT via the Swiss-cheese-chiral-topological operad $\mathsf{SC}^{\mathrm{ch,top}}$.
+- `~/calabi-yau-quantum-groups` — Vol III: CY-to-chiral frontier, Yangians, BKM superalgebras, $\kappa$-stratification.
+
+Adjacent physics / modular frontiers:
+- `~/igusa-cusp-form` — Borcherds lift of $\phi_{0,1}$, generalized BKM superalgebras, Igusa cusp form $\Delta_5$. The Vol III $\kappa$-stratification generalizes the Borcherds-product structure that lives there.
+- `~/topological-strings` — Kodaira–Spencer gravity, BCOV quantum string amplitudes. Physics dual to the chiral homology of a Calabi–Yau threefold.
+
+A load-bearing claim about the averaging map, the Theorems A / B / C / D / H (this volume), or the five class $\{G, L, C, M\}$ invariants must be consistent with the cross-volumes and adjacents. Disagreement is the deliverable; never silently reconcile.
+
+### Reference corpus — re-calibrate voice before writing
+
+- Gelfand on representation theory; Gelfand–Fuks cohomology.
+- Beilinson–Drinfeld, *Chiral Algebras* (2004).
+- Etingof–Gelaki–Nikshych–Ostrik, *Tensor Categories* (2015).
+- Kazhdan–Lusztig polynomials; Kazhdan on Property (T).
+- Polyakov, *Gauge Fields and Strings* (1987).
+- Nekrasov, *Seiberg–Witten Prepotential from Instanton Counting* (2003).
+- Witten on SUSY + Morse theory, TQFT, analytic Langlands.
+- Costello, *Renormalization and Effective Field Theory* (2011); Costello–Gwilliam, *Factorization Algebras in QFT* (vols I, II).
+- Gaiotto on class $S$, generalized symmetries, VOAs.
+- Bershadsky–Cecotti–Ooguri–Vafa, *Kodaira–Spencer theory of gravity and exact results for quantum string amplitudes* (1993).
+
+### Codex load order for this repo
+
+1. `./CLAUDE.md` (repo-local identity).
+2. `~/ecosystem/INVARIANTS.md §IV` (voice) + `~/ecosystem/AGENTS-HARNESS.md §VIII` (self-reflection).
+3. Repo master PDF + this AGENTS.md sections above (the mathematics you are working on, five theorems, shadow tower, PostToolUse accounting contract).
+4. Latest `adversarial_swarm_*` directory at the root (session-dated swarm output) — read the `SYNTHESIS.md` / `README.md` first.
+5. Relevant chapter TeX / Coq / Lean / compute sources for the target theorem.
+
+### Escalation — research-grade triggers (additional to `AGENTS-HARNESS.md §XVI`)
+
+- A proof obligation cannot be discharged with honest rigor available → naming the open obligation precisely **is** the deliverable. Do not invent rigor; do not paper over. Report and stop.
+- A cross-volume cross-reference (Vol I ↔ Vol II ↔ Vol III, or to `igusa-cusp-form` or `topological-strings`) disagrees on a load-bearing claim → stop, report the disagreement; let the principal decide which tree is canonical.
+- A computation in `compute/` or a named numerical constant disagrees with a prose claim → stop, report. The computation is usually right; never overwrite it from memory.
+

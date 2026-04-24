@@ -1,5 +1,9 @@
 # CLAUDE.md
 
+> **Inherits `~/ecosystem/INVARIANTS.md`.** That file holds the canonical ecosystem rules: destructive-git forbidden-command list, multi-agent worktree concurrency, standalone-documents discipline, Russian-school voice, every-file-into-the-repo rule, commits-carry-no-LLM-attribution, deep-semantic-merges, intelligence propagation. Read it first. Repo-local rules follow.
+
+---
+
 ## What this repository is for
 
 This repository is an instrument for advancing human mathematical
@@ -464,11 +468,11 @@ the scope in the inscription and move on — do not argue with the hook.
 
 ## What not to do
 
-1. Do not spawn 30 parallel Codex agents for an adversarial audit.
-   The codex-companion serializes and silently budget-cuts;
-   empirical throughput is ~1 substantive deliverable per session
-   window. Direct edits in the main thread are higher throughput for
-   virtually any bookkeeping-style target.
+1. Do not treat old throughput cautions as a prohibition on swarms.
+   When the user explicitly asks for a large adversarial or
+   cross-volume swarm, it is allowed. Partition work by disjoint files
+   or mathematical axes, require short verifiable reports, and merge by
+   deep semantic review across Vol I/II/III.
 2. Do not propagate status-label wording across 10 files when
    mathematics is waiting.
 3. Do not invent formulas from memory. Consult
