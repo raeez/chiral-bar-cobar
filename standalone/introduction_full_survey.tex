@@ -1,13 +1,7 @@
 \documentclass[11pt]{report}
+\usepackage[localtheorems]{raeez-math-template}
 
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathrsfs}
-\usepackage[shortlabels]{enumitem}
-\usepackage{booktabs}
 \usepackage{array}
-\usepackage{microtype}
-\usepackage[dvipsnames]{xcolor}
-\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -1895,7 +1889,7 @@ semisimple shadow CohFTs; obstructed for non-semisimple by
 Proposition~\ref{prop:non-semisimple-pixton-obstruction});
 (ii)~a complete resolution of the BV/BRST identification for
 free fields
-(Theorem~\ref{thm:heisenberg-bv-bar-all-genera});
+(Theorem~\ref{thm:heisenberg-bv-bar-all-genera-vol1});
 (iii)~the multi-weight genus tower through genus~$4$ with
 explicit closed forms and a growth theorem
 (Proposition~\ref{prop:cross-channel-growth});
@@ -2695,10 +2689,10 @@ The identity $D^2 = 0$ is the
 codimension-$2$ boundary cancellation $\partial^2 = 0$
 on~$\overline{\cM}_{g,n}$, transported through
 the $\Hom$ functor
-(Lemma~\ref{lem:stable-graph-d-squared};
-at the ambient level,
-Theorem~\ref{thm:ambient-d-squared-zero}
-via~\cite[Theorem~3.3.1(1)]{Mok25}).
+(Lemma~\ref{lem:stable-graph-d-squared}).  At the ambient relative
+log-FM level, Theorem~\ref{thm:ambient-d-squared-zero} is conditional
+on Mok's relative geometry and the signed residue-pushforward
+construction.
 
 \subsection{The universal Maurer--Cartan element}
 \label{subsec:feynman-transform-motivation}
@@ -4360,9 +4354,25 @@ The identification theorem (Corollary~\ref{cor:theta-twisting-morphism}):\ $\The
 \subsection{Pillar C: logarithmic Fulton--MacPherson (Mok25)}
 \label{subsec:pillar-c}
 
-The global collision geometry is the logarithmic Fulton--MacPherson compactification $\mathrm{FM}_n(X | D)$ on a simple normal crossing pair $(X, D)$ in the sense of Mok~\cite{Mok25}. The classical FM compactification is the special case $D = \emptyset$.
+The global collision geometry is the logarithmic Fulton--MacPherson
+compactification $\mathrm{FM}_n(X | D)$ on a simple normal crossing
+pair $(X, D)$ in the sense of Mok~\cite{Mok25}. The classical FM
+compactification is the special case $D = \emptyset$.
 
-The tropicalization theorem (Theorem~\ref{thm:planted-forest-tropicalization}): $\Gmod_{\mathrm{pf}} = \operatorname{Trop}(\mathrm{FM}_n(\mathbb{C} | D))$. Planted forests are dual graphs of tropical curves; grafting is degeneration. The semistable degeneration formula yields the clutching laws for the quartic resonance class (Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
+Mok's geometric theorem indexes boundary strata by planted forests and
+gives their codimensions.  The tropicalization statement
+(Theorem~\ref{thm:planted-forest-tropicalization}) is therefore
+geometric at the level of strata:
+\[
+\operatorname{Trop}(\mathrm{FM}_n(X | D))
+=\mathsf{For}_{\mathrm{plant}}(n).
+\]
+The identification with the dg planted-forest coefficient algebra is
+conditional on determinant-line signs and the signed
+edge-contraction differential.  The semistable degeneration formula
+supplies the geometric input for the clutching laws; the
+chain-level residue-pushforward transport is the conditional
+manuscript package.
 
 \subsection{Eleven identification theorems}
 \label{subsec:eleven-identifications}
@@ -4372,15 +4382,19 @@ The three pillars yield eleven identification theorems, nine proved and two stru
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item $\gAmod = \operatorname{hom}_\alpha(\mathrm{Com}^{!}_{\mathrm{ch}},\, \mathcal{P}^{\mathrm{ch}})$: the convolution algebra is the twisting hom (Theorem~\ref{thm:convolution-master-identification}).
 \item $\Theta_\cA \in \operatorname{MC}(\operatorname{hom}_\alpha) \cong \operatorname{Tw}_\alpha$: the universal MC element is a twisting morphism (Corollary~\ref{cor:theta-twisting-morphism}).
-\item $\Gmod_{\mathrm{pf}} = \operatorname{Trop}(\mathrm{FM}_n(\mathbb{C} | D))$: planted forests are tropical curves (Theorem~\ref{thm:planted-forest-tropicalization}).
+\item $\operatorname{Trop}(\mathrm{FM}_n(X | D))
+ = \mathsf{For}_{\mathrm{plant}}(n)$ at the level of Mok boundary
+ strata and codimensions; the dg coefficient algebra
+ $\Gmod_{\mathrm{pf}}$ is the signed chain model, conditional on
+ determinant-line orientations (Theorem~\ref{thm:planted-forest-tropicalization}).
 \item $B(\cA)$ is a $\mathrm{Ch}_\infty$-algebra (Theorem~\ref{thm:cech-hca}).
 \item $\barB_\kappa \dashv \Omega_\kappa$ is a Quillen equivalence (Theorem~\ref{thm:quillen-equivalence-chiral}).
 \item $\cA^{\mathrm{sh}}$ is a homotopy invariant (Theorem~\ref{thm:shadow-homotopy-invariance}).
 \item The one-slot obstruction constrains MC3: the categorical lift must proceed one slot at a time (RNW19, Theorem~6.6).
 \item $F_n = o_n$: the secondary Borcherds operations of~\cite{MS24} at degree $n \geq 3$ coincide with the shadow obstruction tower obstruction classes (Proposition~\ref{prop:borcherds-shadow-identification}).
 \item The quartic clutching law has a log-geometric derivation via Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25} (Construction~\ref{constr:degree4-degeneration}).
-\item The log clutching conjecture is proved by Mok~\cite[Corollary~5.3.4]{Mok25}: Theorem~\ref{thm:log-clutching-degeneration}.
-\item The ambient $D^2 = 0$ (Theorem~\ref{thm:ambient-d-squared-zero}) is proved via the log-FM normal-crossings result~\cite[Theorem~3.3.1(1)]{Mok25}.
+\item The log clutching package uses Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25} as geometric input; the chain-level residue-pushforward transport is conditional.
+\item The ambient $D^2 = 0$ (Theorem~\ref{thm:ambient-d-squared-zero}) is conditional on Mok's relative log-FM geometry and the signed residue-pushforward construction.
 \end{enumerate}
 
 
@@ -4388,13 +4402,16 @@ The three pillars yield eleven identification theorems, nine proved and two stru
 \label{subsec:chain-level-synthesis-intro}
 \index{chain-level synthesis|textbf}
 
-The three pillars produce a single chain-level object.
+The three pillars produce a single chain-level object on the fixed
+smooth-curve core and a conditional relative logarithmic enhancement.
 For a cover~$\mathfrak{U}$ of~$X$, set
 $A^{\mathrm{ch}}_\infty := \check{C}^\bullet(\mathfrak{U};\cA)$
 (the $\mathrm{Ch}_\infty$-input) and
 $\cC^{\log\mathrm{FM}}_{\mathrm{mod}}(n) :=
 C_\bullet(\operatorname{FM}_n(X|D))$
-(the cooperadic coefficient system).
+(the geometric coefficient system).  It becomes a cooperadic chain
+system after choosing the signed residue-pushforward, orientation-line,
+and homotopy-coherent cocomposition package.
 The logarithmic FM convolution algebra
 \begin{equation}\label{eq:logfm-convolution-intro}
 \gAmod
@@ -4421,28 +4438,29 @@ codimension-one separating divisors,
 and $d_{\mathrm{loop}}$ is pushforward along
 non-separating divisors
 (Construction~\ref{const:vol1-boundary-operators-residue}).
-The identity $D^2=0$ is the cancellation of codimension-two faces
-in Mok's normal-crossings compactification.
+The fixed smooth-curve part of $D^2=0$ is the ordinary
+boundary-of-boundary identity.  The ambient relative log-FM part is
+conditional on transporting Mok's codimension-two faces through signed
+Gysin residues and proper pushforwards.
 
 The \emph{graphwise cocomposition}
 (Construction~\ref{const:vol1-graphwise-log-fm-cocomposition})
 \[
 \Delta^{\log}_\Gamma
 \;:=\;
-(\nu_\Gamma)_* \circ
-\operatorname{Res}_{D^{\log}_\Gamma}
+(\nu_\Gamma)_* \circ i_\Gamma^!
 \]
 decomposes the cooperadic structure over rigid stable
 graphs: here $D^{\log}_\Gamma$ is the log-FM boundary
 divisor indexed by the graph~$\Gamma$ (the stratum
 where points collide according to the combinatorial
-type of~$\Gamma$), $\operatorname{Res}$ denotes
-the residue along this divisor, and
+type of~$\Gamma$), $i_\Gamma^!$ is the conditional Gysin residue
+along this divisor, and
 $\nu_\Gamma \colon D^{\log}_\Gamma \to
 \prod_{v \in V(\Gamma)}
 \overline{C}_{\mathrm{val}(v)}(X)$ is the
 normalisation map that separates the colliding
-clusters. This yields Taylor coefficients
+clusters. Once the signed chain package is fixed, this yields Taylor coefficients
 $\ell_k^{(g)} = \sum_\Gamma
 |\operatorname{Aut}(\Gamma)|^{-1}\,\ell_\Gamma$ of the
 modular $L_\infty$-structure.
@@ -4476,16 +4494,24 @@ This is the universal modular twisting morphism:
 $\operatorname{MC}_\bullet(\gAmod) \simeq
 \operatorname{Tw}_{\alpha^{\mathrm{mod}}}$
 (Corollary~\ref{cor:vol1-theta-log-fm-twisting-data}).
-Each coefficient of~$\Theta_\cA$ acquires a
-\emph{tridegree} $(g,n,d)$
+Each coefficient of~$\Theta_\cA$ acquires the refined Mok degree
+\[
+\mu=(g,r;\,b,s,\ell,c,p)
+\]
 (Definition~\ref{def:vol1-rigid-planted-forest-depth-filtration}):
-$g$ is the loop genus (from vertex genera and graph
-loops), $n$ is the degree (number of external legs), and
-$d$ is the \emph{log boundary depth} (the number of
-nested log-FM strata traversed by the graph, counting
-how many times the configuration passes through
-codimension-$2$ or higher boundary faces of Mok's
-compactification).
+$g$ is loop genus, $r$ is external arity, $b$ counts
+bar/Hamiltonian contractions, $s$ separating stable nodes,
+$\ell$ non-separating stable nodes, $c$ relative Mok crossings, and
+$p$ pure planted-forest depth.  The full log codimension is
+$s+\ell+c+p$.  The coarse tridegree $(g,r,d)$ is a projection; the
+computational projection used here is $d=c+p$.
+With the signed residue-pushforward package fixed, this filtration is
+bar--cobar compatible:
+\[
+\operatorname{gr}_F\Omega\bar{B}^{\mathrm{mod},\log}(\cA)
+\;\cong\;
+\Omega\bigl(\operatorname{gr}_F\bar{B}^{\mathrm{mod},\log}(\cA)\bigr).
+\]
 
 The weight filtration stratifies the MC equation by
 internal-edge count. At weight~$1$, the MC element

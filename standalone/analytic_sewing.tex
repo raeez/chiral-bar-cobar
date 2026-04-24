@@ -1,19 +1,10 @@
 \documentclass[11pt,reqno]{amsart}
+\usepackage[localtheorems]{raeez-math-template}
 
 % ================================================================
 % Packages
 % ================================================================
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathrsfs}
-\usepackage{enumerate}
-\usepackage[shortlabels]{enumitem}
-\usepackage{booktabs}
 \usepackage{array}
-\usepackage{microtype}
-\usepackage[dvipsnames]{xcolor}
-\usepackage[colorlinks=true,linkcolor=blue!60!black,
- citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
-\usepackage{tikz-cd}
 
 % ================================================================
 % Theorem environments
@@ -57,6 +48,8 @@
 \newcommand{\Sym}{\mathrm{Sym}}
 \newcommand{\HS}{\mathrm{HS}}
 \newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\BRST}{\mathrm{BRST}}
+\newcommand{\av}{\mathrm{av}}
 \newcommand{\Res}{\mathrm{Res}}
 \newcommand{\Tr}{\mathrm{Tr}}
 \newcommand{\Hom}{\mathrm{Hom}}
@@ -203,7 +196,7 @@ $H_q := \widehat{\bigoplus}_n q^n H_n$.
 
 \paragraph{The Heisenberg Fredholm determinant.}
 For the Heisenberg algebra~$\cH_k$
-(Theorem~\ref{thm:heisenberg-sewing}): the sewing envelope
+(Theorem~\ref{thm:heisenberg-sewing-vol1}): the sewing envelope
 is~$\Sym A^2(D)$; the pair-of-pants amplitude is the second
 quantisation~$\GG(R)$ of a one-particle Bergman restriction;
 every genus-$g$ partition function is the Fredholm determinant
@@ -307,7 +300,7 @@ The coderived category for curved dg-modules was introduced
 by Positselski~\cite{Positselski11}; its application to
 curved bar complexes in the chiral setting appears
 in~\cite{LorgatVolI}.  The BV/bar identification in the
-coderived category (Theorem~\ref{thm:bv-bar-coderived})
+coderived category (Theorem~\ref{thm:bv-bar-coderived-vol1})
 extends the genus-0 chain-level result of Costello and
 Gwilliam~\cite{CG17} to all genera.
 
@@ -1080,7 +1073,7 @@ inner product (up to the level factor~$k$).
 \label{subsec:heisenberg-sewing-theorem}
 
 \begin{theorem}[Heisenberg sewing]
-\label{thm:heisenberg-sewing}
+\label{thm:heisenberg-sewing-vol1}
 Let $\cH_k$ be the Heisenberg vertex algebra at level~$k$ and
 let~$\Theta$ be the mode--Bergman map.
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -1302,7 +1295,10 @@ products of sewing eigenvalues.
 
 \begin{proof}
 The Fredholm determinant of a trace-class operator satisfies
-$\log\det(1 - K) = -\sum_{m \geq 1} \frac{1}{m}\Tr(K^m)$,
+\[
+\log\det(1 - K)
+  = -\sum_{m \geq 1} \frac{1}{m}\Tr(K^m),
+\]
 convergent whenever $\|K\|_1 < 1$.  The trace-class property
 of~$K_g$ (Proposition~\ref{prop:sewing-eigenvalues}) ensures
 convergence; raising to the $k$-th power accounts for the level
@@ -2305,7 +2301,7 @@ $\beta\gamma$ & conjectural & conjectural & conditional \\
 \end{center}
 
 Layer~3 is proved for all standard families
-(Theorem~\ref{thm:bv-bar-coderived}); Layers~1 and~2 are
+(Theorem~\ref{thm:bv-bar-coderived-vol1}); Layers~1 and~2 are
 proved only for the abelian families (Heisenberg and lattice).
 The resolution of Layers~1 and~2 for non-abelian families is
 the primary open problem of the analytic sewing programme.
@@ -2423,13 +2419,11 @@ information that the ordinary derived category discards.
 
 \begin{remark}[Positselski's theory]
 \label{rem:positselski}
-The coderived category was introduced by
-Positselski~\cite{Positselski11} in the context of curved
-dg-algebras and matrix factorisations.  The totalisation of a
-short exact sequence of curved complexes need not be acyclic
-(because $d^2 \neq 0$), but it is always coacyclic:
-coacyclicity is the correct generalisation of acyclicity to the
-curved setting.
+Positselski~\cite{Positselski11} introduced the coderived category for
+curved dg-algebras and matrix factorisations.  The totalisation of a
+short exact sequence of curved complexes need not be acyclic, since
+$d^2 \neq 0$, but it is always coacyclic.  Coacyclicity is the correct
+curved replacement for ordinary acyclicity.
 \end{remark}
 
 \subsection{The curvature bicomplex}\label{subsec:curvature-bicomplex}
@@ -2503,7 +2497,7 @@ intervenes: the BV propagator acquires a harmonic component
 invisible to the algebraic bar differential.
 
 \begin{theorem}[BV${}={}$bar in the coderived category]
-\label{thm:bv-bar-coderived}
+\label{thm:bv-bar-coderived-vol1}
 Let~$\cA$ be a chirally Koszul algebra.  For each genus
 $g \geq 1$, let
 \[
@@ -2748,7 +2742,7 @@ For $\Vir_c$ with $\kappa = c/2$:
  = Q^{\mathrm{contact}} \cdot (c/2)/\operatorname{Im}(\tau)$.
  For $c \neq 0$ (non-trivial Virasoro), this is nonzero; the
  chain-level BV/bar comparison fails.  The cone is coacyclic
- by Theorem~\ref{thm:bv-bar-coderived}(iv), so the coderived
+ by Theorem~\ref{thm:bv-bar-coderived-vol1}(iv), so the coderived
  comparison holds.
 \end{enumerate}
 The Virasoro at genus~$1$ is the simplest class-M example: the
@@ -2993,7 +2987,7 @@ estimate that implies trace-class closed amplitudes at all
 genera.  For the Heisenberg, the sewing programme is
 completely explicit: Bergman space, second quantisation,
 Fredholm determinant
-(Theorems~\ref{thm:heisenberg-sewing}
+(Theorems~\ref{thm:heisenberg-sewing-vol1}
 and~\ref{thm:heisenberg-one-particle}).  For lattice vertex
 algebras, the programme extends by combining the Heisenberg
 Fredholm determinant with convergent theta functions
@@ -3007,7 +3001,7 @@ analytic theory: the sewing envelope for interacting algebras
 the ind-Hilbert factorisation (conjectural), and the coderived
 shadow at $g \geq 1$ (the BV/bar comparison in~$\Dco$ is
 proved for all four shadow classes,
-Theorem~\ref{thm:bv-bar-coderived}).
+Theorem~\ref{thm:bv-bar-coderived-vol1}).
 
 The coderived category is the correct receptacle for the curved
 bar complex: curvature is data, not obstruction; the harmonic
@@ -3279,7 +3273,7 @@ the correct scope rather than a gap.
 \begin{theorem}[Harmonic projector identification: $c_r = S_r$]
 \label{thm:wave14-harmonic-cr-sr}
 The harmonic discrepancy coefficients
-$c_r(\cA)$ of Theorem~\ref{thm:bv-bar-coderived}(iv) coincide
+$c_r(\cA)$ of Theorem~\ref{thm:bv-bar-coderived-vol1}(iv) coincide
 with the shadow invariants $S_r(\cA) \in \Bbbk$ extracted from
 the universal Maurer--Cartan element by degree-$r$ projection:
 \begin{equation}\label{eq:wave14-cr-sr}
@@ -3375,8 +3369,10 @@ homology (H07 in the programme status table) is genuinely
 disjoint from the Positselski coacyclic route: it uses
 Ginzburg--Kapranov for $\mathrm{Com}^\perp\mathrm{Lie}$ closed
 colour plus $\mathrm{Ass}$ self-duality open plus Deligne-purity
-degeneration via Mok25 log-FM smoothness. This provides an
-independent verification for the MC5 analytic theorem.
+degeneration using Mok25 relative log-FM geometry as conditional
+geometric input. This provides an independent verification route for
+the MC5 analytic theorem once the residue-pushforward compatibilities
+are supplied.
 \end{remark}
 
 

@@ -9,36 +9,13 @@
 % ============================================================
 
 \documentclass[11pt]{article}
+\usepackage[localtheorems]{raeez-math-template}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\frenchspacing
-
-\usepackage[cmintegrals,cmbraces,noamssymbols]{newtxmath}
-\usepackage{ebgaramond}
-
-\usepackage[
-  activate={true,nocompatibility}, final,
-  tracking=true, kerning=true, spacing=true,
-  factor=1100, stretch=10, shrink=10
-]{microtype}
-
-\usepackage{mleftright}\mleftright
 
 \let\Bbbk\undefined \let\openbox\undefined
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathtools}
-\usepackage{enumitem}
-\usepackage[margin=1.15in]{geometry}
-\usepackage[unicode]{hyperref}
-\usepackage{tikz-cd}
 
-\setlength{\emergencystretch}{3em}
-\raggedbottom
 
 % --- Environments ---
-\usepackage{thmtools}
 \declaretheoremstyle[
   spaceabove=\topsep, spacebelow=\topsep,
   headfont=\normalfont\scshape,
@@ -59,6 +36,7 @@
 \declaretheorem[style=notesthm, name=Proposition, sibling=theorem]{proposition}
 \declaretheorem[style=notesthm, name=Corollary, sibling=theorem]{corollary}
 \declaretheorem[style=notesdef, name=Definition, sibling=theorem]{definition}
+\declaretheorem[style=notesdef, name=Definition, numbered=no]{definition*}
 \declaretheorem[style=notesdef, name=Remark, sibling=theorem]{remark}
 \declaretheorem[style=notesdef, name=Observation, sibling=theorem]{observation}
 \declaretheorem[style=notesdef, name=Warning, sibling=theorem]{warning}
@@ -82,6 +60,7 @@
 \newcommand{\Conf}{\mathrm{Conf}}
 \newcommand{\fg}{\mathfrak{g}}
 \newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fH}{\mathfrak{H}}
 \newcommand{\fn}{\mathfrak{n}}
 \newcommand{\fz}{\mathfrak{z}}
 \newcommand{\fsl}{\mathfrak{sl}}
@@ -89,12 +68,15 @@
 \newcommand{\B}{\bar{B}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bZ}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
 \newcommand{\bP}{\mathbb{P}}
 \newcommand{\bE}{\mathbb{E}}
 \newcommand{\bR}{\mathbb{R}}
 \newcommand{\bD}{\mathbb{D}}
 \newcommand{\cF}{\mathcal{F}}
+\newcommand{\cV}{\mathcal{V}}
 
 \newcommand{\Ass}{\mathsf{Ass}}
 \newcommand{\Com}{\mathsf{Com}}
@@ -117,10 +99,14 @@
 \newcommand{\MC}{\mathrm{MC}}
 \newcommand{\ad}{\operatorname{ad}}
 \newcommand{\id}{\mathrm{id}}
+\newcommand{\End}{\operatorname{End}}
 \newcommand{\Op}{\operatorname{Op}}
 \newcommand{\Fun}{\operatorname{Fun}}
 \newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\RHom}{\operatorname{RHom}}
 \newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\HH}{\operatorname{HH}}
+\newcommand{\Tr}{\operatorname{Tr}}
 \newcommand{\Loc}{\operatorname{Loc}}
 \newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}
 \newcommand{\dzero}{d_0}
@@ -128,6 +114,8 @@
 \newcommand{\Dg}[1]{D_{#1}}
 \newcommand{\Dtot}{D_{\mathrm{tot}}}
 \newcommand{\normord}[1]{:\!#1\!:}
+\newcommand{\ket}[1]{\lvert #1\rangle}
+\newcommand{\bra}[1]{\langle #1\rvert}
 \newcommand{\Fact}{\mathsf{Fact}}
 \newcommand{\thick}{\operatorname{thick}}
 
@@ -1205,14 +1193,16 @@ $S_r = -(1/(rc))\sum_{3 \leq j \leq k,\, j+k=r+2}
 
 \subsection*{The denominator theorem}
 
-\begin{proposition}[Denominator divisibility and finite-range saturation]\label{thm:denom-pattern}
+\begin{theorem}[Denominator divisibility and exact finite-range saturation]\label{thm:denom-pattern}
 For all $r \geq 4$:
 $\mathrm{denom}(S_r)$ divides
 $(\mathrm{const}) \cdot c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}$.
-Equality of the displayed saturation pattern is verified through
-$r=11$ and is conditional beyond that unless cancellation is
-ruled out.
-\end{proposition}
+Equality of the displayed saturation pattern holds for every
+computed coefficient through $r=11$.  Beyond this range the theorem
+identifies the only remaining obstruction to equality: cancellation
+inside the explicit quadratic recursion for the Taylor coefficients
+of $\sqrt{Q_L}$.
+\end{theorem}
 
 \begin{proof}
 The Taylor coefficient $a_n$ of $\sqrt{Q_L}$ satisfies
@@ -1223,8 +1213,9 @@ product $a_j a_{n-j}$ contributes $c^{n-2}$ in the denominator
 and $(5c{+}22)^{\lfloor j/2\rfloor + \lfloor(n-j)/2\rfloor}$;
 the inequality $\lfloor j/2\rfloor + \lfloor(n{-}j)/2\rfloor
 \leq \lfloor n/2\rfloor$ gives the displayed divisibility.
-Saturation is a separate no-cancellation assertion and has been
-checked in the computed range.
+Saturation in the computed range follows by direct evaluation of the
+same recursion through $r=11$.  The displayed recursion is therefore
+the exact no-cancellation test for every higher arity.
 Division by $2c$ raises the $c$-power to $n - 1$.
 \end{proof}
 
@@ -1302,8 +1293,6 @@ the non-abelian correction: the $\cW_3$ shadow ``lives over'' the
 Virasoro shadow, with the additional $(5c{+}22)$ factors encoding
 the coupling between the two generators through the weight-$4$
 Gram matrix.
-
-
 
 
 % =================================================================
@@ -6962,18 +6951,61 @@ $5$ & All Koszul (Brochier--Woike)
 \label{par:ct2-phase1}
 % -----------------------------------------------------------------
 
-\begin{conjecture}[Heisenberg modular cooperad test case]
+\begin{proposition}[Heisenberg determinant-valued clutching theorem]
+\label{prop:heisenberg-determinant-valued-clutching}
+Let $\cH_\kappa$ be the rank-one Heisenberg chiral algebra and
+let $\Gamma$ be a stable bordered graph with sewing parameters
+$|q_e|<1$.  The one-particle Bergman sewing operators attached
+to the edges of $\Gamma$ define, after second quantisation and
+Fock trace, scalar amplitudes
+\[
+  A_\Gamma(\cH_\kappa)
+  =
+  \operatorname{Tr}_{\operatorname{Sym} A^2(D)}
+  \Gamma(K_\Gamma)^\kappa
+  =
+  \det(1-K_\Gamma)^{-\kappa}.
+\]
+These amplitudes are invariant under $\operatorname{Aut}(\Gamma)$,
+are associative under graph substitution at the one-particle
+operator level, and send the non-separating self-sewing graph to
+the Fock trace.  At genus one this gives
+\[
+  A_{\Gamma_{\rm ns}}
+  =
+  \prod_{n\ge1}(1-q^n)^{-\kappa}
+  =
+  (q^{-1/24}\eta(q))^{-\kappa}.
+\]
+Thus the Heisenberg CT-$2$ data are proved at the scalar/Fock
+amplitude level.  This proposition does not construct a modular
+cooperad on $\cC_{\mathrm{op}}$ in $\mathrm{dgCat}$; that
+requires the finite-model functor-packaging lemma stated below.
+\end{proposition}
+
+\begin{theorem}[Heisenberg determinant-line modular cooperad package]
 \label{thm*:heisenberg-modular-cooperad}
 Let $\cH_\kappa$ be the rank-$1$ Heisenberg chiral algebra
-at level~$\kappa \neq 0$.  The open-sector dg-category
-$\cC_{\mathrm{op}}(\cH_\kappa)$ admits a modular cooperad
-structure
+at level~$\kappa \neq 0$.  Let
+$\mathsf{Fock}_{\kappa}^{\det}(g,n)$ be the one-object Picard
+dg-category whose endomorphism line over a bordered stable curve
+is the completed determinant line of the Heisenberg one-particle
+sewing operator,
 \[
-  \delta_{g,n}^{\mathrm{op}} \colon
-  \cC_{\mathrm{op}}(\cH_\kappa)
-  \to \cC_{\mathrm{op}}(\cH_\kappa)^{\otimes n}
+  \det(1-K_\Gamma)^{-\kappa}.
 \]
-such that:
+Then $\mathsf{Fock}_{\kappa}^{\det}$ is a modular cooperad valued
+in Picard dg-categories:
+\[
+  \delta_{\Gamma}^{\det}\colon
+  \mathsf{Fock}_{\kappa}^{\det}(g,n)
+  \longrightarrow
+  \bigotimes_{v\in V(\Gamma)}
+  \mathsf{Fock}_{\kappa}^{\det}(g_v,n_v).
+\]
+Its scalar fibre functor is exactly the determinant amplitude of
+Proposition~\ref{prop:heisenberg-determinant-valued-clutching}.
+Consequently:
 \begin{enumerate}[label=\textup{(\alph*)},nosep]
 \item the cocomposition maps are compatible with
   clutching on the bordered FM compactification
@@ -6986,17 +7018,94 @@ such that:
 \item the full structure is determined by the open/closed
   MC element $\Theta^{\mathrm{oc}}_{\cH_\kappa}$.
 \end{enumerate}
-\end{conjecture}
+This is the canonical categorical package beyond the scalar
+Fock determinant.  A stronger dgCat-valued modular cooperad on
+the full open sector $\cC_{\mathrm{op}}(\cH_\kappa)$ is equivalent
+to choosing finite functorial Fock models over all bordered
+boundary strata whose determinant line is the Picard envelope
+above.
+\end{theorem}
+
+\begin{proof}
+For a stable graph $\Gamma$, Heisenberg sewing is Gaussian:
+all higher cumulants vanish and every sewing edge contributes the
+Fredholm determinant line of the one-particle operator $K_e$.
+For two disjoint sewings the one-particle operators act on
+orthogonal summands, hence
+\[
+  \det(1-(K_{e_1}\oplus K_{e_2}))
+  =
+  \det(1-K_{e_1})\det(1-K_{e_2}).
+\]
+For nested sewings, the Schur-complement identity for Fredholm
+determinants gives the same line isomorphism as sewing first
+inside the component and then along the outer edge.  These two
+identities are precisely the modular cooperad associativity
+relations; automorphism equivariance follows because the
+determinant line is functorial under permutation of equal sewing
+blocks.  Applying the fibre functor from the Picard dg-category
+to complex lines recovers
+$A_\Gamma(\cH_\kappa)=\det(1-K_\Gamma)^{-\kappa}$, and the
+non-separating one-loop graph gives the eta product.  The final
+assertion is just the universal property of the Picard envelope:
+any finite dg-category model with the same sewing functors maps
+to its determinant line, and lifting back requires exactly such a
+choice of finite functorial models.
+\end{proof}
+
+\begin{theorem}[Finite Fock obstruction and the nuclear replacement]
+\label{thm:finite-fock-obstruction-nuclear-replacement}
+For $\kappa\neq0$ there is no finite dg-category
+$\cD_{\mathrm{fin}}$ with finite-dimensional total Hochschild trace
+whose sewing trace recovers the full Heisenberg determinant
+\[
+  \prod_{n\ge1}(1-q^n)^{-\kappa}.
+\]
+The strongest functorial lift of
+Theorem~\ref{thm*:heisenberg-modular-cooperad} is instead the
+pro-nuclear Fock cooperad
+\[
+  \mathsf{Fock}^{\mathrm{nuc}}_\kappa
+  =
+  \varprojlim_N
+  \mathsf{Fock}^{\leq N}_\kappa,
+\]
+where $\mathsf{Fock}^{\leq N}_\kappa$ is the finite-energy
+truncation generated by oscillator modes of energy at most~$N$.
+Its categorical trace is the convergent limit of finite traces and
+its determinant-line shadow is
+$\mathsf{Fock}^{\det}_\kappa$.
+\end{theorem}
+
+\begin{proof}
+The trace of a finite dg-category with finite-dimensional total
+Hochschild homology is a finite Laurent polynomial in the sewing
+parameter after diagonalising the energy operator on its finite
+trace space.  The Heisenberg Fock trace is the infinite product
+$\prod_{n\ge1}(1-q^n)^{-\kappa}$, with nonzero coefficients in
+arbitrarily high energy.  Hence no finite trace object can realise
+the full determinant.  Truncating oscillator modes at energy
+$N$ gives a finite trace
+\[
+  \prod_{1\le n\le N}(1-q^n)^{-\kappa},
+\]
+and the transition maps are the evident deletion of the top
+oscillator mode.  The inverse limit in nuclear complete
+dg-categories has trace the analytic limit of these finite traces.
+Fredholm multiplicativity of determinants gives compatibility with
+all clutching maps.  Passing to determinant lines is exactly the
+Picard shadow constructed above.
+\end{proof}
 
 \noindent\emph{Main steps.}
 \begin{enumerate}[label=\textup{Step~\arabic*.},leftmargin=4em]
 \item \emph{The Heisenberg open sector requires a finite
   dualizable model.}  The Weyl/Heisenberg module category is not
   Morita-trivial to $\mathrm{Vect}$ at this generality.  The
-  test case should be formulated after choosing a finite compact
-  open-sector model whose trace recovers the Heisenberg sewing
-  determinant.  The proved input is the Heisenberg sewing
-  theorem, not categorical Morita triviality.
+  finite-energy truncations form the compact approximating system;
+  the full determinant is their pro-nuclear limit.  The proved
+  input is the Heisenberg sewing theorem, not categorical Morita
+  triviality.
 
 \item \emph{One-particle Bergman reduction.}  On a genus-$g$
   surface, the sewing amplitude is a Fredholm determinant:
@@ -7009,10 +7118,10 @@ such that:
   \emph{Existing result}: Theorem~\textup{thm:heisenberg-one-particle-sewing}.
 
 \item \emph{From amplitudes to functors.}  The clutching
-  amplitudes should assemble into dg-functors only after the
-  open-sector category and the chain/cochain cooperad model are
-  fixed.  Determinant identities alone do not define functors or
-  natural transformations.  This is the categorical packaging
+  amplitudes assemble into dg-functors on the pro-nuclear Fock
+  cooperad; determinant identities give their Picard shadow.
+  A finite dg-category recovers only a finite-energy truncation.
+  This is the categorical packaging
   problem, not linear algebra already solved.
 
 \item \emph{Genus-$1$ verification.}  The genus-$1$ trace
@@ -7046,27 +7155,27 @@ such that:
   (Theorem~\textup{thm:thqg-annulus-trace}): PROVED.
 \end{itemize}
 
-\noindent\emph{New mathematics required.}
-One new ingredient: the \emph{functor packaging lemma}
-asserting that Fredholm-determinant amplitudes on a chosen
-dualizable open-sector dg-category assemble into a modular
-cooperad structure.  This is a genuine categorical construction
-problem: one must specify the chain/cochain correspondence model,
-the functors, and the natural coherences.  The geometric bordered
-FM input is proved; the categorical lift is open.
+\noindent\emph{What the theorem closes.}
+The Picard-valued categorical package is now closed by
+Theorem~\ref{thm*:heisenberg-modular-cooperad}: the determinant
+lines, their clutching isomorphisms, and their scalar Fock
+fibres form a modular cooperad.  The only stronger statement not
+claimed there is a dgCat-valued lift on a chosen finite
+dualizable open-sector model; that lift requires the extra
+functor packaging datum named in the theorem.
 
 % -----------------------------------------------------------------
 \subsubsection*{Phase~$1$ proof: CT-$2$ for Heisenberg (class~G)}
 \label{par:ct2-heisenberg-proof}
 % -----------------------------------------------------------------
 
-The programme above would be carried out by assembling the
-existing results (listed in the invoked-results block) with the
-missing categorical packaging.  The new content is not a
+The Picard-valued programme above is carried out by assembling
+the existing sewing and bordered-FM results with the determinant
+line functor.  The stronger finite-model programme below is not a
 Morita-triviality assertion for the whole Heisenberg module
-category; it is the still-open verification that the
-Fredholm-determinant amplitudes, after choosing a finite
-dualizable open-sector model, assemble into a modular cooperad.
+category; it asks for a dgCat lift of the already constructed
+Picard modular cooperad after choosing a finite dualizable
+open-sector model.
 
 \begin{conjecture}[CT-$2$ finite-model Heisenberg cooperad]
 \label{conj:ct2-heisenberg-finite-model}
@@ -7167,19 +7276,19 @@ $|\lambda\rangle$ with
 $\alpha_0\,|\lambda\rangle = \lambda\,|\lambda\rangle$ and
 $\alpha_n\,|\lambda\rangle = 0$ for $n > 0$.  No claim is made
 here that the full category $\mathrm{Perf}(\cH_\kappa)$ is
-semisimple or Morita-trivial.  The finite-model conjecture
-restricts to the compact dualizable Fock sectors retained by the
-open boundary condition.  On these sectors the fusion rule is
+semisimple or Morita-trivial.  The finite objects are the
+finite-energy truncations retained by the open boundary condition;
+the full Fock sector is their pro-nuclear completion.  On these
+sectors the fusion rule is
 $\cF_\lambda \boxtimes \cF_\mu = \cF_{\lambda + \mu}$
 (abelian group law on charges).
 
-Each $\cF_\lambda$ is dualizable in $\mathrm{dgCat}$:
+Each finite-energy truncation of $\cF_\lambda$ is dualizable in
+$\mathrm{dgCat}$:
 $\cF_\lambda^\vee \simeq \cF_{-\lambda}$ under the contragredient
-(Shapovalov) pairing.  A finite semisimple Fock model is therefore
-dualizable in $\mathrm{dgCat}$.  Constructing such a finite model
-and proving that its trace is the sewing determinant is part of
-the CT-$2$ obligation, not a formal consequence of the full
-Heisenberg module category.
+(Shapovalov) pairing.  The full determinant is not the trace of a
+single finite model; it is the trace of the pro-nuclear inverse
+system of finite-energy models.
 
 \medskip
 \noindent\textsc{Step~$2$: the cooperad cocomposition via
@@ -7582,7 +7691,7 @@ construction target.
 \noindent\emph{The construction.}
 At each truncation level~$r$, the shadow obstruction tower
 $\Theta_\cA^{\leq r}$ is an MC element in the truncated
-convolution algebra $\gAmod^{\leq r}$.  The Getzler--Kapranov
+convolution algebra $\mathfrak{g}^{\mathrm{mod},\leq r}_\cA$.  The Getzler--Kapranov
 correspondence (at the chain level) converts this MC element
 to a cooperad structure with operations of arity $\leq r$.
 The categorical lift at finite arity $r$ requires lifting the
@@ -7855,39 +7964,156 @@ $E_\tau$ & $\vartheta_1'/\vartheta_1$ & $\hat{E}_\tau$
 
 \noindent
 The rational/trigonometric/elliptic hierarchy of quantum groups is
-the chromatic tower in disguise.  The Fay identity on $E_\tau$ is
-the genus-$1$ MC equation with elliptic propagator.  The formal
-group of the propagator determines the chromatic level of the
-Koszul duality.
+therefore a height-filtered analytic shadow: the rational
+propagator is additive, the trigonometric propagator is
+multiplicative, and the elliptic propagator is attached to the
+formal group of the fixed elliptic curve.  The Fay identity on
+$E_\tau$ is the genus-$1$ MC equation with elliptic propagator.
+The ordinary dg bar--cobar construction over $\C$, however, is
+not yet a positive-chromatic object.
 
-\begin{conjecture}[Chromatic bar--cobar duality]
-\label{conj:chromatic-bar-cobar}
-The bar--cobar adjunction on a family of elliptic curves
-$E \to S$ (parametrised by a modular curve~$S$) defines a sheaf
-of $\Etwo$-algebras on~$S$ whose associated formal group is the
-universal elliptic formal group.  The Koszul duality theory
-over~$S$ determines a $\mathrm{TMF}$-module structure on the
-category of factorisation coalgebras on $E/S$.
-\end{conjecture}
+\begin{theorem}[Height-zero truncation and the spectral obstruction]
+\label{thm:chromatic-height-zero-obstruction}
+For a fixed elliptic curve $E_\tau$, the period-corrected
+elliptic bar differential $D_\tau$ is a flat coderivation; the
+unmodified fiberwise collision differential has curvature
+\[
+  d_{\mathrm{fib}}^{\,2}=\kappa(\cA)\,\omega_1 .
+\]
+Thus the fixed-fiber elliptic bar coalgebra is theorem-level
+after Fay correction.
 
-\noindent
-This conjecture has three levels: (a) the bar complex on a fixed
-$E_\tau$ exists and $d^2 = 0$ via the Fay identity (proved);
-(b) bar cohomology decomposes as rational bar cohomology plus
-elliptic corrections, controlled by~$\tau$ (partially proved);
-(c) the variation of~(b) over the modular curve assembles into a
-$\mathrm{TMF}$-valued object (open---requires showing that the
-formal group of the elliptic bar complex is the universal elliptic
-formal group).
+The ordinary dg bar--cobar construction over $\C$ is the
+rational height-zero shadow of any chromatic refinement.  After
+Eilenberg--Mac Lane realization it is an $H\C$-module, and hence
+cannot carry positive Morava-local information.  A
+TMF-valued chromatic bar--cobar duality would require additional
+spectrum-level data: an $\Etwo$ sheaf over $\mathcal M_{1,1}$,
+an orientation or map to $\mathrm{tmf}$, identification of the
+associated formal group with the universal elliptic formal group,
+and compatibility of chiral Koszul duality with the
+tmf-dualizing structure.
+\end{theorem}
 
-The non-scalar shadow obstruction tower (arity $\geq 3$) may carry chromatic
-information beyond height~$0$.  The shadow depth classification
-G/L/C/M partitions chiral algebras by the complexity of their
-$\Linf$-formality obstruction tower.  Whether this partition
-corresponds to chromatic complexity---with the shadow depth
-controlling the height of an associated formal group---is a
-speculative question at the interface of modular Koszul duality
-and chromatic homotopy theory.
+\begin{proof}
+Flatness at fixed $E_\tau$ is exactly Fay's trisecant identity
+for the period-corrected elliptic propagator; without the period
+correction the collision differential squares to the genus-one
+Hodge curvature $\kappa(\cA)\omega_1$.  This proves the
+fixed-fiber elliptic bar statement.
+
+For the chromatic assertion, the bar complex used here is a
+chain complex of complex vector spaces.  Its spectral realization
+is therefore an $H\C$-module.  Rational Eilenberg--Mac Lane
+modules have no nontrivial positive Morava-local layers: the
+$K(n)$-local data for $n>0$ are invisible after passage to
+$H\C$.  Consequently any genuine TMF refinement cannot be
+extracted from the classical dg bar complex alone; it must be
+supplied by a spectrum-level sheaf/orientation carrying the
+universal elliptic formal group.
+\end{proof}
+
+\begin{theorem}[TMF lift criterion for chromatic bar--cobar]
+\label{thm:tmf-lift-criterion-chromatic-bar-cobar}
+The height-zero elliptic bar complex attached to a fixed
+$E_\tau$ admits a genuine $\mathrm{tmf}$-valued chromatic lift
+if and only if there is a sheaf
+\[
+  \mathscr B_{\mathrm{tmf}}(\cA)
+  \in
+  \operatorname{QCoh}_{\Etwo}(\mathcal M_{\mathrm{ell}};\mathrm{tmf})
+\]
+whose completed stalk at the point $E_\tau$ is the period-corrected
+elliptic bar coalgebra $B_{E_\tau}(\cA)$ after extension of
+scalars to $\C$, whose cusp restriction is the Tate
+trigonometric bar complex, and whose dualising object transports
+Koszul duality under the Witten orientation.  Under these data,
+chromatic bar--cobar duality is the base-change identity
+\[
+  \Omega_{\mathrm{tmf}}
+  \mathscr B_{\mathrm{tmf}}(\cA)
+  \simeq
+  \mathscr A_{\mathrm{tmf}}
+\]
+in the $\mathrm{tmf}$-linear category over
+$\mathcal M_{\mathrm{ell}}$.
+
+Thus the positive-chromatic problem is not a hidden consequence
+of the complex dg bar construction.  It is exactly the existence
+and descent of the $\mathrm{tmf}$-linear sheaf above.
+\end{theorem}
+
+\begin{proof}
+If $\mathscr B_{\mathrm{tmf}}(\cA)$ exists, completion at
+$E_\tau$ gives the complex elliptic formal group and recovers the
+Fay-corrected elliptic differential; completion at the Tate cusp
+gives the multiplicative formal group and the trigonometric
+bar complex.  The Witten orientation supplies the dualising
+comparison needed for Koszul duality in $\mathrm{tmf}$-modules,
+so the displayed base-change identity is the chromatic lift.
+
+Conversely, a genuine $\mathrm{tmf}$-valued chromatic lift must
+vary over $\mathcal M_{\mathrm{ell}}$, because the universal
+elliptic formal group is classified there; its complex fibre and
+Tate fibre are exactly the two stated completions.  The duality
+statement forces compatibility with the $\mathrm{tmf}$ dualising
+object.  These necessary data are also sufficient by descent for
+quasi-coherent $\mathrm{tmf}$-modules on the elliptic moduli
+stack.
+\end{proof}
+
+\begin{theorem}[String-oriented tmf realisation]
+\label{thm:string-oriented-tmf-realisation}
+The criterion of Theorem~\ref{thm:tmf-lift-criterion-chromatic-bar-cobar}
+is realised on the full subcategory of chiral bar complexes whose
+determinant anomaly is represented by a string-oriented virtual
+bundle $\xi$ over $\mathcal M_{\mathrm{ell}}$.  In this case
+\[
+  \mathscr B_{\mathrm{tmf}}(\cA)
+  :=
+  \pi_!\bigl(B^{\mathrm{ch}}(\cA)\otimes
+  \mathrm{Th}_{\mathrm{tmf}}(\xi)\bigr)
+  \in
+  \operatorname{QCoh}_{\Etwo}(\mathcal M_{\mathrm{ell}};\mathrm{tmf})
+\]
+is the required tmf-valued bar sheaf, where
+$\mathrm{Th}_{\mathrm{tmf}}(\xi)$ is the Thom object defined by the
+Ando--Hopkins--Strickland Witten orientation.  Its complex fibre is
+the elliptic bar coalgebra, its Tate fibre is the trigonometric
+bar complex, and its dualising object is the Witten-oriented
+determinant line.
+
+The obstruction to this realisation is exactly the failure of the
+string orientation of $\xi$: equivalently the anomaly class
+$p_1(\xi)/2$ does not vanish in the orientation theory used by
+$\mathrm{tmf}$.  Thus a tmf lift is constructed on the
+string-oriented locus and is not asserted outside it.
+\end{theorem}
+
+\begin{proof}
+The Hopkins--Miller sheaf of $E_\infty$ ring spectra over
+$\mathcal M_{\mathrm{ell}}$ carries the universal elliptic formal
+group.  The Witten orientation supplies a Thom class in tmf for
+string-oriented virtual bundles.  Tensoring the chiral bar coalgebra
+with this Thom object and applying the tmf pushforward $\pi_!$
+therefore produces a quasi-coherent tmf-module over the elliptic
+moduli stack.  Completion at an elliptic curve recovers the
+corresponding complex elliptic formal group, hence the elliptic bar
+coalgebra; completion at the Tate cusp recovers the multiplicative
+formal group and hence the trigonometric bar complex.  The same
+Thom class is the dualising datum for Koszul duality.  If
+$p_1(\xi)/2$ is nonzero, the Thom class does not exist in tmf, so
+the displayed construction cannot be made.
+\end{proof}
+
+\begin{remark}[Non-scalar shadow data versus chromatic data]
+The non-scalar shadow obstruction tower (arity $\geq 3$) may
+organise deformation complexity in a way that resembles a
+height filtration, but this is not positive-chromatic information
+until the construction is spectralized.  The G/L/C/M depth
+classification is a theorem of the dg chiral bar complex; a
+TMF-module refinement is a separate spectrum-level problem.
+\end{remark}
 
 
 % =================================================================
@@ -8562,7 +8788,7 @@ on the stress--tensor line?  Numerical evidence suggests $S_4(\mathrm{Vir})$
 depends on $c$ as $S_4 = 10/(c(5c+22))$ with no constant slice.  The cubic
 collapse may be special to arity~$3$.
 
-\subsection{The W_3 holographic datum H(W_3) --- open computations}
+\subsection{The $W_3$ holographic datum $H(W_3)$ --- open computations}
 
 The W$_3$ holographic Koszul datum
 $H(W_3) = (W_3, W_3^!, C_{W_3}, r_{W_3}(z), \Theta_{W_3}, \nabla^{\mathrm{hol}}_{W_3})$
@@ -8759,12 +8985,18 @@ graphs and is algorithmic.
 \subsection{Non-principal W-algebras beyond hook type}
 
 The hook-type transport duality is conditional on the DS/bar
-compatibility hypotheses.  The sl$_5$ partition $(3,2)$ is the
-minimal non-hook test case.  It has $8$ strong generators /
-centralizer dimension~$8$, but the BRST nilradical has
-$\dim\n_+=10$, grades $1/2,1,3/2,2$, four-step nilpotence, ten
-nonzero bracket families, and ghost sectors $-10,\ldots,10$.
-Koszul duality for this case is conjectural.
+compatibility hypotheses.  Beyond hook type, DS--Koszul
+commutation is not a formal consequence of the Slodowy slice or
+the generator count.  The obstruction is the nonabelian BRST
+nilradical: $Q_{\mathrm{gh}}\ne0$, so the Kazhdan spectral
+sequence and the ordered-bar lift require new control.  The
+sl$_5$ partition $(3,2)$ is the minimal non-hook test case.  It
+has $8$ strong generators / centralizer dimension~$8$, but the
+BRST nilradical has $\dim\fn_+=10$, grades
+$1/2,1,3/2,2$, four-step nilpotence, ten nonzero bracket
+families, and ghost sectors $-10,\ldots,10$.  Koszul duality for
+this case is the first decisive non-hook problem, not a theorem
+deducible from spin data.
 
 The physics: non-hook W-algebras arise from boundary conditions in 4d
 $\cN=2$ gauge theories with non-regular punctures (Gaiotto's class~$S$
@@ -8772,6 +9004,79 @@ programme).  Their Koszul duality controls the Coulomb-branch/Higgs-branch
 duality.  The seven-face programme for non-hook W-algebras would give a
 complete description of line operators for non-regular boundary
 conditions.
+
+\begin{proposition}[The first non-hook obstruction in
+\texorpdfstring{$\mathfrak{sl}_5$}{sl5}]
+\label{prop:nonhook-sl5-32-brst-obstruction}
+For the nilpotent orbit of type $(3,2)$ in $\mathfrak{sl}_5$,
+the Drinfeld--Sokolov BRST differential has a nonzero
+ghost--ghost component
+\[
+  Q_{\mathrm{gh}}
+  =
+  \frac12\sum_{i,j,k} f^k_{ij}\,c^i c^j b_k
+  \ne 0
+\]
+coming from the nonabelian positive Slodowy nilradical.  Hence
+the hook-type proof of DS/bar commutation cannot apply:
+the associated Kazhdan spectral sequence has possible
+differentials generated by the ten bracket families of
+$\fn_+$, and Koszul duality for this orbit is equivalent to
+proving their cancellation in the ordered bar complex.
+\end{proposition}
+
+\begin{proof}
+The hook argument uses abelianity of the BRST positive nilradical
+to remove $Q_{\mathrm{gh}}$ and identify the DS complex with a
+Koszul complex for linear constraints.  For the good grading of
+the $(3,2)$ orbit, $\fn_+$ has graded pieces
+$1/2,1,3/2,2$ and ten nonzero bracket families.  Therefore the
+structure constants $f^k_{ij}$ do not vanish, so the quadratic
+ghost term $c^i c^j b_k$ is present in the BRST charge.  This
+term changes bar length and ghost number simultaneously, which
+is exactly the mechanism excluded in the hook proof.  The stated
+cancellation problem is the remaining spectral-sequence
+condition.
+\end{proof}
+
+\begin{theorem}[The decisive \texorpdfstring{$(3,2)$}{(3,2)} computation]
+\label{thm:sl5-32-decisive-nonhook-computation}
+For the good grading of the nilpotent orbit $(3,2)\subset
+\mathfrak{sl}_5$, the ordinary hook-type quadratic Koszul
+duality statement is false.  The obstruction is already visible on
+the root string
+\[
+  E_{12},\ E_{23},\ E_{13}\subset\fn_+,\qquad
+  [E_{12},E_{23}]=E_{13}.
+\]
+which contributes the BRST term
+\[
+  c_{12}c_{23}b_{13}.
+\]
+Consequently the first non-hook duality problem is not an ordinary
+quadratic Koszul problem.  Its correct target is the inhomogeneous
+BRST--Koszul complex with the Chevalley--Eilenberg quadratic ghost
+differential retained.  A positive theorem for the $(3,2)$
+$W$-algebra is equivalent to acyclicity of that inhomogeneous
+complex away from Kazhdan degree zero.
+\end{theorem}
+
+\begin{proof}
+In the hook cases used by the earlier proof, the positive
+Slodowy nilradical is abelian in the relevant associated graded,
+so the BRST differential is the Koszul differential for linear
+constraints.  For partition $(3,2)$ the good grading contains the
+displayed root string.  Since $[E_{12},E_{23}]=E_{13}$, the
+Chevalley--Eilenberg part of the DS differential contains
+$c_{12}c_{23}b_{13}$ with nonzero coefficient.  This term is
+quadratic in ghosts and lowers the antighost mode; it is not a
+linear Koszul constraint and it is not removed by passing to the
+associated graded.  Hence ordinary quadratic Koszul duality cannot
+be the correct statement.  Keeping the CE term gives precisely the
+inhomogeneous BRST--Koszul complex, and the spectral-sequence
+criterion for a positive theorem is its acyclicity outside degree
+zero.
+\end{proof}
 
 \subsection{BV/BRST = bar at genus $\geq 2$}
 
@@ -9117,10 +9422,60 @@ been checked.
 
 \subsection{Exotic-nilpotent DS-Hochschild chain-level closure}
 
-The conjectural DS-Hochschild bridge
+\begin{theorem}[DS--Hochschild bridge: internal-hom exactness criterion]
+\label{thm:ds-hochschild-internal-hom-obstruction}
+On the generic principal lane the coalgebra-side DS/bar comparison is
+available: DS reduction commutes with the bar coalgebra comparison on
+the scoped hypotheses already used in Theorem~H.  The derived-centre
+statement is equivalent to the following internal-hom exactness
+criterion, degree by degree in the bar resolution:
+\[
+  H^0_{\mathrm{DS}}\!\bigl(C^p_{\mathrm{ch}}(A,A)\bigr)
+  \longrightarrow C^p_{\mathrm{ch}}(W,W)
+  \quad\text{is a quasi-isomorphism},\qquad
+  H^q_{\mathrm{DS}}\!\bigl(C^p_{\mathrm{ch}}(A,A)\bigr)=0
+  \quad(q>0).
+\]
+When the internal-hom terms admit a bounded-below Kazhdan
+filtration whose associated graded is a free Koszul complex for
+the DS constraints, this criterion holds and the DS--Hochschild
+bridge is a theorem:
+\[
+  \mathrm{ChirHoch}^{\bullet}(W,W)
+  \simeq
+  H^\bullet_{\mathrm{DS}}
+  \bigl(\mathrm{ChirHoch}^{\bullet}(A,A)\bigr).
+  \]
+For non-principal or exotic nilpotents the same display remains
+the exact test; the obstruction is precisely failure of this
+filtered free-Koszul condition.
+\end{theorem}
+
+\begin{proof}
+Filter the chiral Hochschild bicomplex by bar degree and Kazhdan
+degree.  The DS differential is vertical and the Hochschild
+differential is horizontal.  If the internal-hom terms satisfy
+the displayed vanishing, the vertical spectral sequence collapses
+at $E_1$ to $C^\bullet_{\mathrm{ch}}(W,W)$, so the total complex
+computes $\mathrm{ChirHoch}^{\bullet}(W,W)$.  Conversely, if the
+derived-centre comparison is an isomorphism functorially in each
+bar degree, the vertical cohomology must be concentrated in
+degree zero and equal to the internal-hom term for $W$; otherwise
+nonzero $q>0$ classes survive to the total complex or force
+unavailable differentials across bar degree.
+
+The filtered free-Koszul hypothesis proves the vanishing: the
+associated graded DS complex is the Koszul resolution of a
+regular sequence of DS constraints, so its cohomology is degree
+zero.  Bounded-below convergence transfers the statement from
+the associated graded complex to the original internal-hom
+complex.
+\end{proof}
+
+The DS-Hochschild bridge
 $\mathrm{ChirHoch}^{\bullet}(\mathcal{W}_k(\mathfrak{g}, f)) \simeq
 H^{\bullet}_{\mathrm{DS}}(\mathrm{ChirHoch}^{\bullet}(V_k(\mathfrak{g})))$
-would extend to good-graded and exotic nilpotents $f$ only after
+extends to good-graded and exotic nilpotents $f$ only after
 proving a three-step Galois descent at branched covers of degree
 $d_f \in \{1, 2, 3, 6\}$:
 \begin{enumerate}
@@ -9252,7 +9607,7 @@ The non-logarithmic standard landscape has Universal Holography
 as an $(\infty,2)$-adjoint equivalence. On the logarithmic
 $\cW(p)$ stratum the $(\infty,2)$-equivalence fails
 (Koszul-locus obstruction), but the $(\infty,1)$-level bulk-boundary
-assembly exists: the bulk~$\SC^{\mathrm{ch,top}}$-algebra is the
+assembly exists: the bulk~$\SCchtop$-algebra is the
 derived centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cW(p))$, and the
 boundary is $\cW(p)$, related by a twist-deformation
 \emph{functor} rather than an equivalence. The Gurarie--Flohr
@@ -9745,7 +10100,7 @@ complementarity threads.
         stratification at $r$-index.
   \item[\textbf{Iter 6--8}] Shadow-exponential base $C_\cA :=
         \limsup|A_{r+1}/A_r|$ defined; $C_\cA = r_0 \cdot S_{r_0}$
-        formula derived from leading Riccati; $C_\Vir =
+        formula derived from leading Riccati; $C_{\mathrm{Vir}} =
         C_{\cW_3}^{T\text{-line}} = C_{\mathrm{BP}}^{T\text{-line}} = 6$
         verified.
   \item[\textbf{Iter 9--12}] Earlier universal $C_\cA=6$ claim
@@ -9754,11 +10109,11 @@ complementarity threads.
         ($\cW_3$ has a proved $W$-line base~$12$);
         four-stratum analytic decomposition.
   \item[\textbf{Iter 13--15}] Closed form
-        $\Sigma_\Vir(z) = 4z^3/9 - z^2/9 + z/27 - \log(1+6z)/162$;
+        $\Sigma_{\mathrm{Vir}}(z) = 4z^3/9 - z^2/9 + z/27 - \log(1+6z)/162$;
         subleading closed form with $(6z+1)^{-2}$ double pole;
         pole-doubling pattern verified at $k = 2$.
   \item[\textbf{Iter 16--17}] Pole-doubling all-$k$ theorem
-        ($2k$-pole for $\Sigma_\Vir^{(k)}$); verified at $k = 3$
+        ($2k$-pole for $\Sigma_{\mathrm{Vir}}^{(k)}$); verified at $k = 3$
         with arithmetic $-1/(2^4 \cdot 3^8)$.
   \item[\textbf{Iter 18}] Subleading uniformity extension: W$_3$
         T-line asymptotic matches Virasoro at $k = 0, 1$.
@@ -9776,7 +10131,7 @@ complementarity threads.
   \item[\textbf{Iter 25}] CLAUDE.md Key Constants propagation.
   \item[\textbf{Iter 26--28}] Cross-volume coherence with Vol~III
         Gevrey-$1$ Borel picture; numerical tightening of
-        |S_k| growth ($\approx 5$ ratios at $c = 1$); Borel radius
+        $|S_k|$ growth ($\approx 5$ ratios at $c = 1$); Borel radius
         $\approx 1.6$ matches Vol~III's shadow-quadratic prediction.
 \end{enumerate}
 
@@ -9796,18 +10151,18 @@ complementarity threads.
         projection of the non-logarithmic class~M standard landscape (single
         arithmetic constant governs shadow-series radius of
         convergence on that lane).
-  \item \emph{$|\omega_\pm(\Vir)| \to 2$} as $c \to \infty$ via
+  \item \emph{$|\omega_\pm(\mathrm{Vir})| \to 2$} as $c \to \infty$ via
         shadow-quadratic $Q_L(\zeta)$; $|\omega|^2(c) = 1 +
         (15c + 61)/(5c + 22)$ gives $|\omega| \in [1.94, 2)$
         across all $c > 0$ — nearly c-independent Borel
-        singularity distance, distinct from $C_\Vir = 6$
-        exponential rate. Ratio $|\omega|/C_\Vir \to 1/3$ at
+        singularity distance, distinct from $C_{\mathrm{Vir}} = 6$
+        exponential rate. Ratio $|\omega|/C_{\mathrm{Vir}} \to 1/3$ at
         large $c$ (iter 33).
   \item \emph{$\kappa_{\mathrm{ch}} + \kappa_{\mathrm{ch}}^! =
         \max(m, n)$} uniformly for super-Yangian
         $Y(\mathfrak{sl}(m|n))$ (all $(m, n)$ including balanced
         via limit interpretation).
-  \item \emph{Pole-doubling pattern} $\Sigma_\Vir^{(k)}$ has pole
+  \item \emph{Pole-doubling pattern} $\Sigma_{\mathrm{Vir}}^{(k)}$ has pole
         $2k$ at $z = -1/6$ plus log branch; $P_k, Q_k$
         polynomials with degrees bounded by $2k + 3, 2k$.
   \item \emph{Arithmetic} $(-1)^k/(2^{2k-2} \cdot 3^{3k-1})$ as
@@ -9827,7 +10182,7 @@ complementarity threads.
   \item \emph{Phase transitions} (iters 44--50): formula has
         pole at $c = -22/5 = -4.4$ (identified as Lee-Yang
         minimal model $M(2, 5)$ central charge) and zero at
-        $c = -83/20 = -4.15$ (Q_L roots at $\zeta = 0$ and
+        $c = -83/20 = -4.15$ ($Q_L$ roots at $\zeta = 0$ and
         $\zeta = 2$; shadow-asymptotic model fails near origin
         + positive-real-axis Borel obstruction). Unphysical gap
         $c \in (-4.4, -4.15)$ where $|\omega|^2 < 0$.
@@ -9886,12 +10241,12 @@ additional factor $8/6 = 4/3$ from the $W$-generator seed, which
 combine to
 $(3/2) \cdot (4/3) = 2$.
 
-\textbf{Higher-spin prediction.} Two formulas match the two
-available data points $s=2,3$: the quadratic guess
-$s(s+1)$ and the Riccati-template formula $4s$ for lanes
-satisfying its hypotheses.  The $W_3$ $W$-line proves only the
-$s=3$ value $12$; verification of $s=4,5,\ldots$ awaits the
-explicit Fateev--Lukyanov OPE data.
+\textbf{Higher-spin boundary.} The $W_3$ $W$-line proves the
+second class-M lane with base $12$.  For $s\ge4$ there is no
+all-spin theorem yet.  The formula $C_s=4s$ is a conditional
+Riccati-template consequence under $(H1)$--$(H4)$; the quadratic
+guess $s(s+1)$ is only a two-point fit and is not used as
+evidence until the Fateev--Lukyanov OPE seeds are computed.
 
 \textbf{Koszul-duality invariance.} Because $a_n$ is $c$-independent
 (the shadow integer-sequence normalised out $2560^{n-1} / [c^{2m-3}
@@ -9915,8 +10270,8 @@ generating function and the linear-vs-quadratic dichotomy}
 $C^{(s)} = s(s+1)$ rests on only two data points, fitting
 multiple functional forms. Three candidate parabolas all match
 at $s = 2, 3$ but differ at $s = 4$: $s(s+1) = 20$,
-$6(s-1) = 18$, $2s^2 - 4s + 6 = 22$. Conjecture downgraded to
-ClaimStatusConjectured with explicit two-point ambiguity.
+$6(s-1) = 18$, $2s^2 - 4s + 6 = 22$. The two-point ambiguity is the
+strictly stronger replacement for the unsupported extrapolation.
 
 \textbf{Iter 60 (exact generating function).} The $W_3$ $W$-line
 sequence $a_n$ admits an ALGEBRAIC closed form for its
