@@ -10,7 +10,7 @@
 %
 % Scope chosen after adversarial audit:
 % - T1 (brace dg / E_2 Deligne--Tamarkin derived-center equivalence):
-%   downgraded to \begin{conjecture}; the naive/derived H^0 recovery
+%   downgraded to a conjectural claim; the naive/derived H^0 recovery
 %   is stated and proved as a separate lemma.
 % - T2 (perfectness on the standard landscape): stated as a
 %   hypothesis-conditional proposition; the Heisenberg and affine
@@ -86,14 +86,20 @@ center and $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
 \ChirHoch^\bullet(\cA, \cA)$ for the chiral-Hochschild derived
 center.
 
-\begin{lemma}[Naive center identification via Koszul pairing;
-\ClaimStatusProvedHere]
+\begin{lemma}[Central-pairing criterion for the naive centers;
+\ClaimStatusConditional]
 \label{lem:naive-center-koszul-identification}
 \index{center!naive!Koszul identification}%
-For a chiral Koszul pair $(\cA, \cA^!)$ on the Koszul locus, the
-Koszul pairing $\langle -, - \rangle_K$ of
-Theorem~\ref{thm:chiral-koszul-duality} restricts to a perfect
-pairing
+For a chiral Koszul pair $(\cA, \cA^!)$ on the Koszul locus, assume
+the central orthogonality condition
+\[
+ Z(\cA)^\perp \cap Z(\cA^!) = 0,
+ \qquad
+ Z(\cA^!)^\perp \cap Z(\cA) = 0
+\]
+inside the Koszul pairing $\langle -, - \rangle_K$ of
+Theorem~\ref{thm:chiral-koszul-duality}. Then
+$\langle -, - \rangle_K$ restricts to a perfect pairing
 \[
   \langle -, - \rangle_K \colon Z(\cA) \otimes Z(\cA^!)
   \longrightarrow \mathbb{C}
@@ -104,17 +110,16 @@ $Z(\cA) \cong Z(\cA^!)^\vee$.
 
 \begin{proof}
 The Koszul pairing is non-degenerate on the full pair
-$(\cA, \cA^!)$ by Theorem~\ref{thm:chiral-koszul-duality}. Its
-restriction to central elements is non-degenerate because the
-eigenvalue-zero subspaces of the adjoint actions of $\cA$ and
-$\cA^!$ are paired to one another by the argument of
-Lemma~\ref{lem:involution-splitting}: the involution $\sigma$ acts
-trivially on~$Z(\cA)$ and with eigenvalue $-1$ on~$Z(\cA^!)$, so the
-Koszul pairing restricted to $Z(\cA) \otimes Z(\cA^!)$ is the
-residual non-degenerate pairing between the two eigenspaces at
-$g = 0$. Finite-dimensionality of each side follows from the
-positive-energy axiom and the local finiteness of the bar coalgebra
-at each conformal weight.
+$(\cA, \cA^!)$ by Theorem~\ref{thm:chiral-koszul-duality}. The two
+central orthogonality equalities say exactly that no non-zero element
+of either naive center pairs trivially against the opposite naive
+center. Hence the restricted bilinear form is non-degenerate on both
+factors. Finite-dimensionality of each conformal-weight summand follows
+from the positive-energy axiom and the local finiteness of the bar
+coalgebra; the completed statement is the inverse limit over weights.
+No genus-$0$ Verdier eigenspace argument is used: at $g=0$ the
+Theorem~C decomposition has $Q_0(\cA^!)=0$, so the $g\geq 1$
+anti-invariant involution cannot be imported into this lemma.
 \end{proof}
 
 \begin{conjecture}[Derived center brace-algebra equivalence]
@@ -137,7 +142,8 @@ Lemma~\ref{lem:naive-center-koszul-identification} on~$H^0$.
 The conjecture is supported by the following partial evidence.
 \textup{(i)} On $H^0$ it reduces to
 Lemma~\ref{lem:naive-center-koszul-identification}, which is
-unconditional. \textup{(ii)} For the Heisenberg family $\cA = H_k$
+conditional on the central orthogonality hypothesis stated there.
+\textup{(ii)} For the Heisenberg family $\cA = H_k$
 the identification is tractable by explicit computation, since the
 chiral Hochschild complex has dimension three in each degree and the
 brace structure is combinatorially explicit. \textup{(iii)} At the
@@ -448,61 +454,68 @@ of extrapolating the degree formula outside its stated domain of
 validity.
 \end{remark}
 
-\section{PTVV mapping-stack alternative}
+\section{PTVV compatibility criterion}
 \label{sec:C-PTVV-alternative}
 
-The proposition below gives a derived-algebraic-geometry route to
-the $(-(3g{-}3))$-shifted symplectic structure on
-$\mathbf{C}_g(\cA)$. Its scope is honestly mixed. The
-shifted-symplectic form itself is constructed on the derived mapping
-stack $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ by the
-Pantev--To\"en--Vaqui\'e--Vezzosi machinery
-\cite{PTVV13}; this construction is genuinely independent of the
-established bar-side eigenspace decomposition. The identification of
-$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ as complementary
-Lagrangians still forwards, at the level of inscription, to the
-eigenspace decomposition
-Theorem~\ref{thm:quantum-complementarity-main}: the
-Verdier anti-symplectic involution used in
-Proposition~\ref{prop:ptvv-lagrangian} is presently realized only
-via the $\sigma$-action on the ambient complex, not via an
-intrinsic derived-stack construction.
+The Pantev--To\"en--Vaqui\'e--Vezzosi theorem gives a shifted
+symplectic form on $R\operatorname{Map}(Y,Z)$ only after two pieces of
+data have been supplied: a $d$-orientation on~$Y$ and an $n$-shifted
+symplectic form on~$Z$; the output shift is $n-d$. The manuscript does
+not contain an intrinsic construction of a $0$-shifted symplectic
+derived stack $S_\cA$ whose tangent is the chiral center, nor an
+orientation package on $\overline{\mathcal{M}}_g$ strong enough to
+make $R\operatorname{Map}(\overline{\mathcal{M}}_g,S_\cA)$ an
+independent proof of Theorem~C. In particular, the classifying stack
+$BG_\cA$ cannot be used as a black box with a declared
+$0$-shifted form: classifying stacks with invariant pairings are the
+standard source of shifted symplectic structures of different degree.
 
-\begin{theorem}[Mapping-stack PTVV presentation of~$C_1$; mixed
-status]
+The true statement available here is a compatibility criterion.
+It records exactly what extra data would make a PTVV route reproduce
+the Verdier pairing; it does not bypass
+Theorem~\ref{thm:quantum-complementarity-main}.
+
+\begin{theorem}[PTVV compatibility criterion for~$C_1$; conditional]
 \label{thm:C-PTVV-alternative}
 \index{PTVV!mapping-stack presentation|textbf}%
 Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth complex
-curve~$X$, and fix $g \geq 2$. Let $BG_\cA$ be the classifying
-stack of the formal group associated to~$\cA$ in the chiral
-deformation-theoretic sense of
-\S\textup{\ref{subsec:modular-deformation-complex}}. Then\textup{:}
+curve~$X$, and fix $g \geq 2$. Assume the following PTVV datum:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item an oriented derived enhancement
+$Y_g$ of $\overline{\mathcal{M}}_g$ of orientation dimension
+$3g-3$;
+\item a derived stack $S_\cA$ carrying a $0$-shifted symplectic form;
+\item a base point $s\in S_\cA$ with
+$T_sS_\cA\simeq\mathcal{Z}(\cA)$ and an identification
+\[
+ T_{[s]}R\operatorname{Map}(Y_g,S_\cA)
+ \simeq
+ R\Gamma(\overline{\mathcal{M}}_g,\mathcal{Z}(\cA))
+ = \mathbf{C}_g(\cA);
+\]
+\item compatibility of the PTVV $2$-form with the Verdier pairing on
+this tangent complex.
+\end{enumerate}
+Then\textup{:}
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Shifted symplectic form, independent construction.}
-\ClaimStatusProvedElsewhere%
+\item \emph{Shifted symplectic form.}
+\ClaimStatusConditional%
  The derived mapping stack
- $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$
+ $R\operatorname{Map}(Y_g,S_\cA)$
  carries a canonical $(-(3g{-}3))$-shifted symplectic form by the
  mapping-stack construction
- \textup{\cite[Theorem~2.5]{PTVV13}}, using
- $\dim \overline{\mathcal{M}}_g = 3g{-}3$ and the
- $0$-shifted Lie-bialgebra structure on $\cA$. This form is
- constructed without reference to the eigenspace
- decomposition~\eqref{eq:complementarity-decomp}, and its
- existence and non-degeneracy are genuinely independent of
- Theorem~\textup{\ref{thm:quantum-complementarity-main}}.
+ \textup{\cite[Theorem~2.5]{PTVV13}}.
 
 \item \emph{Comparison to the Verdier pairing.}
-\ClaimStatusProvedHere%
- The linearization at a point of
- $R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ identifies
- canonically with $\mathbf{C}_g(\cA)$, and the $(-(3g{-}3))$-shifted
- symplectic form in~\textup{(i)} pulls back to the Verdier pairing
- of
- Theorem~\textup{\ref{thm:quantum-complementarity-main}(ii)}.
+\ClaimStatusConditional%
+ Under hypotheses \textup{(c)}--\textup{(d)}, the linearized
+ $(-(3g{-}3))$-shifted form on
+ $T_{[s]}R\operatorname{Map}(Y_g,S_\cA)$ is the Verdier pairing of
+ Theorem~\textup{\ref{thm:quantum-complementarity-main}(ii)} on
+ $\mathbf{C}_g(\cA)$.
 
 \item \emph{Lagrangian complementarity, forwarded.}
-\ClaimStatusConjectured%
+\ClaimStatusConditional%
  That $\mathbf{Q}_g(\cA), \mathbf{Q}_g(\cA^!)$ embed as
  complementary Lagrangians in the PTVV sense is a consequence of
  Theorem~\textup{\ref{thm:quantum-complementarity-main}} via
@@ -514,46 +527,19 @@ deformation-theoretic sense of
 \end{theorem}
 
 \begin{proof}
-\textup{(i)} The Pantev--To\"en--Vaqui\'e--Vezzosi mapping-stack
-construction \cite[Theorem~2.5]{PTVV13} supplies a
-$(d - n)$-shifted symplectic form on
-$R\operatorname{Map}(Y, Z)$ whenever~$Y$ is of Calabi--Yau dimension
-$d$ and~$Z$ carries an $n$-shifted symplectic form. For
-$Y = \overline{\mathcal{M}}_g$, the canonical class gives
-Calabi--Yau dimension $\dim \overline{\mathcal{M}}_g = 3g - 3$. The
-classifying stack $BG_\cA$ carries its natural $0$-shifted symplectic
-form coming from the chiral Lie-bialgebra pairing on~$\cA$, so the
-output shift is $0 - (3g{-}3) = -(3g{-}3)$. No ingredient of the
-eigenspace decomposition is used. This establishes the
-shifted-symplectic form on the mapping stack independently of the
-established Theorem~C.
+\textup{(i)} PTVV~\cite[Theorem~2.5]{PTVV13} sends a $d$-oriented
+source and an $n$-shifted symplectic target to an
+$(n-d)$-shifted symplectic mapping stack. Here $n=0$ and
+$d=3g-3$, hence the shift is $-(3g-3)$.
 
-\textup{(ii)} The tangent complex of
-$R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ at the
-tautological point is
-$R\Gamma(\overline{\mathcal{M}}_g, \mathfrak{g}_\cA)$ where
-$\mathfrak{g}_\cA$ is the Lie algebra of~$BG_\cA$, by the standard
-tangent-complex formula for derived mapping stacks
-\textup{\cite[3.3.3]{HAG-II}}. The definition of $BG_\cA$ via the
-chiral deformation complex of
-\S\textup{\ref{subsec:modular-deformation-complex}} fixes
-$\mathfrak{g}_\cA$ as the $1$-shifted chiral center
-$\mathcal{Z}(\cA)[1]$, so
-\[
-  T_{[*]} R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)
-  \;=\;
-  R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))[1]
-  \;=\;
-  \mathbf{C}_g(\cA)[1],
-\]
-with the canonical degree~$1$ shift recording that $BG_\cA$ is the
-classifying stack and not the Lie algebra itself. Under this
-identification the PTVV $2$-form of~\textup{(i)} restricts to the
-Verdier pairing on $\mathbf{C}_g(\cA)$ up to the shift; the
-normalization is fixed so that the induced pairing coincides with
-the Verdier pairing on $\mathbf{C}_g(\cA)$ restricted to the
-derived tangent direction. This identification is bookkeeping and
-uses no eigenspace input.
+\textup{(ii)} The tangent-complex formula for derived mapping stacks
+\textup{\cite[3.3.3]{HAG-II}} gives
+$T_{[s]}R\operatorname{Map}(Y_g,S_\cA)\simeq
+R\Gamma(Y_g,s^*T_sS_\cA)$. Hypothesis~\textup{(c)} identifies this
+with $\mathbf{C}_g(\cA)$, and hypothesis~\textup{(d)} identifies the
+PTVV form with the Verdier form. The comparison is therefore a
+conditional compatibility statement, not an independent construction
+of Theorem~C.
 
 \textup{(iii)} The Lagrangian property of $\mathbf{Q}_g(\cA)$ inside
 the PTVV shifted-symplectic linear derived scheme is established in
@@ -564,85 +550,42 @@ cites $\mathbf{C}_g(\cA) = \mathbf{Q}_g(\cA) \oplus
 Theorem~\textup{\ref{thm:quantum-complementarity-main}}. A proof
 of~(iii) that does not forward to the established eigenspace
 decomposition would require constructing the Verdier involution on
-$R\operatorname{Map}(\overline{\mathcal{M}}_g, BG_\cA)$ intrinsically
+$R\operatorname{Map}(Y_g,S_\cA)$ intrinsically
 at derived-stack level, which is recorded as an open frontier. In
-the present inscription clause~(iii) is tagged
-\texttt{ClaimStatusConjectured}.
+this theorem clause~(iii) carries \ClaimStatusConditional{}.
 \end{proof}
 
-% Independent verification decorators for Theorem~\ref{thm:C-PTVV-alternative}(i)-(ii)
-%
-% V1 (Theorem~\ref{thm:C-PTVV-alternative}(i)). derived_from: PTVV mapping-stack
-%   construction (Theorem 2.5 of Pantev-Toen-Vaquie-Vezzosi 2013) applied to the
-%   Calabi--Yau source M-bar_g with canonical class of degree 3g-3.
-%   verified_against: the dimension-count 0 - (3g - 3) = -(3g - 3) matches
-%   the Verdier-pairing degree read off from the established
-%   thm:quantum-complementarity-main(ii) at each value of g >= 2.
-%   disjoint_rationale: the PTVV construction is a derived-algebraic-geometry
-%   theorem with no appeal to the eigenspace decomposition, the Koszul pairing,
-%   or the bar complex; only the Lie-bialgebra structure on A and the canonical
-%   class of M-bar_g enter.
-%
-% V2 (Theorem~\ref{thm:C-PTVV-alternative}(ii)). derived_from: standard
-%   identification of tangent complexes of derived mapping stacks (Toen-Vezzosi
-%   HAG-II 3.3.3).
-%   verified_against: tangent-complex formula R Gamma(M-bar_g, g_A) evaluated
-%   against the established definition of C_g(A) = R Gamma(M-bar_g, Z(A)) yields
-%   the same complex up to the Lie-bialgebra-vs-center normalization shift.
-%   disjoint_rationale: HAG-II tangent-complex computation is purely derived
-%   algebraic geometry, independent of the Verdier-pairing construction on
-%   the bar side.
-%
-% V3 (Lemma~\ref{lem:naive-center-koszul-identification}).
-%   derived_from: restriction of the Koszul pairing of
-%   Theorem~\ref{thm:chiral-koszul-duality} to sigma-eigenspaces.
-%   verified_against: for A = Heis = H_k the naive center is the ground field
-%   for k != 0; for A = V_k(g) at non-critical level the naive center is 1-dim
-%   by the Feigin-Frenkel center theorem; both match the expected
-%   Z(A) otimes Z(A^!) -> C non-degeneracy and the duality
-%   Z(A) ~ Z(A^!)^v.
-%   disjoint_rationale: the naive-center computation for Heisenberg is a
-%   direct commutator check independent of the Koszul-pairing construction;
-%   for affine Kac-Moody, the Feigin-Frenkel center theorem is a
-%   Lie-algebraic result independent of any bar-coalgebra machinery.
-
-\section{Summary of status}
+\section{Status map}
 \label{sec:theorem-C-refinements-summary}
 
-Of the nine items advertised by the 2026-04-16 status narrative,
-the honest counts are as follows.
-\textup{(T1)} Downgraded to
+The derived-center comparison has two different levels. The
+brace-dg equivalence
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\simeq
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$ remains
 Conjecture~\ref{conj:derived-center-koszul-equivalence}; the naive
-center identification
-Lemma~\ref{lem:naive-center-koszul-identification} is unconditional.
-\textup{(T2)} Conditional proposition
-Proposition~\ref{prop:perfectness-standard-landscape}\textup{;}
-unconditional for Heisenberg and affine Kac--Moody at positive
-integer or boundary admissible level (via TUY / Arakawa
-propagation); affine Kac--Moody at generic non-critical $k$
-recorded as
-Conjecture~\ref{conj:perfectness-boundary-km-generic}; class
-$\mathsf{M}$ boundary-stratum case recorded as
-Conjecture~\ref{conj:perfectness-boundary-class-M}.
-\textup{(T3)} $C_1$ reflexivity unconditional on the loci of
-Corollary~\ref{cor:c0-unconditional-class-G-L}; conditional on
-Conjecture~\ref{conj:perfectness-boundary-class-M} or
-Conjecture~\ref{conj:perfectness-boundary-km-generic} for the rest.
-\textup{(T4)} Retracted as a separate theorem; the $g=0$
-Remark~\ref{rem:plus-three-shift-nonissue} records that there is no
-$+3$ shift contradiction to resolve.
-\textup{(T5)} Consistent with the established
-Theorem~\ref{thm:shifted-symplectic-complementarity} hypothesis
-pinning; no changes required.
-\textup{(T6)} Folded into
-Corollary~\ref{cor:c0-unconditional-class-G-L}.
-\textup{(T7)} Consistent with the MC5 weight-completed inscription
-in the MC5 chapter; no changes here.
-\textup{(T8)} Consistent with
-Proposition~\textup{\ref{thm:delta-f-cross-w3-g2}} at
-$(W_3, g = 2)$.
-\textup{(T9)} Established as
-Theorem~\ref{thm:C-PTVV-alternative} with mixed status: clauses
-\textup{(i)}, \textup{(ii)} genuinely independent; clause
-\textup{(iii)} forwards, recorded as
-\texttt{ClaimStatusConjectured}.
+$H^0$ centre pairing is the conditional criterion of
+Lemma~\ref{lem:naive-center-koszul-identification}.
+
+Perfectness is proved on exactly the loci named in
+Proposition~\ref{prop:perfectness-standard-landscape}: Heisenberg,
+positive-integer affine Kac--Moody, and boundary-admissible affine
+Kac--Moody. Generic non-critical affine Kac--Moody and the
+class-$\mathsf{M}$ boundary stratum remain
+Conjectures~\ref{conj:perfectness-boundary-km-generic}
+and~\ref{conj:perfectness-boundary-class-M}.
+
+The $C_1$ reflexivity statement is unconditional on the loci of
+Corollary~\ref{cor:c0-unconditional-class-G-L} and conditional on the
+two fiber-finiteness conjectures elsewhere. The $g=0$ comparison is the
+separate statement of Remark~\ref{rem:plus-three-shift-nonissue};
+there is no Verdier-pairing shift contradiction at genus~$0$.
+
+The shifted-symplectic refinement keeps the hypotheses of
+Theorem~\ref{thm:shifted-symplectic-complementarity}. The MC5
+class-$\mathsf{M}$ input is the weight-completed/pro-object statement
+of the MC5 chapter, not the raw direct-sum ambient. The explicit
+cross-channel correction at $(W_3,g)=(W_3,2)$ is
+Proposition~\textup{\ref{thm:delta-f-cross-w3-g2}}. The PTVV statement
+is Theorem~\ref{thm:C-PTVV-alternative}: a conditional compatibility
+criterion for a derived-stack construction, not an independent proof of
+$C_1$.

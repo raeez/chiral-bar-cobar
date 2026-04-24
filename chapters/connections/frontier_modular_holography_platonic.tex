@@ -4996,12 +4996,12 @@ boson bifundamentals:
  where $\mathrm{Sb}^{4N^2}$ denotes $4N^2$ symplectic
  bosons.
 
-\item \emph{Modular characteristic.}
+\item \emph{Pre-BRST and reduced modular characteristics.}
  By additivity, the modular characteristic receives
  contributions from the two Chern--Simons sectors
  and from the $4N^2$ symplectic boson pairs:
  \begin{equation}\label{eq:frontier-abjm-kappa}
- \kappa(\cA_{\mathrm{ABJM}}(N,k))
+ \kappa_{\mathrm{pre}}(\cA_{\mathrm{ABJM}}(N,k))
  \;=\;
  \underbrace{(N^2-1)}_{\text{CS}_{k}\,+\,\text{CS}_{-k}}
  \;+\;
@@ -5009,12 +5009,19 @@ boson bifundamentals:
  \;=\;
  -(N^2+1).
  \end{equation}
+ The BRST-reduced compute model gives
+ $\kappa_{\mathrm{red}}=-N^2$; the finite-$N$ equality between a
+ reduced physical datum and the pre-BRST value is not asserted without
+ computing the ghost cancellation in the same BRST complex.
  The negative sign reflects the non-unitarity of the
  symplectic boson system.
  At large~$N$, $\kappa \sim -N^2$.
 
 \item \emph{Genus-$1$ free energy.}
- $F_1 = \kappa/24 = -(N^2+1)/24$.
+ The pre-BRST scalar gives
+ $F_1^{\mathrm{pre}} = \kappa_{\mathrm{pre}}/24 = -(N^2+1)/24$,
+ while the reduced compute datum gives
+ $F_1^{\mathrm{red}}=-N^2/24$.
  At large~$N$, $F_1 \sim -N^2/24$,
  matching the localization result for ABJM.
 
@@ -5071,22 +5078,16 @@ $\mathrm{Sb}_\lambda$ at $\lambda = 1/2$:
 $\kappa(\mathrm{Sb}_{1/2})
 = 6(1/2)^2 - 6(1/2) + 1 = -1/2$ per pair, so
 $4N^2 \cdot (-1/2) = -2N^2$.
-Total: $\kappa = (N^2{-}1) + (-2N^2) = -(N^2 + 1)$.
-% Verification note (2026-04-07): The caveat about BRST ghosts
-% is documented in the remark below. The additive formula is correct for
-% the pre-BRST system; the BRST reduction may introduce corrections.
+Total: $\kappa_{\mathrm{pre}} = (N^2{-}1) + (-2N^2) = -(N^2 + 1)$.
 This computation uses the additivity of~$\kappa$
 (Proposition~\ref{prop:independent-sum-factorization}) on the
-pre-BRST system. The BRST reduction introduces ghost fields whose
-$\kappa$-contribution vanishes for a standard $bc$-ghost system
-with $\lambda = 1$ (since $\kappa(bc_1) = 6 - 6 + 1 = 1$ per
-pair, but BRST ghosts cancel against gauge degrees of freedom in
-the standard anomaly cancellation). The precise ghost contribution
-for the ABJM BRST complex at finite~$N$ depends on the specific
-gauge-fixing; the formula $\kappa = -(N^2+1)$ is the pre-BRST
-value.
+pre-BRST system. The reduced datum
+$\kappa_{\mathrm{red}}=-N^2$ is the value implemented by the compute
+engine after BRST reduction. The precise finite-$N$ comparison between
+the two requires a ghost-cancellation computation inside the same BRST
+complex.
 
-Part~(iii): immediate from $\kappa = -(N^2+1)$ and
+Part~(iii): immediate from the chosen pre-BRST or reduced scalar and
 $\lambda_1^{\mathrm{FP}} = 1/24$.
 
 Part~(iv): the Airy function formula is the
@@ -5142,31 +5143,36 @@ The holographic modular Koszul datum is:
  At $N = 2$: $c = 25$.
  At $N = 3$: $c = 98$.
 
-\item \emph{Modular characteristic.}
- Using the Virasoro-line extraction $\kappa = c_{2\mathrm{d}}/2$:
+\item \emph{Stress-tensor modular characteristic.}
+ Using the Virasoro-line extraction
+ $\kappa_{\mathrm{stress}} = c_{2\mathrm{d}}/2$:
  \begin{equation}\label{eq:frontier-m5-kappa}
- \kappa(\mathrm{M5}_N)
+ \kappa_{\mathrm{stress}}(\mathrm{M5}_N)
  \;=\;
  \frac{4N^3 - 3N - 1}{2}.
  \end{equation}
  At large~$N$, $\kappa \sim 2N^3$: the cubic scaling
  is the shadow signature of the $N^3$ scaling of M5 brane
  degrees of freedom \textup{(}Henningson--Skenderis~\cite{HS98}\textup{)}.
- At $N = 1$: $\kappa = 0$ (free tensor multiplet).
+ At $N = 1$: $\kappa_{\mathrm{stress}} = 0$ (free tensor multiplet).
+ The full $W_{1+\infty}$ modular characteristic may receive
+ higher-spin contributions; this theorem records the stress-tensor
+ lane only.
 
 \item \emph{Koszul dual.}
  The $W_\infty$ involution $\lambda \mapsto 2 - \lambda$ gives
  $\cA_{\mathrm{M5}}(N)^! = W_{1+\infty}[\lambda = 2 - N]$
- with Koszul dual modular characteristic
+ with stress-line dual scalar
  \begin{equation}\label{eq:frontier-m5-kappa-dual}
- \kappa(\mathrm{M5}_N^!)
+ \kappa_{\mathrm{stress}}(\mathrm{M5}_N^!)
  \;=\;
  (2 - N)^3.
  \end{equation}
 
 \item \emph{Complementarity sum.}
  \begin{equation}\label{eq:frontier-m5-complementarity}
- \kappa(\mathrm{M5}_N) + \kappa(\mathrm{M5}_N^!)
+ \kappa_{\mathrm{stress}}(\mathrm{M5}_N) +
+ \kappa_{\mathrm{stress}}(\mathrm{M5}_N^!)
  \;=\;
  \frac{4N^3 - 3N - 1}{2} + (2 - N)^3
  \;=\;
@@ -5967,24 +5973,27 @@ Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
 \label{rem:fmhp-2}
 The global holographic triangle -- boundary $\leftrightarrow$ bulk
 $\leftrightarrow$ line -- closes on the Lorentzian-lattice-parametric
-B-family through the Bruinier 2002 Prop.~5.1 Heegner
+B-family only after the parity-halving and cusp/Euler comparison maps
+are constructed on the same object. The automorphic input supplies the
+Bruinier 2002 Prop.~5.1 Heegner
 Chern-class reciprocity: the $\mathbb Z/8$-class $[L^{\Delta_5}]\in\mathrm{CH}^1(H_1)$
-is simultaneously the boundary modular holonomy (Mukai doubling), the
-bulk monodromy (Humbert $H_1$), and the line fusion determinant
+as a candidate boundary modular holonomy (Mukai doubling), bulk
+monodromy (Humbert $H_1$), and line fusion determinant
 (Lusztig $\ell = 8$). At the Lusztig specialisation $\hbar^2 = -1/8$
 the boundary-linear bulk is \emph{proved} (Theorem~H, concentration
 in degrees $\{0,1,2\}$), while the global triangle remains conjectural
 beyond the Koszul locus. The $\kappa$~indexing on the two sides of
-the triangle is reconciled by
+the triangle is expected to be reconciled by
 Proposition~\ref{prop:kappa-bkm-cross-volume-reconciliation} at
 $\kappa_{\mathrm{BKM}}^{(3\text{-faces})} = 2\kappa_{\mathrm{BKM}}^{(\mathrm{Borch})} + \chi(\cO_X) + 2$,
 evaluating to $12 = 2\cdot 5 + 0 + 2$ on $K3 \times E$; the
 $+2$ is the bar--cobar double-parity correction and is the
-quantitative signature that, at the Lusztig specialisation, the two
-indexings are bulk-boundary projections of the same Drinfeld double
+quantitative signature expected, at the Lusztig specialisation, to make
+the two indexings bulk-boundary projections of the same Drinfeld double
 $U_\cA = \cA \bowtie \cA^{!}_\infty$. The class~$\mathsf{M}$ residue
-left open by the boundary-linear argument closes at chain level via
-the DS--Hochschild bridge of Vol.~II
+left open by the boundary-linear argument closes cohomologically, and
+at chain level only in the completed/pro sense, via the
+DS--Hochschild bridge of Vol.~II
 (Corollary~\ref{thm:class-M-chain-bulk}); the residue beyond the
 DS~lane remains conjectural and is exhibited by the admissible bar
 class $\eta_4$ of $L_{-1/2}(\mathfrak{sl}_2)$. See Vol.~III,

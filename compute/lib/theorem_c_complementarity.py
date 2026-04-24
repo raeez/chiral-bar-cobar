@@ -191,11 +191,6 @@ def kappa(family: str, **params) -> Fraction:
         k = params.get("k", 1)
         dim_g, h_dual = _lie_dim_hdual(lie_type, rank)
         k_frac = Fraction(k)
-        if k_frac + h_dual == 0:
-            raise ValueError(
-                f"Critical level k = -{h_dual}: kappa undefined for "
-                f"affine {lie_type}_{rank}"
-            )
         return Fraction(dim_g) * (k_frac + h_dual) / (2 * h_dual)
 
     elif family == "betagamma":

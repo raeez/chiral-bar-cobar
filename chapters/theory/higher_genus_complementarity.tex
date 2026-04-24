@@ -1,9 +1,8 @@
 \section{The complementarity theorem}
 \label{sec:complementarity-theorem}
 
-% Macro safety net for cross-chapter wave-14 references (BRST functor of
-% chap:universal-conductor). Defended by \providecommand for portability
-% across standalone extraction (AP-FM6/AP-FM36).
+% Macro safety net for the BRST functor of chap:universal-conductor.
+% Guarded by \providecommand for portability across standalone extraction.
 \providecommand{\BRST}{\mathrm{BRST}}
 
 Classical Koszul duality over a point already distinguishes the bar
@@ -74,11 +73,12 @@ with distinct logical statuses.
  This produces the ambient complex on which~\textup{(C1)}
  and~\textup{(C2)} operate.
 
-\item \emph{Eigenspace decomposition \textup{(}unconditional on the
- Koszul locus\textup{)}.}\;
+\item \emph{Eigenspace decomposition \textup{(}strict flat
+ representative\textup{)}.}\;
  For every chiral Koszul pair $(\cA, \cA^!)$ on a smooth projective
- curve~$X$ and every genus $g \geq 0$, the cohomology of the ambient
- complex splits as
+ curve~$X$ and every genus $g \geq 0$ for which the Verdier
+ involution is represented on the strict flat ambient complex, the
+ cohomology of that ambient complex splits as
  \begin{equation}\label{eq:complementarity-summary}
  H^*(\overline{\mathcal{M}}_g,\,\mathcal{Z}(\cA))
  \;=\;
@@ -328,12 +328,18 @@ Suppose the following two conditions hold:
  \textup{MK3} of
  Definition~\textup{\ref{def:modular-koszul-chiral})}.
 
-\item \emph{Finite-dimensional flat fiber cohomology.}
+ \item \emph{Finite-dimensional flat fiber cohomology.}
  For each closed point
  $[\Sigma] \in \overline{\mathcal{M}}_g$,
  $\dim_\mathbb{C} H^n\bigl(
  \bar{B}^{(g)}_{\mathrm{flat}}(\cA)\big|_\Sigma\bigr)
  < \infty$ for all~$n$.
+
+\item \emph{Pseudo-coherent bounded family.}
+ The filtered strict flat family is pseudo-coherent over
+ $\overline{\mathcal{M}}_g$, bounded in a uniform finite
+ cohomological interval, and its filtration is finite on every
+ cohomological truncation.
 \end{enumerate}
 Then the derived pushforward
 $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is a perfect complex on
@@ -346,7 +352,9 @@ The argument has three steps.
 \emph{Step~1: Uniform cohomological bound from the associated graded.}
 The PBW filtration~$F_\bullet$ is flat over the base
 $\overline{\mathcal{M}}_g$ (it is a bar-degree filtration,
-hence defined fiber-by-fiber by the combinatorial bar grading).
+hence defined fiber-by-fiber by the combinatorial bar grading);
+hypothesis~(iii) supplies the finite truncations needed to apply the
+filtered spectral sequence in a bounded cohomological range.
 At the associated graded level the quantum correction terms in
 $\Dg{g}$ sit in positive filtration degree, so
 $\operatorname{gr}_F$ carries only the genus-$0$
@@ -372,7 +380,9 @@ of~$[\Sigma]$.
 \emph{Step~3: Cohomology and base change.}
 The family
 $\pi_g\colon \mathcal{C}_g(\cA) \to \overline{\mathcal{M}}_g$
-is a proper morphism of finite type. By Steps~1--2, the fiber
+is a proper morphism of finite type, and hypothesis~(iii) makes the
+strict flat family pseudo-coherent and uniformly bounded. By
+Steps~1--2, the fiber
 cohomology sheaves
 $\mathcal{H}^q(R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA))$ vanish for
 $q \neq 0$ uniformly over the base, and the surviving
@@ -380,9 +390,9 @@ degree-$0$ cohomology sheaf has
 finite-dimensional fibers by hypothesis~(ii). The standard
 cohomology and base change theorem
 (EGA~III, Th\'eor\`eme~7.7.5)
-then gives that $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is a perfect
-complex (bounded, with coherent cohomology sheaves) on
-$\overline{\mathcal{M}}_g$.
+then gives coherent cohomology. Since
+$\overline{\mathcal{M}}_g$ is smooth, bounded coherent complexes are
+perfect, so $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is perfect.
 \end{proof}
 
 \begin{theorem}[Fiber--center identification \textup{(Theorem~\texorpdfstring{$\mathrm{C}_0$}{C0})}; \ClaimStatusProvedHere]
@@ -1845,12 +1855,17 @@ carries the $(-1)$-shifted symplectic structure that governs the
 Verdier pairing of Proposition~\ref{prop:lagrangian-eigenspaces}.
 \end{remark}
 
-\begin{proposition}[Verdier pairing and Lagrangian eigenspaces; \ClaimStatusProvedHere]
+\begin{proposition}[Verdier pairing and Lagrangian eigenspaces;
+\ClaimStatusConditional]
 \label{prop:lagrangian-eigenspaces}
 \index{Lagrangian!eigenspaces|textbf}
 \index{Verdier duality!pairing on moduli}
 Let $(\cA, \cA^!)$ be a chiral Koszul pair and let
 $V = H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+Assume that the Koszul pairing identifies
+$\mathbb{D}\mathcal Z(\cA)$ with $\mathcal Z(\cA^!)$, that the resulting
+pairing on $V$ is non-degenerate, and that the Verdier involution
+$\sigma$ is anti-symplectic for this pairing.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Verdier duality on the center local system $\mathcal{Z}(\cA)$
  induces a non-degenerate bilinear pairing
@@ -1889,22 +1904,12 @@ duality for constructible sheaves on the smooth Deligne--Mumford
 stack $\overline{\mathcal{M}}_g$.
 
 \emph{Part (ii).}
-The Verdier involution $\sigma$ is defined by
-$\sigma = \mathbb{D} \circ \mathrm{KS}$, where $\mathrm{KS}$ is
-the Kodaira--Spencer isomorphism
-(Theorem~\ref{thm:kodaira-spencer-chiral-complete}) and
-$\mathbb{D}$ is Verdier duality. Since $\mathbb{D}^2 = \mathrm{id}$
-on constructible sheaves and the Kodaira--Spencer map satisfies
-the anti-commutativity
-$\mathbb{D} \circ \nabla_{\kappa(v)}^z =
--\nabla_{\kappa(v)}^z \circ \mathbb{D}$
-(Step~7 of the proof of
-Theorem~\ref{thm:quantum-complementarity-main}), the involution
-$\sigma$ reverses the sign of the pairing:
-$\langle \sigma(v), \sigma(w) \rangle_{\mathbb{D}}
-= \langle \mathbb{D}v, \mathbb{D}w \rangle_{\mathbb{D}}
-= -\langle v, w \rangle_{\mathbb{D}}$,
-where the last step uses the anti-commutativity property.
+This is exactly the anti-symplectic compatibility assumed in the
+statement. In applications it is verified by constructing the
+Verdier representative of $\sigma$ and checking that the
+Kodaira--Spencer connection anticommutes with Verdier duality; the
+present proposition records the formal consequence once that
+chain-level compatibility has been supplied.
 
 \emph{Part (iii).}
 For $v, w \in V^+$ (eigenvalue $+1$):

@@ -2,7 +2,7 @@
 
 THEOREM H (one of 5 main theorems). For chirally Koszul A on a smooth
 projective curve X (dim_C X = 1), the chiral Hochschild cohomology is
-CONCENTRATED IN DEGREES [0, 2] with dim ChirHoch*(A) <= 4.  Explicitly
+CONCENTRATED IN DEGREES [0, 2].  Explicitly
 (thm:hochschild-polynomial-growth):
 
   (a) Concentration.  ChirHoch^n(A) = 0 for n < 0 or n > 2.
@@ -13,7 +13,7 @@ CONCENTRATED IN DEGREES [0, 2] with dim ChirHoch*(A) <= 4.  Explicitly
       (thm:main-koszul-hoch).
 
 The amplitude [0, 2] is forced by dim_C X = 1: the de Rham functor on
-the curve has cohomological length 2.  This bound applies UNIFORMLY
+the curve has cohomological length 2.  This degree bound applies UNIFORMLY
 to every Koszul chiral algebra in the standard landscape, including
 the W-algebra family (Virasoro, W_3, W_N, ...).
 
@@ -25,7 +25,7 @@ ring regime" that modelled ChirHoch*(W^k(g, f_prin)) as
 yielding infinite-dimensional cohomology with polynomial growth.
 
 That model is REFUTED by Theorem H: ChirHoch* lives on the curve and
-has amplitude [0, 2] with finite total dimension.  The refuted model
+has amplitude [0, 2] with family-dependent finite total dimension.  The refuted model
 confused two distinct objects (see AP94 in CLAUDE.md):
 
   * Continuous Lie cohomology H*_cont(Vect(S^1)) of the Witt/Virasoro

@@ -5674,7 +5674,7 @@ The three regimes below correspond to the first three levels of the
 regime hierarchy (Convention~\ref{conv:regime-tags}): quadratic
 (Regime~I), curved-central (Regime~II), and filtered-complete
 (Regime~III). The fourth level (programmatic) lies beyond the
-scope of the present chapter.
+scope of this curved bar-cobar analysis.
 
 \subsubsection{\texorpdfstring{Regime I: strict differential ($d^2 = 0$ strict)}{Regime I: strict differential (d2 = 0 strict)}}
 \label{def:strict-dg}
@@ -6367,7 +6367,8 @@ and Verdier intertwining of
 Theorem~A
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}): the Verdier
 intertwining $\mathbb{D}_{\operatorname{Ran}} \barB(\cA_1) \simeq
-\barB(\cA_2)$ becomes a Quillen-level statement about derived
+(\cA_2)_\infty$ identifies the Verdier dual bar coalgebra with the
+homotopy Koszul-dual algebra and becomes a Quillen-level statement about derived
 functors, and the configuration-space integrals that define the bar
 differential become the geometric realization of the model structure's
 fibration data.
@@ -6613,8 +6614,8 @@ The bar construction:
 \[B: \mathrm{ChAlg}^{\mathrm{central}} \to \mathrm{Coalg}\]
 is a functor from chiral algebras with central curvature to coalgebras, characterized by the
 universal property:
-\[\mathrm{Hom}_{\mathrm{Coalg}}(B(\mathcal{A}), C) \simeq \mathrm{Hom}_{\mathrm{ChAlg}}(\mathcal{A},
-\Omega(C))\]
+\[\mathrm{Hom}_{\mathrm{ChAlg}}(\Omega(C),\mathcal{A}) \simeq
+\mathrm{Hom}_{\mathrm{Coalg}}(C,B(\mathcal{A}))\]
 
 This adjunction automatically implies $d_{\mathrm{bar}}^2 = 0$ by the universal property.
 \end{theorem}
@@ -6626,7 +6627,15 @@ The proof assembles three previously established results into the claimed adjunc
 By Theorem~\ref{thm:bar-functorial}, the bar construction $B$ is functorial: a morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $B(f): B(\mathcal{A}) \to B(\mathcal{B})$ compatible with the coalgebra structures. The category $\mathrm{ChAlg}^{\mathrm{central}}$ consists of chiral algebras whose curvature $\mu_0$ lies in the center $Z(\mathcal{A})$.
 
 \emph{Adjunction.}
-The bar-cobar adjunction $B \dashv \Omega$ is established in Theorem~\ref{thm:bar-cobar-adjunction}. For a coalgebra~$C$ and a chiral algebra~$\mathcal{A}$, a coalgebra map $\phi: B(\mathcal{A}) \to C$ determines a chiral algebra map $\tilde{\phi}: \mathcal{A} \to \Omega(C)$ by the universal property of the tensor coalgebra: $\phi$ restricts to a map on cogenerators $\bar{\phi}: s\mathcal{A} \to \bar{C}$, and $\tilde{\phi} = s^{-1}\bar{\phi}$ is the corresponding algebra map. Conversely, $\tilde{\phi}: \mathcal{A} \to \Omega(C)$ extends uniquely to $\phi: B(\mathcal{A}) \to C$ by the cofree property of the tensor coalgebra.
+The bar-cobar adjunction $\Omega \dashv B$ is established in
+Theorem~\ref{thm:bar-cobar-adjunction}. For a coalgebra~$C$ and a
+chiral algebra~$\mathcal{A}$, a coalgebra map
+$\phi\colon C \to B(\mathcal{A})$ is equivalently a twisting morphism
+from~$C$ to~$\mathcal{A}$, hence a chiral algebra map
+$\tilde{\phi}\colon \Omega(C) \to \mathcal{A}$. Conversely,
+$\tilde{\phi}$ restricts to the generators of~$\Omega(C)$ and extends
+uniquely to the coalgebra map $C \to B(\mathcal{A})$ by the cofree
+property of the bar coalgebra.
 
 \emph{$d^2 = 0$ from the adjunction.}
 The bar differential $d_{\bar{B}}$ on $B(\mathcal{A})$ satisfies $d_{\bar{B}}^2 = 0$ when the curvature $\mu_0$ is central: by Theorem~\ref{thm:central-implies-strict}, the centrality $\mu_0 \in Z(\mathcal{A})$ implies that the curvature-induced term $[\mu_0, -]$ in $d_{\bar{B}}^2$ vanishes identically. From the Grothendieck perspective, this is automatic: $d_{\bar{B}}$ is the unique coderivation on $B(\mathcal{A})$ whose projection to cogenerators recovers the chiral algebra structure maps. The condition $d_{\bar{B}}^2 = 0$ is equivalent to the $A_\infty$ relations on $\mathcal{A}$, which reduce to the associativity of the chiral product when $\mu_0$ is central (the curved $A_\infty$ relations $\sum m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0$ collapse because the terms involving $m_0 = \mu_0$ commute with everything).
@@ -6669,7 +6678,7 @@ functor directly: $\Omegach(\barBch(\cA)) \to \cA$. This is
 \emph{reconstruction}: it recovers~$\cA$ from its collision data,
 and Theorem~B says it is a quasi-isomorphism on the Koszul locus.
 The second interposes Verdier duality on the Ran space:
-$\Omegach(\mathbb{D}_{\Ran}\barBch(\cA))$. This is
+$\mathbb{D}_{\Ran}\barBch(\cA)$. This is
 \emph{duality}: it produces the Koszul dual partner~$\cA^!$, not
 $\cA$ itself. The distinction between reconstruction and duality is
 the bar-cobar analogue of the distinction between the identity and
@@ -6704,15 +6713,15 @@ precise.
 \begin{definition}[The two functors]
 \label{def:reconstruction-vs-duality-functors}
 \index{reconstruction functor $R_X$}
-\index{Verdier--cobar duality functor $K_X$}
+\index{Verdier duality functor $K_X$}
 For an augmented chiral algebra~$\cA$, define
 \[
 R_X(\cA) := \Omegach_X \barBch_X(\cA),
 \qquad
-K_X(\cA) := \Omegach_X \mathbb{D}_{\Ran}\barBch_X(\cA).
+K_X(\cA) := \mathbb{D}_{\Ran}\barBch_X(\cA).
 \]
 We call $R_X$ the \emph{reconstruction functor} and $K_X$ the
-\emph{Verdier--cobar duality functor}.
+\emph{Verdier duality functor}.
 \end{definition}
 
 \begin{theorem}[Reconstruction versus duality; \ClaimStatusProvedHere]
@@ -6732,11 +6741,12 @@ The first statement is the bar-cobar counit on the Koszul locus
 For the second, finite chiral Koszulity supplies the Verdier
 identification
 $\mathbb{D}_{\Ran}\barBch_X(\cA) \simeq (\cA^\sharp)_\infty$ (factorization \emph{algebra}, not coalgebra).
-Applying $\Omegach_X$ and then the counit for~$\cA^\sharp$ gives
+The strict comparison $(\cA^\sharp)_\infty \simeq \cA^\sharp$ on the
+finite Koszul locus gives
 \[
 K_X(\cA)
-= \Omegach_X \mathbb{D}_{\Ran}\barBch_X(\cA)
-\simeq \Omegach_X \barBch_X(\cA^\sharp)
+= \mathbb{D}_{\Ran}\barBch_X(\cA)
+\simeq (\cA^\sharp)_\infty
 \simeq \cA^\sharp.
 \qedhere
 \]
@@ -6769,11 +6779,12 @@ $\cA^! = (\cA^{\scriptstyle \text{\normalfont !\textasciigrave}})^\vee$ & algebr
 \end{center}
 The reconstruction functor $R_X = \Omegach_X \circ \barBch_X$
 recovers~$\cA$ (an algebra). The duality functor $K_X =
-\Omegach_X \circ \mathbb{D}_{\Ran} \circ \barBch_X$ produces
+\mathbb{D}_{\Ran} \circ \barBch_X$ produces
 $\cA^!$ (an algebra): Verdier duality converts the coalgebra to an
-algebra, and cobar extracts the underlying chiral algebra. The
+algebra, and the finite Koszul comparison identifies that algebra with
+the strict dual partner. The
 distinction: $\Omegach_X(\barBch_X(\cA)) \simeq \cA$, while
-$\Omegach_X(\mathbb{D}_{\Ran}\barBch_X(\cA)) \simeq \cA^!$.
+$\mathbb{D}_{\Ran}\barBch_X(\cA) \simeq \cA^!$.
 \end{remark}
 
 \begin{theorem}[Recognition theorem for finite chiral Koszul pairs;
@@ -6796,14 +6807,12 @@ chiral Koszul locus: $K_X(K_X(\cA)) \simeq \cA$.
 The implication (i)$\Rightarrow$(ii) is
 Theorem~\ref{thm:reconstruction-vs-duality}. Conversely,
 suppose $K_X(\cA) \simeq \cB$ and $K_X(\cB) \simeq \cA$.
-Set $C_\cA := \mathbb{D}_{\Ran}\barBch_X(\cB)$ and
-$C_\cB := \mathbb{D}_{\Ran}\barBch_X(\cA)$.
-By the bar-cobar adjunction, the quasi-isomorphisms correspond
-to Koszul twisting morphisms $\tau_\cA \colon C_\cA \to \cA$
-and $\tau_\cB \colon C_\cB \to \cB$, so the adjunction units
-$C_\cA \to \barBch_X(\cA)$ and $C_\cB \to \barBch_X(\cB)$
-are weak equivalences, exactly the Verdier compatibility
-required of a finite chiral Koszul pair.
+Then the two quasi-isomorphisms are precisely
+$\mathbb{D}_{\Ran}\barBch_X(\cA)\simeq\cB$ and
+$\mathbb{D}_{\Ran}\barBch_X(\cB)\simeq\cA$. Dualizing once more gives
+weak equivalences between the corresponding bar coalgebras, so the
+Koszul twisting morphisms supplied by the bar construction identify
+$(\cA,\cB)$ as a finite chiral Koszul pair.
 \end{proof}
 
 \subsection{The mixed-boundary spectral sequence}

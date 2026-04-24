@@ -118,22 +118,16 @@ class TestShadowData:
         assert shadow_S3() == F(2)
 
     def test_S4_at_c26(self):
-        """S_4(Vir_{26}) = -(5*26+22)/(10*26) = -152/260 = -38/65."""
-        # VERIFIED: [DC] direct substitution: -(130+22)/260 = -152/260 = -38/65,
-        #           [CF] cross-check with Delta = 8*kappa*S_4 = 8*13*(-38/65) = -608/5
-        assert shadow_S4(F(26)) == F(-38, 65)
+        """S_4(Vir_{26}) = 10/(26*(5*26+22)) = 5/1976."""
+        assert shadow_S4(F(26)) == F(5, 1976)
 
     def test_S4_at_c1(self):
-        """S_4(Vir_1) = -(5+22)/10 = -27/10."""
-        # VERIFIED: [DC] direct substitution,
-        #           [LC] c -> infinity: S_4 -> -1/2 (leading term -(5c)/(10c) = -1/2)
-        assert shadow_S4(F(1)) == F(-27, 10)
+        """S_4(Vir_1) = 10/(1*(5+22)) = 10/27."""
+        assert shadow_S4(F(1)) == F(10, 27)
 
     def test_S4_at_c13(self):
-        """S_4(Vir_{13}) = -(65+22)/(130) = -87/130."""
-        # VERIFIED: [DC] -(87)/(130),
-        #           [SY] self-dual c=13: Delta = -2(5*13+22)/5 = -2*87/5 = -174/5
-        assert shadow_S4(F(13)) == F(-87, 130)
+        """S_4(Vir_{13}) = 10/(13*(65+22)) = 10/1131."""
+        assert shadow_S4(F(13)) == F(10, 1131)
 
     def test_S4_diverges_at_c0(self):
         """S_4 is undefined at c=0."""
@@ -191,9 +185,9 @@ class TestVertexAmplitudes:
         assert vertex_amplitude_g0(3, F(1)) == F(2)
 
     def test_g0_val4(self):
-        """Genus-0 valence-4: S_4 = -(5c+22)/(10c)."""
+        """Genus-0 valence-4: S_4 = 10/[c(5c+22)]."""
         # VERIFIED: [DC] direct from shadow_S4, [LT] prop:quartic-shadow-virasoro
-        assert vertex_amplitude_g0(4, F(26)) == F(-38, 65)
+        assert vertex_amplitude_g0(4, F(26)) == F(5, 1976)
 
     def test_g1_val1(self):
         """Genus-1 valence-1: V_{1,1} = chi^orb(M_{1,1}) * kappa = (-1/12)(c/2)."""
@@ -216,7 +210,7 @@ class TestVertexAmplitudes:
 class TestGraphContributionsC26:
     """Verify each graph contribution at c=26 (string ghost cancellation point).
 
-    At c=26: kappa = 13, P = 1/13, S_3 = 2, S_4 = -38/65.
+    At c=26: kappa = 13, P = 1/13, S_3 = 2, S_4 = 5/1976.
     All values independently derived by manual computation.
     """
 
@@ -240,11 +234,11 @@ class TestGraphContributionsC26:
         assert gc.weighted_amplitude == F(-1, 24)
 
     def test_banana(self):
-        """Banana: (1/8) * S_4 * P^2 = (1/8)(-38/65)(1/169) = -38/(8*65*169)."""
-        # VERIFIED: [DC] (-38/65)*(1/169) = -38/10985; / 8 = -19/43940,
+        """Banana: (1/8) * S_4 * P^2 = (1/8)(5/1976)(1/169)."""
+        # VERIFIED: [DC] (5/1976)*(1/169) = 5/333944; / 8 = 5/2671552,
         #           [DA] single g=0 vertex, val=4, two self-loops
         gc = self._contribs()["banana"]
-        assert gc.weighted_amplitude == F(-19, 43940)
+        assert gc.weighted_amplitude == F(5, 2671552)
 
     def test_separating(self):
         """Separating: (1/2) * V_{1,1}^2 * P = (1/2)(169/144)(1/13) = 13/288."""
@@ -337,11 +331,11 @@ class TestGraphContributionsC1:
         assert gc.weighted_amplitude == F(-1, 24)
 
     def test_banana(self):
-        """Banana: (1/8)*S_4*P^2 = (1/8)*(-27/10)*4 = -27/20."""
-        # VERIFIED: [DC] S_4(1)=-27/10, P^2=4, raw=-27*4/10=-108/10=-54/5, /8=-27/20,
+        """Banana: (1/8)*S_4*P^2 = (1/8)*(10/27)*4 = 5/27."""
+        # VERIFIED: [DC] S_4(1)=10/27, P^2=4, raw=40/27, /8=5/27,
         #           [DA] single vertex g=0 val=4 with two self-loops
         gc = self._contribs()["banana"]
-        assert gc.weighted_amplitude == F(-27, 20)
+        assert gc.weighted_amplitude == F(5, 27)
 
     def test_theta(self):
         """Theta: (1/12)*4*8 = 32/12 = 8/3."""
@@ -401,12 +395,12 @@ class TestTotalObstruction:
 
     def test_boundary_nonzero_c26(self):
         """Boundary obstruction nonzero at c=26."""
-        # VERIFIED: [DC] computed above as -9463/3163680,
+        # VERIFIED: [DC] computed above as -4729/1849536,
         #           [CF] nonzero for all non-degenerate c
         obs = boundary_obstruction(F(26))
         assert obs is not None
         assert obs != F(0)
-        assert obs == F(-9463, 3163680)
+        assert obs == F(-4729, 1849536)
 
     def test_boundary_nonzero_c1(self):
         """Boundary obstruction nonzero at c=1."""

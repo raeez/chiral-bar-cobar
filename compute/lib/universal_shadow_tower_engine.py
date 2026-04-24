@@ -465,7 +465,7 @@ def compute_free_energies(kappa: Fraction, max_genus: int = 5) -> Dict[int, Frac
 
     F_g = kappa * lambda_g^FP.
 
-    VERIFIED: [DC] F_1 = kappa/24; F_2 = 7*kappa^2/5760;
+    VERIFIED: [DC] F_1 = kappa/24; F_2 = 7*kappa/5760;
     [LT] thm:theorem-d (higher_genus_modular_koszul.tex).
 
     NOTE (AP32): These are UNIFORM-WEIGHT formulas.  For multi-weight

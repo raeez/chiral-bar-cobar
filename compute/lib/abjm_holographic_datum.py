@@ -86,7 +86,7 @@ For A_{ABJM}(N,k) in the reduced scalar convention:
   F_1 = -N^2 / 24
 
 At large N with fixed lambda = N/k:
-  F_1 = -N^2 / 12 ~ -k * lambda * N / 12
+  F_1 = -N^2 / 24 = -k^2 * lambda^2 / 24
 
 This matches the known one-loop result for ABJM from localization.
 
@@ -310,15 +310,15 @@ def abjm_free_energy_large_N(N: int, k: int) -> sympy.Expr:
 
 
 def abjm_free_energy_one_loop(N: int, k: int) -> Fraction:
-        """One-loop (genus-1) free energy from the reduced shadow formula.
+    """One-loop (genus-1) free energy from the reduced shadow formula.
 
-    F_1 = kappa(A) / 24 = -N^2 / 24
+    F_1 = kappa_red(A) / 24 = -N^2 / 24
 
-        Note the sign: kappa_red is negative for the ABJM matter shadow.
+    Note the sign: kappa_red is negative for the ABJM matter shadow.
 
     CAREFUL: this is the PERTURBATIVE one-loop around the trivial
     saddle. The full localization result has additional contributions.
-    The shadow formula F_1 = kappa/24 is the universal genus-1 formula
+    The shadow formula F_1 = kappa_red/24 is the universal genus-1 formula
     from modular Koszul duality (Theorem D, genus-1 universality).
     """
     kappa = Fraction(-N * N)
@@ -744,8 +744,8 @@ def shadow_to_airy_change_of_variables(kappa_val: Fraction, N: int, k: int) -> D
 
     where Q(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2 is the shadow metric.
 
-    For ABJM: kappa = -N^2 and the shadow metric encodes the perturbative
-    genus expansion.
+    For ABJM in the reduced scalar convention, kappa_red = -N^2 and the
+    shadow metric encodes the perturbative genus expansion.
 
     The passage to the Airy equation requires:
     1. Setting t = C_k^{1/3} * (N - B_k)^{-1} * x  (rescaling by N)

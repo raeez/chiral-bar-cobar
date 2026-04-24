@@ -13,7 +13,7 @@ Delta = 8*kappa*S_4 != 0 for generic c.
 Shadow data (from theorem_ainfty_nonformality_class_m_engine.py):
     kappa(Vir_c) = c/2                        (C2, AP1)
     S_3 = 2                                    (c-independent)
-    S_4 = -(5c+22)/(10c)                       (c-dependent)
+    S_4 = 10/[c(5c+22)]                        (c-dependent)
     S_5 = -48/(c^2(5c+22))                     (c-dependent)
 
 r-matrix (AP19, AP126, C11): r^Vir(z) = (c/2)/z^3 + 2T/z
@@ -124,13 +124,15 @@ def shadow_S3() -> F:
 
 
 def shadow_S4(c: F) -> Optional[F]:
-    """S_4(Vir_c) = -(5c+22)/(10c).
+    """S_4(Vir_c) = 10/[c(5c+22)].
 
     Returns None if c = 0 (divergent).
     """
     if c == F(0):
         return None
-    return -(F(5) * c + F(22)) / (F(10) * c)
+    if F(5) * c + F(22) == 0:
+        return None
+    return F(10) / (c * (F(5) * c + F(22)))
 
 
 def shadow_S5(c: F) -> Optional[F]:
@@ -218,7 +220,7 @@ def vertex_amplitude_g0(valence: int, c: F) -> Optional[F]:
         val=1: 0 (no tadpole by translation invariance)
         val=2: kappa = c/2
         val=3: S_3 = 2
-        val=4: S_4 = -(5c+22)/(10c)
+        val=4: S_4 = 10/[c(5c+22)]
         val=5: S_5 = -48/(c^2(5c+22))
         val=6: S_6 (not needed for genus-2 n=0 graphs)
     """

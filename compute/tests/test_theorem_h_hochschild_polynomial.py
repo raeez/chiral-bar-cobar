@@ -5,7 +5,7 @@ families.  Every Koszul chiral algebra A on a smooth projective curve
 X (dim_C X = 1) has:
   * ChirHoch^n(A) = 0 for n outside [0, 2];
   * P_A(t) a polynomial of degree <= 2;
-  * dim ChirHoch*(A) <= 4.
+  * finite family-dependent total dimension.
 
 AP94 rectification: the prior "W-algebra polynomial ring regime"
 (ChirHoch*(W^k) = C[Theta_1, ..., Theta_r] with infinite-dimensional

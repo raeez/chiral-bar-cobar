@@ -191,7 +191,7 @@ def find_env_end(lines: list[str], start_idx: int, env_name: str) -> int:
 def extract_claims(path: Path) -> list[Claim]:
     """Extract all tagged claims from a single .tex file."""
     rel_path = path.relative_to(ROOT).as_posix()
-    text = path.read_text(encoding="utf-8", errors="ignore")
+    text = strip_comments(path.read_text(encoding="utf-8", errors="ignore"))
     lines = text.splitlines()
     claims: list[Claim] = []
 
@@ -286,7 +286,7 @@ def extract_claims(path: Path) -> list[Claim]:
 def extract_all_labels(path: Path) -> list[LabelEntry]:
     """Extract all \\label{} occurrences from a file."""
     rel_path = path.relative_to(ROOT).as_posix()
-    text = path.read_text(encoding="utf-8", errors="ignore")
+    text = strip_comments(path.read_text(encoding="utf-8", errors="ignore"))
     lines = text.splitlines()
     entries: list[LabelEntry] = []
 
@@ -305,7 +305,7 @@ def extract_all_labels(path: Path) -> list[LabelEntry]:
 def extract_all_refs(path: Path) -> list[tuple[str, str, int]]:
     """Extract all \\ref{} occurrences: (label, file, line)."""
     rel_path = path.relative_to(ROOT).as_posix()
-    text = path.read_text(encoding="utf-8", errors="ignore")
+    text = strip_comments(path.read_text(encoding="utf-8", errors="ignore"))
     lines = text.splitlines()
     refs: list[tuple[str, str, int]] = []
 
@@ -348,10 +348,10 @@ def write_claims_jsonl(claims: list[Claim]) -> None:
 
 
 def raw_grep_counts(all_files: list[Path]) -> dict[str, int]:
-    """Count raw occurrences of \\ClaimStatus* strings (matches legacy grep method)."""
+    """Count active occurrences of \\ClaimStatus* strings after LaTeX comment stripping."""
     counts: dict[str, int] = defaultdict(int)
     for path in all_files:
-        text = path.read_text(encoding="utf-8", errors="ignore")
+        text = strip_comments(path.read_text(encoding="utf-8", errors="ignore"))
         for match in STATUS_RE.finditer(text):
             counts[match.group(1)] += 1
     return dict(counts)
@@ -402,7 +402,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
             "total_claims": len(claims),
         },
         "raw_grep_counts": {
-            "_note": "Raw string occurrences (includes inline mentions in remarks/proofs). Higher than structured count.",
+            "_note": "Active string occurrences after LaTeX comment stripping (includes inline mentions in remarks/proofs). Higher than structured count.",
             "ProvedHere": grep_counts.get("ProvedHere", 0),
             "ProvedElsewhere": grep_counts.get("ProvedElsewhere", 0),
             "Conjectured": grep_counts.get("Conjectured", 0),
