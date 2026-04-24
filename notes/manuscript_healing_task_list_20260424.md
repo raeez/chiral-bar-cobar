@@ -236,5 +236,7 @@ reader-facing mathematics.
   added no labels, and changed no claim-status tags.
 - [x] Run conflict-marker scans and `git diff --check` across all edited
   volumes.
-- [ ] Commit source/front-matter changes separately from generated metadata
+- [x] Commit source/front-matter changes separately from generated metadata
   or binary artifacts, with Raeez-only exhaustive messages.
+- [x] Preserve and merge the remaining Vol II KZ side-worktree staged
+  Makefile parity state without discarding it.
