@@ -64,6 +64,7 @@ SOURCES   := $(wildcard *.tex) \
 # Output — everything goes to out/
 OUT_DIR   := out
 PDF       := $(OUT_DIR)/main.pdf
+ICLOUD_MAIN_PREREQ := $(if $(wildcard $(PDF)),,$(PDF))
 
 # Working notes
 WN_TEX    := working_notes.tex
@@ -84,10 +85,12 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
+.DEFAULT_GOAL := all
+
 .PHONY: all fast watch clean veryclean clean-builds count check draft integrity phase0-index metadata verify census test editorial standalone dist release help working-notes icloud verify-independence verify-independence-verbose
 
 ## icloud: Copy latest PDFs to iCloud Drive, organised by subject
-icloud: $(PDF)
+icloud: $(ICLOUD_MAIN_PREREQ) standalone
 	@echo "  ── Copying to iCloud (subject-organised) ──"
 	@# --- Volumes ---
 	@mkdir -p "$(ICLOUD_DIR)/volumes"
@@ -98,7 +101,8 @@ icloud: $(PDF)
 		koszulness_fourteen_characterizations en_chiral_operadic_circle \
 		sc_chtop_pva_descent drinfeld_kohno_bridge seven_faces genus1_seven_faces \
 		arithmetic_shadows multi_weight_cross_channel analytic_sewing \
-		ordered_chiral_homology survey_modular_koszul_duality_v2; do \
+		ordered_chiral_homology survey_modular_koszul_duality_v2 \
+		determinant_of_an_operator; do \
 		[ -f $(OUT_DIR)/$$p.pdf ] && cp $(OUT_DIR)/$$p.pdf "$(ICLOUD_DIR)/vol1_foundations/$$p.pdf" \
 			&& echo "    ✓ vol1_foundations/$$p" || true; \
 	done
@@ -148,6 +152,9 @@ $(STAMP): $(SOURCES) $(BUILD_SCRIPT)
 	@echo "  ✓  $(PDF) built successfully."
 	@echo ""
 
+$(PDF): $(STAMP)
+	@true
+
 ## fast: Bounded quick build for rapid iteration → out/main.pdf
 fast:
 	@echo "  ── Fast build (up to $(FAST_PASSES) passes) ──"
@@ -189,10 +196,7 @@ release:
 	@echo "  [2/3] Working notes"
 	@$(MAKE) --no-print-directory working-notes
 	@echo ""
-	@echo "  [3/3] Standalone papers"
-	@$(MAKE) --no-print-directory standalone
-	@echo ""
-	@echo "  ── Copying to iCloud (subject-organised) ──"
+	@echo "  [3/3] Standalone papers and iCloud"
 	@$(MAKE) --no-print-directory icloud
 	@echo ""
 	@echo "  ══════════════════════════════════════════"
@@ -397,6 +401,7 @@ standalone:
 		chiral_chern_weil ordered_chiral_homology \
 		five_theorems_modular_koszul e1_primacy_ordered_bar \
 		en_chiral_operadic_circle koszulness_fourteen_characterizations \
+		determinant_of_an_operator \
 		drinfeld_kohno_bridge sc_chtop_pva_descent \
 		three_dimensional_quantum_gravity \
 		arithmetic_shadows multi_weight_cross_channel \
@@ -408,21 +413,29 @@ standalone:
 		programme_summary programme_summary_section1 \
 		programme_summary_sections2_4 programme_summary_sections5_8 \
 		programme_summary_sections9_14; do \
-		if [ -f standalone/$$paper.tex ]; then \
-			echo "    Building $$paper.tex ..."; \
-			rm -f standalone/$$paper.pdf; \
-			cd standalone && TEXINPUTS=".:..:$$TEXINPUTS"; export TEXINPUTS; for i in 1 2 3; do \
-				$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
-			done && cd ..; \
-			if [ -f standalone/$$paper.pdf ]; then \
-				mv standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
-				rm -f standalone/$$paper.aux standalone/$$paper.log standalone/$$paper.out standalone/$$paper.toc 2>/dev/null; \
-				echo "    ✓  out/$$paper.pdf"; \
-			else \
-				echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
-				failures=$$((failures + 1)); \
-			fi; \
+	if [ -f standalone/$$paper.tex ]; then \
+		if [ -f $(OUT_DIR)/$$paper.pdf ] && [ $(OUT_DIR)/$$paper.pdf -nt standalone/$$paper.tex ] && [ $(OUT_DIR)/$$paper.pdf -nt raeez-math-template.sty ]; then \
+			echo "    ✓  out/$$paper.pdf (up to date)"; \
+			continue; \
 		fi; \
+		echo "    Building $$paper.tex ..."; \
+		rm -f standalone/$$paper.pdf; \
+		build_failed=0; \
+		cd standalone && TEXINPUTS=".:..:$$TEXINPUTS"; export TEXINPUTS; for i in 1 2 3; do \
+			if ! $(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1; then \
+				build_failed=1; \
+				break; \
+			fi; \
+		done; cd ..; \
+		if [ $$build_failed -eq 0 ] && [ -f standalone/$$paper.pdf ]; then \
+			mv standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
+			rm -f standalone/$$paper.aux standalone/$$paper.log standalone/$$paper.out standalone/$$paper.toc 2>/dev/null; \
+			echo "    ✓  out/$$paper.pdf"; \
+		else \
+			echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
+			failures=$$((failures + 1)); \
+		fi; \
+	fi; \
 	done; \
 	if [ $$failures -ne 0 ]; then \
 		echo "  ✗  $$failures standalone paper(s) failed."; \
