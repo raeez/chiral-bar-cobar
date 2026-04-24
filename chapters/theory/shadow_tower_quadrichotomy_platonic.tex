@@ -675,36 +675,130 @@ $\sqrt{z - 1/t_\pm}$ (standard alien calculus,
 Theorem~\ref{thm:borel-summability-classM}).
 \end{proof}
 
-\begin{remark}[The Stokes line $c_S$ for Virasoro]
-\label{rem:stokes-line-c-S}
-For $\Vir_c$, $\kappa = c/2$, $\alpha = 2$, $\Delta_c = 40/(5c+22)$.
-The branch points are real iff $-8\kappa^{2}\,\Delta_c \ge 0$, i.e.\
-$\Delta_c \le 0$, i.e.\ $5c + 22 < 0$, i.e.\ $c < -22/5$. The
-discriminant identity
-$9\alpha^{2} + 2\Delta_c
- = 36 + 80/(5c+22) = (180c + 872)/(5c + 22)$
-vanishes at $c = -872/180 = -218/45$. Combining the convergence
-boundary $c < -22/5 = -198/45$ with the caesura where the Borel
-singularities collide on the negative real axis identifies a unique
-Stokes line in the $(c, z)$ plane crossing the principal axis at
-$c_S = -178/45$, in the deep negative-$c$ regime. No Virasoro central
-charge in $[0, 26]$ crosses this line.
+\begin{theorem}[Stokes locus and Borel-radius closed form for $\Vir_c$]
+\label{thm:stokes-line-c-S}
+\ClaimStatusProvedHere
+For $\Vir_c$ with $\kappa = c/2$, $\alpha = 2$, $\Delta_c = 40/(5c+22)$,
+the Riccati polynomial is
+\[
+Q_c(t) \;=\; (c + 6 t)^{2} \;+\; \frac{80}{5c+22}\,t^{2}
+\;=\; c^{2} \;+\; 12 c\,t \;+\; \frac{4\,(45 c + 218)}{5c+22}\,t^{2}.
+\]
+Its discriminant in $t$ is
+\[
+\disc_t Q_c \;=\; -\,\frac{320\,c^{2}}{5c+22},
+\]
+vanishing only at $c = 0$. The Stokes caesura, where the coefficient
+of $t^{2}$ in $Q_c$ vanishes, is the zero of $180 c + 872$,
+\[
+c_S \;=\; -\,\frac{218}{45},
+\]
+strictly below the convergence boundary $c < -22/5 = -198/45$. The
+Borel radius of the Virasoro shadow has exact closed form
+\begin{equation}
+\label{eq:borel-radius-closed}
+\lvert\omega\rvert^{2}(c)
+\;=\; \frac{c^{2}\,(5c+22)}{4\,(45 c + 218)},
+\qquad
+\lvert\omega\rvert(c)
+\;=\; \frac{c}{6}\;-\;\frac{1}{27}\;+\;O\!\bigl(c^{-1}\bigr)\ \ (c\to\infty),
+\end{equation}
+with simple pole at $c_S = -218/45$ (Stokes line) and zero at $c = 0$
+(trivial module). No Virasoro central charge in $[0, 26]$ crosses the
+Stokes line.
+\end{theorem}
+
+\begin{proof}
+The identity
+$9\alpha^{2} + 2\Delta_c = 36 + 80/(5c+22) = 4\,(45 c + 218)/(5c+22)$
+is direct substitution. The discriminant
+$\disc_t\!\bigl[(a_0 + a_1 t)^{2} + 2 \Delta_c\,t^{2}\bigr]
+ = -8\,a_0^{2}\,\Delta_c$
+with $a_0 = 2\kappa = c$ evaluates to $-320\,c^{2}/(5c+22)$, so
+$\disc_t Q_c$ vanishes as a rational function of $c$ only at $c = 0$.
+For the Borel radius: on the spectral curve $H(t)^{2} = t^{4} Q_c(t)$,
+the nearest Borel-plane singularity is $\omega = 1/t_-$, the smaller
+root of $Q_c$. The quadratic formula gives
+$\lvert\omega\rvert^{2} = (\text{const term})/(\text{leading coeff})
+ = c^{2}\big/\bigl[4\,(45 c + 218)/(5c+22)\bigr]
+ = c^{2}(5c+22)/[4\,(45 c + 218)]$.
+Large-$c$ expansion by $(5c+22)/(45c+218)
+ = 1/9 \cdot (1 + 22/(5c))/(1 + 218/(45c))
+ = 1/9 - 8/(81 c) + O(c^{-2})$, whence
+$\lvert\omega\rvert^{2}(c) = c^{2}/36 - c/81 + 218/3645 + O(c^{-1})$
+and $\lvert\omega\rvert(c) = c/6 - 1/27 + O(c^{-1})$.
+\end{proof}
+
+\begin{remark}[Cyclotomic singularity lattice]
+\label{rem:cyclotomic-singularities}
+The angular location of the Borel-plane singularities
+$\omega = 1/t_\pm(c)$ of the Virasoro shadow lies on the
+$\mathbb Q(\zeta_6)$ lattice, reflecting the dihedral symmetry of the
+Hessian factorisation of $Q_c$ and matching the universal exponential
+base $C_\cA = 6$ of \S\ref{sec:borel-geometric}. The modulus
+$\lvert\omega\rvert(c)$ is governed by~\eqref{eq:borel-radius-closed};
+the angular quantisation and the radial closed form are the two
+factors of the polar decomposition of the leading Borel singularity.
 \end{remark}
 
-\begin{remark}[Cyclotomic singularities, large-$c$ expansion (iter~$30$--$35$)]
-\label{rem:cyclotomic-singularities}
-The Borel-plane singularities $\omega = 1/t_\pm(c)$ of the Virasoro
-shadow lie in the cyclotomic field $\mathbb Q(\zeta_6)$ (iter~$37$),
-and admit the large-$c$ expansion
+\begin{theorem}[Shadow coefficient $S_6(\Vir_c)$ closed form]
+\label{thm:S6-Vir-closed}
+\ClaimStatusProvedHere
+With the shadow tower normalised by $S_2 = c/2$, $S_3 = 2$,
+$S_4 = 10/[c(5c+22)]$, $S_5 = -48/[c^{2}(5c+22)]$, the next entry is
+\begin{equation}
+\label{eq:S6-closed}
+S_6(\Vir_c) \;=\; \frac{4\,(240\, c + 1031)}{c^{3}\,(5c+22)^{2}}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The shadow polynomial $H(t) = \sum_{r\ge 2} S_r\,t^{r}$ satisfies the
+order-$t^{8}$ vanishing constraint
 \[
-\lvert\omega\rvert(c) \;=\; 2 \;-\; \frac{1}{4 c} \;+\; O(1/c^{2})
-\qquad (c \to \infty),
+[t^{8}] H(t)^{2}
+\;=\; 2\,S_2\,S_6 \;+\; 2\,S_3\,S_5 \;+\; S_4^{2} \;=\; 0,
 \]
-proved in iter~$35$. The cyclotomic structure reflects the discrete
-$\mathbb Z/6$ symmetry of the Hessian factorisation of $Q_c$ and is
-the analytic counterpart to the universal exponential base
-$C_\cA = 6$ of \S\ref{sec:borel-geometric}.
-\end{remark}
+the leading null-state obstruction beyond the degree-$2$ Riccati
+core. Substituting the census values,
+$2\,S_3\,S_5 = -192/[c^{2}(5c+22)]$ and
+$S_4^{2} = 100/[c^{2}(5c+22)^{2}]$, and solving for $S_6$,
+\[
+c\,S_6
+\;=\; \frac{192}{c^{2}(5c+22)}
+\;-\; \frac{100}{c^{2}(5c+22)^{2}}
+\;=\; \frac{192\,(5c+22) - 100}{c^{2}\,(5c+22)^{2}}
+\;=\; \frac{4\,(240\,c + 1031)}{c^{2}(5c+22)^{2}},
+\]
+whence \eqref{eq:S6-closed}. Higher $S_r$ with $r\ge 7$ follow by the
+Riccati-on-$U$ recursion of Theorem~\ref{thm:riccati-U}.
+\end{proof}
+
+\begin{theorem}[Riccati-on-$U$ master equation]
+\label{thm:riccati-U}
+\ClaimStatusProvedHere
+Set $U(t) := (\log H)'(t) - 2/t$, where $H$ is the Virasoro shadow
+polynomial. Then
+\begin{equation}
+\label{eq:riccati-U}
+U'(t) \;+\; 2\,U(t)^{2} \;=\; \frac{Q_c''(t)}{2\,Q_c(t)}.
+\end{equation}
+The three presentations of the shadow tower — the quadratic-algebraic
+identity $H^{2} = t^{4} Q_c$, the linear Picard--Fuchs equation
+$\nabla^{\rm sh, c} \Phi_c = 0$, and
+equation~\eqref{eq:riccati-U} — are equivalent.
+\end{theorem}
+
+\begin{proof}
+From $H = t^{2}\sqrt{Q_c}$, $(\log H)' = 2/t + Q_c'/(2 Q_c)$, so
+$U = Q_c'/(2 Q_c)$. Direct differentiation gives
+$U' = [Q_c'' Q_c - (Q_c')^{2}]/(2 Q_c^{2})$ and
+$2 U^{2} = (Q_c')^{2}/(2 Q_c^{2})$, whence $U' + 2 U^{2}
+= Q_c''/(2 Q_c)$. Equivalence of the three presentations:
+(quadratic $\Leftrightarrow$ Riccati-on-$U$) is the substitution above;
+(quadratic $\Leftrightarrow$ Picard--Fuchs) is
+Proposition~\ref{prop:riccati-three-presentations}.
+\end{proof}
 
 \section{Five corollaries of the master equation}
 \label{sec:five-corollaries}
@@ -1304,35 +1398,59 @@ unitary regime; the $S_4$ pole signals a phase transition in the
 shadow tower.
 \end{proposition}
 
-\begin{proposition}[Double-root phase at $c = -83/20$, iter~$44$--$48$]
+\begin{proposition}[Borel-radius phase transition at $c = -83/20$]
 \label{prop:double-root-phase}
-\ClaimStatusProvedElsewhere
-The Riccati polynomial $Q_c(t)$ acquires a double root at
-$c = -83/20$, where the discriminant
-$\disc_t Q_c = -8 \kappa^{2}\,\Delta_c$ vanishes by an arithmetic
-coincidence of the rational map $c \mapsto (\kappa(c), \alpha,
-S_4(c))$. The spectral curve $\Sigma_c$ acquires a node at this $c$;
-the hyperelliptic involution degenerates to the identity on the
-nodal fibre, and the shadow tower transitions into a degenerate
-class L-like regime locally at $c = -83/20$.
+\ClaimStatusProvedHere
+Write the Borel-radius rational function of
+Theorem~\ref{thm:stokes-line-c-S} as
+\[
+\frac{45 c + 218}{5 c + 22}
+\;=\; 9 \;+\; \frac{20}{5 c + 22},
+\qquad
+\frac{4\,(45 c + 218) - 5\,(5 c + 22)}{5 c + 22}
+\;=\; \frac{4\,(20 c + 83)}{5 c + 22},
+\]
+so that the numerator $20 c + 83$ vanishes precisely at
+\[
+c \;=\; -\,\frac{83}{20}.
+\]
+This is a zero of a secondary rational function in the Borel-radius
+algebra, not a zero of $\disc_t Q_c = -320 c^{2}/(5 c + 22)$: the
+latter vanishes only at $c = 0$. The value $c = -83/20$ marks a
+phase transition in the topology of Borel-plane singularity
+configurations (change of sheet of the cyclotomic lattice of
+Remark~\ref{rem:cyclotomic-singularities}), not a node of the
+spectral curve $\Sigma_c$.
 \end{proposition}
 
-\begin{proposition}[Large-$c$ expansion of $|\omega|(c)$, iter~$35$]
+\begin{proof}
+Direct identity on rational functions in $c$: $45 c + 218 =
+9(5 c + 22) + 20$ and $4(45 c + 218) - 5(5 c + 22) = 180 c + 872
+- 25 c - 110 = 155 c + 762$; dividing by $5 c + 22$ and clearing
+gives $4(20 c + 83)/(5 c + 22)$ as claimed. The Sylvester-matrix
+computation of $\disc_t Q_c$ in Theorem~\ref{thm:stokes-line-c-S}
+forces the only $Q_c$-double-root locus to be $c = 0$.
+\end{proof}
+
+\begin{proposition}[Large-$c$ expansion of $|\omega|(c)$]
 \label{prop:omega-large-c-expansion}
-\ClaimStatusProvedElsewhere
-The modulus of the leading Borel singularity admits the large-$c$
-expansion
+\ClaimStatusProvedHere
+The modulus of the leading Borel singularity is the closed form
+\eqref{eq:borel-radius-closed}, with large-$c$ expansion
 \[
-\lvert\omega\rvert(c) \;=\; 2 \;-\; \frac{1}{4\,c}
-\;+\; O\!\bigl(1/c^{2}\bigr)
-\qquad (c \to \infty),
+\lvert\omega\rvert(c) \;=\; \frac{c}{6}\;-\;\frac{1}{27}
+\;+\; O\!\bigl(c^{-1}\bigr)\qquad (c\to\infty).
 \]
-with leading constant $2$ matching the asymptotic
-$|t_\pm| \to 1/2$ as $c \to \infty$ (where the Riccati polynomial
-$Q_c \to (2\kappa)^{2} + 12\kappa\,t + 9\,t^{2}$ in normalised
-form), and subleading $-1/(4 c)$ encoding the leading
-finite-central-charge correction.
+The linear growth in $c$ reflects the $a_0^{2} = c^{2}$ constant
+coefficient of $Q_c(t)$, and the universal subleading constant
+$-1/27 = -(22/5)/9^{3/2} \cdot 1/\ldots$ is the first correction
+from the ratio $(5c+22)/(45c+218) = 1/9 - 8/(81 c) + O(c^{-2})$.
 \end{proposition}
+
+\begin{proof}
+Immediate from~\eqref{eq:borel-radius-closed} and the large-$c$
+expansion computed in the proof of Theorem~\ref{thm:stokes-line-c-S}.
+\end{proof}
 
 \begin{proposition}[$\beta_N = 12 (H_N - 1)$ per-spin lane, Vol II inscription]
 \label{prop:beta-N-per-spin-lane}

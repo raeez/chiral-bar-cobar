@@ -409,7 +409,7 @@ standalone:
 		programme_summary_sections9_14; do \
 		if [ -f standalone/$$paper.tex ]; then \
 			echo "    Building $$paper.tex ..."; \
-			cd standalone && for i in 1 2 3; do \
+			cd standalone && TEXINPUTS=".:..:$$TEXINPUTS"; export TEXINPUTS; for i in 1 2 3; do \
 				$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
 			done && cd ..; \
 			if [ -f standalone/$$paper.pdf ]; then \
