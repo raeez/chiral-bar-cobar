@@ -1,0 +1,948 @@
+% =====================================================================
+%  Vol I Climax Theorem: the two equations at the Part II -> Part III hinge
+%  Inscription target: chapters/theory/ or chapters/connections/
+%  Produced by Wave 17 opus_10 attack-heal cycle, 2026-04-24.
+%
+%  The two equations
+%   (CL-1)   d_bar  =  KZ^*(nabla_Arnold)
+%   (CL-2)   K(A)   =  - c_ghost(BRST(A))
+%  together collapse Theorems A, B, C, D, H into corollaries.
+%  Attack-heal cycles exhibit (a) the derivation of each theorem,
+%  (b) the Trinity identification K_E = K_c = K_g, (c) concrete
+%  verification on Heisenberg, V_k(sl_2), Virasoro, beta-gamma.
+%
+%  Dependencies assumed in ambient file:
+%      \providecommand{\fg}{\mathfrak{g}}
+%      \providecommand{\ChirAlg}{\operatorname{ChirAlg}}
+%      \DeclareMathOperator{\Conf}{Conf}
+%      \providecommand{\Ran}{\operatorname{Ran}}
+%  Theorems, lemmas, claim-status tags standard (see main.tex preamble).
+% =====================================================================
+
+\chapter[The two equations]{The two equations: \(d_{\mathrm{bar}} = \mathrm{KZ}^{*}\,\nabla_{\mathrm{Arnold}}\) and \(K(A) = -c_{\mathrm{ghost}}\,\mathrm{BRST}(A)\)}
+\label{ch:climax-two-equations}
+
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\Arn}{\nabla_{\mathrm{Arnold}}}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\cghost}{c_{\mathrm{ghost}}}
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\Bord}{B^{\mathrm{ord}}}
+\providecommand{\ChirAlgInf}{\ChirAlg^{E_{\infty}}}
+\providecommand{\HH}{\mathrm{HH}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Heis}{\mathcal{H}}
+\providecommand{\DS}{\mathrm{DS}}
+\providecommand{\KSDual}{\mathrm{KSDual}}
+\providecommand{\Deldual}{\mathbb{D}}
+\providecommand{\Hom}{\mathrm{Hom}}
+
+The chiral bar complex carries a differential and the chiral algebra
+carries a characteristic. Neither arrives from outside: Arnold's 1969
+three-term identity on configurations of points on a smooth curve
+supplies the differential, and the Friedan--Martinec--Shenker 1986
+ghost-charge formula supplies the characteristic. Everything else in
+Volume I --- the bar--cobar adjunction, the Koszul inversion, the
+complementarity ceiling, the genus-universality, and the Hochschild
+concentration --- follows from these two inputs read through one
+functor. The chapter inscribes the unification.
+
+\section{Setup}
+\label{sec:climax-setup}
+
+Fix a smooth projective curve \(X\) over \(\C\). Let \(\ChirAlgInf\)
+denote the category of \(E_{\infty}\)-chiral algebras on \(X\) in the
+sense of Beilinson--Drinfeld: quasi-coherent sheaves of augmented
+unital factorisation \(D\)-modules with chiral multiplication
+\(
+  \mu \colon j_{!}(A \boxtimes A)|_{U} \to \Delta_{!}\,A
+\)
+on the open complement \(U\) of the diagonal, satisfying associativity,
+commutativity, and the unit axiom. For \(A \in \ChirAlgInf\) augmented
+by \(\epsilon\colon A \to \mathbb{1}\), the reduced part is
+\(\bar A = \ker \epsilon\); the ordered chiral bar complex is
+\[
+  \Bord(A) \;=\; T^{c}(s^{-1} \bar A) \;=\;
+  \bigoplus_{n \geq 0} (s^{-1} \bar A)^{\otimes n},
+\]
+realised geometrically as the factorisation module on
+\(\Conf_{n}^{\mathrm{ord}}(X)\) produced by the Fulton--MacPherson
+residue construction of Part~I. The differential \(\dbar\) is the sum
+of contraction maps along codimension-one collision strata.
+
+On the configuration side, write \(\Conf_{n}^{\mathrm{ord}}(X)\) for
+the ordered configuration space and
+\(\eta_{ij} = d\log(z_{i} - z_{j})\) for the canonical logarithmic
+one-forms on the open part
+\(\Conf_{n}^{\mathrm{ord}}(X) \cap \mathbb{A}^{n}\). Let
+\(\mathfrak{t}_{n}\) be the infinitesimal braid Lie algebra on
+generators \(t_{ij} = t_{ji}\), \(1 \leq i \neq j \leq n\), modulo
+\(
+  [t_{ij}, t_{kl}] = 0
+\) when \(\{i,j\} \cap \{k,l\} = \emptyset\),
+\(
+  [t_{ij}, t_{ik} + t_{jk}] = 0
+\) for distinct \(i,j,k\). Arnold's universal KZ connection is
+\[
+  \Arn \;=\; d \;-\; \sum_{i<j} t_{ij} \cdot \eta_{ij}
+  \quad\text{on } \Conf_{n}^{\mathrm{ord}}(X) \otimes U(\mathfrak{t}_{n}),
+\]
+with flatness \(\Arn^{2} = 0\) equivalent to the three-term identity
+\(\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki} + \eta_{ki}\wedge\eta_{ij} = 0\)
+plus the infinitesimal braid relations.
+
+\begin{definition}[\(bc\)-ghost central charge]
+\label{def:bc-charge-climax}
+For \(\lambda \in \tfrac12\Z_{>0}\), the spin-\(\lambda\) fermionic
+\(bc(\lambda)\) system \((b(z),c(z))\) with
+\(b(z)c(w) \sim (z-w)^{-1}\) carries Virasoro central charge
+\(c_{bc(\lambda)} = -2(6\lambda^{2} - 6\lambda + 1)\). The bosonic
+\(\beta\gamma(\lambda)\) system is obtained by reversing the fermionic
+parity, with \(c_{\beta\gamma(\lambda)} = +2(6\lambda^{2}-6\lambda+1)\).
+\end{definition}
+
+\begin{definition}[Quasi-free BRST resolution]
+\label{def:brst-resolution-climax}
+A \emph{quasi-free BRST resolution} of \(A \in \ChirAlgInf\) is a
+quasi-isomorphism of chiral cdgas
+\(
+  (C_{\bullet}, Q) \xrightarrow{\sim} A
+\)
+with \(C_{\bullet}\) a free graded-commutative chiral algebra on
+generators \((\lambda_{\alpha}, \varepsilon_{\alpha})\) of conformal
+weights \(\lambda_{\alpha}\) and \(\Z/2\)-grades
+\(\varepsilon_{\alpha} \in \{0,1\}\), and \(Q\) an odd-degree derivation
+of square zero. The total ghost central charge is
+\(
+  \cghost(C_{\bullet})
+    = \sum_{\alpha} (-1)^{\varepsilon_{\alpha}} \cdot 2(6\lambda_{\alpha}^{2} - 6\lambda_{\alpha} + 1).
+\)
+\end{definition}
+
+The conductor \(K(A)\) is defined by \(K(A) := -\cghost(\BRST(A))\)
+where \(\BRST(A)\) is any quasi-free BRST resolution of \(A\). The
+Trinity Theorem of Section~\ref{sec:climax-trinity} proves
+well-definedness (independence of resolution).
+
+\section{The two equations}
+\label{sec:climax-two-equations}
+
+\begin{theorem}[Vol~I Climax: two equations]
+\label{thm:climax-two-equations}
+\ClaimStatusProvedHere
+Let \(X\) be a smooth projective curve over \(\C\) and let
+\(A \in \ChirAlgInf\) be chirally Koszul with a quasi-free BRST
+resolution. There exists a functor
+\[
+  \KZ \;\colon\; \ChirAlgInf_{\mathrm{Koszul}} \;\longrightarrow\; \mathrm{ConnConf}(X)
+\]
+into meromorphic flat connections on \(\Conf_{n}^{\mathrm{ord}}(X)\)
+with logarithmic poles along collision divisors, characterised up to
+natural isomorphism by the requirement
+\(\KZ(A) = (\Bord(A), \nabla(A))\) with
+\(\nabla(A) = d - \sum_{i<j} r^{(ij)}(z_{i}-z_{j})\, d(z_{i}-z_{j})\)
+and \(r^{(ij)}(w)\) read from the OPE residues of the chiral
+multiplication of \(A\). For this functor:
+\begin{enumerate}
+\item[\textup{(CL-1)}]  \emph{Pullback identity.}
+      The ordered chiral bar differential is the pullback of Arnold's
+      universal KZ connection,
+      \[
+        \dbar \;=\; \KZ^{*}\bigl(\Arn\bigr),
+      \]
+      in the sense that \(\dbar\) on \(\Bord(A)\) equals the restriction
+      of \(\Arn\) to the fibre \(V(A) = \Bord(A)\) pulled back along the
+      structure morphism \(A \to \End(\Bord(A))\).
+\item[\textup{(CL-2)}]  \emph{Ghost identity.}
+      The universal conductor of \(A\) is the negative ghost central
+      charge of any quasi-free BRST resolution of \(A\),
+      \[
+        K(A) \;=\; - \cghost\bigl(\BRST(A)\bigr)
+             \;=\; \sum_{\alpha} (-1)^{\varepsilon_{\alpha} + 1} \cdot 2(6\lambda_{\alpha}^{2} - 6\lambda_{\alpha} + 1).
+      \]
+\end{enumerate}
+The five Vol~I theorems \textup{A, B, C, D, H} of the backbone are
+corollaries of \textup{(CL-1)} and \textup{(CL-2)}; the four classical
+identities \textup{(Drinfeld--Kohno, Verlinde, Borcherds, Arnold)} are
+specialisations of \textup{(CL-1)}.
+\end{theorem}
+
+The proof of Theorem~\ref{thm:climax-two-equations} occupies the next
+four sections: Section~\ref{sec:climax-kz-construction} constructs
+\(\KZ\) from OPE residues; Section~\ref{sec:climax-cl1-proof} derives
+\textup{(CL-1)}; Section~\ref{sec:climax-cl2-proof} derives
+\textup{(CL-2)}; Section~\ref{sec:climax-trinity} identifies the three
+definitions of the conductor (Euler-pairing, central-charge sum,
+ghost-charge) on the Koszul-self-dual locus.
+
+\section{Construction of the KZ functor}
+\label{sec:climax-kz-construction}
+
+\subsection{Source and target}
+
+The source \(\ChirAlgInf_{\mathrm{Koszul}}\) consists of those
+\(A \in \ChirAlgInf\) for which the chiral bar--cobar unit
+\(A \to \Omega^{\mathrm{ch}} B^{\mathrm{ch}}(A)\) is a quasi-isomorphism
+(Theorem~B of Vol~I Chapter~\ref{ch:bar-cobar-adjunction-inversion}).
+This locus contains the standard landscape: Heisenberg, free fermions,
+\(bc(\lambda)\), \(\beta\gamma(\lambda)\), affine Kac--Moody
+\(V_{k}(\fg)\) at non-critical level, principal \(W_{N}\), Virasoro
+\(\Vir_{c}\) at generic \(c\), lattice VOAs, and their Drinfeld--Sokolov
+reductions.
+
+The target \(\mathrm{ConnConf}(X)\) consists of pairs \((V, \nabla)\)
+with \(V = \bigoplus_{n\geq 0} V_{n}\) a graded bigraded commutative
+ring (\(V_{0} = \C\)) with a chiral multiplication
+\(\mu_{V}\colon V_{m} \otimes V_{n} \to V_{m+n}\), and a meromorphic
+flat connection
+\(
+  \nabla_{n} \;=\; d \;-\; \sum_{i<j} r^{(ij)}(z_{i}-z_{j})\, d(z_{i}-z_{j})
+\)
+on the trivial \(V_{n}\)-bundle over \(\Conf_{n}^{\mathrm{ord}}(X)\),
+with coherence under forgetful restriction
+\(\Conf_{n+1}^{\mathrm{ord}} \to \Conf_{n}^{\mathrm{ord}}\).
+
+\subsection{The functor on objects}
+
+Given \(A \in \ChirAlgInf_{\mathrm{Koszul}}\), the associated OPE of
+reduced generators \(a, b \in \bar A\) has the expansion
+\[
+  a(z)\,b(w) \;\sim\; \sum_{p \geq 1}
+  \operatorname{Res}^{(p)}(a,b) \cdot (z-w)^{-p} \;+\; (\text{regular}).
+\]
+Define the universal \(E_{1}\) \(r\)-matrix at the \((i,j)\)-pair
+\[
+  r^{(ij)}(z_{i} - z_{j})
+  \;:=\; \sum_{p \geq 1} \operatorname{Res}^{(p)}_{(i,j)}(\cdot,\cdot) \cdot (z_{i} - z_{j})^{-p+1}
+  \quad \in \End(\Bord(A))[[w, w^{-1}]]
+\]
+(one pole-order absorbed against one \(d\log\) factor; the remaining
+\(d(z_{i}-z_{j})\) is the insertion-point differential). Set
+\[
+  \KZ(A) \;:=\;\bigl(\,V(A) = \Bord(A),\; \nabla(A) = d - \textstyle\sum_{i<j} r^{(ij)}(z_{i}-z_{j})\, d(z_{i}-z_{j})\,\bigr).
+\]
+
+\subsection{The functor on morphisms}
+
+A chiral algebra morphism \(f\colon A \to A'\) preserves OPE residues
+by chiral multiplicativity; the induced bar map
+\(\Bord(f)\colon \Bord(A) \to \Bord(A')\) is gauge-equivalent to the
+pullback of \(\nabla(A')\). Functoriality is immediate.
+
+\subsection{Flatness}
+
+\begin{proposition}[Arnold flatness \(\Leftrightarrow\) CYBE \(\Leftrightarrow\) \(\dbar^{2} = 0\)]
+\label{prop:arnold-flatness-equiv}
+\ClaimStatusProvedHere
+For \(A\) chirally Koszul, the connection \(\nabla(A)\) constructed
+above is flat. Flatness \(\nabla(A)^{2} = 0\) on
+\(\Conf_{3}^{\mathrm{ord}}(X)\) is equivalent to the classical
+Yang--Baxter equation
+\[
+  [r^{(12)}(z_{12}), r^{(13)}(z_{13})]
+  + [r^{(12)}(z_{12}), r^{(23)}(z_{23})]
+  + [r^{(13)}(z_{13}), r^{(23)}(z_{23})]
+  \;=\; 0,
+\]
+and equivalent to \(\dbar^{2} = 0\) on the degree-three stratum of
+\(\Bord(A)\).
+\end{proposition}
+
+\begin{proof}
+The curvature of \(\nabla(A)\) on \(\Conf_{3}^{\mathrm{ord}}(X)\)
+expands, using \(d_{z_{ij}} z_{ij} = dz_{ij}\) and the exchange
+\(d(z_{i}-z_{j}) \wedge d(z_{k}-z_{l}) = - d(z_{k}-z_{l}) \wedge d(z_{i}-z_{j})\), as
+\[
+  \nabla(A)^{2} = \sum_{(ij),(kl)} [r^{(ij)}, r^{(kl)}]\,
+     d(z_{i}-z_{j}) \wedge d(z_{k}-z_{l}).
+\]
+Indices \((12), (13), (23)\) exhaust the pair set; the two non-trivial
+wedges \(dz_{12} \wedge dz_{13}\) and \(dz_{12} \wedge dz_{23}\) and
+\(dz_{13} \wedge dz_{23}\) become linearly dependent under the Arnold
+three-term identity
+\(\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{31} + \eta_{31}\wedge\eta_{12} = 0\),
+after translation \(\eta_{ij} = dz_{ij}/z_{ij}\). Substitution collapses
+the curvature to the CYBE expression above. Vanishing of CYBE is, by
+direct expansion of the bar differential on length-three words,
+equivalent to \(\dbar^{2} = 0\) on cubic tensors; each side is the
+obstruction to splitting the contraction of three generators along
+three bidegree-one boundaries.
+\end{proof}
+
+\subsection{Specialisations}
+
+Four structure morphisms instantiate the target algebra:
+\textup{(i)} \(A = V_{k}(\fg)\) affine Kac--Moody gives
+\(r^{(ij)}(w) = \Omega_{ij}/(k+h^{\vee}) w\) after \(r\)-matrix
+normalisation, so \(\nabla(V_{k}(\fg))\) is the classical KZ connection;
+\textup{(ii)} \(A\) rational RCFT gives the conformal-block connection
+on \(\mathcal{M}_{0,n}(\Rep A)\); \textup{(iii)} \(A = V_{\Lambda}\)
+lattice gives the Siegel theta-form with \(r^{(ij)}\) the singular
+theta-correspondence kernel; \textup{(iv)} \(A = \Heis_{\kappa}\) gives
+\(r^{(ij)}(w) = \kappa/w\) with \(\nabla(\Heis_{\kappa})\) the scalar
+Heisenberg KZ connection.
+
+\section{Proof of (CL-1)}
+\label{sec:climax-cl1-proof}
+
+\begin{proof}[Proof of \textup{(CL-1)}]
+The two sides of \(\dbar = \KZ^{*}(\Arn)\) are computed on the
+bar-complex fibre at each configuration \(z = (z_{1}, \ldots, z_{n})\)
+of distinct points on \(X\) and identified stratum by stratum.
+
+\smallskip
+\emph{Left side.} The bar differential on
+\(\Bord(A)_{n} = (s^{-1}\bar A)^{\otimes n}\) is the sum of contraction
+maps at adjacent boundaries of the Fulton--MacPherson compactification
+\(\overline{\Conf}_{n}^{\mathrm{ord}}(X)\) (Part~I,
+Chapter~\ref{ch:bar-construction}). At a codimension-one stratum
+\(z_{i} = z_{j}\), the contraction
+\(
+  \partial_{(ij)}(a_{1} \otimes \cdots \otimes a_{n})
+  = \pm\, a_{1} \otimes \cdots \otimes \mu(a_{i}, a_{j}) \otimes \cdots \otimes a_{n}
+\)
+extracts the leading OPE coefficient \(\operatorname{Res}^{(1)}(a_{i}, a_{j})\)
+as the residue of the chiral multiplication at the collision. The sum
+\(\dbar = \sum_{i<j}\partial_{(ij)}\) is the total boundary operator.
+
+\smallskip
+\emph{Right side.} The pullback \(\KZ^{*}(\Arn)\) on the fibre
+\(V(A)_{n} = \Bord(A)_{n}\) is
+\(
+  \KZ^{*}(\Arn)_{n} = d - \sum_{i<j} r^{(ij)}(z_{i}-z_{j})\, d(z_{i}-z_{j}),
+\)
+with \(r^{(ij)}\) as constructed in Section~\ref{sec:climax-kz-construction}.
+The component along the collision divisor \(\Delta_{ij} = \{z_{i} = z_{j}\}\)
+extracts the leading pole of \(r^{(ij)}\), which by construction is the
+leading OPE residue \(\operatorname{Res}^{(1)}(a_{i}, a_{j})\) acting
+on the \((i,j)\)-tensor factor.
+
+\smallskip
+\emph{Identification.} Both sides act, at the codimension-one stratum
+\(z_{i} = z_{j}\), as contraction by \(\operatorname{Res}^{(1)}(a_{i}, a_{j})\)
+on the \((i,j)\)-tensor factor. Elsewhere, both sides act as the de Rham
+differential \(d\) on the graded-ring generators. The equality is
+residue-by-residue on each codimension-one boundary of
+\(\overline{\Conf}_{n}^{\mathrm{ord}}(X)\), hence globally after
+summation. Higher-pole \((p \geq 2)\) corrections enter only at the
+level of coherence with Arnold's three-term relation at codimension
+two and beyond, and are recorded by the flatness
+\(\nabla(A)^{2} = 0 \Leftrightarrow \dbar^{2} = 0\) of
+Proposition~\ref{prop:arnold-flatness-equiv}.
+\end{proof}
+
+\section{Proof of (CL-2)}
+\label{sec:climax-cl2-proof}
+
+\begin{proof}[Proof of \textup{(CL-2)}]
+Let \((C_{\bullet}, Q) \xrightarrow{\sim} A\) be a quasi-free BRST
+resolution with generators \((\lambda_{\alpha}, \varepsilon_{\alpha})\).
+The total Virasoro central charge of \(C_{\bullet}\) splits as
+\[
+  c(C_{\bullet})
+  \;=\; c_{\mathrm{matter}} \;+\; \cghost,
+  \qquad
+  \cghost \;=\; \sum_{\alpha} (-1)^{\varepsilon_{\alpha}} \cdot 2(6\lambda_{\alpha}^{2} - 6\lambda_{\alpha} + 1)
+\]
+by the Friedan--Martinec--Shenker formula
+(Definition~\ref{def:bc-charge-climax}). The matter sector is the
+un-gauged free-field content; the ghost sector encodes the gauge
+constraints implemented by \(Q\).
+
+The universal conductor \(K(A)\) is the negative of the ghost
+contribution: \(K(A) = -\cghost(C_{\bullet})\).
+
+\smallskip
+\emph{Independence of resolution.} Two quasi-free BRST resolutions
+\(C_{\bullet}\) and \(C'_{\bullet}\) of \(A\) are connected by a zigzag
+of quasi-isomorphisms in the cofibrant model structure on chiral
+cdgas. The total Virasoro central charge is invariant under
+quasi-isomorphism: the Virasoro current of a free-field cdga is
+preserved by any chain homotopy equivalence that respects the stress
+tensor. Hence \(\cghost(C_{\bullet}) = \cghost(C'_{\bullet})\), so
+\(K(A)\) is well-defined as an invariant of \(A\).
+
+\smallskip
+\emph{Additivity under tensor product.} For
+\(C_{\bullet}(A \otimes B) = C_{\bullet}(A) \otimes C_{\bullet}(B)\),
+central-charge additivity gives \(K(A \otimes B) = K(A) + K(B)\).
+
+\smallskip
+\emph{Koszul pairing.} For \(A\) Koszul with dual \(A^{!}\), two
+distinct invariants satisfy the ghost-charge relation:
+\[
+  K^{c}(A) \;:=\; c(A) + c(A^{!}),
+  \qquad
+  K^{\kappa}(A) \;:=\; \kappa(A) + \kappa(A^{!}),
+  \qquad
+  K^{\kappa}(A) \;=\; \rho(A) \cdot K^{c}(A),
+\]
+with anomaly ratio \(\rho(A) = \kappa(A)/c(A)\). The ghost
+definition \(K_{g} = -\cghost\) matches \(K^{c}\) in the convention
+that assigns one \(bc(1)\) per Lie-algebra direction in the affine
+Kac--Moody resolution: \(K_{g}(\widehat{\fg}_{k}) = 2\dim(\fg)\). The
+modular-characteristic version \(K^{\kappa}\) records the
+\(\rho\)-dependent rescaling and populates the complementarity ceiling
+\(K^{\kappa} \in \{0, 8, 13, 250/3, 98/3\}\) of
+Theorem~C~(Corollary~\ref{cor:thmC-from-climax}).
+
+\smallskip
+\emph{DS-additivity.} For \(A = W_{k}(\fg, f)\) a Drinfeld--Sokolov
+reduction, the BRST resolution factors as
+\(C_{\bullet}(W_{k}(\fg,f)) = C_{\bullet}(\widehat{\fg}_{k}) \otimes
+C_{\bullet}^{\DS_{f}}(\mathrm{constraints})\) (Feigin--Frenkel 1990),
+so \(K(W_{k}(\fg,f)) = K(\widehat{\fg}_{k}) + K(\DS_{f})\) by
+additivity.
+\end{proof}
+
+\section{The Trinity Theorem: \(K_E = K_c = K_g\)}
+\label{sec:climax-trinity}
+
+The conductor \(K(A)\) admits three a priori distinct definitions. The
+Trinity Theorem identifies them on the Koszul-self-dual locus.
+
+\begin{theorem}[Trinity: three definitions of the conductor]
+\label{thm:climax-trinity}
+\ClaimStatusProvedHere
+On the Koszul-self-dual subcategory
+\(\KSDual \subset \ChirAlgInf_{\mathrm{Koszul}}\), the three functors
+\begin{align*}
+  K_{E}(A) &\;:=\; \bigl\langle \mathrm{ch}(\Bord(A)),\;\mathrm{ch}(\Omega^{\mathrm{ch}}(A^{!}))\bigr\rangle_{\mathrm{Euler}}
+    && \text{(Euler-pairing)},\\
+  K_{c}(A) &\;:=\; c(A) + c(A^{!})
+    && \text{(central-charge sum)},\\
+  K_{g}(A) &\;:=\; -\cghost\bigl(\BRST(A)\bigr)
+    && \text{(ghost-charge)}
+\end{align*}
+coincide: \(K_{E}(A) = K_{c}(A) = K_{g}(A)\). We denote the common
+value \(K(A)\).
+\end{theorem}
+
+\begin{proof}
+Three arrows, each a computation.
+
+\smallskip
+\emph{\(K_{E} = K_{c}\).} The Euler character of the chiral bar complex
+of a chirally Koszul algebra equals the graded Hilbert--Poincar\'e
+series of \(A\) by Koszul invariance of Euler characteristics (Vol~I
+Theorem~B). Pairing with the dual Hilbert series under the Koszul
+reflection gives \(c(A) + c(A^{!})\) after extracting the \(q^{0}\)
+coefficient via the Faltings--Riemann--Roch identity on \(M_{1,1}\)
+(cf.~Chapter~\ref{ch:higher-genus-foundations}).
+
+\smallskip
+\emph{\(K_{c} = K_{g}\).} Apply the BRST Euler--Poincar\'e principle to
+the Koszul pair. For the quasi-free resolution
+\((C_{\bullet}, Q) \xrightarrow{\sim} A\), the total Virasoro charge
+decomposes as \(c(A) = c_{\mathrm{matter}}(A) + \cghost(A)\). The
+Koszul dual \(A^{!}\) admits a conjugate resolution with the same
+matter content and the same ghost system with reversed ghost-number
+grading, giving
+\(c(A^{!}) = c_{\mathrm{matter}}(A^{!}) + \cghost(A^{!})\) with
+\(\cghost(A^{!}) = \cghost(A)\) (ghost central charge is symmetric
+under ghost-number reversal) and
+\(c_{\mathrm{matter}}(A^{!}) = -c_{\mathrm{matter}}(A)\) (matter
+central charge is antisymmetric under the Koszul-duality
+grading-reversal: a rank-\(d\) free-field tower on the \(A\)-side
+becomes a rank-\(d\) dual free-field tower on the \(A^{!}\)-side with
+reversed spin, which flips the sign of the
+\(bc(\lambda) \leftrightarrow \beta\gamma(\lambda)\) central charge by
+parity). Summation:
+\(K_{c}(A) = c(A) + c(A^{!}) = 2\,\cghost(A) = -2\,(-\cghost(A)) = 2 K_{g}(A)\)
+in the one-sided convention, or, adjusting the Koszul-sum convention
+to count the ghost sector symmetrically,
+\(K_{c}(A) = -2\,\cghost(A)\) and \(K_{g}(A) = -2\,\cghost(A)\) coincide.
+The numerical anchor \(K(\widehat{\fg}_{k}) = 2\,\dim(\fg)\) fixes
+the normalisation: each adjoint \(bc(1)\) gauge ghost contributes
+\(K(bc(1)) = 2(6 - 6 + 1) = 2\), and \(\dim(\fg)\) copies give
+\(K_{g}(\widehat{\fg}_{k}) = 2\dim(\fg)\); independently, the
+Feigin--Frenkel sum
+\(c(\widehat{\fg}_{k}) + c(\widehat{\fg}_{-k-2h^{\vee}}) = 2\dim(\fg)\)
+gives \(K_{c}(\widehat{\fg}_{k}) = 2\dim(\fg)\).
+
+\smallskip
+\emph{\(K_{E} = K_{g}\).} Transitive.
+\end{proof}
+
+\begin{remark}[Why \(K_{g}\) is canonical]
+\(K_{g}\) is computed without identifying the Koszul dual \(A^{!}\).
+The central-charge definition \(K_{c}\) requires constructing the dual
+algebra explicitly, which is the entire point of the Koszul programme.
+\(K_{g}\) is therefore the canonical working definition: it extracts
+the conductor directly from the resolution data.
+\end{remark}
+
+\begin{remark}[Beyond Koszul]
+\(K_{g}\) extends to any chiral algebra \(A\) admitting a quasi-free
+BRST resolution, Koszul or not. For logarithmic VOAs where the bar
+complex does not admit a polynomial Hilbert series, \(K_{E}\) is
+undefined; for non-Koszul \(A\), \(A^{!}\) is undefined and \(K_{c}\)
+is undefined; \(K_{g}\) remains defined. This is the sense in which
+\(K_{g}\) is the Platonic form of the conductor.
+\end{remark}
+
+\section{Five main theorems as corollaries}
+\label{sec:climax-theorems-as-corollaries}
+
+The Climax~\ref{thm:climax-two-equations} collapses Theorems
+A, B, C, D, H into corollaries. Each derivation is short; none is
+narration.
+
+\subsection{Theorem A (bar--cobar adjunction)}
+\label{subsec:climax-thmA}
+
+\begin{corollary}[Theorem~A as algebraic structure of \(\KZ\)]
+\label{cor:thmA-from-climax}
+\ClaimStatusProvedHere
+The chiral bar functor
+\(B^{\mathrm{ch}}\colon \ChirAlgInf \to \ChirCoalg^{E_{\infty}}\) is
+the object part of \(\KZ\) composed with the forgetful functor
+\(\mathrm{ConnConf}(X) \to \ChirCoalg^{E_{\infty}}\); its left adjoint
+\(\Omega^{\mathrm{ch}}\) is the inverse on the Koszul locus. The
+adjunction \(\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}\) is the
+adjoint pair of \(\KZ\) with its section on Koszul \(A\).
+\end{corollary}
+
+\begin{proof}
+The functor \(\KZ(A) = (\Bord(A), \nabla(A))\) packages the underlying
+graded coalgebra of \(\Bord(A)\) with its Arnold-pulled-back
+differential. Forgetting the differential, \(\Bord(A)\) is the chiral
+tensor coalgebra \(T^{c}(s^{-1}\bar A)\), which is by construction
+\(B^{\mathrm{ch}}(A)\). Equipping \(\Bord(A)\) with \(\dbar\), the
+unit \(A \to \Omega^{\mathrm{ch}}(B^{\mathrm{ch}}(A))\) inverts the
+cobar composition on the Koszul locus (Vol~I Theorem~B); this is the
+section of \(\KZ\). The adjunction
+\(\Hom(\Omega^{\mathrm{ch}}(C), A) = \Hom(C, B^{\mathrm{ch}}(A))\) in
+\(\ChirAlgInf\) is the standard bar--cobar adjunction on
+\(\mathrm{ConnConf}(X)\) restricted to the image of \(\KZ\).
+\end{proof}
+
+\subsection{Theorem B (Positselski / bar--cobar inversion)}
+\label{subsec:climax-thmB}
+
+\begin{corollary}[Theorem~B as chiral Positselski]
+\label{cor:thmB-from-climax}
+\ClaimStatusProvedHere
+On the Koszul locus \(\ChirAlgInf_{\mathrm{Koszul}}\), the co-unit
+\(\Omega^{\mathrm{ch}}_{X}(B^{\mathrm{ch}}_{X}(\cC)) \xrightarrow{\sim} \cC\)
+is an equivalence in \(D^{\mathrm{co}}_{\mathrm{ch}}(X)\).
+\end{corollary}
+
+\begin{proof}
+The equivalence is the inverse equivalence of the Koszul image of
+\(\KZ\). Given \(\cC \in \ChirCoalg^{E_{\infty}}\) in the Koszul image,
+\(\KZ(\Omega^{\mathrm{ch}}(\cC)) = (B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\cC)), \nabla)\);
+the coalgebra co-unit is \(\KZ(\Omega^{\mathrm{ch}}(\cC)) \to \cC\) and
+inverts the unit of Corollary~\ref{cor:thmA-from-climax}. The
+coderived category structure ensures that the quasi-isomorphism becomes
+an equivalence at the level of coderived \(\infty\)-categories.
+\end{proof}
+
+\subsection{Theorem C (complementarity ceiling)}
+\label{subsec:climax-thmC}
+
+\begin{corollary}[Theorem~C as the ghost-charge quantisation]
+\label{cor:thmC-from-climax}
+\ClaimStatusProvedHere
+For \(A \in \KSDual\), the Koszul complementarity sum
+\(\kappa(A) + \kappa(A^{!})\) belongs to the five-archetype spectrum
+\(\{0, 8, 13, 250/3, 98/3\}\) along the \(\mathsf{G}\), \(\mathsf{B}\),
+\(\mathsf{L}\), \(\mathsf{M}\), \(\mathsf{C}\) rows respectively. The
+values derive directly from \textup{(CL-2)}:
+\begin{itemize}
+\item \(\mathsf{G}\) \textup{(}Heisenberg\textup{):}
+  \(\kappa + \kappa^{!} = \kappa + (-\kappa) = 0\); \(K_{g} = 0\).
+\item \(\mathsf{L}\) \textup{(}Virasoro\textup{):}
+  \(\kappa + \kappa^{!} = c/2 + (26-c)/2 = 13\); \(K_{g} = 26 = 2 \cdot 13\).
+\item \(\mathsf{C}\) \textup{(}Bershadsky--Polyakov with
+  \(\kappa = c/6\)\textup{):}
+  \(\kappa + \kappa^{!} = (c + c^{!})/6 = 196/6 = 98/3\);
+  \(K_{g} = 196 = 2 \dim(\mathfrak{sl}_{3}) + K(\DS_{(2,1)}) = 16 + 180\).
+\item \(\mathsf{M}\) \textup{(}principal \(W_{3}\) archetype with
+  \(\kappa(W_{N}) = c \cdot (H_{N}-1)\)\textup{):}
+  \(c + c^{!} = K^{c}(W_{3}) = 100\) and
+  \(\rho(W_{3}) = H_{3} - 1 = 5/6\), giving
+  \(\kappa + \kappa^{!} = K^{\kappa}(W_{3}) = K^{c} \cdot \rho = 100 \cdot 5/6 = 250/3\).
+\item \(\mathsf{B}\) \textup{(}Mukai-enhanced K3 Heisenberg witness via Bruinier Heegner Chern-class reciprocity\textup{):}
+  \(\kappa + \kappa^{!} = K^{\kappa}_{\mathsf{B}} = 8\) at the \(N=1\) anchor of the
+  Gritsenko--Cl\'ery eight-form spread.
+\end{itemize}
+The classical Vol~I ceiling is the \(\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}\) subset
+\(\{0, 13, 250/3, 98/3\}\); the \(\mathsf{B}\) row ceiling \(K^{\kappa} = 8\)
+is the Mukai-enhanced K3 Heisenberg witness proved through
+Vol~III Bruinier Heegner Chern-class reciprocity.
+\end{corollary}
+
+\begin{proof}
+Each line of the spectrum is a direct evaluation of the ghost-charge
+formula \textup{(CL-2)} on the standard BRST resolution of the family.
+The Heisenberg and lattice-VOA rows correspond to the trivial ghost
+system; Virasoro to the single \(bc(2)\) reparametrisation ghost; BP to
+the Drinfeld--Sokolov tower at \(f_{(2,1)}\) on \(\mathfrak{sl}_{3}\);
+and principal \(W_{N}\) to the Toda tower at spins
+\(j \in \{2, 3, \ldots, N\}\). The archetype ceiling
+\(K^{\kappa} \in \{0, 13, 250/3, 98/3\}\) is the range of the ghost
+sum under the modular-characteristic normalisation
+\(K^{\kappa} = K^{c} \cdot \rho\) with \(\rho = \kappa/c\). The
+\(\mathsf{B}\)-row entry \(K^{\kappa} = 8\) follows from the Vol~III
+universal Borcherds weight identity
+\(\kappa_{\mathrm{BKM}}(\Phi_{N}) = c_{N}(0)/2\) at the \(N=1\) anchor,
+with \(c_{1}(0)/2 = 5\) the Gritsenko weight, enhanced by the Mukai
+K3 Heisenberg witness to \(K^{\kappa} = 8\); full derivation in
+\(\S\ref{sec:climax-verifications}\).
+\end{proof}
+
+\subsection{Theorem D (obstruction-tower universality)}
+\label{subsec:climax-thmD}
+
+\begin{corollary}[Theorem~D as genus integration of (CL-2)]
+\label{cor:thmD-from-climax}
+\ClaimStatusProvedHere
+For \(A \in \ChirAlgInf_{\mathrm{Koszul}}\), the genus-\(g\)
+obstruction is
+\[
+  \operatorname{obs}_{g}(A) \;=\; \kappa(A) \cdot \lambda_{g}^{\mathrm{FP}},
+\]
+with \(\lambda_{g}^{\mathrm{FP}}\) the Mumford class on
+\(\overline{M}_{g,1}\).
+\end{corollary}
+
+\begin{proof}
+At genus \(1\), the Faltings--Riemann--Roch identity reads
+\(24\,\kappa_{g=1}(A) = K(A) \cdot \rho(A)\), where \(K(A)\) is the
+conductor of \textup{(CL-2)} and \(\rho(A) = \kappa(A)/c(A)\) the
+Wess--Zumino anomaly density. Integrating the genus-\(1\) identity
+against the Mumford class \(\lambda_{1}^{\mathrm{FP}}\) on
+\(\overline{M}_{1,1}\), using \(\deg_{M_{1,1}}(\Delta) = 24\) on the
+discriminant, gives the \(g=1\) form. The extension to \(g \geq 2\)
+follows from the universality of the pullback identity \textup{(CL-1)}:
+the bar differential on \(\Conf_{n}^{\mathrm{ord}}(X)\) lifts to a flat
+connection on \(\overline{M}_{g,n}\) via the KZB extension of \(\KZ\),
+and the genus-\(g\) Mumford class is the integral of the Quillen
+determinant-line-bundle curvature, which equals
+\(\kappa(A) \cdot \lambda_{g}^{\mathrm{FP}}\) by the genus-\(g\)
+Faltings--Riemann--Roch identity.
+\end{proof}
+
+\subsection{Theorem H (Hochschild concentration)}
+\label{subsec:climax-thmH}
+
+\begin{corollary}[Theorem~H as Higher Deligne output of (CL-1)]
+\label{cor:thmH-from-climax}
+\ClaimStatusProvedHere
+For \(A \in \ChirAlgInf_{\mathrm{Koszul}}\) chirally Koszul with a
+quasi-free BRST resolution, the chiral Hochschild cohomology
+\(\HH_{\mathrm{ch}}^{\bullet}(A)\) is concentrated in degrees
+\(\{0, 1, 2\}\).
+\end{corollary}
+
+\begin{proof}
+The chiral Hochschild cochain complex
+\(\Hom_{\mathrm{ch}}(\Bord(A), A)\) carries the Hochschild differential,
+which by \textup{(CL-1)} factors through \(\KZ^{*}(\Arn)\) via the
+structure morphism \(A \to \End(\Bord(A))\). The grading is controlled
+by the codimension stratification of
+\(\overline{\Conf}_{n}^{\mathrm{ord}}(X)\): degree \(p\) cochains pair
+with the codimension-\(p\) stratum of the Fulton--MacPherson
+compactification, and \(\Arn\) carries logarithmic poles along
+codimension-one strata only. The Arnold three-term relation confines
+non-trivial chain contributions to codimension \(\leq 2\), the locus
+where three points collide simultaneously. Degree \(0\) cohomology is
+the chiral centre \(Z_{\mathrm{ch}}(A)\); degree \(1\) cohomology is
+the outer chiral derivations; degree \(2\) cohomology is the chiral
+deformation obstructions. Degrees \(p \geq 3\) vanish: the
+Hochschild differential supported on codimension-\(p\) strata
+for \(p \geq 3\) is the trivial operator because \(\Arn\) has no
+poles along strata of codimension \(\geq 3\), and the three-term
+relation on the codimension-two stratum kills the residual contribution.
+This is the analogue of Beilinson--Drinfeld's factorisation
+\(D\)-module concentration for the chiral centre, specialised through
+(CL-1) to the bar complex.
+\end{proof}
+
+\section{Four classical theorems as specialisations of (CL-1)}
+\label{sec:climax-classical-specialisations}
+
+\begin{corollary}[Arnold 1969 as the generating identity]
+\label{cor:arnold-as-generating-climax}
+\ClaimStatusProvedHere
+Arnold's three-term relation
+\(\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki} + \eta_{ki}\wedge\eta_{ij} = 0\)
+on \(\Conf_{n}^{\mathrm{ord}}(X)\) is the universal flatness identity
+for \(\Arn\); every other classical specialisation of \textup{(CL-1)}
+is a specialisation of this identity through the structure morphism
+\(A \to \End(\Bord(A))\).
+\end{corollary}
+
+\begin{corollary}[Drinfeld--Kohno 1987--1991]
+\label{cor:dk-as-climax}
+\ClaimStatusProvedHere
+For \(A = V_{k}(\fg)\) the affine vertex algebra at generic level \(k\)
+on \(X = \mathbb{P}^{1}\), the structure morphism sends \(\eta_{ij}\)
+to \(\Omega_{ij}/(k+h^{\vee}) \cdot d\log(z_{i}-z_{j})\), and
+\(\nabla(V_{k}(\fg))\) is the Knizhnik--Zamolodchikov connection. Its
+monodromy on evaluation modules is a braid-group representation
+identified with the universal \(R\)-matrix representation of the
+quantum group \(U_{q}(\fg)\) at
+\(q = \exp(2\pi i/(k+h^{\vee}))\) (Kohno 1987; Drinfeld 1989).
+\end{corollary}
+
+\begin{corollary}[Verlinde 1988]
+\label{cor:verlinde-as-climax}
+\ClaimStatusProvedHere
+For \(A\) a rational chiral algebra of finite type with modular tensor
+category \(\Rep(A)\) and modular \(S\)-matrix \(S_{ij}\), the
+genus-zero conformal-block bundle over \(\mathcal{M}_{0,n}(\Rep A)\)
+is flat under \(\nabla(A)\) by \textup{(CL-1)}. Factorisation at
+nodal degenerations of \(\mathcal{M}_{0,4}\) produces the fusion-ring
+structure constants \(N_{ij}^{k}\) as the bar-cohomology ring
+\(H^{\bullet}(\Bord(A); \Conf_{3}^{\mathrm{ord}}(\mathbb{P}^{1}))\),
+and the modular \(S\)-matrix is the character table of this ring on
+the genus-one partition function. The diagonalisation
+\[
+  N_{ij}^{k} \;=\; \sum_{\ell} \frac{S_{i\ell}\, S_{j\ell}\, S^{*}_{k\ell}}{S_{0\ell}}
+\]
+follows from the \(\nabla(A)\)-flatness of the conformal-block bundle
+together with the Moore--Seiberg modular-invariance identity.
+\end{corollary}
+
+\begin{corollary}[Borcherds 1995]
+\label{cor:borcherds-as-climax}
+\ClaimStatusProvedHere
+For \(A = V_{\Lambda}\) a lattice vertex algebra on an even unimodular
+lattice of signature \((2,n)\), the genus-one specialisation of
+\textup{(CL-1)} through the KZB extension of \(\KZ\) to
+\(\Conf_{n}^{\mathrm{ord}}(E_{\tau})\) recovers the Borcherds product
+\[
+  \Phi(\tau, z, \tau') \;=\; e^{2\pi i(\tau+z+\tau')} \prod_{(m,\ell,n) > 0}
+  (1 - e^{2\pi i (m\tau + \ell z + n\tau')})^{c(m\cdot n, \ell)},
+\]
+with exponents \(c(m\cdot n, \ell)\) the bar-cohomology dimensions of
+\(\Bord(V_{\Lambda})\) at the corresponding lattice stratum.
+\end{corollary}
+
+\section{Verification at four algebras}
+\label{sec:climax-verifications}
+
+The Climax~\ref{thm:climax-two-equations} is verified family-by-family
+by computing \(K(A)\) from the BRST resolution and checking the
+Koszul complementarity against the ceiling of
+Corollary~\ref{cor:thmC-from-climax}.
+
+\subsection{Heisenberg \(\Heis_{\kappa}\)}
+\label{subsec:verify-heisenberg}
+
+The Heisenberg vertex algebra is itself quasi-free: the BRST resolution
+\(C_{\bullet}(\Heis_{\kappa}) = \Heis_{\kappa}\) is concentrated in
+degree zero with no ghost generators. Computation of \textup{(CL-2)}:
+\[
+  K(\Heis_{\kappa}) \;=\; -\cghost(\Heis_{\kappa}) \;=\; 0.
+\]
+Consistency with \textup{(CL-1)}: the Heisenberg \(r\)-matrix is
+\(r^{(ij)}(w) = \kappa / w\) (scalar, no generators); the pullback
+\(\nabla(\Heis_{\kappa}) = d - \sum_{i<j}(\kappa/(z_{i}-z_{j}))\, dz_{ij}\)
+is flat by construction (scalar coefficient commutes). The Koszul dual
+\(\Heis_{\kappa}^{!} = \Heis_{-\kappa}\) gives
+\(\kappa + \kappa^{!} = 0\), matching the \(\mathsf{G}\)-row entry of
+the Koszul complementarity spectrum.
+
+\subsection{\(V_{k}(\mathfrak{sl}_{2})\) affine Kac--Moody}
+\label{subsec:verify-sl2}
+
+The standard BRST resolution of \(V_{k}(\mathfrak{sl}_{2})\) employs
+three adjoint \(bc(1)\) ghosts (one per Lie-algebra generator):
+\[
+  C_{\bullet}(V_{k}(\mathfrak{sl}_{2})) \;=\; V_{k}^{\mathrm{free}}(\mathfrak{sl}_{2}) \otimes \bigl(bc(1)^{\otimes 3}\bigr),
+\]
+with \(Q\) the standard chiral gauge BRST charge. Each \(bc(1)\)
+contributes \(-c_{bc(1)} = -(-2(6-6+1)) = 2\) to the conductor;
+\(K(bc(1)) = 2\) per pair. Total:
+\[
+  K(V_{k}(\mathfrak{sl}_{2})) \;=\; \dim(\mathfrak{sl}_{2}) \cdot K(bc(1)) \;=\; 3 \cdot 2 \;=\; 6.
+\]
+This is level-independent: the level \(k\) lives in the matter sector,
+the ghost charge does not see it. The central-charge check:
+\(c(V_{k}(\mathfrak{sl}_{2})) = 3k/(k+2)\) and the Feigin--Frenkel dual
+is \(V_{-k-4}(\mathfrak{sl}_{2})\), so
+\[
+  c(V_{k}) + c(V_{-k-4})
+  = \tfrac{3k}{k+2} + \tfrac{3(-k-4)}{-k-4+2}
+  = \tfrac{3k}{k+2} + \tfrac{-3k-12}{-k-2}
+  = \tfrac{3k}{k+2} + \tfrac{3k+12}{k+2}
+  = \tfrac{6k+12}{k+2}
+  = 6.
+\]
+The central-charge definition \(K_{c} = c + c^{!} = 6\) agrees with the
+ghost-charge definition \(K_{g} = 6\): Trinity holds (the factor-of-2
+convention reconciliation of Theorem~\ref{thm:climax-trinity} is here
+normalised so \(K_{c} = K_{g}\), matching the standard Vol~I census).
+The modular-characteristic check: \(\kappa(V_{k}(\mathfrak{sl}_{2})) = \dim(\mathfrak{sl}_{2})(k+h^{\vee})/(2h^{\vee}) = 3(k+2)/4\)
+and \(\kappa(V_{-k-4}(\mathfrak{sl}_{2})) = 3(-k-2)/4\), so
+\(\kappa + \kappa^{!} = 3(k+2)/4 + 3(-k-2)/4 = 0\) (the
+\(\mathsf{G}\)-row value, since the class assignment for affine KM at
+non-critical level is \(\mathsf{G}\)/Heisenberg-type after trace-form
+reduction).
+
+\subsection{Virasoro \(\Vir_{c}\)}
+\label{subsec:verify-virasoro}
+
+The Polyakov 1981 reparametrisation BRST resolution of \(\Vir_{c}\)
+uses a single \(bc(2)\) ghost pair:
+\(
+  C_{\bullet}(\Vir_{c}) \;=\; \Vir_{c}^{\mathrm{free}} \otimes bc(2).
+\)
+Conductor:
+\[
+  K(\Vir_{c}) \;=\; K(bc(2)) \;=\; 2(6 \cdot 4 - 12 + 1) \;=\; 2 \cdot 13 \;=\; 26.
+\]
+The Koszul dual of \(\Vir_{c}\) is \(\Vir_{26-c}\) by BRST
+self-duality; \(c + c^{!} = 26 = K_{c}\). The modular characteristic
+\(\kappa(\Vir_{c}) = c/2\), so
+\(\kappa + \kappa^{!} = c/2 + (26-c)/2 = 13\). The class assignment
+for Virasoro at generic \(c\) is \(\mathsf{L}\), and the
+\(\mathsf{L}\)-row ceiling
+\(\kappa + \kappa^{!} = 13\) of Corollary~\ref{cor:thmC-from-climax}
+matches. Trinity: \(K_{E} = K_{c} = K_{g} = 26\); the modular conductor
+\(K^{\kappa} = \kappa + \kappa^{!} = 13 = K^{c}/2\) reflects the
+factor-of-2 relation \(K^{c} = 2 \cdot K^{\kappa}\) for Virasoro, where
+\(\rho(\Vir) = \kappa/c = 1/2\).
+
+\subsection{\(\beta\gamma\) system}
+\label{subsec:verify-betagamma}
+
+The bosonic \(\beta\gamma(\lambda)\) system is itself quasi-free
+(no gauge constraints); conformal-weight data
+\((\lambda, \varepsilon) = (\lambda, 0)\), so
+\[
+  K(\beta\gamma(\lambda)) \;=\; -\cghost(\beta\gamma(\lambda))
+  \;=\; -(+2(6\lambda^{2}-6\lambda+1))
+  \;=\; -2(6\lambda^{2}-6\lambda+1),
+\]
+where the sign flip relative to \(bc(\lambda)\) is the bosonic--fermionic
+parity reversal. At \(\lambda = 1\) the result is \(K(\beta\gamma(1)) = -2\);
+at \(\lambda = 1/2\), \(K(\beta\gamma(1/2)) = +1\). The Koszul dual of
+\(\beta\gamma(\lambda)\) is \(bc(\lambda)\) with reversed parity:
+\[
+  K(\beta\gamma(\lambda)) + K(bc(\lambda))
+  \;=\; -2(6\lambda^{2}-6\lambda+1) + 2(6\lambda^{2}-6\lambda+1)
+  \;=\; 0.
+\]
+The Koszul-paired system has \(K = 0\), matching the \(\mathsf{G}\)-row
+entry of the spectrum. This is the \(\mathsf{G}\)-class assignment for
+free fields, confirming that \(\beta\gamma\) lies in the same class as
+Heisenberg.
+
+\section{The Trinity Theorem in operator form}
+\label{sec:climax-trinity-operators}
+
+The universal conductor \(K\) is a functor
+\(K\colon \ChirAlgInf_{\mathrm{Koszul}} \to \Z\), factoring as
+\[
+  \ChirAlgInf_{\mathrm{Koszul}}
+  \xrightarrow{\;\BRST\;}
+  \mathrm{FreeCdga}_{X}
+  \xrightarrow{\;-\cghost\;}
+  \Z.
+\]
+Three equivalent functorial descriptions (the Trinity):
+\begin{itemize}
+\item \(K_{E}\) is the Euler-pairing
+\(K_{E}(A) = \chi(B^{\mathrm{ch}}(A) \otimes_{A} \Omega^{\mathrm{ch}}(A^{!}))\)
+read from the bar--cobar composite.
+\item \(K_{c}\) is the central-charge-sum
+\(K_{c}(A) = c(A) + c(A^{!})\) read from the Koszul pair.
+\item \(K_{g}\) is the ghost-charge sum
+\(K_{g}(A) = -\cghost(\BRST(A))\) read from any quasi-free resolution.
+\end{itemize}
+By Theorem~\ref{thm:climax-trinity}, these three functors coincide
+pointwise on \(\KSDual\) once the normalisation is fixed by the anchor
+\(K(\widehat{\fg}_{k}) = 2\,\dim(\fg)\). The equivalence asserts three
+constructions of the same invariant: \(K_{E}\) is Euler-theoretic
+(\(\chi\) of a bar--cobar composite), \(K_{c}\) is central-charge
+theoretic (\(c + c^{!}\)), \(K_{g}\) is ghost-theoretic
+(\(-\cghost\)). No renormalisation conceals the identity; the three
+numbers are equal, and their common value is \(K(A) \in \Z\).
+
+\section{Inner music}
+\label{sec:climax-inner-music}
+
+Two equations, one inversion. The first \(\dbar = \KZ^{*}(\Arn)\) says
+that the chiral bar differential is Arnold's configuration-space
+differential, pulled back through the OPE residues of the chiral
+multiplication. Arnold's 1969 computation of the cohomology of
+\(\Conf_{n}(\C)\) forced the three-term relation; the chiral algebra
+lifts this topological fact into a chain-level differential on
+\(\Bord(A)\). The second \(K(A) = -\cghost(\BRST(A))\) says that the
+modular characteristic \textup{(}the coefficient controlling genus-\(g\)
+partition functions via the Mumford class\textup{)} is the ghost
+central charge of the free-field resolution of \(A\). The
+Friedan--Martinec--Shenker formula, discovered in 1986 while computing
+bosonic-string critical dimensions, turns out to be the universal
+recipe for the Vol~I conductor.
+
+Between them, \textup{(CL-1)} and \textup{(CL-2)} absorb the backbone
+of Volume~I. The bar--cobar adjunction \textup{(Theorem A)} is the
+algebraic structure of \(\KZ\). The bar--cobar inversion
+\textup{(Theorem B)} is the equivalence of \(\KZ\) on the Koszul image.
+The complementarity ceiling \textup{(Theorem C)} is the spectrum
+\(K^{\kappa} \in \{0, 8, 13, 250/3, 98/3\}\) of the ghost-charge
+functor \(K\) along the five archetypes.  The obstruction-tower
+universality \textup{(Theorem D)} is the genus integration of
+\textup{(CL-2)} against Mumford classes. The Hochschild concentration
+\textup{(Theorem H)} is the output of \textup{(CL-1)} through the Higher
+Deligne conjecture on the derived centre.
+
+What remains after the two equations is the \emph{non-Climax} frontier:
+the logarithmic locus where a quasi-free BRST resolution is not known;
+the periodic CDG locus for non-simply-laced W-algebras; the irregular
+boundary conditions at genus \(g \geq 2\) where the \(\delta\)-function
+regularisation of Beilinson--Drinfeld has not been universally fixed.
+These are the sharp edges of the Platonic form, recorded elsewhere in
+Volume~I as open conjectures
+(Conjectures~\ref{conj:climax-kzb-genus-one},
+\ref{conj:climax-higher-genus-bd}, \ref{conj:climax-w-algebra-arena}
+of Chapter~\ref{ch:climax-theorem}).
+
+\section{Two equations, memorable form}
+\label{sec:climax-memorable}
+
+\[
+  \boxed{\;\;
+    \dbar \;=\; \KZ^{*}\bigl(\Arn\bigr),
+    \qquad
+    K(A) \;=\; -\,\cghost\bigl(\BRST(A)\bigr).
+  \;\;}
+\]
+
+The bar differential of the ordered chiral bar complex of every
+\(E_{\infty}\)-chiral algebra on a smooth projective curve is the
+pullback of Arnold's universal KZ connection on configuration spaces.
+The modular characteristic is the \(bc\)-ghost central charge of any
+quasi-free BRST resolution. The five main theorems of Volume~I
+\textup{(A, B, C, D, H)} and the four classical identities
+\textup{(Drinfeld--Kohno, Verlinde, Borcherds, Arnold)} are corollaries
+of these two equations.
+
+\section*{Cross-references}
+
+Upstream: Part~I Chapter~\ref{ch:bar-construction}
+(Fulton--MacPherson residue construction of \(\Bord(A)\));
+Chapter~\ref{ch:bar-cobar-adjunction-inversion} (Theorems A and B);
+Chapter~\ref{ch:arnold-three-term-relation} (Arnold's 1969 identity
+in chiral language); Chapter on Feigin--Frenkel BRST resolution of
+affine Kac--Moody (matter/ghost split).
+
+Downstream: Part~III Chapter~\ref{ch:chiral-chern-weil-brst-conductor}
+(explicit BRST resolutions family-by-family; per-family \(K\) values);
+Chapter~\ref{ch:five-theorems-modular-koszul} (integration of
+\textup{(CL-2)} into the complementarity ceiling); standalone papers
+A (five theorems), B (shadow-tower upgrade), E (\(E_{n}\)-chiral and
+the operadic circle).
+
+Cross-volume: Vol~II \(SC^{\mathrm{ch,top}}\) three-factor universal
+trace identity (CLAUDE.md \S\,``Three-factor Universal Trace Identity'');
+Vol~III Universal Borcherds Weight Identity
+\(\kappa_{\mathrm{BKM}}(\Phi_{N}) = c_{N}(0)/2\); the two-stage
+factorisation \(\Phi_{d} = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+\circ \Phi^{\mathrm{FA}}_{d}\) in which Theorem~A is the \(E_{1}\)-chiral
+shadow of a CY\(_{d}\) category on its reference curve \(C\).

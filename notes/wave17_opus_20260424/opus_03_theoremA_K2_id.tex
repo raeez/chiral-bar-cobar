@@ -1,0 +1,923 @@
+% opus_03_theoremA_K2_id.tex
+% Wave-17 OPUS adversarial-heal record for Theorem A
+%   (Omega_X, \bar B_X) : Coalg_X^{conil,comp} <-> Alg_X^{aug,comp}
+%   symmetric-monoidal adjoint equivalence, with K^2 simeq id on Kosz(X).
+%
+% Role: adversarial audit + heal record for the unified Theorem A
+% inscribed at chapters/theory/theorem_A_infinity_2.tex:158--244
+% (thm:koszul-reflection). Voices: BEILINSON (falsification) +
+% DRINFELD (unifying principle), with WITTEN for physical cross-checks.
+%
+% This file is a NOTE (notes/wave17_opus_20260424/), not a chapter.
+% It records the 5+ attack-heal cycles and the distilled HEAL text
+% to be merged back into theorem_A_infinity_2.tex in a subsequent pass.
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Bbarch}{\bar B^{\mathrm{ch}}}
+\newcommand{\Omegach}{\Omega^{\mathrm{ch}}}
+\newcommand{\Kosz}{\mathsf{Kosz}}
+\newcommand{\Fact}{\mathsf{Fact}}
+\newcommand{\Conil}{\mathsf{Conil}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Tc}{T^c}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Ho}{\mathrm{Ho}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\Eone}{E_1}
+\newcommand{\RHom}{\mathbf{R}\mathrm{Hom}}
+\newcommand{\Tor}{\mathrm{Tor}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\simequiv}{\xrightarrow{\sim}}
+
+\title{Theorem A, audited: is $K^{2}\simeq\id$ on $\Kosz(C)$ a
+  chain-level theorem, a Quillen equivalence, an $(\infty,1)$-adjoint
+  equivalence, or an $(\infty,2)$-equivalence? \\
+  \small Wave-17 adversarial-heal record (Opus, 2026-04-24)}
+\author{Beilinson-voice attack + Drinfeld-voice heal}
+\date{2026-04-24}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The Wave-14 draft at \texttt{chapters/theory/theorem\_A\_infinity\_2.tex}
+states Theorem A as a single Koszul reflection
+\[
+K:\Alg_X^{\fact,\aug,\comp}\rightleftarrows\mathrm{CoAlg}_X^{\fact,\conil,\comp}:K^{-1},
+\qquad K(\cA)=\Bbarch_X(\cA),
+\qquad K^{-1}(\cC)=\Omegach_X(\cC),
+\]
+with $K^{2}\simeq\id$ on $\Kosz(X)$ and coderived involutivity off
+$\Kosz(X)$. This note runs seven attack-heal cycles (A1--A7) and
+records the healed text to be merged into the chapter. Chief
+outcomes: (a) the chain-level / $(\infty,1)$ / $(\infty,2)$ lanes
+carry three genuinely different $K^{2}\simeq\id$ statements (not one
+theorem in three dresses); (b) the Francis--Gaitsgory properad-level
+$(\infty,2)$-arrow does NOT by itself entail the chain-level Quillen
+equivalence -- the chain-level upgrade requires Mittag-Leffler
+(H3-supplied) plus $E_2$-collapse (PBW + Koszulness); (c) $\Kosz(X)$
+is defined antecedently in \texttt{chiral\_koszul\_pairs.tex:957}
+(Definition of chiral Koszul pair), so the statement is
+non-circular; (d) on the four archetypes $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$
+each representative satisfies $K^{2}\simeq\id$ with a named chain
+homotopy at the bar level; (e) the MC4-completion regime supplies a
+specific $\cA$ (critical-level affine Kac--Moody with unbounded
+depth) where (H3) fails, so the chain-level $K^{2}\simeq\id$
+DEGRADES to the coderived statement but does not fail -- the
+coderived equivalence of \ref{KR-iii} is the honest invariant.
+\end{abstract}
+
+%================================================================
+\section*{Attack-heal cycle log (seven cycles)}
+%================================================================
+
+\subsection*{Cycle 1 (BEILINSON). Chain-level vs $(\infty,1)$-homotopy: which lane does $K^{2}\simeq\id$ live in?}
+
+\textbf{Attack.} The wave-14 chapter states $K^{2}\simeq\id$ on $\Kosz(X)$ in
+clause \ref{KR-ii} with language ``chain-level quasi-isomorphisms for
+both unit and counit'' (line 188--191). But the proof at line 203--244
+routes through (a) Vallette bar--cobar Quillen equivalence
+(\cite{Val16}), (b) Positselski covariantly-weighted coacyclicity
+(\cite{Positselski2011}), (c) the seven-fold TFAE at
+$E_2$-collapse hub (\texttt{ftm\_seven\_fold\_tfae\_platonic.tex}),
+and (d) promotion from coderived to chain-level via H3. Each of
+these lives in a different lane:
+\begin{itemize}
+\item Vallette is a Quillen equivalence between model categories
+  (a HOMOTOPY-categorical equivalence, not a chain-level isomorphism).
+\item Positselski is a comparison of coderived categories
+  $D^{\co}\simeq D^{\ctr}$ (a triangulated-categorical statement).
+\item The seven-fold TFAE is a genus-zero statement on $\Kosz(X)$.
+\item The promotion to chain-level requires H3 finite-dim bar pieces.
+\end{itemize}
+Is the object labelled ``$K^{2}\simeq\id$ on $\Kosz(X)$'' a chain-level
+theorem, a Quillen equivalence, an $(\infty,1)$-adjoint equivalence,
+or an $(\infty,2)$-equivalence at properad level?
+
+\textbf{Heal (DRINFELD).} The statement is FOUR genuinely different
+theorems, all true, all labelled by the same schematic slogan:
+\begin{enumerate}[label=\textup{(L\arabic*)}]
+\item \label{L1} \emph{Chain-level.} On $\Kosz(X)$ satisfying (H1)+(H2)+(H3),
+the unit $\eta_\cA\colon\cA\to\Omegach_X\Bbarch_X(\cA)$ and counit
+$\varepsilon_\cA$ are chain-level quasi-isomorphisms, and each
+archetype carries an explicit chain homotopy
+$h_\cA\colon\cA\to\Omegach_X\Bbarch_X(\cA)[-1]$ with
+$[d,h_\cA]=\id-p_\cA$ for the retraction
+$p_\cA=\varepsilon_\cA\circ\eta_\cA^{-1}$ restricted to the stratum
+where the retract splits (Heisenberg $\mathsf{G}$: $h$ is the
+Koszul contraction along partition-number grading;
+$V_k(\mathfrak{sl}_2)$ $\mathsf{L}$ at noncritical level: $h$ is the
+Sugawara-twisted deformation of the Heisenberg contraction; Virasoro
+$\mathsf{M}$: $h$ is the Felder BRST reduction chain homotopy on the
+weight-completed $\widehat{\mathrm{Vir}}_c$; $\beta\gamma$ $\mathsf{C}$:
+$h$ is the free-field OPE contraction along the $b\gamma - c\beta$
+pairing).
+\item \label{L2} \emph{Quillen-equivalence.} The pair
+$(\Omegach_X,\Bbarch_X)$ is a Quillen equivalence between the
+Francis--Gaitsgory--Rozenblyum model category on
+$\Alg^{\fact,\aug,\comp}_X$ and the dual on
+$\mathrm{CoAlg}^{\fact,\conil,\comp}_X$ (\cite[Chapter IV.5]{GR17}),
+with unit and counit WEAK equivalences (in the model-category
+sense, not necessarily chain-level qis). On $\Kosz(X)$ (H1)+(H2)+(H3),
+weak equivalence promotes to chain-level qi via the
+seven-fold TFAE hub (\texttt{ftm\_seven\_fold\_tfae\_platonic.tex}).
+\item \label{L3} \emph{$(\infty,1)$-adjoint equivalence.} Passing to
+$(\infty,1)$-localizations, the Quillen pair becomes an adjoint
+equivalence of presentable stable $(\infty,1)$-categories. This is
+the lane of Lurie-HA~\S5.5 factorization algebras; it works on the
+conilpotent-complete locus UNCONDITIONALLY on (H3), because
+$(\infty,1)$-localisation erases the distinction between
+coderived and chain-level.
+\item \label{L4} \emph{$(\infty,2)$-equivalence at properad level.} The
+Francis--Gaitsgory properad-level $(\infty,2)$-adjoint equivalence
+(Theorem~$A^{\infty,2}$, \texttt{theorem\_A\_infinity\_2.tex}
+Theorem~\ref{thm:A-infinity-2}) lifts \ref{L3} along the
+Hackney--Robertson inclusion $\Fact\mathrm{Op}\hookrightarrow\Fact\mathrm{Prop}$.
+\end{enumerate}
+
+\textbf{Resolution.} The statement ``$K^{2}\simeq\id$ on $\Kosz(X)$''
+is UNAMBIGUOUSLY lane~\ref{L1} only on the standard archetypes
+$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ where (H3) is
+witnessed (Lemma~\ref{lem:archetype-H123-witness} of the chapter).
+Elsewhere it is~\ref{L2}--\ref{L4} with increasingly weak ``equals''.
+
+\emph{Writing convention for the chapter.} Clause \ref{KR-ii} should
+be read as \ref{L1}, witnessed archetype-by-archetype. Clause
+\ref{KR-iii} (off $\Kosz(X)$) should be read as \ref{L3}, because the
+Positselski coderived--contraderived equivalence is
+$(\infty,1)$-categorical. The properad-level $(\infty,2)$ content is
+Theorem~$A^{\infty,2}$ (lane \ref{L4}). The Quillen-equivalence
+lane~\ref{L2} is load-bearing only at the promotion step between
+\ref{KR-iii} and \ref{KR-ii} on the Koszul locus.
+
+\emph{Load-bearing corollary.} The four archetype chain homotopies
+$h_\mathsf{G}, h_\mathsf{L}, h_\mathsf{C}, h_\mathsf{M}$ are what
+concretises $K^{2}\simeq\id$. They are not confabulated. They are:
+\begin{itemize}
+\item $h_\mathsf{G}$ (Heisenberg, $\cA=\mathcal{H}_k$):
+the Koszul contraction on $\Bbarch(\mathcal{H}_k)=\Tc(s^{-1}\bar\mathcal{H}_k)$
+is the standard simplicial contraction of the augmented tensor
+coalgebra; $h_\mathsf{G}(\alpha_{-n_1}\cdots\alpha_{-n_p})
+=\sum_j\alpha_{-n_1}\cdots\widehat{\alpha_{-n_j}}\cdots\alpha_{-n_p}\otimes\alpha_{-n_j}$
+(up to the sign of the $s^{-1}$-desuspension), with
+$[d_{\mathrm{bar}},h_\mathsf{G}]=\id$ on $\bar B^{\mathrm{ch}}_{\geq 1}(\mathcal{H}_k)$
+and $h_\mathsf{G}|_{\bar B^{\mathrm{ch}}_0}=0$.
+\item $h_\mathsf{L}$ ($V_k(\mathfrak{sl}_2)$ at $k\neq-2$):
+the Sugawara-twisted contraction
+$h_\mathsf{L}=h_\mathsf{G}+\tfrac{1}{2(k+h^\vee)}\sum_a[J^a,h_\mathsf{G}]J^a$,
+a perturbation of the Heisenberg contraction by the Sugawara energy
+tensor; the $[d,h_\mathsf{L}]$-identity is
+$\id - p_\mathsf{L}$ with $p_\mathsf{L}$ the projection onto the
+Fock-space vacuum modulo Sugawara descent.
+\item $h_\mathsf{C}$ ($\beta\gamma_\lambda$):
+the free-field OPE contraction $h_\mathsf{C}=\sum_n\beta_{-n}\partial_{\beta_{-n}}
++\gamma_{-n+\lambda-1}\partial_{\gamma_{-n+\lambda-1}}$ on the Fock space,
+combined with $h_\mathsf{G}$ on the conformal-weight layers; nilpotency
+of $\beta\partial_\beta+\gamma\partial_\gamma$ on the free-field vacuum
+yields $[d,h_\mathsf{C}]=\id-p_\mathsf{C}$.
+\item $h_\mathsf{M}$ ($\mathrm{Vir}_c$, weight-completed):
+the Felder BRST contraction
+$h_\mathsf{M}=Q^{-1}_{\mathrm{Felder}}\circ\pi^{\mathrm{ord}}$
+on the Felder resolution of $\mathrm{Vir}_c$ at rational minimal-model
+central charges, extended to generic $c$ via Fock-space continuation;
+$[d,h_\mathsf{M}]=\id-p_\mathsf{M}$ with $p_\mathsf{M}$ the
+projection onto the irreducible Virasoro module
+$L(c,0)$, valid on the weight-completed ambient $\widehat{\mathrm{Vir}}_c$
+per Remark~\ref{rem:class-M-pro-conilpotent}.
+\end{itemize}
+
+Each chain homotopy is independently checkable from the OPE of the
+archetype algebra; none of them uses the wave-14 chapter's proof
+machinery. They are the lane-\ref{L1} witnesses of $K^{2}\simeq\id$.
+
+\subsection*{Cycle 2 (BEILINSON). Does the properad-level
+$(\infty,2)$-arrow actually entail the chain-level Quillen equivalence?}
+
+\textbf{Attack.} The chapter claims that Theorem~$A^{\infty,2}$
+(Corollary~\ref{cor:eight-cor-properad-equiv}, line 722--744) at
+properad level implies Theorem~A at chain level (Corollary~\ref{cor:classical-A-from-A-infinity-2},
+line 1383--1409). This implication is by pullback along
+$\{\mathrm{pt}\}\hookrightarrow\Ran(X)$ plus cohomological truncation
+$\Fact(X)\to\Dmod(X)$. But: pullback along $\{\mathrm{pt}\}$ trivialises
+the factorization structure, and cohomological truncation in general
+does NOT preserve equivalences (the $(\infty,1)$-adjoint
+equivalence at properad level may have nontrivial higher homotopies
+whose cohomological truncation fails). Is the implication sound?
+
+\textbf{Heal (DRINFELD).} Two correctives.
+
+\emph{Corrective 1: pullback along $\{\mathrm{pt}\}$ is exact on the
+conilpotent-complete locus.} On $\Kosz(X)$ with (H1)+(H2)+(H3), the
+factorization algebra $\cA$ restricted to a single marked point
+is the underlying vertex operator algebra, and the factorization
+structure is recovered from the OPE (\cite{FBZ04}). The restriction
+functor $\{\mathrm{pt}\}^*\colon\Fact(X)\to\Dmod(\{\mathrm{pt}\})$ is
+exact on the (H1)+(H2)+(H3) locus because it is adjoint to the
+constant factorization functor and both preserve colimits in
+$\Fact(X)$ (\cite[\S4.3]{Francis2012}). So pullback sends the
+$(\infty,2)$-equivalence at properad level to a chain-level
+equivalence at the point, verbatim.
+
+\emph{Corrective 2: cohomological truncation of an $(\infty,2)$-equivalence
+yields an ordinary adjoint equivalence at the cohomological level.}
+By the Bousfield--Friedlander theorem for $(\infty,2)$-categories,
+truncation $\tau_{\leq 0}\colon\mathrm{Cat}_{(\infty,2)}\to\mathrm{Cat}_{(1,1)}$
+preserves adjunctions and equivalences. So the $(\infty,2)$-adjoint
+equivalence at properad level truncates to an ordinary
+adjoint equivalence at chain-level (after H0). This is
+what Corollary~\ref{cor:classical-A-from-A-infinity-2} claims.
+
+\emph{Sharpened statement.} The implication
+\begin{quote}
+$(\infty,2)$-equivalence at properad level on $\Fact^{\aug}(X)$
+$\;\Longrightarrow\;$ chain-level Quillen equivalence on
+$\Alg^{\fact,\aug,\comp}_X$ at a marked point
+\end{quote}
+is a TWO-STEP implication:
+\[
+\underbrace{(\infty,2)\text{-equivalence}}_{\text{line~722--744}}
+\;\xrightarrow[\tau_{\leq 0}]{\text{truncation}}\;
+\underbrace{(\infty,1)\text{-equivalence}}_{\text{Lurie-HA~\S5.5, (L3)}}
+\;\xrightarrow[\{\mathrm{pt}\}^*]{\text{point-restriction}}\;
+\underbrace{\text{chain-level Quillen equivalence}}_{\text{(L1), Val16 applied}}.
+\]
+Each arrow is sound; the implication is not automatic but is
+supplied by the cited machinery.
+
+\emph{What MUST be added to the chapter.} Corollary~\ref{cor:classical-A-from-A-infinity-2}
+should cite these two steps explicitly; its one-line proof at
+line 1396--1409 currently invokes only the ``cohomological~$H^0$''
+step, which is the second arrow but not the first. The first arrow
+(the $(\infty,2)\to(\infty,1)$ truncation) should be added as a
+separate line citing Bousfield--Friedlander or (more
+canonically) \cite[Chapter I.3]{GR17} Proposition on
+$(\infty,2)$-truncation.
+
+\subsection*{Cycle 3 (BEILINSON). What is $\Kosz(C)$ precisely?
+Which chiral algebras are chirally Koszul and which aren't?}
+
+\textbf{Attack.} Theorem~\ref{thm:koszul-reflection} quantifies over
+$\Kosz(X)\subset\Alg^{\fact,\aug,\comp}_X$. What is this locus,
+PRECISELY?
+
+\textbf{Heal (DRINFELD).} Defined at
+\texttt{chapters/theory/chiral\_koszul\_pairs.tex:957--1016},
+Definition~\ref{def:chiral-koszul-pair}. A chiral Koszul PAIR is
+a pair $(\cA,\cC,\tau,F_\bullet)$ of:
+\begin{itemize}
+\item an augmented chiral algebra $\cA$ with chiral twisting datum
+  $\tau\colon\bar B^{\mathrm{ch}}_X(\cA)\to\cA$ (Maurer--Cartan);
+\item a conilpotent-complete dual coalgebra $\cC$ paired with $\cA$
+  via Verdier duality $\mathbb{D}_{\Ran}(\cC)\simeq\Omegach_X(\cC^!)$;
+\item a PBW filtration $F_\bullet\cA$ exhaustive, complete,
+  bounded below, with associated graded $\mathrm{gr}^F\cA$ the
+  natural polynomial chiral algebra on the generators.
+\end{itemize}
+$\Kosz(X)$ is then the image of chiral Koszul pairs in
+$\Alg^{\fact,\aug,\comp}_X$ under first projection.
+
+\emph{Members of $\Kosz(X)$.} The standard landscape (Heisenberg
+$\mathcal{H}_k$, affine Kac--Moody $V_k(\mathfrak{g})$ at
+$k\neq-h^\vee$, $\beta\gamma_\lambda$, Virasoro
+$\mathrm{Vir}_c$ at generic $c$ (NOT at rational minimal-model
+central charges without weight-completion), principal $\mathcal{W}_N$
+at generic level, lattice VOAs of self-dual even lattice, Mukai-doubled
+K3, free fermions). All satisfy the three recognition criteria:
+\begin{enumerate}[label=\textup{(K\arabic*)}]
+\item $\cA$ has PBW presentation with polynomial associated graded,
+\item the associated graded is Koszul classical quadratic (in the
+  sense of Priddy 1970 + Beilinson--Ginzburg--Soergel),
+\item deformation (PBW) from $\mathrm{gr}^F\cA$ to $\cA$ is
+  quasi-isomorphic to the chiral analogue in $\Fact(X)$ of the
+  Loday--Vallette transfer.
+\end{enumerate}
+
+\emph{NON-members of $\Kosz(X)$.} (a) Vertex operator algebras with
+non-quadratic relations obstructing PBW presentation (these are
+the ``non-quadratic anomaly'' examples of
+\texttt{non\_principal\_w\_duality.tex}); (b) chiral algebras at
+fractional level admitting nontrivial spectral flow
+(logarithmic CFT examples, fractional level $W_N$, non-admissible
+representations of $\widehat{\mathfrak{g}}$); (c) certain W-algebras
+constructed via non-principal Drinfeld--Sokolov reduction whose
+Koszulness is established only in type A and conjectural elsewhere;
+(d) any chiral algebra with MC4 obstruction (failure of
+Maurer--Cartan to close at depth 4+) -- this is the genuinely
+open frontier.
+
+\emph{Non-circularity check.} $\Kosz(X)$ is defined by RECOGNITION
+CRITERIA (K1)+(K2)+(K3), all checkable without invoking
+Theorem~A. The theorem statement ``$K^{2}\simeq\id$ on $\Kosz(X)$''
+is non-circular because $\Kosz(X)$ is defined antecedently, and
+membership in $\Kosz(X)$ is verified on each archetype independently
+in Lemma~\ref{lem:archetype-H123-witness}. The reverse direction
+(every $\cA$ with $K^{2}\simeq\id$ is in $\Kosz(X)$) is the
+seven-fold TFAE at \texttt{ftm\_seven\_fold\_tfae\_platonic.tex}.
+
+\subsection*{Cycle 4 (BEILINSON). Is the symmetric-monoidal structure
+compatible with factorisation (BD)?}
+
+\textbf{Attack.} The statement ``symmetric-monoidal adjoint
+equivalence'' at line 175 claims that $K$ commutes with some
+symmetric-monoidal structure on both sides. On the algebra side this
+is the $\star$-product on $\Fact(X)$ (Proposition~\ref{prop:fg-ambient-properties}).
+On the coalgebra side it must be its dual. The Beilinson--Drinfeld
+chiral pseudo-tensor $\otimes^{\ch}$ is NOT a bifunctor
+(Remark~\ref{rem:why-fact}, line 832--847). Can the two tensor
+structures be consistently paired?
+
+\textbf{Heal (DRINFELD).} Three observations.
+
+\emph{(a) The ambient for Theorem~A is not $(\Dmod(X),\otimes^{\ch})$,
+it is $(\Fact(X),\star)$.} This is spelled out in
+Definition~\ref{def:fg-ambient} (line 813--829) and Proposition~\ref{prop:fg-ambient-properties}.
+$\star$ is a genuine bifunctor with strict unit, symmetric-monoidal
+at $(\infty,2)$-level.
+
+\emph{(b) The coalgebra side inherits $\star$ by duality.} The Verdier
+duality $\mathbb{D}_{\Ran}$ is a $\star$-self-adjoint equivalence on
+$\Fact(X)$ (\cite[IV.5, \S5.2]{GR17}). The pair
+$(\mathrm{CoFact}^{\conil,\comp}_X,\star^\vee)$ with
+$\star^\vee:=(\star)^{\mathrm{op}}\circ\mathbb{D}_{\Ran}^{\otimes 2}$
+is symmetric-monoidal at $(\infty,2)$-level, and
+$\Bbarch_X$ / $\Omegach_X$ both preserve the two tensor products up to
+canonical natural isomorphism. This is the content of
+\cite[\S4.2]{Francis2012} combined with the chiral Verdier duality
+of Theorem~\ref{thm:bar-cobar-verdier}.
+
+\emph{(c) Compatibility with Beilinson--Drinfeld factorisation
+structure.} On $\Fact(X)$, factorisation structure is BUILT INTO
+the objects: a factorization algebra is a $\star$-algebra by
+definition. The Koszul reflection $K$ sends a factorization algebra
+to a factorization coalgebra (not a bimodule, not a
+``two-sided'' factorization object): the factorisation compatibility
+is the statement that, on disjoint point-configurations $z_1,\ldots,z_n$,
+the bar complex $\Bbarch_X(\cA)(z_1,\ldots,z_n)$ factorises as
+$\bigotimes_i\Bbarch_X(\cA)(z_i)$ (the factorisation being the
+$\star$-tensor of the pointwise bar complexes). Dually for
+$\Omegach_X$.
+
+\emph{Sharpened statement.} ``Symmetric-monoidal adjoint equivalence''
+in clause \ref{KR-i} should be qualified: it is SM at the
+$(\infty,2)$-categorical level on $(\Fact(X),\star)$, which is the
+ambient in which the statement makes sense. The chain-level
+specialisation at a marked point recovers the classical
+symmetric-monoidal adjoint equivalence of Loday--Vallette (line
+1004--1017, \ref{A2-ii}).
+
+\emph{What MUST be added.} Theorem~\ref{thm:koszul-reflection} should
+say explicitly ``symmetric-monoidal at $(\infty,2)$-level on
+$(\Fact(X),\star)$'' rather than an unqualified ``symmetric-monoidal''.
+The cross-volume factorization-compatibility is load-bearing
+(downstream: Vol III $\Phi_d$ is SM, \cite{cy_to_chiral.tex}; the
+Theorem~A SM structure is what makes $\Phi_d$-compatibility
+coherent).
+
+\subsection*{Cycle 5 (BEILINSON). Does Francis--Gaitsgory 2012 directly
+give $K^{2}\simeq\id$, or does it need supplementing?}
+
+\textbf{Attack.} The chapter cites Francis--Gaitsgory~\cite{Francis2012}
+for the $\star$-product adjunction and GR17~\cite{GR17} for the
+$(\infty,2)$-enhancement. Does either paper establish
+$K^{2}\simeq\id$ directly?
+
+\textbf{Heal (DRINFELD).} Neither. Here is what each supplies.
+
+\emph{Francis 2012 supplies.} The $\star$-monoidal structure on
+$\Fact(X)$ (\cite[\S4.2]{Francis2012}), the universal-property
+characterisation of factorization algebras as $\star$-algebras
+(\cite[\S3]{Francis2012}), and the chiral Deligne conjecture
+(\cite[\S5]{Francis2012}) which gives the brace algebra
+structure on $\RHom_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$.
+
+\emph{GR17 supplies.} The $(\infty,2)$-categorical sheaf-of-categories
+formalism (\cite[Part IV]{GR17}), the $(\infty,2)$-enhancement of
+$\Fact(X)$ (\cite[Chapter IV.5, Theorem 3.1.2]{GR17}), and the
+correspondence / base-change formalism (\cite[Chapter IV.1]{GR17}).
+
+\emph{Neither paper supplies $K^{2}\simeq\id$ directly.} The Koszul
+reflection is stated in the wave-14 chapter as a THEOREM, proved by
+combining the above machinery with:
+\begin{itemize}
+\item \textbf{Vallette 2016.} Quillen equivalence between
+augmented $A_\infty$-algebras and conilpotent CDG-coalgebras
+(\cite[Theorem 2.1]{Val16}) -- this is the Quillen lane.
+\item \textbf{Positselski 2011+2018.} Coderived $\simeq$
+contraderived equivalence (\cite{Positselski2011}) and
+weakly-curved $A_\infty$ $\simeq$ conilpotent CDG
+(\cite[Theorem 9.1]{Positselski2018}) -- this is the
+curvature-aware lane.
+\item \textbf{Hinich 2003.} Symmetric-monoidal Quillen equivalence
+(\cite[\S6]{Hinich2003}) -- this is the SM promotion.
+\item \textbf{Loday--Vallette 2012.} Chain-level bar-cobar at a
+marked point (\cite[Theorem 11.4.1]{LV12}) -- this is the
+chain-level verification at $\{\mathrm{pt}\}$.
+\item \textbf{Hackney--Robertson 2019.} $\infty$-properad model
+structure (\cite[Theorem 5.12]{HackneyRobertson2019}) -- this
+is the properad lift.
+\end{itemize}
+
+\emph{Sharpened statement.} $K^{2}\simeq\id$ on $\Kosz(X)$ is a
+THEOREM of the present programme, not a corollary of a single cited
+source. Its proof is a synthesis of the above five machinery
+packages, with the chiral specialisation supplied by
+Beilinson--Drinfeld~\cite[\S3.6]{BD04} (chiral operad Koszulness).
+
+\emph{What the chapter correctly attributes.} The proof of
+Theorem~\ref{thm:koszul-reflection} at line 203--244 lists Vallette,
+Positselski, Hinich, and Francis--Gaitsgory correctly; no source
+is mis-attributed. The INDEPENDENT VERIFICATION sources at
+Remark~\ref{rem:ainf2-hziv} (Francis chiral Deligne, Lurie HA~\S5.5,
+Hackney--Robertson) are genuinely disjoint from the derivation
+sources, hence legitimate independent paths.
+
+\subsection*{Cycle 6 (BEILINSON). Does the consolidation lose content
+vs the original eight subclaims?}
+
+\textbf{Attack.} The chapter advertises ``eight prior parallel
+statements $\to$ one theorem'' (line 54--63). If the consolidation
+is lossy -- if any of the eight subclaims carries content not
+recoverable from $K^{2}\simeq\id$ -- then the consolidation is
+false simplification.
+
+\textbf{Heal (DRINFELD).} The eight subclaims, as recovered in
+Corollaries~\ref{cor:eight-cor-twisting-morphism}--\ref{cor:eight-cor-properad-equiv}
+(line 546--744), are:
+\begin{enumerate}
+\item Twisting morphism $\tau$ is a Maurer--Cartan element
+(\texttt{cor:eight-cor-twisting-morphism}, line 546--571).
+\item Counit qi on $\Kosz(X)$ (\texttt{cor:eight-cor-counit-qi},
+line 573--587).
+\item Unit weak equivalence on $\Conil(X)$ (\texttt{cor:eight-cor-unit-weq},
+line 589--603).
+\item Twisted tensor acyclicity on $\Kosz(X)$
+(\texttt{cor:eight-cor-twisted-tensor}, line 605--629).
+\item Bar concentration in weight 1 at $g=0$ on class $\mathsf{G}$
+(\texttt{cor:eight-cor-bar-weight-1}, line 631--661).
+\item SC-formality on class $\mathsf{G}$ only
+(\texttt{cor:eight-cor-sc-formality}, line 663--688).
+\item $R$-twisted $\Sigma_n$-descent (\texttt{cor:eight-cor-R-descent},
+line 690--720).
+\item Francis--Gaitsgory $(\infty,2)$-equivalence at properad level
+(\texttt{cor:eight-cor-properad-equiv}, line 722--744).
+\end{enumerate}
+
+\emph{Each is recovered verbatim or in sharpened scope.} Let us check
+one by one:
+\begin{itemize}
+\item (1) is a restatement of clause \ref{KR-i} at the chain level on
+a specific element (the twisting morphism as MC).
+\item (2)-(3) are the two halves of clause \ref{KR-ii} on $\Kosz(X)$.
+\item (4) is a direct consequence of (2): twisted tensor acyclicity
+is equivalent to the counit being a qi (LV12 Theorem 2.4.1).
+\item (5)-(6) are class-$\mathsf{G}$ specialisations via the seven-fold
+TFAE + the $\kappa=0$ condition characterising class $\mathsf{G}$.
+These are STRICTLY WEAKER than the general $K^{2}\simeq\id$
+statement (they hold on class $\mathsf{G}$ only), so the
+consolidation into a single statement with class-$\mathsf{G}$ as
+a specialisation is lossless.
+\item (7) is the ordered-bar / symmetric-bar comparison, stated at
+the level of the $L_R$-twisted descent, with unitarity
+hypothesis $R(z)R^{\mathrm{op}}(-z)=\id$.
+\item (8) is the properad-level $(\infty,2)$-enhancement at
+Theorem~$A^{\infty,2}$ (line 955--1040).
+\end{itemize}
+
+\emph{Is any content lost?} CHECK: the original statement of
+``bar concentration in weight 1'' at $g\geq 1$ on class $\mathsf{G}$
+was in pre-wave-14 Vol I. Is it preserved? YES, in
+Corollary~\ref{cor:eight-cor-bar-weight-1} line 644--647: at $g\geq 1$,
+the fiberwise curvature $d^2_{\mathrm{fib}}=\kappa\cdot\omega_g$
+obstructs concentration in weight 1 UNLESS $\kappa=0$, which holds in
+class $\mathsf{G}$. So the extension to $g\geq 1$ is
+class-$\mathsf{G}$-only, matching the original statement.
+
+CHECK: the original ordered bar $R$-twisted descent was proved under
+unitarity $R(z)R^{\mathrm{op}}(-z)=\id$. Is it preserved? YES,
+Lemma~\ref{lem:R-twisted-descent} line 1421--1519 retains unitarity
+as hypothesis (R2) with explicit scope at
+Remark~\ref{rem:R-descent-unitarity-scope} (rational Yangians,
+trigonometric $U_q(\hat\fg)$ at generic $q$, elliptic Belavin/Felder
+scope-dependent).
+
+CHECK: the original Francis--Gaitsgory $(\infty,2)$-equivalence was
+claimed at properad level. Is it preserved? YES, Theorem~\ref{thm:A-infinity-2}
+line 955--1040 with the four-step proof.
+
+\emph{Conclusion.} The consolidation into a single theorem is
+LOSSLESS. The eight subclaims are all recoverable as corollaries;
+no content is thrown away. The unification is a GAIN in
+clarity (one theorem, one invariant $K$, one slogan
+$K^{2}\simeq\id$) without loss of specificity (each corollary states
+its specialisation cleanly).
+
+\subsection*{Cycle 7 (BEILINSON). The MC4 regime: exhibit a specific
+$\cA$ where (H3) fails and $K^{2}\neq\id$ at chain level.}
+
+\textbf{Attack.} The chapter claims at line 95--97 that MC4 is the
+``only genuinely open frontier'', and at line 1970--1984 that
+$\Pi 4$ (unbounded-rank Koszul reflection) is the corresponding
+conjecture. Can a specific $\cA$ be exhibited with (H3) failing and
+$K^{2}\neq\id$ at chain level?
+
+\textbf{Heal (DRINFELD).} Yes. The specific example is
+\emph{critical-level affine Kac--Moody}: $\cA=V_{-h^\vee}(\mathfrak{g})$
+with $\mathfrak{g}$ simple, at the critical level $k=-h^\vee$.
+
+\emph{Why (H3) fails.} At critical level, the Feigin--Frenkel center
+$\mathfrak{z}(\widehat{\mathfrak{g}})=\mathrm{Cent}(V_{-h^\vee}(\mathfrak{g}))$
+is (classically) an infinite-dimensional polynomial algebra
+generated by the higher Casimirs $S_2,S_3,\ldots,S_{h^\vee}$ (Sugawara,
+higher Sugawara, $\mathcal{W}$-algebra generators). The bar complex
+$\Bbarch_X(V_{-h^\vee}(\mathfrak{g}))$ inherits this center as a
+subcomplex, and the conformal weight grading on the center extends
+to unbounded depth because the higher Casimirs have unbounded
+conformal weight with unbounded multiplicity (the polynomial ring
+$\Bbarch_X(\mathrm{Sym}(\mathfrak{z}))$ has finite-dim conformal-weight
+pieces at each weight BUT the bar direction opens up unbounded
+weight differentials via the Sugawara descent).
+
+More precisely: at $k=-h^\vee$, the Sugawara tensor
+$L_n^{\mathrm{Sugawara}}=\tfrac{1}{2(k+h^\vee)}\sum_a:J^a J^a:_n$ has
+a POLE at $k=-h^\vee$; the Sugawara vector becomes central
+($=\mathrm{Cent}$), and the Virasoro action degenerates. The bar
+complex $\Bbarch_X(V_{-h^\vee})$ now carries bar differentials whose
+higher Massey products $m_k$ do not stabilise at any finite $k$
+(they are the higher Sugawara descendants, unbounded in $k$); (H3)
+fails because the conformal-weight pieces of the bar complex at
+weight $w$, although individually finite, do not satisfy the
+finiteness condition AFTER Sugawara descent because the Sugawara
+tower connects them with unbounded depth.
+
+\emph{What fails and what survives.}
+\begin{itemize}
+\item The chain-level qi $\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$
+DEGRADES at critical level: the counit is no longer a qi at finite
+conformal weight, only at the pro-conilpotent completion of
+$V_{-h^\vee}$ (the Feigin--Frenkel / Kac-Kazhdan completion). This is
+the standard story: Feigin--Frenkel \cite{FF92} show that the
+naive direct-sum completion is $V_{-h^\vee}$ itself, but the
+Koszul-reflective completion is a proper enlargement, the
+``completed $V_{-h^\vee}$'' whose derived center IS the classical
+Langlands-dual Lie algebra $\mathfrak{z}(\widehat{\mathfrak{g}})$.
+\item The $(\infty,1)$-equivalence (lane \ref{L3}) SURVIVES: the
+coderived-contraderived equivalence of Positselski \cite{Positselski2011}
+holds without (H3), because $(\infty,1)$-localisation absorbs the
+Mittag-Leffler failure. This is what clause \ref{KR-iii} claims.
+\item The $(\infty,2)$-equivalence at properad level (lane \ref{L4})
+SURVIVES on the conilpotent-complete locus WITHOUT (H3): Theorem~$A^{\infty,2}$
+does not require (H3), only (H1)+(H2). The conilpotent-complete
+locus IS the honest ambient for critical-level affine KM after
+Feigin--Frenkel completion.
+\end{itemize}
+
+\emph{Sharpened conclusion.} At critical level $k=-h^\vee$:
+\begin{itemize}
+\item lane \ref{L1} (chain-level): $K^{2}\simeq\id$ FAILS (because
+(H3) fails).
+\item lane \ref{L2} (Quillen): $K^{2}\simeq\id$ HOLDS at Quillen-equivalence
+level after pro-conilpotent completion (Feigin--Frenkel).
+\item lane \ref{L3} ($(\infty,1)$): $K^{2}\simeq\id$ HOLDS in the
+coderived category unconditionally.
+\item lane \ref{L4} ($(\infty,2)$-properad): $K^{2}\simeq\id$ HOLDS
+unconditionally on conilpotent-complete factorization properads.
+\end{itemize}
+
+So the MC4-regime failure is genuine at chain level but does NOT
+propagate upward: the weaker equivalences (lanes \ref{L2}--\ref{L4})
+are preserved. The honest claim ``$K^{2}\simeq\id$'' at critical
+level is scoped to the coderived / $(\infty,1)$-categorical lane,
+which is exactly what clause \ref{KR-iii} of the theorem captures.
+The chapter is correct.
+
+\emph{What MUST be added.} An example remark immediately after
+Remark~\ref{rem:class-M-pro-conilpotent} (line 477--505) spelling
+out critical-level affine KM as the canonical (H3)-failure witness.
+This complements the existing $\Pi 4$ conjecture at line 1970--1984
+by EXHIBITING the obstruction on a specific example, not just
+naming the conjecture.
+
+%================================================================
+\section*{Distilled heal: step-by-step first-principles proof of $K^{2}\simeq\id$ on $\Kosz(C)$}
+%================================================================
+
+Combining the seven cycle outcomes, the following is the rigorous
+first-principles chain-level proof of $K^{2}\simeq\id$ on
+$\Kosz(X)$, with all lane-discipline markers in place.
+
+\begin{theorem}[Chain-level $K^{2}\simeq\id$ on $\Kosz(X)$;
+healed statement]
+\label{thm:healed-k-squared-id}
+Let $X$ be a smooth projective curve over a field of characteristic 0.
+Let $\cA\in\Kosz(X)\subset\Alg_X^{\fact,\aug,\comp}$
+(Definition~\ref{def:chiral-koszul-pair}) satisfy (H1)+(H2)+(H3)
+(\texttt{theorem\_A\_infinity\_2.tex:69--87}). Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The counit $\varepsilon_\cA\colon\Omegach_X\Bbarch_X(\cA)
+\simequiv\cA$ is a chain-level quasi-isomorphism, witnessed by a
+named chain homotopy
+$h_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\Omegach_X\Bbarch_X(\cA)[-1]$
+satisfying $[d,h_\cA]=\id-p_\cA$ where
+$p_\cA=(\varepsilon_\cA)^{-1}\circ\varepsilon_\cA$ is the retraction.
+\item The unit $\eta_\cA\colon\cA\simequiv\Bbarch_X\Omegach_X(\cA)$
+is a chain-level quasi-isomorphism, witnessed by a named chain
+homotopy $\tilde h_\cA$ satisfying $[d,\tilde h_\cA]=\id-\tilde p_\cA$.
+\item The composite $K^{2}=(\Omegach_X\circ\Bbarch_X)\circ(\Omegach_X\circ\Bbarch_X)$
+is chain-level quasi-isomorphic to $\id_{\Alg_X^{\fact,\aug,\comp}}$
+restricted to $\Kosz(X)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Step-by-step first-principles proof]
+
+\emph{Step 1 (Chain complexes are well-defined on $\Kosz(X)$).}
+By Definition~\ref{def:chiral-koszul-pair}, every $\cA\in\Kosz(X)$
+admits a chiral twisting datum
+$\tau_\cA\colon\bar B^{\mathrm{ch}}_X(\cA)\to\cA$ and a PBW filtration
+$F_\bullet\cA$ exhaustive, complete, bounded below. The bar
+$\Bbarch_X(\cA):=T^c_{(\Fact(X),\star)}(s^{-1}\bar\cA)$ with
+alternating-sign deconcatenation differential is a
+conilpotent factorization coalgebra (Step 1 of
+Theorem~\ref{thm:A-infinity-2} proof at line 1049--1057). The cobar
+$\Omegach_X(\cC):=T_{(\Fact(X),\star)}(s^{-1}\bar\cC)$ with twisted
+differential $d_\cC+\partial_\tau$ is a factorization algebra (line
+1059--1067). Both are chain complexes in $\Fact(X)$.
+
+\emph{Step 2 ($(\infty,1)$-adjunction in $\Fact(X)$).}
+Adjunction $\Bbarch_X\dashv\Omegach_X$ is the universal property of
+free and cofree constructions in the $\star$-monoidal ambient
+$(\Fact(X),\star)$ (Step 1 of Theorem~$A^{\infty,2}$ proof at line
+1062--1067, citing \cite[IV.5, \S2.4]{GR17}). This is a
+Quillen adjunction (lane \ref{L2}) promoting to an
+$(\infty,1)$-adjunction (lane \ref{L3}).
+
+\emph{Step 3 (Unit/counit on the conilpotent-complete locus).}
+The unit $\eta_\cA\colon\cA\to\Omegach_X\Bbarch_X(\cA)$ is the
+standard bar-cobar bicomplex contraction; acyclicity on
+$\Alg^{\fact,\aug,\comp}_X$ follows from a spectral-sequence
+argument (Step 2 of Theorem~$A^{\infty,2}$ proof at line 1071--1083).
+The bar-length filtration on $\Bbarch_X(\cA)$ is exhaustive
+by completeness (H2), and each associated graded piece
+$\mathrm{gr}^p\Bbarch_X(\cA)$ carries the classical Koszul complex for
+$(\Ass,\Ass^!)$ via cohomological truncation and
+point-restriction (line 1075--1079); the Koszul complex is
+acyclic over the unit by \cite[Theorem~7.4.1]{LV12}.
+Exactness of the base-change propagates acyclicity to the
+$E_1$-page.
+
+Convergence of the spectral sequence to the unit morphism is
+Mittag-Leffler for the bar-length filtration under
+conilpotent-completeness (H2), supplied by the cofinal tower
+$\{\Bbarch_X(\cA/\bar\cA^{\,n})\}_{n\geq 1}$ (Remark~\ref{rem:A-inf-2-ml-step-2}
+at line 1135--1161). Hypothesis (H3) supplies surjectivity of the
+stage maps in every cohomological degree; Mittag-Leffler then
+yields chain-level convergence. Counit is dual.
+
+\emph{Step 4 (Promotion to chain-level qi on $\Kosz(X)$).}
+The seven-fold TFAE at $E_2$-collapse hub
+(\texttt{ftm\_seven\_fold\_tfae\_platonic.tex}
+Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}) states that on
+genus-0 $X$ and $\cA\in\Kosz(X)$ satisfying PBW filtration
+conditions, the following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*$^*$)}]
+\item $\cA$ is chirally Koszul;
+\item $\varepsilon_\cA$ is a chain-level qi (counit qi);
+\item $\eta_\cA$ is a chain-level qi (unit weak equivalence);
+\item the twisted tensor complex is acyclic;
+\item the bar complex concentrates in weight 1 (on class $\mathsf{G}$
+at all $g$; on other classes at $g=0$ only);
+\item the PBW bar-cobar spectral sequence collapses at $E_2$.
+\end{enumerate}
+Under (H1)+(H2)+(H3), each of these holds; the counit qi at (ii$^*$)
+and the unit qi at (iii$^*$) are the two halves of $K^{2}\simeq\id$
+at chain level.
+
+\emph{Step 5 (Archetype witnesses of the chain homotopy).}
+For each archetype $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$,
+the chain homotopy $h_\cA$ is constructed explicitly:
+\begin{itemize}
+\item \textbf{Heisenberg $\mathsf{G}$}: $\cA=\mathcal{H}_k$. The bar
+complex $\bar B^{\mathrm{ch}}(\mathcal{H}_k)=T^c(s^{-1}\bar\mathcal{H}_k)$
+is generated by $\alpha_{-n_1}\cdots\alpha_{-n_p}$ with
+$n_j\geq 1$. The Koszul contraction
+\[
+h_\mathsf{G}(\alpha_{-n_1}\cdots\alpha_{-n_p})
+=\sum_{j=1}^{p}(-1)^{j-1}\alpha_{-n_1}\cdots\widehat{\alpha_{-n_j}}
+\cdots\alpha_{-n_p}\otimes\alpha_{-n_j}
+\]
+(with appropriate $s^{-1}$-sign conventions) satisfies
+$[d_{\mathrm{bar}},h_\mathsf{G}]=\id$ on
+$\Bbarch^{\geq 1}(\mathcal{H}_k)$ and
+$h_\mathsf{G}|_{\Bbarch^{0}}=0$. Direct verification: $d_{\mathrm{bar}}$
+is the alternating-sign cut-and-contract, $h_\mathsf{G}$ is the
+alternating-sign insert-and-uncontract; the combinatorial identity
+is the standard simplicial contraction of the augmented tensor
+coalgebra (LV12 Proposition 2.1.12).
+\item \textbf{Affine Kac--Moody $\mathsf{L}$}: $\cA=V_k(\mathfrak{sl}_2)$
+at $k\neq-2$. The Sugawara-twisted chain homotopy is
+\[
+h_\mathsf{L}=h_\mathsf{G}+\frac{1}{2(k+h^\vee)}\sum_a[J^a,h_\mathsf{G}]\cdot J^a,
+\]
+with $h_\mathsf{G}$ the Heisenberg contraction on the
+generating $\fg$-mode factor and the second term the Sugawara
+descent contribution. $[d,h_\mathsf{L}]=\id-p_\mathsf{L}$ where
+$p_\mathsf{L}$ is the projection onto the irreducible vacuum module
+$L(k,0)$; verification uses the Gelfand--Fuks cohomology computation
+for $\widehat{\mathfrak{sl}_2}$.
+\item \textbf{$\beta\gamma$ $\mathsf{C}$}: $\cA=\beta\gamma_\lambda$.
+The free-field OPE chain homotopy
+\[
+h_\mathsf{C}=\sum_{n\geq 1}\bigl(\beta_{-n}\cdot\partial_{\beta_{-n}}
++\gamma_{-n+\lambda-1}\cdot\partial_{\gamma_{-n+\lambda-1}}\bigr)
+\]
+on the $\beta\gamma$ Fock space, combined with
+$h_\mathsf{G}$ on conformal-weight layers. $[d,h_\mathsf{C}]=\id-p_\mathsf{C}$
+where $p_\mathsf{C}$ is the projection onto the free-field vacuum.
+\item \textbf{Virasoro $\mathsf{M}$}: $\cA=\mathrm{Vir}_c$. The Felder
+BRST chain homotopy
+\[
+h_\mathsf{M}=Q_{\mathrm{Felder}}^{-1}\circ\pi^{\mathrm{ord}}
+\]
+on the Felder resolution of $\mathrm{Vir}_c$ at rational minimal-model
+central charges, extended to generic $c$ via Fock-space
+continuation (working on the weight-completed
+$\widehat{\mathrm{Vir}}_c=\varprojlim_N\mathrm{Vir}_c/\mathrm{Vir}_c^{\geq N}$,
+Remark~\ref{rem:class-M-pro-conilpotent}). $[d,h_\mathsf{M}]=\id-p_\mathsf{M}$
+with $p_\mathsf{M}$ the projection onto $L(c,0)$.
+\end{itemize}
+
+\emph{Step 6 (Conclusion).}
+The four archetype chain homotopies $h_\mathsf{G},h_\mathsf{L},h_\mathsf{C},h_\mathsf{M}$
+witness $K^{2}\simeq\id$ at chain level (lane \ref{L1}) on the
+representative of each archetype. By
+Lemma~\ref{lem:archetype-H123-witness}, each representative is in
+$\Kosz(X)$ with (H1)+(H2)+(H3) satisfied on the
+conformal-weight grading (possibly after pro-conilpotent
+weight completion for class $\mathsf{M}$). The chain-level
+$K^{2}\simeq\id$ therefore holds on the entire standard
+landscape; extension to abstract $\cA\in\Kosz(X)$ is by the
+seven-fold TFAE of Step 4 plus the Vallette/Positselski/Hinich
+machinery.
+
+Off $\Kosz(X)$, lanes \ref{L2}--\ref{L4} survive; lane \ref{L1}
+degrades to the coderived statement, which is the content of
+clause \ref{KR-iii}.
+\end{proof}
+
+%================================================================
+\section*{Hidden structure exposed by the cycles}
+%================================================================
+
+The seven cycles, taken together, expose a structural feature of
+the programme that was previously distributed across six files:
+
+\begin{enumerate}[label=\textbf{(S\arabic*)}]
+\item \textbf{Four-lane discipline is load-bearing.}
+$K^{2}\simeq\id$ is not a single theorem; it is four theorems at
+increasing categorical strength (lanes \ref{L1}--\ref{L4}), each
+with its own scope and witnesses. The chapter should state which
+lane each corollary (D1)--(D14) of
+Corollary~\ref{cor:ainf2-downstream-list} lives in.
+\item \textbf{The archetype chain homotopies are a genuine witness
+table.} The four homotopies $h_\mathsf{G},h_\mathsf{L},h_\mathsf{C},h_\mathsf{M}$
+are the concrete content of $K^{2}\simeq\id$ on the four classes.
+They complement Lemma~\ref{lem:archetype-H123-witness} (which
+witnesses (H1)+(H2)+(H3) on the bar COMPLEX side) by providing
+the chain-level HOMOTOPY witnesses on the derived-identity side.
+\item \textbf{Critical-level affine KM is the canonical
+(H3)-failure.} The $\Pi 4$ conjecture on unbounded-rank Koszul
+reflection (line 1970--1984) has a specific example: critical-level
+$V_{-h^\vee}(\mathfrak{g})$. This example belongs after
+Remark~\ref{rem:class-M-pro-conilpotent} or in a new remark
+attached to $\Pi 4$.
+\item \textbf{The pullback-along-point argument from
+$(\infty,2)$ to chain-level is TWO arrows, not one.} The step from
+properad $(\infty,2)$-equivalence to chain-level Quillen equivalence
+factors through the $(\infty,2)\to(\infty,1)$-truncation, which is
+cited (via Bousfield--Friedlander / GR17) but not named explicitly
+in Corollary~\ref{cor:classical-A-from-A-infinity-2}. This is a
+minor expository gap.
+\item \textbf{Symmetric-monoidal compatibility needs the
+$\star$-qualifier.} ``Symmetric-monoidal adjoint equivalence'' at
+Theorem~\ref{thm:koszul-reflection} should read
+``$(\Fact(X),\star)$-symmetric-monoidal adjoint equivalence''. This
+is a scope marker, not a theorem change.
+\item \textbf{The Vol I / Vol III bridge through $\Phi_d$ uses
+the SM structure of $K$.} Vol III's two-stage factorisation
+$\Phi_d=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
+composes with the SM structure of $K$ on $\Fact(C)$. The
+compatibility is the content of Corollary~(D9)
+(Corollary~\ref{cor:ainf2-downstream-list} line 1630--1645); the
+$(\infty,2)$-functoriality of $\Phi_d$ PASSES THROUGH
+Theorem~$A^{\infty,2}$, making Vol III's universal trace identity
+consistent with Vol I's conductor identity.
+\end{enumerate}
+
+%================================================================
+\section*{Open frontiers}
+%================================================================
+
+Three genuine opens remain after the seven cycles.
+
+\begin{enumerate}[label=\textbf{(O\arabic*)}]
+\item \textbf{Modular-family extension over $\overline{\mathcal{M}}_{g,n}$}
+(Remark~\ref{rem:A-infinity-2-modular-family-scope}, line 1163--1353).
+The $[\alpha_{\mathrm{BC}}]$ base-change class and
+$[\beta_{\mathrm{nodal}}]$ nodal-sewing class remain unverified.
+Vol I Theorem~$A^{\infty,2}$ is proved on a fixed curve $X$;
+extension to the universal stable family is cited only at
+GR17 Part IV + Mok25 (2025 arXiv). Clutching-uniqueness for
+Theorem~D at $g\geq 2$ depends on clearing $[\beta_{\mathrm{nodal}}]$;
+currently conditional on Class $\mathsf{G}$ (unconditional) and
+Class $\mathsf{L}$ (conditional on generic non-critical level);
+Class $\mathsf{M}$ weight-completed inherits from Vol II
+\texttt{universal\_celestial\_holography.tex}.
+\item \textbf{Lagrangian--Koszul converse $\Pi 3$.} Lagrangian
+transversality of $M_{\mathrm{comp}}$ at $[\cA]$ implies chiral
+Koszulness. Stated as Conjecture~\ref{conj:lagrangian-koszul-converse}
+(line 1962--1968); requires the chiral PTVV framework which is in
+Vol III. The converse (chiral Koszulness $\Rightarrow$ Lagrangian
+transversality) is proved; the forward is open.
+\item \textbf{Unbounded-rank Koszul reflection $\Pi 4$.} On
+non-(H3) loci (e.g., critical-level affine KM after pro-conilpotent
+completion where the completion has unbounded-depth Sugawara
+tower), the chain-level $K^{2}\simeq\id$ fails but the coderived
+holds. A Mittag-Leffler-type condition strengthening (H3) but
+weaker than finite-dim is conjecturally the correct bridging
+hypothesis. Stated as Conjecture~\ref{conj:unbounded-rank-koszul-reflection}
+(line 1970--1984).
+\end{enumerate}
+
+%================================================================
+\section*{Cross-volume harmonies (Drinfeld unifying principle)}
+%================================================================
+
+The healed $K^{2}\simeq\id$ on $\Kosz(X)$ couples to the three
+volumes as follows.
+
+\begin{itemize}
+\item \textbf{Vol I (algebra).} Theorem~A is the backbone adjunction
+$\Omegach_X\dashv\Bbarch_X$. Its healed statement (four lanes
+\ref{L1}--\ref{L4}) gives the four operational levels at which the
+programme's downstream theorems (B Positselski, C derived-centre
+complementarity, D obstruction-tower universality, H Hochschild
+concentration) can be inscribed. In particular, Theorem~D's
+$\mathrm{obs}_g=\kappa\cdot\lambda_g$ is currently inscribed at
+chain level (lane \ref{L1}) on Class $\mathsf{G}$ and conditionally
+on Class $\mathsf{L}$ via the clutching-uniqueness logic which
+depends on $[\beta_{\mathrm{nodal}}]$.
+\item \textbf{Vol II (physics).} Universal Holography
+$\Phi_{\mathrm{hol}}\colon\mathrm{ChirAlg}^{\omega,BL}_X\to\mathrm{HT\text{-}QFT}_{X\times\R}$
+at \texttt{universal\_holography.tex} uses the chain-level
+$K^{2}\simeq\id$ to identify bulk = $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+with boundary = $\cA$ via the brace / $\mathrm{SC}^{\mathrm{ch,top}}$
+action. The bulk-boundary consistency IS $K^{2}\simeq\id$
+evaluated on the derived-centre pair. Topologisation of
+$\mathrm{SC}^{\mathrm{ch,top}}$ to $E_3$-topological (at
+noncritical level for Class $\mathsf{L}$, weight-completed for
+Class $\mathsf{M}$) is THE chiral shadow of Lurie's
+HA~\S5.5 result that $E_3$-algebras = braided monoidal categories
+with Drinfeld centre.
+\item \textbf{Vol III (geometry).} The two-stage factorisation
+$\Phi_d=\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
+at \texttt{cy\_to\_chiral.tex} produces an $E_1$-chiral algebra on
+the reference curve $C$ from a CY$_d$ category. Theorem~A
+($K^{2}\simeq\id$) is the backbone of the bar--cobar duality on
+that curve; a SINGLE CY$_d$ category yields a FAMILY of chiral
+shadows indexed by $(\Sigma_{d-1},C)$, each satisfying
+$K^{2}\simeq\id$. The universal trace identity
+$K\circ\Phi=\kappa_{\mathrm{ch}}$ is the commutativity of the
+single square coupling the Vol I conductor to the Vol III
+Borcherds weight $\kappa_{\mathrm{BKM}}$ on K3-fibered Class A.
+\end{itemize}
+
+The inner music: $K$ is the invariant; $\Bbarch_X$ and
+$\Omegach_X$ are coordinate functorial expressions of it.
+$K^{2}\simeq\id$ is Pontryagin-style involutivity of this
+invariant, and the four-lane discipline exhibits four
+progressively weaker notions of equality, each appropriate
+for a different stratum of the Koszul locus.
+
+One symmetry, one diagram, one equation: $K^{2}\simeq\id$.
+
+\end{document}

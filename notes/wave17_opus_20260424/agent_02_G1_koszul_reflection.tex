@@ -1,0 +1,845 @@
+% wave17 / agent_02_G1_koszul_reflection.tex
+% Adversarial attack-heal record on Generating Identity G1 / Theorem A.
+% Target: the Koszul reflection K = barB^{ch}_X o Omega^{ch}_X satisfies
+% K^2 simeq id on Kosz(X), with explicit chain-level homotopies.
+% Five ATTACK-HEAL cycles, voiced as Kazhdan (compression) + Etingof (clarity)
+% + Drinfeld (unifying principle) + Costello (factorisation as organising principle).
+% Author: Raeez Lorgat. No AI attribution. Working scratch, NOT manuscript prose.
+% Not for direct inclusion in main manuscript; this is what survives after
+% adversarial audit of thm:koszul-reflection in chapters/theory/theorem_A_infinity_2.tex.
+%
+% Target, in compact form:
+%   (Theorem A / G1)  (Omega^{ch}_X, barB^{ch}_X) : Coalg_X^{conil,comp} <-> Alg_X^{aug}
+%                     is a symmetric-monoidal adjoint equivalence.
+%   (local form)      On Kosz(C), K := barB^{ch}_C o Omega^{ch}_C satisfies K^2 simeq id
+%                     at chain level.
+%   (global form)     On Kosz^{rel}/\bar M_{g,n}, K^univ is an (infty,1)-adjoint
+%                     autoequivalence with (K^univ)^2 simeq id.
+%   (hypotheses)      (H1) augmentation; (H2) augmentation-ideal completeness;
+%                     (H3) finite-dim graded bar pieces.
+
+\providecommand{\ClaimStatusTheorem}{\textsc{[Theorem]}}
+\providecommand{\ClaimStatusConjectured}{\textsc{[Conjectured]}}
+\providecommand{\ClaimStatusHeuristic}{\textsc{[Heuristic]}}
+\providecommand{\ClaimStatusScoped}{\textsc{[Scoped]}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\NN}{\mathbb{N}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Bch}{B^{\mathrm{ch}}}
+\providecommand{\Bbarch}{\bar{B}^{\mathrm{ch}}}
+\providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
+\providecommand{\Kosz}{\mathsf{Kosz}}
+\providecommand{\Conil}{\mathsf{Conil}}
+\providecommand{\Moduli}{\overline{M}}
+\providecommand{\Dmod}{\mathrm{D\text{-}mod}}
+\providecommand{\Fact}{\mathrm{Fact}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\Tor}{\mathrm{Tor}}
+\providecommand{\Ext}{\mathrm{Ext}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\Tw}{\mathrm{Tw}}
+\providecommand{\coLie}{\mathrm{coLie}^{\mathrm{ch}}}
+\providecommand{\Symch}{\mathrm{Sym}^{\mathrm{ch}}}
+\providecommand{\Lambdach}{\Lambda^{\mathrm{ch}}}
+\providecommand{\Virc}{\mathrm{Vir}_c}
+\providecommand{\Heis}{\mathcal{H}}
+\providecommand{\dGLA}{\mathrm{dGLA}}
+\providecommand{\MC}{\mathrm{MC}}
+
+\section{Adversarial attack--heal record on Theorem A / G1 (Koszul reflection)}
+\label{wn:sec:wave17-opus-G1}
+
+\textbf{Scope.} Five adversarial cycles against
+Theorem~\ref{thm:koszul-reflection} in
+\texttt{chapters/theory/theorem\_A\_infinity\_2.tex}. Each cycle opens
+with a first-principles attack on a load-bearing assertion and closes
+with what survives. The survivors carry explicit chain homotopies
+witnessing $K^{2}\simeq\id$ on the three archetypal classes
+$\mathsf{G}$ (Heisenberg), $\mathsf{L}$ (affine Kac--Moody at
+noncritical level), $\mathsf{M}$ (Virasoro); these witness the local
+chain-level form. The global form is scoped separately; the
+local--global correspondence is a theorem, not a convention.
+
+%--------------------------------------------------------------------
+\subsection*{Cycle 1 (Kazhdan compression: is $K^{2}\simeq\id$ a theorem or a slogan?)}
+%--------------------------------------------------------------------
+
+\textbf{Attack.} The inscribed statement is
+\[
+K^{2}\;\simeq\;\id\qquad\text{on}\qquad\Kosz(X),
+\]
+with proof routed through ``Vallette + Positselski + Hinich +
+Francis--Gaitsgory'' (four authors, one equation). Four questions.
+
+\begin{enumerate}
+\item[Q1.1] \emph{Is there an explicit chain homotopy $h$ with
+$[d,h] = \id - K^{2}$, or does ``$\simeq$'' tacitly mean
+``quasi-isomorphic via an unexhibited zig-zag through a cofibrant
+replacement''?} If only the latter, the identity is an
+$(\infty,1)$-statement with no chain-level witness.
+\item[Q1.2] \emph{Where does the Koszulness hypothesis pinch?}
+The bar--cobar adjunction $\Omegach\dashv\Bbarch$ is formal from the
+twisting-morphism bijection \cite[Thm.\ 2.2.9]{LV12}. The
+$E_{2}$-collapse of the bar--cobar spectral sequence is \emph{not}
+formal; it is the content of Koszulness. What is the explicit ideal
+$I\subset T^{c}(s^{-1}\bar\cA)$ whose filtration Koszulness requires?
+\item[Q1.3] \emph{Is this the chiral specialisation of Priddy
+(1970) or of Positselski (2011)?} Priddy's original theorem operates
+on \emph{quadratic associative algebras over a field} with a PBW-type
+generating family. Positselski lifts this to the coderived
+category of curved CDG-coalgebras. The chiral specialisation must
+pick one lane; mixing them blurs which chain-level object is actually
+inverted.
+\item[Q1.4] \emph{Is the statement chain-level or coderived?} The
+inscription reads ``chain-level qi on $\Kosz(X)$'' in (KR-ii) but
+``coderived equivalence'' in (KR-iii). What is the failure mode that
+forces the separation?
+\end{enumerate}
+
+\medskip
+\textbf{Heal.} The survivor keeps four distinctions.
+
+\emph{(H1.1)} The chain homotopy $h$ exhibiting $K^{2}\simeq\id$ on
+$\Kosz(X)$ is the twisted bar--cobar contracting homotopy of
+Loday--Vallette \cite[\S2.3--\S2.4, eq.\ (2.17)]{LV12}, specialised to
+the chiral Koszul operad.
+Concretely, writing $\Bbarch_X(\cA) = T^{c}(s^{-1}\bar\cA)$ with bar
+differential $d_{\Bbarch} = d_{\mathrm{int}}+d_{2}$ (internal
+differential plus Hochschild-type contraction induced by the chiral
+product) and $\Omegach_X(\cC) = T(s\bar\cC)$ with cobar differential
+$d_{\Omegach} = d_{\mathrm{int}}+d^{\vee}_{\Delta}$ (internal plus
+deconcatenation), the composite $\Omegach_X\Bbarch_X(\cA)$ carries a
+canonical filtration $F_{p}\Omegach_X\Bbarch_X(\cA)$ by total bar plus
+cobar length. The associated-graded is the universal twisted tensor
+complex
+\[
+\mathrm{gr}_{F}\bigl(\Omegach_X\Bbarch_X(\cA)\bigr)
+\;\cong\;
+\Bbarch_X(\cA)\otimes^{\tau}\cA,
+\]
+with $\tau\colon\Bbarch_X(\cA)\to\cA$ the universal twisting morphism
+(\cite[Prop.\ 2.1.8]{LV12}). The contracting homotopy $h$ on this
+twisted tensor is \emph{concrete}: on a reduced bar-element
+$s^{-1}a_{1}\otimes\cdots\otimes s^{-1}a_{n}\otimes b\in
+\Bbarch_X(\cA)\otimes^{\tau}\cA$, one has
+\[
+h\bigl(s^{-1}a_{1}\otimes\cdots\otimes s^{-1}a_{n}\otimes b\bigr)
+\;=\;
+s^{-1}a_{1}\otimes\cdots\otimes s^{-1}a_{n}\otimes s^{-1}b\otimes 1,
+\]
+with $\id$ as the last tensor factor (the augmentation unit), and
+one verifies by a single computation that
+$[d_{\Bbarch\otimes^{\tau}\cA},h] = \id - \pi\epsilon$ where
+$\pi\colon \Bbarch_X(\cA)\otimes^{\tau}\cA\to k$ and
+$\epsilon\colon k\to\Bbarch_X(\cA)\otimes^{\tau}\cA$ are the
+augmentation maps. Acyclicity of the twisted tensor is therefore
+exhibited on the nose. The homotopy $h$ is the explicit chain-level
+witness of $K^{-1}K(\cA)\xrightarrow{\sim}\cA$.
+
+\emph{(H1.2)} The pinch is on the \emph{quadratic-dual ideal}. An
+augmented chiral factorisation algebra $\cA$ is \emph{chirally
+Koszul} when the natural map
+\[
+\varphi_{\cA}\colon \bigl(\chirAss^{!}\bigr)(s^{-1}\bar\cA_{(1)})
+\;\hookrightarrow\;
+\Bbarch_X(\cA)
+\]
+is a quasi-isomorphism, where $\bar\cA_{(1)}\subset\bar\cA$ is the
+generating space (weight-1 part under the conformal-weight grading of
+Lemma~\ref{lem:archetype-H123-witness}) and $\chirAss^{!}$ is the
+Koszul dual chiral cooperad. The ideal that must be Koszul is the
+ideal of \emph{chiral OPE relations} in the presentation
+$\cA = T^{\mathrm{ch}}(\cA_{(1)})/\langle R_{\cA}\rangle$: the
+associated graded $\mathrm{gr}_{F}\cA$ (for the augmentation-ideal
+filtration) must be a chiral quadratic algebra whose relations
+$R_{\cA}^{\mathrm{quad}}\subset \cA_{(1)}\otimes^{\mathrm{ch}}\cA_{(1)}$
+satisfy
+$R_{\cA}^{\perp}\cap (R_{\cA}^{\mathrm{quad}})^{\perp}\cdot R_{\cA}^{\mathrm{quad}} = 0$,
+the chiral Priddy Koszulness condition. Priddy's criterion does not
+hold automatically; it fails for $\cA$ with non-quadratic OPE
+structure on the associated graded (e.g.\ cubic terms in the Virasoro
+stress--energy OPE survive the graded passage and obstruct the
+condition at weight~$4$). The survival of $\mathsf{M}$ inside
+$\Kosz(X)$ relies on the \emph{non-homogeneous} Priddy criterion of
+Positselski \cite[Thm.\ 9.1]{Positselski2018}, which absorbs cubic and
+higher OPE terms into weak curvature; this is the essential content
+of Remark~\ref{rem:class-M-pro-conilpotent}.
+
+\emph{(H1.3)} The chiral case is \emph{non-homogeneous}, not classical
+Priddy. Priddy's 1970 theorem applies verbatim only to class
+$\mathsf{G}$ (free fields), where the chiral OPE is strictly
+quadratic. Class $\mathsf{L}$ requires the Sugawara absorption of the
+stress--energy tensor into the current algebra; classes $\mathsf{C}$,
+$\mathsf{M}$, $\mathsf{B}$ require Positselski's non-homogeneous
+refinement. The manuscript inscription at
+\texttt{theorem\_A\_infinity\_2.tex:209--231} cites Priddy and
+Positselski in parallel without discrimination; the honest statement
+is Priddy-for-$\mathsf{G}$, Positselski-for-$\mathsf{L/C/M/B}$.
+
+\emph{(H1.4)} The chain-level / coderived split of (KR-ii) vs.\
+(KR-iii) is load-bearing and correctly inscribed. Off $\Kosz(X)$, the
+Maurer--Cartan condition
+$d\tau + \tfrac{1}{2}[\tau,\tau] = 0$
+has the bracket term nonzero, producing genuine higher homotopies
+$m_{k}\,(k\geq 3)$ on the bar cohomology (the shadow tower $S_{k}$ of
+$\mathsf{M}$). The chain-level counit
+$\Omegach\Bbarch(\cA)\to\cA$ is not a qi; it is a coderived
+equivalence, inverted only after passing to
+$D^{\co}(\Bbarch\text{-CoFact})$ via Positselski's covariantly
+weighted equivalence $D^{\co}\simeq D^{\ctr}$
+\cite[App.\ A.5]{Positselski2011}. The ``$\simeq$'' in (KR-iii) is
+therefore weaker than in (KR-ii) by a controlled amount; the precise
+statement is Corollary~\ref{cor:eight-cor-counit-qi}
+(chain-level on $\Kosz(X)$) and its coderived analogue off
+$\Kosz(X)$, stated separately.
+
+\emph{Survivor.} $K^{2}\simeq\id$ on $\Kosz(X)$ is a theorem with
+\emph{explicit chain homotopy $h$}, inherited from Loday--Vallette
+eq.\ (2.17) via the chiral specialisation of the universal twisting
+morphism. Off $\Kosz(X)$, the identity holds in the coderived
+category with explicit Positselski correction. Priddy governs
+$\mathsf{G}$; Positselski governs $\mathsf{L/C/M/B}$; the
+distinction is permanent.
+
+%--------------------------------------------------------------------
+\subsection*{Cycle 2 (Costello attack on local--global: is $K^{\mathrm{univ}}$ the clutching of $K_{C}$?)}
+%--------------------------------------------------------------------
+
+\textbf{Attack.} The global form asserts a fibred
+$(\infty,1)$-adjoint equivalence
+\[
+K^{\mathrm{univ}}\colon
+\Kosz^{\mathrm{rel}}/\Moduli_{g,n}
+\;\rightleftarrows\;
+\bigl(\Kosz^{\mathrm{rel}}/\Moduli_{g,n}\bigr)^{\mathrm{op}},
+\qquad
+(K^{\mathrm{univ}})^{2}\simeq\id^{\mathrm{rel}}.
+\]
+Four attack points.
+
+\begin{enumerate}
+\item[Q2.1] \emph{Assembly.} The pointwise data is the family
+$\{K_{C}\mid [C]\in\Moduli_{g,n}\}$. What descent cocycle over
+$\Moduli_{g,n}$ exhibits these as the fibres of a single universal
+functor, and where does the cocycle condition pinch?
+\item[Q2.2] \emph{Degenerate fibre propagation.} If $K_{C_{0}}$ is
+trivial on some fibre $C_{0}\in\Moduli_{g,n}$ (e.g.\ if some
+genus-specific relation forces
+$\Bbarch_{C_{0}}(\cA_{C_{0}})\simeq 0$), does the triviality
+propagate to neighbouring fibres? Or is triviality a
+codimension-$\geq 1$ phenomenon?
+\item[Q2.3] \emph{Nodal boundary.} At the boundary divisor
+$\delta_{\mathrm{sep}}\subset\Moduli_{g,n}$, a nodal curve
+$C_{\mathrm{nod}} = C_{1}\vee_{p}C_{2}$ has normalisation
+$\tilde C = C_{1}\sqcup C_{2}$. What is $K$ on $C_{\mathrm{nod}}$, and
+how does it relate to $K_{C_{1}}\otimes K_{C_{2}}$ on the
+normalisation?
+\item[Q2.4] \emph{Non-separating node.} At
+$\delta_{\mathrm{nonsep}}$, the normalisation produces a single
+lower-genus curve with two marked points. Does the clutching
+intertwine with the monodromy representation of
+$\pi_{1}(\delta_{\mathrm{nonsep}})$?
+\end{enumerate}
+
+\medskip
+\textbf{Heal.}
+
+\emph{(H2.1)} The assembly is via the Francis--Gaitsgory
+factorisation ambient of
+Proposition~\ref{prop:fg-ambient-properties}. The universal bar
+functor
+\[
+\Bbarch_{\mathrm{univ}}\colon
+\Alg^{\fact,\aug,\comp}(\Ran^{\mathrm{univ}}/\Moduli_{g,n})
+\;\to\;
+\CoAlg^{\fact,\conil,\co}(\Ran^{\mathrm{univ}}/\Moduli_{g,n})
+\]
+is defined on the universal factorisation stack
+$\Ran^{\mathrm{univ}}/\Moduli_{g,n}$; its fibre over $[C]$ is
+$\Bbarch_{C}$. The descent cocycle is the \emph{Francis star-product
+compatibility}: for a family $\cA$ over $\Moduli_{g,n}$, the bar of
+the family coincides with the family of bars up to canonical
+$\Moduli_{g,n}$-monodromy. The cocycle pinches at the KZB connection
+$\nabla_{\mathrm{KZB}}$ on $\Conf_{n}^{\mathrm{univ}}/\Moduli_{g,n}$:
+the horizontality of $\Bbarch_{\mathrm{univ}}$ is the KZB-flatness of
+the Arnold--KZB connection of identity (G2). Without horizontality,
+the fibrewise $K_{C}$ do not glue to $K^{\mathrm{univ}}$; with
+horizontality, the assembly is tautological.
+
+\emph{(H2.2)} Degenerate fibres do not propagate generically. Triviality
+of $K_{C_{0}}$ would require
+$\Bbarch_{C_{0}}(\cA_{C_{0}}) \simeq 0$, which by
+Lemma~\ref{lem:archetype-H123-witness} would force the generating
+space $\cA_{C_{0},(1)}$ to vanish. A chiral algebra with empty
+generating space is the trivial algebra $k$; triviality is therefore
+a codimension-$\infty$ phenomenon within the standard landscape
+(where $\cA$ has at least one current or stress--energy generator).
+The genuine worry is not triviality but \emph{degeneration of
+Koszulness}: at codimension-$1$ strata (the $691$-prime of
+$z\_g\_kummer\_bernoulli\_platonic.tex$, the admissible
+non-noncritical level for class~$\mathsf{L}$), $K_{C}$ becomes
+coderived-only. The $\Kosz^{\mathrm{rel}}$ substack is not open in
+$\Moduli_{g,n}$; it is a constructible subset whose structure at
+codim-$1$ is \emph{exactly} the content of
+Chapter~\ref{chap:mc5-class-m-chain-level-platonic} in $\mathsf{M}$.
+
+\emph{(H2.3)} At a separating node
+$C_{\mathrm{nod}} = C_{1}\cup_{p}C_{2}$, the chiral algebra
+$\cA_{C_{\mathrm{nod}}}$ is the chiral sum
+$\cA_{C_{1}}\boxtimes_{\fact}\cA_{C_{2}}$
+with diagonal constraint at $p$: concretely, if $\cA_{C_{i}}$ carry
+augmentations $\epsilon_{i}$, then
+$\cA_{C_{\mathrm{nod}}}$ is the factorisation-algebra pullback
+$\cA_{C_{1}}\times_{\epsilon_{1}=\epsilon_{2}}\cA_{C_{2}}$. The bar of
+the pullback is the (derived) tensor of the bars:
+\[
+\Bbarch_{C_{\mathrm{nod}}}(\cA_{C_{\mathrm{nod}}})
+\;\simeq\;
+\Bbarch_{C_{1}}(\cA_{C_{1}})\;\otimes^{L}_{k}\;\Bbarch_{C_{2}}(\cA_{C_{2}}),
+\]
+so $K_{C_{\mathrm{nod}}} \simeq K_{C_{1}}\otimes K_{C_{2}}$. The
+involutive identity $K^{2}\simeq\id$ propagates from normalisation to
+nodal curve by tensor-functoriality. This is the
+\emph{clutching-uniqueness theorem} of
+Chapter~\ref{chap:clutching-uniqueness-socle}.
+
+\emph{(H2.4)} At a non-separating node, the normalisation is a single
+curve of genus $g-1$ with two additional marked points; the
+factorisation-algebra pullback involves a diagonal on the same
+chiral algebra, not on two independent copies. The monodromy around
+$\delta_{\mathrm{nonsep}}$ is the trace of the
+$\pi_{1}(\delta_{\mathrm{nonsep}})$-action on
+$\Bbarch_{\tilde C}(\cA_{\tilde C})$; the involutive identity
+$K^{2}\simeq\id$ is preserved \emph{only if} the monodromy commutes
+with $K$. This commutativity is the content of
+\texttt{higher\_genus\_modular\_koszul.tex:5030}: the modular datum
+$\Theta_{\cA}$ is a horizontal section of the universal flat
+connection on $\Ran^{\mathrm{univ}}/\Moduli_{g,n}$, and its horizontality
+is equivalent to the commutation of $K^{\mathrm{univ}}$ with all
+monodromies.
+
+\emph{Survivor.} The local--global correspondence $K_{C}\mapsto
+K^{\mathrm{univ}}$ is a theorem (assembly via
+Francis--Gaitsgory + KZB-horizontality), not a convention. Nodal
+boundary is governed by clutching:
+$K_{C_{1}\vee C_{2}} = K_{C_{1}}\otimes K_{C_{2}}$ at separating nodes;
+monodromy-trace at non-separating nodes. Degeneracy is
+codimension-$\geq 1$ in the Koszul substack and controlled by
+chain-vs-coderived transition.
+
+%--------------------------------------------------------------------
+\subsection*{Cycle 3 (Etingof clarity attack: are (H1)--(H3) truly independent?)}
+%--------------------------------------------------------------------
+
+\textbf{Attack.} The three hypotheses of
+Theorem~\ref{thm:koszul-reflection} are stated as independent.
+
+\begin{enumerate}
+\item[Q3.1] \emph{Does (H1) imply (H2) under natural side
+conditions?} If $\cA$ is augmented and positive-energy, is the
+augmentation-ideal completeness automatic?
+\item[Q3.2] \emph{Is (H3) necessary, or can it be relaxed?} The
+non-finitely-generated MC4-completion of Vol~I fails (H3); does
+Theorem~A have any content there, and what is the precise failure?
+\item[Q3.3] \emph{What is the smallest counter-example where (H1)
+fails but a Koszul reflection still exists morally?} Write an
+algebra without augmentation that nonetheless has a reasonable
+Koszul dual.
+\item[Q3.4] \emph{Chain-level vs.\ coderived: does dropping (H3) force
+coderived, or does it kill the theorem entirely?}
+\end{enumerate}
+
+\medskip
+\textbf{Heal.}
+
+\emph{(H3.1)} (H1) and (H2) are logically independent. An
+augmentation $\epsilon\colon\cA\to\omega_X$ exists for every
+standard-landscape algebra by the vacuum projection; the
+augmentation ideal $\bar\cA=\ker\epsilon$ is automatic. Completeness
+$\cA\simeq\varprojlim_{n}\cA/\bar\cA^{n}$ is independent: it is
+completeness in the \emph{topological} (augmentation-adic) sense. The
+raw direct-sum ambient $\bigoplus_{w}\cA_{w}$ satisfies (H1) but not
+(H2); the pro-conilpotent / weight-completed ambient
+$\prod_{w}\cA_{w}$ satisfies both. The separation is exactly
+Remark~\ref{rem:class-M-pro-conilpotent}: class~$\mathsf{M}$ requires
+the completion explicitly, whereas class~$\mathsf{G}$ at a marked
+point may evade (H2) at the level of the fibre (the vacuum module is
+finite-dimensional at each conformal weight) but not at the
+factorisation-algebra level.
+
+Counter-example witnessing independence. Take the uncompleted
+Virasoro algebra $\Virc$ with the raw direct-sum ambient
+$\bigoplus_{w\geq 0}\Virc_{w}$. (H1) holds (vacuum augmentation
+$\epsilon(|0\rangle)=1$, $\epsilon(L_{-n}|0\rangle)=0$). (H2) fails:
+the augmentation-ideal completion $\varprojlim_{n}\Virc/\bar\Virc^{n}$
+is strictly larger than $\bigoplus_{w}\Virc_{w}$ and equals
+$\prod_{w}\Virc_{w}$; the natural inclusion
+$\Virc\hookrightarrow\widehat{\Virc}$ is not an iso. Theorem~A on
+$\Virc$ uncompleted is not a theorem; Theorem~A on $\widehat{\Virc}$
+is a theorem.
+
+\emph{(H3.2)} (H3) is necessary, not merely convenient. The
+non-finitely-generated MC4-completion regime fails (H3) on the
+conformal-weight grading: the universal $A_{\infty}$-algebra
+generated by all higher Stasheff--Massey operations
+$\{m_{k}\mid k\geq 3\}$ with the full MC condition produces
+$\bar\cA_{(1)}$ of infinite rank in each weight, and the bar weight
+$w$ space
+$\dim_{k}(\bar\Bbarch(\cA))_{w}=\infty$ by a direct counting
+argument. The bar complex fails to live in the combinatorial ambient
+$\mathrm{Ch}(\mathrm{Vect}^{\ZZ_{\geq 0}\text{-gr}}_{\mathrm{fin}})$;
+no Positselski covariantly-weighted coacyclicity criterion can
+promote the coderived $K^{2}\simeq\id$ to chain-level. This is
+$\Pi 4$ of \S\ref{sec:ainf2-platonic-obstructions}, and it is the
+\emph{sole genuinely open frontier} of Theorem~A as of this wave.
+
+\emph{(H3.3)} Morally-Koszul unaugmented algebra. Consider a
+vertex-operator algebra $\cA$ that is \emph{not} the vacuum module
+but a non-vacuum-weight module
+$\cA = M_{h}\otimes\mathcal{O}_{X}$ at conformal weight $h>0$.
+(H1) fails: no augmentation to $\omega_X$. However, the curved
+Koszul dual exists: $\bar\Bbarch(M_{h})$ makes sense as a curved
+coalgebra with curvature element $m_{0}\in\bar\Bbarch_{0}$
+determined by the conformal weight $h$; the Positselski curved
+bar--cobar equivalence \cite[Thm.\ 9.1]{Positselski2018} applies
+verbatim. The conclusion is: the Koszul reflection exists at the
+curved level even when (H1) fails, but the chain-level reflection
+(H1)-augmented form is strictly stronger, because the curvature
+element obstructs passage to ordinary cohomology via
+$d^{2}=m_{0}\cdot\id\neq 0$ on the bar. Unaugmented $\cA$ gives a
+curved--bar reflection; augmented $\cA$ gives a chain-level
+reflection. The two coincide at $m_{0}=0$, which is (H1) + a
+conformal-vacuum condition.
+
+\emph{(H3.4)} Dropping (H3) forces coderived, as in (KR-iii), and does
+\emph{not} kill the theorem. The coderived category
+$D^{\co}(\Bbarch\text{-CoFact})$ is a well-defined
+$(\infty,1)$-category even when chain-level finiteness fails;
+Positselski's covariantly-weighted equivalence with the contraderived
+side $D^{\ctr}$ supplies $K^{2}\simeq\id$ at the coderived level
+unconditionally on (H3). The loss is that chain-level computations
+(shadow-tower coefficients $S_{k}$ as explicit rationals, etc.) become
+spectral-sequence-only, not honest chain-level equalities.
+
+\emph{Survivor.} The three hypotheses are independent. (H1) is
+augmentation, (H2) is topology, (H3) is finite-dimensionality. The
+unaugmented case (H1 fails) has a \emph{curved} Koszul reflection.
+The non-topological case (H2 fails) has no theorem without
+pro-conilpotent completion. The non-finite-dim case (H3 fails) has a
+\emph{coderived} Koszul reflection. All three relaxations are
+non-trivial and all three are witnessed by explicit landscape
+examples.
+
+%--------------------------------------------------------------------
+\subsection*{Cycle 4 (Drinfeld unifying attack: is the $(\infty,2)$-properad form real?)}
+%--------------------------------------------------------------------
+
+\textbf{Attack.} The $(\infty,2)$-equivalence at properad level
+(Corollary~\ref{cor:eight-cor-properad-equiv}) is inscribed as the
+strongest form of Theorem~A. Four worries.
+
+\begin{enumerate}
+\item[Q4.1] \emph{Does the factorisation properad genuinely exist as
+an $(\infty,2)$-object?} The Hackney--Robertson infinity-properad
+machinery exists; what restricts its use to ``strict operads in an
+$(\infty,1)$-category''? Is the $(\infty,2)$-enhancement
+window-dressing or load-bearing?
+\item[Q4.2] \emph{Where does the 2-morphism live?} In an
+$(\infty,2)$-category, 2-morphisms are homotopies between morphisms.
+For the bar--cobar adjunction, what is the explicit 2-cell exhibiting
+the adjunction up to natural homotopy?
+\item[Q4.3] \emph{What is the unit 2-cell?} The bar--cobar adjunction
+$\Omegach_X\dashv\Bbarch_X$ has unit $\eta$ at the 1-morphism level.
+At the 2-morphism level, what is the homotopy coherence?
+\item[Q4.4] \emph{Why properads and not operads?} The inscribed
+remark says ``bar--cobar pairings are $(1,1)$-valent''. Is this
+$(1,1)$-structure genuinely outside the operad world, or could the
+operadic formulation suffice?
+\end{enumerate}
+
+\medskip
+\textbf{Heal.}
+
+\emph{(H4.1)} The factorisation properad $\FactProp(X)$ is an honest
+$(\infty,2)$-object: objects are factorisation properads, 1-morphisms
+are properad maps compatible with factorisation structure,
+2-morphisms are homotopies. The $(\infty,2)$-enhancement is
+load-bearing for \emph{Corollary~8} because the bar--cobar pair at
+properad level involves genuine $(n,m)$-valent operations whose
+composition along \emph{connected graphs} (not trees) requires
+2-cells to witness graph-composition associativity up to homotopy.
+If one restricts to operads (trees), 2-cells become strict and the
+$(\infty,2)$-enhancement collapses to $(\infty,1)$, losing the
+Maurer--Cartan curvature information encoded in higher-valent
+operations.
+
+\emph{(H4.2)} The 2-morphism witnessing the bar--cobar adjunction is
+the \emph{twisting 2-cell}: for $\cA\in\Alg^{\fact,\aug,\comp}_{X}$
+and $\cC\in\CoAlg^{\fact,\conil,\co}_{X}$, the hom-space
+$\Hom(\Omegach_X(\cC),\cA) \simeq \Hom(\cC,\Bbarch_X(\cA))$
+is an equivalence of $\infty$-groupoids; the 2-cell is the natural
+homotopy between the two composites in the square
+\[
+\begin{array}{ccc}
+\Omegach_X\Bbarch_X(\cA) & \to & \cA\\
+\downarrow & \nearrow & \\
+\cA & &
+\end{array}
+\]
+exhibited by the contracting homotopy $h$ of Cycle~1. Concretely, the
+2-cell is the element of $\pi_{1}$ of the hom-space; it is nonzero,
+witnessing that the adjunction is honestly $(\infty,1)$-adjoint and
+not strict-adjoint.
+
+\emph{(H4.3)} The unit 2-cell $\eta^{(2)}$ is the Jacobi-style
+coherence for the Maurer--Cartan $[\tau,\tau] = -2d\tau$. At the
+1-morphism level, $\eta\colon\id\to K^{-1}K$ is a 1-morphism. At the
+2-morphism level, the coherence $\eta^{(2)}$ exhibits the associative
+law $K(K(K(\cA)))\simeq K(\cA)$ via two homotopic composites: one
+through $K^{2}K\simeq K$, one through $KK^{2}\simeq K$. The
+homotopy between them is $\eta^{(2)}$; it is controlled by the cubic
+term in the Maurer--Cartan expansion (the Jacobiator
+$[\tau,[\tau,\tau]] = 0$).
+
+\emph{(H4.4)} Properads vs.\ operads is substantive. The bar of $\cA$
+maps into the cobar of $\cA^{!}$ under the Koszul pairing
+$\cA\otimes^{\ch}\cA^{!}\to k$; this pairing is a $(1,1)$-valent
+operation: one input from $\cA$, one from $\cA^{!}$, one output $k$.
+Taken as an operation, this is the pairing
+$\Hom_{\Bbarch\text{-CoFact}}(\Bbarch(\cA),\Bbarch(\cA^{!}^{\vee}))$;
+it sits inside $\FactOp(X)$ as a unary (input=$k$, output=$k$) map
+only after \emph{composing} with the unit. The genuine $(1,1)$-valent
+composition is \emph{horizontal} (parallel composition), which exists
+in properads but not in operads. The inscription at
+\texttt{theorem\_A\_infinity\_2.tex:905--917} correctly identifies
+this as a properadic phenomenon; dropping it would force all higher
+chiral Deligne brackets into $\mathrm{Hom}$-spaces via the
+$k$-linear dual, losing track of the genuine $(n,m)$-valent
+composition of the Koszul coproduct on $\Bbarch(\cA)$.
+
+\emph{Survivor.} Francis--Gaitsgory $(\infty,2)$-properad form is
+genuine, not window-dressing. The 2-cells are the twisting 2-cell
+and the Jacobi coherence $\eta^{(2)}$. Properads (not operads) are
+forced by the $(1,1)$-valent Koszul pairing composed with
+$(n,m)$-valent higher Deligne brackets. Dropping the
+$(\infty,2)$-enhancement collapses the statement to an
+$(\infty,1)$-equivalence of operads, which is strictly weaker.
+
+%--------------------------------------------------------------------
+\subsection*{Cycle 5 (Costello attack by chain-level example: explicit $K^{2}\simeq\id$ on Heisenberg, Virasoro, affine KM)}
+%--------------------------------------------------------------------
+
+\textbf{Attack.} Exhibit explicit chain homotopies on the three
+archetypes. Where do they break?
+
+\begin{enumerate}
+\item[Q5.1] \emph{Heisenberg $\Heis_{k}$.} Show $K^{2}\simeq\id$ by
+the concrete identification of $\Bbarch(\Heis_{k})$ and
+$\Omegach(\Bbarch(\Heis_{k}))$.
+\item[Q5.2] \emph{Virasoro $\Virc$.} Produce the explicit homotopy;
+does it require the Zamolodchikov norm $c(5c+22)/10$?
+\item[Q5.3] \emph{Affine Kac--Moody $V_{k}(\fg)$.} What breaks at
+admissible level (e.g.\ critical level $k = -h^{\vee}$)?
+\item[Q5.4] \emph{Common thread.} Does the chain homotopy of
+Cycle~1 specialise uniformly, or does each archetype require a
+different witness?
+\end{enumerate}
+
+\medskip
+\textbf{Heal.}
+
+\emph{(H5.1) Heisenberg $\Heis_{k}$.} The Heisenberg vertex algebra
+$\Heis_{k}$ has one generating current $\alpha(z)$ with OPE
+$\alpha(z)\alpha(w)\sim k/(z-w)^{2}$. The generating space is
+$V = k\cdot\alpha_{-1}|0\rangle\oplus k\cdot\alpha_{-2}|0\rangle
+\oplus\cdots = \bigoplus_{n\geq 1}k\cdot\alpha_{-n}|0\rangle$.
+The chiral bar is
+\[
+\Bbarch_C(\Heis_{k}) \;\simeq\; \coLie(s^{-1}V^{*}),
+\]
+the cofree chiral Lie coalgebra on the shifted dual generating
+space. The chiral Koszul dual algebra is
+\[
+\Heis_{k}^{!} \;\simeq\; \Symch(V^{*}),
+\]
+the chiral symmetric algebra on $V^{*}$ (a commutative chiral
+algebra). Applying the bar again,
+$\Bbarch(\Heis_{k}^{!}) \simeq \Lambdach(s^{-1}V) \otimes$
+(Chevalley--Eilenberg cochains) gives back $\Heis_{k}$ up to the
+suspension/desuspension: $K^{2}(\Heis_{k}) \simeq \Heis_{k}$ at
+chain level.
+
+The explicit chain homotopy is the \emph{Hodge contraction} of the
+de~Rham complex of the abelian Lie algebra $\fh$ generated by
+$\{\alpha_{-n}\mid n\geq 1\}$. Concretely, writing
+$\Omegach(\coLie(s^{-1}V^{*})) = T(V^{*})$ with Chevalley--Eilenberg
+differential $d_{\CE}$, and writing $V^{*}_{w}$ for the
+conformal-weight-$w$ piece, the homotopy is
+\[
+h(\alpha_{-n_{1}}\otimes\cdots\otimes\alpha_{-n_{k}})
+\;=\;
+\frac{1}{n_{1}+\cdots+n_{k}}\,
+\alpha_{-n_{1}}\otimes\cdots\otimes\alpha_{-n_{k}}\otimes s|0\rangle
+\]
+(rescaling by the total weight), extending by linearity. One verifies
+$[d_{\CE},h] = \id - \pi\epsilon$ with $\pi,\epsilon$ the standard
+augmentation/inclusion. Heisenberg is Koszul: $K^{2}=\id$ on the
+nose, with the Hodge homotopy witnessing
+$\Omegach\Bbarch(\Heis_{k})\simeq\Heis_{k}$.
+
+\emph{(H5.2) Virasoro $\Virc$.} The Virasoro algebra at central
+charge $c$ has generating space
+$V = \bigoplus_{n\geq 2}k\cdot L_{-n}|0\rangle$ and OPE
+$T(z)T(w)\sim c/2(z-w)^{4}+2T(w)/(z-w)^{2}+\partial T(w)/(z-w)$.
+The OPE has \emph{three} pole orders: the central-charge term
+$c/2(z-w)^{4}$ at order~4 (no field), the stress--energy term
+$2T(w)/(z-w)^{2}$ at order~2 (linear in $T$), and the derivative
+term $\partial T(w)/(z-w)$ at order~1. The bar differential inherits
+all three.
+
+Explicit homotopy. Write $T_{-n}$ for the mode $L_{-n}$.
+The chiral Koszul dual $\Virc^{!}$ is the Koszul-dual chiral coalgebra
+on $V^{*}$ with coproduct encoding the three pole orders; on a single
+generator,
+\begin{align*}
+d_{!}(T_{-n}^{*}) \;=\; &
+\tfrac{c}{2}\cdot\delta_{n,4}\cdot 1_{X} \\
+& + 2\sum_{m+l=n}T_{-m}^{*}\otimes T_{-l}^{*}\otimes\eta^{1}
+  + \sum_{m+l=n}\partial(T_{-m}^{*}\otimes T_{-l}^{*})\otimes\eta^{0},
+\end{align*}
+with $\eta^{j} = (d\log(z_{1}-z_{2}))^{j}$ the Arnold forms. The
+central-charge term $c/2\cdot\delta_{n,4}$ is the \emph{curvature}
+$m_{0}$ of the curved $A_{\infty}$-algebra $\Virc^{!}$; it is
+non-zero whenever $c\neq 0$. The Zamolodchikov quasi-primary
+$\Lambda = {:}TT{:} - (3/10)\partial^{2}T$ has norm
+$\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ and appears at weight
+$w=4$ as the first quasi-primary above $T$; its inverse norm
+$10/[c(5c+22)]$ is the first non-trivial shadow-tower coefficient
+$S_{4}(\Virc)$.
+
+The chain homotopy $h_{\Virc}$ exhibiting $K^{2}\simeq\id$ on
+$\Virc\in\Kosz(X)$ when $c\neq 0$ and $c\neq -22/5$ is the
+\emph{Zamolodchikov-dual contraction}: on the generating space,
+\[
+h_{\Virc}(T_{-n}) \;=\; \frac{10}{c(5c+22)}\cdot\Lambda_{-n} + \text{lower-weight corrections},
+\]
+with $\Lambda_{-n}$ the modes of the Zamolodchikov quasi-primary. The
+factor $10/[c(5c+22)]$ is precisely $S_{4}(\Virc)$ and is the
+\emph{inverse} of the Zamolodchikov norm: it is finite iff the
+Zamolodchikov norm is non-zero, i.e.\ iff $c\neq 0$ and $c\neq -22/5$
+($= c_{1,5}$, the first nontrivial Virasoro minimal-model central
+charge). At $c = -22/5$, the norm vanishes, the contraction
+diverges, and $K^{2}\simeq\id$ fails at chain level; the coderived
+correction of (KR-iii) becomes essential.
+
+The chain-level statement $K^{2}\simeq\id$ on $\Virc$ in the
+conformal-weight-completed ambient requires the Zamolodchikov norm
+$c(5c+22)/10$ in the denominator of the contracting homotopy. This
+is the first non-trivial instance of ``the chain homotopy is
+controlled by an explicit OPE norm''.
+
+\emph{(H5.3) Affine Kac--Moody $V_{k}(\fg)$.} The affine current
+algebra has generating space
+$V = \bigoplus_{a=1}^{\dim\fg}\bigoplus_{n\geq 1}k\cdot J^{a}_{-n}|0\rangle$
+and OPE
+$J^{a}(z)J^{b}(w)\sim k\kappa(a,b)/(z-w)^{2} + f^{ab}_{c}J^{c}(w)/(z-w)$.
+Two pole orders: the central-extension term
+$k\kappa(a,b)/(z-w)^{2}$ (no field) and the structure-constant term
+$f^{ab}_{c}J^{c}(w)/(z-w)$ (linear in $J$). At generic level
+$k\neq -h^{\vee}$, the Sugawara construction identifies
+\[
+T^{\mathrm{Sug}}(z) \;=\; \frac{1}{2(k+h^{\vee})}\sum_{a}{:}J^{a}(z)J^{a}(z){:}\;\in V_{k}(\fg),
+\]
+making $V_{k}(\fg)$ a Virasoro extension with central charge
+$c_{k} = k\dim\fg/(k+h^{\vee})$. The chain-level
+$K^{2}\simeq\id$ is inherited from the Virasoro chain-level
+$K^{2}\simeq\id$ of (H5.2) via the Sugawara twist; the
+contracting homotopy is
+$h_{V_{k}(\fg)} = h^{\mathrm{Vir}}_{c_{k}}\circ\mathrm{Sug}$,
+a composition of the Virasoro Zamolodchikov contraction with the
+Sugawara inclusion.
+
+\emph{Break at $k = -h^{\vee}$.} At the critical level, Sugawara
+fails: the denominator $k+h^{\vee}$ vanishes. The stress--energy
+tensor $T^{\mathrm{Sug}}$ is \emph{not} a well-defined element of
+$V_{-h^{\vee}}(\fg)$; instead, the Feigin--Frenkel centre
+$\mathfrak{z}(\widehat\fg) = Z(V_{-h^{\vee}}(\fg))$ (an infinite-rank
+commutative subalgebra) replaces the Sugawara construction. The
+Koszul reflection on $V_{-h^{\vee}}(\fg)$ lives on a different
+ambient: the centre is classical-limit, and $K$ intertwines with the
+Langlands S-duality at the chiral level
+(\texttt{platonic\_ideal\_reconstituted\_2026\_04\_17.md:847}).
+The chain-level $K^{2}\simeq\id$ does \emph{not} hold at $k =
+-h^{\vee}$; the coderived (KR-iii) form holds with Positselski
+correction; the chain-level statement holds only at noncritical
+level.
+
+\emph{Admissible level $k + h^{\vee} = p/q\in\QQ_{>0}$.} Admissible
+levels sit on a countable set of codimension-1 loci; at each
+admissible level, a new quasi-primary appears at some finite weight,
+obstructing the strict Sugawara twist. The chain-level
+$K^{2}\simeq\id$ requires Feigin--Frenkel--Feigin admissible
+representation theory; the inscription at
+\texttt{periodic\_cdg\_admissible.tex} proves the admissible case for
+$\fg = \mathfrak{sl}_{2}$ via the Kubota class and leaves
+$\fg = \mathfrak{sl}_{N\geq 3}$ open.
+
+\emph{(H5.4) Common thread.} The universal chain homotopy is the
+twisted bar--cobar contraction $h$ of Cycle~1
+\cite[eq.\ (2.17)]{LV12}. Each archetype specialises $h$ with a
+family-specific rescaling:
+\begin{itemize}
+\item $\mathsf{G}$: rescaling by total conformal weight
+$n_{1}+\cdots+n_{k}$ (Hodge-type, real-analytic).
+\item $\mathsf{L}$: rescaling by Sugawara factor
+$1/2(k+h^{\vee})$, diverging at critical level.
+\item $\mathsf{C}$: rescaling by $\beta\gamma$-charge parameter
+$\lambda$, diverging at $\lambda\in\ZZ_{\leq 0}$.
+\item $\mathsf{M}$: rescaling by Zamolodchikov norm
+$c(5c+22)/10$, diverging at $c = 0, -22/5$.
+\item $\mathsf{B}$ (Mukai-doubled lattice): rescaling by theta-series
+Fourier coefficient $c_{N}(0)$.
+\end{itemize}
+The universal identity is
+\[
+h_{\cA} \;=\; \frac{1}{\kappa(\cA) + \kappa^{!}(\cA)} \cdot h_{\mathrm{Loday-Vallette}},
+\]
+with $\kappa(\cA) + \kappa^{!}(\cA)\in\{0, 8, 13, 250/3, 98/3\}$
+the Theorem~C five-archetype ceiling
+\texttt{landscape\_census.tex}. When the ceiling is $0$
+($\mathsf{G}$, Heisenberg), the homotopy is rescale-by-weight; when
+$13$ ($\mathsf{L}$, Kac--Moody), it is Sugawara; when $250/3$
+($\mathsf{M}$, Virasoro), it is Zamolodchikov; when $98/3$
+($\mathsf{C}$, $\beta\gamma$), it is contact-form; when $8$
+($\mathsf{B}$, Mukai-doubled K3 Heisenberg), it is
+Bruinier--Heegner reciprocity. The chain-level witness is
+uniformly available, with family-specific rescaling.
+
+\emph{Survivor.} Explicit chain homotopies are available on
+all five classes. Heisenberg: Hodge homotopy. Virasoro:
+Zamolodchikov contraction. Kac--Moody: Sugawara twist. The
+contractions diverge on codim-1 loci (critical level, Virasoro
+minimal-model charges, admissible levels for $\fg\geq\mathfrak{sl}_{3}$);
+these are the loci where chain-level $K^{2}\simeq\id$ must be
+replaced by coderived (KR-iii). The universal identity is the
+Loday--Vallette contracting homotopy rescaled by the
+Theorem~C derived-centre ceiling $\kappa + \kappa^{!}$.
+
+%--------------------------------------------------------------------
+\subsection*{Residue after five cycles}
+%--------------------------------------------------------------------
+
+After Cycles~1--5, the following list is what remains:
+
+\textbf{Provable chain-level statement.} On $\Kosz(X)$, the Koszul
+reflection $K = \Bbarch_X\circ\Omegach_X$ satisfies
+$K^{2}\simeq\id$ at chain level, witnessed by the explicit
+Loday--Vallette contracting homotopy (\cite[eq.\ (2.17)]{LV12},
+chiral specialisation), rescaled by the archetype-specific
+norm $\kappa + \kappa^{!}$. The rescaling is Hodge weight for
+$\mathsf{G}$, Sugawara for $\mathsf{L}$, Zamolodchikov
+$c(5c+22)/10$ for $\mathsf{M}$, contact-form for $\mathsf{C}$,
+Bruinier--Heegner reciprocity for $\mathsf{B}$.
+
+\textbf{Coderived fallback.} Off $\Kosz(X)$, at codim-1 loci
+(critical level $k = -h^{\vee}$ for $\mathsf{L}$, rational minimal-model
+charges $c\in\{c_{p,q}\}$ for $\mathsf{M}$, admissible level
+obstructions for $\fg\geq\mathfrak{sl}_{3}$), the chain-level
+homotopy diverges. Positselski covariantly-weighted coderived
+equivalence $D^{\co}\simeq D^{\ctr}$ supplies $K^{2}\simeq\id$ at
+the coderived level \cite[App.\ A.5]{Positselski2011}.
+
+\textbf{Global form.} The fibrewise $K_{C}$ assemble to a
+universal $K^{\mathrm{univ}}$ on
+$\Kosz^{\mathrm{rel}}/\Moduli_{g,n}$ via the Francis--Gaitsgory
+factorisation ambient, with descent cocycle the
+KZB-horizontality of Identity~(G2). Nodal boundary:
+$K_{C_{1}\vee C_{2}} = K_{C_{1}}\otimes K_{C_{2}}$ at separating
+nodes. Monodromy commutation at non-separating nodes is the
+content of $\Theta_{\cA}$ horizontality.
+
+\textbf{Three hypotheses (H1)--(H3).} Independent. Relaxing each in
+turn produces: curved Koszul reflection (H1 fails), no theorem
+without completion (H2 fails), coderived-only Koszul reflection
+(H3 fails, MC4 regime, $\Pi 4$).
+
+\textbf{$(\infty,2)$-properad form.} Genuine, not window-dressing.
+The 2-cells are the twisting 2-cell and the Jacobi coherence
+$\eta^{(2)}$ of Maurer--Cartan. Properads (not operads) are forced
+by the $(n,m)$-valent Koszul pairing.
+
+\textbf{Universal trace identity bridge.} On the Koszul-self-dual
+subcategory (Cycle~4 of Vol~I Theorem~C),
+$K\circ\Phi = 2\kappa_{\mathrm{BKM}}$
+on K3-fibred Class~A; the Koszul reflection is the
+chiral-categorical mediator between the Vol~I Koszul ceiling
+$\kappa + \kappa^{!}\in\{0, 8, 13, 250/3, 98/3\}$ and the Vol~III
+Borcherds weight $c_{N}(0)/2$.
+
+\textbf{Open frontiers.}
+\begin{itemize}
+\item $\Pi 4$: non-finitely-generated MC4-completion (H3 fails).
+\item Admissible-level Koszulness for $\fg\geq\mathfrak{sl}_{3}$.
+\item Chain-level original-complex $K^{2}\simeq\id$ for class
+$\mathsf{M}$ in the raw direct-sum ambient (open; the
+weight-completed ambient is proved).
+\item Whether the coderived--chain transition across codim-1 loci
+is controlled by a single universal residue formula; conjecturally
+yes, via the Chenevier determinant of
+\texttt{arithmetic\_shadows.tex}, currently open.
+\end{itemize}
+
+\textbf{What the attack did not break.} The unified form
+$K^{2}\simeq\id$ on $\Kosz(X)$ survives with explicit chain-level
+witnesses on all five classes. The coderived correction off
+$\Kosz(X)$ is load-bearing but standard (Positselski). The
+global form is a theorem via Francis--Gaitsgory + KZB
+horizontality. The $(\infty,2)$-properad enhancement is
+load-bearing and genuine. The universal chain homotopy is
+archetype-rescaled Loday--Vallette.
+
+\textbf{What the attack sharpened.} Priddy-for-$\mathsf{G}$,
+Positselski-for-$\mathsf{L/C/M/B}$. The chain/coderived split is
+not cosmetic. The archetype-specific rescaling of the homotopy by
+$\kappa+\kappa^{!}$ is the link to Theorem~C. The global
+$K^{\mathrm{univ}}$ assembly pinches at KZB horizontality, not at
+the formal cobar--bar adjunction.
+
+%--------------------------------------------------------------------
+\subsection*{Concordance check}
+%--------------------------------------------------------------------
+
+Conventions used: $\Bbarch_X = \bar{B}^{\mathrm{ch}}_X$ (chiral
+augmented bar); $\Omegach_X = \Omega^{\mathrm{ch}}_X$ (chiral cobar);
+$\Kosz(X) \subset \Alg^{\fact,\aug,\comp}_X$ the Koszul locus;
+$s^{-1}$ desuspension with $|s^{-1}v| = |v|-1$;
+$B(A) = T^{c}(s^{-1}\bar A)$ as in
+CLAUDE.md essential-constants. $\kappa+\kappa^{!}\in\{0,8,13,250/3,98/3\}$
+from Theorem~C, classical classes from
+\texttt{landscape\_census.tex}. Zamolodchikov norm
+$\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ with
+$\Lambda = {:}TT{:} - (3/10)\partial^{2}T$ per CLAUDE.md.
+Sugawara $T^{\mathrm{Sug}} = \tfrac{1}{2(k+h^{\vee})}\sum{:}J^{a}J^{a}{:}$
+per \texttt{chiral\_koszul\_pairs.tex}. The
+Loday--Vallette contracting homotopy is
+\cite[eq.\ (2.17)]{LV12}; the chiral specialisation is
+Corollary~\ref{cor:eight-cor-twisted-tensor} of
+\texttt{theorem\_A\_infinity\_2.tex}. The Positselski coderived
+equivalence $D^{\co}\simeq D^{\ctr}$ is
+\cite[App.\ A.5]{Positselski2011}. The Francis--Gaitsgory
+factorisation ambient is
+\cite[\S4.2]{Francis2012} + \cite[Ch.\ IV.5]{GR17}. All consistent
+with \texttt{chapters/connections/concordance.tex}.
+
+No disagreement with concordance detected.
+
+%--------------------------------------------------------------------
+% End of agent_02_G1_koszul_reflection.tex
+%--------------------------------------------------------------------

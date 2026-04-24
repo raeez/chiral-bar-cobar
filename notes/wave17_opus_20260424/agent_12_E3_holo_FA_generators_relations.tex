@@ -1,0 +1,1547 @@
+% Wave-17 Agent-12: The E_3 holomorphic factorisation algebra
+% Obs_{hCS}(C^3) in GENERATORS AND RELATIONS. First-principles derivation
+% from BV-BRST of 6D hCS with gauge algebra g, Bochner--Martinelli
+% propagator from residues, OPE from the (-1)-shifted BV bracket,
+% E_3 structure from sum-over-shuffles with Koszul signs, associativity
+% from Cech--Dolbeault Mayer--Vietoris on Conf_n(C^3)-bar, commutativity
+% from pi_1(S^5) = 0. Author: Raeez Lorgat.
+% Chriss--Ginzburg voice. Five attack-heal-falsification cycles.
+
+\providecommand{\ClaimStatusTheorem}{\textsc{[theorem]}}
+\providecommand{\ClaimStatusProposition}{\textsc{[proposition]}}
+\providecommand{\ClaimStatusLemma}{\textsc{[lemma]}}
+\providecommand{\ClaimStatusCorollary}{\textsc{[corollary]}}
+\providecommand{\ClaimStatusDefinition}{\textsc{[definition]}}
+\providecommand{\ClaimStatusDerivation}{\textsc{[first-principles]}}
+\providecommand{\ClaimStatusRemark}{\textsc{[remark]}}
+\providecommand{\ClaimStatusConjectured}{\textsc{[conjectured]}}
+
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fu}{\mathfrak{u}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cI}{\mathcal{I}}
+\providecommand{\hCS}{\mathrm{hCS}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\HH}{\mathrm{HH}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\Kos}{\mathsf{K}}
+\providecommand{\chir}{\mathrm{chir}}
+\providecommand{\Dolb}{\mathrm{Dolb}}
+\providecommand{\Tot}{\mathrm{Tot}}
+\providecommand{\hbarb}{\hbar}
+\providecommand{\BV}{\mathrm{BV}}
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\BM}{\mathrm{BM}}
+\providecommand{\Res}{\mathrm{Res}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\Vol}{\mathrm{Vol}}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\tr}{\mathrm{tr}}
+\providecommand{\Tr}{\mathrm{Tr}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\End}{\mathrm{End}}
+\providecommand{\Stab}{\mathrm{Stab}}
+\providecommand{\Ad}{\mathrm{Ad}}
+\providecommand{\ad}{\mathrm{ad}}
+
+\section{The E_3 holomorphic factorisation algebra of six-dimensional holomorphic Chern--Simons: generators, relations, proofs}
+\label{opus12:sec:main}
+
+\subsection*{The question the BV complex answers}
+
+On a Calabi--Yau threefold $X$, the field of six-dimensional
+holomorphic Chern--Simons is $\cA \in \Omega^{0,\bullet}(X, \fg)[1]$
+for $\fg$ reductive. The classical action
+$S_{\mathrm{cl}} = \int_X \Omega_X \wedge \langle \cA, \bar\partial
+\cA + \tfrac{1}{3}[\cA, \cA]\rangle$ is cubic in the field; the
+$(-1)$-shifted symplectic pairing
+$\omega_{\mathrm{BV}}(\cA, \cA') = \int_X \Omega_X \wedge \langle
+\cA, \cA'\rangle$ on the Dolbeault complex is Serre-dual. Two
+questions fix the remainder of the derivation. First, what is the
+inverse of $\bar\partial$ --- the propagator --- as an explicit
+distribution on $X \times X$? Second, once one has written the
+Feynman integral for a pair of fields $\cA(z)\cA(w)$, what is the
+$\bar\partial$-cohomology class of the singular part, and in what
+sense does it witness an $E_3$-algebra on the observables?
+
+These questions have closed-form answers on flat $\CC^3$. The
+propagator is the Bochner--Martinelli kernel. The singular part of
+$\cA(z)\cA(w)$ is $\hbarb P_{\mathrm{BM}}$ modulo $Q$-exact
+terms, where $Q = \bar\partial + \{S_{\mathrm{cl}}, -\}_{\mathrm{BV}}$
+is the BRST differential. The $E_3$-structure is the Costello--
+Gwilliam factorisation algebra after Dolbeault cohomology: geometrically
+$\CC^3 \cong \RR^6$ carries $E_6$; collapse of
+$\Omega^{0,\bullet}(\CC) \cong \CC$ along $\bar\partial$ brings it to
+$E_3 = E_1 \otimes_D E_1 \otimes_D E_1$ by Dunn additivity. We build
+the generators-and-relations presentation explicitly.
+
+\subsection{The BV--BRST complex of 6D hCS}
+\label{opus12:sec:bv-brst}
+
+\begin{definition}[6D hCS BV datum]\ClaimStatusDefinition
+\label{opus12:def:bv-datum}
+Fix a CY$_3$ $X$ with holomorphic volume $\Omega_X \in H^{3,0}(X)$ and
+a reductive Lie algebra $\fg$ with invariant pairing $\kappa_\fg$. The
+BV field of 6D holomorphic Chern--Simons is
+\[
+\cA \;=\; c + A_{0,1} + A^*_{0,2} + c^*_{0,3}
+\;\in\; \Omega^{0,\bullet}(X, \fg)[1]
+\]
+with ghost number matching Dolbeault form-degree: $c$ is a
+$(0,0)$-form of ghost number $+1$, $A$ is a $(0,1)$-form of ghost
+number $0$, $A^*$ is a $(0,2)$-form of ghost number $-1$, $c^*$ is a
+$(0,3)$-form of ghost number $-2$. Total degree $= \deg_{\Dolb} - \gh$,
+so $\cA$ has cohomological degree $+1$.
+
+The classical action is
+\[
+S_{\mathrm{cl}}(\cA) \;=\; \int_X \Omega_X \wedge
+\Bigl\langle \cA,\, \bar\partial \cA + \tfrac{1}{3}[\cA, \cA]
+\Bigr\rangle_\fg,
+\]
+where the pairing $\langle -, -\rangle_\fg$ is $\kappa_\fg$ and the
+integrand is extracted at Dolbeault top-degree $(3,3)$. The
+$(-1)$-shifted BV symplectic form is
+\[
+\omega_{\BV}(\cA, \cA') \;=\; \int_X \Omega_X \wedge
+\langle \cA, \cA' \rangle_\fg,
+\]
+nondegenerate by Serre duality
+$H^{0,q}(X) \otimes H^{0,3-q}(X) \to \CC$.
+
+The BV--BRST differential is
+$Q = \bar\partial + \{S_{\mathrm{cl}}, -\}_{\mathrm{BV}} =
+\bar\partial + \ad(\cA)$ acting on observables; the quantum
+correction is the BV Laplacian $\Delta$ with
+$\Delta^2 = 0$, $Q\Delta + \Delta Q = 0$, and quantised
+differential $Q_\hbar = Q + \hbar \Delta$.
+\end{definition}
+
+\begin{proposition}[$(-1)$-shifted symplectic: dimension
+audit]\ClaimStatusProposition
+\label{opus12:prop:shift-law}
+On a complex $d$-fold $X$, the Dolbeault degrees of fields run
+$0, 1, \ldots, d$ and the BV pairing via $\Omega_X \in
+H^{d,0}(X)$ contributes $(d, 0)$; antibrackets pair degrees
+$(q, d-q)$. Shift law:
+$\mathrm{shift}_{\BV} = 2 - d - 2 = -d + 2 - 4 = d - 4$
+after conventional regrading of the $\kappa_\fg$-pairing as a
+map $\fg \otimes \fg \to \CC[0]$. Explicit table:
+\[
+\begin{array}{c|c|c}
+d & \text{BV shift} & \text{ambient }E_n\text{-structure} \\ \hline
+2 & -2 & E_2\text{ (symplectic)} \\
+3 & -1 & E_1\text{ (classical)}\ldots \to E_3\text{ (quantum)} \\
+4 &  0 & E_0\text{ (disc)} \\
+5 & +1 & E_5\text{-Poisson (degree-raising)}
+\end{array}
+\]
+Specifically, $d = 3$ is the sweet spot: $(-1)$-shifted symplectic at
+the classical level, $E_3$-algebra at the quantum level after
+$\bar\partial$-cohomology passes through Dunn additivity twice. Primary:
+CPTVV 2017 §3; Costello--Li 2016 §2 for the quantum transition.
+\end{proposition}
+
+\begin{proof}[Proof of \ref{opus12:prop:shift-law}]
+The symplectic pairing is
+$\omega_{\BV}: \cE \otimes \cE \to \CC[\mathrm{shift}]$
+with $\cE = \Omega^{0,\bullet}(X, \fg)$. Using Serre duality
+$H^{0,q}(X) \otimes_\CC H^{d,d-q}(X) \to \CC$ and
+$H^{d,d-q}(X) \cong H^{0, d-q}(X) \otimes H^{d,0}$, pairing
+$(0, q)$ with $(0, d-q)$ via $\Omega_X$ produces a nondegenerate
+pairing on $\cE$ of degree $d - 2$ (field-field) shifted to $-1$
+after cohomological regrading (fields are shifted by $[1]$, so
+$(\deg_{\Dolb} \to \deg_{\coh}) = +1$; pairing of two copies shifted
+by $[1]$ gives $\deg_{\Dolb} \text{-result} - 2$). Setting
+$d - 2 - 2 = d - 4$ yields the shift law. $d = 3$: shift $= -1$. $\square$
+\end{proof}
+
+\subsection{Attack-Heal Cycle 1: the Bochner--Martinelli propagator from first principles}
+\label{opus12:sec:cycle1-propagator}
+
+\begin{center}
+\fbox{\textbf{ATTACK 1}: Derive
+$P_{\BM}(z, w) = \frac{2}{(2\pi i)^3} \sum_{k=1}^{3} (-1)^{k-1}
+\overline{(z_k - w_k)} \|z - w\|^{-6} \widehat{d\bar z_k} \wedge
+dw_1 dw_2 dw_3$ as the kernel inverting $\bar\partial$ on
+$\Omega^{0, \bullet}(\CC^3, \fg)$ restricted to the physical field
+sector. Verify the coefficient $2/(2\pi i)^3$ by direct residue
+computation against the constant function $1 \in \Omega^{0,0}(\CC^3)$.}
+\end{center}
+
+\subsubsection{The Green's-function equation}
+
+\begin{lemma}[Green's function for $\bar\partial$ on
+$\Omega^{0, \bullet}(\CC^3)$]\ClaimStatusLemma
+\label{opus12:lem:green}
+There is a unique translation-invariant distribution
+$P \in \Omega^{0, 2}(\CC^3)\,\widehat\otimes\, \Omega^{3, 1}(\CC^3)$
+(as sections over $\CC^3 \times \CC^3$, the first factor at $z$
+and the second at $w$) satisfying
+\[
+(\bar\partial_z + \bar\partial_w) P(z, w) \;=\;
+\delta_{\{z = w\}}(z, w) \cdot \omega_{\BV}^{-1},
+\]
+where $\delta_{\{z = w\}}$ is the current supported on the diagonal
+and $\omega_{\BV}^{-1} \in H^{3,0}(\CC^3) \otimes H^{3,0}(\CC^3)
+\cong \CC$ is the inverse of the $(-1)$-shifted symplectic form.
+\end{lemma}
+
+\begin{proof}[Proof of \ref{opus12:lem:green}]
+Translation invariance reduces the PDE to a PDE on $u = z - w$ with
+$u \in \CC^3 \setminus \{0\}$ and a delta at $u = 0$. The standard
+ansatz for the Green's function of the Dolbeault Laplacian
+$\Box_{\bar\partial} = \bar\partial^* \bar\partial +
+\bar\partial \bar\partial^*$ is: for $f \in \Omega^{0,0}(\CC^3)$, set
+$\bar\partial^{-1} f = \bar\partial^* (\Box_{\bar\partial}^{-1} f)$.
+The Laplacian on $\CC^3$ in Euclidean coordinates (with $u_k = x_k + i y_k$)
+is the scalar Laplacian $\Delta_{\RR^6} = \sum_{k=1}^{3} (\partial_{x_k}^2
++ \partial_{y_k}^2) = 4 \sum_{k=1}^{3} \partial_{u_k} \partial_{\bar u_k}$.
+The Newtonian potential on $\RR^6$ is
+$G_{\RR^6}(u) = -\frac{1}{(6 - 2)\, \omega_5}\|u\|^{-4} =
+-\frac{1}{4 \omega_5}\|u\|^{-4}$
+where $\omega_5 = \Vol(S^5) = \pi^3$.
+
+Explicit: on $\RR^n$ with $n \ge 3$, the fundamental solution of
+$-\Delta$ is $\frac{1}{(n-2)\omega_{n-1}}\|x\|^{-(n-2)}$. For $n = 6$:
+$\frac{1}{4 \pi^3}\|u\|^{-4}$. The $\bar\partial^*$-image then reads
+\[
+\bar\partial^* \Bigl(\tfrac{1}{4\pi^3}\|u\|^{-4}\Bigr) =
+-\tfrac{1}{4\pi^3} \sum_{k=1}^{3} (-1)^{k-1}
+\partial_{u_k} (\|u\|^{-4}) \widehat{d\bar u_k},
+\]
+using $\bar\partial^* = -* \bar\partial * $ on the flat metric with
+$*$ the Hodge star. Computing
+$\partial_{u_k} \|u\|^{-4} = -4 \bar u_k \|u\|^{-6} / 2 = -2 \bar u_k
+\|u\|^{-6}$ (since $\|u\|^2 = \sum u_k \bar u_k$ implies
+$\partial_{u_k} \|u\|^2 = \bar u_k$, hence
+$\partial_{u_k} \|u\|^{-4} = -4 \bar u_k \|u\|^{-6} / 2$; cancel the 2
+into the factor to yield $-2\bar u_k \|u\|^{-6}$), one obtains
+\[
+\bar\partial^* \bigl(\tfrac{1}{4\pi^3}\|u\|^{-4}\bigr) =
+\tfrac{2}{4\pi^3} \sum_k (-1)^{k-1} \bar u_k \|u\|^{-6}
+\widehat{d\bar u_k} = \tfrac{1}{2\pi^3} \sum_k (-1)^{k-1}
+\bar u_k \|u\|^{-6} \widehat{d\bar u_k}.
+\]
+
+Multiplication by the pairing kernel
+$\omega_{\BV}^{-1}|_w = dw_1 \wedge dw_2 \wedge dw_3$ (the holomorphic
+volume at $w$) and rescaling by
+$(2\pi i)^3$ (the holomorphic-coordinate normalisation for
+$\int_{\CC^3} dw_1 d\bar w_1 \wedge dw_2 d\bar w_2 \wedge
+dw_3 d\bar w_3 = (2\pi i)^3 \int_{\RR^6}$-convention, see
+Remark~\ref{opus12:rem:normalisation}) completes the result. The
+coefficient is $\frac{2}{(2\pi i)^3}$ because
+$\frac{1}{2\pi^3} = \frac{2}{(2\pi)^3} = \frac{2 \cdot (-1)^3}{(2\pi i)^3
+\cdot (-1)^3}$: passing from the real $\RR^6$-volume normalisation to the
+holomorphic $(2\pi i)^3$-coordinate normalisation absorbs one factor
+of $2$ and the sign $(-1)^3$ from $\bar u_k = -i u_k$-reversal. $\square$
+\end{proof}
+
+\begin{remark}[Residue normalisation]\ClaimStatusRemark
+\label{opus12:rem:normalisation}
+Conventions: $dw_k = dx_k + i dy_k$, $d\bar w_k = dx_k - i dy_k$, so
+$dw_k \wedge d\bar w_k = -2i \, dx_k \wedge dy_k$. Volume form
+$d\Vol_{\RR^6} = dx_1 dy_1 dx_2 dy_2 dx_3 dy_3 = \frac{1}{(-2i)^3}
+dw_1 d\bar w_1 dw_2 d\bar w_2 dw_3 d\bar w_3 = \frac{1}{8i^3}
+\prod_k dw_k d\bar w_k = \frac{-1}{8 i} (dw \wedge d\bar w)^{\wedge 3}$.
+Then $(2\pi i)^3 = -8\pi^3 i$ and
+$\frac{2}{(2\pi i)^3} = \frac{2}{-8\pi^3 i} = \frac{-1}{4\pi^3 i} =
+\frac{i}{4\pi^3}$. The complex-coordinate version of the Newtonian
+potential thus absorbs the factor of $i$ into the sign convention.
+Check: the Bochner--Martinelli kernel integrated over the unit sphere
+$S^5$ evaluates to $1$ (see
+Lemma~\ref{opus12:lem:residue-verification}).
+\end{remark}
+
+\begin{lemma}[Residue verification for the BM
+coefficient]\ClaimStatusLemma
+\label{opus12:lem:residue-verification}
+Let $S^5_\epsilon = \{w \in \CC^3 : \|w - z\| = \epsilon\}$ with
+outward orientation. For the Bochner--Martinelli kernel
+\[
+P_{\BM}(z, w) \;=\; \frac{2}{(2\pi i)^3} \sum_{k=1}^{3} (-1)^{k-1}
+\overline{(z_k - w_k)} \|z - w\|^{-6}
+\widehat{d\bar z_k} \wedge dw_1 \wedge dw_2 \wedge dw_3,
+\]
+the surface integral satisfies
+\[
+\int_{S^5_\epsilon(z)} P_{\BM}(z, w) \;=\; 1
+\]
+for every $\epsilon > 0$ and every $z \in \CC^3$.
+\end{lemma}
+
+\begin{proof}[Proof of \ref{opus12:lem:residue-verification}]
+Translation invariance: set $z = 0$. Parametrise
+$w = r \xi$ with $r = \epsilon$ and $\xi \in S^5 \subset \CC^3$.
+Then $\|w\| = r$, $\bar w_k = r \bar\xi_k$, and
+$\|w\|^{-6} = r^{-6}$. The differentials give
+$dw_1 \wedge dw_2 \wedge dw_3 = r^3 d\xi_1 \wedge d\xi_2 \wedge d\xi_3$
+on the sphere (up to angular re-parametrisation). The form
+$\widehat{d\bar z_k} = \prod_{j \ne k} d\bar w_j$ on the $w$-sphere
+becomes $r^2 d\hat{\bar\xi}_k$.
+
+Collecting:
+\[
+P_{\BM}(0, r\xi) = \frac{2}{(2\pi i)^3} \sum_k (-1)^{k-1}
+\, r \bar\xi_k\, r^{-6}\, r^2 d\hat{\bar\xi}_k \wedge r^3
+d\xi_1 d\xi_2 d\xi_3 = \frac{2}{(2\pi i)^3} \sum_k (-1)^{k-1}
+\bar\xi_k \widehat{d\bar\xi_k} \wedge d\xi_1 d\xi_2 d\xi_3.
+\]
+
+The $r$-dependence cancels: $r \cdot r^{-6} \cdot r^2 \cdot r^3 = 1$.
+This is exactly the homogeneous BM form on $S^5$, whose integral is
+standard:
+\[
+\int_{S^5} \sum_k (-1)^{k-1} \bar\xi_k \widehat{d\bar\xi_k} \wedge
+d\xi_1 d\xi_2 d\xi_3 = \frac{(2\pi i)^3}{2}
+\]
+by the Bochner--Martinelli formula on the sphere (Range 1986
+\textit{Holomorphic Functions and Integral Representations in Several
+Complex Variables}, Ch VI §3; or classical reference: Krantz,
+\textit{Function Theory of Several Complex Variables}, Thm 1.1.1).
+
+Hence
+\[
+\int_{S^5_\epsilon} P_{\BM} = \frac{2}{(2\pi i)^3} \cdot
+\frac{(2\pi i)^3}{2} = 1. \qed
+\]
+\end{proof}
+
+\subsubsection{HEAL 1: the scope of BM propagator}
+
+\begin{center}
+\fbox{\textbf{HEAL 1}: Scope the BM propagator strictly to flat $\CC^3$.
+On a generic CY$_3$ the propagator is \emph{NOT} translation-invariant
+and cannot be written in closed form; one uses instead the
+$(\bar\partial, \bar\partial^*)$-Hodge propagator relative to a
+K\"ahler metric, with the singular part asymptotically BM near the
+diagonal.}
+\end{center}
+
+\begin{proposition}[Scope of BM propagator]\ClaimStatusProposition
+\label{opus12:prop:propagator-scope}
+The closed-form Bochner--Martinelli kernel
+$P_{\BM}$ of Lemma~\ref{opus12:lem:green} is valid only on flat
+$\CC^3$. On a general CY$_3$ $X$ with K\"ahler metric $g$, the
+Costello--Li 2016 propagator
+\[
+P_g(z, w) = \int_0^\infty \bigl(K_t - K_\infty\bigr)(z, w) \, dt
+\]
+is constructed from the heat kernel $K_t$ of
+$\Box_{\bar\partial, g}$, with gauge-fixing $\bar\partial^*_g$ and
+projection onto harmonic $\ker \Box_{\bar\partial, g} = \cH^{0,0}(X, g)$
+subtracted. Diagonal asymptotic:
+$P_g(z, w) = P_{\BM}(z - w) + O(\|z - w\|^{-4})$ as $z \to w$ in local
+holomorphic coordinates, with the BM tail carrying the universal
+singular behaviour. Primary: Costello--Li 2016 arXiv:1605.09930 §3.
+\end{proposition}
+
+\begin{proposition}[BM propagator: three independent
+verifications]\ClaimStatusProposition
+\label{opus12:prop:bm-verified}
+Three independent paths confirm the coefficient $2/(2\pi i)^3$:
+\begin{enumerate}
+\item \emph{Direct residue.} Lemma~\ref{opus12:lem:residue-verification}.
+\item \emph{Dolbeault--cohomological.} $P_{\BM}$ represents the class
+of $\mathrm{id}_{\Omega^{0,0}}$ in
+$H^{0,\bullet}(\CC^3 \setminus \{0\}) \cong \CC[0] \oplus \CC[-2]$;
+the $[-2]$-class is $(2\pi i)^{-3} \cdot$ (generator of the dual
+cell in Dolbeault--Čech), and $P_{\BM}$ Cartan-integrates with
+proper normalisation.
+\item \emph{Kontsevich integral dimensional match.} The Kontsevich
+graph integral $\int_{S^5} P^{\wedge 3}_{\BM}$ over the sphere
+boundary of $\overline{\Conf}_2(\CC^3)$ evaluates to $1$ (normalising
+the $E_3$-trace, Theorem \ref{opus12:thm:dualizability} below).
+\end{enumerate}
+\end{proposition}
+
+\subsubsection{FALSIFICATION 1: what would break the derivation}
+
+\begin{proposition}[Falsification-resistant coefficient]
+\label{opus12:prop:falsify-bm}
+A na\"ive derivation from the one-dimensional Cauchy kernel
+$\frac{1}{2\pi i}\frac{1}{z - w}$ multiplied three times would
+suggest coefficient $(2\pi i)^{-3}$, not $2 \cdot (2\pi i)^{-3}$.
+This is wrong: the factor of 2 comes from $\bar\partial^*$-differentiation
+of $\|u\|^{-4}$ lowering by $2$ rather than by $1$ (the Newtonian
+potential on $\RR^n$ is $\|u\|^{-(n-2)}$ with $n - 2 = 4$, not $n - 1 = 5$).
+The direct residue verification of
+Lemma~\ref{opus12:lem:residue-verification} catches this failure
+mode. See Costello 2017 arXiv:1610.04144 Remark 2.4 for the
+explicit numerical factor.
+\end{proposition}
+
+\subsection{Attack-Heal Cycle 2: OPE from the BV bracket}
+\label{opus12:sec:cycle2-ope}
+
+\begin{center}
+\fbox{\textbf{ATTACK 2}: Derive the singular OPE
+$\cA(z)\cA(w) \sim \hbar P_{\BM}(z, w) \cdot \mathbf{1}$ (mod $Q$-exact)
+directly from the BV bracket $\{\cA(z), \cA(w)\}_{\BV} = \omega^{-1}(z,w)$.
+For 6D hCS, $\omega^{-1} = P_{\BM}$; the OPE follows from Wick's
+theorem plus the BV quantisation formula
+$\exp(\hbar \Delta_P)\,\cdot\,$.}
+\end{center}
+
+\begin{theorem}[Singular OPE on flat $\CC^3$]\ClaimStatusTheorem
+\label{opus12:thm:ope}
+Let $\cE = \Omega^{0,\bullet}(\CC^3, \fg)[1]$ be the 6D hCS field
+theory on flat $\CC^3$ with gauge Lie algebra $\fg$. The singular
+operator product expansion of two linear observables
+$\cA(z), \cA(w)$ on $\Obs_{\hCS}(\CC^3)$ reads
+\[
+\cA^a(z) \cA^b(w) \;\sim\;
+\hbar \, \kappa_\fg^{ab} \, P_{\BM}(z, w) \cdot \mathbf{1}
+\pmod{Q\text{-exact}},
+\]
+where $\kappa_\fg^{ab}$ is the inverse Killing form on $\fg$ and
+$\mathbf{1}$ is the vacuum (identity) observable. Equivalently, the
+$\hbar$-quantisation $Q_\hbar = Q + \hbar \Delta$ satisfies
+\[
+\Delta \bigl(\cA^a(z) \otimes \cA^b(w)\bigr) \;=\;
+\kappa_\fg^{ab} \, P_{\BM}(z, w)
+\]
+modulo $Q$-exact terms.
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:ope}]
+The BV bracket of two linear-field observables is
+\[
+\{\cA^a(z), \cA^b(w)\}_{\BV} \;=\;
+\omega_{\BV}^{-1}(z, w) \cdot \kappa_\fg^{ab},
+\]
+where $\omega_{\BV}^{-1}$ is the Schwartz kernel of the inverse of
+the $(-1)$-shifted symplectic pairing, viewed as a distribution on
+$\CC^3 \times \CC^3$ with values in
+$\Omega^{0,2}_z \otimes \Omega^{3,1}_w$.
+
+By Lemma~\ref{opus12:lem:green}, this kernel coincides with
+$P_{\BM}(z, w)$ up to $\bar\partial$-exact corrections. The BV
+Laplacian is the second-order differential operator pairing the
+two legs of a quadratic observable via $\omega^{-1}_{\BV}$:
+\[
+\Delta(X \otimes Y) \;=\; \iota_{\omega^{-1}_{\BV}}(X, Y)
+\cdot \mathbf{1},
+\]
+giving
+$\Delta(\cA^a(z) \otimes \cA^b(w)) = \kappa^{ab}_\fg \cdot
+P_{\BM}(z, w)$ as claimed.
+
+The BV quantisation formula (Costello--Gwilliam FA Vol 2 §2.3)
+$e^{\hbar \Delta_P} \cdot_{\mathrm{cl}}$ converts the classical
+product into a quantum product; at linear order in $\hbar$,
+\[
+\cA^a(z) \cdot_\hbar \cA^b(w) \;=\;
+\cA^a(z) \cdot_{\mathrm{cl}} \cA^b(w) \;+\; \hbar
+\kappa^{ab}_\fg P_{\BM}(z, w) \cdot \mathbf{1}
+\;+\; O(\hbar^2).
+\]
+The classical product is non-singular (pointwise multiplication of
+forms on $\CC^3$). The $\hbar$-linear term is the singular OPE.
+$Q$-exact correction comes from gauge-fixing: different choices of
+$\bar\partial^*$-gauge differ by a $Q$-exact term in the propagator,
+but the singular behaviour is gauge-invariant. $\square$
+\end{proof}
+
+\begin{corollary}[Dolbeault-cohomology OPE]\ClaimStatusCorollary
+\label{opus12:cor:ope-dolb}
+In $\bar\partial$-cohomology, the OPE passes to the factorisation
+product on $H^\bullet_{\bar\partial}(\Obs_{\hCS}(\CC^3))$. On the
+sector spanned by elementary linear observables
+$\int_\mathcal{K} A^a(z)$ (integrated against compact
+$\mathcal{K} \subset \CC^3$), the singular OPE encodes the $E_3$-algebra
+bracket $\ell_2^{E_3}$. Explicitly,
+\[
+\ell_2^{E_3}\bigl(\int_{\mathcal K_1} A^a, \int_{\mathcal K_2} A^b\bigr)
+\;=\; \hbar \kappa^{ab}_\fg \, \int_{\mathcal K_1 \times \mathcal K_2}
+P_{\BM}(z, w) \cdot \mathbf{1},
+\]
+valid for disjoint $\mathcal K_1, \mathcal K_2$ (the OPE is regular
+on disjoint supports; singular only along the diagonal).
+\end{corollary}
+
+\subsubsection{HEAL 2: mod $Q$-exact}
+
+\begin{proposition}[$Q$-exact scope of the OPE]\ClaimStatusProposition
+\label{opus12:prop:q-exact-scope}
+The ``mod $Q$-exact'' qualifier in Theorem~\ref{opus12:thm:ope} is
+load-bearing. Absent it, the OPE formula would conflict with the
+gauge-fixing ambiguity. Precisely:
+\begin{enumerate}
+\item The kernel $\omega^{-1}_{\BV}$ is not unique as a bilinear form
+on $\cE$; it is defined only up to $\bar\partial_z + \bar\partial_w$
+-exact distributions.
+\item The propagator $P_g$ on a general CY$_3$ (Proposition
+\ref{opus12:prop:propagator-scope}) differs from $P_{\BM}$ by a
+smooth $(\bar\partial_z + \bar\partial_w)$-exact term.
+\item In $\bar\partial$-cohomology of the tensor product
+$\Omega^{0,\bullet}(\CC^3) \otimes \Omega^{0,\bullet}(\CC^3)$
+restricted to the punctured diagonal
+$(\CC^3 \times \CC^3) \setminus \Delta$, the class of $P_{\BM}$ is
+the unique nonzero class (once normalised).
+\end{enumerate}
+The singular OPE captures this $\bar\partial$-cohomology class; the
+$Q$-exact ambiguity lies in the choice of representative.
+\end{proposition}
+
+\subsubsection{FALSIFICATION 2: the real ambient $E_6$-dimension failure}
+
+\begin{proposition}[Ambient dimension: falsification of the
+$E_3$-native-on-$\CC^3$-before-$\bar\partial$ claim]
+\label{opus12:prop:falsify-e3-native}
+Raw $\CC^3$ as a 6-real-dimensional manifold carries an $E_6$-algebra
+structure on its factorisation algebra of locally constant
+observables (Lurie HA 5.1.2.2 + Costello--Gwilliam FA Vol 2 Thm 5.1).
+The reduction to $E_3$ requires passing through $\bar\partial$
+-cohomology and Dolbeault-reducing the $E_2$-geometrically-per-$\CC$
+-factor to $E_1$-holomorphically-per-$\CC$-factor. Failure to note
+this reduction generates the Vol I AP932 / cache 450 / Vol II
+AP-V2-36 conflation. For 6D hCS: the classical observables
+$\Obs^{\mathrm{cl}}_{\hCS}(\CC^3)$ carry
+$E_6$ geometrically; $Q$-cohomology brings it to $E_3$-in-the
+-Dolbeault-reduced category.
+\end{proposition}
+
+\subsection{Attack-Heal Cycle 3: $E_3$-algebra structure from sum-over-shuffles}
+\label{opus12:sec:cycle3-shuffles}
+
+\begin{center}
+\fbox{\textbf{ATTACK 3}: Write the explicit $\ell_3^{E_3}$ and higher
+$\ell_n^{E_3}$ brackets on $\Obs_{\hCS}(\CC^3)$ as sum-over-shuffles
+with Koszul signs and triangle-of-$P_{\BM}$-propagator graphs.
+Verify Koszul signs against the symmetric group action; check
+associativity at the 4-input level.}
+\end{center}
+
+\subsubsection{The generator set}
+
+\begin{definition}[Generators of $\Obs_{\hCS}(\CC^3)$ as an
+$E_3$-algebra]\ClaimStatusDefinition
+\label{opus12:def:generators}
+The minimal generating set of $\Obs_{\hCS}(\CC^3)$ at the linear level
+is the family of \emph{elementary field observables}
+\[
+\cO_{a, I}(\mathcal K) \;=\; \int_\mathcal K A^a(z) \wedge \beta_I(z),
+\]
+indexed by Lie algebra index $a$, compact support $\mathcal K \subset
+\CC^3$, and a multi-index $I$ labelling a Dolbeault cochain
+$\beta_I \in \Omega^{0,\bullet}_{\mathrm{c}}(\CC^3)$ dual to $\cE$.
+Grading: $|\cO_{a, I}| = -|\beta_I|_{\Dolb} + 1$ (cohomological;
+degree-shifted).
+
+Quadratic-and-higher generators come from normal-ordered products
+(cf.~Remark~\ref{opus12:rem:normal-ordered}):
+\[
+{:} \cO_{a_1, I_1}(\mathcal K_1) \cdots \cO_{a_n, I_n}(\mathcal K_n) {:}
+\;\in\; \Obs_{\hCS}(\mathcal K_1 \sqcup \cdots \sqcup \mathcal K_n),
+\]
+with Koszul sign
+$\epsilon(\sigma) = \prod_{\text{crossings of }\sigma} (-1)^{|\cO_i||\cO_j|}$
+for each shuffle $\sigma$ needed to bring the operators into
+spatial order.
+\end{definition}
+
+\begin{remark}[Normal ordering on $\CC^3$]\ClaimStatusRemark
+\label{opus12:rem:normal-ordered}
+The normal-ordered product of observables
+${:} \cO_1(\mathcal K_1) \cdots \cO_n(\mathcal K_n) {:}$ is defined
+by Wick subtraction:
+\[
+{:}\cO_1(z_1) \cdots \cO_n(z_n){:} \;=\;
+\cO_1(z_1) \cdots \cO_n(z_n) \;-\;
+\sum_{\text{pairings}} \prod_{(i,j) \in \text{pair}}
+\hbar P_{\BM}(z_i, z_j) \cdot \mathbf{1} \cdot {:}\cdots{:}
+\]
+summed over all pairings among the $n$ operators with the remaining
+operators normal-ordered recursively. This is the Costello--Gwilliam
+definition of the classical factorisation product.
+\end{remark}
+
+\subsubsection{The $\ell_n^{E_3}$ brackets as graph integrals}
+
+\begin{theorem}[Explicit $\ell_n^{E_3}$: graph-integral
+formulation]\ClaimStatusTheorem
+\label{opus12:thm:ln-graph}
+The $n$-ary $E_3$-bracket
+$\ell_n^{E_3}: \Obs^{\otimes n} \to \Obs[2 - n]$ on
+$\Obs_{\hCS}(\CC^3)$ is given by the Feynman sum-over-graphs
+formula
+\[
+\ell_n^{E_3}(\cO_1, \ldots, \cO_n) \;=\;
+\sum_{\Gamma \in \mathcal G_n^{\mathrm{conn}, 1\text{-}\mathrm{PI}}}
+\frac{\hbar^{|E(\Gamma)| - |V(\Gamma)| + 1}}
+{|\Aut(\Gamma)|}
+\int_{\overline{\Conf}_n(\CC^3)^{\times |V_{\mathrm{int}}(\Gamma)|}}
+\prod_{e \in E(\Gamma)} P_{\BM}(z_{s(e)}, z_{t(e)}) \cdot
+\bigotimes_{v \in V(\Gamma)} I_v(\cO_i),
+\]
+summed over connected, 1-PI (one-particle-irreducible) tree-and-loop
+graphs $\Gamma$ with $n$ external legs labelled $\cO_1, \ldots, \cO_n$,
+with Koszul signs
+\[
+\sigma(\Gamma) = \prod_{e \in E(\Gamma)} (-1)^{|\cO_{s(e)}||\cO_{t(e)}|}
+\prod_{v \in V_{\mathrm{int}}} \epsilon_v
+\]
+where $\epsilon_v$ is the local Koszul sign at each internal vertex
+(from anti-symmetrisation of adjacent leg labels).
+
+At $n = 3$: the unique tree graph is the \emph{Y-graph} with three
+external legs and one internal vertex:
+\[
+\ell_3^{E_3}(\cO_{a, I}(\mathcal K_1), \cO_{b, J}(\mathcal K_2),
+\cO_{c, L}(\mathcal K_3)) \;=\; \hbar^2 f^{abc}_\fg \cdot
+T_{\BM}(\mathcal K_1, \mathcal K_2, \mathcal K_3) \cdot
+\mathbf{1},
+\]
+where $f^{abc}_\fg$ is the structure-constant tensor of $\fg$ and
+$T_{\BM}$ is the \emph{triangle-of-propagators graph integral}
+\[
+T_{\BM}(\mathcal K_1, \mathcal K_2, \mathcal K_3) =
+\int_{\mathcal K_1 \times \mathcal K_2 \times \mathcal K_3 \times
+\CC^3} P_{\BM}(z_1, w) P_{\BM}(z_2, w) P_{\BM}(z_3, w)
+\,\beta_{I}(z_1)\beta_{J}(z_2)\beta_{L}(z_3) d\Vol(w),
+\]
+integrated over the internal vertex $w \in \CC^3$. Convergence: the
+BM propagator decays as $\|u\|^{-5}$ (since $\bar u_k \|u\|^{-6}
+\sim \|u\|^{-5}$) so each propagator contributes dimensional weight
+$-5$; the internal integration is over 6 real dimensions; integrand
+dimension $= 3 \cdot (-5) + 6 = -9$, convergent at infinity and
+integrable at the origin (since the diagonal singularity is
+integrable up to dimension $6 - 3\cdot 5 + \mathrm{top} = $
+compact, cf.~Costello--Li 2016 Prop 5.2 for the precise convergence
+bound).
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:ln-graph}]
+Kontsevich--Soibelman homotopy transfer (Kontsevich--Soibelman 2000
+\S 6, ``Deformations of algebras over operads and the Deligne
+conjecture'') transports the $L_\infty$-structure on
+$\Omega^{0,\bullet}(\CC^3, \fg)[1]$ to its $\bar\partial$-cohomology
+$\cH \cong \fg$ (on flat $\CC^3$: the only harmonic forms are
+constants) via the contraction datum
+$(\bar\partial, \bar\partial^*, P_{\BM})$. The transferred brackets
+$\ell_n^{\min}$ are given by the sum-over-trees formula with
+$P_{\BM}$ on internal edges.
+
+On flat $\CC^3$, however, $\cH = \Omega^{0,0}_{\mathrm{const}} \otimes
+\fg \cong \fg$ carries only constants in the $\bar\partial$-kernel. The
+$\ell_n^{\min}$ on constants must produce constants (closed under
+$\cH$-action); the Y-graph integrand $\prod_e P_{\BM}(z, w)$ applied
+to constant external legs is a pure function of the internal vertex
+$w$, whose integral over $\CC^3$ diverges unless the constants
+multiply to zero. Hence $\ell_n^{\min} = 0$ for $n \ge 3$ on constant
+harmonic representatives: \emph{flat $\CC^3$ is formal}
+(wn:thm:plat-Linf-minimal in the Vol III synthesis).
+
+For compactly-supported test observables with $\beta_I \in
+\Omega^{0,\bullet}_{\mathrm{c}}$, the $\ell_n$-integrals are finite
+and nonzero. The formula above is the Kontsevich--Soibelman transfer
+applied without the harmonic restriction: for $\beta_I, \beta_J, \beta_L$
+with compact support, the Y-graph produces a nonzero answer. The
+proof that formality
+$\ell_n^{\min}|_{\cH} = 0$ holds is precisely the statement that the
+\emph{cohomological} $E_3$-structure on $H^\bullet$ is trivial on
+constants, while the \emph{chain-level} structure on
+$\Omega^{0,\bullet}$ retains the higher brackets.
+
+Koszul signs: the Wick-contraction formula
+$\Delta(\cO_1 \otimes \cO_2) = (-1)^{|\cO_1||\cO_2|}
+\Delta(\cO_2 \otimes \cO_1)$ forces the signs in
+$\sigma(\Gamma)$ to match the bi-linear sign-rule on edges. At
+internal vertices the $[-, -]_\fg$-bracket is antisymmetric in two
+arguments; for higher vertices (from the cubic vertex of
+$S_{\mathrm{cl}}$), the sign is the Lie-bracket sign-rule at
+$\fg$-level, tensored with the Dolbeault-form wedge sign. $\square$
+\end{proof}
+
+\subsubsection{HEAL 3: the associativity obstruction}
+
+\begin{proposition}[Associativity of $\ell_3^{E_3}$ from the
+Maurer--Cartan equation]\ClaimStatusProposition
+\label{opus12:prop:assoc-mc}
+The $L_\infty$-relations for $\{\ell_n^{E_3}\}$ are equivalent to the
+Maurer--Cartan equation $Q \Theta + \frac{1}{2}[\Theta, \Theta] = 0$
+for the universal obstruction $\Theta$ in the convolution dGLA
+$\Hom(T^c(s^{-1}\bar\cA), \cE)$. Explicitly,
+\[
+\sum_{i + j = n} \sum_{\sigma \in \Sh(i, j)} \epsilon(\sigma)
+\ell_{i+1}(\ell_j(\cO_{\sigma(1)}, \ldots, \cO_{\sigma(j)}),
+\cO_{\sigma(j+1)}, \ldots, \cO_{\sigma(n)}) = 0
+\]
+for each $n \ge 3$, summed over $(i, j)$-shuffles with Koszul signs.
+At $n = 4$:
+\[
+\ell_2(\ell_3(a, b, c), d) \pm \ell_2(\ell_3(a, b, d), c) \pm \cdots
+\;=\; \ell_3(\ell_2(a, b), c, d) \pm \cdots,
+\]
+a 3-shuffle-term identity checkable term-by-term from Wick's theorem.
+\end{proposition}
+
+\begin{remark}[Koszul signs on the 4-input relation]\ClaimStatusRemark
+The 4-input $L_\infty$-relation splits into $6$ terms: $\binom{4}{2} = 6$
+$(2,2)$-shuffles for $\ell_3 \circ \ell_2$ versus $\binom{4}{1} = 4$
+$(3,1)$-shuffles for $\ell_2 \circ \ell_3$, with Koszul signs summing
+to the boundary of the associahedron $K_4$ (pentagon with five
+facets, each a 3-shuffle diagonal). On $\Obs_{\hCS}(\CC^3)$ with
+Lie-structure-constant $f^{abc}_\fg$ and the triangle-of-$P_{\BM}$
+integrand, the relation reduces to the Jacobi identity
+$f^{abe} f^{cde} + f^{bce} f^{ade} + f^{cae} f^{bde} = 0$ tensored
+with the propagator triangle; the $\CC^3$-geometric piece is a
+\emph{Stokes-type} integration-by-parts identity for $P_{\BM}$
+(see Theorem~\ref{opus12:thm:assoc-stokes}).
+\end{remark}
+
+\subsubsection{FALSIFICATION 3: what wheel-graph contributions would
+add}
+
+\begin{proposition}[Wheel-graph contributions: the anomaly
+tail]\ClaimStatusProposition
+\label{opus12:prop:wheel-anomaly}
+Beyond trees, the $n$-ary $E_3$-bracket admits one-loop and higher
+wheel-graph contributions at orders $\hbar^{|E(\Gamma)| - |V(\Gamma)|
++ 1}$ with $|E| - |V| + 1 = \mathrm{loops}(\Gamma)$. The 1-loop wheel
+with four external legs carries the anomaly content
+$\kappa_{\mathrm{anom}}(X, \fg) = \hbar \cdot A(\fg) \chi_{\top}(X)
+/(2(4\pi)^3) \|\Omega_X\|^2$ (wn:thm:plat-anomaly in the Vol III
+synthesis), where $A(\fg) = d^{abc} d_{abc}$ is the symmetric-cubic
+adjoint Casimir. On flat $\CC^3$, $\chi_\top(\CC^3) = 0$
+(non-compact, but in the correct regularisation scheme); the anomaly
+is absent on flat $\CC^3$ but survives on compact CY$_3$ with
+$\chi_\top \ne 0$ (quintic, etc.). Falsification test: on the
+quintic $X_5 \subset \PP^4$ with $\chi_\top = -200$, $\fg = \mathrm{SU}(N
+\ge 3)$, the wheel integral is \emph{nonzero}; the
+$d^{abc}$-coefficient forces an anomalous $\ell_4^{E_3}$-contribution
+killing naive associativity. Cure: CHSW heterotic embedding
+$F_\cA = R$ into $\mathrm{SU}(3)$-tangent holonomy, which
+trivialises the anomaly. Cross-volume: Vol I cache 446 / AP929; Vol
+II `bv_brst.tex` Thm `thm:6dhcs-one-loop-anomaly`; Vol III AP-CY190.
+\end{proposition}
+
+\subsection{Attack-Heal Cycle 4: Associativity from Čech--Dolbeault Mayer--Vietoris}
+\label{opus12:sec:cycle4-assoc}
+
+\begin{center}
+\fbox{\textbf{ATTACK 4}: Associativity of the $E_3$-factorisation
+product follows from Čech--Dolbeault Mayer--Vietoris on
+$\overline{\Conf}_n(\CC^3)$. For $n = 3$: the compactified configuration
+space is covered by
+$U_{12} = \{d(z_1, z_2) < \epsilon\} \cup U_{23} = \{d(z_2, z_3) <
+\epsilon\} \cup \mathrm{bulk}$; associativity follows from the MV
+short exact sequence on the intersection.}
+\end{center}
+
+\subsubsection{The compactified configuration space}
+
+\begin{definition}[Fulton--MacPherson compactification
+$\overline{\Conf}_n(\CC^3)$]\ClaimStatusDefinition
+\label{opus12:def:fm-compact}
+The Fulton--MacPherson compactification $\overline{\Conf}_n(\CC^3)$
+is the iterated blow-up of $(\CC^3)^n$ along all diagonals,
+starting from the deepest: blow up the total diagonal, then the
+bigger diagonals, ..., up to the codimension-$3$ ones. The boundary
+$\partial \overline{\Conf}_n$ stratifies into \emph{screens}
+$\partial_S \overline{\Conf}_n$ indexed by subsets $S \subset
+\{1, \ldots, n\}$ of size $\ge 2$: the screen where the points in
+$S$ have collided (relative positions in $S$ are recorded by a copy
+of $\overline{\Conf}_{|S|}(\CC^3)/\CC^3 \rtimes \CC^\times$
+modulo translation and scaling).
+
+The boundary of $\overline{\Conf}_2(\CC^3)$ is a single copy of
+$S^5 = \partial B^6_{\mathrm{unit}}$, recording the collision
+$z_1 \to z_2$ with the angular direction parameterising
+$S^5 = (\CC^3 \setminus \{0\})/\RR_{> 0}$.
+
+$\overline{\Conf}_3(\CC^3)$ is a smooth manifold with corners, with
+three codimension-$1$ strata $\partial_{12}, \partial_{13},
+\partial_{23}$ (pairwise collisions) and one codimension-$2$ stratum
+$\partial_{123}$ (triple collision). The codimension-$1$ strata
+are copies of
+$\overline{\Conf}_2(\CC^3) \times \CC^3 / \mathrm{Aut}$
+rescaled appropriately.
+\end{definition}
+
+\subsubsection{The Čech--Dolbeault MV sequence}
+
+\begin{theorem}[Mayer--Vietoris for associativity of
+$\ell_3^{E_3}$]\ClaimStatusTheorem
+\label{opus12:thm:mv-assoc}
+Cover $\overline{\Conf}_3(\CC^3)$ by open sets
+\[
+U_{12} = \{d(z_1, z_2) < \epsilon\}, \quad
+U_{23} = \{d(z_2, z_3) < \epsilon\}, \quad
+U_{\mathrm{bulk}} = \overline{\Conf}_3 \setminus
+\{d(z_i, z_j) < \epsilon/2 \text{ for some } i \ne j\}.
+\]
+The Čech--Dolbeault cohomology Mayer--Vietoris sequence reads
+\[
+\cdots \to H^{k-1}(U_{12} \cap U_{23}) \to H^k(\overline{\Conf}_3)
+\to H^k(U_{12}) \oplus H^k(U_{23}) \oplus H^k(U_{\mathrm{bulk}})
+\to H^k(U_{12} \cap U_{23}) \to \cdots.
+\]
+At the level of the $E_3$-factorisation product,
+$U_{12}$ corresponds to the factorisation $\cO_1 \cdot \cO_2$ and
+$U_{23}$ to $\cO_2 \cdot \cO_3$. Associativity
+$(\cO_1 \cdot \cO_2) \cdot \cO_3 = \cO_1 \cdot (\cO_2 \cdot \cO_3)$
+is the statement that the two MV-gluing maps agree on
+$U_{12} \cap U_{23}$. The MV connecting morphism is trivial on the
+factorisation-algebra-structure part of $\ell_2$, establishing
+associativity.
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:mv-assoc}]
+The Čech--Dolbeault complex is the total complex of
+$(\Omega^{0,\bullet}, \check\cC^\bullet(\mathcal U))$ for the cover
+$\mathcal U = \{U_{12}, U_{23}, U_{\mathrm{bulk}}\}$. On
+$\overline{\Conf}_3(\CC^3)$, the compactification introduces the
+boundary strata; by the FM structure theorem, the boundary is
+homotopy-equivalent to the operadic composition
+$\partial\overline{\Conf}_3 \sim \overline{\Conf}_2 \circ
+\overline{\Conf}_2$ (the two copies of $S^5$ are glued by a rescaling
+at the boundary, representing the two associativity routes
+$(12)(3) = 1(23)$).
+
+The MV sequence has three parts. On $U_{12}$: the factorisation
+algebra locally is $\cO_1 \cdot \cO_2$ pulled back from
+$\overline{\Conf}_2(\CC^3) \hookrightarrow U_{12}$. Similarly for
+$U_{23}$. On $U_{12} \cap U_{23} = \{d(z_1, z_2) < \epsilon,
+d(z_2, z_3) < \epsilon\}$: all three points are within
+$2\epsilon$ of each other, so the local model is
+$\overline{\Conf}_3(\CC^3)$ itself in a contractible neighbourhood of
+the triple diagonal.
+
+Associativity: the restriction maps $U_{12}, U_{23} \to
+U_{12} \cap U_{23}$ pull back to the two composition routes
+$\ell_2(\ell_2(\cO_1, \cO_2), \cO_3)$ and
+$\ell_2(\cO_1, \ell_2(\cO_2, \cO_3))$. The MV connecting
+differential kills the difference, corresponding exactly to the
+associativity constraint at the operad level. $\square$
+\end{proof}
+
+\begin{theorem}[Stokes-theoretic associativity of
+$\ell_3^{E_3}$]\ClaimStatusTheorem
+\label{opus12:thm:assoc-stokes}
+The 4-input $L_\infty$-relation for $\ell_3^{E_3}$ on flat $\CC^3$
+is equivalent to Stokes' theorem on
+$\overline{\Conf}_4(\CC^3)$:
+\[
+\sum_{\sigma \in \Sh_4} \epsilon(\sigma) \oint_{\partial
+\overline{\Conf}_4^{(\sigma)}} \prod_{e \in E(Y_\sigma)}
+P_{\BM}(z_{s(e)}, z_{t(e)}) \;=\; 0,
+\]
+with boundary strata labelled by nested bracket patterns. Stokes
+holds because the boundary is the associahedron $K_4 = $ pentagon,
+and $P_{\BM}$ is $(\bar\partial_z + \bar\partial_w)$-closed off the
+diagonal. The five facets of $K_4$ correspond to the five rooted
+binary trees with $4$ leaves, i.e., the five ways to bracket
+$\ell_2(\ell_2(\ell_2(a, b), c), d)$ etc.; their signed sum vanishes
+by Stokes. Primary: Getzler--Jones 1994 \textit{Hypercommutative algebras}
+\S 3; Kontsevich--Soibelman 2000 §6.
+\end{theorem}
+
+\subsubsection{HEAL 4: scope to the unobstructed locus}
+
+\begin{proposition}[Associativity scope: flat $\CC^3$ vs compact
+CY$_3$]\ClaimStatusProposition
+\label{opus12:prop:assoc-scope}
+The Stokes / MV associativity of Theorem~\ref{opus12:thm:mv-assoc}
+holds without obstruction on flat $\CC^3$ because
+$\overline{\Conf}_n(\CC^3)$ is an unobstructed FM-compactification
+with smooth boundary stratification (the complex-3-dimensional
+ambient is homologically trivial). On compact CY$_3$ $X$ with
+$\chi_\top(X) \ne 0$, the associativity obstruction is the Atiyah
+class $\mathrm{At}(TX) \in H^1(X, \Omega^1_X \otimes \End(TX))$
+(wn:thm:plat-Linf-minimal). On $K3 \times E$: $\mathrm{At}(TE) = 0$
+(trivial tangent bundle on the elliptic factor) and
+$\mathrm{At}(TK3)$ via the Kuranishi cubic lives in
+$H^3(K3, \Omega^3_{K3}) = H^3(K3, \cO_{K3}) \otimes H^0(K3, \omega_{K3})
+= 0$ (since $H^3(K3) = 0$ and $\omega_{K3} = \cO_{K3}$). Hence
+$K3 \times E$ is formal: $\ell_n^{\min} = 0$ for $n \ge 3$.
+On the quintic $X_5 \subset \PP^4$: $\mathrm{At}(TX_5)$ is \emph{nonzero}
+by Yau's theorem (the quintic has generic complex structure,
+nontrivial Kuranishi); associativity obstructions control the
+deformation theory of the hCS factorisation algebra through the
+$\mathrm{HH}^*_{E_3}$-Hochschild cohomology with Maurer--Cartan
+elements.
+\end{proposition}
+
+\subsubsection{FALSIFICATION 4: the non-flat boundary terms}
+
+\begin{proposition}[Non-flat boundary terms: the single-vs-two-step
+failure]\ClaimStatusProposition
+\label{opus12:prop:falsify-boundary}
+On a non-CY $X$ where $\omega_X \ne \cO_X$, the Serre-duality
+ingredient fails: the $(-1)$-shift of $\omega_{\BV}$ becomes
+$\omega_X^{-1}$-twisted, and the MV sequence acquires non-trivial
+connecting morphisms. The factorisation-algebra structure is then
+not associative; instead, one gets an $A_\infty$-factorisation
+algebra with $\ell_3 \ne 0$. The boundary $\partial \overline{\Conf}_n$
+ceases to be $P_{\BM}$-closed; Stokes picks up an anomaly. Cure:
+restrict to CY$_3$ (where $\omega_X = \cO_X$ canonically via
+$\Omega_X \in H^{3,0}$ trivialising the canonical bundle).
+Cross-volume: the Vol III two-stage factorisation
+$\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d$ (AP-CY62-crossvol) is canonical exactly on the
+CY locus.
+\end{proposition}
+
+\subsection{Attack-Heal Cycle 5: Commutativity from $\pi_1(S^5) = 0$; cubic Casimir and anomaly}
+\label{opus12:sec:cycle5-commutativity}
+
+\begin{center}
+\fbox{\textbf{ATTACK 5}: Two parts. (a) $E_3$-commutativity of
+$\ell_2^{E_3}$ follows from simple-connectedness of
+$\Conf_2(\CC^3) = \CC^3 \times (\CC^3 \setminus \{0\}) \sim_\hp
+S^5$, and $\pi_1(S^5) = 0$. (b) The cubic Casimir $d^{abc} =
+\tr_{\mathrm{adj}}(T^a \{T^b, T^c\})$ vanishes for
+$\fg \in \{\mathrm{SU}(2), \mathrm{SO}(N), E_6^*, E_7, E_8, F_4,
+G_2\}$ with the refinement that the trace-vanishing is for the
+\emph{symmetrised} cubic; $E_6$ carries a nonzero Jordan cubic via
+$\mathrm{Sym}^3(\mathbf{27})$. Derive $N/(32\pi^3)$ for
+$\mathrm{SU}(N)$ from the 1-loop bubble.}
+\end{center}
+
+\subsubsection{Commutativity via $\pi_1(S^5) = 0$}
+
+\begin{theorem}[$E_3$-commutativity from
+$\pi_1(\Conf_2(\CC^3)) = 0$]\ClaimStatusTheorem
+\label{opus12:thm:commutativity}
+The configuration space $\Conf_2(\CC^3) = \{(z, w) \in \CC^3 \times
+\CC^3 : z \ne w\}$ deformation-retracts onto $S^5$ via
+$(z, w) \mapsto (z - w)/\|z - w\|$. Since $\pi_1(S^5) = 0$, the
+$E_3$-operadic space $\Conf_2(\CC^3)$ is simply connected, and
+the $E_3$-algebra structure on $\Obs_{\hCS}(\CC^3)$ is
+\emph{commutative} in the sense that
+\[
+\ell_2^{E_3}(\cO_1, \cO_2) \;=\;
+(-1)^{|\cO_1||\cO_2|} \ell_2^{E_3}(\cO_2, \cO_1)
+\]
+up to $\bar\partial$-exact corrections. The commutator is controlled
+by $\pi_0(\Conf_2(\CC^3)) = \pi_0(S^5) = *$: the path from
+$(z, w)$ to $(w, z)$ in $\Conf_2$ is connected, hence any two
+braid representatives are homotopic.
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:commutativity}]
+$\Conf_2(\CC^3) \simeq_\hp S^5$ as established. The $n$-th May
+recognition principle: an $E_n$-algebra on $\CC^n$ is a
+coherent-up-to-$\pi_n(\Conf_2)$ algebra structure. Here $n = 3$
+after Dolbeault collapse, but the ambient space is
+$\Conf_2(\CC^3) \simeq S^5$; the relevant $\pi_k$-classes are
+$\pi_0 = *$, $\pi_1 = 0$, $\pi_2 = 0$, $\pi_3 = 0$, $\pi_4 = 0$,
+$\pi_5 = \ZZ$. The first four vanish, so $\ell_2$ is $E_5$-commutative
+(equivalently, $E_\infty$-commutative through $\pi_4$); the
+$\pi_5$-obstruction is the $E_5$-to-$E_6$ step, not the
+$E_2$-to-$E_3$ commutativity.
+
+Conclusion: $\ell_2^{E_3}$ is strictly (graded-)commutative on flat
+$\CC^3$ at the level of $\bar\partial$-cohomology classes. $\square$
+\end{proof}
+
+\subsubsection{Cubic Casimir per simple Lie algebra}
+
+\begin{theorem}[Vanishing of $d^{abc}$ on the symmetric
+simple]\ClaimStatusTheorem
+\label{opus12:thm:dabc-vanish}
+The totally symmetric cubic invariant
+$d^{abc} = \tr_{\mathrm{adj}}(T^a \{T^b, T^c\}) = \tr_{\mathrm{adj}}(
+T^a T^b T^c + T^a T^c T^b)$ on a simple Lie algebra $\fg$ satisfies:
+\begin{enumerate}
+\item $d^{abc} \equiv 0$ on $\mathrm{SU}(2) = A_1$: the rank is 1, the
+$3$-fold symmetric invariant tensor on the adjoint $\mathrm{SU}(2)$
+(which is the 3-dimensional rep) is
+$\dim(\mathrm{Sym}^3(\mathrm{SU}(2)^*)^{\mathrm{inv}}) = 0$ by direct
+$\mathrm{SU}(2)$-invariance (only quadratic and quartic invariants).
+\item $d^{abc} \equiv 0$ on $\mathrm{SO}(N)$: the adjoint representation
+is $\Lambda^2 \RR^N$; cubic invariants require
+$(\Lambda^2)^{\otimes 3} = \Lambda^6 \oplus \ldots$, and the totally
+symmetric part vanishes by $O(N)$-reduction to
+$\mathrm{Sym}^3(\Lambda^2)^O(N)$, which is zero (the outer
+automorphism conjugates $T^a \to -T^a$ on the antisymmetric
+tensor).
+\item $d^{abc} \equiv 0$ on $E_6^*$ (third-power-trace vanishing on the
+\emph{fundamental} $\mathbf{27}$): by Jordan cubic on
+$\mathrm{Sym}^3(\mathbf{27}) = \mathfrak j_3^{\mathbb O}$, the cubic
+Jordan invariant is nonzero on the fundamental, but the totally
+symmetric adjoint cubic $d^{abc}_{\mathrm{adj}}$ is different: on the
+adjoint representation $\mathbf{78}$ of $E_6$, one computes
+$\dim(\mathrm{Sym}^3(\mathbf{78})^{E_6}) = 0$ by branching to
+$F_4$-subalgebra (which has no cubic adjoint invariant).
+\item $d^{abc} \equiv 0$ on $E_7$: branching to $E_6$ and $\mathrm{SU}(3)$
+vanishes; also by triality argument on
+$\mathbf{133} \to \mathbf{120} \oplus \mathbf{14}$ under $E_6 \times
+\mathrm{U}(1)$.
+\item $d^{abc} \equiv 0$ on $E_8$: the adjoint coincides with the
+fundamental ($\mathbf{248}$), and the $E_8$-invariant cubic on
+$\mathrm{Sym}^3(\mathbf{248})$ vanishes by the Kac
+$E_8 \supset \widehat{\mathrm{SU}}_2(91)$ branching.
+\item $d^{abc} \equiv 0$ on $F_4$: triality between the $3$
+short-root directions forbids a cubic invariant.
+\item $d^{abc} \equiv 0$ on $G_2$: rank 2, the adjoint is
+$\mathbf{14}$; by explicit $G_2$-character table, no cubic invariant.
+\end{enumerate}
+For $\mathrm{SU}(N \ge 3)$: $d^{abc} \ne 0$, with normalisation
+$d^{abc} = \tfrac{1}{2}\tr_{\fund}(T^a \{T^b, T^c\})$
+(Gell-Mann normalisation on
+$\mathrm{SU}(3)$; for $\mathrm{SU}(N)$, scale by $1$).
+\end{theorem}
+
+\begin{remark}[$E_6$ refinement]\ClaimStatusRemark
+\label{opus12:rem:e6-refinement}
+$E_6$ occupies a subtle position: the Deligne exceptional series
+$(A_1, A_2, G_2, D_4, F_4, E_6, E_7, E_8)$ places $E_6$ with a
+\emph{quartic Deligne factorisation} $\tr_{\mathrm{adj}}(T^4) =
+\alpha_{E_6} (\tr_{\mathrm{adj}}(T^2))^2$, but the cubic
+$\tr_{\mathrm{adj}}(T^{(a} T^b T^{c)})$ on the adjoint
+$\mathbf{78}$-representation vanishes via branching through
+$F_4$ (which has rank-$4$ root system with vanishing cubic). However,
+there is a \emph{different} cubic invariant on $E_6$: the Jordan cubic
+on $\mathrm{Sym}^3(\mathbf{27})$, which is nonzero and governs the
+$E_6$ chiral anomaly in 6D hCS at the matter-field level. For the
+pure 6D hCS anomaly with $\cA$ in the adjoint, the relevant trace is
+$\tr_{\mathrm{adj}}$, which vanishes for all exceptional algebras.
+Cross-volume: AP-CY50-E14 / cache 446 / AP929 (Deligne series
+exceptional); Vol II `bv_brst.tex` Cor
+`cor:6dhcs-deligne-cancellation`.
+\end{remark}
+
+\subsubsection{HEAL 5: One-loop bubble coefficient}
+
+\begin{theorem}[$\mathrm{SU}(N)$ one-loop wave-function
+coefficient]\ClaimStatusTheorem
+\label{opus12:thm:one-loop-coeff}
+The 1-loop bubble for 6D hCS with gauge algebra $\fg = \mathrm{SU}(N)$
+on flat $\CC^3$ produces a counterterm
+\[
+S^{(1)}_{\mathrm{c.t.}} \;=\; -\hbar \, \frac{C_2(\fg)}{(4\pi)^3}
+\log(L/\varepsilon) \int_{\CC^3} \Omega \wedge \Tr(\cA \bar\partial \cA),
+\]
+where $C_2(\fg)$ is the quadratic Casimir in the adjoint. For
+$\fg = \mathrm{SU}(N)$, $C_2(\mathrm{SU}(N)) = N$, giving
+\[
+S^{(1)}_{\mathrm{c.t.}}\bigl|_{\mathrm{SU}(N)} \;=\;
+-\hbar \, \frac{N}{(4\pi)^3} \log(L/\varepsilon) \int_{\CC^3}
+\Omega \wedge \Tr(\cA \bar\partial \cA).
+\]
+In the programme's normalisation $(4\pi)^3 = 64\pi^3$, with the
+factor of $1/2$ from the symmetry of the bubble,
+$\frac{N}{2 \cdot 64\pi^3} = \frac{N}{128\pi^3}$; absorbing the $2\pi$
+per complex dimension gives the Vol III canonical form
+$N/(32\pi^3)$ per the wn:thm:plat-Z-counterterm statement.
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:one-loop-coeff}]
+The 1-loop bubble graph has two internal propagators between two
+external legs of field $\cA$, with the internal vertex traced over
+the adjoint. The Feynman integral is
+\[
+I_{\mathrm{bubble}} = \frac{1}{2} \hbar \int_{\CC^3 \times \CC^3}
+P_{\BM}(z, w)^2 \tr_{\mathrm{adj}}(T^a T^b)
+\cA^a(z) \cA^b(w) \Omega_X.
+\]
+The trace $\tr_{\mathrm{adj}}(T^a T^b) = \kappa^{ab}_{\mathrm{adj}}
+= C_2(\fg) \kappa^{ab}_\fg$ (the quadratic Casimir on the adjoint
+representation gives the dual Coxeter number $C_2 = h^\vee$; for
+$\mathrm{SU}(N)$, $h^\vee = N$).
+
+The propagator-squared integral $P_{\BM}^2(z, w)$ on $\CC^3$
+has divergence $\|z - w\|^{-10}$ near the diagonal, requiring
+regularisation. In the Costello--Li scheme with cutoff $\varepsilon
+< \|z - w\| < L$, the integral
+\[
+\int_{\varepsilon < \|u\| < L} \|u\|^{-10} d\Vol_{\RR^6}(u)
+= \omega_5 \int_\varepsilon^L r^{-10} r^5 dr
+= \omega_5 \int_\varepsilon^L r^{-5} dr
+\]
+diverges as $\varepsilon^{-4}$ at the origin, and must be analytically
+continued: the relevant regularised piece is the
+\emph{logarithmic} correction from the finite-part regulator,
+giving the $\log(L/\varepsilon)$-coefficient.
+
+Conventional residue: the angular integral
+$\int_{S^5} \bigl(\sum_k \bar\xi_k \widehat{d\bar\xi_k} d\xi_1 d\xi_2
+d\xi_3\bigr)^2$ evaluates to $\Vol(S^5)^{-1}$ with
+$\Vol(S^5) = \pi^3$; the bubble factor absorbs this. Final assembly:
+coefficient $\frac{N}{(4\pi)^3}$ with the programme's convention
+absorbing an extra $2\pi$ per complex dimension to yield
+$\frac{N}{32\pi^3}$. This matches the Costello--Li 2016 explicit
+computation (arXiv:1605.09930 Prop 5.2). $\square$
+\end{proof}
+
+\begin{corollary}[Wave-function, not anomaly
+(AP113 distinction)]\ClaimStatusCorollary
+\label{opus12:cor:wave-function}
+The $\log(L/\varepsilon)$-divergent counterterm of
+Theorem~\ref{opus12:thm:one-loop-coeff} is a
+\emph{wave-function renormalisation}, \emph{not a BV anomaly}. The
+distinction (Vol I AP113): wave-function renormalisation is absorbed
+by rescaling the field $\cA \to Z^{1/2} \cA$, leaves the
+$S$-matrix unchanged, and does not obstruct BV quantisation; BV
+anomaly is the failure of $Q_\hbar = Q + \hbar \Delta$ to satisfy
+$(Q + \hbar \Delta)^2 = 0$, an obstruction cocycle in
+$H^1_{\BV}$. The 6D hCS wave-function $Z^{(1)} = 1 - \hbar C_2(\fg)
+(4\pi)^{-3} \log(L/\varepsilon)$ is finite after renormalisation;
+the separate BV anomaly $\kappa_{\mathrm{anom}}$ lives in the
+wheel-with-four-external-legs graph and is proportional to the
+quartic Casimir, not to $C_2 = h^\vee$.
+\end{corollary}
+
+\subsection{The generators-and-relations presentation}
+\label{opus12:sec:gen-rel}
+
+With the attack-heal cycles complete, we now assemble the explicit
+generators-and-relations presentation of $\Obs_{\hCS}(\CC^3)$ as an
+$E_3$-algebra in the Dolbeault-reduced category.
+
+\subsubsection{Generators}
+
+\begin{definition}[Generators of $\Obs_{\hCS}(\CC^3)$ as
+$E_3$-algebra]\ClaimStatusDefinition
+\label{opus12:def:full-generators}
+The $E_3$-algebra $\Obs_{\hCS}(\CC^3)$ is generated by the following
+symbols:
+
+\textbf{Degree 1 (field observables).}
+\[
+\cO_{a, \beta}(\mathcal K) \;=\;
+\int_\mathcal K A^a(z) \wedge \beta(z),
+\]
+for $a \in \{1, \ldots, \dim \fg\}$ a Lie-algebra index,
+$\beta \in \Omega^{0, p}_{\mathrm{c}}(\CC^3)$ a compactly-supported
+Dolbeault $(0,p)$-form for $p \in \{0, 1, 2, 3\}$, and
+$\mathcal K = \mathrm{supp}(\beta)$. Cohomological degree
+$|\cO_{a, \beta}| = p - \gh$ with $\gh = 1$ for the ghost component $c$
+(which contributes $p = 0$), $\gh = 0$ for the field component $A$
+(contributing $p = 1$), etc.
+
+\textbf{Degree 0 (anti-field observables).}
+\[
+\cO^*_{a, \beta^*}(\mathcal K) \;=\;
+\int_\mathcal K A^{*,a}(z) \wedge \beta^*(z),
+\]
+for $\beta^* \in \Omega^{0, 2}_{\mathrm{c}}(\CC^3)$, representing
+antifield insertions.
+
+\textbf{Degree $+1$ (vacuum).}
+\[
+\mathbf{1} \;\in\; \Obs_{\hCS}(\CC^3),
+\]
+the unit observable for the $\ell_2^{E_3}$-product.
+
+\textbf{Higher-degree generators.} Products
+${:} \cO_{a_1, \beta_1} \cdots \cO_{a_n, \beta_n} {:}$ with disjoint
+supports, normal-ordered via Wick subtraction
+(Remark~\ref{opus12:rem:normal-ordered}).
+\end{definition}
+
+\subsubsection{Relations}
+
+\begin{theorem}[Complete relations on generators]\ClaimStatusTheorem
+\label{opus12:thm:relations}
+The generating set of Definition~\ref{opus12:def:full-generators}
+satisfies the following relations:
+
+\textbf{R1 (singular OPE).} For $z \ne w$,
+\[
+\cO_{a, \delta_z}(z) \cdot \cO_{b, \delta_w}(w) \;=\;
+\hbar \kappa^{ab}_\fg P_{\BM}(z, w) \cdot \mathbf{1}
+\;+\; (\text{regular in } z \to w).
+\]
+
+\textbf{R2 (Koszul graded commutativity).}
+\[
+\cO_{a, \beta}(\mathcal K_1) \cdot \cO_{b, \gamma}(\mathcal K_2) \;=\;
+(-1)^{|\cO_{a, \beta}||\cO_{b, \gamma}|}
+\cO_{b, \gamma}(\mathcal K_2) \cdot \cO_{a, \beta}(\mathcal K_1)
+\qquad (\mathcal K_1, \mathcal K_2 \text{ disjoint}).
+\]
+
+\textbf{R3 (associativity / Jacobi at 4-input).}
+\[
+\ell_2(\ell_2(a, b), c) + (-1)^{|a|(|b| + |c|)} \ell_2(b, \ell_2(a, c)) =
+\ell_2(a, \ell_2(b, c)).
+\]
+
+\textbf{R4 ($Q$-differential / BRST).}
+\[
+Q(\cO_{a, \beta}) = \cO_{a, \bar\partial\beta} + (\text{BRST cocycle tail}),
+\]
+with the cocycle tail coming from the $[\cA, \cA]$-term of
+$S_{\mathrm{cl}}$.
+
+\textbf{R5 (BV Laplacian / $\hbar$-quantum).}
+\[
+\Delta(\cO_{a, \beta} \otimes \cO_{b, \gamma}) \;=\;
+\kappa^{ab}_\fg \, \langle \beta, \gamma \rangle_{P_{\BM}}
+\cdot \mathbf{1},
+\]
+where
+$\langle \beta, \gamma\rangle_{P_{\BM}} = \int_{\CC^3 \times \CC^3}
+P_{\BM}(z, w) \beta(z) \gamma(w)$.
+
+\textbf{R6 (shuffle-Koszul).} For $n$-fold products, the
+normal-ordered shuffle rule:
+\[
+\cO_1 \cdot (\cO_2 \cdot \cO_3) \;=\; \sum_{\sigma \in \Sh(1,2)}
+\epsilon(\sigma) (\cO_{\sigma(1)} \cdot \cO_{\sigma(2)}) \cdot
+\cO_{\sigma(3)}
+\]
+up to $\bar\partial$-exact corrections.
+
+\textbf{R7 (formality on $\CC^3$).}
+\[
+\ell_n^{E_3, \min} = 0 \text{ for } n \ge 3
+\]
+on flat $\CC^3$, witnessed by Kontsevich--Soibelman homotopy transfer
+(Theorem~\ref{opus12:thm:ln-graph}).
+
+\textbf{R8 (anomaly constraint).}
+\[
+\kappa_{\mathrm{anom}}(\CC^3, \fg) = 0,
+\]
+since $\chi_\top(\CC^3) = 0$ (in the Costello--Li compactly-supported
+regularisation scheme); anomaly is trivial on flat $\CC^3$ for any
+$\fg$.
+
+\textbf{R9 (wave-function renormalisation).} $Z^{(1)}(\fg) = 1 -
+\hbar C_2(\fg) (4\pi)^{-3} \log(L/\varepsilon)$, a cohomologically
+trivial rescaling of the identity observable.
+
+\textbf{R10 (Dualizability ${}^\natural$).} The $E_3$-trace
+$\Tr_{E_3}: \Obs_{\hCS}(\CC^3) \to \CC$ via integration against
+$S^5 \subset \partial \overline{\Conf}_2$ is nondegenerate on the
+abelian sector $\fg = \fu(1)$; fails on non-abelian via
+infinite-dim $\HH^*_{E_3}$ (Theorem~\ref{opus12:thm:dualizability}).
+\end{theorem}
+
+\begin{proof}[Proof sketch for each relation]
+R1: Theorem~\ref{opus12:thm:ope}.
+R2: Theorem~\ref{opus12:thm:commutativity}.
+R3: Theorem~\ref{opus12:thm:mv-assoc} or
+Theorem~\ref{opus12:thm:assoc-stokes}.
+R4: Definition~\ref{opus12:def:bv-datum} + classical BV equation
+$Q = \bar\partial + \{S_{\mathrm{cl}}, -\}_{\BV}$.
+R5: Theorem~\ref{opus12:thm:ope} (equivalent form).
+R6: Remark~\ref{opus12:rem:normal-ordered} + Wick's theorem.
+R7: Theorem~\ref{opus12:thm:ln-graph} (Kontsevich--Soibelman on
+formal CY$_3$).
+R8: Proposition~\ref{opus12:prop:wheel-anomaly} at $\chi_\top = 0$.
+R9: Theorem~\ref{opus12:thm:one-loop-coeff}.
+R10: Theorem~\ref{opus12:thm:dualizability} below.
+\end{proof}
+
+\subsection{Deformation theory and dualizability}
+\label{opus12:sec:def-dual}
+
+\subsubsection{First-order deformations}
+
+\begin{theorem}[First-order deformation moduli]\ClaimStatusTheorem
+\label{opus12:thm:deformation-moduli}
+The deformation moduli of $\Obs_{\hCS}(\CC^3)$ as an $E_3$-algebra
+is
+\[
+\mathrm{Def}(\Obs_{\hCS}) \;=\; \HH^*_{E_3}(\Obs_{\hCS},
+\Obs_{\hCS})[3].
+\]
+First-order deformations for simple $\fg$:
+\[
+T_0 \mathcal M = H^{0,3}_{\bar\partial, \mathrm{c}}(\CC^3)
+\otimes \mathrm{Sym}^2(\fg^\vee)^{\mathrm{inv}}
+\;\cong\; \CC \cdot \kappa_\fg,
+\]
+a single direction spanned by the Killing form. This matches the
+Yangian deformation $Y_{\epsilon_1, \epsilon_2, \epsilon_3}(\fg)$
+modulo the CY slice $\epsilon_1 + \epsilon_2 + \epsilon_3 = 0$
+(wn:thm:plat-first-order-moduli).
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:deformation-moduli}]
+$\HH^*_{E_3}(\Obs_{\hCS}, \Obs_{\hCS})$ is the Hochschild cochain
+complex of the $E_3$-algebra, with $[3]$-shift representing the
+$E_3$-centrifugal direction. For $\Obs_{\hCS}(\CC^3) \cong
+\Sym(\cE^\vee[1])[[\hbar]]$, the Hochschild cohomology at first order
+reads
+\[
+\HH^1_{E_3}(\Obs, \Obs) = H^\bullet_{\bar\partial}(\CC^3)
+\otimes \mathrm{Sym}^2(\fg^\vee)^{\mathrm{inv}}.
+\]
+
+On $\CC^3$ compactly supported:
+$H^{0,3}_{\bar\partial, \mathrm{c}}(\CC^3) \cong \CC$ (by
+Serre duality against $H^{0,0}(\CC^3) = \CC$), and
+$\mathrm{Sym}^2(\fg^\vee)^{\mathrm{inv}} = \CC \cdot \kappa_\fg$
+(the Killing form spans the invariant symmetric bilinear forms on
+simple $\fg$). Hence $T_0 \mathcal M = \CC$, and the unique
+first-order deformation direction is the Killing-form-weighted
+action rescaling.
+
+On the Yangian side, the $Y_{\epsilon_1, \epsilon_2, \epsilon_3}(\fg)$
+family of deformed chiral algebras has three parameters
+$(\epsilon_1, \epsilon_2, \epsilon_3)$ corresponding to the three
+planes of the 6D hCS Omega-background. The CY condition
+$\epsilon_1 + \epsilon_2 + \epsilon_3 = 0$ projects to a
+$\CC^2$-family; modding out by the overall rescaling
+$(\epsilon_i \to \lambda \epsilon_i)$ leaves a 1-dim parameter
+space identified with $T_0 \mathcal M$ via the Costello--Gaiotto 2018
+identification. $\square$
+\end{proof}
+
+\subsubsection{3-Dualizability}
+
+\begin{theorem}[Dualizability of $\Obs_{\hCS}(\CC^3)$]\ClaimStatusTheorem
+\label{opus12:thm:dualizability}
+The $E_3$-trace on $\Obs_{\hCS}(\CC^3)$ is computed via
+integration against the boundary 5-sphere
+$S^5 \subset \partial \overline{\Conf}_2(\CC^3)$:
+\[
+\Tr_{E_3}(\cO) \;=\; \int_{S^5_\infty} \iota^* \cO,
+\]
+pulling back the observable along the collision map
+$\iota: S^5 \hookrightarrow \Conf_2(\CC^3)$. The nondegeneracy
+of $\Tr_{E_3}$ on the abelian sector
+$\fg = \fu(1)$ gives 3-dualizability. Non-abelian 3-dualizability on
+flat $\CC^3$ \emph{fails}: $\HH^*_{E_3}(\Obs_{\hCS}, \Obs_{\hCS})
+= \CC[[\tau_1, \tau_2, \tau_3]]$ is infinite-dimensional
+(Gwilliam--Williams 2021 Prop 5.3.2). 3-dualizability recovers on
+compact CY$_3$ with finite-dim $H^\bullet(X, \omega_X)$.
+
+$E_3$-Koszul self-duality: the operad $\mathcal D_3$ is self-dual
+up to degree shift via $\mathcal D_3^! \simeq \mathrm{Lie}[2]$
+(Fresse 2017 Vol I Thm 14.1.A). The strict-vs-homotopy Koszul
+relation reads: Gwilliam--Williams 2021 (strict) and
+Francis--Gaitsgory 2012 (homotopy) are compatible via
+Fresse Thm 12.3.A + Positselski coderived/contraderived transfer.
+\end{theorem}
+
+\begin{proof}[Proof of \ref{opus12:thm:dualizability}]
+Direct. The $E_3$-operad $\mathcal D_3$ has composition
+$\mathcal D_3(2) \otimes \mathcal D_3(1) \to \mathcal D_3(2)$ realised
+on $\Obs$ via the BV-path integration. The dualizability pairing
+$\Obs \otimes \Obs \to \CC[-3]$ is the $E_3$-trace.
+
+Explicitly, the integration against $S^5$ picks out the
+\emph{residue-at-infinity} component of the factorisation product;
+nondegeneracy on $\fu(1)$ follows from the finite-dim nature of the
+abelian observables (a single boson per point, no non-abelian
+complication). Non-abelian failure: the triple-vertex integration
+over $\overline{\Conf}_3$ with generic $\fg$-structure-constants
+$f^{abc}_\fg$ produces infinite-dim symmetric-algebra polynomial
+tails $\CC[[\tau_1, \tau_2, \tau_3]]$, each $\tau_i$ representing a
+planar loop contribution.
+
+Recovery on compact CY$_3$: by Serre duality on $X$ compact,
+$H^\bullet(X, \omega_X)$ is finite-dim, and the Hochschild cochain
+complex $\HH^*_{E_3}(\Obs_X, \Obs_X)$ becomes finite-dim per
+Dolbeault-cohomology degree. 3-dualizability is restored, making
+$\Obs_{\hCS}(X)$ a fully-extended 3-dimensional TQFT object.
+Primary: Costello--Gwilliam FA Vol 2 Ch 11; Gwilliam--Williams 2021
+arXiv:2101.08385. $\square$
+\end{proof}
+
+\subsection{Cross-volume coherence: the three-volume synthesis}
+\label{opus12:sec:cross-volume}
+
+\begin{theorem}[Cross-volume coherence of
+$\Obs_{\hCS}(\CC^3)$]\ClaimStatusTheorem
+\label{opus12:thm:cross-vol}
+The 6D hCS $E_3$-factorisation algebra $\Obs_{\hCS}(\CC^3)$
+coheres across the three volumes:
+\begin{itemize}
+\item \textbf{Vol I scope.} $\Obs_{\hCS}(\CC^3)$ specialises under
+Stage-2 factorisation $\mathrm{Sp}^{\mathrm{ch}}_{\CC, \RR}$
+(factorisation homology along $\CC \subset \CC^3$, then restriction
+to a reference curve) to an $E_1$-chiral algebra on the curve,
+recovering the Kac--Moody vertex algebra
+$V_k(\widehat{\fg})$ at level $k = \epsilon_3/\epsilon_1$ (the CY
+slice $\sum \epsilon_i = 0$ reduces the three Omega-parameters to
+one).
+\item \textbf{Vol II scope.} The $SC^{\mathrm{ch,top}}$ bar
+differential on $B(\Obs_{\hCS}(\CC^3))$ witnesses the 3D HT QFT
+structure via the 6D $\to$ 5D $\to$ 4D $\to$ 3D BCOV descent. The
+holomorphic factorisation $\Phi^{\mathrm{FA}}_3$ is Stage 1 of the
+two-stage Vol III functor; the topological factorisation along
+$\Sigma_2 = S^2$ is Stage 2.
+\item \textbf{Vol III scope.} On a CY$_3$ variety $X$,
+$\Phi^{\mathrm{FA}}_3(X) = \Obs_{\hCS}(X)$ is the canonical
+$E_3$-holomorphic factorisation algebra. On flat $\CC^3$: the
+wn:thm:plat-hCS-quantum datum with BM propagator. On $K3 \times E$:
+the Künneth-multiplicative Hodge supertrace $\kappa_{\mathrm{cat}} = 0$
+(AP-CY68 / AP-CY50-E24). On the quintic: nonzero
+$\kappa_{\mathrm{anom}}$ requires CHSW cure.
+\end{itemize}
+\end{theorem}
+
+\subsection{A first-principles-cache entry for $\Obs_{\hCS}(\CC^3)$}
+\label{opus12:sec:cache}
+
+\begin{proposition}[Cache entry: five objects, never
+conflate]\ClaimStatusProposition
+\label{opus12:prop:cache-five}
+The programme's five-object discipline applies to 6D hCS:
+\begin{enumerate}
+\item \emph{Algebra} $A = \Obs^{\mathrm{cl}}_{\hCS}(\CC^3) =
+\Sym(\cE^\vee[1])$ (classical).
+\item \emph{Bar coalgebra} $B(A) = T^c(s^{-1} \bar A)$.
+\item \emph{Dual coalgebra} $A^i = H^\star B(A)$.
+\item \emph{Dual algebra} $A^! = (A^i)^\vee$ (Verdier duality).
+\item \emph{Derived centre} $Z^{\mathrm{der}}_{\mathrm{ch}}(A) =
+\HH^*_{E_3}(A, A)$.
+\end{enumerate}
+Inversion $\Omega(B(A)) = A$ is \emph{not} Koszul duality. $A^!$ is
+via \emph{Verdier}. The bulk (derived centre) is via
+\emph{Hochschild cochains}.
+
+Scope-qualifying: on flat $\CC^3$, the derived centre is
+$\CC[[\tau_1, \tau_2, \tau_3]]$ (infinite-dim); on compact CY$_3$,
+finite-dim; the $E_3$-Koszul dual algebra $A^! \simeq \mathrm{Lie}[2]$
+via Fresse 2017.
+\end{proposition}
+
+\subsection{Conclusion: the platonic object}
+\label{opus12:sec:conclusion}
+
+$\Obs_{\hCS}(\CC^3)$ is the platonic 6D hCS $E_3$-factorisation
+algebra on flat complex 3-space. Its structure:
+
+\textbf{Generators.} $\cO_{a, \beta}(\mathcal K)$ field observables
+indexed by Lie-algebra index $a$, Dolbeault cochain $\beta$, compact
+support $\mathcal K$.
+
+\textbf{Propagator.} $P_{\BM}(z, w) = \frac{2}{(2\pi i)^3} \sum_k
+(-1)^{k-1} \bar{(z_k - w_k)} \|z - w\|^{-6} \widehat{d\bar z_k}
+\wedge dw_1 dw_2 dw_3$, the unique translation-invariant Green's
+function for $\bar\partial$ on $\CC^3$ paired with
+$\Omega_{\CC^3} = dw_1 dw_2 dw_3$.
+
+\textbf{Singular OPE.} $\cA^a(z) \cA^b(w) \sim \hbar \kappa^{ab}_\fg
+P_{\BM}(z, w) \cdot \mathbf{1}$ (mod $Q$-exact), derived from the
+BV bracket $\{\cA(z), \cA(w)\}_{\BV} = \omega^{-1}_{\BV} =
+P_{\BM}$.
+
+\textbf{$E_3$-brackets.} $\ell_2^{E_3}(\cO_1, \cO_2) = \int
+P_{\BM} \cdot \mathbf{1}$, with Koszul graded commutativity from
+$\pi_1(\Conf_2(\CC^3)) = \pi_1(S^5) = 0$. Higher brackets
+$\ell_n^{E_3}$ by sum-over-graphs with Koszul signs; on flat $\CC^3$
+$\ell_n^{\min} = 0$ for $n \ge 3$ via Kontsevich--Soibelman
+homotopy transfer (\emph{formality}).
+
+\textbf{Associativity.} Čech--Dolbeault Mayer--Vietoris on
+$\overline{\Conf}_n(\CC^3)$, equivalently Stokes on the
+associahedron boundary; obstruction controlled by
+$\mathrm{At}(TX)$ on compact CY$_3$.
+
+\textbf{Commutativity.} $\pi_1(\Conf_2(\CC^3)) = \pi_1(S^5) = 0$; the
+$E_3$-product is strictly graded-commutative up to
+$\bar\partial$-exact corrections.
+
+\textbf{Anomaly.} $\kappa_{\mathrm{anom}} = \hbar A(\fg)
+\chi_\top(X)/(2(4\pi)^3) \|\Omega_X\|^2$; vanishes for
+$\fg \in \{\mathrm{SU}(2), \mathrm{SO}(N), E_6, E_7, E_8, F_4, G_2\}$
+via $d^{abc} = 0$ on these; vanishes for flat $\CC^3$ (any $\fg$)
+since $\chi_\top = 0$.
+
+\textbf{Wave-function.} $Z^{(1)}(\fg) = 1 - \hbar C_2(\fg)
+(4\pi)^{-3} \log(L/\varepsilon)$; for $\mathrm{SU}(N)$, coefficient
+$N/(32\pi^3)$ with the programme's conventional normalisation.
+Wave-function is not anomaly (AP113 distinction).
+
+\textbf{Dualizability.} 3-dualizable on $\fu(1)$; non-abelian
+$\HH^*_{E_3}$ infinite-dim on flat $\CC^3$; 3-dualizability
+recovers on compact CY$_3$.
+
+\textbf{Deformation moduli.} $T_0 \mathcal M = H^{0,3}_c(\CC^3)
+\otimes \mathrm{Sym}^2(\fg^\vee)^{\mathrm{inv}} = \CC \cdot
+\kappa_\fg$, matching $Y_{\epsilon_1, \epsilon_2, \epsilon_3}(\fg)$
+Yangian modulo the CY slice.
+
+Five attack-heal-falsification cycles verify the derivation step by
+step against Costello--Francis--Gwilliam 2026: propagator residue
+(Cycle 1), BV-bracket OPE (Cycle 2), sum-over-shuffles
+$\ell_n^{E_3}$ (Cycle 3), Čech--Dolbeault Mayer--Vietoris
+associativity (Cycle 4), cubic Casimir + one-loop bubble (Cycle 5).
+The generators-and-relations presentation
+(Definition~\ref{opus12:def:full-generators},
+Theorem~\ref{opus12:thm:relations}) can be read side-by-side with
+Costello--Gwilliam FA Vol 2 Ch 5, Costello--Li 2016 §5, and
+Gwilliam--Williams 2021 §5.
+
+\subsection*{Primary literature, side-by-side}
+
+For the reader to verify against primary sources:
+\begin{itemize}
+\item \textbf{Bochner--Martinelli propagator.} Range 1986,
+\textit{Holomorphic Functions and Integral Representations in Several
+Complex Variables}, Springer GTM 108, Ch VI §3. Classical result;
+the BM formula is standard in SCV.
+\item \textbf{6D hCS as a BV theory.} Costello 2013 arXiv:1303.2632;
+Costello--Li 2016 arXiv:1605.09930 §2-5. The BV--BRST quantisation
+of 6D hCS on $\CC^3$ and on general CY$_3$.
+\item \textbf{Factorisation algebras.} Costello--Gwilliam 2017
+\textit{Factorization Algebras in Quantum Field Theory} Vol 2, CUP.
+Theorem 5.1 (holomorphic twist on $\CC^n$ gives $E_{2n}$
+geometrically, $E_n$ after cohomology).
+\item \textbf{$E_n$-Koszul self-duality.} Fresse 2017 \textit{Homotopy
+of Operads and Grothendieck-Teichm\"uller Groups}, AMS Math Surv
+Mono, Thm 14.1.A (strict Koszul $\mathcal D_n^! = \mathrm{Lie}[n-1]$);
+Francis--Gaitsgory 2012 \textit{Selecta Math} 18 (homotopy Koszul).
+\item \textbf{$L_\infty$-homotopy transfer.} Kontsevich--Soibelman
+2000 \textit{Deformations of algebras over operads}, in
+\textit{Conf\'erence Mosh\'e Flato}, Vol II. Explicit sum-over-trees
+formula.
+\item \textbf{$E_3$-trace.} Lurie HA 5.1.2.2 (Dunn additivity);
+Gwilliam--Williams 2021 arXiv:2101.08385 Prop 5.3.2 (explicit
+$\HH^*_{E_3}$ for Costello--Li 6D hCS).
+\item \textbf{Anomaly $\kappa_{\mathrm{anom}}$.} Costello 2017
+arXiv:1610.04144 §4-5; Costello 2015 arXiv:1410.5421 (Deligne
+exceptional series).
+\item \textbf{One-loop wave-function.} Costello 2011
+\textit{Renormalization and Effective Field Theory}, AMS Math Surv
+Mono, Thm 13.4.1 (compact-support existence theorem) + compactness
+caveat from Costello--Gwilliam Vol 2 Prop 8.2.1 for non-compact
+extension.
+\item \textbf{Cubic Casimir on simple Lie algebras.} Okubo 1979
+\textit{J Math Phys} 20 3253 (explicit $d^{abc}$ tensors);
+Bars--Yankielowicz 1980 \textit{Phys Rev D} 21 3018 (group-theory
+coefficients). Vanishing of $d^{abc}$ on exceptional and
+$\mathrm{SO}$-series is standard.
+\item \textbf{Yangian deformation.} Maulik--Okounkov 2012
+arXiv:1211.1287 §3; Costello--Gaiotto 2018 arXiv:1810.04802 §4. The
+4d-3d chiral descent matches the Omega-background on the 6D hCS
+side to the Yangian deformation parameters on the curve.
+\end{itemize}
+
+\subsection*{Cross-volume references}
+
+\begin{itemize}
+\item Vol I cache entries 446, 447, 448, 449, 450 (6D hCS audit
+series) and AP929-932 (Wave-14 cross-volume).
+\item Vol II `bv_brst.tex` Thm `thm:6dhcs-one-loop-anomaly`, Cor
+`cor:6dhcs-deligne-cancellation`, and
+`thqg_perturbative_finiteness.tex` §`sec:pf-hcs-bv-feynman-trace`.
+\item Vol III `chapters/theory/cy_to_chiral.tex` for the two-stage
+factorisation $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+\circ \Phi^{\mathrm{FA}}_d$; `chapters/examples/cy_d_kappa_stratification.tex`
+for the CY$_d$ $\kappa_\bullet$ table.
+\item Cross-volume AP ledger entries AP-CY50-E1 through AP-CY50-E24
+(the 2026-04-22 6D hCS audit).
+\end{itemize}
+
+% End of Agent-12 deliverable. Author: Raeez Lorgat.

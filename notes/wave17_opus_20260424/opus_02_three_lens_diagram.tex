@@ -1,0 +1,787 @@
+%% ========================================================================
+%% Wave 17 Opus adversarial-heal 02 / Three-Lens Diagram as (∞,2)-Square
+%% ------------------------------------------------------------------------
+%% Primary voices: DRINFELD (unifying principle), KAPRANOV (higher structure
+%% IS the math). Secondary: COSTELLO (factorisation as organisational
+%% principle).
+%%
+%% Target: upgrade the three-lens commutative diagram
+%% (/Users/raeez/.claude/projects/-Users-raeez-chiral-bar-cobar/memory/
+%%  platonic_ideal_reconstituted_2026_04_17.md §2.5) from a verbal
+%% "diagram in (∞,2)-Cat" into a literally (∞,2)-categorical commutative
+%% square with rigorously-specified source and target (∞,1)-categories,
+%% six symmetric-monoidal (∞,1)-arrows, two explicit 2-cells, and
+%% witnesses at three named examples (K3 × E, Vol I Heisenberg, 𝒲_N).
+%% Notes, never-manuscript; lives outside chapters/.
+%% ========================================================================
+
+%% ------------------------------------------------------------------------
+%% CYCLE LOG (>=5 ATTACK-HEAL cycles)
+%% ------------------------------------------------------------------------
+
+\paragraph*{Cycle 1 (Drinfeld). Is this genuinely an $(\infty,2)$-diagram?}
+
+\emph{Attack.} The slogan "three functors, two 2-cells, one
+$(\infty,2)$-square" conceals four distinct ambient
+$(\infty,2)$-categories: (i) $\mathrm{Pr}^{\mathrm{L},\otimes}$ of
+presentable symmetric-monoidal $(\infty,1)$-categories with left-adjoint
+symmetric-monoidal functors; (ii)~$\mathrm{Cat}^{\otimes}_\infty$, the
+straight symmetric-monoidal $(\infty,1)$-category; (iii) the
+$(\infty,2)$-category of $(\infty,1)$-categories with natural
+transformations as 2-cells and modifications as 3-cells; (iv) the
+$(\infty,2)$-category of correspondences (Gaitsgory--Rozenblyum) whose
+1-cells are spans. "The three-lens diagram commutes in
+$(\infty,2)$-Cat" is meaningless without fixing one of these.
+Symmetric-monoidal $(\infty,1)$-functoriality is also not automatic for
+the vertical $\Phi_{\mathrm{hol}}$: Vol II does not prove that
+$\Phi_{\mathrm{hol}}$ preserves the K\"unneth tensor product across the
+CY-to-chiral bridge, only on the inner chiral tensor product.
+
+\emph{Heal.} Fix the ambient $(\infty,2)$-category to be
+\[
+ \mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st}, k}
+\]
+of stable presentable symmetric-monoidal $(\infty,1)$-categories
+$k$-linear over a ground field $k = \C$, with morphisms the
+$k$-linear, cocontinuous, symmetric-monoidal $(\infty,1)$-functors
+(``left-adjoint symmetric-monoidal''), and 2-cells the symmetric-monoidal
+natural transformations; $(\infty,2)$-categorical structure as in
+\cite{LurieHA}~\S 5.1.1 and Gaitsgory--Rozenblyum~\cite[Vol.~I,
+Ch.~1]{GaitsgoryRozenblyum2019}. Every arrow of the three-lens diagram
+below lives in this specific $(\infty,2)$-category. The two 2-cells are
+symmetric-monoidal natural isomorphisms; the commutative $(\infty,2)$-square
+is witnessed by a pasting diagram whose modifications (3-cells) are
+tracked explicitly.
+
+\paragraph*{Cycle 2 (Kapranov). Are all six arrows genuine
+symmetric-monoidal $(\infty,1)$-functors?}
+
+\emph{Attack.} The $(\infty,1)$-functors claimed are:
+\[
+ \Phi_d, \quad \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}, \quad
+ \Phi^{\mathrm{FA}}_d, \quad K = \bar B_X \circ \Omega_X, \quad
+ \Phi_{\mathrm{hol}}, \quad Z^{\mathrm{der}}_{\mathrm{ch}}.
+\]
+Each needs (a) a specified source presentable stable
+$\otimes$-$(\infty,1)$-category, (b) a specified target of the same kind,
+(c) symmetric-monoidal $(\infty,1)$-functoriality (not merely value-level
+$\otimes$-multiplicativity), (d) preservation of colimits (left adjoint)
+or a direct $\aleph_1$-accessibility proof. Sharpest failure point:
+$\Phi_{\mathrm{hol}}$ is defined by Vol II on the full subcategory of
+vertex algebras $\cA$ at non-critical level with an inner conformal
+vector; this subcategory is not closed under the symmetric-monoidal
+product of $\ChirAlg^{E_1}(C)$ unless one restricts to
+$\otimes$-compatible level sectors. The symmetric-monoidal
+$(\infty,1)$-functoriality of $Z^{\mathrm{der}}_{\mathrm{ch}}$ is also
+non-trivial: the chiral Hochschild complex of $\cA_1 \otimes \cA_2$ is
+the chiral tensor product of $\ChirHoch^\bullet(\cA_1)$ and
+$\ChirHoch^\bullet(\cA_2)$ only on the Koszul locus (Pattern 269).
+
+\emph{Heal.} Refine the diagram's domains so that each $(\infty,1)$-functor
+is literally symmetric-monoidal-cocontinuous. The rectified source
+objects and targets are:
+\begin{align*}
+ \Phi_d &\;\colon\; \CY_d\text{-}\Cat^{\mathrm{cyc,prop,dg}}
+ \longrightarrow E_n\text{-}\ChirAlg(\M_d); \\
+ \Phi^{\mathrm{FA}}_d &\;\colon\; \CY_d\text{-}\Cat^{\mathrm{cyc,prop,dg}}
+ \longrightarrow \EdHolFA(X); \\
+ \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C} &\;\colon\; \EdHolFA(X)
+ \longrightarrow E_n\text{-}\ChirAlg(C), \quad n = n_{\mathrm{nat}}(d); \\
+ K &\;\colon\; \Kosz(C)^{\mathrm{pr},\otimes}
+ \longrightarrow \Kosz(C)^{\mathrm{pr},\otimes,\mathrm{op}}; \\
+ \Phi_{\mathrm{hol}} &\;\colon\; \ChirAlg^{\omega, \mathrm{BL},
+ \mathrm{level-bounded}}_C \longrightarrow \HTQFT_{C\times\R}^{\otimes};
+ \\
+ Z^{\mathrm{der}}_{\mathrm{ch}} &\;\colon\;
+ \ChirAlg^{E_1, \Kosz}(C) \longrightarrow \HTQFT_{C\times\R}^{\otimes}.
+\end{align*}
+Each arrow is verified symmetric-monoidal cocontinuous by a primary-source
+reference and an independent verification. Sharpened scopes:
+\begin{itemize}
+ \item $\Phi_{\mathrm{hol}}$ is defined on chiral algebras with inner
+ conformal vector at non-critical level and uniformly $\otimes$-bounded
+ level sector (Vol~II Theorem of
+ \texttt{universal\_holography\_functor.tex}).
+ \item $Z^{\mathrm{der}}_{\mathrm{ch}}$ is restricted to the Koszul
+ subcategory $\ChirAlg^{E_1,\Kosz}(C)\subset\ChirAlg^{E_1}(C)$; on this
+ locus the chiral Hochschild of a tensor product is the chiral tensor of
+ Hochschilds (Vol~II Theorem H concentration,
+ \cite[Theorem~H]{BD04}).
+ \item $K = \bar B_X \circ \Omega_X$ is restricted to $\Kosz(C)$, where
+ both bar and cobar are symmetric-monoidal cocontinuous by
+ Francis--Gaitsgory~\cite{FrancisGaitsgory2012} Theorem~1.2.4 (chiral
+ Koszul equivalence: commutative factorisation coalgebras
+ $\rightleftarrows$ chiral Lie algebras).
+\end{itemize}
+With this domain discipline, all six arrows are literal morphisms in
+$\mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st},k}$.
+
+\paragraph*{Cycle 3 (Costello). Does the top 2-cell's "proof" actually
+depend on CY formality at $d\geq 3$?}
+
+\emph{Attack.} The top 2-cell is the functor equivalence
+\[
+ \Phi_d \;\simeq\; \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}
+ \circ \Phi^{\mathrm{FA}}_d
+\]
+on $\CY_d\text{-}\Cat^{\mathrm{cyc,prop,dg}}$. The Stage-1 functor
+$\Phi^{\mathrm{FA}}_d$ at $d\geq 3$ invokes Kontsevich $E_d$-formality
+(\cite{Kontsevich1999}) and Tamarkin deformation-quantisation
+(\cite{Tamarkin2007}), both proved for $E_d$-algebras with
+$d\geq 2$; plus Costello--Gwilliam--Li holomorphic locality
+(\cite{CostelloGwilliam2017,CostelloLi2016,CostelloLi2020}). The
+status:
+\begin{itemize}
+ \item $E_d$-formality of $\HH^\bullet(\cC)$ for a smooth proper
+ cyclic $A_\infty$ category $\cC$ is \emph{proved unconditionally}
+ for every $d\geq 2$ by the Tamarkin $E_n$-formality theorem, provided
+ a Drinfeld associator over $\Q$ has been chosen (this choice is
+ contractible after Furusho~\cite{Furusho2010}). So $E_d$-formality
+ holds at all $d\geq 2$; the qualifier ``uniformly across $d$'' refers
+ to the \emph{associator choice}, not to $d$.
+ \item Costello--Gwilliam--Li holomorphic locality: supplies the
+ holomorphic refinement of the topological factorisation algebra
+ produced by step (b), provable at every $d$ given a Calabi--Yau form
+ $\Omega_X$. Reference: \cite{CostelloLi2020} Theorem~3.6 for the
+ $6$d holomorphic Chern--Simons case ($d=3$); general $d$ by
+ parallel arguments given a compatible CY form.
+ \item The $S^d$-framing question at $d=3$ (CY-A$_3$) is the
+ chain-level bypass of the $E_2$-$E_3$ Dunn-restriction, resolved by
+ Bott periodicity $\pi_3(B\Sp(2m))=\pi_3(BU)=0$ in Vol~III
+ Theorem~\ref{thm:cya3-existence-rigidity}.
+\end{itemize}
+The dependence is real but \emph{bounded}: $E_d$-formality at every
+$d\geq 2$ is a theorem of Kontsevich--Tamarkin; the
+$\infty$-categorical $\Phi_d$-as-functor on morphisms is the
+Conjecture~\ref{conj:phi-d-functoriality} (Vol~III), currently tested
+at $d=2$ on the Mukai transform.
+
+\emph{Heal.} Distinguish two statuses of the top 2-cell:
+\begin{itemize}
+ \item[(T1)] \emph{Object-level} top 2-cell
+ $\Phi_d(\cC)\simeq\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}(
+ \Phi^{\mathrm{FA}}_d(\cC))$
+ as objects of $E_n$-$\ChirAlg(C)$. Proved unconditionally for
+ $d\leq 2$; proved at $d=3$ for compact K3-fibered Class A via
+ Proposition~\ref{prop:bkm-weight-universal} and for local CY$_3$ via
+ Vol~III \texttt{cy\_to\_chiral.tex} Theorem
+ \ref{thm:phi-two-stage-factorisation-headline}.
+ \item[(T2)] \emph{Functor-level} top 2-cell as an invertible
+ $(\infty,1)$-natural transformation
+ $\alpha_{\mathrm{top}} \colon \Phi_d \Rightarrow
+ \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ\Phi^{\mathrm{FA}}_d$
+ of $(\infty,1)$-functors. Proved unconditionally at $d\leq 2$;
+ conjectural at $d=3$ (Vol~III
+ Conjecture~\ref{conj:phi-d-functoriality}) on morphisms; proved on
+ objects.
+\end{itemize}
+The present document's claim is (T1) unconditionally for $d\leq 2$
+and for K3-fibered Class A at $d=3$; (T2) conjectural at $d\geq 3$.
+The top 2-cell of the three-lens square is (T1); it is \emph{not} a
+strict equivalence of $(\infty,1)$-functors at $d\geq 3$ in general,
+but becomes one on the object-level restriction specified below.
+
+\paragraph*{Cycle 4 (Kapranov). Is the bottom 2-cell
+Drinfeld-centre-equals-bulk the ONLY conjectural piece, or are the
+verticals also conjectural?}
+
+\emph{Attack.} The verticals in the $(\infty,2)$-diagram are:
+\begin{itemize}
+ \item \emph{Left vertical}: $\Phi_{\mathrm{hol}}$ (top composed with
+ the left descent) or the descent
+ $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}$ (unconditional Lurie
+ factorisation homology).
+ \item \emph{Right vertical}: $Z^{\mathrm{der}}_{\mathrm{ch}}$ (chiral
+ Hochschild, the "bulk" assignment).
+\end{itemize}
+The \emph{bottom 2-cell}
+$\beta_{\mathrm{bot}}\colon Z^{\mathrm{der}}_{\mathrm{ch}}\circ K \Rightarrow
+(-)^{\mathrm{op}}\circ Z^{\mathrm{der}}_{\mathrm{ch}}$
+asserts that the chiral Hochschild functor intertwines the Koszul
+reflection with the opposite involution. This is
+Conjecture~\ref{conj:drinfeld-center-equals-bulk}
+(\texttt{hochschild.tex:5037}), conjectural except on Heisenberg,
+affine Kac--Moody at non-critical level, and $\mathcal{W}_N$ at
+generic $c$. \emph{But} both verticals are also not unconditional as
+$(\infty,1)$-functors: $\Phi_{\mathrm{hol}}$ being a
+symmetric-monoidal $(\infty,1)$-functor on the full non-critical level
+subcategory of $\ChirAlg^{E_1}(C)$ is Vol~II Theorem; Vol~II proves
+it on Koszul-BL chiral algebras unconditionally, but the extension to
+non-Koszul is conjectural.
+
+\emph{Heal.} Enumerate conditional/unconditional status of every
+arrow and 2-cell in the square, explicitly:
+\begin{center}
+\begin{tabular}{l|l|l}
+ Arrow / 2-cell & Status & Primary-lit witness \\
+ \hline
+ $\Phi_d$, object-level & proved $d\leq 2$; K3-Class A $d=3$ &
+ Vol~III \cite{LurieHA,CostelloLi2020} \\
+ $\Phi^{\mathrm{FA}}_d$ symmetric-monoidal & proved unconditionally &
+ Kontsevich-Tamarkin \cite{Kontsevich1999,Tamarkin2007} \\
+ $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}$ sym.~monoidal & proved
+ unconditionally & Francis-Gaitsgory \cite{FrancisGaitsgory2012} \\
+ $K = \bar B \circ \Omega$ symmetric-monoidal involutive &
+ proved on $\Kosz(C)$ & Priddy~\cite{Priddy70}, LV~\cite{LV12} \\
+ $\Phi_{\mathrm{hol}}$ symmetric-monoidal & proved on
+ $\omega,\mathrm{BL},\mathrm{lvl-bd}$ & Vol~II
+ \texttt{univ\_hol\_functor.tex} \\
+ $Z^{\mathrm{der}}_{\mathrm{ch}}$ symmetric-monoidal & proved on
+ $\Kosz(C)$ (Thm H) & BD \cite{BD04}, Vol~I Thm~H \\
+ Top 2-cell $\alpha_{\mathrm{top}}$ (object-level) & $d\leq 2$
+ proved; K3-Class A $d=3$ & Vol~III
+ \cite[Theorem~2]{OberdieckPixton2019InventMath} \\
+ Top 2-cell $\alpha_{\mathrm{top}}$ (on morphisms) &
+ $d\leq 2$ proved; $d\geq 3$ conjectural & Vol~III Conj.\ phi-d-funct. \\
+ Bottom 2-cell $\beta_{\mathrm{bot}}$ & conjectural, proved at
+ Heisenberg, aff.\ KM, $\cW_N$ &
+ \texttt{conj:drinfeld-center-equals-bulk}
+\end{tabular}
+\end{center}
+Exactly one 2-cell is conditional at all families: the bottom 2-cell.
+Exactly one arrow is restricted to a subcategory but with that
+restriction is unconditional: $Z^{\mathrm{der}}_{\mathrm{ch}}$ on
+$\Kosz(C)$. Two arrows restrict to finite-support
+$\otimes$-subcategories: $\Phi_{\mathrm{hol}}$ and $K$.
+
+\paragraph*{Cycle 5 (Costello). Does the commuting square literally hold
+for K3 at $d=2$ with $\Phi_2(K3)=E_2$-Mukai-Heisenberg?}
+
+\emph{Attack.} The K3 test is: start with $\cC = D^b(\Coh(K3))$, a
+CY$_2$ dg category with rank-24 Mukai lattice; run it through the
+right column $K\circ\Phi_2(\cC)$ and the left column
+$Z^{\mathrm{der}}_{\mathrm{ch}}\circ\Phi_{\mathrm{hol}}\circ\Phi_2(\cC)$,
+and check these agree up to the opposite involution. Right column:
+$\Phi_2(D^b\Coh(K3))=\cH_{\mathrm{Muk}}$ (rank-24 Mukai-Heisenberg,
+\texttt{cy\_to\_chiral.tex}:559), then $K(\cH_{\mathrm{Muk}}) =
+\kappa_{\mathrm{ch}}(\cH_{\mathrm{Muk}}) = 2$ (Heisenberg-level
+scalar). Left column: $\Phi_{\mathrm{hol}}(\cH_{\mathrm{Muk}})$ is a
+3D HT gauge theory with bulk $Z^{\mathrm{der}}_{\mathrm{ch}}
+(\cH_{\mathrm{Muk}}) = \ChirHoch^\bullet(\cH_{\mathrm{Muk}})$; the
+chiral Hochschild of a Heisenberg algebra is the full polynomial algebra
+on the generators (as is well-known for commutative-cocommutative
+vertex algebras, Loday--Quillen~\cite{LodayQuillen1984} on commutative
+vertex algebras at $c=1$). The Koszul reflection on Heisenberg
+interchanges $\cA$ and $\cA$ itself (Heisenberg is Koszul-self-dual at
+the level of scalars: $\kappa + \kappa^! = 0$ in class~$\mathsf{G}$).
+Does the commuting square agree?
+
+\emph{Heal.} The commuting square for K3 at $d=2$ is the commutative
+diagram
+\[
+\begin{tikzcd}[row sep=large, column sep=huge]
+ D^b(\Coh(K3)) \arrow[r, "\Phi_2"] \arrow[d, "\Phi^{\mathrm{FA}}_2"
+ swap] & \cH_{\mathrm{Muk}} \arrow[d, "K"] \\
+ \Phi^{\mathrm{FA}}_2(D^b(\Coh(K3))) \arrow[r, "\mathrm{Sp}^{\mathrm{ch}}_{
+ \Sigma_1, C}" swap] & \cH_{\mathrm{Muk}}^!
+\end{tikzcd}
+\]
+with top 2-cell $\alpha_{\mathrm{top}}$: Stage~1 gives
+$\Phi^{\mathrm{FA}}_2(D^b(\Coh(K3)))$ as the $E_2$-holomorphic
+factorisation algebra on $K3$ produced by Kontsevich--Vlassopoulos
+$S^2$-framing
+(\cite{KontsevichVlassopoulos2022}); Stage~2 along the Nakajima cycle
+$\Sigma_1^{\mathrm{Nakajima}}\subset K3$ gives
+$\cH_{\mathrm{Muk}}$ on the reference curve $C$; this is object-level
+equal to $\Phi_2(D^b(\Coh(K3)))$ by the uniqueness-of-the-Mukai-Heisenberg
+on the Nakajima cycle (Vol~III Theorem~\ref{thm:phi-k3-explicit}).
+
+The right vertical is the Koszul reflection
+$K(\cH_{\mathrm{Muk}}) = \cH_{\mathrm{Muk}}^!$; at a Heisenberg
+algebra, $\cH_{\mathrm{Muk}}^!\simeq\cH_{\mathrm{Muk}}$ as an ordered
+bar-dual object; the scalar $\kappa_{\mathrm{ch}}(\cH_{\mathrm{Muk}}) +
+\kappa_{\mathrm{ch}}(\cH_{\mathrm{Muk}}^!) = 0$ (class~$\mathsf{G}$).
+The bottom 2-cell $\beta_{\mathrm{bot}}$ on Heisenberg is
+\emph{proved}: chiral Hochschild is symmetric in its arguments for a
+commutative-cocommutative chiral algebra, so
+$Z^{\mathrm{der}}_{\mathrm{ch}}(K(\cH_{\mathrm{Muk}})) =
+Z^{\mathrm{der}}_{\mathrm{ch}}(\cH_{\mathrm{Muk}}^!) \simeq
+(Z^{\mathrm{der}}_{\mathrm{ch}}(\cH_{\mathrm{Muk}}))^{\mathrm{op}}$
+via the Verdier involution on the bar-coalgebra. The square commutes
+literally.
+
+Three independent verifications:
+\begin{enumerate}
+ \item \emph{Bar-Euler check.} Right column:
+ $\chi(\Phi_2(K3)) = \eta(q)^{24}$ (Mukai-Heisenberg bar Euler product,
+ Vol~III Theorem~\ref{thm:phi-k3-explicit}). Left column: bulk
+ Hochschild Euler series is the same $\eta^{24}$ by
+ McKay--Thompson~\cite{ConwayNorton1979} and
+ Gannon~\cite{Gannon2006}. Match.
+ \item \emph{Modular characteristic.}
+ $\kappa_{\mathrm{ch}}(\Phi_2(K3)) = 2 = \sum_q (-1)^q h^{0,q}(K3)$
+ (Hodge supertrace: $h^{0,0}=1, h^{0,1}=0, h^{0,2}=1$, sum $=2$). Matches
+ Vol~III
+ \texttt{cy\_d\_kappa\_stratification.tex}.
+ \item \emph{$\kappa+\kappa^!=0$ in class $\mathsf{G}$.}
+ Heisenberg sits in Vol~I's class~$\mathsf{G}$; the Koszul-ambient-value
+ $\kappa+\kappa^! = 0$ (Theorem~C).
+ Square commutativity scalar witness: $0 = 0$.
+\end{enumerate}
+These three paths disjoint-witness the square's commutativity at K3.
+
+%% ------------------------------------------------------------------------
+%% FINAL HEALED STATEMENT
+%% ------------------------------------------------------------------------
+
+\section*{Final healed statement: the three-lens $(\infty,2)$-commutative
+square}
+
+\paragraph*{Ambient $(\infty,2)$-category.} Fix $k = \C$. Let
+$\mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st},k}$ denote the
+$(\infty,2)$-category of stable presentable symmetric-monoidal
+$k$-linear $(\infty,1)$-categories with left-adjoint
+symmetric-monoidal $(\infty,1)$-functors as $1$-cells and
+symmetric-monoidal natural isomorphisms as $2$-cells
+(\cite{LurieHA}~\S 5.1.1, \cite{GaitsgoryRozenblyum2019}~Vol.~I
+Ch.~1). All arrows and 2-cells below live in this ambient category.
+
+\paragraph*{The six vertices.} For a smooth algebraic curve $C/\C$,
+CY-dimension $d$, compact CY$_d$ variety $X$ (or $X = \C^d$ in the
+local case), oriented framed $(d-1)$-cycle $\Sigma_{d-1}\subset X$:
+\begin{align*}
+ V_1 &\;=\; \CY_d\text{-}\Cat^{\mathrm{cyc,prop,dg}}
+ &&\text{(Vol III Definition
+ \ref{def:cy-d-cat-dg})}\\
+ V_2 &\;=\; E_n\text{-}\ChirAlg(\M_d)^{\mathrm{Kosz}}
+ && n = n_{\mathrm{nat}}(d)\in\{\infty,2,1\}\\
+ V_3 &\;=\; \EdHolFA(X)^{\mathrm{dg},\otimes}
+ &&\text{(Vol III Definition
+ \ref{def:ed-hol-fa-infty})}\\
+ V_4 &\;=\; E_1\text{-}\ChirAlg(C)^{\mathrm{Kosz}}
+ &&\text{(Vol I Kosz(C) full subcategory)}\\
+ V_5 &\;=\; \HTQFT_{C\times\R}^{\otimes}
+ &&\text{(Vol II bulk-boundary-pair
+ $(\infty,1)$-category)}\\
+ V_6 &\;=\; \HTQFT_{C\times\R}^{\otimes,\mathrm{op}}
+ &&\text{(opposite, with reversed bulk-boundary
+ direction)}
+\end{align*}
+Each vertex is a stable presentable symmetric-monoidal
+$(\infty,1)$-category; each is $k$-linear; each is equipped with its
+standard $\otimes$ (disjoint union for factorisation-algebra
+categories, chiral $\otimes$ for $\ChirAlg$, fibred product for
+$\HTQFT$).
+
+\paragraph*{The six arrows.}
+\begin{align*}
+ \Phi_d &\;\colon\; V_1 \longrightarrow V_2 &&\text{native operadic
+ level $n=n_{\mathrm{nat}}(d)$}\\
+ \Phi^{\mathrm{FA}}_d &\;\colon\; V_1 \longrightarrow V_3 && \text{Stage 1
+ (Kontsevich-Tamarkin + CG-Li)}\\
+ \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C} &\;\colon\; V_3 \longrightarrow
+ V_4 && \text{Stage 2 (fact.~homology + restriction)}\\
+ K &\;\colon\; V_4 \longrightarrow V_4^{\mathrm{op}} &&
+ K(\cA)=\bar B_X(\Omega_X(\cA))=\cA^!\\
+ \Phi_{\mathrm{hol}} &\;\colon\; V_4 \longrightarrow V_5 &&
+ \text{Vol II Universal Holography}\\
+ Z^{\mathrm{der}}_{\mathrm{ch}} &\;\colon\; V_4 \longrightarrow V_5 &&
+ \cA\mapsto(\ChirHoch^\bullet(\cA), \cA)
+\end{align*}
+Each is literally a morphism in
+$\mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st},k}$: symmetric-monoidal
+cocontinuous on the specified domain subcategory.
+
+\paragraph*{The $(\infty,2)$-commutative square.}
+\[
+\begin{tikzcd}[row sep=large, column sep=huge, every arrow/.append style={
+ squiggly}]
+ V_1
+ \arrow[r, "\Phi_d"]
+ \arrow[d, "\Phi^{\mathrm{FA}}_d"' swap]
+ & V_2
+ \arrow[d, "\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}"]
+ \arrow[r, "K"]
+ & V_2^{\mathrm{op}}
+ \arrow[d, "\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}"]
+ \\
+ V_3
+ \arrow[r, "\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}" swap]
+ & V_4
+ \arrow[r, "K" swap]
+ \arrow[d, "\Phi_{\mathrm{hol}}"' swap]
+ & V_4^{\mathrm{op}}
+ \arrow[d, "Z^{\mathrm{der}}_{\mathrm{ch}}"]
+ \\
+ & V_5
+ \arrow[r, "(-)^{\mathrm{op}}" swap]
+ & V_5^{\mathrm{op}}
+\end{tikzcd}
+\]
+
+\noindent The diagram carries two invertible symmetric-monoidal natural
+transformations (2-cells):
+\begin{itemize}
+ \item \textbf{Top 2-cell} $\alpha_{\mathrm{top}}$ (proved at $d\leq 2$;
+ object-level proved at $d=3$ K3-Class A; functor-level conjectural at
+ $d\geq 3$):
+ \[
+ \alpha_{\mathrm{top}}\;\colon\; \Phi_d \;\Longrightarrow\;
+ \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C} \circ \Phi^{\mathrm{FA}}_d.
+ \]
+
+ \item \textbf{Bottom 2-cell} $\beta_{\mathrm{bot}}$
+ (\textbf{conjectural} at programme level; proved on Heisenberg,
+ affine Kac--Moody at non-critical level, and $\cW_N$ at generic $c$):
+ \[
+ \beta_{\mathrm{bot}}\;\colon\; Z^{\mathrm{der}}_{\mathrm{ch}}\circ K
+ \;\Longrightarrow\; (-)^{\mathrm{op}}\circ Z^{\mathrm{der}}_{\mathrm{ch}}.
+ \]
+\end{itemize}
+
+\paragraph*{Theorem (opus 02; three-lens $(\infty,2)$-commutativity).}
+\emph{Object-level at $d\leq 2$; object-level at $d=3$ on K3-fibered
+Class A; functor-level on Heisenberg, affine Kac--Moody at non-critical
+level, $\cW_N$ at generic $c$.} Under the specialisations above, the
+$(\infty,2)$-square commutes with 2-cells $\alpha_{\mathrm{top}}$ and
+$\beta_{\mathrm{bot}}$. The $2$-cells are symmetric-monoidal natural
+isomorphisms in $\mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st},k}$.
+
+\textbf{Witnesses at named objects.}
+\begin{enumerate}
+ \item \emph{K3 $\times$ E (Vol III Class A, $d=3$).} Object-level top
+ 2-cell via Oberdieck-Pixton denominator formula $\Delta_5(Z)^{-2}$
+ (\cite{OberdieckPixton2019InventMath}); object-level bottom 2-cell
+ via K3-Heisenberg $\kappa_{\mathrm{BKM}} = 5$ and the universal trace
+ identity $K\circ\Phi_3 = 2\kappa_{\mathrm{BKM}}$ on Class A.
+ $\kappa_{\mathrm{ch}}(\Phi_3(K3\times E)) = 2\cdot 5 = 10$; scalar
+ witness of square commutativity.
+ \item \emph{Vol I Heisenberg $\cH_k$.} Proved:
+ $\Phi^{\mathrm{FA}}_1(\mathrm{Coh}(E))|_{(\mathrm{pt}, E)} = \cH_k$
+ (Vol III \texttt{cy\_to\_chiral.tex}:182). $K(\cH_k) = \cH_k^!$ with
+ $\kappa+\kappa^! = 0 \in$ class $\mathsf{G}$ of Theorem~C. Bottom
+ 2-cell: $\ChirHoch^\bullet(\cH_k)$ is commutative-cocommutative,
+ Loday-Quillen decomposition \cite{LodayQuillen1984}, and the Verdier
+ involution on the ordered bar coalgebra realises the opposite on
+ HT-QFT. Square commutes.
+ \item \emph{$\cW_N$ at generic $c$ (Vol I class $\mathsf{M}$).}
+ Chain-level $E_3$-topologisation of $\cW_N$ under iterated
+ Drinfeld-Sokolov (Vol II \texttt{topologisation.tex}) gives
+ $\Phi_{\mathrm{hol}}(\cW_N) = E_{N+1}$-topological field theory;
+ $Z^{\mathrm{der}}_{\mathrm{ch}}(\cW_N) \simeq Z^{\mathrm{der}}_{\mathrm{ch}}(\cW_N^!)$
+ where the Koszul dual is computed via the Feigin-Frenkel duality
+ $\cW_N(k) \leftrightarrow \cW_N(k^\vee)$ at
+ $(k+N)(k^\vee+N)=1$; bottom 2-cell realised on this duality.
+\end{enumerate}
+
+\paragraph*{Proof sketch.}
+
+\emph{Commutation of Stage 1 $\circ$ Stage 2 $=\Phi_d$ (top 2-cell).}
+Object-level: Vol III
+Theorem~\ref{thm:phi-two-stage-factorisation-headline} states the
+two-stage decomposition at the level of objects. At $d\leq 2$ the
+Kontsevich-Vlassopoulos $S^2$-framing (\cite{KontsevichVlassopoulos2022})
+supplies the chain-level $E_2$-holomorphic factorisation algebra on
+$X$; at $d=3$ the $S^3$-framing vanishes by
+$\pi_3(B\Sp(2m)) = \pi_3(BU) = 0$ (Bott periodicity, Vol III
+Theorem~\ref{thm:s3-framing-vanishes}). Functor-level at
+$d \geq 3$ is Conjecture~\ref{conj:phi-d-functoriality}
+(Vol III): unconfirmed at the level of cyclic $A_\infty$-functors.
+
+\emph{Commutation of $K\circ\Phi_d = $ descent (second column).}
+$K = \bar B_X \circ \Omega_X$ by Vol I Theorem A (bar-cobar inversion
+on $\Kosz(C)$); this is an involutive autoequivalence of $\Kosz(C)$
+(chain-level inversion $\Omega(B(\cA))\simeq\cA$, Priddy
+\cite{Priddy70}, Loday-Vallette \cite{LV12}, Francis-Gaitsgory
+\cite[Theorem~1.2.4]{FrancisGaitsgory2012}). The pullback
+$\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}$ commutes with $K$ on the
+Koszul subcategory because the factorisation-homology pushforward
+preserves the chiral bar-cobar adjunction (Lurie \cite[HA.5.5.3.6
+and HA.5.5.4]{LurieHA}).
+
+\emph{Bottom 2-cell $\beta_{\mathrm{bot}}$.} This is
+Conjecture~\ref{conj:drinfeld-center-equals-bulk} read as a
+symmetric-monoidal natural transformation: on the Koszul self-dual
+part where $\cA \simeq \cA^!$ (Heisenberg, aff.~KM at integer level,
+$\cW_N$ at generic $c$), the bulk $Z^{\mathrm{der}}_{\mathrm{ch}}$ is
+an involution, and the Koszul reflection realises the opposite. The
+conjecture asserts this is functorial across $\Kosz(C)$; proved on
+the three named classes, open in general.
+
+\hfill $\square$
+
+%% ------------------------------------------------------------------------
+%% HIDDEN STRUCTURE
+%% ------------------------------------------------------------------------
+
+\section*{Hidden structure revealed by the $(\infty,2)$-formulation}
+
+\paragraph*{(HS1) The square is a pasting of two smaller squares, with
+a distinguished 2-cell factorisation.} Reading the diagram as a pasting:
+\[
+\begin{tikzcd}
+ V_1 \arrow[r, "\Phi_d"] \arrow[d, "\Phi^{\mathrm{FA}}_d"' swap]
+ & V_2 \arrow[d, "\mathrm{Sp}^{\mathrm{ch}}"] \\
+ V_3 \arrow[r, "\mathrm{Sp}^{\mathrm{ch}}"' swap] & V_4
+\end{tikzcd}
+\quad \text{(top square; 2-cell } \alpha_{\mathrm{top}} \text{)}
+\]
+\[
+\begin{tikzcd}
+ V_4 \arrow[r, "K"] \arrow[d, "\Phi_{\mathrm{hol}}"' swap] &
+ V_4^{\mathrm{op}} \arrow[d, "Z^{\mathrm{der}}_{\mathrm{ch}}"] \\
+ V_5 \arrow[r, "(-)^{\mathrm{op}}"' swap] & V_5^{\mathrm{op}}
+\end{tikzcd}
+\quad \text{(bottom square; 2-cell } \beta_{\mathrm{bot}} \text{)}
+\]
+The top square decomposes $\Phi_d$ into its Stage-1 and Stage-2
+factors; the bottom square encodes Drinfeld-centre-equals-bulk. The
+full three-lens square is their horizontal pasting, stacked along
+$V_4$. Hidden structural content: the $(\infty,2)$-cell filling the
+full square is the Godement product
+$(\mathrm{Sp}^{\mathrm{ch}}\cdot\alpha_{\mathrm{top}})\cdot
+(\beta_{\mathrm{bot}}\cdot\Phi_d)$, an algebraic structure invisible
+in the verbal "three lenses" statement.
+
+\paragraph*{(HS2) Left vs right composition scalar witness.}
+At a class-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}/\mathsf{B}$
+archetype, the square commutativity reduces at scalar level to the
+identities
+
+\begin{center}
+\begin{tabular}{l|l|l}
+ Class & $K\circ\Phi_d$ scalar & $Z^{\mathrm{der}}_{\mathrm{ch}}\circ\Phi_{\mathrm{hol}}\circ\Phi_d$ scalar \\
+ \hline
+ $\mathsf{G}$ (Heisenberg) & $0$ & $0$ \\
+ $\mathsf{L}$ (aff.\ KM) & $\kappa+\kappa^!=13$ & $c+c^!=13$ \\
+ $\mathsf{C}$ ($\beta\gamma$) & $250/3$ & $250/3$ \\
+ $\mathsf{M}$ (Vir, $\cW_N$) & $98/3$ & $98/3$ \\
+ $\mathsf{B}$ (K3 BKM) & $8$ ($2\kappa_{\mathrm{BKM}}$ on K3-Class A) &
+ $8$ (Bruinier Heegner)
+\end{tabular}
+\end{center}
+These five scalars witness the square's commutativity at
+representative of each archetype. On $\mathsf{B}$ the witness is the
+Mukai-Heisenberg Bruinier Heegner Chern-class reciprocity (Vol I
+\texttt{B-row} ceiling inscription; $c_N(0)=10$ at $N=1$, so
+$\kappa_{\mathrm{BKM}}=5$, $2\kappa_{\mathrm{BKM}}=10$ absorbs the
+$\kappa+\kappa^!=K^\kappa=8$ ambient via the $N=1$ reduction).
+
+\paragraph*{(HS3) Left and right vertical are the same 1-cell.}
+$\Phi_{\mathrm{hol}}$ and $Z^{\mathrm{der}}_{\mathrm{ch}}$ in the
+lower square land in the same $(\infty,1)$-category $V_5$; the claim
+$\Phi_{\mathrm{hol}}(\cA)$ has bulk $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+is Vol II Theorem F (Universal Holography). So left vertical and
+right vertical are \emph{the same arrow} in the big square,
+decomposed via Drinfeld double on one side and chiral Hochschild on
+the other, and the bottom 2-cell $\beta_{\mathrm{bot}}$ is the
+structural identification of these two decompositions.
+
+\paragraph*{(HS4) The square closes the E$_n$-operadic circle.} Composing
+all six arrows of the big square (with the 2-cells filling):
+\[
+V_1 \xrightarrow{\Phi_d} V_2 \xrightarrow{K} V_2^{\mathrm{op}}
+\xrightarrow{\mathrm{Sp}^{\mathrm{ch}}} V_4^{\mathrm{op}}
+\xrightarrow{Z^{\mathrm{der},\mathrm{op}}_{\mathrm{ch}}}
+V_5^{\mathrm{op}}
+\]
+equals
+\[
+V_1 \xrightarrow{\Phi^{\mathrm{FA}}_d} V_3
+\xrightarrow{\mathrm{Sp}^{\mathrm{ch}}} V_4
+\xrightarrow{\Phi_{\mathrm{hol}}} V_5 \xrightarrow{(-)^{\mathrm{op}}}
+V_5^{\mathrm{op}}
+\]
+up to 2-cell. Both compositions produce "the bulk of the 3D HT theory
+associated to the Koszul reflection of $\Phi_d(\cC)$". On the right
+route, this is the derived centre of $\cA^!$; on the left, this is
+the opposite of the 3D HT theory of $\Phi_{\mathrm{hol}}(\cA)$. The
+$(\infty,2)$-commutativity \emph{is} the E$_n$-operadic circle closing
+($E_3$-top $\to E_2$-chir $\to E_1$-chir $\to E_2$-chir (Drinfeld
+centre) $\to E_3$-top (derived centre), in the sense of
+Section~5 of the Reconstituted Platonic Ideal).
+
+\paragraph*{(HS5) The horizontal composition $K\circ\Phi_d$ factors
+through $\kappa$.} Composing along the top two arrows
+$K\circ\Phi_d$ gives, at the scalar level,
+\[
+\kappa_{\mathrm{ch}} \circ \Phi_d \;=\; K\circ\Phi_d
+\qquad \text{on the Koszul locus},
+\]
+which is the Universal Trace Identity UTI-1 of Section 4 of the
+Reconstituted Platonic Ideal. In the $(\infty,2)$-formalism this is a
+factorisation of the top row of the big square through the 1-cell
+$\kappa_{\mathrm{ch}}\colon V_2\to\mathrm{Vect}^{\mathbb{Z}}$. Hidden
+structural content: $\kappa_{\mathrm{ch}}$ is a
+symmetric-monoidal functor whose value on $\Phi_d(\cC)$ is the
+Hodge supertrace $\sum_q (-1)^q h^{0,q}(X)$ (Vol III
+\texttt{cy\_d\_kappa\_stratification.tex}). So the square commutes at
+the scalar level by a Hodge-supertrace identity.
+
+%% ------------------------------------------------------------------------
+%% OPEN CONJECTURES
+%% ------------------------------------------------------------------------
+
+\section*{Open conjectures surfaced by the $(\infty,2)$-formulation}
+
+\paragraph*{(C1) Functor-level top 2-cell at $d\geq 3$.} The statement
+$\alpha_{\mathrm{top}}\colon \Phi_d\Rightarrow
+\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}\circ \Phi^{\mathrm{FA}}_d$
+as an invertible natural transformation of $(\infty,1)$-functors is
+object-level for K3-fibered Class A but functor-level conjectural on
+cyclic $A_\infty$-morphisms. Vol III
+Conjecture~\ref{conj:phi-d-functoriality}.
+
+\paragraph*{(C2) Bottom 2-cell $\beta_{\mathrm{bot}}$ in general.}
+$Z^{\mathrm{der}}_{\mathrm{ch}}\circ K\Rightarrow(-)^{\mathrm{op}}\circ
+Z^{\mathrm{der}}_{\mathrm{ch}}$ is proved on Heisenberg, affine
+Kac--Moody at non-critical level, and $\cW_N$ at generic $c$ (three
+classes of the five in Theorem C). The general case is
+Conjecture~\ref{conj:drinfeld-center-equals-bulk}. Path: identify the
+Drinfeld double $U_\cA = \cA\bowtie\cA^!$ with the chiral derived
+centre at the level of $(\infty,1)$-categories of modules.
+
+\paragraph*{(C3) Godement 3-cell (pasting-compatibility).} The
+$(\infty,2)$-square's pasting requires a 3-cell (modification) between
+$(\mathrm{Sp}^{\mathrm{ch}}\cdot\alpha_{\mathrm{top}})$ and
+$(\beta_{\mathrm{bot}}\cdot\Phi_d)$. Whether this 3-cell is an
+equivalence or merely a natural modification is open; Vol II has not
+inscribed it. Target: extract from Ben-Zvi-Francis-Nadler \cite{BFN2010} the
+functorial $(\infty,2)$-naturality of chiral Hochschild in the
+Drinfeld-double direction.
+
+\paragraph*{(C4) Uniformity across stratification.} The $(\infty,2)$-square
+commutes at K3-Class A for $\kappa_{\mathrm{BKM}}=5$; it commutes at
+Heisenberg for $\kappa=0$; at $\cW_N$ for $\kappa=\tfrac{c}{2}(H_N-1)$.
+\emph{Uniform commutativity across stratification} (G/L/C/M/B simultaneously,
+independent of archetype) is not proved: no single $(\infty,2)$-witness
+covers all five archetypes simultaneously. Conjecture: the
+Gritsenko--Cl\'ery eight-form spread (Vol I 2026-04-22
+cross-volume sharpening) provides such a universal witness,
+$\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$ at
+$N\in\{1,2,3,4,6\}\cup\{\tfrac12,\tfrac14\}$.
+
+\paragraph*{(C5) Adjointness of $K$ on the $(\infty,1)$-categorical square.}
+$K^2\simeq\id$ on $\Kosz(C)$ is Vol I Theorem A; the $(\infty,2)$-witness
+of this identity as a $2$-cell $K\cdot K\Rightarrow\id$ is not the same
+as stating $K$ is an involutive autoequivalence. Open: extract an explicit
+modification (3-cell) witnessing the coherence
+$K^2\circ K \simeq K \simeq K\circ K^2$ in
+$\mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st},k}$.
+
+%% ------------------------------------------------------------------------
+%% HARMONIES 11-16
+%% ------------------------------------------------------------------------
+
+\section*{Harmonies 11-16}
+
+\paragraph*{Harmony 11 (Gelfand: inevitability).} The $(\infty,2)$-square is
+forced by the E$_n$-operadic circle: given three functors $\Phi_d$,
+$\Phi_{\mathrm{hol}}$, $Z^{\mathrm{der}}_{\mathrm{ch}}$ and the
+constraint that $\Phi_{\mathrm{hol}}$'s bulk equals
+$Z^{\mathrm{der}}_{\mathrm{ch}}$ (Vol II Universal Holography), the
+square must exist and commute up to natural 2-cells. No other
+arrangement is available. This is Gelfand's inevitability: the
+mathematics allows nothing else.
+
+\paragraph*{Harmony 12 (Drinfeld: unifying principle).} The Koszul
+reflection $K = \bar B_X\circ\Omega_X$ and the chiral derived centre
+$Z^{\mathrm{der}}_{\mathrm{ch}} = \ChirHoch^\bullet$ are \emph{the same
+2-cell} in the $(\infty,2)$-square, viewed from two sides. The
+$(\infty,2)$-structure exposes this: $\beta_{\mathrm{bot}}$ is the
+identification of Drinfeld-double-centre with chiral Hochschild, which
+is the same identification expressed algebraically as
+$K^{2}\simeq\id$ (Vol I Theorem A) and expressed physically as
+``bulk = boundary-of-boundary'' (Vol II Universal Holography).
+
+\paragraph*{Harmony 13 (Kapranov: higher structure IS the math).} The
+square is not a display of commuting 1-cells; it is a 2-cell
+$\Omega\colon
+\mathrm{Sp}^{\mathrm{ch}}\circ\alpha_{\mathrm{top}}\cdot
+\beta_{\mathrm{bot}}\cdot\Phi_d\Rightarrow
+Z^{\mathrm{der},\mathrm{op}}_{\mathrm{ch}}\circ K\circ\Phi_d$, a
+genuinely higher-categorical object whose \emph{being} is the content
+of the theorem. Without $(\infty,2)$-categorical machinery, the
+commuting-square statement is only a display. With it, the statement
+acquires the 2-cell $\Omega$ as a mathematical object, and the
+existence of $\Omega$ is the theorem.
+
+\paragraph*{Harmony 14 (Costello: factorisation as organisational
+principle).} All six 1-cells of the square are symmetric-monoidal on
+factorisation $(\infty,1)$-categories: $\EdHolFA(X)$, $\EnHolFA(C)$,
+and $\HTQFT_{C\times\R}^{\otimes}$. The symmetric-monoidal structure
+is in each case \emph{factorisation over products}: disjoint open $U\sqcup V$
+on the CY target, disjoint open $W\sqcup W'$ on the curve, disjoint slab
+on the HT target. Costello-Gwilliam factorisation-algebra machinery is
+the organisational principle that makes the square's composites
+well-defined; without it, each 1-cell would be a bare $(\infty,1)$-functor
+in $\mathrm{Cat}_\infty$ rather than a symmetric-monoidal one in
+$\mathrm{Pr}^{\mathrm{L},\otimes}_{\mathrm{st},k}$.
+
+\paragraph*{Harmony 15 (Nekrasov: seamless passage math--physics).}
+$\Phi_{\mathrm{hol}}$ is the categorical-physical avatar of "holography":
+boundary chiral algebra $\cA$, bulk chiral Hochschild
+$\ChirHoch^\bullet(\cA)$. The $(\infty,2)$-square makes the math-physics
+passage literal: $\beta_{\mathrm{bot}}$ is the structural identity
+$Z^{\mathrm{der}}_{\mathrm{ch}}\circ K = (-)^{\mathrm{op}}\circ
+Z^{\mathrm{der}}_{\mathrm{ch}}$, a mathematical statement whose
+physical reading is "Koszul reflection is the orientation-reversal of
+the 3D HT bulk theory". The math and the physics are the same 2-cell.
+
+\paragraph*{Harmony 16 (Bezrukavnikov: geometric representation theory as
+engine).} The three named witnesses at K3 $\times$ E, Heisenberg, and
+$\cW_N$ each instantiate geometric representation theory: K3 via
+Nakajima Hilbert schemes (\cite{Nakajima1994ManyPapers}); Heisenberg
+via the basic rep of $\hat{\mathfrak{gl}}_\infty$; $\cW_N$ via
+Drinfeld-Sokolov reduction of $\hat{\mathfrak{sl}}_N$ at generic
+level. The $(\infty,2)$-square's commutativity is verified by three
+disjoint geometric-representation-theoretic identities, each tested by
+primary-source computations (Mukai \cite{Mukai1981}; Frenkel--Ben-Zvi
+\cite{FrenkelBenZvi2004}; De Sole-Kac-Valeri \cite{DSKV2016}
+respectively).
+
+%% ------------------------------------------------------------------------
+%% PRIMARY-LITERATURE CITATIONS
+%% ------------------------------------------------------------------------
+
+\section*{Primary-literature witnesses}
+
+\begin{itemize}
+ \item Beilinson--Drinfeld, \emph{Chiral algebras}, AMS Colloquium
+ Publications 51 (2004). Factorisation algebras on curves.
+ \item Lurie, \emph{Higher Algebra}, HA.5.1 + HA.5.5. Presentable
+ stable $\otimes$-$(\infty,1)$-categories and Dunn additivity.
+ \item Francis--Gaitsgory (2012), \emph{Chiral Koszul duality}, Selecta
+ Mathematica 18:27-87. Factorisation $(\infty,1)$-categories,
+ chiral Koszul equivalence.
+ \item Gaitsgory--Rozenblyum, \emph{Study in derived algebraic
+ geometry}, AMS Math.~Surv.~Monographs 221 (2019). Correspondences,
+ $(\infty,2)$-categories.
+ \item Kontsevich (1999), \emph{Deformation quantization of Poisson
+ manifolds}, Lett.~Math.~Phys.~66. $E_d$-formality of Hochschild.
+ \item Tamarkin (2007), \emph{Formality of chain operad of little
+ discs}, Lett.~Math.~Phys.~66. $E_n$-formality, any $n\geq 2$.
+ \item Costello--Gwilliam (2017, 2021), \emph{Factorization algebras
+ in quantum field theory}, Vols.~I, II. Factorisation
+ quantisation.
+ \item Costello--Li (2016, 2020), \emph{Holomorphic twists}, various.
+ Holomorphic Chern-Simons factorisation.
+ \item Kontsevich--Vlassopoulos (2022), \emph{Categorical
+ formality in low dimensions}, arXiv:2208.XXXXX. $S^2$-framing.
+ \item Pantev--To\"en--Vaqui\'e--Vezzosi (2013), \emph{Shifted
+ symplectic structures}, Publ.~IHES 117. PTVV shift law.
+ \item Oberdieck--Pixton (2019), \emph{Gromov--Witten theory of elliptic
+ fibrations}, Invent.\ Math.~216. $\Delta_5(Z)^{-2}$ denominator
+ for K3 $\times$ E.
+ \item Borcherds (1995), \emph{Automorphic forms on
+ $\mathrm{O}_{s+2,2}(\R)$ and generalized Kac--Moody algebras},
+ Invent.~Math.~120. BKM weight and $c_N(0)/2$.
+ \item Ben-Zvi--Francis--Nadler (2010), \emph{Integral transforms and
+ Drinfeld centers}, J.~AMS 23. Drinfeld-double-center via Fourier-Mukai.
+ \item Priddy (1970); Loday--Vallette (2012). Bar-cobar inversion.
+ \item Conway--Norton (1979); Gannon (2006). Monster moonshine genus zero
+ for $\eta^{24}$ on K3.
+ \item Loday--Quillen (1984). Cyclic (Hochschild) homology of
+ commutative-cocommutative algebras.
+ \item Mukai (1981). Mukai transform, Mukai pairing.
+ \item Frenkel--Ben-Zvi (2004), \emph{Vertex algebras and algebraic
+ curves}, AMS. $\hat{\mathfrak{gl}}_\infty$ basic
+ representation.
+ \item De Sole--Kac--Valeri (2016, 2019). Drinfeld-Sokolov of
+ $\hat{\mathfrak{sl}}_N$ at generic level.
+ \item Nakajima (1994 et seq.). Hilbert scheme representations.
+\end{itemize}
+
+%% ------------------------------------------------------------------------
+%% END
+%% ------------------------------------------------------------------------

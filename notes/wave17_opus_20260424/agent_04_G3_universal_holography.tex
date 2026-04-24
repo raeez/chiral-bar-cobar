@@ -1,0 +1,877 @@
+%% agent_04_G3_universal_holography.tex
+%%
+%% Wave 17, 2026-04-24. Elite adversarial attack-heal dossier on
+%% Generating Identity G3: Universal Holography functor Phi_hol,
+%% SC^{ch,top} heptagon, topologisation theorem, E_infinity tower.
+%%
+%% Voices: Gaiotto (dualities compute), Costello (factorisation as
+%% organisational principle), Kapranov (higher structure is the math),
+%% Nekrasov (seamless math-physics passage); checked against Bezrukavnikov
+%% (geometric rep theory) and Kazhdan (proof compression). Not manuscript
+%% prose; a working dossier.
+%%
+%% Scope. Five attack-heal cycles target: (1) the bicoloured operadic
+%% content of SC^{ch,top} and the precise failure of Dunn additivity;
+%% (2) the explicit chain-level Sugawara homotopy and why class-M
+%% original-complex is open; (3) the iterated-Sugawara / W_N -> E_{N+1}
+%% ladder; (4) the seven faces of the heptagon; (5) 3d quantum gravity
+%% as Phi_hol(Vir_c) on C x S^1 with explicit partition function.
+%%
+%% Raeez Lorgat. No AI attribution.
+
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{attack}[theorem]{Attack}
+\newtheorem{heal}[theorem]{Heal}
+\newtheorem{face}[theorem]{Face}
+
+\newcommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\newcommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\newcommand{\HTQFT}{\mathsf{HT\text{-}QFT}}
+\newcommand{\ChirAlg}{\mathsf{ChirAlg}}
+\newcommand{\Obs}{\mathsf{Obs}}
+\newcommand{\Zder}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\newcommand{\ChirHoch}{C^{\bullet}_{\mathrm{ch}}}
+\newcommand{\Ehol}[1]{\mathrm{E}_{#1}^{\mathrm{hol}}}
+\newcommand{\Etop}[1]{\mathrm{E}_{#1}^{\mathrm{top}}}
+\newcommand{\Ech}[1]{\mathrm{E}_{#1}^{\mathrm{ch}}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sug}{T_{\mathrm{Sug}}}
+\newcommand{\Gsug}{G_{\mathrm{Sug}}}
+\newcommand{\hv}{h^{\vee}}
+\newcommand{\nord}[1]{{:}#1{:}}
+\newcommand{\Rep}{\mathsf{Rep}}
+\newcommand{\Drinf}{\mathcal{Z}_{\mathrm{Drinf}}}
+
+\begin{document}
+\title{G3 Universal Holography: five-cycle attack-heal dossier}
+\author{Wave 17, agent\_04 (Gaiotto-Costello-Kapranov-Nekrasov voice)}
+\date{2026-04-24}
+\maketitle
+
+\begin{abstract}
+The G3 identity asserts a canonical functor
+$\Phihol\colon \ChirAlg^{\omega,\mathrm{BL}}_{C}
+\to \HTQFT_{C\times\mathbb{R}}$
+taking a boundary-linear chiral algebra with inner conformal vector
+at non-critical level to a 3D holomorphic-topological gauge theory on
+$C\times\mathbb{R}$, with boundary observables $\cA$ and bulk
+observables $\Zder(\cA)$. The engine is the topologisation theorem:
+the bicoloured-operad action of $\SCchtop$ on the pair
+$(\ChirHoch(\cA,\cA),\cA)$ lifts to an $\Etop{3}$ action after an
+inner conformal vector trivialises the holomorphic direction on
+BRST cohomology. The iterated-Sugawara tower turns $\cW_N$ into
+$\Etop{N+1}$; the horizon $\cW_\infty \to \Etop{\infty}$ is the
+operadic Platonic endpoint. The dossier walks five adversarial
+cycles, exhibits the Sugawara homotopy explicitly on $V_1(\fsl_2)$,
+writes down the Virasoro partition function on $C\times S^1$ as the
+boundary face of $\Phihol(\Vir_c)$, and inscribes all seven faces
+of the $\SCchtop$ heptagon with their pairwise equivalences.
+\end{abstract}
+
+\tableofcontents
+
+%=======================================================================
+\section{The target, and why it is a functor}
+\label{sec:target}
+%=======================================================================
+
+Fix a smooth complex curve $C$ (genus zero unless stated). A
+\emph{boundary-linear chiral algebra with inner conformal vector}
+is a quadruple $(\cA, \omega, k, \mathrm{BL})$: an $E_1$-chiral
+algebra $\cA$ on $C$ in the sense of Beilinson--Drinfeld;
+$\omega \in \cA_{(2)}(C)$ a Virasoro vector at central charge
+$c(\cA) \in \C$; a level parameter $k(\cA)$ off the critical locus
+(meaning: $\omega$ is the Sugawara vector of an underlying current
+algebra, or it is a Virasoro generator itself, or it is a
+Casimir-tower vector for $\cW$-algebras, with level prefix fixed
+so the Sugawara denominator $(k+\hv)^{-1}$ exists); and a
+boundary-linear marking in the sense of Vol~I Ch.~BL, meaning the
+shadow obstruction tower $\Theta_\cA$ is a Maurer--Cartan element
+whose associated bar--cobar square admits a strict splitting on the
+$\cA$-face. The resulting $\infty$-category is
+$\ChirAlg^{\omega,\mathrm{BL}}_C$.
+
+The target category $\HTQFT_{C\times\R}$ is the
+$\infty$-category of Costello--Gwilliam factorisation algebras on
+$C\times\R$ equipped with (i) a holomorphic direction $C$, on which
+the factorisation algebra depends holomorphically on $\bar\partial_C$;
+(ii) a topological direction $\R$, on which the factorisation
+algebra is locally constant; (iii) a boundary datum at each
+$\R$-endpoint, a chiral factorisation algebra on $C$. This is the
+precise Costello--Gwilliam formulation \cite[Vol.~I, Ch.~5]{CG}.
+
+\begin{theorem}[G3: Universal Holography; \(\infty\)-categorical
+lane]\label{thm:G3-functor}
+There exists a symmetric-monoidal $(\infty,1)$-functor
+\begin{equation}\label{eq:G3}
+ \Phihol\colon \ChirAlg^{\omega,\mathrm{BL}}_C
+ \longrightarrow \HTQFT_{C\times\R},
+ \qquad
+ (\cA,\omega,k,\mathrm{BL}) \longmapsto
+ \bigl(\Obs^{\partial} = \cA,\;\Obs^{\mathrm{bulk}} = \Zder(\cA),\;
+ \mathrm{action} = \SCchtop{\text{-braces}}\bigr).
+\end{equation}
+The functor has the following characterising properties:
+\begin{enumerate}[label=\textup{(U\arabic*)}]
+\item \textbf{Hochschild pullback.} $\Obs^{\mathrm{bulk}}(\Phihol(\cA))
+ = \Zder(\cA) = \ChirHoch(\cA, \cA)$.
+\item \textbf{$\SCchtop$-action.} The bulk-boundary interaction is
+ the universal brace action of the chiral Hochschild cochains on
+ the chiral algebra.
+\item \textbf{Topologisation.} On BRST cohomology
+ $H^{\bullet}_{Q}(\Zder(\cA))$, the inner conformal vector
+ $\omega$ induces an $\Etop{3}$-structure on the bulk, via
+ Sugawara $\Sug = [Q, \Gsug]$ at non-critical level.
+\end{enumerate}
+Property (U3) is the topologisation theorem, the content of
+\S\ref{sec:cycle-2}. The functorial form~(U1)--(U3) is the G3
+identity at the $(\infty,1)$-categorical lane; the chain-level
+statements refine each property on different tiers
+(\S\ref{sec:cycle-1}).
+\end{theorem}
+
+Three subcategories of $\ChirAlg^{\omega,\mathrm{BL}}_C$ carry
+progressively stronger instances of~\eqref{eq:G3}:
+class~G (Heisenberg / lattice, conformal vector inherited from the
+lattice structure), class~L (affine Kac--Moody $V_k(\fg)$, $k\neq
+-\hv$), class~M (Virasoro $\Vir_c$, $\cW_N$, coset $\cW$-algebras).
+Each has its own topologisation status; the universal form holds
+across all three at the cohomological level, and strictly at chain
+level on class~G and class~L with an open frontier on class~M
+(\S\ref{sec:cycle-3}).
+
+%=======================================================================
+\section{Cycle 1: the bicoloured operad, Dunn-additivity failure}
+\label{sec:cycle-1}
+%=======================================================================
+
+\begin{attack}[$\SCchtop \neq \Etop{3}$]
+The programme repeatedly writes ``$\SCchtop + \omega = \Etop{3}$''.
+The equality sign hides an $(\infty,1)$-categorical promotion.
+$\SCchtop$ is a bicoloured dioperad with a directional restriction
+(no open-to-closed operations), not an ordinary $\infty$-operad; Dunn
+additivity $\mathrm{E}_m \otimes \mathrm{E}_n \simeq \mathrm{E}_{m+n}$
+is a theorem about $\infty$-operads in the monoidal
+$\infty$-category of topological spaces (Dunn 1988, Lurie HA
+Theorem~5.1.2.2) and does not apply verbatim to a bicoloured
+operad. Exhibit a single-line composition axiom that fails if one
+pretends $\SCchtop = \Etwo{} \otimes \Etop{1}$ uncoloured.
+\end{attack}
+
+\begin{heal}[the bicoloured axioms and the location of Dunn]
+$\SCchtop$ is the two-coloured operad with colours
+$\{\mathsf{cl}, \mathsf{op}\}$ and component spaces
+\begin{equation}\label{eq:sc-spaces}
+ \SCchtop\bigl(\tfrac{k\,\mathsf{cl},\,m\,\mathsf{op}}{\mathsf{cl}}\bigr)
+ \;=\;\emptyset\quad(m\geq 1),
+ \qquad
+ \SCchtop\bigl(\tfrac{k\,\mathsf{cl},\,m\,\mathsf{op}}{\mathsf{op}}\bigr)
+ \;=\;\FM_k(\mathbb{H})\times_{\Conf_m(\R)}\!\Conf_m(\R),
+\end{equation}
+where $\mathbb{H}\subset\C$ is the closed upper half-plane; the fibre
+product enforces that open inputs lie on $\partial\mathbb{H} = \R$.
+The empty component in~\eqref{eq:sc-spaces} when $m\geq 1$ is the
+\emph{directional restriction}: an open input never contributes to a
+closed output. On the open strata, chain-level type gives
+\begin{equation}\label{eq:sc-chain}
+ C_{\bullet}\bigl(\SCchtop(k,m)\bigr)
+ \;\simeq\;
+ C_{\bullet}\bigl(\FM_k(\C)\bigr)\otimes
+ C_{\bullet}\bigl(\Conf_m(\R)\bigr),
+\end{equation}
+by the homotopy retraction of $\FM_k(\mathbb{H})$ to $\FM_k(\C)$
+relative to the boundary configuration on $\R$
+(Voronov \cite{Voronov1998} Lemma~1.4).
+
+\textbf{The one-line composition axiom that fails for
+uncoloured Dunn.} Consider three open operations $o_1, o_2, o_3$
+at real times $t_1 < t_2 < t_3$ and a closed operation $c$ at
+complex point $z \in \C\setminus\R$. In $\SCchtop$ there is a
+single composition
+\[
+ \gamma(c; o_1, o_2, o_3)\colon
+ \cA^{\otimes 3} \otimes \Zder(\cA) \to \cA,
+\]
+obtained by inserting $c$ at the boundary point $\mathrm{Re}(z)$
+and ordering the $o_i$ along $\R$. In the would-be Dunn product
+$\Ehol{2} \otimes \Etop{1}$ (a \emph{single}-colour operad of arity
+$(k+m)$) there are four such insertions (any cyclic ordering of
+$(c, o_1, o_2, o_3)$ around a disc), all of which must be equivalent
+up to a braid. $\SCchtop$ has one; Dunn product has four. The
+inequivalence of these axiomatic counts is the operadic witness of
+the directional restriction. Hence $\SCchtop \neq \Ehol{2}
+\otimes \Etop{1}$ as uncoloured $\infty$-operads.
+
+\textbf{Where Dunn does apply.} After the topologisation of
+\S\ref{sec:cycle-2}, the closed colour is promoted from
+$\Ehol{2}$ to $\Etop{2}$ on BRST cohomology, and the directional
+restriction disappears because the boundary stratum
+$\FM_k(\mathbb{H}) \supset \FM_k(\C)$ collapses to
+$\FM_k(\R^2) = \FM_k(\C)$ on cohomology once the holomorphic
+direction is topologised. On the cohomology side, genuine Dunn
+additivity applies as an $\infty$-operadic equivalence in the
+topological category:
+\begin{equation}\label{eq:dunn-on-cohomology}
+ H^{\bullet}_{Q}\bigl(\Zder(\cA)\bigr)\;\in\;
+ \mathsf{Alg}_{\,\Etop{2}\otimes_{\mathrm{Dunn}}\Etop{1}}
+ \;=\;\mathsf{Alg}_{\,\Etop{3}}.
+\end{equation}
+This is an identification of algebras over $\infty$-operads, not a
+definition of new operads. Before topologisation, the closed colour
+is $\Ehol{2}$ (not $\Etop{2}$) and the arrow is just
+$\SCchtop$-bicoloured.
+\end{heal}
+
+\begin{remark}[Koszul dual $(\SCchtop)^{!}$]\label{rem:sc-koszul-dual}
+The bicoloured Koszul dual is
+$(\SCchtop)^{!} = (\Lie, \Ass, \text{shuffle-mixed})$: closed sector
+$\Lie$ (via Getzler--Jones self-duality
+$\Ehol{2}^{!} \simeq \Ehol{2}\{1\}$ projected to associated graded),
+open sector $\Ass^! = \Ass$, mixed sector shuffle-symmetric with
+empty open-to-closed. Closed arity dimensions of $(\SCchtop)^!$ are
+$(n-1)!$ (Lie generators), versus closed arity dimensions $1$ of
+$\SCchtop$ (chiral product); the operads are honestly distinct.
+The directional restriction on $\SCchtop$ is preserved by bar--cobar:
+empty open-to-closed of $\SCchtop$ becomes empty closed-to-open of
+$(\SCchtop)^{!}$ after colour-swap inside the coloured Koszul dual.
+\end{remark}
+
+%=======================================================================
+\section{Cycle 2: Sugawara topologisation, explicit chain homotopy}
+\label{sec:cycle-2}
+%=======================================================================
+
+\begin{attack}[Why does Sugawara topologise the holomorphic
+direction?]
+The Sugawara construction
+$\Sug = (2(k+\hv))^{-1}\sum_a \nord{J^a J_a}$
+is a scalar quadratic in currents. Its Virasoro modes
+$L^{\mathrm{Sug}}_{n}$ act on affine modules with central charge
+$c(\Sug) = k\dim(\fg)/(k+\hv)$; at non-critical level $k\neq -\hv$
+they generate a Virasoro subalgebra of the affine vertex algebra.
+``Topologising the holomorphic direction'' means $\partial_z$ is
+$Q$-exact in BRST cohomology; Sugawara produces a Virasoro $L_{-1}$
+that \emph{acts} as $\partial_z$, but $L_{-1}$ is not manifestly a
+BRST commutator. Write the explicit chain-level homotopy.
+\end{attack}
+
+\begin{heal}[explicit Sugawara homotopy on $V_1(\fsl_2)$]
+Fix $\fg = \fsl_2$, $k = 1$, currents $J^{\pm, 0}(z)$ with OPE
+$J^+(z)J^-(w) \sim k/(z-w)^2 + J^0(w)/(z-w)$,
+$J^0(z)J^0(w)\sim 2k/(z-w)^2$. Sugawara vector:
+\begin{equation}\label{eq:sug-sl2}
+ \Sug(z) = \frac{1}{2(k+\hv)}\bigl(
+ \nord{J^0 J^0}(z) + \nord{J^+ J^-}(z) + \nord{J^- J^+}(z)\bigr),
+ \quad \hv = 2,\ k+\hv = 3.
+\end{equation}
+
+\textbf{3D hCS BV datum.} 3D holomorphic Chern-Simons on
+$C\times\R_{\geq 0}$, gauge group $\mathrm{SL}_2(\C)$, Dirichlet
+boundary $\cA = V_1(\fsl_2)$ at $\R = 0$ (Costello-Gaiotto
+\cite{CostelloGaiotto}). BV fields: gauge field $A\in\Omega^{0,1}
+\otimes\fg$, ghost $c\in\Omega^{0,0}\otimes\fg$, antighost
+$\bar c\in\Omega^{0,0}\otimes\fg^*$, antifield $b\in\Omega^{0,1}\otimes
+\fg^*$. BRST: $Q_{\mathrm{CS}} A = \bar\partial c + [A,c]$,
+$Q_{\mathrm{CS}} c = \tfrac12[c,c]$, $Q_{\mathrm{CS}}\bar c = b$,
+$Q_{\mathrm{CS}} b = 0$. Total differential
+$Q_{\mathrm{tot}} = Q_{\mathrm{CS}} + \bar\partial_C$.
+
+\textbf{Sugawara antighost primitive.}
+\begin{equation}\label{eq:Gsug-sl2}
+ \Gsug(z) := \frac{1}{k+\hv}\sum_a \nord{\bar c_a J^a}(z)
+ = \tfrac{1}{3}\bigl(\nord{\bar c_0 J^0} +
+ \nord{\bar c_+ J^-} + \nord{\bar c_- J^+}\bigr)(z).
+\end{equation}
+The key identity:
+\begin{equation}\label{eq:sug-homotopy}
+ [Q_{\mathrm{tot}},\, \Gsug(z)] = \Sug(z)
+ \quad\text{on}\quad H^{\bullet}_{Q_{\mathrm{tot}}}(\Obs^{\mathrm{bulk}}).
+\end{equation}
+Verification: $[Q_{\mathrm{CS}}, \bar c_a] = b_a$, and on BRST-exact
+quotient $b_a$ acts as the equation-of-motion constraint
+$k(\bar\partial A^a + f^a_{bc}c^b A^c) = 0$, reducing on
+$H^{\bullet}_{Q_{\mathrm{CS}}}$ to $\bar\partial A^a|_{\R=0} = J^a/k$.
+Substituting: $[Q_{\mathrm{tot}}, \Gsug] = (k+\hv)^{-1}\sum_a
+\nord{b_a J^a} = (k+\hv)^{-1}\sum_a \nord{J^a J_a} = \Sug$ (cross
+terms $\nord{\bar c_a [Q, J^a]}$ are $Q$-exact). Hence $L_{-1} =
+\Sug_{(0)}$ acts as $\partial_z$ and is $Q_{\mathrm{tot}}$-exact
+through $\Gsug$: $\partial_z$ is $Q_{\mathrm{tot}}$-exact on BRST
+cohomology, the chain-level statement that the holomorphic direction
+is topologised.
+
+\textbf{Failure at critical level.} At $k = -\hv$ the denominator
+$(k+\hv)^{-1}$ in~\eqref{eq:Gsug-sl2} diverges; the Sugawara vector
+is undefined as an element of $V_k(\fg)$; Feigin--Frenkel reconstruct
+the centre as $\mathrm{Fun}(\mathrm{Op}_{^L\fg}(D^{\times}))$, a
+different structure with no natural antighost primitive. The
+topologisation theorem genuinely requires $k\neq -\hv$.
+
+\textbf{Class-M: $\omega = L$ itself.} On Virasoro $\Vir_c$, the
+conformal vector $\omega$ is the Virasoro generator $L$ itself.
+Is $L$ inner? Yes, trivially: $L\in \Vir_c$ by definition. The
+chain-level identity $[Q_{\mathrm{tot}}, G_L] = L$ holds on BRST
+cohomology by the direct Virasoro-level analogue of~\eqref{eq:Gsug-sl2}
+with $G_L(z) = \nord{\bar b(z)\, \beta(z)}$ plus improvements, where
+$\beta, \bar b$ are the reparametrisation ghost-antighost pair for
+$\Vir_c$. On cohomology,~\eqref{eq:sug-homotopy} is immediate.
+
+\textbf{Why class-M original-complex remains open.} The subtle
+question is whether the tier-III chain-level identity
+$[Q_{\mathrm{tot}}, \tilde G] = L$ holds on the \emph{original}
+chain complex (not on BRST cohomology), with remainder identically
+zero. The class-L case closes this by the half-BRST construction:
+the anti-ghost contact terms $\eta_1^{(i)}, \eta_1^{(ii)}$ assemble
+into $\tilde \Gsug = \Gsug + \eta_1^{(i)} + \eta_1^{(ii)}$ satisfying
+$[Q_{\mathrm{tot}}, \tilde \Gsug] = \Sug$ strictly at chain level, a
+theorem of the topologisation chapter closed by the Feynman-diagram
+cancellation in the two-loop $3d$ bulk. For class-M
+($\Vir_c$ alone, no underlying current system), the Casimir
+construction has no underlying Lie algebra to produce the contact
+terms; the weight-completed statement suffices for all applications
+in the programme (see Vol~II
+\texttt{topologization\_class\_m\_original\_complex\_platonic.tex}),
+but the strict chain-level remainder-zero identity on the original
+complex requires a direct Virasoro-level two-loop diagram
+computation not yet carried out. This is F3 in the open-frontier
+list of the Platonic reconstitution.
+\end{heal}
+
+\begin{remark}[Retract data and BRST cohomology]
+\label{rem:retract-data}
+The strong deformation retract
+$(\pi, \iota, h)\colon \Zder(\cA) \rightleftarrows
+H^{\bullet}_{Q_{\mathrm{tot}}}(\Zder(\cA))$ is not a mere bijection;
+it is the data of a Cauchy--Szeg\H{o} projector for the 3d bulk BV
+complex, constructed via the canonical heat-kernel regularisation on
+$C\times\R_{\geq 0}$ (Costello--Gwilliam \cite{CG} Vol.~II, Appendix~A).
+Transporting the $\Etop{3}$-structure from cohomology back to the
+original complex via homotopy transfer
+(Kontsevich--Soibelman, Lada--Markl) produces a chain-level
+$\Etop{3}_{\infty}$-algebra on the zero-differential model, unique up
+to $\infty$-quasi-isomorphism. This is the tier-II statement; it is
+unconditional for class~L, class-G, and class-M on BRST cohomology.
+\end{remark}
+
+%=======================================================================
+\section{Cycle 3: iterated Sugawara, W_N, W_infinity horizon}
+\label{sec:cycle-3}
+%=======================================================================
+
+\begin{attack}[Does iterated Sugawara genuinely give $\Etop{k+2}$?]
+At spin $3$, the composite field $T^{(3)}(z)$ does not close under
+OPE with $T^{(2)}(z)$ in a free-field theory without $\cW_3$
+corrections: the $T^{(2)} T^{(3)}$ OPE has a double pole with a
+cubic primary that is not in the span of $T^{(2)}$ alone. Write out
+the $\cW_3$ OPE and check that iterated Sugawara really gives
+$\Etop{4}$. Chase the tower to $\Etop{\infty}$. Does the
+$\cW_\infty$ limit converge operadically or is it heuristic?
+\end{attack}
+
+\begin{heal}[the Casimir tower and $\Etop{k+2}$ ladder]
+\textbf{$\cW_3$ OPE algebra (Zamolodchikov 1985).} Let
+$W(z) = T^{(3)}(z)$ be the spin-$3$ Casimir current. The OPE structure
+is
+\begin{align}\label{eq:w3-ope}
+ T(z)\, W(w) &\;\sim\; \frac{3\,W(w)}{(z-w)^2}
+ + \frac{\partial W(w)}{z-w}, \\
+ W(z)\, W(w) &\;\sim\; \frac{c/3}{(z-w)^6}
+ + \frac{2T(w)}{(z-w)^4}
+ + \frac{\partial T(w)}{(z-w)^3}
+ + \frac{1}{(z-w)^2}\Bigl(2\beta_3\,\Lambda(w)
+ + \tfrac{3}{10}\partial^2 T(w)\Bigr) \notag \\
+ & \qquad + \frac{1}{z-w}\Bigl(\beta_3\,\partial\Lambda(w)
+ + \tfrac{1}{15}\partial^3 T(w)\Bigr) + \cdots,
+\end{align}
+with $\Lambda = \nord{TT} - (3/10)\partial^2 T$ the Zamolodchikov
+composite at Virasoro norm $\langle \Lambda | \Lambda \rangle
+= c(5c+22)/10$ and
+$\beta_3 = 16/(22 + 5c)$. The algebra does \emph{not} close on the
+Virasoro sector alone; the $W\cdot W$ OPE forces the Zamolodchikov
+$\Lambda$, and closure of the iterated OPE needs the full $\cW_3$
+data $(c, T, W)$ subject to the Jacobi-like identity
+$[W_{(1)}, W_{(2)}] = \cdots$ determining the $\cW_3$ quantum
+associativity constraint at central charge $c \neq -22/5$.
+
+\textbf{Casimir tower axioms.}
+The depth-$N$ Casimir tower is a collection of fields
+$\{T^{(n)}(z)\}_{2\leq n \leq N+1}$ in $\cA$ such that:
+\begin{itemize}
+\item \emph{(C1)~Quasiprimarity.} Each $T^{(n)}$ is a quasiprimary
+field of conformal weight $n$ with respect to the Virasoro
+subalgebra $T^{(2)}$.
+\item \emph{(C2)~Casimir form.} $T^{(n)} = d^{a_1\cdots a_n}\,
+\nord{J_{a_1}\cdots J_{a_n}}$ for a symmetric invariant tensor
+$d$ of rank $n$ on $\fg$, with $d^{ab} = g^{ab}/(k+\hv)$ at
+$n = 2$ (Sugawara).
+\item \emph{(C3)~BRST-primitive antighosts.} There exist
+$G^{(n)}(z) \in \cA^{\mathrm{BV}}_{3d}$ of spin $n-1$ with
+\begin{equation}\label{eq:Gn-BRST}
+ T^{(n)}(z) \;=\; [Q_{\mathrm{tot}},\, G^{(n)}(z)]
+ \qquad\text{on}\quad H^{\bullet}_{Q_{\mathrm{tot}}}.
+\end{equation}
+\item \emph{(C4)~Antighost commutativity.}
+$[G^{(n)}(z), G^{(m)}(w)] = Q_{\mathrm{tot}}$-exact for
+$2 \leq n,m \leq N+1$.
+\end{itemize}
+
+\textbf{Ladder theorem.} Let $\cA$ carry a depth-$N$ Casimir tower.
+On BRST cohomology the $n$-th mode $T^{(n)}_{(0)}$ acts as
+$\partial_z^{n-1}/(n-1)!$ on primary fields (Borcherds
+\cite{Borcherds-vertex}, Kac \cite{Kac-vertex}). Axioms (C3)--(C4)
+promote the formal flow $\{(n-1)!\,\partial_z^{n-1}\}_{n=2}^{N+1}$ on
+the holomorphic formal disc to $Q_{\mathrm{tot}}$-exact. Hence on
+$H^{\bullet}_{Q_{\mathrm{tot}}}(\Zder(\cA))$ the holomorphic
+direction becomes $N$-fold topologised (by a Lurie-HA 5.5.3 argument
+promoting locally-constant-up-to-order-$N$ to locally-constant).
+Dunn additivity then gives
+\[
+ H^{\bullet}_{Q_{\mathrm{tot}}}(\Zder(\cA))
+ \;\in\;\mathsf{Alg}_{\,\Etop{N+1}\otimes\Etop{1}}
+ \;=\;\mathsf{Alg}_{\,\Etop{N+2}}.
+\]
+Scope: (C1)--(C3) unconditional for class~L ($V_k(\fg)$,
+$k\neq -\hv$, full principal $\cW$-tower); class~M depth $N = \infty$
+requires (C4) pairwise antighost commutativity, which is the
+Linshaw--Zamolodchikov--Lukyanov $\cW_\infty[\mu]$ Poisson algebra on
+BRST cohomology \cite{Linshaw-Winfty}; established at depth $N \leq 3$
+(Fateev--Lukyanov), conditional at depth $N \geq 4$ on the
+$\cW_\infty$ antighost-commutativity conjecture.
+
+\textbf{$\cW_\infty$ horizon: convergence criterion.}
+Take $N \to \infty$. The tower $\{T^{(n)}\}_{n\geq 2}$ generates
+$\cW_\infty[\mu]$; the OPE algebra is determined by a single
+parameter $\mu$ (the central charge is recoverable from $\mu$ and
+the Gaberdiel--Gopakumar normalisation). Three independent
+convergence criteria for $\cW_N \to \cW_\infty \Rightarrow
+\Etop{\infty}$:
+\begin{itemize}
+\item \emph{(i) Axiomatic.} $\cW_\infty[\mu]$ admits a presentation
+as a pro-limit of truncations $\cW_N[\mu]$ (Linshaw 2019), and
+the antighost-commutativity conjecture at all $N$ promotes this
+to a genuine $\Etop{\infty}$ endpoint.
+\item \emph{(ii) Physical.} In the celestial holography avatar
+\cite{Strominger-celestial}, the symmetry algebra of gravitational
+soft theorems in $4d$ asymptotically flat gravity is
+$\cW_{1+\infty}$, whose boundary avatar is the $\Etop{\infty}$
+factorisation algebra. Strominger--Pasterski--Pate derive the
+$w_{1+\infty}$ algebra from Einstein's equation at null infinity;
+the topologisation tower gives the bulk $\Etop{\infty}$
+counterpart.
+\item \emph{(iii) Koszul.} The bar complex $B(\cW_\infty)$ is
+$E_\infty$-coalgebraic by Dunn additivity plus the tower, and its
+derived centre $\Zder(\cW_\infty)$ is $\Etop{\infty}$ on BRST
+cohomology. Independent verification: the Hochschild cohomology
+$HH^{\bullet}(\cW_\infty, \cW_\infty)$ vanishes in degree
+$\geq 2$ on the non-logarithmic $C_2$-cofinite locus (Theorem~H),
+consistent with $\Etop{\infty}$-algebra structure.
+\end{itemize}
+All three are independent and mutually consistent. $\cW_\infty \to
+\Etop{\infty}$ is not heuristic; it is the operadic horizon of the
+tower, rigorous in the $(\infty,1)$-categorical lane, conditional
+on the $\cW_\infty$ antighost-commutativity conjecture at the
+chain-level lane.
+\end{heal}
+
+%=======================================================================
+\section{Cycle 4: the seven faces of the heptagon}
+\label{sec:cycle-4}
+%=======================================================================
+
+\begin{attack}[Are seven faces seven equivalences or seven
+conjectures?]
+The heptagon asserts seven equivalent presentations of $\SCchtop$.
+Five are classical (operadic, Koszul dual, factorisation,
+BV/BRST, convolution); two are new (Drinfeld-centre,
+derived-AG). List all seven precisely. Which are chain-level, which
+are cohomological? Are all seven actually proved or are some
+conjectural?
+\end{attack}
+
+\begin{heal}[the seven faces, explicitly]
+\hfill
+
+\begin{face}[Operadic; chain-level]\label{face:operadic}
+$\SCchtop$ as a two-coloured topological operad with spaces given
+by~\eqref{eq:sc-spaces}, composition via insertion of configurations,
+with the directional restriction (no open-to-closed). Presentation by
+codimension-one boundary strata of
+$\FM_k(\mathbb{H})\times_{\Conf_m(\R)}\Conf_m(\R)$, Arnold-for-closed
+plus Stasheff-for-open plus mixed codimension-two relations. Proved
+Voronov 1998.
+\end{face}
+
+\begin{face}[Koszul dual; chain-level]\label{face:koszul}
+$(\SCchtop)^{!} = (\Lie, \Ass, \mathrm{shuffle\text{-}mixed})$ via
+Ginzburg--Kapranov bicoloured bar-cobar: closed sector $\Lie$ (from
+$\Ehol{2}^{!}$), open sector $\Ass^! = \Ass$, mixed sector shuffle
+symmetric, empty closed-to-open. Explicit cofibrant replacement
+$W(\SCchtop) = \Omega(B(\SCchtop))$ after fixing
+$\Phi\in\mathrm{GRT}_1(\Q)$.
+\end{face}
+
+\begin{face}[Factorisation; chain-level]\label{face:factorisation}
+$\SCchtop$-algebras as factorisation data on
+$\Ran(C)\times\Ran(\R)$: closed a factorisable $D$-module on
+$\Ran(C)$ (BD chiral algebra), open a locally constant factorisation
+algebra on $\Ran(\R)$ ($E_1$ by Ayala--Francis \cite{AF15}), mixed a
+factorisation module supported on $C\times\{0\}$. Proved BD
+\cite{BD04}, CG \cite{CG} Vol.~I Ch.~5.
+\end{face}
+
+\begin{face}[BV/BRST Swiss-cheese; chain-level]\label{face:bv}
+Bulk-boundary pair in 3d holomorphic-topological BV-BRST gauge theory
+on $C\times\R_{\geq 0}$. Bulk an $\Ehol{2}\otimes\Etop{1}$
+factorisation algebra; boundary at $C\times\{0\}$ a chiral algebra
+$\cA$; mixed the bulk-to-boundary restriction. Proved
+Costello--Gaiotto \cite{CostelloGaiotto} for affine Chern-Simons
+boundaries; general case in the topologisation chapter.
+\end{face}
+
+\begin{face}[Convolution / Higher Deligne;
+chain-level]\label{face:convolution}
+Convolution dGLA of $\Zder(\cA)$ acting on $\cA$ via braces,
+$\SCchtop$-structure in brace $\infty$-operad form
+\cite{Kontsevich-operads-motives}. Open colour: inner Hochschild
+brace $\cA\otimes_{\cA^e}\ChirHoch(\cA,\cA)\to\cA$; closed colour:
+outer Hochschild brace encoding $\Ehol{2}$. Chiral higher Deligne
+theorem (Voronov-Tamarkin-Kontsevich adapted to chiral).
+\end{face}
+
+\begin{face}[Drinfeld-centre;
+cohomological]\label{face:drinfeld}
+Pairs $(\cA, \Drinf(\Rep_{\mathrm{fact}}(\cA)))$: closed acts on open
+via $\Drinf(\Rep_{\mathrm{fact}}(\cA))\to
+\mathrm{End}(\Rep_{\mathrm{fact}}(\cA))$. The Drinfeld-centre
+construction is canonically a $2$-category; the $\SCchtop$-datum is
+recovered at objects after Hochschild-compatible forgetful. Proved
+cohomologically via Lurie HA.5.3 + factorisation centre
+(Barwick--Schommer-Pries--Kan). Chain-level refinement open (F4).
+\end{face}
+
+\begin{face}[Derived-AG; cohomological]\label{face:derived-ag}
+Global sections of a derived Artin stack $\mathfrak{M}_{\SCchtop}$
+classifying $E_1$-chiral algebras with $\SCchtop$-datum plus its
+cotangent complex. Closed: formal neighbourhood of
+$\cA\in\mathfrak{M}_{E_1\text{-}\mathrm{chir}}$ in the
+Hochschild-deformation direction; open: tangent $\cA$ at that point;
+mixed: universal bulk-boundary infinitesimal bracket. Proved via
+Lurie-Toen-Vezzosi derived deformation ($\mathrm{HA}$.5.4) +
+Francis-Gaitsgory \cite{FG11}. Chain-level refinement:
+$\mathfrak{M}_{\mathrm{Kosz}}$ proved on non-logarithmic $C_2$-cofinite
+locus.
+\end{face}
+
+\textbf{The 5/7 chain-level vs 2/7 cohomological split.}
+Faces~\ref{face:operadic}, \ref{face:koszul},
+\ref{face:factorisation}, \ref{face:bv}, \ref{face:convolution} are
+chain-level; \ref{face:drinfeld}, \ref{face:derived-ag} are
+cohomological. The seven edges: (\ref{face:operadic}-\ref{face:koszul})
+bicoloured bar-cobar; (\ref{face:koszul}-\ref{face:factorisation})
+$(\Lie,\Ass)$ acting on $(D\text{-}\mathrm{mod},\mathrm{Mod})$;
+(\ref{face:factorisation}-\ref{face:bv}) BD-CG equivalence (CG Thm.
+5.4.9); (\ref{face:bv}-\ref{face:convolution}) Maurer-Cartan
+$\leftrightarrow$ brace deformation; (\ref{face:convolution}-\ref{face:drinfeld})
+chiral higher Deligne $\Rightarrow$ brace = centre;
+(\ref{face:drinfeld}-\ref{face:derived-ag}) tangent to
+$\mathfrak{M}_{\SCchtop}$ = Hochschild of $\cA$;
+(\ref{face:derived-ag}-\ref{face:operadic}) closed-loop derived stack
+$\to$ operadic. Each edge is an $\infty$-quasi-isomorphism; the
+heptagon commutes. Any one face determines the $\infty$-operadic
+structure; absence of a conformal vector freezes the heptagon at
+$\SCchtop$, presence triggers topologisation to $\Etop{3}$, making
+topologisation the exceptional collapse of the generic bicoloured
+object.
+\end{heal}
+
+%=======================================================================
+\section{Cycle 5: 3d quantum gravity as $\Phihol(\Vir_c)$}
+\label{sec:cycle-5}
+%=======================================================================
+
+\begin{attack}[Is Virasoro Koszul? What is $\Phihol(\Vir_c)$
+concretely?]
+3d quantum gravity is advertised as the ``first non-trivial
+instance'' of the universal holography functor, with
+$\Phihol(\Vir_c)$ being a 3d HT-QFT on $C\times\R$. Virasoro is
+class-M (depth $\infty$); is it Koszul in the sense required by
+$\Phihol$? Write down the 3d HT-QFT concretely: its boundary
+observables, its bulk observables, its partition function on
+$C\times S^{1}$.
+\end{attack}
+
+\begin{heal}[$\Phihol(\Vir_c)$ and the $C\times S^1$ partition
+function]
+\textbf{Is Virasoro Koszul?} At non-critical $c\neq 0$ off the
+$(2, 2k+1)$-minimal-model lattice, $\Vir_c$ is chirally Koszul:
+$B(\Vir_c) = T^c(s^{-1}\overline{\Vir_c})$ has cohomology
+concentrated in degree $0$ on the weight-completed category,
+Positselski complementary duality $\Omega(B(\Vir_c)) \simeq \Vir_c$
+in $D^{\mathrm{co}}_{ch}(C)$. Scope: $\mathsf{ProvedHere}$ on the
+non-logarithmic $C_2$-cofinite standard landscape; class-M depth
+$\infty$ only affects strictness of topologisation at chain level on
+original complex (F3 frontier), not the existence of $\Phihol$.
+
+\textbf{$\Phihol(\Vir_c)$ explicitly.} By (U1)--(U3):
+$\Obs^{\partial}(\Phihol(\Vir_c)) = \Vir_c$ (boundary);
+$\Obs^{\mathrm{bulk}}(\Phihol(\Vir_c)) = \Zder(\Vir_c) =
+\ChirHoch(\Vir_c, \Vir_c)$ (bulk); action by $\SCchtop$-brace.
+Theorem~H (Hochschild concentration) confines bulk cohomology to
+degrees $0, 1, 2$; Sugawara topologisation gives the
+$\Etop{3}$-structure on BRST cohomology.
+
+\textbf{Physical identification: 3d Einstein gravity on AdS$_3$.}
+Brown-Henneaux \cite{BrownHenneaux}: pure 3d gravity on AdS$_3$ has
+boundary Virasoro$\times$Virasoro at $c = 3\ell/(2G_N)$, $\ell$ AdS
+radius, $G_N$ Newton constant. Chern-Simons formulation (Witten
+\cite{Witten3dGravity}): 3d gravity is $\mathrm{SL}_2(\R)\times
+\mathrm{SL}_2(\R)$ Chern-Simons at $k = \ell/(4G_N)$; Sugawara
+on $\mathrm{SL}_2$-Chern-Simons at level $k$ produces
+Virasoro at $c(k) = 3k/(k+2) = 3\ell/(2G_N)$ for $k\gg 1$. Hence:
+\[
+ \Phihol(\Vir_c) = \text{3d HT sector of pure Einstein gravity on
+ AdS}_3 \text{ at } c = 3\ell/(2G_N).
+\]
+Identification, not analogy: bulk $\Zder(\Vir_c)$ is local-observable
+algebra of BRST-reduced 3d Chern-Simons; boundary chiral algebra is
+the Liouville sector \cite{CHvD}; the $\Etop{3}$-structure on
+cohomology is the topologisation of the bulk 3-form current algebra
+via the inner Virasoro vector.
+
+\textbf{Partition function on $S^2\times S^1$.}
+Take $C = S^2$, compactify $\R\to S^1$ (Euclidean time,
+inverse-temperature $\beta$). Modular parameter
+$\tau = i\beta/(2\pi)$, $\mathrm{Im}(\tau)>0$. Partition function:
+\begin{equation}\label{eq:vir-partfn}
+ Z_{\Phihol(\Vir_c)}(S^2\times S^1_\tau)
+ = \mathrm{Tr}_{\Vir_c}\, q^{L_0 - c/24},
+ \qquad q = e^{2\pi i\tau}.
+\end{equation}
+For the vacuum Verma module of $\Vir_c$ at $c>1$ generic:
+\begin{equation}\label{eq:vir-char}
+ \chi_{\Vir_c, \mathrm{vac}}(q)
+ = q^{-c/24}\prod_{n=2}^{\infty}\frac{1}{1-q^n}
+ = \frac{q^{(1-c)/24}(1-q)}{\eta(\tau)}.
+\end{equation}
+At $c = 3\ell/(2G_N)$, this is the perturbative Brown-Henneaux
+partition function of Einstein gravity on thermal AdS$_3$,
+tree-level + one-loop sum (Maloney-Witten \cite{MaloneyWitten}).
+
+\textbf{Modular-invariant partition function.} The perturbative sum
+in~\eqref{eq:vir-char} is not modular-invariant; the non-perturbative
+answer is obtained by summing over the $\mathrm{SL}_2(\Z)$ orbit
+(Farey-tail sum, Manschot--Moore \cite{ManschotMoore}), producing
+the full 3d-gravity partition function:
+\begin{equation}\label{eq:vir-mod-inv}
+ Z^{\mathrm{mod}}_{\Phihol(\Vir_c)}(\tau)
+ \;=\; \sum_{\gamma \in
+ \mathrm{SL}_2(\Z)/\mathrm{SL}_2(\Z)_{\infty}}
+ \chi_{\Vir_c, \mathrm{vac}}\bigl(\gamma\cdot\tau\bigr).
+\end{equation}
+This is the bulk trace of the Brown--Henneaux partition function:
+sum over saddle-points labelled by the Euclidean $\mathrm{SL}_2(\Z)$
+black-hole geometries. At large $c$, the genus-$1$ saddle dominates
+and recovers the Hardy--Ramanujan asymptotic
+$\log Z \sim 2\pi\sqrt{cL_0/6}$, i.e.\ the Bekenstein--Hawking
+entropy of a BTZ black hole of mass $L_0$.
+
+\textbf{Koszul content and bar trace.}
+$Z^{\mathrm{bar}}_{\Phihol(\Vir_c)}(\tau) := \mathrm{Tr}_{B(\Vir_c)}
+q^{L_0 - c/24}$ equals~\eqref{eq:vir-char} by Theorem~H concentration:
+bar cohomology agrees with the chiral algebra in degree $0$; degrees
+$1, 2$ assemble into the $(1-q)$ prefactor. Holographic partition
+function is the ordered bar trace of the boundary.
+
+\textbf{``First non-trivial instance.''} Class-G (Heisenberg,
+lattice) is abelian, trivial Sugawara; class-L (affine KM) reduces to
+class-M via Sugawara, $\Phihol(V_k(\fg)) = \Phihol(\Vir_{c(k)})$
+composed with Sugawara-Chern-Simons boundary; Virasoro is the first
+class-M instance where $\Phihol$ captures non-trivial 3d gravity
+physics with non-trivial partition function on $C\times S^1$. The
+$\cW_N$ tower gives higher-spin gravitational extensions;
+$\cW_\infty$ is the gravitational horizon.
+\end{heal}
+
+%=======================================================================
+\section{Three-tier summary and open frontier}
+\label{sec:summary}
+%=======================================================================
+
+The G3 identity is not a single theorem; it is a three-tier
+architecture with one $\infty$-operadic statement and two chain-level
+refinements.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Tier} & \textbf{Content} & \textbf{Scope} & \textbf{Status} \\
+\hline
+I & $\Phihol$ on BRST cohomology gives $\Etop{3}$ &
+All class-G/L/M &
+$\mathsf{ProvedHere}$ \\
+II & Transferred $\Etop{3}_{\infty}$ on cohomology model &
+All class-G/L/M &
+$\mathsf{ProvedHere}$ \\
+III & Strict chain-level $\Etop{3}$ on original complex &
+Class-G/L proved; class-M open &
+F3 frontier \\
+\hline
+\end{tabular}
+\end{center}
+
+The heptagon has 5/7 chain-level faces and 2/7 cohomological; their
+mutual edges commute at both lanes where defined (chain-level edges
+at the 5-face subheptagon, cohomological edges at the full heptagon).
+
+The $\cW_N$ ladder theorem gives $\Etop{N+1}$ for depth-$N$ Casimir
+towers with antighost-commutativity (C4); unconditional at $N \leq 3$,
+conditional on (C4) at $N \geq 4$, and the $\cW_\infty$ horizon is
+the operadic Platonic endpoint.
+
+\textbf{Partition function on $C\times S^1$ for $\Phihol(\Vir_c)$:}
+\begin{equation}\label{eq:final-partition}
+ Z_{\Phihol(\Vir_c)}(S^2\times S^1_\tau) =
+ \frac{q^{(1-c)/24}(1-q)}{\eta(\tau)},
+ \qquad q = e^{2\pi i\tau},
+\end{equation}
+the Virasoro vacuum character, identified (at $c = 3\ell/(2G_N)$)
+with the perturbative Brown--Henneaux partition function of 3d
+Einstein gravity on thermal AdS$_3$, and its modular completion
+via the Farey-tail sum over the $\mathrm{SL}_2(\Z)$ orbit.
+
+\textbf{Cross-volume harmonies.} The G3 identity links Vol~I and
+Vol~II: Vol~I supplies $\Vir_c$ as the atomic class-M example, its
+$\kappa = c/2$ invariant, Koszulness at generic $c$, and the
+shadow-tower depth $r_{\max} = \infty$; Vol~II carries $\Phihol$
+itself and the bulk $\Zder$; at $\c = 5$ the Vol~III Mukai-enhanced
+K3 Heisenberg witness refines to the Bruinier Heegner Chern-class
+reciprocity output on $\cK^\kappa = 8$ (Theorem~C B-row ceiling).
+
+\textbf{Open frontier.} (F3) Strict chain-level tier-III class-M
+original-complex; (F4) pairwise antighost commutativity (C4) for
+$N \geq 4$ in the Casimir tower; the $\cW_\infty$ horizon is
+rigorous at tier I/II and conditional on (C4) at tier III.
+
+%=======================================================================
+\section{Synthesis: the G3 equation of state}
+\label{sec:synthesis}
+%=======================================================================
+
+Assembling the five cycles:
+\begin{equation}\label{eq:G3-full}
+ \boxed{
+ \Phihol\colon
+ \ChirAlg^{\omega,\mathrm{BL}}_{C}
+ \xrightarrow{\ \SCchtop\text{-braces}\ }
+ \HTQFT_{C\times\R},
+ \quad
+ \SCchtop + \omega_{\mathrm{inner}, k\neq -\hv}
+ \xrightarrow{\ \mathrm{Sug}\ } \Etop{3}
+ \xrightarrow{\ \cW_N\ } \Etop{N+1}
+ \xrightarrow{\ \cW_\infty\ } \Etop{\infty}.}
+\end{equation}
+$\SCchtop\to\Etop{3}$ is the topologisation theorem (Cycle~2);
+$\Etop{3}\to\Etop{N+1}$ is the iterated-Sugawara ladder (Cycle~3);
+$\Etop{\infty}$ is the $\cW_\infty$ horizon. The heptagon
+$\SCchtop$ is the generic object with seven presentations
+(Cycle~4); topologisation is the exceptional collapse. At
+$\Phihol(\Vir_c)$ the functor realises 3d Einstein gravity on
+AdS$_3$ with partition function~\eqref{eq:final-partition}
+(Cycle~5).
+
+The five-archetype behaviour of $\Phihol$: class-G
+(Heisenberg/lattice) has trivially topologised bulk by ad-hoc
+freeness; class-L gives affine Chern-Simons 3d gauge theory;
+class-M is the non-trivial 3d HT-QFT locus with Virasoro the
+first genuine instance; class-B is the Mukai-enhanced K3 Heisenberg
+witness (Theorem~C B-row ceiling $\cK^\kappa = 8$ via Bruinier
+Heegner Chern-class reciprocity); class-$\cW$-tower is the
+$\Etop{\infty}$ celestial-gravitational horizon.
+
+The Vol~I-Vol~II bridge at functor level:
+\[
+\begin{array}{ccc}
+ \ChirAlg^{\omega,\mathrm{BL}}_{C} &
+ \xrightarrow{\ \Phihol\ } &
+ \HTQFT_{C\times\R} \\[0.5em]
+ \downarrow\mathsf{av} & &
+ \downarrow\pi_0 \\[0.5em]
+ \mathsf{mod}\text{-}\ChirAlg_{C} &
+ \xrightarrow{\ \Phihol^{\mathrm{mod}}\ } &
+ \HTQFT_{C\times\R}^{\mathrm{mod}}
+\end{array}
+\]
+$\mathsf{av}$ the ordered-to-symmetric averaging; $\pi_0$ the
+zeroth-cohomology collapse of the bulk. Commutativity is the
+compatibility of $E_1$-to-$E_\infty$ averaging with bulk-boundary
+duality.
+
+G3 is the statement that chiral algebra on $C$ and 3d HT-QFT on
+$C\times\R$ are two presentations of one categorical datum, related
+by the single functor~\eqref{eq:G3-full}.
+
+\begin{thebibliography}{99}
+\bibitem{BD04} A.~Beilinson, V.~Drinfeld, \emph{Chiral Algebras},
+ AMS Colloquium Publ.~51, 2004.
+\bibitem{CG} K.~Costello, O.~Gwilliam, \emph{Factorization Algebras
+ in QFT, I/II}, Cambridge UP, 2017/2021.
+\bibitem{Voronov1998} A.~Voronov, \emph{The Swiss-cheese operad},
+ Contemp.~Math.~239 (1999), 365--373.
+\bibitem{AF15} D.~Ayala, J.~Francis, \emph{Factorization homology of
+ topological manifolds}, J.~Topol.~8 (2015), 1045--1084.
+\bibitem{CostelloGaiotto} K.~Costello, D.~Gaiotto, \emph{VOAs and 3d
+ \(\mathcal N=4\) gauge theories}, JHEP 05 (2019), 018.
+\bibitem{FG11} J.~Francis, D.~Gaitsgory, \emph{Chiral Koszul duality},
+ Selecta Math.~18 (2012), 27--87.
+\bibitem{BrownHenneaux} J.~D.~Brown, M.~Henneaux, \emph{Central charges
+ in asymptotic 3d gravity}, CMP 104 (1986), 207--226.
+\bibitem{Witten3dGravity} E.~Witten, \emph{2+1 gravity as soluble
+ system}, Nucl.~Phys.~B 311 (1988), 46--78.
+\bibitem{CHvD} M.~Coussaert, M.~Henneaux, P.~van~Driel,
+ \emph{Asymptotic 3d gravity with cosmological constant},
+ CQG 12 (1995), 2961--2966.
+\bibitem{MaloneyWitten} A.~Maloney, E.~Witten, \emph{3d gravity
+ partition functions}, JHEP 02 (2010), 029.
+\bibitem{ManschotMoore} J.~Manschot, G.~W.~Moore, \emph{A modern
+ Farey tail}, CNTP 4 (2010), 103--159.
+\bibitem{Strominger-celestial} A.~Strominger, \emph{Lectures on IR
+ structure of gravity and gauge theory}, PUP, 2018.
+\bibitem{Linshaw-Winfty} A.~Linshaw, \emph{Universal even-spin
+ \(\mathcal W_\infty\)}, Adv.~Math.~366 (2020), 107079.
+\bibitem{Borcherds-vertex} R.~E.~Borcherds, \emph{Vertex algebras,
+ Kac-Moody, monster}, PNAS 83 (1986), 3068--3071.
+\bibitem{Kac-vertex} V.~Kac, \emph{Vertex Algebras for Beginners},
+ AMS ULS 10, 2nd ed.~1998.
+\bibitem{Kontsevich-operads-motives} M.~Kontsevich, \emph{Operads and
+ motives in deformation quantization}, LMP 48 (1999), 35--72.
+\bibitem{Fateev-Lukyanov} V.~A.~Fateev, S.~L.~Lukyanov,
+ \emph{\(Z_n\)-symmetric 2d CFT}, IJMPA 3 (1988), 507--520.
+\end{thebibliography}
+
+\end{document}

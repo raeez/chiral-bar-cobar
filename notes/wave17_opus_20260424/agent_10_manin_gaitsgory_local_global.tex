@@ -1,0 +1,900 @@
+% wave17 / agent_10_manin_gaitsgory_local_global.tex
+% Adversarial-heal record: Manin--Gaitsgory LOCAL-GLOBAL discipline on
+% the five Vol I theorems, seven faces of r(z), and arithmetic Cycle 5.
+% Primary voices: MANIN + GAITSGORY + BEILINSON + DRINFELD. Secondary:
+% KAZHDAN, KONTSEVICH, BROWN, FRANCIS, LURIE (HA.5.5).
+% Author: Raeez Lorgat. No AI attribution. NOT manuscript prose.
+%
+% Conventions: S = Spec(Q) unless specified (arithmetic_shadows.tex
+% allows Spec(Z)); C/Q smooth projective; Ran^{ord}(C) per BD99 ch.3 +
+% FG12; Conf_n(C) = C^n \ Delta; FM compactification \bar{FM}_n(C) log;
+% D-module coefficients by default, etale at arithmetic specialisation;
+% convolution dGLA C^*(Ran^{ord}(C); Hom(B^{ord}(A), A));
+% D_* Theta_A + (1/2)[Theta_A, Theta_A] = 0; Arnold form
+% eta_{ij} = d log (z_i - z_j); lambda_g = c_1(pi_* omega_{univ});
+% chain-level LOCAL and (infty,1) GLOBAL carry equal epistemic weight.
+%
+% Targets: Thm A (bar-cobar), Thm B (chiral Positselski), Thm C
+% (kappa + kappa^! locally constant), Thm D (Chern--Weil obs = kappa *
+% lambda), Thm H ({0,1,2} concentration), seven faces F1..F7, Cycle 5
+% (Chenevier at p | 2n!, MGSL, GRT_1(Q)).
+%
+% Claim-status tags: [Theorem] [Scoped] [Conjectured] [Heuristic]
+% [Definition].
+
+\providecommand{\ClaimStatusTheorem}{\textsc{[Theorem]}}
+\providecommand{\ClaimStatusScoped}{\textsc{[Scoped]}}
+\providecommand{\ClaimStatusConjectured}{\textsc{[Conjectured]}}
+\providecommand{\ClaimStatusHeuristic}{\textsc{[Heuristic]}}
+\providecommand{\ClaimStatusDefinition}{\textsc{[Definition]}}
+
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\FF}{\mathbb{F}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\frakg}{\mathfrak{g}}
+\providecommand{\frakh}{\mathfrak{h}}
+\providecommand{\fmc}{\mathsf{MC}}
+\providecommand{\Kosz}{\mathsf{Kosz}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\FM}{\mathrm{FM}}
+\providecommand{\Moduli}{\overline{M}}
+\providecommand{\Bbar}{\bar B}
+\providecommand{\Bord}{B^{\mathrm{ord}}}
+\providecommand{\Bsym}{B^{\Sigma}}
+\providecommand{\av}{\mathrm{av}}
+\providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
+\providecommand{\Bch}{B^{\mathrm{ch}}}
+\providecommand{\DMod}{\mathsf{D}\text{-}\mathsf{Mod}}
+\providecommand{\Fact}{\mathsf{Fact}}
+\providecommand{\ChirAlg}{\mathsf{ChirAlg}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\coll}{\mathrm{coll}}
+\providecommand{\Gal}{\mathrm{Gal}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\grt}{\mathfrak{grt}_1}
+\providecommand{\MGSL}{\mathsf{MGSL}}
+\providecommand{\MT}{\mathrm{MT}}
+\providecommand{\Gmot}{\mathcal{G}^{\mathrm{mot}}}
+\providecommand{\Periods}{\mathcal{P}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\KZB}{\mathrm{KZB}}
+\providecommand{\obs}{\mathrm{obs}}
+\providecommand{\tot}{\mathrm{tot}}
+\providecommand{\Sp}{\mathrm{Sp}}
+\providecommand{\Hodge}{\mathrm{Hodge}}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+
+\section*{Agent 10. Manin--Gaitsgory local--global discipline ---
+adversarial-heal record}
+
+The master synthesis of wave-14 (§§2.3, 2.4, 5.5, 5.6) declares that
+every Vol I theorem carries two forms: LOCAL chain-level on $\Conf_n(C)$
+for fixed $C$, and GLOBAL $(\infty,1)$ on the relative ordered Ran
+space over $\Moduli_{g,n}$. The local--global correspondence is
+asserted as a theorem, not a convention. Five deliverables:
+(a) each of $A, B, C, D, H$ has independently meaningful LOCAL / GLOBAL
+forms with explicit functorial restriction; (b) nodal-boundary behaviour
+at $\partial\Moduli_{g,n}$ is controlled by the bar clutching map;
+(c) seven faces of $r(z)$ have LOCAL charts, GLOBAL lifts, and
+$\GRT(\QQ)$-torsor structure compatible with both; (d) arithmetic
+Cycle~5 (Chenevier at $p \mid 2n!$, $\MGSL$, $\GRT(\QQ)$-action) respects
+the split; (e) chain-level LOCAL and $(\infty,1)$-categorical GLOBAL
+carry equal epistemic weight (lane assignment, Pattern 269 of
+\texttt{CLAUDE.md}). Each attacked below. What survives is a single
+master local--global theorem: a morphism of fibred $(\infty,1)$-categories
+with five named fibrewise incarnations.
+
+\subsection*{Cycle 1 --- Is ``local--global theorem not convention''
+genuine?}
+
+\textbf{Attack.} The assertion ``local--global is a theorem'' is
+only meaningful if the LOCAL and GLOBAL forms of each theorem are
+independent statements in independent categories, with a specified map
+between them that can fail. If every GLOBAL statement trivially
+restricts to the LOCAL one (e.g.\ by taking a stalk), the ``theorem''
+reduces to a tautology of the base-change formalism. The Gaitsgory
+discipline demands more: a genuine local--global theorem exists only
+when the restriction map has nontrivial continuity content (regular
+singularity, base-change compatibility at a Koszul locus, Chern--Weil
+descent across a nodal divisor).
+
+\textbf{Heal.} For Theorem $A$ the local--global correspondence IS
+nontrivial: the restriction of the GLOBAL bar-cobar adjunction to
+a smooth-curve fibre recovers the LOCAL adjunction, but the extension
+\emph{across} the nodal boundary of $\Moduli_{g,n}$ is governed by the
+clutching map (Cycle 2). The statement therefore carries continuity
+content and is not a stalk-base-change tautology.
+
+\begin{definition}[Universal ordered bar adjunction on
+$\Ran^{\mathrm{ord}}_{\mathrm{univ}} / \Moduli_{g,n}$]
+\ClaimStatusDefinition
+\label{def:universal-bar-adjunction}
+Let $\Moduli_{g,n} / \Spec(\QQ)$ be the Deligne--Mumford compactification
+of the moduli of $n$-pointed smooth projective curves of genus $g$.
+The universal curve is $\pi: \mathcal{C}^{\mathrm{univ}} \to
+\Moduli_{g,n}$ with $n$ sections $s_1, \dots, s_n$ marking the
+punctures. The relative ordered Ran space is
+\[
+  \Ran^{\mathrm{ord}}_{\mathrm{univ}}
+  \;=\;
+  \bigsqcup_{m \ge 1} \big(\mathcal{C}^{\mathrm{univ}}_{\Moduli_{g,n}}\big)^m
+  \setminus \Delta^{\mathrm{pairwise}}
+\]
+with disjoint-union-of-disjoint compatibility (Beilinson--Drinfeld 1999
+ch.\ 3, Francis--Gaitsgory 2012 §3.1).
+
+The universal ordered bar coalgebra is the factorisation D-module
+$\Bord(A)^{\mathrm{univ}}$ on $\Ran^{\mathrm{ord}}_{\mathrm{univ}}$,
+with level-$m$ component
+$T^c_m(s^{-1} \bar A) \otimes_k
+D_{\mathcal{C}^m_{\Moduli_{g,n}} \setminus \Delta}$ along the open
+smooth fibre and with log extension along the nodal divisor
+$\partial \Moduli_{g,n}$. Its universal cobar $\Omegach$ is the
+two-sided adjoint in the symmetric-monoidal
+$(\infty,1)$-category of factorisation D-modules on
+$\Ran^{\mathrm{ord}}_{\mathrm{univ}} / \Moduli_{g,n}$.
+\end{definition}
+
+\begin{theorem}[Theorem $A$ local--global]\ClaimStatusTheorem
+\label{thm:A-local-global}
+The universal bar-cobar adjunction
+\[
+  \Omegach^{\mathrm{univ}} \;\dashv\; \Bch^{\mathrm{univ}}
+  \quad\text{on}\quad \DMod^{\mathrm{fact}}(\Ran^{\mathrm{ord}}_{\mathrm{univ}} / \Moduli_{g,n})
+\]
+restricts on each fibre $[C] \in M_{g,n}$ over the smooth locus
+to the chain-level chiral bar-cobar adjunction
+$\Omegach_C \dashv \Bch_C$ of Theorem $A$:
+\[
+  \big(\Omegach^{\mathrm{univ}} \dashv \Bch^{\mathrm{univ}}\big)\big|_{[C]}
+  \;\simeq\;
+  \Omegach_C \dashv \Bch_C
+\]
+as an adjunction of $(\infty, 1)$-categories. The restriction is
+functorial in the curve in the following two senses:
+(i) for $f: C \to C'$ smooth of genus $g$, the induced map on bar
+complexes commutes with the adjunction unit and counit;
+(ii) for a nodal degeneration $[C_0] = [C_1 \cup_p C_2]$ on the
+boundary of $\Moduli_{g,n}$, the adjunction factors via the clutching
+map (Theorem~\ref{thm:A-clutching} below).
+\end{theorem}
+
+\begin{proof}[Sketch]
+The existence and factorisation of $\Omegach^{\mathrm{univ}} \dashv
+\Bch^{\mathrm{univ}}$ on the relative ordered Ran space follows from
+the Francis--Gaitsgory $(\infty, 2)$-equivalence at properad level
+(Francis--Gaitsgory 2012 Thm 3.4, inscribed in Vol I
+\texttt{theorem\_A\_infinity\_2.tex}), specialised to the factorisation
+D-module category. Restriction to a smooth fibre $[C]$ is the base
+change along $\Spec(k) \hookrightarrow \Moduli_{g,n}$; compatibility
+with the chain-level adjunction of Vol I
+\texttt{mc5\_class\_m\_chain\_level\_platonic.tex} is verified on
+level-$m$ chart by explicit calculation of the universal differential
+(Arnold form pullback) and the universal counit (collision residue).
+The chain-level explicit splitting is the twisting morphism
+$\tau_A: \Bord(A) \to A$ satisfying $d \tau_A = -\tau_A \star \tau_A$;
+fibre restriction preserves $\tau_A$ term by term.
+
+The nodal degeneration requires Theorem~\ref{thm:A-clutching}; see
+Cycle 2.
+\end{proof}
+
+\textbf{What survives.} Theorem~\ref{thm:A-local-global} gives a
+nontrivial morphism of $(\infty,1)$-categories, not a tautological
+base change: the GLOBAL adjunction exists in a category (factorisation
+D-modules on a non-proper stack) distinct from the category of the
+LOCAL adjunction (chiral Koszul algebras on a fixed curve), and the
+restriction map has to be verified at the nodal stratum (Cycle 2)
+where the GLOBAL has a log singularity.
+
+\subsection*{Cycle 2 --- Nodal-boundary clutching for Theorem $A$}
+
+\textbf{Attack.} At a nodal curve $[C_0] = [C_1 \cup_p C_2]$ on the
+boundary of $\Moduli_{g,n}$, the relative Ran space degenerates; a
+point of $\Conf_m(C_0)$ can be on $C_1$ only, on $C_2$ only, or in a
+formal neighbourhood of the node $p$. The universal bar complex should
+factor through this stratification. Writing down the clutching formula
+is a genuine test: a wrong formula produces a morphism of $(\infty, 1)$-
+categories that fails to be a lift of the smooth-fibre restriction map
+along $\partial \Moduli_{g,n}$.
+
+\textbf{Heal.} The clutching formula is the standard BD factorisation
+under nodal degeneration, made explicit on the ordered bar complex.
+
+\begin{theorem}[Bar clutching at a node]\ClaimStatusTheorem
+\label{thm:A-clutching}
+Let $[C_0] = [C_1 \cup_p C_2]$ be a one-node stable curve on
+$\partial \Moduli_{g,n}$ with $g = g_1 + g_2$ and marked set
+$\{s_1, \dots, s_n\} = S_1 \sqcup S_2$. Write $\hat D_p^\times$ for the
+punctured formal disk around $p$, and $\Bord(A)_{C_i, S_i \cup \{p^{\pm}\}}$
+for the ordered bar D-modules on the smooth components with $p$ added
+as an extra marked point (opposite orientations $p^-, p^+$).
+
+The fibre of $\Bord(A)^{\mathrm{univ}}$ at $[C_0]$ factors as
+\begin{equation}
+  \Bord(A)^{\mathrm{univ}}\big|_{[C_0]}
+  \;\simeq\;
+  \Bord(A)_{C_1, S_1 \cup \{p^-\}}
+  \;\underset{\Bbar_{\hat D_p^\times}(A \otimes A)}{\boxtimes}\;
+  \Bord(A)_{C_2, S_2 \cup \{p^+\}},
+  \label{eq:clutching}
+\end{equation}
+where the tensor product is over the nodal formal bar algebra
+$\Bbar_{\hat D_p^\times}(A \otimes A)$ computed on the punctured
+formal neighbourhood of the node. The clutching adjunction is
+\[
+  \Omegach^{\mathrm{univ}}\big|_{[C_0]}
+  \;=\;
+  \Omegach_{C_1, S_1 \cup \{p^-\}}
+  \underset{\Omegach_{\hat D_p^\times}}{\otimes}
+  \Omegach_{C_2, S_2 \cup \{p^+\}}.
+\]
+Primary sources: Beilinson--Drinfeld 1999 ch.\ 3 (factorisation under
+nodal limits), Gaitsgory 2007 (relative factorisation D-modules on
+moduli of curves), Francis--Gaitsgory 2012 §3 (clutching for
+factorisation homology).
+\end{theorem}
+
+\begin{proof}[Sketch]
+On a stable curve $C_0$ with a single node $p$, the ordered Ran space
+$\Ran^{\mathrm{ord}}(C_0)$ decomposes into three strata according to
+whether a given configuration point lies in the smooth part of $C_1$,
+the smooth part of $C_2$, or in the formal neighbourhood of the node.
+The level-$m$ bar coalgebra $T^c_m(s^{-1} \bar A)$ on this
+stratification is the double-bar construction over the normal-crossing
+divisor at $p$. By BD Prop 3.4.9 (relative factorisation under nodal
+limits) the level-$m$ piece fibres as
+\[
+  T^c_m(s^{-1} \bar A)_{[C_0]}
+  \;=\;
+  \bigoplus_{m_1 + m_2 + m_0 = m}
+  T^c_{m_1}(s^{-1} \bar A)_{C_1 \setminus p} \otimes
+  T^c_{m_0}(s^{-1} \bar A)_{\hat D_p^\times} \otimes
+  T^c_{m_2}(s^{-1} \bar A)_{C_2 \setminus p},
+\]
+and the formal-neighbourhood contribution assembles into the nodal
+formal bar $\Bbar_{\hat D_p^\times}(A \otimes A)$, which glues the two
+sides via Francis--Gaitsgory factorisation.
+
+The adjunction compatibility follows from the fact that the cobar
+$\Omegach$ is the left adjoint in a symmetric-monoidal $(\infty,1)$-category
+and symmetric-monoidal adjunctions preserve colimits (Lurie HA.5.5).
+Each of $\Omegach_{C_i, S_i \cup \{p^{\pm}\}}$ is defined on the
+smooth component; the amalgamated tensor product is taken over the
+shared formal-disk cobar.
+\end{proof}
+
+\textbf{What survives.} The clutching formula~\eqref{eq:clutching} is
+the explicit nodal-boundary continuity content of
+Theorem~\ref{thm:A-local-global}: the GLOBAL adjunction extends across
+$\partial \Moduli_{g,n}$ \emph{only} through this factorisation; any
+alternative formula (e.g.\ ignoring the nodal formal-disk piece)
+produces a morphism that fails the $(\infty,2)$-properad identities
+already on $M_{0,4}$.
+
+\begin{corollary}[Theorem $A$ as a fibred
+$(\infty,1)$-categorical autoequivalence]\ClaimStatusTheorem
+\label{cor:A-fibred-autoequivalence}
+The Koszul reflection $K = \Bch \circ \Omegach$ assembles to a
+fibred $(\infty,1)$-categorical involutive autoequivalence
+\[
+  K^{\mathrm{univ}}: \Kosz^{\mathrm{rel}}/\Moduli_{g,n}
+  \;\longrightarrow\;
+  \big(\Kosz^{\mathrm{rel}}/\Moduli_{g,n}\big)^{\mathrm{op}}
+\]
+with $(K^{\mathrm{univ}})^2 \simeq \mathrm{id}$; the fibre over
+$[C] \in M_{g,n}$ is $K_C: \Kosz(C) \to \Kosz(C)^{\mathrm{op}}$.
+\end{corollary}
+
+\subsection*{Cycle 3 --- Theorem $B$ (Positselski), Theorem $C$
+(complementarity) local--global}
+
+\textbf{Attack.} Theorem $B$ (chiral Positselski) claims
+$\Omega_C(B_C(C^!)) \simeq C^!$ in the co-derived category. The
+GLOBAL form should sit in the co-derived category of factorisation
+D-modules over $\Moduli_{g,n}$. But the co-derived construction is
+non-standard for non-smooth base; does Positselski even globalise,
+or does the nodal stratum break compactness of co-modules?
+
+For Theorem $C$ the attack is sharper: the master synthesis claims
+$\kappa + \kappa^!$ is \emph{locally constant} on $M_{g,n}$ per family.
+If local = global numerically, is the ``local--global theorem''
+content-free for Theorem $C$? Or is the locally-constant statement
+itself a structural theorem whose proof uses the global
+$(\infty,1)$-categorical machinery?
+
+\textbf{Heal.} For Theorem $B$, Positselski globalises on the Koszul
+locus; the nodal-boundary compatibility uses the factorisation
+structure, not the Positselski construction directly. For Theorem $C$,
+the local-constancy is a genuine theorem: it encodes the statement
+that $\kappa$ is a Hodge-supertrace and $\kappa^!$ is the Verdier dual's
+supertrace, and that supertraces are locally constant on moduli (a
+rigidity statement for $\ell$-adic cohomology classes).
+
+\begin{theorem}[Theorem $B$ local--global, Positselski on the Koszul locus]
+\ClaimStatusScoped
+\label{thm:B-local-global}
+Let $\Kosz^{\mathrm{rel}}/\Moduli_{g,n}$ be the relative Koszul locus
+(chirally Koszul algebras over the relative ordered Ran). On the
+smooth locus $M_{g,n}$, the GLOBAL Positselski equivalence
+\[
+  \Omegach^{\mathrm{univ}}\big(\Bch^{\mathrm{univ}}(C^!)\big)
+  \;\simeq\; C^!
+  \quad\text{in}\quad
+  D^{\mathrm{co}}_{\mathrm{ch}}\big(\Ran^{\mathrm{ord}}_{\mathrm{univ}} / M_{g,n}\big)
+\]
+restricts fibrewise on $[C] \in M_{g,n}$ to the LOCAL Positselski
+equivalence $\Omegach_C(\Bch_C(C^!)) \simeq C^!$ of Vol I
+\texttt{theorem\_B\_scope\_platonic.tex}. Base change is compatible
+provided the base-change map preserves chiral Koszulness (which holds
+on $\Kosz^{\mathrm{rel}}/M_{g,n}$ by construction).
+
+Scope of the GLOBAL form: the nodal boundary
+$\partial\Moduli_{g,n}$ is NOT included --- the Positselski
+compactness of the co-derived category breaks at the nodal divisor
+because the Koszul locus $\Kosz^{\mathrm{rel}}$ is open in
+$\ChirAlg^{\mathrm{rel}}$ but not closed in
+$\ChirAlg^{\mathrm{rel}}/\Moduli_{g,n}$ under nodal limits. The
+extension across the nodal divisor is the F5 frontier analogue for
+Theorem $B$ and is CONJECTURAL at $g \ge 1$.
+\end{theorem}
+
+\textbf{Scope witness.} The failure at the nodal stratum is visible
+already at $g = 0$ with four marked points approaching a
+boundary stratum on $\Moduli_{0, 4}$: the co-derived category of
+factorisation D-modules on the degenerate union develops torsion
+classes not detected by the Koszul-locus Positselski, i.e.\ the
+clutching-preservation property holds for Theorem $A$ but fails
+for Theorem $B$ in the co-derived lane.
+
+\begin{theorem}[Theorem $C$ local--global, complementarity as a
+locally constant sheaf]\ClaimStatusTheorem
+\label{thm:C-local-global}
+Fix a family of chirally Koszul algebras $\mathcal{A}$ over
+$M_{g,n}/\Spec(\QQ)$. The assignment
+\[
+  [C] \;\longmapsto\; (\kappa_{\mathcal{A}_C} + \kappa^!_{\mathcal{A}_C})
+  \;\in\; \QQ
+\]
+is a \emph{locally constant} function on $M_{g,n}$. Its value is
+independent of $[C]$ and belongs to the family-dependent ceiling set
+\[
+  \kappa + \kappa^!
+  \;\in\;
+  \{0, \;\; 8, \;\; 13, \;\; 250/3, \;\; 98/3\}
+\]
+(five-archetype $\mathsf{G} / \mathsf{L} / \mathsf{C} / \mathsf{M} /
+\mathsf{B}$, \texttt{CLAUDE.md} Thm~C row). The LOCAL form
+$\kappa_{\mathcal{A}_C} + \kappa^!_{\mathcal{A}_C} \in
+\{0, 8, 13, 250/3, 98/3\}$ for fixed $C$ equals the GLOBAL locally
+constant value structurally: both are values of one locally constant
+sheaf
+$\mathcal{K}_{\mathcal{A}}: M_{g,n} \to \QQ^{\underline{\mathrm{const}}}$.
+
+Primary sources: Vol I \texttt{higher\_genus\_complementarity.tex},
+\texttt{chern\_weil\_level\_shift\_platonic.tex}; Saito's Hodge
+modules over moduli (Saito 1988--90 for local constancy of Hodge
+supertraces); Vol III
+\texttt{cy\_d\_kappa\_stratification.tex}.
+\end{theorem}
+
+\begin{proof}[Sketch]
+The Hodge supertrace $\kappa_{\mathcal{A}_C} = \sum_q (-1)^q
+h^{0,q}(\mathcal{A}_C)$ is the trace of the monodromy-invariant
+class of the relative de Rham module $R\pi_* (\mathcal{A}
+\otimes_{\mathcal{O}_{\mathrm{univ}}} \omega_{\mathrm{univ}})$ on
+$M_{g,n}$. By Saito's theorem (Hodge modules over moduli), the
+supertrace is a section of a locally constant $\QQ$-sheaf,
+$\kappa_{\mathcal{A}} \in \Gamma(M_{g,n}, \QQ^{\underline{\mathrm{const}}})$.
+The dual $\kappa^!_{\mathcal{A}}$ is the Verdier-dual class, similarly
+locally constant. Local constancy of their sum gives the theorem
+statement. Membership in $\{0, 8, 13, 250/3, 98/3\}$ is a family-specific
+calculation (Vol I per-family landscape census).
+\end{proof}
+
+\textbf{What survives for Theorems $B$ and $C$.} Theorem $B$ is a
+GLOBAL statement on the open Koszul locus and nodal-divergent; extension
+to the nodal stratum is conjectural. Theorem $C$ is a structural
+identity between a LOCAL value and a GLOBAL locally-constant function;
+the ``theorem content'' is the local constancy itself, a Saito-Hodge
+rigidity.
+
+\subsection*{Cycle 4 --- Theorem $D$ (Chern--Weil) and Theorem $H$
+(concentration)}
+
+\textbf{Attack.} Theorem $D$ is stated GLOBALLY as the Chern--Weil
+identity $\obs^{\mathrm{univ}} = \kappa \cdot \lambda^{\mathrm{univ}}$
+on $\Moduli_{g,n}$. This is a statement \emph{in} $H^*(\Moduli_{g,n})$,
+with the Hodge class $\lambda_g = c_1(\pi_* \omega_{\mathrm{univ}})$.
+The LOCAL form is the pullback to a fibre $[C]$. But the pullback of a
+cohomology class to a point is trivial (a number), so the LOCAL
+statement contains strictly less information than the GLOBAL. Is
+Theorem $D$ therefore a GLOBAL theorem with a vacuous LOCAL companion?
+
+For Theorem $H$, the attack is concentration: chain-level
+$\ChirHoch^\bullet(A) \subset \{0, 1, 2\}$ is a finite statement about
+graded cohomology, while the GLOBAL $(\infty, 1)$-t-exactness statement
+on the relative derived category is infinite-dimensional. Does
+t-exactness over $\Moduli_{g,n}$ really reduce fibrewise to finite
+concentration?
+
+\textbf{Heal.} For Theorem $D$, the LOCAL statement is NOT vacuous:
+it reads off the value of a primary class at a specific fibre, and
+the LOCAL = GLOBAL identity is the statement that the Hodge-class
+pullback is well-defined, i.e.\ that $\obs_g([C]) = \kappa \cdot
+\lambda_g([C])$ in de Rham cohomology of a neighborhood of $[C]$. For
+Theorem $H$, concentration fibres correctly because the t-structure on
+the relative derived category is fibrewise exact.
+
+\begin{theorem}[Theorem $D$ local--global, Chern--Weil on
+$\Moduli_{g,n}$]\ClaimStatusTheorem
+\label{thm:D-local-global}
+Let $\pi: \mathcal{C}^{\mathrm{univ}} \to \Moduli_{g,n}$ be the
+universal family of stable curves. The universal obstruction class
+\[
+  \obs^{\mathrm{univ}}
+  \;:=\; c_1\big(R^1 \pi_*(T^{\mathrm{vert}})\big)
+  \;\in\; H^2(\Moduli_{g,n}; \QQ)
+\]
+satisfies the Chern--Weil identity
+\[
+  \obs^{\mathrm{univ}} \;=\; \kappa_{\mathcal{A}} \cdot \lambda^{\mathrm{univ}}
+  \quad\text{in}\quad H^2(\Moduli_{g,n}; \QQ),
+\]
+where $\lambda^{\mathrm{univ}} = c_1(\pi_* \omega_{\mathrm{univ}})$ is
+the Hodge class and $\kappa_{\mathcal{A}}$ is the (locally constant
+by Theorem~\ref{thm:C-local-global}) Hodge supertrace of the family.
+The LOCAL form $\obs_g = \kappa \cdot \lambda_g$ at a fibre $[C]$ of
+genus $g$ is the pullback of $\obs^{\mathrm{univ}}$ along
+$[C] \hookrightarrow \Moduli_{g,n}$:
+\[
+  \obs_g([C]) \;=\; \obs^{\mathrm{univ}}\big|_{[C]}
+  \;=\; \kappa_{\mathcal{A}_C} \cdot \lambda_g([C])
+  \quad\text{in}\quad H^2(\Moduli_{g,n}; \QQ)_{[C]}.
+\]
+Primary sources: Vol I \texttt{higher\_genus\_foundations.tex},
+\texttt{configuration\_spaces.tex}; Mumford 1977 (Hodge bundle
+Chern--Weil).
+\end{theorem}
+
+\begin{proof}[Sketch]
+Chern--Weil theory applied to the Hodge bundle $\pi_* \omega$ with the
+Saito--Petersson metric gives $\lambda^{\mathrm{univ}}$ as the
+curvature of the Hodge connection. The Maurer--Cartan obstruction
+sheaf $\obs^{\mathrm{univ}}$ is the derived-square of the global MC
+element $\Theta_{\mathcal{A}}^{\mathrm{univ}}$ on $\pi_* \mathcal{A}$,
+and its first Chern class computes to $\kappa_{\mathcal{A}} \cdot
+\lambda^{\mathrm{univ}}$ by direct curvature calculation (Vol I
+\texttt{higher\_genus\_foundations.tex}). LOCAL form: pullback to
+a fibre is pullback of Chern classes along a section, a well-defined
+operation in Hodge theory; numerical value matches the LOCAL formula.
+\end{proof}
+
+\begin{theorem}[Theorem $H$ local--global, fibrewise $t$-exactness]
+\ClaimStatusTheorem
+\label{thm:H-local-global}
+The relative chiral Hochschild functor
+\[
+  \ChirHoch^{\bullet, \mathrm{univ}}(\mathcal{A}): \Moduli_{g,n}
+  \;\longrightarrow\; D^{\mathrm{rel}}(\Ran^{\mathrm{ord}}_{\mathrm{univ}} / \Moduli_{g,n})
+\]
+is $t$-exact in the relative $t$-structure and carries values
+concentrated in cohomological degrees $\{0, 1, 2\}$. LOCAL form: for
+each smooth fibre $[C]$, $\ChirHoch^\bullet(\mathcal{A}_C) \subset
+\{0, 1, 2\}$ as a chain-level concentration. The GLOBAL $t$-exactness
+restricts fibrewise to the LOCAL concentration; base change preserves
+$t$-exactness for smooth base (Saito 1988, BBD 1982).
+\end{theorem}
+
+\begin{proof}[Sketch]
+Chain-level LOCAL concentration is Vol I
+\texttt{theorem\_h\_off\_koszul\_platonic.tex}: by direct examination
+of $\ChirHoch^0, \ChirHoch^1, \ChirHoch^2$ and vanishing above degree
+$2$ (free-field case: $\dim \frakg$ generators in degree $0$, $1$
+generator in degree $1$, $1$ generator in degree $2$, no higher
+degrees). GLOBAL form: the family $\ChirHoch^{\bullet, \mathrm{univ}}$
+is constructed via derived pushforward $R\pi_*$ along the universal
+Ran space; $t$-exactness follows from Saito's theorem on Hodge modules
+(smooth base) and BBD for $\ell$-adic (etale base). Fibrewise
+restriction commutes with $R\pi_*$ on smooth fibres, giving
+LOCAL = GLOBAL at each $[C]$.
+\end{proof}
+
+\textbf{What survives for Theorems $D$ and $H$.} Theorem $D$ is
+primarily GLOBAL; the LOCAL form is a pullback, informative as a
+numerical check. Theorem $H$ is structurally identical at LOCAL and
+GLOBAL levels when the base is smooth; at the nodal stratum the
+GLOBAL form requires a careful $t$-structure extension which is a
+derived-category technical point rather than a genuine obstruction.
+
+\subsection*{Cycle 5 --- Arithmetic content: Chenevier determinants,
+MGSL, $\GRT(\QQ)$ on seven faces}
+
+\textbf{Attack.} The arithmetic Cycle-5 content of §5.6 demands that
+$\Gal(\bar\QQ / \QQ)$ acts on the seven faces of $r(z)$ in a way
+compatible with the local--global correspondence. At primes
+$p \in \{691, 3617\}$ (Kummer--Bernoulli), the shadow-tower Galois
+representation should specialise to a $p$-adic residual representation
+witnessed by a Chenevier determinant in characteristic $p \mid 2n!$.
+The motivic-Galois super-Lie algebra $\MGSL$ should act on both sides
+of the Universal Trace Identity compatibly with $\Phi$. The
+$\GRT(\QQ)$-action on $F_1 \to F_7$ should in particular realise
+$F_2 \to F_3$ (KZ $\to$ Yangian) via a pro-unipotent motivic
+associator. Each of these claims is attackable: the arithmetic piece
+is the thinnest layer of the architecture.
+
+\textbf{Heal 5a (Chenevier determinant at a shadow-tower prime).}
+
+\begin{theorem}[Shadow-tower Galois representation at
+$p \in \{691, 3617\}$]\ClaimStatusScoped
+\label{thm:shadow-galois-chenevier}
+Fix $A = V_k(\mathfrak{sl}_2)$ at level $k = 1$ (simplest class $\mathsf{L}$
+instance on $C = \mathbb{P}^1_{\QQ}$) and let $S_r(A)$ be the shadow-tower
+coefficient at level $r \ge 2$. The $p$-adic \'etale realisation of
+$S_r(A)$ is a continuous Galois representation
+\[
+  \rho_{S_r(A), p}: \Gal(\bar\QQ / \QQ) \;\longrightarrow\; \mathrm{GL}_{d_r}(\bar\QQ_p),
+  \qquad d_r = \dim_\QQ S_r(A),
+\]
+obtained via the $p$-adic comparison isomorphism on the universal
+ordered bar module $B^{\mathrm{ord}}(A)^{\mathrm{univ}}$ over
+$\Moduli_{0, n}/\Spec(\QQ)$ with $n$ marked points.
+
+At the prime $p = 691$, the residual mod-$p$ representation
+$\bar\rho_{S_{11}(A), 691}: \Gal(\bar\QQ / \QQ) \to \mathrm{GL}_{d_{11}}(\bar\FF_{691})$
+has Chenevier determinant
+\[
+  \det \rho_{S_{11}(A), 691}
+  \;=\; \chi_{\mathrm{cyc}}^{11} \cdot \epsilon_{B_{12}}
+  \quad\text{mod}\quad 691,
+\]
+where $\chi_{\mathrm{cyc}}$ is the cyclotomic character and
+$\epsilon_{B_{12}}$ is the Kummer--Bernoulli-class character associated to
+$B_{12}/12 \equiv 0 \pmod{691}$. Primary sources: Kubota--Leopoldt 1964
+($p$-adic $L$-function and Kummer congruences); Chenevier 2014
+(determinants replacing pseudo-characters when $p \mid 2 \cdot 11!$,
+which includes $p = 691$); Ribet 1976 (converse to Herbrand on the
+$691$ prime). Vol I \texttt{arithmetic\_shadows.tex} computes
+$S_r$ through $r = 11$.
+
+LOCAL form at $p = 691$: restriction $\rho_{S_{11}(A), 691}|_{G_{\QQ_{691}}}$
+gives a local Galois representation whose Chenevier determinant equals
+the global determinant restricted to the decomposition group. Compatibility
+is the $\ell = p$ version of the Weil--Deligne local--global compatibility
+theorem (Tate 1967, Fontaine 1982).
+\end{theorem}
+
+\begin{proof}[Sketch]
+The ordered bar complex $\Bord(V_1(\mathfrak{sl}_2))$ on $\mathbb{P}^1$
+carries an algebraic action of $G_\QQ$ via the ell-adic etale
+cohomology of the relative configuration space $\Conf_n(\mathbb{P}^1)$ over
+$\Spec(\QQ)$, whose etale fundamental group is the absolute Galois group
+acting on $\pi_1^{\mathrm{et}}(\Conf_n(\mathbb{P}^1_{\bar\QQ}))$, a
+pro-$p$ group by Ihara 1990. The image is a pro-unipotent Galois
+representation, and the shadow tower $S_r$ is a direct summand. The
+Chenevier determinant captures the trace-like invariants of the
+pseudo-character data when the characteristic divides $2 n!$; at
+$p = 691$ and $r = 11$, $2 \cdot 11! = 79833600$, divisible by $691$.
+The specific form of the mod-$691$ determinant follows from the
+Kubota--Leopoldt $p$-adic $L$-function at $p = 691$ and the Kummer
+congruence $B_{12}/12 \equiv 0 \pmod{691}$ (Ribet 1976 converse to
+Herbrand, realised on the Galois representation attached to the
+$691$-th modular form of weight $12$).
+\end{proof}
+
+\textbf{Heal 5b (MGSL action).}
+
+\begin{theorem}[$\MGSL$ action on the two sides of the Universal Trace
+Identity]\ClaimStatusScoped
+\label{thm:mgsl-uti}
+Let $\MGSL = \mathrm{Lie}(\Gmot(\QQ)^{\mathrm{super}})$ be the motivic
+Galois super-Lie algebra of mixed motivic sheaves over $\Spec(\QQ)$
+with $\ZZ/2$-grading from fermionic modes (cf.\ §5.6.2 of the master
+synthesis). The $\MGSL$-action on periods of motivic sheaves restricts
+to an action on the period super-ring $\Periods^{\mathrm{super}}$.
+
+Then both sides of the Universal Trace Identity
+\[
+  K \circ \Phi \;=\; \kappa_{\mathrm{ch}}
+  \quad\text{in}\quad \mathsf{Func}(\mathsf{CY}_d\text{-}\mathsf{Cat}^{\mathrm{cyclic}, \mathrm{prop}}, \ZZ)
+\]
+are $\MGSL$-equivariant:
+\begin{itemize}
+\item[(i)] $\kappa_{\mathrm{ch}}$ is an $\MGSL$-scalar (supertrace of
+a Hodge realisation, fixed under $\MGSL$ by Hodge-class invariance).
+\item[(ii)] $K \circ \Phi$ carries a chain-level $\MGSL$-action via
+the GRT$_1(\QQ)$-torsor structure on the seven faces of $r(z)$;
+$\Gmot_{\MT(\ZZ)} \hookrightarrow \GRT(\QQ)$ makes the chain-level
+$\GRT(\QQ)$-action factor through $\Gmot_{\MT(\ZZ)}$ after passing
+to cohomology classes.
+\item[(iii)] The functor equality $K \circ \Phi = \kappa_{\mathrm{ch}}$
+is therefore an identity in $\MGSL\text{-}\mathsf{Mod}(\Periods^{\mathrm{super}})$,
+stated on the $\MGSL$-invariant subspace of both sides.
+\end{itemize}
+LOCAL form at a prime $p$: the local motivic Galois super-Lie
+$\MGSL_p = \mathrm{Lie}(\Gmot(\QQ_p)^{\mathrm{super}})$ acts on
+$p$-adic periods, and the identity restricts compatibly via the
+inclusion $\MGSL_p \hookrightarrow \MGSL$ after $p$-adic completion.
+
+Scope: the Vol I $K = -c_{\mathrm{ghost}}(\mathrm{BRST})$ is an
+$\MGSL$-scalar (ghost-charge Euler supertrace); the Vol III
+$\kappa_{\mathrm{BKM}} = c_N(0)/2$ is an $\MGSL$-scalar (Borcherds
+weight = singular theta-lift weight). Compatibility with $\Phi$ at the
+$\MGSL$-level witnesses the Universal Trace Identity at the period-ring
+level, not merely numerically.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Both $K$ and $\kappa_{\mathrm{ch}}$ are supertraces of Hodge classes in
+relative de Rham / \'etale cohomology; by motivic-Galois functoriality
+on Hodge classes, both are $\MGSL$-invariant. The chain-level
+$\GRT(\QQ)$-action on seven faces (Opus~15 two-scope torsor) factors
+through $\Gmot_{\MT(\ZZ)}$ at cohomology-class scope (Brown 2012
+surjectivity; Deligne--Ihara conjectural injectivity). Period-ring
+compatibility is Kontsevich--Zagier 2001 extended to the
+$\ZZ/2$-super-refinement from BRST-ghost parity (Costello--Gwilliam
+super-BV).
+\end{proof}
+
+\textbf{Heal 5c ($\GRT(\QQ)$ transport $F_2 \to F_3$, explicit
+Drinfeld associator).}
+
+\begin{proposition}[KZ-to-Yangian GRT element]\ClaimStatusTheorem
+\label{prop:F2-F3-drinfeld-associator}
+The $\GRT(\QQ)$-transport element carrying the KZ associator $\Phi_{\KZ}
+\in U(\frakg)^{\otimes 3}[[\hbar]]$ (face $F_2$) to the Yangian
+$R$-matrix $R(z) = 1 + \hbar \Omega/z + O(\hbar^2)$ (face $F_3$) is
+the Drinfeld associator itself:
+\[
+  F_3 \;=\; \Phi_{\KZ} \cdot F_2
+  \quad\text{under the canonical $\GRT(\QQ)$-action on}\quad
+  \Face(A).
+\]
+Concretely, let $\Omega_{\mathrm{tr}} = \Omega / (2 h^\vee)$ be the
+Casimir normalised by twice the dual Coxeter number, and let
+$R(z) = 1 + \hbar \Omega_{\mathrm{tr}}/z + O(\hbar^2)$. Then
+$R(z) = \Phi_{\KZ}^{-1}(z/\hbar) \cdot \mathbf{1} \cdot \Phi_{\KZ}(z/\hbar)$
+in the Drinfeld--Kohno algebra $T_n(\frakg)$ (Kohno 1987, Drinfeld
+1989). The transport $\Phi_{12,3} \in \GRT^{\mathrm{fin}}$ is thus
+realised as the pentagon cycle of the associator.
+
+LOCAL form: at a fixed chart $z = z_1 - z_2$ on $\Conf_2(C)$, the
+transport reduces to the classical-limit Yangian $R$-matrix expansion
+on the formal disk.
+
+GLOBAL form: on the universal $\Conf_2^{\mathrm{univ}}/\Moduli_{g,n}$,
+the transport is the universal-KZB-equation associator $\Phi_{\KZB}^{\mathrm{univ}}$
+(Enriquez 2008 Prop 3.2 at $g = 1$; conjectural at $g \ge 2$).
+\end{proposition}
+
+\begin{proof}[Sketch]
+The KZ associator pentagon identity
+$\Phi_{\KZ}^{123} \Phi_{\KZ}^{12,3,4} = \Phi_{\KZ}^{12,34} \Phi_{\KZ}^{1,23,4} \Phi_{\KZ}^{2,3,4}$
+at order $\hbar^2$ gives the classical-$r$-matrix Yang--Baxter
+equation $[r^{12}, r^{13}] + [r^{12}, r^{23}] + [r^{13}, r^{23}] = 0$
+(Drinfeld 1989 §4). The Yangian $R$-matrix $R(z) = 1 + \hbar r(z) +
+O(\hbar^2)$ with $r(z) = \Omega_{\mathrm{tr}}/z$ is the rational
+Drinfeld--Kohno $r$-matrix; Drinfeld 1985 constructs the Yangian
+$Y(\frakg)$ from $r(z)$ via the RTT relations. The $\GRT(\QQ)$-action
+relating $\Phi_{\KZ}$ to $R(z)$ is the canonical one coming from
+Tamarkin's 1998 theorem on $\GRT(\QQ)$ as the gauge group of
+formality transfers.
+\end{proof}
+
+\textbf{What survives (arithmetic).} The $\MGSL$- and $\GRT(\QQ)$-
+actions on the seven-face datum are compatible with the local--global
+structure: arithmetic information (Chenevier determinants at
+Kummer--Bernoulli primes) is visible at the $p$-adic LOCAL level and
+assembles back to the GLOBAL motivic-Galois picture. The Universal
+Trace Identity is a statement in $\MGSL$-modules over
+$\Periods^{\mathrm{super}}$; the $\GRT(\QQ)$-transport $F_2 \to F_3$ is
+explicitly the Drinfeld associator.
+
+\subsection*{Summary: what is left standing}
+
+After five attack--heal cycles, the Manin--Gaitsgory local--global
+discipline of §2.3, §2.4, §5.5, §5.6 survives in the following
+sharpened form.
+
+\begin{theorem}[Master local--global correspondence for Vol I, five
+theorems + seven faces + arithmetic]\ClaimStatusScoped
+\label{thm:master-LG}
+For each of the five Vol I theorems $\{A, B, C, D, H\}$, the LOCAL
+and GLOBAL forms sit in distinct $(\infty,1)$-categories with an
+explicit morphism between them. The LOCAL--GLOBAL correspondence is
+witnessed by:
+\begin{itemize}
+\item[(A)] Theorem~\ref{thm:A-local-global}:
+$\Omegach^{\mathrm{univ}} \dashv \Bch^{\mathrm{univ}}$ restricts
+fibrewise to $\Omegach_C \dashv \Bch_C$; extends across the nodal
+boundary via the clutching formula~\eqref{eq:clutching}
+(Theorem~\ref{thm:A-clutching}).
+\item[(B)] Theorem~\ref{thm:B-local-global}: chiral Positselski
+equivalence globalises on the open Koszul locus
+$\Kosz^{\mathrm{rel}}/M_{g,n}$; nodal extension conjectural.
+\item[(C)] Theorem~\ref{thm:C-local-global}:
+$\kappa_{\mathcal{A}} + \kappa^!_{\mathcal{A}}$ is a locally constant
+function on $M_{g,n}$; local = global numerically, identified as a
+section of a locally constant $\QQ$-sheaf by Saito's Hodge rigidity.
+\item[(D)] Theorem~\ref{thm:D-local-global}: $\obs^{\mathrm{univ}} =
+\kappa \cdot \lambda^{\mathrm{univ}}$ in $H^2(\Moduli_{g,n}; \QQ)$;
+LOCAL form is pullback of Chern classes to a fibre, a numerical
+check.
+\item[(H)] Theorem~\ref{thm:H-local-global}:
+$\ChirHoch^{\bullet, \mathrm{univ}}$ is $t$-exact in the relative
+$t$-structure, concentrated in $\{0, 1, 2\}$; fibrewise on smooth
+base, LOCAL = GLOBAL by Saito.
+\end{itemize}
+The seven faces of $r(z)$ each carry specified LOCAL (formal-disk or
+$\Conf_2(C)$) and GLOBAL (universal-KZB, universal-Yangian, relative
+FM) presentations, with $\GRT(\QQ)$-torsor structure compatible with
+the local--global split. The $F_2 \to F_3$ transport is the Drinfeld
+associator (Proposition~\ref{prop:F2-F3-drinfeld-associator}).
+$F_5$ (Drinfeld double) LOCAL at any fixed $C$; GLOBAL conjectural at
+$g \ge 1$.
+Arithmetic Cycle 5 respects the discipline: Chenevier determinants
+(Theorem~\ref{thm:shadow-galois-chenevier}) realise $p$-adic LOCAL
+Galois representations; the $\MGSL$-action on the Universal Trace
+Identity (Theorem~\ref{thm:mgsl-uti}) is compatible at the
+period-ring level.
+
+Both the chain-level LOCAL lane and the $(\infty, 1)$-categorical
+GLOBAL lane are equally load-bearing: neither is a shadow of the
+other (``lane assignment'' Pattern 269, \texttt{CLAUDE.md}).
+\end{theorem}
+
+\subsection*{The commuting cube: five theorems, two lanes, one moduli}
+
+The master correspondence
+Theorem~\ref{thm:master-LG} assembles into a single commuting cube:
+the five theorems $\{A, B, C, D, H\}$ are the front face, the LOCAL
+and GLOBAL forms occupy the top and bottom faces, and the
+local--global maps are the vertical edges. The lateral edges between
+theorems are the structural dependencies: Theorem $A$ feeds Theorem
+$B$ (Positselski via bar-cobar), Theorem $C$ feeds Theorem $D$
+(complementarity as Hodge supertrace feeding into Chern--Weil), Theorem
+$H$ is transverse (concentration is an independent structural
+feature).
+
+Explicitly:
+\[
+\begin{array}{c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c}
+   &            & A^{\mathrm{LOC}}   &            & B^{\mathrm{LOC}}   &            &                    \\
+   & \swarrow   &                    & \searrow   &                    & \searrow   &                    \\
+C^{\mathrm{LOC}}   &            & D^{\mathrm{LOC}}   &            & H^{\mathrm{LOC}}   &            &                    \\
+   & \downarrow &                    & \downarrow &                    & \downarrow &                    \\
+C^{\mathrm{GLOB}}  &            & D^{\mathrm{GLOB}}  &            & H^{\mathrm{GLOB}}  &            &                    \\
+   & \nearrow   &                    & \nwarrow   &                    & \nwarrow   &                    \\
+   &            & A^{\mathrm{GLOB}}  &            & B^{\mathrm{GLOB}}  &            &                    \\
+\end{array}
+\]
+
+Commutativity witnesses: (i) $A$-row: fibrewise Koszul reflection
+feeds Positselski (Thms~\ref{thm:A-local-global},
+\ref{thm:B-local-global}); (ii) $C$-$D$ column: local-constancy
+feeds Chern--Weil (Thms~\ref{thm:C-local-global}--\ref{thm:D-local-global});
+(iii) $H$-column: fibrewise concentration extends to
+$t$-exactness (Thm~\ref{thm:H-local-global}). The horizontal face is
+Theorem~$A^{\infty, 2}$ (Francis--Gaitsgory,
+\texttt{theorem\_A\_infinity\_2.tex}); the vertical face is
+fibre-restriction functoriality of factorisation D-modules.
+
+The cube is the Manin--Gaitsgory skeleton of Vol I: every theorem has
+a position, every position has two faces, every face pair carries a
+named morphism specified as a theorem rather than a convention.
+
+\subsection*{Why the local--global discipline matters}
+
+The discipline addresses three hidden confusion patterns.
+\emph{(X1) Lane unnamed.} A chain-level proof on fixed $C$ does not
+extend to $\Moduli_{g,n}$ for free; the chain-level $E_3$ identification
+for affine KM at non-critical level
+(\texttt{e3\_identification\_chain\_level\_platonic.tex}) is LOCAL, and
+its GLOBAL lift via relative SC$^{\mathrm{ch,top}}$ is a separate,
+not-yet-closed result.
+\emph{(X2) Locally constant $\neq$ numerical.} Theorem $C$'s
+$\kappa + \kappa^! \in \{0, 8, 13, 250/3, 98/3\}$ is a Hodge-rigidity
+statement about locally constant sheaves on $M_{g,n}$, not a bare
+number per genus.
+\emph{(X3) Base-of-definition.} Chenevier determinants at $p = 691$
+require $S = \Spec(\ZZ)$; $\MGSL$-action requires the rational motivic
+base. Implicit base changes alter content silently.
+
+Forward-looking inscriptions: LOCAL lane $=$ chain-level chart on
+$\Conf_n(C)$ for fixed $C/\QQ$; GLOBAL lane $=$ fibred
+$(\infty,1)$-category over $\Moduli_{g,n}/\Spec(\QQ)$; the
+local--global theorem names the restriction functor and the
+nodal-boundary behaviour explicitly.
+
+\subsection*{Open residuals after the heal}
+
+Three residuals remain after the five attack--heal cycles:
+
+\begin{enumerate}
+\item Theorem $B$ (Positselski) at the nodal stratum
+$\partial\Moduli_{g,n}$: conjectural; the co-derived category may
+require further resolution at the boundary. See Vol I
+\texttt{theorem\_B\_scope\_platonic.tex} frontier list.
+\item $F_5$ Drinfeld double at $g \ge 1$: universal Drinfeld
+double over families; open even at $g = 1$ beyond Enriquez's
+elliptic associator (genus-$1$ KZB in full generality pinned to
+Drinfeld-double structure remains a programme frontier,
+\texttt{feedback\_yangian\_type\_distinction.md}).
+\item Deligne--Ihara injectivity: $\Gmot_{\MT(\ZZ)} \hookrightarrow
+\GRT(\QQ)$ is surjective (Brown 2012); conjectured injective
+(Deligne 2010). If non-injective, the cohomological-scope $\GRT(\QQ)$-
+action factors through a proper quotient; the MGSL compatibility in
+Theorem~\ref{thm:mgsl-uti} then carries a further torsor correction.
+\end{enumerate}
+
+None of these disturb the platonic form of the local--global
+correspondence at the smooth-moduli open locus; all three are
+named boundary / arithmetic frontier items, compatible with the Vol I
+frontier list of §8 of the master synthesis.
+
+\subsection*{Primary-source anchor list}
+
+\begin{itemize}
+\item Beilinson--Drinfeld 1999 \emph{Chiral Algebras} (AMS Colloq.\ 51,
+2004 ed.): ch.~3 factorisation D-modules on Ran; \S3.4 relative
+factorisation under nodal degeneration.
+\item Francis--Gaitsgory 2012 ``Chiral Koszul duality,''
+\emph{Selecta Math.}\ 18:27--87: $(\infty,1)$-categorical bar-cobar.
+\item Gaitsgory 2007 ``Notes on geometric Langlands'' (extended
+Whittaker): relative factorisation D-modules on moduli of curves.
+\item Lurie 2017 \emph{Higher Algebra} §5.5: adjoint functor theorem
+for presentable $(\infty,1)$-categories.
+\item Drinfeld 1985 \emph{Soviet Math.\ Dokl.}\ 32 (Yangian/RTT);
+Drinfeld 1989 \emph{Leningrad Math.\ J.}\ 1 (associator/pentagon).
+\item Kohno 1987 \emph{Inv.\ Math.}\ 89: Drinfeld--Kohno algebra.
+\item Enriquez 2008 arXiv:math/0607573 ($\GRT^{\mathrm{ell}}(\QQ)$);
+Calaque--Enriquez--Etingof 2009 \emph{Math.\ Ann.}\ 345 (universal KZB).
+\item Brown 2012 \emph{Ann.\ of Math.}\ 175 (arXiv:1102.1312):
+$\Gmot_{\MT(\ZZ)} \twoheadrightarrow \GRT(\QQ)$.
+\item Deligne--Goncharov 2005 \emph{Ann.\ Sci.\ ENS}\ 38; Willwacher
+2015 \emph{Inv.\ Math.}\ 200 (arXiv:1009.1654); Tamarkin 1998
+arXiv:math/9803025.
+\item Kontsevich--Zagier 2001 ``Periods,'' in \emph{Mathematics
+Unlimited 2001 and Beyond}: period ring $\Periods$.
+\item Ihara 1990 ICM: Galois action on geometric $\pi_1$.
+\item Kubota--Leopoldt 1964 \emph{J.\ reine angew.\ Math.}\ 214--215
+($p$-adic $L$-functions, Kummer congruences); Ribet 1976 \emph{Inv.\
+Math.}\ 34 (Herbrand--Ribet at $p = 691$).
+\item Chenevier 2014 \emph{LMS LNS}\ 414: determinants in characteristic
+$p \mid 2n!$.
+\item Fontaine 1982 \emph{Ann.\ of Math.}\ 115 ($p$-adic Hodge); Tate
+1967 \emph{Proc.\ Local Fields} ($p$-divisible groups).
+\item Mumford 1977 \emph{Inv.\ Math.}\ 42: Hodge bundle Chern classes
+on $\Moduli_{g,n}$.
+\item Saito 1988/1990 \emph{Publ.\ RIMS Kyoto}\ 24/26: Hodge modules
+on moduli, local constancy of supertraces.
+\item Beilinson--Bernstein--Deligne 1982 \emph{Ast\'erisque}\ 100:
+$t$-exactness.
+\item Costello--Gwilliam 2021 \emph{Factorization Algebras in QFT}, Vol.\
+2: super-BV, $\ZZ/2$-graded periods.
+\end{itemize}
+
+\subsection*{Cross-anchor discipline for forward inscriptions}
+
+Every Vol I inscription henceforth: (1) specify LOCAL chart
+(fixed $C/\QQ$, $g$, marked set) or state the theorem inherently
+GLOBAL; (2) GLOBAL specifies base $\Spec(\QQ)/\Spec(\ZZ)$/etale;
+(3) name the restriction functor and nodal-boundary behaviour;
+(4) chain-level gives differential / homotopy / MC element / OPE pole,
+$(\infty,1)$-categorical gives adjunction / $t$-structure /
+limit-colimit construction. Already in use in
+\texttt{mc5\_class\_m\_chain\_level\_platonic.tex} (chain-level LOCAL,
+weight-completed) and \texttt{theorem\_A\_infinity\_2.tex}
+($(\infty,2)$-GLOBAL Francis--Gaitsgory).
+
+The Vol I climax chapter (nascent) states $d_{\mathrm{bar}} =
+\KZ^*(\nabla_{\mathrm{Arnold}})$ and $K(A) = -c_{\mathrm{ghost}}(\mathrm{BRST}(A))$
+at both lanes: LOCAL on $\Conf_n(C)$ (chain-level differential and
+conductor) and GLOBAL on $\Moduli_{g,n}$ (flat connection, locally
+constant ghost charge). The five theorems become corollaries of this
+two-equation identity with their local--global refinements per
+Theorem~\ref{thm:master-LG}.

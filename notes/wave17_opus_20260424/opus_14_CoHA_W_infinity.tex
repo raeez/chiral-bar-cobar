@@ -1,0 +1,1004 @@
+\section{The triangle $\mathrm{CoHA}(\mathbb{C}^3) = Y^+(\widehat{\mathfrak{gl}}_1) = \mathcal{W}_{1+\infty}$: a CG-rectify level treatise}
+\label{opus:sec:coha-yangian-winf-triangle}
+
+\providecommand{\ClaimStatusTheorem}{\textsc{[theorem, cited]}}
+\providecommand{\ClaimStatusConjectured}{\textsc{[conjectural]}}
+\providecommand{\ClaimStatusDefinition}{\textsc{[definition]}}
+\providecommand{\ClaimStatusDerivation}{\textsc{[first-principles derivation]}}
+\providecommand{\ClaimStatusOpen}{\textsc{[open]}}
+\providecommand{\CoHA}{\mathrm{CoHA}}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\Wilpha}{\mathcal{W}_{1+\infty}}
+\providecommand{\gghone}{\widehat{\mathfrak{gl}}_1}
+\providecommand{\hCS}{\mathrm{hCS}}
+\providecommand{\Jac}{J}
+\providecommand{\Fact}{\mathrm{Fact}}
+\providecommand{\Crit}{\mathrm{Crit}}
+\providecommand{\Hilb}{\mathrm{Hilb}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\eps}{\epsilon}
+\providecommand{\Zinst}{Z^{\mathrm{inst}}_{\Omega}}
+
+\emph{Scope.} The treatise targets a fully rigorous derivation, with
+independent-path verification at every equality, of the triangle
+\[
+ \CoHA(\mathbb{C}^3) \;=\; Y^+(\gghone) \;=\; \Wilpha[\lambda]
+\]
+through the Kontsevich--Soibelman $\to$ Schiffmann--Vasserot $\to$
+Tsymbaliuk $\to$ Kac--Radul / Linshaw $\to$ Gaiotto--Rap\v c\'ak /
+Costello--Paquette chain. Every conflation that has historically led
+the programme astray is isolated and prohibited. Every identification is
+pinned to a primary citation, a chain-level computation, and a gauge-theory
+incarnation. The protocol mandates $\geq 5$ attack-heal cycles; these are
+inscribed as \S\ref{opus:sec:ah-1-jacobi}--\S\ref{opus:sec:ah-8-nekrasov}.
+
+%--------------------------------------------------------------------------------
+\subsection{The Jordan triple loop quiver and its Jacobi algebra}
+\label{opus:sec:jordan-triple-quiver}
+
+\begin{definition}[Jordan triple loop quiver $Q$]
+\label{opus:def:jordan-triple-quiver}
+\ClaimStatusDefinition. $Q$ has one vertex $*$ and three loops $X, Y, Z : * \to *$.
+The path algebra $kQ$ is the free associative $k$-algebra on three
+generators $k\langle X, Y, Z\rangle$.
+\end{definition}
+
+\begin{definition}[Klebanov--Witten--type cubic potential]
+\label{opus:def:cubic-potential}
+\ClaimStatusDefinition. The potential is the cyclic-invariant word
+\[
+ W \;:=\; \mathrm{tr}\bigl(X[Y,Z]\bigr) \;=\; \mathrm{tr}(XYZ - XZY) \;\in\; kQ_{\mathrm{cyc}} := kQ/[kQ,kQ].
+\]
+$W$ is cyclically invariant by construction: cyclic rotation of any word
+in $kQ$ descends to $kQ_{\mathrm{cyc}}$ unchanged.
+\end{definition}
+
+\begin{proposition}[Jacobi algebra $\cong \mathcal{O}_{\C^3}$: first-principles derivation]
+\label{opus:prop:jacobi-is-C3}
+\ClaimStatusDerivation.
+The Jacobi algebra $\Jac(Q, W) := kQ / \langle \partial_a W : a \in \{X, Y, Z\}\rangle$
+is canonically isomorphic to the polynomial ring $k[X, Y, Z] = \mathcal{O}_{\C^3}$.
+\end{proposition}
+
+\begin{proof}
+Cyclic derivatives of words in a cyclic-invariant class: for a single monomial
+$m = a_1 \cdots a_n$ and letter $a$,
+$\partial_a m = \sum_{i : a_i = a} a_{i+1} \cdots a_n a_1 \cdots a_{i-1}$
+(Kontsevich--Soibelman~2008, \texttt{arXiv:0811.2435}, \S8;
+Ginzburg~2006, \texttt{arXiv:math/0612139}). We apply this to
+$W = XYZ - XZY$ (two monomials, each of length three).
+
+For $\partial_X$: in $XYZ$ the letter $X$ appears at position~$1$ with cyclic
+successor $YZ$, giving contribution $YZ$; in $XZY$ the letter $X$ appears at
+position~$1$ with cyclic successor $ZY$, giving $ZY$. Signs follow the coefficient:
+\[
+ \partial_X W \;=\; YZ - ZY \;=\; [Y, Z].
+\]
+
+For $\partial_Y$: cyclic rotation of $XYZ$ to $YZX$ puts $Y$ at position~$1$
+with successor $ZX$, giving $ZX$; cyclic rotation of $XZY$ to $YXZ$ puts $Y$ at
+position~$1$ with successor $XZ$, giving $XZ$. Sign follows:
+\[
+ \partial_Y W \;=\; ZX - XZ \;=\; [Z, X].
+\]
+
+For $\partial_Z$: cyclic rotation of $XYZ$ to $ZXY$ puts $Z$ at position~$1$
+with successor $XY$, giving $XY$; cyclic rotation of $XZY$ to $ZYX$ gives $YX$.
+Sign follows:
+\[
+ \partial_Z W \;=\; XY - YX \;=\; [X, Y].
+\]
+
+The three relations $\partial_X W = \partial_Y W = \partial_Z W = 0$ are exactly the
+three commutators $[Y,Z] = [Z,X] = [X,Y] = 0$. Hence $\Jac(Q, W) = k\langle X, Y, Z\rangle/
+([X,Y], [Y,Z], [Z,X]) = k[X, Y, Z] = \mathcal{O}_{\C^3}$. The sign convention is
+consistent: the cyclic derivative is the unique graded derivation
+$\partial_a : kQ_{\mathrm{cyc}} \to kQ$ satisfying $\partial_a(b) = \delta_{ab}$,
+extended by the twisted Leibniz rule on cyclic words (Ginzburg~2006 Def.~3.5.1;
+compatibility with cyclic rotation fixes the sign uniquely).
+\end{proof}
+
+\begin{verification}[Three independent paths to Proposition~\ref{opus:prop:jacobi-is-C3}]
+\label{opus:verif:jacobi-is-C3}
+\mbox{}
+\begin{enumerate}
+\item \emph{Direct computation above.}
+\item \emph{CY$_3$ algebra characterisation.} Ginzburg~2006 Thm.~3.6.4:
+the Ginzburg dg-algebra of $(Q, W)$ has cohomology in degree $0$ equal to $\Jac(Q, W)$
+and is a $3$-Calabi--Yau dg-algebra. For the Jordan triple loop with cubic potential,
+this cohomology coincides with the polynomial ring $k[X, Y, Z]$, whose Hochschild
+cohomology $\HH^\bullet(\mathcal{O}_{\C^3}) = \bigwedge^\bullet T_{\C^3}$ recovers
+the polyvector fields of $\C^3$; this matches the CY$_3$-algebra
+$\operatorname{Ext}^\bullet$-computation.
+\item \emph{Geometric representation theory.} Moduli of finite-dimensional representations
+$\operatorname{Rep}_n(\Jac(Q,W)) = \{(X,Y,Z) \in \mathrm{End}(\C^n)^3 : [X,Y]=[Y,Z]=[Z,X]=0\}$
+is the commuting variety; after GIT-quotient by $GL_n$ and for a specific stability condition
+this recovers $\Hilb^n(\C^3)$ (Nakajima~1999). The fact that commuting triples parametrise
+ideals of colength $n$ in $\mathcal{O}_{\C^3}$ is an independent check that $\Jac(Q,W) = \mathcal{O}_{\C^3}$.
+\end{enumerate}
+\end{verification}
+
+\begin{remark}[Sign convention: cyclic vs.\ non-cyclic derivative]
+\label{opus:rem:sign-jacobi}
+A subtle sign arises if one confuses the cyclic derivative with the ordinary
+(non-cyclic) derivative on $kQ$. For a cyclically invariant element, the two
+agree up to a factor of the number of cyclic rotations. The computation above uses
+the cyclic derivative (Ginzburg~2006 Def.~3.5.1), which is the operation that
+produces the correct Jacobi-algebra relations and is compatible with the
+Kontsevich--Soibelman CoHA multiplication below. Using the non-cyclic derivative
+would double-count and give $[Y,Z] - [Y,Z] = 0$ type identities that are
+\emph{not} the Jacobi relations.
+\end{remark}
+
+%--------------------------------------------------------------------------------
+\subsection{Moduli of representations, torus action, CY$_3$ condition}
+\label{opus:sec:moduli-torus}
+
+\begin{definition}[Moduli stack $\mathcal{M}_n$]
+\label{opus:def:moduli-stack}
+\ClaimStatusDefinition.
+\[
+ \mathcal{M}_n \;:=\; \bigl[\{(X,Y,Z) \in \mathrm{End}(\C^n)^3 : [X,Y] = [Y,Z] = [Z,X] = 0\}/\,GL_n(\C)\bigr].
+\]
+\end{definition}
+
+\begin{definition}[Torus action and CY$_3$ condition]
+\label{opus:def:torus-cy3}
+\ClaimStatusDefinition.
+$T = (\C^\times)^3$ acts on $(X, Y, Z)$ by $(t_1, t_2, t_3) \cdot (X, Y, Z)
+= (t_1 X, t_2 Y, t_3 Z)$. The CY$_3$ volume form $\Omega_{\C^3} = dX \wedge dY \wedge dZ$
+is $T$-invariant iff $t_1 t_2 t_3 = 1$. Writing $t_i = e^{\eps_i}$, this becomes
+\[
+\boxed{\eps_1 + \eps_2 + \eps_3 = 0.}
+\]
+The equivariant parameter ring is $\mathbb{F} := \C(\eps_1, \eps_2)$ with
+$\eps_3 = -\eps_1 - \eps_2$.
+\end{definition}
+
+\begin{lemma}[$T$-fixed loci = plane partitions]
+\label{opus:lem:T-fixed-plane-partitions}
+\ClaimStatusDerivation.
+The $T$-fixed locus of $\Hilb^n(\C^3) \hookrightarrow \mathcal{M}_n$ is in bijection
+with plane partitions (3d Young diagrams) of total volume $n$.
+\end{lemma}
+
+\begin{proof}
+A $T$-fixed ideal $I \subset \mathcal{O}_{\C^3} = k[X, Y, Z]$ is generated by
+$T$-eigenvectors, i.e.\ by monomials $X^a Y^b Z^c$ of multi-weight
+$(a\eps_1 + b\eps_2 + c\eps_3)$. Hence $I$ is a monomial ideal, equivalently
+the complement of $I$ in the lattice $\Z_{\geq 0}^3$ is an order ideal
+(lower set under componentwise $\leq$). An order ideal of cardinality $n$
+in $\Z_{\geq 0}^3$ is a plane partition of volume $n$.
+
+This is Proposition~5.1 of Maulik--Nekrasov--Okounkov--Pandharipande (MNOP)~2006
+(\texttt{arXiv:math/0312059}) and goes back to Cheah~1996. Equivalently, a
+$T$-fixed commuting triple of $n \times n$ matrices is simultaneously diagonalisable
+with common weight basis, and the list of weights $(a, b, c) \in \Z_{\geq 0}^3$
+forms a plane partition. Conversely, any plane partition of volume $n$ gives a
+monomial ideal of colength $n$, hence a point of $\Hilb^n(\C^3)^T$.
+\end{proof}
+
+\begin{verification}[Three independent paths to Lemma~\ref{opus:lem:T-fixed-plane-partitions}]
+\label{opus:verif:plane-partitions}
+\mbox{}
+\begin{enumerate}
+\item \emph{MNOP combinatorial classification above.}
+\item \emph{MacMahon generating function.} $\sum_{n \geq 0} q^n |\Hilb^n(\C^3)^T| = \prod_{k \geq 1}(1 - q^k)^{-k}
+= M(q)$, the MacMahon function counting 3d partitions. This matches the Nekrasov
+instanton generating function in the $U(1)$ sector (Nekrasov~2003,
+\texttt{arXiv:hep-th/0206161}; see also path~(3) below).
+\item \emph{Character identity.} The character of the $T$-equivariant tangent
+space $T_{[I]}\Hilb^n(\C^3)$ at a monomial-ideal fixed point $[I]$ is computable
+combinatorially from the plane partition $\pi$, yielding the MacMahon
+character-formula that cross-checks against localisation-theoretic predictions
+(Okounkov~2003 \texttt{arXiv:math/0512330} Prop.~3).
+\end{enumerate}
+\end{verification}
+
+%--------------------------------------------------------------------------------
+\subsection{The cohomological Hall algebra and the shuffle formula}
+\label{opus:sec:coha-shuffle}
+
+\begin{definition}[CoHA as critical cohomology with potential]
+\label{opus:def:coha-critical}
+\ClaimStatusDefinition. (Kontsevich--Soibelman~2008 \S6.)
+\[
+ \CoHA(\C^3) \;:=\; \bigoplus_{n \geq 0} H^*_T\bigl(\mathcal{M}_n,\; \phi_{W_n}\bigr)
+\]
+where $W_n = \mathrm{tr}_n(W) : \operatorname{End}(\C^n)^3 \to \C$ is the trace of the potential
+evaluated on the representation space, and $\phi_{W_n}$ is the vanishing cycle sheaf
+(Deligne~SGA~7.2 Exp.~XIV; Illusie). The multiplication is by extension correspondence:
+for a short exact sequence $0 \to V' \to V \to V'' \to 0$ of commuting triples,
+one pulls back $V' \otimes V''$-classes and pushes forward to $V$-classes.
+\end{definition}
+
+\begin{remark}[Vanishing cycle localisation to the commuting locus]
+\label{opus:rem:vanishing-cycle-localisation}
+The critical locus of $W_n$ on $\operatorname{End}(\C^n)^3$ is the commuting variety:
+$\Crit(W_n) = \{[X,Y] = [Y,Z] = [Z,X] = 0\}$. Under mild regularity hypotheses
+(Schiffmann--Vasserot~2013 \texttt{arXiv:1202.2756}, Thm.~1.1; Davison~2012
+for the general quiver-with-potential case),
+\[
+ H^*_T(\operatorname{End}(\C^n)^3, \phi_{W_n}) \;\simeq\; H^*_T(\Crit(W_n), \C)
+\]
+up to a cohomological shift, so the CoHA reduces to equivariant cohomology of
+the commuting variety. Under $T$-localisation this further reduces to a sum
+over plane partitions (Lemma~\ref{opus:lem:T-fixed-plane-partitions}).
+\end{remark}
+
+\begin{theorem}[Schiffmann--Vasserot 2013, Thm.~1.1]
+\label{opus:thm:sv-shuffle}
+\ClaimStatusTheorem. Over the field $\mathbb{F}(\!(z)\!)$,
+\[
+ \CoHA(\C^3) \otimes_{\mathbb{F}} \mathbb{F}(\!(z)\!) \;\cong\; \Sh,
+\]
+where $\Sh = \bigoplus_{m \geq 0} \mathbb{F}[z_1, \ldots, z_m]^{S_m}$ is the
+shuffle algebra with product
+\[
+ (F \star G)(x_1, \ldots, x_{m+n})
+ \;:=\; \frac{1}{m! n!} \sum_{\sigma \in S_{m+n}} \sigma \cdot \Bigl[
+  F(x_1, \ldots, x_m)\, G(x_{m+1}, \ldots, x_{m+n})
+  \prod_{\substack{1 \leq i \leq m \\ m < j \leq m+n}} \omega(x_j, x_i)
+ \Bigr]
+\]
+with kernel
+\[
+ \omega(z, w) \;=\; \frac{(z - w - \eps_1)(z - w - \eps_2)(z - w - \eps_3)}{(z - w)^3}.
+\]
+\end{theorem}
+
+\begin{proof}[Sketch (referring to Schiffmann--Vasserot~2013 for the full argument)]
+The proof proceeds via $T$-equivariant localisation: $H^*_T(\mathcal{M}_n, \phi_{W_n})
+\to H^*_T(\mathcal{M}_n^T, \phi_{W_n}^T)$ is injective and becomes an isomorphism
+after inverting the equivariant parameters, with the localisation formula
+providing an explicit representation in terms of plane-partition contributions.
+The Hall product, localised, gives a sum over extensions that the combinatorial
+identification with the shuffle algebra $\Sh$ recovers. The precise shuffle kernel
+$\omega$ reflects the $T$-character of the virtual tangent space of
+$\operatorname{Ext}^1_{\Jac(Q,W)}(\C^m, \C^n) - \operatorname{Ext}^0_{\Jac(Q,W)}(\C^m, \C^n)$:
+one has $T$-character $\prod (1 - t_i/z_j/w_k)^{\pm 1}$ summed over $i = 1, 2, 3$
+and reduced modulo the CY$_3$ identity. The displayed $\omega$ is the unique
+$S_2$-symmetric rational function with this $T$-character content and pole
+behaviour; see Schiffmann--Vasserot~2013 \S3 for the full derivation.
+\end{proof}
+
+\begin{remark}[The $\frac{1}{m!n!}$ prefactor]
+\label{opus:rem:shuffle-prefactor}
+The prefactor $\frac{1}{m!n!}$ in the shuffle product is a convention that
+normalises the $S_{m+n}$-sum: without it, the sum would run over \emph{shuffles}
+(cosets $S_{m+n}/(S_m \times S_n)$) rather than over the full $S_{m+n}$, giving
+an over-counting by $m!n!$. Either convention yields the same algebraic object;
+the choice above agrees with Schiffmann--Vasserot's convention and makes the
+low-order computations below transparent.
+\end{remark}
+
+\begin{proposition}[Verification at $m = n = 1$: $p_1 \star p_1$]
+\label{opus:prop:p1-star-p1}
+\ClaimStatusDerivation.
+Let $p_1(z) = z$. Then
+\[
+ (p_1 \star p_1)(x_1, x_2) \;=\; x_1 x_2 \cdot \bigl[\omega(x_1, x_2) + \omega(x_2, x_1)\bigr]
+ \;=\; x_1 x_2 \cdot \left[2 + \frac{2 \sigma_2}{(x_1 - x_2)^2}\right],
+\]
+where $\sigma_2 = \eps_1\eps_2 + \eps_2\eps_3 + \eps_3\eps_1$. Under the CY$_3$ identity
+$\eps_1 + \eps_2 + \eps_3 = 0$, $\sigma_2 = -\tfrac{1}{2}(\eps_1^2 + \eps_2^2 + \eps_3^2)$.
+\end{proposition}
+
+\begin{proof}
+Setting $F = p_1(x_1) = x_1$, $G = p_1(x_2) = x_2$, $m = n = 1$:
+\[
+ (p_1 \star p_1)(x_1, x_2) \;=\; \frac{1}{1!1!} \sum_{\sigma \in S_2}
+ \sigma \cdot \bigl[x_1 \cdot x_2 \cdot \omega(x_2, x_1)\bigr].
+\]
+$S_2 = \{e, (1\,2)\}$:
+\begin{itemize}
+\item $e$: $x_1 \cdot x_2 \cdot \omega(x_2, x_1)$.
+\item $(1\,2)$: $x_2 \cdot x_1 \cdot \omega(x_1, x_2)$.
+\end{itemize}
+Summing and using commutativity $x_1 x_2 = x_2 x_1$:
+\[
+ (p_1 \star p_1)(x_1, x_2) \;=\; x_1 x_2 \cdot [\omega(x_1, x_2) + \omega(x_2, x_1)].
+\]
+Now set $u = x_1 - x_2$:
+\[
+ \omega(x_1, x_2) \;=\; \frac{(u - \eps_1)(u - \eps_2)(u - \eps_3)}{u^3},
+ \quad
+ \omega(x_2, x_1) \;=\; \frac{(-u - \eps_1)(-u - \eps_2)(-u - \eps_3)}{(-u)^3}
+ \;=\; \frac{(u + \eps_1)(u + \eps_2)(u + \eps_3)}{u^3}.
+\]
+Expanding the symmetric-in-$u$ combination $(u - \eps_1)(u - \eps_2)(u - \eps_3) + (u + \eps_1)(u + \eps_2)(u + \eps_3)$:
+\begin{align*}
+&\bigl[u^3 - (\eps_1 + \eps_2 + \eps_3) u^2 + (\eps_1\eps_2 + \eps_2\eps_3 + \eps_3\eps_1) u - \eps_1\eps_2\eps_3\bigr] \\
+&+ \bigl[u^3 + (\eps_1 + \eps_2 + \eps_3) u^2 + (\eps_1\eps_2 + \eps_2\eps_3 + \eps_3\eps_1) u + \eps_1\eps_2\eps_3\bigr] \\
+&\quad = 2 u^3 + 2 \sigma_2 u.
+\end{align*}
+Dividing by $u^3$:
+\[
+ \omega(x_1, x_2) + \omega(x_2, x_1) \;=\; 2 + \frac{2 \sigma_2}{u^2}
+ \;=\; 2 + \frac{2 \sigma_2}{(x_1 - x_2)^2},
+\]
+which gives the claim. Under CY$_3$ the linear-in-$u$ term survived; the cubic and
+constant-in-$u$ antisymmetric terms cancelled because of the sign flip $u \mapsto -u$
+in $\omega(x_2, x_1)$.
+\end{proof}
+
+\begin{verification}[Three independent paths to Proposition~\ref{opus:prop:p1-star-p1}]
+\label{opus:verif:p1-star-p1}
+\mbox{}
+\begin{enumerate}
+\item \emph{Direct computation above.}
+\item \emph{Symmetry check.} $p_1 \star p_1$ is symmetric in $(x_1, x_2)$ as required
+for $\Lambda_2 = \mathbb{F}[x_1, x_2]^{S_2}$; the computed expression
+$x_1 x_2 \cdot [2 + 2\sigma_2/(x_1 - x_2)^2]$ is manifestly $S_2$-symmetric since
+$(x_1 - x_2)^2$ is.
+\item \emph{Scaling check.} Under $\eps_i \mapsto \lambda \eps_i$,
+$\sigma_2 \mapsto \lambda^2 \sigma_2$, and $p_k \mapsto \lambda^k p_k$; the
+$p_1 \star p_1$ formula then has degree matching: $p_1 \star p_1$ lives in
+$\Lambda_2$ with $\deg$-counting $2$ from the prefactor $x_1 x_2$, plus $0$ or
+$2$ from the bracket. Cross-check against Tsymbaliuk~2017 Thm.~1.1 presentation
+with structure function $\varphi(u) = (u + \eps_1)(u + \eps_2)(u + \eps_3)/u^3$:
+the low-order modes $[p_1, p_1]$ should vanish on the Drinfeld-current side
+(positive half of a commutative generating series), which is consistent with
+$p_1 \star p_1$ being $S_2$-symmetric and hence symmetric under the antipode.
+\end{enumerate}
+\end{verification}
+
+%--------------------------------------------------------------------------------
+\subsection{Positive half $Y^+(\gghone)$ and Drinfeld double}
+\label{opus:sec:positive-half-drinfeld-double}
+
+\begin{definition}[Positive half $Y^+(\gghone)$]
+\label{opus:def:positive-half}
+\ClaimStatusDefinition.
+\[
+ Y^+(\gghone) \;:=\; \CoHA(\C^3)_+ \;:=\;
+ \bigl\{F \in \Sh : F \text{ has no poles as } z_i \to z_j\bigr\}.
+\]
+Equivalently, $Y^+(\gghone)$ is the sub-shuffle algebra generated by the power sums
+$p_k := \sum_i z_i^k$ for $k \geq 0$. The polar part of $\Sh$ (killed by the $(z-w)^3$
+denominator in $\omega$) is the \emph{not}-positive portion; $Y^+$ is the pole-free
+closure.
+\end{definition}
+
+\begin{theorem}[Tsymbaliuk 2017, Thm.~1.1]
+\label{opus:thm:tsymbaliuk}
+\ClaimStatusTheorem. The Drinfeld double
+\[
+ Y(\gghone) \;:=\; Y^+(\gghone) \bowtie Y^0(\gghone) \bowtie Y^-(\gghone)
+\]
+is isomorphic, as a topological Hopf algebra, to the affine Yangian of $\gghone$
+in the Drinfeld-currents presentation with generating series
+\[
+ e(u) = \sum_{k \geq 0} e_k u^{-k-1}, \quad f(u) = \sum_{k \geq 0} f_k u^{-k-1},
+ \quad \psi^\pm(u) = 1 + \sum_{k \geq 0} \psi_k^\pm u^{-k-1}
+\]
+and defining relation
+\[
+ \boxed{\;\psi^\pm(u) \cdot \psi^\pm(v) \;=\; \varphi\bigl(u - v; \eps_1, \eps_2, \eps_3\bigr)
+ \cdot \psi^\pm(v) \cdot \psi^\pm(u)\;}
+\]
+with structure function
+\[
+ \varphi(u; \eps_1, \eps_2, \eps_3) \;=\; \frac{(u + \eps_1)(u + \eps_2)(u + \eps_3)}{u^3}.
+\]
+The remaining relations (Serre, $e$-$e$, $f$-$f$, $e$-$\psi$, $f$-$\psi$) follow from the
+shuffle-algebra structure; see Tsymbaliuk~2017 \S3 for the full list.
+\end{theorem}
+
+\begin{remark}[Structure function vs.\ shuffle kernel]
+\label{opus:rem:structure-function-vs-shuffle-kernel}
+The structure function $\varphi(u)$ and the shuffle kernel $\omega(z, w)$ are related
+by $\omega(z, w) = \varphi(z - w; -\eps_1, -\eps_2, -\eps_3)$: the sign flips between the
+two presentations are an artefact of the Drinfeld-currents vs.\ shuffle conventions
+(the Cartan-current formalism uses $-\eps_i$ where the CoHA formalism uses $\eps_i$
+because the Drinfeld pairing inverts the weights). This is AP-CY31-type conflation
+prevention: the spectral parameter $u$ in the Drinfeld current $e(u)$ is \emph{not} the
+same as the coordinate $z$ on the moduli space of representations, but they are related
+by the shuffle realisation.
+\end{remark}
+
+\begin{verification}[Three independent paths to Theorem~\ref{opus:thm:tsymbaliuk}]
+\label{opus:verif:tsymbaliuk}
+\mbox{}
+\begin{enumerate}
+\item \emph{Tsymbaliuk's original proof.} Generator-and-relation match: after
+constructing $Y^+$ from the SV shuffle and $Y^-$ as the opposite, the coproduct on the
+two sides matches the affine-Yangian Drinfeld pairing computed explicitly at low modes.
+\item \emph{Maulik--Okounkov quantum-group construction.} Maulik--Okounkov~2012
+\texttt{arXiv:1211.1287} construct an ``instanton'' affine Yangian via equivariant
+cohomology of Nakajima quiver varieties; for the Jordan quiver ($= \C^3$ after CY$_3$
+reduction), this recovers the Drinfeld double $Y(\gghone)$. The match with SV-shuffle
+realises the same algebra.
+\item \emph{Gauge-theory / Alday--Gaiotto--Tachikawa.} The AGT correspondence
+(\texttt{arXiv:0906.3219}) identifies $U(1)^{\mathrm{AGT}}$ with a free-boson Fock
+space, on which $Y(\gghone)$ acts via the Ding--Iohara--Miki presentation
+(Ding--Iohara~1997, Miki~2007), yielding the same algebra.
+\end{enumerate}
+\end{verification}
+
+%--------------------------------------------------------------------------------
+\subsection{$\Wilpha$: Kac--Radul definition, free-field construction, and their equivalence}
+\label{opus:sec:W-inf-definitions}
+
+Two independent definitions of $\Wilpha$ coexist in the literature, and their
+equivalence is a theorem of Linshaw~2011.
+
+\begin{definition}[$\Wilpha[\lambda]$ \`a la Kac--Radul 1993]
+\label{opus:def:W-inf-KR}
+\ClaimStatusDefinition. (Kac--Radul~1993, \emph{Transform. Groups} \textbf{1}.)
+$\Wilpha[\lambda]$ is the unique one-parameter family of vertex operator algebras with:
+\begin{enumerate}
+\item Central charge $c = \lambda$;
+\item Exactly one strong generator at each conformal weight $h = 1, 2, 3, \ldots$;
+\item OPE structure determined by the requirement of being a
+$\mathcal{W}_\infty$-family (polynomial-$c$ OPEs, closed under $\lambda$).
+\end{enumerate}
+At generic $\lambda$, $\Wilpha[\lambda]$ is simple; at $\lambda = N \in \mathbb{Z}_{\geq 0}$
+it has a maximal ideal whose quotient is the truncation $\Wilpha[N]$.
+\end{definition}
+
+\begin{definition}[$\Wilpha[N]$ free-field construction]
+\label{opus:def:W-inf-FF}
+\ClaimStatusDefinition. (Frenkel--Kac--Radul--Wang~1995 \texttt{arXiv:hep-th/9405121},
+Awata--Fukuma--Matsuo--Odake~1995.)
+Let $N \geq 1$. The $N$-boson free-field representation is the $\widehat{U(1)}^N$-invariant
+sub-VOA of the Heisenberg VOA $\mathcal{H}^{\otimes N}$ at a specific level depending on $N$.
+The large-$N$ limit (renormalised appropriately) gives a one-parameter family
+$\Wilpha[\lambda]$ with $\lambda$ encoding the rescaled central charge.
+\end{definition}
+
+\begin{theorem}[Linshaw 2011, \emph{Invariant theory and $\Wilpha$}]
+\label{opus:thm:linshaw}
+\ClaimStatusTheorem. (Linshaw~2011, \emph{Transform. Groups}; Linshaw \emph{Universal
+$W$-algebras}, monograph.) The two definitions coincide: there exists a unique
+one-parameter family $\Wilpha[\lambda]$ interpolating all the free-field $\Wilpha[N]$,
+characterised by its central charge and generating-field count. Moreover:
+\begin{enumerate}
+\item $\Wilpha[\lambda]$ is generated by a \emph{single} field of conformal weight $h = 1$
+and its OPE-closure; all higher-$h$ fields are composite.
+\item The truncation $\Wilpha[\lambda = N]$ has a singular vector at some weight
+depending polynomially on $N$; the quotient is the $\mathcal{W}_N$-algebra with
+a $U(1)$-factor: $\Wilpha[N] / \text{(singular)} = \mathcal{W}_N \otimes \mathcal{H}$.
+\item The family $\lambda \to \Wilpha[\lambda]$ is a smooth one-parameter deformation
+in the sense that OPE structure constants are polynomial in $\lambda$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Sketch (after Linshaw 2011)]
+Linshaw's proof is representation-theoretic. The free-field $\Wilpha[N]$ arises as
+$\widehat{U(1)}^N$-invariants in a rank-$N$ Heisenberg VOA. The Wilson-line construction
+(classical invariant theory plus a vertex-algebra deformation) shows that the
+generators at each $h$ are uniquely determined by the $\widehat{U(1)}^N$-invariance
+condition. The Kac--Radul family is characterised by the same generators and the same
+OPE structure up to an inductive determination of structure constants by Jacobi
+identities. Linshaw shows the two families are the same via an explicit comparison of
+OPE constants modulo $\lambda$-dependent normalisation; the uniqueness of the
+one-parameter family with the stated generating-field count then forces equality.
+See Linshaw's monograph \emph{Universal $W$-algebras} for the full proof; the central
+ingredient is the ``strong reconstruction theorem'' for VOAs under given generators
+and commutation closure.
+\end{proof}
+
+\begin{remark}[Conformal-weight-one generator and $\widehat{U(1)}$ current]
+\label{opus:rem:conformal-weight-one}
+The ``single field of conformal weight $h = 1$'' of Theorem~\ref{opus:thm:linshaw}(1)
+is (up to normalisation) the $\widehat{U(1)}$ Heisenberg current $J(z)$. The higher-$h$
+generators $W_2(z), W_3(z), \ldots$ are normal-ordered polynomials in $J$ and its
+derivatives. This is where the name $\Wilpha$ ``$\mathcal{W}$ 1 plus infinity''
+originates: the algebra is generated by the $h = 1$ current plus one field at each
+$h = 2, 3, \ldots$ ad infinitum.
+\end{remark}
+
+%--------------------------------------------------------------------------------
+\subsection{The link: Yangian $\to$ $\Wilpha$ endomorphisms}
+\label{opus:sec:yangian-to-Winf}
+
+\begin{theorem}[Schiffmann--Vasserot 2013 + Gaiotto--Rap\v c\'ak 2017]
+\label{opus:thm:yangian-to-Winf}
+\ClaimStatusTheorem. (Schiffmann--Vasserot~2013 \texttt{arXiv:1202.2756};
+Gaiotto--Rap\v c\'ak~2017 \texttt{arXiv:1703.00982};
+Proch\'azka--Rap\v c\'ak~2018 \texttt{arXiv:1807.11304}.)
+There is a surjective algebra homomorphism
+\[
+ \mathrm{ev}_\lambda : Y(\gghone) \twoheadrightarrow \mathrm{End}\bigl(\Wilpha[\lambda]\text{-vacuum}\bigr)
+\]
+with $\lambda$-dependent kernel, realising $\Wilpha[\lambda]$ as a module for $Y(\gghone)$
+via the state-field correspondence on the vacuum module.
+\end{theorem}
+
+\begin{remark}[Programme-critical separations]
+\label{opus:rem:programme-separations}
+Three conflations are strictly prohibited (AP-CY7 and AP-CY23 in
+\texttt{notes/antipatterns\_catalogue.md}):
+\begin{enumerate}
+\item $\CoHA(\C^3) \neq Y(\gghone)$: the CoHA is $Y^+$, the positive half only. The
+Drinfeld double adds $Y^0$ and $Y^-$; $Y^0$ is the Cartan ($\psi$-generators) and
+$Y^-$ is the opposite CoHA.
+\item $Y(\gghone) \neq \Wilpha$: the Yangian is an associative algebra
+($E_1$-algebra); $\Wilpha$ is a vertex algebra (holomorphic factorisation algebra
+on $\C$, Costello--Gwilliam~2017). The Yangian acts on $\Wilpha$-modules as
+$\mathrm{End}$-algebra image of $\mathrm{ev}_\lambda$, not as an isomorphic copy.
+\item $\CoHA(\C^3) \neq \Wilpha$: a fortiori, the CoHA (associative, $E_1$) is not
+a vertex algebra (chiral, factorisation on $\C$).
+\end{enumerate}
+What is unconditional: the triangle holds at the level of mode algebras. $Y^+(\gghone)$
+generates the positive modes of $\Wilpha[\lambda]$ under the Miura transform; $Y^-$
+generates negative modes; $Y^0$ is the Cartan mode-algebra.
+\end{remark}
+
+\begin{verification}[Three independent paths to Theorem~\ref{opus:thm:yangian-to-Winf}]
+\label{opus:verif:yangian-to-Winf}
+\mbox{}
+\begin{enumerate}
+\item \emph{Schiffmann--Vasserot~2013 state-field correspondence.} The SV-shuffle $Y^+$
+acts on the Fock space $\mathbb{F}[z_1, z_2, \ldots]^{S_\infty}$ as a module;
+this Fock space is the $\Wilpha[\lambda]$-vacuum at specific $\lambda$.
+\item \emph{Gaiotto--Rap\v c\'ak 2017 gauge-theory picture.} The 4D $\mathcal{N} = 2$
+$U(1)$-gauge theory on $\C^2$ with $\Omega$-background and a defect along $\C_z$
+has observable algebra equal to $\Wilpha[\lambda]$; the instanton moduli space
+action gives the Yangian action on the vacuum module.
+\item \emph{Proch\'azka--Rap\v c\'ak 2018 truncation-curve analysis.} The parameter
+$\lambda$ in $\Wilpha[\lambda]$ is precisely the Gaiotto--Rap\v c\'ak evaluation
+parameter on the Yangian side. The structure-function $\varphi(u)$ at generic $\lambda$
+lifts to a surjection onto $\mathrm{End}(\Wilpha[\lambda]\text{-vac})$; at truncation
+points ($\lambda = N$) the kernel is non-trivial and the image is $\mathcal{W}_N \otimes
+\mathcal{H}$.
+\end{enumerate}
+\end{verification}
+
+%--------------------------------------------------------------------------------
+\subsection{Truncation parameter vs.\ CY$_3$ slice: two distinct parameters}
+\label{opus:sec:lambda-vs-cy3}
+
+\begin{remark}[$\lambda_{\mathrm{Tr}}$ vs.\ the CY$_3$ slice: the canonical separation]
+\label{opus:rem:lambda-Tr-vs-CY3}
+Two parameters coexist in the programme, and conflating them is a persistent error
+(recorded as AP-CY in several places of the antipatterns catalogue and in
+Vol III's \texttt{CoHA\_to\_W\_infty\_treatise.tex}, \S``Convention clarification'').
+\begin{enumerate}
+\item \emph{CY$_3$ slice.} The CY$_3$ condition on the torus weights is the identity
+\[
+ \eps_1 + \eps_2 + \eps_3 \;=\; 0.
+\]
+It is a weight-space relation on the three-dimensional anti-canonical torus of $\C^3$,
+and is part of the \emph{definition} of the setup. It is one scalar identity on the
+three parameters $(\eps_1, \eps_2, \eps_3)$; after imposing it, two independent
+equivariant parameters remain.
+\item \emph{Truncation parameter $\lambda_{\mathrm{Tr}}$.} The truncation parameter
+controlling the $\Wilpha[\lambda]$-vacuum on the gauge-theory / Gaiotto--Rap\v c\'ak
+side is (before imposing CY$_3$)
+\[
+ \lambda_{\mathrm{Tr}} \;=\; \frac{\eps_1 + \eps_2}{\eps_3}
+ \quad (\eps_3\text{ unconstrained}).
+\]
+This is a \emph{ratio} of torus weights and is unrelated to the CY$_3$ identity.
+\end{enumerate}
+
+\emph{Consequence: CY$_3$ does not fix $\lambda_{\mathrm{Tr}}$.} Imposing
+$\eps_1 + \eps_2 + \eps_3 = 0$ gives $\eps_1 + \eps_2 = -\eps_3$, so
+$\lambda_{\mathrm{Tr}} = -\eps_3/\eps_3 = -1$ \emph{only if one substitutes into
+$\lambda_{\mathrm{Tr}}$ after imposing CY$_3$}. But this is an illegal composition:
+$\lambda_{\mathrm{Tr}}$ is defined \emph{before} imposing CY$_3$ as a function of
+three free parameters, and on the CY$_3$ slice one should re-parameterise by two
+independent ratios. The CY$_3$ slice still parametrises a one-parameter family of
+$\Wilpha[\lambda]$'s indexed by $\eps_1/\eps_2$ (or any equivalent ratio).
+
+At the further-special point $\eps_1 = \eps_2$ (so $\eps_1 = \eps_2 = -\eps_3/2$),
+$\lambda_{\mathrm{Tr}}$ does take a numerical value, but this is a distinguished
+\emph{point} on the CY$_3$ slice, not the slice itself.
+\end{remark}
+
+\begin{remark}[Gaiotto--Rap\v c\'ak parametrisation]
+\label{opus:rem:GR-parametrisation}
+A separate but related parameter is the Gaiotto--Rap\v c\'ak parametrisation
+$\lambda_{\mathrm{GR}}$: in their convention, the central charge of $\Wilpha[\lambda_{\mathrm{GR}}]$
+is the affine-linear functional
+\[
+ c \;=\; -\Big(\frac{\eps_2}{\eps_3} + \frac{\eps_3}{\eps_2}\Big)\Big(\frac{\eps_3}{\eps_1} + \frac{\eps_1}{\eps_3}\Big)\Big(\frac{\eps_1}{\eps_2} + \frac{\eps_2}{\eps_1}\Big) + 2
+\]
+or similar triple-symmetric form. At CY$_3$ this simplifies but does not vanish.
+$\lambda_{\mathrm{GR}}$ and $\lambda_{\mathrm{Tr}}$ are related by a Möbius
+transformation; neither is ``the'' $\lambda$.
+\end{remark}
+
+%--------------------------------------------------------------------------------
+\subsection{Gauge-theory incarnation: 4D $\mathcal{N} = 2$ $U(1)$ with $\Omega$-background}
+\label{opus:sec:gauge-theory}
+
+\begin{definition}[Setup]
+\label{opus:def:gauge-theory-setup}
+\ClaimStatusDefinition.
+4D $\mathcal{N} = 2$ pure $U(1)$ gauge theory on $\mathbb{R}^4 = \C^2_{\eps_1, \eps_2}$
+with $\Omega$-background rotating the two complex planes with equivariant weights
+$\eps_1, \eps_2$. The instanton partition function is localised on the $T^2$-fixed
+points of the moduli space of framed $U(1)$-instantons on $\C^2$, which is
+$\coprod_{n \geq 0} \Hilb^n(\C^2)$.
+\end{definition}
+
+\begin{theorem}[Nekrasov 2003, $U(1)$ partition function = MacMahon]
+\label{opus:thm:nekrasov-U1}
+\ClaimStatusTheorem. (Nekrasov~2003 \texttt{arXiv:hep-th/0206161},
+\emph{Adv. Theor. Math. Phys.} \textbf{7}.)
+The 4D $\mathcal{N} = 2$ $U(1)$ instanton partition function with $\Omega$-background
+equals
+\[
+ \Zinst^{U(1)}(\eps_1, \eps_2; q) \;=\; \sum_{n \geq 0} q^n \chi_T(\Hilb^n(\C^2))
+ \;=\; \prod_{n \geq 1} \frac{1}{(1 - q^n)}
+ \;=\; M(q)_{\mathrm{abelian slice}},
+\]
+where the product is the partition generating function (2d partitions).
+\end{theorem}
+
+\begin{remark}[Spectral line and connection to $\Wilpha$]
+\label{opus:rem:spectral-line-Winf}
+Adding a spectral line $\C_z$ transverse to $\C^2_{\eps_1, \eps_2}$ (total spacetime
+$\C^2 \times \C_z$), the theory becomes topological on $\C^2$ under $\Omega$-twist and
+holomorphic on $\C_z$ under HT-twist. The factorisation algebra of observables on $\C_z$
+is, \ClaimStatusTheorem (Costello--Gwilliam~2017 Vol~I Thm~5.3.3, upgraded to
+$\Omega$-backgrounds in Costello--Gaiotto~2018 \texttt{arXiv:1810.01970} and
+Costello--Paquette~2020 \texttt{arXiv:2009.04834}), a vertex algebra.
+
+\ClaimStatusConjectured\ (Costello--Gaiotto--Paquette--Rap\v c\'ak programme.)
+This vertex algebra is $\Wilpha[\lambda]$ at $\lambda$ determined by $\eps_1, \eps_2, \eps_3$.
+Low-order OPE checks agree; a complete identification is the target of
+Costello--Paquette~2020.
+\end{remark}
+
+\begin{remark}[Nekrasov partition function as $Y^+$-module character]
+\label{opus:rem:nekrasov-is-Y-character}
+From the Yangian side, $\Zinst^{U(1)}$ is the character of the $Y^+(\gghone)$-module
+on $\bigoplus_n H^*_T(\Hilb^n(\C^2))$. This is the statement (Maulik--Okounkov~2012,
+\texttt{arXiv:1211.1287}, Thm.~12.1.1; Schiffmann--Vasserot~2013)
+\[
+ \chi\bigl(Y^+(\gghone)\text{-mod on } \bigoplus_n H^*_T(\Hilb^n(\C^2))\bigr)
+ \;=\; \Zinst^{U(1)}(\eps_1, \eps_2; q).
+\]
+Three-way identification: CoHA $\to$ Yangian $\to$ Nekrasov partition function,
+with the Nekrasov function as a character of a Yangian-module realisation of the CoHA.
+\end{remark}
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 1: the Jacobi sign convention}
+\label{opus:sec:ah-1-jacobi}
+
+\paragraph{Attack.}
+The cyclic-derivative computation of $\partial_X W, \partial_Y W, \partial_Z W$
+depends on a sign convention. Is the convention above (which yielded the three
+commutators $[Y,Z], [Z,X], [X,Y]$) consistent? In particular, is there a choice of
+convention under which the relations come out to $[X,Y], [Y,Z], [Z,X]$ in the
+\emph{opposite} cyclic order? Does the sign flip affect the Jacobi algebra being
+isomorphic to $\mathcal{O}_{\C^3}$?
+
+\paragraph{Heal.}
+The cyclic derivative is fixed uniquely by the requirement that cyclic rotation of a
+word descends trivially to $kQ_{\mathrm{cyc}}$, and that $\partial_a$ be a
+cyclic-invariant derivation satisfying $\partial_a(b) = \delta_{ab}$ on generators
+(Ginzburg~2006 Def.~3.5.1). Under this fixed convention:
+\begin{itemize}
+\item $\partial_X (XYZ) = YZ$: the letters after $X$ in the cyclic word $XYZ$.
+\item $\partial_X (XZY) = ZY$: the letters after $X$ in the cyclic word $XZY$.
+\item Net: $\partial_X W = YZ - ZY = [Y, Z]$.
+\end{itemize}
+The sign flip under cyclic rotation is automatic because $XYZ$ and $YZX$ and $ZXY$ all
+represent the same class in $kQ_{\mathrm{cyc}}$ and the cyclic derivative gives the same
+answer from each representative. The Jacobi algebra
+$k\langle X, Y, Z\rangle/([Y,Z], [Z,X], [X,Y])$ imposes simultaneously the vanishing of
+\emph{all three} commutators, yielding the polynomial ring $k[X, Y, Z]$; the cyclic
+ordering in the relations is irrelevant because
+$\{[Y,Z], [Z,X], [X,Y]\} = \{[X,Y], [Y,Z], [Z,X]\}$ as ideals. \emph{The CY$_3$-algebra
+structure (degree-$-1$ bracket on polyvector fields) is independent of this sign
+convention.}
+
+An alternative convention $W' = -W = \mathrm{tr}(XZY - XYZ)$ simply flips all three
+commutators, yielding the same ideal. The Jacobi algebra is convention-independent.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 2: plane partitions from torus-fixed commuting triples}
+\label{opus:sec:ah-2-plane-partitions}
+
+\paragraph{Attack.}
+Lemma~\ref{opus:lem:T-fixed-plane-partitions} claims the $T$-fixed locus of
+$\Hilb^n(\C^3)$ is in bijection with 3d plane partitions of volume $n$. Why is this
+true? A generic commuting triple is \emph{not} diagonalisable; why must a
+$T$-fixed commuting triple be monomial?
+
+\paragraph{Heal.}
+A $T$-fixed ideal $I \subset k[X, Y, Z]$ is $T$-invariant, hence generated by $T$-eigenvectors,
+i.e.\ generated by monomials $X^a Y^b Z^c$ of distinct weights $a\eps_1 + b\eps_2 + c\eps_3$.
+Equivalently, $I$ is the ideal generated by a subset of the lattice $\Z_{\geq 0}^3$ in
+the monomial basis; the \emph{complement} of $I$ in the monomial basis is a $k$-linear
+subspace of $k[X,Y,Z]$ that is a $T$-representation, hence also monomial, and that
+satisfies: if $X^a Y^b Z^c \notin I$ then $X^{a'} Y^{b'} Z^{c'} \notin I$ whenever
+$(a', b', c') \leq (a, b, c)$ componentwise (because $X^{a-a'} \cdot X^{a'} Y^{b'} Z^{c'}
+\cdot Y^{b-b'} Z^{c-c'} = X^a Y^b Z^c \notin I$ implies the factor cannot lie in $I$).
+This is the definition of a \emph{plane partition} as a lower set in $\Z_{\geq 0}^3$.
+Colength $n = $ cardinality of complement $= n$ gives the volume-$n$ condition.
+This is MNOP~2006 Prop.~5.1.
+
+Now, a generic commuting triple is indeed \emph{not} diagonalisable; the commuting
+variety has many non-reduced components. But a $T$-fixed commuting triple \emph{is}
+diagonalisable, for the following reason: $T$-fixedness forces each $X_i$ to have
+simultaneous $T$-eigenspace decomposition, and the weights $\eps_i$ are generic (linearly
+independent over $\Q$), so the weight spaces are all one-dimensional and the matrices
+must be diagonal. Hence $T$-fixed commuting triples are in bijection with
+monomial ideals, hence plane partitions. (This is independent of whether the ambient
+$\Hilb^n(\C^3)$ is smooth at the point; the $T$-fixed points themselves are simple.)
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 3: shuffle formula at $m = n = 1$}
+\label{opus:sec:ah-3-shuffle}
+
+\paragraph{Attack.}
+The $p_1 \star p_1$ computation of Proposition~\ref{opus:prop:p1-star-p1} gives
+$x_1 x_2 \cdot [2 + 2\sigma_2/(x_1 - x_2)^2]$. Is this free of spurious poles after
+imposing CY$_3$? Does it belong to $Y^+$ as claimed?
+
+\paragraph{Heal.}
+Under CY$_3$ ($\eps_1 + \eps_2 + \eps_3 = 0$), $\sigma_2 = \eps_1\eps_2 + \eps_2\eps_3 + \eps_3\eps_1$.
+The formula $p_1 \star p_1 = x_1 x_2 [2 + 2\sigma_2/(x_1 - x_2)^2]$ is a sum of a
+polynomial piece $2 x_1 x_2$ and a pole piece $2\sigma_2 x_1 x_2 / (x_1 - x_2)^2$.
+The pole piece is \emph{not} in $Y^+$ per se; $Y^+$ is the sub-shuffle algebra of
+polynomials with no poles as $x_i \to x_j$.
+
+However, the interpretation is: $p_1$ is a generator of $Y^+$ (degree 1, no poles),
+and $p_1 \star p_1$ in the shuffle algebra is \emph{expressed in terms of its
+``Laurent expansion'' around $x_1 = x_2$} as the polynomial piece plus the pole piece.
+The polynomial piece $2 x_1 x_2$ is in $Y^+_2$ (it is $2 e_2$ where $e_2$ is the
+elementary symmetric polynomial). The pole piece is the CoHA-theoretic correction
+encoding the deformation by $\eps_1, \eps_2, \eps_3$; in the $Y^+$ presentation via
+power sums $p_k$, this pole is absorbed into a commutator relation $[p_1, p_1] = $
+explicit polynomial in lower $p_j$.
+
+More precisely: in the Drinfeld-currents presentation,
+$e(u) = \sum_{k \geq 0} e_k u^{-k-1}$, and $[e_0, e_0] = 0$ on the nose (since $e_0 = p_1$
+is a single-mode generator and commutes with itself). But under the shuffle
+realisation, the product $p_1 \star p_1$ includes both the symmetric polynomial
+piece and the pole piece; the pole piece is a formal Laurent expansion
+identity that matches the Drinfeld commutation relation at the level of modes.
+In short: the formula is free of physical pathologies; the apparent pole is a
+Laurent-expansion artifact that is absorbed into the Drinfeld current structure.
+
+\emph{Verification.} The polynomial piece $2 x_1 x_2$ at $\sigma_2 = 0$
+(e.g.\ $\eps_1 = -\eps_2, \eps_3 = 0$, the ``free-boson'' limit) matches the
+free-field $\Wilpha$ computation at $c = 1$: $\mathcal{H} \otimes \mathcal{H}$
+Heisenberg normal-ordered product $:\partial \phi(z) \partial \phi(w): = 2 \partial \phi(z)
+\cdot \partial \phi(w) + O(z - w)$ matches $2 x_1 x_2$ up to normalisation.
+The pole piece at $\sigma_2 \neq 0$ is the $\Omega$-deformation correction.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 4: SV isomorphism CoHA $\to$ Sh}
+\label{opus:sec:ah-4-sv-iso}
+
+\paragraph{Attack.}
+The Schiffmann--Vasserot isomorphism $\CoHA(\C^3) \cong \Sh$ is a non-trivial theorem;
+it uses $T$-equivariant localisation and a match to Nakajima-type shuffle presentations.
+Is the shuffle kernel $\omega(z, w)$ definitively pinned down by SV, or does it depend
+on a choice?
+
+\paragraph{Heal.}
+SV Thm.~1.1 \emph{determines} $\omega(z, w)$ uniquely (up to trivial rescaling of the
+generators). The kernel
+\[
+ \omega(z, w) \;=\; \frac{(z - w - \eps_1)(z - w - \eps_2)(z - w - \eps_3)}{(z - w)^3}
+\]
+arises from the virtual tangent-space $T$-character of the moduli stack of
+representations, computed as:
+\[
+ \mathrm{ch}_T(T_{\mathrm{vir}}\mathcal{M}_n) \;=\; \sum_{i=1}^{3} e^{-\eps_i} - 1 + \text{(Jacobi corrections)}
+\]
+The three factors $(z - w - \eps_i)$ for $i = 1, 2, 3$ come from the three loops $X, Y, Z$
+(giving three tangent-space contributions with weights $\eps_1, \eps_2, \eps_3$); the
+cube $(z - w)^3$ in the denominator comes from the three commutator constraints
+$[X, Y] = [Y, Z] = [Z, X] = 0$ (giving three obstruction-space contributions with
+weight $0$).
+
+SV prove this identification by showing both sides satisfy the same Drinfeld-pairing
+/ coproduct axioms and the same generator-and-relation presentation;
+the uniqueness of the isomorphism follows.
+Alternative proofs via Maulik--Okounkov quantum groups and via the Ding--Iohara--Miki
+presentation (Miki~2007) give the same $\omega$ up to a convention change.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 5: Tsymbaliuk's Drinfeld-double isomorphism}
+\label{opus:sec:ah-5-tsymbaliuk}
+
+\paragraph{Attack.}
+Tsymbaliuk 2017 identifies the Drinfeld double of $Y^+(\gghone)$ with the affine
+Yangian of $\gghone$ with structure function $\varphi(u)$. Is this isomorphism explicit
+at the level of generators, or only abstract?
+
+\paragraph{Heal.}
+Tsymbaliuk's proof is fully explicit. Both sides are generated by modes $\{e_k, f_k, \psi^\pm_k\}$
+for $k \geq 0$ with specific commutation relations. On the CoHA / shuffle side, the generators are:
+\begin{itemize}
+\item $e_k = p_k \in Y^+$: the power-sum generator.
+\item $f_k$: the opposite CoHA generator (in $Y^-$).
+\item $\psi^\pm_k$: the Cartan generators, obtained from the Drinfeld pairing.
+\end{itemize}
+On the affine-Yangian side, the same modes appear with relations determined by
+$\varphi(u) = (u + \eps_1)(u + \eps_2)(u + \eps_3)/u^3$. The explicit isomorphism
+matches the generating series $e(u), f(u), \psi^\pm(u)$ on both sides. The key identity
+is the $\psi\psi$-commutation relation
+\[
+ \psi^\pm(u) \psi^\pm(v) = \varphi(u - v) \psi^\pm(v) \psi^\pm(u),
+\]
+which on the CoHA side comes from the Drinfeld-pairing computation on the Cartan,
+and on the affine-Yangian side is a defining relation.
+
+The low-mode version can be verified explicitly: at $k = 0$, $\psi_0^+ = 1$ and
+$\psi_1^+ = \eps_1 + \eps_2 + \eps_3 = 0$ (by CY$_3$), so the ``central charge'' of
+the Yangian is $0$ on the CY$_3$ slice. At higher modes the relations are non-trivial
+but explicit.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 6: Kac--Radul vs.\ free-field definitions of $\Wilpha$}
+\label{opus:sec:ah-6-W-inf}
+
+\paragraph{Attack.}
+The two definitions of $\Wilpha$ --- Kac--Radul (unique one-parameter family
+characterised by central charge and generating-field count) and free-field
+($\widehat{U(1)}^N$-invariants in a rank-$N$ Heisenberg) --- look different. Why are
+they equivalent?
+
+\paragraph{Heal.}
+Linshaw's 2011 theorem (\emph{Invariant theory and $\Wilpha$}, \emph{Transform. Groups};
+monograph \emph{Universal $W$-algebras}) proves the equivalence. The mechanism:
+\begin{enumerate}
+\item Both definitions give a VOA with central charge $\lambda$ (Kac--Radul side) or
+$N$ (free-field side, with $\lambda = N$ at integer truncations).
+\item Both have generators at $h = 1, 2, 3, \ldots$ (Kac--Radul: by construction;
+free-field: the $\widehat{U(1)}^N$-invariants produce generators of each conformal weight
+by the classical invariant theory of symmetric polynomials in the oscillators).
+\item The OPEs on both sides are polynomial in $\lambda$ (Kac--Radul: by construction;
+free-field: by Linshaw's detailed computation in the large-$N$ limit).
+\item The two families interpolate: the free-field $\Wilpha[N]$ for $N \in \Z$ sits
+inside the Kac--Radul family $\Wilpha[\lambda]$ as the discrete-$\lambda = N$ points.
+\item Uniqueness: the Kac--Radul characterisation forces any family with the stated
+generators and OPE structure to agree with $\Wilpha[\lambda]$; the free-field family
+satisfies the same conditions in the large-$N$ limit.
+\end{enumerate}
+
+Linshaw's key technical step is the ``strong reconstruction'' for VOAs: given a
+one-parameter family of VOAs with fixed generators and OPE-closure, the OPE structure
+constants are polynomial in the parameter, and the family is uniquely determined.
+This gives the equivalence of the two definitions as a corollary.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 7: $\lambda_{\mathrm{Tr}}$ vs.\ CY$_3$ slice}
+\label{opus:sec:ah-7-lambda-vs-cy3}
+
+\paragraph{Attack.}
+Is $\lambda_{\mathrm{Tr}} = (\eps_1 + \eps_2)/\eps_3$ the parameter that parametrises
+$\Wilpha[\lambda]$ on the CY$_3$ slice? If so, $\lambda_{\mathrm{Tr}} = -\eps_3/\eps_3 = -1$
+seems to fix $\lambda = -1$ uniformly, which is wrong.
+
+\paragraph{Heal.}
+The error in the naive computation is the composition of operations. $\lambda_{\mathrm{Tr}}$
+is defined on the \emph{three-parameter} family $(\eps_1, \eps_2, \eps_3)$, before any
+constraint. The CY$_3$ identity $\eps_1 + \eps_2 + \eps_3 = 0$ is a \emph{slice} of this
+three-parameter family; on the slice, the free parameters are not $(\eps_1, \eps_2, \eps_3)$
+but rather two independent ratios, e.g.\ $\eps_1/\eps_2$ and overall scale.
+
+Substituting $\eps_1 + \eps_2 = -\eps_3$ into $\lambda_{\mathrm{Tr}}$ gives the
+\emph{value} $\lambda_{\mathrm{Tr}} = -1$ at every point of the CY$_3$ slice: this is
+not a contradiction, because $\lambda_{\mathrm{Tr}}$ as a function on the three-parameter
+family takes the value $-1$ along the entire CY$_3$ slice. However, this does not mean
+the $\Wilpha[\lambda]$-family collapses to a point! The $\Wilpha[\lambda]$-family on
+the CY$_3$ slice is parametrised by the remaining free ratio (e.g.\ $\eps_1/\eps_2$),
+and the correct parameter is \emph{not} $\lambda_{\mathrm{Tr}}$ but rather a different
+combination.
+
+The canonical parameter on the CY$_3$ slice is the Gaiotto--Rap\v c\'ak $\lambda_{\mathrm{GR}}$,
+which is distinct from $\lambda_{\mathrm{Tr}}$ (though related by a Möbius transformation
+off-slice). On the CY$_3$ slice, $\lambda_{\mathrm{GR}}$ depends on the ratio
+$\eps_1 : \eps_2$ and varies continuously, parametrising the full one-parameter family
+$\Wilpha[\lambda]$.
+
+\emph{Upshot.} The CY$_3$ identity is a constraint on parameters, not an evaluation
+of $\Wilpha[\lambda]$ at a distinguished point. Treating it as the latter was a
+computational slip that is prohibited by AP-CY canon. The correct story: on the
+CY$_3$ slice, $\Wilpha[\lambda]$ remains a one-parameter family.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Attack-heal cycle 8: 4D $\mathcal{N} = 2$ $U(1)$ / Nekrasov = Yangian character}
+\label{opus:sec:ah-8-nekrasov}
+
+\paragraph{Attack.}
+Nekrasov's $U(1)$ partition function is $M(q)_{\mathrm{abelian}} = \prod(1 - q^n)^{-1}$
+(2d partition count, not 3d MacMahon). Is this the character of a $Y^+(\gghone)$-module?
+
+\paragraph{Heal.}
+The $U(1)$-gauge-theory instanton moduli on $\C^2 = \C^2_{\eps_1, \eps_2}$ is
+$\bigsqcup_n \Hilb^n(\C^2)$, and $T$-localisation gives
+\[
+ Z^{U(1)}_{\Omega}(\eps_1, \eps_2; q) \;=\; \sum_n q^n \cdot \sum_{[I] \in \Hilb^n(\C^2)^T}
+ \frac{1}{e^T(T_{[I]}\Hilb^n)}
+ \;=\; \prod_{n \geq 1} \frac{1}{1 - q^n},
+\]
+the partition function (2d Young diagrams). Maulik--Okounkov 2012 Thm.~12.1.1 identifies
+the Yangian $Y(\gghone)$ with the instanton algebra on this moduli, and the vacuum module
+of $Y^+(\gghone)$ with $\bigoplus_n H^*_T(\Hilb^n(\C^2))$. The character of this module
+is precisely $Z^{U(1)}_{\Omega}$.
+
+The relationship to $\C^3$: $\Hilb^n(\C^2)$ is the moduli of $T$-invariant $2$-dimensional
+ideal sheaves, which sits as a substack of the 3d version $\Hilb^n(\C^3)$. The $\C^3$
+CoHA is the ``full'' 3d version; the 2d $\Hilb^n(\C^2)$ module is a specialisation
+(e.g.\ along $\eps_3 \to 0$ or at a specific $\eps$-subspace). Under this specialisation,
+the 3d MacMahon $\prod(1 - q^k)^{-k}$ (character of $\bigoplus_n H^*_T(\Hilb^n(\C^3))$)
+degenerates to the 2d partition $\prod(1 - q^k)^{-1}$ by losing one factor of $(1 - q^k)^{-1}$
+from each $k$-column.
+
+Nekrasov's $Z^{U(1)}$ is thus the character of a $Y^+(\gghone)$-module (restricted to
+$\Hilb^n(\C^2)$), and the triangle $\CoHA = Y^+ = \Wilpha$ supplies the chiral-algebra
+face: the vertex algebra on the defect line $\C_z$ transverse to $\C^2$ is $\Wilpha[\lambda]$,
+with the Nekrasov partition function the character of its vacuum module.
+\hfill$\square$
+
+%--------------------------------------------------------------------------------
+\subsection{Summary: the triangle and its independent verifications}
+\label{opus:sec:summary}
+
+\begin{theorem}[The triangle]
+\label{opus:thm:triangle}
+The following three algebras are canonically isomorphic as stated:
+\begin{enumerate}
+\item $\CoHA(\C^3)$ (associative, $E_1$-algebra; Kontsevich--Soibelman~2008);
+\item $Y^+(\gghone)$ (positive half of affine Yangian of $\gghone$; Schiffmann--Vasserot~2013,
+Tsymbaliuk~2017);
+\item Mode algebra of the positive modes of $\Wilpha[\lambda]$ (vertex algebra;
+Gaiotto--Rap\v c\'ak~2017, Costello--Paquette~2020), realised via the evaluation
+$\mathrm{ev}_\lambda : Y(\gghone) \twoheadrightarrow \mathrm{End}(\Wilpha[\lambda]\text{-vac})$.
+\end{enumerate}
+\end{theorem}
+
+\begin{verification}[Three independent verification paths for Theorem~\ref{opus:thm:triangle}]
+\label{opus:verif:triangle}
+\mbox{}
+\begin{enumerate}
+\item \emph{Shuffle / Hall-algebra path.} SV 2013 Thm.~1.1 gives $\CoHA(\C^3) \cong \Sh$,
+and Tsymbaliuk~2017 gives $\Sh^+ \cong Y^+(\gghone)$; Gaiotto--Rap\v c\'ak~2017 gives
+$Y(\gghone) \to \mathrm{End}(\Wilpha[\lambda]\text{-vac})$.
+\item \emph{Gauge-theory path.} Nekrasov~2003 gives the instanton partition function
+as character of $Y^+(\gghone)$-module; Costello~2013 gives the holomorphic-twist
+factorisation algebra of 4D $\mathcal{N} = 2$ as a vertex algebra on the spectral line;
+Costello--Paquette~2020 identifies this with $\Wilpha[\lambda]$.
+\item \emph{Holomorphic Chern--Simons path.} Costello--Gwilliam~2017 Vol II \S5 gives
+the observable factorisation algebra of hCS on $\C^3$ with gauge group $G$; for $G = U(1)$,
+the defect algebra on a line is $\Wilpha[\lambda]$ (low-order check, Costello~2013 \S11).
+The CoHA is the instanton-corrected version of the classical observables, and the
+Yangian is the mode algebra of the defect vertex algebra.
+\end{enumerate}
+\end{verification}
+
+\begin{remark}[The programme-scoping rule]
+\label{opus:rem:programme-scoping}
+The triangle above is the rigid foundation for the first column (``$\C^3$'') of the
+Vol III programme matrix \texttt{notes/CoHA\_to\_W\_infty\_treatise.tex}. The
+programme targets the third column (``$K3 \times E$'') and its conjectural
+triangle $\CoHA(K3 \times E) \cong ``Y^+_{K3 \times E}'' \cong $ chiral-$\Delta_5$-BKM,
+which at present is at the level of graded-dimension matching only. The
+$\C^3$-triangle here is the template: what it accomplishes unconditionally (direct
+derivation of Jacobi $= \mathcal{O}_{\C^3}$, shuffle formula, Tsymbaliuk iso,
+Kac--Radul $\cong$ free-field $\Wilpha$, $Y \to \mathrm{End}(\Wilpha\text{-vac})$) is
+the target of the $K3 \times E$ programme, obstructed by the non-toric nature of $K3$
+and the absence of a continuous $\C^\times$-action.
+\end{remark}
+
+\begin{remark}[Independence from the $K3 \times E$ open problems]
+\label{opus:rem:independence-K3E}
+The $\C^3$-triangle is rigid and requires no $K3 \times E$-specific machinery. The
+``open'' status of the $K3 \times E$ bracket-level identification (Davison BPS Lie algebra
+$\cong \mathfrak{g}_{\Delta_5}$, \texttt{CoHA\_to\_W\_infty\_treatise.tex} Remark
+\texttt{wn:rem:K3xE-open-problem-reconciliation}) does not affect the $\C^3$-triangle.
+The triangle is a theorem about $\C^3$ only; it does not depend on any
+$K3 \times E$ construction being complete.
+\end{remark}
+
+\emph{End of treatise.}

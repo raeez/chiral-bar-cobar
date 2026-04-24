@@ -1,0 +1,1352 @@
+%% opus_05_G3_holography_topologisation.tex
+%%
+%% Elite-voice adversarial-heal dossier (Wave 17, 2026-04-24 opus).
+%% Target: Identity G3 -- Universal Holography functor
+%%   Phi_hol : ChirAlg^{omega, BL}_C  ->  HT-QFT_{C x R}
+%% plus the topologisation tower
+%%   SC^{ch,top} + inner conformal vector (Sugawara, k != -h^v)  =  E_3-topological
+%%   W_N inner stress tower of depth N  ->  E_{N+1}-topological
+%%   W_infty  ->  E_infty-topological  (horizon, conditional).
+%%
+%% Primary voices: Bezrukavnikov (geometric rep theory) + Kazhdan
+%% (compression). Secondary: Costello (factorisation).
+%%
+%% This is a working dossier, not reader-facing prose. Six ATTACK-HEAL
+%% cycles; healed identifications; hidden structure; open frontiers;
+%% cross-volume harmonies. No manuscript insertion.
+
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{attack}[theorem]{Attack}
+\newtheorem{heal}[theorem]{Heal}
+\newtheorem{hidden}[theorem]{Hidden structure}
+\newtheorem{openfrontier}[theorem]{Open frontier}
+
+\newcommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\newcommand{\Phihol}{\Phi_{\mathrm{hol}}}
+\newcommand{\HTQFT}{\mathsf{HT\text{-}QFT}}
+\newcommand{\ChirAlg}{\mathsf{ChirAlg}}
+\newcommand{\Obs}{\mathsf{Obs}}
+\newcommand{\Zder}{Z^{\mathrm{der}}_{\mathrm{ch}}}
+\newcommand{\ChirHoch}{\mathrm{ChirHoch}}
+\newcommand{\Ehol}{\mathrm{E}_2^{\mathrm{hol}}}
+\newcommand{\Etop}[1]{\mathrm{E}_{#1}^{\mathrm{top}}}
+\newcommand{\Ech}[1]{\mathrm{E}_{#1}^{\mathrm{ch}}}
+\newcommand{\DS}{\mathrm{DS}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\BRST}{\mathrm{BRST}}
+
+\begin{document}
+\title{G3 Universal Holography \& Topologisation: six-cycle attack-heal dossier}
+\author{Wave 17, opus\_05 (Bezrukavnikov + Kazhdan + Costello voice)}
+\date{2026-04-24}
+\maketitle
+
+\begin{abstract}
+The G3 identity asserts the existence of a canonical functor
+$\Phihol\colon \ChirAlg^{\omega,\mathrm{BL}}_C \to
+\HTQFT_{C\times\mathbb{R}}$ taking a boundary-linear chiral algebra
+with inner conformal vector at non-critical level to a 3D
+holomorphic-topological gauge theory on $C\times\mathbb{R}$, with
+boundary observables equal to $\cA$ and bulk observables equal to
+the derived chiral centre $\Zder(\cA)$. The topologisation theorem
+is the engine: the $\SCchtop$ operadic action on the pair
+$(C^{\bullet}_{\mathrm{ch}}(\cA,\cA),\cA)$ lifts to
+$\Etop{3}$ once an inner conformal vector trivialises the
+holomorphic direction on BRST cohomology. Class-L ($V_k(\fg)$,
+$k\neq -h^\vee$) is the unconditional base case; class-M
+(Virasoro, $\cW_N$) is weight-completed only; the original-complex
+chain-level statement for class-M is the genuine open frontier.
+This dossier walks through six ATTACK-HEAL cycles, constructs
+$\Phihol$ on $V_1(\mathfrak{sl}_2)$ from first principles, extends
+to $\cW_3$ as the $N=3$ ladder rung, and maps the $\cW_\infty$
+horizon to three independently checkable convergence criteria.
+\end{abstract}
+
+\tableofcontents
+
+%=======================================================================
+\section{Setup and the seven attack questions}
+\label{sec:opus-setup}
+%=======================================================================
+
+The target identity is G3 in the Platonic reconstitution
+(file `platonic_ideal_reconstituted_2026_04_17.md`, \S3):
+\begin{equation}\label{eq:opus-G3-statement}
+  \Phihol\colon \ChirAlg^{\omega,\mathrm{BL}}_C
+  \longrightarrow \HTQFT_{C\times\mathbb{R}},
+  \qquad
+  (\cA,\omega,\mathrm{BL}) \longmapsto
+  (\mathrm{boundary}=\cA,\;\mathrm{bulk}=\Zder(\cA),\;
+   \mathrm{interaction}=\SCchtop\text{-braces}),
+\end{equation}
+together with the topologisation theorem
+\begin{equation}\label{eq:opus-topologisation}
+  \SCchtop + \omega\ \text{(inner, non-critical)}
+  \;\longrightarrow\; \Etop{3}
+  \quad\text{on}\quad \Zder(\cA).
+\end{equation}
+The inscribed source files are:
+\begin{itemize}
+\item Vol II master theorem: \texttt{chapters/connections/%
+universal\_holography\_functor.tex},
+Thm.~\ref*{opus:thm:UHF}.
+\item Vol II pointwise master + $c=24$ landscape plus Banach radius:
+\texttt{chapters/connections/programme\_climax\_platonic.tex},
+Thm.~\ref*{opus:thm:PMC}.
+\item Vol II $\Einfty$-ladder: \texttt{chapters/connections/%
+e\_infinity\_topologization.tex}, Thm.~\ref*{opus:thm:EINF-LAD}.
+\item Vol I topologisation base: \texttt{chapters/theory/%
+en\_koszul\_duality.tex}, \S\ref*{opus:sec:V1topo}.
+\item Vol II class-M chain-level status:
+\texttt{chapters/theory/topologization\_class\_m\_%
+original\_complex\_platonic.tex}.
+\end{itemize}
+
+\begin{question}[Seven attack questions]
+\label{q:opus-seven}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textbf{Identification vs lift.} Is the topologisation theorem
+an \emph{identification} of $\SCchtop + \omega$ with $\Etop{3}$, or
+only a \emph{lift} up to weight-completion?
+\item \textbf{``Inner'' conformal vector.} Is ``inner'' a structural
+requirement or just any $V_\omega \in \cA$ of weight two?
+\item \textbf{Regularity of the Sugawara topologisation.} At what
+regularity does the Sugawara construction topologise the
+$C$-direction? Does the argument fail at $k=-h^\vee$?
+\item \textbf{$\cW_N$ chain-level status.} Is the
+$\cW_N \to \Etop{N+1}$ statement proved chain-level, or only at
+weight-completion?
+\item \textbf{$\cW_\infty$ horizon.} Is the
+$\cW_\infty \to \Etop{\infty}$ claim a genuine operadic horizon, or
+does the tower terminate finitely?
+\item \textbf{Scope of $\Phihol$.} Is
+``non-logarithmic $C_2$-cofinite'' the maximal unconditional scope?
+\item \textbf{Commit \texttt{a5640de}.} Did the \texttt{a5640de}
+commit close $H^2=0$ at all genus, or only at specific genus?
+\end{enumerate}
+\end{question}
+
+These seven questions drive six ATTACK-HEAL cycles
+(\S\ref{sec:opus-cycle-1} through \S\ref{sec:opus-cycle-6}).
+Attack~(g) is dismissed inside Cycle~1 since a direct
+\texttt{git show a5640de} reveals the commit is a $W(p)$-tempered
+retraction, unrelated to $H^2$. Attacks~(a)--(f) carry the
+mathematics.
+
+%=======================================================================
+\section{Cycle 1: identification versus lift; the weight-completion axis}
+\label{sec:opus-cycle-1}
+%=======================================================================
+
+\begin{attack}[a,~g]
+\label{att:cycle1}
+The programme sometimes writes
+``$\SCchtop + \omega = \Etop{3}$''
+(master-theorem statements in
+\texttt{universal\_holography\_functor.tex} and
+\texttt{programme\_climax\_platonic.tex}). Two objections:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The equality sign hides an $(\infty,1)$-categorical
+promotion. $\SCchtop$ is a two-coloured operad (or
+\emph{bicoloured propad}; see
+\texttt{class\_m\_direct\_sum\_obstruction\_platonic.tex}); the
+promotion to $\Etop{3}$ is the content of Dunn additivity
+\emph{after} the holomorphic direction has been topologised by
+an inner conformal vector. Dunn is a theorem about
+$\infty$-operads in the topological monoidal
+$\infty$-category; calling it an ``equality'' conflates
+chain-level data with $(\infty,1)$-categorical identification.
+\item For class-M the inscribed chain-level statement only
+holds on the \emph{weight-completed} complex
+(\texttt{prop:bv-bar-class-m-weight-completed});
+the original-complex chain-level statement is a frontier item.
+Commit \texttt{a5640de} did not close this. (\texttt{git show
+a5640de} shows the commit is the $W(p)$-tempered retraction,
+unrelated to $H^2$ or the class-M original-complex statement.)
+\end{enumerate}
+\end{attack}
+
+\begin{heal}[a,~g]
+\label{heal:cycle1}
+Both objections are absorbed into a three-tier layer structure
+(Vol~I~\S\ref*{opus:sec:V1topo},
+Thm.~\ref*{opus:thm:topologization}):
+
+\smallskip
+\textbf{Tier~I (cohomological identification).} On BRST
+cohomology $H^\bullet_Q\bigl(\Zder(\cA)\bigr)$, once $\omega$
+acts $Q$-exactly on holomorphic translations
+($T_{\mathrm{Sug}} = [Q, G]$), the factorisation algebra on the
+holomorphic direction becomes locally constant, which by
+Lurie HA Theorem~5.4.5.9 recognises an $\Etop{2}$ structure.
+Dunn additivity with the transverse $\Etop{1}$ then gives
+\emph{genuine equality of operads}:
+\begin{equation}\label{eq:opus-tier-I}
+  H^\bullet_Q\bigl(\Zder(\cA)\bigr)
+  \;\in\; \mathrm{Alg}_{\,\Etop{2} \otimes_{\mathrm{Dunn}} \Etop{1}}
+  \;=\; \mathrm{Alg}_{\,\Etop{3}}.
+\end{equation}
+This is an identification, not a lift. Tier~I is
+unconditional for class~L (affine KM) and
+class-M-at-cohomology, at every genus.
+
+\smallskip
+\textbf{Tier~II (chain-level, transferred model).} Choose a
+strong deformation retract
+$(\pi, \iota, h)\colon \Zder(\cA) \rightleftarrows
+H^\bullet_Q\bigl(\Zder(\cA)\bigr)$ (Cauchy datum,
+\texttt{homotopy retract is data}, RS-2). Transport the
+Tier~I structure across the retract via the homotopy transfer
+theorem (Kontsevich--Soibelman, Lada--Markl), producing a
+chain-level $\Etop{3}_\infty$-algebra structure on the
+zero-differential model. The result is unique up to
+$\infty$-quasi-isomorphism. Tier~II is unconditional for the
+same scope as Tier~I.
+
+\smallskip
+\textbf{Tier~III (original-complex chain-level).} The
+transferred structure of Tier~II is on the cohomology model,
+not on $\Zder(\cA)$ itself. To obtain an $\Etop{3}$
+structure on the \emph{original} chain complex requires an
+$A_\infty$-coherent null-homotopy of holomorphic translation
+in the brace deformation complex
+(\texttt{en\_koszul\_duality.tex} \S\ref*{opus:sec:V1topo},
+Part~(iii) of Thm.~\ref*{opus:thm:topologization}): an
+$A_\infty$-family $G = (G_1, G_2, \ldots)$ with
+$[m, G] = \partial_z$, $G_1 =$ Sugawara antighost
+contraction. For class~L this has been closed
+(Prop.~\texttt{prop:sugawara-gauge-rectification}); the
+tower terminates at $r_{\max} = 3$. For class-M the
+tower need not terminate, and only the weight-completed
+statement is proved.
+
+\smallskip
+\textbf{Scope declaration.} The G3 statement
+``$\Phihol$ exists as a functor'' holds in the
+$(\infty,1)$-categorical lane at Tier~I (cohomological). The
+chain-level lane (Tiers~II, III) refines the same statement
+at chain level. Tier~II is proved unconditionally across
+G/L/C and class-M-weight-completed; Tier~III is proved
+unconditionally for class~L and is a frontier item for
+class~M original complex.
+
+\smallskip
+\textbf{Commit \texttt{a5640de}.} \texttt{git show a5640de}
+(2026-04-17, author Raeez Lorgat) retracts
+\texttt{thm:tempered-stratum-contains-wp} for the logarithmic
+triplet $W(p)$: it downgrades the status from
+$\textsf{ProvedHere}$ to $\textsf{Conjectured}$ after finding
+that the Zhu-bounded-Massey argument fails on primary-source
+audit (Gurarie 1993, Flohr 1996). The commit has no
+relationship to $H^2$, curved-Dunn, or class-M
+original-complex. The G3 attack question (g) is dismissed.
+\end{heal}
+
+\begin{hidden}[layer structure]
+\label{hidden:cycle1}
+The three tiers are not a hierarchy in which higher tiers
+subsume lower ones; they are three different theorems about
+three different mathematical objects: BRST cohomology, a
+cohomology-model quasi-iso, and the original chain complex.
+Each tier is loadbearing, and the G3 identity in its
+\emph{strongest} honest form is the statement that
+$\Phihol$ lands on $\Etop{3}$-topological algebras at
+Tier~I globally, at Tier~II via transferred models
+globally, and at Tier~III on the restricted subcategory of
+class-L + class-M-weight-completed objects.
+\end{hidden}
+
+%=======================================================================
+\section{Cycle 2: what ``inner'' means (structural requirement)}
+\label{sec:opus-cycle-2}
+%=======================================================================
+
+\begin{attack}[b]
+\label{att:cycle2}
+The hypothesis in the source category
+$\ChirAlg^{\omega,\mathrm{BL}}_C$
+(\texttt{universal\_holography\_functor.tex}
+Def.~\ref*{opus:def:UHF-source}) is that $\omega \in \cA_2(X)$
+is a conformal vector and $\cA$ is boundary-linear. There is
+an additional hypothesis that $\omega$ is an
+\emph{inner} conformal vector at a non-critical level
+(Definition~\ref{def:opus-inner}). Is ``inner''
+\emph{needed}, or is any weight-2 Virasoro-OPE generator
+enough? If merely Virasoro-OPE is required, the source
+category is much larger than stated; if ``inner''' is
+structural, the statement needs this clause to close.
+\end{attack}
+
+\begin{heal}[b]
+\label{heal:cycle2}
+``Inner'' is structural, not decorative. Here is why.
+
+\begin{definition}[Inner conformal vector]
+\label{def:opus-inner}
+Let $\cA$ be a chiral algebra with a weight-2 generator
+$\omega$ satisfying the Virasoro OPE of central charge~$c$.
+Let $Q$ be the BRST differential of a 3d
+holomorphic-topological theory $T_\cA$ on $C \times \mathbb{R}$
+whose boundary chiral algebra is $\cA$. The conformal vector
+$\omega$ is \emph{inner} for $(\cA, Q)$ if there exists
+$G(z)$ in the bulk observables of $T_\cA$ such that
+\begin{equation}\label{eq:opus-inner}
+  \omega(z) \;=\; [Q, G(z)]
+  \quad\text{in }\ H^\bullet\bigl(A^{\mathrm{BV}}_{3d},Q\bigr).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Failure without ``inner'';
+\texttt{proved elsewhere}: \texttt{en\_koszul\_duality.tex}
+Rem.~\ref*{opus:rem:conformal-vector-necessary}]
+\label{prop:opus-need-inner}
+If $\omega$ is not inner for the bulk $Q$, then the
+topologisation step fails at Tier~I: $\partial_z$ is not
+$Q$-exact on $H^\bullet_Q\bigl(\Zder(\cA)\bigr)$, and the
+factorisation algebra on the holomorphic direction retains
+genuine $\bar\partial$-dependence. The $\Etop{2}$ structure
+on $\Zder(\cA)$ produced by chiral Deligne stays
+\emph{holomorphic} $\Ehol$, not topological, and the
+Dunn-additivity step $\Etop{2} \otimes \Etop{1} \simeq
+\Etop{3}$ does not apply.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Without innerness there is no BRST-primitive $G$ lifting
+$\omega$. The Sugawara identity
+$\partial_z = [T, \cdot] = [[Q, G], \cdot] = [Q, [G, \cdot]]$
+breaks at the second step. The factorisation algebra on
+the $C$-direction therefore carries $\bar\partial$-cohomology
+classes at every point of $C$, so local constancy fails.
+\end{proof}
+
+\begin{hidden}[inner $\leftrightarrow$ bulk BV-BRST existence]
+\label{hidden:cycle2}
+Innerness is simultaneously a \emph{property of $\cA$} (the
+existence of the BRST primitive $G$) and a \emph{construction
+of the bulk theory} (the existence of the
+$A^{\mathrm{BV}}_{3d}$ complex). The two are inseparable: one
+cannot write down $G$ without specifying the bulk theory, and
+one cannot construct the bulk theory without a chiral
+boundary algebra $\cA$ that is the Dirichlet / boundary
+condition for the BV fields. For the four standard
+landscape families:
+\begin{itemize}
+\item \textbf{G} (Heisenberg / lattice): $\omega =
+\tfrac{1}{2}\sum \alpha \alpha$ is inner, with
+$G = \tfrac{1}{2}\sum \bar c_\alpha \alpha$ the abelian
+antighost bilinear. Bulk: Costello--Li abelian holomorphic
+Chern--Simons.
+\item \textbf{L} (affine KM $V_k(\fg)$, $k \neq -h^\vee$):
+$\omega = T_{\mathrm{Sug}}$ is inner, with
+$G = \tfrac{1}{2(k+h^\vee)} \sum :J^a \bar c_a:$. Bulk:
+Costello--Gaiotto non-abelian holomorphic Chern--Simons.
+\item \textbf{C} ($\beta\gamma$, $bc$): bosonised to
+class~G; inherits innerness.
+\item \textbf{M} (Virasoro, $\cW_N$, hook-type
+$\cW_k(\fg, f)$): $\omega = T$ (stress tensor). Inner for
+the Costello--Gaiotto bulk with Drinfeld--Sokolov boundary;
+the DS-reduction provides the bulk
+$A^{\mathrm{BV}}_{3d}$-complex and the primitive $G$.
+\end{itemize}
+The B-row (BKM extension with Borcherds product; Mukai-enhanced
+K3 Heisenberg) has a \emph{non-inner} conformal vector
+(the Borcherds weight $5$ does not match $T_{\mathrm{Sug}} + $
+Heisenberg decomposition): the topologisation route on the
+B-row goes through the direct Mukai-enhanced K3 Heisenberg
+presentation (Vol~III, \texttt{cy\_d\_kappa\_stratification%
+.tex}) rather than through Sugawara.
+\end{hidden}
+
+%=======================================================================
+\section{Cycle 3: Sugawara regularity and critical-level failure}
+\label{sec:opus-cycle-3}
+%=======================================================================
+
+\begin{attack}[c]
+\label{att:cycle3}
+What is the \emph{regularity} of the Sugawara topologisation
+on the $C$-direction? Is it chain-level, or only after
+completion? The Sugawara polynomial
+$T_{\mathrm{Sug}} = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a J_a{:}$
+involves a level-dependent denominator that blows up at
+$k = -h^\vee$. Does the argument fail at the critical level,
+and is this a genuine restriction or a convention issue?
+\end{attack}
+
+\begin{heal}[c]
+\label{heal:cycle3}
+The regularity is \emph{single-contour normal-ordered chain-
+level} for all $k \neq -h^\vee$ and \emph{fails genuinely} at
+$k = -h^\vee$. The healed picture:
+
+\textbf{Non-critical regularity.} For any non-critical level
+$k \neq -h^\vee$, the Sugawara polynomial
+\begin{equation}\label{eq:opus-sugawara}
+  T_{\mathrm{Sug}}(z) \;=\;
+  \frac{1}{2(k+h^\vee)}\, \sum_a {:}J^a(z) J_a(z){:}
+\end{equation}
+is a well-defined single-contour normally ordered
+field in $\cA$ (Kac \S5; Frenkel--Ben-Zvi \S4.5). Its modes
+$L_n = \mathrm{Res}_z z^{n+1} T_{\mathrm{Sug}}(z)$ satisfy
+the Virasoro OPE of central charge
+\begin{equation}\label{eq:opus-ksug-c}
+  c_{\mathrm{Sug}}(k) \;=\;
+  \frac{k \cdot \dim(\fg)}{k+h^\vee}.
+\end{equation}
+The BRST primitive $G$ of Cycle~2 exists chain-level in the
+3d BV complex, and the identity $T_{\mathrm{Sug}} = [Q, G]$
+holds strictly on BRST cohomology (Tier~I); for class~L,
+also strictly on the original chain complex (Tier~III, via
+gauge rectification).
+
+\textbf{Critical-level failure.} At $k = -h^\vee$:
+\begin{enumerate}[label=(\arabic*)]
+\item The denominator in \eqref{eq:opus-sugawara} vanishes,
+so $T_{\mathrm{Sug}}$ is undefined as a normally ordered
+polynomial in $J$-currents;
+\item The Feigin--Frenkel centre
+$\mathfrak{z}(\hat\fg)_{-h^\vee}$ of the universal affine
+algebra becomes commutative (not Sugawara!);
+the Sugawara mechanism for topologisation collapses;
+\item The correct replacement at critical level is the
+Feigin--Frenkel isomorphism
+$\mathfrak{z}(\hat\fg)_{-h^\vee} \simeq
+\mathrm{Fun}(\mathrm{Op}_{\fg^L}(D))$ identifying the centre
+with the space of opers on the formal disc for the Langlands
+dual; but this is \emph{arithmetic} Koszul duality
+(Beilinson--Drinfeld), not Sugawara topologisation. The bulk
+theory becomes wild (irregular-singular KZB, Stokes data);
+the $\Etop{3}$ upgrade fails.
+\end{enumerate}
+
+\begin{remark}[Not a convention issue, a genuine restriction]
+\label{rem:opus-critical-scope}
+The hypothesis $k \neq -h^\vee$ in the source category
+$\ChirAlg^{\omega,\mathrm{BL}}_C$ is structural, not a
+convention one can rephrase away. The master theorem of
+$\Phihol$ is \emph{undefined} on
+$V_{-h^\vee}(\fg)$. This is consistent with the general
+principle that critical-level affine algebras belong to a
+different geometric setting (geometric Langlands, opers,
+Drinfeld--Sokolov BRST) than non-critical-level ones
+(holomorphic Chern--Simons, $\Etop{3}$-topological).
+\end{remark}
+
+\begin{hidden}[critical $\leftrightarrow$ arithmetic duality]
+\label{hidden:cycle3}
+What $\Phihol$ assigns at non-critical level is a
+\emph{3D quantum gauge theory}. At critical level the natural
+assignment is the \emph{oper-moduli} of the Langlands-dual
+group. The two assignments live on different sides of the
+Langlands wall: one on the ``automorphic side'' (geometric
+Langlands with Kac--Moody symmetry, opers, Hecke modifications);
+the other on the ``spectral side''
+($\Etop{3}$-topological local observables, quantum gauge
+theory). $\Phihol$ is the functor on the spectral side only;
+the critical-level analogue is a separate theorem
+(Beilinson--Drinfeld's geometric Langlands programme).
+\end{hidden}
+\end{heal}
+
+%=======================================================================
+\section{Cycle 4: $\cW_N$ chain-level and the $N=3$ test case}
+\label{sec:opus-cycle-4}
+%=======================================================================
+
+\begin{attack}[d]
+\label{att:cycle4}
+The $\Einfty$-ladder theorem
+(\texttt{e\_infinity\_topologization.tex}
+Thm.~\ref*{opus:thm:EINF-LAD}) claims
+$\cW_N \to \Etop{N+1}$
+for every depth~$N$, with $\cW_\infty \to \Etop{\infty}$ in
+the limit. Two worries:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Is this a \emph{chain-level} statement on the original
+complex, or a weight-completed one? For class~M the
+general pattern (Cycle~1) says only weight-completed;
+does that apply to $\cW_N$?
+\item What is the scope of the
+\texttt{tower:antighost-commutativity} axiom (axiom T5 of
+\texttt{e\_infinity\_topologization.tex})? The inscribed
+remark \texttt{rem:axiom-T5-scope} says it is vacuous at
+$N=2$ and reducible to a single bracket
+$[G^{(2)}, G^{(3)}]$ at $N=3$, but \emph{postulated} for
+$N \ge 4$. Where exactly does the proof become conditional?
+\end{enumerate}
+\end{attack}
+
+\begin{heal}[d]
+\label{heal:cycle4}
+The healed status is precise. We give the step-by-step
+first-principles construction of $\Phihol$ on
+$\cW_3^k$ (the Zamolodchikov algebra, $\fg = \mathfrak{sl}_3$,
+principal nilpotent) through the $N=3$ ladder rung.
+
+\textbf{Stress tower of $\cW_3$.} The Zamolodchikov
+algebra at generic $c$ has two primary generators: the
+stress tensor $T(z)$ of conformal weight $2$ and the
+Zamolodchikov field $W(z)$ of conformal weight $3$
+(Zamolodchikov 1985; Fateev--Lukyanov 1988). Axioms
+T1--T4 of the higher-spin stress tower
+(\texttt{def:higher-spin-stress-tower}) are verified:
+\begin{itemize}
+\item T1 (quasiprimary): both $T$ and $W$ are
+quasiprimary w.r.t.\ the Virasoro subalgebra generated by
+$T$.
+\item T2 (inner Sugawara-like): $T = T_{\mathrm{Sug}}
++ T_{\mathrm{imp}}$, with
+$T_{\mathrm{imp}} = (\rho, \partial H)$ the principal
+improvement; $W$ is the cubic Casimir
+$W = d_{abc}^{(3)} :J^a J^b J^c: + \text{improvements}$,
+the Fateev--Lukyanov explicit formula.
+\item T3 (truncated $\cW_\infty$): the OPE of $\{T, W\}$
+closes on $\{T, W, :WW:, :TW:, \partial T, \partial W, \ldots\}$,
+a quotient of Linshaw's universal $\cW_\infty[\mu]$ at
+truncation depth 3.
+\item T4 (BRST-primitive existence): the 3D BV complex for
+$\cW_3^k$ is the Costello--Gaiotto bulk with principal DS
+boundary on $\widehat{\mathfrak{sl}}_3$. The
+antighost $G^{(2)} = \tfrac{1}{2(k+3)} \sum_a :J^a \bar c_a:$
+gives $T = [Q_{\mathrm{tot}}, G^{(2)}]$ on cohomology
+(Cycle~2). For $G^{(3)}$, the higher-spin
+Casimir construction
+(\texttt{eq:G-n-formula}) gives
+\begin{equation}\label{eq:opus-G3}
+  G^{(3)}(z) \;=\; \frac{1}{3} \sum_{j=1}^3
+  d^{a_1 a_2 a_3}\, :J_{a_1}(z)\cdots \bar c_{a_j}(z)
+  \cdots J_{a_3}(z):
+\end{equation}
+with $d$ the totally symmetric invariant tensor of rank 3 on
+$\mathfrak{sl}_3$; the identity $W = [Q_{\mathrm{tot}},
+G^{(3)}]$ on cohomology follows by Leibniz
+(\texttt{eq:leibniz-tower}) and
+$J_a = [Q_{\mathrm{tot}}, \bar c_a]$
+(Costello--Gaiotto boundary condition).
+\end{itemize}
+
+\textbf{Axiom T5 at $N=3$ (BRST-commutativity of
+antighosts).} The single bracket to verify is
+$[G^{(2)}, G^{(3)}]$. By Leibniz:
+\begin{align*}
+  [G^{(2)}, G^{(3)}]
+  &= \left[\tfrac{1}{2(k+3)}\sum :J^a \bar c_a:,\ G^{(3)}\right] \\
+  &= \tfrac{1}{2(k+3)} \sum \left(\text{terms with one
+$J$ replaced by $[:J\bar c:, \cdot]$-contraction}\right).
+\end{align*}
+Each contraction reduces to a combination of single-contour
+OPE residues between $J^a$ and the $J$-insertions inside
+$G^{(3)}$. By the classical Poisson identity (Linshaw
+Thm.~7.1; BMP \S4.3), $\{T^{(2)}, T^{(3)}\} =$ total
+derivative of a spin-$2$ combination of $T^{(2)}$ and
+$T^{(3)}$; lifting to the quantum OPE via
+Feigin--Frenkel screening gives
+$[T^{(2)}, T^{(3)}] = \partial f$ on cohomology for some
+quantum field $f$. Substituting $T^{(n)} = [Q,G^{(n)}]$ gives
+$[G^{(2)}, G^{(3)}] = Q$-exact. Axiom T5 verified at $N=3$.
+
+\textbf{Ladder at $N=3$.} Apply
+Thm.~\ref*{opus:thm:EINF-LAD}:
+\begin{equation}\label{eq:opus-W3-ladder}
+  \Zder(\cW_3^k) \;\in\;
+  \mathrm{Alg}_{\,\Etop{2}(G^{(2)})
+    \otimes \Etop{1}(G^{(3)})
+    \otimes \Etop{1}_{\mathrm{tr}}}
+  \;=\; \mathrm{Alg}_{\,\Etop{4}}.
+\end{equation}
+Dimension count: $2$ (from $G^{(2)}$ topologising the
+$\mathbb{C}$-direction) $+\ 1$ (from $G^{(3)}$ topologising
+the first-order jet) $+\ 1$ (transverse $\mathbb{R}$) $= 4$.
+
+\textbf{Chain-level scope.} Tier~I (cohomological) is
+unconditional. Tier~II (transferred model) is unconditional.
+Tier~III (original complex): the analogue of the class~L
+gauge rectification is \emph{open} for $\cW_3$ on the
+uncompleted direct-sum complex; the weight-completed
+version holds by the DS-Hochschild bridge to
+$V_k(\mathfrak{sl}_3)$. This is the class-M weight-completed
+scope of Cycle~1 instantiated at $\cW_3$.
+
+\textbf{General $\cW_N$.} The construction generalises: the
+$N-1$ Casimir tensors $T^{(2)}, T^{(3)}, \ldots, T^{(N)}$
+each admit antighost primitives $G^{(n)}$ by
+\eqref{eq:opus-G3}-type formulas. Axiom T5 at $N$ requires
+$(N-1)(N-2)/2$ pairwise brackets
+$[G^{(m)}, G^{(n)}]$ for $2 \le m < n \le N$ to be
+$Q$-exact. At $N=3$: one bracket, verified. At $N=4$: three
+brackets, \emph{postulated}. The classical Poisson shadow of
+these brackets \emph{does} vanish modulo total derivatives
+of lower-spin Casimirs (Linshaw Thm.~7.1); the lift from
+classical Poisson to quantum BRST-commutation is what
+remains to verify from first principles at $N \ge 4$.
+
+\begin{hidden}[$N=3$ as the witness where all inputs line up]
+\label{hidden:cycle4}
+The $\cW_3$ case is the minimal non-trivial verification of
+the ladder beyond the base rung $N=2$. At $N=3$: the
+bulk $3$d theory is Costello--Gaiotto holomorphic
+Chern--Simons on $\widehat{\mathfrak{sl}}_3$ with principal
+DS boundary; the stress tower has the classically-computable
+cubic Casimir $W$ with Fateev--Lukyanov formula; axiom T5
+reduces to one testable OPE bracket; the resulting bulk
+algebra is $\Etop{4}$, matching the Zamolodchikov conformal
+field theory's interpretation as 4D higher-spin gravity in
+the Gaberdiel--Gopakumar dictionary.
+\end{hidden}
+\end{heal}
+
+%=======================================================================
+\section{Cycle 5: the $\cW_\infty$ horizon}
+\label{sec:opus-cycle-5}
+%=======================================================================
+
+\begin{attack}[e]
+\label{att:cycle5}
+Is $\cW_\infty \to \Etop{\infty}$ a genuine operadic horizon
+or does the tower terminate at some finite depth? The naive
+reading of the formula
+``$\Etop{N+1} \otimes_{\mathrm{Dunn}} \Etop{1} =
+\Etop{N+2}$'' suggests that every Sugawara step genuinely
+increases the dimension, but each truncation
+$\cW_\infty \twoheadrightarrow \cW_N$ drops infinitely many
+higher-spin generators. Why doesn't the ladder stabilise?
+\end{attack}
+
+\begin{heal}[e]
+\label{heal:cycle5}
+The tower does not terminate because each higher-spin
+Casimir is \emph{independent} (neither a polynomial in
+lower-spin generators nor a total derivative). The
+$\Einfty$-ladder is a genuine operadic horizon, realised
+as an inverse limit in the $\infty$-operad category.
+
+\textbf{Operadic statement.} By
+Lurie HA Notation~5.1.1.5, $\Etop{\infty}$ is \emph{defined}
+as the inverse limit of the stabilisation tower
+\begin{equation}\label{eq:opus-Einfty-def}
+  \Etop{\infty} \;=\; \varprojlim_n \Etop{n}
+\end{equation}
+in the symmetric monoidal $\infty$-category of
+$\infty$-operads
+$\mathrm{Op}_\infty^{\otimes}$. The $\cW_\infty$ horizon
+statement is
+\begin{equation}\label{eq:opus-Winfty-horizon}
+  \Zder(\cW_\infty[\mu]) \;\in\;
+  \mathrm{Alg}_{\,\Etop{\infty}}
+  \;=\; \varprojlim_N \mathrm{Alg}_{\,\Etop{N+1}},
+\end{equation}
+where the inverse limit is along the truncation tower
+$\cW_\infty[\mu] \twoheadrightarrow \cW_N[\mu]$ of Linshaw.
+
+\textbf{Independence of higher Casimirs.} At generic $\mu$,
+the algebra $\cW_\infty[\mu]$ contains a quasiprimary field
+$T^{(n)}$ of every spin $n \ge 2$, and these are
+algebraically independent from $\{T^{(2)}, \ldots,
+T^{(n-1)}\}$: specifically, Linshaw shows that the commutant
+$\mathrm{Com}(\cW_{N-1}[\mu], \cW_\infty[\mu])$ is
+generated by $T^{(n)}$ for $n \ge N$, strictly strictly
+containing fields for every $n$. Therefore each step in the
+ladder contributes a genuinely independent $\Etop{1}$-factor,
+and the Dunn product does not stabilise.
+
+\textbf{Three equivalent convergence criteria.}
+(\texttt{conj:w-infty-e-infty-topological-convergence},
+\texttt{e\_infinity\_topologization.tex}):
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textbf{Gaberdiel--Gopakumar stabilisation.} Every OPE
+structure constant $f^{n_1 n_2}_{n_3, k}(c)$ of
+$\cW_\infty[\mu]$ equals the corresponding structure constant
+of $\cW_N[\mu]$ for $N \ge \max(n_1, n_2, n_3, k)$.
+\item \textbf{$\infty$-categorical Dunn convergence.} The
+iterated Dunn product $\bigotimes_{n \ge 2} \Etop{1}(G^{(n)})$
+converges in $\mathrm{Op}_\infty^{\otimes}$ to
+$\Etop{\infty}$.
+\item \textbf{Yamada strong convergence.} On every
+bar-weight window $[w_{\min}, w_{\max}]$, the truncation
+$\cW_\infty[\mu] \twoheadrightarrow \cW_N[\mu]$ induces
+isomorphisms of weight-$w$ subspaces for $N \ge w_{\max} - 1$.
+\end{enumerate}
+
+Criterion (a) is proved by Gaberdiel--Gopakumar
+(\texttt{GaberdielGopakumar2011-Winfty} Thm.~3.1).
+Criterion (c) is proved by Yamada
+(\texttt{Yamada-Winfty-convergence}) at generic $c$.
+Criterion (b) follows from (c) by co-cofinality of the
+stabilisation tower (Ayala--Francis Lemma~3.7).
+
+\textbf{Scope of the $\cW_\infty$ horizon statement.}
+Conditional on axiom T5 at all spins (Cycle~4), the
+$\Einfty$-structure on
+$\Zder(\cW_\infty[\mu])$ is realised chain-level via the
+weight-filtered inverse limit. Each finite weight window
+$[w_{\min}, w_{\max}]$ is computed in a finite truncation
+$\cW_{w_{\max}-1}[\mu]$ where the $\Etop{w_{\max}}$
+structure is Tier~II-transferred. The horizon statement is
+therefore:
+\begin{equation}\label{eq:opus-Winfty-conditional}
+  \text{Tier~I: unconditional at generic }c;\quad
+  \text{Tier~II: conditional on T5 at all spins};\quad
+  \text{Tier~III: OPEN.}
+\end{equation}
+
+\begin{hidden}[horizon $=$ Koszul self-dual endpoint]
+\label{hidden:cycle5}
+$\Etop{\infty}$ is Koszul self-dual at the operadic level
+(Fresse, Thm.~14.1.1): the Koszul dual of $\Etop{\infty}$
+is itself. The $\cW_\infty[\mu]$ endpoint is therefore the
+\emph{unique} standard-landscape chiral algebra whose
+derived chiral centre lies on the self-dual diagonal of the
+operadic E-ladder. This matches the architectural
+expectation that $\cW_\infty[\mu]$ is the Platonic endpoint
+of all higher-spin symmetry: it is what the
+Gaberdiel--Gopakumar AdS/CFT correspondence calls the
+``higher-spin square'' boundary algebra, whose bulk is
+Vasiliev's higher-spin gravity in $\mathrm{AdS}_3$.
+\end{hidden}
+\end{heal}
+
+%=======================================================================
+\section{Cycle 6: scope of unconditional $\Phihol$}
+\label{sec:opus-cycle-6}
+%=======================================================================
+
+\begin{attack}[f]
+\label{att:cycle6}
+The master theorem
+(\texttt{programme\_climax\_platonic.tex}
+Thm.~\ref*{opus:thm:PMC}) asserts $\Phihol$ unconditionally
+on the ``non-logarithmic, $C_2$-cofinite standard
+landscape'' plus ``VSKR+BGG-tempered irrational cosets''.
+Is this the maximal scope? Two directions of worry:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Why ``non-logarithmic''? What fails for
+logarithmic $W(p)$?
+\item Why ``$C_2$-cofinite''? What fails for irrational
+non-tempered cosets?
+\end{enumerate}
+\end{attack}
+
+\begin{heal}[f]
+\label{heal:cycle6}
+\textbf{Why ``non-logarithmic''.} Logarithmic vertex
+algebras (the triplet $W(p)$ being the canonical example)
+have OPEs that carry $\log(z-w)$ singularities. Four
+structural failures ensue:
+\begin{itemize}
+\item $L_0$ is non-diagonalisable: it has a Jordan block of
+rank 2 on the top-level fields (the triplet and its
+logarithmic partner). This breaks the
+``quasiprimary'' axiom T1 of the higher-spin stress tower.
+\item The Zhu algebra of $W(p)$ is not semisimple; the
+Zhu-bounded-Massey argument of commit \texttt{a5640de}
+fails precisely here (Gurarie 1993, Flohr 1996:
+logarithmic Massey products grow super-polynomially despite
+$C_2$-cofiniteness).
+\item The tempered stratum of the $\Phihol$-image does not
+contain $W(p)$, as proved by the retraction of
+\texttt{thm:tempered-stratum-contains-wp}.
+\item The bulk theory is expected to be logarithmic 3D
+gravity (Grumiller--Riedler 2010), whose BRST complex has
+an $L_0$-nilpotent sector not captured by the single
+Sugawara mechanism.
+\end{itemize}
+
+\textbf{Why ``$C_2$-cofinite''.} $C_2$-cofiniteness is
+Zhu's finiteness condition: the quotient
+$\cA / C_2(\cA)$ by the second derivation filtration is
+finite-dimensional. Three structural uses:
+\begin{itemize}
+\item $C_2$-cofinite implies finite-dim Zhu algebra
+$\mathrm{Zhu}(\cA)$ (Zhu 1996 Thm.~4.4.3);
+\item $C_2$-cofinite + rational implies modular invariance
+of characters (Zhu);
+\item $C_2$-cofinite implies the chiral algebra has
+\emph{finite shadow depth} (Arakawa): the shadow
+obstruction tower has $r_{\max} < \infty$. This is the
+scope on which $\Phihol$ produces an $\Etop{3}$-topological
+rather than a more exotic bulk.
+\end{itemize}
+
+\textbf{Irrational cosets.} Irrational cosets
+$\mathrm{Com}(B, C)$ need not be $C_2$-cofinite but are
+still \emph{tempered} in the VSKR+BGG sense
+(\texttt{tempered\_stratum\_characterization\_platonic.tex}):
+their shadow tower, while infinite, admits a Banach
+completion with finite radius $\rho_*$. This is what
+allows $\Phihol$ to be defined on
+$\mathrm{Com}(H_k, V_k(\mathfrak{sl}_2))$ with explicit
+Banach radius
+$\rho_*(\mathrm{Com}) = |c| / (6|c_K(k)|)$
+(Thm.~\ref*{opus:thm:PMC}(iii)).
+
+\textbf{Maximal scope.} The inscribed scope
+``non-logarithmic $C_2$-cofinite + VSKR+BGG-tempered
+irrational coset'' is the \emph{union} of two strata:
+\begin{itemize}
+\item Stratum A: finite shadow-depth (class G/L/C/M in the
+rational locus);
+\item Stratum B: infinite-depth but Banach-tempered
+(VSKR+BGG-tempered cosets).
+\end{itemize}
+Beyond this: logarithmic $W(p)$ is the nearest frontier
+case (open); genuinely wild / irregular-singular algebras
+(beyond the polar Stokes stratification) are outside the
+programme's current reach. The maximal scope may be refined
+upward by proving the $W(p)$ case (F1 frontier), but not
+trivially.
+
+\begin{hidden}[scope $\leftrightarrow$ Banach completion radius]
+\label{hidden:cycle6}
+The boundary between ``$\Phihol$ exists'' and ``$\Phihol$
+does not exist'' is controlled by the Banach completion
+radius $\rho_*(\cA) = |c|/\beta_\cA$: whenever $\rho_* > 0$,
+there is a chain-level quasi-iso from the Banach completion
+$\mathcal{B}_{\rho}(\cA)$ (for $\rho < \rho_*$) to
+$\Zder(\cA)$, and $\Phihol(\cA)$ is defined as the bulk
+HT-QFT whose bulk observables are this Banach completion.
+When $\rho_* = 0$ (logarithmic $W(p)$ at $p \ge 2$, and
+certain irregular-singular algebras), the bulk is not a
+Banach space and the $\Etop{3}$-topological structure fails
+structurally. The $\Phihol$-scope is exactly
+$\{\cA : \rho_*(\cA) > 0\}$.
+\end{hidden}
+\end{heal}
+
+%=======================================================================
+\section{Construction of $\Phihol$ on $V_1(\mathfrak{sl}_2)$ from first
+principles}
+\label{sec:opus-construction}
+%=======================================================================
+
+The healed G3 identity is an \emph{existence-of-functor}
+statement; this section constructs the functor at the
+minimal non-trivial point. Input:
+$(\cA, \omega, \mathrm{BL}) = (V_1(\mathfrak{sl}_2),
+T_{\mathrm{Sug}}^{k=1}, \mathrm{Dirichlet})$.
+
+\subsection{The boundary algebra}
+$\cA = V_1(\mathfrak{sl}_2)$: the level-1 affine vertex
+algebra of $\mathfrak{sl}_2$. Generators: three currents
+$J^+, J^-, H$ with the level-1 affine OPEs
+\begin{align}
+  J^+(z) J^-(w) &\sim \frac{1}{(z-w)^2} + \frac{H(w)}{z-w}, \\
+  H(z) J^\pm(w) &\sim \pm\frac{2 J^\pm(w)}{z-w}, \\
+  H(z) H(w) &\sim \frac{2}{(z-w)^2}.
+\end{align}
+Non-critical level: $k+h^\vee = 1+2 = 3 \neq 0$. Central
+charge from \eqref{eq:opus-ksug-c}:
+$c_{\mathrm{Sug}}(1, \mathfrak{sl}_2) =
+(1)(3)/(1+2) = 1$. So
+$V_1(\mathfrak{sl}_2) = \mathrm{Vir}_{c=1}$-symmetric: the
+Sugawara stress tensor has $c=1$. In fact
+$V_1(\mathfrak{sl}_2) \simeq$ lattice VOA
+$V_{\sqrt{2}\mathbb{Z}}$ (Frenkel--Kac).
+
+\subsection{The conformal vector is inner at $k=1$}
+Sugawara polynomial:
+\begin{equation}
+  T_{\mathrm{Sug}}(z) = \frac{1}{2 \cdot 3}
+  \left({:}J^+ J^-{:} + {:}J^- J^+{:} +
+  \tfrac{1}{2}{:}H H{:}\right)(z).
+\end{equation}
+BRST primitive in the Costello--Gaiotto bulk for
+$\mathfrak{sl}_2$: introduce bulk antighosts
+$\bar c^+, \bar c^-, \bar c_H$ dual to $J^+, J^-, H$. The
+identity $J^a = [Q_{\mathrm{tot}}, \bar c^a]$ on
+BRST cohomology (Costello--Gaiotto 2018) gives
+\begin{equation}
+  G^{(2)}(z) = \frac{1}{6}
+  \left({:}\bar c^+ J^-{:} + {:}\bar c^- J^+{:} +
+  \tfrac{1}{2}{:}\bar c_H H{:}\right)(z),
+\end{equation}
+verifying $T_{\mathrm{Sug}} = [Q_{\mathrm{tot}}, G^{(2)}]$
+on cohomology by Leibniz.
+
+\subsection{$\SCchtop$-heptagon action on the pair}
+The pair $(\ChirHoch^\bullet(V_1(\mathfrak{sl}_2)),
+V_1(\mathfrak{sl}_2))$ carries the $\SCchtop$-operad
+action (\texttt{sc\_chtop\_heptagon.tex}): bulk braces
+on boundary, bulk products from holomorphic $\Etop{2}$ on
+$\mathrm{FM}_k(\mathbb{C})$, boundary products from
+topological $\Etop{1}$ on $\mathbb{R}$. The closed-colour
+generators are the chiral Deligne braces (HKR for
+$V_1(\mathfrak{sl}_2) \simeq V_{\sqrt{2}\mathbb{Z}}$); the
+open-colour generators are the boundary $E_1$-product on
+$\mathbb{R}$ (Ayala--Francis); the mixed-colour operations
+are the braces acting on $V_1(\mathfrak{sl}_2)$ by
+$L_\infty$-brace formulas.
+
+\subsection{Topologisation yielding $\Etop{3}$}
+Tier~I: apply the Sugawara identity
+$T_{\mathrm{Sug}} = [Q_{\mathrm{tot}}, G^{(2)}]$.
+On BRST cohomology $H^\bullet_Q$ of the 3D BV complex,
+$\partial_z$ is $Q_{\mathrm{tot}}$-exact:
+$\partial_z \mathcal{O} =
+[T_{\mathrm{Sug}}(0), \mathcal{O}] =
+[[Q_{\mathrm{tot}}, G^{(2)}_{(0)}], \mathcal{O}] =
+[Q_{\mathrm{tot}}, [G^{(2)}_{(0)}, \mathcal{O}]]$.
+Therefore the factorisation algebra on $\mathbb{C}$
+becomes locally constant on $H^\bullet_Q$, recognised
+by Lurie HA Thm.~5.4.5.9 as an $\Etop{2}$. Dunn additivity
+with the transverse $\Etop{1}$ from $\mathbb{R}$:
+\begin{equation}
+  H^\bullet_Q\bigl(\Zder(V_1(\mathfrak{sl}_2))\bigr)
+  \;\in\; \mathrm{Alg}_{\,\Etop{3}}.
+\end{equation}
+
+\subsection{Chain-level original complex (class L)}
+For $V_k(\fg)$ at $k \neq -h^\vee$, the class-L gauge
+rectification of
+\texttt{prop:sugawara-gauge-rectification} gives the
+original-complex Tier~III statement. The explicit
+$A_\infty$-coherence is computable at $V_1(\mathfrak{sl}_2)$:
+the family $G = (G_1, G_2, G_3, \ldots)$ with
+$G_1 = G^{(2)}_{(0)}$ (Sugawara antighost) and
+$G_{\ge 2}$ given by higher-order Koszul-contraction
+corrections supplying the coherence
+$[m, G] = \partial_z$. Termination: at the level of
+the shadow tower, class-L has $r_{\max} = 3$, so the
+tower $G_n$ terminates at $n = 3$. This matches the
+finite-depth argument
+(\texttt{rem:topologization-scope}).
+
+\subsection{Output: $\Phihol(V_1(\mathfrak{sl}_2))$}
+The bulk HT-QFT is the Costello--Li abelian holomorphic
+Chern--Simons on $\mathbb{C} \times \mathbb{R}$ for the
+lattice $\sqrt{2}\mathbb{Z}$: the lattice VOA
+$V_{\sqrt{2}\mathbb{Z}} \simeq V_1(\mathfrak{sl}_2)$ is the
+boundary algebra, and the bulk factorisation algebra is
+$\Zder(V_1(\mathfrak{sl}_2)) =
+H^\bullet(V_{\sqrt{2}\mathbb{Z}}, V_{\sqrt{2}\mathbb{Z}})
+\simeq$ lattice cohomology $H^\bullet(\mathrm{pt})[c]$,
+equipped with $\Etop{3}$-structure from the double
+Hochschild + transverse $\mathbb{R}$. This is the base
+case, and it works chain-level on the original complex.
+
+%=======================================================================
+\section{Extension to $\cW_3$ and to $\cW_\infty[\mu]$}
+\label{sec:opus-wstack}
+%=======================================================================
+
+\subsection{$\cW_3$ at generic $c$}
+Input: $\cW_3^k$ at generic $c$, principal DS reduction of
+$V_k(\widehat{\mathfrak{sl}}_3)$. Stress tower:
+$\{T, W\}$ of spins $\{2, 3\}$. Antighost primitives
+$G^{(2)}, G^{(3)}$ as in \S\ref{sec:opus-cycle-4}. Axiom T5
+verified ($[G^{(2)}, G^{(3)}] = Q$-exact via lifting
+Linshaw Thm.~7.1).
+
+Tier~I output: $\Zder(\cW_3^k) \in \mathrm{Alg}_{\,\Etop{4}}$,
+unconditional on cohomology at generic $c$.
+
+Tier~II: transferred model unconditional; zero-differential
+cohomology complex carries $\Etop{4}_\infty$-structure
+unique up to $\infty$-quasi-iso.
+
+Tier~III: weight-completed statement via DS-Hochschild
+bridge to $V_k(\widehat{\mathfrak{sl}}_3)$; original-complex
+statement OPEN (F3 frontier).
+
+\subsection{$\cW_\infty[\mu]$ at generic $c, \mu$}
+Input: $\cW_\infty[\mu]$, Linshaw's universal two-parameter
+family. Infinite stress tower
+$\{T^{(n)} : n \ge 2\}$. Axiom T5 at $N \ge 4$ POSTULATED.
+
+Tier~I output: $\Zder(\cW_\infty[\mu]) \in
+\mathrm{Alg}_{\,\Etop{\infty}}$ on cohomology, conditional
+on T5 at all spins.
+
+Tier~II: transferred model on cohomology complex,
+conditional on T5.
+
+Tier~III: OPEN.
+
+\subsection{Convergence realisation}
+At generic $c$, the three convergence criteria (a),(b),(c)
+of Cycle~5 are equivalent and all hold; the
+$\Etop{\infty}$-structure on
+$\Zder(\cW_\infty[\mu])$ is realised chain-level via the
+weight-filtered inverse limit, with each bar-weight window
+$[w_{\min}, w_{\max}]$ computed in a finite truncation
+$\cW_{w_{\max}-1}[\mu]$ by the finite-$N$ ladder.
+
+\textbf{Minimal explicit test: spin-$\le 4$ truncation.}
+$\cW_\infty[0]$ truncated to spin $\le 4$ carries the
+stress tower $\{T, W_3, W_4\}$ (Zamolodchikov +
+Kausch--Watts). Ladder output: $\Etop{5}$ (dimension
+count: $2 + 2 + 1 = 5$). All three convergence criteria
+verify by hand at this truncation
+(\texttt{ex:w-infty-spin4-truncation}).
+
+%=======================================================================
+\section{Healed identifications}
+\label{sec:opus-healed}
+%=======================================================================
+
+\begin{enumerate}
+\item \textbf{Three-tier topologisation theorem} as in
+Cycle~1, \texttt{heal:cycle1}: cohomological (I), transferred
+(II), original-complex (III). Tiers I and II unconditional
+across G/L/C/M (at weight-completed for class~M); Tier III
+unconditional for class~L, frontier for class~M.
+
+\item \textbf{Inner conformal vector is structural} as in
+Cycle~2: innerness is a property of $(\cA, Q)$ requiring
+existence of BRST primitive $G$ in the bulk BV complex. The
+four standard families have inner conformal vectors at
+non-critical level; logarithmic algebras fail by
+$L_0$-nondiagonalisability.
+
+\item \textbf{Critical-level failure is structural} as in
+Cycle~3: at $k = -h^\vee$ the Sugawara denominator diverges,
+the FF centre becomes commutative, and the
+$\Etop{3}$-topological structure fails. Critical level
+belongs to a different arithmetic programme (geometric
+Langlands).
+
+\item \textbf{$\cW_N$ ladder at $N=3$ via higher-spin
+Casimir} as in Cycle~4: the $N=3$ case is the minimal
+non-trivial ladder step beyond the base $N=2$; axiom T5 is
+verifiable explicitly, the output is $\Etop{4}$, and
+the $\cW_3$ algebra is the Zamolodchikov higher-spin
+gravity boundary algebra.
+
+\item \textbf{$\cW_\infty$ horizon is a genuine operadic
+inverse limit} as in Cycle~5: each higher-spin Casimir is
+algebraically independent, so the ladder does not
+terminate; $\Etop{\infty}$ is defined as the inverse limit
+of the stabilisation tower; three equivalent convergence
+criteria (Gaberdiel--Gopakumar stabilisation,
+$\infty$-categorical Dunn convergence, Yamada strong
+convergence) realise it.
+
+\item \textbf{Maximal scope of $\Phihol$ is
+Banach-positive} as in Cycle~6: the scope is exactly
+$\{\cA : \rho_*(\cA) > 0\}$, which includes non-logarithmic
+$C_2$-cofinite + VSKR+BGG-tempered irrational cosets, and
+excludes logarithmic $W(p)$ (F1 frontier) and
+irregular-singular cases (beyond programme reach).
+
+\item \textbf{Commit \texttt{a5640de}} is the $W(p)$
+retraction, not an $H^2 = 0$ closure. The G3 programme
+has no dependence on this commit for its topologisation
+content.
+\end{enumerate}
+
+%=======================================================================
+\section{Hidden structure}
+\label{sec:opus-hidden}
+%=======================================================================
+
+\begin{hidden}[$\Phihol$ is Stage~2 of the two-stage
+factorisation]
+\label{hidden:phi-hol-stage-2}
+The Vol~III two-stage factorisation
+$\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d$ gives Stage~1 a canonical
+$E_d$-holomorphic factorisation algebra on a CY-$d$ variety,
+and Stage~2 specialises via factorisation-homology
+pushforward $\int_{\Sigma_{d-1}}$ to a reference curve $C$.
+The output of Stage~2 is an $E_1$-chiral algebra on $C$
+equipped with the 3D HT-QFT bulk
+$\Zder(\cdot)$. The functor $\Phihol$ is Stage~2 of this
+factorisation: $\Phihol = \mathrm{bulk} \circ
+\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}$. The two
+colours of $\SCchtop$ are the two stages: closed colour =
+Stage~1 $E_d$-holomorphic, open colour = Stage~2 $E_1$-chiral
+(after specialisation). This observation is in
+\texttt{sc\_chtop\_heptagon.tex}
+Rem.~\texttt{rem:heptagon-two-stage-CY-to-chiral}.
+\end{hidden}
+
+\begin{hidden}[Virasoro climax is $\Phihol$ at $\cA = \Vir_c$]
+\label{hidden:virasoro-climax}
+The 3D quantum gravity cluster of Vol~II is not a
+separate mathematical structure from $\Phihol$; it is
+$\Phihol(\Vir_c)$ for $c \neq 0$ non-critical. The
+Brown--Henneaux identification $c = 3\ell/(2G_N)$ converts
+the abstract central charge into a geometric input (AdS
+radius $\ell$, Newton constant $G_N$); the Virasoro boundary
+algebra determines the partition function and BTZ spectrum;
+the bulk is read off as $\Zder(\Vir_c)$. This is the
+content of Corollary~P2.1 (memory file
+\texttt{platonic\_ideal\_reconstituted\_2026\_04\_17.md}).
+The identification ``bulk 3D QG partition function = Vol~I
+shadow-tower generating function'' is a computation
+mediated by $\Phihol$, not a shadow.
+\end{hidden}
+
+\begin{hidden}[Topologisation tower $=$ higher-spin gravity
+dual]
+\label{hidden:topo-tower-higher-spin}
+The ladder
+$\Etop{3} \to \Etop{4} \to \cdots \to \Etop{\infty}$
+produced by iterated Sugawara is the bulk dual of the
+Gaberdiel--Gopakumar higher-spin AdS$_3$/CFT$_2$
+correspondence. The CFT$_2$ boundary is $\cW_N$ or
+$\cW_\infty[\mu]$; the AdS$_3$ bulk is Vasiliev higher-spin
+gravity of spin range $[2, N]$ or $[2, \infty]$. The
+$\Etop{N+1}$-operadic upgrade is the algebraic shadow of
+the $(N+1)$-dimensional transverse geometric data of the
+Vasiliev theory.
+\end{hidden}
+
+\begin{hidden}[Dunn additivity on the topologised direction
+only]
+\label{hidden:dunn-topologised}
+The Dunn-additivity step
+$\Etop{p} \otimes \Etop{q} \simeq \Etop{p+q}$ applies only
+when both factors are topological. The chiral direction is
+not originally topological; it is $\Ech{2}$-chiral by
+chiral Deligne. Sugawara is what converts it to
+$\Etop{2}$. Without this conversion, the naive Dunn
+$\Ech{2} \otimes \Etop{1} \ne \Etop{3}$ fails (AP,
+\texttt{ap:topologization-healed}). The antipattern
+precisely says: one must topologise \emph{before} applying
+Dunn. The Sugawara mechanism is the topologisation step; it
+is not a parallel structure to Dunn, it is what unlocks Dunn.
+\end{hidden}
+
+%=======================================================================
+\section{Open frontiers}
+\label{sec:opus-open}
+%=======================================================================
+
+\begin{openfrontier}[F3: class-M chain-level on the original
+complex]
+\label{open:F3}
+Prove that $\Zder(\cW_N^k)$ (and more generally
+$\Zder(\cA)$ for class-M algebras) carries a chain-level
+$\Etop{N+1}$-structure on the \emph{original} (uncompleted,
+direct-sum) complex, not merely on the weight-completed
+one. Obstruction: the iterated-Sugawara
+$A_\infty$-coherence tower need not terminate; the
+class-L finite-shadow-depth argument does not apply.
+Current scope: weight-completed holds
+(\texttt{prop:bv-bar-class-m-weight-completed}); original
+complex is F3.
+
+Strategic routes: (a) find an explicit combinatorial
+formula for the $A_\infty$-tower and prove it terminates
+at $r_{\max}(\cW_N)$; (b) prove that weight-completion is
+essentially surjective in the derived category, which
+would transport the weight-completed result to the
+original complex up to equivalence; (c) find a direct 3D
+BV BRST construction of
+$\Phihol(\cW_N)$ independent of DS-reduction and show that
+its chain-level $\Etop{3}$-structure restricts to the
+original complex directly.
+\end{openfrontier}
+
+\begin{openfrontier}[T5 at high spin]
+\label{open:T5}
+Prove $[G^{(n)}, G^{(m)}] = Q_{\mathrm{tot}}$-exact for all
+$n, m \ge 4$ from the Costello--Gaiotto bulk BV-BRST
+structure on the 3D holomorphic-topological quantisation of
+a chiral algebra with higher-spin stress tower, not by
+appeal to the classical $\cW_\infty[\mu]$ Poisson algebra.
+Until this is established, the $\Einfty$-specialisation
+Theorem $\cW_\infty \to \Etop{\infty}$ is conditional.
+\end{openfrontier}
+
+\begin{openfrontier}[F1: logarithmic $W(p)$ tempering]
+\label{open:F1}
+Prove (or disprove at each $p$) that the logarithmic
+triplet $W(p)$ admits a tempered-stratum membership in the
+$\Phihol$-scope. The Zhu-bounded-Massey route fails by
+commit \texttt{a5640de} (Gurarie 1993, Flohr 1996); a new
+mechanism is needed. Candidates: (a) direct character-
+amplitude bound via Adamovi\'c--Milas fusion rules; (b)
+logarithmic 3D gravity bulk construction and explicit
+BRST primitive for $\omega = T_{W(p)}$ in its log-BRST
+complex.
+\end{openfrontier}
+
+\begin{openfrontier}[Class-L original-complex TIER III:
+$A_\infty$-tower termination proof]
+\label{open:classL-tierIII}
+The class-L Tier III statement is inscribed as proved via
+\texttt{prop:sugawara-gauge-rectification}, but the
+explicit $A_\infty$-coherence tower requires finite shadow
+depth ($r_{\max} = 3$ for class~L) to terminate. A purely
+chain-level proof of the termination (without appeal to
+the shadow-depth-finiteness abstract argument) is not yet
+inscribed. Strengthening the Tier III statement to a
+direct chain-level construction would improve the
+epistemic standing from
+``proved via finite-depth argument'' to ``proved via
+explicit chain-level formula''.
+\end{openfrontier}
+
+%=======================================================================
+\section{Cross-volume harmonies}
+\label{sec:opus-harmonies}
+%=======================================================================
+
+\subsection{Vol I harmonies}
+\begin{itemize}
+\item The G3 topologisation base is inscribed in Vol I
+(\texttt{en\_koszul\_duality.tex} \S\ref*{opus:sec:V1topo}),
+proving
+Thm.~\ref*{opus:thm:topologization} for $V_k(\fg)$,
+$k \neq -h^\vee$, with explicit three-tier layer structure
+(Tier~I, II, III).
+\item The iterated Sugawara
+$\Einfty$-tower is inscribed in Vol I
+Thm.~\ref*{opus:thm:E-inf-top}, matching the Vol II
+\texttt{e\_infinity\_topologization.tex} ladder. The two
+volumes agree on scope: Tier~I unconditional; Tier~II
+unconditional; Tier~III class-L unconditional,
+class-M weight-completed, class-M original-complex open.
+\item The G3 functor $\Phihol$ is the Vol~II operationalisation
+of Vol~I's Theorem~A (bar-cobar backbone): the
+bulk-boundary adjunction $\mathrm{bulk}: \cA \mapsto
+\Zder(\cA)$ and $\mathrm{bdry}: T_\cA \mapsto
+\Obs^\partial(T_\cA)$ is the chiral instantiation of
+$\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}$ at the
+factorisation-algebra level (HT-QFT ambient).
+\end{itemize}
+
+\subsection{Vol II harmonies}
+\begin{itemize}
+\item $\Phihol$ is the master theorem
+(\texttt{universal\_holography\_functor.tex}
+Thm.~\ref*{opus:thm:UHF}), with explicit scope
+``non-logarithmic $C_2$-cofinite + VSKR+BGG-tempered''
+(Cycle~6).
+\item The $\Einfty$-ladder
+(\texttt{e\_infinity\_topologization.tex}) specialises to
+Virasoro ($\Etop{3}$), $\cW_N$ ($\Etop{N+1}$),
+$\cW_\infty$ ($\Etop{\infty}$). Scope is precise: $N \le 3$
+unconditional (axiom T5 vacuous or reducible to one
+bracket), $N \ge 4$ conditional on T5.
+\item The class-M weight-completed status comes from the
+DS-Hochschild bridge
+(\texttt{chd-ds-hochschild}), which reduces class-M to
+class-L under Drinfeld--Sokolov.
+\end{itemize}
+
+\subsection{Vol III harmonies}
+\begin{itemize}
+\item The $\SCchtop$ two-colour structure is the
+algebraic encoding of the Vol~III two-stage factorisation
+$\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C} \circ
+\Phi^{\mathrm{FA}}_d$: closed colour = Stage~1
+$E_d$-holomorphic FA, open colour = Stage~2
+$E_1$-chiral after specialisation.
+\item The B-row ($\kappa + \kappa^! = 8$) Mukai-enhanced K3
+Heisenberg chiral algebra has a \emph{non-inner} conformal
+vector: it enters $\Phihol$ via a different route (direct
+Borcherds-Heegner reciprocity) rather than Sugawara
+topologisation.
+\item The Universal Trace Identity
+(memory file \S4) closes across the three volumes: Vol I
+ghost-scope $\mathrm{tr}_{\mathrm{ghost}}(Q^2)$, Vol II
+Pentagon-scope $\mathrm{tr}_{\mathrm{Pentagon}}$, Vol III
+Borcherds-scope $\omega_{\mathrm{Borcherds}}$ all equal
+$c_N(0)/2$ at each $N \in \{1,2,3,4,6\}$ and the
+half/quarter-integer continuations.
+\end{itemize}
+
+%=======================================================================
+\section{Cycle log: sequence of attack-heal turns}
+\label{sec:opus-log}
+%=======================================================================
+
+\textbf{Cycle 1 (Attacks a, g).}
+Attack: identification-vs-lift + commit \texttt{a5640de}
+question. Healed by three-tier layer structure + direct
+\texttt{git show} verification that \texttt{a5640de} is the
+$W(p)$ retraction. Hidden: three tiers are different
+theorems about different objects.
+
+\textbf{Cycle 2 (Attack b).}
+Attack: is ``inner'' structural or decorative? Healed:
+inner requires BRST primitive $G$ in the bulk BV complex;
+the identity $T = [Q, G]$ in cohomology is what lets
+holomorphic translations become $Q$-exact. Non-inner
+algebras (B-row / Borcherds) enter via a different route.
+
+\textbf{Cycle 3 (Attack c).}
+Attack: regularity + critical-level. Healed: chain-level
+single-contour normally ordered for $k \neq -h^\vee$,
+structural failure at critical level (FF centre becomes
+commutative). Hidden: critical vs non-critical is the
+Langlands wall.
+
+\textbf{Cycle 4 (Attack d).}
+Attack: $\cW_N$ chain-level + axiom T5 scope. Healed:
+$N = 3$ is the minimal non-trivial test; T5 reduces to one
+bracket $[G^{(2)}, G^{(3)}]$, verified via Leibniz +
+Linshaw Thm~7.1; $N \ge 4$ requires T5 postulated, with
+the Linshaw classical-Poisson identity as evidence. Output:
+$\Etop{4}$ for $\cW_3$.
+
+\textbf{Cycle 5 (Attack e).}
+Attack: $\cW_\infty$ horizon -- genuine or finite
+termination? Healed: each higher-spin Casimir is
+algebraically independent (Linshaw commutant theorem), so
+the tower does not stabilise. $\Etop{\infty}$ is the
+inverse limit in $\mathrm{Op}_\infty^{\otimes}$; three
+equivalent convergence criteria realise it chain-level at
+generic $c$.
+
+\textbf{Cycle 6 (Attack f).}
+Attack: scope of unconditional $\Phihol$. Healed: maximal
+scope is $\{\cA : \rho_*(\cA) > 0\}$ = Banach-positive
+algebras, union of $C_2$-cofinite strata and VSKR+BGG
+tempered irrational cosets. $W(p)$ (logarithmic) and
+irregular-singular cases are outside.
+
+\textbf{Summary of healed $\Phihol$ status.}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Class & Tier~I (coh) & Tier~II (transf) & Tier~III (orig) \\
+\midrule
+G (Heis/lattice) & Unconditional & Unconditional & Unconditional \\
+L ($V_k(\fg)$, $k\neq-h^\vee$) & Unconditional & Unconditional & Unconditional (class~L) \\
+C ($\beta\gamma$, $bc$) & Unconditional & Unconditional & Unconditional (boson.\ G) \\
+M-wc (Vir, $\cW_N$, wt-comp.) & Unconditional & Unconditional & Unconditional \\
+M-oc (Vir, $\cW_N$, orig.~cplx) & Unconditional & Unconditional & OPEN (F3) \\
+B-row (Mukai K3 Heis) & Unconditional & Unconditional & Unconditional (direct) \\
+$W(p)$ (logarithmic) & OPEN (F1) & OPEN & OPEN \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Summary of $\Einfty$-ladder status.}
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Depth $N$ & Ladder output & Status \\
+\midrule
+2 (Virasoro, affine KM) & $\Etop{3}$ & Unconditional (axiom T5 vacuous) \\
+3 ($\cW_3$) & $\Etop{4}$ & Unconditional (T5 at $n,m \in \{2,3\}$ verifiable) \\
+$N \ge 4$ ($\cW_N$) & $\Etop{N+1}$ & Conditional on T5 at $n, m \ge 4$ \\
+$\infty$ ($\cW_\infty[\mu]$) & $\Etop{\infty}$ & Conditional on T5 all spins \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

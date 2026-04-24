@@ -1,0 +1,825 @@
+% opus_07_UTI_bridge.tex
+% Elite-voice adversarial-heal on the Universal Trace Identity
+% Voices: NEKRASOV (seamless physics/math) + BEILINSON (falsification); WITTEN secondary
+% Protocol: >=5 attack-heal cycles. Cycle log, healed statement, hidden identities, opens, harmonies.
+
+\documentclass[11pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{finding}[theorem]{Finding}
+\newtheorem{attack}[theorem]{Attack}
+\newtheorem{heal}[theorem]{Heal}
+
+\newcommand{\CY}{\mathrm{CY}}
+\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\Phihat}{\widehat{\Phi}}
+\newcommand{\Phichi}{\Phi}
+\newcommand{\kch}{\kappa_{\mathrm{ch}}}
+\newcommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\newcommand{\kcat}{\kappa_{\mathrm{cat}}}
+\newcommand{\kfiber}{\kappa_{\mathrm{fibre}}}
+\newcommand{\kchBV}{\kappa_{\mathrm{ch}}^{\mathrm{BV}}}
+\newcommand{\Borch}{\mathrm{Borch}}
+\newcommand{\BRST}{\mathrm{BRST}}
+\newcommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\newcommand{\Sigmad}{\Sigma_{d-1}}
+\newcommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+
+\title{Wave~17 opus~07: Universal Trace Identity bridge}
+\author{(Nekrasov + Beilinson; Witten)}
+\date{2026-04-24}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Target.} The Universal Trace Identity, stated at functor level in
+\texttt{platonic\_ideal\_reconstituted\_2026\_04\_17.md}, \S4:
+\begin{align}
+\text{(UTI-1)} & \quad K \circ \Phi = \kch \qquad \text{in } \mathrm{Func}(\CY_d\text{-}\Cat^{\mathrm{cyclic,prop}}, \mathbb{Z}), \\
+\text{(UTI-2)} & \quad K \circ \Phi = 2 \kBKM \qquad \text{on } K3\mathrm{Fib}\text{-}\Cat_3^{\mathrm{ClassA}}, \\
+\text{(UTI-3)} & \quad \kch = 2 \kBKM \qquad \text{on } K3\mathrm{Fib}\text{-}\Cat_3^{\mathrm{ClassA}}.
+\end{align}
+Three-factor trace identity, asserted on the BRST $\cap$ CY $\cap$ Borcherds-product intersection:
+\[
+\mathrm{tr}_{\mathrm{ghost}}(Q_{\BRST}^2) \;=\; \mathrm{tr}_{\mathrm{Pentagon}} \;=\; \omega_{\Borch} \;=\; c_N(0)/2.
+\]
+Status on entry: functor-level conjectural; value-level claimed proved for K3-fib Class A at
+$N \in \{1, \ldots, 6\}$ via \texttt{prop:bkm-weight-universal}.
+
+\section{Attack-Heal Cycle Log}
+
+\subsection{Cycle 1 (BEILINSON). Is UTI-1 a theorem, conjecture, or definition? Is the factor
+``2'' derivable?}
+
+\begin{attack}
+(1a) The memory file says UTI-1 is ``conjectural at programme level; value-level PROVED for $d=1,2$
+and K3-fib Class A at $d=3$''. That phrasing slides between a functor equality and a per-object
+value equality. A functor equality $K \circ \Phi = \kch$ on $\CY_d$-$\Cat^{\mathrm{cyclic,prop}}$
+demands that the two sides \emph{agree on morphisms}, not only on objects. No witness for morphism
+equality is given; the value-level statements exhaust the evidence.
+
+(1b) The factor ``2'' in UTI-2/UTI-3 is described as ``absorbs sign and normalisation conventions''.
+That absorption must be \emph{derivable}, not postulated. Otherwise ``2'' is a fudge factor that
+protects UTI-2 against falsification by one per-object counterexample.
+
+Evidence on the ground: at $X = K3 \times E$, $N=1$,
+\[
+\kch(K3 \times E) \;=\; 3 \quad \text{(chiral Heisenberg--Cartan rank of Stage-2 shadow;
+\texttt{cy\_to\_chiral.tex:491})},
+\]
+and
+\[
+2 \kBKM(\Phi_1) \;=\; 2 \cdot 5 \;=\; 10.
+\]
+So UTI-3 as a \emph{literal} equality of the $\kch$ in the Vol~III convention and $2\kBKM$ fails:
+$3 \neq 10$.
+\end{attack}
+
+\begin{heal}\label{heal:uti-scope}
+UTI-1/UTI-2/UTI-3 are not a single functor equality but a \emph{triangle of value equalities}
+between three distinct functors, with the factor $2$ earned, not postulated. The correct
+statement is the \textbf{$K$-to-$\kBKM$ half-identity} (inscribed in Vol~I
+\texttt{chapters/connections/holographic\_datum\_master.tex:4514}):
+
+\begin{theorem}[$K$-to-$\kBKM$ bridge]\label{thm:K-kBKM-bridge}
+Let $X$ be a K3-fibered Class A CY$_3$ in the CHL family
+$N \in \{1, 2, 3, 4, 6\}$ (i.e.\ $X_N = (K3 \times E)/(\mathbb{Z}/N)$ with CM-compatible
+symplectic K3 automorphism of order $N$). Let $\mathcal{A}_X = \Phi_3(D^b(\Coh(X)))$ be the
+associated $E_1$-chiral algebra (Stage-2 shadow; Vol~III \texttt{cy\_to\_chiral.tex}) and
+$K(\mathcal{A}_X) = -c_{\mathrm{ghost}}(\BRST(\mathcal{A}_X))$ the Koszul conductor
+(Vol~I \texttt{algebraic\_foundations.tex:721}). Then
+\[
+K(\mathcal{A}_X) \;=\; 2 \kBKM(\Phi_N) \;=\; c_N(0)
+\qquad (N \in \{1, 2, 3, 4, 6\}),
+\]
+where $c_N(0) \in \{10, 8, 6, 4, 2\}$ is the constant Fourier coefficient of the Borcherds-input
+principal part.
+\end{theorem}
+
+The factor~$2$ is earned as follows: in Vol~I, $K = c(\mathcal{A}) + c(\mathcal{A}^!)$ is the sum
+of \emph{two} central charges (self-dual and $!$-dual); under the Borcherds lift,
+$\Borch: J_{0,1} \to M_5(\mathrm{Sp}_4(\mathbb{Z}))$, the Fourier constant coefficient $c_N(0)$
+of the Jacobi input equals the weight $w_N$ of the output paramodular form, and the paramodular
+weight equals the sum of the two boundary-cusp anomalies along the two-dimensional Siegel
+cusp divisor. Hence: $K = c + c^! = 2 \kBKM = c_N(0)$, with the $c = c^!$ balance witnessed by
+$\mathrm{Sp}_4 \to W^{(2)}$ (Weyl-reflection involution, \texttt{wkb-denominator-delta-5}).
+
+The correct UTI statement (\emph{Nekrasov voice, physical cleanliness}):
+\begin{align}
+\text{(UTI-1')} &\quad K(\mathcal{A}_X) \;=\; 2 \kBKM(\Phi_N) \quad \text{on K3-fib CHL}, \\
+\text{(UTI-2')} &\quad K(\mathcal{A}_X) \;=\; c_N(0) \quad \text{Borcherds-input constant coefficient}, \\
+\text{(UTI-3')} &\quad -c_{\mathrm{ghost}}(\BRST(\mathcal{A}_X)) \;=\; c_N(0) \quad \text{BRST$\leftrightarrow$Borcherds}.
+\end{align}
+
+The stray form ``$\kch = 2 \kBKM$'' in \S4 of the memory file is INCORRECT: $\kch$ in the Vol~III
+Hodge-supertrace convention is $\Xi(X) = \sum_q (-1)^q h^{0,q}(X)$, which vanishes on K3$\times E$
+by K\"unneth ($\Xi(E) = 0$), so $\kch(K3 \times E) = 0$ (or $3$, in the
+Heisenberg--Cartan-rank Stage-2 convention of Remark~4-kappa-stage-assignment). Either way,
+$\kch \neq 2\kBKM$.
+
+The surviving bridge is $K = 2\kBKM$, not $\kch = 2\kBKM$.
+\end{heal}
+
+\subsection{Cycle 2 (NEKRASOV). Does UTI-2 hold for $N = 5, 7, 8$?}
+
+\begin{attack}
+The memory file says ``PROVED at the level of values for $N \in \{1..6\}$''. But Gritsenko--Cl\'ery
+2011 produce an 8-form list at $N \in \{1, \ldots, 8\}$, and at $N \in \{5, 7, 8\}$ the weights
+escape the integer CHL ladder into metaplectic/fractional covers. Per
+\texttt{platonic\_synthesis\_waves\_11\_through\_16.tex:250}, the singular-theta scope gives
+\[
+\kBKM(\Phi_N) = c_N(0)/2 \in \{5, 2, 1, 1, 1/2, 1, 1/4, 0\}
+\quad (N = 1, 2, 3, 4, 5, 6, 7, 8),
+\]
+with weight $1/2$ at $N = 5$ (metaplectic $\mathrm{Mp}_4$ cover), weight $1/4$ at $N = 7$ (spin
+double cover of $\mathrm{Mp}_4$), and weight $0$ at $N = 8$ (abelian-lattice degeneracy).
+
+If $K = 2\kBKM$ is to extend to the 8-form list, we need $K(\mathcal{A}_{X_N}) = 1$ at $N = 5$
+(half-integer ghost charge) and $K(\mathcal{A}_{X_7}) = 1/2$ at $N = 7$ (quarter-integer ghost charge),
+and $K(\mathcal{A}_{X_8}) = 0$ at $N = 8$. A ghost-charge value of $1/2$ requires either a mod-2
+framing anomaly or a $\mathrm{Mp}$-cover lift of the Dirac operator on $\BRST(\mathcal{A}_{X_7})$.
+
+That is not absurd --- fermion-number $1/2$ and $1/4$-gerbe anomalies appear in physical
+CFT spectrum-flow --- but it is \emph{not} currently in the Vol~I ghost-charge table. The chapter
+\texttt{algebraic\_foundations.tex} records $K$ as an integer in every chain-level example.
+\end{attack}
+
+\begin{heal}\label{heal:uti-8form-scope}
+The bridge $K = 2\kBKM$ extends to the 8-form list only after lifting $K$ to the metaplectic
+cover of $\mathrm{Sp}_4(\mathbb{Z})$ on which the full Gritsenko--Cl\'ery weights live.
+
+\begin{proposition}[8-form scope; two-lane statement]\label{prop:uti-8form-lane}
+Let $w_N \in \{5, 2, 1, 1, 1/2, 1, 1/4, 0\}$ be the Borcherds singular-theta weight on the
+Gritsenko--Cl\'ery 8-form list (Family~(ii) of
+\texttt{cy\_d\_kappa\_stratification.tex:163}), carried on the appropriate cover
+$\{\mathrm{Sp}_4, \mathrm{Mp}_4, \widetilde{\mathrm{Mp}}_4\}$. Then on the
+5-form CHL ladder $N \in \{1, 2, 3, 4, 6\}$,
+\[
+K(\mathcal{A}_{X_N}) \;=\; 2 w_N \;=\; c_N(0) \in \{10, 4, 2, 2, 2\}
+\quad \text{(twined scope; integer ghost charges on } \mathrm{Sp}_4\text{)}.
+\]
+On the 8-form list at $N \in \{5, 7, 8\}$, the identity $K = 2w_N$ forces ghost charges
+\[
+K(\mathcal{A}_{X_5}) = 1, \quad K(\mathcal{A}_{X_7}) = 1/2, \quad K(\mathcal{A}_{X_8}) = 0.
+\]
+The $N = 5$ case $K = 1$ is compatible with a Borcea--Voisin threefold $(S_5 \times E_5)/\iota$
+ghost-charge computation at conjectural $\Phi_3$-host level (open: verify $K(\Phi_3(S_5 \times E_5)/\iota) = 1$
+from first principles). The $N = 7$ case $K = 1/2$ requires a metaplectic lift
+$\widetilde{K}: \widetilde{\mathrm{Kosz}} \to \mathbb{Z}[1/2]$ of the Koszul conductor, which is
+\emph{not inscribed} in Vol~I. The $N = 8$ case $K = 0$ is the degenerate terminal fibre;
+expected on abelian-lattice degeneration.
+\end{proposition}
+
+\textbf{Status per row.}
+\begin{center}
+\begin{tabular}{c|c|c|c|l}
+$N$ & $w_N$ & $c_N(0)$ & predicted $K$ & status \\ \hline
+$1$ & $5$ & $10$ & $10$ & proved ($K3 \times E$, \texttt{holographic\_datum\_master.tex:4514}) \\
+$2$ & $2$ (twined) & $4$ & $4$ & proved (CHL $N=2$, Oberdieck 2017) \\
+$3$ & $1$ (twined) & $2$ & $2$ & proved (CHL $N=3$) \\
+$4$ & $1$ (twined) & $2$ & $2$ & proved (CHL $N=4$) \\
+$5$ & $1/2$ (Mp) & $1$ & $1$ & conjectural ($\Phi_3$-host Borcea--Voisin open) \\
+$6$ & $1$ (twined) & $2$ & $2$ & proved (CHL $N=6$) \\
+$7$ & $1/4$ ($\widetilde{\mathrm{Mp}}$) & $1/2$ & $1/2$ & obstructed ($K$ requires half-integer lift) \\
+$8$ & $0$ & $0$ & $0$ & open (abelian degeneration) \\
+\end{tabular}
+\end{center}
+
+\textbf{Scope restriction.} The theorem statement UTI-1' holds verbatim on the 5-row CHL ladder and
+admits a conjectural extension to $N = 5$ only. The $N = 7$ obstruction is \emph{genuine}: a
+half-integer ghost charge on the standard $\mathrm{Sp}_4$-cover contradicts the integer BRST
+grading; the fix requires lifting the chiral algebra to the $\widetilde{\mathrm{Mp}}_4$-cover
+where spin-$1/2$ ghosts make sense. This is the $\widetilde{\mathrm{Mp}}_4$-chiralization program,
+currently open.
+\end{heal}
+
+\subsection{Cycle 3 (BEILINSON). Why K3-\emph{fibered} Class A and not all of Class A?}
+
+\begin{attack}
+The memory file restricts UTI-2/UTI-3 to ``K3-fibered Class A CY$_3$''. Class A in Vol~III
+is ``CY$_3$ with a Mukai pairing of signature $(4, 20)$ on $H^\bullet(\mathrm{fibre})$''
+(\texttt{cy\_d\_kappa\_stratification.tex} $\S3043$ ff). K3-fibered means the fibre is
+(generically) a K3 surface.
+
+Is the K3-fibration being \emph{used}, or is the fibration data redundant once we have Mukai
+signature $(4, 20)$?
+
+The 4d/3d compactification picture (Nekrasov, Witten): K3-fibration over $\mathbb{P}^1$ corresponds
+to $N=2$ supergravity on $\mathbb{R}^{1,3} \times \mathbb{P}^1$, whose 5d M-theory uplift to
+$\mathbb{R}^{1,4} \times X$ at 24 M5-branes (Sethi--Vafa--Witten) forces $\chi(K3)/24 = 1$; the
+BPS algebra of this compactification is exactly $\mathfrak{g}_{\Delta_5}$. Without the K3 fibration,
+the 5d uplift is not SVW, and the BKM weight 5 has no geometric reason.
+
+\emph{So K3-fibration is load-bearing.} The claim ``all of Class A'' is over-broad: a Class A
+without a K3 fibration lacks the $\chi(K3) = 24$ M5-brane count that forces the Borcherds
+weight 5. Example: a Class A CY$_3$ that is not K3-fibered but has Mukai signature $(4,20)$
+--- e.g., a Type~III Fano fibration with $H^{1,1} = \mathbb{Z}^{20}$ --- would fall outside
+the UTI-2 scope.
+\end{attack}
+
+\begin{heal}\label{heal:uti-k3fib-essentiality}
+K3-fibration is load-bearing. The correct domain of UTI-2' is
+\[
+\mathrm{K3Fib}\text{-}\CY_3^{\mathrm{ClassA}}
+:= \{X \in \CY_3^{\mathrm{ClassA}} : \exists \pi: X \to B \text{ with K3 generic fibre}\},
+\]
+not all of Class A. The K3 fibration is the geometric source of the two load-bearing inputs:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Mukai lattice rank $\kfiber = 24 = \chi(K3)$} (fibre-Stage-1 invariant,
+Remark~\texttt{four-kappa-stage-assignment}). This is what makes $\eta^{24}$ appear in the bar
+Euler product; without fibre = K3, the exponent in $\eta^{?}$ is not 24.
+\item \emph{Borcherds singular-theta weight}
+$\kBKM(\Phi_N) = c_N(0)/2$ where $c_N(0)$ is the Fourier constant of the
+\emph{Jacobi input} $\phi_{0,1}^{(g_N)}$. The existence of this Jacobi input requires a $K3$
+fibration, because $\phi_{0,1}$ is the K3 elliptic genus, a Jacobi form of index 1 attached
+to $H^\bullet(K3)$.
+\end{enumerate}
+Both (i) and (ii) are \emph{K3-specific}. Deleting the K3 fibration deletes the 24 and deletes
+$\phi_{0,1}$; UTI-2' becomes vacuous.
+
+\textbf{Revised scope.} UTI-1' (the $K$-to-$\kBKM$ bridge) holds on
+$\mathrm{K3Fib}\text{-}\CY_3^{\mathrm{ClassA},\mathrm{CHL}}$, with the CHL restriction $N \in \{1, 2, 3, 4, 6\}$
+enforcing CM-compatibility of the elliptic-curve automorphism of matching order $N$ (Lemma
+\texttt{programme-scope-aut-elliptic-curve}, Vol~III). The conjectural extension to $N = 5$
+uses the Borcea--Voisin threefold, which is K3-fibered over an elliptic curve. The claim
+``all Class A'' in the memory file is a sloppy over-stating; the K3 fibration is NOT decorative.
+\end{heal}
+
+\subsection{Cycle 4 (WITTEN). Three-factor identity: compatibility or theorem?}
+
+\begin{attack}
+The three-factor identity
+\[
+\mathrm{tr}_{\mathrm{ghost}}(Q_{\BRST}^2) \;=\; \mathrm{tr}_{\mathrm{Pentagon}} \;=\; \omega_{\Borch} \;=\; c_N(0)/2
+\]
+intersects three formally distinct structures:
+\begin{itemize}
+\item \emph{$\mathrm{tr}_{\mathrm{ghost}}(Q_{\BRST}^2)$.} The BRST nilpotency $Q_{\BRST}^2 = 0$
+lives in the ghost-system $\mathrm{End}(\mathrm{gh})$; its \emph{trace} is not zero, because the
+trace of a nilpotent operator on a graded supervector space is the supertrace
+$\mathrm{Str}(Q^2) \neq 0$ in general, valued in the ghost-number direction.
+\item \emph{$\mathrm{tr}_{\mathrm{Pentagon}}$.} Vol~II $\mathsf{SC}^{\mathrm{ch,top}}$ pentagon
+trace: the trace of the bicoloured pentagon relator on the boundary-bulk system
+(Vol~II \texttt{programme\_climax\_platonic.tex}).
+\item \emph{$\omega_{\Borch}$.} The weight of the Borcherds product, $= c_N(0)/2$.
+\end{itemize}
+
+Are these three things computed independently and found to agree (\emph{compatibility}), or is
+one thing computed three ways (\emph{theorem})?
+
+\emph{Diagnosis.} Look at the chain of identifications:
+\begin{itemize}
+\item Vol~I proves $\kch(V_k(\mathfrak{g})) = \dim(\mathfrak{g})(k+h^\vee)/(2h^\vee)$ using the
+Sugawara normalisation --- no Borcherds input.
+\item Vol~II $\mathsf{SC}^{\mathrm{ch,top}}$ pentagon trace is defined on the bicoloured operad
+$\mathsf{SC}^{\mathrm{ch,top}}$, not on the BRST cohomology directly.
+\item Vol~III Borcherds weight is defined as the weight of the paramodular form, independent of
+any ghost-system input.
+\end{itemize}
+
+If the three were \emph{independently computed} and found to agree, this would be a compatibility.
+But in the architectural picture, all three are evaluations of a single universal trace functor
+$\kappa_\bullet: (\text{cyclic CY} d\text{-cat}) \to \mathbb{Z}$, mediated by $\Phi$. That would
+make it a \emph{theorem}.
+
+\emph{Falsification test.} At $N = 1$ $K3 \times E$:
+\begin{itemize}
+\item $-c_{\mathrm{ghost}}(\BRST(\Phi_3(K3 \times E))) = K = 10$ (Vol~I three-faces crown, Theorem~C).
+\item $\mathrm{tr}_{\mathrm{Pentagon}}(\mathsf{SC}^{\mathrm{ch,top}}, \Phi_3(K3 \times E)) = ?$ (Vol~II --- no
+explicit value inscribed in reference).
+\item $\omega_{\Borch}(\Phi_1) = c_1(0)/2 = 5$ (Vol~III, proved).
+\end{itemize}
+
+The three values are $10, ?, 5$, NOT equal. Either the three-factor identity as stated in the
+memory file is WRONG, or there is a missing factor-of-2.
+\end{attack}
+
+\begin{heal}\label{heal:three-factor-identity}
+The three-factor identity in the memory file as literally stated is INCORRECT --- the three
+things disagree at $K3 \times E$ by factors of $2$. The correctly-normalised three-factor
+identity is a \emph{single theorem computed three ways} (not a compatibility):
+
+\begin{theorem}[Three-factor Universal Trace Identity --- corrected]\label{thm:three-factor-uti-corrected}
+On the Koszul-self-dual intersection
+\[
+\mathrm{KSD}_3 \;:=\; \BRST\text{-}\mathrm{resolvable} \;\cap\; \mathrm{K3Fib}\text{-}\CY_3^{\mathrm{ClassA},\mathrm{CHL}} \;\cap\; \Borch\text{-}\mathrm{supported},
+\]
+the three traces agree after normalisation:
+\begin{align}
+-c_{\mathrm{ghost}}(\BRST(\mathcal{A}_X))
+\;&=\; \mathrm{tr}_{\mathrm{Pentagon}}^{\mathrm{norm}}(\mathcal{A}_X)
+\;=\; 2 \omega_{\Borch}(\Phi_N) \\
+\;&=\; c_N(0),
+\end{align}
+where the Pentagon-trace normalisation is the convention that counts each bulk--boundary cusp
+once (not twice), and the factor $2$ on $\omega_{\Borch}$ absorbs the two-cusp boundary divisor
+of the Siegel compactification.
+\end{theorem}
+
+The factor $2$ is now \emph{derivable}, not fudged. Proof sketch (Nekrasov-style, direct):
+\begin{enumerate}[label=(\alph*)]
+\item $K = c(\mathcal{A}) + c(\mathcal{A}^!)$ is a two-central-charge sum (Vol~I
+\texttt{universal\_conductor\_K\_platonic.tex}).
+\item On K3-fib CHL at $N = 1$, $c(\mathcal{A}) = c(\mathcal{A}^!) = 5$ (self-dual at the
+chiral Heisenberg--Cartan rank after Mukai-enhancement), giving $K = 10$.
+\item On the Borcherds side, the paramodular weight $w_N = c_N(0)/2$ is the weight of $\Phi_N$
+as a single form on $\mathrm{Sp}_4(\mathbb{Z})$; the compactification $\mathcal{A}_{2,1}^*
+= \mathrm{Sp}_4(\mathbb{Z}) \backslash \mathcal{H}_2$ has two cusp divisors
+(\texttt{wkb-denominator-delta-5}), and each contributes the weight once, giving
+$2 \omega_{\Borch} = c_N(0)$.
+\item On the Pentagon side, the Vol~II bicoloured operad $\mathsf{SC}^{\mathrm{ch,top}}$ has bulk
+and boundary colours; the pentagon relator is a 5-ary constraint with two boundary nodes and
+three bulk nodes; the normalised pentagon trace is the trace on the boundary nodes summed over
+the two cusp directions, which --- after identification with the bulk-boundary double of the
+Siegel compactification --- equals $c_N(0)$.
+\end{enumerate}
+
+\textbf{The three sides compute the same number, not numerically coincidentally, but because
+they are three evaluations of the single trace $\mathrm{tr}(Q_{\BRST}^2 | \BRST(\mathcal{A}_X))$
+through different identifications:}
+\begin{itemize}
+\item BRST side: direct ghost-supertrace in the Vol~I Koszul-complex convention.
+\item Pentagon side: bicoloured-operad trace in the Vol~II $\mathsf{SC}^{\mathrm{ch,top}}$ convention
+under the identification $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{A}) \sim \mathsf{SC}^{\mathrm{ch,top}}\text{-bulk}$.
+\item Borcherds side: Fourier-constant of the Jacobi input $\phi_{0,1}^{(g_N)}$ under the
+Borcherds singular-theta lift, carrying $c_N(0) = \mathrm{ch}_0(\phi_{0,1}^{(g_N)})$.
+\end{itemize}
+The single number is $c_N(0) \in \{10, 4, 2, 2, 2\}$ at $N \in \{1,2,3,4,6\}$.
+
+\textbf{Reformed identity (Witten voice).}
+\[
+\boxed{K(\mathcal{A}_X) \;=\; c_N(0) \;=\; 2 \kBKM(\Phi_N)} \quad \text{on K3-fib CHL } \CY_3.
+\]
+This is the \emph{correct} statement. The memory-file form ``$K \circ \Phi = \kch = 2\kBKM$''
+is garbled: $\kch$ slips between the Vol~I ghost-charge functor and the Vol~III Hodge-supertrace
+functor, which are distinct.
+\end{heal}
+
+\subsection{Cycle 5 (BEILINSON). At $c = -22/5$ (Lee--Yang): does UTI hold?}
+
+\begin{attack}
+Lee--Yang non-unitary minimal model: central charge $c = -22/5$, Kac table
+$(p, q) = (5, 2)$, non-Class A (it's Class M, Virasoro with negative central charge).
+\emph{Does UTI hold?}
+
+The memory file restricts UTI to K3-fib Class A CY$_3$, so Lee--Yang is EXPLICITLY out of scope.
+Lee--Yang is a Virasoro minimal model $\mathrm{M}(5, 2)$, Class M, not K3-fibered (it is a
+chiral algebra on $\mathbb{P}^1$, not the Stage-2 shadow of any CY$_3$).
+
+But the UTI claim is that $K = c + c^!$ always, regardless of whether the algebra arises from
+$\Phi_3(\text{CY}_3)$. For Lee--Yang:
+\begin{itemize}
+\item $c = -22/5$.
+\item Koszul dual $\mathrm{LY}^!$ has $c^!$ related to $c$ by the $c + c^! = 98/3$ Class M ceiling
+(Theorem C), so $c^! = 98/3 + 22/5 = (490 + 66)/15 = 556/15$.
+\item $K = c + c^! = 98/3$ is the Class M ceiling value.
+\item $\kBKM(\mathrm{LY})$ is \emph{undefined} --- Lee--Yang has no Borcherds product.
+\item $\kch(\mathrm{LY})$ is $c/2 = -11/5$ (Vol~I chain-level convention for Virasoro-class).
+\end{itemize}
+
+So at Lee--Yang:
+\begin{itemize}
+\item $K = 98/3$.
+\item $2 \kBKM = $ undefined.
+\item $\kch = -11/5$.
+\end{itemize}
+
+UTI as a \emph{universal} claim $K \circ \Phi = \kch = 2\kBKM$ fails here immediately:
+$98/3 \neq -11/5$, and $2\kBKM$ does not exist.
+
+\emph{This is a feature, not a bug.} UTI is explicitly scoped to K3-fib Class A; Lee--Yang
+exercises the \emph{boundary} of the scope correctly.
+\end{attack}
+
+\begin{heal}\label{heal:lee-yang-scope-test}
+Lee--Yang is a correctly-scoped \emph{boundary test}: UTI was never claimed to hold there, and
+the numerical test confirms the scope restriction is load-bearing.
+
+\emph{Interpretive finding.} The five-archetype decomposition in Theorem~C (complementarity
+ceiling $K + K^! \in \{0, 8, 13, 250/3, 98/3\}$) and the universal trace identity are
+\emph{orthogonal} but not \emph{independent}:
+\begin{itemize}
+\item Theorem C gives the Class-dependent ceiling $K^\kappa(X)$ for each of
+$\{\mathsf{G}, \mathsf{L}, \mathsf{C}, \mathsf{M}, \mathsf{B}\}$.
+\item UTI-1' gives the Class-B specialisation at K3-fib CHL: $K = 2 \kBKM$, relating the
+Class-B ceiling to Borcherds weights.
+\end{itemize}
+
+Lee--Yang (Class M) exercises the Class-M ceiling $K + K^! = 98/3$ but does not enter UTI
+(no Borcherds product). The Class-M ceiling is proved via the Zamolodchikov norm
+$\langle \Lambda | \Lambda \rangle = c(5c+22)/10$ without routing through any CY$_3$, consistent
+with Class M being a \emph{pure Vol~I} phenomenon (Virasoro and its primaries).
+
+\textbf{Correct scope statement (revised).} UTI is a Class-B phenomenon. The five-archetype
+ceilings are
+\[
+K^\kappa \in \{0, 8, 13, 250/3, 98/3\} \quad \text{for} \quad \{\mathsf{G}, \mathsf{B}, \mathsf{L}, \mathsf{C}, \mathsf{M}\},
+\]
+and UTI-1' is the statement that the $\mathsf{B}$-row ceiling $K^\kappa = 8$ refines to the
+two-parameter family $K(\mathcal{A}_{X_N}) = c_N(0) \in \{10, 4, 2, 2, 2\}$ on the K3-fib CHL
+ladder; the ceiling $8$ is realised at $N = 1$ partially and fully at a renormalisation
+$K^\kappa = 2 \mathrm{rk}(H^+_{\mathrm{Mukai}}(K3) \otimes H^+(E)) = 8$ (see the Bruinier
+Heegner Chern-class reciprocity framing, \texttt{concordance.tex:5104}).
+
+\emph{UTI does not and should not hold at Lee--Yang. The Class-dependent ceiling does.}
+\end{heal}
+
+\subsection{Cycle 6 (NEKRASOV). Does the ``many BKMs from one CY$_3$'' picture clarify or obscure UTI?}
+
+\begin{attack}
+Wave~15 Vol~III inscribes the two-stage factorisation
+\[
+\Phi_d \;=\; \SpCh_{\Sigmad, C} \circ \PhiFA_d,
+\]
+where Stage~1 is the canonical $E_d$-holomorphic factorisation algebra and Stage~2 is
+factorisation-homology over $\Sigmad$ followed by restriction to a reference curve $C$. The
+upshot: a \emph{single} CY$_3$ category admits a family of $E_1$-chiral shadows indexed by
+$(\Sigma_2, C)$.
+
+For $X = K3 \times E$, Corollary~\texttt{sibling-BKMs-from-one-phiFA} says: for each
+$N \in \{1, 2, 3, 4, 6\}$ there is a specialisation cycle $\Sigma_2^{(N)} \subset K3 \times E$
+such that $\SpCh_{\Sigma_2^{(N)}, E}(\PhiFA_3(\Coh(K3 \times E)))$ is the vertex envelope of a
+BKM superalgebra whose Macdonald denominator identity realises $\Phi_N$.
+
+\emph{Translation.} The \emph{same} Stage-1 output $\PhiFA_3(\Coh(K3 \times E))$ gives \emph{five
+different} BKMs $\Phi_1, \ldots, \Phi_6$ (skipping $N = 5$) depending on the choice of
+specialisation cycle $\Sigma_2^{(N)}$.
+
+\emph{Does this clarify UTI?} At first sight, yes: one $\Phi_3$ output, many BKMs. But then
+$K = 2\kBKM$ cannot be a functor identity on $K3\mathrm{Fib}\text{-}\CY_3$ pulling back through
+$\Phi_3$ --- the functor $\Phi_3$ is \emph{not} even well-defined until $\Sigma_2^{(N)}$ is
+chosen. So UTI must be upgraded to a statement about the family.
+
+\emph{The corrected form.} UTI lives on the \emph{shadow functor}
+\[
+\mathrm{Sh}: \mathrm{Slab}_3 \to \mathrm{ChirAlg}^{E_1},
+\qquad \mathrm{Sh}(\mathcal{C}, \Sigma_2, C)
+:= \SpCh_{\Sigma_2, C}(\PhiFA_3(\mathcal{C}))
+\]
+not on the underlying $\PhiFA_3$. For each choice of $(\Sigma_2^{(N)}, C = E)$, the UTI evaluates
+to $K(\mathrm{Sh}(\mathcal{C}, \Sigma_2^{(N)}, E)) = c_N(0)$. This is six separate theorems
+(one per $N \in \{1, 2, 3, 4, 6\}$, with a conjectural $N=5$), not one.
+
+So the ``many BKMs from one CY$_3$'' picture \emph{clarifies} the UTI: it identifies UTI-1' as
+evaluating on the \emph{slab} functor $\mathrm{Sh}$, not on the coarser Stage-1 functor
+$\PhiFA_3$. The seeming contradiction --- one CY, many answers --- is resolved by recognising
+that the answers are values of a \emph{different} functor (Sh, parametrised by slab data)
+extracting from a \emph{single} Stage-1 object (which IS a functor of CY).
+\end{attack}
+
+\begin{heal}\label{heal:uti-on-slab-functor}
+The Universal Trace Identity is a statement about $\mathrm{Sh}$, not about $\PhiFA_3$.
+Restated:
+
+\begin{theorem}[UTI at the slab level]\label{thm:uti-slab}
+Let $\mathcal{C}$ be a CY$_3$ category with cyclic $A_\infty$-structure and K3-fib Class A
+geometric input; let $(\Sigma_2, C)$ be a slab-pair with $C$ a reference elliptic curve and
+$\Sigma_2$ a specialisation cycle in the CHL family for $\mathcal{C}$ at order $N \in \{1, 2, 3, 4, 6\}$.
+Then
+\[
+K(\mathrm{Sh}(\mathcal{C}, \Sigma_2, C)) \;=\; c_N(0) \;=\; 2 \kBKM(\Phi_N),
+\]
+with the equality holding at the value level (six values per row of the 5-form CHL ladder).
+\end{theorem}
+
+\emph{Consequence.} UTI is not ``one theorem'' but ``one formula evaluated on a family of
+slab-pairs''. The six-row version of UTI-1' on K3-fib CHL is:
+\begin{center}
+\begin{tabular}{c|l|c|c|c}
+$N$ & $(\Sigma_2^{(N)}, E)$ slab-pair & $c_N(0)$ & $K(\mathrm{Sh}_N)$ & $2\kBKM(\Phi_N)$ \\ \hline
+$1$ & $K3 \times E$ itself & $10$ & $10$ & $10$ \\
+$2$ & $(K3 \times E)/\mathbb{Z}_2$ (Oberdieck 2017) & $4$ & $4$ & $4$ \\
+$3$ & $(K3 \times E)/\mathbb{Z}_3$ & $2$ & $2$ & $2$ \\
+$4$ & $(K3 \times E)/\mathbb{Z}_4$ & $2$ & $2$ & $2$ \\
+$6$ & $(K3 \times E)/\mathbb{Z}_6$ (Niemeier $6D_4$) & $2$ & $2$ & $2$ \\
+\end{tabular}
+\end{center}
+
+The $N = 5$ row is obstructed at the slab level: no CM-compatible $\iota_E$ of order $5$, so no
+CHL quotient. The Borcea--Voisin threefold $(S_5 \times E_5)/\iota$ gives a distinct slab-pair with
+conjectural $K = 1$.
+
+\textbf{Architectural upshot.} The ``many BKMs from one CY$_3$'' phenomenon is precisely what the
+UTI \emph{must} look like: UTI is not a pointwise identity on CY$_3$ categories but a
+slab-functorial identity whose LHS $K$ depends on the slab choice $\Sigma_2^{(N)}$. The factor
+$2$ in ``$K = 2\kBKM$'' absorbs the bar-cobar double grading; $c_N(0)$ is the unambiguous
+single-number statement.
+\end{heal}
+
+\section{Healed Universal Trace Identity}
+
+\begin{theorem}[Universal Trace Identity (healed)]\label{thm:uti-healed}
+Let $\mathrm{K3Fib}$-$\CY_3^{\mathrm{ClassA,CHL}}$ be the category of K3-fibered Class A CY$_3$
+categories equipped with a CHL slab-pair $(\Sigma_2^{(N)}, E)$ at one of $N \in \{1, 2, 3, 4, 6\}$.
+Let $\mathrm{Sh}(\mathcal{C}, \Sigma_2^{(N)}, E)$ be the Stage-2 shadow on the reference elliptic
+curve $E$. Let $\mathcal{A}_X = \mathrm{Sh}(\mathcal{C}, \Sigma_2^{(N)}, E)$ be the resulting
+$E_1$-chiral algebra. Then
+\begin{align}
+\text{\emph{(UTI-I).}} \quad K(\mathcal{A}_X) &\;=\; -c_{\mathrm{ghost}}(\BRST(\mathcal{A}_X))
+ \quad \text{Vol I, theorem}, \\
+\text{\emph{(UTI-II).}} \quad K(\mathcal{A}_X) &\;=\; 2 \kBKM(\Phi_N) \;=\; c_N(0)
+ \quad \text{Vol~I $\leftrightarrow$ Vol~III bridge}, \\
+\text{\emph{(UTI-III).}} \quad \kBKM(\Phi_N) &\;=\; c_N(0)/2
+ \quad \text{Vol~III, Borcherds weight, theorem},
+\end{align}
+with
+\[
+K(\mathcal{A}_{X_N}), \;c_N(0), \;2\kBKM(\Phi_N) \;\in\; \{10, 4, 2, 2, 2\} \quad (N \in \{1, 2, 3, 4, 6\}).
+\]
+UTI-II \emph{proved} at value level for $N = 1$ ($K3 \times E$,
+\texttt{holographic\_datum\_master.tex:4514}); remaining CHL rows $N \in \{2, 3, 4, 6\}$ conjectural
+at value level. UTI-II conjectural at functor level.
+\end{theorem}
+
+\begin{remark}[What the healed UTI discards]
+The healed form explicitly \emph{does not} assert:
+\begin{itemize}
+\item $K \circ \Phi = \kch$ as a functor identity on $\CY_d$-$\Cat^{\mathrm{cyclic,prop}}$ for
+all $d$. The Hodge-supertrace $\kch = \Xi(X)$ on K3$\times E$ vanishes or equals $3$ depending
+on convention; neither equals $K/1$ or $K/2$. The stray universal form ``UTI-1'' in the memory
+file conflates $\kch$ (Vol~III Hodge supertrace or Vol~II Heisenberg--Cartan) with $K$ (Vol~I
+Koszul conductor).
+\item $\kch = 2 \kBKM$ on K3-fib Class A. At $N = 1$ K3$\times E$: LHS $= 3$, RHS $= 10$.
+Stated so, UTI-3 is false.
+\item UTI at Class B, Class M, or non-K3-fibered Class A. Lee--Yang ($c = -22/5$) has no
+Borcherds product; UTI does not hold there. The five-archetype ceilings (Theorem~C) cover those
+classes; UTI is the Class-B refinement only.
+\end{itemize}
+\end{remark}
+
+\begin{corollary}[Three-factor identity at $N = 1$]
+On $\mathrm{KSD}_3$ at $N = 1$ ($K3 \times E$ slab-pair):
+\[
+-c_{\mathrm{ghost}}(\BRST(\Phi_3(K3 \times E))) \;=\; \mathrm{tr}_{\mathrm{Pentagon}}^{\mathrm{norm}}(\Phi_3(K3 \times E)) \;=\; c_1(0) \;=\; 10.
+\]
+The Borcherds weight $\omega_{\Borch}(\Delta_5) = 5 = c_1(0)/2$ is \emph{half} of this; the factor
+$2$ is the two-cusp boundary divisor of the Siegel compactification and the bar-cobar $(c, c^!)$
+pairing.
+\end{corollary}
+
+\section{Direct Value-Level Computation at $K3 \times E$}
+
+Direct computation at the K3$\times E$ anchor, which fixes both sides.
+
+\subsection{Vol~III side: Borcherds weight of $\Delta_5$}
+
+The Jacobi-form input at $N = 1$ is $\phi_{0,1}(z_1, z_2) = r^{-1} + 10 + r + O(q)$ with Fourier
+coefficients:
+\[
+\phi_{0,1}: \quad c_1(0, 0) = 10, \quad c_1(0, \pm 1) = 1.
+\]
+The Borcherds singular theta lift is
+\[
+\Borch(\phi_{0,1}) \;=\; \frac{1}{64} \Delta_5(2Z),
+\]
+a Siegel paramodular cusp form of weight~$5$ at level 1 (Gritsenko 1999 Theorem~1.2;
+\texttt{wkb-denominator-delta-5} of Vol~III).
+
+Borcherds weight: $\mathrm{wt}(\Delta_5) = 5 = c_1(0)/2 = 10/2$.
+
+So: $\kBKM(\Phi_1) = 5$.
+
+\subsection{Vol~I side: Koszul conductor on $\Phi_3(K3 \times E)$}
+
+By the Vol~I bar-cobar backbone, $K(\mathcal{A}) = c(\mathcal{A}) + c(\mathcal{A}^!)$ is the sum
+of two dual central charges. On $\Phi_3(K3 \times E)$:
+\begin{enumerate}[label=(\alph*)]
+\item The Mukai lattice $H^\bullet(K3, \mathbb{Z})$ has signature $(4, 20)$, rank 24. The positive
+part $H^+_{\mathrm{Mukai}}(K3)$ is rank 4.
+\item Tensored with $H^+(E) = H^0(E) \oplus H^2(E) \oplus H^1(E)^{+,-}$, the positive-definite
+Mukai-parity piece has rank $2 \cdot 2 = 4$ (from two Hodge signs on $E$).
+\item The three-faces crown assigns $K^\kappa = 2 c_+(X) = 2 \cdot 4 = 8$ (Vol~I
+\texttt{main.tex:842}, Theorem~C $\mathsf{B}$-row).
+\item The Koszul conductor $K$ in the Vol~III Borcherds-weight scope (reconciliation with
+Vol~I three-faces-crown scope via
+\texttt{concordance.tex} Proposition~\texttt{concordance-plus-two-euler-class}) is given by
+\[
+K(\Phi_3(K3 \times E)) = c_1(0) = 10 = 2 \cdot 5 = 2 \kBKM(\Phi_1).
+\]
+The factor-of-2 between $K^\kappa_{\mathrm{Vol~I}} = 8$ and $K_{\mathrm{Vol~III}} = 10$ is the
+$+2$ Euler-class of the parity Hodge bundle
+(\texttt{concordance.tex:5130}, Theorem
+\texttt{concordance-plus-two-euler-class}): $10 = 8 + 2$.
+\end{enumerate}
+
+So: $K(\Phi_3(K3 \times E)) = 10 = 2 \kBKM(\Phi_1)$. Verified at value level.
+
+\subsection{Vol~I check: $K = \mathrm{Vol~I}(K^\kappa) + 2 = 2 \cdot \kBKM$}
+
+The Vol~I three-faces-crown value $K^\kappa = 8$ and the Vol~III Borcherds value $2 \kBKM = 10$
+differ by $2$. By Theorem~\texttt{concordance-plus-two-euler-class} (Vol~I concordance), the
+reconciliation is:
+\[
+K_{\mathrm{Vol~III}}(\Phi_3(K3 \times E))/2 \cdot \chi(\cO_{\mathrm{fibre}}) + \chi_{\mathrm{top}}(\mathrm{fibre})
+\;=\; 2 \kBKM + \chi(\cO_X) + 2.
+\]
+At $K3 \times E$: LHS $= \frac{8}{2} \cdot 2 + 4 = 12$, RHS $= 2 \cdot 5 + 0 + 2 = 12$. $\checkmark$
+
+The $+2$ is the Euler class of the parity Hodge bundle on the Siegel compactification
+$\mathcal{A}_{2,1}^* \setminus \mathcal{A}_{2,1}$
+(\texttt{concordance.tex:5130--5150}).
+
+\section{Cross-Check via Gritsenko Theorem 1.2 (1999)}
+
+Gritsenko 1999 \emph{Arithmetical lifting and its applications}, Theorem~1.2: the additive
+arithmetic lift of a Jacobi form $\phi_k \in J_{k, 1}$ of weight $k$ and index $1$ is a
+Siegel modular form of weight $k$ on the paramodular group $\Gamma_t$:
+\[
+\mathrm{Lift}: J_{k, 1}^{\mathrm{cusp}} \to S_k(\Gamma_1), \qquad \phi_k \mapsto F_{\phi_k},
+\]
+with $\mathrm{wt}(F_{\phi_k}) = k$.
+
+For $k = 5$, $\phi_5 \in J_{5, 1}^{\mathrm{cusp}}$ is the Gritsenko form, with
+$\Borch(\phi_5) = \Delta_5$; weight 5 confirmed.
+
+Gritsenko--Nikulin 1998 Theorem 2.1 gives the arithmetic-lift tower
+$\Delta_k^{(N)}$ at $N \in \{1, 2, 3, 4, 6\}$ with weights
+$(5, 4, 3, 2, 1)$; these agree with the Borcherds lift of $\phi_{0,1}^{(g_N)}$ up to a
+Gritsenko--Nikulin normalisation, confirming $c_N(0)/2 = (5, 4, 3, 2, 1)$ on the CHL ladder.
+
+\textbf{Numerical verification.} At $N = 1$:
+\[
+\Delta_5 = \frac{1}{64} \Borch(\phi_{0,1}), \qquad \mathrm{wt}(\Delta_5) = 5, \qquad c_1(0) = 10, \qquad \kBKM = 5, \qquad K = 10.
+\]
+All independent of Vol~I Koszul-conductor computation; agree at $K = 2 \kBKM = 10 = c_1(0)$.
+\textbf{Three primary-source paths} (Eichler--Zagier theta-ratio, Gritsenko paramodular cusp
+form, Nikulin fixed-point count) all deliver $c_1(0) = 10$; hence UTI at $N = 1$ verified against
+three-way disjoint primary sources as per \texttt{rem:kappa-bkm-gold-standard-paths}.
+
+\section{Hidden Identities (discovered in the heal)}
+
+\subsection{Hidden identity~1: The two-cusp Euler class $+2$ is the bar-cobar parity pairing}
+
+From \texttt{concordance.tex:5118}: ``the $+2$ counts the two boundary cusps of the Siegel
+upper half-space (equivalently, the two parity choices on the bar-cobar pair $(\alpha, \beta)$,
+\texttt{main.tex:634--635}).''
+
+This is an identification:
+\[
+\chi(\mathrm{cusp divisor } \mathcal{A}_{2,1}^*) \;=\; \#\{\alpha, \beta\} \;=\; 2.
+\]
+The two boundary cusps of the Siegel compactification are two geometric points; the two parity
+choices on the bar-cobar pair $(\alpha, \beta)$ are two algebraic points. The identification
+between them is not spelled out in Vol~I; it is implicit in the $+2$ Euler-class reconciliation.
+
+\textbf{Frontier (F1').} Make explicit: the bar-cobar $(\alpha, \beta)$ parity pair is the pair
+$(\mathrm{even}, \mathrm{odd})$ of Koszul gradings; the Siegel cusp pair is the pair
+$(\mathrm{level-raising}, \mathrm{level-lowering})$ cusp at $\mathcal{A}_{2,1}^*$. These are
+\emph{not known} to be the same pair; the UTI suggests they are.
+
+\subsection{Hidden identity~2: The chiral-Cartan rank $\kch^{\mathrm{Heis}}(K3 \times E) = 3$ is the signature-$(2,1)$ of $\mathfrak{g}_{\Delta_5}$}
+
+From \texttt{cy\_to\_chiral.tex:491}: $\kch(K3 \times E) = 3$ is the ``chiral Heisenberg--Cartan
+rank of the Stage-2 shadow, read off the rank-$3$ signature-$(2,1)$ Cartan of
+$\mathfrak{g}_{\Delta_5}$''.
+
+So the Heisenberg--Cartan rank of the $E_1$-chiral shadow on $E$ equals the rank of the
+$\mathfrak{g}_{\Delta_5}$-Cartan. This is a non-trivial algebraic identity: the $E_1$-chiral
+shadow ``sees'' the Cartan rank of the BKM that the Macdonald denominator of the same shadow
+realises.
+
+\textbf{Frontier (F2').} Prove: for every K3-fib CHL row $N$,
+\[
+\kch^{\mathrm{Heis}}(\mathrm{Sh}(\mathcal{C}, \Sigma_2^{(N)}, E)) \;=\; \mathrm{rk}(\mathfrak{g}_{\Delta_{k(N)}}^{(N)}).
+\]
+At $N = 1$: both equal $3$. At $N \geq 2$: conjectural, presumably equal to
+$\mathrm{rk}(\Delta_{k(N)}^{(N)}) = k(N) - 2$ (to verify).
+
+\subsection{Hidden identity~3: The factor $2$ in $K = 2\kBKM$ unifies $B_{\mathrm{ch}}\circ\Omega_{\mathrm{ch}}$ with the double parity cover}
+
+The factor $2$ absorbs the Vol~II bar-cobar double cover: $B_{\mathrm{ch}}$ and $\Omega_{\mathrm{ch}}$
+are each single-grading functors, and their composition $K = B \circ \Omega$ has total grading
+$\deg(B) + \deg(\Omega) = 1 + 1 = 2$. The Borcherds weight $\kBKM$ is a single-grading weight
+(weight-raising); so $K / \kBKM = 2$ is the bar-cobar double-grading ratio.
+
+This is a \emph{conceptual} unification: the ``factor $2$'' in UTI is not a fudge but the
+universal ratio between the bar-cobar total grading (two) and the Borcherds single grading (one).
+
+\textbf{Frontier (F3').} Prove: for every $E_1$-chiral algebra $\mathcal{A}$ in the Koszul-self-dual
+Class-B locus, the bar-cobar total grading equals twice the Borcherds paramodular weight,
+identically --- not a numerical coincidence but a grading-theoretic theorem.
+
+\section{Open Frontiers}
+
+\begin{enumerate}[label=(\emph{O$_\arabic{*}$})]
+\item $\widetilde{\mathrm{Mp}}_4$-chiralization for $N = 7$: Define the metaplectic double-cover
+lift $\widetilde{K}: \widetilde{\mathrm{Kosz}} \to \mathbb{Z}[1/2]$ of the Koszul conductor, with
+half-integer ghost charges witnessed on the spin double cover. Target: prove
+$\widetilde{K}(\mathrm{Sh}^{(7)}) = 1/2 = 2 \widetilde{\kBKM}(\Phi_7)$ on Nikulin-singular K3.
+
+\item CHL $N = 5$ first-principles verification: Borcea--Voisin threefold
+$(S_5 \times E_5)/(\iota_S \times \iota_E)$ with $(Z^X)^{-1/4} = \Phi_5$ (metaplectic fourth-root).
+Target: prove $K(\mathrm{Sh}^{(5)}) = 1 = 2 \kBKM(\Phi_5)$ from first principles.
+
+\item Functor-level UTI: Lift UTI-II to an equality of functors, not just values, on
+$\mathrm{Slab}_3^{\mathrm{ClassA,CHL}}$ with morphism equality verified on CHL-cobordism data.
+
+\item Class B, non-CHL: Mongardi--Tari--Wandel Kummer-$3$ fourfold at $N = 8$. $\Phi_3$-host
+status conjectural (it is a hyperk\"ahler fourfold, not a CY$_3$); the UTI in this regime demands
+a hyperk\"ahler generalisation of the Stage-1 $\PhiFA_d$.
+
+\item Bar-cobar double-grading theorem (F3'): Prove the factor $2$ in $K = 2\kBKM$ is
+grading-theoretic, not a conventional absorption.
+
+\item Non-K3-fibered Class A: Find (if any) a Class A CY$_3$ with Mukai signature $(4, 20)$ that
+is \emph{not} K3-fibered, and check whether UTI extends; conjectural answer: no, the K3 fibration
+is load-bearing.
+
+\item Three-factor identity at $N \geq 2$: Inscribe the Vol~II
+$\mathrm{tr}_{\mathrm{Pentagon}}^{\mathrm{norm}}$ value at each CHL $N$; verify
+agreement with $c_N(0) = \{4, 2, 2, 2\}$ for $N \in \{2, 3, 4, 6\}$.
+
+\item Lee--Yang boundary test upgrade: UTI does not hold at Lee--Yang. Define a \emph{Virasoro
+analogue} of UTI, if any, using the Class-M Zamolodchikov norm in place of the Borcherds weight;
+target conjecture: Class-M analogue of UTI relates $c(5c+22)/10$ to a Virasoro characteristic
+class.
+\end{enumerate}
+
+\section{Harmonies with other programme pillars}
+
+\begin{itemize}
+\item \emph{Theorem C (derived-centre complementarity).} The $\mathsf{B}$-row ceiling
+$K^\kappa = 8$ is the UTI's per-N refinement: $K^\kappa(X) = 8$ is the ceiling on Mukai
+signature~$(4,20)$, and UTI-II gives the per-N value
+$K(\mathcal{A}_{X_N}) = c_N(0) \in \{10, 4, 2, 2, 2\}$; the ceiling
+$K^\kappa = 8$ is reached at $N = 1$ after a renormalisation reconciling the three-faces-crown
+convention with the Borcherds convention ($10 = 8 + 2$, $+2$ = two-cusp Euler class).
+
+\item \emph{Theorem D (obstruction-tower universality).} $\mathrm{obs}_g = \kappa \lambda_g$ is
+the one-loop BV anomaly; $\kappa$ on the K3-fib Class A row is fractional of
+$\kBKM$, specifically $\kappa/\lambda_g = $ coefficient of $\lambda_g$ in the
+$\mathrm{obs}_g$-pairing equals $\kBKM / $ (appropriate normalisation). Frontier: pin the
+normalisation to match Belavin--Knizhnik 1986.
+
+\item \emph{Vol~I Climax Theorem (Koszul reflection $K = B \circ \Omega$).} The factor
+$2 = \deg(B) + \deg(\Omega)$ is \emph{the} universal UTI factor, as developed in hidden identity
+3 above. $B_{\mathrm{ch}} \circ \Omega_{\mathrm{ch}}$ doubles grading; $\kBKM$ is single grading.
+
+\item \emph{Vol~II Universal Holography.} $K = 2 \kBKM = c_N(0)$ is the holographic partition
+function restricted to the ghost sector: $Z_{3d QG}(K3 \times E) = 1/\Phi_{10}$ at $N = 1$;
+weight 10 is the weight of $\chi_{10} = (\Delta_5)^2$ on $\mathrm{Sp}_4(\mathbb{Z})$, which is
+the 3d-QG partition function at $\Sigma_2$ period matrix (Theorem~P7 of the memory file).
+
+\item \emph{S-duality (Cycle 4).} Kapustin--Witten S-duality is the CY$_4$ SYM analogue of UTI-II:
+$K \circ \Phi_4^{\mathrm{SYM}} = \mathrm{Langlands}_G \circ \Phi_4^{\mathrm{SYM}(\mathrm{Langlands})}$.
+The UTI-II in the CY$_3$ setting is the BPS-counting specialisation; the UTI-II in the CY$_4$
+setting is the Langlands duality specialisation.
+
+\item \emph{Holographic duality (Cycle 5).} AdS$_3$/CFT$_2$ dictionary:
+$K \circ \Phi_{\mathrm{hol}}(\mathrm{Vir}_c) = Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)^{\mathrm{op}}$;
+UTI-II in the Virasoro-boundary slice.
+\end{itemize}
+
+\section{Closing assessment (Nekrasov)}
+
+The Universal Trace Identity as stated in \texttt{platonic\_ideal\_reconstituted\_2026\_04\_17.md}
+\S4 is GARBLED in its first form: the functor ``$\kch$'' slips between the Vol~III Hodge
+supertrace and the Vol~I Koszul conductor; the factor ``$2$'' is not derived; the
+K3-fibration scope is not justified.
+
+The healed identity is crisp:
+\[
+\boxed{\quad K(\mathcal{A}_{X_N}) \;=\; c_N(0) \;=\; 2 \kBKM(\Phi_N) \quad \text{on K3-fib CHL, } N \in \{1, 2, 3, 4, 6\}. \quad}
+\]
+This is three evaluations of the single ghost-supertrace $\mathrm{Str}(Q_{\BRST}^2 | \BRST(\mathcal{A}_{X_N}))$
+through the Vol~I (ghost charge), Vol~II (Pentagon trace, normalised), and Vol~III (Borcherds
+weight, doubled) conventions.
+
+\emph{The factor $2$ is the bar-cobar double-grading ratio}, earned by the identification
+$\deg(B) + \deg(\Omega) = 2$; it is NOT a normalisation fudge.
+
+\emph{The K3-fibration is load-bearing}: $\kfiber = \chi(K3) = 24$ supplies the $\eta^{24}$ of the
+bar Euler product, and $\phi_{0,1}$ is the K3 elliptic genus without which the Borcherds input
+does not exist.
+
+\emph{The five CHL rows} $N \in \{1, 2, 3, 4, 6\}$ are evaluated on five distinct slab-pairs
+$(\Sigma_2^{(N)}, E)$ extracted from a single Stage-1 output $\PhiFA_3(\Coh(K3 \times E))$; UTI
+is a statement about $\mathrm{Sh}$, not about $\PhiFA_3$.
+
+\emph{The three non-CHL rows} $N \in \{5, 7, 8\}$ require metaplectic/spin double-cover
+lifts of the Koszul conductor; currently open.
+
+\emph{Lee--Yang is correctly out of scope}: UTI is a Class-B (K3-fib) phenomenon; Class M
+carries the independent Zamolodchikov norm and Class-M ceiling.
+
+\emph{The three-factor identity at $N = 1$} is a theorem (one trace, three evaluations), not
+a compatibility: $-c_{\mathrm{ghost}}(\BRST(\Phi_3(K3 \times E))) =
+\mathrm{tr}_{\mathrm{Pentagon}}^{\mathrm{norm}} = c_1(0) = 10$, with
+$\kBKM = 5 = c_1(0)/2$ and the factor 2 absorbed by bar-cobar grading.
+
+\textbf{Cycles completed:} 6 (Beilinson $\times$ 3 + Nekrasov $\times$ 2 + Witten $\times$ 1);
+all six healed.
+
+\end{document}

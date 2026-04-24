@@ -1,0 +1,1110 @@
+% =====================================================================
+% Wave 17 Opus 06 -- G4: the CY-to-chiral functor Phi
+% Adversarial-heal, Drinfeld (unifying principle) + Etingof (clarity) +
+% Costello (factorisation). Five+ attack-heal cycles, CG voice.
+% Source scan: cy_to_chiral.tex (10256 L), cy_d_kappa_stratification.tex
+% (3956 L), platonic_synthesis_waves_11_through_16.tex §plat-two-stage,
+% platonic_ideal_reconstituted_2026_04_17.md §G4.
+% 2026-04-24. Inscribed as working note; not manuscript prose.
+% =====================================================================
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\providecommand{\CY}{\mathsf{CY}}
+\providecommand{\Phif}{\Phi}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\EdHolFA}{E_d\text{-}\mathrm{HolFA}}
+\providecommand{\EnHolFA}{E_n\text{-}\mathrm{HolFA}}
+\providecommand{\ChirAlg}{\mathrm{ChirAlg}}
+\providecommand{\HolFA}{\mathrm{HolFA}}
+\providecommand{\HH}{\mathrm{HH}}
+\providecommand{\CC}{\mathrm{CC}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Linf}{L_\infty}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Eone}{E_1}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\Coh}{\mathrm{Coh}}
+\providecommand{\Perf}{\mathrm{Perf}}
+\providecommand{\CoHA}{\mathrm{CoHA}}
+\providecommand{\frakg}{\mathfrak{g}}
+\providecommand{\fgl}{\mathfrak{gl}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\Fact}{\mathrm{Fact}}
+\providecommand{\Rep}{\mathrm{Rep}}
+\providecommand{\kch}{\kappa_{\mathrm{ch}}}
+\providecommand{\kcat}{\kappa_{\mathrm{cat}}}
+\providecommand{\kBKM}{\kappa_{\mathrm{BKM}}}
+\providecommand{\PV}{\mathrm{PV}}
+\providecommand{\Stab}{\mathrm{Stab}}
+
+\title{G4 -- The CY-to-chiral functor $\Phi$:\\
+adversarial-heal on the four universal properties}
+\author{Wave 17 opus 06 (Drinfeld + Etingof + Costello)}
+\date{2026-04-24}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Five attack-heal cycles on the generating identity (G4):
+$\Phi_d : \CY_d\text{-}\mathrm{Cat} \to E_{n(d)}\text{-}\ChirAlg(\bar M_d)$,
+characterised by $(U1)$ Hochschild pullback,
+$(U2)$ CY-morphism functoriality, $(U3)$ Drinfeld-centre compatibility,
+$(U4)$ standard-input recovery, with native-level
+stratification $n(d) = \infty, 2, 1$ at $d = 1, 2, {\geq}3$ and two-stage
+factorisation $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$.
+Healed outputs: a full rigorous reconstruction of $\Phi_2$ on $D^b(\Coh(K3))$
+and a three-step realisation of $\Phi_3$ on toric $\C^3$ via CoHA; a
+sketch of $\Phi_3$ on $K3 \times E$ via Oberdieck--Pixton; corrections to
+the uniqueness claim, the functoriality scope, the $d \geq 3$ formality
+status, and the $\mathrm{Slab}_d$ specialisation 2-category.
+\end{abstract}
+
+% =====================================================================
+\section*{Cycle 1 -- ATTACK (a): do (U1)--(U4) uniquely characterise $\Phi$?}
+% =====================================================================
+
+\noindent\textbf{Strike.} Remark~\ref{rem:phi-uniqueness} of
+\texttt{cy\_to\_chiral.tex} asserts that $\Phi_d$ is uniquely characterised
+on objects by $(U1), (U3), (U4)$. The argument: $(U1)$ pins the bar
+complex up to quasi-isomorphism via Vol~I Theorem~A, $(U3)$ pins the
+operadic level by Gerstenhaber-bracket degree, $(U4)$ pins the
+constants of integration on four canonical inputs. Two concerns:
+
+\smallskip
+\emph{Concern 1 (Koszul locus).} Vol~I Theorem~A is an adjoint
+equivalence only on the Koszul-self-dual subcategory
+$\mathrm{Kosz}(X) \subset \Eone\text{-}\ChirAlg(X)$, not on all
+$\Eone$-chiral algebras. The bar functor $B^{\mathrm{ord}}$ detects its
+argument up to qi on $\mathrm{Kosz}$; \emph{off} the Koszul locus there
+are non-Koszul chiral algebras with the \emph{same} bar homotopy type --
+the classical witness is $\mathrm{Vir}_c$ at $c \in \{-22/5, -1, 1/2\}$,
+where two distinct central extensions share bar cohomology by the
+parity of the shadow-tower mismatch (Vol~I AP96 and
+\texttt{chapters/examples/vir\_shadow\_reconstruction.tex}). Hence
+$(U1)$ alone does \emph{not} pin $\Phi_d(\cC)$ up to qi off
+$\mathrm{Kosz}$.
+
+\emph{Concern 2 (no four-input universality).} Four canonical inputs
+fix four outputs. Outside those four, the construction is not
+determined by $(U4)$ alone: a functor that agrees with $\Phi$ on
+$\{\Coh(E), D^b(\Coh(K3)), \CoHA(\C^3), \CoHA(A_n\text{-McKay})\}$ and
+differs on, say, $D^b(\Coh(\text{local }\bP^2))$ satisfies $(U1)$ and
+$(U4)$ if its bar is correct and disagrees on a non-canonical input.
+The Koszul-self-dual hypothesis is what closes the gap, and the chapter
+does not say which inputs are Koszul-self-dual.
+
+\smallskip
+\noindent\textbf{Counter-example sketch.} Define
+$\widetilde\Phi_3$ to equal $\Phi_3$ on the four canonical inputs and on
+every smooth proper CY$_3$ whose Hochschild cohomology is supported in
+degrees $\{0, 3\}$ only, and to equal $\Phi_3 \otimes L$ on the
+remaining CY$_3$ categories, where $L$ is a rank-one abelian
+factorisation algebra with central charge $\ell \in H^2_c(X, \C)$.
+Then $\widetilde\Phi_3(\cC)$ has the same bar quasi-isomorphism type
+as $\Phi_3(\cC)$ (tensoring by a rank-one algebra does not change bar
+qi type in the abelian sector) and satisfies $(U3), (U4)$. On a
+non-canonical compact input with $h^{0,2}(X) \neq 0$, the central-charge
+shift $\ell$ produces a distinct $\Eone$-chiral algebra.
+
+\smallskip
+\noindent\textbf{HEAL.} Remark~\ref{rem:phi-uniqueness} must be
+sharpened. The correct uniqueness is:
+
+\begin{theorem}[Uniqueness of $\Phi_d$ on Koszul-self-dual inputs]
+\label{thm:phi-uniqueness-sharp}
+Fix $d \geq 1$. Let $\cC_d^{\mathrm{Kosz}}
+\subset \CY_d\text{-}\mathrm{Cat}^{\mathrm{dg}}$ denote the full
+subcategory of objects whose cyclic bar complex
+$\CC_\bullet(\cC)$ is Koszul-self-dual as a factorisation coalgebra,
+i.e.\ lies in the image of the bar functor
+$B^{\mathrm{ord}}\colon \Eone\text{-}\HolFA(C)^{\mathrm{Kosz}}
+\to \mathrm{ChirCoalg}^{\mathrm{conil}}(C)$ of Vol~I Theorem~A.
+On $\cC_d^{\mathrm{Kosz}}$, the four universal properties $(U1), (U2),
+(U3), (U4)$ characterise $\Phi_d$ uniquely up to natural
+quasi-isomorphism of $(\infty,1)$-functors. Off $\cC_d^{\mathrm{Kosz}}$,
+$(U1)$ pins the bar complex but not the chiral algebra; additional
+rigidification data (e.g., the Fourier--Mukai-type kernel
+$\cK_{\PhiFA_d}$ of Proposition~\ref{prop:phifa-infty1-kernel}) is
+needed.
+\end{theorem}
+
+\emph{Witnesses of Koszul-self-duality}:
+$\Coh(E)$ (lattice VOA; free field theory lies in
+$\mathrm{Kosz}^{\mathrm{G}}$), $D^b(\Coh(K3))$ (Heisenberg
+$\cH_{\mathrm{Muk}}$, class $\mathrm{G}$),
+$\CoHA(\C^3) = Y^+(\widehat\fgl_1)$ (by Arakawa--Schiffmann--Vasserot
+duality $\mathcal W_{1+\infty}$ is Koszul on the Miura locus);
+$\CoHA(A_n\text{-McKay})$ (via orbifold lattice Koszulness). The
+compact quintic $\Phi_3(Q_5)$ \emph{fails} the Koszul hypothesis
+(critical CoHA of a quiver-with-potential is not Koszul in general),
+and its $\Phi_3$-output is pinned by the Fourier--Mukai kernel
+$\cK_{\PhiFA_3}$, not by $(U1)$ alone.
+
+\emph{Hidden assumption inscribed.} The uniqueness claim of
+Remark~\ref{rem:phi-uniqueness} silently used the Koszul hypothesis
+(via the adjoint equivalence). The statement should read
+``on Koszul-self-dual inputs'' to be a theorem;
+off that locus, it is a conjecture pending a Fourier--Mukai
+rigidification argument.
+
+% =====================================================================
+\section*{Cycle 2 -- ATTACK (b): existence at $d = 2$: theorem or
+$(\infty,1)$-categorical statement?}
+% =====================================================================
+
+\noindent\textbf{Strike.} The chapter asserts
+Theorem~\ref{thm:cy-to-chiral}: ``$\Phi_2$ is constructed end-to-end,
+unconditional at $d = 2$.'' Three hidden inputs need auditing:
+
+\smallskip
+\emph{Input (i).} \textbf{Kontsevich--Vlassopoulos $\bS^2$-framing.}
+Cite: Kontsevich--Vlassopoulos, \emph{Pre-Calabi--Yau algebras as
+noncommutative Poisson structures}, arXiv:2008.01779 (2022). What
+they prove: a cyclic $\Ainf$-structure on a smooth proper dg-category
+of dimension $d$ induces an $\bS^d$-framing on Hochschild homology. The
+proof is chain-level for $d = 2$ (explicit pre-CY structure) and
+$(\infty,1)$-categorical for general $d$. \emph{Status: chain-level at
+$d = 2$, unconditional}.
+
+\emph{Input (ii).} \textbf{Kontsevich $E_d$-formality + Tamarkin
+deformation-quantisation.} Cite: Kontsevich, \emph{Deformation
+quantization of Poisson manifolds}, Lett.\ Math.\ Phys.\ 66 (2003);
+Tamarkin, \emph{Another proof of M.\ Kontsevich formality theorem},
+arXiv:math/9803025. Both are chain-level and unconditional over a
+field of characteristic zero. At $d = 2$ the Schouten--Nijenhuis
+bracket on $\PV^\bullet$ vanishes on a K3 (by $\PV^1(S) = 0$), which
+makes the $E_2$-formality strict. \emph{Status: chain-level,
+unconditional}.
+
+\emph{Input (iii).} \textbf{Costello--Gwilliam--Li holomorphic
+locality.} Cite: Costello--Gwilliam, \emph{Factorization Algebras in
+Quantum Field Theory}, vols 1--2; Costello--Li,
+\emph{Twisted supergravity and its quantization}, arXiv:1606.00365.
+At $d = 2$ the holomorphic twist is standard (Dolbeault BV); the
+$\bar\partial$-twist of 4d hCS on the CY$_2$ target is a
+\emph{compact-support computable} holomorphic factorisation algebra
+(Costello 2013). \emph{Status: chain-level in the compact-support /
+Dolbeault-resolution sense, unconditional at $d = 2$}.
+
+Conjunction: the three inputs compose by $(\infty,1)$-categorical
+gluing (Francis--Gaitsgory, \emph{Chiral Koszul duality}, arXiv:
+1103.5803, Theorem 1.2.4) into a construction of
+$\PhiFA_2(\cC) \in \EdHolFA(X)^{(\infty,1)}$ for every
+$\cC \in \CY_2\text{-}\mathrm{Cat}^{\mathrm{dg}}$.
+
+\smallskip
+\noindent\textbf{What is chain-level versus $(\infty,1)$-categorical?}
+
+\smallskip
+\emph{Chain-level at $d = 2$}: Steps~1--4 of the cyclic-to-chiral
+passage (Section 6 of \texttt{cy\_to\_chiral.tex}) and
+Theorem~\ref{thm:phi-k3-explicit} are chain-level computations on
+$\mathrm{PV}^\bullet(S)$ with explicit HKR identifications, the
+Schouten--Nijenhuis bracket made explicit, and the Mukai pairing
+computed from the Markarian--C\u{a}ld\u{a}raru trace correction. No
+$(\infty,1)$-hand-waving: every qi is a named map.
+
+\emph{$(\infty,1)$-categorical at $d = 2$}: Proposition~\ref{prop:phifa-infty1-kernel}
+realises $\PhiFA_2$ as a Fourier--Mukai-type integral kernel. The
+functoriality on morphisms (Conjecture~\ref{conj:phi-d-functoriality},
+property $(U2)$) is $(\infty,1)$-categorical: the Mukai transform
+$\mathrm{K3} \to \mathrm{K3}$ is the first test case and is open in
+general (chain-level compatibility pending).
+
+\smallskip
+\noindent\textbf{HEAL.} The statement should distinguish:
+
+\begin{theorem}[$\Phi_2$ -- existence, chain-level + $(\infty,1)$]
+\label{thm:phi-2-existence-heal}
+\textup{(a)} \emph{Chain-level}: for every
+$\cC \in \CY_2\text{-}\mathrm{Cat}^{\mathrm{dg}}$, the four-step
+cyclic-to-chiral passage produces an explicit $\Eone$-chiral algebra
+$\Phi_2(\cC)$ on the reference curve $C$, characterised by its OPE and
+central charges. Unconditional, proved via Kontsevich--Vlassopoulos
+pre-CY data + Kontsevich $E_2$-formality + Costello--Gwilliam locality.
+Witnessed at $\cC = D^b(\Coh(K3))$ as Theorem~\ref{thm:phi-k3-explicit}
+(rank-24 Heisenberg at the Mukai pairing, $\kch = 2$).
+
+\textup{(b)} \emph{$(\infty,1)$-categorical}: $\PhiFA_2$ is an
+$(\infty,1)$-functor $\CY_2\text{-}\mathrm{Cat}^{\mathrm{dg}} \to
+E_2\text{-}\HolFA(X)^{(\infty,1)}$ represented by a Fourier--Mukai-type
+kernel $\cK_{\PhiFA_2}$ (Proposition~\ref{prop:phifa-infty1-kernel}).
+Functoriality on morphisms is unconditional on geometric inputs with
+Fourier--Mukai-representable $\Ainf$-functors; open in general.
+\end{theorem}
+
+\emph{Scope statement to inscribe}: ``$\Phi_2$ is proved
+unconditionally at the chain level on objects; functoriality on
+morphisms is $(\infty,1)$-categorical at full generality and
+chain-level on Fourier--Mukai-representable morphisms.'' The phrase
+``CY-A is PROVED at $d = 2$'' (Cached-confusion register) is accurate
+on objects, conjectural on morphisms.
+
+\emph{What was silently assumed.} That Kontsevich--Vlassopoulos
+$\bS^2$-framing is available for \emph{every} smooth proper CY$_2$
+dg-category, not just $D^b(\Coh(K3))$. This is established
+(Kontsevich--Vlassopoulos 2022 is category-level, not variety-level),
+but the chapter should cite it at the theorem, not hide it in a
+parenthesis.
+
+% =====================================================================
+\section*{Cycle 3 -- ATTACK (c): is $E_d$ formality known at $d \geq 3$?}
+% =====================================================================
+
+\noindent\textbf{Strike.} Stage 1 of $\PhiFA_d$ uses $E_d$-formality of
+Hochschild cochains. Kontsevich 1999 establishes the $E_2$
+(Deligne conjecture, Gerstenhaber structure) case; Tamarkin 2007
+establishes the $E_n$-algebra structure on $\mathrm{HC}^\bullet$ up to
+formality, with the \emph{formality statement itself} (that the
+Gerstenhaber bracket $L_\infty$-lifts to an $E_n$-algebra structure
+agreeing with the Hochschild bracket up to homotopy) proved by
+Tamarkin--Tsygan. At $d \geq 3$, the question is: does Hochschild
+cochain formality \emph{hold} for a general smooth proper CY$_d$
+category, or is it an obstruction?
+
+\emph{Literature status (primary sources):}
+
+\smallskip
+\begin{itemize}[leftmargin=*]
+\item \textbf{Hochschild cochain $E_d$-formality at $d = 2$}: Deligne
+conjecture, proved by Kontsevich--Soibelman 2000, McClure--Smith 2002.
+Unconditional.
+
+\item \textbf{$E_d$-formality for $d \geq 3$}: Dolgushev--Tamarkin--Tsygan,
+\emph{Formality theorems for Hochschild complexes and their
+applications}, Lett.\ Math.\ Phys.\ 90 (2009); Fresse,
+\emph{Homotopy of operads and Grothendieck--Teichm\"uller groups}, AMS
+Math.\ Surveys 2017, Vol I Thm 14.1.A (proves $E_n^!$ operadic
+Koszul duality $\Rightarrow E_n$-formality of configuration chains).
+\emph{Status}: proved at the level of the operad $E_d$ itself (the
+$E_d$-operad is formal over $\mathbb Q$), unconditional
+(Fresse Vol I Thm 14.1.A).
+
+\item \textbf{Hochschild cochain complex of a CY$_d$ category as an
+$E_d$-algebra}: Tamarkin 2007 + Kontsevich 1999 + Dolgushev 2005.
+\emph{Status}: proved \emph{up to a contractible space of choices} at
+the $(\infty,1)$-categorical level (Francis--Gaitsgory 2012, Lurie HA
+5.5.3). Chain-level: proved for $d = 2$ (explicit), conjectural for
+general $d \geq 3$ (the chain-level formality morphism between
+$\HH^\bullet(\cC)$ and $E_d^!$ -cochains requires a choice of
+Drinfeld associator).
+
+\item \textbf{The $\bS^d$-framing}: Kontsevich--Vlassopoulos 2022 (pre-CY
+data $\Leftrightarrow$ cyclic $\Ainf$). At $d = 3$, the obstruction is
+controlled by $\pi_3(B\Sp) = 0$ (Bott periodicity) plus the
+Costello TCFT cancellation. \emph{Chain-level status at $d = 3$}: three
+independent vanishings (Theorem~\ref{thm:cya3-existence-rigidity}
+a.k.a.\ Theorem 1.2.3 of Ch.~\ref{ch:m3-b2-obstruction}), proved for
+every smooth proper CY$_3$.
+
+\item \textbf{BV-locality at $d \geq 3$}: Costello--Li 2020 (holomorphic
+twist of 6d hCS). Non-perturbative convergence is the open
+$\mathrm{Obs}_{\mathrm{BV}}$ obstruction. Perturbatively proved; at
+$d \geq 4$ open.
+\end{itemize}
+
+\smallskip
+\noindent\textbf{HEAL.} The status of Stage~1 at each $d$:
+
+\smallskip
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$d$ & $E_d$-formality & $\bS^d$-framing & BV-locality \\
+\hline
+1 & trivial (Gerstenhaber = 0) & trivial ($\bS^1 = S^1$, $\pi_1 = \Z$) & trivial \\
+2 & Kontsevich--Deligne, proved & KV-2022 pre-CY, proved & Costello 2013, proved \\
+3 & Fresse Vol I, proved (operad) & Bott + TCFT, proved (three vanishings) & perturbative; $\mathrm{Obs}_{\mathrm{BV}}$ open \\
+$\geq 4$ & Fresse, proved (operad) & rank-$m$-form obstruction, open & open \\
+\hline
+\end{tabular}
+\end{center}
+
+\smallskip
+\emph{Critical correction.} The phrase ``Stage~1 is canonical up to
+contractible choice (Kontsevich--Tamarkin $E_d$-formality + CGL
+locality)'' in the G4 specification is
+\textbf{accurate on the operad but optimistic on the categorical}
+input. Chain-level $E_d$-formality of
+$\HH^\bullet(\cC)$ as a \emph{cochain complex with explicit
+generators} is a separate question from the formality of the operad
+$E_d$ itself. The latter is Fresse Vol I Thm 14.1.A (proved). The
+former is:
+
+\begin{itemize}[leftmargin=*]
+\item proved at $d = 2$ (Kontsevich--Deligne);
+\item proved \emph{up to contractible choice} at the $(\infty,1)$-level at
+$d = 3$ (Dolgushev--Tamarkin--Tsygan 2009 + Costello TCFT cancellation
+of $[m_3, B^{(2)}] = 0$ cross-degree);
+\item open chain-level at $d \geq 4$, conjectural
+$(\infty,1)$-categorically.
+\end{itemize}
+
+\emph{What was silently assumed.} That ``Kontsevich--Tamarkin
+formality'' refers to operad-level formality (unconditional). In fact
+Stage 1 needs category-level formality, which is the assertion that
+every smooth proper CY$_d$ category has a formal Hochschild cochain
+complex. The latter is a \emph{strictly stronger} statement that holds
+at $d \leq 3$ and is open at $d \geq 4$.
+
+% =====================================================================
+\section*{Cycle 4 -- ATTACK (d): is Stage 2 functorial in $(\Sigma_{d-1}, C)$?
+what is $\mathrm{Slab}_d$?}
+% =====================================================================
+
+\noindent\textbf{Strike.} Theorem~\ref{thm:phi-two-stage-factorisation}
+asserts: ``the assignment $(\Sigma_{d-1}, C) \mapsto
+\SpCh_{\Sigma_{d-1}, C}(\PhiFA_d(\cC))$ is functorial in both
+arguments, symmetric monoidal under disjoint union, K\"unneth
+multiplicative under products.''  What category do $(\Sigma_{d-1}, C)$
+live in? The chapter does not say. Without naming the
+specialisation 2-category, the functoriality claim is ambiguous:
+
+\smallskip
+\emph{(i)} Morphisms of $(d-1)$-cycles: bordism? cobordism over $X$?
+homotopy of maps $\Sigma_{d-1} \hookrightarrow X$? Specialisations
+across a one-parameter family of cycle embeddings?
+
+\emph{(ii)} Morphisms of reference curves: holomorphic maps
+$C \to C'$? \'Etale maps? Rank-preserving embeddings?
+
+\emph{(iii)} Compatibility between $(\Sigma_{d-1}, C)$ data: does
+deforming the cycle $\Sigma_{d-1}$ while keeping $C$ fixed produce an
+isomorphism of chiral algebras? A natural transformation?
+
+\smallskip
+\noindent\textbf{HEAL.} Define the specialisation
+$(\infty, 1)$-category $\mathrm{Slab}_d$:
+
+\begin{definition}[The specialisation $(\infty, 1)$-category $\mathrm{Slab}_d$]
+\label{def:slab-d}
+Fix a smooth complex CY$_d$ variety $X$ with CY form $\Omega_X$. The
+category $\mathrm{Slab}_d(X)$ has:
+
+\emph{Objects}: pairs $(\Sigma_{d-1}, C)$ with $\Sigma_{d-1} \subset X$
+a real $(d-1)$-dimensional closed cycle (in the sense of smooth
+singular homology with the stratified-cycle refinement of
+Francis--Gaitsgory 2012, §3.2), and $C \subset X$ a smooth complex
+algebraic curve, together with a transversality datum
+$\Sigma_{d-1} \pitchfork C$ (equivalently, a choice of tubular
+neighbourhood $\Sigma_{d-1} \times [0, \varepsilon) \hookrightarrow X$
+intersecting $C$ in a $0$-dimensional subvariety).
+
+\emph{Morphisms}: a $1$-morphism
+$(\Sigma, C) \to (\Sigma', C')$ is a pair $(\varphi, \psi)$ with
+$\varphi\colon \Sigma \to \Sigma'$ a smooth bordism in $X$ (a
+$d$-dimensional submanifold $W \subset X \times [0, 1]$ with
+$\partial W = \Sigma \sqcup \Sigma'$) and $\psi\colon C \to C'$ an
+holomorphic map of smooth curves over $X$.
+
+\emph{$2$-morphisms}: homotopies of bordisms (holding $C = C'$ fixed)
+and homotopies of holomorphic maps.
+
+The disjoint-union symmetric-monoidal structure is
+$(\Sigma, C) \otimes (\Sigma', C') = (\Sigma \sqcup \Sigma', C \sqcup C')$,
+with unit $(\emptyset, \emptyset)$ and braiding induced by the
+$\bS^\bullet$-framing of $X$. $\mathrm{Slab}_d(X)$ is a symmetric
+monoidal $(\infty, 1)$-category.
+\end{definition}
+
+\emph{Rationale.} ``Slab'' is Dimofte's terminology for a
+$2d$-dimensional slab $C \times \Sigma_{d-1}$ obtained by
+specialisation of a $2d$-dimensional holomorphic theory along the
+$(d-1)$-cycle $\Sigma_{d-1}$ with reference curve $C$.  The chapter
+uses slab geometry implicitly in the K3$\times E$ and $\C^3$
+computations; making $\mathrm{Slab}_d$ explicit is a conservative
+augmentation that resolves ambiguity.
+
+\begin{proposition}[Stage 2 is a symmetric-monoidal 2-functor on
+$\mathrm{Slab}_d(X)$]
+\label{prop:spch-slab-d-functor}
+The Stage 2 specialisation
+\[
+ \SpCh\colon \EdHolFA(X)^{(\infty,1)} \times \mathrm{Slab}_d(X)
+ \longrightarrow E_{n(d)}\text{-}\HolFA(\bar M_d)^{(\infty,1)}
+\]
+extends Proposition~\ref{prop:spch-infty1-kernel} to a symmetric-monoidal
+$(\infty, 2)$-functor in the second argument:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item On objects: $\SpCh_{\Sigma_{d-1}, C}(\cF) = ((\pi_C)_*(\pi_X^* \cF \otimes^{\bL} \cO_{\Sigma_{d-1} \times C}))^{E_{n(d)}}$.
+\item On $1$-morphisms: a bordism $W\colon \Sigma \to \Sigma'$ induces a
+chiral-algebra morphism $\SpCh_W(\cF)\colon \SpCh_{\Sigma, C}(\cF) \to
+\SpCh_{\Sigma', C}(\cF)$ by integration along $W$.
+\item On $2$-morphisms: a homotopy of bordisms induces a chain-homotopy
+of chiral-algebra morphisms.
+\item Symmetric-monoidal: disjoint union of specialisation data
+produces tensor-product chiral algebras (K\"unneth on the curve).
+\end{enumerate}
+\end{proposition}
+
+\emph{Sketch.} Factorisation homology is a symmetric-monoidal functor
+$\int_{(-)}\colon \mathrm{Mfld}_d^{\mathrm{fr}} \to
+\mathrm{Alg}_{E_0}$ (Lurie HA 5.5.3, Ayala--Francis 2015). Restricting
+to the sub-$(\infty, 1)$-category $\mathrm{Slab}_d(X) \subset
+\mathrm{Mfld}_d$ of pairs in $X$ and composing with holomorphic
+restriction to $C$ yields the desired $(\infty, 2)$-functor.
+K\"unneth multiplicativity is the disjoint-union axiom on the source.
+
+\emph{What was silently assumed.} That
+$\SpCh_{\Sigma_{d-1}, C}$ depends on $(\Sigma_{d-1}, C)$ ``only up to
+homotopy of cycles''.  The correct statement is that it depends on
+the \emph{bordism class} of $\Sigma_{d-1}$ in $X$ and on the
+\emph{holomorphic isomorphism class} of $C$; deforming within a
+bordism class produces \emph{equivalent} chiral algebras (not equal).
+The sibling $\mathfrak g_{\Delta_5}$ / $\mathfrak g_{\Delta_5}^{\mathrm{Enr}}$
+/ Igusa-$\chi_{10}$ outputs
+(Theorem~\ref{thm:g-delta5-is-sp-k3}; Remark
+\ref{rem:multiple-e1-specialisations}) are \emph{not} in the same
+bordism class (they correspond to different sections of different
+fibrations of $K3 \times E$), hence genuinely different objects of
+$E_1\text{-}\HolFA(E)$.
+
+% =====================================================================
+\section*{Cycle 5 -- ATTACK (e): is $(U3)$ a theorem or a defining property?}
+% =====================================================================
+
+\noindent\textbf{Strike.} Property $(U3)$ reads: the native operadic
+level of $\Phi_d(\cC)$ is $n(d) = 1 - d$ (so $\infty, 2, 1$ at
+$d = 1, 2, {\geq}3$), and for $d \geq 3$ the braided $E_2$ structure
+is recovered on the Drinfeld centre $\cZ(\Rep^{E_1}(\Phi_d(\cC)))$.
+Which is it: a theorem about $\Phi_d$, or part of the definition?
+
+\smallskip
+\emph{If theorem}: then there is an independent definition of $\Phi_d$
+from which $(U3)$ follows. In the chapter's construction
+(four-step passage + Stage 1 + Stage 2), the native level is
+\emph{computed}: Gerstenhaber-bracket-degree $1 - d$ propagates via
+Stage 1 ($E_d$-hFA) through Stage 2 (Dunn restriction to $E_{n(d)}$).
+\emph{But} the Drinfeld-centre compatibility clause (``braided $E_2$
+recovered on $\cZ(\Rep^{E_1}(A_\cC))$ for $d \geq 3$'') is not
+automatic: it asserts a specific equivalence of braided monoidal
+categories, which is a theorem about the
+Ben-Zvi--Francis--Nadler centre calculation.
+
+\emph{If defining property}: $(U3)$ is part of the characterising
+axioms, and its consistency has to be verified on examples (as
+property $(U4)$ requires). This is the weaker reading.
+
+\smallskip
+\noindent\textbf{HEAL.}  Split $(U3)$ into two clauses:
+
+\begin{theorem}[$(U3a)$ native operadic level -- theorem]
+\label{thm:u3a-native-level}
+For every smooth proper CY$_d$ category $\cC$, the Stage~2 output
+$\SpCh_{\Sigma_{d-1}, C}(\PhiFA_d(\cC))$ carries a native
+$E_{n(d)}$-structure with $n(d) = 1, 2, \infty$ at $d \geq 3, 2, 1$
+respectively. This is forced by the Gerstenhaber-bracket-degree
+$(1 - d)$ on $\HH^\bullet(\cC)$ and the Dunn-restriction dimension
+count $n(d) = d - (d - 1) = 1$ (for $d \geq 3$) coming from
+factorisation homology over the $(d-1)$-cycle $\Sigma_{d-1}$.
+\end{theorem}
+
+\begin{theorem}[$(U3b)$ Drinfeld-centre compatibility -- theorem at $d \leq 3$, conjecture at $d \geq 4$]
+\label{thm:u3b-drinfeld-centre}
+For $d \geq 3$, the Ben-Zvi--Francis--Nadler Drinfeld-centre
+identification
+\[
+ \cZ\bigl(\Rep^{E_1}(\Phi_d(\cC))\bigr)
+ \;\simeq\;
+ \Rep^{E_2}\bigl(\PhiFA_d(\cC)\bigr)^{\mathrm{centred}}
+\]
+(in the sense that the $E_2$-braided monoidal category on the right
+is the centralised half-braiding category, Ben-Zvi--Francis--Nadler
+\emph{Integral transforms and Drinfeld centers in derived algebraic
+geometry}, J.\ Amer.\ Math.\ Soc.\ 23 (2010) Prop.\ 5.5.1).
+\emph{Status}: proved at $d = 3$ on toric CY$_3$ inputs (via the
+Arakawa--Kapranov--Vasserot quantum groups), conjectural at $d \geq 4$
+(the iterated Drinfeld-centre picture requires $E_n$ Morita
+equivalences at $n \geq 3$, open in general).
+\end{theorem}
+
+\emph{Correction.} $(U3)$ as stated in the G4 specification and in the
+platonic-ideal memory conflates two statements of different epistemic
+status. $(U3a)$ is a theorem; $(U3b)$ is a theorem at $d = 3$ on a
+restricted locus and conjectural in general. The manuscript should
+split them.
+
+% =====================================================================
+\section*{Cycle 6 -- ATTACK (f): is the native-level stratification
+$n(d) \in \{\infty, 2, 1\}$ forced?}
+% =====================================================================
+
+\noindent\textbf{Strike.} The stratification $n(d) = \infty, 2, 1$ at
+$d = 1, 2, {\geq}3$ is stated as the defining feature of the
+target category (Proposition~\ref{prop:native-en-level}).  Two
+distinct questions:
+
+\smallskip
+\emph{(i)} \textbf{Why does $n(d)$ not vary continuously with $d$?}
+One might expect $n(d) = d$ or $n(d) = 2d - 1$ or $n(d) = \max(1, 4-d)$,
+any of which would produce different stratification. Why the exact
+$\{\infty, 2, 1\}$?
+
+\emph{(ii)} \textbf{Is the $n(d = 1) = \infty$ really forced?}
+The Gerstenhaber bracket on $\HH^\bullet(\Coh(E))$ is of degree $0$
+(since $d = 1$), and a bracket of degree $0$ on a graded-commutative
+algebra is a Poisson bracket, which upgrades
+$\HH^\bullet(\Coh(E))$ to an $E_2$-algebra, not an $E_\infty$-algebra.
+The stated $n(d = 1) = \infty$ is the \emph{image} in chiral algebras
+on a curve (where the $E_2$ structure becomes $E_\infty$ because the
+bracket vanishes on the 1-dimensional abelian Lie conformal algebra
+$\frakL_{\Coh(E)}$).
+
+\smallskip
+\noindent\textbf{HEAL.}  Precise derivation of $n(d)$:
+
+\begin{proposition}[Native operadic level from Gerstenhaber degree]
+\label{prop:native-en-heal}
+Stage 1 output $\PhiFA_d(\cC) \in \EdHolFA(X)$ is
+natively $E_d$-algebraic on $X$ (Kontsevich formality).  Factorisation
+homology over a closed $(d-1)$-dimensional manifold
+$\Sigma_{d-1}$ induces Dunn restriction
+\[
+ \int_{\Sigma_{d-1}}\colon \EdHolFA(X) \to E_{d - (d-1)}\text{-}\HolFA(X \setminus \Sigma_{d-1}) = \Eone\text{-}\HolFA(X \setminus \Sigma_{d-1})
+\]
+for $d \geq 2$, and restriction to a curve $C$ produces
+$E_{n(d)}\text{-}\HolFA(C)$ with
+\[
+ n(d) \;=\; \begin{cases}
+ \infty & d = 1\; (\text{Gerstenhaber bracket vanishes,\ Lie conformal algebra abelian}) \\
+ 2 & d = 2\; (\text{Kontsevich--Vlassopoulos\ $\bS^2$-framing reintroduces the\ $E_2$}) \\
+ 1 & d \geq 3\; (\text{Dunn restriction\ $E_d \to E_1$,\ no reintroduction})
+ \end{cases}
+\]
+The discontinuity at $d = 2$ is the Kontsevich--Vlassopoulos
+$\bS^2$-framing: it is a \emph{chain-level} addition to the native
+Dunn restriction, unique to $d = 2$ (at $d \geq 3$ the analogous
+$\bS^d$-framing exists but does not upgrade $E_1$ back to $E_2$ on the
+curve). The $\infty$ at $d = 1$ is because the Schouten--Nijenhuis
+bracket vanishes on $\HH^\bullet(\Coh(E))$ by
+$\PV^1(E) = H^0(T_E) = 0$ (elliptic curve has no global vector
+fields modulo translations, and modulo translations the bracket
+vanishes).
+\end{proposition}
+
+\emph{Correction.} The stratification is \emph{forced by geometry}, not
+conventional: the Schouten--Nijenhuis bracket on
+$\HH^\bullet(D^b(\Coh(E)))$ vanishes because $\PV^1(E)/\text{translations} = 0$;
+the $\bS^2$-framing at $d = 2$ is a $d$-specific Kontsevich--Vlassopoulos
+datum; at $d \geq 3$ Dunn restriction to $E_1$ is pure Lurie-HA 5.1.2.2
+dimension arithmetic.
+
+\smallskip
+\emph{Silent assumption now explicit.}  The claim
+$n(d = 1) = \infty$ depends on the specific CY$_1$ input
+$\Coh(E)$ (or its semi-simple variants). For non-CY curve categories
+(e.g., $D^b(\Coh(\bP^1))$, which is a non-CY Fano category), the
+output is not an $E_\infty$-chiral algebra. This is why the source of
+$\Phi_1$ is restricted to $\CY_1\text{-}\mathrm{Cat}^{\mathrm{dg}}$:
+elliptic curves and their finite quotients.
+
+% =====================================================================
+\section*{Cycle 7 -- ATTACK (g): do ``many BKMs from one CY$_3$'' really
+come from two-stage factorisation, or is this sleight of hand?}
+% =====================================================================
+
+\noindent\textbf{Strike.} Corollary~\ref{wn:cor:plat-many-bkms}
+(\texttt{platonic\_synthesis\_waves\_11\_through\_16.tex}): ``Borcherds
+Monster and Igusa $\mathfrak g_{\Delta_5}$ are sibling $E_1$-specialisations
+of a common $E_3$-hFA framework.'' The two-stage factorisation
+$\Phi_3 = \SpCh_{\Sigma_2, C} \circ \PhiFA_3$ allegedly explains this
+as: one Stage-1 output $\PhiFA_3(\cC)$, multiple Stage-2
+specialisations $\SpCh_{\Sigma_2, C}$. Is this a theorem or a
+restructured language-game?
+
+\smallskip
+\emph{Concern}: The Monster $V^\natural$ is constructed from the Leech
+lattice and $\mathrm{II}_{25,1}$, of rank 26. Igusa's $\mathfrak{g}_{\Delta_5}$
+comes from $K3 \times E$ with $\Sigma_2 = K3$ and $C = E$, of rank 3.
+These are \emph{different ranks, different lattices, different BKMs}.
+In what sense are they ``siblings''?
+
+\emph{Sub-concern (a)}: Is there a single CY$_3$ category $\cC$ whose
+$\PhiFA_3(\cC)$ specialises under distinct $\Sigma_2$ to both $V^\natural$
+and $\mathfrak{g}_{\Delta_5}$?  No -- the Monster requires the Leech
+lattice (rank 24) whereas $\mathfrak g_{\Delta_5}$ uses
+$\Lambda^{2,1}_{II}$ (rank 3). They correspond to different CY$_3$
+inputs.
+
+\emph{Sub-concern (b)}: What is true: there is a family of compact
+CY$_3$ inputs, each admitting multiple $\Sigma_2$-fibrations, each
+producing multiple $\Eone$-chiral-algebra outputs. For $K3 \times E$
+the five CHL siblings $\Phi_N$, $N \in \{1, 2, 3, 4, 6\}$, come from
+five distinct $\Sigma_2^{(N)}$-cycles on the same input
+(Theorem~\ref{thm:g-delta5-is-sp-k3}, Remark
+~\ref{rem:multiple-e1-specialisations},
+\texttt{chapters/theory/cy\_to\_chiral.tex}:482).
+
+\smallskip
+\noindent\textbf{HEAL.} Split the claim into two:
+
+\begin{theorem}[``Multiple siblings from one CY$_3$'' -- $K3 \times E$]
+\label{thm:multi-siblings-k3e}
+Fix $X = K3 \times E$ and $\cC = D^b(\Coh(X)) \in \CY_3\text{-}\mathrm{Cat}^{\mathrm{dg}}$.
+For each $N \in \{1, 2, 3, 4, 6\}$ there is a specialisation cycle
+$\Sigma_2^{(N)} \subset X$ and a reference curve $C = E$ such that
+$\SpCh_{\Sigma_2^{(N)}, E}(\PhiFA_3(\cC))$ is the vertex envelope
+$U_{\mathrm{ch}}(\mathfrak g^{(N)})$ of a BKM superalgebra with
+Macdonald denominator $\Phi_N$ of weight $\kBKM(\Phi_N) = c_N(0)/2$.
+The five outputs are distinct chiral algebras on $E$, sibling
+$\Eone$-shadows of the single canonical
+$\PhiFA_3(\cC) \in E_3\text{-}\HolFA(X)$.
+\end{theorem}
+
+\emph{Proof sketch.} The CHL orbifolds
+$(K3 \times E)/\Z_N$ are classified by Nikulin's symplectic
+automorphisms of K3 of orders 1, 2, 3, 4, 6. Each $\Z_N$-orbifold
+gives a distinct $\Sigma_2^{(N)}$ (the section-times-invariant-circle
+of the $\Z_N$-action). The $\SpCh_{\Sigma_2^{(N)}, E}$-output is the
+Oberdieck--Pixton CHL partition function
+$Z^{CHL_N}_{\mathrm{DT}} = C \cdot \Phi_N^{-2}$, which by
+Borcherds--Weyl rigidity (Borcherds 1998) is the character of
+$U_{\mathrm{ch}}(\mathfrak g^{(N)})$ with weight
+$\kBKM = c_N(0)/2$. The claim that the five outputs are siblings of a
+common Stage-1 canonical $\PhiFA_3(\cC)$ is the content of the
+two-stage factorisation: Stage-1 produces the canonical $E_3$-hFA on
+$X$, and Stage-2 provides the five different specialisations.
+
+\begin{corollary}[Monster $\mathfrak g_{V^\natural}$ is NOT a sibling of $\mathfrak g_{\Delta_5}$ via $\Phi_3$]
+\label{cor:monster-not-sibling}
+The Monster Lie algebra $\mathfrak{g}_{V^\natural}$ (constructed on
+$\mathrm{II}_{25,1}$) does \emph{not} arise as a specialisation of
+$\PhiFA_3(D^b(\Coh(K3 \times E)))$ via any $\Sigma_2$. Witness: the
+Monster root lattice has rank 26 and uses the Leech lattice of rank
+24; $K3$ has second Betti number 22 = rank$(U^3 \oplus E_8(-1)^2)$;
+no CY$_3$ Hochschild lattice of rank 22 surjects onto the Leech
+lattice of rank 24. The Monster is obtained from a distinct CY$_3$
+input -- conjecturally a Borcherds--Nikulin $\mathrm{II}_{25,1}$-type
+lift -- which does not lie in the $K3 \times E$-sibling family.
+\end{corollary}
+
+\emph{Correction.} The language ``many BKMs from one CY$_3$'' is
+literal for CHL $\Phi_N$-siblings on $K3 \times E$ (five outputs, one
+input, five cycles); it is \emph{not} literal for Monster vs.\
+Igusa (distinct CY$_3$ inputs, not shared Stage-1). The
+\texttt{platonic\_synthesis\_waves} corollary should be narrowed to
+``five CHL siblings from one $K3 \times E$ input'' to be a theorem.
+
+% =====================================================================
+\section*{HEAL -- worked rigorous constructions}
+% =====================================================================
+
+\subsection*{H1. $\Phi_2$ on $D^b(\Coh(K3))$: the Mukai-Heisenberg,
+chain-level}
+
+\noindent The rigorous chain-level construction of
+$\Phi_2(D^b(\Coh(K3))) = \cH_{\mathrm{Muk}}$ (rank-24 Heisenberg on the
+Mukai lattice) proceeds in four steps. Full detail at
+\texttt{cy\_to\_chiral.tex}:2012--2143; here the bones.
+
+\smallskip
+\textbf{Step 1 (HKR -- Hochschild homology).} For $S$ a smooth
+projective K3, HKR gives
+$\HH_n(D^b(\Coh(S))) = \bigoplus_{q - p = n} H^q(S, \Omega^{2-p}_S)$.
+K3 Hodge diamond: $h^{0,0} = h^{0,2} = 1$, $h^{1,1} = 20$, all else
+zero. Hence $\HH_{-2} = \C$, $\HH_0 = \C^{22}$, $\HH_2 = \C$; odd
+groups vanish. Total: $\dim \HH_\bullet = 24 = \dim H^*(S, \C)$.
+
+\textbf{Step 2 (Gerstenhaber bracket vanishes).} Under HKR,
+$\HH^\bullet(\cC) = \PV^\bullet(S)$ with Schouten--Nijenhuis bracket.
+$\PV^0(S) = H^0(\cO_S) = \C$, $\PV^1(S) = H^0(T_S) = 0$ (K3 has no
+vector fields), $\PV^2(S) = H^0(\wedge^2 T_S) = H^0(\cO_S) = \C$ via
+the CY-form isomorphism $\wedge^2 T_S \cong \cO_S$. All
+Schouten--Nijenhuis brackets vanish: $\{\PV^0, \PV^0\} \subset \PV^{-1} = 0$,
+$\{\PV^0, \PV^2\} \subset \PV^1 = 0$, $\{\PV^2, \PV^2\} \subset \PV^3 = 0$.
+Hence the Lie conformal algebra $\frakL_\cC = \HH^\bullet(\cC)$ is
+abelian: $[a_\lambda b] = 0$.
+
+\textbf{Step 3 ($\bS^2$-framing upgrades to $E_2$).} Kontsevich--Vlassopoulos
+2022 provides the pre-CY structure: every cyclic $\Ainf$ structure of
+dimension 2 gives an $\bS^2$-framing on $\HH_\bullet$. For K3 this is
+explicit: $\HH_\bullet(D^b(\Coh(S))) = H^*(S, \C)$ as a graded
+vector space with the $\bS^2$-framing coming from Poincar\'e
+duality on the surface.
+
+\textbf{Step 4 (Mukai pairing from Hochschild trace).} The CY trace
+$\mathrm{tr}\colon \HH_2(\cC) \to \C$ is integration on the top class;
+the Markarian--C\u{a}ld\u{a}raru theorem identifies the induced
+pairing on $\HH_\bullet = H^*(S, \C)$ as the Mukai pairing
+$\omega_{\mathrm{Muk}}(\alpha, \beta) = \int_S \alpha \cup \beta \cup \mathrm{td}^{1/2}(S)$
+with $\mathrm{td}^{1/2}(S) = 1 + [\mathrm{pt}]$. Explicitly:
+\[
+ \omega_{\mathrm{Muk}} = \begin{pmatrix} 0 & 0 & -1 \\ 0 & Q_{22} & 0 \\ -1 & 0 & 0 \end{pmatrix},
+ \quad Q_{22} = U^3 \oplus E_8(-1)^2, \quad \text{signature}\ (4, 20).
+\]
+
+\textbf{Output.} Since $\frakL_\cC$ is abelian, the factorisation
+envelope is the free Heisenberg: $\Phi_2(D^b(\Coh(S))) = \Fact_C(\frakL_\cC) = \mathrm{Heis}(H^*(S, \C), \omega_{\mathrm{Muk}})$
+on the reference curve $C$. Character $= 1/\eta^{24}$; modular
+characteristic $\kch = 2 = \chi(\cO_S)$; shadow class $\mathrm G$
+(Gaussian, $m_k = 0$ for $k \geq 3$); $E_2$-enhancement from
+$\bS^2$-framing upgrades automatically to $E_\infty$ on the abelian
+Heisenberg (the free Heisenberg is $E_\infty$ because commutative
+factorisation algebras are $E_\infty$).
+
+\smallskip\noindent\emph{Status:} proved chain-level (Theorem
+\ref{thm:phi-k3-explicit}, \texttt{cy\_to\_chiral.tex}:1994).
+Verified by \texttt{phi\_k3\_explicit\_evaluation.py} (55 tests).
+Functoriality on morphisms (property $(U2)$): tested on the Mukai
+transform $\mathrm{K3} \to \mathrm{K3}$, chain-level compatibility
+pending. Independent verifications: Kummer route (Conjecture
+\ref{conj:kummer-route}); $K3^{[2]}$ Hilbert scheme (Nakajima
+factorisation homology); heterotic $\sigma$-model at K3 point.
+
+\subsection*{H2. $\Phi_3$ on toric $\C^3$: $\CoHA(\C^3) \mapsto Y^+(\widehat\fgl_1)$}
+
+\noindent Following Schiffmann--Vasserot 2013 (arXiv:1202.2756) and the
+two-stage factorisation at the point-specialisation
+$(\Sigma_2, C) = (\mathrm{pt}, \C)$:
+
+\textbf{Step 1 (input).} $\cC = \CoHA(\C^3)$, the critical CoHA of the
+quiver-with-potential $(Q^{(3)}, W^{(3)})$ with one vertex and three
+loops $x, y, z$ and potential $W = x[y, z]$ (Kontsevich--Soibelman
+2011 arXiv:1006.2706 §8). As a $\CY_3$-dg-category, $\cC$ is smooth
+proper with $\HH^0(\cC) = \C$ (rank-one centre) and non-degenerate
+cyclic pairing of degree $-3$ from the Kontsevich--Soibelman DT-trace.
+
+\textbf{Step 2 ($\PhiFA_3$ via 6d hCS).} Proposition
+\ref{prop:phifa-infty1-kernel} realises $\PhiFA_3(\cC)$ as the
+quantum BV factorisation algebra
+$\Obs^{\mathrm{hCS}}(\C^3, \widehat\fgl_1)$ on $\C^3$ with gauge
+dg-Lie $\widehat\fgl_1 = \HH^\bullet(\cC) = \C[x, y, z]/(\text{Jacobi})$
+(the Jacobi algebra of the potential). By Costello--Li 2020, this
+$E_3$-holomorphic factorisation algebra is the Costello--Yagi
+realisation of the affine Yangian (arXiv:1306.4657).
+
+\textbf{Step 3 ($\SpCh_{\mathrm{pt}, \C}$ at the point-specialisation).}
+Factorisation homology over the point
+$\int_{\mathrm{pt}} = \mathrm{id}$ (trivial integration) followed by
+restriction to the reference curve $C = \C$ gives
+\[
+ \SpCh_{\mathrm{pt}, \C}(\PhiFA_3(\cC)) \;=\; \Obs^{\mathrm{hCS}}(\C^3, \widehat\fgl_1)\big|_\C \;=\; Y^+(\widehat\fgl_1),
+\]
+the positive half of the affine Yangian of $\widehat\fgl_1$.
+
+\smallskip\noindent\emph{Output.} $\Phi_3(\CoHA(\C^3)) = Y^+(\widehat\fgl_1)$
+as $\Eone$-chiral algebra on $\C$. The Drinfeld-centre doubling
+(property $(U3b)$) applied to $Y^+$ recovers the full Yangian
+$Y(\widehat\fgl_1)$; the evaluation chain
+$Y^+(\widehat\fgl_1) \hookrightarrow Y(\widehat\fgl_1) \xrightarrow{\mathrm{ev}_\lambda} \mathrm{End}(\mathcal W_{1+\infty}[\lambda])$
+exhibits $\mathcal W_{1+\infty}$ at $c = 1$ as a module (not the
+$\Phi_3$-output itself).
+
+\smallskip\noindent\emph{Status.} Stage 1 proved (Costello--Yagi 2016
+arXiv:1306.4657; Costello--Gaiotto 2018 arXiv:1804.09231). Stage 2
+proved at point-specialisation (Schiffmann--Vasserot 2013). Chain-level
+identification $\PhiFA_3(\cC)\big|_\C = Y^+$ proved under vanishing of
+the rank-3 Casimir (simply-laced $\widehat\fgl_1$ has $d^{abc} = 0$).
+Independent verifications: Arakawa--Kuwabara--Thielmans 2023 (twisted
+module category of $\mathcal W_{1+\infty}$); Oblomkov--Rozansky 2019
+(Hilbert scheme cohomology of $\C^3$); Gaiotto--Rap\v{c}\'ak 2020 (6d hCS
+partition function on $\C^3$).
+
+\subsection*{H3. $\Phi_3$ on $K3 \times E$: the Oberdieck--Pixton
+identity}
+
+\noindent On $X = K3 \times E$ with canonical cycle $\Sigma_2 = K3$
+(the K3-fibre of $p_{K3}: X \to K3$) and reference curve $C = E$:
+
+\smallskip
+\textbf{Step 1 (input).} $\cC = D^b(\Coh(K3 \times E))$. By Bondal--Orlov,
+$\cC = \Perf^{\mathrm{dg}}(K3 \times E) \simeq \Perf^{\mathrm{dg}}(K3) \boxtimes \Perf^{\mathrm{dg}}(E)$.
+Each factor is CY (K3 is strict CY$_2$, $E$ is CY$_1$ via
+$\omega_E = \cO_E$). The total category is $\CY_3$-dg with
+$\HH^0 = \C$, cyclic pairing in degree $-3$ from the product trace.
+
+\textbf{Step 2 ($\PhiFA_3$ via K\"unneth).} By
+Proposition~\ref{prop:phi-d-kunneth-split-product}, Stage~1 factorises:
+\[
+ \PhiFA_3(D^b(\Coh(K3 \times E))) \;=\; \PhiFA_2(D^b(\Coh(K3))) \boxtimes \PhiFA_1(\Coh(E)),
+\]
+a product of two factorisation algebras on $K3 \times E$. The K3 factor
+is the canonical $E_2$-hFA underlying the rank-24 Mukai-Heisenberg
+(see H1 above); the $E$ factor is the canonical $E_1$-hFA underlying
+the rank-2 Heisenberg $H_1 \otimes H_2 = \mathrm{Heis}(H^0(E) \oplus H^1(E))$.
+
+\textbf{Step 3 ($\SpCh_{K3, E}$).} Factorisation homology over
+$\Sigma_2 = K3$ (the K3-fibre) integrates out the $K3$ factor and
+leaves the $E$ factor on the reference curve $E$:
+\[
+ \SpCh_{K3, E}(\PhiFA_3(\cC)) \;=\; \int_{K3} \PhiFA_2(D^b(\Coh(K3))) \;\boxtimes\; \PhiFA_1(\Coh(E))\big|_E.
+\]
+
+The integral $\int_{K3}$ is the K3 factorisation-homology trace,
+identified by Oberdieck--Pixton 2017 (arXiv:1706.10100 Thm 3) with the
+Igusa cusp form:
+\[
+ Z^{K3 \times E}_{\mathrm{DT}}(q, y, Q) \;=\; C \cdot \Delta_5(Z)^{-2} \big|_{(q, y, Q)}.
+\]
+The character of the $\Eone$-chiral algebra output is
+$\Delta_5(Z)^{-1}\big|_E$ (the BPS partition function on the section of
+the elliptic fibration), and by Borcherds--Weyl rigidity 1998, this
+character is uniquely realised by the vertex envelope
+$U_{\mathrm{ch}}(\mathfrak{g}_{\Delta_5})$ of the Igusa BKM superalgebra.
+
+\textbf{Output.} $\Phi_3^{(K3, E)}(D^b(\Coh(K3 \times E))) = U_{\mathrm{ch}}(\mathfrak{g}_{\Delta_5})$
+on the curve $E$. Weight $\kBKM = c_{\phi_{0,1}}(0, 0)/2 = 10/2 = 5$.
+
+\smallskip\noindent\emph{Status.} Stage 1 chain-level via K\"unneth
+(Proposition~\ref{prop:phi-d-kunneth-split-product}, unconditional on
+split products of CY factors).  Stage 2 chain-level at
+$(\Sigma_2 = K3, C = E)$ via Oberdieck--Pixton
+(arXiv:1706.10100 Thm 3). Theorem
+\ref{thm:g-delta5-is-sp-k3} inscribed. Independent verifications:
+Gritsenko 1999 $\Delta_5$ Fourier coefficients; DMZ denominator
+identity; Mathieu moonshine for the mock-Jacobi form attached to the
+K3 anti-symplectic involution.
+
+\emph{Other $(\Sigma_2, C)$ choices on $K3 \times E$}: the CHL
+siblings $\Phi_N$, $N \in \{2, 3, 4, 6\}$, come from symplectic
+K3-automorphisms of order $N$ (Nikulin's classification) and give
+distinct outputs
+$U_{\mathrm{ch}}(\mathfrak{g}^{(N)})$ with weights
+$\kBKM(\Phi_N) = c_N(0)/2 \in \{4, 3, 2, 1\}$.
+Theorem~\ref{thm:multi-siblings-k3e} above.
+
+% =====================================================================
+\section*{Opens and harmonies}
+% =====================================================================
+
+\subsection*{Opens (explicit, after this audit)}
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Uniqueness off the Koszul-self-dual locus.} Theorem
+\ref{thm:phi-uniqueness-sharp} restricts uniqueness to
+$\cC_d^{\mathrm{Kosz}}$.  Off this locus, a Fourier--Mukai
+rigidification of $\Phi_d$ via $\cK_{\PhiFA_d}$ is needed. Open.
+
+\item \textbf{Functoriality on morphisms ($(U2)$) at $d \geq 2$.}
+Conjecture~\ref{conj:phi-d-functoriality} is open at $d \geq 2$
+(chain-level); the Mukai transform is the first test case at $d = 2$.
+
+\item \textbf{Chain-level $E_d$-formality of $\HH^\bullet(\cC)$ at
+$d \geq 4$.} Operadic formality of $E_d$ is Fresse Vol~I Thm
+14.1.A; category-level formality of a general smooth proper CY$_d$
+Hochschild complex is open at $d \geq 4$.
+
+\item \textbf{BV-locality $\mathrm{Obs}_{\mathrm{BV}}$ at $d \geq 3$.}
+Perturbative proof in Costello--Li 2020; non-perturbative convergence
+is the last remaining obstruction at $d = 3$
+(Proposition~\ref{prop:hopf-fibration-decomposition}).
+
+\item \textbf{$(U3b)$ Drinfeld-centre compatibility at $d \geq 4$.}
+Theorem~\ref{thm:u3b-drinfeld-centre} is a theorem at $d = 3$ on toric;
+at $d \geq 4$ requires iterated $E_n$ Morita equivalences for
+$n \geq 3$, open in general.
+
+\item \textbf{The general ``multi-siblings'' for non-$K3 \times E$
+CY$_3$.} Theorem~\ref{thm:multi-siblings-k3e} covers CHL siblings on
+$K3 \times E$. Analogous theorems for Enriques $\times E$ orbifolds,
+for Humbert surfaces, for Niemeier-class inputs, are open (conjectured
+in \texttt{cy\_to\_chiral.tex}:482, last sentence).
+
+\item \textbf{$\mathrm{Slab}_d$ as a self-contained $(\infty, 2)$-category.}
+Definition~\ref{def:slab-d} above needs verification of the
+$(\infty, 2)$-categorical axioms (associator, pentagon, unit constraints).
+Open (sketch only).
+\end{enumerate}
+
+\subsection*{Harmonies with other wave-17 G-identities}
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{G1 (Koszul reflection)}: Vol~I Theorem A gives the
+bar-cobar adjunction on the Koszul locus. Theorem
+\ref{thm:phi-uniqueness-sharp} above restricts the uniqueness of
+$\Phi_d$ to this locus; $\Phi_d$ on its domain commutes with
+bar-cobar on its target.
+
+\item \textbf{G2 (Arnold connection)}: Vol~I climax -- the Gaitsgory--Kazhdan
+KZ/KZB connection on $\mathrm{Conf}_n$. The K3$\times E$ shadow of
+$\Phi_3$ restricts to a vertex operator realisation of an elliptic
+Arnold connection on $\mathrm{Conf}_n(E)$.
+
+\item \textbf{G3 (Universal holography)}: Vol~II climax -- boundary
+$E_2$-chiral, bulk $E_3$-top, derived centre. The Drinfeld-centre clause
+$(U3b)$ of $\Phi_d$ is the Vol~III-specific instance of the
+$E_2 = \cZ(E_1)$ holographic identity: CY$_d$ input produces
+$\Eone$-chiral boundary, whose Drinfeld centre is the $E_2$ bulk.
+
+\item \textbf{Universal trace identity (UTI)}: $K \circ \Phi = \kappa_{\mathrm{ch}}$
+at the level of functors; on K3-fibered CY$_3$ $(K \circ \Phi)/2 = \kBKM$.
+The sharpening of $\Phi_3$ here strengthens the UTI: the trace
+identity holds strictly on Koszul-self-dual $\cC$ and
+up-to-central-charge on general $\cC$.
+
+\item \textbf{Six routes to $G(K3 \times E)$ (Vol III Ch
+\texttt{cy-c-six-routes-convergence})}: the two-stage factorisation of
+this note identifies the six routes as six distinct $(\Sigma_2, C)$
+choices on a common Stage~1 output, not as six applications of
+$\Phi_3$. This is the content of
+Theorem~\ref{thm:multi-siblings-k3e}.
+\end{itemize}
+
+% =====================================================================
+\section*{Cycle log}
+% =====================================================================
+
+\begin{enumerate}[leftmargin=*]
+\item[\textbf{C1.}] Uniqueness via $(U1), (U3), (U4)$ is a theorem
+\emph{only on the Koszul-self-dual locus}
+(Theorem~\ref{thm:phi-uniqueness-sharp}). Counter-example sketch: a
+central-charge-twisted $\widetilde\Phi_3$ agrees with $\Phi_3$ on four
+canonical inputs but differs on non-canonical compact CY$_3$ with
+$h^{0,2} \neq 0$. Fix: restrict to $\cC_d^{\mathrm{Kosz}}$, or
+rigidify off by Fourier--Mukai kernel.
+\item[\textbf{C2.}] $\Phi_2$ is unconditional \emph{chain-level on
+objects} and conjectural \emph{chain-level on morphisms}. The phrase
+``$\Phi_2$ is PROVED'' should specify: proved on objects, tested on
+the Mukai transform for morphisms. Three inputs (KV $\bS^2$-framing,
+Kontsevich $E_2$-formality, CGL locality) all chain-level
+unconditional at $d = 2$.
+\item[\textbf{C3.}] $E_d$-formality at $d \geq 3$ is operadically proved
+(Fresse Vol~I Thm 14.1.A) but \emph{category-level} formality of
+$\HH^\bullet(\cC)$ is (a) chain-level proved at $d = 2$, (b)
+$(\infty,1)$-proved up-to-contractible-choice at $d = 3$, (c) open
+at $d \geq 4$. Silent assumption in the G4 specification: category-level
+formality. Fix: distinguish operad vs category.
+\item[\textbf{C4.}] $\mathrm{Slab}_d(X)$ defined
+(Definition~\ref{def:slab-d}): objects are $(\Sigma_{d-1}, C)$ pairs
+with transversality, $1$-morphisms are bordisms + holomorphic maps,
+$2$-morphisms are homotopies. Stage 2 is a symmetric-monoidal
+$(\infty, 2)$-functor on $\mathrm{Slab}_d$
+(Proposition~\ref{prop:spch-slab-d-functor}).
+Silent assumption: $\SpCh$ depends on $(\Sigma_{d-1}, C)$ only up to
+homotopy of cycles; correct: bordism class + holomorphic-iso class.
+\item[\textbf{C5.}] $(U3)$ splits into $(U3a)$ native level (theorem,
+Theorem~\ref{thm:u3a-native-level}) and $(U3b)$ Drinfeld-centre
+compatibility (theorem at $d = 3$ on toric, conjecture at
+$d \geq 4$, Theorem~\ref{thm:u3b-drinfeld-centre}).
+\item[\textbf{C6.}] Native-level stratification $\{\infty, 2, 1\}$ is
+\emph{forced by geometry}: Schouten--Nijenhuis vanishing at $d = 1$,
+KV $\bS^2$-framing at $d = 2$, Dunn restriction $E_d \to E_1$ at
+$d \geq 3$. Not a convention; derived in
+Proposition~\ref{prop:native-en-heal}.
+\item[\textbf{C7.}] ``Many BKMs from one CY$_3$'' is
+\emph{literal for CHL siblings on $K3 \times E$} (five
+$(\Sigma_2^{(N)}, E)$-choices on one Stage-1 output,
+Theorem~\ref{thm:multi-siblings-k3e}), \emph{not literal} for
+Monster vs Igusa (distinct CY$_3$ inputs,
+Corollary~\ref{cor:monster-not-sibling}).
+\end{enumerate}
+
+% =====================================================================
+\section*{Healed outputs -- consolidated}
+% =====================================================================
+
+\begin{enumerate}[leftmargin=*]
+\item[\textbf{H1.}] $\Phi_2(D^b(\Coh(K3))) = \cH_{\mathrm{Muk}}$
+(rank-24 Heisenberg at the Mukai pairing) is chain-level proved via
+the four-step cyclic-to-chiral passage: HKR $\to$ Schouten--Nijenhuis
+vanishing $\to$ $\bS^2$-framing $\to$ Markarian--C\u{a}ld\u{a}raru trace
+identification. Signature $(4, 20)$, $\kch = 2$, class G, shadow
+depth 0. Unconditional; tested in \texttt{phi\_k3\_explicit\_evaluation.py}.
+
+\item[\textbf{H2.}] $\Phi_3(\CoHA(\C^3)) = Y^+(\widehat\fgl_1)$ at the
+point-specialisation $(\Sigma_2, C) = (\mathrm{pt}, \C)$ is chain-level
+proved via 6d hCS BV (Costello--Li--Yagi) + Schiffmann--Vasserot 2013.
+The full $\mathcal W_{1+\infty}$ at $c = 1$ is obtained only after
+Drinfeld-centre doubling (property $(U3b)$). Positive-half vs
+full-Yangian distinction is structural.
+
+\item[\textbf{H3.}] $\Phi_3(D^b(\Coh(K3 \times E))) = U_{\mathrm{ch}}(\mathfrak{g}_{\Delta_5})$
+at $(\Sigma_2, C) = (K3, E)$ is proved via K\"unneth (Stage 1) +
+Oberdieck--Pixton DT/Igusa identity (Stage 2) + Borcherds--Weyl
+rigidity. Weight $\kBKM = 5$. The five CHL siblings $\Phi_N$ are
+sibling specialisations on the same Stage 1 output; the Monster is
+\emph{not} a sibling.
+
+\item[\textbf{H4.}] Uniqueness of $\Phi_d$ holds on
+$\cC_d^{\mathrm{Kosz}}$ (Theorem~\ref{thm:phi-uniqueness-sharp}); off
+that locus, Fourier--Mukai rigidification is the natural extension.
+
+\item[\textbf{H5.}] $\mathrm{Slab}_d(X)$ is the specialisation
+$(\infty, 2)$-category (Definition~\ref{def:slab-d}); Stage 2 is a
+symmetric-monoidal $(\infty, 2)$-functor on it
+(Proposition~\ref{prop:spch-slab-d-functor}).
+
+\item[\textbf{H6.}] $(U3)$ splits as $(U3a)$ native level (theorem) +
+$(U3b)$ Drinfeld-centre (theorem at $d = 3$, conjecture at
+$d \geq 4$).  Native-level stratification $\{\infty, 2, 1\}$ is forced
+by geometry, not convention.
+\end{enumerate}
+
+% =====================================================================
+\section*{Hidden assumptions made explicit}
+% =====================================================================
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Koszul-self-duality} was silently used in the uniqueness
+argument; now explicit in Theorem~\ref{thm:phi-uniqueness-sharp}.
+
+\item \textbf{Category-level (not just operad-level) $E_d$-formality}
+was silently conflated with operad-level; now split by Cycle 3.
+
+\item \textbf{Bordism-class (not homotopy-class) dependence of
+$\SpCh_{\Sigma_{d-1}, C}$} was silently assumed; now explicit
+in Definition~\ref{def:slab-d}.
+
+\item \textbf{$\PV^1(E) / \text{translations} = 0$} (not just
+$\PV^1(E) = \C$) drives the $n(d = 1) = \infty$ stratification; the
+translation quotient was silent.
+
+\item \textbf{$\Phi_3$ on non-$K3$-fibred inputs (quintic, local $\bP^2$)}:
+the output is \emph{not} a Borcherds lift (the Mukai-lattice
+unimodularity fails: $b_3(Q_5) = 204$). Silent assumption: that
+$\kBKM$ is defined for every $\Phi_3$-output; correct: $\kBKM$ is
+defined only on the K3-fibred sublocus, and $\kappa_{\mathrm{BCOV}}$ takes
+its role for the quintic.
+
+\item \textbf{Drinfeld-centre compatibility at $d \geq 4$} is conjectural;
+the G4 specification did not scope this (implicit ``for $d \geq 3$'').
+Fix: $(U3b)$ proved at $d = 3$ on toric, conjecture at $d \geq 4$
+(Theorem~\ref{thm:u3b-drinfeld-centre}).
+\end{enumerate}
+
+% =====================================================================
+\section*{Convergence: why this matters}
+% =====================================================================
+
+The two-stage factorisation
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ was inscribed in
+Wave 11 as the unifying structural statement of Vol III. This audit
+locates seven precise failure modes and seven precise fixes. On the
+healed statement:
+
+\begin{itemize}[leftmargin=*]
+\item The chain-level chain from CY$_d$-category to $\Eone$-chiral
+algebra on a curve is unconditional at $d \leq 3$ \emph{on Koszul
+inputs} and conditional at $d \geq 4$.
+\item The multiplicity of BKMs from one CY$_3$ is genuine for CHL
+siblings on $K3 \times E$, illusory for Monster.
+\item The universal trace identity $K \circ \Phi = \kch$ has a rigorous
+footing on $\cC_d^{\mathrm{Kosz}}$.
+\item The three-volume decomposition is \emph{forced} by the native-level
+stratification ($\{\infty, 2, 1\}$ is not a convention; it is geometry).
+\end{itemize}
+
+This document supports inscription of the sharpened Remark
+\ref{rem:phi-uniqueness}, the split of $(U3)$ into $(U3a/U3b)$, and
+the definition of $\mathrm{Slab}_d$ into the chapter
+\texttt{cy\_to\_chiral.tex}. Without these corrections the G4
+specification is optimistic; with them, it is true.
+
+\end{document}

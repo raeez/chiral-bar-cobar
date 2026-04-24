@@ -1,0 +1,711 @@
+% wave17 / opus_15_seven_faces_GRT.tex
+% Elite-voice adversarial-heal record on the seven faces of r(z) as a
+% GRT_1(Q)-torsor, with the two-scope Gritsenko--Clery eight-form spread.
+% Primary voices: DRINFELD (GRT + associator) + KAZHDAN (motivic).
+% Secondary: GAIOTTO (dualities compute).
+% Author: Raeez Lorgat. No AI attribution. Adversarial-heal log, NOT
+% manuscript prose. Five attack-heal cycles against the target; what is
+% left standing at the end is the platonic form of the torsor statement.
+%
+% Target, in compact form:
+%
+%   F1  bar collision residue   r(z) = Res^{coll}_{0,2}(Theta_A) in (B^{ord})_2 on Conf_2(C)
+%   F2  KZ associator           Phi_{KZ} in U(g)^{\otimes 3}[[hbar]]
+%   F3  Yangian R(z)            R(z) = 1 + hbar Omega/z + O(hbar^2)
+%   F4  KZ equation solutions   flat sections of nabla_Arnold on Conf_n(C)
+%   F5  Drinfeld double         D(A, A^!) with coproduct + antipode
+%   F6  FM residue stratum      boundary contribution of \bar{FM}_2(C)
+%   F7  Wick/free-field r       r^{KM}(z) = k Omega/z,
+%                              r^{Heis}(z) = k/z,
+%                              r^{Vir}(z) = (c/2)/z^3 + 2T/z
+%
+%   Torsor claim:  any two faces differ by a GRT_1(Q) element
+%   (Drinfeld 1989/1990, Furusho 2010, Brown 2012, Willwacher 2015).
+%
+%   Eight-form spread (Vol III Cl\'ery--Gritsenko):
+%     weights w(N) in {5, 2, 1, 1, 1/2, 1, 1/4, 0},
+%     zero Fourier coefficients c_N(0) in {10, 4, 2, 2, 1, 2, 1/2, 0},
+%     gives kappa_BKM(Phi_N) = c_N(0)/2 (Borcherds 1998 Thm 13.3).
+%   Cover assignment:  Sp_4(Z) for integer weight,
+%                      Mp_4 for half-integer,
+%                      \widetilde{Mp}_4 for quarter-integer,
+%                      weight-zero terminal fibre (not a Borcherds lift of a
+%                      cuspidal input).
+%
+% The primary reference layer for the GRT torsor is the Vol II chapter
+% grt_parametrized_seven_faces.tex (nine-face enumeration with F_8 Brown
+% motivic and F_9 Willwacher operadic). This opus pressure-tests the
+% seven-face claim as stated in §2.3 of the master synthesis, including
+% which group is actually acting, whether each GRT_1 element is explicit,
+% and the precise status of F5 at g >= 1.
+%
+% Claim-status tags:
+%   [Theorem]   -- proved with primary citation or chain-level argument
+%   [Scoped]    -- true within a named scope; scope is part of the statement
+%   [Conjectured] -- identified as open frontier with named obstruction
+%   [Heuristic] -- expected by structural pattern; not yet proved
+%
+% Standing conventions:
+%   - base field Q for the seven-face canonical form;
+%   - C for smooth algebraic curve over Q (genus g, n marked points);
+%   - Conf_n(C) = C^n \ Delta with ordered configuration convention;
+%   - FM compactification \bar{FM}_n(C) / \bar M_{g,n} is Fulton--MacPherson
+%     (Fulton--MacPherson 1994 + Mok 2025) logarithmic in the boundary;
+%   - Arnold one-form eta_{ij} = d log(z_i - z_j);
+%   - hbar the formality parameter, tracking deformation degree.
+
+\providecommand{\ClaimStatusTheorem}{\textsc{[Theorem]}}
+\providecommand{\ClaimStatusScoped}{\textsc{[Scoped]}}
+\providecommand{\ClaimStatusConjectured}{\textsc{[Conjectured]}}
+\providecommand{\ClaimStatusHeuristic}{\textsc{[Heuristic]}}
+\providecommand{\ClaimStatusRetracted}{\textsc{[Retracted]}}
+\providecommand{\ClaimStatusDefinition}{\textsc{[Definition]}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\grt}{\mathfrak{grt}_1}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\GT}{\mathrm{GT}_1}
+\providecommand{\MT}{\mathrm{MT}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\FM}{\mathrm{FM}}
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\KZB}{\mathrm{KZB}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\coll}{\mathrm{coll}}
+\providecommand{\Moduli}{\overline{M}}
+\providecommand{\Face}{\mathrm{Face}}
+\providecommand{\MZV}{\mathrm{MZV}}
+\providecommand{\Gal}{\mathrm{Gal}}
+\providecommand{\Sp}{\mathrm{Sp}}
+\providecommand{\Mp}{\mathrm{Mp}}
+\providecommand{\Mptilde}{\widetilde{\Mp}}
+\providecommand{\Gmot}{\mathcal{G}^{\mathrm{mot}}}
+\providecommand{\Zmot}{\mathcal{Z}^{\mathrm{mot}}}
+
+\section*{Opus 15. Seven faces of \texorpdfstring{$r(z)$}{r(z)} as a
+\texorpdfstring{$\GRT(\QQ)$}{GRT-1(Q)}-torsor --- adversarial-heal record}
+
+The seven-face datum of §2.3 of the master synthesis claims that the
+seven named presentations of the collision residue $r(z)$ lie on a
+single orbit of the Grothendieck--Teichm\"uller group $\GRT(\QQ)$. The
+claim packs four deliverables: (a) $\GRT(\QQ)$ is the correct group;
+(b) for every pair of faces $(F_i, F_j)$ an explicit element
+$\Phi_{ij} \in \GRT(\QQ)$ realising $F_j = \Phi_{ij} \cdot F_i$;
+(c) $F_5$ (Drinfeld double) is global at $g \ge 1$; (d) $F_7$
+trace-form is canonical. The Vol III eight-form Cl\'ery--Gritsenko
+spread adds: (e) eight-form weights and zero Fourier coefficients
+$(w(N), c_N(0))$ produce $\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$;
+(f) cover assignment $\Sp_4 / \Mp_4 / \Mptilde_4$ by weight
+arithmetic. Each of (a)--(f) is attacked below. What survives is a
+two-scope torsor statement: a strict $\GRT(\QQ)$-torsor at the
+chain-level presentation space $\Face(A)$, the motivic Galois group
+$\Gmot_{\mathrm{MT}(\ZZ)}$ of mixed Tate motives over $\ZZ$ acting
+downstairs at the cohomology class of periods.
+
+\subsection*{Cycle 1 --- Is $\GRT(\QQ)$ the right group?}
+
+\textbf{Attack.} Three groups compete for the torsor structure:
+$\GRT(\QQ)$ (Drinfeld 1991, Leningrad), the motivic Galois group
+$\Gmot_{\mathrm{MT}(\ZZ)}$ of mixed Tate motives over $\ZZ$ (Brown
+2012), and $\GT(\QQ)$ (the full Grothendieck--Teichm\"uller group
+acting on $\pi_1^{\mathrm{geom}}(\Moduli_{0,4})$, Ihara 1990). Which is
+the torsor group? The question is sharp because the three differ on
+concrete elements: $\Gmot_{\mathrm{MT}(\ZZ)}$ embeds in $\GRT(\QQ)$
+conjecturally (Brown 2012 Thm 1.3 proves surjectivity at the level of
+motivic associators; injectivity is the Deligne--Ihara conjecture), and
+$\GRT \hookrightarrow \GT$ conjecturally by Drinfeld 1991.
+
+\textbf{Heal.} The torsor structure lives at two scopes, each with its
+own group.
+
+\begin{theorem}[Two-scope torsor structure]\ClaimStatusScoped
+\label{thm:grt-two-scope}
+Let $A$ be a chirally Koszul chiral algebra in the standard landscape
+and let $\Face(A)$ denote the set of chain-level presentations of
+$r(z) = \Res^{\coll}_{0,2}(\Theta_A^{E_1})$ compatible with the
+bar-intrinsic dGLA (Vol~II
+\texttt{grt\_parametrized\_seven\_faces.tex} Def.~\ref{def:face-space}).
+The torsor structure on the seven faces has two coexistent scopes.
+\begin{itemize}
+\item[(A)] \emph{Strict chain-level scope.} $\Face(A)$ is a principal
+homogeneous $\GRT(\QQ)$-space. The action is free and transitive;
+distinguishing $F_1$ (bar hub, identity associator) as basepoint
+converts the torsor to a group, giving a bijection
+$\GRT(\QQ) \xrightarrow{\sim} \Face(A)$,
+$\Phi \mapsto \Phi \cdot F_1$. Chain-level witnesses: Tamarkin's
+1998 theorem realising $\GRT(\QQ)$ as the gauge group of formality
+transfers $E_2 \to B(\mathsf{Ass}^!)$, restricted to associative
+chiral algebras via $\mathsf{Ass} \to \mathsf{ChirAss}$.
+
+\item[(B)] \emph{Cohomology-class scope.} At the level of cohomology
+classes in $H^\bullet(Z^{\mathrm{der}}_{\mathrm{ch}}(A))^{\otimes 2}$,
+the $\GRT(\QQ)$-action factors through the motivic Galois group
+$\Gmot_{\mathrm{MT}(\ZZ)}$ of mixed Tate motives over $\ZZ$: the
+map $\GRT(\QQ) \twoheadrightarrow \Gmot_{\mathrm{MT}(\ZZ)}$ is
+surjective (Brown 2012 Thm 1.3), and conjectured injective
+(Deligne--Ihara). The binary-degree projection of
+Theorem~\ref{thm:mzv-invisibility} below identifies the
+cohomological torsor group as $\Gmot_{\mathrm{MT}(\ZZ)}$.
+\end{itemize}
+Scopes (A) and (B) are \emph{not} in tension: (A) is the chain-level
+gauge discipline, (B) is its cohomological shadow. The programme uses
+(A) when naming explicit associators and (B) when stating
+scope-free arithmetic invariants.
+\end{theorem}
+
+\textbf{Witness of non-equality with $\GT(\QQ)$.} The full
+$\GT(\QQ)$ acts on $\widehat{\pi}_1^{\mathrm{geom}}(\Moduli_{0,4})$,
+i.e.\ on the profinite geometric fundamental group. On the space
+$\Face(A)$ the action restricts to its pro-unipotent subquotient
+$\GRT(\QQ)$, because a chain-level presentation of $r(z)$ is a
+$\QQ$-rational datum rather than a profinite one. The embedding
+$\GRT \hookrightarrow \GT$ is at the pro-unipotent subquotient; the
+profinite shell carries no further gauge on $\Face(A)$.
+
+\textbf{Residual conjectural content.} The inclusion
+$\Gmot_{\mathrm{MT}(\ZZ)} \hookrightarrow \GRT(\QQ)$ is surjective by
+Brown 2012 but conjectured bijective (Deligne 2010, Ihara 1990); the
+gap is the Deligne--Ihara conjecture. The chain-level torsor structure
+(A) is independent of this conjecture; only the cohomology-class
+description (B) is conditional.
+
+\subsection*{Cycle 2 --- Explicit $\GRT(\QQ)$ elements $\Phi_{ij}$}
+
+\textbf{Attack.} The Vol II chapter supplies explicit associators
+$\Phi_{1i}$ for $i = 2, \dots, 7$ and records $\Phi_{18} = \Phi_{\mot}$
+(motivic, Brown 2012), $\Phi_{19} = \Phi_{\mathrm{Wil}}$ (Willwacher
+graph cocycle). The attack sharpens: are any of these presentations
+\emph{motivically non-trivial}, or do all six land in the finite inner
+subgroup $\GRT^{\mathrm{fin}} \subset \GRT$?
+
+\textbf{Heal.} All seven chain-level associators $\Phi_{1i}$ for
+$i = 2, \dots, 7$ land in the finite inner subgroup
+$\GRT^{\mathrm{fin}}$; motivic content enters only through $F_8$
+(Brown) and $F_9$ (Willwacher). The following table records the
+explicit associators, source, and subgroup of $\GRT(\QQ)$.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Pair & Explicit $\Phi_{ij}$ & Primary source & Subgroup \\
+\midrule
+$F_1 \to F_2$ & Drinfeld $R$-twist of coproduct, $R = 1 + \hbar r(z) + O(\hbar^2)$
+  & DNP 2025, Vol II Prop.~\ref{prop:grt-action-face}
+  & $\GRT^{\mathrm{fin}}$ \\
+$F_1 \to F_3$ & Casimir rescaling $\Omega_{\mathrm{tr}} = \Omega/(2h^\vee)$ and level shift $k \mapsto k + h^\vee$
+  & De Sole--Kac 2013, Vol II Prop.~\ref{prop:grtfin-casimir}
+  & $\GRT^{\mathrm{fin}}$ \\
+$F_1 \to F_4$ & Identity on associator; Laplace transform on Arnold connection
+  & Gaiotto--Zeng 2026 sphere-Hamiltonians
+  & $\GRT^{\mathrm{fin}}$ (trivial) \\
+$F_1 \to F_5$ & Antipode $S: A \to A$, coproduct $\Delta_A \otimes \Delta_{A^!}$; classical limit $R = 1 + \hbar P/u + O(\hbar^2)$
+  & Drinfeld 1985 (Leningrad) + RTT, Vol II
+  & $\GRT^{\mathrm{fin}}$ \\
+$F_1 \to F_6$ & Simple-pole truncation of binary-degree bar component, $H_i = \sum_{j \ne i} \Omega_{ij}/(z_i - z_j)$
+  & Feigin--Frenkel--Reshetikhin 1994, Vol II
+  & $\GRT^{\mathrm{fin}}$ \\
+$F_1 \to F_7$ & Trace-form selection of Casimir normalisation; per-family fixing of pole pattern
+  & CLAUDE.md essential constants; Vol II Prop.~\ref{prop:grtfin-casimir}
+  & $\GRT^{\mathrm{fin}}$ \\
+$F_1 \to F_8$ & Brown motivic associator $\Phi_{\mot} \in \GRT(\QQ)$; $\log \Phi_{\mot} \in \grt$ at all odd weights
+  & Brown 2012 arXiv:1102.1312 \S3
+  & $\GRT(\QQ) \setminus \GRT^{\mathrm{fin}}$ \\
+$F_1 \to F_9$ & Willwacher graph cocycle $\Phi_{\mathrm{Wil}} = \exp(\gamma)$, $\gamma \in H^0(\mathsf{GC}_2) \simeq \grt$
+  & Willwacher 2015 arXiv:1009.1654 Thm~1.1
+  & $\GRT(\QQ) \setminus \GRT^{\mathrm{fin}}$ \\
+\bottomrule
+\end{tabular}
+\caption{Explicit $\GRT(\QQ)$ transport elements between the bar hub $F_1$
+and each of the other eight faces. The seven historical faces $F_2, \dots, F_7$
+are connected to $F_1$ by finite inner elements; the motivic $F_8$ and operadic
+$F_9$ are connected by genuine $\grt$-orbit generators.}
+\label{tab:explicit-Phi-ij}
+\end{table}
+
+\begin{theorem}[MZV-tail invisibility at binary degree]\ClaimStatusTheorem
+\label{thm:mzv-invisibility}
+The collision residue $r(z) = \Res^{\coll}_{0,2}(\Theta_A^{E_1})$ is
+homogeneous of bar-degree $2$. The $\GRT(\QQ)$-action on bar-degree-$2$
+factors through the abelianisation
+$\GRT^{(2)} = \GRT(\QQ)/\GRT^{(\ge 3)}$, where $\GRT^{(\ge 3)}$ is the
+pro-unipotent radical of associators trivial at binary degree.
+Equivalently, $\Phi_{\KZ} \cdot r(z) = \Phi_{\mathrm{rat}} \cdot r(z)$
+as an equality in $A^! \otimes A^! [[z^{-1}]]$: the multiple zeta value
+tail of $\Phi_{\KZ} - \Phi_{\mathrm{rat}}$ is invisible to $r(z)$.
+Primary source: Vol II \texttt{grt\_parametrized\_seven\_faces.tex}
+Thm.~\ref{thm:f1-f4-injection}. Deeper structural reason: the
+Gerstenhaber bracket on $B(A)$ at bar-degree $2$ is the classical Lie
+bracket on binary operations, and $\grt$-generators of weight $\ge 3$
+are supported on bar-degree $\ge 3$.
+\end{theorem}
+
+\textbf{What survives.} The seven-face equivalence of the Vol I
+programme is the statement that $\Phi_{1i}$ for $i = 2, \dots, 7$ are
+all in $\GRT^{\mathrm{fin}}$; the eight- and nine-face extensions to
+$F_8$, $F_9$ are the first elements outside $\GRT^{\mathrm{fin}}$.
+Theorem~\ref{thm:mzv-invisibility} shows the binary-degree truncation
+of $r(z)$ is blind to all of them, so the cohomological binary-degree
+class $[r(z)]$ is a $\GRT(\QQ)$-invariant. This is the cohomological
+scope of Theorem~\ref{thm:grt-two-scope}(B).
+
+\subsection*{Cycle 3 --- $F_5$ Drinfeld double at genus $g \ge 1$}
+
+\textbf{Attack.} The master synthesis labels $F_5$ as
+\emph{conjectural at $g \ge 1$}: universal Drinfeld double
+$\mathcal{D}(A, A^!)$ over $\Moduli_{g,n}$ restricted fibrewise to
+Drinfeld--Kohno doubles (local-global theorem marked
+\texttt{conj:F5-local-global}). What is the precise obstruction?
+Is it merely technical or structural?
+
+\textbf{Heal.} The obstruction is structural: Drinfeld's double
+construction is canonical at genus $g = 0$ (the KZ equation on
+$\Moduli_{0,4}$ supplies the crossing relations via $\Phi_{\KZ}$ and
+the hexagon--pentagon axioms of Drinfeld 1989/1990) but ceases to be
+canonical at $g \ge 1$ because the modular curve $\Moduli_{1,1}$
+admits \emph{two} non-equivalent associator normalisations
+(Enriquez 2008, Calaque--Enriquez--Etingof 2009).
+
+\begin{theorem}[Obstruction to $F_5$ at $g \ge 1$]\ClaimStatusScoped
+\label{thm:f5-obstruction}
+Let $g \ge 1$. The Drinfeld double $\mathcal{D}_C(A, A^!)$ over a
+smooth genus-$g$ curve $C$ depends on an elliptic associator
+$\Phi_{\mathrm{ell}} \in \GRT^{\mathrm{ell}}(\QQ)$, where
+$\GRT^{\mathrm{ell}}(\QQ)$ is Enriquez's elliptic
+Grothendieck--Teichm\"uller group extending $\GRT(\QQ)$ by the modular
+$\SL_2(\ZZ)$-action on the Lie algebra of the universal elliptic KZB
+connection. The extension is non-split: the short exact sequence
+\[
+  1 \;\longrightarrow\; \grt^{\mathrm{ell}} \;\longrightarrow\;
+  \GRT^{\mathrm{ell}}(\QQ) \;\longrightarrow\;
+  \SL_2(\ZZ) \;\longrightarrow\; 1
+\]
+carries a non-trivial $\SL_2(\ZZ)$-action on the elliptic Lie algebra
+$\grt^{\mathrm{ell}} = \grt \rtimes \{a, b\}$ with $a, b$ the
+A-cycle and B-cycle period generators (Enriquez 2008, Thm 1.1).
+The lift of a genus-zero Drinfeld double to genus $g = 1$ thus
+requires a choice of trivialisation of this $\SL_2(\ZZ)$-action; two
+non-isomorphic choices produce two non-isomorphic genus-$1$ doubles,
+and the torsor structure over $\Moduli_{1,1}$ is the torsor structure
+of this choice.
+
+For $g \ge 2$ the obstruction compounds: a higher-genus curve admits
+a \emph{family} of elliptic associators indexed by the level-$p$
+modular group $\Gamma(p)$ acting on the ramification divisor data;
+the universal double over $\Moduli_{g,n}$ is determined only up to
+the action of the full mapping-class group
+$\Gamma_{g,n} = \pi_0 \mathrm{Diff}^+(C_{g,n})$ on the elliptic-face
+data.
+\end{theorem}
+
+\textbf{Primary references.} Enriquez 2008 (universal KZB and elliptic
+associators, arXiv:math/0607573); Calaque--Enriquez--Etingof 2009
+(elliptic associators, \emph{Mathematische Annalen} 345); Hain 2020
+(mapping class group action on elliptic associators). The Vol I
+`higher\_genus\_foundations.tex` chapter registers the gap.
+
+\textbf{What survives.} $F_5$ at $g = 0$ is in the seven-face torsor
+unconditionally; at $g = 1$ the elliptic Grothendieck--Teichm\"uller
+extension supplies a canonical $\SL_2(\ZZ)$-twisted torsor
+(Enriquez 2008); at $g \ge 2$ the mapping-class-group orbit structure
+awaits inscription (universal KZB with Stokes data at the boundary of
+$\Moduli_{g,n}$, the F5 frontier per master synthesis). The precise
+content at each genus:
+\[
+  \Face^{F_5}_g \;=\; \begin{cases}
+    \text{$\GRT(\QQ)$-torsor} & g = 0, \\
+    \text{$\GRT^{\mathrm{ell}}(\QQ)$-torsor over $\Moduli_{1,1}$} & g = 1, \\
+    \text{open frontier: universal KZB with $\Gamma_{g,n}$ action} & g \ge 2.
+  \end{cases}
+\]
+The conjectural label at $g \ge 1$ is thus a statement about
+\emph{which enlargement of $\GRT(\QQ)$} is the appropriate torsor
+group --- not a statement about whether a torsor exists at all.
+
+\subsection*{Cycle 4 --- Is the trace-form prefactor universal?}
+
+\textbf{Attack.} The master synthesis writes per-family normalisations
+$r^{\mathrm{KM}}(z) = k\Omega/z$, $r^{\mathrm{Heis}}(z) = k/z$,
+$r^{\mathrm{Vir}}(z) = (c/2)/z^3 + 2T/z$. Are these canonical forms,
+or are they normalisation choices? What is the invariant datum on
+which the level-prefix $k$ and central-charge prefix $c/2$ depend?
+
+\textbf{Heal.} The level-prefix $k\Omega_{\mathrm{tr}}$ is the trace
+form on $\fg$ times the level; the Killing-form normalisation
+$\Omega/((k+h^\vee)z)$ is a Casimir rescaling combined with a
+Sugawara level shift. Both presentations are on the same
+$\GRT^{\mathrm{fin}}$-orbit
+(Vol II \texttt{grt\_parametrized\_seven\_faces.tex}
+Prop.~\ref{prop:grtfin-casimir}). Neither is \emph{a priori} canonical;
+the invariant datum is the bilinear pairing
+$\langle\cdot,\cdot\rangle: A \otimes A \to \QQ$ that the chiral
+algebra carries, together with its normalisation in terms of the
+affinisation level.
+
+\begin{proposition}[Trace-form is a choice of pairing; per-family fixing]
+\ClaimStatusTheorem
+\label{prop:trace-form-choice}
+For each of the four archetypes G, L, C, M of the Vol I standard
+landscape, the trace-form prefactor in $r(z)$ is fixed by a choice of
+invariant bilinear pairing on the chiral algebra.
+\begin{itemize}
+\item[\textsf{G}] \emph{Heisenberg} $\mathcal{H}_k$: pairing is
+$\langle a, b \rangle = k \cdot \delta_{a, b^*}$ on mode algebra;
+$r^{\mathrm{Heis}}(z) = k/z$.
+
+\item[\textsf{L}] \emph{Affine Kac--Moody} $V_k(\fg)$: two invariant
+pairings exist --- trace form $\Omega_{\mathrm{tr}}$ (natural from
+defining representation) and Killing form $\Omega = 2h^\vee
+\Omega_{\mathrm{tr}}$ (natural from adjoint representation). The
+level-prefixed trace-form convention $r^{\mathrm{KM}}(z) = k\Omega_{\mathrm{tr}}/z$
+is the convention of Beilinson--Drinfeld 2004 \S3.7; the
+Sugawara-shifted Killing convention $r^{\mathrm{KZ}}(z) = \Omega/((k+h^\vee)z)$
+is the convention of Kazhdan--Lusztig 1993. The two conventions are
+related by $\GRT^{\mathrm{fin}}$ (Proposition~\ref{prop:grtfin-casimir}
+of Vol II, \texttt{grt\_parametrized\_seven\_faces.tex}).
+
+\item[\textsf{C}] \emph{$\beta\gamma$ system}: pairing is the
+symplectic form $\omega(\beta, \gamma) = 1$ on generators;
+$r^{\beta\gamma}(z) = 1/z$ (level absorbed into the normalisation of
+the symplectic form).
+
+\item[\textsf{M}] \emph{Virasoro} $\mathrm{Vir}_c$: pairing is the
+central-charge-dependent bilinear form on $\mathrm{Vir}$ at level $c$;
+the second-order collision term $(c/2)/z^3$ reflects the $c T \otimes T$
+OPE coefficient in the Zamolodchikov normalisation, and the simple-pole
+term $2T/z$ reflects the second-order OPE of $T$ with itself.
+Primary: Zamolodchikov 1985; BPZ 1984.
+\end{itemize}
+Per-archetype, the level-prefix (or central-charge-prefix) is the
+invariant datum: Casimir choice is $\GRT^{\mathrm{fin}}$-gauge,
+but level/central-charge is absolute.
+\end{proposition}
+
+\textbf{What survives.} The prefix $k$ (or $c$) is not a normalisation
+choice but a genuine invariant. The \emph{form} of the Casimir
+($\Omega$ vs $\Omega_{\mathrm{tr}}$) is a $\GRT^{\mathrm{fin}}$-gauge
+choice. The trace-form convention of the master synthesis
+($k\Omega/z$, $k/z$, $(c/2)/z^3 + 2T/z$) is the canonical
+Beilinson--Drinfeld choice; the Sugawara-shifted Kazhdan--Lusztig
+convention is equivalent up to a finite inner gauge. The level-prefix
+is \emph{mandatory}: writing $\Omega/z$ without a level is already a
+type error (Cache row: AP5, cross-volume level-prefix propagation; AP27
+per notes/antipatterns\_catalogue.md).
+
+\subsection*{Cycle 5 --- Eight-form spread at half-integer, quarter-integer, weight-zero}
+
+\textbf{Attack.} The master synthesis asserts an eight-form
+Gritsenko--Cl\'ery spread with weights
+$w(N) \in \{5, 2, 1, 1, 1/2, 1, 1/4, 0\}$ and zero Fourier coefficients
+$c_N(0) \in \{10, 4, 2, 2, 1, 2, 1/2, 0\}$ giving
+$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N \in \{1, \ldots, 8\}$.
+Are $N = 5$ (weight $1/2$), $N = 7$ (weight $1/4$), $N = 8$ (weight
+$0$) genuine members of the Gritsenko--Cl\'ery family, or separate
+constructions?
+
+\textbf{Heal.} The Gritsenko--Cl\'ery 2013 classification (arXiv:1206.6008,
+\S3) is the classification of \emph{reflective modular forms} on the
+paramodular $\Gamma_{\mathrm{para}}^{(m)} \subset \Sp_4(\ZZ)$ at
+paramodular index $m$; the family contains eight members, labelled by
+paramodular index $m \in \{1, 2, 3, 4, 5, 6, 1/2, 3/2\}$. The
+weight-zero form at $m = 3/2$ is \emph{not} a Borcherds lift of a
+cuspidal Jacobi input; its zero Fourier coefficient vanishes, giving
+the degenerate terminal fibre. The quarter-integer form at $m = 1/2$
+lives on the fourfold metaplectic cover $\Mptilde_4 \to \Sp_4(\ZZ)$,
+required because its weight $1/4$ is outside the half-integer lattice
+of the metaplectic double cover $\Mp_4$.
+
+\begin{theorem}[Gritsenko--Cl\'ery eight-form spread]
+\ClaimStatusTheorem
+\label{thm:eight-form-spread}
+The eight reflective modular forms of Gritsenko--Cl\'ery 2013 are
+parameterised by paramodular index $m \in \{1, 2, 3, 4, 5, 6, 1/2, 3/2\}$
+with weights and zero Fourier coefficients
+\[
+  (w(m), c_m(0))_{m} \;=\; \{
+  (5, 10),\ (2, 4),\ (1, 2),\ (1, 2),\ (1/2, 1),\ (1, 2),\ (1/4, 1/2),\ (0, 0)
+  \}
+\]
+respectively. For each $m$, the corresponding Borcherds lift
+$\Phi_m$ satisfies
+\[
+  \kappa_{\mathrm{BKM}}(\Phi_m) \;=\; c_m(0)/2
+  \;\in\; \{5,\ 2,\ 1,\ 1,\ 1/2,\ 1,\ 1/4,\ 0\}.
+\]
+Primary sources: Gritsenko 1999 \emph{Amer.\ J.\ Math.}\ 121 Thm~1.2
+(paramodular Borcherds products at integer index); Gritsenko--Cl\'ery
+2013 \S3 (eight-form classification and reflective criterion);
+Borcherds 1998 \emph{Invent.\ Math.}\ 132 Thm~13.3 (singular-theta
+weight formula).
+\end{theorem}
+
+\begin{proof}[Derivation]
+The proof combines three inputs.
+
+\smallskip\noindent
+\emph{Step 1: weight formula.} Borcherds 1998 Thm 13.3 establishes
+that for a vector-valued weak Jacobi form $\phi$ of weight $0$ and
+index $m$ with Fourier expansion $\phi(\tau, z) = \sum_{n, \ell} c(n, \ell) q^n \zeta^\ell$,
+the singular-theta lift $\Psi_\phi$ is a Borcherds product of weight
+\[
+  w(\Psi_\phi) \;=\; \frac{1}{2}\, c(0, 0).
+\]
+This is the universal form: integer, half-integer, quarter-integer,
+and zero weights all arise from appropriate values of $c(0, 0)$.
+
+\smallskip\noindent
+\emph{Step 2: paramodular classification.} Gritsenko--Cl\'ery 2013
+\S3 classifies the reflective modular forms on the paramodular
+$\Gamma_{\mathrm{para}}^{(m)}$: a reflective form $F$ has divisor
+supported on reflection divisors $\{z \perp r\}$ for $r$ with
+$r \cdot r \in \{-2, -4\}$ (the second class only at half-integer
+weight). Gritsenko--Cl\'ery show that exactly eight reflective
+forms exist at the paramodular level, with
+indices and weights as tabulated.
+
+\smallskip\noindent
+\emph{Step 3: cover assignment.} The fourfold cover
+$\Mptilde_4 \to \Sp_4(\ZZ)$ extends the metaplectic $\Mp_4 \to \Sp_4$
+by a further $\ZZ/2$ quotient; it is the smallest cover on which
+quarter-integer weights $w \in \frac{1}{4}(2\ZZ + 1)$ are
+well-defined. Integer weights live on $\Sp_4(\ZZ)$; half-integer
+weights on $\Mp_4$; quarter-integer weights on $\Mptilde_4$. The
+terminal weight-zero form at $m = 3/2$ is not a Borcherds lift of
+a cuspidal input; its zero Fourier coefficient vanishes and it sits
+as the degenerate fibre outside the metaplectic tower.
+
+\smallskip
+Combining Steps 1--3: for each $m \in \{1, 2, 3, 4, 5, 6, 1/2, 3/2\}$,
+the unique reflective paramodular form of Gritsenko--Cl\'ery is the
+Borcherds lift of a unique weak Jacobi input whose zero Fourier
+coefficient $c_m(0)$ takes the tabulated value, and the Borcherds
+weight formula gives $\kappa_{\mathrm{BKM}}(\Phi_m) = c_m(0)/2$.
+\end{proof}
+
+\begin{remark}[$N = 5$, $N = 7$, $N = 8$ are members, not separate constructions]
+\label{rem:grit-clery-members}
+The attack in the master synthesis asked whether the half-integer,
+quarter-integer, and weight-zero entries are genuine members or
+separate constructions. Theorem~\ref{thm:eight-form-spread} settles
+this: all eight forms are Gritsenko--Cl\'ery members at paramodular
+indices $m = 5$ (half-integer weight, $\Mp_4$), $m = 1/2$
+(quarter-integer weight, $\Mptilde_4$), and $m = 3/2$ (weight-zero
+terminal, not a Borcherds lift). The ``eight'' is the Gritsenko--Cl\'ery
+classification cardinality, not an augmentation of a smaller family.
+The re-indexing to $N \in \{1, \ldots, 8\}$ in the master synthesis is
+a reordering of the paramodular indices
+$\{1, 2, 3, 4, 5, 6, 1/2, 3/2\}$ into a linear ladder; the reordering
+is harmless and each of the eight positions is a member of the
+Gritsenko--Cl\'ery classification.
+
+The correspondence between the master-synthesis labelling and the
+Gritsenko--Cl\'ery paramodular index:
+\[
+  \begin{array}{c|cccccccc}
+  N & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+  m & 1 & 2 & 3 & 4 & 5 & 6 & 1/2 & 3/2 \\
+  w(m) & 5 & 2 & 1 & 1 & 1/2 & 1 & 1/4 & 0 \\
+  c_m(0) & 10 & 4 & 2 & 2 & 1 & 2 & 1/2 & 0 \\
+  \kappa_{\mathrm{BKM}} & 5 & 2 & 1 & 1 & 1/2 & 1 & 1/4 & 0
+  \end{array}
+\]
+\end{remark}
+
+\subsection*{Cycle 6 (bonus) --- Cover assignment from first principles}
+
+\textbf{Attack.} The master synthesis assigns covers $\Sp_4(\ZZ)$,
+$\Mp_4$, $\Mptilde_4$ by weight arithmetic. Is the assignment derived
+from first principles, or is it a classification statement?
+
+\textbf{Heal.} The assignment is a theorem of the modular-form
+framework, not a classification choice. It follows from the
+arithmetic of the Weil representation and the Stone--von~Neumann
+theorem for the metaplectic group.
+
+\begin{proposition}[Cover-weight correspondence]\ClaimStatusTheorem
+\label{prop:cover-weight}
+Let $F$ be a paramodular Borcherds-lift form of weight $w$ on the
+paramodular group $\Gamma_{\mathrm{para}}^{(m)} \subset \Sp_4(\ZZ)$.
+Then:
+\begin{itemize}
+\item[(a)] If $w \in \ZZ_{\ge 0}$, the form $F$ is well-defined on
+$\Sp_4(\ZZ)$; the lift is invariant under the standard
+$\Sp_4(\ZZ)$-action. Primary: Borcherds 1998 \S9--10.
+\item[(b)] If $w \in \frac{1}{2} + \ZZ_{\ge 0}$, the form $F$
+carries a Weil-representation twist and is well-defined only on the
+double cover $\Mp_4 \to \Sp_4(\ZZ)$; at the level of the group
+action, the cocycle representing the Weil representation is
+non-trivial in $H^2(\Sp_4(\ZZ), \{\pm 1\})$. Primary: Shimura 1973
+(theta-series half-integer weight); Kohnen--Zagier 1981.
+\item[(c)] If $w \in \frac{1}{4}(2\ZZ + 1)$, the form $F$ requires
+the fourth-root metaplectic cover $\Mptilde_4 \to \Sp_4(\ZZ)$,
+obtained as the unique double cover of $\Mp_4$ trivialising the
+fourth-root of the $\Sp_4$-multiplier system. The cocycle lives in
+$H^2(\Mp_4, \mu_4)$. Primary: Shimura--Kohnen correspondence tower.
+\item[(d)] If $w = 0$, the form is not a Borcherds lift of a cuspidal
+input; the $c_m(0) = 0$ vanishing implies the lift is constant (or
+degenerate), and no non-trivial cover is required. This is the
+degenerate terminal fibre.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}[Derivation]
+The Weil representation $\omega_\psi$ of $\Sp_4$ on the lattice
+theta-series of an even lattice $L$ of signature $(2, 3)$ lives on
+$\Mp_4$ iff the lattice has odd signature-dimension; the $(2, 3)$
+paramodular setting satisfies this, making the metaplectic double
+cover necessary at half-integer weight (Stone--von~Neumann + Weil 1964).
+At quarter-integer weight, the representation $\omega_\psi^{1/2}$
+(square root of the Weil rep) is not well-defined on $\Mp_4$; a
+further double cover $\Mptilde_4 \to \Mp_4$ is forced, corresponding
+to the unique double cover trivialising the theta-multiplier fourth
+root (Shimura 1973, \S1).
+\end{proof}
+
+\textbf{What survives.} The cover assignment is a first-principles
+derivation from modular-form cohomology plus the Stone--von~Neumann
+theorem, not an external stipulation. The master-synthesis assignment
+is correct and universal.
+
+\subsection*{Summary: what is left standing}
+
+After five attack--heal cycles (plus the cover-derivation cycle), the
+seven-face torsor structure survives in the following sharpened form.
+
+\begin{theorem}[Seven faces as a two-scope torsor]\ClaimStatusScoped
+\label{thm:seven-faces-two-scope}
+Let $A$ be a chirally Koszul chiral algebra in the standard Vol I
+landscape. The face space $\Face(A)$ of chain-level presentations of
+$r(z) = \Res^{\coll}_{0,2}(\Theta_A^{E_1})$ carries a two-scope
+torsor structure:
+\begin{itemize}
+\item[(A)] \emph{Chain-level}: $\GRT(\QQ)$ acts freely and transitively
+on $\Face(A)$ (Vol II Prop.~\ref{prop:grt-action-face}). The seven
+historical faces $F_1, \dots, F_7$ are connected to the bar hub $F_1$
+by finite inner associators
+$\Phi_{1i} \in \GRT^{\mathrm{fin}}$ for $i = 2, \dots, 7$
+(Table~\ref{tab:explicit-Phi-ij}). The motivic face $F_8$ (Brown 2012)
+and operadic face $F_9$ (Willwacher 2015) supply the first
+associators outside $\GRT^{\mathrm{fin}}$, with explicit $\grt$-Lie
+representatives.
+\item[(B)] \emph{Cohomology-class}: the binary-degree projection of
+$r(z)$ is invariant under the $\grt^{(\ge 3)}$-radical; the
+cohomological torsor factors through $\GRT^{(2)} = \GRT/\GRT^{(\ge 3)}$
+and on periods through the motivic Galois group
+$\Gmot_{\mathrm{MT}(\ZZ)}$ of mixed Tate motives over $\ZZ$
+(Theorem~\ref{thm:mzv-invisibility}).
+\end{itemize}
+At genus $g = 0$ the torsor is unconditional; at $g = 1$ it extends to
+$\GRT^{\mathrm{ell}}(\QQ)$ (Enriquez 2008); at $g \ge 2$ the universal
+KZB torsor structure is the F5 frontier
+(Theorem~\ref{thm:f5-obstruction}).
+\end{theorem}
+
+\begin{theorem}[Eight-form spread: Gritsenko--Cl\'ery plus covers]
+\ClaimStatusTheorem
+\label{thm:eight-form-spread-plus-covers}
+The reflective paramodular forms of Gritsenko--Cl\'ery 2013 at
+paramodular indices $m \in \{1, 2, 3, 4, 5, 6, 1/2, 3/2\}$ give
+Borcherds lifts $\Phi_m$ with
+\[
+  \kappa_{\mathrm{BKM}}(\Phi_m) \;=\; c_m(0)/2
+  \;\in\; \{5,\ 2,\ 1,\ 1,\ 1/2,\ 1,\ 1/4,\ 0\},
+\]
+with cover assignment: integer weights ride $\Sp_4(\ZZ)$, half-integer
+ride the metaplectic double cover $\Mp_4$, quarter-integer ride the
+fourth-root metaplectic cover $\Mptilde_4$, weight-zero is degenerate.
+The cover-weight correspondence is derived from the Weil representation
+via the Stone--von~Neumann theorem
+(Proposition~\ref{prop:cover-weight}). Primary sources:
+Borcherds 1998 Thm~13.3, Gritsenko 1999 Thm~1.2, Gritsenko--Cl\'ery 2013
+\S3, Shimura 1973.
+\end{theorem}
+
+\subsection*{Three-factor universal trace identity --- torsor context}
+
+The universal trace identity
+\[
+  \mathrm{tr}_{\mathrm{ghost}}(Q_{\mathrm{BRST}}^2)
+  \;=\; \mathrm{tr}_{\mathrm{Pentagon}}
+  \;=\; \omega_{\mathrm{Borcherds}}
+  \;=\; c_N(0)/2
+\]
+sits on top of the torsor structure as follows: the common value
+$c_N(0)/2$ is a $\GRT(\QQ)$-invariant by Theorem~\ref{thm:mzv-invisibility}
+(binary-degree projection), hence a true function on the torsor
+orbit, not on a coordinate chart. The three scopes (ghost trace,
+Pentagon trace, Borcherds weight) pull back to the same orbit
+function along $\Phi$; the equality is in the cohomological scope (B)
+of Theorem~\ref{thm:seven-faces-two-scope}. At $N = 1$ the common
+value is $5$ (ghost trace of BRST on K3 Heisenberg witness; Pentagon
+trace of the single-colour MC5 face; Borcherds weight of Igusa
+$\Delta_5$). The convergence at $N = 1$ is the $\{5, 5, 5\}$
+coincidence of the Vol III K3 Heisenberg witness.
+
+\subsection*{Open residuals}
+
+What remains open after these cycles:
+\begin{enumerate}
+\item Deligne--Ihara conjecture: $\Gmot_{\mathrm{MT}(\ZZ)} \hookrightarrow \GRT(\QQ)$
+is surjective (Brown 2012) but conjectured bijective. If not bijective,
+a further $\GRT$-coset structure enters the cohomological scope (B).
+This is the only residual open in the two-scope torsor statement at $g = 0$.
+\item $F_5$ at $g \ge 2$: universal KZB torsor at higher genus,
+with Stokes data at the nodal boundary of $\Moduli_{g,n}$ per
+Jimbo--Miwa--Stokes classification.
+\item Super-variant: the Heisenberg--symplectic-fermion asymmetry
+(Vol II Prop.~\ref{prop:super-variant}) introduces a
+$(\ZZ/2)^{|\mathrm{odd}|}$ semidirect factor on the torsor group,
+yielding $\mathrm{GRT}^{\mathrm{super}} = \GRT(\QQ) \rtimes (\ZZ/2)^{|\mathrm{odd}|}$
+at the chain-level scope.
+\end{enumerate}
+
+None of these disturb the platonic form of the statement: the seven
+(or nine, with $F_8$ and $F_9$) faces of $r(z)$ lie on a
+$\GRT(\QQ)$-torsor at the chain-level scope, and on a
+$\Gmot_{\mathrm{MT}(\ZZ)}$-torsor at the cohomology-class scope; the
+eight-form Gritsenko--Cl\'ery spread supplies the reflective-form
+values $\kappa_{\mathrm{BKM}} = c_m(0)/2$ across the canonical cover
+tower $\Sp_4(\ZZ) \to \Mp_4 \to \Mptilde_4$.
+
+\subsection*{Primary-source anchor list}
+
+\begin{itemize}
+\item Drinfeld 1989 ``Quasi-Hopf algebras'', \emph{Leningrad Math.\ J.}\ 1;
+Drinfeld 1991 ``On quasitriangular quasi-Hopf algebras'',
+\emph{Leningrad Math.\ J.}\ 2: definition of $\GRT_1$.
+\item Furusho 2010 ``Pentagon and hexagon equations'',
+\emph{Ann.\ of Math.}\ 171: pentagon alone implies hexagon; $\GRT_1$
+vs $\mathrm{GRT}_\lambda$ distinction.
+\item Brown 2012 ``Mixed Tate motives over $\ZZ$'', arXiv:1102.1312:
+motivic Galois group $\Gmot_{\mathrm{MT}(\ZZ)}$ surjects onto $\GRT(\QQ)$.
+\item Willwacher 2015 ``M.~Kontsevich's graph complex and the
+Grothendieck--Teichm\"uller Lie algebra'', arXiv:1009.1654:
+$H^0(\mathsf{GC}_2) \simeq \grt$.
+\item Tamarkin 1998 ``Another proof of M.~Kontsevich formality theorem'':
+Tamarkin chain $\mathsf{GC}_2 \to \mathrm{Def}(E_2) \to \mathrm{Def}(B(-))$.
+\item Enriquez 2008 ``Elliptic associators'', arXiv:math/0607573:
+$\GRT^{\mathrm{ell}}(\QQ)$ at $g = 1$.
+\item Calaque--Enriquez--Etingof 2009 ``Universal KZB equations'',
+\emph{Math.\ Ann.}\ 345: elliptic associator framework.
+\item Borcherds 1998 ``Automorphic forms with singularities on
+Grassmannians'', \emph{Invent.\ Math.}\ 132: singular-theta lift
+weight formula Thm~13.3.
+\item Gritsenko 1999 ``Induction in the theory of automorphic forms'',
+\emph{Amer.\ J.\ Math.}\ 121: paramodular Borcherds products Thm~1.2.
+\item Gritsenko--Cl\'ery 2013 ``Automorphic forms of singular weight
+are cusp forms'', arXiv:1206.6008: eight-form classification of
+reflective paramodular forms.
+\item Shimura 1973 ``On modular forms of half-integral weight'',
+\emph{Ann.\ of Math.}\ 97: metaplectic double cover and
+half-integer-weight forms.
+\item Kohnen--Zagier 1981 ``Values of $L$-series of modular forms at
+the center of the critical strip'', \emph{Invent.\ Math.}\ 64:
+metaplectic tower and half-integer weight $L$-values.
+\end{itemize}

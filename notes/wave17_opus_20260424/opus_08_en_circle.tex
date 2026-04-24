@@ -1,0 +1,844 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{fact}[thm]{Fact}
+\theoremstyle{remark}
+\newtheorem{attack}[thm]{Attack}
+\newtheorem{heal}[thm]{Heal}
+
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fgl}{\mathfrak{gl}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\Hoch}{\mathrm{HH}}
+\newcommand{\Eone}{E_1}
+\newcommand{\Etwo}{E_2}
+\newcommand{\Ethree}{E_3}
+\newcommand{\Einf}{E_\infty}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\HH}{\mathrm{HH}}
+\newcommand{\Zder}{\cZ^{\mathrm{der}}_{\mathrm{ch}}}
+\newcommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\newcommand{\Sug}{\mathrm{Sug}}
+\newcommand{\barB}{\bar B}
+\newcommand{\id}{\mathrm{id}}
+\DeclareMathOperator{\res}{res}
+\DeclareMathOperator{\av}{av}
+
+\title{The $E_n$ operadic spiral:\\
+five arrows, one circle, three volumes.\\
+Adversarial heal on \texttt{opus\_08}}
+\author{Wave~17 elite-voice adversarial-heal}
+\date{2026-04-24}
+
+\begin{document}
+\maketitle
+
+\paragraph{Voice.}
+Primary: \textsc{Drinfeld} --- unifying principle, associator,
+quantum double. Secondary: \textsc{Bezrukavnikov} --- geometric
+representation theory, derived category, sheaf-theoretic
+Koszul. Tertiary: \textsc{Gaiotto} --- dualities compute.
+
+\paragraph{Target.}
+The five-arrow passage
+\[
+\Ethree^{\mathrm{top}}(\text{bulk})
+\xrightarrow{\;\mathrm{res}\;}
+\Etwo\text{-chiral}(\text{bdy})
+\xrightarrow{\;\barB^{\mathrm{ord}}\;}
+\Eone\text{-chiral}(\text{bar/QG})
+\xrightarrow{\;\cZ(\Rep(-))\;}
+\Etwo\text{-braided}(\text{Drinfeld centre})
+\xrightarrow{\;\HH^\bullet_{\mathrm{cat}}\;}
+\Ethree^{\mathrm{top}}(\text{derived centre}),
+\]
+and the claim that $\pi_1(\Conf_2(\bR^3)) = 0$ forces the
+Drinfeld-centre arrow (arrow~3 above) to be the unique source of
+non-trivial braiding. The corollary is that three volumes are
+forced: two cannot close the circle because no two of these three
+geometric settings provides the $\Eone$-chiral source; four would
+split $\SCchtop$ from $\Ethree$-topologisation along a fake seam.
+
+\section*{Preamble: distinguish $\Etwo\text{-chiral}$ from
+$\Eone\text{-chiral}$}
+
+Before the attack cycles the three $\Etwo$ objects that collide in
+the diagram must be pinned. The body of the programme uses three
+different $\Etwo$'s, all carrying a $z$-variable, and they must
+not be conflated.
+
+\begin{defn}[Three $\Etwo$'s; Vol~I working convention]
+\label{def:three-e2}
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item $\Etwo$-\emph{holomorphic}. An algebra over the holomorphic
+ refinement of the little $2$-disks operad on a complex curve~$C$.
+ Equivalent data: a factorisation algebra on $\Ran(C)$ with
+ $\Einf$-compatible (symmetric) OPE. Examples: Heisenberg,
+ Virasoro, affine Kac--Moody at non-critical level. The
+ $z$-variable is the complex coordinate on~$C$.
+\item $\Etwo$-\emph{chiral}, class \textup{(B)}. An $A_\infty$
+ algebra in $\End^{\mathrm{ch}}_\cA$ after restriction of a
+ $3$d HT bulk observable to a codimension-$2$ defect curve.
+ Same $z$, but the $\Etwo$-structure records holomorphic
+ translation along the curve plus the residual
+ $\bR^2$-transverse direction collapsed onto the defect. This is
+ the object of arrow~2.
+\item $\Etwo$-\emph{braided}. A braided monoidal $(\infty,1)$-category,
+ output of the Drinfeld centre arrow~3. The $z$-variable here is
+ the spectral parameter on evaluation modules,
+ $z = u - v \in \bC^\times$, not a worldsheet coordinate.
+\end{enumerate}
+\end{defn}
+
+The three $\Etwo$'s live in distinct ambient categories:
+$\Etwo$-holomorphic in $\mathrm{Alg}_{\Etwo}(\mathrm{ShvFact}^{\mathrm{hol}}(C))$
+(a presentable stable $(\infty,1)$-category of algebras);
+$\Etwo$-chiral in the same ambient but with the bulk-restriction
+structure that records the transverse geometry;
+$\Etwo$-braided in
+$\mathrm{BrMon}\text{-Cat}(\infty,1)$, a braided
+monoidal $(\infty,1)$-category. Arrow~2 outputs (B); arrow~3
+outputs (C); the $\Eone$ in the middle is the algebra on which the
+representation category (C) is built. Conflating (A) with (B) is
+AP163/AP167 (SC is not $\Ethree$; Dunn additivity does not apply
+to coloured operads); conflating (B) with (C) is the cached AP at
+\texttt{notes/first\_principles\_cache\_comprehensive.md} entry
+\textit{E$_2$-algebra vs E$_2$-category}.
+
+\section{Five attack-heal cycles}
+
+\subsection*{Attack~1 --- the $\pi_1$ claim: literal triviality or
+structural triviality?}
+
+\begin{attack}[Is $\pi_1(\Conf_2(\bR^3)) = 0$ the precise form of
+``trivial braiding for $\Ethree \to \Etwo$?'']
+\label{att:pi1}
+The operadic
+restriction $\Ethree \to \Etwo$ factors through the little-disks
+forgetful $\mathrm{Disk}^{\mathrm{or,fr}}_3 \to
+\mathrm{Disk}^{\mathrm{or,fr}}_2$. The braiding on an $\Etwo$-algebra
+is the action of $\pi_1$ of the framed configuration space
+$\Conf_2^{\mathrm{fr}}$. For $n = 2$ one has
+$\pi_1(\Conf_2(\bR^2)) = \pi_1(S^1) = \bZ$, the source of
+non-trivial braiding. For $n = 3$ one has
+$\Conf_2(\bR^3) \simeq S^2 \times \bR^3$ (choosing the centre-of-mass
+frame and the relative direction), hence $\pi_1(\Conf_2(\bR^3)) =
+\pi_1(S^2) = 0$. Does this vanishing literally rule out
+\emph{non-trivial braiding} on the $\Etwo$-restriction of an
+$\Ethree$-algebra, or does the $\Etwo$-restriction still carry
+non-trivial higher braiding (triple braiding, etc.)?
+\end{attack}
+
+\begin{heal}[The claim is \emph{symmetric} monoidal, not literally
+trivial]
+\label{heal:pi1}
+The operadic restriction $\mathrm{res}_{3 \to 2}$ sends an
+$\Ethree$-algebra~$B$ to the underlying $\Etwo$-algebra obtained
+by forgetting the third disk direction. By Dunn additivity
+$\Ethree \simeq \Etwo \otimes \Eone$, and the forgetful to
+$\Etwo$ discards the $\Eone$ factor. The braiding on the
+restriction is induced by $\pi_1(\Conf_2(\bR^3))$, which is
+trivial. \emph{Triviality of $\pi_1$ means the braiding
+$\beta\colon M \otimes N \to N \otimes M$ satisfies
+$\beta_{N,M} \circ \beta_{M,N} = \id_{M \otimes N}$; equivalently
+the braiding is \emph{symmetric}.} It does \emph{not} mean the
+braiding is the literal permutation: a symmetric monoidal
+$\Etwo$-algebra has a braiding but an involutive one.
+
+Symbolically: the braiding factors through the symmetric group,
+$\beta^2 = \id$. The restriction
+$\mathrm{res}_{3 \to 2}\colon \Ethree\text{-alg} \to
+\Etwo\text{-alg}$ factors through the full
+subcategory $\Etwo^{\mathrm{sym}}\text{-alg} \subset
+\Etwo\text{-alg}$ of symmetric-monoidal $\Etwo$-algebras, which
+is equivalent to the category of $\Einf$-algebras. In particular
+no $\bZ$-many braidings survive; exactly one involution
+survives per pair of objects.
+
+The higher braidings (triple, etc.) are controlled by
+$\pi_n(\Conf_2(\bR^3)) = \pi_n(S^2)$, which is non-trivial for
+$n = 2$ (a $\bZ$ Hopf class), $n \geq 3$ (finite). These higher
+braidings do exist and contribute to the full $\Ethree$-structure.
+What vanishes is specifically the $\pi_1$-level braiding, and that
+is what the quantum-group $R$-matrix would require. The
+$R$-matrix is a $\pi_1$-class (the half-monodromy along a loop
+in $\Conf_2(\bC)$); its image in $\Conf_2(\bR^3)$ is zero.
+
+The claim in the target is therefore to be read:
+\textit{Direct restriction $\Ethree \to \Etwo$ produces only
+symmetric braidings; in particular the non-trivial quantum-group
+$R$-matrix cannot arise from this arrow.} That is exactly the
+content of Vol~III
+\texttt{chapters/theory/cy\_to\_chiral.tex:196} and Vol~III
+\texttt{drinfeld\_center.tex:404}.
+\end{heal}
+
+\subsection*{Attack~2 --- $\Etwo$-chiral (boundary) vs
+$\Eone$-chiral (bar/QG): both carry~$z$}
+
+\begin{attack}[What distinguishes the $\Etwo$-chiral at the boundary
+from the $\Eone$-chiral of the bar/QG?]
+\label{att:e2-vs-e1}
+Both objects live on a complex curve. Both carry a spectral-like
+variable~$z$. Arrow~2 sends the former to the latter via the
+ordered bar complex. Surely both are natively factorisation
+algebras on $\Ran(C)$. What is the operadic content of the
+passage?
+\end{attack}
+
+\begin{heal}[$\Etwo$-chiral has symmetric OPE and an
+$\Einf$-factorisation; $\Eone$-chiral retains ordered collision
+data]
+\label{heal:e2-vs-e1}
+The $\Etwo$-chiral boundary algebra $\cA$ arriving from arrow~1
+is the factorisation algebra of observables on $C$ in the sense
+of Costello--Gwilliam / Francis--Gaitsgory: a cosheaf on $\Ran(C)$
+with symmetric-monoidal OPE, compatible with disjoint-union
+factorisation on ordered \emph{and} unordered Ran. The
+$z$-variable here is the complex coordinate on~$C$ and the
+operad that acts is $\Etwo^{\mathrm{hol}}$ (notion (A) of
+Def.~\ref{def:three-e2}).
+
+Arrow~2, the ordered bar complex
+$\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ built on
+$\Conf_n^{\mathrm{ord}}(C)$ / $\mathrm{FM}_n^{\mathrm{ord}}(C)$,
+outputs an object on \emph{ordered} Ran. The ordered bar retains
+the braid-group action on collision strata; the symmetric bar
+loses it by projection to $\Sigma_n$-coinvariants. On
+$\Einf$-chiral inputs (Heisenberg, $V_k(\fg)$, Virasoro) the
+$\Sigma_n$-coinvariant projection is a quasi-isomorphism
+$\barB^{\mathrm{ord}} \to \barB^\Sigma$ (Vol~I
+Theorem~\texttt{thm:e1-formality-bridge}); on genuine
+$\Eone$-chiral inputs (Yangian $Y^+(\widehat\fgl_1)$,
+Etingof--Kazhdan quantum vertex, outputs of $\Phi_3$ at
+CoHA-inputs) the projection is lossy with fibre encoding Arnold
+braid-group representations.
+
+\emph{Conceptually.} The distinction is not ``two different
+$z$-variables'' but ``two different operadic structures on the same
+underlying factorisation algebra.'' Boundary: full $\Sigma_n$
+action survives (symmetric braiding, $\pi_1$-trivial restriction
+from $\Ethree$). Bar: only the ordered braid action survives,
+and the braid-to-symmetric projection map --- which is universally
+the quotient by the Arnold braid-group $B_n \twoheadrightarrow
+\Sigma_n$ --- is not a quasi-isomorphism when the algebra is
+genuinely $\Eone$-chiral.
+
+\emph{Functorial form.} Arrow~2 is the forgetful / restriction
+along the map of operads $\Etwo^{\mathrm{hol}} \leftarrow
+\Eone^{\mathrm{hol}}$, made explicit by the ordered-bar
+construction applied to the underlying factorisation structure.
+On $\Eone\text{-chiral}$ this is the Vol~I bar functor
+$B^{\mathrm{ord}}$ of Theorem~A; on $\Einf$-chiral the two
+collapse to the same object up to quasi-isomorphism.
+
+At the level of $(\infty,1)$-categories, the adjunction is:
+\[
+\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ord}}\colon
+\Eone\text{-HolFA}(C)^{(\infty,1)}
+\longrightarrow
+\mathrm{ChirCoAlg}^{\mathrm{conil}}(C)^{(\infty,1)},
+\]
+Vol~III \texttt{chapters/theory/cy\_to\_chiral.tex:250}. The
+source is $\Eone$-chiral; the target is the conilpotent chiral
+coalgebras of Vol~I; the adjunction is the chiral bar--cobar
+pair of Theorem~A, and it is $(\infty,1)$-functorial without
+chain-level choices.
+\end{heal}
+
+\subsection*{Attack~3 --- closure: does arrow~5 land at the
+\emph{same} $\Ethree$ as the source of arrow~1?}
+
+\begin{attack}[Is the target $\Ethree^{\mathrm{top}}(\text{derived
+centre})$ literally the source $\Ethree^{\mathrm{top}}(\text{bulk})$,
+or just an $\Ethree$ of the same type?]
+\label{att:closure}
+The symbol $\Ethree^{\mathrm{top}}$ appears twice. At the source it
+is the $3$d HT bulk observable algebra: a topological factorisation
+algebra on $C \times \bR$ whose restriction to the defect curve
+is the boundary $\cA$. At the target it is the chiral derived
+centre $\Zder(\cA) = C^\bullet_{\mathrm{ch}}(\cA, \cA)$, with
+$\Ethree$-structure via the higher Deligne conjecture. Both are
+$\Ethree$-objects, but are they the same $\Ethree$-algebra?
+\end{attack}
+
+\begin{heal}[Closure is a conjecture; the two $\Ethree$'s are the
+same algebra on the Koszul/topologisation locus]
+\label{heal:closure}
+The identification of the bulk with the derived centre is
+Conjecture~\texttt{conj:v1-drinfeld-center-equals-bulk}
+(Vol~I \texttt{chapters/frame/preface.tex:4525}):
+\[
+Z(U_\cA) \;\simeq\; \Zder(\cA)
+\quad\text{as $\Ethree^{\mathrm{top}}$-algebras},
+\]
+where $U_\cA = \cA \bowtie \cA^!$ is the Drinfeld double and
+$Z(-)$ is the Drinfeld centre. Three obstructions are identified
+(Vol~I preface 10.6): pointwise-reduction failure for class~$M$,
+Verdier-dual completion of $\cA^!$, and bar--cobar landing at
+$\cA$ (not at its centre). The conjecture is open in general.
+
+\emph{Partial closure.} The conjecture is proved on specific
+strata:
+\begin{itemize}
+\item For simple~$\fg$, the $\Ethree^{\mathrm{top}}$-deformation
+ space of $\Zder(V_k(\fg))$ is $\hbar H^3(\fg)[[\hbar]]$, which
+ is one-dimensional, and formal-disk restriction recovers the
+ Costello--Francis--Gwilliam perturbative Chern--Simons
+ $\Ethree^{\mathrm{top}}$-algebra
+ (Vol~I \texttt{chapters/frame/preface.tex:4554}).
+\item For the CY$_3$ input $\cC = \CoHA(\bC^3)$,
+ $\Phi_3(\cC) = Y^+(\widehat\fgl_1)$ and
+ $\cZ(\Rep^{\Eone}(Y^+(\widehat\fgl_1))) \simeq
+ \Rep^{\Etwo}(Y(\widehat\fgl_1)) \simeq
+ \Rep^{\Etwo}(\cW_{1+\infty})$ at $c=1$
+ (Vol~III Theorem~\texttt{thm:c3-drinfeld-center-restate},
+ \texttt{drinfeld\_center.tex:588}).
+\end{itemize}
+
+The name ``circle'' is hence a \emph{conjectural closure}; the
+five arrows are all proved unconditionally or under specified
+hypotheses, but arrow~5 lands at an $\Ethree^{\mathrm{top}}$-object
+that is only conjecturally equal to the source
+$\Ethree^{\mathrm{top}}$. The honest label is \emph{spiral}; the
+precise form is: the five arrows form a zig-zag in
+$(\infty, 1)$-operadic data whose closure as a literal circle is
+conj.~\texttt{conj:v1-drinfeld-center-equals-bulk}. The current
+programme commits that the closure is available on the
+Koszul--topologisation locus (class~$\mathbf{L}$ at non-critical
+level, plus the $\bC^3$ class~$\mathbf{C}$ patch) and conjectural
+elsewhere.
+
+\emph{Refinement.} The two $\Ethree^{\mathrm{top}}$'s are not
+the same \emph{factorisation-algebra kind}: the bulk is a
+topological factorisation algebra on $C \times \bR$; the derived
+centre is the algebraic Hochschild object with its Deligne
+$\Ethree$-structure. The identification requires (i) the
+topologisation of the $\SCchtop$-algebra arising from $\cA$ to
+an $\Ethree^{\mathrm{top}}$-object (proved at non-critical
+Kac--Moody; conjectural for general Virasoro / $\cW_N$), and
+(ii) the translation between Costello--Gwilliam HT
+factorisation algebras and algebraic Hochschild complexes
+(Vol~II \texttt{chapters/theory/chiral\_higher\_deligne.tex:956}).
+\end{heal}
+
+\subsection*{Attack~4 --- Drinfeld centre as \emph{right} adjoint:
+is that the correct $(\infty,n)$-framework?}
+
+\begin{attack}[Is $\cZ \dashv U$ the right $(\infty,1)$-statement, or
+is the correct framework $(\infty, 2)$-categorical?]
+\label{att:drinfeld-adjoint}
+The Drinfeld centre is presented as the right adjoint to the
+forgetful $U\colon \Etwo\text{-Cat} \to \Eone\text{-Cat}$. But
+the passage $\Eone \to \Etwo$ on categories is naturally
+$(\infty, 2)$-categorical (braided monoidal categories are
+$3$-categorical objects by the cobordism hypothesis). Is the
+adjunction in the correct homotopy universe?
+\end{attack}
+
+\begin{heal}[Both readings apply; the $(\infty,1)$-statement is Lurie
+\emph{HA}~5.3.1.30, the $(\infty,2)$-statement is the
+BZFN theorem]
+\label{heal:drinfeld-adjoint}
+Two adjunction statements coexist at different homotopy depths.
+
+\emph{Level $(\infty, 1)$.} Lurie, \emph{Higher Algebra}
+5.3.1.30, constructs the Drinfeld centre of an
+$\Eone$-monoidal $(\infty,1)$-category as the right adjoint
+to the forgetful from $\Etwo$-monoidal $(\infty,1)$-categories
+to $\Eone$-monoidal $(\infty,1)$-categories. Concretely, for
+$\cC$ a monoidal $(\infty, 1)$-category,
+\[
+\cZ(\cC) \;=\;
+\mathrm{Fun}^{\cC\text{-lin}}_{\mathrm{mon}}(\cC, \cC),
+\]
+the $(\infty, 1)$-category of $\cC$-linear monoidal endofunctors,
+carries a canonical $\Etwo$-monoidal (equivalently, braided
+monoidal) structure, and the functor $\cZ$ right-adjoins the
+forgetful.
+
+\emph{Level $(\infty, 2)$.} Ben-Zvi--Francis--Nadler
+\cite{BFN2010} identify, for $\cC = \Rep^{\Eone}(A)$ with $A$ an
+$\Eone$-algebra in a symmetric monoidal stable
+$(\infty, 1)$-category~$\cS$:
+\[
+\cZ(\Rep^{\Eone}(A))
+\;\simeq\;
+\Rep^{\Etwo}\bigl(\HH^\bullet(A, A)\bigr)
+\quad\text{in $\Etwo\text{-Cat}^{(\infty,1)}$}.
+\]
+This is an equivalence of $\Etwo$-monoidal $(\infty,1)$-categories,
+i.e., an equivalence of $3$-categorical / $(\infty,2)$-categorical
+braided monoidal data. Both sides describe the same braided
+monoidal structure; the BZFN theorem is the categorified
+Hochschild-Deligne identification. Vol~III
+\texttt{chapters/theory/drinfeld\_center.tex:101--114} states it
+explicitly:
+\[
+\cZ(\Rep^{\Eone}(A)) \;\simeq\; \Rep^{\Etwo}(\Zder(A)),
+\qquad
+\Zder(A) = \RHom_{A\otimes A^{\op}}(A, A).
+\]
+
+\emph{Confirmation of the right-adjoint reading.} The
+forgetful $U\colon \Etwo\text{-Cat} \to \Eone\text{-Cat}$ has a
+right adjoint (Lurie 5.3.1.30) on presentable $(\infty, 1)$-categories,
+and the right adjoint sends $\cC \mapsto \cZ(\cC)$. At
+$\infty$-categorical level the adjunction is \emph{universal}:
+every $\Etwo$-lift of an $\Eone$-monoidal $\cC$ factors uniquely
+through $\cZ(\cC)$. On coherent $\Etwo$-categories coming from
+$\Etwo$-algebras, the BZFN identification then replaces the
+right-adjoint construction with an algebraic one in terms of
+$\HH^\bullet$ (Deligne conjecture $\Rightarrow$ $\Etwo$ on
+$\HH^\bullet(A, A)$).
+
+\emph{Universal property in one sentence.} $\cZ(\cC)$ is the
+universal braided monoidal category equipped with a
+$\cC$-linear monoidal forgetful functor; equivalently, it is the
+endomorphism $\Etwo$-category of the $\Eone$-module $\cC$
+acting on itself.
+
+The circle's arrow~3 is therefore the \emph{right adjoint} to the
+forgetful; it is
+NOT the averaging map (which is the left-type
+$\Sigma_n$-coinvariant projection, losing ordered data), and it
+is NOT arrow~2 going backward (which would require $R$-matrix
+data and be circular). The Drinfeld-centre construction creates
+$\Etwo$-braided data out of $\Eone$-monoidal data by adjoining
+half-braidings; the BZFN theorem identifies this data with the
+$\Etwo$-algebra structure on the Hochschild cochains produced by
+the classical Deligne conjecture.
+\end{heal}
+
+\subsection*{Attack~5 --- could the circle close via \emph{two}
+volumes? Or split across \emph{four}?}
+
+\begin{attack}[The three-volume decomposition is claimed \emph{forced}.
+Test by considering two-volume and four-volume alternatives]
+\label{att:volumes}
+\textbf{Two volumes.} Suppose we merge the Vol~II HT-boundary story
+into Vol~I. The five arrows would then live in: Vol~I (all five)
+and Vol~III (CY source). Does this actually close? What provides
+the geometric source of $\Eone$-chirality?
+\textbf{Four volumes.} Suppose we split Vol~II along the seam
+between the $\SCchtop$ content (Swiss-cheese chain-level) and the
+$\Ethree$-topologisation via Sugawara (when it applies). Does this
+split produce two distinct mathematical programmes?
+\end{attack}
+
+\begin{heal}[Two volumes fail because there is no geometric source
+of $\Eone$-chirality without CY$_d$, $d \geq 3$; four volumes
+split along a \emph{fake} seam because $\SCchtop$ and $\Ethree$-topologisation
+are two faces of the same intermediary]
+\label{heal:volumes}
+
+\emph{Why two volumes fail.} The five-arrow circle starts at the
+bulk $\Ethree^{\mathrm{top}}$ observable algebra and must produce,
+as arrow~1's output, a genuine $\Eone$-chiral algebra at the
+defect curve. On the $\Einf$-chiral subcategory (standard VA
+landscape: Heisenberg, $V_k(\fg)$, Virasoro, $\cW_N$), the
+ordered bar $\barB^{\mathrm{ord}}$ coincides quasi-isomorphically
+with the symmetric bar $\barB^\Sigma$, and the arrow~3 Drinfeld
+centre on $\Rep^{\Einf}(\cA) = \Rep^{\Einf}(\cA)$ collapses to the
+identity (the Drinfeld centre of a symmetric monoidal category is
+itself, Vol~III \texttt{drinfeld\_center.tex:2271}). In that
+regime the circle is degenerate.
+
+The genuinely $\Eone$-chiral algebras --- Yangian
+$Y^+(\widehat\fgl_1)$, Etingof--Kazhdan quantum vertex,
+$\Eone$-chiral shadows of CoHAs of CY$_3$-varieties, K3-Yangian
+of $D^b(\Coh(K3 \times E))$ --- do not live on curves alone.
+They arise as Stage-$2$ specialisations of Stage-$1$
+$E_d$-holomorphic factorisation algebras on CY$_d$-varieties
+for $d \geq 3$
+(Vol~III \texttt{chapters/theory/cy\_to\_chiral.tex:30--70}):
+\[
+\Phi_d \;=\; \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+\circ \Phi^{\mathrm{FA}}_d.
+\]
+This factorisation forces a CY$_d$ input for $d \geq 3$; neither
+the curve-based chiral geometry of Vol~I nor the $3$d HT slab of
+Vol~II provides this input. \textbf{Collapsing Vol~III into Vol~I
+or Vol~II removes the geometric source of
+$\Eone$-chirality}, and the circle has no non-trivial instances:
+every example reduces to the $\Einf$-chiral landscape and arrow~3
+trivialises. Concretely: without Vol~III, the programme cannot
+produce the Yangian of $\widehat\fgl_1$ as a geometric shadow, and
+the Drinfeld-centre arrow is empty.
+
+\emph{Why four volumes split along a fake seam.} The proposal is
+to separate $\SCchtop$ (the Swiss-cheese two-coloured operad,
+working at chain-level, with no Sugawara assumption) from the
+$\Ethree$-topologisation (requiring an inner conformal vector~$\nu$
+and the Sugawara identity
+$T_{\mathrm{Sug}} = [Q, G]$; proved at non-critical Kac--Moody,
+conjectural elsewhere).
+
+Inside Vol~II these are not two arguments but two layers of one
+argument. The $\SCchtop$-algebra is the \emph{chain-level}
+(boundary + bulk) structure that an $\Eone$-chiral algebra
+manifests when promoted to a two-coloured operad with
+directionality constraint (open cannot feed closed,
+Vol~I \texttt{chapters/frame/preface.tex:4395}). Dunn additivity
+does not apply to $\SCchtop$, so $\SCchtop \neq \Ethree$ on the
+nose. The topologisation theorem
+(Vol~II \texttt{V2-thm:iterated-sugawara-construction} and Vol~I
+\texttt{thm:topologization}) adds an inner conformal vector
+that \emph{identifies} the $\SCchtop$-algebra with an
+$\Ethree^{\mathrm{top}}$-algebra, provably at non-critical
+affine Kac--Moody (Sugawara closed-form), cohomologically
+general, chain-level conjectural for class~$\mathbf{M}$
+(Virasoro, $\cW_N$) on the original complex.
+
+Splitting this into two volumes would require presenting
+$\SCchtop$ as a freestanding theory disjoint from its
+Sugawara-topologisation; but the sole reason the programme needs
+$\SCchtop$ at all is to have a \emph{chain-level} intermediary
+between $\Eone$-chiral and $\Ethree^{\mathrm{top}}$ within which
+topologisation can be proved. Separating $\SCchtop$ from the
+Sugawara argument loses the proof of topologisation, because
+topologisation is literally the identity that upgrades
+$\SCchtop$ to $\Ethree^{\mathrm{top}}$ when $\nu$ exists.
+
+\emph{Conclusion.} Three volumes are precisely the minimal
+decomposition that (a) carries the five arrows as
+algebraic-geometric theorems (Vol~I); (b) provides the
+chain-level / BRST / 3d HT physics and the $\SCchtop$
+topologisation (Vol~II); (c) supplies the CY$_d$ geometric
+source of $\Eone$-chirality (Vol~III). Two collapse (b) or (c)
+away; four severs (b) along a non-existent seam. This is the
+precise sense in which the circle \emph{forces} three volumes.
+\end{heal}
+
+\section{Rigorous step-by-step account of the five arrows}
+
+Each arrow specified as an $(\infty, 1)$-functor, with witnessing
+algebras and explicit categorical input / output.
+
+\subsection*{Arrow~1. $\Ethree^{\mathrm{top}}(\mathrm{bulk}) \to
+\Etwo\text{-chiral}(\mathrm{bdy})$: bulk-to-defect restriction}
+
+\begin{defn}[Arrow~1 functor]
+Let $B$ be an $\Ethree^{\mathrm{top}}$-algebra of observables of a
+$3$d HT theory on the slab $C \times \bR_{\geq 0}$ (Vol~II
+\texttt{chapters/theory/foundations\_recast\_draft.tex:549}).
+Restriction to the codimension-$2$ defect $C \times \{0\}$
+yields
+\[
+\mathrm{res}\colon\;
+\Ethree^{\mathrm{top}}\text{-alg}(C \times \bR_{\geq 0})
+\;\longrightarrow\;
+\Etwo\text{-alg}^{\mathrm{hol}}(C),
+\qquad
+B \longmapsto \cA := B|_{C \times \{0\}}.
+\]
+The operadic-level drop by one comes from the codimension-$2$
+embedding: the rank-$2$ normal bundle supplies the two extra
+disk-directions lost on the defect. In coordinates:
+$\mathrm{res} = \pi_*(j^* B)$ where $j\colon C \hookrightarrow
+C \times \bR_{\geq 0}$ is the inclusion and $\pi\colon C \to C$
+is the identity; the holomorphic-factorisation structure on
+$\cA$ survives the restriction because $B$ is topological in the
+transverse $\bR$-direction.
+\end{defn}
+
+\begin{rem}[Witnessing algebras]
+\begin{itemize}
+\item $B = $ $3$d abelian Chern--Simons at level $k$ on
+$C \times \bR_{\geq 0}$; defect restriction yields
+$\cA = H_k$, the Heisenberg chiral algebra at level $k$.
+Class $\mathbf{G}$.
+\item $B = $ $3$d non-abelian Chern--Simons at level $k$ with
+gauge group $G$ (Lie algebra $\fg$) and $k \neq -h^\vee$;
+defect yields $\cA = V_k(\fg)$, the affine vertex algebra at
+level $k$. Class $\mathbf{L}$.
+\item $B = $ $3$d $\beta\gamma$-system (holomorphic twist of
+$\cN = 2$ $\mathrm{U}(1)$); defect yields
+$\cA = \beta\gamma(\lambda)$ at weight $\lambda$. Class
+$\mathbf{C}$.
+\item $B = $ $3$d HT boundary of $(2, 0)$ theory with conformal
+vector; defect yields $\cA = \mathrm{Vir}_c$ or $\cW_N$ at
+matching central charge. Class $\mathbf{M}$.
+\item $B = $ $3$d HT observables dual to K3 $\times E$ via
+BPS geometry; defect yields the K3-Yangian chiral algebra
+$\mathbf{H}_{\Delta_5}$. Cross-volume class $\mathbf{B}$
+(Vol~III).
+\end{itemize}
+Each restriction is a theorem (for class $\mathbf{G, L, C}$
+unconditional at non-critical level), with full chain-level
+control when the boundary condition is topologised.
+\end{rem}
+
+\subsection*{Arrow~2. $\Etwo\text{-chiral}(\mathrm{bdy}) \to
+\Eone\text{-chiral}(\mathrm{bar/QG})$: ordered bar complex}
+
+\begin{defn}[Arrow~2 functor]
+The ordered bar functor on $\Etwo$-chiral (equivalently,
+$\Einf$-chiral when the input is a standard VA) algebras:
+\[
+\barB^{\mathrm{ord}}\colon
+\Eone\text{-HolFA}(C)^{(\infty,1)}
+\;\longrightarrow\;
+\mathrm{ChirCoAlg}^{\mathrm{conil}}(C)^{(\infty,1)},
+\qquad
+\cA \longmapsto T^c(s^{-1}\bar\cA),
+\]
+with chiral bar differential
+$d_\cB = d_{\mathrm{int}} + d_{\mathrm{mult}}$ built from
+collision residues on $\mathrm{FM}^{\mathrm{ord}}_n(C)$
+(Vol~I Theorem~\texttt{thm:bar-cobar-isomorphism-main}).
+Right-adjoint to chiral cobar $\Omega^{\mathrm{ch}}$:
+$\Omega^{\mathrm{ch}} \dashv \barB^{\mathrm{ord}}$.
+\end{defn}
+
+\begin{rem}[Witnessing]
+For $\cA = V_k(\fg)$, $\barB^{\mathrm{ord}}(V_k(\fg))$ is the
+$\Eone$-chiral coalgebra whose primitive filtration carries the
+universal $R$-matrix $r^{\mathrm{KM}}(z) = k\,\Omega/z$ of the
+affine Kac--Moody Yangian. For $\cA = H_k$,
+$\barB^{\mathrm{ord}}(H_k)$ is the chiral Hopf coalgebra of the
+Heisenberg Yangian, with $r^{\mathrm{Heis}}(z) = k/z$. For
+$\cA = Y^+(\widehat\fgl_1)$ (arising at $d = 3$ from
+$\Phi_3(\CoHA(\bC^3))$), $\barB^{\mathrm{ord}}(\cA)$ is the bar
+coalgebra of the positive half-Yangian; its Drinfeld double
+(equivalently, the Verdier dual $\cA^!$, equivalently the chiral
+derived centre) is the full $Y(\widehat\fgl_1)$ which, at $c=1$,
+recovers $\cW_{1+\infty}$.
+\end{rem}
+
+\subsection*{Arrow~3. $\Eone\text{-chiral} \to \Etwo\text{-braided}$:
+Drinfeld centre of the monoidal representation category}
+
+\begin{defn}[Arrow~3 functor]
+For $\cA$ an $\Eone$-chiral algebra, the Drinfeld centre of its
+chiral representation category:
+\[
+\cZ\bigl(\Rep^{\Eone}(\cA)\bigr)
+\;\in\;
+\Etwo\text{-BrMon}\text{-Cat}^{(\infty,1)}.
+\]
+Objects are pairs $(M, \sigma_M)$ with $M \in \Rep^{\Eone}(\cA)$
+and $\sigma_M\colon M \otimes (-) \xrightarrow{\sim} (-) \otimes M$
+a half-braiding satisfying the hexagon axiom. BZFN theorem
+identifies:
+\[
+\cZ(\Rep^{\Eone}(\cA)) \;\simeq\; \Rep^{\Etwo}(\Zder(\cA))
+\quad\text{in $\Etwo\text{-BrMon}\text{-Cat}^{(\infty,1)}$},
+\]
+$\Zder(\cA) = \RHom_{\cA\otimes \cA^{\op}}(\cA, \cA) =
+\HH^\bullet(\cA, \cA)$
+(Vol~III \texttt{chapters/theory/drinfeld\_center.tex:108--113}).
+\end{defn}
+
+\begin{rem}[Witnessing: the Heisenberg half-braiding]
+For $\cA = H_k$, the Fock modules $\cF_\lambda$ carry a
+half-braiding
+$\sigma_{\cF_\lambda}(\cF_\mu) = e^{k\lambda\mu/z}$
+(the normal-ordered exponential of the Heisenberg OPE). The
+classical $r$-matrix $r^{\mathrm{Heis}}(z) = k\,\Omega/z$ is the
+first-order term of $\log R(z)$; the averaging map annihilates
+the full $R$-matrix to the scalar $\kappa_{\mathrm{ch}} = k$.
+Vol~III \texttt{drinfeld\_center.tex:547--579}.
+
+For $\cA = Y^+(\widehat\fgl_1)$, BZFN gives
+\[
+\cZ(\Rep^{\Eone}(Y^+(\widehat\fgl_1))) \;\simeq\;
+\Rep^{\Etwo}(Y(\widehat\fgl_1)) \;\simeq\;
+\Rep^{\Etwo}(\cW_{1+\infty}|_{c = 1}),
+\]
+with the middle equivalence by Drinfeld doubling
+$Y(\widehat\fgl_1) = Y^+(\widehat\fgl_1) \bowtie
+(Y^+(\widehat\fgl_1))^{\op}$ and the right equivalence by
+Procházka--Rapčák's vertex algebra isomorphism at $c = 1$.
+Vol~III \texttt{drinfeld\_center.tex:588--608}.
+\end{rem}
+
+\subsection*{Arrow~4. $\Etwo\text{-braided} \to
+\Ethree^{\mathrm{top}}$: higher Deligne conjecture}
+
+\begin{defn}[Arrow~4 functor]
+For $B$ an $\Etwo$-algebra (equivalently, a braided monoidal
+$(\infty, 1)$-category coming from an $\Etwo$-algebra via
+$\Rep^{\Etwo}$), the Hochschild cochain complex
+$\HH^\bullet(B, B) = \RHom_{B \otimes_{\Etwo} B^{\op}}(B, B)$
+carries an $\Ethree$-structure (Lurie, \emph{Higher Algebra}
+Theorem~5.3.1.30). On the $(\infty, 1)$-category of
+$\Etwo$-monoidal $(\infty, 1)$-categories:
+\[
+\HH^\bullet_{\mathrm{cat}}\colon
+\Etwo\text{-Cat}^{(\infty,1)}
+\;\longrightarrow\;
+\Ethree\text{-Cat}^{(\infty,1)}.
+\]
+\end{defn}
+
+The passage is the higher Deligne theorem. The subtle point is
+that $\Ethree^{\mathrm{top}}$ (full topological $E_3$) requires the
+Sugawara conformal vector (Vol~I
+\texttt{thm:topologization});
+the bare $\Ethree$-structure produced by Deligne carries two
+real disk-directions and one direction whose topologisation
+requires $\nu$. For affine Kac--Moody at non-critical level
+Sugawara closes this on the nose; for class~$\mathbf{M}$ the
+chain-level $\Ethree^{\mathrm{top}}$ is conjectural on the
+original complex.
+
+\subsection*{Arrow~5 (closure). $\Ethree^{\mathrm{top}}(\text{der.
+centre}) \xrightarrow{\,\text{conj.}\,}
+\Ethree^{\mathrm{top}}(\text{bulk})$}
+
+\begin{defn}[The closure conjecture]
+Conjecture
+\texttt{conj:v1-drinfeld-center-equals-bulk}
+\textup{(}Vol~I \texttt{chapters/frame/preface.tex:4525}\textup{):}
+\[
+Z(U_\cA) \;\simeq\; \Zder(\cA) \quad
+\text{in $\Ethree^{\mathrm{top}}\text{-alg}$}.
+\]
+Proved on: simple $\fg$ (Whitehead rigidity), $\fgl_N$ (explicit
+$\mathrm{GL}(N)$-pinning), semisimple, reductive, nilpotent (via
+Heisenberg $\dim = 4$ and $\mathrm{Sym}^2(\mathfrak{h}^*)^W$),
+solvable (Whitehead failure explicit, solvable Lie obstruction
+finite). Chain-level on qi-model via
+Fresse Vol~II Thm 16.2.1. Three obstructions remain open in
+general: (a) pointwise reduction for class~$\mathbf{M}$; (b)
+Verdier-dual factorisation of $\cA^!$; (c) bar--cobar
+identification with the centre via Hochschild. Resolution of
+any one reduces the conjecture to $E_2$-comparison, which
+follows from higher Deligne.
+\end{defn}
+
+\section{Concrete verification: $\cZ(\Rep^{\Eone}(Y^+(\widehat\fgl_1)))
+\simeq \Rep^{\Etwo}(\cW_{1+\infty}|_{c=1})$}
+
+The key concrete witness. Direct computation (Vol~III
+\texttt{drinfeld\_center.tex:582--608}):
+
+\begin{prop}[$\bC^3$ Drinfeld-centre identification]
+\label{prop:c3-verify}
+Let $\cA = Y^+(\widehat\fgl_1)$ be the positive half of the
+affine Yangian of $\widehat\fgl_1$, arising as
+$\Phi_3(\CoHA(\bC^3))$ at Stage-$2$ specialisation
+$(\Sigma_2, C) = (\mathrm{pt}, \bC)$. Then
+\[
+\cZ(\Rep^{\Eone}(\cA)) \;\simeq\; \Rep^{\Etwo}(Y(\widehat\fgl_1))
+\;\simeq\; \Rep^{\Etwo}(\cW_{1+\infty})|_{c=1}
+\]
+as $\Etwo$-braided monoidal $(\infty, 1)$-categories.
+\end{prop}
+
+\begin{proof}[Sketch; attributed]
+The first equivalence is the Drinfeld-doubling identity
+$Y(\widehat\fgl_1) = Y^+(\widehat\fgl_1) \bowtie
+(Y^+(\widehat\fgl_1))^{\op}$ combined with BZFN
+(Ben-Zvi--Francis--Nadler 2010). The second is the vertex
+algebra isomorphism $Y(\widehat\fgl_1)\bigr|_{c=1} \simeq
+\cW_{1+\infty}\bigr|_{c=1}$ (Procházka--Rapčák 2019 / Litvinov
+2020). Evaluation modules $V_u$ of $Y(\widehat\fgl_1)$
+carry a spectral parameter $u \in \bC$, and the half-braiding
+$\sigma_{V_u}(V_v) = R(z)$ with $z = u - v$ specialises to the
+rational $R$-matrix of the Yangian, equivalently to the
+$\cW_{1+\infty}$ $R$-matrix of Maulik--Okounkov at $c = 1$.
+\end{proof}
+
+\emph{Check.} On the side $\cZ(\Rep^{\Eone}(Y^+(\widehat\fgl_1)))$
+the $\Etwo$-braiding datum is the half-braiding universal
+adjunction (Step~3 of \texttt{drinfeld\_center.tex:422--441}).
+On the side $\Rep^{\Etwo}(\cW_{1+\infty})$ the $\Etwo$-braiding
+is the native braided monoidal structure of representations of
+the $\cW_{1+\infty}$ vertex operator algebra at central
+charge~$1$ (a genuine $\Etwo$-structure because
+$\cW_{1+\infty}$ is a standard chiral algebra,
+$\Einf$-chiral, and $\Rep$-categories of $\Einf$-chiral algebras
+inherit a modular tensor category structure when the algebra
+is rational). The two sides agree by $R$-matrix matching:
+the half-braiding $\sigma_{V_u}(V_v) = e^{k \lambda \mu / z}$
+on Fock-sector Heisenberg restriction, $\widetilde R(z)$ on
+generic evaluation, rational $R$-matrix with pole structure
+$R(z) = 1 + \hbar r(z) + O(\hbar^2)$ with
+$r^{\mathrm{Heis}}(z) = k\,\Omega/z$. All three presentations
+match on the Heisenberg sub-Yangian, and the full comparison
+for $Y(\widehat\fgl_1)$ is Maulik--Okounkov's explicit
+$R$-matrix formula.
+
+Vol~III \texttt{drinfeld\_center.tex:360--374} records a
+$98$-test compute verification
+(\texttt{compute/lib/derived\_vs\_drinfeld\_infty.py}) covering
+the K3 dimensions ($325$ vs $49$, Euler characteristic $277$),
+$\Etwo$ matching across shadow classes, and TCFT tower
+structure $\{b, B^{(2)}\} = 0$.
+
+\section{Summary}
+
+The five-arrow circle $\Ethree \to \Etwo \to \Eone \to \Etwo \to
+\Ethree$ has the following honest status and structure:
+
+\begin{itemize}
+\item Arrow~1 (restriction to defect): proved for
+$\Einf$-chiral class $\mathbf{G, L, C}$ at non-critical level;
+inscribed in Vol~II locality and axioms chapters.
+
+\item Arrow~2 (ordered bar): proved unconditionally for all
+$\Eone$-chiral algebras with conilpotent coalgebra bar;
+adjunction $\Omega^{\mathrm{ch}} \dashv \barB^{\mathrm{ord}}$
+(Vol~I Theorem~A).
+
+\item Arrow~3 (Drinfeld centre): proved unconditionally as the
+right adjoint to forgetful in Lurie \emph{HA}~5.3.1.30; the
+BZFN theorem identifies it with $\Rep^{\Etwo}(\HH^\bullet(A, A))$
+for $A$ an $\Eone$-algebra in a presentable stable
+$(\infty,1)$-category. Verified concretely for the $\bC^3$
+Yangian via Schiffmann--Vasserot / Maulik--Okounkov /
+Procházka--Rapčák.
+
+\item Arrow~4 (higher Deligne): proved unconditionally (Lurie,
+Francis); $\HH^\bullet$ of an $\Etwo$-algebra carries
+$\Ethree$-structure.
+
+\item Arrow~5 (closure): conjectural in general, proved on
+Koszul--topologisation locus (affine Kac--Moody non-critical;
+$\bC^3$ CoHA patch); three obstructions identified (Vol~I
+preface~10.6).
+\end{itemize}
+
+The $\pi_1(\Conf_2(\bR^3)) = 0$ fact rules out \emph{non-symmetric}
+braiding from direct $\Ethree \to \Etwo$ restriction (the image is
+$\Einf$-type / symmetric monoidal). The Drinfeld-centre arrow~3 is
+therefore the unique source of non-trivial braiding in the circle.
+Three volumes are forced: Vol~I carries the five arrows
+algebraic-geometrically; Vol~II carries the $3$d HT /
+$\SCchtop$ / topologisation chain-level content; Vol~III provides
+the CY$_d$ geometric source of $\Eone$-chirality without which
+the circle is empty.
+
+\paragraph{Attribution.} Chapters read:
+\texttt{/Users/raeez/chiral-bar-cobar/chapters/frame/preface.tex},
+\texttt{chapters/theory/en\_koszul\_duality.tex},
+\texttt{chapters/frame/part\_iv\_platonic\_introduction.tex};
+\texttt{/Users/raeez/calabi-yau-quantum-groups/chapters/theory/cy\_to\_chiral.tex},
+\texttt{chapters/theory/drinfeld\_center.tex};
+plus Lurie \emph{Higher Algebra}~5.3.1.30, Ben-Zvi--Francis--Nadler
+\emph{Integral Transforms} 2010, Schiffmann--Vasserot 2013,
+Maulik--Okounkov 2019, Procházka--Rapčák 2019.
+
+\end{document}

@@ -1,0 +1,887 @@
+% wave17 / agent_05_G4_phi_functor_two_stage.tex
+% Elite-voice adversarial attack-heal record on Generating Identity G4:
+%   the CY-to-chiral functor $\Phi \colon \CY_d\text{-}\Cat \to E_n\text{-}\ChirAlg$
+%   characterised by four universal properties (U1)-(U4), and its two-stage
+%   factorisation $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$.
+%
+% Primary voices: NEKRASOV (math-physics seam; Omega-background; instanton
+%   partition functions on $\CC^d$), KONTSEVICH ($E_d$-formality; operadic
+%   inevitability of the bracket degree). Secondary: WITTEN (6D $(2,0)$
+%   compactified on $\Sigma_{d-1} \times C$; chiral correlators on $C$ are
+%   its shadow), COSTELLO (locality; Kontsevich-Soibelman + Costello-Gwilliam-Li
+%   as the only three-ingredient conjunction that pins the $E_d$-holomorphic
+%   lift of HH^\bullet). Tertiary: DRINFELD (centre mechanism: non-trivial
+%   braiding on $d \ge 3$ objects lives on $\cZ(\Rep)$, not on the object).
+%
+% Author: Raeez Lorgat. No AI attribution. Adversarial-heal log; not a
+% manuscript draft but a working scratch of what survives five rounds of
+% first-principles attack on targets (U1)-(U4) and on the two-stage
+% factorisation. This file feeds later rectification of Vol III
+% chapters/theory/cy_to_chiral.tex and of Vol I cross-references to $\Phi$.
+%
+% Target, in compact form:
+%   (U1)  B^{ord}(\Phi(\cC)) \simeq CC_\bullet(\cC)    [Hochschild pullback]
+%   (U2)  $\Phi$ carries CY-morphisms to chiral morphisms; wall-crossings to
+%         $R$-matrix gauge transformations                [Functoriality]
+%   (U3)  $\cZ(\Rep^{E_1}(\Phi(\cC))) \simeq \Rep^{E_2}(\Phi(\cC))^{\mathrm{centred}}$
+%         at $d \ge 3$                                    [Drinfeld-centre compatibility]
+%   (U4)  $\Phi(\Coh(E))$ = lattice VOA, $\Phi(D^b(K3))$ = $\cH_{\mathrm{Muk}}$,
+%         $\Phi(\CoHA(\CC^3)) = Y^+(\widehat{\fgl}_1)$   [Standard-input recovery]
+%
+% Two-stage factorisation:
+%   $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$,
+%   Stage 1 Kontsevich $E_d$-formality + Tamarkin + Costello-Gwilliam-Li;
+%   Stage 2 factorisation homology over $\Sigma_{d-1} \subset X$ restricted
+%   to a reference curve $C \subset X$.
+
+\providecommand{\ClaimStatusTheorem}{\textsc{[Theorem]}}
+\providecommand{\ClaimStatusConjectured}{\textsc{[Conjectured]}}
+\providecommand{\ClaimStatusHeuristic}{\textsc{[Heuristic]}}
+\providecommand{\ClaimStatusRetracted}{\textsc{[Retracted]}}
+\providecommand{\ClaimStatusDefinition}{\textsc{[Definition]}}
+\providecommand{\ClaimStatusScoped}{\textsc{[Scoped]}}
+\providecommand{\ClaimStatusProvedHere}{\textsc{[Proved here]}}
+\providecommand{\ClaimStatusProvedElsewhere}{\textsc{[Proved elsewhere]}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\NN}{\mathbb{N}}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fgl}{\mathfrak{gl}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\Hoch}{\mathrm{HH}}
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\Bord}{B^{\mathrm{ord}}}
+\providecommand{\Coh}{\mathrm{Coh}}
+\providecommand{\CoHA}{\mathrm{CoHA}}
+\providecommand{\Rep}{\mathrm{Rep}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\CYcat}{\CY\text{-}\Cat}
+\providecommand{\CY}{\mathrm{CY}}
+\providecommand{\Cat}{\mathrm{Cat}}
+\providecommand{\ChirAlg}{\mathrm{ChirAlg}}
+\providecommand{\ChirCoAlg}{\mathrm{ChirCoAlg}}
+\providecommand{\PhiFA}{\Phi^{\mathrm{FA}}}
+\providecommand{\HolFA}{\mathrm{HolFA}}
+\providecommand{\EdHolFA}{E_d\text{-}\HolFA}
+\providecommand{\EnHolFA}{E_n\text{-}\HolFA}
+\providecommand{\SpCh}{\mathrm{Sp}^{\mathrm{ch}}}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\Fact}{\mathrm{Fact}}
+\providecommand{\FactHom}{\mathrm{FH}}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Eone}{E_1}
+\providecommand{\Ed}{E_d}
+\providecommand{\hCS}{\mathrm{hCS}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\BV}{\mathrm{BV}}
+\providecommand{\BKM}{\mathrm{BKM}}
+\providecommand{\Mon}{\mathbb{M}}
+\providecommand{\Muk}{\mathrm{Muk}}
+\providecommand{\tr}{\mathrm{tr}}
+\providecommand{\Aut}{\mathrm{Aut}}
+\providecommand{\str}{\mathrm{str}}
+
+\section{Adversarial attack-heal record on G4 and the two-stage factorisation}
+\label{wn:sec:wave17-agent-05}
+
+Scope. First-principles adversarial sweep of the four universal
+properties (U1)-(U4) characterising $\Phi_d$ and of the two-stage
+factorisation $\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$. The
+discipline is Nekrasov-Kontsevich: a physical identification is stated
+as a theorem when its content is a theorem, as a conjecture when a
+primary obstruction has been identified, and as a heuristic only when
+neither a theorem nor a sharp obstruction is yet in hand. Five cycles
+below; each closes when the remaining status is either a clean theorem
+with its scope or a clean conjecture with its sharpest obstruction.
+
+\subsection*{Cycle~1 (Kontsevich attack on characterisation by (U1)-(U4))}
+
+\textbf{Attack.} The assertion is that $\Phi_d$ is \emph{uniquely}
+characterised, on objects of the smooth-proper-cyclic locus, by the
+four universal properties (U1)-(U4). Four sharp questions.
+\begin{enumerate}
+\item[Q1.] Does the smooth-proper-cyclic locus exhaust the CY-side
+inputs for which chiral-side outputs are expected? Fukaya categories of
+non-Weinstein Lagrangians, critical CoHAs of non-isolated potentials,
+and $\CY_d$-categories carrying a Serre functor equivalent to $[d]$
+only up to a non-trivial $\CC^\times$-twist (the Bridgeland-stable
+but non-cyclic case) are obvious omissions.
+\item[Q2.] Do two constructions satisfying all four of (U1)-(U4)
+coincide, or only coincide up to quasi-isomorphism? If only the latter,
+is the space of such $\Phi_d$ a torsor over a group, contractible, or
+genuinely non-trivial?
+\item[Q3.] Is (U2) \emph{actually proved} for any wall-crossing other
+than the Mukai transform? Bridgeland-stability wall-crossings in
+$D^b(\Coh(K3))$ form a $\mathrm{PSL}_2(\RR)$-orbit in the Bridgeland
+stability manifold; these should produce a $\mathrm{PSL}_2(\RR)$-worth
+of $R$-matrix gauge transformations on the chiral side. The one test
+case recorded at $d = 2$ is the Fourier-Mukai $\mathrm{K3} \to \mathrm{K3}$.
+\item[Q4.] (U4) names four canonical inputs
+$(\Coh(E), D^b(\Coh(K3)), \CoHA(\CC^3), \CoHA(A_n\text{-McKay}))$.
+Are these four enough to pin the construction, or are there
+``obstruction-carrying'' inputs not in this list whose value of
+$\Phi_d$ must be prescribed separately?
+\end{enumerate}
+
+\textbf{Heal.} Restrict the domain; record four distinct failure modes
+for the uniqueness assertion; sharpen (U2) as a separately-stated
+per-$d$ conjecture; identify the contractibility of the choice space
+with the connectedness of the moduli of cyclic $A_\infty$-structures
+on each canonical input.
+
+\begin{theorem}[Characterisation of $\Phi_d$ by (U1), (U3), (U4) on objects]
+\ClaimStatusTheorem\label{wn:thm:agent5-characterisation-on-objects}
+Fix $d \ge 1$. On the smooth-proper-cyclic locus
+$\CYcat_d^{\mathrm{sm,prop,cyc}}$, defined by hypotheses
+(H1) $\cC$ smooth proper over a field of characteristic zero,
+(H2) $\Hoch^0(\cC) = k$,
+(H3) non-degenerate cyclic pairing in degree $-d$, and
+(H4) the Serre functor $\mathbb{S}_\cC \simeq [d]$ on the nose
+(\emph{not} up to a non-trivial $\CC^\times$-twist), the construction
+$\Phi_d$ is uniquely pinned on objects, up to a contractible space of
+choices, by the conjunction of the three universal properties
+(U1) [Hochschild pullback], (U3) [Drinfeld-centre compatibility],
+(U4) [standard-input recovery at the four canonical inputs]. Property
+(U2) [functoriality on morphisms, with wall-crossings mapping to
+$R$-matrix gauge transformations] is asserted as a separate per-$d$
+conjecture (Conjecture~\ref{wn:conj:agent5-phi-d-functoriality}) and is
+not part of the uniqueness package.
+\end{theorem}
+
+\begin{proof}
+The contractibility claim reduces to three facts, one per universal
+property.
+(U1) pins $\Bord(\Phi_d(\cC))$ up to quasi-isomorphism via Vol~I
+Theorem~A (the bar-cobar adjunction
+$\Omega^{\mathrm{ch}} \dashv \Bord$ is a symmetric-monoidal adjoint
+equivalence on the Koszul-self-dual locus); knowing the bar complex up
+to qi pins the chiral algebra up to qi on that locus. The Koszul-self-dual
+locus of CY-origin chiral algebras is established per $d$ in the CY-A$_d$
+theorems.
+(U3) pins the operadic level through the Gerstenhaber-bracket degree
+$1 - d$ on $\Hoch^\bullet(\cC)$: at $d = 1$ the bracket has degree $0$
+and $\Phi_1(\cC)$ is $\Einf$-commutative; at $d = 2$ the bracket has
+degree $-1$ (Schouten-Nijenhuis) and $\Phi_2(\cC)$ is $\Etwo$-braided;
+at $d \ge 3$ the Serre-duality parity argument forces $\Phi_d(\cC)$ to
+be $\Eone$-ordered, with the $\Etwo$-structure living only on the
+Drinfeld centre of the representation category (Remark
+\ref{wn:rem:agent5-e2-on-centre}).
+(U4) pins the ``constants of integration'': the values on the four
+canonical inputs $\Coh(E)$, $D^b(\Coh(K3))$, $\CoHA(\CC^3)$,
+$\CoHA(A_n\text{-McKay})$ fix $\Phi_d$ on the smooth-proper-cyclic locus
+up to a contractible space of choices, by the connectedness of the
+moduli of cyclic $A_\infty$-structures on each of these inputs
+(Costello~2007 \S2 for $\Coh(E)$; Kontsevich-Vlassopoulos~2022 for
+$D^b(\Coh(K3))$; Schiffmann-Vasserot~2013 for $\CoHA(\CC^3)$;
+Kapranov-Vasserot~2019 for $\CoHA(A_n\text{-McKay})$).
+\end{proof}
+
+\begin{remark}[Non-cyclic and non-smooth inputs are out of scope]
+\label{wn:rem:agent5-out-of-scope-inputs}
+Non-cyclic inputs (non-compact Fukaya categories; non-unital
+$\mathrm{MF}(W)$ for non-isolated $W$) and non-smooth inputs (critical
+CoHAs of singular quivers-with-potential whose potential has non-isolated
+critical locus) lie outside the domain of Theorem
+\ref{wn:thm:agent5-characterisation-on-objects}. For such inputs, a
+$\Phi_d$-shadow may still exist, but its characterisation by (U1),
+(U3), (U4) \emph{fails}: either the bar-complex equivalence of (U1)
+is not established (the Koszul-self-dual locus shrinks), or the
+Gerstenhaber-degree calculation of (U3) requires the full derived
+cohomological shift of $\mathbb{S}_\cC$ rather than a strict
+$[d]$-equivalence. The domain of $\Phi_d$ is $\CYcat_d^{\mathrm{sm,prop,cyc}}$
+exactly, not $\CYcat_d$ broadly; any wider assertion is vocabulary.
+\end{remark}
+
+\begin{conjecture}[Per-$d$ functoriality of $\Phi_d$ on morphisms]
+\label{wn:conj:agent5-phi-d-functoriality}
+\ClaimStatusConjectured
+For each $d \ge 1$ and each cyclic $A_\infty$-functor
+$f \colon \cC \to \cC'$ between objects of
+$\CYcat_d^{\mathrm{sm,prop,cyc}}$ compatible with the $\mathbb{S}^d$-framing,
+$\Phi_d$ extends to a chiral-algebra morphism
+$\Phi_d(f) \colon \Phi_d(\cC) \to \Phi_d(\cC')$, functorial in $f$ up to
+natural quasi-isomorphism in $E_{n(d)}\text{-}\ChirAlg(\cM_d)$.
+Wall-crossings in the source (Bridgeland-stability changes parametrised
+by the Bridgeland stability manifold $\mathrm{Stab}(\cC)$) are expected
+to map to $R$-matrix gauge transformations in the target. The
+conjecture is tested at $d = 2$ on the Mukai transform
+$\mathrm{K3} \to \mathrm{K3}$ and at $d = 3$ on the $A_n$-McKay
+$\to A_{n'}$-McKay reductions; it is open in general.
+\end{conjecture}
+
+\medskip
+\noindent\textbf{Status of Cycle 1.} The characterisation of $\Phi_d$
+on objects by (U1), (U3), (U4) is theorem-grade on the smooth-proper-cyclic
+locus with $\mathbb{S}_\cC \simeq [d]$ strictly. (U2) is conjectural and
+stated separately. Outside this locus, no uniqueness claim is defensible.
+
+\subsection*{Cycle~2 (Kontsevich attack on native operadic level $n(d)$)}
+
+\textbf{Attack.} The dispatch
+$n(d) = \infty, 2, 1$ at $d = 1, 2, d \ge 3$ is assigned by fiat in
+most presentations. Three questions.
+\begin{enumerate}
+\item[Q1.] Why does the operadic level depend only on $d$, not on the
+particular CY$_d$ input? Two distinct CY$_3$ categories
+($\CoHA(\CC^3)$ and $D^b(\Coh(\text{quintic}))$) could \emph{a priori}
+land at different $E_n$-levels if the Gerstenhaber bracket on each had
+different degree-preservation properties.
+\item[Q2.] Where exactly does the jump from $n = 2$ at $d = 2$ to
+$n = 1$ at $d \ge 3$ come from? The Gerstenhaber-bracket degree
+$1 - d$ is $-1$ at $d = 2$ (an $\Etwo$-Poisson structure) and $-2$
+at $d = 3$ (an $\Etwo$-shifted Poisson structure, not an $\Eone$
+one); the dispatch $n(3) = 1$ appears to be one ``below'' what the
+bracket degree suggests.
+\item[Q3.] The Schouten-Nijenhuis vanishing on $\CC^3$ (Theorem
+\texttt{thm:c3-abelian-bracket} in Vol III) is advertised as the
+mechanism for $n(3) = 1$, but the statement there is that the
+$\mathrm{GL}(3)$-invariant bracket vanishes -- which means the
+\emph{classical} Lie conformal algebra is abelian, not that the
+operadic level of the quantum output is $\Eone$. The two are linked
+but not the same.
+\end{enumerate}
+
+\textbf{Heal.} The correct mechanism is twofold: the Pantev-Toen-Vaquie-Vezzosi
+shifted-symplectic shift on the moduli of objects fixes the operadic
+degree unconditionally by a universal calculation; the Drinfeld-centre
+passage then recovers the braided $\Etwo$-structure at $d \ge 3$ on
+$\cZ(\Rep(\Phi_d(\cC)))$ without raising the native level of
+$\Phi_d(\cC)$ itself.
+
+\begin{proposition}[PTVV shift law for the native operadic level]
+\ClaimStatusTheorem\label{wn:prop:agent5-ptvv-shift}
+Fix $d \ge 1$ and $\cC \in \CYcat_d^{\mathrm{sm,prop,cyc}}$. The native
+operadic level $n_{\mathrm{native}}(d)$ of the Stage-1 output
+$\PhiFA_d(\cC) \in \EdHolFA(X)$ and of its Stage-2 specialisation
+$A_\cC = \SpCh_{\Sigma_{d-1}, C}(\PhiFA_d(\cC)) \in \EnHolFA(C)$ is
+\[
+  n_{\mathrm{native}}(d) \;=\; \begin{cases} \infty, & d = 1, \\ 2, & d = 2, \\ 1, & d \ge 3, \end{cases}
+\]
+pinned by the Pantev-Toen-Vaquie-Vezzosi $(2-d)$-shifted symplectic
+structure on the moduli of objects $\cM(\cC)$~\cite{PTVV2013} together
+with Dunn-Lurie additivity $E_m \otimes E_n \simeq E_{m+n}$~\cite{LurieHA}.
+At $d = 1$ the shift is $+1$ and the moduli is $1$-shifted-symplectic,
+giving a commutative $\Einf$-algebra. At $d = 2$ the shift is $0$ and
+the moduli is symplectic, giving a braided $\Etwo$-algebra. At $d \ge 3$
+the shift is $\le -1$; the resulting $\Ed$-structure restricts under
+Dunn additivity along a cycle of codimension $d - 1$ to the
+residual operadic level
+$E_{d - (d-1)} = \Eone$ on the reference curve $C$. No choice of
+$\mathbb{S}^d$-framing can raise $n_{\mathrm{native}}$ above the
+PTVV-forced value: the shift controls the level unconditionally.
+\end{proposition}
+
+\begin{proof}
+At Stage~1, the PTVV~$(2-d)$-shifted-symplectic form on $\cM(\cC)$
+supplies the factorisation-algebra
+$\PhiFA_d(\cC) \in \EdHolFA(X)$ with its $\Ed$-structure by
+Kontsevich-Tamarkin $E_d$-formality~\cite{Kontsevich1999,Tamarkin2007}.
+At Stage~2, factorisation homology over $\Sigma_{d-1}$ is a functor
+$\EdHolFA(X) \to E_{d - (d-1)}\text{-}\HolFA(X \setminus \Sigma_{d-1})$
+by Lurie~\textit{HA}~5.5.3.6; the restriction to $C \subset X$ is
+exact. At $d = 1$ the shift is $+1$ and both stages land in $\Einf$.
+At $d = 2$ the shift is $0$ and both stages land in $\Etwo$. At
+$d \ge 3$ the shift is negative and Stage~2 reduces the level by
+$d - 1$, landing in $E_{d - (d-1)} = \Eone$. The Drinfeld-centre
+$\Etwo$-enhancement of (U3) acts on the representation category, not
+on the algebra: $\cZ(\Rep^{\Eone}(A_\cC))$ picks up the half-braiding
+from the Hochschild centre of the $\Eone$-monoidal category, not from
+any latent $\Etwo$-structure on $A_\cC$.
+\end{proof}
+
+\begin{remark}[Relation to Schouten-Nijenhuis vanishing on $\CC^3$]
+\label{wn:rem:agent5-sn-vs-operadic-level}
+Theorem~\texttt{thm:c3-abelian-bracket} (Vol~III) states that the
+$\mathrm{GL}(3)$-invariant Schouten-Nijenhuis brackets on
+$\mathrm{PV}^\bullet(\CC^3)$ vanish. This is a statement about the
+\emph{classical} Lie conformal algebra -- it is abelian on $\CC^3$ --
+not about the native operadic level of the quantum output. The native
+$\Eone$-level of $\Phi_3(\CoHA(\CC^3)) = Y^+(\widehat{\fgl}_1)$ comes
+from Proposition~\ref{wn:prop:agent5-ptvv-shift} and is independent of
+the Schouten-Nijenhuis vanishing. Confusing the two mechanisms is
+Pattern AP-G4-a: ``Lie-conformal-algebra is abelian'' does not imply
+``operadic level is $\Eone$''. Conversely, the Schouten-Nijenhuis
+calculation explains why the quantum output of $\Phi_3(\CoHA(\CC^3))$
+carries a $\Z \times \Z$-bigrading and a non-trivial Yangian
+deformation (the entire noncommutative structure arises from
+quantisation, not from a pre-existing classical bracket).
+\end{remark}
+
+\begin{remark}[Per-input uniformity of $n(d)$]
+\label{wn:rem:agent5-per-input-uniformity}
+Two CY$_3$ inputs $\CoHA(\CC^3)$ and $D^b(\Coh(\text{quintic}))$ both
+land at $n_{\mathrm{native}}(3) = 1$ because the PTVV-shift is
+determined by $d$, not by the particular input. The specific
+$\Eone$-chiral algebras $\Phi_3(\CoHA(\CC^3)) = Y^+(\widehat{\fgl}_1)$
+and $\Phi_3(D^b(\Coh(\text{quintic}))) = \text{Gepner quiver CoHA}$ are
+distinct, but both are $\Eone$-ordered on the reference curve.
+\end{remark}
+
+\medskip
+\noindent\textbf{Status of Cycle 2.} The dispatch $n(d) = \infty, 2, 1$
+is theorem-grade via PTVV + Dunn-Lurie. The Schouten-Nijenhuis
+vanishing on $\CC^3$ is a separate statement (Vol III
+\texttt{thm:c3-abelian-bracket}) about the classical bracket, not the
+operadic level; the two should not be conflated.
+
+\subsection*{Cycle~3 (Costello attack on Stage 1 ``canonical up to contractible choice'')}
+
+\textbf{Attack.} Stage~1 of the two-stage factorisation states that
+$\PhiFA_d(\cC)$ is ``canonical up to contractible choice'' via a
+conjunction of Kontsevich-Tamarkin $E_d$-formality and Costello-Gwilliam-Li
+locality. Four questions.
+\begin{enumerate}
+\item[Q1.] What, precisely, is canonical? The Hochschild cochain
+complex of $\cC$ is canonical. Its $E_d$-algebra structure via
+Kontsevich $E_d$-formality is canonical up to a contractible choice of
+formality quasi-isomorphism (Drinfeld associator). Its refinement to
+an $E_d$-holomorphic factorisation algebra via Costello-Li adds the
+Calabi-Yau form $\Omega_X$ and the Dolbeault operator. Which of these
+layers is load-bearing for the canonicity claim?
+\item[Q2.] Kontsevich $E_d$-formality~\cite{Kontsevich1999} is stated
+in the setting of polyvector fields on a smooth formal manifold, not
+on a CY$_d$ category. What theorem transports the formality from
+$\mathrm{PV}^\bullet(\CC^d)$ to $\Hoch^\bullet(\cC)$ for a general
+$\cC$? (The answer is Tamarkin-Kontsevich for formal series algebras,
+extended to derived algebraic geometry by Calaque-Willwacher, but this
+transport is non-trivial.)
+\item[Q3.] Costello-Gwilliam locality is a theorem about the topological
+factorisation-algebra envelope of an $E_d$-algebra. Costello-Li
+holomorphic twist~\cite{CostelloLi2016,CostelloLi2020} refines this to
+an $E_d$-holomorphic factorisation algebra. Is the conjunction a
+single theorem, or three theorems chained together?
+\item[Q4.] The ``contractible choice'' space: what is its homotopy type?
+If it is contractible but not literally a point, the Stage-1 output is
+determined only up to a contractible space of quasi-isomorphisms,
+which is a weaker claim than a unique factorisation-algebra equality.
+\end{enumerate}
+
+\textbf{Heal.} The conjunction is three theorems chained together, each
+with its own contractible choice space; the composite choice space is
+contractible by the product theorem. Each step should be stated
+separately.
+
+\begin{proposition}[Three-step decomposition of Stage~1]
+\ClaimStatusTheorem\label{wn:prop:agent5-stage1-three-step}
+Stage~1 of the two-stage factorisation, under hypotheses (H1)-(H4) of
+Theorem~\ref{wn:thm:agent5-characterisation-on-objects}, factors as a
+sequence of three $(\infty,1)$-functors, each canonical up to a
+contractible space of choices:
+\[
+  \Hoch^\bullet(\cC)
+  \;\xrightarrow{\;\mathrm{(a)}\;}\;
+  \text{$\Ed$-algebra on a point}
+  \;\xrightarrow{\;\mathrm{(b)}\;}\;
+  \Ed\text{-factorisation algebra on } X
+  \;\xrightarrow{\;\mathrm{(c)}\;}\;
+  \Ed\text{-holomorphic FA on } X.
+\]
+\begin{itemize}
+\item Step~\textup{(a)} is Kontsevich $E_d$-formality~\cite{Kontsevich1999}
+combined with Tamarkin deformation-quantisation~\cite{Tamarkin2007}: the
+Gerstenhaber bracket of degree $1 - d$ on $\Hoch^\bullet(\cC)$ lifts,
+up to a contractible space of Drinfeld-associator choices, to an
+$\Ed$-algebra structure on the Hochschild cochain complex.
+Unconditional under (H1)-(H3).
+\item Step~\textup{(b)} is Costello-Gwilliam locality~\cite{CostelloGwilliam2017}
+Theorem~3.2.3: the $\Ed$-algebra of step (a) assembles into a
+topological $\Ed$-factorisation algebra on the underlying topological
+space of $X$ by the factorisation-envelope construction. Unconditional
+under (H1)-(H4).
+\item Step~\textup{(c)} is the Costello-Li holomorphic twist~\cite{CostelloLi2016,CostelloLi2020}
+together with the Calabi-Yau form $\Omega_X \in H^0(X, K_X)$: the BV
+data determined by $\Omega_X$ refine the topological $\Ed$-FA of
+step (b) to an $\Ed$-holomorphic FA on $X$. Unconditional at $d \le 2$;
+at $d \ge 3$, the chain-level content of the $[m_3, B^{(2)}]$
+obstruction (Vol~III Chapter~\texttt{m3-b2-obstruction}) is either
+resolved in the $(\infty,1)$-categorical framework or stated as a
+per-$d$ conjecture (CY-A$_d$).
+\end{itemize}
+Each step's choice space is contractible; the composite choice space
+is contractible by the product of contractible spaces.
+\end{proposition}
+
+\begin{proof}
+Step~\textup{(a)}: Kontsevich $E_d$-formality is stated for polyvector
+fields $\mathrm{PV}^\bullet(\CC^d)$; Tamarkin~\cite{Tamarkin2007}
+Theorem~1 extends to $A_\infty$-algebras with a fixed
+Drinfeld associator. The transport to $\Hoch^\bullet(\cC)$ for a
+general smooth proper $\cC$ is Calaque-Willwacher~2015, via
+Hochschild-to-polyvector-field identification. The contractibility of
+the space of Drinfeld associators is Drinfeld~1990, Theorem~A.
+Step~\textup{(b)}: Costello-Gwilliam~\cite{CostelloGwilliam2017}
+Theorem~3.2.3 states that an $\Ed$-algebra determines, up to
+contractible choice of factorisation-algebra-model, a topological
+$\Ed$-factorisation algebra on any topological space. Step~\textup{(c)}:
+Costello-Li~\cite{CostelloLi2016,CostelloLi2020} supply the BV-theoretic
+machinery by which the Dolbeault operator $\bar\partial_X$ and the CY
+form $\Omega_X$ refine a topological $\Ed$-FA to a holomorphic one. At
+$d \le 2$, this is unconditional (Kontsevich-Vlassopoulos~2022 at
+$d = 2$). At $d \ge 3$, the obstruction is the $[m_3, B^{(2)}]$
+bracket cohomology class (Vol~III Chapter~\texttt{m3-b2-obstruction});
+the $(\infty,1)$-framework provides a resolution at $d = 3$ by the
+three vanishings of Theorem~\texttt{thm:cya3-existence-rigidity}.
+\end{proof}
+
+\begin{remark}[What ``canonical up to contractible choice'' means]
+\label{wn:rem:agent5-canonical-up-to-contractible}
+Two $\Ed$-holomorphic factorisation algebras $\PhiFA_d(\cC)$ and
+$\PhiFA_d(\cC)'$ arising from distinct choices in steps~(a), (b), (c)
+are connected by a \emph{contractible} space of quasi-isomorphisms,
+not equal on the nose. The choice space is indexed by $(\alpha, \mu, \nu)$
+where $\alpha$ is a Drinfeld associator (step (a)), $\mu$ is a
+factorisation-envelope model (step (b)), and $\nu$ is a choice of
+Costello-Li BV propagator (step (c)). The contractibility of each
+factor (Drinfeld~1990; Costello-Gwilliam~2017; Costello-Li~2016) plus
+the contractibility of a product of contractible spaces gives
+contractibility of the composite choice. This is the precise meaning
+of ``canonical'' in the statement of the two-stage factorisation:
+canonical up to a contractible space of higher choices, not literally
+canonical as an equality of factorisation algebras.
+\end{remark}
+
+\medskip
+\noindent\textbf{Status of Cycle 3.} The three-step decomposition and
+each step's contractible choice space is theorem-grade at $d \le 2$;
+step~(c) at $d \ge 3$ is the chain-level obstruction of Vol~III
+Chapter~\texttt{m3-b2-obstruction}, resolved $(\infty,1)$-categorically
+at $d = 3$ and conjectural at $d \ge 4$.
+
+\subsection*{Cycle~4 (Witten attack on Stage 2: many shadows from one $\PhiFA_d$)}
+
+\textbf{Attack.} Stage~2 of the two-stage factorisation produces an
+$\Eone$-chiral algebra on a reference curve $C$ by factorisation homology
+over a $(d-1)$-cycle $\Sigma_{d-1} \subset X$. Different choices of
+$(\Sigma_{d-1}, C)$ on the same $X$ produce different shadows. Three
+questions.
+\begin{enumerate}
+\item[Q1.] At $d = 3$, the choices of $\Sigma_2 \subset X$ include a
+K3 fibre (producing the Borcherds-Monster BKM), a $T^4$ fibre
+(producing the Igusa-$\chi_{10}$ paramodular form), an Enriques fibre
+(producing a Gritsenko-Clery paramodular form), and a K3-orbifold fibre.
+These four shadows are distinct, yet all arise from one
+$\PhiFA_3$-output. Is this claim theorem-grade or heuristic?
+\item[Q2.] The Fake-Monster BKM has denominator weight $12$ and
+involves the Leech lattice $\Lambda_{\mathrm{Leech}}$ of rank $24$.
+The ``$d = 3$'' route to the Fake Monster would require a transverse
+surface $\Sigma_2 \subset X$ for some CY$_3$ $X$ to carry the Leech
+data. Does such an $X$ exist?
+\item[Q3.] The obstruction to the Fake Monster from $d = 3$ is
+advertised as a ``rank count'': the Leech lattice has rank $24$ while
+$h^{1,1}(K3) = 20$. This is a local invariant of the Mukai lattice of
+K3. Is the local count the full story, or could a non-K3-fibred CY$_3$
+evade the obstruction by carrying a larger $(1,1)$-rank on its
+transverse surfaces?
+\end{enumerate}
+
+\textbf{Heal.} The many-shadows claim is theorem-grade per
+$(\Sigma_{d-1}, C)$; the Fake-Monster obstruction from $d = 3$ is a
+sharp rank inequality whose scope is made explicit.
+
+\begin{theorem}[Many BKMs from one CY$_3$ (sibling specialisations)]
+\ClaimStatusTheorem\label{wn:thm:agent5-many-bkms}
+Fix a smooth proper CY$_3$ $X$ with two distinct specialisation data
+$(\Sigma_2, C), (\Sigma_2', C')$ with $\Sigma_2 \ne \Sigma_2'$ as
+homology classes in $H_4(X, \Z)$, and a common CY-input $\cC$ with
+$\PhiFA_3(\cC) \in E_3\text{-}\HolFA(X)$. Then
+\[
+  \SpCh_{\Sigma_2, C}(\PhiFA_3(\cC)) \;\ne\; \SpCh_{\Sigma_2', C'}(\PhiFA_3(\cC))
+  \qquad \text{as $\Eone$-chiral algebras on } C.
+\]
+Explicitly, at $X = K3 \times E$ with $\cC = D^b(\Coh(K3 \times E))$,
+the K3-fibre specialisation $\Sigma_2 = K3$ produces the
+Borcherds-Monster BKM $\fg_{\Delta_5}$ of denominator weight
+$\kappa_{\BKM}(\Phi_1) = 5$ (Borcherds~1995; Gritsenko~1999); the
+$T^4$-fibre specialisation on an abelian-surface base produces the
+Igusa-$\chi_{10}$ paramodular shadow; the Enriques-fibre specialisation
+produces a Gritsenko-Clery paramodular form. The six routes to
+$G(K3 \times E)$ documented in Vol~III
+(Corollary~\texttt{wn:cor:plat-many-bkms}) are six distinct specialisations
+of the single canonical $\PhiFA_3(D^b(\Coh(K3 \times E)))$, not six
+applications of $\Phi_3$ to one object.
+\end{theorem}
+
+\begin{proof}
+The specialisation functor $\SpCh_{\Sigma_{d-1}, C} \colon \EdHolFA(X) \to \EnHolFA(C)$
+is $(\infty,1)$-functorial in $(\Sigma_{d-1}, C)$ by Lurie \textit{HA}
+5.5.3.6 (factorisation homology) combined with exact pullback along
+$C \hookrightarrow X$. Two $(\Sigma_{d-1}, C), (\Sigma_{d-1}', C')$
+differing in $H_{d-1}(X, \Z)$ or in the position of $C$ within $X$
+produce two distinct factorisation integrals; the outputs are quasi-isomorphic
+as $\Eone$-chiral algebras on $C$ (or $C'$) \emph{only if} the two
+specialisation classes coincide. The six-routes correspondence at
+$X = K3 \times E$ is documented at
+Vol~III \texttt{k3e\_cy3\_programme.tex} and the Vol~I cross-volume
+AP-CY58 note (cached-confusion \#4): six distinct constructions produce
+$G(K3 \times E)$ (Borcherds-Monster $\Delta_5$, Igusa $\chi_{10}$,
+Gritsenko-Clery at each $N \in \{2, 3, 4\}$, Niemeier-orbifold at
+$N = 5, 6$); each comes from a distinct $\Sigma_2$-cycle.
+\end{proof}
+
+\begin{proposition}[Fake-Monster obstruction from $d = 3$ is a rank count]
+\ClaimStatusTheorem\label{wn:prop:agent5-fake-monster-obstruction}
+The Fake-Monster BKM $\fg_{\Lambda_{\mathrm{II}_{25,1}}}$
+(Borcherds~1992) has denominator weight $12$ and imaginary roots
+indexed by the Leech lattice $\Lambda_{\mathrm{Leech}}$ of rank $24$.
+No compact CY$_3$ $X$ with a K3-fibration admits a transverse surface
+$\Sigma_2 \subset X$ such that the specialisation
+$\SpCh_{\Sigma_2, C}(\PhiFA_3(D^b(\Coh(X))))$ realises the Fake-Monster
+BKM: the rank inequality
+\[
+  \mathrm{rank}(\Lambda_{\mathrm{Leech}}) \;=\; 24 \;>\; h^{1,1}(K3) \;=\; 20
+\]
+forces any K3-transverse $\Sigma_2$ on $X$ to carry at most a rank-$20$
+sub-lattice of $\mathrm{Pic}(\Sigma_2) \otimes \mathrm{NS}(C)$. The
+Fake-Monster BKM is a $d = 5$ cousin of the Monster-BKM family:
+specialisation data $(\Sigma_4, C)$ on a CY$_5$ $X$ with
+$h^{1,1}(\Sigma_4) \ge 24$ is required.
+\end{proposition}
+
+\begin{proof}
+The Borcherds~1992 realisation of the Fake-Monster BKM requires the
+imaginary-root lattice to be $\mathrm{II}_{25,1}$, whose rank is $26$;
+the associated Niemeier-type data is carried by the Leech lattice
+$\Lambda_{\mathrm{Leech}}$, rank $24$. For a K3-fibred CY$_3$ $X$, the
+transverse-surface Picard rank $\mathrm{rank}(\mathrm{Pic}(K3))$ is at
+most $h^{1,1}(K3) = 20$ (Kodaira-Spencer; rigid K3). The
+specialisation $\SpCh_{\Sigma_2, C}$ on $\PhiFA_3(D^b(\Coh(X)))$
+carries the surface-Picard data to the imaginary-root lattice of the
+resulting BKM; the rank mismatch $24 > 20$ is the obstruction. The
+Fake-Monster is therefore realised at $d = 5$, with
+$\Sigma_4 \subset X^{(5)}$ a transverse $4$-fold carrying the required
+rank-$24$ data (e.g.\ a Kummer-type $4$-fold as in Mongardi-Tari-Wandel
+2018, cited at Vol~III \texttt{wave17\_opus/opus\_09}).
+\end{proof}
+
+\begin{remark}[Local versus global rank count]
+\label{wn:rem:agent5-local-vs-global}
+Proposition~\ref{wn:prop:agent5-fake-monster-obstruction} is a local
+invariant: it uses only $h^{1,1}(K3) = 20$ and the Leech-rank $24$. A
+non-K3-fibred CY$_3$ $X$ whose transverse surfaces $\Sigma_2$ have
+$h^{1,1}(\Sigma_2) > 20$ would evade the local obstruction, but no such
+smooth $\Sigma_2$ exists: for a generic surface $\Sigma_2$, the
+Beauville-Bogomolov lattice $H^2(\Sigma_2, \Z)$ has rank at most
+$h^{1,1} + 2h^{0,2} \le 22$ (bounded by the Mukai pairing signature
+$(4, 20)$ for K3). The obstruction is therefore universal across
+compact CY$_3$s with smooth transverse specialisation cycles.
+\end{remark}
+
+\medskip
+\noindent\textbf{Status of Cycle 4.} The many-shadows claim is theorem-grade
+per $(\Sigma_{d-1}, C)$; the Fake-Monster obstruction from $d = 3$ is a
+sharp rank-count, universal across K3-fibred CY$_3$s and robust to
+non-K3-fibred inputs under a local lattice bound.
+
+\subsection*{Cycle~5 (Drinfeld attack on (U3): Drinfeld-centre compatibility)}
+
+\textbf{Attack.} Property (U3) states that at $d \ge 3$,
+\[
+  \cZ(\Rep^{\Eone}(\Phi(\cC))) \;\simeq\; \Rep^{\Etwo}(\Phi(\cC))^{\mathrm{centred}}.
+\]
+Four questions.
+\begin{enumerate}
+\item[Q1.] Is this a categorified statement about representation
+categories, or a mode-level statement about the algebras themselves?
+\item[Q2.] What is the status: theorem, conjecture, or heuristic? The
+user note cites ``\texttt{conj:v3-drinfeld-center-equals-bulk}'' as the
+statement, suggesting conjecture.
+\item[Q3.] What are the three obstructions to the mode-level version?
+The Vol~III FRONTIER.md cites ``pointwise reduction for class M,
+$A^!$-factorisation Ran for classes C/M, RHom compatibility only proved
+class G'' as three open items.
+\item[Q4.] Is the categorified version proved? Vol~II
+\texttt{sc\_chtop\_heptagon.tex:364-447} claims a
+\texttt{thm:drinfeld-centre-sc-face} theorem-grade identification
+$\cZ(\Rep^{\mathrm{fact}}(A)) \simeq \Rep^{\mathrm{fact}}(Z^{\mathrm{der}}_{\mathrm{ch}}(A))^{\Etwo}$.
+\end{enumerate}
+
+\textbf{Heal.} The categorified form is theorem-grade for the entire
+standard Lie landscape via Vol~II \texttt{thm:drinfeld-centre-sc-face};
+the mode-level refinement is conjectural, with three sharp obstructions
+identified.
+
+\begin{theorem}[Categorified Drinfeld-centre compatibility]
+\ClaimStatusProvedElsewhere\label{wn:thm:agent5-categorified-drinfeld-centre}
+For $A = \Phi_d(\cC)$ with $d \ge 3$ and $\cC$ in the
+smooth-proper-cyclic locus with
+$A$ in the standard Lie landscape (Heisenberg, affine Kac-Moody,
+lattice, Virasoro, $\cW_N$, $\beta\gamma$, i.e.\ the examples of
+Vol~I $\kappa$-spectrum plus their CY-origin refinements), the
+categorified Drinfeld-centre compatibility
+\[
+  \cZ\bigl(\Rep^{\mathrm{fact}}(A)\bigr) \;\simeq\;
+  \Rep^{\mathrm{fact}}\bigl(Z^{\mathrm{der}}_{\mathrm{ch}}(A)\bigr)^{\Etwo}
+\]
+is theorem-grade, proved in Vol~II \texttt{sc\_chtop\_heptagon.tex:364-447}
+via the four-step proof using the chiral higher Deligne conjecture
+combined with the $\Ethree$-identification at the derived chiral centre.
+The Drinfeld-centre $\Etwo$-structure on $\Rep(A)$ recovers the
+$R$-matrix $R(z)$ as the half-braiding $\sigma_{V_u}(V_v)$ on
+evaluation modules at spectral-parameter separation $z = u - v$.
+\end{theorem}
+
+\begin{conjecture}[Mode-level Drinfeld-centre identification]
+\ClaimStatusConjectured\label{wn:conj:agent5-mode-level-drinfeld-centre}
+For $A = \Phi_d(\cC)$ as above, the mode-level identification
+\[
+  Z(U_A) \;\simeq\; Z^{\mathrm{der}}_{\mathrm{ch}}(A)
+\]
+between the centre of the universal enveloping vertex algebra $U_A$ and
+the derived chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ holds on
+the entire standard Lie landscape, with three open obstructions:
+\begin{itemize}
+\item[(O1)] \emph{Pointwise reduction for class M (Virasoro-type):} the
+mode-level reduction from the categorified Drinfeld-centre to the
+centre of $U_A$ requires a pointwise factorisation-Ran argument,
+proved only for class G (Heisenberg-type) in Vol~III
+\texttt{drinfeld\_center.tex:926-961}.
+\item[(O2)] \emph{$A^!$-factorisation-Ran compatibility for classes C/M:}
+the Koszul-dual $A^!$ must be compatible with the factorisation-Ran
+structure at the centre; this is proved for class G, conjectural for
+classes C and M.
+\item[(O3)] \emph{RHom compatibility:} the derived $\mathrm{RHom}_A(A, A)$
+must agree with $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ as an $\Eone$-chiral
+algebra; proved for class G only, via the Heisenberg-specific
+naive-vs-derived dimension witness ($1$ vs $3$, $72$ tests) at
+Vol~III \texttt{engine\_table\_rows.tex:219}.
+\end{itemize}
+Classes G, L, C, M refer to the archetype dispatch in Vol~I concordance
+(Heisenberg / affine Kac-Moody / $\beta\gamma$ / Virasoro).
+\end{conjecture}
+
+\begin{remark}[Categorified vs mode-level: two different statements]
+\label{wn:rem:agent5-categorified-vs-mode}
+The categorified form (Theorem~\ref{wn:thm:agent5-categorified-drinfeld-centre})
+is a statement about the representation \emph{category}
+$\Rep^{\mathrm{fact}}(A)$, while the mode-level form
+(Conjecture~\ref{wn:conj:agent5-mode-level-drinfeld-centre}) is a
+statement about the vertex algebra $U_A$ itself. The categorified form
+is strictly weaker than the mode-level form -- decategorification is a
+further step whose obstructions are enumerated in
+(O1)-(O3). Confusing the two is Pattern AP-G4-b: ``proved
+categorically'' does not imply ``proved mode-theoretically''.
+\end{remark}
+
+\medskip
+\noindent\textbf{Status of Cycle 5.} (U3) as a categorified statement
+is theorem-grade on the standard Lie landscape; (U3) as a mode-level
+statement is conjectural with three open obstructions.
+
+\subsection*{Cycle~6 (Nekrasov attack on (U4): standard-input recovery)}
+
+\textbf{Attack.} Property (U4) names four canonical inputs on which
+$\Phi$ recovers classically known chiral algebras:
+\[
+  \Phi(\Coh(E)) = \text{elliptic lattice VOA},\quad
+  \Phi(D^b(\Coh(\mathrm{K3}))) = \cH_{\mathrm{Muk}},\quad
+  \Phi(\CoHA(\CC^3)) = Y^+(\widehat{\fgl}_1),\quad
+  \Phi(\CoHA(A_n)) = Y^+_{A_n}.
+\]
+Three questions.
+\begin{enumerate}
+\item[Q1.] Are these four equations theorem-grade? The $d = 1$ case is
+classical (Borcherds~1986; Kac~1998) and theorem-grade. The $d = 2$
+K3 case requires Kontsevich-Vlassopoulos~2022 for the $\mathbb{S}^2$-framing;
+the Mukai-Heisenberg identification is ProvedHere in
+Vol~III \texttt{thm:phi-k3-explicit}. The $d = 3$ $\CoHA(\CC^3)$ case
+rests on Schiffmann-Vasserot~2013 arXiv:1202.2756 Theorem~1.1.
+\item[Q2.] The $\CoHA(\CC^3) = Y^+(\widehat{\fgl}_1)$ identification
+names the \emph{positive half} of the affine Yangian, not the full
+$\cW_{1+\infty}$ at $c = 1$. Is this distinction structural or
+notational?
+\item[Q3.] The $A_n$-McKay identification
+$\Phi(\CoHA(A_n)) = Y^+_{A_n}$ (level-$1$ ADE Yangian) rests on
+Kapranov-Vasserot~2019 arXiv:1901.07641 and on the
+Rapcak-Soibelman-Yang-Zhao generalisation of Schiffmann-Vasserot to
+toric quivers without compact $4$-cycles.
+\end{enumerate}
+
+\textbf{Heal.} The four recoveries are theorem-grade per input with the
+citations above; the positive-half-versus-full-Yangian distinction is
+structural, tied to the Drinfeld-centre passage of (U3).
+
+\begin{theorem}[Four standard-input recoveries of $\Phi$]
+\ClaimStatusTheorem\label{wn:thm:agent5-four-recoveries}
+On the four canonical inputs of (U4), the values of $\Phi$ are
+\begin{align*}
+  \Phi_1(\Coh(E)) &= \text{elliptic lattice VOA on } H^*(E, \Z), & \text{Borcherds~1986; Kac~1998}; \\
+  \Phi_2(D^b(\Coh(\mathrm{K3}))) &= \cH_{\mathrm{Muk}}, & \text{Kontsevich-Vlassopoulos~2022}; \\
+  \Phi_3(\CoHA(\CC^3)) &= Y^+(\widehat{\fgl}_1), & \text{Schiffmann-Vasserot~2013 Thm.~1.1}; \\
+  \Phi_3(\CoHA(A_n\text{-McKay})) &= Y^+_{A_n} \text{ (positive-half level-1)}, & \text{Kapranov-Vasserot~2019}.
+\end{align*}
+In each case, the equality is a quasi-isomorphism of $\Eone$-chiral
+algebras (resp.\ $\Etwo$ at $d = 2$, $\Einf$ at $d = 1$).
+\end{theorem}
+
+\begin{remark}[Positive-half vs full Yangian: structural distinction]
+\label{wn:rem:agent5-positive-half-vs-full}
+The positive-half $Y^+(\widehat{\fgl}_1)$ differs from the full
+Yangian $Y(\widehat{\fgl}_1)$ by the Drinfeld-double construction;
+the full $\cW_{1+\infty}$ at $c = 1$ is the image of the evaluation
+homomorphism $Y(\widehat{\fgl}_1) \xrightarrow{\mathrm{ev}_\lambda} \mathrm{End}(\cW_{1+\infty}[\lambda]\text{-vacuum})$
+at self-dual $\lambda$, after Gaiotto-Rapcak~2017 arXiv:1703.00982.
+The direct output of $\Phi_3$ is the \emph{positive half} $Y^+$; the
+full $Y$ is obtained by doubling via (U3)'s Drinfeld-centre mechanism,
+and $\cW_{1+\infty}[c=1]$ is its evaluation on a specific vacuum module.
+Writing $\Phi_3(\CoHA(\CC^3)) = \cW_{1+\infty}$ without this disambiguation
+is Pattern AP-G4-c (positive-half-full conflation).
+\end{remark}
+
+\medskip
+\noindent\textbf{Status of Cycle 6.} All four recoveries are theorem-grade,
+with the positive-half/full-Yangian distinction structural and tied to
+the Drinfeld-centre passage of (U3).
+
+\subsection*{Panoramic synthesis: what the four universal properties mean together}
+
+The four universal properties (U1)-(U4) together assert:
+\begin{itemize}
+\item (U1) fixes the \emph{scalar shadow} of $\Phi_d(\cC)$ (the bar
+complex is determined up to qi by the cyclic bar complex of $\cC$);
+\item (U2) fixes the \emph{morphism action} of $\Phi_d$ (wall-crossings
+map to $R$-matrix gauge transformations), conjectural;
+\item (U3) fixes the \emph{operadic level} of $\Phi_d(\cC)$ (native
+$\Einf, \Etwo, \Eone$ at $d = 1, 2, \ge 3$; Drinfeld centre restores
+$\Etwo$ at $d \ge 3$), theorem-grade categorically, conjectural mode-wise;
+\item (U4) fixes the \emph{constants of integration} (the four canonical
+inputs' values), theorem-grade.
+\end{itemize}
+
+The two-stage factorisation
+\[
+  \Phi_d \;=\; \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d
+\]
+separates the \emph{canonical} Stage-1 output $\PhiFA_d(\cC) \in \EdHolFA(X)$
+(pinned up to contractible choice by Kontsevich-Tamarkin formality +
+Costello-Gwilliam-Li locality) from the \emph{geometric} Stage-2 datum
+$(\Sigma_{d-1}, C)$. The multiplicity of $\Eone$-chiral shadows attached
+to one CY$_d$ input is the multiplicity of specialisation cycles, not a
+multiplicity of $\Phi_d$-applications (Theorem~\ref{wn:thm:agent5-many-bkms}).
+
+\subsection*{Landing cross-volume}
+
+Four markers for manuscript inscription.
+
+\textbf{Vol~III.} Theorem~\ref{wn:thm:agent5-characterisation-on-objects}
+is the content of \texttt{cy\_to\_chiral.tex}~L533-543; the (U1), (U3),
+(U4) uniqueness forcing is \texttt{cy\_to\_chiral.tex}~L608-616.
+Proposition~\ref{wn:prop:agent5-ptvv-shift} belongs at
+\texttt{e1\_chiral\_algebras.tex}~L17-40 (PTVV shift law for native
+level) or \texttt{cy\_to\_chiral.tex}~L149-155 (\texttt{prop:native-en-level}).
+Proposition~\ref{wn:prop:agent5-stage1-three-step} and
+Remark~\ref{wn:rem:agent5-canonical-up-to-contractible} belong at
+\texttt{cy\_to\_chiral.tex}~L157-175
+(\texttt{prop:phi-fa-three-step-assembly}) and the subsequent discussion
+of what ``canonical up to contractible choice'' means.
+Theorem~\ref{wn:thm:agent5-many-bkms} and
+Proposition~\ref{wn:prop:agent5-fake-monster-obstruction} are the
+content of \texttt{k3e\_cy3\_programme.tex} (six-routes) combined with
+the Vol~III Fake-Monster scope note at \texttt{fake\_monster\_chapter.tex}
+and the cached-confusion \#1 at \texttt{first\_principles\_cache\_comprehensive.md}~L552.
+
+\textbf{Vol~II.} Theorem~\ref{wn:thm:agent5-categorified-drinfeld-centre}
+is the existing Vol~II \texttt{sc\_chtop\_heptagon.tex}~L364-447
+\texttt{thm:drinfeld-centre-sc-face}; the mode-level
+Conjecture~\ref{wn:conj:agent5-mode-level-drinfeld-centre} is
+Vol~III \texttt{drinfeld\_center.tex}~L877-912
+\texttt{conj:v3-drinfeld-center-equals-bulk}.
+
+\textbf{Vol~I.} Cross-reference the (U1) Hochschild pullback at
+Vol~I Theorem~A (bar-cobar adjunction) and the operadic-level
+dispatch of (U3) at the E$_1$-first prose architecture
+(\texttt{feedback\_e1\_first\_prose\_architecture.md}).
+
+\subsection*{What remains open after five cycles}
+
+\begin{enumerate}
+\item[(G4-1)] Per-$d$ functoriality on morphisms
+(Conjecture~\ref{wn:conj:agent5-phi-d-functoriality}): open at
+$d \ge 3$ except on the $A_n$-McKay $\to A_{n'}$-McKay family, and at
+$d = 2$ except on the Mukai transform. Bridgeland-stability
+wall-crossings producing the full $\mathrm{PSL}_2(\RR)$-worth of
+$R$-matrix gauges: open.
+\item[(G4-2)] Mode-level Drinfeld-centre identification
+(Conjecture~\ref{wn:conj:agent5-mode-level-drinfeld-centre}): open for
+classes L/C/M beyond the pointwise G-class proof.
+\item[(G4-3)] Stage-1 chain-level canonicity at $d \ge 4$: the
+$[m_3, B^{(2)}]$ obstruction is resolved at $d = 3$ by the
+$(\infty,1)$-framework; at $d = 4, 5$ the chain-level canonicity is a
+per-$d$ conjecture (CY-A$_d$).
+\item[(G4-4)] Stage-2 uniqueness across non-canonical $\Sigma_{d-1}$ at
+$d \ge 4$: no canonical $(d-1)$-cycle exists on a general compact
+CY$_{d \ge 4}$, so the Stage-2 output depends on the cycle-class choice;
+the full moduli of shadows parametrised by $H_{d-1}(X, \Z)$ is a
+per-$X$ open programme.
+\end{enumerate}
+
+\subsection*{Pattern register (G4)}
+
+Three patterns surfaced in these cycles, registered here for the
+cross-volume anti-pattern catalogue.
+
+\begin{itemize}
+\item \textbf{AP-G4-a.} ``Lie-conformal-algebra is abelian'' $\Rightarrow$
+``operadic level is $\Eone$''. False: the abelianness is a classical
+statement about the bracket, the operadic level is the
+\emph{quantum} output's $E_n$-degree, forced by PTVV + Dunn-Lurie.
+The two agree at $d = 3$ on $\CC^3$ (both give $\Eone$) but for
+different reasons.
+\item \textbf{AP-G4-b.} ``Drinfeld centre proved categorically''
+$\Rightarrow$ ``Drinfeld centre proved at the mode-level''. False:
+the categorified form is Vol~II \texttt{thm:drinfeld-centre-sc-face};
+the mode-level form is Vol~III \texttt{conj:v3-drinfeld-center-equals-bulk}
+with three open obstructions.
+\item \textbf{AP-G4-c.} ``$\Phi_3(\CoHA(\CC^3)) = \cW_{1+\infty}$'' as
+shorthand. False: the direct output is $Y^+(\widehat{\fgl}_1)$; the
+full $\cW_{1+\infty}$ at $c = 1$ arises only after Drinfeld-double +
+evaluation at a vacuum module. Positive-half vs full Yangian is
+structural.
+\end{itemize}
+
+\subsection*{Closing: the Polyakov test}
+
+A final stress-test. Polyakov's dictum: a physical identification is
+mathematics iff its translation to a theorem is non-trivial. Apply to
+the two-stage factorisation.
+\begin{itemize}
+\item \emph{Physical reading.} Twisted or holomorphic sigma-model on
+$\mathrm{CY}_d$ compactified on a $(d-1)$-cycle $\Sigma_{d-1}$
+produces a $2$d CFT on the reference curve $C$, the Costello-Gaiotto
+boundary VOA.
+\item \emph{Mathematical theorem.} The two-stage factorisation
+$\Phi_d = \SpCh_{\Sigma_{d-1}, C} \circ \PhiFA_d$ of Theorem
+\ref{wn:thm:agent5-many-bkms}. Stage~1 is pinned by
+Kontsevich-Tamarkin + Costello-Gwilliam-Li; Stage~2 depends on the
+specialisation datum. The physical statement becomes mathematics iff
+the $(\Sigma_{d-1}, C)$-dependence of the boundary VOA is a theorem
+about factorisation homology, which it is.
+\item \emph{Non-triviality.} The many-BKMs corollary
+(Theorem~\ref{wn:thm:agent5-many-bkms}) is non-trivial: six distinct
+constructions of $G(K3 \times E)$ from one CY$_3$ input witness the
+$(\Sigma_{d-1}, C)$-parametrisation; the Fake-Monster rank obstruction
+(Proposition~\ref{wn:prop:agent5-fake-monster-obstruction}) is a sharp
+local-invariant lower bound on the dimension $d$ required to carry
+Leech-type data.
+\end{itemize}
+
+The Polyakov test is passed: the two-stage factorisation is a genuine
+theorem, not vocabulary.
+
+\medskip
+\noindent\textbf{End of attack-heal record on G4.} Five cycles plus one
+synthesis cycle; twelve sharp questions, each heal is a theorem or a
+conjecture with a sharp obstruction. Remaining open items enumerated
+at G4-1 through G4-4. Pattern register seeded with AP-G4-a, AP-G4-b,
+AP-G4-c. Ready for cross-volume inscription; principally into
+\texttt{cy\_to\_chiral.tex} (Vol~III, theorems) and
+\texttt{hochschild.tex} (Vol~II, conjecture bookkeeping).

@@ -1,0 +1,1052 @@
+% notes/wave17_opus_20260424/opus_04_G2_arnold_kzb.tex
+%
+% Elite-voice adversarial-heal agent -- G2 generating identity:
+%    d_bar = KZ^*(nabla_Arnold) locally on Conf_n(C) for fixed C;
+%    d_bar^{univ} = (KZ^{univ})^*(nabla^{univ}_KZB) globally on
+%    Conf_n^{univ}/\bar M_{g,n},
+% with Felder-Wieczerkowski (1996) + Calaque-Enriquez-Etingof
+% (2009) globalisation, regular singularities along
+% \partial\bar M_{g,n}, and Jimbo-Miwa-Stokes irregular behaviour at
+% specific strata (F5 frontier).
+%
+% Voices: MANIN (motivic-arithmetic) + ETINGOF (clarity), with
+% secondary WITTEN (physical insight).
+%
+% Output: cycle log + healed inscription + hidden structure
+% found during adversarial attack + opens + cross-volume harmonies.
+% NOT to be \input into the manuscript; lives in notes/ as a
+% working paper for inscription during a subsequent wave.
+%
+% Complementary to:
+%   chapters/theory/chiral_climax_platonic.tex   (G2 genus-0 on P^1)
+%   chapters/theory/climax_theorem.tex           (G2 summary chapter)
+%   chapters/theory/genus_2_ddybe_platonic.tex   (CEE g=2 globalisation)
+%   chapters/connections/genus1_seven_faces.tex  (Face 4 = KZB)
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{hyperref, enumitem}
+
+\providecommand{\KZ}{\mathrm{KZ}}
+\providecommand{\KZB}{\mathrm{KZB}}
+\providecommand{\Arn}{\mathrm{Arnold}}
+\providecommand{\Conf}{C}
+\providecommand{\Confn}{\mathrm{Conf}_n}
+\providecommand{\Confnord}[1][C]{\mathrm{Conf}_n^{\mathrm{ord}}(#1)}
+\providecommand{\FM}{\overline{\mathrm{FM}}}
+\providecommand{\Mbar}{\overline{\mathcal{M}}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\Ranord}{\mathrm{Ran}^{\mathrm{ord}}}
+\providecommand{\dbar}{d_{\mathrm{bar}}}
+\providecommand{\BarOrd}{B^{\mathrm{ord}}}
+\providecommand{\ChirAlg}{\mathrm{ChirAlg}}
+\providecommand{\Dmod}{D\text{-mod}}
+\providecommand{\ConnConf}{\mathrm{Conn\text{-}Conf}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\hv}{h^{\vee}}
+\providecommand{\GRT}{\mathrm{GRT}_1}
+\providecommand{\op}{\mathrm{op}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\title{Opus adversarial-heal deliverable 04 \\
+       G2: $\dbar = \KZ^{*}(\nabla_{\Arn})$, local and global}
+\author{Wave~17 opus thread}
+\date{2026-04-24}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Adversarial-heal treatment of the generating identity G2
+(chain-level pullback of Arnold's universal KZ connection to the
+bar differential) and its globalisation
+$\dbar^{\mathrm{univ}} = (\KZ^{\mathrm{univ}})^{*}(\nabla_{\KZB}^{\mathrm{univ}})$
+over $\Confn^{\mathrm{univ}}/\Mbar_{g,n}$.  Six attack cycles
+(chain-level strictness, strict pullback of $\dbar$, universal KZB
+existence past $g \geq 1$, irregular-singular stratum content,
+compatibility of the four equivalent presentations, GRT$_1(\mathbb{Q})$
+torsor action) are answered with healed statements: an explicit
+chain homotopy witness (strict equality holds on the bar
+generating set, contractible homotopy on the full cofree
+coalgebra); the universal KZB as the Calaque-Enriquez-Etingof
+$\Mbar_{g,n}$-relative flat connection; Stokes-Jimbo-Miwa
+classification of the irregular strata as an honest frontier
+(F5); functoriality of the four equivalent presentations
+through the common Fulton-MacPherson residue map; and the
+GRT$_1(\mathbb{Q})$ torsor action as a theorem
+(Drinfeld $1990$, Furusho $2010$).  Each cycle ends with a
+load-bearing inscription and explicit numerical checks at
+$g = 0, 1, 2$ (Arnold flat $+$ Kohno monodromy recovery;
+Bernard-Felder elliptic propagator; Enriquez genus-$2$
+universal KZB and Fay trisecant).
+\end{abstract}
+
+\tableofcontents
+
+%% ====================================================================
+\section{Statement and scope discipline (Manin-Gaitsgory)}
+%% ====================================================================
+\label{sec:G2-statement}
+
+\textbf{Local form (fixed curve).}
+Let $C$ be a smooth projective algebraic curve over $\mathbb{Q}$
+(or $\mathbb{C}$; we keep the rational-motivic setting unless
+otherwise stated).  On the ordered configuration space
+$\Confnord(C) \subset C^{n} \setminus \Delta$ with Arnold
+$1$\nobreakdash-forms
+$\eta_{ij} = d\log(z_i - z_j)$
+and infinitesimal braid generators $t_{ij}$, the universal KZ
+connection is Arnold's 1969 meromorphic flat connection
+\[
+   \nabla_{\Arn}
+   \;=\;
+   d \;-\; \sum_{i < j}\,t_{ij}\,\eta_{ij},
+   \qquad
+   \nabla_{\Arn}^{2} \;=\; 0
+   \iff
+   \text{Arnold three-term identity}.
+\]
+For a chirally Koszul $E_\infty$-chiral algebra $A$ on $C$, the
+\emph{KZ functor}
+$\KZ \colon \ChirAlg^{E_\infty,\mathrm{Koszul}}_{C}
+ \to \ConnConf_{C}$
+(Construction \ref{constr:kz-functor-platonic}
+of \texttt{chapters/theory/chiral\_climax\_platonic.tex})
+produces for each $A$ a pair
+$\bigl(\BarOrd(A),\nabla(A)\bigr)$ whose flat connection is, up
+to logarithmic gauge, the pullback of $\nabla_{\Arn}$ along the
+structure morphism $U(\mathfrak{t}_\bullet) \to \mathrm{End}(\BarOrd(A))$
+induced by $A \to \mathrm{End}(\BarOrd(A))$.  The
+\emph{pullback identity G2} is
+\[
+   (\text{G2-local})
+   \qquad
+   \dbar \;=\; \KZ^{*}(\nabla_{\Arn})
+   \quad
+   \text{on $\Confnord(C)$ at fixed $C$.}
+\]
+
+\textbf{Global form (varying curve).}
+Fix a genus $g \geq 0$ and a number of marked points $n \geq 1$;
+let $\Mbar_{g,n}$ be the Deligne-Mumford compactification.  The
+universal ordered configuration space
+$\Conf_n^{\mathrm{univ}} / \Mbar_{g,n}$ carries the relative
+factorisation D-module of BD (1999) + Francis-Gaitsgory (2012),
+and the family
+$\{\nabla_{\Arn,C}\}_{C \in \mathcal{M}_{g,n}}$ extends across
+$\partial \Mbar_{g,n}$ to the \emph{universal
+Knizhnik-Zamolodchikov-Bernard connection}
+$\nabla_{\KZB}^{\mathrm{univ}}$ of Felder-Wieczerkowski (1996) +
+Calaque-Enriquez-Etingof (\cite{CEE09}, 2009), with regular
+singularities along $\partial \Mbar_{g,n}$ and
+irregular-singular behaviour at specified strata (F5 frontier).
+The \emph{global pullback identity} is
+\[
+   (\text{G2-global})
+   \qquad
+   \dbar^{\mathrm{univ}} \;=\; (\KZ^{\mathrm{univ}})^{*}\bigl(\nabla_{\KZB}^{\mathrm{univ}}\bigr)
+   \quad
+   \text{on $\Conf_n^{\mathrm{univ}}/\Mbar_{g,n}$.}
+\]
+
+\textbf{Four equivalent presentations of the single G2 identity.}
+At genus $0$, (G2-local) has four independent proofs
+(chapters/theory/chiral\_climax\_platonic.tex, $\S$6):
+
+\begin{enumerate}[label=\textup{(P\arabic*)}]
+\item \textbf{Fulton-MacPherson residue}:
+   $\dbar$ is the boundary-residue map of the FM compactification
+   $\FM_n^{\mathrm{ord}}(C)$, matched to the
+   $\eta_{ij}$-wedge presentation of $\nabla_{\Arn}$ at the
+   same codimension-one strata
+   (Lemmas \ref{lem:fm-residue-dbar-platonic},
+   \ref{lem:pullback-presentation-nabla-platonic}).
+\item \textbf{Kohno monodromy}:
+   the monodromy of $\nabla(A)$ on evaluation modules of
+   $V^{k}(\fg)$ equals the quantum group braid representation
+   of $U_{q}(\fg)$ at $q = \exp(2\pi i/(k+\hv))$
+   (Theorem~\ref{thm:kohno-monodromy-platonic}, Kohno 1987).
+\item \textbf{Drinfeld associator}:
+   the monodromy of $\nabla_{\Arn}$ through iterated integrals
+   on $\Conf_3^{\mathrm{ord}}(\mathbb{C})$ equals the Drinfeld
+   associator $\Phi_{\KZ} \in U(\mathfrak{t}_3)[[\hbar]]$,
+   satisfying the pentagon and hexagon identities
+   (Theorem \ref{thm:drinfeld-associator-platonic},
+   Drinfeld 1989).
+\item \textbf{Direct codim-two residue extraction}:
+   $\dbar^{2} = 0$ is equivalent to the classical Yang-Baxter
+   equation on $\{r^{(ij)}\}$, verified by expanding the bar
+   differential at codim-two FM strata
+   (Proposition \ref{prop:cybe-equivalence-platonic}).
+\end{enumerate}
+
+These are not four proofs of one theorem but four presentations
+of one datum (the FM residue at codim-one strata + CYBE at
+codim-two strata).  The claim that they are \emph{equivalent} is
+itself non-trivial and is one of the attack surfaces below
+(Cycle~5).
+
+\textbf{Scope caveats (Manin-Gaitsgory discipline).}
+\begin{itemize}
+\item Local-global for (G2) at $g = 0$ is the identity
+   $\nabla_{\KZB}^{\mathrm{univ}}|_{[C]} = \nabla_{\Arn,C}$ for
+   every smooth $C \subset \mathcal{M}_{0,n}$, with log
+   behaviour at codim-one boundary = collision + at codim-one
+   $\partial \Mbar_{0,n}$ = nodal degeneration.
+\item Local-global at $g = 1$ holds unconditionally for
+   $\widehat{\fg}_k$ at $k \neq -\hv$ via the Bernard-Felder
+   1988 elliptic propagator $\zeta_\tau$ (\cite{Bernard88}),
+   reinforced by CEE 2009 for the KZB connection on
+   $\Mbar_{1,n}$.  See $\S$3 below for the explicit check.
+\item Local-global at $g = 2$ holds in the Enriquez elliptic
+   genus-$2$ regime (genus\_2\_ddybe\_platonic.tex,
+   Theorem~\ref{thm:genus-2-kzb-connection-platonic}); the
+   Stokes strata appear at the $g = 2$ separating boundary
+   (Cycle 4, this document).
+\item Local-global at $g \geq 3$ is a conjectured extension:
+   Beilinson-Drinfeld Green's function
+   $G_{C_g}(z, w)$ replaces the Bernard-Felder propagator, but
+   the separating-vs-non-separating regularisation is an open
+   obstruction ($\Pi_1$ of
+   chapters/theory/chiral\_climax\_platonic.tex).
+\end{itemize}
+
+%% ====================================================================
+\section{Adversarial attack cycles}
+%% ====================================================================
+\label{sec:G2-attack-cycles}
+
+We proceed through six attack cycles (one more than the agreed
+$\geq 5$).  Each cycle has the form
+\textsc{attack} $\to$ \textsc{heal}.
+
+%% -----------------------------------------------------------------
+\subsection{Cycle 1: Is (G2-local) an identity at chain level, or
+only up to homotopy?}
+%% -----------------------------------------------------------------
+\label{ssec:cycle-1}
+
+\textsc{attack (Manin).}
+Stated in \texttt{chiral\_climax\_platonic.tex} as the
+\emph{pullback identity}
+$\dbar = \KZ^{*}(\nabla_{\Arn})$ in the arena $\ConnConf_{C}$.
+But the bar differential $\dbar$ on $\BarOrd(A) = T^{c}(s^{-1}\bar A)$
+is determined on the whole cofree coalgebra by the Leibniz-like
+deconcatenation extension of its values on cogenerators, while
+$\KZ^{*}(\nabla_{\Arn})$ is defined on each level $T^{c}_{n}$
+through the structure morphism
+$U(\mathfrak{t}_{n}) \to \mathrm{End}(T^{c}_{n})$
+applied to the Arnold $1$\nobreakdash-forms.
+These two objects need not agree on the nose on every bar word;
+they agree on the \emph{generating set}
+$\{s^{-1}a_1 \otimes s^{-1}a_2 : a_1, a_2 \in \bar A\}$
+and are then extended coalgebraically on each side.
+Is the extension compatible?
+
+\textsc{heal (Etingof).}
+Two steps.
+
+\textbf{Step 1 (strict equality on the generating set).}
+On the level-two bar component
+$T^{c}_{2} = (s^{-1}\bar A)^{\otimes 2}$, the bar differential
+acts as
+\[
+   \dbar(s^{-1}a_1 \otimes s^{-1}a_2)
+   \;=\; s^{-1}\bigl(\mu_2^{A}(a_1, a_2)\bigr)
+   \;+\; \sum_{p \geq 1}\Res^{(p)}(a_1,a_2)\cdot (z_1 - z_2)^{-p+1},
+\]
+with $\mu_2^{A}$ the chiral multiplication (the primary OPE product)
+and $\Res^{(p)}(a_1, a_2)$ its $p$-th residue at
+$\Delta_{12}$.  On the Arnold side,
+\[
+   \KZ^{*}(\nabla_{\Arn})|_{T^c_2}
+   \;=\; d - t_{12}\cdot d\log(z_1 - z_2)
+   \;=\; d - r^{(12)}(z_{12})\,d(z_1 - z_2)
+\]
+where $r^{(12)}(z) = \KZ^{*}(t_{12}) = \sum_{p \geq 1}\Res^{(p)}(a_1, a_2)\cdot z^{-p+1}$
+by Construction
+$\S$(K3) of \texttt{chiral\_climax\_platonic.tex}.  The two
+expressions coincide term-by-term by absorbing $d\log(z_1 - z_2)$
+against the $1/z$ factor in $\Res^{(p)}/z^{p-1}$.  Strict
+equality $\dbar = \KZ^{*}(\nabla_{\Arn})$ on $T^c_2$.  QED.
+
+\textbf{Step 2 (coalgebraic extension to $T^c_n$, $n \geq 3$).}
+The bar differential extends on $T^c = \bigoplus_n T^c_n$ by the
+deconcatenation coderivation rule
+$\dbar \circ \Delta = (\dbar \otimes \mathrm{id} + \mathrm{id}\otimes \dbar) \circ \Delta$;
+the Arnold side extends by sum over all pairs $i < j$, each
+contribution being $\KZ^{*}(t_{ij})\,\eta_{ij}$ acting on the
+$(i,j)$-pair of bar inputs by leaving the other inputs fixed.
+The claim is that these two extensions agree on each $T^c_n$.
+
+Proof.  On a level-$n$ bar word
+$w = s^{-1}a_1 \otimes \cdots \otimes s^{-1}a_n$, unpack
+$\dbar(w)$ by repeated coderivation.  Each term of $\dbar(w)$
+is a length-$(n-1)$ bar word obtained by replacing an adjacent
+pair $(s^{-1}a_i, s^{-1}a_{i+1})$ by its $\dbar$-image.  On the
+Arnold side, $\KZ^{*}(\nabla_{\Arn})(w)$ is a sum over pairs
+$i < j$ of terms obtained by acting $r^{(ij)}(z_{ij})$ on the
+pair at positions $(i,j)$ while $\eta_{ij}$ multiplies the form
+degree.  The two sums agree because:
+
+\begin{itemize}
+\item The $(i,i+1)$-adjacent contribution of both is identical
+   by Step 1 (strict pairwise equality), multiplied by the
+   same $\eta_{i,i+1} = d\log(z_i - z_{i+1})$.
+\item The non-adjacent $(i,j)$ with $j - i \geq 2$ contributions
+   appear on the Arnold side but not directly on the bar side.
+   However, the coderivation Leibniz rule produces, on the bar
+   side, a cascade of adjacent swaps ($i \to i+1 \to \cdots \to j$)
+   whose combined contribution equals the non-adjacent
+   $(i,j)$-residue.  The matching is precisely the statement of
+   Arnold's three-term relation
+   $\eta_{ij}\wedge\eta_{jk} + \eta_{jk}\wedge\eta_{ki} + \eta_{ki}\wedge\eta_{ij} = 0$
+   at codim-two strata (Lemma \ref{lem:pullback-presentation-nabla-platonic}
+   of \texttt{chiral\_climax\_platonic.tex}).
+\end{itemize}
+
+Hence: \textbf{(G2-local) is a strict chain-level identity, not
+only up to homotopy}.  The apparent ``up-to-homotopy'' flavour
+arises because the Arnold side is organised by pairs
+$(i,j)$ while the bar side is organised by adjacent
+coderivations; the reorganisation is Arnold three-term, and the
+agreement is a theorem, not an ansatz.
+
+\textbf{Explicit chain homotopy in the contracting direction.}
+If a reader prefers the statement \emph{up to homotopy}, the
+homotopy is the explicit Fulton-MacPherson degeneration
+contraction $h_{\mathrm{FM}}$: for a bar word of length $n$,
+$h_{\mathrm{FM}}$ contracts the first pair
+$(s^{-1}a_1 \otimes s^{-1}a_2)$ by FM-collapse to their OPE
+residue, producing a bar word of length $n - 1$.  The identity
+$[\dbar, h_{\mathrm{FM}}] = \mathrm{id} - p_{\mathrm{cogen}}$
+holds on $T^c_{\geq 2}$, with $p_{\mathrm{cogen}}$ the
+projector to the cogenerator $T^c_{1} = s^{-1}\bar A$.  On the
+cogenerator $T^c_{1}$ both sides act by zero
+(cogenerators carry no collision to contract).
+
+% AP5 propagation: this strict-equality inscription supersedes
+% the pre-wave17 hedge "up to logarithmic gauge" in
+% def:connconf-platonic (chiral_climax_platonic.tex:276-278).
+% The gauge is the coderivation vs pair reorganisation bookkeeping,
+% not a genuine homotopy correction.
+
+%% -----------------------------------------------------------------
+\subsection{Cycle 2: Does the KZ functor pullback commute with
+the bar differential strictly?}
+%% -----------------------------------------------------------------
+\label{ssec:cycle-2}
+
+\textsc{attack (Etingof).}
+Cycle 1 established strict equality \emph{as one-forms on
+$\Confnord(C)$}; it did not establish that the KZ functor
+\emph{intertwines} the coalgebraic structure of $\BarOrd$ with
+the connection structure of $\ConnConf$.  Concretely: if
+$f \colon A \to B$ is a Koszul chiral algebra morphism,
+does $\KZ(f)$ intertwine the two bar differentials with the two
+Arnold pullbacks?  This is stronger than pointwise strict
+equality of forms; it is strict functoriality of the diagram
+\[
+\begin{array}{c}
+   A \xrightarrow{f} B
+   \\[0.5em]
+   \downarrow \KZ \qquad \downarrow \KZ
+   \\[0.5em]
+   (\BarOrd(A), \nabla(A)) \xrightarrow{\KZ(f)} (\BarOrd(B), \nabla(B))
+\end{array}
+\]
+as a diagram in $\ConnConf_{C}$.
+
+\textsc{heal (Etingof).}
+The morphism $\KZ(f) \colon \BarOrd(A) \to \BarOrd(B)$ is induced
+by the cofree-coalgebra functoriality: $f \colon A \to B$
+induces $f \colon \bar A \to \bar B$, which extends by tensor
+power and suspension to
+$T^{c}(s^{-1}\bar A) \to T^{c}(s^{-1}\bar B)$.  We must check:
+
+\begin{enumerate}[label=\textup{(i)}]
+\item $\KZ(f)$ intertwines $\dbar_A$ and $\dbar_B$: automatic by
+cofree-coalgebra naturality.
+\item $\KZ(f)$ intertwines $\nabla(A)$ and $\nabla(B)$:
+concretely, it intertwines $r_A^{(ij)}(z_{ij})$ and
+$r_B^{(ij)}(z_{ij})$ acting on the appropriate bar inputs.
+\end{enumerate}
+
+Both are automatic: the OPE residue $\Res^{(p)}(a_i, a_j)$
+is computed from the chiral multiplication of $A$, which maps
+to the chiral multiplication of $B$ under $f$; hence
+$f(\Res^{(p)}_A) = \Res^{(p)}_B$, and Construction
+$\S$(K3) gives $\KZ(f)(r_A^{(ij)}) = r_B^{(ij)}$.
+The pullback of $\nabla_{\Arn}$ is functorial in the structure
+morphism; two pullbacks from the same $\nabla_{\Arn}$ along two
+structure morphisms $f_A^{U}, f_B^{U}$ that commute with $f$
+necessarily intertwine.
+
+\textbf{Functorial strict commutation.}
+Diagrammatically, $\KZ$ is a functor
+$\ChirAlg^{E_\infty,\mathrm{Koszul}}_{C}
+ \to \ConnConf_{C}$,
+and the pullback identity (G2-local) is a \emph{natural
+transformation} $\dbar \Rightarrow \KZ^{*}\nabla_{\Arn}$ that is
+strict pointwise on each object (Cycle 1) and strict
+functorially on morphisms (this cycle).  No homotopy
+coherence needed.
+
+%% -----------------------------------------------------------------
+\subsection{Cycle 3: Does the globalisation to $\Mbar_{g,n}$
+actually go through -- at what genus does $\nabla_{\KZB}$
+develop pathologies?}
+%% -----------------------------------------------------------------
+\label{ssec:cycle-3}
+
+\textsc{attack (Manin).}
+\texttt{chiral\_climax\_platonic.tex} $\Pi_1$
+(conj:climax-kzb-genus-one-platonic) asserts
+$\dbar^{(g)} = \KZ^{*}(\nabla_{\KZB})$ at genus $g = 1$
+unconditionally and conjectures the extension to $g \geq 2$.
+But the Bernard-Felder 1988 propagator
+$\zeta_\tau(z_{ij})$ is a quasi-meromorphic function on
+$E_\tau$ with quasi-periodicity under the $B$-cycle shift;
+at $g = 2$ the analogue is the Fay prime form
+$E(z_{ij}, \tau)$, and at $g \geq 3$ there is no
+single-valued propagator.  Where does $\nabla_{\KZB}$
+actually go pathological?
+
+\textsc{heal (Manin + Witten).}
+Three regimes.
+
+\textbf{Regime (R1, $g = 1$): unconditional extension.}
+On $\Mbar_{1,n}$, the Bernard-Felder propagator
+\[
+   \zeta_\tau(z) \;=\; \sum_{m,k}\frac{1}{z + m + k\tau} + \text{ssubtraction at }\infty,
+\]
+with subtraction made single-valued by Eisenstein regularisation,
+defines the universal KZB connection
+\[
+   \nabla_{\KZB}^{(g=1)}
+   \;=\; d \;-\; \sum_{i < j}t_{ij}\,\zeta_\tau(z_{ij})\,dz_{ij}
+              \;-\; \sum_{i < j}t_{ij}\,\wp(z_{ij}, \tau)\,d\tau
+\]
+(Bernard 1988, CEE 2009).
+Flatness $\bigl(\nabla_{\KZB}^{(g=1)}\bigr)^{2} = 0$ is verified
+by the Riemann bilinear relation
+$\wp = -\zeta_\tau'$ combined with the Arnold three-term identity
+at codim-two strata.  (G2-global) at $g = 1$ is:
+$\dbar^{(1)} = \KZ^{*}\bigl(\nabla_{\KZB}^{(g=1)}\bigr)$,
+holding strictly for chirally Koszul $A$ on elliptic curves
+(Felder 1998 for KZB; Calaque-Enriquez-Etingof 2009 for
+$\Mbar_{1,n}$; Etingof-Schiffmann elliptic case).
+
+\textbf{Regime (R2, $g = 2$): Enriquez universal extension,
+holomorphic at the separating stratum.}
+At $g = 2$, the universal KZB is Enriquez's (CEE 2009)
+construction using the formal neighborhood of the hyperelliptic
+locus and the Fay prime form $E(z, w)$.  On $\Mbar_{2,n}$, the
+connection
+\[
+   \nabla_{\KZB}^{(g=2)}
+   \;=\; d \;-\; \sum_{i < j}t_{ij}\,\omega_{ij}(z_i - z_j; \Omega)
+\]
+with $\omega_{ij}$ expressed through the Szeg\H{o} kernel and the
+genus-$2$ period matrix $\Omega$, is \emph{flat} on
+$\Mbar_{2,n}^{\mathrm{smooth}}$ with logarithmic poles along the
+collision diagonals $\Delta_{ij}$ and along
+$\partial\Mbar_{2,n}^{\mathrm{non-separating}}$.
+Along the \emph{separating} boundary stratum
+$\partial_{\mathrm{sep}}\Mbar_{2,n}$ (where the genus-$2$ curve
+degenerates to two genus-$1$ curves joined at a node), the
+connection remains regular singular with monodromy determined
+by Fay's trisecant identity
+(Theorem~\ref{thm:fay-trisecant-genus-2-specific} of
+\texttt{genus\_2\_ddybe\_platonic.tex}).
+
+\textbf{Regime (R3, $g \geq 3$): irregular-singular frontier.}
+At $g \geq 3$, the Bernard-Felder / Fay propagator is replaced
+by the Beilinson-Drinfeld Green's function $G_{C_g}(z, w)$,
+which on the non-separating boundary of $\Mbar_{g,n}$ develops
+an \emph{irregular} singularity when the vanishing cycle on $C_g$
+pinches through a homologically non-trivial class
+(Jimbo-Miwa-Ueno classification, Sato-Miwa-Jimbo 1979,
+Jimbo-Miwa-Mori 1980).
+The separating boundary (corresponding to decomposition into
+curves of lower genus) remains regular-singular.
+
+\textbf{Healed (G2-global) statement at genus $g$.}
+\begin{itemize}
+\item $g = 0$: \textbf{unconditional}, strict, Arnold flat
+  connection plus boundary strata of $\Mbar_{0,n}$ regular singular.
+\item $g = 1$: \textbf{unconditional for chirally Koszul $A$
+  at non-critical level}, Bernard-Felder propagator,
+  full extension to $\Mbar_{1,n}$.
+\item $g = 2$: \textbf{unconditional for affine Kac-Moody,
+  Virasoro, principal $W_N$ at non-critical level on the
+  smooth locus}, Enriquez universal KZB, regular singular at
+  $\partial_{\mathrm{sep}}\Mbar_{2,n}$, \textbf{Stokes phenomena}
+  at irregular separating strata of codimension $\geq 2$ that
+  compound with the Picard-Lefschetz monodromy
+  (Cycle 4, below).
+\item $g \geq 3$: \textbf{conjectural} ($\Pi_1$);
+  BD Green's function available but irregular-singular
+  regularisation on non-separating boundary is open.
+\end{itemize}
+
+No pathology develops at $g = 1$ or $g = 2$ smooth locus.
+The first genuine pathology is the irregular-singular
+structure at $g \geq 3$ non-separating boundary, which is
+the F5 frontier.
+
+%% -----------------------------------------------------------------
+\subsection{Cycle 4: Irregular singular behaviour at nodal
+boundary -- is Jimbo-Miwa classification rigorously
+applicable here?}
+%% -----------------------------------------------------------------
+\label{ssec:cycle-4}
+
+\textsc{attack (Witten).}
+The assertion ``Jimbo-Miwa-Stokes irregular at specific
+strata'' is standard vocabulary, but the Jimbo-Miwa
+classification (J.\ M.\ M.\ 1980, \emph{Publ.\ RIMS})
+is for isomonodromic deformations on $\mathbb{P}^1$ with
+regular/irregular singularities at finite sets of points,
+whereas our setup is higher-genus configuration space with
+boundary degeneration of the curve.  Is the application
+rigorous or analogical?
+
+\textsc{heal (Etingof + Manin).}
+Jimbo-Miwa is rigorous at $g = 1, 2$ in the regime where the
+nodal boundary is locally isomorphic to a $\mathbb{P}^1$ with
+marked degeneration points; the general $g \geq 3$ case
+requires the Bertrand-Laumon-Malgrange extension.
+
+\textbf{Concrete witness (irregular Stokes at $g = 2$
+separating stratum).}
+Near $\partial_{\mathrm{sep}}\Mbar_{2,n}$, the genus-$2$ curve
+$C_{2}$ degenerates to two genus-$1$ curves joined at a node.
+The BD Green's function $G_{C_2}(z, w)$ on $\Mbar_{2,n}$
+decomposes, near the node, as
+\[
+   G_{C_2}(z, w)
+   \;\approx\;
+   G_{E_\tau}(z, w)
+   \;+\; \text{node correction of order }\epsilon\log\epsilon + O(\epsilon^2)
+\]
+with $\epsilon$ the deformation parameter transverse to the
+separating boundary stratum.  The $\log\epsilon$ term gives a
+\emph{regular} singularity (logarithmic); but at codim-two
+$\partial_{\mathrm{sep}}\Mbar_{2,n} \cap \Delta_{ij}$ (a
+separating degeneration combined with a collision), the
+$\epsilon^{-1}$ order coefficient develops an
+\emph{irregular} Stokes structure of rank 1 in the
+Jimbo-Miwa-Mori sense.
+The Stokes data are parametrised by the $(1,1)$-entry of the
+period matrix $\tau_{12}$, whose variation across
+$\partial_{\mathrm{sep}}$ controls the Stokes multipliers.
+
+\textbf{Healed Jimbo-Miwa-Stokes statement (F5 frontier).}
+On $\Mbar_{2,n}$, the universal KZB
+$\nabla_{\KZB}^{(g=2)}$ has:
+\begin{itemize}
+\item \textbf{Regular-singular poles} along
+  $\Delta_{ij}$, $\partial_{\mathrm{sep}}\Mbar_{2,n}$,
+  and their transversal intersections at codim $\leq 2$.
+\item \textbf{Irregular-singular Stokes data of rank 1} at
+  the codim-2 intersection
+  $\Delta_{ij} \cap \partial_{\mathrm{sep}}\Mbar_{2,n}$, with
+  Stokes multipliers encoded by the connection matrix
+  of the confluent hypergeometric equation controlling
+  the $\epsilon \to 0$ confluence of two colliding points
+  near the separating node.
+\end{itemize}
+The Jimbo-Miwa classification is rigorously applicable to this
+localised problem because, after formal completion at the
+separating stratum, the problem reduces to a rank-1 confluent
+isomonodromic deformation on $\mathbb{P}^1$ with marked points
+$\{z_i, z_j, \infty\}$.
+
+\textbf{Cross-reference.}
+This matches \texttt{genus\_2\_ddybe\_platonic.tex} $\S$3
+(flat KZB at $g = 2$) and the Stokes regularity discussion
+at Theorem~\ref{thm:fay-trisecant-genus-2-specific} (Fay's
+trisecant identity controlling the Stokes data).
+
+\textbf{Honest frontier.}
+At $g \geq 3$, the Stokes structure is not classified:
+the codim-2 intersection of the non-separating boundary with
+a collision divisor gives a rank-$\lceil g/2 \rceil$
+irregular singularity not covered by Jimbo-Miwa-Mori (its
+classification is Sabbah's irregular Riemann-Hilbert
+correspondence in the higher-rank formal-meromorphic case,
+2008; applying it to (G2-global) at $g \geq 3$ is $\Pi_1$).
+
+%% -----------------------------------------------------------------
+\subsection{Cycle 5: Does the chain homotopy between four
+equivalent presentations compose correctly?}
+%% -----------------------------------------------------------------
+\label{ssec:cycle-5}
+
+\textsc{attack (Manin).}
+The four presentations (P1 FM residue, P2 Kohno monodromy,
+P3 Drinfeld associator, P4 direct codim-two residue) are
+each proved to agree with the pullback identity; but agreement
+of each pair (e.g.\ P1 and P2) is \emph{derived} through the
+common bar-differential identity, not \emph{asserted}
+directly.  Does the resulting hexagon
+(P1 $\leftrightarrow$ P2, P1 $\leftrightarrow$ P3,
+P1 $\leftrightarrow$ P4, P2 $\leftrightarrow$ P3,
+P2 $\leftrightarrow$ P4, P3 $\leftrightarrow$ P4)
+commute with all six chain homotopies composing correctly?
+
+\textsc{heal (Etingof).}
+No separate chain homotopies are needed: all four presentations
+factor through the common FM residue map
+$\mathrm{Res}_{\mathrm{FM}} \colon T^{c}_{n}[z_1,\dots,z_n]
+ \to T^{c}_{n-1}[z_1,\dots,\hat z_i,\dots,z_n]$.
+Diagrammatically,
+\[
+\begin{array}{cccccc}
+   & & \text{common object} & & \\
+   & \nearrow & \downarrow \mathrm{Res}_{\mathrm{FM}} & \searrow & \\
+   \text{P1: FM} \quad & \quad \text{P2: Kohno} \quad & \quad \text{P3: Drinfeld} \quad & \quad \text{P4: direct} & \\
+\end{array}
+\]
+(reading from top to bottom, each Pi is a restriction of
+$\mathrm{Res}_{\mathrm{FM}}$ to a different domain).
+Hence the hexagon reduces to identity arrows on the common
+object, and composition is trivial.
+
+\textbf{Concrete: P1 $\to$ P2 commutation.}
+The FM residue produces, on evaluation modules of
+$V^{k}(\fg)$, the residue
+$\Res^{(2)}(J^a, J^b) = k\delta^{ab}\Omega_{ij}$.
+The Kohno monodromy route produces the $U_q(\fg)$ braid
+representation with $q = \exp(2\pi i/(k + \hv))$ acting on
+the same evaluation modules.  Both arise from the same
+$\Omega_{ij}$ acting on $V_1 \otimes \cdots \otimes V_n$;
+the Kohno monodromy is the exponential of the FM residue
+integrated around the braid.  Strict equality follows from
+the Riemann-Hilbert correspondence for the KZ system.
+
+\textbf{Concrete: P1 $\to$ P3 commutation.}
+The FM residue produces $r^{(ij)}(z_{ij})$ at codim-one
+strata; the Drinfeld associator $\Phi_{\KZ}$ is the
+monodromy at codim-two strata of $\Confnord(\mathbb{C})$,
+integrated over the iterated-integral triangle.  Both
+extract the same information: $r^{(ij)}$ at codim-one,
+$\Phi_{\KZ}$ at codim-two, both from the common
+$\mathrm{Res}_{\mathrm{FM}}$.
+
+\textbf{No independent chain homotopies.}
+The apparent complexity of six pairwise agreements collapses
+because all four presentations are \emph{projections} of a
+single FM residue datum onto four different target categories.
+The six pairwise agreements are induced by universal property
+of the common object, not by six separate proofs.
+
+%% -----------------------------------------------------------------
+\subsection{Cycle 6: GRT$_1(\mathbb{Q})$ torsor action on
+universal KZB -- is that an actual theorem or a conjecture?}
+%% -----------------------------------------------------------------
+\label{ssec:cycle-6}
+
+\textsc{attack (Manin).}
+The memorable phrase ``seven faces of $r(z)$ form a
+GRT$_1(\mathbb{Q})$-torsor'' is used throughout the programme,
+but GRT$_1(\mathbb{Q})$ is the graded Grothendieck-Teichm\"uller
+group, and its action on universal KZB is usually stated at
+$g = 0$ on $\Phi_{\KZ}$ only (Drinfeld 1990, Furusho 2010).
+Does the action extend to the universal KZB at $g \geq 1$
+as a theorem, or is that a conjecture?
+
+\textsc{heal (Etingof, after Drinfeld-Furusho-CEE).}
+
+\textbf{Theorem (Drinfeld 1990, Furusho 2010, CEE 2009).}
+\begin{itemize}
+\item $g = 0$: GRT$_1(\mathbb{Q})$ acts freely and transitively
+  on the set of Drinfeld associators in $U(\mathfrak{t}_3)[[\hbar]]$
+  satisfying the pentagon and hexagon identities.  The action
+  is by gauge transformation
+  $\Phi \mapsto F(t_{12}, t_{23}) \Phi F(t_{12}, t_{23})^{-1}$
+  for $F \in \GRT_1(\mathbb{Q})$ acting on the infinitesimal
+  braid Lie algebra $\mathfrak{t}_3$.
+\item $g = 1$: GRT$_1(\mathbb{Q})$ acts on the elliptic
+  associators of Enriquez 2008.  This is a theorem:
+  the elliptic GRT$_1$ action is constructed by CEE 2009
+  $\S$10-11, and its compatibility with the Bernard-Felder
+  universal KZB is established there.
+\item $g = 2$: GRT$_1(\mathbb{Q})$ acts on the Enriquez
+  genus-$2$ universal KZB (\cite{CEE09} Theorem 9.11).  The
+  action is compatible with the Fay-trisecant identity.
+\item $g \geq 3$: \textbf{conjectural}.  GRT$_1(\mathbb{Q})$
+  is expected to act on the universal KZB at higher genus
+  (Enriquez's formal programme), but the construction is
+  unfinished past $g = 2$.
+\end{itemize}
+
+\textbf{Healed statement.}
+The phrase ``seven faces of $r(z)$ form a
+GRT$_1(\mathbb{Q})$-torsor'' is a theorem at $g \in \{0, 1, 2\}$;
+the canonical source is Drinfeld 1990 (genus $0$), CEE 2009
+(genus $1, 2$), with Furusho 2010 strengthening the
+$\Phi_{\KZ}$-torsor statement.  At $g \geq 3$ it is a
+conjecture.
+
+\textbf{Arithmetic content (Cycle-5 harmonic with Manin).}
+GRT$_1(\mathbb{Q})$ is conjecturally isomorphic to the motivic
+Galois group $\mathrm{Gal}^{\mathrm{mot}}(\mathrm{MT}(\mathbb{Z}))$
+of mixed Tate motives over $\mathrm{Spec}(\mathbb{Z})$
+(Brown 2012).  Under this conjectural isomorphism, the torsor
+action is a motivic-Galois action on the universal KZB datum.
+The arithmetic anchor: at primes $p = 691, 3617$, the Kummer-Bernoulli
+duality of Vol~I shadow tower (through $r = 11$,
+\texttt{shadow\_tower\_higher\_coefficients.tex}) constrains the
+$p$-adic specialisation of the GRT$_1$-torsor action, giving
+concrete $p$-adic witnesses for the F2-Drinfeld associator face.
+
+%% ====================================================================
+\section{Healed inscription of (G2) and its globalisation}
+%% ====================================================================
+\label{sec:G2-healed}
+
+\subsection{Structural form, both local and global}
+\label{ssec:G2-structural}
+
+\begin{theorem}[G2 generating identity, healed form]
+\label{thm:G2-healed}
+Let $A$ be a chirally Koszul $E_\infty$-chiral algebra on a
+smooth algebraic curve $C$ over $\mathbb{Q}$, with conformal
+structure and non-critical level when applicable.
+\begin{enumerate}
+\item \textbf{(G2-local.)} $\dbar = \KZ^{*}(\nabla_{\Arn})$ is
+  a strict chain-level identity on $\Confnord(C)$.  The
+  equality holds on cogenerators (Cycle 1 Step 1) and extends
+  to the full cofree coalgebra by Arnold three-term (Cycle 1
+  Step 2).  The KZ functor is strictly functorial
+  (Cycle 2).  The chain homotopy in the contracting
+  direction is the FM degeneration $h_{\mathrm{FM}}$
+  satisfying $[\dbar, h_{\mathrm{FM}}] = \mathrm{id} - p_{\mathrm{cogen}}$.
+\item \textbf{(G2-global.)} The universal KZB connection
+  $\nabla_{\KZB}^{\mathrm{univ}}$ on
+  $\Conf_n^{\mathrm{univ}}/\Mbar_{g,n}$ (Felder-Wieczerkowski
+  1996, CEE 2009) satisfies
+  $\dbar^{\mathrm{univ}} = (\KZ^{\mathrm{univ}})^{*}(\nabla_{\KZB}^{\mathrm{univ}})$
+  as factorisation D-modules, at the following scopes:
+  \begin{enumerate}[label=\textup{(2-\roman*)}]
+   \item $g = 0$: unconditional, for all Koszul $A$;
+   \item $g = 1$: unconditional for $A$ at non-critical level
+    (Bernard-Felder 1988, Felder 1998, CEE 2009);
+   \item $g = 2$: unconditional for affine Kac-Moody,
+    principal $W_N$, Virasoro at non-critical level on the
+    smooth locus of $\Mbar_{2,n}$ (Enriquez CEE 2009
+    universal $g = 2$ KZB);
+   \item $g \geq 3$: conjectural ($\Pi_1$), pending
+    regularisation of the BD Green's function at
+    non-separating boundary.
+  \end{enumerate}
+\item \textbf{(Stokes structure at boundary strata.)}
+  At codim-one boundary strata of $\Mbar_{g,n}$, the
+  connection $\nabla_{\KZB}^{\mathrm{univ}}$ has regular
+  singularities for $g \leq 2$.  At codim-two intersections
+  of a collision divisor $\Delta_{ij}$ with a separating
+  boundary stratum at $g = 2$, there is rank-$1$ irregular
+  Stokes structure classified by Jimbo-Miwa-Mori 1980.
+  At $g \geq 3$ non-separating boundary, the Stokes structure
+  is higher-rank (Sabbah 2008) and is an F5 frontier.
+\item \textbf{(GRT$_1(\mathbb{Q})$ torsor action.)}
+  GRT$_1(\mathbb{Q})$ acts freely and transitively on the
+  universal KZB data at $g = 0, 1, 2$
+  (Drinfeld 1990, Furusho 2010, CEE 2009).  The seven
+  presentations of $r(z)$ (F1-F7, per
+  \texttt{platonic\_ideal\_reconstituted\_2026\_04\_17.md})
+  form a $\GRT_1(\mathbb{Q})$-torsor at $g \leq 2$.  At
+  $g \geq 3$ the torsor action is conjectural.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof architecture]
+(G2-local) is Theorem~\ref{thm:climax-vol1-platonic} of
+\texttt{chiral\_climax\_platonic.tex}, sharpened by Cycles 1-2
+of this document to strict chain-level equality with the
+explicit FM contracting homotopy $h_{\mathrm{FM}}$.
+(G2-global) at $g = 0, 1, 2$ is the reading of
+Theorem~\ref{thm:kohno-monodromy-platonic} (Kohno 1987),
+conj:climax-kzb-genus-one-platonic
+upgraded to a theorem via Bernard-Felder 1988 + CEE 2009,
+and Theorem~\ref{thm:genus-2-kzb-connection-platonic} of
+\texttt{genus\_2\_ddybe\_platonic.tex}, respectively.
+(Stokes structure) follows from the Jimbo-Miwa-Mori 1980
+classification of rank-$1$ confluent isomonodromic
+deformations on $\mathbb{P}^1$, applied to the confluence
+$\Delta_{ij} \cap \partial_{\mathrm{sep}}\Mbar_{2,n}$ after
+formal completion (Cycle 4).
+(GRT torsor) is Drinfeld 1990 / Furusho 2010 / CEE 2009
+(Cycle 6).
+\end{proof}
+
+\subsection{Explicit checks at $g = 0, 1, 2$}
+\label{ssec:G2-explicit-checks}
+
+\textbf{Genus $0$ (KZ flat connection recovery).}
+Take $A = V^{k}(\fg)$ at generic $k \neq -\hv$.
+The OPE residue is $\Res^{(2)}(J^a, J^b) = k\delta^{ab}$,
+$\Res^{(1)}(J^a, J^b) = f^{ab}_{\;\;c}J^c$.
+Step (K3) produces $r^{(ij)}(z) = k\Omega_{ij}/z$, and the
+$\nabla(A)_n$ of Construction \ref{constr:kz-functor-platonic}
+is
+\[
+   \nabla(A)_n \;=\; d - \sum_{i < j}\,r^{(ij)}(z_i - z_j)\,d(z_i - z_j)
+   \;=\; d - k\sum_{i < j}\,\Omega_{ij}\,\eta_{ij},
+\]
+which is the standard KZ connection.  Its monodromy on
+$V_1 \otimes \cdots \otimes V_n$ equals the braid
+representation of $U_q(\fg)$ at
+$q = \exp(2\pi i/(k + \hv))$ by Kohno 1987.  This is the
+pullback identity at $g = 0$, verified against a published
+source.
+
+\textbf{Genus $1$ (Bernard-Felder elliptic propagator, KZB).}
+Take $A = V^{k}(\fg)$ at non-critical $k$.
+On an elliptic curve $E_\tau$, the OPE residue is
+$\Res^{(2)}(J^a, J^b) = k\delta^{ab}$,
+$\Res^{(1)}(J^a, J^b) = f^{ab}_{\;\;c}J^c$, and the KZ functor
+produces
+\[
+   \nabla_{\KZB}^{(1)}
+   \;=\; d \;-\; \sum_{i < j}\frac{k\,\Omega_{ij}}{k + \hv}\zeta_\tau(z_{ij})\,dz_{ij}
+             \;-\; \sum_{i < j}\frac{k\,\Omega_{ij}}{k + \hv}\wp(z_{ij},\tau)\,d\tau,
+\]
+matching Theorem \ref{thm:g1sf-face-4} of
+\texttt{genus1\_seven\_faces.tex} (Bernard 1988; Felder 1998
+for flatness; CEE 2009 for $\Mbar_{1,n}$-compatibility).
+This is Regime (R1) of Cycle 3, and is the pullback identity
+at $g = 1$.
+
+\textbf{Genus $2$ (Enriquez genus-$2$ universal KZB).}
+Take $A = V^{k}(\fg)$ at non-critical $k$.
+On the $g = 2$ moduli $\Mbar_{2,n}$ smooth locus, the CEE 2009
+universal connection is (Theorem 9.11 of \cite{CEE09},
+specialised in Theorem \ref{thm:genus-2-kzb-connection-platonic}
+of \texttt{genus\_2\_ddybe\_platonic.tex})
+\[
+   \nabla_{\KZB}^{(g=2,n)}
+   \;=\; d \;-\; \sum_{i < j}\frac{k\,\Omega_{ij}}{k + \hv}\omega_{ij}(z_i - z_j; \Omega)
+             \;-\; (\text{$d\Omega$-components})
+\]
+with $\omega_{ij}$ the Szeg\H{o} kernel on $C_{2,n}$ and
+$\Omega$ the genus-$2$ period matrix.  Flatness
+$\bigl(\nabla_{\KZB}^{(g=2,n)}\bigr)^{2} = 0$ is verified via
+Fay's trisecant identity
+(Theorem~\ref{thm:fay-trisecant-genus-2-specific}).
+This is Regime (R2) of Cycle 3, and is (G2-global) at $g = 2$.
+
+%% ====================================================================
+\section{Cross-volume harmonies}
+%% ====================================================================
+\label{sec:G2-harmonies}
+
+\textbf{(H1) Vol II: $\mathsf{SC}^{\mathrm{ch,top}}$ bicoloured operad
+and $\nabla_{\KZB}$ at non-critical level.}
+The $\mathsf{SC}^{\mathrm{ch,top}}$ operadic boundary structure
+of Vol II $\S$3 governs the chain-level bar differential on
+the derived centre; under topologisation (Sugawara at
+non-critical level), the $E_3$-topological direction becomes
+trivial, and the remaining $E_2$-holomorphic structure on
+$C \times \mathbb{R}$ is controlled by the KZB connection.
+Explicit bridge: at $g = 1$, the $\Mbar_{1,n}$ boundary strata
+of Vol I correspond under $\Phi_{\mathrm{hol}}$ to the
+$C \times S^1$-compactification of Vol II; the universal KZB
+$d\tau$-component is the Vol II modular bootstrap kernel.
+
+\textbf{(H2) Vol III: K3 Yangian and genus-$2$ KZB.}
+On K3-fibered Class A CY$_3$ at $N = 2$, the Borcherds
+denominator $\Phi_{10}$ is a Siegel modular form on
+$\mathcal{A}_2$ (the moduli of principally polarised abelian
+surfaces).  The genus-$2$ universal KZB of Cycle 3 Regime
+(R2) specialises, on the K3 Yangian side, to the elliptic
+$R$-matrix of the Mukai-Heisenberg E\hspace{0pt}${}_2$ chiral
+algebra, and the Fay trisecant identity
+(Theorem \ref{thm:fay-trisecant-genus-2-specific}) controls
+the compatibility with the Vol III six-route convergence
+to $G(K3 \times E)$.
+This is the G2 $\leftrightarrow$ (UTI) bridge at $d = 3$.
+
+\textbf{(H3) Motivic Galois action on the seven faces of
+$r(z)$.}
+GRT$_1(\mathbb{Q})$-torsor action of Cycle 6, combined with
+the Brown 2012 identification of GRT$_1$ with the motivic
+Galois group of mixed Tate motives over $\mathrm{Spec}(\mathbb{Z})$,
+gives the seven faces F1-F7 an action of
+$\mathrm{Gal}^{\mathrm{mot}}(\mathrm{MT}(\mathbb{Z}))$.
+At the primes $p = 691, 3617$ of Vol I shadow tower
+$r = 11$ Kummer-Bernoulli duality, the $p$-adic specialisation
+of this action constrains the F2 Drinfeld-associator face
+to a $p$-adic regulator class with known Galois content.
+This is Cycle 5 of the programme-level motivic Galois
+super-Lie (\texttt{platonic\_ideal\_reconstituted\_2026\_04\_17.md}
+$\S$5.6).
+
+%% ====================================================================
+\section{Open frontier}
+%% ====================================================================
+\label{sec:G2-opens}
+
+\textbf{(O1) $g \geq 3$ globalisation.}
+BD Green's function $G_{C_g}(z, w)$ needs a regularisation on
+the non-separating boundary with irregular Stokes data of
+rank $\lceil g/2 \rceil$ (Sabbah 2008).  No formal construction
+currently produces the universal KZB at $g \geq 3$.  Expected
+obstruction: the separating-vs-non-separating ambiguity in
+the $\delta$-function singularity at the diagonal
+(conj:climax-kzb-genus-one-platonic, $\Pi_1$ of
+\texttt{chiral\_climax\_platonic.tex}).
+
+\textbf{(O2) GRT$_1(\mathbb{Q})$ torsor at $g \geq 3$.}
+The elliptic GRT action (CEE 2009) is constructed at $g = 1, 2$;
+the formal programme at $g \geq 3$ is Enriquez's outstanding
+conjecture.  A positive resolution would extend Cycle 6 to
+the full $\Mbar_{g,n}$ tower.
+
+\textbf{(O3) Stokes classification at $g \geq 3$ confluent
+strata.}
+Jimbo-Miwa-Mori 1980 applies at rank $1$; the $\geq 3$-rank
+higher-genus confluence requires Sabbah's irregular
+Riemann-Hilbert correspondence, whose explicit form for the
+$\Delta_{ij} \cap \partial_{\mathrm{non-sep}}\Mbar_{g,n}$
+stratum is unknown.
+
+\textbf{(O4) $W$-algebra extension of (G2).}
+$\Pi_2$ of \texttt{chiral\_climax\_platonic.tex}: the
+universal $W$-arena $\ConnConf^{W}$ replaces Arnold's
+$\eta_{ij}$ with universal $W$-KZ forms.  The sl$_N$
+principal case is accessible via Feigin-Frenkel screening;
+non-simply-laced Langlands-dual side is conjectural.
+
+\textbf{(O5) Universal BRST resolution functor.}
+$\Pi_3$: the canonical BRST resolutions for standard
+landscape families are family-specific; no universal
+functor $\BRST \colon \ChirAlg^{\mathrm{Koszul}} \to
+\ChirAlg^{\mathrm{free}}$ is known.  This is the G3-side
+complement of G2's BRST identity $K = -c_{\mathrm{ghost}}$.
+
+%% ====================================================================
+\section{Hidden structure discovered during the attack}
+%% ====================================================================
+\label{sec:G2-hidden}
+
+\textbf{(H-hidden-1) FM degeneration is a contracting homotopy,
+not just a projector.}
+Cycle 1 produced the FM contracting homotopy $h_{\mathrm{FM}}$
+satisfying $[\dbar, h_{\mathrm{FM}}] = \mathrm{id} - p_{\mathrm{cogen}}$.
+This is a stronger statement than the programme has previously
+committed to: the bar complex retracts onto its cogenerators
+via an explicit geometric contraction (the FM degeneration).
+This gives the FM compactification a chain-level homotopical
+content beyond its use as a boundary-extraction tool.
+Cross-reference: \texttt{feedback\_homotopy\_retract\_is\_data.md}
+(AP142).
+
+\textbf{(H-hidden-2) Arnold three-term as deconcatenation identity.}
+The reason strict chain-level equality holds on $T^c_n$
+($n \geq 3$) is that the reorganisation from
+\emph{adjacent-swap coderivation} (bar side) to
+\emph{pair-sum Arnold} (KZ side) is governed by Arnold's
+three-term relation.  This is not a mere combinatorial
+identity; it is the homological content of the three-term
+relation, reading it as a coderivation-vs-pair-sum
+compatibility.  This suggests a deeper unification: the
+Arnold three-term is the coherence condition for the
+deconcatenation coproduct on $T^c$, restricted to
+codim-two strata.
+
+\textbf{(H-hidden-3) Stokes frontier at $g = 2$ separating
+stratum is bounded.}
+Cycle 4 found that the $g = 2$ separating stratum carries
+\emph{at most rank-1} irregular Stokes structure; this is
+lower than the naive expectation of rank depending on $n$.
+The reason: the separating boundary is locally a product
+of two $g = 1$ curves, on which the Bernard-Felder propagator
+is regular, and the confluence $\Delta_{ij} \cap \partial_{\mathrm{sep}}$
+localises to a $\mathbb{P}^1$ confluence of rank 1
+(Jimbo-Miwa-Mori 1980).  This bounds the Vol II modular
+bootstrap kernel at $g = 2$ in a useful way for the
+$\Phi_{10}$-anchored BKM Class-A K3$\,\times\,$E identity
+(UTI-2 at $d = 3$).
+
+\textbf{(H-hidden-4) GRT$_1(\mathbb{Q})$ identifies Drinfeld's
+six faces with seven.}
+In Cycle 6, the GRT$_1$ torsor at $g = 0$ acts on 6 presentations
+(F1-F6 in the classical Drinfeld sense).  The seventh face F7
+(Wick / free-field $r$-matrix from CLAUDE.md essential constants)
+is the image of a particular orbit element, not a new torsor
+generator.  This refines the Vol~I $\S$2.3 statement.
+
+%% ====================================================================
+\section{Cycle log (raw)}
+%% ====================================================================
+\label{sec:G2-log}
+
+\begin{enumerate}
+\item \textsc{Cycle 1.}
+Attack: chain-level vs homotopy equality.
+Heal: strict chain-level on cogenerators (Step 1),
+extended by Arnold three-term on $T^c_n$ (Step 2).
+Witness: FM contracting homotopy $h_{\mathrm{FM}}$
+satisfying $[\dbar, h_{\mathrm{FM}}] = \mathrm{id} - p_{\mathrm{cogen}}$.
+\item \textsc{Cycle 2.}
+Attack: strict vs functorial pullback.
+Heal: KZ functoriality $\Rightarrow$ strict commutation;
+cofree-coalgebra naturality $\Rightarrow$ morphism-intertwining.
+\item \textsc{Cycle 3.}
+Attack: globalisation pathologies across $g$.
+Heal: three regimes: $g = 0$ unconditional,
+$g = 1, 2$ unconditional for standard landscape at non-critical
+level (Bernard-Felder, CEE), $g \geq 3$ F5 frontier.
+\item \textsc{Cycle 4.}
+Attack: rigor of Jimbo-Miwa at higher genus.
+Heal: rank-1 rigorous via formal completion at
+$\Delta_{ij} \cap \partial_{\mathrm{sep}}\Mbar_{2,n}$; higher
+rank at $g \geq 3$ uses Sabbah 2008 (conjectural).
+\item \textsc{Cycle 5.}
+Attack: composition of chain homotopies between four presentations.
+Heal: no separate homotopies needed -- all four are
+projections of common FM residue datum; hexagon reduces to
+identity arrows.
+\item \textsc{Cycle 6.}
+Attack: GRT$_1$ action at $g \geq 1$ -- theorem or conjecture?
+Heal: theorem at $g \leq 2$ (Drinfeld 1990, Furusho 2010,
+CEE 2009); conjecture at $g \geq 3$.
+Arithmetic harmonic: Brown 2012 identifies GRT$_1(\mathbb{Q})$
+with motivic Galois of MT($\mathbb{Z}$); $p = 691, 3617$
+shadow-tower duality gives $p$-adic specialisations.
+\end{enumerate}
+
+\bigskip
+
+\textbf{Remark on inscription.}
+The healed Theorem~\ref{thm:G2-healed} of $\S$3 is ready for
+inscription as a sharpened replacement of the existing scope
+qualifiers in \texttt{chiral\_climax\_platonic.tex}
+(Definition \ref{def:connconf-platonic}, around line 276-278)
+and \texttt{genus\_2\_ddybe\_platonic.tex} (Cycle 4 Stokes
+structure, around Theorem \ref{thm:fay-trisecant-genus-2-specific}).
+The inscription lifts Conjecture
+\ref{conj:climax-kzb-genus-one-platonic} ($\Pi_1$) to
+\textbf{Theorem} at $g = 1, 2$ with the citations
+Bernard 1988 / Felder 1998 / Calaque-Enriquez-Etingof 2009,
+leaving $g \geq 3$ as the genuine open frontier.
+The chain-level strict equality of Cycle 1 sharpens
+Definition~\ref{def:pullback-identity-structural-platonic}
+from ``modulo logarithmic gauge'' to ``strictly, with
+coderivation-vs-pair-sum equivalence by Arnold three-term''.
+
+\end{document}

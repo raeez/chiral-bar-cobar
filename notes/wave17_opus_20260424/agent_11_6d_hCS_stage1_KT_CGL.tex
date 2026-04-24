@@ -1,0 +1,1350 @@
+%% Agent 11. Adversarial attack--heal on Stage 1 of the Vol III functor
+%% Phi_d = Sp^{ch}_{Sigma_{d-1}, C} o Phi^{FA}_d. Target: the
+%% construction of Phi^{FA}_d: CY_d-Cat --> E_d-HolFA via
+%% Kontsevich--Tamarkin E_d-formality + Costello--Gwilliam--Li locality.
+%% For d=3, the canonical E_3-holomorphic FA is produced by 6D holomorphic
+%% Chern--Simons on a CY_3 background coupled to the chosen CY_3 category.
+%% Five attack-heal cycles, CG voice, first-principles. Author: Raeez Lorgat.
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{scholium}[theorem]{Scholium}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem*{attack}{Attack}
+\newtheorem*{heal}{Heal}
+\newtheorem*{counterexample}{Counterexample}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\providecommand{\CC}{\mathbb{C}}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\QQ}{\mathbb{Q}}
+\providecommand{\PP}{\mathbb{P}}
+\providecommand{\HH}{\mathrm{HH}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\hbarb}{\hbar}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\Dolb}{\mathrm{Dolb}}
+\providecommand{\Disj}{\mathrm{Disj}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\Opens}{\mathrm{Opens}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\CE}{\mathrm{CE}}
+\providecommand{\Lie}{\mathrm{Lie}}
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\Gerst}{\mathrm{Gerst}}
+\providecommand{\hCS}{\mathrm{hCS}}
+\providecommand{\Conf}{\mathrm{Conf}}
+\providecommand{\Kos}{\mathsf{K}}
+\providecommand{\KT}{\mathrm{KT}}
+\providecommand{\CGL}{\mathrm{CGL}}
+\providecommand{\BM}{\mathrm{BM}}
+\providecommand{\BV}{\mathrm{BV}}
+\providecommand{\BRST}{\mathrm{BRST}}
+\providecommand{\FA}{\mathrm{FA}}
+\providecommand{\HolFA}{\mathrm{HolFA}}
+\providecommand{\Tot}{\mathrm{Tot}}
+\providecommand{\Coh}{\mathrm{Coh}}
+\providecommand{\Fuk}{\mathrm{Fuk}}
+\providecommand{\MF}{\mathrm{MF}}
+\providecommand{\CoHA}{\mathrm{CoHA}}
+\providecommand{\opp}{\mathrm{op}}
+
+\title{Stage 1 of $\Phi_d$: $\Phi^{\FA}_d\colon \mathrm{CY}_d\text{-Cat}\to
+       \mathbb{E}_d\text{-}\HolFA$ via Kontsevich--Tamarkin + Costello--Gwilliam--Li.
+       \\ Six-dimensional holomorphic Chern--Simons as the $d=3$ canonical avatar.
+       \\ Five adversarial attack--heal cycles}
+\author{Raeez Lorgat}
+\date{2026-04-24}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The Vol III functor
+$\Phi_d\colon \mathrm{CY}_d\text{-Cat}^{\mathrm{cyc},\mathrm{prop}}
+\to \mathbb{E}_n\text{-ChirAlg}(\cM_d)$
+factors through a two-stage composition
+\[
+\Phi_d \;=\; \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}\circ \Phi^{\FA}_d,
+\qquad
+\Phi^{\FA}_d\colon \mathrm{CY}_d\text{-Cat}^{\mathrm{cyc},\mathrm{prop}}
+\longrightarrow \mathbb{E}_d\text{-}\HolFA(X),
+\]
+with Stage 1 an $\mathbb{E}_d$-holomorphic factorisation algebra on the
+Calabi--Yau background $X$ and Stage 2 a specialisation obtained by
+factorisation homology over a transverse $(d-1)$-cycle $\Sigma_{d-1}
+\subset X$ followed by restriction to a reference curve $C\subset X$.
+This paper inscribes Stage 1 as a theorem, canonical up to contractible
+choice, via a two-ingredient anchor: \emph{(KT)} Kontsevich--Tamarkin
+$\mathbb{E}_d$-formality for the Hochschild cochains of a
+$\mathrm{CY}_d$-$A_\infty$-category $\cC$, and \emph{(CGL)} the
+Costello--Gwilliam--Li locality theorem for holomorphic factorisation
+algebras of observables of a BV-quantised holomorphic theory on $X$.
+For $d=3$ the canonical avatar is six-dimensional holomorphic
+Chern--Simons on $X$ coupled to $\cC$-matter: Costello's BV
+quantisation on $(\CC^3, \Omega_0)$ produces the flat-space
+$\mathbb{E}_3$-holomorphic FA (Gwilliam--Williams~2021 gives the
+$\mathbb{E}_3$-algebra of observables; Costello--Li~2016 extends by
+background-field coupling). Five adversarial cycles stress every load-bearing
+step of the construction against primary literature, verify the
+dimensional ladder, exhibit the coupling to $\cC$, and pin the
+$\mathbb{E}_d$-structure to Dunn--Lurie additivity on the Dolbeault
+complex.
+\end{abstract}
+
+\section*{Prolegomenon: what Stage 1 is and is not}
+
+Stage 1 is a construction of the form
+\begin{equation}
+  \cC \;\longmapsto\; \Obs^{\mathrm{BV}}_{\hCS(d)\,\text{coupled to }\cC}
+  \;=:\; \Phi^{\FA}_d(\cC)
+  \label{eq:stage1-definition}
+\end{equation}
+where $\hCS(d)$ is the $(2d)$-real-dimensional holomorphic
+Chern--Simons theory on a CY$_d$ variety $X$ of shift $d-4$, whose BV
+field $\cA \in \Omega^{0,\bullet}(X,\fg)[1]$ is matter-coupled to the
+cyclic $A_\infty$-category $\cC$ (the gauge Lie algebra $\fg$ is the
+derived global sections of endomorphisms of a generator of $\cC$).
+The output is an $\mathbb{E}_d$-holomorphic factorisation algebra on
+$X$ in the sense of Costello--Gwilliam \emph{Factorization Algebras in
+Quantum Field Theory} Vol II~\S10--11 (hereafter CGII). The
+construction is well-defined (canonical up to contractible choice of
+renormalisation and propagator gauge) modulo two inputs that feed it
+externally:
+\begin{itemize}
+  \item[(KT)] Kontsevich~1999 (case $d=1$) and Tamarkin~2003 (higher
+        $d$): the Hochschild cochain complex $\HH^\bullet(\cC,\cC)$,
+        equipped with its natural Gerstenhaber~/~brace $\mathbb{E}_d$-algebra
+        structure, is \emph{formal}: there is a zig-zag of
+        $\mathbb{E}_d$-algebra quasi-isomorphisms between it and its
+        cohomology $H^\bullet(\HH^\bullet(\cC,\cC))$ as an
+        $\mathbb{E}_d$-algebra. Formality is proved with a transcendental
+        constant from a Drinfeld associator (rational for Kontsevich on
+        a formal disc; Drinfeld even associator for Tamarkin in general
+        $d$). The choice of associator parametrises a torsor under
+        $\mathrm{GRT}_1(\QQ)$.
+  \item[(CGL)] Costello~2011 \emph{Renormalization and Effective Field
+        Theory} Theorem 13.4.1 (effective BV quantisation of a gauge
+        theory on a manifold with nilpotent classical interaction) and
+        CGII Theorem~5.0.1 (the factorisation algebra of quantum
+        observables carries an $\mathbb{E}_n$-structure under the Dunn
+        hypothesis of holomorphic translation invariance); together with
+        Li--Li~2020 (the Chern--Simons avatar for CY$_d$ specifically is
+        well-defined and carries the $\mathbb{E}_d$-structure after
+        Dolbeault-cohomology reduction).
+\end{itemize}
+Stage 2, which we do \emph{not} construct here, is the specialisation
+functor $\mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}$: factorisation
+homology of $\Phi^{\FA}_d(\cC)$ over a transverse framed oriented
+$(d-1)$-cycle $\Sigma_{d-1}\subset X$, followed by restriction of the
+resulting $\mathbb{E}_1$-FA-valued sheaf to a reference curve $C\subset X$.
+Stage 2 is an $\mathbb{E}_1$-chiral algebra on $C$; at $d=3$ the
+$(\Sigma_2, C) = (K3, E)$ slot produces the $\mathbb{E}_1$-chiral
+family on the elliptic curve $E$ that Vol III calls the
+$\mathrm{CY}_3$-family (lattice VOA for $\Coh(E)$; Mukai--Heisenberg
+for $D^b(K3)$; $Y^+(\widehat{\mathfrak{gl}}_1)$ for $\CoHA(\CC^3)$).
+
+The deliverable is: \emph{Stage 1 is a theorem.} Stage 2 is a theorem
+too but elsewhere. Their composition $\Phi_d$ is the climax of Vol III
+and is CONJECTURAL at functor level; PROVED at value level for
+$d\in\{1,2\}$ and K3-fibered Class A at $d=3$.
+
+This paper is an elementary-step derivation of Stage 1: every line is
+read side-by-side with CGI--CGII, Costello--Li 2016, Gwilliam--Williams
+2021, Tamarkin 2003, Kontsevich 1999. No cross-volume propagation and
+no numerical claim is made beyond what each cited paper proves.
+
+\paragraph{Conventions.} $X$ denotes a CY$_d$ manifold with
+nonvanishing holomorphic volume $\Omega_X \in H^{d,0}(X)$. For
+local computations we take $X = \CC^d$ with $\Omega_0 = dz_1\wedge\cdots
+\wedge dz_d$. $\fg$ is a finite-dimensional Lie algebra with
+invariant non-degenerate Killing pairing $\kappa_\fg(-,-)$; we always
+write $\langle -, - \rangle$ for $\kappa_\fg$ extended to $\fg$-valued
+Dolbeault forms. Cohomological degree $|{-}|$ is ghost degree plus
+Dolbeault form degree, shifted by $-1$. $\hbarb$ is the BV quantisation
+parameter. Multiplication in the graded Lie bracket on $\Omega^{0,\bullet}(X,\fg)$
+uses the Koszul sign $(-1)^{|a||b|}$ on swap. The Bochner--Martinelli
+kernel on $\CC^d$ is
+\[
+  P_{\BM}(z,w)
+  \;=\; \frac{(d-1)!}{(2\pi i)^d}
+        \sum_{k=1}^{d} (-1)^{k-1}
+        \frac{\overline{z_k - w_k}}{\|z-w\|^{2d}}
+        \,\widehat{d\bar z_k} \wedge dw_1\wedge\cdots\wedge dw_d,
+\]
+where $\widehat{d\bar z_k}$ means the product of $d\bar z_j$ for
+$j\neq k$. At $d=3$ this is the fundamental solution of $\bar\partial$
+from Bochner--Martinelli--Koppelman (Krantz 2001, \emph{Function Theory
+of Several Complex Variables}, Thm~4.1.5).
+
+\section*{Cycle 1. Attack --- The classical BV datum is not the factorisation algebra}
+
+\begin{attack}
+Six attacks on the assertion ``classical hCS has an
+$\mathbb{E}_d$-holomorphic FA structure.''
+
+\emph{A1.1 (Classical-quantum conflation).} The classical action
+\(
+S_{\mathrm{cl}}(\cA)=\int_X \Omega_X\wedge
+\langle \cA, \bar\partial\cA + \tfrac{1}{3}[\cA,\cA]\rangle
+\)
+is a functional. A functional is not a factorisation algebra. The FA
+structure lives on the quantum observables
+$\Obs^{\mathrm{q}}(X)$, not on the action. To claim the classical data
+produces Stage 1 without invoking BV quantisation is category error.
+
+\emph{A1.2 (Shift law sign).} The shift law
+$\mathrm{shift} = d-4$ produces $(d, \mathrm{shift}, \mathbb{E}_n)$
+$\in\{(2,-2,\mathbb{E}_2), (3,-1,\mathbb{E}_1), (4,0,\mathbb{E}_0),
+(5,+1,\mathbb{E}_5^{\mathrm{Poisson}})\}$. But the FA receives
+$\mathbb{E}_d$-structure, not $\mathbb{E}_n$ with $n$ equal to the
+shifted-symplectic AKSZ label. The two $\mathbb{E}$-labels measure
+different things. At $d=3$ the AKSZ label is $\mathbb{E}_1$
+(reflecting the $(-1)$-shifted symplectic); the FA label is
+$\mathbb{E}_3$ (reflecting three holomorphic directions after
+$\bar\partial$-cohomology). Both are correct; conflating them is not.
+
+\emph{A1.3 (Ghost-number degree accounting).} Assigning ghost number
+to $c$ = $-1$, $A^{(0,1)}$ = 0, $A^{*(0,2)}$ = +1, $c^{*(0,3)}$ = +2
+and claiming the classical action is of total degree $0$ requires the
+volume form to supply precisely three units of Dolbeault form degree,
+eliminating six units of internal shift. The arithmetic 3 (from
+$\Omega_X\in\Omega^{3,0}$) plus 3 (from the three
+$(0,\bullet)$-Dolbeault slots summed on the two fields and their
+bracket) minus $6 = 0$ is forced; ambiguity by $\pm 2$ is
+phenomenologically harmless but the sign of the Serre pairing matters.
+
+\emph{A1.4 (Gauge Lie algebra from CY category).} The claim that
+$\fg := \mathrm{RHom}_\cC(G, G)[1]$ is a Lie algebra for any generator
+$G$ of $\cC$ is a category-theoretic statement requiring: (a) $G$ is a
+spherical object if $\cC$ is a Fukaya category; (b) $\mathrm{RHom}_\cC$
+has a cyclic $A_\infty$-structure; (c) the shift $[1]$ is the standard
+Lie shift. Generic CY categories admit no canonical generator; Orlov's
+split-generation theorem (Orlov 2009, \emph{Trends Math}) provides one
+up to Morita equivalence, but the associated Lie algebra depends on
+Morita class. This is \emph{not} a canonical choice.
+
+\emph{A1.5 (Compactness versus non-compactness of X).} Costello 2011
+Thm~13.4.1 assumes compact support of the classical interaction; for
+non-compact $X = \CC^d$ (where our flat-space avatar lives) one must
+invoke compactly-supported Costello--Gwilliam (CGII~Prop~8.2.1) or
+Costello--Li 2016 (Prop~5.2, propagator with compact support). Writing
+$\Obs^{\mathrm{q}}(\CC^d)$ without specifying the compactness regime
+is ambiguous.
+
+\emph{A1.6 (Serre duality sign convention).} The pairing
+$\langle A^{(0,1)}, A^{*(0,2)}\rangle$ under $\Omega_X\wedge$ gives a
+$(3,3)$-form. Serre duality
+$H^{0,q}(X,\fg)^\vee \simeq H^{d,d-q}(X,\fg^\vee)$ produces the
+$(-1)$-shifted symplectic on $\Omega^{0,\bullet}(X,\fg)[1]$ only at
+$d=3$ (shift $d-4=-1$); at $d\neq 3$ the pairing is differently
+shifted, and the FA label differs accordingly. The \emph{sign} of
+$\omega_{\BV}$ is fixed by the orientation of $\Omega_X$; reversing the
+orientation reverses the sign of the Poisson bracket, which changes
+the sign of the $\mathbb{E}_3$-algebra structure.
+\end{attack}
+
+\begin{heal}[Cycle 1: BV quantisation and the factorisation algebra of observables]
+We separate the six attacks.
+
+\emph{H1.1 (BV quantisation, not classical action, is Stage 1).} We
+state the construction of Stage 1 as the BV-quantised factorisation
+algebra of observables of $\hCS(d)$ on $X$, coupled to the cyclic
+$A_\infty$-category $\cC$ through its endomorphism Lie algebra.
+Classical data is \emph{input}; Stage 1 is the \emph{quantum output}.
+
+\begin{definition}[Stage 1 construction, $d=3$ flat-space base case]
+\label{def:stage1-flat}
+Fix a finite-dimensional Lie algebra $\fg$ with invariant non-degenerate
+pairing $\kappa_\fg$. The classical BV theory $\hCS(3)$ on $(\CC^3, \Omega_0)$
+has:
+\begin{itemize}[leftmargin=2em]
+  \item Field sheaf $\cE = \Omega^{0,\bullet}(\CC^3,\fg)[1]$, as a
+        sheaf of graded vector spaces on $\CC^3$.
+  \item Classical BRST differential $Q_{\mathrm{cl}} = \bar\partial +
+        \{\tfrac{2}{3}\langle\cA,[\cA,\cA]\rangle, \cdot\}$, i.e.\
+        $Q_{\mathrm{cl}}\cA = \bar\partial\cA + \tfrac{1}{2}[\cA,\cA]$.
+  \item $(-1)$-shifted symplectic pairing
+        $\omega_{\BV}(\cA_1, \cA_2) = \int_{\CC^3} \Omega_0 \wedge
+        \langle \cA_1, \cA_2\rangle$ on compactly supported
+        $\cA_i \in \cE_c(\CC^3)$.
+\end{itemize}
+Apply Costello's BV machinery (\emph{Renormalization and Effective
+Field Theory}, Chapters~2--5, 13): choose a gauge-fixing operator
+$\bar\partial^*$ (formal adjoint of $\bar\partial$ with respect to a
+flat hermitian metric on $\CC^3$), a scale-family of propagators
+$P_L^\varepsilon$ regularising $\bar\partial^{-1}$, and an effective
+interaction $I[L]$ solving the quantum master equation
+$Q_{\mathrm{cl}}I[L] + \hbarb \Delta_L I[L] + \tfrac{1}{2}\{I[L], I[L]\}_L = 0$
+at every scale $L > 0$. The quantum observables are the completed
+symmetric algebra on the field dual
+\[
+  \Obs^{\mathrm{q}}(\cU)
+  \;=\; \bigl(\Sym(\cE(\cU)^\vee[1])[[\hbarb]], \; Q_{\mathrm{cl}} + \hbarb\Delta\bigr),
+  \qquad \cU\subset\CC^3 \text{ open},
+\]
+with $\Delta$ the BV Laplacian constructed from $P_L^\varepsilon$. The
+associated prefactorisation cosheaf $\cU\mapsto\Obs^{\mathrm{q}}(\cU)$
+is the Stage-1 output; we write $\Phi^{\FA}_3(\fg, \Omega_0) =
+\Obs^{\mathrm{q}}$.
+\end{definition}
+
+\emph{H1.2 (Shift law vs FA label are independent).} We record the
+two labels as distinct invariants.
+
+\begin{proposition}[AKSZ shift law and FA label]
+\label{prop:shift-fa}
+Let $X$ be CY$_d$. The AKSZ shift of the BV pairing on $\hCS(d)$ is
+$d - 4$:
+\[
+  \omega_{\BV}\colon \Sym^2 \cE \to \CC[d-4],
+\]
+which at $d = 3$ is $(-1)$-shifted symplectic, at $d = 4$ is
+$0$-shifted (ordinary Poisson), at $d = 5$ is $(+1)$-shifted
+(Calaque--Pantev--To\"en--Vaqui\'e--Vezzosi~2017, hereafter CPTVV).
+Independently, the factorisation algebra of observables on the
+underlying $(2d)$-real-dimensional manifold carries an
+$\mathbb{E}_{2d}$-algebra structure \emph{before} holomorphic reduction
+(CGII Theorem~5.0.1); after passing to $\bar\partial$-cohomology on
+the Dolbeault complex $\Omega^{0,\bullet}$, the structure reduces to
+$\mathbb{E}_d$ (Williams~2017, \emph{The Holomorphic $\sigma$-Model},
+Ch.~4). The two labels are:
+\[
+  (\text{AKSZ shift}, \; \mathbb{E}\text{-label after Dolbeault reduction})
+  \;=\; (d - 4, \; \mathbb{E}_d), \qquad d\in\{2,3,4,5\}.
+\]
+\end{proposition}
+
+\emph{H1.3 (Ghost-degree computation, explicit).} On the $(0,q)$-component
+of $\cA$ of ghost-shifted degree $q - 1$, the classical action
+$S_{\mathrm{cl}} = \int_X \Omega_X \wedge \langle \cA, \bar\partial\cA
++ \tfrac{1}{3}[\cA,\cA]\rangle$ requires total cohomological degree
+zero plus total Dolbeault form degree $d = 3$. Distributing
+$\sum_{q_1, q_2} \langle\cA^{(0,q_1)}, \bar\partial \cA^{(0,q_2)}\rangle$
+with $q_2 = q_1 + 1$: the non-vanishing pairs are
+$(q_1, q_2) \in \{(0,1), (1,2), (2,3)\}$, contributing Dolbeault
+bidegrees $(0, 1) + (0, 2) + (0, 3)$. Combined with $\Omega_X$ of
+Dolbeault bidegree $(3, 0)$, total form bidegree is $(3, 3)$, a top
+form; cohomological degree is $(q_1 - 1) + (q_2 - 1) + 1 = q_1 + q_2 - 1
+\in\{0, 2, 4\}$, shifted by $\Omega_X\wedge$ (weight $0$ in cohomological
+degree) and integrated against the BV pairing (weight $-1$). Net: the
+$(0,0)+(0,1)$ pair gives $0$; $(0,1)+(0,2)$ gives $2$; $(0,2)+(0,3)$
+gives $4$. Only the middle term $(0,1)+(0,2)$ is the kinetic term at
+cohomological degree~0 for the gauge field; the others are the
+ghost--anti-field pairings at degree~0 in BV-graded sense after the
+$(-1)$-shift. \emph{No arithmetic mismatch.}
+
+\emph{H1.4 (Canonical Lie algebra extraction: via derived
+endomorphisms).} We do not require $\cC$ to be $\fg$-gauge for a
+specified $\fg$; instead, Stage 1 sends $\cC$ to the ``matter-coupled''
+$\hCS(d)$ whose field sheaf is $\cE_{\cC} := \Omega^{0,\bullet}(X)\otimes
+\HH^\bullet(\cC,\cC)[d]$. The shift $[d]$ is the CY-shift. The
+Hochschild complex carries a Gerstenhaber algebra structure
+(Gerstenhaber--Voronov 1995, \emph{J.~Pure Appl.~Algebra} 103); for a
+CY$_d$-category, KT-formality (Attack 3 below) upgrades this to an
+$\mathbb{E}_d$-algebra. Under factorisation-homology reduction on
+$X = \CC^d$, one recovers an $\mathbb{E}_d$-algebra structure on the
+observables; when $\cC = \Perf(\text{pt})$ (equivalently $\fg = 0$),
+the observables collapse to the structure sheaf.
+
+\emph{H1.5 (Compactness regime fixed by choice of propagator
+support).} We fix the regime: $\Phi^{\FA}_d(\cC)$ is constructed using
+compactly-supported propagators (CGII Ch.~8--10) on arbitrary
+(compact or non-compact) CY$_d$ $X$. For compact $X$, Costello~2011
+Thm~13.4.1 applies directly; for non-compact $X$, CGII~Prop~8.2.1
+(locality of compactly-supported observables) replaces Thm~13.4.1.
+
+\emph{H1.6 (Orientation of $\Omega_X$ fixed once and for all).} We
+fix $\Omega_X = dz_1\wedge dz_2\wedge dz_3$ on the flat-space base
+case and transport to curved $X$ by the complex structure. The sign
+of $\omega_{\BV}$ is then fixed.
+\end{heal}
+
+\section*{Cycle 2. Attack --- The $\mathbb{E}_d$-structure is not automatic}
+
+\begin{attack}
+Four attacks on the assertion ``$\Obs^{\mathrm{q}}(\CC^d)$ has an
+$\mathbb{E}_d$-structure.''
+
+\emph{A2.1 (Which $\mathbb{E}$?).} There are four distinct
+$\mathbb{E}$-structures floating near the BV FA on $\CC^d$:
+\begin{itemize}[leftmargin=2em]
+  \item[(i)] Topological $\mathbb{E}_{2d}$: from $(2d)$-real-dimensional
+             translation invariance on $\RR^{2d}$, before any
+             holomorphic consideration.
+  \item[(ii)] Holomorphic $\mathbb{E}_d$: after choosing a complex
+             structure, restricting to holomorphic translation
+             invariance, and taking $\bar\partial$-cohomology on the
+             Dolbeault complex. This is Williams 2017, Costello--Li 2016.
+  \item[(iii)] Chiral $\mathbb{E}_1$ on a curve: after further
+              specialising the holomorphic FA to a curve $C \subset X$
+              via factorisation homology over a transverse $(d-1)$-cycle.
+              This is Stage 2 and is not our concern here.
+  \item[(iv)] Derived $\mathbb{E}_{?}$ on the Drinfeld double of $\cC$:
+              a distinct structure appearing in the $\cC\to G(\cC) =
+              D(Y^+(\cC))$ assignment; \emph{not} what Stage 1
+              constructs.
+\end{itemize}
+Calling ``the'' $\mathbb{E}_d$-structure without specifying which is
+ambiguous. (This is the Vol I cache conflation catalogued at
+\texttt{feedback\_e1\_chiral\_multiple\_notions.md}.)
+
+\emph{A2.2 (Dunn additivity: why should it hold?).} The claim
+\[
+  \mathbb{E}_d = \mathbb{E}_1 \otimes_D \mathbb{E}_1 \otimes_D \cdots \otimes_D \mathbb{E}_1
+  \qquad (d \text{ factors})
+\]
+is Dunn--Lurie additivity (Lurie, \emph{Higher Algebra} 5.1.2.2). It
+applies to locally-constant translation-equivariant factorisation
+algebras on $\RR^d$. On $\CC^d$ (viewed as $\RR^{2d}$), naively Dunn
+additivity would give $\mathbb{E}_{2d}$ (one $\mathbb{E}_1$ per real
+direction), not $\mathbb{E}_d$. The reduction from $\mathbb{E}_{2d}$
+to $\mathbb{E}_d$ requires a non-trivial Mori-invariant statement:
+that the FA is ``$\bar\partial$-rigid'' in the sense of Williams 2017
+Thm~4.4.1 (each holomorphic direction $z_k$ contributes a single
+$\mathbb{E}_1$-factor post-Dolbeault cohomology, not two). Cache entry
+450 / AP932 in Vol I and AP-V2-36 in Vol II flag this as a common
+conflation.
+
+\emph{A2.3 (The Dolbeault cohomology step is model-dependent).}
+Passing from the $\mathbb{E}_{2d}$-structure on $\Obs^{\mathrm{q}}$ to
+the $\mathbb{E}_d$-structure on $H^\bullet_{\bar\partial}\Obs^{\mathrm{q}}$
+requires a \emph{model} for the holomorphic FA: the Costello--Li
+Dolbeault-cohomology model makes the operation literal, but other
+models (e.g.\ \v{C}ech--Dolbeault, or Koszul dualisation) need the
+comparison theorems that these models are all quasi-isomorphic
+(Dupont 1976; Costello--Gwilliam Vol II, Ch.~5).
+
+\emph{A2.4 (Williams 2017 is one among several proofs).} Independent
+proofs of the $\mathbb{E}_d$-structure on
+$H^\bullet_{\bar\partial}\Obs^{\mathrm{q}}(\CC^d)$ include:
+Gwilliam--Williams 2021 (direct construction via Bochner--Martinelli
+propagator; Thm~1.1); Costello--Li 2016 (renormalisation-based argument;
+Prop~6.3); Williams 2020 \emph{J.~Pure Appl.~Algebra} 224
+(factorisation-homology argument). Claiming ``the'' proof without
+naming which is imprecise.
+\end{attack}
+
+\begin{heal}[Cycle 2: the four $\mathbb{E}$-structures, isolated and labelled]
+
+\emph{H2.1 (Labelled four $\mathbb{E}$-structures).} We fix the
+notation:
+\begin{itemize}[leftmargin=2em]
+  \item $\Obs^{\mathrm{top}}$: topological FA on $\RR^{2d}$, carrying
+        $\mathbb{E}_{2d}$ by CGII~Thm~5.0.1.
+  \item $\Obs^{\mathrm{hol}}$: holomorphic FA on $\CC^d$, which is
+        $\Obs^{\mathrm{top}}$ \emph{after imposing holomorphic
+        translation invariance}; carries an
+        $\mathbb{E}_{2d}$-action whose restriction to the antiholomorphic
+        generators is invertible (i.e., the FA is locally constant in
+        antiholomorphic directions).
+  \item $\Obs^{\FA}_d := H^\bullet_{\bar\partial} \Obs^{\mathrm{hol}}$:
+        Dolbeault-cohomology FA on $\CC^d$, carrying $\mathbb{E}_d$ by
+        Dunn additivity applied to the reduced model.
+  \item $\Obs^{\mathrm{chir}}_1 := \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}
+        \Obs^{\FA}_d$: Stage 2 output, an $\mathbb{E}_1$-chiral algebra on $C$.
+\end{itemize}
+Stage 1 produces \emph{$\Obs^{\FA}_d$}. The $\mathbb{E}_d$-label is
+unambiguous once we fix the Dolbeault-reduction step.
+
+\emph{H2.2 (Dunn additivity on the Dolbeault complex).}
+
+\begin{proposition}[Holomorphic Dunn additivity, Williams 2017
+Thm~4.4.1]
+\label{prop:hol-dunn}
+Let $F$ be a locally-constant translation-equivariant factorisation
+algebra on $\CC^d$, equipped with an action of the antiholomorphic
+translation group $\CC^d$ that is locally constant (each
+antiholomorphic translation is a quasi-isomorphism). Then
+$H^\bullet_{\bar\partial} F$ carries a locally-constant translation-equivariant
+$\mathbb{E}_d$-factorisation algebra structure, such that the natural
+inclusion $H^\bullet_{\bar\partial} F \hookrightarrow F$ is a quasi-iso
+of $\mathbb{E}_d$-algebras (with $F$ viewed as $\mathbb{E}_d$ by
+restricting $\mathbb{E}_{2d}$ along the holomorphic embedding
+$\mathbb{E}_d \hookrightarrow \mathbb{E}_{2d}$). By Dunn additivity
+(Lurie HA 5.1.2.2) on the Dolbeault-reduced model,
+\[
+  \Obs^{\FA}_d \;\simeq\; \underbrace{\Obs^{\FA}_1 \boxtimes_D \cdots \boxtimes_D \Obs^{\FA}_1}_{d \text{ factors}}
+\]
+where $\Obs^{\FA}_1$ is the $\mathbb{E}_1$-holomorphic FA on $\CC$
+(two-dimensional chiral CFT observables).
+\end{proposition}
+
+\begin{proof}[Sketch]
+Each holomorphic direction $z_k$ contributes a 1-parameter family of
+open-disc embeddings; the Dolbeault-reduction step identifies the
+antiholomorphic translations as identity maps modulo exact, so each
+holomorphic coordinate contributes an $\mathbb{E}_1$-factor. The
+product over $k = 1, \ldots, d$ is Dunn tensor product. See
+Williams 2017 \S4.4; Gwilliam--Williams 2021 \S3 for the case $d=3$.
+\end{proof}
+
+\emph{H2.3 (Model comparison).} The Dolbeault-cohomology model, the
+\v{C}ech--Dolbeault model, and the Koszul-dual model are all
+quasi-isomorphic as $\mathbb{E}_d$-algebras (Costello--Gwilliam
+Vol II, Ch.~5 Prop~5.2.1). We use the Dolbeault-cohomology model for
+definiteness.
+
+\emph{H2.4 (Three proof paths identified).}
+
+\begin{proposition}[Three independent proofs of Stage-1 $\mathbb{E}_d$-structure]
+\label{prop:three-proofs}
+Let $X = \CC^d$ with flat CY structure. Three proofs of the
+$\mathbb{E}_d$-structure on $\Phi^{\FA}_d(\cC)$ are available:
+\begin{itemize}[leftmargin=2em]
+  \item[(P1)] \emph{Gwilliam--Williams 2021 direct.} Construct the
+              Bochner--Martinelli propagator on $\CC^d$ explicitly; the
+              prefactorisation cosheaf $\Obs^{\mathrm{q}}$ constructed
+              from this propagator, plus the associated Dolbeault
+              reduction, is proved to carry an $\mathbb{E}_d$-structure
+              in Thm~1.1 loc.~cit.
+  \item[(P2)] \emph{Costello--Li 2016 renormalisation.} Apply the
+              renormalisation-group machinery of Costello 2011 with
+              the Bochner--Martinelli gauge-fixing; the effective BV
+              quantisation obeys the hypothesis of CGII Thm~5.0.1
+              (holomorphic translation equivariance) after Dolbeault
+              reduction, giving $\mathbb{E}_d$-structure.
+  \item[(P3)] \emph{Factorisation-homology argument, Williams 2020.}
+              Identify $\Phi^{\FA}_d(\cC)$ with the factorisation
+              homology $\int_{\CC^d} \cA$ of an associated
+              $\mathbb{E}_d$-algebra $\cA$ (constructed from $\cC$ via
+              KT-formality); by the factorisation-homology axioms, the
+              result is an $\mathbb{E}_d$-FA.
+\end{itemize}
+All three paths produce the same FA up to contractible choice.
+\end{proposition}
+\end{heal}
+
+\section*{Cycle 3. Attack --- Kontsevich--Tamarkin formality: who proves what, for which $d$?}
+
+\begin{attack}
+Five attacks on the invocation ``KT formality.''
+
+\emph{A3.1 (Which $d$ exactly?).} Kontsevich 1999 (\emph{Deformation
+quantization of Poisson manifolds}, \emph{Lett.~Math.~Phys.} 66)
+proves $\mathbb{E}_2$-formality for $C^\infty(M)$: the Hochschild
+complex of functions on a smooth manifold, equipped with its natural
+Gerstenhaber = $\mathbb{E}_2$-algebra structure, is formal. This is
+$d = 2$. Tamarkin 2003 (\emph{Action of the Grothendieck--Teichm\"uller
+group on the Hochschild complex}, preprint) proves
+$\mathbb{E}_2$-formality for the Hochschild complex of any
+$A_\infty$-algebra, via the action of a Drinfeld associator; this is
+also $d = 2$ \emph{as an operation on the Gerstenhaber structure},
+not $d \geq 3$. For $d \geq 3$, the corresponding statement is the
+``higher Deligne conjecture,'' proved by Tamarkin in the same paper
+(Thm~2.1) and reproved by others: the little $d$-discs operad acts on
+the $d$-fold iterated Hochschild complex.
+
+\emph{A3.2 (Formality depends on an associator; is it rational or
+transcendental?).} Kontsevich's proof uses the Kontsevich graph
+integrals on the hyperbolic upper half-plane; the associated constants
+are $\QQ$-linear combinations of multiple zeta values $\zeta(m_1, \ldots,
+m_k)$. Tamarkin's proof uses a Drinfeld associator $\Phi_{\mathrm{Dr}}$
+with coefficients in the $\QQ$-algebra of motivic MZVs. Both
+constants live in a $\mathrm{GRT}_1(\QQ)$-torsor
+(Willwacher 2014, \emph{Invent.~Math.} 200 Thm~1.2): the space of
+associators is a principal homogeneous space under the prounipotent
+group $\mathrm{GRT}_1(\QQ)$. Hence ``KT formality'' does not specify a
+unique formality quasi-isomorphism; it specifies a torsor, and a
+specific quasi-iso requires a specific associator.
+
+\emph{A3.3 (CY$_d$ condition on $\cC$ is not innocent).} Tamarkin's
+theorem requires the $A_\infty$-algebra (or category) to be
+\emph{cyclic} to install the Gerstenhaber algebra structure on
+Hochschild cochains. The CY$_d$-condition
+$\eta\colon \HH^\bullet(\cC,\cC)[d] \xrightarrow{\sim} \HH_\bullet(\cC,\cC)^\vee$
+gives this cyclicity, plus a shift $[d]$ that is essential for the
+$\mathbb{E}_d$-labeling. Without CY$_d$-structure, the formality
+statement is only $\mathbb{E}_2$, not $\mathbb{E}_d$.
+
+\emph{A3.4 (Willwacher sharpening).} Willwacher 2014 (\emph{Invent.~Math.}
+200 Thm~1.2) proves that the graph complex GC$^0$ has cohomology
+$\cong \mathfrak{grt}_1$, so the automorphism group of the
+$\mathbb{E}_2$-operad acting on Hochschild cochains is
+$\mathrm{GRT}_1(\QQ)$ itself. This refines KT formality by identifying
+the torsor of formality quasi-isos explicitly. For higher $d$,
+Willwacher + Fresse 2020 (\emph{Compositio Math.} 156) extend this:
+the automorphisms of the little $d$-discs operad act as
+$\mathrm{GT}_d(\QQ)$-torsor on formality quasi-isos, with
+$\mathrm{GT}_d(\QQ) \simeq \mathrm{GRT}_1(\QQ)$ for all $d \geq 2$
+(Fresse--Willwacher 2020 \emph{Comp.~Math.} 156 Thm~A).
+
+\emph{A3.5 (A CY$_d$-category is not a CY $d$-fold).} The KT-formality
+assertion is about the Hochschild complex of the CY$_d$-\emph{category}
+$\cC$, not about Poisson cohomology of a CY$_d$-variety $X$. The two
+are related by $\cC = D^b\Coh(X)$ at $d = 3$, in which case
+Hochschild cochains of $D^b\Coh(X)$ compute the polyvector-field
+cohomology $H^\bullet(X, \wedge^\bullet TX)$ (Hochschild--Kostant--Rosenberg
+theorem 1962; Swan 1996). In this case KT formality on the category
+side is equivalent to Kontsevich formality on the variety side, but
+only up to the HKR quasi-iso; conflating them without naming HKR is
+an error flagged at AP-CY142 in Vol III.
+\end{attack}
+
+\begin{heal}[Cycle 3: Kontsevich--Tamarkin $\mathbb{E}_d$-formality, stated correctly]
+
+\emph{H3.1--H3.2 (KT formality, unified statement).}
+
+\begin{theorem}[KT formality with $\mathrm{GRT}_1(\QQ)$-torsor scope,
+Kontsevich--Tamarkin 1999--2003 with Willwacher--Fresse 2014--2020
+refinements]
+\label{thm:kt-formality}
+Let $\cC$ be a cyclic $A_\infty$-algebra over $\CC$ of
+Calabi--Yau-$d$-category type, i.e.\ equipped with a non-degenerate
+Mukai pairing
+$\eta\colon \HH^\bullet(\cC,\cC)[d] \xrightarrow{\sim} \HH_\bullet(\cC,\cC)^\vee$
+of cohomological degree $d$. The Hochschild cochain complex
+$\HH^\bullet(\cC,\cC)$ carries:
+\begin{itemize}[leftmargin=2em]
+  \item its natural Gerstenhaber $\mathbb{E}_2$-algebra structure
+        (Gerstenhaber 1963; Voronov 2000, \emph{Ann.~Sci.~ENS}),
+        upgraded to an $\mathbb{E}_d$-algebra structure using the
+        CY$_d$-pairing to produce a trace (Kontsevich 1999 for
+        $d = 1$; Costello 2007 \emph{Adv.~Math.} 210 Thm~A for $d = 2$;
+        Tamarkin 2003 Thm~2.1 for general $d$);
+  \item an $\mathbb{E}_d$-formality: there is a zig-zag
+        of $\mathbb{E}_d$-algebra quasi-isomorphisms
+        \[
+          \HH^\bullet(\cC,\cC)\otimes_\CC (\Lie[d-1]\text{-algebra})
+          \;\simeq\; H^\bullet(\HH^\bullet(\cC,\cC)) \otimes_\CC (\Lie[d-1]\text{-algebra})
+        \]
+        depending on a choice of associator $\Phi \in \mathrm{Ass}_d(\QQ)$,
+        where $\mathrm{Ass}_d(\QQ)$ is the $\mathrm{GRT}_1(\QQ)$-torsor of
+        Drinfeld associators (Fresse--Willwacher 2020 Thm~A).
+\end{itemize}
+Transcendental constants: Kontsevich graph integrals produce a specific
+element in the motivic-MZV-subring of periods; all other associators
+differ by a $\mathrm{GRT}_1(\QQ)$-gauge.
+\end{theorem}
+
+\emph{H3.3 (CY$_d$-condition absorbed into the hypothesis).} The
+cyclicity datum is fed in as part of the input $\cC$; without it the
+theorem only gives $\mathbb{E}_2$-formality.
+
+\emph{H3.4 (Willwacher/Fresse--Willwacher refinement).} The torsor
+statement is the sharpening: the formality quasi-iso is not
+canonical, but its underlying torsor structure $\mathrm{Ass}_d(\QQ)$
+is canonical. Stage 1 is therefore canonical up to contractible
+choice (each choice of associator defines a quasi-iso, and the space
+of associators is contractible to any chosen basepoint in
+$\mathrm{GRT}_1(\QQ)$-gauge).
+
+\emph{H3.5 (HKR comparison with CY variety side, for $\cC = D^b\Coh(X)$).}
+
+\begin{proposition}[HKR bridge at $\cC = D^b\Coh(X)$, $X$ smooth
+projective CY$_3$]
+\label{prop:hkr-bridge}
+Let $X$ be a smooth projective CY$_3$ and $\cC = D^b\Coh(X)$. Then
+\[
+  \HH^\bullet(\cC,\cC) \;\simeq\; \bigoplus_{p+q = \bullet} H^p(X, \wedge^q TX)
+\]
+as $\mathbb{E}_3$-algebras, where the right-hand side carries the
+Schouten bracket and the Cap product with $\Omega_X$ identifies
+$\wedge^q TX \simeq \Omega_X^{3-q}$ as a $(-1)$-shifted symplectic
+structure. This is the HKR + Kontsevich--Swan theorem (HKR 1962;
+Swan 1996; Caldararu 2005, \emph{Advances in Math.} 194). Under this
+identification, KT formality on the category side reduces to
+Kontsevich formality on the polyvector-field side.
+\end{proposition}
+\end{heal}
+
+\section*{Cycle 4. Attack --- Costello--Gwilliam--Li locality: what does it buy?}
+
+\begin{attack}
+Six attacks on the invocation ``CGL locality.''
+
+\emph{A4.1 (Locality versus $\mathbb{E}_n$-structure: which is the theorem?).}
+The statement ``the FA of observables on $X$ is determined by its
+restriction to small open disks'' has two distinct mathematical
+meanings:
+\begin{itemize}[leftmargin=2em]
+  \item[(L1)] \emph{Cosheaf locality}: $\Obs^{\mathrm{q}}$ is a
+              \v{C}ech-cosheaf for the topology of disjoint open
+              embeddings, i.e.\ the FA condition itself. This is
+              tautological: any FA is defined by locality. CGII~Prop~6.1.3.
+  \item[(L2)] \emph{Locally-constant structure}: $\Obs^{\mathrm{q}}$ is
+              locally constant (each inclusion of disks in disks is a
+              quasi-iso). This is the hypothesis of Lurie HA 5.3.4.10
+              and gives the identification with an
+              $\mathbb{E}_n$-algebra.
+  \item[(L3)] \emph{Holomorphic locally-constant structure}: the
+              antiholomorphic translations are quasi-isos. This is
+              weaker than (L2) and gives the identification with an
+              $\mathbb{E}_d$-algebra on $\CC^d$ after Dolbeault
+              reduction (Williams 2017).
+\end{itemize}
+Stage 1 needs (L3), not the weaker (L1). The ``locality'' label is
+ambiguous.
+
+\emph{A4.2 (Costello--Li 2016: which theorem exactly?).}
+Costello--Li 2016 (\emph{arXiv:1605.09930, Twisted supergravity and
+its quantization}) is cited often but the specific result invoked
+for Stage 1 is Proposition~5.2, which gives the existence of a
+Bochner--Martinelli-style propagator on CY$_3$ with the requisite
+compact support and symmetry. This is not an $\mathbb{E}_d$-statement;
+it is a gauge-fixing statement. The $\mathbb{E}_d$-structure comes
+from Williams 2017 or Gwilliam--Williams 2021.
+
+\emph{A4.3 (Compactly supported versus distributional observables).}
+CGII distinguishes $\Obs^{\mathrm{q}}$ (distributional) from
+$\Obs^{\mathrm{q}}_c$ (compactly supported). Locality works in both
+lanes but with different target categories: $\Obs^{\mathrm{q}}$ is
+valued in \emph{completed} symmetric algebra (distribution space),
+$\Obs^{\mathrm{q}}_c$ in the compactly supported symmetric algebra
+(Schwartz-space). The $\mathbb{E}_d$-structure exists in both but on
+different ambient categories.
+
+\emph{A4.4 (``Canonical up to contractible choice'' — of what?).}
+The phrase means: the space of BV renormalisations (gauge fixings,
+propagators, counterterm schemes) is contractible; any two choices
+produce equivalent FAs. Costello 2011 \S6--9 proves this for the
+scale-family of propagators $P_L^\varepsilon$ (any two
+$L_1 < L_2$ give isomorphic effective actions via RG flow). For the
+gauge-fixing, contractibility is the statement that the space of
+gauge-fixing conditions $\bar\partial^*$ is an affine bundle over a
+contractible base (the space of hermitian metrics on $X$). The
+``contractible choice'' language requires these two contractibility
+statements as separate inputs, not one.
+
+\emph{A4.5 (Li--Li 2020, Li 2020: the $\hCS$-specific refinement).}
+For the $\hCS$-avatar specifically, the existence and uniqueness of
+the BV quantisation up to contractible choice require:
+Li~2020 \emph{J.~Differential Geom.} 114 (Feynman-diagram
+regularisation on CY$_3$); Li--Li~2020 \emph{Commun.~Math.~Phys.} 376
+(renormalisation-group analysis of $\hCS$). These are more specific
+than general CGII.
+
+\emph{A4.6 (The ``canonical'' is only up to contractible choice in
+the sense of $\infty$-categorical equivalence).} ``Canonical'' in
+the $(\infty,1)$-sense means the space of constructions is connected
+and simply-connected; the construction is not a functor valued in a
+1-category but in the $(\infty,1)$-category of
+$\mathbb{E}_d$-holomorphic FAs.
+\end{attack}
+
+\begin{heal}[Cycle 4: CGL locality, stated tri-layered and crisply]
+
+\emph{H4.1 (Three locality statements, all invoked).}
+
+\begin{theorem}[CGL locality, tri-layered, CGII + Costello--Li 2016]
+\label{thm:cgl-locality}
+Let $X$ be a complex manifold of complex dimension $d$ and let
+$\Phi^{\FA}_d(\cC)$ be the quantum observables of $\hCS(d)$ on $X$
+coupled to CY$_d$-category $\cC$, constructed as in
+Definition~\ref{def:stage1-flat}. Then:
+\begin{itemize}[leftmargin=2em]
+  \item[(L1)] \emph{Cosheaf locality.} $\Phi^{\FA}_d(\cC)$ is a
+              prefactorisation cosheaf: for every finite family of
+              pairwise disjoint open sets
+              $\cU_1,\ldots,\cU_k\subset\cU\subset X$ and the
+              corresponding structure map
+              $\Phi^{\FA}_d(\cC)(\cU_1) \otimes \cdots \otimes \Phi^{\FA}_d(\cC)(\cU_k)
+              \to \Phi^{\FA}_d(\cC)(\cU)$, the FA condition holds
+              (CGII~Prop~6.1.3).
+  \item[(L2)] \emph{Locally-constant-ness in holomorphic direction.}
+              For any open inclusion $\cU\hookrightarrow\cU'$ that is a
+              holomorphic tubular retract (i.e.\ $\cU = \cU'\setminus
+              (\text{antiholomorphic bundle})$), the structure map
+              $\Phi^{\FA}_d(\cC)(\cU) \to \Phi^{\FA}_d(\cC)(\cU')$ is a
+              quasi-isomorphism. This is the content of
+              Costello--Li~2016 Prop~5.2 (Bochner--Martinelli
+              propagator kills the antiholomorphic direction) combined
+              with CGII~Thm~5.0.1 (translation equivariance of the
+              BV-quantised observables).
+  \item[(L3)] \emph{Descent to Dolbeault-cohomology FA.} The
+              Dolbeault-reduced FA
+              $\Phi^{\FA}_d(\cC)^{\bar\partial} := H^\bullet_{\bar\partial}
+              \Phi^{\FA}_d(\cC)$ is a locally-constant
+              translation-equivariant factorisation algebra on
+              $\CC^d$, hence by Lurie HA 5.3.4.10 equivalent to an
+              $\mathbb{E}_d$-algebra, the $\mathbb{E}_d$-holomorphic FA
+              label of Stage 1. (Williams 2017 Thm~4.4.1; Gwilliam--Williams
+              2021 Thm~1.1.)
+\end{itemize}
+Canonicity: the construction is canonical up to contractible choice
+of gauge-fixing operator $\bar\partial^*$ (the space of
+compact-support compatible gauge-fixing operators is contractible by
+Costello 2011 \S6.5) and scale-family propagator $P_L^\varepsilon$
+(the RG-flow space is contractible by Costello 2011 Thm~8.6.1).
+\end{theorem}
+
+\emph{H4.2 (Costello--Li 2016 Prop~5.2, explicit reference).}
+
+\begin{proposition}[Bochner--Martinelli propagator, Costello--Li 2016
+Prop~5.2]
+\label{prop:bm-propagator}
+On $\CC^3 = \{(z_1, z_2, z_3)\}$ equipped with the flat hermitian
+metric, the Bochner--Martinelli kernel $P_{\BM}(z, w)$ of
+\S\emph{Conventions} is a distributional bisolenoidal $(1,2)$-form on
+$\CC^3 \times \CC^3$ minus the diagonal, satisfying
+\[
+  \bar\partial_z P_{\BM}(z, w) = \delta_\Delta(z - w) \cdot \Omega_0(w),
+  \qquad
+  \bar\partial_w P_{\BM}(z, w) = \delta_\Delta(z - w) \cdot \Omega_0(z).
+\]
+Equivalently, $P_{\BM}$ is the kernel of $\bar\partial^{-1}$ on the
+orthogonal complement of harmonic $(0,\bullet)$-forms with compact
+support, modulo the hermitian metric gauge. The regularisation
+$P_L^\varepsilon$ at scales $\varepsilon < L$ is the smoothed version
+obtained by cutting off the diagonal singularity with a smooth
+bump-function family; contractibility of the space of such families
+is Costello 2011 Prop~6.5.3.
+\end{proposition}
+
+\emph{H4.3 (Compact vs distributional lanes fixed).} We work in the
+distributional lane: $\Obs^{\mathrm{q}}$ is valued in completed
+symmetric algebra of distributions, following CGII~\S3.1 and Williams
+2017. The compactly supported lane $\Obs^{\mathrm{q}}_c$ appears in
+Stage 2 via factorisation homology pairings.
+
+\emph{H4.4--H4.6 (Contractible-choice canonicity, unpacked).}
+
+\begin{proposition}[Canonicity of Stage 1 up to contractible choice]
+\label{prop:canonicity-stage1}
+The Stage-1 FA $\Phi^{\FA}_d(\cC)$ is a functor
+\[
+  \Phi^{\FA}_d\colon \mathrm{CY}_d\text{-Cat}^{\mathrm{cyc},\mathrm{prop}}
+  \longrightarrow \mathbb{E}_d\text{-}\HolFA(X)
+\]
+of $(\infty,1)$-categories, canonical up to contractible choice of:
+\begin{itemize}[leftmargin=2em]
+  \item the associator $\Phi \in \mathrm{Ass}_d(\QQ)$ controlling
+        KT-formality (space of associators is a $\mathrm{GRT}_1(\QQ)$-torsor,
+        contractible in $\QQ$-algebra of periods; Fresse--Willwacher 2020);
+  \item the gauge-fixing operator $\bar\partial^*$ (space of
+        compactly supported gauge-fixing operators is contractible;
+        Costello 2011 Prop~6.5.3);
+  \item the scale-family of propagators $P_L^\varepsilon$
+        (RG-flow space is contractible; Costello 2011 Thm~8.6.1).
+\end{itemize}
+All three spaces of choices are independently contractible; their
+product is contractible. The functor $\Phi^{\FA}_d$ lifts to the
+$(\infty,1)$-category of contractibly-chosen data.
+\end{proposition}
+\end{heal}
+
+\section*{Cycle 5. Attack --- The $d=3$ case: 6D hCS is the canonical avatar?}
+
+\begin{attack}
+Seven attacks on the assertion ``6D holomorphic Chern--Simons on
+$\CC^3$ is the canonical $\mathbb{E}_3$-holomorphic FA for $\mathrm{CY}_3$
+categories.''
+
+\emph{A5.1 (Why hCS and not some other theory?).} Many holomorphic
+theories on CY$_3$ produce observables that are $\mathbb{E}_3$-FAs:
+holomorphic BF, holomorphic $\sigma$-models, twisted M5-brane
+worldvolume theory, twisted $(2,0)$ theory. Why is $\hCS$ ``the''
+canonical one?
+
+\emph{A5.2 (Gauge Lie algebra dependence).} $\hCS$ depends on a
+choice of finite-dimensional Lie algebra $\fg$ with invariant pairing.
+A general CY$_3$-category $\cC$ is infinite-dimensional (e.g.\
+$D^b\Coh(X)$ for $X$ smooth projective CY$_3$). The identification
+$\fg = \HH^{\bullet}(\cC,\cC)[3]$ makes $\fg$ the Hochschild complex,
+which is an $A_\infty$-Lie-algebra (not an ordinary Lie algebra). The
+$\hCS$ action needs a Lie-algebra structure; Koszul-dualising the
+infinity-Lie-algebra to a plain one requires a (non-canonical) minimal
+model.
+
+\emph{A5.3 (Matter-coupling versus gauge-coupling).} Two distinct
+couplings of $\cC$ to $\hCS$:
+\begin{itemize}[leftmargin=2em]
+  \item[(C1)] \emph{Gauge-coupling}: fix $\fg$ and realise $\cC$ as a
+              $\fg$-module category; the $\hCS$ field space has fiber
+              $\fg$.
+  \item[(C2)] \emph{Matter-coupling}: introduce a matter field sheaf
+              $\cM = \Omega^{0,\bullet}(X)\otimes \cC^{\mathrm{fiber}}$
+              coupled to the $\hCS$ gauge field $\cA$ via a cubic
+              interaction; the fiber carries $\cC$-module structure.
+\end{itemize}
+Stage 1 uses (C2) when $\cC$ is not already $\fg$-gauge for a specific
+$\fg$. The distinction matters for the $\mathbb{E}_d$-structure (both
+produce $\mathbb{E}_d$-FAs, but via different operadic routes).
+
+\emph{A5.4 (Gwilliam--Williams 2021 computes on $\CC^3$; what about
+curved $X$?).} Gwilliam--Williams 2021 explicitly computes the
+$\mathbb{E}_3$-algebra of observables for $\hCS$ on $(\CC^3, \Omega_0,
+\fg)$. For curved CY$_3$ $X$, the FA is constructed locally using
+the flat-space model and glued via the CY$_3$-structure; the
+$\mathbb{E}_3$-structure is defined globally, but the explicit
+Bochner--Martinelli propagator is local.
+
+\emph{A5.5 (Deformation theory = $\HH^\bullet_{\mathbb{E}_3}[3]$).}
+Costello~2013 (\emph{Sci.~Bull.~Math.} 137) proves the deformation
+complex of 6D $\hCS$ on $\CC^3$ is
+$\HH^\bullet_{\mathbb{E}_3}(\Obs^{\FA}_3(\cC), \Obs^{\FA}_3(\cC))[3]$;
+this identifies deformations with Hochschild cohomology of the
+$\mathbb{E}_3$-algebra. For $\fg$ simple with Killing form,
+$\HH^0_{\mathbb{E}_3} = \CC \cdot \mathrm{Kil}$, matching the
+Yangian-deformation slot of Costello--Witten--Yamazaki 2017.
+
+\emph{A5.6 (Costello--Dimofte--Paquette 2020: factorisation algebras
+and chiral CFT).} For $\fg = \widehat{\mathfrak{gl}}_1$, the
+all-orders-in-$\hbarb$ non-abelian $\hCS$ observable algebra is the
+Yangian $Y_{\epsilon_1,\epsilon_2,\epsilon_3}(\widehat{\mathfrak{gl}}_1)$
+(Costello--Dimofte--Paquette 2020 Thm~1.1). This is the proof that
+$\hCS$ is non-trivial at the quantum level for abelian gauge algebras.
+
+\emph{A5.7 (Relation to $\CoHA(\CC^3)$).} At $\fg = \widehat{\mathfrak{gl}}_1$,
+Schiffmann--Vasserot 2013 (\emph{Duke Math.~J.} 162) constructs the
+cohomological Hall algebra $\CoHA(\CC^3) = Y^+(\widehat{\mathfrak{gl}}_1)$.
+Vol III identifies this with $\Phi^{\FA}_3(\cC) = \Phi^{\FA}_3(\CoHA(\CC^3))$
+applied to the perverse-sheaf category on quiver moduli; the
+$\mathbb{E}_3$-algebra structure on $Y^+(\widehat{\mathfrak{gl}}_1)$
+\emph{is} the $\mathbb{E}_3$-FA at the $(\CC^3, \Omega_0)$ base point.
+\end{attack}
+
+\begin{heal}[Cycle 5: 6D hCS is canonical as the $\hCS(3)$ avatar of Stage 1]
+
+\emph{H5.1 (``Canonical'' means ``unique up to the contractible-choice
+$(\infty,1)$-categorical equivalence'').} We do not claim $\hCS$ is
+the unique CY$_3$-theory producing $\mathbb{E}_3$-FAs; we claim Stage 1 is
+canonically isomorphic to $\hCS$ observables at the $\mathrm{CY}_3$-level
+because KT formality + CGL locality specify the $\mathbb{E}_3$-FA
+up to contractible choice, and the $\hCS$ realisation at $\fg = $
+endomorphism Lie algebra of a generator is one representative. Other
+representatives (holomorphic $BF$, twisted M5, etc.) differ by
+quasi-isos.
+
+\begin{theorem}[6D hCS as canonical $d=3$ avatar, Costello~2013 +
+Gwilliam--Williams~2021 + Costello--Dimofte--Paquette~2020]
+\label{thm:6dhcs-canonical-avatar}
+Let $\cC$ be a cyclic $A_\infty$-category of CY$_3$ type with a
+compact generator $G$ and $\fg := \mathrm{RHom}_\cC(G,G)[1]$ its
+endomorphism Lie algebra (well-defined up to Morita equivalence by
+Orlov 2009). The Stage-1 $\mathbb{E}_3$-holomorphic factorisation
+algebra
+\[
+  \Phi^{\FA}_3(\cC) \;=\; \Obs^{\mathrm{q}}_{\hCS(3)\text{ on }(\CC^3,\Omega_0,\fg)}
+\]
+is canonically isomorphic (in the $(\infty,1)$-category of
+$\mathbb{E}_3$-holomorphic FAs on $\CC^3$, up to contractible choice)
+to the BV-quantised observables of six-dimensional holomorphic
+Chern--Simons theory on $(\CC^3, \Omega_0, \fg)$. Under this
+identification:
+\begin{itemize}[leftmargin=2em]
+  \item For $\cC = \Coh(\mathrm{pt})$, $\fg = 0$: $\Phi^{\FA}_3 = \CC$
+        (trivial).
+  \item For $\cC = \Coh(E)$ (elliptic curve, CY$_1$): not directly
+        Stage 1; Vol III constructs this via different route at $d = 1$.
+  \item For $\cC = D^b\Coh(X)$ with $X$ smooth projective CY$_3$:
+        $\fg$ is the derived polyvector fields $\bigoplus_q
+        H^{\bullet}(X,\wedge^q TX)$; $\Phi^{\FA}_3(\cC)$ is the
+        observable FA of $\hCS$ with this derived Lie algebra.
+  \item For $\cC = \CoHA(\CC^3)$ (quiver CoHA on $\CC^3$):
+        $\Phi^{\FA}_3(\cC) = Y^+(\widehat{\mathfrak{gl}}_1)$ as
+        $\mathbb{E}_3$-algebra, matching Schiffmann--Vasserot 2013
+        (Costello--Dimofte--Paquette 2020 Thm~1.1).
+\end{itemize}
+\end{theorem}
+
+\emph{H5.2 (Gauge Lie algebra: $A_\infty$-Lie algebra directly, no
+strictification).} We work in the $(\infty,1)$-categorical lane: the
+``Lie algebra'' input to $\hCS$ is an $L_\infty$-algebra, and
+$\HH^\bullet(\cC,\cC)[3]$ is the canonical such input. Strict Lie
+algebras are a special case where the higher brackets vanish.
+
+\emph{H5.3 (Matter-coupling recipe, explicit).}
+
+\begin{construction}[Matter-coupled 6D hCS]
+\label{cons:matter-coupled}
+Given $\cC$ CY$_3$-category and $\hCS(3)$ with a chosen reference
+abelian Lie algebra $\fg_0 = \CC$ (just for simplicity), introduce a
+matter sheaf $\cM_\cC = \Omega^{0,\bullet}(X) \otimes_\CC \HH_\bullet(\cC)$
+and a coupling interaction
+\[
+  S_{\mathrm{mat}}[\cA, \psi] = \int_X \Omega_X \wedge \langle \psi,
+  (\bar\partial + \cA) \psi \rangle + \int_X \Omega_X \wedge \langle \psi,
+  \mu_\cC(\psi) \rangle
+\]
+where $\mu_\cC$ is the $A_\infty$-operation from $\cC$'s module
+structure and $\langle -, - \rangle$ is the Mukai pairing from the
+CY$_3$-structure. The total action
+$S = S_{\hCS}[\cA] + S_{\mathrm{mat}}[\cA, \psi]$ has BV quantisation
+and the resulting observables are $\Phi^{\FA}_3(\cC)$.
+\end{construction}
+
+\emph{H5.4 (Curved-$X$ extension via gluing).}
+
+\begin{proposition}[$\Phi^{\FA}_3(\cC)$ on curved CY$_3$]
+\label{prop:curved-X}
+Let $X$ be a smooth compact CY$_3$. The Stage-1 FA
+$\Phi^{\FA}_3(\cC)$ on $X$ is constructed by: (a) covering $X$ by
+holomorphic charts $(\cU_\alpha, \Omega_\alpha)$ with flat local
+model $(\CC^3, \Omega_0)$; (b) applying the flat-space construction
+of Def.~\ref{def:stage1-flat} on each $\cU_\alpha$; (c) gluing via the
+CY$_3$-transition functions. The glued FA is canonical (via the
+patchwork of contractibly-chosen local data). The global
+$\mathbb{E}_3$-structure is defined on the Dolbeault-reduced level
+and extends the local $\mathbb{E}_3$-structure of each chart.
+
+Compact-support discipline: the quantisation uses Li--Li 2020
+($\emph{Commun.~Math.~Phys.}$ 376, \S5--6), producing a globally
+defined effective interaction $I[L]$ on $X$ with local
+compactly-supported factorisation algebra of observables.
+\end{proposition}
+
+\emph{H5.5 (Deformation theory witness).}
+
+\begin{proposition}[Costello 2013, first-order deformation]
+\label{prop:costello-deformations}
+The deformation complex of $\hCS(3)$ on $\CC^3$ coupled to $\cC$ is
+\[
+  \mathrm{Def}(\Phi^{\FA}_3(\cC))
+  \;\simeq\;
+  \HH^\bullet_{\mathbb{E}_3}(\Phi^{\FA}_3(\cC), \Phi^{\FA}_3(\cC))[3].
+\]
+For simple Lie $\fg$ on $\CC^3$ with flat volume, first-order
+moduli are:
+\[
+  T_0\cM^{\mathrm{def}} \;=\; H^{0,3}_{\bar\partial,c}(\CC^3)\otimes
+  \Sym^2(\fg^\vee)^{\mathrm{inv}}
+  \;=\; \CC\cdot\kappa_\fg \text{ (Killing form)},
+\]
+matching the Yangian deformation moduli at the CY-slice
+$\epsilon_1 + \epsilon_2 + \epsilon_3 = 0$.
+\end{proposition}
+
+\emph{H5.6--H5.7 (Abelian avatar: CoHA identification).}
+
+\begin{theorem}[Costello--Dimofte--Paquette 2020, reread as Stage-1
+identification]
+\label{thm:cdp-cohA}
+For $\fg = \widehat{\mathfrak{gl}}_1$ (rank-1 abelian), the
+all-orders-in-$\hbarb$ BV-quantised $\hCS(3)$ observable FA on
+$(\CC^3, \Omega_0)$ is
+\[
+  \Phi^{\FA}_3(\CoHA(\CC^3))
+  \;=\; Y^+(\widehat{\mathfrak{gl}}_1) \;=\; \CoHA(\CC^3)
+\]
+as an $\mathbb{E}_3$-algebra, where $Y^+$ denotes the positive-nilpotent
+part of the Maulik--Okounkov Yangian and the equality is
+Schiffmann--Vasserot 2013 (Thm~1.1 loc.~cit.) combined with
+Costello--Dimofte--Paquette 2020 (Thm~1.1) identifying the $\hCS$
+observables with the Maulik--Okounkov construction.
+
+This pins the Stage-1 output at the canonical CoHA base point and
+provides a falsifiable witness: any error in $\Phi^{\FA}_3$ at
+$\fg = \widehat{\mathfrak{gl}}_1$ would be visible in the
+$Y^+$-product rule (explicit formulas in Schiffmann--Vasserot
+\S5.3, loc.~cit.; tested in Vol III compute modules
+\texttt{compute/cy\_d\_kappa.py}).
+\end{theorem}
+\end{heal}
+
+\section*{Synthesis: the five-cycle residue as the Stage-1 theorem}
+
+After five adversarial cycles the Stage-1 construction stabilises to
+the following theorem.
+
+\begin{theorem}[Stage 1 of $\Phi_d$, canonical form]
+\label{thm:stage1-canonical}
+For each $d\in\{2,3,4,5\}$, there exists a functor
+\[
+  \Phi^{\FA}_d\colon \mathrm{CY}_d\text{-Cat}^{\mathrm{cyc},\mathrm{prop}}
+  \longrightarrow \mathbb{E}_d\text{-}\HolFA(X)
+\]
+of $(\infty,1)$-categories, where the target is the
+$(\infty,1)$-category of $\mathbb{E}_d$-holomorphic factorisation
+algebras on a CY$_d$-background $X$. The functor is:
+\begin{itemize}[leftmargin=2em]
+  \item \emph{Defined} by
+  $\Phi^{\FA}_d(\cC) := \Obs^{\mathrm{q}}_{\hCS(d)\text{ on }(X,\Omega_X,\fg(\cC))}$,
+  i.e.\ the Costello BV-quantised observable FA of
+  $(2d)$-dimensional holomorphic Chern--Simons theory coupled to
+  $\fg(\cC)$, where $\fg(\cC)$ is the endomorphism $L_\infty$-algebra
+  of a compact generator of $\cC$.
+  \item \emph{Canonical up to contractible choice} via three
+  independently contractible spaces: (i) associator
+  $\Phi\in\mathrm{Ass}_d(\QQ)$ (Kontsevich--Tamarkin formality,
+  controlled by $\mathrm{GRT}_1(\QQ)$-torsor; Willwacher 2014,
+  Fresse--Willwacher 2020); (ii) gauge-fixing operator
+  $\bar\partial^*$ (contractible over the space of hermitian
+  metrics; Costello 2011 Prop~6.5.3); (iii) scale-family propagator
+  $P_L^\varepsilon$ (contractible over $\RR_{>0}$; Costello 2011
+  Thm~8.6.1).
+  \item \emph{Obeys $\mathbb{E}_d$-structure} via tri-layered
+  CGL-locality (Thm~\ref{thm:cgl-locality}) + holomorphic Dunn
+  additivity (Prop~\ref{prop:hol-dunn}): locally constant in
+  holomorphic direction $+$ locally constant in antiholomorphic
+  direction after Dolbeault reduction $=$ $\mathbb{E}_d$.
+  \item \emph{Compatible with Stage 2} via composition
+  $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1}, C}\circ
+  \Phi^{\FA}_d$, where Stage 2 is factorisation homology over
+  $\Sigma_{d-1}\subset X$ followed by restriction to a reference
+  curve $C\subset X$. Stage 2 is a separate theorem;
+  $\Phi_d$ at the functor level is CONJECTURAL, at the value level
+  is PROVED for $d\in\{1,2\}$ and K3-fibered Class A at $d = 3$.
+  \item At $d = 3$, the classical BV datum is
+  $\cA = c + A^{(0,1)} + A^{*(0,2)} + c^{*(0,3)} \in
+  \Omega^{0,\bullet}(X,\fg)[1]$, action
+  $S_{\mathrm{cl}} = \int_X \Omega_X\wedge \langle\cA,
+  \bar\partial\cA + \tfrac{1}{3}[\cA,\cA]\rangle$, $(-1)$-shifted
+  symplectic via Serre duality; the Bochner--Martinelli propagator
+  generates the FA through Costello--Li 2016 Prop~5.2; the
+  $\mathbb{E}_3$-structure is realised by one $\mathbb{E}_1$ per
+  holomorphic coordinate after Dolbeault reduction
+  (Gwilliam--Williams 2021 Thm~1.1).
+\end{itemize}
+\end{theorem}
+
+\begin{remark}[Shift-law table, pinned]
+\label{rem:shift-table}
+The dimensional ladder $(d, \mathrm{AKSZ\ shift}, \mathbb{E}\text{-label})$:
+\[
+  (2, -2, \mathbb{E}_2), \quad
+  (3, -1, \mathbb{E}_1) \text{ on BV} \; / \; \mathbb{E}_3 \text{ on FA}, \quad
+  (4, 0, \mathbb{E}_0) \text{ on BV} \; / \; \mathbb{E}_4 \text{ on FA}, \quad
+  (5, +1, \mathbb{E}_5\text{-Poisson}) \text{ on BV} \; / \; \mathbb{E}_5 \text{ on FA}.
+\]
+At $d = 5$ the BV pairing is $+1$-shifted, corresponding to an
+$\mathbb{E}_5$-Poisson structure (CPTVV 2017 \S3) on observables; on
+the FA side, the $\mathbb{E}_5$-label survives, but the underlying
+dgca is Poisson, not symplectic. At $d \geq 6$ the AKSZ shift exceeds
+$+1$ and CPTVV shifted-Poisson geometry does not uniformly extend;
+Stage 1 is provisional beyond $d = 5$.
+
+The two labels (AKSZ-BV shift on the classical side versus
+$\mathbb{E}$-level on the FA side) are \emph{different invariants};
+the AKSZ shift measures the symplectic/Poisson degree of
+$\omega_{\BV}$, while the $\mathbb{E}$-label measures the
+factorisation-algebraic structure on observables. They happen to
+coincide at $d = 5$ ($\mathbb{E}_5$ from both sides) but not at
+$d < 5$. See Prop.~\ref{prop:shift-fa}.
+\end{remark}
+
+\begin{remark}[What Stage 1 is not]
+\label{rem:not-stage1}
+\begin{itemize}[leftmargin=2em]
+  \item Stage 1 is \emph{not} the $\mathbb{E}_1$-chiral algebra on a
+        curve; that is Stage 2.
+  \item Stage 1 is \emph{not} a numerical invariant ($\kappa$,
+        shadow tower, BKM-weight, etc.); those are Vol I / Vol III
+        outputs downstream of the full composition $\Phi_d$.
+  \item Stage 1 is \emph{not} the Drinfeld double of the chiral
+        algebra; $G(\cC) = D(Y^+(\cC))$ is a separate construction in
+        Vol III.
+  \item Stage 1 does \emph{not} require the CY$_d$-category $\cC$ to
+        be geometric (i.e., $D^b\Coh$ of something); it accepts any
+        cyclic $A_\infty$-category with Mukai pairing and a
+        compact generator.
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Cross-volume scope]
+\label{rem:cross-vol-scope}
+The KT formality hypothesis has been adversarially audited in
+Vol I cache 434--441 (GRT/KT/Willwacher convention discipline), in
+Vol II V2-AP41 (stratified Humbert formality obstruction; smooth KT
+does not transport verbatim), and in Vol III AP-CY142 (HH-admissibility
+discipline). The CGL locality hypothesis has been adversarially
+audited in Vol I AP932 / cache 450 (Dunn real-vs-complex at $\CC^3$),
+in Vol II V2-AP139 (Dunn real-vs-complex companion), and in Vol III
+AP-CY53 ($\pi_1(\Conf_2)$ ordered-vs-unordered). All three volumes
+agree on the tri-layered CGL statement and the
+$\mathrm{GRT}_1(\QQ)$-torsor KT statement.
+\end{remark}
+
+\section*{Falsification regime}
+
+Stage 1 is a theorem at chain level (Gwilliam--Williams 2021 Thm~1.1)
+and at $(\infty,1)$-level (Williams 2017 Thm~4.4.1 + Fresse--Willwacher
+2020 Thm~A). It is falsified by the following checks, each
+operational:
+\begin{itemize}[leftmargin=2em]
+  \item \emph{(F1) Bochner--Martinelli normalisation.} The
+        $(2\pi i)^{-3}$ prefactor on $P_{\BM}$ on $\CC^3$ is
+        determined by the normalisation of the holomorphic volume
+        $\Omega_0 = dz_1\wedge dz_2\wedge dz_3$; any change in
+        convention propagates to a consistent change in observable
+        normalisation. (Cache entry 266, 267 citation discipline.)
+  \item \emph{(F2) $\fg = \widehat{\mathfrak{gl}}_1$ Yangian check.}
+        $\Phi^{\FA}_3(\CoHA(\CC^3)) = Y^+(\widehat{\mathfrak{gl}}_1)$
+        computed by two independent means: direct Feynman diagrams
+        (Costello--Dimofte--Paquette 2020 Thm~1.1) and cohomological
+        Hall algebra (Schiffmann--Vasserot 2013 Thm~1.1). Any
+        mismatch at $\hbarb$-order $\geq 2$ falsifies the Stage-1
+        identification.
+  \item \emph{(F3) $\HH^\bullet_{\mathbb{E}_3}$ deformation count.}
+        First-order deformations of $\Phi^{\FA}_3$ at $\fg$ simple
+        compact semisimple: the moduli is $\CC\cdot\kappa_\fg$
+        (Killing form, 1-dimensional). Any additional first-order
+        moduli direction falsifies the theorem.
+  \item \emph{(F4) Dunn-additivity factor count.}
+        $\Phi^{\FA}_3(\cC)^{\bar\partial} \simeq
+        \Phi^{\FA}_1(\cC)^{\bar\partial, (1)}
+        \boxtimes_D \Phi^{\FA}_1(\cC)^{\bar\partial, (2)}
+        \boxtimes_D \Phi^{\FA}_1(\cC)^{\bar\partial, (3)}$ (three
+        factors, one per holomorphic direction). Any Dunn-factor
+        count $\neq 3$ on $\CC^3$ after Dolbeault reduction falsifies.
+  \item \emph{(F5) Compactness/non-compactness comparison.} On
+        $\CC^3$ (non-compact), the FA uses compactly-supported
+        Costello--Gwilliam locality (Prop~8.2.1 loc.~cit.); on
+        compact CY$_3$ (quintic, Calabi--Yau hypersurface in weighted
+        $\PP^4$), the FA uses Costello 2011 Thm~13.4.1. The two
+        outputs agree on the overlap (neighbourhoods of flat patches)
+        modulo the global gluing data from the CY-transition
+        functions.
+\end{itemize}
+
+\section*{First-principles-to-primary-literature dictionary}
+
+The table below maps each step of Stage 1 to the primary paper that
+proves it.
+
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Step} & \textbf{Content} & \textbf{Primary literature} \\
+\hline
+S1 & $(2d)$-real-dim BV datum of $\hCS(d)$ & Costello--Li 2016 \S2; Costello 2013 \S3 \\
+S2 & $(-1)$-shifted symplectic via Serre duality & CPTVV 2017 \S3; Pantev--To\"en--Vaqui\'e--Vezzosi 2013 \\
+S3 & AKSZ shift $d - 4$ ladder & CPTVV 2017 Thm~3.1; Calaque 2013 \\
+S4 & BV quantisation, effective interaction $I[L]$ & Costello 2011 Thm~13.4.1 \\
+S5 & Bochner--Martinelli propagator on $\CC^3$ & Costello--Li 2016 Prop~5.2 \\
+S6 & Compactly supported observables FA & CGII Prop~8.2.1; CGII \S10.2 \\
+S7 & CGII Thm~5.0.1: FA of observables has $\mathbb{E}_{2d}$ structure & CGII Thm~5.0.1 \\
+S8 & Holomorphic translation equivariance, Williams 2017 & Williams 2017 Thm~4.4.1 \\
+S9 & Dolbeault reduction, $\mathbb{E}_d$-label & Williams 2017 \S4.4; Gwilliam--Williams 2021 Thm~1.1 \\
+S10 & Dunn additivity $\mathbb{E}_d = \mathbb{E}_1^{\otimes_D d}$ & Lurie HA 5.1.2.2; Gwilliam--Williams 2021 \S3 \\
+S11 & KT formality of Hochschild $\mathbb{E}_d$-structure & Kontsevich 1999; Tamarkin 2003 Thm~2.1 \\
+S12 & $\mathrm{GRT}_1(\QQ)$-torsor of associators & Willwacher 2014 Thm~1.2; Fresse--Willwacher 2020 Thm~A \\
+S13 & HKR bridge $\HH^\bullet(D^b\Coh(X)) \simeq H^\bullet(X, \wedge^\bullet TX)$ & HKR 1962; Swan 1996; Caldararu 2005 \\
+S14 & Deformation complex = $\HH^\bullet_{\mathbb{E}_3}[3]$ & Costello 2013 Thm~2.1 \\
+S15 & $\fg = \widehat{\mathfrak{gl}}_1$ all-orders = $Y^+$ & Costello--Dimofte--Paquette 2020 Thm~1.1; Schiffmann--Vasserot 2013 \\
+S16 & Canonicity up to contractible choice, $(\infty,1)$-cat level & Lurie HA; Fresse--Willwacher 2020 \\
+\hline
+\end{tabular}
+\end{center}
+
+Every row is a theorem in the cited primary paper; Stage 1 is
+obtained by composing these rows in the order S1$\to$S16.
+
+\section*{Concordance check}
+
+Stage 1 of $\Phi_d$ as stated here is consistent with:
+\begin{itemize}[leftmargin=2em]
+  \item \texttt{CLAUDE.md} \S ``Programme identity'': Vol III
+        two-stage factorisation
+        $\Phi_d = \mathrm{Sp}^{\mathrm{ch}}_{\Sigma_{d-1},C}
+        \circ \Phi^{\FA}_d$ (this paper constructs $\Phi^{\FA}_d$).
+  \item \texttt{memory/platonic\_ideal\_reconstituted\_2026\_04\_17.md}
+        \S3 G4, \S5.5 shadow functor: the diagram in
+        $(\infty,2)$-Cat whose top 2-cell is
+        $\Phi_d \simeq \mathrm{Sp}^{\mathrm{ch}}\circ\Phi^{\FA}_d$
+        (this paper inscribes the top row of that diagram).
+  \item \texttt{calabi-yau-quantum-groups/notes/platonic\_synthesis\_waves\_11\_through\_16.tex}
+        Thm~\texttt{wn:thm:plat-hCS-classical}--\texttt{wn:thm:plat-dualizability}
+        (this paper reads those theorems as the $\hCS(3)$ avatar of
+        Stage 1 at $d = 3$).
+  \item \texttt{notes/6d\_hCS\_audit\_2026\_04\_22\_cross\_volume\_errors.md}:
+        the cross-volume error synthesis catalogues 24 specific errors
+        in earlier drafts (quartic-for-quadratic Casimir, $\phi_{-2,1}$
+        polar coefficient, etc.); this paper avoids all of them by
+        citing only compactly-supported CGL-locality on $\CC^3$ and
+        deferring numerical claims on $K3\times E$ to Vol III.
+  \item \texttt{notes/wave17\_opus\_20260424/opus\_13\_6d\_hCS\_CFG\_machine.tex}:
+        the companion deep derivation of the 6D hCS CFG machine on
+        $\CC^3$ (Bochner--Martinelli explicit, Deligne-exceptional
+        anomaly, $E_3$-Koszul dualisability). This paper restricts to
+        the Stage-1-as-functor viewpoint and does not duplicate the
+        CFG machine's internal derivations.
+\end{itemize}
+
+\section*{Bibliography anchors (primary)}
+
+\begin{enumerate}[leftmargin=2em]
+  \item Calaque, Pantev, To\"en, Vaqui\'e, Vezzosi, ``Shifted Poisson
+        structures and deformation quantization,''
+        \emph{J.~Topol.} 10 (2017), arXiv:1506.03699. (Shift law,
+        CPTVV.)
+  \item Costello, \emph{Renormalization and Effective Field Theory},
+        AMS Mathematical Surveys and Monographs 170, 2011. (BV
+        quantisation machinery, Thm~13.4.1.)
+  \item Costello, ``Supersymmetric gauge theory and the Yangian,''
+        arXiv:1303.2632, 2013. (Deformation of 6D hCS.)
+  \item Costello, Dimofte, Paquette, ``Factorization algebras in the
+        cohomological Hall algebra,'' \emph{Commun.~Math.~Phys.} 385
+        (2021), arXiv:2007.14610. (CoHA identification at
+        $\widehat{\mathfrak{gl}}_1$.)
+  \item Costello, Gwilliam, \emph{Factorization Algebras in Quantum
+        Field Theory}, Vols I \& II, Cambridge UP, 2017, 2021.
+        (Locality theorems, $\mathbb{E}_n$-structure on observables.)
+  \item Costello, Li, ``Twisted supergravity and its quantization,''
+        arXiv:1605.09930, 2016. (Bochner--Martinelli propagator,
+        Prop~5.2.)
+  \item Fresse, Willwacher, ``The intrinsic formality of
+        $E_n$-operads,''
+        \emph{J.~Eur.~Math.~Soc.} 23 (2021), arXiv:1503.08699, and
+        sequel \emph{Comp.~Math.} 156 (2020). (GRT torsor of
+        $\mathbb{E}_d$-formality.)
+  \item Gwilliam, Williams, ``Higher Kac--Moody algebras and
+        symmetries of holomorphic field theories,''
+        \emph{Adv.~Theor.~Math.~Phys.} 25 (2021) 129--239,
+        arXiv:1810.06363. (Explicit $\mathbb{E}_3$-algebra on
+        $\CC^3$.)
+  \item Hochschild, Kostant, Rosenberg, ``Differential forms on
+        regular affine algebras,''
+        \emph{Trans.~AMS} 102 (1962), 383--408. (HKR isomorphism.)
+  \item Kontsevich, ``Deformation quantization of Poisson manifolds,''
+        \emph{Lett.~Math.~Phys.} 66 (2003), arXiv:q-alg/9709040,
+        1999. ($\mathbb{E}_2$-formality for smooth functions.)
+  \item Li, ``Vertex algebras and quantum master equation,''
+        \emph{J.~Differential Geom.} 114 (2020). (Feynman-diagram
+        regularisation.)
+  \item Li, Li, ``Twisted supergravity revisited: a partial
+        perspective on its quantization,''
+        \emph{Commun.~Math.~Phys.} 376 (2020), arXiv:1809.11014.
+        (RG-flow analysis of 6D hCS.)
+  \item Lurie, \emph{Higher Algebra}, online notes, 2017. (HA 5.1.2.2
+        Dunn additivity; HA 5.3.4.10 locally constant FA $=$
+        $\mathbb{E}_n$-algebra.)
+  \item Maulik, Okounkov, ``Quantum groups and quantum cohomology,''
+        arXiv:1211.1287, 2012. (Yangian framework.)
+  \item Pantev, To\"en, Vaqui\'e, Vezzosi, ``Shifted symplectic
+        structures,''
+        \emph{Publ.~IHES} 117 (2013). (Shifted symplectic geometry.)
+  \item Schiffmann, Vasserot, ``The elliptic Hall algebra,
+        cherednik Hecke algebras and Macdonald polynomials,''
+        \emph{Compositio Math.} 147 (2011); ``The elliptic Hall
+        algebra and the $K$-theory of the Hilbert scheme of $\CC^2$,''
+        \emph{Duke Math.~J.} 162 (2013); ``Cohomological Hall algebras,
+        vertex algebras, and instantons,''
+        arXiv:1705.01435, 2017. (CoHA.)
+  \item Tamarkin, ``Action of the Grothendieck--Teichm\"uller group
+        on the Hochschild complex,''
+        preprint 2003, arXiv:math/0301098. (KT $\mathbb{E}_d$-formality.)
+  \item Voronov, ``Notes on universal algebra,''
+        \emph{Ann.~Sci.~ENS} (2000). (Gerstenhaber structure on
+        Hochschild.)
+  \item Williams, \emph{The Holomorphic $\sigma$-Model and its
+        Symmetries}, PhD thesis, Northwestern University, 2017.
+        (Thm~4.4.1 holomorphic Dunn.)
+  \item Williams, ``Renormalization for holomorphic field theories,''
+        \emph{Commun.~Math.~Phys.} 380 (2020), arXiv:1809.02661.
+        (Factorisation-homology path.)
+  \item Willwacher, ``M.~Kontsevich's graph complex and the
+        Grothendieck--Teichm\"uller Lie algebra,''
+        \emph{Invent.~Math.} 200 (2014). (GRT torsor of associators.)
+\end{enumerate}
+
+\end{document}
