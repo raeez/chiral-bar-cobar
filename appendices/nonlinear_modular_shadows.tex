@@ -207,7 +207,7 @@ The signs are fixed by the Koszul rule and the orientation conventions
 of Appendix~\ref{app:signs}.
 \end{proof}
 
-\begin{proposition}[Genus-$0$ shadow obstruction tower as $L_\infty$ formality obstruction tower; \ClaimStatusProvedHere]
+\begin{proposition}[Genus-$0$ shadow obstruction tower as $L_\infty$ formality obstruction tower; \ClaimStatusConditional]
 \label{prop:shadow-linfty-obstruction}%
 \index{shadow obstruction tower!$L_\infty$ formality obstruction}%
 \index{L-infinity formality@$L_\infty$ formality!shadow tower identification}%
@@ -807,7 +807,7 @@ Let $P_{\cA}=H_{\cA}^{-1}$ be the propagator. For symmetric tensors $\alpha\in \
 by contracting one leg of $\alpha$ with one leg of $\beta$ using $P_{\cA}$ and symmetrizing over the remaining external legs. This is the tensor-level realization of separating clutching by one internal edge.
 \end{construction}
 
-\begin{theorem}[Separating boundary recursion through quartic order; \ClaimStatusProvedHere]
+\begin{theorem}[Separating boundary recursion through quartic order; \ClaimStatusConditional]
 \label{thm:nms-separating-boundary-recursion}
 Since the shadow jets are the degree-$\le 4$ projections of the bar-intrinsic MC element $\Theta_\cA$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}, which satisfies the modular clutching identity, on every separating clutching map $\xi$ one has
 \begin{align}
@@ -869,7 +869,7 @@ H_{\cA}+\mathfrak C_{\cA}+\mathfrak Q_{\cA}
 \end{equation}
 \end{construction}
 
-\begin{theorem}[Finite-order realization of the universal class; \ClaimStatusProvedHere]
+\begin{theorem}[Finite-order realization of the universal class; \ClaimStatusConditional]
 \label{thm:nms-shadow-cocycle-characterization}
 The element $\Theta_{\cA}^{\le 4}$ is a cocycle in $\mathcal G_{\cA}^{\le 4}$ if and only if the quartic shadow master equations \eqref{eq:nms-master-cubic}--\eqref{eq:nms-master-quartic} and the separating boundary recursion \eqref{eq:nms-clutching-H}--\eqref{eq:nms-clutching-Q} hold.
 \end{theorem}
@@ -1870,7 +1870,8 @@ Concretely:
 \begin{itemize}
 \item The separating clutching map $\xi$ corresponds to a semistable
  degeneration $\mathcal{C} \to B$ with separating node: the log-FM
- special fibre decomposes as a product
+ special-fibre component is a proper birational modification of the
+ product
  $\overline{\operatorname{FM}}_{n_1+1}(Y_1|D_1)
  \times \overline{\operatorname{FM}}_{n_2+1}(Y_2|D_2)$
  of smaller log-FM spaces on the two components.
@@ -1893,7 +1894,7 @@ reflects the five types of codimension-$1$ boundary stratum of
 $\overline{\operatorname{FM}}_n(C|D_{\mathrm{nodes}})$.
 \end{remark}
 
-\begin{theorem}[The first nonlinear shadow of \texorpdfstring{$\Theta_{\cA}$}{ThetaA}; \ClaimStatusProvedHere]
+\begin{theorem}[The first nonlinear shadow of \texorpdfstring{$\Theta_{\cA}$}{ThetaA}; \ClaimStatusConditional]
 \label{thm:nms-first-nonlinear-shadow-theta}
 The bar-intrinsic MC element $\Theta_{\cA}$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})} satisfies the modular clutching identity
 \[
@@ -2001,7 +2002,7 @@ The scalar characteristic $\kappa(\cA)$ and the spectral characteristic $\Delta_
 The primary nonlinear modular characteristic class is $[\mathfrak C_{\cA}]$. It is a cocycle for the Hessian-twisted differential $\nabla_{H_{\cA}}$ by Theorem~\ref{thm:nms-shadow-master-equations}, and its cohomology class is a canonical modular invariant. It is the first genuinely nonlinear characteristic class of the modular homotopy theory.
 \end{remark}
 
-\begin{theorem}[Full resonance tower; \ClaimStatusProvedHere]
+\begin{theorem}[Full resonance tower; \ClaimStatusConditional]
 \label{thm:nms-full-resonance-tower}%
 For each degree $r\ge 4$ there exists a modular resonance class
 \[
@@ -2108,7 +2109,7 @@ where $c_{p,q}=1$ if $p<q$ and $c_{p,p}=\frac12$, and the bracket is the single-
 
 \begin{theorem}[All-degree master equation; \ClaimStatusProvedHere]
 \label{thm:nms-all-degree-master-equation}
-Assume the complementarity potential $S_{\cA}$ satisfies the classical master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$. Then for every $r\ge 3$, the shadow jets satisfy
+Assume the complementarity potential $S_{\cA}$ satisfies the classical master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$ in the completed degree filtration. Then for every $r\ge 3$, the shadow jets satisfy
 \begin{equation}
 \label{eq:nms-all-degree-master-equation}
 \nabla_{H_{\cA}}\mathrm{Sh}_r(\cA) + \mathfrak o_{\cA}^{(r)} = 0,
@@ -2117,7 +2118,20 @@ where $\nabla_{H_{\cA}}:=\{H_{\cA},\,\cdot\,\}_{H_{\cA}}$ and $\mathfrak o_{\cA}
 \end{theorem}
 
 \begin{proof}
-Expand the master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$ in the degree filtration. At degree~$r$ the equation decomposes as
+Write
+\[
+S_{\cA}=H_{\cA}+\sum_{m\ge 3}\mathrm{Sh}_m(\cA)
+\]
+in the completed symmetric algebra on the chosen cyclic slice, with the conventional factorial normalization absorbed into the tensor bracket. A single-edge Hamiltonian contraction lowers homogeneous degree by two:
+\[
+\deg\{\alpha_p,\beta_q\}_{H_{\cA}}=p+q-2.
+\]
+The degree-$r$ part of $\frac12\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$ therefore receives contributions only from ordered pairs $(p,q)$ with $p+q=r+2$. The two ordered linear terms $(2,r)$ and $(r,2)$ combine, after the factor $\frac12$, to
+\[
+\{H_{\cA},\mathrm{Sh}_r\}_{H_{\cA}}
+=\nabla_{H_{\cA}}\mathrm{Sh}_r.
+\]
+All remaining terms have $p,q\ge 3$ and hence involve only lower-degree shadows. Thus the degree-$r$ component is
 \[
 \{H_{\cA},\mathrm{Sh}_r\}_{H_{\cA}}
 +
@@ -2126,7 +2140,7 @@ c_{p,q}\,
 \{\mathrm{Sh}_p,\mathrm{Sh}_q\}_{H_{\cA}}
 = 0,
 \]
-where the first term is $\nabla_{H_{\cA}}\mathrm{Sh}_r$ and the remaining terms comprise $\mathfrak o_{\cA}^{(r)}$. The coefficients $c_{p,q}$ arise from collecting equivalent unshuffle summands: when $p<q$ the two orderings $(p,q)$ and $(q,p)$ contribute equally, giving $c_{p,q}=1$; when $p=q$ only one pairing appears, giving $c_{p,p}=\frac12$. At $r=3$ the sum is empty; at $r=4$ one recovers Theorem~\ref{thm:nms-shadow-master-equations}.\qedhere
+where the remaining terms comprise $\mathfrak o_{\cA}^{(r)}$. The coefficient $c_{p,q}$ is the automorphism factor of the one-edge two-vertex graph: if $p<q$, the ordered pairs $(p,q)$ and $(q,p)$ both occur and the prefactor $\frac12$ gives $c_{p,q}=1$; if $p=q$, there is one diagonal unordered graph and the prefactor remains $c_{p,p}=\frac12$. The completion is used only to make the infinite sum meaningful; every degree-$r$ equation is finite. At $r=3$ the obstruction sum is empty; at $r=4$ one recovers Theorem~\ref{thm:nms-shadow-master-equations}.\qedhere
 \end{proof}
 
 \begin{corollary}[The quintic master equation; \ClaimStatusProvedHere]
@@ -2212,7 +2226,7 @@ Theorem~\ref{thm:nms-finite-termination} reveals a structural divide. The primit
 \subsection{The all-degree separating boundary recursion}
 \label{subsec:nms-all-degree-separating}
 
-\begin{theorem}[All-degree separating boundary recursion; \ClaimStatusProvedHere]
+\begin{theorem}[All-degree separating boundary recursion; \ClaimStatusConditional]
 \label{thm:nms-all-degree-separating-boundary}
 Since the shadow jets are projections of the bar-intrinsic MC element $\Theta_\cA$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}, which satisfies the modular clutching identity, for every $r\ge 2$ and every separating clutching map $\xi$,
 \begin{equation}
@@ -2228,7 +2242,7 @@ Since the shadow jets are projections of the bar-intrinsic MC element $\Theta_\c
 This is the degree-$r$ component of $\xi^*(\Theta_{\cA})=\Theta_{\cA}\star\Theta_{\cA}$.\qedhere
 \end{proof}
 
-\begin{corollary}[Quintic separating boundary recursion; \ClaimStatusProvedHere]
+\begin{corollary}[Quintic separating boundary recursion; \ClaimStatusConditional]
 \label{cor:nms-quintic-separating-boundary}
 At degree~$5$:
 \[
@@ -2291,24 +2305,26 @@ Immediate from Definition~\ref{def:nms-genus-loop-operator}.\qedhere
 \subsection{Non-separating clutching of the shadow obstruction tower}
 \label{subsec:nms-nonseparating-clutching}
 
-\begin{theorem}[Non-separating clutching law for the shadow obstruction tower; \ClaimStatusProvedHere]
+\begin{theorem}[Non-separating clutching law for the shadow obstruction tower; \ClaimStatusConditional]
 \label{thm:nms-nonseparating-clutching-law}
 Along the non-separating clutching map
 $\xi_{\mathrm{ns}}\colon \overline{\mathcal M}_{g-1,n+2}\to \overline{\mathcal M}_{g,n}$,
-the shadow obstruction tower satisfies
+the one-vertex associated graded of the refined Mok filtration satisfies
 \begin{equation}
 \label{eq:nms-nonseparating-recursion}
-\xi_{\mathrm{ns}}^*\bigl(\mathrm{Sh}_r^{(g)}\bigr)
+\operatorname{gr}\,\xi_{\mathrm{ns}}^*\bigl(\mathrm{Sh}_r^{(g)}\bigr)
 =
-\Lambda_{P_{\cA}}\bigl(\mathrm{Sh}_{r+2}^{(g-1)}\bigr)
-+
-\textup{(mixed sewing corrections)},
+\Lambda_{P_{\cA}}\bigl(\mathrm{Sh}_{r+2}^{(g-1)}\bigr),
 \end{equation}
-where the leading term traces two legs of the genus-$(g-1)$ shadow at degree $r+2$.
+where the leading term traces two legs of the genus-$(g-1)$ shadow at
+degree $r+2$.  The full non-separating identity includes mixed sewing
+and planted-forest correction terms and is conditional on the signed
+log-FM residue-pushforward cocomposition.
 \end{theorem}
 
 \begin{proof}
-The non-separating clutching identity for the universal class reads
+On the one-vertex associated graded, the non-separating clutching
+identity for the universal class reads
 $\xi_{\mathrm{ns}}^*\Theta_{\cA}^{(g)}
 =
 \Lambda_{P_{\cA}}(\Theta_{\cA}^{(g-1)})$.
@@ -2328,7 +2344,8 @@ This is a rank-$2$ tensor determined entirely by the genus-$0$ quartic shadow an
 \end{corollary}
 
 \begin{proof}
-Set $g=1$ and $r=2$ in Theorem~\ref{thm:nms-nonseparating-clutching-law}.\qedhere
+Set $g=1$ and $r=2$ in the one-vertex associated graded statement of
+Theorem~\ref{thm:nms-nonseparating-clutching-law}.\qedhere
 \end{proof}
 
 \begin{remark}[Why this goes beyond the $\hat{A}$-genus]
@@ -2373,7 +2390,10 @@ Both loops are nonzero. On the primary line with $H=(c/2)x^2$, $\mathfrak C=2x^3
 \frac{120}{c^2(5c+22)}\,x^2.
 \label{eq:nms-virasoro-hessian-correction}
 \end{align}
-The genus-$1$ loop ratio is $\rho^{(1)}_{\mathrm{Vir}}=\delta H^{(1)}/H^{(0)}=240/[c^3(5c+22)]$, independent of $\kappa=c/2$.
+The genus-$1$ loop ratio is
+$\rho^{(1)}_{\mathrm{Vir}}=\delta H^{(1)}/H^{(0)}=240/[c^3(5c+22)]$.
+It is not part of the scalar linear Hodge tower
+$\kappa\lambda_g$; it is a nonlinear shadow invariant.
 \end{enumerate}
 \end{theorem}
 
@@ -2448,7 +2468,7 @@ The first three levels are genus-$0$ data. The genus loop correction is the firs
 \section{A unified summary theorem}
 \label{sec:nms-summary-theorem}
 
-\begin{theorem}[Ambient complementarity and nonlinear modular shadows; \ClaimStatusProvedHere]
+\begin{theorem}[Ambient complementarity and nonlinear modular shadows; \ClaimStatusConditional]
 \label{thm:nms-unified-summary}
 Let $\cA$ be a modular Koszul family on a quartic-regular parameter locus, and suppose the cyclic deformation package is available through quartic order on a chosen cyclic slice. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -2617,20 +2637,27 @@ The \emph{degree-$r$ resonance class} is
 The quartic class of Definition~\ref{def:nms-modular-quartic-resonance-class} is the first case.
 \end{definition}
 
-\begin{theorem}[All-degree boundary law for the resonance tower; \ClaimStatusProvedHere]
+\begin{theorem}[Associated-graded all-degree boundary law for the resonance tower; \ClaimStatusConditional]
 \label{thm:nms-all-degree-resonance-boundary}%
 For every $r\ge 4$ and every separating clutching map $\xi$,
 \begin{equation}
 \label{eq:nms-all-degree-resonance-boundary}
 \xi^*\mathfrak R^{\mathrm{mod}}_{r,g,n}(\cA)
-=
+\equiv
 p_1^*\mathfrak R^{\mathrm{mod}}_{r,g_1,n_1+1}(\cA)
 +
 p_2^*\mathfrak R^{\mathrm{mod}}_{r,g_2,n_2+1}(\cA)
 +
-\sum_{p+q=r+2}\mathfrak T^{(p,q)}_{\xi}(\cA),
+\sum_{p+q=r+2}\mathfrak T^{(p,q)}_{\xi}(\cA)
+\quad \bmod F_{\mathrm{Mok}}^{\ge 2},
 \end{equation}
-where $\mathfrak T^{(p,q)}_{\xi}(\cA)$ is the determinant divisor of one-edge sewings of degree-$p$ and degree-$q$ vertices. The quartic case ($r=4$, with only the $(3,3)$ tree term) is Theorem~\ref{thm:nms-clutching-law-modular-resonance}.
+where $\mathfrak T^{(p,q)}_{\xi}(\cA)$ is the determinant divisor of
+one-edge sewings of degree-$p$ and degree-$q$ vertices.  The exact
+Picard-valued all-degree law requires the refined Mok-type
+contributions in depth at least~$2$ and is conditional on the
+log-FM residue-pushforward cocomposition. The quartic case ($r=4$, with
+only the $(3,3)$ tree term) is
+Theorem~\ref{thm:nms-clutching-law-modular-resonance}.
 \end{theorem}
 
 \begin{proof}
@@ -2685,9 +2712,10 @@ The associated graded decomposes by depth:
  tree correction
  $\bigoplus_{p+q=r+2}\mathscr{T}^{(p,q)}_\xi(\cA)$.
 \item \emph{Depth~$\ge 2$} (nontrivial planted trees with $\ge 2$
- crossing edges): these rigid types have polyhedra of
- codimension~$\ge 2$ in the boundary complex, and their
- determinant contributions do not affect divisor classes.
+ crossing edges): these rigid types lie in the higher Mok filtration.
+ The present statement records the quotient modulo their contribution;
+ proving that they do not alter the exact Cartier divisor class is a
+ separate refined determinant-line obligation.
 \end{enumerate}
 
 \emph{Step~3: Determinant factorisation.}
@@ -2707,10 +2735,11 @@ p_2^*s_{r,g_2,n_2+1}^{\mathrm{res}}(\cA)
 \;\otimes\;
 \bigotimes_{p+q=r+2} t^{(p,q)}_\xi(\cA).
 \]
-The passage from $\operatorname{gr}_F$ to the original
-filtration does not change the divisor class, since the
-correction terms live in higher filtration and are nilpotent.
-Taking divisors yields~\eqref{eq:nms-all-degree-resonance-boundary}.
+Taking divisors on the associated graded and then projecting modulo
+$F_{\mathrm{Mok}}^{\ge2}$ yields
+\eqref{eq:nms-all-degree-resonance-boundary}.  No exact Picard-valued
+statement is asserted beyond this quotient without the missing refined
+Mok determinant-line calculation.
 \end{proof}
 
 \subsection{The complementarity phase function}
@@ -3162,10 +3191,10 @@ is the enveloping vertex algebra. The shadow obstruction tower of this
 appendix supplies the higher-genus completion. That is, the
 ideal object attached to a cyclically admissible Lie conformal
 algebra~$L$
-(Definition~\ref{def:cyclically-admissible}) is not merely the
+(Definition~\ref{V3-def:cyclically-admissible}) is not merely the
 genus-$0$ factorization algebra $\Fact_X(L)$, but the full
 modular Koszul datum~$\Pi_X(L)$
-(Construction~\ref{constr:platonic-package}), in which all
+(Construction~\ref{constr:v1-platonic-package}), in which all
 shadows ($\kappa$, $\Delta$, $\mathfrak{C}$,
 $\mathfrak{Q}$, $\Theta$) are successive projections of a
 single universal Maurer--Cartan element
@@ -3749,7 +3778,7 @@ factors.
 %% DS shadow depth increase
 %% ----------------------------------------------------------------
 
-\begin{theorem}[DS shadow depth increase; \ClaimStatusProvedHere]
+\begin{theorem}[DS shadow depth increase; \ClaimStatusConditional]
 \label{thm:ds-shadow-depth-increase}%
 \index{Drinfeld--Sokolov reduction!shadow depth}%
 \index{shadow depth!increase under DS}%
@@ -4059,7 +4088,7 @@ $\mathrm{Sh}_6|_{x_T=0} \neq 0$ (verified computationally).
 %% ----------------------------------------------------------------
 
 \begin{theorem}[Shadow obstruction tower as cyclic $L_\infty$ MC potential;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{thm:nms-shadow-mc-potential}%
 \index{shadow tower!MC potential identification}%
 \index{Maurer--Cartan potential!shadow tower}%
@@ -4123,7 +4152,7 @@ $W(x \cdot \eta)$ by the bar-intrinsic construction
 \end{proof}
 
 \begin{proposition}[Shadow potential convergence;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{prop:nms-shadow-convergence}%
 \index{shadow potential!convergence}%
 For the Virasoro algebra at central charge $c \notin \{0, -22/5\}$:
@@ -4295,7 +4324,7 @@ Part~(e): direct computation at $N = 4, 5, 6, 7$.
 \end{proof}
 
 \begin{theorem}[Hadamard factorization of the MC potential;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{thm:nms-hadamard-mc-potential}%
 \index{Hadamard factorization!MC potential}%
 \index{shadow potential!Hadamard factorization}%

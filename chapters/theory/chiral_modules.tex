@@ -283,7 +283,7 @@ $s^{-1}J^a \otimes v \otimes \eta_{z,x}$ to
 $T^a_\Lambda(v)$, the representation matrix acting on~$v$.
 \end{definition}
 
-\begin{proposition}[Module bar-comodule comparison on the quadratic \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusProvedHere]
+\begin{proposition}[Module bar-comodule comparison on the quadratic \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusConditional]
 \label{prop:module-koszul-equivalence}
 Assume $\cA$ lies on the quadratic genus-$0$ $\Eone$
 complete/conilpotent lane of
@@ -342,7 +342,7 @@ Theorem~\ref{thm:e1-module-koszul-duality}, its completed module
 category may be rewritten using the graded dual algebra~$\cA^!$.
 \end{proof}
 
-\begin{theorem}[Lax monoidal structure of the module bar functor; \ClaimStatusProvedHere]
+\begin{theorem}[Lax monoidal structure of the module bar functor; \ClaimStatusConditional]
 \label{thm:monoidal-module-koszul}
 \index{Koszul duality!monoidal}
 \index{fusion product!Koszul duality}
@@ -461,7 +461,7 @@ where $q = e^{\pi i/(k + h^\vee)}$ and $k' = -k - 2h^\vee$.
 Since $k' < 0$, the bottom-left entry is the full category~$\mathcal{O}$ (KL--Finkelberg category~\cite{KL93}). The vertical arrow reverses the braiding ($R_q \mapsto R_{q^{-1}}$) while preserving the tensor product.
 \end{remark}
 
-\begin{proposition}[Derived Ext exchange on the quadratic \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusProvedHere]
+\begin{proposition}[Derived Ext exchange on the quadratic \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusConditional]
 \label{prop:ext-tor-exchange}
 \index{derived Ext exchange}
 Assume $\mathcal{A}$ lies on the quadratic genus-$0$ $\Eone$
@@ -544,9 +544,11 @@ $\mathbb{V}(\mathcal{A}; X) = H^0(X, \mathcal{A}) \backslash
 \label{prop:conformal-blocks-bar}
 \index{conformal blocks!bar complex computation}
 For a Koszul chiral algebra $\mathcal{A}$ on a curve $X$ of
-genus~$g$ with module insertions
-$\mathcal{M}_1, \ldots, \mathcal{M}_r$, the space of conformal
-blocks is computed by the bar complex on $X$:
+genus~$g$ with Koszul module insertions
+$\mathcal{M}_1, \ldots, \mathcal{M}_r$, assume that the pointed
+module bar resolution is degreewise finite and exact above
+degree~$0$ after applying coinvariants. Then the space of
+conformal blocks is computed by the bar complex on $X$:
 \begin{equation}\label{eq:conformal-blocks-bar}
 \mathbb{V}(\mathcal{A};\, \mathcal{M}_1, \ldots, \mathcal{M}_r;\, X)
 \;\cong\;
@@ -558,7 +560,8 @@ H^0\bigl(
 where $\bar{B}(\mathcal{M}_1, \ldots, \mathcal{M}_r; X)$ is the
 bar complex on $\overline{C}_{n+r}(X)$ with module data at the
 first $r$ marked points and algebra data at the remaining~$n$
-points.
+points. Without the degree-$0$ exactness hypothesis, the same total
+complex computes the derived conformal blocks.
 \end{proposition}
 
 \begin{proof}
@@ -582,13 +585,24 @@ Definition~\ref{def:geometric-bar}, with $d_{\mathrm{config}}$
 encoding the chiral bracket residues of $\mathcal{A}$ acting on
 each~$\mathcal{M}_i$.
 
-By the Koszul property, the spectral sequence associated to the
-bar filtration degenerates at~$E_2$, and the $E_1$ page computes
-$H^*(X \setminus \{x_i\}, \mathcal{A}) \backslash
-\mathcal{M}_1 \otimes \cdots \otimes \mathcal{M}_r$, which is
-precisely the conformal block. The $E_2$ degeneration ensures that
-$H^0(\mathrm{Tot}\, \bar{B})$ is exactly the conformal block
-space, without higher corrections.
+The augmented pointed bar complex is a cofibrant resolution of the
+coinvariant functor. Applying coinvariants gives the derived
+coinvariants
+\[
+\mathbb{L}\bigl(
+H^0(X\setminus\{x_i\},\mathcal{A})\backslash(-)
+\bigr)
+\bigl(\mathcal{M}_1\otimes\cdots\otimes\mathcal{M}_r\bigr).
+\]
+Its degree-$0$ homology is the cokernel of the residue action
+map, hence the classical coinvariant space
+\eqref{eq:conformal-blocks}. The exactness hypothesis kills the
+higher homology of this resolution, so the derived and classical
+coinvariants agree in degree~$0$, giving
+\eqref{eq:conformal-blocks-bar}. In the rational affine
+Kac--Moody/TUY lane this exactness is the finite-rank conformal-block
+exactness; in a general module category it is the extra hypothesis
+that prevents higher derived conformal blocks from contributing.
 \end{proof}
 
 \begin{remark}[Conformal blocks and Koszul duality]
@@ -1912,7 +1926,7 @@ $C_2$-cofiniteness condition. Then:
 \end{enumerate}
 \end{example}
 
-\begin{proposition}[Zhu algebra under level-shifting Koszul duality; \ClaimStatusProvedHere]
+\begin{proposition}[Zhu algebra under level-shifting Koszul duality; \ClaimStatusConditional]
 \label{prop:zhu-koszul-compatibility}
 \index{Zhu's algebra!Koszul compatibility}
 For the following Koszul pairs, the Zhu algebras are canonically
@@ -2768,7 +2782,7 @@ highest weights via the factorization structure.
 
 \subsection{BGG resolution from the bar complex}
 
-\begin{theorem}[BGG resolution from bar complex; \ClaimStatusProvedHere]
+\begin{theorem}[BGG resolution from bar complex; \ClaimStatusConditional]
 \label{thm:bgg-from-bar}
 \index{BGG resolution!from bar complex}
 \index{bar complex!BGG resolution}
@@ -2880,7 +2894,7 @@ affine Weyl chamber.
 \end{remark}
 
 \begin{computation}[BGG pipeline for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl2-hat}
-at generic level; \ClaimStatusProvedHere]
+at generic level; \ClaimStatusConditional]
 \label{comp:bgg-sl2-pipeline}
 \index{BGG resolution!explicit pipeline}
 \index{bar complex!BGG pipeline}
@@ -2994,7 +3008,7 @@ involution under Koszul duality.
 
 \subsection{General modules}
 
-\begin{theorem}[Weyl--Kac character formula; \ClaimStatusProvedHere]
+\begin{theorem}[Weyl--Kac character formula; \ClaimStatusConditional]
 \label{thm:weyl-kac-geometric}
 \index{Weyl--Kac character formula!geometric derivation}
 Let $\mathcal{A} = \widehat{\mathfrak{g}}_k$ at generic level~$k$,
@@ -3073,7 +3087,7 @@ generators $J^3_{-m}, e_{-m}, f_{-m}$ of
 $\widehat{\mathfrak{sl}}_2$.)
 \end{proposition}
 
-\begin{proposition}[Character from bar resolution; \ClaimStatusProvedHere]
+\begin{proposition}[Character from bar resolution; \ClaimStatusConditional]
 \label{prop:weyl-kac-sl2-bar}
 The alternating character sum from the BGG/bar resolution gives:
 \begin{equation}\label{eq:weyl-kac-sl2}
@@ -3227,7 +3241,7 @@ stratum. This is the bar complex realization of the truncated
 Clebsch--Gordan rule at $j'' \leq 2k - j - j' = 2$.
 \end{example}
 
-\begin{proposition}[\texorpdfstring{$\mathrm{Ext}$}{Ext} groups at level~\texorpdfstring{$2$}{2}; \ClaimStatusProvedHere]
+\begin{proposition}[\texorpdfstring{$\mathrm{Ext}$}{Ext} groups at level~\texorpdfstring{$2$}{2}; \ClaimStatusConditional]
 \label{prop:ext-sl2-level2}
 \index{Ext groups!sl2 level 2@$\mathfrak{sl}_2$ level $2$}
 \index{sl2-hat@$\widehat{\mathfrak{sl}}_2$!Ext groups}
@@ -3258,7 +3272,7 @@ Ext-vanishing is the module-theoretic statement of the Koszul
 property.
 \end{proof}
 
-\begin{proposition}[\texorpdfstring{$\mathrm{Ext}$}{Ext} complementarity at dual levels; \ClaimStatusProvedHere]
+\begin{proposition}[\texorpdfstring{$\mathrm{Ext}$}{Ext} complementarity at dual levels; \ClaimStatusConditional]
 \label{prop:ext-koszul-dual-level}
 \index{Ext groups!complementarity at dual levels}
 At the Koszul dual level $k' = -k - 2h^\vee = -6$, the situation
@@ -3315,7 +3329,7 @@ exactly the stated complementarity between the semisimple side and the
 extension-rich dual side.
 \end{proof}
 
-\begin{proposition}[Characters under level-shifting Koszul duality; \ClaimStatusProvedHere]
+\begin{proposition}[Characters under level-shifting Koszul duality; \ClaimStatusConditional]
 \label{prop:character-koszul-duality}
 \index{character!under Koszul duality}
 Let $\widehat{\mathfrak{g}}_k$ and
@@ -3405,7 +3419,7 @@ categories~$\mathcal{O}$.
 \subsection{Vacuum Verma module under Koszul duality}
 \label{sec:vacuum-koszul}
 
-\begin{proposition}[Vacuum Verma under the module bar functor on the finite-type \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusProvedHere]
+\begin{proposition}[Vacuum Verma under the module bar functor on the finite-type \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusConditional]
 \label{prop:vacuum-verma-koszul}
 \index{vacuum module!Koszul duality}
 \index{module Koszul duality!vacuum module}
@@ -3568,7 +3582,7 @@ of $k \mapsto -k-4$ and admits singular vectors that are
 self-dual.
 \end{proof}
 
-\begin{proposition}[Non-vacuum Verma modules under the module bar functor on the finite-type \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusProvedHere]
+\begin{proposition}[Non-vacuum Verma modules under the module bar functor on the finite-type \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusConditional]
 \label{prop:nonvacuum-verma-koszul}
 \index{module Koszul duality!non-vacuum Verma}
 \index{Shapovalov form!general highest weight}
@@ -3651,7 +3665,7 @@ $F_{r,s}(\lambda, -k\!-\!4) = 0$ gives
 $\lambda = s - 1 + r(k+2)$.
 \end{proof}
 
-\begin{corollary}[Singular vector locus symmetry; \ClaimStatusProvedHere]
+\begin{corollary}[Singular vector locus symmetry; \ClaimStatusConditional]
 \label{cor:singular-vector-symmetry}
 \index{singular vector!locus symmetry}
 Define the grade-$n$ singular vector locus
@@ -3728,7 +3742,7 @@ reduced on the theorem surface to the stage-$3$ fifteen-coefficient
 packet and the stage-$4$ six-coefficient packet organized as three
 local OPE blocks.
 
-\begin{proposition}[Virasoro Verma module under the same-family involution; \ClaimStatusProvedHere]
+\begin{proposition}[Virasoro Verma module under the same-family involution; \ClaimStatusConditional]
 \label{prop:virasoro-verma-koszul}
 \index{Virasoro algebra!Verma module!Koszul duality}
 \index{module Koszul duality!Virasoro}
@@ -4024,7 +4038,7 @@ This is the free boson denominator identity.
 
 \subsection{Free fermion}
 
-\begin{calculation}[Fermion vacuum; \ClaimStatusProvedHere]
+\begin{calculation}[Fermion vacuum; \ClaimStatusConditional]
 For the free fermion $\mathcal{F}$, the Koszul dual is the
 $\beta$-$\gamma$ system $\mathcal{B}^{\beta\gamma}$
 (Theorem~\ref{thm:fermion-boson-koszul}).
@@ -4040,7 +4054,7 @@ of the Koszul dual. Since $\mathcal{F}$ is a free-field algebra
 $\psi(z)\psi^*(w) \sim 1/(z-w)$) and hence Koszul by the
 Lie$\leftrightarrow$Com mechanism
 (the fermionic OPE is quadratic), the bar-cobar resolution is acyclic
-(Theorem~\ref{thm:bar-cobar-inversion-qi}). The alternating character
+(Theorem~\ref{thm:koszul-reflection}, reconstruction clause). The alternating character
 sum gives:
 \[
 1 = \operatorname{ch}(\operatorname{vac}_{\mathcal{F}})
@@ -4055,7 +4069,7 @@ $h_{\mathcal{F}}(t) \cdot h_{\mathcal{B}^{\beta\gamma}}(-t) = 1$.
 
 \subsection{$\mathcal{W}$-algebras}
 
-\begin{calculation}[W-algebra at critical level; \ClaimStatusProvedHere]
+\begin{calculation}[W-algebra at critical level; \ClaimStatusConditional]
 For $W^{-h^\vee}(\mathfrak{g})$ at critical level $k = -h^\vee$:
 
 \emph{Setup.}
@@ -4065,7 +4079,7 @@ where $Q_{\mathrm{DS}} = \sum_{\alpha \in \Delta_+} \oint S_\alpha^{\mathrm{BRST
 involves fermionic ghosts $c_\alpha, b_\alpha$ for each positive root $\alpha > 0$.
 At critical level, the bar complex of $\widehat{\mathfrak{g}}_{-h^\vee}$ satisfies
 $d^2 = 0$ (Proposition~\ref{prop:km-bar-curvature}(i)), so the bar-cobar resolution
-is acyclic (Theorem~\ref{thm:bar-cobar-inversion-qi}).
+is acyclic conditional on the critical-level bar-cobar comparison.
 
 \emph{Resolution.}
 The vacuum module resolution takes the form:
@@ -4172,7 +4186,7 @@ derived correction: $\Gamma^{\mathrm{ch}}$ becomes a derived
 equivalence involving the ind-completion of the category.
 \end{proof}
 
-\begin{proposition}[Bar complex as localization; \ClaimStatusProvedHere]
+\begin{proposition}[Bar complex as localization; \ClaimStatusConditional]
 \label{prop:bar-localization}
 \index{bar complex!localization}
 The module bar complex
@@ -4514,7 +4528,7 @@ $\operatorname{ch}(\mathcal{L}(\lambda)) /
 \prod_{\alpha > 0}(1 - e^{-\alpha})$.
 \end{proof}
 
-\begin{corollary}[\texorpdfstring{$\mathcal{W}$}{W}-algebra bar at dual level via DS and Verdier intertwining; \ClaimStatusProvedHere]\label{cor:ds-bar-level-shift}
+\begin{corollary}[\texorpdfstring{$\mathcal{W}$}{W}-algebra bar at dual level via DS and Verdier intertwining; \ClaimStatusConditional]\label{cor:ds-bar-level-shift}
 \index{Drinfeld--Sokolov reduction!bar at dual level}
 For a simple Lie algebra $\mathfrak{g}$ and non-critical level $k \neq -h^\vee$:
 \begin{equation}\label{eq:ds-bar-level-shift}
@@ -4712,7 +4726,7 @@ homotopies between different orderings of degeneration.
 \end{proof}
 
 \begin{proposition}[Koszul duality of genus-graded modules;
-\ClaimStatusProvedHere]\label{prop:genus-module-koszul}
+\ClaimStatusConditional]\label{prop:genus-module-koszul}
 \index{Koszul duality!genus-graded modules}
 For a Koszul pair $(\cA, \cA^!)$ and a Koszul $\cA$-module $M$
 with Koszul dual module $M^! = \Phi(M)$
@@ -5003,7 +5017,7 @@ arbitrary fractional level.
 \index{fusion product!bar-cobar preservation}
 
 \begin{theorem}[Fusion product compatibility on the module bar surface;
-\ClaimStatusProvedHere]\label{thm:fusion-bar-cobar}
+\ClaimStatusConditional]\label{thm:fusion-bar-cobar}
 \index{fusion product!Koszul duality}
 Assume $\cA$ lies on a module-theoretic lane where
 Proposition~\ref{prop:module-koszul-equivalence} applies and that the
@@ -5196,7 +5210,7 @@ The Heisenberg case is exceptional: $d_{\mathrm{cross}} = 0$ because the OPE is 
 \section{Synthesis}
 \label{sec:chiralmod-supplement}
 
-\begin{remark}[CY-2 $[2]$-shift and Mukai-doubling $K^{\kappa_{\mathrm{ch}}} = 8$]
+\begin{remark}[CY-2 $\lbrack 2\rbrack$-shift and Mukai-doubling $K^{\kappa_{\mathrm{ch}}} = 8$]
 \label{rem:chiralmod-1}
 The module theory built here for chiral algebras on the Lorentzian-lattice
 B-family acquires a preferred grading under CY-2 Serre duality:
@@ -5216,7 +5230,7 @@ same $\mathbb Z/8$-class in $\mathrm{CH}^1(H_1)$. The universal
 identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ on the B-family
 then forces $\hbar^2 = -1/8$, which is the precise root-of-unity at
 which $\mathbf H_{\Delta_5}$-modules admit a full curved lift.
-See Vol.~III, Chapter~\ref{ch:k3-chiral-bialgebra-platonic}, \S\ref{sec:Mukai-Humbert-Lusztig}.
+See Vol.~III, Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, \S\ref{V3-sec:humbert-monodromy-platonic}.
 \end{remark}
 
 \begin{remark}[$\widetilde M_{24}$ Schur cocycle of order $6$ on the Serre functor]
@@ -5252,6 +5266,6 @@ $\mathrm{av} = \mathrm{Torelli}_{K3}\circ\mathrm{KugaSatake}\circ j_{\mathrm{Kod
 descends this to ordinary $K3$-moduli. Under this dictionary, simple
 $\mathbf H_{\Delta_5}$-modules correspond to stable $K3$-sheaves with
 Mukai vector of discriminant divisible by $8 = K^{\kappa_{\mathrm{ch}}}$.
-See Vol.~III, Chapter~\ref{ch:k3-chiral-bialgebra-platonic}, and
+See Vol.~III, Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, and
 Mukai 1987, Bridgeland--Maciocia 2001.
 \end{remark}

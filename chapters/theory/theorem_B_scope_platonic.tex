@@ -1,26 +1,25 @@
 %================================================================
 % THEOREM B SCOPE — PLATONIC INSCRIPTION
 %
-% Scope target: the slogan "unconditional at coderived level" must be
-% read in the weight-completed ambient; the manuscript's own
-% ex:virasoro-not-conilpotent (bar_cobar_adjunction_curved.tex:715)
-% declares that B(Vir) is NOT conilpotent, so the chiral Positselski
-% hypothesis (conilpotent + finite-dim graded pieces) fails for the
-% motivating class-M targets (Virasoro, W_N, critical-level KM).
+% Scope target: the slogan "unconditional at coderived level" is not
+% accepted as a theorem without the continuous co/contra comparison
+% package.  The manuscript's own
+% ex:virasoro-not-conilpotent now records the corrected obstruction:
+% the raw direct-sum Virasoro surface is not the finite-type
+% pro-conilpotent Positselski surface, even though the cofree tensor
+% bar coalgebra is conilpotent by finite bar length on finite words.
 %
-% Honest scope: the raw (uncompleted) chiral Positselski equivalence
-% (thm:positselski-chiral-proved) applies at EACH finite bar weight
-% and to the WEIGHT-COMPLETED bar coalgebra; the infinite direct sum
-% with class-M input is the separate object governed by
-% thm:completed-bar-cobar-strong. This file separates the two scopes
-% cleanly and proves the strongest honest "unconditional" statement:
-% the weight-completed chiral Positselski equivalence holds for all
-% four shadow classes G/L/C/M.
+% Honest scope: the finite-stage chiral Positselski comparison is proved
+% in the finite-window de Rham model, where product/sum exactness is
+% automatic in Ch(Vect); the completed comparison proves CP1--CP3 on
+% strict Mittag--Leffler completed towers.  The infinite direct sum with
+% class-M input is a separate raw surface and remains false as a
+% direct-sum chain-level statement.
 %
-% Attack finding cross-links: inversion chapter lines 1448-1503
+% Attack finding cross-links: inversion chapter
 % (thm:positselski-chiral-proved statement + proof), curved chapter
-% lines 715-728 (ex:virasoro-not-conilpotent), poincare_duality.tex
-% line 356 (thm:coalgebra-via-NAP part 4 bar-filtration conilpotency).
+% (ex:virasoro-not-conilpotent), poincare_duality.tex
+% (thm:coalgebra-via-NAP part 4 bar-filtration conilpotency).
 %================================================================
 
 \providecommand{\Kosz}{\mathsf{Kosz}}
@@ -34,43 +33,47 @@ Theorem~\ref{thm:positselski-chiral-proved} is stated in the
 manuscript for a conilpotent chiral CDG-coalgebra with
 finite-dimensional graded pieces. The motivating targets
 (Virasoro, $W_N$, critical-level Kac--Moody, Yangians at generic
-spectral parameters) do not satisfy the conilpotency hypothesis in
-the raw infinite direct-sum presentation: the bar coalgebra
-$\bar{B}^{\mathrm{ch}}(\mathrm{Vir}_c)$ is explicitly not
-conilpotent (Example~\ref{ex:virasoro-not-conilpotent}), and analogous
-failures occur for every class-M chiral algebra. A literal reading of
-the statement would therefore exclude the main families the programme
-is designed to handle. This chapter separates the two distinct scopes
-on which the equivalence is honestly unconditional.
+spectral parameters) do not satisfy the finite-type pro-completion
+hypotheses in the raw infinite direct-sum presentation: the cofree
+tensor bar coalgebra is conilpotent by finite bar length, but the raw
+direct-sum topology does not contain the infinite OPE and harmonic
+families recorded in
+Example~\ref{ex:virasoro-not-conilpotent}. A literal raw direct-sum
+reading would therefore exclude the main families the programme is
+designed to handle. This chapter separates the distinct finite,
+completed, and raw-direct-sum scopes.
 
 The organizing principle is the \emph{weight filtration}. Every chiral
 algebra in the standard landscape carries a conformal-weight grading
 with finite-dimensional weight spaces (the positive-energy axiom), and
 the bar coalgebra inherits a filtration by \emph{total bar weight}
 $w = (\text{bar degree}) + \sum_i h_i$ summing the conformal weights
-of the inputs. Each finite-weight truncation
-$\bar{B}^{\mathrm{ch}}(\cA)/F^{w+1}$ is a finite-dimensional chain
-complex in each cohomological degree. The inverse limit is the
-weight-completed bar coalgebra
-$\widehat{\bar{B}}^{\mathrm{ch}}(\cA)
-= \varprojlim_{w} \bar{B}^{\mathrm{ch}}(\cA)/F^{w+1}$.
+of the inputs. Each finite low-weight window
+$F^{\leq w}\bar{B}^{\mathrm{ch}}(\cA)$ is a finite-dimensional chain
+complex in each cohomological degree. The strict completed surface is
+the finite-window tower together with the continuous comparison data;
+it is not the naive quotient of the raw bar object by a high-weight
+tail.
 
-We prove three layered statements. First, at each finite weight, the
-chiral Positselski equivalence holds unconditionally
+We prove and isolate three layered statements. First, at each finite
+weight, the chiral Positselski equivalence holds in the finite-window
+de Rham model, where the finite-stage co/contra product/sum exactness
+hypothesis is automatic
 (Theorem~\ref{thm:chiral-positselski-at-each-weight}). Second, on the
-weight-completed bar coalgebra the equivalence extends to the full
-coderived/contraderived pair
+strict completed surface the continuous comparison package
+\textup{(CP1)--(CP3)} recovers the full coderived/contraderived pair
 (Theorem~\ref{thm:chiral-positselski-weight-completed}). Third, on the
 raw (non-completed) direct-sum bar coalgebra with class-M input, the
 counit $\Omega(\bar{B}(\cA)) \to \cA$ fails to be a chain-level
 quasi-isomorphism in positive conformal weight, and no strengthening
-of the coderived framework repairs this
+of the coderived framework repairs this inside the raw direct-sum
+ambient
 (Proposition~\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}).
 The net effect is a clean trichotomy recorded in
 Corollary~\ref{cor:positselski-applicable-families}: the Positselski
-equivalence applies on the direct-sum level to classes G and L only;
-on the weight-completed level it applies to all four classes
-G/L/C/M.
+equivalence applies on the direct-sum level to classes G, L, and C;
+on the strict Mittag--Leffler weight-completed level it applies to the
+standard G/L/C/M finite-window towers.
 
 \section{Setup: the weight filtration on the chiral bar coalgebra}
 \label{sec:weight-filtration-chiral-bar}
@@ -101,12 +104,14 @@ w(\xi) = n + \sum_{i=1}^{n} h_i.
 \end{equation}
 The \emph{weight filtration} $F^{\leq w} \bar{B}^{\mathrm{ch}}(\cA)$
 is the subspace spanned by tensors of total bar weight at most $w$.
-The conformal grading splits the bar object into weight summands; write
-$F^{>w}\bar{B}^{\mathrm{ch}}(\cA)$ for the complementary closed
-high-weight tail. Then
-$\bar{B}^{\mathrm{ch}}(\cA)/F^{>w}\bar{B}^{\mathrm{ch}}(\cA)
-\cong F^{\leq w}\bar{B}^{\mathrm{ch}}(\cA)$ is the finite weight
-truncation.
+It is the finite low-weight window. The conformal grading also splits
+the underlying vector space into a complementary high-weight tail, but
+that tail is not asserted to be a subcomplex: the bar differential is
+filtration preserving, hence weakly weight-decreasing, and may carry
+high-weight input to lower weight. Thus the finite chain object is
+$F^{\leq w}\bar{B}^{\mathrm{ch}}(\cA)$ itself, or an explicitly chosen
+finite-stage model compatible with it, not the formal quotient of the
+raw infinite bar object by a high-weight tail.
 \end{definition}
 
 \begin{lemma}[Filtration basics]
@@ -146,37 +151,42 @@ graded piece, and the finite-dimensionality in each weight provides
 the conilpotency data.
 \end{proof}
 
-\begin{definition}[Weight-completed chiral bar coalgebra]
+\begin{definition}[Strict weight-completed chiral bar surface]
 \label{def:weight-completed-bar}
-The \emph{weight-completed chiral bar coalgebra} is the inverse limit
-\begin{equation}\label{eq:weight-completed-bar}
-\widehat{\bar{B}}^{\mathrm{ch}}(\cA)
-\;=\;
-\varprojlim_{w \to \infty}
-\bigl(\bar{B}^{\mathrm{ch}}(\cA)/F^{>w}\bigr).
-\end{equation}
-Equivalently, $\widehat{\bar{B}}^{\mathrm{ch}}(\cA)$ is the
-completion of $\bar{B}^{\mathrm{ch}}(\cA)$ by finite total-weight
-truncations.
+The \emph{strict weight-completed chiral bar surface} is the
+complete-filtered tower whose finite stages are differential-stable
+finite models
+\[
+C_w := F^{\leq w}\bar{B}^{\mathrm{ch}}(\cA)
+\quad\text{or, equivalently in the standard families,}\quad
+C_N := \bar B^{\mathrm{ch}}(\cA_{\leq N})
+\]
+with the induced chain maps and finite-window comparison maps.
+The completed object is the compatible continuous object determined
+by this tower when the finite-window continuity condition holds:
+each output window receives only a well-defined finite-stage
+contribution from the tower. It is not, in general, the naive quotient
+tower $\bar B^{\mathrm{ch}}(\cA)/F^{>w}$.
 \end{definition}
 
 \begin{remark}[Why the weight filtration, not the bar-degree filtration]
 \label{rem:why-weight-filtration}
 The naive filtration by bar degree $n$ alone is insufficient for
-class M: the Virasoro example
-(Example~\ref{ex:virasoro-not-conilpotent}) exhibits a single element
-$L_0 \in \bar{B}^1(\mathrm{Vir})$ whose iterated coproduct
-$\bar{\Delta}^{(N)}$ produces an infinite sum
-$\sum_{k \in \mathbb{Z}} L_k \otimes L_{-k}$ in bar degree~$2$, so
-bar-degree filtration never reaches conilpotency. The total-weight
-filtration of
-Definition~\ref{def:total-bar-weight} cuts off at each weight $w$ by
-\emph{combining} bar degree and conformal weight; inside a fixed
-total weight, only finitely many
-$(k, -k)$ pairs satisfy the weight constraint (since $|L_k|$ has
-conformal weight $|k|+1$), so the iterated coproduct on
-$\mathrm{gr}^w$ vanishes in finitely many steps. This is the
-mechanism by which the weight completion repairs the conilpotency
+class M. Bar degree controls the number of tensor factors, so the
+cofree tensor coalgebra is conilpotent on each finite word; it does
+not control the mode index in families such as
+\[
+\xi_N=\sum_{\lvert k\rvert\leq N}
+s^{-1}L_{-k}\otimes s^{-1}L_k .
+\]
+The compatible family $\{\xi_N\}_N$ is visible in finite
+conformal-weight truncations and converges in the weight completion,
+but it is not a finite element of the discrete direct-sum bar object.
+The total-weight filtration of
+Definition~\ref{def:total-bar-weight} cuts off both bar length and
+conformal weight; inside a fixed total weight, only finitely many
+mode pairs satisfy the weight constraint. This is the mechanism by
+which the weight completion repairs the finite-type/convergence
 failure.
 \end{remark}
 
@@ -184,62 +194,74 @@ failure.
 \label{sec:chiral-positselski-at-each-weight}
 
 \begin{theorem}[Chiral Positselski at each finite weight;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:chiral-positselski-at-each-weight}
 Let $\cA$ be a chiral algebra on a smooth curve $X$ with
 positive-energy conformal-weight grading and finite-dimensional
 weight spaces, and let
 $C = \bar{B}^{\mathrm{ch}}(\cA)$ be its curved chiral CDG bar
-coalgebra. For every $w \geq 0$, the finite-weight truncation
-$C/F^{>w}$ is a conilpotent chiral CDG-coalgebra with
-finite-dimensional graded pieces, and the chiral Positselski
-equivalence holds on the truncation:
+coalgebra. Work in the finite-window de Rham chiral model: the
+underlying chain category is $\mathrm{Ch}(\mathrm{Vect})$ after
+de Rham global sections on the fixed curve, and all chiral operations
+are the induced finite-window operations. For every $w \geq 0$, the
+finite low-weight subobject
+$F^{\leq w}C$ is a conilpotent chiral CDG-coalgebra with
+finite-dimensional graded pieces. The finite-window product/sum exactness
+required by the chiral co/contra correspondence is automatic in this
+de Rham vector-space model. The chiral Positselski equivalence holds
+on the truncation:
 \begin{equation}\label{eq:chiral-positselski-at-each-weight}
-D^{\mathrm{co}}\bigl((C/F^{>w})\text{-}
+D^{\mathrm{co}}\bigl((F^{\leq w}C)\text{-}
  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\simeq\;
-D^{\mathrm{ctr}}\bigl((C/F^{>w})\text{-}
+D^{\mathrm{ctr}}\bigl((F^{\leq w}C)\text{-}
  \mathrm{contra}^{\mathrm{ch}}\bigr).
 \end{equation}
-The equivalence is natural in $w$, compatible with the tower of
-surjections $C/F^{>w+1} \twoheadrightarrow C/F^{>w}$.
+The equivalence is natural in $w$ for the inclusions of finite
+low-weight coalgebras.
 \end{theorem}
 
 \begin{proof}
 \emph{Step~1: hypotheses on the truncation.}
-Lemma~\ref{lem:weight-filtration-basics}(2),(4) shows that
-$C/F^{>w}$ is finite-dimensional in each cohomological degree
+Lemma~\ref{lem:weight-filtration-basics}(1),(2),(4) shows that
+$F^{\leq w}C$ is a differential-stable chiral subcoalgebra and is
+finite-dimensional in each cohomological degree
 (a finite direct sum of finite-dimensional graded pieces). The
 conilpotency is witnessed by the bar-degree-plus-weight filtration:
-on any element of $C/F^{>w}$, the iterated deconcatenation
+on any element of $F^{\leq w}C$, the iterated deconcatenation
 coproduct $\bar{\Delta}^{(N)}$ vanishes once $N$ exceeds the maximum
-bar degree in $C/F^{>w}$, which is bounded by~$w$ itself (since
+bar degree in $F^{\leq w}C$, which is bounded by~$w$ itself (since
 $n \leq w$ when $n + \sum h_i \leq w$ with $h_i \geq 0$).
 
 \emph{Step~2: apply the chiral co-contra correspondence.}
-The hypotheses of
-Theorem~\ref{thm:chiral-co-contra-correspondence} are met on
-$C/F^{>w}$: conilpotency is Step~1, finite-dimensional graded
+The hypotheses of the finite-window co/contra correspondence are met
+on $F^{\leq w}C$: conilpotency is Step~1, finite-dimensional graded
 pieces is Lemma~\ref{lem:weight-filtration-basics}(2), and the
-chiral/$\cD_X$-module structure descends from $C$ along the
-filtration. Applying the co-contra correspondence gives
+finite de Rham chiral operations descend from $C$ along the
+filtration. In $\mathrm{Ch}(\mathrm{Vect})$ arbitrary products and
+arbitrary sums are exact: kernels, cokernels, products, and sums are
+computed degreewise in vector spaces, and products of surjective maps
+are surjective. Thus the product/sum exactness needed in
+Theorem~\ref{thm:chiral-co-contra-correspondence} is automatic on the
+finite-window surface. Applying the co-contra correspondence gives
 \eqref{eq:chiral-positselski-at-each-weight}.
 
 \emph{Step~3: naturality in $w$.}
-The truncation maps
-$C/F^{>w+1} \twoheadrightarrow C/F^{>w}$ are surjective chiral
-CDG-coalgebra maps; the induced pushforward on comodules and the
-induced pullback on contramodules intertwine the Positselski
-equivalence (this is the naturality clause in
+The inclusions
+$F^{\leq w}C \hookrightarrow F^{\leq w+1}C$ are chiral
+CDG-coalgebra maps. The induced extension and restriction functors on
+comodules and contramodules intertwine the Positselski equivalence;
+this is the naturality clause in
 Theorem~\ref{thm:chiral-co-contra-correspondence} applied along
 coalgebra morphisms, and it descends to the coderived and
 contraderived categories because those are constructed as
-localizations compatible with short exact sequences).
+localizations compatible with short exact sequences.
 \end{proof}
 
 \begin{remark}[Independence from the conformal-weight boundary value]
 \label{rem:independence-from-boundary}
-The truncation $C/F^{>w}$ is defined for every $w \geq 0$ and
+The finite low-weight object $F^{\leq w}C$ is defined for every
+$w \geq 0$ and
 does not require a choice of minimum or maximum conformal weight on
 $\cA$. In particular, the statement applies to Virasoro, $W_N$,
 critical-level Kac--Moody, and any other class-M target where the
@@ -249,119 +271,127 @@ full direct-sum bar coalgebra fails to be conilpotent.
 \section{The weight-completed chiral Positselski equivalence}
 \label{sec:chiral-positselski-weight-completed}
 
-\begin{theorem}[Chiral Positselski on the weight-completed bar
- coalgebra; \ClaimStatusProvedHere]
+\begin{definition}[Strict Mittag--Leffler completed chiral coalgebra]
+\label{def:strict-ml-completed-chiral-coalgebra}
+A \emph{strict Mittag--Leffler completed chiral CDG-coalgebra} is an
+inverse system $\{C_N\}_{N\geq0}$ of finite-window de Rham chiral
+CDG-coalgebras such that:
+\begin{enumerate}[label=\textup{(ML\arabic*)}]
+\item every $C_N$ is conilpotent and finite-dimensional in each
+cohomological degree;
+\item the transition maps $C_{N+1}\twoheadrightarrow C_N$ are strict
+surjective morphisms of chiral CDG-coalgebras;
+\item the differential, curvature, coproduct, and chiral cooperations
+commute with the transition maps and define continuous operations on
+$\widehat C:=\varprojlim_N C_N$;
+\item for every cohomological degree $m$, the inverse systems
+$\{H^m(C_N)\}_N$ and the corresponding cone systems are
+Mittag--Leffler.
+\end{enumerate}
+Continuous comodules and contramodules over $\widehat C$ are compatible
+inverse systems of finite-stage comodules and contramodules. Their
+morphism complexes are the derived inverse limits of finite-stage
+morphism complexes.
+\end{definition}
+
+\begin{theorem}[Continuous chiral Positselski comparison on the
+strict completed surface; \ClaimStatusConditional]
 \label{thm:chiral-positselski-weight-completed}
 \phantomsection\label{thm:chiral-positselski-7-2}%
 \phantomsection\label{thm:chiral-positselski-5-3}%
 Let $\cA$ be as in
 Theorem~\ref{thm:chiral-positselski-at-each-weight}, and let
-$\widehat{C} = \widehat{\bar{B}}^{\mathrm{ch}}(\cA)$ be the
-weight-completed chiral bar coalgebra
-(Definition~\ref{def:weight-completed-bar}). Then
-$\widehat{C}$ is a pro-conilpotent chiral CDG-coalgebra with
-finite-dimensional graded pieces, and there is a natural equivalence
-of triangulated categories
+$\widehat C$ denote the strict complete-filtered bar surface of
+Definition~\ref{def:weight-completed-bar}. Suppose its finite-window
+tower is a strict Mittag--Leffler completed chiral coalgebra in the
+sense of Definition~\ref{def:strict-ml-completed-chiral-coalgebra}.
+Then the following continuous co/contra comparison package holds.
+\begin{enumerate}
+\item[\textup{(CP1)}] The finite-stage coalgebras $C_w=F^{\leq w}C$ or
+$C_N=\bar B^{\mathrm{ch}}(\cA_{\leq N})$ assemble to a completed
+curved chiral coalgebra $\widehat C$ with continuous differential and
+finite-window comparison maps.
+\item[\textup{(CP2)}] The completed coderived comodule category is recovered from the
+finite-stage coderived tower by the derived inverse limit, with all
+Milnor $\varprojlim^1$ terms controlled:
+\[
+D^{\mathrm{co}}\bigl(\widehat C\text{-}
+ \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
+\simeq
+R\!\varprojlim_w
+D^{\mathrm{co}}\bigl(C_w\text{-}
+ \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr).
+\]
+\item[\textup{(CP3)}] The completed contraderived contramodule category is similarly
+recovered from the finite-stage contraderived tower, and the completed
+chiral co/contra adjunction preserves the product-generated
+contraacyclic objects and the sum-generated coacyclic objects.
+\end{enumerate}
+Then there is a natural equivalence of triangulated categories
 \begin{equation}\label{eq:chiral-positselski-weight-completed}
 D^{\mathrm{co}}\bigl(\widehat{C}\text{-}
  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\simeq\;
-\varprojlim_{w}
- D^{\mathrm{co}}\bigl((C/F^{>w})\text{-}
+R\!\varprojlim_{w}
+ D^{\mathrm{co}}\bigl(C_w\text{-}
  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
 \;\simeq\;
-\varprojlim_{w}
- D^{\mathrm{ctr}}\bigl((C/F^{>w})\text{-}
+R\!\varprojlim_{w}
+ D^{\mathrm{ctr}}\bigl(C_w\text{-}
  \mathrm{contra}^{\mathrm{ch}}\bigr)
 \;\simeq\;
 D^{\mathrm{ctr}}\bigl(\widehat{C}\text{-}
  \mathrm{contra}^{\mathrm{ch}}\bigr).
 \end{equation}
-In particular, the weight-completed chiral Positselski equivalence
-holds unconditionally for every chiral algebra in the standard
-landscape.
+The statement is internal to the strict Mittag--Leffler surface. It
+does not identify $\widehat C$ with the raw direct-sum coalgebra after
+forgetting the tower.
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1: pro-conilpotency of $\widehat{C}$.}
-By construction
-$\widehat{C} = \varprojlim_w C/F^{>w}$ in the category of chiral
-CDG-coalgebras. Each $C/F^{>w}$ is conilpotent
-(Theorem~\ref{thm:chiral-positselski-at-each-weight}, Step~1), and
-the transition maps are surjective, so $\widehat{C}$ is
-pro-conilpotent: every element of $\widehat{C}$ has an image in some
-$C/F^{>w}$ where the iterated coproduct eventually vanishes.
+\emph{Step~1: finite-stage input and naturality.}
+Theorem~\ref{thm:chiral-positselski-at-each-weight} gives the chiral
+co/contra equivalence at every finite stage~$C_N$, natural for strict
+coalgebra maps. Naturality follows because a strict map of finite
+chiral coalgebras induces extension and restriction functors on
+comodules and contramodules, and Positselski's finite-stage
+construction is functorial in the coalgebra.
 
-\emph{Step~2: coderived inverse limit.}
-We claim the natural functor
-\[
-D^{\mathrm{co}}\bigl(\widehat{C}\text{-}
-  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
-\;\longrightarrow\;
-\varprojlim_{w}
-  D^{\mathrm{co}}\bigl((C/F^{>w})\text{-}
-  \mathrm{comod}^{\mathrm{conil,\,ch}}\bigr)
-\]
-is an equivalence. A conilpotent chiral CDG-comodule over
-$\widehat{C}$ is, by definition, a $\mathcal{D}_X$-module $M$
-equipped with a coaction $M \to \widehat{C} \chirtensor M$ whose
-image at each element lies in the Mittag--Leffler-completed
-$F^{\leq w}$-truncation for some finite $w$. Concretely,
-conilpotency forces the coaction to factor through some $C/F^{>w}$
-(with $w$ depending on the element), so the category
-$\widehat{C}\text{-}\mathrm{comod}^{\mathrm{conil,\,ch}}$ is the
-filtered colimit of the categories $(C/F^{>w})\text{-}
-\mathrm{comod}^{\mathrm{conil,\,ch}}$ along the truncation tower.
+\emph{Step~2: CP1.}
+The operations on $\widehat C$ are the inverse limits of the
+operations on $C_N$. Since the transition maps are strict and
+surjective, every coalgebra identity holds on $\widehat C$ if and only
+if it holds after projection to every finite stage. The differential,
+curvature, coproduct, and chiral cooperations are continuous by
+Definition~\ref{def:strict-ml-completed-chiral-coalgebra}(ML3).
+Thus $\widehat C$ is a completed curved chiral coalgebra with
+finite-window comparison maps.
 
-The coderived construction is built from null-homotopic objects
-plus total complexes of exact triples, both of which commute with
-filtered colimits of abelian categories on the comodule side
-(Positselski~\cite[Theorem~4.6]{Positselski11} gives the classical
-one-variable statement; the chiral analogue is immediate because
-the chiral tensor $\chirtensor$ preserves filtered colimits in each
-variable and the $\mathcal{D}_X$-module structure descends
-levelwise). Passing to the inverse limit on the coderived-category
-side therefore matches the levelwise coderived categories of the
-tower, yielding the first isomorphism in
-\eqref{eq:chiral-positselski-weight-completed}. The surjectivity of
-the transition maps $C/F^{>w+1} \twoheadrightarrow C/F^{>w}$
-supplies the Mittag--Leffler condition needed for the
-$\varprojlim^1$-term in the Milnor exact sequence to vanish in each
-cohomological degree.
+\emph{Step~3: CP2 and CP3.}
+By definition of continuous comodules and contramodules over
+$\widehat C$, the underlying dg categories are the homotopy inverse
+limits of the finite-stage dg categories, with mapping complexes
+$R\!\varprojlim_N$ of finite-stage mapping complexes. The
+Mittag--Leffler condition (ML4) kills the Milnor
+$\varprojlim^1$ obstruction on cohomology of cones and morphism
+complexes, so the Verdier localizations by coacyclic and
+contraacyclic objects commute with the inverse limit. Coacyclic
+objects are generated by totalizations of short exact sequences and
+closed under direct sums; contraacyclic objects are generated dually
+and closed under products. In the finite-window de Rham model products
+and sums in $\mathrm{Ch}(\mathrm{Vect})$ are exact, and the strict
+transition functors preserve the generating short exact sequences.
+Hence the completed adjunction preserves the product-generated
+contraacyclic objects and the sum-generated coacyclic objects.
 
-\emph{Step~3: apply the finite-weight Positselski equivalence along
- the tower.}
-Theorem~\ref{thm:chiral-positselski-at-each-weight} gives an
-equivalence at each $w$, natural in the tower. Taking inverse limits
-on both sides yields the middle isomorphism in
+\emph{Step~4: pass the finite-stage equivalences through the derived
+limit.}
+Taking $R\!\varprojlim$ of the natural finite-stage equivalences gives
+the middle equivalence in
 \eqref{eq:chiral-positselski-weight-completed}.
-
-\emph{Step~4: contraderived inverse limit.}
-Dually, a chiral CDG-contramodule over $\widehat{C}$ is a
-$\mathcal{D}_X$-module $P$ with a contraaction
-$\mathrm{Hom}^{\mathrm{ch}}(\widehat{C}, P) \to P$; finite-type
-conilpotency of $\widehat{C}$ implies the contraaction factors
-through $\mathrm{Hom}^{\mathrm{ch}}(C/F^{>w}, P)$ for some $w$
-(on each fixed element), so the contramodule category is again the
-filtered colimit of the truncation-tower categories. The
-contraderived construction is stable under this filtered-colimit
-presentation by the dual of the argument in Step~2
-(projective-class stability along surjective quotient towers,
-chiral analogue of Positselski~\cite[Theorem~5.3]{Positselski11});
-the Mittag--Leffler condition on the tower supplies vanishing of
-the $\varprojlim^1$-obstruction. Composing the three equivalences
-yields \eqref{eq:chiral-positselski-weight-completed}.
-
-\emph{Step~5: unconditional scope.}
-The hypotheses of Steps~1--4 are satisfied by every chiral algebra
-$\cA$ with positive-energy conformal-weight grading and
-finite-dimensional conformal weight spaces, which includes all of
-Heisenberg, affine Kac--Moody at arbitrary level (including
-critical), Virasoro, $W_N$, principal and non-principal $W$-algebras,
-the $\beta\gamma$ system, and the $bc$ system. No additional
-assumption (such as conilpotency of the raw direct-sum bar coalgebra,
-or finite-generation of $\cA$ beyond the finite-type conformal-weight
-hypothesis) is required.
+Composing with the CP2 and CP3 identifications yields the displayed
+completed equivalence. The proof uses no quotient of the raw complex
+by a non-stable high-weight tail.
 \end{proof}
 
 \begin{remark}[Relation to the MC4 completion theorem]
@@ -386,15 +416,18 @@ inverse limit of categorical equivalences along a tower.
 
 \begin{proposition}[Raw direct-sum chiral Positselski fails for class
  M at chain level;
- \ClaimStatusProvedHere]
+ \ClaimStatusConditional]
 \label{prop:chiral-positselski-raw-direct-sum-class-M-false}
 Let $\cA \in \{\mathrm{Vir}_c, W_N\text{-algebras}, V_{-h^\vee}(\mathfrak{g})\}$
 be a class-M chiral algebra, and let
 $C = \bar{B}^{\mathrm{ch}}(\cA)$ be its raw (non-completed) chiral
 bar coalgebra with the direct-sum conformal-weight grading. Then $C$
-is not conilpotent, the chiral co-contra correspondence
+is conilpotent as a cofree deconcatenation coalgebra on finite bar
+words, but it is not an object of the verified finite-type
+weight-completed Positselski surface with the discrete direct-sum
+topology. Consequently the chiral co-contra correspondence
 Theorem~\ref{thm:chiral-co-contra-correspondence} does not apply
-directly to $C$, and this proposition does not provide the equivalence
+directly to this raw surface, and this proposition does not provide the equivalence
 $D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{conil,\,ch}})
 \simeq
 D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
@@ -404,38 +437,42 @@ direct-sum complex.
 \end{proposition}
 
 \begin{proof}
-Non-conilpotency for Virasoro is
-Example~\ref{ex:virasoro-not-conilpotent}: the element
-$L_0 \in \bar{B}^1(\mathrm{Vir})$ has
-$\bar{\Delta}^{(N)}(L_0) \neq 0$ for every $N \geq 1$ because the
-infinite sum over the Cartan modes never terminates in the raw direct
-sum. The identical argument applies to
-$T \in \bar{B}^1(W_N)$ and to any field of critical level
-$k = -h^\vee$ Kac--Moody on which the screening charges produce
-infinite-type coproducts. The conilpotency hypothesis of
-Theorem~\ref{thm:chiral-co-contra-correspondence} is therefore
-violated on the nose.
+For the cofree tensor bar coalgebra, deconcatenation is conilpotent
+by bar length on each finite tensor. This does not place the raw
+direct-sum object in the finite-type Positselski surface used by
+Theorem~\ref{thm:chiral-co-contra-correspondence}. The obstruction is
+the topology. Example~\ref{ex:virasoro-not-conilpotent} exhibits the
+compatible finite-weight family
+$\xi_N=\sum_{\lvert k\rvert\leq N}
+s^{-1}L_{-k}\otimes s^{-1}L_k$: it is a genuine element after
+passing to the weight-completed inverse limit, but no element of the
+discrete direct sum represents its limit. The same finite-type
+failure occurs for $W_N$ through the higher-spin OPE modes and for
+critical-level Kac--Moody through the infinite screening-family
+corrections. Thus the raw direct-sum surface lacks the continuous
+operations required by the verified co-contra theorem.
 
-The failure is not merely a proof artifact: the shadow-tower
-invariant $S_4(\mathrm{Vir}_c) = 10/[c(5c+22)]$ is nonzero at generic
-central charge (Theorem~\ref{thm:shadow-tower} and
-Remark~\ref{rem:s4-vir}), which forces the raw bar cohomology
-$H^*(\bar{B}(\mathrm{Vir}_c))$ to contain a nonzero class at weight
-$4$ detected by the $S_4$ invariant. Any alleged coderived equivalence
-on the raw direct sum would have to identify this weight-$4$
-class with a corresponding contramodule-side class, but the
-contramodule side is a direct product (by duality between direct
-sums and direct products), and direct products of the weight pieces
-carry no analogous invariant because the relevant sum
-$\sum_{k} L_k \otimes L_{-k}$ fails to converge in the direct
-product topology. The obstruction is therefore real: raw
-direct-sum chiral Positselski is chain-level false for class M, and
-remains false at the raw direct-sum derived (coderived) level for
-class-M reasons that no repackaging of the coderived construction
-can circumvent. (The weight-completed and pro-object ambients
-recover the equivalence; see
+The failure is not merely a proof artifact. The shadow-tower invariant
+$S_4(\mathrm{Vir}_c) = 10/[c(5c+22)]$ is nonzero at generic central
+charge (Theorem~\ref{thm:shadow-tower} and
+Remark~\ref{rem:s4-vir}), but this finite class alone is only the
+first detected term. A finite-weight class can be matched on a
+finite-stage model. The direct-sum obstruction is the nonterminating
+harmonic family
+$\{\delta_r^{\mathrm{harm}}\}_{r\geq 4}$: an alleged raw
+chain-level equivalence would require one chain homotopy containing
+all higher harmonic corrections, while the direct-sum complex contains
+only finite-support sums. The required homotopy is therefore a
+compatible infinite finite-window family, not an element of the raw
+direct-sum chain complex. The obstruction is real inside
+$\mathrm{Ch}(\mathrm{Vect})_{\oplus}$: raw direct-sum chiral
+Positselski is chain-level false for class M. The
+weight-completed/pro ambients are the only possible recovery surface:
+they retain the compatible finite-weight tower. The continuous
+conditions under which this becomes a completed coderived equivalence
+are stated in
 Theorem~\ref{thm:chiral-positselski-weight-completed} and
-Theorem~\ref{thm:thm-B-coalgebra-side-unit-qi}.)
+Theorem~\ref{thm:thm-B-coalgebra-side-unit-qi}.
 \end{proof}
 
 \begin{remark}[Chain-level class G and L: external attribution;
@@ -447,7 +484,7 @@ $\mathsf{G}$ (Heisenberg) and class $\mathsf{L}$ (affine
 Kac--Moody at non-critical level) is not proved locally in Vol~I:
 the theorem home is Vol~II
 \textsf{chapters/connections/bv\_brst.tex}, theorem
-\textsf{thm:bv-bar-coderived} clauses~(ii) and~(iii), whose proof
+\textsf{thm:bv-bar-coderived-vol1} clauses~(ii) and~(iii), whose proof
 exhibits the strict chain-level intertwining via the Hodge
 decomposition of the BV propagator and the PBW associated graded
 of $V_k(\mathfrak{g})$. The raw-level
@@ -457,7 +494,7 @@ consequence of that chain-level equivalence; the converse direction
 (raw-level coderived equivalence from chain-level quasi-isomorphism)
 is automatic. Consumers of the raw-level statement for
 $\mathsf{G}/\mathsf{L}$ should cite Vol~II
-\textsf{thm:bv-bar-coderived} as the load-bearing source.
+\textsf{thm:bv-bar-coderived-vol1} as the load-bearing source.
 \end{remark}
 
 \begin{remark}[Why class G and L survive on the raw direct sum]
@@ -497,12 +534,12 @@ Theorem~\ref{thm:positselski-chiral-proved} applies as follows:
 \item \textup{(Class C)} $\beta\gamma$ system, $bc$ system: applies
  at the raw direct-sum level in the quadratic regime (free-field
  realization supplies conilpotency via finite-type bosonization);
- applies unconditionally at the weight-completed level.
+ applies on the strict Mittag--Leffler weight-completed level.
 \item \textup{(Class M)} Virasoro $\mathrm{Vir}_c$, principal $W_N$,
  critical-level Kac--Moody $V_{-h^\vee}(\mathfrak{g})$: does
  \emph{not} apply at the raw direct-sum level
  \textup{(}Proposition~\textup{\ref{prop:chiral-positselski-raw-direct-sum-class-M-false}}\textup{);}
- applies at the weight-completed level via
+ applies on the strict Mittag--Leffler weight-completed level via
  Theorem~\ref{thm:chiral-positselski-weight-completed}.
 \item \textup{(Yangian)} $Y_\hbar(\mathfrak{g})^{\mathrm{ch}}$: in
  the ordered $E_1$-chiral presentation on the Koszul locus, the
@@ -596,10 +633,10 @@ The proof separates three facts:
  Extending the coderived equivalence to the raw direct-sum bar
  coalgebra fails for class M on the nose, because
  Example~\ref{ex:virasoro-not-conilpotent} exhibits a concrete
- non-conilpotent element.
+ finite-type/completion failure in the Virasoro OPE-mode tower.
 \item \textbf{Correct relationship.}
  Theorem~\ref{thm:positselski-chiral-proved} applies at the
- \emph{weight-completed} level to all four shadow classes
+ \emph{strict Mittag--Leffler weight-completed} level to all four shadow classes
  G/L/C/M (Theorem~\ref{thm:chiral-positselski-weight-completed}),
  and at the \emph{raw direct-sum} level only to classes G, L, and
  C. The class-M failure at raw level is genuine and is certified
@@ -612,14 +649,15 @@ This triple is the analogue, for the Positselski/coderived package,
 of the class-M direct-sum versus weight-completed distinction already
 established for MC5
 (Theorem~\ref{thm:completed-bar-cobar-strong}). The two failures
-share a common cause: infinite-type coproducts on the generators of
-class-M algebras, localized to any fixed bar degree by summation over
-the full Cartan of Virasoro or $W_N$.
+share a common cause: infinite OPE-mode and harmonic correction
+families in class-M algebras, localized to fixed finite-weight stages
+but not represented by a finite element of the raw direct-sum surface.
 
 \begin{remark}[Sharp replacement]
 \label{rem:thm-B-scope-confusion-type}
-The sharp statement is that the equivalence is unconditional on the
-weight-completed side, and sharp (class-M false, G/L/C true) on the
+The sharp statement is that the equivalence is proved on the strict
+Mittag--Leffler weight-completed side, and sharp
+(class-M false, G/L/C true) on the
 raw direct-sum side. This pair of statements is
 Theorems~\ref{thm:chiral-positselski-at-each-weight} and
 \ref{thm:chiral-positselski-weight-completed}, with the
@@ -652,7 +690,7 @@ for every conilpotent chiral CDG-coalgebra $C$ on $X$ with
 finite-dimensional graded pieces.
 
 \begin{lemma}[Bar-cobar adjunction direction; canonical $\Omega^{\mathrm{ch}} \dashv \bar B^{\mathrm{ch}}$ versus opposite-notation $\bar B^{\mathrm{ch}} \dashv \Omega^{\mathrm{ch}}$;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{lem:bar-cobar-adjunction-direction-canonical}
 The chiral bar-cobar adjunction admits exactly one mathematically
 distinguished direction. The Hom-bijection
@@ -686,10 +724,8 @@ $A \to \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(A))$ that appears
 under the opposite-notation reading is \emph{not} a unit in the
 canonical sense: in the canonical convention it is the
 \emph{inverse of the counit $\psi_\cA$}, defined only on the Koszul
-locus where $\psi_\cA$ is a chain-level qi
-\textup{(}Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}},
-clause~\textup{(1)}\textup{)} or as a coderived isomorphism on the
-off-Koszul lane \textup{(}clause~\textup{(2)}\textup{)}.
+locus where $\psi_\cA$ is a chain-level qi, or as a coderived
+isomorphism on the off-Koszul lane.
 \end{lemma}
 
 \begin{proof}
@@ -769,7 +805,7 @@ counit-and-unit-qi pair — comprise the chiral bar-cobar adjunction's
 realisation as an equivalence on the appropriate localisations.
 \end{remark}
 
-\begin{theorem}[Bar-cobar unit on the coalgebra side; \ClaimStatusProvedHere]
+\begin{theorem}[Bar-cobar unit on the coalgebra side; \ClaimStatusConditional]
 \label{thm:thm-B-coalgebra-side-unit-qi}
 \index{Theorem B!coalgebra-side unit qi|textbf}%
 \index{bar-cobar unit!coalgebra side}%
@@ -864,29 +900,24 @@ of $C$.
 
 \emph{Step~3: weight-completed scope for class M.}
 For $C = \widehat{\bar B}^{\mathrm{ch}}(\cA)$ the weight-completed
-bar coalgebra of a class-M chiral algebra
+bar surface of a class-M chiral algebra
 (Definition~\textup{\ref{def:weight-completed-bar}}), the unit
 $\eta_C \colon C \to \bar B^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(C))$
-is a coderived isomorphism by Step~2 applied at each finite-weight
-truncation $C/F^{>w}$
+is a coderived isomorphism provided the continuous comparison
+package \textup{(CP1)--(CP3)} of
+Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}} holds.
+At finite weight the input is Step~2 applied to the finite
+low-weight coalgebras $F^{\leq w}C$
 (Theorem~\textup{\ref{thm:chiral-positselski-at-each-weight}})
-together with the inverse-limit identification of
-Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}.
-The Mittag--Leffler condition on the truncation tower transfers
-from the comodule side to the bar-cobar side because the bar
-construction $\bar B^{\mathrm{ch}}$ commutes with surjective
-inverse limits at the level of finite-dimensional graded pieces
-(by finite-type stability), so
-$\eta_{\widehat{C}} = \varprojlim_w \eta_{C/F^{>w}}$
-in the sense of pro-objects. The pro-object limit of an inverse
-system of coderived isomorphisms with Mittag--Leffler images is a
-coderived isomorphism in $D^{\mathrm{co}}_{\mathrm{ch}}(X)$, by the
-Milnor lim$^1$ vanishing argument of Step~2 of the proof of
-Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}.
+together with the finite-stage unit. The passage from those
+finite-stage isomorphisms to the completed unit is exactly the
+derived inverse-limit and co/contra preservation assertion in
+\textup{(CP1)--(CP3)}; it is not a consequence of quotienting the raw
+bar object by a high-weight tail.
 \end{proof}
 
 \begin{remark}[Ambient qualifier on Theorem~B coalgebra-side unit;
-\ClaimStatusProvedHere]\label{rem:thm-B-coalg-side-ambient}
+\ClaimStatusConditional]\label{rem:thm-B-coalg-side-ambient}
 By analogy with the algebra-side dichotomy of
 Corollary~\textup{\ref{cor:positselski-applicable-families}}, the
 coalgebra-side unit
@@ -979,7 +1010,7 @@ structure (Booth--Lazarev 2023, arXiv:2304.08409) instantiates chirally
 here via the K3 averaging morphism
 $\mathrm{av} = \mathrm{Torelli}_{K3}\circ\mathrm{KugaSatake}\circ j_{\mathrm{Kod}}$,
 which pulls back the curved Quillen equivalence to the K3 chiral setting.
-Cross-ref Vol.~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
 \begin{remark}[Theorem B scope vs universal identity]
@@ -991,7 +1022,7 @@ by Lusztig obstructions (divided-power vs truncated-power at
 root-of-unity order $\ell = 8$). The scope is the locus in
 $(\mathrm{Spec}\,\mathbb Z[\hbar^2])\times\mathrm{Mukai}$
 cut out by the universal identity \cite{Lusztig1990,Positselski2011}.
-Cross-ref Chapter~\ref{ch:k3-chiral-bialgebra-platonic}.
+Cross-ref Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
 \section{The Etingof--Kazhdan super-quasi-Hopf augmentation}
@@ -1017,8 +1048,8 @@ $\mathfrak{g}_{\Delta_5}$ with Manin pair
 $(\mathfrak{g}_{\Delta_5},\,
 \mathfrak{n}_+^{\mathrm{imag}}\oplus
 \mathfrak{h}^{\mathrm{imag,rk\,23}})$
-(Vol~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic},
-Theorem~\ref{thm:k3-structural-genesis}), the two completions
+(Vol~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
+Theorem~\ref{V3-thm:k3-structural-genesis}), the two completions
 match on the nose: the bar-coalgebra-side weight filtration is the
 cyclic-bar analogue of the pro-$\hbar$-filtration on
 $\widehat{U}_\hbar(\mathfrak{g}_{\Delta_5})$, and the associated
@@ -1039,8 +1070,8 @@ Positselski]
 The pentagon equation at order~$\hbar^3$ for the Siegel--Borcherds
 associator
 $\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}/\eta^{24}]$
-of Vol~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic}
-Theorem~\ref{thm:pentagon-sieg-bor} has coboundary
+of Vol~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}
+Theorem~\ref{V3-thm:pentagon-sieg-bor} has coboundary
 $\phi^{(3)} = \zeta(3)\,c_{\mathrm{symm}}
 + \tfrac{25}{3}\,c_{\mathrm{timelike}}
 + (\Phi_{10}/\eta^{24})\,c_{\Phi_{10}}$
@@ -1070,8 +1101,8 @@ because the Chevalley--Eilenberg complex is not well-defined without
 the completion. This is the chain-level translation of
 the Etingof~1-dimensional classification cohomology
 $H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2,\,K(1)}\cong\mathbb{C}\cdot\Delta_5$
-(Vol~III Chapter~\ref{ch:k3-chiral-bialgebra-platonic}
-Theorem~\ref{thm:k3-classification-etingof}).
+(Vol~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}
+Theorem~\ref{V3-thm:k3-classification-etingof}).
 \end{remark}
 
 \begin{remark}[Theorem~B and the single-$\hbar$ universal-identity
@@ -1088,7 +1119,7 @@ to the Lusztig root-of-unity $\zeta = e^{2\pi i/8}$ of
 order~$\ell = 8$ via Drinfeld's 1990 scaling
 $\hbar = 2\pi i/\ell$~\cite{Drinfeld1990,Lusztig1990}. On the
 Lorentzian-lattice-parametric $\mathcal{B}$-family of Vol~III
-Chapter~\ref{ch:k3-chiral-bialgebra-platonic} the specialisation
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} the specialisation
 produces $\hbar^2 = -1/8$, and the universal identity
 $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ holds exactly when
 the Koszul conductor $K$ is the torsion order of the Bruinier
@@ -1535,7 +1566,7 @@ $\overline{\mathcal{A}_2}$ by
 Theorem~\ref{thm:climax-W18-global-inversion}~(b).
 \end{proof}
 \emph{Constitutional consequence.} The scope row for Theorem~B in
-Chapter~\ref{ch:concordance}
+Chapter~\ref{chap:concordance}
 (\emph{concordance.tex}) should read
 ``bar-cobar holds strictly on
 $\overline{\mathcal{A}_2}\setminus\bigcup_{n\ \text{admissible}} H_n$
@@ -1568,11 +1599,12 @@ $\Omega^{\mathrm{ch}} B^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})
 strict inversion genuinely obstructed there? The total-bar-weight
 filtration of Definition~\ref{def:total-bar-weight} alone does not
 decide the question: the transition maps
-$C/F^{>w+1}\twoheadrightarrow C/F^{>w}$ are surjective on
-cohomology fibre by fibre, but on a formal neighbourhood of a Humbert
-wall the Gauss--Manin monodromy mixes fibres. Fibrewise Mittag--Leffler
-does not imply Mittag--Leffler of the pro-system of sheaves on the
-formal neighbourhood.
+$F^{\leq w}C\hookrightarrow F^{\leq w+1}C$ preserve finite
+low-weight windows fibre by fibre, but on a formal neighbourhood of a
+Humbert wall the Gauss--Manin monodromy mixes fibres. Fibrewise
+finite-window control does not imply the derived Mittag--Leffler
+condition for the completed pro-system of sheaves on the formal
+neighbourhood.
 
 The resolution is to refine the total-bar-weight filtration by the
 monodromy-isotypic bigrading. The refined filtration retains
@@ -1912,7 +1944,7 @@ adds bar weight $\geq 2$ via the conformal-weight shift of the
 curvature form $\omega_g$): at any fixed total bar weight $w$, only
 $\lfloor w/2\rfloor$ terms contribute, so the series is finite on
 each finite-weight truncation
-$\bar{B}^{\mathrm{ch}}/F^{\leq w}$. The pro-limit assembles the
+$F^{\leq w}\bar{B}^{\mathrm{ch}}$. The pro-limit assembles the
 finite-weight corrections into a strictly convergent inverse-system
 chain homotopy.
 
@@ -2160,9 +2192,9 @@ applied fibrewise on each $\widehat{\mathcal{O}}_{H_n}$ give each
 summand vanishes; consequently the global cohomology vanishes and
 $\widehat{\mathrm{counit}}^\Gamma_A$ is a strict chain-level
 quasi-isomorphism on $\widehat{\mathcal{O}}^{\circ}_{H_1\cup H_3\cup H_4}$.
-The statement therefore holds on the Humbert union minus the
-wall-of-walls locus; the wall-of-walls obstruction is the content of
-Theorem~\ref{thm:wall-of-walls-obstruction} below.
+The statement therefore holds exactly on the Humbert union with the
+pairwise wall-of-walls locus removed, which is the open formal
+neighbourhood appearing in the theorem.
 
 \emph{Primary inputs.} Bruinier monodromy order at $H_1$:
 \cite[Prop.~5.1]{Bruinier2002LNM}. Kashiwara--Malgrange $V$-filtration
@@ -2342,7 +2374,7 @@ chain-homotopy identity
 $[d^{\Gamma}_{\mathrm{bar}}, h^{\Gamma,\mathrm{corr}}_{H_n}] =
 \mathrm{id} - p^{\Gamma}_{H_n}$
 is verified term-by-term at each total-bar-weight truncation
-$\bar{B}^{\mathrm{ch}}/F^{\leq w}$, with the finite $\lfloor w/2\rfloor$
+$F^{\leq w}\bar{B}^{\mathrm{ch}}$, with the finite $\lfloor w/2\rfloor$
 terms of the geometric series~\eqref{eq:curvature-corrected-bott-koszul}
 explicit. The verification succeeds on the non-$\chi$-isotypic direct
 summands for each $\chi\in\widehat{\Gamma_n}\setminus\{\chi_0\}$ at
@@ -2432,7 +2464,7 @@ full base at coderived level; statuses (iv), (v) are the per-wall and
 wall-of-walls refinements. The quadrichotomy of
 Corollary~\ref{cor:tbsp-trichotomy-HDelta5} (which had three
 entries) is consequently refined to the above pentachotomy.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{corollary}
 
 \begin{proof}
@@ -2512,7 +2544,7 @@ $\lim^1$-obstruction, Baily--Borel boundary compatibility) and one
 global inversion theorem with four ambient-qualified lanes.
 
 Throughout, $A=\mathbf{H}_{\Delta_5}$ denotes the K3 chiral
-bialgebra of Chapter~\ref{ch:k3-chiral-bialgebra-platonic};
+bialgebra of Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic};
 $\widehat{\mathcal{O}}_{H_n}$ denotes the formal completion of the
 structure sheaf of $\overline{\mathcal{A}_2}$ along $H_n$;
 $\widehat{U}_{H_n}=\mathrm{Spec}\,\widehat{\mathcal{O}}_{H_n}\setminus H_n$
@@ -2709,7 +2741,7 @@ The bar differential $d_{\mathrm{bar}}$ on
 $\bar B^{\mathrm{ch}}(A)|_{\widehat{\mathcal{O}}_{H_n}}$ is the
 pullback of Arnold's flat connection along the KZ functor
 (\cite[Ch.\,3]{KasselTuraev08}). Its Chern class at $H_n$ is
-computed in Chapter~\ref{ch:k3-chiral-bialgebra-platonic} and
+computed in Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} and
 equals the residue of the Bruinier lift:
 $c_1(d_{\mathrm{bar}})|_{H_n}=c_{-2,1}(n,r_n)\cdot[H_n]$
 (Borcherds \cite{Borcherds1998}, reread through the
@@ -2890,7 +2922,7 @@ the $A_\infty$-corrections of (iii) glued via (ii) at each $H_n$.
 Together (i)--(iv) constitute the global inversion theorem for
 chiral bar-cobar on $\overline{\mathcal{A}_2}$, stated in the
 ambient in which each lane is strictly correct.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{theorem}
 
 \begin{proof}
@@ -3270,7 +3302,7 @@ tensoring with $V_{\alpha_1}$. After weight completion, the identity
 B}^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})\otimes V_{\alpha_1}$ across
 the full base $\overline{\mathcal{A}_2}$ in
 $D^{\mathrm{co}}_{\mathrm{ch}}(\overline{\mathcal{A}_2})$.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{theorem}
 
 \begin{proof}
@@ -3685,7 +3717,7 @@ bar degree $n=5$, the anti-symmetric sign pattern $(-1)^5=-1$
 forces the first contribution of the $A_\infty$-corrector
 $\phi^{(5)}$ inherited from the algebra-level lane (iii) of
 Theorem~\ref{thm:tbsp-global-inversion-all-admissible}.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{proposition}
 
 \begin{proof}
@@ -3758,7 +3790,7 @@ is \emph{not} done degree-by-degree (Propositions
 \ref{prop:tbsp-homotopy-n4-valpha1}--\ref{prop:tbsp-homotopy-n6-valpha1}
 are illustrative only); it is delivered uniformly by the bar
 spectral-sequence collapse of Lemma~\ref{lem:tbsp-bar-ss-collapse}.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{corollary}
 
 \begin{proof}
@@ -3919,7 +3951,7 @@ where $\mathrm{adj}^{\mathrm{fin}}=\mathfrak h\oplus\bigoplus_
 and $\widehat{\mathrm{adj}}^{\mathrm{im}}$ is the imaginary-root
 weight-completed part, to which Theorem
 \ref{thm:chiral-positselski-weight-completed} applies directly.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{theorem}
 
 \begin{proof}
@@ -4037,7 +4069,7 @@ Koszul locus $U^{\mathrm{adm}}$, with $A_\infty$-corrections
 $h^{(n)}_\beta=\phi^{(n)}\otimes\mathrm{FK}_{\mathrm{id},\beta}$ on
 each admissible wall $H_n$ twisted by the Frenkel--Kac identity
 vertex operator.
-\ClaimStatusProvedHere{}
+\ClaimStatusConditional{}
 \end{theorem}
 
 \begin{proof}

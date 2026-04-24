@@ -430,94 +430,62 @@ For a fixed smooth curve $\Sigma_g$, stabilization gives a map $\pi: \overline{C
 
 \subsubsection{Local coordinates and blow-up charts}
 
-\begin{theorem}[Local coordinates near boundary; \ClaimStatusProvedHere]\label{thm:local-coords-boundary}
-Let $D_S \subset \partial\overline{C}_n(\Sigma_g)$ be a boundary divisor corresponding to collision of points $S = \{i_1, \ldots, i_k\} \subseteq \{1,\ldots,n\}$ with $k \geq 2$.
-
-There exist local analytic coordinates near a general point of $D_S$:
-\[(p, \epsilon, \theta_1, \ldots, \theta_{k-1}, w_{\alpha})_{\alpha \in \{1,\ldots,n\}\setminus S}\]
-where:
-\begin{itemize}
-\item $p \in \Sigma_g$ is the collision point (where all points in $S$ meet)
-\item $\epsilon \in \mathbb{R}_{>0}$ is the \emph{collision scale} (overall size of the cluster)
-\item $\theta_j \in S^1$ for $j=1,\ldots,k-1$ are \emph{relative angles} (directions of approach)
-\item $w_{\alpha} \in \Sigma_g$ for $\alpha \notin S$ are locations of the remaining points
-\end{itemize}
-
-In these coordinates:
+\begin{theorem}[Local holomorphic coordinates near a collision divisor; \ClaimStatusProvedHere]\label{thm:local-coords-boundary}
+Let $D_S \subset \partial\overline{C}_n(\Sigma_g)$ be the
+Fulton--MacPherson divisor corresponding to collision of
+$S=\{i_1,\ldots,i_k\}$, $k\geq 2$, at a general point of the divisor.
+After choosing a holomorphic coordinate $\zeta$ on $\Sigma_g$ at the
+collision point, there are analytic coordinates
+\[
+(p,x_S,u_1,\ldots,u_{k-1},w_\alpha)_{\alpha\notin S}
+\]
+near that point such that:
 \begin{enumerate}
-\item The divisor $D_S$ is defined by $\{\epsilon = 0\}$
-\item The original points are recovered as:
-\[z_{i_j} = p + \epsilon \cdot e^{2\pi i \theta_j} \cdot (\text{fixed direction in } T_p\Sigma_g)\]
-for $j = 1, \ldots, k$ (with $\theta_k = 0$ by convention)
-\item The normal bundle to $D_S$ is trivialized by $\frac{\partial}{\partial \epsilon}$
+\item $p$ is the collision point and $w_\alpha$ are the remaining
+ marked points;
+\item $D_S$ is the coordinate divisor $\{x_S=0\}$;
+\item for $i,j\in S$ one has
+ \[
+ \zeta(z_i)-\zeta(z_j)=x_S\,u_{ij},
+ \]
+ where $u_{ij}$ is regular and is nonzero on the open chart of the
+ collision screen in which the two labelled directions remain distinct;
+\item hence
+ \[
+ \eta_{ij}=d\log(\zeta(z_i)-\zeta(z_j))
+ =d\log x_S+d\log u_{ij}
+ \]
+ on this chart, so $\operatorname{Res}_{D_S}\eta_{ij}=1$ precisely
+ for the pairs separated by the screen coordinate.
 \end{enumerate}
+At a normal-crossing corner indexed by a nested or disjoint collection
+of collision subsets, the corresponding scale parameters
+$x_{S_1},\ldots,x_{S_m}$ are simultaneous normal coordinates.
 \end{theorem}
 
 \begin{proof}
-We construct the coordinates using the blow-up description.
-
-\medskip
-\noindent\emph{Step 1: Center of Mass Coordinate}
+This is the standard local chart of the iterated blow-up of the small
+diagonal.  In a holomorphic coordinate, write the relative coordinates
+of the colliding points as
+\[
+\xi_j=\zeta(z_{i_j})-\frac1k\sum_{\ell=1}^k\zeta(z_{i_\ell}),
+\qquad \sum_j\xi_j=0.
+\]
+On an affine chart of the exceptional projective space choose one
+nonzero relative coordinate as the scale $x_S$ and write all other
+relative coordinates as $x_S u_j$.  Then $D_S=\{x_S=0\}$ and pairwise
+differences inside the cluster have the asserted form.  The
+Fulton--MacPherson building set permits exactly nested or disjoint
+collections of collision subsets to occur simultaneously; the
+corresponding blow-up scales give the stated normal coordinates.
+\end{proof}
 
 \begin{remark}[Ordering convention for collisions]\label{rem:collision-ordering}
-When describing collision of points $\{i_1, \ldots, i_k\}$, we always order indices so that $i_1 < i_2 < \cdots < i_k$. The collision divisor is denoted $D_{i_1 \cdots i_k}$ or $D_S$ where $S = \{i_1, \ldots, i_k\}$ with the lexicographic ordering understood.
-
-This convention ensures consistency with the residue formulas and sign computations throughout the manuscript.
+When describing collision of points $\{i_1,\ldots,i_k\}$, we order
+indices so that $i_1<\cdots<i_k$.  This is a notation convention for
+labels and signs; it is not an additional geometric ordering of the
+Fulton--MacPherson compactification.
 \end{remark}
-
-For points $\{z_{i_1}, \ldots, z_{i_k}\} \subset \Sigma_g$ approaching a common point, define:
-\[p = \frac{1}{k}\sum_{j=1}^k z_{i_j} \in \Sigma_g\]
-This is the center of mass of the colliding cluster.
-
-\medskip
-\noindent\emph{Step 2: Relative Coordinates}
-
-Choose a local coordinate $\zeta$ on $\Sigma_g$ near $p$ (with $\zeta(p) = 0$). Write:
-\[\zeta_{i_j} = \zeta(z_{i_j}) \in \mathbb{C}\]
-
-Define relative coordinates:
-\[\xi_j = \zeta_{i_j} - \zeta(p) = \zeta_{i_j} - \frac{1}{k}\sum_{\ell=1}^k \zeta_{i_\ell}\]
-Note that $\sum_{j=1}^k \xi_j = 0$ (center of mass is at origin).
-
-\medskip
-\noindent\emph{Step 3: Polar Decomposition}
-
-Write each $\xi_j$ in polar form:
-\[\xi_j = r_j e^{i\theta_j}\]
-The collision scale is:
-\[\epsilon = \max_{1 \leq j \leq k} r_j = \text{diameter of the cluster}\]
-
-Normalized directions:
-\[\theta_j = \arg(\xi_j) \in S^1\]
-Fix one angle (say $\theta_k = 0$) to remove rotational redundancy.
-
-\medskip
-\noindent\emph{Step 4: Blow-Up Description}
-
-The blow-up of $\Delta_S$ introduces coordinates:
-\begin{itemize}
-\item $p \in \Sigma_g$: collision point
-\item $\epsilon$: scale
-\item $[\xi_1 : \cdots : \xi_{k-1}] \in \mathbb{P}^{k-2}$: projective direction
-\end{itemize}
-
-Using the constraint $\sum \xi_j = 0$, we can express this as:
-\begin{itemize}
-\item $p$
-\item $\epsilon$
-\item $\theta_1, \ldots, \theta_{k-1} \in S^1$: angles
-\end{itemize}
-
-\medskip
-\noindent\emph{Step 5: Verification}
-
-To verify $D_S = \{\epsilon = 0\}$:
-\begin{itemize}
-\item When $\epsilon > 0$: points $z_{i_j} = p + \epsilon e^{i\theta_j} (\cdots)$ are distinct
-\item When $\epsilon \to 0$: all points approach $p$, i.e., $z_{i_j} \to p$ for all $j$
-\item The limit $\epsilon \to 0$ with fixed $\theta_j$ describes a point in $D_S \subset \overline{C}_n(\Sigma_g)$
-\end{itemize}
-\end{proof}
 
 \begin{example}[Explicit coordinates for three points]\label{ex:three-points-coords}
 For $n=3$ on $\Sigma_g$, consider the divisor $D_{12}$ where $z_1 \to z_2$.
@@ -1268,70 +1236,42 @@ At bar degree~$\geq 3$, both terms vanish individually
 \end{proof}
 
 \begin{lemma}[Basic logarithmic form; \ClaimStatusProvedHere]\label{lem:basic-log-form-residue}
-The form $\eta_{ij} = d\log(z_i - z_j)$ has:
-\begin{itemize}
-\item Simple pole along $D_{ij}$
-\item Residue $1$ along $D_{ij}$
-\item No other poles
-\end{itemize}
+On a Fulton--MacPherson normal-crossing chart with collision-scale
+coordinates $x_S$ for a nested collection of clusters, the form
+$\eta_{ij}=d\log(z_i-z_j)$ has the local expression
+\[
+z_i-z_j
+=
+u_{ij}\prod_{\{i,j\}\subset S}x_S,
+\qquad
+u_{ij}\in\mathcal O^\times,
+\]
+and therefore
+\[
+\eta_{ij}
+=
+\sum_{\{i,j\}\subset S}d\log x_S+d\log u_{ij}.
+\]
+Consequently $\eta_{ij}$ has a simple logarithmic pole along every
+collision divisor whose cluster contains both labels $i,j$, with
+residue~$1$ on the screen chart where those two labelled directions are
+separated, and no pole along collision divisors whose cluster does not
+contain both labels.
 \end{lemma}
 
 \begin{proof}
-We work in the local coordinates of Theorem~\ref{thm:local-coords-boundary}
-applied to the two-point collision divisor $D_{ij}\subset\overline{C}_n(\Sigma_g)$.
-Choose a local coordinate $\zeta$ on $\Sigma_g$ centered at the collision
-point, and set $t = \zeta(z_i) - \zeta(z_j)$. In the blow-up chart the
-divisor $D_{ij}$ is the smooth hypersurface $\{t = 0\}$, and $(t, \zeta(z_j),
-w_\alpha)$ form part of a local coordinate system on $\overline{C}_n(\Sigma_g)$,
-where $w_\alpha$ denotes the positions of the remaining $n-2$ points.
-
-\medskip
-\noindent\emph{Step 1: Local expression.}
-In these coordinates, the logarithmic form is
-\[
-\eta_{ij} \;=\; d\log(z_i - z_j) \;=\; d\log\!\bigl(\zeta(z_i)-\zeta(z_j)\bigr)
-\;=\; \frac{dt}{t}\,,
-\]
-since $t = \zeta(z_i) - \zeta(z_j)$. This is a section of
-$\Omega^1_{\overline{C}_n}(\log D_{ij})$ with a simple (first-order) pole along
-$D_{ij} = \{t=0\}$ and no other polar locus, since $\eta_{ij}$ is smooth on the
-open configuration space $C_n(\Sigma_g)$ and extends with at worst logarithmic
-singularity along $D_{ij}$ (the only boundary component where $z_i$ and $z_j$ collide).
-
-\medskip
-\noindent\emph{Step 2: Residue computation.}
-By the definition of the Poincar\'e residue for a logarithmic form
-$\omega = f \cdot dt/t + (\text{terms regular in } t)$,
-\[
-\Res_{D_{ij}}(\omega) \;=\; f\big|_{t=0}\,.
-\]
-Applied to $\eta_{ij} = 1 \cdot dt/t$, this gives
-\[
-\Res_{D_{ij}}(\eta_{ij}) \;=\; 1 \;\in\; \Omega^0_{D_{ij}}
-\;=\; \mathcal{O}_{D_{ij}}\,.
-\]
-
-\medskip
-\noindent\emph{Step 3: Coordinate independence.}
-Let $\zeta \mapsto \varphi(\zeta)$ be a holomorphic change of local coordinate
-on $\Sigma_g$ (with $\varphi'(0) \neq 0$). Under this change,
-\[
-\zeta(z_i) - \zeta(z_j) \;\longmapsto\;
-\varphi(\zeta(z_i)) - \varphi(\zeta(z_j))
-\;=\; \varphi'(\zeta(z_j))\cdot t + O(t^2)\,,
-\]
-where $t = \zeta(z_i) - \zeta(z_j)$ as before. Therefore
-\begin{align*}
-d\log\bigl(\varphi(\zeta(z_i)) - \varphi(\zeta(z_j))\bigr)
-&= d\log\bigl(\varphi'(\zeta(z_j))\cdot t \cdot (1 + O(t))\bigr) \\
-&= \frac{dt}{t} + d\log\varphi'(\zeta(z_j))
-+ d\log(1+O(t))\,.
-\end{align*}
-The second term is holomorphic (since $\varphi' \neq 0$), and the third
-term is $O(t)\,dt/t + (\text{smooth}) = (\text{smooth})$. Hence the polar part
-is still $dt/t$, and the residue is still $1$. This confirms that the
-residue is an intrinsic invariant, independent of the choice of local
-coordinate on $\Sigma_g$.
+Work in the holomorphic coordinates of
+Theorem~\ref{thm:local-coords-boundary} for a nested collection of
+clusters.  Each cluster $S$ containing both $i$ and $j$ contributes one
+scale coordinate $x_S$ to the difference $z_i-z_j$; clusters not
+containing both labels contribute only to coordinates transverse to that
+difference.  The remaining factor $u_{ij}$ is invertible on the chart
+where the two directions on the last common screen are distinct.  Taking
+$d\log$ gives the displayed formula.  The Poincare residue along
+$D_S=\{x_S=0\}$ extracts the coefficient of $dx_S/x_S$, which is $1$
+when $\{i,j\}\subset S$ and is $0$ otherwise.  A holomorphic change of
+coordinate multiplies $z_i-z_j$ by a unit, changing only the regular
+term $d\log u_{ij}$, so the residues are intrinsic.
 \end{proof}
 
 \begin{theorem}[Residue operations; \ClaimStatusProvedHere]\label{thm:residue-operations}
@@ -1344,6 +1284,13 @@ These satisfy:
 \begin{enumerate}
 \item \emph{Leibniz rule:} $\text{Res}_{D_\alpha}(\omega \wedge \eta) = \text{Res}_{D_\alpha}(\omega) \wedge \eta|_{D_\alpha} + (-1)^{|\omega|}\omega|_{D_\alpha} \wedge \text{Res}_{D_\alpha}(\eta)$
 \item \emph{Commutativity:} If $D_\alpha \cap D_\beta = \emptyset$, then $\text{Res}_{D_\alpha} \circ \text{Res}_{D_\beta} = \text{Res}_{D_\beta} \circ \text{Res}_{D_\alpha}$
+\item \emph{Corner sign:} If $D_\alpha$ and $D_\beta$ meet
+ transversely, the degree-$-1$ residue operators anticommute:
+ \[
+ \Res_{D_\alpha}\Res_{D_\beta}
+ =
+ -\Res_{D_\beta}\Res_{D_\alpha}.
+ \]
 \item \emph{Residue theorem:} If $d\omega=0$, then the residue family $\{\text{Res}_{D_\alpha}(\omega)\}_\alpha$ satisfies the cocycle condition in the residue sequence of Theorem~\ref{thm:residue-sequence} (equivalently, its total boundary residue vanishes).
 \end{enumerate}
 \end{theorem}
@@ -1383,6 +1330,14 @@ vanishes, so each composition
 $\Res_{D_i}\circ\Res_{D_j}$ and $\Res_{D_j}\circ\Res_{D_i}$ is zero; hence they
 agree globally.
 
+If $D_i$ and $D_j$ meet transversely, the two-log part of a form is
+\[
+\omega=\frac{dz_i}{z_i}\wedge\frac{dz_j}{z_j}\wedge\gamma+\cdots .
+\]
+Changing the order of the two logarithmic factors changes sign.  The
+two iterated residues therefore extract the same coefficient with
+opposite signs, which is the displayed anticommutation identity.
+
 Finally, by Theorem~\ref{thm:residue-sequence}, the residue map is the middle map
 of a short exact sequence of complexes. Therefore for $d\omega=0$, the residue
 family lies in the kernel of the connecting morphism, i.e. it satisfies the
@@ -1390,26 +1345,32 @@ residue cocycle condition (equivalently, total boundary residue vanishes).
 \end{proof}
 
 \begin{proposition}[Residue computation in local coordinates; \ClaimStatusProvedHere]\label{prop:residue-local}
-In the local coordinates $(p, \epsilon, \theta, w)$ near $D_S = \{\epsilon = 0\}$ from Theorem~\ref{thm:local-coords-boundary}, the residue operation is:
+In the holomorphic local coordinates $(p,x_S,u,w)$ near
+$D_S=\{x_S=0\}$ from Theorem~\ref{thm:local-coords-boundary}, the
+residue operation is:
 \[\text{Res}_{D_S}: \Omega^k(\log D_S) \to \Omega^{k-1}_{D_S}\]
 given explicitly by:
-\[\text{Res}_{D_S}\left(\frac{d\epsilon}{\epsilon} \wedge \alpha + \beta\right) = \alpha|_{\epsilon=0}\]
+\[\text{Res}_{D_S}\left(\frac{dx_S}{x_S} \wedge \alpha + \beta\right) = \alpha|_{x_S=0}\]
 where $\alpha \in \Omega^{k-1}$ and $\beta \in \Omega^k$ are smooth.
+On the real oriented blow-up one may write
+$x_S=\epsilon e^{i\theta}$, so
+$d\log x_S=d\epsilon/\epsilon+i\,d\theta$; this is the real/log
+boundary expression of the same holomorphic residue coordinate.
 \end{proposition}
 
 \begin{proof}
 In the chart of Theorem~\ref{thm:local-coords-boundary}, $D_S$ is the smooth
-divisor $\{\epsilon=0\}$, and the logarithmic cotangent sheaf is generated by
-$d\epsilon/\epsilon$, $d\theta$, and the regular differentials in the remaining
+divisor $\{x_S=0\}$, and the logarithmic cotangent sheaf is generated by
+$dx_S/x_S$ and the regular differentials in the remaining
 coordinates. Hence every logarithmic $k$-form can be written uniquely as
 \[
-\omega=\frac{d\epsilon}{\epsilon}\wedge\alpha+\beta,
+\omega=\frac{dx_S}{x_S}\wedge\alpha+\beta,
 \]
-where neither $\alpha$ nor $\beta$ contains a $d\epsilon/\epsilon$ factor.
+where neither $\alpha$ nor $\beta$ contains a $dx_S/x_S$ factor.
 By definition of the Poincar\'e residue for a smooth divisor, the residue is the
-coefficient of $d\epsilon/\epsilon$ restricted to $\epsilon=0$, giving
+coefficient of $dx_S/x_S$ restricted to $x_S=0$, giving
 \[
-\Res_{D_S}(\omega)=\alpha|_{\epsilon=0}.
+\Res_{D_S}(\omega)=\alpha|_{x_S=0}.
 \]
 This is exactly the displayed formula.
 \end{proof}
@@ -1640,31 +1601,33 @@ where $\mathrm{Nest}(\{1,\ldots,n\})$ denotes the poset of nested collections of
 The logarithmic FM compactification developed below is the
 ambient geometry on which Theorem~A in its
 $(\infty,2)$-properad-level formulation
-(Conjecture~\ref{conj:A-infinity-2} in
+(Theorem~\ref{thm:A-infinity-2} in
 \texttt{theorem\_A\_infinity\_2.tex}) operates. Conceptually,
 the Arnold connection is enlarged: in addition to the
-interior-collision strata $D_S^{\mathrm{FM}}$ (where the
-Arnold relation lives), the puncture-collision strata
-$D_{i,\alpha}^{\mathrm{punc}}$ contribute new logarithmic
-divisors at which the propagator extracts the chiral
-\emph{module} action $\rho_\alpha$ rather than the chiral
-algebra OPE. The two types of collisions sit transversally and
-together produce the residue calculus on which conformal-block
-recovery (Corollary~\ref{cor:conformal-blocks-punctured-bar})
-rests.
+interior-collision strata $D_S^{\mathrm{FM}}$ ($|S|\geq2$, where
+the Arnold relation lives), the logarithmic strata over the fixed
+divisor~$D$ contribute residue faces at which the propagator extracts
+the chiral \emph{module} action $\rho_\alpha$ rather than the chiral
+algebra OPE. Mok's construction records these faces by grid
+subdivisions and planted forests, not merely by pairwise labels.
+The resulting residue calculus is the geometric input for
+conformal-block recovery
+(Corollary~\ref{cor:conformal-blocks-punctured-bar}).
 
 When the base curve $X$ carries marked points $p_1, \ldots, p_r$
 (``punctures''), the configuration space $C_m(X \setminus \{p_1,
 \ldots, p_r\})$ of $m$ points on the complement is no longer an
 open subset of $X^m$ (it is open in $(X \setminus D)^m$ where
 $D = \{p_1, \ldots, p_r\}$). The FM compactification must be
-modified to account for the \emph{two} types of collisions:
+modified to account for two geometric mechanisms:
 \begin{enumerate}[label=(\roman*)]
-\item \emph{FM collisions}: distinct moving points
- $z_i \to z_j$, encoded by the usual FM blow-ups;
-\item \emph{Puncture collisions}: moving points $z_i \to p_\alpha$
- approaching a puncture, encoded by logarithmic blow-ups along
- the divisor $D$.
+\item \emph{FM collisions}: clusters $S\subset\{1,\ldots,m\}$,
+ $|S|\geq2$, of moving points collide, encoded by the usual
+ Fulton--MacPherson blow-ups;
+\item \emph{logarithmic approach to the boundary}: moving points
+ approach strata of the fixed divisor~$D$, encoded by toroidal
+ monomial modifications of the Artin fan and their pullbacks to the
+ configuration space, rather than by blow-ups of~$D$ itself.
 \end{enumerate}
 
 \begin{definition}[Logarithmic FM compactification \cite{Mok25}]
@@ -1673,45 +1636,47 @@ modified to account for the \emph{two} types of collisions:
 Let $X$ be a smooth projective curve, $D = p_1 + \cdots + p_r$ an
 effective divisor. The \emph{logarithmic Fulton--MacPherson
 compactification of the fixed pointed curve $(X,D)$},
-$\mathrm{FM}_m(X \mathbin{|} D)$, is a smooth
-compactification of $C_m(X \setminus D)$ with the following
+$\mathrm{FM}_m(X \mathbin{|} D)$, is a compactification of the
+labelled configuration space $C_m(X \setminus D)$ with the following
 properties:
 \begin{enumerate}
 \item There is an open embedding
  $j\colon C_m(X \setminus D) \hookrightarrow
  \mathrm{FM}_m(X \mathbin{|} D)$
  with dense image.
-\item The boundary $\partial \mathrm{FM}_m(X \mathbin{|} D)
- = \mathrm{FM}_m(X \mathbin{|} D) \setminus C_m(X \setminus D)$
- is a normal-crossings divisor with two types of irreducible
- components:
- \begin{itemize}
- \item $D_{ij}^{\mathrm{FM}}$ ($1 \leq i < j \leq m$):
- the locus where $z_i = z_j$ (as in the standard FM space);
- \item $D_{i,\alpha}^{\mathrm{punc}}$ ($1 \leq i \leq m$,
- $1 \leq \alpha \leq r$): the locus where $z_i = p_\alpha$.
- \end{itemize}
- For fixed $(X,D)$, these are the only codimension-$1$ boundary
- components.
-\item The strata of $\mathrm{FM}_m(X \mathbin{|} D)$ are indexed
- by \emph{marked nestings}: pairs $(S, \varphi)$ where
- $S \in \mathrm{Nest}(\{1, \ldots, m\})$ records FM collisions
- and $\varphi\colon \{1, \ldots, m\} \to \{0, 1, \ldots, r\}$
- records puncture attachments ($\varphi(i) = \alpha$ means
- $z_i \to p_\alpha$; $\varphi(i) = 0$ means $z_i$ remains generic).
+\item The boundary
+ $\partial\mathrm{FM}_m(X \mathbin{|} D)$ is a logarithmic
+ normal-crossings boundary in the toroidal sense. Its local strata
+ are indexed by Mok planted-forest combinatorial types
+ \[
+ (\mathcal F_{\mathcal P}\to\mathcal F_{\Sigma_X},\,m;\,
+ T_{v_1},\ldots,T_{v_k}),
+ \]
+ where $(\mathcal P,m)$ is an $m$-marked grid subdivision of the
+ tropicalisation~$\Sigma_X$ of the pair $(X,D)$, and each
+ $T_{v_i}$ is a rooted tree whose legs are the markings supported
+ at the vertex~$v_i$.
+\item The classical FM collision divisors are the special case in
+ which the grid subdivision is trivial and a rooted tree records a
+ collision cluster. The strata over~$D$ are the grid-subdivision
+ part of the same Mok type. Thus pairwise labels $D_{ij}$ and
+ single-point puncture labels $D_{i,\alpha}$ are only local
+ first-order shadows of the full planted-forest stratification.
 \end{enumerate}
 \end{definition}
 
 \begin{remark}[Fixed versus relative log FM spaces]
 \label{rem:log-fm-fixed-vs-relative}
 Definition~\ref{def:log-fm-compactification} keeps the pointed
-curve $(X,D)$ fixed. Its boundary therefore has only the two
-fiberwise strata listed above: FM collisions among moving points
-and puncture collisions with the fixed divisor~$D$. It does not
-contain additional components from degeneration of the underlying
-curve. Those curve-degeneration strata appear only in the
-relative logarithmic Fulton--MacPherson compactification of the
-universal pointed stable family over $\overline{\mathcal{M}}_{g,n}$.
+curve $(X,D)$ fixed. Its boundary records only configuration
+collisions and logarithmic approach to the fixed divisor~$D$,
+organised by Mok planted forests and grid subdivisions. It does
+not contain additional components from degeneration of the
+underlying curve. Those curve-degeneration strata appear only in
+the relative logarithmic Fulton--MacPherson compactification of a
+semistable family, and in this manuscript only conditionally after
+descent to the universal pointed stable family over
+$\overline{\mathcal{M}}_{g,n}$.
 That relative space, not the fixed-curve space of
 Definition~\ref{def:log-fm-compactification}, is the one used in
 the ambient square-zero argument of
@@ -1751,7 +1716,7 @@ genus-$0$ convolution bracket on
 $\mathfrak{g}^{\mathrm{mod}}_\cA$.
 \end{example}
 
-\begin{theorem}[Bar complex on punctured curves; \ClaimStatusProvedHere]
+\begin{theorem}[Bar complex on punctured curves; \ClaimStatusConditional]
 \label{thm:bar-punctured-curve}
 \index{bar complex!punctured curve}
 Let $\cA$ be a chiral algebra on $X$, and let
@@ -1760,25 +1725,27 @@ supported at $p_1, \ldots, p_r$. The bar complex with module
 insertions is:
 \begin{equation}\label{eq:bar-punctured}
 \bar{B}_n(\cA;\, \mathcal{M}_1, \ldots, \mathcal{M}_r;\, X)
-= \Gamma\bigl(\mathrm{FM}_{n+r}(X \mathbin{|} D),\;
- j_* j^*(\cA^{\boxtimes n}
- \boxtimes \mathcal{M}_1 \boxtimes \cdots
- \boxtimes \mathcal{M}_r)
+= \Gamma\bigl(\mathrm{FM}_{n}(X \mathbin{|} D),\;
+ j_* j^*(\cA^{\boxtimes n})
+ \otimes \mathcal{M}_1 \otimes \cdots \otimes \mathcal{M}_r
  \otimes \Omega^n_{\log}\bigr)
 \end{equation}
-where $\Omega^n_{\log} = \Omega^n_{\mathrm{FM}_{n+r}(X|D)}
+where $\Omega^n_{\log} = \Omega^n_{\mathrm{FM}_{n}(X|D)}
 (\log \partial)$ is the sheaf of logarithmic $n$-forms
-on $\mathrm{FM}_{n+r}(X \mathbin{|} D)$.
+on $\mathrm{FM}_{n}(X \mathbin{|} D)$.  The $r$ modules are fixed
+boundary insertions at the divisor $D=\{p_1,\ldots,p_r\}$; they are not
+additional moving configuration points.
 The differential
 $d = d_{\mathrm{FM}} + d_{\mathrm{punc}}$
 has two components:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $d_{\mathrm{FM}}$: residues along FM collision divisors
- $D_{ij}^{\mathrm{FM}}$, extracting the $\cA$-algebra OPE
- \textup{(}exactly as in the unpunctured
- case, Theorem~\textup{\ref{thm:bar-nilpotency-complete})};
-\item $d_{\mathrm{punc}}$: residues along puncture divisors
- $D_{i,\alpha}^{\mathrm{punc}}$, extracting the
+\item $d_{\mathrm{FM}}$: residues along FM collision faces indexed by
+ collision clusters $S$, extracting the iterated $\cA$-algebra OPE
+ \textup{(}with the pairwise faces giving the usual Arnold
+ computation of Theorem~\textup{\ref{thm:bar-nilpotency-complete})};
+\item $d_{\mathrm{punc}}$: logarithmic residues along faces where a
+ moving insertion approaches the fixed boundary component
+ $p_\alpha$, extracting the
  $\cA$-module action $\rho_\alpha\colon \cA \boxtimes
  \mathcal{M}_\alpha \to \Delta_* \mathcal{M}_\alpha$.
 \end{enumerate}
@@ -1786,22 +1753,25 @@ has two components:
 
 \begin{proof}
 The key identity is $d^2 = 0$, which follows from
-the fact that $\mathrm{FM}_{n+r}(X \mathbin{|} D)$ is attached to the
-fixed pointed curve $(X,D)$: its codimension-$1$ boundary has only
-FM collision divisors and puncture divisors, with no curve-degeneration
-faces. The curve-degeneration boundary appears only in the relative
+the fact that $\mathrm{FM}_{n}(X \mathbin{|} D)$ is attached to the
+fixed pointed curve $(X,D)$.  Its boundary has collision faces and log
+approach-to-$D$ faces, but no curve-degeneration faces.  The
+curve-degeneration boundary appears only in the relative
 universal-family space used in
-Theorem~\ref{thm:ambient-d-squared-zero}. Thus only three types of
-double-residue cancellations occur:
+Theorem~\ref{thm:ambient-d-squared-zero}. Thus the double-residue
+cancellations split into the following cases:
 \begin{enumerate}
-\item \emph{FM-FM:} $\operatorname{Res}_{D_{ij}}
- \operatorname{Res}_{D_{jk}}$ terms cancel by the Arnold
+\item \emph{FM-FM:} on a pairwise collision screen the
+ $\operatorname{Res}_{D_{ij}}\operatorname{Res}_{D_{jk}}$ terms cancel
+ by the Arnold
  relation $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge
  \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$, exactly as
  in the unpunctured case
- (Theorem~\ref{thm:bar-nilpotency-complete}).
-\item \emph{FM-puncture:} $\operatorname{Res}_{D_{ij}}
- \operatorname{Res}_{D_{j,\alpha}}$ involves the OPE
+ (Theorem~\ref{thm:bar-nilpotency-complete}).  Nested collision faces
+ are handled by the same boundary-of-boundary cancellation in the
+ Fulton--MacPherson normal-crossings stratification.
+\item \emph{FM-puncture:} the mixed residue where a collision cluster
+ approaches $p_\alpha$ involves the OPE
  $\cA(z_i) \cdot \cA(z_j)$ followed by the module action
  $\rho_\alpha$. The cancellation uses the module axiom:
  the $\cA$-module action is associative, so
@@ -1812,19 +1782,21 @@ double-residue cancellations occur:
  $D_{i,\alpha}^{\mathrm{punc}} \cap D_{j,\beta}^{\mathrm{punc}}$
  is empty when $i = j$ (a single point cannot approach two
  distinct punctures), so these terms vanish. For $i \neq j$,
- the normal-crossings property gives
+ the normal-crossings property gives commutation of the underlying
+ restrictions and anticommutation of the odd residue operators in the
+ boundary differential:
  $\operatorname{Res}_{D_{i,\alpha}}
  \operatorname{Res}_{D_{j,\beta}}
- = \operatorname{Res}_{D_{j,\beta}}
+ =-\operatorname{Res}_{D_{j,\beta}}
  \operatorname{Res}_{D_{i,\alpha}}$
- (residues at disjoint divisors commute).
+ after the orientation/Koszul sign is included.
 \end{enumerate}
 Each case contributes zero to $d^2$, establishing
 $d^2 = 0$.
 \end{proof}
 
 \begin{corollary}[Conformal blocks from punctured bar complex;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:conformal-blocks-punctured-bar}
 The zeroth cohomology of the punctured bar complex recovers
 the space of conformal blocks:
@@ -1854,9 +1826,10 @@ simple modules $L(\Lambda_i)$ at $0, 1, \infty$:
 \[
 \bar{B}_1(\widehat{\mathfrak{g}}_k;\,
 L(\Lambda_1), L(\Lambda_2), L(\Lambda_3);\, \mathbb{P}^1)
-= \Gamma(\mathrm{FM}_4(\mathbb{P}^1 \mathbin{|} \{0,1,\infty\}),\;
-\mathfrak{g} \boxtimes L(\Lambda_1) \boxtimes L(\Lambda_2)
-\boxtimes L(\Lambda_3) \otimes \Omega^1_{\log})
+= \Gamma(\mathrm{FM}_1(\mathbb{P}^1 \mathbin{|} \{0,1,\infty\}),\;
+j_*j^*(\widehat{\mathfrak{g}}_k)
+\otimes L(\Lambda_1)\otimes L(\Lambda_2)\otimes L(\Lambda_3)
+\otimes \Omega^1_{\log})
 \]
 The bar differential extracts:
 \begin{itemize}
@@ -2735,7 +2708,7 @@ and the genus grading $\hbar^g$.
 \end{definition}
 
 \begin{theorem}[dg~Lie structure on the open-closed convolution
-algebra; \ClaimStatusProvedHere]
+algebra; \ClaimStatusConditional]
 \label{thm:oc-convolution-dg-lie}
 \index{modular convolution algebra!open-closed!dg Lie structure}
 The open-closed convolution algebra
@@ -2983,7 +2956,7 @@ the same interval).
 \end{definition}
 
 \begin{theorem}[Modular MC equation with clutching;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:modular-mc-clutching}
 \index{modular Maurer--Cartan equation!with clutching}
 The modular twisting morphism $\Theta_\cA$ of
@@ -3329,7 +3302,7 @@ genus-$0$ boundary and mixed terms):
 \end{remark}
 
 \begin{corollary}[Recovery of the bar-intrinsic MC element;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:recovery-bar-intrinsic}
 \index{bar-intrinsic MC element!recovery from bordered FM}
 In the closed sector $($no boundary modules:
@@ -4937,7 +4910,10 @@ The boundary divisors intersect in \emph{normal crossings}: locally
 like coordinate hyperplanes.
 
 \begin{theorem}[Normal crossings property; \ClaimStatusProvedHere]\label{thm:normal-crossings-verified}
-Let $D_{S_1}, \ldots, D_{S_k}$ be boundary divisors of $\overline{C}_n(X)$ that intersect.
+Let $D_{S_1}, \ldots, D_{S_k}$ be boundary divisors of
+$\overline{C}_n(X)$ that intersect.  Equivalently, the subsets
+$S_i$ form a nest: any two are either disjoint or one contains the
+other.
 Then their intersection $D_{S_1} \cap \cdots \cap D_{S_k}$ has normal crossings, meaning:
 
 There exist local coordinates $(x_1, \ldots, x_d)$ near any point in the intersection such that:
@@ -4946,47 +4922,29 @@ for $i = 1, \ldots, k$.
 \end{theorem}
 
 \begin{proof}[Verification for $n=3$]
-We verify explicitly for $\overline{C}_3(\mathbb{C})$.
+For $\overline{C}_3(\mathbb C)$ the divisors $D_{12}$ and $D_{23}$ do
+not meet as simultaneous codimension-one collision divisors: the
+subsets $\{1,2\}$ and $\{2,3\}$ overlap without being nested.  The
+codimension-two corner over the triple collision is instead represented
+by a nested pair, for example $D_{123}\cap D_{12}$.
 
-\emph{Case: $D_{12} \cap D_{23}$ (all three points collide)}
-
-This is a codimension-2 stratum. We need coordinates where:
-\[D_{12} = \{\epsilon_{12} = 0\}, \quad D_{23} = \{\epsilon_{23} = 0\}\]
-
-We use nested blow-up coordinates. The first collision brings $z_1, z_2$ together;
-the second brings their center toward $z_3$.
-
-Coordinates:
-\begin{align}
-u &= \frac{z_1 + z_2 + z_3}{3} \quad \text{(barycenter)}\\
-\epsilon_{12} &= |z_1 - z_2| \quad \text{(first collision)}\\
-\theta_{12} &= \arg(z_1 - z_2)\\
-\epsilon_{(12)3} &= \left| \frac{z_1 + z_2}{2} - z_3 \right| \quad \text{(second collision)}\\
-\theta_{(12)3} &= \arg\left(\frac{z_1 + z_2}{2} - z_3\right)
-\end{align}
-
-In these coordinates:
-\begin{itemize}
-\item $D_{12} = \{\epsilon_{12} = 0\}$ (coordinate hyperplane)
-\item $D_{23}$ is \emph{not} simply $\{\epsilon_{(12)3} = 0\}$, because we need to account
-for the relationship $z_2 = \frac{z_1 + z_2}{2} - \frac{z_1 - z_2}{2}$.
-\end{itemize}
-
-\emph{Refined coordinates.}
-To make $D_{23}$ also a coordinate hyperplane, we use a different parameterization.
-
-Let $\rho_1 = |z_1 - u|$, $\rho_2 = |z_2 - u|$, $\rho_3 = |z_3 - u|$ be distances from barycenter.
-
-Then define:
-\[\tilde{\epsilon}_{12} = \rho_1 + \rho_2 - 2\rho_3, \quad 
-\tilde{\epsilon}_{23} = \rho_2 + \rho_3 - 2\rho_1\]
-
-These are linear combinations of the $\rho_i$, and near the intersection $D_{12} \cap D_{23}$:
-\[D_{12} = \{\tilde{\epsilon}_{12} = 0\}, \quad D_{23} = \{\tilde{\epsilon}_{23} = 0\}\]
-
-Since $\tilde{\epsilon}_{12}$ and $\tilde{\epsilon}_{23}$ are independent coordinates
-(they span a 2-plane in the $(\rho_1, \rho_2, \rho_3)$ space), the divisors intersect in
-normal crossings. \checkmark
+Use the holomorphic nested blow-up coordinates
+\[
+ z_1-z_3=x_{123}u_1,\qquad
+ z_2-z_3=x_{123}u_2,\qquad
+ u_1-u_2=x_{12}v_{12},
+\]
+on the chart where the first screen records the triple collision and
+the second screen records the collision of the labelled pair inside
+that screen.  Then
+\[
+D_{123}=\{x_{123}=0\},\qquad D_{12}=\{x_{12}=0\}.
+\]
+These are coordinate hyperplanes.  The other nested charts are obtained
+by permuting labels.  The general case is the same building-set
+argument: Fulton--MacPherson boundary divisors meet only for nested or
+disjoint subsets, and the corresponding blow-up scales are independent
+normal coordinates.
 \end{proof}
 
 \begin{remark}[Normal crossings]
@@ -5381,7 +5339,7 @@ This rigidity is what allows the Koszul-duality pair
 $(B_{\mathrm{ch}}(\mathbf H_{\Delta_5}),\Omega_X)$ to descend to a
 \emph{discrete} set of Hecke-coefficient-valued residues, not a
 continuous family -- see Vol.~III,
-Chapter~\ref{ch:k3-chiral-bialgebra-platonic}, \S\ref{sec:bi-based-ran}.
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}, \S\ref{sec:bi-based-ran}.
 \end{remark}
 
 \begin{remark}[Steiner $S(5,8,24)$ rigidity on $\mathrm{Ran}(X)$]
@@ -5568,7 +5526,7 @@ reduction, and the Kuga--Satake mirror is the precise bridge.
 \label{rem:confspaces-drinfeld-factorization-compat}
 The dynamical Siegel $R$-matrix
 $R_{\mathrm{Sieg,dyn}}(u,Z) = R^{\mathrm{rat}}_{\mathrm{Yang}}(u)\cdot
-\theta^{\mathrm{K3}}(u,Z)$ of Vol.~III Theorem~\ref{thm:schiffmann-vasserot-shuffle}
+\theta^{\mathrm{K3}}(u,Z)$ of Vol.~III Theorem~\ref{V3-thm:schiffmann-vasserot-shuffle}
 has two parameters: a spectral parameter $u$ and a Siegel period
 $Z\in\mathbb{H}_2$. The named-curve theorem fixes their geometric
 interpretations: $u$ is the uniformiser on the elliptic curve $E$
@@ -5581,7 +5539,7 @@ lives on a disc of $E^{\mathrm{nod,sm}}_{24}$ near a node; the K3-theta
 factor $\theta^{\mathrm{K3}}(u,Z)$ pulls back the Siegel-parameter
 $\mathcal{D}$-module $\mathcal{L}^{\Delta_5}$ from $\overline{\mathcal{A}_2}$
 via the averaging morphism of
-Vol.~III~\ref{thm:k3-bi-based-factorization}.
+Vol.~III~\ref{V3-thm:k3-bi-based-factorization}.
 \end{remark}
 
 \begin{remark}[$M_{24}$-equivariance via Steiner $S(5,8,24)$]

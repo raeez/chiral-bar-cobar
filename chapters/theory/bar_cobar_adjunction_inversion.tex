@@ -699,8 +699,7 @@ The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a chiral coalgebra
 DG chiral coalgebra ($\dzero^2 = 0$); at genus~$g \geq 1$ with
 $\kappa(\cA) \neq 0$, it is a \emph{curved} DG chiral coalgebra
 ($\dfib^{\,2} = \mcurv{g} \neq 0$; Convention~\ref{conv:higher-genus-differentials}). In the curved case, ordinary
-bar-complex cohomology collapses on the higher-genus bar-object
-surface
+the bar object is coacyclic on the higher-genus coderived surface
 \textup{(}Proposition~\ref{prop:curved-bar-acyclicity}\textup{)},
 and a richer homological algebra is needed.
 
@@ -1054,8 +1053,9 @@ global dimension), the two categories coincide
 (Positselski~\cite[\S4.5]{Positselski11}). When $h \neq 0$, the standard
 cohomological derived category is no longer the right invariant
 for the curved theory; on the higher-genus bar-complex surfaces
-treated here the underlying complexes are acyclic, while
-$D^{\mathrm{co}}$ is nontrivial.
+treated here the curved bar objects are coacyclic in the second-kind
+sense, while $D^{\mathrm{co}}$ retains nontrivial comodule
+information.
 \end{remark}
 
 \subsection{Injective comodules and projective contramodules}
@@ -1327,14 +1327,21 @@ to injective objects and vice versa.
 \subsection{The chiral comodule-contramodule correspondence}
 \label{subsec:chiral-co-contra-correspondence}
 
-\begin{theorem}[Chiral comodule-contramodule correspondence;
-\ClaimStatusProvedHere]
+\begin{theorem}[Chiral comodule-contramodule correspondence under
+product exactness; \ClaimStatusConditional]
 \label{thm:chiral-co-contra-correspondence}
 \phantomsection\label{thm:chiral-positselski-5-2}
 \index{comodule-contramodule correspondence!chiral|textbf}
 \index{Positselski!chiral correspondence|textbf}
 Let $(C, d, h)$ be a conilpotent chiral CDG-coalgebra on a smooth
-curve $X$ with finite-dimensional graded pieces. The derived functors
+curve $X$ with finite-dimensional graded pieces. Assume moreover that
+the chiral adjunction
+$\Phi_C^{\mathrm{ch}}\dashv\Psi_C^{\mathrm{ch}}$ preserves the
+second-kind acyclic generators in the required directions:
+$\Phi_C^{\mathrm{ch}}$ sends product-generated contraacyclic objects
+to coacyclic comodules, and $\Psi_C^{\mathrm{ch}}$ sends
+sum-generated coacyclic objects to contraacyclic contramodules. Then
+the derived functors
 \begin{align*}
 \mathbb{L}\Phi_C^{\mathrm{ch}}\colon
 D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
@@ -1416,19 +1423,15 @@ contraacyclic CDG-contramodules to coacyclic CDG-comodules, and
 $\Psi_C^{\mathrm{ch}}$ maps coacyclic CDG-comodules to
 contraacyclic CDG-contramodules.
 
-For $\Phi_C^{\mathrm{ch}}$: since $\Phi_C^{\mathrm{ch}}$ is a
-left adjoint, it preserves (all) colimits, in particular coproducts
-and cokernels. A contraacyclic CDG-contramodule is built from
-totalizations of exact triples and direct products. Now,
-$\Phi_C^{\mathrm{ch}}$ preserves exact triples (being a left adjoint
-of an exact functor, hence right exact; and by
-Lemma~\ref{lem:Phi-Psi-properties}(d) it sends projective
-contramodules to injective comodules, so the left derived functor
-is exact). The image of a totalization under $\Phi_C^{\mathrm{ch}}$
-is a totalization, and the image of a direct product is computed
-using the cofree resolution from Step~2. Thus
-$\Phi_C^{\mathrm{ch}}$ preserves contraacyclic $\to$ coacyclic.
-The argument for $\Psi_C^{\mathrm{ch}}$ is dual.
+For $\Phi_C^{\mathrm{ch}}$, exact triples are preserved by
+Lemma~\ref{lem:Phi-Psi-properties}(d) after passing to the derived
+functor on projective contramodule resolutions. The remaining
+second-kind point is not formal from left-adjointness: contraacyclic
+objects are generated using direct products. This is exactly the
+product-exactness hypothesis in the statement. Under that hypothesis
+$\Phi_C^{\mathrm{ch}}$ sends contraacyclic objects to coacyclic
+objects. The dual sum/product assertion for $\Psi_C^{\mathrm{ch}}$
+is the second half of the same hypothesis.
 
 \emph{Step~5: Conclusion.}
 Combining Steps~3 and~4: $\mathbb{L}\Phi_C^{\mathrm{ch}}$ and
@@ -1449,7 +1452,10 @@ to the full compactly generated category
 
 \begin{remark}[Hypotheses]\label{rem:co-contra-hypotheses}
 The two raw hypotheses are conilpotency and finite-type grading. They
-hold on the finite-type conilpotent bar-coalgebra surface. They do not
+hold on the finite-type conilpotent bar-coalgebra surface. The
+additional second-kind hypothesis is product/sum exactness of the
+chiral co/contra adjunction; it is automatic only after it is checked
+in the chosen finite or completed ambient. The hypotheses do not
 hold for every standard chiral algebra as a raw direct-sum statement:
 Virasoro and principal $\mathcal W$-algebras require the
 weight-completed / pro-conilpotent replacement of
@@ -1468,15 +1474,17 @@ on additional finite-type or genus-$0$ bar-dual surfaces may one
 rewrite the target in terms of ordinary modules over an explicit dual
 algebra.
 
-\begin{theorem}[Positselski equivalence for the chiral bar coalgebra;
-\ClaimStatusProvedHere]
+\begin{theorem}[Positselski equivalence for the finite-type chiral bar
+coalgebra; \ClaimStatusConditional]
 \label{thm:positselski-chiral-proved}
 \index{Positselski!chiral equivalence|textbf}
 \index{comodule-contramodule correspondence!chiral Koszul|textbf}
-For a Koszul chiral algebra $\cA$ on a smooth curve $X$ with
-curved bar complex $C = \bar{B}^{\mathrm{ch}}(\cA)$
-(a conilpotent chiral CDG-coalgebra by
-Example~\textup{\ref{ex:bar-as-CDG}}), there is an equivalence of
+For a Koszul chiral algebra $\cA$ on a smooth curve $X$ whose
+chiral bar coalgebra $C = \bar{B}^{\mathrm{ch}}(\cA)$ lies in the
+finite-type conilpotent CDG surface and satisfies the product/sum
+exactness hypothesis of
+Theorem~\textup{\ref{thm:chiral-co-contra-correspondence}}, there is
+an equivalence of
 triangulated categories:
 \begin{equation}\label{eq:positselski-chiral-proved}
 D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{conil,\,ch}})
@@ -1499,6 +1507,9 @@ with~$\cA^!$, and one recovers the genus-$0$ module Koszul duality of
 Theorem~\textup{\ref{thm:e1-module-koszul-duality}}.
 At genus~$g \geq 1$, the coderived/contraderived categories are the
 correct ambient categories for this bar-coalgebra comparison.
+For class-$\mathsf M$ raw direct-sum bar coalgebras this theorem is
+not the applicable surface; the completed conditional comparison is
+Theorem~\textup{\ref{thm:chiral-positselski-weight-completed}}.
 \end{theorem}
 
 \begin{proof}
@@ -1507,10 +1518,9 @@ $C = \bar{B}^{\mathrm{ch}}(\cA)$.
 
 \emph{Conclusion.}
 The hypotheses of Theorem~\ref{thm:chiral-co-contra-correspondence}
-are satisfied: $\bar{B}^{\mathrm{ch}}(\cA)$ is conilpotent
-(Theorem~\ref{thm:coalgebra-via-NAP}(4)) with finite-dimensional
-graded pieces (since $\cA$ is finitely generated with
-finite-dimensional conformal weight spaces). The equivalence
+are precisely the hypotheses imposed in the statement: $C$ is
+conilpotent, finite type, and product/sum exact for the chiral
+co/contra adjunction. The equivalence
 $D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
 \simeq D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
 of Theorem~\ref{thm:chiral-co-contra-correspondence} therefore yields
@@ -1526,7 +1536,7 @@ is recorded only on that bar-dual surface.
 \end{proof}
 
 \begin{theorem}[Flat finite-type reduction on the completed-dual side;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:full-derived-module-equiv-proved}
 \index{derived category!flat finite-type reduction|textbf}
 \index{Positselski!derived reduction on completed dual|textbf}
@@ -1701,7 +1711,8 @@ explicit contracting homotopy $h$ with $[d,h]=\mathrm{id}-p$
 the pole-filtered bar pieces admit a Mittag--Leffler witness; the
 pro-object/$J$-adic/filtered-completed ambients of
 Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}} supply
-that witness for the class-$\mathsf{M}$ strand
+that witness only under their continuous tower hypotheses for the
+class-$\mathsf{M}$ strand
 \textup{(}$\mathrm{Vir}_c$ generic, principal $\cW_N$
 non-critical\textup{)}, while the class-$\mathsf{L}$ strand
 \textup{(}Heisenberg, Kac--Moody at non-critical level, free fermions,
@@ -1718,7 +1729,7 @@ $\bar B^{\mathrm{ch}}(\cA)$ is an $E_1$-coassociative chiral coalgebra,
 not an $\mathsf{SC}^{\mathrm{ch,top}}$-coalgebra;
 $\mathsf{SC}^{\mathrm{ch,top}}$ emerges only
 on the derived-centre pair $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\cA)$ of
-Chapter~\ref{chap:chiral-center-theorem}.
+Section~\ref{sec:chiral-center-theorem}.
 
 The five named open problems of the preface localise on specific
 clauses of Theorem~\ref{thm:bar-cobar-platonic}:
@@ -1727,10 +1738,10 @@ extends clause~(4) on the non-critical Koszul lane, conditional on the
 coherence equation $[m,G]=\partial_z$; \textup{(ii)}~general
 topologization extends (i) to $\mathrm{Vir}_c$ and $\cW_N$ on the
 class-$\mathsf M$ stratum, pending the bulk BRST complex;
-\textup{(iii)}~MC5 class $\mathsf M$ at chain level is
+\textup{(iii)}~MC5 class $\mathsf M$ at chain level is conditional on
 Theorem~\textup{\ref{thm:mc5-class-m-chain-level-pro-ambient}} in the
-pro-ambient; the lift to the bounded direct-sum ambient is the open
-problem, compatible with clause~(2) \textup{(}coderived off-Koszul
+pro-ambient; a lift to the bounded direct-sum ambient is not available,
+compatible with clause~(2) \textup{(}coderived off-Koszul
 lane\textup{)}; \textup{(iv)}~Koszul freeness is the converse of
 clause~(1) \textup{(}D-module purity $\Rightarrow$ Koszul\textup{)};
 \textup{(v)}~the Baxter constraint is an open refinement of the
@@ -2639,7 +2650,7 @@ sequence.
 
 \subsection{Spectral sequence construction}
 
-\begin{theorem}[Bar-cobar spectral sequence; \ClaimStatusProvedHere]\label{thm:bar-cobar-spectral-sequence}
+\begin{theorem}[Bar-cobar spectral sequence; \ClaimStatusConditional]\label{thm:bar-cobar-spectral-sequence}
 \label{thm:koszul-spectral-sequence}
 \textup{[Regime: square-zero total differential on the filtered
 bar-cobar complex.]}
@@ -2699,7 +2710,7 @@ By standard spectral sequence theory (Weibel \cite{Weibel94}, Chapter 5), this e
 \[E_\infty^{p,q} = \text{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A})))\]
 \end{proof}
 
-\begin{theorem}[Collapse at \texorpdfstring{$E_2$}{E2}; \ClaimStatusProvedHere]\label{thm:spectral-sequence-collapse}
+\begin{theorem}[Collapse at \texorpdfstring{$E_2$}{E2}; \ClaimStatusConditional]\label{thm:spectral-sequence-collapse}
 \textup{[Regime: quadratic, Koszul locus, square-zero total differential
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
@@ -2753,7 +2764,7 @@ or when the curvature collapses.
 
 \subsection{Convergence at all genera}
 
-\begin{theorem}[Genus-graded convergence; \ClaimStatusProvedHere]\label{thm:genus-graded-convergence}
+\begin{theorem}[Genus-graded convergence; \ClaimStatusConditional]\label{thm:genus-graded-convergence}
 \textup{[Regime: curved-central on the Koszul locus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
@@ -2762,7 +2773,9 @@ Koszul-lane hypotheses of
 Theorem~\ref{thm:bar-cobar-inversion-qi}. The bar-cobar inversion
 $\psi: \Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$
 converges at each genus $g$, and the full genus-graded sum converges in the
-$\hbar$-adic completion.
+$\hbar$-adic completion.  Analytic convergence for non-formal
+$\hbar$ is conditional on the corresponding all-genus growth bound for
+the moduli-space integrals.
 
 More precisely:
 \begin{enumerate}
@@ -2776,8 +2789,10 @@ More precisely:
  
 \item \emph{Genus series:}
  \[\psi = \sum_{g=0}^\infty \hbar^{2g-2} \psi_g\]
- converges in the $\hbar$-adic completion for $|\hbar| < R$ (radius determined 
- by growth of moduli spaces)
+defines an element of the formal $\hbar$-adic completion.  If the
+genus-$g$ norms of the corrected counits satisfy an exponential bound
+\(\|\psi_g\| \leq C R^{-g}\), then the same series converges
+analytically for \(|\hbar|^2 < R\).
 \end{enumerate}
 \end{theorem}
 
@@ -2871,7 +2886,7 @@ In this completion, the series converges unconditionally.
 
 \subsection{The counit of the adjunction}
 
-\begin{proposition}[Counit is quasi-isomorphism; \ClaimStatusProvedHere]\label{prop:counit-qi}
+\begin{proposition}[Counit is quasi-isomorphism; \ClaimStatusConditional]\label{prop:counit-qi}
 The counit of the bar-cobar adjunction:
 \[\epsilon: \bar{B}(\Omega(\mathcal{C})) \longrightarrow \mathcal{C}\]
 for a chiral coalgebra $\mathcal{C}$ is also a quasi-isomorphism (dual statement).
@@ -2892,7 +2907,7 @@ is also a quasi-isomorphism.
 
 \subsection{Functoriality of the quasi-isomorphism}
 
-\begin{theorem}[Functoriality of bar-cobar inversion; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-functorial}
+\begin{theorem}[Functoriality of bar-cobar inversion; \ClaimStatusConditional]\label{thm:bar-cobar-inversion-functorial}
 % NOTE: removed duplicate label thm:cobar-functorial which conflated
 % functoriality of the inversion qi with functoriality of the cobar functor.
 The quasi-isomorphism $\psi: \Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$ 
@@ -3076,7 +3091,7 @@ Ring~1 of the monograph across all four regimes: quadratic,
 curved-central, filtered-complete, and programmatic.
 \end{remark}
 
-\begin{corollary}[Completed derived equivalence; \ClaimStatusProvedHere]
+\begin{corollary}[Completed derived equivalence; \ClaimStatusConditional]
 \label{cor:completed-derived-equivalence}
 \index{derived equivalence!completed}
 Let $\cA \in \CompCl(\Fft)$ be a strong completion tower on a
@@ -3189,11 +3204,12 @@ $B_\kappa$) is the same.}
 satisfies these conditions precisely on the Koszul locus.
 
 \begin{theorem}[Barr--Beck--Lurie characterization of chiral Koszulness;
-\ClaimStatusProvedHere]\label{thm:barr-beck-lurie-koszulness}
+\ClaimStatusConditional]\label{thm:barr-beck-lurie-koszulness}
 \index{Koszulness!Barr--Beck--Lurie characterization}
 \index{bar-cobar adjunction!Barr--Beck--Lurie conditions}
 Let $\cA$ be a chiral algebra on a smooth curve~$X$ satisfying the
-standing hypotheses of Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}.
+strict Koszul-lane hypotheses of Theorems~\textup{\ref{thm:koszul-reflection}}
+and~\textup{\ref{thm:higher-genus-inversion}}.
 The bar-cobar adjunction $B_\kappa \dashv \Omega_\kappa$ satisfies the
 Barr--Beck--Lurie conditions:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -3223,7 +3239,8 @@ resolution $G^{\bullet+1}(M)$.
 \begin{proof}
 \emph{Conservativity.}
 On the Koszul locus, bar-cobar inversion
-(Theorem~\ref{thm:bar-cobar-inversion-qi}) gives that the counit
+(Theorem~\ref{thm:koszul-reflection}, reconstruction clause, together
+with Theorem~\ref{thm:higher-genus-inversion}) gives that the counit
 $\varepsilon_\cA \colon \Omega_\kappa(B_\kappa(\cA)) \xrightarrow{\sim} \cA$
 is a quasi-isomorphism for every Koszul~$\cA$.
 Suppose $f\colon \cA \to \cA'$ is a morphism such that
@@ -3689,14 +3706,15 @@ $\omega$ is perfect at each~$n$, so the pro-complete
 pairing on~$\fg = \varprojlim_n \fg/F_n$ is perfect.
 \end{proof}
 
-\begin{corollary}[Unconditional Lagrangian criterion for the
+\begin{corollary}[Lagrangian criterion for the
 standard landscape]
 \label{cor:lagrangian-unconditional}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{Koszulness!Lagrangian criterion unconditional}
 \index{Lagrangian!unconditional equivalence}
 Under hypotheses \textup{(P1)--(P3)}, and on the Koszul locus to
-which Theorem~\ref{thm:bar-cobar-inversion-qi} applies, the Lagrangian criterion
+which Theorems~\ref{thm:koszul-reflection} and
+\ref{thm:higher-genus-inversion} apply, the Lagrangian criterion
 \textup{(}item~\textup{(xi)} of the meta-theorem,
 Theorem~\textup{\ref{thm:koszul-equivalences-meta})} is an
 unconditional equivalence: $\cA$ is chirally Koszul if and only if
@@ -3706,7 +3724,8 @@ space~$\mathcal{M}_{\mathrm{comp}}$.
 
 In particular, this applies unconditionally to every algebra in the
 standard landscape at the non-critical, non-degenerate levels for
-which Theorem~\ref{thm:bar-cobar-inversion-qi} applies:
+which Theorems~\ref{thm:koszul-reflection} and
+\ref{thm:higher-genus-inversion} apply:
 Heisenberg at $k \neq 0$, affine Kac--Moody $V_k(\fg)$ at
 $k \neq -h^\vee$, Virasoro at generic~$c$, principal
 $\mathcal{W}$-algebras at non-critical level, and all free-field
@@ -3716,7 +3735,8 @@ families $bc$, $\beta\gamma$.
 \begin{proof}
 We verify the shifted-symplectic hypotheses and then prove the two
 implications directly on the Koszul surface covered by
-Theorem~\ref{thm:bar-cobar-inversion-qi}.
+Theorems~\ref{thm:koszul-reflection} and
+\ref{thm:higher-genus-inversion}.
 
 \smallskip\noindent
 \emph{(1) Formal moduli problem with $(-1)$-shifted symplectic
@@ -4429,7 +4449,7 @@ series. The differential $d_1$ on the $E_1$-page extracts the
 differentials $d_r$ capture \emph{higher-order corrections} from
 $r$-fold collisions.
 
-\begin{proposition}[Convergence criterion; \ClaimStatusProvedElsewhere{}
+\begin{proposition}[Convergence criterion; \ClaimStatusConditional{}
 Theorems~\ref{thm:spectral-sequence-collapse}
 and~\ref{thm:bar-cobar-inversion-qi}]
 \label{prop:log-convergence}
@@ -4493,7 +4513,7 @@ to sums. For the categorical logarithm, this is the content of the
 complementarity theorem.
 
 \begin{proposition}[Additivity of the categorical logarithm;
-\ClaimStatusProvedElsewhere{} Theorem~\ref{thm:quantum-complementarity-main}]
+\ClaimStatusConditional{} Theorem~\ref{thm:quantum-complementarity-main}]
 \label{prop:log-additivity}
 Let $(\cA, \cA^!)$ be a Koszul pair. The quantum corrections to the
 bar complex satisfy
@@ -5366,7 +5386,7 @@ $H^2_{\mathrm{cyc,prim}}(\cA) = 0$.
 
 \begin{corollary}[Drinfeld--Sokolov reductions remain one-channel in
 the semisimple admissible sector;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:ds-not-first-frontier}
 \index{Drinfeld--Sokolov reduction!scalar rigidity}
 Let $k$ be admissible and $f \in \mathfrak{g}$ nilpotent. Then the
@@ -5411,7 +5431,7 @@ multiplicative genus factoring through the modular characteristic must
 take the universal form.
 
 \begin{theorem}[Classification of scalar genera \textup{(}uniform-weight\textup{)};
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:classification-scalar-genera}
 \index{scalar logarithm!classification}
 \index{multiplicative genus!scalar}
@@ -5483,7 +5503,7 @@ the deformation-theoretic level into five steps, each resolving a
 na\"ive expectation.
 
 \begin{theorem}[Five-step hierarchy of the categorical logarithm;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:platonic-hierarchy-log}
 \index{categorical logarithm!five-step hierarchy}
 Assume the Whitehead decomposition and the scalar genus formula
@@ -7105,6 +7125,6 @@ $\hbar^2 = -1/\ell$, this pins
 \]
 The identity is simultaneously the curvature-cancellation, strictness,
 and Bruinier 2002 Heegner-reciprocity condition. See Vol.~III,
-Chapter~\ref{ch:k3-chiral-bialgebra-platonic},
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
 \S\ref{sec:humbert-monodromy-order-8}.
 \end{remark}

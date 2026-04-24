@@ -1,8 +1,14 @@
 \documentclass[11pt]{memoir}
 \usepackage{raeez-math-template}
 
+% Compatibility for imported fragments that still use old-style \rm in math.
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+
 % Orientation line used in §6 (keeps the existing symbol but defines it cleanly).
 \newcommand{\orline}[1]{\mathrm{or}_{#1}}
+
+% Lightweight wrappers used by chapter-opening synthesis passages.
+\newenvironment{overture}{\begin{quote}\itshape}{\end{quote}}
 
 % ==========================================
 % MATH OPERATORS
@@ -21,6 +27,10 @@
 \DeclareMathOperator{\Free}{Free}
 \DeclareMathOperator{\Cofree}{Cofree}
 \DeclareMathOperator{\Spec}{Spec}
+\providecommand{\HS}{\operatorname{HS}}
+\providecommand{\obs}{\operatorname{obs}}
+\providecommand{\RMap}{\operatorname{RMap}}
+\providecommand{\Pro}{\operatorname{Pro}}
 
 % ==========================================
 % OPERADS — sans-serif per Loday--Vallette convention
@@ -64,6 +74,8 @@
 \newcommand{\CoAlg}{\cat{CoAlg}}
 \newcommand{\Op}{\cat{Op}}
 \newcommand{\DGCat}{\cat{DGCat}}
+\providecommand{\dgAlg}{\mathsf{dgAlg}}
+\providecommand{\dgCoAlg}{\mathsf{dgCoAlg}}
 
 % D-modules and sheaves
 \newcommand{\DMod}{\cat{D}\text{-}\cat{Mod}}
@@ -72,6 +84,7 @@
 \newcommand{\omX}{\omega_X}
 \newcommand{\IndCoh}{\cat{IndCoh}}
 \newcommand{\QCoh}{\cat{QCoh}}
+\providecommand{\Coh}{\operatorname{Coh}}
 
 % ==========================================
 % COMMON SYMBOLS
@@ -85,6 +98,8 @@
 \newcommand{\cV}{\mathcal{V}}
 \newcommand{\cW}{\mathcal{W}}
 \newcommand{\cI}{\mathcal{I}}
+\providecommand{\cAr}{\mathcal{A}^{\mathrm{Arn}}}
+\providecommand{\vac}{\mathbf{1}}
 \newcommand{\Sh}{\operatorname{Sh}}
 \newcommand{\barB}{\overline{B}}
 \newcommand{\barPi}{\overline{\Pi}}
@@ -113,6 +128,70 @@
 % ==========================================
 \newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})} % W-algebra W_k(g)
 \newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}} % affine Kac--Moody
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Hilb}{\operatorname{Hilb}}
+\providecommand{\Fun}{\operatorname{Fun}}
+\providecommand{\DK}{\mathrm{DK}}
+\providecommand{\tr}{\operatorname{tr}}
+\providecommand{\fu}{\mathfrak{u}}
+\providecommand{\f}{\mathfrak{f}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\VOA}{\mathrm{VOA}}
+\providecommand{\Zmod}{\mathbb{Z}/}
+\providecommand{\str}{\mathrm{str}}
+\providecommand{\sBer}{\operatorname{sBer}}
+\providecommand{\Ainfty}{\mathsf{A}_{\infty}}
+\providecommand{\Linfty}{\mathsf{L}_{\infty}}
+\providecommand{\Assch}{\mathrm{Ass}^{\mathrm{ch}}}
+\providecommand{\poly}{\mathrm{poly}}
+\providecommand{\Muk}{\mathrm{Muk}}
+\providecommand{\qt}{\mathrm{qt}}
+\providecommand{\slnn}[1]{\mathfrak{sl}_{#1}}
+\providecommand{\fpsl}{\mathfrak{psl}}
+\providecommand{\fosp}{\mathfrak{osp}}
+\providecommand{\CP}{\mathbb{CP}}
+\providecommand{\xlongequal}[2][]{\mathrel{\overset{#2}{\underset{#1}{=}}}}
+\providecommand{\cref}[1]{\ref{#1}}
+\providecommand{\Cref}[1]{\ref{#1}}
+\providecommand{\kmax}{k_{\max}}
+\providecommand{\Dco}{D^{\mathrm{co}}}
+\providecommand{\der}{\mathrm{der}}
+\providecommand{\ch}{\mathrm{ch}}
+\providecommand{\Zder}{\operatorname{Z}_{\mathrm{der}}}
+\providecommand{\Zderch}{\operatorname{Z}^{\mathrm{ch}}_{\mathrm{der}}}
+\providecommand{\ord}{\mathrm{ord}}
+\providecommand{\fact}{\mathrm{fact}}
+\providecommand{\aug}{\mathrm{aug}}
+\providecommand{\comp}{\mathrm{comp}}
+\providecommand{\conil}{\mathrm{conil}}
+\providecommand{\co}{\mathrm{co}}
+\providecommand{\AMlocG}{\mathrm{AM}_g}
+\providecommand{\AMlocFour}{\mathrm{AM}_4}
+\providecommand{\AMlocSix}{\mathrm{AM}_6}
+\providecommand{\AbarG}{\overline{\mathcal{A}_g}}
+\providecommand{\AbarFour}{\overline{\mathcal{A}_4}}
+\providecommand{\AMtightG}{\mathsf{AM}^{\mathrm{tight}}_g}
+\providecommand{\AMtightGinf}{\mathsf{AM}^{\mathrm{tight}}_{\infty}}
+\providecommand{\AMtightSix}{\mathsf{AM}^{\mathrm{tight}}_6}
+\providecommand{\AMtightSeven}{\mathsf{AM}^{\mathrm{tight}}_7}
+\providecommand{\AMtightEight}{\mathsf{AM}^{\mathrm{tight}}_8}
+\providecommand{\MbarSix}{\overline{\mathcal{M}}_6}
+\providecommand{\Schottky}{\mathsf{Sch}}
+\providecommand{\Sps}{D^{\mathrm{Chen}}}
+\providecommand{\Obs}{\mathrm{Obs}}
+\providecommand{\Gsuper}{\mathbb{G}_{\mathrm{super}}}
+\providecommand{\sSer}{\mathbb{S}_{\mathrm{CY}_3}}
+\providecommand{\Tpar}{\mathbb{T}^{\mathrm{par}}}
+\providecommand{\Lspin}{L^{\mathrm{spin}}}
+\providecommand{\Humbert}{\mathcal{H}}
+\providecommand{\NLdiv}{\mathrm{NL}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\Confnord}{\Conf_n^{\mathrm{ord}}}
+\providecommand{\Confcomp}{\overline{\mathrm{Conf}}}
+\providecommand{\ChirCoalg}{\mathsf{ChirCoalg}}
+\providecommand{\itemA}{\item}
+\providecommand{\qedlem}{\qed}
+\providecommand{\ClaimIndependentlyVerified}[1][]{\textnormal{[independently verified]}}
 
 % ==========================================
 % NOTATION CONSISTENCY DECLARATIONS
@@ -127,6 +206,7 @@
 \providecommand{\secquant}{\Gamma}
 \providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
 \providecommand{\GL}{\mathrm{GL}}
+\providecommand{\SL}{\mathrm{SL}}
 \providecommand{\Imag}{\operatorname{Im}}
 % ==========================================
 \newcommand{\barBgeom}{\bar{\mathbf{B}}}
@@ -159,6 +239,7 @@
 \newcommand{\Definfmod}{\operatorname{Def}_{\infty}^{\mathrm{mod}}} % homotopy-invariant modular deformation object
 \newcommand{\Gmod}{\mathcal{G}^{\mathrm{mod}}} % modular graph coefficient algebra
 \newcommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}} % modular convolution dg Lie algebra of A
+\providecommand{\gAord}{\mathfrak{g}_{\cA}^{\mathrm{ord}}}
 \newcommand{\Perbr}{\operatorname{Per}} % derived scalar period
 \newcommand{\Ydg}{\mathcal{Y}^{\mathrm{dg}}} % dg-shifted Yangian
 \newcommand{\QGspec}{\operatorname{QG}_{\mathrm{spec}}} % spectral quantum group
@@ -169,7 +250,7 @@
 \newcommand{\LCA}{\mathsf{LCA}} % category of Lie conformal algebras
 \newcommand{\JacF}[2]{J_{#1,#2}} % one-step Jacobi coalgebra J_{F,p}
 
-\title{\textit{Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves}\\[0.5em]\large Volume~1: $E_1$ Chiral Algebras and Modular Koszul Duality}
+\title{\texorpdfstring{\textit{Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves}\\[0.5em]\large Volume~1: $E_1$ Chiral Algebras and Modular Koszul Duality}{Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves. Volume 1: E1 Chiral Algebras and Modular Koszul Duality}}
 \author{Raeez Lorgat}
 \date{Draft, \today}
  
@@ -190,6 +271,7 @@
 \expandafter\endinput
 \fi
 \begin{document}
+\hypersetup{pageanchor=false}
 
 % Fallback macros for imported chapter fragments.
 % Operads, categories, and D-module macros are now in the preamble;
@@ -364,14 +446,8 @@ The local seed is the logarithmic form
 \eta_{12}=d\log(z_1-z_2)
 \]
 on the configuration space of two points of a smooth algebraic
-curve~$X$. On three points it satisfies Arnold's relation
-\[
-\eta_{12}\wedge\eta_{23}
-+\eta_{23}\wedge\eta_{31}
-+\eta_{31}\wedge\eta_{12}=0.
-\]
-This identity is the nilpotence mechanism of the ordered chiral bar
-complex
+curve~$X$. On three points Arnold's relation is the nilpotence
+mechanism of the ordered chiral bar complex
 \[
 \barB^{\mathrm{ord}}_X(\cA)=T^c(s^{-1}\bar\cA),
 \qquad |s^{-1}v|=|v|-1,
@@ -386,11 +462,34 @@ equation
 \[
 D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0
 \]
-in the modular convolution $L_\infty$-algebra. Thus the particular
-calculus of two colliding points contains the general object:
-configuration-space geometry selects the Borcherds identity, the
-Borcherds identity makes the bar differential square to zero, and the
-modular compactification records the higher-genus curvature.
+in the modular convolution $L_\infty$-algebra. Configuration-space
+geometry selects the Borcherds identity; the Borcherds identity makes
+the bar differential square to zero; the modular compactification
+records the higher-genus curvature.
+
+The logarithmic boundary refines this curvature before it is averaged.
+For a simple-normal-crossing pair $(X,D)$, Mok's logarithmic
+Fulton--MacPherson spaces label boundary strata by planted forests.
+For the relative universal family the corresponding boundary type has
+refined degree
+\[
+\mu=(g,r;\,b,s,\ell,c,p),
+\]
+where $b$ counts bar/Hamiltonian contractions, $s$ separating nodes,
+$\ell$ non-separating nodes, $c$ relative Mok crossings, and $p$ pure
+planted-forest depth. The full logarithmic codimension is
+$s+\ell+c+p$; the coarse computational tridegree records only
+$(g,r,c+p)$. Mok supplies the geometric strata,
+codimensions, and degeneration formula. The residue-pushforward,
+orientation-line, and coassociativity package that turns those strata
+into a chain cooperad is a conditional structure. Under this
+filtration the modular bar--cobar pair is filtered and, on associated
+gradeds,
+\[
+\operatorname{gr}_F\Omega\barB^{\mathrm{mod},\log}(\cA)
+\;\cong\;
+\Omega\bigl(\operatorname{gr}_F\barB^{\mathrm{mod},\log}(\cA)\bigr).
+\]
 
 The ordered bar is the primitive object. Averaging ordered
 configurations is the unique information-loss operation: passing to
@@ -406,18 +505,25 @@ The degree-two ordered residue is the classical $r$-matrix
 $r_\cA(z)$; after averaging it becomes the scalar characteristic
 $\kappa(\cA)$. At genus $g\ge1$ the ordered fibre differential has
 curvature $(d^{\mathrm{ord}}_{\mathrm{fib}})^2
-=r_\cA(z)\cdot\omega_g$, whose scalar shadow is the Hodge class
-$\kappa(\cA)\lambda_g$ on $\overline{\cM}_g$.
+=r_\cA(z)\cdot\omega_g$. Its scalar-diagonal, uniform-weight shadow is
+the Hodge class $\kappa(\cA)\lambda_g$ on $\overline{\cM}_g$; the full
+all-weight free energy retains the cross-channel correction measured
+by Theorem~D.
 
 Five theorem packages are the invariant content that survives this
 ordered-to-symmetric passage. Theorem~A is the chiral bar--cobar
 adjunction in its chain-level and factorisation-$\infty$ lanes.
 Theorem~B is bar--cobar inversion on the Koszul locus together with
 the weight-completed coderived Positselski form off the strict lane.
-Theorem~C is derived-centre complementarity; on the canonical
-witnesses its scalar ceiling is
+Theorem~C is derived-centre complementarity. On the Vol~I classical
+witnesses the scalar ceiling is
 \[
 \kappa(\cA)+\kappa(\cA^!)\in
+\{0,13,250/3,98/3\}.
+\]
+The canonical cross-volume bucket adjoins the Vol~III $\mathsf B$-row
+Mukai witness $K^\kappa=2c_+(\mathrm{Mukai}(K3))=8$, giving
+\[
 \{0,8,13,250/3,98/3\}.
 \]
 Theorem~D is the genus tower
@@ -426,11 +532,11 @@ F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}
 +\delta F_g^{\mathrm{cross}}(\cA),
 \]
 with $\delta F_g^{\mathrm{cross}}=0$ on the uniform-weight lane.
-Theorem~H is chiral Hochschild concentration in degrees
-$\{0,1,2\}$ on the proved Koszul/generic surface. Holography,
-fingerprint completeness, the seven faces of $r(z)$, and the
-Calabi--Yau-to-chiral comparison are reconstruction and comparison
-surfaces built on this five-theorem spine.
+Theorem~H is the curve-level chiral Hochschild theorem:
+concentration in degrees $\{0,1,2\}$ on the proved Koszul/generic
+surface. Holography, fingerprint completeness, the seven faces of
+$r(z)$, and the Calabi--Yau-to-chiral comparison are reconstruction
+and comparison surfaces built on this five-theorem spine.
 
 The standard landscape is read by the same residue. The averaging
 shadow stratifies the principal families into
@@ -490,6 +596,8 @@ chiral Koszulness, modular twisting morphism,
 graphwise cocomposition, configuration spaces.
 
 \tableofcontents
+\clearpage
+\hypersetup{pageanchor=true}
 
 \section*{Notation and conventions}
 Throughout this manuscript:
@@ -1427,6 +1535,181 @@ the engine points.
 \input{chapters/theory/existence_criteria}
 
 % ======================================================================
+% CROSS-VOLUME PHANTOM LABELS
+%
+% These anchors resolve prefixed references to real targets in Vol II and
+% Vol III. They are not theorem statements; each source label below was
+% verified against the corresponding external volume before retargeting.
+% ======================================================================
+% --- V2 verified external anchors ---
+\phantomsection\label{V2-app:q-conventions-v2}% % V2:app:q-conventions-v2
+\phantomsection\label{V2-ch:grt-seven-faces}% % V2:ch:grt-seven-faces
+\phantomsection\label{V2-conj:3dg-off-koszul-bridge}% % V2:conj:3dg-off-koszul-bridge
+\phantomsection\label{V2-cor:celestial-holography-recovers-moonshine}% % V2:cor:celestial-holography-recovers-moonshine
+\phantomsection\label{V2-cor:rosetta-heisenberg-projections}% % V2:cor:rosetta-heisenberg-projections
+\phantomsection\label{V2-cor:thqg-I-heisenberg-selberg}% % V2:cor:thqg-I-heisenberg-selberg
+\phantomsection\label{V2-def:cmb-combined-cel-algebra}% % V2:def:cmb-combined-cel-algebra
+\phantomsection\label{V2-def:face-space}% % V2:def:face-space
+\phantomsection\label{V2-def:oc-factorization-category}% % V2:def:oc-factorization-category
+\phantomsection\label{V2-eq:molien-weyl-g}% % V2:eq:molien-weyl-g
+\phantomsection\label{V2-item:scope-orbifold}% % V2:item:scope-orbifold
+\phantomsection\label{V2-lem:thqg-X-composition-decay}% % V2:lem:thqg-X-composition-decay
+\phantomsection\label{V2-prop:3dg-stokes-integrality-c24}% % V2:prop:3dg-stokes-integrality-c24
+\phantomsection\label{V2-prop:bv-bar-class-m-weight-completed}% % V2:prop:bv-bar-class-m-weight-completed
+\phantomsection\label{V2-prop:f7-split}% % V2:prop:f7-split
+\phantomsection\label{V2-prop:grt-action-face}% % V2:prop:grt-action-face
+\phantomsection\label{V2-prop:grtfin-casimir}% % V2:prop:grtfin-casimir
+\phantomsection\label{V2-prop:mixed-product-decomposition}% % V2:prop:mixed-product-decomposition
+\phantomsection\label{V2-prop:thqg-X-second-quantization}% % V2:prop:thqg-X-second-quantization
+\phantomsection\label{V2-prop:uch-mellin-shadow}% % V2:prop:uch-mellin-shadow
+\phantomsection\label{V2-prop:wa-f-constant}% % V2:prop:wa-f-constant
+\phantomsection\label{V2-rem:3dg-off-koszul-remaining-conditionals}% % V2:rem:3dg-off-koszul-remaining-conditionals
+\phantomsection\label{V2-rem:anomtop-312-spectrum}% % V2:rem:anomtop-312-spectrum
+\phantomsection\label{V2-rem:anomtop-anomaly-polynomial}% % V2:rem:anomtop-anomaly-polynomial
+\phantomsection\label{V2-rem:bulk-bdry-vol1-averaging}% % V2:rem:bulk-bdry-vol1-averaging
+\phantomsection\label{V2-rem:bulk-categorical}% % V2:rem:bulk-categorical
+\phantomsection\label{V2-rem:cdhg-obs-infty}% % V2:rem:cdhg-obs-infty
+\phantomsection\label{V2-rem:cmb-two-kappa}% % V2:rem:cmb-two-kappa
+\phantomsection\label{V2-rem:e3-topological-scope-map}% % V2:rem:e3-topological-scope-map
+\phantomsection\label{V2-rem:htpo-mukai-direction}% % V2:rem:htpo-mukai-direction
+\phantomsection\label{V2-rem:two-pairings-supertrace-berezinian}% % V2:rem:two-pairings-supertrace-berezinian
+\phantomsection\label{V2-rem:v2-oackd-W15-e1-e2}% % V2:rem:v2-oackd-W15-e1-e2
+\phantomsection\label{V2-rem:v2-oackd-W15-two-param}% % V2:rem:v2-oackd-W15-two-param
+\phantomsection\label{V2-rem:was-6A-6B}% % V2:rem:was-6A-6B
+\phantomsection\label{V2-rem:witten-het-iia-mukai-narain}% % V2:rem:witten-het-iia-mukai-narain
+\phantomsection\label{V2-sec:3dgravvix-supplement}% % V2:sec:3dgravvix-supplement
+\phantomsection\label{V2-sec:bar-cobar-review-supplement}% % V2:sec:bar-cobar-review-supplement
+\phantomsection\label{V2-sec:fsc-K3-vs-A2}% % V2:sec:fsc-K3-vs-A2
+\phantomsection\label{V2-sec:grt-torsor-thm}% % V2:sec:grt-torsor-thm
+\phantomsection\label{V2-sec:grtfin}% % V2:sec:grtfin
+\phantomsection\label{V2-sec:lineop-ext-supplement}% % V2:sec:lineop-ext-supplement
+\phantomsection\label{V2-sec:schtop-heptagon-supplement}% % V2:sec:schtop-heptagon-supplement
+\phantomsection\label{V2-sec:w-algebras-w3-supplement}% % V2:sec:w-algebras-w3-supplement
+\phantomsection\label{V2-sec:wa-supplement-iii}% % V2:sec:wa-supplement-iii
+\phantomsection\label{V2-subsec:thqg-III-shifted-symplectic}% % V2:subsec:thqg-III-shifted-symplectic
+\phantomsection\label{V2-thm:3dg-borcherds-ensemble-bridge}% % V2:thm:3dg-borcherds-ensemble-bridge
+\phantomsection\label{V2-thm:E3-topological-DS}% % V2:thm:E3-topological-DS
+\phantomsection\label{V2-thm:E3-topological-DS-general}% % V2:thm:E3-topological-DS-general
+\phantomsection\label{V2-thm:E3-topological-km}% % V2:thm:E3-topological-km
+\phantomsection\label{V2-thm:affine-half-space-bv}% % V2:thm:affine-half-space-bv
+\phantomsection\label{V2-thm:affine-monodromy-identification}% % V2:thm:affine-monodromy-identification
+\phantomsection\label{V2-thm:celestial-moonshine-bridge}% % V2:thm:celestial-moonshine-bridge
+\phantomsection\label{V2-thm:chd-deligne-tamarkin}% % V2:thm:chd-deligne-tamarkin
+\phantomsection\label{V2-thm:chd-ds-hochschild}% % V2:thm:chd-ds-hochschild
+\phantomsection\label{V2-thm:class-M-chain-bulk}% % V2:thm:class-M-chain-bulk
+\phantomsection\label{V2-thm:dnp-bar-cobar-identification}% % V2:thm:dnp-bar-cobar-identification
+\phantomsection\label{V2-thm:f1-f4-injection}% % V2:thm:f1-f4-injection
+\phantomsection\label{V2-thm:mathieu-celestial-correspondence}% % V2:thm:mathieu-celestial-correspondence
+\phantomsection\label{V2-thm:modular}% % V2:thm:modular
+\phantomsection\label{V2-thm:modular-bar}% % V2:thm:modular-bar
+\phantomsection\label{V2-thm:monster-chain-level-e3-top}% % V2:thm:monster-chain-level-e3-top
+\phantomsection\label{V2-thm:monster-orbifold-e3}% % V2:thm:monster-orbifold-e3
+\phantomsection\label{V2-thm:seven-faces-as-GRT-torsor}% % V2:thm:seven-faces-as-GRT-torsor
+\phantomsection\label{V2-thm:shadow-tower-moonshine}% % V2:thm:shadow-tower-moonshine
+\phantomsection\label{V2-thm:thqg-I-determinant-formula}% % V2:thm:thqg-I-determinant-formula
+\phantomsection\label{V2-thm:thqg-III-eigenspace-decomposition}% % V2:thm:thqg-III-eigenspace-decomposition
+\phantomsection\label{V2-thm:thqg-X-heisenberg-sewing-full}% % V2:thm:thqg-X-heisenberg-sewing-full
+\phantomsection\label{V2-thm:uhf-monster-orbifold-bv-anomaly-vanishes}% % V2:thm:uhf-monster-orbifold-bv-anomaly-vanishes
+\phantomsection\label{V2-thm:universal-holography-master}% % V2:thm:universal-holography-master
+\phantomsection\label{V2-thm:wa-divisor-rule}% % V2:thm:wa-divisor-rule
+
+% --- V3 verified external anchors ---
+\phantomsection\label{V3-ch:cy-to-chiral}% % V3:ch:cy-to-chiral
+\phantomsection\label{V3-ch:drinfeld-center}% % V3:ch:drinfeld-center
+\phantomsection\label{V3-ch:geometric-langlands}% % V3:ch:geometric-langlands
+\phantomsection\label{V3-ch:k3-chiral-bialgebra-platonic}% % V3:ch:k3-chiral-bialgebra-platonic
+\phantomsection\label{V3-ch:k3e-bkm}% % V3:ch:k3e-bkm
+\phantomsection\label{V3-conj:toroidal-e1}% % V3:conj:toroidal-e1
+\phantomsection\label{V3-conj:toroidal-koszul-dual}% % V3:conj:toroidal-koszul-dual
+\phantomsection\label{V3-cor:averaging-morphism-compat-k3}% % V3:cor:averaging-morphism-compat-k3
+\phantomsection\label{V3-cor:qgf-grt1-affine-recovery}% % V3:cor:qgf-grt1-affine-recovery
+\phantomsection\label{V3-def:classS-A1-Sigma024}% % V3:def:classS-A1-Sigma024
+\phantomsection\label{V3-def:cyclic-ainf-cat}% % V3:def:cyclic-ainf-cat
+\phantomsection\label{V3-def:cyclically-admissible}% % V3:def:cyclically-admissible
+\phantomsection\label{V3-def:k3-chiral-bialgebra}% % V3:def:k3-chiral-bialgebra
+\phantomsection\label{V3-def:k3-double-current-algebra}% % V3:def:k3-double-current-algebra
+\phantomsection\label{V3-def:qgf-imag-pro}% % V3:def:qgf-imag-pro
+\phantomsection\label{V3-def:qgf-quant-delta5}% % V3:def:qgf-quant-delta5
+\phantomsection\label{V3-lem:nearby-cycles-local-node}% % V3:lem:nearby-cycles-local-node
+\phantomsection\label{V3-lem:polar-support-phi-K3}% % V3:lem:polar-support-phi-K3
+\phantomsection\label{V3-prop:A-infty-structure-constants-humbert}% % V3:prop:A-infty-structure-constants-humbert
+\phantomsection\label{V3-prop:SV-e3-sugawara-toroidal}% % V3:prop:SV-e3-sugawara-toroidal
+\phantomsection\label{V3-prop:chi-3-nonvanishing-MNOP}% % V3:prop:chi-3-nonvanishing-MNOP
+\phantomsection\label{V3-prop:class-m-borel-summability-bridge}% % V3:prop:class-m-borel-summability-bridge
+\phantomsection\label{V3-prop:cy-c-beyond-joyce-three-CY3}% % V3:prop:cy-c-beyond-joyce-three-CY3
+\phantomsection\label{V3-prop:k3-chacaltana-distler-24}% % V3:prop:k3-chacaltana-distler-24
+\phantomsection\label{V3-prop:k3-schur-q-expansion}% % V3:prop:k3-schur-q-expansion
+\phantomsection\label{V3-prop:k3e-diagonal-delta5}% % V3:prop:k3e-diagonal-delta5
+\phantomsection\label{V3-prop:phi-d-kunneth-split-product}% % V3:prop:phi-d-kunneth-split-product
+\phantomsection\label{V3-rem:K3xE-coha-chiral-guard}% % V3:rem:K3xE-coha-chiral-guard
+\phantomsection\label{V3-rem:bllpr-k3-connection}% % V3:rem:bllpr-k3-connection
+\phantomsection\label{V3-rem:bkm-conway-M24-descent}% % V3:rem:bkm-conway-M24-descent
+\phantomsection\label{V3-rem:chi-3-Koszul-locus-scope}% % V3:rem:chi-3-Koszul-locus-scope
+\phantomsection\label{V3-rem:cy-c-beyond-quintic-joyce-not-brauer}% % V3:rem:cy-c-beyond-quintic-joyce-not-brauer
+\phantomsection\label{V3-rem:cy2ch-phi-K3-comparison}% % V3:rem:cy2ch-phi-K3-comparison
+\phantomsection\label{V3-rem:cycainf-depth-4}% % V3:rem:cycainf-depth-4
+\phantomsection\label{V3-rem:cydkappa-fibre-functor}% % V3:rem:cydkappa-fibre-functor
+\phantomsection\label{V3-rem:cydkappa-gerbe}% % V3:rem:cydkappa-gerbe
+\phantomsection\label{V3-rem:cydkappa-mukai-grading-direction}% % V3:rem:cydkappa-mukai-grading-direction
+\phantomsection\label{V3-rem:gl-fricke-self-duality}% % V3:rem:gl-fricke-self-duality
+\phantomsection\label{V3-rem:gl-kazhdan-fricke-wilson}% % V3:rem:gl-kazhdan-fricke-wilson
+\phantomsection\label{V3-rem:hh-morita}% % V3:rem:hh-morita
+\phantomsection\label{V3-rem:hochcalc-theoremH-CY3-scope}% % V3:rem:hochcalc-theoremH-CY3-scope
+\phantomsection\label{V3-rem:ikeda-gritsenko-disambiguation}% % V3:rem:ikeda-gritsenko-disambiguation
+\phantomsection\label{V3-rem:k3-classS-numerical-caveat}% % V3:rem:k3-classS-numerical-caveat
+\phantomsection\label{V3-rem:k3-non-yangian-adjoint}% % V3:rem:k3-non-yangian-adjoint
+\phantomsection\label{V3-rem:mukai-doubling-K-kappa}% % V3:rem:mukai-doubling-K-kappa
+\phantomsection\label{V3-rem:qgf-grt1-three-paths}% % V3:rem:qgf-grt1-three-paths
+\phantomsection\label{V3-sec:R-Sieg-dynamical}% % V3:sec:R-Sieg-dynamical
+\phantomsection\label{V3-sec:bkm-conway-moonshine}% % V3:sec:bkm-conway-moonshine
+\phantomsection\label{V3-sec:ek-winfinity-ident}% % V3:sec:ek-winfinity-ident
+\phantomsection\label{V3-sec:elliptic-bar-heisenberg}% % V3:sec:elliptic-bar-heisenberg
+\phantomsection\label{V3-sec:humbert-monodromy-platonic}% % V3:sec:humbert-monodromy-platonic
+\phantomsection\label{V3-sec:k3-classS-4d-parent}% % V3:sec:k3-classS-4d-parent
+\phantomsection\label{V3-sec:k3e-reflections}% % V3:sec:k3e-reflections
+\phantomsection\label{V3-sec:qgf-grt1-bkm}% % V3:sec:qgf-grt1-bkm
+\phantomsection\label{V3-sec:qgf-kazhdan-classical}% % V3:sec:qgf-kazhdan-classical
+\phantomsection\label{V3-sec:siegel-borcherds-associator}% % V3:sec:siegel-borcherds-associator
+\phantomsection\label{V3-subsec:bkm-conway-witten}% % V3:subsec:bkm-conway-witten
+\phantomsection\label{V3-thm:K3xE-coha-character-igusa}% % V3:thm:K3xE-coha-character-igusa
+\phantomsection\label{V3-thm:arthur-packet-H-delta5}% % V3:thm:arthur-packet-H-delta5
+\phantomsection\label{V3-thm:bkm-conway-identity-class}% % V3:thm:bkm-conway-identity-class
+\phantomsection\label{V3-thm:bkm-conway-psi-super-image}% % V3:thm:bkm-conway-psi-super-image
+\phantomsection\label{V3-thm:bkm-conway-ten-class-table}% % V3:thm:bkm-conway-ten-class-table
+\phantomsection\label{V3-thm:bkm-conway-universal-identity-fails}% % V3:thm:bkm-conway-universal-identity-fails
+\phantomsection\label{V3-thm:bkm-enriques-psi-landscape}% % V3:thm:bkm-enriques-psi-landscape
+\phantomsection\label{V3-thm:bkm-psi-four-is-all}% % V3:thm:bkm-psi-four-is-all
+\phantomsection\label{V3-thm:bkm-ratio-of-levels}% % V3:thm:bkm-ratio-of-levels
+\phantomsection\label{V3-thm:bkm-simple-roots-walls}% % V3:thm:bkm-simple-roots-walls
+\phantomsection\label{V3-thm:bkm-universal-identity}% % V3:thm:bkm-universal-identity
+\phantomsection\label{V3-thm:borcherds-weight-kappa-BKM-universal}% % V3:thm:borcherds-weight-kappa-BKM-universal
+\phantomsection\label{V3-thm:dt-igusa}% % V3:thm:dt-igusa
+\phantomsection\label{V3-thm:filtration-sharpness}% % V3:thm:filtration-sharpness
+\phantomsection\label{V3-thm:humbert-order-K-kappa}% % V3:thm:humbert-order-K-kappa
+\phantomsection\label{V3-thm:k3-abelian-at-lie}% % V3:thm:k3-abelian-at-lie
+\phantomsection\label{V3-thm:k3-bi-based-factorization}% % V3:thm:k3-bi-based-factorization
+\phantomsection\label{V3-thm:k3-classS-4d-parent}% % V3:thm:k3-classS-4d-parent
+\phantomsection\label{V3-thm:k3-classification-etingof}% % V3:thm:k3-classification-etingof
+\phantomsection\label{V3-thm:k3-cy2-serre-cocycle}% % V3:thm:k3-cy2-serre-cocycle
+\phantomsection\label{V3-thm:k3-siegel-character}% % V3:thm:k3-siegel-character
+\phantomsection\label{V3-thm:k3-structural-genesis}% % V3:thm:k3-structural-genesis
+\phantomsection\label{V3-thm:k3e-borcherds-product}% % V3:thm:k3e-borcherds-product
+\phantomsection\label{V3-thm:kcb-MC-hbar7-hbar12}% % V3:thm:kcb-MC-hbar7-hbar12
+\phantomsection\label{V3-thm:kcb-phi-arrow-discipline}% % V3:thm:kcb-phi-arrow-discipline
+\phantomsection\label{V3-thm:mathieu-moonshine}% % V3:thm:mathieu-moonshine
+\phantomsection\label{V3-thm:modtr-banding-cocycle}% % V3:thm:modtr-banding-cocycle
+\phantomsection\label{V3-thm:modtr-fricke-log-block-eigenvalues}% % V3:thm:modtr-fricke-log-block-eigenvalues
+\phantomsection\label{V3-thm:modtr-mu16-metaplectic-banding-cocycle}% % V3:thm:modtr-mu16-metaplectic-banding-cocycle
+\phantomsection\label{V3-thm:modtr-sps-coend-formula}% % V3:thm:modtr-sps-coend-formula
+\phantomsection\label{V3-thm:pentagon-sieg-bor}% % V3:thm:pentagon-sieg-bor
+\phantomsection\label{V3-thm:phi-platonic}% % V3:thm:phi-platonic
+\phantomsection\label{V3-thm:qgf-grt1-bkm-transitivity}% % V3:thm:qgf-grt1-bkm-transitivity
+\phantomsection\label{V3-thm:qgf-humbert-non-extendability}% % V3:thm:qgf-humbert-non-extendability
+\phantomsection\label{V3-thm:schiffmann-vasserot-shuffle}% % V3:thm:schiffmann-vasserot-shuffle
+\phantomsection\label{V3-thm:schur-to-delta5-composite}% % V3:thm:schur-to-delta5-composite
+\phantomsection\label{V3-thm:seven-faces-of-r-cy}% % V3:thm:seven-faces-of-r-cy
+
+% ======================================================================
 % ANNALS-EDITION PHANTOM LABELS
 %
 % Labels defined in archive-only content (Part VI outlook, concordance,
@@ -1436,6 +1719,97 @@ the engine points.
 % In archive mode the real labels take precedence (these are skipped).
 % ======================================================================
 \ifannalsedition
+ % --- Archive-only Vol I labels with source definitions ---
+ % These labels are defined in Vol I source files that the annals build
+ % omits. The stubs preserve annals navigation without changing the
+ % archive build, where the real labelled objects compile.
+ \phantomsection\label{ch:landscape-census}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:family-index}% % chapters/connections/concordance.tex
+ \phantomsection\label{thm:bv-bar-coderived-vol1}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{part:seven-faces}% % archive-only Part V
+ \phantomsection\label{part:v1-frontier}% % archive-only Part VI
+ \phantomsection\label{ch:derived-langlands}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{thm:shadow-depth-operator-order}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{thm:off-koszul-ran-inversion}% % chapters/theory/coderived_models.tex
+ \phantomsection\label{conv:theorem-c-bucket}% % chapters/connections/concordance.tex
+ \phantomsection\label{ch:holographic-datum-master}% % chapters/connections/holographic_datum_master.tex
+ \phantomsection\label{rem:nc-ML-prolimit-12}% % chapters/theory/nilpotent_completion.tex
+ \phantomsection\label{cor:anomaly-ratio-ds}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:langlands-bar-bridge}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{prop:archetype-complementarity-bridge}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{prop:coderived-bar-degree-spectral-sequence}% % chapters/theory/coderived_models.tex
+ \phantomsection\label{thm:oper-bar-dl}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{thm:census-witness-complementarity}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:gz26-commuting-differentials}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{thm:periodic-cdg-is-koszul-compatible}% % chapters/theory/periodic_cdg_admissible.tex
+ \phantomsection\label{thm:admissible-kl-bar-cobar-adjunction}% % chapters/theory/periodic_cdg_admissible.tex
+ \phantomsection\label{cor:anomaly-duality-km-vol1}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{prop:w3-genus3-cross-channel}% % chapters/examples/genus_expansions.tex
+ \phantomsection\label{rem:garland-lepowsky-sl2}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{eq:bvbrst-heegner-identity}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{princ:gravitational-primitivity}% % chapters/connections/concordance.tex
+ \phantomsection\label{thm:ent-topological-entanglement}% % chapters/connections/entanglement_modular_koszul.tex
+ \phantomsection\label{ch:genus1-seven-faces}% % chapters/connections/genus1_seven_faces.tex
+ \phantomsection\label{thm:conilpotent-reduction}% % chapters/theory/coderived_models.tex
+ \phantomsection\label{rem:bv-bar-class-m-frontier}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{prop:kappa-bkm-cross-volume-reconciliation}% % chapters/connections/concordance.tex
+ \phantomsection\label{rem:census-silent-non-coverage}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{prop:ds-invariant-discriminant}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{rem:feyn-nekrasov-humbert-residues}% % chapters/connections/feynman_diagrams.tex
+ \phantomsection\label{thm:hdm-grt-cocycle-ledger}% % chapters/connections/holographic_datum_master.tex
+ \phantomsection\label{conj:v1-master-infinite-generator}% % chapters/connections/editorial_constitution.tex
+ \phantomsection\label{eq:census-triples}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{sec:B2-details}% % chapters/examples/bar_complex_tables.tex
+ \phantomsection\label{sec:G2-details}% % chapters/examples/bar_complex_tables.tex
+ \phantomsection\label{prop:minimal-model-class-transport}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{rem:dl-kazhdan-global-consistency}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{conv:three-hochschild}% % chapters/connections/concordance.tex
+ \phantomsection\label{prop:harmonic-factorization}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{thm:heisenberg-bv-bar-all-genera-vol1}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{comp:bp-kappa-three-paths}% % chapters/connections/subregular_hook_frontier.tex
+ \phantomsection\label{prop:nilpotent-transport-typeA}% % chapters/connections/subregular_hook_frontier.tex
+ \phantomsection\label{chap:entanglement-modular-koszul}% % chapters/connections/entanglement_modular_koszul.tex
+ \phantomsection\label{ex:vir-bar-completion}% % chapters/theory/bar_cobar_adjunction_inversion.tex
+ \phantomsection\label{thm:fact-co-contra-general}% % chapters/theory/coderived_models.tex
+ \phantomsection\label{def:periodic-cdg-filtration}% % chapters/theory/periodic_cdg_admissible.tex
+ \phantomsection\label{prop:sl2-complementarity-all-genera}% % chapters/examples/genus_expansions.tex
+ \phantomsection\label{thm:gaudin-yangian-identification}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{rem:kappa-polysemy}% % chapters/connections/concordance.tex
+ \phantomsection\label{cor:growth-rate-dimg}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{rem:bar-hilbert-koszul-dual}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:motzkin-path-model}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:fg-localization}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{prop:bar-verlinde-asymptotics}% % chapters/examples/genus_expansions.tex
+ \phantomsection\label{rem:rank-plus-one}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{rem:feyn-nekrasov-NS-bethe}% % chapters/connections/feynman_diagrams.tex
+ \phantomsection\label{ch:shadow-L-function-platonic}% % chapters/theory/shadow_L_function_platonic.tex
+ \phantomsection\label{rem:ent-cthird-K3}% % chapters/connections/entanglement_modular_koszul.tex
+ \phantomsection\label{prop:w3-tline-virasoro-inheritance}% % chapters/theory/shadow_tower_other_class_M_platonic.tex
+ \phantomsection\label{prop:w3-wline-closed-form}% % chapters/theory/shadow_tower_other_class_M_platonic.tex
+ \phantomsection\label{rem:nc-asymptotic-11-12}% % chapters/theory/nilpotent_completion.tex
+ \phantomsection\label{rem:nc-fake-monster-non-interference}% % chapters/theory/nilpotent_completion.tex
+ \phantomsection\label{tab:shadow-l-functions}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{sec:completion-kinematics-census}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:census-self-dual-locus}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:bv-bar-geometric}% % chapters/connections/bv_brst.tex
+ \phantomsection\label{thm:dl-pseudocharacter-delta10}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{rem:dl-hecke-extension}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{rem:dl-archimedean-delta5}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{tab:master-invariants-chart}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{tab:rmatrix-census}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{thm:kz-classical-quantum-bridge}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{prop:whitehead-spectral-decomposition}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{sec:concordance-nishinaka-vicedo}% % chapters/connections/outlook.tex
+ \phantomsection\label{subsec:concordance-e1-primacy}% % chapters/connections/concordance.tex
+ \phantomsection\label{rem:ww-even-poles-census}% % chapters/examples/landscape_census.tex
+ \phantomsection\label{rem:sphere-reconstruction-gz26}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{sec:frontier-modular-holography-platonic}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{sec:dl-kazhdan-classical}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{rem:dl-kazhdan-multiplicity-formula}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{rem:dl-kazhdan-group-structure}% % chapters/theory/derived_langlands.tex
+ \phantomsection\label{thm:yangian-shadow-theorem}% % chapters/connections/frontier_modular_holography_platonic.tex
+ \phantomsection\label{ch:climax-theorem}% % chapters/theory/climax_theorem.tex
+ \phantomsection\label{rem:nc-brown-deligne}% % chapters/theory/nilpotent_completion.tex
  % --- High-frequency labels from archive-only chapters ---
  \phantomsection\label{thm:general-hs-sewing}% % genus_complete.tex
  \phantomsection\label{subsec:hs-sewing}% % genus_complete.tex

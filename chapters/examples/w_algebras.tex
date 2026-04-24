@@ -128,13 +128,13 @@ Quartic $Q^{\mathrm{contact}}$ &
 Quintic $o_5$ & $\neq 0$ (forced) & $\neq 0$ \\
 $r$-matrix $r(z)$ & $(c/2)/z^3 + 2T/z$ &
  Three channels \\
-Koszul dual & $\mathrm{Vir}_{26-c}$
- & $\mathcal{W}_3^{-k-6}$ \\
+Koszul dual / companion & $\mathrm{Vir}_{26-c}$
+ & characteristic companion $\mathcal{W}_3^{-k-6}$ \\
 Complementarity &
  $\kappa + \kappa' = 13$ &
  $\kappa + \kappa' = 250/3$ \\
-Koszul self-dual point &
- $c = 13$ & $c = 50$ \\
+Fixed point &
+ $c = 13$ & companion fixed charge $c = 50$ \\
 SC formality &
  Non-formal (all $\ell_k^{\mathrm{tr}} \neq 0$; chirally Koszul) &
  Non-formal (chirally Koszul) \\
@@ -370,27 +370,50 @@ The sixth-order pole in the $W \times W$ OPE places this beyond quadratic Koszul
 
 \subsection{\texorpdfstring{Curved $A_\infty$ Koszul duality}{Curved A-infinity Koszul duality}}
 
-\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra Koszul duality for principal nilpotent; \ClaimStatusProvedHere]\label{thm:w-algebra-koszul-main}
+\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra characteristic transport for principal nilpotent; \ClaimStatusConditional]\label{thm:w-algebra-koszul-main}
 \index{W-algebra@$\mathcal{W}$-algebra|textbf}
 \textup{[Regime: filtered-complete \textup{(}DS reduction from curved-central KM;
 Convention~\textup{\ref{conv:regime-tags})}.]}
 
 Let $\mathfrak{g}$ be a simple Lie algebra with dual Coxeter number $h^\vee$, and let $f = f_{\mathrm{prin}}$ be the principal nilpotent.
-For $k \neq -h^\vee$, the W-algebra $\mathcal{W}^k(\mathfrak{g}) = \mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})$ admits a curved $A_\infty$ Koszul dual:
+For $k \neq -h^\vee$, set
+\[
+k^\vee=-k-2h^\vee .
+\]
+The filtered-complete Koszul dual of the principal W-algebra
+$\mathcal{W}^k(\mathfrak{g})=\mathcal{W}^k(\mathfrak{g},f_{\mathrm{prin}})$
+has the same modular characteristic and the same central-charge
+complementarity constant as the principal W-algebra at the companion
+level $k^\vee$:
 \begin{equation}\label{eq:w-koszul-main}
-\mathcal{W}^k(\mathfrak{g})^! \simeq \mathcal{W}^{k'}(\mathfrak{g})
+\kappa\!\left(\mathcal{W}^k(\mathfrak{g})^!\right)
+=
+\kappa\!\left(\mathcal{W}^{k^\vee}(\mathfrak{g})\right),
+\qquad
+c(k)+c(k^\vee)
+=K_{\mathfrak g}^{W},
 \end{equation}
-where the dual level is the Feigin--Frenkel involution:
-\begin{equation}\label{eq:ff-level-shift}
-k' = -k - 2h^\vee
-\end{equation}
+where in the principal type~$A$ case
+$\mathfrak g=\mathfrak{sl}_N$ one has
+$K_{\mathfrak{sl}_N}^{W}=2(N-1)(2N^2+2N+1)$ by the
+Freudenthal--de~Vries form of the DS central-charge identity. The
+stronger same-family
+identification
+\[
+\mathcal{W}^k(\mathfrak{g})^!\simeq
+\mathcal{W}^{k^\vee}(\mathfrak{g})
+\]
+is conditional on the DS/bar transport package of
+Theorem~\ref{thm:bar-semi-infinite-w}; without that package the proved
+statement is the characteristic transport in~\eqref{eq:w-koszul-main},
+not equality of the two chiral algebras.
 
-The equivalence is of curved $A_\infty$ chiral algebras, and satisfies:
+The companion involution satisfies:
 \begin{enumerate}
-\item \emph{Involutivity.} $(k')' = -(-k-2h^\vee) - 2h^\vee = k$, so $(\mathcal{W}^!)^! \simeq \mathcal{W}$.
+\item \emph{Involutivity.} $(k^\vee)^\vee = -(-k-2h^\vee) - 2h^\vee = k$.
 \item \emph{Critical fixed point.} The Feigin--Frenkel involution fixes
-the critical level: if $k=-h^\vee$, then $k'=-k-2h^\vee=-h^\vee$.
-\item \emph{Virasoro specialization.} For $\mathfrak{g} = \mathfrak{sl}_2$ ($h^\vee = 2$), this gives $k' = -k-4$, and the central charges satisfy $c(k) + c(k') = 26$ exactly (by direct computation: $c(k') = 1 + 6(k+3)^2/(k+2)$, so $c(k)+c(k') = 2 + 24 = 26$), recovering the Virasoro level-shifting.
+the critical level: if $k=-h^\vee$, then $k^\vee=-k-2h^\vee=-h^\vee$.
+\item \emph{Virasoro specialization.} For $\mathfrak{g} = \mathfrak{sl}_2$ ($h^\vee = 2$), this gives $k^\vee = -k-4$, and the central charges satisfy $c(k) + c(k^\vee) = 26$ exactly (by direct computation: $c(k^\vee) = 1 + 6(k+3)^2/(k+2)$, so $c(k)+c(k^\vee) = 2 + 24 = 26$), recovering the Virasoro level-shifting.
 \end{enumerate}
 \end{theorem}
 
@@ -427,7 +450,7 @@ Taking cohomology with respect to
 $Q_{\mathrm{DS}}^{\mathrm{bar}}$:
 The bar complexes of the constituent free fields are known: $\bar{B}(\mathcal{H}_k) \simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)$ (the bar differential vanishes since the Heisenberg OPE has only a double pole; the coalgebra retains the level~$k$ through the pairing on~$V$, cf.\ Theorem~\ref{thm:heisenberg-koszul-dual-early}), and $\bar{B}(\mathcal{F}_{\beta\gamma})^\vee \simeq \mathcal{F}_{bc}$ (the bar coalgebra of $\beta\gamma$, dualized, is the $bc$ system, cf.\ Section~\ref{sec:betagamma-koszul-dual}).
 
-\emph{Step~3: BRST cohomology at the dual level.}
+\emph{Step~3: characteristic transport at the companion level.}
 The BRST differential $Q_{\mathrm{DS}}$ acts on the bar complex.
 
 The bar construction dualizes the coalgebra on the Heisenberg factor,
@@ -436,47 +459,58 @@ $\alpha_i \mapsto -\alpha_i$.
 This is the effect of the Koszul pairing
 $J \mapsto J^*$ on the level-dependent bilinear form.
 
-By Feigin--Frenkel duality~\cite{Feigin-Frenkel}, the negated momenta
-$-\alpha_i$ are precisely the screening momenta at the dual level
-$k' = -k - 2h^\vee$.
+In the principal type-$A$ normalization, the companion level
+$k^\vee=-k-2h^\vee$ negates $k+h^\vee$. Hence the affine curvature
+changes sign before DS reduction, while the DS central-charge
+polynomial changes by the level-independent complementarity constant.
 
 Therefore:
 \[
-H^*_{Q_{\mathrm{DS}}}(\bar{B}(\text{free fields at level } k)) \simeq \mathcal{W}^{k'}(\mathfrak{g})
+H^*_{Q_{\mathrm{DS}}}(\bar{B}(\text{free fields at level } k))
+\quad\text{has the same characteristic package as}\quad
+\mathcal{W}^{k^\vee}(\mathfrak{g})
 \]
-with $k' = -k - 2h^\vee$.
+with $k^\vee = -k - 2h^\vee$.
 
 The screening charges $S_i = \oint V_{\alpha_i}(z)\,dz$ at level $k$
-therefore become the screening charges at level $k'$.
+therefore transport to the companion characteristic package at
+level~$k^\vee$.
 
 Although the Heisenberg bar complex $\bar{B}(\mathcal{H}_k)$ is
 commutative and has trivial differential, the coalgebra pairing still
 retains the level~$k$.
 
-Since $-\alpha_i$ are the screening momenta for level
-$k' = -k-2h^\vee$ by Feigin--Frenkel duality, the level shift arises
-from the BRST mechanism, not from the Heisenberg factor alone.
+The level reflection arises from the BRST mechanism, not from the
+Heisenberg factor alone. Identifying the resulting filtered-complete
+Koszul dual with the same-family algebra
+$\mathcal{W}^{k^\vee}(\mathfrak g)$ is precisely the conditional
+DS/bar transport assertion of Theorem~\ref{thm:bar-semi-infinite-w}.
 
-\emph{Step~4: Curved $A_\infty$ identification.}
+\emph{Step~4: Curved $A_\infty$ characteristic identification.}
 For $k \neq -h^\vee$, the W-algebra has non-trivial curvature $m_0 \neq 0$ (Theorem~\ref{thm:w-bar-curvature}). The bar-cobar adjunction of Theorem~\ref{thm:e1-chiral-koszul-duality} gives a curved $A_\infty$ quasi-isomorphism:
 \[
-\Omega^{\mathrm{ch}}(\bar{B}(\mathcal{W}^k(\mathfrak{g}))) \xrightarrow{\;\sim\;} \mathcal{W}^{-k-2h^\vee}(\mathfrak{g})
+\Omega^{\mathrm{ch}}(\bar{B}(\mathcal{W}^k(\mathfrak{g}))) \xrightarrow{\;\sim\;} \mathcal{W}^k(\mathfrak{g})^!
 \]
-The curvature of the dual is $m_0' = (k' + h^\vee) \cdot C_2 = -(k + h^\vee) \cdot C_2 = -m_0$, where $C_2$ is the quadratic Casimir element. In particular, $m_0 = 0$ if and only if $m_0' = 0$, as expected.
+and the curvature of the companion package is
+$m_0^\vee = (k^\vee + h^\vee) \cdot C_2 = -(k + h^\vee) \cdot C_2$,
+where $C_2$ is the quadratic Casimir element. In particular,
+$m_0 = 0$ if and only if $m_0^\vee = 0$, as expected. Equality of
+the target algebra with $\mathcal W^{k^\vee}(\mathfrak g)$ remains
+conditional on DS/bar transport.
 
 \emph{Step~5: Consistency checks.}
-\emph{(i) Involutivity.} $k'' = -(k') - 2h^\vee = -(-k-2h^\vee) - 2h^\vee = k$. \checkmark
+\emph{(i) Involutivity.} $(k^\vee)^\vee = -(-k-2h^\vee) - 2h^\vee = k$. \checkmark
 
-\emph{(ii) Critical level.} At $k = -h^\vee$: $k' = -(-h^\vee) - 2h^\vee = -h^\vee$. Both sides have vanishing curvature ($m_0 = 0$), and the involution fixes the level. The relevant critical consistency check is therefore the affine Feigin--Frenkel center
+\emph{(ii) Critical level.} At $k = -h^\vee$: $k^\vee = -(-h^\vee) - 2h^\vee = -h^\vee$. Both sides have vanishing curvature ($m_0 = 0$), and the involution fixes the level. The relevant critical consistency check is therefore the affine Feigin--Frenkel center
 $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$
 (Theorem~\ref{thm:ff-center}), not a separate manuscript-internal theorem that principal $\mathcal{W}$-centers are globally exchanged. \checkmark
 
-\emph{(iii) $\mathfrak{sl}_2$ reduction.} For $\mathfrak{g} = \mathfrak{sl}_2$ with $h^\vee = 2$: $\mathcal{W}^k(\mathfrak{sl}_2) = \mathrm{Vir}_{c(k)}$ with $c(k) = 1 - 6(k+1)^2/(k+2)$. The dual level $k' = -k-4$ gives $c(k') = 1 - 6(-k-3)^2/(-k-2) = 1 + 6(k+3)^2/(k+2)$. Then $c(k) + c(k') = 2 + 6[-(k+1)^2 + (k+3)^2]/(k+2) = 2 + 6 \cdot 4(k+2)/(k+2) = 2 + 24 = 26$. The Virasoro algebra at $c = 0$ is \emph{quadratic} self-dual ($\mathrm{Vir}_0^{!_{\mathrm{quad}}} \simeq \mathrm{Vir}_0$, Theorem~\ref{thm:virasoro-self-duality}); this is a property of the uncurved OPE at $c=0$, not of the FF level-shifting involution (which sends $c=0$ to $c=26$). \checkmark
+\emph{(iii) $\mathfrak{sl}_2$ reduction.} For $\mathfrak{g} = \mathfrak{sl}_2$ with $h^\vee = 2$: $\mathcal{W}^k(\mathfrak{sl}_2) = \mathrm{Vir}_{c(k)}$ with $c(k) = 1 - 6(k+1)^2/(k+2)$. The companion level $k^\vee = -k-4$ gives $c(k^\vee) = 1 - 6(-k-3)^2/(-k-2) = 1 + 6(k+3)^2/(k+2)$. Then $c(k) + c(k^\vee) = 2 + 6[-(k+1)^2 + (k+3)^2]/(k+2) = 2 + 6 \cdot 4(k+2)/(k+2) = 2 + 24 = 26$. The Virasoro algebra at $c = 0$ is \emph{quadratic} self-dual ($\mathrm{Vir}_0^{!_{\mathrm{quad}}} \simeq \mathrm{Vir}_0$, Theorem~\ref{thm:virasoro-self-duality}); this is a property of the uncurved OPE at $c=0$, not of the level-reflection package (which sends $c=0$ to $c=26$). \checkmark
 
-The level-independence of $c(k) + c(k') = 26$ is an instance of the
+The level-independence of $c(k) + c(k^\vee) = 26$ is an instance of the
 general pattern: for $\mathfrak{g} = \mathfrak{sl}_N$, the
 Freudenthal--de~Vries identity gives
-$c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
+$c(\mathcal{W}^k) + c(\mathcal{W}^{k^\vee})
 = 2(N{-}1)(2N^2{+}2N{+}1)$,
 independent of $k$.
 
@@ -542,7 +576,8 @@ that bar--cobar/Koszul duality commutes with arbitrary-nilpotent
 reduction, identifying the correct dual nilpotent under Barbasch--Vogan
 or Spaltenstein duality~\cite{BV85}, and determining the non-principal
 level transform $k' = k'(k,f)$ generalizing $k' = -k - 2h^\vee$.
-The principal case is proved
+The principal characteristic transport is proved, while the
+same-family algebra identification is conditional
 (Theorem~\ref{thm:w-algebra-koszul-main}); the
 $\mathfrak{sl}_3$ Bershadsky--Polyakov computation
 (Conjecture~\ref{conj:bp-duality} with evidence in
@@ -855,7 +890,7 @@ takes modules whose support lives on some subset $X \subset \fg^*$ to
 modules whose support is $X \cap S_f$.
 
 This is the \emph{geometric localization principle} for DS reduction.
-Every algebraic theorem in this chapter (the Koszul functoriality
+Every algebraic theorem in this chapter (the characteristic transport
 (Theorem~\ref{thm:w-algebra-koszul-main}), the bar-complex
 intertwining (Theorem~\ref{thm:ds-koszul-intertwine}), the shadow
 tower transport, the orbit duality
@@ -1255,7 +1290,7 @@ theorem-level identification of the full bar complex.
 
 \subsection{The main theorem}
 
-\begin{theorem}[Koszul duality for \texorpdfstring{$\mathcal{W}$}{W}-algebras, precise statement; \ClaimStatusProvedHere]\label{thm:w-koszul-precise}
+\begin{theorem}[Koszul duality for \texorpdfstring{$\mathcal{W}$}{W}-algebras, precise statement; \ClaimStatusConditional]\label{thm:w-koszul-precise}
 \index{W-algebra@$\mathcal{W}$-algebra!Koszul dual}
 Let $\mathfrak{g}$ be a simple Lie algebra and $f \in \mathfrak{g}$ a nilpotent element.
 
@@ -1268,11 +1303,15 @@ level:
 \end{equation}
 and $k'=-k-2h^\vee=-h^\vee$.
 
-\emph{(B) At General Level.} For $f = f_{\mathrm{prin}}$ and $k \neq -h^\vee$, the Koszul dual has the same modular characteristic as the W-algebra at the shifted level (Theorem~\ref{thm:w-algebra-koszul-main}):
+\emph{(B) At General Level.} For $f = f_{\mathrm{prin}}$ and $k \neq -h^\vee$, the Koszul dual has the same modular characteristic as the W-algebra at the companion level (Theorem~\ref{thm:w-algebra-koszul-main}):
 \begin{equation}
 \kappa\bigl(\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})^!\bigr) = \kappa\bigl(\mathcal{W}^{-k-2h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})\bigr).
 \end{equation}
 The Koszul dual $\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})^!$ is the chiral CE algebra at the Feigin--Frenkel dual level, not $\mathcal{W}^{-k-2h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})$ itself (same~$\kappa$, distinct as chiral algebras).
+The same-family identification
+$\mathcal{W}^k(\mathfrak{g},f_{\mathrm{prin}})^!
+\simeq \mathcal{W}^{-k-2h^\vee}(\mathfrak{g},f_{\mathrm{prin}})$
+is conditional on DS/bar transport.
 
 \emph{(C) $\mathcal{W}_3$ Specialization.} For $\mathfrak{g} = \mathfrak{sl}_3$, $h^\vee = 3$:
 \begin{equation}
@@ -1292,7 +1331,11 @@ Langlands-dual critical $\mathcal{W}$-equivalence by passage to the
 limit; that stronger quantum-Langlands interpretation lies outside the
 proved manuscript route.
 
-Part (C) is immediate from Part~(B) with $h^\vee(\mathfrak{sl}_3) = 3$.
+Part (B) is the characteristic part of
+Theorem~\ref{thm:w-algebra-koszul-main}. The final same-family
+identification is exactly the conditional DS/bar transport assertion
+isolated there. Part (C) is immediate from Part~(B) with
+$h^\vee(\mathfrak{sl}_3) = 3$.
 \end{proof}
 
 \section{Explicit computation: Virasoro algebra}
@@ -1637,7 +1680,7 @@ Virasoro algebra replacing that of $\widehat{\mathfrak{sl}}_2$.
 
 \subsubsection{Curvature theorem}
 
-\begin{theorem}[Genus-1 curvature for \texorpdfstring{$\mathrm{Vir}_c$}{Virc}; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 curvature for \texorpdfstring{$\mathrm{Vir}_c$}{Virc}; \ClaimStatusConditional]
 \label{thm:vir-genus1-curvature}
 The genus-1 differential satisfies:
 \begin{equation}\label{eq:vir-genus1-dsquared}
@@ -1689,7 +1732,7 @@ genus~1 precisely when it is uncurved at genus~0
 
 \subsubsection{Spectral sequence collapse}
 
-\begin{theorem}[Genus-1 bar-cobar inversion for \texorpdfstring{$\mathrm{Vir}_c$}{Virc}; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 bar-cobar inversion for \texorpdfstring{$\mathrm{Vir}_c$}{Virc}; \ClaimStatusConditional]
 \label{thm:vir-genus1-inversion}
 For generic central charge $c$ (specifically, $c \neq c_{r,s}$ for all
 $r, s \geq 1$, where $c_{r,s}$ are the minimal model central charges),
@@ -1753,7 +1796,7 @@ the representation theory is most singular.
 
 \subsubsection{Complementarity and the bosonic string}
 
-\begin{theorem}[Genus-1 complementarity for \texorpdfstring{$\mathrm{Vir}_c$}{Virc}; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 complementarity for \texorpdfstring{$\mathrm{Vir}_c$}{Virc}; \ClaimStatusConditional]
 \label{thm:vir-genus1-complementarity}
 For generic $c \neq 0$:
 \begin{align}
@@ -1924,7 +1967,7 @@ The $W \times W$ contribution involves the sixth-order pole, which contributes a
 
 \subsection{\texorpdfstring{Koszul dual of $\mathcal{W}_3$}{Koszul dual of W 3}}
 
-\begin{theorem}[Critical fixed point and general-level duality for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusProvedHere]\label{thm:w3-koszul-dual}
+\begin{theorem}[Critical fixed point and general-level characteristic duality for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusConditional]\label{thm:w3-koszul-dual}
 At critical level $k = -h^\vee = -3$ for $\mathfrak{sl}_3$, the
 manuscript-internal statement is the critical fixed-point inversion
 package:
@@ -1934,10 +1977,18 @@ package:
 \end{equation}
 and the Feigin--Frenkel involution fixes the level: $k' = -k - 6 = -3$.
 
-At general level $k \neq -3$, the Feigin--Frenkel duality $k \leftrightarrow k' = -k - 2h^\vee = -k-6$ gives:
+At general level $k \neq -3$, set $k'=-k-6$. The proved
+characteristic statement is
 \begin{equation}
-\mathcal{W}_3^{k} \text{ is Koszul dual to } \mathcal{W}_3^{k'}
+\kappa\bigl((\mathcal{W}_3^k)^!\bigr)
+=
+\kappa\bigl(\mathcal{W}_3^{k'}\bigr),
+\qquad
+c(k)+c(k')=100.
 \end{equation}
+The same-family chiral-algebra identification
+$(\mathcal{W}_3^k)^!\simeq \mathcal{W}_3^{k'}$
+is conditional on DS/bar transport.
 \end{theorem}
 
 \begin{proof}
@@ -1952,10 +2003,20 @@ model of Remark~\ref{rem:w-critical-bar-viewpoint} is compatible with
 this fixed-point package but is not needed as theorem-level input.
 
 \emph{General level ($k \neq -3$).}
-By the main W-algebra Koszul duality theorem
-(Theorem~\ref{thm:w-algebra-koszul-main}), the Feigin--Frenkel
-involution $k \mapsto k' = -k - 2h^\vee = -k - 6$ gives
-$(\mathcal{W}_3^k)^! \simeq \mathcal{W}_3^{k'}$.
+Theorem~\ref{thm:w-algebra-koszul-main} gives the characteristic
+transport:
+\[
+\kappa\bigl((\mathcal W_3^k)^!\bigr)
+=\kappa(\mathcal W_3^{k'}),\qquad k'=-k-6.
+\]
+For $\mathcal W_3$ the DS central-charge formula
+$c(k)=2-24(k+2)^2/(k+3)$ gives
+\[
+c(k')=2+24(k+4)^2/(k+3),\qquad c(k)+c(k')=100.
+\]
+Identifying the Koszul dual chiral algebra itself with
+$\mathcal W_3^{k'}$ is the conditional same-family statement from
+Theorem~\ref{thm:w-algebra-koszul-main}.
 \end{proof}
 
 \subsection{\texorpdfstring{Genus-1 pipeline for the $\mathcal{W}_3$ algebra}{Genus-1 pipeline for the W3 algebra}}
@@ -2003,7 +2064,7 @@ $h_T = 2$ and $h_W = 3$ of the respective generators.
 
 \subsubsection{Curvature theorem}
 
-\begin{theorem}[Genus-1 curvature for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 curvature for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusConditional]
 \label{thm:w3-genus1-curvature}
 The genus-1 differential satisfies:
 \begin{equation}\label{eq:w3-genus1-dsquared}
@@ -2070,7 +2131,7 @@ which occurs at $k = -5/3$ and $k = -9/4$
 
 \subsubsection{Spectral sequence collapse}
 
-\begin{theorem}[Genus-1 bar-cobar inversion for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 bar-cobar inversion for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusConditional]
 \label{thm:w3-genus1-inversion}
 For generic level $k$ (specifically, $k$ not a rational level giving a
 $\mathcal{W}_3$ minimal model $\mathcal{W}_3(p,q)$ with $p > q \geq 3$
@@ -2140,10 +2201,10 @@ non-trivial null vectors appear.
 
 \subsubsection{\texorpdfstring{Complementarity and the $c + c' = 100$ structure}{Complementarity and the c + c' = 100 structure}}
 
-\begin{theorem}[Genus-1 complementarity for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 companion complementarity for \texorpdfstring{$\mathcal{W}_3$}{W3}; \ClaimStatusConditional]
 \label{thm:w3-genus1-complementarity}
-For generic $c \neq 0$, writing $c' = 100 - c$ for the dual central charge
-under $k \mapsto k' = -k - 6$:
+For generic $c \neq 0$, writing $c' = 100 - c$ for the companion
+central charge under $k \mapsto k' = -k - 6$:
 \begin{align}
 Q_1(\mathcal{W}_3^k) &= \mathbb{C} \cdot \tfrac{5c}{6}
  \subset H^0(\overline{\mathcal{M}}_{1,1}) \label{eq:Q1-w3} \\
@@ -2159,10 +2220,11 @@ Q_1(\mathcal{W}_3^k) \oplus Q_1(\mathcal{W}_3^{k'})
 \end{theorem}
 
 \begin{proof}
-Theorem~\ref{thm:quantum-complementarity-main} applied to
-$\cA = \mathcal{W}_3^k$ with
-$\cA^! = \mathcal{W}_3^{k'}$
-(Theorem~\ref{thm:w3-koszul-dual}).
+This is the genus-$1$ companion calculation. Interpreting the companion
+algebra $\mathcal W_3^{k'}$ as the same-family Koszul dual of
+$\mathcal W_3^k$ is conditional on the DS/bar transport clause of
+Theorem~\ref{thm:w3-koszul-dual}; the direct complementarity
+calculation below does not use that identification.
 
 \emph{Step~1: Obstruction from curvature.}
 By Theorem~\ref{thm:w3-genus1-curvature},
@@ -2235,7 +2297,7 @@ contributing its own vacuum leakage. The general formula
 for all $N$ validates the Master Table entry
 (Table~\ref{tab:master-invariants}).
 
-\begin{theorem}[Obstruction coefficient for \texorpdfstring{$\mathcal{W}_N$}{WN}; \ClaimStatusProvedHere]
+\begin{theorem}[Obstruction coefficient for \texorpdfstring{$\mathcal{W}_N$}{WN}; \ClaimStatusConditional]
 \label{thm:wn-obstruction}
 For the principal $\mathcal{W}$-algebra
 $\mathcal{W}_N^k = \mathcal{W}^k(\mathfrak{sl}_N, f_{\mathrm{prin}})$
@@ -2347,7 +2409,7 @@ unconditional statement is $\mathrm{obs}_1=\kappa\lambda_1$.
 \end{itemize}
 \end{proof}
 
-\begin{corollary}[Central charge complementarity sum for \texorpdfstring{$\mathcal{W}_N$}{WN}; \ClaimStatusProvedHere]
+\begin{corollary}[Central charge complementarity sum for \texorpdfstring{$\mathcal{W}_N$}{WN}; \ClaimStatusConditional]
 \label{cor:wn-complementarity}
 Under the Feigin--Frenkel duality $k \mapsto k' = -k - 2N$:
 \begin{equation}\label{eq:wn-kappa-sum}
@@ -2368,7 +2430,7 @@ is level-independent
 (Theorem~\ref{thm:central-charge-complementarity}).
 \end{proof}
 
-\begin{corollary}[Obstruction coefficient for general \texorpdfstring{$\mathcal{W}(\mathfrak{g})$}{W(g)}; \ClaimStatusProvedHere]
+\begin{corollary}[Obstruction coefficient for general \texorpdfstring{$\mathcal{W}(\mathfrak{g})$}{W(g)}; \ClaimStatusConditional]
 \label{cor:general-w-obstruction}
 \index{obstruction coefficient!general W-algebra}
 \index{W-algebra@$\mathcal{W}$-algebra!general obstruction coefficient}
@@ -2669,7 +2731,7 @@ A proof requires localization on the instanton moduli space and identification o
 \end{remark}
 
 \begin{theorem}[AGT shadow correspondence;
-\ClaimStatusProvedHere]%
+\ClaimStatusConditional]%
 \label{thm:agt-shadow-correspondence}%
 \index{AGT correspondence!shadow tower interpretation|textbf}%
 \index{Nekrasov partition function!genus expansion}%
@@ -2696,8 +2758,9 @@ The Nekrasov free energy
 $F = \log \mathcal{Z}^{\mathrm{inst}} =
 \sum_{g \geq 0} \hbar^{g-1} F_g(\vec{a}, q)$
 has genus-$g$ coefficient
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} \textup{(}ALL-WEIGHT + $\delta F_g^{\mathrm{cross}}$\textup{}) +
-(\text{representation-dependent terms})$
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}
+\bigl(\mathrm{ALL\mbox{-}WEIGHT} + \delta F_g^{\mathrm{cross}}\bigr) +
+\text{(representation-dependent terms)}$
 in the symmetric limit $\vec{a} \to 0$, $q \to 0$.
 The leading \textup{(}universal\textup{)} term
 $\kappa \cdot \lambda_g^{\mathrm{FP}}$ is the shadow
@@ -2839,11 +2902,12 @@ with $c = 2 - 24(k+2)^2/(k+3)$ verifies all five theorems:
 \textbf{Theorem} & \textbf{$\mathcal{W}_3$ specialization} \\
 \midrule
 \textbf{A} (Adjunction) &
- $(\mathcal{W}_3^k)^! \simeq \mathcal{W}_3^{-k-6}$
- via the Feigin--Frenkel involution
+ $\kappa((\mathcal{W}_3^k)^!)=\kappa(\mathcal{W}_3^{-k-6})$
+ via the Feigin--Frenkel companion involution; the same-family algebra
+ identification is conditional on DS/bar transport
  \textup{(}Theorem~\textup{\ref{thm:w-algebra-koszul-main}}\textup{)}.
  Involutive: $(-k-6)' = k$.
- Koszul self-dual at $c = 50$ (fixed point of $c \mapsto 100{-}c$).
+ Companion fixed central charge $c = 50$.
  Two curvature channels: $m_0^{(T)} = c/2$, $m_0^{(W)} = c/3$.
  \\
 \textbf{B} (Inversion) &
@@ -2894,7 +2958,9 @@ For principal $\mathcal{W}_N^k = \mathcal{W}^k(\mathfrak{sl}_N)$
 with generators of spins $2, 3, \ldots, N$ and central charge
 $c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)$:
 \begin{enumerate}[label=\textup{(\Alph*)}]
-\item $(\mathcal{W}_N^k)^! \simeq \mathcal{W}_N^{-k-2N}$
+\item $\kappa((\mathcal{W}_N^k)^!) =
+ \kappa(\mathcal{W}_N^{-k-2N})$; the same-family algebra
+ identification is conditional on DS/bar transport
  (Theorem~\ref{thm:w-algebra-koszul-main}).
 \item $\Omega(\bar{B}(\mathcal{W}_N^k)) \xrightarrow{\sim}
  \mathcal{W}_N^k$ at genus~$0$ (Theorem~\ref{thm:w-koszul-precise}).
@@ -2970,7 +3036,17 @@ Let $k$ be a non-critical level ($k \neq -h^\vee$).
 \begin{remark}[W-algebra modules and Koszul duality]
 \label{rem:w-module-koszul}
 \index{W-algebra@$\mathcal{W}$-algebra!module Koszul duality}
-The level shift $k \mapsto k' = -k - 2h^\vee$ (Theorem~\ref{thm:w-algebra-koszul-main}) extends to modules: $H^0_{\mathrm{DS}}(\mathrm{Ind}(M)) \simeq \mathrm{Ind}_W(H^0_{\mathrm{DS}}(M))$ (Theorem~\ref{thm:e1-module-koszul-duality}). At minimal model values $k = -h^\vee + p/q$, $\mathcal{W}^k$ is rational ($X_{\mathcal{W}^k} = \{0\}$, Arakawa~\cite{Arakawa17}), while at the dual level $k' = -h^\vee - p/q$ it is non-rational ($X_{\mathcal{W}^{k'}} \neq \{0\}$).
+The companion level shift $k \mapsto k' = -k - 2h^\vee$ controls the
+characteristic package of Theorem~\ref{thm:w-algebra-koszul-main}.
+On modules the corresponding DS functoriality is the separate
+statement
+$H^0_{\mathrm{DS}}(\mathrm{Ind}(M)) \simeq
+\mathrm{Ind}_W(H^0_{\mathrm{DS}}(M))$
+(Theorem~\ref{thm:e1-module-koszul-duality}). At minimal model
+values $k = -h^\vee + p/q$, $\mathcal{W}^k$ is rational
+($X_{\mathcal{W}^k} = \{0\}$, Arakawa~\cite{Arakawa17}), while at
+the companion level $k' = -h^\vee - p/q$ it is non-rational
+($X_{\mathcal{W}^{k'}} \neq \{0\}$).
 \end{remark}
 
 \begin{example}[Virasoro minimal model modules]
@@ -3859,7 +3935,7 @@ The divergence of the shadow coefficients at $c(5c+22) = 0$ is an
 artifact of the finite-order truncation, not of the underlying MC element.
 The following theorem makes this precise.
 
-\begin{theorem}[Resonance reorganization; \ClaimStatusProvedHere]
+\begin{theorem}[Resonance reorganization; \ClaimStatusConditional]
 \label{thm:w-resonance-reorganization}
 \index{Virasoro algebra!resonance reorganization|textbf}
 Let $c_0$ be a value in the singular locus of the shadow obstruction tower,
@@ -3996,7 +4072,7 @@ The two resonance points behave differently:
 \end{remark}
 
 \begin{corollary}[Pole structure of the complementarity potential;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:w-complementarity-potential-poles}
 \index{complementarity potential!pole structure}
 The complementarity potential
@@ -4051,7 +4127,7 @@ $\frac{1}{8}\cdot(-\frac{25}{11})\,x^4 = -\frac{25}{88}\,x^4$.
 \index{primitive kernel!W-algebra@$\mathcal{W}$-algebra}
 
 \begin{proposition}[Virasoro primitive kernel;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:virasoro-primitive-kernel}
 The primitive logarithmic modular kernel
 \textup{(}Definition~\textup{\ref{def:primitive-log-modular-kernel})}
@@ -4103,7 +4179,7 @@ $K_{0,4}$.
 \end{proof}
 
 \begin{proposition}[Virasoro primitive shell equations;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:virasoro-primitive-shell}
 \index{shell equation!Virasoro}
 All three channels of the primitive master equation are active for
@@ -4441,7 +4517,7 @@ of $(5c+22)^{-1}$ to the denominator, giving the stated
 filtration.
 \end{proof}
 
-\begin{theorem}[$\mathcal{W}_3$ quintic nonvanishing; \ClaimStatusProvedHere]
+\begin{theorem}[$\mathcal{W}_3$ quintic nonvanishing; \ClaimStatusConditional]
 \label{thm:w3-quintic-nonvanishing}
 \index{W3@$\mathcal{W}_3$!quintic nonvanishing}
 \index{shadow tower!class M confirmation}
@@ -4486,7 +4562,7 @@ that DS reduction collapses the Lie-theoretic trilinear vanishing
 the nonlinear $W$-composites that seed the infinite tower.
 \end{remark}
 
-\begin{proposition}[DS shadow cascade for $V_k(\mathfrak{sl}_N) \to \mathcal{W}_N$; \ClaimStatusProvedHere]
+\begin{proposition}[DS shadow cascade for $V_k(\mathfrak{sl}_N) \to \mathcal{W}_N$; \ClaimStatusConditional]
 \label{prop:ds-shadow-cascade}
 \index{Drinfeld--Sokolov reduction!shadow cascade|textbf}
 \index{shadow depth!DS cascade}
@@ -4839,7 +4915,7 @@ The preceding results, combined with the frame family computations
 of Chapters~\ref{chap:free-fields}--\ref{chap:beta-gamma},
 lead to a clean structural classification.
 
-\begin{theorem}[Archetype trichotomy; \ClaimStatusProvedHere]
+\begin{theorem}[Archetype trichotomy; \ClaimStatusConditional]
 \label{thm:w-archetype-trichotomy}
 \index{archetype trichotomy}
 Through quartic order, the three frame families realize the three
@@ -5225,7 +5301,7 @@ closed-form rational functions of~$c$}
 {\small
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-$\boldsymbol{r}$ & $\boldsymbol{S_r(c)}$ & $\boldsymbol{\operatorname{sgn}}$ & $\boldsymbol{c^a(5c{+}22)^b}$ & $\boldsymbol{\deg P_r}$ \\
+$\boldsymbol{r}$ & $\boldsymbol{S_r(c)}$ & $\boldsymbol{\mathrm{sgn}}$ & $\boldsymbol{c^a(5c{+}22)^b}$ & $\boldsymbol{\deg P_r}$ \\
 \hline
 $2$ & $\dfrac{c}{2}$ & $+$ & $1$ & $0$ \\[4pt]
 \hline
@@ -5264,7 +5340,7 @@ other step. This is verified through degree~$10$ by
 (116~tests, including cross-validation against three independent
 recursion modules).
 
-\begin{theorem}[Finite termination for primitive archetypes; \ClaimStatusProvedHere]
+\begin{theorem}[Finite termination for primitive archetypes; \ClaimStatusConditional]
 \label{thm:w-finite-termination}
 \index{shadow tower!finite termination}
 For the three frame families, the shadow obstruction tower terminates at finite degree:
@@ -5339,7 +5415,7 @@ infinite-order: the complementarity potential is non-polynomial.
 \end{remark}
 
 \begin{corollary}[Virasoro/$\mathcal{W}_N$ shadow obstruction tower:
-infinite; \ClaimStatusProvedHere]
+infinite; \ClaimStatusConditional]
 \label{cor:virasoro-postnikov-nontermination}
 \index{shadow obstruction tower!Virasoro non-termination}
 The shadow obstruction tower
@@ -5771,7 +5847,7 @@ multi-channel graph sum]
 The genus-$2$ free energy of $\mathcal{W}_3$ is the first explicit
 multi-channel graph sum at genus~$2$. The computation sums over
 the seven genus-$2$ stable graphs (smooth, figure-eight, banana,
-dumbbell, bridge-loop, theta, tadpole), each with $2^e$ channel assignments
+dumbbell, theta, lollipop, barbell), each with $2^e$ channel assignments
 ($e$ = number of edges, channels $\in \{T, W\}$).
 
 \smallskip\noindent\emph{Scalar universal part.}
@@ -5814,7 +5890,7 @@ The total cross-channel correction is
 \end{equation}
 This decomposes as
 $\delta F_2 = 1/16 + 51/(4c)$:
-the constant $1/16$ from the tadpole (c-independent, from a
+the constant $1/16$ from the lollipop (c-independent, from a
 genus-$1$ vertex times a genus-$0$ vertex), the rational
 $15/(2c)$ from the banana and theta graphs, and
 $21/(4c)$ from the barbell. At large~$c$,
@@ -7306,8 +7382,8 @@ $4$d $\mathcal N = 2$ theory $\mathcal T[A_1,\Sigma_{0,24}]$
 \]
 with canonical central charge $c_{2d} = -214$ (from
 $c_{4d} = 107/6$ via $c_{2d} = -12 c_{4d}$; see Vol.~III
-Proposition~\ref{prop:k3-chacaltana-distler-24} and
-Remark~\ref{rem:k3-classS-numerical-caveat} for the double-retraction
+Proposition~\ref{V3-prop:k3-chacaltana-distler-24} and
+Remark~\ref{V3-rem:k3-classS-numerical-caveat} for the double-retraction
 of the intermediate value $c_{2d} = -312$) and flavour
 $\mathfrak{su}(2)^{24}$. The $W$-algebra content is the
 non-abelian-chiral lift of the $24$-fold Heisenberg OPE to
@@ -7343,6 +7419,6 @@ At $\Psi = 1/2$ the $W_N$ vertex-operator algebra on $\mathcal F_{K3}$
 becomes an integrable $\mathbf H_{\Delta_5}$-module, which is the
 K3-base statement of the Arakawa-Creutzig-Linshaw 2019 $W$-algebra
 triality collapsed to the K3 base. Cross-ref Vol.~II,
-\S\ref{sec:w-algebras-w3-supplement}. Primary-lit: Fateev-Lukyanov 1988,
+\S\ref{V2-sec:w-algebras-w3-supplement}. Primary-lit: Fateev-Lukyanov 1988,
 Feigin-Frenkel 1990, Arakawa-Creutzig-Linshaw 2019.
 \end{remark}
