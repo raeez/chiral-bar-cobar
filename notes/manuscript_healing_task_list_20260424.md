@@ -240,3 +240,35 @@ reader-facing mathematics.
   or binary artifacts, with Raeez-only exhaustive messages.
 - [x] Preserve and merge the remaining Vol II KZ side-worktree staged
   Makefile parity state without discarding it.
+
+## P. Four-Volume Extension: Vol IV Realization Layer
+
+- [x] Extend the dirty-state and recent-history audit to
+  `~/chiral-bar-cobar-vol4`.
+- [x] Read Vol IV `CLAUDE.md`, `AGENTS.md`, active `main.tex`,
+  `chapters/frame/preface.tex`, and
+  `chapters/realization/realization_programme.tex` before writing.
+- [x] Inspect Vol IV recent commits around the arithmetic realization
+  branch: critical-line Hadamard support, post-Tate quotient,
+  Meyer graph-dual no-go, and final residual ledger.
+- [x] Identify Vol IV side worktrees. The branch heads are ancestors of
+  `main`, but many locked worktrees contain dirty state owned by a live
+  Claude process; this thread must not mutate those worktrees.
+- [x] Add a Vol IV abstract to `main.tex` carrying the realization functor,
+  the Vol I/II/III session-spoils corpus, the finite-jet KZ/BV scope, the
+  Joyce--KPS compact-CY3 lane, and the native Vol IV arithmetic residual.
+- [x] Upgrade the Vol IV preface so the realization input corpus includes
+  the corrected Virasoro shadow tower, four-conductor split,
+  Gritsenko--Clery spread, KZ/BV analytic-SDR scope, Joyce--KPS compact
+  CY3 scope, and post-Tate/Hadamard support no-go.
+- [x] Upgrade the Vol IV realization-programme body with realization
+  obligations for the Khan--Zeng finite-jet BV/PVA lane, the Joyce--KPS
+  compact Calabi--Yau threefold lane, and the post-Tate Hadamard/Meyer
+  graph-dual no-go.
+- [x] Correct the Vol IV programme-wide coverage arithmetic from
+  `5 / 3692` with `3687` remaining to `5 / 3695` with `3690` remaining.
+- [x] Remove front-facing AP/HZ process residue from the edited Vol IV
+  front-matter and realization-programme passages where it was not
+  mathematical terminology.
+- [ ] Do not run full LaTeX builds unless explicitly requested; Vol IV
+  verification in this pass is static TeX/diff hygiene plus targeted scans.
