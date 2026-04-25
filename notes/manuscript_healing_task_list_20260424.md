@@ -272,3 +272,43 @@ reader-facing mathematics.
   mathematical terminology.
 - [ ] Do not run full LaTeX builds unless explicitly requested; Vol IV
   verification in this pass is static TeX/diff hygiene plus targeted scans.
+
+## Q. Four-Volume Last-100-Commit LaTeX Prose Audit
+
+- [x] Restrict the cleanup scope to LaTeX manuscript surfaces:
+  `main.tex`, `chapters/**/*.tex`, `appendices/**/*.tex`, and active
+  bibliography TeX where present. Internal command files, notes, prompts,
+  logs, and side-worktree artifacts are excluded from this prose pass.
+- [x] Audit the last 100 commits in Vol I, Vol II, Vol III, and Vol IV for
+  manuscript-facing process residue.
+- [x] Run hard sweeps for source/process vocabulary:
+  wave-number language, swarm, agent, LLM/Codex/Claude/OpenAI/Anthropic,
+  AI-attribution strings, and generated/co-authored markers.
+- [x] Run soft sweeps for prose tells:
+  `actually`, `wait`, `not quite right`, `notably`, `crucially`,
+  `remarkably`, `furthermore`, `moreover`, `we now`, drafting-history
+  transitions, and TeX/unicode em-dash forms.
+- [x] Repair Vol IV arithmetic realization chapters by converting
+  session process vocabulary into source-disjoint audit, proof-route, and
+  theorem-status language, while preserving mathematical dependencies and
+  labels where changing them would break references.
+- [x] Repair Vol I theorem, connection, and front-matter prose that cited
+  internal author documents or process provenance; replace each with the
+  corresponding mathematical convention, theorem, or obstruction.
+- [x] Repair Vol II theorem and connection prose that cited internal
+  author documents; replace them with direct chain-level /
+  \((\infty,1)\)-categorical lane statements and HZ-IV verification
+  conventions.
+- [x] Repair Vol III theorem/example prose that exposed note-file,
+  wave, or agent provenance; replace these with theorem names, direct
+  computations, and standard mathematical terminology. Type-AI
+  Grassmannian terminology is retained as legitimate mathematics.
+- [x] Remove TeX em-dash forms and unicode em dashes from LaTeX surfaces
+  across all four volumes, including comment rulers that produced false
+  positives in the audit.
+- [x] Re-run hard and soft scans across all four volumes. Remaining hard
+  hits are mathematical false positives only: `compactly generated`,
+  Airy `\mathrm{Ai}`, and type-AI Grassmannian.
+- [x] Run `git diff --check` in all four volumes.
+- [ ] Full LaTeX builds were not run; builds remain user-opt-in
+  session-end verification.
