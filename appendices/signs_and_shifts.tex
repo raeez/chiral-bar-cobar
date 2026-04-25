@@ -14,37 +14,37 @@ Beilinson--Drinfeld~\cite{BD04} (chiral algebras), and Lurie~\cite{HA}
 \begin{convention}[Koszul sign rule]
 \label{conv:koszul}
 \index{Koszul sign rule|textbf}
-Let $\cC$ be a graded category (chain complexes, differential graded algebras, 
-graded vector spaces, etc.). When two homogeneous elements $a$ and $b$ of 
-degrees $|a|$ and $|b|$ respectively are interchanged in any formula, a sign 
+Let $\cC$ be a graded category (chain complexes, differential graded algebras,
+graded vector spaces, etc.). When two homogeneous elements $a$ and $b$ of
+degrees $|a|$ and $|b|$ respectively are interchanged in any formula, a sign
 $(-1)^{|a| \cdot |b|}$ must be introduced:
 \[
 a \otimes b \longmapsto (-1)^{|a| \cdot |b|} \, b \otimes a.
 \]
-This rule applies universally: to tensor products, compositions, evaluations, 
+This rule applies universally: to tensor products, compositions, evaluations,
 and any operation where the order of graded objects matters.
 \end{convention}
 
 \begin{definition}[Graded commutator]
 \label{def:graded-commutator}
-For homogeneous elements $a, b$ in a graded algebra $A$, the 
+For homogeneous elements $a, b$ in a graded algebra $A$, the
 \emph{graded commutator} is:
 \[
 [a, b] := a \cdot b - (-1)^{|a| \cdot |b|} b \cdot a.
 \]
-An algebra is \emph{graded commutative} if $[a, b] = 0$ for all homogeneous 
+An algebra is \emph{graded commutative} if $[a, b] = 0$ for all homogeneous
 $a, b$, which is equivalent to $a \cdot b = (-1)^{|a| \cdot |b|} b \cdot a$.
 \end{definition}
 
 \begin{proposition}[Graded Jacobi identity; \ClaimStatusProvedHere]
 \label{prop:graded-jacobi}
-For any graded Lie algebra $(L, [-,-])$, the bracket satisfies the 
+For any graded Lie algebra $(L, [-,-])$, the bracket satisfies the
 \emph{graded Jacobi identity}:
 \[
-(-1)^{|a| \cdot |c|} [a, [b, c]] + (-1)^{|b| \cdot |a|} [b, [c, a]] 
+(-1)^{|a| \cdot |c|} [a, [b, c]] + (-1)^{|b| \cdot |a|} [b, [c, a]]
 + (-1)^{|c| \cdot |b|} [c, [a, b]] = 0.
 \]
-This is equivalent to requiring that the adjoint action $\ad_a = [a, -]$ 
+This is equivalent to requiring that the adjoint action $\ad_a = [a, -]$
 is a derivation of the bracket:
 \[
 [a, [b, c]] = [[a, b], c] + (-1)^{|a| \cdot |b|} [b, [a, c]].
@@ -52,16 +52,16 @@ is a derivation of the bracket:
 \end{proposition}
 
 \begin{proof}
-The equivalence follows from expanding the graded Jacobi identity and 
-applying graded antisymmetry $[b, c] = -(-1)^{|b| \cdot |c|} [c, b]$. 
+The equivalence follows from expanding the graded Jacobi identity and
+applying graded antisymmetry $[b, c] = -(-1)^{|b| \cdot |c|} [c, b]$.
 The cyclic sum becomes:
 \begin{align*}
-0 &= (-1)^{|a| \cdot |c|} [a, [b, c]] + (-1)^{|b| \cdot |a|} [b, [c, a]] 
+0 &= (-1)^{|a| \cdot |c|} [a, [b, c]] + (-1)^{|b| \cdot |a|} [b, [c, a]]
  + (-1)^{|c| \cdot |b|} [c, [a, b]] \\
- &= (-1)^{|a| \cdot |c|} [a, [b, c]] 
- - (-1)^{|b| \cdot |a|} (-1)^{|a| \cdot |c|} [b, [a, c]] 
+ &= (-1)^{|a| \cdot |c|} [a, [b, c]]
+ - (-1)^{|b| \cdot |a|} (-1)^{|a| \cdot |c|} [b, [a, c]]
  + (-1)^{|c| \cdot |b|} [c, [a, b]] \\
- &= (-1)^{|a| \cdot |c|} \bigl( [a, [b, c]] - (-1)^{|a| \cdot |b|} [b, [a, c]] 
+ &= (-1)^{|a| \cdot |c|} \bigl( [a, [b, c]] - (-1)^{|a| \cdot |b|} [b, [a, c]]
  - [[a, b], c] \bigr),
 \end{align*}
 using $[[a,b],c] = -(-1)^{(|a|+|b|)|c|}[c,[a,b]]$ and simplifying exponents.
@@ -71,31 +71,31 @@ using $[[a,b],c] = -(-1)^{(|a|+|b|)|c|}[c,[a,b]]$ and simplifying exponents.
 \label{conv:dg-signs}
 In a differential graded algebra $(A, d, \cdot)$:
 \begin{enumerate}[label=(\roman*)]
-\item The differential has degree $|d| = +1$ (cohomological convention) 
+\item The differential has degree $|d| = +1$ (cohomological convention)
 or $|d| = -1$ (homological convention).
 \item The Leibniz rule incorporates the Koszul sign:
 \[
 d(a \cdot b) = (da) \cdot b + (-1)^{|a|} a \cdot (db).
 \]
-\item For a differential graded Lie algebra, the bracket-differential 
+\item For a differential graded Lie algebra, the bracket-differential
 compatibility is:
 \[
 d[a, b] = [da, b] + (-1)^{|a|} [a, db].
 \]
 \end{enumerate}
-Throughout this monograph, we use the \emph{cohomological convention} 
+Throughout this monograph, we use the \emph{cohomological convention}
 $|d| = +1$ unless explicitly stated otherwise.
 \end{convention}
 
 \begin{lemma}[Sign rule for compositions \cite{LV12}; \ClaimStatusProvedElsewhere]
 \label{lem:composition-signs}
-Let $f: V \to W$ and $g: W \to X$ be graded linear maps of degrees $|f|$ 
-and $|g|$ respectively. The composition $g \circ f: V \to X$ has degree 
+Let $f: V \to W$ and $g: W \to X$ be graded linear maps of degrees $|f|$
+and $|g|$ respectively. The composition $g \circ f: V \to X$ has degree
 $|g \circ f| = |f| + |g|$. For evaluation on $v \in V$:
 \[
 (g \circ f)(v) = g(f(v)) \quad \text{(no sign)}.
 \]
-However, when expressing $g \circ f$ in terms of tensor factors, the 
+However, when expressing $g \circ f$ in terms of tensor factors, the
 Koszul rule applies:
 \[
 (f \otimes g) \circ \tau_{V,W} = (-1)^{|f| \cdot |g|} \tau_{V,X} \circ (g \otimes f)
@@ -105,10 +105,10 @@ where $\tau$ denotes the graded twist map.
 
 \begin{definition}[Graded Hom complex]
 \label{def:graded-hom}
-For chain complexes $(V, d_V)$ and $(W, d_W)$, the \emph{internal Hom complex} 
+For chain complexes $(V, d_V)$ and $(W, d_W)$, the \emph{internal Hom complex}
 $\underline{\Hom}(V, W)$ has:
 \begin{enumerate}[label=(\roman*)]
-\item Degree $n$ component: $\underline{\Hom}(V, W)^n = \prod_{k \in \bZ} 
+\item Degree $n$ component: $\underline{\Hom}(V, W)^n = \prod_{k \in \bZ}
 \Hom_k(V^k, W^{k+n})$, i.e., degree-$n$ maps.
 \item Differential: For $f \in \underline{\Hom}(V, W)^n$,
 \[
@@ -122,9 +122,9 @@ The sign $(-1)^{|f|}$ ensures $d_{\underline{\Hom}}^2 = 0$.
 \label{ver:d-hom-squared}
 For $f$ of degree $|f|$:
 \begin{align*}
-(d^2 f)(v) &= d\bigl( d_W(f(v)) - (-1)^{|f|} f(d_V v) \bigr) 
+(d^2 f)(v) &= d\bigl( d_W(f(v)) - (-1)^{|f|} f(d_V v) \bigr)
  - (-1)^{|f|+1} \bigl( d_W(f(v)) - (-1)^{|f|} f(d_V v) \bigr)|_{v \mapsto d_V v} \\
-&= d_W^2(f(v)) - (-1)^{|f|} d_W(f(d_V v)) 
+&= d_W^2(f(v)) - (-1)^{|f|} d_W(f(d_V v))
  - (-1)^{|f|+1} d_W(f(d_V v)) + (-1)^{2|f|+1} f(d_V^2 v) \\
 &= 0 - (-1)^{|f|} d_W(f(d_V v)) + (-1)^{|f|} d_W(f(d_V v)) + 0 = 0.
 \end{align*}
@@ -167,7 +167,7 @@ Lurie~\cite{HTT, HA}.
 
 \begin{proposition}[Duality and grading reversal; \ClaimStatusProvedHere]
 \label{prop:duality-grading}
-For a finite-dimensional chain complex $(C_\bullet, \partial)$, the dual 
+For a finite-dimensional chain complex $(C_\bullet, \partial)$, the dual
 complex $C^* = \Hom(C, k)$ naturally carries a cohomological grading:
 \[
 (C^*)^n := \Hom_k(C_n, k) = (C_n)^*.
@@ -182,8 +182,8 @@ for $\phi \in (C^*)^n$ and $c \in C_{n+1}$.
 \begin{proof}
 The sign ensures $(\partial^*)^2 = 0$:
 \begin{align*}
-\langle (\partial^*)^2 \phi, c \rangle 
-&= (-1)^{|\phi|+2} \langle \partial^* \phi, \partial c \rangle 
+\langle (\partial^*)^2 \phi, c \rangle
+&= (-1)^{|\phi|+2} \langle \partial^* \phi, \partial c \rangle
 = (-1)^{|\phi|+2} (-1)^{|\phi|+1} \langle \phi, \partial^2 c \rangle = 0.
 \end{align*}
 The sign $(-1)^{|\phi|+1}$ is precisely the convention that makes
@@ -198,14 +198,14 @@ A chain complex $C$ (in homological grading) is:
 \item \emph{Coconnective} if $C_n = 0$ for $n > 0$ (concentrated in non-positive degrees).
 \item \emph{Bounded} if both conditions hold with finitely many nonzero terms.
 \end{enumerate}
-In cohomological grading, connective means $C^n = 0$ for $n > 0$, and 
+In cohomological grading, connective means $C^n = 0$ for $n > 0$, and
 coconnective means $C^n = 0$ for $n < 0$.
 \end{definition}
 
 \begin{remark}[Filtrations and spectral sequences]
 \label{rem:filt-ss-grading}
-The grading convention affects the indexing of spectral sequences. For a 
-filtered complex with cohomological grading and increasing filtration 
+The grading convention affects the indexing of spectral sequences. For a
+filtered complex with cohomological grading and increasing filtration
 $F^p C \subseteq F^{p+1} C$, the spectral sequence has:
 \[
 E_r^{p,q} \Rightarrow H^{p+q}(C).
@@ -239,7 +239,7 @@ An element $v \in V^{n-1}$ corresponds to $sv \in (sV)^n$ with $|sv| = |v| + 1$.
 \[
 (s^{-1}V)^n := V^{n+1}.
 \]
-An element $v \in V^{n+1}$ corresponds to $s^{-1}v \in (s^{-1}V)^n$ with 
+An element $v \in V^{n+1}$ corresponds to $s^{-1}v \in (s^{-1}V)^n$ with
 $|s^{-1}v| = |v| - 1$.
 \end{enumerate}
 These are inverse operations: $s \circ s^{-1} = s^{-1} \circ s = \id$.
@@ -258,8 +258,8 @@ The notation $V[n]$ is used with two incompatible conventions in the literature:
 \begin{enumerate}[label=(\roman*)]
 \item \emph{Homological convention.} $(V[n])_k = V_{k-n}$, so $V[1]$ shifts
 \emph{up} (increases indices).
-\item \emph{Cohomological convention.} $(V[n])^k = V^{k+n}$, so $V[1]$ shifts 
-\emph{down} (decreases indices in the sense that degree-$k$ elements come from 
+\item \emph{Cohomological convention.} $(V[n])^k = V^{k+n}$, so $V[1]$ shifts
+\emph{down} (decreases indices in the sense that degree-$k$ elements come from
 degree-$(k+1)$ elements of $V$).
 \end{enumerate}
 We follow the cohomological convention: $V[n]^k = V^{k+n}$. Under this convention,
@@ -284,14 +284,14 @@ Without the sign, we would have $d_{sV}(sv) = s(dv)$, and then:
 \[
 d_{sV}^2(sv) = d_{sV}(s(dv)) = s(d(dv)) = s(d^2 v) = 0.
 \]
-This appears to work, but the sign is required for compatibility with tensor 
+This appears to work, but the sign is required for compatibility with tensor
 products. Consider $V \otimes W$ with differential:
 \[
 d_{V \otimes W}(v \otimes w) = dv \otimes w + (-1)^{|v|} v \otimes dw.
 \]
 For the suspended tensor product $(sV) \otimes W$ to have consistent differential:
 \[
-d((sv) \otimes w) = d_{sV}(sv) \otimes w + (-1)^{|sv|} sv \otimes dw 
+d((sv) \otimes w) = d_{sV}(sv) \otimes w + (-1)^{|sv|} sv \otimes dw
 = -s(dv) \otimes w + (-1)^{|v|+1} sv \otimes dw.
 \]
 This matches $s(d(v \otimes w))$ only with the sign convention $d_{sV}(sv) = -s(dv)$.
@@ -312,15 +312,15 @@ For an operad $\cP$, the \emph{operadic suspension} $\fS \cP$ is the operad with
 \[
 (\fS \cP)(n) := \sgn_n \otimes \cP(n)[n-1]
 \]
-where $\sgn_n$ is the sign representation of $\Sigma_n$. The operadic composition 
+where $\sgn_n$ is the sign representation of $\Sigma_n$. The operadic composition
 involves signs from both the degree shift and the sign representation.
 
 Explicitly, if $\gamma \in \cP(k)$ and $\mu_1, \ldots, \mu_k \in \cP(n_1), \ldots, \cP(n_k)$:
 \[
-s^{k-1}\gamma \circ (s^{n_1-1}\mu_1, \ldots, s^{n_k-1}\mu_k) 
+s^{k-1}\gamma \circ (s^{n_1-1}\mu_1, \ldots, s^{n_k-1}\mu_k)
 = \epsilon \cdot s^{n-1}(\gamma \circ (\mu_1, \ldots, \mu_k))
 \]
-where $n = n_1 + \cdots + n_k$ and $\epsilon$ is a sign depending on degrees 
+where $n = n_1 + \cdots + n_k$ and $\epsilon$ is a sign depending on degrees
 and positions.
 \end{definition}
 
@@ -330,7 +330,7 @@ For a Koszul operad $\cP$, the Koszul dual cooperad is:
 \[
 \cP^{\scriptstyle \text{\textexclamdown}} = (\fS^{-1} \cP^!)^\vee
 \]
-where $\cP^!$ is the linear dual operad and $\fS^{-1}$ is operadic desuspension. 
+where $\cP^!$ is the linear dual operad and $\fS^{-1}$ is operadic desuspension.
 Explicitly:
 \[
 \cP^{\scriptstyle \text{\textexclamdown}}(n) = \cP^!(n)^* \otimes \sgn_n[1-n].
@@ -344,12 +344,12 @@ This formula explains the appearance of signs and shifts in bar-cobar duality.
 
 \begin{definition}[Determinant of a vector space]
 \label{def:det-vect}
-For a finite-dimensional vector space $V$ of dimension $n$, the 
+For a finite-dimensional vector space $V$ of dimension $n$, the
 \emph{determinant line} is:
 \[
 \Det(V) := \bigwedge^n V = \bigwedge^{\dim V} V.
 \]
-This is a 1-dimensional vector space. An element $\omega \in \Det(V) \setminus \{0\}$ 
+This is a 1-dimensional vector space. An element $\omega \in \Det(V) \setminus \{0\}$
 is called an \emph{orientation} of $V$.
 \end{definition}
 
@@ -364,8 +364,8 @@ The determinant construction satisfies:
 \item \emph{Direct sums.} $\Det(V \oplus W) \cong \Det(V) \otimes \Det(W)$.
 \item \emph{Duality.} $\Det(V^*) \cong \Det(V)^* = \Det(V)^{-1}$.
 \item \emph{Zero space.} $\Det(0) = k$ (the ground field, concentrated in degree 0).
-\item \emph{Functoriality.} An isomorphism $f: V \xrightarrow{\sim} W$ induces 
-$\Det(f): \Det(V) \xrightarrow{\sim} \Det(W)$ with $\Det(f)(v_1 \wedge \cdots \wedge v_n) 
+\item \emph{Functoriality.} An isomorphism $f: V \xrightarrow{\sim} W$ induces
+$\Det(f): \Det(V) \xrightarrow{\sim} \Det(W)$ with $\Det(f)(v_1 \wedge \cdots \wedge v_n)
 = f(v_1) \wedge \cdots \wedge f(v_n)$.
 \end{enumerate}
 \end{proposition}
@@ -376,35 +376,35 @@ For a finite set $I$, define:
 \[
 \Det(I) := \Det(k^I)
 \]
-where $k^I$ is the vector space with basis indexed by $I$. Concretely, if 
+where $k^I$ is the vector space with basis indexed by $I$. Concretely, if
 $I = \{i_1, \ldots, i_n\}$:
 \[
 \Det(I) = k \cdot (e_{i_1} \wedge \cdots \wedge e_{i_n})
 \]
-is 1-dimensional, and permuting the order of $I$ introduces signs according to 
+is 1-dimensional, and permuting the order of $I$ introduces signs according to
 the permutation's signature.
 \end{definition}
 
 \begin{lemma}[Determinant and ordering \cite{Weibel94}; \ClaimStatusProvedElsewhere]
 \label{lem:det-ordering}
-For a finite set $I$ with total orderings $<$ and $<'$, let $\sigma \in \Sigma_I$ 
+For a finite set $I$ with total orderings $<$ and $<'$, let $\sigma \in \Sigma_I$
 be the permutation taking the $<$-ordering to the $<'$-ordering. Then:
 \[
 e_{i_1} \wedge \cdots \wedge e_{i_n} = \sgn(\sigma) \cdot e_{i_{\sigma(1)}} \wedge \cdots \wedge e_{i_{\sigma(n)}}.
 \]
-The determinant line $\Det(I)$ is canonically independent of ordering, but a 
+The determinant line $\Det(I)$ is canonically independent of ordering, but a
 choice of generator (i.e., orientation) depends on ordering.
 \end{lemma}
 
 \begin{definition}[Orientation line]
 \label{def:orientation-line}
-For a smooth manifold $M$ of dimension $d$, the \emph{orientation line} at 
+For a smooth manifold $M$ of dimension $d$, the \emph{orientation line} at
 $p \in M$ is:
 \[
 \orline{M,p} := \Det(T_p M) = \bigwedge^d T_p M.
 \]
-The \emph{orientation sheaf} $\orline{M}$ is the local system with fiber 
-$\orline{M,p}$ at $p$. An orientation of $M$ is a global section 
+The \emph{orientation sheaf} $\orline{M}$ is the local system with fiber
+$\orline{M,p}$ at $p$. An orientation of $M$ is a global section
 $\sigma: M \to \orline{M}$ that is nowhere vanishing.
 \end{definition}
 
@@ -431,7 +431,7 @@ where $N_{D/\FM_n}$ is the normal bundle to the boundary divisor.
 
 \begin{construction}[Determinant line in bar complex]
 \label{constr:det-bar}
-In the geometric bar complex, the determinant line appears through the 
+In the geometric bar complex, the determinant line appears through the
 identification:
 \[
 \Bbar^{\mathrm{geom}}_n(\cA) = \Gamma(\FM_n(X), \cA^{\boxtimes n} \otimes \Omega^{n-1}_{\log}(\FM_n, D))
@@ -446,7 +446,7 @@ Explicitly, for $n = 2$ on $X = \bP^1$:
 \[
 \Omega^1_{\log}(\FM_2(\bP^1), D_{12}) = \cO \cdot \dlog(z_1 - z_2) = \cO \cdot \frac{d(z_1 - z_2)}{z_1 - z_2}
 \]
-which has a simple pole along $D_{12} = \{z_1 = z_2\}$ and generates the 
+which has a simple pole along $D_{12} = \{z_1 = z_2\}$ and generates the
 log de Rham complex.
 \end{construction}
 
@@ -456,35 +456,35 @@ The residue map along a divisor $D \subset Y$ is:
 \[
 \Res_D: \Omega^k_{\log}(Y, D) \to \Omega^{k-1}(D)
 \]
-This map respects determinant lines in the following sense: if $D$ is smooth 
+This map respects determinant lines in the following sense: if $D$ is smooth
 of codimension 1, then:
 \[
 \Res_D: \omega_Y \otimes \cO_Y(D)|_D \to \omega_D
 \]
-is the adjunction isomorphism, and the signs in the bar differential arise 
+is the adjunction isomorphism, and the signs in the bar differential arise
 from tracking this isomorphism across multiple boundary strata.
 \end{proposition}
 
 \begin{theorem}[Determinant conventions and bar-cobar signs \cite{LV12}; \ClaimStatusProvedElsewhere]
 \label{thm:det-bar-cobar-signs}
-The signs in the bar-cobar adjunction can be uniformly expressed using 
+The signs in the bar-cobar adjunction can be uniformly expressed using
 determinant lines. For an $\Eone$-chiral algebra $\cA$:
 \begin{enumerate}[label=(\roman*)]
 \item The bar complex element $[a_1 | \cdots | a_n] \in \Bbar_n(\cA)$ corresponds to:
 \[
 a_1 \otimes \cdots \otimes a_n \otimes \omega_{[n]} \in \cA^{\otimes n} \otimes \Det([n])
 \]
-where $[n] = \{1, \ldots, n\}$ and $\omega_{[n]}$ is the standard generator of 
+where $[n] = \{1, \ldots, n\}$ and $\omega_{[n]}$ is the standard generator of
 $\Det([n])$ determined by the ordering $1 < 2 < \cdots < n$.
 
 \item The bar differential is:
 \[
 d[a_1 | \cdots | a_n] = \sum_{i=1}^{n-1} (-1)^{\epsilon_i} [a_1 | \cdots | a_i a_{i+1} | \cdots | a_n]
 \]
-where $\epsilon_i = |a_1| + \cdots + |a_i| + i - 1$ tracks both internal degrees 
+where $\epsilon_i = |a_1| + \cdots + |a_i| + i - 1$ tracks both internal degrees
 and position.
 
-\item These signs arise canonically from the face maps of the simplicial 
+\item These signs arise canonically from the face maps of the simplicial
 structure on $\Delta^\bullet$ and the determinant line conventions.
 \end{enumerate}
 \end{theorem}
@@ -574,10 +574,10 @@ d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= -s^{-1}(dc_1) \otimes s^{-1}c_2 \\
 
 \begin{proposition}[Master sign formula {\cite{LV12}}; \ClaimStatusProvedElsewhere]
 \label{prop:master-sign}
-For the bar complex of an $\Ainf$-algebra $(A, \{m_n\})$, the full differential 
+For the bar complex of an $\Ainf$-algebra $(A, \{m_n\})$, the full differential
 on $[a_1|\cdots|a_n]$ is:
 \[
-d_{\mathrm{bar}}[a_1|\cdots|a_n] = \sum_{i=1}^{n} \sum_{k=1}^{n-i+1} 
+d_{\mathrm{bar}}[a_1|\cdots|a_n] = \sum_{i=1}^{n} \sum_{k=1}^{n-i+1}
 (-1)^{\epsilon_{i,k}} [a_1|\cdots|a_{i-1}|m_k(a_i, \ldots, a_{i+k-1})|a_{i+k}|\cdots|a_n]
 \]
 where the sign is:
@@ -641,41 +641,41 @@ Computations~\ref{comp:bar-signs-2-1}--\ref{comp:bar-signs-3-2}.
 
 \begin{definition}[Orientation system]
 \label{def:orientation-system}
-An \emph{orientation system} on a stratified space $Y = \bigsqcup_\alpha Y_\alpha$ 
-is a collection of line bundles $\orline{Y_\alpha}$ on each stratum together with 
-\emph{gluing isomorphisms}: for each pair $Y_\alpha \subseteq \overline{Y_\beta}$ 
+An \emph{orientation system} on a stratified space $Y = \bigsqcup_\alpha Y_\alpha$
+is a collection of line bundles $\orline{Y_\alpha}$ on each stratum together with
+\emph{gluing isomorphisms}: for each pair $Y_\alpha \subseteq \overline{Y_\beta}$
 (closure relation), an isomorphism:
 \[
-\phi_{\alpha\beta}: \orline{Y_\alpha}|_{\partial_\alpha Y_\beta} \xrightarrow{\sim} 
+\phi_{\alpha\beta}: \orline{Y_\alpha}|_{\partial_\alpha Y_\beta} \xrightarrow{\sim}
 \orline{Y_\beta}|_{\partial_\alpha Y_\beta} \otimes N_{\alpha\beta}
 \]
-where $N_{\alpha\beta}$ is the normal bundle factor and $\partial_\alpha Y_\beta$ 
+where $N_{\alpha\beta}$ is the normal bundle factor and $\partial_\alpha Y_\beta$
 is the boundary of $Y_\beta$ meeting $Y_\alpha$.
 \end{definition}
 
 \begin{proposition}[Orientation system on FM compactification \cite{FM94}; \ClaimStatusProvedElsewhere]
 \label{prop:orient-fm}
-The FM compactification $\FM_n(X)$ carries a canonical orientation system 
+The FM compactification $\FM_n(X)$ carries a canonical orientation system
 determined by:
 \begin{enumerate}[label=(\roman*)]
 \item On the open stratum $\Conf_n(X)$: $\orline{\Conf_n(X)} = \bigotimes_{i=1}^n \orline{X}$.
-\item On boundary stratum $D_T$ (labeled by tree $T$): 
+\item On boundary stratum $D_T$ (labeled by tree $T$):
 $\orline{D_T} = \bigotimes_{v \in V(T)} \orline{X}$ times exceptional fiber orientations.
-\item Gluing isomorphisms: Given by the blowup construction, with signs determined 
+\item Gluing isomorphisms: Given by the blowup construction, with signs determined
 by the ordering on vertices of $T$.
 \end{enumerate}
 \end{proposition}
 
 \begin{construction}[Sign from blowup]
 \label{constr:sign-blowup}
-When blowing up the diagonal $\Delta_{ij} \subset X^n$, the orientation 
+When blowing up the diagonal $\Delta_{ij} \subset X^n$, the orientation
 transformation is:
 \[
 \orline{X^n} = \orline{\Bl_{\Delta_{ij}}(X^n)} \otimes \orline{E_{ij}}^{-1}
 \]
 where $E_{ij} \cong \bP(N_{\Delta_{ij}/X^n})$ is the exceptional divisor.
 
-For $X$ a curve (dimension 1), the normal bundle $N_{\Delta/X^2} \cong T_X$ 
+For $X$ a curve (dimension 1), the normal bundle $N_{\Delta/X^2} \cong T_X$
 along the diagonal, so:
 \[
 \orline{E_{ij}} = \orline{\bP^0} = k
