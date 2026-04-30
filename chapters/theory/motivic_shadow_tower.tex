@@ -1,13 +1,10 @@
 %% The Motivic Shadow Tower.
 %%
-%% Constructs the motivic lift of the Vol I shadow tower:
-%% S_r(A) \in Q[(2 pi i)^r, zeta(3), zeta(5), ...] admits canonical
-%% lift S_r^{mot}(A) \in MZV^{mot}_{wt r}; the GRT_1(Q) torsor action
-%% on Face(A) (Vol II grt_parametrized_seven_faces.tex) lifts to a
-%% coaction on {S_r^{mot}(A)}; Kummer-congruence prediction for the
-%% Z_g closed forms follows from motivic Bernoulli-Kummer; the
-%% shadow L-function pole structure and kappa-vs-beta split
-%% are both explained by motivic weight data.
+%% Constructs the motivic lift of the Vol I shadow tower on affine
+%% Arnold screens. The motivic object is weight-filtered, not purely
+%% weight r in general: rational Virasoro coefficients live in the
+%% Tate-scalar lane, while non-rational Arnold periods live in the
+%% Brown--Goncharov motivic MZV filtration.
 %%
 %% Vol I theory sequence. Depends on shadow tower (see \ref{part:characteristic-datum}), Vol II
 %% GRT-parametrized seven faces, Vol III shadow-Feynman
@@ -39,6 +36,7 @@
 \providecommand{\coll}{\mathrm{coll}}
 \providecommand{\Res}{\operatorname{Res}}
 \providecommand{\fg}{\mathfrak{g}}
+\providecommand{\Fil}{\mathrm{Fil}}
 \providecommand{\ClaimStatusConditional}{}
 
 \chapter{The Motivic Shadow Tower}
@@ -48,30 +46,26 @@
 \section*{Prologue}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The shadow tower $\{S_r(\cA)\}_{r \geq 2}$ was introduced in
-the characteristic-datum part as the sequence of $\MC$-coefficients produced by the
-universal Maurer--Cartan element $\Theta_{\cA}$ in the ordered
-convolution $E_1$ dGLA; it classifies chiral algebras into the
-five shadow strata G/L/C/M/FF via the $r_{\max}$ slot of the
-infinite fingerprint (\S\text{infinite-fingerprint}). Individual
-coefficients such as $S_4(\Vir_c) = 10/[c(5c+22)]$ have been
-computed numerically and verified against three independent
-implementations (convolution recursion, master-equation recursion,
-\texttt{ds\_shadow\_higher\_arity}). These numerical identities
-are true statements in $\mathbb{Q}(c)$; they do not, on their own,
-explain why the tower coefficients live in the specific arithmetic
-ring they appear to inhabit.
+The shadow tower $\{S_r(\cA)\}_{r \geq 2}$ is the sequence of scalar
+coefficients obtained from the ordered Maurer--Cartan element
+$\Theta_{\cA}$ after Arnold-residue extraction and symmetric averaging.
+The low Virasoro values
+\[
+ S_2(\Vir_c)=\frac c2,\qquad S_3(\Vir_c)=2,\qquad
+ S_4(\Vir_c)=\frac{10}{c(5c+22)},\qquad
+ S_5(\Vir_c)=\frac{-48}{c^2(5c+22)}
+\]
+are rational functions of the central charge. Their rationality is not
+a motivic purity statement in weight $r$: it says that these particular
+Arnold pairings have only the Tate-scalar component. Higher-spin
+channels may carry genuine Brown--Goncharov periods, but a non-zero
+period coefficient must be produced by an explicit Arnold/KZ iterated
+integral that survives the ordered-to-symmetric averaging map.
 
-The Vol~II chapter on GRT-parametrized seven
-faces\footnote{See \texttt{chapters/theory/grt\_parametrized\_seven\_faces.tex}
-in Vol~II.} promoted the seven historical
-realisations of $r(z)$ to Q-rational orbit representatives of a
-single $\GRT(\mathbb{Q})$-torsor, with two canonical motivic
-companions: Brown's motivic face $F_8$ and Willwacher's operadic
-face $F_9$. The torsor structure immediately raises the question
-of whether the shadow tower itself admits a motivic refinement
-\emph{compatible} with the torsor action. This chapter answers
-affirmatively.
+The GRT-parametrised faces act on the same Arnold/KZ period algebra.
+Thus the natural motivic object attached to a shadow coefficient is a
+weight-filtered motivic period, together with its rational OPE
+coefficient, not a bare numerical scalar.
 
 Throughout, we distinguish numerical multiple zeta values
 $\MZV^{\num} \subset \mathbb{R}$ (the $\mathbb{Q}$-algebra generated
@@ -86,23 +80,14 @@ motivic Galois group $\mathrm{Gal}^{\mot}(\mathrm{MT}(\mathbb{Z}))
 \simeq \mathrm{Spec}(U(\grt))$ whose Lie algebra is precisely
 $\grt$. That coincidence is not accidental.
 
-The chapter is organised as follows.
-Section~\ref{sec:mot-setup} sets up the ambient
-$\MZV^{\mot}$ ring, the weight filtration, and the motivic
-coaction. Section~\ref{sec:mot-lift-thm} establishes
-Theorem~\ref{thm:shadow-tower-motivic-lift}: the shadow-tower
-coefficients admit a canonical motivic lift with
-period-compatibility. Section~\ref{sec:grt-coaction}
-lifts the GRT torsor action on $\Face(\cA)$ to a coaction on the
-motivic shadow tower. Section~\ref{sec:explicit-computations}
-computes three explicit motivic lifts: $S_4(\Vir_c)$, $S_5(\Vir_c)$,
-and $S_6(W_3)$ (the first weight at which $\zet^{\mot}(3)$
-enters). Section~\ref{sec:kummer} derives the Kummer-congruence
-prediction for the genus-expansion closed forms $Z_g$.
-Section~\ref{sec:shadow-L} resolves the shadow $L$-function
-pole structure (closing). Section~\ref{sec:kappa-vs-beta}
-resolves the $\kappa^{\mot}$-vs-Dyson-$\beta$ motivic-modular
-split (closing).
+The first obstruction is purity. A shadow coefficient has an external
+bar weight $r$, while its motivic period may have any Brown weight
+$\leq r$; rational Virasoro coefficients have Brown weight $0$. The
+second obstruction is descent. Arnold forms control affine ordered
+screens; projective and positive-genus curves add the extra relations
+recorded in Appendix~\ref{app:arnold-relations}. The third obstruction
+is Hochschild scope. Shadow/Gel'fand--Fuks representatives are not
+curve-level chiral Hochschild classes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Setup: motivic multiple zeta values and the weight filtration}
