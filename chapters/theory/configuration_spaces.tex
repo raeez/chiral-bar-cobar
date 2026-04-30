@@ -18,21 +18,25 @@ period relations recorded in
 Proposition~\ref{prop:arnold-higher-genus}.
 
 The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ are the scalar
-coefficients of the universal KZ connection one-form
+coefficients of the universal KZ connection one-form on an affine
+genus-$0$ screen
 $\omega_{\mathrm{Arnold}} = \sum_{i<j} t_{ij}\,\eta_{ij}$ valued in
 the infinitesimal braid Lie algebra $\mathfrak{t}_n$; the
 universal flat connection is
 $\nabla_{\mathrm{Arnold}} = d - \omega_{\mathrm{Arnold}}$ on the
 trivial $U(\mathfrak{t}_n)$-bundle over $\operatorname{Conf}_n(\mathbb{C})$,
-and the bar differential is its pullback along the KZ functor:
+and, on the Arnold-local ordered genus-$0$ subcategory, the bar
+differential is its pullback along the KZ functor:
 \[
  d_{\mathrm{bar}} \;=\; \mathrm{KZ}^*\bigl(\nabla_{\mathrm{Arnold}}\bigr).
 \]
-Four geometric inputs carry this identity: $\overline{C}_n(X)$
+Six geometric inputs carry this identity: $\overline{C}_n(X)$
 (\S\ref{sec:FM-compactification}); the logarithmic propagator
 (Definition~\ref{def:log-forms}); the Arnold relation
-(Theorem~\ref{thm:arnold-relations}), which is the flatness of
-$\nabla_{\mathrm{Arnold}}$ on the affine genus-$0$ screen; and the
+(Theorem~\ref{thm:arnold-relations}), which is the scalar form
+component of the flatness of $\nabla_{\mathrm{Arnold}}$ on the affine
+genus-$0$ screen; the infinitesimal braid relations, which supply the
+Lie-algebra component; the
 projective/period corrections of
 Proposition~\ref{prop:arnold-higher-genus}, which govern the global
 curve geometry away from that screen; and the residue maps
@@ -48,8 +52,8 @@ remains the local tangent-screen identity, but the global
 configuration-space package acquires projective and period corrections
 (Proposition~\ref{prop:arnold-higher-genus};
 Proposition~\ref{prop:elliptic-arnold-relations}; \cite{Fay73}
-for prime forms): the deficit is absorbed into the curvature
-$\kappa(\cA) \cdot \omega_g$, which the universal-conductor
+for prime forms): on the scalar modular lane the resulting deficit is
+measured by the curvature $\kappa(\cA) \cdot \omega_g$, which the universal-conductor
 chapter (Chapter~\ref{chap:universal-conductor}) reads as
 $K(\cA) = -c_{\mathrm{ghost}}(\mathrm{BRST}(\cA))$ on the
 shadow side.
@@ -123,8 +127,8 @@ the genus-$0$ Arnold relation is the precise local cancellation
 identity ensuring that these contributions sum to zero on an affine
 screen. The equivalence between the local Arnold relation and
 nilpotency of the bar differential is
-Theorem~\ref{thm:arnold-iff-nilpotent}; at genus~$0$ it is the
-\emph{only} relation on the scalar propagator classes. On
+Theorem~\ref{thm:arnold-iff-nilpotent}; on the affine genus-$0$ screen
+it is the \emph{only} relation on the scalar propagator classes. On
 $\mathbb{P}^1$ one must also quotient by the projective linear
 relations, and on $\Sigma_g$ with $g \geq 1$ one must adjoin the
 surface generators and mixed period relations of
@@ -201,9 +205,11 @@ The two variants serve distinct purposes in the bar--cobar formalism.
 \item The projection $\pi^\Sigma\colon C^{\mathrm{ord}}_n \to C^{\Sigma}_n$
  induces the averaging morphism
  $\mathrm{av}\colon B^{\mathrm{ord}}(\cA) \to B^{\Sigma}(\cA)$
- (taking $\Sigma_n$-coinvariants), and the geometric origin of
- $\mathrm{av}$ is precisely the $\Sigma_n$-coinvariant projection on
- configuration spaces.
+ after the ordered differential has been checked to be
+ $\Sigma_n$-equivariant. Algebraically this is passage to
+ coinvariants; geometrically it is quotient by relabelling. It is not
+ an additional configuration-space symmetry and it does not erase the
+ ordered proof of the Arnold cancellation before the quotient.
 \end{itemize}
 The Fulton--MacPherson compactification commutes with the
 $\Sigma_n$-quotient: $\overline{C}^{\Sigma}_n(\Sigma_g) =
@@ -244,7 +250,12 @@ where the first factor records the collision center plus the remaining $n-|S|$ p
 $\mathrm{Aff}(\mathbb{A}^1) = \mathbb{C} \rtimes \mathbb{C}^*$
 of translations and dilations on the screen. The translation quotient identifies the screen with the tangent space~$T_q\Sigma_g$ at the collision point (eliminating the choice of origin), and the dilation quotient eliminates the overall scale, so that only the projective-shape data remain on the screen. For deeper strata corresponding to nested collisions, this iterates: screens within screens give products of $\mathrm{Aff}$-quotiented genus-$0$ configuration spaces. Note: unlike the Deligne--Mumford compactification $\overline{\mathcal{M}}_{g,n}$, the FM compactification of a fixed curve involves no curve degeneration; all screens are genus~$0$.
 
-\item The construction is \emph{functorial}: smooth maps $\Sigma_g \to \Sigma_g'$ induce maps $\overline{C}_n(\Sigma_g) \to \overline{C}_n(\Sigma_{g'})$ compatible with stratification.
+\item The construction is \emph{functorial} for maps that preserve
+distinctness of labelled points, in particular for open embeddings and
+automorphisms of curves:
+$\overline{C}_n(\Sigma_g) \to \overline{C}_n(\Sigma_g')$ is then
+compatible with the boundary stratification. A general smooth map need
+not send configurations to configurations.
 \end{enumerate}
 \end{theorem}
 
@@ -264,7 +275,7 @@ where $\Delta_{ij} = \{(x_1,\ldots,x_n) \in \Sigma_g^n : x_i = x_j\}$ is a smoot
 First blow up the full diagonal $\Delta_n = \{x_1 = \cdots = x_n\}$ (codimension $n-1$):
 \[\widetilde{\Sigma_g^n}_1 = \text{Bl}_{\Delta_n}(\Sigma_g^n)\]
 
-\emph{Local coordinates near $\Delta_n$.} Choose a point $p \in \Delta_n$ and local coordinate $z$ on $\Sigma_g$ near $p$. Near $p$, we have coordinates $(z_1,\ldots,z_n)$ on $\Sigma_g^n$. The blow-up introduces:
+\emph{Local coordinates near $\Delta_n$.} Choose a point $p \in \Delta_n$ and local coordinate $z$ on $\Sigma_g$ near $p$. Near $p$, the coordinates on $\Sigma_g^n$ are $(z_1,\ldots,z_n)$. The blow-up introduces:
 \begin{itemize}
 \item \emph{Center of mass:} $u = \frac{1}{n}\sum_{i=1}^n z_i$
 \item \emph{Relative coordinates:} $\zeta_i = z_i - u$ for $i = 1,\ldots,n-1$ (with $\zeta_n = -\sum_{i=1}^{n-1}\zeta_i$)
@@ -282,7 +293,7 @@ For a subset $S = \{i_1, \ldots, i_k\}$ with $2 \leq k < n$:
 \[\widetilde{\Sigma_g^n}_{S} = \text{Bl}_{\widetilde{\Delta_S}}(\widetilde{\Sigma_g^n}_{S_{\text{prev}}})\]
 where $\widetilde{\Delta_S}$ is the proper transform of $\Delta_S$ from the previous blow-up stage.
 
-The ordering matters: we must blow up in order of decreasing codimension to ensure:
+The blow-ups are taken in decreasing codimension, which ensures:
 \begin{enumerate}
 \item All centers of blow-up are smooth
 \item The final result is independent of choices within each codimension
@@ -292,15 +303,20 @@ The ordering matters: we must blow up in order of decreasing codimension to ensu
 \medskip
 \noindent\emph{Stage 3: Final Compactification}
 
-After all blow-ups, we obtain:
+After all blow-ups:
 \[\overline{C}_n(\Sigma_g) = \widetilde{\Sigma_g^n}_{\text{final}}\]
 
 The boundary divisors $D_S$ (one for each subset $S$ with $|S| \geq 2$) are the exceptional divisors from blowing up $\Delta_S$.
 
 \medskip
-\noindent\emph{Verification of Normal Crossings.}
+\noindent\emph{Normal crossings.}
 
-To verify that $D = \bigcup_S D_S$ has normal crossings, we check locally. Near a point in $D_{S_1} \cap \cdots \cap D_{S_m}$ (where $S_1, \ldots, S_m$ are \emph{nested} subsets: $S_1 \subset S_2 \subset \cdots \subset S_m$), we have local analytic coordinates:
+The divisor $D = \bigcup_S D_S$ has normal crossings by a local
+coordinate calculation. Near a point in
+$D_{S_1} \cap \cdots \cap D_{S_m}$, where
+$S_1, \ldots, S_m$ are \emph{nested} subsets
+$S_1 \subset S_2 \subset \cdots \subset S_m$, there are local analytic
+coordinates:
 \[(u, \epsilon_1, \theta_1, \ldots, \epsilon_m, \theta_m, w_1, \ldots, w_k)\]
 where:
 \begin{itemize}
@@ -316,7 +332,11 @@ These are precisely coordinate hyperplanes, hence normal crossing.
 \medskip
 \noindent\emph{Functoriality.}
 
-If $f: \Sigma_g \to \Sigma_{g'}$ is a smooth map, it induces $f^{(n)}: \Sigma_g^n \to \Sigma_{g'}^n$ by $(x_1,\ldots,x_n) \mapsto (f(x_1),\ldots,f(x_n))$. The map $f^{(n)}$ preserves diagonals:
+If $f: \Sigma_g \to \Sigma_{g'}$ is an open embedding, it induces
+$f^{(n)}: \Sigma_g^n \to \Sigma_{g'}^n$ by
+$(x_1,\ldots,x_n) \mapsto (f(x_1),\ldots,f(x_n))$. The map
+$f^{(n)}$ preserves the configuration locus and carries diagonals to
+diagonals:
 \[f^{(n)}(\Delta_S) \subseteq \Delta_S\]
 so it lifts canonically to the blow-ups, giving:
 \[\overline{f^{(n)}}: \overline{C}_n(\Sigma_g) \to \overline{C}_n(\Sigma_{g'})\]
@@ -362,7 +382,18 @@ D_\Gamma \cong \prod_{v \in V(\Gamma)} \overline{\mathcal{M}}_{g(v), n(v)} \bigg
 where $n(v)$ counts the half-edges and tails at vertex $v$. Each edge $e \in E(\Gamma)$ corresponds to a node of the degenerate curve, with local model $xy = t_e$ for a smoothing parameter $t_e$. When the curve has a fixed complex structure with period matrix $\tau \in \mathbb{H}_g$, the degeneration strata $D_{\Gamma,\tau}$ record how $\tau$ approaches the boundary of the Satake compactification of $\mathbb{H}_g / \mathrm{Sp}_{2g}(\mathbb{Z})$.
 
 \emph{Exhaustiveness.}
-Every point of $\partial\overline{C}_n(\Sigma_g) = \overline{C}_n(\Sigma_g) \setminus C_n(\Sigma_g)$ belongs to at least one stratum: either some subset of marked points has collided (type 1), or the underlying curve has degenerated (type 2), or both. This follows from the properness of $\overline{\mathcal{M}}_{g,n}$ (Deligne--Mumford--Knudsen \cite{DeligneM69,Knudsen83}): every sequence in $C_n(\Sigma_g)$ has a subsequence converging to a stable $n$-pointed curve, and the limit is classified by its dual graph and the collision data of the marked points.
+Every point of
+$\partial\overline{\mathcal{M}}_{g,n}
+= \overline{\mathcal{M}}_{g,n}\setminus \mathcal{M}_{g,n}$
+belongs to at least one stratum: either some marked points have
+collided on a rational bubble, or the underlying curve has degenerated,
+or both. This follows from the properness of
+$\overline{\mathcal{M}}_{g,n}$ (Deligne--Mumford--Knudsen
+\cite{DeligneM69,Knudsen83}). For a fixed smooth curve
+$\Sigma_g$, the FM boundary
+$\partial\overline{C}_n(\Sigma_g)$ contains only the collision part;
+the curve-degeneration part appears after passage to the relative
+universal family.
 \end{proof}
 
 \begin{definition}[Stable graph]\label{def:stable-graph}
@@ -385,8 +416,7 @@ where $h^1(\Gamma) = |E(\Gamma)| - |V(\Gamma)| + 1$ is the first Betti number.
 \label{rem:stable-graph-counts-anchors}
 \index{stable graph!counts at low genus}
 The cardinalities of the boundary stratification index sets are
-small but error-prone. The
-verified counts are:
+small but error-prone. The counts are:
 \begin{itemize}
 \item Genus~$1$, $n = 1$: 1 stable graph
 (self-loop on a single vertex of $g(v) = 0$, with the marked
@@ -481,7 +511,7 @@ corresponding blow-up scales give the stated normal coordinates.
 \end{proof}
 
 \begin{remark}[Ordering convention for collisions]\label{rem:collision-ordering}
-When describing collision of points $\{i_1,\ldots,i_k\}$, we order
+When a collision subset is written as $\{i_1,\ldots,i_k\}$, the
 indices so that $i_1<\cdots<i_k$. This is a notation convention for
 labels and signs; it is not an additional geometric ordering of the
 Fulton--MacPherson compactification.
@@ -533,7 +563,7 @@ More precisely, if $D = \bigcup_{\alpha} D_\alpha$ is the decomposition into irr
 \end{theorem}
 
 \begin{proof}
-We verify normal crossings using the blow-up construction.
+Normal crossings follow from the blow-up construction.
 
 \medskip
 \noindent\emph{Single Divisor ($k=1$).}
@@ -552,7 +582,8 @@ $D_{S_i}$ records the collision of points in $S_i$, so $D_{S_1} \cap D_{S_2} \ne
 
 \emph{Local coordinates for nested sets.}
 
-Assume $S_1 \subsetneq S_2 \subsetneq \cdots \subsetneq S_k$. Near $x$, we have coordinates:
+Assume $S_1 \subsetneq S_2 \subsetneq \cdots \subsetneq S_k$. Near
+$x$, there are coordinates:
 \[(p, \epsilon_1, \theta_1^{(1)}, \ldots, \theta_{|S_1|-1}^{(1)}, \epsilon_2, \theta_1^{(2)}, \ldots, \theta_{|S_2|-|S_1|-1}^{(2)}, \ldots, \epsilon_k, \ldots)\]
 where:
 \begin{itemize}
@@ -768,17 +799,21 @@ By the logarithmic Poincar\'{e} lemma (Deligne~\cite{Deligne71}), the logarithmi
 \[H^*(\overline{C}_n(\Sigma_g),\, \Omega^\bullet(\log D)) \cong H^*(C_n(\Sigma_g);\, \mathbb{C})\]
 \end{proof}
 
-\begin{theorem}[Arnold relations: flatness of $\nabla_{\mathrm{Arnold}}$; \ClaimStatusProvedHere]\label{thm:arnold-relations}
+\begin{theorem}[Arnold relations and KZ flatness; \ClaimStatusProvedHere]\label{thm:arnold-relations}
 \index{Arnold relations|textbf}
 \index{propagator!logarithmic|textbf}
 \index{Arnold connection!flatness|textbf}
-In the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}), the identity $d^2 = 0$ at degree~$2$ reduced to the three-term relation $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$. We recognized it as the Arnold relation; here we develop it systematically. Geometrically the relation is the flatness of the universal Arnold connection
+In the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}), the identity $d^2 = 0$ at degree~$2$ reduces to the three-term relation $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$. This is the Arnold relation. Geometrically the relation is the scalar differential-form half of the flatness of the universal Arnold connection
 $\nabla_{\mathrm{Arnold}}$ on $\operatorname{Conf}_n(\mathbb{C})$
 whose connection one-form is $\eta = \sum_{i<j} \eta_{ij}\,T_{ij}$
-(the universal KZ form, with $T_{ij}$ pure-braid generators);
+(the universal KZ form, with $T_{ij}$ infinitesimal-braid generators);
+the Lie-algebra half is the infinitesimal braid relation
+$[T_{ij},T_{kl}]=0$ for disjoint pairs and
+$[T_{ij},T_{ik}+T_{jk}]=0$ for triples;
 the chiral specialisation
 $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
-of Chapter~\ref{chap:climax-platonic} is then a corollary, and
+of Chapter~\ref{chap:climax-platonic} is then a genus-$0$
+Arnold-local corollary, and
 $d^2 = 0$ on the chiral side is its curvature-zero shadow.
 
 The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy fundamental relations:
@@ -792,11 +827,14 @@ The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy fundamental relat
 \item \emph{Completeness (genus split):} For $\Sigma_0 = \mathbb{C}$, the
 classes $\eta_{ij}$ generate $H^*(C_n(\mathbb{C}); \mathbb{C})$ and the
 Arnold relations generate all relations. For $X = \mathbb{P}^1$, the
-same pairwise forms descend only after imposing the projective linear
-relations $\sum_{j \neq i}\bar\eta_{ij} = 0$. For $g \geq 1$, the
-cohomology is computed by the Totaro--K\v{r}\'{\i}\v{z}--Bezrukavnikov
-model with additional generators pulled back from $H^*(\Sigma_g)$ and
-mixed relations $\eta_{ij}(\pi_i^*\xi-\pi_j^*\xi)=0$.
+degree-$1$ projective classes are represented after a
+$\mathrm{PSL}_2$ gauge fixing and satisfy the projective linear
+relations $\sum_{j \neq i}\bar\eta_{ij} = 0$; the full cohomology also
+contains the degree-$3$ class of $\mathrm{PSL}_2(\mathbb{C})$. For
+$g \geq 1$, the cohomology is computed by the
+Totaro--K\v{r}\'{\i}\v{z}--Bezrukavnikov model with additional
+generators pulled back from $H^*(\Sigma_g)$ and mixed relations
+$\eta_{ij}(\pi_i^*\xi-\pi_j^*\xi)=0$.
 \end{enumerate}
 \end{theorem}
 
@@ -854,6 +892,28 @@ The bracketed expression reduces by partial fractions over the common denominato
 \frac{u+v}{uv(u+v)} - \frac{u}{uv(u+v)} - \frac{v}{uv(u+v)} = \frac{(u+v) - u - v}{uv(u+v)} = 0.
 \]
 This completes the proof for any triple of distinct indices and any~$n \geq 3$.
+
+\emph{KZ flatness.}
+For
+$\omega_{\mathrm{Arnold}}=\sum_{i<j}T_{ij}\eta_{ij}$ one has
+$d\eta_{ij}=0$, hence
+\[
+\nabla_{\mathrm{Arnold}}^2
+=\frac12[\omega_{\mathrm{Arnold}},\omega_{\mathrm{Arnold}}].
+\]
+The summands with disjoint pairs vanish by
+$[T_{ij},T_{kl}]=0$. For each triple $\{i,j,k\}$, the remaining
+curvature contribution is
+\[
+[T_{ij},T_{ik}]\,\eta_{ij}\wedge\eta_{ik}
++[T_{ij},T_{jk}]\,\eta_{ij}\wedge\eta_{jk}
++[T_{ik},T_{jk}]\,\eta_{ik}\wedge\eta_{jk}.
+\]
+The infinitesimal braid relations identify these three Lie brackets up
+to the signs forced by the displayed wedge order; the coefficient
+therefore factors as one Lie bracket times the Arnold cyclic sum. The
+Arnold identity kills that scalar sum. Thus
+$\nabla_{\mathrm{Arnold}}^2=0$ on the affine screen.
 
 \emph{Part 3: Completeness.}
 The genus split is proved in
@@ -927,13 +987,17 @@ a_i\wedge c_{ij} + c_{ij}\wedge a_j + a_j\wedge a_i &= 0,\label{eq:p1-projective
 b_i\wedge c_{ij} + c_{ij}\wedge b_j + b_j\wedge b_i &= 0,\label{eq:p1-projective-rel-3}\\
 c_{ij}\wedge c_{jk} + c_{jk}\wedge c_{ki} + c_{ki}\wedge c_{ij} &= 0.\label{eq:p1-projective-rel-4}
 \end{align}
-Equivalently, if $\bar\eta_{ij}$ denotes the descended pairwise class
-on $C_n(\mathbb{P}^1)$, then one has Arnold together with the projective
-linear relations
+Equivalently, if $\bar\eta_{ij}$ denotes the degree-$1$ projective
+class represented on the gauge-fixed factor, then its pairwise
+subalgebra has the Arnold relations together with the projective linear
+relations
 \[
 \sum_{j\neq i}\bar\eta_{ij}=0
 \qquad (1\leq i\leq n).
 \]
+This presentation describes the degree-$1$ Orlik--Solomon part; the
+tensor factor $\Lambda(u)$, $|u|=3$, is independent of these pairwise
+classes.
 
 \item \textup{\textbf{Positive genus.}}
 Let $X=\Sigma_g$ with $g\geq 1$, let
@@ -1113,9 +1177,12 @@ Because the cohomology of the gauge-fixed factor satisfies the same
 recurrence and is generated by those degree-$1$ classes, the natural map
 $A_m^{01}\twoheadrightarrow
 H^*(C_m(\mathbb{C}\setminus\{0,1\});\mathbb{Q})$
-is an isomorphism. Thus the equivalent projective formulation
-$\sum_{j\neq i}\bar\eta_{ij}=0$ is obtained by undoing the gauge fixing.
-So $\mathbb{P}^1$ already carries more than the affine Arnold relation:
+is an isomorphism. Thus the projective degree-$1$ formulation
+$\sum_{j\neq i}\bar\eta_{ij}=0$ is obtained by undoing the gauge fixing
+on the Orlik--Solomon factor. The exterior generator
+$u\in H^3(\mathrm{PSL}_2(\mathbb{C});\mathbb{Q})$ is not represented by
+a pairwise logarithmic form. So $\mathbb{P}^1$ already carries more
+than the affine Arnold relation:
 projective rigidity contributes a linear relation at each marked point.
 
 \emph{Part 3: $X=\Sigma_g$ with $g\geq 1$.}
@@ -1154,9 +1221,10 @@ curve, the diagonal class is
 which is exactly the Abel--Jacobi/period correction tying the puncture
 generator to the ambient cohomology. Because $\Sigma_g$ is smooth and
 projective, Totaro's degeneration theorem
-\cite[Theorem~3]{Totaro96} shows that no further rational differentials
-survive, so this CDGA computes
-$H^*(C_n(\Sigma_g);\mathbb{Q})$.
+\cite[Theorem~3]{Totaro96} identifies the rational cohomology of
+$C_n(\Sigma_g)$ with the cohomology of this diagonal CDGA; no
+additional Arnold-only relation among closed pairwise classes computes
+the positive-genus contribution.
 The resulting model is equivalent to the rational models of
 K\v{r}\'{\i}\v{z}~\cite{Kriz94} and
 Bezrukavnikov~\cite{Bezrukavnikov94}. In particular,
@@ -1180,12 +1248,13 @@ is geometrically realized on~$\overline{C}_2(X)$ by the propagator:
 \;=\;
 \operatorname{Res}_{w=z}\, \bar{a}(w) \cdot \eta(z, w),
 \end{equation}
-where $\eta(z,w) = d\log(z - w)$ is the logarithmic propagator
-\textup{(}for genus~$0$; the Szeg\H{o} kernel $S(z,w)$ for
-general genus\textup{)}. The Maurer--Cartan equation
+where $\eta(z,w) = d\log(z - w)$ is the logarithmic propagator on an
+affine genus-$0$ screen \textup{(}the Szeg\H{o}/prime-form propagator
+with period correction replaces it on a compact positive-genus
+curve\textup{)}. The Maurer--Cartan equation
 $\partial(\pi) + \pi \star \pi = 0$
 \textup{(}Definition~\textup{\ref{def:twisting-morphism})} at bar
-degree~$2$ is the Arnold relation
+degree~$2$ on that affine screen is the Arnold relation
 \textup{(}Theorem~\textup{\ref{thm:arnold-relations})}:
 \[
 \underbrace{\operatorname{Res}_{w=z}\,
@@ -1200,7 +1269,10 @@ degree~$2$ is the Arnold relation
 Neither term vanishes individually; their sum is zero by
 $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
 + \eta_{31} \wedge \eta_{12} = 0$.
-The Arnold relation \emph{is} the MC equation for the propagator.
+The affine Arnold relation is the local MC equation for the propagator;
+on $\mathbb{P}^1$ and on positive-genus curves it is supplemented by
+the projective and Totaro--period terms of
+Proposition~\ref{prop:arnold-higher-genus}.
 \end{proposition}
 
 \begin{proof}
@@ -1217,8 +1289,8 @@ differential at bar degree~$1$
 (the collision residue of
 Theorem~\ref{thm:bar-nilpotency-complete}).
 
-The MC equation $\partial(\pi) + \pi \star \pi = 0$ at bar
-degree~$2$ reads:
+On an affine genus-$0$ collision screen, the MC equation
+$\partial(\pi) + \pi \star \pi = 0$ at bar degree~$2$ reads:
 $\operatorname{Res}_{w=z} d_{\barB}([s^{-1}\bar{a}_1 \mid
 s^{-1}\bar{a}_2]) \cdot \eta(z,w)
 + \operatorname{Res}_{w_1=z} \operatorname{Res}_{w_2=z}
@@ -1445,7 +1517,7 @@ Exactness means that forms with log poles having zero residue along all $D_\alph
 
 \begin{proof}
 Exactness is local on $\overline{C}_n(\Sigma_g)$. By
-Theorem~\ref{thm:normal-crossings}, near every point we can choose coordinates
+Theorem~\ref{thm:normal-crossings}, near every point there are coordinates
 $(z_1,\dots,z_m)$ with $D=\{z_1\cdots z_r=0\}$.
 
 Write $D_i=\{z_i=0\}$ for $1\le i\le r$. Every logarithmic form can be uniquely
@@ -1510,34 +1582,45 @@ boundary-strata compatibility are established in \cite{FM94}; the statements
 here are the corresponding specialization to smooth curves/surfaces.
 \end{remark}
 
-\begin{theorem}[Universal property: operadic structure {\cite{LV12}}; \ClaimStatusProvedElsewhere]\label{thm:FM-operad}
-The collection $\{\overline{C}_n(\Sigma_g)\}_{n \geq 0}$ forms a \emph{topological operad} with:
-
-\begin{enumerate}
-\item \emph{Composition maps:} For disjoint subsets $S_1, \ldots, S_k \subseteq \{1,\ldots,n\}$:
-\[\gamma: \overline{C}_k(\Sigma_g) \times \overline{C}_{|S_1|}(\Sigma_g) \times \cdots \times \overline{C}_{|S_k|}(\Sigma_g) \to \overline{C}_n(\Sigma_g)\]
-
-\item \emph{Unit:} $\overline{C}_1(\Sigma_g) = \Sigma_g$ (single marked point)
-
-\item \emph{Associativity and unit axioms} (as for any operad)
-\end{enumerate}
-
-This operad structure is \emph{compatible with stratification}: composition maps send boundary strata to boundary strata according to the combinatorics of gluing.
+\begin{theorem}[Universal property: FM right-module structure {\cite{FM94,LV12}}; \ClaimStatusProvedElsewhere]\label{thm:FM-operad}
+For a fixed smooth curve $\Sigma_g$, the collection
+$\{\overline{C}_n(\Sigma_g)\}_{n\geq 0}$ is a right module over the
+genus-$0$ Fulton--MacPherson operad of tangent screens. Equivalently,
+each collision divisor carries a gluing map
+\[
+\overline{C}_{n-|S|+1}(\Sigma_g)
+\times
+\bigl(\overline{C}_{|S|}(\mathbb{A}^1)/
+\mathrm{Aff}(\mathbb{A}^1)\bigr)
+\longrightarrow
+D_S\subset \overline{C}_n(\Sigma_g),
+\]
+and these maps are associative along nested collision strata. When
+$\Sigma_g=\mathbb{A}^1$ or a formal disk with a chosen coordinate, this
+right-module structure is the usual FM operad structure. For a general
+fixed curve there is no intrinsic operation inserting an entire global
+configuration on $\Sigma_g$ into a point of another such configuration;
+the intrinsic inserted object is the affine tangent screen.
 \end{theorem}
 
 \begin{remark}[Provenance and citation]
 This theorem is imported and treated as \ClaimStatusProvedElsewhere. The
-compactified configuration-space composition/gluing formalism is part of the
-Fulton--MacPherson framework \cite{FM94}, and the operadic packaging used here
-is standard in operad references such as \cite{LV12}.
+compactified configuration-space gluing formalism is part of the
+Fulton--MacPherson framework \cite{FM94}, and the operadic/right-module
+packaging used here is standard in operad references such as \cite{LV12}.
 \end{remark}
 
 \begin{remark}[Chiral operad structure]\label{rem:chiral-operad}
-The operadic structure of $\{\overline{C}_n(\Sigma_g)\}$ is the geometric foundation for the \emph{chiral operad} structure in Beilinson--Drinfeld \cite{BD04}.
+The FM right-module structure of $\{\overline{C}_n(\Sigma_g)\}$ over
+the affine tangent-screen operad is the geometric foundation for the
+\emph{chiral operad} structure in Beilinson--Drinfeld \cite{BD04}.
 
-Specifically, the spaces of logarithmic forms:
+Specifically, the spaces of logarithmic forms
 \[\mathcal{P}^{\text{ch}}_n(\Sigma_g) = H^0(\overline{C}_n(\Sigma_g), \Omega^n_{\overline{C}_n(\Sigma_g)}(\log D))\]
-form an operad of differential forms, and chiral algebras are precisely algebras over this operad (in the appropriate $\infty$-categorical sense).
+assemble into the factorization/right-module operations obtained by
+restriction to collision screens; chiral algebras are algebras over the
+resulting chiral structure in the appropriate $\infty$-categorical
+sense.
 \end{remark}
 
 \subsubsection{Connection to factorization homology}
@@ -1551,7 +1634,8 @@ where:
 \begin{itemize}
 \item $\mathcal{A}^{\boxtimes n} = \mathcal{A} \boxtimes \cdots \boxtimes \mathcal{A}$ is the external tensor product on $\Sigma_g^n$
 \item $\mathcal{D}_{\overline{C}_n(\Sigma_g)}$ is the sheaf of differential operators on $\overline{C}_n(\Sigma_g)$
-\item The colimit is over inclusions $\overline{C}_n \hookrightarrow \overline{C}_{n+1}$ via operadic composition
+\item The colimit is over the Ran/factorization structure maps induced
+by disjoint union and collision-screen gluing
 \end{itemize}
 \end{theorem}
 
@@ -2870,7 +2954,7 @@ with a mixed bubble;
 \eqref{eq:oc-codim2} from a boundary collision simultaneous with
 a nodal degeneration.
 
-We verify~\eqref{eq:bdy-mix-commute} explicitly. Consider a
+For~\eqref{eq:bdy-mix-commute}, consider a
 codimension-$2$ stratum~$S$ where an interior point~$z_i$
 approaches puncture~$p_j$ (mixed) while simultaneously two
 boundary points $t_a, t_{a+1}$ on interval~$\mathcal{I}_j$
@@ -3358,7 +3442,7 @@ genus-completed differential.)
 
 \section{Period coordinates at higher genus}
 
-At genus $g$, we have additional coordinates from:
+At genus $g$, additional coordinates come from:
 \begin{itemize}
 \item Period matrix $\Omega \in \mathcal{H}_g$ (Siegel upper half-space)
 \item Marking of homology basis $\{a_i, b_i\}_{i=1}^g$
@@ -3406,7 +3490,7 @@ For genus 0 ($X = \mathbb{C}$), this is the kernel of $B_n \to S_n$ where $B_n$ 
 % (Fulton--MacPherson compactification already covered in detail above)
 
 \begin{example}[Configuration spaces across genera]\label{ex:config-genera}
-\emph{Genus 0 ($\mathbb{P}^1$):} We compute $\overline{M}_{0,4}$ explicitly (the Deligne--Mumford compactification of the moduli space of $4$ distinct points on~$\mathbb{P}^1$, which governs the genus-$0$ bar complex at degree~$1$):
+\emph{Genus 0 ($\mathbb{P}^1$):} The compactification $\overline{M}_{0,4}$ is explicit: it is the Deligne--Mumford compactification of the moduli space of $4$ distinct points on~$\mathbb{P}^1$, and it governs the genus-$0$ bar complex at degree~$1$.
 \begin{enumerate}
 \item Fix three points using $\mathrm{PSL}_2(\mathbb{C})$: $(z_1, z_2, z_3) = (0, 1, \infty)$. The fourth point $z_4 = \lambda \in \mathbb{C} \setminus \{0,1\}$ is the remaining modular parameter.
 
@@ -3426,16 +3510,24 @@ The FM compactification $\overline{C}_n(\mathbb{P}^1)$ (without the $\mathrm{PSL
 
 \emph{Genus 1 (Torus).} For $\Sigma_1 = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$:
 \begin{enumerate}
-\item The configuration space includes modular parameter $\tau \in \mathcal{H}$
-\item Boundary divisors include collisions AND degenerating cycles
-\item Additional coordinates from period integrals
+\item for a fixed elliptic curve, $\tau$ is fixed and the FM boundary
+contains only point-collision divisors;
+\item in the relative family over the modular curve, $\tau$ varies and
+the compactified total space also has the nodal degeneration
+$q=e^{2\pi i\tau}=0$;
+\item the positive-genus correction is carried by period classes and by
+the diagonal differential in Proposition~\ref{prop:arnold-higher-genus}.
 \end{enumerate}
 
 \emph{Genus $g \geq 2$.} For $\Sigma_g$:
 \begin{enumerate}
-\item Configuration space includes period matrix $\Omega \in \mathcal{H}_g$
-\item Boundary stratification includes stable graphs
-\item Spin structures and theta characteristics appear
+\item for a fixed curve, the period matrix is fixed and
+$\overline C_n(\Sigma_g)$ has only FM collision strata;
+\item stable-graph boundary strata appear in the relative
+Deligne--Mumford compactification, not in the fixed-curve FM space;
+\item spin structures and theta characteristics enter the analytic
+choice of prime-form or Szeg\H{o} propagator, not the Arnold
+Orlik--Solomon presentation.
 \end{enumerate}
 
 The logarithmic forms at each genus:
@@ -3482,8 +3574,10 @@ $\kappa(\cA)\cdot \omega_g$.
 
 Configuration spaces therefore encode local OPE data through the
 collision divisors and (at genus~$g \geq 1$) global monodromy data
-through the period integrals on $\Sigma_g$. At genus~$0$ only the
-local data is present; at genus~$g \geq 1$ both contribute.
+through the period integrals on $\Sigma_g$. On the affine genus-$0$
+screen only the local data is present; on $\mathbb{P}^1$ the
+projective linear relations remain, and at genus~$g \geq 1$ the period
+data also contribute.
 \end{example}
 
 \begin{theorem}[FM compactification and associahedra {\cite{Sta63,}}; \ClaimStatusProvedElsewhere]\label{thm:fm-associahedron}
@@ -3547,10 +3641,13 @@ theory; see~\cite{Arnold69,OS80}.
 
 \subsection{No-broken-circuit bases}
 
-For explicit computations, we need concrete bases for the cohomology:
+Explicit computations use concrete cohomology bases:
 
 \begin{definition}[Broken circuit]
-Fix a total order on pairs $(i, j)$ with $i < j$ (we use lexicographic order). A \emph{broken circuit} is a set obtained by removing the minimal element from a circuit (minimal dependent set) in the graphical matroid on $K_n$.
+Fix a total order on pairs $(i, j)$ with $i < j$; this chapter uses
+lexicographic order. A \emph{broken circuit} is a set obtained by
+removing the minimal element from a circuit (minimal dependent set) in
+the graphical matroid on $K_n$.
 \end{definition}
 
 \begin{definition}[NBC basis]\label{def:nbc-basis}
@@ -3598,7 +3695,8 @@ constructed in Chapter~\ref{chap:bar-cobar}.
 
 \begin{definition}[D-module category]
 \index{D-module|textbf}
-We work with the category $\text{D-mod}_{rh}(X)$ of regular holonomic D-modules on $X$.
+Let $\text{D-mod}_{rh}(X)$ denote the category of regular holonomic
+D-modules on $X$.
 These are D-modules $\mathcal{M}$ satisfying:
 \begin{enumerate}
 \item Finite presentation: locally finitely generated over $\mathcal{D}_X$
@@ -3776,13 +3874,29 @@ On $\overline{C_n(E_\tau)}$, define the elliptic analogs of $\eta_{ij}$:
 where $\theta_1(z|\tau) = -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n+1/2)^2/2}e^{i\pi(2n+1)z}$ with $q = e^{2\pi i\tau}$.
 \end{definition}
 
-\begin{proposition}[Elliptic Arnold relations \cite{Fay73}; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Elliptic correction to the Arnold relation \cite{Fay73}; \ClaimStatusProvedElsewhere]
 \label{prop:elliptic-arnold-relations}
-The elliptic logarithmic forms satisfy modified Arnold relations:
+The elliptic logarithmic forms do not satisfy the affine Arnold
+relation as a global identity on $C_3(E_\tau)$. Their cyclic wedge sum
+is a period correction:
 \[
-\eta_{ij}^{(1)} \wedge \eta_{jk}^{(1)} + \eta_{jk}^{(1)} \wedge \eta_{ki}^{(1)} + \eta_{ki}^{(1)} \wedge \eta_{ij}^{(1)} = 2\pi i \omega_\tau
+\eta_{ij}^{(1)} \wedge \eta_{jk}^{(1)}
++ \eta_{jk}^{(1)} \wedge \eta_{ki}^{(1)}
++ \eta_{ki}^{(1)} \wedge \eta_{ij}^{(1)}
+= \mathcal P_{ijk}(\tau),
 \]
-where $\omega_\tau = \frac{dz \wedge d\bar{z}}{2i\,\mathrm{Im}(\tau)}$ is the normalized volume form on $E_\tau$. Note that $\eta_{ij}^{(1)}$ is \emph{not} holomorphic: the regularization term $\frac{\pi}{\mathrm{Im}(\tau)}\,d\bar{z}$ ensures double periodicity but introduces a $(0,1)$-component, so that the wedge product on the left-hand side can produce a $(1,1)$-form on the right.
+where $\mathcal P_{ijk}(\tau)$ is the translation-invariant
+$(1,1)$ period term determined by the normalized elliptic propagator
+and the diagonal class in the genus-one
+Totaro--K\v{r}\'{\i}\v{z} model. Its scalar coefficient depends on the
+theta-function normalization; the only invariant point used here is
+that the term is generally nonzero globally and vanishes on the
+tangent-screen associated graded. Thus the affine Arnold relation is
+recovered on a formal disk. The form $\eta_{ij}^{(1)}$ is \emph{not}
+holomorphic: the regularization term
+$\frac{\pi}{\mathrm{Im}(\tau)}\,d\bar{z}$ ensures double periodicity
+but introduces a $(0,1)$-component, so the cyclic wedge can produce a
+$(1,1)$ period term.
 \end{proposition}
 
 The non-vanishing right-hand side encodes the central extension that appears at genus 1.
@@ -3872,7 +3986,7 @@ HS-sewing programme (Theorem~\ref{thm:general-hs-sewing}).
 \end{remark}
 
 \begin{remark}[Regularization]
-When convergence fails, we use:
+When convergence fails, the available regularisations are:
 \begin{itemize}
 \item Analytic continuation in dimensions
 \item Point-splitting regularization
@@ -3908,7 +4022,7 @@ The orientations satisfy:
 \end{lemma}
 
 \begin{proof}
-We proceed by induction on codimension.
+Proceed by induction on codimension.
 
 \emph{Codimension 1}: $D_{ij}$ has orientation from the normal bundle:
 \[\text{or}(D_{ij}) = \text{or}(N_{D_{ij}}) \wedge \text{or}(\ConfigSpace{n-1})\]
@@ -4011,7 +4125,8 @@ The NBC basis satisfies:
 \end{theorem}
 
 \begin{proof}
-We proceed by induction on $n$. For $n = 2$, the single NBC element is $\eta_{12}$ with $d\eta_{12} = 0$.
+Proceed by induction on $n$. For $n = 2$, the single NBC element is
+$\eta_{12}$ with $d\eta_{12} = 0$.
 
 For the inductive step, consider the Fadell--Neuwirth fibration
 \[
@@ -4089,25 +4204,39 @@ Total non-zero entries: $\leq n \cdot \binom{n-1}{2} \cdot \rho \cdot |\text{NBC
  dimensions, data that purely algebraic constructions may miss.
  \end{remark}
 
-\begin{lemma}[Arnold relations on boundary; \ClaimStatusProvedHere]\label{lem:arnold-boundary}
-The Arnold relations extend continuously to $\partial \overline{C}_n(X)$.
+\begin{lemma}[Arnold relations on affine boundary screens; \ClaimStatusProvedHere]\label{lem:arnold-boundary}
+On every affine genus-$0$ Fulton--MacPherson collision screen, the
+Arnold relation extends as an identity of logarithmic forms to the
+normal-crossing boundary. On $\mathbb{P}^1$ and on positive-genus
+curves this is the local tangent-screen identity; the global
+configuration-space relations are those of
+Proposition~\ref{prop:arnold-higher-genus}.
 \end{lemma}
 
 \begin{proof}
-Near a boundary stratum $D_I$ where points in $I \subset \{1,\ldots,n\}$ collide, use coordinates:
-- $u = \frac{1}{|I|}\sum_{i \in I} z_i$ (center of mass)
-- $\epsilon_{ij} = |z_i - z_j|$ for $i,j \in I$
-- $\theta_{ij} = \arg(z_i - z_j)$
+Near a boundary stratum $D_I$ choose a holomorphic coordinate on the
+curve and the FM coordinates of
+Theorem~\ref{thm:local-coords-boundary}. If $i,j\in I$, then
+$z_i-z_j=x_Iu_{ij}$ with $u_{ij}$ invertible on the chosen screen chart,
+so
+\[
+\eta_{ij}=d\log x_I+d\log u_{ij}.
+\]
+For $i,j,k\in I$, the common scale term cancels from the cyclic sum and
+the remaining identity is exactly the Arnold relation for the affine
+screen coordinates $u_{ij},u_{jk},u_{ki}$.
 
-The logarithmic forms become:
-$\eta_{ij} = d\log \epsilon_{ij} + id\theta_{ij} + O(\epsilon_{ij})$
-
-For any triple $i,j,k \in I$:
-$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = d\log \epsilon_{ij} \wedge d\log \epsilon_{jk} + \text{cyclic} + O(\epsilon)$
-
-The leading term vanishes by the classical Arnold relation for the configuration space of the bubble. The $O(\epsilon)$ terms vanish in the limit $\epsilon \to 0$, establishing continuity.
-
-For the mixed case where $|\{i,j,k\} \cap I| = 2$ (say $i,j \in I$ but $k \notin I$): the forms $\eta_{ij}$ involve the blow-up coordinates within the cluster, while $\eta_{ik}$ and $\eta_{jk}$ remain bounded (since $z_k$ stays at finite distance from the cluster). Thus $\eta_{ik} - \eta_{jk} = d\log\frac{z_i - z_k}{z_j - z_k} \to 0$ as $\epsilon \to 0$ (the two points in the cluster become indistinguishable from the vantage of $z_k$), and the Arnold relation reduces to $\eta_{ij} \wedge (\eta_{ik} - \eta_{jk}) \to 0$, which holds in the limit.
+If exactly two labels, say $i,j$, lie in $I$ and $k\notin I$, then
+$z_i-z_k$ and $z_j-z_k$ have the same boundary value and
+\[
+\eta_{ik}-\eta_{jk}
+=d\log\frac{z_i-z_k}{z_j-z_k}
+\]
+is regular and restricts to zero on $D_I$. The cyclic Arnold sum reduces
+on the boundary to
+$\eta_{ij}\wedge(\eta_{jk}-\eta_{ik})$, hence vanishes. The cases with
+one or zero labels in $I$ are regular restrictions of the interior
+identity.
 \end{proof}
 
 \subsection{Permutohedral tiling and cell complex}
@@ -4123,11 +4252,16 @@ The real configuration space $C_n(\mathbb{R})$ admits a CW decomposition where:
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-We construct the cell decomposition explicitly. Points in $C_\pi$ have configuration type
+The cell decomposition is explicit. Points in $C_\pi$ have configuration type
 \[
 x_{B_1} < x_{B_2} < \cdots < x_{B_k}
 \]
-where $x_{B_i}$ denotes the common position of points in block $B_i$. The geometric dimension of $C_\pi$ is $k$ (the number of free position parameters). The formula $\dim C_\pi = n - k$ refers to the cochain degree: partitioning $[n]$ into $k$ blocks imposes $n - k$ collision conditions, so $C_\pi$ has codimension $n - k$ in $C_n(\mathbb{R})$, and we use this codimension as the grading for the cellular cochain complex.
+where $x_{B_i}$ denotes the common position of points in block $B_i$.
+The geometric dimension of $C_\pi$ is $k$ (the number of free position
+parameters). The formula $\dim C_\pi = n - k$ refers to the cochain
+degree: partitioning $[n]$ into $k$ blocks imposes $n-k$ collision
+conditions, so $C_\pi$ has codimension $n-k$ in $C_n(\mathbb{R})$; this
+codimension is the grading for the cellular cochain complex.
 
 The boundary formula follows from approaching configurations where adjacent blocks merge. The cellular differential
 \[
@@ -4154,7 +4288,7 @@ For the geometric bar complex in dimension $n$:
 \item NBC basis size: $|\mathrm{NBC}(n)| = n!$ (for the braid arrangement $\mathcal{A}_{n-1}$, matching $\dim H^*(C_n(\mathbb{C}))$)
 \item Differential computation: $O(n^3)$ non-zero entries (by weight/sparsity)
 \item Storage: $O(n \cdot n!)$ sparse representation
-\item Verification of $d^2=0$: $O(n^5)$ operations
+\item Computation of $d^2=0$: $O(n^5)$ operations
 \end{enumerate}
 \end{theorem}
 
@@ -4167,7 +4301,8 @@ Computing residue per edge: $O(n)$ for weight matching.
 Total per basis element: $O(n^2)$.
 With $B(n)$ elements: a naive bound gives $O(n^2 \cdot B(n))$; sparsity reduces this to $O(n^3)$ nonzero entries.
 
-\emph{Verification.} Compose differential twice on $O(B(n))$ elements, each taking $O(n^3)$ operations.
+\emph{Square-zero cost.} Compose the differential twice on $O(B(n))$
+elements, each taking $O(n^3)$ operations.
 \end{proof}
 
 \begin{theorem}[Spectral sequence convergence; \ClaimStatusProvedHere]\label{thm:spectral-convergence}
@@ -4219,9 +4354,12 @@ Correctness follows from the residue formula in Theorem~\ref{thm:residue-operati
 The Arnold relation (Theorem~\ref{thm:arnold-relations}) was proved
 by two independent methods in \S\ref{sec:FM-compactification}: the
 partial-fraction argument and the coordinate-reduction argument. Both
-establish the relation in $\Omega^2(C_n(X))$ for every $n \geq 3$,
-and Theorem~\ref{thm:arnold-iff-nilpotent} shows that the Arnold
-relation is equivalent to $d_{\mathrm{residue}}^2 = 0$.
+establish the relation in
+$\Omega^2(C_n(\mathbb{C}))$ for every $n \geq 3$, and on every affine
+formal collision screen of $\overline{C}_n(X)$. On this affine
+genus-$0$ screen Theorem~\ref{thm:arnold-iff-nilpotent} shows that the
+Arnold relation is equivalent to the triple-collision component of
+$d_{\mathrm{residue}}^2 = 0$.
 
 % Labels preserved for cross-referencing from other chapters.
 \label{prop:arnold-topological}%
@@ -4240,8 +4378,8 @@ quadratic, not linear. The cohomology algebra is
 $H^*(C_3(\mathbb{C})) = \bigwedge^*(\eta_{12}, \eta_{13}, \eta_{23})
 / (\text{Arnold relation})$, where the Arnold relation
 $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
-+ \eta_{31} \wedge \eta_{12} = 0$ was verified by explicit
-partial fractions in Theorem~\ref{thm:arnold-relations}.
++ \eta_{31} \wedge \eta_{12} = 0$ is the explicit partial-fraction
+identity of Theorem~\ref{thm:arnold-relations}.
 
 \emph{Dimension count}:
 \begin{align}
@@ -4320,75 +4458,78 @@ is $\prod_{k=1}^{n-1}(1+kt)$, as proved by Arnol'd~\cite{Arnold69}.
 \subsection{Physical interpretation: Jacobi identity and associativity}
 \label{sec:arnold-physical}
 
-\begin{theorem}[Arnold relation $\Leftrightarrow$ Jacobi for the chiral bracket \cite{LV12}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Arnold relation $\Leftrightarrow$ simple-pole Jacobi on the affine screen \cite{LV12}; \ClaimStatusProvedElsewhere]
 \label{thm:arnold-jacobi}
-The Arnold cyclic relation on $\Omega^2_{\overline{C}_n(X)}(\log D)$ is equivalent to the Jacobi identity for the chiral bracket $\{a,b\} := a_{(0)}b$; equivalently, to the associativity axiom of the chiral operad (Loday--Vallette \cite[Theorem~7.1.3, \S7.6]{LV12}). This is the simple-pole projection; the full bar differential requires the Borcherds identity, which couples all OPE pole orders (Proposition~\ref{prop:pole-decomposition} in Chapter~\ref{chap:bar-cobar}).
+On an affine genus-$0$ collision screen, the Arnold cyclic relation in
+$\Omega^2(\log D)$ is equivalent to the Jacobi identity for the chiral
+bracket $\{a,b\} := a_{(0)}b$; equivalently, to the simple-pole
+associativity axiom of the chiral operad (Loday--Vallette
+\cite[Theorem~7.1.3, \S7.6]{LV12}). This is the simple-pole projection;
+the full bar differential requires the Borcherds identity, which
+couples all OPE pole orders (Proposition~\ref{prop:pole-decomposition}
+in Chapter~\ref{chap:bar-cobar}), and the global curve cases require
+the projective or Totaro--period corrections of
+Proposition~\ref{prop:arnold-higher-genus}.
 \end{theorem}
 
-\begin{remark}[Physical mnemonic: crossing symmetry]
+\begin{remark}[Physical mnemonic: simple-pole crossing]
 \label{rem:arnold-crossing-symmetry}
-The Arnold relation expresses crossing symmetry of OPE at the simple-pole level: the three iterated residues at the triple-collision stratum $D_{ijk}$ correspond to the three ways of expanding $\phi_i(z_i)\phi_j(z_j)\phi_k(z_k)$ via successive collisions, and Arnold is the identity
+On an affine genus-$0$ collision screen, the Arnold relation expresses
+crossing symmetry of OPE at the simple-pole level: the three iterated
+residues at the triple-collision stratum $D_{ijk}$ correspond to the
+three ways of expanding $\phi_i(z_i)\phi_j(z_j)\phi_k(z_k)$ via
+successive collisions, and Arnold is the identity
 \begin{equation}
 \operatorname{Res}_{D_{jk}}\operatorname{Res}_{D_{ij}}
 + \operatorname{Res}_{D_{ki}}\operatorname{Res}_{D_{jk}}
 + \operatorname{Res}_{D_{ij}}\operatorname{Res}_{D_{ki}} = 0
 \end{equation}
-forcing the three expansions to agree on the chiral bracket. In string-theoretic language: different ways of degenerating a Riemann surface by bringing punctures together produce consistent amplitudes.
+forcing the three expansions to agree on the chiral bracket. For full
+OPEs the corresponding statement is the Borcherds identity, and in
+positive genus it is coupled to the period corrections already named.
 \end{remark}
 
 \begin{corollary}[Operadic associativity \cite{LV12}; \ClaimStatusProvedElsewhere]
 \label{cor:arnold-operadic}
-The Arnold relations are equivalent to the associativity axiom for the chiral operad:
+On the affine genus-$0$ simple-pole part, the Arnold relations are
+equivalent to the associativity axiom for the chiral operad:
 \begin{equation}
 \gamma \circ (\text{id} \otimes \gamma) = \gamma \circ (\gamma \otimes \text{id})
 \end{equation}
 where $\gamma$ is the operadic composition.
 \end{corollary}
 
-\begin{theorem}[Arnold--Orlik--Solomon relations; \ClaimStatusProvedHere]
+\begin{theorem}[Arnold--Orlik--Solomon circuit relations; \ClaimStatusProvedHere]
 \label{thm:arnold-orlik-solomon}
-For logarithmic forms on configuration space:
-\[\sum_{k \in S} (-1)^{|k|} \eta_{ik} \wedge \eta_{kj} \wedge \bigwedge_{l \in S\setminus\{k\}} \eta_{kl} = 0\]
-for any subset $S$ and distinct $i,j \notin S$.
+Let $i_0,i_1,\ldots,i_m,i_0$ be a simple cycle in the complete graph on
+$\{1,\ldots,n\}$, with $m\geq 2$, and put
+$e_r=\eta_{i_r i_{r+1}}$ \textup{(}indices modulo $m+1$\textup{)}.
+In $H^*(C_n(\mathbb{C});\mathbb{C})$ one has the Orlik--Solomon
+circuit relation
+\[
+\sum_{r=0}^{m}
+(-1)^r\,
+e_0\wedge\cdots\wedge\widehat{e_r}\wedge\cdots\wedge e_m
+=0.
+\]
+For $m=2$ this is Arnold's three-term relation, after translating
+between the fixed cyclic order and the symmetric convention
+$\eta_{ij}=\eta_{ji}$. For $m>2$ these relations are consequences of
+the triangular Arnold relations, since every cycle in a complete graph
+has a chord.
 \end{theorem}
 
-\begin{proof}[Direct proof]
-We proceed by induction on $|S|$.
-
-\emph{Base case}: $S = \{k\}$.
-\[\eta_{ik} \wedge \eta_{kj} = d\log(z_i - z_k) \wedge d\log(z_k - z_j)\]
-
-Using the identity $z_i - z_j = (z_i - z_k) + (z_k - z_j)$:
-\begin{align}
-d\log(z_i - z_j) &= d\log((z_i - z_k) + (z_k - z_j)) \\
-&= \frac{d(z_i - z_k)}{z_i - z_k} \cdot \frac{1}{1 + \frac{z_k - z_j}{z_i - z_k}} + \frac{d(z_k - z_j)}{z_k - z_j} \cdot \frac{1}{1 + \frac{z_i - z_k}{z_k - z_j}}
-\end{align}
-
-Expanding and collecting terms proves the base case.
-
-\emph{Inductive step}: Assume true for $|S| = n$, prove for $|S| = n+1$.
-
-Let $S' = S \cup \{m\}$. The left side becomes:
-\[\sum_{k \in S'} (-1)^{|k|} \eta_{ik} \wedge \eta_{kj} \wedge \bigwedge_{l \in S'\setminus\{k\}} \eta_{kl}\]
-
-Split into terms with $k \in S$ and $k = m$:
-\begin{align}
-&= \sum_{k \in S} (-1)^{|k|} \eta_{ik} \wedge \eta_{kj} \wedge \eta_{km} \wedge \bigwedge_{l \in S\setminus\{k\}} \eta_{kl} \\
-&\quad + (-1)^{|m|} \eta_{im} \wedge \eta_{mj} \wedge \bigwedge_{l \in S} \eta_{ml}
-\end{align}
-
-By the inductive hypothesis applied to different index sets, these terms cancel.
-\end{proof}
-
-\begin{proof}[Topological proof]
-Consider the evaluation map:
-\[\text{ev}: S^1 \times C_{|S|}(X) \to C_{|S|+2}(X)\]
-\[(e^{i\theta}, w_1, \ldots, w_{|S|}) \mapsto (z_i, z_j = z_i + \epsilon e^{i\theta}, w_1, \ldots, w_{|S|})\]
-
-Since $\partial(S^1 \times C_{|S|}(X)) = 0$, Stokes' theorem gives:
-\[0 = \int_{\partial} = \sum_{\text{faces}} \int_{\text{face}}\]
-
-Each face corresponds to a term in the Arnold relation.
+\begin{proof}
+The braid arrangement is the graphic arrangement of the complete graph.
+The Orlik--Solomon ideal is generated by boundaries of graphic
+circuits. A circuit is exactly a simple cycle, and its boundary is the
+displayed alternating sum. For a triangle this boundary is the
+three-term Arnold relation. If the cycle has length at least four,
+choose a chord. The chord splits the cycle into two shorter cycles; the
+Orlik--Solomon boundary of the long cycle is the signed sum of the two
+shorter circuit boundaries after wedging with the complementary edge
+monomials. Induction on the length of the cycle reduces every circuit
+relation to triangular Arnold relations.
 \end{proof}
 
 \begin{corollary}[Bar differential squares to zero; \ClaimStatusProvedHere]
@@ -4428,106 +4569,47 @@ The logarithmic forms at higher genus are built from prime forms and period inte
 \label{sec:normal-crossings-higher-genus}
 
 \begin{theorem}[Normal crossings preservation; \ClaimStatusProvedHere]\label{thm:normal-crossings-preservation}
-The boundary divisor $D \subset \overline{C}_n(X)$ has normal crossings (Fulton--MacPherson
-\cite{FM94}). When we form the fiber product
-\[\overline{\mathcal{M}}_{g,n} \times_{X^n} \text{Conf}_n(X)\]
-over the moduli stack of stable curves, the normal crossing property is preserved.
+Let $\pi\colon \mathcal X\to S$ be a smooth family of curves over a
+smooth base with normal-crossing boundary $B\subset S$, and assume
+$\pi$ extends log-smoothly over $B$. The relative
+Fulton--MacPherson compactification
+$\overline{C}_n(\mathcal X/S)$ has logarithmic normal-crossing boundary
+given by the union of the relative collision divisors and the pullback
+of~$B$. For a fixed curve $X$ this reduces to the ordinary FM
+normal-crossing boundary of \cite{FM94}. The Deligne--Mumford boundary
+of $\overline{\mathcal M}_{g,n}$ enters only through such a relative
+family; it is not a boundary component of $\overline C_n(X)$ for a
+fixed smooth curve.
 \end{theorem}
 
 \begin{proof}
-
-\emph{Step 1: Genus zero (Knudsen).}
-
-For $g=0$, $\overline{\mathcal{M}}_{0,n} = \overline{M}_{0,n}$ is the Deligne--Mumford--Knudsen
-compactification of the moduli space of $n$-pointed rational curves. By Knudsen:
-\[\partial \overline{M}_{0,n} = \bigcup_{S \sqcup T = [n], |S|,|T| \geq 2} D_{S|T}\]
-is a normal crossing divisor, where each $D_{S|T}$ parametrizes curves with a node
-separating points labeled by $S$ from those labeled by $T$.
-
-\emph{Step 2: General genus (Deligne--Mumford).}
-
-For $g \geq 0$, $\overline{\mathcal{M}}_{g,n}$ is the Deligne--Mumford compactification.
-By Deligne--Mumford~\cite{DeligneM69}:
-\begin{enumerate}
-\item $\overline{\mathcal{M}}_{g,n}$ is a smooth Deligne--Mumford stack
-\item The boundary $\partial \overline{\mathcal{M}}_{g,n}$ is a normal crossing divisor
-\item Each boundary component is isomorphic to $\overline{\mathcal{M}}_{g_1,n_1+1} \times
-\overline{\mathcal{M}}_{g_2,n_2+1}$ (for splitting nodes) or
-$\overline{\mathcal{M}}_{g-1,n+2}$ (for non-separating nodes)
-\end{enumerate}
-
-\emph{Step 3: Fulton--MacPherson compactification.}
-
-The configuration space compactification $\overline{C}_n(X)$ is constructed via iterated
-blowups (Fulton--MacPherson~\cite{FM94}):
-\[\overline{C}_n(X) = \text{Bl}_{\Delta_{(n)}} \text{Bl}_{\Delta_{(n-1)}} \cdots
-\text{Bl}_{\Delta_{(2)}} X^n\]
-where $\Delta_{(k)}$ is the ``big diagonal'' of points with $\geq k$ coincident coordinates.
-
-By construction, the boundary $D = \partial \overline{C}_n(X)$ has normal crossings,
-with exceptional divisors $E_{ij}$ corresponding to coincidences $z_i = z_j$.
-
-\emph{Step 4: Fiber product analysis.}
-
-Consider the fiber product:
-\[Y := \overline{\mathcal{M}}_{g,n} \times_{X^n} \overline{C}_n(X)\]
-
-\begin{lemma}[Fiber product normal crossings; \ClaimStatusProvedHere]\label{lem:fiber-product-NC}
-If $X_1 \to S$ and $X_2 \to S$ both have normal crossing boundaries, then
-$X_1 \times_S X_2 \to S$ has normal crossings provided the map $X_2 \to S$ is flat.
-\end{lemma}
-
-\begin{proof}[Proof of Lemma]
-Work locally in coordinates. Suppose $X_1$ has boundary divisor $D_1 = \{x_1 \cdots x_k = 0\}$
-and $X_2$ has boundary $D_2 = \{y_1 \cdots y_l = 0\}$, both in normal crossing form.
-
-If $X_2 \to S$ is flat, then the fiber product $X_1 \times_S X_2$ has local equations
-combining those of $X_1$ and $X_2$:
-\[D_1 \times_S D_2 = \{x_1 \cdots x_k \cdot y_1 \cdots y_l = 0\}\]
-which remains in normal crossing form.
+For a fixed curve this is Theorem~\ref{thm:normal-crossings}. In the
+relative case, choose local coordinates
+$(t_1,\ldots,t_r,s_1,\ldots,s_a)$ on the base with
+$B=\{t_1\cdots t_r=0\}$ and a relative coordinate $z$ on the curve.
+The log-smooth hypothesis gives nodal or smooth local models in which
+the base boundary is monomial in the $t_\alpha$. The relative FM
+construction blows up only the relative diagonals
+$z_i=z_j$ inside the fibres. In the FM charts, each collision supplies a
+scale coordinate $x_S$, and the boundary is locally
+\[
+t_1\cdots t_r\prod_S x_S=0.
+\]
+Thus the collision and base-degeneration divisors form a logarithmic
+normal-crossing divisor. The residue maps used in the bar differential
+are therefore defined along collision faces for fixed curves and along
+the additional log base faces only in the relative modular family.
 \end{proof}
 
-\emph{Step 5: Application to our case.}
-
-The map $\overline{C}_n(X) \to X^n$ is flat over the open complement $C_n(X) = X^n \setminus \bigcup \Delta_{ij}$ (where it is an isomorphism) and has controlled behavior over the center (the exceptional divisors have normal crossing structure by the iterated blowup construction). The fiber product therefore preserves normal crossings by Lemma~\ref{lem:fiber-product-NC} applied stratum-by-stratum:
-\[\partial Y = (\partial \overline{\mathcal{M}}_{g,n} \times_{X^n} \overline{C}_n(X))
-\cup (\overline{\mathcal{M}}_{g,n} \times_{X^n} D)\]
-has normal crossings.
-
-\emph{Step 6: Explicit verification for small cases.}
-
-\emph{Case $g=1, n=1$:}
-\[\overline{\mathcal{M}}_{1,1} \times_X \overline{C}_1(X) = \overline{\mathcal{M}}_{1,1}
-\times X\]
-Trivially has normal crossings (it is smooth).
-
-\emph{Case $g=1, n=2$:}
-\[\overline{\mathcal{M}}_{1,2} \times_{X^2} \overline{C}_2(X)\]
-The boundary of $\overline{\mathcal{M}}_{1,2}$ consists of nodal cubics. The boundary
-of $\overline{C}_2(X)$ is the collision divisor $\Delta$. These intersect transversely,
-giving normal crossings.
-
-\emph{Step 7: Connection to residues.}
-
-The normal crossing property is essential for the residue maps:
-\[\text{Res}_D: \Omega^{\bullet}_{\log}(\text{Conf}_n(X)) \to \Omega^{\bullet-1}(D)\]
-
-Without normal crossings, this residue map would not be well-defined. Our verification
-ensures that even at higher genus, with quantum corrections, the residue maps defining
-the bar differential remain well-defined.
-
-\end{proof}
-
-\begin{remark}[Iterated blow-up preservation]\label{rem:iterated-blowup}
-Our proof in Step 4 used a general lemma about fiber products. However, for the specific
-case of configuration spaces, there is a stronger statement:
-
-The iterated blow-up construction of $\overline{C}_n(X)$ commutes with pull-back along $\overline{\mathcal{M}}_{g,n} \to X^n$. That is:
-\[\overline{\mathcal{M}}_{g,n} \times_{X^n} \overline{C}_n(X) \simeq
-\text{Bl}_{\ldots} \text{Bl}_{\ldots} (\overline{\mathcal{M}}_{g,n} \times_{X^n} X^n)\]
-where the blow-ups are performed fiberwise over $\overline{\mathcal{M}}_{g,n}$.
-
-Normal crossings are therefore preserved, and the bar complex construction extends to higher genus.
+\begin{remark}[Fixed curve versus relative modular family]\label{rem:iterated-blowup}
+The expression
+$\overline{\mathcal M}_{g,n}\times_{X^n}\overline C_n(X)$ is not an
+intrinsic object for a fixed curve $X$: $\overline{\mathcal M}_{g,n}$
+varies the curve, while $X^n$ does not. The correct object is the
+relative FM compactification of the universal stable curve, or a
+log-smooth family pulled back from it. In that ambient, the iterated
+blow-ups are fibrewise along relative diagonals, and normal crossings
+are preserved by the monomial local form above.
 \end{remark}
 \section{\texorpdfstring{Explicit local coordinates on $\overline{C}_n(X)$}{Explicit local coordinates on C n(X)}}
 \label{sec:explicit-coordinates-complete}
@@ -4668,7 +4750,7 @@ After blow-up, the proper transforms of pairwise diagonals $D_{12}$ and $D_{23}$
 
 \emph{Coordinates near triple collision.}
 
-We need a \emph{nested} blow-up:
+A \emph{nested} blow-up is needed:
 \begin{enumerate}
 \item First blow up the triple diagonal $\{z_1 = z_2 = z_3\}$
 \item Then blow up the proper transforms of pairwise diagonals
@@ -4904,7 +4986,7 @@ u_{23} &= \frac{z_2 + z_3}{2} = \frac{(u_{12} - \frac{\epsilon_{12}}{2}e^{i\thet
 These are smooth functions as long as $\epsilon_{12} \neq 0$ and $z_2 \neq z_3$.
 \end{example}
 
-\subsection{Verification of normal crossings}
+\subsection{Normal crossings}
 
 The boundary divisors intersect in \emph{normal crossings}: locally
 like coordinate hyperplanes.
@@ -4921,7 +5003,7 @@ There exist local coordinates $(x_1, \ldots, x_d)$ near any point in the interse
 for $i = 1, \ldots, k$.
 \end{theorem}
 
-\begin{proof}[Verification for $n=3$]
+\begin{proof}[The case $n=3$]
 For $\overline{C}_3(\mathbb C)$ the divisors $D_{12}$ and $D_{23}$ do
 not meet as simultaneous codimension-one collision divisors: the
 subsets $\{1,2\}$ and $\{2,3\}$ overlap without being nested. The
@@ -5105,7 +5187,7 @@ Each construction has advantages:
 \end{construction}
 
 \begin{computation}[Explicit examples; \ClaimStatusProvedHere]
-We compute Ran space explicitly for basic examples:
+The basic Ran spaces are explicit:
 
 \emph{$\operatorname{Ran}(\mathbb{R})$.}
 
@@ -5131,7 +5213,7 @@ Boundary: $\overline{\text{Sym}^n(\mathbb{C})} \supset \text{Sym}^{n-1}(\mathbb{
 
 \emph{$\operatorname{Ran}(S^1)$.}
 
-For the circle, we compute:
+For the circle:
 \[H_*(\text{Ran}(S^1)) = \bigoplus_{n \geq 0} H_*(\text{Sym}^n(S^1))\]
 
 Using the Dold--Thom theorem:
@@ -5313,7 +5395,7 @@ Total cohomology of Ran space:
 \end{table}
 
 \medskip\noindent
-The geometric inputs are now in place. The Fulton--MacPherson compactification $\overline{C}_n(X)$ carries the logarithmic forms $\eta_{ij}$ as sections of $\Omega^1(\log D)$, and the Arnold relation is the codimension-two compatibility that forces $d^2 = 0$ on the bar differential on an affine genus-$0$ screen. Proposition~\ref{prop:arnold-higher-genus} records the additional projective and period relations needed on $\mathbb{P}^1$ and on positive-genus curves. The logarithmic FM variant $\mathrm{FM}_m(X\mathbin{|}D)$ and the bordered FM compactification $\overline{C}^{\,\mathrm{oc}}_{k,\vec{m}}$ extend the framework to punctured and tangential-log curves, on which the modular Maurer--Cartan equation with clutching governs the genus expansion of chiral correlators. The Ran space $\operatorname{Ran}(X)$ provides the factorization-theoretic carrier $\operatorname{ChirAlg}(X) \simeq \operatorname{D-mod}_{\mathrm{fact}}(\operatorname{Ran}(X))$ in which the bar coalgebra lives. The universal identification $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$ of the opening is proved at the climax (Chapter~\ref{chap:climax-platonic}); its inputs are assembled here.
+The geometric inputs are now in place. The Fulton--MacPherson compactification $\overline{C}_n(X)$ carries the local logarithmic propagators $\eta_{ij}$ as sections of $\Omega^1(\log D)$ on affine charts and tangent screens, and the Arnold relation is the codimension-two compatibility that forces $d^2 = 0$ on the bar differential on an affine genus-$0$ screen. Proposition~\ref{prop:arnold-higher-genus} records the additional projective and period relations needed on $\mathbb{P}^1$ and on positive-genus curves. The logarithmic FM variant $\mathrm{FM}_m(X\mathbin{|}D)$ and the bordered FM compactification $\overline{C}^{\,\mathrm{oc}}_{k,\vec{m}}$ extend the framework to punctured and tangential-log curves, on which the modular Maurer--Cartan equation with clutching governs the genus expansion of chiral correlators. The Ran space $\operatorname{Ran}(X)$ provides the factorization-theoretic carrier $\operatorname{ChirAlg}(X) \simeq \operatorname{D-mod}_{\mathrm{fact}}(\operatorname{Ran}(X))$ in which the bar coalgebra lives. The universal identification $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$ of the opening is proved at the climax on the Arnold-local genus-$0$ surface (Chapter~\ref{chap:climax-platonic}); its inputs are assembled here.
 
 \section{Synthesis}
 \label{sec:confspaces-supplement}
@@ -5445,8 +5527,8 @@ on $\Sigma_{\mathrm{SW}}$ compute BPS states; Beem--Rastelli
 by the Schur-index limit, which is insensitive to the Coulomb-branch
 geometry and depends only on the residues at the $24$ punctures.
 
-\emph{Verification of \textup{(d)}.} We check seven convergent
-constructions place the chiral algebra on $E^{\mathrm{nod}}_{24}$.
+\emph{Case \textup{(d)}.} Seven convergent constructions place the
+chiral algebra on $E^{\mathrm{nod}}_{24}$.
 
 (1) \emph{Heterotic on $T^6$} with self-dual $T^2 = E$
 \cite{HarveyMoore1996} realises the chiral half of the threshold
@@ -5463,7 +5545,7 @@ $T$-equivariant over the elliptic factor $E$; the $24$-node discriminant
 locus is the factorisation-base on which the Hall product localises.
 
 (4) \emph{Dijkgraaf--Verlinde--Verlinde second quantisation}
-$Z_{M/K3^2\times S^1}(Z) = 1/\Phi_{10}(Z)$ on $\mathrm{K3}\times E$
+$Z_{M/K3^2\times S^1}(Z) = 1/\Phi_{10}^{\mathrm{un}}(Z)$ on $\mathrm{K3}\times E$
 with $E = T^2 = S^1\times S^1$ identifies the Borcherds-factor fibres
 with the $24$ $I_1$ fibres on $E^{\mathrm{nod}}_{24}$.
 
@@ -5471,7 +5553,7 @@ with the $24$ $I_1$ fibres on $E^{\mathrm{nod}}_{24}$.
 correspondence} \cite{OberdieckPixton2016} for $\mathrm{K3}\times E$
 has $E$ as the genus-$1$ factor; the reduced partition function
 $Z^{\mathrm{red}}_{\mathrm{GW}} = Z^{\mathrm{red}}_{\mathrm{DT}} =
-1/\Phi_{10}$ localises its $24$ Kodaira contributions to $E$.
+1/\Phi_{10}^{\mathrm{un}}$ localises its $24$ Kodaira contributions to $E$.
 
 (6) \emph{Gritsenko--Nikulin Siegel-automorphic-product BKM construction}
 \cite{GritsenkoNikulin1998} for $\Delta_5 = \mathrm{Grit}(\eta^9\vartheta_1)$
@@ -5489,7 +5571,7 @@ marking. The seven-route convergence is a nontrivial theorem, not a
 tautology: each route has a structurally different origin, and the
 common output is the content of the naming.
 
-\emph{Bar-Euler verification.} The bar-Euler characteristic
+\emph{Bar-Euler computation.} The bar-Euler characteristic
 $\chi_{\mathrm{bar}}(\mathbf{H}_{\Delta_5})$ on the candidate base
 matches the Siegel-modular-form weight $5$ of $\Delta_5$ if and only if
 the base contributes an additive $24$-fold via Kodaira residues. On
@@ -5561,7 +5643,7 @@ sections via the Schur cocycle of order $6$ in
 $H^2(M_{24},\mathrm{U}(1))\cong\mathbb{Z}/12$.
 \end{remark}
 
-\subsection{Chain-level verification of the factorisation axioms on
+\subsection{Chain-level factorisation axioms on
 $\mathrm{Ran}(E^{\mathrm{nod}}_{24})$}
 \label{subsec:confspaces-factorisation-axiom-verification}
 
@@ -5574,7 +5656,7 @@ The $24$ nodal singularities are structural obstructions: a
 Beilinson--Drinfeld chiral algebra lives on a \emph{smooth} curve, and
 the factorisation structure on a nodal base requires a specification of
 the nearby-cycles datum at each node. The following five-step
-verification (following Francis--Gaitsgory~\cite{FrancisGaitsgory2011}
+construction (using Francis--Gaitsgory~\cite{FrancisGaitsgory2011}
 for the Ran-space presentation, Costello--Gwilliam~\cite{CG17} for the
 factorisation-algebra axiom system, and Beilinson--Drinfeld~\cite{BD04}
 Chapter~3 for the chiral-algebra--factorisation-algebra equivalence)
@@ -5647,7 +5729,8 @@ $\{n_1,\ldots,n_{24}\}$.
 \end{theorem}
 
 \begin{proof}
-We exhibit the map at chain level and verify quasi-isomorphism.
+The map is exhibited at chain level, where the quasi-isomorphism is
+checked.
 
 \emph{Chain-level construction.} By the Schiffmann--Vasserot CoHA
 presentation of Remark~\ref{rem:confspaces-drinfeld-factorization-compat},
@@ -5779,7 +5862,7 @@ the Schiffmann--Vasserot shuffle coproduct formula.
 \end{theorem}
 
 \begin{proof}
-We verify co-associativity order-by-order in the quantisation parameter
+Co-associativity is checked order-by-order in the quantisation parameter
 $\hbar$ (the CoHA deformation parameter of Schiffmann--Vasserot).
 
 \emph{Order $\hbar^0$.} At $\hbar=0$, the CoHA degenerates to the
@@ -5896,7 +5979,7 @@ with the Mumford class $\lambda_1\in H^2(\overline{\mathcal{A}_2})$
 via the averaging morphism gives
 $\langle\alpha,\lambda_1\rangle =
 \chi_{\mathrm{bar}}(\mathbf{H}_{\Delta_5}) = 5$
-(the Gritsenko weight; computed in the Bar-Euler verification of
+(the Gritsenko weight; computed in the Bar-Euler calculation of
 Theorem~\ref{thm:confspaces-canonical-curve-HDeltaFive}), while
 $\langle d_{\mathrm{bar}}\beta,\lambda_1\rangle = 0$ by Stokes, a
 contradiction. Hence $[\alpha]\neq 0$ in
@@ -5928,7 +6011,7 @@ co-associativity at nodes
 \textup{(}Theorem~\ref{thm:confspaces-co-associativity-nodal-coproduct}\textup{)},
 and $M_{24}$-equivariance
 \textup{(}all four of the above, $M_{24}$-equivariantly\textup{)} are
-each verified at chain level with explicit witnesses.
+each proved at chain level with explicit witnesses.
 \end{corollary}
 
 \begin{proof}
@@ -5941,7 +6024,7 @@ $M_{24}$-equivariant.
 
 \begin{remark}[Scope: chain level vs.\ $(\infty,1)$-categorical]
 \label{rem:confspaces-factorisation-scope}
-The five verifications of this subsection are \emph{chain-level}
+The five statements of this subsection are \emph{chain-level}
 statements: each axiom is discharged with an explicit chain homotopy,
 an explicit $R$-matrix residue, an explicit $\mathbb{Z}/12$ monodromy
 datum at each node. The $(\infty,1)$-categorical version of the same
@@ -5949,7 +6032,7 @@ content -- that $\mathrm{ChirAlg}^{\mathrm{ch}}_{E^{\mathrm{nod,sm}}_{24}}$
 is a presentable stable $\infty$-category with $\mathbf{H}_{\Delta_5}$
 as a coherent factorisation-$\infty$-algebra in the sense of
 Francis--Gaitsgory~\cite{FrancisGaitsgory2011} -- is the natural
-$\infty$-lift and is compatible with the chain-level verification in
+$\infty$-lift and is compatible with the chain-level construction in
 the two-lane sense: the two lanes inform each other, neither
 subsumes the other. The chain-level statement pins the arithmetic (the
 Gritsenko weight $5$, the Schur $\mathbb{Z}/12$-phase, the $24$-fold

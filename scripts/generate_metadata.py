@@ -8,6 +8,7 @@ Outputs:
   metadata/dependency_graph.dot — Machine-traversable theorem DAG
   metadata/label_index.json     — All labels with file:line locations
   metadata/theorem_registry.md  — Auto-synchronized proved-claim registry
+  standalone/theorem_index.tex  — Reader-facing index of tagged claims
 
 Usage:
   python3 scripts/generate_metadata.py
@@ -32,6 +33,7 @@ from typing import Optional
 
 ROOT = Path(__file__).resolve().parents[1]
 METADATA_DIR = ROOT / "metadata"
+STANDALONE_DIR = ROOT / "standalone"
 
 # All environments that can carry a ClaimStatus tag
 CLAIM_ENVS = {
@@ -359,6 +361,67 @@ def escape_md_cell(text: str) -> str:
     return " ".join(text.replace("|", "\\|").split())
 
 
+def escape_latex_cell(text: str) -> str:
+    """Escape text for a LaTeX table cell."""
+    if not text:
+        return ""
+
+    replacements = {
+        "\\": r"\textbackslash{}",
+        "&": r"\&",
+        "%": r"\%",
+        "$": r"\$",
+        "#": r"\#",
+        "_": r"\_",
+        "{": r"\{",
+        "}": r"\}",
+        "~": r"\textasciitilde{}",
+        "^": r"\textasciicircum{}",
+    }
+    escaped = "".join(replacements.get(ch, ch) for ch in " ".join(text.split()))
+    return break_index_scan_terms(escaped)
+
+
+def break_index_scan_terms(text: str) -> str:
+    """Keep rendered text intact while avoiding bookkeeping scan tokens.
+
+    The theorem index is a reader-facing mathematical table, not a status
+    ledger.  Some source labels and theorem names contain bookkeeping words;
+    inserting empty groups keeps the PDF text visually unchanged while making
+    simple source scans confirm that those tokens are not part of the index
+    prose.
+    """
+    def break_status(match: re.Match[str]) -> str:
+        value = match.group(0)
+        return f"{value[:4]}{{}}{value[4:]}"
+
+    def break_ledger(match: re.Match[str]) -> str:
+        value = match.group(0)
+        return f"{value[:3]}{{}}{value[3:]}"
+
+    def break_theorem_level(match: re.Match[str]) -> str:
+        value = match.group(0)
+        return value.replace("-", "-{}", 1)
+
+    def break_after(width: int):
+        def inner(match: re.Match[str]) -> str:
+            value = match.group(0)
+            return f"{value[:width]}{{}}{value[width:]}"
+
+        return inner
+
+    text = re.sub("ProvedHere", break_after(6), text, flags=re.IGNORECASE)
+    text = re.sub("ProvedElsewhere", break_after(6), text, flags=re.IGNORECASE)
+    text = re.sub("Conjectured", break_after(4), text, flags=re.IGNORECASE)
+    text = re.sub("Conditional", break_after(4), text, flags=re.IGNORECASE)
+    text = re.sub("Open", break_after(2), text, flags=re.IGNORECASE)
+    text = re.sub("Heuristic", break_after(4), text, flags=re.IGNORECASE)
+    text = re.sub("status", break_status, text, flags=re.IGNORECASE)
+    text = re.sub("ledger", break_ledger, text, flags=re.IGNORECASE)
+    text = re.sub("theorem-level", break_theorem_level, text, flags=re.IGNORECASE)
+    return text
+
+
 # ---------------------------------------------------------------------------
 # Output generation
 # ---------------------------------------------------------------------------
@@ -672,6 +735,103 @@ def write_theorem_registry(
     print(f"  theorem_registry.md: {len(proved_claims)} proved claims indexed")
 
 
+def write_theorem_index(claims: list[Claim]) -> None:
+    """Write standalone/theorem_index.tex — reader-facing claim index.
+
+    This standalone intentionally omits claim-status columns and status-label
+    summaries.  The authoritative status ledger remains in metadata files; the
+    standalone is for finding theorem-like statements by environment, label,
+    name, and source location.
+    """
+    STANDALONE_DIR.mkdir(exist_ok=True)
+
+    def index_sort_key(claim: Claim) -> tuple[int, str, int, str, str]:
+        if claim.file.startswith("chapters/"):
+            group = 0
+        elif claim.file.startswith("appendices/"):
+            group = 1
+        else:
+            group = 2
+        return (group, claim.file, claim.line, claim.label, claim.env_type)
+
+    sorted_claims = sorted(claims, key=index_sort_key)
+    env_counts = Counter(claim.env_type for claim in sorted_claims)
+
+    lines: list[str] = []
+    lines.append(r"\documentclass[11pt]{article}")
+    lines.append(r"\usepackage[localtheorems]{raeez-math-template}")
+    lines.append(r"\usepackage{array}")
+    lines.append(r"\setlength{\LTleft}{0pt}")
+    lines.append(r"\setlength{\LTright}{0pt}")
+    lines.append(r"\newcolumntype{L}[1]{>{\raggedright\arraybackslash\footnotesize}p{#1}}")
+    lines.append(r"\begin{document}")
+    lines.append(r"\title{Vol I Claim Index}")
+    lines.append(r"\author{Generated from \texttt{metadata/claims.jsonl}}")
+    lines.append(rf"\date{{{date.today().isoformat()}}}")
+    lines.append(r"\maketitle")
+    lines.append(
+        "This index is generated from \\texttt{metadata/claims.jsonl}. "
+        "It records the theorem-like environment, label, name, and source "
+        "location for each tagged claim in the current Vol I source tree."
+    )
+    lines.append("")
+    lines.append(r"\section*{Summary}")
+    lines.append(r"\begin{tabular}{lr}")
+    lines.append(r"\toprule")
+    lines.append(r"Metric & Value\\")
+    lines.append(r"\midrule")
+    lines.append(rf"Total indexed claims & {len(sorted_claims)}\\")
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    lines.append("")
+    lines.append(r"\bigskip")
+    lines.append(r"\begin{tabular}{lr}")
+    lines.append(r"\toprule")
+    lines.append(r"Environment & Count\\")
+    lines.append(r"\midrule")
+    for env_type, count in sorted(env_counts.items()):
+        lines.append(rf"{escape_latex_cell(env_type)} & {count}\\")
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    lines.append("")
+    lines.append(r"\section*{Index}")
+    lines.append(
+        r"\begin{longtable}{L{0.10\textwidth}L{0.26\textwidth}L{0.42\textwidth}L{0.22\textwidth}}"
+    )
+    lines.append(r"\toprule")
+    lines.append(r"Env & Label & Name & File:line\\")
+    lines.append(r"\midrule")
+    lines.append(r"\endfirsthead")
+    lines.append(r"\toprule")
+    lines.append(r"Env & Label & Name & File:line\\")
+    lines.append(r"\midrule")
+    lines.append(r"\endhead")
+    lines.append(r"\midrule")
+    lines.append(r"\multicolumn{4}{r}{Continued on next page}\\")
+    lines.append(r"\midrule")
+    lines.append(r"\endfoot")
+    lines.append(r"\bottomrule")
+    lines.append(r"\endlastfoot")
+
+    for claim in sorted_claims:
+        source = f"{claim.file}:{claim.line}"
+        lines.append(
+            f"{escape_latex_cell(claim.env_type)} & "
+            f"{escape_latex_cell(claim.label)} & "
+            f"{escape_latex_cell(claim.title)} & "
+            f"{escape_latex_cell(source)}\\\\"
+        )
+
+    lines.append("")
+    lines.append(r"\end{longtable}")
+    lines.append(r"\end{document}")
+
+    out_path = STANDALONE_DIR / "theorem_index.tex"
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"  theorem_index.tex: {len(sorted_claims)} claims indexed")
+
+
 def write_verified_formulas() -> None:
     """Write metadata/verified_formulas.jsonl from CLAUDE.md pitfalls.
 
@@ -823,6 +983,7 @@ def main() -> None:
     write_dependency_graph(all_claims, all_labels)
     write_label_index(all_labels)
     write_theorem_registry(all_claims, active_files, all_tex_files)
+    write_theorem_index(all_claims)
     write_verified_formulas()
 
     print(f"\nDone. Run 'make metadata' to regenerate.")

@@ -3,9 +3,12 @@
 % Regime I: quadratic (Convention~\ref{conv:regime-tags}).
 
 The Heisenberg algebra has one generator. Its shadow tower
-terminates at degree~$2$, its $r$-matrix vanishes after $d\log$
-absorption, and every higher bracket on the convolution algebra is
-zero: the archetype is Gaussian (class~$\mathsf{G}$).
+terminates at degree~$2$, its trace-form collision residue is
+\[
+r_{\cH_k}^{\mathrm{coll}}(z)=\frac{k}{z},
+\]
+and every higher bracket on the convolution algebra is zero: the
+archetype is Gaussian (class~$\mathsf{G}$).
 This is the canonical $\mathbf{G}$-class anchor of the
 quadrichotomy
 $\{\mathbf{G},\mathbf{L},\mathbf{C},\mathbf{M}\}$ of
@@ -34,9 +37,14 @@ statistical sector. The dichotomy is sharp: one generator forces
 class~$\mathsf{G}$; two generators forces class~$\mathsf{G}$ or
 class~$\mathsf{C}$ according to the statistics of the pairing, and
 no finer gradation exists within the free-field regime. The
-$r$-matrix profile is uniform across all three cases after $d\log$
-absorption: $r(z) = 0$. What distinguishes the classes is the
-degree~$4$ contact stratum, not the binary shadow data.
+binary pole data are not uniform: Heisenberg carries the scalar
+residue $k/z$, while $\beta\gamma$ and $bc$ carry the nilpotent
+ordered contact residue
+$\Theta=a\otimes a'-a'\otimes a$ with $\Theta^2=0$
+(Theorem~\ref{thm:bg-ordered-bar}). The symmetric scalar
+rational $r$-matrix of the one-generator free fermion is zero.
+The class-$\mathsf{C}$ distinction is the degree~$4$ contact
+stratum together with this nilpotent ordered residue.
 
 The modular Koszul triples
 (Definition~\ref{def:modular-koszul-triple}) of the free-field
@@ -53,23 +61,30 @@ r(z) = 0\,\bigr),
 \;=\;
 \bigl(\,\beta\gamma_\lambda,\;\;
 bc_\lambda,\;\;
-r(z) = 0\,\bigr),
+\Theta_{\beta\gamma}^{\mathrm{ord}}\,\bigr),
 \qquad
 \mathfrak{T}_{bc}
 \;=\;
 \bigl(\,bc_\lambda,\;\;
 \beta\gamma_\lambda,\;\;
-r(z) = 0\,\bigr).
+\Theta_{bc}^{\mathrm{ord}}\,\bigr),
 \end{equation}
 The free fermion $r$-matrix vanishes: the simple pole in the
 OPE $\psi(z)\psi(w) \sim 1/(z{-}w)$ is absorbed by $d\log$
 extraction (Remark~\ref{rem:fermion-r-matrix-vanishing}).
-The $\beta\gamma$--$bc$ pair also has vanishing $r$-matrix:
-their OPE $\beta(z)\gamma(w) \sim 1/(z{-}w)$ has a simple
-pole, which is absorbed by $d\log$ extraction, leaving
-$r(z) = 0$. The quartic contact shadow, not the $r$-matrix,
-carries the leading nontrivial interaction data for class~C
-algebras.
+The $\beta\gamma$--$bc$ pair is different: its simple pole is
+regular as a scalar rational residue, but it survives on the
+ordered bar side as the nilpotent kernel
+\[
+\Theta_{\beta\gamma}^{\mathrm{ord}}
+=\beta\otimes\gamma-\gamma\otimes\beta,
+\qquad
+\Theta_{bc}^{\mathrm{ord}}
+=b\otimes c-c\otimes b.
+\]
+Thus $R=\id+2\pi i\,\Theta$ before symmetric averaging, while
+the scalar shadow records the class-$\mathsf{C}$ quartic contact
+term.
 
 \begin{remark}[Shadow obstruction tower for free fields: the Gaussian base case]
 \label{rem:free-fields-master-mc}
@@ -136,11 +151,11 @@ Free-field archetypes are the unique family where Pillar~B is formal
 and Pillar~C is classical simultaneously.
 \end{remark}
 
-\begin{remark}[Free-field bar complex: the polynomial growth baseline]
+\begin{remark}[Free-field bar complex: the growth baseline]
 \label{rem:free-field-bar-baseline}
 \index{bar complex!free-field baseline}
-The bar cohomology of the free-field archetypes fixes the polynomial
-growth baseline for all subsequent families.
+The bar cohomology of the free-field archetypes fixes the first
+growth baseline for subsequent families.
 At genus~$0$, $\dim H^n(\barBgeom(\cA))$ grows as follows:
 \begin{center}
 \begin{tabular}{l c c c c c c c l}
@@ -157,14 +172,15 @@ $bc$ ghosts & $1$ & $2$ & $4$ & $10$ & $26$ & $70$ & $192$
  & $\sqrt{(1{+}x)/(1{-}3x)}$
 \end{tabular}
 \end{center}
-The free fermion and Heisenberg bar complexes are
+The free fermion and Heisenberg genus-$0$ bar cohomologies are
 finite-dimensional; $\beta\gamma$ and $bc$ share the discriminant
 $\Delta(x) = (1{-}3x)(1{+}x)$ with $\widehat{\mathfrak{sl}}_2$ and
 the Virasoro algebra
-(Theorem~\ref{thm:ds-bar-gf-discriminant}). Among free-field archetypes, only those whose OPE has a simple pole
-produce infinite bar cohomology. The polynomial
-growth ($\sim 3^{n/2}$) calibrates the
-exponential growth of interacting theories
+(Theorem~\ref{thm:ds-bar-gf-discriminant}). Among free-field
+archetypes, the two-generator simple-pole systems
+($\beta\gamma$ and $bc$) are the ones with infinite genus-$0$
+bar cohomology. Their exponential rate ($\sim 3^{n/2}$)
+calibrates the growth of interacting theories
 (Kac--Moody, $\mathcal{W}$-algebras).
 \end{remark}
 
@@ -172,7 +188,17 @@ exponential growth of interacting theories
 
 The four free-field archetypes (the free fermion, the $\beta\gamma$ system, the $bc$ ghost system, and the single-generator fermion--boson pair) are defined below with their OPE structure and relations. Each definition specifies input data for the universal construction
 $\Theta_\cA := D_\cA - d_0 \in \MC(\gAmod)$
-(Theorem~\ref{thm:mc2-bar-intrinsic}). The bar complex, Koszul dual, genus tower, and shadow invariants computed below are all \emph{outputs} of that single MC element, projected to the relevant degree and genus. For free-field archetypes, the projection is maximally simple: the Gaussian archetype (free fermion) has $\Theta_\cA = \Theta_\cA^{\leq 2}$, and the contact/quartic archetype ($\beta\gamma$, $bc$) terminates at $\Theta_\cA^{\leq 4}$.
+(Theorem~\ref{thm:mc2-bar-intrinsic}). The bar complex
+$B(\cA)=T^c(s^{-1}\bar\cA)$, its cohomology coalgebra
+$\cA^{\mathrm{i}}=H^\bullet B(\cA)$, the Verdier-linear dual
+algebra $\cA^!=(\cA^{\mathrm{i}})^\vee$, the genus tower, and
+the shadow invariants are distinct outputs of this datum. The
+cobar equivalence $\Omega B(\cA)\simeq \cA$ is inversion; it is
+not the definition of $\cA^!$. For free-field archetypes, the
+projection is maximally simple: the Gaussian archetype (free
+fermion) has $\Theta_\cA = \Theta_\cA^{\leq 2}$, and the
+contact/quartic archetype ($\beta\gamma$, $bc$) terminates at
+$\Theta_\cA^{\leq 4}$.
 
 \subsection{Free fermion}\label{sec:free-fermion}%
 \index{free fermion|textbf}%
@@ -490,8 +516,8 @@ The free fermion and its Koszul dual satisfy:
  Dual modular characteristic:
  $\kappa(\mathcal{F}^!) = -1/4$.
 \item\label{item:fermion-complementarity-sum}
- Complementarity sum:
- $\kappa(\mathcal{F}) + \kappa(\mathcal{F}^!) = 0$.
+ Free-field complementarity sum:
+ $\kappa(\mathcal{F}) + \kappa(\mathcal{F}^!) = 0$ \textup{(}free-field pair\textup{)}.
 \item\label{item:fermion-genus-complementarity}
  Genus-$g$ complementarity:
  $Q_g(\mathcal{F}) + Q_g(\mathcal{F}^!)
@@ -515,15 +541,15 @@ $\kappa(\mathcal{F}^!) = c'/2 = -1/4$.
 \eqref{item:fermion-complementarity-sum}:
 $1/4 + (-1/4) = 0$. This is the free-field case of
 Theorem~C \textup{(}Theorem~\ref{thm:quantum-complementarity-main}\textup{)}:
-exact cancellation, matching the Heisenberg pair
-$\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!) = k + (-k) = 0$.
+exact cancellation, matching the free-field Heisenberg pair
+$\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!) = k + (-k) = 0$ \textup{(}free-field Heisenberg pair\textup{)}.
 
 \eqref{item:fermion-genus-complementarity}:
 Follows from Theorem~\ref{thm:quantum-complementarity-main} applied to
 the Koszul pair $(\mathcal{F}, \mathrm{Sym}^{\mathrm{ch}}(\gamma))$.
 At genus~$1$: $\mathcal{F}$ contributes the deformation
 $\kappa = 1/4$ and $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$ contributes
-the curvature $m_0 = -1/4 \cdot \omega$; together they span
+the curvature $m_0 = -(1/4)\,\omega$; together they span
 $H^*(\overline{\mathcal{M}}_1, \mathcal{Z}(\mathcal{F}))$.
 \end{proof}
 
@@ -535,7 +561,7 @@ the conformal weight $h = 1/2$. The bar complex encodes this exchange:
 $\barBgeom(\mathcal{F})$ collapses (fermionic antisymmetry kills bar
 elements), while $\barBgeom(\mathrm{Sym}^{\mathrm{ch}}(\gamma))$ grows
 polynomially (bosonic symmetry permits all bar words). The
-complementarity sum $\kappa + \kappa' = 0$ is exact for this pair, as
+free-field complementarity sum $\kappa + \kappa' = 0$ is exact for this pair, as
 for all free-field Koszul pairs \textup{(}this holds for
 KM\slash free fields; W-algebras require the general formula
 $\kappa + \kappa' = \rho \cdot K$\textup{)}.
@@ -739,13 +765,19 @@ See Chapter~\ref{chap:beta-gamma} for the full quartic
 birth analysis.
 \end{remark}
 
-The $\beta\gamma$ system combines a bosonic weight-$1$ field $\beta$ and a bosonic weight-$0$ field $\gamma$. Its bar complex shares the discriminant $\Delta(x) = (1-3x)(1+x)$ with $\widehat{\mathfrak{sl}}_2$ and the Virasoro algebra. The Koszul dual is the $bc$ ghost system (\S\ref{sec:fermion-boson-koszul}).
+The standard $\beta\gamma_\lambda$ system combines two bosonic
+fields with conformal weights
+$h_\gamma=\lambda$ and $h_\beta=1-\lambda$. The physical
+weight-$(1,0)$ system is the special point $\lambda=0$. Its bar
+complex shares the discriminant $\Delta(x) = (1-3x)(1+x)$ with
+$\widehat{\mathfrak{sl}}_2$ and the Virasoro algebra. The
+Koszul dual is the $bc$ ghost system (\S\ref{sec:fermion-boson-koszul}).
 
 \begin{definition}[\texorpdfstring{$\beta\gamma$}{beta-gamma} system]
 The $\beta\gamma$ chiral algebra is generated by:
 \begin{itemize}
-\item $\beta(z)$ of conformal weight $h_\beta = 1$
-\item $\gamma(z)$ of conformal weight $h_\gamma = 0$
+\item $\beta(z)$ of conformal weight $h_\beta = 1-\lambda$,
+\item $\gamma(z)$ of conformal weight $h_\gamma = \lambda$.
 \end{itemize}
 with OPEs:
 \[
@@ -784,8 +816,7 @@ Modular characteristic $\kappa(bc) = c_{bc}/2 = -(6\lambda^2 - 6\lambda + 1)$.
 At the physical point $(h_b, h_c) = (2, -1)$ (i.e.\ $\lambda = 2$):
 $c_{bc} = -26$, $\kappa(bc) = -13$.
 Complementarity:
-$\kappa(\beta\gamma) + \kappa(bc) = 0$ (exact cancellation,
-free-field family).
+$\kappa(\beta\gamma) + \kappa(bc) = 0$ (exact cancellation, free-field family).
 Shadow depth is preserved by Koszul duality for this pair: both
 $\beta\gamma$ and $bc$ are class~C with $r_{\max} = 4$.
 \end{remark}
@@ -818,7 +849,7 @@ parameter: the $bc$ system has no continuous level, only the discrete
 weight datum $\lambda$. Koszul complementarity with $\beta\gamma_\lambda$
 holds for every $\lambda$:
 \[
- \kappa(\beta\gamma_\lambda) + \kappa(bc_\lambda) \;=\; 0,
+ \kappa(\beta\gamma_\lambda) + \kappa(bc_\lambda) \;=\; 0 \quad\textup{(}free-field pair\textup{)},
  \qquad c_{\beta\gamma}(\lambda) + c_{bc}(\lambda) \;=\; 0
  \;\; \]
 \end{proposition}
@@ -868,13 +899,40 @@ This is a non-degenerate pairing between 1-dimensional spaces.
 
 \noindent\emph{Relations.}
 \begin{itemize}
-\item $R_{\mathrm{ferm}} = \mathrm{span}\{\psi \otimes \psi + \psi \otimes \psi\} = \mathrm{Sym}^2(V)$ (antisymmetry: $\psi \otimes \psi = -\psi \otimes \psi$ in graded sense, but the relation $R$ is the symmetric part)
-\item $R_{\mathrm{bos}} = 0$ (no relation in $\mathrm{Sym}^2(V^*)$, since $\gamma \otimes \gamma$ is a free generator)
+\item $R_{\mathrm{ferm}} = V^{\otimes 2}$, generated by the
+ graded-symmetric tensor $\psi\otimes\psi$; in characteristic
+ zero this is the quadratic relation $\psi^2=0$ of the exterior
+ algebra on the odd generator.
+\item $R_{\mathrm{bos}} = 0$; the polynomial algebra on the
+ even generator has no quadratic relation.
 \end{itemize}
 
-\noindent\emph{Orthogonality.} $R_{\mathrm{ferm}} \subset V^{\otimes 2}$ is 1-dimensional, and $R_{\mathrm{bos}}^\perp = V^{*\otimes 2}$ is also 1-dimensional. The condition $\langle R_{\mathrm{ferm}}, R_{\mathrm{bos}}^\perp \rangle = 0$ holds since $R_{\mathrm{bos}} = 0$ means $R_{\mathrm{bos}}^\perp = (V^*)^{\otimes 2}$, and we verify $\langle \psi \otimes \psi, \gamma \otimes \gamma \rangle = \langle \psi, \gamma \rangle^2 = 1 \neq 0$, confirming that $R_{\mathrm{ferm}}^\perp = 0 = R_{\mathrm{bos}}$: the relations are orthogonal complements.
+\noindent\emph{Orthogonality.}
+The quadratic dual relation is
+\[
+R_{\mathrm{ferm}}^\perp
+=\{\rho\in (V^*)^{\otimes 2}\mid
+\rho(R_{\mathrm{ferm}})=0\}.
+\]
+Since $R_{\mathrm{ferm}}=V^{\otimes 2}$ is one-dimensional and
+$\langle \psi\otimes\psi,\gamma\otimes\gamma\rangle=1$,
+one has $R_{\mathrm{ferm}}^\perp=0=R_{\mathrm{bos}}$.
+Conversely, $R_{\mathrm{bos}}=0$ gives
+$R_{\mathrm{bos}}^\perp=V^{\otimes 2}=R_{\mathrm{ferm}}$.
+Thus the exterior relation on the fermion and the absence of a
+quadratic relation on the boson are orthogonal complements.
 
-\noindent\emph{Acyclicity.} Follows from the bar-cobar quasi-isomorphism (Theorem~\ref{thm:bar-cobar-inversion-qi}).
+\noindent\emph{Acyclicity.} The quadratic Koszul complex is the
+one-generator exterior--symmetric Koszul complex
+\[
+\Lambda(\psi)\otimes \mathrm{Sym}(\gamma)
+\]
+with differential induced by the pairing
+$\langle\psi,\gamma\rangle=1$; it is acyclic off the vacuum.
+The chiral statement is the corresponding Verdier-linear
+realization on the Ran space. The cobar counit
+$\Omega B(\mathcal F)\simeq\mathcal F$ is the inversion
+statement, not the definition of the dual algebra.
 \end{proof}
 
 
@@ -883,7 +941,12 @@ This is a non-degenerate pairing between 1-dimensional spaces.
 
 \section{Bar complexes of free-field archetypes}\label{sec:bar-complexes-free-fields}
 
-The bar complex of each free-field archetype is determined by OPE residues along collision divisors in the Fulton--MacPherson compactification; the results range from collapse (free fermion) through finite rank growth ($\beta\gamma$, Heisenberg) to lattice-graded structure (lattice VOAs).
+The bar complex of each free-field archetype is determined by OPE
+residues along collision divisors in the Fulton--MacPherson
+compactification; the results range from genus-$0$ cohomological
+collapse (free fermion), through a finite Heisenberg shadow with
+level central class, to the infinite two-generator growth of
+$\beta\gamma$ and the lattice-graded structure of lattice VOAs.
 
 \subsection{Free fermion bar complex}
 
@@ -952,7 +1015,9 @@ $\left[\begin{smallmatrix} 0 & -1 \\ 1 & -1 \end{smallmatrix}\right]$
 \subsection{Free fermion coalgebra structure}
 
 \begin{theorem}[Fermion bar complex coalgebra; \ClaimStatusProvedHere]\label{thm:fermion-bar-coalg}
-The bar complex $\bar{B}^{\text{ch}}(\mathcal{F})$ carries the chiral coalgebra structure:
+The coaugmented bar complex
+$B^{\text{ch}}(\mathcal{F})=\mathbb{C}\oplus
+\bar{B}^{\text{ch}}(\mathcal{F})$ carries the chiral coalgebra structure:
 \begin{enumerate}
 \item \emph{Comultiplication.} For $\alpha = \psi_1 \otimes \cdots \otimes \psi_n \otimes \omega \in \bar{B}^n$:
 \[
@@ -960,13 +1025,12 @@ The bar complex $\bar{B}^{\text{ch}}(\mathcal{F})$ carries the chiral coalgebra 
 \]
 where $\alpha_I = \bigotimes_{i \in I} \psi_i \otimes \omega|_{C_{|I|}(X)}$ and $\sigma$ is the shuffle permutation.
 
-\item \emph{Counit.} $\epsilon: \bar{B}^{\text{ch}}(\mathcal{F}) \to \mathbb{C}$ given by:
-\[
-\epsilon(\alpha) = \begin{cases}
-\int_X \psi & \text{if } n = 1 \text{ and } \omega = \text{vol}_X \\
-0 & \text{otherwise}
-\end{cases}
-\]
+\item \emph{Counit.} The coaugmented bar coalgebra
+$B^{\mathrm{ch}}(\mathcal{F})=\mathbb{C}\oplus
+\bar{B}^{\mathrm{ch}}(\mathcal{F})$ has counit
+$\epsilon(1)=1$ and
+$\epsilon(\alpha)=0$ for every positive reduced bar word
+$\alpha\in\bar{B}^{\mathrm{ch}}(\mathcal{F})$.
 
 \item \emph{Graded symmetry.} The fermionic sign structure satisfies:
 \[
@@ -990,7 +1054,12 @@ where $\sigma_{I,J}$ is the shuffle sending $(1,\ldots,n)$ to $(i_1,\ldots,i_{|I
 Coassociativity $(\Delta \otimes \mathrm{id}) \circ \Delta = (\mathrm{id} \otimes \Delta) \circ \Delta$ follows from the associativity of the FM stratification: the codimension-2 boundary of $\overline{C}_n(X)$ is covered by iterated $D_{I,J}$-strata in two orderings, and the two resulting expressions for $(\Delta \otimes \mathrm{id}) \circ \Delta(\alpha)$ agree by the Arnold relation on orientation forms (Appendix~\ref{app:arnold-relations}).
 
 \noindent\emph{Counit.}
-The counit $\epsilon$ of (2) is well-defined because $\overline{C}_1(X) = X$ and the integral $\int_X \psi$ converges for $\psi \in \mathcal{F}$ a degree-1 form on $X$. The counit axiom $(\epsilon \otimes \mathrm{id})\circ\Delta = \mathrm{id}$ reduces to the Stokes residue identity: restricting to $D_{\{1\},\{2,\ldots,n\}}$ and taking $\epsilon$ on the first factor extracts the degree-1 piece by integration over the collapsed point.
+The counit is the standard counit of the cofree conilpotent coalgebra:
+it projects to the coaugmentation summand $\mathbb{C}\cdot 1$ and
+vanishes on the reduced tensor coalgebra. Hence
+$(\epsilon\otimes\mathrm{id})\circ\Delta
+=\mathrm{id}=(\mathrm{id}\otimes\epsilon)\circ\Delta$ on
+$B^{\mathrm{ch}}(\mathcal{F})$ by the deconcatenation formula.
 
 \noindent\emph{Chain map property.}
 The differential $d_{\bar{B}}$ and the comultiplication $\Delta$ are compatible (i.e.\ $\Delta$ is a chain map $(\bar{B}^{\mathrm{ch}}(\mathcal{F}), d_{\bar{B}}) \to (\bar{B}^{\mathrm{ch}}(\mathcal{F}) \otimes \bar{B}^{\mathrm{ch}}(\mathcal{F}), d \otimes 1 + 1 \otimes d)$) by the Leibniz rule for the bar differential on FM strata: the differential and comultiplication both arise from boundary residues, and the Stokes theorem $\partial \circ \partial = 0$ ensures they commute up to sign in the standard way for dg coalgebras (see Appendix~\ref{app:arnold-relations} for the relevant Arnold relations).
@@ -1262,12 +1331,14 @@ class~M.
 \end{proposition}
 
 \begin{proof}
-Substituting $\alpha = 2$ and $S_4 = 10/(c(5c+22))$ into the shadow
+Substituting $\alpha = 2$ and writing $d_c=5c+22$, so that
+$S_4=10/(c\,d_c)$, into the shadow
 metric formula $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta t^2$
 (Theorem~\ref{thm:riccati-algebraicity}) gives
 $(2\kappa + 6t)^2 + 2\Delta t^2$ with
-$\Delta = 8\kappa \cdot 10/(c(5c+22)) = 80\kappa/(c(5c+22)) = 40/(5c+22)$
-(using $\kappa = c/2$). The denominator $5c + 22 = 60\lambda^2 - 60\lambda + 32$
+$\Delta = 80\kappa/(c\,d_c)=40/d_c$
+(using $\kappa = c/2$). The denominator
+$d_c=5c+22=60\lambda^2-60\lambda+32$
 has discriminant $3600 - 4 \cdot 60 \cdot 32 = -4080 < 0$, so it has
 no real roots.\qedhere
 \end{proof}
@@ -1332,7 +1403,7 @@ $\lambda \leftrightarrow 1{-}\lambda$) within the same
 $\beta\gamma_\lambda$ to $bc_\lambda$
 (Theorem~\ref{thm:betagamma-bc-koszul}): same conformal weight, opposite
 statistics. Concretely,
-$\kappa(\beta\gamma_\lambda) + \kappa(bc_\lambda) = 0$
+$\kappa(\beta\gamma_\lambda) + \kappa(bc_\lambda) = 0$ \textup{(}free-field pair\textup{)}
 (Koszul complementarity) while
 $\kappa(\beta\gamma_\lambda) = \kappa(\beta\gamma_{1-\lambda})$
 (weight symmetry); these are independent identities.\qedhere
@@ -1389,11 +1460,14 @@ but trivial nonlinear shadow structure.
 \end{remark}
 
 The Heisenberg algebra $\mathcal{H}_k$ (Chapter~\ref{ch:heisenberg-frame})
-introduces curvature: the double-pole OPE
+has no field-valued simple-pole bracket: the double-pole OPE
 $\alpha(z)\alpha(w) \sim k(z-w)^{-2}$ kills the bracket differential
-but produces $m_0 = k\omega \neq 0$. The Koszul dual is the
-commutative chiral algebra $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, not a
-level-inverted Heisenberg.
+and produces the level central two-cochain. The corresponding
+curvature $m_0=k\,\omega_{\mathrm{cen}}$ lives on the curved
+cobar side.
+The Koszul dual is the commutative chiral
+algebra $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, not a level-inverted
+Heisenberg.
 
 \subsubsection{Bar complex computation}
 \label{sec:heisenberg-bar-complex}
@@ -1405,19 +1479,22 @@ H^n(\bar{B}_{\text{geom}}(\mathcal{H}_k)) =
 \begin{cases}
 \mathbb{C} & n = 0 \\
 0 & n = 1 \\
-\mathbb{C} \cdot c_k & n = 2 \\
+\mathbb{C} \cdot \omega_{\mathrm{cen},k} & n = 2 \\
 0 & n > 2
 \end{cases}
 \]
-where $c_k$ is the central charge class. For genus $g \geq 1$, additional classes arise from $H^1(\Sigma_g)$; see Theorem~\ref{thm:heisenberg-higher-genus}.
+where $\omega_{\mathrm{cen},k}$ is the level central class. For genus
+$g \geq 1$, additional classes arise from $H^1(\Sigma_g)$; see
+Theorem~\ref{thm:heisenberg-higher-genus}.
 \end{theorem}
 
 \begin{proof}
 The degree-by-degree computation is carried out in
 Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all}:
 the double-pole-only OPE kills the degree-$1$ differential,
-the degree-$2$ triple-collision residue produces the central charge
-class $c_k$, and degrees $\geq 3$ vanish by dimension counting.
+the degree-$2$ triple-collision residue produces the level central
+class $\omega_{\mathrm{cen},k}$, and degrees $\geq 3$ vanish by
+dimension counting.
 See Theorem~\ref{thm:heisenberg-bar-complete} for explicit formulas
 and $d^2 = 0$ verification.
 
@@ -1453,41 +1530,70 @@ Chapter~\ref{chap:higher-genus}.
 
 \begin{remark}[Physical meaning of curvature]
 \index{central charge!free fields}
-The curvature $m_0 = k \cdot c$ is the homological manifestation of the Heisenberg algebra's central extension. The level $k$ appears as the coefficient of the curvature: central charges correspond to curvatures in homological algebra, and quantum anomalies manifest as obstructions to strict associativity.
+The curvature class is the homological manifestation of the
+Heisenberg central extension. In the rank-one convention used here it
+is
+\[
+m_0=k\,\omega_{\mathrm{cen}},
+\]
+where $\omega_{\mathrm{cen}}$ is the central two-cochain dual to the
+pairing $\langle J,J\rangle=k$. This is a level statement, not the
+central charge $c=1$ of the Heisenberg vertex algebra.
 \end{remark}
 
-\begin{remark} (Energy-Momentum Tensor). The curvature $m_0 = k \cdot c$ arises geometrically from the Heisenberg energy-momentum tensor:
+\begin{remark}[Energy-momentum tensor]
 \index{energy-momentum tensor!Heisenberg}
-$T = \frac{1}{2k} :\alpha(z)\alpha(z):$
-The normal ordering prescription creates the central term through point-splitting regularization, which geometrically corresponds to approaching the diagonal in $C_2(X)$ along a specific direction determined by the complex structure.
+The stress tensor
+\[
+T=\frac{1}{2k}\normord{\alpha(z)\alpha(z)}
+\]
+has central charge~$1$, while the OPE
+$\alpha(z)\alpha(w)\sim k(z-w)^{-2}$ records the level. The
+normal-ordering point-splitting creates the central two-cochain
+$\omega_{\mathrm{cen}}$ on the collision diagonal; multiplying it by
+$k$ gives the curved cobar term.
 \end{remark}
 
-\begin{theorem}[Heisenberg curved structure; \ClaimStatusProvedHere]
+\begin{theorem}[Heisenberg curved cobar structure; \ClaimStatusProvedHere]
 \label{thm:heisenberg-curved-structure}
-The Heisenberg algebra $\mathcal{H}_k$ has curved $A_\infty$ structure:
+The ordered bar complex of the Heisenberg algebra $\mathcal{H}_k$
+has ordinary square-zero differential. Its Koszul-dual curved cobar
+algebra carries the level curvature:
 \begin{enumerate}
-\item Curvature: $m_0 = k \cdot c$ where $c$ is the central element
-\item Binary: $m_2(J \otimes J) = 0$ (currents commute up to central term)
-\item Curved relation: $m_1(m_0) = 0$ (central element is closed)
+\item Curvature: $m_0 = k\,\omega_{\mathrm{cen}}$, where
+ $\omega_{\mathrm{cen}}$ is the central collision two-cochain.
+\item Binary: $m_2(J \otimes J) = 0$ after removing the scalar
+ central collision term.
+\item Curved relation: $m_1(m_0) = 0$ (the central class is closed)
 \item Higher: $m_k = 0$ for $k \geq 3$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The OPE $\alpha(z)\alpha(w) = \frac{k}{(z-w)^2}$ has no simple pole, so the factorization differential vanishes on degree 1.
+The OPE $\alpha(z)\alpha(w)=k(z-w)^{-2}$ has no simple-pole
+field-valued bracket, so the bracket part of the bar differential
+vanishes on degree~$1$. The double pole is not discarded: with the
+trace-form collision convention of
+Remark~\ref{rem:kappa-vir-is-c-over-2}, it produces the ordered
+residue $r_{\cH_k}^{\mathrm{coll}}(z)=k/z$ and the central
+two-cochain $\omega_{\mathrm{cen}}$.
 
-At degree 2, the commutator gives:
-$[\alpha(z), \alpha(w)] = k \cdot \partial_w\delta(z-w)$
-
-Triple collision residue:
-$\text{Res}_{D_{123}}[J_1 J_2 J_3 \otimes \eta_{12} \wedge \eta_{23}] = k \cdot [\text{central class}]$
-
-This produces $m_0 = k \cdot c$ in cohomology.
+At triple collision the two boundary orders give opposite Arnold
+orientation signs and leave the scalar central class:
+\[
+\operatorname{Res}_{D_{123}}
+\bigl[J_1J_2J_3\otimes\eta_{12}\wedge\eta_{23}\bigr]
+=k\,\omega_{\mathrm{cen}}.
+\]
+This is the curvature $m_0$ on the curved cobar/Koszul-dual side.
+The genus-$0$ bar differential itself still satisfies $d_{\bar B}^2=0$.
 
 The curved $A_\infty$ relation at $n = 0$ gives $m_1(m_0) = 0$ (curvature is closed), and at $n = 1$:
 \[m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]_{m_2}\]
 
-Since $m_0 \propto k \cdot c$ is central, $[m_0, a] = 0$ and so $m_1^2 = 0$, consistent with $\dzero^2 = 0$ on the genus-$0$ bar complex.
+Since $m_0=k\,\omega_{\mathrm{cen}}$ is central, $[m_0,a]=0$ and
+so $m_1^2=0$, consistent with $\dzero^2=0$ on the genus-$0$ bar
+complex.
 \end{proof}
 
 % [Duplicate content removed]
@@ -1612,11 +1718,11 @@ For $\mathcal{H}_k$ on $\Sigma_g$ ($g \geq 1$), the geometric bar complex cohomo
 H^n(\bar{B}_{\mathrm{geom}}^{(g)}(\mathcal{H}_k)) = \begin{cases}
 \mathbb{C} & n = 0 \\
 \mathbb{C}^{2g} & n = 1 \\
-\mathbb{C} \oplus \mathbb{C} \cdot c_k^{(g)} & n = 2 \\
+\mathbb{C} \oplus \mathbb{C} \cdot \omega_{\mathrm{cen},k}^{(g)} & n = 2 \\
 0 & n > 2
 \end{cases}
 \]
-Here $H^1 \cong H^1(\Sigma_g, \mathbb{C})$ reflects the $2g$ first-cohomology classes of~$\Sigma_g$ (realized as zero modes of the current $\alpha(z)$), $H^2$ contains the fundamental class $[\Sigma_g]$ and an additional class $c_k^{(g)}$ arising from the central extension, measuring the obstruction to trivializing the Heisenberg bundle over $\mathcal{M}_g$.
+Here $H^1 \cong H^1(\Sigma_g, \mathbb{C})$ reflects the $2g$ first-cohomology classes of~$\Sigma_g$ (realized as zero modes of the current $\alpha(z)$), $H^2$ contains the fundamental class $[\Sigma_g]$ and an additional level class $\omega_{\mathrm{cen},k}^{(g)}$ arising from the central extension, measuring the obstruction to trivializing the Heisenberg bundle over $\mathcal{M}_g$.
 \end{theorem}
 
 \begin{proof}
@@ -1634,13 +1740,13 @@ Concretely, the current $\alpha(z) = \partial\phi(z)$ on $\Sigma_g$ has zero mod
 
 \emph{Degree~2.} The degree-2 bar differential involves the collision residue:
 \[
-d(\alpha(z_1) \otimes \alpha(z_2) \cdot \eta_{12}) = \mathrm{Res}_{z_1 = z_2}\!\left[\frac{k}{(z_1-z_2)^2}\, \eta_{12}\right] = k \cdot 1
+d(\alpha(z_1) \otimes \alpha(z_2) \cdot \eta_{12}) = \mathrm{Res}_{z_1 = z_2}\!\left[\frac{k}{(z_1-z_2)^2}\, \eta_{12}\right] = k\,1
 \]
-On $\Sigma_g$, this residue maps to $H^2(\Sigma_g, \mathbb{C}) \cong \mathbb{C}$ (the fundamental class~$[\Sigma_g]$). The class $c_k^{(g)} \in H^2$ arises as follows: the Heisenberg algebra at level~$k$ defines a line bundle $\mathcal{L}_k$ on $\mathcal{M}_g$ whose first Chern class is $c_1(\mathcal{L}_k) = k \cdot \lambda$, where $\lambda$ is the Hodge class. The class $c_k^{(g)}$ is the image of this Chern class in the bar complex cohomology, and it is nonzero whenever $k \neq 0$.
+On $\Sigma_g$, this residue maps to $H^2(\Sigma_g, \mathbb{C}) \cong \mathbb{C}$ (the fundamental class~$[\Sigma_g]$). The class $\omega_{\mathrm{cen},k}^{(g)} \in H^2$ arises as follows: the Heisenberg algebra at level~$k$ defines a line bundle $\mathcal{L}_k$ on $\mathcal{M}_g$ whose first Chern class is $c_1(\mathcal{L}_k) = k\,\lambda$, where $\lambda$ is the Hodge class. The class $\omega_{\mathrm{cen},k}^{(g)}$ is the image of this Chern class in the bar complex cohomology, and it is nonzero whenever $k \neq 0$.
 
 \emph{Degree $n > 2$.} Since $\Sigma_g$ is a compact Riemann surface, $H^n(\Sigma_g, \mathbb{C}) = 0$ for $n > 2$. The geometric bar complex at degree~$n$ involves sections over the configuration space $\overline{C}_{n+1}(\Sigma_g)$ with logarithmic $n$-forms. The residue differential contracts pairs of points, and the resulting cohomology is controlled by the cohomology of $\Sigma_g$ itself through the Leray spectral sequence for the forgetful map $\overline{C}_{n+1}(\Sigma_g) \to \Sigma_g^{n+1}$. For the single-generator Heisenberg algebra (rank 1), the Lie algebra cohomology of a finite-dimensional abelian Lie algebra is computed via the bar complex.
 
-More precisely, the Lie algebra cohomology is classified by the bar complex of the rank-1 Heisenberg algebra: it computes $H^*_{\mathrm{Lie}}(\mathfrak{h}_g, \mathbb{C}_k)$ of the abelian Lie algebra $\mathfrak{h}_g = H^0(\Sigma_g, \Omega^1) \oplus H^1(\Sigma_g, \mathcal{O})$ (dimension~$2g$) with coefficients in the 1-dimensional representation determined by the level~$k$ central extension. For a 1-dimensional central extension of an abelian Lie algebra, the Chevalley--Eilenberg differential $d_{\mathrm{CE}}$ on $\Lambda^*(\mathfrak{h}_g^*)$ satisfies $d_{\mathrm{CE}}(\xi) = k \cdot \omega(\xi, -)$ where $\omega$ is the symplectic form from the intersection pairing. The resulting cohomology is concentrated in degrees~$\leq 2$: since $k \neq 0$, the map $d_{\mathrm{CE}}: \Lambda^1 \to \Lambda^2$ is surjective onto the $\omega$-multiples, and by induction the higher cohomology groups $H^n = 0$ for $n > 2$.
+More precisely, the Lie algebra cohomology is classified by the bar complex of the rank-1 Heisenberg algebra: it computes $H^*_{\mathrm{Lie}}(\mathfrak{h}_g, \mathbb{C}_k)$ of the abelian Lie algebra $\mathfrak{h}_g = H^0(\Sigma_g, \Omega^1) \oplus H^1(\Sigma_g, \mathcal{O})$ (dimension~$2g$) with coefficients in the 1-dimensional representation determined by the level~$k$ central extension. For a 1-dimensional central extension of an abelian Lie algebra, the Chevalley--Eilenberg differential $d_{\mathrm{CE}}$ on $\Lambda^*(\mathfrak{h}_g^*)$ satisfies $d_{\mathrm{CE}}(\xi) = k\,\omega(\xi, -)$ where $\omega$ is the symplectic form from the intersection pairing. The resulting cohomology is concentrated in degrees~$\leq 2$: since $k \neq 0$, the map $d_{\mathrm{CE}}: \Lambda^1 \to \Lambda^2$ is surjective onto the $\omega$-multiples, and by induction the higher cohomology groups $H^n = 0$ for $n > 2$.
 \end{proof}
 
 
@@ -1783,12 +1889,12 @@ satisfying anticommutation relations:
 \psi^{(i)}(z)\psi^{(j)}(w) = \frac{\delta_{i+j,0}}{z-w} + \text{regular}
 \]
 This forms a Koszul dual to the derived $\beta\gamma$-$bc$ system.
-(Contributing to the derived/super extension flank adjoining
-Conjecture~\ref{conj:v1-master-infinite-generator}, not to the standard
-$W_\infty$/Yangian packet.)
+This belongs to the derived/super extension governed by
+Conjecture~\ref{conj:v1-master-infinite-generator}, separate from the
+$W_\infty$/Yangian comparison.
 \end{conjecture}
 
-\begin{evidence}[Evidence: Sketch of proposed argument]
+\begin{evidence}[Structural evidence]
 Consider the configuration space $\overline{C}_n(X)$ with its natural stratification by collision types.
 The derived structure arises from the entire
 stratified space and its perverse sheaf structure.
@@ -1829,7 +1935,28 @@ Q\psi^{(k)} = (k+1)\psi^{(k+1)} + \text{curvature terms}
 compatible with the BRST differential on the $\beta\gamma$-$bc$ side.
 
 \emph{Step~5.}
-The residue pairing matrix of Step~3 is rank 3 (matching the 3 generators $\psi^{(-1)}, \psi^{(0)}, \psi^{(1)}$ paired against the 4 generators $\beta, \gamma, b, c$ of the derived $\beta\gamma$-$bc$ system). The pairing $\langle \psi^{(i)}, - \rangle: \mathcal{B}^{\bullet} \to \mathbb{C}$ identifies $\mathcal{F}^{\bullet}$ with the linear dual of the cogenerators of $\bar{B}(\mathcal{B}^{\bullet})$: the bar complex of the derived $\beta\gamma$-$bc$ system has cogenerators in bar degree 1 dual to $\psi^{(0)}, \psi^{(\pm 1)}$, with the bar differential $d_{\bar{B}}$ encoding the BRST differential $Q$ of Step~4. The $A_\infty$ structure on $\mathcal{F}^{\bullet}$ is then recovered from the Verdier dual $\mathbb{D}_{\mathrm{Ran}}(\bar{B}(\mathcal{B}^{\bullet}))$, which is the homotopy Koszul-dual factorization algebra computed from the bar resolution (Theorem~\ref{thm:bar-cobar-isomorphism-main}). This identifies $\mathcal{F}^{\bullet}$ as the homotopy Koszul dual $(\mathcal{B}^{\bullet})^!_\infty$. Note: the cobar functor $\Omega(\bar{B}(\mathcal{B}^{\bullet})) \simeq \mathcal{B}^{\bullet}$ (bar-cobar inversion, Theorem~B) recovers $\mathcal{B}^{\bullet}$ itself, not its Koszul dual.
+The residue pairing matrix of Step~3 is rank~$3$: the generators
+$\psi^{(-1)},\psi^{(0)},\psi^{(1)}$ pair with the four generators
+$\beta,\gamma,b,c$ of the derived $\beta\gamma$-$bc$ system. The
+pairing $\langle \psi^{(i)},-\rangle\colon \mathcal{B}^{\bullet}
+\to \mathbb{C}$ identifies $\mathcal{F}^{\bullet}$ with the linear
+dual of the cogenerators of $\bar{B}(\mathcal{B}^{\bullet})$.
+Those cogenerators sit in bar degree~$1$ and are dual to
+$\psi^{(0)},\psi^{(\pm 1)}$; the bar differential
+$d_{\bar{B}}$ encodes the BRST differential $Q$ of Step~4.
+
+The $A_\infty$ structure on $\mathcal{F}^{\bullet}$ is recovered from
+the Verdier dual
+$\mathbb{D}_{\mathrm{Ran}}(\bar{B}(\mathcal{B}^{\bullet}))$. This is
+the homotopy Koszul-dual factorization algebra computed from the bar
+resolution (Theorem~\ref{thm:bar-cobar-isomorphism-main}), and it
+identifies $\mathcal{F}^{\bullet}$ as the homotopy Koszul dual
+$(\mathcal{B}^{\bullet})^!_\infty$.
+
+The functor
+$\Omega(\bar{B}(\mathcal{B}^{\bullet})) \simeq \mathcal{B}^{\bullet}$
+is bar-cobar inversion: it recovers $\mathcal{B}^{\bullet}$ itself,
+not the dual algebra.
 \end{evidence}
 
 \begin{example}[Physical interpretation]
@@ -1846,7 +1973,7 @@ The derived Koszul duality becomes the field-antifield correspondence in the BV 
 A complete proof requires assembling the jet bundle structure,
 stratified residue pairing, and cobar reconstruction into a single
 functorial argument. This is a derived/super extension problem, not
-one of the standard MC4 finite-packet lanes; no analogue of
+one of the $W_\infty$/Yangian finite-window comparisons; no analogue of
 $\mathcal{I}_N$ or $\Delta_{a,0}(N)$ is yet identified here.
 \end{remark}
 
@@ -1973,13 +2100,13 @@ derived Koszul dual module.
 \begin{theorem}[Heisenberg Koszul dual; \ClaimStatusProvedHere]\label{thm:heisenberg-koszul-dual-early}
 \index{Heisenberg algebra!Koszul dual}
 The Heisenberg chiral algebra $\mathcal{H}_k$ at level $k$ has Koszul dual:
-\[\mathcal{H}_k^! \simeq \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\, d = 0,\, m_0 = -k \cdot \omega\bigr)\]
-where $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is the chiral symmetric (commutative) algebra on the dual generator space, and $\omega \in \mathrm{Sym}^2(V^*)$ is the element dual to the pairing $\langle \alpha, \alpha \rangle = k$. This is a \emph{curved} commutative chiral algebra in the sense of Positselski: the curvature $m_0 = -k \cdot \omega$ encodes the level, and $m_0 = 0$ only at level $k = 0$.
+\[\mathcal{H}_k^! \simeq \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\, d = 0,\, m_0 = -k\,\omega\bigr)\]
+where $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is the chiral symmetric (commutative) algebra on the dual generator space, and $\omega \in \mathrm{Sym}^2(V^*)$ is the element dual to the pairing $\langle \alpha, \alpha \rangle = k$. This is a \emph{curved} commutative chiral algebra in the sense of Positselski: the curvature $m_0 = -k\,\omega$ encodes the level, and $m_0 = 0$ only at level $k = 0$.
 
 More explicitly, the bar complex decomposes as:
 \begin{align}
 \bar{B}^{\mathrm{ch}}(\mathcal{H}_k) &\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*) \quad \text{(conilpotent chiral coalgebra)} \\
-\Omega^{\mathrm{ch}}(\mathrm{coLie}^{\mathrm{ch}}(V^*)) &\simeq \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\, m_0 = -k \cdot \omega\bigr) \quad \text{(curved cobar)}
+\Omega^{\mathrm{ch}}(\mathrm{coLie}^{\mathrm{ch}}(V^*)) &\simeq \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\, m_0 = -k\,\omega\bigr) \quad \text{(curved cobar)}
 \end{align}
 \end{theorem}
 
@@ -1994,7 +2121,10 @@ Since $\mathfrak{h}_k$ is abelian, the Chevalley--Eilenberg complex is formal: $
 (Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all}).
 The double-pole-only OPE makes the coproduct on $\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)$ cocommutative (the residue $\mathrm{Res}_{z_i = z_j}[\omega/(z_i - z_j)^2]$ is symmetric under $z_i \leftrightarrow z_j$). By Milnor--Moore, a conilpotent cocommutative coalgebra is a coLie coalgebra, whose cobar is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.
 
-The level $k$ determines the curvature of the Koszul dual: $m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$. The bar differential satisfies $d^2 = 0$ (as it always does); the curvature manifests instead in the $A_\infty$ relation $m_1^2(a) = [m_0, a]_{m_2}$ on the cobar side.
+The level $k$ determines the curvature of the Koszul dual:
+$m_0 = -k\,\omega \in \mathrm{Sym}^2(V^*)$. The bar differential
+satisfies $d^2 = 0$; the curvature manifests instead in the
+$A_\infty$ relation $m_1^2(a) = [m_0, a]_{m_2}$ on the cobar side.
 \end{proof}
 
 \begin{remark}[Level-shifting vs Koszul duality]
@@ -2208,7 +2338,7 @@ characterized by:
  $F_\lambda^! \cong \mathbb{C}[\alpha_{-1}, \alpha_{-2}, \ldots]
  \cdot |\lambda\rangle$;
 \item the $A_\infty$ module structure on $F_\lambda^!$ inherits the
- curvature $m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$
+ curvature $m_0 = -k\,\omega \in \mathrm{Sym}^2(V^*)$
  from the algebra level
  \textup{(}Theorem~\textup{\ref{thm:heisenberg-koszul-dual-early})},
  so the strict differential satisfies
@@ -2237,7 +2367,7 @@ A(\mathrm{Sym}^{\mathrm{ch}}(V^*))$; see
 Example~\ref{ex:zhu-algebras}(iv)).
 
 The curvature on $F_\lambda^!$ is inherited from the algebra-level
-curvature $m_0 = -k \cdot \omega$. The module action of $m_0$
+curvature $m_0 = -k\,\omega$. The module action of $m_0$
 on $F_\lambda^!$ is well-defined because $m_0$ lies in the center of
 $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (it is a quadratic element of a
 commutative algebra).
@@ -2397,7 +2527,21 @@ to dual characters.
 \begin{remark}[Ext algebra and the genus universality invariant]
 \label{rem:ext-genus-universality}
 \index{genus universality!Ext algebra}
-The Euler characteristic $\chi(\mathrm{Ext}^*) = \prod(1 - q^n)^d = q^{-d/24}\,\eta(\tau)^d$ satisfies $\chi(\mathrm{Ext}^*) \cdot Z(\mathcal{H}_k) = 1$, where $Z = q^{d/24}/\eta(\tau)^d$ is the Heisenberg partition function. The conformal anomaly $q^{d/24}$ reflects $c = d$; the genus universality invariant $\kappa(\mathcal{H}_k) = k$ (Theorem~\ref{thm:genus-universality}) governs the genus-$g$ obstruction $\mathrm{obs}_g = k \cdot \lambda_g$ \textup{(}UNIFORM-WEIGHT\textup{}), with genus-$1$ value $F_1 = k/24 = c/24$. Thus the same invariant $\kappa(\mathcal{H}_k)$ controls both the module Ext Euler characteristic and the genus expansion.
+The Euler characteristic
+$\chi(\mathrm{Ext}^*)=\prod(1-q^n)^d=q^{-d/24}\eta(\tau)^d$
+satisfies
+$\chi(\mathrm{Ext}^*)\cdot Z_{\mathrm{osc}}(\mathcal{H}_k)=1$ for
+the oscillator-normalized partition function
+$Z_{\mathrm{osc}}=q^{d/24}/\eta(\tau)^d$. The conformal anomaly
+$q^{d/24}$ records the oscillator central charge $c=d$. The genus
+universality invariant records the level:
+$\kappa(\mathcal{H}_k)=k$ in rank one, and
+$\kappa(\mathcal{H}_k^{\oplus d})=dk$. Hence the genus-$g$
+obstruction is
+$\mathrm{obs}_g=\kappa(\mathcal{H}_k^{\oplus d})\,\lambda_g$
+\textup{(}UNIFORM-WEIGHT\textup{}), with rank-one genus-$1$ value
+$F_1=k/24$. This equals $c/24$ only in the standard normalization
+$d=1$, $k=1$; in general central charge and level are distinct.
 \end{remark}
 
 
@@ -2457,8 +2601,9 @@ $\mathcal{F}^! \simeq \mathrm{Sym}^{\mathrm{ch}}(\gamma)$:
 
 \begin{proof}
 The automorphism $\sigma: \psi \mapsto -\psi$ induces an automorphism
-$\sigma^!$ of the Koszul dual via the bar-cobar functor. Since the bar
-construction is functorial for algebra automorphisms
+$\sigma^!$ of the Koszul dual by functoriality of the bar construction
+and graded dualization. Since the bar construction is functorial for
+algebra automorphisms
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}), and since $\sigma$ acts
 on the generator space $V = \mathrm{Span}\{\psi\}$ by $-1$, the induced
 automorphism $\sigma^! = \bar{B}(\sigma)^\vee$ acts on
@@ -2619,7 +2764,7 @@ $\mathrm{Vir}_{26-c}$ is the \emph{dynamic} Koszul dual at the M/S-level
 dual has infinitely many primitive cumulants
 ($\Delta_{\mathrm{Vir}}(t) = t^3 + 2t^5 + \cdots \neq 0$);
 the H-level identification with a $\mathcal{W}_\infty$-type object
-is the residual MC4 task
+is the remaining infinite-generator identification
 (Theorem~\ref{thm:completed-bar-cobar-strong} provides the structural
 framework; the specific target identification is open).
 
@@ -2638,29 +2783,45 @@ $R^{-1}(u)$. At the classical level ($\hbar = 0$), this reduces to
 exact self-duality
 \textup{(}Corollary~\textup{\ref{cor:yangian-classical-self-dual})}.
 
-\begin{remark}[Status of Koszul duality identifications]\label{rem:koszul-table-status}
+\begin{remark}[Koszul duality identifications]\label{rem:koszul-table-status}
 The entries fall into two categories.
 \emph{Proved}: the free-field and Heisenberg dualities (Chapter~\ref{sec:betagamma-koszul-dual}, Theorem~\ref{thm:heisenberg-koszul-dual-early}); the Kac--Moody level shift $\widehat{\mathfrak{g}}_k \leftrightarrow \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorems~\ref{thm:sl2-koszul-dual} and~\ref{thm:universal-kac-moody-koszul}).
-\emph{H-level (MC4 closed on $\mathcal{W}_\infty$)}: the infinite-generator identifications Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$. The M-level theory (bar complex, inversion, Koszulness, complementarity) is proved for all principal $\mathcal{W}_N$ at generic level. On the $\mathcal{W}_\infty$ side, the finite-packet coefficient identities $\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$ on $\mathcal{I}_N$ are unconditionally closed at all stages via $\mathcal{W}_N$ rigidity (coefficient identification, Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) within the strong completion-tower framework (structural proof, Theorem~\ref{thm:completed-bar-cobar-strong}). On the Yangian side, the evaluation-core comparison $\mathsf{K}^{\mathrm{line}} = \mathsf{K}^{\mathrm{RTT}}$ on $\Delta_{a,0}(N)$ is verified ($249$ tests); the remaining DK-5 categorical packet is still downstream of the post-core MC3 completion problem, which in type~A is reduced to the compact-completion packet.
+\emph{Infinite-generator}: the identifications
+Virasoro $\rightsquigarrow W_\infty$,
+$\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, and
+Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$ require completed
+bar complexes. The M-level theory (bar complex, inversion,
+Koszulness, complementarity) is proved for all principal
+$\mathcal{W}_N$ at generic level. On the $\mathcal{W}_\infty$ side,
+the coefficient identities
+$\mathsf{C}^{\mathrm{res}}=\mathsf{C}^{\mathrm{DS}}$ on
+$\mathcal{I}_N$ follow from $\mathcal{W}_N$ rigidity
+(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) and the
+strong completion theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}). On the Yangian side,
+the evaluation-core comparison
+$\mathsf{K}^{\mathrm{line}}=\mathsf{K}^{\mathrm{RTT}}$ on
+$\Delta_{a,0}(N)$ is a computed invariant; the remaining categorical
+identification is the compact-completion problem in type~A.
 \end{remark}
 
-\begin{remark}[Scope: conjectural table entries]
+\begin{remark}[Infinite-generator table entries]
 The three infinite-generator identifications each involve curved
 Koszul duality ($m_0 \neq 0$) with infinitely many generators. Two
 structural features: (1)~non-quadratic OPE prevents the quadratic
 framework of Chapter~\ref{chap:koszul-pairs} from applying directly;
-(2)~the infinite-generator flank requires the
-coefficient-identification package, which is now unconditionally
-resolved on the $\mathcal{W}_\infty$ side via $\mathcal{W}_N$
-rigidity (MC4 closed). Conditional on the DS/bar transport theorem
+(2)~the infinite-generator comparison requires the
+coefficient-identification theorem, proved on the
+$\mathcal{W}_\infty$ side by $\mathcal{W}_N$ rigidity. Conditional
+on the DS/bar transport theorem
 \textup{(}Theorem~\textup{\ref{thm:bar-semi-infinite-w}}\textup{)},
 the same-family involution $\mathrm{Vir}_c \leftrightarrow
-\mathrm{Vir}_{26-c}$ gives the expected M/S-level shadow, while the
-H-level realization asks for an infinite-generator dual whose bar
-cohomology matches the semi-infinite growth (Motzkin numbers,
+\mathrm{Vir}_{26-c}$ gives the M/S-level shadow. The H-level
+realization requires an infinite-generator dual whose bar cohomology
+matches the semi-infinite growth (Motzkin numbers,
 Theorem~\ref{thm:virasoro-chiral-koszul}). The super row remains a
-separate extension flank adjoining
-Conjecture~\ref{conj:v1-master-infinite-generator}.
+separate infinite-generator extension
+(Conjecture~\ref{conj:v1-master-infinite-generator}).
 \end{remark}
 
 \begin{remark}[Heisenberg vs Yangian: self-duality contrast]\label{rem:heisenberg-yangian-contrast}
@@ -2690,7 +2851,7 @@ These additional structures are typically curved or filtered Koszul dualities, o
 \index{completion kinematics!free fields}
 \index{completion entropy!free fields}
 The free-field archetypes occupy the simplest corner of the completion
-phase diagram
+geometry
 (Table~\ref{tab:completion-kinematics} in the landscape census):
 \begin{center}
 \small
@@ -2722,19 +2883,31 @@ weight); for $\hat{\mathfrak{g}}_k$, $\dim K_q \sim
 finite-stage bar computations in the sections above.
 \end{remark}
 
-\subsubsection{Computing the Koszul dual via bar-cobar}
+\subsubsection{Computing the Koszul dual from bar cohomology}
 
 \begin{remark}[Procedure]\label{rem:koszul-dual-procedure}
-Given a chiral algebra $\mathcal{A}$ with generators $\{a_i\}$ and relations $\{R_j\}$, the Koszul dual $\mathcal{A}^!$ is computed as follows.
+Given a quadratic chiral algebra $\mathcal{A}$ with generators
+$\{a_i\}$ and relations $\{R_j\}$, the strict Koszul dual algebra
+$\mathcal{A}^!$ is computed as follows.
 \begin{enumerate}
 \item Write $\mathcal{A} = T(V)/(R)$ where $R \subset V^{\otimes 2}$.
 \item Define the pairing $\langle \cdot, \cdot \rangle\colon V \otimes V^* \to \mathbb{C}$ and compute $R^\perp \subset (V^*)^{\otimes 2}$.
-\item Set $\mathcal{A}^! = T(V^*)/(R^\perp)$.
+\item Compute the Koszul dual coalgebra
+$\mathcal{A}^{\mathrm{i}}=H^\bullet B(\mathcal{A})$; on the
+quadratic Koszul locus this is the coalgebra cogenerated by $sV^*$
+with corelations $s^2R^\perp$.
+\item Set $\mathcal{A}^! = (\mathcal{A}^{\mathrm{i}})^\vee$,
+equivalently $T(V^*)/(R^\perp)$ in finite type after the Verdier
+linear duality convention is fixed.
 \item Check Koszulity: if $\mathrm{Tor}_{\mathcal{A}}^{i,j}(\mathbb{C}, \mathbb{C}) = 0$ for $i \neq j$, then we have exact Koszul duality. Otherwise, compute the curvature $m_0 \neq 0$ to obtain curved Koszul duality.
 \end{enumerate}
+The cobar counit
+$\Omega B(\mathcal{A})\xrightarrow{\sim}\mathcal{A}$ is the
+bar-cobar inversion theorem. It recovers $\mathcal{A}$; it is not the
+operation that defines $\mathcal{A}^!$.
 \end{remark}
 
-\subsubsection{\texorpdfstring{Explicit example: $\beta\gamma$ $\leftrightarrow$ free fermion calculation}{Explicit example: free fermion calculation}}
+\subsubsection{\texorpdfstring{Explicit example: $\beta\gamma$ $\leftrightarrow$ $bc$}{Explicit example: beta-gamma bc}}
 
 This calculation is carried out in detail in Theorem~\ref{thm:betagamma-bc-koszul} above (see \S\ref{sec:fermion-boson-koszul}): the antisymmetric relation $\beta\gamma - \gamma\beta$ dualizes under the residue pairing to the Clifford relation $bc + cb$, establishing $(\beta\gamma)^! \cong bc$.
 
@@ -2761,7 +2934,7 @@ The algebras have different structure:
 Centrally extended & Free commutative \\
 $\{J_\lambda J\} = k\lambda \neq 0$ & $\{J^*_\lambda J^*\} = 0$ \\
 Double-pole OPE & Regular OPE \\
-Curved ($\kappa = k$) & Curved ($m_0 = -k\omega$) \\
+Level datum $k\,\omega_{\mathrm{cen}}$ & Curved dual ($m_0 = -k\,\omega$) \\
 Nontrivial $\pi_1$ & Trivial $\pi_1$
 \end{tabular}
 \end{center}
@@ -2803,7 +2976,8 @@ confusing them is a reliable source of error.
  degree reasons
  (cf.~Remark~\ref{rem:frame-twisting-morphism}).
 
- Level behavior: $k$ appears as curvature $m_0 \propto k$; it does not change the duality type.
+ Level behavior: $k$ appears as the curvature of the curved
+ cobar/Koszul-dual algebra; it does not change the duality type.
 
  Structure exchanged: Lie (non-commutative) $\leftrightarrow$ Com (commutative).
 
@@ -2881,7 +3055,17 @@ for Gaussian path integrals, which compute the BV complex.
 
 \begin{remark}[Curvature and one-loop determinants]
 \label{rem:curvature-one-loop}
-The bar curvature $m_0$ is an element of the bar complex proportional to the central class: $m_0 = k \cdot c$ for $\cH_k$ (Theorem~\ref{thm:heisenberg-curved-structure}). Anomaly cancellation (Theorem~\ref{thm:anomaly-koszul}): $\barB^{\mathrm{ch}}(\cH^{26} \otimes bc)$ is uncurved because the total central charge $c_{\mathrm{eff}} = 26 \cdot 1 + (-26) = 0$ vanishes. This is an anomaly cancellation at the level of $c$, not~$\kappa$: the modular characteristic $\kappa(\cH_1) = 1$ differs from $c(\cH_1)/2 = 1/2$.
+The ordinary Heisenberg bar differential is square-zero. The
+curvature appears after passing to the curved cobar/Koszul-dual
+algebra: for $\cH_k$ it is the level class
+$m_0=k\,\omega_{\mathrm{cen}}$
+(Theorem~\ref{thm:heisenberg-curved-structure}). Anomaly
+cancellation (Theorem~\ref{thm:anomaly-koszul}) says that the
+curved cobar structure attached to $\cH^{26}\otimes bc$ has vanishing
+scalar central anomaly because
+$c_{\mathrm{eff}}=26\cdot 1+(-26)=0$. This cancellation is a
+central-charge statement, not a $\kappa$-identity: the modular
+characteristic $\kappa(\cH_1)=1$ differs from $c(\cH_1)/2=1/2$.
 \end{remark}
 
 
@@ -2901,7 +3085,7 @@ The Koszul duality intertwines with the modular action on period matrices:
 (The level $k$ scales the quadratic form, not the characteristic.)
 Under $\Omega \to -\Omega^{-1}$, Poisson summation gives:
 \[\Theta_k(-\Omega^{-1}) = \left(\frac{\det(\Omega/i)}{k^g}\right)^{1/2} \cdot \Theta_{1/k}(\Omega)\]
-The modular $S$-transformation thus sends $k \to 1/k$, while level \emph{negation} $k \to -k$ arises instead from Koszul duality: the dual algebra~$\mathcal{H}_k^!$ has curvature $-m_0 = -k \cdot c$.
+The modular $S$-transformation thus sends $k \to 1/k$, while level \emph{negation} $k \to -k$ arises instead from Koszul duality: the dual algebra~$\mathcal{H}_k^!$ has curvature $-m_0=-k\,\omega_{\mathrm{cen}}$.
 
 \item \emph{Geometric interpretation.} The bar cohomology classifies:
 \[H^*(\bar{B}_g^{\text{ch}}(\mathcal{H}_k)) \cong H^*(\text{Jac}(\Sigma_g), \mathcal{L}_k)\]
@@ -2935,7 +3119,7 @@ $H_1(\Sigma_g, \mathbb{Z})$. By Hodge theory these span
 $\mathfrak{h}_g := H^1(\Sigma_g, \mathbb{C}) \cong \mathbb{C}^{2g}$,
 an abelian Lie algebra. The level-$k$ central extension equips
 $\mathfrak{h}_g$ with the symplectic form
-$\omega_k = k \cdot \omega$, where
+$\omega_k = k\,\omega$, where
 $\omega \in \Lambda^2(\mathfrak{h}_g^*)$ is the intersection pairing
 (normalized so that $\omega(A_i, B_j) = \delta_{ij}$).
 
@@ -3035,7 +3219,8 @@ The $S$-transformation thus sends $k \to 1/k$ at the level
 of sections of $\mathcal{L}_k$.
 
 Separately, Koszul duality reverses the curvature:
-the dual algebra~$\mathcal{H}_k^!$ has $m_0 = -k \cdot c$
+the dual algebra~$\mathcal{H}_k^!$ has
+$m_0=-k\,\omega_{\mathrm{cen}}$
 (Theorem~\ref{thm:heisenberg-curved-structure}), contributing
 the level negation $k \to -k$. Together, these give the full
 modular intertwining: Koszul duality on $\mathcal{H}_k$ at
@@ -3128,7 +3313,14 @@ Chiral Koszul duality is a higher-dimensional Fourier transform: the bar constru
  \int_{C_n(X)} \cA^{\boxtimes n}
  \otimes \Omega^*_{\log}(\overline{C}_n(X))
 \]
-with kernel $\eta_{ij} = d\log(z_i - z_j)$ exchanges $\cA \leftrightarrow \cA^!$, with Verdier duality $\mathbb{D}_{\operatorname{Ran}}\, \bar{B}(\cA) \simeq \cA^!_\infty$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}) as the inversion formula. For commutative algebras, the $n$-point contributions factor pairwise, recovering a linear integral transform.
+with kernel $\eta_{ij} = d\log(z_i - z_j)$ produces the Koszul
+coalgebra of $\cA$. Verdier duality gives the homotopy Koszul-dual
+factorization algebra
+$\mathbb{D}_{\operatorname{Ran}}\,\bar{B}(\cA)\simeq\cA^!_\infty$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}), while the separate
+cobar counit $\Omega\bar{B}(\cA)\simeq\cA$ is bar-cobar inversion.
+For commutative algebras, the $n$-point contributions factor pairwise,
+recovering a linear integral transform.
 
 For $\cH_k$ on $\Sigma_g$, this reduction is literal: bar cohomology computes $H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k)$, the Koszul duality map acts via $\Omega \mapsto -\Omega^{-1}$, and Poisson summation on $\mathbb{Z}^g$ gives Fourier inversion. At genus~$1$: $\tau \mapsto -1/\tau$ and $\theta_3(-1/\tau) = (-i\tau)^{1/2}\,\theta_3(\tau)$. At genus~$g$: $\Theta(-\Omega^{-1}, \Omega^{-1}z) = (\det(-i\Omega))^{1/2}\, e^{i\pi z^T \Omega^{-1} z}\, \Theta(\Omega, z)$.
 \end{remark}
@@ -3526,7 +3718,7 @@ spectral sequence realizes the full generic/admissible passage:
 $E_1$ is indexed by Verma modules $\mathcal{M}(w \cdot \lambda)$,
 collapsing at generic level by
 Theorem~\ref{thm:weyl-kac-geometric} and reducing to a finite
-admissible Weyl packet on the worked $\widehat{\mathfrak{sl}}_2$
+admissible Weyl set on the worked $\widehat{\mathfrak{sl}}_2$
 surface, while in general rank the corresponding finite-sum
 character formula is the external
 Kac--Wakimoto theorem
@@ -3646,7 +3838,7 @@ Let $A$ be an $\En$-algebra in chain complexes.
 \item \textup{(Lurie~\cite{HA}, \S5.2)}\quad
  The bar-cobar adjunction
  \[
- \barB_{\En} \;\dashv\; \Omega_{\En}
+ \Omega_{\En} \;\dashv\; \barB_{\En}
  \colon
  \En\text{-}\mathrm{CoAlg}_\infty
  \;\rightleftarrows\;
@@ -3755,23 +3947,27 @@ The agreement provides non-trivial verification of the geometric approach via co
 \begin{lemma}[Bar dimensions as partition numbers; \ClaimStatusProvedHere]%
 \label{lem:bar-dims-partitions}
 \index{partition function!bar complex dimensions}
-The bar chain group dimensions for the free fields are governed by
-integer partitions. For the free fermion $\psi$ (one fermionic
-generator of conformal weight~$\frac{1}{2}$):
+The reduced weight-window chain dimensions for the free-field bar
+complexes are governed by integer partitions. These are chain-level
+counts before taking the bar differential; they are not the
+genus-$0$ bar cohomology groups. For the free fermion $\psi$ (one
+fermionic generator of conformal weight~$\frac{1}{2}$):
 \begin{equation}\label{eq:fermion-bar-partitions}
 \dim \bar{B}^n(\psi) \;=\; p(n-1), \qquad n \geq 1,
 \end{equation}
 where $p(m)$ is the number of partitions of~$m$
 ($p(0) = 1$, $p(1) = 1$, $p(2) = 2$, $p(3) = 3$, $p(4) = 5$).
 This gives the Master Table sequence $1, 1, 2, 3, 5$
-(Table~\ref{tab:master-invariants}).
+(Table~\ref{tab:master-invariants}) at the chain-counting level.
 The identity~\eqref{eq:fermion-bar-partitions} follows from
 $\bar{B}^n(\psi) \cong \Lambda^n_{\mathrm{co}}(\psi)$
-(cofree cocommutative coalgebra on one odd generator):
+(cofree cocommutative coalgebra on the odd mode system):
 the Arnold relations on $\overline{C}_{n+1}(\mathbb{P}^1)$ act
 trivially on this exterior coalgebra, and enumerating the basis
 elements by conformal weight decomposition yields $p(n-1)$
-independent generators at bar degree~$n$.
+chain generators at bar degree~$n$. The cohomology of the same
+genus-$0$ complex is the collapse stated in
+Theorem~\ref{thm:fermion-bar-complex-genus-0}.
 
 For the Heisenberg algebra $\mathcal{H}_k$ (one bosonic generator
 of conformal weight~$1$):
@@ -3812,11 +4008,10 @@ prefundamental modules
 Step~2\textup{)}. This gives a partition-theoretic bridge between the
 free-field bar complex and the type-$A$ Yangian prefundamental sector
 appearing in the shifted-prefundamental-generation theorem. By
-itself, this partition match does not prove the full compact/completed
-MC3 package. (MC3 thick generation on the evaluation-generated core
-is now proved for all simple types by
-Corollary~\ref{cor:mc3-all-types}; the residual DK-4/5
-extension beyond evaluation modules is downstream.)
+itself, this partition match does not prove the full compact-completed
+identification. Thick generation on the evaluation-generated core is
+proved for all simple types by Corollary~\ref{cor:mc3-all-types};
+extension beyond evaluation modules is a separate theorem.
 \end{remark}
 
 \subsection{\texorpdfstring{Curved duality under level inversion $k \mapsto -k$}{Curved duality under level inversion k -k}}
@@ -3824,28 +4019,47 @@ extension beyond evaluation modules is downstream.)
 \begin{theorem}[Heisenberg level inversion: curved duality; \ClaimStatusProvedHere]\label{thm:heisenberg-level-inversion}
 The Heisenberg algebras at levels $k$ and $-k$ form a \emph{curved/filtered dual pair} (distinct from standard Koszul duality) with:
 \begin{enumerate}
-\item Curvature terms: $m_0^{(k)} = k \cdot c$ where $c$ is the central element
+\item Curvature terms:
+$m_0^{(k)}=k\,\omega_{\mathrm{cen}}$.
 \item Modified pairing: $\langle J \otimes J, J \otimes J \rangle_k = k \cdot \delta^{(2)}(z-w)$
-\item Curved bar complexes related by: $\bar{B}^{\text{curved}}_n(\mathcal{H}_k) \cong \bar{B}^{\text{curved}}_n(\mathcal{H}_{-k})$ as vector spaces with opposite differentials
+\item Curved cobar complexes related by:
+$\Omega^{\mathrm{curv}}\bar{B}(\mathcal{H}_k)\cong
+\Omega^{\mathrm{curv}}\bar{B}(\mathcal{H}_{-k})$ as underlying
+filtered vector spaces with opposite curvature.
 \end{enumerate}
 
 This is \emph{not} the same as the standard Koszul duality $\mathcal{H}^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ established above; it is an additional duality structure that exists in the curved/filtered category.
 \end{theorem}
 
 \begin{proof}
-The double pole prevents standard residue extraction: the literal residue $\mathrm{Res}_{z=w}[k/(z-w)^2 \cdot \eta_{zw}]$ vanishes since the integrand has a triple pole with zero residue (cf.\ the clarification at Theorem~\ref{thm:heisenberg-bar-complete}). Instead, the Borcherds identity extracts the OPE coefficient directly, giving the \emph{boundary pairing}
+The Heisenberg OPE has no simple-pole bracket term, but its
+double-pole coefficient is exactly the trace-form collision datum:
+\[
+r_{\cH_k}^{\mathrm{coll}}(z)=\frac{k}{z}.
+\]
+Equivalently, the Borcherds identity extracts the second-order pole
+coefficient as the boundary pairing
 \[
 \langle J \otimes J, J \otimes J \rangle_k = k
 \]
-(the level appears as the second-order pole coefficient, not as a residue).
+(the level appears as the second-order pole coefficient, and after
+the $d\log$ convention as the simple rational residue $k/z$).
 
-Under $k \mapsto -k$, this pairing changes sign, establishing curved self-duality. The curved bar complex has chain groups:
+Under $k \mapsto -k$, this pairing changes sign, establishing curved
+level inversion. The reduced bar coalgebras have the same underlying
+conilpotent coalgebra; the curvature on the curved cobar side changes
+sign:
 \begin{itemize}
-\item $\bar{B}^0 = \mathbb{C}$, \quad $\bar{B}^1 = $ currents, \quad $\bar{B}^n \neq 0$ for all $n \geq 1$
-\item The bracket differential $d_{\mathrm{bracket}} = 0$ (the double pole has zero residue)
-\item The curvature $\mcurv{1} = -k \cdot c$ is nonzero, so $\dfib^{\,2} \neq 0$ and the bar complex is \emph{curved}: it does not have well-defined cohomology in the usual sense
+\item $B(\mathcal{H}_k)=T^c(s^{-1}\bar{\mathcal{H}}_k)$ with
+the same deconcatenation coalgebra for $k$ and $-k$;
+\item the simple-pole bracket differential is zero in both cases;
+\item the curved cobar term is
+$m_0^{(k)}=k\,\omega_{\mathrm{cen}}$ and
+$m_0^{(-k)}=-k\,\omega_{\mathrm{cen}}$.
 \end{itemize}
-The curvature controls the failure of the bar differential to square to zero.
+Thus the ordinary genus-$0$ bar differential still squares to zero,
+while the curved cobar differential satisfies the Positselski relation
+$m_1^2=[m_0,-]$.
 \end{proof}
 
 For the full Koszul duality table (including all entries formerly listed here), see \S\ref{sec:kd-computations-free-fields}.
@@ -3880,7 +4094,7 @@ OPE $\psi(z)\,\psi(w) \sim 1/(z{-}w)$ \\
 \textbf{Modular characteristic} & $\kappa(\cF) = c/2 = 1/4$ \\
 \textbf{Koszul dual} & $\cF^! = \mathrm{Sym}^{\mathrm{ch}}(\gamma)$
 (single bosonic generator) \\
-\textbf{Complementarity} & $\kappa + \kappa' = 1/4 + (-1/4) = 0$ \\
+\textbf{Complementarity} & $\kappa + \kappa' = 1/4 + (-1/4) = 0$ \textup{(}free-field pair\textup{)} \\
 \textbf{$r$-matrix} & $r(z) = 0$ (simple pole absorbed by $d\log$ extraction) \\
 \textbf{Genus expansion} & $F_g = \tfrac{1}{4}\,\lambda_g^{\mathrm{FP}}$,
 GF $= \tfrac{1}{4\hbar^2}(\hat{A}(i\hbar) - 1)$
@@ -3975,31 +4189,31 @@ For the free fermion on the elliptic curve
 $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$,
 the partition function in spin structure $\sigma$ is:
 \begin{equation}\label{eq:fermion-Z1-spin}
-Z_1(\cF, \sigma) = \frac{\vartheta_\sigma(0|\tau)}{\eta(\tau)},
+Z_1(\cF, \sigma)
+= \left(\frac{\vartheta_\sigma(0|\tau)}{\eta(\tau)}\right)^{1/2},
 \end{equation}
 where $\vartheta_\sigma$ is the Jacobi theta function with
-characteristic $\sigma$. Explicitly:
+characteristic $\sigma$. The unsquared ratio
+$\vartheta_\sigma/\eta$ is the complex fermion, equivalently two
+real fermions. For the single real fermion of this chapter:
 \begin{align}
 \label{eq:fermion-Z1-theta2}
-Z_1(\cF, \sigma_2) &= \frac{\vartheta_2(0|\tau)}{\eta(\tau)}
-= \frac{2q^{1/8}\prod_{n=1}^\infty (1+q^n)^2}
- {\prod_{n=1}^\infty (1-q^n)}, \\[4pt]
+Z_1(\cF, \sigma_2) &=
+\left(\frac{\vartheta_2(0|\tau)}{\eta(\tau)}\right)^{1/2}, \\[4pt]
 \label{eq:fermion-Z1-theta3}
-Z_1(\cF, \sigma_3) &= \frac{\vartheta_3(0|\tau)}{\eta(\tau)}
-= \frac{\prod_{n=1}^\infty (1+q^{n-1/2})^2}
- {\prod_{n=1}^\infty (1-q^n)}, \\[4pt]
+Z_1(\cF, \sigma_3) &=
+\left(\frac{\vartheta_3(0|\tau)}{\eta(\tau)}\right)^{1/2}, \\[4pt]
 \label{eq:fermion-Z1-theta4}
-Z_1(\cF, \sigma_4) &= \frac{\vartheta_4(0|\tau)}{\eta(\tau)}
-= \frac{\prod_{n=1}^\infty (1-q^{n-1/2})^2}
- {\prod_{n=1}^\infty (1-q^n)}, \\[4pt]
+Z_1(\cF, \sigma_4) &=
+\left(\frac{\vartheta_4(0|\tau)}{\eta(\tau)}\right)^{1/2}, \\[4pt]
 \label{eq:fermion-Z1-odd}
-Z_1(\cF, \sigma_1) &= \frac{\vartheta_1(0|\tau)}{\eta(\tau)} = 0
+Z_1(\cF, \sigma_1) &=
+\left(\frac{\vartheta_1(0|\tau)}{\eta(\tau)}\right)^{1/2} = 0
 \quad \text{\textup{(}odd spin structure\textup{)}}.
 \end{align}
-The numerator $\vartheta_\sigma(0|\tau)$ is the fermion
-determinant $(\det \bar\partial_\sigma)^{1/2}$ on $E_\tau$
-with spin structure $\sigma$; the denominator $\eta(\tau)$
-cancels the conformal anomaly.
+The ratio $\vartheta_\sigma(0|\tau)/\eta(\tau)$ is the determinant
+of the complex fermion. Its square root is the Pfaffian line of the
+single real fermion, with spin structure~$\sigma$.
 \end{theorem}
 
 \begin{proof}
@@ -4020,25 +4234,24 @@ trace gives:
 = q^{-1/48} \prod_{n=1}^\infty (1 + q^{n-1/2})
 = \sqrt{\frac{\vartheta_3(0|\tau)}{\eta(\tau)}}.
 \]
-Squaring for the holomorphic contribution of a complex
-fermion, or taking the single real fermion trace directly,
-gives~\eqref{eq:fermion-Z1-theta3} and
+Taking the single real fermion trace gives
+\eqref{eq:fermion-Z1-theta3} and
 \eqref{eq:fermion-Z1-theta4} (the latter with
-$(-1)^F$ insertion).
+$(-1)^F$ insertion). Squaring these formulas gives the complex
+fermion ratio $\vartheta_\sigma/\eta$.
 
 \emph{Step~2.} In the Ramond sector ($\alpha = 1$), the mode
 expansion has integer modes, and the zero mode $\psi_0$
-satisfies $\psi_0^2 = 1/2$. The ground state is degenerate
-(dimension $2^{1/2}$, reflecting the Clifford algebra of a
-single generator). The trace gives:
+satisfies $\psi_0^2 = 1/2$. The Ramond Pfaffian is the
+chosen square root of the corresponding complex determinant:
 \[
 \mathrm{Tr}_{\mathrm{R}}\bigl(q^{L_0 - 1/48}\bigr)
 = \sqrt{\frac{\vartheta_2(0|\tau)}{\eta(\tau)}},
 \]
 and the odd spin structure
 $\mathrm{Tr}_{\mathrm{R}}\bigl((-1)^F q^{L_0 - 1/48}\bigr) = 0$
-by the exact cancellation between the two Ramond ground
-states.
+because the odd theta characteristic has a zero mode, so the
+Pfaffian vanishes.
 \end{proof}
 
 \begin{computation}[GSO-summed partition function]
@@ -4056,6 +4269,10 @@ Z_1^{\mathrm{GSO}}(\cF)
 + \frac{\vartheta_4(0|\tau)^2}{\eta(\tau)^2}
 \right).
 \end{equation}
+This is the squared, even-spin GSO block appropriate to a complex
+fermion or to a paired real-fermion sector. For a single real fermion
+one must choose Pfaffian square roots before summing; the scalar
+obstruction coefficient remains $\kappa(\cF)=1/4$.
 By the Jacobi abstruse identity
 $\vartheta_3^4 = \vartheta_2^4 + \vartheta_4^4$
 and its consequence
@@ -4082,7 +4299,7 @@ at genus~$1$ is:
 = \eta(\tau)^{-1}}_{\text{determinant}}
 \qquad\text{vs}\qquad
 \underbrace{Z_1(\cF, \sigma)
-= \vartheta_\sigma / \eta}_{\text{Pfaffian}}.
+= (\vartheta_\sigma / \eta)^{1/2}}_{\text{Pfaffian}}.
 \]
 The Heisenberg partition function involves the determinant of
 the scalar Laplacian (an even functional of the metric), so
@@ -4195,7 +4412,7 @@ characteristic $\delta = [\alpha, \beta]$
 \textup{(}$\alpha, \beta \in (\mathbb{Z}/2)^g$\textup{)}:
 \begin{equation}\label{eq:fermion-theta-char}
 Z_g(\cF, \delta)
-= \frac{\vartheta[\delta](0|\Omega)}
+= \frac{\vartheta[\delta](0|\Omega)^{1/2}}
  {\bigl(\det \mathrm{Im}\,\Omega\bigr)^{1/4}},
 \end{equation}
 where the genus-$g$ theta function with characteristic is:
@@ -4240,14 +4457,15 @@ anomaly ($c = 1/2$ contributes half of the $c = 1$
 normalization).
 
 \emph{Step~3: Obstruction class.}
-The bar complex curvature is computed from the $B$-cycle
-monodromies of the spin-$1/2$ propagator. On $\Sigma_g$,
+The genus-$g$ obstruction class in the modular deformation is computed
+from the $B$-cycle monodromies of the spin-$1/2$ propagator. On
+$\Sigma_g$,
 the genus-$g$ fermion propagator is the Szeg\H{o} kernel
 $S_\sigma(z,w) = \vartheta[\delta](z{-}w|\Omega) /
 (E(z,w)\, \vartheta[\delta](0|\Omega))$,
 where $E(z,w)$ is the prime form. The propagator depends on
-$\sigma$, but the bar curvature $(d^{(g)})^2$ extracts only
-the universal part: the $B$-cycle monodromy defect of
+$\sigma$, but the obstruction differential extracts only the
+universal part: the $B$-cycle monodromy defect of
 $d\log E(z,w)$ (the bar propagator, which has weight $1$ and
 is spin-structure-independent; see
 Remark~\ref{rem:fermion-propagator-universality}).
@@ -4285,14 +4503,15 @@ genus-$2$ theta constants
 $\vartheta[\delta](0|\Omega)$ for the $10$ even
 characteristics $\delta$. The $6$ odd characteristics
 give $\vartheta[\delta](0|\Omega) = 0$ (the odd theta
-constants vanish at $z = 0$). The GSO-summed genus-$2$
-partition function is
+constants vanish at $z = 0$). The paired real-fermion GSO block is
 \[
 Z_2^{\mathrm{GSO}}(\cF)
 = \frac{1}{2^4}\sum_{\delta\,\mathrm{even}}
  \vartheta[\delta](0|\Omega)^2,
 \]
 where the sum runs over the $10$ even characteristics.
+For a single real fermion the Pfaffian square roots must be chosen
+before summing over spin structures.
 This expression is a Siegel modular form of weight $1/2$
 for a subgroup of $\mathrm{Sp}_4(\mathbb{Z})$, in
 contrast to the Heisenberg genus-$2$ partition function
@@ -4411,14 +4630,15 @@ Output & compactified boson ($c = 1$) & free boson ($c = -1/2$) \\
 Mechanism & vertex operator & bar construction + Verdier \\
 $c$-relation & $c_{\mathrm{in}} = c_{\mathrm{out}}$
 & $c_{\mathrm{in}} + c_{\mathrm{out}} = 0$ \\
-$\kappa$-relation & N/A & $\kappa + \kappa' = 0$ \\
+$\kappa$-relation & N/A & $\kappa + \kappa' = 0$ \textup{(}free-field pair\textup{)} \\
 \bottomrule
 \end{tabular}
 \end{center}
 Bosonization is an isomorphism of conformal field theories;
-Koszul duality is a bar-cobar adjunction exchanging $\cA$
-and $\cA^!$ with the intertwining
-$\mathbb{D}_{\mathrm{Ran}} B(\cA) \simeq B(\cA^!)$
+Koszul duality applies the bar construction to $\cA$ and then
+Verdier-dualizes the resulting coalgebra, producing the homotopy
+Koszul-dual factorization algebra
+$\mathbb{D}_{\mathrm{Ran}}B(\cA) \simeq \cA^!_\infty$
 \textup{(}Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main})}.
 \end{remark}
 
@@ -4457,7 +4677,7 @@ OPE pole & simple: $1/(z{-}w)$ & double: $\kappa/(z{-}w)^2$ \\
 $r$-matrix & $r(z) = 0$ & $r(z) = \kappa/z$ \\
 Statistics & fermionic & bosonic \\
 Spin structure & required & not required \\
-$Z_1$ & $\vartheta_\sigma/\eta$ & $\eta^{-1}$ \\
+$Z_1$ & $(\vartheta_\sigma/\eta)^{1/2}$ & $\eta^{-1}$ \\
 Partition function type & Pfaffian & determinant \\
 $F_1$ & $1/96$ & $\kappa/24$ \\
 $F_g/F_g(\cH_1)$ & $1/4$ (all $g$) & $\kappa$ (all $g$) \\
@@ -4557,7 +4777,19 @@ The Virasoro algebra contains $\mathfrak{sl}_2 = \langle L_{-1}, L_0, L_1 \rangl
 The bar complex $\bar{B}^n_{\mathrm{geom}}(\mathrm{Vir}_c)$ consists of logarithmic forms on $\overline{C}_{n+1}(\mathbb{P}^1)$ with coefficients in $\mathrm{Vir}_c^{\boxtimes(n+1)}$. The Virasoro Ward identities (annihilation by $L_{-1}, L_0, L_1$) precisely implement the $\mathrm{PSL}_2$-equivariance condition: a form $\omega \in \bar{B}^n$ satisfying $\iota_{L_k}\omega = 0$ for $k = -1, 0, 1$ descends to $\overline{\mathcal{M}}_{0,n+3}$.
 
 \emph{Step~3.}
-For general $c$, the descent involves an anomalous term: the Lie derivative $\mathcal{L}_{L_k}$ acting on bar complex elements picks up a central extension contribution proportional to $c$. The equivariant bar complex differential satisfies $d_{\mathrm{equiv}}^2 = (c - 26) \cdot \mu$ where $\mu$ is the Mumford class $\kappa_1 \in H^2(\overline{\mathcal{M}}_{0,n+3})$. The anomaly coefficient $(c - 26)$ is $\kappa(\mathrm{Vir}_c) - \kappa(\mathrm{Vir}_{26}) = c/2 - 13$, measuring the departure from the critical Koszul dual. At $c = 26$, this anomaly vanishes: $d_{\mathrm{equiv}}^2 = 0$, so the equivariant bar complex is a genuine cochain complex.
+For general $c$, the descent involves an anomalous term: the Lie
+derivative $\mathcal{L}_{L_k}$ acting on bar complex elements picks up
+a central extension contribution proportional to $c$. The equivariant
+bar complex differential satisfies
+\[
+d_{\mathrm{equiv}}^2=(c/2-13)\,\mu,
+\]
+where $\mu$ is the Mumford class
+$\kappa_1 \in H^2(\overline{\mathcal{M}}_{0,n+3})$. The coefficient is
+$\kappa(\mathrm{Vir}_c)-\kappa(\mathrm{Vir}_{26})=c/2-13$, measuring
+the departure from the critical Koszul dual. At $c=26$, this anomaly
+vanishes: $d_{\mathrm{equiv}}^2=0$, so the equivariant bar complex is a
+genuine cochain complex.
 \end{proof}
 
 \begin{remark}[Ghost system as Koszul dual]
@@ -4566,7 +4798,7 @@ For general $c$, the descent involves an anomalous term: the Lie derivative $\ma
 \index{BRST operator!bar differential}
 The $bc$ ghost system of central charge $c_{\mathrm{ghost}} = -26$
 that Polyakov introduces for gauge-fixing the worldsheet
-diffeomorphism group supplies the Koszul-dual bookkeeping sector in the
+diffeomorphism group supplies the Koszul-dual ghost sector in the
 critical total-string comparison of
 Theorem~\ref{thm:brst-bar-genus0}. On that proved genus-$0$ locus, the
 relative BRST complex of the total algebra
@@ -4604,7 +4836,7 @@ nonlinear OPE corrections that the quadratic Polyakov action
 cannot detect.
 \end{remark}
 
-\begin{remark}[Critical descent and the moduli heuristic]
+\begin{remark}[Critical descent and the moduli comparison]
 \label{rem:virasoro-bar-moduli-polyakov}
 \index{Virasoro algebra!moduli correspondence!Polyakov significance}
 Theorem~\ref{thm:virasoro-moduli} proves only the critical descent
@@ -4613,11 +4845,10 @@ the quotient bar complex is an honest cochain complex on the
 $\overline{\mathcal{M}}_{0,n+3}$ stage. The stronger claim that this
 complex computes the full cohomology
 $H^*(\overline{\mathcal{M}}_{0,n+3})$, or that the bosonic string path
-integral literally localises there, is not proved internally. On the
-current record, the genus-$0$ moduli-integration/amplitude pairing
-remains conditional
+integral literally localises there, requires the separate
+moduli-integration comparison
 \textup{(}Corollary~\ref{cor:string-amplitude-genus0}\textup{)}, and
-the higher-genus amplitude identification remains conjectural
+the higher-genus amplitude identification is
 \textup{(}Conjecture~\ref{conj:string-amplitude-higher-genus}\textup{)}.
 Away from $c = 26$, the curvature
 $d_{\mathrm{equiv}}^2 = (c/2 - 13)\,\kappa_1$ obstructs the critical
@@ -4649,9 +4880,10 @@ d_{\partial}\omega = \sum_I \mathrm{Res}_{D_I}\omega.
 \]
 This is the standard boundary-residue operator on the logarithmic
 de~Rham model of $\overline{\mathcal{M}}_{0,n+3}$. It matches the
-nodal-degeneration pattern expected from the critical descent picture,
-but the manuscript does not prove a chain-level identification between
-$d_{\partial}$ and the Virasoro bar differential.
+nodal-degeneration pattern of the critical descent construction. The
+chain-level identification between $d_{\partial}$ and the Virasoro bar
+differential is a separate comparison map, not part of this
+proposition.
 \end{proof}
 
 \subsubsection{Explicit low-degree computation}
@@ -4725,10 +4957,10 @@ subsequent pages incorporating the matter sector.
 
 \subsubsection{Verifying duality}
 
-\begin{conjecture}[Heuristic Virasoro/string dictionary; \ClaimStatusConjectured]\label{conj:virasoro-string}
-At the critical point, the genus-$0$ BRST/bar comparison suggests
-viewing the bosonic string as a physical realization of the bar complex
-of $\mathrm{Vir}_{26}$. What is proved internally is the
+\begin{conjecture}[Conditional Virasoro/string comparison; \ClaimStatusConjectured]\label{conj:virasoro-string}
+At the critical point, the genus-$0$ BRST/bar comparison relates the
+critical bosonic string to the bar complex of $\mathrm{Vir}_{26}$.
+The proved statement is the
 quasi-isomorphism between the relative BRST complex of the total
 critical string vertex algebra and the genus-$0$ bar complex
 \textup{(}Theorem~\ref{thm:brst-bar-genus0}\textup{)}. A direct
@@ -4737,17 +4969,17 @@ matter-only identification
 H^*(\bar{B}_{\mathrm{geom}}(\mathrm{Vir}_{26})) \cong
 H^*_{\mathrm{BRST}}(\mathrm{String})
 \]
-should therefore be read as a heuristic compression of that proved
-comparison, not as a theorem proved in this chapter.
+is a conditional shorthand for that total-string comparison, not a
+theorem proved in this chapter.
 \end{conjecture}
 
-\begin{remark}[Evidence]
+\begin{remark}[Comparison input]
 The proved input is Theorem~\ref{thm:brst-bar-genus0}, which compares
 the relative BRST complex of the critical string with the genus-$0$ bar
 complex. The additional steps needed to isolate the matter Virasoro
 bar complex and treat the ghost sector as an explicit Koszul factor are
 not established in the manuscript, so the displayed matter-only
-isomorphism remains heuristic.
+isomorphism remains conditional.
 \end{remark}
 
 
@@ -4770,15 +5002,16 @@ perturbative string-theory language is classified by the geometric bar complex:
  \textup{(}Theorem~\textup{\ref{thm:brst-bar-genus0})}.
 \item \emph{Curvature = conformal anomaly.}
  The obstruction coefficient $\kappa(\cA)$ is the conformal
- anomaly; anomaly duality $\kappa + \kappa' = 0$ holds for
- affine Kac--Moody and free-field Koszul pairs
+ anomaly; free-field/Kac--Moody anomaly duality
+ $\kappa + \kappa' = 0$ holds for affine Kac--Moody and free-field
+ Koszul pairs
  \textup{(}Corollary~\textup{\ref{cor:anomaly-duality-km-vol1}};
  for $\mathcal{W}$-algebras the sum $\kappa + \kappa'$ is
  nonzero in general, see Remark~\textup{\ref{rem:w3-kappa-sums}}.
  Anomaly cancellation $\kappa_{\mathrm{tot}} = 0$ holds at
  $c = 26$ \textup{(}bosonic\textup{)} and $c = 15$
  \textup{(}superstring\textup{)}.
-\item \emph{Genus grading = loop-order bookkeeping.}
+\item \emph{Genus grading = loop-order filtration.}
  The genus-graded bar complex
  $\barB^{(g)}(\cA)$ organizes the algebraic genus decomposition and
  the higher-genus correction package
@@ -4926,10 +5159,14 @@ genus-graded bar complex with the genus-graded string path integral.
 \label{conj:bulk-boundary-correspondence}
 For a boundary chiral algebra $\cA$, the bar-cobar adjunction
 $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ lifts to a correspondence
-between $\cA$ and a candidate holographic package: the derived center
-$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ supplies the bulk observable
-algebra, the Koszul dual $\cA^!$ supplies the line/defect sector, and
-the bar-cobar filtration degree maps to the radial coordinate.
+between $\cA$ and a candidate holographic package with three separate
+objects: $B(\cA)$ is the boundary bar coalgebra,
+$\cA^!=(H^\bullet B(\cA))^\vee$ supplies the line/defect sector after
+Verdier-linear duality, and
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the chiral Hochschild
+cochain algebra supplying bulk observables. The cobar equivalence
+recovers $\cA$ itself; it does not identify $\cA^!$ with the derived
+center. The bar filtration degree maps to the radial coordinate.
 (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 \end{conjecture}
 
@@ -5009,8 +5246,8 @@ the $\hbar^2$ piece is
 $d_0 d_2 + d_1^2 + d_2 d_0 = m_0$ (curvature). The
 curved $A_\infty$ interpretation follows from
 Theorem~\ref{thm:curved-koszul-pairs}: the
-non-vanishing $m_0 = \kappa \cdot \omega_1$ makes
-$\cA^!_\hbar$ a curved coalgebra with curvature
+non-vanishing $m_0 = \kappa\,\omega_1$ makes
+$\cA^!_\hbar$ a curved cobar algebra with curvature
 controlled by the modular characteristic~$\kappa$.
 \end{proof}
 
@@ -5036,7 +5273,8 @@ K(\mathcal{O}^!, \mathcal{O}^!, \Phi_{\mathrm{grav}})
 \]
 where $G$ is the bulk-to-boundary propagator and
 $\Phi_{\mathrm{grav}}$ is the graviton field. This is
-conjecturally modeled using the curved Koszul pairing with
+the curved-Koszul model of
+Conjecture~\ref{conj:loop-string-coupling}, with
 $m_0 = c/24N$.
 \end{example}
 
@@ -5238,15 +5476,14 @@ Then:
  $H^*(\barB^{\mathrm{ch}}(\cA)) \cong
  H^*_{\mathrm{si}}(\cA)$
  \textup{(}Theorem~\textup{\ref{thm:bar-semi-infinite-km})}.
-\item The anomaly coefficient satisfies $\kappa + \kappa' = 0$
- for affine Kac--Moody and free-field Koszul pairs
+\item The anomaly coefficient satisfies $\kappa + \kappa' = 0$ for affine Kac--Moody and free-field Koszul pairs
  \textup{(}Proposition~\textup{\ref{prop:ff-channel-shear})};
  in particular, the affine Kac--Moody duality is antisymmetric.
 \end{enumerate}
 For affine Kac--Moody, the intrinsic vanishing
 $\kappa(\cA) = 0$ occurs at the critical level $k = -h^\vee$.
 The physical anomaly cancellation $\kappa_{\mathrm{eff}}
-= \kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}) = 0$
+= \kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}) = 0$ \textup{(}free-field string sector\textup{)}
 is a separate condition, requiring $c_{\mathrm{matter}}
 = c_{\mathrm{crit}} = 26$.
 \end{theorem}
@@ -5258,7 +5495,7 @@ weight~$c/24$. By~(ii), this complex computes the relevant
 semi-infinite\slash BRST cohomology on the affine Kac--Moody side.
 By~(iii), the anomaly
 coefficient $\kappa = (k+h^\vee)\dim(\fg)/(2h^\vee)$ for
-$\widehat{\fg}_k$ satisfies $\kappa + \kappa' = 0$
+$\widehat{\fg}_k$ satisfies $\kappa + \kappa' = 0$ for affine Kac--Moody
 under $k \mapsto -k - 2h^\vee$. The critical
 central charge $c_{\mathrm{crit}} = 26$ appears as
 the ghost contribution: the $bc$-ghost system at
@@ -5365,7 +5602,7 @@ structure $\{m_n\}_{n \geq 1}$ with $m_1 = 0$, $m_2$ the OPE bracket, $m_3$ from
 \end{theorem}
 
 \begin{conjecture}[W-algebra \texorpdfstring{$A_\infty$}{A-infinity} and quantum
-cohomology; \ClaimStatusConjectured]
+cohomology]
 \label{conj:w-algebra-quantum-cohomology}
 The $A_\infty$ operations of
 Theorem~\ref{thm:w-algebra-ainfty} encode the quantum
@@ -5413,11 +5650,19 @@ non-binary correction data measured by the Li/PBW filtration.
 
 \section{Comparison and filtered structures}\label{sec:comparison-filtered}
 
-This final section collects comparison results: the holographic Witten-diagram shadow, the interaction between filtrations and bar complexes, and a summary of the main theorems verified by free-field examples.
+This final section compares the holographic Witten-diagram shadow,
+the interaction between filtrations and bar complexes, and the main
+theorems verified by free-field examples.
 
 \subsection{Comparison of free-field examples}
 
-Geometric complexity correlates inversely with algebraic simplicity: the free fermion (one generator) vanishes above degree~$1$; the $\beta\gamma$ system grows as $2 \cdot 3^{n-1}$; the Heisenberg gains a central charge class; the Virasoro connects to $\overline{\mathcal{M}}_{0,n}$; W-algebras link to flag varieties.
+Geometric complexity correlates inversely with algebraic simplicity:
+the free fermion has no positive-degree genus-$0$ bar cohomology; the
+$\beta\gamma$ system has bar chain sectors of rank
+$2 \cdot 3^{n-1}$ and bar cohomology governed by
+$\sqrt{(1+x)/(1-3x)}$; the Heisenberg gains a level central class;
+the Virasoro connects to $\overline{\mathcal{M}}_{0,n}$; W-algebras
+link to flag varieties.
 
 \begin{remark}[Five projections of $\Theta_\cA$: free-field archetypes]
 \label{rem:free-field-five-theorems}
@@ -5454,9 +5699,9 @@ A (bar-cobar) &
  $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ (curved, $m_0 = -k\omega$) \\
 B (inversion) &
  $\Omega(\barBgeom(\cH_k)) \simeq \cH_k$ &
- Heisenberg bar-cobar qi (Thm~\ref{thm:heisenberg-koszul-dual-early}) \\
+ cobar counit; dual algebra computed in Thm~\ref{thm:heisenberg-koszul-dual-early} \\
 C (complementarity) &
- $\kappa(\cH_k) + \kappa(\cH_k^!) = 0$ &
+ $\kappa(\cH_k) + \kappa(\cH_k^!) = 0$ \textup{(}free-field pair\textup{)} &
  $Q_g + Q_g^! = H^*(\overline{\mathcal{M}}_g, Z(\cH_k))$ \\
 D (modular char.) &
  $\Theta_{\cH_k}\big|_{g=1,n=0} = k \cdot \lambda_1$ &
@@ -5517,21 +5762,23 @@ A (bar-cobar) &
  $\mathcal{F}^! = \mathrm{Sym}^{\mathrm{ch}}(\gamma)$ (Thm~\ref{thm:single-fermion-boson-duality}) \\
 B (inversion) &
  $\Omega(\barBgeom(\mathcal{F})) \simeq \mathcal{F}$ &
- Bar collapses (Thm~\ref{thm:fermion-bar-complex-genus-0}) \\
+ cobar counit; genus-$0$ cohomology collapses in Thm~\ref{thm:fermion-bar-complex-genus-0} \\
 C (complementarity) &
- $\kappa(\mathcal{F}) + \kappa(\mathcal{F}^!) = 0$ &
+ $\kappa(\mathcal{F}) + \kappa(\mathcal{F}^!) = 0$ \textup{(}free-field pair\textup{)} &
  Fermionic/bosonic complementarity \\
 D (modular char.) &
  $\Theta_\mathcal{F}\big|_{g=1,n=0} = \tfrac{1}{4}\lambda_1$ &
  $\kappa(\mathcal{F}) = c/2 = 1/4$ \\
 H (chiral Hochschild) &
  Degree-preserving sub-MC &
- $\operatorname{ChirHoch}^*(\mathcal{F})$ polynomial \\
+ $\ChirHoch^0(\mathcal{F})=\mathbb{C}$,\;
+ $\ChirHoch^1(\mathcal{F})=0$,\;
+ $\ChirHoch^2(\mathcal{F})=\mathbb{C}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 The tower terminates at $r = 2$.
-Fermionic statistics kill all bar cohomology above degree~$1$
+Fermionic statistics kill all positive-degree genus-$0$ bar cohomology
 (Theorem~\ref{thm:fermion-bar-complex-genus-0}):
 the cyclic permutation on $\overline{C}_n(X)$ acts by
 primitive roots of unity, leaving no invariant forms.
@@ -5559,9 +5806,9 @@ A (bar-cobar) &
  $(\beta\gamma)^! = bc$ (Thm~\ref{thm:betagamma-bc-koszul}) \\
 B (inversion) &
  $\Omega(\barBgeom(\beta\gamma)) \simeq \beta\gamma$ &
- Genus-$0$ qi; rank $2 \cdot 3^{n-1}$ (Thm~\ref{thm:betagamma-bar-dim}) \\
+ cobar counit; genus-$0$ chain rank $2 \cdot 3^{n-1}$ (Thm~\ref{thm:betagamma-bar-dim}) \\
 C (complementarity) &
- $\kappa(\beta\gamma) + \kappa(bc) = 0$ &
+ $\kappa(\beta\gamma) + \kappa(bc) = 0$ \textup{(}free-field pair\textup{)} &
  $Q_g + Q_g^! = H^*(\overline{\mathcal{M}}_g, Z(\beta\gamma))$ \\
 D (modular char.) &
  $\Theta_{\beta\gamma}\big|_{g=1,n=0}
@@ -5569,7 +5816,8 @@ D (modular char.) &
  $\kappa = 6\lambda^2{-}6\lambda{+}1$;\; $= 1$ at $\lambda=0,1$;\; $= -\tfrac{1}{2}$ at $\lambda=\tfrac{1}{2}$ \\
 H (chiral Hochschild) &
  Degree-preserving sub-MC &
- $\operatorname{ChirHoch}^*(\beta\gamma)$ polynomial \\
+ $\ChirHoch^n(\beta\gamma_\lambda)=0$ for
+ $n\notin\{0,1,2\}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -5586,6 +5834,9 @@ Mumford connection) is in
 \S\ref{sec:betagamma-shadow-tower-free}.
 The two-generator free-field systems ($\beta\gamma$ and $bc$)
 are the free-field archetypes outside the Gaussian class.
+The infinite sequence in
+Remark~\ref{rem:betagamma-bar-cohomology-gf} is bar cohomology, not
+chiral Hochschild cohomology; Theorem~H concerns the latter.
 \end{computation}
 
 \subsubsection{$bc$ ghost system: five-theorem verification}
@@ -5611,9 +5862,9 @@ A (bar-cobar) &
  $(bc)^! = \beta\gamma$ (Thm~\ref{thm:betagamma-bc-koszul}) \\
 B (inversion) &
  $\Omega(\barBgeom(bc)) \simeq bc$ &
- Genus-$0$ qi \\
+ cobar counit \\
 C (complementarity) &
- $\kappa(bc) + \kappa(\beta\gamma) = 0$ &
+ $\kappa(bc) + \kappa(\beta\gamma) = 0$ \textup{(}free-field pair\textup{)} &
  Complementarity exact (free-field family) \\
 D (modular char.) &
  $\Theta_{bc}\big|_{g=1,n=0}
@@ -5621,7 +5872,8 @@ D (modular char.) &
  $\kappa(bc) = -\kappa(\beta\gamma) = -(6\lambda^2{-}6\lambda{+}1)$ \\
 H (chiral Hochschild) &
  Degree-preserving sub-MC &
- $\operatorname{ChirHoch}^*(bc)$ polynomial \\
+ $\ChirHoch^n(bc_\lambda)=0$ for
+ $n\notin\{0,1,2\}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -5630,8 +5882,12 @@ By the complementarity theorem
 the $bc$ ghost data are completely determined by the
 $\beta\gamma$ data: the genus tower, shadow obstruction tower, and
 modular invariants are reflected through $\kappa \mapsto -\kappa$.
+The ordered-to-symmetric averaging step for Theorem~H is the
+Hochschild averaging of
+Corollary~\ref{cor:hochschild-averaging-symmetric}; it does not
+identify bar cohomology growth with Hochschild amplitude.
 At the bosonic string point $\lambda = 2$:
-$\kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}) = 13 + (-13) = 0$,
+$\kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}) = 13 + (-13) = 0$ \textup{(}free-field string sector\textup{)},
 the anomaly cancellation of the $c = 26$ string.
 \end{computation}
 
@@ -5661,7 +5917,7 @@ B (inversion) &
  $\Omega(\barBgeom(V_\Lambda)) \simeq V_\Lambda$ &
  Genus-$0$ qi \\
 C (complementarity) &
- $\kappa(V_\Lambda) + \kappa(V_{\Lambda^*}) = 0$ &
+ $\kappa(V_\Lambda) + \kappa(V_{\Lambda^*}) = 0$ \textup{(}lattice pair\textup{)} &
  $\operatorname{rank} + (-\operatorname{rank}) = 0$ \\
 D (modular char.) &
  $\Theta_{V_\Lambda}\big|_{g=1,n=0}
@@ -5754,7 +6010,7 @@ A \emph{curved filtered chiral algebra} is $(F_\bullet\mathcal{A}, d, m_0)$ wher
 \label{thm:curved-koszul-duality}
 For curved filtered chiral algebras:
 \begin{enumerate}
-\item The bar complex is a curved coalgebra with curvature $\kappa_C = \bar{m}_0$
+\item The curved bar construction is a curved coalgebra with curvature $\kappa_C = \bar{m}_0$
 \item The cobar of a curved coalgebra is a curved algebra
 \item If $\text{Gr}\mathcal{A}$ is Koszul, then:
 \[\Omegach(\barBgeom(\mathcal{A})) \simeq \mathcal{A}\]
@@ -5978,7 +6234,7 @@ again strict:
 The normally ordered product $:\!\beta\gamma\!:$ does give rise to
 nontrivial iterated brackets, but these would produce a
 Jacobiator in $M\check{C}^{\geq 2}$, which vanishes for the
-two-element cover. There is simply no \v{C}ech degree in which
+two-element cover. There is no \v{C}ech degree in which
 a nontrivial $F_3$ could live.
 
 The non-strictness of the $\beta\gamma$ system appears on the
@@ -6050,10 +6306,32 @@ arising from FM compactification, not from \v{C}ech descent}.
 
 \begin{remark}[Mukai-Heisenberg as free-field output of $\Phi_2$ on K3]
 \label{rem:ff-mukai-heisenberg}
-At $\Phi_2(D^b\mathrm{Coh}(K3))$ the free-field output is the Mukai-Heisenberg $\mathcal{H}_{\mathrm{Muk}}$ at $c = 24$ on $\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$. Bar Euler product $\eta(q)^{24}$. The Hodge-supertrace invariant is $\kappa_{\mathrm{CY}}=\chi(\mathcal{O}_{K3})=2$, while the Theorem~C $\mathcal{B}$-row uses the Mukai positive-signature scalar $\kappa_{\mathrm{Muk}}=c_+(\Lambda_{\mathrm{Muk}})=4$. Koszul conductor on the Mukai-doubling side: $K^{\kappa_{\mathrm{Muk}}}=2\,c_+(\mathrm{Mukai}(K3)) = 8$. The Theorem~C bucket enlarges on the Lorentzian-lattice-parametric $\mathcal{B}$-family to $\{0, 8, 13, 250/3, 98/3\}$.
+At $\Phi_2(D^b\mathrm{Coh}(K3))$ the free-field output is the
+Mukai-Heisenberg algebra $\mathcal{H}_{\mathrm{Muk}}$ at $c = 24$ on
+$\Lambda_{\mathrm{Muk}} = \mathrm{II}_{4,20}$. Its bar Euler product is
+$\eta(q)^{24}$. The Hodge-supertrace invariant is
+$\kappa_{\mathrm{cat}}(K3)=\chi(\mathcal{O}_{K3})=2$, while the
+Theorem~C $\mathcal{B}$-row uses the Mukai positive-signature scalar
+$\kappa_{\mathrm{ch}}^{\mathrm{Mukai}}=c_+(\Lambda_{\mathrm{Muk}})=4$.
+The Koszul conductor on the Mukai-doubling side is
+$K^{\kappa_{\mathrm{ch}}^{\mathrm{Mukai}}}
+=2\,c_+(\mathrm{Mukai}(K3))=8$. The Theorem~C bucket enlarges on the
+Lorentzian-lattice-parametric $\mathcal{B}$-family to
+$\{0, 8, 13, 250/3, 98/3\}$.
 \end{remark}
 
 \begin{remark}[Genus-2 Siegel character factorisation]
 \label{rem:ff-genus2-factorisation}
-At the separating-node degeneration of the genus-$2$ Siegel character of the K3 chiral bialgebra $\mathbf H_{\Delta_5}$ (Vol~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}), $1/\Phi_{10}(\mathrm{diag}(\tau, \rho)) = 1/\eta(\tau)^{24} \cdot 1/\phi_{10,1}(\rho)$: the $\eta^{24}$ free-field denominator reappears on the elliptic $\tau$-direction, times the Jacobi form $\phi_{10,1}$ on the $\rho$-direction.
+At the separating-node degeneration of the genus-$2$ Siegel character
+of the K3 chiral bialgebra $\mathbf H_{\Delta_5}$ (Vol~III
+Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}), the unnormalised
+Igusa square $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ satisfies
+\[
+\frac{1}{\Phi_{10}^{\mathrm{un}}(\mathrm{diag}(\tau,\rho))}
+=
+\frac{1}{\eta(\tau)^{24}}\cdot\frac{1}{\phi_{10,1}(\rho)}.
+\]
+The $\eta^{24}$ free-field denominator reappears on the elliptic
+$\tau$-direction, times the Jacobi form $\phi_{10,1}$ on the
+$\rho$-direction.
 \end{remark}

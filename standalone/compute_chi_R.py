@@ -66,7 +66,7 @@ mp.dps = 50  # high precision
 # For hat{sl}_2 level k, the character is:
 #   chi_j(tau) = (1/eta(tau)) * sum_{n in Z} sign_factor * q^{exponent(n)}
 #
-# Actually, the cleanest route uses the BRANCHING into Virasoro modules.
+# A clean route uses the branching into Virasoro modules.
 # For k=2 (the N=1 superconformal / 3-state Potts level), we can
 # compute explicitly.
 #
@@ -78,7 +78,7 @@ mp.dps = 50  # high precision
 # where A_{m,p}(tau) = sum_{n in Z} (p*n + (p-m)/2) * q^{(pn + (p-m)/2)^2 / (2p)}
 #                                                         ... [derivative form]
 #
-# No -- let me use the SIMPLEST correct formula.
+# Use the stable full-character formula.
 #
 # For hat{sl}_2 at level k, the FULL character with z-fugacity is:
 #   chi_j(z, tau) = [Theta_{2j+1,k+2}(z,tau) - Theta_{-(2j+1),k+2}(z,tau)]
@@ -95,7 +95,7 @@ mp.dps = 50  # high precision
 #              = [d/dz Theta_{2j+1,k+2}(z,tau)|_{z=0}]
 #                / [d/dz Theta_{1,2}(z,tau)|_{z=0}]
 #
-# But actually the correct normalization involves the Weyl denominator.
+# The correct normalization involves the Weyl denominator.
 # For hat{sl}_2, the Weyl-Kac denominator is:
 #   R(z,tau) = (y^{1/2} - y^{-1/2}) * prod_{n>=1} (1-q^n y)(1-q^n/y)(1-q^n)
 #
@@ -194,9 +194,9 @@ def affine_sl2_character_direct(j, tau, k=2, num_terms=500):
 
     Hence chi_j(tau) = A_{2j+1,2(k+2)}(tau) / eta(tau)^3
     where A_{m,p}(tau) = sum_{n in Z} m_n * q^{m_n^2/(2p)}
-    with m_n = p*n + m (running over the coset m + p*Z) ... no wait.
+    with m_n = p*n + m running over the coset m + p*Z.
 
-    Let me just compute via the derivative approach directly.
+    Compute via the derivative approach directly.
     """
     q = exp(2 * pi * mpc(0, 1) * tau)
 

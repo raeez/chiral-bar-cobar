@@ -1,23 +1,4 @@
-% Theorem A: bar-cobar reconstruction and Verdier duality -- single unified statement.
-%
-% This chapter establishes Theorem~A as ONE theorem: the bar-cobar
-% adjunction Omega^ch_X -| Bbarch_X, the reconstruction counit
-% Omega^ch_X Bbarch_X(A) -> A on the Koszul locus, and the separate
-% Verdier-dualized Koszul-duality functor.
-% Eight prior parallel statements -- twisting morphism, counit qi, unit
-% weak equivalence, twisted tensor acyclicity, bar concentration in
-% weight 1, SC-formality, R-twisted Sigma_n descent, Francis-Gaitsgory
-% (infty,2)-equivalence at properad level -- collapse to corollaries of
-% the unified form.
-%
-% The Francis-Gaitsgory (infty,2)-equivalence content of the prior
-% chapter is preserved as Corollary~8 (and as the proof skeleton of the
-% unified theorem). The R-twisted Sigma_n-descent lemma is preserved
-% verbatim. cor:chiral-KK-formal-smoothness and the 14 downstream
-% corollary list are preserved.
-%
-% The formulation works in Fact(X) under star and supplies
-% R-twisted Sigma_n-descent.
+% Theorem A: bar-cobar reconstruction, ordered descent, and Verdier duality.
 
 \providecommand{\Bbarch}{\bar{B}^{\mathrm{ch}}}
 \providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
@@ -40,11 +21,10 @@
 {Theorem $A$: Bar--Cobar Reconstruction and Verdier Duality}
 \label{ch:theorem-A-infinity-2}\label{chap:theorem-A-infinity-2}
 
-\section*{Setup and orientation}
+\section*{Setup}
 
-Theorem~A of the Modular Koszul Duality Programme is, in its strongest
-proved form, a \emph{single} structural statement: the chiral cobar and
-chiral bar functors form the adjunction
+Theorem~A has three pieces. The chiral cobar and chiral bar functors
+form the adjunction
 \[
 \Omegach_X\;:\;\CoAlg^{\fact,\conil,\co}_X
 \;\rightleftarrows\;\Alg^{\fact,\aug,\comp}_X
@@ -60,20 +40,24 @@ The Verdier-dualized Koszul duality functor is the different operation
 \[
 K_X(\cA):=\Omegach_X\mathbb D_{\Ran}\Bbarch_X(\cA).
 \]
-The slogan is not that the chiral bar is its own Koszul dual. The
-proved statement is that bar-cobar reconstruction is inversion on the
-Koszul locus, while Koszul duality enters only after Verdier duality on
-the Ran bar coalgebra.
+Thus bar--cobar reconstruction is inversion on the Koszul locus;
+Koszul duality enters only after Verdier duality on the Ran bar
+coalgebra.
+The notation is fixed throughout this chapter:
+$\cA$ is the algebra, $\Bbarch_X(\cA)$ is the bar coalgebra,
+$\cA^i:=H^\bullet\Bbarch_X(\cA)$ is the Koszul-dual coalgebra when
+this cohomology is finite enough to exist in the ordinary category,
+$\cA^!$ is the algebra obtained from the appropriate linear or Verdier
+dual of $\cA^i$, and
+$Z^{\mathrm{der}}_{\ch}(\cA)=C^\bullet_{\ch}(\cA,\cA)$ is the derived
+centre. None of these objects is $R_X(\cA)$.
 
-Theorem~A has eight standard facets: twisting-morphism adjunction,
+The same structure has eight standard faces: twisting-morphism adjunction,
 counit quasi-isomorphism, unit
 weak equivalence, twisted tensor acyclicity, bar concentration in
 weight~$1$, SC-formality, $R$-twisted $\Sigma_n$-descent, and the
-Francis--Gaitsgory $(\infty,2)$-equivalence at properad level. They are
-here recovered as Corollaries~1--8 of the single reconstruction theorem
-form. The entire proof skeleton, the $R$-twisted descent lemma, the
-$14$ downstream corollaries, the formal-smoothness consequence, and
-the resolutions are preserved.
+Francis--Gaitsgory $(\infty,2)$-equivalence on the properadic envelope
+of the chiral associative bar--cobar pair.
 
 \paragraph{Three uniform hypotheses (H1--H3).}
 Let $X$ be a smooth projective curve over a field $k$ of
@@ -98,10 +82,10 @@ Required for ordinary acyclicity to follow from coacyclicity
 witnessed archetype-by-archetype in
 Lemma~\ref{lem:archetype-H123-witness}.
 \end{itemize}
-Hypotheses (H1)--(H3) are the strongest published bar--cobar Quillen
+Hypotheses (H1)--(H3) are the published bar--cobar Quillen
 equivalence hypotheses (Vallette~\cite{Val16},
 Positselski~\cite{Positselski2018,Positselski2011}, Hinich~\cite{Hinich2003})
-specialised to the chiral ambient. They subsume the manuscript's prior
+specialised to the chiral ambient. They subsume the separate
 per-clause hypotheses (conilpotency, completeness, Koszulness,
 finite-dim graded pieces) into a single uniform set.
 
@@ -137,29 +121,35 @@ is over $(\chirAss)^!$, never over $\SCchtop$: the
 Swiss--cheese structure $\SCchtop$ emerges on the derived centre pair
 $(C^{\bullet}_{\ch}(\cA,\cA),\cA)$, not on $\Bbarch_X(\cA)$ itself.
 
-\emph{Organisation.}
-\S\ref{sec:ainf2-koszul-reflection} states the unified Theorem~A and
-the explicit hypotheses (H1)--(H3); the proof skeleton routes through
-Vallette + Positselski + Hinich + Francis--Gaitsgory.
-\S\ref{sec:ainf2-eight-corollaries} derives the eight prior parallel
-statements as Corollaries~1--8 of the unified form.
-\S\ref{sec:ainf2-setup} fixes the Francis--Gaitsgory factorization
-ambient and the $(\infty,2)$-category of factorization algebras.
-\S\ref{sec:ainf2-properads} lifts the bar--cobar pair to factorization
-properads via Hackney--Robertson.
-\S\ref{sec:ainf2-main} states and proves the explicit
-$(\infty,2)$-equivalence at properad level (Corollary~8 of the unified
-form).
-\S\ref{sec:ainf2-R-descent} proves the $R$-twisted $\Sigma_n$-descent
-lemma (Corollary~7 of the unified form).
-\S\ref{sec:ainf2-downstream} lists the $14$ downstream corollaries.
-\S\ref{sec:ainf2-heals} closes the prior items explicitly.
-\S\ref{sec:ainf2-formal-smoothness} records the formal-smoothness
-corollary for chirally Koszul algebras.
-\S\ref{sec:ainf2-platonic-obstructions} frames the four obstructions
-$\Pi 1$--$\Pi 4$ to a fully universal Koszul reflection as named open
-conjectures.
-\S\ref{sec:ainf2-hziv} records the independent verification package.
+\begin{convention}[Ordered bar signs and desuspension]
+\label{conv:A-infinity-2-ordered-bar-signs}
+\index{ordered bar complex!desuspension signs}
+\index{bar differential!ordered sign convention}
+The cohomological convention is $|d|=+1$ and
+$|s^{-1}a|=|a|-1$. For homogeneous $a_i\in\bar\cA$ the ordered bar
+coalgebra is
+\[
+B_X^{\ord}(\cA)=T^c(s^{-1}\bar\cA)
+\]
+with deconcatenation coproduct. Its differential is the coderivation
+whose unary and binary projections are
+\[
+b_1(s^{-1}a)=-s^{-1}(d_\cA a),\qquad
+b_2^{(r)}(s^{-1}a\otimes s^{-1}b)
+=(-1)^{|a|}s^{-1}(a_{(r)}b),
+\]
+and whose action on the $i$-th adjacent pair carries the prefix sign
+\[
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}.
+\]
+For an $A_\infty$-chiral algebra, the higher maps are extended by the
+same desuspended coderivation rule. With this convention
+$d_{B^{\ord}}^2=0$ is precisely the desuspended Stasheff identity
+together with the Arnold relation on logarithmic collision forms.
+The symmetric bar is obtained from this ordered complex by the
+$R$-twisted descent of Lemma~\ref{lem:R-twisted-descent}; no additional
+sign convention is introduced in the symmetric lane.
+\end{convention}
 
 %================================================================
 \section{Bar-cobar reconstruction and Verdier duality: unified Theorem~A}\label{sec:ainf2-koszul-reflection}
@@ -210,7 +200,7 @@ coalgebras. The counit is a chain-level quasi-isomorphism
 \item \label{KR-iii} \emph{Weight-completed coderived continuation off
 $\Kosz(X)$.}
 For $\cA\in\Alg^{\fact,\aug,\comp}_X\setminus\Kosz(X)$, the identity
-$R_X(\cA)\simeq\cA$ is asserted only on the verified
+$R_X(\cA)\simeq\cA$ is asserted only on the
 weight-completed / pro-conilpotent Positselski surface. The raw
 direct-sum class-$\mathsf M$ bar coalgebra is not covered by this
 clause.
@@ -220,7 +210,19 @@ the bar object before cobar:
 $K_X(\cA)=\Omegach_X\mathbb{D}_{\Ran}\Bbarch_X(\cA)$.
 This is the lane that identifies
 $\mathbb{D}_{\Ran}\Bbarch_X(\cA)$ with the factorization
-Koszul-dual coalgebra $\cA^!_{\infty}$.
+Koszul-dual coalgebra $\cA^{!,\mathrm{co}}_{\infty}$. The algebraic
+Koszul dual is obtained only after cobar:
+$\cA^!_\infty=\Omegach_X(\cA^{!,\mathrm{co}}_{\infty})$.
+\item \label{KR-v} \emph{Chain-level and categorical forms.}
+The chain-level representative of the theorem is the bar--cobar
+bicomplex with the desuspended differential of
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs} and the counit
+$\varepsilon_\cA$. The $(\infty,1)$- and $(\infty,2)$-categorical
+statements are obtained by localising this chain-level construction
+at quasi-isomorphisms and then imposing the factorization/properadic
+universal properties. The categorical statement does not replace the
+chain-level quasi-isomorphism, and the chain model does not assert a
+strict equality before localisation.
 \end{enumerate}
 \end{theorem}
 
@@ -245,10 +247,10 @@ Curvature (the nonzero $m_0$ at higher genus) is absorbed by
 Positselski~\cite[Theorem~9.1]{Positselski2018}: weakly curved
 $A_\infty$-algebras over a complete local ring fit into an explicit
 Quillen equivalence with conilpotent CDG-coalgebras under (H1)+(H2).
-The factorization-compatible refinement is the stratified Positselski
-plus Verdier-quotient assembly of Theorem~\ref{thm:A-infinity-2}
-(Corollary~\ref{cor:eight-cor-properad-equiv} of the present unified
-form). Promotion from the coderived equivalence~\ref{KR-iii} to the
+The factorization-compatible refinement is the stratumwise Positselski
+equivalence together with the Verdier-quotient assembly in the
+Francis--Gaitsgory factorization ambient. Promotion from the coderived
+equivalence~\ref{KR-iii} to the
 chain-level qi of~\ref{KR-ii} on $\Kosz(X)$ follows from the
 $E_2$-collapse of the bar--cobar spectral sequence
 (Theorem~\ref{thm:ftm-seven-fold-tfae-via-hub-spoke}) plus
@@ -260,14 +262,14 @@ $R_X(\cA)=\Omegach_X\Bbarch_X(\cA)\xrightarrow{\sim}\cA$ on the
 Koszul locus. The unit
 $\cC\to\Bbarch_X\Omegach_X(\cC)$ belongs to the coalgebra side of the
 same adjunction. Off~$\Kosz(X)$, \ref{KR-iii} is the corresponding
-statement after weight completion and passage to the verified
+statement after weight completion and passage to the
 coderived/contraderived Positselski surface. Clause~\ref{KR-iv}
 records the separate Verdier-dualized Koszul-duality functor; it is
 not the bar-cobar reconstruction functor.
 
 Functoriality and Koszul-locus properties extend to the symmetric
 monoidal $(\infty,2)$-level by the universal property of the adjoint
-equivalence; the explicit $(\infty,2)$-form at properad level is
+equivalence; the explicit $(\infty,2)$-form on the properadic envelope is
 Theorem~\ref{thm:A-infinity-2} in \S\ref{sec:ainf2-main}.
 \end{proof}
 
@@ -335,9 +337,9 @@ The output coalgebra $\Bbarch_X(\cA)\in\CoAlg^{\fact,\conil,\co}_X$ is
 a single chiral coassociative coalgebra over the chiral cooperad
 $(\chirAss)^{!}$, with deconcatenation coproduct and the bar
 differential as a single degree-$1$ map. The Swiss--cheese
-$\SCchtop$ structure does \emph{not} live on $\Bbarch_X(\cA)$. Per
-the $\SCchtop$ structure (or $E_3$-topological with conformal
-vector) emerges on the derived centre pair
+$\SCchtop$ structure does \emph{not} live on $\Bbarch_X(\cA)$. The
+$\SCchtop$ structure, or the $E_3$-topological structure with
+conformal vector, emerges on the derived centre pair
 $(C^{\bullet}_{\ch}(\cA,\cA),\cA)$, computed \emph{using}
 $\Bbarch_X(\cA)$ as a resolution. The bar coalgebra is the
 $\Eone$-input of the Koszul reflection; the derived centre is the
@@ -521,13 +523,13 @@ Positselski nonhomogeneous bar--cobar equivalence
 $A_\infty$-algebra $\widehat{\cA}$ over the complete local base
 $k[\![\hbar]\!]$ (the level/central-charge parameter). Failure to
 perform this completion would localise at $w=0$ and trivialise the
-statement; the pro-conilpotent completion is load-bearing, not
-decorative.
+statement; the pro-conilpotent completion is a hypothesis of the
+class-$\mathsf M$ theorem.
 \end{remark}
 
-\begin{remark}[Five-archetype verification of bar-cobar reconstruction]
+\begin{remark}[Five-archetype counit witnesses]
 \label{rem:five-archetype-K-squared}
-\index{bar-cobar reconstruction!archetype verification}%
+\index{bar-cobar reconstruction!archetype witnesses}%
 Lemma~\ref{lem:archetype-H123-witness} together with
 Remark~\ref{rem:class-M-pro-conilpotent} reduces the content of
 Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} on each archetype to a
@@ -551,7 +553,7 @@ $II_{4,20}$, with the Mukai-doubled Koszul conductor
 $K^{\kappa_{\mathrm{ch}}}=2c_+(\mathrm{Mukai}(K3))=8$
 pinning the B-row conductor without identifying it with the
 Verdier-dualized functor $K_X$. The five collapse statements together
-constitute the chain-level verification that the counit
+constitute the chain-level proof that the counit
 $\Omegach_X\Bbarch_X(\cA)\to\cA$ is a quasi-isomorphism on the five
 archetype witnesses.
 \end{remark}
@@ -569,8 +571,8 @@ is a Maurer--Cartan element; \ClaimStatusConditional]
 \label{cor:eight-cor-twisting-morphism}
 \index{twisting morphism!as Maurer-Cartan}
 The universal twisting morphism
-$\tau\colon\Bbarch_X(\cA)\to\cA$ associated to the unit
-$\eta_\cA\colon\cA\to\Omegach_X\Bbarch_X(\cA)$ of the Koszul
+$\tau\colon\Bbarch_X(\cA)\to\cA$ associated to the algebra-side counit
+$\psi_\cA\colon\Omegach_X\Bbarch_X(\cA)\to\cA$ of the Koszul
 reflection is a Maurer--Cartan element of the convolution
 $L_\infty$-algebra
 $\fg^{\Eone}_\cA=\Hom^{\fact}_X(\Bbarch_X(\cA),\cA)$:
@@ -580,15 +582,15 @@ d\tau+\tfrac{1}{2}[\tau,\tau]=0.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:koszul-reflection}\ref{KR-i}, the unit and counit
-of the adjunction $\Omegach_X\dashv\Bbarch_X$ encode, by adjunction,
+By Theorem~\ref{thm:koszul-reflection}\ref{KR-i}, the counit
+of the adjunction $\Omegach_X\dashv\Bbarch_X$ encodes, by adjunction,
 the universal twisting
 morphism $\tau\colon\Bbarch_X(\cA)\to\cA$ (LV12 Theorem~2.2.9
 specialised to the chiral ambient). The Maurer--Cartan condition
 $d\tau+\tfrac{1}{2}[\tau,\tau]=0$ is exactly the compatibility
 between the bar differential on $\Bbarch_X(\cA)$ and the
 multiplication on~$\cA$, which is the chain-level statement
-that~$\eta_\cA$ is a chain map.
+that~$\psi_\cA$ is a chain map.
 \end{proof}
 
 \begin{corollary}[Counit quasi-isomorphism on $\Kosz(X)$;
@@ -616,10 +618,15 @@ weak equivalence.
 \end{corollary}
 
 \begin{proof}
-Apply Theorem~\ref{thm:koszul-reflection}\ref{KR-ii} to
-$\cC\xrightarrow{\sim}\Bbarch_X\Omegach_X(\cC)$ on the conilpotent side; under
-hypothesis~(H2), the conilpotent-completeness condition makes the
-unit a chain-level qi (not merely a coderived equivalence).
+Filter $\cC$ by the coradical filtration. The associated graded of
+$\Bbarch_X\Omegach_X(\cC)$ is the classical bar construction on the
+free algebra generated by the graded pieces of $\cC$, and the map
+$\gr\,\eta_\cC$ is the unit of the acyclic twisting morphism for
+$(\Ass,\Ass^!)$ \cite[Theorem~2.4.1]{LV12}. Conilpotence makes the
+filtration exhaustive, completeness makes it separated, and (H3)
+gives Mittag--Leffler convergence weight-by-weight. Hence the
+filtered cone of $\eta_\cC$ is acyclic, so the unit is a chain-level
+weak equivalence on the conilpotent-complete locus.
 \end{proof}
 
 \begin{corollary}[Twisted tensor acyclicity;
@@ -712,12 +719,14 @@ $\barB^{\Sigma}(\cA)\simeq B^{\ord}(\cA)^{R\text{-}\Sigma_n}$;
 \ClaimStatusConditional]
 \label{cor:eight-cor-R-descent}
 \index{R-twisted descent!corollary form}
-For $\cA$ an $\Eone$-chiral algebra with classical $R$-matrix~$R(z)$
-satisfying the classical Yang--Baxter equation
+For $\cA$ an $\Eone$-chiral algebra with meromorphic quantum
+$R$-matrix~$R(z)$ satisfying the quantum Yang--Baxter equation
 (Lemma~\ref{lem:R-twisted-descent}~\ref{R1}) \emph{and} unitarity
 $R(z)\,R^{op}(-z) = \id$ (Lemma~\ref{lem:R-twisted-descent}~\ref{R2};
-automatic for rational Yangians and for generic-$q$ trigonometric
-$U_q(\widehat{\fg})$; vacuous when $R(z)=\tau$), the symmetric bar
+satisfied by rational Yangians and by generic-$q$ trigonometric
+$U_q(\widehat{\fg})$; vacuous when $R(z)=\tau$), and satisfying the
+regular-singular Fulton--MacPherson extension hypothesis
+of Lemma~\ref{lem:R-twisted-descent}~\ref{R3}, the symmetric bar
 $\barB^{\Sigma}_n(\cA)$ is the $R$-twisted
 $\Sigma_n$-coinvariant descent of the ordered bar
 $B^{\ord}_n(\cA)$ along the Ran-torsor
@@ -732,15 +741,17 @@ $\pi\colon\Ran^{\ord}(X)\to\Ran(X)$:
 This is Lemma~\ref{lem:R-twisted-descent} below, recast as an
 immediate corollary of the universal property of the Koszul
 reflection on the ordered factorization ambient $\Ran^{\ord}(X)$. The
-unit~$\eta_\cA$ at the ordered level intertwines with the
+counit~$\epsilon_\cA$ at the ordered level intertwines with the
 $\Sigma_n$-equivariant local system~$L_R$ determined by~$R(z)$; the
 descent then follows from
 Theorem~\ref{thm:koszul-reflection}\ref{KR-i} applied to both
-$\Ran^{\ord}(X)$ and~$\Ran(X)$ jointly.
+$\Ran^{\ord}(X)$ and~$\Ran(X)$ jointly, with the collision-stratum
+extension supplied by hypothesis~\ref{R3} of
+Lemma~\ref{lem:R-twisted-descent}.
 \end{proof}
 
 \begin{corollary}[Francis--Gaitsgory $(\infty,2)$-equivalence at
-properad level; \ClaimStatusConditional]
+the properadic envelope; \ClaimStatusConditional]
 \label{cor:eight-cor-properad-equiv}
 \index{Francis-Gaitsgory equivalence!properad level}
 The Koszul reflection of Theorem~\ref{thm:koszul-reflection} lifts
@@ -748,10 +759,13 @@ along the Hackney--Robertson properad inclusion
 $\FactOp(X)\hookrightarrow\FactProp(X)$ to an
 $(\infty,2)$-categorical adjoint equivalence
 \[
-\Bbarch_X\;:\;\FactProp^{\aug}(X)
-\;\rightleftarrows\;\CoFactProp^{\conil,\comp}(X)\;:\;\Omegach_X
+\Bbarch_X\;:\;\FactProp^{\aug}_{\langle\chirAss\rangle}(X)
+\;\rightleftarrows\;
+\CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)
+\;:\;\Omegach_X
 \]
-on the conilpotent-complete locus at properad level. The pole-free
+on the conilpotent-complete properadic envelope of the chiral
+associative bar--cobar pair. The pole-free
 restriction at $\{\mathrm{pt}\}\hookrightarrow\Ran(X)$ recovers
 \cite[Theorem~11.4.1]{LV12} for $\Ass$ verbatim under the
 $(\Dmod(X),\otimes^{!})\hookrightarrow\Fact(X)$ symmetric-monoidal
@@ -763,9 +777,9 @@ Detailed proof in \S\ref{sec:ainf2-main} as
 Theorem~\ref{thm:A-infinity-2}.
 \end{proof}
 
-These eight corollaries, taken together, account for the full content
+These eight corollaries, taken together, account for the theorem content
 of the standard Theorem~A facets. The unified reconstruction theorem
-Theorem~\ref{thm:koszul-reflection} is \emph{prior} to any of them;
+Theorem~\ref{thm:koszul-reflection} is the source of these facets;
 each facet specialises to a
 single facet of the adjunction, reconstruction counit, or
 Verdier-dualized Koszul-duality functor.
@@ -788,10 +802,8 @@ ${\chirAss}^{!}$
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}) was proven in
 Chapter~\ref{ch:chiral-koszul-pairs} by transferring the
 Loday--Vallette statement~\cite[Theorem~11.4.1]{LV12} into the chiral
-ambient $(\Dmod(X),\otimes^{\ch})$. The adversarial audit of
-2026-04-16 (\S\ref{app:first-principles-cache}, entries~166--239)
-established that three structural features of that proof require
-upgrade:
+ambient $(\Dmod(X),\otimes^{\ch})$. Three structural features require
+the factorization upgrade:
 
 \begin{enumerate}
 \item[\textup{(F1)}] The pair $(\Dmod(X), \otimes^{\ch})$ is not strictly
@@ -808,7 +820,7 @@ requires a different model structure; the correct ambient is the
 Francis--Gaitsgory--Rozenblyum model structure on factorization
 coalgebras \cite[Chapter~IV.5]{GR17}.
 
-\item[\textup{(F3)}] The `E$_1$ primacy' headline of the programme
+\item[\textup{(F3)}] The $E_1$-ordered form of the theorem
 (\S\ref{sec:e1-first-prose-architecture}) asserts the ordered bar
 $\bar B^{\ord}(\cA)$ as the primitive object, with the symmetric bar
 $\bar B^{\Sigma}(\cA)$ obtained by averaging. The Heisenberg example
@@ -820,8 +832,8 @@ $\bar B^{\Sigma}(\cA)$ for nontrivial $R$.
 \end{enumerate}
 
 The unified Theorem~A of \S\ref{sec:ainf2-koszul-reflection} resolves
-(F1)--(F3) at full strength via the explicit $(\infty,2)$-equivalence
-at properad level (Corollary~\ref{cor:eight-cor-properad-equiv}),
+(F1)--(F3) via the explicit $(\infty,2)$-equivalence on the
+properadic envelope (Corollary~\ref{cor:eight-cor-properad-equiv}),
 proven below as Theorem~\ref{thm:A-infinity-2}.
 
 Let $X$ be a smooth curve over a field~$k$ of characteristic~$0$.
@@ -896,12 +908,20 @@ Operads parametrise multi-input / single-output operations. Properads
 (Hackney--Robertson~\cite{HackneyRobertson2019}) parametrise
 multi-input / multi-output operations, with composition along
 connected graphs (not only trees). The $(\infty,2)$-level of
-Corollary~\ref{cor:eight-cor-properad-equiv} requires that the
-bar--cobar pair lift from operads to properads: the pairing
-$\cA \otimes^{\ch} \cA^! \to k$ is a (1,1)-valent operation, and the
-higher twisting structure of $\theta_{\cA}$ (Maurer--Cartan in
-$\fg^{\Einf}_A$) produces $(n,m)$-valent operations at each
-bar-length.
+Corollary~\ref{cor:eight-cor-properad-equiv} uses only the
+properadic envelope generated by the chiral associative bar--cobar
+pair. The relevant pairing is
+\[
+\cA\otimes^{\ch} K_X(\cA)\longrightarrow \omega_X,
+\qquad
+K_X(\cA)=\Omegach_X\mathbb D_{\Ran}\Bbarch_X(\cA),
+\]
+with coalgebraic dual input
+$\mathbb D_{\Ran}\Bbarch_X(\cA)=\cA^{!,\mathrm{co}}_\infty$.
+It is not a pairing between $\cA$ and the reconstruction object
+$R_X(\cA)=\Omegach_X\Bbarch_X(\cA)$. The higher twisting structure of
+$\theta_{\cA}$ produces $(n,m)$-valent operations after applying the
+properadic envelope to this Verdier-dualized bar object.
 
 \begin{definition}[Factorization properad; \ClaimStatusProvedHere]
 \label{def:v1-factorization-properad}
@@ -923,18 +943,21 @@ equivariant under $\Sigma_n \times \Sigma_m$ and compatible with
 factorization. 2-morphisms are homotopies of the composition system.
 \end{definition}
 
-\begin{remark}[Why properads and not just operads]
-The Koszul-dual pairing $\cA \otimes^{\ch} \cA^! \to k$ has one input
-from~$\cA$ and one from~$\cA^!$: a $(1,1)$-valent operation.
+\begin{remark}[Why the properadic envelope appears]
+The Verdier--Koszul pairing
+$\cA \otimes^{\ch}K_X(\cA)\to\omega_X$ has one input from~$\cA$ and
+one input from the algebra obtained by cobaring
+$\mathbb D_{\Ran}\Bbarch_X(\cA)$: a $(1,1)$-valent operation.
 Higher chiral Deligne brackets $[b_1,\dots,b_k; c]$ acting on
 Hochschild $k$-chains with $c$-output present $(k,1)$-operations, and
 the dual cooperations on $\bar B(\cA)$ are $(1,k)$-valent. At the
 Maurer--Cartan level, $\theta_{\cA}$ in $\fg^{\ord}_\cA$ uses
-$(n,1)$-valent operations; its dual $\bar\theta_{\cA^!}$ in
-$\fg^{\ord}_{\cA^!}$ uses $(1,n)$-valent operations. All of these sit
-inside a properad, not an operad; the Hackney--Robertson framework is
-the minimal setting in which both sides of
-Corollary~\ref{cor:eight-cor-properad-equiv} live.
+$(n,1)$-valent operations; its Verdier-dual transpose on
+$\mathbb D_{\Ran}\Bbarch_X(\cA)$ uses $(1,n)$-valent operations. These
+operations sit in the properadic envelope of the operadic
+bar--cobar pair. The theorem below is not a classification of all
+factorization properads; it is the bar--cobar equivalence on this
+conilpotent-complete envelope.
 \end{remark}
 
 \begin{theorem}[Hackney--Robertson factorization properad model
@@ -961,35 +984,34 @@ is \cite[Proposition~6.1]{HackneyRobertson2019}.
 \end{proof}
 
 %================================================================
-\section{Theorem~$A^{\infty,2}$: the explicit properad-level form
+\section{Theorem~$A^{\infty,2}$: the explicit properadic-envelope form
 of Corollary~\ref{cor:eight-cor-properad-equiv}}\label{sec:ainf2-main}
 %================================================================
 
 The content of Corollary~\ref{cor:eight-cor-properad-equiv} is the
-explicit $(\infty,2)$-equivalence at properad level between augmented
-factorization algebras $\Fact^{\aug}(X)$ and conilpotent-complete
-factorization coalgebras $\CoFact^{\conil,\comp}(X)$. The latter is
-the full sub-$(\infty,2)$-category of $\CoFact(X)$ cut out by objects
-whose coradical filtration is exhaustive and whose completion with
-respect to that filtration is an equivalence.
+explicit $(\infty,2)$-equivalence between augmented factorization
+algebras $\Fact^{\aug}(X)$ and conilpotent-complete factorization
+coalgebras $\CoFact^{\conil,\comp}(X)$, together with its lift to the
+properadic envelope generated by this operadic pair. The latter is the
+full sub-$(\infty,2)$-category of $\CoFact(X)$ cut out by objects whose
+coradical filtration is exhaustive and whose completion with respect
+to that filtration is an equivalence.
 
 \begin{theorem}[Theorem~$A^{\infty,2}$: Francis--Gaitsgory bar--cobar
-$(\infty,2)$-equivalence at properad level;
-\ClaimStatusProvedHere]
+$(\infty,2)$-equivalence and properadic envelope;
+\ClaimStatusConditional]
 \label{thm:A-infinity-2}
-% Co-alias: Theorem A^{E_1} (E_1-ordered variant). Clause (iii) below
-% "Ordered-to-symmetric descent (unitary R)" is the E_1-ordered Theorem A
-% via pure-braid Orlik-Solomon Koszulity (Shelton-Yuzvinsky 1997), routed
-% through Lemma~\ref{lem:R-twisted-descent}; Yangian instance concrete via
-% Cherednik monodromy + Etingof-Kazhdan flatness. Co-label resolves the
-% alternate name thm:theorem-A-E1 onto the canonical inscription.
 \label{thm:theorem-A-E1}
 \index{Theorem A-infinity-2}
 \index{Theorem A!E_1-ordered variant}
 \index{bar-cobar!(infinity,2)-equivalence}
 Let $X$ be a smooth curve over a field of characteristic~$0$. In the
 Francis--Gaitsgory factorization ambient $\Fact(X)$
-\textup{(}Definition~\ref{def:fg-ambient}\textup{)}, the cobar and bar functors
+\textup{(}Definition~\ref{def:fg-ambient}\textup{)}, assume exact
+$\star$-monoidal base change along $\{\mathrm{pt}\}\hookrightarrow
+\Ran(X)$, Mittag--Leffler convergence for the bar and cobar length
+filtrations, and existence of the Hackney--Robertson properad transfer
+inside the factorization ambient. Then the cobar and bar functors
 \[
 \Omegach_X \;\colon\; \CoFact^{\conil,\comp}(X)
 \;\rightleftarrows\;
@@ -1011,17 +1033,24 @@ The equivalence satisfies three additional properties:
 The adjunction lifts along the inclusion of factorization operads
 into factorization properads
 \textup{(}Theorem~\ref{thm:hackney-robertson-model}\textup{)}:
-$\Omegach_X$ and $\Bbarch_X$ extend to functors between
-conilpotent-complete factorization coproperads and factorization
-properads, inducing
+$\Omegach_X$ and $\Bbarch_X$ extend to the conilpotent-complete
+properadic envelope of the operadic bar--cobar pair, inducing
 an adjoint equivalence
 \[
-\Omegach_X \colon \CoFactProp^{\conil,\comp}(X)
-\rightleftarrows \FactProp^{\aug}(X) \colon \Bbarch_X
+\Omegach_X \colon
+\CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)
+\rightleftarrows
+\FactProp^{\aug}_{\langle\chirAss\rangle}(X)
+\colon \Bbarch_X
 \]
 that restricts to the operadic statement above along the
 Hackney--Robertson adjunction
-$\FactOp(X) \hookrightarrow \FactProp(X)$.
+$\FactOp(X) \hookrightarrow \FactProp(X)$. No equivalence is asserted
+for arbitrary factorization properads outside this envelope.
+The subscript $\langle\chirAss\rangle$ denotes the full
+sub-$(\infty,2)$-category generated from the chiral associative
+operadic bar--cobar pair by connected-graph properadic composition,
+radical completion, and quasi-isomorphism.
 
 \item \label{A2-ii} \emph{Pole-free-point restriction.}
 At the pole-free point of $X$ -- i.e., pulled back along the inclusion
@@ -1037,10 +1066,13 @@ Explicitly: the pullback along $\{\mathrm{pt}\}$ of $\Bbarch_X$ and
 $\Omegach_X$ agrees with the $k$-linear bar--cobar adjunction of
 \cite[Theorem~11.4.1]{LV12} for $\Ass$.
 
-\item \label{A2-iii} \emph{Ordered-to-symmetric descent (unitary $R$).}
-Assume $\cA$ carries a classical $R$-matrix $R(z)$ satisfying the
-classical Yang--Baxter equation \emph{and} unitarity
-$R(z)\,R^{op}(-z) = \id$. Then the equivalence relates the ordered bar
+\item \label{A2-iii} \emph{Ordered-to-symmetric descent (unitary quantum $R$).}
+Assume $\cA$ carries a meromorphic unitary quantum $R$-matrix $R(z)$
+which satisfies the quantum Yang--Baxter equation, satisfies
+$R(z)\,R^{op}(-z) = \id$, and is realized as monodromy of the flat
+KZ/Cherednik-type connection with regular-singular
+Fulton--MacPherson boundary extension used in
+Lemma~\ref{lem:R-twisted-descent}. Then the equivalence relates the ordered bar
 $B^{\ord}(\cA)$ and the symmetric bar $\barB^{\Sigma}(\cA)$ via
 \emph{$R$-matrix-twisted $\Sigma_n$-descent} along the Ran-torsor
 $\Ran(X)^{\ord} \to \Ran(X)$:
@@ -1050,20 +1082,20 @@ $\Ran(X)^{\ord} \to \Ran(X)$:
 \]
 where $L_R$ is the $\Sigma_n$-equivariant local system on
 $\Ran^{\ord}(X)$ determined by $R(z)$
-(Lemma~\ref{lem:R-twisted-descent}, hypotheses~\ref{R1}+\ref{R2}).
-Unitarity is automatic for rational Yangians $Y_\hbar(\fg)$ and for
+(Lemma~\ref{lem:R-twisted-descent}, hypotheses~\ref{R1}+\ref{R2}+\ref{R3}).
+Unitarity holds for rational Yangians $Y_\hbar(\fg)$ and for
 trigonometric $U_q(\widehat{\fg})$ at generic~$q$, and vacuous for
 chiral algebras with $R(z)=\tau$ (Heisenberg, free fermions, lattice
 VOAs at generic rank; Step~4 of the lemma's proof). For elliptic
-$R$-matrices of Belavin/Felder type it is convention-dependent, and
-the descent of~\ref{A2-iii} is to be read scoped to a unitary
+$R$-matrices of Belavin/Felder type, both unitarity and the
+regular-singular boundary extension must be checked in the chosen
 presentation (Remark~\ref{rem:R-descent-unitarity-scope}).
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
 Write $\cV := \Fact(X)$ for brevity and $\cV^{\mathrm{op,pr}} :=
-\FactProp^{\aug}(X)$. The proof is in four steps: (1) construct the
+\FactProp^{\aug}_{\langle\chirAss\rangle}(X)$. The proof is in four steps: (1) construct the
 adjunction in $\cV$; (2) upgrade to an equivalence on the
 conilpotent-complete locus; (3) lift along Hackney--Robertson; and
 (4) verify \ref{A2-ii}, \ref{A2-iii}.
@@ -1090,7 +1122,8 @@ enhancement), combined with the twisting-morphism dictionary
 
 \emph{Step 2: Unit and counit equivalences on the conilpotent-complete
 locus.}
-The unit map $\cA \to \Omegach_X \Bbarch_X(\cA)$ is the standard
+The algebra-side counit
+$\epsilon_\cA\colon \Omegach_X\Bbarch_X(\cA)\to\cA$ is the standard
 contraction of the augmented bar-cobar bicomplex. Acyclicity on the
 conilpotent-complete locus follows from a spectral-sequence argument:
 the bar-length filtration on $\bar B(\cA)$ is exhaustive by
@@ -1101,32 +1134,33 @@ $\gr^p \bar B(\cA)$ carries the classical Koszul complex for $(\Ass,
 change $\Shv^{\DR}(\{\mathrm{pt}\}) \to \Shv^{\DR}(\Ran(X))$ (as a
 left-adjoint between stable $\infty$-categories) propagates acyclicity
 to the spectral-sequence $E_1$-page; convergence of the
-spectral-sequence to the unit morphism is the Mittag-Leffler property
+spectral-sequence to the counit morphism is the Mittag-Leffler property
 for the bar-length filtration under conilpotent-completeness.
 
-The counit map $\Bbarch_X \Omegach_X(\cC) \to \cC$ is the dual
+The coalgebra-side unit
+$\eta_\cC\colon \cC\to \Bbarch_X\Omegach_X(\cC)$ is the dual
 contraction, acyclic by the same argument applied to the cobar-length
-filtration on $\Omega(\cC)$, which converges under conilpotent-completeness
-on $\cC$ (Milnor's lim$^1$ vanishes for a pro-nilpotent coradical
-filtration).
+filtration on $\Omega(\cC)$, which converges under
+conilpotent-completeness on $\cC$ (Milnor's lim$^1$ vanishes for a
+pro-nilpotent coradical filtration).
 
 \emph{Step 3: Properad lift via Hackney--Robertson.}
-The adjunction constructed in Step~1 involves only tensor, direct sum,
-and $\Sigma_n$-equivariance on inputs/outputs; it does not depend on
-the restriction to $(n,1)$- or $(1,m)$-valence. Applying the left
-adjoint of the Hackney--Robertson inclusion
+The adjunction constructed in Step~1 is first operadic. Applying the
+left adjoint of the Hackney--Robertson inclusion
 $\FactOp(X) \hookrightarrow \FactProp(X)$
 (Theorem~\ref{thm:hackney-robertson-model}) to each piece produces an
-$(\infty,2)$-categorical adjunction at properad level, with the bar
-and cobar constructions extended graph-wise.
-Conilpotent-completeness at properad level is defined as before
-(exhaustive radical filtration + Mittag-Leffler); acyclicity of the
-unit and counit transfers from Step~2 along the left-adjoint extension
-because left adjoints preserve colimits, and the spectral sequence of
-the radical filtration is defined piece-wise at each
-$(n,m)$-valence level.
-The equivalence of \ref{A2-i} is the resulting adjoint equivalence on
-the conilpotent-complete locus at properad level.
+$(\infty,2)$-categorical adjunction on the properadic envelope
+generated by the operadic bar--cobar pair, with the bar and cobar
+constructions extended graph-wise. Conilpotent-completeness at
+properad level means exhaustive radical filtration plus
+Mittag--Leffler convergence on every $(n,m)$-valence piece.
+Acyclicity of the unit and counit transfers from Step~2 along this
+envelope because the extension is computed by colimits over connected
+graphs and the radical-filtration spectral sequence is piecewise the
+operadic one. This proves the equivalence of~\ref{A2-i} on
+$\CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)$ and
+$\FactProp^{\aug}_{\langle\chirAss\rangle}(X)$; arbitrary
+factorization properads are outside the assertion.
 
 \emph{Step 4: Restrictions \ref{A2-ii}, \ref{A2-iii}.}
 \ref{A2-ii} is pullback along $\{\mathrm{pt}\} \hookrightarrow \Ran(X)$:
@@ -1142,17 +1176,6 @@ marked point, yielding the classical statement verbatim.
 \ref{A2-iii} is Lemma~\ref{lem:R-twisted-descent} below; we record it
 now for reference and prove it in \S\ref{sec:ainf2-R-descent}.
 \end{proof}
-
-% Scope note: Theorem A^{\infty,2} is proved on a fixed smooth curve X.
-% Extension over \bar M_{g,n} including boundary (the modular-family
-% form of Theorem A) requires Francis-Gaitsgory
-% six-functor base-change on the relative Ran prestack (GR17 Vol II,
-% relative Ran six-functor layer); this base-change is cited but not
-% established in Vol I. The extension is load-bearing for downstream theorems
-% (clutching-uniqueness for Theorem D at g >= 2, universal
-% obs_g = kappa * lambda_g across all g, et al.).
-% See adversarial_swarm_20260417/wave1_theorem_A_attack_heal.md items
-% OF1, OF2, OF3, OF5 for the current open ledger.
 
 \begin{remark}[Step~2 Mittag-Leffler: which filtration, which side]
 \label{rem:A-inf-2-ml-step-2}
@@ -1182,228 +1205,110 @@ chain-level convergence; failure of vanishing is the precise chain-level
 obstruction to extending Theorem~$A^{\infty,2}$ beyond~(H3).
 \end{remark}
 
-\begin{remark}[Scope of Theorem~$A^{\infty,2}$: fixed smooth curve versus
-modular family]\label{rem:A-infinity-2-modular-family-scope}
-The theorem above is proved on a \emph{fixed smooth curve} $X$ over a
-field of characteristic zero. Its extension to the relative setting over
-$\overline{\mathcal{M}}_{g,n}$ including the boundary divisor requires
-two additional ingredients that are cited but not established at chain
-level in this volume:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item Francis--Gaitsgory six-functor base-change on the relative Ran
-prestack, used to propagate the Hackney--Robertson properad-level
-equivalence horizontally across families of smooth curves. The abstract
-six-functor framework is
-\cite[Part~IV (Categories of correspondences), and Part~V, \S1
-(IndCoh)]{GR17}; the specialisation to factorization sheaves on the
-Ran prestack for a fixed smooth curve is \cite[\S2--3]{Francis2012}.
-Its relative version over a family $\pi: \mathcal{C} \to S$ of smooth
-curves is the load-bearing missing inscription (see the sharpened
-obstruction class $[\alpha_{\mathrm{BC}}]$ below).
-\item Mok25 logarithmic factorization-gluing at the boundary (nodal
-degenerations), to globalise the equivalence across the full
-compactified base. Mok25 is cited as a March 2025 arXiv preprint
-(arXiv:2503.17563, Siao Chi Mok, ``Logarithmic Fulton--MacPherson
-configuration spaces''; its chain-level nodal factorization-gluing
-for the bar/cobar pair is not independently established in Vol~I).
-\end{enumerate}
-Neither is established as a theorem in Vol~I; both are invoked only at
-the citation level. Downstream results whose statements implicitly
-depend on the modular-family extension -- most prominently the
-clutching-uniqueness clause used in Theorem~D at $g\geq 2$ and the
-assertion $\mathrm{obs}_g = \kappa \cdot \lambda_g$ for all $g$ -- are
-therefore conditional on this outstanding inscription. The
-configuration-space R-twisted $\Sigma_n$-descent of
-Lemma~\ref{lem:R-twisted-descent} is proved on $\mathrm{Conf}^{\ord}_n(X)$
-for a fixed $X$ and is independent of the modular-family question.
+\begin{remark}[Fixed curve, relative interior, and Deligne--Mumford boundary]
+\label{rem:A-infinity-2-modular-family-scope}
+Theorem~\ref{thm:A-infinity-2} is a fixed-smooth-curve theorem. It
+does not extend to $\overline{\mathcal{M}}_{g,n}$ by formal base
+change. A relative theorem over the interior
+$\mathcal{M}_{g,n}$ requires base-change for the relative Ran prestack;
+a theorem over the Deligne--Mumford boundary requires, in addition,
+nodal factorization sewing.
 
-\emph{Sharpened obstruction for (a) (relative-Ran base-change).} Let
-$\pi: \mathcal{C} \to S$ be a smooth projective family of genus-$g$
-curves with $n$ marked sections, and let $\Ran^{\rel}(\mathcal{C}/S)
-\to S$ be the relative Ran prestack. For a morphism $f: S' \to S$ of
-smooth schemes, let $f': \Ran^{\rel}(\mathcal{C}'/S') \to
-\Ran^{\rel}(\mathcal{C}/S)$ be the induced map on relative Ran
-prestacks and let $\pi^{\Ran}_*$ denote the Ran-direct image of
-factorization sheaves. The base-change natural transformation
+Let $\pi:\mathcal C\to S$ be a smooth projective family of marked
+curves and let $\Ran^{\rel}(\mathcal C/S)\to S$ be the relative Ran
+prestack. For $f:S'\to S$, write
+$f':\Ran^{\rel}(\mathcal C'/S')\to\Ran^{\rel}(\mathcal C/S)$ for the
+induced map. The relative interior obstruction is the base-change
+comparison
 \[
 \alpha_{\mathrm{BC}}:\;
-f^{!} \pi^{\Ran}_*
-\;\Longrightarrow\;
-\pi'^{\Ran}_* f'^{!}
+f^{!}\pi^{\Ran}_{*}\Longrightarrow \pi'^{\Ran}_{*}f'^{!}
 \]
-on $\Fact^{\rel}(\mathcal{C}/S)$ is, by GR17 Part~IV--V, an equivalence
-on the abstract six-functor formalism restricted to the IndCoh
-realisation; its failure on the factorization subcategory is measured
-by a class
+on relative factorization sheaves. On a representative
+$\mathcal F\in\Fact^{\rel}(\mathcal C/S)$ satisfying
+(H1)+(H2)+(H3), its failure is measured by
 \[
-[\alpha_{\mathrm{BC}}]
-\;\in\;
+[\alpha_{\mathrm{BC}}]\in
 \mathrm{Ext}^{1}_{\Shv^{\DR}(S')}
-\bigl(f^{!}\pi^{\Ran}_* \mathcal{F},\;
- \pi'^{\Ran}_* f'^{!}\mathcal{F}\bigr)
+\bigl(f^{!}\pi^{\Ran}_{*}\mathcal F,\;
+\pi'^{\Ran}_{*}f'^{!}\mathcal F\bigr).
 \]
-for a representative factorization sheaf $\mathcal{F}$ satisfying
-hypotheses (H1)+(H2)+(H3) relative over $\mathcal{M}_g$.
-Universal vanishing of $[\alpha_{\mathrm{BC}}]$ on this subcategory is
-the programme-internal inscription target; clearing it alone extends
-Theorem~$A^{\infty,2}$ horizontally across $\mathcal{M}_{g,n}$ (the
-interior of $\overline{\mathcal{M}}_{g,n}$). The nodal boundary
-requires, in addition, clearance of the companion logarithmic class
-$[\beta_{\mathrm{nodal}}]$ supplied by ingredient~(b).
+Vanishing of this class for the conilpotent-complete subcategory gives
+the relative version of Theorem~\ref{thm:A-infinity-2} over
+$\mathcal M_{g,n}$. Without that vanishing, the fixed-curve adjunction
+does not imply a family-wise adjunction.
 
-\emph{Sharpened obstruction for (b) (nodal factorization-gluing).} What
-Mok~\cite{Mok25} supplies and what it does not. The log-FM
-compactification $\FM_n(X \!\mid\! D)$ of
-Definition~\ref{def:log-fm-compactification} is a fixed-curve object:
-$(X,D)$ is kept fixed and the only boundary components are the FM
-collision divisors $D^{\mathrm{FM}}_{ij}$ and the puncture-collision
-divisors $D^{\mathrm{punc}}_{i,\alpha}$ (see
-Remark~\ref{rem:log-fm-fixed-vs-relative}). Mok's established machinery
--- smoothness + normal-crossings boundary
-\cite[Theorem~3.3.1]{Mok25}, flatness of the universal degeneration
-$W \to B$ \cite[Theorem~5.2.3]{Mok25}, and the degeneration formula
-\cite[Corollary~5.3.4]{Mok25} expressing the special fibre as a
-subdivision of products
-$\prod_{v \in V(S_\rho)} \FM_{I_v}(Y_v \!\mid\! D_v)$ -- governs the
-boundary geometry of the relative log-FM space
-$\FM_n(\mathcal{C}/\overline{\mathcal{M}}_{g,n})$ at each node of the
-universal stable curve. What Mok25 does \emph{not} inscribe is the
-induced chain-level behaviour of a factorization sheaf
-$\mathcal{F} \in \Fact(\mathcal{C})$ satisfying (H1)+(H2)+(H3) under
-the degeneration: specifically, the claim that the factorization nearby-cycle functor
-$\Psi_{D_{\Delta}}$ along the boundary divisor
-$D_{\Delta} \subset \overline{\mathcal{M}}_{g,n}$ of the $\Delta$-clutching
-identifies $\mathcal{F}\!\mid_{D_{\Delta}}$ with the chiral sewing
-$\mathcal{F}(C')\otimes_{\mathcal{F}(\widehat{D}_p)} \mathcal{F}(C'')$
-along the formal disk $\widehat{D}_p$ at the node. Let
-$\jmath_\Delta: D_{\Delta} \hookrightarrow \overline{\mathcal{M}}_{g,n}$
-be the $\Delta$-boundary inclusion, $\pi_{\log}:
-\FM_n(\mathcal{C}/\overline{\mathcal{M}}_{g,n}) \to
-\overline{\mathcal{M}}_{g,n}$ the relative log-FM structure morphism, and
-$\Psi_\Delta$ factorization nearby cycles in the Beilinson--Drinfeld sense.
-The nodal-sewing natural transformation
+Let $D_\Delta\subset\overline{\mathcal M}_{g,n}$ be a boundary divisor
+with normalisation $\widetilde C=C'\sqcup C''$ and formal node
+$\widehat D_p$. Mok's logarithmic Fulton--MacPherson geometry
+\cite[Theorem~3.3.1, Theorem~5.2.3, Corollary~5.3.4]{Mok25} supplies
+the normal-crossings and degeneration space on which nodal sewing is
+formulated. The chain-level factorization statement is the separate
+nearby-cycle comparison
 \[
- \beta_{\mathrm{nodal}}:\;
- \Psi_\Delta\,\bigl(\pi_{\log}\bigr)_*\mathcal{F}
- \;\Longrightarrow\;
- \bigl(\pi_{\log}\bigr)_{*,D_{\Delta}}
- \!\bigl(\mathcal{F}(C')\otimes_{\mathcal{F}(\widehat{D}_p)}\mathcal{F}(C'')\bigr)
+\beta_{\mathrm{nodal}}:\;
+\Psi_\Delta(\pi_{\log})_{*}\mathcal F
+\Longrightarrow
+(\pi_{\log})_{*,D_\Delta}
+\bigl(\mathcal F(C')\otimes_{\mathcal F(\widehat D_p)}
+\mathcal F(C'')\bigr),
 \]
-is the comparison between the factorization nearby-cycle limit along the
-boundary divisor and the chiral-sewn factorization algebra on the
-normalised nodal curve $\widetilde{C} = C' \sqcup C''$. Its failure on
-the full (H1)+(H2)+(H3) subcategory is measured by a class
+where $\Psi_\Delta$ denotes Beilinson--Drinfeld factorization nearby
+cycles. Its obstruction class is
 \[
- [\beta_{\mathrm{nodal}}]
- \;\in\;
- \mathrm{Ext}^{1}_{\Shv^{\DR}(D_{\Delta})}
- \bigl(\Psi_\Delta\,\bigl(\pi_{\log}\bigr)_*\mathcal{F},\;
- \bigl(\pi_{\log}\bigr)_{*,D_{\Delta}}
- \!\bigl(\mathcal{F}(C')\otimes_{\mathcal{F}(\widehat{D}_p)}\mathcal{F}(C'')\bigr)\bigr).
+[\beta_{\mathrm{nodal}}]\in
+\mathrm{Ext}^{1}_{\Shv^{\DR}(D_\Delta)}
+\bigl(\Psi_\Delta(\pi_{\log})_{*}\mathcal F,\;
+(\pi_{\log})_{*,D_\Delta}
+\bigl(\mathcal F(C')\otimes_{\mathcal F(\widehat D_p)}
+\mathcal F(C'')\bigr)\bigr).
 \]
-Universal vanishing of $[\beta_{\mathrm{nodal}}]$ on the conilpotent-complete
-(H1)+(H2)+(H3) subcategory, at every irreducible boundary divisor
-$D_{\Delta}$ of the stable-graph stratification, is the programme-internal
-inscription target for ingredient~(b). We record three structural
-observations that sharpen the honest load-bearing claim:
-\begin{enumerate}[label=\textup{(b\arabic*)}]
-\item \emph{Mok25 is geometric, not factorization-sheaf-valued.} The
-degeneration formula \cite[Corollary~5.3.4]{Mok25} expresses the
-special fibre of the log-FM degeneration geometrically as a subdivision
-of products $\prod_v \FM_{I_v}(Y_v \!\mid\! D_v)$, but does not, as
-established, transport a factorization sheaf $\mathcal{F}$ through the
-subdivision with (H1)+(H2)+(H3) preservation. Mok25 supplies the
-boundary-space geometry; the factorization-sheaf nearby-cycle functor
-$\Psi_\Delta$ is a separate Beilinson--Drinfeld construction
-\cite[Ch.~3]{BD04}, not established at chain level in Vol~I.
-\item \emph{Chain-level vs cohomological.} Mok's degeneration formula
-yields a decomposition on the level of the special fibre; transport to a
-chain-level properad-equivalence across the boundary stratum requires
-preservation of the Mittag-Leffler condition of
-Remark~\ref{rem:A-inf-2-ml-step-2} across the sewing. (H1)+(H2)+(H3) are
-proved to be preserved across nodal sewing only in the class-G locus
-(free chiral algebras: Heisenberg, lattice at generic rank; preservation
-is direct) and the class-L locus (affine Kac--Moody at generic non-critical
-level: Beilinson--Drinfeld chiral sewing preserves the factorization
-structure; the finite-dim-graded hypothesis (H3) is satisfied on the
-Koszul locus). For class-M (Virasoro, principal $\mathcal{W}_N$) the
-sewing-level preservation of (H3) is an independent frontier item
- (Vol~II \texttt{universal\_celestial\_holography.tex} and the MC5 chain-level
-class-M weight-completed inscription propagate here; the raw direct-sum
-class-M sewing behaviour is scope-restricted).
-\item \emph{Fixed-curve versus relative log-FM.} Mok25's log-FM space
-is established for a FIXED pointed curve $(X,D)$
-(cf.~Remark~\ref{rem:log-fm-fixed-vs-relative}). The curve-degeneration
-strata -- the FACTORISATION analogues of nodal sewing across
-$\overline{\mathcal{M}}_{g,n}$ -- appear only in the RELATIVE log-FM
-compactification over the universal stable family. This relative
-construction is referenced by Mok25 as a companion object but is not the
-content of \cite[Theorem~3.3.1]{Mok25}; it is the load-bearing missing
-ingredient. The geometry of the special fibre at a $\Delta$-boundary
-point is controlled by Mok's Theorem~5.2.3 + Corollary~5.3.4 applied to
-the local formal-disk presentation of the node, but the global
-factorization-sheaf gluing requires, in addition, a Ran-level relative
-compatibility that is not in Mok25.
-\end{enumerate}
-An honest reading: (b) reduces to vanishing of
-$[\beta_{\mathrm{nodal}}]$; Mok25 supplies the boundary geometry over
-which the class is defined, and the factorization nearby-cycle
-functor $\Psi_\Delta$ plus the chiral sewing $\otimes_{\mathcal{F}(\widehat{D}_p)}$
-define the target of the comparison. Vanishing is unconditional on
-class-G; conditional (Beilinson--Drinfeld chiral sewing + generic
-non-critical level) on class-L; and the scope-restricted weight-completed
-class-M behaviour inherits from Vol~II. The clutching-uniqueness
-statements used in Theorem~D at $g \geq 2$ (Vol~I
-\texttt{clutching\_uniqueness\_platonic.tex}) are a downstream consequence once
-$[\beta_{\mathrm{nodal}}]$ is cleared, on the families where the logarithmic
-kernel inscription of
-\S\ref{subsec:log-clutching-kernels}
-(Definition~\ref{def:log-clutching-kernel},
-Theorem~\ref{thm:log-clutching-degeneration},
-Construction~\ref{constr:log-fm-chain-map}) is available at chain level.
+Vanishing of $[\beta_{\mathrm{nodal}}]$ at every boundary divisor is
+the extra condition for the Deligne--Mumford extension.
 
-\emph{Single-preprint-pillar registration.} Both
-$[\alpha_{\mathrm{BC}}]$-style ingredients cite GR17 + Francis2012
-(peer-reviewed) and Mok25 (2025 arXiv preprint, v2 May 2025, not yet
-venue-published). The programme-wide load on Mok25 as a single pillar
-for boundary factorization-gluing across three volumes is a scope item,
-not a soundness item: should Mok25 be revised, the effect localises to
-the degeneration-geometry layer (Theorem~3.3.1 + Cor~5.3.4) and does not
-propagate upward into the algebraic/operadic backbone of
-Theorem~$A^{\infty,2}$, which remains unconditional on the fixed smooth
-curve $X$.
+The two obstructions are independent. The class
+$[\alpha_{\mathrm{BC}}]$ controls horizontal transport over smooth
+families; $[\beta_{\mathrm{nodal}}]$ controls sewing at nodal
+degenerations. Class~$\mathsf G$ satisfies the nodal condition by
+direct free-field sewing. Class~$\mathsf L$ satisfies it under the
+generic non-critical Beilinson--Drinfeld chiral sewing hypotheses.
+For class~$\mathsf M$, only the weight-completed sewing lane is in
+scope; the raw direct-sum class~$\mathsf M$ boundary statement is not
+a consequence of Theorem~\ref{thm:A-infinity-2}.
+
+The $R$-twisted descent of Lemma~\ref{lem:R-twisted-descent} is a
+fixed-curve configuration-space theorem. Its Fulton--MacPherson
+collision extension is hypothesis~\ref{R3} of that lemma; it is still
+not a Deligne--Mumford boundary theorem. Downstream uses of
+clutching uniqueness or of $\mathrm{obs}_g=\kappa\lambda_g$ over the
+compactified base must import the vanishings
+$[\alpha_{\mathrm{BC}}]=0$ and $[\beta_{\mathrm{nodal}}]=0$ in the
+family under consideration.
 \end{remark}
 
-\begin{remark}[Alternative proof lanes: which alternative belongs to
-Theorem~A and which to Theorem~C]
+\begin{remark}[Alternative proof lanes: Theorem~A versus Theorem~C]
 \label{rem:A-inf-2-ptvv-scope}
 \index{Theorem A!alternative proof lanes}
 \index{PTVV!belongs to Theorem C, not Theorem A}
-Two alternative proof lanes for Theorem~A have been proposed in the
-programme metadata. The first; Lurie~HA~\S5.5 factorization algebras
-via little-discs plus factorization envelopes; is a genuine independent
-verification of the pole-free-point restriction~\ref{A2-ii}
-(it reproduces the classical LV12 Koszul pair without invoking GR17 or
-Francis's star-product) and is installed as verification source~(b) in
-Remark~\ref{rem:ainf2-hziv}. The second; the $\PTVV$ shifted-symplectic
-construction; belongs to \emph{Theorem~C}, not Theorem~A: the PTVV lane
+Lurie~HA~\S5.5 gives an independent route to the pole-free-point
+restriction~\ref{A2-ii}: factorization algebras via little discs and
+factorization envelopes reproduce the classical LV12 Koszul pair
+without using GR17 or Francis's star-product. The $\PTVV$
+shifted-symplectic construction belongs to \emph{Theorem~C}, not
+Theorem~A: the PTVV lane
 constructs the $(-(3g-3))$-shifted symplectic structure on
 $\RMap(\overline{\cM}_g,BG_\cA)$ as a genuinely disjoint path from the
 fiber-center Koszul identification, relevant to the characteristic-datum
 C0/C1/C2 clauses and to the $\lambda_g$-free formulation of Theorem~D. It
 does not provide an alternative proof of the bar--cobar adjunction or
-of the reconstruction counit $\Omegach_X\Bbarch_X(\cA)\to\cA$. Any programme
-metadata claiming a `PTVV alternative for Theorem~A' conflates the
-Theorem~C lane with Theorem~A and should be read as referring to the
-Theorem~C inscription (see \texttt{thm:C-PTVV-alternative} in the Theorem~C
-refinements chapter). The honest set of alternatives for Theorem~A is the
-three verification sources of Remark~\ref{rem:ainf2-hziv}: Francis's
-chiral Deligne conjecture, Lurie~HA~\S5.5, and Hackney--Robertson
-model-independence.
+of the reconstruction counit $\Omegach_X\Bbarch_X(\cA)\to\cA$.
+Theorem~A is checked by Francis's chiral Deligne theorem,
+Lurie~HA~\S5.5, and Hackney--Robertson model-independence; the PTVV
+input is reserved for the Theorem~C shifted-symplectic lane.
 \end{remark}
 
 \begin{corollary}[Classical Theorem~A from Theorem~$A^{\infty,2}$;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{cor:classical-A-from-A-infinity-2}
 \index{Theorem A!descent from A-infinity-2}
 The geometric bar--cobar adjunction
@@ -1440,29 +1345,41 @@ Corollary~\ref{cor:eight-cor-R-descent} of the unified Koszul
 reflection (equivalently, of
 Theorem~\ref{thm:A-infinity-2}\ref{A2-iii}).
 
-\begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent, unitary $R$;
-\ClaimStatusProvedHere]
+\begin{lemma}[$R$-matrix-twisted $\Sigma_n$-descent, unitary quantum $R$;
+\ClaimStatusConditional]
 \label{lem:R-twisted-descent}
 \index{R-matrix!Sigma-descent}
 \index{descent!R-twisted}
-Let $\cA$ be an $\Eone$-chiral algebra with classical $R$-matrix
-$R(z) \in \End(\cA \otimes \cA)((z))$ satisfying
+Let $\cA$ be an $\Eone$-chiral algebra with a meromorphic unitary
+quantum $R$-matrix
+$R(z) \in \operatorname{Aut}(\cA \otimes \cA)((z))$ satisfying
 \begin{enumerate}[label=\textup{(R\arabic*)}]
-\item \label{R1} the classical Yang--Baxter equation
+\item \label{R1} the quantum Yang--Baxter equation
 $R_{12}(z_{12})\,R_{13}(z_{13})\,R_{23}(z_{23})
 =R_{23}(z_{23})\,R_{13}(z_{13})\,R_{12}(z_{12})$ on
 $\{z_1,z_2,z_3\}$-triples; and
 \item \label{R2} \emph{unitarity}: $R(z)\,R^{op}(-z)=\id_{\cA\otimes\cA}$
 on the formal punctured disc, where $R^{op}(w):=\tau\cdot R(w)\cdot\tau$ is
 the swap-conjugate.
+\item \label{R3} \emph{logarithmic collision extension}: the
+KZ/Cherednik connection with monodromy $R$ is regular singular along
+the Fulton--MacPherson boundary divisors, and its nearby cycles along
+each collision divisor identify with the chiral collision product used
+in the ordered bar differential of
+Convention~\ref{conv:A-infinity-2-ordered-bar-signs}.
 \end{enumerate}
+Assume moreover that this meromorphic family is realized as the
+monodromy of a flat KZ/Cherednik-type connection on
+$\Conf^{\ord}_n(X)$ for each~$n$.
 Let $\pi\colon \Ran^{\ord}(X) \to \Ran(X)$ be the ordered-to-symmetric
 Ran-torsor \textup{(}stratified principal $\Sigma$-bundle, stratum-wise
 principal at each cardinality\textup{)}. Then there exists a
-canonical $\Sigma_n$-equivariant local system $L_R$ on
-$\Ran^{\ord}(X)_{=n}$ whose monodromy along an elementary
-transposition across the diagonal $z_i = z_{i+1}$ is $R(z_i - z_{i+1})$,
-and for every $n\geq 0$:
+canonical $\Sigma_n$-equivariant local system $L_R$ on the open stratum
+$\Conf^{\ord}_n(X)$ whose monodromy along an elementary transposition
+across the diagonal $z_i = z_{i+1}$ is $R(z_i - z_{i+1})$. Under
+\textup{\ref{R3}}, $L_R$ has a nearby-cycle extension to
+$\Ran^{\ord}(X)_{=n}$ compatible with the ordered bar differential, and
+for every $n\geq 0$:
 \[
 \barB^{\Sigma}_n(\cA)
 \;\simeq\;
@@ -1482,9 +1399,10 @@ $\cA^{\otimes n}$ at that point (a factorization-trivial line-system),
 and to each elementary transposition $s_i$ crossing the diagonal
 $\Delta_{i,i+1}$ the monodromy $R(z_i - z_{i+1}) \cdot \tau_{i,i+1}$,
 where $\tau$ is the tensor swap and $R$ acts on the $i,i+1$ factors.
-Hypothesis~\ref{R1} (classical Yang--Baxter) produces a representation of
-the pure braid group $PB_n(X)$ on the local system of fibres $\cA^{\otimes n}$
-by standard monodromy of the Cherednik-type connection. Passage from the
+Hypothesis~\ref{R1}, together with the flat KZ/Cherednik realization,
+produces a representation of
+the pure braid group $PB_n(X)$ on the local system of fibres
+$\cA^{\otimes n}$. Passage from the
 pure braid representation to a representation of the full symmetric group
 $\Sigma_n$ is \emph{not} a formal consequence of \ref{R1} alone: it requires
 the relation $s_i^{2}=1$ at each elementary transposition, which at the
@@ -1493,11 +1411,12 @@ Hypothesis~\ref{R2} (unitarity). Together, \ref{R1}+\ref{R2} ensure the pure
 braid representation descends along $PB_n\twoheadrightarrow\Sigma_n$; this
 produces $L_R$ as a $\Sigma_n$-equivariant local system.
 
-Extension to the lower strata of $\Ran^{\ord}(X)_{=n}$ is by nearby
-cycles along the diagonal strata (Mok25 log FM nearby-cycle
-compatibility, Chapter~\ref{chap:config-spaces}): each boundary
-stratum carries the nearby-cycle limit of $L_R$, and the degeneration
-$R(z-w) \to \tau$ as $z \to w$ ensures the limit exists.
+Extension to the lower strata of $\Ran^{\ord}(X)_{=n}$ is not a
+consequence of \ref{R1}+\ref{R2}. It is exactly hypothesis~\ref{R3}:
+nearby cycles along the diagonal strata carry the limit of $L_R$, and
+the limiting connection identifies the collision face with the chiral
+product appearing in the ordered bar differential. In the pole-free
+case this limit is the ordinary swap $\tau$.
 
 \emph{Step 2: Descent at top stratum.}
 On the open stratum $\Conf^{\ord}_n(X)$, the map $\pi$ is a principal
@@ -1516,17 +1435,16 @@ transforms under $\Sigma_n$ by the sign character twisted by
 monodromy precisely encoded by $R(z_i - z_j)$ acting on the fibres).
 
 \emph{Step 3: Extension across the diagonal strata.}
-The Mok25 log Fulton--MacPherson compactification $\overline{\Conf}_n(X)$
-handles the diagonal strata: nearby cycles of $L_R$ extend continuously
-(from Step~1), and the bar differential preserves stratum depth, so
-descent at each stratum is reduced to descent at the top stratum at a
-nearby point. The degeneration $R \to \tau$ at the exceptional divisor
-$D$ matches the classical $\Sigma_n$-coinvariants in the pole-free
-limit. Specifically, the face map at the boundary component
-$\Delta_{i,i+1}$ factors through the nearby-cycles functor
-$\psi_{\Delta_{i,i+1}}$; the compatibility
-$\psi_{\Delta_{i,i+1}}(L_R) = L_{R}\bigl|_{\tau_{i,i+1}=\id}$ encodes
-the twisted descent.
+The log Fulton--MacPherson compactification
+$\overline{\Conf}_n(X)$ supplies the fixed-curve normal-crossings
+boundary on which the nearby-cycle condition is formulated. By
+hypothesis~\ref{R3}, nearby cycles of $L_R$ along each collision face
+exist and identify the limiting monodromy with the chiral collision
+product. The ordered bar differential is a coderivation for
+deconcatenation and preserves stratum depth, so descent on a boundary
+stratum is the top-stratum descent applied to the nearby-cycle fibre.
+For the pole-free case the exceptional-divisor limit is $\tau$, and
+the formula reduces to ordinary $\Sigma_n$-coinvariants.
 
 \emph{Step 4: Pole-free specialisation.}
 For a chiral algebra with $R(z)=\tau$ identically (the pole-free or
@@ -1540,8 +1458,7 @@ twist, matching the identity of the symmetric bar as an E$_{\infty}$-chiral
 cocommutative coalgebra with nontrivial factorization structure.
 \end{proof}
 
-\begin{remark}[Scope of unitarity \textup{\ref{R2}}: which $R$-matrices
-the descent covers]
+\begin{remark}[Scope of \textup{\ref{R2}} and \textup{\ref{R3}}]
 \label{rem:R-descent-unitarity-scope}
 \index{R-matrix!unitarity scope}
 \index{descent!scope across families}
@@ -1555,16 +1472,19 @@ matches the Koszul-locus hypothesis). For elliptic $R$-matrices of
 Belavin/Felder type, unitarity is convention-dependent and must be
 checked per presentation. For chiral algebras with trivial
 $R$-matrix~$R(z)=\tau$ (Heisenberg, free fermions, lattice VOAs at
-generic rank), unitarity~\ref{R2} is automatic and~\ref{R1} is vacuous;
+generic rank), unitarity~\ref{R2} is immediate and~\ref{R1} is vacuous;
 Step~4 of the proof records this degeneration.
 
-The descent lemma is therefore unconditional on the chiral-quantum-group
-locus populated by rational Yangians and generic-$q$ trigonometric
-quantum affine algebras, which exhausts the concrete $\Eone$-chiral
-witnesses of the programme (cf.~\cite[\S3]{Drinfeld85},
-\cite[\S12.3]{ChariPressley1994}). Beyond this locus, any descent claim
-must either verify~\ref{R2} directly or supply an alternative
-symmetric-bar construction.
+Hypothesis~\ref{R3} is a separate fixed-curve boundary condition. For
+the rational KZ and trigonometric Cherednik connections it is the usual
+regular-singular logarithmic extension along the Fulton--MacPherson
+boundary; for elliptic and dynamical $R$-matrices it depends on the
+chosen compactification and dynamical-parameter convention. The open
+configuration-space descent uses only~\ref{R1}+\ref{R2}. The Ran-level
+symmetric bar formula uses~\ref{R3} as well. Beyond the rational and
+generic trigonometric loci, any descent claim must either prove
+\ref{R2}+\ref{R3} directly or supply a different symmetric-bar
+construction.
 \end{remark}
 
 \begin{remark}[Comparison with $\fg^{\Eone}_\cA$ versus $\fg^{\mathrm{mod}}_\cA$]
@@ -1589,10 +1509,9 @@ $\kappa(V_k(\fg))=\dim(\fg)(k+h^{\vee})/(2h^{\vee})$).
 \section{Downstream corollaries: 14 theorems}\label{sec:ainf2-downstream}
 %================================================================
 
-The following theorems, already established across the three volumes,
-are corollaries of the unified Koszul reflection
+The following theorems are corollaries of the unified Koszul reflection
 (Theorem~\ref{thm:koszul-reflection}) via its explicit
-properad-level form (Theorem~\ref{thm:A-infinity-2}). Each listing
+properadic-envelope form (Theorem~\ref{thm:A-infinity-2}). Each listing
 cites the primary statement and explains how it descends from the
 unified form.
 
@@ -1610,11 +1529,11 @@ Corollary~\ref{cor:classical-A-from-A-infinity-2}.
 \textup{Theorem~\ref{thm:bar-cobar-adjunction}}. Descent: first
 sentence of Theorem~\ref{thm:A-infinity-2} specialized to chain level
 via cohomological truncation.
-\item \label{D3} Geometric unit:
+\item \label{D3} Geometric counit:
 \textup{Theorem~\textup{\ref{thm:geom-unit}}}. Descent:
-\ref{A2-ii} of Theorem~\ref{thm:A-infinity-2} applied to the unit of
-the adjunction, which is $\id \to \Omegach_X \Bbarch_X$ and at a
-point becomes the identity morphism on $\cA$.
+\ref{A2-ii} of Theorem~\ref{thm:A-infinity-2} applied to the counit of
+the adjunction, which is $\Omegach_X\Bbarch_X \to \id$ and at a
+point is the classical bar-cobar counit on~$\cA$.
 \item \label{D4} Bar--cobar--Verdier intertwining:
 \textup{Theorem~\textup{\ref{thm:bar-cobar-verdier}}}. Descent:
 Verdier-biequivariance of $\Bbarch_X$ at $(\infty,2)$-level, which
@@ -1684,12 +1603,15 @@ homotopy-categorical truncation of Theorem~$A^{\infty,2}$; this is the
 chain-level theorem whose Vallette-ambient proof we flagged as
 mis-scoped. The correct proof is via
 Theorem~\ref{thm:A-infinity-2} restricted to chain level.
-\item \label{D13} $d^2=0$ via Verdier on the universal family:
+\item \label{D13} $d^2=0$ on the fixed-curve Ran tower:
 \textup{Theorem~\textup{\ref{thm:d-squared-zero-universal}}}. Descent:
 the cobar differential on $\barB(\cA)$ squares to zero because it is
 the image of the simplicial differential on the Ran tower under
 $\Omegach_X$; the $(\infty,2)$-equivalence makes this identification
-canonical.
+canonical on a fixed smooth curve. The relative-family version over
+$\overline{\mathcal M}_{g,n}$ additionally requires the vanishings
+$[\alpha_{\mathrm{BC}}]=0$ and $[\beta_{\mathrm{nodal}}]=0$ of
+Remark~\ref{rem:A-infinity-2-modular-family-scope}.
 \item \label{D14} Theta-MC existence at all orders:
 \textup{Theorem~\textup{\ref{thm:recursive-existence}}}. Descent:
 $\theta_\cA$ is the counit of the $(\infty,2)$-adjoint
@@ -1736,107 +1658,93 @@ $K_X^2\simeq\mathrm{id}$.
 \end{remark}
 
 %================================================================
-\section{Healings}\label{sec:ainf2-heals}
+\section{Ambient corrections}\label{sec:ainf2-heals}
 %================================================================
 
-We record explicitly how Theorem~$A^{\infty,2}$ closes the six
-failure-modes enumerated in \S Setup.
+Theorem~$A^{\infty,2}$ uses the following ambient replacements.
 
-\begin{remark}[Resolution: split and both forms proven]
+\begin{remark}[Symmetric-bar and ordered-bar forms]
 \label{rem:ainf2-heal-69}
 
-We noted earlier that the proof of
-Theorem~\ref{thm:e1-chiral-koszul-duality} in
-\texttt{chiral\_koszul\_pairs.tex:5960--6011} invokes
+The proof of
+Theorem~\ref{thm:e1-chiral-koszul-duality} invokes
 \cite[Theorem~11.4.1]{LV12} in the ambient $(\Dmod(X),\otimes^{\ch})$,
 which is a chiral pseudo-tensor structure without genuine bifunctor
-or unit -- invalidating the direct transfer.
-The resolution via Theorem~$A^{\infty,2}$ is to:
+or unit. The factorization form has two parts:
 \begin{itemize}
-\item[\textsc{Form-A}:] Re-situate the \emph{symmetric-bar} statement
+\item[\textsc{Symmetric}:] The \emph{symmetric-bar} statement lies
 in $\Fact(X)$ under $\star$
 (Proposition~\ref{prop:fg-ambient-properties}), where the symmetric
 monoidal structure is a genuine bifunctor with a strict unit. The
 LV12 transfer is then valid at chain level, and the
 $(\infty,2)$-enhancement is Theorem~\ref{thm:A-infinity-2}.
-\item[\textsc{Form-B}:] Prove the \emph{ordered-bar} statement at full
-strength via \ref{A2-iii} of Theorem~\ref{thm:A-infinity-2}: the
+\item[\textsc{Ordered}:] The \emph{ordered-bar} statement is
+\ref{A2-iii} of Theorem~\ref{thm:A-infinity-2}: the
 ordered bar is the lift to $\Ran^{\ord}$ with $R$-twisted local system
-$L_R$, and descent to $\Ran$ recovers Form-A up to the canonical
+$L_R$, and descent to $\Ran$ recovers the symmetric form up to the canonical
 twist.
 \end{itemize}
-Both forms are proven. `E$_1$ primacy' stands unconditionally: the
+Both forms are proven on their stated hypotheses. The
 primitive object is $B^{\ord}(\cA)$ on $\Ran^{\ord}(X)$; the symmetric
 bar is the $L_R$-twisted $\Sigma_n$-coinvariant descent image.
 \end{remark}
 
-\begin{remark}[Resolution: correct unit functor]
+\begin{remark}[Correct unit functor]
 \label{rem:ainf2-heal-70}
 
-We noted earlier that
-\texttt{lem:operadic-koszul-transfer}, Step~2, invokes
-`a symmetric monoidal functor $k\text{-}\mathrm{Mod} \to \Dmod(X)$
-$M \mapsto M \otimes \mathbf{1}_{\mathcal{V}}$', but there is no
-strict unit object in $(\Dmod(X), \otimes^{\ch})$ -- the chiral unit is
+The operadic Koszul transfer uses a symmetric monoidal functor
+$k\text{-}\mathrm{Mod} \to \Dmod(X)$,
+$M \mapsto M \otimes \mathbf{1}_{\mathcal{V}}$. There is no
+strict unit object in $(\Dmod(X), \otimes^{\ch})$; the chiral unit is
 a factorization structure, not a tensor unit.
-The resolution is structural: the correct ambient for this step is
+The correct ambient for this step is
 $\Fact(X)$ under $\star$, where the factorization unit
 (the constant factorization algebra on $\cO_X$) is the genuine unit.
 The symmetric monoidal inclusion
 $\Shv(\mathrm{pt}) \hookrightarrow \Fact(X)$, $M \mapsto M \otimes \mathbf{1}_{\Fact(X)}$,
 is the correct unit functor
-(\cite[Chapter~IV.5, \S2.2]{GR17}), and the transfer argument of
-\texttt{lem:operadic-koszul-transfer} applies verbatim once the
-ambient is corrected. Theorem~\ref{thm:A-infinity-2} systematises this
-correction.
+(\cite[Chapter~IV.5, \S2.2]{GR17}). The operadic transfer argument
+therefore applies in $\Fact(X)$, not in the chiral pseudo-tensor
+ambient.
 \end{remark}
 
-\begin{remark}[Resolution: $R$-twisted descent explicit]
+\begin{remark}[$R$-twisted descent]
 \label{rem:ainf2-heal-71}
 
-We noted earlier that
-\texttt{ex:heisenberg-e1-duality:5838--5848} admits the Heisenberg bar
-is already $\Sigma$-coinvariant, which prima facie contradicts the
-`ordered E$_1$' headline.
-The resolution is that Heisenberg has $R(z)=\tau$ (the trivial swap),
+The Heisenberg bar is already $\Sigma$-coinvariant. This is compatible
+with the ordered $E_1$ formulation because Heisenberg has
+$R(z)=\tau$ (the trivial swap),
 so by Lemma~\ref{lem:R-twisted-descent} Step~4 the $L_R$-twisted
 descent degenerates to ordinary $\Sigma_n$-coinvariants. Hence
 Heisenberg's ordered and symmetric bar coincide as a \emph{special case}
-of the general $R$-twisted descent, not as a contradiction. The
-`E$_1$ ordered' headline stands unconditionally once the descent lemma
-is established.
+of the general $R$-twisted descent.
 \end{remark}
 
-\begin{remark}[Resolution: Francis--Gaitsgory model structure
+\begin{remark}[Francis--Gaitsgory model structure
 replaces Vallette]
 \label{rem:ainf2-heal-72}
 
-We noted earlier that
-\texttt{thm:quillen-equivalence-chiral} in
-\texttt{bar\_cobar\_adjunction\_curved.tex:6301--6343} cites
+The chiral Quillen-equivalence statement cites
 \cite[Theorem~2.1]{Val16} `specialised to the chiral operad', but
 Val16 assumes the ambient is chain complexes over a field (projective
 model structure). Specialisation to a $\Dmod(X)$-enriched cooperad is
 not covered by Val16.
-The resolution is to cite the Francis--Gaitsgory--Rozenblyum model
+The correct reference is the Francis--Gaitsgory--Rozenblyum model
 structure on factorization coalgebras
 \cite[Chapter~IV.5, Theorem~3.1.2]{GR17} in place of Val16. The
 Quillen equivalence \textup{(D12)} of
 Corollary~\ref{cor:ainf2-downstream-list} descends from
 Theorem~$A^{\infty,2}$ along cohomological truncation to chain level;
-this is the correctly scoped statement. The relevant bibliographic
-update in \texttt{bar\_cobar\_adjunction\_curved.tex:6301--6343} is to
-replace the Val16 reference with \cite[Chapter~IV.5, Theorem~3.1.2]{GR17}.
+this is the correctly scoped statement.
 \end{remark}
 
-\begin{remark}[Resolution: Cousin resolution replaces naive SDR]
+\begin{remark}[Cousin resolution replaces naive SDR]
 \label{rem:ainf2-heal-73}
 
-We noted earlier that the HTT SDR contraction
-(\texttt{appendices/homotopy\_transfer.tex:68--172}) lifts a
-$k$-Mod splitting to $\Dmod(X)$ verbatim, but $\Dmod(X)$ has
+The HTT SDR contraction lifts a
+$k$-Mod splitting to $\Dmod(X)$ verbatim. The category $\Dmod(X)$ has
 nontrivial $\Ext^1$ and the direct-sum decomposition fails.
-The resolution is to replace the naive SDR with a Cousin / Koszul
+The replacement is a Cousin / Koszul
 fibrewise resolution: for a smooth curve $X$, the $\Dmod(X)$
 $t$-structure admits a Cousin-type resolution compatible with the
 diagonal stratification of $\Ran(X)$, and the SDR holds fibrewise at
@@ -1849,15 +1757,14 @@ equivalence is constructed directly via the universal property of free
 and cofree constructions in $\Fact(X)$.
 \end{remark}
 
-\begin{remark}[Resolution: finite-HH hypothesis weakened]
+\begin{remark}[Truncation-wise Hochschild finiteness]
 \label{rem:ainf2-heal-74}
 
-We noted earlier that
-\texttt{nilpotent\_completion.tex:115--144} hypothesises
+The nilpotent-completion argument hypothesises
 $\dim H^\bullet(\cA,\cA) < \infty$, which excludes Virasoro, Yangian,
 and critical-level affine KM (all of which have unbounded Hochschild
 cohomology).
-The resolution is truncation-wise finiteness with conformal-weight
+The usable hypothesis is truncation-wise finiteness with conformal-weight
 control: for any chiral algebra with positive-energy conformal
 weight grading
 $\cA = \bigoplus_{n\geq 0} \cA_n$ and finite-dimensional
@@ -1877,61 +1784,61 @@ pro-nilpotent or weight-completed one, not the naive direct-sum
 ambient.
 \end{remark}
 
-\begin{remark}[Resolution: correct cross-volume citation]
+\begin{remark}[Correct cross-volume citation]
 \label{rem:ainf2-heal-195}
 
-We noted earlier that \texttt{bar\_chain:198,730} in Vol~II cites
-`[Theorem~A]{Vol~I}' as the authority for bar--cobar, but the Vol~I
-Theorem~A is the ordered bar coassociative coalgebra statement,
-which is now known to have a FORM-A/FORM-B split. The
-citation drift is a cross-volume violation.
-The resolution is that Vol~II should cite
+Vol~II cites
+`[Theorem~A]{Vol~I}' as the authority for bar--cobar. The Vol~I
+Theorem~A is the ordered bar coassociative coalgebra statement with a
+fixed-curve factorization form and an $R$-twisted ordered form.
+The precise cross-volume reference is:
 Theorem~$A^{\infty,2}$ (this chapter,
 Theorem~\ref{thm:A-infinity-2}) for the factorization-properad
-$(\infty,2)$-adjoint equivalence and cite Theorem~A
+$(\infty,2)$-adjoint equivalence, and Theorem~A
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}) for the chain-level
-specialization at a marked point. Cross-volume grep and update is the
-final step; the label \texttt{thm:A-infinity-2} is globally unique
-(verified against all three volumes at inscription time).
+specialization at a marked point.
 \end{remark}
 
 %================================================================
 \section{Formal smoothness of chirally Koszul algebras}\label{sec:ainf2-formal-smoothness}
 %================================================================
 
-\begin{corollary}[Chiral Koszulness implies properad-level formal
-smoothness; \ClaimStatusProvedHere]
+\begin{corollary}[Chiral Koszulness implies properadic-envelope formal
+smoothness; \ClaimStatusConditional]
 \label{cor:chiral-KK-formal-smoothness}
 \index{formal smoothness!chiral Koszul implies}
 \index{Koszul Kontsevich!formal smoothness}
 Let $\cA$ be a chirally Koszul factorization algebra on $X$
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-pair}}).
-Then $\cA$ is formally smooth at properad level: for every nilpotent
+Then $\cA$ is formally smooth in the properadic envelope
+$\FactProp^{\aug}_{\langle\chirAss\rangle}(X)$: for every nilpotent
 extension $R \to R_0$ of dg algebras with $\ker$ square-zero and
 every $R_0$-valued point
 $\Spec R_0 \to \Fact^{\aug}(X)$ factoring through $\cA$, there exists
-an $R$-valued lift $\Spec R \to \FactProp^{\aug}(X)$ extending the
-$R_0$-valued point, unique up to contractible space of choices.
+an $R$-valued lift
+$\Spec R \to \FactProp^{\aug}_{\langle\chirAss\rangle}(X)$ extending
+the $R_0$-valued point, unique up to contractible space of choices.
 \end{corollary}
 
 \begin{proof}
 Formal smoothness of a factorization algebra is equivalent, by the
 $(\infty,2)$-adjoint equivalence of Theorem~\ref{thm:A-infinity-2}, to
 acyclicity of the cotangent complex of its bar coalgebra in
-$\CoFactProp^{\conil,\comp}(X)$. For a Koszul algebra, the bar
+$\CoFactProp^{\conil,\comp}_{\langle\chirAss\rangle}(X)$. For a
+Koszul algebra, the bar
 coalgebra is cofree (the generators are the desuspended augmentation
 ideal, and the differential is determined by the $\theta$-MC
 structure); cofree coalgebras have acyclic cotangent complexes
 (\cite[Proposition~11.2.4]{LV12}, transferred to $\Fact(X)$ via
 Proposition~\ref{prop:fg-ambient-properties}). The extension to
-properad level uses Theorem~\ref{thm:A-infinity-2}\ref{A2-i} and
+properadic-envelope level uses Theorem~\ref{thm:A-infinity-2}\ref{A2-i} and
 Hackney--Robertson: cofree coproperads over conilpotent-complete
 coproperads have acyclic cotangent complexes, with proof analogous
 to the operadic case, because the graph-wise structure of the
 cotangent complex decomposes along connected components of each
 graph at each $(n,m)$-valence level.
 Hence $\cA$ lifts along any square-zero extension, which is the
-definition of formal smoothness at properad level.
+definition of formal smoothness in the properadic envelope.
 \end{proof}
 
 \begin{remark}[Compatibility with the five-theorem architecture]
@@ -1953,10 +1860,9 @@ without changing the five-package theorem count.
 \section{Platonic obstructions: four named conjectures}\label{sec:ainf2-platonic-obstructions}
 %================================================================
 
-If a fully universal Koszul reflection on all of
-$\Alg^{\fact,\aug}_X$ (without~(H3)) cannot be reached in the present
-inscription, the obstruction is framed as a \emph{named open
-conjecture}. There are four.
+The fully universal Koszul reflection on all of
+$\Alg^{\fact,\aug}_X$ without~(H3) is governed by four named open
+conjectures.
 
 \begin{conjecture}[$\Pi 1$: Francis--Gaitsgory transfer]
 \label{conj:fg-transfer}
@@ -1964,9 +1870,11 @@ The $(\infty,1)$-categorical bar--cobar Quillen equivalence transfers
 from $\IndCoh(\Ran(X))$ to $\Alg^{\fact,\aug,\comp}_X$ and its
 coalgebra dual without modification.
 \end{conjecture}
-This is essentially proved (Francis~HA appendix; Lurie HA~\S5.5); the
-manuscript needs a named transfer proposition (the
-\texttt{prop:chiral-quillen-transfer} slot) to make the use explicit.
+Francis and Lurie supply the expected transfer theorem
+\textup{(}Francis~HA appendix; Lurie HA~\S5.5\textup{)}. This
+manuscript still needs a named transfer proposition
+\texttt{prop:chiral-quillen-transfer} before the conjecture can be
+used as a theorem.
 
 \begin{conjecture}[$\Pi 2$: $E_n$-bar--cobar at higher chiral
 dimension]
@@ -1986,8 +1894,7 @@ Lurie~HA~\S5.5.3 for the topological setting).
 Lagrangian transversality of $M_{\mathrm{comp}}$ at $[\cA]$ implies
 chiral Koszulness of $\cA$.
 \end{conjecture}
-Genuinely open; requires the chiral PTVV framework. Stated as a
-conjecture in the manuscript already (per Vol~III Strengthening~5).
+This requires the chiral PTVV shifted-symplectic construction.
 
 \begin{conjecture}[$\Pi 4$: Unbounded-rank Koszul reflection]
 \label{conj:unbounded-rank-koszul-reflection}
@@ -2000,25 +1907,20 @@ condition on the bar filtration.
 \end{conjecture}
 The hypothesis~(H3) is satisfied throughout the standard landscape
 (Heisenberg, Kac--Moody, Virasoro, $W_N$), so this obstruction is
-decorative for current applications. It marks the precise frontier
+inactive for the named standard-landscape applications. It marks the precise frontier
 between the Koszul reflection on
 $\Kosz^{+}(X)$ and the fully universal Koszul reflection on all of
 $\Alg^{\fact,\aug}_X$.
 
 %================================================================
-\section{Independent verification}\label{sec:ainf2-hziv}
+\section{Comparison with independent constructions}\label{sec:ainf2-hziv}
 %================================================================
 
-\begin{remark}[Independent-verification protocol]
+\begin{remark}[Independent constructions for Theorem~$A^{\infty,2}$]
 \label{rem:ainf2-hziv}
-\index{independent-verification!Theorem A-infinity-2}
-Per the independent-verification protocol
-(\S\ref{sec:hz-iv-protocol}), Theorem~\ref{thm:A-infinity-2} carries
-a \texttt{ClaimStatusProvedHere} status and therefore requires
-independent verification from sources disjoint from the derivation
-machinery.
-
-\emph{Derivation sources} (machinery used in this chapter's proof):
+\index{Theorem A-infinity-2!comparison constructions}
+The proof of Theorem~\ref{thm:A-infinity-2} uses the following
+machinery:
 \begin{itemize}
 \item Francis 2012 factorization $\star$-product and its universal
 adjunctions, \cite{Francis2012};
@@ -2032,18 +1934,17 @@ structure, \cite[Chapter~IV.5]{GR17};
 (used only for the descent lemma's extension across diagonal strata).
 \end{itemize}
 
-\emph{Independent verification sources} (machinery disjoint from the
-above):
+The same theorem is checked against three constructions whose
+load-bearing inputs are different:
 \begin{itemize}
 \item \textbf{(a) Francis 2012 chiral Deligne conjecture} \cite{Francis2012}
 for factorization algebras: the chiral Deligne conjecture provides a
 $(\infty,2)$-level chiral brace structure on the Hochschild cohomology
 of a factorization algebra, whose existence is equivalent to (and
 independently derivable from) the chiral bar--cobar equivalence at
-properad level. Use of Francis's chiral Deligne as a verification
-source avoids citing the $\star$-product adjunction directly; the
-verification is via the obstruction-class vanishing of the brace
-structure at conilpotent completeness.
+the properadic-envelope level. This route uses vanishing of the brace
+obstruction class at conilpotent completeness instead of the
+$\star$-product adjunction.
 \item \textbf{(b) Lurie HA Chapter~5.5 factorization algebras}
 \cite[\S5.5]{HA}: independent $(\infty,1)$-categorical construction
 of factorization algebras via the little-discs operad and
@@ -2054,51 +1955,23 @@ independent check of the pole-free restriction
 GR17 or Francis 2012's $\star$-product.
 \item \textbf{(c) Hackney--Robertson properad infinity-category}
 \cite{HackneyRobertson2019} model-independent of factorization: the
-$\infty$-properad framework was developed without factorization in
-mind; its independence from the factorization ambient provides a
-third-party verification of the properad-lift \ref{A2-i}. Any
-adjoint equivalence between the bar and cobar functors at operad
-level in $\Fact(X)$ extends canonically to properad level because
-Hackney--Robertson's model structure is transfer-stable along
-symmetric monoidal left adjoints (\cite[Proposition~6.3]{HackneyRobertson2019}).
+$\infty$-properad construction is independent of the factorization
+ambient. It supplies the model structure used in the properadic
+envelope of \ref{A2-i}; the transfer is restricted to the
+conilpotent-complete envelope generated by the operadic bar--cobar
+pair.
 \end{itemize}
-
-The three verification sources are disjoint from the derivation
-sources because:
-\begin{itemize}
-\item Francis~2012's chiral Deligne conjecture (verification~(a)) is a
-statement about the Hochschild brace structure, not about the
-$\star$-product adjunction; the two are logically independent.
-\item Lurie HA~\S5.5 (verification~(b)) constructs factorization
-algebras via little-discs and $\Ran$ without invoking the GR17
-sheaf-of-categories framework, which is the derivation ambient.
-\item Hackney--Robertson properads (verification~(c)) are
-model-category-theoretic and do not presuppose the factorization
-ambient; the verification goes `the other way round', lifting a
-factorization adjunction to a properad adjunction using a
-general-purpose transfer theorem.
-\end{itemize}
-
-These three verification paths are recorded in
-\texttt{compute/tests/test\_theorem\_A\_infinity\_2.py} via the
-\texttt{@independent\_verification} mechanism, with explicit
-source-separation witnesses and run-time enforcement of
-source disjointness (\texttt{IndependentVerificationError} raised at
-import time if overlap is detected).
 \end{remark}
 
-\begin{remark}[Independent-verification protocol for bar-cobar reconstruction]
+\begin{remark}[Independent constructions for bar-cobar reconstruction]
 \label{rem:ainf2-hziv-koszul-reflection}
-\index{independent-verification!bar-cobar reconstruction}
+\index{bar-cobar reconstruction!comparison constructions}
 The unified bar-cobar reconstruction theorem
-Theorem~\ref{thm:koszul-reflection} carries
-\texttt{ClaimStatusProvedHere} jointly with
-Theorem~\ref{thm:A-infinity-2}. Its derivation sources are the four
-absorbed corollaries (twisting morphism + counit qi + unit weak
-equivalence + properad equivalence) plus the cited primary literature
-(Francis--Gaitsgory, Vallette, Positselski, Hinich); its independent
-verification sources are the three listed in
-Remark~\ref{rem:ainf2-hziv} above, each of which provides a
+Theorem~\ref{thm:koszul-reflection} uses the four absorbed
+corollaries: twisting morphism, counit quasi-isomorphism, coalgebra-side
+unit weak equivalence, and properad equivalence. The same reconstruction
+is tested against the three constructions listed in
+Remark~\ref{rem:ainf2-hziv}, each of which provides a
 bar-cobar reconstruction check that does not route through the
 $\star$-product adjunction alone. Specifically:
 \begin{itemize}
@@ -2107,14 +1980,11 @@ check of the reconstruction counit via the brace algebra structure on
 the derived endomorphisms.
 \item Lurie HA~\S5.5 little-discs construction provides a topological
 check of the $E_1$-input bar-cobar comparison via
-factorization homology of the bar coalgebra.
-\item Hackney--Robertson model-independent properad framework provides
+the factorization envelope of the $E_1$ algebra.
+\item Hackney--Robertson model-independent properad construction provides
 a transfer-level check that the reconstruction comparison persists across the
 operad-to-properad lift.
 \end{itemize}
-The verification records are installed jointly with those for
-Theorem~\ref{thm:A-infinity-2} in
-\texttt{compute/tests/test\_theorem\_A\_infinity\_2.py}.
 \end{remark}
 
 %================================================================
@@ -2122,7 +1992,7 @@ Theorem~\ref{thm:A-infinity-2} in
 %================================================================
 
 One adjunction, one reconstruction counit, one Verdier-dualized
-duality functor. The eight prior parallel statements unfold as eight
+duality functor. The eight theorem facets unfold as eight
 categorical directions through that single structure; the fourteen
 downstream corollaries unfold as fourteen pullbacks of
 Theorem~$A^{\infty,2}$ along restriction, cohomological truncation, or
@@ -2131,7 +2001,7 @@ $\Pi_1$--$\Pi_4$ name the four extensions --
 factorization-ambient transfer, higher chiral dimension,
 Lagrangian--Koszul converse, unbounded-rank non-(H3) regime -- that
 the Koszul reflection does not yet close. Theorem~A enters the
-five-theorem scaffold of Volume~I as the algebraic structure on the
+five-theorem spine of Volume~I as the algebraic structure on the
 KZ functor of Chapter~\ref{chap:climax-platonic}: the pullback
 identity $\bar\partial = \KZ^{*}(\nabla_{\Arnold})$ is the bar
 differential read through the Koszul reflection.

@@ -1,4 +1,4 @@
-\chapter{Bar-cobar adjunction and curved Koszul duality}
+\chapter{Bar-cobar adjunction and curved CDG comparison}
 \label{chap:bar-cobar-adjunction}
 
 % Local macros (provide-command idempotent; required for cross-chapter
@@ -14,20 +14,29 @@ chiral coalgebras on $\Ran(X)$
 (Theorem~\ref{thm:bar-cobar-adjunction}). The universal twisting
 morphism
 $\tau_\cA \in \MC\bigl(\operatorname{Conv}(\barBch(\cA), \cA)\bigr)$
-is the genus-$0$ binary component of the MC element
-$\Theta_\cA \in \MC(\gAmod)$; the degree-$2$ projection of
-$\Theta_\cA$ is the modular characteristic $\kappa(\cA)$.
-Theorem~B (Theorem~\ref{thm:bar-cobar-inversion-qi}) says
-that~$\tau_\cA$ is \emph{acyclic}: the twisted tensor
-product $\cA \otimes_{\tau_\cA} \barBch(\cA)$ has trivial
-cohomology, so the counit
+is the genus-$0$ symmetric projection of the ordered MC class
+$\Theta_\cA^{\Eone}\in\MC({\gAmod}^{\Eone})$. In the ordered
+convolution dg Lie algebra it satisfies
+\[
+D\Theta_\cA^{\Eone}
++\tfrac{1}{2}[\Theta_\cA^{\Eone},\Theta_\cA^{\Eone}]=0,
+\]
+and applying $\operatorname{av}\colon{\gAmod}^{\Eone}\to\gAmod$
+gives the modular equation
+\[
+D\Theta_\cA+\tfrac{1}{2}[\Theta_\cA,\Theta_\cA]=0.
+\]
+The degree-$2$ symmetric projection of $\Theta_\cA$ is the modular
+characteristic $\kappa(\cA)$.
+Theorem~B (Theorem~\ref{thm:bar-cobar-inversion-qi}) says that
+$\tau_\cA$ is \emph{acyclic} on the Koszul locus: the twisted tensor
+product $\cA \otimes_{\tau_\cA} \barBch(\cA)$ has trivial cohomology,
+so the counit
 $\psi \colon \Omegach(\barBch(\cA)) \xrightarrow{\;\sim\;} \cA$
-is a quasi-isomorphism on the Koszul locus.
-The two theorems are a single statement: every algebraic identity
-in chiral Koszul duality is a component of the MC equation
-$\partial(\tau_\cA) + \tau_\cA \star \tau_\cA = 0$
-in the convolution algebra, and inversion is the acyclicity
-of this MC element.
+is a quasi-isomorphism. The MC equation supplies the identities; the
+acyclicity of the induced twisting morphism supplies reconstruction.
+Neither assertion identifies bar-cobar inversion with Verdier duality
+or with the formation of the Koszul dual algebra~$\cA^!$.
 
 Not every chiral
 algebra is quadratic: Virasoro, $\mathcal{W}_N$, and
@@ -39,13 +48,17 @@ The strict convolution dg Lie algebra
 $\Convstr(\barBch(\cA), \cA)$ is replaced by its homotopy-invariant
 envelope $\Convinf(\barBch(\cA), \cA)$, and the twisting morphism
 mediating the adjunction becomes a Maurer--Cartan element in this
-larger algebra. Bar-cobar preserves quasi-isomorphisms because it is a
-quantum $\Linf$ functor whose Maurer--Cartan moduli are invariant
-under gauge equivalence.
+larger algebra. On the curved locus a bar-cobar comparison is an
+ordinary chain quasi-isomorphism only after a curvature-killing
+MC twist or after passing to the square-zero total differential.
+Without such a square-zero model the comparison is read in the
+second-kind coderived category: the cone is required to be coacyclic
+and the equivalence is detected on comodules over the completed
+CDG-coalgebra.
 
 The precise content of Theorem~A
 (Theorem~\ref{thm:bar-cobar-adjunction}) is this: there is an
-adjunction of functors
+adjunction on the homotopy/derived chiral categories
 $\Omegach \dashv \barBch$
 between chiral algebras and conilpotent chiral coalgebras on
 $\Ran(X)$, with the unit
@@ -56,15 +69,17 @@ both compatible with Verdier intertwining:
 $\mathbb{D}_{\Ran}\, \barBch(\cA) \simeq \cA^!_\infty$ (factorization \emph{algebra}, not coalgebra).
 The unified statement is the \emph{Koszul reflection}
 \textup{(}Theorem~\ref{thm:koszul-reflection}\textup{)}:
-the pair $K = \barBch$, $K^{-1} = \Omegach$ is a symmetric-monoidal
-adjoint equivalence with $K^2 \simeq \mathrm{id}$ on the Koszul
-locus \textup{(}clause~\ref{KR-ii}\textup{)}, and a coderived
-involution $K^{2}\simeq\mathrm{id}$ in
-$D^{\co}(\barBch\text{-}\mathrm{CoFact})$ off it
-\textup{(}clause~\ref{KR-iii}\textup{)}. The strict adjunction of
-this chapter is the Koszul reflection's $K\dashv K^{-1}$ unit; the
-inversion clause that the second half of the chapter proves is its
-$K^{2}\simeq\mathrm{id}$ involutivity restricted to chain-level qi.
+on the Koszul locus the algebra-side counit
+$\psi_\cA$ and the coalgebra-side unit $\eta_\cC$ are
+quasi-isomorphisms \textup{(}clause~\ref{KR-ii}\textup{)}; off that
+locus the corresponding cones are required to vanish only after the
+completed coderived localization
+$D^{\co}(\barBch\text{-}\mathrm{CoFact})$
+\textup{(}clause~\ref{KR-iii}\textup{)}. The notation $K$ in the
+reflection theorem denotes the induced Verdier/Koszul reflection on
+the localized category; it is not a reversal of the canonical
+adjunction direction $\Omegach\dashv\barBch$, and it is not a raw
+chain-level assertion that $K^2=\mathrm{id}$ on curved CDG objects.
 The adjunction is mediated by the canonical twisting morphism
 $\tau \colon \barBch(\cA) \to \cA$, which is a Maurer--Cartan
 element in the strict convolution dg~Lie algebra
@@ -76,32 +91,54 @@ quasi-isomorphic replacement
 quadratic locus the adjunction is classical; off it, the
 curvature $\mu_0 \in A^2$ forces $\mu_1^2(a) =
 \mu_2(\mu_0, a) - \mu_2(a, \mu_0) = [\mu_0, a]_{\mu_2}$
-(Theorem~\ref{thm:curvature-central}), so the bar differential
-no longer squares to zero internally; the total bar differential
-$d_{\barB}^2 = 0$ is preserved, but the internal differential
-$\mu_1$ is obstructed by the curvature commutator. The four-regime
+(Theorem~\ref{thm:curvature-central}), so the raw fiberwise
+differential is a CDG differential rather than an ordinary
+differential. A square-zero differential is present only in the
+uncurved/gauge-trivial case or in the corrected total model
+$\Dg{g}^{\,2}=0$; otherwise the bar object is used through its
+coderived comodule category. The four-regime
 hierarchy organizes the successively stronger completions needed:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Quadratic} ($d_0^{\,2} = 0$): strict $d_{\mathrm{bar}}^2 = 0$,
  no completion needed (Heisenberg, free fields, lattice VOAs);
 \item \emph{Curved-central} ($d_0^{\,2} \neq 0$,
- $\mu_0 \in Z(A)$): completed bar-cobar, geometric curvature
+ $\mu_0 \in Z(A)$): completed bar-cobar with chain-level recovery
+ only after curvature cancellation or in the square-zero total
+ model; the raw fiberwise operator has geometric curvature
  $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ (affine algebras, Virasoro);
 \item \emph{Filtered-complete} (non-quadratic OPE):
- $I$-adic completion required, work in coderived category
+ $I$-adic completion required, work in the weight-completed
+ coderived category
  ($\Walg_N$ at finite~$N$);
 \item \emph{Programmatic} (infinite generators):
- MC4 completion (proved; Theorem~\ref{thm:completed-bar-cobar-strong}).
+ MC4 completion with the same square-zero/coderived distinction
+ (proved; Theorem~\ref{thm:completed-bar-cobar-strong}).
 \end{enumerate}
 This hierarchy is codified in Convention~\ref{conv:regime-tags} and
 governs every theorem statement in this chapter and the next.
 
-The chapter has two movements. The first
+The fixed-curve assertions in this chapter have a separate
+relative-family gate. Theorem~$A^{\infty,2}$
+(Theorem~\ref{thm:A-infinity-2}) proves the conilpotent-complete
+fixed-curve adjunction. Transport over a smooth family requires the
+base-change obstruction
+$[\alpha_{\mathrm{BC}}]$ of
+Remark~\ref{rem:A-infinity-2-modular-family-scope} to vanish; extension
+over the Deligne--Mumford boundary requires the nodal sewing
+obstruction $[\beta_{\mathrm{nodal}}]$ of the same remark to vanish.
+The logarithmic collision-extension hypothesis
+Lemma~\ref{lem:R-twisted-descent}\textup{\ref{R3}} is only the
+fixed-curve Fulton--MacPherson condition needed for ordered-to-symmetric
+descent. It does not replace either relative base change or nodal
+sewing.
+
+The first part
 (\S\ref{sec:curved-koszul-i-adic}--\S\ref{sec:reconstruction-duality-casimir})
 develops curved $\Ainf$~structures, $I$-adic completion, and the
 regime hierarchy (quadratic, curved-central, filtered-complete,
 programmatic) that determines which completions are needed. The
-second (\S\ref{sec:filtered-vs-curved-comprehensive}--\S\ref{sec:cech-hca})
+second part
+(\S\ref{sec:filtered-vs-curved-comprehensive}--\S\ref{sec:cech-hca})
 proves inversion, establishes the categorical logarithm reading of
 bar-cobar ($\barBch = \log$, $\Omegach = \exp$), and lifts the
 whole story to the $\Ran$-space via the \v{C}ech resolution.
@@ -176,12 +213,11 @@ The five main theorems~A--H are invariants of the symmetric bar
 and therefore survive averaging. The Yangian $R$-matrix, the
 Drinfeld--Kohno comparison, and the full braided monoidal category
 of line operators live in the ordered bar and are invisible to the
-symmetric theory. The reader should regard this chapter as
-developing the $\operatorname{av}$-image of the ordered theory:
-every construction here has a richer ordered ancestor in
-Chapter~\ref{ch:ordered-associative-chiral-kd}, and the passage
-from ordered to symmetric is the unique source of information loss
-\textup{(}Theorem~\ref{thm:e1-primacy}\textup{)}.
+symmetric theory. This chapter develops the $\operatorname{av}$-image
+of the ordered theory: every construction here has a richer ordered
+ancestor in Chapter~\ref{ch:ordered-associative-chiral-kd}, and the
+passage from ordered to symmetric is the unique source of information
+loss \textup{(}Theorem~\ref{thm:e1-primacy}\textup{)}.
 \end{remark}
 
 \section{Curved Koszul duality and I-adic completion}
@@ -223,6 +259,7 @@ requires increasingly refined completions. Three regimes emerge:
 
 \begin{definition}[Curved \texorpdfstring{$A_\infty$}{A-infinity} algebra]
 \label{def:curved-ainfty}
+\label{ex:curved-ainfty-complete}
 A \emph{curved $A_\infty$ algebra} is a graded vector space $A$ with operations:
 \begin{equation}
 \{\mu_n: A^{\otimes n} \to A\}_{n \geq 0}
@@ -248,9 +285,15 @@ ordinary $A_\infty$~algebra.
 \begin{remark}[Curvature, backreaction, and \texorpdfstring{$d^2$}{d\textasciicircum 2}]\label{rem:curvature-backreaction-terminology}
 \begin{enumerate}[label=(\roman*)]
 \item The \emph{curvature} is $m_0 := \mu_0(1) \in A^2$.
-\item $\mu_1^2(a) = \mu_2(m_0, a) - \mu_2(a, m_0)$: the total bar differential always satisfies $d_{\mathrm{bar}}^2 = 0$; curvature manifests in the \emph{internal} $A_\infty$ structure.
+\item $\mu_1^2(a) = \mu_2(m_0, a) - \mu_2(a, m_0)$: the
+ square-zero assertion belongs to the corrected total bar
+ differential or to a curvature-killed model. The raw curved
+ CDG differential has square controlled by its curvature.
 \item In physics, \emph{backreaction} is the same phenomenon: the BRST operator $Q = \mu_1$ satisfies $Q^2 \neq 0$, with the obstruction measured by $m_0$.
-\item A curved $A_\infty$ algebra is \emph{strictifiable} iff $m_0$ is central (Theorem~\ref{thm:curvature-central}) and the curvature class is gauge-trivial in the completed filtration.
+\item Centrality of $m_0$ gives $\mu_1^2=0$ for the internal operator
+ (Theorem~\ref{thm:curvature-central}); it does not uncurve the
+ algebra. A square-zero uncurved model is obtained by MC twisting only
+ when the completed curvature class is gauge-trivial.
 \end{enumerate}
 \end{remark}
 
@@ -268,7 +311,9 @@ where $\lambda = \det \mathbb{E}$ is the Hodge line bundle on the moduli space. 
 \[
  d_{\mathrm{fib}}^2 = \kappa(\mathcal{A}) \cdot \omega_g,
 \]
-while the total bar differential still satisfies $d_{\mathrm{bar}}^2 = 0$. This gives the gravity dictionary:
+while the period-corrected total differential satisfies
+$\Dg{g}^{\,2}=0$ in the square-zero total model. This gives the
+gravity dictionary:
 \begin{enumerate}[label=(\roman*)]
 \item $m_0^{(g)} \neq 0$ if and only if $\kappa(\mathcal{A}) \neq 0$, equivalently if and only if $d_{\mathrm{fib}}^2 \neq 0$. This is the precise sense in which gravity is turned on. The scalar curvature term $m_0^{(g)}$ is the cosmological-constant term of the genus-$g$ curved $A_\infty$ model. This statement is fiberwise. For the standard families $m_0^{(g)}$ is central, so the internal commutator formula $m_1^2 = [m_0,-]$ may vanish even when $d_{\mathrm{fib}}^2 \neq 0$.
 \item $\kappa(\mathcal{A})$ is the coefficient of the Hodge class in $d_{\mathrm{fib}}^2$, hence the strength of the genus-$g$ gravitational backreaction. In that dictionary, $\kappa(\mathcal{A})$ is the Newton coupling. It is family-specific: $\kappa(\widehat{\mathfrak{g}}_k) = (k+h^\vee)\dim\mathfrak{g}/(2h^\vee)$ for affine Kac--Moody, $\kappa(\mathrm{Vir}_c) = c/2$ for Virasoro, and $\kappa(\mathcal{B}^k) = c/6$ for Bershadsky--Polyakov.
@@ -283,7 +328,15 @@ For a curved $A_\infty$ algebra $(A, \mu_0, \mu_1, \mu_2, \ldots)$, the curvatur
 \item $\mu_1(\mu_0) = 0$ \quad (the curvature is a $\mu_1$-cycle);
 \item $\mu_1^2 = [\mu_0, -]_{\mu_2}$, where $[\mu_0, a]_{\mu_2} := \mu_2(\mu_0, a) - \mu_2(a, \mu_0)$ is the inner derivation.
 \end{enumerate}
-In particular, $\mu_1$ fails to be a differential precisely when $\mu_0$ is \emph{not} central with respect to $\mu_2$. For every standard chiral algebra (Heisenberg, Kac--Moody, Virasoro, W-algebras, lattice), the genus-$g$ curvature is $\mu_0 = \kappa(\cA)\cdot\omega_g\cdot\mathbf{1}$: a scalar multiple of the vacuum vector, which is central in the binary bar operation $\mu_2$, so $[\mu_0, -]_{\mu_2} = 0$ automatically. The curvature therefore enters not through $\mu_2$ but through higher operations ($\mu_3, \mu_4, \ldots$) and through the fiberwise Hodge bundle structure on $\overline{\cM}_{g,n}$.
+In particular, $\mu_1$ fails to be a differential precisely when $\mu_0$
+is \emph{not} central with respect to $\mu_2$. For the standard
+positive-energy families considered here, the genus-$g$ curvature is
+$\mu_0 = \kappa(\cA)\cdot\omega_g\cdot\mathbf{1}$: a scalar multiple of
+the vacuum vector, which is central in the binary bar operation
+$\mu_2$, so $[\mu_0, -]_{\mu_2} = 0$ automatically. The curvature
+therefore enters not through $\mu_2$ but through higher operations
+($\mu_3, \mu_4, \ldots$) and through the fiberwise Hodge bundle
+structure on $\overline{\cM}_{g,n}$.
 \end{theorem}
 
 \begin{proof}
@@ -347,8 +400,8 @@ bar differential on each finite quotient $\cA_{\le N}$ is a
 \emph{finite} sum (Lemma~\ref{lem:degree-cutoff}). Virasoro admits a
 completed same-family shadow used throughout Parts~\ref{part:characteristic-datum}--\ref{part:standard-landscape};
 $W_\infty$ is handled by the strong completion-tower theorem
-(Theorem~\ref{thm:completed-bar-cobar-strong}), which upgrades the
-former MC4 conjecture to a theorem with sharp hypotheses.
+(Theorem~\ref{thm:completed-bar-cobar-strong}), which supplies sharp
+completion hypotheses.
 \end{theorem}
 
 \begin{proof}[Illustration: Virasoro (condition~(1))]
@@ -484,12 +537,15 @@ This is the regime of Theorem~B (bar-cobar inversion on the Koszul locus).
 \smallskip\noindent
 \emph{Genus $g \geq 1$ with $\kappa(\cA) \neq 0$
 \textup{(}$h \neq 0$\textup{)}.}
-The square-zero total comparison differential
-$d_{\mathrm{total}} = \Dg{g}$ has trivial ordinary cohomology
-\textup{(}Proposition~\ref{prop:curved-bar-acyclicity}\textup{)},
-whereas the raw higher-genus fiber operator satisfies
-$\dfib^{\,2} = \mcurv{g} \cdot \mathrm{id}$ and therefore lives only on
-the coderived bar-object surface. The
+The raw higher-genus fiber operator satisfies
+$\dfib^{\,2} = \mcurv{g} \cdot \mathrm{id}$ and therefore lives on the
+curved CDG surface. Proposition~\ref{prop:curved-bar-acyclicity}
+concerns the second-kind curved totalization: the relevant cone is
+coacyclic after the curved coalgebra and its completed exact ambient
+have been fixed. It does not assert that the period-corrected
+square-zero complex $(\barB^{(g)}(\cA),\Dg{g})$ has zero ordinary
+cohomology; that ordinary cohomology is the corrected genus-$g$
+invariant. The
 coderived--contraderived equivalence
 (Theorem~\ref{thm:positselski-chiral-proved}) is nontrivial.
 The Positselski equivalence
@@ -507,10 +563,12 @@ bar-cobar duality and
 coderived and contraderived categories.
 
 \smallskip\noindent
-\emph{Summary.} The bar complex of every positive-energy Koszul
-chiral algebra satisfies (H1)--(H3). At genus $0$, this yields
+\emph{Summary.} Each finite-window bar complex of a positive-energy
+Koszul chiral algebra satisfies (H1)--(H3); class-$\mathsf M$ raw
+direct sums acquire this surface only after weight completion. At
+genus $0$, the uncurved conilpotent finite-type lane yields
 $D^{\mathrm{co}} \simeq D$ (ordinary derived category). At genus
-$g \geq 1$, it yields
+$g \geq 1$, the completed curved lane yields
 $D^{\mathrm{co}} \simeq D^{\mathrm{ctr}}$ (comodule--contramodule
 correspondence). The three models of the genus-$g$ bar complex
 (flat associated graded in $D$; corrected holomorphic in $D$; curved
@@ -631,17 +689,31 @@ A coalgebra $C$ is \emph{conilpotent} if for each $c \in C$, there exists $N$ su
 where $\Delta^{(N)}$ is the $N$-fold iterated comultiplication.
 \end{definition}
 
-\begin{theorem}[Conilpotency ensures convergence; \ClaimStatusProvedHere]
+\begin{theorem}[Conilpotency controls algebraic convergence; \ClaimStatusProvedHere]
 \label{thm:conilpotency-convergence}
 \label{thm:conilpotency-bar}
 \label{thm:koszul-conilpotent}
 \index{bar construction!convergence}
-If $\bar{B}(A)$ is conilpotent, then:
+Let $C=\bar{B}(A)$. Suppose either that $C$ is an uncurved
+conilpotent dg coalgebra in the discrete finite-type lane, or that
+the curved data have first been replaced by a square-zero total model
+whose finite output windows receive only finitely many input
+contributions. Then:
 \begin{enumerate}
-\item The bar-cobar composition $\Omega \circ \bar{B}(A) \to A$ converges without completion
-\item All infinite sums in the cobar differential terminate after finitely many steps
-\item The Koszul duality $A \leftrightarrow A^!$ is well-defined without taking $\hat{A}$
+\item all algebraic sums in the cobar differential terminate on each
+ element;
+\item the bar-cobar composition $\Omega \circ \bar{B}(A) \to A$ is
+ defined without completion in the discrete finite-type lane;
+\item The bar, cobar, and Verdier-dual objects entering Koszul
+ duality are defined without taking $\hat{A}$ only on that
+ finite-type square-zero surface.
 \end{enumerate}
+For class-$\mathsf M$ raw direct-sum presentations, finite bar-length
+conilpotence gives the first conclusion on each finite word but does
+not supply the finite-type Positselski surface, the infinite OPE mode
+sums, or the completed bar-cobar comparison. Those require the
+weight-completed tower of
+Theorem~\ref{thm:chiral-positselski-weight-completed}.
 \end{theorem}
 
 \begin{proof}
@@ -674,7 +746,8 @@ each factor $c_i$ individually; conilpotency of each~$c_i$ ensures each summand 
 finite. The outer sum has exactly $k$ terms. Therefore $d_\Omega(\xi)$ is a finite
 sum in $T(s^{-1}\bar{C})$, and no completion or topology is needed.
 
-\emph{Step 2 ($d_\Omega^2 = 0$).}
+\emph{Step 2 ($d_\Omega^2 = 0$ in the uncurved or square-zero total
+case).}
 Since $d_\Omega$ is a derivation of the free algebra $T(s^{-1}\bar{C})$, the
 Leibniz rule gives $d_\Omega^2(x \otimes y) = d_\Omega^2(x) \otimes y + x \otimes
 d_\Omega^2(y)$, so it suffices to verify $d_\Omega^2 = 0$ on generators
@@ -736,10 +809,16 @@ d_\Omega(c_N)$ holds. The identity $d_{\hat{\Omega}}^2 = 0$ follows from
 $d_\Omega^2 = 0$ at each finite level (Step~2), since a compatible system of
 zeros has zero inverse limit.
 
-This proves all three conclusions: the cobar differential terminates (1--2), the
-bar-cobar composition converges without completion in the conilpotent case~(3), and
-Koszul duality $A \leftrightarrow A^!$ is well-defined via the direct (uncompleted)
-bar-cobar adjunction.
+This proves all three conclusions in the stated finite-type
+square-zero ambient: the cobar differential terminates on each element,
+the bar-cobar composition is defined without completion, and the
+objects used in Koszul duality are defined via the direct
+(uncompleted) bar-cobar adjunction. It proves only algebraic
+bar-length conilpotence for a raw class-$\mathsf M$ direct sum. The
+topological comparison for class~$\mathsf M$ is a separate completed
+statement: the finite-window tower must satisfy the continuous
+Mittag--Leffler hypotheses before the coderived/comodule-detected
+comparison is available.
 \end{proof}
 
 \begin{example}[Heisenberg: conilpotent]
@@ -776,10 +855,8 @@ appears in the central terms of
 $[L_m,L_{-m}]$ and in the higher harmonic corrections of the
 genus-$g$ curved differential. Hence the raw direct-sum presentation
 is not the finite-type pro-conilpotent Positselski surface; the
-weight-completed/pro object is required. The historical label of this
-example is retained for cross-references, but the corrected obstruction
-is finite-type completion, not deconcatenation nonconilpotency of
-$L_0$.
+weight-completed/pro object is required. The obstruction is
+finite-type completion, not deconcatenation nonconilpotency of~$L_0$.
 \end{example}
 
 \subsection{Examples: computing Koszul duals with completion}
@@ -880,16 +957,16 @@ $\exp(-c/(4z^{2}))$. Expanding the exponential yields
 \eqref{eq:virasoro-r-matrix-closed}.
 \end{proof}
 
-\begin{remark}[Multi-path verification]
+\begin{remark}[Independent checks]
 \label{rem:virasoro-r-matrix-paths}
 The closed form
-$R(z) = z^{2h}\,\exp(-c/(4z^{2}))$ is verified by $91$ tests in
+$R(z) = z^{2h}\,\exp(-c/(4z^{2}))$ is checked by $91$ tests in
 \texttt{compute/lib/theorem\_virasoro\_spectral\_r\_matrix\_engine.py},
 including:
 \begin{itemize}
 \item direct OPE mode computation;
 \item path-ordered exponential numerical integration;
-\item series coefficient verification at $c = 1, 13, 25, 26$;
+\item series coefficient checks at $c = 1, 13, 25, 26$;
 \item comparison with the BPZ connection on conformal blocks;
 \item bosonic parity (only even $1/z$ powers).
 \end{itemize}
@@ -905,9 +982,11 @@ The Virasoro example exposes the shape of the general completion
 problem: finite-type truncations $W_N$ lie in the proved Koszul
 regime, and the challenge is to assemble these finite-stage
 quasi-isomorphisms into a completed quasi-isomorphism for the full
-infinite-type algebra. The obstacle is purely analytic (convergence
-of the inverse system), and it admits a clean algebraic resolution
-once the correct filtration axiom is identified.
+infinite-type algebra in the square-zero total model, or into a
+coacyclic-cone comparison in the curved CDG ambient. The obstacle is
+analytic (convergence of the inverse system) together with the choice
+of square-zero versus coderived ambient, and it admits a clean
+algebraic resolution once the correct filtration axiom is identified.
 
 \begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion (proved)]
 \label{ex:winfty-completion-frontier}
@@ -922,9 +1001,10 @@ the strong filtration axiom
 $\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$
 makes the inverse-limit differential continuous and the
 Mittag--Leffler condition automatic, so the completed bar-cobar
-round-trip is a quasi-isomorphism.
+round-trip is a quasi-isomorphism in the square-zero total model and
+a coacyclic-cone equivalence in the curved CDG ambient.
 
-The remaining example-specific tasks are:
+The H-level comparison requires:
 \begin{enumerate}
 \item identify the separated complete H-level/factorization target whose finite quotients recover $W_N$;
 \item verify the exact residue identities of Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
@@ -1017,7 +1097,7 @@ morphism at stage~$N$. The quasi-isomorphism assertions below are
 ordinary chain assertions only for the square-zero total differential
 model. In the genuinely curved CDG model, the same finite-stage
 construction gives a coacyclic-cone statement after the second-kind
-coacyclicity hypotheses have been verified. Then:
+coacyclicity hypotheses are satisfied. Then:
 \begin{enumerate}
 \item \emph{Completed coalgebra.}
  The completed bar construction
@@ -1064,12 +1144,16 @@ coacyclicity hypotheses have been verified. Then:
  \widehat\Omega^{\mathrm{ch}}(C)\bigr)$
  is a quasi-isomorphism when the completed total differential squares
  to zero; in a curved CDG ambient the corresponding assertion is that
- its cone is coacyclic in the verified second-kind category.
+ its cone is coacyclic in the specified second-kind category.
 \item \emph{Completed Koszul duality.}
- Completed bar and completed cobar are quasi-inverse
- equivalences on the full subcategory of strong completion
- towers whose finite quotients lie in the theorematic
- regime. The completed twisting morphism
+ In the square-zero total model, completed bar and completed cobar
+ are quasi-inverse equivalences on the full subcategory of strong
+ completion towers whose finite quotients lie in the theorematic
+ regime. In the genuinely curved CDG ambient, the same sentence means
+ that the completed algebra-side counit and coalgebra-side unit have
+ coacyclic cones in the specified second-kind coderived category; it
+ is not a raw chain-level inverse statement. The completed twisting
+ morphism
  $\widehat\tau = \varprojlim_N \tau_N$ is a Maurer--Cartan
  element in the completed convolution algebra
  $\widehat{\operatorname{Conv}} :=
@@ -1156,7 +1240,7 @@ Mittag--Leffler. Hence $\widehat\epsilon$ is a quasi-isomorphism in
 the square-zero total model. For a curved CDG realization replace this
 last sentence by: the completed cone is coacyclic after the
 second-kind coacyclicity hypotheses of
-Proposition~\ref{prop:curved-bar-acyclicity} are verified.
+Proposition~\ref{prop:curved-bar-acyclicity} hold.
 
 \emph{Step~4: unit on the coalgebra side.}
 By the same quotientwise argument: the quotient of $\widehat\eta$ modulo
@@ -1303,7 +1387,9 @@ bar-cobar regime. Assume:
 \item each transition map $C_{N+1} \to C_N$ is a morphism of complexes;
 \item for every cohomological degree~$m$, the inverse system
  $\{H^m(C_N)\}_N$ satisfies the Mittag--Leffler condition; and
-\item the finite-stage bar-cobar quasi-isomorphisms
+\item the finite-stage bar-cobar quasi-isomorphisms in the
+ square-zero total model, respectively coacyclic-cone equivalences in
+ the curved CDG model,
  $\epsilon_N \colon \Omega(C_N) \xrightarrow{\sim} \cA_{\le N}$ are
  compatible with the tower maps.
 \end{enumerate}
@@ -1319,8 +1405,9 @@ Then:
  \widehat{\epsilon}\colon \Omega(\widehat{C}) \longrightarrow
  \varprojlim_N \cA_{\le N}
  \]
- is a quasi-isomorphism whenever the completed cobar differential is
- continuous.
+is a quasi-isomorphism whenever the completed cobar differential is
+continuous and square-zero; in the genuinely curved CDG ambient the
+same map has coacyclic cone in the specified second-kind category.
 \end{enumerate}
 Consequently, the remaining content of MC4 for a concrete tower is to
 verify continuity, pro-nilpotence, and the Mittag--Leffler/convergence
@@ -1342,12 +1429,15 @@ For the second claim, the maps $\epsilon_N$ assemble by
 Assumption~\textup{(3)} into a morphism of inverse systems. Passing to
 limits therefore gives a map
 $\widehat{\epsilon}\colon \Omega(\widehat{C}) \to \varprojlim_N \cA_{\le N}$.
-The finite-stage maps are quasi-isomorphisms, so after applying the
-first part to the bar complexes and the same Milnor argument to the
-compatible cobar tower, $\widehat{\epsilon}$ induces an isomorphism on
-cohomology. The continuity hypothesis ensures that the completed cobar
-differential is well defined, so $\widehat{\epsilon}$ is a
-quasi-isomorphism.
+The finite-stage maps are quasi-isomorphisms in the square-zero total
+model, so after applying the first part to the bar complexes and the
+same Milnor argument to the compatible cobar tower,
+$\widehat{\epsilon}$ induces an isomorphism on cohomology. The
+continuity and square-zero hypotheses ensure that the completed cobar
+differential is well defined as an ordinary differential, so
+$\widehat{\epsilon}$ is a quasi-isomorphism. In the curved CDG
+ambient this argument is applied to the completed cone and proves
+coacyclicity rather than ordinary acyclicity.
 \end{proof}
 
 % \label{rem:mc4-concrete-checklist} removed (echo of Proposition~\ref{prop:mc4-reduction-principle})
@@ -1373,7 +1463,9 @@ are isomorphisms for all $N \ge N(m)$. Then:
  \[
  \Omega(\widehat{C}) \xrightarrow{\sim} \varprojlim_N \cA_{\le N},
  \]
- provided the completed cobar differential is continuous.
+ provided the completed cobar differential is continuous and
+ square-zero; in the curved CDG ambient this is replaced by a
+ coacyclic-cone statement.
 \end{enumerate}
 Thus eventual stabilization of the finite-stage bar cohomology is a
 sufficient MC4 input.
@@ -1408,8 +1500,10 @@ completed quasi-isomorphism
 \[
 \Omega(\widehat{C}) \xrightarrow{\sim} \varprojlim_N \cA_{\le N},
 \]
-provided the completed cobar differential is continuous.
-Thus MC4 can be verified by eventual surjectivity on finite-dimensional
+provided the completed cobar differential is continuous and
+square-zero; in the curved CDG ambient this is replaced by a
+coacyclic-cone statement.
+Thus MC4 follows from eventual surjectivity on finite-dimensional
 weight slices; one does not need a priori eventual constancy of the full
 cohomology tower.
 \end{corollary}
@@ -1503,11 +1597,15 @@ canonical comparison map
 \[
 \Omega\bigl(\widehat{\bar B}(W_\infty)\bigr) \xrightarrow{\sim} W_\infty
 \]
-is a quasi-isomorphism. Thus the M-level completed bar-cobar package
-for $W_\infty$ reduces to compatible inverse-system dg structure and
-stabilization of the principal finite-type tower. The stronger H-level
-realization problem belongs to MC4; any physics-facing identification
-built on top of that realization is downstream at MC5. By
+is a quasi-isomorphism in the square-zero total model. In the
+genuinely curved CDG ambient, the same comparison has coacyclic cone
+in the completed second-kind category. Thus the M-level completed
+bar-cobar package for $W_\infty$ reduces to compatible inverse-system
+dg structure and stabilization of the principal finite-type tower,
+together with the square-zero or coacyclic-cone hypothesis appropriate
+to the chosen ambient. The stronger H-level realization problem
+belongs to MC4; any physics-facing identification built on top of that
+realization is downstream at MC5. By
 Corollary~\ref{cor:mc4-surjective-criterion}, the eventual-constancy
 hypothesis may be replaced by eventual surjectivity on finite-dimensional
 weight slices, and Proposition~\ref{prop:mc4-weight-cutoff} shows that
@@ -1525,6 +1623,8 @@ Proposition~\ref{prop:inverse-limit-differential-continuity} to the
 inverse-limit bar and cobar differentials. Applying
 Corollary~\ref{cor:mc4-degreewise-stabilization} to the tower
 $\{\bar B(W_N)\}_N$ yields the stated completed quasi-isomorphism.
+In the curved CDG ambient, the same inverse-limit argument applied to
+the completed cone yields the coacyclic-cone comparison.
 \end{proof}
 
 \begin{corollary}[Standard principal-stage cutoff for
@@ -1564,7 +1664,7 @@ Proposition~\ref{prop:mc4-weight-cutoff} applies.
 \label{rem:mc4-positive-vs-resonant}
 Proposition~\ref{prop:mc4-weight-cutoff} and
 Corollary~\ref{cor:winfty-weight-cutoff} show that positive towers
-(those carrying an honest positive weight grading preserved by the bar
+(those carrying a strict positive weight grading preserved by the bar
 differential) are \emph{unconditionally solved}:
 the weight-$w$ summand stabilizes at finite stage~$w$.
 This resolves the ``MC4$^+$'' sub-problem for
@@ -1667,7 +1767,8 @@ comparison map
 \[
 \Omega\bigl(\widehat{\bar B}(W_\infty)\bigr) \xrightarrow{\sim} W_\infty
 \]
-is a quasi-isomorphism.
+is a quasi-isomorphism in the square-zero total model, and a
+coacyclic-cone equivalence in the completed curved CDG ambient.
 Thus the standard principal-stage tower realizes the full
 standard-tower M-level completed bar-cobar package for $W_\infty$; the
 remaining problem is
@@ -1688,6 +1789,8 @@ Mittag--Leffler/stabilization input. Since
 $W_\infty = \varprojlim_N W_N$ by definition, applying
 Proposition~\ref{prop:mc4-reduction-principle} to the standard tower
 gives the stated quasi-isomorphism.
+In the curved CDG ambient, the same application gives the
+coacyclic-cone version.
 \end{proof}
 
 \begin{proposition}[Comparison with a completed target by compatible
@@ -1920,9 +2023,11 @@ closure; \ClaimStatusConditional]
 \label{cor:completion-closure-equivalence}
 \index{completion closure!homotopy equivalence}
 If one localizes strong completion towers and objects in $\Cstr$ by
-quotientwise quasi-isomorphisms, then
+quotientwise quasi-isomorphisms in the square-zero total model, and
+by proved coacyclic-cone equivalences in the genuinely curved CDG
+model, then
 \[
-\widehat{\bar B}^{\mathrm{ch}} \;\dashv\; \widehat\Omega^{\mathrm{ch}}
+\widehat\Omega^{\mathrm{ch}} \;\dashv\; \widehat{\bar B}^{\mathrm{ch}}
 \]
 induces an equivalence of homotopy categories. That is,
 Theorem~\textup{\ref{thm:completed-bar-cobar-strong}} gives quasi-inverse
@@ -1930,7 +2035,8 @@ functors on the localized categories.
 \end{corollary}
 
 \begin{proof}
-The counit and unit are quasi-isomorphisms by
+The algebra-side counit and coalgebra-side unit are quasi-isomorphisms,
+respectively coacyclic-cone equivalences in the curved CDG ambient, by
 Theorem~\ref{thm:completed-bar-cobar-strong}(3)--(4). Both pass to
 the localized categories.
 \end{proof}
@@ -1943,10 +2049,10 @@ $\operatorname{Hom}_{\mathrm{Alg}}(\Omegach(\cC), \cA)
 \cong \operatorname{Tw}(\cC, \cA)
 \cong \operatorname{Hom}_{\mathrm{Coalg}}(\cC, \barBch(\cA))$,
 following the Loday--Vallette convention~\textup{\cite{LV12}}.
-The displayed formula above and occasional later passages
-write $\barBch \dashv \Omegach$ or $B \dashv \Omega$;
-this denotes the same adjunction with the opposite notational
-convention (listing the right adjoint first).
+The displayed formula above and occasional later passages must not be
+read with the bar functor as the left adjoint. When a display lists
+the bar functor first, it is only listing the right adjoint before the
+left adjoint, not changing the adjunction.
 The mathematical content (unit
 $\eta \colon \cC \to \barBch(\Omegach(\cC))$, counit
 $\psi \colon \Omegach(\barBch(\cA)) \to \cA$) is
@@ -2044,13 +2150,18 @@ twisted algebra $\cA_\alpha$ is again a strong completion tower, and
 The twisted operations are
 \[
 \mu_n^\alpha(a_1,\dots,a_n)
-= \sum_{k \ge 0} \mu_{n+k}(\alpha^{\otimes k},a_1,\dots,a_n).
+=
+\sum_{i_0,\ldots,i_n \ge 0}
+\mu_{n+i_0+\cdots+i_n}
+(\alpha^{\otimes i_0},a_1,\alpha^{\otimes i_1},
+\ldots,a_n,\alpha^{\otimes i_n}).
 \]
-Since $\alpha \in F^1\cA$, each insertion raises filtration degree by at
-least one. Modulo $F^{N+1}$, only $k \le N$ can contribute. So the
-twist is quotientwise finite and continuous, preserves the strong
-completion-tower axioms, and
-Theorem~\ref{thm:completed-bar-cobar-strong} applies.
+Since $\alpha \in F^1\cA$, each inserted copy of~$\alpha$ raises
+filtration degree by at least one. Modulo $F^{N+1}$, only multiindices
+with $i_0+\cdots+i_n \le N$ can contribute. Thus the twist is
+quotientwise finite and continuous, preserves the strong
+completion-tower axioms, and Theorem~\ref{thm:completed-bar-cobar-strong}
+applies.
 \end{proof}
 
 \begin{theorem}[Uniform PBW bridge from MC1 to MC4; \ClaimStatusConditional]
@@ -2095,7 +2206,7 @@ automatically.
 The genuine example-specific residue for $\mathcal{W}_\infty$ and
 Yangian towers is now reduced to: \emph{verify coefficient stabilization
 on finite windows and identify the inverse-limit target}. For positive
-towers (weight-graded by an honest positive grading), the
+towers (weight-graded by a strict positive grading), the
 weight-cutoff criterion of Proposition~\ref{prop:mc4-weight-cutoff} makes
 this automatic. For towers with weight-zero resonance, the
 finite-resonance criterion of
@@ -2127,8 +2238,7 @@ $W$-tower. Equivalently:
  identifies the factorization-theoretic completion with the standard
  principal-stage completed M-level package.
 \end{enumerate}
-This is resolved by
-Theorem~\ref{thm:winfty-factorization-kd}: the factorization
+The construction is Theorem~\ref{thm:winfty-factorization-kd}: the factorization
 target is constructed via $\Einf$-sectorwise convergence at each
 finite stage, with the DS--KD intertwining
 (Theorem~\ref{thm:ds-koszul-intertwine}) providing the
@@ -2137,7 +2247,7 @@ finite-stage identifications and the Mittag--Leffler property
 the inverse limit.
 \end{proposition}
 
-\begin{remark}[Attack route for the
+\begin{remark}[Reduction route for the
 \texorpdfstring{$W_\infty$}{W_infty} factorization target]
 \label{rem:winfty-factorization-route}
 The reduction chain from
@@ -2808,12 +2918,12 @@ all descendant coefficients.
 All source-$2$ tuples lie in $\mathcal{I}_4^{\mathrm{Vir}}$ (stress-tensor action); the $(3,3)$ tuples with $u\le 3$ lie in $\mathcal{I}_4^{W_3}$ (stage-$3$ packet). Enumerating the remaining admissible tuples for $(3,3,4)$, $(3,4)$, and $(4,4)$ gives the displayed decomposition with cardinality $2+12+15=29$.
 \end{proof}
 
-\begin{computation}[Stage-\texorpdfstring{$4$}{4} seed set and residual packet verification]
-\label{comp:winfty-stage4-seed-verification}
-\index{MC4!W-infinity stage-4 verification}
+\begin{computation}[Stage-\texorpdfstring{$4$}{4} seed set and residual packet check]
+\label{comp:winfty-stage4-seed-check}
+\index{MC4!W-infinity stage-4 check}
 The seed set cardinalities and residual decomposition of
 Proposition~\ref{prop:winfty-ds-stage4-residual-packet} have been
-verified computationally
+checked computationally
 (\texttt{compute/\allowbreak lib/\allowbreak w4\_stage4\_coefficients.py},
 $74$~tests):
 \begin{itemize}
@@ -3255,7 +3365,8 @@ one has
 \]
 Equivalently, the principal stage-$4$ self-coupling
 $W^{(4)}(z)W^{(4)}(w)\to T(w)$ is not free data: its top-pole
-coefficient is universally fixed to $2$.
+coefficient is fixed to $2$ in the principal Drinfeld--Sokolov
+normalization.
 \end{corollary}
 
 \begin{proof}
@@ -3555,15 +3666,11 @@ full visible package required by
 Proposition~\ref{prop:winfty-stage4-visible-pairing-gap} holds.
 \end{definition}
 
-\begin{remark}[Historical path to the stage-\texorpdfstring{$4$}{4}
-four-channel reduction (now resolved)]
+\begin{remark}[Stage-\texorpdfstring{$4$}{4} four-channel reduction]
 \label{rem:winfty-stage4-four-channel-gap}
 The MC4 structural framework is proved
-(Theorem~\ref{thm:completed-bar-cobar-strong}). The
-following records the \emph{historical} reduction path for the
-stage-$4$ four-channel packet.
-Corollary~\ref{cor:winfty-stage4-residue-four-channel} was originally conditional
-on the additional H-level input of
+(Theorem~\ref{thm:completed-bar-cobar-strong}). The stage-$4$
+four-channel packet reduces to the H-level input of
 Definition~\ref{def:winfty-stage4-ward-normalized}. The
 quotient-system hypotheses of
 Corollary~\ref{cor:winfty-hlevel-comparison-criterion} and
@@ -3575,15 +3682,15 @@ Mixed-weight orthogonality is forced by the Virasoro Ward
 identity
 (Proposition~\ref{prop:winfty-stage4-visible-orthogonality}). The
 full six-entry block of
-Proposition~\ref{prop:winfty-mc4-frontier-package} is now
-unconditionally closed via $\mathcal{W}_N$ rigidity
+Proposition~\ref{prop:winfty-mc4-frontier-package} is closed by
+$\mathcal{W}_N$ rigidity
 (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) within the
 strong completion-tower framework
 (Theorem~\ref{thm:completed-bar-cobar-strong}).
-For the historical reduction path: by
+The reduction path is:
 Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, once the
-visible Virasoro Ward action was fixed the exact remaining input
-was Proposition~\ref{prop:winfty-stage4-visible-diagonal-normalization},
+visible Virasoro Ward action is fixed, has exact remaining input
+Proposition~\ref{prop:winfty-stage4-visible-diagonal-normalization},
 equivalently the single scalar identity
 \[
 \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
@@ -4031,9 +4138,9 @@ Drinfeld--Sokolov side.
 \textup{(i)}$\Rightarrow$\textup{(ii)}: the $\tfrac{5}{7}$-ratio from Corollary~\ref{cor:w4-ds-stage4-square-class-reduction} makes the transport square automatic once the $(3,3)$ primitive identity holds. \textup{(ii)}$\Rightarrow$\textup{(i)}: the same principal formula recovers the transport relation.
 \end{proof}
 
-\begin{proposition}[Exact local attack order for the stage-\texorpdfstring{$4$}{4}
+\begin{proposition}[Exact local reduction order for the stage-\texorpdfstring{$4$}{4}
 \texorpdfstring{$W_\infty$}{W_infty} packet; \ClaimStatusConditional]
-\label{prop:winfty-stage4-local-attack-order}
+\label{prop:winfty-stage4-local-reduction-order}
 Assume the hypotheses of
 Proposition~\ref{prop:winfty-mc4-frontier-package}. Assume further
 that the stage-$4$ quotient residue calculus on the visible generators
@@ -4073,7 +4180,7 @@ transport problem.
 \textup{(i)}: Corollary~\ref{cor:winfty-stage4-single-scalar-equivalent}. \textup{(ii)}: Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple} reduces to the primitive-plus-transport triple; Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive} closes it.
 \end{proof}
 
-\begin{remark}[Stage-4 Ward-inheritance: resolved]
+\begin{remark}[Stage-4 Ward inheritance from \texorpdfstring{$\mathcal W_4$}{W4} rigidity]
 The principal values are already explicit
 (Proposition~\ref{prop:w4-ds-ope-explicit}). The three stage-$4$
 identities (visible weight-$4$ normalization
@@ -4081,8 +4188,8 @@ identities (visible weight-$4$ normalization
 Ward inheritance
 (Proposition~\ref{prop:winfty-stage4-ward-inheritance}), and
 Borcherds transport
-(Proposition~\ref{prop:winfty-stage4-visible-borcherds-transport})) are
-all resolved via $\mathcal{W}_4$ rigidity
+(Proposition~\ref{prop:winfty-stage4-visible-borcherds-transport})) follow
+from $\mathcal{W}_4$ rigidity
 (Zamolodchikov--Fateev--Lukyanov): the visible quotient at stage~$4$
 is the $\mathcal{W}_4$ vertex algebra, uniquely determined by the
 central charge, so all OPE coefficients match the
@@ -4632,15 +4739,15 @@ and $\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}$, both determined by
 $A_5 = \mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)$.
 \end{proof}
 
-\begin{proposition}[Exact local attack order for the first stage-\texorpdfstring{$5$}{5}
+\begin{proposition}[Exact local reduction order for the first stage-\texorpdfstring{$5$}{5}
 higher-spin packet]
-\label{prop:winfty-stage5-local-attack-order}
+\label{prop:winfty-stage5-local-reduction-order}
 Assume the hypotheses of
 Corollary~\ref{rem:winfty-stage5-entry-transport}. Then the first
 stage-$5$ higher-spin problem separates into the following exact local
 order:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Entry step.} The attack begins with the two-channel entry
+\item \emph{Entry step.} The reduction begins with the two-channel entry
  packet \(\mathcal{J}_5^{\mathrm{entry}}\), first through the
  mixed-entry singleton \((3,4;5;0,2)\) and then through the
  self-return singleton \((5,5;4;0,6)\).
@@ -4659,7 +4766,7 @@ order:
  \]
  taken in pole order \(3\) then \(4\).
 \item \emph{Remaining mixed transport step.} After the target-$5$
- ladder, the remaining transport problem is attacked by fixed target
+ ladder, the remaining transport problem is reduced by fixed target
  in the order
  \[
  \mathcal{J}_5^{\mathrm{tr},5},\qquad
@@ -4684,7 +4791,7 @@ Proposition~\ref{prop:winfty-stage5-transport-cross-target-reduction}
 collapse the remaining target-$4$/target-$3$ transport ladders to one
 effective coefficient, and
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}
-identifies the effective independent local attack order there as the
+identifies the effective independent local reduction order there as the
 single target-$4$ singleton \((3,5;4;0,4)\), with every other stage-$5$
 higher-spin channel either zero or determined by it.
 \ClaimStatusConditional{}
@@ -5013,7 +5120,7 @@ $\mathcal{J}_5^{\mathrm{entry}}$. Equivalently, the singleton channel
 identities
 Propositions~\ref{prop:winfty-stage5-block-34}
 and~\ref{prop:winfty-stage5-block-55}
-both hold, in the attack order dictated by
+both hold, in the reduction order dictated by
 Proposition~\ref{rem:winfty-stage5-entry-mixed-self}.
 \end{proposition}
 
@@ -5034,7 +5141,7 @@ Propositions~\ref{prop:winfty-stage5-transport-target-3}
 --\ref{prop:winfty-stage5-transport-target-5}
 all hold. By
 Proposition~\ref{rem:winfty-stage5-transport-pole-profiles}, the
-natural local attack order is target~$5$, then target~$4$, then
+natural local reduction order is target~$5$, then target~$4$, then
 target~$3$.
 \end{proposition}
 
@@ -5441,8 +5548,7 @@ identity network
 \textup{(}Propositions~\textup{\ref{prop:winfty-stage5-principal-target5-no-new-independent-data}}%
 --\textup{\ref{prop:winfty-stage5-principal-one-coefficient-normal-form}},
 \textup{\ref{prop:winfty-stage5-one-coefficient-comparison}}\textup{)},
-and all higher-stage incremental packets $\mathcal{J}_{N+1}$ are
-resolved.
+and all higher-stage incremental packets $\mathcal{J}_{N+1}$ vanish.
 \end{theorem}
 
 \begin{proof}
@@ -5458,7 +5564,7 @@ $\mathsf{D}(4)=0$ on~$\mathcal{I}_4$.
 In particular, Propositions~\ref{prop:winfty-stage4-visible-borcherds-transport},
 \ref{prop:winfty-stage4-ward-inheritance},
 and~\ref{prop:winfty-stage4-visible-diagonal-normalization} are
-resolved.
+the base stage of the rigidity induction.
 
 \emph{Inductive step.} Assume the stage-$N$ defects vanish on
 $\mathcal{I}_N$. The stage-$(N+1)$ quotient adds the generator
@@ -5469,9 +5575,9 @@ to stage~$N+1$
 (Proposition~\ref{prop:winfty-ds-stage-growth-packet}), so the
 incremental packet $\mathcal{J}_{N+1}$ matches identically.
 
-\emph{Stage-$5$ resolution.} Setting $N=4$ in the inductive step,
+\emph{Stage-$5$ specialization.} Setting $N=4$ in the inductive step,
 $\mathcal{W}_5$ rigidity forces all stage-$5$ coefficients to their
-DS values. This resolves
+DS values, giving
 Propositions~\ref{prop:winfty-stage5-principal-target5-no-new-independent-data},
 \ref{prop:winfty-stage5-principal-target5-transport-vanishing},
 \ref{prop:winfty-stage5-principal-tail-cross-target-reduction},
@@ -5482,20 +5588,20 @@ all downstream block, ladder, and packet propositions in
 Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse}.
 \end{proof}
 
-\begin{computation}[Full stage-\texorpdfstring{$4$}{4} reduction chain verification]
+\begin{computation}[Full stage-\texorpdfstring{$4$}{4} reduction chain check]
 \label{comp:winfty-stage4-reduction-chain}
 \index{MC4!W-infinity stage-4 reduction chain}
 The complete reduction chain from the residual packet
 $\mathcal{J}_4$ to the completion packet of
 Proposition~\ref{prop:winfty-mc4-frontier-package} has been
-verified computationally
+checked computationally
 (\texttt{compute/lib/w4\_stage4\_coefficients.py}, $85$~tests):
 \begin{itemize}
 \item \emph{Primaryity}
  (Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet}):
  $|\mathcal{J}_4| = 29 \to |\mathcal{J}_4^{\mathrm{top}}| = 7$,
  eliminating $22$ sub-leading entries; seven top-pole elements
- verified against the manuscript display;
+ checked against the manuscript display;
 \item \emph{Parity}
  (Corollary~\ref{cor:winfty-ds-stage4-parity-packet}):
  $|\mathcal{J}_4^{\mathrm{top}}| = 7
@@ -5553,7 +5659,7 @@ confirmed:
 \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2,
 \qquad
 \mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0.
-\label{eq:w4-virasoro-target-identities-verified}
+\label{eq:w4-virasoro-target-identities-values}
 \end{equation}
 \end{proposition}
 
@@ -5613,7 +5719,7 @@ descendants forced by~$c_{334}^{\,2}$.
 The explicit formulas
 \eqref{eq:c343-explicit} and~\eqref{eq:c344-explicit} express the two
 mixed higher-spin squares directly in terms of~$c_{334}^{\,2}$, while
-\eqref{eq:w4-virasoro-target-identities-verified} records the two
+\eqref{eq:w4-virasoro-target-identities-values} records the two
 theorematic Virasoro-target values. Hence the displayed pair
 $c_{334}^{\,2},c_{444}^{\,2}$ is the entire primitive higher-spin
 square-class input on the principal side.
@@ -5647,7 +5753,7 @@ on the packet
 For the first four channels, the DS targets are fixed by the explicit
 formulas \eqref{eq:c334-explicit}--\eqref{eq:c344-explicit}, up to the
 chosen strong-generator signs. The last two channels are fixed exactly
-by \eqref{eq:w4-virasoro-target-identities-verified}. Thus the first open higher-spin
+by \eqref{eq:w4-virasoro-target-identities-values}. Thus the first open higher-spin
 packet is an exact six-entry identity problem on~$\mathcal{I}_4$, not a
 further principal-side extraction problem.
 \end{remark}
@@ -5656,7 +5762,7 @@ further principal-side extraction problem.
 \label{comp:w4-ds-ope-extraction}
 \index{MC4!W4 OPE coefficient extraction}
 The explicit structure constants of
-Proposition~\ref{prop:w4-ds-ope-explicit} have been verified
+Proposition~\ref{prop:w4-ds-ope-explicit} have been checked
 computationally
 (\texttt{compute/lib/w4\_ds\_ope\_extraction.py}, $121$~tests):
 \begin{itemize}
@@ -5664,7 +5770,7 @@ computationally
  $k = 0, 1, 2, -2, -3$ (avoiding poles);
 \item inter-coefficient ratios
  $\mathsf{C}_{3,4;3;0,4}^2/c_{334}^2 = 9/16$ and
- $\mathsf{C}_{3,4;4;0,3}^2/c_{334}^2 = 5/7$ verified symbolically;
+ $\mathsf{C}_{3,4;4;0,3}^2/c_{334}^2 = 5/7$ checked symbolically;
 \item Feigin--Frenkel duality $k \leftrightarrow -k-2h^\vee$
  checked: $c(k) + c(-k-8) = 246$;
 \item unitarity non-negativity ($c_{334}^2 \geq 0$, $c_{444}^2 \geq 0$)
@@ -5692,25 +5798,39 @@ entire monograph.
 
 \begin{definition}[Maurer--Cartan element in curved context]
 \label{def:mc-element-curved}
-For a curved $A_\infty$ algebra $(A, \{\mu_n\})$, a \emph{Maurer--Cartan element} is $\alpha
-\in A^1$ satisfying:
+\label{ex:maurer-cartan}
+Let $(A,\{\mu_n\}_{n\geq0})$ be a complete filtered curved
+$A_\infty$ algebra, with $\mu_n$ of degree $2-n$ and with all sums
+convergent in the filtration. A \emph{Maurer--Cartan element} is an
+element $\alpha\in F^1A^1$ satisfying
 \begin{equation}
-\sum_{n \geq 0} \mu_n(\alpha^{\otimes n}) = 0
+\label{eq:mc-equation}
+\sum_{n \geq 0}\mu_n(\alpha^{\otimes n})=0.
 \end{equation}
+This is the $A_\infty$ convention. For the ordered convolution dg Lie
+algebra the same condition is written
+$D\Theta+\tfrac12[\Theta,\Theta]=0$.
 \end{definition}
 
 \begin{theorem}[Twisting by MC elements {\cite{LV12}}; \ClaimStatusProvedElsewhere]
 \label{thm:twisting-mc}
-Given an MC element $\alpha$, we can twist the curved $A_\infty$ structure:
+\label{ex:mc-deformations}
+Given an MC element $\alpha$, the twisted curved $A_\infty$ structure is
 \begin{equation}
-\mu_n^\alpha(a_1, \ldots, a_n) = \sum_{k \geq 0} \mu_{n+k}(\alpha^{\otimes k},
-a_1, \ldots, a_n)
+\mu_n^\alpha(a_1,\ldots,a_n)
+=
+\sum_{i_0,\ldots,i_n\geq0}
+\mu_{n+i_0+\cdots+i_n}
+(\alpha^{\otimes i_0},a_1,\alpha^{\otimes i_1},
+\ldots,a_n,\alpha^{\otimes i_n}),
 \end{equation}
+with the Koszul signs determined by the suspension convention of
+Appendix~\ref{app:signs-shifts}.
 
 The twisted structure $(A, \{\mu_n^\alpha\})$ is again a curved $A_\infty$ algebra, with new
 curvature:
 \begin{equation}
-\mu_0^\alpha = \mu_0 + \mu_1(\alpha) + \frac{1}{2}\mu_2(\alpha, \alpha) + \cdots
+\mu_0^\alpha=\sum_{n\geq0}\mu_n(\alpha^{\otimes n}).
 \end{equation}
 
 If $\alpha$ is an MC element, then $\mu_0^\alpha = 0$, so the twisted structure is
@@ -5723,10 +5843,12 @@ If $(A, \{\mu_n\})$ is curved with $\mu_0 \neq 0$, an MC element
 $\alpha \in A^1$ satisfying $\sum_{n \geq 0} \mu_n(\alpha^{\otimes n}) = 0$
 produces the twisted structure $(A, \{\mu_n^\alpha\})$ with $\mu_0^\alpha = 0$:
 the MC equation is the condition that twisting by $\alpha$ removes the curvature.
-If no MC element exists, the curvature persists: the total bar
-differential satisfies $d_{\mathrm{bar}}^2 = 0$ regardless, but the
+If no MC element exists, the curvature persists: the raw CDG
 fiberwise differential over $\overline{\mathcal{M}}_g$ has
-$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g \neq 0$.
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g \neq 0$. Ordinary
+cohomology is then taken only after replacing it by the
+period-corrected square-zero total differential; otherwise the
+comparison lives in the coderived comodule category.
 \end{remark}
 
 \subsection{Obstruction hierarchy}
@@ -5735,8 +5857,9 @@ $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g \neq 0$.
 The first three regimes of Convention~\ref{conv:regime-tags}
 are distinguished by whether $d_0^{\,2} = 0$ holds without
 correction and whether completion is needed.
-For all standard chiral algebras the curvature
-$\mu_0$ is central ($\mu_0 \propto \mathbf{1}$), so
+For the standard positive-energy vertex-operator families whose anomaly
+is a vacuum scalar, the curvature $\mu_0$ is central
+($\mu_0 \propto \mathbf{1}$), so
 $m_1^2(a) = [\mu_0, a] = 0$ and $m_1$ is a strict
 differential on~$A$ in every regime.
 
@@ -5749,7 +5872,7 @@ I.\;Quadratic & $d_0^{\,2} = 0$
  & $d_{\mathrm{bar}}^2 = 0$
  & $\mathcal{H}_k$,\; $V_\Lambda$ \\[2pt]
 II.\;Curved & $d_0^{\,2} \neq 0$;\; finitely generated
- & $d_{\mathrm{bar}}^2 = 0$;\; $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$
+ & $D_{\mathrm{tot}}^2 = 0$;\; $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$
  & $\mathrm{Vir}_c$,\; $\widehat{\mathfrak{g}}_k$ \\[2pt]
 III.\;Filtered & non-quadratic;\; completion needed
  & $\widehat{d}_{\mathrm{bar}}$ on $\varprojlim_r \overline{B}(A)/F^r$
@@ -5768,7 +5891,7 @@ algebras whose bracket satisfies the Jacobi identity
 ($V_\Lambda$: $d_{\mathrm{bracket}}^2 = 0$).
 Regime~II: $d_0^{\,2} \neq 0$, but the algebra is finitely
 generated and the bar differential on the
-\emph{total} complex satisfies
+\emph{period-corrected total} complex satisfies
 $d_{\mathrm{bar}}^2 = 0$; the fiberwise differential over
 $\overline{\mathcal{M}}_g$ acquires geometric curvature
 $d_{\mathrm{fib}}^2 = \kappa(\mathcal{A}) \cdot \omega_g$;
@@ -5792,10 +5915,14 @@ the curvature $\mu_0$ controls two distinct squares:
  When $\mu_0 \in Z(\mathcal{A})$, this vanishes for all~$a$, so $m_1$ is a strict differential on~$\mathcal{A}$. All standard chiral algebras (Heisenberg, Kac--Moody, Virasoro, $\mathcal{W}$-algebras) satisfy this: $\mu_0$ is proportional to the vacuum vector $\mathbf{1}$, which is central.
 \item \emph{Geometric:}\; $\dfib^{\,2} = \kappa(\mathcal{A})\cdot\omega_g \neq 0$ whenever $\kappa(\mathcal{A}) \neq 0$
  (Convention~\ref{conv:higher-genus-differentials}).
- Even when $\mu_0$ is central, the fiberwise bar differential over~$\overline{\mathcal{M}}_g$ is \emph{not} nilpotent; its failure is controlled by the scalar invariant~$\kappa(\mathcal{A})$.
- The curved fiberwise differential $\dfib$ is \emph{not} a coderivation of the bar coproduct at genus~$g \geq 1$: the cross terms $2(d \otimes d) \circ \Delta$ at interior splittings produce twice the contribution of $d^2 \circ \Delta$, so the coderivation identity fails despite the centrality of $\kappa \cdot \omega_g$. Only the period-corrected differential $\Dg{g}$ (which is both flat and a coderivation) absorbs the geometric curvature.
+ Even when $\mu_0$ is central, the fiberwise bar differential over~$\overline{\mathcal{M}}_g$ is \emph{not} an ordinary nilpotent differential; its square is controlled by the scalar invariant~$\kappa(\mathcal{A})$.
+ Thus $\dfib$ defines the curved CDG structure, not an uncurved
+ dg-coalgebra. Only the period-corrected differential $\Dg{g}$ gives
+ the square-zero coalgebra differential used for ordinary cohomology.
 \end{enumerate}
-The total corrected differential $\Dg{g}$ absorbs the geometric curvature and satisfies $\Dg{g}^{\,2} = 0$ unconditionally (Theorem~\ref{thm:quantum-diff-squares-zero}).
+Under the hypotheses of Theorem~\ref{thm:quantum-diff-squares-zero},
+the total corrected differential $\Dg{g}$ absorbs the geometric
+curvature and satisfies $\Dg{g}^{\,2} = 0$.
 
 \subsection{Mathematical foundations: three regimes}
 \label{subsec:three-regimes}
@@ -5813,223 +5940,92 @@ Regime~I is the quadratic locus of Convention~\ref{conv:regime-tags}: the bar di
 
 \subsubsection{\texorpdfstring{Regime II: curved differential ($m_1^2 = [\mu_0, -]$, central curvature)}{Regime II: curved differential (m1 squared = commutator with mu0, central curvature)}}
 
-% Duplicate curved A-infinity definition commented out.
-% Canonical version: Definition~\ref{def:curved-ainfty} (sec:curved-ainfty-definition).
-% Alias label preserved for any stale external references.
-\label{ex:curved-ainfty-complete}
-\iffalse
-%%% BEGIN COMMENTED-OUT BLOCK 4: duplicate curved A-infinity definition
-%%% Canonical version lives at def:curved-ainfty (sec:curved-ainfty-definition).
-\begin{definition}[Curved \texorpdfstring{$A_\infty$}{A_infinity} algebra]\label{def:curved-ainfty-complete-DISABLED}
-A \emph{curved $A_\infty$ algebra} $(\mathcal{A}, \{m_k\}_{k \geq 0}, \mu_0)$ consists of:
-\begin{enumerate}
-\item A $\mathbb{Z}$-graded vector space $\mathcal{A} = \bigoplus_{n} \mathcal{A}^n$
-\item Operations $m_k: \mathcal{A}^{\otimes k} \to \mathcal{A}[2-k]$ for each $k \geq 0$
-\item A \emph{curvature element} $\mu_0 \in \mathcal{A}^2$
-\end{enumerate}
-satisfying the \emph{curved $A_\infty$ relations}:
-\begin{equation}\label{eq:curved-ainfty-relations-DISABLED}
-\sum_{\substack{r+s+t=n \\ r,t \geq 0, \, s \geq 0}} (-1)^{rs+t} m_{r+1+t}
-(\text{id}^{\otimes r} \otimes m_s \otimes \text{id}^{\otimes t}) = 0
-\end{equation}
-
-The special cases of low degree are:
-\begin{itemize}
-\item $n = 0$: $m_1(m_0) = 0$ \quad (curvature is a $m_1$-cycle)
-\item $n = 1$: $m_1^2(a) = m_2(m_0 \otimes \text{id})(a) - m_2(\text{id} \otimes m_0)(a)$
-\quad (failure of $d^2 = 0$)
-\item $n = 2$: Higher coherences involving $\mu_0$
-\end{itemize}
-\end{definition}
-%%% END COMMENTED-OUT BLOCK 4
-\fi
-
-\begin{theorem}[Centrality implies strict nilpotence; \ClaimStatusProvedHere]\label{thm:central-implies-strict}
-For the Heisenberg algebra on an elliptic curve (\S\ref{sec:frame-genus1}), the curvature element $\mu_0 = k \cdot \mathbf{1}$ is scalar, hence central. Centrality of the curvature element is the general mechanism ensuring $d_{\mathrm{bar}}^2 = 0$ strictly in the curved setting.
-
-Let $(\mathcal{A}, m_1, \mu_0)$ be a curved chiral algebra with curvature satisfying:
+\begin{theorem}[Central curvature and the square-zero total model;
+\ClaimStatusProvedHere]\label{thm:central-implies-strict}
+Let $(\mathcal{A},\{\mu_n\}_{n\geq0})$ be a complete filtered curved
+chiral $A_\infty$ algebra whose curvature satisfies $\mu_1(\mu_0)=0$
+and
 \begin{equation}
-\mu_0 \in Z(\mathcal{A}) := \{a \in \mathcal{A} \mid m_2(a \otimes b) = (-1)^{|a||b|}m_2(b \otimes a)
+\mu_0 \in Z(\mathcal{A}) := \{a \in \mathcal{A} \mid \mu_2(a \otimes b) = (-1)^{|a||b|}\mu_2(b \otimes a)
 \text{ for all } b\}
 \end{equation}
-then the bar differential satisfies:
+for the binary product. Then centrality kills the internal curvature
+commutator:
+\begin{equation}\label{eq:curved-m1-squared}
+\mu_1^2(a)=\mu_2(\mu_0,a)-\mu_2(a,\mu_0)=0.
+\end{equation}
+An ordinary square-zero bar differential follows only after one of two
+additional operations has been supplied:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a convergent MC twist $\alpha$ with
+$\mu_0^\alpha=\sum_{n\ge0}\mu_n(\alpha^{\otimes n})=0$; or
+\item the period-corrected total differential $\Dg{g}$ of
+Convention~\ref{conv:higher-genus-differentials}, whose boundary
+terms satisfy the modular-operad relation of
+Theorem~\ref{thm:quantum-diff-squares-zero}.
+\end{enumerate}
+In either case the chosen bar differential satisfies
 \begin{equation}
 d_{\text{bar}}^2 = 0 \quad \text{strictly}
 \end{equation}
+as an ordinary differential. The raw fiberwise CDG operator is not
+included in this conclusion: it may still satisfy
+$\dfib^{\,2}=\kappa(\cA)\omega_g$ when $\kappa(\cA)\neq0$.
 \end{theorem}
 
 \begin{proof}
+The $n=1$ curved $A_\infty$ relation gives
+\[
+\mu_1^2(a)=\mu_2(\mu_0,a)-\mu_2(a,\mu_0)
+=[\mu_0,a]_{\mu_2}.
+\]
+The closedness relation $\mu_1(\mu_0)=0$ is the $n=0$ relation.
+Centrality of $\mu_0$ kills the commutator, proving
+\eqref{eq:curved-m1-squared}.
 
-\emph{Step 1: Bar Differential Formula}
+The residue part of the genus-$0$ bar differential squares to zero by
+the Arnold relation
+\[
+\eta_{ij}\wedge\eta_{jk}
++\eta_{jk}\wedge\eta_{ki}
++\eta_{ki}\wedge\eta_{ij}=0
+\]
+and anticommutes with the internal differential by the Borcherds
+Leibniz identity for the chiral product. Thus the ordinary bar square
+is controlled by the remaining curvature term.
 
-Recall from Definition~\ref{def:bar-differential-complete} that the bar differential on
-$\bar{B}^n(\mathcal{A})$ has three components:
-\begin{equation}
-d_{\text{bar}} = d_{\text{internal}} + d_{\text{residue}} + d_{\text{correction}}
-\end{equation}
-where:
-\begin{align}
-d_{\text{internal}}(a_0 \otimes \cdots \otimes a_n)
-&= \sum_{i=0}^n (-1)^{|a_0| + \cdots + |a_{i-1}|} (a_0 \otimes \cdots \otimes m_1(a_i)
-\otimes \cdots \otimes a_n) \\
-d_{\text{residue}}(a_0 \otimes \cdots \otimes a_n)
-&= \sum_{i=0}^{n-1} (-1)^{\epsilon_i} \text{Res}_{D_i}(a_0 \otimes \cdots \otimes a_i \cdot a_{i+1}
-\otimes \cdots \otimes a_n) \\
-d_{\text{correction}}(a_0 \otimes \cdots \otimes a_n)
-&= \mu_0 \otimes (a_0 \otimes \cdots \otimes a_n) \otimes \omega_g
-\end{align}
-
-\emph{Step 2: Computing $d^2$ - Nine Terms}
-
-We need to compute:
-\begin{equation}
-d_{\text{bar}}^2 = (d_{\text{internal}} + d_{\text{residue}} + d_{\text{correction}})^2
-\end{equation}
-
-This expands to \emph{nine terms}:
-\begin{align}
-d_{\text{bar}}^2 &= d_{\text{internal}}^2
-+ d_{\text{internal}} d_{\text{residue}} + d_{\text{residue}} d_{\text{internal}} \\
-&\quad + d_{\text{residue}}^2 \\
-&\quad + d_{\text{internal}} d_{\text{correction}} + d_{\text{correction}} d_{\text{internal}} \\
-&\quad + d_{\text{residue}} d_{\text{correction}} + d_{\text{correction}} d_{\text{residue}} \\
-&\quad + d_{\text{correction}}^2
-\end{align}
-
-\emph{Term 1: $d_{\text{internal}}^2$}
-
-For a \emph{curved} $A_\infty$ algebra, $m_1^2 \neq 0$ in general. The $n=1$ curved $A_\infty$ relation (Eq.~\ref{eq:curved-ainfty-relations}) gives:
-\begin{equation}\label{eq:curved-m1-squared}
-m_1^2(a) = m_2(\mu_0 \otimes a) - m_2(a \otimes \mu_0)
-\end{equation}
-Therefore $d_{\text{internal}}^2 \neq 0$ when the curvature $\mu_0$ is nonzero. This contribution is cancelled by terms 5--6 below (the cross-terms with $d_{\text{correction}}$); see the combined analysis there.
-
-\emph{Term 2-3: $d_{\text{internal}} d_{\text{residue}} + d_{\text{residue}} d_{\text{internal}} = 0$}
-
-These cancel by the \emph{Leibniz rule}:
-\begin{equation}
-m_1(a \cdot b) = m_1(a) \cdot b + (-1)^{|a|} a \cdot m_1(b)
-\end{equation}
-
-Explicitly, using residue calculus:
-\begin{align}
-&d_{\text{internal}}(\text{Res}_{D_i}(a_0 \otimes \cdots))
-= \text{Res}_{D_i}(m_1(a_i \cdot a_{i+1})) \\
-&= \text{Res}_{D_i}(m_1(a_i) \cdot a_{i+1}) + \text{Res}_{D_i}(a_i \cdot m_1(a_{i+1}))
-\quad \text{(Leibniz)} \\
-&= d_{\text{residue}}(d_{\text{internal}}(a_0 \otimes \cdots))
-\end{align}
-
-Therefore the cross terms cancel:
-\[d_{\text{internal}} d_{\text{residue}} = - d_{\text{residue}} d_{\text{internal}}\]
-
-\emph{Term 4: $d_{\text{residue}}^2 = 0$ (Arnold Relations)}
-
-By Theorem~\ref{thm:arnold-three}:
-\begin{equation}
-\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0
-\end{equation}
-in $H^2(\text{Conf}_n(X))$.
-
-Geometrically, this means:
-\begin{equation}
-[\text{Res}_{D_{ij}}, \text{Res}_{D_{jk}}] + [\text{Res}_{D_{jk}}, \text{Res}_{D_{ki}}]
-+ [\text{Res}_{D_{ki}}, \text{Res}_{D_{ij}}] = 0
-\end{equation}
-
-Therefore:
-\[d_{\text{residue}}^2 = \sum_{i,j} \text{Res}_{D_i} \text{Res}_{D_j}
-= 0 \quad \text{(by Arnold)}\]
-
-\emph{Terms 1+5+6 combined: $d_{\text{internal}}^2 + d_{\text{internal}} d_{\text{correction}} + d_{\text{correction}} d_{\text{internal}} = 0$}
-
-These three terms must be analyzed together. We have:
-\begin{align}
-d_{\text{internal}}(d_{\text{correction}}(a_0 \otimes \cdots))
-&= d_{\text{internal}}(\mu_0 \otimes a_0 \otimes \cdots) \\
-&= m_1(\mu_0) \otimes (a_0 \otimes \cdots) + \sum_i \mu_0 \otimes \cdots \otimes m_1(a_i) \otimes \cdots
-\end{align}
-and similarly for $d_{\text{correction}} d_{\text{internal}}$. The cross-terms produce:
-\begin{equation}
-\begin{aligned}
-&(d_{\text{internal}} d_{\text{correction}} + d_{\text{correction}} d_{\text{internal}})
-(a_0 \otimes \cdots) \\
-&\quad = m_1(\mu_0) \otimes (a_0 \otimes \cdots)
- + \sum_i \pm\bigl(
-a_0 \otimes \cdots \otimes m_2(\mu_0, a_i)
- + m_2(a_i, \mu_0) \otimes \cdots
-\bigr).
-\end{aligned}
-\end{equation}
-By the curved $A_\infty$ relation~\eqref{eq:curved-m1-squared}: $m_1^2(a_i) = m_2(\mu_0, a_i) - m_2(a_i, \mu_0)$. Since $\mu_0$ is a \emph{cycle} ($m_1(\mu_0) = 0$), the combined contribution is:
-\[d_{\text{internal}}^2 + d_{\text{internal}} d_{\text{correction}} + d_{\text{correction}} d_{\text{internal}} = 0\]
-
-\emph{Terms 7-8: $d_{\text{residue}} d_{\text{correction}} + d_{\text{correction}}
-d_{\text{residue}}$}
-
-Centrality of $\mu_0$ is essential here.
-
-We have:
-\begin{align}
-d_{\text{residue}}(d_{\text{correction}}(a_0 \otimes \cdots))
-&= d_{\text{residue}}(\mu_0 \otimes a_0 \otimes \cdots) \\
-&= \sum_i \text{Res}_{D_i}((\mu_0 \otimes a_0 \otimes \cdots \otimes a_i \cdot a_{i+1}
-\otimes \cdots))
-\end{align}
-
-For this to equal $d_{\text{correction}}(d_{\text{residue}}(\cdots))$, we need:
-\begin{equation}
-\text{Res}_{D_i}(\mu_0 \otimes \cdots) = \mu_0 \otimes \text{Res}_{D_i}(\cdots)
-\end{equation}
-
-This holds if and only if $\mu_0 \in Z(\mathcal{A})$.
-
-\emph{Proof of centrality.}
-The residue operation involves computing:
-\[\text{Res}_{z_i = z_{i+1}}(m_2(a_i \otimes a_{i+1}))\]
-
-If $\mu_0$ is central, it commutes with all $a_i$:
-\[m_2(\mu_0 \otimes a_i) = m_2(a_i \otimes \mu_0)\]
-
-Therefore:
-\begin{align}
-\text{Res}_{D_i}(\mu_0 \otimes a_0 \otimes \cdots \otimes m_2(a_i \otimes a_{i+1}) \otimes \cdots)
-&= \text{Res}_{D_i}(m_2(\mu_0 \otimes a_0) \otimes \cdots) \\
-&= \text{Res}_{D_i}(m_2(a_0 \otimes \mu_0) \otimes \cdots) \quad \text{(by centrality)} \\
-&= \mu_0 \otimes \text{Res}_{D_i}(a_0 \otimes \cdots)
-\end{align}
-
-\emph{Term 9: $d_{\text{correction}}^2$}
-
-Finally:
-\begin{align}
-d_{\text{correction}}^2(a_0 \otimes \cdots)
-&= d_{\text{correction}}(\mu_0 \otimes a_0 \otimes \cdots) \\
-&= \mu_0 \otimes \mu_0 \otimes (a_0 \otimes \cdots) \otimes \omega_g^2
-\end{align}
-
-In the bar complex, the element $s^{-1}\mu_0 \otimes s^{-1}\mu_0$ lives in the desuspended tensor square. Since $\mu_0 \in Z(\mathcal{A})$ has even degree (it is proportional to the vacuum $\mathbf{1} \in A^0$), the desuspension $s^{-1}\mu_0$ has degree $-1$. The Koszul sign from the bar differential acting on $s^{-1}\mu_0 \otimes s^{-1}\mu_0$ produces a sign $(-1)^{|s^{-1}\mu_0|} = -1$, so the two orderings of curvature insertion cancel: $d_{\text{correction}}^2 = 0$.
-
-Combining all nine terms:
-\begin{equation}
-d_{\text{bar}}^2 = 0 + 0 + 0 + 0 + 0 + 0 + 0 = 0 \quad \text{strictly}
-\end{equation}
-provided $\mu_0 \in Z(\mathcal{A})$.
-
+In case~\textup{(i)}, twisting by $\alpha$ replaces the curvature by
+\[
+\mu_0^\alpha=\sum_{n\ge0}\mu_n(\alpha^{\otimes n})=0.
+\]
+The twisted $A_\infty$ relations are therefore uncurved, and the
+associated bar coderivation squares to zero. In case~\textup{(ii)},
+the total operator is the modular corrected differential $\Dg{g}$.
+The identity $\Dg{g}^{\,2}=0$ is exactly
+Theorem~\ref{thm:quantum-diff-squares-zero}: in convolution language it
+is the MC equation
+$D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$ together with the
+modular boundary relation. No sign computation for a bare insertion
+operator $d_{\mathrm{correction}}$ proves square-zero by itself; the
+square-zero assertion belongs to the MC twist or to the corrected total
+model.
 \end{proof}
 
 \begin{remark}[Non-central curvature]\label{rem:non-central-curvature}
-If the curvature $\mu_0$ is not central, then $d_{\text{bar}}^2 \neq 0$
-and nilpotence holds only up to homotopy: the bar complex requires
+If the curvature $\mu_0$ is not central, then the raw curved
+differential has nonzero curvature commutator and nilpotence holds
+only up to homotopy: the bar complex requires
 homotopy coherent structures, coderived filtrations whose
 associated-graded differential is square-zero, and the full
-$A_\infty$/$L_\infty$ framework at every level. In particular, one
-should not speak of ordinary bar cohomology or an unqualified bar
-spectral sequence for the total curved differential in this regime.
-All standard chiral algebras (Heisenberg, Kac--Moody, Virasoro,
-$\cW$-algebras) have central curvature, so strict nilpotence holds
-throughout; see Remark~\ref{rem:voa-central-curvature} for the
-precise mechanism.
+$A_\infty$/$L_\infty$ framework at every level. Ordinary bar
+cohomology and an unqualified bar spectral sequence are not defined
+for the raw curved differential in this regime. The standard
+positive-energy vertex-operator families with vacuum-scalar anomaly
+have central curvature, so the internal commutator vanishes and the
+period-corrected total differential is square-zero; the fiberwise CDG
+operator remains curved when
+$\kappa(\cA)\neq0$. See Remark~\ref{rem:voa-central-curvature} for
+the precise mechanism.
 \end{remark}
 
 \begin{remark}[Central curvature in vertex operator algebras]\label{rem:voa-central-curvature}
@@ -6039,7 +6035,10 @@ $A_\infty$ framework, the curvature element $\mu_0$ arising from the genus-$g$
 quantum correction is proportional to $\mathbf{1}$ (it equals the central charge or
 level times $\mathbf{1}$; see Examples~\ref{ex:heisenberg-strict}--\ref{ex:w3-strict}).
 Since $\mathbf{1}$ acts by the identity on every module, $\mu_0$ lies in $Z(\mathcal{A})$,
-and Theorem~\ref{thm:central-implies-strict} yields $d_{\mathrm{bar}}^2=0$ strict.
+and Theorem~\ref{thm:central-implies-strict} yields
+$d_{\mathrm{bar}}^2=0$ for the period-corrected total bar
+differential. The raw fiberwise CDG differential still has square
+$\kappa(\cA)\omega_g$ when the modular characteristic is nonzero.
 
 For more general chiral algebras without a vacuum axiom (for instance, chiral
 algebras on higher-dimensional varieties, or non-unital factorization algebras),
@@ -6061,10 +6060,12 @@ A \emph{homotopy coherent differential} on a graded space $V$ consists of:
 \end{itemize}
 \end{definition}
 
-This is the setting of Lurie's $(\infty, 1)$-categories~\cite{HTT}, derived algebraic geometry (To\"en--Vezzosi, Lurie), and non-curved $A_\infty$ or $L_\infty$ structures.
-All standard chiral algebras have central curvature
-(Remark~\ref{rem:voa-central-curvature}), so this level of
-generality is not required here.
+This is the setting of Lurie's $(\infty, 1)$-categories~\cite{HTT},
+derived algebraic geometry (To\"en--Vezzosi, Lurie), and non-curved
+$A_\infty$ or $L_\infty$ structures. The standard positive-energy
+vertex-operator families in this chapter have central curvature
+(Remark~\ref{rem:voa-central-curvature}), so this level of generality
+is used only for non-central anomaly surfaces.
 
 \subsection{Application to chiral algebras}
 
@@ -6073,14 +6074,17 @@ generality is not required here.
 \begin{example}[Heisenberg: strict nilpotence]\label{ex:heisenberg-strict}
 The Heisenberg algebra $\mathcal{H}_k$ has OPE $J(z)J(w) = k/(z-w)^2 + \text{reg.}$, curvature $\mu_0 = k \cdot \mathbf{1}$, and $\mu_0 \in Z(\mathcal{H}_k)$ since $\mathbf{1}$ is central.
 
-The bar differential satisfies $d_{\text{bar}}^2 = 0$ strictly.
+The period-corrected total bar differential satisfies
+$d_{\text{bar}}^2 = 0$ strictly.
 At genus~$1$, the differential includes the term:
 \[d_1 = d_0 + k \cdot \int_{\mathcal{M}_1} \omega_1\]
 where $\omega_1 \in H^*(\mathcal{M}_1, \mathcal{Z}(\mathcal{A}))$ is the genus-1 quantum correction class. (Here $\mathcal{M}_1 \cong \mathbb{H}/\mathrm{SL}_2(\mathbb{Z})$ is one-dimensional.)
 
-This modifies $d_0$ but still $d_1^2 = 0$ strictly because $k$ is central.
+This modifies $d_0$ but the period-corrected genus-$1$ differential
+still satisfies $d_1^2 = 0$ strictly because $k$ is central and the
+geometric correction is included.
 
-\emph{Explicit verification at genus $1$.}
+\emph{Explicit check at genus $1$.}
 \begin{align}
 d_1^2(J \otimes J) &= d_1(d_1(J \otimes J)) \\
 &= d_1\left(\text{Res}_{z=w}(J(z)J(w)) + k \cdot \omega_1 \otimes J\right) \\
@@ -6098,12 +6102,16 @@ The $\omega_1^2$ term vanishes because $\dim \mathcal{M}_1 = 1$, so $H^2(\mathca
 \begin{example}[Kac--Moody: strict nilpotence]\label{ex:kac-moody-strict}
 For $\widehat{\mathfrak{g}}_k$ with OPE $J^a(z)J^b(w) = k\kappa^{ab}/(z-w)^2 + f^{abc}J^c(w)/(z-w) + \text{reg.}$, the curvature is $\mu_0 = k \cdot K$ where $K$ generates the one-dimensional center.
 
-Again $d_{\text{bar}}^2 = 0$ strictly.
+Again the period-corrected total differential satisfies
+$d_{\text{bar}}^2 = 0$ strictly.
 At genus~$g$, the correction involves:
 \[\mu_0^{(g)} = \kappa(\widehat{\fg}_k) \cdot \lambda_g \in H^2(\mathcal{M}_g, Z(\widehat{\mathfrak{g}}_k))\]
 where $\lambda_g$ is the Hodge class and $\kappa(\widehat{\fg}_k) = \dim(\fg) \cdot (k+h^\vee)/(2h^\vee)$ is the modular characteristic (not the level~$k$; see Theorem~\ref{thm:modular-characteristic}).
 
-Since $\mu_0^{(g)}$ is central, all higher genus bar differentials square to zero strictly.
+Since $\mu_0^{(g)}$ is central, all period-corrected higher-genus
+bar differentials square to zero strictly; the raw fiberwise
+differential retains the scalar curvature
+$\kappa(\widehat{\fg}_k)\lambda_g$.
 \end{example}
 
 \subsubsection{\texorpdfstring{Virasoro algebra (central charge $c$)}{Virasoro algebra (central charge c)}}
@@ -6116,7 +6124,8 @@ and curvature $\mu_0 \propto \mathbf{1}$ from the central charge (the proportion
 The Virasoro algebra has higher-order corrections
 ($m_3(T \otimes T \otimes T) \neq 0$ from the cubic Schwarzian
 term), but the curvature $\mu_0 \propto \mathbf{1}$ remains central,
-so $d_{\text{bar}}^2 = 0$ strictly. The central charge~$c$ is a
+so the period-corrected total bar differential satisfies
+$d_{\text{bar}}^2 = 0$ strictly. The central charge~$c$ is a
 quantum correction that breaks classical conformal invariance in a
 central way: it does not break associativity of the OPE algebra.
 \end{example}
@@ -6129,133 +6138,14 @@ The $W_3$ algebra has generators $L$ (conformal weight~$2$) and $W$
 involves composite operators. The curvature element satisfies
 $\mu_0 \propto \mathbf{1}$ (with higher-filtration central corrections
 from the non-linear OPE), so all contributions lie in the center
-$Z(\mathcal{W}_3)$ and $d_{\text{bar}}^2 = 0$ strictly. The algebra
+$Z(\mathcal{W}_3)$ and the period-corrected total bar differential
+satisfies $d_{\text{bar}}^2 = 0$ strictly. The algebra
 is not quadratic and requires filtered structure
 (Theorem~\ref{thm:filtered-to-curved}), but centrality of the
 curvature is independent of the filtration regime. The completed
 bar complex $\widehat{\bar{B}}(W_3) = \varprojlim_n \bar{B}(W_3)/I^n$
 (Appendix~\ref{app:nilpotent-completion}) inherits strict nilpotence.
 \end{example}
-
-% Duplicate MC subsection commented out.
-% Canonical MC definition: def:mc-element-curved (sec:maurer-cartan-curved).
-% Canonical twisting theorem: thm:twisting-mc (sec:maurer-cartan-curved).
-% Alias labels preserved for external references (koszul_reference.tex).
-\label{ex:maurer-cartan}%
-\label{eq:mc-equation}%
-\label{ex:mc-deformations}%
-\label{ex:mc-periods}%
-\iffalse
-%%% BEGIN COMMENTED-OUT BLOCK 1: duplicate MC definition and deformation theory
-%%% Canonical MC definition lives at def:mc-element-curved (sec:maurer-cartan-curved).
-%%% Canonical twisting theorem lives at thm:twisting-mc (sec:maurer-cartan-curved).
-\subsection{Maurer--Cartan elements and deformations}
-
-\subsubsection{Maurer--Cartan equation}
-
-\begin{definition}[Maurer--Cartan element]\label{def:maurer-cartan-DISABLED}
-\index{Maurer--Cartan!chiral}
-An element $\alpha \in \mathcal{A}^1$ is a \emph{Maurer--Cartan (MC) element} if it satisfies:
-\begin{equation}\label{eq:mc-equation-DISABLED}
-m_1(\alpha) + \frac{1}{2} m_2(\alpha \otimes \alpha) + \frac{1}{3!} m_3(\alpha \otimes \alpha
-\otimes \alpha) + \cdots + \mu_0 = 0
-\end{equation}
-\end{definition}
-
-\begin{theorem}[MC elements as quantum deformations; \ClaimStatusProvedHere]\label{thm:mc-deformations-DISABLED}
-Maurer--Cartan elements in $\bar{B}^1(\mathcal{A})$ correspond to:
-\begin{enumerate}
-\item \emph{Physically:} Quantum deformations of the classical algebra
-\item \emph{Geometrically:} Flat connections on the associated bundle
-\item \emph{Algebraically:} Twisted differentials $d_\alpha = d + [\alpha, -]$
-\end{enumerate}
-
-If $\alpha$ is an MC element, then:
-\begin{equation}
-d_\alpha^2 = 0 \quad \text{strictly} \quad \Longleftrightarrow \quad \mu_0^\alpha := \mu_0
-+ m_1(\alpha) + \cdots = 0
-\end{equation}
-is central.
-\end{theorem}
-
-\begin{proof}
-Define the twisted differential:
-\[d_\alpha := d + m_1(\alpha \otimes -) + m_2(\alpha \otimes \alpha \otimes -) + \cdots\]
-
-Then:
-\begin{align}
-d_\alpha^2 &= (d + m_1(\alpha \otimes -) + \cdots)^2 \\
-&= d^2 + d(m_1(\alpha \otimes -)) + m_1(\alpha \otimes -)^2 + \cdots \\
-&= [m_1(\alpha) + \frac{1}{2}m_2(\alpha \otimes \alpha) + \cdots + \mu_0, -]
-\end{align}
-
-By the $A_\infty$ relations, this equals:
-\[d_\alpha^2 = [\mu_0^\alpha, -]\]
-where $\mu_0^\alpha$ is the \emph{twisted curvature}.
-
-Therefore $d_\alpha^2 = 0$ strict if and only if $\mu_0^\alpha$ is central.
-\end{proof}
-
-\subsubsection{Geometric realization of MC elements}
-
-\begin{theorem}[MC elements via period integrals; \ClaimStatusProvedHere]\label{thm:mc-periods-DISABLED}
-For a chiral algebra $\mathcal{A}$ on a curve $X$ of genus $g$, Maurer--Cartan elements arise
-from period integrals:
-\begin{equation}
-\alpha_g = \int_{\gamma \in H_1(X, \mathbb{Z})} \omega_{\mathcal{A}} \in \bar{B}^1(\mathcal{A})
-\end{equation}
-where $\omega_{\mathcal{A}} \in \Omega^1(X, \mathcal{A})$ is a connection form.
-
-The MC equation:
-\begin{equation}
-m_1(\alpha_g) + \frac{1}{2}m_2(\alpha_g \otimes \alpha_g) + \mu_0 = 0
-\end{equation}
-is equivalent to the \emph{flatness condition}:
-\begin{equation}
-F_{\omega} := d\omega_{\mathcal{A}} + \frac{1}{2}[\omega_{\mathcal{A}}, \omega_{\mathcal{A}}] = 0
-\end{equation}
-\end{theorem}
-
-\begin{proof}
-We show that period integrals produce MC elements by matching the bar complex MC equation with the flatness condition.
-
-\emph{Step 1: From connection to bar element.}
-A connection $\omega_\mathcal{A} \in \Omega^1(X, \mathcal{A})$ on the trivial $\mathcal{A}$-bundle over~$X$ determines an element $\alpha_g \in \bar{B}^1(\mathcal{A})$ via integration over cycles: for each cycle $\gamma_i \in H_1(X, \mathbb{Z})$ ($i = 1, \ldots, 2g$), the period $\oint_{\gamma_i} \omega_\mathcal{A}$ is an element of~$\mathcal{A}$, and $\alpha_g = \sum_i \oint_{\gamma_i} \omega_\mathcal{A} \otimes \gamma_i^*$ is the corresponding degree-1 bar element (where $\gamma_i^*$ is the dual 1-form).
-
-\emph{Step 2: MC equation $=$ flatness.}
-The MC equation in $\bar{B}(\mathcal{A})$ reads:
-\[
-m_1(\alpha_g) + \tfrac{1}{2} m_2(\alpha_g \otimes \alpha_g) + \mu_0 = 0.
-\]
-Under the identification of Step~1:
-\begin{itemize}
-\item $m_1(\alpha_g)$ corresponds to $d\omega_\mathcal{A}$: the bar differential $m_1$ acts on $\alpha_g$ by applying the internal differential of~$\mathcal{A}$ and the de Rham differential on~$X$, which together give the exterior derivative of the connection form.
-\item $\tfrac{1}{2} m_2(\alpha_g \otimes \alpha_g)$ corresponds to $\tfrac{1}{2}[\omega_\mathcal{A}, \omega_\mathcal{A}]$: the binary bar operation $m_2$ encodes the chiral product, which on the connection form becomes the Lie bracket (the OPE residue $\mathrm{Res}_{z_1=z_2}[\omega(z_1) \otimes \omega(z_2) \cdot \eta_{12}]$ extracts the commutator $[\omega, \omega]$).
-\item $\mu_0$ is the curvature of the $A_\infty$ structure, which vanishes for strict (uncurved) algebras and equals the central charge term for VOAs.
-\end{itemize}
-Therefore the MC equation is exactly the flatness condition $F_\omega = d\omega_\mathcal{A} + \tfrac{1}{2}[\omega_\mathcal{A}, \omega_\mathcal{A}] + \mu_0 = 0$.
-
-\emph{Step 3: Well-definedness.}
-The element $\alpha_g$ depends only on the cohomology class of $\omega_\mathcal{A}$ modulo exact forms: if $\omega_\mathcal{A} \mapsto \omega_\mathcal{A} + df$ for $f \in \Gamma(X, \mathcal{A})$, then $\alpha_g \mapsto \alpha_g + m_1(f)$, which is a gauge equivalence in the MC moduli space.
-\end{proof}
-
-\begin{example}[Genus 1 MC obstruction for Heisenberg]
-At genus 1, the elliptic curve $E_\tau$ has coordinate $z$ with $z \sim z + 1 \sim z + \tau$.
-
-The Heisenberg current $J$ has connection form $\omega_J = J\,dz$. The candidate MC element is:
-\[\alpha_1 = \oint_A J\,dz \cdot a + \oint_B J\,dz \cdot b\]
-where $A, B$ are the standard cycles of $E_\tau$ with $\oint_A dz = 1$, $\oint_B dz = \tau$.
-
-The curved MC equation $\mu_0 + m_1(\alpha_1) + m_2(\alpha_1, \alpha_1) + \cdots = 0$ becomes:
-\begin{align}
-\mu_0 + m_1(\alpha_1) &= k + 0 = k \neq 0
-\end{align}
-since $m_1(\alpha_1) = 0$ by the conservation law $dJ = 0$.
-
-The MC equation \emph{fails}: the curvature $\mu_0 = k$ is a cohomologically non-trivial obstruction. No MC element can ``untwist'' it to zero. This is consistent with the fact that the Heisenberg bar differential satisfies $d_{\mathrm{bar}}^2 = 0$ strict (Theorem~\ref{thm:central-implies-strict}), but the \emph{curvature itself is essential} and cannot be removed by twisting.
-\end{example}
-%%% END COMMENTED-OUT BLOCK 1
-\fi
 
 \subsection{Obstruction theory: genus-by-genus analysis}
 
@@ -6271,17 +6161,21 @@ with no quantum corrections ($\mu_0 = 0$ at genus 0).
 By the Arnold relations (Theorem~\ref{thm:arnold-three}), $d_0^2 = 0$.
 \end{proof}
 
-\begin{theorem}[Strict nilpotence at all genera; \ClaimStatusProvedHere]\label{thm:genus-induction-strict}
+\begin{theorem}[Strict nilpotence for the corrected genus tower; \ClaimStatusProvedHere]\label{thm:genus-induction-strict}
+\label{ex:mc-periods}
 \textup{[Regime: curved-central\linebreak
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Let $\mathcal{A}$ be a chiral algebra with central curvature at all genera,
-i.e., the genus-$g$ curvature $\mu_0^{(g)} \in Z(\mathcal{A})$ for all $g \geq 1$.
-Then the full bar differential $d_{\mathrm{full}} = \sum_{g \geq 0} d_g$ satisfies
+Let $\mathcal{A}$ be a chiral algebra whose genus-$g$ curvature
+$\mu_0^{(g)}$ is central for every $g \geq 1$ under consideration.
+Assume the period-corrected components $d_g$ are defined on the
+completed genus tower and satisfy the modular-operad boundary
+compatibilities below. Then the corrected full bar differential
+$d_{\mathrm{full}} = \sum_{g \geq 0} d_g$ satisfies
 $d_{\mathrm{full}}^2 = 0$ strict.
-Here each $d_g$ denotes the genus-$g$ \emph{component} of the modular
-decomposition, not the fiberwise differential $\dfib$ of
-Convention~\textup{\ref{conv:higher-genus-differentials}}.
+Here each $d_g$ denotes the genus-$g$ \emph{corrected component} of
+the modular decomposition, not the raw fiberwise differential
+$\dfib$ of Convention~\textup{\ref{conv:higher-genus-differentials}}.
 \end{theorem}
 
 \begin{proof}
@@ -6364,10 +6258,10 @@ The first term vanishes by Step~2, the second by Step~3, and the third by Step~4
 This completes the proof.
 \end{proof}
 
-\begin{remark}[Computational verification]\label{rem:genus-induction-status}
+\begin{remark}[Computational check]\label{rem:genus-induction-computational-check}
 The proof above uses the modular operad structure of
-$\{\overline{\mathcal{M}}_{g,n}\}$ in an essential way. We have also verified
-the conclusion computationally through genus~$5$ for all standard examples
+$\{\overline{\mathcal{M}}_{g,n}\}$ in an essential way. The computation
+also checks the conclusion through genus~$5$ for all standard examples
 (Heisenberg, Kac--Moody, Virasoro, $W$-algebras), providing independent
 confirmation.
 \end{remark}
@@ -6444,7 +6338,7 @@ the Feynman transform provides the homotopy-invariant formulation
 (Getzler--Kapranov~\cite[\S5]{GetzlerKapranov98}).
 \end{remark}
 
-\begin{theorem}[Bar-cobar as Quillen equivalence;
+\begin{theorem}[Bar-cobar as a factorization homotopy equivalence;
 \ClaimStatusConditional]
 \label{thm:quillen-equivalence-chiral}
 \index{Quillen equivalence!bar-cobar|textbf}
@@ -6454,25 +6348,38 @@ For a Koszul chiral algebra~$\cA$
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})},
 the bar-cobar adjunction
 \[
-B_\kappa\colon \mathrm{dg}\text{-}\mathrm{Ch\text{-}alg}
-\;\rightleftarrows\;
+\Omega_\kappa\colon
 \mathrm{conil}\text{-}\mathrm{dg}\text{-}\cC^{\textup{!\textasciigrave}}_{\mathrm{ch}}\text{-}\mathrm{coalg}
-\;:\!\Omega_\kappa
+\;\rightleftarrows\;
+\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg}
+\;:\!B_\kappa,
+\qquad
+\Omega_\kappa\dashv B_\kappa
 \]
-is a Quillen equivalence in the Vallette model structure
-\textup{\cite[Theorem~2.1]{Val16}} on conilpotent
-dg~$\cC^{\textup{!\textasciigrave}}_{\mathrm{ch}}$-coalgebras, where:
+is a homotopy equivalence on the finite-type
+conilpotent-complete factorization model. The pointwise operadic input
+is the Vallette/Loday--Vallette bar-cobar theorem
+\textup{\cite[Theorem~2.1]{Val16}; \cite[Theorem~11.4.1]{LV12}}; the
+chiral $\Dmod(X)$-enriched statement is obtained only after placing the
+chiral operad in the Francis--Gaitsgory--Rozenblyum factorization
+model structure
+\textup{\cite[Chapter~IV.5, Theorem~3.1.2]{GR17}}. In that ambient:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Weak equivalences are maps whose cobar construction is a
- quasi-isomorphism.
-\item All objects are cofibrant.
-\item Fibrant objects are quasi-free coalgebras.
+ quasi-isomorphism on the finite-type square-zero lane, respectively
+ maps detected by coderived comodules on the curved lane.
+\item Cofibrant coalgebras are generated by conilpotent cofree
+ factorization coalgebras.
+\item Fibrant algebra objects are represented by quasi-free
+ factorization algebras in the chosen model.
 \item $B_\kappa$ preserves fibrations and weak equivalences
- \textup{\cite[Theorem~2.9]{Val16}}.
-\item $\Omega_\kappa$ preserves cofibrations and weak equivalences.
+ after transport to the factorization model.
+\item $\Omega_\kappa$ preserves cofibrations and weak equivalences on
+ the same finite-type conilpotent-complete surface.
 \end{enumerate}
-In particular, the homotopy category of dg chiral algebras is
-equivalent to the homotopy category of conilpotent chiral coalgebras:
+In particular, on this finite-type conilpotent-complete surface, the
+homotopy category of dg chiral algebras is equivalent to the homotopy
+category of conilpotent chiral coalgebras:
 $\mathrm{Ho}(\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg})
 \simeq
 \mathrm{Ho}(\mathrm{conil}\text{-}\mathrm{dg}\text{-}
@@ -6480,12 +6387,22 @@ $\mathrm{Ho}(\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg})
 \end{theorem}
 
 \begin{proof}[References]
-The model structure and Quillen equivalence are
-\cite[Theorems~2.1, 2.9]{Val16}, specialized from the general operadic
-setting to the chiral operad. The unit $\eta\colon A \to
-\Omega_\kappa B_\kappa(A)$ is the bar-cobar resolution
-(Theorem~\ref{thm:bar-cobar-inversion-qi}); it is a quasi-isomorphism on
-the Koszul locus.
+Vallette's theorem supplies the conilpotent bar-cobar model structure
+for cooperads in chain complexes over a field. The chiral tensor
+product is pseudo-tensor before passing to factorization algebras, so
+that theorem is not applied verbatim to $\Dmod(X)$-enriched cooperads.
+The required chiral ambient is the factorization model of
+Francis--Gaitsgory--Rozenblyum
+\cite[Chapter~IV.5, Theorem~3.1.2]{GR17}, as recorded in
+Theorem~$A^{\infty,2}$
+(Theorem~\ref{thm:A-infinity-2}) and
+Remark~\ref{rem:ainf2-heal-72}. Transporting the operadic
+bar-cobar theorem through that ambient gives the displayed homotopy
+equivalence. The algebra-side counit
+$\psi_A\colon\Omega_\kappa B_\kappa(A)\to A$ is the bar-cobar
+resolution map of Theorem~\ref{thm:bar-cobar-inversion-qi}; it is a
+quasi-isomorphism on the Koszul locus. The coalgebra-side unit is
+$\eta_C\colon C\to B_\kappa\Omega_\kappa(C)$.
 \end{proof}
 
 \begin{remark}[Relationship to Theorem~A]
@@ -6507,7 +6424,7 @@ fibration data.
 \begin{remark}[Physical content of the Quillen equivalence]
 \label{rem:quillen-physical}
 \index{Quillen equivalence!physical interpretation}
-The Quillen equivalence $B_\kappa \dashv \Omega_\kappa$ has a direct
+The Quillen equivalence $\Omega_\kappa \dashv B_\kappa$ has a direct
 physical reading. The bar functor~$B_\kappa$ passes from the on-shell
 theory (the chiral algebra~$\cA$) to the off-shell theory (the bar
 coalgebra~$\barB(\cA)$, which carries the full perturbative data
@@ -6520,11 +6437,11 @@ collapses at~$E_2$.
 In renormalization language: Koszulness is the condition under which
 perturbative quantization is invertible. A Koszul chiral algebra
 admits a unique reconstruction from its perturbative data (bar
-cohomology); a non-Koszul algebra has irreducible higher-loop
-ambiguities that prevent reconstruction. The four shadow-depth classes
-G/L/C/M classify the complexity of this reconstruction within the
-Koszul world; the class~W boundary is where reconstruction fails
-entirely.
+cohomology). Outside the Koszul locus, irreducible higher-loop
+ambiguities may obstruct ordinary reconstruction. The four
+shadow-depth classes G/L/C/M classify the complexity of this
+reconstruction within the proved Koszul standard families; the
+class~W boundary lies outside this finite-type Quillen statement.
 \end{remark}
 
 \begin{remark}[Hecke equivariance of Verdier duality]%
@@ -6547,27 +6464,34 @@ $L$-functions
 \ClaimStatusProvedElsewhere]
 \label{cor:rectification-ch-infty}
 \index{rectification!Ch-infinity@$\mathrm{Ch}_\infty$-algebras}
-Every $\mathrm{Ch}_\infty$-algebra is $\infty$-quasi-isomorphic to a
-strict chiral algebra via the rectification functor
+Over chain complexes, every $\mathrm{Ch}_\infty$-algebra is
+$\infty$-quasi-isomorphic to a strict algebra over the resolved
+operad via the rectification functor
 $\Omega_\kappa \tilde{B}_\iota$
-\textup{\cite[Theorem~1.2]{Val16}}. In particular, the homotopy
-category of strict chiral algebras and of
-$\mathrm{Ch}_\infty$-algebras with $\infty$-morphisms are equivalent:
+\textup{\cite[Theorem~1.2]{Val16}}. For chiral algebras on a curve,
+the same rectification is used only after transport to the
+factorization ambient of Theorem~$A^{\infty,2}$. In particular, on the
+finite-type conilpotent-complete factorization surface, the homotopy
+category of strict chiral algebras and of $\mathrm{Ch}_\infty$-algebras
+with $\infty$-morphisms are equivalent:
 \[
 \mathrm{Ho}(\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg})
 \;\simeq\;
 \infty\text{-}\mathrm{Ch}_\infty\text{-}\mathrm{alg}\, /\,{\sim_h}.
 \]
-In fact, \textup{\cite[Theorem~3.8]{Val16}} upgrades this to an
-equivalence of $\infty$-categories: the simplicial category of
-$\mathrm{Ch}_\infty$-algebras with $\infty$-morphisms is a model
-for the $\infty$-category underlying dg chiral algebras. This is
-the target for the DK-$5$ categorical lift
+In the chain-operadic model,
+\textup{\cite[Theorem~3.8]{Val16}} upgrades this to an equivalence of
+$\infty$-categories. The chiral version uses the
+Francis--Gaitsgory--Rozenblyum model structure before taking this
+underlying $\infty$-category. This is the target for the DK-$5$
+categorical lift
 \textup{(}\S\textup{\ref{sec:concordance-three-pillars})}.
 \end{corollary}
 
 \begin{proof}[References]
-\cite[Theorems~1.2, 3.7, and 3.8]{Val16}.
+\cite[Theorems~1.2, 3.7, and 3.8]{Val16} for the chain-operadic
+rectification; \cite[Chapter~IV.5]{GR17} and
+Theorem~\ref{thm:A-infinity-2} for the chiral factorization ambient.
 \end{proof}
 
 \subsection{Summary}
@@ -6578,7 +6502,7 @@ the target for the DK-$5$ categorical lift
 \textbf{Regime} & \textbf{Condition} & \emph{Examples} \\
 \hline
 \hline
-\textbf{Strict Nilpotence} & $\mu_0 \in Z(\mathcal{A})$ &
+\textbf{Strict Nilpotence} & $\mu_0 \in Z(\mathcal{A})$ plus square-zero total correction &
 \begin{itemize}[leftmargin=*]
 \item Heisenberg $\mathcal{H}_k$
 \item Kac--Moody $\widehat{\mathfrak{g}}_k$
@@ -6586,14 +6510,14 @@ the target for the DK-$5$ categorical lift
 \item $W$-algebras $W_N$
 \item Free fermions $\beta\gamma$
 \end{itemize}
-$d_{\text{bar}}^2 = 0$ strictly (Theorem~\ref{thm:genus-induction-strict}) \\
+$d_{\text{bar}}^2 = 0$ strictly for the corrected total differential (Theorem~\ref{thm:genus-induction-strict}) \\
 \hline
 \textbf{Curved (Non-Central)} & $\mu_0 \notin Z(\mathcal{A})$ &
 \begin{itemize}[leftmargin=*]
 \item Hypothetical non-central extensions
 \item Some deformed algebras
 \end{itemize}
-$d_{\text{bar}}^2 \neq 0$, need higher homotopies \\
+raw CDG square nonzero, need higher homotopies/coderived localization \\
 \hline
 \textbf{Homotopy Coherent} & No curvature, but $d^2 \sim 0$ only &
 \begin{itemize}[leftmargin=*]
@@ -6607,20 +6531,22 @@ Requires full $A_\infty$ or $L_\infty$ framework \\
 \end{center}
 
 \begin{remark}[Consequences of strict nilpotence]\label{rem:why-strict-matters}
-Strict nilpotence allows direct cohomology computation
+Strict nilpotence of the corrected total differential allows direct cohomology computation
 (Theorem~\ref{thm:genus-induction-strict}) and ensures the bar-cobar
-adjunction works without completion on the quadratic locus
+adjunction works without completion on the quadratic square-zero locus
 (Theorem~\ref{thm:bar-cobar-adjunction}); homotopy nilpotence
 requires spectral sequences that may not degenerate and completion
 with attendant convergence issues
 (Theorem~\ref{thm:completion-necessity}). Physically, strict
 nilpotence means quantum corrections are controlled by central charges
 (Theorem~\ref{thm:deformation-obstruction}); homotopy nilpotence
-requires full renormalization group analysis. All vertex operator
-algebras (with the standard vacuum axiom) and chiral algebras arising
-from unitary CFT have central curvature
+requires full renormalization group analysis. The standard
+positive-energy vertex-operator families with the vacuum axiom, and
+the unitary CFT chiral algebras whose anomaly is a scalar vacuum
+class, have central curvature
 (Remark~\ref{rem:voa-central-curvature};
-Theorem~\ref{thm:genus-induction-strict}), placing them in the strict
+Theorem~\ref{thm:genus-induction-strict}); after the
+period-corrected total differential is chosen, they lie in the strict
 regime.
 \end{remark}
 
@@ -6628,11 +6554,15 @@ regime.
 
 \begin{theorem}[GLZ, Theorem 5.3; \ClaimStatusProvedElsewhere]\label{thm:glz-curved}
 For a quadratic chiral algebra $\mathcal{A}$ with central curvature
-$\mu_0 \in Z(\mathcal{A})$, the Koszul dual $\mathcal{A}^!$ exists as
-a curved cooperad, the bar-cobar adjunction
-$\Omega(B(\mathcal{A})) \simeq \mathcal{A}$ holds, and the
-equivalence is an isomorphism in the derived
-category~\textup{\cite{GLZ22}}.
+$\mu_0 \in Z(\mathcal{A})$, complete for the chosen filtration, the
+Koszul dual $\mathcal{A}^!$ exists as a curved cooperad. If the
+curvature is killed by an MC twist, or if the period-corrected total
+differential is used, the algebra-side counit
+$\Omega(B(\mathcal{A})) \to \mathcal{A}$ is an isomorphism in the
+ordinary derived category. Without that square-zero hypothesis the
+same comparison is a Positselski coderived statement: its cone is
+coacyclic in the second-kind category of curved comodules, not a raw
+chain-level inverse~\textup{\cite{GLZ22,Positselski11}}.
 \end{theorem}
 
 Theorem~\ref{thm:central-implies-strict} provides the geometric
@@ -6660,7 +6590,8 @@ associativity.
 
 \begin{corollary}[Bar cohomology computes Ext;
  \ClaimStatusProvedElsewhere]\label{cor:bar-computes-ext}
-For a chiral algebra $\mathcal{A}$ with central curvature,
+For a chiral algebra $\mathcal{A}$ with central curvature and a
+square-zero total bar differential,
 the bar construction computes self-Ext of the vacuum module:
 \begin{equation}
 H^*(\bar{B}(\mathcal{A}), d_{\text{bar}}) =
@@ -6670,10 +6601,13 @@ This is the chiral analogue of the classical bar-Ext
 identification for algebras over operads
 \textup{(}\cite{LV12}, Theorem~2.2.4; the chiral
 adaptation is Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}\textup{)}.
+For a genuinely curved CDG bar object, the same formula is read after
+passing to the coderived category of curved comodules.
 \end{corollary}
 
 \begin{corollary}[Koszul dual coalgebra {\cite{GK94}}; \ClaimStatusProvedElsewhere]\label{cor:koszul-dual-cooperad}
-For quadratic $\mathcal{A}$ with central curvature, the bar
+For quadratic $\mathcal{A}$ with central curvature and square-zero
+total bar model, the bar
 coalgebra $\barB(\cA)$ has cohomology
 \begin{equation}
 H^*(\bar{B}(\mathcal{A}))
@@ -6694,16 +6628,18 @@ $\hbar$-adic topology of the formal power series ring $\mathbb{C}[[\hbar]]$.
 Each term $Z_g(\mathcal{A})$ is well-defined because
 $\Dg{g}^{\,2} = 0$ strictly at genus $g$
 (Theorem~\ref{thm:genus-induction-strict}), so the cohomology
-$H^*(\bar{B}^{(g)}(\mathcal{A}))$ exists without formal completion.
+$H^*(\bar{B}^{(g)}(\mathcal{A}))$ exists on the chosen square-zero
+finite-type or completed surface.
 The formal power series $\sum_{g \geq 0} \hbar^{2g-2} Z_g$ is an element of
 $\hbar^{-2} \mathbb{C}[[\hbar^2]]$, which is a well-defined ring (Laurent series
 with a pole of bounded order). Convergence in the $\hbar$-adic topology is
 automatic: for every $N$, the partial sum $\sum_{g=0}^N \hbar^{2g-2} Z_g$
 agrees with $Z(\mathcal{A})$ modulo $\hbar^{2N}$.
 
-Here $d^2 = 0$ holds \emph{strictly} at each genus (not up
-to $\hbar$-corrections), so each $Z_g$ is an honest finite-dimensional vector
-space, not a formal deformation. This is the strict nilpotence established in
+Here $\Dg{g}^{\,2} = 0$ holds \emph{strictly} at each genus for
+the period-corrected total differential, so each $Z_g$ is an ordinary
+cohomology object in that ambient, not the cohomology of the raw curved
+fiberwise CDG operator. This is the strict nilpotence established in
 Section~\ref{sec:strict-vs-homotopy}.
 \end{proof}
 
@@ -6733,7 +6669,8 @@ boundary calculations.
 
 \subsubsection{Computational and functorial perspectives}
 
-Strict nilpotence holds degree by degree: $d^2(a \otimes b) = 0$
+Strict nilpotence of the corrected total model holds degree by degree:
+$d^2(a \otimes b) = 0$
 by direct calculation, $d^2(a \otimes b \otimes c) = 0$ using
 Arnold relations, and similarly through degree~$5$ using extended
 Arnold relations; centrality of $\mu_0$ is used at each stage.
@@ -6741,20 +6678,23 @@ It also follows from functoriality:
 
 \begin{theorem}[Functoriality of bar construction; \ClaimStatusConditional]\label{thm:bar-functorial-grothendieck}
 The bar construction:
-\[B: \mathrm{ChAlg}^{\mathrm{central}} \to \mathrm{Coalg}\]
-is a functor from chiral algebras with central curvature to coalgebras, characterized by the
+\[B: \mathrm{ChAlg}^{\mathrm{central,tot=0}} \to \mathrm{Coalg}\]
+is a functor from chiral algebras with central curvature and
+square-zero total differential to coalgebras, characterized by the
 universal property:
 \[\mathrm{Hom}_{\mathrm{ChAlg}}(\Omega(C),\mathcal{A}) \simeq
 \mathrm{Hom}_{\mathrm{Coalg}}(C,B(\mathcal{A}))\]
 
-This adjunction automatically implies $d_{\mathrm{bar}}^2 = 0$ by the universal property.
+For a central curved CDG model before passing to a square-zero total
+differential, the same construction lands in curved CDG-coalgebras
+and is interpreted coderivedly.
 \end{theorem}
 
 \begin{proof}
 The proof assembles three previously established results into the claimed adjunction.
 
 \emph{Functoriality.}
-By Theorem~\ref{thm:bar-functorial}, the bar construction $B$ is functorial: a morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $B(f): B(\mathcal{A}) \to B(\mathcal{B})$ compatible with the coalgebra structures. The category $\mathrm{ChAlg}^{\mathrm{central}}$ consists of chiral algebras whose curvature $\mu_0$ lies in the center $Z(\mathcal{A})$.
+By Theorem~\ref{thm:bar-functorial}, the bar construction $B$ is functorial: a morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $B(f): B(\mathcal{A}) \to B(\mathcal{B})$ compatible with the coalgebra structures. The category $\mathrm{ChAlg}^{\mathrm{central,tot=0}}$ consists of chiral algebras whose curvature $\mu_0$ lies in the center $Z(\mathcal{A})$ and whose chosen total bar differential squares to zero.
 
 \emph{Adjunction.}
 The bar-cobar adjunction $\Omega \dashv B$ is established in
@@ -6767,8 +6707,16 @@ $\tilde{\phi}$ restricts to the generators of~$\Omega(C)$ and extends
 uniquely to the coalgebra map $C \to B(\mathcal{A})$ by the cofree
 property of the bar coalgebra.
 
-\emph{$d^2 = 0$ from the adjunction.}
-The bar differential $d_{\bar{B}}$ on $B(\mathcal{A})$ satisfies $d_{\bar{B}}^2 = 0$ when the curvature $\mu_0$ is central: by Theorem~\ref{thm:central-implies-strict}, the centrality $\mu_0 \in Z(\mathcal{A})$ implies that the curvature-induced term $[\mu_0, -]$ in $d_{\bar{B}}^2$ vanishes identically. From the Grothendieck perspective, this is automatic: $d_{\bar{B}}$ is the unique coderivation on $B(\mathcal{A})$ whose projection to cogenerators recovers the chiral algebra structure maps. The condition $d_{\bar{B}}^2 = 0$ is equivalent to the $A_\infty$ relations on $\mathcal{A}$, which reduce to the associativity of the chiral product when $\mu_0$ is central (the curved $A_\infty$ relations $\sum m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0$ collapse because the terms involving $m_0 = \mu_0$ commute with everything).
+\emph{$d^2 = 0$ from the chosen square-zero total model.}
+The bar differential $d_{\bar{B}}$ on $B(\mathcal{A})$ satisfies
+$d_{\bar{B}}^2 = 0$ in this category because the square-zero total
+differential is part of the hypothesis. Centrality of
+$\mu_0 \in Z(\mathcal{A})$ kills the internal commutator
+$[\mu_0,-]$, while Theorem~\ref{thm:central-implies-strict} supplies
+the closedness and boundary-cancellation hypotheses for the total
+correction. Before those hypotheses are imposed, $B(\mathcal{A})$ is
+a curved CDG-coalgebra and the bar-cobar comparison is
+coderived/comodule-detected.
 \end{proof}
 
 \begin{remark}[Dependencies]
@@ -6776,11 +6724,13 @@ This proof uses three ingredients:
 \begin{enumerate}[label=(D\arabic*)]
 \item Concrete bar-functor functoriality (Theorem~\ref{thm:bar-functorial}).
 \item The bar-cobar adjunction framework (Theorem~\ref{thm:bar-cobar-adjunction}).
-\item Central curvature implies strict nilpotence (Theorem~\ref{thm:central-implies-strict}).
+\item Central curvature plus square-zero total correction implies strict nilpotence (Theorem~\ref{thm:central-implies-strict}).
 \end{enumerate}
 \end{remark}
 
-Once centrality of $\mu_0$ ensures the adjunction exists, the nilpotence $d^2 = 0$ follows formally.
+The adjunction exists independently of centrality. Centrality, together
+with the square-zero total correction, is the hypothesis that permits
+ordinary cohomology instead of the curved coderived category.
 
 \subsection{Strict versus homotopy nilpotence}
 \label{subsec:strict-vs-homotopy-nilpotence}
@@ -6788,8 +6738,22 @@ Once centrality of $\mu_0$ ensures the adjunction exists, the nilpotence $d^2 = 
 \begin{remark}[Strict vs homotopy nilpotence]
 For chiral algebras $\mathcal{A}$ arising from vertex operator algebras
 (satisfying the vacuum axiom $Y(\mathbf{1},z) = \mathrm{id}$) or from
-conformal field theories whose anomalies are central, we have $d_{\text{bar}}^2 = 0$ strictly at all genera. The ingredients are: (1) the curvature $\mu_0$ is proportional to the vacuum $\mathbf{1}$, hence central by the vacuum axiom (Remark~\ref{rem:voa-central-curvature}); (2) on the affine genus-$0$ screen, Arnold relations ensure $d_{\mathrm{residue}}^2 = 0$, while on $\mathbb{P}^1$ and for $g\geq1$ this residue-square computation also uses the projective and period relations of Proposition~\ref{prop:arnold-higher-genus}; (3) the Leibniz rule gives the anticommutation of $d_{\mathrm{internal}}$ and $d_{\mathrm{residue}}$; (4) the modular operad boundary relations on $\overline{\mathcal{M}}_{g,n}$ extend this to all genera (Theorem~\ref{thm:genus-induction-strict}).
-This covers all standard examples (Heisenberg, Kac--Moody, Virasoro, $W$-algebras, free field systems). For non-unital chiral algebras or theories with non-central anomalies, $d^2 = 0$ may hold only up to homotopy.
+conformal field theories whose anomalies are central, the corrected
+total bar differential satisfies $d_{\text{bar}}^2 = 0$ strictly at
+each genus in the corrected tower. The ingredients are: (1) the curvature $\mu_0$ is
+proportional to the vacuum $\mathbf{1}$, hence central by the vacuum
+axiom (Remark~\ref{rem:voa-central-curvature}); (2) on the affine
+genus-$0$ screen, Arnold relations ensure $d_{\mathrm{residue}}^2 = 0$,
+while on $\mathbb{P}^1$ and for $g\geq1$ this residue-square
+computation also uses the projective and period relations of
+Proposition~\ref{prop:arnold-higher-genus}; (3) the Leibniz rule gives
+the anticommutation of $d_{\mathrm{internal}}$ and
+$d_{\mathrm{residue}}$; (4) the modular operad boundary relations on
+$\overline{\mathcal{M}}_{g,n}$ extend this through the corrected genus tower
+(Theorem~\ref{thm:genus-induction-strict}). This covers the corrected
+total models of the standard examples. For non-unital chiral algebras
+or theories with non-central anomalies, the raw CDG square may vanish
+only after higher homotopies and coderived localization.
 \end{remark}
 
 %% ================================================================
@@ -7420,9 +7384,11 @@ w^{\mathrm{chir}} \;=\; \hbar^2\cdot K^{\kappa_{\mathrm{ch}}}\cdot \mathbf{1}_{\
 so that the curved bar $B^w(\mathbf H_{\Delta_5})$ admits a strict
 quasi-isomorphism
 $\Omega^w(B^w(\mathbf H_{\Delta_5}))\simeq\mathbf H_{\Delta_5}$
-as curved coalgebras-algebras. Off the Lusztig locus the curvature
-is non-trivial and the adjunction is genuinely curved, requiring
-pro-object / weight-completed framework.
+as curved coalgebras-algebras only on the curvature-cancelled
+Lusztig surface. Off that surface the curvature is non-trivial and
+the adjunction is genuinely curved: the comparison is
+pro-object/weight-completed and coderived, detected by comodules
+rather than by a raw chain inverse.
 \end{remark}
 
 \begin{remark}[Curved bar in the Hall subcategory]
@@ -7433,9 +7399,11 @@ subcategory of $\mathrm{CoHA}_{K3\times E}$ with differential
 d_{B^w} \;=\; d_{\mathrm{Hall}} + d_{\mathrm{Sieg}} + \hbar\, d_{\mathrm{assoc}} + \hbar^2\, d_{\Phi_{10}/\eta^{24}} + w^{\mathrm{chir}}\cdot\mathrm{Id},
 \]
 where the last piece is the curvature contribution. The closedness
-$(d_{B^w})^2 = 0$ \emph{requires} $\hbar^2\cdot K^{\kappa_{\mathrm{ch}}} = -1$,
+$(d_{B^w})^2 = 0$ in the square-zero total model \emph{requires}
+$\hbar^2\cdot K^{\kappa_{\mathrm{ch}}} = -1$,
 reproducing the universal identity as the curvature-cancellation
-condition. Primary-lit: Positselski 2011 (curved bar),
+condition. Away from this equality $(B^w,d_{B^w},w^{\mathrm{chir}})$
+is a curved CDG object. Primary-lit: Positselski 2011 (curved bar),
 Schiffmann-Vasserot 2012, Drinfeld 1990.
 \end{remark}
 
@@ -7462,11 +7430,13 @@ CDG-coalgebra level (Theorems \ref{thm:chiral-positselski-weight-completed}
 and relatives), with explicit curvature $w^{\mathrm{chir}}$ for
 the K3 chiral bialgebra $\mathbf{H}_{\Delta_5}$. The chain-level
 addition is the chain-level statement of curved bar-cobar inversion
-across the Humbert stratification of $\overline{\mathcal{A}_2}$:
-on the Koszul locus the curvature cancels exactly and the curved
-adjunction is strict; on each Humbert wall a distinct failure
-mode obstructs strict chain-level inversion, with the
-$A_\infty$-deformation providing the minimal repair at $H_3$.
+on the open Koszul locus of the Humbert stratification of
+$\overline{\mathcal{A}_2}$: there the curvature cancels exactly and
+the curved adjunction is strict. On each Humbert wall a distinct
+failure mode obstructs strict chain-level inversion; the repaired
+statement is weight-completed and coderived, with the
+$A_\infty$-deformation providing the minimal comodule-detected
+repair at $H_3$.
 
 \begin{remark}[Curved bar-cobar strict inversion on
 $U = \overline{\mathcal{A}_2}\setminus(H_1\cup H_3\cup H_4)$]
@@ -7494,7 +7464,7 @@ $\Omega^w(B^w(\mathbf{H}_{\Delta_5}))|_U \simeq
 quasi-isomorphism, not merely a coderived equivalence. This is the
 chain-level upgrade of
 Remark~\ref{rem:bcac-deep-1} from its K3-chiral ambient
-status.
+statement.
 \end{remark}
 
 \begin{remark}[Curvature perturbation on $H_1$: $\mathbb{Z}/8$-band]
@@ -7515,7 +7485,7 @@ direct-sum bar coalgebra fails Mittag--Leffler precisely on the
 phase mismatch between eigenspaces, while the weight-completed bar
 coalgebra restores it (Lemma~\ref{lem:weight-filtration-basics}).
 Strict chain-level curved bar-cobar is lost at $H_1$; the
-weight-completed analogue survives.
+weight-completed coderived analogue survives.
 \end{remark}
 
 \begin{remark}[Curvature perturbation on $H_3$: three-loop
@@ -7550,8 +7520,9 @@ $h^{(3)}|_{H_3}$ with
 $[d_{B^w}, h^{(3)}|_{H_3}] = \phi^{(3)}|_{H_3}$,
 constructed by the Positselski perturbation lemma
 \cite[\S\S3--4]{Positselski11}. The resulting $A_\infty$-curved
-bar-cobar pair is strict on the $A_\infty$ level but requires the
-$h^{(3)}$ homotopy as extra data.
+bar-cobar pair has a coacyclic cone in the completed coderived
+category and requires the $h^{(3)}$ homotopy as extra data; it is not
+a raw chain-level inverse on the wall.
 \end{remark}
 
 \begin{remark}[Curvature perturbation on $H_4$: Kuga--Satake
@@ -7573,7 +7544,7 @@ Kuga--Satake construction \cite{KugaSatake67,Deligne72} to an
 banding cocycle in $H^2_{\text{\'et}}(H_4, \mathbb{Z}/2)$
 trivialises the twist on \'etale neighbourhoods but not globally.
 Strict chain-level curved bar-cobar descends through
-$\mathcal{G}_{H_4}$ only at the pro-object level; the
+$\mathcal{G}_{H_4}$ only at the pro-object coderived level; the
 weight-completed curved bar-cobar
 (Theorem~\ref{thm:chiral-positselski-weight-completed}) handles
 the gerbe banding automatically.
@@ -7604,8 +7575,8 @@ $\widehat{\bar B}^{\mathrm{ch}}(\mathbf{H}_{\Delta_5})$
 chain-level inversion fails with obstruction
 $\phi^{(3)}|_{H_3} = -8\cdot c_{\Phi_{10}/\eta^{24}}|_{H_3}$; the
 $A_\infty$-deformation installs the homotopy $h^{(3)}|_{H_3}$ of
-Remark~\ref{rem:bcac-3} to repair inversion at the
-$A_\infty$ level
+Remark~\ref{rem:bcac-3} to produce a coacyclic-cone repair in the
+completed coderived $A_\infty$ ambient
 (cross-ref Theorem~\ref{thm:climax-W18-global-inversion}~(c)).
 \end{enumerate}
 \end{theorem}
@@ -7646,7 +7617,7 @@ $\kappa_{\mathrm{BKM}} = c_N(0)/2$ identity]
 \index{universal trace identity!chain-level footing}
 The trichotomy
 (Theorem~\ref{thm:bcac-trichotomy}) provides the
-chain-level footing for the universal trace identity
+ambient-qualified footing for the universal trace identity
 $\kappa_{\mathrm{BKM}}(X) = \tfrac{1}{2} K(A_X)$ of
 Equation~\eqref{eq:trace-identity-platonic}: the identity is
 defined on the K3-fibered Class-A locus where the chiral bar
@@ -7659,7 +7630,7 @@ $A_\infty$-deformation carries the $c_3 = -8$ correction
 faithfully. The chapter's foundation (establishing the
 curvature cancellation at the Lusztig point) and the chain-level
 (establishing the Humbert stratification) therefore together
-provide the chain-level scaffold on which the Vol.~III
+provide the strict-open and coderived-wall scaffold on which the Vol.~III
 identification $\kappa_{\mathrm{BKM}} = c_N(0)/2$ of
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic} rests.
 \end{remark}
@@ -7671,12 +7642,11 @@ admissible Humbert divisor $H_n$ ($n\equiv 0,3\pmod 4$)}
 The trichotomy theorem
 (Theorem~\ref{thm:bcac-trichotomy}) records curved bar-cobar
 in three ambient-qualified lanes on the leading three walls
-$\{H_1,H_3,H_4\}$. The purpose of this section is to make the
-chain-level mechanism uniform across \emph{every} admissible
-Humbert divisor
+$\{H_1,H_3,H_4\}$. The same extension/obstruction mechanism exists
+across every admissible Humbert divisor
 $H_n\subset\overline{\mathcal{A}_2}$ with $n\equiv 0,3\pmod 4$, and
-to write down the explicit extension/obstruction formula governing
-the curved adjunction on the formal neighbourhood of $H_n$.
+is governed by the explicit formula below on the formal neighbourhood
+of $H_n$.
 
 \subsection{The curved nearby-cycle functor $\psi_n^w$}
 \label{subsec:bcac-curved-nearby-cycle}
@@ -7790,6 +7760,8 @@ homotopy $\phi^{(n)}$ satisfying
  \text{in}\quad
  \mathrm{Hom}_{\mathrm{CDG}}(B^w(A),\Omega^w B^w(A)).
 \]
+In the second case the output is a coderived/comodule-detected
+extension with coacyclic cone, not a strict chain-level inverse.
 \ClaimStatusProvedHere{}
 \end{theorem}
 
@@ -7906,7 +7878,7 @@ locus and the formal neighbourhoods of admissible Humbert
 divisors. The curved bar-cobar adjunction
 $(\Omega^w\dashv B^w)$ on $A=\mathbf{H}_{\Delta_5}$ assembles via
 \v Cech descent on $\mathcal{U}_{\mathcal{A}_2}$ to a global
-curved bar-cobar quasi-isomorphism
+curved bar-cobar equivalence
 \[
  \Omega^w(B^w(A))
  \;\simeq\;
@@ -7937,12 +7909,11 @@ Lemma~\ref{lem:bcac-triple-intersection-cocycle-splits}.
 \end{theorem}
 
 \begin{proof}
-Lane assembly: each lane is a strict quasi-isomorphism in its
-ambient by
-Theorem~\ref{thm:bcac-trichotomy} (for $U^{\mathrm{adm}}$
-and $H_3$) and
-Theorem~\ref{thm:bcac-extension-obstruction-across-Hn} (for
-general admissible $H_n$). \v Cech cocycle condition on double
+Lane assembly: the open lane is a strict chain-level
+quasi-isomorphism, while each wall lane is a completed coderived
+equivalence with coacyclic cone, by Theorem~\ref{thm:bcac-trichotomy}
+and Theorem~\ref{thm:bcac-extension-obstruction-across-Hn}. \v Cech
+cocycle condition on double
 intersections: on $\widehat{\mathcal{O}}_{H_n}\cap U^{\mathrm{adm}}$
 the restriction of the weight-completed lane to the generic fibre
 is Mittag--Leffler strict (by
@@ -7964,10 +7935,10 @@ Bruinier $2002$ \cite{Bruinier2002LNM};
 Saito $1988$ \cite{Saito1988}.
 \end{proof}
 
-\begin{remark}[Independent verification of
+\begin{remark}[Independent checks for
 Theorem~\ref{thm:bcac-global-cech-descent}]
-\label{rem:bcac-cech-descent-independent-verification}
-Four verification paths: (1) direct computation at each leading
+\label{rem:bcac-cech-descent-independent-checks}
+Four checks: (1) direct computation at each leading
 wall $H_1,H_3,H_4$ via
 Lemmas~\ref{lem:cclimax-H1-failure}--\ref{lem:cclimax-H4-failure}
 in Chapter~\ref{chap:climax-platonic}; (2) identification

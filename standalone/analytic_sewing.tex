@@ -97,9 +97,10 @@ the decisive first case.  For lattice vertex algebras we prove
 that the partition function factors into a Heisenberg Fredholm
 determinant times a Siegel theta function, both absolutely
 convergent on the Siegel upper half-space.  The general
-HS-sewing theorem verifies the criterion for the entire standard
-landscape: Heisenberg, affine Kac--Moody, Virasoro, $\cW_N$
-algebras, and lattice vertex algebras.
+HS-sewing theorem verifies the criterion for Heisenberg, positive
+integer-level affine Kac--Moody, lattice vertex algebras, and for
+Virasoro and principal $\cW_N$ after a positive Hilbert model with
+polynomial OPE bounds is fixed.
 
 We identify a three-layer analytic gap separating the algebraic
 bar construction from convergent partition functions: the sewing
@@ -190,8 +191,8 @@ operators $m_{a,b}^c \colon H_a \otimes H_b \to H_c$ satisfy
 \end{equation}
 for some $0 < q < 1$.  We prove
 (Proposition~\ref{prop:closed-trace-class}) that this single
-estimate delivers the full sewing package: every closed
-amplitude is trace class on the weighted completion
+estimate delivers the sewing package for the \(q\)-damped kernel:
+every closed amplitude is trace class on the weighted completion
 $H_q := \widehat{\bigoplus}_n q^n H_n$.
 
 \paragraph{The Heisenberg Fredholm determinant.}
@@ -468,15 +469,17 @@ Let $E$ be any complete locally convex realisation of
 $\cA_{\mathrm{alg}}$ for which every algebraic amplitude
 $A_\Sigma^{\mathrm{alg}}$ extends continuously.  Then the
 identity on~$\cA_{\mathrm{alg}}$ extends uniquely to a
-continuous map $\cA^{\mathrm{sew}} \to E$.
+continuous map $E \to \cA^{\mathrm{sew}}$ with dense image, provided
+$\cA_{\mathrm{alg}}$ is dense in~$E$.
 \end{proposition}
 
 \begin{proof}
 By hypothesis, each seminorm~$p_{\Sigma,\xi,\eta}$ is
 continuous on~$E$.  Hence the identity
-$\cA_{\mathrm{alg}} \to E$ is continuous for the sewing
-topology.  By completeness of~$E$, it extends uniquely from
-the Hausdorff completion~$\cA^{\mathrm{sew}}$.
+$(\cA_{\mathrm{alg}},E\text{-topology}) \to
+(\cA_{\mathrm{alg}},\text{sewing topology})$ is continuous.  Since
+$\cA^{\mathrm{sew}}$ is complete, this map extends uniquely from
+the dense algebraic core to~$E$.
 \end{proof}
 
 \begin{remark}[Comparison with other completions]
@@ -485,13 +488,12 @@ The sewing envelope need not coincide with naive completions:
 the $q$-adic completion
 $\widehat{\bigoplus}_n q^n H_n$, the Hilbert-space completion
 with respect to a fixed invariant form, Zhu's $C_2$-quotient,
-or Moriwaki's ind-Hilbert completion.  All of these are quotients
-or subspaces of~$\cA^{\mathrm{sew}}$ under the universal
-property, but none is a~priori large enough to carry every
-bordism amplitude as a continuous map.  The HS-sewing criterion
-of the next section is the device by which one identifies a
-concrete Hilbert completion
-$H_q \subset \cA^{\mathrm{sew}}$.
+or Moriwaki's ind-Hilbert completion.  They compare to
+$\cA^{\mathrm{sew}}$ by continuous maps once their amplitudes are
+continuous; embeddings or quotient descriptions require additional
+topological hypotheses.  The HS-sewing criterion of the next section
+constructs a concrete Hilbert completion~$H_q$ equipped with a dense
+comparison map $H_q \to \cA^{\mathrm{sew}}$.
 \end{remark}
 
 \subsection{Functoriality}\label{subsec:sewing-functoriality}
@@ -684,16 +686,25 @@ $q \in (0,1)$ if
 \|m_{a,b}^c\|_{\HS}^2
 \;<\; \infty.
 \end{equation}
-The \emph{weighted completion} is
-$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$, with inner
-product
-$\langle v, w \rangle_q = q^{2n}\langle v, w\rangle_{H_n}$
-for $v, w \in H_n$.
-\end{definition}
+	The \emph{weighted completion} is
+	$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$, with inner
+	product
+	$\langle v, w \rangle_q = q^{2n}\langle v, w\rangle_{H_n}$
+	for $v, w \in H_n$.
+	The \emph{$q$-damped pair-of-pants} is the sectorwise map
+	\[
+	m_q\big|_{H_a\otimes H_b\to H_c}
+	\;:=\;
+	q^{(3a+3b-c)/2}\,m_{a,b}^c ,
+	\]
+	viewed as an operator $H_q\widehat\otimes H_q\to H_q$.
+	\end{definition}
 
-The scaling~$q^{2n}$ is the unique convention under which the
-weighted pair-of-pants~$m_q$ is Hilbert--Schmidt precisely
-when~\eqref{eq:hs-sewing} holds.
+	The damping is part of the sewing kernel.  The raw multiplication
+	on the Hilbert space with inner product
+	$q^{2n}\langle-,-\rangle_{H_n}$ contributes the sector factor
+	$q^{2(c-a-b)}$ to the Hilbert--Schmidt norm, not the factor in
+	\eqref{eq:hs-sewing}.
 
 \subsection{The trace-class theorem}
 \label{subsec:trace-class}
@@ -702,7 +713,7 @@ when~\eqref{eq:hs-sewing} holds.
 \label{prop:closed-trace-class}
 Suppose $\cA$ satisfies HS-sewing at parameter~$q$.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the weighted pair-of-pants
+\item the $q$-damped pair-of-pants
 $m_q \colon H_q \otimes H_q \to H_q$ is Hilbert--Schmidt, with
 \[
 \|m_q\|_{\HS}^2
@@ -712,20 +723,20 @@ $m_q \colon H_q \otimes H_q \to H_q$ is Hilbert--Schmidt, with
 \item every closed amplitude of~$\cA$, built from any finite
 composition of pair-of-pants multiplications and traces, is
 trace class on~$H_q$;
-\item the sewing envelope~$\cA^{\mathrm{sew}}$ admits a
-continuous linear map
-$\cA^{\mathrm{sew}} \to H_q$ with dense image.
+\item the weighted Hilbert completion~$H_q$ admits a continuous
+linear map
+$H_q \to \cA^{\mathrm{sew}}$ with dense image.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 Claim~(i): identifying $H_a \otimes H_b$ with the
 weight-$(a+b)$ subspace of $H_q^{\widehat{\otimes} 2}$,
-the sector component $m_{a,b}^c$ contributes
-$q^a \cdot q^b \cdot q^{-c} \cdot q^{2c} = q^{a+b+c}$
-to the Hilbert--Schmidt norm of~$m_q$ (the factor~$q^{-c}$
-comes from the output side, the factor~$q^{2c}$ from the
-normalisation of the inner product on~$H_c$).  Summing gives
+	the raw sector component $m_{a,b}^c$ contributes
+	$q^{2(c-a-b)}\|m_{a,b}^c\|_{\HS}^2$.  The damping
+	$q^{(3a+3b-c)/2}$ multiplies this by $q^{3a+3b-c}$, so the
+	sector contribution is $q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2$.
+	Summing gives
 $\|m_q\|_{\HS}^2 =
 \sum q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2 < \infty$.
 
@@ -742,7 +753,9 @@ Definition~\ref{def:sewing-envelope} are all dominated by
 the~$H_q$ inner product, because each matrix coefficient
 factorises through the trace-class operator of claim~(ii).
 Continuity of the identity
-$\cA_{\mathrm{alg}} \to H_q$ for the sewing topology follows.
+$(\cA_{\mathrm{alg}},H_q\text{-topology}) \to
+(\cA_{\mathrm{alg}},\text{sewing topology})$ follows, and completion
+gives $H_q \to \cA^{\mathrm{sew}}$.
 \end{proof}
 
 \begin{corollary}[Partition functions converge]
@@ -935,12 +948,11 @@ special cases:
  HS-sewing does not), but strictly weaker in scope (it applies
  only to $C_2$-cofinite algebras, while HS-sewing applies to
  generic-level universal algebras).
-\item \emph{Trace-class pair-of-pants:} one could replace the
- Hilbert--Schmidt condition on~$m_{a,b}^c$ with a trace-class
- condition on the composed operator
- $m_q \circ m_q^*$.  This is strictly weaker than HS-sewing
- (trace class $\subset$ Hilbert--Schmidt) but harder to verify
- from OPE data alone.
+\item \emph{Closed-amplitude trace class:} one could require
+ trace-class convergence only for the closed amplitudes
+ entering a given partition function.  This can be weaker than
+ controlling the full pair-of-pants operator, but it is less local
+ and is harder to verify from OPE data alone.
 \end{enumerate}
 
 The HS condition strikes the optimal balance between
@@ -1770,8 +1782,7 @@ OPE-level estimates.
 Let $\cA$ be a positive-energy chiral algebra with a choice of
 pre-Hilbert structure on each sector~$H_n$.  Suppose:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(\textbf{subexponential sector growth})}\;
-$\log\dim H_n = o(n)$; equivalently,
+\item \textup{(\textbf{Hardy--Ramanujan sector growth})}\;
 $\dim H_n \leq C e^{\alpha\sqrt{n}}$ for some
 $C, \alpha > 0$;
 \item \textup{(\textbf{polynomial OPE coefficient growth})}\;
@@ -1825,11 +1836,10 @@ absolutely.
 \begin{corollary}[Automatic HS-sewing for Koszul
  algebras]\label{cor:koszul-automatic}
 Every finitely strongly generated chirally Koszul algebra
-satisfies HS-sewing.  The PBW theorem provides polynomial OPE
-growth; finite strong generation provides the finite $N$ in
-hypothesis~(ii); positive energy provides subexponential sector
-growth.  HS-sewing is therefore an independent analytic
-condition only for infinitely generated algebras.
+satisfies HS-sewing after a positive Hilbert model is fixed and the
+PBW monomial basis has polynomial OPE matrix coefficients.  Finite
+strong generation gives Hardy--Ramanujan sector growth; PBW gives
+the finite exponent in hypothesis~(ii).
 \end{corollary}
 
 \subsection{Verification on the standard
@@ -1867,7 +1877,11 @@ $T(z)T(w) \sim (c/2)(z-w)^{-4} + 2T(w)(z-w)^{-2}
 is quartic (the $r$-matrix has cubic pole by $d\log$-absorption,
 per the pole relation $\mathrm{pole}_r = \mathrm{pole}_{\mathrm{OPE}} - 1$).
 Repeated normal products give $|C| \leq K(n+1)^2$ with
-$N = 2$.  The criterion applies at every central charge~$c$.
+$N = 2$ in the PBW monomial norm, and in the unitary range this is
+a genuine Hilbert estimate.  At nonunitary or degenerate central
+charges the Shapovalov form is not a positive Hilbert form; the
+criterion applies only after choosing a positive quotient or
+completion for which the displayed polynomial bound is verified.
 \end{example}
 
 \begin{example}[$\cW_N$-algebras]\label{ex:wn}
@@ -1875,9 +1889,10 @@ The principal~$\cW_N$-algebra has $N-1$ generators of
 conformal weights $2,3,\ldots,N$.  Sector dimensions satisfy
 $\dim H_n \leq Ce^{\alpha\sqrt{n}}$ from the $\cW_N$ character
 formula.  OPE coefficient growth is
-$|C| \leq K(n+1)^{2N}$; applying
+$|C| \leq K(n+1)^{2N}$ in the PBW monomial norm.  Applying
 Theorem~\ref{thm:general-hs-sewing} gives HS-sewing at every
-$0 < q < 1$.
+$0 < q < 1$ in any positive Hilbert realization satisfying the
+same bound.
 \end{example}
 
 \begin{example}[Lattice vertex algebras]\label{ex:lattice}
@@ -1888,8 +1903,9 @@ $|C| \leq K \cdot r$, $N = r$.
 
 \begin{proposition}[Summary table]\label{prop:summary-table}
 The following table records the HS-sewing data for the standard
-landscape.  Every entry satisfies the hypotheses of
-Theorem~\ref{thm:general-hs-sewing}.
+landscape.  The entries prove the criterion in the indicated
+positive Hilbert realizations; for nonunitary degenerate quotients
+the polynomial bound is an additional normed-model hypothesis.
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{l|ccc|c}
@@ -2281,7 +2297,7 @@ the identification of~$\cA^{\mathrm{sew}}$ with a specific
 Hilbert space is additional data.
 \end{proof}
 
-For the standard landscape, the current status of each layer:
+For the standard landscape, each layer has the following proof state:
 
 \begin{center}
 \small
@@ -2309,23 +2325,26 @@ the primary open problem of the analytic sewing programme.
 \subsection{The sewing envelope as a nuclear
  space}\label{subsec:nuclear}
 
-The sewing envelope carries a natural nuclear topology
-(projective limit of Hilbert spaces~$H_q$ as $q \to 1^-$).
-This nuclear structure provides additional functional-analytic
-tools.
+The weighted spaces~$H_q$ form a natural nuclear Hilbert scale as
+$q \to 1^-$. Identifying this scale with the sewing envelope requires
+the sewing topology and the weighted Hilbert-scale topology to control
+one another; HS-sewing alone gives only one comparison map.
 
-\begin{proposition}[Nuclear structure]
+\begin{proposition}[Nuclear Hilbert scale]
 \label{prop:nuclear-structure}
-Under HS-sewing, the sewing envelope $\cA^{\mathrm{sew}}$
-is the projective limit
+Assume the sector dimensions have subexponential growth. Then the
+weighted completions form a projective Hilbert scale
 \[
-\cA^{\mathrm{sew}}
-\;=\;
-\varprojlim_{q \to 1^-} H_q,
+\mathcal H^{\mathrm{scale}}
+\;:=\;
+\varprojlim_{q \to 1^-} H_q
 \]
-and the transition maps $H_{q'} \to H_q$ (for $q' > q$) are
-Hilbert--Schmidt.  In particular, $\cA^{\mathrm{sew}}$ is a
-nuclear Fr\'echet space.
+whose transition maps $H_{q'} \to H_q$ (for $q' > q$) are
+Hilbert--Schmidt. In particular, $\mathcal H^{\mathrm{scale}}$ is a
+nuclear Fr\'echet space. If, in addition, the sewing seminorms and
+the Hilbert-scale seminorms define the same completion on
+$\cA_{\mathrm{alg}}$, then
+$\cA^{\mathrm{sew}}\cong\mathcal H^{\mathrm{scale}}$.
 \end{proposition}
 
 \begin{proof}
@@ -2343,11 +2362,10 @@ of Hilbert spaces with Hilbert--Schmidt transition maps is
 nuclear~\cite{RS72}.
 \end{proof}
 
-The nuclear structure implies the Schwartz kernel theorem:
-every continuous bilinear form on $\cA^{\mathrm{sew}}$ is
-represented by a distribution kernel.  This provides the
-correct framework for the pair-of-pants multiplication as a
-continuous bilinear operation on the sewing envelope.
+The nuclear structure implies the Schwartz kernel theorem on
+$\mathcal H^{\mathrm{scale}}$. It applies to
+$\cA^{\mathrm{sew}}$ only after the additional topology-comparison
+hypothesis in Proposition~\ref{prop:nuclear-structure}.
 
 
 % ================================================================
@@ -3100,9 +3118,11 @@ A bounded operator $T \colon H \to H$ is:
  $T = \sum_j \lambda_j \langle f_j, \cdot\rangle g_j$
  with $\sum_j |\lambda_j| < \infty$.
 \end{enumerate}
-The three conditions (a), (b), (c) are equivalent for
-positive operators; in general,
-trace class $\subset$ Hilbert--Schmidt $\subset$ compact.
+For Hilbert spaces, nuclear and trace class agree.  In general,
+trace class $\subset$ Hilbert--Schmidt $\subset$ compact, and the
+first inclusion is strict even for positive operators: the diagonal
+operator $\operatorname{diag}(1/n)$ on $\ell^2$ is positive and
+Hilbert--Schmidt but not trace class.
 \end{definition}
 
 \begin{proposition}[Composition and trace]
@@ -3251,32 +3271,30 @@ function, by complementary mechanisms.
 % ================================================================
 
 % ================================================================
-% Wave-14 reconception addendum: MC5 harmonic projector c_r = S_r,
-%   Francis-Gaitsgory chain-level at nodes, weight-completed class M
+% Harmonic projector, chain-level nodal sewing, and weight-completed class M
 % ================================================================
 
-\section{Wave-14 reconception: MC5 harmonic identification
- and chain-level sewing at nodes}
-\label{sec:wave14-mc5-harmonic}
+\section{Harmonic identification and chain-level sewing at nodes}
+\label{sec:analytic-mc5-harmonic}
 
 The analytic sewing package of this paper is sharpened against
-the 2026-04-17 platonic-ideal MC5 closure wave at three precise
-points: (i)~the harmonic discrepancy coefficients
+three precise tests: (i)~the harmonic discrepancy coefficients
 $c_r(\cA)$ are not merely named but \emph{identified} with the
 shadow invariants $S_r(\cA)$; (ii)~chain-level sewing at nodes
-lifts to $\overline{\cM}_{g,n}$ via Mok25 logarithmic Fulton--MacPherson
-and Francis--Gaitsgory factorization-gluing; (iii)~the class~M
+conditionally lifts to $\overline{\cM}_{g,n}$ via Mok25 logarithmic
+Fulton--MacPherson and Francis--Gaitsgory factorization-gluing;
+(iii)~the class~M
 BV/bar comparison is \emph{proved} in the weight-completed
 category, with the direct-sum chain-level failure identified as
 the correct scope rather than a gap.
 
 \begin{theorem}[Harmonic projector identification: $c_r = S_r$]
-\label{thm:wave14-harmonic-cr-sr}
+\label{thm:analytic-harmonic-cr-sr}
 The harmonic discrepancy coefficients
 $c_r(\cA)$ of Theorem~\ref{thm:bv-bar-coderived-vol1}(iv) coincide
 with the shadow invariants $S_r(\cA) \in \Bbbk$ extracted from
 the universal Maurer--Cartan element by degree-$r$ projection:
-\begin{equation}\label{eq:wave14-cr-sr}
+\begin{equation}\label{eq:analytic-cr-sr}
 c_r(\cA) \;=\; S_r(\cA), \qquad r \ge 2.
 \end{equation}
 Equivalently, the harmonic projector on the Hodge cohomology
@@ -3302,10 +3320,13 @@ projection~$\av$ on the factor of~$H_g^{\otimes r}$ seen by the
 universal convolution algebra $\mathfrak{g}^{\mathrm{mod}}_\cA$.
 \end{proof}
 
-\begin{theorem}[Chain-level sewing at nodes via Mok25 log-FM
- and Francis--Gaitsgory]\label{thm:wave14-chain-level-nodes}
-Under the HS-sewing hypothesis, the analytic sewing theorem
-extends from the open stratum $\cM_{g,n}$ to the boundary
+\begin{theorem}[Conditional chain-level sewing at nodes via log-FM
+ and Francis--Gaitsgory]\label{thm:analytic-chain-level-nodes}
+Assume the logarithmic Fulton--MacPherson compactification used
+below exists with the stated smooth snc boundary and that the
+Francis--Gaitsgory factorization-gluing theorem applies to the
+chosen factorization category. Under HS-sewing, the analytic sewing
+theorem extends from the open stratum $\cM_{g,n}$ to the boundary
 $\partial\overline{\cM}_{g,n}$ at the chain level, via two inputs:
 \begin{enumerate}[(i)]
 \item the Mok25 logarithmic Fulton--MacPherson compactification,
@@ -3316,12 +3337,13 @@ $\partial\overline{\cM}_{g,n}$ at the chain level, via two inputs:
   provides a chain-level colimit formula for the sewing
   amplitude at each nodal boundary divisor.
 \end{enumerate}
-The resulting chain-level sewing is unconditional for classes~G,
-L, C and weight-completed for class~M.
+The resulting chain-level sewing is proved only under these two
+geometric hypotheses; classes~G, L, C then live on the original
+complex, while class~M lives in the weight-completed ambient.
 \end{theorem}
 
 \begin{remark}[Weight-completed class~M is the correct scope]
-\label{rem:wave14-weight-completed-M}
+\label{rem:analytic-weight-completed-M}
 The direct-sum chain-level BV${}={}$bar comparison for class~M
 (Virasoro, $\cW_N$) is \emph{genuinely false}: the quartic
 harmonic discrepancy $c_4 \ne 0$ at generic~$c$ forces bar
@@ -3331,27 +3353,28 @@ $\widehat B^{(g)}(\cA) = \varprojlim_N B^{(g),\le N}(\cA)$:
 at each weight stage $N$, the harmonic discrepancy is a finite
 sum absorbed by an explicit chain homotopy, and the
 Milnor/Mittag-Leffler passage to the inverse limit is
-unconditional under the HS-sewing hypothesis. This is not
-a failure of the programme; it is the correct identification
-of the category in which class~M lives (compare Vol~III
+valid when the finite-stage maps satisfy the required
+Mittag-Leffler/surjectivity hypotheses. Thus class~M lives in the
+weight-completed category, not in the raw direct-sum ambient
+(compare Vol~III
 \texttt{bp\_chain\_level\_strict\_platonic.tex} for the
 Bershadsky--Polyakov analogue).
 \end{remark}
 
 \begin{remark}[Uniqueness of degree-$2$ curvature]
-\label{rem:wave14-degree-2-curvature-uniqueness}
+\label{rem:analytic-degree-2-curvature-uniqueness}
 The central-charge uniqueness of the degree-$2$
 curvature $m_0$ is resolved via Hodge theory plus vacuum-proportionality:
 $H^{2,0}(\Sigma_g) \cong H^0(K_{\Sigma_g})$ parametrises central
 extensions compatible with the vacuum axiom, and competing
 bar-length-$2$ insertions are killed by the vanishing of the
 $H^{2,0}$-component on a single nodal divisor. The statement
-$c_r(\cA) = S_r(\cA)$ (Theorem~\ref{thm:wave14-harmonic-cr-sr})
+$c_r(\cA) = S_r(\cA)$ (Theorem~\ref{thm:analytic-harmonic-cr-sr})
 inherits this uniqueness.
 \end{remark}
 
 \begin{remark}[$\kappa$ and $r$-matrix conventions used in this addendum]
-\label{rem:wave14-discipline}
+\label{rem:analytic-conventions}
 Every $\kappa$ in this addendum is specified by family (no bare
 $\kappa$): $\kappa(\Vir_c) = c/2$,
 $\kappa(V_k(\fg)) = \dim(\fg)(k + h^\vee)/(2h^\vee)$. Every
@@ -3363,9 +3386,9 @@ claim.
 \end{remark}
 
 \begin{remark}[Alternative: Costello--Gwilliam factorization
- homology]\label{rem:wave14-CG-alt}
+ homology]\label{rem:analytic-CG-alt}
 The alternative proof route via Costello--Gwilliam factorization
-homology (H07 in the programme status table) is genuinely
+homology (H07 in the programme theorem map) is genuinely
 disjoint from the Positselski coacyclic route: it uses
 Ginzburg--Kapranov for $\mathrm{Com}^\perp\mathrm{Lie}$ closed
 colour plus $\mathrm{Ass}$ self-duality open plus Deligne-purity

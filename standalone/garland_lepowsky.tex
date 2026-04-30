@@ -64,29 +64,26 @@ cohomology $H^p(\fn_-; \mathbb{C})$ of the negative nilpotent
 subalgebra of a Kac--Moody algebra in terms of Weyl group
 combinatorics. We prove a chiral extension: for the affine
 Kac--Moody vertex algebra $V_k(\fg)$ at non-critical level
-$k \neq -h^\vee$, the bar cohomology $H^n(\barB(V_k(\fg)))$ is
-concentrated in bar degree~$1$ for each conformal weight, with
-$\dim H^n = 2n{+}1$ for $\fg = \fsl_2$ and, more
-generally, polynomial growth governed by the Weyl group of~$\fg$.
-The concentration is equivalent to chiral Koszulness of~$V_k(\fg)$
+$k \neq -h^\vee$, the PBW spectral sequence is controlled by
+Garland--Lepowsky affine nilradical homology. For $\fg=\fsl_2$ the
+verified Koszul-dual dimension sequence is $\dim H^n=2n+1$; more
+generally, polynomial growth is governed by the Weyl group of~$\fg$.
+This diagonal PBW control is equivalent to chiral Koszulness of~$V_k(\fg)$
 via the PBW spectral sequence. The Koszul dual is the chiral
 Chevalley--Eilenberg algebra at the Feigin--Frenkel dual level
 $k' = -k - 2h^\vee$, with modular characteristic
 $\kappa(\ghat_k) = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$ satisfying the
-Feigin--Frenkel complementarity on the affine Kac--Moody line (the
-complementarity sum vanishes family-specifically; the universal
-form is $\kappa + \kappa^! = \varrho_\cA \cdot K$ with
-$\varrho_{\mathrm{KM}} = 0$, which reduces to~$0$ here
-independently of the value of $K_{\ghat}$). The shadow obstruction tower is class~$L$
+Feigin--Frenkel complementarity on the affine Kac--Moody line:
+$\kappa(\ghat_k)+\kappa(\ghat_{-k-2h^\vee})=0$. This scalar
+complementarity is distinct from the central-charge conductor
+$K_c(V_k(\fg))=2\dim\fg$. The shadow obstruction tower is class~$L$
 with depth $r_{\max} = 3$: a nonzero cubic shadow from the Lie
 bracket, killed at the quartic level by the Jacobi identity.
 \end{abstract}
 
-\begin{remark}[Wave-14 reconstitution anchor]\label{rem:wave14-anchor-GL}
-This standalone inscribes the Platonic content of the chiral
-Garland--Lepowsky theorem. The 2026-04-16 closure wave upgraded two
-downstream infrastructures that this note now cites rather than
-re-proves: (i) the periodic-CDG admissible-KL bar-cobar adjunction
+\begin{remark}[Admissible-KL and Positselski inputs]\label{rem:gl-inputs}
+This paper uses two downstream inputs rather than re-proving them:
+(i) the periodic-CDG admissible-KL bar-cobar adjunction
 $\Omega^{\mathrm{ch}} \dashv B^{\mathrm{ch}}$
 (\textup{\textsf{thm:periodic-cdg-is-koszul-compatible}},
 \textup{\textsf{thm:admissible-kl-bar-cobar-adjunction}}, Vol~I
@@ -223,41 +220,33 @@ $|J^a_{-m}| = m$.
 
 \begin{theorem}[Garland--Lepowsky~\cite{GL76}]
 \label{thm:garland-lepowsky}
-The Lie algebra cohomology
-$H^p(\fn_-^{\mathrm{loop}}; \mathbb{C})$ is finite-dimensional
-in each conformal weight~$h$ and satisfies:
-\begin{enumerate}[(i)]
-\item At each $p$ and $h$, the cohomology is concentrated
- in a single bidegree: for each cohomological degree~$p$,
- $H^p$ is nonzero at only finitely many conformal weights,
- and the nonzero weights are determined by the affine Weyl
- group~$W_{\mathrm{aff}}$.
-\item The Euler characteristic of $H^*$ at conformal weight~$h$
- equals the coefficient of $q^h$ in the Euler series
- \begin{equation}\label{eq:euler-series}
- \chi(\barB(V_k(\fg)))
- \;=\; \prod_{n \geq 1} (1 - q^n)^{\dim\fg}.
- \end{equation}
-\item For semisimple $\fg$, the cohomology $H^p$ at each
- conformal weight is concentrated in a single cohomological
- degree (Kostant-type concentration), so the Euler
- characteristic equals the total dimension up to sign.
-\end{enumerate}
+Let
+\[
+\mathfrak u^-=\fg\otimes t^{-1}\mathbb C[t^{-1}]
+\]
+be the nilradical opposite to the standard affine parabolic, and let
+$W_{\mathrm{aff}}^0$ be the minimal representatives for
+$W_{\mathrm{fin}}\backslash W_{\mathrm{aff}}$. Then
+\[
+H_p(\mathfrak u^-;\mathbb C)
+\cong
+\bigoplus_{\substack{w\in W_{\mathrm{aff}}^0\\ \ell(w)=p}}
+L_{\fg}\!\left(\overline{w(\widehat\rho)-\widehat\rho}\right)
+\otimes \mathbb C_{\deg_\delta(w)}.
+\]
+Dualizing gives the corresponding cohomology statement for
+$H^p(\fn_-^{\mathrm{loop}};\mathbb C)$ with the opposite weight
+convention.
 \end{theorem}
 
 \begin{remark}\label{rem:GL-mechanism}
-The mechanism of concentration is the semisimplicity of~$\fg$.
-The Chevalley--Eilenberg complex
-$C^*(\fn_-^{\mathrm{loop}}; \mathbb{C})
-= \Lambda^*(\fn_-^{\mathrm{loop}})^*$ admits a PBW-type
-filtration by the number of distinct negative modes.
-The $E_1$ page of the associated spectral sequence computes
-$H^*(\fg; M)$ for $\fg$-modules~$M$ arising as graded
-components of the symmetric algebra on the loop generators.
-The Whitehead lemma ($H^p(\fg; M) = 0$ for $p \geq 1$ and
-$M$ a nontrivial finite-dimensional simple
-$\fg$-module) kills all terms except the $\fg$-invariant
-part. The surviving terms are computed by Kostant's theorem.
+Garland--Lepowsky is an imported affine nilradical homology
+calculation, not a consequence of the finite-dimensional Whitehead
+lemma. The PBW filtration in the chiral bar complex identifies the
+associated graded with the Chevalley--Eilenberg complex of
+$\mathfrak u^-$; Garland--Lepowsky then supplies the homology
+decomposition. The remaining local work is the PBW comparison between
+the chiral bar differential and this affine nilradical complex.
 \end{remark}
 
 % ================================================================
@@ -317,7 +306,7 @@ Geometrically, the degree-$n$ piece of the bar complex is
 \otimes \Omega^n_{\log}\right),
 \end{equation}
 where $\overline{C}_{n+1}(X)$ is the Fulton--MacPherson
-compactification~\cite{} of the configuration space
+compactification~\cite{FultonMacPherson94} of the configuration space
 of $n{+}1$ points on a smooth curve~$X$, and
 $\Omega^n_{\log}$ is the sheaf of logarithmic $n$-forms
 along the boundary divisors.
@@ -427,12 +416,13 @@ This is precisely the Chevalley--Eilenberg differential.
 
 \begin{definition}\label{def:chiral-koszul}
 A chiral algebra $\mathcal{A}$ is \emph{chirally Koszul}
-if the bar cohomology $H^*(\barB(\mathcal{A}))$ is
-concentrated in bar degree~$1$ at each conformal weight:
+if the bar cohomology $H^*(\barB(\mathcal{A}))$ lies on the
+Koszul diagonal determined by the PBW/conformal grading:
 \begin{equation}
 H^n(\barB(\mathcal{A}))_h \;\neq\; 0
-\quad \Longrightarrow \quad n = 1.
+\quad \Longrightarrow \quad h=h(n)
 \end{equation}
+for the diagonal function fixed by the PBW grading of the family.
 Equivalently, the PBW spectral sequence collapses at~$E_2$
 \textup{(}see~\cite{Lor-MKD}, Theorem~5.1.1\textup{)}.
 \end{definition}
@@ -457,19 +447,12 @@ $H^*_{\CE}(\fn_-^{\mathrm{loop}}; \mathbb{C})$,
 which is computed by the Garland--Lepowsky theorem
 (Theorem~\ref{thm:garland-lepowsky}).
 
-The Garland--Lepowsky concentration (property~(iii) of
-Theorem~\ref{thm:garland-lepowsky}) states that for
-semisimple~$\fg$, the cohomology at each conformal weight
-is concentrated in a single cohomological degree.
-This concentration is a consequence of the Whitehead
-vanishing lemma applied to $\fg$-modules appearing in
-the spectral sequence: for each negative mode
-$J^a_{-m}$ with $m \geq 1$, the $\fg$-module
-$\fg_{-m} = \fg \otimes t^{-m}$ is isomorphic to the
-adjoint representation, which is simple for
-simple~$\fg$. The Whitehead lemma then forces
-$H^p(\fg; \fg_{-m}) = 0$ for $p \geq 1$,
-and the spectral sequence collapses at~$E_2$.
+The affine Weyl decomposition in
+Theorem~\ref{thm:garland-lepowsky} gives the bidegree support of
+$H^*_{\CE}(\fn_-^{\mathrm{loop}};\mathbb C)$. The PBW comparison
+identifies this $E_2$ page with the associated graded bar cohomology;
+no Whitehead-lemma substitute proves the Garland--Lepowsky
+calculation.
 
 \emph{Step~2: Free strong generation.}
 The universal affine vertex algebra $V_k(\fg)$ at any
@@ -522,7 +505,7 @@ $\dim H^2_{\CE} = 20$. The Koszulness conclusion
 changes is the precise dimension count.
 \end{warning}
 
-\subsection{The Whitehead mechanism in detail}
+\subsection{The affine nilradical mechanism in detail}
 
 The spectral sequence collapse in Step~1 of the proof of
 Theorem~\ref{thm:chiral-koszul-km} deserves a closer
@@ -555,20 +538,18 @@ E_1^{p,q}
 \end{equation}
 where $S^q$ denotes the $q$-th symmetric power and
 the quotient $\fn_-^{\mathrm{loop}}/\fg$ is taken
-modulo the weight-$1$ stratum. The Whitehead lemma
-asserts: for a semisimple Lie algebra $\fg$ and a
-nontrivial finite-dimensional simple
-$\fg$-module~$M$,
+modulo the weight-$1$ stratum. The finite-dimensional Whitehead
+lemma is not the Garland--Lepowsky calculation. It only controls
+finite-dimensional $\fg$-module pieces. The required affine
+nilradical homology is imported from
+Theorem~\ref{thm:garland-lepowsky}. In the finite-dimensional pieces,
+for a semisimple Lie algebra $\fg$ and a nontrivial
+finite-dimensional simple $\fg$-module~$M$,
 \begin{equation}\label{eq:whitehead}
 H^p(\fg; M) \;=\; 0 \qquad \text{for all } p \geq 0.
 \end{equation}
-Since $\fg_{-m} \cong \fg_{\mathrm{ad}}$ is the adjoint
-representation (simple for simple~$\fg$), and the
-symmetric powers $S^q(\fg_{\mathrm{ad}})$ decompose into
-simple modules, the Whitehead lemma forces
-$E_1^{p,q} = 0$ for all $p \geq 1$. The spectral
-sequence degenerates at $E_1$: only the $p = 0$ column
-survives, and $E_2 = E_\infty$.
+The spectral sequence comparison therefore uses Garland--Lepowsky for
+the affine nilradical page; it is not a Whitehead-lemma substitute.
 
 The surviving terms at $p = 0$ are the $\fg$-invariants:
 \begin{equation}\label{eq:invariants}
@@ -646,12 +627,8 @@ up to the universal prefactor $q^{-\rk(\fg)/24}$.
 \end{theorem}
 
 \begin{proof}
-Garland--Lepowsky~\cite{GL76} prove single-degree concentration
-for every simply-laced affine Kac--Moody algebra by the Kostant
-mechanism (Remark~\ref{rem:GL-mechanism}): the Whitehead lemma
-kills all $E_1^{p,q}$ with $p \geq 1$, leaving only the
-$\fg$-invariant column $E_1^{0,q} =
-S^q(\fn_-^{\mathrm{loop}})^{\fg}$. For simply-laced $\fg$
+Garland--Lepowsky~\cite{GL76} compute the affine nilradical homology
+by affine Weyl representatives. For simply-laced $\fg$
 the invariant ring of the adjoint representation on each
 negative mode $t^{-m}$ is a polynomial ring on the $r$
 fundamental Casimirs at degrees equal to the exponents
@@ -679,10 +656,9 @@ P_{\widehat{\fsl}_2}(x)
 The Chevalley--Eilenberg complex of
 $\fsl_2 \otimes t^{-1}\mathbb{C}[t^{-1}]$ is an
 exterior algebra on $3$ generators per negative mode.
-The Whitehead lemma for $\fsl_2$ forces the PBW
-spectral sequence $E_1$ page to be concentrated on the
-$\fsl_2$-invariant subalgebra, which is generated by
-one Casimir per mode $t^{-m}$, $m \geq 1$ (the
+The Garland--Lepowsky affine nilradical computation identifies the
+PBW spectral sequence page with the relevant $\fsl_2$-invariant
+subalgebra, generated by one Casimir per mode $t^{-m}$, $m \geq 1$ (the
 quadratic Casimir $C_2^{(-m)} = e_{-m} f_{-m}
 + f_{-m} e_{-m} + h_{-m}^2/2$).
 
@@ -1353,11 +1329,10 @@ following form.
  sum $\kappa + \kappa' = 0$ are special cases of
  Theorem~D of~\cite{Lor-MKD}. The vanishing
  complementarity sum is specific to the Kac--Moody and
- free-field families; for $\mathcal{W}$-algebras,
- $\kappa + \kappa' = \varrho(\fg) \cdot K(\fg) \neq 0$,
- where $\varrho(\fg) = \sum_{i=1}^{r} (m_i + 1)^{-1}$ is
- the anomaly ratio
- (not the Weyl vector~$\rho$).
+ free-field families. For $\mathcal{W}$-algebras the
+ scalar complementarity is nonzero and is computed by the
+ family-specific conductor normalization, not by a universal
+ affine ratio.
 
 \item The shadow depth classification
  (Theorem~\ref{thm:km-class-L}) places affine Kac--Moody
@@ -1410,7 +1385,7 @@ B.~Feigin, E.~Frenkel, and N.~Reshetikhin,
 Gaudin model, Bethe ansatz and critical level,
 \emph{Comm.\ Math.\ Phys.}~\textbf{166} (1994), no.~1, 27--62.
 
-\bibitem{}
+\bibitem{FultonMacPherson94}
 W.~Fulton and R.~MacPherson,
 A compactification of configuration spaces,
 \emph{Ann.\ of Math.~(2)}~\textbf{139} (1994), no.~1, 183--225.

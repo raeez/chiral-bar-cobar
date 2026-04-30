@@ -62,16 +62,18 @@ an algebraic chiral core for which every bordism amplitude extends
 continuously. We prove three results. First, under a
 Hilbert--Schmidt condition on the sector multiplication, every
 closed amplitude of $\cA$ is trace class on a weighted completion
-$H_q$, for every $0 < q < 1$. Second, for the Heisenberg algebra
+$H_q$, for every $0 < q < 1$, after inserting the \(q\)-damping
+into the sewing kernel. Second, for the Heisenberg algebra
 the sewing envelope on the disk is $\Sym A^2(D)$, the pair-of-pants
 amplitude is the second quantization of a one-particle Bergman
 restriction, and every genus-$g$ partition function is a Fredholm
 determinant on the reduced Bergman space. Third, any
-positive-energy chiral algebra with subexponential sector growth
+positive-energy chiral algebra with Hardy--Ramanujan sector growth
 and polynomial OPE coefficient growth satisfies the HS-sewing
-condition. The criterion verifies for the Heisenberg, affine
-Kac--Moody at integer level, Virasoro, $\mathcal{W}_N$, and
-lattice vertex algebras.
+condition. The criterion verifies for Heisenberg, positive
+integer-level affine Kac--Moody, lattice vertex algebras, and for
+Virasoro and principal $\mathcal{W}_N$ after a positive Hilbert model
+with polynomial OPE bounds is fixed.
 \end{abstract}
 
 \subjclass[2020]{17B69 (primary), 14H10, 30H20, 47B10, 81T40}
@@ -134,8 +136,8 @@ components of the pair-of-pants product. Say $\cA$ satisfies
 \end{equation}
 for some $0 < q < 1$. Our first result (Proposition
 \ref{prop:closed-trace-class}) is that this single estimate
-delivers the full sewing package: every closed amplitude is
-trace-class on the weighted completion
+delivers the sewing package for the \(q\)-damped kernel: every
+closed amplitude is trace-class on the weighted completion
 $H_q := \widehat{\bigoplus}_n q^n H_n$, so the genus-$g$ partition
 functions and correlators are absolutely convergent numbers,
 not merely formal series.
@@ -283,15 +285,17 @@ Let $E$ be any complete locally convex realization of
 $\cA_{\mathrm{alg}}$ for which every algebraic amplitude
 $A_\Sigma^{\mathrm{alg}}$ extends continuously. Then the identity
 on $\cA_{\mathrm{alg}}$ extends uniquely to a continuous map
-$\cA^{\mathrm{sew}} \to E$.
+$E \to \cA^{\mathrm{sew}}$ with dense image, provided
+$\cA_{\mathrm{alg}}$ is dense in~$E$.
 \end{proposition}
 
 \begin{proof}
 By hypothesis, each seminorm $p_{\Sigma,\xi,\eta}$ is continuous
-on $E$. Hence the identity $\cA_{\mathrm{alg}} \to E$ is
-continuous for the sewing topology. By completeness of $E$, it
-extends uniquely from the Hausdorff completion
-$\cA^{\mathrm{sew}}$.
+on $E$. Hence the identity
+$(\cA_{\mathrm{alg}},E\text{-topology}) \to
+(\cA_{\mathrm{alg}},\text{sewing topology})$ is continuous. Since
+$\cA^{\mathrm{sew}}$ is complete, it extends uniquely from the dense
+algebraic core to~$E$.
 \end{proof}
 
 \begin{remark}[Algebraic versus analytic completions]
@@ -299,14 +303,13 @@ The sewing envelope need not coincide with naive completions
 such as the $q$-adic completion
 $\widehat{\bigoplus}_n q^n H_n$, the Hilbert-space completion
 with respect to a fixed invariant form, or Zhu's $C_2$-quotient.
-All of these are quotients or subspaces of $\cA^{\mathrm{sew}}$
-under the universal property of
-Proposition~\ref{prop:sewing-universal}, but none is obviously
-large enough to carry every bordism amplitude as a continuous map.
-The HS-sewing criterion of the next section is the device by
-which one identifies a concrete Hilbert completion
-$H_q \subset \cA^{\mathrm{sew}}$ and verifies that amplitudes
-extend continuously to it.
+These completions compare to $\cA^{\mathrm{sew}}$ by continuous maps
+once their amplitudes are continuous; embeddings or quotient
+descriptions require additional topological hypotheses. The
+HS-sewing criterion of the next section constructs a concrete Hilbert
+completion~$H_q$ with a dense comparison map
+$H_q \to \cA^{\mathrm{sew}}$ and verifies that amplitudes extend
+continuously to it.
 \end{remark}
 
 % ================================================================
@@ -335,21 +338,30 @@ Say $\cA$ satisfies \emph{HS-sewing} at parameter $q \in (0,1)$ if
 \|m_{a,b}^c\|_{\HS}^2
 \;<\; \infty.
 \end{equation}
-The \emph{weighted completion} is
-$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$, with inner
-product $\langle v, w \rangle_q = q^{2n}\langle v, w\rangle_{H_n}$
-for $v, w \in H_n$.
-\end{definition}
+	The \emph{weighted completion} is
+	$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$, with inner
+	product $\langle v, w \rangle_q = q^{2n}\langle v, w\rangle_{H_n}$
+	for $v, w \in H_n$.
+	The \emph{$q$-damped pair-of-pants} is the sectorwise map
+	\[
+	m_q\big|_{H_a\otimes H_b\to H_c}
+	\;:=\;
+	q^{(3a+3b-c)/2}\,m_{a,b}^c ,
+	\]
+	viewed as an operator $H_q\widehat\otimes H_q\to H_q$.
+	\end{definition}
 
-The scaling $q^{2n}$ is the unique convention under which the
-weighted pair-of-pants $m_q$ is Hilbert--Schmidt precisely when
-\eqref{eq:hs-sewing} is satisfied.
+	The damping is part of the sewing kernel. The raw multiplication on
+	the Hilbert space with inner product
+	$q^{2n}\langle-,-\rangle_{H_n}$ contributes the sector factor
+	$q^{2(c-a-b)}$ to the Hilbert--Schmidt norm, not the factor in
+	\eqref{eq:hs-sewing}.
 
 \begin{proposition}[Closed amplitudes are trace-class]
 \label{prop:closed-trace-class}
 Suppose $\cA$ satisfies HS-sewing at parameter $q$. Then
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the weighted pair-of-pants
+\item the $q$-damped pair-of-pants
 $m_q \colon H_q \otimes H_q \to H_q$ is Hilbert--Schmidt, with
 \[
 \|m_q\|_{\HS}^2
@@ -359,21 +371,18 @@ $m_q \colon H_q \otimes H_q \to H_q$ is Hilbert--Schmidt, with
 \item every closed amplitude of $\cA$, built from any finite
 composition of pair-of-pants multiplications and traces, is trace
 class on $H_q$;
-\item the sewing envelope $\cA^{\mathrm{sew}}$ admits a continuous
-linear map $\cA^{\mathrm{sew}} \to H_q$ whose image is dense.
+\item the weighted Hilbert completion~$H_q$ admits a continuous
+linear map $H_q \to \cA^{\mathrm{sew}}$ whose image is dense.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 Claim~(i) is direct calculation. Identifying $H_a \otimes H_b$
 with the weight-$(a+b)$ subspace of $H_q^{\widehat{\otimes} 2}$,
-the sector component $m_{a,b}^c \colon H_a \otimes H_b \to H_c$
-contributes
-$q^a \cdot q^b \cdot q^{-c} \cdot q^{2c}
-= q^{a+b+c}$ to the Hilbert--Schmidt norm of $m_q$; the $q^{-c}$
-factor comes from the output side and the $q^{2c}$ factor from
-the normalization of the inner product on $H_c$. Summing the
-sector contributions gives
+	the raw sector component $m_{a,b}^c \colon H_a \otimes H_b \to H_c$
+	contributes $q^{2(c-a-b)}\|m_{a,b}^c\|_{\HS}^2$. The damping
+	$q^{(3a+3b-c)/2}$ multiplies this by $q^{3a+3b-c}$, so the sector
+	contribution is $q^{a+b+c}\|m_{a,b}^c\|_{\HS}^2$. Summing gives
 $\|m_q\|_{\HS}^2 = \sum q^{a+b+c} \|m_{a,b}^c\|_{\HS}^2 < \infty$.
 
 Claim~(ii) is the multiplicativity of trace-class operators under
@@ -390,7 +399,9 @@ $p_{\Sigma,\xi,\eta}$ of Definition~\ref{def:sewing-envelope} are
 all dominated by the $H_q$ inner product, because each matrix
 coefficient factorises through the trace-class operator of
 claim~(ii); continuity of the identity
-$\cA_{\mathrm{alg}} \to H_q$ for the sewing topology follows.
+$(\cA_{\mathrm{alg}},H_q\text{-topology}) \to
+(\cA_{\mathrm{alg}},\text{sewing topology})$ follows, and completion
+gives $H_q \to \cA^{\mathrm{sew}}$.
 \end{proof}
 
 \begin{corollary}[Positivity of the sewing Gram matrix]
@@ -611,8 +622,7 @@ character formulas and OPE tables.
 Let $\cA$ be a positive-energy chiral algebra with a choice of
 pre-Hilbert structure on each sector $H_n$. Suppose
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item (\textbf{subexponential sector growth})
-$\log\dim H_n = o(n)$, equivalently
+\item (\textbf{Hardy--Ramanujan sector growth})
 $\dim H_n \leq C e^{\alpha\sqrt{n}}$ for some
 $C, \alpha > 0$;
 \item (\textbf{polynomial OPE coefficient growth}) there exist
@@ -687,9 +697,10 @@ orthonormal basis.
 \end{proof}
 
 \begin{remark}[Completed algebras]\label{rem:completed}
-The standard families below are all finitely strongly generated
-in the sense that a finite set of fields produces the entire
-algebra under normal-ordered product and derivation. For
+The standard families below are finitely strongly generated in the
+sense that a finite set of fields produces the entire algebra under
+normal-ordered product and derivation. For nonunitary or degenerate
+quotients, the polynomial OPE bound is a normed-model hypothesis. For
 completed algebras (such as $\cW_{1+\infty}$ or completed
 Yangians), the polynomial OPE bound of
 hypothesis~(ii) must be verified in the completed (inverse
@@ -747,13 +758,12 @@ $T(z)T(w) \sim c/2(z-w)^{-4} + 2T(w)(z-w)^{-2}
 is quartic; repeated normal products of $T$ give
 $|C| \leq K(n+1)^2$ with $N = 2$. The general
 Theorem~\ref{thm:general-hs-sewing} applies for every
-$0 < q < 1$; the sector sum
+$0 < q < 1$ in the PBW monomial norm, and in a genuine Hilbert
+model only after the same polynomial estimate is verified; the sector sum
 $\sum_n q^n p(n) = q^{(1-c)/24}/\eta(q)$
-is the Virasoro vacuum character. Note: the criterion
-applies at every central charge $c$; the specialization
-$c < 1$ discussed in Zhu~\cite{Zhu96} corresponds to
-minimal-model rationality, which the HS criterion does not
-require.
+is the Virasoro vacuum character. The criterion applies without
+rationality, but positivity of the Hilbert form is a separate
+condition.
 \end{example}
 
 \begin{example}[$\cW_N$-algebras]\label{ex:wn}
@@ -761,9 +771,10 @@ The principal $\cW_N$-algebra is generated by $N - 1$ primary
 fields of conformal weights $2, 3, \ldots, N$. Sector
 dimensions satisfy $\dim H_n \leq C e^{\alpha\sqrt n}$ from
 the $\cW_N$ character formula. OPE coefficient growth is
-$|C| \leq K(n+1)^{2N}$; applying
+$|C| \leq K(n+1)^{2N}$ in the PBW monomial norm; applying
 Theorem~\ref{thm:general-hs-sewing} with this $N$ gives
-HS-sewing at every $0 < q < 1$, and sector summation
+HS-sewing at every $0 < q < 1$ in any positive Hilbert
+realization satisfying the same bound, and sector summation
 produces the $\cW_N$ character $\chi_{\cW_N}(q)$.
 \end{example}
 

@@ -5908,3 +5908,179 @@ Wrong: writing the BCOV 1-loop anomaly class as $\alpha_{\mathrm{BCOV}}(X) = (\c
 
 **AP2156 — Super root $\alpha$ isotropy derived at pairing level, not cited only (Medium, sibling of AP-CY321).**
 Wrong: asserting "$(\alpha, \alpha) = 0$ on the isotropic super root" in Vol I super bar-cobar via Kac 1977 Thm 2.4 citation alone, without the supertrace computation. Correct: for $\alpha = \epsilon_1 - \epsilon_2$ on $\mathfrak{gl}(1|1)$, $(\alpha, \alpha) = (\epsilon_1, \epsilon_1) - 2 (\epsilon_1, \epsilon_2) + (\epsilon_2, \epsilon_2) = 1 - 0 + (-1) = 0$ under the supertrace-induced bilinear form ($+1$ on even diagonal, $-1$ on odd diagonal). Affine lift inherits isotropy via $(\delta, \delta) = (\delta, \alpha) = 0$. **Counter**: every "$\alpha$ isotropic" statement in Vol I super content displays the supertrace computation once; citation alone hides the zero's source.
+
+## Vol III finite-Rees hCS--Hall and automorphic-product propagation: AP2157 through AP2168 (2026-04-30)
+
+Source: Vol III finite DWR/Ran Rees hCS--Hall construction and compact-CoHA critique reconciliation, mirrored for Vol I bar--cobar and chiral quantum-group uses.
+
+**AP2157 -- Finite Rees hCS--Hall is not ordinary compact critical CoHA (High, sibling of AP-CY345).**
+Wrong: using a finite simplex-integrated hCS--Hall map as the compact critical-CoHA comparison. Correct: the finite construction gives a Maurer--Cartan element in a bounded DWR/Ran convolution dg Lie algebra valued in an oriented Rees Hall complex. Compact critical CoHA requires pro-compatible inverse limit with Mittag--Leffler control and monoidal vanishing-cycle realization preserving Hall correspondences, orientations, shifts, Tate twists, and Thom--Sebastiani. **Counter**: Vol I bar--cobar arguments name which layer is used: finite Rees, completed Rees, realized critical CoHA, positive half, or Drinfeld double.
+
+**AP2158 -- Multi-chart gluing exists at finite Rees level (Medium, sibling of AP-CY346).**
+Wrong: repeating that no explicit gluing exists outside the single $\mathbb C^3$ chart. Correct: finite multi-chart gluing is supplied by face-compatible cyclic contractions over $\Omega^\bullet(\Delta^p)$, Fourier--BV Rees identification, and Stokes assembly into a Maurer--Cartan element. The remaining open step is completed/realized compact CoHA, not finite gluing. **Counter**: Vol I gluing claims distinguish finite DWR/Ran descent from compact realization.
+
+**AP2159 -- $\CoHA(\mathbb C^3)$ is the positive half, not $\mathcal W_{1+\infty}$ (High, sibling of AP-CY347).**
+Wrong: writing $\CoHA(\mathbb C^3)=\mathcal W_{1+\infty}$. Correct: $\CoHA(\mathbb C^3)\cong Y^+(\widehat{\mathfrak{gl}}_1)$; the full Yangian/Drinfeld double and a Fock/vacuum-module evaluation produce the $\mathcal W_{1+\infty}$ vertex algebra. **Counter**: Vol I quantum-group rows separate positive half, double, representation, and vertex algebra.
+
+**AP2160 -- Toric vertices do not by themselves give the simplex map (Medium, sibling of AP-CY348).**
+Wrong: toric CY$_3$ comparison follows only from affine charts $U_\sigma\simeq\mathbb C^3/G_\sigma$. Correct: vertices supply local models; the finite comparison also requires face-compatible contractions, mutation coherence, orientation transport, Thom--Sebastiani compatibility, and Hall product compatibility on all DWR/Ran simplices. **Counter**: Vol I toric statements name the full finite cyclic atlas, not only the vertex charts.
+
+**AP2161 -- Non-formality of local $\mathbb P^2$ is absorbed into the cyclic potential (Medium, sibling of AP-CY349).**
+Wrong: local $\mathbb P^2$ is blocked merely because its category is non-formal. Correct: higher $m_k$ operations enter the finite cyclic potential $W_\sigma$ and hence the Rees critical complex. The real obligations are cyclic contraction, mutation coherence, completion, and realization. **Counter**: non-formality is data inside $W_\sigma$, not a terminal obstruction.
+
+**AP2162 -- Oberdieck--Pixton and Oberdieck--Pandharipande labels are not interchangeable (Medium, sibling of AP-CY350).**
+Wrong: using Oberdieck--Pixton for every reduced DT theorem anchor. Correct: use OPi only when Pixton's component is used; use Oberdieck--Pandharipande or the year-specific Oberdieck theorem for reduced DT anchors on $K3\times E$. **Counter**: Vol I reduced-DT citations name the actual theorem source.
+
+**AP2163 -- Quasi-NCCR characters do not construct compact critical CoHA (High, sibling of AP-CY351).**
+Wrong: a quasi-NCCR or compact character formula constructs the compact critical CoHA. Correct: a character equality can test a constructed object; it does not supply compact-support descent, monoidal realization, orientation transport, or a comparison morphism. **Counter**: Vol I character identities are evidence or consequences, not construction of the compact CoHA layer.
+
+**AP2164 -- Layer-aware $Y^+$ notation (High, sibling of AP-CY352).**
+Wrong: one notation $Y^+(X)$ silently passes through finite Rees, completed Rees, realized CoHA, positive half, and Drinfeld double. Correct: finite Rees Hall complex, completed Rees Hall algebra, realized positive critical CoHA, and Hall--Drinfeld double are distinct objects connected by named arrows. **Counter**: every cross-volume use states the arrow crossed.
+
+**AP2165 -- Global hCS--Hall has four cases, not yes/no (Medium, sibling of AP-CY353).**
+Wrong: asking whether global hCS--Hall is simply constructed or not constructed. Correct: $\mathbb C^3$ positive half is constructed; finite multi-chart Rees is constructed under cyclic-atlas hypotheses; completed Rees is conditional on pro-compatibility and Mittag--Leffler; realized compact critical CoHA is conditional on monoidal vanishing-cycle realization. **Counter**: Vol I summaries keep this four-case stratification.
+
+**AP2166 -- CHL and Gritsenko--Clery constant-term ladders are separate (Medium, sibling of AP-CY354).**
+Wrong: quoting $\kappa_{\mathrm{BKM}}=c(0)/2$ without specifying the CHL ladder or the Gritsenko--Clery atlas. Correct: both obey the weight formula but use different indexing families and constant terms. **Counter**: name CHL or Gritsenko--Clery before comparing constants.
+
+**AP2167 -- $\Delta_5$, $\Phi_{10}$, and $\Phi_{12}$ have different roles (High, sibling of AP-CY355).**
+Wrong: interchanging the K3 paramodular denominator, its square, and the Fake-Monster denominator. Correct: $\Delta_5$ is the primitive weight-5 K3 paramodular BKM denominator; $\Phi_{10}=\Delta_5^2$ is the compact reduced-DT / Igusa square; $\Phi_{12}$ is the Fake-Monster product on $\mathrm{II}_{25,1}$. **Counter**: every trace or partition-function statement names which automorphic product appears.
+
+**AP2168 -- Determinant Hodge line notation is $\lambda_1^{\det}$ (Low, sibling of AP-CY356).**
+Wrong: writing the determinant Hodge line as $\lambda_g^1$ in the BL/DWR bridge. Correct: use $\lambda_1^{\det}$ for the determinant Hodge line; reserve genus subscripts for actual genus-indexed Hodge bundles. **Counter**: Vol I boundary-curving claims use determinant-line notation.
+
+**AP2169 -- OP/DT scalar normalization uses $D_5=64^{-1}\Delta_5$ (High, sibling of AP-CY357).**
+Wrong: writing the \(K3\times E\) reduced-DT scalar as bare
+\(-\Delta_5^{-2}\) or unqualified \(-\Phi_{10}^{-1}\). Correct:
+\(\Delta_5\) is the primitive BKM denominator, while the OP scalar
+branch uses the monic Borcherds product
+\[
+D_5=64^{-1}\Delta_5,\qquad
+\chi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2.
+\]
+Thus \(Z_{\mathrm{OP/DT}}=-(\chi_{10}^{\mathrm{OP}})^{-1}
+=-D_5^{-2}=-4096\,\Delta_5^{-2}\). **Counter**: Vol I trace,
+bar-Euler, Hochschild, and DT passages use \(\chi_{10}^{\mathrm{OP}}\)
+or \(D_5\) when referring to the OP/DT scalar; the unnormalised Igusa
+square \(\Phi_{10}^{\mathrm{un}}=\Delta_5^2\) is a different convention.
+
+## Topological-strings Hamiltonian BF / mixed HT critique propagation: AP2170 through AP2177 (2026-04-30)
+
+Source: `~/topological-strings` refreshed 02:14 SAST
+`Mixed Holomorphic-Topological strings critique.pdf`, mirrored here only
+as cross-programme anti-pattern discipline.  The critique is not a
+source of truth; each entry records a failure mode requiring
+first-principles proof in the target manuscript.
+
+**AP2170 -- PBW special fibre is not deformation-level Koszul duality (High).**
+Wrong: titling a stable Hamiltonian trace comparison as Koszul duality
+when the proof identifies only the associated graded PBW special fibre
+\(U_\hbar(\mathfrak g)/(\hbar)\cong S(\mathfrak g)\). Correct: call this
+a PBW/Rees shadow unless a filtered deformation-level algebra map,
+module action, and completed bar-cobar adjunction are constructed.
+**Counter**: every closed/open Koszul claim states which layer is being
+used: operadic, CE/PV, PBW/Rees, Matlis, factorization-current, or
+stable horizon.
+
+**AP2171 -- Hamiltonian CE coordinate is not the boundary Hamiltonian source (High).**
+Wrong: sending the CE coordinate \(c^f\) dual to a Hamiltonian generator
+to the boundary Hamiltonian \(B_f\). Correct:
+\(c^f\mapsto\theta^f\) is the constant polyvector coordinate, while the
+shifted cotangent coordinate \(u_f\mapsto O_f\) gives the boundary
+Hamiltonian function; \(X_{O_f}=d_\pi O_f=\Phi(d_{\rm CE}u_f)\).
+**Counter**: every boundary-source statement distinguishes \(c\),
+\(u\), \(\theta\), and \(O\).
+
+**AP2172 -- Polynomial one-\(\psi\) descendants are not Matlis principal parts (High).**
+Wrong: identifying \(\Psi_{a,b}\) with \(\rho_{a,b}\) because their
+labels match. Correct: \(\Psi_{a,b}\) are PBW-special-fibre open
+descendant labels; \(\rho_{a,b}=z_1^{-a-1}z_2^{-b-1}dz_1dz_2\) are
+residue principal parts carrying the coadjoint module. Same labels do
+not give the same topology, \(\mathfrak h\)-action, or deformation
+object. **Counter**: a \(\Psi\to\rho\) bridge must name a genuine module
+map and prove action compatibility; same-action Rees/Fourier bridges are
+not presumed.
+
+**AP2173 -- Scalar reduction is not balanced-supertrace anomaly cancellation (High).**
+Wrong: treating projection away from scalar Hamiltonians as physical
+removal of the \(U(1)\) scalar anomaly. Correct: ordinary
+\(\mathfrak{gl}_N\) has
+\(\{\mathrm{Tr}\phi_1,\mathrm{Tr}\phi_2\}=N\) and quantum scalar class
+\(\hbar N[\bar c]\); a balanced supertrace brane
+\(\mathbb C^{N|N}\) is a different source choice and must be proved by
+direct supertrace cancellation. **Counter**: every bracket theorem says
+before/after scalar quotient and ordinary/balanced branch.
+
+**AP2174 -- Strict product/direct-sum endpoint does not supply the Costello kernel (High).**
+Wrong: using the unweighted product/direct-sum formal Hamiltonian pair as
+the analytic Costello coefficient system. Correct: a Costello BV kernel
+requires weighted or otherwise kernel-admissible coefficient spaces with
+proved bracket continuity, coadjoint continuity, and convergence of the
+diagonal Casimir \(C_{-,+}=\sum_I H_I\otimes\rho_I\). **Counter**:
+strict endpoint claims are obstruction statements unless the diagonal
+kernel is constructed in the stated topology.
+
+**AP2175 -- Reduced principal-part currents do not construct the unreduced factorization center (High).**
+Wrong: inferring an unreduced \(Z^{P_0}_{\rm fact}(Obs_{\rm open})\)
+map from a reduced post-contraction current theorem. Correct: the
+unreduced lift needs compactly supported de Rham current sources,
+principal-part current fields, product and bracket centrality homotopies,
+and coherence for arbitrary open observables. **Counter**: reduced
+current maps are labelled as post-contraction data until the unreduced
+centrality complex is built.
+
+**AP2176 -- First/third Moyal graph checks are not all-order Costello/QME realization (High).**
+Wrong: treating the first coefficient and the \(1/24\) third coefficient
+as an analytic Costello graph theorem. Correct: the formal Moyal product
+is an algebraic target; Costello realization requires an elliptic field
+complex, heat kernel, propagator, RG flow, counterterms, scalar and
+non-scalar QME classes, and proof that no higher connected binary
+cumulants survive. **Counter**: graph normalization sufficiency is
+conditional on the renormalized binary contraction and cumulant
+vanishing hypotheses.
+
+**AP2177 -- Local Hamiltonian BF does not transfer to compact CY / Igusa / MNOP without matched descent (High).**
+Wrong: extracting compact Calabi--Yau, global BCOV, Vol III, Igusa/BKM,
+MNOP, or sister-volume consequences from a local formal-disk theorem.
+Correct: supply a matched-conventions target datum, obstruction vector,
+and null-homotopies for degrees, pairings, periods, central classes,
+factorization products, QME, convergence, and descent. **Counter**: no
+target datum and no null-homotopies means no global consequence.
+
+**AP2178 -- Topological-string stable ranges and homology models are degree-specific (Medium).**
+Wrong: importing a stable range, homology statement, or topology label
+without the degree and coefficient convention used in the proof. Correct:
+\(N\ge d\) is supported for scalar trace-coordinate invariants when
+\(d\) is ordinary matrix-letter trace word degree; it is not a
+\(\psi\)-weight, concomitant, or large-\(N\) physics theorem. The
+one-\(\psi\) Abel-map proof gives homology equivalence unless a stronger
+homotopy proof is supplied. Matlis continuous duals use finite Taylor
+support / locally finite direct-sum topology, and the finite Dirac brane
+trace algebra is ghost-zero reduced BV/Koszul, not full open BV.
+**Counter**: every stable-range, one-\(\psi\), Matlis, or Dirac statement
+names its degree convention, coefficient topology, and truncation.
+
+**AP2179 -- Admissible Koszul large-\(N\) is not physical large-\(N\) (High).**
+Wrong: replacing the raw finite-\(N\) brane limit by
+\(U_\hbar(\bar A_\hbar\ltimes P_\hbar[1])\) and then calling this the
+physical large-\(N\) theorem. Correct: the enveloping algebra is a
+candidate admissible Koszul object; it becomes theorem-grade only inside
+an explicit filtered/bar-cobar category and after a comparison from
+finite-\(N\) brane data. A physical large-\(N\) theorem separately
+requires BV states, topology, trace normalization, connected cumulants,
+planar scaling, QME control, and convergence of correlation
+distributions. **Counter**: every large-\(N\) claim names whether it is
+degreewise stable algebra, admissible Koszul deformation, or physical
+BV/correlator limit.
+
+**AP2180 -- Naming a mixed HT habitat does not construct the category (High).**
+Wrong: treating labels such as \(\mathrm{Coeff}_{q_-,q_+}\),
+\(\mathrm{BV}^{w}_{HT}\), \(\mathrm{FactCenter}^{pp}\),
+\(\mathrm{Koszul}_{HT}\), \(\mathrm{BVFactState}_{1/N}\), or
+\(\mathrm{GlobDesc}\) as established mathematical categories merely
+because the intended objects are named. Correct: each habitat needs its
+objects, morphisms, topology/completion, compositions, signs, functorial
+rules, obstruction complexes, and universal properties written and
+proved. **Counter**: every habitat theorem begins with definitions and
+first nontrivial coordinate checks before any equivalence or realization
+claim.

@@ -70,3 +70,40 @@ See \ref{thm:active}.
     assert [entry.label for entry in labels] == ["sec:active"]
     assert refs == [("thm:active", "sample.tex", 5)]
     assert counts == {"ProvedHere": 1}
+
+
+def test_theorem_index_has_no_status_surface(tmp_path, monkeypatch):
+    gm = load_generator()
+    monkeypatch.setattr(gm, "ROOT", tmp_path)
+    monkeypatch.setattr(gm, "STANDALONE_DIR", tmp_path / "standalone")
+
+    claims = [
+        gm.Claim(
+            label="rem:open-status-ledger",
+            env_type="remark",
+            status="ProvedHere",
+            file="chapters/theory/sample.tex",
+            line=12,
+            title=(
+                "Conditional Open Heuristic ProvedHere ProvedElsewhere "
+                "Conjectured status ledger theorem-level record"
+            ),
+        )
+    ]
+
+    gm.write_theorem_index(claims)
+    index_text = (tmp_path / "standalone" / "theorem_index.tex").read_text(
+        encoding="utf-8"
+    )
+
+    assert "Env & Label & Name & File:line" in index_text
+    assert "Status" not in index_text
+    assert "ProvedHere" not in index_text
+    assert "status" not in index_text.lower()
+    assert "ledger" not in index_text.lower()
+    assert "theorem-level" not in index_text.lower()
+    assert "Conditional" not in index_text
+    assert "Open" not in index_text
+    assert "Heuristic" not in index_text
+    assert "ProvedElsewhere" not in index_text
+    assert "Conjectured" not in index_text

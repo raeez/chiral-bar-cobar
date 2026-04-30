@@ -1,349 +1,438 @@
-\chapter{The $\kappa$-conductor functor}
+\chapter{The $\kappa$-conductor scalar packages}
 \label{ch:kappa-conductor}
 
-Across the chiral landscape a single integer attaches to each chiral
-algebra $A$ admitting a quasi-free BRST resolution: its
-$\kappa$-conductor $K(A) \in \mathbb{Z}$. It is at once the Euler
-self-pairing of $A$ under bar--cobar, the central-charge sum
-$\kappa(A) + \kappa(A^!)$ across the Koszul reflection, and minus the
-ghost charge of any quasi-free BRST resolution. This chapter assembles
-these three definitions into one functor, proves them coincident on the
-Koszul-self-dual subcategory, and reads every per-family conductor
-formula in the manuscript (Heisenberg, $bc(\lambda)$ ghosts, affine
-Kac--Moody, Virasoro, the $W_N$ cubic, Bershadsky--Polyakov, the
-hook-type W-algebras) as a corollary of one universal closed form.
+Three scalar packages occur in the conductor literature around the
+standard chiral landscape. They are adjacent, but they are not the same
+object:
+\[
+ K^c(A,A^!) := c(A)+c(A^!),\qquad
+ K^\kappa(A,A^!) := \kappa(A)+\kappa(A^!),\qquad
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(A)
+ :=-c_{\mathrm{ghost}}(\mathrm{BRST}_{\mathrm{can}}(A)).
+\]
+The first is a central-charge complementarity sum. The second is the
+chiral modular-characteristic complementarity sum. The third is the
+scalar ghost witness attached to a chosen canonical BRST
+presentation; the universal conductor of
+Chapter~\ref{chap:universal-conductor} is the ordered-to-symmetric
+averaging morphism, not this scalar.
+
+The normalisations used below are those of
+Table~\ref{tab:master-invariants} and
+Remark~\ref{rem:kappa-vir-is-c-over-2}:
+\[
+\kappa(\mathcal H_{\ell}^{\oplus d})=d\ell,\qquad
+\kappa(V_k(\mathfrak g))
+=\frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee},\qquad
+\kappa(\mathrm{Vir}_c)=\frac c2,\qquad
+\kappa(\mathcal W_N)=c(H_N-1).
+\]
+Thus Virasoro complementarity is
+\[
+ c+c'=26,\qquad
+ \kappa+\kappa'=\frac c2+\frac{26-c}{2}=13,
+\]
+not $26$. On the affine Kac--Moody and Heisenberg scalar Verdier
+lanes, the scalar complementarity sum vanishes. Principal
+$\mathcal W_N$ has
+$K^\kappa=(H_N-1)K^c$, and the K3/BKM row uses subscripted invariants
+rather than a bare $\kappa$.
 
 \section{The conductor as an Euler self-pairing}
 \label{sec:conductor-euler-pairing}
 
-Theorem~\ref{thm:bar-cobar-platonic} \textup{(}Chiral bar--cobar duality
-in Platonic form\textup{)} sends each augmented complete chiral algebra
-$A$ on a smooth projective curve $X$ to its Koszul dual coalgebra
-$\bar{B}_X(A)$ and back to $A$ via the Koszul reflection
-$K \colon A \mapsto \Omega_X \bar{B}_X(A) \simeq A$. On the
-Koszul-self-dual subcategory $\mathrm{KSDual}(X) \subset
-\mathrm{Alg}^{\mathrm{fact, aug, comp}}_X$ \textup{(}those $A$ for which
-the Koszul dual algebra $A^! := \Omega_X(\bar{B}_X(A))^\vee$ admits a
-canonical isomorphism $A^! \simeq A$\textup{),} the conductor is the
-Euler self-pairing
+Theorem~\ref{thm:bar-cobar-platonic} sends each augmented complete
+chiral algebra $A$ on a smooth projective curve $X$ to the reduced bar
+coalgebra $\bar{B}_X(A)$. When $\bar{B}_X(A)$ is finite-dimensional in
+each conformal weight and the alternating sum converges, one may form
+the Euler self-pairing
 \[
  K_E(A) \;:=\; \chi\bigl(\bar{B}_X(A)\bigr)
  \;=\; \sum_{n \geq 0} (-1)^n \dim_k H^n\bigl(\bar{B}_X(A)\bigr).
 \]
-$K_E$ is well-defined when the bar coalgebra is finite-dimensional in
-each conformal weight (hypothesis (H3) of
-Theorem~\ref{thm:bar-cobar-platonic}).
+This is a bar-complex invariant. It is not, by definition, the
+central-charge conductor $K^c$, the scalar complementarity conductor
+$K^\kappa$, or the ghost scalar $K_{\mathrm{ghost}}^{\mathrm{leg}}$.
+Any equality with one of those numbers is an additional theorem on a
+specified lane, not a formal consequence of bar--cobar duality alone.
 
 \section{The conductor as a central-charge sum}
 \label{sec:conductor-central-charge}
 
-Each $A \in \mathrm{KSDual}(X)$ carries a Virasoro central charge
-$c(A)$, and its Koszul dual $A^!$ carries a central charge $c(A^!)$.
-The central-charge conductor is the symmetric sum
+When $A$ and its scalar Verdier partner $A^!$ carry compatible
+Virasoro elements, the central-charge conductor is the symmetric sum
 \[
- K_c(A) \;:=\; c(A) + c(A^!).
+ K^c(A,A^!) \;:=\; c(A) + c(A^!).
 \]
-$K_c$ is the conductor in the sense of the W-algebra literature
-(Frenkel--Kac--Wakimoto, Bouwknegt--Schoutens):
-$K_c(\mathrm{Vir}_c) = c + c' = 26$, $K_c(W_N) = 4N^3 - 2N - 2$,
-$K_c(\mathrm{BP}) = 196$.
+For the standard witness families:
+\[
+K^c(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})=26,\qquad
+K^c(\mathcal W_N,\mathcal W_N^!)=4N^3-2N-2,\qquad
+K^c(\mathrm{BP}_k,\mathrm{BP}_{-k-6})=196.
+\]
+The scalar $\kappa$-conductor is instead
+\[
+ K^\kappa(A,A^!) := \kappa(A)+\kappa(A^!).
+\]
+The anomaly-ratio bridge of
+Proposition~\ref{prop:archetype-complementarity-bridge} gives
+$K^\kappa=\varrho K^c$ when the witness pair has the same
+level-independent ratio $\varrho=\kappa/c$. In particular,
+$K^\kappa(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})=13$,
+$K^\kappa(\mathcal W_3,\mathcal W_3^!)=250/3$, and
+$K^\kappa(\mathrm{BP}_k,\mathrm{BP}_{-k-6})=98/3$.
 
 \section{The conductor as a BRST ghost charge}
 \label{sec:conductor-ghost-charge}
 
-A quasi-free BRST resolution of $A$ is a free chiral cdga
-$(C_\bullet, Q)$ with $H^*(C_\bullet, Q) \simeq A$, where $C_\bullet$ is
-generated by free fields of conformal weights $\{\lambda_\alpha\}$ and
-$\bbZ/2$-grading $\{\varepsilon_\alpha\}$. The total ghost central
-charge
+Fix a canonical BRST presentation
+$\mathrm{BRST}_{\mathrm{can}}(A)=(C_\bullet,Q)$ when one has been
+specified by the construction under discussion. If the ghost fields
+have conformal weights $\{\lambda_\alpha\}$ and parities
+$\{\varepsilon_\alpha\}$, the total ghost central charge is
 \[
  c_{\mathrm{ghost}}(C_\bullet) \;=\; \sum_\alpha (-1)^{\varepsilon_\alpha + 1} \cdot \bigl(-\,2(6\lambda_\alpha^2 - 6\lambda_\alpha + 1)\bigr)
 \]
-is the well-known $bc(\lambda)$-ghost contribution per generator: for a fermionic generator ($\varepsilon_\alpha = 1$) the summand is $-2(6\lambda_\alpha^2 - 6\lambda_\alpha + 1)$, the standard $bc(\lambda)$ central charge, which at $\lambda = 2$ reads $-26$. The ghost-charge conductor is its negative:
+with the usual fermionic $bc(\lambda)$ central charge
+$-2(6\lambda^2-6\lambda+1)$. The retained scalar witness value is
 \[
- K_g(A) \;:=\; -\, c_{\mathrm{ghost}}\bigl(C_\bullet\bigr)
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(A)
+ \;:=\; -\, c_{\mathrm{ghost}}\bigl(\mathrm{BRST}_{\mathrm{can}}(A)\bigr)
  \;=\; \sum_\alpha (-1)^{\varepsilon_\alpha + 1} \cdot 2(6\lambda_\alpha^2 - 6\lambda_\alpha + 1).
 \]
+It is a scalar attached to the chosen canonical ghost presentation.
+Changing from a gauge-field BRST presentation to a matter free-field
+presentation, as in the level-$1$ Frenkel--Kac--Segal identification,
+can change this scalar. It is therefore not a resolution-independent
+functor on all quasi-free presentations.
 
-\section{The Trinity Theorem}
+\section{The comparison theorem}
 \label{sec:trinity-theorem}
 
-\begin{theorem}[Trinity]
+\begin{theorem}[Scalar-conductor comparison]
 \label{thm:conductor-trinity}
 \ClaimStatusProvedHere
-On the Koszul-self-dual subcategory $\mathrm{KSDual}(X) \subset
-\mathrm{Alg}^{\mathrm{fact, aug, comp}}_X$, the three definitions
-coincide:
-\[
- K_E(A) \;=\; K_c(A) \;=\; K_g(A).
-\]
-\end{theorem}
-
-\begin{proof}
-The bar functor $\bar{B}_X$ sends $A$ to a coaugmented conilpotent
-factorisation coalgebra by
-Theorem~\ref{thm:bar-cobar-platonic}, with $\bar{B}_X(A)$ presented in
-each conformal weight by the bar resolution against the augmentation
-ideal. The Euler self-pairing $K_E(A) = \chi(\bar{B}_X(A))$ equals the
-graded character of $\bar{B}_X(A)$ at $q = 1$, which by Borel--Weil--Bott
-on $\Ran(X)$ equals the central-charge sum $c(A) + c(A^!)$ on
-$\mathrm{KSDual}(X)$ where $A^! \simeq A$ canonically. This gives
-$K_E = K_c$.
-
-The identification $K_c = K_g$ is additivity of the Virasoro central
-charge across BRST quasi-isomorphism: the resolution $(C_\bullet, Q) \to A$
-exhibits $A$ as the cohomology of a quasi-free cdga, and the central
-charge descends as an Euler sum
-$c(A) = \sum_\alpha (-1)^{\varepsilon_\alpha} c_{bc(\lambda_\alpha)}$
-with $c_{bc(\lambda)} = -2(6\lambda^2 - 6\lambda + 1)$ the standard
-fermionic $bc(\lambda)$-ghost central charge. Symmetrising under the Koszul
-reflection $A \leftrightarrow A^!$ produces $K_c$, whose negative
-recovers $K_g$.
-
-Each pairwise identification depends on $A \in \mathrm{KSDual}(X)$:
-$K_E = K_c$ uses the canonical $A^! \simeq A$, $K_c = K_g$ uses the
-existence of a quasi-free BRST resolution. Outside
-$\mathrm{KSDual}(X)$, the three definitions diverge: $K_E$ is a Koszul
-invariant that may differ from the central-charge sum, $K_c$ is a
-working definition that depends on the $A^!$-algebraisation, and $K_g$
-is the right one whenever a quasi-free resolution exists.
-\end{proof}
-
-\section{The Platonic Conductor Theorem}
-\label{sec:platonic-conductor}
-
-The Trinity collapses to a single functor on the BRST-resolvable
-subcategory.
-
-\begin{theorem}[Platonic Conductor]
-\label{thm:platonic-conductor}
-\ClaimStatusProvedHere
-Let $\mathrm{BRSTGaugedChirAlg}(X)$ denote the category of chiral
-algebras $A$ on $X$ admitting a quasi-free BRST resolution
-$(C_\bullet, Q) \to A$ by free-field generators of conformal weights
-$\{\lambda_\alpha\}$ and $\bbZ/2$-grading $\{\varepsilon_\alpha\}$, with
-morphisms the quasi-isomorphisms of cdgas. Then the assignment
-\[
- \boxed{\;K \colon \mathrm{BRSTGaugedChirAlg}(X) \;\to\; \mathbb{Z},
- \qquad K(A) \;:=\; \sum_\alpha (-1)^{\varepsilon_\alpha + 1} \cdot 2(6\lambda_\alpha^2 - 6\lambda_\alpha + 1)\;=\; -\,c_{\mathrm{ghost}}(\mathrm{BRST}(A))\;}
-\]
-is a well-defined functor satisfying:
+Let $A$ belong to a standard witness lane for which the scalar Verdier
+partner $A^!$, the central charges $c(A),c(A^!)$, the modular
+characteristics $\kappa(A),\kappa(A^!)$, and the canonical BRST ghost
+presentation are all fixed. Then:
 \begin{enumerate}
- \item[\textup{(P1)}] \emph{Resolution-independence:} $K(A)$ depends
- only on the quasi-isomorphism class of $A$.
- \item[\textup{(P2)}] \emph{Trinity:} on the Koszul-self-dual subcategory
- $\mathrm{KSDual}(X) \cap \mathrm{BRSTGaugedChirAlg}(X)$,
- $K = K_E = K_c$.
- \item[\textup{(P3)}] \emph{Functoriality:}
- \begin{itemize}
- \item additive: $K(A \otimes B) = K(A) + K(B)$,
- \item Koszul-invariant: $K(A^!) = K(A)$ \textup{(}via the
- symmetric form $K^c$\textup{),}
- \item DS-additive: $K(W_k(\mathfrak{g}, f)) = K(\widehat{\mathfrak{g}}_k) + K(\mathrm{DS}_f)$,
- \item cosetic: $K(G/H) = K(\widehat{\mathfrak{g}}) - K(\widehat{\mathfrak{h}}) + K(\mathrm{coset~BRST~ghosts})$,
- \item FKS level-$1$ drop: under the Frenkel--Kac--Segal isomorphism $\widehat{\mathfrak{g}}_1 \simeq V_{\Lambda_{\mathfrak{g}}}$ (simply-laced $\mathfrak{g}$), the conductor drops from $K(\widehat{\mathfrak{g}}_1) = 2\dim(\mathfrak{g})$ (Wakimoto BRST gauge-fixing, fermionic $bc(1)$-ghosts) to $K(V_{\Lambda_{\mathfrak{g}}}) = \mathrm{rank}(\mathfrak{g})$ (matter-convention lattice-VOA free-boson presentation; cf.\ Corollary~\ref{cor:uc-K-lattice}). The drop $2\dim(\mathfrak{g}) \to \mathrm{rank}(\mathfrak{g})$ is resolution-dependent: P1 above holds up to the choice of matter-vs-ghost convention, and the FKS identification is a convention change, not a quasi-isomorphism between two BRST resolutions of the same gauge content.
- \end{itemize}
- \item[\textup{(P4)}] \emph{Universal closed form:} $K$ is a polynomial
- in the rank-numerical invariants of the resolution. For series
- indexed by $N$ \textup{(}$\mathrm{sl}_N$ principal,
- $\mathrm{sp}_{2N}$ principal, etc.\textup{),} $K$ is a polynomial
- in $N$ of degree at most $3$ with leading coefficient determined
- by the integral of the spin-$j$ ghost density $12 j^2$ over the
- spin range.
+\item If the witness pair has the same level-independent anomaly ratio
+$\varrho=\kappa/c$ on $A$ and $A^!$, then
+\[
+ K^\kappa(A,A^!)=\varrho\,K^c(A,A^!).
+\]
+\item The equality
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(A)=K^c(A,A^!)$ is a statement about
+the chosen canonical gauge ghost presentation. It holds on the affine,
+Virasoro, principal $\mathcal W_N$, and Bershadsky--Polyakov witness
+lanes recorded below; it is not an equality of all quasi-free
+resolutions and it is not an Euler-pairing theorem.
+\item On the Heisenberg scalar Verdier lane,
+$K^c=K^\kappa=0$ whereas the canonical abelian-affine ghost witness has
+$K_{\mathrm{ghost}}^{\mathrm{leg}}=2$ in rank one.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Resolution-independence (P1) is Euler--Poincar\'e: any two quasi-free
-BRST resolutions of $A$ have the same total ghost charge by additivity
-of the central charge under quasi-isomorphism.
+The first assertion is the scalar identity
+\[
+ \kappa(A)+\kappa(A^!)
+ =
+ \varrho\,c(A)+\varrho\,c(A^!)
+ =
+ \varrho\bigl(c(A)+c(A^!)\bigr),
+\]
+under the stated equal-ratio hypothesis. The witness values are fixed
+in Table~\ref{tab:master-invariants}: Virasoro has
+$\varrho=1/2$ and $K^c=26$, hence $K^\kappa=13$; principal
+$\mathcal W_3$ has $\varrho=5/6$ and $K^c=100$, hence
+$K^\kappa=250/3$; Bershadsky--Polyakov has $\varrho=1/6$ and
+$K^c=196$, hence $K^\kappa=98/3$.
 
-Trinity (P2) is Theorem~\ref{thm:conductor-trinity}.
+The second assertion is the direct ghost calculation in the canonical
+gauge complexes. A fermionic $bc(j)$ pair contributes
+$2(6j^2-6j+1)$ to $K_{\mathrm{ghost}}^{\mathrm{leg}}$. Thus a
+Virasoro reparametrisation ghost $bc(2)$ gives $26$, the principal
+$\mathcal W_N$ DS ghosts give
+$\sum_{j=2}^{N}2(6j^2-6j+1)$, and the affine Wakimoto gauge ghosts
+give $2\dim\mathfrak g$. These are the compatibility values of
+Corollaries~\ref{cor:uc-K-affine-KM}, \ref{cor:uc-K-virasoro},
+\ref{cor:uc-K-WN}, and \ref{cor:uc-K-BP}.
 
-Additivity in (P3) follows from $c(A \otimes B) = c(A) + c(B)$ for
-chiral tensor product. Koszul-invariance follows from the symmetry
-$K^c(A) = c(A) + c(A^!) = c(A^!) + c(A^{!!}) = K^c(A^!)$ using
-$A^{!!} \simeq A$ on the Koszul-self-dual subcategory. DS-additivity
-follows from the BRST presentation
-$W_k(\mathfrak{g}, f) = H^*_{BRST}(\widehat{\mathfrak{g}}_k \otimes \mathrm{DS}_f)$. Cosetic
-additivity is the GKO construction. Level-1 collapse uses the
-Frenkel--Kac--Segal isomorphism $\widehat{\mathfrak{g}}_1 \simeq V_{\Lambda_\mathfrak{g}}$ and
-the lattice-VOA self-duality $V_\Lambda^! \simeq V_\Lambda$ for
-unimodular $\Lambda$.
+For Heisenberg, the scalar Verdier partner has
+$\kappa(\mathcal H_k^!)=-k$ by
+Theorem~\ref{thm:derived-centre-complementarity-strengthened}, so
+$K^\kappa=0$; in the same curved scalar convention the central-charge
+sum is $K^c=0$ on the archetype bridge table. The canonical
+abelian-affine gauge complex used by
+Corollary~\ref{cor:uc-K-heisenberg} has instead one fermionic $bc(1)$
+pair in rank one, hence $K_{\mathrm{ghost}}^{\mathrm{leg}}=2$. This
+separates the ghost witness from the scalar Verdier conductor.
+\end{proof}
 
-Universal closed form (P4) is the cubic formula for the ghost-charge
-polynomial: each spin-$j$ ghost contributes $-2(6j^2 - 6j + 1)$ to
-$c_{\mathrm{ghost}}$, so $K = -c_{\mathrm{ghost}}$ summed over spins
-$j \in \{j_{\min}, \ldots, j_{\max}\}$ is a discrete integral of
-$12 j^2$ \textup{(}plus lower-order corrections from the affine
-constants $-12 j + 2$\textup{)}. For $W_N$ principal, the spin range
-$j \in \{2, 3, \ldots, N\}$ gives the cubic $4 N^3 - 2N - 2$ via the
-discrete sum $\sum_{j = 2}^N 2(6j^2 - 6j + 1)$.
+\section{The canonical ghost scalar}
+\label{sec:platonic-conductor}
+
+The ghost scalar becomes a closed formula only after the canonical
+ghost presentation has been fixed.
+
+\begin{theorem}[Canonical ghost scalar]
+\label{thm:platonic-conductor}
+\ClaimStatusProvedHere
+For a standard witness family equipped with its canonical finite ghost
+presentation, the scalar
+\[
+ \boxed{\;
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(A)
+ := \sum_\alpha (-1)^{\varepsilon_\alpha + 1}
+ \cdot 2(6\lambda_\alpha^2 - 6\lambda_\alpha + 1)
+ =-c_{\mathrm{ghost}}(\mathrm{BRST}_{\mathrm{can}}(A))\;}
+\]
+has the following values:
+\begin{enumerate}
+\item[\textup{(G)}] rank-one abelian-affine Heisenberg:
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal H_k)=2$;
+\item[\textup{(L)}] affine Kac--Moody at non-critical level:
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(V_k(\mathfrak g))=2\dim\mathfrak g$;
+\item[\textup{(M)}] Virasoro:
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathrm{Vir}_c)=26$;
+\item[\textup{(M)}] principal $\mathcal W_N$:
+\[
+K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal W_N)
+=\sum_{j=2}^{N}2(6j^2-6j+1)=4N^3-2N-2;
+\]
+\item[\textup{(M)}] Bershadsky--Polyakov:
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathrm{BP}_k)=196$.
+\end{enumerate}
+The scalar is additive under tensor products and BRST products only
+after the presentation convention is fixed. The Frenkel--Kac--Segal
+level-$1$ identification changes the convention from Wakimoto gauge
+ghosts to a matter lattice-VOA presentation, replacing
+$2\dim\mathfrak g$ by $\operatorname{rank}\mathfrak g$ as in
+Corollary~\ref{cor:uc-K-lattice}; this is not a contradiction because
+$K_{\mathrm{ghost}}^{\mathrm{leg}}$ is presentation-sensitive.
+\end{theorem}
+
+\begin{proof}
+The rank-one Heisenberg, affine, Virasoro, principal $\mathcal W_N$,
+Bershadsky--Polyakov, and lattice compatibility values are precisely
+Corollaries~\ref{cor:uc-K-heisenberg}--\ref{cor:uc-K-lattice}. The
+closed form for the principal $\mathcal W_N$ row is the elementary
+sum
+\[
+\sum_{j=2}^{N}2(6j^2-6j+1)
+ =
+12\Bigl(\frac{N(N+1)(2N+1)}6-1\Bigr)
+-12\Bigl(\frac{N(N+1)}2-1\Bigr)+2(N-1),
+\]
+which simplifies to $4N^3-2N-2$. Presentation-sensitivity is forced
+by the level-$1$ comparison: the Wakimoto gauge complex counts
+$\dim\mathfrak g$ fermionic $bc(1)$ pairs, while the lattice matter
+presentation counts the free bosons of $V_{\Lambda_{\mathfrak g}}$.
 \end{proof}
 
 \section{Per-family corollaries}
 \label{sec:conductor-corollaries}
 
-The Platonic Conductor recovers every per-family formula in the
-manuscript as a corollary.
+The comparison theorem records the per-family scalar formulas with
+their normalisations separated.
 
 \begin{corollary}[Heisenberg]
 \label{cor:K-heisenberg}
-$K(\mathcal{H}_k) = -2$ for any level $k$, and the symmetric form
-$K^c(\mathcal{H}_k) = c(\mathcal{H}_k) + c(\mathcal{H}_k^!) = 1 + 1 = 2$.
-Witnessed by the single spin-$1$ bosonic generator $J$ with
-$\varepsilon = 0$, contributing $(-1)^{0+1}\cdot 2(6 - 6 + 1) = -2$ in
-the defining formula for $K$ displayed in
-Theorem~\ref{thm:platonic-conductor}. The level $k$ enters only the
-normalisation of $J$ and not the spin-$1$ ghost weight, so
-$K(\mathcal{H}_k)$ is read off the spin alone, agreeing with the
-Universal Conductor derivation of
-Corollary~\ref{cor:uc-K-heisenberg}.
+For rank-one abelian-affine Heisenberg, the canonical gauge ghost
+witness has
+\[
+K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal H_k)=2.
+\]
+The scalar Verdier lane has
+$\kappa(\mathcal H_k)=k$, $\kappa(\mathcal H_k^!)=-k$, and therefore
+$K^\kappa(\mathcal H_k,\mathcal H_k^!)=0$; in the same curved scalar
+convention $K^c=0$. The value $2$ is the canonical fermionic
+$bc(1)$ ghost-pair value of Corollary~\ref{cor:uc-K-heisenberg}, not
+the modular characteristic $\kappa(\mathcal H_k)$ and not the
+central-charge complementarity sum.
 \end{corollary}
 
 \begin{corollary}[Affine Kac--Moody]
 \label{cor:K-affine-KM}
-$K(\widehat{\mathfrak{g}}_k) = 2 \dim(\mathfrak{g})$ for any non-critical
-level $k$, simple Lie algebra $\mathfrak{g}$. Witnessed by the
-Wakimoto--Feigin--Frenkel resolution, whose BRST complex introduces one
-fermionic $bc(1)$-ghost pair per Lie-algebra direction
-(\cite{wakimoto1986, feigin_frenkel_ds}): $\dim(\mathfrak{g})$ fermionic
-generators with $\varepsilon_\alpha = 1$, $\lambda_\alpha = 1$, each
-contributing $(-1)^{1+1}\cdot 2(6 - 6 + 1) = +2$ to $K$; total
-$K(\widehat{\mathfrak{g}}_k) = 2\dim(\mathfrak{g})$, matching
-$K^c = c(\widehat{\mathfrak{g}}_k) + c(\widehat{\mathfrak{g}}_{-k-2h^\vee}) = 2\dim(\mathfrak{g})$.
+For a simple Lie algebra $\mathfrak g$ and non-critical level
+$k\ne-h^\vee$,
+\[
+K_{\mathrm{ghost}}^{\mathrm{leg}}(V_k(\mathfrak g))
+=K^c(V_k(\mathfrak g),V_{-k-2h^\vee}(\mathfrak g))
+=2\dim\mathfrak g,
+\qquad
+K^\kappa=0.
+\]
+The first equality is the Wakimoto--Feigin--Frenkel ghost calculation:
+one fermionic $bc(1)$ pair per Lie direction contributes $2$. The
+second scalar is different because
+\[
+\kappa(V_k(\mathfrak g))
+=\frac{\dim\mathfrak g\,(k+h^\vee)}{2h^\vee},\qquad
+\kappa(V_{-k-2h^\vee}(\mathfrak g))
+=-\kappa(V_k(\mathfrak g)).
+\]
 \end{corollary}
 
 \begin{corollary}[Virasoro]
 \label{cor:K-virasoro}
-$K(\mathrm{Vir}_c) = 26$ for all $c \neq 0$. Witnessed by the
-diffeomorphism BRST resolution, whose single fermionic reparametrisation
-$bc(2)$-ghost pair has $\varepsilon = 1$, $\lambda = 2$, contributing
-$(-1)^{1+1}\cdot 2(6\cdot 4 - 12 + 1) = +2 \cdot 13 = 26$.
-The symmetric form $K^c = c + (26 - c) = 26$ is the Koszul reflection
-$\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26 - c}$, fixed at the
-self-dual point $c = 13$. This is the Polyakov critical dimension of
-bosonic string theory.
+For the Virasoro Verdier pair
+$\mathrm{Vir}_c^!\simeq\mathrm{Vir}_{26-c}$,
+\[
+ K^c(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})=26,\qquad
+ K^\kappa(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})=13.
+\]
+The ghost witness also gives
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathrm{Vir}_c)=26$: the single
+fermionic reparametrisation $bc(2)$ pair contributes
+$2(6\cdot4-12+1)=26$. The self-dual point is $c=13$, where
+$\kappa=\kappa'=13/2$; the string anomaly-cancellation point $c=26$
+is a different statement, with matter $\kappa=13$ cancelled by ghost
+$\kappa=-13$.
 \end{corollary}
 
 \begin{corollary}[$W_N$ cubic]
 \label{cor:K-WN-cubic}
-$K(W_N) = 4 N^3 - 2N - 2$ for principal $W_N$ \textup{(}BRST resolution
-by Toda ghosts at spins $\{2, 3, \ldots, N\}$\textup{):}
+For principal $\mathcal W_N$ with canonical DS ghosts at spins
+$2,\ldots,N$,
 \[
- K(W_N) \;=\; \sum_{j = 2}^N 2(6 j^2 - 6 j + 1) \;=\; 4 N^3 - 2N - 2.
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal W_N)
+ =K^c(\mathcal W_N,\mathcal W_N^!)
+ = \sum_{j = 2}^N 2(6 j^2 - 6 j + 1)
+ = 4 N^3 - 2N - 2.
 \]
-The third difference $\Delta^3 K(W_N) = 24$ is constant. Recovers
-$K(W_2) = K(\mathrm{Vir}) = 26$, $K(W_3) = 100$,
-$K(W_4) = 246$, $K(W_5) = 488$.
+The scalar modular-characteristic sum is
+\[
+ K^\kappa(\mathcal W_N,\mathcal W_N^!)
+ =(H_N-1)(4N^3-2N-2),
+\]
+because $\kappa(\mathcal W_N)=c(H_N-1)$ in the census
+normalisation.
+The third difference
+$\Delta^3 K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal W_N)=24$ is
+constant. This recovers
+$K^c(\mathcal W_2)=K^c(\mathrm{Vir})=26$,
+$K^c(\mathcal W_3)=100$, $K^c(\mathcal W_4)=246$, and
+$K^c(\mathcal W_5)=488$.
 \end{corollary}
 
 \begin{corollary}[Bershadsky--Polyakov]
 \label{cor:K-BP}
-$K(\mathrm{BP}) = 196$, equivalently the polynomial identity
-$c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k - 6) = 196$. Witnessed by the
-BRST presentation $\mathrm{BP} = W(\mathrm{sl}_3, f_{(2,1)})$:
-$K(\mathrm{BP}) = 2 \dim(\mathrm{sl}_3) + K(\mathrm{DS}_{(2,1)~\mathrm{ghosts}})
-= 16 + 180 = 196$.
+For Bershadsky--Polyakov,
+\[
+K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathrm{BP}_k)
+=K^c(\mathrm{BP}_k,\mathrm{BP}_{-k-6})=196,
+\qquad
+K^\kappa(\mathrm{BP}_k,\mathrm{BP}_{-k-6})=\frac{98}{3}.
+\]
+The first equality is the minimal DS ghost calculation retained in
+Corollary~\ref{cor:uc-K-BP}; equivalently
+$c_{\mathrm{BP}}(k)+c_{\mathrm{BP}}(-k-6)=196$. The second follows
+from the census formula $\kappa(\mathrm{BP}_k)=c_{\mathrm{BP}}(k)/6$.
 \end{corollary}
 
 \begin{remark}[The 24 in the third difference]
 \label{rem:third-difference-24}
-The constancy $\Delta^3 K(W_N) = 24$ in
+The constancy
+$\Delta^3 K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal W_N) = 24$ in
 Corollary~\ref{cor:K-WN-cubic} is the cubic-rigidity signature of the
 $W_N$-conductor. The number $24 = 6 \cdot 4$ factorises through
 $6 = $ leading-spin-coefficient $\cdot ~2 \cdot 2 = $ leading
-ghost-density coefficient: $K(W_N)$ has cubic part
+ghost-density coefficient:
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal W_N)$ has cubic part
 $4 N^3 = (4/6) \cdot \int_2^N 12 j^2 dj |_{\mathrm{discrete}}$, whose
-third forward difference is $4 \cdot 6 = 24$. This is the same
-``$24$'' that appears as the exponent in the cusp form
-$\Delta(\tau) = q \prod_{n \geq 1} (1 - q^n)^{24}$, as the rank of the
-Leech lattice, as the transverse dimension of the bosonic string, and
-(shifted by $1$) as the Euler characteristic $\chi(\mathrm{K3}) = 24$;
-the common structural origin is the Borcherds product expansion of
-$\Delta^{24}$ as the denominator of the Fake Monster Lie algebra, the
-gauge-algebra parent of the Vol~III Mukai-lattice analysis
-(\cite{Borcherds1998}).
+third forward difference is $4 \cdot 6 = 24$. This is a discrete
+spin-sum fact. It does not identify the $W_N$ cubic with the Leech
+lattice rank, the K3 Euler characteristic, or a BKM weight. The
+K3/BKM scalar package is separate:
+$\kappa_{\mathrm{fiber}}(K3)=24$,
+$\kappa_{\mathrm{BKM}}(\Delta_5)=5$, and
+$\kappa_{\mathrm{BKM}}(\Phi_{12})=12$ in the Fake-Monster row.
 \end{remark}
 
 \section{The exclusion frontier}
 \label{sec:conductor-exclusion-frontier}
 
-The class $\mathrm{BRSTGaugedChirAlg}$ is precisely-named: it consists
-of chiral algebras whose graded character $\mathrm{ch}_A(q, z)$ is the
-Euler character of a finite-rank free-field BRST complex. This includes
-all simple affine Kac--Moody at non-critical level, all simple
-W-algebras at non-critical level, all lattice VOAs, all free-field
-systems, and all BRST cohomologies of finite quasi-free chains
-\textup{(}including the small quantum group at root of unity via Felder
-screening\textup{).} It excludes:
+The scalar $K_{\mathrm{ghost}}^{\mathrm{leg}}$ is defined here only on
+families with a fixed canonical finite ghost presentation. The proved
+examples are the abelian-affine Heisenberg witness, non-critical
+affine Kac--Moody in its Wakimoto gauge presentation, Virasoro,
+principal $\mathcal W_N$, Bershadsky--Polyakov, and lattice VOAs in
+the matter convention of Corollary~\ref{cor:uc-K-lattice}. The
+following classes are outside this proved scalar package unless an
+explicit canonical finite BRST presentation is supplied:
 \begin{itemize}
  \item Logarithmic VOAs whose character is not a polynomial in
  free-field characters \textup{(}e.g., the $W_p$ triplet at
  certain $p$\textup{);}
- \item Quasi-rational VOAs without quasi-free resolution
- \textup{(}status open\textup{);}
+ \item Quasi-rational VOAs without a known quasi-free resolution;
  \item Critical-level Kac--Moody algebras \textup{(}where the BRST
  gauge fixing fails\textup{).}
 \end{itemize}
-The exclusion list \emph{is} the open frontier of the conductor
-programme. Each exclusion is named as a conjecture below.
+Each exclusion is named as a conjectural extension below.
 
 \begin{conjecture}[Logarithmic conductor]
 \label{conj:K-logarithmic}
 \ClaimStatusConjectured
 For logarithmic VOAs whose character $\mathrm{ch}_A(q, z)$ is not a
 polynomial in free-field characters, an extended conductor
-$K^{\log}(A)$ is defined by the regularised limit of $K$ along a
-deformation $A_\epsilon \to A$ with $A_\epsilon \in
-\mathrm{BRSTGaugedChirAlg}$ for $\epsilon > 0$. The limit exists and is
-finite; for the $W_p$ triplet at $p = 2$, $K^{\log}(W_2) = 12$
-\textup{(}conjectural\textup{).}
+$K_{\mathrm{ghost}}^{\log}(A)$ is defined by the regularised limit of
+$K_{\mathrm{ghost}}^{\mathrm{leg}}(A_\epsilon)$ along a deformation
+$A_\epsilon \to A$ whose members have fixed canonical finite ghost
+presentations for $\epsilon>0$. The limit exists and is finite; for
+the $W_p$ triplet at $p = 2$,
+$K_{\mathrm{ghost}}^{\log}(W_2) = 12$ \textup{(}conjectural\textup{).}
 \end{conjecture}
 
 \begin{conjecture}[Quasi-rational conductor]
 \label{conj:K-quasi-rational}
 \ClaimStatusConjectured
 Every quasi-rational VOA admits a quasi-free BRST resolution after
-passing to its Koszul double cover, on which the Platonic Conductor
-applies.
+passing to its Koszul double cover, on which a canonical finite ghost
+presentation defines $K_{\mathrm{ghost}}^{\mathrm{leg}}$.
 \end{conjecture}
 
 \begin{conjecture}[Critical-level conductor]
 \label{conj:K-critical}
 \ClaimStatusConjectured
 At critical level $k = -h^\vee$, the BRST gauge fixing fails and the
-Platonic Conductor is undefined; the appropriate replacement is the
-Feigin--Frenkel screening conductor $K^{\mathrm{FF}}$ defined by the
-reductive part of the centre of $\widehat{\mathfrak{g}}_{-h^\vee}$.
+canonical finite ghost scalar is undefined; the appropriate
+replacement is the Feigin--Frenkel screening conductor
+$K^{\mathrm{FF}}$ defined by the reductive part of the centre of
+$\widehat{\mathfrak{g}}_{-h^\vee}$.
 \end{conjecture}
 
-\section{Cross-volume parallel: the Borcherds conductor}
+\section{Cross-volume parallel: the Borcherds scalar}
 \label{sec:conductor-cross-volume}
 
-The Vol III Borcherds--Kac--Moody conductor
-$\kappa_{\mathrm{BKM}} = c_\Lambda(0)/2$ is the cross-volume parallel
-of the Platonic Conductor. For any K3-fibered CY$_3$ whose transcendental
-lattice embeds in an even unimodular Borcherds-lift lattice $\Lambda$ of
-signature $(2, n)$ carrying a Borcherds character $c_\Lambda$
-\textup{(}the signature $(2, n)$ is that of the orthogonal-modular
-domain on which the lift is defined, not the $(4, 20)$-signature K3
-Mukai lattice itself\textup{):}
+The Vol III Borcherds--Kac--Moody scalar is
+$\kappa_{\mathrm{BKM}}=c_\Phi(0)/2$, the weight of the Borcherds lift
+of the chosen weak Jacobi input $\Phi$. It is a BKM automorphic weight,
+not the Virasoro central charge, not the chiral modular
+characteristic $\kappa_{\mathrm{ch}}$, and not the ghost scalar
+$K_{\mathrm{ghost}}^{\mathrm{leg}}$. For any K3-fibered CY$_3$ whose
+chosen Borcherds input satisfies the hypotheses of the Borcherds
+weight theorem on the relevant orthogonal or paramodular domain,
 \[
- \kappa_{\mathrm{BKM}}(\mathfrak{g}_\Lambda) \;=\; c_\Lambda(0) / 2,
+ \kappa_{\mathrm{BKM}}(\mathfrak g_\Phi)=c_\Phi(0)/2.
 \]
-unconditional via Borcherds 1998 weight theorem (Vol III
-\texttt{prop:bkm-weight-universal}). The structural correspondence:
-\begin{itemize}
- \item Vol I: $K(A) = -c_{\mathrm{ghost}}(\mathrm{BRST}(A))$ is the
- \emph{negative} ghost charge of any quasi-free BRST resolution.
- \item Vol III: $\kappa_{\mathrm{BKM}}(\mathfrak{g}_\Lambda) = c_\Lambda(0)/2$
- is the \emph{leading Fourier coefficient} of the Borcherds
- character.
-\end{itemize}
-Both invariants compute the trace of the universal Koszul reflection on
-the appropriate centre: in Vol I the ghost-charge centre of the BRST
-complex; in Vol III the Borcherds-character centre of the
-BKM superalgebra. The cross-volume bridge is the
-\emph{Universal Trace Identity} \textup{(}conjectural, see the
-cross-volume bridge chapter\textup{).}
+For the default $K3\times E$ denominator normalisation,
+$c_{\Delta_5}(0)=10$ and hence
+$\kappa_{\mathrm{BKM}}(\Delta_5)=5$; the Igusa-square normalisation
+$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ has weight $10$. The same row
+also carries
+\[
+\{\kappa_{\mathrm{cat}},\kappa_{\mathrm{ch}}^{\mathrm{Heis}},
+\kappa_{\mathrm{BKM}},\kappa_{\mathrm{fiber}}\}(K3\times E)
+=\{0,3,5,24\},
+\qquad
+K^\kappa_{\mathcal B}=2c_+(\mathrm{Mukai}(K3))=8.
+\]
+These are the four-scalar separation of
+Remark~\ref{rem:landscape-1} and Remark~\ref{rem:landscape-2}. The
+formula $\kappa_{\mathrm{BKM}}=c_\Phi(0)/2$ is unconditional once the
+Borcherds input and domain are fixed; the comparison between this BKM
+weight and a Vol I ghost or scalar Verdier conductor is the
+Universal Trace Identity and remains conjectural.

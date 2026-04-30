@@ -190,15 +190,24 @@ of this simple pole with the Feigin--Frenkel--Reshetikhin
 r-matrix is the genuine content of this section; we isolate it as
 Theorem~\ref{thm:gaudin-r-matrix-identification} below.
 
-\begin{theorem}[Chiral collision residue $=$ FFR r-matrix]
+\begin{theorem}[KZ-normalized collision residue and FFR r-matrix]
 \label{thm:gaudin-r-matrix-identification}
 \emph{(ProvedHere.)} Let $\widehat{\fg}_k$ be the affine Kac--Moody
 algebra at non-critical level $k \neq -h^\vee$, with
 $\fg$ simple finite-dimensional and $h^\vee$ the dual Coxeter number.
-The chiral collision residue
+The trace-form collision residue and the KZ-normalized Gaudin kernel
+are
+\[
+r^{\mathrm{KM}}_{\mathrm{tr}}(z)=k\,\Omega_{\mathrm{tr}}/z,
+\qquad
+r^{\mathrm{KZ}}(z)=\Omega_{\mathrm{KZ}}/((k+h^\vee)z),
+\quad
+\Omega_{\mathrm{KZ}}=2h^\vee\Omega_{\mathrm{tr}}.
+\]
+Thus the KZ-normalized chiral collision residue
 $\Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k}) \in
 \widehat{\fg}_k^! \otimes \widehat{\fg}_k^! \, [\![z^{-1}]\!]$
-of Definition~\ref{def:collision-residue} is the
+of Definition~\ref{def:collision-residue} gives the
 Feigin--Frenkel--Reshetikhin Gaudin r-matrix:
 \begin{equation}\label{eq:ffr-identification}
  \Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k})
@@ -208,40 +217,34 @@ Feigin--Frenkel--Reshetikhin Gaudin r-matrix:
  \frac{\Omega}{(k + h^\vee)\, z},
 \end{equation}
 with $\Omega = \sum_a t^a \otimes t_a$ the quadratic Casimir. The
-$(k+h^\vee)$-rescaled Yangian r-matrix
-$k \cdot \Omega_{\mathrm{tr}}/z$ (trace-form Casimir
-$\Omega_{\mathrm{tr}} = \Omega/(2h^\vee)$ of the RTT presentation)
-equals $r_{\mathrm{Gaudin}}(z)$ up to Casimir normalisation; the
-two presentations are related by the inner automorphism subgroup
-$\mathrm{GRT}^{\mathrm{fin}} \subset \mathrm{GRT}_1$ acting on
-collision residues by Casimir rescaling, not by a change of face.
+trace-form and KZ-normalized expressions are conventionally related
+normalizations, not identical rational functions of~$k$.
 \end{theorem}
 
 \begin{proof}
-\textbf{(a) Derivation of the simple pole from the OPE.} By
+\textbf{(a) Simple-pole support from the OPE.} By
 Proposition~\ref{prop:pole-structure}, $k_{\max} = p_{\max} - 1 =
 1$, hence the Laurent expansion reduces to $r(z) = r_1/z$ with
 $r_1 \in \widehat{\fg}_k^! \otimes \widehat{\fg}_k^!$ the image
 under the bar-to-dual projection of the leading OPE coefficient of
 \eqref{eq:km-ope}. The double-pole coefficient
-$k\,(t^a,t^b)$ is the Killing-normalised central term; its
-bar-to-dual projection is the quadratic Casimir
-$\Omega = \sum_a t^a \otimes t_a$ on $\fg$-factors, with overall
-scalar determined by the next step.
+$k\,(t^a,t^b)$ gives the trace-form central tensor
+$k\,\Omega_{\mathrm{tr}}/z$. The structure-constant simple pole gives
+the Lie bracket part of the current algebra; it is not contracted with
+the central tensor into a second copy of~$\Omega$.
 
-\textbf{(b) Sugawara normalisation fixes the $(k+h^\vee)^{-1}$
-scalar.} The chiral Maurer--Cartan element $\Theta_{\widehat{\fg}_k}$
-is constructed from the universal enveloping chiral algebra through
-the Sugawara stress tensor
+\textbf{(b) KZ normalisation fixes the $(k+h^\vee)^{-1}$
+connection coefficient.} The KZ connection is constructed through the
+Sugawara stress tensor
 $T(z) = \tfrac{1}{2(k+h^\vee)} \, :J^a J_a:(z)$, whose normalisation
-factor $(k+h^\vee)^{-1}$ propagates to the binary projection of
-$\Theta_{\widehat{\fg}_k}$ via the identity
+factor $(k+h^\vee)^{-1}$ enters via the identity
 $[T, J^a] = \partial J^a$, which holds at non-critical level
 $k \neq -h^\vee$ and fails at $k = -h^\vee$ precisely because the
-Sugawara scalar diverges. The genus-zero binary projection
-$\Res^{\mathrm{coll}}_{0,2}$ inherits this scalar: the Sugawara
-denominator is transported through the collision by functoriality
-of the projection. Combining steps (a) and (b),
+Sugawara scalar diverges. Passing from the trace-form collision tensor
+to the KZ connection therefore replaces
+$k\,\Omega_{\mathrm{tr}}$ by $\Omega_{\mathrm{KZ}}/(k+h^\vee)$.
+This is a normalization bridge, not an algebraic contraction of the
+central and Lie OPE terms. In KZ normalization,
 $r_1 = \Omega/(k+h^\vee)$, which is
 \eqref{eq:ffr-identification}.
 
@@ -663,17 +666,18 @@ the seven-face programme.
 \end{proposition}
 
 % ================================================================
-\subsection{Elliptic Gaudin via Felder $R$-matrix and KZB}
+\subsection{Elliptic Gaudin, Belavin--Drinfeld, and Felder}
 \label{sec:elliptic-gaudin}
 % ================================================================
 
-At genus one, the collision-residue programme upgrades from KZ to
-the Knizhnik--Zamolodchikov--Bernard (KZB) connection, and the
-simple-pole kernel $1/(z_i - z_j)$ is replaced by the dynamical
-propagator $\theta_1'(z_i - z_j, \tau)/\theta_1(z_i - z_j, \tau)$
-(FM30 warning: \emph{not} the Weierstrass zeta $\zeta_\tau$, which
-breaks CYBE). The elliptic Gaudin Hamiltonians carry an extra
-dependence on the dynamical parameter $\lambda \in \mathfrak{h}^*$.
+At genus one, KZ regularizes to the KZB connection. The
+non-dynamical elliptic classical $r$-matrix is the Belavin--Drinfeld
+matrix, with the full Weierstrass $\zeta_\tau$ in the Cartan channel
+and theta-function ratios in the root channels. The Felder
+$R(z,\lambda,\tau)$ is a distinct dynamical IRF/face-model object
+satisfying the dynamical Yang--Baxter equation; for $\mathfrak{sl}_2$
+it is related to the Belavin matrix by a vertex--IRF gauge transform,
+not identical to the bare collision residue.
 
 \begin{theorem}[Elliptic Gaudin from chiral collision at
 $g=1$]\label{thm:elliptic-gaudin}
@@ -681,7 +685,9 @@ $g=1$]\label{thm:elliptic-gaudin}
 Let $E_\tau = \CC/(\ZZ + \tau\ZZ)$ and $\widehat{\fsl}_2$ at
 non-critical level~$k$. The genus-one collision residue of
 $\Theta_{\widehat{\fsl}_2}$ on $E_\tau^{\times n} / \Sigma_n$
-produces the Felder dynamical $R$-matrix
+produces the KZB/Belavin elliptic kernel. After the vertex--IRF gauge
+transform, the corresponding dynamical object is the Felder
+$R$-matrix
 \[
  R_{\mathrm{Felder}}(z, \lambda, \tau) \;=\;
  \mathrm{id} \;+\; \hbar \cdot \frac{\theta_1'(z, \tau)}
@@ -699,8 +705,8 @@ Gaudin Hamiltonians are
 Flatness of the KZB connection $\nabla_{\mathrm{KZB}} = d -
 \sum_{i<j} r^{\mathrm{ell}}(z_i - z_j, \tau, \lambda) dz_{ij} -
 \partial_\tau(\cdot)\,d\tau$ is equivalent to the dynamical CYBE
-for the Felder $R$-matrix, which in turn is the $g=1$ MC equation
-on the elliptic collision residue.
+after this gauge transform. The bare collision residue is the
+non-dynamical KZB/Belavin input.
 \end{theorem}
 
 \begin{remark}[Heat-equation prefactor]

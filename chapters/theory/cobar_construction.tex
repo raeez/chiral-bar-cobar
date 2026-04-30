@@ -44,9 +44,13 @@ $\Omega^{\mathrm{ch}}_n(\cC)
 (Definition~\ref{def:geom-cobar-intrinsic}), where
 $\cC^\vee = \mathbb{D}_X(\cC)$ is the $\cD$-module Verdier dual
 and $j \colon C_{n+1}(X) \hookrightarrow \overline{C}_{n+1}(X)$
-is the open inclusion. The cobar differential is the Verdier
-transport of the bar differential through the Hom functor:
+is the open inclusion. In the uncurved conilpotent lane the cobar
+differential is the Verdier transport of the bar differential through
+the Hom functor:
 $d_{\mathrm{cobar}} := \mathbb{D}(d_{\mathrm{bar}})$.
+When the bar object is curved, the same Verdier transport produces a
+CDG cobar object; its square is the inner curvature operator, not zero
+on the nose.
 The exchange $\mathbb{D} \circ j_* \cong j_! \circ \mathbb{D}$
 (Lemma~\ref{lem:verdier-extension-exchange}) identifies the
 cobar kernel as the distributional partner of the logarithmic
@@ -61,8 +65,11 @@ $\operatorname{Tw}(\cC, \cA) = \MC(\operatorname{Conv}(\cC, \cA))$
 At genus~$g \geq 1$ the fiberwise differential satisfies
 $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$, reflecting the curved
 $A_\infty$ structure $\mu_1^2 = [\mu_0, -]$
-(Chapter~\ref{chap:bar-cobar-adjunction}). The total bar differential
-$d_{\mathrm{bar}}^2 = 0$ remains nilpotent. The cobar functor
+(Chapter~\ref{chap:bar-cobar-adjunction}). Thus the raw fiberwise
+operator is not a differential unless the curvature acts trivially.
+Strict nilpotence belongs to the uncurved genus-$0$ complex, to the
+flat total comparison differential, to a Maurer--Cartan twist killing
+the curvature, or to the coderived totalization. The cobar functor
 applied to the bar coalgebra viewed as an FCom-algebra
 (Theorem~\ref{thm:bar-modular-operad}) encodes the shadow
 obstruction tower $\Theta_\cA^{\leq r}$
@@ -299,12 +306,16 @@ inclusion, $D = \partial\overline{C}_{n+1}(X)$ is the boundary divisor, and
 $\mathbb{D}_{\overline{C}_{n+1}(X)}$ is the Verdier duality functor on the
 compactified configuration space.
 
-The \emph{cobar differential} is:
+In the uncurved case the \emph{cobar differential} is:
 \[
 d_{\mathrm{cobar}} := \mathbb{D}(d_{\mathrm{bar}})
 \]
 the Verdier dual of the bar differential
-(Definition~\ref{def:bar-differential-complete}).
+(Definition~\ref{def:bar-differential-complete}). In the curved CDG
+case this formula denotes the degree-$1$ derivation underlying the
+curved cobar object; its square is governed by
+Corollary~\ref{cor:cobar-nilpotence-verdier}, not by strict
+nilpotence.
 \end{definition}
 
 \begin{remark}\label{rem:cobar-intrinsic-meaning}
@@ -494,17 +505,78 @@ and does not interact with configuration space geometry; it is self-dual
 under $\mathbb{D}_X(\mathcal{C}^\vee) = \mathcal{C}$.
 \end{proof}
 
-\begin{corollary}[\texorpdfstring{$d_{\mathrm{cobar}}^2 = 0$}{d\_cobar\textasciicircum 2 = 0} via Verdier duality;
+\begin{corollary}[Uncurved cobar nilpotence and curved square via Verdier duality;
 \ClaimStatusProvedHere]\label{cor:cobar-nilpotence-verdier}
-The cobar differential satisfies $d_{\mathrm{cobar}}^2 = 0$.
+Let $\mathcal{C}$ be a conilpotent chiral coalgebra whose Verdier-dual
+bar object is uncurved. Then the cobar differential satisfies
+\[
+d_{\mathrm{cobar}}^2 = 0.
+\]
+If $\mathcal{C}$ carries CDG curvature, the curved cobar is a triple
+\[
+\bigl(\Omega^{\mathrm{ch}}_{\mathrm{curv}}(\mathcal{C}),
+  d_{\Omega,h}, h_\Omega\bigr)
+\]
+with $h_\Omega\in \Omega^{\mathrm{ch}}_{\mathrm{curv}}(\mathcal{C})^2$
+and
+\begin{equation}\label{eq:curved-cobar-square}
+d_{\Omega,h}^{\,2}(x)
+= [h_\Omega,x]
+:= h_\Omega\cdot x - x\cdot h_\Omega,
+\qquad
+d_{\Omega,h}(h_\Omega)=0.
+\end{equation}
+For a Maurer--Cartan element $\alpha$ the twisted operator
+$d_{\Omega,\alpha}=d_{\Omega,h}+[\alpha,-]$ satisfies
+\begin{equation}\label{eq:curved-cobar-twist-square}
+d_{\Omega,\alpha}^{\,2}
+=
+\left[
+h_\Omega+d_{\Omega,h}\alpha+\frac{1}{2}[\alpha,\alpha],
+-
+\right].
+\end{equation}
+Thus a curved cobar object becomes strictly square-zero only after a
+twist with
+$h_\Omega+d_{\Omega,h}\alpha+\frac{1}{2}[\alpha,\alpha]=0$, or after
+passing to the flat comparison/coderived totalization where curvature
+is absorbed into the total structure.
 \end{corollary}
 
 \begin{proof}
-The bar differential satisfies $d_{\mathrm{bar}}^2 = 0$
+In the uncurved lane the bar differential satisfies
+$d_{\mathrm{bar}}^2 = 0$
 (Theorem~\ref{thm:genus-induction-strict}). Since
-$d_{\mathrm{cobar}} = \mathbb{D}(d_{\mathrm{bar}})$ and Verdier duality is
-an exact functor on holonomic $\mathcal{D}$-modules, we have
-$d_{\mathrm{cobar}}^2 = \mathbb{D}(d_{\mathrm{bar}}^2) = \mathbb{D}(0) = 0$.
+$d_{\mathrm{cobar}} = \mathbb{D}(d_{\mathrm{bar}})$ and Verdier
+duality is exact on holonomic $\mathcal{D}$-modules,
+\[
+d_{\mathrm{cobar}}^2
+= \mathbb{D}(d_{\mathrm{bar}}^2)
+= \mathbb{D}(0)
+=0.
+\]
+
+In the curved CDG lane the bar side carries curvature $h_{\bar B}$ and
+satisfies $d_{\bar B,h}^{\,2}=[h_{\bar B},-]$. Verdier duality
+transports $h_{\bar B}$ to a curvature element
+$h_\Omega=\mathbb{D}(h_{\bar B})$ on the cobar side and transports the
+inner commutator identity to
+Equation~\eqref{eq:curved-cobar-square}. The Bianchi identity
+$d_{\Omega,h}(h_\Omega)=0$ is the CDG relation dual to
+$d_{\bar B,h}(h_{\bar B})=0$.
+
+For the twist, expand
+$d_{\Omega,\alpha}=d_{\Omega,h}+[\alpha,-]$ and use the graded Jacobi
+identity. Since $h_\Omega$ has even degree,
+\[
+(d_{\Omega,h}+[\alpha,-])^2
+=[h_\Omega+d_{\Omega,h}\alpha+\tfrac12[\alpha,\alpha],-],
+\]
+which is Equation~\eqref{eq:curved-cobar-twist-square}. The right-hand
+side vanishes for a curvature-killing Maurer--Cartan solution. Without
+such a solution, ordinary cohomology of the raw curved object is not
+the invariant; Positselski's coderived totalization records the CDG
+object with its curvature.
 \end{proof}
 
 \begin{remark}[Resolution of delta-function products]\label{rem:delta-product-resolution}
@@ -523,8 +595,9 @@ making them well-defined without renormalization.
 The distributional representation
 (Theorem~\ref{thm:cobar-distributional-model}) is a \emph{consequence}: it
 describes how the intrinsic $\mathcal{D}$-module object looks when evaluated
-on test sections, but the differential and its nilpotence are established at
-the $\mathcal{D}$-module level, where no analytic subtleties arise.
+on test sections, but the uncurved nilpotence and the curved inner-square
+identity are established at the $\mathcal{D}$-module level, where no
+analytic subtleties arise.
 \end{remark}
 
 
@@ -691,24 +764,27 @@ order~$k-1$: one less than the pole order, because the $d\log$ kernel
 on the bar side has already absorbed one pole.
 \end{proof}
 
-\begin{theorem}[Distributional verification of \texorpdfstring{$d_{\text{cobar}}^2 = 0$}{d\_cobar\textasciicircum 2 = 0}; \ClaimStatusProvedHere]\label{thm:cobar-d-squared-zero}
-\textbf{Note.} The rigorous proof of $d_{\mathrm{cobar}}^2 = 0$
-is Corollary~\ref{cor:cobar-nilpotence-verdier}, which deduces
-nilpotence from Verdier duality without distributional products.
-The present verification is a \emph{distributional consistency
-check}: it shows that the distributional model, where defined,
-gives the same answer. At Term~3 below, the product
-$\delta(z_i - z_j)^2$ is formally undefined (Schwartz
-impossibility); the cancellation mechanism via Arnold relations
-is heuristic in the distributional setting and rigorous only
-via Verdier duality.
-The cobar differential satisfies $d_{\text{cobar}}^2 = 0$. This requires verifying
-nine cross-term cancellations (mirroring the bar complex from Section~\ref{sec:bar-nilpotency}):
+\begin{theorem}[Uncurved distributional verification of
+\texorpdfstring{$d_{\text{cobar}}^2 = 0$}{d\_cobar\textasciicircum 2 = 0};
+\ClaimStatusProvedHere]\label{thm:cobar-d-squared-zero}
+Assume the uncurved conilpotent regime of
+Corollary~\ref{cor:cobar-nilpotence-verdier}. The rigorous proof of
+$d_{\mathrm{cobar}}^2 = 0$ is the Verdier-duality argument there; the
+present verification is a distributional consistency check. It shows
+that the distributional model, where the displayed products are defined
+or regularized compatibly with Verdier duality, gives the same
+square-zero answer. At Term~3 below, the product
+$\delta(z_i - z_j)^2$ is formally undefined; the Arnold cancellation is
+a computational shadow of the Verdier proof, not an independent
+definition of the product.
+The uncurved cobar differential satisfies $d_{\text{cobar}}^2 = 0$.
+This requires verifying the diagonal and off-diagonal cancellation
+families mirroring the bar complex from Section~\ref{sec:bar-nilpotency}:
 
 \[d_{\text{cobar}}^2 = (d_{\text{comult}} + d_{\text{internal}} + d_{\text{extend}})^2
 = \sum_{i,j} d_i \circ d_j = 0\]
 
-\emph{The nine terms to verify.}
+\emph{The cancellation families.}
 \begin{enumerate}
 \item $d_{\text{comult}}^2 = 0$ (coassociativity)
 \item $d_{\text{internal}}^2 = 0$ (differential property)
@@ -742,7 +818,8 @@ By coassociativity, terms with different orderings cancel pairwise. This complet
 
 \emph{Term 2: $d_{\text{internal}}^2 = 0$}
 
-The internal differential acts on each tensor factor independently:
+In the uncurved lane the internal differential acts on each tensor
+factor independently:
 \[
 d_{\text{internal}}(K)(c_1, \ldots, c_n) = \sum_i K(c_1, \ldots, d_{\mathcal{C}}(c_i), \ldots, c_n).
 \]
@@ -783,7 +860,7 @@ $\delta_\epsilon(z) = \frac{1}{\pi\epsilon^2} e^{-|z|^2/\epsilon^2}$ and take $\
 after integration.
 
 \emph{(3) Arnold relation cancellations.} Divergences cancel via the Arnold relations
-(Theorem~\ref{thm:arnold-three}). The condition $d^2 = 0$ is equivalent to this cancellation.
+(Theorem~\ref{thm:arnold-three}). The uncurved condition $d^2 = 0$ is equivalent to this cancellation.
 
 See Hörmander~\cite{Hormander} Chapter 8, Melrose~\cite{Mel93} on b-calculus, Kashiwara--Schapira~\cite{KS90} Chapter VII, and Costello--Gwilliam~\cite{CG17} Volume 1, \S2.4 for the complete theory.
 We adopt the Verdier duality approach (Theorem~\ref{thm:verdier-bar-cobar}) as the rigorous foundation; the distributional formulas serve as computational guides.%
@@ -808,7 +885,7 @@ Arnold--Orlik--Solomon relations from the bar complex (Section~\ref{sec:bar-nilp
 collision loci have a combinatorial structure (partial order of collisions), and
 the Arnold relations encode this structure.
 
-\emph{Rigorous alternative.} A clean proof avoiding distributional issues entirely is given in Corollary~\ref{cor:cobar-nilpotence-verdier} above, which deduces $d^2 = 0$ from Verdier duality on the Fulton--MacPherson compactification without reference to distributional products.
+\emph{Rigorous alternative.} A clean proof avoiding distributional issues entirely is given in Corollary~\ref{cor:cobar-nilpotence-verdier} above, which deduces the uncurved identity $d^2 = 0$ from Verdier duality on the Fulton--MacPherson compactification without reference to distributional products.
 
 This completes term~3.
 
@@ -887,7 +964,8 @@ while $\delta(z_i - z_j)$ acts geometrically. They commute as operators:
 
 The two compositions differ by a Koszul sign: commuting the degree-$1$ operator $d_{\mathcal{C}}$ past the geometric factor $\delta(z_i - z_j)$ introduces $(-1)^1$, so $d_{\mathrm{internal}} \circ d_{\mathrm{extend}} = -d_{\mathrm{extend}} \circ d_{\mathrm{internal}}$, and the anticommutator vanishes.
 
-This completes the verification of $d^2 = 0$. All nine cross-terms vanish:
+This completes the verification of $d^2 = 0$ in the uncurved lane. All
+diagonal and off-diagonal families vanish:
 \begin{center}
 \begin{tabular}{c|ccc}
 & $d_{\text{comult}}$ & $d_{\text{internal}}$ & $d_{\text{extend}}$ \\ \hline
@@ -897,16 +975,19 @@ $d_{\text{extend}}$ & Leibniz & commute & Arnold \\
 \end{tabular}
 \end{center}
 
-Therefore:
+Therefore, in the uncurved conilpotent regime:
 \[d_{\text{cobar}}^2 = 0\]
 
-This completes the nilpotency verification, establishing the cobar construction
-as a valid chain complex, and more precisely as a differential graded algebra with the
-$A_\infty$ structure.
+This establishes the cobar construction as a chain complex, and more
+precisely as a differential graded algebra with the $A_\infty$
+structure, only in the uncurved regime. In the curved CDG regime the
+same calculation leaves the inner curvature term
+$[h_\Omega,-]$ of Equation~\eqref{eq:curved-cobar-square}.
 \end{proof}
 
-\begin{remark}[Duality with bar \texorpdfstring{$d^2=0$}{d\textasciicircum 2=0} proof]\label{rem:bar-cobar-d2-duality}
-The structure of this proof \emph{mirrors exactly} the bar $d^2=0$ proof from
+\begin{remark}[Duality with the uncurved bar
+\texorpdfstring{$d^2=0$}{d\textasciicircum 2=0} proof]\label{rem:bar-cobar-d2-duality}
+The structure of this proof mirrors the uncurved bar $d^2=0$ proof from
 Section~\ref{sec:bar-nilpotency}:
 
 \begin{center}
@@ -921,7 +1002,10 @@ Extract (analyze) & Insert (synthesize) \\
 \end{tabular}
 \end{center}
 
-The proofs are dual under Verdier duality, as is the bar-cobar adjunction itself.
+The proofs are dual under Verdier duality, as is the bar-cobar
+adjunction itself. In the curved lane the same duality transports the
+bar curvature into the cobar curvature and gives
+$d_{\Omega,h}^{\,2}=[h_\Omega,-]$.
 \end{remark}
 
 \subsection{Sign conventions for cobar operations}
@@ -961,10 +1045,10 @@ When convolving distributions, there are signs from interchanging integrals:
 Interchanging the order introduces sign $(-1)^{|K_1| \cdot |K_2|}$.
 \end{convention}
 
-\begin{lemma}[Sign consistency for cobar differential; \ClaimStatusProvedHere]\label{lem:cobar-sign-consistency}
-The sign conventions above ensure that for any two operations in the cobar differential,
-the double application produces consistent signs that allow cancellations in the
-$d^2 = 0$ proof.
+\begin{lemma}[Sign consistency for the uncurved cobar differential; \ClaimStatusProvedHere]\label{lem:cobar-sign-consistency}
+The sign conventions above ensure that, in the uncurved cobar
+differential, double applications of the elementary operations carry
+the signs needed for the Verdier square-zero identity.
 \end{lemma}
 
 \begin{proof}
@@ -987,14 +1071,20 @@ We have:
 \[\delta(z_i - z_j) \wedge \delta(z_i - z_\ell) = (-1) \delta(z_j - z_\ell)
 \wedge \delta(z_i - z_\ell)\]
 
-This is the distributional analog of the Arnold relation. \emph{Caveat:} products of delta functions supported on intersecting submanifolds require wavefront set conditions for rigorous definition; the argument here is heuristic. The rigorous proof of $d^2 = 0$ for the cobar complex is provided by Verdier duality (Corollary~\ref{cor:cobar-nilpotence-verdier}).
+This is the distributional analog of the Arnold relation.
+\emph{Caveat:} products of delta functions supported on intersecting
+submanifolds require wavefront set conditions for rigorous definition;
+the argument here is heuristic. The rigorous proof of the uncurved
+$d^2 = 0$ identity for the cobar complex is provided by Verdier duality
+(Corollary~\ref{cor:cobar-nilpotence-verdier}).
 
 In all cases, the signs are chosen so that the Arnold relations
-hold, ensuring $d_{\text{extend}}^2 = 0$.
+hold, ensuring $d_{\text{extend}}^2 = 0$ in the uncurved Verdier model.
 \end{proof}
 
 \begin{example}[Explicit sign computation: three-point function]\label{ex:three-point-signs-cobar}
-Consider cobar complex for $n=3$ with $\mathcal{C} = \omega_X$ (trivial). Elements are:
+Consider the uncurved cobar complex for $n=3$ with
+$\mathcal{C} = \omega_X$ (trivial). Elements are:
 \[K_3(z_1, z_2, z_3) = \sum_{\text{perms}} k_\sigma(z_1, z_2, z_3) \cdot
 \text{sgn}(\sigma)\]
 
@@ -1018,7 +1108,7 @@ The three-term Arnold relation (applied heuristically to delta functions, cf.\ t
 directly, so the three terms in $d_{\text{extend}}^2(K_3)$ sum to zero:
 \[\text{term}_1 + \text{term}_2 + \text{term}_3 = 0\]
 
-Hence $d_{\text{extend}}^2(K_3) = 0$.
+Hence $d_{\text{extend}}^2(K_3) = 0$ in this uncurved three-point model.
 \end{example}
 
 \subsection{Low-degree explicit computations}
@@ -1839,7 +1929,12 @@ Our construction extends~\cite{CG17}: Vol.~1 develops factorization homology on 
 \end{remark}
 
 \begin{remark}[Cobar summary]
-The geometric cobar is Verdier-dual to the bar (Section~\ref{sec:bar-nilpotency}): the three-component differential, nine-term $d^2 = 0$ verification, and Arnold relations all mirror their bar counterparts.
+The geometric cobar is Verdier-dual to the bar
+(Section~\ref{sec:bar-nilpotency}): in the uncurved lane the
+three-component differential, the $d^2 = 0$ verification, and the
+Arnold relations mirror their bar counterparts; in the curved lane the
+same mirror gives the inner-curvature square
+$d_{\Omega,h}^{\,2}=[h_\Omega,-]$.
 \end{remark}
 
 \begin{proposition}[Cobar as modular shadow carrier]
@@ -2150,7 +2245,7 @@ Remark~\ref{rem:eta-adjunction-vs-qi-scope} below.
 
 \begin{lemma}[Cobar derivation extension; \ClaimStatusProvedHere]
 \label{lem:cobar-derivation-extension}
-Let $\cC$ be a coaugmented chiral coalgebra on~$X$ with reduced
+Let $\cC$ be an uncurved coaugmented chiral coalgebra on~$X$ with reduced
 comultiplication
 $\bar{\Delta} \colon \bar{\cC} \to \bar{\cC} \otimes \bar{\cC}$,
 and write $V := s^{-1}\bar{\cC}$ for the desuspension. Let
@@ -2183,8 +2278,8 @@ where $\sigma$ inserts the Koszul sign $(-1)^{|c'|}$ from the desuspension
 of the leftmost factor in $\bar{\Delta}(c) = \sum c' \otimes c''$
 \textup{(}cf.\ \cite[\S2.2.5]{LV12}\textup{)}. The same sign convention
 makes $d_\Omega$ a derivation of degree~$+1$ for the chiral product on
-$\mathrm{Free}_{\mathrm{ch}}(V)$, and yields $d_\Omega^2 = 0$ on generators
-from coassociativity of $\bar{\Delta}$.
+$\mathrm{Free}_{\mathrm{ch}}(V)$, and yields $d_\Omega^2 = 0$ on
+generators from coassociativity of $\bar{\Delta}$ in the uncurved case.
 \end{enumerate}
 \end{lemma}
 
@@ -2213,11 +2308,12 @@ convention $d_\Omega := -s^{-1} \circ \bar{\Delta} \circ s$ that ensures
 $d_\Omega$ has the same orientation as the cobar differential of
 \cite[\S2.2]{LV12} and extends to a derivation rather than a coderivation.
 Coassociativity of $\bar{\Delta}$ then gives $d_\Omega^2 = 0$ on
-generators by the standard \cite[Proposition~2.2.6]{LV12} computation:
+generators in the uncurved case by the standard
+\cite[Proposition~2.2.6]{LV12} computation:
 the two iterated coproducts $(\bar{\Delta} \otimes \mathrm{id}) \bar{\Delta}$
 and $(\mathrm{id} \otimes \bar{\Delta}) \bar{\Delta}$ produce equal
 contributions to $d_\Omega^2$ with opposite signs, hence cancel. The
-derivation property extends $d_\Omega^2 = 0$ to all of
+derivation property extends the uncurved identity $d_\Omega^2 = 0$ to all of
 $\mathrm{Free}_{\mathrm{ch}}(V)$ by the Leibniz rule. This is the
 generator-level reformulation of
 Corollary~\ref{cor:cobar-nilpotence-verdier}.
@@ -2239,19 +2335,16 @@ on the full category of augmented chiral algebras.
 The further claim that $\psi_{\cA}$ is a \emph{quasi-isomorphism} is
 \emph{Theorem~B} \textup{(}Theorem~\ref{thm:bar-cobar-inversion-qi}\textup{)};
 it requires the Koszul hypothesis on the strict lane and a coderived
-collapse input off it. The historical conflation of these two statements
-into a single ``geometric unit theorem'' \textup{(}with backwards arrow
-direction\textup{)} obscured the dichotomy of
-Convention~\ref{conv:regime-tags}; we keep them separate here.
+collapse input off it. Thus there are two distinct assertions:
+existence of the adjunction and invertibility of the counit on the
+Koszul or coderived locus.
 
-In particular, the prior wording ``unit
-$\eta\colon\cA\to\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$'' was
-doubly incorrect: the canonical natural transformation in this geometric
-direction is the \emph{counit} $\psi$, not a unit, and it points
+The canonical natural transformation in this geometric direction is
+the \emph{counit} $\psi$, and it points
 $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA)) \to \cA$, not the reverse.
 The reverse arrow $\cA \to \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))$
-exists (and is canonical) only when $\psi_{\cA}$ is a qi, in which case it
-is the homotopy inverse of $\psi_{\cA}$ -- and that is exactly the Koszul-
+exists canonically only when $\psi_{\cA}$ is a qi, in which case it
+is the homotopy inverse of $\psi_{\cA}$; this is exactly the Koszul
 locus content of Theorem~\ref{thm:bar-cobar-inversion-qi}.
 \end{remark}
 
@@ -2548,25 +2641,49 @@ Each boundary stratum $\overline{M}_{0,|I|+1} \times \overline{M}_{0,|J|+1}$ con
 \subsection{Geometric cobar for curved coalgebras}
 
 \begin{definition}[Curved cobar]\label{def:curved-cobar}
-For a curved chiral coalgebra $(\mathcal{C}, \kappa_C)$ with curvature element $\kappa_C \in \mathcal{C}^{\otimes 2}[2]$, the cobar complex has modified differential:
+For a curved chiral coalgebra $(\mathcal{C}, \kappa_C)$ with
+curvature element
+$\kappa_C \in \mathcal{C}^{\otimes 2}[2]$, the cobar construction is
+the CDG chiral algebra
 \[
-d_{\text{curved}} = d_{\text{cobar}} + m_0
+\Omega^{\mathrm{ch}}_{\mathrm{curv}}(\mathcal{C})
+=
+\bigl(\Omega^{\mathrm{ch}}(\mathcal{C}), d_{\Omega,h}, h_\Omega\bigr),
 \]
-where $m_0 \in \Omega^{\text{ch}}(\mathcal{C})[2]$ is the curvature term geometrically realized by:
+not an ordinary cochain complex in general. The curvature term is
+geometrically realized by
 \[
-m_0 = \int_{S^1 \times X} \kappa_C(z, w) \wedge K_{\text{prop}}(z, w)
+h_\Omega = \int_{S^1 \times X}
+\kappa_C(z, w) \wedge K_{\text{prop}}(z, w)
 \]
-with $K_{\text{prop}}$ the propagator kernel encoding quantum corrections.
+with $K_{\text{prop}}$ the propagator kernel encoding quantum
+corrections. The defining CDG identities are
+\[
+d_{\Omega,h}^{\,2}=[h_\Omega,-],
+\qquad
+d_{\Omega,h}(h_\Omega)=0.
+\]
+The uncurved cobar complex is the special case $h_\Omega=0$.
 \end{definition}
 
 \begin{theorem}[Curved Maurer--Cartan equation; \ClaimStatusProvedHere]\label{thm:curved-mc-cobar}
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Elements $\alpha \in \Omega^{\text{ch}}(\mathcal{C})[-1]$ satisfying the curved Maurer--Cartan equation:
+For $\alpha \in \Omega^{\text{ch}}(\mathcal{C})[-1]$, set
 \[
-d_{\text{curved}}\alpha + \frac{1}{2}m_2(\alpha, \alpha) + m_0 = 0
+h_{\Omega,\alpha}
+:=
+h_\Omega+d_{\Omega,h}\alpha+\frac{1}{2}[\alpha,\alpha].
 \]
+The twisted derivation
+$d_{\Omega,\alpha}=d_{\Omega,h}+[\alpha,-]$ satisfies
+\[
+d_{\Omega,\alpha}^{\,2}=[h_{\Omega,\alpha},-].
+\]
+Thus $\alpha$ satisfies the curved Maurer--Cartan equation precisely
+when $h_{\Omega,\alpha}=0$; only then does the twist produce a strict
+square-zero cobar differential. Such curvature-killing twists
 correspond geometrically to:
 \begin{itemize}
 \item Deformations of the chiral structure that do not preserve the grading
@@ -2576,11 +2693,26 @@ correspond geometrically to:
 \end{theorem}
 
 \begin{proof}
-By the general theory of curved $A_\infty$ algebras (Positselski~\cite{Positselski11}, Loday--Vallette~\cite{LV12} \S10.1), the curved Maurer--Cartan equation $d\alpha + \frac{1}{2}[\alpha,\alpha] + m_0 = 0$ parametrizes gauge equivalence classes of curved deformations
-(gauge equivalence in the $L_\infty$ sense). In the chiral setting, $m_0 \in \Omega^{\mathrm{ch}}(\mathcal{C})$ is the curvature element. The three geometric correspondences are:
-(i) A solution $\alpha$ defines a twisted differential $d_\alpha = d + [\alpha, -]$ satisfying $d_\alpha^2 = 0$, which deforms the chiral structure.
-(ii) The curvature $m_0$ is the genus-0 obstruction to $d^2 = 0$; for a chiral algebra with central charge $c$, $m_0 \propto c$ (Proposition~\ref{prop:km-bar-curvature}), which is the conformal anomaly.
-(iii) At genus 1, solutions $\alpha$ with $m_0 = 0$ classify central extensions of the chiral algebra by $\mathbb{C}$, as established in Section~\ref{sec:genus_1_central_extensions}.
+By the general theory of curved $A_\infty$ and CDG algebras
+(Positselski~\cite{Positselski11}, Loday--Vallette~\cite{LV12}
+\S10.1), twisting a curved object by $\alpha$ changes the curvature to
+\[
+h_{\Omega,\alpha}
+=h_\Omega+d_{\Omega,h}\alpha+\frac{1}{2}[\alpha,\alpha],
+\]
+and changes the derivation to
+$d_{\Omega,\alpha}=d_{\Omega,h}+[\alpha,-]$. The CDG identity gives
+$d_{\Omega,\alpha}^{\,2}=[h_{\Omega,\alpha},-]$. Hence a twist is an
+ordinary differential exactly when the curved Maurer--Cartan equation
+$h_{\Omega,\alpha}=0$ holds.
+
+In the chiral setting, $h_\Omega$ is the cobar-side representative of
+the same anomaly measured by the curved bar square. For affine
+Kac--Moody algebras its scalar component is the curvature computed in
+Proposition~\ref{prop:km-bar-curvature}. At genus~$1$, curvature-zero
+solutions give central extensions by $\mathbb{C}$ as in
+Section~\ref{sec:genus_1_central_extensions}; with nonzero curvature
+one remains in the CDG/coderived category.
 \end{proof}
 
 \begin{proposition}[Curvature of the affine bar complex; \ClaimStatusProvedHere]
@@ -2593,7 +2725,10 @@ m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \Omega
 where $h^\vee$ is the dual Coxeter number and $\Omega = \sum_a J^a \otimes J_a$ is the Casimir element (we write $\Omega$ rather than $\kappa$ for the Casimir to avoid confusion with the modular characteristic $\kappa(\cA)$). In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $m_1^2 = 0$ \textup{(}i.e., $d^2 = 0$ on the internal differential\textup{)} if and only if $k = -h^\vee$ \textup{(}critical level\textup{)};
-\item The total bar differential $d_{\bar{B}}$ always satisfies $d_{\bar{B}}^2 = 0$, regardless of the level.
+\item away from the critical level, the bar object is CDG:
+ $d_{\bar{B},k}^{\,2}=[m_0,-]$. Strict square-zero holds only at
+ critical level, after a curvature-killing Maurer--Cartan twist, or
+ after passage to the flat comparison/coderived totalization.
 \end{enumerate}
 \end{proposition}
 
@@ -2617,6 +2752,9 @@ $m_1(\mathbf{1}) = 0$, but the composite $m_1^2$ on degree-$2$
 elements picks up the adjoint action:
 $m_1^2(e \boxtimes f \cdot \eta_{12}) = [h, k \cdot \mathbf{1} + h]_{\mathrm{bar}}
 = k \cdot (\text{ad-action of Casimir}) + 2h = (k+2) \cdot \partial h$.
+This is the affine instance of the CDG identity
+$d_{\bar{B},k}^{\,2}=[m_0,-]$ with
+$m_0=((k+h^\vee)/(2h^\vee))\Omega$.
 \end{proof}
 
 \begin{remark}[Feigin--Frenkel center at critical level]
@@ -3248,8 +3386,8 @@ A chiral coalgebra $\mathcal{C}$ is in the essential image of $\barBgeom$ if and
 The bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction})
 provides unit and counit maps for any augmented chiral algebra and
 any conilpotent coalgebra. On the Koszul locus
-(Definition~\ref{def:chiral-koszul-pair}), the counit
-$\bar{B}(\Omega(\mathcal{C})) \to \mathcal{C}$ is a
+(Definition~\ref{def:chiral-koszul-pair}), the coalgebra-side unit
+$\mathcal{C}\to\bar{B}(\Omega(\mathcal{C}))$ is a
 quasi-isomorphism (Theorem~\ref{thm:bar-cobar-isomorphism-main}),
 which identifies $\mathcal{C}$ as the bar of its cobar.
 This holds precisely when $\Omega(\mathcal{C})$ has strict
@@ -3361,13 +3499,26 @@ For the \emph{coupled matter-ghost BRST system} in string theory, anomaly cancel
 \end{conjecture}
 
 \begin{remark}[Individual vs.\ total nilpotence]
-This is \emph{not} in contradiction with the fact that the bar differential $d_{\text{bar}}^2 = 0$ for any individual chiral algebra (Theorem~\ref{thm:bar-nilpotency-complete}). The bar differential of each chiral algebra squares to zero by the Arnold relations. The BRST anomaly arises when one couples a matter chiral algebra to a ghost system and requires the \emph{total} BRST charge to be nilpotent; this imposes $c_{\text{total}} = c_{\text{matter}} + c_{\text{ghost}} = 0$.
+This is \emph{not} in contradiction with the uncurved bar identity
+$d_{\text{bar}}^2 = 0$ for an individual strict chiral algebra
+(Theorem~\ref{thm:bar-nilpotency-complete}). In the curved central
+lane the individual square is instead the inner curvature operator.
+The BRST anomaly arises when one couples a matter chiral algebra to a
+ghost system and requires the \emph{total} BRST charge to be
+nilpotent; this imposes
+$c_{\text{total}} = c_{\text{matter}} + c_{\text{ghost}} = 0$.
 \end{remark}
 
 \begin{remark}[Physical motivation: configuration space geometry]
-The anomaly arises from the failure of the \emph{total BRST differential} (not the individual bar differential) to square to zero on the compactified configuration space.
+The anomaly arises from the failure of the \emph{total BRST
+differential} to square to zero on the compactified configuration
+space; it is not a statement about the uncurved individual bar
+identity.
 
-\emph{Step 1: Individual Nilpotency.} On any chiral algebra, the bar differential satisfies $d_{\text{bar}}^2 = 0$ by Theorem~\ref{thm:bar-nilpotency-complete}.
+\emph{Step 1: Individual Nilpotency.} On an uncurved strict chiral
+algebra, the bar differential satisfies $d_{\text{bar}}^2 = 0$ by
+Theorem~\ref{thm:bar-nilpotency-complete}. In the curved central lane
+one reads $d_{\text{bar},h}^{\,2}=[h_{\bar B},-]$ instead.
 
 \emph{Step 2: BRST Coupling.} The total BRST differential $d_{\text{BRST}} = d_{\text{matter}} + d_{\text{ghost}} + d_{\text{coupling}}$ includes a coupling term from the matter-ghost interaction. The cross-terms yield:
 \[d_{\text{BRST}}^2 = \frac{c_{\text{matter}} + c_{\text{ghost}}}{24} \cdot \chi(\overline{C}_n(X))\]
@@ -3404,16 +3555,26 @@ Theorem~\ref{thm:bar-cobar-isomorphism-main}), not part of the definition.
 \end{remark}
 
 \begin{remark}[Bar-cobar vs.\ Koszul: the fundamental distinction]\label{rem:fundamental-distinction}
-\emph{Always true (for any augmented chiral algebra $\mathcal{A}$):}
+\emph{Strict uncurved lane.}
 \begin{itemize}
-\item $\bar{B}: \mathcal{A} \to \bar{B}(\mathcal{A})$ exists and $d^2 = 0$
- (Theorem~\ref{thm:bar-nilpotency-complete})
+\item $\bar{B}: \mathcal{A} \to \bar{B}(\mathcal{A})$ exists and
+ $d^2 = 0$ for uncurved augmented chiral algebras
+ (Theorem~\ref{thm:bar-nilpotency-complete}).
 \item $\Omega: \bar{B}(\mathcal{A}) \to \Omega(\bar{B}(\mathcal{A}))$ exists
- and $d^2 = 0$
- (Theorem~\ref{thm:cobar-d-squared-zero})
+ and $d^2 = 0$ for uncurved conilpotent bar coalgebras
+ (Theorem~\ref{thm:cobar-d-squared-zero}).
 \end{itemize}
 
-These are \emph{constructions}: they work for any augmented algebra.
+These are constructions in the ordinary dg sense. In the curved
+central lane the constructions still exist, but as CDG objects:
+\[
+d_{\bar B,h}^{\,2}=[h_{\bar B},-],
+\qquad
+d_{\Omega,h}^{\,2}=[h_\Omega,-].
+\]
+Strict nilpotence is restored only by a curvature-killing
+Maurer--Cartan twist or by the flat comparison/coderived
+totalization.
 
 \emph{On the Koszul locus only
  \textup{(}chiral Koszul pairs,
@@ -3657,7 +3818,7 @@ Arnold relations (Theorem~\ref{thm:arnold-three}) ensure
 $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
 + \eta_{ki} \wedge \eta_{ij} = 0$, which forces the boundary
 integral to cancel term by term.
-The detailed bookkeeping across all boundary strata is carried out in
+The detailed stratum-by-stratum analysis across all boundary strata is carried out in
 the proof of Theorem~\ref{thm:quantum-complementarity-main},
 Steps~3--4.
 \end{proof}
@@ -3918,9 +4079,20 @@ where the four pieces correspond, respectively, to Schiffmann--Vasserot
 singular-theta correspondence comultiplication (dual of Siegel
 multiplication), the Drinfeld associator coboundary at order $\hbar$,
 and the Gritsenko--Nikulin $\Phi_{10}/\eta^{24}$ twist at order $\hbar^2$.
-The closedness $d_\Omega^2 = 0$ is the K3 Maurer--Cartan equation
-$D\cdot \Theta_{\mathbf H_{\Delta_5}} + \tfrac{1}{2}[\Theta_{\mathbf H_{\Delta_5}},\Theta_{\mathbf H_{\Delta_5}}] = 0$
-on the bi-based Ran-space. Primary-lit: Schiffmann--Vasserot 2012,
+On the raw curved object the square is the inner commutator with the
+MC defect:
+\[
+d_{\Omega,\Theta}^{\,2}
+=
+\left[
+D\cdot \Theta_{\mathbf H_{\Delta_5}}
++ \tfrac{1}{2}[\Theta_{\mathbf H_{\Delta_5}},\Theta_{\mathbf H_{\Delta_5}}],
+-
+\right].
+\]
+The closedness $d_{\Omega,\Theta}^{\,2} = 0$ is the assertion that this K3
+Maurer--Cartan defect vanishes on the MC-twisted or coderived
+totalization. Primary-lit: Schiffmann--Vasserot 2012,
 Borcherds 1995, Drinfeld 1990, Gritsenko--Nikulin 1997--98.
 \end{remark}
 
@@ -4016,10 +4188,11 @@ of $[\cdot,\cdot]$ versus the non-symmetric $\smile$.
 \begin{remark}[Cobar side MC verification at
 $\hbar^3, \hbar^4$; \ClaimStatusConditional]
 \label{rem:cobar-MC-verification-k3}
-The cobar-side closedness $d_\Omega^2 = 0$ on
-$\Omega_X(B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5}))$ translates,
-via Proposition~\ref{prop:bar-cobar-MC-naturality-k3}, to the
-bar-side MC equation verified in
+The MC-twisted cobar-side closedness
+$d_{\Omega,\Theta}^{\,2}=0$ on
+$\Omega_X(B_{\mathrm{ch}}(\mathbf{H}_{\Delta_5}))$ translates, via
+Proposition~\ref{prop:bar-cobar-MC-naturality-k3}, to the bar-side MC
+equation verified in
 Theorem~\ref{thm:MC-hbar3-hbar4-k3} of Chapter~\ref{chap:bar-construction}.
 The $\hbar^3$ term is $\phi^{(3)} = \zeta(3)c_{\mathrm{symm}} +
 (25/3)c_{\mathrm{timelike}} + (\Phi_{10}/\eta^{24})c_{\Phi_{10}}$

@@ -16,7 +16,7 @@
 % raw direct sum of bar-words.
 %
 % The reconstitution upgrades (a) and reinterprets (b). The strongest
-% honest form is:
+% form is:
 %
 % MC5 CLASS M CHAIN-LEVEL PLATONIC THEOREM. In the pro-object ambient
 % pro-Ch(Vect), equivalently in the J-adic topological chain complex
@@ -59,12 +59,10 @@ The master conjecture MC5 (chain-level identification of the BV-BRST
 complex with the algebraic bar complex) is one of the five backbone
 conjectures of the programme. The class-$\mathsf{M}$ strand, covering
 Virasoro and principal $\mathcal{W}_N$, is the structurally delicate
-case. The 2026-04-24 attack--heal audit supersedes the original
-opening of this chapter: the raw direct-sum failure in
-$\mathrm{Ch}(\mathrm{Vect})$ is a real failure surface, not merely a
-choice of presentation, and the pro-object, $J$-adic, and
-filtered-completed ambients are not identified without explicit
-continuous comparison functors.
+case. The raw direct-sum complex in $\mathrm{Ch}(\mathrm{Vect})$ is
+not the object on which the theorem is true: the pro-object,
+$J$-adic, and filtered-completed ambients agree only after explicit
+continuous comparison functors have been supplied.
 
 The correct reading of this chapter is the strict Mittag--Leffler
 finite-window reading. The pro, $J$-adic, and filtered-completed
@@ -134,7 +132,7 @@ for the weight-completed bar complex, equivalently the inverse limit
 \[
 \widehat{B}^{(g)}(\cA)
 \;:=\;
-\varprojlim_N \, \bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})
+\varprojlim_N \, \bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)
 \]
 of its finite-weight truncations, regarded as an object of
 $\mathrm{pro}\text{-}\mathrm{Ch}(\mathrm{Vect})$ or as the underlying
@@ -206,7 +204,7 @@ weight tower that the raw direct-sum surface forgets.
 \section{The Platonic theorem: chain-level MC5 class M in the pro-ambient}
 \label{sec:mc5-platonic-theorem}
 
-Three equivalent formulations of the strongest honest form: the
+Three equivalent formulations of the strongest form: the
 pro-object form used throughout the rest of the chapter, the
 topological-chain form, and the already-installed filtered-completion
 form.
@@ -224,11 +222,15 @@ Proposition~\textup{\ref{prop:standard-strong-filtration}}. Let $g \geq 0$,
 let
 \[
 f_g^{(\leq N)} \colon
-C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g)
+C^{\bullet}_{\mathrm{BV},\leq N}(\cA, \Sigma_g)
 \longrightarrow
-\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})
+\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)
 \]
-be the finite-weight comparison map at stage $N$, and let
+be the comparison map on the total-conformal-weight quotient/window at
+stage $N$. Thus $\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)$ is obtained
+from the full bar complex by killing bar words of total conformal
+weight \(>N\); it is not the bar construction applied to the truncated
+vector space $\cA_{\leq N}$ with its products forgotten. Let
 \[
 f_g \;:=\; \{f_g^{(\leq N)}\}_{N \geq 0}
 \;\in\;
@@ -250,13 +252,16 @@ consequences of the raw direct-sum complex.
 
 \begin{proof}
 \emph{Step 1: finite-stage strict quasi-isomorphism.} For each $N$, the
-truncation $\cA_{\leq N}$ is finite-dimensional
+finite total-weight quotient/window uses only finitely many
+finite-dimensional conformal-weight pieces of~$\cA$
 \textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}\textup{)}.
+Products and OPE operations are computed in~$\cA$ and then projected
+to total weight~$\leq N$.
 The harmonic discrepancy at stage $N$ involves only finitely many bar
 weights $r \leq N$, so the series
 $\sum_{r \leq N} \delta_r^{\mathrm{harm}} = \sum_{r \leq N} c_r(\cA) \cdot m_0^{\lfloor r/2 \rfloor - 1}$
 is a finite sum of curvature corrections acting between finite-dimensional
-bar-weight summands of $\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})$. The
+bar-weight summands of $\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)$. The
 explicit contracting homotopy
 \[
 h_N
@@ -273,35 +278,30 @@ the harmonic subspace, and $f_g^{(\leq N)}$ is strictly inverse to the
 harmonic projector. Therefore $f_g^{(\leq N)}$ is a strict chain-level
 quasi-isomorphism for every $N$.
 
-\emph{Step 2: compatibility under tower maps.} The transition maps
-$p_N \colon \cA_{\leq N+1} \twoheadrightarrow \cA_{\leq N}$ are strict
-surjections of curved chiral $A_\infty$-algebras
-\textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}(ii)\textup{)},
-and the induced maps on bar and BV complexes are morphisms of chain
-complexes. The homotopies $h_N$ are compatible: for every weight
-bound $w \leq N$ and every $N' \geq N \geq w$, the restriction of
-$h_{N'}$ to $F_{\leq w} \bar B^{\mathrm{ch}, (g)}(\cA_{\leq N'})$
-coincides with $h_N$ on $F_{\leq w} \bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})$
-under the isomorphism
-$F_{\leq w}\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N'}) \xrightarrow{\sim}
-F_{\leq w}\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})$
-of Proposition~\textup{\ref{prop:standard-strong-filtration}}(iv).
-This compatibility is automatic from the filtration-preservation
-property recorded in
-Equation~\textup{\eqref{eq:bar-weight-preservation}} of
-Proposition~\textup{\ref{prop:standard-strong-filtration}},
-$d_{\mathrm{bar}}(F_{\leq w} C_N) \subset F_{\leq w} C_N$, together
-with clause~(iv) $F_{\leq w}$-stabilisation; the homotopy $h$ is
-constructed stage by stage on each filtration piece and the stabilised
-identification of filtration pieces transports it coherently between
-stages. The stronger grading-preservation property, which holds only
-on the associated graded, is not needed for this step. Therefore
+\emph{Step 2: compatibility under tower maps.} The transition maps are
+the quotient maps
+\[
+p_N\colon \bar B^{\mathrm{ch},(g)}_{\leq N+1}(\cA)
+\twoheadrightarrow
+\bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)
+\]
+and their BV counterparts. The strict tower hypothesis requires
+$p_N f_g^{(\leq N+1)}=f_g^{(\leq N)}p_N$ and
+$p_N h_{N+1}=h_Np_N$ on the corresponding finite windows. These
+identities are part of the strict continuous pro-chain surface. The
+filtration-preservation property
+\[
+d_{\mathrm{bar}}(F_{\leq w}C_N)\subset F_{\leq w}C_N
+\]
+and the stabilization of $F_{\leq w}$ reduce the check to a finite
+calculation on each window; they do not by themselves manufacture
+compatible homotopies. Under this compatibility datum
 $\{f_g^{(\leq N)}\}_N$ assembles into a morphism of pro-objects.
 
 \emph{Step 3: Mittag--Leffler condition via finite-dimensionality.} We
 verify Mittag--Leffler for the inverse systems
-$\{H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))\}_N$ and
-$\{H^m(\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N}))\}_N$ at every fixed
+$\{H^m(C^{\bullet}_{\mathrm{BV},\leq N}(\cA, \Sigma_g))\}_N$ and
+$\{H^m(\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA))\}_N$ at every fixed
 cohomological degree $m$.
 
 The bar differential of the standard chiral bar complex is not
@@ -328,7 +328,8 @@ weight-grading decomposition.
 Two independent routes furnish Mittag--Leffler; we record both.
 
 \emph{Route (a): finite-dimensionality of each stage.} At each stage
-$N$, $\cA_{\leq N}$ is finite-dimensional
+$N$, the total-weight window is built from the finite-dimensional
+space $\cA_{\leq N}$
 \textup{(}Proposition~\textup{\ref{prop:standard-strong-filtration}}(ii)\textup{)}.
 Fix any cohomological degree $m$. Bar words of finite total
 conformal weight contributing to the genus-$g$ bar complex at
@@ -337,11 +338,12 @@ and $g$ through the genus-$g$ conformal-weight budget of the
 factorisation structure. Combined with finite-dimensionality of
 $\cA_{\leq N}$, this forces
 \[
-\dim_\C H^m\bigl(\bar B^{\mathrm{ch},(g)}(\cA_{\leq N})\bigr) < \infty
+\dim_\C H^m\bigl(\bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)\bigr) < \infty
 \qquad
 \text{for every } N.
 \]
-The same bound holds for $H^m(C^{\bullet}_{\mathrm{BV}}(\cA_{\leq N}, \Sigma_g))$
+The same bound holds for
+$H^m(C^{\bullet}_{\mathrm{BV},\leq N}(\cA, \Sigma_g))$
 by its $L_0$-decomposition. The tower of finite-dimensional images
 \[
 \operatorname{im}\bigl(H^m(C_{N+k}) \longrightarrow H^m(C_N)\bigr),
@@ -370,13 +372,14 @@ are chain-level quasi-isomorphisms by Step~1\textup{)}, it gives
 $\varprojlim^1_N H^{m-1}(\operatorname{Cone}(f_g^{(\leq N)})) = 0$ in
 every cohomological degree $m$.
 
-\begin{remark}[Honest weight behaviour of the bar differential]
-\label{rem:mc5-honest-weight-filtration}
+\begin{remark}[Weight behaviour of the bar differential]
+\label{rem:mc5-weight-filtration}
 \index{bar differential!weakly weight-decreasing, not weight-preserving}%
 The decomposition
-$\bar B^{\mathrm{ch},(g)}(\cA_{\leq N}) = \prod_{w} \bar B^{\mathrm{ch},(g)}(\cA_{\leq N})_w$
+$\bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)
+= \prod_{w} \bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)_w$
 holds on the associated graded
-$\operatorname{gr}^{\bullet} \bar B^{\mathrm{ch},(g)}(\cA_{\leq N})$,
+$\operatorname{gr}^{\bullet} \bar B^{\mathrm{ch},(g)}_{\leq N}(\cA)$,
 not on the raw bar complex. For class~$\mathsf{M}$ the spectral
 sequence of the weight filtration does not collapse at finite pages:
 the shadow-obstruction tower is nonterminating
@@ -542,7 +545,7 @@ quotients with the strict finite stages used above.
 \begin{proof}
 The $J$-adic quotient $B^{(g)}(\cA) / J^{(N)} B^{(g)}(\cA)$ is naturally
 isomorphic to the finite-weight truncation
-$\bar B^{\mathrm{ch}, (g)}(\cA_{\leq N})$ of
+$\bar B^{\mathrm{ch}, (g)}_{\leq N}(\cA)$ of
 Proposition~\textup{\ref{prop:standard-strong-filtration}}:
 both quotient out bar words of total conformal weight exceeding $N$,
 and the identification preserves differentials, coproducts, and
@@ -627,7 +630,8 @@ $\varprojlim_N C_N$ with base of open neighbourhoods
 $\{\ker(\varprojlim_N C_N \to C_N)\}_N$. Its inverse sends a $J$-adic
 topological chain complex to the pro-object of its finite $J$-adic
 quotients. On the bar complex and its BV counterpart these functors
-identify $\widehat{B}^{(g)}(\cA) = \varprojlim_N \bar B^{(g)}(\cA_{\leq N})$
+identify $\widehat{B}^{(g)}(\cA) =
+\varprojlim_N \bar B^{(g)}_{\leq N}(\cA)$
 with $B^{(g)}(\cA)^{\wedge}_J$, and Mittag--Leffler chain-level
 quasi-isomorphisms with continuous chain-level quasi-isomorphisms. This
 is the standard pro-to-topological correspondence for
@@ -893,8 +897,9 @@ $\operatorname{gr}^w \bar B$, not on the raw bar complex.
 \emph{Correct.} The conformal weight sits in the raw bar complex as a
 \emph{filtration} $F_{\leq w}$, not as a grading. Mittag--Leffler at
 fixed cohomological degree is secured by finite-dimensionality of each
-stage (the truncation $\cA_{\leq N}$ is finite-dimensional, so
-$H^m(\bar B(\cA_{\leq N}))$ is finite-dimensional, so the tower of
+stage (the finite window is built from the finite-dimensional
+$\cA_{\leq N}$, so
+$H^m(\bar B_{\leq N}(\cA))$ is finite-dimensional, so the tower of
 finite-dimensional images automatically stabilises), not by a product
 decomposition that does not exist.
 \end{description}
@@ -3034,7 +3039,7 @@ H_{\Delta_5}}) \cong \widehat{\mathfrak{grt}}_1/\mathrm{ob}^{\mathrm{GN}}$,
 with $\mathrm{ob}^{\mathrm{GN}}$ the obstruction cocycle vanishing
 exactly on the Koszul locus
 $\overline{\mathcal A_2}\setminus\bigcup_{n\,\mathrm{adm}}H_n$
-(Theorem-B scope, Beilinson tightening; ledger item II.E). The
+(Theorem-B scope, Beilinson tightening). The
 classifying-space computation follows from Dold--Kan on the filtered
 $\widehat{\mathfrak{grt}}_1$-action.
 
@@ -3098,7 +3103,7 @@ The three paths meet: deformation-theoretic (V1), mixed-Hodge-limit
 (V2), and graph-complex (V3) all compute the same $\infty$-group up to
 canonical isomorphism, with agreement at the finite Padovan weight
 $n\le 12$ by Brown \cite[Theorem~1.2]{Brown12} and conditional on
-Zagier--Hoffman depth-reduction beyond weight $12$ (ledger item III.A).
+Zagier--Hoffman depth-reduction beyond weight $12$.
 \end{remark}
 
 \begin{remark}[Reciprocity: the hexachotomy datum is canonical, not
@@ -3374,8 +3379,7 @@ The three paths coincide: deformation-theoretic (V1), Gaitsgory--Nadler
 2-morphisms up to canonical equivalence. Agreement holds at finite
 Padovan weight $n\le 12$ by Brown \cite[Theorem~1.2]{Brown12} and is
 conditional on Zagier--Hoffman depth-reduction beyond weight $12$
-(ledger item~III.A, inherited unchanged from
-Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}).
+(as in Theorem~\textup{\ref{thm:compat-data-torsor-uniqueness}}).
 \end{remark}
 
 \begin{remark}[1-truncation recovers
@@ -3506,9 +3510,9 @@ $U_{q,\kappa}(\widehat{\widehat{\mathfrak{gl}}}_1)$ stalk at a single
 K3 fibre. Primality of $107$ obstructs any non-trivial factorisation
 of $-214$ analogous to $-312 = -24\cdot 13$; the KST content
 concentrates in the Nakajima-Heisenberg $24$-factor and the
-Shapere--Tachikawa $107$ numerator. Cross-ref Vol~I
-Section~\ref{sec:thqg-open-closed-realization} line~1932 for the
-numerical retraction audit.
+Shapere--Tachikawa $107$ numerator. See Vol~I
+Section~\ref{sec:thqg-open-closed-realization} for the
+numerical retraction.
 \end{remark}
 
 \begin{remark}[Kontsevich deformation quantisation of $\mathrm{Hilb}^n(K3)$ at the self-dual point]
@@ -3972,12 +3976,12 @@ $\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$ is the content of
 Theorem~\ref{thm:chiral-kontsevich-formality}.
 \end{remark}
 
-\begin{remark}[Adversarial stress tests of chiral Kontsevich formality]
-\label{rem:chiral-kontsevich-adversarial-stress-tests}
-\index{Kontsevich formality!chiral!adversarial stress tests}%
-Theorem~\ref{thm:chiral-kontsevich-formality} withstands five
-independent adversarial stress tests, each targeting a distinct
-hypothesis of the classical Kontsevich 1997 theorem and each healed
+\begin{remark}[Five structural tests of chiral Kontsevich formality]
+\label{rem:chiral-kontsevich-formality-tests}
+\index{Kontsevich formality!chiral!structural tests}%
+Theorem~\ref{thm:chiral-kontsevich-formality} is checked against five
+independent structural tests, each targeting a distinct
+hypothesis of the classical Kontsevich 1997 theorem and each resolved
 by a named chain-level witness on
 $\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$. Collectively they pin the
 theorem's scope to the Humbert-free complement and identify the
@@ -3995,8 +3999,7 @@ $\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}=
 \overline{\mathcal A}_2\setminus\bigcup_n H_n$, which is a smooth
 quasi-projective threefold (Mumford 1977 \textit{Proc.\ Symp.\
 Pure Math.}~29, Prop.~3.1); the theorem is stated on precisely
-this open complement. The Humbert stratification is not a bug of
-the classical transport; it is the content of the obstruction
+this open complement. The Humbert stratification is the obstruction
 class $c_n$ of Path~(iii).
 \item \emph{Absence of a global Poisson bivector.} The Kontsevich
 input is a smooth Poisson bivector
@@ -4038,8 +4041,8 @@ Francis 2013 \textit{Adv.\ Math.}~239 Thm.~1.1 descent of
 factorisation-operad formality, which holds on
 $\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$ by
 Costello 2021 \cite[\S~4]{Costello2021hCS} $1$-loop triviality.
-Singular strata of $\overline{\mathcal A}_2$ are handled not by
-Tamarkin descent but by the Deligne--Malcev bi-unipotent
+Singular strata of $\overline{\mathcal A}_2$ are handled by
+the Deligne--Malcev bi-unipotent
 pro-ambient of Chapter~\ref{chap:e1-modular-koszul},
 Theorem~\ref{thm:bd-factorisation-bi-unipotent-compatibility},
 which supplies the nilpotent-orbit correction on each
@@ -4073,7 +4076,7 @@ Route~(ii)), matching the Hain--Matsumoto 2003
 The single integer $c_ic_j$ is the obstruction viewed from
 three sides.
 \end{enumerate}
-The convergence of the five adversarial tests pins the scope of
+Agreement of the five tests pins the scope of
 Theorem~\ref{thm:chiral-kontsevich-formality} to
 $\mathcal U_{\mathrm{Humb}}^{\mathrm{c}}$ and produces, at the same
 time, the obstruction match that lifts the theorem from the

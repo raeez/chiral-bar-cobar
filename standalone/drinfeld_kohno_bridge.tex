@@ -97,12 +97,6 @@
 \newcommand{\cR}{\mathcal{R}}
 \newcommand{\cY}{\mathcal{Y}}
 
-% Claim status macros (standalone: no-op definitions)
-\providecommand{\ClaimStatusConjectured}{}
-\providecommand{\ClaimStatusProvedHere}{}
-\providecommand{\ClaimStatusProvedElsewhere}{}
-\providecommand{\ClaimStatusHeuristic}{}
-
 \numberwithin{equation}{section}
 
 % ================================================================
@@ -348,7 +342,6 @@ Drinfeld--Kohno programme rests.
 
 \begin{theorem}[Pure-braid Orlik--Solomon Koszulity
 route]\label{thm:dk-os-koszul}
-\ClaimStatusProvedElsewhere
 Let $\fg$ be simple and $V^k(\fg)$ the universal affine vertex
 algebra at non-critical level. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -367,9 +360,10 @@ Koszulity, without analytic input beyond $d\log$ absorption.
 \end{theorem}
 
 \begin{lemma}[$R$-twisted $\Sigma_n$-descent]\label{lem:dk-r-twist-descent}
-\ClaimStatusProvedElsewhere
 Let $\cA$ be an ordered-Koszul chiral algebra with $R$-matrix
-$R(z)$. The ordered bar complex $B^{\mathrm{ord}}(\cA)$ descends to
+$R(z)$ satisfying the quantum Yang--Baxter equation and normalized
+unitarity $R(z)R^{\mathrm{op}}(-z)=\id$. The ordered bar complex
+$B^{\mathrm{ord}}(\cA)$ descends to
 the symmetric bar $B^\Sigma(\cA)$ via the $R$-twisted
 $\Sigma_n$-coinvariant functor
 \[
@@ -389,7 +383,6 @@ structure.
 
 \begin{corollary}[Chiral Kac--Kazhdan formal smoothness]
 \label{cor:dk-chiral-kk-smooth}
-\ClaimStatusProvedElsewhere
 Combined with the Francis--Gaitsgory bar-cobar $(\infty,2)$-equivalence
 lifted to the properad level, the pure-braid Orlik--Solomon
 Koszulity route (Theorem~\ref{thm:dk-os-koszul}) and the $R$-twisted
@@ -649,7 +642,6 @@ $R$-matrix.
 
 \begin{theorem}[Bar-complex $R$-matrix]
 \label{thm:dk-r-matrix}
-\ClaimStatusProvedHere
 At $n = 2$, the ordered configuration space
 $\Conf_2^{\mathrm{ord}}(\CC) = \{(z_1, z_2) \in \CC^2
 \mid z_1 \neq z_2\}$ has fundamental group
@@ -760,7 +752,6 @@ representation.
 
 \begin{theorem}[Drinfeld--Kohno, genus~$0$]
 \label{thm:dk0}
-\ClaimStatusProvedHere
 Let $\fg$ be a simple Lie algebra,
 $k \in \CC \setminus \{-\hv\}$ generic, and
 $V_1, \ldots, V_n$ finite-dimensional $\fg$-modules.
@@ -879,7 +870,6 @@ to the quantum group involution $q \mapsto q^{-1}$.
 
 \begin{theorem}[The DK square]
 \label{thm:dk-square}
-\ClaimStatusProvedHere
 For $\fg$ simple and $k$ generic, the following square
 commutes on the evaluation-generated core
 ${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$:
@@ -898,8 +888,8 @@ D^b(\Rep_{\mathrm{fd}}(U_q(\fg)))
 \end{equation}
 where:
 \begin{enumerate}[label=(\roman*)]
-\item $\Phi$ is the $\Eone$-chiral Koszul duality functor
-  (bar-cobar on the ordered configurations), which reverses
+\item $\Phi$ is the Verdier/linear-dual functor on the ordered Koszul
+  coalgebra; bar-cobar supplies the separate inversion witness. It reverses
   the braiding: $R(u; \hbar) \mapsto R^{-1}(u; \hbar)
   = R(u; -\hbar)$.
 \item $\Phi_K$ is the Kazhdan equivalence
@@ -1099,7 +1089,6 @@ scalar is determined by a single equation.
 
 \begin{theorem}[Root-space one-dimensionality]
 \label{thm:dk-root-space}
-\ClaimStatusProvedElsewhere
 Let $\fg$ be a simple Lie algebra.  For any subset
 $S = \{\alpha_1, \ldots, \alpha_n\}$ of simple roots such
 that $\alpha = \sum_{i=1}^n \alpha_i$ is a root of $\fg$,
@@ -1137,7 +1126,6 @@ E_{\alpha_{i_n}}] \cdots]$ is nonzero.
 
 \begin{theorem}[Spectral Drinfeld strictification]
 \label{thm:dk-strictification}
-\ClaimStatusProvedHere
 For any simple Lie algebra $\fg$, on the
 evaluation-generated core
 ${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$
@@ -1236,7 +1224,6 @@ Yangian multiplication.
 
 \begin{corollary}[Yangian as strictified bar product]
 \label{cor:dk-yangian-strict}
-\ClaimStatusProvedHere
 The strictified ordered bar complex of $V^k(\fg)$ is the
 Yangian $Y_\hbar(\fg)$ at $\hbar = \pi i/(\kp)$:
 the spectral twist $G$ of
@@ -1318,7 +1305,6 @@ of the affine algebra.
 
 \begin{theorem}[Yangian as Koszul dual]
 \label{thm:dk-yangian-koszul}
-\ClaimStatusProvedHere
 For $\fg$ simple and $k \neq -\hv$ generic, on the
 evaluation-generated core
 ${\mathrm{Core}}_{\mathrm{eval}}(\widehat{\mathfrak{g}}_k)$
@@ -1356,11 +1342,12 @@ Classical limit $\hbar = \infty$ \\
 \end{theorem}
 
 \begin{proof}
-The $\Eone$-chiral Koszul dual of $\cA$ is defined as the
-cohomology of the ordered bar complex:
-$(V^k(\fg))^{!,\Eone} = H^*(B^{\mathrm{ord}}(V^k(\fg)))$,
-endowed with the algebra structure from the deconcatenation
-coproduct and the spectral product from
+The $\Eone$-chiral Koszul coalgebra of $\cA$ is
+$(V^k(\fg))^{i,\Eone}=H^*(B^{\mathrm{ord}}(V^k(\fg)))$.
+The dual algebra $(V^k(\fg))^{!,\Eone}$ is obtained only after
+finite/Verdier duality and spectral strictification, using the
+algebra structure from the deconcatenation coproduct and the spectral
+product from
 Theorem~\ref{thm:dk-strictification}.
 
 The identification with $\Ydg_\hbar(\fg)$ proceeds in
@@ -1434,7 +1421,6 @@ $\fg$.
 
 \begin{proposition}[Strictification by Dynkin type]
 \label{prop:dk-type-verification}
-\ClaimStatusProvedHere
 For each simple Lie algebra $\fg$, the spectral Drinfeld
 class vanishes at all filtration levels.
 The type-specific content is:
@@ -1530,7 +1516,6 @@ subcategory of modules.
 
 \begin{corollary}[DK-3 on the evaluation-generated core]
 \label{cor:dk3-eval-core}
-\ClaimStatusProvedHere
 The $\Eone$-chiral Koszul duality functor restricts to an
 equivalence of $\Eone$-factorization categories on the
 evaluation-generated cores:
@@ -1559,7 +1544,6 @@ configuration spaces
 
 \begin{conjecture}[Full DK-3 beyond evaluation modules]
 \label{conj:dk3-full}
-\ClaimStatusConjectured
 The equivalence of
 Corollary~\textup{\ref{cor:dk3-eval-core}} extends to the
 full $\Eone$-factorization categories:
@@ -1783,7 +1767,6 @@ braid representation.
 
 \begin{proposition}[Colored Jones from bar-complex monodromy]
 \label{prop:dk-jones}
-\ClaimStatusProvedHere
 Let $K$ be a knot presented as the closure of a braid
 $\beta \in B_m$.  The colored Jones polynomial is
 \begin{equation}\label{eq:dk-jones}

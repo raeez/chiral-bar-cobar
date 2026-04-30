@@ -17,9 +17,9 @@
 \index{Swiss-cheese theorem!chiral|textbf}
 \index{universal bulk|textbf}
 
-\begin{remark}[Dependency spine]
+\begin{remark}[Local input]
 \label{rem:thqg-oc-dependency-spine}
-Everything in this section depends only on:
+The local open/closed construction uses:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the chiral Hochschild complex
  $C^\bullet_{\mathrm{chiral}}(\cA)$
@@ -33,8 +33,10 @@ Everything in this section depends only on:
 \item the bar-intrinsic MC element $\Theta_\cA$
  (Theorem~\ref{thm:mc2-bar-intrinsic}).
 \end{enumerate}
-No additional geometric or physical hypotheses are needed beyond
-the gravitational input (Definition~\ref{def:thqg-standing-hypotheses}).
+The chiral Hochschild complex and bordered FM compactification
+govern the genus-$0$ local theory. The gravitational input of
+Definition~\ref{def:thqg-standing-hypotheses} enters only when
+the modular curvature and clutching terms are invoked.
 \end{remark}
 
 % ===================================================================
@@ -112,8 +114,13 @@ parameters.
 \ClaimStatusProvedHere
 Let $\cA$ be a chiral algebra on a smooth curve~$X$, and let
 $p \in X$ with local coordinate $z \colon \widehat{D}_p
-\xrightarrow{\sim} \operatorname{Spec} \mathbb{C}[[z]]$. The following four-step
-chain produces a canonical isomorphism of non-$\Sigma$ operads:
+\xrightarrow{\sim} \operatorname{Spec} \mathbb{C}[[z]]$. Assume
+that the completed finite-piece of the underlying right
+$\mathcal D$-module of~$\cA$ is locally free with flat connection
+at~$p$. The horizontal fibre
+$A_p := \Gamma_{\nabla}(\widehat{D}_p,\cA)$ carries the translation
+operator $\partial=\nabla_{d/dz}$. The construction below produces
+a coordinate-dependent isomorphism of non-$\Sigma$ operads:
 \begin{equation}\label{eq:bd-algebraic-bridge}
  \operatorname{End}^{\mathrm{ch}}_{\cA, \mathrm{BD}}(n)\big|_{\widehat{D}_p^n}
  \;\xrightarrow[\;\cong\;]{\;\Phi_z\;}
@@ -132,17 +139,18 @@ The isomorphism $\Phi_z$ is constructed in four steps:
  Restrict the BD operad from $X^n$ to the formal
  polydisk $\widehat{D}_p^n = \operatorname{Spec} \mathbb{C}[[z_1, \ldots, z_n]]$.
 \item \textbf{D-module trivialisation.}
- On the formal disk $\widehat{D}_p$, every coherent D-module
- trivialises: the global-sections functor
- $\Gamma(\widehat{D}_p, -) \colon D\text{-}\mathrm{mod}(\widehat{D}_p)
- \to \mathrm{Vect}$ is an equivalence of symmetric monoidal
- categories. The chiral algebra $\cA|_{\widehat{D}_p}$ becomes a
- graded vector space $V = A_p$ equipped with a translation
- operator $\partial = \nabla_{d/dz}$.
+ The chosen coordinate identifies the completed locally free
+ flat $\mathcal D$-module with
+ $A_p\widehat{\otimes}\mathbb{C}[[z]]$. This is a trivialisation
+ of the flat finite-piece attached to~$\cA$, not a statement that
+ arbitrary coherent $\mathcal D$-modules on a formal disk are
+ trivial. The chiral algebra $\cA|_{\widehat{D}_p}$ becomes the
+ graded vector space $A_p$ equipped with
+ $\partial = \nabla_{d/dz}$.
 \item \textbf{Spectral-variable identification.}
  Under trivialisation, the maximal meromorphic extension
  $j_* j^*(\cA^{\boxtimes n})|_{\widehat{D}_p^n}$ becomes
- $V^{\otimes n} \otimes
+ $A_p^{\otimes n} \otimes
  \mathbb{C}((\lambda_1))\cdots((\lambda_{n-1}))$
  where $\lambda_i = z_i - z_n$ are the relative positions.
  The BD chiral product $\mu^{\mathrm{ch}}$ restricts to the
@@ -165,15 +173,13 @@ operad is obtained by choosing a trivialisation.
 \end{proposition}
 
 \begin{proof}
-Step~2 follows from the contractibility of the formal disk:
-$\pi_1(\widehat{D}_p) = 0$, so every regular flat connection on
-$\widehat{D}_p$ trivialises (regularity is inherited from the
-standing conventions of
-\S\ref{sec:standing-assumptions}), and $\Gamma(\widehat{D}_p, -)$ is
-an exact tensor equivalence. Step~3 is the definition of the
-$j_* j^*$-functor applied to the trivialised sheaf: sections
-with poles along the diagonal $z_i = z_j$ become formal Laurent
-series in the difference variables $\lambda_i = z_i - z_n$.
+Step~2 is the standard formal-disk trivialisation of a locally
+free module with flat connection: a section is identified with its
+horizontal value at~$p$, and the coordinate vector field gives the
+translation operator. Step~3 is the definition of the
+$j_* j^*$-functor applied to the trivialised finite-piece: sections
+with poles along the diagonal $z_i = z_j$ become completed formal
+Laurent series in the difference variables $\lambda_i = z_i - z_n$.
 Poles along non-last diagonals $z_i = z_j$ ($i, j < n$) are
 captured by the element $(\lambda_i - \lambda_j)^{-1}$ in the
 iterated Laurent field; the ordering of the iterated completion
@@ -181,10 +187,9 @@ iterated Laurent field; the ordering of the iterated completion
 encodes the collision ordering, and this is the source of the
 non-$\Sigma$ (ordered) operadic structure.
 Step~4 follows from the operadic structure of the
-Fulton--MacPherson compactification
-(cf.\ Fulton--MacPherson~\cite{}; the formal-disk
+Fulton--MacPherson compactification~\cite{FM94}: the formal-disk
 restriction identifies codimension-one boundary strata with
-consecutive-block collisions), matching the algebraic operadic
+consecutive-block collisions, matching the algebraic operadic
 composition in equation~\eqref{eq:thqg-block-composition}. The
 $\operatorname{Aut}(\mathcal{O})$-equivariance is immediate from the
 coordinate naturality of each step: a formal coordinate change
@@ -374,15 +379,29 @@ Definition~\ref{def:chiral-hochschild-cochain-brace}).
 \begin{definition}[Chiral derived center]
 \label{def:thqg-chiral-derived-center}
 \index{derived center!chiral|textbf}
-The \emph{chiral derived center} of $\cA$ is the cohomology
+The \emph{cochain-level chiral derived center} of~$\cA$ is the
+brace dg algebra
+\[
+\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+:=
+\bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA,\cA),\delta\bigr).
+\]
+Its cohomology is denoted
 \begin{equation}\label{eq:thqg-derived-center}
 \mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 \;:=\;
 H^*\!\bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA),\, \delta\bigr).
 \end{equation}
 By Theorem~\ref{thm:thqg-brace-dg-algebra}(iv), this is a
-Gerstenhaber algebra. On the Koszul locus, Theorem~H
-(Theorem~\ref{thm:hochschild-polynomial-growth}) gives
+Gerstenhaber algebra. The universal bulk in the Swiss-cheese
+theorem is the dg object
+$\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$; its on-shell
+bulk fields are the classes in
+$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+On the Koszul locus at generic level with the
+$E_\infty$-chiral PBW completion, Theorem~H
+\textup{(}Theorem~\ref{thm:hochschild-polynomial-growth}\textup{)}
+gives
 $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)^n = 0$
 for $n \notin \{0, 1, 2\}$, so the derived center is a
 three-term Gerstenhaber algebra:
@@ -397,7 +416,9 @@ $[\cdot, \cdot] \colon
 (a Lie algebra on bulk derivations) and
 $[\cdot, \cdot] \colon
 \mathcal{Z}^1 \otimes \mathcal{Z}^2 \to \mathcal{Z}^2$
-(the action of derivations on obstructions).
+(the action of derivations on obstructions). No concentration
+claim is made here for critical level, minimal/admissible level,
+or non-PBW $E_1$-chiral inputs.
 \end{definition}
 
 \begin{definition}[Genus-$g$ chiral derived center]
@@ -448,18 +469,29 @@ Definition~\ref{def:thqg-chiral-derived-center}.
 \begin{definition}[Local chiral open/closed pair]
 \label{def:thqg-local-oc-pair}
 A \emph{local chiral open/closed pair} with open color~$\cA$
-is a triple $(\cB, \cA, \iota)$ where:
+is a triple $(\cB, \cA, \{\mu_{p;q}\})$ where:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $\cB$ is a dg vertex algebra (the ``bulk'');
-\item $\cA$ is a chiral algebra (the ``boundary'');
-\item $\iota \colon \cB \to
- \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
- is a dg algebra map (the ``bulk-to-boundary coupling'').
+\item $\cB$ is a continuous brace dg algebra, or equivalently
+ the closed colour algebra in the local chiral Swiss-cheese model;
+\item $\cA$ is an $A_\infty$-chiral algebra, the open colour;
+\item the mixed operations
+ $\mu_{p;q}\colon \cB^{\otimes p}\otimes A^{\otimes q}
+ \to A((\lambda_1))\cdots((\lambda_{p+q-1}))$
+ satisfy the local chiral Swiss-cheese identities.
 \end{enumerate}
+Equivalently, the one-closed-input operations define a continuous
+brace dg algebra map
+\[
+\iota_\mu\colon \cB\to
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA,\cA),
+\qquad
+\iota_\mu(b)_n=(-1)^{|b|}\mu_{1;n}(b;-),
+\]
+encoding the bulk-to-boundary coupling.
 A \emph{morphism} of local chiral open/closed pairs
-$(\cB, \cA, \iota) \to (\cB', \cA, \iota')$ (with fixed open color)
-is a dg algebra map $\phi \colon \cB \to \cB'$ such that
-$\iota' \circ \phi = \iota$.
+$(\cB, \cA, \mu) \to (\cB', \cA, \mu')$ (with fixed open color)
+is a brace dg algebra map $\phi \colon \cB \to \cB'$ such that
+$\iota_{\mu'} \circ \phi = \iota_\mu$.
 \end{definition}
 
 \begin{theorem}[Universal open/closed pair (chiral Swiss-cheese theorem);
@@ -491,7 +523,10 @@ $\mu^{\mathrm{univ}}_{p;q} \colon
 \otimes A^{\otimes q}
 \to A((\lambda_1))\cdots((\lambda_{p+q-1}))$
 are defined by iterated brace evaluation of chiral Hochschild
-cochains on algebra elements.
+cochains on algebra elements. Passing to cohomology gives the
+on-shell Gerstenhaber algebra
+$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, but terminality
+is a cochain-level statement.
 \end{theorem}
 
 \begin{proof}
@@ -502,7 +537,7 @@ $b \in \cB$, define
 \[
 \Phi(b)_n(a_1, \ldots, a_n)
 \;:=\;
-\mu_{1;n}(b;\, a_1, \ldots, a_n),
+(-1)^{|b|}\,\mu_{1;n}(b;\, a_1, \ldots, a_n),
 \]
 where $\mu_{1;n}$ is the mixed operation of the Swiss-cheese pair.
 This gives a well-defined element $\Phi(b) \in
@@ -523,26 +558,38 @@ $(\cB, \cA, \mu)$ imply:
 Uniqueness: any Swiss-cheese morphism
 $\Psi \colon \cB \to \mathcal{C}^{\bullet}_{\mathrm{ch}}$
 must intertwine the mixed operations, forcing
-$\Psi(b)_n = \mu_{1;n}(b; -)$ by evaluation, so $\Psi = \Phi$.
+$\Psi(b)_n = (-1)^{|b|}\mu_{1;n}(b; -)$ by evaluation, so
+$\Psi = \Phi$.
 The full proof with explicit signs and spectral-variable
-bookkeeping is given in
+conventions is given in
 Theorem~\ref{thm:chiral-deligne-tamarkin}
 (\S\ref{subsec:local-swiss-cheese}).
 \end{proof}
 
-\begin{remark}[Physical interpretation]
+\begin{remark}[Bulk, Verdier dual, and bar-cobar inverse]
 \label{rem:thqg-oc-physical}
 In the holomorphic-topological framework of
 Costello--Dimofte--Gaiotto, the boundary of a 3d HT theory is an
 $A_\infty$-chiral algebra $\cA$, and the bulk local operators map to
 the derived center of $\cA$. Theorem~\ref{thm:thqg-swiss-cheese}
-makes this precise: the universal bulk attached to a boundary
-algebra~$\cA$ is exactly
-$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$.
-The distinction from bar/cobar is sharp: bar/cobar classifies
-\emph{twisting morphisms} (universal couplings between
-$\cA$ and~$\cA^!$), while the derived center classifies
-\emph{bulk operators acting on the boundary}.
+identifies the universal bulk with the cochain-level object
+$\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+This is independent of the two bar constructions in the spine of
+the monograph:
+\[
+\Omega^{\mathrm{ch}}\barB^{\mathrm{ch}}(\cA)\simeq \cA
+\quad\text{is bar-cobar inversion,}
+\]
+\[
+\mathbb{D}_{\Ran}\barB_X(\cA_i)\simeq \cA^!
+\quad\text{is Verdier duality,}
+\]
+whereas
+$\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is governed by
+chiral Hochschild cochains. The Koszul dual algebra~$\cA^!$ is not
+the bulk unless an additional compact-generator Hochschild
+comparison identifies the relevant category of boundary conditions
+with a Hochschild center.
 \end{remark}
 
 \begin{proposition}[Mixed sector encodes bulk-to-boundary module structure;
@@ -558,15 +605,12 @@ $\dim = (k{-}1)!\,\binom{k+m}{m}$
 encodes the bulk-to-boundary module structure: the iterated
 brace evaluation
 $\mu_{k;m}\colon
-(Z_{\mathrm{ch}}^{\mathrm{der}}(\cA))^{\otimes k}
+\bigl(\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)\bigr)^{\otimes k}
 \otimes \cA^{\otimes m} \to \cA$
 by which the chiral derived center acts on the boundary algebra.
 At $(k{=}1,\,m{=}n)$, this recovers the $n$-fold brace
 evaluation with $\dim = n{+}1$ counting the insertion positions
 for one bulk operator among $n$ ordered boundary points.
-Computational verification:
-\texttt{sc\_mixed\_sector\_engine.py}
-\textup{(}$47$ tests\textup{)}.
 \end{proposition}
 
 \begin{proof}
@@ -576,16 +620,16 @@ $\mathsf{SC}^{\mathrm{ch,top}}(\mathsf{c}^k,\mathsf{o}^m;\mathsf{o})
 parametrize $k$ closed (bulk) inputs and $m$ open (boundary)
 inputs producing one open output. By
 Theorem~\ref{thm:thqg-swiss-cheese}, the terminal open/closed
-pair $(\cZ_{\mathrm{ch}}^{\mathrm{der}}(\cA),\,\cA)$ realizes
-these operations as iterated brace evaluations. The
+pair
+$(\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\,\cA)$
+realizes these operations as iterated brace evaluations. The
 K\"unneth factorization
 $\operatorname{Lie}^c(k) \otimes \operatorname{Sh}(k,m)$
 (where $\operatorname{Sh}(k,m) = \binom{k+m}{m}$ counts
 $(k,m)$-shuffles) gives the dimension.
 \end{proof}
 
-\begin{remark}[Mixed sector is genus-independent]
-\textup{(}LOCAL: scope fixed in this environment\textup{})
+\begin{remark}[Mixed sector and multi-weight channels]
 \label{rem:mixed-sector-genus-independent}
 The product decomposition
 $C_*(\FM_{k|m}(\Sigma_g, \partial))
@@ -594,12 +638,12 @@ $C_*(\FM_{k|m}(\Sigma_g, \partial))
 modular Swiss-cheese chapter) holds at all genera.
 The open colour $E_1(m)$ is genus-independent: the interval~$\mathbb{R}$
 has no genus. All genus dependence lives in the closed factor. The
-curvature $\kappa(\cA) \cdot \omega_g$ is purely closed-sector. Genus-raising
-operations act only on closed inputs; open inputs are passive. Beware
-: the ``mixed channels'' of the multi-weight correction
-$\delta F_g^{\mathrm{cross}}$ are mixed-\emph{weight}
-(closed-sector endomorphism decorations), not mixed-\emph{sector}
-(bulk-to-boundary $\mathsf{SC}$ operations).
+curvature $\kappa(\cA) \cdot \omega_g$ is closed-sector data, and
+genus-raising operations act on closed inputs. The mixed channels in
+the multi-weight correction
+$\delta F_g^{\mathrm{cross}}$ are mixed-\emph{weight} channels
+\textup{(}closed-sector endomorphism decorations\textup{)}, not
+mixed-\emph{sector} bulk-to-boundary $\mathsf{SC}$ operations.
 \end{remark}
 
 % ===================================================================
@@ -611,8 +655,10 @@ $\delta F_g^{\mathrm{cross}}$ are mixed-\emph{weight}
 The bordered FM compactification
 $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)$
 of Construction~\ref{constr:bordered-fm} provides the global
-geometric stage. The algebraic derived center is identified
-with the local restriction of the global open-closed convolution.
+geometric stage. Its formal-disk restriction has two outputs:
+the closed local chart is the chiral Hochschild cochain complex
+of~$\cA$, while the open categorical chart is the Morita
+Hochschild center of the boundary category.
 
 \begin{theorem}[Local-global bridge; \ClaimStatusProvedHere]
 \label{thm:thqg-local-global-bridge}
@@ -620,10 +666,9 @@ with the local restriction of the global open-closed convolution.
 Let $(X, D, \tau)$ be a tangential log curve with a single
 puncture $D = \{p\}$, and let $\cA$ be a chiral algebra on~$X$
 with module $\mathcal{M}$ at~$p$. Assume $\mathcal{M}$ admits
-a compact generator $b$ \textup{(}this holds whenever
-$\mathcal{M}$ is a proper dg-category, e.g.\ when $\cA$ is
-chirally Koszul and the module category is the category of
-bounded $\cA$-modules\textup{)}. Then:
+a compact generator~$b$ and is Morita equivalent to
+$\operatorname{Perf}(A_b)$ for
+$A_b:=\operatorname{RHom}_{\mathcal M}(b,b)$. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Algebraic chart.}
  The boundary algebra
@@ -633,7 +678,7 @@ bounded $\cA$-modules\textup{)}. Then:
  $\operatorname{Conf}^{\mathrm{ord}}_n(I_p)$
  (Definition~\ref{def:mixed-config-space}).
 
-\item \emph{Derived center identification.}
+\item \emph{Closed formal chart.}
  The genus-$0$, pure-interior component of the open-closed
  convolution algebra
  $\mathfrak{g}^{\mathrm{oc}}_{\cA, \mathcal{M}}$
@@ -646,12 +691,27 @@ bounded $\cA$-modules\textup{)}. Then:
  \;\simeq\;
  \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA).
  \end{equation}
+ This chart sees the closed algebra~$\cA$; it does not use the
+ compact generator~$b$.
 
-\item \emph{Morita invariance.}
- The quasi-isomorphism type of the right side of
- \eqref{eq:thqg-local-global-identification} depends only on
- the Morita equivalence class of the boundary category
- $\mathcal{M}$, not on the choice of compact generator~$b$.
+\item \emph{Open categorical center.}
+ The derived center of the boundary category is computed in the
+ compact-generator chart by
+ \[
+ Z_{\mathrm{der}}(\mathcal M)
+ \;\simeq\;
+ \operatorname{RHom}_{A_b^e}(A_b,A_b)
+ =
+ \mathrm{HH}^{\bullet}_{\mathrm{alg}}(A_b).
+ \]
+ Here $A_b^e=A_b\otimes A_b^{\mathrm{op}}$.
+ This quasi-isomorphism type depends only on the Morita
+ equivalence class of~$\mathcal M$, not on the choice of~$b$.
+ If the boundary endomorphism algebra is the formal chiral
+ boundary algebra induced from~$\cA$, the comparison of
+ Proposition~\ref{prop:geometric-algebraic-hochschild} identifies
+ this algebraic center with the corresponding chiral Hochschild
+ cochain complex.
 \end{enumerate}
 \end{theorem}
 
@@ -686,9 +746,11 @@ at each degree gives~\eqref{eq:thqg-local-global-identification}.
 another compact generator with
 $\mathcal{M} \simeq \operatorname{Perf}(A_b)
 \simeq \operatorname{Perf}(A_{b'})$,
-then the derived centers of $A_b$ and $A_{b'}$ are canonically
-quasi-isomorphic via the bimodule implementing the Morita
-equivalence.
+then Theorem~\ref{thm:derived-center-hochschild} gives
+$Z_{\mathrm{der}}(\mathcal M)\simeq \operatorname{RHom}_{A_b^e}(A_b,A_b)$
+and the analogous expression for~$A_{b'}$. The bimodule
+implementing the Morita equivalence carries one Hochschild
+cochain complex to the other.
 \end{proof}
 
 \begin{corollary}[The intrinsic bulk]
@@ -696,16 +758,19 @@ equivalence.
 The \emph{intrinsic bulk} of the open sector is the
 Morita-invariant object
 \begin{equation}\label{eq:thqg-intrinsic-bulk}
-\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{M})
+Z_{\mathrm{der}}(\mathcal{M})
 \;:=\;
 \operatorname{RHom}_{\operatorname{Fun}(\mathcal{M},
 \mathcal{M})}(\mathrm{Id},\, \mathrm{Id}),
 \end{equation}
 which in a chart $\mathcal{M} \simeq \operatorname{Perf}(A_b)$
-is computed by
-$\mathcal{C}^{\bullet}_{\mathrm{ch}}(A_b, A_b)$.
-On the Koszul locus, this is the three-term Gerstenhaber algebra
-of~\eqref{eq:thqg-derived-center-three-term}.
+is computed by $\mathrm{HH}^{\bullet}_{\mathrm{alg}}(A_b)$.
+When $A_b$ is the formal chiral boundary algebra induced from~$\cA$,
+the geometric--algebraic comparison upgrades this to the chiral
+cochain model
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(A_b, A_b)$. On the Koszul/PBW
+locus covered by Theorem~H, its cohomology is concentrated in
+degrees~$\{0,1,2\}$ as in~\eqref{eq:thqg-derived-center-three-term}.
 \end{corollary}
 
 % ===================================================================
@@ -746,14 +811,14 @@ for factorization homology~\cite{AF15} to the boundary circle
 $S^1_p$ viewed as a $1$-manifold on which $\mathcal{M}$ is a
 locally constant factorization category (by axiom~(iv) of
 Definition~\ref*{V2-def:oc-factorization-category}). The same
-excision strategy appears for locally constant factorization
+excision argument appears for locally constant factorization
 algebras in
 Theorem~\ref{thm:circle-fh-hochschild}
 (\S\ref{sec:annulus-hochschild-chains}); the present proof
 adapts it to the boundary-circle setting of the open/closed
 factorization category, retaining full detail for self-containment.
 
-The proof proceeds in five steps: an excision decomposition of
+The proof has five parts: an excision decomposition of
 $S^1_p$, identification of the resulting bar-type complex,
 verification of the differential, the passage to cyclic
 invariants, and Morita functoriality.
@@ -1132,12 +1197,12 @@ and the clutching sector (d) from the nodal boundary strata
 
 \begin{theorem}[Open/closed projection principle; \ClaimStatusConditional]
 \label{thm:thqg-oc-projection}
-The holographic modular Koszul datum
+The open/closed MC element sees the projection of the holographic
+modular Koszul datum
 $\mathcal{H}(\cA) = (\cA, \cA^!, \mathcal{C}, r(z),
 \Theta_\cA, \nabla^{\mathrm{hol}})$
 (Definition~\ref{def:thqg-holographic-datum})
-is recovered from the open/closed MC element
-$\Theta^{\mathrm{oc}}_\cA$ by projection:
+to its closed, open, mixed, and shadow components:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The \emph{closed projection}
  $\pi_{\mathrm{cl}} \colon
@@ -1168,6 +1233,11 @@ $\Theta^{\mathrm{oc}}_\cA$ by projection:
  $(\mu_2^{\mathcal{M}}, \mu_3^{\mathcal{M}}, \ldots)$
  in the open sector.
 \end{enumerate}
+The projection does not reconstruct $\cA^!$, $r(z)$, or
+$\nabla^{\mathrm{hol}}$ from the MC element alone. The algebra
+$\cA^!$ is obtained through Verdier duality on the bar coalgebra,
+$r(z)$ from the collision residue of the OPE, and
+$\nabla^{\mathrm{hol}}$ from the modular connection data.
 \end{theorem}
 
 \begin{proof}
@@ -1183,7 +1253,7 @@ $\operatorname{Hom}(C_*(\overline{C}^{\,\mathrm{oc}}_{1, (n)}),
 \operatorname{Hom}(\cA \otimes \mathcal{M}_j^{\otimes n},
 \cA \otimes \mathcal{M}_j))$.
 At genus~$0$ on a formal disk, this identifies with the chiral
-chiral Hochschild cochain complex by
+Hochschild cochain complex by
 Theorem~\ref{thm:thqg-local-global-bridge}(ii).
 The shadow obstruction tower projections (iv) follow from the degree filtration
 on $\mathfrak{g}^{\mathrm{oc}}$.
@@ -1200,7 +1270,7 @@ be the open/closed MC element
 \textup{(}Construction~\textup{\ref{constr:thqg-oc-mc-element})}.
 The modular MC equation
 \textup{(}Theorem~\textup{\ref{thm:thqg-oc-mc-equation})}
-simultaneously determines, at every genus~$g \geq 0$:
+imposes a compatible system at every genus~$g \geq 0$:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Closed-sector genus tower.}
  The closed projection
@@ -1209,7 +1279,6 @@ simultaneously determines, at every genus~$g \geq 0$:
  recovers the genus-$g$ component of the bar-intrinsic MC element.
 On the uniform-weight lane, this is the genus tower
 $F_g = \kappa(\cA) \cdot \lambda_g$
-\textup{(}UNIFORM-WEIGHT\textup{})
 \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}(ii),
  Theorem~D\textup{)}.
 
@@ -1231,17 +1300,17 @@ $F_g = \kappa(\cA) \cdot \lambda_g$
  \Theta^{(g_1)} \star \Theta^{(g_2)}$
  \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}(iii)\textup{)}.
 \end{enumerate}
-Since all three sectors are projections of the \emph{same}
+Since all three sectors are projections of the same
 MC element~$\Theta^{\mathrm{oc}}_\cA$, the genus-$g$ component
 of the MC equation is a single identity whose restriction to each
-sector yields a compatible system. In particular:
+sector yields a compatible system:
 \begin{enumerate}[resume, label=\textup{(\alph*)}]
 \item \emph{Open-closed consistency at every genus.}
  The closed-sector genus-$g$ amplitude and the open-sector
  genus-$g$ amplitude are not independent: both are determined
  by~$\Theta^{\mathrm{oc}}_\cA|_g$, and the MC equation
- constrains their joint values. No additional consistency
- check is required beyond the MC equation itself.
+ constrains their joint values in the open/closed convolution
+ algebra.
 \end{enumerate}
 \end{theorem}
 
@@ -1264,14 +1333,13 @@ the open projection recovers the module operations;
 the clutching projection recovers the separating and
 non-separating degenerations.
 
-Part~(d) is the key structural consequence. The genus-$g$
+Part~(d) is the structural consequence. The genus-$g$
 MC equation is a \emph{single} vanishing condition in
 $\mathfrak{g}^{\mathrm{oc},(g)}$. Its restriction to any
 sector is a consequence of the same equation. Therefore
 any identity obtained by projecting to the closed sector
-is automatically compatible with the identity obtained by
-projecting to the open sector. The compatibilities are not
-additional axioms: they are projections of the Stokes theorem
+is compatible with the identity obtained by projecting to the
+open sector. The compatibilities are projections of the Stokes theorem
 on the bordered FM compactification
 $\overline{C}{}^{\,\mathrm{oc}}_{k, \vec{m}}$.
 \end{proof}
@@ -1285,13 +1353,11 @@ questions remain:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{The scalar identification.}
 The specific formula $F_g = \kappa(\cA) \cdot \lambda_g$
-\textup{(}UNIFORM-WEIGHT\textup{}) is
-proved on the uniform-weight lane and at genus~$1$ for all
+is proved on the uniform-weight lane and at genus~$1$ for all
  families. For multi-weight algebras at genus~$g \geq 2$,
  the scalar formula \emph{fails}: the free energy receives a
  cross-channel correction $\delta F_g^{\mathrm{cross}} \neq 0$
- \textup{(}\textbf{op:multi-generator-universality}, resolved
- negatively; Theorem~\ref{thm:multi-weight-genus-expansion}\textup{)}.
+ \textup{(}Theorem~\ref{thm:multi-weight-genus-expansion}\textup{)}.
  The MC equation does not resolve this because the question
  is about which tautological class on $\overline{\cM}_g$ appears
  in the scalar trace of~$\Theta_\cA$, not about open-closed
@@ -1300,9 +1366,9 @@ proved on the uniform-weight lane and at genus~$1$ for all
  Computing $F_g$ from iterated clutching on
  $\mathcal{C}_{\mathrm{op}}$ alone (without invoking the
  bar-intrinsic construction) and verifying agreement with the
- closed-sector tower is a separate programme. The MC-forced
- consistency guarantees that such a computation, if carried out,
- \emph{must} agree; it does not construct the computation.
+ closed-sector tower is a separate construction. The MC-forced
+ consistency states the target identity for such a construction;
+ it does not produce the open-sector calculation.
 \end{enumerate}
 \end{remark}
 
@@ -1315,15 +1381,13 @@ proved on the uniform-weight lane and at genus~$1$ for all
 
 The open-sector factorization dg category $\mathcal{C}_{\mathrm{op}}$
 carries cocomposition maps read off from clutching on bordered
-Fulton--MacPherson compactifications, and at genus~$1$ the
-annulus trace recovers the open-closed identification proved in
-Theorem~\ref{thm:thqg-mc-forced-consistency}. The structural question
-left open by that theorem is whether these partial data assemble into
-a \emph{modular cooperad} in the sense of Getzler--Kapranov
-\cite{GetzlerKapranov98}, and whether the assembled structure is
+Fulton--MacPherson compactifications, and at genus~$1$ the annulus
+trace recovers the open-closed identification proved in
+Theorem~\ref{thm:thqg-mc-forced-consistency}. The remaining
+structural question is whether these data assemble into a modular
+cooperad in the sense of Getzler--Kapranov
+\cite{GetzlerKapranov98}, and whether that assembled structure is
 determined by the open-closed MC element $\Theta^{\mathrm{oc}}_\cA$.
-We record the expected answer as a conjecture and give a five-phase
-road map whose first three phases are already proved.
 
 \begin{conjecture}[CT-2: modular cooperad on the open sector]
 \ClaimStatusConjectured
@@ -1363,101 +1427,88 @@ on $\mathcal{C}_{\mathrm{op}}$ with the following three properties.
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[Three-layer decomposition]
-\label{rem:ct2-three-layer-decomposition}
-The content of Conjecture~\ref{conj:ct2} decomposes into three
-layers whose statuses are different.
+\begin{remark}[Existence and coherence obligations]
+\label{rem:ct2-existence-coherence-obligations}
+Conjecture~\ref{conj:ct2} has three logically separate obligations.
 
-\emph{Layer 1 (existence; categorical lift).}
+\emph{Existence.}
 The cooperad structure on $\mathcal{C}_{\mathrm{op}}$ lifts the
 known modular operad structure on the closed sector
 $\mathcal{C}_{\mathrm{cl}}$ through the bar-cobar adjunction of
 Theorem~A. The lift exists because $\mathcal{C}_{\mathrm{op}}$
-is homotopy Koszul: this is proved in Vol~II via the PVA descent
-(see the chapter on the open-sector PVA). Layer~1 is the content
-of Phase~4 below.
+is homotopy Koszul; the needed input is the Vol.~II PVA descent
+for the open-sector category.
 
-\emph{Layer 2 (compatibility; automatic from Getzler--Kapranov).}
+\emph{Clutching compatibility.}
 The Getzler--Kapranov modular operad framework
 \cite{GetzlerKapranov98} guarantees that any cooperad structure
 compatible with clutching on the bordered
 Fulton--MacPherson compactification is automatically compatible
 with the factorization structure: no additional axioms are needed.
-Layer~2 is therefore subsumed by Layer~1 once clutching
-compatibility is established.
 
-\emph{Layer 3 (uniqueness; $(\infty,2)$-categorical integration).}
+\emph{$(\infty,2)$-uniqueness.}
 Uniqueness of the cooperad structure requires integrating the
-strict clutching data to an $(\infty,2)$-category. This is where
-the categorical gap sits. The blueprint is the Brochier--Woike
-strategy for factorization homology and topological field theory
+strict clutching data to an $(\infty,2)$-category. The categorical
+obstruction lies in that integration. Brochier--Woike's construction for
+factorization homology and topological field theory
 \cite{BrochierWoike2022}, which produces an $(\infty,2)$-functor
-from clutching data under additional coherence hypotheses.
-Layer~3 is the content of Phase~5 below.
+from clutching data under additional coherence hypotheses, is the
+model for this integration.
 \end{remark}
 
-\begin{remark}[Five-phase road map]
-\label{rem:ct2-five-phase-roadmap}
-The Conjecture~\ref{conj:ct2} proof strategy decomposes into five
-phases. The first three are proved; the last two are the genuinely
-conjectural content.
+\begin{remark}[Proved loci and conjectural loci]
+\label{rem:ct2-proved-conjectural-loci}
+The established inputs for Conjecture~\ref{conj:ct2} are:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Phase 1: Bordered FM construction.}
- \textup{PROVED.} The bordered Fulton--MacPherson compactification
+\item The bordered Fulton--MacPherson compactification
  $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)$ with its
  clutching and gluing strata is constructed in the Vol~II chapter
  on bordered FM geometry, building on
- \cite{KontsevichSoibelman}. Cross-reference:
- \S\ref{sec:bordered-fm} of the present volume.
-\item \emph{Phase 2: Chain-level $D^2_{\mathrm{oc}} = 0$.}
- \textup{PROVED.} The open-closed differential squares to zero on
+ \cite{KontsevichSoibelman}; see
+ \S\ref{sec:bordered-fm}.
+\item The open-closed differential squares to zero on
  the chain complex, with the convolution-level identity proved via
  Mok's log-FM framework and the ambient differential identity
  recorded in Theorem~\ref{thm:thqg-oc-mc-equation}(a). This fixes
  the ambient cochain model on which any cooperad structure must act.
-\item \emph{Phase 3: Annulus trace at genus~$1$.}
- \textup{PROVED.} The genus-$1$ trace of $\Theta^{\mathrm{oc}}_\cA$
+\item The genus-$1$ trace of $\Theta^{\mathrm{oc}}_\cA$
  recovers the annulus identification by a Zhu-type argument,
  producing the open-closed pairing on $\mathrm{HH}_\ast(\cA)$
- at $g = 1$ (Theorem~\ref{thm:thqg-annulus-trace}). This pins
- down Conjecture~\ref{conj:ct2}(b).
-\item \emph{Phase 4: Categorical lift existence.}
- \textup{CONJECTURE.} Lift the modular cooperad structure along
+ at $g = 1$ (Theorem~\ref{thm:thqg-annulus-trace}). This proves
+ the genus-$1$ trace clause of Conjecture~\ref{conj:ct2}(b).
+\end{enumerate}
+The unproved obligations are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Lift the modular cooperad structure along
  the bar-cobar adjunction from
  $\mathcal{C}_{\mathrm{cl}}$ to $\mathcal{C}_{\mathrm{op}}$,
  using homotopy Koszulness of $\mathcal{C}_{\mathrm{op}}$ (Vol~II
  PVA descent) to promote the strict clutching data to a cooperad
- up to coherent homotopy. This is the main CT-2 existence claim;
- it implies Conjecture~\ref{conj:ct2}(a).
-\item \emph{Phase 5: $(\infty,2)$-uniqueness.}
- \textup{CONJECTURE.} Integrate the homotopy-coherent clutching
+ up to coherent homotopy.
+\item Integrate the homotopy-coherent clutching
  data to an $(\infty,2)$-category and prove that two such
  integrations agreeing on $\Theta^{\mathrm{oc}}_\cA$ are equivalent
- as $(\infty,2)$-functors. This is the main CT-2 uniqueness
- claim; it implies Conjecture~\ref{conj:ct2}(c). The strategy
- follows Brochier--Woike \cite{BrochierWoike2022}.
+ as $(\infty,2)$-functors, following the Brochier--Woike
+ localization mechanism \cite{BrochierWoike2022}.
 \end{enumerate}
-The statement of Conjecture~\ref{conj:ct2} asserts Phase~4 and
-Phase~5 together: the modular cooperad structure on
-$\mathcal{C}_{\mathrm{op}}$ exists and is unique up to
-$(\infty,2)$-equivalence.
+These two obligations are exactly the existence and uniqueness
+clauses of Conjecture~\ref{conj:ct2}.
 \end{remark}
 
-\begin{remark}[The Brochier--Woike strategy and the uniqueness gap]
+\begin{remark}[Categorical localization obstruction]
 \label{rem:ct2-brochier-woike}
-\index{Brochier--Woike strategy|textbf}
-The obstruction separating Phases~1--3 from Phases~4--5 is
-\emph{categorical, not geometric}. The bordered FM geometry, the
-chain-level differential, and the genus-$1$ annulus trace are all
-constructed at the level of dg categories and their homologies;
-clutching compatibility is a concrete chain-level identity. What
-is missing is the passage from these strict chain-level data to a
-homotopy-coherent $(\infty,2)$-category of open-sector
-factorization algebras in which cooperad structures are classified
-up to equivalence.
+\index{Brochier--Woike localization|textbf}
+The remaining obstruction is categorical, not geometric. The
+bordered FM geometry, the chain-level differential, and the
+genus-$1$ annulus trace are all constructed at the level of dg
+categories and their homologies; clutching compatibility is a
+concrete chain-level identity. What is missing is the passage from
+these strict chain-level data to a homotopy-coherent
+$(\infty,2)$-category of open-sector factorization algebras in
+which cooperad structures are classified up to equivalence.
 
-The Brochier--Woike strategy \cite{BrochierWoike2022} provides the
-blueprint: one first builds a $(2,2)$-category of bordered
+Brochier--Woike \cite{BrochierWoike2022} first builds a
+$(2,2)$-category of bordered
 factorization data with strict clutching, and then localizes at
 the homotopy equivalences using the universal property of
 $(\infty,2)$-localization. The step that does \emph{not} transfer
@@ -1467,9 +1518,10 @@ Conjecture~\ref{conj:ct2}(a); this is the categorical obstruction.
 Once the localization is shown to preserve clutching, the
 uniqueness statement of Conjecture~\ref{conj:ct2}(c) follows by
 the Brochier--Woike rigidity argument applied to
-$\Theta^{\mathrm{oc}}_\cA$ as the classifying datum. The gap is
-therefore isolated to a single categorical step, and CT-2 is not
-obstructed by any geometric or chain-level computation.
+$\Theta^{\mathrm{oc}}_\cA$ as the classifying datum. The remaining
+obstruction is therefore isolated to a single categorical step;
+no geometric or chain-level obstruction is visible in the present
+model.
 \end{remark}
 
 % ===================================================================
@@ -1645,7 +1697,7 @@ is the octuple
 \Bigl(
 \cA,\;\;
 \cA^!,\;\;
-\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\;\;
+\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\;\;
 \Theta^{\mathrm{oc}}_\cA,\;\;
 r(z),\;\;
 \nabla^{\mathrm{hol}},\;\;
@@ -1662,8 +1714,9 @@ consisting of:
 \hline
 $\cA$ & boundary chiral algebra & given \\
 $\cA^!$ & Koszul dual (line-operator algebra) & bar + Verdier \\
-$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
- & derived center (universal bulk) & Def.~\ref{def:thqg-chiral-derived-center} \\
+$\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+ & cochain-level derived center (universal bulk)
+ & Def.~\ref{def:thqg-chiral-derived-center} \\
 $\Theta^{\mathrm{oc}}_\cA$
  & open/closed MC element & Constr.~\ref{constr:thqg-oc-mc-element} \\
 $r(z)$ & collision residue (classical $r$-matrix)
@@ -1678,7 +1731,7 @@ $\mathfrak{R}^{\mathrm{oc}}_\bullet(\cA)$
 \end{center}
 The datum extends the holographic modular Koszul datum
 $\mathcal{H}(\cA)$ (Definition~\ref{def:thqg-holographic-datum})
-by adding the derived center (universal bulk), the annulus trace
+by adding the cochain-level derived center (universal bulk), the annulus trace
 (open modular shadow), and the nonlinear resonance tower
 (quartic and higher obstructions in the derived center).
 \end{definition}
@@ -1691,10 +1744,12 @@ following physical content:
 \item \emph{Boundary.} $\cA$ is the boundary chiral algebra
  (the ``boundary CFT'' of holography).
 \item \emph{Bulk.}
- $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the
- universal bulk, reconstructed from the boundary. Holography
+ $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the
+ universal bulk, reconstructed from the boundary. Its cohomology
+ $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the on-shell
+ Gerstenhaber algebra of bulk fields. Holography
  is the assertion that the boundary data $\cA$ determines the
- bulk $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and
+ bulk $\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and
  the perturbative gravitational partition function.
 \item \emph{Lines.}
  $\cA^!$ generates the line-operator category $\mathcal{C}
@@ -1716,24 +1771,22 @@ following physical content:
 \end{enumerate}
 \end{remark}
 
-\section{Synthesis}
+\section{K3 class-\texorpdfstring{$\mathcal S$}{S} open-closed realization}
 \label{sec:thqg-occ-supplement}
 
 \begin{remark}[Class-$\mathcal S$ on $\Sigma_{0,24}$ as the open-closed realisation]
 \label{rem:thqg-occ-1}
 The class-$\mathcal S$ theory $\mathcal T[A_1,\Sigma_{0,24}]$ has
 $c_{4d} = 107/6$, $c_{2d} = -214$, Coulomb rank $21$, flavour
-$\mathfrak{su}(2)^{24}$ (canonical values; see
-Remark~\ref{rem:thqg-occ-retraction} for the
-double-retraction of the intermediate evaluation
-$(26, -312)$), providing a $4d$/$2d$ open-closed realisation
-in which the Schur sector is the K3 chiral algebra
+$\mathfrak{su}(2)^{24}$, providing a $4d$/$2d$ open-closed
+realisation in which the Schur sector is the K3 chiral algebra
 $\mathbf H_{\Delta_5}$-module. The $24$ punctures on $\Sigma_{0,24}$
 host the $24$ flavour $\mathfrak{su}(2)$'s and correspond to the $24$
 Kodaira $I_1$ fibres $E^{\mathrm{nod,sm}}_{24}$ in the bi-based
 Ran space. This is the class-$\mathcal S$ face of the six coordinate
 charts on $\mathbf H_{\Delta_5}$ \cite{Gaiotto2009,BeemRastelli2015}.
-Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}
+records the K3 chiral-bialgebra chart.
 \end{remark}
 
 \begin{remark}[Bi-based Ran structure in the open-closed TFT]
@@ -1746,7 +1799,7 @@ sector lives on $\bar{\mathcal A}_2$ (genus-$2$ Siegel upper
 half-space, Kuga--Satake target). The Steiner $S(5,8,24)$ rigidity
 (Conway--Sloane 1988) cuts out the unique $M_{24}$-symmetric $24$-point
 boundary configuration compatible with the open-closed Cardy condition
-\cite{ConwaySloane1988,KugaSatake1967}. Cross-ref
+\cite{ConwaySloane1988,KugaSatake1967}; see
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
@@ -1760,7 +1813,7 @@ open/closed structure. On the open sector
 $\mathrm{Ran}(E^{\mathrm{nod,sm}}_{24})$ the two equivariant
 parameters $(\epsilon_1,\epsilon_2)$ act by rotation of the two
 transverse planes at each Kodaira $I_1$ node; the derived-centre
-pair $(\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5}),
+pair $(\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5}),
 \mathbf{H}_{\Delta_5})$ carries an induced
 $T^2 = U(1)_{\epsilon_1}\times U(1)_{\epsilon_2}$ action whose
 equivariant trace is the $\Omega$-deformed K3 partition function
@@ -1769,18 +1822,18 @@ Nekrasov--Okounkov equivariant localisation
 \cite{Nekrasov2003,NekrasovOkounkov2006}. The universal-bulk
 identification
 $\mathrm{Obs}^{\mathrm{bulk}}(T_{\mathbf{H}_{\Delta_5}})\simeq
-\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})$
+\mathbf{Z}^{\mathrm{der}}_{\mathrm{ch}}(\mathbf{H}_{\Delta_5})$
 (Theorem~\ref{thm:thqg-chiral-derived-center-universal}, via the
 Vol~II master theorem) sends the $\Omega$-deformed bulk trace to
 the self-dual-phase Siegel character
 \[
  Z^{K3}_{\mathrm{inst}}(\epsilon_1,\epsilon_2)\big|_{\epsilon_1=-\epsilon_2=\epsilon}
  \;=\;
- 1 / \Phi_{10}(Z),
+ \frac{1}{\Phi_{10}^{\mathrm{un}}(Z)},
  \qquad
  \hbar^2 \;=\; \epsilon_1\,\epsilon_2 \;=\; -\epsilon^2.
 \]
-The programme's $\hbar^2 = -1/8$ specialisation thus fixes
+The specialization $\hbar^2 = -1/8$ fixes
 $\epsilon^2 = 1/8$, i.e.\ $\epsilon = \pm 1/(2\sqrt{2})$; this is
 the Nekrasov--Shatashvili self-dual point
 \cite{NekrasovShatashvili2009} at which the $\Omega$-deformed
@@ -1790,23 +1843,20 @@ $R$-matrix is precisely the $R_{\mathrm{Sieg,dyn}}$ of the K3
 Hall--Drinfeld double
 \cite{MaulikOkounkov12,SchiffmannVasserot13}. The Humbert
 monodromy identity $\mathrm{ord}(H_1) = K^\kappa = 2c_+ = 8$
-(Beilinson B-1 verification) coincides with the order of the
-Maulik--Okounkov braid-group representation at the self-dual
-fixed-point. Primary-literature frame: Nekrasov~2003
+is the matching normalization for the Maulik--Okounkov
+braid-group representation at the self-dual fixed point.
+Primary-literature frame: Nekrasov~2003
 (\texttt{hep-th/0206161}), Nekrasov--Okounkov 2006, Maulik--Okounkov
 Ast\'erisque 408 (2019); AGT side
 \cite{AGT09,AldayTachikawa10,CordovaGaiotto2016}.
 \end{remark}
 
-\begin{remark}[Character matching: Nekrasov = chiral character]
+\begin{remark}[Character matching: Nekrasov partition function and chiral character]
 \label{rem:thqg-occ-character-match}
-A Nekrasov-voice falsification rule (``if the character does not
-match $Z_{\mathrm{inst}}$, the construction is wrong'') applies
-directly to $\mathbf{H}_{\Delta_5}$: the Schur-limit of the
-$\Omega$-deformed K3 partition function computed by
+For $\mathbf{H}_{\Delta_5}$ the Schur-limit of the
+$\Omega$-deformed K3 partition function is computed by the
 plethystic-exponential expansion of the class-$\mathcal S$
-$\mathcal{T}[A_1,\Sigma_{0,24}]$ $4d$/$2d$ shadow (compute module
-\texttt{k3\_yangian\_wave14\_schur\_index\_classS\_A1\_24.py}) reads
+$\mathcal{T}[A_1,\Sigma_{0,24}]$ $4d$/$2d$ shadow:
 \[
  \mathcal I_{\mathrm{Schur}}(q;\mathbf 1)
  \;=\;
@@ -1836,7 +1886,7 @@ coefficient mismatch through $q^{10}$ falsifies the
 class-$\mathcal S$ origin.
 \end{remark}
 
-\section{Synthesis}
+\section{Rank-\texorpdfstring{$N$}{N} K3 class-\texorpdfstring{$\mathcal S$}{S} family}
 \label{sec:thqg-occ-supplement-ii}
 
 \begin{remark}[The $N$-parametric family
@@ -1927,26 +1977,25 @@ the Proposition's body is uniquely determined by the four-data
 interpolation $(N, n_v, n_h)\in\{(2,0,4),(3,5,16),(4,18,40),(5,42,80)\}$;
 higher-$N$ CD values (e.g.\ $T_6$) are consistent with the formula
 (Chacaltana--Distler 2010 eq.\ (5.14)). Substitution into the
-Shapere--Tachikawa formulas gives the table. Compute module:
-\texttt{k3\_yangian\_wave15\_schur\_index\_classS\_ANm1\_24.py}
-(\texttt{calabi-yau-quantum-groups/compute/lib/}).
+Shapere--Tachikawa formulas gives the table.
 \end{proof}
 
-\begin{remark}[Retraction of an earlier Chacaltana--Distler ansatz]
-\label{rem:thqg-occ-retraction}
-An earlier programme iteration asserted
-$c_{4d}(A_1, \Sigma_{g,n}) = (12(g-1) + 7n)/6$ based on an ansatz
-that fails the $n = 4$ cross-check: at $(g, n) = (0, 4)$ it returns
+\begin{remark}[$A_1$ central-charge normalization check]
+\label{rem:thqg-occ-A1-central-charge-normalization}
+The expression
+$c_{4d}(A_1, \Sigma_{g,n}) = (12(g-1) + 7n)/6$
+fails the $n = 4$ cross-check: at $(g, n) = (0, 4)$ it returns
 $c_{4d} = 8/3$, whereas the well-established
 $\mathrm{SU}(2)$ $N_f = 4$ value is $c_{4d} = 7/6$ (Shapere--Tachikawa
 2008 Table~4; Tachikawa 2013 lectures eq.~(13.6)). The correct
 first-principles value at $n = 24$ is therefore $c_{4d} = 107/6$
 and $c_{2d} = -214$, coinciding with the boxed K3 value
-(\texttt{k3\_chiral\_bialgebra\_platonic.tex} line~1095). The
-intermediate retraction $c_{4d} = 26$ is itself retracted here. The
-earlier K3 $a_{4d} = 421/24$ differs from the first-principles
-$a_{4d} = 403/24$ by $18/24 = 3/4$; the source of this discrepancy
-is flagged as open. The six-fold pentagon-umbral
+in \texttt{k3\_chiral\_bialgebra\_platonic.tex}. The value
+$c_{4d} = 26$ is incompatible with this normalization. The
+alternative K3 value $a_{4d} = 421/24$ differs from the
+first-principles $a_{4d} = 403/24$ by $18/24 = 3/4$; this is an
+open normalization mismatch for the $a$-anomaly, not an input to
+the $c_{4d}$ calculation. The six-fold pentagon-umbral
 $\mathbb{Z}/6$ anomaly is independent of this
 central-charge correction (it lies in $H^2(M_{24}, U(1))$, not in the
 $c_{4d}$ data) and survives unchanged.
@@ -1969,34 +2018,29 @@ $M_{24}$-equivariant with the same projective Schur cocycle of
 order $6$ (Theorem~k3-projective-M24-equivariance, Vol.~III).
 \end{remark}
 
-\begin{remark}[Siegel lift at higher $N$:
- weight$-k_N$ cusp form on $\mathrm{Sp}_{2g+2}(\mathbb{Z})$;
- conjectural]
+\begin{remark}[Higher-rank Siegel lift: conjectural input data]
 \label{rem:thqg-occ-siegel}
 For $\mathcal T[A_1, \Sigma_{0,24}]$, the Borcherds singular-theta
 lift of the $M_{24}$-averaged diagonal Schur index is the weight-$5$
 Siegel cusp form $\Delta_5$ on $\mathrm{Sp}_4(\mathbb{Z})$ (paramodular
 at level one; Gritsenko--Nikulin 1997
 \texttt{arXiv:alg-geom/9504006}; Borcherds 1998
-\texttt{arXiv:alg-geom/9609022} Theorem~13.3). For $\mathcal T[A_{N-1},
-\Sigma_{0,24}]$ at $N \ge 2$, the natural target of the analogous
-lift is a Siegel modular form on the paramodular group
-$\Gamma_0^{\mathrm{para}}(k_{\mathrm{lvl}})\subset
-\mathrm{Sp}_{2\,r(N)}(\mathbb{Z})$ of signature determined by the
-Lorentzian lattice $\Lambda^{N+1, 2}$ (rank $= n_{\mathrm{Cou}} + 2
-= 21(N-1) + 2$ in the Maulik--Okounkov normalisation), with
-\emph{weight} fixed by the Borcherds rank formula
-$\mathrm{wt} = \tfrac{1}{2}\mathrm{rank}\,\Lambda$. At $N = 2$ this
-returns $\mathrm{wt} = 5$, matching $\Delta_5$; at $N \ge 3$ the
-formula predicts $\mathrm{wt} = \tfrac{1}{2}(21(N-1) + 2)$, which
-at $N = 3$ gives $\mathrm{wt} = 22$, a Siegel-modular weight consistent
-with paramodular-form existence results of Gritsenko--Hulek 1998
-\texttt{arXiv:alg-geom/9609022}. The existence and automorphic
-identification of $\Delta_{k_N}^{(N)}$ for $N \ge 3$ is a
-CONJECTURE; the $N$-independent CY-to-chiral functor $\Phi$
-(Vol.~III Chapter~\ref{ch:cy-to-chiral-functor}) predicts
-existence, but the BKM-root structure at $N \ge 3$ does not reduce
-to Mathieu moonshine and may lack a closed automorphic form.
+\texttt{arXiv:alg-geom/9609022} Theorem~13.3). For
+$\mathcal T[A_{N-1}, \Sigma_{0,24}]$ at $N \ge 3$, no weight formula
+is proved in this chapter. The conjectural automorphic lift must
+specify four data before a weight can be asserted: the input Jacobi
+or vector-valued modular form extracted from the $M_{24}$-averaged
+Schur index, the Lorentzian lattice and paramodular group, the Weyl
+vector, and the Borcherds constant term that gives the weight. The
+$N=2$ case supplies the normalization $\Delta_5$ of weight~$5$;
+higher rank does not follow from the rank formula
+$\tfrac12(21(N-1)+2)$, which would already contradict the $N=2$
+normalization. The existence and automorphic identification of a
+form $\Delta_{k_N}^{(N)}$ for $N \ge 3$ is conjectural. The
+$N$-independent CY-to-chiral functor $\Phi$
+(Vol.~III Chapter~\ref{ch:cy-to-chiral-functor}) predicts a
+candidate source, but the BKM-root structure at $N \ge 3$ does not
+reduce to Mathieu moonshine and may lack a closed automorphic form.
 Primary references: Freitag ``Siegelsche Modulfunktionen'' 1983;
 Gritsenko--Nikulin 1997--2018 series; Borcherds 1998 Theorems
 13.3, 14.2 (general rank).
@@ -2040,8 +2084,7 @@ object: it is an $E_1$-chiral bialgebra on the curve
 $E^{\mathrm{nod,sm}}_{24}$ in the Ran topology. The CY-to-chiral
 functor $\Phi$ (Vol.~III) relates them by $\Phi(\mathrm{CoHA}_{\mathrm{K3},
 N}) \simeq \mathbf H^{(N)}_{\Delta_5}$ on the Koszul locus, but
-this is a functorial identification, not an equality. Conflation
-of CoHA with chiral algebra is the cache-pattern error
-\texttt{coha\_ne\_chiral} (AP-CY\,61 in Vol.~III); the rank-$N$
-extension preserves the same care of distinction.
+this is a functorial identification, not an equality. The rank-$N$
+extension preserves the distinction between a cohomological Hall
+algebra and an $E_1$-chiral bialgebra.
 \end{remark}

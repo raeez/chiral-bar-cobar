@@ -1,34 +1,27 @@
 
-The bar complex looks like a Feynman expansion. The differential
-is a sum over trees weighted by propagators $\eta_{ij} = d\log(z_i - z_j)$,
-the degree counts vertices, and iterated residues on
-Fulton--MacPherson boundary strata play the role of UV divergences.
-The similarity raises a precise question: is the bar
-complex a literal reformulation of perturbative QFT, or only a
-structural analogy?
+Two graph calculi meet on the boundary of configuration space.  The
+ordered bar differential is built from Arnold logarithmic forms
+$\eta_{ij}=d\log(z_i-z_j)$ and collision residues on
+Fulton--MacPherson strata; perturbative field theory is built from
+Wick contraction kernels and local vertices.  The error is to identify
+these kernels.  The theorem shared by the two calculi is the
+stable-graph decomposition of the universal MC element.
 
-The honest answer distinguishes two regimes. For the Heisenberg
-algebra $\mathcal{H}_{\kappa^{\mathrm{Heis}}}$, the bar complex
-reproduces the free-boson residue calculus exactly, and
-Conjecture~\ref{conj:v1-bar-cobar-path-integral-heisenberg} records the
-expected all-genera path-integral identification. For interacting
-theories, Volume~I proves only the
-genus-$0$ algebraic BRST/bar comparison on the Kac--Moody locus and
-the local binary/ternary reduction package; the general perturbative
-comparison remains conjectural
-\textup{(}Conjecture~\ref{conj:v1-bar-cobar-path-integral}\textup{)}.
-The Feynman--bar mnemonic (Remark~\ref{rem:feynman-bar-bridge})
-identifies propagator $= \eta_{ij}$, vertex $=$ collision residue,
-and UV divergence $=$ FM boundary stratum; it does \emph{not}
-establish a general equality between perturbative complexes and the
-bar complex, nor a literal loop$=$genus identity. What the
-mnemonic does establish is a canonical bijection between bar
-differential terms and tree-level stable graphs: the Feynman
-transform of the commutative modular operad decomposes $\Theta_\cA$
-as a stable-graph sum, and the free boson case is verified at each
-genus below. The gap between analogy and equivalence is the gap
-between the Gaussian base case and the nonlinear locus; closing it
-is the content of the seven faces of the collision residue.
+For the Heisenberg algebra $\mathcal{H}_{\kappa^{\mathrm{Heis}}}$,
+the double-pole OPE gives the Gaussian BV/bar comparison for free
+fields (Proposition~\ref{prop:bar-bv-free-fields}) and the explicit
+higher-genus bar cohomology of Theorem~\ref{thm:heisenberg-higher-genus}.
+Conjecture~\ref{conj:v1-bar-cobar-path-integral-heisenberg} asks for the
+all-genera comparison map, not for an equality of the Wick kernel with
+$\eta_{ij}$.  For interacting chiral algebras, Volume~I proves the
+genus-$0$ BRST/bar quasi-isomorphism on the anomaly-free locus
+(Theorem~\ref{thm:brst-bar-genus0}) and the local binary/ternary
+reduction package; the all-genera perturbative comparison is
+Conjecture~\ref{conj:v1-bar-cobar-path-integral}.  The
+Feynman--bar mnemonic (Remark~\ref{rem:feynman-bar-bridge}) is therefore
+a controlled dictionary: Arnold form $=$ logarithmic collision form,
+vertex $=$ chiral residue, boundary stratum $=$ stable-graph gluing.
+It is not a loop$=$genus identity.
 
 \begin{construction}[Feynman transform as stable-graph MC decomposition]
 \label{constr:feynman-stable-graph}
@@ -39,7 +32,18 @@ The Feynman transform $\mathrm{FT}(\mathrm{FCom})$ of the commutative modular op
 \[
 \Theta_\cA^{(g,n)} = \sum_{\Gamma \in \mathsf{Gr}^{\mathrm{st}}_{g,n}} \frac{1}{|\mathrm{Aut}(\Gamma)|} \cdot W_\Gamma(\cA),
 \]
-where $W_\Gamma(\cA)$ is the $\Gamma$-amplitude (Construction~\ref{constr:stable-graph-decomposition}). Feynman diagrams in physical QFT are the genus-$0$ tree-level truncation of this sum; loop corrections are the higher-genus contributions. The MC equation $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ is the codimension-$2$ face cancellation in $\overline{\mathcal{M}}_{g,n}$ (Remark~\ref{rem:mc-codimension-two}).
+where $W_\Gamma(\cA)$ is the $\Gamma$-amplitude of
+Construction~\ref{constr:stable-graph-decomposition}.  The displayed
+sum is the symmetric modular quotient: the ordered lift keeps the
+labels of half-edges and the Arnold forms on
+$\mathrm{Conf}_n(X)$, and averaging by the symmetric group produces
+the factor $|\mathrm{Aut}(\Gamma)|^{-1}$.  At genus~$0$ the stable
+graphs are trees.  Positive graph genus records self-sewing and
+boundary strata of $\overline{\mathcal{M}}_{g,n}$; it becomes a
+physical loop number only after choosing a ribbon or fatgraph
+perturbative model.  The MC equation
+$D\Theta+\tfrac{1}{2}[\Theta,\Theta]=0$ is the codimension-$2$ face
+cancellation of these strata (Remark~\ref{rem:mc-codimension-two}).
 \end{construction}
 
 \section{The free boson at genus~\texorpdfstring{$0$}{0}}
@@ -58,25 +62,28 @@ each insertion of $a(z_i)$ is an external leg.
 \end{tikzpicture}
 \end{center}
 
-The genus-$0$ bar complex is
-$\bar{B}^{(0)}_n = \int_{C_n(\mathbb{P}^1)} \omega \otimes a(z_1) \otimes \cdots \otimes a(z_n)$,
-with differential computing tree-level factorization.
+The genus-$0$ bar complex is computed on
+$\overline{C}_n(\mathbb{P}^1)$ by logarithmic forms with coefficients
+in $a(z_1)\otimes\cdots\otimes a(z_n)$; its differential is the
+tree-level chiral factorization residue.
 The bar differential uses the logarithmic propagator
 $\eta_{12} = d\log(z_1 - z_2)$, which is the unique conformally invariant
 1-form with a simple pole along the diagonal (Remark~\ref{rem:why-log-forced}).
 It does \emph{not} combine multiplicatively with the OPE propagator
 $G(z_1,z_2)=\kappa^{\mathrm{Heis}}(z_1-z_2)^{-2}$; the two objects play distinct roles.
-The bar differential acts by residue extraction via $\eta_{12}$:
-\begin{equation}
-d^{(0)}[a \otimes a \otimes \eta_{12}]
-= \operatorname{Res}_{D_{12}}\bigl(\eta_{12} \cdot a(z_1)\,a(z_2)\bigr)
+The bar differential applies the chiral residue map:
+\begin{equation}\label{eq:heisenberg-bar-residue}
+d^{(0)}_{\mathrm{res}}[a \otimes a \otimes \eta_{12}]
+= a_{(1)}a
 = \kappa^{\mathrm{Heis}} \cdot \mathbf{1},
 \end{equation}
-where the residue is $\kappa^{\mathrm{Heis}}$ because $a(z_1)a(z_2) \sim \kappa^{\mathrm{Heis}}(z_1-z_2)^{-2}$
-and $\eta_{12} = d\log(z_1-z_2)$ absorbs one pole order, leaving a simple pole
-whose residue is $\kappa^{\mathrm{Heis}}$
+because $a_{(0)}a=0$ and the double-pole coefficient is
+$a_{(1)}a=\kappa^{\mathrm{Heis}}\mathbf{1}$
 (Example~\ref{ex:ope-to-residue} and Proposition~\ref{prop:pole-decomposition}).
-The QFT propagator $G(z,w)=\kappa^{\mathrm{Heis}}/(z-w)^2$ is a separate bookkeeping device
+The notation $\operatorname{Res}_{D_{12}}$ denotes this chiral residue
+operation; it is not the ordinary meromorphic residue of
+$\eta_{12}\cdot (z_1-z_2)^{-2}$.
+The QFT propagator $G(z,w)=\kappa^{\mathrm{Heis}}/(z-w)^2$ is a separate contraction kernel
 for Wick contractions; it does not enter the bar differential.
 
 \section{The free boson at genus~\texorpdfstring{$1$}{1}}
@@ -84,10 +91,14 @@ for Wick contractions; it does not enter the bar differential.
 The tadpole diagram (self-contraction on an elliptic curve
 $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$) gives:
 \begin{equation}
-A_{\text{tadpole}}^{(E_\tau)} = \kappa^{\mathrm{Heis}} \sideset{}{'}\sum_{(n,m) \in \mathbb{Z}^2} \frac{1}{(n + m\tau)^2}
-= \kappa^{\mathrm{Heis}} \cdot E_2(\tau),
+A_{\text{tadpole}}^{(E_\tau)}
+= \kappa^{\mathrm{Heis}}\,G_2(\tau),\qquad
+G_2(\tau):=\sideset{}{'}\sum_{(n,m) \in \mathbb{Z}^2}
+\frac{1}{(n + m\tau)^2}
+= \frac{\pi^2}{3}E_2(\tau),
 \end{equation}
-up to normalization. The modular anomaly
+with the Eisenstein normalization of
+Theorem~\ref{thm:heisenberg-genus-one-complete}.  The modular anomaly
 $E_2(-1/\tau) = \tau^2 E_2(\tau) + 6\tau/(\pi i)$
 is the one-loop quantum correction to modularity, proportional
 to~$\kappa^{\mathrm{Heis}}$.
@@ -100,8 +111,18 @@ to~$\kappa^{\mathrm{Heis}}$.
 \end{tikzpicture}
 \end{center}
 
-The tadpole corresponds to $[\text{Tr}(a \otimes a)]^{(1)} \in \bar{B}^{(1)}_1$,
-with $d^{(0)}[\text{Tr}(a \otimes a)]^{(1)} = \kappa^{\mathrm{Heis}} \cdot [1]^{(1)}$.
+In the modular bar complex this trace is not a new
+$d^{(0)}$-differential.  The Heisenberg cubic vertex vanishes, so
+$K_{1,1}^{\mathcal{H}}=0$ in the stable-graph recursion; the
+genus-$1$ scalar comes from the same binary double-pole class
+transported through the Hodge line:
+\[
+\mathrm{obs}_1(\mathcal{H}_{\kappa^{\mathrm{Heis}}})
+= \kappa^{\mathrm{Heis}}\lambda_1,\qquad
+F_1(\mathcal{H}_{\kappa^{\mathrm{Heis}}})
+= \kappa^{\mathrm{Heis}}\!\int_{\overline{\mathcal{M}}_{1,1}}\lambda_1
+= \frac{\kappa^{\mathrm{Heis}}}{24}.
+\]
 
 \subsection{Loop-genus correspondence}
 
@@ -114,43 +135,55 @@ $\chi = V - E + F = 2 - 2g$, hence $g = (L + 1 - F)/2 \leq L/2$,
 with equality when $F = 1$.
 \end{theorem}
 
-The free boson correlation function expands as
-$\langle a(z_1) \cdots a(z_n) \rangle_{\text{all genera}}
-= \sum_{g=0}^\infty (\kappa^{\mathrm{Heis}})^{n/2+g-1}
-\langle a(z_1) \cdots a(z_n) \rangle^{(g)}_{\text{conn.}}$,
-and the bar filtration weights genus~$g$ by $(\kappa^{\mathrm{Heis}})^g$.
+The genus in $\bar{B}^{(g)}$ is the stable-curve genus.  In a ribbon
+model it is bounded by graph loop number as above, but the
+modular characteristic of the Heisenberg theory is linear in the
+level:
+\[
+\mathrm{obs}_g(\mathcal{H}_{\kappa^{\mathrm{Heis}}})
+= \kappa^{\mathrm{Heis}}\lambda_g,\qquad
+F_g(\mathcal{H}_{\kappa^{\mathrm{Heis}}})
+=\kappa^{\mathrm{Heis}}\lambda_g^{\mathrm{FP}}
+\]
+on the uniform-weight scalar lane (Theorem~\ref{thm:genus-universality}).
+Thus the bar genus filtration is not weighted by
+$(\kappa^{\mathrm{Heis}})^g$.
 
 \section{One-loop partition function}
 
 The Gaussian path integral on $E_\tau$ gives
 $Z_{E_\tau} = (\mathrm{Im}\,\tau)^{-1/2} |\eta(\tau)|^{-2}$,
 which is modular invariant as a density on
-$\mathcal{M}_{1,0}$. The bar complex interpretation:
-$Z_{E_\tau} = H_0(\bar{B}^{(1)})$; the modular anomaly
-is the scalar trace
-$\kappa(\cA)\cdot\deg(\lambda_1) = \kappa(\cA)/24$
+$\mathcal{M}_{1,0}$.  The bar complex does not identify this
+function with a homology group.  Its vacuum line is
+$H^0(\bar{B}^{(1)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}}))=\mathbb{C}$,
+and its scalar anomaly is
+$F_1(\cA)=\kappa(\cA)\deg(\lambda_1)=\kappa(\cA)/24$
 (Theorems~\ref{thm:genus-universality}
 and~\ref{thm:explicit-theta}).
 
-\section{Path integral = bar complex}
+\section{The bar complex and the path integral}
 
 \begin{conjecture}[Bar complex = path integral for the free boson; \ClaimStatusConjectured]\label{conj:v1-bar-cobar-path-integral-heisenberg}
 For the Heisenberg vertex algebra $\mathcal{H}_{\kappa^{\mathrm{Heis}}}$
 \textup{(}free boson at nonzero Heisenberg level\textup{)} on a
-compact Riemann surface $\Sigma_g$ of genus~$g \geq 0$:
-\begin{equation}\label{eq:bar-partition-heisenberg}
-Z_g^{\mathcal{H}_{\kappa^{\mathrm{Heis}}}}(\Sigma_g)
-= H^0(\bar{B}^{(g)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}})) = \mathbb{C}
-\end{equation}
-\begin{equation}\label{eq:bar-npoint-heisenberg}
-\langle \alpha(z_1) \cdots \alpha(z_n) \rangle_{\Sigma_g}
-= H^n(\bar{B}^{(g)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}}))
-/ H^0(\bar{B}^{(g)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}}))
-\end{equation}
+compact Riemann surface $\Sigma_g$ of genus~$g \geq 0$, there is a
+genus-filtered comparison morphism
+\[
+\Phi_g^{\mathrm{Heis}}\colon
+C^\bullet_{\mathrm{BV,red}}(\Sigma_g;\mathcal{H}_{\kappa^{\mathrm{Heis}}})
+\longrightarrow
+\bar{B}_{\mathrm{geom}}^{(g)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}})
+\]
+from the zero-mode-reduced Gaussian BV complex to the geometric bar
+complex.  It sends Wick contraction classes to the chiral residue
+class \eqref{eq:heisenberg-bar-residue}, sends the normalized
+partition function to the generator of the vacuum line
+$H^0=\mathbb{C}$, and induces the cohomology groups of
+Theorem~\ref{thm:heisenberg-higher-genus}.
 \end{conjecture}
 
-\begin{remark}[Evidence]
-\emph{Step~1: Bar complex cohomology.}
+\begin{remark}[Evidence for Conjecture~\ref{conj:v1-bar-cobar-path-integral-heisenberg}]
 By Theorem~\ref{thm:heisenberg-higher-genus}, the bar complex
 cohomology of $\mathcal{H}_{\kappa^{\mathrm{Heis}}}$ on~$\Sigma_g$ is:
 \[
@@ -162,7 +195,6 @@ H^n(\bar{B}^{(g)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}})) = \begin{cases}
 \end{cases}
 \]
 
-\emph{Step~2: Free boson path integral.}
 The path integral is Gaussian with normalized partition function
 $Z_g = 1$ (zero-mode volume removed), matching
 $H^0 = \mathbb{C}$. By Wick's theorem:
@@ -170,69 +202,76 @@ $H^1 \cong H^1(\Sigma_g, \mathbb{C})$ (zero modes);
 the $2$-point function has residue $\kappa^{\mathrm{Heis}}$ matching the bar
 differential; $H^n = 0$ for $n > 2$ (free theory).
 
-\emph{Step~3: Factorization homology.}
-By Theorem~\ref{thm:verdier-AF-compat},
-$H^*(\bar{B}^{(g)}(\mathcal{H}_{\kappa^{\mathrm{Heis}}}))$ computes the
-factorization homology $\int_{\Sigma_g}\mathcal{H}_{\kappa^{\mathrm{Heis}}}$,
-which for the free boson equals the Gaussian BV
-cohomology~\cite{CG17}.
+For free fields the reduced bar complex is already proved
+quasi-isomorphic to the chain-level BV complex
+(Proposition~\ref{prop:bar-bv-free-fields}).  The remaining
+all-genera assertion is compatibility with the genus-completed
+modular bar structure and the Hodge classes $\lambda_g$.
 \end{remark}
 
 \begin{conjecture}[Bar-cobar as worldsheet path integral: general case; \ClaimStatusConjectured]\label{conj:v1-bar-cobar-path-integral}
-For a general chiral algebra $\cA$ on $\Sigma_g$, the generating functional of correlation functions is classified by the bar complex:
-\begin{equation}
-\exp\left( \sum_{g,n} \frac{1}{n!} \int_{C_n(\Sigma_g)} \langle a(z_1) \cdots a(z_n) \rangle_g \right) = \det(\mathbf{1} + \bar{B}(\cA))
-\end{equation}
-where the right side is the Fredholm determinant of the bar complex.
-Evidence is strongest for $\mathcal{H}_{\kappa^{\mathrm{Heis}}}$ at all genera
-\textup{(}Conjecture~\textup{\ref{conj:v1-bar-cobar-path-integral-heisenberg})};
-conjectural for interacting $\cA$.
-Contributing to Conjecture~\ref{conj:master-bv-brst}.
+Let $\cA$ be a chiral algebra on $\Sigma_g$ equipped with a
+BV/BRST factorization model of local observables
+$\mathcal{F}_{\cA,g}$.  There is a genus-completed
+$L_\infty$ comparison morphism
+\[
+\Phi_g^{\mathrm{BV/bar}}\colon
+\mathcal{F}_{\cA,g}\longrightarrow \bar{B}^{\mathrm{ch},g}(\cA)
+\]
+whose genus-$0$ anomaly-free Kac--Moody specialization is the
+quasi-isomorphism of Theorem~\ref{thm:brst-bar-genus0} and whose
+degree-$2$ scalar projection is
+$\Theta_\cA^{\leq 2}=\kappa(\cA)\cdot\eta\otimes\Lambda$
+as in Theorem~\ref{thm:explicit-theta}.  The missing datum is the
+construction of $\Phi_g^{\mathrm{BV/bar}}$ for nonlinear OPE vertices,
+with the Arnold signs and Fulton--MacPherson boundary orientations
+compatible with the stable-graph MC equation.
 \end{conjecture}
 
-\begin{remark}[Shadow depth decomposition in the Feynman picture]
+\begin{remark}[Shadow depth in the Feynman picture]
 \label{rem:feynman-depth-decomposition}
-The loop-genus correspondence (Theorem~\ref{thm:loop-genus-correspondence})
-underlies the depth decomposition $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
-of Theorem~\ref{thm:depth-decomposition} (Chapter~\ref{chap:arithmetic-shadows}):
-$d_{\mathrm{arith}}$ counts critical lines of the spectral $L$-function
-(Feynman-integral periods) and $d_{\mathrm{alg}}$ records the OPE vertex
-complexity visible as higher-loop skeleton subdivergences.
+The loop-genus correspondence of
+Theorem~\ref{thm:loop-genus-correspondence} supplies only a graph
+bound.  The invariant controlling this monograph is the algebraic
+shadow depth
+\[
+r_{\max}(\cA)=\sup\{r\geq 2:\cA^{\mathrm{sh}}_{r,0}\neq 0\},
+\]
+not the loop order of a chosen perturbative model
+(Definition~\ref{def:generating-depth} and
+Theorem~\ref{thm:shadow-archetype-classification}).  A Feynman drawing
+of $S_r(\cA)$ should be read as a stable-graph contact term of
+arity~$r$, not as a literal connected $(r-1)$-loop amplitude.
 \end{remark}
 
-\begin{remark}[Shadow-Feynman dictionary: $S_r = (r{-}1)$-loop graph sum]
+\begin{remark}[Shadow-Feynman dictionary]
 \label{rem:feynman-shadow-loop-dictionary}
 \index{shadow tower!Feynman dictionary|textbf}
 \index{Feynman diagram!shadow correspondence}
 Under the Feynman-bar mnemonic
-(Remark~\ref{rem:feynman-bar-bridge}), the shadow tower coefficients
-$S_r(\cA)$ for $r \geq 2$ correspond to the connected $(r-1)$-loop
-graph sums of the chiral perturbative expansion: $S_2 = \kappa(\cA)$
-is the one-loop tadpole anomaly, $S_3$ is the two-loop sunset,
-$S_4$ is the three-loop watermelon, and the
-quadrichotomy of shadow class
-$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ controls
-diagrammatic complexity:
+(Remark~\ref{rem:feynman-bar-bridge}), the shadow coefficient
+$S_r(\cA)$ is the degree-$r$ stable-graph vertex in the MC tower.
+The proved census gives the following exact truncation data
+(Table~\ref{tab:shadow-invariants-landscape}):
 \begin{itemize}
 \item Class~$\mathsf{G}$ (Heisenberg): tower terminates at
- $r = 2$; only the one-loop tadpole survives, all higher
- connected loop sums vanish.
+ $r_{\max} = 2$; $S_r = 0$ for $r \geq 3$.
 \item Class~$\mathsf{L}$ (affine Kac--Moody): tower terminates at
- $r = 3$; connected loop sums vanish from two loops upward.
-\item Class~$\mathsf{C}$ (free $\beta\gamma$): tower terminates at
- $r = 4$; the three-loop watermelon is the highest non-vanishing
- graph sum.
+ $r_{\max} = 3$; the cubic shadow is the Lie bracket and
+ $S_r = 0$ for $r \geq 4$.
+\item Class~$\mathsf{C}$ (standard $\beta\gamma_\lambda$ line):
+ $r_{\max} = 4$ with
+ $S_2 = 6\lambda^2 - 6\lambda + 1$, $S_3 = 0$,
+ $S_4 = -5/12$, and $S_r = 0$ for $r \geq 5$.
 \item Class~$\mathsf{M}$ (Virasoro, $\Walg_N$): tower extends to
- $r = \infty$; every connected loop graph sum is non-vanishing,
- and the asymptotic ratio $\limsup |S_{r+1}/S_r| = C_\cA$
- records the exponential base of the loop-amplitude growth (e.g.\
- $C_{\mathrm{Vir}} = 6$, $C_{W_3}^{W\text{-line}} = 12$).
+ $r_{\max} = \infty$; for Virasoro,
+ $S_2=c/2$, $S_3=2$,
+ $S_4=10/[c(5c+22)]$, and
+ $S_5=-48/[c^2(5c+22)]$.
 \end{itemize}
-This shadow-Feynman dictionary is the loop-counting interpretation
-of the depth quadrichotomy
-(Theorem~\ref{thm:depth-decomposition}): the diagrammatic
-complexity of the perturbative expansion is bounded by the algebraic
-depth of the shadow tower.
+These are bar-degree and stable-vertex statements.  A physical loop
+interpretation is an additional model-dependent realization, not the
+definition of the invariant.
 \end{remark}
 
 \begin{remark}[Structural cross-references]
@@ -242,30 +281,35 @@ The Feynman picture intersects the main structural spine at three
 points:
 \begin{enumerate}[label=\textup{(W\arabic*)}]
 \item \emph{Universal conductor.} The free-boson partition function
- $Z_g^{\mathcal{H}_\kappa} = \kappa\,\lambda_g/24$
- (genus~$g$ Heisenberg) is the per-family instance of the
+ has vacuum line $H^0=\mathbb{C}$ after zero-mode normalization.
+ Its scalar genus-$g$ obstruction is
+ $\mathrm{obs}_g(\mathcal{H}_\kappa)=\kappa\,\lambda_g$,
+ and the genus-$1$ scalar free energy is
+ $F_1(\mathcal{H}_\kappa)=\kappa/24$.  This is the
+ per-family instance of the
  universal conductor identity $\kappa(\cA) = -c_{\mathrm{ghost}}(\BRST(\cA))$
  of Chapter~\ref{chap:universal-conductor}; the BRST nilpotence
  condition $c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$ is
  precisely the path-integral statement that the one-loop
  anomaly cancels.
 \item \emph{Climax identity.} The bar differential
- $d^{(0)}[a \otimes a \otimes \eta_{12}] = \kappa^{\mathrm{Heis}} \cdot \mathbf{1}$
- displayed in equation~(2) of this chapter is the Heisenberg
+ $d^{(0)}_{\mathrm{res}}[a \otimes a \otimes \eta_{12}]
+ = \kappa^{\mathrm{Heis}} \cdot \mathbf{1}$
+ of \eqref{eq:heisenberg-bar-residue} is the Heisenberg
  Feynman-rule realisation of the climax identity
  $d_{\mathrm{bar}} = \mathrm{KZ}^*(\nabla_{\mathrm{Arnold}})$
  of Chapter~\ref{ch:climax-theorem}: the Arnold form
- $\eta_{12}$ pulled back through the KZ map produces the
- free-boson propagator residue $\kappa^{\mathrm{Heis}}$.
+ $\eta_{12}$ pulled back through the KZ map supplies the logarithmic
+ collision form, and the double-pole OPE supplies the scalar
+ residue $\kappa^{\mathrm{Heis}}$.
 \item \emph{Cross-volume bridge.} The all-genera Heisenberg
  conjecture (Conjecture~\ref{conj:v1-bar-cobar-path-integral-heisenberg})
- lifts to Vol~II's universal celestial holography on the closed
- colour, where the path-integral identification becomes the
- universal master theorem
- (Vol~II Theorem~\ref{V2-thm:universal-holography-master}); for
+ is the Vol~I input compared with Vol~II's universal celestial
+ holography on the closed colour
+ (Vol~II Theorem~\ref{V2-thm:universal-holography-master}).  For
  K3-fibered Class~A threefolds this further descends, via the
  $d = 3$ CY-to-chiral output, to the BPS-counting partition function,
- with the conjectural conductor comparison to the proved Borcherds
+ with the conditional conductor comparison to the proved Borcherds
  weight $c_N(0)/2$ on the five verified Borcherds families
  $N \in \{1,2,3,4,6\}$.
 \end{enumerate}
@@ -273,10 +317,24 @@ points:
 
 \begin{remark}[Scope of the bar-path-integral comparison]\label{rem:bar-path-integral-scope}
 Conjecture~\ref{conj:v1-bar-cobar-path-integral-heisenberg} records
-the expected bar-complex/path-integral identification for
-$\mathcal{H}_{\kappa^{\mathrm{Heis}}}$ at all genera. For interacting chiral algebras $\cA$, only the
-genus-$0$ algebraic BRST/bar comparison on the Kac--Moody locus and
-the local binary/ternary reduction package are proved in this volume
+the bar-complex/path-integral comparison for
+$\mathcal{H}_{\kappa^{\mathrm{Heis}}}$ at all genera.  For interacting
+chiral algebras $\cA$, only the genus-$0$ algebraic BRST/bar
+comparison on the Kac--Moody locus and the local binary/ternary
+reduction package are proved in this volume
 (Theorem~\ref{thm:brst-bar-genus0}); the all-genera comparison is
 Conjecture~\ref{conj:v1-bar-cobar-path-integral}.
+
+All Arnold-relation and sign checks occur in the ordered
+$E_1$ lift before averaging.  The symmetric modular class is obtained
+after quotienting labelled configurations by the symmetric group; the
+stable-graph automorphism denominators in
+Construction~\ref{constr:feynman-stable-graph} belong to this
+averaged surface.  The path-integral comparison is also separate from
+the three structural identifications in the spine of the monograph:
+$\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}(\cA)\simeq\cA$ is
+bar-cobar inversion, $\mathbb{D}_{\Ran}\bar{B}_X(\cA_i)\simeq\cA^!$
+is Verdier duality, and
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is governed by chiral
+Hochschild cochains (Convention~\ref{conv:three-hochschild}).
 \end{remark}

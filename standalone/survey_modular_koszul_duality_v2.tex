@@ -657,8 +657,11 @@ $\delta F_g^{\mathrm{cross}}$.
 
 \medskip
 \noindent\textbf{Theorem H} (chiral Hochschild).
-$\mathrm{ChirHoch}^*(\cA)$ has polynomial Hilbert series,
-concentrated in cohomological degrees $\{0,1,2\}$.
+On the Koszul locus, in the generic/PBW-completed regime,
+$\mathrm{ChirHoch}^*(\cA)$ has degree-$\leq2$ polynomial Hilbert
+series and is concentrated in cohomological degrees $\{0,1,2\}$.
+The free-polynomial cup-product description requires Massey
+vanishing, and the critical-level affine lane is separate.
 
 \subsection*{1.9.\enspace Bar chain models on curve geometries}
 
@@ -3749,7 +3752,7 @@ and the propagator is $P_{\cH_k}=1/k$. The computation:
 \[
 \Theta^{(2)}_{\cH_k}=\frac{1}{2}\cdot\frac{1}{k^2}\cdot k^2\cdot\lambda_2=\frac{1}{2}\lambda_2.
 \]
-Wait: the factor $k^2$ from two propagator insertions cancels against
+The factor $k^2$ from two propagator insertions cancels against
 the $1/k^2$ from two applications of the inverse Killing form. The
 numerical coefficient $1/2$ is the $|\Aut(\Gamma_8)|^{-1}=1/8$ times
 the combinatorial factor $\binom{4}{2}=6$ (choosing which two of the
@@ -7400,7 +7403,7 @@ The genus expansion of the modular bar differential,
 $D = \sum_{g \ge 0} \hbar^g D^{(g)}$, is the Feynman transform
 of the modular operad; the canonical MC element
 $\delta_\cA = D - D^{(0)}$ computes positive-genus corrections.
-Stable graphs, automorphism weights, genus bookkeeping: the
+Stable graphs, automorphism weights, and genus weights form the
 mathematical shadow of the 't~Hooft expansion. The
 identification $\hbar \leftrightarrow 1/N$ for a specific
 holographic model remains the principal open bridge.
@@ -8141,47 +8144,72 @@ of chiral derived center and boundary algebra.
 
 Volume~III constructs the concrete examples of $E_1$-chiral
 quantum groups from Calabi--Yau geometry. The abstract framework
-of Sections~1--9 receives its geometric instantiation: the CY
-categories produce chiral algebras via a functor
-$\Phi \colon \mathrm{CY}_d\text{-}\mathrm{Cat} \to
-E_2\text{-}\mathrm{ChirAlg}$, and the resulting chiral algebras
-carry the full modular Koszul package.
+of Sections~1--9 receives its geometric instantiation: a CY
+category first gives a holomorphic factorisation algebra, and
+specialisation along the auxiliary cycle produces the chiral
+shadow. Thus $\Phi_d$ is $E_2$-chiral in the CY$_2$ lane and
+$E_1$-chiral in the CY$_3$ BPS/CoHA lane; the $E_2$ structure for
+CY$_3$ appears on the Drinfeld/derived centre, not on the
+positive Hall algebra itself. The resulting chiral shadows carry
+the modular Koszul package.
 
 \medskip\noindent\textbf{The CY-to-chiral functor.}\enspace
 For a CY$_d$ category $\cC$ (a smooth proper dg-category with
-$d$-Calabi--Yau structure), the functor $\Phi$ produces an
-$E_2$-chiral algebra $\Phi(\cC)$ whose:
+$d$-Calabi--Yau structure), the two-stage functor $\Phi_d$
+produces a chiral shadow $\Phi_d(\cC)$ whose:
 \begin{itemize}[nosep]
-\item central charge is $\kappa_{\ch}(\Phi(\cC))$, a function of
+\item central charge is $\kappa_{\ch}(\Phi_d(\cC))$, a function of
 the CY structure (for local surfaces $\mathrm{Tot}(K_S \to S)$:
 $\kappa_{\ch} = \chi(S)/2$, where $\chi$ is the topological Euler
 characteristic);
 \item $r$-matrix is the collision residue of the CY-derived MC
 element, carrying the BPS state structure of the CY geometry;
-\item shadow tower identifies with the automorphic correction of
-the associated BKM superalgebra (when one exists).
+\item the shadow tower supplies the scalar bar-Euler face of the
+automorphic correction of the associated BKM superalgebra, when
+such a BKM denominator exists.
 \end{itemize}
-The functor is proved for $d = 2$ (CY$_2$ = K3 and abelian
-surfaces) and for $d = 3$ ($\infty$-categorical proof:
-$\mathrm{HH}^{-2}_{E_1} = 0$ implies the $E_3$-lifting is
-contractible).
+The CY$_2$ lane is the K3/abelian-surface $E_2$ lane. The
+CY$_3$ examples below use the $E_1$ BPS/CoHA shadow supplied by
+the 6d holomorphic Chern--Simons construction; higher centre
+structures are separate.
 
 \medskip\noindent\textbf{Example: $K3 \times E$.}\enspace
-The product of a K3 surface and an elliptic curve is a CY$_3$
-with $\kappa_{\ch} = \chi(K3)/2 = 12$ (since $\chi(K3) = 24$).
-The BKM superalgebra is the Borcherds--Kac--Moody algebra
-$\fg_{\Phi_{10}}$ with root multiplicities encoded by the Igusa
-cusp form $\Phi_{10}$, weight $10 = 2\kappa_{\mathrm{BKM}}$
-with $\kappa_{\mathrm{BKM}} = 5$. The Koszul conductor:
-$K = 0$ (free-field branch, CY complementarity).
+The product of a K3 surface and an elliptic curve is a CY$_3$,
+but it does not carry a single scalar $\kappa$. The four
+load-bearing values are
+\[
+\bigl\{
+\kappa_{\mathrm{cat}}(K3\times E),\,
+\kappa_{\ch}^{\mathrm{Heis}}(K3\times E),\,
+\kappa_{\mathrm{BKM}}(\Delta_5),\,
+\kappa_{\mathrm{fiber}}(K3)
+\bigr\}
+=\{0,3,5,24\}.
+\]
+Here $\kappa_{\mathrm{cat}}(K3\times E)=0$ by K\"unneth
+multiplicativity for $\chi(\cO_X)$, the free-field chiral shadow
+has $\kappa_{\ch}^{\mathrm{Heis}}=3$, and the primitive K3
+Borcherds denominator is the Gritsenko--Nikulin form
+$\Delta_5$ of weight~$5$, so
+$\kappa_{\mathrm{BKM}}(\Delta_5)=5$. The number
+$\chi(K3)=24$ is the fibre moonshine multiplier, not
+$\kappa_{\ch}(K3\times E)$.
 
-The shadow tower of $\Phi(K3 \times E)$ identifies with the
-automorphic correction: the coefficients
-$\mathrm{Sh}_r(\Phi(K3 \times E))$ are the Taylor coefficients
-of $\log \Phi_{10}$ expanded in the appropriate Siegel modular
-coordinates. The shadow-Siegel gap (the discrepancy between the
-shadow tower and the full Siegel modular form) measures the
-genuinely genus-$2$ information invisible to the shadow tower.
+The unnormalised Igusa square is
+$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$. In the
+Oberdieck--Pandharipande reduced-DT normalisation one uses the
+monic Borcherds product
+$D_5=64^{-1}\Delta_5$ and therefore
+\[
+\Phi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2,\qquad
+Z_{\mathrm{OP/DT}}=-D_5^{-2}=-4096\,\Delta_5^{-2}.
+\]
+Thus the BKM algebra is $\fg_{\Delta_5}$ on the primitive
+half-BPS denominator; the compact reduced-DT scalar uses the
+normalised square. The shadow tower records local bar-Euler and
+Taylor data of the automorphic correction. It does not by itself
+produce the full Siegel form; the shadow--Siegel gap is precisely
+the genus-$2$ information missing from the scalar tower.
 
 \medskip\noindent\textbf{Example: conifold.}\enspace
 The resolved conifold $\mathrm{Tot}(\cO(-1)^{\oplus 2} \to
@@ -8202,6 +8230,11 @@ $\cW_{1+\infty}$) produces the perturbative constant-map
 Gromov--Witten free energies $F_g^{\mathrm{GW,const}}(\bC^3)$.
 On the DT side, the MacMahon function
 $M(q) = \prod_{n \ge 1}(1 - q^n)^{-n}$ counts plane partitions.
+The cohomological Hall algebra is
+$\mathrm{CoHA}(\bC^3)=Y^+(\widehat{\fgl}_1)$, the positive half
+of the affine Yangian. The algebra $\cW_{1+\infty}$ enters only
+after passing through the Drinfeld double, centre, Fock
+realisation, or evaluation slice.
 The shadow IS the full GW answer for $\bC^3$ because there are
 no compact curves (no worldsheet instantons); the two towers
 (shadow and GW) agree exactly.
@@ -8271,18 +8304,16 @@ representation category with the $E_2$ representation category of
 the boundary chiral algebra. This is the categorical level of
 the holographic correspondence.
 
-\subsection*{13.10.\enspace The deepest open problems (2026-04-17 state)}
+\subsection*{13.10.\enspace The deepest open problems}
 
-The 2026-04-16 closure wave proved the periodic-CDG compatibility
-for admissible Kazhdan--Lusztig, iterated Sugawara and the
-$E_\infty$-topologization ladder, the chiral higher-Deligne
-theorem, the SC$^{\mathrm{ch,top}}$ heptagon, the CY-D dimension
-stratification, and the Francis--Gaitsgory $(\infty,2)$-equivalence
-at properad level. The 2026-04-17 Beilinson-rectified audit
-reduced the frontier to the following residual problems.
+Periodic-CDG compatibility holds for admissible Kazhdan--Lusztig,
+iterated Sugawara and the $E_\infty$-topologization ladder, the
+chiral higher-Deligne theorem, the SC$^{\mathrm{ch,top}}$ heptagon,
+the CY-D dimension stratification, and the Francis--Gaitsgory
+$(\infty,2)$-equivalence at properad level. The remaining frontier is
+the following list of residual problems.
 
-\smallskip\noindent\textbf{Beilinson-rectified residuals
-(2026-04-17).}
+\smallskip\noindent\textbf{Residual frontiers.}
 \begin{enumerate}[nosep]
 \item \emph{$W(p)$ triplet tempering}: the Gurarie~1993 and
  Flohr~1996 logarithmic-CFT amplitudes exhibit unbounded
@@ -8388,8 +8419,11 @@ Volume~III extends the engine to Calabi--Yau geometry: forty-two
 CY/BKM compute engines with $5700+$ tests cover the
 $K3 \times E$ programme (shadow-Siegel gap, BKM root
 multiplicities, moonshine multiplier, Schottky barrier), toric
-CY$_3$ CoHA integrality, and the automorphic correction as
-shadow obstruction tower identification.
+CY$_3$ CoHA integrality, and the scalar bar-Euler face of the
+automorphic correction. At the toric point
+$\mathrm{CoHA}(\bC^3)=Y^+(\widehat{\fgl}_1)$; the
+$\cW_{1+\infty}$ algebra enters after
+double/centre/Fock/evaluation.
 
 Volume~II develops the 3d theory in three new chapters: the
 factorisation Swiss-cheese algebra (global truth on
@@ -8400,7 +8434,7 @@ chapter, the affine half-space BV theorem, and eleven
 additional computational engines, these constitute the
 Volume~II programme.
 
-\subsection*{13.12.\enspace The single open problem}
+\subsection*{13.12.\enspace The organizing ambient problem}
 
 Everything proved in this monograph is a finite-order projection
 of the universal MC element
@@ -8443,21 +8477,23 @@ genus-$0$ Lagrangian extends over $\overline\cM_{g,n}$;
 \item the Calabi--Yau quantum group programme (Volume~III):
 Sections~1--9 introduce $E_1$-chiral quantum groups as abstract
 algebraic-geometric objects; Volume~III constructs the concrete
-examples from CY geometry. The functor
-$\Phi \colon \mathrm{CY}_d\text{-}\mathrm{Cat} \to
-E_2\text{-}\mathrm{ChirAlg}$ produces chiral algebras from CY
-categories (proved for $d = 2$ and $d = 3$; the $d = 3$ proof
-uses the $\infty$-categorical vanishing
-$\mathrm{HH}^{-2}_{E_1} = 0$). The CY quantum groups
+examples from CY geometry. The two-stage functor $\Phi_d$
+produces $E_2$-chiral shadows in the CY$_2$ lane and $E_1$-chiral
+BPS/CoHA shadows in the CY$_3$ lane; centre constructions carry
+the higher $E_2$ structure. The CY quantum groups
 (CoHA, quantum toroidal algebras, BPS algebras) are the flesh
 on the algebraic skeleton of Sections~1--9. The theories
 studied include 6d holomorphic Chern--Simons on CY$_3$ (the
 primary source), 4d and~5d HT Chern--Simons, 6d little string
 theory, and M5 brane theory. The shadow tower of the CY chiral
-algebra IS the automorphic correction of the BKM superalgebra;
-at $\kappa_{\mathrm{ch}} = \Psi$ the shadow produces the
-constant-map Gromov--Witten free energies of $\bC^3$. The
-Drinfeld centre
+algebra supplies the scalar bar-Euler face of the BKM
+automorphic correction; the primitive K3 denominator is
+$\Delta_5$, with $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ only after
+squaring. At $\kappa_{\mathrm{ch}} = \Psi$ the shadow produces
+the constant-map Gromov--Witten free energies of $\bC^3$, while
+$\mathrm{CoHA}(\bC^3)=Y^+(\widehat{\mathfrak{gl}}_1)$ and
+$\cW_{1+\infty}$ appears after double/centre/Fock/evaluation.
+The Drinfeld centre
 $\cZ(\Rep^{E_1}(Y^+(\widehat{\mathfrak{gl}}_1)))
 \cong \Rep^{E_2}(\cW_{1+\infty})$ closes the
 $E_n$ operadic circle.

@@ -1,79 +1,26 @@
-%================================================================
-% THEOREM C REFINEMENTS -- PLATONIC INSCRIPTION
-%
-% Honest healing of the "nine strengthening results" advertised
-% in the prior status narrative. An adversarial audit established
-% that of the nine T1-T9 items, only T3, T5,
-% T7, T8 correspond to established content in the body chapters; T1,
-% T2, T4, T6, T9 were paper-promises pointing at a file that had
-% never been created. This chapter is that file.
-%
-% Scope chosen after adversarial audit:
-% - T1 (brace dg / E_2 Deligne--Tamarkin derived-center equivalence):
-% downgraded to a conjectural claim; the naive/derived H^0 recovery
-% is stated and proved as a separate lemma.
-% - T2 (perfectness on the standard landscape): stated as a
-% hypothesis-conditional proposition; the Heisenberg and affine
-% Kac--Moody at non-critical level cases are proved unconditionally;
-% Virasoro, W_N, lattice, betagamma are isolated as explicit
-% boundary-stratum sub-conjectures pending Arakawa C_2-cofiniteness
-% input at nodal fibers of M-bar_g.
-% - T4 (g=0 statement): retracted as a separate theorem. At g=0 the
-% relevant content is Q_0(A) = H^0(pt, Z(A)) and Q_0(A^!) = 0
-% already established inside thm:quantum-complementarity-main; there
-% is no Verdier pairing at g=0 and therefore no +3 shift to
-% resolve. A remark records this.
-% - T6 (C0 "unconditional with identifications"): folded into T2 as a
-% corollary; no separate theorem.
-% - T9 (PTVV alternative for C1): established with HONEST mixed status.
-% The (-(3g-3))-shifted symplectic structure on the mapping-stack
-% side is genuinely independent of the established bar-side eigenspace
-% decomposition at the level of Theorem C_0 / the existence of the
-% shifted form itself. The Lagrangian complementarity statement
-% still forwards to thm:quantum-complementarity-main; to replace
-% that forwarding with a genuinely disjoint proof requires
-% constructing the involution at derived-stack level (research
-% frontier). The proposition is tagged ClaimStatusProvedElsewhere
-% for its shifted-symplectic part, ClaimStatusConjectured for the
-% intrinsic-Lagrangian part.
-%
-% Principal cross-references:
-% - higher_genus_complementarity.tex:304 (lem:perfectness-criterion)
-% - higher_genus_complementarity.tex:388 (thm:fiber-center-identification)
-% - higher_genus_complementarity.tex:540 (thm:quantum-complementarity-main)
-% - higher_genus_complementarity.tex:2194 (prop:ptvv-lagrangian)
-% - higher_genus_foundations.tex:368 (prop:gauss-manin-uncurving-chain)
-% - standalone/multi_weight_cross_channel.tex:608 (prop:delta-f-cross-w3-g2)
-%================================================================
-
 \chapter{Theorem C refinements: perfectness, brace equivalence, PTVV}
 \label{ch:theorem-C-refinements-platonic}
 
-Theorem~C\textup{,} in the form established at
-Theorem~\ref{thm:quantum-complementarity-main}, asserts the
-homotopy eigenspace decomposition
+Theorem~\ref{thm:quantum-complementarity-main}, under the hypotheses
+stated there, gives the homotopy eigenspace decomposition
 $\mathbf{C}_g(\cA) \simeq \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
 on the Koszul locus and, for $g \geq 1$, the Verdier perfect-duality
 pairing of cohomological degree $-(3g{-}3)$. The chapter below
-records four refinements. First, a derived-center identification at
-the level of the naive center $Z(\cA)$ that recovers the Koszul
-pairing on~$H^0$; the full brace dg algebra equivalence
+records four refinements. First, the naive center $Z(\cA)$ recovers
+the Koszul pairing on~$H^0$, and the full brace dg algebra equivalence
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) \simeq
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$ as $E_2$-algebras after
-Deligne--Tamarkin is stated as a conjecture, motivated and
-scope-qualified. Second, a perfectness proposition for the relative
-bar family over $\overline{\mathcal{M}}_g$ that is proved
-unconditionally for the Heisenberg and affine Kac--Moody
-non-critical families, and is recorded as a hypothesis-conditional
-statement for the remaining standard-landscape families pending
-explicit boundary-stratum analysis. Third, a clarification of the
+Deligne--Tamarkin is reduced to a precise derived-Morita kernel
+criterion. Second, a perfectness criterion for the relative
+bar family over $\overline{\mathcal{M}}_g$ that separates PBW
+filterability, total flat-fiber finiteness, and bounded
+pseudo-coherence. Third, a clarification of the
 genus-zero content of Theorem~C together with a remark on a
 misreading of the degree formula $-(3g{-}3)$ at $g = 0$. Fourth, a
-mapping-stack Pantev--To\"en--Vaqui\'e--Vezzosi construction that is
-genuinely independent of the established eigenspace decomposition at
-the level of the existence and nondegeneracy of the shifted
-symplectic form, with the Lagrangian complementarity statement
-honestly forwarded to the bar-side proof.
+mapping-stack Pantev--To\"en--Vaqui\'e--Vezzosi compatibility
+criterion; it packages a Verdier/PTVV route under explicit
+nondegeneracy and orientation hypotheses while the bar-side
+complementarity proof remains the controlling input.
 
 \section{Derived center: naive recovery; brace equivalence conjecture}
 \label{sec:derived-center-koszul-equivalence}
@@ -91,7 +38,10 @@ center.
 \label{lem:naive-center-koszul-identification}
 \index{center!naive!Koszul identification}%
 For a chiral Koszul pair $(\cA, \cA^!)$ on the Koszul locus, assume
-the central orthogonality condition
+that the naive centers are finite-dimensional, or more generally are
+separated and complete for the conformal-weight topology with
+finite-dimensional graded pieces. Assume also the central
+orthogonality condition
 \[
  Z(\cA)^\perp \cap Z(\cA^!) = 0,
  \qquad
@@ -99,13 +49,15 @@ the central orthogonality condition
 \]
 inside the Koszul pairing $\langle -, - \rangle_K$ of
 Theorem~\ref{thm:chiral-koszul-duality}. Then
-$\langle -, - \rangle_K$ restricts to a perfect pairing
+$\langle -, - \rangle_K$ restricts weightwise to a non-degenerate
+pairing
 \[
  \langle -, - \rangle_K \colon Z(\cA) \otimes Z(\cA^!)
  \longrightarrow \mathbb{C}
 \]
-and induces a natural isomorphism
-$Z(\cA) \cong Z(\cA^!)^\vee$.
+and induces a natural isomorphism from the completed center
+$\widehat{Z(\cA)}$ to the continuous graded dual
+$\widehat{Z(\cA^!)}^{\,\vee,\mathrm{cont}}$.
 \end{lemma}
 
 \begin{proof}
@@ -114,12 +66,12 @@ $(\cA, \cA^!)$ by Theorem~\ref{thm:chiral-koszul-duality}. The two
 central orthogonality equalities say exactly that no non-zero element
 of either naive center pairs trivially against the opposite naive
 center. Hence the restricted bilinear form is non-degenerate on both
-factors. Finite-dimensionality of each conformal-weight summand follows
-from the positive-energy axiom and the local finiteness of the bar
-coalgebra; the completed statement is the inverse limit over weights.
-No genus-$0$ Verdier eigenspace argument is used: at $g=0$ the
-Theorem~C decomposition has $Q_0(\cA^!)=0$, so the $g\geq 1$
-anti-invariant involution cannot be imported into this lemma.
+factors. In finite dimension this gives the ordinary algebraic dual.
+In the completed case it gives the inverse-limit statement over
+finite conformal-weight windows; the dual is the continuous graded
+dual of the completed center. At $g=0$ the Theorem~C decomposition
+has $Q_0(\cA^!)=0$, so the $g\geq 1$ anti-invariant involution lies
+outside this lemma.
 \end{proof}
 
 \begin{conjecture}[Derived center brace-algebra equivalence]
@@ -137,50 +89,95 @@ rectification and recovers
 Lemma~\ref{lem:naive-center-koszul-identification} on~$H^0$.
 \end{conjecture}
 
-\begin{remark}[Scope and obstructions]
+\begin{proposition}[Derived-Morita criterion for the brace center;
+\ClaimStatusConditional]
+\label{prop:derived-center-morita-criterion}
+\index{derived center!Morita criterion}
+Let $(\cA,\cA^!)$ be a chiral Koszul pair on the Koszul locus. Assume
+there is a perfect chiral $\cA$--$\cA^!$ bimodule
+$\mathcal K_{\cA}$ whose left and right duals exist and whose tensor
+functors induce inverse equivalences
+\[
+ \Perf_{\mathrm{ch}}(\cA)
+ \;\simeq\;
+ \Perf_{\mathrm{ch}}(\cA^!)
+\]
+in the Morita $(\infty,2)$-category of chiral dg categories. Assume
+also that the chiral Hochschild cochain complex is computed by the
+endomorphism operad model of
+Theorem~\ref{thm:thqg-brace-dg-algebra}, and that this model is
+Morita functorial. Then there is a natural zig-zag of brace
+dg-algebra quasi-isomorphisms
+\[
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+ \;\simeq\;
+ Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!).
+\]
+After Deligne--Tamarkin rectification this is an equivalence of
+$E_2$-algebras, and on $H^0$ it is the completed central pairing of
+Lemma~\ref{lem:naive-center-koszul-identification}.
+\end{proposition}
+
+\begin{proof}
+Keller and To\"en identify derived Morita equivalences with
+equivalences of the corresponding dg categories of perfect modules
+\cite{Keller06,Toen07}. Hochschild cochains are the derived
+endomorphism object of the identity functor on this category. An
+equivalence transports the identity functor, its derived endomorphism
+object, and the operadic insertions defining the brace operations.
+Thus the Morita equivalence induced by $\mathcal K_{\cA}$ gives a
+brace dg-algebra quasi-isomorphism between the Hochschild cochains of
+$\Perf_{\mathrm{ch}}(\cA)$ and $\Perf_{\mathrm{ch}}(\cA^!)$.
+The stated chiral endomorphism-operad comparison identifies these
+Hochschild cochains with
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$. Deligne--Tamarkin
+rectification sends brace quasi-isomorphisms to $E_2$
+quasi-isomorphisms. The degree-zero term is the endomorphism ring of
+the unit object, hence the naive center after completion; the Koszul
+pairing identifies that term with
+Lemma~\ref{lem:naive-center-koszul-identification}.
+\end{proof}
+
+\begin{remark}[Scope and obstruction]
 \label{rem:derived-center-koszul-scope}
-The conjecture is supported by the following partial evidence.
-\textup{(i)} On $H^0$ it reduces to
-Lemma~\ref{lem:naive-center-koszul-identification}, which is
-conditional on the central orthogonality hypothesis stated there.
-\textup{(ii)} For the Heisenberg family $\cA = H_k$
-the identification is tractable by explicit computation, since the
-chiral Hochschild complex has dimension three in each degree and the
-brace structure is combinatorially explicit. \textup{(iii)} At the
-$E_2$-cohomology level the statement reduces, via Chiral Higher
-Deligne (see Vol.~II, chapter on chiral higher Deligne), to a shadow
-identity that the Koszul pairing does preserve. The obstruction to
-promoting these to a chain-level brace quasi-isomorphism is the
-associator-dependence of the cochain-level chiral quantum-group
-equivalence; for class~$\mathsf{M}$ the chain-level identification
-is expected to fail in the raw direct-sum ambient, parallel to the
-MC5 chain-level class-$\mathsf{M}$ phenomenon. The expected correct
-scope for the chain-level brace equivalence is expected to be a
-strict completed/pro surface satisfying continuous tower comparison;
-identifying that surface with the raw direct-sum complex is not
-available. We record this as an open frontier.
+Proposition~\ref{prop:derived-center-morita-criterion} isolates the
+load-bearing obstruction. The brace center equivalence follows from a
+perfect chiral Morita kernel. Thus
+Conjecture~\ref{conj:derived-center-koszul-equivalence} is equivalent,
+on the Koszul locus, to constructing that kernel and proving Morita
+functoriality for the chiral endomorphism operad.
+
+Three checks fix the normalization. On $H^0$ the statement reduces to
+Lemma~\ref{lem:naive-center-koszul-identification}. For the Heisenberg
+family $\cA=H_k$, the chiral Hochschild complex has shape
+$(1,1,1,0,\ldots)$, so the brace center can be computed directly. At
+$E_2$ cohomology level, Chiral Higher Deligne in Vol.~II identifies
+the same shadow identity preserved by the Koszul pairing. For
+class~$\mathsf M$ the raw direct-sum complex lacks the required
+continuous homotopies; the completed/pro surface is the natural
+ambient for the Morita kernel.
 \end{remark}
 
-\begin{remark}[Intrinsic-chiral routes do not bypass Deligne--Tamarkin;
+\begin{remark}[Intrinsic-chiral routes and Deligne--Tamarkin;
 falsification test]
 \label{rem:derived-center-sharpened-scope}%
 \index{derived center!falsification test}%
-Two alternative chiral inputs have been proposed as candidates for
-removing the Deligne--Tamarkin dependence; neither does so cleanly.
+Two intrinsic chiral inputs clarify the Deligne--Tamarkin dependence.
 \emph{Hinich rectification~\textup{\cite{Hin97}}} gives a
 chain-level $E_2$ model of any brace dg algebra, and hence a
 chain-level $E_2$ model of each side of the putative equivalence
-separately; but it does not supply the comparison zig-zag between
-the two sides. \emph{Gaitsgory--Rozenblyum~\textup{\cite{GR17}}}
+separately. The comparison zig-zag still comes from the Morita kernel
+of Proposition~\ref{prop:derived-center-morita-criterion}.
+\emph{Gaitsgory--Rozenblyum~\textup{\cite{GR17}}}
 provide a six-functor formalism on Ran prestacks that lifts
 factorization algebras to $(\infty, 2)$-properads; this supports
-Theorem~A at the chiral base, not the derived-center identification
-across Koszul-dual pairs. The chiral Higher Deligne theorem of
+Theorem~A at the chiral base. The derived-center identification
+across Koszul-dual pairs still requires the brace/Morita comparison.
+The chiral Higher Deligne theorem of
 Vol.~II upgrades $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ to a
-universal $E_3$-chiral algebra, which strengthens the ambient but
-does not weaken the conjectural status of the equivalence. The
-Deligne--Tamarkin rectification is therefore the substantive input,
-and the conjecture stands.
+universal $E_3$-chiral algebra. The Deligne--Tamarkin rectification
+remains the substantive input at the $E_2$ brace level.
 
 \emph{Falsification test.} The conjecture predicts, at the level
 of~$H^2$, that the induced pairing
@@ -219,43 +216,45 @@ class~$\mathsf{M}$.
 The perfectness criterion
 Lemma~\ref{lem:perfectness-criterion} is hypothesis-conditional: it
 requires \textup{(i)} PBW filterability with Koszul-acyclic
-associated graded, and \textup{(ii)} finite-dimensional flat fiber
-cohomology at every closed point of $\overline{\mathcal{M}}_g$.
+associated graded, \textup{(ii)} finite-dimensional total flat fiber
+cohomology at every closed point of $\overline{\mathcal{M}}_g$, and
+\textup{(iii)} a pseudo-coherent bounded family whose filtration is
+finite on every cohomological truncation.
 Hypothesis~\textup{(i)} is built into the modular pre-Koszul datum
 (axioms \textup{MK1}, \textup{MK3} of
-Definition~\ref{def:modular-koszul-chiral}). Hypothesis~\textup{(ii)}
-is the substantive content on the compactification, where it must
-be checked at nodal fibers of~$\overline{\mathcal{M}}_g$.
+Definition~\ref{def:modular-koszul-chiral}). Hypotheses
+\textup{(ii)} and~\textup{(iii)} are the substantive content on the
+compactification, where total fiber cohomology, base change, and
+bounded pseudo-coherence must be checked at nodal fibers of
+$\overline{\mathcal{M}}_g$.
 
-The proposition below records the standard-landscape verification at
-the honest level of inscription. Three sub-cases are discharged
-unconditionally at every closed point of~$\overline{\mathcal{M}}_g$:
-Heisenberg, affine Kac--Moody at positive integer level (via
-Tsuchiya--Ueno--Yamada finite-rank conformal blocks), and affine
-Kac--Moody at boundary admissible level (via Arakawa's
-$C_2$-cofiniteness). The generic non-critical Kac--Moody case and
-the class~$\mathsf{M}$ boundary case remain conjectural and are
-isolated as explicit sub-conjectures~\textup{(}%
-Conjectures~\textup{\ref{conj:perfectness-boundary-km-generic}}
-and~\textup{\ref{conj:perfectness-boundary-class-M}}%
-\textup{)}.
+The proposition records the part that is proved in this chapter.  TUY
+finite-rank conformal blocks verify a total-finiteness input for
+positive-integer integrable affine Kac--Moody after the
+bar-conformal-block exactness hypotheses are present.  Arakawa's
+$C_2$-cofiniteness applies to simple admissible quotients, not to the
+universal vacuum algebra without an additional quotient and
+bar-Koszulness comparison.  Generic non-critical Kac--Moody,
+admissible simple quotients, and class~$\mathsf{M}$ boundary strata
+therefore remain separate conditional or conjectural loci.
 
 \begin{proposition}[Perfectness on the standard landscape,
 conditional;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:perfectness-standard-landscape}
 \index{perfectness!standard landscape|textbf}%
 Let $\cA$ be an object of the standard landscape in the sense of
 Part~\ref{part:standard-landscape}
 \textup{(}Heisenberg, affine Kac--Moody,
-Virasoro, principal $\cW_N$, lattice, $\beta\gamma$\textup{)}. Assume the finite-weight
-fiber finiteness at every closed point of
-$\overline{\mathcal{M}}_g$
-\textup{(}hypothesis~\textup{(ii)} of
-Lemma~\textup{\ref{lem:perfectness-criterion}}\textup{)}. Then
+Virasoro, principal $\cW_N$, lattice, $\beta\gamma$\textup{)}. Assume
+the three hypotheses of
+Lemma~\textup{\ref{lem:perfectness-criterion}}: PBW filterability,
+total finite-dimensional flat fiber cohomology at every closed point
+of $\overline{\mathcal{M}}_g$, and pseudo-coherent boundedness with
+finite filtration on cohomological truncations. Then
 $R\pi_{g*}\bar{B}^{(g)}_{\mathrm{flat}}(\cA)$ is a perfect complex
-on~$\overline{\mathcal{M}}_g$. The fiber-finiteness
-hypothesis is unconditional for the following families\textup{:}
+on~$\overline{\mathcal{M}}_g$. The following inputs verify only the
+total-fiber-finiteness part of the criterion on the stated loci:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Heisenberg $\cA = H_k$.} Each conformal-weight piece
  $H_{k,h}$ is finite-dimensional by an explicit Poincar\'e series,
@@ -275,21 +274,23 @@ hypothesis is unconditional for the following families\textup{:}
  highest weights. The bar cohomology at each fiber is finite
  dimensional at each conformal weight.
 
-\item \emph{Affine Kac--Moody at admissible level
- $\cA = V_k(\fg)$, $k + h^\vee = p/q$ with $(p,q)$ coprime and
- $p \geq h^\vee$.} Arakawa's $C_2$-cofiniteness theorem for
- simple admissible affine vertex algebras at boundary admissible
- level supplies finite-dimensional conformal blocks at every
- stable curve, and the argument of~\textup{(b)} above propagates
- this to nodal fibers.
+\item \emph{Affine Kac--Moody at admissible level.} Arakawa's
+ $C_2$-cofiniteness theorem applies to simple admissible affine
+ vertex algebras $L_k(\fg)$. It supplies the finite-conformal-blocks
+ input for the simple quotient after the quotient comparison,
+ admissible bar-Koszulness, nodal sewing, and pseudo-coherent
+ boundedness are supplied. The universal vacuum algebra
+ $V_k(\fg)$ requires its own quotient-comparison and bar-Koszulness
+ input.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The main statement is a direct application of
-Lemma~\ref{lem:perfectness-criterion}: hypothesis~\textup{(i)} is
-the modular pre-Koszul datum; hypothesis~\textup{(ii)} is the
-assumption.
+The main statement is exactly
+Lemma~\ref{lem:perfectness-criterion} applied with its three
+hypotheses.  The remaining paragraphs identify family-specific
+evidence for hypothesis~\textup{(ii)}; they do not remove the need for
+the pseudo-coherent boundedness hypothesis~\textup{(iii)}.
 
 For the Heisenberg case, the Poincar\'e series of~$H_k$ is
 $\prod_{n \geq 1}(1 - q^n)^{-\operatorname{rank}}$; each weight
@@ -310,9 +311,12 @@ normalized components coupled through the evaluation pairing at
 $\lambda$. The bar complex at each fiber is built from finitely
 many integrable highest-weight modules, each of finite graded
 dimension at each conformal weight, and inherits fiber-finiteness.
-For the admissible level case, Arakawa's $C_2$-cofiniteness
-theorem at boundary admissible levels supplies the finite-dim
-conformal-blocks input and the argument proceeds identically.
+For admissible level, Arakawa's theorem supplies finite conformal
+blocks for the simple quotient $L_k(\fg)$ under its hypotheses.  The
+passage from that quotient statement to the universal algebra
+$V_k(\fg)$, and from conformal blocks to the flat bar family, remains
+conditional on the quotient comparison and bar-Koszulness hypotheses
+named in the statement.
 
 \emph{Weightwise to total: the bar-conformal-blocks bridge.}
 Weightwise finite-dimensionality alone is strictly weaker than the
@@ -320,34 +324,35 @@ total finite-dimensional flat fiber cohomology required by
 hypothesis~\textup{(ii)} of
 Lemma~\ref{lem:perfectness-criterion}; infinitely many nonzero
 conformal weights can still make the total fiber
-infinite-dimensional. The upgrade uses two established inputs. First,
+infinite-dimensional. The upgrade requires two inputs. First,
 Proposition~\ref{prop:conformal-blocks-bar} identifies
 $H^0$ of the flat fiber bar complex with the space of conformal
-blocks at each closed point of $\overline{\mathcal{M}}_{g,n}$, so
-the TUY/Arakawa finite-rank conclusion controls
+blocks only under its degreewise-finiteness and exactness hypotheses,
+so the TUY finite-rank conclusion controls
 $\dim H^0(\bar B^{(g)}_{\mathrm{flat}}(\cA)|_\Sigma)$ rather than a
 weight-by-weight sum. Second, the spectral-sequence collapse
 recorded inside Lemma~\ref{lem:perfectness-criterion} concentrates
 the flat-bar cohomology in degree~$0$ on the Koszul locus at
-integer and boundary admissible levels: on the PBW-associated graded
+integer level, and on any admissible simple-quotient locus where the
+same PBW/bar-Koszulness hypotheses have been established: on the
+PBW-associated graded
 the higher pages vanish by the Orlik--Solomon Koszul
 transfer~\textup{(cf.~Theorem~\ref{thm:pbw-koszulness-criterion})},
 and the flat filtration is finite, so the degree-$0$ concentration
 lifts to the strict flat bar complex. Combining these two, total
 fiber cohomology equals $H^0$ equals the space of conformal blocks,
-which is finite-dimensional by TUY (integer level) or Arakawa
-(admissible level). Hypothesis~\textup{(ii)} of
-Lemma~\ref{lem:perfectness-criterion} is therefore discharged in
-the strong form needed: not merely weightwise, but total.
+which is finite-dimensional by TUY at positive integer level.  At
+admissible level the same conclusion is conditional on the simple
+quotient and bar-comparison hypotheses above.
 
-The two hypotheses of Lemma~\ref{lem:perfectness-criterion} are
-thus verified unconditionally at every closed point for the
-Heisenberg family (where finiteness at each weight combined with a
-free generator count yields total finiteness directly on each
-bounded-weight truncation, with limits controlled by the standard
-strong filtration) and for affine Kac--Moody at positive integer
-or admissible level (via the bar-conformal-blocks bridge above);
-perfectness follows.
+The proposition therefore proves a conditional perfectness criterion.
+On Heisenberg and positive-integer affine Kac--Moody it supplies the
+main total-finiteness input; ordinary perfectness still uses the
+bounded pseudo-coherent family hypothesis of
+Lemma~\ref{lem:perfectness-criterion}.  On admissible simple
+quotients it supplies only the Arakawa finite-conformal-blocks input;
+the universal vacuum algebra and the bar/Ext comparison remain outside
+the proved locus.
 \end{proof}
 
 \begin{conjecture}[Nodal-stratum fiber-finiteness for generic
@@ -356,8 +361,8 @@ non-critical affine Kac--Moody]
 \ClaimStatusConjectured
 \index{perfectness!affine Kac--Moody!generic non-critical}%
 For affine Kac--Moody $\cA = V_k(\fg)$ at non-critical
-$k \neq -h^\vee$ outside the positive-integer and boundary
-admissible loci, hypothesis~\textup{(ii)} of
+$k \neq -h^\vee$ outside the positive-integer locus,
+hypothesis~\textup{(ii)} of
 Lemma~\textup{\ref{lem:perfectness-criterion}} holds at every
 closed point of $\overline{\mathcal{M}}_g$. Specifically, the
 bar-cohomology sheaf has finite-dimensional fibers at each stable
@@ -371,56 +376,59 @@ stratum without the TUY or Arakawa finite-conformal-blocks input is
 the unresolved content.
 \end{conjecture}
 
-\begin{conjecture}[Boundary-stratum fiber-finiteness for class~$\mathsf{M}$]
+\begin{conjecture}[Boundary-stratum fiber-finiteness for admissible
+quotients and class~$\mathsf{M}$]
 \label{conj:perfectness-boundary-class-M}
 \ClaimStatusConjectured
 \index{perfectness!class~M boundary}%
 Hypothesis~\textup{(ii)} of
-Lemma~\textup{\ref{lem:perfectness-criterion}} holds unconditionally
-for the class-$\mathsf{M}$ standard landscape families (Virasoro at
-generic~$c$, principal~$\cW_N$ via Fateev--Lukyanov screening,
-lattice via theta/eta generating functions, $\beta\gamma$ via
-character formula). Specifically, finite-dimensional conformal
-blocks at every closed point of $\overline{\mathcal{M}}_g$ follow
-from Arakawa's $C_2$-cofiniteness criterion applied at each nodal
-degeneration stratum, propagated to the full bar complex by the
-bar-degree filtration spectral sequence.
+Lemma~\textup{\ref{lem:perfectness-criterion}} holds for admissible
+simple affine quotients $L_k(\fg)$ after quotient comparison and
+bar-Koszulness, and for the class-$\mathsf{M}$ standard landscape
+families (Virasoro at generic~$c$, principal~$\cW_N$ via
+Fateev--Lukyanov screening, lattice via theta/eta generating
+functions, $\beta\gamma$ via character formula). The missing input is
+not weightwise finite-dimensionality; it is total flat-fiber
+cohomology at nodal strata plus the bar-conformal-block exactness
+hypotheses.
 \end{conjecture}
 
-\begin{remark}[Why the conjectural status is honest]
-\label{rem:perfectness-honest-scope}%
+\begin{remark}[Boundary perfectness]
+\label{rem:perfectness-boundary-scope}%
 The finite-dimensionality of conformal blocks at smooth fibers for
 Virasoro at generic~$c$, $\cW_N$, lattice, and $\beta\gamma$ is
-classical. The content of
-Conjecture~\textup{\ref{conj:perfectness-boundary-class-M}}
-is propagation to nodal fibers. Arakawa's $C_2$-cofiniteness at the
-admissible level is the input that pins down finite conformal blocks
-at degeneration strata, but the chapter verifying this
-family-by-family on $\overline{\mathcal{M}}_g$ is not established
-here; it is a research frontier
-\textup{(}compare the analogous open frontier in the Theorem~B
-scope analysis at
-Chapter~\textup{\ref{ch:theorem-B-scope-platonic}}\textup{)}.
+classical in their natural regimes.  The content of
+Conjecture~\textup{\ref{conj:perfectness-boundary-class-M}} is
+propagation from conformal blocks to total flat-bar cohomology at
+nodal fibers, with the exactness hypotheses of
+Proposition~\ref{prop:conformal-blocks-bar} and the bounded
+pseudo-coherence hypothesis of
+Lemma~\ref{lem:perfectness-criterion}.  Arakawa's
+$C_2$-cofiniteness pins down finite conformal blocks for simple
+admissible quotients. The universal vacuum-algebra bar statement
+requires the quotient-comparison input.
 \end{remark}
 
 \begin{corollary}[$C_0$ on the Heisenberg and affine Kac--Moody
-integer / admissible locus;
+integer locus;
 \ClaimStatusConditional]
 \label{cor:c0-unconditional-class-G-L}
 On the Heisenberg family and on affine Kac--Moody at positive
-integer level or boundary admissible level, the fiber-center
-identification
-Theorem~\ref{thm:fiber-center-identification} holds unconditionally:
-clauses~\textup{(i)--(iii)} are realized without the perfectness
-hypothesis appearing as an auxiliary axiom. For affine Kac--Moody at
-generic non-critical $k$ outside these loci, the same conclusion is
-conditional on the generic boundary-perfectness conjecture.
+integer level, the fiber-center identification
+Theorem~\ref{thm:fiber-center-identification} follows from
+Proposition~\ref{prop:perfectness-standard-landscape} once the
+bounded pseudo-coherent family hypothesis of
+Lemma~\ref{lem:perfectness-criterion} is supplied. For affine
+Kac--Moody at generic non-critical $k$ outside the positive-integer
+locus, and for admissible simple quotients, the same conclusion is
+conditional on the corresponding boundary-perfectness and quotient
+comparison hypotheses.
 \end{corollary}
 
 \begin{proof}
 Combine
-Proposition~\ref{prop:perfectness-standard-landscape}, which
-discharges the perfectness hypothesis on the stated loci, with
+Proposition~\ref{prop:perfectness-standard-landscape}, with the
+bounded pseudo-coherent family hypothesis retained, with
 Theorem~\ref{thm:fiber-center-identification}.
 \end{proof}
 
@@ -435,8 +443,8 @@ class. The content of Theorem~C at $g = 0$ is therefore
  Q_0(\cA) = H^0\bigl(\mathrm{pt}, \cZ(\cA)\bigr),
  \qquad Q_0(\cA^!) = 0,
 \]
-as established in
-Theorem~\ref{thm:quantum-complementarity-main} lines~604--608.
+as established in the genus-zero clause of
+Theorem~\ref{thm:quantum-complementarity-main}.
 
 \begin{remark}[On the spurious ``$+3$ shift'' at $g=0$]
 \label{rem:plus-three-shift-nonissue}%
@@ -459,20 +467,19 @@ validity.
 The Pantev--To\"en--Vaqui\'e--Vezzosi theorem gives a shifted
 symplectic form on $R\operatorname{Map}(Y,Z)$ only after two pieces of
 data have been supplied: a $d$-orientation on~$Y$ and an $n$-shifted
-symplectic form on~$Z$; the output shift is $n-d$. The manuscript does
-not contain an intrinsic construction of a $0$-shifted symplectic
-derived stack $S_\cA$ whose tangent is the chiral center, nor an
-orientation package on $\overline{\mathcal{M}}_g$ strong enough to
-make $R\operatorname{Map}(\overline{\mathcal{M}}_g,S_\cA)$ an
-independent proof of Theorem~C. In particular, the classifying stack
-$BG_\cA$ cannot be used as a black box with a declared
+symplectic form on~$Z$; the output shift is $n-d$. A PTVV proof of
+Theorem~C would require an intrinsic $0$-shifted symplectic derived
+stack $S_\cA$ whose tangent is the chiral center, together with an
+orientation package on $\overline{\mathcal{M}}_g$ strong enough for
+$R\operatorname{Map}(\overline{\mathcal{M}}_g,S_\cA)$. In particular,
+the classifying stack
+$BG_\cA$ requires its actual shifted form rather than a declared
 $0$-shifted form: classifying stacks with invariant pairings are the
 standard source of shifted symplectic structures of different degree.
 
-The true statement available here is a compatibility criterion.
-It records exactly what extra data would make a PTVV route reproduce
-the Verdier pairing; it does not bypass
-Theorem~\ref{thm:quantum-complementarity-main}.
+The theorem is a compatibility criterion. It records the data under
+which a PTVV construction reproduces the Verdier pairing, using
+Theorem~\ref{thm:quantum-complementarity-main} as input.
 
 \begin{theorem}[PTVV compatibility criterion for~$C_1$; conditional]
 \label{thm:C-PTVV-alternative}
@@ -513,7 +520,7 @@ Then\textup{:}
  Theorem~\textup{\ref{thm:quantum-complementarity-main}(ii)} on
  $\mathbf{C}_g(\cA)$.
 
-\item \emph{Lagrangian complementarity, forwarded.}
+\item \emph{Lagrangian complementarity.}
 \ClaimStatusConditional%
  That $\mathbf{Q}_g(\cA), \mathbf{Q}_g(\cA^!)$ embed as
  complementary Lagrangians in the PTVV sense is a consequence of
@@ -541,50 +548,55 @@ conditional compatibility statement, not an independent construction
 of Theorem~C.
 
 \textup{(iii)} The Lagrangian property of $\mathbf{Q}_g(\cA)$ inside
-the PTVV shifted-symplectic linear derived scheme is established in
-the established
+the PTVV shifted-symplectic linear derived scheme is
 Proposition~\textup{\ref{prop:ptvv-lagrangian}}; its proof explicitly
 cites $\mathbf{C}_g(\cA) = \mathbf{Q}_g(\cA) \oplus
 \mathbf{Q}_g(\cA^!)$ from
 Theorem~\textup{\ref{thm:quantum-complementarity-main}}. A proof
-of~(iii) that does not forward to the established eigenspace
-decomposition would require constructing the Verdier involution on
-$R\operatorname{Map}(Y_g,S_\cA)$ intrinsically
-at derived-stack level, which is recorded as an open frontier. In
+of~(iii) intrinsic to the PTVV side would require constructing the
+Verdier involution on $R\operatorname{Map}(Y_g,S_\cA)$ directly at
+derived-stack level. In
 this theorem clause~(iii) carries \ClaimStatusConditional{}.
 \end{proof}
 
-\section{Status map}
+\section{Loci and hypotheses}
 \label{sec:theorem-C-refinements-summary}
 
-The derived-center comparison has two different levels. The
+The derived-center comparison has three levels. The
 brace-dg equivalence
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)\simeq
 Z^{\mathrm{der}}_{\mathrm{ch}}(\cA^!)$ remains
-Conjecture~\ref{conj:derived-center-koszul-equivalence}; the naive
-$H^0$ centre pairing is the conditional criterion of
+Conjecture~\ref{conj:derived-center-koszul-equivalence}. It follows
+from the Morita-kernel criterion of
+Proposition~\ref{prop:derived-center-morita-criterion}. The naive
+$H^0$ center pairing is the conditional criterion of
 Lemma~\ref{lem:naive-center-koszul-identification}.
 
-Perfectness is proved on exactly the loci named in
-Proposition~\ref{prop:perfectness-standard-landscape}: Heisenberg,
-positive-integer affine Kac--Moody, and boundary-admissible affine
-Kac--Moody. Generic non-critical affine Kac--Moody and the
-class-$\mathsf{M}$ boundary stratum remain
+Perfectness is governed by
+Lemma~\ref{lem:perfectness-criterion}.  Proposition~\ref{prop:perfectness-standard-landscape}
+records the conditional criterion and the family-specific
+total-finiteness evidence: Heisenberg and positive-integer affine
+Kac--Moody supply the strongest current input; admissible simple
+quotients, generic non-critical affine Kac--Moody, and the
+class-$\mathsf{M}$ boundary stratum remain under
 Conjectures~\ref{conj:perfectness-boundary-km-generic}
-and~\ref{conj:perfectness-boundary-class-M}.
+and~\ref{conj:perfectness-boundary-class-M} or their named quotient
+comparison hypotheses.
 
-The $C_1$ reflexivity statement is unconditional on the loci of
-Corollary~\ref{cor:c0-unconditional-class-G-L} and conditional on the
-two fiber-finiteness conjectures elsewhere. The $g=0$ comparison is the
-separate statement of Remark~\ref{rem:plus-three-shift-nonissue};
-there is no Verdier-pairing shift contradiction at genus~$0$.
+The $C_1$ reflexivity statement follows on the loci of
+Corollary~\ref{cor:c0-unconditional-class-G-L} with the same
+pseudo-coherent and perfectness hypotheses retained, and is
+conditional on the fiber-finiteness conjectures elsewhere. The
+$g=0$ comparison is the separate statement of
+Remark~\ref{rem:plus-three-shift-nonissue}; there is no
+Verdier-pairing shift contradiction at genus~$0$.
 
 The shifted-symplectic refinement keeps the hypotheses of
 Theorem~\ref{thm:shifted-symplectic-complementarity}. The MC5
 class-$\mathsf{M}$ input is the weight-completed/pro-object statement
 of the MC5 chapter, not the raw direct-sum ambient. The explicit
 cross-channel correction at $(W_3,g)=(W_3,2)$ is
-Proposition~\textup{\ref{thm:delta-f-cross-w3-g2}}. The PTVV statement
+Theorem~\textup{\ref{thm:delta-f-cross-w3-g2}}. The PTVV statement
 is Theorem~\ref{thm:C-PTVV-alternative}: a conditional compatibility
 criterion for a derived-stack construction, not an independent proof of
 $C_1$.

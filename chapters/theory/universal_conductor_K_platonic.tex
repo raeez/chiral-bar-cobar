@@ -1,14 +1,12 @@
 % =====================================================================
 % chapters/theory/universal_conductor_K_platonic.tex
 %
-% THE UNIVERSAL CONDUCTOR K AS ORDERED-TO-SYMMETRIC AVERAGING
+% ORDERED-TO-SYMMETRIC CONDUCTOR AND SCALAR PACKAGES
 %
-% This chapter replaces the retired scalar "ghost conductor" headline
-% by the actual universal conductor used by the ordered bar programme:
-% the averaging morphism from ordered E_1 data to symmetric modular
-% data. A short compatibility section retains the old scalar witness
-% values under separate notation so downstream citations are not left
-% dangling.
+% The universal conductor is the averaging morphism from ordered E_1
+% data to symmetric modular data. The scalar packages K^c, K^\kappa,
+% and K_{\mathrm{ghost}}^{\mathrm{leg}} are separate numerical
+% invariants on specified witness lanes.
 % =====================================================================
 
 \providecommand{\bbC}{\mathbb{C}}
@@ -32,6 +30,7 @@
 \providecommand{\Rep}{\operatorname{Rep}}
 \providecommand{\Vir}{\mathrm{Vir}}
 \providecommand{\BP}{\mathrm{BP}}
+\providecommand{\BRST}{\mathrm{BRST}}
 
 \chapter{The Universal Conductor: ordered-to-symmetric averaging}
 \label{chap:universal-conductor}
@@ -57,30 +56,39 @@ quotient map
  q \colon \Ranord(X) \longrightarrow \Ran(X)=\Ranord(X)/\Sigma_\bullet.
 \]
 This is the map that sends the ordered bar package to its modular
-shadow. It is not bar--cobar inversion, not Verdier Koszul duality,
-not the derived chiral centre $\DerZ(\cA)$, and not the categorical
-Drinfeld centre $\mathcal Z(\Rep^{E_1}(\cA))$. The five objects
+shadow. Bar--cobar inversion, Verdier Koszul duality, the derived
+chiral centre $\DerZ(\cA)$, and the categorical Drinfeld centre
+$\mathcal Z(\Rep^{E_1}(\cA))$ are different constructions. The five objects
 \[
  \cA,\qquad B(\cA),\qquad \cA^i,\qquad \cA^!,\qquad \DerZ(\cA)
 \]
 remain distinct throughout.
 
-The chapter does six things, each in the strongest honest form used by
-the rest of the manuscript.
+The same letter $K$ also marks three scalar packages on standard
+witness lanes:
+\[
+ K^c(A,A^!)=c(A)+c(A^!),\qquad
+ K^\kappa(A,A^!)=\kappa(A)+\kappa(A^!),\qquad
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(A)
+ =-c_{\mathrm{ghost}}(\BRST_{\mathrm{can}}(A)).
+\]
+They are central-charge, modular-characteristic, and BRST-presentation
+numbers, respectively.
+
+The mathematical content is:
 \begin{enumerate}
-\item It defines $K$ by named chain-level and $(\infty,1)$-categorical
+\item $K$ has named chain-level and $(\infty,1)$-categorical
  witnesses.
-\item It characterises the image of $K$ by three independent paths:
+\item The image of $K$ has three equivalent descriptions:
  quotient, fixed-point splitting, and homotopy coinvariants.
-\item It exhibits named kernel classes for the four archetypes
+\item The kernel has named classes for the four archetypes
  $G/L/C/M$.
-\item It constructs the map from the standard landscape to
- $\{G,L,C,M\}$ from the first nonzero averaged shadow, and verifies
- it against the census row-by-row.
-\item It isolates the Vol~III scope: ordered Koszul locus only, with
- named failure modes off that locus.
-\item It retains a small compatibility surface for the retired scalar
- ghost-conductor citations already used elsewhere in the manuscript.
+\item The map from the standard landscape to $\{G,L,C,M\}$ is the first
+ nonzero averaged shadow, compared against the census row-by-row.
+\item The Vol~III comparison is restricted to the ordered Koszul locus,
+ with named failure modes off that locus.
+\item The scalar packages $K^c$, $K^\kappa$, and
+ $K_{\mathrm{ghost}}^{\mathrm{leg}}$ are separated by family.
 \end{enumerate}
 
 \section{Definition of the averaging conductor}
@@ -192,7 +200,7 @@ witnesses.
  $q_!\simeq(-)_{h\Sigma_\bullet}$ of
  Definition~\ref{def:uc-homotopy-coinvariants}.
 \end{enumerate}
-:
+It satisfies:
 \begin{enumerate}
 \item[\textup{(a)}] $K_\cA$ preserves the dg Lie differential and the
  bracket because both are $\Sigma_n$-equivariant on ordered
@@ -232,8 +240,7 @@ $\Omega(B(\cA))\to \cA$ is an inversion map; Verdier duality defines
 the Koszul dual algebra $\cA^!$; $\DerZ(\cA)$ is a bulk algebra built
 from chiral Hochschild cochains; and
 $\mathcal Z(\Rep^{E_1}(\cA))$ is a braided monoidal category. The
-universal conductor is none of these: it is the ordered-to-symmetric
-projection.
+universal conductor is the ordered-to-symmetric projection.
 \end{proof}
 
 \section{Image of the conductor}
@@ -279,7 +286,7 @@ characterised by three independent descriptions.
  theory.
 \end{enumerate}
 Consequently the answer to ``subalgebra, fixed point, or quotient?''
-is precise: the image is an honest quotient by definition, a
+is precise: the image is a coinvariant quotient by definition, a
 fixed-point summand after Reynolds splitting, and a sub-dg Lie algebra
 of $\gAmod$ only because $\gAmod$ is already the symmetric target.
 \end{theorem}
@@ -367,8 +374,8 @@ witnesses for each of the four archetypes $G/L/C/M$.
  \]
  lies in $\ker K_{\Vir}$.
 \end{enumerate}
-For each archetype the kernel claim is supported by three independent
-verification paths: direct averaging, a family-specific ordered
+For each archetype the kernel claim has three independent
+checks: direct averaging, a family-specific ordered
 computation, and the shadow-depth classification in
 \texttt{landscape\_census.tex}.
 \end{theorem}
@@ -440,14 +447,14 @@ Then define
 \]
 \end{definition}
 
-\begin{theorem}[Constructed universality map, verified row-by-row]
+\begin{theorem}[Constructed universality map on census rows]
 \label{thm:uc-landscape-universality}
 \ClaimStatusProvedHere
 On the classified standard-landscape rows of
 \texttt{landscape\_census.tex}, the map
 $\mathfrak U\colon \cA\mapsto\{G,L,C,M\}$ of
 Definition~\ref{def:uc-averaged-shadow-depth} reproduces the archetype
-column entry-by-entry. The verification count is:
+column entry-by-entry. The row count is:
 \[
  G:5,\qquad L:2,\qquad C:4,\qquad M:11.
 \]
@@ -460,7 +467,7 @@ sequence does not collapse.
 \begin{proof}
 The construction of $\mathfrak U$ is intrinsic: it is defined by the
 first stage at which the averaged shadow stops vanishing. The
-verification is nevertheless finite because the census table is finite.
+comparison is finite because the census table is finite.
 
 \emph{Class~G ($5$ rows).} Free fermion, Heisenberg, lattice VOA,
 Niemeier lattice, and $Y_{1,1,1}[\Psi]$ are the Gaussian rows. For
@@ -478,7 +485,7 @@ commutator killed by averaging.
 
 \emph{Class~C ($4$ rows).} The $\beta\gamma$, $bc$, symplectic boson,
 and symplectic fermion rows are the quartic-contact rows. They are
-verified by the table entry $r_{\max}=4$, by the explicit quartic
+identified by the table entry $r_{\max}=4$, by the explicit quartic
 contact class recorded in the family chapters, and by the
 boson--fermion obstruction of
 Theorem~\ref{thm:uc-kernel-archetypes}(C).
@@ -498,15 +505,15 @@ the theorem does not classify it. The Kronecker wild row is outside
 the domain because the modular-Koszul shadow tower does not exist there.
 \end{proof}
 
-\begin{remark}[Verification counts by archetype]
-\label{rem:uc-verification-counts}
+\begin{remark}[Census counts by archetype]
+\label{rem:uc-census-counts}
 The row counts of
 Theorem~\ref{thm:uc-landscape-universality} are themselves checked in
 three independent ways: by direct count in the archetype table, by the
 completion-kinematics table of
 Section~\ref{sec:completion-kinematics-census}, and by the family
 chapter list attached to each row in the census. The theorem uses the
-intersection of those three surfaces, not a programme-level slogan.
+intersection of those three surfaces.
 \end{remark}
 
 \section{Vol~III scope and boundary}
@@ -515,7 +522,7 @@ intersection of those three surfaces, not a programme-level slogan.
 \begin{theorem}[Ordered-Koszul boundary for Vol~III comparisons]
 \label{thm:uc-K-Atiyah}
 \ClaimStatusProvedHere
-The Vol~III chiral-Yangian / chiral-quantum-group programme can
+The Vol~III chiral-Yangian / chiral-quantum-group comparison can
 compare ordered data with the symmetric modular shadow through the
 universal conductor only on the \emph{ordered Koszul locus}, namely
 where the following three conditions hold simultaneously:
@@ -557,143 +564,230 @@ ordered tower itself; its failure is the non-pure bar obstruction.
 Condition~(K3) is exactly the Vol~I/III Hochschild concentration
 boundary.
 
-The named boundary terms are likewise already explicit in the
-manuscript. The 5d Yangian obstruction is the missing
-factorisation-coalgebra identification in the Vol~III pipeline.
+The boundary terms are concrete obstructions. The 5d Yangian
+obstruction is the missing factorisation-coalgebra identification in
+the Vol~III comparison.
 The elliptic/toroidal boundary is the point where the rational Arnold
 relation has been replaced by the Fay/KZB kernel only at the
-propagator level; compatibility with ordered-to-symmetric averaging is
-not yet proved there.
+propagator level; the comparison with ordered-to-symmetric averaging
+remains open there.
 \end{proof}
 
 \begin{conjecture}[Universal trace comparison downstream of averaging]
 \label{thm:uc-universal-trace-identity}
 \ClaimStatusConjectured
-Any future universal-trace comparison between the Vol~I conductor and a
+Every universal-trace comparison between the Vol~I conductor and a
 Vol~III chiral quantum-group invariant must first factor through the
 ordered-to-symmetric averaging map
 $K_\cA\colon \gAE\to \gAmod$ on the ordered Koszul locus of
-Theorem~\ref{thm:uc-K-Atiyah}. No stronger statement is presently
-inscribed for the elliptic/KZB or toroidal regimes.
+Theorem~\ref{thm:uc-K-Atiyah}. The elliptic/KZB and toroidal regimes
+have no theorem asserting such a factorisation.
 \end{conjecture}
 
-\section{Compatibility surface for retired scalar citations}
-\label{sec:uc-legacy-compatibility}
+\section{Central-charge, \texorpdfstring{$\kappa$}{kappa}, and ghost scalar packages}
+\label{sec:uc-scalar-packages}
 
-Many existing Vol~I chapters still cite the retired scalar
-ghost-conductor lane. To keep those citations honest during the
-present rectification, we record the old scalar witness values under a
-new name.
+The averaging conductor $K_\cA=\Av_\cA$ is a morphism of dg Lie
+algebras. The following scalar packages live on witness lanes where a
+Verdier partner, Virasoro element, and canonical BRST presentation have
+been fixed.
 
-\begin{definition}[Retired scalar ghost conductor]
-\label{def:uc-legacy-ghost}
-Define
+\begin{definition}[Three scalar conductor packages]
+\label{def:uc-scalar-packages}
+For such a pair $(A,A^!)$, set
+\[
+ K^c(A,A^!) := c(A)+c(A^!),\qquad
+ K^\kappa(A,A^!) := \kappa(A)+\kappa(A^!).
+\]
+For a chosen finite BRST presentation set
 \[
  K_{\mathrm{ghost}}^{\mathrm{leg}}(\cA)
  :=
  -\,c_{\mathrm{ghost}}(\BRST_{\mathrm{can}}(\cA)).
 \]
-This is \emph{not} the universal conductor of this chapter. It is
-retained only as a citation-compatibility shadow for already-written
-scalar formulas.
+The first number is central-charge complementarity; the second is
+modular-characteristic complementarity; the third is a
+presentation-sensitive ghost central-charge scalar.
 \end{definition}
 
-\begin{corollary}[Heisenberg compatibility value]
+\begin{corollary}[Heisenberg scalar packages]
 \label{cor:uc-K-heisenberg}
 \ClaimStatusProvedHere
-For the abelian-affine Heisenberg witness lane,
+For the rank-one abelian-affine Heisenberg witness lane,
 \[
+ K^c(\mathcal H_k,\mathcal H_k^!)=0,\qquad
+ K^\kappa(\mathcal H_k,\mathcal H_k^!)=0,\qquad
  K_{\mathrm{ghost}}^{\mathrm{leg}}(\mathcal H_k)=2.
 \]
-The universal conductor $K_{\mathcal H_k}$ of this chapter is the
-averaging map, not this scalar.
 \end{corollary}
 
 \begin{proof}
-The canonical abelian-affine gauge complex has one fermionic $bc(1)$
-pair, whose ghost central charge contributes $2$.
+The scalar Verdier partner has
+$\kappa(\mathcal H_k^!)=-\kappa(\mathcal H_k)$ and the same curved
+central projection gives $c(\mathcal H_k^!)=-c(\mathcal H_k)$ on this
+lane, so the two scalar Verdier sums vanish. The canonical
+abelian-affine gauge complex has one fermionic $bc(1)$ pair, whose
+ghost central charge contributes $2$ to
+$K_{\mathrm{ghost}}^{\mathrm{leg}}$.
 \end{proof}
 
-\begin{corollary}[Affine Kac--Moody compatibility value]
+\begin{corollary}[Affine Kac--Moody scalar packages]
 \label{cor:uc-K-affine-KM}
 \ClaimStatusProvedHere
 For every non-critical affine Kac--Moody algebra,
 \[
+ K^c(V_k(\fg),V_{-k-2h^\vee}(\fg))
+ =
  K_{\mathrm{ghost}}^{\mathrm{leg}}(V_k(\fg))
- =2\dim(\fg).
+ =2\dim(\fg),
+ \qquad
+ K^\kappa(V_k(\fg),V_{-k-2h^\vee}(\fg))=0.
 \]
 \end{corollary}
 
 \begin{proof}
-The canonical gauge complex has $\dim(\fg)$ copies of $bc(1)$.
+The Feigin--Frenkel level involution is $k'=-k-2h^\vee$. The standard
+central-charge formula gives $c(k)+c(k')=2\dim\fg$. The modular
+characteristic
+\[
+\kappa(V_k(\fg))
+=\frac{\dim(\fg)(k+h^\vee)}{2h^\vee}
+\]
+changes sign under $k\mapsto k'$, hence the $\kappa$-sum is zero. The
+canonical Wakimoto gauge complex has $\dim(\fg)$ fermionic $bc(1)$
+pairs, hence ghost scalar $2\dim(\fg)$.
 \end{proof}
 
-\begin{corollary}[Virasoro compatibility value]
+\begin{corollary}[Virasoro scalar packages]
 \label{cor:uc-K-virasoro}
 \ClaimStatusProvedHere
-For Virasoro,
+For the Virasoro Verdier pair $\Vir_c^!\simeq\Vir_{26-c}$,
 \[
- K_{\mathrm{ghost}}^{\mathrm{leg}}(\Vir_c)=26.
+ K^c(\Vir_c,\Vir_{26-c})
+ =
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\Vir_c)
+ =26,\qquad
+ K^\kappa(\Vir_c,\Vir_{26-c})=13.
 \]
 \end{corollary}
 
 \begin{proof}
-The canonical reparametrisation ghost is the single fermionic
-$bc(2)$-pair.
+The central charges sum to $26$. Since
+$\kappa(\Vir_c)=c/2$, the scalar modular-characteristic sum is
+$c/2+(26-c)/2=13$. The canonical reparametrisation ghost is a single
+fermionic $bc(2)$ pair, and
+$2(6\cdot2^2-6\cdot2+1)=26$.
 \end{proof}
 
-\begin{corollary}[Principal \texorpdfstring{$W_N$}{WN} compatibility value]
+\begin{corollary}[Principal \texorpdfstring{$W_N$}{WN} scalar packages]
 \label{cor:uc-K-WN}
 \ClaimStatusProvedHere
 For principal $W_N$,
 \[
+ K^c(W_N,W_N^!)
+ =
  K_{\mathrm{ghost}}^{\mathrm{leg}}(W_N)
  =
  \sum_{j=2}^{N}2(6j^2-6j+1)
  =
- 4N^3-2N-2.
+ 4N^3-2N-2,
 \]
+and
+\[
+ K^\kappa(W_N,W_N^!)
+ =
+ (H_N-1)(4N^3-2N-2).
+\]
+In particular $K^\kappa(W_3,W_3^!)=250/3$.
 \end{corollary}
 
 \begin{proof}
-The canonical principal DS complex has one $bc(j)$ ghost pair for each
-Casimir degree $j=2,\dots,N$.
+The canonical principal Drinfeld--Sokolov complex has one fermionic
+$bc(j)$ ghost pair in each Casimir degree $j=2,\ldots,N$. Summing the
+per-spin contribution gives
+\[
+\sum_{j=2}^{N}2(6j^2-6j+1)
+=4N^3-2N-2.
+\]
+The same closed form is the central-charge complementarity sum on the
+principal witness lane. The census normalisation
+$\kappa(W_N)=c(H_N-1)$ gives the displayed formula for
+$K^\kappa$. For $N=3$, $H_3-1=5/6$ and
+$(5/6)\cdot100=250/3$.
 \end{proof}
 
-\begin{corollary}[Bershadsky--Polyakov compatibility value]
+\begin{corollary}[Bershadsky--Polyakov scalar packages]
 \label{cor:uc-K-BP}
 \ClaimStatusProvedHere
 For Bershadsky--Polyakov,
 \[
- K_{\mathrm{ghost}}^{\mathrm{leg}}(\BP_k)=196.
+ K^c(\BP_k,\BP_{-k-6})
+ =
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(\BP_k)
+ =196,\qquad
+ K^\kappa(\BP_k,\BP_{-k-6})=\frac{98}{3}.
 \]
 \end{corollary}
 
 \begin{proof}
-This is the scalar output of the minimal DS ghost calculation retained
-from the old witness lane.
+The minimal Drinfeld--Sokolov ghost computation gives the ghost scalar
+$196$, and the central-charge complementarity computation gives
+$c_{\BP}(k)+c_{\BP}(-k-6)=196$. The census formula
+$\kappa(\BP_k)=c_{\BP}(k)/6$ gives
+$K^\kappa=196/6=98/3$.
 \end{proof}
 
-\begin{corollary}[Lattice compatibility value]
+\begin{proposition}[K3/BKM scalar separation]
+\label{prop:uc-K3-BKM-scalar-separation}
+\ClaimStatusProvedElsewhere
+For the K3/BKM comparison row,
+\[
+\{\kappa_{\mathrm{cat}},
+\kappa_{\mathrm{ch}}^{\mathrm{Heis}},
+\kappa_{\mathrm{BKM}},
+\kappa_{\mathrm{fiber}}\}(K3\times E)
+=\{0,3,5,24\}.
+\]
+The Borcherds weight of the Igusa denominator is
+\[
+ \kappa_{\mathrm{BKM}}(\Delta_5)=5,
+\]
+the Igusa square $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ has weight
+$10$, and the Mukai-enhanced chiral scalar is
+\[
+ K^\kappa_{\mathcal B}=2c_+(\mathrm{Mukai}(K3))=8.
+\]
+\end{proposition}
+
+\begin{proof}
+The four entries are subscripted invariants with different
+definitions. The BKM value is the Borcherds lift weight
+$c_{\Delta_5}(0)/2=5$, while the square has twice that weight. The
+Mukai value uses the positive signature
+$c_+(\mathrm{Mukai}(K3))=4$, giving $K^\kappa_{\mathcal B}=8$. These
+are the K3/BKM separations recorded in
+Remarks~\ref{rem:landscape-1} and~\ref{rem:landscape-2} and in the
+Vol~III K3 comparison.
+\end{proof}
+
+\begin{corollary}[Lattice matter presentation]
 \label{cor:uc-K-lattice}
 \ClaimStatusProvedHere
 For a lattice VOA $V_\Lambda$, the matter-convention free-boson
-presentation gives the compatibility value
+presentation gives
 \[
- K_{\mathrm{ghost}}^{\mathrm{leg}}(V_\Lambda)=\operatorname{rank}(\Lambda),
+ K_{\mathrm{ghost}}^{\mathrm{leg}}(V_\Lambda)=\operatorname{rank}(\Lambda).
 \]
-but this value is presentation-sensitive and should not be confused
-with the universal conductor $K$.
+This is a presentation scalar, distinct from $K_\cA=\Av_\cA$.
 \end{corollary}
 
 \begin{proof}
 The free-boson presentation contributes one spin-$1$ bosonic pair per
-lattice direction. The point of the compatibility statement is not
-universality but citation continuity.
+lattice direction.
 \end{proof}
 
-\section{Closing summary}
-\label{sec:uc-closing}
+\section{Averaging and scalar identities}
+\label{sec:uc-identities}
 
 The universal conductor of Volume~I is the averaging map
 \[
@@ -710,13 +804,14 @@ antisymmetric Heisenberg tensors, the affine Lie commutator,
 $R_{\beta\gamma}$, and the Virasoro Arnold witness
 (Theorem~\ref{thm:uc-kernel-archetypes}).
 
-The universality map to $\{G,L,C,M\}$ is constructed from the first
-nonzero averaged shadow and checked on all $22$ classified census rows
+The map to $\{G,L,C,M\}$ is the first nonzero averaged shadow and
+agrees with all $22$ classified census rows
 (Theorem~\ref{thm:uc-landscape-universality}). The Vol~III comparison
-surface is honest only on the ordered Koszul locus, with named failure
-modes off that locus
-(Theorem~\ref{thm:uc-K-Atiyah}). The old scalar ghost-conductor values
-survive only as the compatibility notation
-$K_{\mathrm{ghost}}^{\mathrm{leg}}$, kept so existing citations remain
-traceable while the manuscript converges onto the averaging-map
-meaning of $K$.
+is restricted to the ordered Koszul locus, with named failure modes off
+that locus (Theorem~\ref{thm:uc-K-Atiyah}). The scalar packages are
+separate:
+\[
+ K^c,\qquad K^\kappa,\qquad K_{\mathrm{ghost}}^{\mathrm{leg}}.
+\]
+They coincide only on the family lanes where the displayed formulas
+prove the coincidence.

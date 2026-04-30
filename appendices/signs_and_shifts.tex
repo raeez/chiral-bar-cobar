@@ -118,7 +118,7 @@ $\underline{\Hom}(V, W)$ has:
 The sign $(-1)^{|f|}$ ensures $d_{\underline{\Hom}}^2 = 0$.
 \end{definition}
 
-\begin{verification}[\texorpdfstring{$d_{\underline{\Hom}}^2 = 0$}{d\_Hom\textasciicircum 2 = 0}]
+\begin{computation}[\texorpdfstring{$d_{\underline{\Hom}}^2 = 0$}{d\_Hom\textasciicircum 2 = 0}]
 \label{ver:d-hom-squared}
 For $f$ of degree $|f|$:
 \begin{align*}
@@ -129,7 +129,7 @@ For $f$ of degree $|f|$:
 &= 0 - (-1)^{|f|} d_W(f(d_V v)) + (-1)^{|f|} d_W(f(d_V v)) + 0 = 0.
 \end{align*}
 The cancellation depends on the sign convention.
-\end{verification}
+\end{computation}
 
 
 \section{Cohomological versus homological grading}
@@ -244,12 +244,27 @@ $|s^{-1}v| = |v| - 1$.
 \end{enumerate}
 These are inverse operations: $s \circ s^{-1} = s^{-1} \circ s = \id$.
 
-The two constructions that produce the Koszul dual use \emph{opposite} shifts, for a precise reason:
+The ordered bar construction and the linear Koszul-dual generators use
+opposite shifts:
 \begin{itemize}
-\item \emph{Bar construction} (desuspension): $\bar{B}(\cA) = T^c(s^{-1}\bar{\cA},\, d)$. Desuspension lowers generators by one degree because the bar differential $d_{\mathrm{res}}$ extracts a residue (an integration operation that lowers form degree), and the shift compensates so that $|d| = +1$.
+\item \emph{Ordered bar construction} (desuspension):
+$\bar{B}^{\mathrm{ord}}(A)=T^c(s^{-1}\bar A)$, with
+\[
+b_1(s^{-1}a)=-s^{-1}(d_Aa),\qquad
+b_2^{(r)}(s^{-1}a\otimes s^{-1}b)
+=(-1)^{|a|}s^{-1}(a_{(r)}b).
+\]
+Extending these maps as coderivations gives, on the adjacent pair
+$(a_i,a_{i+1})$, the prefix sign
+\[
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}.
+\]
 \item \emph{Koszul dual coalgebra} (suspension): $\cA^! \hookrightarrow \mathrm{Cofree}(sV^*)$ (Appendix~\ref{app:koszul-reference}). Suspension raises the dual generators $V^*$ by one degree because dualizing reverses the grading, and the shift restores it.
 \end{itemize}
-These are consistent: when $\cA$ is Koszul, $H^*(\bar{B}(\cA))$ concentrates in bar degree~$1$, and the desuspension-then-suspension cancels, recovering the Koszul dual generators in their natural degree.
+These are consistent: when $\cA$ is Koszul, the bar cohomology
+concentrates in the prescribed linear strand, and the desuspension in the
+bar complex is cancelled by the suspension used to place the dual
+generators in their natural degree.
 \end{definition}
 
 \begin{remark}[Shift notation ambiguity]
@@ -470,7 +485,9 @@ from tracking this isomorphism across multiple boundary strata.
 The signs in the bar-cobar adjunction can be uniformly expressed using
 determinant lines. For an $\Eone$-chiral algebra $\cA$:
 \begin{enumerate}[label=(\roman*)]
-\item The bar complex element $[a_1 | \cdots | a_n] \in \Bbar_n(\cA)$ corresponds to:
+\item The desuspended bar word
+$[a_1|\cdots|a_n]=s^{-1}a_1\otimes\cdots\otimes s^{-1}a_n$
+has determinant-line representative:
 \[
 a_1 \otimes \cdots \otimes a_n \otimes \omega_{[n]} \in \cA^{\otimes n} \otimes \Det([n])
 \]
@@ -481,8 +498,13 @@ $\Det([n])$ determined by the ordering $1 < 2 < \cdots < n$.
 \[
 d[a_1 | \cdots | a_n] = \sum_{i=1}^{n-1} (-1)^{\epsilon_i} [a_1 | \cdots | a_i a_{i+1} | \cdots | a_n]
 \]
-where $\epsilon_i = |a_1| + \cdots + |a_i| + i - 1$ tracks both internal degrees
-and position.
+where, in the ordered desuspended convention,
+\[
+\epsilon_i=\sum_{q<i}(|a_q|-1)+|a_i|.
+\]
+Equivalently $\epsilon_i\equiv |a_1|+\cdots+|a_i|+i-1\pmod 2$; the
+displayed formula records the coderivation prefix and the
+$b_2(s^{-1}a_i,s^{-1}a_{i+1})$ sign separately.
 
 \item These signs arise canonically from the face maps of the simplicial
 structure on $\Delta^\bullet$ and the determinant line conventions.
@@ -493,42 +515,55 @@ structure on $\Delta^\bullet$ and the determinant line conventions.
 \section{Detailed sign computations in bar-cobar duality}
 \label{sec:detailed-signs}
 
-\begin{computation}[Bar differential signs: degree 2 to 1]
+\begin{computation}[Reduced ordered bar signs: lengths 2 and 3]
 \label{comp:bar-signs-2-1}
-For elements $[a|b] \in \Bbar_2(A)$ where $A$ is a dg-algebra:
+\label{comp:bar-signs-3-2}
+For $[a|b]=s^{-1}a\otimes s^{-1}b$ in
+$T^c(s^{-1}\bar A)$, the ordered desuspended convention gives
 \[
-d_{\mathrm{bar}}[a|b] = [ab] - (-1)^{|a|} a \cdot [b] - [a] \cdot b
+d_{\mathrm{bar}}[a|b]
+=-[d_Aa|b]+(-1)^{|a|}[a|d_Ab]+(-1)^{|a|}[ab].
 \]
-Here:
-\begin{enumerate}[label=(\roman*)]
-\item The term $[ab]$ comes from the multiplication $\mu: A \otimes A \to A$.
-\item The term $(-1)^{|a|} a \cdot [b]$ is the left action of $A$ on $\Bbar_1(A) = A$.
-\item The term $[a] \cdot b$ is the right action.
-\end{enumerate}
+If the internal differential is suppressed, the residue/product part is
+\[
+d_{\mathrm{res}}[a|b]=(-1)^{|a|}[ab].
+\]
 
-For the \emph{reduced} bar complex $\overline{\Bbar}(A) = \Bbar(A, A, k)$:
-\[
-d_{\mathrm{bar}}[a|b] = [ab]
-\]
-with augmentation eliminating the action terms.
+For $[a|b|c]\in T^c(s^{-1}\bar A)$:
+\begin{align*}
+d_{\mathrm{bar}}[a|b|c]
+&= -[d_Aa|b|c]+(-1)^{|a|}[a|d_Ab|c]
+   +(-1)^{|a|+|b|-1}[a|b|d_Ac] \\
+&\quad +(-1)^{|a|}[ab|c]
+   -(-1)^{|a|+|b|}[a|bc].
+\end{align*}
+The two product signs are instances of
+$(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}$.
 \end{computation}
 
-\begin{computation}[Bar differential signs: degree 3 to 2]
-\label{comp:bar-signs-3-2}
-For $[a|b|c] \in \Bbar_3(A)$:
-\begin{align*}
-d_{\mathrm{bar}}[a|b|c] &= [ab|c] - (-1)^{|a|}[a|bc] \\
-&\quad + (-1)^{|a|} a \cdot [b|c] + (-1)^{|a|+|b|} [a|b] \cdot c \\
-&\quad + (-1)^{|a|} [da|b|c] + (-1)^{|a|+|b|+1} [a|db|c] + (-1)^{|a|+|b|+|c|} [a|b|dc]
-\end{align*}
-
-The signs arise systematically:
-\begin{enumerate}[label=(\roman*)]
-\item $[ab|c]$: Multiply positions 1,2; no sign (conventions place multiplication first).
-\item $(-1)^{|a|}[a|bc]$: Multiply positions 2,3; sign from passing $a$ over boundary.
-\item Action terms: Signs from Koszul rule and boundary conventions.
-\item Differential terms: Signs from position in the bar expression.
-\end{enumerate}
+\begin{computation}[Two-sided twisting signs for bimodules]
+\label{comp:two-sided-twisting-signs}
+For an $A$-bimodule $M$, let $C=\bar B^{\mathrm{ord}}(A)$ and let
+$\tau:C\to A$ be the universal twisting cochain. The two-sided twisted
+bicomodule is
+\[
+K_A^{\mathrm{bi}}(M)=C\widehat\otimes M\widehat\otimes C
+\]
+with twisting part
+\[
+d_L(c\otimes m\otimes d)
+=
+\sum (-1)^{|c_{(1)}|}\,
+c_{(1)}\otimes \tau(c_{(2)})\cdot m\otimes d,
+\]
+\[
+d_R(c\otimes m\otimes d)
+=
+\sum (-1)^{|c|+|m|}\,
+c\otimes m\cdot \tau(d_{(1)})\otimes d_{(2)}.
+\]
+The first sign moves the degree-one twisting cochain past the first
+coalgebra leg. The second also moves it past the middle bimodule factor.
 \end{computation}
 
 \begin{computation}[Cobar differential signs: degree 1 to 2]
@@ -540,7 +575,7 @@ d_\Omega(s^{-1}c) = -s^{-1}(dc) - \sum_{(c)} (-1)^{|c'|} (s^{-1}c') \otimes (s^{
 \]
 where $\Delta(c) = \sum_{(c)} c' \otimes c''$ (Sweedler notation) and the desuspended element $s^{-1}c'$ has degree $|s^{-1}c'| = |c'| - 1$.
 
-\emph{Sign verification.} The Koszul sign $(-1)^{|c'|}$ within each summand
+\emph{Sign calculation.} The Koszul sign $(-1)^{|c'|}$ within each summand
 arises from applying $(s^{-1} \otimes s^{-1})$ to $c' \otimes c''$: commuting
 the second $s^{-1}$ (degree $-1$) past $c'$ gives $(-1)^{|s^{-1}|\cdot|c'|}
 = (-1)^{|c'|}$. The overall minus sign on the comultiplication term is
@@ -550,7 +585,7 @@ the bar-cobar counit $\varepsilon\colon \Omega(\bar B(A)) \to A$ is a chain map
 only when both terms of $d_\Omega$ carry the same overall sign.
 % NOTE (2026-03-31): The $-\sum$ sign on the comultiplication term differs from
 % [LV12, Prop.~2.2.5], which uses $+\sum$ under the SUSPENSION convention.
-% Our DESUSPENSION convention flips this sign; see eq:cobar-diff-generators.
+% Our DESUSPENSION convention flips this sign; see Computation~\ref{comp:cobar-signs-1-2}.
 \end{computation}
 
 \begin{computation}[Cobar differential signs: degree 2 to 3]
@@ -571,6 +606,23 @@ d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= -s^{-1}(dc_1) \otimes s^{-1}c_2 \\
 &\quad + (-1)^{|c_1|} \sum (-1)^{|c_2'|} s^{-1}c_1 \otimes s^{-1}c_2' \otimes s^{-1}c_2''
 \end{align*}
 \end{computation}
+
+\begin{convention}[Bar--cobar adjunction direction]
+\label{conv:bar-cobar-adjunction-direction}
+The cobar functor is the left adjoint:
+\[
+\Omega:\mathrm{Coalg}_{\mathrm{conil}}\rightleftarrows
+\mathrm{Alg}_{\mathrm{aug}}:B,\qquad \Omega\dashv B.
+\]
+Thus the adjunction unit and counit have directions
+\[
+\eta_C:C\longrightarrow B\Omega C,\qquad
+\varepsilon_A:\Omega B(A)\longrightarrow A.
+\]
+A map $A\to\Omega B(A)$, when produced by an additional Koszul or
+completion argument, is not the unit of the adjunction
+$\Omega\dashv B$.
+\end{convention}
 
 \begin{proposition}[Master sign formula {\cite{LV12}}; \ClaimStatusProvedElsewhere]
 \label{prop:master-sign}
@@ -593,19 +645,21 @@ Some references (e.g., Loday--Vallette \cite{LV12}) define the bar differential
 on $sa_1 \otimes \cdots \otimes sa_n$ with a sign
 $\epsilon'_{i,k} = \sum_{j=1}^{i-1}|sa_j|$ arising from commuting the coderivation past
 suspended elements. For a strict algebra ($m_k = 0$ for $k \neq 2$), the two conventions
-are related by a global sign on each summand and yield the same $d^2 = 0$ complex.
-The explicit computations in \S\ref{comp:bar-signs-2-1}--\ref{comp:bar-signs-3-2}
-use the \emph{unsuspended} bar notation ($[a|b] = a \otimes b$). In the desuspended convention ($[a|b] = s^{-1}a \otimes s^{-1}b$), the correct formulas are
-$d[a|b] = (-1)^{|a|}[ab]$ and $d[a|b|c] = (-1)^{|a|}[ab|c] - (-1)^{|a|+|b|}[a|bc]$; see the verification in \S\ref{ver:d2-degree3}.
+are related by the cohomological/homological degree reversal. In the
+desuspended convention ($[a|b] = s^{-1}a \otimes s^{-1}b$), the formulas are
+$d[a|b] = (-1)^{|a|}[ab]$ and $d[a|b|c] = (-1)^{|a|}[ab|c] - (-1)^{|a|+|b|}[a|bc]$; see the calculation in \S\ref{ver:d2-degree3}.
 \end{remark}
 \end{proposition}
 
 \medskip
-\noindent\textbf{Convention shift.} The computations above (\S\ref{comp:bar-signs-2-1}--\ref{comp:bar-signs-3-2}) use the unsuspended bar notation $[a|b] = a \otimes b$. From this point onward, we work in the \emph{desuspended} convention $[a|b] = s^{-1}a \otimes s^{-1}b$, which is the convention used in the body of the monograph.
+\noindent\textbf{Desuspended convention.} The computations in
+\S\ref{comp:bar-signs-2-1}--\ref{comp:two-sided-twisting-signs} use
+$[a_1|\cdots|a_n]=s^{-1}a_1\otimes\cdots\otimes s^{-1}a_n$, the
+convention used in the body of the monograph.
 
-\begin{verification}[\texorpdfstring{$d^2 = 0$}{d\textasciicircum 2 = 0} check at degree 3]
+\begin{computation}[\texorpdfstring{$d^2 = 0$}{d\textasciicircum 2 = 0} in degree 3]
 \label{ver:d2-degree3}
-We verify $d_{\mathrm{bar}}^2[a|b|c] = 0$ for a graded associative algebra
+For a graded associative algebra, $d_{\mathrm{bar}}^2[a|b|c] = 0$
 (where $m_2 = \mu$ and $m_k = 0$ for $k \neq 2$).
 
 The desuspended multiplication on $s^{-1}A$ carries a Koszul sign:
@@ -631,9 +685,9 @@ by associativity.
 For generators concentrated in degree~0 (the ungraded case), all signs are
 trivial and the formulas simplify to $d[a|b] = [ab]$ and
 $d[a|b|c] = [ab|c] - [a|bc]$, recovering the expressions in
-Computations~\ref{comp:bar-signs-2-1}--\ref{comp:bar-signs-3-2}.
+Computation~\ref{comp:bar-signs-2-1}.
 \end{remark}
-\end{verification}
+\end{computation}
 
 
 \section{Determinant lines and stratifications}
@@ -734,12 +788,12 @@ Sign conventions used in different sources are compared and translated below.
 \endlastfoot
 Koszul sign rule & $(-1)^{|a| \cdot |b|}$ & $(-1)^{|a| \cdot |b|}$ (same) \\
 Differential degree & $|d| = -1$ & $|d| = +1$ \\
-Suspension & $s: V \to sV$, $|sv| = |v| + 1$ & $s: V \to V[-1]$, $|sv| = |v| + 1$ (cohomological: $V[-1]^k = V^{k-1}$, so $v \in V^m$ maps to $sV^{m+1}$) \\
-Desuspension & $s^{-1}: sV \to V$, $|s^{-1}(sv)| = |v|$ & $[-1]: V[1] \to V$ \\
+Suspension & $s: V \to sV$, $|sv| = |v| + 1$ & $sV=V[-1]$, $|sv| = |v|+1$ \\
+Desuspension & $s^{-1}:sV\to V$, $|s^{-1}(sv)|=|v|$ & $s^{-1}V=V[1]$, $|s^{-1}v|=|v|-1$ \\
 Bar construction & $B(\mathcal{A}) = (T^c(s\mathcal{A}), d_{\text{bar}})$ & $\bar{B}(\mathcal{A}) = (T^c(s^{-1}\bar{\mathcal{A}}), d)$ (desuspension; cf.\ cohomological convention) \\
-Cobar construction & $\Omega(\mathcal{C}) = (T(s^{-1}\mathcal{C}), d_{\text{cobar}})$ & $\Omega(\mathcal{C})_n = \mathcal{C}^{\otimes_{\text{co}} n}$ \\
+Cobar construction & $\Omega(\mathcal{C}) = (T(s^{-1}\mathcal{C}), d_{\text{cobar}})$ & $\Omega(C)=T(s^{-1}\bar C)$ with differential as in Computation~\ref{comp:cobar-signs-1-2} \\
 Coproduct sign & $\Delta(ab) = \Delta(a) \cdot \Delta(b)$ with $(-1)^{|a_2| \cdot |b_1|}$ & Same \\
-Shuffle sign & $(a \shuffle b) = \sum (-1)^{\sigma} a_{\sigma(1)} \otimes \cdots$ & Same \\
+Shuffle sign & Koszul sign on suspended words & Koszul sign on desuspended words $s^{-1}a_i$, i.e.\ inversions contribute $(-1)^{(|a_i|-1)(|a_j|-1)}$ \\
 Collision divisor ordering & Not applicable (no geometry) & Lexicographic: $i < j$ always \\
 Logarithmic form sign & Not applicable & $\eta_{ji} = \eta_{ij}$ as differential forms ($d\log(-1)=0$). Note: the Orlik--Solomon generators are antisymmetric; fixing $i < j$ in $\eta_{ij}$ fixes an orientation. \\
 Arnold relations & Not applicable & $\sum_{\text{cyclic}} \eta_{ij} \wedge \eta_{jk} = 0$ \\
@@ -857,7 +911,7 @@ Configuration space & $C_n(\mathbb{R}^d)$ (open) & $\ConfigSpace{n}$ (compactifi
 Forms & Smooth forms & Logarithmic forms \\
 Propagator & $\frac{1}{z-w}$ & $\frac{dz}{z-w}$ (with log pole) \\
 Graphs & Directed graphs & Genus-stratified graphs \\
-Formality & $\mathcal{U}: T_{\text{poly}} \to D_{\text{poly}}$ & Bar-cobar: $\bar{B} \dashv \Omega$ \\
+Formality & $\mathcal{U}: T_{\text{poly}} \to D_{\text{poly}}$ & Bar-cobar: $\Omega \dashv \bar{B}$ \\
 Wheels & Non-planar graphs & Higher genus contributions \\
 \hline
 \end{tabular}
@@ -973,9 +1027,59 @@ All higher-degree relations in the OS algebra follow from the 3-term Arnold rela
 
 \subsubsection{Residue signs}
 
-The sign arising from the residue at $\colldiv{i}{j}$ is determined by the Koszul sign rule: the residue operation (cohomological degree~$1$) must commute past the preceding tensor factors. For elements $s^{-1}a_1 \otimes \cdots \otimes s^{-1}a_n$ in the bar complex, the residue at $D_{ij}$ (colliding factors $i$ and $j$) picks up the sign $(-1)^{\sum_{k<i}|s^{-1}a_k|}$. In particular, when all generators have even desuspended degree, all residue signs are positive.
+The sign arising from the residue at $\colldiv{i}{j}$ is determined by the Koszul sign rule: the residue operation (cohomological degree~$1$) must commute past the preceding tensor factors. For elements $s^{-1}a_1 \otimes \cdots \otimes s^{-1}a_n$ in the ordered bar complex, the adjacent residue at $D_{i,i+1}$ picks up the prefix sign $(-1)^{\sum_{k<i}|s^{-1}a_k|}$. Thus even desuspended preceding degrees make the prefix sign positive; the total product sign still includes the local factor $(-1)^{|a_i|}$.
 
-For the explicit sign computations relevant to the bar differential, see the proof of $d^2 = 0$ in \S\ref{sec:bar-nilpotency}.
+For adjacent collisions in the ordered bar differential this combines with
+$b_2(s^{-1}a_i,s^{-1}a_{i+1})=(-1)^{|a_i|}s^{-1}(a_i a_{i+1})$ and gives
+\[
+(-1)^{\sum_{q<i}(|a_q|-1)+|a_i|}.
+\]
+For the explicit sign computations relevant to the bar differential, see
+Computation~\ref{comp:bar-signs-2-1} and
+Computation~\ref{ver:d2-degree3}.
+
+\subsubsection{Ordered-to-symmetric averaging signs}
+
+On desuspended words the plain permutation action is the Koszul action
+\[
+\sigma\cdot [a_1|\cdots|a_n]
+=\epsilon_s(\sigma;a)\,
+[a_{\sigma^{-1}(1)}|\cdots|a_{\sigma^{-1}(n)}],
+\]
+where
+\[
+\epsilon_s(\sigma;a)
+=\prod_{\substack{i<j\\ \sigma(i)>\sigma(j)}}
+(-1)^{(|a_i|-1)(|a_j|-1)}.
+\]
+In the pole-free case the averaging map is the Reynolds projection
+\[
+\operatorname{av}_n(x)=\frac{1}{n!}\sum_{\sigma\in\Sigma_n}\sigma\cdot x,
+\]
+equivalently the quotient by the ordinary $\Sigma_n$-coinvariant
+relations in characteristic~$0$.
+
+With singular OPE, write
+\[
+R^s_{i,i+1}(z)=(s^{-1}\otimes s^{-1})\,
+R_{i,i+1}(z)\,(s\otimes s)
+\]
+for the $R$-matrix transported to desuspended tensor factors. The
+adjacent transposition is not the plain Koszul twist but
+\[
+\sigma_i\cdot x
+=\bigl(\tau^{s}_{i,i+1}\circ R^s_{i,i+1}(z_i-z_{i+1})\bigr)(x),
+\]
+where
+\[
+\tau^{s}_{i,i+1}
+(s^{-1}a_i\otimes s^{-1}a_{i+1})
+=(-1)^{(|a_i|-1)(|a_{i+1}|-1)}
+s^{-1}a_{i+1}\otimes s^{-1}a_i.
+\]
+Only after the Yang--Baxter relations and strong unitarity
+$R_{12}(z)R_{21}(-z)=\id$ are available does this define a
+$\Sigma_n$-descent to the symmetric bar complex.
 
 \subsection{Common pitfalls and how to avoid them}
 
@@ -1057,7 +1161,7 @@ To convert from our conventions to Loday--Vallette:
 \end{enumerate}
 \end{proposition}
 
-\begin{proof}[Verification]
+\begin{proof}
 The key identity is that homological grading (LV) relates to cohomological grading
 (ours) by $\deg_{\text{hom}} = -\deg_{\text{coh}}$.
 
@@ -1078,7 +1182,7 @@ The Koszul sign rule in the Leibniz formula is the same in both conventions:
 For three points $z_1, z_2, z_3$, the Arnold relation is:
 \[\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0\]
 
-\emph{Sign verification.}
+\emph{Sign calculation.}
 \begin{enumerate}
 \item Each $\eta_{ij}$ has degree 1
 \item Wedge product: $\eta \wedge \eta'$ has degree 2
@@ -1225,48 +1329,42 @@ with $|s^{-1}a_i| = |a_i| - 1$.
 \emph{Our convention} (cohomological, $|d|=+1$, desuspension in bar).
 \begin{equation}\label{eq:bar-diff-us}
 d_{\mathrm{bar}}[a_1|\cdots|a_n]
-= \sum_{i=1}^{n-1} (-1)^{\sum_{j=1}^{i}(|a_j|-1)}\,
+= \sum_{i=1}^{n-1}
+(-1)^{\sum_{j<i}(|a_j|-1)+|a_i|}\,
  [a_1|\cdots|a_i \cdot a_{i+1}|\cdots|a_n]
 \;+\; \text{(internal $d$-terms)}.
 \end{equation}
 
 \emph{Loday--Vallette convention} (homological, $|d|=-1$, suspension in bar).
 LV writes the bar complex on $T^c(s\bar{\cA})$ with $|sa_i| = |a_i|+1$.
-Their bar differential is:
+Writing the suspended product as
+$b^{\mathrm{LV}}_2(sa_i,sa_{i+1})=(-1)^{|a_i|+1}s(a_i\cdot a_{i+1})$,
+the product part is:
 \begin{equation}\label{eq:bar-diff-lv}
 d_1(sa_1\otimes\cdots\otimes sa_n)
-= \sum_{i=1}^{n-1} (-1)^{\sum_{j=1}^{i}|sa_j|}\,
+= \sum_{i=1}^{n-1} (-1)^{\sum_{j<i}|sa_j|+|a_i|+1}\,
  sa_1\otimes\cdots\otimes s(a_i \cdot a_{i+1})\otimes\cdots\otimes sa_n.
 \end{equation}
 
-\emph{Translation.} Identifying $s^{-1}a$ (us) with $sa$ (LV) under the
-relabeling $\deg_{\mathrm{coh}} = -\deg_{\mathrm{hom}}$, the exponents
-$\sum_{j\leq i}(|a_j|-1)$ in~\eqref{eq:bar-diff-us} become
-$\sum_{j\leq i}|sa_j|$ in~\eqref{eq:bar-diff-lv} because
-$|a_j|-1 = |a_j| + 1 = |sa_j|$ after negating the grading.
-The two formulas are \emph{identical} as linear maps; only the bookkeeping changes.
+\emph{Translation.} The prefix sign is the Koszul sign for commuting the
+coderivation past the shifted inputs. The product sign must also be
+translated. Omitting it gives the false exponent
+$\sum_{j\le i}(|a_j|-1)$, whose length-two specialization
+$(-1)^{|a|-1}$ is the opposite of the ordered convention.
 
-\begin{example}[Explicit sign: two generators of odd degree]
+\begin{example}[Explicit ordered signs in length two]
 Let $a, b \in \cA^1$ (cohomological degree~1). Then $|s^{-1}a| = 0$,
 $|s^{-1}b| = 0$.
 \begin{align*}
 \text{Us:} &\quad d_{\mathrm{bar}}[a|b]
- = (-1)^{|a|-1}[a\cdot b] = (-1)^{0}[ab] = [ab]. \\
-\text{LV:} &\quad d_1(sa\otimes sb)
- = (-1)^{|sa|}s(ab) = (-1)^{2}s(ab) = s(ab).
+ = (-1)^{|a|}[a\cdot b] = -[ab].
 \end{align*}
-Both give the unsigned product; the apparent sign $(-1)^2 = +1$ in LV
-matches $(-1)^0 = +1$ in ours.
 
 Now let $a \in \cA^0$, $b \in \cA^1$:
 \begin{align*}
 \text{Us:} &\quad d_{\mathrm{bar}}[a|b]
- = (-1)^{|a|-1}[ab] = (-1)^{-1}[ab] = -[ab]. \\
-\text{LV:} &\quad d_1(sa\otimes sb)
- = (-1)^{|sa|}s(ab) = (-1)^{1}s(ab) = -s(ab).
+ = (-1)^{|a|}[ab] = [ab].
 \end{align*}
-Both produce a minus sign. The exponent looks different ($-1$ vs.\ $1$),
-but the sign is the same: $(-1)^{-1} = (-1)^1 = -1$.
 \end{example}
 
 \subsubsection{Cobar differential and $A_\infty$ structure maps}
@@ -1426,14 +1524,15 @@ CG's BV antibracket on a curve $X$, applied to local functionals $F, G$:
 
 Our bar differential encodes the same data geometrically:
 \[
-d_{\mathrm{res}}[a|b] = (-1)^{|a|-1}\, [a \cdot b]
+d_{\mathrm{res}}[a|b] = (-1)^{|a|}\, [a \cdot b]
 \]
 where $a \cdot b$ is the chiral product (residue of the OPE).
 
 \emph{Translation.} CG's antibracket restricted to 2-point functionals on a
 curve reproduces our bar differential. The sign $(-1)^{|F||G|}$ in CG
-becomes $(-1)^{|a|-1}$ in ours because the desuspension shifts degrees:
-$|s^{-1}a| = |a| - 1$, so $|F| = |s^{-1}a| = |a| - 1$.
+is converted by the desuspended multiplication
+$b_2(s^{-1}a,s^{-1}b)=(-1)^{|a|}s^{-1}(a\cdot b)$; the prefix part is
+trivial in length two.
 
 \subsubsection{Renormalization and completion}
 
@@ -1548,7 +1647,7 @@ Curved $A_\infty$ relation & N/A & $m_1^2 = [m_0,-]$ & $m_1^2 = [m_0,-]$ & $m_1^
 \hline
 $\hbar$ parameter & N/A & explicit & N/A & genus filtration \\
 \hline
-Bar-cobar adjunction & factorization axiom & descent & $B \dashv \Omega$ & $\bar{B} \dashv \Omega$ \\
+Bar-cobar adjunction & factorization axiom & descent & $\Omega \dashv B$ & $\Omega \dashv \bar{B}$ \\
 \hline
 Koszul dual & not discussed & not discussed & $\cP^!$ & $\cA^!$ \\
 \hline

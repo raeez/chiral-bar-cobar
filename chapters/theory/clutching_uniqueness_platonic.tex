@@ -6,7 +6,7 @@
 % This chapter SUPPLEMENTS prop:scalar-obstruction-hodge-euler
 % (which is already unconditional via Arakelov-Faltings + BGS + GRR)
 % with a separate boundary-restriction uniqueness statement, stated at the
-% honest scope: uniqueness holds on the SOCLE of the tautological ring,
+% proved scope: uniqueness holds on the SOCLE of the tautological ring,
 % not on the full ring at degree g > 1.
 %
 % Guiding principle: strengthening only. Every claim is scoped to the
@@ -35,8 +35,8 @@ The boundary-restriction uniqueness statement is complementary: the class
 $\mathrm{obs}_g(\cA)/\kappa(\cA)$ satisfies Mumford-type clutching
 identities, and these identities determine its \emph{socle projection}
 onto the top-degree component of the tautological ring. We state the
-uniqueness theorem at its honest scope and explicitly identify the
-residual sub-socle data that boundary restriction does not see.}
+	uniqueness theorem at its proved scope and explicitly identify the
+	residual sub-socle data that boundary restriction does not see.}
 
 \section{Setup and notation}
 \label{sec:clutching-setup}
@@ -213,7 +213,7 @@ $H^{2g}(\overline{\cM}_g) \setminus R^g(\overline{\cM}_g)$.
 \section{The clutching uniqueness theorem}
 \label{sec:clutching-uniqueness-theorem}
 
-The uniqueness statement at its honest scope reads as follows.
+The uniqueness statement at its proved scope reads as follows.
 
 \begin{theorem}[Clutching uniqueness on the socle;
 \ClaimStatusProvedHere]
@@ -339,7 +339,7 @@ $\omega_{\mathrm{soc}} = 1$ forces $c = 1$, hence
 $\alpha_1 = \lambda_1$ on the nose.
 \end{proof}
 
-\begin{remark}[Why the honest scope is the socle, not the full ring]
+\begin{remark}[Why the proved scope is the socle, not the full ring]
 \label{rem:socle-scope-explanation}
 The uniqueness statement of
 Theorem~\ref{thm:clutching-uniqueness-socle-projection} is phrased
@@ -359,7 +359,7 @@ Corollary~\ref{cor:genus-2-explicit-match} below).
 \item \emph{Genus $g \geq 3$}: $\cN^g = 0$ is the
 $\lambda_g$-sharper form of Faber's conjecture; it is known in
 specific cases (Ionel 2002 for low $g$) but not in general.
-Uniqueness on the socle remains the honest scope.
+	Uniqueness on the socle remains the proved scope.
 \end{enumerate}
 The direct Arakelov--Faltings--BGS proof
 (Proposition~\ref{prop:scalar-obstruction-hodge-euler}) bypasses
@@ -391,22 +391,28 @@ scalar lane. Write
 \qquad
 \varepsilon_g(\cA) \;\in\; \cN^g(\overline{\cM}_g).
 \]
-Under the uniform-weight hypothesis, $\varepsilon_g(\cA) = 0$ on the
-nose by the direct Arakelov--Faltings--BGS proof
+Under the uniform-weight hypothesis, $\varepsilon_g(\cA) = 0$ by the
+direct Arakelov--Faltings--BGS proof
 \textup{(}Proposition~\ref{prop:scalar-obstruction-hodge-euler}%
 \textup{)}. In the absence of the uniform-weight hypothesis (e.g.,
-for multi-weight $\cW_3$), $\varepsilon_g(\cA)$ is a cross-channel
-correction term:
+for multi-weight $\cW_3$), Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}
+constructs a numerical cross-channel correction
+$\delta F_g^{\mathrm{cross}}(\cA)$. A class-valued lift is a separate
+datum:
 \[
-\varepsilon_g(\cA) \;=\; \delta F_g^{\mathrm{cross}}(\cA)
-\qquad \textup{(}ALL-WEIGHT, with cross-channel correction%
+\delta o_g^{\mathrm{cross}}(\cA)\in H^{2g}(\overline{\cM}_g)
+\qquad
+\textup{with}\qquad
+\langle \delta o_g^{\mathrm{cross}}(\cA),[\overline{\cM}_g]\rangle
+=\delta F_g^{\mathrm{cross}}(\cA)
+\qquad \textup{(}ALL-WEIGHT, class lift%
 \textup{)},
 \]
-explicitly computable from the multi-weight genus expansion
-\textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}%
-\textup{)}, and satisfying
-$\xi_h^*\varepsilon_g = \varepsilon_h\boxtimes\varepsilon_{g-h}
-+ \text{boundary-supported corrections}$.
+when such a lift is constructed. Under that additional hypothesis,
+$\varepsilon_g(\cA)=\delta o_g^{\mathrm{cross}}(\cA)$ modulo the
+numerical-equivalence kernel, and its boundary restriction satisfies
+$\xi_h^*\varepsilon_g = \varepsilon_h\boxtimes\varepsilon_{g-h}$
+plus boundary-supported corrections.
 \end{proposition}
 
 \begin{proof}
@@ -416,19 +422,19 @@ $\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ in
 $H^{2g}(\overline{\cM}_g,\Q)$, hence $\varepsilon_g(\cA) = 0$
 and (trivially) $\varepsilon_g(\cA)\in \cN^g$.
 
-Without uniform-weight, the bar complex receives contributions
-from cross-weight contractions. Explicit calculation at genus $2$
-for $\cW_3$ (Theorem~\ref{thm:multi-weight-genus-expansion}) gives
+Without uniform-weight, the bar complex receives numerical
+contributions from cross-weight contractions. Explicit calculation at
+genus $2$ for $\cW_3$
+\textup{(}Theorem~\ref{thm:multi-weight-genus-expansion}\textup{)}
+gives
 \[
 \delta F_2^{\mathrm{cross}}(\cW_3) \;=\; \frac{c+204}{16 c},
 \]
-a non-zero correction supported on the boundary of
-$\overline{\cM}_2$. In terms of tautological classes on the base,
-this correction is a combination of $\kappa_1\lambda_1$-type and
-$\delta_{\mathrm{irr}}\lambda_{g-1}$-type terms whose socle
-projection vanishes, i.e., $\varepsilon_g$ lies in $\cN^g$. The
-boundary-recursive structure follows from the factorisation of the
-multi-weight bar propagator under clutching.
+a non-zero correction to the scalar free energy. Turning this number
+into a class in $H^{2g}(\overline{\cM}_g)$ requires the class-valued
+lift $\delta o_g^{\mathrm{cross}}$ named in the statement. Once that
+lift is supplied, its boundary-recursive structure follows from the
+factorisation of the multi-weight bar propagator under clutching.
 \end{proof}
 
 \section{Separating and non-separating clutching compatibility}
@@ -741,37 +747,27 @@ in the independent-verification sense. The checks recorded in
 disjoint theorem sets explicitly.
 \end{remark}
 
-\section{Honest scope summary}
-\label{sec:honest-scope-summary}
+\section{Socle projection and on-the-nose equality}
+\label{sec:socle-projection-equality}
 
-The following table summarises what SURVIVED the adversarial audit
-versus what NEEDED SCOPE:
+The scalar obstruction statement separates into four parts.
 
 \begin{itemize}
-\item \textbf{SURVIVED unconditionally:} the identification
+\item \textbf{Unconditional scalar identity.} The identification
 $\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ on the
 uniform-weight scalar lane at all $g \geq 1$, via the direct
 Arakelov--Faltings + BGS + GRR path (Proposition~%
 \ref{prop:scalar-obstruction-hodge-euler}). The direct proof does
 not require any uniqueness theorem.
-\item \textbf{SURVIVED with scope:} the clutching-uniqueness
-boundary-restriction argument, at the honest scope of the
-\emph{socle projection}
+\item \textbf{Socle-projected uniqueness.} The clutching-uniqueness
+boundary-restriction argument identifies the socle projection
 $\pi_{\mathrm{soc}}(\alpha_g) = \pi_{\mathrm{soc}}(\lambda_g)$
 for $g \geq 2$ (Theorem~\ref{thm:clutching-uniqueness-socle-projection}).
+\item \textbf{Conditional sharpening.}
 On-the-nose equality $\alpha_g = \lambda_g$ in $R^g(\overline{\cM}_g)$
 holds unconditionally at $g = 1, 2$ but is conditional on the
 $\lambda_g$-analogue of Faber's conjecture for $g \geq 3$.
-\item \textbf{NEEDED SCOPE:} the original inscription
-\texttt{prop:clutching-uniqueness} in
-\texttt{higher\_genus\_foundations.tex} asserts on-the-nose
-equality via boundary injectivity at degree $2g$. This is correct
-in spirit but silently invokes $\cN^g(\overline{\cM}_g) = 0$ at
-each genus. The honest statement is the socle-projection version
-of Theorem~\ref{thm:clutching-uniqueness-socle-projection};
-the on-the-nose sharpening is a separate corollary for $g \leq 2$
-(unconditional) or for $g \geq 3$ conditional on Faber.
-\item \textbf{DISJOINT alternative:} the PTVV
+\item \textbf{Independent proof.} The PTVV
 factorisation-homology path (Theorem~%
 \ref{thm:H04-PTVV-alternative-disjoint}) is genuinely disjoint
 from the tautological-ring path; neither path appears in the
@@ -955,7 +951,7 @@ supplies Mittag--Leffler counterterms on each Humbert stratum; the
 third carries the conformal content of the bracket.
 
 \begin{proposition}[Genus-$2$ MC element, explicit form;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{prop:theta-A-genus2}
 \index{Theta_A@$\Theta_\cA^{(2)}$!Beilinson--Drinfeld Green function|textbf}
 \index{Theta_A@$\Theta_\cA^{(2)}$!Humbert Fourier expansion|textbf}
@@ -999,6 +995,10 @@ quadratic form $b^2-4ac=-n$
 Let $h_n\in\{1,2,3,4,\ldots\}$ index the admissible Humbert
 divisors \textup{(}$n=1$: reducible Jacobian $E_1\times E_2$;
 $n=4$: bielliptic; $n=5,8,9,\ldots$: real multiplication\textup{)}.
+Assume the Humbert residue formula
+$\mathrm{Res}_{H_n}G_{\Sigma_2}=c_n(Z)\omega_{\Sigma_2}$ and the
+Mittag--Leffler extension of the resulting counterterms across the
+admissible Humbert strata.
 Then the genus-$2$ component of the universal MC element
 \textup{(}Definition~\ref{def:ordered-convolution-dgla}\textup{)} is
 \begin{equation}\label{eq:theta-A-g2}
@@ -1022,7 +1022,7 @@ D\cdot\Theta_\cA^{(2)}\;+\;\tfrac{1}{2}\bigl[\Theta_\cA^{(2)},
 \Theta_\cA^{(2)}\bigr]\;=\;0
 \qquad\textup{in }{\gAord}^{(2)}[1]
 \end{equation}
-on the whole of $\overline{\cA_2}$ after the Humbert counterterm of
+on the stated completed Humbert neighbourhood after the counterterm of
 equation~\eqref{eq:theta-A-g2} is included; the associated scalar
 curvature class is
 \begin{equation}\label{eq:obs-g2}
@@ -1061,7 +1061,8 @@ diagonal $\omega_{\Sigma_2}$, which cancels exactly
 $D\cdot\sum_{i<j}t_{ij}G_{\Sigma_2}(z_i,z_j)$ by the Stokes identity
 $\bar\partial G_{\Sigma_2}=\pi\delta_{\mathrm{diag}}$.
 
-\emph{Step 2 (Humbert counterterm).} At each admissible divisor
+\emph{Step 2 (Humbert counterterm).} Under the residue hypothesis, at
+each admissible divisor
 $H_n\subset\cA_2$ the abelian surface develops real multiplication
 by $\mathcal{O}_{\Q(\sqrt{n})}$; the period coordinate
 $\tau_{12}/\sqrt{\tau_1\tau_2-\tau_{12}^2}$ satisfies a rational
@@ -1193,7 +1194,7 @@ Proposition~\ref{prop:scalar-obstruction-hodge-euler} at $g=3$.
 \label{subsec:theta-A-induction}
 
 \begin{theorem}[Induction step for the universal MC ladder;
-\ClaimStatusProvedHere]
+\ClaimStatusConditional]
 \label{thm:theta-A-induction}
 \index{induction!genus $g\Rightarrow g+1$ for MC element|textbf}
 \index{Mittag--Leffler!tower for MC element|textbf}
@@ -1207,6 +1208,12 @@ for all $0\leq h\leq g$;
 $\xi_{h}^{*}\Theta_\cA^{(g)}=\Theta_\cA^{(h)}\boxtimes
 \Theta_\cA^{(g-h)}$ and $\xi_{\mathrm{irr}}^{*}\Theta_\cA^{(g)}=
 \Delta_{\mathrm{ns}}(\Theta_\cA^{(g-1)})$.
+\item the obstruction class in
+$H^{1}({\gAord}^{(g+1)})$ is detected by the boundary restrictions
+together with the socle pairing, and the strict weight-truncated tower
+$\{{\gAord}^{(g+1,N)}\}_{N\geq 1}$ satisfies the Mittag--Leffler
+exactness needed to pass from finite windows to the completed
+convolution dGLA.
 \end{itemize}
 Then there exists $\Theta_\cA^{(g+1)}\in{\gAord}^{(g+1)}$ satisfying
 $D\Theta_\cA^{(g+1)}+\tfrac{1}{2}[\Theta_\cA^{(g+1)},
@@ -1233,17 +1240,15 @@ $\xi_{\mathrm{irr}}^{*}$ by construction.
 The obstruction to solving the MC equation at genus $g+1$ lies in
 $H^{1}({\gAord}^{(g+1)})$, and its boundary-restriction vanishes on
 both clutching images by the inductive hypothesis. By the
-Graber--Vakil vanishing
-theorem~\cite{GraVak05} (Step~3 of the proof of
-Theorem~\ref{thm:clutching-uniqueness-socle-projection}), an element
-of $H^{1}({\gAord}^{(g+1)})$ vanishing on every boundary divisor lies
-in the socle of the tautological ring. Pairing against a fixed
-admissible socle class $\omega_{\mathrm{soc}}$ gives the rational
-number $\pi_{\mathrm{soc}}(\mathrm{obs}_{g+1}/\kscal(\cA))$; by the
+boundary-detection hypothesis, this obstruction is then controlled by
+its socle pairing. Pairing against a fixed admissible socle class
+$\omega_{\mathrm{soc}}$ gives the rational number
+$\pi_{\mathrm{soc}}(\mathrm{obs}_{g+1}/\kscal(\cA))$; by the
 genus-$1$ normalisation and the uniform-weight
 Proposition~\ref{prop:scalar-obstruction-hodge-euler}, this socle
 projection equals $\pi_{\mathrm{soc}}(\lambda_{g+1})$. Hence the
-obstruction is socle-trivial and the Mittag--Leffler tower
+obstruction is socle-trivial. The Mittag--Leffler exactness hypothesis
+on the tower
 $\{{\gAord}^{(g+1,N)}\}$ converges
 \textup{(}$\mathrm{lim}^{1}\Theta_\cA^{(g+1,N)}=0$ is the
 Mittag--Leffler condition verified in

@@ -284,7 +284,7 @@ The parameter $u_D = \cot(\pi/(k+2))$ is real, not imaginary. The Hecke braiding
 \index{Drinfeld--Kohno!derived!Yangian}
 %
 \textup{[Category: the evaluation-generated subcategory of
-$\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))$,
+$\operatorname{Rep}_{\mathrm{fd}}(U_q(L\mathfrak{g}))$,
 not the semisimplified tilting category
 $\mathcal{C}(U_q(\mathfrak{g}))$ of
 Theorem~\textup{\ref{thm:derived-dk-affine}}.
@@ -309,7 +309,7 @@ and fits into the same square as the Kazhdan equivalence
 \[
 \operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g}))
 \simeq
-\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))
+\operatorname{Rep}_{\mathrm{fd}}(U_q(L\mathfrak{g}))
 \big|_{q = e^\hbar}
 \]
 \cite{Drinfeld85}.
@@ -336,18 +336,21 @@ D^b(\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_\hbar))
 & D^b(\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_{-\hbar}))
  \ar[d, "\Phi_K"]
 \\
-D^b(\operatorname{Rep}_{\mathrm{fd}}(U_q))
- \ar[r, "q \mapsto q^{-1}"']
-& D^b(\operatorname{Rep}_{\mathrm{fd}}(U_{q^{-1}}))
+D^b(\operatorname{Rep}_{\mathrm{fd}}(U_q(L\mathfrak{g})))
+ \ar[r, "\iota_q"']
+& D^b(\operatorname{Rep}_{\mathrm{fd}}(U_{q^{-1}}(L\mathfrak{g})))
 \end{tikzcd}
 \end{equation}
+Here $\iota_q$ is the quantum-loop involution obtained from
+$q\mapsto q^{-1}$ and loop inversion on the evaluation coordinate,
+$z\mapsto z^{-1}$.
 
 The top arrow reverses the braiding:
 $\sigma_R \mapsto \sigma_{R^{-1}}$
 \textup{(}Proposition~\textup{\ref{prop:yangian-module-koszul}(iii))}.
 
 Under the Kazhdan identification $\Phi_K$, this becomes the
-$q \mapsto q^{-1}$ involution on quantum group representations.
+$\iota_q$ involution on quantum-loop representations.
 
 The $\Eone$-chiral bar-cobar duality of the Yangian
 is a chain-level derived enhancement of the Drinfeld--Kohno
@@ -362,10 +365,10 @@ argument of the finite-dimensional type-$A$ extension criterion.
 The Kazhdan functor~\cite{Drinfeld85}
 $\Phi_K \colon \operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g}))
 \xrightarrow{\sim}
-\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))$
+\operatorname{Rep}_{\mathrm{fd}}(U_q(L\mathfrak{g}))$
 at $q = e^\hbar$ is a monoidal equivalence that sends
 the $R$-matrix $R_Y(u) = 1 - \hbar P/u$ of the Yangian
-to the trigonometric $R$-matrix $R_q$ of the quantum group
+to the trigonometric $R$-matrix $R_q$ of the quantum loop algebra
 via the exponential map
 $R_Y(u) \mapsto R_q(e^u)$. On evaluation modules,
 $\Phi_K(V(a)_\hbar) = V_q(e^a)$, where $V_q(z)$ denotes
@@ -381,24 +384,15 @@ $V(-a)_{-\hbar}$
 Applying~$\Phi_K$ to the right column yields
 $V(-a)_{-\hbar}$ $\mapsto$ $V_{q^{-1}}(e^{-a})$.
 Applying~$\Phi_K$ first (left column) followed by
-$q \mapsto q^{-1}$ gives
+$\iota_q$ gives
 \[
-V(a)_\hbar \,\mapsto\, V_q(e^a) \,\mapsto\, V_{q^{-1}}(e^a).
+V(a)_\hbar \,\mapsto\, V_q(e^a) \,\mapsto\,
+V_{q^{-1}}(e^{-a}).
 \]
-These agree when
-$V_{q^{-1}}(e^{-a}) \cong V_{q^{-1}}(e^a)$
-as $U_{q^{-1}}(\mathfrak{g})$-modules.
-As $U_{q^{-1}}(\widehat{\mathfrak{g}})$-modules these are
-distinct (the evaluation points $e^{-a} \neq e^a$ determine
-different loop algebra actions), but upon restriction to the
-horizontal subalgebra $U_{q^{-1}}(\mathfrak{g}) \hookrightarrow
-U_{q^{-1}}(\widehat{\mathfrak{g}})$ both carry the same
-highest-weight representation, so the restriction is an
-isomorphism. The commutativity of~\eqref{eq:dk-square-yangian}
-therefore holds at the level of
-$U_{q^{-1}}(\mathfrak{g})$-module categories;
-the loop algebra distinction is accounted for by the
-braiding comparison in Step~3.
+The two paths therefore agree as quantum-loop evaluation modules.
+The spectral parameter is part of the comparison; restricting to the
+horizontal subalgebra would forget precisely the loop datum needed for
+Drinfeld--Kohno transport.
 
 \emph{Step~3: Braiding.}
 On the Yangian side, the braiding is
@@ -406,7 +400,8 @@ $\sigma_Y = P \circ R_Y(u)$, and $\Phi$ sends it to
 $\sigma_Y^{-1} = P \circ R_Y^{-1}(u)$
 (Proposition~\ref{prop:yangian-module-koszul}(iii)).
 The Kazhdan functor identifies $R_Y(u)$ with $R_q(e^u)$,
-so $R_Y^{-1}(u) \mapsto R_q^{-1}(e^u) = R_{q^{-1}}(e^u)$.
+so $R_Y^{-1}(u) \mapsto R_q^{-1}(e^u) =
+R_{q^{-1}}(e^{-u})$ under $\iota_q$.
 This is the braiding on the $q^{-1}$ side.
 
 \emph{Step~4: Ext exchange.}
@@ -422,8 +417,8 @@ be read on the dual Yangian module surface and then transported across
 the Kazhdan equivalence.
 Via $\Phi_K$, this becomes
 \[
-\operatorname{Ext}^n_{U_q}(V_q(e^a), W_q(e^b))
-\cong \operatorname{Ext}^n_{U_{q^{-1}}}(V_{q^{-1}}(e^{-a}),
+\operatorname{Ext}^n_{U_q(L\mathfrak{g})}(V_q(e^a), W_q(e^b))
+\cong \operatorname{Ext}^n_{U_{q^{-1}}(L\mathfrak{g})}(V_{q^{-1}}(e^{-a}),
 W_{q^{-1}}(e^{-b})),
 \]
 the derived enhancement of the classical DK identification.
@@ -476,7 +471,15 @@ with the following properties:
  \;\mapsto\; V(-a_1) \otimes \cdots \otimes V(-a_n)$
  with $\hbar \mapsto -\hbar$.
 \item \emph{On braiding:}
- $R(u; \hbar) \;\mapsto\; R^{-1}(u; \hbar) = R(u; -\hbar)$.
+ the normalized braiding is sent to its inverse. For the rational
+ Yang normalization $R(u;\hbar)=1-\hbar P/u$ this reads
+ \[
+ R(u;\hbar)^{-1}
+ =
+ (1-\hbar^2/u^2)^{-1}R(u;-\hbar),
+ \]
+ so $R(u;-\hbar)$ is the inverse after the standard central scalar
+ unitarity normalization.
 \item \emph{On factorization:} the factorization isomorphisms
  are preserved, with the $\Eone$-ordering reversed
  \textup{(}reflecting the ``op'' on the target\textup{)}.
@@ -504,7 +507,8 @@ the ``op'' monoidal structure on the target.
 
 The evaluation-module results above establish the derived
 Drinfeld--Kohno correspondence at the chain level and on the
-evaluation locus. What remains decomposes into three layers:
+evaluation locus. The extension beyond evaluation modules separates
+into three mathematical layers:
 \begin{enumerate}[label=\textup{(\Roman*)}]
 \item \textbf{Proved core.}
  Evaluation-locus factorization bridge
@@ -540,12 +544,12 @@ full $\Eone$-factorization category:
 \begin{equation}\label{eq:full-dk}
 \operatorname{Fact}_{\Eone}(\mathcal{Y}(\mathfrak{g}))
 \;\simeq\;
-\operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}},
+\operatorname{Fact}_{\Eone}(U_q(L\mathfrak{g}))^{\mathrm{op}},
 \end{equation}
 where $\mathcal{Y}(\mathfrak{g})$ is the Yangian
-$\Eone$-chiral algebra and $U_q(\mathfrak{g})$ is the quantum
-group, viewed as an $\Eone$-factorization algebra via the
-construction of Latyntsev~\cite{Latyntsev23}.
+$\Eone$-chiral algebra and $U_q(L\mathfrak{g})$ is the quantum
+loop algebra, viewed as an $\Eone$-factorization algebra via the
+spectral construction of Latyntsev~\cite{Latyntsev23}.
 This is the factorization-level Kazhdan bridge beyond the evaluation
 subcategories; it separates the ordered Yangian factorization problem
 from the later dg-shifted comparison of
@@ -563,8 +567,8 @@ Let
 \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g}))
 \subset \operatorname{Fact}_{\Eone}(\mathcal{Y}(\mathfrak{g})),
 \qquad
-\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))
-\subset \operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(L\mathfrak{g}))
+\subset \operatorname{Fact}_{\Eone}(U_q(L\mathfrak{g}))
 \]
 be the smallest full stable idempotent-complete braided monoidal
 subcategories containing all ordered tensor products of evaluation
@@ -573,18 +577,18 @@ objects. Assume there exist exact braided monoidal functors
 KZ_{\mathrm{fact}}^{\mathrm{gen}}\colon
 \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g}))
 \to
-\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))^{\mathrm{op}},
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(L\mathfrak{g}))^{\mathrm{op}},
 \]
 \[
 LZ_{\mathrm{fact}}^{\mathrm{gen}}\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(L\mathfrak{g}))^{\mathrm{op}}
 \to
 \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g})),
 \]
 whose restrictions to the evaluation generators recover the
 evaluation-locus comparison of
 Theorem~\ref{thm:factorization-dk-eval} after transport to the
-quantum-group evaluation side, and such that both composites are
+quantum-loop evaluation side, and such that both composites are
 isomorphic to the identity on those generators. Then the two functors
 are quasi-inverse braided monoidal equivalences on the generated cores.
 If, in addition,
@@ -593,9 +597,9 @@ If, in addition,
 =
 \operatorname{Fact}_{\Eone}(\mathcal{Y}(\mathfrak{g})),
 \qquad
-\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(L\mathfrak{g}))
 =
-\operatorname{Fact}_{\Eone}(U_q(\mathfrak{g})),
+\operatorname{Fact}_{\Eone}(U_q(L\mathfrak{g})),
 \]
 then the same functors extend to a quasi-inverse braided monoidal
 equivalence on the full factorization categories.
@@ -1302,33 +1306,42 @@ $[V_1] \cdot [L^-] = [L^-(+1)] + [L^-(-1)]$
 with the QQ-system of the quantum group.
 \end{remark}
 
-\begin{proposition}[DK-5 for $\mathfrak{sl}_2$ via FRT
-reconstruction; \ClaimStatusConditional]
+\begin{proposition}[Rational FRT reconstruction for
+\texorpdfstring{$Y_\hbar(\mathfrak{sl}_2)$}{Yh(sl2)};
+\ClaimStatusConditional]
 \label{prop:dk5-sl2-frt}
-\index{Drinfeld--Kohno!DK-5!sl2@$\mathfrak{sl}_2$ resolution|textbf}
-\index{FRT construction!DK-5 resolution}
-\index{quantum group!FRT reconstruction from bar complex}
-For $\fg = \mathfrak{sl}_2$ at generic~$q$, the
-full Hopf algebra $U_q(\mathfrak{sl}_2)$ is uniquely
-determined by the Yang $R$-matrix
-$R(u) = uI + \hbar P$ arising from the bar complex
-$\barB^{\mathrm{ord}}(\widehat{\mathfrak{sl}}_{2,k})$
-via the FRT construction.
+\index{Drinfeld--Kohno!DK-5!sl2@$\mathfrak{sl}_2$ rational FRT|textbf}
+\index{FRT construction!rational Yangian reconstruction}
+\index{Yangian!FRT reconstruction from bar complex}
+For $\fg = \mathfrak{sl}_2$, the Yang $R$-matrix
+\[
+R(u)=u\,I-\hbar P
+\]
+arising from the ordered degree-$2$ bar residue determines the
+rational RTT bialgebra
+\[
+R(u-v)T_1(u)T_2(v)=T_2(v)T_1(u)R(u-v).
+\]
+After imposing the standard quantum-determinant normalization this
+RTT bialgebra is the RTT presentation of
+$Y_\hbar(\mathfrak{sl}_2)$.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The $R$-matrix satisfies the Yang--Baxter equation and
- strong unitarity $R_{12}(u)\,R_{21}(-u) = (u^2 - \hbar^2)I$.
-\item The FRT relations $R\,T_1\,T_2 = T_2\,T_1\,R$
- produce the Drinfeld--Jimbo coproduct
- $\Delta(E) = E \otimes K + I \otimes E$,
- $\Delta(F) = F \otimes I + K^{-1} \otimes F$,
- $\Delta(K) = K \otimes K$.
-\item Rigidity: $H^2(U_q(\mathfrak{sl}_2), \mathbb{k}) = 0$
- ensures the reconstruction is unique
- \textup{(}no deformation ambiguity\textup{)}.
-\item At roots of unity $q = e^{2\pi i/(k+2)}$, the Verlinde
- truncation at spin $j = (k{+}1)/2$ is a direct consequence:
- the quantum dimension $[k{+}2]_q = 0$ forces vanishing
- of the trace on spin-$(k{+}1)/2$ representations.
+ scalar unitarity
+ \[
+ R_{12}(u)R_{21}(-u)=(\hbar^2-u^2)I.
+ \]
+\item The FRT relations reconstruct the rational Yangian
+ coproduct on the generating series,
+ \[
+ \Delta T_{ij}(u)=\sum_a T_{ia}(u)\otimes T_{aj}(u),
+ \]
+ not the Drinfeld--Jimbo coproduct of $U_q(\mathfrak{sl}_2)$.
+\item The trigonometric quantum-loop category enters only after the
+ Drinfeld--Kazhdan exponential comparison
+ $u\mapsto e^u$, $q=e^\hbar$. Verlinde truncation at roots of
+ unity is a separate quotient on the trigonometric side, not a
+ consequence of the rational FRT reconstruction.
 \end{enumerate}
 \end{proposition}
 
@@ -1336,15 +1349,22 @@ via the FRT construction.
 The Yang $R$-matrix is constructed from the bar complex
 via the collision residue
 (Theorem~\ref{thm:factorization-dk-eval}). The FRT
-procedure applied to $R(u) = uI + \hbar P$ yields
-the RTT algebra; the standard Faddeev--Reshetikhin--Takhtajan
-argument identifies this with $U_q(\mathfrak{sl}_2)$ at
-$q = e^{i\hbar}$. Rigidity follows from the vanishing of the
-second Hochschild--Kostant--Rosenberg cohomology of
-$U_q(\mathfrak{sl}_2)$ at generic~$q$, which in turn follows
-from the semisimplicity of the representation category.
-The Verlinde truncation is immediate from the quantum
-dimension formula $[n]_q = \sin(n\pi/(k{+}2))/\sin(\pi/(k{+}2))$.
+procedure applied to $R(u)=uI-\hbar P$ gives precisely the
+RTT relations displayed in the statement. Since $P^2=I$ and
+$P_{12}=P_{21}$, the product
+\[
+(uI-\hbar P)(-uI-\hbar P)
+\]
+equals $(\hbar^2-u^2)I$, giving scalar unitarity. The Yang--Baxter
+equation is the standard permutation identity for the rational Yang
+matrix and is also the degree-$3$ projection of the ordered MC equation.
+The coproduct is the FRT matrix coproduct
+$\Delta T(u)=T(u)\dot\otimes T(u)$, which is the RTT Yangian
+coproduct after the quantum determinant reduction to
+$\mathfrak{sl}_2$. The Drinfeld--Jimbo Hopf algebra belongs to the
+trigonometric quantum-loop comparison; it is related to this rational
+RTT surface by the exponential spectral-parameter comparison, not by
+the rational FRT construction itself.
 \end{proof}
 
 \begin{conjecture}[Restricted DK-5: evaluation-generated triple bridge;
@@ -1358,8 +1378,8 @@ Let $\fg$ be a simple Lie algebra, and let
 \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\fg))
 \subset \operatorname{Fact}_{\Eone}(\mathcal{Y}(\fg)),
 \qquad
-\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{gen}}(U_q(\fg))
-\subset \operatorname{Rep}(U_q(\fg))
+\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{gen}}(U_q(L\fg))
+\subset \operatorname{Rep}(U_q(L\fg))
 \]
 be the full stable idempotent-complete braided monoidal subcategories
 generated by evaluation modules
@@ -1374,7 +1394,7 @@ $\infty$-categories
 \;\simeq\;
 \operatorname{Mod}^{\mathrm{gen}}(\Ydg_{\cA})
 \;\simeq\;
-\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{gen}}(U_q(\fg))^{\mathrm{op}},
+\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{gen}}(U_q(L\fg))^{\mathrm{op}},
 \end{equation}
 compatible with the DK-1 evaluation-locus equivalence
 \textup{(}Theorem~\textup{\ref{thm:factorization-dk-eval}}\textup{)}
@@ -1392,7 +1412,7 @@ simple types.
  $D^b(\mathrm{Rep}_{\mathrm{fd}}(Y_\hbar(\fg)))$
  \textup{(}Corollary~\textup{\ref{cor:dk2-thick-generation-all-types}}\textup{)}.
  The subcategory
- $\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{gen}}(U_q(\fg))$
+ $\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{gen}}(U_q(L\fg))$
  therefore contains every finite-dimensional irreducible.
 \item \emph{Categorical Clebsch--Gordan.}
  The all-types CG closure
@@ -1405,7 +1425,7 @@ simple types.
  The outer equivalence on the evaluation-generated core is
  proved
  \textup{(}Corollary~\textup{\ref{cor:dk23-all-types}}\textup{)}.
- What remains is the middle term: the dg-shifted Yangian
+ The non-formal middle term is the dg-shifted Yangian
  identification~\textup{(}DK-4 restricted to the generated
  sector\textup{)} and the PBW/exponential
  passage~\textup{(}DK-5 on the generated core\textup{)}.
@@ -1442,7 +1462,9 @@ Three consequences organize the proved surface:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Quadratic $\Rightarrow$ $R$-matrix inversion.}
  The RTT relation is quadratic in~$T$; the orthogonal complement
- $R^\perp$ of the $R(u)$-relations is the $R^{-1}(u)$-relations,
+ $R^\perp$ of the $R(u)$-relations is the scalar-normalized
+ inverse $R$-relation \textup{(}equivalently the
+ $\hbar\mapsto-\hbar$ relation in the rational normalization\textup{)},
  so $Y(\fg)^! = Y_{-\hbar}(\fg)$
  (Theorem~\ref{thm:yangian-koszul-dual}).
 
@@ -1863,13 +1885,8 @@ $\cA_{\leq N}$, the tangent Lie algebra
 $\mathfrak{g}_N := T_{*}\mathfrak{F}_{\cA_{\leq N}}$
 satisfies:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $\mathfrak{g}_N$ is a finite-dimensional dg Lie algebra
- with $N \cdot (\dim V_0)^2$ generators in degree~$0$
- \textup{(}one copy of $\operatorname{End}(V_0)$ per RTT
- level; for the reduced Yangian, $N \cdot \dim \fg$
- generators\textup{)}.
-\item The differential on~$\mathfrak{g}_N$ is the derivation
- of $\barB(\cA_{\leq N})$ induced by the bar differential:
+\item $\mathfrak{g}_N$ is the complete dg Lie algebra of continuous
+ derivations of the finite-mode bar coalgebra:
  \[
  \mathfrak{g}_N
  \;\cong\;
@@ -1877,184 +1894,102 @@ satisfies:
  \barB(\cA_{\leq N}),\, \barB(\cA_{\leq N})
  \bigr)[1].
  \]
+\item Its linear degree-$0$ generator space is
+ \[
+ V_{\leq N}=\bigoplus_{r=0}^{N-1}\operatorname{End}(V_0)_r,
+ \]
+ of dimension $N(\dim V_0)^2$; for the reduced Yangian this linear
+ quotient is $\bigoplus_{r=0}^{N-1}\fg_r$, of dimension
+ $N\dim\fg$. The full dg Lie algebra is complete and locally finite
+ by RTT-level and bar-length windows; it is not a finite-dimensional
+ dg Lie algebra.
+\item The bar coalgebra $\barB(\cA_{\leq N})$ is cofree
+ conilpotent by bar length. Quadratic RTT relations do not bound bar
+ degree. They give a finite-mode algebra whose finite
+ total-window pieces
+ \[
+ F^{\leq w}\barB(\cA_{\leq N})
+ \]
+ are finite-dimensional and form the correct completed surface.
 \item The truncation maps $\cA_{\leq N+1} \to \cA_{\leq N}$
- induce surjective dg Lie algebra maps
- $\mathfrak{g}_{N+1} \twoheadrightarrow \mathfrak{g}_N$,
- compatible with the bar construction.
-\item At $N = 1$, $\mathfrak{g}_1 \cong \mathfrak{gl}(V_0)$
- \textup{(}the RTT generators $T_{ij}^{(0)}$ at level~$0$ span
- $\operatorname{End}(V_0)$ with the commutator bracket\textup{)},
- concentrated in degree~$0$. For the reduced Yangian
- $Y(\fg)$ \textup{(}quantum determinant quotient\textup{)},
- $\mathfrak{g}_1 \cong \fg$.
+ induce continuous dg Lie algebra maps
+ $\mathfrak{g}_{N+1}\to\mathfrak{g}_N$ that are surjective on every
+ finite total-window quotient. Thus the tangent tower is
+ Mittag--Leffler after passing to the strict completed window
+ surface.
+\item At $N = 1$, the linear tangent quotient is
+ $\mathfrak{gl}(V_0)$, and for the reduced Yangian it is~$\fg$.
+ The full tangent complex remains the completed derivation complex of
+ the bar coalgebra of $U(\mathfrak{gl}(V_0))$ or of its reduced
+ quotient.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-Part~(a):
-$\cA_{\leq N}$ is the quotient of~$\cA$ by generators of
-level $> N$. Each level contributes $(\dim V_0)^2$
-generators (the RTT modes $T_{ij}^{(r)}$ for
-$0 \leq r \leq N-1$), so $\mathfrak{g}_N$ has
-$N \cdot (\dim V_0)^2$ generators in degree~$0$.
-Since $\cA_{\leq N}$ is quadratic and Koszul
-(Proposition~\ref{prop:yangian-koszul}), the tangent Lie
-algebra $\mathfrak{g}_N \cong
-\operatorname{Ext}^*_{\cA_{\leq N}}(\bC, \bC)[1]$ is
-finite-dimensional (each degree of the Koszul dual
-$\cA_{\leq N}^!$ is finite-dimensional by local finiteness).
-
-Part~(b):
 By Lurie's formal moduli theorem~\cite{LurieDAGX}, the tangent
 Lie algebra is computed as the shifted derivations of the bar
-coalgebra. For the finite-dimensional quotient~$\cA_{\leq N}$,
-the bar coalgebra $\barB(\cA_{\leq N})$ is finite-dimensional
-(bounded bar degree by the quadratic relations), so
-the derivation complex is finite-dimensional.
+coalgebra, giving~(a). The $N$-th RTT truncation has only the modes
+$T_{ij}^{(r)}$ with $0\le r<N$, hence its linear generator space is
+$V_{\leq N}$; imposing the quantum determinant or trace-zero
+condition replaces $\operatorname{End}(V_0)$ by~$\fg$. This proves~(b).
 
-Part~(c):
-The truncation map $\cA_{\leq N+1} \twoheadrightarrow \cA_{\leq N}$
-induces a surjection
-$\barB(\cA_{\leq N+1}) \twoheadrightarrow \barB(\cA_{\leq N})$
-of bar coalgebras (bar is covariant on algebra maps).
+The reduced bar coalgebra is $T^c(s^{-1}\bar\cA_{\leq N})$.
+Its deconcatenation coproduct strictly lowers bar length on every
+finite tensor, so it is conilpotent in the usual cofree sense. No
+quadratic relation truncates tensor length. Finite-dimensionality
+comes instead from the combined total window: bounded RTT level and
+bounded bar length allow only finitely many tensor words in the
+finite-dimensional generator space~$V_{\leq N}$. This is~(c).
 
-For the tangent Lie algebras, the map
-$\mathfrak{g}_{N+1} \to \mathfrak{g}_N$ is surjective by the
-following Koszul dual argument: since $\cA_{\leq N}$ is Koszul,
-the tangent Lie algebra in degree~$p$ is
-$(\mathfrak{g}_N)_p \cong (\cA_{\leq N}^!)_{p+1}$.
+The projection $\cA_{\leq N+1}\twoheadrightarrow\cA_{\leq N}$ kills
+only the top RTT mode and induces a continuous coalgebra map on bars.
+On any fixed total window, every surviving word already uses modes
+$<N$ once $N$ is large enough, so the induced map on window quotients
+is surjective. Passing to continuous derivations gives the same
+windowwise surjectivity for the tangent Lie algebras, proving~(d).
 
-The Koszul dual $\cA_{\leq N}^!$ has generators
-$V_{\leq N}^*$ and relations $R_{\leq N}^\perp$.
-Any element $f \in (\cA_{\leq N}^!)_n
-\subset (V_{\leq N}^*)^{\otimes n} \cap (R_{\leq N}^\perp)_n$
-extends by zero on the $V_N^*$-components to an element
-$\tilde{f} \in (\cA_{\leq N+1}^!)_n$
-(since $\tilde{f}$ automatically annihilates all
-relations involving level-$N$ generators).
-Hence $(\cA_{\leq N+1}^!)_n \twoheadrightarrow (\cA_{\leq N}^!)_n$
-is surjective in every degree.
-
-The identification
-$(\mathfrak{g}_N)_p \cong (\cA_{\leq N}^!)_{p+1}$ is natural
-in~$N$: it arises from Lurie's formal moduli theorem (Part~(b))
-applied to each truncation, and the truncation-compatible maps of
-bar coalgebras induce compatible maps on derivation complexes.
-Thus the surjectivity of $(\cA_{\leq N+1}^!)_n \twoheadrightarrow
-(\cA_{\leq N}^!)_n$ directly yields
-$\mathfrak{g}_{N+1} \twoheadrightarrow \mathfrak{g}_N$ in every
-internal degree.
-
-Part~(d):
-At $N = 1$, $\cA_{\leq 1} \cong U(\mathfrak{gl}(V_0))$ (the
-$T_{ij}^{(0)}$ for $1 \leq i,j \leq \dim V_0$ generate
-$\operatorname{End}(V_0) = \mathfrak{gl}(V_0)$ under the
-commutator, and the RTT relation at level~$0$ reproduces the
-$\mathfrak{gl}(V_0)$ bracket). The bar complex
-$\barB(U(\mathfrak{gl}(V_0)))$ is the Chevalley--Eilenberg complex,
-and $\operatorname{Der}(\barB(U(\mathfrak{gl}(V_0))))[1]
-\cong \mathfrak{gl}(V_0)$, concentrated in degree~$0$.
-The quantum determinant condition at level~$0$ reduces the
-identity component, giving $\mathfrak{g}_1 \cong \fg$ for
-the reduced Yangian.
+For~(e), the RTT relation at level~$0$ is the enveloping algebra
+relation for $\mathfrak{gl}(V_0)$; the determinant reduction gives
+$\fg$. This identifies the linear tangent quotient. The completed bar
+derivation complex contains the higher bar-length directions and is
+therefore not literally concentrated in this quotient.
 \end{proof}
 
-\begin{theorem}[Mittag-Leffler for the RTT bar cohomology tower;
+\begin{theorem}[Mittag-Leffler for finite RTT bar windows;
 \ClaimStatusProvedHere]
 \label{thm:rtt-mittag-leffler}
 \index{Mittag-Leffler condition!RTT tower|textbf}
 \index{bar complex!RTT tower!Mittag-Leffler}
 \index{Drinfeld--Kohno!DK-4!Mittag-Leffler}
-For any simple Lie algebra~$\fg$, the transition maps on bar
-cohomology in the RTT tower are surjective:
+For any simple Lie algebra~$\fg$, let $Y_{\leq N}$ be the standard
+RTT truncation and filter $\barB(Y_{\leq N})$ by total RTT window
+(\textup{bar length plus total mode level}). For every cohomological
+degree~$n$ and every finite window~$w$, the transition maps induce
+isomorphisms
 \[
-H^n\bigl(\barB(\cA_{\leq N+1})\bigr)
-\;\twoheadrightarrow\;
-H^n\bigl(\barB(\cA_{\leq N})\bigr)
-\qquad \text{for all } N \geq 1, \;\text{all } n \geq 0.
+H^n\bigl(F^{\leq w}\barB(Y_{\leq N+1})\bigr)
+\xrightarrow{\;\sim\;}
+H^n\bigl(F^{\leq w}\barB(Y_{\leq N})\bigr)
+\qquad (N\geq w).
 \]
-In particular, the Mittag-Leffler condition holds and
-$\varprojlim^1_N H^n(\barB(\cA_{\leq N})) = 0$.
+Consequently the strict completed RTT-window tower is
+Mittag--Leffler and
+$\varprojlim^1_N H^n(F^{\leq w}\barB(Y_{\leq N}))=0$ for every
+finite window~$w$. This is the completed Theorem~B surface; it is not
+a raw direct-sum assertion about the uncompleted bar coalgebra.
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1: PBW filtration on truncated bar complexes.}
-Each truncation $\cA_{\leq N} = Y(\fg)_{\leq N}$ inherits the
-PBW filtration of Proposition~\ref{prop:yangian-koszul}:
-$F_p \cA_{\leq N}$ is spanned by ordered monomials of total
-level $\leq p$ in the RTT generators $\{T_{ij}^{(r)}\}_{r < N}$.
-The associated graded is the polynomial algebra:
-\[
-\operatorname{gr}_F \cA_{\leq N}
-\;\cong\;
-\operatorname{Sym}(V_{\leq N}),
-\qquad
-V_{\leq N} = \bigoplus_{r=0}^{N-1}
-\operatorname{End}(\bC^{N_0})_r,
-\]
-where $N_0 = \dim V_0$. The truncation maps
-$\cA_{\leq N+1} \twoheadrightarrow \cA_{\leq N}$ preserve the
-PBW filtration and induce the projection
-$\operatorname{Sym}(V_{\leq N+1}) \twoheadrightarrow
-\operatorname{Sym}(V_{\leq N})$ on associated graded.
-
-\emph{Step~2: PBW spectral sequence for bar cohomology.}
-The PBW filtration induces a bounded-below, exhaustive filtration
-on $\barB(\cA_{\leq N})$. By
-Theorem~\ref{thm:pbw-koszulness-criterion} (``bar construction
-commutes with taking associated graded for flat filtrations''),
-the associated spectral sequence has $E_1$ page
-\[
-E_1^{p,q}(\cA_{\leq N})
-= H^{p+q}\bigl(\barB(\operatorname{Sym}(V_{\leq N}))\bigr).
-\]
-By Koszulness of $\cA_{\leq N}$
-(Proposition~\ref{prop:yangian-koszul} applies to each truncation:
-$\cA_{\leq N}$ is a quadratic algebra in finitely many generators
-$\{T_{ij}^{(r)}\}_{r < N}$ with the restricted RTT relations, inherits
-the PBW basis of Molev, and satisfies local finiteness a~fortiori),
-the spectral sequence \emph{degenerates at $E_1$}:
-$E_1 = E_\infty$: Koszulness forces bar cohomology
-onto the diagonal $p + q = n$, $p = n$ (homological = internal
-degree), so all higher differentials $d_r$ for $r \geq 2$ have
-zero source or target for bidegree reasons.
-
-\emph{Step~3: Surjectivity on $E_1$.}
-For the commutative algebra $\operatorname{Sym}(V_{\leq N})$,
-the Koszul dual is $\bigwedge(V_{\leq N}^*)$, and bar cohomology
-in degree~$n$ is $\bigwedge^n(V_{\leq N}^*)$. The truncation
-$\operatorname{Sym}(V_{\leq N+1}) \twoheadrightarrow
-\operatorname{Sym}(V_{\leq N})$ induces on bar cohomology the
-projection
-\[
-\textstyle
-\bigwedge\nolimits^n(V_{\leq N+1}^*)
-\;\twoheadrightarrow\;
-\bigwedge\nolimits^n(V_{\leq N}^*),
-\]
-which kills exactly the wedge products involving the factor
-$\operatorname{End}(\bC^{N_0})_N^*$. This map is surjective
-for all $N$ and $n$.
-
-\emph{Step~4: Filtered surjectivity implies surjectivity.}
-The truncation maps $\cA_{\leq N+1} \to \cA_{\leq N}$ are
-compatible with the PBW filtrations, hence induce a map of
-spectral sequences. On the $E_1 = E_\infty$ page, this map
-is the surjection of Step~3. Since the PBW filtration on
-$H^n(\barB(\cA_{\leq N}))$ is exhaustive and bounded below
-(each bar degree and level contributes finitely), a standard
-filtered-surjectivity argument gives: a filtered map
-$f\colon M' \to M$ of filtered objects inducing a surjection
-$\operatorname{gr}_p f$ on each graded piece is itself
-surjective. (Proof: by induction on $p$, the image of
-$f$ contains $F_p M$ for each~$p$; exhaustivity gives
-$\operatorname{im}(f) = M$.)
-
-Therefore $H^n(\barB(\cA_{\leq N+1}))
-\twoheadrightarrow H^n(\barB(\cA_{\leq N}))$
-is surjective for all $N$ and~$n$. Surjective transition maps
-trivially satisfy Mittag-Leffler, giving
-$\varprojlim^1 = 0$.
+The RTT generators have non-negative mode level, and the RTT
+relations are homogeneous for total mode level. A bar word in
+window~$w$ can involve only modes $T_{ij}^{(r)}$ with $r\leq w$ and
+has bar length at most~$w$. Hence, for $N\geq w$, the window
+subcomplex $F^{\leq w}\barB(Y_{\leq N})$ is literally independent of
+$N$. The transition maps are identities on this subcomplex, so they
+induce the displayed isomorphisms on cohomology. The inverse system is
+therefore eventually constant in each finite window, which is exactly
+Mittag--Leffler and kills the Milnor $\varprojlim^1$ term window by
+window.
 \end{proof}
 
 \begin{corollary}[Completed bar-cobar equivalence for Yangians;
@@ -2062,57 +1997,61 @@ $\varprojlim^1 = 0$.
 \label{cor:completed-bar-cobar-yangian}
 \index{bar-cobar duality!completed Yangian|textbf}
 \index{Yangian!completed bar-cobar}
-For any simple~$\fg$, the completed reduced bar construction
+For any simple~$\fg$, the strict RTT-window completed reduced bar
+construction
 \[
-\widehat{\barB}\bigl(Y(\fg)\bigr)
+\widehat{\barB}_{\mathrm{RTT}}\bigl(Y(\fg)\bigr)
 \;:=\;
-\varprojlim_N\, \barB\bigl(Y(\fg)_{\leq N}\bigr)
+\varprojlim_w\,F^{\leq w}\barB\bigl(Y(\fg)_{\leq w}\bigr)
 \]
 exists as a separated complete conilpotent $\Eone$-chiral coalgebra,
 and the completed cobar-bar counit is a quasi-isomorphism:
 \[
 \Omega^{\mathrm{ch}}\bigl(
- \widehat{\barB}(Y(\fg))
+ \widehat{\barB}_{\mathrm{RTT}}(Y(\fg))
 \bigr)
 \;\xrightarrow{\;\sim\;}\;
-Y(\fg).
+\widehat Y_{\mathrm{RTT}}(\fg).
 \]
 This verifies
 Theorem~\textup{\ref{thm:completed-bar-cobar-strong}}
-for the Yangian RTT tower.
+for the Yangian RTT tower on the strict completed surface. It does not
+identify the raw direct-sum bar coalgebra with this completion after
+forgetting the RTT-window topology.
 \end{corollary}
 
 \begin{proof}
 The strong completion-tower axioms of
 Theorem~\ref{thm:completed-bar-cobar-strong} are verified:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Each truncation $\cA_{\leq N}$ is finite type and lies in
- the proved bar-cobar regime
- (Corollary~\ref{cor:yangian-bar-cobar}).
+\item Each finite RTT-window truncation lies in the proved bar-cobar
+ regime (Corollary~\ref{cor:yangian-bar-cobar}) and has
+ finite-dimensional graded pieces in that window.
 \item The transition maps $\cA_{\leq N+1} \to \cA_{\leq N}$ are
  compatible with the finite-stage bar constructions
  (PBW filtration compatibility,
  Proposition~\ref{prop:finite-stage-tangent}(c)).
-\item The inverse system on bar complexes satisfies Mittag-Leffler
- (Theorem~\ref{thm:rtt-mittag-leffler}): the transition maps
- on bar cohomology are surjective, so
- $\varprojlim^1_N H^n(\barB(\cA_{\leq N})) = 0$.
+\item The inverse system on finite windows satisfies
+ Mittag--Leffler (Theorem~\ref{thm:rtt-mittag-leffler}), so
+ $\varprojlim^1$ vanishes windowwise.
 \end{enumerate}
 The Mittag-Leffler condition gives
-$H^n(\widehat{\barB}(Y(\fg)))
-\cong \varprojlim_N H^n(\barB(\cA_{\leq N}))$
+$H^n(\widehat{\barB}_{\mathrm{RTT}}(Y(\fg)))
+\cong \varprojlim_w H^n(F^{\leq w}\barB(\cA_{\leq w}))$
 (no $\varprojlim^1$ correction). The completed cobar differential
 is continuous by
 Proposition~\ref{prop:inverse-limit-differential-continuity}
-(automatic for inverse systems of finite-stage curved dg
-coalgebras). By the MC4 reduction principle
+(for inverse systems of finite-window curved dg coalgebras). By the
+MC4 reduction principle
 (Proposition~\ref{prop:mc4-reduction-principle},
 now verified for this tower), the completed cobar-bar counit
 restricts at each finite stage to the proved
 quasi-isomorphism
 $\Omega(\barB(\cA_{\leq N})) \xrightarrow{\sim} \cA_{\leq N}$,
-and the Mittag-Leffler condition ensures the inverse limit
-of quasi-isomorphisms is a quasi-isomorphism.
+and the windowwise Mittag--Leffler condition ensures the inverse
+limit of quasi-isomorphisms is a quasi-isomorphism. The target inverse
+limit is the coefficientwise RTT completion
+$\widehat Y_{\mathrm{RTT}}(\fg)$.
 \end{proof}
 
 \begin{conjecture}[DK-4: tangent Lie algebra identification;
@@ -2120,18 +2059,19 @@ of quasi-isomorphisms is a quasi-isomorphism.
 \label{conj:dk4-inverse-limit}
 \index{Drinfeld--Kohno!DK-4!inverse limit construction}
 \index{tangent Lie algebra!inverse limit}
-By Theorem~\textup{\ref{thm:rtt-mittag-leffler}}, the
-inverse system $\{\mathfrak{g}_N\}_{N \geq 1}$ of
-Proposition~\textup{\ref{prop:finite-stage-tangent}} satisfies
-Mittag-Leffler with surjective transition maps, and the tangent
-Lie algebra of the factorization formal moduli problem is
+By Theorem~\textup{\ref{thm:rtt-mittag-leffler}} and
+Proposition~\textup{\ref{prop:finite-stage-tangent}}, the finite
+RTT-window quotients of the tangent tower are Mittag--Leffler. On the
+strict completed window surface, the tangent Lie algebra of the
+factorization formal moduli problem is expected to be
 \[
 \mathfrak{g}_{\cA}
 \;=\;
 T_{*}\mathfrak{F}_{\cA}
 \;\cong\;
-\varprojlim_N\, \mathfrak{g}_N.
+\varprojlim_N\, \mathfrak{g}_N
 \]
+as a continuous dg Lie algebra.
 The remaining content of DK-4 is the identification of this
 inverse limit with the dg-shifted Yangian:
 \[
@@ -2140,7 +2080,9 @@ inverse limit with the dg-shifted Yangian:
 \Ydg_{\cA}.
 \]
 This identification is equivalent to showing that the derivation
-complex $\operatorname{Der}(\widehat{\barB}(Y(\fg)))$
+complex
+$\operatorname{Der}^{\mathrm{cont}}
+(\widehat{\barB}_{\mathrm{RTT}}(Y(\fg)))$
 carries the dg-shifted RTT structure
 \textup{(}Definition~\textup{\ref{def:dg-shifted-yangian}}\textup{)}:
 the Maurer--Cartan element $r(z) = \tau|_{\deg 2}$, the
@@ -2152,10 +2094,12 @@ translation operator, and the twisted coproduct.
 \index{Mittag-Leffler condition!DK-4 reduction}
 Theorem~\ref{thm:rtt-mittag-leffler} and
 Corollary~\ref{cor:completed-bar-cobar-yangian} resolve the
-\emph{analytic} part of DK-4: the inverse limit exists, is
-well-behaved ($\varprojlim^1 = 0$), and the completed bar-cobar
+\emph{analytic} part of DK-4 on finite RTT windows: the strict
+completed inverse limit exists, has no windowwise
+$\varprojlim^1$ obstruction, and the completed bar-cobar
 equivalence holds. What remains is the \emph{algebraic}
-identification of $\varprojlim_N \mathfrak{g}_N$ with the
+identification of the continuous limit $\varprojlim_N \mathfrak{g}_N$
+with the
 dg-shifted Yangian; specifically, the three structural
 data:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -2163,7 +2107,8 @@ data:
  degree-$2$ part of the bar propagator~$\tau$;
 \item the translation operator is the derivation induced by
  $T_{ij}^{(r)} \mapsto T_{ij}^{(r+1)}$;
-\item the twisted coproduct on $\widehat{\barB}(Y(\fg))$
+\item the twisted coproduct on
+ $\widehat{\barB}_{\mathrm{RTT}}(Y(\fg))$
  decomposes as the Drinfeld coproduct on~$\Ydg$.
 \end{enumerate}
 Proposition~\ref{prop:yangian-dk4-typea-frontier} isolates the
@@ -2342,7 +2287,7 @@ compatible with evaluation modules and the KZ monodromy package on the
 evaluation locus.
 
 \smallskip\noindent
-\emph{Status.}
+\emph{Reduction.}
 Conjecture~\textup{\ref{conj:full-derived-dk}} is the DK-3 outer
 factorization equivalence; Theorem~\textup{\ref{thm:factorization-dk-eval}}
 proves DK-1 on the evaluation locus. The Yangian middle term and the
@@ -3204,11 +3149,11 @@ Proposition~\ref{prop:yangian-dk5-fundamental-packet}. Let
 KZ_{\mathrm{fd}}\colon
 \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
 \xrightarrow{\sim}
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 \[
 LZ_{\mathrm{fd}}\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \xrightarrow{\sim}
 \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
 \]
@@ -3224,7 +3169,7 @@ J_Y^\omega\colon
 \mathcal{C}_Y^\omega,
 \qquad
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \xrightarrow{\sim}
 \mathcal{C}_q^\omega
 \]
@@ -3293,12 +3238,12 @@ monoidal subcategory containing the fundamental evaluation objects is
 the whole finite-dimensional Yangian factorization category.
 \end{proof}
 
-\begin{lemma}[Finite-dimensional quantum-group factorization core is
+\begin{lemma}[Finite-dimensional quantum-loop factorization core is
 generated by fundamental evaluation objects; \ClaimStatusProvedHere]
 \label{lem:quantum-fd-fundamental-generation}
 For $\mathfrak{sl}_M$, the braided monoidal stable category
 \[
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 is the smallest full stable idempotent-complete braided monoidal
 subcategory containing the fundamental evaluation objects.
@@ -3315,14 +3260,14 @@ category of finite-dimensional quantum-loop modules shows that the
 bounded derived category is the thick triangulated closure of the
 fundamental evaluation modules. The factorization category
 \[
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 is this same finite-dimensional stable category equipped with the
 ordered factorization tensor product, and ordered tensor products of
 fundamental evaluation objects remain inside the same closure.
 Therefore the smallest full stable idempotent-complete braided
 monoidal subcategory containing the fundamental evaluation objects is
-the whole finite-dimensional quantum-group factorization category.
+the whole finite-dimensional quantum-loop factorization category.
 \end{proof}
 
 \begin{proposition}[Spectral compact-core realization is formal from
@@ -3341,13 +3286,13 @@ Let
 \[
 \mathcal{G}^{\mathrm{fund,fd}}_{q}
 \subset
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 be the full subcategory generated by finite ordered tensor products of
 fundamental evaluation objects, and let
 \[
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \mathcal{C}_q^\omega
 \]
@@ -3392,7 +3337,7 @@ Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}. Let
 \[
 \mathcal{P}^{\mathrm{fund,fd}}_{q}
 \subset
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 be the full subcategory spanned by the fundamental evaluation objects
 themselves, and let
@@ -3405,7 +3350,7 @@ be the full subcategory spanned by their completed spectral images.
 Assume that the exact braided monoidal functor
 \[
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \mathcal{C}_q^\omega
 \]
@@ -3436,7 +3381,7 @@ spectral category in an exact braided-monoidal way.
 \begin{proof}
 By Lemma~\ref{lem:quantum-fd-fundamental-generation}, the source
 \[
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 is the smallest full stable idempotent-complete braided monoidal
 subcategory containing \(\mathcal{P}^{\mathrm{fund,fd}}_{q}\). By the
@@ -3463,18 +3408,18 @@ Proposition~\ref{prop:yangian-dk5-spectral-realization-formal} is
 automatic. The final sentence follows.
 \end{proof}
 
-\begin{lemma}[Type-\texorpdfstring{$A$}{A} quantum-group fundamental packet is generated
+\begin{lemma}[Type-\texorpdfstring{$A$}{A} quantum-loop fundamental packet is generated
 by the vector evaluation line; \ClaimStatusProvedHere]
 \label{lem:quantum-fd-vector-fundamental-generation}
 Let
 \[
 \mathcal{P}^{\mathrm{vec,fd}}_{q}
 \subset
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 be the full subcategory spanned by the vector evaluation objects.
 Then every fundamental evaluation object of
-\(\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}\)
+\(\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}\)
 belongs to the smallest full stable idempotent-complete braided
 monoidal subcategory containing
 \(\mathcal{P}^{\mathrm{vec,fd}}_{q}\).
@@ -3500,7 +3445,7 @@ Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}. Let
 \[
 \mathcal{P}^{\mathrm{vec,fd}}_{q}
 \subset
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \]
 be the full subcategory generated by finite ordered tensor products of
 the vector evaluation objects, and
@@ -3515,7 +3460,7 @@ spectral tensor packet.
 Assume that the exact braided monoidal functor
 \[
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \mathcal{C}_q^\omega
 \]
@@ -3633,7 +3578,7 @@ autoequivalences. The group law and unit follow from composition.
 \ClaimStatusProvedHere]
 \label{lem:quantum-fd-vector-seed-schur}
 For every \(a\in\mathbb C\), the type-$A$ vector evaluation object
-\(V(a)\in \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}\)
+\(V(a)\in \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}\)
 is simple, so \(\End(V(a))\cong \mathbb C\).
 \end{lemma}
 
@@ -3703,7 +3648,7 @@ and~\ref{prop:yangian-dk5-spectral-vector-line}. Assume that the exact
 braided monoidal functor
 \[
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \mathcal{C}_q^\omega
 \]
@@ -3807,7 +3752,7 @@ Work in the setting of
 Definitions~\ref{def:ordered-e1-factorization}
 and~\ref{def:spectral-quantum-group}. Let
 \(J_q^{\mathrm{mult}}\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \Factord(\bC^\times;\QGspec(R_{\cA}))\)
 be an exact braided-monoidal functor, and write
@@ -3842,7 +3787,7 @@ be an exact braided-monoidal functor, and write
  \(\mathcal C_{q,\mathrm{mult}}^\omega\xrightarrow{\sim}
  \mathcal C_{q,\mathrm{mult}}^\omega\),
  \(J_q^{\mathrm{mult}}\) is an exact braided-monoidal equivalence
- \(\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+ \(\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
  \xrightarrow{\sim}
  \mathcal C_{q,\mathrm{mult}}^\omega\),
  and \(\mathcal C_{q,\mathrm{mult}}^\omega\) is a multiplicative
@@ -5106,7 +5051,7 @@ type-$A$ Yangian DK-4/DK-5 packet closes.
  further that the spectral compact core admits an exact braided
  monoidal functor
  \(J_q^\omega\colon
- \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+ \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
  \longrightarrow \mathcal C_q^\omega\)
  whose restriction to the vector evaluation line is an equivalence
  onto the completed vector spectral line, as in
@@ -5452,7 +5397,7 @@ closed under the multiplicative dilations
 \(\rho_a(z)=e^a z\), and that the exact braided-monoidal functor
 \[
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \mathcal C_q^\omega
 \]
@@ -5790,7 +5735,7 @@ hold for \(U^{\mathrm{comp}}(\mathfrak{g}_{\cA})\). Assume further
 that the spectral compact core admits an exact braided monoidal functor
 \[
 J_q^\omega\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(L\mathfrak{sl}_M))^{\mathrm{op}}
 \longrightarrow
 \mathcal C_q^\omega
 \]
@@ -5835,17 +5780,18 @@ The DK square takes different forms depending on the $R$-matrix type:
 \textup{(}Theorem~\textup{\ref{thm:derived-dk-yangian})}.
 The Yangian $R$-matrix $R(u) = 1 - \hbar P/u$ is rational
 in the additive spectral parameter $u$. Koszul duality sends
-$\hbar \to -\hbar$, i.e., $R(u) \to R^{-1}(u)$. The bar
-complex uses the propagator $d\log(z_i - z_j)$ on the
-FM compactification of $\bC$.
+$\hbar \to -\hbar$; after scalar unitarity normalization this is
+$R(u)\mapsto R(u)^{-1}$. The bar complex uses the propagator
+$d\log(z_i - z_j)$ on the FM compactification of $\bC$.
 
 \emph{Trigonometric DK}
 \textup{(}Remark~\textup{\ref{rem:yangian-quantum-group})}.
 The quantum loop algebra $U_q(\widehat{\mathfrak{g}})$ has
 trigonometric $R$-matrix $R(u/v)$ in the multiplicative
-parameter. Koszul duality sends $q \to q^{-1}$. The bar
-complex uses the propagator $d\log(z_i/z_j)$ on the
-FM compactification of $\bC^\times$.
+parameter. Koszul duality sends $q \to q^{-1}$ together with
+loop inversion of the evaluation coordinate $z\mapsto z^{-1}$.
+The bar complex uses the propagator $d\log(z_i/z_j)$ on the FM
+compactification of $\bC^\times$.
 
 The Kazhdan functor $\Phi_K$ intertwines the rational and
 trigonometric pictures via the exponential map $u \mapsto e^u$,
@@ -5858,9 +5804,10 @@ The Yangian chapter reveals the $\Eone$-chiral face of the theory.
 The chain-level / evaluation-locus derived Drinfeld--Kohno theorem
 (Theorems~\ref{thm:derived-dk-affine}
 and~\ref{thm:derived-dk-yangian}) proves that bar-cobar duality
-\emph{geometrically implements} the quantum group involution
-$q \mapsto q^{-1}$, via orientation reversal on ordered
-configuration spaces. The $\Einf$-chiral examples of the preceding
+\emph{geometrically implements} the quantum-loop involution
+$\iota_q=(q\mapsto q^{-1},\,z\mapsto z^{-1})$, via orientation
+reversal on ordered configuration spaces. The $\Einf$-chiral examples
+of the preceding
 chapters all have commutative factorization structure; the Yangian is
 the first object whose Koszul duality intertwines genuinely
 noncommutative (braided) monoidal data. The theorematic endpoint is
@@ -6302,7 +6249,7 @@ $\Theta_\cA = \varprojlim \Theta_\cA^{\leq r}$.
 
 \begin{remark}[Proved and open components of DK-5]
 \label{rem:dk5-restricted-status}
-\index{Drinfeld--Kohno!DK-5!status of components}
+\index{Drinfeld--Kohno!DK-5!components}
 The three data of Conjecture~\ref{conj:dk5-restricted} exist
 individually:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -6886,7 +6833,8 @@ R(u) = \mathbb{1} - \frac{\hbar\, P}{u}
 \]
 (where $P$ is the permutation operator) should be recovered
 from the degree-$2$ MC projection of the Yangian bar complex
-as $r(z) = \tau|_{\deg 2} = \hbar\, P / z$.
+as $r(z) = \tau|_{\deg 2} = -\hbar\, P / z$ in the
+rational RTT normalization used here.
 
 At the CG level, this is the assertion that the MC element
 $\Theta_{Y(\mathfrak{sl}_2)}$ in the convolution algebra
@@ -7184,9 +7132,10 @@ where $V$ is any finite-dimensional $\fg$-module,
 $\hbar = \pi i/(k + h^\vee)$,
 $\Omega = \sum_a T^a \otimes T_a$ is the quadratic Casimir,
 and $r_n(u)$ are rational functions of~$u$ determined by higher
-bar-tree contractions. In the fundamental representation of
-$\mathfrak{sl}_N$, $R(u)$ coincides with the Jimbo
-$R$-matrix~\cite{Jimbo85}
+bar-tree contractions. This is the additive/rational normalization.
+After the exponential comparison $u\mapsto e^u$ and the usual scalar
+normalization, the fundamental trigonometric specialization is the
+Jimbo $R$-matrix~\cite{Jimbo85}
 \begin{equation}\label{eq:jimbo-R-matrix}
 R^{\mathrm{fund}}_{\mathfrak{sl}_N}
 = q \sum_i e_{ii} \otimes e_{ii}
@@ -7202,7 +7151,8 @@ R_{12}(u_{12})\, R_{13}(u_{13})\, R_{23}(u_{23})
 holds as a formal consequence of the coassociativity
 $(\Delta \otimes \operatorname{id}) \circ \Delta
 = (\operatorname{id} \otimes \Delta) \circ \Delta$
-of the bar coproduct.
+of the bar coproduct together with the hexagon identity for the
+ordered factorization braiding.
 \end{proposition}
 
 \begin{proof}
@@ -7234,11 +7184,12 @@ $\bar B(\cA)_{\{1,2,3\}}$ factors through either of the two
 iterated coproductions
 $(\Delta_{12} \otimes \operatorname{id}) \circ \Delta_{12,3}$ or
 $(\operatorname{id} \otimes \Delta_{23}) \circ \Delta_{1,23}$.
-Their equality is the coassociativity axiom. Projecting both sides
-to the degree-$2$ component in each tensor factor and reading off the
-$u$-dependence yields~\eqref{eq:qybe-from-bar}. In the fundamental
-representation of $\mathfrak{sl}_N$, the explicit matrix
-\eqref{eq:jimbo-R-matrix} is verified numerically for
+Their equality is the coassociativity axiom, and the ordered
+factorization braiding supplies the corresponding hexagon. Projecting
+both sides to the braid operators attached to adjacent collisions and
+reading off the $u$-dependence yields~\eqref{eq:qybe-from-bar}. After
+the exponential comparison to the trigonometric side, the fundamental
+matrix~\eqref{eq:jimbo-R-matrix} is verified numerically for
 $\mathfrak{sl}_2$ ($4\times 4$) and $\mathfrak{sl}_3$ ($9\times 9$)
 in \texttt{quantum\_rmatrix\_barcomplex.py}, classes
 \texttt{verify\_qybe\_sl2} and \texttt{verify\_qybe\_sl3}:
@@ -7806,7 +7757,7 @@ for all Bethe roots.
 \label{rem:ordered-center-bethe}
 \index{Bethe ansatz!ordered chiral center|textbf}
 \index{ordered chiral center!Bethe wavefunctions}
-\index{Bethe ansatz!wavefunction from ker(av)}
+\index{Bethe ansatz!averaging kernel}
 \index{transfer matrix!from symmetric shadow}
 The integrable structures of the preceding results admit a
 precise restatement in terms of the ordered chiral center
@@ -7847,27 +7798,26 @@ $Q(u) = \prod_{a=1}^{M}(u - u_a)$ whose roots are the Bethe
 roots, and both $\Lambda(u)$ and $Q(u)$ are symmetric functions
 of the Bethe roots.
 
-\textbf{3.\@ Kernel of averaging = Bethe wavefunctions.}
+\textbf{3.\@ Kernel of averaging = discarded ordered amplitudes.}
 The kernel $\ker(\av_L)$ at degree~$L$ has dimension
 $2^L - (L + 1)$.
-It carries the matrix-valued $PB_L$-monodromy: the Bethe
-\emph{wavefunctions}
+It is not the Bethe eigenspace. The Bethe wavefunctions
 $|\{u_a\}\rangle = B(u_1) \cdots B(u_M)\,|\Omega\rangle
 \in V^{\otimes L}$
 (Faddeev~\cite{Faddeev96}), where $B(u)$ is the off-diagonal
 entry of the monodromy matrix
 $T(u) = \bigl[\begin{smallmatrix} A & B \\ C & D
 \end{smallmatrix}\bigr]$.
-The wavefunction $|\{u_a\}\rangle$ is a specific
-vector in $V^{\otimes L}$ that projects under $\av_L$
-to the scalar eigenvalue $\Lambda(u)$; the full
-vector-valued datum (the amplitudes on each site of the
-chain) is the genuinely $E_1$ content invisible to the
-symmetric theory. For distinct Bethe roots, the wavefunctions
-span a $\binom{L}{\lfloor L/2 \rfloor}$-dimensional subspace
-of $V^{\otimes L}$ (the completeness of the Bethe ansatz),
-and this subspace lies in $V^{\otimes L}$, not in its
-$\Sigma_L$-coinvariant quotient.
+They live in $V^{\otimes L}$ with the matrix-valued
+$PB_L$-monodromy. Their image under $\av_L$ records only the
+symmetric spectral data: the transfer eigenvalue $\Lambda(u)$, the
+Baxter polynomial $Q(u)$, and the central quantum determinant. The
+ordered amplitudes on individual sites are the $E_1$ data discarded
+by the symmetric quotient; differences of ordered vectors with the
+same symmetric spectral data lie in $\ker(\av_L)$. For distinct Bethe
+roots, Bethe vectors span the appropriate magnon-sector eigenspaces
+inside $V^{\otimes L}$ under the usual completeness hypotheses; those
+eigenspaces are not equal to $\ker(\av_L)$.
 
 \textbf{4.\@ At integrable level: ordered chiral homology
 recovers conformal blocks.}
@@ -7983,14 +7933,14 @@ $\cA^! = H^*(\barBch(\cA))^\vee$.
  = T_2(v)\, T_1(u)\, R_{12}(u{-}v)$
  is the binary component of the bar codifferential: the
  quadratic relations defining $Y(\fg)$ are exactly the
- degree-$2$ bar relations, and $R(u) \mapsto R^{-1}(u)$ is
- the passage from bar to Koszul dual
+ degree-$2$ bar relations, and $R(u)$ passes to its
+ scalar-normalized inverse relation under Koszul duality
  \textup{(}Theorem~\textup{\ref{thm:yangian-koszul-dual}},
  Remark~\textup{\ref{rem:rtt-is-the-duality-datum})}.
  In this sense, the RTT presentation encodes $Y(\fg)$ as its
  own Koszul duality problem: the collision residue
  extracts~$R(u)$, and the orthogonal complement of the
- $R(u)$-relations gives the $R^{-1}(u)$-relations
+ $R(u)$-relations gives the scalar-normalized inverse relations
  defining $Y(\fg)^! = Y_{-\hbar}(\fg)$.
 \end{enumerate}
 \end{theorem}
@@ -8023,11 +7973,12 @@ Part~(iii): for the Yangian $Y(\fg)$ with RTT presentation,
 the quadratic relations $\{R_{12}T_1T_2 - T_2T_1R_{12} = 0\}$
 are the bar relations at degree~$2$. The orthogonal complement
 under the Koszul duality pairing gives the relations of~$Y(\fg)^!$,
-which are the $R^{-1}$-relations: $Y(\fg)^! = Y_{-\hbar}(\fg)$
+which are the scalar-normalized inverse $R$-relations:
+$Y(\fg)^! = Y_{-\hbar}(\fg)$
 (Theorem~\ref{thm:yangian-koszul-dual}). The collision residue
-extracts~$R(u)$ from the bar differential, and inversion
-$R \mapsto R^{-1}$ is exactly the passage from the bar coalgebra
-to the Koszul dual algebra.
+extracts~$R(u)$ from the bar differential, and scalar-normalized
+inversion is exactly the passage from the bar coalgebra to the Koszul
+dual algebra.
 \end{proof}
 
 \begin{remark}[The binary inverse as leading term]
@@ -8963,9 +8914,9 @@ to the full completed statement via
 Theorem~\ref{thm:spectral-residue-bounded-completion}.
 \end{proof}
 
-\begin{remark}[Status of conditions C1--C4]
+\begin{remark}[Conditions C1--C4]
 \label{rem:spectral-c1c4-status}
-\index{strictification!status of conditions}
+\index{strictification!conditions}
 For the $\mathfrak{sl}_N$ Yangian tower:
 \begin{itemize}
 \item \ref{item:strict-C1} holds at
@@ -9040,16 +8991,68 @@ spectral Drinfeld class at filtration~$\ge 4$.
 
 \begin{remark}[Hall--Drinfeld double as the fourth taxonomic slot]
 \label{rem:ydk-hall-drinfeld}
-Beyond Drinfeld--Jimbo, Yangians, RTT, and Manin-triple quasi-Hopf sits a fourth quasi-Hopf taxonomic slot: the \emph{K3 chiral Hall--Drinfeld double}
+Beyond Drinfeld--Jimbo, Yangians, RTT, and Manin-triple quasi-Hopf
+sits a fourth quasi-Hopf taxonomic slot: the \emph{K3 chiral
+Hall--Drinfeld double}
 \[
  \mathcal{D}_\hbar\bigl(\mathcal{Y}^{\mathrm{Hall}}_\hbar(\mathrm{CoHA}_{K3 \times E})\bigr),
 \]
-with Schiffmann--Vasserot $2012$ shuffle presentation (Davison $2017$ CY-$3$ extension), attached to the Manin \emph{pair} $(\mathfrak{g}_{\Delta_5}, \mathfrak{n}_+^{\mathrm{imag}} \oplus \mathfrak{h}^{\mathrm{imag,rk\,23}})$ whose signature-$(2,1)$ Cartan form forbids Lagrangian decomposition. The BKM Lie superalgebra $\mathfrak{g}_{\Delta_5}$ lacks a Kac--Moody Cartan, Weyl group on imaginary simple roots, and J-presentation; consequently $Y_\hbar(\mathfrak{g}_{\Delta_5})$ is \emph{not} a Drinfeld Yangian in the $1985$ sense. See Vol~III Chapter~\texttt{k3\_chiral\_bialgebra\_platonic}.
+with Schiffmann--Vasserot $2012$ shuffle presentation
+\textup{(}Davison $2017$ CY-$3$ extension\textup{)}, attached to the
+Manin \emph{pair}
+$(\mathfrak{g}_{\Delta_5},\mathfrak{n}_+^{\mathrm{imag}}\oplus
+\mathfrak{h}^{\mathrm{imag,rk\,23}})$ whose signature-$(2,1)$ Cartan
+form forbids Lagrangian decomposition. The BKM Lie superalgebra
+$\mathfrak{g}_{\Delta_5}$ lacks a Kac--Moody Cartan, Weyl group on
+imaginary simple roots, and J-presentation; consequently
+$Y_\hbar(\mathfrak{g}_{\Delta_5})$ is \emph{not} a Drinfeld Yangian in
+the $1985$ sense. See Vol~III
+Chapter~\texttt{k3\_chiral\_bialgebra\_platonic}.
+
+Here $K3\times E$ denotes the Hall/CoHA CY$_3$ construction and not a
+single modular characteristic: the separated scalar spectrum is
+\[
+\Spec_{\kappa_\bullet}(K3\times E)
+=\{\kappa_{\mathrm{cat}},\kappa_{\mathrm{ch}}^{\mathrm{Heis}},
+\kappa_{\mathrm{BKM}},\kappa_{\mathrm{fiber}}\}
+=\{0,3,5,24\}.
+\]
+The BKM entry is the weight of the primitive denominator $\Delta_5$,
+not the total-space categorical Euler characteristic and not the fibre
+value.
 \end{remark}
 
 \begin{remark}[Siegel--Borcherds associator at genus $2$]
 \label{rem:ydk-siegel-borcherds}
-The Drinfeld--Kohno Lie algebra $\widehat{\mathfrak{t}}_3$ underlying the classical KZ associator $\Phi_{KZ}$ extends to the Siegel Drinfeld--Kohno Lie algebra $\mathfrak{t}^{\mathrm{Sieg}}_{2,[2]}$ coupled to the imaginary-root nilpotent $\mathfrak{n}_+^{\mathrm{imag}}$. The twisted Siegel--Borcherds associator $\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}[\Phi_{10}/\eta^{24}] \in \exp(\widehat{\mathfrak{t}^{\mathrm{Sieg}}_{2,[2]} \oplus \mathfrak{n}_+^{\mathrm{imag}}})^{\mathrm{grouplike}}$ satisfies pentagon at $\hbar^{\leq 3}$ with coboundary $\phi^{(3)} = \zeta(3) c_{\mathrm{symm}} + (25/3) c_{\mathrm{timelike}} + (\Phi_{10}/\eta^{24}) c_{\Phi_{10}}$, where $25/3 = \mathrm{rk}(\mathrm{II}_{25,1})/3$ is the Fake Monster Cartan rank divided by triple-leg antisymmetrisation. Gauge equivalence classes classified by $H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2, K(1)} \cong \mathbb{C} \cdot \Delta_5$ (Etingof--Kazhdan super-extension; Bruinier $2002$ Heegner Chern-class reciprocity): the Igusa form IS the classification invariant.
+The Drinfeld--Kohno Lie algebra $\widehat{\mathfrak{t}}_3$ underlying
+the classical KZ associator $\Phi_{KZ}$ extends to the Siegel
+Drinfeld--Kohno Lie algebra $\mathfrak{t}^{\mathrm{Sieg}}_{2,[2]}$
+coupled to the imaginary-root nilpotent
+$\mathfrak{n}_+^{\mathrm{imag}}$. The twisted Siegel--Borcherds
+associator
+\[
+\widetilde{\Phi}^{\mathrm{Sieg\text{-}Bor}}_{\mathrm{Sp}_4}
+[\Phi_{10}^{\mathrm{un}}/\eta^{24}]
+\in
+\exp(\widehat{\mathfrak{t}^{\mathrm{Sieg}}_{2,[2]}\oplus
+\mathfrak{n}_+^{\mathrm{imag}}})^{\mathrm{grouplike}}
+\]
+satisfies pentagon at $\hbar^{\leq 3}$ with coboundary
+\[
+\phi^{(3)}
+=\zeta(3)c_{\mathrm{symm}}
++(25/3)c_{\mathrm{timelike}}
++(\Phi_{10}^{\mathrm{un}}/\eta^{24})c_{\Phi_{10}^{\mathrm{un}}},
+\]
+where $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ is the unnormalised Igusa
+square and $25/3=\mathrm{rk}(\mathrm{II}_{25,1})/3$ is the Fake
+Monster Cartan rank divided by triple-leg antisymmetrisation. Gauge
+equivalence classes are classified by
+$H^2(\mathfrak{g}_{\Delta_5})^{\mathbb{Z}/2,K(1)}
+\cong\mathbb{C}\cdot\Delta_5$ (Etingof--Kazhdan super-extension;
+Bruinier $2002$ Heegner Chern-class reciprocity): the primitive
+denominator $\Delta_5$, not an OP-normalised square, is the
+classification invariant.
 \end{remark}
 
 \begin{remark}[Siegel-elliptic dynamical $R$-matrix as fourth $R$-class]
@@ -9122,7 +9125,8 @@ These chiral blocks carry an $\mathrm{Sp}_4(\mathbb Z)$-action with
 Siegel-modular-weight $5n$, and at the Lusztig specialisation $\hbar^2 = -1/8$
 they are finite-dimensional with dimension matching the Hecke spectrum
 of the Andrianov $L$-function
-$L(s,\Phi_{10}) = L(s,\Delta\otimes E_6)\zeta(s-9)\zeta(s-8)$ evaluated
+$L(s,\Phi_{10}^{\mathrm{un}}) =
+L(s,\Delta\otimes E_6)\zeta(s-9)\zeta(s-8)$ evaluated
 at $s = n$. This is the K3 version of the classical Knizhnik-Zamolodchikov
 factorisation. Primary-lit: Andrianov 1974, Arthur 2004.
 \end{remark}

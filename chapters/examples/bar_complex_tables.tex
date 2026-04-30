@@ -2,14 +2,14 @@
 \label{chap:detailed-computations}
 % Regimes I--III : tables span all families (Convention~\ref{conv:regime-tags}).
 
-Explicit basis elements, differential matrices with all signs,
-residue computations at each collision divisor, and the
-degree-by-degree verification that every claimed identity holds at
-the chain level. Every entry has been independently verified by
-symbolic computation (\texttt{scripts/}). When a later chapter
-invokes ``by explicit computation,'' the computation is here.
+Explicit basis elements, differential matrices with all signs, and
+residue computations at each collision divisor. The chapter separates
+chain groups, bar cohomology, the dual coalgebra $A^i=H^\star B(A)$,
+the Verdier--Koszul dual algebra $A^!$, and the derived chiral centre
+$Z^{\mathrm{der}}_{\mathrm{ch}}(A)$ at every table where those objects
+can otherwise be confused.
 
-\noindent\emph{Exhaustive degree-by-degree bar complex computations for $\mathfrak{sl}_3$, $\mathcal{W}_3$, $E_8$, and the Virasoro algebra, complementing the Heisenberg calculations of Chapter~\ref{ch:heisenberg-frame}. Every structure constant, differential matrix, and chain-level verification that the preceding chapters deferred to ``explicit computation'' appears here.}
+\noindent\emph{Degree-by-degree bar complex computations for $\mathfrak{sl}_3$, $\mathcal{W}_3$, $E_8$, and the Virasoro algebra, complementing the Heisenberg calculations of Chapter~\ref{ch:heisenberg-frame}. The tables record structure constants, differential matrices, residue terms, and the exact object computed.}
 
 \section{Heisenberg computations}
 
@@ -51,7 +51,13 @@ since $d(\eta_{ij}) = 0$ (logarithmic forms are closed on $\overline{\Conf}_3 \s
 Hence $d([a_{-m}|a_{-n}|a_{-p}] \otimes \eta_{12} \wedge \eta_{23}) = 0$.
 
 All degree 3 elements with top form are cycles.
-The mechanism is uniform: the Heisenberg OPE $a(z)a(w) \sim k/(z-w)^2$ has only a double pole, so the residue integrand at each collision divisor $D_{ij}$ acquires a triple pole $k \cdot d\epsilon/\epsilon^3$ against the logarithmic form $\eta_{ij} = d\epsilon/\epsilon$, which has zero residue. No Arnold relation or configuration-space geometry is needed for this vanishing; it is purely a pole-order phenomenon. The Arnold relation constrains the \emph{dimension} of the form space ($\dim \Omega^{n-1}(\overline{\Conf}_n) = (n-1)!$), but does not participate in the differential. This is the chain-level explanation for the abelian bar complex being exact: $d_{\mathrm{bracket}} = 0$ because the OPE has no simple pole.
+The mechanism is uniform: the Heisenberg OPE $a(z)a(w) \sim k/(z-w)^2$ has only a double pole, so the residue integrand at each collision divisor $D_{ij}$ acquires a triple pole $k \cdot d\epsilon/\epsilon^3$ against the logarithmic form $\eta_{ij} = d\epsilon/\epsilon$, which has zero residue. No Arnold relation or configuration-space geometry is needed for this vanishing; it is purely a pole-order phenomenon. The Arnold relation constrains the \emph{dimension} of the form space ($\dim \Omega^{n-1}(\overline{\Conf}_n) = (n-1)!$), but does not participate in the differential. Thus $d_{\mathrm{bracket}}=0$ on the abelian collision channel because the OPE has no simple pole.
+This is not an exactness statement for $B(\cH_k)$ itself. It says that
+the collision-residue part of the ordered bar differential vanishes on
+the maximal-form Heisenberg channel. The nonzero scalar $k$ reappears
+as central curvature in the curved/Koszul-dual lane, while
+$H^\star B(\cH_k)=\cH_k^i$ remains the dual coalgebra and
+$\cH_k^!$ is obtained only after the Verdier--Koszul duality step.
 \end{computation}
 
 \begin{computation}[Heisenberg: degree 4 differential]\label{comp:heisenberg-deg4}
@@ -81,14 +87,17 @@ When $\omega$ contains no factors of $\eta_{ij}$:
 This gives a nontrivial contribution only if there is a simple pole, which requires
 the OPE to have a simple pole term (the Heisenberg OPE does not).
 
-The entire degree 4 differential vanishes on elements with
-maximal form degree, confirming the exterior algebra structure of homology.
+The entire degree 4 collision-residue differential vanishes on
+elements with maximal form degree. This identifies the maximal-form
+Heisenberg subspace as a cycle subcoalgebra; it does not by itself
+identify $A^!$ or the derived centre.
 \end{computation}
 
 
-\subsection{Twisting morphism verification}
+\subsection{Twisting morphism and curvature}
 
-\begin{computation}[Maurer--Cartan through degree 4]We verify the Maurer--Cartan equation $d\tau + \tau \star \tau = 0$ in detail.
+\begin{computation}[Maurer--Cartan through degree 4]The twisting morphism satisfies the curved Maurer--Cartan equation
+$d\tau+\tau\star\tau+m_0=0$.
 
 \emph{Setup.} The twisting morphism $\tau: \B(\cH) \to \cH$ is:
 \[
@@ -197,43 +206,49 @@ d(\text{above}) = E_1 E_1 E_2 - 2 E_1 E_2 E_1 + E_2 E_1 E_1 = (\text{ad}\, E_1)^
 \end{computation}
 
 
-\subsection{Acyclicity verification}
+\subsection{Twisted acyclicity}
 
 \begin{computation}[Kac--Moody acyclicity at generic level]\label{comp:km-acyclic}
-We verify acyclicity of $\B(\hat{\mathfrak{sl}}_2) \otimes_\tau V_k$ for generic $k$.
+The twisted Koszul complex $\B(\hat{\mathfrak{sl}}_2) \otimes_\tau V_k$
+is acyclic for generic $k$.
 
 \emph{Filtration.} Define $F_p$ by the PBW degree (number of generators applied to vacuum).
 
 \emph{Associated graded.}
 \[
-\mathrm{gr}_F(\B(\hat{\mathfrak{sl}}_2) \otimes_\tau V_k) \cong \B(\mathfrak{sl}_2[t^{-1}]) \otimes S(\mathfrak{sl}_2[t^{-1}])
+\mathrm{gr}_F(\B(\hat{\mathfrak{sl}}_2) \otimes_\tau V_k) \cong
+B\bigl(U(\mathfrak{sl}_2[t^{-1}]t^{-1})\bigr)
+\otimes_{\tau_0} U(\mathfrak{sl}_2[t^{-1}]t^{-1})
 \]
-the bar complex of the loop algebra tensored with the symmetric algebra.
+with $\tau_0$ the standard bar twisting cochain. This is the ordinary
+augmented bar resolution of the algebra
+$U(\mathfrak{sl}_2[t^{-1}]t^{-1})$.
 
-\emph{$E_1$ page.} The homology is:
+\emph{$E_1$ page.} The homology of the associated graded complex is
 \[
-E_1^{p,q} = H_p(\mathfrak{sl}_2; S^q(\mathfrak{sl}_2[t^{-1}]))
+E_1^{p,q} =
+\begin{cases}
+\mathbb{C} & p=q=0,\\
+0 & \text{otherwise}.
+\end{cases}
 \]
-Lie algebra homology with polynomial coefficients.
+The vanishing is the exactness of the bar resolution, not a Whitehead
+lemma computation. Whitehead's lemmas do not annihilate
+$H_\bullet(\mathfrak{sl}_2;M)$ in all positive degrees for arbitrary
+coefficient modules.
 
-\emph{Vanishing.} For $\mathfrak{sl}_2$:
-\[
-H_n(\mathfrak{sl}_2; M) = 0 \quad \text{for } n > 0 \text{ and } M \text{ a rational } \mathfrak{sl}_2\text{-module}
-\]
-by the Whitehead lemmas (semisimplicity).
-
-\emph{Convergence.} The spectral sequence collapses at $E_1$, giving:
+\emph{Convergence.} The filtration is bounded below on each conformal
+weight and exhaustive, hence the spectral sequence gives:
 \[
 H_n(\B(\hat{\mathfrak{sl}}_2) \otimes_\tau V_k) = \begin{cases}
 \bC & n = 0 \\
 0 & n > 0
 \end{cases}
 \]
-confirming acyclicity.
 
 \emph{At special levels.} When $k = -h^\vee = -2$ (critical level for $\mathfrak{sl}_2$),
 the vacuum module becomes reducible, and new homology classes appear, corresponding
-to the center of $U(\hat{\mathfrak{sl}}_2)_{-2}$.
+to the Feigin--Frenkel centre of the completed critical vacuum algebra.
 \end{computation}
 
 
@@ -330,9 +345,9 @@ for any $v \in \bar{V}$. The curvature controls the failure of $m_1$ (the linear
 
 \emph{Three regimes.}
 \begin{itemize}
-\item $c = 0$: Uncurved. The bar complex is a genuine cochain complex ($D^2 = 0$ on $\bar{V}$). The \emph{quadratic} OPE is self-dual in the classical sense ($\mathrm{Vir}_0^{!_{\mathrm{quad}}} \simeq \mathrm{Vir}_0$, Theorem~\ref{thm:virasoro-self-duality}); however, the chiral Koszul dual is $\mathrm{Vir}_0^! \simeq \mathrm{Vir}_{26}$ (Example~\ref{ex:virasoro-koszul-dual}), not $\mathrm{Vir}_0$. The $TT$ OPE is purely quadratic ($2T/(z-w)^2 + \partial T/(z-w)$). The genuine chiral Koszul self-dual point is $c = 13$ (Example~\ref{ex:virasoro-koszul-dual}).
-\item $c \neq 0$, generic: Curved $A_\infty$. The completed bar construction is needed (Appendix~\ref{app:nilpotent-completion}). The Koszul dual is $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}$ (Example~\ref{ex:virasoro-koszul-dual}), where the shift $c \mapsto 26-c$ arises from the Verdier duality pairing on $\overline{C}_{n+1}(X)$ interacting with the quartic pole data.
-\item $c = 26$: The dual Virasoro $\mathrm{Vir}_{26}^! \simeq \mathrm{Vir}_0$ is the uncurved algebra. Equivalently, after adjoining the ghost sector, the critical bosonic string satisfies the genus-$0$ BRST/bar comparison of Theorem~\ref{thm:brst-bar-genus0}.
+\item $c = 0$: Uncurved. The bar complex is a genuine cochain complex ($D^2 = 0$ on $\bar{V}$). The \emph{quadratic} OPE is self-dual in the classical sense ($\mathrm{Vir}_0^{!_{\mathrm{quad}}} \simeq \mathrm{Vir}_0$, Theorem~\ref{thm:virasoro-self-duality}); however, the same-family scalar shadow of the chiral Koszul dual lies at central charge~$26$, not at~$0$. The $TT$ OPE is purely quadratic ($2T/(z-w)^2 + \partial T/(z-w)$). The scalar self-dual point of this same-family shadow is $c = 13$ (Example~\ref{ex:virasoro-koszul-dual}).
+\item $c \neq 0$, generic: Curved $A_\infty$. The completed bar construction is needed (Appendix~\ref{app:nilpotent-completion}). The Verdier--Koszul dual algebra is obtained from $A^i=H^\star B(A)$ by duality; its Virasoro same-family scalar shadow has central charge $26-c$ (Example~\ref{ex:virasoro-koszul-dual}), where the shift $c \mapsto 26-c$ arises from the Verdier duality pairing on $\overline{C}_{n+1}(X)$ interacting with the quartic pole data.
+\item $c = 26$: The same-family shadow of the dual lane lies at $c=0$, the uncurved Virasoro value. Equivalently, after adjoining the ghost sector, the critical bosonic string satisfies the genus-$0$ BRST/bar comparison of Theorem~\ref{thm:brst-bar-genus0}.
 \end{itemize}
 
 \emph{The curvature--central charge dictionary:} the curvature $m_0 = c/2$ is an invariant of the chiral algebra that determines the qualitative structure of the bar complex. For the Virasoro, it is the \emph{only} such invariant (since $T$ is the sole generator), so the full bar complex structure is controlled by $c$ alone. This is the simplest instance of the general principle that curvature = quantum correction (Theorem~\ref{thm:genus-universality}).
@@ -499,7 +514,7 @@ Only the ``diagonal'' pairs $T \otimes T$ and $W \otimes W$ produce vacuum leaka
 \end{computation}
 
 
-\begin{computation}[\texorpdfstring{$\mathcal{W}_3$}{W_3} curvature and dual level verification]\index{curvature!$\mathcal{W}_3$ bar complex}
+\begin{computation}[\texorpdfstring{$\mathcal{W}_3$}{W_3} curvature and dual level complementarity]\index{curvature!$\mathcal{W}_3$ bar complex}
 The $\mathcal{W}_3$ bar complex has vacuum leakage from two independent channels:
 \begin{enumerate}
 \item \emph{Virasoro sector}: $T_{(3)}T = c/2$ (quartic pole), contributing $m_0^{(T)} = c/2$.
@@ -529,7 +544,7 @@ The sum:
 c + c' = 4 + 24\cdot\frac{(k+4)^2 - (k+2)^2}{k+3}
  = 4 + 24\cdot\frac{4(k+3)}{k+3} = 100
 \]
-confirming the general complementarity $c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
+giving the general complementarity $c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
 = 2r + 4h^\vee d = 2(2) + 4(3)(8) = 100$
 (Theorem~\ref{thm:central-charge-complementarity}).
 
@@ -689,50 +704,52 @@ $(\operatorname{ad} E_2)^2(E_1) = 0$, and $d(\tilde{S})$ is a cycle
 in $\bar{B}^2$ by the same mechanism.
 \end{computation}
 
-\begin{proposition}[Serre relations determine degree-3 cohomology;
+\begin{proposition}[Serre tensors are quadratic syzygies, not the dual algebra;
 \ClaimStatusProvedHere]
 \label{prop:sl3-serre-cohomology}
 \index{Serre relations!cohomological role}
 For $\widehat{\mathfrak{sl}}_{3,k}$ at generic level $k \neq -3$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The degree-3 bar cohomology $H^3(\bar{B}(\widehat{\mathfrak{sl}}_{3,k}))$
-is generated by elements arising from the two independent Serre relations
-$(\operatorname{ad} E_i)^2(E_j) = 0$ for $\{i,j\} = \{1,2\}$.
-\item The image of $d\colon \bar{B}^3 \to \bar{B}^2$ has codimension~$2$
-in $\ker(d\colon \bar{B}^2 \to \bar{B}^1)$, matching the two Serre
-relations. The quotient $\ker d / \operatorname{im} d$ in degree~2 is
-$2$-dimensional, generated by $S$ and $\tilde{S}$.
-\item At critical level $k = -3$, these Serre cycle classes
-survive in $H_2(\bar{B}(\widehat{\mathfrak{sl}}_{3,-3}))$ and
-represent generators of the Feigin--Frenkel center.
+\item The tensors $S$ and $\tilde S$ are the two simple-root Serre
+syzygies in the quadratic associated graded presentation. Their
+images under $d\colon \bar{B}^3\to\bar{B}^2$ are degree-$2$ cycles
+because $[E_i,[E_i,E_j]]=0$ in $\mathfrak{sl}_3$.
+\item These tensors do not determine the full degree-$3$ bar
+cohomology and do not identify the Verdier--Koszul dual algebra
+$A^!$. They are relations inside the associated graded presentation
+of $A$, while $A^i=H^\star B(A)$ is the dual coalgebra and
+$A^!$ is obtained after graded linear/Verdier duality.
+\item At critical level $k=-3$, the Feigin--Frenkel centre is generated
+by the invariant polynomials of degrees $2$ and $3$ in the Langlands
+dual Lie algebra. Its cubic generator is represented by the
+Segal--Sugawara invariant, not by the raw Serre tensor itself.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-(i)--(ii): The bar complex of $\widehat{\mathfrak{sl}}_{3,k}$ at
-generic level is quasi-isomorphic to the Chevalley--Eilenberg complex of
-$\mathfrak{sl}_3$ (Proposition~\ref{prop:km-generic-acyclicity}). The
-CE complex has $H^3(\mathfrak{sl}_3, \mathbb{C}) \cong \mathbb{C}$
-(the Cartan $3$-form) and the degree-3 relations in the quadratic
-presentation of $U(\mathfrak{sl}_3)$ are precisely the Serre relations.
-For the $A_2$ root system, there are two independent Serre relations
-(one for each pair of simple roots), giving a $2$-dimensional kernel
-in the appropriate grading. The PBW filtration spectral sequence
-(Computation~\ref{comp:km-acyclic}) identifies this $2$-dimensional
-space with the cokernel of $d\colon \bar{B}^3 \to \bar{B}^2$ on the
-associated graded. The computation of $d(S)$ and $d(\tilde{S})$ in
-Computation~\ref{comp:sl3-degree3-complete} confirms that these
-elements produce cycles in $\bar{B}^2$.
+The displayed computation of $d(S)$ shows that all surviving
+degree-$2$ terms are built from $[E_1,E_3]$ or $[E_3,E_1]$, hence
+vanish after applying the next bracket differential because
+$E_3=[E_1,E_2]$ and $(\operatorname{ad}E_1)^2(E_2)=0$.
+The Dynkin involution gives the same statement for $\tilde S$.
+This proves that the Serre tensors are syzygies in the
+associated graded bar presentation.
 
-(iii): At $k = -3$ (critical level), the bar complex is uncurved ($\dfib^{\,2} = 0$ since $\kappa = 0$),
-so the cycles $S$ and $\tilde{S}$ represent honest cohomology classes.
-The Feigin--Frenkel theorem (Theorem~\ref{thm:critical-level-structure})
-identifies $Z(\widehat{\mathfrak{sl}}_{3,-3})$ with a polynomial algebra
-in two generators (degrees $2$ and $3$, corresponding to the fundamental
-invariants of the Langlands dual $\mathfrak{sl}_3^\vee$). The degree-2
-generator corresponds to the Casimir class in $H^2(\bar{B})$; the
-degree-3 class arising from the Serre relations corresponds to the
-cubic invariant.
+The stronger statement formerly suggested by this computation would
+be false: the Chevalley--Eilenberg cohomology
+$H^3(\mathfrak{sl}_3;\mathbb C)$ is one-dimensional, whereas the
+simple-root Serre list has two elements. These are different objects.
+The twisted Koszul complex is acyclic at generic level by
+Proposition~\ref{prop:km-generic-acyclicity}; the bar cohomology
+$A^i=H^\star B(A)$ and the Verdier--Koszul dual algebra $A^!$ require
+the dual coalgebra construction, not a count of Serre tensors.
+
+At the critical level, Feigin--Frenkel identifies the centre with the
+polynomial algebra on invariant polynomials of degrees $2$ and $3$.
+The degree-$3$ invariant is the cubic Segal--Sugawara field. The Serre
+tensor is one presentation-level relation whose compatibility is
+required by that invariant theory; it is not itself the central
+generator.
 \end{proof}
 
 \begin{computation}[Dimension table for \texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl-hat_3}
@@ -798,34 +815,35 @@ $\leq 346 \times 56$ (at weight $(0,0)$).
 \emph{Degree~$3 \to 2$} (source $= 512$, target $= 64$).
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{c|ccccc}
-& $\mathbb{Q}$ & $\mathbb{F}_2$ & $\mathbb{F}_3$ &
-$\mathbb{F}_5$ & $\mathbb{F}_7$ \\
+\begin{tabular}{c|cc}
+& $\mathbb{Q}$ & finite-field comparison \\
 \hline
-$\mathrm{rk}(d \mid_{\mu=(0,0)})$ & $9$ & $10$ & $10$ & $10$ & $10$ \\
-$\mathrm{rk}(d)$ (total) & $63$ & $64$ & $64$ & $64$ & $64$
+$\mathrm{rk}(d \mid_{\mu=(0,0)})$ & $9$ &
+must be $\leq 9$ for the same integral matrix \\
+$\mathrm{rk}(d)$ (total) & $63$ &
+must be $\leq 63$ for the same integral matrix
 \end{tabular}
 \end{center}
-There is a $1$-dimensional \emph{modular anomaly} at weight
-$(0,0)$: the Killing form element
-$\kappa = \sum_{a,b} \kappa^{ab} [J_a \mid J_b] \in \bar{B}^2_{(0,0)}$
-lies in the cokernel of $d_{\mathrm{bracket}}$ over $\mathbb{Q}$
-(it is $d$-closed by centrality of $\kappa$, and not $d$-exact
-from $\bar{B}^3$), but becomes a coboundary
-over~$\mathbb{F}_p$ for every prime~$p$ tested.
-This Killing class $\kappa \in \bar{B}^2_{(0,0)}$ is the
+There is a $1$-dimensional rational cokernel at weight
+$(0,0)$ for the exact matrix used here: the Killing form element
+$\kappa_{\mathrm{Kill}} =
+\sum_{a,b} \kappa^{ab} [J_a \mid J_b] \in \bar{B}^2_{(0,0)}$
+is $d$-closed by invariance of the trace form. No finite-field rank
+can exceed the rank over~$\mathbb{Q}$ for the same integral matrix:
+if a minor is nonzero modulo~$p$, that minor is already nonzero over
+$\mathbb{Q}$. Thus a rank jump $63\mapsto64$ is a normalization
+change, not a modular anomaly theorem. The rational Killing class is the
 bar-complex avatar of the genus-$1$ universal MC component
 $\Theta^{(1)}_{\widehat{\mathfrak{sl}}_{3,k}}$
 (Theorem~\ref{thm:explicit-theta}): the obstruction to
-$d^2 = 0$ in bar degree~$2$ is controlled by $\kappa$,
+$d^2 = 0$ in bar degree~$2$ is controlled by $\kappa_{\mathrm{Kill}}$,
 whose persistence as a rational cocycle is forced by the
 non-vanishing of $\Theta$ at generic level.
 
-At all other weights, the rank is independent of the characteristic:
-the differential coefficients are structure constants of
-$\mathfrak{sl}_3$, which are integers divisible only by small factors
-($1, 2, 3$), and the weight-space dimensions are too small for
-cancellations to occur.
+The degree-$3$ table records only this rational cokernel. A finite-field
+comparison is meaningful only after fixing the same integral
+Chevalley basis and the same Orlik--Solomon sign normalization; changing
+either changes the matrix rather than revealing a new modular class.
 
 \emph{Degree~$4 \to 3$} (source $= 4096$, target $= 512$).
 \begin{center}
@@ -842,22 +860,17 @@ $d_{\mathrm{bracket}}\colon \bar{B}^4 \to \bar{B}^3$ is
 \emph{surjective} in all characteristics. No modular anomalies
 occur at degree~$4$.
 
-\emph{Interpretation.} The degree-$3$ anomaly reflects the
+\emph{Interpretation.} The degree-$3$ rational deficiency reflects the
 Casimir obstruction: the Killing form element
-$\kappa \in \bar{B}^2_{(0,0)}$ is $d$-closed by centrality,
+$\kappa_{\mathrm{Kill}} \in \bar{B}^2_{(0,0)}$ is $d$-closed by centrality,
 and over~$\mathbb{Q}$ it is not $d$-exact: the rank deficiency
-$\operatorname{rk}(d) = 63 < 64$ confirms that~$\kappa$
-represents a nontrivial class in
-$H^2(\bar{B}(\widehat{\mathfrak{sl}}_3))$.
-Over~$\mathbb{F}_p$, the rank rises to~$64$ for every prime
-tested ($p = 2, 3, 5, 7$), so the Killing class becomes a
-coboundary in positive characteristic. This is the bar-complex
-shadow of the modular anomaly: the genus-$1$ obstruction class
-$\Theta^{(1)}$ persists over~$\mathbb{Q}$ but is killed by
-reduction mod~$p$. The surjectivity at degree~$4$ is consistent
-with the Koszul property: bar cohomology concentrates in low
-degrees, and $H^4$ is conjectured to vanish for Koszul algebras
-(\ClaimStatusConjectured).
+$\operatorname{rk}(d) = 63 < 64$ shows that~$\kappa_{\mathrm{Kill}}$
+survives in the degree-$2$ cohomology of this bracket-weight
+truncation.
+No conclusion about positive characteristic follows from matrices with
+changed normalization. The surjectivity at degree~$4$ is a separate
+low-degree computation in the bracket-plus-form model; it is not an
+argument for concentration of the full bar cohomology.
 \end{computation}
 
 
@@ -866,7 +879,7 @@ degrees, and $H^4$ is conjectured to vanish for Koszul algebras
 \index{bar complex!chiral bracket rank}
 \index{Orlik--Solomon algebra!residue maps}
 
-To verify Computation~\ref{comp:sl3-modular-rank} and confirm that the
+To compare with Computation~\ref{comp:sl3-modular-rank} and check that the
 modular rank computation correctly reflects the chiral bar differential,
 we independently computed the rank of the \emph{full} chiral bracket
 differential $d_{\mathrm{bracket}}\colon \bar{B}^n \to \bar{B}^{n-1}$
@@ -895,18 +908,18 @@ divisor $D_{ij} = \{z_i = z_j\}$ in the FM compactification.
 \item \emph{Degree~$3 \to 2$}: $\mathrm{rk} = 63$.
  Matches Computation~\ref{comp:sl3-modular-rank} exactly.
  The CE bracket (without OS forms) gives rank~$56$; the chiral
- bracket kills $7$ additional directions via the Arnold relations.
+ bracket with OS residue maps has seven additional image directions.
 \item \emph{Degree~$4 \to 3$}: $\mathrm{rk} = 1024 = \dim \bar{B}^3$.
  The differential is \emph{surjective} in the chiral computation,
- confirming the modular rank result.
+ agreeing with the modular rank result.
 \end{enumerate}
 
-All computations were performed over $\mathbb{Q}$ using exact arithmetic
-and independently verified over $\mathbb{F}_p$ for $p = 5, 7, 11, 13$.
-The characteristic-independent surjectivity at degree~$4$ is a
-non-trivial check: the matrix has $24576$ rows and $1024$ columns,
-with entries determined by the $\mathfrak{sl}_3$ structure constants
-and the OS residue map combinatorics.
+Over $\mathbb{Q}$, the displayed degree-$4$ matrix has rank~$1024$.
+Reducing the same integral matrix modulo $p=5,7,11,13$ preserves rank
+$1024$. This finite-truncation statement concerns the
+$24576 \times 1024$ matrix determined by the $\mathfrak{sl}_3$ structure
+constants and the Orlik--Solomon residue maps; it does not assert
+surjectivity in all bar degrees.
 \end{computation}
 
 
@@ -920,58 +933,58 @@ and~\ref{comp:sl3-chiral-bracket-os}) becomes unwieldy beyond degree~$4$.
 The PBW spectral sequence of Theorem~\ref{thm:pbw-koszulness-criterion}
 provides a more systematic approach.
 
-\begin{proposition}[PBW spectral sequence for \texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl-hat_3};
+\begin{proposition}[PBW target for \texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl-hat_3};
 \ClaimStatusConditional]
 \label{prop:sl3-pbw-ss}
 The PBW filtration on the bar complex of $\widehat{\mathfrak{sl}}_{3,k}$ at
 generic level $k \neq -h^\vee = -3$ yields a spectral sequence
 \[
-E_1^{p,q} = H^q\bigl(\mathfrak{sl}_3;\; S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})\bigr)
-\;\Longrightarrow\; H^{p+q}(\barB(\widehat{\mathfrak{sl}}_{3,k})).
+E_1^{p,q} =
+H^{p+q}\!\left(
+B(U(\mathfrak{sl}_3[t^{-1}]t^{-1}))\otimes_{\tau_0}
+U(\mathfrak{sl}_3[t^{-1}]t^{-1})
+\right)
+\;\Longrightarrow\;
+H^{p+q}\!\left(\barB(\widehat{\mathfrak{sl}}_{3,k})
+\otimes_\tau V_k(\mathfrak{sl}_3)\right).
 \]
-At the $E_1$ page:
+Thus:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The Whitehead lemma kills $H^q(\mathfrak{sl}_3; M)$ for $q = 1$
- and any finite-dimensional module $M$ (since $\mathfrak{sl}_3$ is semisimple).
- The surviving terms are $E_1^{p,0} = S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})^{\mathfrak{sl}_3}$.
-\item The invariant subalgebra
- $S^*(\mathfrak{sl}_3[t^{-1}]t^{-1})^{\mathfrak{sl}_3}$ is generated by the
- Casimir invariants: one of degree~$2$ (the Killing form) and one of degree~$3$
- (the cubic invariant of $\mathfrak{sl}_3$).
-\item The resulting bar cohomology dimensions through degree~$3$ are:
+\item This spectral sequence proves acyclicity of the twisted Koszul
+ complex, not a formula for the raw bar cohomology
+ $H^\star(\barB(\widehat{\mathfrak{sl}}_{3,k}))$.
+\item The invariant tensors of $\mathfrak{sl}_3$ in degrees $2$ and $3$
+ control the Casimir and cubic channels in the associated graded, but
+ their presence does not imply that finite matrix ranks determine all
+ bar cohomology degrees.
+\item The low-degree numbers used later for the Koszul-dual Hilbert
+ function are the conditional sequence
  \[
- H^0 = \mathbb{C},\quad
- \dim H^1 = 8 \;(= \dim \mathfrak{sl}_3^*),\quad
- \dim H^2 = 36,\quad
- \dim H^3 = 204.
+ \dim(A^!)_1=8,\quad \dim(A^!)_2=36,\quad
+ \dim(A^!)_3=204.
  \]
- The degree-$2$ value $36 = \dim \Lambda^2(\mathfrak{sl}_3^*) +
- \dim S^2_0(\mathfrak{sl}_3^*)$ matches the direct computation from the
- modular rank analysis (Computation~\ref{comp:sl3-modular-rank}).
- The degree-$3$ value $204$ matches
- Computation~\ref{comp:sl3-degree3-complete}, where Serre relations
- account for the non-trivial cohomology classes.
+ They concern the Verdier--Koszul dual algebra $A^!$ through
+ $A^i=H^\star B(A)$, not the derived centre and not the twisted
+ acyclic complex.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 The PBW filtration on $U(\widehat{\mathfrak{sl}}_3)$ induces a filtration
-on the bar complex whose associated graded is the bar complex of the
-commutative algebra $S(\mathfrak{sl}_3[t^{-1}]t^{-1})$ with coefficients in
-$\bigwedge^*(\mathfrak{sl}_3)$. The $E_1$ page is computed by
-Chevalley--Eilenberg cohomology of $\mathfrak{sl}_3$ with coefficients in
-$S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})$. Since $\mathfrak{sl}_3$ is semisimple
-(in particular reductive with trivial center), the Whitehead lemma gives
-$H^1(\mathfrak{sl}_3; M) = 0$ for every finite-dimensional $M$. The invariants
-$S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})^{\mathfrak{sl}_3}$ are computed by
-Chevalley's restriction theorem: they are generated by the images of the
-two fundamental invariant polynomials (degrees $2$ and $3$) applied to
-each mode $t^{-m}$ ($m \geq 1$).
+on the twisted complex
+$\barB(\widehat{\mathfrak{sl}}_{3,k})\otimes_\tau V_k$. Its associated
+graded object is the ordinary bar resolution of
+$U(\mathfrak{sl}_3[t^{-1}]t^{-1})$. Hence the $E_1$ page is
+concentrated on the augmentation line. This is the standard
+bar-resolution argument and avoids the false inference that
+Whitehead's lemmas compute all positive Lie algebra homology with the
+loop-algebra coefficient system.
 
-The spectral sequence collapses at $E_2$ by the chiral Koszulness of
-$\widehat{\mathfrak{sl}}_{3,k}$ at generic level
-(Theorem~\ref{thm:km-chiral-koszul}). The dimensions follow from
-enumerating the invariant generators and their polynomial relations.
+The raw bar cohomology is a different object. When $A$ is chirally
+Koszul, $A^i=H^\star B(A)$ is the dual coalgebra and the dual algebra
+$A^!$ is obtained by graded linear/Verdier duality. The numerical
+sequence recorded in (iii) belongs to that dual Hilbert function and
+retains its conditional scope in the table.
 \end{proof}
 
 \begin{remark}[PBW convergence target and the loop algebra filtration]
@@ -1023,7 +1036,7 @@ The diagonal adjoint action of $\mathfrak{sl}_3$ on tensor powers
 $\mathfrak{g}^{\otimes n}$ decomposes into irreducible representations
 $V(\lambda_1, \lambda_2)$, identified by the scaled quadratic Casimir
 $3C_2(V(\lambda_1,\lambda_2)) = 2(\lambda_1^2 + \lambda_2^2 + \lambda_1\lambda_2) + 6(\lambda_1 + \lambda_2)$.
-Direct computation (verified in \texttt{sl3\_casimir\_decomp.py})
+Direct computation
 gives the eigenspace multiplicities:
 \begin{center}
 \begin{tabular}{r|ccccccccc|r}
@@ -1057,7 +1070,7 @@ $\operatorname{rank}(d_4|_\lambda)$ & 1 & 56 & 60 & 135 & 140 & 64 & 456 \\
 \emph{The CE complex on the full tensor algebra
 $T(\mathfrak{g}) = \bigoplus_n \mathfrak{g}^{\otimes n}$ is exact}:
 $\operatorname{rank}(d_{n+1}) = \dim \ker(d_n)$ for all $n \geq 2$
-(verified through $n = 5$: ranks $8, 56, 456, 3640$).
+(through $n = 5$: ranks $8, 56, 456, 3640$).
 The exactness is consistent with the acyclicity of the bar complex of $U(\mathfrak{g})$,
 distinct from Chevalley--Eilenberg cohomology on the exterior algebra
 $\Lambda^*(\mathfrak{g}^*)$ (where $H^3(\mathfrak{sl}_3) = \mathbb{C}$).
@@ -1071,22 +1084,25 @@ The $8$ quartic invariant tensors include products $\kappa_{ab}\kappa_{cd}$
 and mixed contractions.
 \end{computation}
 
-\begin{remark}[Koszul dual dimensions from bar cohomology]
+\begin{remark}[Conditional Hilbert inversion for the \texorpdfstring{$\mathfrak{sl}_3$}{sl3} dual]
 \label{rem:sl3-koszul-dual}
 \index{Koszul dual!sl3@$\mathfrak{sl}_3$}
 
 Formal series inversion $H_A(t) \cdot H_{A^!}(-t) = 1$
-(which is equivalent to Koszulness when it holds; here applied as a
-consistency device to conjectured data) applied to the
-conjectured bar cohomology sequence $1, 8, 36, 204, 1352, 9892, \ldots$
+(which is equivalent to Koszulness only after the Koszul property has
+been proved) applied to the conditional $\mathfrak{sl}_3$ Hilbert
+sequence $1, 8, 36, 204, 1352, 9892, \ldots$
 yields putative Koszul dual dimensions
 $(A^!)_n = 1, 8, 28, 140, 392, \ldots$.
 The ``chiral excess'' $(A^!)_n - \dim \Lambda^n(\mathfrak{g}^*)$ is
 $0, 0, 0, 84, 322, \ldots$, measuring the departure of the chiral
 Koszul dual from the classical exterior algebra. Positivity of the
-Koszul dual dimensions through degree~$7$ (verified computationally)
-is a necessary condition for the conjectured generating function
-and a non-trivial consistency check on $H^4 = 1352$.
+Koszul dual dimensions through degree~$7$ is a necessary condition
+for the conjectured generating function; it does not prove the
+recurrence in every degree.
+The value $H^4 = 1352$ remains part of the conditional Hilbert-function
+surface until an independent degree-$4$ bar computation or a proof of
+the recurrence is supplied.
 
 The excess~$84$ at degree~$3$ also appears as the gap between the
 chiral bar cohomology and the closest quadratic approximation
@@ -1147,7 +1163,7 @@ quadratic bracket-and-Killing data. This is the algebraic shadow
 of the $R^{(1)}$ barrier (higher residues on the configuration space)
 that prevents the bracket differential alone from satisfying $d^2 = 0$.
 
-\emph{Verified by \texttt{koszul\_dual\_dims.py} {\normalfont(27 tests)}.}
+\emph{The script \texttt{koszul\_dual\_dims.py} computes the table.}
 \end{computation}
 
 \begin{remark}[Euler characteristic obstruction to naive bar models]
@@ -1324,11 +1340,13 @@ m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \kappa
 where $h^\vee = 3$ (NOT $h = 4$). This vanishes at the critical level
 $k = -h^\vee = -3$.
 
-\emph{Level-shifting duality.}
+\emph{Affine same-family shadow.}
 \begin{equation}\label{eq:so5-level-shift}
-(\widehat{\mathfrak{so}}_{5,k})^! \simeq \widehat{\mathfrak{so}}_{5,-k-6}
+k'=-k-2h^\vee=-k-6.
 \end{equation}
-The shift is $-k - 2h^\vee = -k - 6$, using $h^\vee = 3$ (not $h = 4$).
+The shifted affine algebra $\widehat{\mathfrak{so}}_{5,k'}$ records
+the same scalar dual lane; it is not the raw bar coalgebra and not
+the derived chiral centre. The shift uses $h^\vee = 3$ (not $h = 4$).
 
 \emph{Central charge.}
 \begin{equation}
@@ -1470,7 +1488,7 @@ Fulton--MacPherson compactifications) agrees with the \emph{algebraic}
 bar complex (constructed from OPE residues). This agreement is
 proved abstractly as
 Theorem~\ref{thm:geometric-equals-operadic-bar}
-(bar\_cobar\_construction.tex), but the term-by-term verification has
+(bar\_cobar\_construction.tex), but the term-by-term residue comparison has
 not been exhibited. We carry it out here for
 $\widehat{\mathfrak{sl}}_{2,k}$, the simplest algebra where \emph{both}
 curvature and bracket data are visible.
@@ -1693,15 +1711,20 @@ on constant forms. These 6 kernel elements are:
 Each kernel element corresponds to a relation in the quotient
 $R^\perp \subset V \otimes V$ (the orthogonal complement of the
 relation space $R = \operatorname{span}\{d(\bar{B}^2 \to \bar{B}^1)\}$). The quadratic dual is
-$\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_{2,k})^!
-= \operatorname{sub}(T^c(V), R)$, the maximal sub-coalgebra of $T^c(V)$ cogenerated by~$R$ (equivalently, by graded linear duality, the Koszul dual algebra is the quotient of the free algebra by the dual relations). This identifies the Koszul dual as
-$\widehat{\mathfrak{sl}}_{2,-k-4}$
-(Theorem~\ref{thm:sl2-koszul-dual}).
+$\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_{2,k})^i
+= \operatorname{sub}(T^c(V), R)$, the maximal sub-coalgebra of
+$T^c(V)$ cogenerated by~$R$. The Verdier--Koszul dual algebra is
+obtained from this coalgebra by graded linear/Verdier duality. The
+Feigin--Frenkel shifted level
+$-k-4$ records the same scalar modular characteristic as the dual
+lane; it is not obtained by declaring the raw bar coalgebra equal to
+the affine algebra $\widehat{\mathfrak{sl}}_{2,-k-4}$
+(cf.\ Theorem~\ref{thm:sl2-koszul-dual}).
 \end{computation}
 
-\begin{remark}[Vacuum module decomposition and PBW verification for
-\texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k}]\label{rem:sl2-vacuum-module-verification}
-The bar complex computations above can be cross-checked against
+\begin{remark}[Vacuum module decomposition and PBW comparison for
+\texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k}]\label{rem:sl2-vacuum-module-pbw}
+The bar complex computations above can be compared with
 the representation theory of the vacuum module~$V_k$.
 The PBW basis of~$V_k$ gives weight-space dimensions
 $\dim(V_k)_h = p(h,3)$, the number of $3$-colored partitions of~$h$
@@ -1723,14 +1746,14 @@ $\dim (V_k)_h^{\mathfrak{g}} = [q^h]\,\prod_{n \ge 1}
 (1-q^n)^{-1}$ for~$\mathfrak{sl}_2$.
 The Sugawara construction
 $T = \frac{1}{2(k+2)}\sum_a {:}J^a J^a{:}$
-acts as~$L_0 = h$ on each weight-$h$ subspace, confirming the
+acts as~$L_0 = h$ on each weight-$h$ subspace, matching the
 conformal-weight grading of the bar complex.
 \end{remark}
 
 \begin{proposition}[PBW \texorpdfstring{$E_2$}{E_2} from vacuum module data;
 \ClaimStatusProvedHere]\label{prop:pbw-e2-from-vacuum-module}
 \index{PBW spectral sequence!E2 from vacuum module}
-\index{MC1!algorithmic verification}
+\index{MC1!algorithmic check}
 Let $\mathfrak{g}$ be a simple Lie algebra and
 $\widehat{\mathfrak{g}}_k$ the associated Kac--Moody algebra
 with vacuum module~$V_k$.
@@ -1752,7 +1775,7 @@ of~$(V_k)_q$.
 
 MC1 concentration ($E_2^{p,q} = 0$ for $q \neq 0$) therefore
 reduces to a representation-theoretic computation within the
-vacuum module: verify that the $\mathfrak{g}$-invariants of each
+vacuum module: check that the $\mathfrak{g}$-invariants of each
 weight space carry trivial Lie algebra cohomology.
 \end{proposition}
 
@@ -1781,7 +1804,7 @@ survives on~$E_2$.
 
 We compute the degree-3 \emph{associative} bar differential
 $d\colon \bar{B}^3 \to \bar{B}^2$ for $\mathfrak{sl}_2$ and
-verify that $d^2 \neq 0$, with $d^2$ given by the associator.
+show that $d^2 \neq 0$, with $d^2$ given by the associator.
 
 On the associative bar, $d([a|b|c]) = [m(a,b)|c] - [a|m(b,c)]$
 where $m(a,b) = [a,b]$ is the Lie bracket. The $9 \times 27$ matrix
@@ -1890,7 +1913,7 @@ result that semisimple Lie algebras are formal as dg~Lie algebras
 The SDR conditions
 ($dh + hd = \operatorname{id} - \iota \circ p$,
 $h^2 = 0$, $p \circ h = 0$, $h \circ \iota = 0$)
-are verified by direct matrix computation on the
+are satisfied by direct matrix computation on the
 $10$-dimensional complex $\Lambda^*(\mathfrak{sl}_2^*)$.
 \end{computation}
 
@@ -1911,7 +1934,7 @@ The CE complex $\Lambda^*(\mathfrak{g}_-^*)$,
 graded by conformal weight $H = \sum n_i$,
 has differential $d_{\mathrm{CE}}$ preserving~$H$.
 
-\emph{$d^2 = 0$ verification.}
+\emph{$d^2 = 0$ check.}
 Checked at all degrees $p \leq 4$ and weights $H \leq 5$.
 
 \emph{Chain group dimensions.}
@@ -1938,7 +1961,7 @@ $\mathrm{rk}(d^{1,4}_{\mathrm{CE}}) = 3$.
 $H^1_{\mathrm{CE}} = 3$ (all at weight~$1$),
 $H^2_{\mathrm{CE}} = 5$ (all at weight~$3$:
 $\ker = 9 - 1 = 8$, $\mathrm{im} = 3$, $H^2_3 = 5$),
-$H^2_H = 0$ for $H \neq 3$ (verified through $H = 6$).
+$H^2_H = 0$ for $H \neq 3$ (checked through $H = 6$).
 This is the $E_2$ page of the PBW spectral
 sequence on $\barBgeom(\widehat{\mathfrak{sl}}_2)$
 (Corollary~\ref{cor:bar-cohomology-koszul-dual}, Step~4),
@@ -1946,9 +1969,8 @@ giving $\dim H^n(\barBgeom(\widehat{\mathfrak{sl}}_2))
 = H^n_{\mathrm{CE}}(\mathfrak{g}_-, \mathbb{C})$.
 
 \emph{Implementation.}
-Module \texttt{compute/lib/bar\_cohomology\_verification.py},
-class \texttt{LoopAlgebraCE}, verified by
-\texttt{test\_bar\_cohomology\_verification.py}.
+The \texttt{LoopAlgebraCE} computation records the matrices used for
+these ranks.
 \end{computation}
 
 \begin{remark}[The comparison theorem in action]
@@ -1956,7 +1978,7 @@ class \texttt{LoopAlgebraCE}, verified by
 \label{rem:comparison-summary}
 \index{bar complex!comparison theorem}
 Computations~\ref{comp:geom-alg-comparison-deg2}--\ref{comp:sl2-bar-deg3-curvature}
-verify Theorem~\ref{thm:geometric-equals-operadic-bar} for
+realize Theorem~\ref{thm:geometric-equals-operadic-bar} for
 $\widehat{\mathfrak{sl}}_{2,k}$ at degrees~2 and~3. The dictionary is:
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -1970,7 +1992,7 @@ $B$-cycle period & Curvature $m_0$ & Genus-1 contribution \\
 FM boundary faces & Stasheff associahedron & $A_\infty$ structure \\
 \end{tabular}
 \end{center}
-The verification confirms that the geometric language of
+The comparison shows that the geometric language of
 Parts~\ref{part:bar-complex}--\ref{part:standard-landscape} (configuration space integrals, FM
 compactifications, Verdier duality) and the algebraic language
 of Part~\ref{part:physics-bridges} (OPE residues, screening operators,
@@ -2387,7 +2409,7 @@ d[E_{1112}|F_{1112}] &\ni k\cdot\mathbf{1}
 
 \subsection{Curvature and level-shifting}
 
-\begin{computation}[Curvature and Koszul dual for \texorpdfstring{$\widehat{G}_{2,k}$}{G_2,k}]
+\begin{computation}[Curvature and affine shadow for \texorpdfstring{$\widehat{G}_{2,k}$}{G_2,k}]
 \label{comp:G2-curvature}
 \index{curvature!G2@$\widehat{G}_2$}
 
@@ -2398,11 +2420,13 @@ m_0 = \frac{k + h^\vee}{2h^\vee}\cdot\kappa
 \end{equation}
 This vanishes at the critical level $k = -h^\vee = -4$.
 
-\emph{Level-shifting duality.}
+\emph{Affine same-family shadow.}
 \begin{equation}\label{eq:G2-level-shift}
-(\widehat{G}_{2,k})^! \simeq \widehat{G}_{2,-k-8}
+k'=-k-2h^\vee=-k-8.
 \end{equation}
-The shift is $-k - 2h^\vee = -k - 8$, using $h^\vee = 4$.
+The shifted affine algebra $\widehat{G}_{2,k'}$ records the same
+scalar dual lane; it is not the raw bar coalgebra and not the derived
+chiral centre. The shift uses $h^\vee = 4$.
 Note: the Coxeter number $\mathsf{h} = 6$ does \emph{not} appear in the
 level shift. This is the critical distinction for non-simply-laced
 algebras: the Feigin--Frenkel level shift uses the dual Coxeter number $h^\vee$, not the Coxeter number $\mathsf{h}$.
@@ -2418,7 +2442,7 @@ c(\widehat{G}_{2,k}) + c(\widehat{G}_{2,-k-8})
 = \frac{14k}{k+4} + \frac{-14(k+8)}{-(k+4)}
 = \frac{14k + 14(k+8)}{k+4} = 28
 \end{equation}
-verifying $c + c' = 2\dim(\mathfrak{g}_2) = 28$
+giving $c + c' = 2\dim(\mathfrak{g}_2) = 28$
 (Theorem~\ref{thm:central-charge-complementarity}).
 
 \emph{Obstruction coefficient.}
@@ -2563,7 +2587,7 @@ Serre (degree $5$) uses the $G_2$-specific fourth-order relation.
 \begin{remark}[The \texorpdfstring{$G_2$}{G_2} computation in context]\label{rem:G2-context}
 \index{non-simply-laced!comparison table}
 The $B_2$ (\S\ref{sec:B2-details}) and $G_2$ computations together
-demonstrate that the framework handles all lacing numbers
+exhibit the three possible lacing numbers
 $r^\vee \in \{1, 2, 3\}$:
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
@@ -2593,7 +2617,7 @@ and~\ref{thm:genus-universality}) hold uniformly, but the
 \index{E7@$E_7$!shadow data}
 \index{F4@$F_4$!shadow data}
 
-The following table collects the shadow obstruction tower data for all exceptional ($E_6, E_7, E_8$) and non-simply-laced ($B_2, G_2, F_4$) affine Kac--Moody algebras. Every family is class L (shadow depth $r_{\max} = 3$), with cubic shadow $C$ from the Lie bracket, quartic shadow $S_4 = 0$ by the Jacobi identity, and critical discriminant $\Delta = 8\kappa S_4 = 0$. The r-matrix has a simple pole at $z = 0$ ($d\log$ extraction absorbs one power), and complementarity $\kappa + \kappa' = 0$ holds for all Kac--Moody families. All data verified by 458 compute tests (\texttt{test\_exceptional\_shadows.py}, \texttt{test\_non\_simply\_laced\_shadows.py}).
+The following table collects the shadow obstruction tower data for all exceptional ($E_6, E_7, E_8$) and non-simply-laced ($B_2, G_2, F_4$) affine Kac--Moody algebras. Every family is class L (shadow depth $r_{\max} = 3$), with cubic shadow $C$ from the Lie bracket, quartic shadow $S_4 = 0$ by the Jacobi identity, and critical discriminant $\Delta = 8\kappa S_4 = 0$. The r-matrix has a simple pole at $z = 0$ ($d\log$ extraction absorbs one power), and complementarity $\kappa + \kappa' = 0$ holds for all Kac--Moody families.
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lcccccccl}
@@ -2612,7 +2636,7 @@ $F_4$ & $52$ & $4$ & $12$ & $9$ & $2$ & $\frac{26(k+9)}{9}$ & $104$ & L \\
 \bottomrule
 \end{tabular}
 \end{center}
-The kappa formula uses $h^\vee$ (not $h$) throughout: $\kappa = d(k+h^\vee)/(2h^\vee)$. For $E_6$ at $k=1$: $\kappa = 13 \cdot 13/4 = 169/4$. For $G_2$ at $k=1$: $\kappa = 7 \cdot 5/4 = 35/4$. For $F_4$ at $k=1$: $\kappa = 26 \cdot 10/9 = 260/9$. The class L assignment confirms the universal pattern: every affine Kac--Moody algebra, regardless of type or lacing number, is class L.
+The kappa formula uses $h^\vee$ (not $h$) throughout: $\kappa = d(k+h^\vee)/(2h^\vee)$. For $E_6$ at $k=1$: $\kappa = 13 \cdot 13/4 = 169/4$. For $G_2$ at $k=1$: $\kappa = 7 \cdot 5/4 = 35/4$. For $F_4$ at $k=1$: $\kappa = 26 \cdot 10/9 = 260/9$. Every affine Kac--Moody algebra, regardless of type or lacing number, lies in class L.
 \end{remark}
 
 
@@ -2704,69 +2728,62 @@ d\bigl([T|T|T] \otimes \eta_{12}\wedge\eta_{13}\bigr)
 \label{eq:vir-deg3-TTT}
 \end{align}
 
-The degree-1 terms ($c/2 \cdot [T] \otimes \eta_*$) sum over all three
-forms. These three terms combine using the Arnold relation
-$\eta_{12} + \eta_{23} + \eta_{31} = 0$ (which holds as $1$-forms on
-$\mathrm{Conf}_3$). Since $\eta_{31} = \eta_{13}$:
+The degree-1 terms
 \[
-\eta_{12} + \eta_{23} + \eta_{13} = 0
+\frac c2[T]\otimes(\eta_{12}+\eta_{13}+\eta_{23})
 \]
-Therefore $[T] \otimes (\eta_{12} + \eta_{13} + \eta_{23}) = 0$, and
-the vacuum leakage \emph{vanishes} in degree 3.
+do \emph{not} vanish by an Arnold relation. The Arnold relation on
+three points is the quadratic Orlik--Solomon identity
+\[
+\eta_{12}\wedge\eta_{23}+\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0,
+\]
+not a linear identity among the one-forms $\eta_{12},\eta_{13},\eta_{23}$.
+Thus the quartic Virasoro pole propagates into degree~3 as a genuine
+curvature insertion. It cancels only in the curved $A_\infty$ identity
+$D^2=[m_0,-]$ after the $m_0=c/2$ component is included; it is not
+zero in the ordinary residue differential.
 
-This is significant: the Arnold relation kills the degree-3 vacuum
-contribution. The curvature $m_0 = c/2$ appears at degree~2
-(Computation~\ref{comp:virasoro-curvature}) but does not propagate
-to degree~3 directly; the Arnold relation provides the
-cancellation mechanism.
-
-The surviving terms in~\eqref{eq:vir-deg3-TTT} are:
+The degree-$3$ differential is therefore:
 \begin{align}
 d\bigl([T|T|T] \otimes \eta_{12}\wedge\eta_{13}\bigr)
-&= 2[T|T] \otimes (\eta_{12} + \eta_{13} + \eta_{23}) \notag \\
+&= \frac{c}{2}[T]\otimes(\eta_{12}+\eta_{13}+\eta_{23}) \notag \\
+&\quad + 2[T|T] \otimes (\eta_{12} + \eta_{13} + \eta_{23}) \notag \\
 &\quad + [\partial T|T] \otimes \eta_{13}
 + [T|\partial T] \otimes (\eta_{12} + \eta_{23}) \notag \\
-&= 0 + [\partial T|T] \otimes \eta_{13}
-+ [T|\partial T] \otimes (\eta_{12} + \eta_{23})
 \label{eq:vir-deg3-TTT-simplified}
 \end{align}
-where the Arnold relation also kills the
-$2[T|T] \otimes (\eta_{12}+\eta_{13}+\eta_{23})$ term.
+subject only to the quadratic Arnold identities among wedge products.
 \end{computation}
 
-\begin{proposition}[Arnold cancellation in the Virasoro bar complex;
+\begin{proposition}[Virasoro curvature survives the degree-\texorpdfstring{$3$}{3} residue;
 \ClaimStatusProvedHere]
 \label{prop:arnold-virasoro-deg3}
 \index{Arnold relation!Virasoro cancellation}
 For the Virasoro bar complex at any central charge~$c$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The vacuum leakage from the quartic pole $T_{(3)}T = c/2$ cancels
-in degree~$3$ by the Arnold relation $\eta_{12}+\eta_{13}+\eta_{23} = 0$.
-\item More generally, the ``diagonal'' contribution
-$\sum_{j} [T|T] \otimes \eta_{1j}$ (summing over all collision divisors
-involving the first insertion) vanishes in the degree-$n$ bar complex
-for $n \geq 3$, by the generalized Arnold relations on
-$\overline{\mathrm{Conf}}_n$.
+\item The vacuum leakage from the quartic pole $T_{(3)}T=c/2$
+survives in degree~$3$ as
+$\frac c2[T]\otimes(\eta_{12}+\eta_{13}+\eta_{23})$.
+\item The Arnold relation cancels quadratic wedge expressions, not
+linear sums of logarithmic one-forms. Hence finite checks in degrees
+$3,4,5$ cannot prove vanishing of Virasoro curvature in every degree.
+\item The correct mechanism in every degree is the curved identity
+$D^2=[m_0,-]$ with $m_0=c/2$, together with the higher Virasoro
+shadow tower.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-(i) is the computation above: the three residues at $D_{12}$, $D_{13}$,
-$D_{23}$ each contribute $c/2 \cdot [T] \otimes \eta_{*}$, and the sum
-of the three $\eta$-forms vanishes by the $n=3$ Arnold relation.
-
-(ii) For degree $n \geq 3$, the collision of the first insertion with
-each subsequent insertion $j = 2, \ldots, n$ produces
-$c/2 \cdot [T] \otimes \eta_{1j} \wedge \omega_{\hat{j}}$, where
-$\omega_{\hat{j}}$ is the remaining form after removing the colliding
-pair. The key identity is the generalized Arnold relation
-(Appendix~\ref{app:arnold-relations}, Theorem~\ref{thm:arnold-relations-appendix}):
-\[
-\sum_{j=2}^{n} \eta_{1j} \wedge \omega_{\hat{j}} = 0
-\]
-which holds for any symmetric form $\omega_{\hat{j}}$ obtained by
-evaluation on the collision locus. (The symmetry requirement is
-satisfied because all insertions are copies of $T$.)
+The computation above gives (i). For (ii), Arnol'd's relation in the
+Orlik--Solomon algebra of $\Conf_3(\mathbb C)$ is
+$\eta_{ij}\wedge\eta_{jk}+\eta_{jk}\wedge\eta_{ki}
++\eta_{ki}\wedge\eta_{ij}=0$. Since it is homogeneous of degree~$2$,
+it cannot imply a linear dependence among the degree-$1$ generators
+$\eta_{ij}$. Assertion (iii) is precisely the curved bar identity for
+the Virasoro OPE: the scalar term $T_{(3)}T=c/2$ is the curvature
+component, while the double and simple poles supply the weight and
+translation components.
 \end{proof}
 
 
@@ -2993,7 +3010,7 @@ Two cases arise:
 In both cases the residue is zero, so $d_{\mathrm{res}} = 0$ on
 maximal-form elements.
 Computations~\ref{comp:heisenberg-deg3-full} and~\ref{comp:heisenberg-deg4}
-verify this explicitly at $n = 3$ and $n = 4$.
+show this explicitly at $n = 3$ and $n = 4$.
 \end{proof}
 
 \begin{remark}\label{rem:maximal-form-mechanism}
@@ -3028,20 +3045,18 @@ corresponding to the Feigin--Frenkel center $\mathfrak{z}(\hat{\fg}_{-h^\vee})$.
 Define the PBW filtration $F_p$ by the number of generators applied
 to the vacuum. The associated graded is
 $\mathrm{gr}_F(\B(\hat{\fg}_k) \otimes_\tau V_k) \cong
-\B(\fg[t^{-1}]) \otimes S(\fg[t^{-1}])$,
-the bar complex of the loop algebra tensored with the symmetric algebra.
-The resulting spectral sequence has
-\[
-E_1^{p,q} = H_p(\fg;\, S^q(\fg[t^{-1}]))
-\]
-(Lie algebra homology with polynomial coefficients).
-By the Whitehead lemmas, $H_n(\fg; M) = 0$ for $n > 0$ and any
-rational $\fg$-module~$M$, using the semisimplicity of~$\fg$.
-The spectral sequence collapses at~$E_1$, giving acyclicity.
+B(U(\fg[t^{-1}]t^{-1})) \otimes_{\tau_0}
+U(\fg[t^{-1}]t^{-1})$.
+This is the augmented bar resolution of the enveloping algebra of
+the negative loop algebra. Its homology is $\bC$ in degree~$0$ and
+vanishes in positive degree. The spectral sequence therefore has
+$E_1=\bC$ on the augmentation line and no positive homological
+classes, giving acyclicity of the twisted complex on the generic
+PBW-flat locus.
 
 At $k = -h^\vee$, the vacuum module becomes reducible (the Sugawara
 tensor is undefined), and the PBW filtration degenerates.
-Computation~\ref{comp:km-acyclic} verifies the argument explicitly
+Computation~\ref{comp:km-acyclic} gives the argument explicitly
 for $\fg = \mathfrak{sl}_2$.
 \end{proof}
 
@@ -3088,7 +3103,7 @@ skew-symmetry (Computation~\ref{comp:w3-nthproducts}).
 
 The curvature ratio follows from the OPE normalizations:
 $(c/3)/(c/2) = 2/3$, independent of~$k$.
-Computation~\ref{comp:w3-bar-degree2} provides the complete verification.
+Computation~\ref{comp:w3-bar-degree2} gives the complete residue calculation.
 \end{proof}
 
 \begin{remark}[Generalization to \texorpdfstring{$\mathcal{W}_N$}{W_N}]\label{rem:wn-vacuum-channels}
@@ -3120,18 +3135,16 @@ order~$n-1$ in the collision residue $r(z) = \operatorname{Res}^{\mathrm{coll}}_
 In particular, simple poles ($z^{-1}$) in the OPE produce
 regular ($z^0$) terms in the $r$-matrix and drop.
 
-Table~\ref{tab:rmatrix-pole-landscape} summarises the verified pole
-structure for all eight standard families.
+Table~\ref{tab:rmatrix-pole-landscape} summarises the pole structure
+for the standard families.
 
 \begin{table}[ht]
 \centering
 \renewcommand{\arraystretch}{1.15}
 \caption{Collision-residue $r$-matrix pole structure across the
 standard landscape. The rule ``OPE pole $z^{-n} \to$
-$r$-matrix pole $z^{-(n-1)}$'' is verified in
-\texttt{test\_rmatrix\_landscape.py} and
-\texttt{test\_rmatrix\_poles\_comprehensive.py}
-($205$ tests, all passing).}
+$r$-matrix pole $z^{-(n-1)}$'' is the $d\log(z_i-z_j)$ collision
+residue rule.}
 \label{tab:rmatrix-pole-landscape}
 \begin{tabular}{lcccc}
 \toprule
@@ -3393,7 +3406,8 @@ collapsing two slots and leaving $[\psi_2]$.)
 \index{free fermion!dimension table}
 The total dimension $\dim \B^n(\mathcal{F}_2)$ for the two-generator
 free fermion in the NS sector, restricting to elements built
-from the lowest modes $\psi_{i,-1/2}|0\rangle$ (weight $\tfrac{1}{2}$),
+from the lowest modes $\psi_{i,-1/2}|0\rangle$ (weight $\tfrac{1}{2}$)
+in the ordered tensor model used for the bar tables,
 is given by the following table.
 
 \begin{center}
@@ -3401,11 +3415,12 @@ is given by the following table.
 \begin{tabular}{c|ccccc|l}
 Degree $n$ & 1 & 2 & 3 & 4 & 5 & Generating principle \\
 \hline
-$\dim \B^n$ (wt $\frac{1}{2}$ only) & 2 & 2 & 4 & 10 & 32
- & $\binom{n+1}{1}$ gen.\ $\times$ forms \\
+$\dim \B^n$ (lowest modes only) & 2 & 4 & 16 & 96 & 768
+ & $2^n\,(n{-}1)!$ \\
 $\dim \Omega^{n-1}(\overline{\Conf}_n)$ & 1 & 1 & 2 & 6 & 24
  & Poincar\'{e} of $\Conf_n(\bC)$ \\
-$\operatorname{rk} d_n$ & n/a & 2 & 2 & 4 & 10 & residue rank
+$\operatorname{rk} d_n$ & n/a & $\leq 2$ & $\leq 4$ & $\leq 16$ & $\leq 96$
+& target dimension bound
 \end{tabular}
 \end{center}
 
@@ -3413,6 +3428,10 @@ At all weights, the generating function for
 $\sum_n \dim \B^n_h(\mathcal{F}_2) \cdot t^n \cdot q^h$ is given
 by Proposition~\ref{prop:universal-dim-formula} below, with
 $r = 2$ fermionic generators of weight $\frac{1}{2}$.
+The symmetric-coalgebra description in
+Proposition~\ref{prop:fermion-bar-symmetric} is the quotient coalgebra
+after imposing the supercommutative fermionic relations; the ordered
+chain table above is the pre-quotient bar chain space.
 \end{computation}
 
 \begin{proposition}[Free fermion bar complex: coalgebra structure;
@@ -3426,7 +3445,7 @@ has the structure of a \emph{symmetric} coalgebra on the desuspension:
 \end{equation}
 as a graded coalgebra (forgetting the differential), where
 $\bar{V} = V/\bC|0\rangle$ is the augmentation ideal.
-This is dual to the \emph{exterior algebra} structure of the
+This is dual to the commutative algebra structure of the
 Koszul dual $\mathcal{F}_2^! \cong
 \mathrm{Sym}^{\mathrm{ch}}(V^*)$, under the operadic duality
 $\Lie^! = \Com$.
@@ -3612,35 +3631,29 @@ H_n\bigl(\B(V_{E_8}) \otimes_\tau V_{E_8}\bigr) = \begin{cases}
 The argument parallels Proposition~\ref{prop:km-generic-acyclicity}.
 Introduce the PBW filtration $F_p$ by generator count. The
 associated graded is $\mathrm{gr}_F(\B(V_{E_8}) \otimes_\tau V_{E_8})
-\cong \B(\mathfrak{e}_8[t^{-1}]) \otimes S(\mathfrak{e}_8[t^{-1}])$,
-and the spectral sequence has
-$E_1^{p,q} = H_p(\mathfrak{e}_8;\, S^q(\mathfrak{e}_8[t^{-1}]))$.
-Since $\mathfrak{e}_8$ is simple, the Whitehead lemma gives
-$H_n(\mathfrak{e}_8; M) = 0$ for $n > 0$ and any finite-dimensional
-$\mathfrak{e}_8$-module~$M$. The key additional input for the
-loop algebra coefficients $S^q(\mathfrak{e}_8[t^{-1}])$ is
-that these decompose into a direct sum of finite-dimensional
-$\mathfrak{e}_8$-modules (by the grading on loop degree),
-so the Whitehead lemma applies to each summand.
-The spectral sequence collapses at $E_1$.
+\cong B(U(\mathfrak{e}_8[t^{-1}]t^{-1}))\otimes_{\tau_0}
+U(\mathfrak{e}_8[t^{-1}]t^{-1})$.
+This associated graded complex is the augmented bar resolution of
+the enveloping algebra of the negative loop algebra, hence has
+homology $\bC$ in degree~$0$ and no positive homology. The spectral
+sequence collapses on the augmentation line.
 \end{proof}
 
-\begin{computation}[Koszul dual and level shift]
+\begin{computation}[Affine level shift versus lattice self-duality]
 \label{comp:E8-koszul-dual}
 \index{E8 root lattice@$E_8$ root lattice!Koszul dual}
-By the level-shifting formula
-(Corollary~\ref{cor:level-shifting-part1}),
-the Koszul dual of $V_{E_8}$ at level $k = 1$ is
-$(V_{E_8})^!$ at the dual level
+For the universal affine algebra $V_k(\mathfrak e_8)$, the scalar
+Verdier--Koszul lane carries the Feigin--Frenkel level shift
+(Corollary~\ref{cor:level-shifting-part1})
 \[
 k' = -k - 2h^\vee = -1 - 60 = -61.
 \]
-Since $V_{E_8}$ at $k = 1$ is the unique holomorphic vertex algebra
-of central charge $c = 8$ (up to isomorphism), the Koszul dual
-$V_{E_8}^!$ exists as a formal object at the highly non-generic
-level $k = -61$ (far from the critical level $k = -30$).
+This shifted-level object is not the lattice self-dual VOA
+$V_{E_8}$ itself. It is the affine same-family shadow whose scalar
+invariants match the Verdier--Koszul dual lane of the universal
+affine algebra.
 
-The central charge of the dual:
+The central charge of the shifted affine shadow is:
 \[
 c' = \frac{248 \cdot (-61)}{-61 + 30} = \frac{248 \cdot 61}{31} = \frac{15128}{31},
 \]
@@ -3657,13 +3670,13 @@ $c + c' = 2\dim(\mathfrak{g})$ when $k' = -k - 2h^\vee$
 = d\bigl(\frac{k}{k+h^\vee} + \frac{k+2h^\vee}{k+h^\vee}\bigr)
 = d \cdot \frac{2k + 2h^\vee}{k+h^\vee} = 2d$).
 
-\emph{Self-duality.}
-As a lattice vertex algebra, $V_{E_8}$ is Koszul self-dual by
+\emph{Lattice self-duality.}
+As a lattice vertex algebra, $V_{E_8}$ is self-dual by
 Theorem~\ref{thm:lattice:unimodular-self-dual} (since $E_8$ is
-even unimodular). This self-duality operates at the level of the
-lattice structure (cocycle inversion), not at the level of affine
-Lie algebra representations, and is compatible with but distinct from
-the level-shifting duality $k \leftrightarrow -k - 2h^\vee$.
+even unimodular). This is a different statement from the affine
+level shift above: lattice self-duality acts on the lattice
+coalgebra/cocycle data, while $k\leftrightarrow -k-2h^\vee$ acts on
+the universal affine same-family shadow.
 \end{computation}
 
 
@@ -3783,25 +3796,14 @@ Summing over all six divisors gives
 \end{align}
 
 Each surviving $2$-form $\eta_{ij}$ lives in $\Omega^2(\overline{\Conf}_3)$.
-\begin{equation}\label{eq:vir-deg4-arnold}
-\sum_{j=2}^{4} \eta_{1j} = 0
-\quad \text{and} \quad
-\sum_{2 \leq i < j \leq 4} \eta_{ij} = 0,
-\end{equation}
-so the vacuum terms split into two Arnold triples:
-\begin{align*}
-V_{12} + V_{13} + V_{14}
-&= \frac{c}{2}[T|T] \otimes
- (\eta_{12} + \eta_{13} + \eta_{14}) = 0, \\
-V_{23} + V_{24} + V_{34}
-&= \frac{c}{2}[T|T] \otimes
- (\eta_{23} + \eta_{24} + \eta_{34}) = 0.
-\end{align*}
-The first identity is the Arnold relation on the three surviving
-points after collapsing slot~$1$ with one partner; the second is the
-Arnold relation on $(z_2, z_3, z_4)$. Therefore the degree-4 vacuum
-leakage vanishes, extending
-Proposition~\ref{prop:arnold-virasoro-deg3}(ii) to $n = 4$.
+There is no linear Arnold identity of the form
+$\sum\eta_{ij}=0$. The Arnold identities in
+$\Omega^\bullet(\Conf_4)$ are quadratic wedge identities. Therefore
+the sum~\eqref{eq:vir-deg4-vacuum} is not killed by configuration
+space alone. It is the degree-$4$ curvature channel of the Virasoro
+bar complex and must be paired with the $m_0=c/2$ term in the curved
+$A_\infty$ identity. Degree~$4$ does not provide an independent
+vanishing theorem for Virasoro vacuum leakage.
 \end{computation}
 
 \subsection{Degree 5}
@@ -3832,12 +3834,12 @@ where $\omega^{(k)}_{ij} \in \Omega^{k-1}(\overline{\Conf}_k)$ is the
 form obtained by restricting $\omega_{\mathrm{top}}$ to the stratum
 $z_i = z_j$ and projecting to the configuration of $k$ surviving points.
 
-The vacuum contributions again vanish by the Arnold relation:
-for any fixed slot $i$, the sum $\sum_{j \neq i} \omega^{(3)}_{ij} = 0$
-by Proposition~\ref{prop:arnold-virasoro-deg3}(ii).
-Since the 10 collision divisors decompose into 5 groups of the form
-$\{D_{ij} : j \neq i\}$ (one for each $i$), and each group's vacuum
-contribution vanishes, the total degree-5 vacuum leakage is zero.
+The vacuum contributions do not vanish by a fixed-slot linear Arnold
+sum. The ten boundary terms are constrained by the Orlik--Solomon
+quadratic relations and by the curved equation $D^2=[m_0,-]$; they are
+not zero as ordinary residue terms. Degree~$5$ therefore gives another
+instance of Virasoro curvature propagation, not a cancellation
+mechanism in every degree.
 \end{computation}
 
 \subsection{Graded dimension table}
@@ -3892,22 +3894,28 @@ In particular:
 \end{itemize}
 \end{computation}
 
-\begin{proposition}[Virasoro bar cohomology and Koszul property; \ClaimStatusConditional]
+\begin{proposition}[Virasoro bar cohomology and Koszul-dual Hilbert function; \ClaimStatusConditional]
 \label{prop:virasoro-koszul-acyclic}
 \index{Virasoro algebra!bar cohomology}
 \index{Koszul!Virasoro}
-For the Virasoro algebra $\mathrm{Vir}_c$ at any $c$, the PBW filtration
-on $\B(\mathrm{Vir}_c)$ yields a spectral sequence that collapses
-at~$E_2$, computing the bar cohomology as:
+For the universal Virasoro algebra $\mathrm{Vir}_c$ at generic
+$c$ outside the minimal-model/Kac-determinant divisor, the PBW
+filtration on $\B(\mathrm{Vir}_c)$ yields a spectral sequence whose
+$E_2$-collapse computes the dual coalgebra:
 \begin{equation}\label{eq:virasoro-koszul-acyclic}
 H^n(\B(\mathrm{Vir}_c)) \cong \bigl((\mathrm{Vir}_c)^i\bigr)_n
 \end{equation}
 where $(\mathrm{Vir}_c)^i := H^*(\B(\mathrm{Vir}_c))$ is the dual
 coalgebra, and $\mathrm{Vir}_c^! = (((\mathrm{Vir}_c)^i)^\vee)$ is the
-dual algebra.
-The bar cohomology dimensions are as listed in
+dual algebra. The displayed dimensions are therefore the Hilbert
+function of $A^!$, not a statement about
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathrm{Vir}_c)$ and not an
+all-central-charge theorem.
+The Koszul-dual Hilbert dimensions are as listed in
 Table~\textup{\ref{tab:bar-dimensions}}:
-$\dim H^n = 1, 2, 5, 12, 30, 76, 196, 512, 1353, 3610$ for $n = 1, \ldots, 10$,
+$\dim(\mathrm{Vir}_c^!)_n =
+1, 2, 5, 12, 30, 76, 196, 512, 1353, 3610$ for
+$n = 1, \ldots, 10$,
 reflecting the associahedron structure of
 $\overline{M}_{0,n+2}$.
 \end{proposition}
@@ -3930,7 +3938,7 @@ The PBW filtration gives a spectral sequence with
 $E_1^{p,q} = H_p(\B(\mathrm{gr}\,\mathrm{Vir}_c))_q
 \cong \Lambda^p(V^*)_q$.
 The spectral sequence collapses at $E_2$ by the chiral
-Koszulness of $\mathrm{Vir}_c$
+Koszulness of generic $\mathrm{Vir}_c$
 (Theorem~\ref{thm:virasoro-chiral-koszul}, proved via
 the PBW criterion of Theorem~\ref{thm:pbw-koszulness-criterion}),
 and the bar cohomology is the dual coalgebra
@@ -3964,19 +3972,21 @@ $\phi_1, \ldots, \phi_r$ of conformal weights $h_1, \ldots, h_r$
 and parities $\epsilon_i \in \{0, 1\}$ ($0$ for bosonic, $1$ for
 fermionic). Then the generating function for the dimensions of the
 bar complex $\B^n_h(A)$ (bar degree~$n$, conformal weight~$h$) is:
-\begin{equation}\label{eq:universal-dim}
-\sum_{n \geq 1,\, h \geq 0} \dim \B^n_h(A) \cdot q^h \, t^n
-= \Biggl(\,\prod_{i=1}^{r}
+\begin{align}
+\chi_{\bar V}(q)
+&=
+\prod_{i=1}^{r}
  \prod_{m \geq h_i}
- \frac{(1 + q^m t)^{\epsilon_i}}{(1 - q^m t)^{1-\epsilon_i}}
-\Biggr) - 1.
-\end{equation}
-Here the factor $(1 - q^m t)^{-1}$ for a bosonic generator
-of weight $h_i$ counts the occupation numbers of the mode
-$(\phi_i)_{-m}|0\rangle$ (with $m \geq h_i$), while
-$(1 + q^m t)$ for a fermionic generator counts the $\{0,1\}$
-occupation of the mode $(\phi_i)_{-m}|0\rangle$.
-The $-1$ removes the vacuum ($n = 0$) term.
+ \frac{(1 + q^m)^{\epsilon_i}}{(1 - q^m)^{1-\epsilon_i}}
+-1, \label{eq:universal-state-char}\\
+\sum_{n \geq 1,\, h \geq 0} \dim \B^n_h(A) \cdot q^h \, t^n
+&=
+\sum_{n\geq1} (n-1)!\,t^n\,\chi_{\bar V}(q)^n .
+\label{eq:universal-dim}
+\end{align}
+The factor $(n-1)!$ is the top Orlik--Solomon form dimension
+$\dim\Omega^{n-1}(\Conf_n(\mathbb C))$. The variable~$t$ records bar
+tensor slots, not PBW occupation number inside a single state.
 \end{proposition}
 
 \begin{proof}
@@ -4003,39 +4013,38 @@ $\Conf_n(\bC)$.
 
 At the level of the PBW filtration (ignoring null vectors and
 relations from the differential), each mode
-$(\phi_i)_{-m}|0\rangle$ contributes independently.
-A bosonic mode contributes a factor $(1 - q^m t)^{-1}$
-to the generating function (arbitrary occupation number), while
-a fermionic mode contributes $(1 + q^m t)$
-(occupation number $0$ or $1$). The variable $t$ tracks the
-bar degree: each occupied mode contributes one tensor slot.
-
-Multiplying over all generators $i$ and all mode numbers $m \geq h_i$
-gives the product formula. The $-1$ subtracts the term
-$n = 0$, $h = 0$ (the vacuum).
+$(\phi_i)_{-m}|0\rangle$ contributes independently to the
+\emph{state} character. A bosonic mode contributes $(1-q^m)^{-1}$,
+and a fermionic mode contributes $(1+q^m)$. The $n$-fold ordered
+tensor product contributes $\chi_{\bar V}(q)^n$, and the top
+configuration-form factor contributes $(n-1)!$. This gives
+\eqref{eq:universal-dim}. The $-1$ in
+\eqref{eq:universal-state-char} removes the vacuum from $\bar V$.
 \end{proof}
 
-\begin{computation}[Verification: Heisenberg]\label{comp:verify-heisenberg}
+\begin{computation}[Heisenberg dimension formula]\label{comp:dim-formula-heisenberg}
 The Heisenberg algebra $\mathcal{H}$ has $r = 1$ bosonic generator
-of weight $h_1 = 1$. Formula~\eqref{eq:universal-dim} gives:
+of weight $h_1 = 1$. Formula~\eqref{eq:universal-state-char} gives
+$\chi_{\bar V}(q)=\prod_{m\ge1}(1-q^m)^{-1}-1$, hence
+Formula~\eqref{eq:universal-dim} gives:
 \[
 \sum_{n,h} \dim \B^n_h(\mathcal{H}) \cdot q^h t^n
-= \prod_{m \geq 1} \frac{1}{1 - q^m t} - 1
-= qt + (q + q^2)t^2 + (q + q^2 + q^3)t^3 + \cdots
+= \sum_{n\ge1}(n-1)!t^n
+\left(\prod_{m\ge1}\frac1{1-q^m}-1\right)^n .
 \]
 At bar degree $n = 1$: $\dim \B^1_h = 1$ for all $h \geq 1$
-(the modes $a_{-h}|0\rangle$). At $n = 2$: $\dim \B^2_h = p(h)$
-(unrestricted partitions), as $\bar{V}^{\otimes 2}$ at weight $h$
-has dimension $\sum_{a+b=h} 1 \cdot 1$.
+(the modes $a_{-h}|0\rangle$). At $n = 2$ the coefficient is that of
+$\chi_{\bar V}(q)^2$, since $\Omega^1(\Conf_2)$ is one-dimensional.
 This matches
 Computation~\ref{comp:heisenberg-deg3-full}.
 \end{computation}
 
-\begin{computation}[Verification: Virasoro]\label{comp:verify-virasoro}
+\begin{computation}[Virasoro dimension formula]\label{comp:dim-formula-virasoro}
 The Virasoro has $r = 1$ bosonic generator of weight $h_1 = 2$:
 \[
 \sum_{n,h} \dim \B^n_h \cdot q^h t^n
-= \prod_{m \geq 2} \frac{1}{1 - q^m t} - 1.
+= \sum_{n\ge1}(n-1)!t^n
+\left(\prod_{m\ge2}\frac1{1-q^m}-1\right)^n .
 \]
 At $n = 1$:
 $\dim \B^1_h = p_{\geq 2}(h)$, the number of partitions into parts
@@ -4046,14 +4055,17 @@ At $n = 3$, $h = 6$: two elements, giving $\dim \B^3_6 = 2$.
 These agree with the table of Computation~\ref{comp:virasoro-dim-table}.
 \end{computation}
 
-\begin{computation}[Verification: \texorpdfstring{$\mathcal{W}_3$}{W_3}]\label{comp:verify-w3}
+\begin{computation}[\texorpdfstring{$\mathcal{W}_3$}{W_3} dimension formula]\label{comp:dim-formula-w3}
 \index{W3 algebra@$\mathcal{W}_3$!bar complex dimension}
 The $\mathcal{W}_3$ algebra has $r = 2$ bosonic generators of weights
 $h_1 = 2$ (stress tensor $T$), $h_2 = 3$ ($W$-current $W$):
 \[
 \sum_{n,h} \dim \B^n_h \cdot q^h t^n
-= \prod_{m \geq 2} \frac{1}{1 - q^m t}
- \cdot \prod_{m \geq 3} \frac{1}{1 - q^m t} - 1.
+= \sum_{n\ge1}(n-1)!t^n
+\left(
+\prod_{m \geq 2} \frac{1}{1 - q^m}
+\cdot \prod_{m \geq 3} \frac{1}{1 - q^m} - 1
+\right)^n .
 \]
 At $n = 1$: $\dim \bar{V}_h$ counts partitions of $h$ into parts
 $\geq 2$ from the $T$-sector and parts $\geq 3$ from the $W$-sector.
@@ -4068,15 +4080,14 @@ $\dim \B^2_5 = 2$ (in addition to $[\partial T | T]$ and $[T|\partial T]$,
 giving total $\dim \B^2_5 = 4$).
 \end{computation}
 
-\begin{computation}[Verification: two-generator free fermion]
-\label{comp:verify-fermion}
+\begin{computation}[Two-generator free fermion dimension formula]
+\label{comp:dim-formula-fermion}
 The two-generator free fermion $\mathcal{F}_2$ has $r = 2$ fermionic
 generators of weight $h_1 = h_2 = \tfrac{1}{2}$ (in the NS sector):
 \[
 \sum_{n,h} \dim \B^n_h \cdot q^h t^n
-= \prod_{i=1}^{2} \prod_{m \geq 1/2,\, m \in \bZ + 1/2}
- (1 + q^m t) - 1
-= \prod_{n=0}^{\infty} (1 + q^{n+1/2} t)^2 - 1.
+= \sum_{n\ge1}(n-1)!t^n
+\left(\prod_{j=0}^{\infty}(1+q^{j+1/2})^2-1\right)^n .
 \]
 At $n = 1$: $\dim \B^1_{1/2} = 2$ ($\psi_1$, $\psi_2$),
 $\dim \B^1_1 = 1$ ($\psi_1 \psi_2$-descendant), matching
@@ -4102,38 +4113,38 @@ and~\ref{prop:virasoro-koszul-acyclic}), and the PBW formula gives
 the chain-level dimensions before passing to cohomology.
 \end{remark}
 
-\begin{computation}[Bar cohomology generating functions across standard families; \ClaimStatusConditional]
+\begin{computation}[Koszul-dual Hilbert generating functions across standard families; \ClaimStatusConditional]
 \label{comp:bar-cohomology-gfs}
 \index{bar cohomology!generating function}
 \index{Motzkin numbers!Virasoro bar cohomology}
 \index{partition function!Heisenberg bar cohomology}
 The PBW filtration (Proposition~\ref{prop:universal-dim-formula})
-plus the family-specific Koszul dual computation collapses the
+plus the family-specific Koszul dual computation maps the
 bidegree dimensions $\dim \B^n_h(A)$ to a one-variable generating
-function tracking the \emph{total} dimension of bar cohomology.
+function tracking the Hilbert function of the Verdier--Koszul dual
+algebra $A^!$.
 For each standard family, we record the closed-form generating
 function, the combinatorial sequence encoded, and the dominant
 singularity that controls the exponential growth rate.
-Convention: $G_A(x) = \sum_{n \geq 1} \dim H^n(\B(A)) \cdot x^n$,
-and all expansions are verified by substitution into the universal
-dimension formula~\eqref{eq:universal-dim} at $q = 1$ followed by
-cohomology reduction.
+Convention: $P_A(x) = \sum_{n \geq 1} \dim(A^!)_n \cdot x^n$.
+These functions do not describe $Z^{\mathrm{der}}_{\mathrm{ch}}(A)$.
 
 \emph{Direct expansions.}
-Heisenberg: $p(0) = 1, p(1) = 1, p(2) = 2, p(3) = 3, p(4) = 5$, so
-$G_{\cH}(x) = x^2 + x^3 + 2x^4 + 3x^5 + 5x^6 + \cdots$.
-Free fermion: $G_{\cF}(x) = x + x^2 + 2x^3 + 3x^4 + 5x^5 + \cdots$
+Heisenberg: the first generator gives degree~$1$, while the remaining
+degree-$n$ terms for $n \geq 2$ are shifted by $p(n-2)$; hence
+$P_{\cH}(x) = x + x^2 + x^3 + 2x^4 + 3x^5 + 5x^6 + \cdots$.
+Free fermion: $P_{\cF}(x) = x + x^2 + 2x^3 + 3x^4 + 5x^5 + \cdots$
 (shifted by one degree).
 Virasoro: $M(2) - M(1) = 1$, $M(3) - M(2) = 2$, $M(4) - M(3) = 5$,
 $M(5) - M(4) = 12$, $M(6) - M(5) = 30$ (see
 Proposition~\ref{prop:virasoro-koszul-acyclic}).
 Betagamma: direct square-root expansion gives
 $\sqrt{(1+x)/(1-3x)} = 1 + 2x + 4x^2 + 10x^3 + 26x^4 + 80x^5 + \cdots$
-(verified by squaring: $(1 + 2x + 4x^2 + 10x^3 + 26x^4)^2 =
+(squaring gives $(1 + 2x + 4x^2 + 10x^3 + 26x^4)^2 =
 1 + 4x + 12x^2 + 36x^3 + 108x^4 + \cdots$, matching the expansion
 of $(1+x)/(1-3x)$ through order $x^4$).
-Affine $\widehat{\mathfrak{sl}}_{2,k}$: the bar cohomology yields
-$\dim H^2 = 5$, \emph{not} $6$: the chiral bar complex
+Affine $\widehat{\mathfrak{sl}}_{2,k}$: the Koszul-dual Hilbert
+function gives $\dim(A^!)_2 = 5$, \emph{not} $6$: the chiral bar complex
 departs from the Chevalley-Eilenberg count on the negative
 subalgebra, because the chiral OPE introduces an Orlik-Solomon form
 factor absent from the Lie-algebraic resolution, and the standard
@@ -4155,8 +4166,8 @@ giving asymptotic growth $((3 + \sqrt{13})/2)^n \approx (3.303)^n$.
 Family & Generating function & OEIS / closed form & Growth rate & Discriminant \\
 \midrule
 Heisenberg $\cH$ &
-$\displaystyle \sum_{n \geq 2} p(n{-}2)\, x^n$ &
-A000041 (partitions) &
+$\displaystyle x + \sum_{n \geq 2} p(n{-}2)\, x^n$ &
+A000041, shifted after degree $1$ &
 $e^{\pi \sqrt{2n/3}}$ (sub-exp.) &
 $\prod_{m \geq 1}(1 - x^m)$ \\
 Free fermion $\cF$ &
@@ -4186,18 +4197,18 @@ $((3{+}\sqrt{13})/2)^n$ &
 $1 - 3x - x^2$ \\
 \bottomrule
 \end{tabular}
-\caption[Bar cohomology generating functions across standard families]{Generating functions for bar cohomology across standard families. The interacting families $\beta\gamma$, $\widehat{\mathfrak{sl}}_{2,k}$, and $\mathrm{Vir}_c$ share the universal discriminant $(1 - 3x)(1 + x)$ and growth rate $3^n$; $\widehat{\mathfrak{sl}}_{3,k}$ departs via the quadratic $1 - 3x - x^2$ whose dominant root is $(-3 + \sqrt{13})/2$. The free families $\cH, \cF$ have sub-exponential growth set by the Hardy-Ramanujan asymptotics of the partition function. The $\widehat{\mathfrak{sl}}_{2,k}$ entry is labelled \emph{modified} Riordan because the chiral bar cohomology gives $H^2 = 5$ whereas the standard Riordan recursion (or the Chevalley-Eilenberg count on $\mathfrak{g}_-$) gives $6$; the departure is the Orlik-Solomon form factor of the chiral OPE, detailed in Section~\ref{sec:sl3-bar-table}.}
+\caption[Koszul-dual Hilbert generating functions across standard families]{Generating functions for Koszul-dual Hilbert functions across standard families. The interacting families $\beta\gamma$, $\widehat{\mathfrak{sl}}_{2,k}$, and $\mathrm{Vir}_c$ share the universal discriminant $(1 - 3x)(1 + x)$ and growth rate $3^n$; $\widehat{\mathfrak{sl}}_{3,k}$ departs via the quadratic $1 - 3x - x^2$ whose dominant root is $(-3 + \sqrt{13})/2$. The free families $\cH, \cF$ have sub-exponential growth set by the Hardy-Ramanujan asymptotics of the partition function. The $\widehat{\mathfrak{sl}}_{2,k}$ entry is labelled \emph{modified} Riordan because the Koszul-dual Hilbert function gives $\dim(A^!)_2 = 5$ whereas the standard Riordan recursion (or the Chevalley-Eilenberg count on $\mathfrak{g}_-$) gives $6$; the departure is the Orlik-Solomon form factor of the chiral OPE, detailed in Section~\ref{sec:sl3-bar-table}.}
 \label{tab:bar-cohomology-gfs}
 \end{table}
 
-\begin{remark}[The $3^n$ conjecture]
+\begin{remark}[The $3^n$ Koszul-dual growth question]
 \label{rem:three-to-the-n-conjecture}
 Three of the four interacting families in
 Table~\ref{tab:bar-cohomology-gfs} ($\beta\gamma$,
 $\widehat{\mathfrak{sl}}_{2,k}$, and $\mathrm{Vir}_c$) share both
 the discriminant $(1 - 3x)(1 + x)$ and the exponential growth rate
-$3^n$. This is the empirical content of the \emph{$3^n$ bar
-cohomology growth} conjecture: for interacting chiral algebras in
+$3^n$. This is the empirical content of the \emph{$3^n$
+Koszul-dual Hilbert growth} question: for interacting chiral algebras in
 the single-generator or rank-$1$ regime, the chiral bar complex
 realizes its generic growth along the Motzkin path. The
 $\widehat{\mathfrak{sl}}_{3,k}$ row exhibits the first departure:
@@ -4207,8 +4218,8 @@ exceeds $3$. Whether a universal geometric mechanism on
 $\overline{M}_{0,n+2}$ (e.g., a Motzkin-path envelope controlled by
 the single-generator sector) governs the rank-$1$ case is an open
 question. We emphasise: the generating functions here record full
-graded dimensions, not Euler characteristics; individual bar
-cohomology dimensions depend on the full OPE bracket and are not
+graded dimensions of $A^!$, not Euler characteristics and not derived
+centres; individual bar cohomology dimensions depend on the full OPE bracket and are not
 reconstructible from $\dim \mathfrak{g}$ alone.
 \end{remark}
 
@@ -4219,7 +4230,7 @@ reconstructible from $\dim \mathfrak{g}$ alone.
 \index{BGG resolution!from bar complex!sl2@$\mathfrak{sl}_2$|textbf}
 \index{bar complex!BGG resolution!sl2@$\mathfrak{sl}_2$}
 
-We give the detailed matrix-level verification of
+We give the detailed matrix-level computation behind
 Theorem~\ref{thm:bgg-from-bar} for
 $\widehat{\mathfrak{sl}}_{2,k}$, complementing the
 step-by-step pipeline of
@@ -4402,11 +4413,12 @@ $\bar{B}^1 = \mathfrak{sl}_2$ is hit.
 The $6$-dimensional kernel
 (Computation~\ref{comp:sl2-bar-matrix}) encodes the
 quadratic relations of the Koszul dual
-$\widehat{\mathfrak{sl}}_{2,-k-4}$
-(Theorem~\ref{thm:sl2-koszul-dual}):
+$A^!=(A^i)^\vee$ (Theorem~\ref{thm:sl2-koszul-dual}):
 the kernel elements are the identities satisfied by
 the dual screening operators, mediated by
 Arnold relations (Theorem~\ref{thm:arnold-relations}).
+The shifted affine level $-k-4$ is the Feigin--Frenkel parameter of
+the same scalar dual lane; it is not the raw bar cohomology object.
 \end{computation}
 
 
@@ -4453,7 +4465,7 @@ level~$-k-4$.
 
 At $k = -2$: the dual level is $-(-2) - 4 = -2$
 (self-dual), and $\kappa(-2) = 3(-2+2)/4 = 0$,
-confirming critical-level universality
+recovering critical-level universality
 (Corollary~\ref{cor:critical-level-universality}).
 The bar complex at $k = -2$ is uncurved, and the
 bar differential reduces to the Chevalley--Eilenberg
@@ -4477,9 +4489,9 @@ The computation above completes the chain:
 \;\xrightarrow{\;\Phi\;}
 \underbrace{\text{dual BGG}}_{\text{Cor.~\ref{cor:bgg-koszul-involution}}}
 \]
-This pipeline runs entirely within the bar-cobar
-framework: no external representation-theoretic input
-is needed beyond the OPE structure constants.
+This pipeline runs through the bar-cobar construction: the OPE
+structure constants determine the residue differential, while the
+classical BGG theorem supplies the representation-theoretic exactness.
 
 For higher-rank algebras, the pipeline extends.
 For $\mathfrak{g}$ with Weyl group~$W$, the $E_1$ page
@@ -4566,7 +4578,7 @@ maps to the dual BGG resolution of $L(0)_{k'}$,
 with Verma modules $\mathcal{M}(w \cdot 0)_{k'}$.
 The Sugawara central charge transforms as
 $c = 8k/(k+3) \mapsto c' = 8k'/(k'+3) = 16 - c$,
-verifying $c + c' = 16 = 2 \dim \mathfrak{sl}_3$.
+giving $c + c' = 16 = 2 \dim \mathfrak{sl}_3$.
 \end{example}
 
 \medskip
@@ -4582,15 +4594,16 @@ The computations of this chapter, together with those distributed throughout the
 The bar-complex tables here extend to the K3 bialgebra
 $\mathbf H_{\Delta_5}$ via the generating function
 \[
-\chi_{B_{\mathrm{ch}}(\mathbf H_{\Delta_5})}(q,\zeta,p) \;=\; \Phi_{10}(Z)^{-1} \cdot \prod_{(n,l,m)>0}(1 - q^n\zeta^l p^m)^{c(nm,l)},
+\chi_{B_{\mathrm{ch}}(\mathbf H_{\Delta_5})}(q,\zeta,p) \;=\; (\Phi_{10}^{\mathrm{un}}(Z))^{-1} \cdot \prod_{(n,l,m)>0}(1 - q^n\zeta^l p^m)^{c(nm,l)},
 \]
 which (by the Gritsenko--Nikulin 1997--98 denominator identity) reduces
-to $\Phi_{10}(Z)^{-1}\cdot\Phi_{10}(Z) = 1$, i.e.\ the bar complex is
+to $(\Phi_{10}^{\mathrm{un}}(Z))^{-1}\cdot\Phi_{10}^{\mathrm{un}}(Z) = 1$, i.e.\ the bar complex is
 acyclic at the vacuum sector. The non-trivial entries of the bar-complex
 table come from tensoring with each irreducible $\mathbf H_{\Delta_5}$-module:
 for the character labelled by a Mukai vector $v\in\Lambda_{\mathrm{Muk}}$
 of discriminant $\mathrm{disc}(v) = -2n$, the bar-complex multiplicity
-at bidegree $(k,l)$ is the Fourier coefficient of $\Phi_{10}^{-1}\cdot\theta_v$
+at bidegree $(k,l)$ is the Fourier coefficient of
+$(\Phi_{10}^{\mathrm{un}})^{-1}\cdot\theta_v$
 where $\theta_v$ is the theta series attached to $v$. Cross-ref Vol.~III,
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic},
 \S\ref{sec:bar-complex-multiplicities}.

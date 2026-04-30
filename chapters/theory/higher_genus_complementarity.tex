@@ -129,17 +129,17 @@ geometric content of the nonlinear theory.
 Holstein--Rivera~\cite{HR24} prove that Koszul duality
 between dg categories and pointed curved coalgebras exchanges
 smooth and proper Calabi--Yau structures. Applied to our
-setting: if $\cA$ carries a smooth $\mathrm{CY}_1$ structure
-(a nondegenerate invariant bilinear form), then
-$\barB(\cA)$ carries a proper $\mathrm{CY}_1$ structure
-(finite-dimensional bar cohomology at each weight). In particular, hypothesis~(P2) (nondegeneracy) implies
-fiber-level perfectness of the bar complex, and makes
-hypothesis~(P3) (dual regularity: $\cA^!$ also satisfies
-(P1)--(P2)) redundant on the Koszul locus via Verdier
-intertwining. The family-level perfectness over
-$\overline{\mathcal{M}}_g$ required by~(C2) is a stronger
-condition that requires PBW filterability and
-base change (Lemma~\ref{lem:perfectness-criterion}).
+setting, this explains the expected exchange: smooth
+$\mathrm{CY}_1$ data on~$\cA$, given by a nondegenerate invariant
+bilinear form, should correspond after the bar construction is placed
+in a finite or completed Koszul surface to proper $\mathrm{CY}_1$ data
+on $\barB(\cA)$. This supports finite cohomology at each fixed finite
+weight. It does not prove family-level perfectness, and it does not
+make the dual regularity hypothesis~(P3) redundant. The
+perfectness required by~(C2) still uses PBW filterability, total
+flat-fiber cohomology, bounded pseudo-coherence, and the corresponding
+regularity hypotheses for~$\cA^!$
+(Lemma~\ref{lem:perfectness-criterion}).
 Calaque--Safronov~\cite{CS24} develop the relative AKSZ
 framework for shifted Lagrangian morphisms that provides
 the natural geometric setting for the~(C2) upgrade.
@@ -220,12 +220,14 @@ The \emph{ambient complex} at genus~$g$ is
 where $\mathcal{Z}(\cA)$ is the center local system.
 The Verdier involution $\sigma$ acts on $\mathbf{C}_g(\cA)$ as a
 cochain-level endomorphism with $\sigma^2 = \mathrm{id}$
-(Theorem~\ref{thm:verdier-bar-cobar}).
-Define the \emph{deformation-obstruction complexes} as homotopy eigenspaces:
+(Theorem~\ref{thm:verdier-bar-cobar}). Let
+$p^\pm=\frac{1}{2}(\mathrm{id}\pm\sigma)$.
+Define the \emph{deformation-obstruction complexes} as the strict
+idempotent eigensummands:
 \begin{equation}\label{eq:complementarity-fiber}
-\mathbf{Q}_g(\cA) := \operatorname{fib}(\sigma - \mathrm{id}\colon
+\mathbf{Q}_g(\cA) := \operatorname{im}(p^+ \colon
 \mathbf{C}_g \to \mathbf{C}_g), \qquad
-\mathbf{Q}_g(\cA^!) := \operatorname{fib}(\sigma + \mathrm{id}\colon
+\mathbf{Q}_g(\cA^!) := \operatorname{im}(p^- \colon
 \mathbf{C}_g \to \mathbf{C}_g).
 \end{equation}
 The \emph{cohomological shadows} (S-level) are defined by:
@@ -238,13 +240,13 @@ Q_g(\cA^!) &:= H^*(\mathbf{Q}_g(\cA^!))
 \end{definition}
 
 \begin{remark}[H/M/S layers; Convention~\ref{conv:hms-levels}]
-The homotopy fibers~\eqref{eq:complementarity-fiber} are the
+The idempotent summands~\eqref{eq:complementarity-fiber} are the
 H-level objects; the bar complexes
 $(\bar{B}^{(g)}(\cA), \Dg{g})$ are M-level models; the kernel
 decomposition~\eqref{eq:shadow-spaces} is the S-level shadow.
 The involution-splitting lemma
 (Lemma~\ref{lem:involution-splitting}) makes the passage automatic
-in characteristic~$0$.
+in characteristic~$0$, with no cone contribution.
 \end{remark}
 
 \begin{lemma}[Involution splitting in characteristic~\texorpdfstring{$0$}{0}; \ClaimStatusProvedHere]
@@ -254,11 +256,11 @@ Let $V$ be a cochain complex over a field of characteristic $\neq 2$,
 and let $\sigma \colon V \to V$ be a cochain involution
 ($\sigma^2 = \mathrm{id}$, $\sigma \circ d = d \circ \sigma$). Then:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item The homotopy eigenspaces
- $V^+ := \operatorname{fib}(\sigma - \mathrm{id})$ and
- $V^- := \operatorname{fib}(\sigma + \mathrm{id})$
- split $V$ in the homotopy category:
- $V^+ \oplus V^- \xrightarrow{\;\sim\;} V$.
+\item The idempotent eigensummands
+ $V^+ := \operatorname{im}\bigl(\frac{1}{2}(\mathrm{id}+\sigma)\bigr)$ and
+ $V^- := \operatorname{im}\bigl(\frac{1}{2}(\mathrm{id}-\sigma)\bigr)$
+ split $V$ as a direct sum of complexes:
+ $V^+ \oplus V^- \xrightarrow{\;\cong\;} V$.
 \item On cohomology:
  $H^*(V) = \ker(\sigma - \mathrm{id}) \oplus \ker(\sigma + \mathrm{id})$.
 \item If $\langle -,- \rangle$ is a cochain-level pairing on~$V$
@@ -273,15 +275,16 @@ and let $\sigma \colon V \to V$ be a cochain involution
 The projectors $p^\pm := \tfrac{1}{2}(\mathrm{id} \pm \sigma)$
 are cochain maps with $p^+ + p^- = \mathrm{id}$,
 $(p^\pm)^2 = p^\pm$, and $p^+ \circ p^- = 0$.
-Part~(a): the inclusion $\operatorname{im}(p^+) \oplus \operatorname{im}(p^-)
-\hookrightarrow V$ is a quasi-isomorphism by direct-sum decomposition,
-and $\operatorname{im}(p^\pm) \simeq \operatorname{fib}(\sigma \mp \mathrm{id})$
-via the standard cone identification.
+Part~(a) is the direct-sum decomposition
+$V=\operatorname{im}(p^+)\oplus\operatorname{im}(p^-)$.
 Part~(b) follows by applying $H^*$ to~(a).
 Part~(c): for $x, y \in V^+$ we have $\sigma x = x$, $\sigma y = y$,
 so $\langle x, y \rangle = \langle \sigma x, \sigma y \rangle
 = -\langle x, y \rangle$, hence $\langle x, y \rangle = 0$.
-Maximality is immediate from the direct-sum decomposition.
+The same argument applies to $V^-$. If the pairing is non-degenerate,
+then the induced pairing between $V^+$ and $V^-$ is perfect, since any
+vector pairing trivially with the opposite summand pairs trivially
+with all of~$V$. Thus each summand is Lagrangian.
 \end{proof}
 
 \begin{definition}[Relative bar fiber complex]\label{def:relative-bar-fiber}
@@ -732,7 +735,7 @@ not as the statement of~$\mathrm{C}_1$ itself.
 Fourth, PTVV transgression
 \textup{(}Theorem~\textup{2.5}\textup{)} and the AKSZ refinements of
 Calaque--Haugseng--Scheimbauer~\cite{CHS25} and
-Calaque--Safronov~\cite{CS24} are compatible with the shift bookkeeping
+Calaque--Safronov~\cite{CS24} are compatible with the shift conventions
 of our fiberwise construction, but they do not justify the shortcut
 ``$(-1)$ on $\mathcal{M}_{\mathrm{comp}}$ integrates to $0$ on the
 genus-$g$ field space.'' The correct comparison is that a
@@ -2027,7 +2030,16 @@ $L_g$ and then identified through~$\chi_g$.
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 Assume the conditional BV package of
-Theorems~\ref{thm:config-space-bv} and~\ref{thm:bv-functor}. Then the
+Theorems~\ref{thm:config-space-bv} and~\ref{thm:bv-functor}. Assume
+also the cyclic nondegeneracy input: the BV bracket adjoint
+\[
+x \longmapsto \{x,-\}_{\mathrm{BV}} \colon
+\barB^{\mathrm{ch}}(\cA)
+\longrightarrow
+\mathbb{D}_{\operatorname{Ran}}(\barB^{\mathrm{ch}}(\cA))[1]
+\]
+is a quasi-isomorphism on the Koszul locus after the
+bracket-compatible Verdier comparison. Then the
 genus-$1$ complementarity
 $Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!)
 \cong H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$ that we
@@ -2055,7 +2067,8 @@ curve $X$.
  \simeq
  \cA^!_\infty[1]
  \]
- is a quasi-isomorphism. On the Koszul locus, the underlying complex
+ is precisely the cyclic duality quasi-isomorphism assumed above. On
+ the Koszul locus, the underlying complex
  of $\cA^!_\infty$ is equivalent to $\barB^{\mathrm{ch}}(\cA^!)$.
  Therefore this Poisson structure is non-degenerate.
 
@@ -2200,12 +2213,16 @@ moduli problem, not as an isolated dg~Lie phenomenon.
 \label{prop:ptvv-lagrangian}
 \index{PTVV!Lagrangian embedding|textbf}
 \index{Lagrangian!PTVV sense|textbf}
-For a chiral Koszul pair $(\cA, \cA^!)$ and $g \geq 2$, the cochain
+Assume the cochain-level complementarity decomposition and the
+non-degenerate Verdier pairing of
+Theorem~\textup{\ref{thm:quantum-complementarity-main}}. For a chiral
+Koszul pair $(\cA, \cA^!)$ and $g \geq 2$, the cochain
 complex
 $C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
 carries a $(-(3g{-}3))$-shifted symplectic structure in the sense of
 Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}, and
-$Q_g(\cA)$, $Q_g(\cA^!)$ embed as complementary Lagrangians in the
+\(\mathbf{Q}_g(\cA)\), \(\mathbf{Q}_g(\cA^!)\) embed as complementary
+Lagrangians in the
 PTVV sense.
 \end{proposition}
 
@@ -2236,18 +2253,20 @@ satisfying~\cite[Definition~2.8]{PTVV13}:
 \item \emph{Non-degeneracy:} the induced map
  $L \to (V/L)^{\vee}[n]$ is a quasi-isomorphism.
 \end{enumerate}
-For $L = Q_g(\cA)$:
+For $L = \mathbf{Q}_g(\cA)$:
 \begin{itemize}
 \item Condition~(a) is
  Proposition~\ref{prop:lagrangian-eigenspaces}(iii):
- $\langle v, w \rangle_{\mathbb{D}} = 0$ for $v, w \in Q_g(\cA)$.
+ $\langle v, w \rangle_{\mathbb{D}} = 0$ for
+ $v, w \in \mathbf{Q}_g(\cA)$.
 \item Condition~(b): Since
- $C_g = Q_g(\cA) \oplus Q_g(\cA^!)$
+ $C_g = \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
  (Theorem~\ref{thm:quantum-complementarity-main}), we have
- $C_g / Q_g(\cA) \cong Q_g(\cA^!)$, and the induced map
- $Q_g(\cA) \to Q_g(\cA^!)^{\vee}[-(3g{-}3)]$ is a
+ $C_g / \mathbf{Q}_g(\cA) \cong \mathbf{Q}_g(\cA^!)$, and the induced map
+ $\mathbf{Q}_g(\cA) \to
+ \mathbf{Q}_g(\cA^!)^{\vee}[-(3g{-}3)]$ is a
  quasi-isomorphism: the Verdier pairing restricted to
- $Q_g(\cA) \otimes Q_g(\cA^!)$ is perfect of degree $-(3g{-}3)$
+ $\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA^!)$ is perfect of degree $-(3g{-}3)$
  by~\eqref{eq:quantum-duality}.
 \end{itemize}
 The same argument applies with $\cA$ and~$\cA^!$ exchanged.
@@ -2566,7 +2585,7 @@ vanishes for all $g \geq 1$:
 \mathrm{obs}_g(\widehat{\mathfrak{g}}_{-h^\vee}) = 0
 \end{equation}
 The genus-$g$ bar complex $\bar{B}^{(g)}(\widehat{\mathfrak{g}}_{-h^\vee})$
-is therefore an honest cochain complex at every genus, and the
+is therefore a strict cochain complex at every genus, and the
 complementarity formula takes the uncurved form:
 \begin{equation}\label{eq:critical-complementarity}
 Q_g(\widehat{\mathfrak{g}}_{-h^\vee})
@@ -4968,10 +4987,14 @@ symplectic deformation problem.
 \begin{theorem}[Ambient complementarity as shifted symplectic formal
 moduli problem]
 \label{thm:ambient-complementarity-fmp}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Under the perfectness and nondegeneracy hypotheses of
 Theorem~\textup{\ref{thm:ambient-complementarity-tangent}(iii)},
-the tangent complex $T_{\mathrm{comp}}(\cA)$ integrates to a
+assume that $T_{\mathrm{comp}}(\cA)$ is represented by a complete
+filtered dg~Lie algebra or cyclic $L_\infty$-algebra with a closed
+invariant non-degenerate pairing of degree~$-1$, and that the
+one-sided complexes are filtered $L_\infty$ subalgebras with
+Lagrangian tangent maps. Then $T_{\mathrm{comp}}(\cA)$ integrates to a
 formal moduli problem $\mathcal{M}_{\mathrm{comp}}(\cA)$ carrying
 a canonical $(-1)$-shifted symplectic structure, and the one-sided
 deformation problems define Lagrangian maps
@@ -4987,7 +5010,7 @@ picture.
 \end{theorem}
 
 \begin{proof}
-The modular cyclic deformation complex
+By hypothesis, the modular cyclic deformation complex
 $\Defcyc^{\mathrm{mod}}(\cA)$
 (Definition~\ref{def:modular-cyclic-deformation-complex})
 is a complete filtered dg~Lie algebra: the product topology over
@@ -5013,7 +5036,8 @@ $\Defcyc^{\mathrm{mod}}(\cA)$ thus gives a
 $(-1)$-shifted symplectic structure on
 $\mathcal{M}_{\mathrm{comp}}(\cA)$.
 
-For the Lagrangian structure: under the perfectness hypothesis,
+For the Lagrangian structure: under the filtered subalgebra and
+perfectness hypotheses,
 the one-sided tangent complexes $T_\cA$ and $T_{\cA^!}$ are
 complementary Lagrangians in $T_{\mathrm{comp}}(\cA)$
 (Theorem~\ref{thm:ambient-complementarity-tangent}(iii)).
@@ -5401,14 +5425,18 @@ symplectic geometry.
 
 \begin{theorem}[Shifted cotangent normal form]
 \label{thm:shifted-cotangent-normal-form}
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 Let $\mathcal{M}$ be a pointed $(-1)$-shifted symplectic formal moduli
 problem, and let $i_+\colon\mathcal{L}_+\to\mathcal{M}$,
 $i_-\colon\mathcal{L}_-\to\mathcal{M}$ be pointed Lagrangian maps.
 Assume the induced tangent map
 $T_0\mathcal{L}_+ \oplus T_0\mathcal{L}_-
 \xrightarrow{\sim} T_0\mathcal{M}$
-is a quasi-isomorphism. Then there exists a pointed formal
+is a quasi-isomorphism. Assume that the shifted symplectic
+neighborhood theorem applies to $i_+$ in the pointed formal category
+under consideration, and that the formal Poincare lemma holds for
+degree-zero one-forms on $\mathcal{L}_+$. Then there exists a pointed
+formal
 symplectomorphism
 \[
 (\mathcal{M}, i_+)
@@ -5423,15 +5451,15 @@ for a degree-zero formal function $S_+$, unique up to constant.
 \end{theorem}
 
 \begin{proof}
-Because $i_+$ is Lagrangian, the normal complex of $\mathcal{L}_+$
+By the shifted symplectic neighborhood hypothesis, the normal complex of $\mathcal{L}_+$
 in $\mathcal{M}$ is canonically identified with
 $T^*[-1]\mathcal{L}_+$. The symplectic neighborhood theorem
 produces the pointed equivalence. Under this identification
 $\mathcal{L}_+$ becomes the zero section; since $\mathcal{L}_-$
 is complementary, it is the graph of a one-form. That one-form is
 closed because the graph of a one-form in a cotangent bundle is
-Lagrangian if and only if the one-form is closed. In a pointed
-formal neighborhood every closed one-form is exact.
+Lagrangian if and only if the one-form is closed. The formal
+Poincare hypothesis makes this closed one-form exact.
 \end{proof}
 
 \begin{definition}[Complementarity potential: existence form]
@@ -6544,7 +6572,7 @@ bar-intrinsic construction
 Theorem~\ref{thm:recursive-existence}).
 What remains conjectural is the passage from this Gaussian calculus
 to the full nonlinear modular kernel category: the construction of
-$\mathfrak{Bulk}(\cA)$ as an honest three-dimensional bulk object.
+$\mathfrak{Bulk}(\cA)$ as a three-dimensional bulk object.
 The shadow obstruction tower provides the finite-order approximations; the bulk
 enhancement provides the geometric realization.
 \end{remark}
@@ -6590,7 +6618,7 @@ The classical four-archetype $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$
 landmark ceiling $\kappa + \kappa^! \in \{0, 13, 250/3, 98/3\}$ enlarges on the Lorentzian-lattice-parametric $\mathcal{B}$-family to the canonical five-element bucket $\{0, 8, 13, 250/3, 98/3\}$ via the Mukai-doubling conductor $K^{\kappa_{\mathrm{ch}}}(\mathcal{H}_{\mathrm{Muk}}(K3)) = 2\,c_+(\mathrm{Mukai}(K3)) = 8$. Universal identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ pins the Lusztig $u_\zeta$-specialisation at $\ell = 8$, matching Humbert $H_1$ monodromy order via Bruinier $2002$ Proposition~$5.1$ Heegner Chern-class reciprocity. Three faces of $8$: Mukai, Humbert, Lusztig.
 \end{remark}
 
-\begin{remark}[Separating-node factorisation $1/\Phi_{10} \to 1/\eta^{24} \cdot 1/\phi_{10,1}$]
+\begin{remark}[Separating-node factorisation $1/\Phi_{10}^{\mathrm{un}} \to 1/\eta^{24} \cdot 1/\phi_{10,1}$]
 \label{rem:hgc-sepnode}
-At $K3 \times E$ the genus-$2$ Siegel character $\mathrm{Ch}(\mathbf{H}_{\Delta_5})(Z) = 1/\Phi_{10}(Z)$ on $\mathbb{H}_2$ factorises at a separating-node degeneration $Z \to \mathrm{diag}(\tau, \rho)$ into $1/\eta(\tau)^{24} \cdot 1/\phi_{10,1}(\rho)$, recovering the genus-$1$ $\eta^{24}$ denominator of the K3 chiral algebra times the Jacobi form of the elliptic direction. $\Delta_5^2 = C \cdot \Phi_{10}$ (Gritsenko--Nikulin $1998$) gives $\kappa_{\mathrm{BKM}}(\mathfrak{g}_{\Delta_5}) = c_\Lambda(0)/2 = \mathrm{wt}(\Delta_5) = 5$.
+At $K3 \times E$ the genus-$2$ Siegel character $\mathrm{Ch}(\mathbf{H}_{\Delta_5})(Z) = 1/\Phi_{10}^{\mathrm{un}}(Z)$ on $\mathbb{H}_2$ factorises at a separating-node degeneration $Z \to \mathrm{diag}(\tau, \rho)$ into $1/\eta(\tau)^{24} \cdot 1/\phi_{10,1}(\rho)$, recovering the genus-$1$ $\eta^{24}$ denominator of the K3 chiral algebra times the Jacobi form of the elliptic direction. The convention-qualified square identity $\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ (Gritsenko--Nikulin $1998$, with the leading Fourier--Jacobi coefficient fixing the scalar) gives $\kappa_{\mathrm{BKM}}(\mathfrak{g}_{\Delta_5}) = c_\Lambda(0)/2 = \mathrm{wt}(\Delta_5) = 5$.
 \end{remark}

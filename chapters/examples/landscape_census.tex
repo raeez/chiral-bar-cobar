@@ -24,11 +24,11 @@ stratifies the periodic table into orbital blocks: $S_3 = S_4 = 0$
 characterizes Gaussian algebras (class~G), $S_3 \neq 0$ with
 $S_4 = 0$ singles out affine Kac--Moody (class~L), and $\Delta \neq 0$
 forces the infinite shadow tower of Virasoro and the $\mathcal{W}$-algebras
-(class~M). The classification is not imposed but forced by the
-structure of the MC element $\Theta_\cA$: once $\kappa$ and $S_4$
-are computed, the archetype is determined. Frontier rows whose
+(class~M). The MC element $\Theta_\cA$ forces the classification:
+once $\kappa$ and $S_4$ are computed, the archetype is determined.
+Frontier rows whose
 Koszul-dual or shadow surfaces are not yet closed are recorded below
-as honest non-coverage rather than folded into this statement.
+as explicit non-coverage rather than folded into this statement.
 
 \paragraph{Distinguished chart on the Koszulness moduli.}
 Each shadow-class stratum selects a distinguished chart on the
@@ -103,10 +103,84 @@ level-independent sum $c(\cA) + c(\cA^!)$ under Koszul duality
 obstruction coefficient $\kappa(\cA)$ from the genus universality
 theorem $\operatorname{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
 (Theorem~\ref{thm:genus-universality};
-; multi-weight requires $\delta F_g^{\mathrm{cross}}$,
+multi-weight requires $\delta F_g^{\mathrm{cross}}$,
 cf.~Theorem~\ref{thm:multi-weight-genus-expansion}).
 Throughout, $d = \dim\fg$, $r = \operatorname{rank}\fg$,
 $h^\vee$ is the dual Coxeter number, and $t = k + h^\vee$.
+
+\begin{remark}[Standard-family constants and collision conventions]
+On the standard landscape the modular characteristic is normalized by
+the genus-$1$ obstruction coefficient and by the trace-form collision
+residue:
+\[
+\begin{aligned}
+\kappa(\mathcal H_{\ell}^{\oplus d}) &= d\,\ell,
+&
+\kappa(V_k(\fg)) &= \frac{\dim(\fg)(k+h^\vee)}{2h^\vee},
+&
+\kappa(\mathrm{Vir}_c) &= \frac{c}{2},\\
+\kappa(\mathcal W_N) &= c\sum_{j=2}^{N}\frac1j
+ = c(H_N-1),
+&
+H_N &= \sum_{j=1}^{N}\frac1j.
+\end{aligned}
+\]
+Thus the rank-one Heisenberg algebra satisfies
+$\kappa(\mathcal H_k)=k$, while the rank-$d$ level-one free-boson
+algebra satisfies $\kappa(\mathcal H_1^{\oplus d})=d$.
+The affine formula is the non-abelian simple Lie-current formula; it is
+not obtained by setting $h^\vee=0$. It has the boundary checks
+\[
+\kappa(V_0(\fg))=\frac{\dim(\fg)}{2},\qquad
+\kappa(V_{-h^\vee}(\fg))=0.
+\]
+On the non-singular Virasoro shadow surface $c(5c+22)\ne0$,
+\[
+S_2=\frac c2,\qquad
+S_3=2,\qquad
+S_4=\frac{10}{c(5c+22)},\qquad
+S_5=-\frac{48}{c^2(5c+22)},
+\]
+and
+\[
+\Delta=8\kappa S_4=\frac{40}{5c+22},\qquad
+\Lambda={:}TT{:}-\frac{3}{10}\partial^2T,\qquad
+\langle\Lambda|\Lambda\rangle=\frac{c(5c+22)}{10}.
+\]
+The collision residues used in this census are
+\[
+r_{\mathcal H}^{\mathrm{coll}}(z)=\frac{k}{z},\qquad
+r_{V_k(\fg)}^{\mathrm{coll}}(z)=\frac{k\Omega_{\mathrm{tr}}}{z},
+\qquad
+r_{\mathrm{Vir}_c}^{\mathrm{coll}}(z)=\frac{c/2}{z^3}+\frac{2T}{z}.
+\]
+The affine KZ presentation
+$r_{\mathrm{KZ}}(z)=\Omega/((k+h^\vee)z)$, with
+$\Omega=2h^\vee\Omega_{\mathrm{tr}}$, is a different normalization of
+the same monodromy datum. It is not the rational function
+$k\Omega_{\mathrm{tr}}/z$: in trace form the level prefix forces
+$r^{\mathrm{coll}}|_{k=0}=0$, while the KZ residue at $k=0$ is
+$\Omega/(h^\vee z)$ for non-abelian~$\fg$.
+\smallskip
+
+The Heisenberg identity follows from the OPE
+$J^a(z)J^b(w)\sim \ell\,\delta^{ab}(z-w)^{-2}$. The affine identity is
+the Sugawara two-channel computation: the trace-form double-pole
+projection contributes $\dim(\fg)k/(2h^\vee)$ and the simple-pole Lie
+bracket channel contributes $\dim(\fg)/2$. The Virasoro identity is
+the leading coefficient of
+$T(z)T(w)\sim (c/2)(z-w)^{-4}+2T(w)(z-w)^{-2}+\partial T(w)(z-w)^{-1}$.
+For principal $\mathcal W_N$, the Drinfeld--Sokolov strong-generator
+weights are $2,\ldots,N$, giving the harmonic sum
+$\sum_{j=2}^{N}1/j$; for $N=2$ this recovers Virasoro and for $N=3$
+gives $\kappa(\mathcal W_3)=5c/6$.
+The Virasoro coefficients and the norm of $\Lambda$ are the
+Zamolodchikov/BPZ normalization computed in
+Appendix~\ref{appendix:virasoro-shadow-tower-computation}; the same
+normalization is recorded in
+Proposition~\ref{prop:virasoro-shadow-canonical}. The trace-form/KZ
+separation is Theorem~\ref{thm:q-convention-bridge-main}.
+\end{remark}
 
 \begin{table}[ht]
 \centering
@@ -275,9 +349,9 @@ Admissible $V_k(\fg)$ at $k + h^\vee = p/q$
 }% end small
 \end{table}
 
-\noindent\textbf{Status column}: PH = proved in this monograph
+\noindent\textbf{Scope column}: PH = proved in this monograph
 (\ClaimStatusProvedHere); CJ = conjectured (\ClaimStatusConjectured);
-HF = honest frontier (scope stated, invariant not yet closed).
+HF = open frontier (scope stated, invariant not yet closed).
 \begin{itemize}[leftmargin=*]
  \item PH$^{\mathrm{N2}}$: Proposition~\ref{prop:n2-kappa}
  at central charge $c = 3k/(k{+}2)$, $c + c' = 6$,
@@ -381,10 +455,10 @@ $\mathfrak{T} = (\cA, \cA^!, r(z))$
  &= \bigl(\cF,\;
  \operatorname{Sym}^{\mathrm{ch}}(\gamma),\;
  0\bigr), \\
-% Convention: trace-form normalisation. In the KZ normalisation
-% (Chapter~\ref{chap:kac-moody-koszul}), this reads
-% Omega/((k+h^v)z) with Omega = sum kappa^{ab} I_a otimes I_b;
-% the identification k*Omega_tr = Omega/(k+h^v) reconciles the two.
+% Convention: trace-form collision residue. The KZ presentation is
+% Omega/((k+h^\vee)z), with Omega = 2h^\vee Omega_tr. These are
+% related by the trace/KZ bridge, not by equality of rational
+% functions; only the trace-form residue has the level prefix k.
 \mathfrak{T}_{\widehat{\fg}_k}
  &= \bigl(\widehat{\fg}_k,\;
  \widehat{\fg}_{-k-2h^\vee},\;
@@ -468,7 +542,10 @@ for Virasoro minimal models.
 \begin{proposition}[Virasoro shadow-tower coefficients; canonical values]
 \label{prop:virasoro-shadow-canonical}
 \ClaimStatusProvedHere
-The Virasoro shadow obstruction tower coefficients $S_r = S_r(\mathrm{Vir}_c)$ are pinned across all three volumes as follows:
+On the non-singular Virasoro shadow surface $c(5c+22)\ne0$, the
+Virasoro shadow obstruction tower coefficients
+$S_r = S_r(\mathrm{Vir}_c)$ are pinned across all three volumes as
+follows:
 \begin{align*}
 S_2 &= \kappa(\mathrm{Vir}_c) = c/2, \\
 S_3 &= 2, \\
@@ -483,6 +560,9 @@ $\Delta$ is \emph{not} $S_4$. The formula
 $S_4 = 40/[c(5c+22)]$ is incorrect; the correct reading is
 $S_4=10/[c(5c+22)]$ and
 $\Delta = 40/(5c+22)$.
+At $c=0$ and $c=-22/5$ these rational functions record poles of the
+universal normalization; quotient-specific renormalized shadows require
+a separate calculation.
 \end{proposition}
 
 \begin{proof}
@@ -568,8 +648,7 @@ $\mathrm{BP}_k = \mathcal{W}_3^{(2)}(k)$ (Bershadsky--Polyakov) & M & $\infty$ &
 \hline
 Yangian $Y(\fg)$ & M & $\infty$ & $R$-matrix $=$ $\Theta_\cA|_{\Eone}$ & \S\ref{sec:modular-dg-shifted-yangian} \\
 \hline
-Quantum lattice $\Vlat_\Lambda^{N,q}$ (strict $\Eone$, $N \geq 3$) & ?\ & unknown & deformed braiding; same character as $V_\Lambda$ but strict $\Eone$-chiral & Thm~\ref{thm:quantum-lattice-structure} \\
-% TBD: classify against compute/lib/quantum_lattice_*.py once a shadow archetype tag is recorded; the chapter establishes strict $\Eone$-chirality and Koszul self-pairing under $q \mapsto -q$, but does not pin a G/L/C/M assignment (state space is the lattice $V_\Lambda$, but braiding is non-degenerate).
+Quantum lattice $\Vlat_\Lambda^{N,q}$ (strict $\Eone$, $N \geq 3$) & ?\ & unknown & deformed braiding; same character as $V_\Lambda$; strict $\Eone$-chiral Koszul self-pairing under $q\mapsto -q$ & Thm~\ref{thm:quantum-lattice-structure} \\
 \hline
 \multicolumn{5}{|c|}{\textit{Wild: non-Koszul boundary}} \\
 \hline
@@ -623,12 +702,11 @@ $\Omega(d_0, d_1)$ of the Kronecker quiver
 (Kontsevich--Soibelman~\cite{KS10}, Reineke~\cite{Re03}),
 which grow exponentially in $\max(d_0, d_1)$ for $m \geq 3$,
 reflecting the wild representation type. The class~W designation
-marks the boundary of the modular Koszul framework: within it
-(classes G/L/C/M), the shadow obstruction tower is the organizing
-structure; beyond it (class~W), motivic DT theory provides the
-algebraic substitute.
+marks the boundary of modular Koszul duality: on classes G/L/C/M,
+the shadow obstruction tower is the organizing structure; on
+class~W, motivic DT theory supplies the algebraic substitute.
 
-Computational verification:
+Computation:
 \texttt{compute/lib/wild\_quiver\_chiral\_engine.py} (89 tests).
 \end{remark}
 
@@ -693,7 +771,7 @@ $\beta\gamma$ (diagonal)
 \hline
 $\widehat{\fg}_k$ (diagonal $J^a J^a$)
  & $1$ & $\{2\}$ & $\{1\}$
- & $k\Omega^{aa}/z$
+ & $k\Omega_{\mathrm{tr}}^{aa}/z$
  & IBR \\
 \hline
 $\widehat{\fg}_k$ (off-diagonal $J^a J^b$)
@@ -735,13 +813,18 @@ $d\log(z_i - z_j)$, which absorbs one power of $(z{-}w)$:
 an OPE pole at $z^{-n}$ produces an $r$-matrix pole at
 $z^{-(n-1)}$. In particular, simple poles ($z^{-1}$) in the OPE
 become regular and drop.
+This is a collision-residue table. The affine entries are written in
+the trace-form convention $k\Omega_{\mathrm{tr}}/z$; the KZ connection
+uses $\Omega/((k+h^\vee)z)$ after Casimir and coupling rescaling. The
+two conventions should not be interchanged when testing level-prefix
+vanishing.
 
 \textbf{Column~$h$}: conformal weight of the generators involved.
 \textbf{CYBE column}: ``trivial'' = abelian $r$-matrix,
 CYBE $[r_{12}, r_{13}] + \text{cyc.} = 0$ holds vacuously;
 ``IBR'' = the CYBE reduces to the infinitesimal braid relation
 $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$ on the Casimir
-tensor (verified numerically for $\mathfrak{sl}_2$ and
+tensor (checked numerically for $\mathfrak{sl}_2$ and
 $\mathfrak{sl}_3$ in
 \texttt{test\_rmatrix\_landscape.py});
 ``odd'' = $r(z)$ has only odd-order poles and is therefore an odd
@@ -749,7 +832,7 @@ function of~$z$, so skew-symmetry
 $r_{12}(z) + r_{21}(-z) = 0$ holds;
 ``mixed'' = even-order poles present (see
 Remark~\ref{rem:ww-even-poles-census} below).
-Computationally verified across
+Computed across
 \texttt{test\_rmatrix\_landscape.py} and
 \texttt{test\_rmatrix\_poles\_comprehensive.py}
 ($205$ tests, all passing).
@@ -1215,7 +1298,7 @@ Corollary~\ref{cor:winfty-stage4-residue-four-channel} gives the
 four-channel refinement on the stage-$4$ Ward-normalized H-level
 locus of Definition~\ref{def:winfty-stage4-ward-normalized}, and
 Theorem~\ref{thm:winfty-all-stages-rigidity-closure} closes the
-stage-$4$ packet inside the strong completion-tower framework of
+stage-$4$ packet inside the strong completion tower of
 Theorem~\ref{thm:completed-bar-cobar-strong}.
 On the Yangian side,
 Corollary~\ref{cor:yangian-hlevel-comparison-criterion} reduces the
@@ -1352,8 +1435,12 @@ different levels of the proof architecture:
 \end{enumerate}
 
 \smallskip
-\noindent\textsuperscript{$\dagger$}The Heisenberg is the abelian Kac--Moody case ($h^\vee = 0$);
-the general KM formula $\kappa = (k+h^\vee)d/(2h^\vee)$ has a removable singularity here.
+\noindent\textsuperscript{$\dagger$}The Heisenberg algebra is the
+abelian current algebra with its own level parameter:
+$\kappa(\mathcal H_k)=k$ in rank one and
+$\kappa(\mathcal H_{\ell}^{\oplus d})=d\ell$ in rank~$d$.
+It is not the $h^\vee=0$ specialization of the non-abelian simple
+affine formula $\kappa=(k+h^\vee)d/(2h^\vee)$.
 The dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is a curved (non-conformal) chiral algebra,
 so $c + c'$ is not defined in the usual sense.
 The duality $\kappa + \kappa' = 0$ still holds: $\kappa' = -\kappa$
@@ -1361,7 +1448,9 @@ The duality $\kappa + \kappa' = 0$ still holds: $\kappa' = -\kappa$
 \textsuperscript{$\ddagger$}For the Virasoro row, the involution
 $c \mapsto 26-c$ supplies the proved same-family partner governing the
 current M/S-level genus and semi-infinite calculations. Identifying the
-corresponding H-level infinite-generator dual object is the residual identification task (MC4 structural framework proved; Theorem~\ref{thm:completed-bar-cobar-strong}).
+corresponding H-level infinite-generator dual object is the remaining
+identification problem; the MC4 structural theorem is
+Theorem~\ref{thm:completed-bar-cobar-strong}.
 \textsuperscript{$\|$}The Leech lattice VOA $V_{\Lambda_{24}}$ is self-dual
 as a lattice VOA: $\Lambda_{24}$ is unimodular, so
 $V_{\Lambda_{24}}^! \cong V_{\Lambda_{24}}$
@@ -1379,11 +1468,11 @@ The complementarity sum $c + c' = 26$ is the Virasoro-sector value.
 
 \begin{table}[ht]
 \centering
-\caption{Koszulness verification landscape: 15 algebras classified
+\caption{Koszulness landscape: 15 algebras classified
 (see also the detailed Table~\textup{\ref{tab:koszulness-landscape}} in
 Chapter~\textup{\ref{chap:koszul-pairs}})}
 \label{tab:koszulness-landscape-census}
-\index{Koszul property!verification landscape}
+\index{Koszul property!classification landscape}
 \renewcommand{\arraystretch}{1.3}
 {\small
 \begin{tabular}{|l|c|c|l|}
@@ -1439,11 +1528,11 @@ $\boldsymbol{\times}$ = proved not Koszul; ? = open.
 \textbf{Equivalence column}: which of the eight genuinely
 independent bidirectional equivalences among (i)--(x) of
 Theorem~\ref{thm:koszul-equivalences-meta} was used for
-verification; (ii) = PBW $E_2$-collapse;
+proof; (ii) = PBW $E_2$-collapse;
 (ix) = Kac--Shapovalov non-degeneracy. Condition~(vi) is a proved
 consequence of~(v); (viii) records chiral Hochschild concentration
 as a one-way consequence on the Koszul locus.
-Computationally verified by \texttt{test\_koszulness\_landscape.py}
+Checked by \texttt{test\_koszulness\_landscape.py}
 (101 tests, 15 algebras, cross-family consistency).
 
 \begin{remark}[Corrections to naive expectations]
@@ -1463,7 +1552,7 @@ Three corrections emerge from the systematic landscape classification.
 \item \emph{Quotient of Koszul $\not\Rightarrow$ Koszul.}
  The simple quotient $L_1(\mathfrak{sl}_2)$ has null vector at
  conformal weight $h = 2$, which is in the bar-relevant range
- $h \geq 2$. PBW fails; status is open. More generally, for
+ $h \geq 2$. PBW fails; the question is open. More generally, for
  admissible levels $k = p/q - 2$, the first null vector appears at
  $h = (p{-}1)q$, which is in the bar-relevant range whenever
  $(p{-}1)q \geq 2$.
@@ -1835,7 +1924,7 @@ $\varrho$ on the standard families is
 Corollary~\ref{cor:anomaly-ratio-ds} for
 $\mathcal{W}^k(\fg)$ and is checked directly on the other families.
 
-The six rows of the table are verified individually.
+The six rows of the table are computed individually.
 
 \emph{Row $\mathsf{G}$ (Heisenberg
 $\cH_k \equiv \cH_1^{\oplus k}$, rank-$k$ free-boson
@@ -2063,12 +2152,12 @@ involutive structures on the lattice (orthogonal reflection versus
 Lorentzian signature flip).
 \end{proof}
 
-\begin{remark}[Three-path verification of the archetype table]
+\begin{remark}[Three-path computation of the archetype table]
 \label{rem:archetype-complementarity-three-path}
-\index{complementarity!archetype table!three-path verification}
+\index{complementarity!archetype table!three-path computation}
 The table of
 Proposition~\textup{\ref{prop:archetype-complementarity-bridge}} is
-verified along three disjoint routes.
+computed along three disjoint routes.
 \textup{(V1)} \emph{Direct OPE computation.} For each archetype
 witness, the scalar $\kappa(\cA)$ is computed from the OPE residue
 $J(z)J(w) \sim \kappa/(z-w)^2 \otimes \Omega$
@@ -2084,7 +2173,7 @@ $\sigma_\mathcal{F}$-fixed point in the level parameter
 \textup{(}Theorem~\textup{\ref{thm:census-self-dual-locus}}\textup{)};
 at the fixed point $\kappa = \kappa^! = \kappa^*$, so
 $K^\kappa = 2\kappa^*$. Three-path agreement on all six rows is
-recorded in the master verification
+recorded in the master computation
 \texttt{test\_complementarity\_landscape.py}
 \textup{(}see \texttt{compute/tests} for the file-level pinning of
 the six $(\varrho, K, K^\kappa, \kappa^*)$ tuples\textup{)}.
@@ -2126,40 +2215,44 @@ referents coincide; for every other standard family they differ by
 the factor $\varrho$, which is not archetype-invariant.
 \end{remark}
 
-\begin{remark}[Degree-three Hochschild class across the archetype
- landscape]
+\begin{remark}[Degree-three Hochschild and shadow witnesses across the
+ archetype landscape]
 \label{rem:chirhoch3-archetype-column}
 \index{Hochschild cohomology!degree-three archetype table}
-\index{Zamolodchikov W3 generator!as $\ChirHoch^3$ representative}
+\index{Zamolodchikov W3 generator!as shadow/GF representative}
 The archetype table of
 Proposition~\textup{\ref{prop:archetype-complementarity-bridge}}
-extends by one column, recording the degree-$3$ chiral
-Hochschild class $[\chi_3^{\cA}]$ of each witness family
-(Theorem~\ref{thm:chirhoch3-five-archetype-portrait} of
-\texttt{hochschild\_cohomology.tex}, which collapses through
+extends by one column, recording the degree-$3$ witness in its
+native ambient. Theorem~\ref{thm:chirhoch3-five-archetype-portrait}
+collapses through
 Corollary~\ref{cor:chirhoch3-unified-formula} to
 \[
  [\chi_3^{\cA}]\;=\;
  \begin{cases}
- 0 & \cA\in\{\mathsf G,\mathsf L,\mathsf C\},\ r_{\max}<\infty, \\
- \mathbb C\cdot\bigl[{:}T\partial T{:}-\tfrac14\partial^3 T\bigr] &
- \cA=\mathrm{Vir}_c,\ c\text{ generic, ambient-curve scope}, \\
+ 0 & \cA\in\{\mathsf G,\mathsf L,\mathsf C,\mathsf M\}
+      \text{ on the ambient curve}, \\
+ [W_3^{\mathrm{Zam}}]_{\mathrm{GF/shadow}} &
+ \cA=\mathrm{Vir}_c,\ c\text{ generic, GF/shadow or extension lane}, \\
  \mathbb C\cdot\bigl[{:}T\partial T{:}-\tfrac14\partial^3 T+
  \hbar\cdot\mathrm{qt}(J^{(3)})\bigr] &
- \cA=\mathbf H_{\Delta_5}=\Phi_3(\mathrm{K3}\times E),
+ \cA=\mathbf H_{\Delta_5}=\Phi_3(\mathrm{K3}\times E)
+      \text{ in the CY-$3$-enlarged product ambient},
  \end{cases}
 \]
-the scope-enlarged ambient being $X\times(\mathrm{K3}\times E)$
-for the crown row.) The weight-$5$ quasi-primary
-${:}T\partial T{:}-(1/4)\partial^3 T$ is the Zamolodchikov
-$W_3$-extension generator
-(Zamolodchikov~\textup{\cite{Zam1985}}~eq.~$(2.6)$), and
-the quantum tail $\hbar\cdot\mathrm{qt}(J^{(3)})$ is the
-Schiffmann--Vasserot degree-$3$ CoHA current. The unified
-Virasoro skeleton is common to the $\mathsf M$ and $\mathbf B$
-rows; the shadow-finite rows $\mathsf G,\mathsf L,\mathsf C$
-admit only $\partial$-exact triples and carry
-$[\chi_3^{\cA}]=0$.
+where the product ambient is $X\times(\mathrm{K3}\times E)$ for
+the crown row. The weight-$5$ quasi-primary
+$W_3^{\mathrm{Zam}}={:}T\partial T{:}-(1/4)\partial^3 T$ is the
+Zamolodchikov $W_3$-extension generator
+(Zamolodchikov~\textup{\cite{Zam1985}}~eq.~$(2.6)$). It is the
+common GF/shadow representative in the $\mathsf M$ and $\mathbf B$
+rows, not a non-zero ambient-curve $\ChirHoch^3$ class for
+$\mathrm{Vir}_c$. The quantum tail
+$\hbar\cdot\mathrm{qt}(J^{(3)})$ is the Schiffmann--Vasserot
+degree-$3$ CoHA current; it produces the non-zero class only after
+the CY-$3$ product ambient is included. The shadow-finite rows
+$\mathsf G,\mathsf L,\mathsf C$ and the ambient-curve
+$\mathsf M$ row admit only $\partial$-exact triples and carry
+$[\chi_3^{\cA}]=0$ in curve-level chiral Hochschild cohomology.
 \end{remark}
 
 \begin{theorem}[Koszul self-dual locus across the witness landscape;
@@ -2392,12 +2485,12 @@ Only $N = 2$ (Virasoro) has its self-dual central charge
 $c^*_2 = 13$ attained on the real locus.
 \end{proof}
 
-\begin{remark}[Three-path verification of
+\begin{remark}[Three-path computation of
 Theorem~\ref{thm:census-self-dual-locus}]
 \label{rem:self-dual-locus-verification}
-\index{Koszul self-duality!three-path verification}
+\index{Koszul self-duality!three-path computation}
 The identification $\kappa^*(\mathcal{F}) = K^\kappa_\mathcal{F}/2$
-is verified three independent ways on each family.
+is computed three independent ways on each family.
 \textup{(V1)} \emph{Direct fixed-point computation of
 $\sigma_\mathcal{F}$.} For Heisenberg:
 $\sigma(k) = -k$, fixed point $k = 0$, $\kappa(0) = 0$. For affine KM:
@@ -2424,7 +2517,7 @@ The theorem's structural conclusion -- that the unique non-empty
 real-level algebraic Koszul self-dual locus in the witness landscape is
 $\{\mathrm{Vir}_{13}\}$ (at M/S-level scope,
 Proposition~\ref{prop:virasoro-generic-koszul-dual}) -- is itself
-three-path verified:
+computed by three paths:
 \textup{(S1)} via the same-family partner
 $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}$ at $c = 13$;
 \textup{(S2)} via the central-charge involution $c \mapsto 26 - c$ and
@@ -2456,11 +2549,11 @@ The Freudenthal--de Vries identity gives the same total via $c + c' = 2r + 4h^\v
 The principal $\cW_N$ central charge~\eqref{eq:fateev-lukyanov-wn} is the source of truth across all three volumes. The alternative parameterisation $c(t) = (N-1)(1 - N(N+1)(t-1)^2/t)$ with $t = k+N$ (Fateev--Lukyanov~\cite{FateevLukyanov88}, equation~(7)) is equivalent by $(N-1)N(N+1) = N(N^2-1)$. Any displayed formula using $(k+N)^{-1}(k'+N)^{-1}$ in place of $(k+N-1)^2/(k+N)$ is a mixed-parameter shorthand valid only at the Koszul self-dual locus and must be recognised as such.
 \end{proposition}
 
-Numerical verifications:
+Numerical checks:
 \begin{itemize}
 \item $N=2$: $c(\mathrm{Vir}_{k}) = 1 - 6(k+1)^2/(k+2)$; at $k=-3/2$ (central-charge zero locus) gives $c = 1 - 6 \cdot 1/4 \cdot 2 = 1 - 3 = -2$; at $k = 1$ gives $c = 1 - 24/3 = -7$ (minimal model $\mathcal{M}(2,5)$ via DS).
 \item $N=3$: $c(\mathcal{W}_3^k) = 2 - 24(k+2)^2/(k+3)$; at $k = -3/2$ gives $c = 2 - 24 \cdot 1/4 \cdot 2/3 = 2 - 4 = -2$; at $k = -9/4$ gives $c = 2 - 24 \cdot 1/16 \cdot 4/3 = 2 - 2 = 0$ (degenerate $\mathcal{W}_3(4,3)$).
-\item Complementarity at $N=2$: the partner $k' = -k - 4$ sends $k=1 \mapsto k' = -5$, giving $c' = 1 - 6 \cdot 16/(-3) = 1 + 32 = 33$, and $c + c' = -7 + 33 = 26 = K_2$. Verified.
+\item Complementarity at $N=2$: the partner $k' = -k - 4$ sends $k=1 \mapsto k' = -5$, giving $c' = 1 - 6 \cdot 16/(-3) = 1 + 32 = 33$, and $c + c' = -7 + 33 = 26 = K_2$.
 \end{itemize}
 \end{remark}
 
@@ -2515,7 +2608,7 @@ non-cyclic outer automorphism group.
 
 For non-simply-laced types, the dual Coxeter number $h^\vee$ governs the kappa formula and level-shifting duality $k \mapsto -k - 2h^\vee$. The Coxeter number $h$ appears in the Strange Formula $\lvert\rho\rvert^2 = dh/12$ and in the exponent sum $\sum m_i = rh/2$, but \emph{not} in the Feigin--Frenkel involution or the curvature formula. The low-rank isomorphism $B_2 \cong C_2$ ($\mathfrak{so}_5 \cong \mathfrak{sp}_4$) produces identical entries: both have $d = 10$, $h^\vee = 3$, and the same kappa formula. For $N \geq 3$, types $B_N$ and $C_N$ are genuinely distinct: they share $d = N(2N+1)$ and $h = 2N$, but $h^\vee(B_N) = 2N-1$ while $h^\vee(C_N) = N+1$, so their kappa formulas and level-shifting dualities diverge.
 
-\emph{Shadow depth universality.} Every affine Kac--Moody algebra $\widehat{\fg}_k$, for \emph{every} simple Lie type ($A_N$, $B_N$, $C_N$, $D_N$, $G_2$, $F_4$, $E_6$, $E_7$, $E_8$), has shadow depth class~L with $r_{\max} = 3$. The cubic shadow $C$ is the Lie bracket, and the tower terminates because the quartic shadow vanishes by the Jacobi identity. This universality is verified computationally for all exceptional and non-simply-laced types in \texttt{compute/lib/bar\_cohomology\_non\_simply\_laced\_engine.py} (120+ tests).
+\emph{Shadow depth universality.} Every affine Kac--Moody algebra $\widehat{\fg}_k$, for \emph{every} simple Lie type ($A_N$, $B_N$, $C_N$, $D_N$, $G_2$, $F_4$, $E_6$, $E_7$, $E_8$), has shadow depth class~L with $r_{\max} = 3$. The cubic shadow $C$ is the Lie bracket, and the tower terminates because the quartic shadow vanishes by the Jacobi identity. The exceptional and non-simply-laced cases are checked by \texttt{compute/lib/bar\_cohomology\_non\_simply\_laced\_engine.py} (120+ tests).
 
 Note: for Kac--Moody algebras the anomaly ratio $\varrho(\mathfrak{g})$ is defined for the associated $\mathcal{W}$-algebra $\mathcal{W}(\mathfrak{g}, f_{\mathrm{prin}})$, not for $\widehat{\mathfrak{g}}_k$ itself; the Kac--Moody obstruction coefficient is $\kappa = (k+h^\vee)\dim\mathfrak{g}/(2h^\vee)$ directly.
 \end{remark}
@@ -2622,7 +2715,7 @@ Remark~\ref{rem:lattice-three-theorems} (lattices),
 Remark~\ref{rem:w-algebra-three-theorems} (W-algebras),
 Remark~\ref{rem:deformation-three-theorems} (deformation quantization),
 Remark~\ref{rem:yangian-three-theorems} (Yangians)) provide
-detailed verifications for each example class.
+detailed computations for each example class.
 
 %% ================================================================
 %% Shadow connection and propagator variance census
@@ -2681,7 +2774,7 @@ The W-line of $\cW_3$ has $\alpha_W = 0$ ($\mathbb{Z}_2$ parity),
 so $Q_W$ is even in~$t$ with purely imaginary branch points.
 The Gaussian decomposition is $Q_W = (2c/3)^2 + 2\Delta_W\,t^2$
 with constant Gaussian envelope.
-Computationally verified by \texttt{test\_shadow\_connection.py}
+Checked by \texttt{test\_shadow\_connection.py}
 (114 tests: residues, monodromy, flat sections, Picard--Fuchs,
 Koszul duality, complementarity).
 
@@ -2753,7 +2846,7 @@ Structural dichotomy: class~L + class~L is always autonomous
 real $c > 0$ ($f_{\mathrm{G}} = 0$ but $f_{\mathrm{M}} \neq 0$,
 so the ratios cannot coincide).
 $\cW_4$ is \emph{never} autonomous at any real central charge.
-Computationally verified by
+Checked by
 \texttt{test\_propagator\_variance\_landscape.py}
 (143 tests: Cauchy--Schwarz, cross-engine consistency,
 enhanced symmetry zeros, mixing polynomial structure).
@@ -2886,7 +2979,7 @@ in $\bQ^*/(\bQ^*)^2$.
 The fundamental discriminant~$d$ is the discriminant
 of the ring of integers $\cO_{K_L}$; when $\delta \equiv 1
 \pmod 4$, $d = \delta$, otherwise $d = 4\delta$.
-Verification:
+Computation:
 \begin{itemize}[nosep]
 \item $c = 1/2$:
  $\operatorname{disc} = -320/(4 \cdot 49/2) = -160/49$.
@@ -2937,8 +3030,9 @@ $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$, Virasoro).
 For $\widehat{\mathfrak{sl}}_3$, the degree-$4$ bar cohomology
 requires computing the rank of a $24576 \times 786432$ matrix
 (the chain-group dimensions grow as $8^n \cdot (n{-}1)!$),
-which exceeds practical hand computation. The $\mathcal{W}_3$ gap awaits either explicit machine
-computation or the discovery of a closed-form generating function.
+which exceeds practical hand computation. The $\mathcal{W}_3$ gap is
+the missing rank computation for this matrix or an equivalent
+closed-form generating function.
 
 For the Yangian $Y(\mathfrak{sl}_2)$, the conjectured formula
 $\dim (Y(\mathfrak{sl}_2)^!)_n = 3^n + 1$ (Conjecture~\ref{conj:yangian-bar-gf})
@@ -3097,12 +3191,12 @@ $\widehat{\mathfrak{sl}}_3$ via recurrence~\eqref{eq:sl3-bar-recurrence},
 $\mathcal{W}_3$ via recurrence~\eqref{eq:w3-bar-recurrence};
 see Conjectures~\ref{conj:sl3-bar-gf}
 and~\ref{conj:w3-algebraicity}.
-All conjectured values ($n \geq 4$ for
+All conjectural values ($n \geq 4$ for
 $\widehat{\mathfrak{sl}}_3$ and $\mathcal{W}_3$,
-$n \geq 4$ for Yangian) await independent verification.}
+$n \geq 4$ for Yangian) require independent computation.}
 \end{table}
 
-\begin{remark}[Status of \texorpdfstring{$H^4(\mathcal{W}_3) = 52$}{H4(W3) = 52}]
+\begin{remark}[Scope of \texorpdfstring{$H^4(\mathcal{W}_3) = 52$}{H4(W3) = 52}]
 \label{rem:w3-h4-status}
 \index{W3-algebra@$\mathcal{W}_3$!degree-4 bar cohomology}
 The value $\dim(\mathcal{W}_3^!)_4 = 52$ is obtained from the unique
@@ -3112,7 +3206,7 @@ fitted to the four computed values $\{0, 2, 5, 16\}$
 determines the degree-$4$ value, four data points do not suffice to
 distinguish it from other generating function ansätze (e.g., a degree-$2$
 algebraic GF would require five or more data points to determine).
-Independent verification (whether by direct bar differential computation
+An independent computation, either by direct bar differential computation
 at degree~$4$, by a generators-and-relations analysis of
 $\barB(\mathcal{W}_3)_4$, or by extending the PBW spectral sequence
 approach of Proposition~\ref{prop:sl3-pbw-ss} to the $\mathcal{W}_3$
@@ -3185,7 +3279,9 @@ the Koszul dual Hilbert function.)
  The Virasoro bar cohomology growth~$3^n$ is consistent
  with the infinite-dimensional same-family shadow partner
  $\mathrm{Vir}_{26-c}$ that controls the current M/S-level
- calculations; MC4 structural framework proved (Theorem~\ref{thm:completed-bar-cobar-strong}); H-level identification residual.
+ calculations. The MC4 structural theorem is
+ Theorem~\ref{thm:completed-bar-cobar-strong}; the H-level
+ infinite-generator identification remains open.
 \end{enumerate}
 \end{remark}
 
@@ -3675,8 +3771,8 @@ $\det(1 - x\, T_{\mathrm{rec}}) = (1-3x)(1+x) = \Delta(x)$.
 \end{proposition}
 
 \begin{proof}
-The recurrence~\eqref{eq:riordan-recurrence-explicit} is
-verified by direct computation from the Riordan generating
+The recurrence~\eqref{eq:riordan-recurrence-explicit} follows by
+direct computation from the Riordan generating
 function (Theorem~\ref{thm:ds-bar-gf-discriminant}).
 The Picard--Fuchs operator~$L$ is obtained by differentiating
 the algebraic equation
@@ -3773,7 +3869,7 @@ consistent with the chain-group bound
  $\dim H^4 = 1352$, $\dim H^5 = 9892$, $\dim H^6 = 76084$,
  $\dim H^7 = 598592$
  (internal consistency of the recurrence~\eqref{eq:sl3-bar-recurrence}
- verified through degree~$7$; these values are \emph{generated} by the
+ checked through degree~$7$; these values are \emph{generated} by the
  recurrence from the three proved initial values, not independently
  computed bar cohomology dimensions).
 \item The characteristic polynomial of the recurrence factors as
@@ -3789,9 +3885,9 @@ still governs the Virasoro and $\beta\gamma$ generating functions
 (Remark~\ref{rem:garland-lepowsky-sl2}).
 \end{enumerate}
 
-\emph{Scope.} Independent verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$ directly from the chiral bar differential. The value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.
+\emph{Scope.} An independent computation of $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$ directly from the chiral bar differential is required. The value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.
 
-The degree-$4$ chain group has dimension $\dim \bar{B}^4 = (\dim\mathfrak{sl}_3)^4 \cdot 3! = 24576$, and the chiral bracket differential $d\colon \bar{B}^4 \to \bar{B}^3$ maps into the $1024$-dimensional space $\bar{B}^3$. The bracket differential at degree~$4 \to 3$ has been verified computationally to be \emph{surjective} (rank~$1024$; Computation~\ref{comp:sl3-modular-rank}). The independent verification of $\dim H^4 = 1352$ therefore reduces to computing $\dim\ker(d^{4 \to 3}) - \dim\operatorname{im}(d^{5 \to 4})$, where the first term equals $24576 - 1024 = 23552$ (by surjectivity) and the second requires the rank of the degree-$5$ differential on the $786432$-dimensional chain group $\bar{B}^5 = 8^5 \cdot 4! = 786432$. This rank computation is feasible via modular arithmetic over $\mathbb{F}_p$ for suitable primes~$p$.
+The degree-$4$ chain group has dimension $\dim \bar{B}^4 = (\dim\mathfrak{sl}_3)^4 \cdot 3! = 24576$, and the chiral bracket differential $d\colon \bar{B}^4 \to \bar{B}^3$ maps into the $1024$-dimensional space $\bar{B}^3$. The bracket differential at degree~$4 \to 3$ is computationally surjective (rank~$1024$; Computation~\ref{comp:sl3-modular-rank}). The independent computation of $\dim H^4 = 1352$ therefore reduces to computing $\dim\ker(d^{4 \to 3}) - \dim\operatorname{im}(d^{5 \to 4})$, where the first term equals $24576 - 1024 = 23552$ (by surjectivity) and the second requires the rank of the degree-$5$ differential on the $786432$-dimensional chain group $\bar{B}^5 = 8^5 \cdot 4! = 786432$. This rank computation is feasible via modular arithmetic over $\mathbb{F}_p$ for suitable primes~$p$.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -3837,9 +3933,6 @@ growth pole at $x = (-3+\sqrt{13})/2 \approx 0.303$.
 
 \begin{theorem}[Bar cohomology generating function classification;
 \ClaimStatusConditional]
-%% Individual entries marked ``conj.''\ in
-%% Table~\ref{tab:bar-gf-classification} are conjectured;
-%% the classification framework and all unmarked entries are proved.
 \label{thm:bar-gf-classification}
 \index{bar complex!generating function!classification|textbf}
 \index{D-finiteness!bar cohomology dichotomy}
@@ -4089,7 +4182,7 @@ by Verdier duality
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}); Verdier duality
 is an involution on configuration spaces, hence preserves the
 analytic structure of the generating function. In the
-$\mathfrak{sl}_2$ family, this is verified explicitly:
+$\mathfrak{sl}_2$ family, this is computed explicitly:
 $P_{\widehat{\mathfrak{sl}}_{2,k}}$ and
 $P_{\widehat{\mathfrak{sl}}_{2,-k-4}}$ both have discriminant
 $(1-3x)(1+x)$.
@@ -4334,7 +4427,7 @@ The $\beta\gamma$ OPE has a simple pole only
 ($\beta_{(0)}\gamma = 1 \in \mathbb{C}$, a scalar),
 so $d_{\mathrm{bracket}} = 0$
 (Proposition~\ref{prop:pole-decomposition}: the simple-pole residue is
-not a field value but the vacuum).
+the vacuum scalar rather than a field value).
 Its generating function $P_{\beta\gamma} = u/(1{-}3x) = (1{+}x)/u$
 has the \emph{inverse} singularity $u^{-1} \sim c_1 / \sqrt{1{-}3x}$
 near $x = 1/3^-$, giving $[x^n] \sim C' \cdot 3^n \cdot n^{-1/2}$
@@ -4411,7 +4504,7 @@ For affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$, the exponential growt
 \[
 \lim_{n \to \infty} \frac{\log \dim (\widehat{\mathfrak{g}}_k^!)_n}{n} = \log(\dim \mathfrak{g}).
 \]
-More precisely, $\dim (\widehat{\mathfrak{g}}_k^!)_n \sim C \cdot (\dim \mathfrak{g})^n \cdot n^{-\alpha}$ for some $C > 0$ and $\alpha > 0$. The verified cases are: $\dim \mathfrak{sl}_2 = 3$ (growth $3^n$), $\dim \mathfrak{sl}_3 = 8$ (growth $8^n$).
+Asymptotically, $\dim (\widehat{\mathfrak{g}}_k^!)_n \sim C \cdot (\dim \mathfrak{g})^n \cdot n^{-\alpha}$ for some $C > 0$ and $\alpha > 0$. The computed cases are: $\dim \mathfrak{sl}_2 = 3$ (growth $3^n$), $\dim \mathfrak{sl}_3 = 8$ (growth $8^n$).
 \end{corollary}
 
 \begin{proof}
@@ -4470,7 +4563,7 @@ determines the radius of convergence. Part~(ii) guarantees that
 this nearest branch point is $x = R$.
 \end{proof}
 
-\begin{remark}[Verified cases]\label{rem:dominant-branch-verified}
+\begin{remark}[Computed cases]\label{rem:dominant-branch-verified}
 For $\mathfrak{sl}_2$: $R = 1/3$, $\Delta = (1 - 3x)(1+x)$,
 $T_{\mathrm{br}} = \operatorname{diag}(3, -1)$, spectral radius $3
 = \dim\mathfrak{sl}_2$.
@@ -4527,9 +4620,8 @@ at height $\geq 0$ and ending at height $0$.
 \end{theorem}
 
 \begin{proof}
-The proof proceeds in three steps: dimension matching,
-explicit construction of the bijection, and verification
-of filtration compatibility.
+The proof has three steps: dimension matching,
+explicit construction of the bijection, and filtration compatibility.
 
 \medskip
 \noindent\emph{Step~1: Dimension matching.}
@@ -5205,13 +5297,13 @@ computed in the following locations.
 \end{enumerate}
 \end{remark}
 
-\begin{remark}[Silent non-coverage of the master table]
+\begin{remark}[Explicit non-coverage of the master table]
 \label{rem:census-silent-non-coverage}
 Five families appear in the shadow-obstruction tower census
 (Table~\ref{tab:shadow-tower-census}) but do not receive a complete
 row in the master invariant table
-(Table~\ref{tab:master-invariants}). They are flagged here as
-honest frontier, not silently skipped.
+(Table~\ref{tab:master-invariants}). They are recorded here as
+open frontier rather than folded into completed rows.
 \begin{enumerate}[leftmargin=*]
  \item $\mathcal{N}{=}2$ superconformal $\mathrm{SCA}_c$: the
  shadow class is~$M$ with multi-lane tower
@@ -5258,46 +5350,98 @@ infinite-fingerprint chapter rather than as bare numerology.
 \medskip
 
 \noindent
-The computations of Part~\ref{part:physics-bridges} are complete. Part~\ref{part:seven-faces} connects the bar-cobar framework to adjacent programs (Feynman diagrams, BV-BRST, holomorphic-topological field theories, the 4d/2d correspondence) and concludes with the concordance and the project toward modular Koszul duality (\S\ref{sec:modular-koszul-programme}).
+Part~\ref{part:physics-bridges} supplies the Feynman, BV--BRST,
+holomorphic-topological, and 4d/2d comparison data. Part~\ref{part:seven-faces}
+then records the concordance and modular Koszul duality
+(\S\ref{sec:modular-koszul-programme}).
 
 \section{Synthesis}
 \label{sec:landscape-supplement}
 
-\begin{remark}[Landscape census row at K3$\times$E: the canonical K3 base point]
+\begin{remark}[K3$\times$E: four scalars and one primitive denominator]
 \label{rem:landscape-1}
-The landscape census's K3$\times$E row is the canonical K3 base
-point, with the four $\kappa_\bullet$-invariants:
+Let $Y=K3\times E$. The census row attached to $Y$ is not a
+single $\kappa$-value. Four constructions give four scalars:
 \[
  \begin{aligned}
-	 \kappa_{\mathrm{cat}}(K3\times E) &= \chi(\cO_{K3})\cdot\chi(\cO_E) = 2\cdot 0 = 0,\\
-	 \kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3\times E) &= 3,\\
-	 \kappa_{\mathrm{BKM}}(\Delta_5) &= c_{1}(0)/2 = 5,\\
-	 \kappa_{\mathrm{fiber}}(K3) &= 24,
+	 \kappa_{\mathrm{cat}}(Y)
+	 &= \chi(\cO_{K3})\cdot\chi(\cO_E) = 2\cdot 0 = 0,\\
+	 \kappa_{\mathrm{ch}}^{\mathrm{Heis}}(Y)
+	 &= 3,\\
+	 \kappa_{\mathrm{BKM}}(\Delta_5)
+	 &= \mathrm{wt}(\Delta_5)=c_{N=1}(0)/2 = 5,\\
+	 \kappa_{\mathrm{fiber}}(K3)
+	 &= 24,
 	 \end{aligned}
 \]
 and the separate K3 fibre witness $\kappa_{\mathrm{cat}}(K3)=2$.
-The values $\{0,3,5,24\}$ and the witness~$2$ come from distinct
-constructions (K\"unneth Hodge supertrace, Heisenberg shadow, Gritsenko
-$\Delta_5$ Borcherds weight, and K3 fibre rank). The Mukai-doubling identity
+The primitive BKM denominator is $\Delta_5$. The reduced
+Oberdieck--Pandharipande DT scalar uses the monic Borcherds product
+\[
+ D_5=64^{-1}\Delta_5,\qquad
+ \Phi_{10}^{\mathrm{un}}=\Delta_5^2,\qquad
+ \Phi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Phi_{10}^{\mathrm{un}},
+\]
+so
+\[
+ Z_{\mathrm{OP}}(K3\times E)
+ := Z^{\mathrm{red}}_{\mathrm{DT}}(K3\times E)
+ = -(\Phi_{10}^{\mathrm{OP}})^{-1}
+ = -D_5^{-2}
+ = -4096\,\Delta_5^{-2}.
+\]
+Thus $\Delta_5$ is the primitive Borcherds denominator,
+$\Phi_{10}^{\mathrm{un}}=\Delta_5^2$ is the unnormalised Igusa square,
+$\Phi_{10}^{\mathrm{OP}}$ is the OP square in the $D_5$ normalisation,
+and $Z_{\mathrm{OP}}$ is the reduced DT scalar. The
+Mukai-doubling identity
 $K^{\kappa_{\mathrm{ch}}} = 2c_+(\mathrm{Mukai}(K3)) = 8$ at the Lusztig
 specialisation $\hbar^2 = -1/8$ selects this row as the canonical
 entry \cite{Borcherds1992,Gritsenko1999,GritsenkoNikulin1998,Mukai1987}.
 Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
-\begin{remark}[Landscape census rows beyond K3$\times$E]
+\begin{remark}[Rows adjacent to K3$\times$E do not inherit its scalars]
 \label{rem:landscape-2}
-Extending the K3 base point through the landscape: (i) CY-$1$
-(elliptic curve) $\kappa_{\mathrm{ch}} = 0$, no $\Delta_5$-analogue, no
-BKM weight; (ii) CY-$2$ (K3) $\kappa_{\mathrm{ch}}$ is the Hodge
-supertrace $\sum_q (-1)^q h^{0,q}(K3) = 2$ at the $\chi(\cO_{K3}) = 2$ face,
-with $\Delta_5$ BKM weight $5$ and Mukai-doubling $8$; (iii) CY-$3$
-(K3$\times$E or quintic) $\kappa_{\mathrm{ch}} = 0$ with $\kappa_{\mathrm{BKM}}(\Delta_5) = 5$
-still via the product structure; (iv) CY-$4$ (local $\mathbb P^2$)
-$\kappa_{\mathrm{ch}} = 3/2$ via McKay/direct shadow. Each row at
-$d\geq 2$ has an (in principle) BKM lift with the universal identity
-$\kappa_{\mathrm{BKM}}(\Phi_N) = c_N(0)/2$ for $N\in\{1,2,3,4,6\}$
-\cite{Borcherds1998,Gritsenko1999}. Cross-ref
+The neighbouring rows share notation with $K3\times E$ but not its
+four-scalar package.
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{0.19\textwidth}p{0.37\textwidth}p{0.36\textwidth}}
+\textbf{Row} & \textbf{$\kappa$-datum} & \textbf{BKM / CoHA datum}\\
+\hline
+$E$ & $\kappa_{\mathrm{ch}}(E)=0$ & no $\Delta_5$ denominator\\
+$K3$ & $\kappa_{\mathrm{ch}}(K3)=\kappa_{\mathrm{cat}}(K3)=2$
+ & $\phi_{0,1}^{K3}$ is Jacobi input, not the $K3\times E$ denominator\\
+$K3\times E$ &
+$\{\kappa_{\mathrm{cat}}(K3\times E),
+\kappa_{\mathrm{ch}}^{\mathrm{Heis}}(K3\times E),
+\kappa_{\mathrm{BKM}}(\Delta_5),\kappa_{\mathrm{fiber}}(K3)\}
+=\{0,3,5,24\}$ &
+$\Delta_5$ is primitive;
+$Z_{\mathrm{OP}}=-4096\Delta_5^{-2}$\\
+$Q_5$ &
+$\kappa_{\mathrm{ch}}^{\mathrm{Hodge}}(Q_5)=0$,
+$\kappa_{\mathrm{ch}}^{\mathrm{BCOV}}(Q_5)=\chi(Q_5)/24=-25/3$ &
+BCOV lane, not $\Delta_5$\\
+$\mathrm{Tot}(\omega_{\mathbb P^2})$ &
+$\kappa_{\mathrm{ch}}=3/2$ &
+local surface McKay lane\\
+$\mathrm{Tot}(\cO(-1)^{\oplus2}\to\mathbb P^1)$ &
+$\kappa_{\mathrm{ch}}=1$ &
+resolved conifold, not a local surface\\
+$\mathbb C^3$ &
+$\mathrm{CoHA}(\mathbb C^3)=Y^+$ &
+$\mathcal W_{1+\infty}$ appears only after the double / centre passage.
+\end{tabular}
+\end{center}
+The universal BKM identity remains
+$\kappa_{\mathrm{BKM}}(\Phi_N)=c_N(0)/2$ for
+$N\in\{1,2,3,4,6\}$ \cite{Borcherds1998,Gritsenko1999}; it does not
+license any additive formula identifying the Borcherds weight with the
+chiral scalar plus $\chi(\cO_{\mathrm{fiber}})$
+and it does not transfer the $K3\times E$ denominator to the quintic,
+the conifold, local $\mathbb P^2$, or $\mathbb C^3$. Cross-ref
 Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
@@ -5352,7 +5496,6 @@ $c=-214$]
 \label{prop:canonical-prs-coefficient-cm214}
 \index{Pope--Romans--Shen!projector coefficient}
 \index{$\mathcal W_\infty[c]$!primary-projector coefficient}
-\ClaimStatusProvedElsewhere{}
 The $\mathcal W_\infty[c]$-primary-projector identity
 \[
  W_k \;=\; e_k + \frac{-c}{22}\, \Lambda_Z,
@@ -5383,7 +5526,7 @@ $[L_n, W_4] = 0$ for $n=1,2$. At $c=-214$, direct arithmetic:
 $-c/22 = 214/22 = 107/11$ \textup{(}$\gcd(214,22)=2$\textup{)}.
 The Wang $1998$ basis coefficients $(1, -3/2, 321/10)$ are
 independent of $c$ and follow from the Virasoro primary condition
-plus the Jacobi identity on the four-generator family, verified
+plus the Jacobi identity on the four-generator family, proved
 at Wang Proposition~$4.2$.
 \end{proof}
 
@@ -5392,7 +5535,6 @@ conjugacy classes]
 \label{prop:canonical-monster-atlas-values}
 \index{Monster!ATLAS character values}
 \index{McKay--Thompson!$1A,\ 2A,\ 3A,\ 3C,\ 24A$}
-\ClaimStatusProvedElsewhere{}
 For the Frenkel--Lepowsky--Meurman moonshine module $V^\natural$
 with graded character
 \[
@@ -5410,8 +5552,8 @@ $196884 = 1 + 196883$ Griess-algebra representation\textup{)}:
 and $H_1(24A) = 0$ since the $24A$-McKay--Thompson series is a
 Hauptmodul for the genus-zero group $\Gamma_0(24)+24$ with
 $q$-expansion $q^{-1} + 0\cdot q + \cdots$. The canonical
-$c(V^\natural)|_{24A}$-value that frequently appears in the programme
-is the $n=2$-graded piece
+$c(V^\natural)|_{24A}$-value used in the moonshine comparison is the
+$n=2$-graded piece
 \[
  H_2(24A) \;=\; 4,
 \]
@@ -5436,7 +5578,7 @@ evaluated on the $196883$-dimensional representation, which has
 character $\chi_{3C}(\mathbf{196883}) = 0$, adding the vacuum $+1$.
 The $H_2(24A) = 4$ entry is the $q^2$-coefficient of the $24A$
 Hauptmodul, tabulated at Conway--Norton Table~$4$ row $24A$.
-Cross-verification: each $H_n(g)$ satisfies the $T_g$-recursion
+Independent check: each $H_n(g)$ satisfies the $T_g$-recursion
 established by Borcherds $1992$ proof of moonshine
 \textup{(}Borcherds Invent.~Math.~$\mathbf{109}$\textup{)}.
 \end{proof}
@@ -5446,7 +5588,6 @@ rank-$5$ and rank-$2$ paramodular cusps]
 \label{prop:canonical-bruinier-heegner-chern}
 \index{Bruinier!Heegner Chern class!canonical values}
 \index{Humbert divisor!discriminant values}
-\ClaimStatusProvedElsewhere{}
 Let $\overline{\mathcal A}_2$ be the Satake compactification of the
 Siegel modular threefold, $H_D\subset\overline{\mathcal A}_2$ the
 Humbert divisor of discriminant $D$, and $\mathcal L^{\Delta_5}$ the
@@ -5469,8 +5610,8 @@ torsion generator
  K^{\kappa_{\mathrm{ch}}}(\mathcal H_{\mathrm{Muk}}(K3))
  \;=\; 2\,c_+(\mathrm{Mukai}(K3)) \;=\; 8.
 \]
-The admissible Heegner discriminants entering the programme
-genus-$2$ shadow analysis are $D\in\{1, 4, 5, 8, 9, 12, 13, 16, \ldots\}$
+The admissible Heegner discriminants entering the genus-$2$
+shadow analysis are $D\in\{1, 4, 5, 8, 9, 12, 13, 16, \ldots\}$
 satisfying $D\equiv 0, 1 \pmod 4$ \textup{(}Bruinier $2002$ LNM
 $1780$, Definition~$2.10$ of Heegner discriminants\textup{)}. The
 first three, $D=1, 4, 5$, cut out $H_1$ \textup{(}product locus
@@ -5509,7 +5650,6 @@ coefficients of $\phi_{0,1}^{K3}$]
 \label{prop:canonical-oberdieck-phi01}
 \index{Oberdieck--Pandharipande!reduced DT}
 \index{$\phi_{0,1}^{K3}$!Fourier coefficients}
-\ClaimStatusProvedElsewhere{}
 The weight-$0$ index-$1$ weak Jacobi form
 \[
  \phi_{0,1}^{K3}(\tau, z)
@@ -5556,7 +5696,7 @@ Theory of Jacobi Forms} Theorem~$2.2$\textup{)} yields the coefficients
 in the EOT convention. The Oberdieck $2018$ normalisation is
 twice the EOT one \textup{(}Oberdieck \S$0.1$ chooses
 $\phi_{0,1}^{K3}(0)=24$; EOT chooses $\phi_{0,1}^{K3}(0)=12$\textup{)}.
-Cross-verification: Mathieu moonshine \textup{(}Cheng--Duncan--Harvey
+Independent check: Mathieu moonshine \textup{(}Cheng--Duncan--Harvey
 $2014$\textup{)} decomposes $\phi_{0,1}^{K3}$ into $M_{24}$-irreducible
 characters; the character sums match the Fourier coefficients
 in EOT normalisation.
@@ -5567,10 +5707,11 @@ contributions on the quintic mirror]
 \label{prop:canonical-bcov-quintic}
 \index{BCOV!quintic mirror!$F_g^{\mathrm{const}}$}
 \index{constant-map contribution!genus $1$ and $2$}
-\ClaimStatusProvedElsewhere{}
-For $X = Q_5\subset\bP^4$ the smooth quintic threefold with
-Euler characteristic $\chi(X) = -200$ and
-$\kappa_{\mathrm{ch}}(Q_5) = \chi(X)/24 = -25/3$, the BCOV
+For $X = Q_5\subset\bP^4$ the smooth quintic threefold, the Hodge
+supertrace gives $\kappa_{\mathrm{ch}}^{\mathrm{Hodge}}(Q_5)=0$,
+whereas the BCOV one-loop lane carries
+$\kappa_{\mathrm{ch}}^{\mathrm{BCOV}}(Q_5)=\chi(X)/24=-25/3$ from
+Euler characteristic $\chi(X) = -200$. The BCOV
 \textup{(}Bershadsky--Cecotti--Ooguri--Vafa $1994$ \emph{Commun.~Math.~Phys.}
 $\mathbf{165}$\textup{)} genus-$g$ constant-map contribution is
 \[
@@ -5591,7 +5732,9 @@ anomaly on $Q_5$ is
  F_1^{\mathrm{const}}(Q_5) \;=\; -\,\frac{25}{72}
  \qquad\textup{(}\text{constant part of genus-1 free energy at large complex structure}\textup{)},
 \]
-derived from $\chi(Q_5)/24 = -200/24 = -25/3$ multiplied by the
+derived from
+$\kappa_{\mathrm{ch}}^{\mathrm{BCOV}}(Q_5)=\chi(Q_5)/24=-200/24=-25/3$
+multiplied by the
 Mumford class coefficient $1/24$ of $\mathcal M_{1,0}$, i.e.\
 $(-25/3)\cdot(1/24) = -25/72$. At genus $2$,
 \[
@@ -5611,8 +5754,8 @@ reached from the present expression by the BCOV sign flip
 $F_g \mapsto (-1)^{g-1} F_g$ and the Klemm--Zaslow overall
 normalisation $|B_4||B_2|/(4\cdot 2)\cdot 1/(2g-2)!\cdot \chi/2$
 with $|B_4| = 1/30, |B_2| = 1/6$; the two conventions differ by
-sign and by a combinatorial factor of $5/2$. The
-programme-canonical convention is BCOV $1994$: positive
+sign and by a combinatorial factor of $5/2$. In the BCOV $1994$
+convention the constant-map term is positive
 $F_g^{\mathrm{const}}$ for even $g$, negative for odd $g$, matching
 the Polyakov sign of the string-theory free energy at tree level.
 Primary sources: BCOV $1994$ \emph{Commun.~Math.~Phys.~}$165$
@@ -5634,7 +5777,7 @@ Faber--Pandharipande $2000$ \emph{Invent.~Math.~}$\mathbf{139}$
 Theorem~$4$ constant-map GW invariant
 $\langle 1\rangle_{2,0}^{\mathrm{const}} = \chi\cdot\int_{\overline{\mathcal M}_2}\lambda_2\lambda_1 = -200\cdot (1/5760)
 = -5/144$; the BCOV sign convention adds $(-1)^{g-1}\cdot 1 = -1$
-at $g=2$, giving the $5/144$ value in magnitude with the programme
+at $g=2$, giving the $5/144$ value in magnitude with the
 canonical sign. Klemm--Zaslow $2000$ convention subtracts a
 Gottsche contribution, yielding the alternative $-35/3456$. The
 two conventions are related by the Klemm--Zaslow
@@ -5644,7 +5787,7 @@ by a rational constant of order $0.04$, well outside any
 genuine coefficient ambiguity.
 \end{proof}
 
-\begin{remark}[Three-path verification discipline for each pinned
+\begin{remark}[Three-path check for each pinned
 value]
 \label{rem:canonical-coefficient-verification}
 Each of the five values pinned above
@@ -5652,8 +5795,7 @@ Each of the five values pinned above
 $\Z/8$ torsion of $c_1(\mathcal L^{\Delta_5}|_{H_1})$,
 $c_{\mathrm{Obd}}(3)=-128$ and $c_{\mathrm{Obd}}(4)=216$,
 $F_1^{\mathrm{const}}(Q_5)=-25/72$ and $F_2^{\mathrm{const}}(Q_5)=
-5/144$ BCOV-canonical\textup{)} has three independent verification
-paths as required by the programme's three-path discipline:
+5/144$ BCOV-canonical\textup{)} has three independent derivations:
 \begin{itemize}
  \item Pope--Romans--Shen coefficient: \textup{(}i\textup{)} Pope--Romans--Shen $1990$
  equation~$\textup{(}2.10\textup{)}$ direct; \textup{(}ii\textup{)} Wang $1998$ Proposition~$4.2$
@@ -5678,5 +5820,5 @@ paths as required by the programme's three-path discipline:
 Any chapter inscribing these values should cite
 Proposition~\textup{(}\ref{prop:canonical-prs-coefficient-cm214}--\ref{prop:canonical-bcov-quintic}\textup{)}
 by label; any compute engine hardcoding them should cite both the
-proposition label and the three verification paths above.
+proposition label and the three derivations above.
 \end{remark}

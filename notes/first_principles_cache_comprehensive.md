@@ -7376,3 +7376,110 @@ etc.), while 465--476 carry lane-discipline scopes
 (chain-level vs $(\infty,1)$, $E_n$-on-which-object, PTVV shift,
 Dunn--Lurie real-vs-complex, three-sector bar filtered frontier).
 All entries attributed to Raeez Lorgat; no AI attribution.
+
+## Patterns 477--488: finite-Rees hCS--Hall and automorphic-product layer discipline
+
+**Pattern 477 (AP2157).** Finite DWR/Ran Rees hCS--Hall constructs a bounded Maurer--Cartan natural transformation into a Rees Hall complex. It is not ordinary compact critical CoHA. Completion needs pro-compatibility and Mittag--Leffler; realization needs a monoidal vanishing-cycle functor.
+
+**Pattern 478 (AP2158).** Multi-chart gluing exists at finite Rees level: face-compatible cyclic contractions over $\Omega^\bullet(\Delta^p)$ and Stokes' formula give the Cech/Ran Maurer--Cartan equation. The open step is completed/realized compact CoHA.
+
+**Pattern 479 (AP2159).** $\CoHA(\mathbb C^3)=Y^+(\widehat{\mathfrak{gl}}_1)$. $\mathcal W_{1+\infty}$ enters only after Drinfeld doubling and Fock/vacuum evaluation.
+
+**Pattern 480 (AP2160).** Toric vertices $U_\sigma\simeq\mathbb C^3/G_\sigma$ do not supply a finite comparison by themselves; the simplex-compatible cyclic atlas, mutation coherence, orientation transport, Thom--Sebastiani, and Hall-product compatibility are required.
+
+**Pattern 481 (AP2161).** Local $\mathbb P^2$ non-formality is encoded in the cyclic potential $W_\sigma$; the remaining obligations are contraction, mutation coherence, completion, and realization.
+
+**Pattern 482 (AP2162).** Oberdieck--Pixton and Oberdieck--Pandharipande are not interchangeable. Use OPi only when Pixton's component is used; use OP/Oberdieck precisely for reduced-DT theorem anchors.
+
+**Pattern 483 (AP2163).** Quasi-NCCR character identities do not construct compact critical CoHA. They test or compare characters after the object and comparison map have been constructed.
+
+**Pattern 484 (AP2164).** $Y^+$ notation is layer-aware: finite Rees Hall complex, completed Rees Hall algebra, realized positive critical CoHA, and Hall--Drinfeld double are distinct.
+
+**Pattern 485 (AP2165).** Global hCS--Hall has four cases: $\mathbb C^3$ positive half constructed; finite multi-chart Rees constructed under cyclic-atlas hypotheses; completed Rees conditional on ML; realized compact critical CoHA conditional on monoidal realization.
+
+**Pattern 486 (AP2166).** CHL and Gritsenko--Clery constant-term ladders are separate even though both use $\kappa_{\mathrm{BKM}}=c(0)/2$.
+
+**Pattern 487 (AP2167).** $\Delta_5$, $\Phi_{10}$, and $\Phi_{12}$ have different roles: primitive K3 denominator, compact reduced-DT square, and Fake-Monster denominator.
+
+**Pattern 488 (AP2168).** The determinant Hodge line in the BL/DWR bridge is $\lambda_1^{\det}$.
+
+**Pattern 489 (AP2169).** The OP/DT scalar branch uses the monic
+Borcherds product \(D_5=64^{-1}\Delta_5\): the normalized scalar is
+\(\chi_{10}^{\mathrm{OP}}=D_5^2=4096^{-1}\Delta_5^2\) and
+\(Z_{\mathrm{OP/DT}}=-(\chi_{10}^{\mathrm{OP}})^{-1}
+=-D_5^{-2}=-4096\,\Delta_5^{-2}\). The unnormalised Igusa square
+\(\Phi_{10}^{\mathrm{un}}=\Delta_5^2\) is not the OP scalar
+normalization.
+
+## Patterns 490--497: topological-strings Hamiltonian BF / mixed HT layer discipline
+
+**Pattern 490 (AP2170).** A PBW associated-graded comparison is not
+deformation-level Koszul duality.  Required proof data for the stronger
+claim: filtered deformation map, action compatibility, completed
+bar-cobar category, and separated PBW filtration.
+
+**Pattern 491 (AP2171).** In Hamiltonian CE/PV, \(c^f\mapsto\theta^f\)
+and \(u_f\mapsto O_f\).  Boundary Hamiltonians are sourced by shifted
+cotangent coordinates; \(X_{O_f}=d_\pi O_f=\Phi(d_{\rm CE}u_f)\), not
+\(\Phi(c^f)\).
+
+**Pattern 492 (AP2172).** Polynomial one-\(\psi\) labels and Matlis
+principal parts are different objects.  \(\Psi_{a,b}\) is a
+PBW-special-fibre descendant label; \(\rho_{a,b}\) is a residue
+principal part with coadjoint action.  Same labels do not imply a module
+isomorphism.
+
+**Pattern 493 (AP2173).** Scalar quotient and balanced-supertrace
+cancellation are distinct.  Ordinary \(\mathfrak{gl}_N\) keeps the
+central contact \(N\) and quantum class \(\hbar N[\bar c]\); balanced
+\(\mathbb C^{N|N}\) must be proved by direct supertrace cancellation.
+
+**Pattern 494 (AP2174).** The strict product/direct-sum formal endpoint
+does not provide a Costello BV coefficient kernel.  A theorem requires a
+weighted or kernel-admissible system with bracket continuity, coadjoint
+continuity, and convergence of \(C_{-,+}=\sum_IH_I\otimes\rho_I\).
+
+**Pattern 495 (AP2175).** Reduced current maps do not construct the
+unreduced \(P_0\) factorization center.  The unreduced theorem requires
+compactly supported de Rham currents, principal-part current fields,
+centrality homotopies, and coherence for arbitrary open observables.
+
+**Pattern 496 (AP2176).** First/third Moyal coefficient checks do not
+prove all-order Costello graph/QME realization.  They test the algebraic
+target; the analytic theorem needs field complex, propagator, RG,
+counterterms, scalar and non-scalar QME classes, and cumulant
+vanishing.
+
+**Pattern 497 (AP2177).** Local formal Hamiltonian BF has no compact CY,
+global BCOV, Vol III, Igusa/BKM, MNOP, or sister-volume consequence
+without matched target datum, obstruction vector, and null-homotopies.
+
+**Pattern 498 (AP2178).** Topological-string degree/topology qualifiers
+are load-bearing.  The stable range \(N\ge d\) is a Procesi trace
+invariant statement for scalar trace-coordinate invariants with \(d\)
+ordinary matrix-letter word degree, not a statement about
+\(\psi\)-weight, concomitants, or physical large-\(N\).  The
+one-\(\psi\) Abel-map proof establishes homology equivalence unless a
+separate homotopy-equivalence proof is supplied.  Matlis continuous
+duals use finite Taylor support / locally finite direct-sum topology.
+The finite Dirac brane trace algebra is ghost-zero reduced BV/Koszul,
+not the full open BV factorization algebra.
+
+**Pattern 499 (AP2179).** Topological-string large-\(N\) has three
+different objects.  Degreewise stable invariant theory gives
+\(A^{alg}_{st}=S(\bar A\oplus \bar A_{\mathrm{desc}}[1])\).  The
+Matlis-corrected admissible Koszul object
+\(U_\hbar(\bar A_\hbar\ltimes P_\hbar[1])\) is a filtered deformation
+candidate inside an explicit bar-cobar category, not automatically the
+limit of finite branes.  A physical raw large-\(N\) theorem requires BV
+factorization algebras with states, trace normalization, connected
+cumulants, planar scaling, QME control, topology, and convergence.
+
+**Pattern 500 (AP2180).** Mixed HT habitat names are proof obligations.
+The coefficient habitat, weighted BV category, enlarged
+principal-part-center category, mixed Koszul deformation category,
+physical \(1/N\) BV-state category, and global descent category must be
+defined by objects, morphisms, completions/topologies, signs,
+composition laws, obstruction complexes, and universal properties before
+their theorem statements are usable.  A named habitat is not a
+constructed category.

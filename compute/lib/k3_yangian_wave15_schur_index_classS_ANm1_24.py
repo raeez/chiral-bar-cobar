@@ -4,12 +4,11 @@ Borcherds-lift datum for $\mathcal T[A_{N-1}, \Sigma_{0,24}]$ and the resulting
 Siegel modular form weight $k_N = (N+3)/2$ on the spin cover of
 $\mathrm O(\Lambda^{N+1,2})$.
 
-Introduced in Wave 15 as a structural placeholder; Wave 16 conjectured
-the Borcherds / Siegel weight $k_N = (N+3)/2$ on the spin cover;
-Wave 17 verifies $k_3 = 3$ and $k_4 = 7/2$ from first principles,
-derives the constant Fourier coefficient $f^{(N)}(0,0) = 2(N+3)$ of the
-$\mathfrak{su}(N)$-refined K3 elliptic genus / $M_{24}$-averaged Schur index,
-and tables the Niemeier umbral moonshine data by $N$.
+The Borcherds / Siegel weight is $k_N = (N+3)/2$ on the spin cover.
+The first non-trivial checks give $k_3 = 3$ and $k_4 = 7/2$ from the
+constant Fourier coefficient $f^{(N)}(0,0) = 2(N+3)$ of the
+$\mathfrak{su}(N)$-refined K3 elliptic genus / $M_{24}$-averaged Schur index.
+The same calculation records the Niemeier umbral moonshine data by $N$.
 
 PRIMARY LITERATURE
 ==================
@@ -27,8 +26,10 @@ PRIMARY LITERATURE
 - Benini-Peelaers 2015, arXiv:1507.04746 Section 5 (class-S Schur index
   on the flavour torus; relation to Jacobi forms).
 - Cordova-Shao 2015, arXiv:1506.00265 (large-flavour-rank Schur index).
-- Beem-Rastelli 2015, arXiv:1812.05116 Section 3-5 (protected VOA of
-  class-S, Schur-index/Jacobi-form sector).
+- Beem-Lemos-Liendo-Peelaers-Rastelli-van Rees 2013, arXiv:1312.5344
+  Section 3 (protected VOA construction).
+- Beem-Rastelli-van Rees 2014, arXiv:1404.1079 Section 3
+  (six-dimensional W-algebra sector).
 - Gaiotto 2009, arXiv:0904.2715 (class-S construction).
 - Shapere-Tachikawa 2008, arXiv:0804.1957 (central charges of 4d N=2 SCFTs).
 - Chacaltana-Distler 2010, arXiv:1008.5203 (trinion anomaly table).
@@ -40,7 +41,7 @@ CROSS-VOLUME ANCHOR
 ===================
 Vol I: `chapters/connections/thqg_open_closed_realization.tex`
        Proposition ``prop:thqg-occ-CD-ANm1-24''
-       and subsequent Wave 16 remark ``rem:walgdeep-DNA-W16-kN''
+       and subsequent remark ``rem:walgdeep-DNA-W16-kN''
        in `chapters/examples/w_algebras_deep.tex'.
 Vol II: `chapters/examples/w-algebras.tex' Wave 15 DNA section.
 Vol III: K3 chiral bialgebra platonic chapter; Borcherds-lift engines.

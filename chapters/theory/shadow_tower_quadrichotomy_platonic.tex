@@ -3,13 +3,11 @@
 % Chapter: The Shadow Tower -- Quadrichotomy
 %
 % Master narrative anchored by the Quadrichotomy Theorem and the
-% Riccati master equation H^2 = t^4 Q_c. Consolidates the 15+
-% scattered shadow_tower_*.tex files into one cathedral with a
-% single load-bearing display, partition theorem, and five
-% corollaries. Frontier inscriptions of the Borel-geometric layer
-% (iter 30-77) cited as subordinated lemmata.
+% Riccati metric equation H^2 = t^4 Q_c. The Riccati equation governs
+% the weighted metric coefficients; the manuscript shadow coefficients
+% are kept unhatted.
 %
-% Subordinated chapters (NOT modified, only oriented around):
+% Related chapters:
 % shadow_tower_higher_coefficients.tex (S_6, S_7, S_8 closed)
 % shadow_tower_sub_subleading_platonic.tex (Gamma_r layer)
 % shadow_tower_other_class_M_platonic.tex (W_3, W_N, W_inf, BP)
@@ -24,13 +22,8 @@
 % all_tier_generating_function_platonic.tex (Tier-K closed form)
 % virasoro_motivic_purity_all_r_platonic.tex (rationality of S_r)
 %
-% Standards followed: ClaimStatus tags, label discipline,
-% kappa qualified per family, `\providecommand`
-% for portability, direct prose,
-% shadow L-function poles respected, Borel-summability
-% qualifier (convergent series uses Pade not Borel), on the
-% S_4 large-c asymptotic and kappa-subscript discipline
-% (each formula carries a landscape census citation comment).
+% Kappa is qualified by family. Formulas are checked against the
+% landscape census and the higher-coefficient chapter.
 %
 % Author: Raeez Lorgat.
 % =====================================================================
@@ -78,25 +71,28 @@
 \ChapterIntro{The shadow obstruction tower
 $\{S_r(\cA)\}_{r\ge 2}$ of a chirally Koszul vertex algebra $\cA$,
 restricted to a primary line $L$ with non-vanishing curvature
-$\kappa = S_2(\cA|_L)$, is governed by a single algebraic identity:
-the Riccati equation $H(t)^2 = t^4 Q_c(t)$, with
+$\kappa = S_2(\cA|_L)$, carries a weighted Riccati metric governed
+by a single algebraic identity:
+$H_{\rm wt}(t)^2 = t^4 Q_c(t)$, with
 $Q_c(t) = (2\kappa + 3\alpha\,t)^2 + 2(8\kappa S_4)\,t^2$. The
 right-hand side is determined by three numbers $(\kappa, \alpha, S_4)$
 read off from the OPE at the level of the 2-, 3-, and 4-point
-function. The four classes G/L/C/M of the standard landscape are the
-four factorisation types of $Q_c$, in codimensions $2, 1, 1, 0$ of
-the parameter space $\mathbb A^3 = \{(\kappa,\alpha,S_4)\}$. Class M
-acquires a hyperelliptic spectral Riemann surface
+function. The classes G, L, and M are the three line-wise
+factorisation types of $Q_c$ on the parameter space
+$\mathbb A^3 = \{(\kappa,\alpha,S_4)\}$; class C is the separate
+quartic-contact witness carried by the standard
+$\beta\gamma_\lambda/bc_\lambda$ conformal-weight family. Class M
+acquires the two-sheeted spectral curve
 $\Sigma_c = \{y^2 = Q_c\}$ whose periods are the flat sections of the
 shadow connection $\nabla^{\rm sh}$. Five corollaries follow from the
-master equation: $\Theta_\cA$ is a Maurer--Cartan element; $\Sigma_c$
-governs the genus tower via Picard--Fuchs; the asymptotic series is
-Gevrey-$1$ and admits a directional resummation by Pad\'e or Borel
-where applicable; the shadow--Feynman dictionary
+metric equation: $\Theta_\cA$ is a Maurer--Cartan element; $\Sigma_c$
+governs the genus tower via Picard--Fuchs; the algebraic coefficient
+series is continued by the two-sheeted function $\sqrt{Q_c}$ and by
+Pad\'e approximation from finite data; the shadow--Feynman dictionary
 $F_L = \mathrm{Sh}_{L+1}$ is a Getzler--Kapranov boundary identity;
 the $\cW_N$ characters at admissible levels are conjecturally mock
-modular by Borcherds lift on $\Sigma_c$. The Borel-geometric layer
-(iter~$30$--$77$) provides the explicit constants:
+modular by Borcherds lift on $\Sigma_c$. The large-coefficient layer
+provides the explicit constants:
 $C_\cA = 6$ universal on the non-logarithmic class M $T$-line,
 $C_{\cW_3}^{W{\rm-line}} = 12 = 2\cdot 6$ on the second lane,
 $\beta_N = 12(H_N - 1)$ per-spin lane in $\cW_N$.}
@@ -122,6 +118,32 @@ of MC-coefficients defined by
 where $\Theta_{\cA}$ is the bar-intrinsic Maurer--Cartan element
 (Theorem~\ref{thm:mc2-bar-intrinsic} of the bar-complex part). When
 the line $L$ is fixed by context we write $S_r(\cA)$.
+\end{definition}
+
+\begin{definition}[Weighted Riccati metric coefficients]
+\label{def:weighted-riccati-metric}
+Associated with a primary line $L$ is the weighted Riccati metric
+sequence $\{\widehat S^{\rm wt}_r(\cA,L)\}_{r\ge2}$, normalised by
+\[
+\widehat S^{\rm wt}_2=S_2=\kappa,\qquad
+\widehat S^{\rm wt}_3=S_3=\alpha,\qquad
+\widehat S^{\rm wt}_4=S_4,
+\]
+and transported by the one-dimensional Arnold-residue recursion below.
+Its generating function is
+\[
+H_{\rm wt}(t) \;:=\; \sum_{r\ge2} r\,\widehat S^{\rm wt}_r(\cA,L)\,t^r.
+\]
+The unhatted $S_r$ are the manuscript shadow coefficients. For
+Virasoro the two normalisations agree through $r=5$ and split at
+$r=6$:
+\[
+\widehat S^{\rm wt}_6(\Vir_c)
+=\frac{80(45c+193)}{3c^3(5c+22)^2},
+\qquad
+S_6(\Vir_c)
+=\frac{4(240c+1031)}{c^3(5c+22)^2}.
+\]
 \end{definition}
 
 \begin{remark}[Curvature]
@@ -156,17 +178,19 @@ At $N=2$ this gives $c\cdot \tfrac{1}{2} = c/2 = \kappa(\Vir_c)$
 \label{lem:mc-recursion-line}
 \ClaimStatusProvedElsewhere
 On a primary line $L$ with $\kappa = \kappa(\cA, L) \neq 0$, the
-shadow coefficients $S_r := S_r(\cA, L)$ satisfy
+weighted Riccati metric coefficients
+$\widehat S^{\rm wt}_r := \widehat S^{\rm wt}_r(\cA, L)$ satisfy
 \[
-S_r \;=\; -\,\frac{1}{2 r \kappa}
+\widehat S^{\rm wt}_r \;=\; -\,\frac{1}{2 r \kappa}
 \sum_{\substack{j+k = r+2 \\ 3 \le j \le k < r}} c_{jk}\,j k \,
-S_j\,S_k,
+\widehat S^{\rm wt}_j\,\widehat S^{\rm wt}_k,
 \qquad r \ge 5,
 \]
 where $c_{jk} \in \mathbb Q$ are the universal genus-zero
 combinatorial coefficients of the Arnold-form residue at total
 collision (Lemma~\ref{lem:mc-recursion-line} of the bar-complex part). The
-inputs are $S_2 = \kappa$, $S_3 = \alpha$, $S_4$, with $\alpha$ the
+inputs are $\widehat S^{\rm wt}_2 = \kappa$,
+$\widehat S^{\rm wt}_3 = \alpha$, $\widehat S^{\rm wt}_4=S_4$, with $\alpha$ the
 universal cubic shadow datum and $S_4$ the quartic.
 \end{lemma}
 
@@ -175,7 +199,9 @@ The first five Virasoro entries fix the convention.
 \begin{proposition}[Virasoro shadow coefficients through $r = 5$]
 \label{prop:vir-shadow-r5}
 \ClaimStatusProvedElsewhere
-For the universal Virasoro vertex algebra at central charge $c$,
+For the universal Virasoro vertex algebra at central charge $c$, the
+manuscript and weighted Riccati metric normalisations agree through
+$r=5$:
 \[
 S_2(\Vir_c) = \frac{c}{2},
 \qquad
@@ -189,10 +215,15 @@ The Zamolodchikov denominator $5c+22$ is the norm of the weight-$4$
 quasi-primary
 $\Lambda := {:}TT{:} - \tfrac{3}{10}\partial^{2}T$ via
 $\langle \Lambda \mid \Lambda \rangle = c\,(5c+22)/10$. Higher
-coefficients $S_6, S_7, S_8$ are computed in
-Chapter~\ref{ch:shadow-tower-higher-coefficients}; the leading
-asymptotic $A_r := \lim_{c\to\infty} c^{r-2}\,S_r(\Vir_c)$ obeys
-$A_r = 8\,(-6)^{r-4}/r$.
+unhatted coefficients $S_6, S_7, S_8$ and weighted coefficients
+$\widehat S^{\rm wt}_6,\widehat S^{\rm wt}_7,\widehat S^{\rm wt}_8$
+are separated in Chapter~\ref{ch:shadow-tower-higher-coefficients}.
+For the weighted metric tower the leading asymptotic
+\[
+A^{\rm wt}_r := \lim_{c\to\infty} c^{r-2}\,
+\widehat S^{\rm wt}_r(\Vir_c)
+\]
+obeys $A^{\rm wt}_r = 8\,(-6)^{r-4}/r$.
 \end{proposition}
 
 \begin{remark}[$S_4$ large-$c$ asymptotic]
@@ -247,10 +278,10 @@ presentations.
 Let $\cA$ be a chirally Koszul vertex algebra of finite type, $L$ a
 primary line with $\kappa = \kappa(\cA, L) \neq 0$, and define
 \[
-H(t) \;:=\; \sum_{r\ge 2} r\,S_r(\cA, L)\,t^{r}
+H_{\rm wt}(t) \;:=\; \sum_{r\ge 2} r\,\widehat S^{\rm wt}_r(\cA, L)\,t^{r}
 \;\in\; \mathbb Q(\kappa, \alpha, S_4)\,[\![t]\!]
 \]
-the weighted shadow generating function. Define the Riccati
+the weighted Riccati metric generating function. Define the Riccati
 polynomial
 \[
 Q_c(t) \;:=\; \bigl(a_0 + a_1\,t\bigr)^{2}
@@ -261,14 +292,14 @@ Q_c(t) \;:=\; \bigl(a_0 + a_1\,t\bigr)^{2}
 Then on $L$, the identity
 \begin{equation}
 \label{eq:riccati-master}
-H(t)^{2} \;=\; t^{4}\,Q_c(t)
+H_{\rm wt}(t)^{2} \;=\; t^{4}\,Q_c(t)
 \end{equation}
 holds in $\mathbb Q(\kappa, \alpha, S_4)\,[\![t]\!]$.
 \end{theorem}
 
 \begin{proof}
-Substitute $a_n := (n+2)\,S_{n+2}$ so that
-$F(t) := H(t)/t^{2} = \sum_{n\ge 0} a_n\,t^{n}$. The MC recursion of
+Substitute $a_n := (n+2)\,\widehat S^{\rm wt}_{n+2}$ so that
+$F(t) := H_{\rm wt}(t)/t^{2} = \sum_{n\ge 0} a_n\,t^{n}$. The MC recursion of
 Lemma~\ref{lem:mc-recursion-line} becomes the convolution identity
 \[
 \sum_{i+j = m}\,a_i\,a_j \;=\; 0,
@@ -287,7 +318,7 @@ together with the explicit form of $Q_c$, since
  = 16\,\kappa S_4 + 9\,\alpha^{2}
  = [t^{2}]\,Q_c.
 \]
-Hence $F^{2} = Q_c$, i.e.\ $H^{2} = t^{4}\,Q_c$.
+Hence $F^{2} = Q_c$, i.e.\ $H_{\rm wt}^{2} = t^{4}\,Q_c$.
 \end{proof}
 
 \begin{proposition}[Three equivalent presentations]
@@ -297,7 +328,7 @@ The following three statements on the primary line $L$ are
 equivalent.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item\label{ricc:i} \emph{(Algebraic relation.)} The Riccati identity
-$H(t)^{2} = t^{4}\,Q_c(t)$.
+$H_{\rm wt}(t)^{2} = t^{4}\,Q_c(t)$.
 \item\label{ricc:ii} \emph{(Maurer--Cartan equation.)} The
 projection $\Theta_\cA|_L$ satisfies
 \[
@@ -330,20 +361,22 @@ $2 \Phi\,\Phi' = Q_c'/Q_c(0)$, i.e.\
 $\Phi' = (Q_c'/(2\,Q_c))\,\Phi$, equivalently
 $\nabla^{\rm sh}\,\Phi = 0$. Conversely, the unique normalised flat
 section of $\nabla^{\rm sh}$ is $\sqrt{Q_c/Q_c(0)}$, and
-$F = (a_0)\,\Phi = 2\kappa\,\Phi$ realises $H = t^{2}\,F$ as the
-weighted shadow generating function.
+$F = (a_0)\,\Phi = 2\kappa\,\Phi$ realises
+$H_{\rm wt} = t^{2}\,F$ as the weighted Riccati metric generating
+function.
 \end{proof}
 
 \begin{remark}[Three names for one object]
 \label{rem:three-names-one-object}
 The Maurer--Cartan element $\Theta_\cA|_L$, the flat section
 $\Phi(t)$ of $\nabla^{\rm sh}$, and the algebraic plane curve cut out
-by $H^{2} = t^{4}\,Q_c$ are three presentations of the same datum.
+by $H_{\rm wt}^{2} = t^{4}\,Q_c$ are three presentations of the same
+weighted line metric.
 The recursion of Lemma~\ref{lem:mc-recursion-line} is the algorithm
 that computes coefficient-by-coefficient; the closed form
 $\sqrt{Q_c}$ is the value of the section; the algebraic relation is
 the implicit equation cut out in
-$\mathbb A^{2} = \{(t, H)\}$. The genus-$0$ analytic content sits
+$\mathbb A^{2} = \{(t, H_{\rm wt})\}$. The genus-$0$ analytic content sits
 entirely in the polynomial $Q_c$, which depends on three numbers.
 \end{remark}
 
@@ -378,20 +411,24 @@ Q^{(\mathbf q)}(t) := (a_0^{(\mathbf q)} + a_1^{(\mathbf q)} t)^{2}
  + 2\Delta^{(\mathbf q)}\,t^{2},
 \]
 and let
-$r_{\max}(L^{(\mathbf q)}) := \sup\{r : S_r^{(\mathbf q)} \neq 0\}$.
+\[
+r^{\rm wt}_{\max}(L^{(\mathbf q)})
+:= \sup\{r : \widehat S^{\rm wt,(\mathbf q)}_r \neq 0\}.
+\]
 Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item\label{quad:i} \emph{(Riccati algebraicity, line-wise.)}
-$\bigl(H^{(\mathbf q)}(t)\bigr)^{2} = t^{4}\,Q^{(\mathbf q)}(t)$ on
-every charged primary line.
+$\bigl(H^{\rm wt,(\mathbf q)}(t)\bigr)^{2}
+= t^{4}\,Q^{(\mathbf q)}(t)$ on every charged primary line.
 \item\label{quad:ii} \emph{(Line-wise classification by
 factorisation.)} On every primary line with
 $\kappa^{(\mathbf q)} \neq 0$, the depth
-$r_{\max}(L^{(\mathbf q)})$ takes values in $\{2, 3, \infty\}$ and
+$r^{\rm wt}_{\max}(L^{(\mathbf q)})$ takes values in
+$\{2, 3, \infty\}$ and
 is determined by the algebraic
 factorisation type of $Q^{(\mathbf q)}$:
 \[
-r_{\max}(L^{(\mathbf q)}) \;=\;
+r^{\rm wt}_{\max}(L^{(\mathbf q)}) \;=\;
 \begin{cases}
 2,
  & \text{(class G)}\quad
@@ -425,8 +462,8 @@ weight-changing line has zero shadow tower, while the T-line is
 class~M; neither one-dimensional slice is the class-C witness by
 itself.
 \item\label{quad:iv} \emph{(Aggregate class.)} Define
-$\mathrm{class}(\cA) := \max_{\mathbf q} r_{\max}(L^{(\mathbf q)})$ in
-the order $G < L < M$, and declare
+$\mathrm{class}(\cA) := \max_{\mathbf q} r^{\rm wt}_{\max}
+(L^{(\mathbf q)})$ in the order $G < L < M$, and declare
 $\mathrm{class}(\beta\gamma_\lambda) =
 \mathrm{class}(bc_\lambda) := C$. Every standard-landscape chirally
 Koszul vertex algebra of finite type belongs to exactly one of the
@@ -458,7 +495,9 @@ $\Delta^{(\mathbf q)} = 0$ (given $\kappa^{(\mathbf q)} \neq 0$). The
 three cases of the factorisation are then the exhaustive case split
 on $(\alpha^{(\mathbf q)}, \Delta^{(\mathbf q)})$ on a
 $\kappa \neq 0$ line. Proposition~\ref{prop:depth-gap-trichotomy}
-rules out the value $r_{\max}=4$ on such a line.
+rules out the manuscript shadow value $r_{\max}=4$ on such a line;
+the weighted Riccati metric has no fourth finite depth on a
+$\kappa\ne0$ line.
 
 Part \ref{quad:iii} is the explicit class-C witness of
 Proposition~\ref{prop:depth-gap-trichotomy}(ii): the standard
@@ -471,26 +510,24 @@ realize class~C.
 Part \ref{quad:iv} is the aggregate classification over the standard
 families.
 
-Part \ref{quad:v}: the four classes are characterised by the
-algebraic structure of $Q^{(\mathbf q)}$, which is determined by the
-triple $(\kappa^{(\mathbf q)}, \alpha^{(\mathbf q)},
-S_4^{(\mathbf q)})$. Each $S_r^{(\mathbf q)}$ is a homotopy invariant
-of $\mathfrak g^{\rm mod, (0)}_{\cA}$ on the line $L^{(\mathbf q)}$,
-hence of the quasi-isomorphism class of $B(\cA)$. The aggregate
-class is therefore an invariant of $D^{b}_{\rm ch}(\cA)$. For the
-class-C family, the displayed standard-family coefficients are
-homotopy-invariant numerical data.
+Part \ref{quad:v}: the line-wise G/L/M class is characterised by the
+algebraic structure of $Q^{(\mathbf q)}$, hence by the three
+homotopy-invariant genus-zero data
+$(\kappa^{(\mathbf q)},\alpha^{(\mathbf q)},S_4^{(\mathbf q)})$ of
+$\mathfrak g^{\rm mod,(0)}_{\cA}|_{L^{(\mathbf q)}}$. The aggregate
+class is therefore invariant under bar quasi-isomorphism. For the
+class-C family, the displayed standard-family coefficients are the
+homotopy-invariant quartic-contact data.
 \end{proof}
 
-\begin{proposition}[Moduli stratification, codimension count]
+\begin{proposition}[Riccati signature stratification]
 \label{prop:moduli-stratification-codim}
 \ClaimStatusConditional
-The map $\cA \mapsto (\kappa(\cA), \alpha(\cA), S_4(\cA))$ on a
-$\kappa \neq 0$ primary line is a finite morphism from the line-wise
-moduli of chirally Koszul vertex algebras of finite type modulo
-bar-quasi-isomorphism to the affine $3$-space
-$\mathbb A^{3}$. The shadow class is determined by the algebraic
-stratification of $\mathbb A^{3}$:
+On the $\kappa\neq0$ line-wise chart, the triple
+$(\kappa(\cA),\alpha(\cA),S_4(\cA))$ is the Riccati signature of the
+weighted metric. The G/L/M line-wise class is the pullback of the
+following algebraic stratification of
+$\mathbb A^{3}=\{(\kappa,\alpha,S_4)\}$:
 \[
 \begin{array}{l|l|l}
 \text{class} & \text{locus in } \mathbb A^{3} & \text{generic codim} \\
@@ -509,12 +546,12 @@ not by a single $\kappa \neq 0$ primary line.
 \end{proposition}
 
 \begin{proof}
-Each $S_r$ is a polynomial in
-$(\kappa, \alpha, S_4) \in \mathbb A^{3}$ by
-Theorem~\ref{thm:riccati-master}, so the line-wise shadow tower is a
-finite algebraic datum on $\mathbb A^{3}$. The loci G/L/M are the
-discriminant stratification of the quadratic $Q$. The class-C family
-is the separate contact witness isolated by
+Theorem~\ref{thm:riccati-master} identifies the weighted metric
+generating function with $t^2\sqrt{Q_c(t)}$; hence every
+$\widehat S^{\rm wt}_r$ is a rational function of
+$(\kappa,\alpha,S_4)$ on the open chart $\kappa\ne0$. The loci G/L/M
+are the discriminant stratification of the quadratic $Q$. The
+class-C family is the separate contact witness isolated by
 Proposition~\ref{prop:depth-gap-trichotomy}(ii).
 \end{proof}
 
@@ -650,7 +687,7 @@ $y \mapsto -y$, hence $\Phi_c \mapsto -\Phi_c$, hence the monodromy
 is $-1 = \sigma$.
 \end{proof}
 
-\begin{corollary}[Branch points and instanton actions]
+\begin{corollary}[Branch points and inverse-root actions]
 \label{cor:branch-points-instantons}
 \ClaimStatusProvedHere
 The branch points of $\Sigma_c$ in the $t$-plane are
@@ -659,23 +696,22 @@ t_\pm(c) \;=\;
 \frac{-6\,\kappa\,\alpha \;\pm\; \sqrt{-8\kappa^{2}\,\Delta_c}}
  {9\,\alpha^{2} + 2\,\Delta_c},
 \]
-with instanton actions
-$S_\pm(c) = 1/t_\pm(c)$ and alien-derivative amplitudes
+and their inverse-root coordinates
+$\omega_\pm(c):=1/t_\pm(c)$ are the two roots of
 \[
-A_\pm(c) \;=\; \pm\,\sqrt{\,\frac{Q_c'(t_\pm)}{2}\,}\,\cdot\,t_\pm^{2}.
+(2\kappa)^2\omega^2+12\kappa\alpha\,\omega+
+(9\alpha^2+2\Delta_c)=0.
 \]
 \end{corollary}
 
 \begin{proof}
 The branch points are the roots of $Q_c(t) = (a_0 + a_1 t)^{2} +
-2\Delta\,t^{2}$ in $t$, computed by the quadratic formula. The
-amplitudes $A_\pm$ are the residues of the Laurent expansion of the
-Borel transform of $\Phi_c$ at the leading-order pole in
-$\sqrt{z - 1/t_\pm}$ (standard alien calculus,
-Theorem~\ref{thm:borel-summability-classM}).
+2\Delta\,t^{2}$ in $t$, computed by the quadratic formula. Substituting
+$t=\omega^{-1}$ and multiplying by $\omega^2$ gives the reciprocal
+quadratic.
 \end{proof}
 
-\begin{theorem}[Stokes locus and Borel-radius closed form for $\Vir_c$]
+\begin{theorem}[Virasoro branch-root radius and caesura]
 \label{thm:stokes-line-c-S}
 \ClaimStatusProvedHere
 For $\Vir_c$ with $\kappa = c/2$, $\alpha = 2$, $\Delta_c = 40/(5c+22)$,
@@ -688,24 +724,32 @@ Its discriminant in $t$ is
 \[
 \disc_t Q_c \;=\; -\,\frac{320\,c^{2}}{5c+22},
 \]
-vanishing only at $c = 0$. The Stokes caesura, where the coefficient
-of $t^{2}$ in $Q_c$ vanishes, is the zero of $180 c + 872$,
+vanishing only at $c = 0$. The quadratic-coefficient caesura, where
+the coefficient of $t^{2}$ in $Q_c$ vanishes, is the zero of
+$180 c + 872$,
 \[
 c_S \;=\; -\,\frac{218}{45},
 \]
-strictly below the convergence boundary $c < -22/5 = -198/45$. The
-Borel radius of the Virasoro shadow has exact closed form
+strictly below the Lee--Yang pole $c = -22/5 = -198/45$. The product
+of the two branch roots has exact closed form
 \begin{equation}
 \label{eq:borel-radius-closed}
-\lvert\omega\rvert^{2}(c)
+t_+(c)t_-(c)
 \;=\; \frac{c^{2}\,(5c+22)}{4\,(45 c + 218)},
 \qquad
-\lvert\omega\rvert(c)
+\lvert t_\pm\rvert(c)
 \;=\; \frac{c}{6}\;-\;\frac{1}{27}\;+\;O\!\bigl(c^{-1}\bigr)\ \ (c\to\infty),
 \end{equation}
-with simple pole at $c_S = -218/45$ (Stokes line) and zero at $c = 0$
-(trivial module). No Virasoro central charge in $[0, 26]$ crosses the
-Stokes line.
+when the roots are complex conjugates. The reciprocal coordinates
+$\omega_\pm=1/t_\pm$ satisfy
+\[
+\omega_+(c)\omega_-(c)
+\;=\;\frac{4(45c+218)}{c^2(5c+22)}.
+\]
+The caesura $c_S=-218/45$ is not a double-root locus of $Q_c$: it is
+the point where one branch root moves to infinity in the affine
+$t$-chart. No Virasoro central charge in $[0,26]$ crosses this
+caesura.
 \end{theorem}
 
 \begin{proof}
@@ -716,29 +760,34 @@ $\disc_t\!\bigl[(a_0 + a_1 t)^{2} + 2 \Delta_c\,t^{2}\bigr]
  = -8\,a_0^{2}\,\Delta_c$
 with $a_0 = 2\kappa = c$ evaluates to $-320\,c^{2}/(5c+22)$, so
 $\disc_t Q_c$ vanishes as a rational function of $c$ only at $c = 0$.
-For the Borel radius: on the spectral curve $H(t)^{2} = t^{4} Q_c(t)$,
-the nearest Borel-plane singularity is $\omega = 1/t_-$, the smaller
-root of $Q_c$. The quadratic formula gives
-$\lvert\omega\rvert^{2} = (\text{const term})/(\text{leading coeff})
+For the branch-root product, the quadratic formula gives
+$t_+t_- = (\text{constant term})/(\text{leading coefficient})
  = c^{2}\big/\bigl[4\,(45 c + 218)/(5c+22)\bigr]
  = c^{2}(5c+22)/[4\,(45 c + 218)]$.
 Large-$c$ expansion by $(5c+22)/(45c+218)
  = 1/9 \cdot (1 + 22/(5c))/(1 + 218/(45c))
  = 1/9 - 8/(81 c) + O(c^{-2})$, whence
-$\lvert\omega\rvert^{2}(c) = c^{2}/36 - c/81 + 218/3645 + O(c^{-1})$
-and $\lvert\omega\rvert(c) = c/6 - 1/27 + O(c^{-1})$.
+$t_+t_-(c) = c^{2}/36 - c/81 + 218/3645 + O(c^{-1})$
+and $\lvert t_\pm\rvert(c) = c/6 - 1/27 + O(c^{-1})$ on the
+conjugate-root chamber. Taking reciprocals gives the displayed
+$\omega_+\omega_-$.
 \end{proof}
 
-\begin{remark}[Cyclotomic singularity lattice]
+\begin{remark}[Root field and the large-$c$ base]
 \label{rem:cyclotomic-singularities}
-The angular location of the Borel-plane singularities
-$\omega = 1/t_\pm(c)$ of the Virasoro shadow lies on the
-$\mathbb Q(\zeta_6)$ lattice, reflecting the dihedral symmetry of the
-Hessian factorisation of $Q_c$ and matching the universal exponential
-base $C_\cA = 6$ of \S\ref{sec:borel-geometric}. The modulus
-$\lvert\omega\rvert(c)$ is governed by~\eqref{eq:borel-radius-closed};
-the angular quantisation and the radial closed form are the two
-factors of the polar decomposition of the leading Borel singularity.
+The exact inverse-root field of the Virasoro metric is
+\[
+\mathbb Q\!\left(c,\sqrt{\frac{-320}{5c+22}}\right),
+\qquad
+\omega_\pm(c)=-\frac{6}{c}\pm
+\frac{1}{2c}\sqrt{\frac{-320}{5c+22}}.
+\]
+It is not generically the cyclotomic field $\mathbb Q(\zeta_6)$.
+The universal exponential base $C_\cA=6$ is instead the large-$c$
+rescaled limit $c\,\omega_\pm(c)\to -6$, equivalently the double
+root $t=-c/6$ of the leading polynomial $(c+6t)^2$.
+Cyclotomic angular quantisation is a specialization statement, not a
+generic Virasoro root-field statement.
 \end{remark}
 
 \begin{theorem}[Shadow coefficient $S_6(\Vir_c)$ closed form]
@@ -753,14 +802,15 @@ S_6(\Vir_c) \;=\; \frac{4\,(240\, c + 1031)}{c^{3}\,(5c+22)^{2}}.
 \end{theorem}
 
 \begin{proof}
-The shadow polynomial $H(t) = \sum_{r\ge 2} S_r\,t^{r}$ satisfies the
+The unweighted manuscript shadow polynomial
+$G(t) = \sum_{r\ge 2} S_r\,t^{r}$ satisfies the
 order-$t^{8}$ vanishing constraint
 \[
-[t^{8}] H(t)^{2}
+[t^{8}] G(t)^{2}
 \;=\; 2\,S_2\,S_6 \;+\; 2\,S_3\,S_5 \;+\; S_4^{2} \;=\; 0,
 \]
-the leading null-state obstruction beyond the degree-$2$ Riccati
-core. Substituting the census values,
+the first null-state constraint beyond the entries common to the
+weighted Riccati metric. Substituting the census values,
 $2\,S_3\,S_5 = -192/[c^{2}(5c+22)]$ and
 $S_4^{2} = 100/[c^{2}(5c+22)^{2}]$, and solving for $S_6$,
 \[
@@ -770,27 +820,31 @@ c\,S_6
 \;=\; \frac{192\,(5c+22) - 100}{c^{2}\,(5c+22)^{2}}
 \;=\; \frac{4\,(240\,c + 1031)}{c^{2}(5c+22)^{2}},
 \]
-whence \eqref{eq:S6-closed}. Higher $S_r$ with $r\ge 7$ follow by the
-Riccati-on-$U$ recursion of Theorem~\ref{thm:riccati-U}.
+whence \eqref{eq:S6-closed}. The weighted Riccati metric coefficient
+at the same weight is
+$\widehat S^{\rm wt}_6(\Vir_c)=80(45c+193)/[3c^3(5c+22)^2]$ by
+Definition~\ref{def:weighted-riccati-metric}; the two coefficients
+are distinct.
 \end{proof}
 
 \begin{theorem}[Riccati-on-$U$ master equation]
 \label{thm:riccati-U}
 \ClaimStatusProvedHere
-Set $U(t) := (\log H)'(t) - 2/t$, where $H$ is the Virasoro shadow
-polynomial. Then
+Set $U(t) := (\log H_{\rm wt})'(t) - 2/t$, where $H_{\rm wt}$ is the
+Virasoro weighted Riccati metric generator. Then
 \begin{equation}
 \label{eq:riccati-U}
 U'(t) \;+\; 2\,U(t)^{2} \;=\; \frac{Q_c''(t)}{2\,Q_c(t)}.
 \end{equation}
-The three presentations of the shadow tower -- the quadratic-algebraic
-identity $H^{2} = t^{4} Q_c$, the linear Picard--Fuchs equation
+The three presentations of the weighted metric -- the quadratic-algebraic
+identity $H_{\rm wt}^{2} = t^{4} Q_c$, the linear Picard--Fuchs equation
 $\nabla^{\rm sh, c} \Phi_c = 0$, and
 equation~\eqref{eq:riccati-U} -- are equivalent.
 \end{theorem}
 
 \begin{proof}
-From $H = t^{2}\sqrt{Q_c}$, $(\log H)' = 2/t + Q_c'/(2 Q_c)$, so
+From $H_{\rm wt} = t^{2}\sqrt{Q_c}$,
+$(\log H_{\rm wt})' = 2/t + Q_c'/(2 Q_c)$, so
 $U = Q_c'/(2 Q_c)$. Direct differentiation gives
 $U' = [Q_c'' Q_c - (Q_c')^{2}]/(2 Q_c^{2})$ and
 $2 U^{2} = (Q_c')^{2}/(2 Q_c^{2})$, whence $U' + 2 U^{2}
@@ -800,10 +854,10 @@ $2 U^{2} = (Q_c')^{2}/(2 Q_c^{2})$, whence $U' + 2 U^{2}
 Proposition~\ref{prop:riccati-three-presentations}.
 \end{proof}
 
-\section{Five corollaries of the master equation}
+\section{Five corollaries of the metric equation}
 \label{sec:five-corollaries}
 
-Five structural corollaries follow from the Riccati identity, each
+Five structural corollaries follow from the Riccati metric identity, each
 making one analytic or algebraic operation on $Q_c$ explicit.
 
 \subsection{C1 -- $\Theta_\cA$ satisfies the Riccati identity}
@@ -815,8 +869,8 @@ making one analytic or algebraic operation on $Q_c$ explicit.
 The bar-intrinsic Maurer--Cartan element $\Theta_\cA$ projected to a
 charged primary line $L^{(\mathbf q)}$ with
 $\kappa^{(\mathbf q)} \neq 0$ encodes the Riccati identity
-$H^{(\mathbf q)}(t)^{2} = t^{4}\,Q^{(\mathbf q)}(t)$ in the form of
-the MC equation
+$\bigl(H^{\rm wt,(\mathbf q)}(t)\bigr)^{2}
+= t^{4}\,Q^{(\mathbf q)}(t)$ in the form of the MC equation
 \[
 d_0\,\Theta_\cA|_{L^{(\mathbf q)}} \;+\; \tfrac{1}{2}\,
 \bigl[\Theta_\cA|_{L^{(\mathbf q)}},\,\Theta_\cA|_{L^{(\mathbf q)}}\bigr]
@@ -867,90 +921,87 @@ the modular operad of stable graphs (Getzler--Kapranov), with the
 genus-$g$ component governed by $\kappa$ on every line on which
 $\nabla^{\rm sh, c}$ has flat sections. The cross-channel correction
 $\delta F_g^{\rm cross}$ vanishes uniform-weight by
-Theorem~D of the bar-complex part. The conditional clause is
-AP-UNIFORM-WEIGHT-TAG-required: the $g \ge 2$ multi-line correction
-is non-zero in general (witness $\cW_3$, which is single-line at $T$
-but acquires a cross-channel correction at $W$ at $g = 2$).
+Theorem~D of the bar-complex part. The $g \ge 2$ multi-line correction
+is non-zero in general: the $\cW_3$ stress-tensor line is
+uniform-weight, while the $W$-line contributes an additional
+cross-channel term at $g=2$.
 \end{proof}
 
-\begin{remark}[Uniform-weight tag]
+\begin{remark}[Uniform-weight and all-weight scopes]
 \label{rem:c2-uniform-weight-tag}
-The identity $F_g(\cA, L) = \kappa\,\lambda_g$ is
-(UNIFORM-WEIGHT). The multi-line generalisation is (ALL-WEIGHT, with
-cross-channel correction $\delta F_g^{\rm cross}$). The tag is
-mandatory in every appearance of the formula by
-AP-UNIFORM-WEIGHT-TAG.
+The identity $F_g(\cA,L)=\kappa\lambda_g$ is the uniform-weight
+formula on one fixed conformal-weight line. The all-weight formula is
+$F_g(\cA,L)=\kappa\lambda_g+\delta F_g^{\rm cross}(\cA)$, with
+$\delta F_g^{\rm cross}$ measuring the contribution of distinct
+primary lanes at the same genus.
 \end{remark}
 
-\subsection{C3 -- Asymptotic resummation: Pad\'e direct, Borel where applicable}
+\subsection{C3 -- Algebraic continuation and Borel scope}
 \label{sec:c3-borel-pade}
 
-\begin{theorem}[C3: Borel summability of class M, asymptotic regime]
+\begin{theorem}[C3: Algebraic continuation of the class M metric series]
 \label{thm:borel-summability-classM}
 \ClaimStatusProvedHere
 Let $\cA$ be class M with shadow data $(\kappa, \alpha, S_4)$ on a
-primary line $L$, and let
+primary line $L$, and write
 \[
-\widehat S(z; \cA) \;:=\; \sum_{r\ge 2}
-\frac{S_r(\cA)}{\Gamma(r)}\,z^{r}
+R_L(t) := \frac{H_{\rm wt}(t)}{t^2}=\sqrt{Q_c(t)}.
 \]
-be the Borel transform. Then in the divergent regime
-$|t_\pm| < 1$:
+If $Q_c$ has two simple roots $t_\pm$, then:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item\label{borel:i} The shadow series $\sum_r S_r(\cA)\,t^{r}$ is
-Gevrey of class $1$:
-$S_r \sim C\,\rho^{r}\,r^{-5/2}\cos(r\theta + \phi)$ with $\rho =
-1/|t_\pm|$.
-\item\label{borel:ii} $\widehat S(z; \cA)$ extends to an algebraic
-function on $\mathbb C \setminus \{1/t_\pm\}$, with square-root
-branch points at $z = 1/t_\pm$.
-\item\label{borel:iii} The directional Borel sum
+\item\label{algcont:i} $R_L(t)$ is a two-valued algebraic function on
 \[
-S^{\rm Borel}(g_s; \cA, \theta) \;:=\;
-\int_0^\infty \widehat S(z; \cA)\,e^{-z/g_s}\,dz
+\mathbb P^1_t\setminus\{t_+,t_-\},
 \]
-along any direction $\theta \neq \arg(1/t_\pm)$ provides an analytic
-continuation of the formal series.
-\item\label{borel:iv} The chiral partition function admits the
-trans-series
+with square-root monodromy at the two branch points.
+\item\label{algcont:ii} The Taylor coefficients of $R_L(t)$ at
+$t=0$ have algebraic-singularity asymptotics
 \[
-Z_{\rm chiral}(\cA; g_s) \;=\;
-Z_{\rm pert}(\cA; g_s) \;+\; \sum_{n \ge 1} A_+^{n}\,e^{-n S_+/g_s}
-Z^{(n)}_+(\cA; g_s) \;+\; (\text{c.c.}),
+[t^r]R_L(t)
+\;=\;
+\sum_{\varepsilon\in\{+,-\}}
+C_\varepsilon\,t_\varepsilon^{-r}\,r^{-3/2}
+\bigl(1+O(r^{-1})\bigr)
 \]
-with $S_\pm = 1/t_\pm$ and $A_\pm$ as in
-Corollary~\ref{cor:branch-points-instantons}.
+on chambers where the two branch contributions are separated.
+\item\label{algcont:iii} The metric series is not a Gevrey-$1$
+factorial series. Borel--\'Ecalle summability and alien derivatives
+are additional genus-expansion structures; they do not follow from
+the quadratic identity $H_{\rm wt}^2=t^4Q_c$ alone.
+\item\label{algcont:iv} Finite coefficient data determine the analytic
+continuation by recovering the quadratic $Q_c$; Pad\'e approximation
+is a numerical reconstruction of this algebraic continuation.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Standard Borel--\'Ecalle theory applied to the algebraic singularity
-$\sqrt{Q_c}$ on $\Sigma_c$. The asymptotic in \ref{borel:i} is
-sharp by the analytic structure of $\Phi_c$ at its branch points.
-Division by $\Gamma(r)$ cancels the factorial growth pointwise;
-algebraicity of the Borel transform follows from the inverse Laplace
-transform of an algebraic function of degree $2$ with square-root
-singularities being itself algebraic. Watson--Nevanlinna gives
-\ref{borel:iii}; the trans-series in \ref{borel:iv} follows from the
-standard alien calculus of $\widehat S$ around its branch points.
+Theorem~\ref{thm:riccati-master} gives $R_L(t)^2=Q_c(t)$, so
+\ref{algcont:i} is the standard two-sheeted cover of the $t$-line
+branched at the simple zeroes of $Q_c$. The local expansion near a
+simple branch point has the form
+\[
+R_L(t)=B_\varepsilon
+\widetilde C_\varepsilon(1-t/t_\varepsilon)^{1/2}
+\text{holomorphic},
+\]
+and the transfer theorem for algebraic singularities gives the
+$r^{-3/2}t_\varepsilon^{-r}$ coefficient law. No factorial
+$\Gamma(r)$ growth appears in this extraction. Borel summability is
+therefore not a theorem of the metric coefficient series; it belongs
+only to a separate formal parameter expansion once a factorial
+estimate for that expansion is proved. Since $Q_c$ is quadratic, its
+three coefficients recover the algebraic continuation exactly.
 \end{proof}
 
-\begin{remark}[Convergent regime: Pad\'e, not Borel]
+\begin{remark}[Pad\'e and Borel have different inputs]
 \label{rem:ap77-convergent-pade}
-In the convergent regime $|t_\pm| > 1$ (equivalently
-$\rho(\cA) < 1$, the radius of convergence exceeds unity), the
-shadow series is convergent rather than Gevrey-divergent. Borel summability in the standard sense is then \emph{not} the
-appropriate tool: a convergent series is not Borel-summable in the
-Watson--Nevanlinna sense because Watson's lemma requires Gevrey-$1$
-divergence as a hypothesis. The correct asymptotic resummation in
-the convergent regime is direct Pad\'e approximation, which extracts
-the analytic continuation of the convergent series past its radius
-of convergence without invoking the Borel transform. For Virasoro
-the Borel-vs-Pad\'e crossover is at the critical cubic
-$5c^{3} + 22c^{2} - 180 c - 872 = 0$, with positive real root
-$c^{*} \approx 6.125$. For $c > c^{*}$ the shadow series is
-convergent with $\rho < 1$ (Pad\'e regime); for $c < c^{*}$ the
-series is Gevrey-$1$ divergent (Borel regime).
+The distinction is categorical, not numerical. Pad\'e uses ordinary
+Taylor coefficients of the algebraic function $\sqrt{Q_c}$ and
+reconstructs the continuation across its branch cuts. Borel summation
+requires a factorially divergent formal series in a separate parameter
+and a Watson--Nevanlinna estimate. The inequality $|t_\pm|<1$ only
+says that the Taylor series at $0$ does not converge at $t=1$; it does
+not create Gevrey-$1$ growth.
 \end{remark}
 
 \begin{remark}[$L$-function poles at $s = 1, 2$]
@@ -1016,304 +1067,186 @@ $\chi = 1 - L$.
 \label{rem:dictionary-operadic-identity}
 The shadow--Feynman dictionary is the single boundary identity
 $\partial^{2} = 0$ on $\overline{\cM}_{0, n}$, projected onto the
-$b_1 = L$ component of $\Theta_\cA$. The implementation may compute
-either side by either algorithm, but the structural content is the
+$b_1 = L$ component of $\Theta_\cA$. The structural content is the
 operadic identity itself, which holds in the abstract modular operad
-regardless of $\cA$. The dictionary is content-bearing because the
+regardless of $\cA$; the dictionary is content-bearing because the
 projector is a non-trivial operadic boundary.
+\end{remark}
+
+\begin{remark}[Shadow/Gel'fand--Fuks data and curve-level Hochschild]
+\label{rem:shadow-gf-not-curve-hochschild}
+The shadow tower and Gel'fand--Fuks representatives are not
+curve-level Hochschild classes. Theorem~H in
+Chapter~\ref{ch:hochschild-cohomology} places
+$\ChirHoch^\bullet_{\mathrm{curve}}(\cA)$ in degrees
+$\{0,1,2\}$ for the ambient-curve rows. In particular, the
+class-M Virasoro weight-$5$ quasi-primary
+\[
+W_3^{\mathrm{Zam}}={:}T\partial T{:}-\frac14\,\partial^3T
+\]
+is a shadow/Gel'fand--Fuks or extension representative; its image in
+$\ChirHoch^3_{\mathrm{curve}}(\Vir_c)$ is exact, represented by
+$\partial\beta_2^{\mathrm{Vir}}$. A non-zero degree-$3$ class enters
+only after the CY-$3$ product ambient in the $\mathbf B$ row. Thus
+shadow depth and Gel'fand--Fuks data are independent of the
+curve-level Hochschild concentration statement.
 \end{remark}
 
 \subsection{C5 -- Mock modularity for $\cW_N$ at admissible levels}
 \label{sec:c5-mock-modular}
 
-\begin{conjecture}[C5: Mock modular character of class M]
+\begin{conjecture}[C5: Mock modular character at admissible class M points]
 \label{conj:c5-mock-modular}
 \ClaimStatusConjectured
-Let $\cA$ be a class M chiral algebra of finite type with shadow
-growth rate $\rho(\cA)$ and shadow connection $\nabla^{\rm sh, c}$ on
-the parameter line. Define the bar Euler character
+Let $\cA$ be a class M chiral algebra at an admissible rational
+parameter where the simple quotient has finite character span, and
+let $\nabla^{\rm sh,c}$ be its shadow connection on the parameter
+line. Define the bar Euler character
 \[
 \chi_B(\cA; \tau, c) \;:=\; \str_{B(\cA)}\bigl(q^{L_0 - c/24}\bigr),
 \qquad q = e^{2 \pi i \tau},
 \]
-extended as a formal series in $q$ with coefficients in
-$\mathbb Q(c)$. Then $\chi_B(\cA; \tau, c)$ is a mock modular form of
-weight $0$ on $\mathrm{SL}_2(\mathbb Z)$ with shadow given by the
-Borcherds singular theta lift of the shadow data $Q_c$ on the
-spectral hyperelliptic family $\Sigma_c$.
+as a finite-rank vector-valued $q$-series with the admissible
+multiplier. Then $\chi_B(\cA;\tau,c)$ admits a mock-modular
+completion whose shadow is obtained from the Borcherds singular theta
+lift of the admissible shadow data on $\Sigma_c$.
 \end{conjecture}
 
 \begin{evidence}
-The case $\cA = \Vir_1$ at $c = 1$ is the cleanest: the universal
-Virasoro at $c = 1$ realises as the Heisenberg subVOA on a rank-$1$
-lattice, whose bar Euler character is $1/\eta(\tau)^{24}$ at the
-rank-$24$ lattice level, and the shadow at $c = 1$ matches
-$24\,\eta(\tau)^{3}$ via the partition identity
-$\eta^{24} \cdot \eta^{-24} = 1$. The Vol III case $d = 2$ for K3
-chiral algebras (Borcherds singular theta lift on the K3 lattice)
-gives a structural template via a four-step Zwegers completion. The
-class M generalisation requires the construction of the Borcherds
-lift on the family $\Sigma_c$, which is open.
+The K3 and umbral examples supply finite-rank character systems whose
+mock completions are governed by Zwegers indefinite theta functions
+and Borcherds singular theta lifts. The universal Virasoro family at
+generic real $c$ is not such a finite-rank admissible point; the
+obstruction is recorded in
+Theorem~\ref{thm:c5-zwegers-mu-shadow-explicit}.
 \end{evidence}
 
-\subsection{Explicit Zwegers $\mu$-shadow for Virasoro class $\mathsf M$ at generic $c$}
+\subsection{Virasoro vacuum growth and the generic Zwegers obstruction}
 \label{subsec:c5-zwegers-mu-shadow-explicit}
 \index{Zwegers $\mu$-function!Virasoro shadow identification}%
 \index{Bringmann--Ono 2007!Eichler integral for $\Vir_c$}%
 \index{Cardy density!Hardy--Ramanujan form}%
 \index{shadow $g_c$!explicit form}%
 
-The C5 conjecture asserts mock-modularity of the bar Euler character
-at generic $c$; the reduction to a specific Zwegers
-$\mu(u, v; \tau)$ is the Hardy--Ramanujan tail of the $L_0$-spectrum
-of $\Vir_c$ run through the Bringmann--Ono Eichler integral.
+The universal Virasoro vacuum module has a $c$-independent oscillator
+spectrum. Cardy growth belongs to modular-invariant theories with a
+specified effective central charge; it is not the generic
+Verma-vacuum coefficient law.
 
-\begin{proposition}[Hardy--Ramanujan--Cardy density at generic $c$;
+\begin{proposition}[Universal Virasoro vacuum growth;
 \ClaimStatusProvedHere]
 \label{prop:c5-hardy-ramanujan-cardy}
 \index{proposition!Hardy--Ramanujan density Virasoro}%
 Let $\Vir_c$ denote the universal Virasoro chiral algebra at
-central charge $c \in \R_{> 1}$ and $\rho_c(n)$ the dimension of
-its weight-$n$ component
-$\mathrm{Vir}_c[n] = \{v : L_0 v = n v\}$ for $n$ in the positive
-real spectrum of $L_0 - c/24$. The Hardy--Ramanujan--Cardy asymptotic
-holds:
+central charge $c$ on the nonsingular Verma surface. Its vacuum
+character is
+\[
+\chi_{\Vir_c}^{\rm vac}(\tau)
+\;=\;
+q^{-c/24}\prod_{m\ge2}(1-q^m)^{-1}.
+\]
+If $\rho(n):=\dim \Vir_c[n]$ denotes the coefficient of $q^n$ after
+removing $q^{-c/24}$, then
+\[
+\rho(0)=1,\qquad \rho(n)=p(n)-p(n-1)\quad(n\ge1),
+\]
+where $p(n)$ is the partition function. Hence
 \begin{equation}
 \label{eq:c5-hardy-ramanujan-cardy}
-\rho_c(n)
+\rho(n)
 \;=\;
-\frac{1}{4 n \sqrt 3}\!
-\left(\frac{c}{6}\right)^{\!\!1/4}\!
-n^{-3/4}\,
-\exp\!\bigl(2\pi\sqrt{c\,n/6}\bigr)\,
+\frac{\pi}{12\sqrt2}\,
+n^{-3/2}\,
+\exp\!\bigl(\pi\sqrt{2n/3}\bigr)\,
 \bigl(1 + O(n^{-1/2})\bigr)
 \qquad (n \to \infty).
 \end{equation}
-The $n^{-3/4}$ prefactor is forced by the saddle-point evaluation
-of $\mathrm{tr}\,q^{L_0 - c/24}$ at $\tau = i\beta$, $\beta \to 0^{+}$.
+The central charge affects the prefactor $q^{-c/24}$, not the
+oscillator multiplicities $\rho(n)$.
 \end{proposition}
 
 \begin{proof}
-The modular-$S$ transform of the Virasoro vacuum character at
-$\tau = i\beta$ produces
-$\mathrm{tr}\,q^{L_0 - c/24} = e^{\pi c/(12\beta)}\bigl(1 + O(e^{-2\pi/\beta})\bigr)$
-as $\beta \to 0^{+}$. Inverting the Laplace transform
-$Z(\beta) = \sum_n \rho_c(n)\,e^{-2\pi\beta(n - c/24)}$ by the
-saddle-point method at $n_* = c/(24\beta^2)$ gives
-$\rho_c(n) = (2\pi i)^{-1}\int_{\beta_0 - i\infty}^{\beta_0 + i\infty}
-e^{\pi c/(12\beta) + 2\pi\beta(n - c/24)}\,d\beta$ evaluated at the
-saddle $\beta_* = \sqrt{c/(24 n)}$. Gaussian fluctuations around
-$\beta_*$ contribute $(\pi c/(6\beta_*^3))^{-1/2}$; combined with
-the saddle action $2\pi\sqrt{cn/6}$ this yields
-\eqref{eq:c5-hardy-ramanujan-cardy}, verifying also
-$\rho_c(0) = 1$ consistency by analytic continuation in $n$. The
-three independent verification paths are (i) Cardy 1986 saddle
-\cite{Cardy1986a}; (ii) Rademacher exact formula for
-$p(n)$-type partition-counting Poincar\'e series, specialised to
-Virasoro at $c = 1$; (iii) direct computation at $c = 24$ against
-the $j$-function Fourier coefficients $c(n)$ satisfying
-$c(n) \sim e^{4\pi\sqrt n}/(\sqrt 2\, n^{3/4})$
-(Petersson--Rademacher 1938), which matches
-\eqref{eq:c5-hardy-ramanujan-cardy} at $c = 24$ on the nose.
+The PBW basis of the vacuum module is generated by
+$L_{-m}$ for $m\ge2$, giving the displayed product. Since
+\[
+\prod_{m\ge2}(1-q^m)^{-1}
+=(1-q)\prod_{m\ge1}(1-q^m)^{-1},
+\]
+the coefficient of $q^n$ is $p(n)-p(n-1)$. Hardy--Ramanujan gives
+\[
+p(n)=\frac{1}{4n\sqrt3}
+\exp\!\bigl(\pi\sqrt{2n/3}\bigr)(1+O(n^{-1/2})).
+\]
+Taking the first difference multiplies this leading term by
+\(\pi/\sqrt{6n}\), which gives
+\(\pi/(12\sqrt2)\,n^{-3/2}\exp(\pi\sqrt{2n/3})\).
 \end{proof}
 
-\begin{theorem}[Zwegers $\mu$-shadow at generic $c$ for $\Vir_c$;
+\begin{theorem}[Obstruction to a generic Zwegers $\mu$-shadow for $\Vir_c$;
 \ClaimStatusProvedHere]
 \label{thm:c5-zwegers-mu-shadow-explicit}
 \index{theorem!Zwegers $\mu$-shadow explicit}%
 \index{Zwegers $\mu$!$(u_c, v_c)$ identification}%
-Fix $c \in \R_{> 1}$. Let
-$\mathcal F^{\rm raw}_c(\tau) = q^{-c/24}\sum_{n \ge 0}\rho_c(n) q^n$
-be the raw character of $\Vir_c$ with $\rho_c(n)$ as in
-Proposition~\ref{prop:c5-hardy-ramanujan-cardy}, and let
-$\widehat{\mathcal F}_c(\tau, \bar\tau) = \mathcal F^{\rm raw}_c(\tau)
-+ (4\pi\,\mathrm{Im}\,\tau)^{-1/2}\,g_c(\bar\tau)$ be its
-Bringmann--Ono completion to a weight-$-1/2$ real-analytic modular
-form on $\mathrm{SL}_2(\Z)$. The shadow $g_c(\bar\tau)$ is the
-Eichler integral
-\begin{equation}
-\label{eq:c5-gc-eichler}
-g_c(\bar\tau)
-\;=\;
-\overline{\mu(u_c, v_c;\, \tau)}\,\eta(\tau)^{-2}
-\;+\;
-R_c(\bar\tau),
-\qquad
-\begin{cases}
-u_c = (c - 25)/24,\\
-v_c = c/24,
-\end{cases}
-\end{equation}
-where $\mu(u, v; \tau)$ is the Zwegers 2002 \S 1.1 function, and
-$R_c(\bar\tau)$ is a rational residue term supported on the integer
-lattice $\Z[u_c + v_c\tau] \subset \C/(\Z + \Z\tau)$. The
-coefficient expansion
-\begin{equation}
-\label{eq:c5-gc-series}
-g_c(\bar\tau)
-\;=\;
-\sum_{n \ge 0}\widetilde\rho_c(n)\,e^{-2\pi n\bar\tau},
-\qquad
-\widetilde\rho_c(n)
-\;=\;
-\frac{\pi\sqrt{c/6}}{n^{3/4}}
-\sum_{m \in \Z + (c-25)/48}
-(-1)^{m - 1/2}
-e^{-2\pi(m - n)^{2}/(n + m)},
-\end{equation}
-converges absolutely for $\bar\tau$ in the upper half-plane. The
-Zwegers $\mu$-function shadow of $g_c$ at weight $3/2$ recovers
-Proposition~\ref{prop:c5-hardy-ramanujan-cardy}'s Hardy--Ramanujan
-density via
-\begin{equation}
-\label{eq:c5-shadow-cardy-match}
-\bigl(\partial/\partial\bar\tau\bigr)\bigl[(4\pi\,\mathrm{Im}\,\tau)^{-1/2}\,g_c(\bar\tau)\bigr]
-\;=\;
-(4\pi\,\mathrm{Im}\,\tau)^{-3/2}
-\sum_{n\ge 0}\rho_c(n)\,e^{-2\pi n\bar\tau},
-\end{equation}
-matching the Bringmann--Ono 2007 \S 3 Eichler-completion of a
-weight-$-1/2$ raw form.
+There is no formula, valid for generic real $c$, which identifies the
+universal Virasoro vacuum character with a Bringmann--Ono/Zwegers
+mock-modular completion on $\mathrm{SL}_2(\mathbb Z)$ by the
+substitution
+\[
+(u_c,v_c)=\bigl((c-25)/24,\;c/24\bigr).
+\]
+The obstruction has three independent parts:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the oscillator multiplicities are the $c$-independent
+partition differences of Proposition~\ref{prop:c5-hardy-ramanujan-cardy};
+\item the $T$-multiplier $e^{-\pi i c/12}$ has infinite order for
+generic real $c$, so the character does not lie in the finite-multiplier
+modular category used by the classical Bringmann--Ono and Zwegers
+theorems;
+\item a Zwegers $\mu$-completion requires a specified indefinite theta
+lattice, polar part, elliptic variables, and multiplier; the triple
+$(\kappa,\alpha,S_4)$ of the Riccati metric does not determine those
+data.
+\end{enumerate}
+Thus C5 is an admissible-level construction problem, not a generic
+real-$c$ theorem for the universal Virasoro module.
 \end{theorem}
 
 \begin{proof}
-The Zwegers $\mu$-function
-$\mu(u, v; \tau) = \frac{e^{\pi i u}}{\vartheta(v;\tau)}
-\sum_{n\in\Z}\frac{(-1)^{n} e^{\pi i(n^{2}+n)\tau + 2\pi i n v}}{1 - e^{2\pi i u + 2\pi i n\tau}}$
-has, by Zwegers 2002 Thm~1.11, $T$-multiplier
-$\mu(u, v; \tau + 1) = e^{-\pi i/4}\,\mu(u, v; \tau)$ with an
-additional phase $e^{\pi i(u^{2} - v^{2})}$ arising from the
-$\vartheta$-denominator. Combined with the $\eta^{-2}$ factor of
-\eqref{eq:c5-gc-eichler} (multiplier $e^{-\pi i/6}$ under $T$),
-the total $T$-multiplier of $g_c$ is
-$e^{-\pi i/4 - \pi i/6 + \pi i(u_c^{2} - v_c^{2})}
-= e^{-5\pi i/12 + \pi i(c-25)(c+25-2c)/576 - \pi i c^{2}/576}
-= e^{-5\pi i/12}\,e^{-\pi i(50c - 625)/576}$. Setting
-$(u_c, v_c) = ((c-25)/24, c/24)$ forces
-$u_c - v_c = -25/24$, hence
-$u_c^{2} - v_c^{2} = (u_c + v_c)(u_c - v_c)
-= \bigl[(2c - 25)/24\bigr]\cdot(-25/24) = -25(2c-25)/576$.
-The resulting $T$-multiplier on the Virasoro raw character
-$\mathcal F^{\rm raw}_c$ is $e^{-\pi i c/12}$, and the completion
-$\widehat{\mathcal F}_c$ must carry the same $T$-multiplier. Direct
-computation: $e^{-\pi i c/12} = e^{-\pi i c/12}$, matched by the
-choice above modulo the global $e^{-5\pi i/12}$ phase that shifts
-into the overall modular prefactor of the Rademacher expansion
-(see Bringmann--Ono 2007 \S 3, eq.\ (3.14), where the analogous
-overall phase appears for the $f(q)$ mock theta function).
-
-The Fourier expansion \eqref{eq:c5-gc-series} follows from the
-Zwegers definition combined with the Mordell-integral
-representation Zwegers 2002 \S 1.3 eq.~(1.12). The holomorphic
-anti-derivative $\partial g_c/\partial\bar\tau$ is a
-weight-$3/2$ Maass form with Fourier coefficients proportional
-to $\sqrt n\cdot e^{-2\pi n\,\mathrm{Im}\,\tau}$, which on
-division by the $(4\pi\mathrm{Im}\,\tau)^{1/2}$ factor of the
-completion recovers exactly the
-$\rho_c(n)\sim n^{-3/4}\exp(2\pi\sqrt{cn/6})$ density of
-Proposition~\ref{prop:c5-hardy-ramanujan-cardy} (Cardy factor of
-$\exp(2\pi\sqrt{cn/6})$ supplied by the saddle in the shadow-integral
-representation; prefactor $n^{-3/4}$ supplied by the $\sqrt n$ of the
-Mordell integrand divided by the $n$ of the Laplace argument).
-
-The rational residue term $R_c(\bar\tau)$ of \eqref{eq:c5-gc-eichler}
-accounts for the $\vartheta$-pole of $\mu$ at $v_c = 0 \pmod{\Z + \Z\tau}$:
-at integer $c \in 24\Z$, $v_c = c/24 \in \Z$ forces a pole, whose
-residue $\mathrm{Res}_{v = 0}\mu(u, 0; \tau) = 1/(2\pi i\,\eta(\tau)^{3})$
-(Zwegers 2002 Prop 1.5) cancels against the Virasoro $\beta$-function
-residue $\rho_c = c(c-25)/24$. At $c = 24$: $\rho_{24} = -1$, and
-$-1 \cdot (2\pi i\,\eta(\tau)^{3})^{-1}$ combines with the Borcherds
-product $\Phi_{10}$ pole-structure (Volume~III
-Theorem~\ref{V3-thm:harvey-moore-threshold}) to give
-$g_{24}(\bar\tau) \equiv 0$. The shadow vanishes at $c = 24$, and
-the completion $\widehat{\mathcal F}_{24}$ is classically modular.
+Proposition~\ref{prop:c5-hardy-ramanujan-cardy} proves (i). For
+(ii), the vacuum character transforms under $T:\tau\mapsto\tau+1$
+by the scalar $e^{-\pi i c/12}$ from the factor $q^{-c/24}$. This
+scalar has infinite order for generic real $c$, while the
+Bringmann--Ono mock theta and Zwegers indefinite-theta completions
+are formulated for fixed finite-rank multiplier data. For (iii),
+Zwegers' $\mu(u,v;\tau)$ is the completion of a specific Appell--Lerch
+sum attached to elliptic variables and an indefinite theta kernel.
+The Riccati triple determines the two branch points of
+$y^2=Q_c(t)$, but it does not determine an Appell--Lerch denominator,
+a polar divisor in $\mathbb C/(\mathbb Z+\tau\mathbb Z)$, or a
+lattice of signature $(1,1)$. Matching a $T$-phase alone cannot
+construct a mock modular completion. The generic formula is therefore
+false as a theorem; admissible rational points require their own
+finite-rank character system and polar data.
 \end{proof}
 
-\begin{corollary}[Shadow vanishing at Liouville-critical locus $c = 25$;
-\ClaimStatusProvedHere]
-\label{cor:c5-liouville-critical-shadow}
-\index{Liouville-critical!$c = 25$!shadow vanishing}%
-At $c = 25$, $u_c = 0$ and the Zwegers $\mu(0, v; \tau)$
-degenerates to a rational multiple of $\vartheta(v;\tau)/\eta(\tau)$
-(Zwegers 2002 Prop 1.5); the shadow $g_{25}(\bar\tau)$ is classically
-modular of weight $1/2$ on $\mathrm{SL}_2(\Z)$, and the
-Maloney--Witten negative-degeneracy coefficients vanish.
-\end{corollary}
-
-\begin{proof}
-At $u_c = 0$, $\mu(0, v_c; \tau) = -\vartheta(v_c; \tau)/\eta(\tau)$
-by Zwegers 2002 Prop 1.5 evaluated at $u = 0$. This is a classical
-weight-$1/2$ Jacobi form of index $1$ at specialisation $v_c = 25/24$.
-Classical modularity of $g_{25}$ implies vanishing of all
-mock-modular Stokes jumps, hence no negative Fourier coefficients in
-the Borel-summed orbit sum. This matches the Maloney--Witten 2007
-observation that the negative-degeneracy coefficients of the
-$3d$-gravity partition function vanish at the Liouville-critical
-value $c = 25$.
-\end{proof}
-
-\begin{remark}[Three-path verification of Theorem~\ref{thm:c5-zwegers-mu-shadow-explicit}]
+\begin{remark}[Admissible construction problem]
 \label{rem:c5-zwegers-mu-verification}
-\index{multi-path verification!Zwegers $\mu$-shadow}%
-The identification \eqref{eq:c5-gc-eichler} is verified along three
-independent paths. \textup{(i)} $T$-multiplier matching: computed
-above, $e^{-\pi i c/12}$ on both sides modulo global phase.
-\textup{(ii)} $c = 24$ degeneration: $g_{24} \equiv 0$ from the
-$\vartheta$-pole cancelling the $\rho_{24} = -1$ residue, matching
-the Koszul-locus integer Fourier coefficients of $\Phi_{10}|_{p = q}$
-(Theorem~\ref{V2-thm:3dg-borcherds-ensemble-bridge} of Volume~II). In
-the uncompleted $c \in 24\Z$ specialisation, the
-\emph{bar trace} (T17~(vi) of the concordance: direct-sum
-categorical trace of the bar endofunctor on
-$\overline{\mathcal M}_{g,n}$, whose scalar image is T17~(v))
-is classically modular of weight $-1/2$ on $\mathrm{SL}_2(\Z)$, as
-required by Proposition~\ref{V2-prop:3dg-stokes-integrality-c24} of
-Volume~II. \textup{(iii)} $c = 1$ Heisenberg limit: at $c = 1$,
-$u_c = -1$, $v_c = 1/24$, and the universal Virasoro reduces to
-the Heisenberg subVOA on a rank-$1$ lattice; $\mu(-1, 1/24; \tau)$
-evaluated against $\eta^{-2}$ matches the evidence-block
-$1/\eta(\tau)^{24}\cdot 24\,\eta(\tau)^{3}$ identity via the lattice
-partition at rank $24$. Primary: Zwegers 2002 Ph.D.\ thesis
-(Utrecht) Thm~1.11, Prop~1.5, eq.~(1.12); Bringmann--Ono 2007
-\texttt{arXiv:math/0611806} Thm~1.1, \S 3; Cardy 1986
-\texttt{Nucl.\ Phys.\ B270:186--204} eq.~(3.5); Maloney--Witten 2007
-\texttt{arXiv:0712.0155} \S 4.3 (Liouville-critical vanishing).
+At a rational admissible point one may still seek a Zwegers or
+Bringmann--Ono completion. The required input is explicit: the simple
+quotient, the finite character vector, its multiplier, the polar part,
+and the indefinite theta lattice whose unary or Appell--Lerch shadow
+matches the bar Euler character. K3 and umbral examples provide this
+data; the universal Virasoro family at generic $c$ does not.
 \end{remark}
 
-\begin{remark}[What this closes in the trilogy]
-\label{rem:c5-zwegers-mu-closes}
-\index{closes!Vol II 3d-gravity class $\mathsf M$ bridge}%
-Theorem~\ref{thm:c5-zwegers-mu-shadow-explicit} supplies the
-second analytic input of
-Conjecture~\ref{V2-conj:3dg-off-koszul-bridge}\,\textup{(ii)}
-(Volume~II, \texttt{3d\_gravity.tex:11401}); the
-Bringmann--Ono 2007 shadow identification
-$g_c(\bar\tau) = \text{Eichler}[\mu\text{-function}]$; as an
-explicit formula in $c$, rather than a conjectural template.
-The first analytic input (Aniceto--Schiappa--Va transfer of the
-alien-derivative closure) remains open; both open threads of
-Volume~II 3d-gravity class-$\mathsf M$ bridge are now
-quantitatively tractable
-(\autoref{V2-rem:3dg-off-koszul-remaining-conditionals} of
-Volume~II). The C5 conjecture (Conjecture~\ref{conj:c5-mock-modular})
-is upgraded: its shadow is now identified explicitly as the
-Bringmann--Ono Eichler integral of the Zwegers
-$\mu(u_c, v_c;\tau)$ at $(u_c, v_c) = ((c-25)/24, c/24)$. The
-Volume~III connection is via the $c = 24$ degeneration, where
-$g_{24} \equiv 0$ and the completion reduces to the Borcherds
-product $\Phi_{10}$
-(Volume~III Theorem~\ref{V3-thm:harvey-moore-threshold}).
-\end{remark}
-
-\section{Borel-geometric layer}
+\section{Large-coefficient geometry}
 \label{sec:borel-geometric}
 
-The Borel-geometric layer of the shadow tower (iter~$30$--$77$,
-$2026{-}04{-}12$ to $2026{-}04{-}17$) supplies the explicit
-constants entering the resurgent regime of class M. We collect the
-established results.
+The large-coefficient geometry of the class M shadow tower supplies
+the explicit constants controlling the stress-tensor and higher-spin
+lanes.
 
-\begin{proposition}[Universal exponential base on the class M $T$-line, iter~$31$--$32$]
+\begin{proposition}[Universal exponential base on the class M $T$-line]
 \label{prop:universal-base-CA-six}
 \ClaimStatusProvedElsewhere
 On every non-logarithmic class M chirally Koszul vertex algebra of
@@ -1324,8 +1257,9 @@ C_\cA \;:=\; \limsup_{r \to \infty}
 \Bigl|\,\frac{A_{r+1}}{A_r}\,\Bigr|
 \;=\; 6,
 \]
-with $A_r = \lim_{c \to \infty} c^{r-2}\,S_r(\Vir_c)$ the Virasoro
-leading asymptotic. The closed form
+with
+$A_r = \lim_{c \to \infty} c^{r-2}\,\widehat S^{\rm wt}_r(\Vir_c)$
+the weighted Virasoro leading asymptotic. The closed form
 \[
 \Sigma_{\Vir}(z) \;=\;
 \frac{4 z^{3}}{9} \;-\; \frac{z^{2}}{9} \;+\;
@@ -1342,7 +1276,7 @@ factor of $6$ as the product of the ramification index $r_0 = 3$ and
 the leading cubic coefficient $S_{r_0}(\Vir_c)|_{c\to\infty} = 2$.
 \end{proposition}
 
-\begin{proposition}[$\cW_3$ second lane $C^{W{\rm-line}}_{\cW_3} = 12$, iter~$58$]
+\begin{proposition}[$\cW_3$ second lane $C^{W{\rm-line}}_{\cW_3} = 12$]
 \label{prop:w3-Wline-twelve}
 \ClaimStatusProvedElsewhere
 The $W$-line of the principal $\cW_3$ algebra carries a separate
@@ -1378,16 +1312,22 @@ $C = 12$ ($\cW_3$ $W$-line, proved). At $s = 4$:
 $C = 20$ (conjectural, $\cW_4$).
 \end{remark}
 
-\begin{proposition}[Cyclotomic singularities $\omega \in \mathbb Q(\zeta_6)$, iter~$37$]
+\begin{proposition}[Virasoro inverse-root field]
 \label{prop:cyclotomic-singularities-iter37}
 \ClaimStatusProvedElsewhere
-The Borel-plane singularities $\omega = 1/t_\pm(c)$ of the Virasoro
-shadow lie in the cyclotomic field $\mathbb Q(\zeta_6)$. The discrete
-$\mathbb Z/6$-symmetry is the dihedral symmetry of the Hessian
-factorisation of $Q_c$.
+For the universal Virasoro metric,
+\[
+\omega_\pm(c)=\frac{1}{t_\pm(c)}
+=-\frac{6}{c}\pm
+\frac{1}{2c}\sqrt{\frac{-320}{5c+22}},
+\]
+so the generic inverse-root field is
+$\mathbb Q(c,\sqrt{-320/(5c+22)})$. The large-$c$ rescaled limit
+$c\omega_\pm(c)\to -6$ gives the exponential base of the
+stress-tensor lane.
 \end{proposition}
 
-\begin{proposition}[Lee--Yang phase at $c = -22/5$, iter~$46$]
+\begin{proposition}[Lee--Yang pole at $c = -22/5$]
 \label{prop:lee-yang-phase}
 \ClaimStatusProvedElsewhere
 At $c = -22/5$ (the Lee--Yang minimal model central charge), the
@@ -1398,10 +1338,10 @@ unitary regime; the $S_4$ pole signals a phase transition in the
 shadow tower.
 \end{proposition}
 
-\begin{proposition}[Borel-radius phase transition at $c = -83/20$]
+\begin{proposition}[Secondary rational zero at $c = -83/20$]
 \label{prop:double-root-phase}
 \ClaimStatusProvedHere
-Write the Borel-radius rational function of
+Write the branch-root rational function of
 Theorem~\ref{thm:stokes-line-c-S} as
 \[
 \frac{45 c + 218}{5 c + 22}
@@ -1414,13 +1354,10 @@ so that the numerator $20 c + 83$ vanishes precisely at
 \[
 c \;=\; -\,\frac{83}{20}.
 \]
-This is a zero of a secondary rational function in the Borel-radius
+This is a zero of a secondary rational function in the branch-root
 algebra, not a zero of $\disc_t Q_c = -320 c^{2}/(5 c + 22)$: the
-latter vanishes only at $c = 0$. The value $c = -83/20$ marks a
-phase transition in the topology of Borel-plane singularity
-configurations (change of sheet of the cyclotomic lattice of
-Remark~\ref{rem:cyclotomic-singularities}), not a node of the
-spectral curve $\Sigma_c$.
+latter vanishes only at $c = 0$. The value $c=-83/20$ is therefore
+not a node of the spectral curve $\Sigma_c$.
 \end{proposition}
 
 \begin{proof}
@@ -1433,13 +1370,13 @@ computation of $\disc_t Q_c$ in Theorem~\ref{thm:stokes-line-c-S}
 forces the only $Q_c$-double-root locus to be $c = 0$.
 \end{proof}
 
-\begin{proposition}[Large-$c$ expansion of $|\omega|(c)$]
+\begin{proposition}[Large-$c$ expansion of the Virasoro branch root]
 \label{prop:omega-large-c-expansion}
 \ClaimStatusProvedHere
-The modulus of the leading Borel singularity is the closed form
+The modulus of the Virasoro branch root is the closed form
 \eqref{eq:borel-radius-closed}, with large-$c$ expansion
 \[
-\lvert\omega\rvert(c) \;=\; \frac{c}{6}\;-\;\frac{1}{27}
+\lvert t_\pm\rvert(c) \;=\; \frac{c}{6}\;-\;\frac{1}{27}
 \;+\; O\!\bigl(c^{-1}\bigr)\qquad (c\to\infty).
 \]
 The linear growth in $c$ reflects the $a_0^{2} = c^{2}$ constant
@@ -1453,41 +1390,38 @@ Immediate from~\eqref{eq:borel-radius-closed} and the large-$c$
 expansion computed in the proof of Theorem~\ref{thm:stokes-line-c-S}.
 \end{proof}
 
-\begin{proposition}[$\beta_N = 12 (H_N - 1)$ per-spin lane, Vol II inscription]
+\begin{proposition}[$\beta_N = 12 (H_N - 1)$ per-spin lane]
 \label{prop:beta-N-per-spin-lane}
 \ClaimStatusProvedElsewhere
-The Vol II inscription
-$\beta_N = \sum_{s = 2}^{N} 12/s = 12\,(H_N - 1)$ records the
-per-spin-$s$ contribution to the principal $\cW_N$ tempering rate.
+The identity $\beta_N = \sum_{s = 2}^{N} 12/s = 12\,(H_N - 1)$
+records the per-spin-$s$ contribution to the principal $\cW_N$
+tempering rate.
 The contribution at spin $s$ is $12/s$. Boundary check at $N = 2$
 gives $\beta_2 = 12 \cdot 1/2 = 6$, matching the Virasoro
 $T$-line $C_\cA = 6$ of
 Proposition~\ref{prop:universal-base-CA-six}. The closed form
 $12 (H_N - 1) = 12 \sum_{s = 2}^{N} 1/s$ is rational (not integer)
-for $N \ge 5$, with $\beta_5 = 77/5$ and $\beta_6 = 87/5$. The
-closed form supersedes both prior candidates $(N+1)(N+2)/2$
-(predicts $15$ at $N = 4$) and $N^{2} - N + 4$ (predicts $16$ at
-$N = 4$); the true value is $\beta_4 = 13$ matching $12\,(1/2 +
-1/3 + 1/4) = 12 \cdot 13/12 = 13$.
+for $N \ge 5$, with $\beta_5 = 77/5$ and $\beta_6 = 87/5$. At
+$N=4$ it gives $\beta_4=13$.
 \end{proposition}
 
-\begin{proposition}[$\cW(p)$ triplet $T$-line / Cartan-line shadow engines, iter~$77$]
+\begin{proposition}[$\cW(p)$ triplet $T$-line and Cartan-line shadows]
 \label{prop:wp-triplet-T-Cartan-line}
 \ClaimStatusProvedElsewhere
 For the logarithmic triplet algebra $\cW(p)$ at $c = 1 - 6 (p -
-1)^{2}/p$, two parallel shadow lanes have been engineered:
+1)^{2}/p$, two parallel shadow lanes have been computed:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the $T$-line (stress-tensor lane), with shadow coefficients
 $S_r(\cW(p)|_T)$ computed for $r = 2, \dots, 10$ at $p = 2$ and at
 $p = 3$;
 \item the Cartan-line (triplet lane), with shadow coefficients
 $S_r(\cW(p)|_{\rm Cartan})$ computed for $r = 2, \dots, 10$ at
-$p = 3$, including a full-scaffold quartic match at iter~$77$.
+$p = 3$, including a quartic match.
 \end{enumerate}
 The two lanes carry distinct asymptotic constants and exhibit the
-expected Massey-product growth pattern; the structural conclusion
-that $\cW(p)$ tempers via Zhu-bounded Massey is RETRACTED at
-publication standard (see \S\ref{sec:open-frontier}).
+expected Massey-product growth pattern. Tempering via
+Zhu-bounded Massey remains open for logarithmic triplets
+(see \S\ref{sec:open-frontier}).
 \end{proposition}
 
 \section{Per-family witnesses}
@@ -1497,9 +1431,8 @@ publication standard (see \S\ref{sec:open-frontier}).
 Modular characteristic $\kappa(\Heis_k) = k$ on the current line
 (landscape census, family G). Cubic $\alpha = 0$; quartic $S_4 = 0$;
 discriminant $\Delta = 0$. The Riccati polynomial collapses to
-$Q_c \equiv (2 k)^{2}$, a constant. Shadow tower terminates at $r =
-2$: $H(t) = 2 k\,t^{2}$, the unison voice. Free-field bar; CG opening
-of the chapter.
+$Q_c \equiv (2 k)^{2}$, a constant. The weighted metric terminates at
+$r=2$: $H_{\rm wt}(t)=2k\,t^2$.
 
 \paragraph{Affine Kac--Moody $V_k(\fg)$, $\fg$ simple, $k \neq -\hv$ (class L).}
 Modular characteristic $\kappa(V_k(\fg)) = \dim(\fg)\,(k + \hv) /
@@ -1507,7 +1440,7 @@ Modular characteristic $\kappa(V_k(\fg)) = \dim(\fg)\,(k + \hv) /
 (structure-constant $3$-cocycle). Quartic $S_4 = 0$; discriminant
 $\Delta = 0$. The Riccati polynomial is a perfect square with linear
 remainder: $Q_c = (2\kappa + 3 t)^{2}$. Shadow tower terminates at
-$r = 3$: $H(t) = t^{2}(2\kappa + 3 t)$. Critical level $k = -\hv$
+$r = 3$: $H_{\rm wt}(t) = t^{2}(2\kappa + 3 t)$. Critical level $k = -\hv$
 excluded by the Sugawara-degeneration caveat of Theorem C3
 (landscape census, kappa vanishes at $k = -\hv$).
 
@@ -1530,10 +1463,9 @@ Modular characteristic $\kappa(\Vir_c) = c/2$ (census C3). Cubic
 $\alpha = 2$. Quartic $S_4 = 10/[c\,(5 c + 22)]$ (census). Discriminant
 $\Delta = 8 \kappa\,S_4 = 40/(5 c + 22) \neq 0$ for generic $c$. The
 Riccati polynomial is irreducible:
-$Q_c = (c + 6\,t)^{2} + 80\,t^{2}/(5 c + 22)$. Shadow tower of depth
-$\infty$; spectral curve $\Sigma_c$ smooth; Borel summable on the
-divergent regime $c < c^{*}$, with $c^{*} \approx 6.125$ the unique
-positive real root of $5 c^{3} + 22 c^{2} - 180 c - 872 = 0$.
+$Q_c = (c + 6\,t)^{2} + 80\,t^{2}/(5 c + 22)$. The weighted metric
+has infinite depth and the spectral curve $\Sigma_c$ is smooth away
+from $c=0$ and $c=-22/5$.
 
 \paragraph{Principal $\cW_3$ (class M).}
 Modular characteristic $\kappa(\cW_3) = 5 c/6$ (census C4 at
@@ -1541,7 +1473,7 @@ $N = 3$). Two primary lanes: the $T$-line (Virasoro $C_\cA = 6$) and
 the $W$-line ($C^{W{\rm-line}}_{\cW_3} = 12$,
 Proposition~\ref{prop:w3-Wline-twelve}). Both lanes are class M;
 the spectral curves $\Sigma_c^{(T)}$ and $\Sigma_c^{(W)}$ are
-distinct, with distinct Borel singularities.
+distinct, with distinct branch-root loci.
 
 \paragraph{Bershadsky--Polyakov $\BP_k$ (class M).}
 Convention-dependent central-charge formula. In the Arakawa
@@ -1570,12 +1502,10 @@ $S_4 = 0$; discriminant $\Delta = 0$. Class G uniformly.
 The chapter records the proved core. We catalogue the two surviving
 open fronts.
 
-\paragraph{Logarithmic $\cW(p)$ tempering (RETRACTED to Conjectured).}
-The Vol II commit \texttt{a5640de} retracts
-\texttt{conj:tempered-stratum-contains-wp} from
-\textsc{ProvedHere} to \textsc{Conjectured}: the proof chain
-``$C_2$-cofiniteness $\Rightarrow$ bounded Massey $\Rightarrow$
-tempered'' fails for $\cW(p)$. Gurarie 1993 (arXiv:hep-th/9303160)
+\paragraph{Logarithmic $\cW(p)$ tempering.}
+The implication
+$C_2$-cofiniteness $\Rightarrow$ bounded Massey $\Rightarrow$
+tempered fails for $\cW(p)$. Gurarie 1993 (arXiv:hep-th/9303160)
 and Flohr 1996 (arXiv:hep-th/9605151) construct logarithmic-CFT
 amplitudes on $\cW(p)$ with unbounded Massey products despite
 finite-dimensional Zhu algebra. The correct tempered scope is:
@@ -1583,8 +1513,7 @@ principal, non-logarithmic, non-minimal standard landscape; $\cW(p)$
 is open pending the Adamovi\'c--Milas character-amplitude bound. The
 $T$-line and Cartan-line shadow engines of
 Proposition~\ref{prop:wp-triplet-T-Cartan-line} provide numerical
-data through $r = 10$ at $p = 2, 3$, but the structural tempering
-claim is downgraded.
+data through $r = 10$ at $p = 2, 3$.
 
 \paragraph{Original-complex chain-level for class M.}
 The chain-level MC5 statement on the original (non-weight-completed)
@@ -1605,20 +1534,20 @@ ambient-comparison hypotheses.
 \section{The single Platonic display}
 \label{sec:platonic-display}
 
-The chapter opens and closes with one identity. The four classes
-G, L, C, M are the four factorisation types of $Q_c$. The shadow
-connection is the Picard--Fuchs of $\Sigma_c = \{y^{2} = Q_c\}$. The
-asymptotic resummation is by Pad\'e where the series converges and
-by Borel where it diverges, with the crossover at the critical cubic
-$5 c^{3} + 22 c^{2} - 180 c - 872 = 0$ for Virasoro. The
-trans-series is the alien calculus of $\widehat S$ around its
-branch points. The mock modularity is conjecturally the Borcherds
-lift of $Q_c$ on $\Sigma_c$.
+The load-bearing identity is the Riccati metric equation. The classes
+G, L, and M are the three line-wise factorisation types of $Q_c$;
+class C is the separate $\beta\gamma_\lambda/bc_\lambda$
+quartic-contact witness. The shadow connection is the Picard--Fuchs
+connection of $\Sigma_c=\{y^2=Q_c\}$. The coefficient continuation is
+algebraic: the branch points of $\sqrt{Q_c}$ determine the
+exponential base and the square-root coefficient asymptotics. Mock
+modularity remains an admissible-level Borcherds-lift problem, not a
+generic real-$c$ Virasoro theorem.
 
 \begin{equation}
 \label{eq:platonic-display}
 \boxed{\;
-H(t)^{2} \;=\; t^{4}\,Q_c(t),
+H_{\rm wt}(t)^{2} \;=\; t^{4}\,Q_c(t),
 \qquad
 Q_c(t) \;=\; (2\kappa + 3\alpha\,t)^{2} \;+\; 2\,(8\,\kappa\,S_4)\,t^{2}.
 \;}
@@ -1626,31 +1555,34 @@ Q_c(t) \;=\; (2\kappa + 3\alpha\,t)^{2} \;+\; 2\,(8\,\kappa\,S_4)\,t^{2}.
 
 \begin{summary}[The chapter in one paragraph]
 \label{sum:chapter-one-paragraph}
-The shadow tower
+The weighted Riccati metric attached to the shadow tower
 $\{S_r(\cA)\}_{r \ge 2}$ on a primary line $L$ of a chirally Koszul
 vertex algebra of finite type is governed by the algebraic identity
-$H^{2} = t^{4}\,Q_c$, with $Q_c$ a quadratic polynomial in three
-genus-zero data $(\kappa, \alpha, S_4)$ read off from the OPE at
-the level of the $2$-, $3$-, $4$-point function. The four classes
-G, L, C, M of the standard landscape are the four factorisation
-types of $Q_c$, in codimensions $2, 1, 1, 0$ of the parameter space.
-Class M acquires a hyperelliptic spectral curve
+$H_{\rm wt}^{2} = t^{4}\,Q_c$, with $Q_c$ a quadratic polynomial in
+three genus-zero data $(\kappa, \alpha, S_4)$ read off from the OPE
+at the level of the $2$-, $3$-, $4$-point function. The G/L/M
+line-wise strata are the three factorisation types of $Q_c$; class C
+is the standard $\beta\gamma_\lambda/bc_\lambda$ quartic-contact
+family. Class M acquires the two-sheeted spectral curve
 $\Sigma_c = \{y^{2} = Q_c\}$ whose periods are the flat sections of
 the Picard--Fuchs shadow connection $\nabla^{\rm sh}$. Five
 corollaries follow: the MC element $\Theta_\cA$ satisfies the
 Riccati identity (C1); Picard--Fuchs propagates the dependence
-$(\kappa, \alpha, S_4)$ across the genus tower (C2); the Gevrey-$1$
-divergent series is Borel-summable on the divergent regime, with
-Pad\'e the correct tool on the convergent regime (C3); the
+$(\kappa, \alpha, S_4)$ across the genus tower (C2); the metric
+series has algebraic continuation and square-root coefficient
+asymptotics, while Borel theory requires a separate factorial
+expansion (C3); the
 shadow--Feynman dictionary $F_L = \Sh_{L+1}$ is a Getzler--Kapranov
 operadic boundary identity (C4); the bar Euler characters are
-conjecturally mock modular by Borcherds lift (C5). The Borel-geometric
-layer (iter~$30$--$77$) provides the explicit constants:
+conjecturally mock modular at admissible class M points by Borcherds
+lift (C5). The large-coefficient geometry provides the explicit
+constants:
 $C_\cA = 6$ on the non-logarithmic class M $T$-line,
 $C^{W{\rm-line}}_{\cW_3} = 12 = 2 \cdot 6$ on the $\cW_3$ $W$-line,
-cyclotomic singularities $\omega \in \mathbb Q(\zeta_6)$, large-$c$
-expansion $|\omega|(c) = c/6 - 1/27 + O(c^{-1})$, and the per-spin tempering
-rate $\beta_N = 12 (H_N - 1)$ on principal $\cW_N$.
+generic inverse-root field
+$\mathbb Q(c,\sqrt{-320/(5c+22)})$, large-$c$ branch-root expansion
+$|t_\pm|(c)=c/6-1/27+O(c^{-1})$, and the per-spin tempering rate
+$\beta_N = 12 (H_N - 1)$ on principal $\cW_N$.
 \end{summary}
 
 \section{Synthesis}
@@ -1661,26 +1593,28 @@ rate $\beta_N = 12 (H_N - 1)$ on principal $\cW_N$.
 The shadow-tower quadrichotomy -- Mathieu class $\mathcal M$ vs Conway
 class $\mathcal C$ vs umbral class $\mathcal U$ vs moonshine class $\mathcal S$ --
 meets at the K3 base point through the class-$\mathcal M$ Virasoro face,
-with shadow tower $m_3 = ?, m_5 = -80/9, m_7 = -24320/81, m_8 = 33157760/19683$
+with computed shadow entries
+$m_5 = -80/9$, $m_7 = -24320/81$, $m_8 = 33157760/19683$
 and $G_5^{\mathrm{conn}} = 775/5184$ (from direct computation). The
 class-$\mathcal S$ face $c_{2d} = -214$ sits below, with umbral-moonshine
 shift $m_\sigma$ (Cheng--Duncan--Harvey 2014) quantising the shift
-between $\mathcal M$ and the other three classes \cite{ChengDuncanHarvey2014,EguchiOoguriTachikawa2010}.
-Cross-ref Vol.~III Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+between $\mathcal M$ and the other three classes
+\cite{ChengDuncanHarvey2014,EguchiOoguriTachikawa2010}. The Vol.~III
+anchor is Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
 \begin{remark}[$\mathbf H_{\Delta_5}$ as unified apex of the four shadow faces]
 \label{rem:stqp-2}
 The fourth taxon $\mathbf H_{\Delta_5}$ is the unified apex of the
 four shadow faces: (i) Mathieu $\mathcal M_{24}$-twined trace gives the
-Igusa $\Delta_5$ as frame shape (conjectural at d=2 -- see Vol.~III
+Igusa $\Delta_5$ as frame shape (conjectural at $d=2$; see Vol.~III
 mock modular theorem); (ii) Conway $\mathcal C$ shadow via $II_{1,1}\oplus II_{8}\oplus II_{8}\oplus II_{8}$
 Leech embedding; (iii) umbral $\mathcal U$ shadow via $\widetilde M_{24}$-lift
 obstruction; (iv) $\mathcal S$-class shadow via class-$\mathcal S$ $A_1$
 on $\Sigma_{0,24}$ with $c_{2d} = -214$. The shadow-tower $m_k$
 coefficients encode the $A_\infty$ coproduct corrections
-\cite{ConwaySloane1988,ChengDuncanHarvey2014,Gaiotto2009}.
-Cross-ref Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
+\cite{ConwaySloane1988,ChengDuncanHarvey2014,Gaiotto2009}. The
+Vol.~III anchor is Chapter~\ref{V3-ch:k3-chiral-bialgebra-platonic}.
 \end{remark}
 
 \section{K3 shadow spectrum at $c_{2d} = -214$}
@@ -1718,7 +1652,7 @@ $c_{4d} = (2n_v + n_h)/12$ with class-$\mathcal S$ count
 $(n_v, n_h) = (63, 88)$ for $(A_1, \Sigma_{0,24})$
 (Shapere--Tachikawa 2008, arXiv:0804.1957; Chacaltana--Distler 2010
 eq.~(5.14); Vol~I Section~\ref{sec:thqg-open-closed-realization}
-line~1890). The integer $107$ is prime, so the Beem--Rastelli
+for the central-charge normalization). The integer $107$ is prime, so the Beem--Rastelli
 image
 \[
 c_{2d}(A_1, \Sigma_{0,24}, \mathrm{all\ max})
@@ -1750,10 +1684,10 @@ c(5c+22) \;=\; (-214)\cdot(-1048) \;=\; 224\,272,
 S_4 \;=\; \frac{10}{c(5c+22)} \;=\; \frac{10}{224\,272} \;=\; \frac{5}{112\,136},
 \]
 \[
-S_5 \;=\; \frac{-48}{c^2(5c+22)} \;=\; \frac{-48}{(-214)^2\cdot(-1048)} \;=\; \frac{3}{3\,000\,319}
+S_5 \;=\; \frac{-48}{c^2(5c+22)} \;=\; \frac{-48}{(-214)^2\cdot(-1048)} \;=\; \frac{3}{2\,999\,638}
 \]
-(with $(-214)^2\cdot(-1048) = -48\,005\,104$;
-$S_5 = -48/(-48\,005\,104) = 3/3\,000\,319$ after common-factor
+(with $(-214)^2\cdot(-1048) = -47\,994\,208$;
+$S_5 = -48/(-47\,994\,208) = 3/2\,999\,638$ after common-factor
 cancellation). All three invariants $(S_2, S_4, S_5)$ are nonzero
 and finite at $c = -214$; the shadow tower has depth
 $r_{\max} = \infty$, and the K3 chiral bialgebra
@@ -1770,8 +1704,7 @@ $22$ pants decomposition with $21$ gauge tubes carrying
 $\mathrm{SU}(2)$ vectors $n_v = N^2-1 = 3$ each: $n_v = 21\cdot 3
 + 22\cdot 0 = 63$, $n_h = 22\cdot 4 = 88$
 (Chacaltana--Distler 2010 eq.~(5.14); Vol~I
-Section~\ref{sec:thqg-open-closed-realization}, Proposition
-around line~1890). Shapere--Tachikawa 2008 arXiv:0804.1957
+Section~\ref{sec:thqg-open-closed-realization}). Shapere--Tachikawa 2008 arXiv:0804.1957
 normalisation
 $c_{4d} = (2n_v + n_h)/12 = (126 + 88)/12 = 214/12 = 107/6$.
 Cross-check: the formula reduces to $c_{4d}(n) = (5n - 13)/6$
@@ -1784,11 +1717,10 @@ $c_{2d} = -12 c_{4d} = -214$ (BLLPRvR 2013 eq.~(3.14)).
 
 The shadow-tower values at $c = -214$ follow by direct substitution
 into Proposition~\ref{prop:vir-shadow-r5}:
-$5c + 22 = -1048$, $c(5c+22) = 224\,272 = 2^4\cdot 107^2\cdot\ldots$
-(explicit factorisation: $224\,272 = 16\cdot 14\,017
-= 2^4\cdot 14\,017$; the number $14\,017 = 107\cdot 131$ is a
-product of two primes, neither of which enters Virasoro
-minimal-model locus $5c+22 = 0$). The Zamolodchikov norm
+$5c + 22 = -1048$ and
+$c(5c+22) = 224\,272 = 16\cdot 14\,017
+=2^4\cdot107\cdot131$. Neither prime factor enters the Virasoro
+minimal-model locus $5c+22 = 0$. The Zamolodchikov norm
 $\langle\Lambda|\Lambda\rangle = c(5c+22)/10 = 224\,272/10
 = 112\,136/5 = 22\,427.2 > 0$ is positive, since both factors
 $c = -214$ and $5c+22 = -1048$ are negative; the
@@ -1798,9 +1730,9 @@ outside the minimal-model degeneracy locus. The Riccati
 polynomial $Q_c = (c + 6t)^2 + 80t^2/(5c+22)$ of
 \eqref{eq:platonic-display} has nonvanishing discriminant
 $\Delta_{\mathrm{Ricc}} = 40/(5c+22) = 40/(-1048) = -5/131
-\neq 0$, placing $c = -214$ in the Borel-summable stratum of
-the critical cubic $5c^3 + 22c^2 - 180c - 872$. Class~$\mathrm M$
-(Virasoro archetype, $r_{\max} = \infty$) follows.
+\neq 0$, placing $c=-214$ in the generic class-$\mathrm M$
+Riccati stratum. Class~$\mathrm M$ (Virasoro archetype,
+$r_{\max} = \infty$) follows.
 \end{proof}
 
 \begin{remark}[Unitarity scope of $c = -214$]
@@ -1871,7 +1803,7 @@ central charge $c_{\mathrm{eff}} = c - 24 h_{\min}$, with
 $h_{\min}$ the lowest Virasoro eigenvalue in the BKM BPS module,
 equivalently the polar part of the Borcherds denominator identity
 at the cusp. For $\mathbf H_{\Delta_5}$ the polar part of
-$1/\Phi_{10}(Z)$ has weight $-10$ at the maximal-rank cusp of
+$1/\Phi_{10}^{\mathrm{un}}(Z)$ has weight $-10$ at the maximal-rank cusp of
 $\mathcal A_2$, giving $h_{\min} = -2$ (half the Borcherds
 denominator weight, after the Gritsenko--Nikulin double-cover
 normalisation), so
@@ -1888,10 +1820,9 @@ See Witten 2007, Manschot--Moore 2007, Dijkgraaf--Verlinde--Verlinde
 K3 BPS invariants uses the Harvey--Moore 1996 singular-theta
 correspondence. Note that the effective value
 $c_{\mathrm{eff}} = -166 = -2\cdot 83$ (with $83$ prime) at
-$c_{2d} = -214$ differs numerically from the retracted
-value $c_{\mathrm{eff}} = -264$ at $c_{2d} = -312$; the
-mathematical content of the Borcherds-polar-part identification
-is unchanged.
+$c_{2d} = -214$ is determined by the polar weight
+$h_{\min}=-2$. No $c_{2d}=-312$ value enters the
+Borcherds-polar-part identification.
 \end{remark}
 
 \begin{remark}[Class-$\mathrm M$ placement of K3 via $c = -214$]
@@ -1917,11 +1848,11 @@ contrasting paragraph on lattice VOAs). The fourth taxon
 $\mathbf H_{\Delta_5}$ of Remark~\ref{rem:stqp-2} is a
 class-$\mathrm M$ object refined by $M_{24}$-umbral shadow and
 Kuga--Satake geometry rather than a fifth class. The class-$\mathrm M$
-conclusion is \emph{robust under the $-312 \to -214$ retraction}:
-both central-charge values lie in the generic class-$\mathrm M$
-stratum (nonvanishing $5c + 22$, nonvanishing $S_4$,
-irreducible $Q_c$); the depth-$\infty$ tower is a topological
-invariant of the stratum, not of the specific central charge.
+conclusion uses only the generic class-$\mathrm M$ conditions at
+$c=-214$: nonvanishing $5c + 22$, nonvanishing $S_4$, and
+irreducible $Q_c$. The depth-$\infty$ tower is a topological
+invariant of that stratum, not of auxiliary central-charge
+bookkeeping.
 \end{remark}
 
 \begin{remark}[Conformal-block basis at $c_{2d} = -214$ and the
@@ -1948,7 +1879,7 @@ Theorem~\ref{V2-thm:modbootstrap-cross-Smatrix}), and the
 torus partition sum
 $Z_{\Delta_5}(\tau,\bar\tau) = \sum_\lambda |F_\lambda(\tau)|^2$
 is $\mathrm{SL}_2(\mathbb Z)$-invariant
-(Vol~II Proposition~\ref{V2-prop:modbootstrap-cross-Tmatrix}),% AP-XV1: prop not thm
+(Vol~II Proposition~\ref{V2-prop:modbootstrap-cross-Tmatrix}),
 lifting to an $\mathrm{Sp}_4(\mathbb Z)$-invariant of weight
 $10$ on the full $\mathcal A_2$
 (Vol~II Theorem~\ref{V2-thm:modbootstrap-cross-214},
@@ -2372,7 +2303,7 @@ Rem.~\ref{rem:cclimax-satake-casimir-ii}; the five small primes
 $p \in \{2, 3, 5, 7, 11\}$ have LMFDB values $a_2 = 216$,
 $a_3 = -3348$, $a_5 = 52\,110$, $a_7 = 2\,822\,456$,
 $a_{11} = 20\,586\,852$ (LMFDB \texttt{16.1.a.a}, verified by
-$E_4\cdot\Delta$ convolution in Vol.~I proof line~$1691$).
+$E_4\cdot\Delta$ convolution in the Vol.~I proof).
 Direct evaluation yields
 \[
 \theta_p \in \{0.93, 2.03, 1.42, 0.87, 1.41, 2.00, 1.06, 1.37,

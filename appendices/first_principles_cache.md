@@ -862,3 +862,39 @@ territory is (a) at weight $\le 12$ plus (c) at single-zeta depth;
 the conditional territory is (b) everywhere beyond Kuga--Satake 1967
 and (a) at weight $\ge 13$.
 
+\section*{Finite-Rees hCS--Hall cache}
+
+\begin{center}
+\begin{tabular}{p{0.18\linewidth}p{0.34\linewidth}p{0.38\linewidth}}
+\toprule
+Code & False compression & Correct layer \\
+\midrule
+FR-1 & finite Rees hCS--Hall $=$ compact critical CoHA
+& finite Rees MC map; completion and vanishing-cycle realization are additional arrows \\
+FR-2 & no multi-chart gluing beyond $\mathbb C^3$
+& finite DWR/Ran gluing is constructed by simplex contractions and Stokes; completed realization remains open \\
+FR-3 & $\CoHA(\mathbb C^3)=\mathcal W_{1+\infty}$
+& $\CoHA(\mathbb C^3)=Y^+(\widehat{\mathfrak{gl}}_1)$; $\mathcal W_{1+\infty}$ is doubled/represented \\
+FR-4 & toric vertices imply the comparison
+& the finite cyclic atlas needs face compatibility, mutation, orientation, Thom--Sebastiani, and Hall product data \\
+FR-5 & local $\mathbb P^2$ non-formality blocks the finite model
+& higher $m_k$ terms enter the cyclic potential $W_\sigma$ \\
+FR-6 & OPi labels all reduced DT anchors
+& use Oberdieck--Pandharipande or year-specific Oberdieck unless Pixton's component is used \\
+FR-7 & quasi-NCCR character constructs compact CoHA
+& character equality requires an already constructed object and comparison map \\
+FR-8 & one $Y^+$ notation covers all layers
+& finite Rees, completed Rees, realized positive CoHA, and Drinfeld double are separate \\
+FR-9 & hCS--Hall is yes/no
+& four cases: $\mathbb C^3$, finite multi-chart Rees, completed Rees, realized compact CoHA \\
+FR-10 & CHL and Gritsenko--Clery constants form one ladder
+& name the ladder before applying $\kappa_{\mathrm{BKM}}=c(0)/2$ \\
+FR-11 & $\Delta_5,\Phi_{10},\Phi_{12}$ are interchangeable
+& primitive K3 denominator, compact DT square, Fake-Monster denominator \\
+FR-12 & determinant Hodge line $\lambda_g^1$
+& use $\lambda_1^{\det}$ in the BL/DWR bridge \\
+FR-13 & OP/DT scalar written as bare $-\Delta_5^{-2}$
+& use $D_5=64^{-1}\Delta_5$, $\chi_{10}^{\mathrm{OP}}=D_5^2$, and $Z_{\mathrm{OP/DT}}=-D_5^{-2}=-4096\,\Delta_5^{-2}$ \\
+\bottomrule
+\end{tabular}
+\end{center}

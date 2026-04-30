@@ -131,9 +131,9 @@ $\Eone(m) = \Conf_m^{<}(\RR)$, and empty open-to-closed
 component (directionality).
 
 We establish three results.
-First, $\SCchtop$ is homotopy-Koszul, via Kontsevich formality
-for the closed colour composed with Livernet's Koszulity of the
-classical Swiss-cheese operad $\SC$ and bar-cobar transfer.
+First, the classical Swiss-cheese operad is Koszul and the closed
+colour of $\SCchtop$ is formal; the full two-colour homotopy-Koszul
+statement requires a mixed-sector quasi-isomorphism.
 Second, the Koszul dual cooperad satisfies
 $(\SCchtop)^! = (\Lie^c,\,\Ass^c,\,\text{shuffle-mixed})$;
 in particular $\SCchtop$ is \emph{not} Koszul self-dual
@@ -142,7 +142,7 @@ $\dim(\SCchtop)^!_{\mathrm{cl}}(n) = (n-1)!$).
 Third, the cogenerator projections of the bar differential
 produce $\Ainf$ operations $\{m_k\}_{k \geq 1}$ whose Stasheff
 relations are Stokes' theorem on $\FM_n(\CC)$; on cohomology
-these descend to the five axioms of a Poisson vertex algebra.
+these descend to the shifted PVA shadow.
 The descent is computed in three cases:
 the Heisenberg algebra (formal, class~G, shadow depth zero),
 affine Kac--Moody at level~$k$ (Lie-transverse, class~L, shadow
@@ -517,17 +517,20 @@ operations.
 
 \subsection{Transfer to $\SCchtop$}
 
-\begin{theorem}[Homotopy-Koszulity of $\SCchtop$]
+\begin{theorem}[Classical Swiss-cheese Koszulity and local product-formal shadow]
 \label{thm:homotopy-koszul-SC}
-\ClaimStatusProvedHere{}
-The operad $\SCchtop$ is homotopy-Koszul: the canonical map
+\ClaimStatusConditional{}
+The classical Swiss-cheese operad is Koszul, and the closed colour of
+$\SCchtop$ is formal. The full two-coloured statement is conditional
+on a mixed-sector quasi-isomorphism. Under that additional hypothesis,
+the canonical map
 \begin{equation}\label{eq:bar-cobar-SC}
   \Omega\mathbf{B}(\SCchtop)
   \;\xrightarrow{\;\sim\;}\;
   \SCchtop
 \end{equation}
-is a quasi-isomorphism.  The bar-cobar adjunction on
-$\SCchtop$-algebras is a Quillen equivalence.
+is a quasi-isomorphism; only then does the bar-cobar adjunction on
+$\SCchtop$-algebras give the asserted Quillen equivalence.
 \end{theorem}
 
 \begin{proof}
@@ -554,10 +557,10 @@ $f \colon \cP \xrightarrow{\sim} \cQ$ is a quasi-isomorphism
 of dg operads and $\cQ$ is Koszul, then $\cP$ is
 homotopy-Koszul; that is, the natural map
 $\Omega\mathbf{B}(\cP) \xrightarrow{\sim} \cP$ is a
-quasi-isomorphism.  Applying this with $\cP = \SCchtop$ and
-$\cQ = \SC$ (connected by the formality quasi-isomorphism on
-the closed colour and the identity on the open colour) yields
-the result.
+quasi-isomorphism. Applying this with $\cP = \SCchtop$ and
+$\cQ = \SC$ requires a mixed-sector quasi-isomorphism in addition to
+the closed-colour formality quasi-isomorphism and the identity on the
+open colour.
 
 The Quillen equivalence follows from the general model category
 structure on algebras over a homotopy-Koszul operad
@@ -862,9 +865,9 @@ entering through the $WW\Lambda$ channel
 
 \subsection{PVA descent on cohomology}
 
-\begin{definition}[Poisson vertex algebra]
+\begin{definition}[Shifted Poisson vertex algebra shadow]
 \label{def:PVA}
-A \emph{Poisson vertex algebra} (PVA) over $\Bbbk$ is a
+A \emph{$(-1)$-shifted Poisson vertex algebra shadow} over $\Bbbk$ is a
 commutative differential algebra $(V, \cdot, \partial)$ equipped
 with a $\lambda$-bracket
 $\{a_\lambda b\} \in V[\lambda]$
@@ -892,10 +895,11 @@ satisfying the following five axioms:
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[PVA descent]
+\begin{theorem}[Shifted PVA descent]
 \label{thm:pva-descent}
-\ClaimStatusProvedHere{}
-Let $\cA$ be a chiral algebra on a smooth curve $X$, and let
+\ClaimStatusConditional{}
+Let $\cA$ be a logarithmic $\SCchtop$-algebra on a smooth curve $X$,
+with the regular and singular kernels separated, and let
 $H = H^\bullet(\cA, m_1)$ be the cohomology with respect to
 the internal differential $m_1 = Q$.  Suppose
 $(H, p, \iota, h)$ is a deformation retract of $(\cA, m_1)$
@@ -916,13 +920,14 @@ Then:
   where $a \cdot b = m_2^H(a,b;0)$ is a commutative associative
   product on $H$ and $\{a_\lambda b\}$ is a $\lambda$-bracket.
 
-\item The pair $(H, \cdot, \{-_\lambda -\})$ is a Poisson vertex
-  algebra in the sense of Definition~\textup{\ref{def:PVA}}.
+\item The pair $(H, \cdot, \{-_\lambda -\})$ is a
+  $(-1)$-shifted Poisson vertex algebra shadow in the sense of
+  Definition~\textup{\ref{def:PVA}}, with shifted Koszul signs.
 
 \item The higher transferred operations $m_k^H$ for $k \geq 3$
-  encode the homotopy corrections to the PVA structure; they
-  vanish if and only if $\cA$ is formal (class~G in the shadow
-  depth classification).
+  encode the homotopy corrections to the chain-level shadow
+  formality problem. Class~G is the strict chain-level vanishing
+  case, not the general cohomological PVA-descent statement.
 \end{enumerate}
 \end{theorem}
 
@@ -1486,23 +1491,20 @@ the perturbative expansion of the bulk theory.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Wave-14 reconception: heptagon embedding, topologization
-%%    scope, PVA descent via Khan-Zeng, AP-SC discipline
+%% Heptagon embedding, topologization scope, and PVA descent
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Wave-14 reconception: heptagon, topologization scope,
- PVA descent}
-\label{sec:wave14-schtop-heptagon}
+\section{Heptagon, topologization scope, and PVA descent}
+\label{sec:schtop-heptagon}
 
-This addendum reconceives the operad $\SCchtop$ against three
-2026-04-17 platonic-ideal anchors: the Vol~II $\SCchtop$ heptagon
-(seven edges routing bar, cobar, Drinfeld centre, derived centre,
-Swiss-cheese, PTVV, celestial), the four-class topologisation scope
-tree, and the Khan--Zeng PVA descent for freely-generated Poisson
-vertex algebras.
+The operad $\SCchtop$ is controlled by three tests: the Vol~II
+$\SCchtop$ heptagon (seven edges routing bar, cobar, Drinfeld
+centre, derived centre, Swiss-cheese, PTVV, and celestial
+holography), the four-class topologisation scope tree, and the
+Khan--Zeng PVA descent for freely-generated Poisson vertex algebras.
 
 \begin{theorem}[The $\SCchtop$ heptagon]
-\label{thm:wave14-heptagon}
+\label{thm:schtop-heptagon}
 The two-coloured operad $\SCchtop$ sits at the hub of a heptagon of
 seven equivalent presentations, each edge a named theorem:
 \begin{enumerate}[(1)]
@@ -1528,7 +1530,7 @@ edges as named theorems.
 \end{theorem}
 
 \begin{theorem}[Topologization scope tree, AP-TOPOLOGIZATION]
-\label{thm:wave14-topologization-scope}
+\label{thm:topologization-scope}
 The passage $\SCchtop \to E_3^{\mathrm{top}}$ via Sugawara
 topologisation branches by shadow class:
 \begin{itemize}
@@ -1557,7 +1559,7 @@ special case.
 \end{theorem}
 
 \begin{theorem}[Khan--Zeng PVA descent on freely generated PVAs]
-\label{thm:wave14-khan-zeng}
+\label{thm:khan-zeng-pva-descent}
 Let $A$ be a freely-generated Poisson vertex algebra with
 conformal vector. Then the $\Ainf$ operations $\{m_k\}$ extracted
 by cogenerator projection from the bar differential of the
@@ -1570,8 +1572,8 @@ recovers the Vol~II orbifold route via $\bZ/n$-invariants
 preserving $\En$-structure.
 \end{theorem}
 
-\begin{remark}[AP-SC-BAR discipline reaffirmed]
-\label{rem:wave14-ap-sc-bar}
+\begin{remark}[The bar complex is not an $\SCchtop$-coalgebra]
+\label{rem:bar-not-schtop-coalgebra}
 As stated in Warning~\ref{warn:bar-not-SC}, the bar complex
 $\barB(\cA) = T^c(s^{-1}\barA)$ is an $\Eone$ chiral
 coassociative coalgebra, \emph{not} an $\SCchtop$-coalgebra. The
@@ -1579,18 +1581,15 @@ $\SCchtop$ structure lives on the derived centre pair
 $(C^\bullet_{\mathrm{ch}}(\cA,\cA), \cA)$; the bar complex serves
 as a resolution used to \emph{compute}
 $C^\bullet_{\mathrm{ch}}(\cA,\cA)$, not as an object carrying
-$\SCchtop$-structure. The six-step chain of errors (FM25) is
-explicitly retired: (1)~the bar differential is not a closed
-colour; (2)~deconcatenation is not an open colour; (3)~two
-structures on a single coalgebra do not produce two colours;
-(4)~$\SCchtop$ emerges in the output via
-$\Hom(B(\cA), \cA)$, not in the input; (5)~$\Eone$-chiral
-$\ne$ $\Eone$-topological (chiral lives on a curve, topological
-on $\Conf_k(\bR)$); (6)~the Steinberg analogy is retired.
+$\SCchtop$-structure. The obstruction is formal: the bar
+differential is not a closed colour, deconcatenation is not an open
+colour, and two structures on one coalgebra do not produce the two
+colours of $\SCchtop$. The $\SCchtop$ structure emerges in
+$\Hom(B(\cA),\cA)$, not in $B(\cA)$.
 \end{remark}
 
-\begin{remark}[AP-SC-NOT-SELFDUAL reaffirmed]
-\label{rem:wave14-ap-sc-notselfdual}
+\begin{remark}[$\SCchtop$ is Koszul, not self-dual]
+\label{rem:schtop-not-selfdual}
 $(\SCchtop)^! \ne \SCchtop$: closed-colour dimensions differ
 at $n \ge 3$ ($\dim\Com(n) = 1$ vs $\dim\Lie(n) = (n-1)!$).
 The duality \emph{functor} is an involution; the operad
@@ -1599,13 +1598,13 @@ self-duality.
 \end{remark}
 
 \begin{remark}[Epistemic tags]
-\label{rem:wave14-schtop-epistemic}
-Theorem~\ref{thm:wave14-heptagon}: the seven heptagon edges are
+\label{rem:schtop-epistemic}
+Theorem~\ref{thm:schtop-heptagon}: the seven heptagon edges are
 \emph{proved} in the Vol~II heptagon chapter; this paper's
 operadic hub (edges 1--3) is proved directly.
-Theorem~\ref{thm:wave14-topologization-scope}: class~G, L, C
+Theorem~\ref{thm:topologization-scope}: class~G, L, C
 are unconditional on the original complex; class~M is
-weight-completed (AP-TOPOLOGIZATION). Theorem~\ref{thm:wave14-khan-zeng}:
+weight-completed (AP-TOPOLOGIZATION). Theorem~\ref{thm:khan-zeng-pva-descent}:
 unconditional for freely-generated PVAs; the general class~M case
 reduces to the weight-completed topologization.
 \end{remark}

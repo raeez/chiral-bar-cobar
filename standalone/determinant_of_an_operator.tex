@@ -1071,17 +1071,18 @@ This identity is the bridge from point counts to zeta functions.
 \section{Varieties over Finite Fields}
 \label{sec:finite-field-zeta}
 
-Let \(X/\bF_q\) be a variety. Its zeta function is
+Let \(X/\bF_q\) be a separated variety of finite type. Its zeta function is
 \[
   Z(X,t):=
   \exp\left(\sum_{r\geq1}\#X(\bF_{q^r})\frac{t^r}{r}\right).
 \]
-The Grothendieck-Lefschetz trace formula says
+The Grothendieck-Lefschetz trace formula uses compactly supported
+étale cohomology:
 \[
   \#X(\bF_{q^r})
   =
   \sum_i(-1)^i
-  \Tr\left(\Frob_q^r\mid H^i_{\mathrm{\acute et}}(X_{\overline{\bF}_q},\bQ_\ell)\right).
+  \Tr\left(\Frob_q^r\mid H^i_{c,\mathrm{\acute et}}(X_{\overline{\bF}_q},\bQ_\ell)\right).
 \]
 Insert this into the exponential defining \(Z(X,t)\):
 \[
@@ -1089,13 +1090,13 @@ Insert this into the exponential defining \(Z(X,t)\):
   =
   \sum_i(-1)^i
   \sum_{r\geq1}
-  \Tr\left(\Frob_q^r\mid H^i\right)\frac{t^r}{r}.
+  \Tr\left(\Frob_q^r\mid H^i_c\right)\frac{t^r}{r}.
 \]
 By \Cref{sec:trace-det-identity},
 \[
-  \sum_{r\geq1}\Tr(\Frob_q^r|H^i)\frac{t^r}{r}
+  \sum_{r\geq1}\Tr(\Frob_q^r|H^i_c)\frac{t^r}{r}
   =
-  -\log\det(1-t\Frob_q|H^i).
+  -\log\det(1-t\Frob_q|H^i_c).
 \]
 Therefore
 \[
@@ -1103,12 +1104,14 @@ Therefore
   =
   \prod_i
   \det\left(1-t\Frob_q\mid
-  H^i_{\mathrm{\acute et}}(X_{\overline{\bF}_q},\bQ_\ell)\right)^{(-1)^{i+1}}.
+  H^i_{c,\mathrm{\acute et}}(X_{\overline{\bF}_q},\bQ_\ell)\right)^{(-1)^{i+1}}.
 \]
 
 This is the arithmetic determinant formula. Counting points over all
 finite extensions is equivalent to taking alternating determinants of
-Frobenius on cohomology.
+Frobenius on compactly supported cohomology. For smooth proper
+varieties, compactly supported cohomology agrees with ordinary
+étale cohomology.
 
 \section{Example: A Smooth Projective Curve}
 \label{sec:curve-zeta}
@@ -1205,9 +1208,9 @@ For \(X=\overline{\Spec\bZ}\), the expected shape is:
 while the cohomological degrees \(0\) and \(2\) account for the Tate
 pole lines at \(s=0\) and \(s=1\).
 
-This is not a formal analogy. It is the finite-field determinant
-formula transported to the arithmetic curve. The open content is the
-construction of the cohomology and operator.
+This is Deninger's conjectural determinant template for the arithmetic
+curve. The open content is the construction of the cohomology, the
+operator, and the regularized determinant.
 
 \section{Arakelov Determinants}
 \label{sec:arakelov-det}

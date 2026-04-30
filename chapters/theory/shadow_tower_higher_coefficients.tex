@@ -1,9 +1,9 @@
-%% Higher Virasoro Shadow-Tower Coefficients: S_6, S_7, S_8.
+%% Higher Virasoro Shadow-Tower Coefficients: weighted S_6, S_7, S_8.
 %%
-%% Explicit closed forms for the Virasoro shadow coefficients through
-%% weight 8, derived by Wick reduction of the Maurer-Cartan master
-%% equation on the ordered convolution dGLA. Extends the S_4, S_5
-%% framework (thm:s5-vir-closed-form) and pins the exact
+%% Explicit closed forms for the weighted Virasoro Riccati-metric
+%% shadow coefficients through weight 8, derived by Wick reduction of
+%% the Maurer-Cartan master equation on the ordered convolution dGLA.
+%% Extends the S_4, S_5 framework (thm:s5-vir-closed-form) and pins the exact
 %% rational-in-c pole structure through the Zamolodchikov factor
 %% (5c + 22)^{floor((r-2)/2)}.
 %%
@@ -15,7 +15,7 @@
 %% universality).
 %%
 %% Cross-volume sweep: Vol III m_8 = 4144720/19683 is verified as
-%% the c = 1 specialisation of S_8(Vir_c) (sec:s8 below).
+%% the c = 1 specialisation of \widehat S^{wt}_8(Vir_c) (sec:s8 below).
 %%
 %% All macros \providecommand-guarded.
 
@@ -30,6 +30,7 @@
 \providecommand{\ClaimStatusProvedHere}{}
 \providecommand{\ClaimStatusProvedElsewhere}{}
 \providecommand{\ClaimStatusConjectured}{}
+\providecommand{\ClaimStatusConditional}{}
 
 \chapter{Higher Virasoro Shadow Coefficients}
 \label{ch:shadow-tower-higher-coefficients}
@@ -56,35 +57,33 @@ $\langle \Lambda \mid \Lambda \rangle = c (5c + 22)/10$ governs the
 Wick reduction of every higher-weight correlator through the stress
 tensor OPE channel.
 
-The chapter establishes explicit closed forms for $S_6, S_7, S_8$ and
-the underlying master-equation recurrence that generates every
-subsequent coefficient. Section~\ref{sec:sth-setup} records the
+The chapter establishes explicit closed forms for
+$\widehat S^{\rm wt}_6,\widehat S^{\rm wt}_7,\widehat S^{\rm wt}_8$
+and the weighted master-equation recurrence that generates every
+subsequent weighted coefficient. Section~\ref{sec:sth-setup} records the
 setup, fixing the $A_\infty$ coproduct correction $\delta^{(r)}$ and
 the shadow transport operator. Section~\ref{sec:sth-recurrence}
-states and proves the Virasoro shadow recurrence
+states and proves the Virasoro weighted shadow recurrence
 (Theorem~\ref{thm:virasoro-shadow-recurrence}), the common engine for
-all higher $S_r$. Section~\ref{sec:sth-s6-s7-s8} establishes the three
-closed forms through weight $8$ and verifies the Zamolodchikov pole
+all higher weighted coefficients. Section~\ref{sec:sth-s6-s7-s8}
+establishes the three closed forms through weight $8$ and verifies the
+Zamolodchikov pole
 structure $(5c+22)^{\lfloor (r-2)/2 \rfloor}$. Section~\ref{sec:sth-boundary}
 discharges the boundary-value checks at $c = 1$, $c = \tfrac{1}{2}$,
 $c = 13$. Section~\ref{sec:sth-leading-asymp} extracts the large-$c$
-asymptotic $S_r(\Vir_c) \sim A_r / c^{r-2}$ with explicit $A_r$ for
-$4 \le r \le 8$ and separates the Kummer-congruence content
+asymptotic
+$\widehat S^{\rm wt}_r(\Vir_c) \sim A_r / c^{r-2}$ with explicit
+$A_r$ for $4 \le r \le 8$ and separates the Kummer-congruence content
 (which lives on the $Z_g$ numerators, not on the Virasoro
 asymptotics directly) from the bare shadow behaviour. Section~\ref{sec:sth-motivic}
-cross-links to the motivic lift: every $S_r(\Vir_c)$ computed here
-is rational in $c$, which pins the absence of $\zeta^{\mathrm{mot}}(n)$
+cross-links to the motivic lift: every weighted Virasoro coefficient
+computed here is rational in $c$, which pins the absence of
+$\zeta^{\mathrm{mot}}(n)$
 contributions at Virasoro through weight $8$ (the first non-rational
 lift appears at $W_3$, weight $6$, by
 Proposition~\ref{prop:s6-w3-mot}).
 
-Strengthening only: every formula has two disjoint derivation chains
-(MC master-equation recurrence and Riccati $\sqrt{Q_L}$ Taylor
-expansion), and each ProvedHere theorem is decorated with a
-\texttt{@independent\_verification} slot at
-\texttt{compute/tests/test\_shadow\_tower\_higher.py}.
-
-\begin{remark}[Rectified coefficient normalisation]
+\begin{remark}[Two coefficient normalisations]
 \label{rem:sth-rectified-normalisation}
 There are two coefficient extractions in the Virasoro tower. The
 square-root metric identity
@@ -103,10 +102,11 @@ $2S_2S_6+2S_3S_5+S_4^2=0$, and gives
 S_6(\Vir_c)
 =\frac{4(240c+1031)}{c^3(5c+22)^2}.
 \]
-The computations below are retained losslessly as the weighted
-Riccati-metric chain. They should be cited as $\widehat S_r^{\rm wt}$
-unless the Riccati-on-$U$ recursion has been used to pass back to the
-manuscript shadow normalisation.
+Thus the recurrence proved in
+Theorem~\ref{thm:virasoro-shadow-recurrence} is the weighted
+Riccati-metric recurrence. Its coefficients are denoted
+$\widehat S_r^{\rm wt}$. The manuscript shadow coefficients are
+unhatted; the first split occurs at weight~$6$.
 \end{remark}
 
 \begin{remark}[Independent BPZ--Wick verification of $S_5$]
@@ -161,18 +161,20 @@ $\delta^{(r)}$ factors through the stress tensor OPE
 and the descendant-channel corrections it generates. We write $c$
 for the central charge throughout.
 
-\begin{definition}[\label{def:shadow-transport-operator}Shadow
+\begin{definition}[\label{def:shadow-transport-operator}Weighted shadow
 transport operator]
 \ClaimStatusProvedHere
 For a chiral algebra $\cA$ on a single primary line with
 $\kappa(\cA) = S_2(\cA) \neq 0$, define the shadow transport
-operator $\mathrm{Transp}_{\cA,r}$ acting on sequences
-$(S_2, S_3, \ldots, S_{r-1})$ by
+operator $\mathrm{Transp}_{\cA,r}^{\rm wt}$ acting on the weighted
+Riccati-metric sequence
+$(\widehat S^{\rm wt}_2,\widehat S^{\rm wt}_3,\ldots,
+\widehat S^{\rm wt}_{r-1})$ by
 \[
- \mathrm{Transp}_{\cA, r}(S_{\bullet})
+ \mathrm{Transp}^{\rm wt}_{\cA, r}(\widehat S^{\rm wt}_{\bullet})
  \;=\; -\,\frac{1}{2 r \kappa(\cA)}
  \sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
- f(j, k)\, j k\, S_j S_k,
+ f(j, k)\, j k\, \widehat S^{\rm wt}_j\,\widehat S^{\rm wt}_k,
 \]
 where $f(j, k) = 1$ for $j < k$ and $f(j, j) = \tfrac{1}{2}$. The
 sum runs over unordered integer pairs $(j, k)$ with $j + k = r + 2$,
@@ -186,10 +188,11 @@ The constraint $j \geq 3$ arises because $j = 2$ gives $S_2 = \kappa$
 as a factor, which is absorbed into the overall $1/(2 r \kappa)$
 prefactor and becomes part of the linearised operator $\nabla_H$
 rather than an obstruction. The constraint $k < r$ is the basic
-inductive property: the transport determines $S_r$ from strictly
+inductive property: the transport determines $\widehat S^{\rm wt}_r$
+from strictly
 lower-weight data. Together these constraints force $3 \leq j \leq
 (r+2)/2$ and make the recurrence closed on the previously computed
-$(S_3, \ldots, S_{r-1})$.
+$(\widehat S^{\rm wt}_3, \ldots, \widehat S^{\rm wt}_{r-1})$.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,9 +201,10 @@ $(S_3, \ldots, S_{r-1})$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{theorem}[\label{thm:virasoro-shadow-recurrence}Virasoro
-shadow recurrence]
+weighted shadow recurrence]
 \ClaimStatusProvedHere
-For $r \geq 5$ the Virasoro shadow coefficient $S_r(\Vir_c)$ is
+For $r \geq 5$ the weighted Riccati-metric coefficient
+$\widehat S^{\rm wt}_r(\Vir_c)$ is
 determined by the initial data
 \[
  \kappa = \tfrac{c}{2}, \qquad S_3 = 2, \qquad
@@ -208,13 +212,15 @@ determined by the initial data
 \]
 and the recurrence
 \[
- S_r(\Vir_c)
+ \widehat S^{\rm wt}_r(\Vir_c)
  \;=\; -\,\frac{1}{r c}
  \sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
- f(j, k)\, j k\, S_j(\Vir_c)\, S_k(\Vir_c),
+ f(j, k)\, j k\,
+ \widehat S^{\rm wt}_j(\Vir_c)\,\widehat S^{\rm wt}_k(\Vir_c),
 \]
 with $f(j, k) = 1$ for $j < k$ and $f(j, j) = \tfrac{1}{2}$. In
-particular $S_r(\Vir_c) \in \mathbb{Q}(c)$ for every $r \geq 2$.
+particular $\widehat S^{\rm wt}_r(\Vir_c) \in \mathbb{Q}(c)$ for
+every $r \geq 2$.
 \end{theorem}
 
 \begin{proof}
@@ -223,18 +229,19 @@ The master-equation recurrence of
 (thm:obstruction-recursion) applied to a single primary line with
 curvature $\kappa$ yields
 \[
- S_r \;=\; -\,\frac{1}{2 r \kappa}
+ \widehat S^{\rm wt}_r \;=\; -\,\frac{1}{2 r \kappa}
  \sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
- f(j, k)\, j k\, S_j\, S_k.
+ f(j, k)\, j k\, \widehat S^{\rm wt}_j\,\widehat S^{\rm wt}_k.
 \]
 Specialise to $\Vir_c$: $\kappa = c/2$, so $2 r \kappa = r c$, and
-the recurrence takes the stated form. The bracket
+the recurrence takes the stated form for the weighted metric
+coefficients. The bracket
 structure on a single primary is governed by the stress tensor OPE,
 whose only non-central channel is the descendant $2 T(w)/(z-w)^2$
 contribution; the Zamolodchikov quasi-primary
 $\Lambda = {:}TT{:} - \tfrac{3}{10} \partial^2 T$ has
 $\langle \Lambda \mid \Lambda \rangle = c (5c+22)/10$, which
-produces the $(5c + 22)$ factor in every subsequent $S_r$
+produces the $(5c + 22)$ factor in every subsequent weighted
 denominator.
 
 Rationality in $c$ follows by induction on $r$: the initial data
@@ -245,13 +252,14 @@ hence preserves rationality.
 
 \begin{remark}[\label{rem:sth-two-chains}Two disjoint derivation
 chains]
-The same $S_r(\Vir_c)$ is produced by the Riccati
+The same $\widehat S^{\rm wt}_r(\Vir_c)$ is produced by the Riccati
 $\sqrt{Q_L}$ Taylor expansion
 \[
  Q_L(t) \;=\; 4 \kappa^2 + 12 \kappa\, S_3\, t +
  (9 S_3^2 + 16 \kappa\, S_4)\, t^2,
  \qquad
- H(t) \;=\; t^2 \sqrt{Q_L(t)} \;=\; \sum_{r \geq 2} r S_r\, t^r.
+ H_{\rm wt}(t) \;=\; t^2 \sqrt{Q_L(t)}
+ \;=\; \sum_{r \geq 2} r\,\widehat S^{\rm wt}_r\, t^r.
 \]
 Chain (A) is the master-equation combinatorial recurrence of
 Theorem~\ref{thm:virasoro-shadow-recurrence}; chain (B) is the
@@ -272,11 +280,11 @@ numerically at $c \in \{1, 1/2, 13, 25\}$ through $r = 8$ by
 \label{sec:sth-s6}
 
 \begin{theorem}[\label{thm:s6-virasoro-closed-form}Closed form for
-$S_6(\Vir_c)$]
+$\widehat S^{\rm wt}_6(\Vir_c)$]
 \ClaimStatusProvedHere
-The weight-$6$ Virasoro shadow coefficient is
+The weight-$6$ weighted Riccati-metric coefficient is
 \[
- S_6(\Vir_c)
+ \widehat S^{\rm wt}_6(\Vir_c)
  \;=\; \frac{80\,(45 c + 193)}{3\, c^{3}\, (5 c + 22)^{2}}
  \;\in\; \mathbb{Q}(c).
 \]
@@ -339,11 +347,11 @@ The denominator $c^{3} (5 c + 22)^{2}$ encodes two structural facts:
 \label{sec:sth-s7}
 
 \begin{theorem}[\label{thm:s7-virasoro-closed-form}Closed form for
-$S_7(\Vir_c)$]
+$\widehat S^{\rm wt}_7(\Vir_c)$]
 \ClaimStatusProvedHere
-The weight-$7$ Virasoro shadow coefficient is
+The weight-$7$ weighted Riccati-metric coefficient is
 \[
- S_7(\Vir_c)
+ \widehat S^{\rm wt}_7(\Vir_c)
  \;=\; \frac{-2880\,(15 c + 61)}{7\, c^{4}\, (5 c + 22)^{2}}
  \;\in\; \mathbb{Q}(c).
 \]
@@ -408,17 +416,18 @@ positive-leading-coefficient lower-weight shadows.
 \label{sec:sth-s8}
 
 \begin{theorem}[\label{thm:s8-virasoro-closed-form}Closed form for
-$S_8(\Vir_c)$]
+$\widehat S^{\rm wt}_8(\Vir_c)$]
 \ClaimStatusProvedHere
-The weight-$8$ Virasoro shadow coefficient is
+The weight-$8$ weighted Riccati-metric coefficient is
 \[
- S_8(\Vir_c)
+ \widehat S^{\rm wt}_8(\Vir_c)
  \;=\; \frac{80\,(2025 c^{2} + 16470 c + 33314)}
  {c^{5}\, (5 c + 22)^{3}}
  \;\in\; \mathbb{Q}(c).
 \]
-In particular $S_8(\Vir_1) = 4144720/19683$, matching the Vol III
-$m_8$ identity at the specialisation $c = 1$.
+In particular $\widehat S^{\rm wt}_8(\Vir_1) = 4144720/19683$,
+matching the Vol III $m_8$ identity at the weighted specialisation
+$c = 1$.
 \end{theorem}
 
 \begin{proof}
@@ -496,7 +505,7 @@ For the Vol III cross-check, substitute $c = 1$:
  \qquad
  5 + 22 \;=\; 27,
  \qquad
- S_8(\Vir_1) \;=\; \frac{80 \cdot 51809}{1 \cdot 27^{3}}
+ \widehat S^{\rm wt}_8(\Vir_1) \;=\; \frac{80 \cdot 51809}{1 \cdot 27^{3}}
  \;=\; \frac{4144720}{19683}.
 \]
 This matches Vol III's $m_8 = 4144720/19683$ identity
@@ -530,8 +539,8 @@ structural, not an artefact of the weight-$4$ specialisation.
 \label{sec:sth-boundary}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{proposition}[\label{prop:sth-boundary-checks}Boundary values
-through weight 8]
+\begin{proposition}[\label{prop:sth-boundary-checks}Weighted boundary
+values through weight 8]
 \ClaimStatusProvedHere
 The closed forms of
 Theorems~\ref{thm:s6-virasoro-closed-form},~\ref{thm:s7-virasoro-closed-form},~\ref{thm:s8-virasoro-closed-form}
@@ -541,11 +550,11 @@ $c \in \{1, \tfrac{1}{2}, 13\}$:
  \begin{array}{r|ccc}
  & c = 1 & c = \tfrac{1}{2} & c = 13 \\
  \hline
- S_6(\Vir_c) & \tfrac{19040}{2187} & \tfrac{551680}{7203}
+ \widehat S^{\rm wt}_6(\Vir_c) & \tfrac{19040}{2187} & \tfrac{551680}{7203}
  & \tfrac{62240}{49887279} \\[2pt]
- S_7(\Vir_c) & -\tfrac{24320}{567} & -\tfrac{12625920}{16807}
+ \widehat S^{\rm wt}_7(\Vir_c) & -\tfrac{24320}{567} & -\tfrac{12625920}{16807}
  & -\tfrac{81920}{168138607} \\[2pt]
- S_8(\Vir_c) & \tfrac{4144720}{19683} & \tfrac{861291520}{117649}
+ \widehat S^{\rm wt}_8(\Vir_c) & \tfrac{4144720}{19683} & \tfrac{861291520}{117649}
  & \tfrac{47171920}{244497554379}
  \end{array}
 \]
@@ -589,11 +598,11 @@ equivalence (vii) at genus $0$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{proposition}[\label{prop:sth-leading-asymp}Leading large-$c$
-asymptotic coefficient]
+asymptotic coefficient for the weighted tower]
 \ClaimStatusProvedHere
 As $c \to \infty$,
 \[
- S_r(\Vir_c) \;\sim\; \frac{A_r}{c^{r - 2}},
+ \widehat S^{\rm wt}_r(\Vir_c) \;\sim\; \frac{A_r}{c^{r - 2}},
  \qquad A_r \in \mathbb{Q},
 \]
 with
@@ -625,7 +634,7 @@ rationals:
  A_6 = 2^{4} 3, \quad
  A_7 = -\tfrac{2^{6} 3^{3}}{7}, \quad A_8 = 2^{4} 3^{4}.
 \]
-No Kummer-irregular prime (e.g.\ $691$, $3617$) appears in any
+No Bernoulli-leading Kummer-irregular prime ($691$ or $3617$) appears in any
 $A_r$ numerator through weight $8$. Extending the computation
 through weight $16$ (via the same recurrence) shows that the
 leading coefficients remain in the $\{2, 3, 5, 7, 11, 13, 17\}$-rough
@@ -848,7 +857,8 @@ $\Sigma_\Vir(z) := \sum_{r \ge 4} A_r^\Vir z^r$ has the closed form
  \frac{4}{9} z^3 \;-\; \frac{1}{9} z^2 \;+\; \frac{1}{27} z
  \;-\; \frac{1}{162} \log(1 + 6 z).
 \]
-The function is meromorphic with a \emph{logarithmic branch point}
+The function is holomorphic on the slit plane after a choice of
+branch for $\log(1+6z)$ and has a \emph{logarithmic branch point}
 at~$z = -1/6$; the radius of convergence of the Taylor series is
 $1/6$, matching $C_\Vir = 6$.
 \end{theorem}
@@ -866,15 +876,11 @@ making the substitution $u = -6 z$:
 The tail sum is the standard log-generating function shifted by
 four terms:
 \[
- \sum_{k=0}^{\infty} \frac{u^k}{k+4}
- \;=\;
- \frac{1}{u^4} \cdot \Biggl(-\log(1 - u) - u - \frac{u^2}{2}
- - \frac{u^3}{3}\Biggr).
+\sum_{k=0}^{\infty} \frac{u^k}{k+4}
+= u^{-4} \sum_{m=4}^{\infty} \frac{u^m}{m}
+= u^{-4} [-\log(1 - u) - u - u^2/2 - u^3/3],
 \]
-Wait: the displayed denominator $u^4$ requires care. The shift
-$\sum_{k=0}^{\infty} u^k/(k+4) = u^{-4} \sum_{m=4}^{\infty} u^m/m
-= u^{-4} [-\log(1 - u) - u - u^2/2 - u^3/3]$, which is the correct
-form after absorbing the four missing low-order terms. Substituting
+after absorbing the four missing low-order terms. Substituting
 $u = -6z$ gives $1 - u = 1 + 6z$ and
 \begin{align*}
  \Sigma_\Vir(z)
@@ -1176,11 +1182,11 @@ specific arithmetic signature of the subleading Riccati mixing at
 $c^{-k}$ order.
 
 This refines the Kummer-arithmetic picture:
-leading-$r$ invariant is Kummer-absent (no irregular primes
-$p \ne 2, 3$); sub-leading-$r$ structure potentially carries
-irregular primes (including the Kummer-regular prime $691$ if it
-ever appears; currently absent through $r = 16$, per
-Remark~\ref{rem:sth-kummer-scope}).
+the leading-$r$ invariant is free of the Bernoulli-leading pair
+$\{691,3617\}$; sub-leading-$r$ structure can carry
+Kummer-irregular primes at other Bernoulli indices. The distinction
+between size-order and Bernoulli-index order is recorded in
+Theorem~\ref{thm:kummer-laurent-depth-controlled}.
 \end{remark}
 
 \begin{remark}[\label{rem:pole-doubling-k3-verification}
@@ -1277,9 +1283,12 @@ Theorem~\ref{thm:universal-class-M-C-is-6}),
 \end{proposition}
 
 \begin{proof}
-By definition $C_\cA = \limsup_{r \to \infty} |A_{r+1}/A_r| =
-\limsup_{r \to \infty} |A_r|^{1/r}$. The Cauchy--Hadamard formula
-gives $\rho(\Sigma_\cA) = 1/\limsup |A_r|^{1/r} = 1/C_\cA$. For
+Use the root-growth definition
+$C_\cA=\limsup_{r\to\infty}|A_r|^{1/r}$; when the consecutive
+ratio has a limit, as in the Virasoro and universal class~M
+cases below, it equals this root-growth constant. The
+Cauchy--Hadamard formula gives
+$\rho(\Sigma_\cA)=1/\limsup |A_r|^{1/r}=1/C_\cA$. For
 Virasoro, $C_\Vir = 6$ by
 Theorem~\ref{thm:shadow-exponential-base-Virasoro}, so
 $\rho(\Sigma_\Vir) = 1/6$. For any other algebra in the universal
@@ -1333,493 +1342,75 @@ three levels of analytic well-definedness of $\Sigma_\cA(z)$.
 
 \begin{remark}[\label{rem:cross-volume-leading-vs-finite-c}
 Cross-volume coherence: leading-$c$ vs fixed-$c$ shadow regimes]
-Vol~III (\verb|chapters/connections/modular_koszul_bridge.tex|)
-analyses the shadow generating function
-$\Theta_A(t) = \sum_{k \ge 2} S_k(A) t^k$ at FIXED finite central
-charge and proves class~$M$ satisfies $|S_k| \sim C^k \cdot k!$
-(Gevrey-$1$ divergent), with Borel summability on the positive
-real axis (Proposition~\textup{\ref*{V3-prop:class-m-borel-summability-bridge}}
-in Vol~III).
-Vol~I's Theorem~\ref{thm:shadow-exponential-base-Virasoro} shows
-$|A_r^\Vir| \sim 6^r / r$ (linear exponential, Gevrey-$0$
-convergent) for the LEADING-$1/c$ asymptotic coefficient.
+There are three distinct analytic regimes.
 
-No contradiction: the two regimes measure different aspects of the
-shadow. At FIXED finite $c$, the full rational $S_r(\Vir_c)$ may
-grow factorially in $r$ (Gevrey-$1$ in $t$); simultaneously, at
-LEADING $1/c$ with $r$ fixed, the coefficients $A_r^{(0)}$ grow
-exponentially (Gevrey-$0$ in $z$). The $1/c$ asymptotic expansion
-of $S_r(\Vir_c)$ is itself Gevrey-$1$ (level-level magnitudes grow
-factorially), consistent with the double-scaling behaviour.
+First, the coefficient-wise large-$c$ expansion of the weighted tower
+has leading series
+$\Sigma_\Vir(z)=\sum_{r\ge4}A_rz^r$ with logarithmic branch point
+at $z=-1/6$ (Theorem~\ref{thm:shadow-series-closed-form-Virasoro}).
+This is a statement about the Laurent coefficient
+$A_r=\lim_{c\to\infty}c^{r-2}\widehat S^{\rm wt}_r(\Vir_c)$, not
+about the finite-$c$ shadow series.
 
-Explicitly: fix $c = c_0 \in \mathbb{R}$. Then
-$\tilde\Sigma_\Vir(z, c_0) = \sum_r S_r(c_0) z^r$ has radius of
-convergence $c_0/6$ (from Vol~I via
-Theorem~\ref{thm:pole-doubling-all-k} at $c = c_0$ finite);
-the Gevrey-$1$ tail of Vol~III is observed in the SEQUENCE
-$S_r(c_0)$ relative to its factorial normalisation $S_r/r!$,
-not in the radius of convergence of $\tilde\Sigma$.
+Second, for fixed $c_0$ the ordinary series
+$\widetilde\Sigma_\Vir(z,c_0)=
+\sum_r\widehat S^{\rm wt}_r(\Vir_{c_0})z^r$ is a different
+resummation problem. A Gevrey-$1$ Borel bound of the form
+$|\widehat S^{\rm wt}_r(c_0)|\le C M^r r!$ is an upper bound on
+the factorially normalised transform; it does not assert that the
+unscaled coefficients must grow factorially. The finite-$c$ root
+growth and the Gevrey type of
+$\sum_r \widehat S^{\rm wt}_r(c_0)\zeta^r/r!$ are therefore
+different invariants.
 
-The Vol~I and Vol~III characterizations are ORTHOGONAL:
-Vol~I asks the radius of convergence of $\tilde\Sigma$ (answer:
-$c_0/6$); Vol~III asks the Gevrey type of $S_r/r!$ (answer:
-Borel-summable, Gevrey-$1$). Both are correct simultaneously.
-
-\textbf{Numerical tightening (iter 27).} Vol~III's Gevrey-$1$ bound
-$|S_k| \le C \cdot M^k \cdot k!$ is VALID but NOT TIGHT. At
-Virasoro $c = 1$, direct numerical evaluation via
-\verb|shadow_tower_higher_vir.py| (Vol~I):
-\begin{center}
-\begin{tabular}{crrr}
-$r$ & $S_r(\Vir_{c=1})$ & $|S_{r+1}/S_r|$ & $(r+1)$ if factorial \\
-\hline
-$6$ & $8.7060$ & $4.93$ & $7$ \\
-$7$ & $-42.8924$ & $4.91$ & $8$ \\
-$8$ & $210.5736$ &; &; \\
-\end{tabular}
-\end{center}
-The ratio $|S_{r+1}/S_r| \approx 4.9$ is BOUNDED, not growing like
-$r + 1$ (which factorial growth would require). Hence
-$|S_r(\Vir_{c=1})|$ grows \emph{geometrically} (Gevrey-$0$),
-specifically with base $\approx 5 < 6 = 6/c$. The asymptotic limit
-approaches $6/|c| = 6$ as $r \to \infty$ (Vol~I prediction);
-finite-$r$ corrections produce the observed $4.9$ at $r = 6, 7, 8$.
-
-The Vol~III Gevrey-$1$ bound $|S_k| \le C \cdot M^k \cdot k!$
-trivially holds since $k! > 1$; but the ACTUAL growth at $c = 1$ is
-exponential (Gevrey-$0$) with base $\approx 6$. Vol~I's
-Theorem~\ref{thm:universal-class-M-C-is-6} provides the TIGHT
-$|S_r|^{1/r} \to 6/|c|$ limit; Vol~III's Gevrey-$1$ is a weaker
-upper bound preserving the Borel-summability statement without
-invoking the sharper exponential rate.
-
-\textbf{Borel radius numerical verification (iter 28).} Despite
-$|S_k|$ growing exponentially rather than factorially, the Borel
-transform $\hat{\Theta}_\Vir(\zeta) = \sum S_k/k! \cdot \zeta^k$
-DOES have finite radius of convergence (consistent with Vol~III's
-Borel-summability claim). At Virasoro $c = 1$:
+Third, the quadratic Borel model attached to the Virasoro
+Riccati metric gives explicit candidate singularities. At $c=1$,
+with $\kappa_{\mathrm{ch}}=1/2$ and
+$S_4=10/27$, the quadratic
+$Q_L(\zeta)=q_0+q_1\zeta+q_2\zeta^2$ has
 \[
- |S_k/k!|^{1/k} \quad\text{at } k = 6, 7, 8 \;=\;
- 0.479, \;0.506, \;0.519,
+ q_0=\frac{206}{27},\qquad q_1=-4,\qquad q_2=2,
 \]
-approaching $\approx 0.52$. Inverse gives Borel radius $\approx 1.93$.
-Vol~III's theoretical prediction via the shadow-quadratic
-$Q_L(\zeta) = q_0 + q_1 \zeta + q_2 \zeta^2$ with
-$q_0 = 4\kappa_{\mathrm{ch}} \alpha^2 - 4 S_4 \kappa_{\mathrm{ch}}^2
-= 8 - 10/27 = 206/27$,
-$q_1 = -4\alpha \kappa_{\mathrm{ch}} = -4$,
-$q_2 = 4\kappa_{\mathrm{ch}} = 2$: singularities at
-$\omega_\pm = t_c \pm i\delta$ with
-$t_c = -q_1/(2 q_2) = 1$ and
-$|\delta|^2 = |q_1^2 - 4 q_0 q_2|/(4 q_2^2) = 1216/(27 \cdot 16)
-= 76/27$, giving $|\omega_\pm| = \sqrt{1 + 76/27} = \sqrt{103/27}
-\approx 1.95$. Matches observed $\approx 1.93$ to within
-finite-$r$ correction (within $1\%$).
-
-\textbf{Summary of Borel-geometric invariants (iters 33--39).}
-The Borel-analytic structure of the Virasoro shadow tower at
-leading-$c$ asymptotic is governed by a single universal constant
-$C_\Vir = 6$:
-\begin{itemize}
- \item $|\omega_\pm| \in [1.94, 2)$ for all $c > 0$; $|\omega|(c) =
- 2 - 1/(4c) + O(c^{-2})$ at large $c$.
- \item $t_c = 1$ constant in $c$; $\omega_\pm = t_c \pm i |\delta|$.
- \item Borel-angle $\to \pi/3 = 2\pi/C_\Vir$ at $c \to \infty$
- (Virasoro-specific numerical coincidence, NOT a general
- $C$-dependence; see iter 39 caveat).
- \item Minimal polynomial over $\mathbb{Q}$:
- $\omega^2 - 2\omega + 4 = 0$ (degree $2$).
- \item Splitting field: $\mathbb{Q}(\zeta_6) = \mathbb{Q}(\sqrt{-3})$
- (cyclotomic order $6 = C_\Vir$; Galois group
- $\mathrm{Gal}/\mathbb{Q} = \mathbb{Z}/2$ of order
- $\varphi(6) = 2$).
- \item Full cubic factorisation $\omega^3 + 8 =
- (\omega + 2)(\omega^2 - 2\omega + 4)$; the real root
- $\omega_0 = -2$ is outside the Borel disk; the complex
- conjugate pair $\omega_\pm$ sits on the Borel circle.
-\end{itemize}
-Platonic identification: $C_\Vir = 6$ is simultaneously the
-exponential rate of $|A_r|$, the radial scale $|\omega| = C/3 = 2$
-of the Borel singular pair, the cyclotomic order of the Galois
-splitting field, and the angular order of the Borel singularity
-(Virasoro-specific). Multiple independent structural invariants
-coalesce onto the single number $6$.
-
-\textbf{Phase transition at $c = -83/20$ (iter 44).} Extending the
-closed-form analysis to negative central charge (domain
-$c > -22/5 = -4.4$ where $5c + 22 > 0$). Simplifying via
-$(5c+22) + (15c+61) = 20c + 83$:
+so its roots are
 \[
- |\omega|^2(c)
- \;=\; 1 + \frac{15 c + 61}{5 c + 22}
- \;=\; \frac{20 c + 83}{5 c + 22}
+ \omega_\pm=1\pm i\sqrt{\frac{76}{27}},\qquad
+ |\omega_\pm|=\sqrt{\frac{103}{27}}.
 \]
-(cleaner closed form). Positive iff both numerator and denominator
-have the same sign:
+For general $c$ in this quadratic model,
 \[
- |\omega|^2(c) > 0
- \iff
- c > -83/20 = -4.15 \text{ (both positive) }
- \text{ or }
- c < -22/5 = -4.4 \text{ (both negative)}.
+ |\omega_\pm|^2
+ =1+\frac{15c+61}{5c+22}
+ =\frac{20c+83}{5c+22}.
 \]
-The UNPHYSICAL gap $c \in (-22/5, -83/20) = (-4.4, -4.15)$ gives
-$|\omega|^2 < 0$ (numerator negative, denominator positive);
-Borel analysis breaks down.
-
-\textbf{Identification of $c = -22/5$ with Lee-Yang (iter 46).}
-The pole of $|\omega|^2(c)$ at $c = -22/5$ is precisely the
-central charge of the Lee-Yang minimal model $M(2, 5)$:
+Thus $c=-22/5$ is the Lee--Yang denominator pole of the universal
+Virasoro Verma formula $S_4=10/[c(5c+22)]$; it is not a singularity
+of the simple Lee--Yang quotient after null vectors are divided out.
+At $c=-83/20$ the quadratic has $q_0=0$ and factors as
 \[
- c_{2,5} = 1 - \frac{6 (2-5)^2}{2 \cdot 5}
- = 1 - \frac{54}{10}
- = -\frac{22}{5}.
+ Q_L(\zeta)=\frac{83}{10}\,\zeta(2-\zeta),
 \]
-At Lee-Yang, the Virasoro formula $S_4(\Vir_c) = 10/[c(5c + 22)]$
-has a denominator zero, so $S_4$ diverges; consequently the Borel
-singularities go to infinity. The phase transition at $c = -22/5$
-is the Lee-Yang non-unitary minimal-model divergence of the shadow
-quartic.
+so the model roots are $0$ and $2$. The root at $0$ is a
+degeneracy of the quadratic approximation, while the root at $2$
+is the positive-real Borel obstruction predicted by that model.
 
-\textbf{Multi-admissibility pattern at Lee-Yang (iter 54).} Parallel
-to the iter 53 analysis at $c = -83/20$: the Lee-Yang central charge
-$c = -22/5$ is ALSO admissible for every simply-laced $\mathfrak{sl}_n$:
-\begin{center}
-\begin{tabular}{c|c|c|c}
-$n$ & $k_n$ & $(p, q)$ & Admissible \\
-\hline
-$2$ & $-44/37$ & $(30, 37)$ & Yes \\
-$3$ & $-33/31$ & $(60, 31)$ & Yes \\
-$4$ & $-88/97$ & $(300, 97)$ & Yes \\
-$5$ & $-55/71$ & $(300, 71)$ & Yes \\
-$6$ & $-132/197$ & $(1050, 197)$ & Yes \\
-\end{tabular}
-\end{center}
-Each satisfies $\gcd(p, q) = 1$ and $p \ge h^\vee = n$. Hence
-$c = -22/5$ is realized by both the Lee-Yang Virasoro $M(2, 5)$
-AND admissible affine $V_{k_n}(\mathfrak{sl}_n)$ at the listed
-levels (for $n = 2, 3, 4, 5, 6$ and presumably all $n$).
+The Sugawara equation
+$8k/(k+3)=-83/20$ gives the admissible
+$\widehat{\mathfrak{sl}}_3$ level $k=-83/81=-3+160/81$.
+The same rational central charge is realised by admissible
+$\mathfrak{sl}_n$ levels for other $n$ as well; this is a
+rational-central-charge phenomenon, not evidence that the
+Virasoro Borel quadratic singles out a unique affine algebra.
 
-\textbf{Common pattern.} Both phase-transition central charges of
-$|\omega|^2(c)$ exhibit the SAME multi-family admissibility
-structure:
-\begin{itemize}
- \item $c = -22/5$ (pole, Lee-Yang identification): admissible for
- all sl$_n$ ($2 \le n \le 6$), plus Virasoro $M(2, 5)$.
- \item $c = -83/20$ (zero, iter 52 identification): admissible for
- all sl$_n$ ($2 \le n \le 6$), no immediate Virasoro
- minimal-model match.
-\end{itemize}
-This suggests the Virasoro shadow-Borel formula's singular points
-coincide with central charges of admissible affine Kac-Moody
-algebras; see the caveat below.
-
-\textbf{Iter 56 caveat.} The multi-admissibility pattern is not
-specifically concentrated at the Virasoro Borel-radius phase
-transitions. Direct verification at comparison central charges
-$c \in \{0, -1, -1/2, -7\}$ shows that EVERY rational $c$ is
-multi-admissible for $\mathfrak{sl}_n$ for most $n \ge 2$. For
-example at $c = -1$, admissible levels are $k = -1/n$ for every
-$n \ge 2$. The Virasoro shadow-Borel phase-transition c-values
-$-22/5$ and $-83/20$ are multi-admissible because they are
-rational, not because the formula specifically targets admissible
-levels.
-
-The physically interesting content at iter 46 (Lee-Yang = $c_{2,5}$)
-and iter 52 (affine $\mathfrak{sl}_3$ at level $-83/81$) is the
-MINIMAL-MODEL identification (Lee-Yang) or the SMALLEST-COMPLEXITY
-admissible level ($(p, q) = (160, 81)$ for sl$_3$ at $c = -83/20$).
-The general multi-admissibility across all sl$_n$ is a weaker
-statement that holds for essentially all rational $c$.
-
-\textbf{Physical interpretation (iter 47).} The shadow formula
-$S_4 = 10/[c(5c + 22)]$ applies to the UNIVERSAL Virasoro Verma
-module (without null-vector quotients). At Lee-Yang $c = c_{2,5}$,
-the simple quotient $M(2, 5)$ differs from the Verma module by
-null-vector identifications; the divergence of $S_4$ at this $c$
-is precisely the signal that the universal-Virasoro shadow
-formula does NOT apply to the minimal model. The correct
-$S_4(M(2, 5))$ requires a separate computation that quotients out
-the null vectors; the simple-quotient shadow is finite. The pole
-of $|\omega|^2(c)$ at Lee-Yang is an analytic-singularity artifact
-of the Verma-module formula, not a physical breakdown of Lee-Yang
-itself.
-
-The companion phase-transition $c = -83/20$ at which Borel
-singularities merge into a single point is a new Virasoro landmark
-not obviously matching any standard minimal-model or W-algebra
-central charge. Its identification, plausibly via admissible-level
-or non-unitary Verma-module structure, is left as an open
-question; $c = -83/20$ characterizes the non-unitary
-Virasoro regime at which the shadow-quadratic discriminant vanishes.
-
-\textbf{Iter 48/49 observation (corrected).} At $c = -83/20$, direct
-computation of $Q_L(\zeta)$: $q_0 = 0$ (since $20c + 83 = 0$),
-$q_1 = 83/5$, $q_2 = -83/10$. Discriminant $q_1^2 - 4 q_0 q_2 =
-(83/5)^2 > 0$. Roots are REAL AND DISTINCT:
+As $c\to\infty$ the two non-real roots in the positive-$c$ regime
+approach
 \[
- Q_L(\zeta) = (83/10) \zeta (2 - \zeta) = 0
- \;\Longleftrightarrow\;
- \zeta = 0 \;\text{or}\; \zeta = 2.
+ \omega_\pm\longrightarrow 1\pm i\sqrt3
+ =2e^{\pm i\pi/3}\in\mathbb Q(\zeta_6).
 \]
-The interpretation ``$|\omega|^2 = 0 \Rightarrow$ roots merge'' of
-iter 44 was WRONG. The correct reading: at $c = -83/20$, the
-PRODUCT of Borel roots $q_0/q_2$ vanishes, meaning ONE root sits
-at the origin $\zeta = 0$ while the other sits at $\zeta = 2$.
-
-\textbf{Cautious interpretation (iter 50).} The shadow-quadratic
-$Q_L(\zeta)$ is a POLYNOMIAL whose roots are PREDICTED Borel
-singularities under the Vol III shadow-Borel correspondence
-(Proposition~\ref*{V3-prop:class-m-borel-summability-bridge}). At
-$c = -83/20$, $Q_L$ has real roots at $\zeta = 0$ and $\zeta = 2$.
-
-The interpretation of ``$Q_L$-root at $\zeta = 0$'' is subtle: the
-Borel transform $\hat\Theta_\Vir(\zeta) = \sum_{k \ge 2}
-(S_k/k!) \zeta^k$ has $\hat\Theta_\Vir(0) = 0$ trivially (Taylor
-series starts at $\zeta^2$), so the function itself is
-well-behaved at the origin as a formal series. The $Q_L$-root at
-$\zeta = 0$ signals instead that the shadow-asymptotic Borel MODEL
-(the Padé-like rational approximation to $\hat\Theta$ whose
-denominator is $Q_L$) FAILS at the origin: the asymptotic series
-is insufficient to describe the Borel transform near $\zeta = 0$
-at this specific $c$.
-
-The $Q_L$-root at $\zeta = 2$ is a conventional Borel singularity
-on the positive real axis, which OBSTRUCTS direct Borel summation
-along $\theta = 0$ (physical direction). At $c = -83/20$, the
-direct Borel sum $\mathcal{S}_0[\Theta_\Vir]$ is consequently
-obstructed; lateral Borel summation ($\theta = 0^\pm$) is the
-required alternative.
-
-Physical reading: $c = -83/20$ is a central charge where both the
-shadow-asymptotic model at origin fails AND the positive-real-axis
-Borel sum is obstructed.
-
-\textbf{Affine $\mathfrak{sl}_3$ identification (iter 52).} The
-central charge $c = -83/20$ is precisely the Sugawara central charge
-of the affine Kac-Moody algebra $V_{-83/81}(\mathfrak{sl}_3)$:
-\[
- c_{\mathrm{Sug}}(V_k(\mathfrak{sl}_3))
- \;=\; \frac{\dim(\mathfrak{sl}_3) \cdot k}{k + h^\vee}
- \;=\; \frac{8 k}{k + 3}
- \;=\; -\frac{83}{20}
- \iff
- k = -\frac{83}{81}.
-\]
-The level $k = -83/81 = -3 + 160/81$ satisfies the
-Kac--Wakimoto \emph{admissibility conditions} for simply-laced
-$\mathfrak{sl}_3$: $p = 160$, $q = 81$; $\gcd(p, q) = 1$;
-$p \ge h^\vee = 3$. Hence $V_{-83/81}(\mathfrak{sl}_3)$ is
-admissible.
-
-\textbf{Iter 53 correction.} The multiplicity of admissible
-identifications is GREATER than $\mathfrak{sl}_3$ alone. Checking
-sl$_n$ for $2 \le n \le 6$:
-\begin{center}
-\begin{tabular}{c|c|c|c}
-$n$ & $k_n$ & $(p, q)$ & Admissible? \\
-\hline
-$2$ & $-166/143$ & $(120, 143)$ & Yes \\
-$3$ & $-83/81$ & $(160, 81)$ & Yes \\
-$4$ & $-332/383$ & $(1200, 383)$ & Yes \\
-$5$ & $-415/563$ & $(2400, 563)$ & Yes \\
-$6$ & $-166/261$ & $(1400, 261)$ & Yes \\
-\end{tabular}
-\end{center}
-All satisfy the simply-laced Kac-Wakimoto admissibility
-($\gcd(p, q) = 1$ and $p \ge h^\vee = n$). The iter 52 claim of
-``$\mathfrak{sl}_3$ is the UNIQUE admissible identification''
-imposed a spurious $\gcd(p, n) = 1$ condition not part of the
-standard admissibility criterion.
-
-Physical interpretation: the phase-transition central charge
-$c = -83/20$ coincides with the Sugawara central charge of
-admissible affine $\mathfrak{sl}_n$ for MULTIPLE $n$ at different
-admissible levels. $\mathfrak{sl}_3$ at $-83/81$ has the smallest
-$(p, q)$ and is the most natural candidate, but the Virasoro
-phase-transition degeneracy at $c = -83/20$ coincides with a
-whole family of admissible affine Kac-Moody algebras sharing this
-Sugawara central charge.
-At $c = -83/20$: $|\omega|^2 = 0$, so the two Borel singularities
-$\omega_\pm = t_c \pm i|\delta|$ \emph{merge} at the single real
-point $t_c = 1$. At $c$ slightly above $-83/20$, they are a pair of
-close complex conjugate singularities; at $c$ slightly below
-$-83/20$ (down to $-22/5$), the formula gives imaginary $|\omega|^2$
-(unphysical), indicating the Borel analysis breaks down.
-
-This is a \emph{phase transition} in the Borel-singularity
-topology of the Virasoro shadow quadratic: complex-pair $\to$
-single-real as $c$ crosses $-83/20$ from above. The phase-transition
-central charge $c = -83/20$ is rational and independent of the
-shadow-exponential base $C_\Vir = 6$; it encodes a different
-structural feature of the Virasoro shadow-quadratic. No
-known physical interpretation of $c = -83/20$ in standard
-Virasoro classification; may correspond to a specific admissible-
-level or Verma-module degeneracy that warrants further
-investigation.
-
-\textbf{Caveat (iter 41): the identification $|\omega| = C/3$ is
-Virasoro-specific, like the angle identification.} From the
-shadow-quadratic $Q_L(\zeta)$ at Virasoro leading $c$:
-$|\delta|^2 \to 3$, $|\omega|^2 \to 4 = 2^2 = (6/3)^2 = (C_\Vir/3)^2$.
-The specific match $|\omega|^2 = (C/3)^2$ is a numerical coincidence
-at the Virasoro shadow quadratic, not a general $C$-dependence
-identity. For hypothetical class M with $C \ne 6$, the shadow
-quadratic would differ and $|\omega|$ would not generally match
-$C/3$. Within the programme scope (universal class M with
-$C_\cA = 6$ uniformly), both identifications $|\omega| = C/3$ and
-angle $= 2\pi/C$ apply throughout via the Virasoro-specific
-arithmetic. Same caveat as iter 39.
-
-\textbf{Platonic observation (iter 33): Borel radius is
-approximately $c$-independent.} Computing $|\omega_\pm|$ as a
-function of $c$:
-\[
- |\omega_\pm|^2(c)
- \;=\; 1 + \frac{15 c + 61}{5 c + 22},
- \qquad
- t_c(c) = 1 \text{ (constant in } c\text{)}.
-\]
-Asymptotic behaviour: $|\omega|^2 \to 4$ as $c \to \infty$
-($|\omega| \to 2$); $|\omega|^2 \to 83/22 \approx 3.77$ as
-$c \to 0^+$ ($|\omega| \approx 1.94$). Across the full range
-$c \in (0, \infty)$: $|\omega| \in [1.94, 2)$, a variation of
-less than $3\%$.
-
-This is a remarkable Platonic invariant: the Virasoro Borel
-radius is essentially CONSTANT at $|\omega| \approx 2$ across
-all non-critical central charges, approaching exactly $2$ as
-$c \to \infty$.
-
-\textbf{Large-$c$ expansion.} Expanding
-$(15c + 61)/(5c + 22) = 3 - 1/(c + 22/5)$ in powers of $1/c$ gives:
-\[
- |\omega|^2(c) \;=\; 4 - \frac{1}{c} + \frac{22}{5 c^2} + O(c^{-3}),
-\]
-and consequently
-\[
- |\omega|(c) \;=\; 2 - \frac{1}{4 c} + O(c^{-2}).
-\]
-The correction term $-1/(4c)$ is the leading finite-$c$ deviation
-from the $|\omega| = 2$ asymptote. Numerical verification:
-at $c = 1000$, exact $|\omega| = 1.99975108$, leading approximation
-$2 - 1/4000 = 1.99975000$; agreement to $\approx 10^{-6}$.
-
-\textbf{Structural identification with shadow-exponential base
-(iter 36).} Computing the PHASE of the Borel singularity at
-$c \to \infty$: $|\delta|^2 \to 3$, so $|\delta| \to \sqrt{3}$; with
-$t_c = 1$, the singularities sit at
-\[
- \omega_\pm \;=\; 1 \pm i \sqrt{3}
- \;=\; 2 \cdot e^{\pm i\pi/3}
- \;=\; 2 \cdot e^{\pm 2\pi i / 6}
- \;=\; 2 \cdot e^{\pm 2\pi i / C_\Vir}.
-\]
-The phase angle $\pi/3 = 2\pi/6 = 2\pi/C_\Vir$ is \emph{exactly}
-the angular fraction determined by the shadow-exponential base.
-The Borel singularities sit at the primitive $C_\Vir$-th roots of
-unity, scaled by $|\omega| = 2$.
-
-Numerical convergence:
-\begin{center}
-\begin{tabular}{crc}
-$c$ & $|\delta|^2$ & $\arg(\omega_+)$ \\
-\hline
-$1$ & $2.8148$ & $59.20^\circ$ \\
-$10$ & $2.9306$ & $59.71^\circ$ \\
-$100$ & $2.9904$ & $59.96^\circ$ \\
-$1000$ & $2.9990$ & $59.996^\circ$ \\
-$\infty$ & $3$ & $60^\circ = \pi/3$ \\
-\end{tabular}
-\end{center}
-
-This identifies $C_\Vir = 6$ not just as the exponential rate of
-the shadow series but also as the ANGULAR ORDER of the Borel
-singularity position: the Borel singularities are at primitive
-$6$th roots of unity $\cdot$ scale $2$, asymptotically.
-
-\textbf{Caveat (iter 39): the angle-$=2\pi/C$ identity is
-Virasoro-specific.} At hypothetical class M with a different
-shadow-exponential base $C \ne 6$, the actual Borel-singularity angle
-is $\arctan(\sqrt{C^2 - 9}/3)$, which matches $2\pi/C$ only at
-$C = 6$ (numerical coincidence $\arctan\sqrt 3 = \pi/3 = 2\pi/6$).
-For other $C$, the angle-formula differs. Since the universal
-class M stratum has $C_\cA = 6$ uniformly (T-line dominance,
-Theorem~\ref{thm:universal-class-M-C-is-6}), the iter 36 formula
-applies throughout the programme scope; it is NOT a general
-$C$-dependence formula.
-
-The ratio $|\omega|/C_\Vir = 2/6 = 1/3$ combined with the phase
-$2\pi/C_\Vir$ completes the structural identification:
-the Borel singularities are at
-$(|\omega|) \cdot e^{\pm 2\pi i/C_\Vir}
- = (C_\Vir/3) \cdot e^{\pm 2\pi i/C_\Vir}$
-at leading-$c$ asymptotic. The shadow-exponential base governs
-BOTH the radial magnitude (via $C/3$) AND the angular position
-(via $2\pi/C$) of the Borel singularities simultaneously.
-
-\textbf{Cyclotomic identification (iter 37).} The asymptotic
-Borel singularities $\omega_\pm = 1 \pm i\sqrt 3$ at $c \to \infty$
-satisfy the minimal polynomial over $\mathbb{Q}$:
-\[
- \omega^2 - 2 \omega + 4 \;=\; 0, \qquad
- \text{equivalently} \quad \omega^3 + 8 = 0.
-\]
-So $\omega_\pm$ are the two \emph{non-real cube roots} of $-8 =
--(C_\Vir/3)^3$; the real cube root $-2$ is outside the Borel
-disk. Discriminant of the minimal polynomial:
-$(-2)^2 - 4 \cdot 4 = -12 = -3 \cdot 2^2$, so $\omega_\pm \in
-\mathbb{Q}(\sqrt{-3}) = \mathbb{Q}(\zeta_6)$ where $\zeta_6 =
-e^{i\pi/3}$ is the primitive $6$th root of unity.
-
-The shadow-exponential base $C_\Vir = 6$ is thus the
-\emph{cyclotomic order} of the minimal Galois field containing the
-asymptotic Virasoro Borel geometry: $\omega_\pm = (C_\Vir/3) \cdot
-\zeta_{C_\Vir}^{\pm 1} \in \mathbb{Q}(\zeta_{C_\Vir})$.
-
-This final identification promotes the shadow-exponential base from
-a geometric-asymptotic constant to a \emph{Galois-theoretic
-arithmetic invariant}: $C_\Vir$ encodes the cyclotomic order of
-the Borel-stratum's number-theoretic home. The Virasoro shadow
-tower's Platonic signature is the cyclotomic field
-$\mathbb{Q}(\zeta_6) = \mathbb{Q}(\zeta_3) = \mathbb{Q}(\sqrt{-3})$
-(degree~$2$ over $\mathbb{Q}$; Euler totient
-$\varphi(6) = \varphi(3) = 2$). The Galois group
-$\mathrm{Gal}(\mathbb{Q}(\zeta_6)/\mathbb{Q}) = \mathbb{Z}/2$
-(complex conjugation) permutes the pair $\omega_+ \leftrightarrow
-\omega_-$; the real cube root $-2$ is fixed in $\mathbb{Q}$.
-The full polynomial $\omega^3 + 8$ factors as
-$(\omega + 2)(\omega^2 - 2\omega + 4)$ over $\mathbb{Q}$, with the
-two factors corresponding to the real Borel-distant saddle
-$\omega_0 = -2$ (outside the Borel disk) and the complex-conjugate
-Borel singular pair $\omega_\pm$ (on the Borel circle) respectively. The ratio $|\omega|/C_\Vir = 2/6 = 1/3$ at
-large~$c$ provides a specific relationship between the
-Borel-summation threshold and the shadow-exponential base.
-Whether this $\approx 2$ constancy is coincidence or reflects
-a deeper structural invariant of the Virasoro shadow-quadratic
-$Q_L(\zeta)$ is an open question; the $|\omega| \to 2$ limit
-may encode a categorified two-dimensional ramification
-(Drinfeld-center $E_2$ depth) inherent to the Virasoro
-bar-complex beyond the $C_{\Vir} = 6$ exponential rate.
-
-\medskip
-
-The three-regime Gevrey picture:
-\begin{itemize}
- \item \emph{$|S_k|$ in $k$ at fixed $c$}: exponential
- (Gevrey-$0$), rate $\approx 6/|c|$ from Vol~I limit.
- \item \emph{$S_k/k!$ in $k$ at fixed $c$}: decays polynomially
- (the factor $6^k/k!$ decays as $1/k!$ dominates), but
- the series $\hat{\Theta}(\zeta)$ has finite radius
- $\approx 1.68$ at $c = 1$.
- \item \emph{$A_r^{(k)}$ in $k$ at fixed $r$}: Gevrey-$1$
- factorial in $k$, consistent with Vol~III's Gevrey
- characterization of the $1/c$ asymptotic expansion
- itself.
-\end{itemize}
-Vol~III's Borel-summability is preserved: the Borel-transform
-radius $\sim 1.68$ at $c = 1$ is consistent with numerical data,
-despite the weaker Gevrey-$1$ upper bound on $|S_k|$.
+The equality of the limiting angle $\pi/3$ with $2\pi/C_\Vir$ is
+specific to the Virasoro weighted quadratic and the value
+$C_\Vir=6$; it should not be promoted to a general formula for an
+arbitrary exponential base.
 \end{remark}
 
 \begin{remark}[\label{rem:shadow-stratification-at-r-index}
@@ -2398,12 +1989,12 @@ Proposition~\ref{prop:s6-w3-mot}).
 \label{sec:sth-summary}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{proposition}[\label{prop:sth-summary}Closed-form Virasoro
-shadow spectrum through weight 8]
+\begin{proposition}[\label{prop:sth-summary}Closed-form weighted Virasoro
+spectrum through weight 8]
 \ClaimStatusProvedHere
 \[
  \begin{array}{r|l|l|l}
- r & S_r(\Vir_c) & \text{pole order at } c = 0 & (5c+22) \text{ multiplicity} \\
+ r & \widehat S^{\rm wt}_r(\Vir_c) & \text{pole order at } c = 0 & (5c+22) \text{ multiplicity} \\
  \hline
  2 & c/2 & 0 & 0 \\
  3 & 2 & 0 & 0 \\
@@ -2443,24 +2034,25 @@ side) are the natural next questions.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Arithmetic disjointness: Kummer-irregular primes are absent from $S_r(\Vir_c)$ through $r = 11$}
+\section{Arithmetic disjointness for the weighted tower through $r = 11$}
 \label{sec:sth-kummer-absence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Virasoro shadow tower and the Verlinde polynomial $Z_g(k)$ record two
 arithmetically distinct invariants of the same underlying programme. The
-first half of the duality is a shadow-side absence statement: the shadow
-coefficients $S_r(\Vir_c)$ through weight $r = 11$ are localised on the
-chiral algebra itself (residues of $\ChirHoch(\cA)$) and carry arithmetic
-disjoint from the Hurwitz--Bernoulli content of $Z_g$. The complementary
+first half of the duality is a shadow-side absence statement: the
+weighted shadow coefficients $\widehat S^{\rm wt}_r(\Vir_c)$ through
+weight $r = 11$ are localised on the ordered shadow/Gel'fand--Fuks
+representative of the chiral algebra and carry arithmetic disjoint
+from the Hurwitz--Bernoulli content of $Z_g$. The complementary
 statement -- that the Kummer-irregular primes $\{691, 3617\}$ appear in the
 $Z_g$ leading coefficients through
 $(-1)^g2^{g-1}B_{2g-2}/(2g-2)!$ -- is proved in
 Theorem~\ref{thm:z-g-s-r-arithmetic-duality}.
 
 \begin{theorem}[\label{thm:s-r-kummer-absent-through-r-11}The
-Bernoulli-leading Kummer pair $\{691, 3617\}$ is absent from $S_r(\Vir_c)$
-through $r = 11$]
+Bernoulli-leading Kummer pair $\{691, 3617\}$ is absent from
+$\widehat S^{\rm wt}_r(\Vir_c)$ through $r = 11$]
 \ClaimStatusProvedHere
 Let $\mathrm{IrrKum}_{\mathrm{Bern},2} := \{691,\, 3617\}$ denote the
 Kummer-irregular primes appearing at the two smallest Bernoulli indices
@@ -2469,55 +2061,61 @@ $r$ in the range
 $2 \leq r \leq 11$, neither $691$ nor $3617$ divides any integer
 coefficient of the cleared numerator
 \[
- N_r(c) \;:=\; S_r(\Vir_c) \cdot c^{r-3} (5c + 22)^{\lfloor (r-2)/2 \rfloor}
+ \widehat N_r(c) \;:=\; \widehat S^{\rm wt}_r(\Vir_c) \cdot
+ c^{r-3} (5c + 22)^{\lfloor (r-2)/2 \rfloor}
  \;\in\; \mathbb{Z}[c].
 \]
-Explicitly, $691,\, 3617 \nmid \mathrm{coeff}_{c^{j}}(N_r(c))$ for every
+Explicitly, $691,\, 3617 \nmid \mathrm{coeff}_{c^{j}}(\widehat N_r(c))$ for every
 $r \leq 11$ and every power $j$. The statement is sharp in its range:
 higher Kummer-irregular primes can and do appear. In particular the prime
 $2111$, which is Kummer-irregular (it divides $\mathrm{num}(B_{1038})$
-with $1038 \leq 2111 - 3$), enters the constant-term numerator of $N_9$
+with $1038 \leq 2111 - 3$), enters the constant-term numerator of
+$\widehat N_9$
 via $29554 = 2 \cdot 7 \cdot 2111$. The arithmetic-disjointness statement
 is therefore restricted to the \emph{Bernoulli-leading} pair;
-the global claim ``no Kummer-irregular prime divides any $N_r$ through
-$r = 11$'' is false.
+the global claim ``no Kummer-irregular prime divides any
+$\widehat N_r$ through $r = 11$'' is false.
 \end{theorem}
 
 \begin{proof}
 We prove the three positive and the one negative claim in turn.
-By Theorem~\ref{thm:virasoro-shadow-recurrence} the sequence
-$(S_r(\Vir_c))_{r \geq 2}$ is determined over $\mathbb{Q}(c)$ by the
+By Theorem~\ref{thm:virasoro-shadow-recurrence} the weighted sequence
+$(\widehat S^{\rm wt}_r(\Vir_c))_{r \geq 2}$ is determined over
+$\mathbb{Q}(c)$ by the
 recurrence
 \[
- S_r \;=\; -\,\frac{1}{r c}
+ \widehat S^{\rm wt}_r \;=\; -\,\frac{1}{r c}
  \sum_{\substack{j + k = r + 2 \\ 3 \le j \le k < r}}
- f(j, k)\, j k\, S_j\, S_k,
+ f(j, k)\, j k\, \widehat S^{\rm wt}_j\, \widehat S^{\rm wt}_k,
  \qquad f(j, k) = 1 \text{ if } j < k, \quad f(j, j) = \tfrac{1}{2},
 \]
-with initial data $(S_2, S_3, S_4, S_5) = (c/2, 2, 10/(c(5c+22)),
--48/(c^2(5c+22)))$. The closed forms of
+with initial data
+$(\widehat S^{\rm wt}_2,\widehat S^{\rm wt}_3,
+\widehat S^{\rm wt}_4,\widehat S^{\rm wt}_5)
+= (c/2, 2, 10/(c(5c+22)), -48/(c^2(5c+22)))$. The closed forms of
 Theorems~\ref{thm:s6-virasoro-closed-form},~\ref{thm:s7-virasoro-closed-form},~\ref{thm:s8-virasoro-closed-form}
-give $S_6, S_7, S_8$. Iterating the recurrence in rational arithmetic
-yields, after clearing the canonical Zamolodchikov denominator
+give $\widehat S^{\rm wt}_6,\widehat S^{\rm wt}_7,
+\widehat S^{\rm wt}_8$. Iterating the recurrence in rational arithmetic
+yields, after clearing the weighted Zamolodchikov denominator
 $c^{r-3} (5c+22)^{\lfloor (r-2)/2 \rfloor}$ (pole structure pinned by
 Proposition~\ref{prop:sth-summary}),
 \begin{align*}
- N_4(c) &= 10, \\
- N_5(c) &= -48, \\
- N_6(c) &= 80 (45 c + 193)/3, \\
- N_7(c) &= -2880 (15 c + 61)/7, \\
- N_8(c) &= 80 (2025 c^{2} + 16470 c + 33314), \\
- N_9(c) &= -1280 (2025 c^{2} + 15570 c + 29554)/3, \\
- N_{10}(c) &= 256 (91125\, c^{3} + 1050975\, c^{2}
+ \widehat N_4(c) &= 10, \\
+ \widehat N_5(c) &= -48, \\
+ \widehat N_6(c) &= 80 (45 c + 193)/3, \\
+ \widehat N_7(c) &= -2880 (15 c + 61)/7, \\
+ \widehat N_8(c) &= 80 (2025 c^{2} + 16470 c + 33314), \\
+ \widehat N_9(c) &= -1280 (2025 c^{2} + 15570 c + 29554)/3, \\
+ \widehat N_{10}(c) &= 256 (91125\, c^{3} + 1050975\, c^{2}
  + 3989790\, c + 4969967), \\
- N_{11}(c) &= -15360 (91125\, c^{3} + 990225\, c^{2}
+ \widehat N_{11}(c) &= -15360 (91125\, c^{3} + 990225\, c^{2}
  + 3500190\, c + 3988097)/11.
 \end{align*}
 The $\mathbb{Z}$-coefficient sets, after cancellation of the integer
 prefactors and GCD reduction, are
 \[
  \begin{array}{r|l}
- r & \text{reduced integer coefficients of } N_r(c) \\ \hline
+ r & \text{reduced integer coefficients of } \widehat N_r(c) \\ \hline
  4 & \{1\} \\
  5 & \{-1\} \\
  6 & \{45,\ 193\} \\
@@ -4055,25 +3653,32 @@ $\mathcal{W}$-algebras.
 \providecommand{\bCc}{\mathsf C}
 \providecommand{\bM}{\mathsf M}
 \providecommand{\bB}{\mathbf B}
+\providecommand{\ChirHochSh}{\ChirHoch_{\mathrm{sh}}}
 
 The shadow coefficient $S_r(\cA) = \delta^{(r)}(1,\ldots,1)$ of
 Definition~\ref{def:shadow-transport-operator} is the
-$\Sym^r$-coinvariant residue of the bar coproduct at the universal
-$\Theta_\cA$ insertion; the chiral Hochschild cocycle
-$\chi_r^{\cA}\in\ChirHoch^r(\cA)$ of
-\texttt{hochschild\_cohomology.tex}
-Theorem~\ref{thm:chirhoch3-five-archetype-portrait}
-is the chain-level representative of a degree-$r$ obstruction class in
-the cyclic bar complex. The question is whether $\chi_r$ and $S_r$
-record the same invariant: the ordered answer is
-$S_r = \langle\chi_r,\omega_r^{\mathrm{univ}}\rangle$, a pairing of a
-cocycle against a universal Arnold cycle. We inscribe the exact
-dictionary.
+$\Sym^r$-coinvariant residue of the ordered bar coproduct at the
+universal $\Theta_\cA$ insertion. This is a shadow-complex invariant,
+not an ambient curve-level chiral Hochschild class. Write
+$\ChirHochSh^\bullet(\cA)$ for the scalar ordered cyclic-bar complex
+obtained before descent to the curve-level complex
+$\ChirHoch_X^\bullet(\cA)$ used in
+Theorem~\ref{thm:chirhoch3-five-archetype-portrait}. The comparison
+map
+\[
+ \rho_X\colon \ChirHochSh^r(\cA)\longrightarrow\ChirHoch_X^r(\cA)
+\]
+forgets the Arnold representative and descends to the ambient curve.
+For the standard landscape covered by Theorem~H, $\rho_X$ kills the
+shadow representatives in degrees $r>2$. Thus the identities below
+live in the ordered shadow/Gel'fand--Fuks lane; they are compatible
+with, and distinct from, curve-level Hochschild concentration in
+degrees $\{0,1,2\}$.
 
 \begin{definition}[\label{def:universal-arnold-cycle}Universal Arnold
-$r$-cycle and cyclic-bar pairing]
+class and cyclic-bar shadow pairing]
 \ClaimStatusProvedHere
-For $r\ge 2$, the \emph{universal Arnold $r$-cycle}
+For $r\ge 2$, the \emph{universal Arnold $r$-class}
 $\omega_r^{\mathrm{univ}}$ is the $\Sym^r$-symmetrised iterated
 $d\log$-form
 \[
@@ -4085,11 +3690,19 @@ $d\log$-form
  \eta_{\sigma(2)\sigma(3)}\wedge\cdots\wedge
  \eta_{\sigma(r-1)\sigma(r)}
 \]
-on $\mathrm{Conf}_r(X)$ with $\eta_{ij}=d\log(z_i-z_j)$, satisfying
-the Arnold relation at every adjacent triple. The \emph{cyclic-bar
-pairing}
+on $\mathrm{Conf}_r(X)$ with $\eta_{ij}=d\log(z_i-z_j)$. It is a
+closed Arnold cohomology class of degree $r-1$; the Arnold three-term
+relation
+\[
+ \eta_{ij}\wedge\eta_{jk}
+ +\eta_{jk}\wedge\eta_{ki}
+ +\eta_{ki}\wedge\eta_{ij}=0
+\]
+is the only relation used in the shadow extraction. The
+\emph{cyclic-bar shadow pairing}
 $\langle\cdot,\cdot\rangle_{\mathrm{cyc}}\colon
-\ChirHoch^r(\cA)\otimes H_r(\mathrm{Conf}_r(X))
+\ChirHochSh^r(\cA)\otimes
+H^{r-1}(\mathrm{Conf}_r(X))
 \to\mathbb C$ evaluates a Hochschild $r$-cocycle on the vacuum tuple
 $(1,\ldots,1)\in\cA^{\otimes r}$ against the Arnold class:
 \[
@@ -4100,26 +3713,29 @@ $(1,\ldots,1)\in\cA^{\otimes r}$ against the Arnold class:
 \end{definition}
 
 \begin{theorem}[\label{thm:shadow-chirhoch-dictionary}Shadow tower
-$\leftrightarrow$ chiral Hochschild: chain-level dictionary]
+and ordered cyclic-bar Hochschild representatives]
 \ClaimStatusConditional
 Let $\cA$ be a chiral algebra on a curve $X$ with
 $\kappa(\cA)\ne 0$, and fix the cyclic-bar recursion of
 Theorem~\ref{thm:virasoro-shadow-recurrence} (the master-equation
-specialised to a single primary line). Let $\chi_r^{\cA}$ denote the
-chiral Hochschild $r$-cocycle produced by cyclic-bar descent from the
+specialised to a single primary line). Let
+$\chi_{r,\mathrm{sh}}^{\cA}\in\ChirHochSh^r(\cA)$ denote the ordered
+shadow representative produced by cyclic-bar descent from the
 universal obstruction $\Theta_\cA$. Then for every $r\ge 3$:
 \begin{enumerate}[label=\textup{(\roman*)}]
  \item \textup{(Pairing identity.)} The Arnold-cycle pairing recovers
  the shadow coefficient:
  \begin{equation}
  \label{eq:shadow-chirhoch-pairing}
- \langle[\chi_r^{\cA}],\omega_r^{\mathrm{univ}}\rangle_{\mathrm{cyc}}
+ \langle[\chi_{r,\mathrm{sh}}^{\cA}],\omega_r^{\mathrm{univ}}\rangle_{\mathrm{cyc}}
  \;=\;S_r(\cA).
  \end{equation}
- \item \textup{(Template decomposition.)} The cocycle decomposes as
+ \item \textup{(Single-line template.)} After projection to the
+ two-field Virasoro line in the ordered shadow complex, the
+ representative decomposes as
  \begin{equation}
  \label{eq:shadow-chirhoch-template}
- \chi_r^{\cA}
+ \pi_{T,T}\chi_{r,\mathrm{sh}}^{\cA}
  \;=\;
  S_r(\cA)\cdot\Psi_r^{\mathrm{univ}}
  \;+\;
@@ -4129,12 +3745,12 @@ universal obstruction $\Theta_\cA$. Then for every $r\ge 3$:
  $\Psi_r^{\mathrm{univ}}
  = \mathrm{Sym}_{\Sym_r}[{:}T\partial^{r-2}T{:}
  - \tfrac{1}{r-1}\partial^{r-1}T]$ is the weight-$(r+1)$
- quasi-primary template built from Virasoro descendants, and
- $\partial\xi_{r-1}^{\cA}$ is the coboundary of a cyclic-bar
- $(r-1)$-chain. On rows with finite shadow depth
- $r_{\max}<\infty$, the template coefficient $S_r(\cA)=0$ for
- $r>r_{\max}$, forcing $[\chi_r^{\cA}]=0$.
- \item \textup{(Row-by-row vanishing.)} On the archetype witnesses of
+ quasi-primary template built from Virasoro descendants in that
+ one-line quotient, and $\partial\xi_{r-1}^{\cA}$ is the coboundary of
+ a cyclic-bar $(r-1)$-chain. Other primary lines, including the
+ $\cW$-line and BKM/Yangian tails, live in the complement of
+ $\pi_{T,T}$ and are not erased by this formula.
+ \item \textup{(Shadow-depth vanishing.)} On the archetype witnesses of
  Theorem~\ref{thm:chirhoch3-five-archetype-portrait}:
  \begin{center}
  \renewcommand{\arraystretch}{1.2}
@@ -4147,14 +3763,17 @@ universal obstruction $\Theta_\cA$. Then for every $r\ge 3$:
  $\bB$ & $\mathbf H_{\Delta_5}$ & $\infty$ & $S_r\ne 0$ generically
  \end{tabular}
  \end{center}
- In particular $[\chi_r]=0$ on rows $\bG,\bL,\bCc$ for
- $r>r_{\max}$, recovering the five-archetype degree-$3$ portrait at
- $r=3$.
- \item \textup{(Virasoro calibration at $r=3$.)} For $\cA=\Vir_c$,
- $r=3$, the cocycle~\eqref{eq:shadow-chirhoch-template} evaluates to
+ Thus the Arnold pairing vanishes on rows $\bG,\bL,\bCc$ for
+ $r>r_{\max}$. This is a statement about the shadow representative;
+ its curve-level image satisfies
+ $\rho_X(\chi_{r,\mathrm{sh}}^{\cA})=0$ for $r>2$ throughout the
+ Theorem~H landscape.
+ \item \textup{(Virasoro calibration at $r=3$.)} For $\cA=\Vir_c$ and
+ $r=3$, the shadow representative in the Gel'fand--Fuks/Virasoro
+ line evaluates to
  \begin{equation}
  \label{eq:chi3-virasoro-value}
- \chi_3^{\Vir_c}
+ \pi_{T,T}\chi_{3,\mathrm{sh}}^{\Vir_c}
  \;=\;2\cdot\Psi_3^{\mathrm{univ}}
  \;=\;2\bigl[{:}T\partial T{:}-\tfrac14\partial^3 T\bigr]
  \;+\;\partial\xi_2^{\Vir},
@@ -4162,7 +3781,8 @@ universal obstruction $\Theta_\cA$. Then for every $r\ge 3$:
  since $S_3(\Vir_c)=2$. The leading bracket is the Zamolodchikov
  weight-$5$ quasi-primary $W_3^{\mathrm{Zam}}$; the factor $2$ is
  the chain-level realisation of the three-point Ward identity of
- $T(z)$.
+ $T(z)$. It is a shadow/GF representative; it is not a nonzero class
+ in $\ChirHoch_X^3(\Vir_c)$.
 \end{enumerate}
 \end{theorem}
 
@@ -4170,22 +3790,20 @@ universal obstruction $\Theta_\cA$. Then for every $r\ge 3$:
 \textsc{(i) Pairing identity.} The cyclic-bar differential on
 $B^{\mathrm{ord}}(\cA)$ projected onto the scalar $(1,\ldots,1)$
 channel is the shadow-corrected coproduct $\delta^{(r)}$
-(\S~\ref{sec:sth-setup}). The Arnold cycle
-$\omega_r^{\mathrm{univ}}$ is the unique
-$\Sym_r$-antisymmetric class in
-$H_r(\mathrm{Conf}_r(X),\mathbb Z)$ (Arnold~$1969$
+(\S~\ref{sec:sth-setup}). The Arnold class
+$\omega_r^{\mathrm{univ}}$ is the path-generator class in the
+Orlik--Solomon algebra of $\mathrm{Conf}_r(X)$ (Arnold~$1969$
 \emph{Mat.\ Zametki}~$5$ Thm.~$1$; Kohno~$1985$ \emph{Ann.\ Inst.\
 Fourier}~$37$ \S~$2$), and its integral pairing with
-$\chi_r^{\mathrm{chain}}(1,\ldots,1;z_\bullet)$ extracts exactly the
+$\chi_{r,\mathrm{sh}}^{\mathrm{chain}}(1,\ldots,1;z_\bullet)$ extracts exactly the
 $\Sym^r$-coinvariant residue that defines $S_r$; by
 Definition~\ref{def:shadow-transport-operator} this is
 $S_r(\cA)$.
 
-\textsc{(ii) Template decomposition.} Every chain-level cyclic-bar
-cocycle of weight $r+1$ on the single primary line $T$ decomposes
-uniquely as a sum of a weight-$(r+1)$ quasi-primary and a total
-derivative: the quasi-primary basis at weight $r+1$ built from $T$
-alone is the one-dimensional span of
+\textsc{(ii) Single-line template.} In the two-field Virasoro-line
+quotient, a cyclic-bar representative of weight $r+1$ decomposes as a
+quasi-primary part plus a total derivative. The quasi-primary basis in
+this quotient is the one-dimensional span of
 $\mathrm{Sym}[{:}T\partial^{r-2}T{:}-\tfrac{1}{r-1}\partial^{r-1}T]$
 (Bouwknegt--Schoutens~$1993$~\S~$3.2$; the quasi-primary condition
 $L_1\Psi=0$ fixes the coefficient $-1/(r-1)$ on the total-derivative
@@ -4194,23 +3812,19 @@ $\partial\xi_{r-1}$. The leading coefficient of $\Psi_r^{\mathrm{univ}}$
 on the $\delta^{(r)}(1,\ldots,1)$ channel, by the recurrence of
 Theorem~\ref{thm:virasoro-shadow-recurrence}, is $S_r(\cA)$.
 
-\textsc{(iii) Row-by-row vanishing.} Rows $\bG,\bL,\bCc$ have
-$\kappa^!=-\kappa$ on the $\bG/\bL/\bCc$-scope (Heisenberg at $k\ne 0$,
-affine Kac--Moody at $k+h^\vee\ne 0$ under the Feigin--Frenkel
-reflection, $\beta\gamma_\lambda$ at $\lambda\ne 1/2$ under the
-charge involution), enforcing the
-shadow-finite condition
-$\kappa+\kappa^!=0$ \emph{on these three rows only} (row $\bM$
-has $\kappa+\kappa^!=13$ for $\Vir_c$, row $\bB$ has $\kappa+\kappa^!=8$
-for $\mathbf H_{\Delta_5}$); this collapses the shadow tower to its
-leading term $S_2=\kappa$ on rows $\bG,\bL,\bCc$
-(\texttt{chiral\_climax\_platonic.tex}~Prop.~\ref{prop:five-archetype-specialisation};
-\texttt{hochschild\_cohomology.tex} rows~$\bG,\bL,\bCc$). The
-cyclic-bar recurrence produces $S_r=0$ for every $r>r_{\max}$; the
-template~\eqref{eq:shadow-chirhoch-template} then forces
-$[\chi_r]=\partial\xi_{r-1}$, a coboundary. Rows $\bM,\bB$ have
-$\kappa+\kappa^!\in\{13,8\}\ne 0$; the recurrence generates nonzero
-$S_r$ at every $r\ge 3$ generically in $c$.
+\textsc{(iii) Shadow-depth vanishing.} The five-archetype
+specialisation in the landscape census gives the displayed row
+patterns for the ordered shadow coefficients: Heisenberg stops after
+$S_2=\kappa$, affine Kac--Moody after the cubic Lie bracket term,
+the canonical free-field row after the quartic term, and the
+Virasoro/BKM rows remain infinite for generic central charge. Applying
+the pairing identity yields exactly the same vanishing pattern for
+Arnold pairings. The map $\rho_X$ is the comparison to the
+curve-level Hochschild complex. Theorem~H, as stated in
+Theorem~\ref{thm:chirhoch3-five-archetype-portrait}, concentrates the
+curve-level theory in degrees $\{0,1,2\}$, so no $r\ge 3$ shadow
+representative is being asserted as a nonzero class in
+$\ChirHoch_X^r(\cA)$.
 
 \textsc{(iv) Virasoro calibration at $r=3$.} Substitute $r=3$ into
 the template: $\Psi_3^{\mathrm{univ}}={:}T\partial T{:}
@@ -4221,79 +3835,74 @@ of Zamolodchikov~$1985$ eq.~$(2.6)$ (through the descent
 $\Psi_3^{\mathrm{univ}}\mapsto W_3^{\mathrm{Zam}}$ by the Virasoro
 $L_{-1}$-action on the weight-$4$ quasi-primary lattice), and using
 $S_3(\Vir_c)=2$ from the prologue equation~(\S~\ref{sec:sth-setup}),
-we recover~\eqref{eq:chi3-virasoro-value}. The factor $2$ matches
-the three-point Ward identity
+we recover~\eqref{eq:chi3-virasoro-value} in the shadow/GF quotient.
+The factor $2$ matches the three-point Ward identity
 $\langle T(z_1)T(z_2)T(z_3)\rangle=c/(z_{12}^2 z_{23}^2 z_{31}^2)$
 evaluated on the universal Arnold cycle.
 \end{proof}
 
 \begin{remark}[\label{rem:shadow-chirhoch-w23.4}Independent numerical
-witness through $L(s,\chi_3)$]
+witness through the spinor residue]
 The spinor Euler product $\Lspin(s,\chi_3)$ of
 \texttt{hochschild\_cohomology.tex} Theorem
 \ref{thm:spinor-L-function-chi3-euler-product}, pinned to the
 residue $\chi(\mathcal O_{\mathrm{K3}})\cdot
 \mathrm{Res}_{s=1/2}[E_5^{(2)}(Z,s)]|_{K(1)}$, numerically realises
 the pairing~\eqref{eq:shadow-chirhoch-pairing} at $r=3$ on the
-$\mathbf H_{\Delta_5}$-row: the leading residue is
+$\mathbf H_{\Delta_5}$ shadow row: the leading residue is
 $2\,\mathrm{Vol}(E)\cdot(2\pi i)^3$, whose Arnold-cycle extraction
 at $r=3$ equals $S_3(\mathbf H_{\Delta_5}) = 2$ (the same value as
 the Virasoro row, because $\mathbf H_{\Delta_5}$ specialises to
 $\Vir_{c_{\mathrm K3}}$ at $\hbar\to 0$, K3$\to$pt, and
-$S_3=2$ is $c$-independent). This is a third genuinely independent
-verification path for the dictionary~\eqref{eq:shadow-chirhoch-pairing}:
-master-equation recurrence (chain~A), Riccati $\sqrt{Q_L}$
-(chain~B), spinor $L$-function residue (chain~C).
+$S_3=2$ is $c$-independent). This witnesses the ordered shadow
+pairing. It does not create a degree-$3$ ambient curve-level
+Hochschild class.
 \end{remark}
 
 \begin{corollary}[\label{cor:chirhoch-depth-forces-shadow-depth}
-Shadow depth forces Hochschild depth]
+Shadow depth is recovered from Arnold pairings]
 \ClaimStatusConditional
 For every $\cA$ in the standard landscape of
 \texttt{landscape\_census.tex}, the shadow-tower depth
-$r_{\max}(\cA)\in\{2,3,4,\infty\}$ equals the smallest $r\ge 2$ such
-that $\ChirHoch^r(\cA)$ acquires a non-trivial cyclic-bar cocycle
-with nonzero Arnold-cycle pairing:
+$r_{\max}(\cA)\in\{2,3,4,\infty\}$ is recovered inside the ordered
+shadow complex by
 \[
  r_{\max}(\cA)
  \;=\;
- \inf\bigl\{r\ge 2\,:\,
- \langle[\chi_r^{\cA}],\omega_r^{\mathrm{univ}}\rangle_{\mathrm{cyc}}\ne 0
+ \sup\bigl\{r\ge 2\,:\,
+ \langle[\chi_{r,\mathrm{sh}}^{\cA}],\omega_r^{\mathrm{univ}}\rangle_{\mathrm{cyc}}\ne 0
  \bigr\}.
 \]
 On the five-archetype landscape: $\bG$ has only $r=2$ nonzero;
 $\bL$ has $r\in\{2,3\}$ nonzero; $\bCc$ has $r\in\{2,3,4\}$
 nonzero; $\bM$ and $\bB$ have every $r\ge 2$ nonzero generically.
+The curve-level Hochschild amplitude remains concentrated in
+degrees $\{0,1,2\}$.
 \end{corollary}
 
 \begin{proof}
 By Theorem~\ref{thm:shadow-chirhoch-dictionary}~(i),
-$\langle[\chi_r],\omega_r^{\mathrm{univ}}\rangle=S_r$; the
-shadow-tower depth $r_{\max}$ is by definition the largest $r$ with
+$\langle[\chi_{r,\mathrm{sh}}],\omega_r^{\mathrm{univ}}\rangle=S_r$;
+the shadow-tower depth $r_{\max}$ is by definition the largest $r$ with
 $S_r\ne 0$ (\texttt{shadow\_tower\_quadrichotomy\_platonic.tex}
 Def.~$1.2$), and the quadrichotomy $r_{\max}\in\{2,3,4,\infty\}$ is
 the Proposition~\ref{prop:five-archetype-specialisation} classification.
 \end{proof}
 
-\begin{remark}[\label{rem:shadow-chirhoch-quadrichotomy-pin}The
-dictionary pins the five-archetype quadrichotomy]
+\begin{remark}[\label{rem:shadow-chirhoch-quadrichotomy-pin}Compatibility
+with the five-archetype quadrichotomy]
 The climax Theorem~\ref{thm:unified-five-theorem-identity} asserts
 five invariants (Theorems~A,B,C,D,H) collapse onto the
 four-archetype shadow-tower depth $r_{\max}\in\{2,3,4,\infty\}$;
-Corollary~\ref{cor:chirhoch-depth-forces-shadow-depth} realises the
-invariant~H (Hochschild concentration) as a direct function of the
-shadow-tower cocycle, not as a parallel invariant. The Vol~III
-functor $\Phi$ (CY-to-chiral) propagates this to the BKM row: the
-$\mathbf H_{\Delta_5}$ row shares the Virasoro cocycle template
-$\Psi_r^{\mathrm{univ}}$ up to the Yangian tail
-$\hbar\cdot\qt(J^{(r)})$
-(Theorem~\ref{thm:chirhoch3-five-archetype-portrait} row~$\bB$),
-enforcing the same $r_{\max}=\infty$ shadow depth. The quantum
-correction $\hbar\cdot\qt(J^{(r)})$ lives in
-$\ker(\omega_r^{\mathrm{univ}})$, hence does not contribute to the
-pairing~\eqref{eq:shadow-chirhoch-pairing}; this is why
-$S_r(\mathbf H_{\Delta_5})=S_r(\Vir_{c_{\mathrm K3}})$ numerically
-even though the cocycles differ by the Yangian tail.
+Corollary~\ref{cor:chirhoch-depth-forces-shadow-depth} supplies the
+ordered-shadow side of this collapse. Theorem~H supplies the separate
+curve-level statement: ambient chiral Hochschild cohomology is
+concentrated in degrees $\{0,1,2\}$. The two statements have the same
+archetype table because both are computed from the averaged chiral
+input, not because the higher shadow representatives are themselves
+nonzero curve-level Hochschild classes. On the BKM row the same
+shadow template is visible after the CY-to-chiral specialisation, and
+the Yangian tail belongs to the complementary primary-line sector.
 \end{remark}
 
 \section{Shadow tower of the K3 chiral bialgebra $\mathbf H_{\Delta_5}$}
@@ -4316,8 +3925,8 @@ with $c_{\mathrm{K3}} = c_{2d} = -214 = -2\cdot 107$ from the
 class-$\mathcal S$ $A_1$-on-$\Sigma_{0,24}$ VOA
 (Shapere--Tachikawa 2008 \S 3 applied to Chacaltana--Distler 2010
 eq.~(5.14); Beem--Rastelli $c_{2d} = -12 c_{4d}$; the intermediate
-value $c_{2d} = -312$ is retracted per Vol~I
-Section~\ref{sec:thqg-open-closed-realization} line~1932).
+value $c_{2d} = -312$ is incompatible with the Vol~I normalization in
+Section~\ref{sec:thqg-open-closed-realization}).
 The Mukai doubling $K^{\kappa_{\mathrm{ch}}} = 8$ enters through
 $S_2 = \kappa_{\mathrm{ch}} = c_{2d}/2 = -107$; the universal
 identity $\hbar^2 \cdot K^{\kappa_{\mathrm{ch}}} = -1$ at
@@ -4416,7 +4025,7 @@ Item~\textup{(a)} is the discriminant-form signature: the index-$1$
 paramodular-lattice form $4NM-\ell^2\equiv-\ell^2\pmod 4$ takes
 values in $\{0,-1\}\pmod 4$, so $-D_n$ is representable iff
 $D_n\in\{0,1\}\pmod 4$. Odd-$n$ integrality forces
-$n\equiv 3,5\pmod 8$ (main.tex preamble line~988;
+$n\equiv 3,5\pmod 8$ (with the convention fixed in the main preamble;
 bar\_construction.tex Theorem~\ref{thm:bc-unconditional-depth-reduction}).
 Item~\textup{(b)} is Eichler--Zagier~$1985$ \textup{Prog.~Math.}~$55$
 Theorem~$9.1$ (index-$m$ weak Jacobi forms vanish in discriminants
@@ -4443,7 +4052,7 @@ $d_n$ alone records the MZV-transcendence content of
 $\phi^{(n)}_{\mathrm{MZV}}$.
 \end{proof}
 
-\begin{remark}[Three filters, three voices]
+\begin{remark}[Three independent filters]
 \label{rem:three-filter-composite-scope}
 The Humbert--Heegner admissibility $n\equiv 3,5\pmod 8$
 (item~\textup{(a)}), the Eichler--Zagier polar cutoff
@@ -4534,10 +4143,9 @@ nested summation reproduces every basis element to $15$ digits. The
 anchor $\zeta(3,3,3,3)=2.959990\cdot 10^{-4}$ follows from
 $a(N)=\sum_{N\ge n_1>n_2>n_3>n_4\ge 1}(n_1 n_2 n_3 n_4)^{-3}$ with
 tail $\sim C/N^2$, giving $a(2000)-a_\infty\approx 4(a(1000)-a_\infty)$
-as required by the Richardson exponent $s_1-1=2$. The module
-\texttt{compute/lib/wave19\_phi\_n\_extension\_weight11\_12\_13.py}
-verifies all twelve anchors against the Vermaseren $1999$ MZDP
-database at $10^{-9}$ relative tolerance.
+as required by the Richardson exponent $s_1-1=2$. A local MZV
+extension check verifies all twelve anchors against the Vermaseren
+$1999$ MZDP database at $10^{-9}$ relative tolerance.
 
 \emph{Verification path $V_2$ (KZ differential-equation recursion).}
 The KZ universal connection
@@ -4669,12 +4277,14 @@ one explicit basis element.
 \begin{theorem}[$\phi^{(n)}$ for $n\in\{13,14,15,16\}$: Padovan dimensions,
 depth stratification, scope tiers]
 \label{thm:phi-n-weight-13-14-15-16}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be the
 Zagier--Brown Padovan dimension of irreducible motivic MZVs at weight
 $n$, controlled unconditionally from above by
 $d_n \le d_{n-2}+d_{n-3}$ (Brown $2012$ \texttt{arXiv:1301.3053}
-Thm $1.2$; Deligne--Goncharov $2005$). Then
+Thm $1.2$; Deligne--Goncharov $2005$). Assume Zagier equality for
+the displayed weights and the Broadhurst--Kreimer depth series for
+the displayed depth strata. Then
 \begin{equation}
 \PadovanDim{13} = 12, \quad
 \PadovanDim{14} = 16, \quad
@@ -4682,7 +4292,8 @@ Thm $1.2$; Deligne--Goncharov $2005$). Then
 \PadovanDim{16} = 28,
 \label{eq:padovan-13-14-15-16}
 \end{equation}
-and the MZV leg of the pentagon coboundary admits the tiered
+and the MZV leg of the pentagon coboundary admits the conditional
+tiered
 decomposition
 \begin{equation}
 \phi^{(n)}_{\mathrm{MZV}} \;=\;
@@ -4723,8 +4334,7 @@ value~\eqref{eq:padovan-13-14-15-16}; the Brown--Deligne canonical
 basis $\{\mathrm{MZV}_i^{(n)}\}_{i=1}^{d_n}$ is organised by
 Lyndon--shuffle products over the depth-graded irreducibles
 $D_{m,d}$ for all $m\le n$, not by the bare $D_{n,d}$ counts alone.
-Numerical values, Richardson-extrapolated to $15$-digit accuracy in
-the module \texttt{compute/lib/wave20\_phi\_n\_extension\_weight14\_15\_16.py}:
+Numerical values, Richardson-extrapolated to $15$-digit accuracy:
 \begin{align}
 \phi^{(13)}_{\mathrm{MZV}} &\approx 1.93\cdot 10^{-9}, \nonumber \\
 \phi^{(14)}_{\mathrm{MZV}} &\approx 1.83\cdot 10^{-10}, \label{eq:phi-13-14-15-16-num}\\
@@ -4792,8 +4402,9 @@ The four scope tiers interact as follows:
 \end{theorem}
 
 \begin{proof}
-The Padovan identity~\eqref{eq:padovan-13-14-15-16} is direct
-evaluation: seed $(d_1,d_2,d_3,d_4)=(1,0,1,1)$, recurrence
+The Padovan values~\eqref{eq:padovan-13-14-15-16} are the values
+predicted by the Zagier recurrence: seed
+$(d_1,d_2,d_3,d_4)=(1,0,1,1)$, recurrence
 $d_n = d_{n-2}+d_{n-3}$, yielding
 $(d_5,\ldots,d_{16})=(1,2,2,3,4,5,7,9,12,16,21,28)$, verified by the
 module function \texttt{padovan\_count\_check} at $n\in\{13,14,15,16\}$.
@@ -4827,8 +4438,8 @@ truncation
 $a_i(N)=\sum_{N\ge n_1>\cdots>n_k\ge 1}(n_1^{s_1}\cdots n_k^{s_k})^{-1}$
 with tail $\sim C_i/N^{s_1-1}$; Richardson exponent $s_1-1$ forces
 $a_i(2N)-a_i(\infty)\approx 2^{-(s_1-1)}(a_i(N)-a_i(\infty))$. The
-module \texttt{wave20\_phi\_n\_extension\_weight14\_15\_16.py}
-reproduces the $d_{13}+d_{14}+d_{15}+d_{16}=77$ numerical basis
+local numerical check reproduces the
+$d_{13}+d_{14}+d_{15}+d_{16}=77$ numerical basis
 values in $\{n\!=\!13,\ldots,16\}$ to relative tolerance $10^{-12}$
 against the Vermaseren $1999$ MZDP database; the leading
 summands~\eqref{eq:phi-13-14-15-16-num} aggregate to the stated
@@ -4857,13 +4468,14 @@ agreement with the full Fourier expansion of $\Phi_{10}$ computed
 via the Gritsenko--Nikulin product at the seven weights $n\in
 \{10,\ldots,16\}$.
 
-The three paths are genuinely independent: $V_1$ evaluates real
+The three checks are independent conditional consistency tests:
+$V_1$ evaluates real
 numbers from partial sums; $V_2$ counts symbolic simplex chambers;
-$V_3$ pins the Borcherds leg via K$3$-BKM root multiplicities. Each
-reproduces both the Padovan dimensions of the Brown canonical basis
-(Zagier-conjecturally equal to $d_n$, unconditional upper bound) and
-the numerical leg values~\eqref{eq:phi-13-14-15-16-num}, pinning the
-coefficients $c_n^{(i)}=1$ in the Brown canonical basis modulo the
+$V_3$ pins the Borcherds leg via K$3$-BKM root multiplicities. They
+reproduce the recurrence-predicted Padovan dimensions (unconditional
+only as Brown's upper bound) and the numerical leg
+values~\eqref{eq:phi-13-14-15-16-num}, pinning the coefficients
+$c_n^{(i)}=1$ in the conditional Brown canonical basis modulo the
 Zagier--Hoffman depth-reduction conjecture at depth $\ge 3$.
 
 The scope-tier classification follows from the
@@ -5008,28 +4620,24 @@ Borcherds 1992/1995/1998, Dijkgraaf--Moore--Verlinde--Verlinde 1997.
 \section{Pentagon coboundary $\phi^{(n)}$ at weights $17$, $18$, $19$, $20$}
 \label{sec:shadtower-phi-n-weight-17-18-19-20}
 
-Three voices sing the same weight. The Padovan recurrence
-$d_n = d_{n-2}+d_{n-3}$ counts irreducibles in the Zagier--Brown
-canonical basis of $\mathcal Z_n$, growing at the plastic-number rate
-$\rho^n$ with $\rho = 1.324\ldots$ The Brown motivic basis,
-depth-stratified by the Broadhurst--Kreimer generating series,
-acquires its first depth-$6$ irreducible $\zeta(3,3,3,3,3,3)$ at
-weight $18$: a scope threshold, not a numerical one. The
-Hardy--Ramanujan formula for the $24$-th power of the Dedekind
-eta-function supplies the Borcherds leg's imaginary-cone dimension,
-dominating the MZV leg by the factor $\exp(4\pi\sqrt{n/2})/n!$. The
-three voices--Padovan plastic, Brown motivic, Hardy--Ramanujan
-imaginary-cone--enter on the same weight and the same beat.
+In weights $17$--$20$ the Padovan recurrence, the
+Broadhurst--Kreimer depth filtration, and the Hardy--Ramanujan
+eta-coefficients control three different pieces of the same
+pentagon-coboundary datum. The recurrence gives the conjectural
+dimension sequence, Brown gives the unconditional upper bound, the
+BK series predicts the first depth-$6$ stratum at weight $18$, and
+the exact $p_{24}$ coefficients control the Borcherds leg.
 
 \begin{theorem}[$\phi^{(n)}$ for $n\in\{17,18,19,20\}$: Padovan dimensions,
 depth-$6$ onset, scope tiers]
 \label{thm:phi-n-weight-17-18-19-20}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
 the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
 weight $n$. The upper bound $d_n \le d_{n-2}+d_{n-3}$ holds
 unconditionally (Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$);
-Zagier $1994$ equality is the conjecture. Then
+Zagier $1994$ equality is the conjecture. Assume Zagier equality and
+the Broadhurst--Kreimer depth series in the displayed range. Then
 \begin{equation}
 \PadovanDim{17} = 37, \quad
 \PadovanDim{18} = 49, \quad
@@ -5038,7 +4646,7 @@ Zagier $1994$ equality is the conjecture. Then
 \label{eq:padovan-17-18-19-20}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
-Definition~\ref{def:phi-n-pent-EK} admits the MZV leg
+Definition~\ref{def:phi-n-pent-EK} admits the conditional MZV leg
 \begin{equation}
 \phi^{(n)}_{\mathrm{MZV}} \;=\;
 \frac{1}{n!}\sum_{i=1}^{d_n}\mathrm{MZV}_i^{(n)},
@@ -5142,8 +4750,8 @@ The four scope tiers interact as follows:
 \end{theorem}
 
 \begin{proof}
-The Padovan identity~\eqref{eq:padovan-17-18-19-20} follows from the
-recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
+The Padovan values~\eqref{eq:padovan-17-18-19-20} are the values
+predicted by the Zagier recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
 $(d_1,d_2,d_3,d_4)=(1,0,1,1)$:
 $(d_5,\ldots,d_{20}) = (1,2,2,3,4,5,7,9,12,16,21,28,37,49,65,86)$,
 verified by the module function \texttt{padovan\_count\_check} at
@@ -5174,9 +4782,8 @@ numerical).} Each basis $\mathrm{MZV}_i^{(n)}$ is summed by nested
 truncation
 $a_i(N)=\sum_{N\ge n_1>\cdots>n_k\ge 1}(n_1^{s_1}\cdots n_k^{s_k})^{-1}$
 with tail $C_i/N^{s_1-1}$; Richardson doubling $N\to 2N$ with exponent
-$s_1-1$ accelerates to $15$-digit accuracy. The module
-\texttt{wave20\_phi\_n\_extension\_weight17\_18\_19\_20.py} reproduces
-the $d_{17}+d_{18}+d_{19}+d_{20}=237$ numerical basis values in the
+$s_1-1$ accelerates to $15$-digit accuracy. The local numerical check
+reproduces the $d_{17}+d_{18}+d_{19}+d_{20}=237$ numerical basis values in the
 Vermaseren $1999$ MZDP database to relative tolerance $10^{-12}$ for
 depth $\le 4$ and $10^{-8}$ for depth $5,6$ (Richardson exponents
 grow with weight, so deeper elements converge more slowly). The
@@ -5220,15 +4827,17 @@ tabulates both exact and asymptotic ratios at $n\in\{17,\ldots,20\}$,
 and the ratio exact/asymptotic settles to $\sim 1/4$--$1/5$
 (the Rademacher subleading terms contribute the suppression).
 
-The three paths are genuinely independent: $V_1$ evaluates real
+The three checks are independent conditional consistency tests:
+$V_1$ evaluates real
 numbers from partial sums against an external database; $V_2$ counts
 symbolic simplex chambers via the KZ iterated integral; $V_3$ pins the
 Borcherds leg via K$3$-BKM root multiplicities and exact modular
-Fourier expansion. Each reproduces both the Padovan
-dimensions~\eqref{eq:padovan-17-18-19-20} (upper bound unconditional)
-and the numerical leg values~\eqref{eq:phi-17-18-19-20-num}, pinning
-$c_n^{(i)}=1$ in the Brown canonical basis modulo Zagier--Hoffman at
-depth $\ge 4$. The scope-tier classification follows from the
+Fourier expansion. They reproduce the recurrence-predicted Padovan
+values~\eqref{eq:padovan-17-18-19-20} (unconditional only as Brown's
+upper bound) and the numerical leg
+values~\eqref{eq:phi-17-18-19-20-num}, pinning $c_n^{(i)}=1$ in the
+conditional Brown canonical basis modulo Zagier--Hoffman at depth
+$\ge 4$. The scope-tier classification follows from the
 Broadhurst--Kreimer extraction: tier \textbf{D2} unconditional
 (Zagier $1994$, Gangl--Kaneko--Zagier $2006$); tier \textbf{D3}
 conditional on BK $1997$ at depth $3$ and Brown $2012$ Cor.\ $1.3$;
@@ -5380,10 +4989,12 @@ Gritsenko--Nikulin product formula.
 \section{Pentagon coboundary $\phi^{(n)}$ at weights $21$, $22$, $23$, $24$}
 \label{sec:shadtower-phi-n-weight-21-22-23-24}
 
-The three voices converge again at depth $7$. The Padovan recurrence
-$d_n = d_{n-2} + d_{n-3}$ produces $(114, 151, 200, 265)$ at
-$n \in \{21, 22, 23, 24\}$, plastic-number accurate to one part in
-$10^{4}$. The Broadhurst--Kreimer $1997$ depth generating series
+At weights $21$--$24$ the Padovan recurrence, the
+Broadhurst--Kreimer depth filtration, and the exact eta-coefficients
+separate cleanly. The recurrence predicts $(114, 151, 200, 265)$ at
+$n \in \{21, 22, 23, 24\}$, while Brown's theorem supplies only the
+corresponding upper bound unconditionally. The Broadhurst--Kreimer
+$1997$ depth generating series
 $\mathrm{BK}(x,y) = 1/(1 - O(x)y + S(x)(y^2-y^4))$ delivers its first
 depth-$7$ irreducible $\zeta(3,3,3,3,3,3,3)$ at weight $n = 21$,
 with $D_{21,7} = 5$ Lyndon representatives surviving shuffle--stuffle
@@ -5394,18 +5005,18 @@ dominates the Padovan denominator $d_{24} = 265$ by a factor of
 $4.1\cdot 10^{7}$. The weight $n = 24$ is not arithmetically neutral:
 it equals $\chi(K3)$, the $24$ cusps of $X(1)$, the rank of the
 Leech lattice, and the Niemeier $A_{2}^{12}$ genus that organises
-umbral moonshine. The Padovan plastic, Brown motivic, Hardy--Ramanujan
-imaginary-cone, and the $24$-fold arithmetic sing one symphony.
+umbral moonshine.
 
 \begin{theorem}[$\phi^{(n)}$ for $n\in\{21,22,23,24\}$: Padovan dimensions,
 depth-$7$ onset at $n=21$, depth-$8$ onset at $n=24$, scope tiers]
 \label{thm:phi-n-weight-21-24}
-\ClaimStatusProvedElsewhere
+\ClaimStatusConditional
 Let $d_n = \dim_{\mathbb Q}\mathcal Z_n/(\zeta(2)\mathcal Z_{n-2})$ be
 the Zagier--Brown Padovan dimension of irreducible motivic MZVs at
 weight $n$. The upper bound $d_n \le d_{n-2}+d_{n-3}$ holds
 unconditionally (Brown $2012$ \texttt{arXiv:1301.3053} Thm $1.2$);
-Zagier $1994$ equality is the conjecture. Then
+Zagier $1994$ equality is the conjecture. Assume Zagier equality and
+the Broadhurst--Kreimer depth series in the displayed range. Then
 \begin{equation}
 \PadovanDim{21} = 114, \quad
 \PadovanDim{22} = 151, \quad
@@ -5414,7 +5025,7 @@ Zagier $1994$ equality is the conjecture. Then
 \label{eq:padovan-21-22-23-24}
 \end{equation}
 and the Etingof--Kazhdan pentagon coboundary of
-Definition~\ref{def:phi-n-pent-EK} admits the MZV leg
+Definition~\ref{def:phi-n-pent-EK} admits the conditional MZV leg
 \begin{equation}
 \phi^{(n)}_{\mathrm{MZV}} \;=\;
 \frac{1}{n!}\sum_{i=1}^{d_n}\mathrm{MZV}_i^{(n)},
@@ -5541,8 +5152,8 @@ weight $22$, but not derived from motivic first principles).
 \end{theorem}
 
 \begin{proof}
-The Padovan identity~\eqref{eq:padovan-21-22-23-24} follows from the
-recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
+The Padovan values~\eqref{eq:padovan-21-22-23-24} are the values
+predicted by the Zagier recurrence $d_n = d_{n-2}+d_{n-3}$ with seed
 $(d_1,d_2,d_3,d_4)=(1,0,1,1)$ iterated from
 $(d_{17},d_{18},d_{19},d_{20})=(37,49,65,86)$:
 $d_{21} = d_{19}+d_{18} = 65+49 = 114$,
@@ -5562,9 +5173,8 @@ open beyond $n = 12$ where Brown $2011$ Thm $1.2$ establishes it.
 
 Extraction of~\eqref{eq:BK-depth-21-24}: expand
 $\mathrm{BK}(x,y) = \sum_{k\ge 0}(O(x)y - S(x)(y^2-y^4))^k$ symbolically
-through order $x^{28}y^{8}$; the module
-\texttt{wave21\_phi\_n\_extension\_weight21\_22\_23\_24.py} function
-\texttt{bk\_depth\_extract} carries out the truncated rational-function
+through order $x^{28}y^{8}$; the local
+\texttt{bk\_depth\_extract} routine carries out the truncated rational-function
 expansion over $\mathbb Q$. The weight-$21$ entry $D_{21,7}=5$ picks
 up the first depth-$7$ contribution: at bi-degree $(x^{21},y^7)$,
 the term $[O(x)]\cdot [S(x)]^{3}$ contributes through
@@ -5576,7 +5186,7 @@ depth-$8$ contribution: at bi-degree $(x^{24},y^8)$, the term
 $[S(x)]^{4}$ contributes through $x^{48}\cdot$(negative powers of
 denominator) truncated to $x^{24}$ at leading order, with $y^{2+2+2+2}=y^{8}$,
 giving $D_{24,8}=7$ after accumulation. Both depth transitions are
-reproduced by the module's symbolic expander and agree with
+reproduced by the symbolic expander and agree with
 Broadhurst--Kreimer $1997$ Table $1$ (weights $\le 16$) and its
 Broadhurst--Bailey $2010$ extension (weights $17$--$24$).
 
@@ -5586,9 +5196,8 @@ truncation
 $a_i(N)=\sum_{N\ge n_1>\cdots>n_k\ge 1}(n_1^{s_1}\cdots n_k^{s_k})^{-1}$
 with tail $C_i/N^{s_1-1}$; Richardson doubling $N\to 2N$ with exponent
 $s_1-1$ accelerates to $15$-digit accuracy at depths $\le 5$ and
-$10$-digit accuracy at depths $6,7,8$. The module
-\texttt{wave21\_phi\_n\_extension\_weight21\_22\_23\_24.py} reproduces
-$d_{21}+d_{22}+d_{23}+d_{24}=730$ numerical basis values in the
+$10$-digit accuracy at depths $6,7,8$. The local numerical check
+reproduces $d_{21}+d_{22}+d_{23}+d_{24}=730$ numerical basis values in the
 Vermaseren $1999$ MZDP database to relative tolerance $10^{-10}$ for
 depth $\le 5$ and $10^{-7}$ for depth $6,7,8$. The leading-order
 values~\eqref{eq:phi-21-22-23-24-num} agree with $d_n/n!$ to three
@@ -5635,15 +5244,17 @@ module's \texttt{hardy\_ramanujan\_ratio\_check\_21\_24} tabulates
 both exact and asymptotic ratios at $n\in\{21,\ldots,24\}$ and
 reproduces~\eqref{eq:borcherds-vs-mzv-ratio-21-24}.
 
-The three paths are genuinely independent: $V_1$ evaluates real
+The three checks are independent conditional consistency tests:
+$V_1$ evaluates real
 numbers from partial sums against the Vermaseren database;
 $V_2$ counts symbolic simplex chambers via the KZ iterated integral;
 $V_3$ pins the Borcherds leg via exact K$3$-BKM root multiplicities
-and modular Fourier expansion. Each reproduces both the Padovan
-dimensions~\eqref{eq:padovan-21-22-23-24} (upper bound unconditional)
-and the leg values~\eqref{eq:phi-21-22-23-24-num}, pinning
-$c_n^{(i)} = 1$ in the Brown canonical basis modulo Zagier--Hoffman at
-depth $\ge 5$ and Broadhurst--Kreimer at depth $\ge 6$. The
+and modular Fourier expansion. They reproduce the recurrence-predicted
+Padovan values~\eqref{eq:padovan-21-22-23-24} (unconditional only as
+Brown's upper bound) and the leg values~\eqref{eq:phi-21-22-23-24-num},
+pinning $c_n^{(i)} = 1$ in the conditional Brown canonical basis
+modulo Zagier--Hoffman at depth $\ge 5$ and Broadhurst--Kreimer at
+depth $\ge 6$. The
 scope-tier classification follows: tier \textbf{D2} unconditional
 (Zagier $1994$); tier \textbf{D3} conditional on BK $1997$ at depth
 $3$ (Brown $2012$ Cor.\ $1.3$ partial); tier \textbf{D4} unconditional
@@ -5777,7 +5388,7 @@ $[O(x)]^{3}\cdot[S(x)]^{3}$ at bi-degree $(27,9)$).
 \cite{Brown2011,Brown2012,BroadhurstKreimer1997,ZagierValues,Hoffman1997,GanglKanekoZagier2006,Brown2017,BroadhurstBailey2010}.
 \end{remark}
 
-\begin{remark}[Padovan plastic-number asymptotic at weights $21$--$24$; Hardy--Ramanujan symphony]
+\begin{remark}[Padovan plastic-number asymptotic at weights $21$--$24$]
 \label{rem:padovan-plastic-asymptotic-21-24}
 The Padovan recurrence $d_n = d_{n-2} + d_{n-3}$ has generating
 function $F(x) = x/(1 - x^2 - x^3)$; the plastic number
@@ -5809,11 +5420,11 @@ $\phi^{(n)}$ is dominated by the K$3$-BKM leg at every $n\ge 10$,
 and the MZV leg is a subleading correction; the dominant-leg
 crossover is visible at $n=10$
 (Remark~\ref{rem:phi-n-borcherds-leg-11-12-13}) and widens to
-$4\cdot 10^{7}$ by $n=24$. Three voices sing the same weight:
-Padovan plastic growth ($\rho^n$ with $\rho = $ plastic number),
-Brown motivic stratification (Broadhurst--Kreimer series
-$\mathrm{BK}(x,y)$ at bi-degree $(n,d)$), Hardy--Ramanujan
-imaginary-cone ($\eta^{-24}$ Fourier expansion with leading rate
+$4\cdot 10^{7}$ by $n=24$. The three controls are Padovan plastic
+growth ($\rho^n$ with $\rho$ the plastic number), Brown motivic
+stratification (Broadhurst--Kreimer series $\mathrm{BK}(x,y)$ at
+bi-degree $(n,d)$), and the Hardy--Ramanujan imaginary cone
+($\eta^{-24}$ Fourier expansion with leading rate
 $\exp(4\pi\sqrt k)$). Vol.\ III
 Ch.\ \ref{V3-ch:k3-chiral-bialgebra-platonic}
 \S\ref{sec:shadow-tower-K3} develops the Borcherds leg via the
@@ -5975,8 +5586,7 @@ The BK-series extraction~\eqref{eq:BK-depth-25-28} uses the same
 symbolic expansion of
 $\mathrm{BK}(x, y) = \sum_{k\ge 0}(O(x)y - S(x)(y^2 - y^4))^k$ as
 Theorem~\ref{thm:phi-n-weight-21-24}, now truncated at $x^{32}y^{10}$
-(module \texttt{wave22\_phi\_n\_extension\_weight25\_26\_27\_28.py}
-function \texttt{bk\_depth\_extract}). The first depth-$9$
+(local \texttt{bk\_depth\_extract} routine). The first depth-$9$
 contribution at bi-degree $(27, 9)$ arises from the monomial
 $[O(x)y]^3 [S(x)y^2]^3$, whose leading term is
 $x^{9}\cdot x^{36} y^{9} = x^{45} y^9$ and requires denominator
@@ -6148,11 +5758,11 @@ The Mittag--Leffler pro-limit of the bar-complex weight-completed
 filtration controls the Borcherds leg at every finite $n$
 (Remark~\ref{rem:nc-ML-prolimit-12}); the MZV leg is
 double-conditional above $n = 20$ and triple-conditional above
-$n = 24$. Three voices; Padovan plastic growth
-($\rho^n$), Brown motivic stratification ($\mathrm{BK}(x, y)$ at
-bi-degree $(n, d)$), Hardy--Ramanujan imaginary cone ($\eta^{-24}$
-with leading rate $\exp(4\pi\sqrt k)$); continue to sing the same
-weight at $n\in\{25, 26, 27, 28\}$.
+$n = 24$. The same three controls persist at
+$n\in\{25, 26, 27, 28\}$: Padovan plastic growth ($\rho^n$), Brown
+motivic stratification ($\mathrm{BK}(x, y)$ at bi-degree $(n, d)$),
+and the Hardy--Ramanujan imaginary cone ($\eta^{-24}$ with leading
+rate $\exp(4\pi\sqrt k)$).
 \cite{Brown2012,Brown2017,GritsenkoNikulin1998,Borcherds1998,HardyRamanujan1918,FLM1988,Borcherds1992,ChengDuncanHarvey2014}.
 \end{remark}
 
@@ -6342,7 +5952,7 @@ Hoffman1997,ZagierValues,IharaTakao2013,EnriquezFurusho2020}.
 \end{remark}
 
 \begin{remark}[Padovan plastic asymptotic at $n\in\{25,\ldots,28\}$:
-precision below $10^{-4}$; three-voice convergence continues]
+precision below $10^{-4}$]
 \label{rem:padovan-plastic-asymptotic-25-28}
 The plastic-number asymptotic $d_n \sim A\rho^n$ with
 $A = \rho^2/(2\rho + 3) = 0.31062883\ldots$ produces
@@ -6355,10 +5965,10 @@ $k\in\{13, 14\}$ overshoots the exact by factor $2.715$ and $2.449$
 Both expansions remain controlled by a unique dominant pole: the
 plastic real root $\rho = 1.3247\ldots$ of $x^3 = x + 1$ for
 Padovan, and the Rademacher cusp singularity of $\eta^{-24}$ at
-$\tau\to i0^+$ for $p_{24}$. Three voices; Padovan plastic,
-Brown motivic, Hardy--Ramanujan imaginary cone; sing at weights
-$25$--$28$ with the same harmonic structure as $17$--$24$, and the
-Conway--Leech umbral voice of $n = 24$ does not reappear.
+$\tau\to i0^+$ for $p_{24}$. The Padovan, Brown motivic, and
+Hardy--Ramanujan controls persist at weights $25$--$28$ with the same
+harmonic structure as $17$--$24$, and the Conway--Leech umbral
+coincidence of $n = 24$ does not reappear.
 \cite{PadovanPlastic,HardyRamanujan1918,GritsenkoNikulin1998,BroadhurstKreimer1997,Brown2017}.
 \end{remark}
 
@@ -6510,8 +6120,7 @@ bound unconditionally; equality is Zagier $1994$.
 The BK-series extraction~\eqref{eq:BK-depth-29-32} uses the symbolic
 expansion of $\mathrm{BK}(x, y) = \sum_{k\ge 0}(O(x)y - S(x)(y^2 - y^4))^k$
 truncated at $x^{36}y^{12}$ (module
-\texttt{k3\_yangian\_wave15\_schur\_index\_classS\_ANm1\_24.py}
-function \texttt{bk\_depth\_extract\_29\_32}). The first depth-$10$
+\texttt{bk\_depth\_extract\_29\_32} routine). The first depth-$10$
 contribution at bi-degree $(30, 10)$ arises from the monomial
 $[O(x)y]^2 [S(x)y^2]^4$ with $y^{2+8} = y^{10}$ and
 $x^{6+48} = x^{54}$, reduced to $x^{30}$ by denominator corrections
@@ -7828,9 +7437,9 @@ the MZV-transcendence content of $\phi^{(n)}_{\mathrm{MZV}}$ with
 depth-stratified numerator from the BK series.
 \end{proof}
 
-\begin{remark}[Attack--heal cascade along the admissible tower;
+\begin{remark}[Five-stage admissible tower;
 Brown~$2017$ as the deepest constraint at $n\ge 45$]
-\label{rem:admissible-tower-attack-heal-cascade}
+\label{rem:admissible-tower-five-stage}
 The scope compacts into the five-stage table:
 \[
 \begin{array}{c|c|cccccccc|l}
@@ -7854,11 +7463,11 @@ crystallises into the steady-state form $\mathrm{cB17}$ at every
 depth $\ge 9$: for every admissible $n\ge 45$ with depth
 $d\in[9, 13]$ Brown~$2017$ Conjecture~$5.3$ supplies the
 generation hypothesis; depth $\ge 15$ at higher admissible weights
-continues the cascade. Six arithmetic voices now sing: Padovan
-plastic ($\rho^n$), Brown motivic ($\mathrm{BK}(x, y)$), depth-graded
+continues the same pattern. Six arithmetic constraints now appear:
+Padovan plastic ($\rho^n$), Brown motivic ($\mathrm{BK}(x, y)$), depth-graded
 $\mathfrak{grt}_1$ via Brown~$2017$, Hardy--Ramanujan exact
 ($p_{24}$ OEIS~A006922), Humbert--Heegner $\bmod 8$ filter,
-Eichler--Zagier polar cutoff. Each is independently verified by a
+Eichler--Zagier polar cutoff. Each is independently checked by a
 first-principles computation in
 \texttt{phi\_n\_humbert\_heegner\_admissible\_triple\_37\_43\_45.py}.
 \cite{Brown2012,Brown2017,BroadhurstKreimer1997,BroadhurstBailey2010,ZagierValues,Hoffman1997,Humbert1899,GritsenkoHulekSankaran2007,EichlerZagier1985,PadovanPlastic,HardyRamanujan1918}.
