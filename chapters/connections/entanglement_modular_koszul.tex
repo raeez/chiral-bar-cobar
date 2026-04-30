@@ -798,8 +798,6 @@ $\delta_{\mathrm{pf}}^{(g,0)}$
 (Remark~\ref{rem:planted-forest-correction-explicit})
 contribute additional terms beyond the scalar level
 at every genus $g \ge 2$.
-Computational verification: \texttt{compute/lib/btz\_shadow\_entropy.py}
-and \texttt{compute/lib/btz\_entropy\_allgenus.py}.
 \end{proof}
 
 \begin{remark}[Three verification routes at genus~$1$]
@@ -948,12 +946,10 @@ $-3/2$:
  Euclidean BTZ saddle (the graviton polarization that
  survives the topological gauge-fix).
 \end{enumerate}
-All three routes agree. Verified by
-\texttt{compute/tests/test\_bh\_entropy\_shadow\_cohft.py}
-\textup{(}92 tests\textup{)}, which cross-checks the coefficient
-against the Cardy asymptotics, the shadow $S_4$ formula, and
-the heat-kernel expansion of
-Remark~\ref{rem:ent-btz-three-routes}.
+The three routes agree on the saddle coefficient
+$-\tfrac32$; the Cardy and heat-kernel routes are physical
+derivations, while the shadow route is an algebraic compatibility
+test for the quartic coefficient.
 \end{computation}
 
 % ======================================================================
@@ -1038,8 +1034,6 @@ t_P\,\frac{c + (26{-}c)}{6} = S_{\mathrm{BH}},
 t_P = \frac{6\,S_{\mathrm{BH}}}{26}
 = \frac{3\,S_{\mathrm{BH}}}{13}.
 \]
-Computational verification:
-\texttt{compute/lib/page\_curve\_shadow.py}.
 \end{remark}
 
 \begin{corollary}[Self-dual Page curve; \ClaimStatusConjectured]
@@ -1087,7 +1081,6 @@ determines the crossover.
 \end{remark}
 
 \begin{remark}[Page curve from Koszul complementarity; \ClaimStatusHeuristic]
-\textup{(}LOCAL: scope fixed in this environment\textup{})
 \label{rem:page-curve-complementarity}
 \index{Page curve!from complementarity constant}
 The Page curve emerges from the Virasoro complementarity sum
@@ -1103,19 +1096,21 @@ because the $c$ cancels algebraically from
 $\kappa + \kappa' = 13$.
 At the Koszul self-dual point $c = 13$:
 $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$
-with all quantum corrections vanishing identically:
-the genus-$g$ correction
-$\delta^{(g)}(c) = (c - 13) \cdot \lambda_g^{\mathrm{FP}}$
-is antisymmetric under Koszul duality and vanishes at the
-self-dual point. Koszul self-duality is literally the
-equal-subsystem condition defining the Page transition.
+for the two linear scalar branches.  Self-duality kills the
+duality-odd part of any correction written as a function of
+$\delta_\kappa=\kappa-\kappa'=c-13$; it does not kill the
+duality-even shadow tower.  Indeed
+$S_4(\mathrm{Vir}_{13})=10/(13\cdot87)\neq0$ and
+$\Delta(13)=40/87$, so the class-$\mathsf M$ tower remains
+non-trivial at the fixed point.
 
 \emph{Epistemic status}: the scalar-level complementarity and
 the Page time formula use only
 Theorems~\ref{thm:quantum-complementarity-main}
 and~\ref{thm:ent-scalar-entropy} (proved).
-The identification of shadow corrections with FLM bulk
-entropy corrections requires a gravitational dual and is
+The identification of the shadow coefficients with FLM bulk
+entropy corrections, and the identification of the crossing with
+the physical Page transition, require a gravitational dual and are
 heuristic.
 \end{remark}
 
@@ -1187,8 +1182,6 @@ shadow projection, and the genus expansion provides quantum
 corrections. The identification of~\eqref{eq:ent-ds-leading}
 with the cosmological horizon area is the dS/CFT
 correspondence (Strominger~\cite{Strominger01}).
-Computational verification:
-\texttt{compute/lib/desitter\_shadow\_entropy.py}.
 \end{remark}
 
 % ======================================================================
@@ -1263,12 +1256,9 @@ requires the full topological recursion, which agrees with
 the shadow CohFT reconstruction
 (Corollary~\ref{cor:topological-recursion-mc-shadow})
 at the level of tautological intersection numbers.
-Computational verification:
-\texttt{compute/lib/jt\_gravity\_shadow.py}.
 \end{remark}
 
 \begin{remark}[Matrix model from the shadow obstruction tower]
-\textup{(}LOCAL: scope fixed in this environment\textup{})
 \label{rem:ent-jt-matrix-model}
 \index{JT gravity!matrix model}
 The JT spectral density

@@ -1032,15 +1032,17 @@ algebra morphisms; \ClaimStatusConditional]
 \index{averaging map!morphism class delimitation}
 \index{averaging map!functoriality scope}
 \index{averaging map!ordered conclusion separated from symmetric}
-Let $\ChirAlg^{\Eone,\mathrm{cyc}}_X$ denote the category of cyclic
-$E_1$-chiral algebras on the smooth proper curve $X$ in the sense
-of Definition~\textup{\ref{def:e1-chiral}} \textup{(}morphisms:
-chiral algebra morphisms $f\colon \cA \to \cB$ that preserve the
-unit, the augmentation, the cyclic pairing $\tau$, and the chiral
-product $\mu^{\mathrm{ch}}$ on the nose at chain
-level\textup{)}. Let
+Let $\ChirAlg^{\Eone,\mathrm{cyc},R}_X$ denote the category whose
+objects are cyclic $E_1$-chiral algebras on the smooth proper
+curve~$X$ in the sense of Definition~\textup{\ref{def:e1-chiral}},
+equipped with a strong-unitary $R$-twisted $\Sigma_n$-descent datum
+compatible with the ordered bar differential and with ribbon
+composition. Morphisms $f\colon \cA \to \cB$ preserve the unit,
+augmentation, cyclic pairing~$\tau$, chiral product
+$\mu^{\mathrm{ch}}$ at chain level, and intertwine the descent
+operators $\rho_{R_\cA}$ and $\rho_{R_\cB}$. Let
 $\fg^{(-)}_{E_1}, \fg^{(-)}_{\mathrm{mod}}\colon
-\bigl(\ChirAlg^{\Eone,\mathrm{cyc}}_X\bigr)^{\mathrm{op}}
+\bigl(\ChirAlg^{\Eone,\mathrm{cyc},R}_X\bigr)^{\mathrm{op}}
 \to \mathrm{dgLie}_k$
 denote the contravariant assignments
 $\cA \mapsto \fg^{E_1}_\cA$ and
@@ -1048,7 +1050,7 @@ $\cA \mapsto \fg^{\mathrm{mod}}_\cA$ of
 Definition~\textup{\ref{def:e1-modular-convolution}}. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{$\fg^{(-)}_{E_1}$ and $\fg^{(-)}_{\mathrm{mod}}$ are
-contravariant 2-functors on $\ChirAlg^{\Eone,\mathrm{cyc}}_X$.}
+contravariant 2-functors on $\ChirAlg^{\Eone,\mathrm{cyc},R}_X$.}
 For each $f\colon \cA \to \cB$ the induced pullback
 $f^* \colon \operatorname{End}_\cB(n) \to \operatorname{End}_\cA(n)$
 on Hom-spaces (precomposition with $f^{\otimes n}$ post-composed
@@ -1058,20 +1060,20 @@ dg~Lie morphisms $f^*_{E_1}\colon \fg^{E_1}_\cB \to
 \fg^{E_1}_\cA$ and $f^*_{\mathrm{mod}}\colon
 \fg^{\mathrm{mod}}_\cB \to \fg^{\mathrm{mod}}_\cA$, functorial in
 $f$.
-\item \emph{$\operatorname{av}$ is a 2-natural transformation
+\item \emph{$\operatorname{av}_R$ is a 2-natural transformation
 $\fg^{(-)}_{E_1} \Rightarrow \fg^{(-)}_{\mathrm{mod}}$.}
 The square
 \[
 \begin{array}{ccc}
-\fg^{E_1}_\cB & \xrightarrow{\;\operatorname{av}_\cB\;} &
+\fg^{E_1}_\cB & \xrightarrow{\;\operatorname{av}_{R,\cB}\;} &
 \fg^{\mathrm{mod}}_\cB \\[2pt]
 {\scriptstyle f^*_{E_1}}\downarrow & & \downarrow{\scriptstyle f^*_{\mathrm{mod}}} \\[2pt]
-\fg^{E_1}_\cA & \xrightarrow{\;\operatorname{av}_\cA\;} &
+\fg^{E_1}_\cA & \xrightarrow{\;\operatorname{av}_{R,\cA}\;} &
 \fg^{\mathrm{mod}}_\cA
 \end{array}
 \]
 commutes on the nose at chain level for every
-$f\colon \cA \to \cB$ in $\ChirAlg^{\Eone,\mathrm{cyc}}_X$.
+$f\colon \cA \to \cB$ in $\ChirAlg^{\Eone,\mathrm{cyc},R}_X$.
 \item \emph{Compatibility with Maurer--Cartan.} The MC element
 $\Theta^{E_1}_{(-)}$ of Theorem~\textup{\ref{thm:e1-mc-element}}
 is natural in $f$:
@@ -1081,11 +1083,11 @@ part~\textup{(ii)} sends $\Theta^{E_1}_\cB \mapsto \Theta_\cA$ by
 either route.
 \item \emph{Scope.} The averaging map is
 \emph{not} a functor between categories of chiral algebras:
-there is no functor $\mathrm{Av}\colon \ChirAlg^{\Eone,\mathrm{cyc}}_X
+there is no functor $\mathrm{Av}\colon \ChirAlg^{\Eone,\mathrm{cyc},R}_X
 \to \ChirAlg^{\Einf,\mathrm{cyc}}_X$ whose action on
-the convolution algebras realises $\operatorname{av}_\cA$ as
+the convolution algebras realises $\operatorname{av}_{R,\cA}$ as
 $\fg^{E_1}_\cA \to \fg^{\mathrm{mod}}_{\mathrm{Av}(\cA)}$. The
-codomain of $\operatorname{av}_\cA$ is $\fg^{\mathrm{mod}}_\cA$,
+codomain of $\operatorname{av}_{R,\cA}$ is $\fg^{\mathrm{mod}}_\cA$,
 not $\fg^{\mathrm{mod}}_{\mathrm{Av}(\cA)}$, and no symmetrisation
 of the chiral product on $\cA$ exists in
 $\ChirAlg^{\Einf,\mathrm{cyc}}_X$ unless $\cA$ is already
@@ -1099,56 +1101,25 @@ $S(z) = \tau$, Proposition~\textup{\ref{prop:symmetric-descent}}~%
 \emph{(i).} For $f\colon \cA \to \cB$ a chiral algebra morphism,
 the pullback on multilinear endomorphisms is
 $(f^* \phi)(a_1, \ldots, a_n) := \phi(f(a_1), \ldots, f(a_n))$ for
-$\phi \in \operatorname{End}_\cB(n)$ and
-$a_i \in \cA$. This is a $k$-linear map
-$\operatorname{End}_\cB(n) \to \operatorname{End}_\cA(n)$, and
-the absence of a $\Sigma_n$-equivariance constraint on the source
-of $\fg^{(-)}_{E_1}$ \textup{(}the $T^c$-convolution side\textup{)}
-is preserved by precomposition with $f^{\otimes n}$ which is
-$\Sigma_n$-equivariant. The dg structure on $\fg^{E_1}_{(-)}$ is
-inherited from $F\!\Ass$ acting on the
-$\cM_{\Ass}(g,n)$-coordinate, which is independent of the
-algebra; the differential and bracket therefore commute with
-$f^*$ tautologically. Hence $f^*_{E_1}$ is a dg~Lie morphism, and
-functoriality $(f \circ g)^* = g^* \circ f^*$ is the
-contravariance of pullback. The argument for $f^*_{\mathrm{mod}}$
-is identical except the Hom now carries the
-$\Sigma_n$-equivariance constraint, which is also preserved by
-$f^{\otimes n}$ (which intertwines the $\Sigma_n$-action on
-$\cA^{\otimes n}$ with that on $\cB^{\otimes n}$).
-\emph{(ii).} The averaging map at $(g,n)$ on a chiral algebra
-$\cC$ is
-$\operatorname{av}_\cC(\phi)(g,n) =
-\tfrac{1}{n!}\sum_{\sigma\in \Sigma_n}
-\sigma \cdot (\phi(g,n) \circ \iota^{\mathrm{rib}}_{g,n})$.
-For $\phi \in \fg^{E_1}_\cB$,
-\begin{align*}
-(f^*_{\mathrm{mod}} \circ \operatorname{av}_\cB)(\phi)(g,n)(a_1,\ldots,a_n)
- &= \operatorname{av}_\cB(\phi)(g,n)(f(a_1),\ldots,f(a_n)) \\
- &= \tfrac{1}{n!}\!\!\sum_{\sigma\in\Sigma_n}\!\!
- \bigl(\sigma \cdot (\phi(g,n) \circ \iota^{\mathrm{rib}}_{g,n})\bigr)
- (f(a_1),\ldots,f(a_n)) \\
- &= \tfrac{1}{n!}\!\!\sum_{\sigma\in\Sigma_n}\!\!
- (\phi(g,n) \circ \iota^{\mathrm{rib}}_{g,n})
- (f(a_{\sigma^{-1}(1)}),\ldots,f(a_{\sigma^{-1}(n)})),
-\end{align*}
-while
-\begin{align*}
-(\operatorname{av}_\cA \circ f^*_{E_1})(\phi)(g,n)(a_1,\ldots,a_n)
- &= \operatorname{av}_\cA(f^*_{E_1}\phi)(g,n)(a_1,\ldots,a_n) \\
- &= \tfrac{1}{n!}\!\!\sum_{\sigma\in\Sigma_n}\!\!
- (f^*_{E_1}\phi)(g,n)(a_{\sigma^{-1}(1)},\ldots,a_{\sigma^{-1}(n)}) \\
- &= \tfrac{1}{n!}\!\!\sum_{\sigma\in\Sigma_n}\!\!
- \phi(g,n)(f(a_{\sigma^{-1}(1)}),\ldots,f(a_{\sigma^{-1}(n)})).
-\end{align*}
-The two right-hand sides agree term by term because
-$\iota^{\mathrm{rib}}_{g,n}$ is a section of the
-ribbon-forgetting quotient and acts only on the
-$\cM_\Ass(g,n)$-coordinate, not on the
-$\operatorname{End}_{(-)}(n)$-coordinate; the section choice is
-absorbed into the boundary equivalence class on both sides
-\textup{(}Theorem~\textup{\ref{thm:fcom-coinvariant-fass}}\textup{)}.
-On-the-nose chain-level commutation follows.
+$\phi \in \operatorname{End}_\cB(n)$ and $a_i \in \cA$. The ordered
+source imposes no $\Sigma_n$-equivariance; the $F\!\Ass$ differential
+and bracket act on the $\cM_{\Ass}(g,n)$-coordinate and commute with
+this pullback. On the descended side, the hypothesis
+$f^{\otimes n}\rho_{R_\cA}(\sigma)=\rho_{R_\cB}(\sigma)f^{\otimes n}$
+makes $f^*$ well defined on $R$-twisted coinvariants. Functoriality is
+contravariance of pullback.
+
+\emph{(ii).} At each $(g,n)$, $\operatorname{av}_{R,\cC}$ is the
+quotient map to $R_\cC$-twisted coinvariants. Since every morphism in
+$\ChirAlg^{\Eone,\mathrm{cyc},R}_X$ intertwines the descent actions,
+$f^*_{E_1}$ is $R$-equivariant. The universal property of coinvariants
+therefore gives
+\[
+f^*_{\mathrm{mod}}\circ \operatorname{av}_{R,\cB}
+\;=\;
+\operatorname{av}_{R,\cA}\circ f^*_{E_1}
+\]
+on the chain complex before passing to cohomology.
 \emph{(iii).} The MC element $\Theta^{E_1}_\cC = D_\cC^{E_1} -
 \dzero$ is constructed from the bar differential on
 $\barB^{\mathrm{ord}}(\cC)$, which is $f$-natural: a chiral
