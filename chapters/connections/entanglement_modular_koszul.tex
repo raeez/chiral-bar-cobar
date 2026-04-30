@@ -1,15 +1,3 @@
-% Chapter: Entanglement Entropy from Modular Koszul Duality
-%
-% This chapter derives entanglement entropy (including quantum corrections)
-% from the proved modular Koszul core. The main results are:
-% G11: Entanglement complementarity (Theorem)
-% Calabrese-Cardy from the A-hat generating function (Corollary)
-% Shadow corrections and entanglement complexity (Proposition)
-% QES from shadow connection (Proposition)
-%
-% All results are projections of the universal MC element Theta_A.
-% The only external input is the twist operator dimension (standard CFT).
-
 \chapter{Entanglement entropy from modular Koszul duality}
 \label{chap:entanglement-modular-koszul}
 \index{entanglement entropy!from modular Koszul duality|textbf}
@@ -29,64 +17,36 @@
 \providecommand{\EE}{\mathrm{EE}}
 \providecommand{\QES}{\mathrm{QES}}
 
-The complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main})
-decomposes the genus-$g$ ambient complex into Lagrangian halves
+Entanglement enters the modular-Koszul tower through a scalar
+projection and a higher shadow projection.  The scalar projection is
+the Calabrese--Cardy single-interval law
 \[
-\mathbf{C}_g(\cA)
-\;\simeq\;
-\mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!).
+ S_{\EE}^{\mathrm{sc}}(\Sigma)
+ = \frac{c(\cA)}{3}\log\frac{L}{\varepsilon},
 \]
-The $\hat{A}$-genus generating function
-(Corollary~\ref{cor:free-energy-ahat-genus})
-resums the scalar genus expansion into an entire function, and
-the shadow obstruction tower $\Theta_\cA^{\le r}$
-supplies constructive finite-order corrections at each degree.
-Together, these three ingredients determine entanglement entropy
-and the full tower of quantum corrections.
+which depends on the Virasoro central charge, not on the programme
+characteristic~$\kappa$ except in families where a separate
+normalisation identifies the two.  For Virasoro,
+$\kappa(\mathrm{Vir}_c)=c/2$ and
+$\mathrm{Vir}_c^!\simeq\mathrm{Vir}_{26-c}$, hence the scalar
+duality sum is
+\[
+ S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_c)
+ +S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{26-c})
+ = \frac{26}{3}\log\frac{L}{\varepsilon}.
+\]
+This is the entanglement shadow of the conductor identity
+$c+c^!=26$, equivalently
+$\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})=13$.
 
-The single external input is the conformal dimension
-of the twist operator $\sigma_n$ on the $n$-sheeted
-branched cover \cite{Calabrese-Cardy04}. Every other ingredient
-(the modular characteristic~$\kappa(\cA)$, the shadow depth
-classification, the shadow radius~$\rho(\cA)$, and the
-complementarity constraint) is proved in Parts~\ref{part:bar-complex}--\ref{part:standard-landscape}.
-
-\smallskip
-\noindent\emph{Epistemic scope.}\;
-The scalar entanglement formula
-$S_{\mathrm{EE}} = (c/3)\log(L/\varepsilon)$ is the Calabrese--Cardy result
-\cite{Calabrese-Cardy04}, imported via the twist operator
-dimension (Lemma~\ref{lem:ent-twist-dimension}), not independently derived here. The new content begins at degree~$3$: the shadow obstruction tower
-$\Theta_\cA^{\leq r}$ contributes computable corrections
-$\delta S_r$ to entanglement entropy, evaluated on the replica
-geometry, that lie beyond Calabrese--Cardy. For class~$\mathbf{G}$
-(shadow depth~$2$), the Calabrese--Cardy formula is \emph{exact}:
-all corrections $\delta S_r = 0$ for $r \geq 3$. For
-class~$\mathbf{M}$ (infinite shadow depth), the corrections are
-bounded by $|\delta S_r| \leq C \rho^r r^{-5/2} \log(L/\varepsilon)$
-and converge absolutely when the shadow radius $\rho(\cA) < 1$.
-Entanglement complementarity
-$S_{\mathrm{EE}}(\cA) + S_{\mathrm{EE}}(\cA^!)
-= \tfrac{c+c'}{3}\log(L/\varepsilon)$
-follows from Theorem~C (complementarity of the
-ambient complex), independent of the Calabrese--Cardy input.
-The identification of $\delta S_r$ with the Faulkner--Lewkowycz--Maldacena
-bulk entropy corrections is heuristic
-(Remark~\ref{rem:ent-rt-scalar}).
-
-\smallskip
-\noindent\emph{Organization.}\;
-\S\ref{sec:ent-replica-shadow} derives entanglement entropy
-via the replica trick grounded in the $\hat{A}$-genus.
-\S\ref{sec:ent-complementarity} proves the entanglement
-complementarity constraint (Theorem~\ref{thm:entanglement-complementarity}).
-\S\ref{sec:ent-shadow-corrections} classifies shadow corrections
-to entanglement entropy by shadow depth.
-\S\ref{sec:ent-qes} identifies the quantum extremal surface
-condition as a shadow connection Ward identity.
-\S\ref{sec:ent-standard-landscape} computes explicit
-entanglement data for the standard landscape.
+The higher projection is algebraic.  The shadow tower gives
+classes~$\Sh_r(\Theta_\cA)$ and bounds their growth; a chosen
+replica functional can turn those classes into numbers
+$\delta S_r$.  The vanishing and convergence statements below are
+therefore theorems about the shadow tower.  Their interpretation as
+Faulkner--Lewkowycz--Maldacena bulk entropy corrections, or as a
+quantum-extremal-surface variational principle, requires a
+gravitational dual and is recorded only as a physical heuristic.
 
 % ======================================================================
 %
@@ -108,10 +68,6 @@ Let $(\cA, \cA^!)$ be a chiral Koszul pair
 on a smooth projective curve~$X$ of genus~$0$,
 with modular characteristic~$\kappa(\cA)$
 and central charge~$c(\cA)$.
-% NOTE: The relationship between kappa and c is family-dependent:
-% kappa = c/2 for Virasoro, kappa = (k+h^v)d/(2h^v) for KM, kappa = k
-% for Heisenberg H_k (where c=1). The Calabrese-Cardy formula uses c.
-% The formulas below are stated in terms of c (the central charge).
 Fix an interval $\Sigma = [0, L] \subset X$
 with UV cutoff~$\varepsilon$.
 The R\'enyi and von~Neumann entropies of~$\Sigma$
@@ -272,16 +228,19 @@ S_{\EE}^{\mathrm{sc}}(\mathrm{Vir}_{13})
 \end{equation}
 
 \item \emph{Shadow-level complementarity.}
-Beyond the scalar level, the shadow duality sums
-$D_r(c) := \Sh_r(\mathrm{Vir}_c) + \Sh_r(\mathrm{Vir}_{26-c})$
+Beyond the scalar level, the algebraic Virasoro shadow sums
+\[
+D_r^{\mathrm{sh}}(c)
+:= S_r(\mathrm{Vir}_c)+S_r(\mathrm{Vir}_{26-c})
+\]
 are controlled by
 Remark~\textup{\ref{rem:higher-degree-complementarity}}:
 \begin{itemize}
-\item Degree $2$: $D_2 = \kappa + \kappa' = 13$
+\item Degree $2$: $D_2^{\mathrm{sh}} = \kappa + \kappa' = 13$
  \textup{(}universal constant\textup{)}.
-\item Degree $3$: $D_3 = S_3(c) + S_3(26{-}c) = 4$
+\item Degree $3$: $D_3^{\mathrm{sh}} = S_3(c) + S_3(26{-}c) = 4$
  \textup{(}universal constant\textup{)}.
-\item Degree $\ge 4$: $D_r(c)$ acquires non-trivial
+\item Degree $\ge 4$: $D_r^{\mathrm{sh}}(c)$ acquires non-trivial
  $c$-dependence through the Lee--Yang denominators
  $(5c{+}22)$ and $(152{-}5c)$.
 \end{itemize}
@@ -290,6 +249,10 @@ $\Delta(\cA) + \Delta(\cA^!) =
 6960/[(5c{+}22)(152{-}5c)]$
 \textup{(}Theorem~\textup{\ref{thm:shadow-connection}(vi)}\textup{)}
 governs the degree-$4$ structure.
+These are algebraic shadow identities.  They do not identify
+$D_r^{\mathrm{sh}}(c)$ with physical entropy corrections until a
+replica functional and, for bulk entropy, a gravitational dual have
+been specified.
 \end{enumerate}
 \end{theorem}
 
@@ -306,11 +269,12 @@ the duality law $c + c' = 26$
 
 \emph{Part (ii).}
 At $c = 13$: $c = c' = 13$, so
-$S_{\EE} = 13/3$.
+$S_{\EE}^{\mathrm{sc}}
+= (13/3)\log(L/\varepsilon)$.
 
 \emph{Part (iii).}
 The degree-$2$ and degree-$3$ universality of the duality sums
-$D_2 = 13$, $D_3 = 4$ is proved in
+$D_2^{\mathrm{sh}} = 13$, $D_3^{\mathrm{sh}} = 4$ is proved in
 Remark~\ref{rem:higher-degree-complementarity}.
 The degree-$\ge 4$ $c$-dependence follows from the
 discriminant complementarity formula
@@ -349,16 +313,27 @@ exchanges the two summands, enforcing~\eqref{eq:ent-complementarity-sum}.
 \index{entanglement complexity!shadow depth|textbf}
 \index{shadow corrections!entanglement entropy}
 
-\begin{proposition}[Entanglement complexity classification;
+\begin{proposition}[Shadow entropy functionals by depth;
 \ClaimStatusConditional]
 \label{prop:ent-complexity-classification}
 \index{entanglement complexity!four classes|textbf}
-The shadow corrections to entanglement entropy
-$\delta S_r(\cA)$ at degree~$r$ are determined by the shadow
-tower $\Theta_\cA^{\le r}$ evaluated on the replica geometry.
+Let $\mathcal R_{n,r}$ be a family of linear replica
+functionals on the degree-$r$ shadow projection of the
+$n$-sheeted replica geometry, regular at $n=1$.  Define the
+degree-$r$ shadow entropy coefficient by
+\[
+\delta S_r^{\mathrm{sh}}(\cA;\Sigma)
+\;:=\;
+-\,\left.\frac{\partial}{\partial n}\right|_{n=1}
+\mathcal R_{n,r}\!\left(
+\Sh_r(\Theta_\cA|_{\Sigma_n})\right).
+\]
+The algebraic vanishing and convergence of
+$\delta S_r^{\mathrm{sh}}$ are determined by the shadow tower
+$\Theta_\cA^{\le r}$.
 The four shadow depth classes
 \textup{(}Theorem~\textup{\ref{thm:shadow-archetype-classification}}\textup{)}
-yield four entanglement complexity classes:
+yield four shadow-complexity classes:
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -367,26 +342,30 @@ yield four entanglement complexity classes:
 & \textbf{Prototype} \\
 \midrule
 \textbf{G} \textup{(Gaussian)} & $2$ &
- None: Calabrese--Cardy exact &
+ none beyond the scalar term &
  Heisenberg, lattice \\
 \textbf{L} \textup{(Lie/tree)} & $3$ &
- One cubic correction $\delta S_3$ &
+ one cubic shadow coefficient &
  Affine Kac--Moody \\
 \textbf{C} \textup{(Contact)} & $4$ &
- Quartic correction $\delta S_4$ \textup{(}$\delta S_3$ may vanish\textup{)} &
+ quartic coefficient \textup{(}the cubic may vanish\textup{)} &
  $\beta\gamma$ \\
 \textbf{M} \textup{(Mixed)} & $\infty$ &
- Infinite tower $\{\delta S_r\}_{r \ge 3}$ &
+ infinite tower $\{\delta S_r^{\mathrm{sh}}\}_{r \ge 3}$ &
  Virasoro, $W_N$ \\
 \end{tabular}
 \end{center}
 In particular:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item For class~G algebras, the Calabrese--Cardy
- formula~\eqref{eq:ent-vn-scalar} is the \emph{exact}
- entanglement entropy.
-\item For class~M algebras, the corrections
- satisfy $|\delta S_r| \le C \cdot \rho(\cA)^r \cdot r^{-5/2}
+\item For class~G algebras, every algebraic shadow contribution
+ $\delta S_r^{\mathrm{sh}}$ with $r\ge3$ vanishes.  The
+ Calabrese--Cardy term is therefore the complete contribution
+ of the shadow model.
+\item For class~M algebras, if the replica functionals are
+ uniformly bounded by
+ $|\mathcal R_{n,r}(x)|\le C_0\|x\|\log(L/\varepsilon)$ near
+ $n=1$, then
+ $|\delta S_r^{\mathrm{sh}}| \le C \cdot \rho(\cA)^r \cdot r^{-5/2}
  \cdot \log(L/\varepsilon)$ where $\rho(\cA)$ is the shadow
  radius \textup{(Theorem~\textup{\ref{thm:shadow-radius}}\textup{)}.}
  The correction series converges absolutely when
@@ -402,26 +381,28 @@ finite-order projections of the bar-intrinsic MC element
 geometry~$\Sigma_n$ (the $n$-sheeted branched cover),
 $\Theta_\cA^{\le r}$ contributes to
 $\log Z_n$ through the genus expansion of the partition
-function restricted to graphs of degree at most~$r$.
+function restricted to graphs of degree at most~$r$; applying
+$\mathcal R_{n,r}$ and differentiating at $n=1$ gives the
+coefficient $\delta S_r^{\mathrm{sh}}$.
 The shadow depth $r_{\max}(\cA)$ is the
 smallest~$r$ at which the tower stabilizes
 (Theorem~\ref{thm:shadow-archetype-classification});
 for~$r > r_{\max}$, all higher shadows vanish and
-$\delta S_r = 0$.
+$\delta S_r^{\mathrm{sh}} = 0$.
 
 Part~(a): For class~G, $r_{\max} = 2$, so all shadows of
 degree $\ge 3$ vanish identically. The scalar
-level~$\kappa$ is the complete content.
+level is the complete shadow content.
 
-Part~(b): The bound on $|\delta S_r|$ follows from the
+Part~(b): The bound on $|\delta S_r^{\mathrm{sh}}|$ follows from the
 shadow growth rate
 (Theorem~\ref{thm:shadow-radius}):
 $|\Sh_r(\Theta_\cA)| \le C_1 \rho(\cA)^r r^{-5/2}$.
-Since the entanglement entropy is a linear functional of the
-shadow projections on the replica geometry (via the
-replica limit~$\partial_n|_{n=1}$), the bound propagates:
-$|\delta S_r| \le C \rho(\cA)^r r^{-5/2} \log(L/\varepsilon)$.
-Absolute convergence of $\sum_{r \ge 3} |\delta S_r|$
+The assumed uniform operator bound on $\mathcal R_{n,r}$ and its
+$n$-derivative propagates this estimate to the replica coefficient:
+$|\delta S_r^{\mathrm{sh}}| \le C \rho(\cA)^r r^{-5/2}
+\log(L/\varepsilon)$.
+Absolute convergence of $\sum_{r \ge 3} |\delta S_r^{\mathrm{sh}}|$
 follows from comparison with the geometric series
 $\sum \rho^r < \infty$ when $\rho < 1$.
 \end{proof}
@@ -432,39 +413,42 @@ $\sum \rho^r < \infty$ when $\rho < 1$.
 For Virasoro at central charge $c$:
 $\rho(c) = \sqrt{(180c+872)/(c^2(5c+22))}$.
 At the self-dual point $c = 13$: $\rho \approx 0.467$
-(convergent, shadow corrections are perturbative).
+(convergent algebraic shadow expansion).
 At the critical string $c = 26$: $\rho \approx 0.233$
-(strongly convergent).
+(strongly convergent algebraic shadow expansion).
 At the Ising point $c = 1/2$: $\rho > 1$
-(divergent; corrections require Borel resummation
-with convergence radius $R = 2\pi/\rho$).
+(the normalized shadow power series has radius below the
+unit sewing disk).
 
 The transition at $c = c^* \approx 6.125$, where
 $\rho = 1$, separates the \emph{perturbative regime}
-(corrections converge, scalar Calabrese--Cardy is
-a good approximation) from the
-\emph{nonperturbative regime}
-(corrections are asymptotic, Borel summable).
+(shadow coefficients give an absolutely convergent correction
+series for bounded replica functionals) from the
+\emph{asymptotic regime}.  Borel--\'Ecalle summability is a
+separate genus-expansion assertion; it does not follow from the
+shadow-radius estimate alone.
 \end{remark}
 
-\begin{corollary}[Full entanglement entropy;
+\begin{corollary}[Shadow expansion of the entropy functional;
 \ClaimStatusConditional]
 \label{cor:ent-full-entropy}
 \index{entanglement entropy!full formula}
 For a chirally Koszul algebra $\cA$ in the convergent
-regime $\rho(\cA) < 1$:
+regime $\rho(\cA) < 1$, and for a replica functional satisfying
+the boundedness hypothesis of
+Proposition~\textup{\ref{prop:ent-complexity-classification}},
+the shadow entropy functional is:
 \begin{equation}\label{eq:ent-full}
-S_{\EE}(\cA)
+S_{\EE}^{\mathrm{sh}}(\cA)
 \;=\;
 \frac{c(\cA)}{3}\,\log\frac{L}{\varepsilon}
 \;+\;
 \sum_{r=3}^{r_{\max}(\cA)}
-\delta S_r(\cA),
+\delta S_r^{\mathrm{sh}}(\cA),
 \end{equation}
 where the sum terminates at $r = r_{\max}$ for classes
 G, L, C and converges absolutely for class~M
-with $\rho < 1$. The shadow duality sums
-$D_r := \delta S_r(\cA) + \delta S_r(\cA^!)$ are universal
+with $\rho < 1$. The underlying Virasoro shadow sums are universal
 constants for $r \le 3$ and acquire $c$-dependence for $r \ge 4$
 \textup{(}Theorem~\textup{\ref{thm:entanglement-complementarity}(iii)}\textup{)}.
 \end{corollary}
@@ -498,24 +482,24 @@ admits the following heuristic decomposition in the modular Koszul framework
 identification with the physical QES formula requires a gravitational
 dual\textup{)}:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The area term is the scalar entanglement entropy:
+\item In a holographic normalization satisfying the RT dictionary,
+ the area term has boundary value
  $\mathrm{Area}(\gamma)/(4G_N) = S_{\EE}^{\mathrm{sc}}(\cA)
  = (c/3)\log(L/\varepsilon)$.
 
-\item The bulk entropy $S_{\mathrm{bulk}}$ is the
- shadow correction series
- $\sum_{r \ge 3} \delta S_r(\cA)$,
- controlled by the shadow obstruction tower.
+\item The bulk entropy $S_{\mathrm{bulk}}$ is represented, on the
+ shadow side, by the correction series
+ $\sum_{r \ge 3} \delta S_r^{\mathrm{sh}}(\cA)$.
 
 \item The stationarity condition
  $\nabla_\gamma S_{\QES} = 0$
- is a Ward identity of the modular shadow connection
+ is the physical image of a Ward identity of the modular shadow connection
  $\nabla^{\mathrm{hol}}_{g,n} = d - \Sh_{g,n}(\Theta_\cA)$
  restricted to the replica geometry.
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[Evidence]
+\begin{remark}[Algebraic evidence]
 Part~(i) is Theorem~\ref{thm:ent-scalar-entropy}.
 Part~(ii) is
 Proposition~\ref{prop:ent-complexity-classification}.
@@ -526,7 +510,7 @@ in~\S\ref{sec:thqg-soft-graviton-theorems}).
 Its Ward identities give
 $\nabla^{\mathrm{hol}}(\Sh_r) + o^{(r)} = 0$
 at each degree $r \ge 3$. On the replica geometry,
-$S_{\QES}$ is a functional of the shadow projections
+$S_{\QES}$ is modelled by a functional of the shadow projections
 $\{\Sh_r|_{\Sigma_n}\}_{r \ge 2}$; the stationarity
 $\delta S_{\QES}/\delta\gamma = 0$ is the content of
 the Ward identity at the appropriate degree.
@@ -543,8 +527,9 @@ $S_{\EE}^{\mathrm{sc}}(\cA) = (c/3)\log(L/\varepsilon)$.
 The quantum corrections
 (Faulkner--Lewkowycz--Maldacena~\cite{Faulkner-Lewkowycz-Maldacena13},
 Engelhardt--Wall~\cite{Engelhardt-Wall14})
-upgrading RT to the quantum extremal surface formula
-are heuristically identified with the shadow corrections $\delta S_r$; this identification requires a gravitational dual
+upgrading RT to the quantum extremal surface formula are
+heuristically identified with the shadow coefficients
+$\delta S_r^{\mathrm{sh}}$; this identification requires a gravitational dual
 and is not a theorem of the present framework.
 
 The shadow depth classification measures the
@@ -571,6 +556,11 @@ tower for $\rho < 1$).
 For each standard family, the scalar entanglement entropy
 coefficient $S_{\EE}^{\mathrm{sc}} / \log(L/\varepsilon)$,
 the shadow depth class, and the convergence status are:
+the entropy coefficient is the central-charge coefficient
+$c(\cA)/3$, while the displayed $\kappa$ is the modular
+characteristic governing the genus-shadow lane.  The
+Heisenberg row is rank one; rank-$d$ level-one free bosons
+replace $1/3$ by $d/3$.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -604,7 +594,8 @@ The Virasoro complementarity constraint is:
 \frac{c}{3} + \frac{26-c}{3}
 = \frac{26}{3},
 \end{equation}
-verified for all $c$ in the standard landscape.
+for all non-singular Virasoro central charges in the standard
+landscape.
 \end{theorem}
 
 \begin{proof}
@@ -623,9 +614,7 @@ all class~G and~L algebras have finite shadow obstruction towers
 (automatically convergent); class~M convergence depends
 on~$\rho(\cA) < 1$.
 The Virasoro sum~\eqref{eq:ent-virasoro-census} is
-$c/3 + (26-c)/3 = 26/3$, verified for all~$c$.
-Computational verification: 72~tests in
-\texttt{compute/tests/test\_entanglement\_shadow\_engine.py}.
+$c/3 + (26-c)/3 = 26/3$.
 \end{proof}
 
 \begin{remark}[Additivity under independent sums]

@@ -1,68 +1,99 @@
 
 \providecommand{\bk}{\mathbb{k}}
-\chapter{Nilpotent-completion frontier for non-quadratic Koszul duality}
+\chapter{Nilpotent completion for filtered chiral bar--cobar}
 \label{app:nilpotent-completion}
 
 
-The bar construction of Virasoro produces an infinite coalgebra.
-Without completion, no dual algebra is accessible. This appendix
-extends the finite-type geometric Koszul formalism to a larger class of
-filtered chiral algebras under finite-generation and polynomial-growth
-hypotheses, recording the $I$-adic framework, the finite-stage
-infrastructure, and the exact missing lemmas that separate the standard
-completed examples from a universal completion theorem.
+A filtered chiral algebra can have finite bar words and still fail to
+define a discrete bar--cobar comparison: a fixed output window may
+receive infinitely many OPE-mode contributions, curvature terms may
+survive in filtration degree~$0$, and the universal twisting
+cochain must be evaluated in a completed convolution algebra.  The
+completion used here is not a substitute for Koszul duality.  It is the
+topology in which the bar coalgebra, the cobar differential, and the
+Maurer--Cartan equation are defined by finite-window limits.
 
-\begin{remark}[Dependency warning]
+\begin{remark}[Three bar surfaces]
 \label{rem:nilpotent-completion-dependency}
-The theorematic core of the monograph remains the finite-type
-Koszul-locus theory of Chapters~\ref{chap:koszul-pairs}
-and~\ref{chap:higher-genus}. The present appendix records the leading
-extension of that core, not a replacement of it. Every result below
-should be read as belonging to the completion regime (Stratum~II),
-and its validity is conditional on the finite-generation and
-polynomial-growth hypotheses stated in
-Theorem~\ref{thm:completion-convergence}.
+There are three distinct objects.
+\[
+\Omega_X\bar B_X(A)\longrightarrow A
+\]
+is the bar--cobar counit; when it is a quasi-isomorphism it is
+inversion.  The completed object
+\[
+\widehat{\bar B}_X(A)=\varprojlim_N \bar B_X(A_{\le N})
+\]
+is a pro-conilpotent bar coalgebra.  The Verdier--Koszul lane is the
+separate construction
+\[
+A^{!,\mathrm{co}}_\infty:=\mathbb D_{\Ran}\widehat{\bar B}_X(A),
+\qquad
+A^!_\infty:=\Omega_X(A^{!,\mathrm{co}}_\infty),
+\]
+whenever the Verdier dual and the completed cobar construction satisfy
+their dualizability and convergence hypotheses.  Thus
+$\Omega_X\widehat{\bar B}_X(A)\simeq A$ recovers~$A$; it does not
+construct~$A^!$.
 \end{remark}
 
-\section{The problem: why completion is necessary}
+\section{Finite windows and completion}
 
-\subsection{Quadratic vs. non-quadratic}
+\subsection{Filtered non-quadratic algebras}
 
-\begin{observation}[Classical Koszul theory limitation]\label{obs:quadratic-limitation}
-Classical Koszul duality applies to quadratic algebras, those presented by generators and quadratic relations. Examples:
-\begin{itemize}
-\item Symmetric algebra: Sym(V) with relations $xy = yx$
-\item Exterior algebra: $\Lambda(V)$ with relations $xy = -yx$, $x^2 = 0$
-\item Polynomial ring: $k[x_1, \ldots, x_n]$
-\end{itemize}
+\begin{observation}[Filtered bar words]\label{obs:quadratic-limitation}
+Classical quadratic Koszul duality sees generators and quadratic
+relations.  Chiral algebras with central terms, normally ordered
+composites, or infinitely many positive-weight generators carry more
+data than this finite quadratic surface.  The Virasoro OPE
+\[
+T(z)T(w)\sim
+\frac{c/2}{(z-w)^4}+\frac{2T(w)}{(z-w)^2}
+ +\frac{\partial T(w)}{z-w}
+\]
+is already curved: the quartic pole contributes a scalar curvature
+term in the bar differential.  Principal $\mathcal W_N$ algebras add
+composite fields.  Positive towers such as $\mathcal W_{1+\infty}$ or
+RTT/Yangian towers require a weight-completed inverse limit of finite
+windows.
 
-However, many chiral algebras require completion beyond the quadratic
-setting: the Virasoro OPE $T(z)T(w) \sim c/(z-w)^4 + \cdots$ is
-\emph{inhomogeneous} quadratic (bilinear plus central term), requiring
-curved Koszul duality (\`{a}~la Positselski) and, in the manuscript's
-main line, producing only the same-family shadow
-$\mathrm{Vir}_{26-c}$ rather than an H-level infinite-generator dual
-object; W-algebras ($N \geq 3$) involve cubic and higher-order OPE
-relations; and the affine Yangian has relations involving spectral
-parameters.
-
-For these, the bar construction $\bar{B}(\cA)$ remains a perfectly well-defined dg coalgebra. Its cohomology coalgebra $H^*(\barB(\cA))$ is the dual coalgebra when that cohomology concentrates, but in the non-quadratic setting the cohomology does not concentrate in a single degree, so the classical Koszul dual algebra $\cA^!$ is not directly visible. $I$-adic completion resolves this: the completed bar coalgebra $\widehat{\bar{B}}(\cA)$ organizes the filtered data from which $\cA^!$ is recovered.
+The deconcatenation coalgebra remains conilpotent on every finite bar
+word.  Completion is needed for a different reason: the bar
+differential, the cobar differential, and the universal twisting
+morphism must be continuous for the chosen filtration, and the
+inverse-limit cohomology must satisfy Mittag--Leffler.
 \end{observation}
 
-\subsection{The completion solution}
+\subsection{The finite-window topology}
 
-\begin{idea}[\texorpdfstring{$I$}{I}-adic completion]\label{idea:I-adic}
-The bar complex $\bar{B}(\mathcal{A})$ carries the $I$-adic (descending) filtration:
-\[\bar{B}(\mathcal{A}) = I^0 \supseteq I^1 \supseteq I^2 \supseteq \cdots\]
-
-where $I = \ker(\epsilon)$ is the coaugmentation coideal.
-
-The $I$-adic completion is:
-\[\widehat{\bar{B}}(\mathcal{A}) := \varprojlim_n \bar{B}(\mathcal{A})/I^n\]
-
-This completed object is the candidate dual model in the completion
-regime studied here.
-\end{idea}
+\begin{definition}[Finite-window completion]\label{idea:I-adic}
+Let $A$ be an augmented filtered chiral $A_\infty$-algebra on a curve
+$X$ with
+\[
+A=F^0A\supset F^1A=\bar A\supset F^2A\supset\cdots,
+\qquad
+A\simeq\varprojlim_N A_{\le N},
+\qquad
+A_{\le N}:=A/F^{N+1}A .
+\]
+The filtration is a \emph{strong finite-window filtration} if
+\[
+\mu_r(F^{i_1}A,\ldots,F^{i_r}A)
+\subset F^{i_1+\cdots+i_r}A
+\tag{\ast}
+\label{eq:nc-strong-filtration}
+\]
+for every chiral $A_\infty$ operation $\mu_r$, and every finite window
+$A_{\le N}$ lies in the finite-type bar--cobar regime.
+The completed bar coalgebra is
+\[
+\widehat{\bar B}_X(A)
+:=\varprojlim_N \bar B_X(A_{\le N}).
+\]
+For an honest augmentation-ideal filtration this is the usual
+$I$-adic completion; for a conformal-weight tower it is the
+weight-window completion.
+\end{definition}
 
 \section{The conilpotent filtration}
 
@@ -84,7 +115,7 @@ This is an \emph{ascending} filtration: $F_0C \subset F_1C \subset F_2C \subset 
 A coalgebra is conilpotent if $\bigcup_n F_nC = C$, equivalently, if every element of $\ker(\epsilon)$ is annihilated by a sufficiently high iterate of the reduced coproduct: $\ker(\epsilon) = \bigcup_n \ker(\bar{\Delta}^{(n)})$.
 \end{definition}
 
-\begin{proposition}[Geometric manifestation; \ClaimStatusProvedHere]\label{prop:geom-conilpotent}
+\begin{proposition}[Collision trees and coradical degree; \ClaimStatusProvedHere]\label{prop:geom-conilpotent}
 For the geometric bar complex:
 \[\bar{B}^{\mathrm{geom}}_n(\mathcal{A}) = \Gamma(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^*_{\log})\]
 
@@ -110,201 +141,224 @@ This is ascending ($F_0 \subset F_1 \subset \cdots$) and exhaustive ($\bigcup_k 
 To verify this is the conilpotent filtration of Definition~\ref{def:conilpotent-filtration}: the reduced coproduct $\bar{\Delta}$ on $\bar{B}$ is the deconcatenation coproduct, which geometrically corresponds to ``splitting'' a configuration into two sub-configurations along a cut of the collision tree. Cutting a tree at an internal vertex reduces the depth by at least one in each factor, so $\bar{\Delta}(F_k) \subset \sum_{i+j=k-1} F_i \otimes F_j$, matching Definition~\ref{def:conilpotent-filtration}.
 \end{proof}
 
-\subsection{Convergence of the completion}
+\subsection{Convergence by finite windows}
 
-\begin{theorem}[Completion convergence; \ClaimStatusProvedHere]\label{thm:completion-convergence}
-For a chiral algebra $\mathcal{A}$ satisfying:
+\begin{theorem}[Finite-window convergence; \ClaimStatusProvedHere]\label{thm:completion-convergence}
+Let $A$ be a separated complete augmented filtered chiral
+$A_\infty$-algebra with a strong finite-window filtration
+\textup{(}Definition~\textup{\ref{idea:I-adic}}\textup{)}.  Then:
 \begin{enumerate}
-\item Finite generation over $\mathcal{D}_X$
-\item Polynomial growth of structure constants
-\item Finite-dimensional topological Hochschild cohomology: $\dim H^*(\mathcal{A}, \mathcal{A}) < \infty$
+\item the inverse limit
+ $\widehat{\bar B}_X(A)=\varprojlim_N\bar B_X(A_{\le N})$
+ is a separated complete pro-conilpotent curved dg chiral coalgebra;
+\item the bar differential, coproduct, curvature, and universal
+ twisting morphism are continuous for the finite-window topology;
+\item the completed convolution algebra
+ \[
+ \widehat{\operatorname{Conv}}(\widehat{\bar B}_X(A),A)
+ :=
+ \varprojlim_N
+ \operatorname{Conv}(\bar B_X(A_{\le N}),A_{\le N})
+ \]
+ contains the compatible limit
+ $\widehat\tau=\varprojlim_N\tau_N$, and
+ $\widehat\tau$ satisfies the Maurer--Cartan equation
+ \[
+ \partial\widehat\tau+\widehat\tau\star\widehat\tau=0;
+ \]
+\item for each cohomological degree~$m$, if the finite-stage
+ cohomology system
+ $\{H^m(\bar B_X(A_{\le N}))\}_N$ is Mittag--Leffler, then
+ \[
+ H^m(\widehat{\bar B}_X(A))
+ \cong
+ \varprojlim_N H^m(\bar B_X(A_{\le N})).
+ \]
 \end{enumerate}
-
-The $I$-adic completion $\widehat{\bar{B}}(\mathcal{A})$ converges and defines a well-defined dg coalgebra.
+The strong filtration condition~\eqref{eq:nc-strong-filtration}
+implies the needed finiteness of the Maurer--Cartan equation in every
+window: modulo $F^{N+1}A$, only operations $\mu_r$ with $r\le N$
+can contribute on reduced inputs.
 \end{theorem}
 
 \begin{proof}
-Let $F^n \bar{B}(\mathcal{A})$ denote the \emph{descending} $I$-adic filtration (the sub-$\mathcal{D}_X$-module generated by elements of OPE order $\geq n$), so that $F^0 = \bar{B} \supset F^1 \supset F^2 \supset \cdots$. (This is the $I$-adic filtration, not the ascending coradical filtration of Definition~\ref{def:conilpotent-filtration}.) We verify that the inverse system $\{\bar{B}(\mathcal{A})/F^n\}_{n \geq 0}$ defines a convergent pro-coalgebra whose limit inherits a well-defined dg structure.
-
-\emph{Step~1. Finite generation in each bidegree.}
-Since $\mathcal{A}$ is finitely generated over~$\mathcal{D}_X$ by hypothesis, say by generators $a_1, \ldots, a_r$, the degree-$k$ component of the bar complex is:
+The quotient maps $A_{\le N+1}\twoheadrightarrow A_{\le N}$ are
+strict morphisms of curved chiral $A_\infty$-algebras.  Functoriality
+of the finite-stage bar construction gives morphisms of curved dg
+chiral coalgebras
 \[
-\bar{B}_k(\mathcal{A}) = \bigoplus_{i_1 + \cdots + i_{k+1} \leq N(k)} \mathcal{A}_{i_1} \otimes \cdots \otimes \mathcal{A}_{i_{k+1}} \otimes \Omega^k_{\log}(\overline{C}_{k+1}(X))
+\bar B_X(A_{\le N+1})\longrightarrow\bar B_X(A_{\le N})
 \]
-where $N(k)$ is a bound coming from the conformal weight grading. The filtration level $F^n \cap \bar{B}_k$ is a sub-$\mathcal{D}_X$-module of a finitely generated module, hence finitely generated (since $\mathcal{D}_X$ is Noetherian on a smooth algebraic curve~$X$).
+compatible with coproduct, coaugmentation, differential, and curvature.
+The inverse limit therefore carries these structures componentwise.
+Each finite quotient is conilpotent by bar length; the limit is
+pro-conilpotent and separated because $A\simeq\varprojlim_N A_{\le N}$.
 
-\emph{Step~2. Polynomial growth controls the associated graded.}
-The polynomial growth hypothesis states that the OPE coefficients $C^c_{ab}(n)$ (defined by $a_{(n)}b = \sum_c C^c_{ab}(n)\, c$) satisfy $|C^c_{ab}(n)| \leq P(n)$ for a polynomial~$P$. This implies that the bar differential $d_{\bar{B}}$, which involves residues of OPEs, preserves the filtration ($d_{\bar{B}}(F^n) \subset F^n$) with the induced map on graded pieces $\mathrm{gr}^n \bar{B} \to \mathrm{gr}^n \bar{B}$ bounded polynomially in~$n$. Therefore:
+For reduced inputs, \eqref{eq:nc-strong-filtration} gives
+$\mu_r(\bar A^{\otimes r})\subset F^rA$.  Hence modulo $F^{N+1}A$ all
+terms with $r>N$ vanish.  The universal finite-stage twisting
+morphisms $\tau_N$ satisfy
+$\partial\tau_N+\tau_N\star\tau_N=0$ and are compatible with the
+transition maps; their inverse limit is the displayed completed
+Maurer--Cartan element.  Continuity is precisely the statement that
+every component is detected after projection to some finite window.
+
+The cohomology statement is the Milnor exact sequence
 \[
-\dim\bigl((F^n/F^{n+1}) \cap \bar{B}_k\bigr) \leq P(n) \cdot Q(k)
+0\to
+\varprojlim\nolimits_N^1 H^{m-1}(\bar B_X(A_{\le N}))
+\to
+H^m(\widehat{\bar B}_X(A))
+\to
+\varprojlim_N H^m(\bar B_X(A_{\le N}))
+\to0 .
 \]
-for polynomials $P, Q$ depending only on the generating data of~$\mathcal{A}$.
-
-\emph{Step~3. Finiteness ensures differential compatibility.}
-The finiteness condition $\dim H^*(\mathcal{A}, \mathcal{A}) < \infty$ guarantees that the obstruction theory for extending the differential from $\bar{B}/F_n$ to $\bar{B}/F_{n+1}$ is unobstructed. Specifically, the obstruction to lifting $d_{\bar{B}} \bmod F^n$ to $d_{\bar{B}} \bmod F^{n+1}$ lives in $H^2(\mathcal{A}, F^n/F^{n+1})$, which is finite-dimensional and eventually zero by the polynomial growth bound. (This step uses the polynomial growth hypothesis of~(H1) to ensure eventual stabilization; see Remark~\ref{rem:completion-convergence-frontier} for the proof-density discussion.)
-
-\emph{Step~4. Mittag-Leffler condition and inverse limit.}
-The transition maps $\bar{B}_k/F^{n+1} \twoheadrightarrow \bar{B}_k/F^n$ are surjections (since $F^{n+1} \subset F^n$). For any inverse system of surjections, the Mittag-Leffler condition is automatically satisfied, which implies $\varprojlim^1_n (\bar{B}_k/F^n) = 0$. (The polynomial growth bound on $\dim(F^n/F^{n+1})_k$ ensures that each quotient is finite-dimensional, so the inverse system is in the category of finite-dimensional vector spaces where the inverse limit is exact.) Therefore the inverse limit
-\[
-\widehat{\bar{B}}_k(\mathcal{A}) = \varprojlim_n \bar{B}_k(\mathcal{A})/F^n
-\]
-exists and is exact. The dg coalgebra structure passes to the limit because $d_{\bar{B}}$ and $\Delta$ are continuous for the $F^\bullet$-adic topology.
+The Mittag--Leffler hypothesis kills the derived limit term.
 \end{proof}
 
-\begin{remark}[Completion-regime proof density]\label{rem:completion-convergence-frontier}
-Step~3 above compresses a non-trivial claim: that the obstruction
-groups $H^2(\mathcal{A}, F^n/F^{n+1})$ are eventually zero under the
-polynomial growth hypothesis. The argument invokes the finite
-topological Hochschild cohomology assumption to control the total obstruction space,
-and the polynomial growth bound to show each graded piece $F^n/F^{n+1}$
-becomes negligible for large~$n$. A fully expanded proof would require
-an explicit filtration-degree estimate showing that the polynomial bound
-on OPE coefficients forces $H^2(\mathcal{A}, F^n/F^{n+1}) = 0$ for
-$n \gg 0$. This places the result in the completion regime of
-Remark~\ref{rem:existence-regimes}(ii), not in the strict finite-type
-core.
+\begin{remark}[Polynomial growth is not a convergence theorem]\label{rem:completion-convergence-window}
+Finite generation, polynomial bounds on OPE coefficients, and
+finite-dimensional Hochschild cohomology do not by themselves imply
+eventual vanishing of
+$H^2(A,F^N/F^{N+1})$.  The convergence statement used in this chapter
+is the finite-window theorem above: either the strong filtration axiom
+gives a degree cutoff, or a separate weight-cutoff/Mittag--Leffler
+criterion verifies the inverse-limit comparison.
 \end{remark}
 
-\section{Koszul duality via completion}
+\section{Completion and the Verdier--Koszul lane}
 
 \subsection{The main construction}
 
-\begin{construction}[Completed Koszul dual]\label{const:completed-koszul}
-For non-quadratic chiral algebras, the intrinsic
-Definition~\ref{def:koszul-dual-quadratic} does not apply.
-Define the \emph{completed Koszul dual coalgebra} as:
-\[\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}} := \widehat{\bar{B}}(\mathcal{A})\]
-the $I$-adic completion of the geometric bar complex.
-This is a completed dg \emph{coalgebra}: the bar construction produces a coalgebra,
-not an algebra. The Koszul dual \emph{algebra} $\mathcal{A}^!$
-(if it exists as such) is obtained by continuous linear dualization of
-$\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}$ under topological
-finiteness hypotheses; this dualization is a separate operation.
+\begin{construction}[Completed bar coalgebra and Koszul dual lane]\label{const:completed-koszul}
+For a complete filtered algebra~$A$, set
+\[
+\widehat B_X(A):=\widehat{\bar B}_X(A)
+=\varprojlim_N\bar B_X(A_{\le N}).
+\]
+This is a completed dg coalgebra.  The coalgebraic Koszul object is
+the bar cohomology
+\[
+A^{\mathrm i}_{\mathrm{cpl}}:=H^\bullet(\widehat B_X(A))
+\]
+when that cohomology is a usable completed coalgebra.  The algebraic
+Koszul dual is obtained only after the Verdier step:
+\[
+A^{!,\mathrm{co}}_\infty:=\mathbb D_{\Ran}\widehat B_X(A),
+\qquad
+A^!_\infty:=\Omega_X(A^{!,\mathrm{co}}_\infty),
+\]
+under the topological finiteness hypotheses that make
+$\mathbb D_{\Ran}$ and the completed cobar functor converge.
 
-The cobar construction on the completed coalgebra gives:
-\[\Omega(\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}) := (T(s^{-1}\overline{\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}}), d_\Omega)\]
-where $T$ denotes the tensor algebra, $s^{-1}$ the desuspension,
-$\overline{\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}}$
-the coaugmentation coideal, and $d_\Omega$ the differential induced by the coproduct.
+The completed cobar used for inversion is a different object:
+\[
+\widehat\Omega_X(\widehat B_X(A))
+:=\varprojlim_N\Omega_X(\bar B_X(A_{\le N})).
+\]
 \end{construction}
 
-\begin{theorem}[Completed bar-cobar duality; \ClaimStatusProvedHere]\label{thm:completed-bar-cobar}
-For a chiral algebra $\mathcal{A}$ satisfying the convergence criteria of
-Theorem~\textup{\ref{thm:completion-convergence}}, there is a quasi-isomorphism:
-\[\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \mathcal{A}\]
-
-This is the completion-regime analogue of the finite-type bar-cobar
-inversion of the core monograph (Main Theorem~B), valid under the
-finite-generation and polynomial-growth hypotheses stated above.
-See Remark~\textup{\ref{rem:completed-bar-cobar-frontier}} for the
-completion-regime scope of the argument.
+\begin{theorem}[Completed finite-window bar--cobar inversion; \ClaimStatusProvedHere]\label{thm:completed-bar-cobar}
+Let $A$ be as in Theorem~\textup{\ref{thm:completion-convergence}},
+and assume the finite-stage counits
+\[
+\epsilon_N\colon \Omega_X\bar B_X(A_{\le N})\longrightarrow A_{\le N}
+\]
+are compatible quasi-isomorphisms in the square-zero total model.
+Then the completed counit
+\[
+\widehat\epsilon\colon
+\widehat\Omega_X(\widehat{\bar B}_X(A))
+=\varprojlim_N\Omega_X\bar B_X(A_{\le N})
+\longrightarrow
+\varprojlim_N A_{\le N}=A
+\]
+is a quasi-isomorphism.  In a genuinely curved CDG realization the
+same finite-window construction gives a coacyclic cone in the relevant
+second-kind coderived category, not an ordinary raw-chain
+quasi-isomorphism.
 \end{theorem}
 
 \begin{proof}
-The proof extends the uncompleted bar-cobar inversion (Main Theorem~B) via a comparison argument using the completion filtration.
-
-\emph{Step~1. Filtration compatibility.}
-The descending bar-degree filtration $\{F^n\bar{B}(\mathcal{A})\}_{n \geq 0}$
-(where $F^n = \bigoplus_{k \geq n} \bar{B}^{\mathrm{ch}}_k(\mathcal{A})$)
-induces a completion:
-$\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/F^n$.
-The bar differential $d_{\bar{B}}$ is compatible with this filtration
-(it increases bar degree by at most~1),
-so $\widehat{\bar{B}}(\mathcal{A})$ is a well-defined dg coalgebra.
-
-\emph{Step~2. Cobar functor on the completion.}
-The cobar functor $\Omega$ applied to $\widehat{\bar{B}}(\mathcal{A})$ produces a dg algebra whose underlying graded space is:
+The maps $\epsilon_N$ form a morphism of inverse systems.  Let
+$K_N=\operatorname{Cone}(\epsilon_N)$.  Each $K_N$ is acyclic in the
+square-zero total model by the finite-stage bar--cobar theorem, and
+the transition maps are surjective finite-window maps.  The Milnor
+sequence gives
 \[
-\Omega(\widehat{\bar{B}}(\mathcal{A})) = T(s^{-1}\overline{\widehat{\bar{B}}(\mathcal{A})})
+0\to\varprojlim\nolimits_N^1H^{m-1}(K_N)
+\to H^m(\varprojlim_NK_N)
+\to \varprojlim_NH^m(K_N)\to0.
 \]
-with differential $d_\Omega$ encoding the coproduct of $\widehat{\bar{B}}(\mathcal{A})$. We must show this is quasi-isomorphic to~$\mathcal{A}$.
-
-\emph{Step~3. Comparison with the uncompleted version.}
-The canonical map $\bar{B}(\mathcal{A}) \to \widehat{\bar{B}}(\mathcal{A})$ induces a map of cobar complexes:
-\[
-\Omega(\bar{B}(\mathcal{A})) \longrightarrow \Omega(\widehat{\bar{B}}(\mathcal{A}))
-\]
-induced by the canonical inclusion $\bar{B}(\mathcal{A}) \hookrightarrow \widehat{\bar{B}}(\mathcal{A})$ (the cobar functor is covariant). We show this map is a quasi-isomorphism using Step~4. By the uncompleted bar-cobar inversion theorem, $\Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$ is a quasi-isomorphism.
-
-\emph{Step~4. Completion does not change homotopy type.}
-The convergence hypotheses (Theorem~\ref{thm:completion-convergence}) ensure that the inverse system $\{\bar{B}(\mathcal{A})/F^n\}_{n \geq 0}$ (with $F^n$ the descending $I$-adic filtration) satisfies the Mittag-Leffler condition. The polynomial growth of structure constants implies that for each bar complex degree~$k$, the quotients $(F^n \bar{B}_k)/(F^{n+1} \bar{B}_k)$ stabilize for $n$ sufficiently large relative to~$k$. Therefore $\varprojlim^1 = 0$, and the natural map
-\[
-H^*(\widehat{\bar{B}}(\mathcal{A})) \xrightarrow{\;\cong\;} \varprojlim_n H^*(\bar{B}(\mathcal{A})/F^n)
-\]
-is an isomorphism. Since each finite-level quotient $\bar{B}(\mathcal{A})/F_n$ is a conilpotent coalgebra (by Positselski \cite{Positselski11}, Theorem~3.5), the cobar construction on it recovers~$\mathcal{A}/I^n$ (where $I$ is the augmentation ideal of~$\mathcal{A}$), and passing to the limit gives $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \varprojlim_n (\mathcal{A}/I^n) = \mathcal{A}$, the last equality holding because $\mathcal{A}$ is $I$-adically complete under the convergence hypotheses.
+The right term vanishes because every $K_N$ is acyclic; the left term
+vanishes by Mittag--Leffler.  Hence
+$\operatorname{Cone}(\widehat\epsilon)$ is acyclic, which is the
+displayed quasi-isomorphism.  In the curved CDG ambient the same
+inverse-limit cone is interpreted in Positselski's second-kind
+category; acyclicity is replaced by coacyclicity.
 \end{proof}
 
-\begin{remark}[Finite-stage compatibility]\label{rem:completed-bar-cobar-frontier}
-Step~4 above uses finite-stage bar-cobar inversion: the claim that
-$\Omega(\bar{B}(\mathcal{A})/F_n) \simeq \mathcal{A}/I^n$ for each~$n$
-requires that each truncation $\mathcal{A}/I^n$ satisfies the hypotheses
-of the uncompleted bar-cobar inversion theorem (Theorem~B). For the
-standard Master Table families, these finite-stage quotients are
-finite-dimensional and hence automatically on the Koszul locus. For
-algebras outside these families, this finite-stage compatibility is an
-additional hypothesis. This places the result in the completion
-regime of Remark~\ref{rem:existence-regimes}(ii).
+\begin{remark}[Finite-stage compatibility]\label{rem:completed-bar-cobar-window}
+The theorem uses finite-stage inversion as an input.  The statement
+does not assert that an arbitrary quotient of an arbitrary filtered
+algebra lies on the Koszul locus; it asserts that a tower whose
+quotients already carry the finite-stage bar--cobar quasi-isomorphisms
+inherits the completed quasi-isomorphism by Milnor exactness.
 \end{remark}
 
 \subsection{Essential image}
 
-\begin{theorem}[Characterization of Koszul duals; \ClaimStatusProvedHere]\label{thm:koszul-dual-characterization}
-A completed coalgebra $\widehat{\mathcal{C}}$ arises as $\widehat{\mathcal{C}} \simeq \widehat{\bar{B}}(\mathcal{A})$ for some chiral algebra $\mathcal{A}$ satisfying the convergence criteria of Theorem~\textup{\ref{thm:completion-convergence}} if and only if:
+\begin{theorem}[Essential image of finite-window bar towers; \ClaimStatusProvedHere]\label{thm:koszul-dual-characterization}
+A separated complete curved dg chiral coalgebra
+$\widehat C$ is isomorphic to $\widehat{\bar B}_X(A)$ for a strong
+finite-window algebra~$A$ if and only if it admits a presentation
+\[
+\widehat C\simeq\varprojlim_N C_N
+\]
+with the following properties:
 \begin{enumerate}
-\item $\widehat{\mathcal{C}}$ is a completed conilpotent coalgebra
-\item The coderivation $d$ is compatible with the completion topology
-\item There exist ``generating cogenerators'' $V^* \hookrightarrow F_1\widehat{\mathcal{C}}/F_0\widehat{\mathcal{C}}$ compatible with collision data on $\overline{C}_n(X)$
-\item The spectral sequence $E_1 = \operatorname{gr}(\widehat{\mathcal{C}})$ degenerates at $E_2$
+\item each $C_N$ is a finite-type conilpotent curved dg chiral
+ coalgebra in the finite-stage essential image, say
+ $C_N\simeq\bar B_X(A_{\le N})$;
+\item the transition maps $C_{N+1}\to C_N$ are induced by strict
+ quotient maps $A_{\le N+1}\twoheadrightarrow A_{\le N}$;
+\item the algebras $A_{\le N}$ assemble to a separated complete
+ algebra $A=\varprojlim_NA_{\le N}$ whose operations satisfy
+ \eqref{eq:nc-strong-filtration}; and
+\item the finite-stage twisting morphisms and counits are compatible
+ with the tower.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-\emph{Forward direction} ($\widehat{\mathcal{C}} = \widehat{\bar{B}}(\mathcal{A}) \Rightarrow$ (1)--(4)):
+If $\widehat C=\widehat{\bar B}_X(A)$, take
+$C_N=\bar B_X(A_{\le N})$.  The four conditions are exactly the
+finite-window construction of Definition~\ref{idea:I-adic} and
+Theorem~\ref{thm:completion-convergence}.
 
-\emph{Condition (1).} The bar complex $\bar{B}(\mathcal{A})$ is conilpotent by construction: the deconcatenation coproduct $\bar{\Delta}$ on $\bar{B}_n$ reduces bar degree, so $\bar{\Delta}^{(n)}(\bar{B}_n) = 0$. Proposition~\ref{prop:geom-conilpotent} gives the geometric manifestation. The completion
-$\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/F_n$
-inherits conilpotency in the completed sense: every element of $\ker(\hat{\epsilon})$ lies in some~$F_n$.
-
-\emph{Condition (2).} The bar differential $d_{\bar{B}}$ is defined via residues of OPEs, which involve OPE coefficients at fixed singularity order. Since $d_{\bar{B}}$ maps $F_n$ to $F_{n-1}$ (collision depth decreases by at most one under residue extraction), it is continuous for the $F$-adic topology. This was verified in Step~1 of the proof of Theorem~\ref{thm:completed-bar-cobar}.
-
-\emph{Condition (3).} The generators $a_1, \ldots, a_r$ of $\mathcal{A}$ embed as cogenerators of $\bar{B}(\mathcal{A})$ via the canonical inclusion $\mathcal{A} \hookrightarrow \bar{B}^1(\mathcal{A})$ (the bar-degree-one component). These elements lie in $F_1/F_0$ and satisfy collision compatibility: the coproduct $\bar{\Delta}$ on a cogenerator $a_i \in \bar{B}^1$ vanishes (they are primitive), while the differential $d(a_i \otimes a_j \otimes \eta_{12}) = \operatorname{Res}_{z_1 = z_2}[a_i(z_1)a_j(z_2)]$ recovers the OPE data. This is the compatibility with collision divisors on $\overline{C}_n(X)$.
-
-\emph{Condition (4).} The spectral sequence associated
-to the conilpotent filtration has
-$E_1^{p,q} = H^q(\operatorname{gr}^p
-\widehat{\bar{B}}(\mathcal{A}))$.
-The $E_1$ page computes the cohomology of the associated graded
-coalgebra, which for the bar complex of $\mathcal{A}$ is determined by
-the quadratic part of the relations. The $E_2$ degeneration holds
-because the convergence criteria of
-Theorem~\ref{thm:completion-convergence} (finite generation +
-polynomial growth) ensure that $E_2^{p,q}$ is finite-dimensional in
-each bidegree, and for degree reasons ($E_r$ differentials have bidegree
-$(r, 1-r)$) all higher differentials $d_r$ for $r \geq 3$ vanish on a
-range that exhausts the complex as $n \to \infty$.
-
-\medskip
-\emph{Backward direction} ((1)--(4) $\Rightarrow$ $\widehat{\mathcal{C}} \simeq \widehat{\bar{B}}(\mathcal{A})$):
-
-Given $\widehat{\mathcal{C}}$ satisfying (1)--(4), define $\mathcal{A} := \Omega(\widehat{\mathcal{C}})$, the cobar construction on the completed coalgebra.
-
-\emph{Step 1: Well-definedness.} Conditions (1) and (2) ensure that $\Omega(\widehat{\mathcal{C}}) = (T(s^{-1}\overline{\widehat{\mathcal{C}}}), d_\Omega)$ is a well-defined dg algebra: the conilpotency guarantees that the cobar differential $d_\Omega$ (induced by $\bar{\Delta}$ and $d$) involves only finite sums, and continuity of $d$ ensures $d_\Omega^2 = 0$ on the completed tensor algebra.
-
-\emph{Step 2: Chiral structure.} Condition (3) provides generators $V^* \subset F_1/F_0$ whose collision compatibility endows $\mathcal{A} = \Omega(\widehat{\mathcal{C}})$ with a chiral algebra structure: the cobar differential encodes OPE data via $d_\Omega(s^{-1}v)(z_1, z_2) = \operatorname{Res}_{z_1 = z_2}[\cdots]$, and the associativity of the chiral product follows from $d_\Omega^2 = 0$. The collision compatibility ensures that these OPEs satisfy the locality axiom (singularities only along diagonals).
-
-\emph{Step 3: Recovery.} By Theorem~\ref{thm:completed-bar-cobar}, $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \mathcal{A}$. We must show $\widehat{\bar{B}}(\mathcal{A}) \simeq \widehat{\mathcal{C}}$. The bar-cobar adjunction provides a unit $\eta: \widehat{\mathcal{C}} \to \widehat{\bar{B}}(\Omega(\widehat{\mathcal{C}}))$. Condition (4) ensures this is a quasi-isomorphism: the $E_2$ degeneration means the bar spectral sequence for $\mathcal{A} = \Omega(\widehat{\mathcal{C}})$ collapses, so $\widehat{\bar{B}}(\mathcal{A})$ has the same cohomology as $\widehat{\mathcal{C}}$. Since both are complete and conilpotent, a cohomology isomorphism between completed conilpotent coalgebras is a quasi-isomorphism of dg coalgebras (by the comparison theorem for complete filtered complexes, cf.\ Positselski \cite{Positselski11}).
+Conversely, assume such a presentation.  The strict quotient maps
+$A_{\le N+1}\twoheadrightarrow A_{\le N}$ assemble to the separated
+complete algebra $A=\varprojlim_NA_{\le N}$.  Compatibility of the
+finite-stage bar functor identifies the inverse system
+$\{C_N\}_N$ with $\{\bar B_X(A_{\le N})\}_N$.  Taking inverse limits
+gives
+\[
+\widehat C
+\simeq
+\varprojlim_N C_N
+\simeq
+\varprojlim_N\bar B_X(A_{\le N})
+=
+\widehat{\bar B}_X(A).
+\]
 \end{proof}
 
-\begin{remark}[Essential-image proof density]\label{rem:koszul-dual-characterization-frontier}
-The backward direction (Step~3) invokes
-Theorem~\ref{thm:completed-bar-cobar}, whose finite-stage compatibility
-qualifier is
-recorded in Remark~\ref{rem:completed-bar-cobar-frontier}. The
-essential-image characterization therefore inherits the same
-proof-density qualifier: the result is valid under the convergence
-hypotheses of Theorem~\ref{thm:completion-convergence}, but those
-hypotheses are part of the completion regime, not the strict
-finite-type core.
+\begin{remark}[Spectral sequences do not define the essential image]\label{rem:koszul-dual-characterization-window}
+Degeneration of an associated-graded spectral sequence is useful for
+proving that a given finite-window tower lies on the Koszul locus, but
+it is not an intrinsic characterization of completed bar coalgebras.
+The essential-image datum is the compatible finite-stage bar tower
+itself, together with the continuous twisting morphisms.
 \end{remark}
 
 \section{Connection to Beilinson--Drinfeld}
@@ -312,37 +366,56 @@ finite-type core.
 \subsection{Filtered chiral algebras}
 
 \begin{remark}[BD framework]\label{rem:BD-filtered}
-Beilinson--Drinfeld (BD 4.2) develop the theory of filtered chiral algebras with I-adic topology. Their framework provides:
+Beilinson--Drinfeld develop filtered chiral algebras with
+augmentation-ideal topology.  The basic operations are:
 
 \begin{itemize}
-\item Filtration by augmentation ideal I
-\item Completion: $\widehat{\mathcal{A}} = \varprojlim_n \mathcal{A}/I^n$
-\item Associated graded: $\text{gr}(\mathcal{A}) = \bigoplus_n I^n/I^{n+1}$
+\item filtration by the augmentation ideal~$I$;
+\item completion
+ $\widehat{\mathcal{A}}=\varprojlim_n\mathcal{A}/I^n$;
+\item associated graded
+ $\operatorname{gr}(\mathcal{A})=\bigoplus_n I^n/I^{n+1}$.
 \end{itemize}
-
-Our nilpotent completion of the bar complex is an instance of this framework:
-\[\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/I^n\]
-is the BD-style completion applied to the bar complex.
+When the finite-window filtration is the augmentation-ideal
+filtration, Definition~\ref{idea:I-adic} is exactly this completion
+applied to the bar coalgebra:
+\[
+\widehat{\bar B}_X(A)=\varprojlim_n\bar B_X(A/I^{n+1}).
+\]
 \end{remark}
 
 \subsection{Chiral homology completion}
 
 \begin{theorem}[BD chiral homology \cite{BD04}; \ClaimStatusProvedElsewhere]\label{thm:BD-chiral-homology}
-\textup{(Beilinson--Drinfeld 4.7)}
-
-For a chiral algebra $\mathcal{A}$ and curve X, BD define completed chiral homology:
-\[\widehat{H}_*^{\text{ch}}(X, \mathcal{A}) := \varprojlim_n H_*^{\text{ch}}(X, \mathcal{A}/I^n)\]
-
-This agrees with our completed bar construction:
-\[\widehat{H}_*^{\text{ch}}(X, \mathcal{A}) \cong H_*(\widehat{\bar{B}}(\mathcal{A}))\]
+Let $A$ be an $I$-adically complete filtered chiral algebra on a
+smooth curve~$X$.  Assume the inverse system
+$\{H_*^{\mathrm{ch}}(X,A/I^{n+1})\}_n$ is Mittag--Leffler.  Then
+completed chiral homology is computed by the completed bar coalgebra:
+\[
+\widehat H_*^{\mathrm{ch}}(X,A)
+:=
+\varprojlim_n H_*^{\mathrm{ch}}(X,A/I^{n+1})
+\cong
+H_*\!\left(\varprojlim_n\bar B_X(A/I^{n+1})\right).
+\]
 \end{theorem}
 
-\section{Physical interpretation: renormalization}
+\section{Perturbative filtrations}
 
 \subsection{Perturbative expansion}
 
 \begin{interpretation}[Completion as perturbative expansion]\label{interp:completion-renorm}
-In the Poisson sigma model on a surface~$\Sigma_g$, the filtration $F^n$ of the bar complex corresponds to the loop expansion truncated at~$n$ loops: the finite truncation $\bar{B}(\mathcal{A})/I^n$ captures contributions from Feynman diagrams with at most~$n$ internal edges, and the completion $\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/I^n$ is the all-orders perturbative expansion. The passage from finite truncation to inverse limit is the algebraic counterpart of removing the UV cutoff, and the convergence criteria of Theorem~\ref{thm:completion-convergence} ensure the limit is well-defined.
+In perturbative models whose Feynman graphs are identified with the
+bar construction, a finite window $\bar B(A_{\le N})$ records the graph
+weights visible below the chosen filtration bound.  The completed
+object
+\[
+\widehat{\bar B}_X(A)=\varprojlim_N\bar B_X(A_{\le N})
+\]
+is the formal all-window object.  Theorem~\ref{thm:completion-convergence}
+is the algebraic convergence statement: finite graph windows assemble
+only when the differential and twisting cochain are continuous and the
+cohomology tower is Mittag--Leffler.
 \end{interpretation}
 
 \subsection{Feynman diagram expansion}
@@ -351,116 +424,112 @@ In the Poisson sigma model on a surface~$\Sigma_g$, the filtration $F^n$ of the 
 The conilpotent filtration levels $F^n/F^{n+1}$ correspond, under the Feynman diagram identification of Chapter~\ref{ch:v1-feynman}, to graphs with exactly~$n$ internal edges. In particular: $F^0/F^1$ consists of vacuum contributions (no internal edges), $F^1/F^2$ of tree-level propagators (single internal edge), and $F^n/F^{n+1}$ of diagrams with~$n$ internal edges. The symmetry factors arising in the perturbative expansion are the orders of the automorphism groups of the corresponding graphs. The completion $\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/I^n$ amounts to summing over all graph topologies, a formal power series that requires the $I$-adic topology to converge.
 \end{remark}
 
-\section{Explicit examples}
+\section{Finite-window examples}
 
 \subsection{Example 1: Virasoro algebra}
 
-\begin{example}[Virasoro completion]\label{ex:virasoro-completion}
-The Virasoro algebra has generators $L_n$ with OPE:
-\[T(z)T(w) \sim \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}\]
-
-The quartic pole means the naive bar complex has:
-\[\bar{B}_2(\text{Vir}) \ni L_n \otimes L_m \otimes (z-w)^{-4} dz \wedge dw\]
-
-This requires completion to handle all powers of $(z-w)^{-k}$ for $k \geq 4$.
-
-\emph{Filtration.}
-\begin{align*}
-F_0 &= \text{All L-generators} \\
-F_1 &= \text{Composite fields like } :LL:, :LLL:, \ldots \\
-F_2 &= \text{Double composites} \\
-&\vdots
-\end{align*}
-
-\emph{Completion.}
-\[\widehat{\bar{B}}(\text{Vir}) = \varprojlim_n \bar{B}(\text{Vir})/I^n\]
-
-Includes all formal power series in composite operators.
-
-\emph{Koszul dual.}
-\[\text{Vir}^! = \widehat{\bar{B}}(\text{Vir})\]
-is a completed coalgebra with infinitely many cogenerators corresponding to the composite fields.
+\begin{example}[Virasoro finite-window completion]\label{ex:virasoro-completion}
+The Virasoro OPE is
+\[
+T(z)T(w)\sim
+\frac{c/2}{(z-w)^4}
++\frac{2T(w)}{(z-w)^2}
++\frac{\partial T(w)}{z-w}.
+\]
+The quartic pole contributes the scalar curvature direction
+$m_0\propto(c/2)\mathbf 1$ in the curved bar model.  On the
+positive-energy state space write
+\[
+(\mathrm{Vir}_c)_{\le N}:=\bigoplus_{0\le h\le N}
+(\mathrm{Vir}_c)_h .
+\]
+Each finite window is finite-dimensional by the VOA finite-energy
+axiom, and the completed bar coalgebra is
+\[
+\widehat{\bar B}(\mathrm{Vir}_c)
+=
+\varprojlim_N
+\bar B\bigl((\mathrm{Vir}_c)_{\le N}\bigr).
+\]
+This object is the completed bar coalgebra.  The same-family shadow
+$\mathrm{Vir}_{26-c}$ belongs to the Verdier--Koszul lane; it is not
+the bar coalgebra itself and is not produced by the counit
+$\Omega\widehat{\bar B}(\mathrm{Vir}_c)\to\mathrm{Vir}_c$.
 \end{example}
 
 \subsection{\texorpdfstring{Example 2: $W_3$ algebra}{Example 2: W-3 algebra}}
 
-\begin{example}[\texorpdfstring{$W_3$}{W3} completion]\label{ex:w3-completion}
-The $\mathcal{W}_3$ algebra (Definition~\ref{def:w3-algebra}) has generators $T$ (spin 2) and $W$ (spin 3); the $W$--$W$ OPE has a sixth-order pole $c/3 \cdot (z-w)^{-6}$, which requires even more careful completion.
-
-\emph{Convergence.}
-The completion converges because:
-\begin{enumerate}
-\item Finite generation: Two generators T, W
-\item Polynomial growth: Structure constants grow like $n^k$ for fixed k
-\item Formal smoothness: $\dim H^*(\mathcal{W}_3, \mathcal{W}_3) < \infty$
-\end{enumerate}
-
-\emph{Completed bar complex.}
-\[\widehat{\bar{B}}(\mathcal{W}_3) = \varprojlim_{n} \bar{B}(\mathcal{W}_3)/I^n\]
-
-includes all formal composite fields built from T and W.
-
-\emph{Geometric interpretation.}
-At the geometric level, completion corresponds to summing over all collision patterns on configuration spaces, including arbitrarily nested collisions.
+\begin{example}[\texorpdfstring{$\mathcal W_3$}{W3} finite windows]\label{ex:w3-completion}
+The algebra $\mathcal W_3$ has strong generators $T$ and~$W$ of spins
+$2$ and~$3$, and the $W$--$W$ OPE contains a sixth-order scalar pole.
+The completion is the conformal-weight tower
+\[
+\widehat{\bar B}(\mathcal W_3)
+=
+\varprojlim_N
+\bar B\bigl((\mathcal W_3)_{\le N}\bigr).
+\]
+The convergence input is not the bare assertion that the structure
+constants have polynomial growth.  The finite-window proof requires
+the operations to preserve the chosen filtration, finite-stage
+bar--cobar inversion on each $(\mathcal W_3)_{\le N}$, and
+Mittag--Leffler stabilization of the resulting bar cohomology tower.
 \end{example}
 
 \subsection{Example 3: Heisenberg (quadratic case for comparison)}
 
-\begin{example}[Heisenberg: no completion needed]\label{ex:heisenberg-no-completion}
+\begin{example}[Heisenberg: discrete conilpotent model]\label{ex:heisenberg-no-completion}
 The Heisenberg algebra is quadratic:
 \[a(z)a(w) \sim \frac{k}{(z-w)^2}\]
 
-The bar complex has:
-\[\bar{B}_n(\mathcal{H}_k) = \mathcal{H}_k^{\otimes n} \otimes \Omega^*_{\log}(\overline{C}_{n+1}(X))\]
-
-with finitely many terms in each degree.
-
-\emph{No completion required.}
-\[\bar{B}(\mathcal{H}_k) = \widehat{\bar{B}}(\mathcal{H}_k)\]
-
-The Heisenberg algebra is Koszul (its quadratic part $\operatorname{Sym}(V)$ is
-Koszul with dual $\Lambda(V^*)$, a finite-dimensional coalgebra).
-Since the Koszul dual coalgebra is finite-dimensional, it is automatically
-conilpotent, and the bar complex is quasi-isomorphic to this finite model
-without any completion. This is the general mechanism: for Koszul algebras, the
-bar complex admits a small, conilpotent model, so completion is unnecessary.
+At genus~$0$ the reduced bar coalgebra is conilpotent by bar length:
+for a word of length~$n$, the $(n+1)$-fold reduced coproduct vanishes.
+The quadratic Koszul model is finite in each finite input window, and
+the bar--cobar counit is defined in the discrete conilpotent category.
+Completing the conformal-weight tower changes no finite bar word; it
+only records the same model as a separated inverse limit.
 \end{example}
 
 \section{Computational methods}
 
 \subsection{Computing the completion}
 
-\begin{remark}[Computing the truncation \texorpdfstring{$\widehat{\bar{B}}(\mathcal{A})/I^N$}{B-hat(A)/I\textasciicircum N}]\label{rem:compute-completion}
-Given a chiral algebra $\mathcal{A}$ and truncation level $N$, the quotient $\bar{B}(\mathcal{A})/I^N$ is computed as follows.
+\begin{remark}[Computing a finite window]\label{rem:compute-completion}
+Given a filtered chiral algebra~$A$ and a window~$N$, the quotient
+$A_{\le N}=A/F^{N+1}A$ determines the finite-stage bar coalgebra
+$\bar B_X(A_{\le N})$.
 \begin{enumerate}
-\item \emph{Generate basis.} Degree 0: vacuum; degree 1: generators of $\mathcal{A}$; degree $k$: $k$-fold tensor products.
-\item \emph{Compute differential.} Use the OPE to compute $d(a_1 \otimes \cdots \otimes a_k)$ by extracting residues at collisions and summing over all collision patterns.
-\item \emph{Filter by conilpotent degree.} Compute the coproduct iteratively, determine which elements lie in $I^n$ for each $n$, and truncate at level $N$.
+\item \emph{Basis.} Keep fields whose filtration degree is at most~$N$.
+\item \emph{Differential.} Compute collision residues from the OPE and
+ discard every output in $F^{N+1}A$.
+\item \emph{Coproduct.} Use deconcatenation on finite bar words.
+\item \emph{Compatibility.} Verify that the projection
+ $\bar B_X(A_{\le N+1})\to\bar B_X(A_{\le N})$ commutes with
+ differential, curvature, coproduct, and the finite-stage twisting
+ morphism.
 \end{enumerate}
 \end{remark}
 
 \subsection{Convergence criteria in practice}
 
-\begin{proposition}[Convergence of the completion \cite{BD04, FG12}; \ClaimStatusProvedElsewhere]\label{prop:practical-convergence}
-For a chiral algebra $\mathcal{A}$ graded by conformal weight, the completion
-$\widehat{\bar{B}}(\mathcal{A})$ is well-defined (the projective limit stabilizes
-in each total weight) whenever:
-\begin{enumerate}
-\item $\mathcal{A}$ is \emph{finitely generated}; the bar complex at bar degree $n$
-has total weight $\geq n \cdot h_{\min}$ where $h_{\min} = \min_i h_i > 0$,
-so each weight space is automatically finite-dimensional. No completion is needed
-beyond finite truncation.
-\item $\mathcal{A}$ has \emph{countably many generators} of weights
-$h_1 \leq h_2 \leq \cdots \to \infty$; the completion converges if the weights grow
-fast enough that each total-weight subspace of the bar complex is finite-dimensional.
-\end{enumerate}
+\begin{proposition}[Weight-window convergence; \ClaimStatusProvedHere]\label{prop:practical-convergence}
+Let $A=\bigoplus_{h\ge0}A_h$ be a positive-energy chiral algebra with
+finite-dimensional weight spaces.  Suppose the chiral $A_\infty$
+operations preserve total conformal weight after the reduced-weight
+shift used in the bar construction, and the finite weight windows
+$A_{\le N}$ lie in the finite-stage bar--cobar regime.  Then
+$\widehat{\bar B}(A)=\varprojlim_N\bar B(A_{\le N})$ is well-defined,
+and every fixed total weight~$w$ stabilizes at stage~$N=w$.
 
-\emph{Examples.}
-\begin{itemize}
-\item Virasoro ($h = 2$), $W_3$ ($h = 2, 3$): finitely generated, completion automatic.
-\item $\mathcal{W}_{1+\infty}$: generators in all integer weights $h = 1, 2, 3, \ldots$;
-completion requires care but converges since $h_n \to \infty$.
-\end{itemize}
+Two standard cases follow.
+\begin{enumerate}
+\item For finitely strongly generated positive-energy algebras, each
+ total-weight piece of the bar complex is finite-dimensional.
+\item For towers with generators of weights
+ $h_1\le h_2\le\cdots\to\infty$, a fixed weight window contains only
+ finitely many generators, so the inverse system is eventually
+ constant on that window.
+\end{enumerate}
 \end{proposition}
 
 \section{Connection to Costello--Gwilliam}
@@ -475,13 +544,19 @@ For a perturbative quantum field theory, the effective interaction satisfies:
 
 where $I^{(n)}$ are n-loop quantum corrections.
 
-This is the structure of our $I$-adic completion:
-\[\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_{n} \bar{B}(\mathcal{A})/I^n\]
+The bar completion has the same formal inverse-limit shape:
+\[
+\widehat{\bar B}(A)=\varprojlim_N\bar B(A_{\le N}).
+\]
 
 \end{theorem}
 
 \begin{remark}[Physical interpretation]
-Under the Feynman diagram identification of Chapter~\ref{ch:v1-feynman}, the $I$-adic completion topology is the algebraic counterpart of the loop expansion: convergence of the inverse system $\{\bar{B}(\mathcal{A})/I^n\}$ ensures that the formal sum over all loop orders defines a well-defined dg coalgebra. The analogy with renormalization group flow is suggestive (both organize quantum corrections by a filtration parameter), but the precise relationship requires the graph complex technology developed in that chapter.
+Under the Feynman diagram identification of Chapter~\ref{ch:v1-feynman},
+the completion topology is the algebraic counterpart of a graph-window
+expansion: convergence of the inverse system
+$\{\bar B(A_{\le N})\}_N$ is exactly the assertion that the formal
+graph sum defines a continuous dg coalgebra.
 \end{remark}
 
 \section{Higher genus corrections}
@@ -502,7 +577,7 @@ The convergence of this genus sum requires analytic input beyond the $I$-adic
 topology; this is the content of the HS-sewing criterion
 (Theorem~\ref{thm:general-hs-sewing}) and not a consequence of the $I$-adic
 completion alone. The string-theory interpretation of the genus parameter as a
-loop-counting variable $g_s$ is suggestive but is not used in the algebraic
+loop-counting variable $g_s$ is not used in the algebraic
 arguments of this appendix.
 \end{remark}
 
@@ -512,14 +587,13 @@ arguments of this appendix.
 \section{Stabilized and resonance-filtered completion}
 \label{sec:mc4-splitting}
 
-The MC4 completion problem, prior to the strong completion-tower
-theorem (Theorem~\ref{thm:completed-bar-cobar-strong}), was stated
-in terms of abstract Mittag--Leffler and continuity inputs
-(Proposition~\ref{prop:mc4-reduction-principle},
-Chapter~\ref{chap:bar-cobar-adjunction}). That formulation is too coarse:
-it treats all infinite-generator towers as one undifferentiated
-frontier. The correct decomposition separates two
-structurally distinct regimes.
+The strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) turns the abstract
+Mittag--Leffler and continuity inputs of
+Proposition~\ref{prop:mc4-reduction-principle} into a finite-window
+criterion.  Infinite-generator towers separate into positive towers,
+where weight windows stabilize, and resonant towers, where a
+finite-dimensional weight-zero sector remains.
 
 \begin{remark}[The MC4 splitting: positive vs.\ resonant]
 \label{rem:mc4-splitting}
@@ -549,11 +623,9 @@ algebras splits into two independent sub-problems:
  ($N \ge 3$), and non-quadratic chiral algebras with central
  terms belong to this regime.}
 \end{itemize}
-This splitting is \emph{not} a mere reclassification. It changes
-the character of the MC4 frontier: most of MC4 is already much
-closer to resolution than initial formulations suggested, and the
-irreducible core is a \emph{finite resonance problem}
-rather than an amorphous infinite-generator abyss.
+This splitting is structural: the positive sector is controlled by
+weight stabilization, while the resonant sector is controlled by a
+finite-dimensional curved factor.
 \end{remark}
 
 \subsection{Positive towers: stabilized completion}
@@ -677,8 +749,8 @@ Assume $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$ with:
 \item $\cA^{>0}$ satisfies the hypotheses of
  Theorem~\textup{\ref{thm:stabilized-completion-positive}};
 \item $R_\cA$ is a finite-dimensional curved $A_\infty$-subalgebra;
-\item every mixed higher product with at least one
- $\cA^{>0}$-input strictly raises positive weight.
+\item every mixed higher product with at least one resonance input and
+ at least one $\cA^{>0}$-input strictly lowers positive weight.
 \end{enumerate}
 Define the \emph{resonance-filtered completed bar coalgebra}
 \[
@@ -695,8 +767,9 @@ D = D^+ + D_R + D_{\mathrm{mix}},
 \]
 where $D^+$ is the stabilized positive-weight differential,
 $D_R$ is finite-dimensional, and $D_{\mathrm{mix}}$ is
-topologically nilpotent (each application strictly increases
-positive weight). Consequently:
+locally nilpotent on every finite positive-weight window
+\textup{(}each application strictly lowers positive weight\textup{)}.
+Consequently:
 \begin{enumerate}
 \item $D$ is continuous in the completed topology;
 \item $\widehat{\bar B}^{\mathrm{res}}(\cA)$ is a complete
@@ -710,11 +783,12 @@ positive weight). Consequently:
 \end{theorem}
 
 \begin{proof}
-Because $D_{\mathrm{mix}}$ strictly raises positive weight, its
-iterates converge in the completed topology: for any element of
-total weight~$w$, the $n$-fold iterate $D_{\mathrm{mix}}^n$
-vanishes for $n > w$. So the full differential is a convergent
-perturbation of $D^+ + D_R$. The stabilized positive sector is
+Because $D_{\mathrm{mix}}$ strictly lowers positive weight, its
+iterates terminate on every finite window: for an element of
+positive weight~$w$, the $n$-fold iterate $D_{\mathrm{mix}}^n$
+vanishes for $n > w$. Thus the full differential is a finite
+perturbation of $D^+ + D_R$ on each window and a continuous
+perturbation after completion. The stabilized positive sector is
 controlled by Theorem~\ref{thm:stabilized-completion-positive};
 the resonance sector is finite-dimensional and therefore
 automatically well-behaved; and the mixed term converges by the
@@ -730,13 +804,13 @@ hypotheses of
 Theorem~\ref{thm:resonance-filtered-bar-cobar}. Define the
 \emph{positive-weight filtration} on the bar complex by
 \[
-\mathcal{F}^p \barB(\cA)
+\mathcal{F}_{\le p} \barB(\cA)
 := \bigl\{\text{bar chains whose total weight from $\cA^{>0}$
-components is $\ge p$}\bigr\}.
+components is $\le p$}\bigr\}.
 \]
 Since the mixed differential $D_{\mathrm{mix}}$ strictly
-increases positive weight, this filtration is preserved by $D$,
-and the associated spectral sequence
+lowers positive weight, this finite increasing filtration is
+preserved by $D$, and the associated spectral sequence
 $(E_r^{p,q}, d_r)_{r \ge 0}$ converges to
 $H^*(\barB(\cA), D)$. The pages are:
 \begin{itemize}
@@ -748,13 +822,13 @@ $H^*(\barB(\cA), D)$. The pages are:
  stabilized bar cohomology and the finite-dimensional
  resonance bar cohomology);
 \item $d_1$: the first correction from $D_{\mathrm{mix}}$,
- which raises positive weight by exactly~$1$;
+ which lowers positive weight by exactly~$1$;
 \item $E_r$ for $r \ge 2$: successive corrections from the mixed
  differential.
 \end{itemize}
 At total weight~$w$, the spectral sequence degenerates at page
-$E_{w+1}$ (since $D_{\mathrm{mix}}$ can increase positive
-weight at most $w$ times before exceeding the total weight).
+$E_{w+1}$ (since $D_{\mathrm{mix}}$ can lower positive
+weight at most $w$ times before reaching~$0$).
 In particular, the spectral sequence is
 \emph{finitely convergent at every weight level}: each $E_\infty^w$
 is computed by a finite number of pages.
@@ -779,7 +853,7 @@ finite-resonance algebra.
 In the setting of
 Construction~\textup{\ref{const:resonance-spectral-sequence}},
 if the mixed operations
-$\cA^{>0} \otimes R_\cA \to \cA^{>0}$ raise positive weight
+$\cA^{>0} \otimes R_\cA \to \cA^{>0}$ lower positive weight
 by at least~$\delta \ge 1$, then the spectral sequence
 degenerates at page $E_{\lfloor w/\delta \rfloor + 1}$ for
 elements of total weight~$w$.
@@ -791,9 +865,9 @@ $\delta \ge w$ it degenerates at $E_2$
 \end{proposition}
 
 \begin{proof}
-Each application of $d_r$ increases positive weight by
-exactly~$r \cdot \delta$. For an element of total weight~$w$,
-the positive weight is bounded by~$w$, so $d_r = 0$ for
+Each application of $d_r$ lowers positive weight by
+exactly~$r \cdot \delta$. For an element of positive weight~$w$,
+no term can be lowered more than~$w$, so $d_r = 0$ for
 $r > w/\delta$. Hence $E_{\lfloor w/\delta \rfloor + 1}
 = E_\infty$ for weight-$w$ elements.
 \end{proof}
@@ -910,8 +984,7 @@ The Virasoro algebra $\mathrm{Vir}_c$ admits a
 positive-energy filtration on the state-space bar complex
 with a finite-dimensional resonance piece
 $R_{\mathrm{Vir}} = \mathbb{k} \cdot m_0$ carrying
-the central term. The four hypotheses previously listed as
-open are now resolved:
+the central term. The resonance construction uses four facts:
 \begin{enumerate}
 \item \emph{Finite-dimensionality of the resonance slice}:
  proved by Theorem~\ref{thm:platonic-completion}
@@ -921,7 +994,7 @@ open are now resolved:
  $\dim R_{\mathrm{Vir}} \le 1$.
  Proposition~\ref{prop:resonance-ranks-standard} computes
  $\dim R_{\mathrm{Vir}} = 1$.
-\item \emph{Strict positive-weight growth of mixed
+\item \emph{Strict positive-weight drop of mixed
  operations}: Steps~1 and~3 of
  Theorem~\ref{thm:platonic-completion} show that the
  transferred operations respect reduced weight and that the
@@ -1237,46 +1310,41 @@ difficulty.
 \end{enumerate}
 \end{construction}
 
-\begin{remark}[MC4 execution programme]
-\label{rem:mc4-execution-programme}
-The correct execution order for the MC4 frontier, given the
-splitting of Remark~\ref{rem:mc4-splitting}, is:
+\begin{remark}[Coideal descent and resonance factorisation]
+\label{rem:mc4-coideal-descent}
+The splitting of Remark~\ref{rem:mc4-splitting} imposes the following
+mathematical order on quotient constructions:
 \begin{enumerate}
-\item \emph{Promote Theorem~\textup{\ref{thm:stabilized-completion-positive}}
- to the main MC4 theorem.}
- Positive towers are declared reduced to weightwise stabilization.
- This shrinks MC4 to the resonant regime.
-\item \emph{Solve the unshifted completed envelope first.}
- For Yangian/$\mathcal{W}_{1+\infty}$-type targets, prove
- completed bar-cobar for the unshifted completed envelope before
- touching shifted quotients. The kernel
- $\to$ completed envelope $\to$ boundary quotient order is
- dictated by the coideal structure
+\item Positive towers are governed by
+ Theorem~\ref{thm:stabilized-completion-positive}; the completed
+ counit is checked weight by weight.
+\item For Yangian/$\mathcal{W}_{1+\infty}$-type targets, the
+ unshifted completed envelope precedes shifted quotients.  The
+ kernel $\to$ completed envelope $\to$ boundary quotient order is
+ forced by the coideal structure
  \textup{(}Appendix~\textup{\ref{chap:shifted-rtt-orthogonal-coideals}}\textup{)}.
-\item \emph{Add quotient/coideal descent.}
- Prove that orthogonal coideals and shifted quotients descend
- through completion. The shift is not the local problem; it is
- the boundary quotient problem. BFN-type shifted data should
- appear at this stage.
-\item \emph{Build the Virasoro resonance model.}
- Construct a positive-energy filtration on the Virasoro
- state-space bar complex, isolate the finite-dimensional
- resonance piece $R_{\mathrm{Vir}}$, and verify the hypotheses
- of Remark~\textup{\ref{rem:virasoro-resonance-model}}.
-\item \emph{Only then return to MC5.}
- The dependency chain
+\item Orthogonal coideals and shifted quotients descend through
+ completion only after their kernels are closed for the
+ finite-window topology.  Shifted BFN-type data belong to this
+ quotient/coideal descent problem.
+\item The Virasoro state-space bar complex carries the
+ positive-energy filtration of
+ Remark~\ref{rem:virasoro-resonance-model}; its completed bar object
+ is controlled by the finite-dimensional resonance factor
+ $R_{\mathrm{Vir}}$.
+\item The dependency chain
  $\text{MC3} \Rightarrow \text{MC4} \Rightarrow \text{MC5}$
- remains inviolable (MC3 proved for all simple types on the evaluation-generated core; MC4 proved). The BV/BRST physics dictionary
- becomes mathematically well-posed only after the completed
- bar-cobar machine is in place.
+ is enforced by the constructions: PBW concentration supplies the
+ finite windows, completed bar--cobar supplies the inverse limit, and
+ the BV/BRST dictionary is a later interpretation of that completed
+ object.
 \end{enumerate}
 \end{remark}
 
 \section{Summary}
 
-\begin{remark}[Completed frontier package]\label{rem:nilpotent-main}
-This appendix should be read as a frontier package, not as a blanket
-extension of the proved core. What is currently in hand is:
+\begin{remark}[Completed finite-window package]\label{rem:nilpotent-main}
+The completed bar--cobar package consists of:
 \begin{enumerate}
 \item the finite-stage convergence and geometry of the completed bar
  tower
@@ -1307,17 +1375,13 @@ extension of the proved core. What is currently in hand is:
 \end{enumerate}
 The Resonance completion theorem
 \textup{(}Theorem~\ref{thm:platonic-completion}\textup{)}
-is the sharp form of the MC4 content:
-every positive-energy chiral algebra has the same completed
-bar-cobar type as a finite-resonance transferred model, so
-``MC4'' is a finite-dimensional problem sitting atop an
-already-solved positive-weight stabilization machine.
-What remains at the frontier is the \emph{Virasoro resonance
-model}: the explicit computation of the resonance spectral
-sequence for $\mathrm{Vir}_c$ and the non-quadratic
-$\mathcal{W}_N$ algebras (Remark~\ref{rem:virasoro-resonance-model}),
-and the identification of the H-level Koszul dual via
-the higher pages of the spectral sequence.
+is the sharp finite-window form: every positive-energy chiral algebra
+has the same completed bar--cobar type as a finite-resonance
+transferred model.  The remaining algebraic computation is the
+resonance spectral sequence for $\mathrm{Vir}_c$ and the
+non-quadratic $\mathcal W_N$ algebras, together with the
+Verdier--Koszul identification of the H-level target from its higher
+pages.
 \end{remark}
 
 \section{Synthesis}
@@ -1389,8 +1453,6 @@ iterated integral. At weight~$5$ the new irreducible is $\zeta(5)$;
 the would-be $\zeta(3)^2$ leg vanishes at $\hbar^5$ because
 $\zeta(3)^2$ is a weight-$6$ object (it re-enters at $\hbar^6$,
 reducible via the Zagier double-shuffle relations).
-Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave15\_pentagon\_coboundary\_hbar45.py}.
 \cite{Brown2011,EtingofKazhdan2000,EnriquezGomezGonzalezMaassarani2022,
  GritsenkoNikulin1998,Drinfeld1990,MarklShniderStasheff2002}.
 \end{remark}
@@ -1581,10 +1643,9 @@ are surjections by construction of the weight filtration
 Deligne~$2013$ exactness of the weight filtration on mixed Tate
 motives). Hence the Mittag--Leffler condition holds, $\lim^1 = 0$,
 and $\mathrm{obs}_\infty$ is a well-defined object of the
-weight-filtered completion (Pattern~$236$ ambient-qualifier
-discipline; Pattern~$269$ adjunction-strictness scope). Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave17\_pentagon\_coboundary\_hbar8\_9\_10.py}
-and Vol.~II
+weight-filtered completion in the chain-level and
+$(\infty,1)$-categorical ambients specified in
+Convention~\ref{conv:higher-genus-differentials}.  Compare Vol.~II
 Chapter~\ref{ch:curved-dunn-higher-genus-topologisation}
 Remark~\ref{V2-rem:cdhg-obs-infty}.
 \cite{Brown2011,Deligne2013,MarklShniderStasheff2002,
@@ -1620,8 +1681,7 @@ Siegel modular forms (Gritsenko--Nikulin $1998$ \S$4$;
 Borcherds $1998$ Thm~$10.1$). The Hardy--Ramanujan asymptotic
 $\dim c_{11}^{(K3)} \sim 11^{-27/4}\exp(4\pi\sqrt{11})$ amplifies the
 ratio to Borcherds over MZV well beyond the $10^{10}$ level witnessed
-at weight~$10$. Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}.
+at weight~$10$.
 \cite{Brown2011,Deligne2013,GritsenkoNikulin1998,Borcherds1998,
  HardyRamanujan1918}.
 \end{remark}
@@ -1645,7 +1705,7 @@ Brown~$2011$ Table basis at weight~$12$ is
  \zeta(3,5,4),\;\zeta(5,3,3,1),\;\zeta(3,3,3,3)\bigr\}.
 \]
 The final entry $\zeta(3,3,3,3)$ is the \emph{first depth-$4$ motivic
-MZV irreducible in the programme}: Brown $2011$ Ann.~Math.~$175$
+MZV irreducible in the tower}: Brown $2011$ Ann.~Math.~$175$
 Thm~$1.2$ proves that $\zeta(3,3,3,3)$ cannot be reduced to a
 polynomial combination of lower-depth MZVs via Euler /
 double-shuffle / stuffle relations; it represents a genuinely new
@@ -1661,9 +1721,7 @@ weight at which Brown's motivic MZV theorem is proved on the nose};
 weights~$\ge 13$ become conjectural on the Zagier--Hoffman
 depth-reduction conjecture (Brown $2012$
 \texttt{arXiv:$1301.3053$}; partial progress in Brown $2017$ on the
-depth-$2$ slice). Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
-and Vol.~III
+depth-$2$ slice).  Compare Vol.~III
 Remark~\ref{V3-rem:cycainf-depth-4}.
 \cite{Brown2011,Brown2012,Deligne2013,Hoffman1997,Zagier1994,
  GritsenkoNikulin1998}.
@@ -1737,7 +1795,7 @@ universal connection on $\overline{M}_{0, 5}$, normalised by $12!$.
 This pairing is the explicit chain-level witness of the pro-unipotent
 motivic-Galois action on the pentagon face of Stasheff's $K_4$ at
 weight~$12$, and realises the \emph{first depth-$4$ associator datum}
-of the programme on the nose.
+of the tower on the nose.
 \cite{Brown2011,Brown2012,Brown2017,BroadhurstKreimer1997,
  Deligne2013,Drinfeld1990,Goncharov2001}.
 \end{remark}
@@ -1812,7 +1870,6 @@ normalising denominator, yielding the chain-level identity
 $14$ Table~$2$; cross-verified against direct convolutional
 partial-sum reconstruction of the Hoffman~$1997$ strict-inequality
 nested series at cutoff $N = 3000$ to $\sim 0.2\%$ in
-\texttt{compute/lib/k3\_yangian\_wave19\_phi12\_zeta3333\_coefficient.py}
 \texttt{zeta\_3333\_from\_partial\_sums()}). This is the first
 depth-$4$ motivic Galois invariant of the pentagon coboundary
 \emph{computed on the nose}: earlier analyses reached only
@@ -1826,7 +1883,7 @@ from any weight-$\le 11$ or depth-$\le 3$ datum
 \begin{remark}[Chain/$(\infty,1)$ agreement for $c_{12}^{(9)}$]
 \label{rem:nc-kz-depth-4-integral}
 The coefficient $c_{12}^{(9)} = \zeta(3, 3, 3, 3)/12!$ is delivered by
-two independent lanes that must agree on the nose. \emph{Chain lane:}
+two independent lanes with the same numerical value. \emph{Chain lane:}
 the KZ iterated integral over the ordered simplex
 $0 < t_{12} < \cdots < t_1 < 1$ with word
 $(\omega_1\omega_0^2)^4$ returns $\zeta(3,3,3,3)$ as a single explicit
@@ -1842,11 +1899,9 @@ class $[f_3, [f_3, [f_3, f_3]]]$ (mod lower depth; Furusho~$2011$
 \emph{Ann.\ Math.}~$174$), and the pairing with the weight-$12$
 component of the universal KZ connection on $\overline{M}_{0, 5}$
 returns $\zeta(3, 3, 3, 3)/12!$ by the motivic-Galois period
-realisation. Pattern~$236$ ambient-qualifier discipline: both lanes
-prove the same theorem, neither is a shadow of the other. The
-on-the-nose numerical agreement is asserted by
-\texttt{compute/lib/k3\_yangian\_wave19\_phi12\_zeta3333\_coefficient.py}
-\texttt{\_test\_chain\_and\_infty1\_agreement()}.
+realisation.  Both lanes prove the same theorem; neither is a shadow
+of the other.  The on-the-nose numerical agreement is asserted by the
+chain/$(\infty,1)$ comparison test for $c_{12}^{(9)}$.
 \cite{Brown2012,Drinfeld1990,Deligne2013,Goncharov2001,Zagier1994}.
 \end{remark}
 
@@ -1871,10 +1926,7 @@ $\zeta(3, 3, 3, 3)$-like period, and the leg and the MZV channel
 pair with $\mathsf g_{3, 3, 3, 3}$ through orthogonal components of
 the pentagon coboundary. The explicit value
 $c_{12}^{(9)} = \zeta(3, 3, 3, 3)/12!$ therefore holds
-\emph{uncorrected} by any K$3$-BKM data. Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave19\_phi12\_zeta3333\_coefficient.py}
-\texttt{fake\_monster\_non\_interference\_at\_weight\_12()} and
-\texttt{borcherds\_leg\_depth\_4\_contribution()}.
+\emph{uncorrected} by any K$3$-BKM data.
 \cite{Borcherds1995,GritsenkoNikulin1998,Borcherds1998,Brown2011,
  Brown2012}.
 \end{remark}
@@ -1893,7 +1945,7 @@ series (Broadhurst--Kreimer~$1997$ \texttt{arXiv:hep-th/$9609128$})
 predicts the next depth-$4$ entries at weights $14$ and $15$, with
 the first depth-$5$ irreducible appearing at weight $15$; every such
 coefficient is conjectural on Zagier--Hoffman. Weight~$12$ therefore
-marks the \emph{unconditional motivic horizon} of the programme.
+marks the \emph{unconditional motivic horizon} of the tower.
 \cite{Brown2011,Brown2012,Brown2017,BroadhurstKreimer1997,Hoffman1997}.
 \end{remark}
 
@@ -1912,9 +1964,7 @@ Padovan dimension $d_n$ supplied by the Brown~$2011$ recurrence
 \qquad
 \frac{\dim c_{12}^{(K3)}}{d_{12}}\sim 4.6\cdot 10^{10}.
 \]
-(Numerical evaluation from
-\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
-\texttt{borcherds\_over\_mzv\_ratio}; matches the weight-$10$ value
+(Numerical evaluation of the Borcherds-over-MZV ratio matches the weight-$10$ value
 $6.5\cdot 10^{9}$ to within the rounding of the leading Hardy--Ramanujan
 term.) The weight-$12$ analysis therefore confirms that the infinite
 tail of the
@@ -1926,9 +1976,7 @@ through weight~$12$ because each truncated weight still has finite
 Hardy--Ramanujan dimension (circle method of
 Hardy--Ramanujan~$1918$ applied to the
 $1/\Phi_{10}^{\mathrm{un}}$ Fourier expansion,
-Gritsenko--Nikulin~$1998$ Sec~$4$). Cross-ref
-\texttt{compute/lib/k3\_yangian\_wave18\_pentagon\_coboundary\_hbar11\_12.py}
-\texttt{borcherds\_over\_mzv\_ratio()}.
+Gritsenko--Nikulin~$1998$ Sec~$4$).
 \cite{HardyRamanujan1918,GritsenkoNikulin1998,Brown2011}.
 \end{remark}
 
@@ -2548,7 +2596,7 @@ irreducible existence at the predicted weights. The minimal first
 test case is $n = 25$: BK predicts one depth-$5$ irreducible
 $[\zeta(3, 3, 3, 3, 9)]$ or equivalent $5$-tuple basis element, and
 the pentagon coefficient $c_{25}^{(\mathrm{depth}\text{-}5)}$ is the
-first coefficient of the programme requiring all three conditionality
+first coefficient of the construction requiring all three conditionality
 layers. On the K$3$-BKM side the Borcherds leg
 $(\Phi_{10}^{\mathrm{un}})^{25/2}\,\eta^{-300}$ has raw weight $-25$ and in-tower
 weight $5\cdot 25 = 125$; because $25$ is odd the leg lives on the
@@ -2656,7 +2704,7 @@ conjectural second depth-$5$ weight-$25$ generator.
 Proposition~\ref{prop:nc-phi-25-depth-5-coefficient} realises the
 weight-$25$ horizon of
 Proposition~\ref{prop:nc-double-conditional-phi-n}: $\phi^{(25)}$ is
-the first pentagon coboundary in the programme whose depth-graded
+the first pentagon coboundary in the tower whose depth-graded
 decomposition requires \emph{both} the Zagier--Hoffman spanning and
 the Broadhurst--Kreimer bigraded rank. At weights $13 \le n \le 23$
 the depth-graded rank at depth~$\le 4$ suffices

@@ -1717,19 +1717,28 @@ level $k = -h^\vee$: the denominator $k + h^\vee$ appears in the definition
 of the Sugawara tensor $S(z) = \frac{1}{2(k+h^\vee)} \sum_a {:}J^a(z)J_a(z){:}$,
 not merely in the central charge formula.
 
-\emph{Sign consequence.} The Feigin--Frenkel duality $k \leftrightarrow -k - 2h^\vee$
-fixes $k = -h^\vee$ and interchanges the two ``halves'' of the critical level.
-This duality reverses the sign of $k + h^\vee$:
+\emph{Sign consequence.} The shifted level
+$K = k + h^\vee$ is the coordinate carried by the Sugawara denominator.
+The critical reflection $K \mapsto -K$, equivalently
+$k \mapsto -k - 2h^\vee$, fixes the critical hyperplane and reverses
+every expression containing an odd power of $K$:
 \[
 k \;\longmapsto\; -k - 2h^\vee
 \quad\Longrightarrow\quad
 (k + h^\vee) \;\longmapsto\; -(k + h^\vee).
 \]
 Any formula involving $(k + h^\vee)^{-1}$ therefore picks up a sign under
-Feigin--Frenkel duality. This sign must be tracked through the Koszul dual:
-the affine algebra $\hat{\mathfrak{g}}_k$ at level $k$ has Koszul dual
-at level $-k - 2h^\vee$, and the curvature $\kappa(\hat{\mathfrak{g}}_k)$
-transforms accordingly.
+this reflection. The assertion is a sign convention on the shifted
+level, not a strict affine Koszul-duality statement. At
+$K=0$ the Sugawara tensor is absent and the Feigin--Frenkel centre
+replaces the Virasoro field as the controlling commutative algebra.
+The modular characteristic remains the affine invariant
+\[
+\kappa(V_k(\mathfrak g))
+ = \frac{\dim(\mathfrak g)(k+h^\vee)}{2h^\vee},
+\]
+so it changes sign under $K\mapsto -K$ and vanishes at the
+critical level.
 
 \subsection{Pitfall 6: Virasoro self-duality point}
 
@@ -1801,10 +1810,16 @@ from the antibracket term doubles the classical BV cohomology obstruction.
 
 \subsection{Pitfall 9: suspension in the Koszul dual}
 
-\emph{Wrong.} ``$\mathrm{Com}^! = \mathrm{coLie}$.''
+\emph{Wrong.} Using the same symbol for the Koszul-dual operad and
+the Koszul-dual cooperad.
 
-\emph{Right.} $\mathrm{Com}^! = \mathrm{Lie}$. The Koszul dual \emph{operad}
-(not cooperad) of $\mathrm{Com}$ is $\mathrm{Lie}$.
+\emph{Right.} With the conventions of this manuscript,
+$\mathrm{Com}^! = \mathrm{Lie}$ is the Koszul-dual \emph{operad}.
+The Koszul-dual \emph{cooperad} is
+$\mathrm{Com}^{\scriptstyle \textexclamdown}
+ = (\fS^{-1}\mathrm{Lie})^\vee$, a suspended form of $\mathrm{coLie}$.
+The convolution Lie algebra uses the cooperadic object with this
+operadic suspension included.
 
 \emph{Sign consequence.} The operadic Koszul duality involves an operadic
 suspension $\fS$ (Definition~\ref{def:susp-operadic}):
@@ -1815,16 +1830,17 @@ suspension $\fS$ (Definition~\ref{def:susp-operadic}):
 The sign representation $\sgn_n$ is the source of the
 Lie $\leftrightarrow$ Com duality: $\mathrm{Com}(n) = k$ (trivial representation),
 and $\fS^{-1}\mathrm{Lie}(n) = \sgn_n \otimes \mathrm{Lie}(n)[1-n]$.
-Omitting the operadic suspension yields $\mathrm{coLie}$ instead of $\mathrm{Lie}$,
-which changes the sign of the bracket in all convolution algebra computations.
+Omitting the operadic suspension loses the $\sgn_n[n-1]$ factor and
+changes the sign of the bracket in all convolution algebra computations.
 
 \subsection{Pitfall 10: FM compactification vs.\ complement of diagonal}
 
 \emph{Wrong.} ``The Fulton--MacPherson space is $X^n \setminus \bigcup_{i<j}\Delta_{ij}$.''
 
-\emph{Right.} $\FM_n(X)$ is obtained by \emph{blowing up} along diagonals (in order
-of increasing codimension), not by removing them. The result is a smooth
-compact variety containing the configuration space as an open dense subset.
+\emph{Right.} $\FM_n(X)$ is obtained by \emph{blowing up} along diagonals
+in the Fulton--MacPherson order. It is a smooth space, proper over
+$X^n$, containing $\Conf_n(X)$ as an open dense subset. It is compact
+exactly when $X$ is proper.
 
 \emph{Sign consequence.} Residues along boundary divisors of $\FM_n(X)$ use
 the \emph{normal bundle orientation} of the exceptional divisor, not the
@@ -1880,7 +1896,7 @@ Omitting either part generically gives $d^2 \neq 0$.
 6 & Vir self-dual at $c=13$ (not 26) & Wrong shadow invariant values \\
 7 & $\eta_{ji} = \eta_{ij}$ (forms) vs.\ $e_{ji} = -e_{ij}$ (OS) & Global sign in bar differential \\
 8 & Factor $\frac{1}{2}$ in MC equation & Obstruction class off by 2 \\
-9 & $\mathrm{Com}^! = \mathrm{Lie}$ (not $\mathrm{coLie}$) & Wrong bracket sign in $\Convstr$ \\
+9 & operad $\mathrm{Com}^! = \mathrm{Lie}$; cooperad includes $\fS$ & Wrong bracket sign in $\Convstr$ \\
 10 & FM = blowup (not complement) & Orientation errors in residues \\
 11 & Prime form: $K^{-1/2}$ (not $K^{+1/2}$) & Wrong genus-$g$ propagator sign \\
 12 & $d_{\mathrm{bracket}}^2 \neq 0$ & Need full Borcherds $d$ for $d^2=0$ \\

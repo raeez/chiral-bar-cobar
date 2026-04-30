@@ -61,14 +61,18 @@ of $Y(\fg)^{\mathrm{ch}}$ is class~$\mathbf{M}$
 \textup{(}$r_{\max} = \infty$\textup{)} on the spectral-parameter
 line, in accord with the quadrichotomy
 $\{\mathbf{G},\mathbf{L},\mathbf{C},\mathbf{M}\}$ of
-Chapter~\ref{chap:shadow-quadrichotomy-platonic}; the universal
-Koszul-conductor identity
-$\kappa(Y_\hbar(\fg)^{\mathrm{ch}}) +
-\kappa(Y_{-\hbar}(\fg)^{\mathrm{ch}}) = 0$
-on the ordered Koszul locus realises $K_{\mathrm{Y}} = 0$
-\textup{(}canonical for $\Eone$-chiral input via the involution
-$\hbar \mapsto -\hbar$\textup{)} in the universal-conductor formula
-of Chapter~\ref{chap:universal-conductor}. For super-Yangians
+Chapter~\ref{chap:shadow-quadrichotomy-platonic}. The proved
+Yangian input for the expected $\Eone$ conductor is the residue
+anti-symmetry
+\[
+ \operatorname*{Res}_{u=0} R_\hbar(u)=-\hbar P,\qquad
+ \operatorname*{Res}_{u=0} R_{-\hbar}(u)=+\hbar P,
+\]
+together with the Koszul inversion
+$Y_\hbar(\fg)^!\simeq Y_{-\hbar}(\fg)$ on the ordered RTT locus.
+This is an $\Eone$ residue characteristic, not the Virasoro
+central-charge invariant $\kappa$ of the symmetric $\Einf$ theory.
+For super-Yangians
 $Y_\hbar(\mathfrak{sl}(m{|}n))$ with $m\neq n$ on the sub-Sugawara
 line, the super-trace normalisation of the shadow pairing gives
 $\kappa^{\str} + \kappa^{\str,!} = 0$
@@ -83,36 +87,6 @@ shift-magnitude step is open
 Nazarov~1991 and Gow~2006 establish centrality and non-degeneracy of
 $\sBer(T(u))$ but not the shadow-depth shift magnitude in closed
 form.
-
-% Verification scope: Proposition \ref{prop:super-berezinian-central-automorphism}(a),
-% super-trace identity only; the Berezinian shift magnitude of
-% Conjecture \ref{conj:super-berezinian-shadow-shift-magnitude} is not
-% verified by any of the three paths below.
-% Derivation source: super-Sugawara super-trace computation in
-% chapters/theory/super_chiral_yangian.tex:622-709 (Vol~II,
-% thm:super-complementarity-supertrace-zero Steps 1-3).
-% Verification sources:
-% [Gow-Molev 2010 Thm 4.2 + direct super-PBW super-trace on
-% the sub-Sugawara line yielding
-% $(k + m - n)(m + n)/2$ and the Frenkel-Frenkel involution
-% $k \mapsto -k - 2 h^{\vee}_{s}$, summing to zero],
-% [Nazarov 1991 Thm 1 + Molev Ch.~3.9 Thm 3.9.1 + Gow 2006
-% Prop 4.3: $\sBer(T(u))$ is central, invertible off
-% $\fpsl(2|2)$; used only for Prop (b)-(c), NOT for the
-% super-trace sum],
-% [direct rational-function cancellation:
-% $(k+m-n)(m+n)/2 + (-k-(m-n))(m+n)/2 = 0$ in $\bQ(k)$,
-% independent of super-PBW via formal Laurent expansion
-% in $\hbar$ on the Drinfeld presentation]
-% Source separation:
-% (V1) super-PBW + super-Sugawara trace; (V2) quasideterminant
-% quantum-Berezinian input for the centrality claim (b)-(c) only,
-% orthogonal to the super-trace cancellation; (V3) direct
-% $\bQ(k)$-rational cancellation bypasses both super-PBW and
-% quasideterminants. The three paths converge on the super-trace
-% identity (a) only; they do not, jointly or separately, pin the
-% Berezinian shift magnitude of
-% Conjecture~\ref{conj:super-berezinian-shadow-shift-magnitude}.
 \begin{proposition}[Nazarov centrality and super-trace complementarity]
 \label{prop:super-berezinian-central-automorphism}
 \ClaimStatusProvedElsewhere
@@ -371,11 +345,14 @@ acts on $V \otimes V$ where $V$ is the fundamental representation,
 and the operators $P$, $Q$, $K$ satisfy the identities recorded below.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Type $A_n$ $(\mathfrak{sl}_{n+1}$, $V = \bC^{n+1})$.}
- The Yang $R$-matrix is
+ In the normalized RTT convention used for residues, the Yang
+ $R$-matrix is
  \begin{equation}\label{eq:rmatrix-type-a}
- R(u) = u\, \mathbb{1} + P,
+ R_\hbar(u)=\mathbb{1}-\frac{\hbar P}{u}.
  \end{equation}
- where $P$ is the permutation operator on $V \otimes V$.
+ Up to scalar gauge and the harmless change $u\mapsto -u$, this is
+ Yang's additive form $u\,\mathbb{1}+ \hbar P$. Here $P$ is the
+ permutation operator on $V \otimes V$.
  The corresponding Casimir is $\Omega = P - \mathbb{1}/N$
  with $N = n+1$, so in the KZ normalisation the classical $r$-matrix at affine
  level $k$ reads
@@ -519,8 +496,9 @@ In the RTT presentation, the Yangian $Y(\mathfrak{g})^{\mathrm{ch}}$ carries the
 \begin{equation}\label{eq:r-twisted-locality}
 J_a(z) J_b(w) - R^{ab}_{cd}(z-w)\, J_d(w) J_c(z) = 0.
 \end{equation}
-For nontrivial $R \neq P$ (the permutation), this is strictly $\Eone$,
-not $\Einf$.
+For nontrivial $R(u) \neq 1$ the induced braiding
+$P\circ R(u)$ is not the symmetric flip~$P$; the structure is
+strictly $\Eone$, not $\Einf$.
 \end{theorem}
 
 \begin{proof}
@@ -534,7 +512,7 @@ T_{ij}(z,u)\, T_{kl}(w,v) \sim \frac{R^{ij,kl}(u-v)}{z-w} \cdot (\text{fusion})
 is $R$-matrix-valued, with simple poles. The $R$-matrix $R(u) = 1 + \hbar r/u + O(u^{-2})$ provides the braiding: $\sigma_{12} \circ \mu = R_{12} \cdot \mu \circ \sigma_{12}$, which is the $\Eone$-locality axiom. Associativity follows from the Yang--Baxter equation $R_{12}R_{13}R_{23} = R_{23}R_{13}R_{12}$.
 
 \emph{Step~3: Non-commutativity.}
-For $\mathfrak{g} = \mathfrak{sl}_2$, the classical $r$-matrix $r = \frac{1}{2}(e \otimes f + f \otimes e) + \frac{1}{4} h \otimes h$ (the split Casimir) satisfies $r \neq 0$, so the $R$-matrix $R(u) = 1 + \hbar r/u + O(u^{-2})$ is non-trivial: $R(u) \neq P$ for finite~$u$, and the RTT relation does not reduce to commutativity. Thus the algebra is strictly $\Eone$.
+For $\mathfrak{g} = \mathfrak{sl}_2$, the classical $r$-matrix $r = \frac{1}{2}(e \otimes f + f \otimes e) + \frac{1}{4} h \otimes h$ (the split Casimir) satisfies $r \neq 0$, so the $R$-matrix $R(u) = 1 + \hbar r/u + O(u^{-2})$ is non-trivial: $P\circ R(u) \neq P$ for finite~$u$, and the RTT relation does not reduce to commutativity. Thus the algebra is strictly $\Eone$.
 \end{proof}
 
 \begin{remark}[Presentations and quadraticity]\label{rem:yangian-presentations}
@@ -543,7 +521,7 @@ Whether the Yangian is ``quadratic'' depends on the presentation. In the \emph{R
 \fi.
 The two presentations yield isomorphic algebras but different Koszul dual
 computations. A rigorous construction of the $\Eone$-chiral structure and its
-Koszul dual should specify which presentation is used.
+Koszul dual must specify which presentation is used.
 \end{remark}
 
 \begin{definition}[\texorpdfstring{$\Eone$}{E1}-chiral Yangian]
@@ -614,6 +592,10 @@ forced by the following chain of mathematical necessities.
 \end{enumerate}
 In short: the KL equivalence exists; bar-cobar duality must be
 compatible with it; compatibility forces ordered configurations.
+The quantum group in the first step is the finite Drinfeld--Jimbo
+algebra governing KZ monodromy. The spectral loop parameter belongs
+to the Yangian/quantum-loop comparison after evaluation; it is not a
+hidden coordinate on the finite quantum group.
 \end{remark}
 
 \section{Koszul dual of the Yangian}\label{sec:yangian-koszul}
@@ -675,8 +657,10 @@ since $P^2 = 1$,
 \[
 R^{-1}(u) = 1 + \hbar P/u + \hbar^2/u^2 + \hbar^3 P/u^3 + \cdots.
 \]
-The Koszul dual RTT relation is the same quadratic
-relation with $\hbar \to -\hbar$.
+The Koszul dual RTT relation is the same quadratic relation with the
+inverse kernel. Since scalar multiplication of~$R$ by an invertible
+formal Laurent series does not change the RTT relation, this inverse
+kernel is equivalently the sign-reversed kernel $R_{-\hbar}$.
 \end{theorem}
 
 \begin{proof}
@@ -708,17 +692,20 @@ Since each graded component is finite-dimensional, the Positselski--Polishchuk f
 \emph{Step~3: $R$-matrix inversion.}
 For the Yang $R$-matrix, $R(u) = (u - \hbar P)/u$ (in the defining representation of $\mathfrak{sl}_2$). The inverse is $R^{-1}(u) = u/(u - \hbar P) = 1 + \hbar P/u + (\hbar P)^2/u^2 + \cdots$. Since $P^2 = 1$ on $V \otimes V$, this simplifies to $R^{-1}(u) = u/(u-\hbar)$ on the symmetric subspace and $R^{-1}(u) = u/(u+\hbar)$ on the antisymmetric subspace.
 
-\emph{Step~4: Identification.}
-The RTT algebra for $R^{-1}(u)$ is isomorphic to the RTT algebra for
-$R(u)$ with $\hbar \to -\hbar$. To see this, note that
-$R^{-1}(u; \hbar) = 1 + \hbar P/u + O(u^{-2})$ agrees with
-$R(u; -\hbar) = 1 + \hbar P/u$ at leading order in $1/u$; the
-higher-order terms $\hbar^{2k}/u^{2k}$ and
-$\hbar^{2k+1}P/u^{2k+1}$ in $R^{-1}$ do \emph{not} appear in
-$R(u;-\hbar)$, but they are irrelevant: the mode
-expansion~\eqref{eq:rtt-modes} extracts only the leading-order data,
-and the higher-order terms are automatic consequences of the quadratic
-RTT relation via the Yang--Baxter equation. Therefore
+\emph{Step~4: Scalar gauge and sign reversal.}
+The exact inverse is not equal term-by-term to $R(u;-\hbar)$.
+Instead
+\[
+ R_\hbar(u)^{-1}
+ = \frac{u}{u-\hbar P}
+ = \frac{u^2}{u^2-\hbar^2}\left(1+\frac{\hbar P}{u}\right)
+ = \left(1-\frac{\hbar^2}{u^2}\right)^{-1} R_{-\hbar}(u).
+\]
+The scalar factor $(1-\hbar^2/u^2)^{-1}$ is central and invertible
+in the completed spectral Laurent ring. Multiplying both sides of an
+RTT relation by such a scalar gauge leaves the relation space
+unchanged. Hence the RTT algebra for $R_\hbar^{-1}$ is exactly the
+RTT algebra for the sign-reversed kernel $R_{-\hbar}$, and therefore
 $Y(\mathfrak{sl}_2)^! \cong Y(\mathfrak{sl}_2)^{\hbar \to -\hbar}$:
 the Koszul dual is the same algebra with reversed deformation
 parameter.
@@ -745,12 +732,12 @@ characteristic $\kappa(H_k^!) = -k = \kappa(H_{-k})$, but
 $H_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*) \neq H_{-k}$
 \textup{(}Theorem~\textup{\ref{thm:heisenberg-not-self-dual}}\textup{)};
 for the Yangian, $Y(\fg)^! = Y_{-\hbar}(\fg)$ is the
-$\hbar$-sign-flipped algebra, which is isomorphic to $Y(\fg)$ for
-simply-laced~$\fg$ (where $\fg \cong \fg^\vee$) and conjecturally
-$Y(\fg^\vee)$ for non-simply-laced~$\fg$, realizing Langlands
-duality at the Yangian level. Latyntsev \cite{Latyntsev23}
-constructs factorisation quantum groups approaching Yangian
-duality via factorisation homology.
+$\hbar$-sign-flipped RTT algebra. The lacing and Langlands-dual
+renormalisation is a separate statement:
+Theorem~\ref{thm:yangian-langlands-lacing} identifies the
+non-simply-laced scaling by the lacing number. Latyntsev
+\cite{Latyntsev23} constructs factorisation quantum groups
+approaching Yangian duality via factorisation homology.
 \end{remark}
 
 \begin{remark}[The \texorpdfstring{$\Eone$}{E1} inversion principle and the nilpotence-periodicity correspondence]
@@ -788,13 +775,18 @@ the latter.
 
 \begin{proposition}[RTT Yangian is Koszul; \ClaimStatusProvedHere]\label{prop:yangian-koszul}
 \index{Yangian!Koszulness}
-For any simple Lie algebra $\mathfrak{g}$ with fundamental
-representation~$V_0$ of dimension~$N = \dim V_0$, assume that
-the RTT Yangian $Y_{\hbar}(\fg)$ satisfies the PBW property
-\textup{(}Molev \cite{molev-yangians}\textup{)}.
-Then $Y(\mathfrak{g})$ in the RTT presentation
+Let $Y_{\hbar}^{\mathrm{RTT}}(\fg,V_0)$ be an RTT/FRT presentation
+whose $R$-matrix acts on a finite-dimensional representation~$V_0$,
+write $N=\dim V_0$, assume that its generators have non-negative RTT
+level, and assume that its PBW theorem identifies the associated
+graded algebra with the symmetric algebra on the RTT generators
+\textup{(}Molev for the classical vector
+series; the corresponding PBW input for exceptional presentations is
+the one used in
+Theorem~\ref{thm:yangian-langlands-lacing}\textup{)}.
+Then $Y_{\hbar}^{\mathrm{RTT}}(\fg,V_0)$
 (Definition~\ref{def:yangian-rtt}) is Koszul: the bar complex
-$\bar{B}(Y(\mathfrak{g}))$ has cohomology concentrated on the
+$\bar{B}(Y_{\hbar}^{\mathrm{RTT}}(\fg,V_0))$ has cohomology concentrated on the
 diagonal, i.e., $\mathrm{Ext}^{i,j}_{Y}(\mathbb{C}, \mathbb{C}) = 0$
 for $i \neq j$ in the $(i, j)$-bigrading by homological degree and
 internal (level) degree.
@@ -802,12 +794,11 @@ internal (level) degree.
 
 \begin{proof}
 \emph{Step~1: PBW basis.}
-Molev \cite{molev-yangians} establishes a Poincar\'{e}--Birkhoff--Witt
-basis for $Y(\mathfrak{g})$ in the RTT presentation for every simple
-$\mathfrak{g}$: ordered monomials
+The assumed PBW theorem gives a Poincar\'{e}--Birkhoff--Witt
+basis for the chosen RTT presentation: ordered monomials
 in the generators $\{T_{ij}^{(r)}\}_{1 \leq i,j \leq N,\, r \geq 0}$
 (with respect to a fixed total order on the index set $(i,j,r)$) form
-a vector space basis for $Y(\mathfrak{g})$. The
+a vector space basis. The
 associated graded algebra with respect to the PBW filtration is the
 polynomial algebra $\mathrm{Sym}(V)$, where
 $V = \bigoplus_{r \geq 0} \mathrm{End}(\mathbb{C}^N)_r$.
@@ -826,44 +817,63 @@ of the Polishchuk--Positselski framework
 (cf.\ step~2b of the proof of
 Theorem~\ref{thm:yangian-koszul-dual}). Since
 $N^2$ is finite and independent of~$r$, local finiteness
-holds uniformly for all simple~$\mathfrak{g}$.
+holds uniformly for every RTT presentation satisfying the stated
+hypotheses.
 
 \emph{Step~3: PBW implies Koszul.}
 By the Polishchuk--Positselski PBW criterion \cite[Ch.~4]{PP05}, a
 quadratic algebra possessing a PBW basis is Koszul, provided
 it is locally finite in a non-negative connected grading (verified
 in Step~2). The argument:
-the PBW property gives a flat deformation from $Y(\mathfrak{g})$
+the PBW property gives a flat deformation from
+$Y_{\hbar}^{\mathrm{RTT}}(\fg,V_0)$
 to its associated graded $\mathrm{Sym}(V)$. Since the Koszul complex
 $K(A) = A \otimes A^{!\ast}$ is functorial in the quadratic data, and
 acyclicity of $K(\mathrm{Sym}(V))$ is classical ($\mathrm{Sym}$--$\bigwedge$ duality),
-flatness of the deformation implies acyclicity of $K(Y(\mathfrak{g}))$.
+flatness of the deformation implies acyclicity of
+$K(Y_{\hbar}^{\mathrm{RTT}}(\fg,V_0))$.
 \end{proof}
 
-\begin{corollary}[Yangian bar-cobar recovery; \ClaimStatusConditional]
+\begin{corollary}[Windowwise Yangian bar-cobar recovery; \ClaimStatusConditional]
 \label{cor:yangian-bar-cobar}
-For any simple~$\mathfrak{g}$, the bar-cobar adjunction yields a
-quasi-isomorphism of $\Eone$-chiral algebras:
+For any RTT Yangian satisfying the hypotheses of
+Proposition~\ref{prop:yangian-koszul}, the bar-cobar adjunction gives
+a quasi-isomorphism on every finite total RTT window. Equivalently,
+for $N\geq w$ the weight-$w$ piece of the finite-stage counit
 \[
-\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(Y(\mathfrak{g})^{\mathrm{ch}}))
-\xrightarrow{\;\sim\;} Y(\mathfrak{g})^{\mathrm{ch}}.
+\Omega^{\mathrm{ch}}\bar{B}^{\mathrm{ch}}
+\bigl(Y_{\leq N}^{\mathrm{RTT}}(\fg,V_0)^{\mathrm{ch}}\bigr)
+\longrightarrow
+Y_{\leq N}^{\mathrm{RTT}}(\fg,V_0)^{\mathrm{ch}}
 \]
+is a quasi-isomorphism in window~$w$. Passing to the stabilized
+product over~$w$ gives the completed RTT bar-cobar recovery
+\[
+\Omega^{\mathrm{ch}}\widehat{\bar{B}}_{\mathrm{RTT}}^{\mathrm{ch}}
+\bigl(Y_{\hbar}^{\mathrm{RTT}}(\fg,V_0)^{\mathrm{ch}}\bigr)
+\xrightarrow{\;\sim\;}
+\widehat{Y}_{\hbar,\mathrm{RTT}}(\fg,V_0)^{\mathrm{ch}}.
+\]
+The assertion is windowwise and completed; it is not a raw
+direct-sum statement about the infinite uncompleted bar coalgebra.
 \end{corollary}
 
 \begin{proof}
 The RTT Yangian is quadratic (Definition~\ref{def:yangian-rtt}),
 locally finite in the level grading (step~2b of the proof of
 Theorem~\ref{thm:yangian-koszul-dual}), and Koszul
-(Proposition~\ref{prop:yangian-koszul}). The mode expansion
-$T_{ij}(u) = \delta_{ij} + \hbar \sum_{r \geq 0} T_{ij}^{(r)}
-u^{-r-1}$ defines the augmentation $\varepsilon(T_{ij}^{(r)}) = 0$
-for all $r \geq 0$, with augmentation ideal $I = \langle
-T_{ij}^{(r)} \rangle$. The PBW basis ensures $\bigcap_n I^n = 0$,
-so the algebra is pro-nilpotent.
-Theorem~\ref{thm:e1-chiral-koszul-duality} then applies:
-the counit~\eqref{eq:e1-counit} of the $\Eone$-chiral bar-cobar
-adjunction is a quasi-isomorphism for augmented pro-nilpotent
-$\Eone$-chiral algebras.
+(Proposition~\ref{prop:yangian-koszul}). Each finite truncation
+$Y_{\leq N}^{\mathrm{RTT}}$ is an augmented finite-type
+$\Eone$-chiral algebra in the quadratic Koszul regime, so
+Theorem~\ref{thm:e1-chiral-koszul-duality} applies to its counit.
+A bar word of total RTT window~$w$ uses only modes of level
+${\leq}w$ and bar length~${\leq}w$; hence the window is unchanged by
+raising~$N$ once $N\geq w$. The finite-stage quasi-isomorphisms
+therefore stabilize windowwise. The completed product statement is
+the weightwise passage supplied by
+Theorem~\ref{thm:shifted-rtt-stabilized-recovery} and by the
+RTT-window Mittag--Leffler theorem
+\textup{(}Theorem~\textup{\ref{thm:rtt-mittag-leffler}}\textup{)}.
 \end{proof}
 
 \begin{remark}[Canonical twisting morphism for Yangians]
@@ -1089,8 +1099,8 @@ $\Eone$ genus theory is open.
 \index{E1-chiral algebra@$\Eone$-chiral algebra!genus theory}
 For an $\Eone$-chiral algebra $\cA$ on $\bR$
 (or on an oriented interval), the genus-$g$ obstruction
-should be defined using the moduli of bordered Riemann
-surfaces $\mathcal{M}_{g,1}^{\partial}$
+is defined, in the conjectural bordered theory, using the moduli of
+bordered Riemann surfaces $\mathcal{M}_{g,1}^{\partial}$
 (surfaces with one parameterized boundary component).
 Specifically:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -1113,7 +1123,7 @@ $\overline{C}_n(\Sigma_{g,1})$
 $\Sigma_{0,1} \cong \bR^2$).
 \item \emph{Ribbon graph expansion.}
 The obstruction $\mathrm{obs}_g^{\Eone}(\cA)$
-should be computed by summing over ribbon graphs
+is the sum over ribbon graphs
 $\Gamma$ with genus~$g$ and one boundary cycle:
 \[
 \mathrm{obs}_g^{\Eone}(\cA) =
@@ -1135,7 +1145,7 @@ reverses the orientation of the ribbon
 graphs.
 \end{enumerate}
 For the Yangian $Y(\mathfrak{sl}_2)^{\mathrm{ch}}$,
-the ribbon graph expansion at genus~$1$ should recover
+the ribbon graph expansion at genus~$1$ recovers
 $\mathrm{obs}_1 \propto \hbar$ (the deformation parameter),
 vanishing at $\hbar = 0$ (the classical limit,
 Corollary~\textup{\ref{cor:yangian-classical-self-dual}}).
@@ -1225,7 +1235,6 @@ fundamental representation~$V_{\omega_i}$:
  denominator $k + h^\vee$ arises from dualizing the zeroth product
  via the level-shifted Killing form
  (Computation~\ref{comp:sl2-collision-residue-kz}).
- %: this is a section on C_2(X), not a formula over a point.
  Equivalently, in the trace-form normalization where
  $k\,\Omega_{\mathrm{tr}} = \Omega/(k+h^\vee)$ at generic~$k$, the
  $r$-matrix reads $r(z) = k\,\Omega_{\mathrm{tr}}/z$.
@@ -1244,12 +1253,18 @@ fundamental representation~$V_{\omega_i}$:
  R_{12}(u{-}v)\, R_{13}(u)\, R_{23}(v)
  = R_{23}(v)\, R_{13}(u)\, R_{12}(u{-}v),
  \]
- and the RTT relation
+ and, in every RTT/FRT realization to which
+ Proposition~\ref{prop:yangian-koszul} applies, the RTT relation
  $R_{12}(u{-}v)\, T_1(u)\, T_2(v)
  = T_2(v)\, T_1(u)\, R_{12}(u{-}v)$
- defines $Y(\fg)$ for all simple~$\fg$. For the classical types,
- the explicit $R$-matrices are those of
- Theorem~\textup{\ref{thm:rtt-all-classical-types}}.
+ defines the corresponding RTT Yangian. For the classical types, the
+ explicit defining $R$-matrices are those of
+ Theorem~\textup{\ref{thm:rtt-all-classical-types}}. For exceptional
+ types, the universal representation-theoretic $R$-matrix supplies
+ the braid and evaluation-module input; it is not being asserted here
+ that the finite Drinfeld--Jimbo quantum group itself is the Yangian
+ or that a single finite FRT matrix replaces Drinfeld's Yangian
+ presentation.
 
 \item \emph{Multiplicity-free $\ell$-weights.}
  For any simple~$\fg$ and any fundamental weight~$\omega_i$, the
@@ -1302,23 +1317,25 @@ The bar-complex propagator $\eta_{12} = d\log(z_1 - z_2)$ absorbs
 one pole order from the OPE. For $\hat{\fg}_k$, the OPE
 $J^a(z)J^b(w) \sim k\,g^{ab}/(z{-}w)^2 + f^{ab}{}_c J^c(w)/(z{-}w)$
 yields, after $d\log$ absorption, the classical $r$-matrix
-$r(z) = k\Omega/z$ (the double pole $k\,g^{ab}/(z{-}w)^2$
+$r^{\mathrm{tr}}(z) = k\Omega_{\mathrm{tr}}/z$ (the double pole $k\,g^{ab}/(z{-}w)^2$
 shifts to $k\,g^{ab}/(z{-}w)$; the
 simple pole becomes regular and drops). The classical Yang--Baxter
-equation for $r(z) = k\Omega/z$ reduces to the infinitesimal braid
+equation for the equivalent KZ-normalized
+$r^{\mathrm{KZ}}(z)=\Omega/((k+h^\vee)z)$ reduces to the infinitesimal braid
 relations $[\Omega_{12}, \Omega_{23}] + [\Omega_{13}, \Omega_{23}] = 0$,
 which hold because $\Omega$ is constructed from a basis of $\fg$ and
 its dual.
 
 \emph{Step~2: Quantization.}
 The QYBE for $R(u)$ at leading $\hbar$-order reduces to the CYBE for
-$r(u) = k\Omega/u$. The full QYBE is verified for all classical types
+$r^{\mathrm{KZ}}(u)=\Omega/((k+h^\vee)u)$. The full QYBE is verified for all classical types
 by the operator algebra of $P$, $Q$, $K$ (Theorem~\ref{thm:rtt-all-classical-types}).
 For the exceptional types $E_6$--$E_8$, $F_4$, $G_2$, the quantum
-$R$-matrix in the fundamental representation is constructed via the
-universal $R$-matrix of $U_q(\fg)$~\cite{Drinfeld85,Jimbo85}, which
-satisfies QYBE universally; the fundamental representation is obtained
-by evaluating on $V_{\omega_1} \otimes V_{\omega_1}$.
+$R$-matrix on finite-dimensional evaluation modules is obtained from
+the universal $R$-matrix of the quantum loop/affine algebra after the
+Kazhdan--Drinfeld comparison. The finite Drinfeld--Jimbo algebra
+$U_q(\fg)$ controls the KZ monodromy side; the loop/evaluation
+parameter is carried by the quantum-loop or Yangian side.
 
 \emph{Step~3: Multiplicity-free $\ell$-weights.}
 By Chari--Moura~\cite[Theorem~1.1]{ChariMoura06}, for any simple
@@ -1361,8 +1378,9 @@ For the exceptional Lie algebras, the $R$-matrix in the minimal
 representation has the following dimensions:
 $E_6$ ($V = \bC^{27}$), $E_7$ ($V = \bC^{56}$),
 $E_8$ ($V = \bC^{248}$, the adjoint), $F_4$ ($V = \bC^{26}$),
-$G_2$ ($V = \bC^{7}$). The classical $r$-matrix $r(z) = k\Omega/z$
-takes values in $\fg \otimes \fg$ regardless of the representation; the
+$G_2$ ($V = \bC^{7}$). The KZ-normalized classical $r$-matrix
+$r(z)=\Omega/((k+h^\vee)z)$ takes values in $\fg \otimes \fg$
+regardless of the representation; the
 representation-dependent data is the evaluation
 $\rho_V \otimes \rho_V(\Omega)$ on $V \otimes V$.
 The CYBE holds universally by the infinitesimal braid relations,
@@ -1376,7 +1394,7 @@ the specific representation.
 \index{Drinfeld--Kohno!ordered bar provenance}
 \index{ordered bar complex!MC3 and DK bridge}
 The MC3 programme is natively an ordered-bar phenomenon. The
-$R$-matrix $r(z) = k\Omega/z$ of
+KZ-normalized $R$-matrix residue of
 equation~\eqref{eq:r-matrix-all-types} lives in bar bidegree
 $(g,n) = (0,2)$ of $\barB^{\Eone}(\hat{\fg}_k)$: it is the
 genus-$0$, degree-$2$ component of the ordered MC element
@@ -2776,9 +2794,13 @@ $\mathsf{K}^{\mathrm{RTT}}_{1,2}(N)$.
 The extraction uses the normalized residue
 $\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, the symmetric/antisymmetric
 channel decomposition, and exact kernel computation on the mixed
-tensor line $e_1\otimes e_2$. Computationally, this low-rank packet
-has been verified by exact and numerical kernel calculations inside the
-current Yangian residue suite \textup{(}$219$~tests\textup{)}.
+tensor line $e_1\otimes e_2$. This kernel is the coefficient kernel of
+the boundary-strip RTT defect. It is not the Bethe eigenspace and not
+the kernel of symmetric averaging: Bethe vectors live in
+$V^{\otimes L}$ with ordered monodromy, while averaging retains only
+the transfer eigenvalue, Baxter polynomial, and central determinant.
+The low-rank packet is verified by exact and numerical kernel
+calculations in the Yangian residue computation suite.
 
 This is evidence for the Yangian side of MC4, not the full theorem.
 The remaining problem is the uniform proof of
